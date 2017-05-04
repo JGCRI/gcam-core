@@ -1,6 +1,6 @@
 #' module_aglu_LB152.ag_GTAP_R_C_GLU_irr
 #'
-#' Briefly describe what this chunk does.
+#' Aggregate the irrigated/rainfed harvest area and production data by GCAM region / commodity / GLU.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,11 +8,11 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L152.ag_irrHA_bm2_R_C_GLU}, \code{L152.ag_rfdHA_bm2_R_C_GLU}, \code{L152.ag_irrProd_Mt_R_C_GLU}, \code{L152.ag_rfdProd_Mt_R_C_GLU}. The corresponding file in the
 #' original data system was \code{LB152.ag_GTAP_R_C_GLU_irr.R} (aglu level1).
-#' @details Describe in detail what this chunk does.
+#' @details This chunk aggregates the irrigated/rainfed harvest area and production data from country and GTAP crop to GCAM region and commodity by each GLU.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
+#' @author RC May 2017
 #' @export
 module_aglu_LB152.ag_GTAP_R_C_GLU_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -39,8 +39,9 @@ module_aglu_LB152.ag_GTAP_R_C_GLU_irr <- function(command, ...) {
     L151.ag_irrProd_t_ctry_crop <- get_data(all_data, "L151.ag_irrProd_t_ctry_crop")
     L151.ag_rfdProd_t_ctry_crop <- get_data(all_data, "L151.ag_rfdProd_t_ctry_crop")
 
-    # Add region and crop lookup vectors to GTAP tables
-    # Collaps ag commodity data into GCAM regions and commodities, and convert to appropriate units (bm2 and Mt)
+    # For each of the four GTAP tables, first add GCAM region and commodity lookup vectors to iso and GTAP crop
+    # Second, convert to appropriate units (bm2 and Mt)
+    # Third, aggregate Ag commodity data into GCAM regions and commodities by GLU
     L151.ag_irrHA_ha_ctry_crop %>%
       left_join_keep_first_only(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%                      # Match country iso with GCAM region
       left_join_keep_first_only(select(FAO_ag_items_PRODSTAT, GTAP_crop, GCAM_commodity), by = "GTAP_crop") %>%   # Match GTAP crop with GCAM commodity
@@ -83,10 +84,9 @@ module_aglu_LB152.ag_GTAP_R_C_GLU_irr <- function(command, ...) {
 
     # Produce outputs
     L152.ag_irrHA_bm2_R_C_GLU %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Irrigated harvested area by GCAM region / commodity / GLU") %>%
+      add_units("bm2") %>%
+      add_comments("Irrigated harvested area data are aggregated from country and GTAP crop to GCAM region and commodity by each GLU") %>%
       add_legacy_name("L152.ag_irrHA_bm2_R_C_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
                      "aglu/FAO_ag_items_PRODSTAT",
@@ -94,10 +94,9 @@ module_aglu_LB152.ag_GTAP_R_C_GLU_irr <- function(command, ...) {
       L152.ag_irrHA_bm2_R_C_GLU
 
     L152.ag_rfdHA_bm2_R_C_GLU %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Rainfed harvested area by GCAM region / commodity / GLU") %>%
+      add_units("bm2") %>%
+      add_comments("Rainfed harvested area data are aggregated from country and GTAP crop to GCAM region and commodity by each GLU") %>%
       add_legacy_name("L152.ag_rfdHA_bm2_R_C_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
                      "aglu/FAO_ag_items_PRODSTAT",
@@ -105,10 +104,9 @@ module_aglu_LB152.ag_GTAP_R_C_GLU_irr <- function(command, ...) {
       L152.ag_rfdHA_bm2_R_C_GLU
 
     L152.ag_irrProd_Mt_R_C_GLU %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Irrigated crop production by GCAM region / commodity / GLU") %>%
+      add_units("Mt") %>%
+      add_comments("Irrigated crop production data are aggregated from country and GTAP crop to GCAM region and commodity by each GLU") %>%
       add_legacy_name("L152.ag_irrProd_Mt_R_C_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
                      "aglu/FAO_ag_items_PRODSTAT",
@@ -116,10 +114,9 @@ module_aglu_LB152.ag_GTAP_R_C_GLU_irr <- function(command, ...) {
       L152.ag_irrProd_Mt_R_C_GLU
 
     L152.ag_rfdProd_Mt_R_C_GLU %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Rainfed crop production by GCAM region / commodity / GLU ") %>%
+      add_units("Mt") %>%
+      add_comments("Rainfed crop production data are aggregated from country and GTAP crop to GCAM region and commodity by each GLUd") %>%
       add_legacy_name("L152.ag_rfdProd_Mt_R_C_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
                      "aglu/FAO_ag_items_PRODSTAT",
