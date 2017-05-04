@@ -1,4 +1,4 @@
-#' module_energy_LA1231.elec_tech
+#' module_emissions_L112.ghg_en_R_S_T_Y
 #'
 #' Briefly describe what this chunk does.
 #'
@@ -6,35 +6,42 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L1231.in_EJ_R_elec_F_tech_Yh}, \code{L1231.out_EJ_R_elec_F_tech_Yh}, \code{L1231.eff_R_elec_F_tech_Yh}. The corresponding file in the
-#' original data system was \code{LA1231.elec_tech.R} (energy level1).
+#' the generated outputs: \code{L112.ghg_tg_R_en_S_F_Yh}, \code{L112.ghg_tgej_R_en_S_F_Yh}. The corresponding file in the
+#' original data system was \code{L112.ghg_en_R_S_T_Y.R} (emissions level1).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_energy_LA1231.elec_tech_DISABLED <- function(command, ...) {
+module_emissions_L112.ghg_en_R_S_T_Y_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "energy/A23.globaltech_eff",
-             FILE = "energy/calibrated_techs",
-             "L123.in_EJ_R_elec_F_Yh",
-             "L123.out_EJ_R_elec_F_Yh",
-             "L123.eff_R_elec_F_Yh"))
+    return(c(FILE = "common/iso_GCAM_regID",
+             FILE = "emissions/EDGAR_sector",
+             FILE = "emissions/EPA_ghg_tech",
+             FILE = "emissions/EDGAR_nation",
+             FILE = "emissions/GCAM_sector_tech",
+             "L101.in_EJ_R_en_Si_F_Yh",
+             "L102.ghg_tgej_USA_en_Sepa_F_2005",
+             FILE = "emissions/EDGAR_CH4",
+             FILE = "emissions/EDGAR_N2O"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L1231.in_EJ_R_elec_F_tech_Yh",
-             "L1231.out_EJ_R_elec_F_tech_Yh",
-             "L1231.eff_R_elec_F_tech_Yh"))
+    return(c("L112.ghg_tg_R_en_S_F_Yh",
+             "L112.ghg_tgej_R_en_S_F_Yh"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    A23.globaltech_eff <- get_data(all_data, "energy/A23.globaltech_eff")
-    calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
-    L123.in_EJ_R_elec_F_Yh <- get_data(all_data, "L123.in_EJ_R_elec_F_Yh")
-    L123.out_EJ_R_elec_F_Yh <- get_data(all_data, "L123.out_EJ_R_elec_F_Yh")
-    L123.eff_R_elec_F_Yh <- get_data(all_data, "L123.eff_R_elec_F_Yh")
+    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
+    EDGAR_sector <- get_data(all_data, "emissions/EDGAR_sector")
+    EPA_ghg_tech <- get_data(all_data, "emissions/EPA_ghg_tech")
+    EDGAR_nation <- get_data(all_data, "emissions/EDGAR_nation")
+    GCAM_sector_tech <- get_data(all_data, "emissions/GCAM_sector_tech")
+    L101.in_EJ_R_en_Si_F_Yh <- get_data(all_data, "L101.in_EJ_R_en_Si_F_Yh")
+    L102.ghg_tgej_USA_en_Sepa_F_2005 <- get_data(all_data, "L102.ghg_tgej_USA_en_Sepa_F_2005")
+    EDGAR_CH4 <- get_data(all_data, "emissions/EDGAR_CH4")
+    EDGAR_N2O <- get_data(all_data, "emissions/EDGAR_N2O")
 
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
@@ -55,6 +62,8 @@ module_energy_LA1231.elec_tech_DISABLED <- function(command, ...) {
     # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # NOTE: This code uses vecpaste
     # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
+    # NOTE: This code uses repeat_and_add_vector
+    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # ===================================================
 
     # Produce outputs
@@ -67,33 +76,23 @@ module_energy_LA1231.elec_tech_DISABLED <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L1231.in_EJ_R_elec_F_tech_Yh") %>%
+      add_legacy_name("L112.ghg_tg_R_en_S_F_Yh") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L1231.in_EJ_R_elec_F_tech_Yh
+      L112.ghg_tg_R_en_S_F_Yh
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L1231.out_EJ_R_elec_F_tech_Yh") %>%
+      add_legacy_name("L112.ghg_tgej_R_en_S_F_Yh") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L1231.out_EJ_R_elec_F_tech_Yh
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L1231.eff_R_elec_F_tech_Yh") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L1231.eff_R_elec_F_tech_Yh
+      L112.ghg_tgej_R_en_S_F_Yh
 
-    return_data(L1231.in_EJ_R_elec_F_tech_Yh, L1231.out_EJ_R_elec_F_tech_Yh, L1231.eff_R_elec_F_tech_Yh)
+    return_data(L112.ghg_tg_R_en_S_F_Yh, L112.ghg_tgej_R_en_S_F_Yh)
   } else {
     stop("Unknown command")
   }

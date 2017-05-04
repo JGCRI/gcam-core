@@ -28,16 +28,11 @@ module_water_L102.water.supply.unlimited <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A_unlimited_water_price <- get_data(all_data, "water/A_unlimited_water_price")
 
-    # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-
-
     # all 4 water types
     water_type <- c( "water consumption", "water withdrawals", "seawater", "biophysical water consumption" )
 
     # copy for ordering later
     water_type_order <- water_type
-
 
     # all historical and future years
     year <- c(HISTORICAL_YEARS, FUTURE_YEARS)
@@ -47,17 +42,13 @@ module_water_L102.water.supply.unlimited <- function(command, ...) {
       repeat_add_columns(tibble(water_type)) %>%
       select(-region) %>%
       repeat_add_columns(tibble(year)) %>%
-      mutate(value = if_else(water_type != "water withdrawals",DEFAULT_UNLIMITED_WATER_PRICE,DEFAULT_UNLIMITED_WITHD_WATER_PRICE),
+      mutate(value = if_else(water_type != "water withdrawals", DEFAULT_UNLIMITED_WATER_PRICE, DEFAULT_UNLIMITED_WITHD_WATER_PRICE),
              year = as.integer(year)) ->
       L102.all_region_water_type
 
     # ===================================================
 
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
 
     L102.all_region_water_type %>%
       add_title("Water price data for different water types") %>%
@@ -65,7 +56,6 @@ module_water_L102.water.supply.unlimited <- function(command, ...) {
       add_comments("nominal default water prices") %>%
       add_legacy_name("L102.unlimited_water_price_R_W_Y_75USDm3") %>%
       add_precursors("common/GCAM_region_names", "water/A_unlimited_water_price") %>%
-      # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L102.unlimited_water_price_R_W_Y_75USDm3
 

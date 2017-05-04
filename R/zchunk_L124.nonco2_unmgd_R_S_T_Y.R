@@ -1,4 +1,4 @@
-#' module_energy_LA1231.elec_tech
+#' module_emissions_L124.nonco2_unmgd_R_S_T_Y
 #'
 #' Briefly describe what this chunk does.
 #'
@@ -6,35 +6,59 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L1231.in_EJ_R_elec_F_tech_Yh}, \code{L1231.out_EJ_R_elec_F_tech_Yh}, \code{L1231.eff_R_elec_F_tech_Yh}. The corresponding file in the
-#' original data system was \code{LA1231.elec_tech.R} (energy level1).
+#' the generated outputs: \code{L124.nonco2_tg_R_grass_Y_GLU}, \code{L124.nonco2_tg_R_forest_Y_GLU}, \code{L124.deforest_coefs}. The corresponding file in the
+#' original data system was \code{L124.nonco2_unmgd_R_S_T_Y.R} (emissions level1).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_energy_LA1231.elec_tech_DISABLED <- function(command, ...) {
+module_emissions_L124.nonco2_unmgd_R_S_T_Y_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "energy/A23.globaltech_eff",
-             FILE = "energy/calibrated_techs",
-             "L123.in_EJ_R_elec_F_Yh",
-             "L123.out_EJ_R_elec_F_Yh",
-             "L123.eff_R_elec_F_Yh"))
+    return(c(FILE = "common/iso_GCAM_regID",
+             FILE = "emissions/EDGAR_nation",
+             FILE = "emissions/EDGAR_sector",
+             "L124.LC_bm2_R_Grass_Yh_GLU_adj",
+             "L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj",
+             FILE = "emissions/EDGAR_SO2",
+             FILE = "emissions/EDGAR_CO",
+             FILE = "emissions/EDGAR_NOx",
+             FILE = "emissions/EDGAR_NMVOC",
+             FILE = "emissions/EDGAR_CH4",
+             FILE = "emissions/EDGAR_N2O",
+             FILE = "emissions/GFED_ForestFire_SO2",
+             FILE = "emissions/GFED_Deforest_SO2",
+             FILE = "emissions/GFED_ForestFire_CO",
+             FILE = "emissions/GFED_Deforest_CO",
+             FILE = "emissions/GFED_ForestFire_NOx",
+             FILE = "emissions/GFED_Deforest_NOx"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L1231.in_EJ_R_elec_F_tech_Yh",
-             "L1231.out_EJ_R_elec_F_tech_Yh",
-             "L1231.eff_R_elec_F_tech_Yh"))
+    return(c("L124.nonco2_tg_R_grass_Y_GLU",
+             "L124.nonco2_tg_R_forest_Y_GLU",
+             "L124.deforest_coefs"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    A23.globaltech_eff <- get_data(all_data, "energy/A23.globaltech_eff")
-    calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
-    L123.in_EJ_R_elec_F_Yh <- get_data(all_data, "L123.in_EJ_R_elec_F_Yh")
-    L123.out_EJ_R_elec_F_Yh <- get_data(all_data, "L123.out_EJ_R_elec_F_Yh")
-    L123.eff_R_elec_F_Yh <- get_data(all_data, "L123.eff_R_elec_F_Yh")
+    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
+    EDGAR_nation <- get_data(all_data, "emissions/EDGAR_nation")
+    EDGAR_sector <- get_data(all_data, "emissions/EDGAR_sector")
+    L124.LC_bm2_R_Grass_Yh_GLU_adj <- get_data(all_data, "L124.LC_bm2_R_Grass_Yh_GLU_adj")
+    L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj <- get_data(all_data, "L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj")
+    EDGAR_SO2 <- get_data(all_data, "emissions/EDGAR_SO2")
+    EDGAR_CO <- get_data(all_data, "emissions/EDGAR_CO")
+    EDGAR_NOx <- get_data(all_data, "emissions/EDGAR_NOx")
+    EDGAR_NMVOC <- get_data(all_data, "emissions/EDGAR_NMVOC")
+    EDGAR_CH4 <- get_data(all_data, "emissions/EDGAR_CH4")
+    EDGAR_N2O <- get_data(all_data, "emissions/EDGAR_N2O")
+    GFED_ForestFire_SO2 <- get_data(all_data, "emissions/GFED_ForestFire_SO2")
+    GFED_Deforest_SO2 <- get_data(all_data, "emissions/GFED_Deforest_SO2")
+    GFED_ForestFire_CO <- get_data(all_data, "emissions/GFED_ForestFire_CO")
+    GFED_Deforest_CO <- get_data(all_data, "emissions/GFED_Deforest_CO")
+    GFED_ForestFire_NOx <- get_data(all_data, "emissions/GFED_ForestFire_NOx")
+    GFED_Deforest_NOx <- get_data(all_data, "emissions/GFED_Deforest_NOx")
 
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
@@ -55,6 +79,8 @@ module_energy_LA1231.elec_tech_DISABLED <- function(command, ...) {
     # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # NOTE: This code uses vecpaste
     # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
+    # NOTE: This code uses repeat_and_add_vector
+    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # ===================================================
 
     # Produce outputs
@@ -67,33 +93,33 @@ module_energy_LA1231.elec_tech_DISABLED <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L1231.in_EJ_R_elec_F_tech_Yh") %>%
+      add_legacy_name("L124.nonco2_tg_R_grass_Y_GLU") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L1231.in_EJ_R_elec_F_tech_Yh
+      L124.nonco2_tg_R_grass_Y_GLU
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L1231.out_EJ_R_elec_F_tech_Yh") %>%
+      add_legacy_name("L124.nonco2_tg_R_forest_Y_GLU") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L1231.out_EJ_R_elec_F_tech_Yh
+      L124.nonco2_tg_R_forest_Y_GLU
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L1231.eff_R_elec_F_tech_Yh") %>%
+      add_legacy_name("L124.deforest_coefs") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L1231.eff_R_elec_F_tech_Yh
+      L124.deforest_coefs
 
-    return_data(L1231.in_EJ_R_elec_F_tech_Yh, L1231.out_EJ_R_elec_F_tech_Yh, L1231.eff_R_elec_F_tech_Yh)
+    return_data(L124.nonco2_tg_R_grass_Y_GLU, L124.nonco2_tg_R_forest_Y_GLU, L124.deforest_coefs)
   } else {
     stop("Unknown command")
   }
