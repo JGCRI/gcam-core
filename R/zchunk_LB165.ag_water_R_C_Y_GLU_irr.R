@@ -19,7 +19,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author BBL April 2017
-#' @export
 module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
@@ -111,16 +110,17 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
       mutate(coef_m3kg = value / (Prod_t * CONV_T_KG)) ->
       L165.ag_Water_ctry_MHcrop_GLU
 
-    # Clip extremely high values which are due to statistical discrepancies (original lines 84-106)
-    # The assumed maximum values are crop specific and based on analysis of the 2011 inventory data
-    # In this step, we're adding 2 m3/kg to every maximum observed value across all national averages.
-    # We want to use something a bit higher than the maximum of the national averages, because the
-    # sub-national regions' values will have a greater range.
+    # Original lines 84-106
+    # The assumed maximum values are crop specific and based on analysis of the 2011 inventory data,
+    # but because of statistical discrepancies we need to clip extremely high values. To do so
+    # we compute the maximum observed value across all national averages, add a small (2 m3/kg)
+    # adjustment, and use that as a cap. We want to use something a bit higher than the maximum of
+    # the national averages, because the sub-national regions' values will have a greater range.
     #
-    # Still, this sort of cap is necessary because many of the water quantities, particularly in
+    # This sort of cap is necessary because many of the water quantities, particularly in
     # small regions, are clearly inconsistent with the underlying production data and produce
     # extremely high water demand coefficients. In the case of Barley in Iraq it is clearly an
-    # error in the M+H gridded inventory, but for others it could be a simple mis-match in
+    # error in the M+H gridded inventory, but for others it could be a simple mismatch in
     # estimates of crop production by region, and share of irrigated production by region.
     CTRY_GLU_MAX_ADDER <- 2
     L165.Mekonnen_Hoekstra_Rep47_A2 %>%
@@ -130,8 +130,8 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
       left_join(select(FAO_ag_items_PRODSTAT, item, MH_crop), by = c("FAO_crop" = "item")) ->
       L165.MaxWaterCoefs_m3kg
 
-    # Change L165.ag_Water_ctry_MHcrop_GLU$coef_m3kg to be the minimum of itself and
-    # the corresponding (by crop and water_type) value in L165.MaxWaterCoefs_m3kg
+    # Apply the cap computed above: change L165.ag_Water_ctry_MHcrop_GLU$coef_m3kg to be the minimum
+    # of itself and the corresponding (by crop and water_type) value in L165.MaxWaterCoefs_m3kg
     L165.MaxWaterCoefs_m3kg %>%
       gather(water_type, value_other, Blue, Green) %>%
       mutate(water_type = tolower(water_type)) %>%
@@ -145,8 +145,11 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
     #	(1) Calculate the total biophysical (green + blue) water quantities and coefficients for each country, GLU, and crop
     #	(2) Match in the irrigated production and calculate the blue water coef for irrigated as min(blue water quantity / irr prod, total biophysical coef)
     #	(3) Calculate the green water coef for irrigated crops as the total biophysical coef minus the blue water coef
-    #	(4) Calculate the total volume of green water on rainfed crops, as the total green water minus green water used by irrigated crops
+    #	(4) Calculate the total volume of green water on rainfed crops as the total green water minus green water used by irrigated crops
     #	(5) Calculate the green water coef for rainfed crops as rainfed green water volume divided by rainfed production
+
+    # Here we go:
+    #	(1) Calculate the total biophysical (green + blue) water quantities and coefficients for each country, GLU, and crop
     L165.ag_Water_ctry_MHcrop_GLU %>%
       ungroup %>%
       select(-MH_crop, -value) %>%
@@ -157,7 +160,7 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
              green_thousm3 = Prod_t * green_m3kg) ->
       L165.ag_Water_ctry_MHcrop_GLU
 
-    # Match in the irrigated production to calculate the blue water coef for irrigated crops (original lines 124-147)
+    #	(2) Match in the irrigated production and calculate the blue water coef (original lines 124-147)
     L165.ag_Water_ctry_MHcrop_GLU %>%
       left_join_error_no_match(L151.ag_irrProd_t_ctry_crop, by = c("iso", "GTAP_crop", "GLU")) %>%
       rename(irrProd_t = irrProd) %>%
@@ -166,14 +169,15 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
       mutate(BlueIrr_m3kg = if_else(irrProd_t == 0, 0, BlueIrr_m3kg),
              # Cap blue water coefficients at the total biophysical quantity
              BlueIrr_m3kg = pmin(BlueIrr_m3kg, total_m3kg),
-             # Green water coefs of irrigated crops = total biophysical coef - calculated blue water coef
+             #	(3) Calculate the green water coef for irrigated crops
              GreenIrr_m3kg = total_m3kg - BlueIrr_m3kg,
-             # Green water quantities for rainfed crops = total green water - green water on irrigated
+             #	(4) Calculate the total volume of green water on rainfed crops
              GreenIrr_thousm3 = GreenIrr_m3kg * irrProd_t,
              GreenRfd_thousm3 = green_thousm3 - GreenIrr_thousm3) %>%
+      # join in rainfed crop production values to calculate the green water coefficient for rainfed crops
       left_join_error_no_match(L151.ag_rfdProd_t_ctry_crop, by = c("iso", "GTAP_crop", "GLU")) %>%
       rename(rfdProd_t = rfdProd) %>%
-      # Green water coef on rainfed = green water on rainfed divided by rainfed production
+      #	(5) Calculate the green water coef for rainfed crops as rainfed green water volume divided by rainfed production
       mutate(GreenRfd_m3kg = if_else(rfdProd_t != 0, GreenRfd_thousm3 / rfdProd_t, 0)) ->
       L165.ag_Water_ctry_MHcrop_GLU
 
