@@ -1,6 +1,6 @@
 #' module_emissions_L152.MACC
 #'
-#' Briefly describe what this chunk does.
+#' Create Marginal Abatement Cost Curves, in percent reduction by 1990 USD abatement costs from EPA cost curves.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,13 +8,14 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L152.MAC_pct_R_S_Proc_EPA}. The corresponding file in the
 #' original data system was \code{L152.MACC.R} (emissions level1).
-#' @details Describe in detail what this chunk does.
+#' @details Create Marginal abatement cost curves, in percent reduction by 1990 USD costs from EPA cost curves.
+#' Chose between 2020 or 2030 data in constants file - emissions.EPA_MACC_YEAR.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
-#' @export
-module_emissions_L152.MACC_DISABLED <- function(command, ...) {
+#' @author RMH May 2017
+
+module_emissions_L152.MACC <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "emissions/EPA_MACC_baselines_MtCO2e",
              FILE = "emissions/EPA_MACC_2020_MtCO2e",
@@ -26,50 +27,88 @@ module_emissions_L152.MACC_DISABLED <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    EPA_MACC_baselines_MtCO2e <- get_data(all_data, "emissions/EPA_MACC_baselines_MtCO2e")
+    EPA_MACC_baselines_MtCO2e_in <- get_data(all_data, "emissions/EPA_MACC_baselines_MtCO2e")
     EPA_MACC_2020_MtCO2e <- get_data(all_data, "emissions/EPA_MACC_2020_MtCO2e")
     EPA_MACC_2030_MtCO2e <- get_data(all_data, "emissions/EPA_MACC_2030_MtCO2e")
 
-    # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses vecpaste
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses repeat_and_add_vector
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code converts gdp using a conv_xxxx_xxxx_USD constant
-    # Use the `gdp_deflator(year, base_year)` function instead
-    # ===================================================
+    # Assign MACC data based on MACC curve year assumption (emissions.EPA_MACC_YEAR)
+    if( emissions.EPA_MACC_YEAR == 2020 ) EPA_MACC_MtCO2e <- EPA_MACC_2020_MtCO2e
+    if( emissions.EPA_MACC_YEAR == 2030 ) EPA_MACC_MtCO2e <- EPA_MACC_2030_MtCO2e
+    if( !emissions.EPA_MACC_YEAR %in% c( 2020, 2030 ) ) stop( "MAC curve year needs to be either 2020 or 2030" )
 
+    # Make processes and region names consistent
+    EPA_MACC_baselines_MtCO2e <- EPA_MACC_baselines_MtCO2e_in %>%
+      mutate(Process = sub( "\\&", "and", Process )) %>%
+      mutate(EPA_region = sub( "\\&", "and", EPA_region )) %>%
+      mutate(EPA_region = sub( "World", "Global", EPA_region )) %>%
+      mutate(EPA_region = sub( "Global Total", "Global", EPA_region ))
+
+    EPA_MACC_MtCO2e <- EPA_MACC_MtCO2e %>%
+      mutate(Process = sub( "\\&", "and", Process ))
+
+    # Convert MAC cureves to long form
+    # Convert from 2010$/tCO2e to 1990$/tC
+    L152.EPA_MACC_MtCO2e <- EPA_MACC_MtCO2e %>%
+      gather(cost_2010USD_tCO2e,reduction_MtCO2e, -Sector, -Process, -EPA_region, -EPA_region_code) %>%
+      mutate(cost_2010USD_tCO2e = as.numeric(cost_2010USD_tCO2e)) %>%
+      mutate(cost_1990USD_tCe = round(cost_2010USD_tCO2e * emissions.CONV_C_CO2 * gdp_deflator(1990, base_year = 2010), 0)) %>%
+      select(-cost_2010USD_tCO2e)
+
+    # For in baseline and abatement data:
+    # Merge aluminum and magnesium processes
+    # Put in long form
+    L152.EPA_MACC_MtCO2e <- L152.EPA_MACC_MtCO2e %>%
+      ungroup() %>%
+      mutate(Process = sub( "Primary Aluminum Production", "Aluminum and Magnesium Production", Process )) %>%
+      mutate(Process = sub( "Magnesium Manufacturing", "Aluminum and Magnesium Production", Process )) %>%
+      group_by(Sector, Process, EPA_region, EPA_region_code, cost_1990USD_tCe) %>%
+      summarize_at(vars(reduction_MtCO2e), sum)
+
+    # Repeat same operation on baseline curve
+    # Also filter for only EPA MACC year
+    L152.EPA_MACC_baselines_MtCO2e <- EPA_MACC_baselines_MtCO2e %>%
+      mutate(Process = sub( "Primary Aluminum Production", "Aluminum and Magnesium Production", Process )) %>%
+      mutate(Process = sub( "Magnesium Manufacturing", "Aluminum and Magnesium Production", Process )) %>%
+      gather(year, baseline_MtCO2e, -Sector, -Process, -EPA_region) %>%
+      mutate_at(vars(year), funs(as.integer)) %>%
+      filter( year == emissions.EPA_MACC_YEAR) %>%
+      group_by(Sector, Process, EPA_region) %>%
+      summarize_at(vars(baseline_MtCO2e), sum)
+
+    # Match in the baseline emissions quantities to abatement tibble then calculate abatement percentages
+    # Use left_join - there should be NAs (i.e., there are sectors where the baseline is zero)  - then drop those NAs
+    # (ie. MAC curves in regions where the sector/process does not exist  - the baseline is zero)
+    L152.EPA_MACC_percent_MtCO2e <- L152.EPA_MACC_MtCO2e %>%
+      left_join( L152.EPA_MACC_baselines_MtCO2e ,
+                 by = c("Sector","Process","EPA_region")) %>%
+      mutate(reduction_pct = reduction_MtCO2e / baseline_MtCO2e) %>%
+      filter(!is.na(reduction_pct)) %>%
+      ungroup %>%
+      select( -EPA_region_code, -reduction_MtCO2e, -baseline_MtCO2e)
+
+
+    # Select reduction percentage data for the given tax levels,
+    # tax levels in emissions.MAC_TAXES are simply a range of costs in $1990 USD so we aren't retaining superfluous detail
+    # create a new df with all rows for all costs for each unique Sector-Process-Region,
+    # then add reduction percentages at those costs
+    L152.MAC_pct_R_S_Proc_EPA <- L152.EPA_MACC_percent_MtCO2e %>%
+      select(Sector, Process, EPA_region) %>%
+      unique %>%
+      repeat_add_columns(tibble::tibble( cost_1990USD_tCe = emissions.MAC_TAXES )) %>%
+      left_join_error_no_match(L152.EPA_MACC_percent_MtCO2e,
+                               by = c("Sector", "Process", "EPA_region", "cost_1990USD_tCe")) %>%
+      spread(cost_1990USD_tCe, reduction_pct )
+
+    # ===================================================
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L152.MAC_pct_R_S_Proc_EPA <- L152.MAC_pct_R_S_Proc_EPA %>%
+      add_title("Marginal abatement cost curves by EPA region / EPA sector / process") %>%
+      add_units("%") %>%
+      add_comments("Marginal abatement cost curves, in percent reduction by 1990 USD abatement costs from EPA cost curves") %>%
       add_legacy_name("L152.MAC_pct_R_S_Proc_EPA") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L152.MAC_pct_R_S_Proc_EPA
+      add_precursors("emissions/EPA_MACC_baselines_MtCO2e",
+                     "emissions/EPA_MACC_2020_MtCO2e",
+                     "emissions/EPA_MACC_2030_MtCO2e")
 
     return_data(L152.MAC_pct_R_S_Proc_EPA)
   } else {
