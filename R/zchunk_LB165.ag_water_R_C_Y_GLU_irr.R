@@ -88,6 +88,17 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
       select(iso, FAO_crop, water_type, coef_m3kg) %>%
       # Set all missing values to zero -- this may be re-visited at another point
       # We may want to substitute default values from the MH2011 table
+
+      # More info on this from @pkyle:
+      # The source data table has 29,725 observations (country x crop), of which 24,063 are missing values,
+      # and of these missing values, 321 did actually have crop production in Monfreda's inventory, 13 of which
+      # had > 1 Mt of production. We are using this dataset to supplement a global gridded inventory with 18 major
+      # crops. Filtering those out, there are still 4 observations with between 1 and 3 Mt of production, all in
+      # Nigeria: CitrusFrtNES, CowPeasDry, Plantains, and FrtFrshNES.
+      # If we want to replace these with defaults, the blue water coef (i.e., the important one) will still be zero,
+      # because it's in Nigeria, where ~100% of crop production is rainfed (according to the inventories). So, if we
+      # do implement a different method, we'll get a slightly higher estimate of biophysical water consumption for
+      # MiscCrop in Africa_Western.
       mutate(coef_m3kg = if_else(is.na(coef_m3kg), 0, coef_m3kg)) %>%
       spread(water_type, coef_m3kg) ->
       L165.Mekonnen_Hoekstra_Rep47_A2
