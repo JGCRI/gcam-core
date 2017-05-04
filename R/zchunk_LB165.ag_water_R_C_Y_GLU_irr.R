@@ -308,13 +308,13 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
     # content dataset (Chapagain 2004) that included fodder crops.
     # The "corresponding" crops are assigned in the mapping file (FAO_ag_items_PRODSTAT),
     # based on species (e.g., maize) or family (e.g., alfalfa)
-    CONV_CROP_FODDER <- 0.2
+    FODDER_CROP_WATER_ADJUSTMENT <- 0.2
     FODDER_CROPS <- c("FodderGrass", "FodderHerb")
     L165.ag_Water_ctry_crop_GLU %>%
       filter(GCAM_commodity %in% FODDER_CROPS) %>%
-      mutate(BlueIrr_thousm3 = BlueIrr_thousm3 * CONV_CROP_FODDER,
-             GreenIrr_thousm3 = GreenIrr_thousm3 * CONV_CROP_FODDER,
-             GreenRfd_thousm3 = GreenRfd_thousm3 * CONV_CROP_FODDER) %>%
+      mutate(BlueIrr_thousm3 = BlueIrr_thousm3 * FODDER_CROP_WATER_ADJUSTMENT,
+             GreenIrr_thousm3 = GreenIrr_thousm3 * FODDER_CROP_WATER_ADJUSTMENT,
+             GreenRfd_thousm3 = GreenRfd_thousm3 * FODDER_CROP_WATER_ADJUSTMENT) %>%
       bind_rows(filter(L165.ag_Water_ctry_crop_GLU, ! GCAM_commodity %in% FODDER_CROPS)) %>%
 
       # at this point, the crops are ready for aggregation by GCAM region and commodity
