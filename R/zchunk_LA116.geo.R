@@ -1,6 +1,9 @@
 #' module_energy_LA116.geo
 #'
-#' Briefly describe what this chunk does.
+#' Generate geothermal (hydrothermal and engineered geothermal systems (EGS)) supply curves by GCAM region
+#' Supply curves developed for the 14 GCAM 3.0 regions are downscaled to the country level on the basis
+#' of land area, and aggregated to the current GCAM regions. The data source for the supply curves is
+#' Hannam et al. 2009: http://www.pnl.gov/main/publications/external/technical_reports/PNNL-19231.pdf
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,16 +11,17 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L116.RsrcCurves_EJ_R_geo}, \code{L116.RsrcCurves_EJ_R_EGS}. The corresponding file in the
 #' original data system was \code{LA116.geo.R} (energy level1).
-#' @details Describe in detail what this chunk does.
+#' @details This code chunk assigns geothermal electric resources to GCAM regions. Because the underlying
+#' source data were developed for the 14 regions of GCAM 3.0 and prior, they are first
+#' downscaled to the nation level on the basis of land area, and aggregated to the current GCAM regions.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
-#' @export
-module_energy_LA116.geo_DISABLED <- function(command, ...) {
+#' @author GPK April 2017
+module_energy_LA116.geo <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
-             "L100.Land_type_area_ha",
+             FILE = "aglu/LDS/Land_type_area_ha",
              FILE = "energy/A16.geo_curves",
              FILE = "energy/A16.EGS_curves"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -28,58 +32,106 @@ module_energy_LA116.geo_DISABLED <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
+    # Note that the land area file is not the L100. file that has been pre-processed in the aglu module,
+    # because one of the steps that takes place in the pre-processing is to map Taiwan back to China,
+    # as Taiwan is not an agriculture and land use region. However it is an energy region, so we want
+    # to use the land area file that has Taiwan separated from China.
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    Land_type_area_ha <- get_data(all_data, "Land_type_area_ha")
+    Land_type_area_ha <- get_data(all_data, "aglu/LDS/Land_type_area_ha")
     A16.geo_curves <- get_data(all_data, "energy/A16.geo_curves")
     A16.EGS_curves <- get_data(all_data, "energy/A16.EGS_curves")
 
-    # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses vecpaste
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses repeat_and_add_vector
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # ===================================================
+    # The method below assumes that the geothermal supply curves (hydrothermal and EGS) have
+    # only one price point per grade (i.e., "grade 2" has the same price in all regions). This
+    # is the standard in GCAM as long as the model has existed, but still this needs to be
+    # confirmed in this initial check
 
-    # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    if(n_distinct(A16.geo_curves[ c("grade", "extractioncost")]) > n_distinct(A16.geo_curves$grade)){
+      stop( "The geothermal (hydrothermal) supply curves have regionally differentiated price points" )
+    }
+    if(n_distinct(A16.EGS_curves[ c("grade", "extractioncost")]) > n_distinct( A16.EGS_curves$grade)){
+      stop( "The geothermal (EGS) supply curves have regionally differentiated price points" )
+    }
+
+    # Downscale GCAM 3.0 geothermal resources to countries on the basis of land area
+    # Calculate land area shares of countries within region_GCAM3
+    # if the last of the HISTORICAL_YEARS is in the land area data set, use that,
+    # otherwise just use the most recent year in the land area data
+    if(max(HISTORICAL_YEARS) %in% Land_type_area_ha$year) {
+      geo_land_year <- max(HISTORICAL_YEARS)
+    } else {
+      geo_land_year <- max(Land_type_area_ha$year)
+    }
+
+    Land_type_area_ha %>%
+      filter(year == geo_land_year) %>%
+      group_by( iso ) %>%
+      summarise(value = as.numeric(sum(value))) %>%
+      left_join_error_no_match(iso_GCAM_regID[c("iso", "region_GCAM3", GCAM_REGION_ID)], by = "iso") ->
+      L116.land_ctry
+
+    L116.land_ctry %>%
+      group_by(region_GCAM3) %>%
+      summarise(sumvalue = sum(value)) ->
+      L116.land_rg3
+
+    L116.land_ctry %>%
+      full_join(L116.land_rg3, by = "region_GCAM3") %>%
+      mutate(share = value / sumvalue) %>%
+      select( -value, -sumvalue ) ->
+      L116.land_share_ctry_rg3
+
+    # Repeat land area shares by the number of grades in the hydrothermal geothermal resource assumptions
+    # and multiply by the available resource quantities
+    L116.land_share_ctry_rg3 %>%
+      repeat_add_columns(unique(A16.geo_curves["grade"])) %>%
+      left_join_error_no_match(A16.geo_curves, by = c("region_GCAM3", "grade")) %>%
+      mutate(available = share * available) ->
+      L116.geothermal_ctry
+
+    # Aggregate country-level hydrothermal geothermal resource supply curves by GCAM region
+    L116.geothermal_ctry %>%
+      group_by_(GCAM_REGION_ID, "resource", "subresource", "grade", "extractioncost") %>%
+      summarise(available = sum(available)) ->
+      L116.geothermal_rgn
+
+    # Specify the names of the resource table that will be written out
+    L116.geothermal_rgn %>%
+      select( GCAM_region_ID, resource, subresource, grade, available, extractioncost ) %>%
+      # Documentation
+      add_title("Hydrothermal geothermal supply curves by GCAM region") %>%
+      add_units("EJ/yr") %>%
+      add_comments("Downscale GCAM 3.0 geothermal supply curves to countries on land area basis; aggregate to GCAM regions") %>%
       add_legacy_name("L116.RsrcCurves_EJ_R_geo") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/iso_GCAM_regID",
+                     "aglu/LDS/Land_type_area_ha",
+                     "energy/A16.geo_curves") ->
       L116.RsrcCurves_EJ_R_geo
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+
+    # Repeat land area shares by the number of grades in the EGS geothermal resource assumptions
+    # and multiply by the available resource quantities
+    L116.land_share_ctry_rg3 %>%
+      repeat_add_columns(unique(A16.EGS_curves["grade"])) %>%
+      left_join_error_no_match(A16.EGS_curves, by = c( "region_GCAM3", "grade")) %>%
+      mutate(available = share * available) ->
+      L116.EGS_ctry
+
+    # Aggregate country-level EGS geothermal resource supply curves by GCAM region
+    L116.EGS_ctry %>%
+      group_by_(GCAM_REGION_ID, "resource", "subresource", "grade", "extractioncost") %>%
+      summarise(available = sum(available)) ->
+      L116.EGS_rgn
+
+    L116.EGS_rgn %>%
+      select( GCAM_region_ID, resource, subresource, grade, available, extractioncost ) %>%
+      # Documentation
+      add_title("Enhanced Geothermal Systems (EGS) supply curves by GCAM region") %>%
+      add_units("EJ/yr") %>%
+      add_comments("Downscale GCAM 3.0 EGS supply curves to countries on land area basis; aggregate to GCAM regions") %>%
       add_legacy_name("L116.RsrcCurves_EJ_R_EGS") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/iso_GCAM_regID",
+                     "aglu/LDS/Land_type_area_ha",
+                     "energy/A16.EGS_curves") ->
       L116.RsrcCurves_EJ_R_EGS
 
     return_data(L116.RsrcCurves_EJ_R_geo, L116.RsrcCurves_EJ_R_EGS)

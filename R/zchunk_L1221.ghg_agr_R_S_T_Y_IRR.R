@@ -16,8 +16,8 @@
 #' @export
 module_emissions_L1221.ghg_agr_R_S_T_Y_IRR_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L1211.ag_irrShare_R_C_Y_GLU_irr",
-              "L122.ghg_tg_R_agr_C_Y_GLU"))
+    return(c("L1211.ag_irrShare_R_C_Y_GLU_irr",
+             FILE = "temp-data-inject/L122.ghg_tg_R_agr_C_Y_GLU"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L1221.ghg_tg_R_agr_C_Y_GLU_IRR"))
   } else if(command == driver.MAKE) {
@@ -26,7 +26,7 @@ module_emissions_L1221.ghg_agr_R_S_T_Y_IRR_DISABLED <- function(command, ...) {
 
     # Load required inputs
     L1211.ag_irrShare_R_C_Y_GLU_irr <- get_data(all_data, "L1211.ag_irrShare_R_C_Y_GLU_irr")
-    L122.ghg_tg_R_agr_C_Y_GLU <- get_data(all_data, "L122.ghg_tg_R_agr_C_Y_GLU")
+    L122.ghg_tg_R_agr_C_Y_GLU <- get_data(all_data, "temp-data-inject/L122.ghg_tg_R_agr_C_Y_GLU")
 
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
