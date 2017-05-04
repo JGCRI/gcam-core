@@ -52,137 +52,137 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
     # EDGAR emissions data
     get_data(all_data, "emissions/EDGAR_NH3") %>%
       gather(year, value, -`IPCC-Annex`, -`World Region`, -ISO_A3, -Name, -IPCC, -IPCC_description) %>%
-      mutate(Non.CO2 = 'NH3') ->
+      mutate(Non.CO2 = "NH3") ->
       EDGAR_NH3
     get_data(all_data, "emissions/EDGAR_CH4") %>%
       gather(year, value, -`IPCC-Annex`, -`World Region`, -ISO_A3, -Name, -IPCC, -IPCC_description) %>%
-      mutate(Non.CO2 = 'CH4')->
+      mutate(Non.CO2 = "CH4")->
       EDGAR_CH4
     get_data(all_data, "emissions/EDGAR_N2O") %>%
       gather(year, value, -`IPCC-Annex`, -`World Region`, -ISO_A3, -Name, -IPCC, -IPCC_description) %>%
-      mutate(Non.CO2 = 'N2O')->
+      mutate(Non.CO2 = "N2O")->
       EDGAR_N2O
     EDGAR_VOC <- get_data(all_data, "emissions/EDGAR_NMVOC") %>%
       gather(year, value, -`IPCC-Annex`, -`World Region`, -ISO_A3, -Name, -IPCC, -IPCC_description) %>%
-      mutate(Non.CO2 = 'NMVOC')->
+      mutate(Non.CO2 = "NMVOC")->
       EDGAR_VOC
     get_data(all_data, "emissions/EDGAR_NOx") %>%
       gather(year, value, -`IPCC-Annex`, -`World Region`, -ISO_A3, -Name, -IPCC, -IPCC_description) %>%
-      mutate(Non.CO2 = 'NOx')->
+      mutate(Non.CO2 = "NOx")->
       EDGAR_NOx
     get_data(all_data, "emissions/EDGAR_SO2") %>%
       gather(year, value, -`IPCC-Annex`, -`World Region`, -ISO_A3, -Name, -IPCC, -IPCC_description) %>%
-      mutate(Non.CO2 = 'SO2')->
+      mutate(Non.CO2 = "SO2")->
       EDGAR_SO2
     get_data(all_data, "emissions/EDGAR_CO") %>%
       gather(year, value, -`IPCC-Annex`, -`World Region`, -ISO_A3, -Name, -IPCC, -IPCC_description) %>%
-      mutate(Non.CO2 = 'CO')->
+      mutate(Non.CO2 = "CO")->
       EDGAR_CO
 
-     ### Perform computations  ###
+    ### Perform computations  ###
 
-     # First: Compute subsector share of sectoral emissions using EPA data
+    # First: Compute subsector share of sectoral emissions using EPA data
 
-     EPA_Ind %>%
-       left_join(EPA_tech, by = "Source_Category") %>%
-       rename(subsector = fuel) %>%
-       select(-EPA_Source_Category_Raw, -Source_Category) %>%   # Remove unnecessary columns
-       unique(.) %>%
-       gather(Non.CO2, value, -sector, -subsector) %>%  # make a new column called Non.co2
-       na.omit() %>%  # delete rows with NAs
-       group_by(sector, subsector, Non.CO2) %>% # group by sector, subsector and Non.CO2
-       summarise(x = sum(value)) -> # sum the values
-       L131.EPA_nonco2_indproc.mlt
+    EPA_Ind %>%
+      left_join(EPA_tech, by = "Source_Category") %>%
+      rename(subsector = fuel) %>%
+      select(-EPA_Source_Category_Raw, -Source_Category) %>%   # Remove unnecessary columns
+      unique() %>%
+      gather(Non.CO2, value, -sector, -subsector) %>%  # make a new column called Non.co2
+      na.omit() %>%  # delete rows with NAs
+      group_by(sector, subsector, Non.CO2) %>% # group by sector, subsector and Non.CO2
+      summarise(x = sum(value)) -> # sum the values
+      L131.EPA_nonco2_indproc.mlt
 
-     # Second: Compute share of sectoral emissions in each subsector using EPA data
-     GCAM_sector_tech %>%
-       select(supplysector, subsector, stub.technology, EPA_agg_sector, EPA_agg_fuel_ghg, EDGAR_agg_sector) %>%
-       filter(EDGAR_agg_sector %in% c("industry_processes", "chemicals", "landfills", "wastewater","aerosols",
-                                      "metals","foams","solvents", "semiconductors")) %>%
-       repeat_add_columns(tibble::tibble(Non.CO2 = c("CH4","N2O","NMVOC","NOx","SO2","CO","VOC"))) ->
-       L131.nonco2_pct_R_prc_S_S_2005
+    # Second: Compute share of sectoral emissions in each subsector using EPA data
+    GCAM_sector_tech %>%
+      select(supplysector, subsector, stub.technology, EPA_agg_sector, EPA_agg_fuel_ghg, EDGAR_agg_sector) %>%
+      filter(EDGAR_agg_sector %in% c("industry_processes", "chemicals", "landfills", "wastewater", "aerosols",
+                                     "metals", "foams", "solvents", "semiconductors")) %>%
+      repeat_add_columns(tibble(Non.CO2 = c("CH4", "N2O", "NMVOC", "NOx", "SO2", "CO", "VOC"))) ->
+      L131.nonco2_pct_R_prc_S_S_2005
 
-     # Third: Group by and then join by sector, subsector, and Non.CO2.  However, to join the columns they have to have
-     # the same name. Rename column to tech_emissions. Tech_emissions is the sum and tech_share is the tech_emissions/sector_emissions
-     L131.nonco2_pct_R_prc_S_S_2005 %>%
-       group_by(EPA_agg_sector, EPA_agg_fuel_ghg, Non.CO2) %>%
-       left_join(L131.EPA_nonco2_indproc.mlt, by = c(EPA_agg_sector = "sector", EPA_agg_fuel_ghg = "subsector","Non.CO2")) %>%
-       rename(tech_emissions = x) %>%
-       mutate(tech_emissions = if_else(is.na(tech_emissions),1,tech_emissions)) ->
-       L131.nonco2_pct_R_prc_S_S_2005
+    # Third: Group by and then join by sector, subsector, and Non.CO2.  However, to join the columns they have to have
+    # the same name. Rename column to tech_emissions. Tech_emissions is the sum and tech_share is the tech_emissions/sector_emissions
+    L131.nonco2_pct_R_prc_S_S_2005 %>%
+      group_by(EPA_agg_sector, EPA_agg_fuel_ghg, Non.CO2) %>%
+      left_join(L131.EPA_nonco2_indproc.mlt, by = c(EPA_agg_sector = "sector", EPA_agg_fuel_ghg = "subsector", "Non.CO2")) %>%
+      rename(tech_emissions = x) %>%
+      mutate(tech_emissions = if_else(is.na(tech_emissions), 1, tech_emissions)) ->
+      L131.nonco2_pct_R_prc_S_S_2005
 
-     L131.nonco2_pct_R_prc_S_S_2005 %>%
-       group_by(EPA_agg_sector, Non.CO2) %>% # group by sector, and Non CO2
-       summarise(tech_emissions = sum(tech_emissions)) ->
-       L131.nonco2_gg_R_prc_S_2005
+    L131.nonco2_pct_R_prc_S_S_2005 %>%
+      group_by(EPA_agg_sector, Non.CO2) %>% # group by sector, and Non CO2
+      summarise(tech_emissions = sum(tech_emissions)) ->
+      L131.nonco2_gg_R_prc_S_2005
 
+    L131.nonco2_pct_R_prc_S_S_2005 %>%
+      group_by(EPA_agg_sector, Non.CO2) %>%
+      left_join(L131.nonco2_gg_R_prc_S_2005, by = c("EPA_agg_sector", "Non.CO2")) %>%
+      rename(sector_emissions = tech_emissions.y) %>% # sector emisisons from thr join
+      rename(tech_emissions = tech_emissions.x) %>%
+      mutate(tech_share = tech_emissions/sector_emissions) ->
+      L131.nonco2_pct_R_prc_S_S_2005
 
-     L131.nonco2_pct_R_prc_S_S_2005 %>%
-       group_by(EPA_agg_sector, Non.CO2) %>%
-       left_join(L131.nonco2_gg_R_prc_S_2005, by = c("EPA_agg_sector", "Non.CO2")) %>%
-       rename(sector_emissions = tech_emissions.y ) %>% # sector emisisons from thr join
-       rename(tech_emissions = tech_emissions.x) %>%
-       mutate(tech_share = tech_emissions/sector_emissions) ->
-       L131.nonco2_pct_R_prc_S_S_2005
+    # Fourth: Disaggregate EDGAR emissions to subsectors
+    # First aggregate all EDGAR data and subset for processing sectors
 
-     # Fourth: Disaggregate EDGAR emissions to subsectors
-     # First aggregate all EDGAR data and subset for processing sectors
+    # filter out years 2009 and 2010 in EDGAR_VOC
+    EDGAR_VOC %>%
+      filter(year!= "2009" & year != "2010") ->
+      EDGAR_VOC
 
-     #filter out years 2009 and 2010 in EDGAR_VOC
-     EDGAR_VOC %>%
-       filter(year!= "2009" & year != "2010") ->
-       EDGAR_VOC
+    # combine all of the nonco2s together in one file
+    bind_rows(EDGAR_CH4, EDGAR_N2O, EDGAR_VOC, EDGAR_NOx, EDGAR_SO2, EDGAR_CO, EDGAR_NH3) %>%
+      left_join(EDGAR_sector, by = c("IPCC_description", "IPCC")) %>%
+      rename(EDGAR_agg_sector = agg_sector) %>%
+      left_join(distinct(EDGAR_nation), by = "ISO_A3") %>%
+      left_join(iso_GCAM_regID, by = "iso") %>%
+      filter(EDGAR_agg_sector %in% c("industry_processes", "chemicals", "landfills", "wastewater", "aerosols",
+                                     "metals", "foams", "solvents", "semiconductors")) %>%
+      select(year,value, Non.CO2, EDGAR_agg_sector, GCAM_region_ID) %>%
+      na.omit()  %>%  # delete rows with NA's
+      group_by(year, Non.CO2, EDGAR_agg_sector, GCAM_region_ID) %>%
+      summarise(EDGAR_emissions = sum(value)) %>%
+      mutate(EDGAR_emissions = EDGAR_emissions * CONV_GG_TG) -> # convert from gg to tg
+      L131.EDGAR.mlt
 
-     # combine all of the nonco2s together in one file
-       bind_rows(EDGAR_CH4, EDGAR_N2O, EDGAR_VOC, EDGAR_NOx, EDGAR_SO2, EDGAR_CO, EDGAR_NH3) %>%
-       left_join(EDGAR_sector, by = c("IPCC_description", "IPCC")) %>%
-       rename(EDGAR_agg_sector = agg_sector) %>%
-       left_join(distinct(EDGAR_nation), by = "ISO_A3") %>%
-       left_join(iso_GCAM_regID, by = "iso") %>%
-       filter(EDGAR_agg_sector %in% c("industry_processes", "chemicals", "landfills", "wastewater","aerosols",
-                                "metals","foams","solvents", "semiconductors")) %>%
-       select(year,value, Non.CO2, EDGAR_agg_sector, GCAM_region_ID) %>%
-       na.omit()  %>%  # delete rows with NA's
-       group_by(year, Non.CO2, EDGAR_agg_sector, GCAM_region_ID) %>%
-       summarise(EDGAR_emissions = sum(value)) %>%
-       mutate(EDGAR_emissions = EDGAR_emissions * CONV_GG_TG) -> # convert from gg to tg
-       L131.EDGAR.mlt
+    L131.EDGAR.mlt$GCAM_region_ID <- as.integer(L131.EDGAR.mlt$GCAM_region_ID)
+    L131.EDGAR.mlt$year <- as.integer(L131.EDGAR.mlt$year)
 
-     L131.EDGAR.mlt$GCAM_region_ID <- as.integer(L131.EDGAR.mlt$GCAM_region_ID)
-     L131.EDGAR.mlt$year <- as.integer(L131.EDGAR.mlt$year)
-
-     # Fifth: map in all data and compute emissions (EDGAR_emissions * tech_share)
-     GCAM_sector_tech %>%
-       select(supplysector, subsector, stub.technology, EDGAR_agg_sector, EPA_agg_sector, EPA_agg_fuel_ghg) %>%
-       filter(EDGAR_agg_sector %in% c("industry_processes" ,"chemicals", "landfills", "wastewater", "aerosols",
-                                      "metals", "foams", "solvents", "semiconductors")) %>%
-       repeat_add_columns(tibble::tibble(Non.CO2 = c("CH4","N2O","NMVOC","NOx","SO2","CO","VOC"))) %>%
-       group_by(supplysector, subsector, stub.technology, Non.CO2) %>%
-       left_join(L131.nonco2_pct_R_prc_S_S_2005, by = c("supplysector", "subsector", "stub.technology",
-                                                        "Non.CO2", "EPA_agg_sector", "EDGAR_agg_sector", "EPA_agg_fuel_ghg")) %>%
-       repeat_add_columns(tibble::tibble(year = c(emissions.EDGAR_YEARS))) %>%
-       repeat_add_columns(tibble::tibble(GCAM_region_ID = c(GCAM_region_names$GCAM_region_ID))) %>%
-       group_by(GCAM_region_ID, EDGAR_agg_sector, Non.CO2, year) %>%
-       left_join(L131.EDGAR.mlt, by = c("GCAM_region_ID","EDGAR_agg_sector","Non.CO2", "year")) %>%
-       na.omit() %>%  # delete rows with NA's
-       mutate(input.emissions = EDGAR_emissions * tech_share) %>%
-       select(-sector_emissions, -tech_emissions) %>%
+    # Fifth: map in all data and compute emissions (EDGAR_emissions * tech_share)
+    GCAM_sector_tech %>%
+      select(supplysector, subsector, stub.technology, EDGAR_agg_sector, EPA_agg_sector, EPA_agg_fuel_ghg) %>%
+      filter(EDGAR_agg_sector %in% c("industry_processes" , "chemicals", "landfills", "wastewater", "aerosols",
+                                     "metals", "foams", "solvents", "semiconductors")) %>%
+      repeat_add_columns(tibble(Non.CO2 = c("CH4", "N2O", "NMVOC", "NOx", "SO2", "CO", "VOC"))) %>%
+      group_by(supplysector, subsector, stub.technology, Non.CO2) %>%
+      left_join(L131.nonco2_pct_R_prc_S_S_2005,
+                by = c("supplysector", "subsector", "stub.technology",
+                       "Non.CO2", "EPA_agg_sector", "EDGAR_agg_sector", "EPA_agg_fuel_ghg")) %>%
+      repeat_add_columns(tibble(year = emissions.EDGAR_YEARS)) %>%
+      repeat_add_columns(tibble(GCAM_region_ID = GCAM_region_names$GCAM_region_ID)) %>%
+      group_by(GCAM_region_ID, EDGAR_agg_sector, Non.CO2, year) %>%
+      left_join(L131.EDGAR.mlt, by = c("GCAM_region_ID", "EDGAR_agg_sector", "Non.CO2", "year")) %>%
+      na.omit() %>%  # delete rows with NA's
+      mutate(input.emissions = EDGAR_emissions * tech_share) %>%
+      select(-sector_emissions, -tech_emissions) %>%
       group_by(GCAM_region_ID, supplysector, subsector, stub.technology, Non.CO2, year) %>%
-       summarise(value = sum(input.emissions)) ->
-       L131.nonco2_tg_R_prc_S_S_Yh
+      summarise(value = sum(input.emissions)) ->
+      L131.nonco2_tg_R_prc_S_S_Yh
 
-     # in order to match old data we have to turn the data in wide format
-     # which introduces NA's that are converted to 0. Then we can convert back to long format.
+    # in order to match old data we have to turn the data in wide format
+    # which introduces NA's that are converted to 0. Then we can convert back to long format.
 
-     L131.nonco2_tg_R_prc_S_S_Yh %>%
-       spread(year, value) %>%
-       gather( year, value, -GCAM_region_ID, -supplysector, -subsector, -stub.technology, -Non.CO2) %>%
-       mutate(value = if_else(is.na(value),0,value)) %>%
+    L131.nonco2_tg_R_prc_S_S_Yh %>%
+      spread(year, value) %>%
+      gather( year, value, -GCAM_region_ID, -supplysector, -subsector, -stub.technology, -Non.CO2) %>%
+      mutate(value = if_else(is.na(value), 0, value)) %>%
 
       # Produce outputs\
       add_title("GHG emissions by GCAM region / sector / technology / historical year") %>%
       add_units("Tg") %>%
-      add_comments("Calculate historical emissions from the processing sector by GCAM,") %>%
+      add_comments("Calculate historical emissions from the processing sector by GCAM, ") %>%
       add_comments(" technology computed from EDGAR emissions data and EPA emissions factors.") %>%
       add_legacy_name("L131.nonco2_tg_R_prc_S_S_Yh") %>%
       add_precursors("common/GCAM_region_names",
