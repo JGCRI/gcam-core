@@ -18,11 +18,11 @@ the generated outputs: \code{L152.ag_irrHA_bm2_R_C_GLU}, \code{L152.ag_rfdHA_bm2
 original data system was \code{LB152.ag_GTAP_R_C_GLU_irr.R} (aglu level1).
 }
 \description{
-Briefly describe what this chunk does.
+Aggregate the irrigated/rainfed harvest area and production data by GCAM region / commodity / GLU.
 }
 \details{
-Describe in detail what this chunk does.
+This chunk aggregates the irrigated/rainfed harvest area and production data from country and GTAP crop to GCAM region and commodity by each GLU.
 }
 \author{
-YourInitials CurrentMonthName 2017
+RC May 2017
 }
