@@ -9,7 +9,7 @@
 #' the generated outputs: \code{L152.MAC_pct_R_S_Proc_EPA}. The corresponding file in the
 #' original data system was \code{L152.MACC.R} (emissions level1).
 #' @details Create Marginal abatement cost curves, in percent reduction by 1990 USD costs from EPA cost curves.
-#' Chose between 2020 or 2030 data in constants file - emissions.EPA_MACC_YEAR.
+#' Choose between 2020 or 2030 data in constants file - emissions.EPA_MACC_YEAR.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -32,9 +32,12 @@ module_emissions_L152.MACC <- function(command, ...) {
     EPA_MACC_2030_MtCO2e <- get_data(all_data, "emissions/EPA_MACC_2030_MtCO2e")
 
     # Assign MACC data based on MACC curve year assumption (emissions.EPA_MACC_YEAR)
-    if( emissions.EPA_MACC_YEAR == 2020 ) EPA_MACC_MtCO2e <- EPA_MACC_2020_MtCO2e
-    if( emissions.EPA_MACC_YEAR == 2030 ) EPA_MACC_MtCO2e <- EPA_MACC_2030_MtCO2e
-    if( !emissions.EPA_MACC_YEAR %in% c( 2020, 2030 ) ) stop( "MAC curve year needs to be either 2020 or 2030" )
+    if( emissions.EPA_MACC_YEAR %in% c( 2020, 2030 )) {
+        if( emissions.EPA_MACC_YEAR == 2020 ) EPA_MACC_MtCO2e <- EPA_MACC_2020_MtCO2e
+        if( emissions.EPA_MACC_YEAR == 2030 ) EPA_MACC_MtCO2e <- EPA_MACC_2030_MtCO2e
+    } else{
+      stop( "MAC curve year needs to be either 2020 or 2030" )
+      }
 
     # Make processes and region names consistent
     EPA_MACC_baselines_MtCO2e <- EPA_MACC_baselines_MtCO2e_in %>%
@@ -46,31 +49,35 @@ module_emissions_L152.MACC <- function(command, ...) {
     EPA_MACC_MtCO2e <- EPA_MACC_MtCO2e %>%
       mutate(Process = sub( "\\&", "and", Process ))
 
-    # Convert MAC cureves to long form
+    # Convert MAC curves to long form
     # Convert from 2010$/tCO2e to 1990$/tC
     L152.EPA_MACC_MtCO2e <- EPA_MACC_MtCO2e %>%
-      gather(cost_2010USD_tCO2e,reduction_MtCO2e, -Sector, -Process, -EPA_region, -EPA_region_code) %>%
+      gather(cost_2010USD_tCO2e, reduction_MtCO2e, -Sector, -Process, -EPA_region, -EPA_region_code) %>%
       mutate(cost_2010USD_tCO2e = as.numeric(cost_2010USD_tCO2e)) %>%
       mutate(cost_1990USD_tCe = round(cost_2010USD_tCO2e * emissions.CONV_C_CO2 * gdp_deflator(1990, base_year = 2010), 0)) %>%
       select(-cost_2010USD_tCO2e)
 
-    # For in baseline and abatement data:
-    # Merge aluminum and magnesium processes
-    # Put in long form
+    # For in abatement and basebline data:
+    # Combine aluminum and magnesium processes: define function, then call in both instances
+    combine_Al_Mg <- function(x){
+      x %>%
+        mutate(Process = sub("Primary Aluminum Production", "Aluminum and Magnesium Production", Process)) %>%
+        mutate(Process = sub("Magnesium Manufacturing", "Aluminum and Magnesium Production", Process))
+     }
+
+    # Abatement data
     L152.EPA_MACC_MtCO2e <- L152.EPA_MACC_MtCO2e %>%
-      ungroup() %>%
-      mutate(Process = sub( "Primary Aluminum Production", "Aluminum and Magnesium Production", Process )) %>%
-      mutate(Process = sub( "Magnesium Manufacturing", "Aluminum and Magnesium Production", Process )) %>%
+      ungroup %>%
+      combine_Al_Mg %>%
       group_by(Sector, Process, EPA_region, EPA_region_code, cost_1990USD_tCe) %>%
       summarize_at(vars(reduction_MtCO2e), sum)
 
-    # Repeat same operation on baseline curve
+    # Baseline data
     # Also filter for only EPA MACC year
     L152.EPA_MACC_baselines_MtCO2e <- EPA_MACC_baselines_MtCO2e %>%
-      mutate(Process = sub( "Primary Aluminum Production", "Aluminum and Magnesium Production", Process )) %>%
-      mutate(Process = sub( "Magnesium Manufacturing", "Aluminum and Magnesium Production", Process )) %>%
+      combine_Al_Mg %>%
       gather(year, baseline_MtCO2e, -Sector, -Process, -EPA_region) %>%
-      mutate_at(vars(year), funs(as.integer)) %>%
+      mutate(year = as.integer(year)) %>%
       filter( year == emissions.EPA_MACC_YEAR) %>%
       group_by(Sector, Process, EPA_region) %>%
       summarize_at(vars(baseline_MtCO2e), sum)
@@ -94,7 +101,7 @@ module_emissions_L152.MACC <- function(command, ...) {
     L152.MAC_pct_R_S_Proc_EPA <- L152.EPA_MACC_percent_MtCO2e %>%
       select(Sector, Process, EPA_region) %>%
       unique %>%
-      repeat_add_columns(tibble::tibble( cost_1990USD_tCe = emissions.MAC_TAXES )) %>%
+      repeat_add_columns(tibble( cost_1990USD_tCe = emissions.MAC_TAXES )) %>%
       left_join_error_no_match(L152.EPA_MACC_percent_MtCO2e,
                                by = c("Sector", "Process", "EPA_region", "cost_1990USD_tCe")) %>%
       spread(cost_1990USD_tCe, reduction_pct )
