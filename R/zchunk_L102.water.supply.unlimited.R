@@ -1,6 +1,6 @@
 #' module_water_L102.water.supply.unlimited
 #'
-#' This file summarizes the water price values by water type and GCAM region.
+#' Summarize the water price values by water type and GCAM region.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -13,7 +13,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author MH May 2017
-
 module_water_L102.water.supply.unlimited <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
@@ -53,7 +52,7 @@ module_water_L102.water.supply.unlimited <- function(command, ...) {
     L102.all_region_water_type %>%
       add_title("Water price data for different water types") %>%
       add_units("$/m3") %>%
-      add_comments("nominal default water prices") %>%
+      add_comments("Nominal default water prices") %>%
       add_legacy_name("L102.unlimited_water_price_R_W_Y_75USDm3") %>%
       add_precursors("common/GCAM_region_names", "water/A_unlimited_water_price") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
