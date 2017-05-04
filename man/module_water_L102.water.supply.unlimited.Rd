@@ -18,7 +18,7 @@ the generated outputs: \code{L102.unlimited_water_price_R_W_Y_75USDm3}. The corr
 original data system was \code{L102.water.supply.unlimited.R} (water level1).
 }
 \description{
-This file summarizes the water price values by water type and GCAM region.
+Summarize the water price values by water type and GCAM region.
 }
 \details{
 We generate all the possible combinations between the 32 GCAM regions, 4 water types, and all the defined years.
