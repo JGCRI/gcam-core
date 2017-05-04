@@ -30,7 +30,9 @@ module_data_Maddison_population <- function(command, ...) {
       select(-deleteme) %>%
       gather(year, value, -Country) %>%
       # Remove all the blanks and "Total..." lines
-      filter(!is.na(value), substr(Country, 1, 5) != "Total", !is.na(Country)) %>%
+      filter(!is.na(value),
+             !(substr(Country, 1, 5) == "Total" & Country != "Total Former USSR"),
+             !is.na(Country)) %>%
       add_title("Angus Maddison historical population by nation from 1500") %>%
       add_units("people") %>%
       add_comments(paste("Read from", gsub("^.*extdata", "extdata", fqfn))) %>%
