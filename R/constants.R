@@ -153,9 +153,8 @@ emissions.EDGAR_YEARS <- 1971:2008
 # ======================================================================
 # Gas technologies
 
-GAS_TECH<- c( "gas (steam/CT)", "gas (CC)" )
+energy.GAS_TECH <- c( "gas (steam/CT)", "gas (CC)" )
 
-# ======================================================================
-# Small adjustment factor for elec efficienies
-ELEC_ADJ <- 0.03
+
+
 
