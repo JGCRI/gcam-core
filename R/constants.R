@@ -149,3 +149,13 @@ emissions.TST_TO_TG <- 0.000907 # Conversion from thousand short tons to Tg
 emissions.NH3_HISTORICAL_YEARS <- 1990:2002
 emissions.NH3_EXTRA_YEARS <- 1971:1989
 emissions.EDGAR_YEARS <- 1971:2008
+
+# ======================================================================
+# Gas technologies
+
+GAS_TECH<- c( "gas (steam/CT)", "gas (CC)" )
+
+# ======================================================================
+# Small adjustment factor for elec efficienies
+ELEC_ADJ <- 0.03
+
