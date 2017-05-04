@@ -55,7 +55,6 @@
 #include "climate/source/hector/headers/core/core.hpp"
 #include "climate/source/hector/headers/visitors/csv_outputstream_visitor.hpp"
 
-class Modeltime;
 class IVisitor;
 
 /*!
@@ -84,7 +83,7 @@ class IVisitor;
 class HectorModel: public IClimateModel {
 public:
     
-    HectorModel( const Modeltime* aModeltime );
+    HectorModel();
     
     // IClimateModel interface
     virtual void XMLParse( const xercesc::DOMNode* node );
@@ -112,13 +111,35 @@ public:
 
     // xml name
     static const std::string& getXMLNameStatic();
+protected:
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        IClimateModel,
+
+        //! A map of the gases Magicc can report out.
+        DEFINE_VARIABLE( SIMPLE, "output-gas-name-map", mOutputGasNameMap, std::map<std::string,int> ),
+        
+        //! Last year to record year-by-year climate
+        DEFINE_VARIABLE( SIMPLE, "hector-end-year", mHectorEndYear, int ),
+        
+        //! Last year to use historical emissions
+        DEFINE_VARIABLE( SIMPLE, "emissions-switch-year", mEmissionsSwitchYear, int ),
+
+        //! Last year the climate model has been run to
+        DEFINE_VARIABLE( SIMPLE, "last-calc-year", mLastYear, int ),
+
+        //! Hector initialization file
+        DEFINE_VARIABLE( SIMPLE, "hector-ini-file", mHectorIniFile, std::string ),
+
+        //! The year the carbon model should start running.
+        //! \note This is a GCAM carbon cycle parameter and does not really
+        //! have anything to do with hector.
+        DEFINE_VARIABLE( SIMPLE, "carbon-model-start-year", mCarbonModelStartYear, int )
+    )
 
 private:
 
-    //! Last year to record year-by-year climate
-    int mHectorEndYear;
-    //! Last year to use historical emissions
-    int mEmissionsSwitchYear;
 
     /* TODO: The gas lookup tables in this class have really
      * proliferated.  We should change them to vectors and include a
@@ -126,12 +147,6 @@ private:
      * obstacle to this is that a couple of the tables include the
      * unimplemented gasses (so that we are ready when they get
      * implemented in Hector). */
-  
-    // data members
-    int mLastYear;               //!< Last year the climate model has been run to
-
-    //! Hector initialization file
-    std::string mHectorIniFile;
     
     //! translation between GCAM names for gasses and Hector names.
     std::map<std::string, std::string> mHectorEmissionsMsg;
@@ -170,9 +185,6 @@ private:
     //! units (multiply GCAM's value by this to get the hector value)
     std::map<std::string, double> mUnitConvFac;
 
-    //! pointer to the GCAM modeltime object
-    const Modeltime* mModeltime;
-
     //! Hector core object
     std::auto_ptr<Hector::Core> mHcore;
 
@@ -182,11 +194,6 @@ private:
     //! output stream visitor
     std::auto_ptr<Hector::CSVOutputStreamVisitor> mHosv;
     
-    //! The year the carbon model should start running.
-    //! \note This is a GCAM carbon cycle parameter and does not really
-    //! have anything to do with hector.
-    int mCarbonModelStartYear;
-
     // private functions
     
     //! reset the Hector GCAM component and the Hector model for a new run
