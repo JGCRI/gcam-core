@@ -17,8 +17,8 @@
 module_energy_LA126.distribution_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "energy/calibrated_techs",
-             "L1011.en_bal_EJ_R_Si_Fi_Yh",
-             "L122.out_EJ_R_gasproc_F_Yh",
+             FILE = "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh",
+             FILE = "temp-data-inject/L122.out_EJ_R_gasproc_F_Yh",
              "L123.out_EJ_R_elec_F_Yh",
              "L123.out_EJ_R_indchp_F_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -37,8 +37,8 @@ module_energy_LA126.distribution_DISABLED <- function(command, ...) {
 
     # Load required inputs
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
-    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
-    L122.out_EJ_R_gasproc_F_Yh <- get_data(all_data, "L122.out_EJ_R_gasproc_F_Yh")
+    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh")
+    L122.out_EJ_R_gasproc_F_Yh <- get_data(all_data, "temp-data-inject/L122.out_EJ_R_gasproc_F_Yh")
     L123.out_EJ_R_elec_F_Yh <- get_data(all_data, "L123.out_EJ_R_elec_F_Yh")
     L123.out_EJ_R_indchp_F_Yh <- get_data(all_data, "L123.out_EJ_R_indchp_F_Yh")
 
@@ -155,7 +155,9 @@ module_energy_LA126.distribution_DISABLED <- function(command, ...) {
       add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L126.IO_R_gaspipe_F_Yh
 
-    return_data(L126.in_EJ_R_elecownuse_F_Yh, L126.out_EJ_R_elecownuse_F_Yh, L126.IO_R_elecownuse_F_Yh, L126.in_EJ_R_electd_F_Yh, L126.out_EJ_R_electd_F_Yh, L126.IO_R_electd_F_Yh, L126.in_EJ_R_gaspipe_F_Yh, L126.out_EJ_R_gaspipe_F_Yh, L126.IO_R_gaspipe_F_Yh)
+    return_data(L126.in_EJ_R_elecownuse_F_Yh, L126.out_EJ_R_elecownuse_F_Yh, L126.IO_R_elecownuse_F_Yh,
+                L126.in_EJ_R_electd_F_Yh, L126.out_EJ_R_electd_F_Yh, L126.IO_R_electd_F_Yh,
+                L126.in_EJ_R_gaspipe_F_Yh, L126.out_EJ_R_gaspipe_F_Yh, L126.IO_R_gaspipe_F_Yh)
   } else {
     stop("Unknown command")
   }
