@@ -47,32 +47,69 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
     enduse_fuel_aggregation <- get_data(all_data, "energy/enduse_fuel_aggregation")
     UCD_ctry <- get_data(all_data, "energy/mappings/UCD_ctry")
     UCD_techs <- get_data(all_data, "energy/mappings/UCD_techs")
-
-    # Russell - it looks like skeleton script got messed up on next line
-    # Probably a loop in original file that loads stuff dynamically
-    UCD_trn_data_ <- get_data(all_data,  paste0("energy/UCD_trn_data_",energy.TRN_SSP))
-    L101.in_EJ_ctry_trn_Fi_Yh <- get_data(all_data, "temp-data-inject/L101.in_EJ_ctry_trn_Fi_Yh")
-    L1011.in_EJ_ctry_intlship_TOT_Yh <- get_data(all_data, "temp-data-inject/L1011.in_EJ_ctry_intlship_TOT_Yh")
-    L131.in_EJ_R_Senduse_F_Yh <- get_data(all_data, "temp-data-inject/L131.in_EJ_R_Senduse_F_Yh")
-    L100.Pop_thous_ctry_Yh <- get_data(all_data, "temp-data-inject/L100.Pop_thous_ctry_Yh")
+    UCD_trn_data <- get_data(all_data,  paste0("energy/UCD_trn_data_",energy.TRN_SSP)) %>%
+      # Might want to gather in a different way
+      gather(year, value, `2005`:`2095`)
+    L101.in_EJ_ctry_trn_Fi_Yh <- get_data(all_data, "temp-data-inject/L101.in_EJ_ctry_trn_Fi_Yh") %>%
+      # temp-data-inject code
+      gather(year, value, starts_with("X")) %>%
+      mutate(year = as.integer(substr(year,2,5)))
+    L1011.in_EJ_ctry_intlship_TOT_Yh <- get_data(all_data, "temp-data-inject/L1011.in_EJ_ctry_intlship_TOT_Yh") %>%
+      # temp-data-inject code
+      gather(year, value, starts_with("X")) %>%
+      mutate(year = as.integer(substr(year,2,5)))
+    L131.in_EJ_R_Senduse_F_Yh <- get_data(all_data, "temp-data-inject/L131.in_EJ_R_Senduse_F_Yh") %>%
+      # temp-data-inject code
+      gather(year, value, starts_with("X")) %>%
+      mutate(year = as.integer(substr(year,2,5)))
+    L100.Pop_thous_ctry_Yh <- get_data(all_data, "temp-data-inject/L100.Pop_thous_ctry_Yh") %>%
+      # temp-data-inject code
+      gather(year, value, starts_with("X")) %>%
+      mutate(year = as.integer(substr(year,2,5)))
 
     # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
+    # 2. Perform computations
+    # Part 1: downscaling country-level transportation energy data to UCD transportation technologies"
+    # NOTE: We are currently aggregating IEA's data on rail and road due to inconsistencies (e.g. no rail in the Middle East)
+
+    # First, replace the international shipping data (swapping in EIA for IEA)
+    # Only perform this swap for international shipping / refined liquids, and in countries in the EIA database
+    L154.in_EJ_ctry_trn_Fi_Yh <- L101.in_EJ_ctry_trn_Fi_Yh %>%
+      # left_join used here because we only want to replace certain values
+      left_join(L1011.in_EJ_ctry_intlship_TOT_Yh %>% rename(EIA_value = value), by = c("iso","year")) %>%
+      mutate(value = if_else(sector == "in_trn_international ship" &
+                               fuel == "refined liquids" &
+                               !is.na(EIA_value), EIA_value, value),
+             sector = sub("in_", "", sector)) %>%
+      select(-Country, -GCAM_region_ID, -EIA_value)
+
+    # Need to map sector to UCD_category, calibrated_techs_trn_agg data is too busy
+    UCD_category_mapping <- calibrated_techs_trn_agg %>% select(sector, UCD_category) %>% distinct
+
+    L154.in_EJ_ctry_trn_Fi_Yh <- L154.in_EJ_ctry_trn_Fi_Yh %>%
+      left_join_error_no_match(UCD_category_mapping, by = "sector") %>%
+      group_by(iso, UCD_category, fuel) %>%
+      summarise(value = sum(value))
+
+    # Aggregating UCD transportation database by the general categories used for the IEA transportation data
+    # These will be used to compute shares for allocation of energy to mode/technology/fuel within category/fuel
+    L154.in_PJ_Rucd_trn_m_sz_tech_F<- UCD_trn_data %>%
+      filter(variable == "energy") %>%
+      left_join_error_no_match(UCD_techs, by = c("UCD_sector", "mode", "size.class", "UCD_technology", "UCD_fuel"))
+
+    L154.in_PJ_Rucd_trn_Cat_F <- L154.in_PJ_Rucd_trn_m_sz_tech_F %>%
+      filter(year == energy.UCD_EN_YEAR) %>%
+      group_by(UCD_region, UCD_category, fuel) %>%
+      summarise(agg = sum(value))
+
+    # Match these energy quantities back into the complete table for computation of shares
+    L154.in_PJ_Rucd_trn_m_sz_tech_F <- L154.in_PJ_Rucd_trn_m_sz_tech_F %>%
+      left_join_error_no_match(L154.in_PJ_Rucd_trn_Cat_F, by = c("UCD_region", "UCD_category", "fuel")) %>%
+      # If the aggregate is 0 or value is NA, set share to 0, rather than NA
+      mutate(UCD_share = if_else(agg == 0 | is.na(value), 0, value/agg))
+
+    #Line 89
+
     # NOTE: This code uses vecpaste
     # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # NOTE: This code uses repeat_and_add_vector

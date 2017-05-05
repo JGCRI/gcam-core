@@ -80,6 +80,9 @@ energy.CDIAC_CO2_HISTORICAL_YEARS <- HISTORICAL_YEARS[HISTORICAL_YEARS < 2010]
 # Constant to select SSP database to use for transportation UCD
 energy.TRN_SSP <- "CORE"
 
+# UCD transportation year to use to compute shares for allocation of energy to mode/technology/fuel within category/fuel
+energy.UCD_EN_YEAR <- 2005
+
 
 ## ======================================================================
 ## Conversion constants.  The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
