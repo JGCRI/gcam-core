@@ -118,10 +118,10 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
         mutate(iso = if_else(iso == "scg", "mne", iso))
     }
 
-    #Extend population data to all years
+    # Extend population data to all years
     iso_list <- tibble(iso = L101.Pop_thous_GCAM3_ctry_Y$iso %>% unique())
-    all_years <- tibble(year = seq(1971,2100))
-    GCAM3_population_df <- repeat_add_columns(iso_list,all_years) %>%
+    all_years <- tibble(year = seq(1971, 2100))
+    GCAM3_population_df <- repeat_add_columns(iso_list, all_years) %>%
       left_join(L101.Pop_thous_GCAM3_ctry_Y, by = c("iso", "year")) %>%
       group_by(iso) %>%
       mutate(population = approx_fun(year,population) )
