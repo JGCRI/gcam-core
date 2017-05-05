@@ -216,9 +216,10 @@ find_csv_file <- function(filename, optional, quiet = FALSE) {
 #' @param chunkdata Named list of tibbles (data frames) to write
 #' @param write_inputs Write data that were read as inputs, not computed?
 #' @param outputs_dir Directory to save data into
+#' @param xml_dir Directory to save XML results into
 #' @importFrom assertthat assert_that
 save_chunkdata <- function(chunkdata, write_inputs = FALSE, outputs_dir =
-                             OUTPUTS_DIR) {
+                             OUTPUTS_DIR, xml_dir = XML_DIR) {
   assert_that(is_data_list(chunkdata))
   assert_that(!is.null(names(chunkdata)))
   assert_that(is.logical(write_inputs))
@@ -227,10 +228,14 @@ save_chunkdata <- function(chunkdata, write_inputs = FALSE, outputs_dir =
   # Create directory if necessary, and remove any previous outputs
   dir.create(outputs_dir, showWarnings = FALSE, recursive = TRUE)
   unlink(file.path(outputs_dir, "*.csv"))
+  dir.create(xml_dir, showWarnings = FALSE, recursive = TRUE)
+  unlink(file.path(xml_dir, "*.xml"))
 
   for(cn in names(chunkdata)) {
     cd <- chunkdata[[cn]]
     if(FLAG_XML %in% get_flags(cd)) {
+      # TODO: worry about absolute paths?
+      cd$xml_file <- file.path(xml_dir, cd$xml_file)
       run_xml_conversion(cd)
     } else if(!isTRUE(identical(NA, cd))) {   # NA means an optional file that wasn't found
 

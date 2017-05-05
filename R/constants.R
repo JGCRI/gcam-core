@@ -2,6 +2,7 @@
 # ======================================================================
 # General behavior constants
 OUTPUTS_DIR  <- "outputs/"
+XML_DIR      <- "xml/"
 COMMENT_CHAR <- "#"
 OLD_DATA_SYSTEM_BEHAVIOR <- TRUE
 
