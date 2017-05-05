@@ -34,56 +34,57 @@ module_water_L210.water.demand.primary <- function(command, ...) {
     A22.globaltech_coef <- get_data(all_data, "energy/A22.globaltech_coef")
     L110.water_demand_primary_R_S_W_m3_GJ <- get_data(all_data, "L110.water_demand_primary_R_S_W_m3_GJ")
 
-    # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    A21.globaltech_coef %>% select(supplysector,subsector,technology) -> A21.tmp1
-    A22.globaltech_coef %>% filter( grepl('nuclear', supplysector)) %>% select(supplysector,subsector,technology) -> A22.tmp
-    A21.A22.tmp <- rbind(A21.tmp1,A22.tmp)
-    L210.TechCoef.v1 <- merge(L110.water_demand_primary_R_S_W_m3_GJ,A21.A22.tmp,by="supplysector")
-
-    # L210.TechCoef.v1 %>% filter( grepl('nuclear', supplysector))
-
-    # Avoid double acounting unconventional oil in the regional oil sector as it is already
-    # accounted for in unconventional oil production.
-    dontuse1 <- data.frame(supp=c("regional oil"))
-    dontuse2 <- data.frame(subs=c("unconventional oil"))
-    L210.TechCoef.v1  %>% filter(!(supplysector %in% dontuse1$supp & subsector %in% dontuse2$subs)) -> L210.TechCoef.v2
-    L210.TechCoef.v2 %>% mutate(water_sector ="mining") -> L210.TechCoef.v3
+      # ===================================================
+      # TRANSLATED PROCESSING CODE GOES HERE...
+      #
+      A21.globaltech_coef %>% select(supplysector,subsector,technology) -> A21.tmp1
+      A22.globaltech_coef %>% filter( grepl('nuclear', supplysector)) %>% select(supplysector,subsector,technology) -> A22.tmp
+      A21.A22.tmp <- bind_rows(A21.tmp1,A22.tmp)
+      left_join(L110.water_demand_primary_R_S_W_m3_GJ, A21.A22.tmp, by="supplysector") -> L210.TechCoef.v1
 
 
+      # Avoid double acounting unconventional oil in the regional oil sector as it is already
+      # accounted for in unconventional oil production.
+      dontuse1 <- tibble(supp=c("regional oil"))
+      dontuse2 <- tibble(subs=c("unconventional oil"))
+
+      L210.TechCoef.v1  %>%
+        filter(!(supplysector %in% dontuse1$supp & subsector %in% dontuse2$subs)) %>%
+        mutate(water_sector = "Mining") %>%
+        mutate(minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector)) %>%
+        # Add in GCAM region names
+        left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+        mutate(market.name=region) -> L210.TechCoef.v2
+
+      L210.orig_num_rows <- nrow( L210.TechCoef.v2 )
+      L210.TechCoef.v2[rep( 1:L210.orig_num_rows, times=length( MODEL_YEARS ) ),] %>%
+        mutate(year = MODEL_YEARS[sort(rep(1:length(MODEL_YEARS), times=L210.orig_num_rows))]) %>%
+        select( one_of(names_TechCoef) ) -> results
+
+      #########
+      #below is for checking the consistency of output from the old and new data system
+      #arrange(results,region,year,coefficient)
 
 
-    ############################
-    #old data system
-    #############################
-    L210.TechCoef$minicam.energy.input <- get_water_inputs_for_mapping( L210.TechCoef, A03.sector )
-    L210.TechCoef <- merge( L210.TechCoef, GCAM_region_names )
-    L210.TechCoef$market.name <- L210.TechCoef[[reg]]
-    # Set the coef for all years
-    L210.orig_num_rows <- nrow( L210.TechCoef )
-    L210.TechCoef <- L210.TechCoef[ rep( 1:nrow( L210.TechCoef ), times=length( model_years ) ), ]
-    L210.TechCoef$year <- model_years[ sort( rep( 1:length( model_years ), times=L210.orig_num_rows ) ) ]
-    L210.TechCoef <- L210.TechCoef[, names_TechCoef ]
+      # If you find a mistake/thing to update in the old code and
+      # fixing it will change the output data, causing the tests to fail,
+      # (i) open an issue on GitHub, (ii) consult with colleagues, and
+      # then (iii) code a fix:
+      #
+      # if(OLD_DATA_SYSTEM_BEHAVIOR) {
+      #   ... code that replicates old, incorrect behavior
+      # } else {
+      #   ... new code with a fix
+      # }
+      #
+      #
+      # NOTE: there are `merge` calls in this code. Be careful!
+      # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
+      # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
+      # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
+      # ===================================================
 
 
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are `merge` calls in this code. Be careful!
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # ===================================================
 
     # Produce outputs
     # Temporary code below sends back empty data frames marked "don't test"
@@ -97,7 +98,7 @@ module_water_L210.water.demand.primary <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L210.TechCoef") %>%
       add_precursors("common/GCAM_region_names", "water/A03.sector", "energy/A21.globaltech_coef",
-                      "energy/A22.globaltech_coef","L110.water_demand_primary_R_S_W_m3_GJ")                      %>%
+                     "energy/A22.globaltech_coef","L110.water_demand_primary_R_S_W_m3_GJ")                      %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L210.TechCoef

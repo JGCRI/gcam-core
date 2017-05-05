@@ -20,6 +20,16 @@ FLAG_PROTECT_FLOAT <- "FLAG_PROTECT_FLOAT"
 HISTORICAL_YEARS <- 1971:2010
 FUTURE_YEARS <- seq(2015, 2100, 5)
 IMF_GDP_YEARS <- 2010:2020
+BASE_YEARS <- c(1975, 1990, 2005, 2010)
+MODEL_YEARS <- c(BASE_YEARS, FUTURE_YEARS)
+
+
+#Technologies name
+names_Tech <- c( "region", "supplysector", "subsector", "technology" )
+names_TechYr <- c( names_Tech, "year" )
+input <- c("minicam.energy.input")
+names_TechCoef <- c( names_TechYr, input, "coefficient", "market.name" )
+
 
 # ======================================================================
 # GCAM constants
