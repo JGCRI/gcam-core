@@ -14,6 +14,7 @@ FLAG_NO_XYEAR   <- "NO_XYEAR"
 FLAG_NO_TEST    <- "NO_TEST"
 FLAG_SUM_TEST   <- "FLAG_SUM_TEST"
 FLAG_PROTECT_FLOAT <- "FLAG_PROTECT_FLOAT"
+FLAG_XML <- "FLAG_XML"
 
 # ======================================================================
 # Time constants
