@@ -25,16 +25,22 @@ run_chunk <- function(chunk, all_data) {
 #' @param chunk_data Data produced by chunk
 #' @param chunk_inputs Names of chunk inputs, character
 #' @param promised_outputs Names of chunk's promised outputs, character
-check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_outputs) {
+#' @param outputs_xml Logical vector: are outputs XML?
+check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_outputs, outputs_xml) {
   assert_that(is_data_list(chunk_data))
 
   # Check that the chunk has provided required data for all objects
   empty_precursors <- TRUE
   for(obj in names(chunk_data)) {
-    assert_that(tibble::is.tibble(chunk_data[[obj]]))
-    for(at in c(ATTR_TITLE, ATTR_UNITS, ATTR_COMMENTS, ATTR_LEGACY_NAME)) {
-      if(is.null(attr(chunk_data[[obj]], at))) {
-        warning("No '", at, "' attached to ", obj, " - chunk ", chunk)
+    # Chunks have to returns tibbles, unless they're tagged as being XML
+    if(!outputs_xml[which(obj == promised_outputs)]) {
+      assert_that(tibble::is.tibble(chunk_data[[obj]]))
+
+      # Make sure objects have required attributes
+      for(at in c(ATTR_TITLE, ATTR_UNITS, ATTR_COMMENTS, ATTR_LEGACY_NAME)) {
+        if(is.null(attr(chunk_data[[obj]], at))) {
+          warning("No '", at, "' attached to ", obj, " - chunk ", chunk)
+        }
       }
     }
     # Data precursors should all appear in input list
@@ -137,7 +143,8 @@ driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE,
       if(!quiet) print(paste("- make", format(round(tdiff, 2), nsmall = 2)))
 
       check_chunk_outputs(chunk, chunk_data, input_names,
-                          promised_outputs = subset(chunkoutputs, name == chunk)$output)
+                          promised_outputs = subset(chunkoutputs, name == chunk)$output,
+                          outputs_xml = subset(chunkoutputs, name == chunk)$to_xml)
 
       # Add this chunk's data to the global data store
       all_data <- add_data(chunk_data, all_data)
