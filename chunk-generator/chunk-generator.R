@@ -342,7 +342,7 @@ batch_substitutions <- function(mibatch, patternfile = PATTERNFILE) {
     makeoutputs_string <- ""
   } else {
     header_quote <- paste0('"', batchdata$header, '"')
-    create_xml_string <- paste0("create_xml(\"xml/", batchdata$xml, "\")")
+    create_xml_string <- paste0("create_xml(\"", batchdata$xml, "\")")
     add_data_string <- paste0("add_xml_data(", paste(batchdata$data, header_quote, sep=","), ")")
     precursors_string <- paste0("add_precursors(",
                                                    paste(paste0('"', batchdata$data, '"'), collapse=","),
