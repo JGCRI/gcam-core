@@ -1,7 +1,6 @@
 # File: EPA_FCCC_IndProc_2005.csv,,,,,,,,,,,
-# Title: Sectoral Report for Energy,,,,,,,,,,,
-# Units: NA,,,,,,,,,,,
-# Comments:  I NEED TO FIND OUT WHAT THIS IS,,,,,,,,,,,
+# Title: Sectoral Report for total industrial energy emissions,,,,,,,,,,,
+# Units: Gg,,,,,,,,,,,
 # Source: GCAM3,,,,,,,,,,,
 EPA_Source_Category_Raw,Source_Category,CO2,CH4,N2O,HFCs,PFCs,SF6,NOx,CO,NMVOC,SO2
 Total Industrial Processes,,146825.25,97.32,69.91,140066.16,6107.35,0.7,534.77,1771.71,1817.65,773.85
