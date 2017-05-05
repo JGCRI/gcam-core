@@ -21,11 +21,11 @@ original data system was \code{L131.nonco2_proc_R_S_T_Y.R} (emissions level1).
 Calculate historical emissions from the processing sector by GCAM technology, computed from EDGAR emissions data and EPA emissions factors.
 }
 \details{
-This chunck calculated the historical emissions from the processing sector by GCAM technology,
+This chunk calculates the historical emissions from the processing sector by GCAM technology,
 computed from EDGAR emissions data and EPA emissions factors. First: Compute subsector share of sectoral emissions using EPA data.
 Second: Compute share of sectoral emissions in each subsector using EPA data. Third: Group by and then join by sector, subsector,
 and Non.CO2. Fourth: Disaggregate EDGAR emissions to subsectors. Fifth: map in all data and compute emissions (EDGAR emissions*tech_share)
 }
 \author{
-CH April 2017
+CH May 2017
 }
