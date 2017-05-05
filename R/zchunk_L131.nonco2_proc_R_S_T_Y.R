@@ -106,8 +106,6 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
       mutate(EDGAR_emissions = EDGAR_emissions * CONV_GG_TG) -> # convert from gg to tg
       L131.EDGAR.mlt
 
-    #L131.EDGAR.mlt$GCAM_region_ID <- as.integer(L131.EDGAR.mlt$GCAM_region_ID)
-
     # Fourth: Map in all data and compute emissions (EDGAR_emissions * tech_share).
 
     GCAM_sector_tech %>%
