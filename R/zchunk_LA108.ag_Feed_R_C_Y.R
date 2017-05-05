@@ -81,7 +81,7 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
     L103.ag_Prod_Mt_R_C_Y %>%
       filter(GCAM_commodity == "FodderHerb") %>%                                                                  # Filter production data for "FodderHerb"
       rename(FodderHerb = value) %>%
-      left_join(filter(an_Feed_Mt_R_C_Y,feed == "FodderHerb_Residue"), by = c("GCAM_region_ID","year")) %>%       # Map in demands for FodderHerb_Residue
+      left_join(filter(an_Feed_Mt_R_C_Y,feed == "FodderHerb_Residue"), by = c("GCAM_region_ID", "year")) %>%       # Map in demands for FodderHerb_Residue
       rename(FodderHerb_Residue = value) %>%
       mutate(residual = FodderHerb - FodderHerb_Residue) %>%                                                      # Compute difference in FodderHerb production and FodderHerb_Residue demand
       select(-GCAM_commodity, -feed, -FodderHerb, -FodderHerb_Residue) ->
@@ -209,6 +209,7 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
                      "L103.ag_Prod_Mt_R_C_Y", "L107.an_Feed_Mt_R_C_Sys_Fd_Y") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L108.ag_Feed_Mt_R_C_Y
+
     ag_NetExp_Mt_R_FodderHerb_Y %>%
       add_title("Net exports of FodderHerb by GCAM region and year ") %>%
       add_units("Mt/yr") %>%
