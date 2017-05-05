@@ -35,6 +35,7 @@ PREAGLU_YEARS <- c(1700, 1750,1800, 1850, 1900, 1950)
 aglu.LAND_COVER_YEARS <- sort(unique(c(LAND_HISTORY_YEARS, AGLU_HISTORICAL_YEARS)))
 GTAP_HISTORICAL_YEAR <- 2000
 CROSIT_HISTORICAL_YEAR <- 2005
+SPEC_AG_PROD_YEARS <- seq(2010, 2050, 5) # Specified ag productivity years
 
 # ======================================================================
 # socioeconomics constants
@@ -154,6 +155,8 @@ IRRIGATION <- "Irrigation"
 MAPPED_WATER_TYPES <- c("water consumption", "water withdrawals")
 MAPPED_WATER_TYPES_SHORT <- c("C", "W")
 names(MAPPED_WATER_TYPES_SHORT) <- MAPPED_WATER_TYPES
+DEFAULT_UNLIMITED_WATER_PRICE <- 0
+DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.001
 
 # ======================================================================
 # emissions constants
