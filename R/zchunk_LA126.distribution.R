@@ -1,9 +1,11 @@
 #' module_energy_LA126.distribution
 #'
 #' This chunk adjusts for onsite, transmission, and distribution losses for electricity and gas. Energy input, output, and input/output ratio are calculated for the following three processes:
-#'     Electricity net ownuse, i.e., electricity consumed onsite prior to any transmission and distribution losses
-#'     Electricity transmission and distribution
-#'     Gas pipeline
+#' \itemize{
+#'  \item{Electricity net ownuse, i.e., electricity consumed onsite prior to any transmission and distribution losses}
+#'  \item{Electricity transmission and distribution}
+#'  \item{Gas pipeline}
+#' }
 #' Nine tables are created in total, 3x3=9. Energy is reported by GCAM_region, sector, fuel, and from 1971-2010.
 #'
 #' @param command API command to execute
@@ -17,7 +19,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author AS May 2017
-#'
 module_energy_LA126.distribution <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh",
@@ -39,29 +40,29 @@ module_energy_LA126.distribution <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh")
-    L1011.en_bal_EJ_R_Si_Fi_Yh %>%
+    get_data(all_data, "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh") %>%
       gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) -> L1011.en_bal_EJ_R_Si_Fi_Yh
+      mutate(year = as.integer(substr(year, 2, 5))) ->
+      L1011.en_bal_EJ_R_Si_Fi_Yh
 
-    L122.out_EJ_R_gasproc_F_Yh <- get_data(all_data, "temp-data-inject/L122.out_EJ_R_gasproc_F_Yh")
-    L122.out_EJ_R_gasproc_F_Yh %>%
+    get_data(all_data, "temp-data-inject/L122.out_EJ_R_gasproc_F_Yh") %>%
       gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) -> L122.out_EJ_R_gasproc_F_Yh
+      mutate(year = as.integer(substr(year, 2, 5))) ->
+      L122.out_EJ_R_gasproc_F_Yh
 
     L123.out_EJ_R_elec_F_Yh <- get_data(all_data, "L123.out_EJ_R_elec_F_Yh")
     L123.out_EJ_R_indchp_F_Yh <- get_data(all_data, "L123.out_EJ_R_indchp_F_Yh")
 
     # ===================================================
     # ELECTRICITY OWNUSE, i.e., electricity consumed onsite prior to any transmission and distribution losses
-      # Summing industrial CHP electricity generation and electricity generation by GCAM region ID and year
-        # Summing electricity generation by GCAM region ID and year
+    # Summing industrial CHP electricity generation and electricity generation by GCAM region ID and year
+    # Summing electricity generation by GCAM region ID and year
     L123.out_EJ_R_elec_F_Yh %>%
       group_by(GCAM_region_ID, year) %>%
       summarise(value_elec_F_Yh = sum(value)) ->
       a
 
-        # Summing industrial CHP electricity generation and then joining it with electricity generation
+    # Summing industrial CHP electricity generation and then joining it with electricity generation
     L123.out_EJ_R_indchp_F_Yh %>%
       group_by(GCAM_region_ID, year) %>%
       summarise(value_indchp_F_Yh = sum(value)) %>%
@@ -70,7 +71,7 @@ module_energy_LA126.distribution <- function(command, ...) {
       select(-value_elec_F_Yh, -value_indchp_F_Yh) ->
       b
 
-      # Filtering energy balance by "net_electricity ownuse" sector and joining with previous table
+    # Filtering energy balance by "net_electricity ownuse" sector and joining with previous table
     L1011.en_bal_EJ_R_Si_Fi_Yh %>%
       filter(sector == "net_electricity ownuse") %>%
       mutate(sector = substr(sector, 5, 30)) %>% # Renaming sector as "electricity ownuse"
@@ -81,19 +82,19 @@ module_energy_LA126.distribution <- function(command, ...) {
       mutate(value_d = value_b / value_c) -> # Creating values for table, L126.IO_R_elecownuse_F_Yh,  by dividing input by output
       c
 
-      # Table b is separated to create the final tables
+    # Table b is separated to create the final tables
     c %>% select(GCAM_region_ID, sector, fuel, year, value = value_b) -> L126.in_EJ_R_elecownuse_F_Yh
     c %>% select(GCAM_region_ID, sector, fuel, year, value = value_c) -> L126.out_EJ_R_elecownuse_F_Yh
     c %>% select(GCAM_region_ID, sector, fuel, year, value = value_d) -> L126.IO_R_elecownuse_F_Yh
 
     # ELECTRICITY TRANSMISSION AND DISTRIBUTION
-      # Preparing electricity generation output (i.e., L126.out_EJ_R_elecownuse_F_Yh) to be joined later with energy balance
+    # Preparing electricity generation output (i.e., L126.out_EJ_R_elecownuse_F_Yh) to be joined later with energy balance
     L126.out_EJ_R_elecownuse_F_Yh %>%
       ungroup() %>% # Need to ungroup to deselect sector and fuel
       select(-sector, -fuel) ->
       d
 
-      # Filtering energy balance by "net_electricity distribution" sector and joining with electricity generation output
+    # Filtering energy balance by "net_electricity distribution" sector and joining with electricity generation output
     L1011.en_bal_EJ_R_Si_Fi_Yh %>%
       filter(sector == "net_electricity distribution") %>%
       mutate(sector = substr(sector, 5, 30)) %>% # Renaming sector as "electricity distribution"
@@ -104,19 +105,19 @@ module_energy_LA126.distribution <- function(command, ...) {
       mutate(value_c = value / value_b) -> # Creating values for table, L126.IO_R_electd_F_Yh, by dividing input by output
       d
 
-      # Table c is separated to create the final tables
+    # Table c is separated to create the final tables
     d %>% select(GCAM_region_ID, sector, fuel, year, value) -> L126.in_EJ_R_electd_F_Yh
     d %>% select(GCAM_region_ID, sector, fuel, year, value = value_b) -> L126.out_EJ_R_electd_F_Yh
     d %>% select(GCAM_region_ID, sector, fuel, year, value = value_c) -> L126.IO_R_electd_F_Yh
 
     # GAS PIPELINE
-      # Preparing to be joined later - summing by GCAM region ID and year
+    # Preparing to be joined later - summing by GCAM region ID and year
     L122.out_EJ_R_gasproc_F_Yh %>%
       group_by(GCAM_region_ID, year) %>%
       summarise(value_b = sum(value)) -> # Creating values for table, L126.in_EJ_R_gaspipe_F_Yh (i.e., input)
       e
 
-      # Filtering energy balance by "net_gas pipeline" sector and joining with gas output
+    # Filtering energy balance by "net_gas pipeline" sector and joining with gas output
     L1011.en_bal_EJ_R_Si_Fi_Yh %>%
       filter(sector == "net_gas pipeline") %>%
       mutate(sector = substr(sector, 5, 30)) %>% # Renaming sector as "gas pipeline"
@@ -128,7 +129,7 @@ module_energy_LA126.distribution <- function(command, ...) {
       mutate(value_d = if_else(is.na(value_d),1,value_d)) -> # Reset NaN IO coefs to 1, since some regions have no gas in some base years.
       f
 
-      # Table d is separated to create the final tables
+    # Table d is separated to create the final tables
     f %>% select(GCAM_region_ID, sector, fuel, year, value = value_b) -> L126.in_EJ_R_gaspipe_F_Yh
     f %>% select(GCAM_region_ID, sector, fuel, year, value = value_c) -> L126.out_EJ_R_gaspipe_F_Yh
     f %>% select(GCAM_region_ID, sector, fuel, year, value = value_d) -> L126.IO_R_gaspipe_F_Yh
@@ -142,6 +143,7 @@ module_energy_LA126.distribution <- function(command, ...) {
       add_precursors("temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "L123.out_EJ_R_elec_F_Yh", "L123.out_EJ_R_indchp_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L126.in_EJ_R_elecownuse_F_Yh
+
     L126.out_EJ_R_elecownuse_F_Yh %>%
       add_title("Electricity onsite energy output") %>%
       add_units("EJ") %>%
@@ -150,6 +152,7 @@ module_energy_LA126.distribution <- function(command, ...) {
       add_precursors("temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "L123.out_EJ_R_elec_F_Yh", "L123.out_EJ_R_indchp_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L126.out_EJ_R_elecownuse_F_Yh
+
     L126.IO_R_elecownuse_F_Yh %>%
       add_title("Electricity onsite energy input/output ratio") %>%
       add_units("EJ") %>%
@@ -158,6 +161,7 @@ module_energy_LA126.distribution <- function(command, ...) {
       add_precursors("temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "L123.out_EJ_R_elec_F_Yh", "L123.out_EJ_R_indchp_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L126.IO_R_elecownuse_F_Yh
+
     L126.in_EJ_R_electd_F_Yh %>%
       add_title("Electricity transmission and distribution energy input") %>%
       add_units("EJ") %>%
@@ -166,6 +170,7 @@ module_energy_LA126.distribution <- function(command, ...) {
       add_precursors("temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "L123.out_EJ_R_elec_F_Yh", "L123.out_EJ_R_indchp_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L126.in_EJ_R_electd_F_Yh
+
     L126.out_EJ_R_electd_F_Yh %>%
       add_title("Electricity transmission and distribution energy output") %>%
       add_units("EJ") %>%
@@ -174,6 +179,7 @@ module_energy_LA126.distribution <- function(command, ...) {
       add_precursors("temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "L123.out_EJ_R_elec_F_Yh", "L123.out_EJ_R_indchp_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L126.out_EJ_R_electd_F_Yh
+
     L126.IO_R_electd_F_Yh %>%
       add_title("Electricity transmission and distribution energy input/output ratio") %>%
       add_units("EJ") %>%
@@ -182,6 +188,7 @@ module_energy_LA126.distribution <- function(command, ...) {
       add_precursors("temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "L123.out_EJ_R_elec_F_Yh", "L123.out_EJ_R_indchp_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L126.IO_R_electd_F_Yh
+
     L126.in_EJ_R_gaspipe_F_Yh %>%
       add_title("Gas pipeline energy input") %>%
       add_units("EJ") %>%
@@ -190,6 +197,7 @@ module_energy_LA126.distribution <- function(command, ...) {
       add_precursors("temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "temp-data-inject/L122.out_EJ_R_gasproc_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L126.in_EJ_R_gaspipe_F_Yh
+
     L126.out_EJ_R_gaspipe_F_Yh %>%
       add_title("Gas pipeline energy output") %>%
       add_units("EJ") %>%
@@ -198,6 +206,7 @@ module_energy_LA126.distribution <- function(command, ...) {
       add_precursors("temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "temp-data-inject/L122.out_EJ_R_gasproc_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L126.out_EJ_R_gaspipe_F_Yh
+
     L126.IO_R_gaspipe_F_Yh %>%
       add_title("Gas pipeline energy input/output ratio") %>%
       add_units("EJ") %>%

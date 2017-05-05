@@ -19,9 +19,11 @@ original data system was \code{LA126.distribution.R} (energy level1).
 }
 \description{
 This chunk adjusts for onsite, transmission, and distribution losses for electricity and gas. Energy input, output, and input/output ratio are calculated for the following three processes:
-    Electricity net ownuse, i.e., electricity consumed onsite prior to any transmission and distribution losses
-    Electricity transmission and distribution
-    Gas pipeline
+\itemize{
+ \item{Electricity net ownuse, i.e., electricity consumed onsite prior to any transmission and distribution losses}
+ \item{Electricity transmission and distribution}
+ \item{Gas pipeline}
+}
 Nine tables are created in total, 3x3=9. Energy is reported by GCAM_region, sector, fuel, and from 1971-2010.
 }
 \details{
