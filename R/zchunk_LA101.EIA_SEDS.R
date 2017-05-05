@@ -1,8 +1,10 @@
 #' module_gcam.usa_LA101.EIA_SEDS
 #'
 #' This chunk produces two ouput tables from the EIA state energy database:
-#'    L101.inEIA_EJ_state_S_F: Energy data by GCAM sector and fuel, state, and year; energy units in EJ, years from 1971-2010, includes only rows that have a defined sector and fuel
-#'    L101.EIA_use_all_Bbtu: Energy data by EIA sector and fuel code, GCAM sector and fuel, MSN, state, and year; energy units in Billion BTU, years from 1960-2011, includes all original data
+#' \itemize{
+#'  \item{L101.inEIA_EJ_state_S_F: Energy data by GCAM sector and fuel, state, and year; energy units in EJ, years from 1971-2010, includes only rows that have a defined sector and fuel}
+#'  \item{L101.EIA_use_all_Bbtu: Energy data by EIA sector and fuel code, GCAM sector and fuel, MSN, state, and year; energy units in Billion BTU, years from 1960-2011, includes all original data}
+#' }
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -15,13 +17,12 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread fill
 #' @author AS April 2017
-#'
 module_gcam.usa_LA101.EIA_SEDS <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/EIA_SEDS_fuels",
              FILE = "gcam-usa/EIA_SEDS_sectors",
-             FILE = "temp-data-inject/EIA_use_all_Bbtu",
-             FILE = "temp-data-inject/A_fuel_conv"))
+             FILE = "gcam-usa/EIA_use_all_Bbtu",
+             FILE = "gcam-usa/A_fuel_conv"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L101.EIA_use_all_Bbtu",
              "L101.inEIA_EJ_state_S_F"))
@@ -32,8 +33,8 @@ module_gcam.usa_LA101.EIA_SEDS <- function(command, ...) {
     # Load required inputs
     EIA_SEDS_fuels <- get_data(all_data, "gcam-usa/EIA_SEDS_fuels")
     EIA_SEDS_sectors <- get_data(all_data, "gcam-usa/EIA_SEDS_sectors")
-    EIA_use_all_Bbtu <- get_data(all_data, "temp-data-inject/EIA_use_all_Bbtu")
-    A_fuel_conv <- get_data(all_data, "temp-data-inject/A_fuel_conv")
+    EIA_use_all_Bbtu <- get_data(all_data, "gcam-usa/EIA_use_all_Bbtu")
+    A_fuel_conv <- get_data(all_data, "gcam-usa/A_fuel_conv")
 
     # ===================================================
 
@@ -49,11 +50,10 @@ module_gcam.usa_LA101.EIA_SEDS <- function(command, ...) {
       mutate(state = State, fuel = GCAM_fuel, sector = GCAM_sector) ->
       x
 
-    # Create 1 of the 2 ouput tables: narrow years from 1971-2010, convert billion BTU to EJ (fuel specific), remove rows that have no defined sector or fuel name
+    # Create 1 of the 2 output tables: narrow years from 1971-2010, convert billion BTU to EJ (fuel specific), remove rows that have no defined sector or fuel name
     x %>%
       select(state, sector, fuel, year, value) %>%
-      filter(year %in% HISTORICAL_YEARS) %>%
-      filter(fuel != "NA", sector != "NA") %>%
+      filter(year %in% HISTORICAL_YEARS, !is.na(fuel), !is.na(sector)) %>%
       left_join(A_fuel_conv, by = "fuel") %>%
       mutate(value = value * conv_Bbtu_EJ) %>%
       group_by(state, sector, fuel, year) %>%
@@ -82,15 +82,18 @@ module_gcam.usa_LA101.EIA_SEDS <- function(command, ...) {
       add_units("Billion BTU") %>%
       add_comments("GCAM sector and fuel names were added, NAs for years 1971-1979 were replaced with most recent year's data available") %>%
       add_legacy_name("L101.EIA_use_all_Bbtu") %>%
-      add_precursors("temp-data-inject/EIA_use_all_Bbtu", "gcam-usa/EIA_SEDS_fuels", "gcam-usa/EIA_SEDS_sectors") %>%
+      add_precursors("gcam-usa/EIA_use_all_Bbtu", "gcam-usa/EIA_SEDS_fuels",
+                     "gcam-usa/EIA_SEDS_sectors") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT) ->
       L101.EIA_use_all_Bbtu
+
     L101.inEIA_EJ_state_S_F %>%
       add_title("State Energy Data in EJ by Year, GCAM-Sector, and GCAM-Fuel") %>%
       add_units("EJ") %>%
       add_comments("GCAM sector and fuel names were added, units converted to EJ, data with no GCAM fuel or sector name removed") %>%
       add_legacy_name("L101.inEIA_EJ_state_S_F") %>%
-      add_precursors("temp-data-inject/EIA_use_all_Bbtu", "gcam-usa/EIA_SEDS_fuels", "gcam-usa/EIA_SEDS_sectors", "temp-data-inject/A_fuel_conv") %>%
+      add_precursors("gcam-usa/EIA_use_all_Bbtu", "gcam-usa/EIA_SEDS_fuels",
+                     "gcam-usa/EIA_SEDS_sectors", "gcam-usa/A_fuel_conv") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L101.inEIA_EJ_state_S_F
 
