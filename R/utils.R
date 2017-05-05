@@ -230,7 +230,9 @@ save_chunkdata <- function(chunkdata, write_inputs = FALSE, outputs_dir =
 
   for(cn in names(chunkdata)) {
     cd <- chunkdata[[cn]]
-    if(!isTRUE(identical(NA, cd))) {   # NA means an optional file that wasn't found
+    if(FLAG_XML %in% get_flags(cd)) {
+      run_xml_conversion(cd)
+    } else if(!isTRUE(identical(NA, cd))) {   # NA means an optional file that wasn't found
 
       fqfn <- file.path(outputs_dir, paste0(cn, ".csv"))
       suppressWarnings(file.remove(fqfn))
@@ -404,7 +406,10 @@ create_xml <- function(xml_file, mi_header = NULL) {
                              package = "gcamdata")
   }
 
-  list(xml_file = xml_file, mi_header = mi_header, data_tables = list())
+  xml_obj <- list(xml_file = xml_file, mi_header = mi_header, data_tables = list())
+  xml_obj <- add_flags(xml_obj, FLAG_XML)
+
+  xml_obj
 }
 
 #' add_xml_data
@@ -465,6 +470,8 @@ make_run_xml_conversion <- function() {
         cat("", file = conv_pipe, sep = "\n")
       }
     }
+
+    dot
   }
 }
 
@@ -481,6 +488,8 @@ make_run_xml_conversion <- function() {
 #' To enable the use of Java a user can set \code{options(gcamdata.use_java=TRUE)}
 #'
 #' @param dot The current state of the pipeline started from \code{create_xml}
+#' @return The argument passed in unmodified in case a user wanted run the
+#' conversion again at a later time.
 #' @author PP March 2017
 #' @export
 run_xml_conversion <- make_run_xml_conversion()
