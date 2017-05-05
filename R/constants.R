@@ -91,7 +91,7 @@ CONV_T_METRIC_SHORT <- 1000/908  # Ratio between metric ton and short ton
 CONV_MCAL_PCAL <- 1e-9
 CONV_HA_BM2 <- 1e-5
 CONV_THA_KGM2 <- 0.1   # tons C/ha -> kg C/m2
-CONV_GG_TG <- 0.001
+CONV_GG_TG <- 0.001 # gigagrams to tegagrams
 CONV_TST_TG <- 0.000907 # thousand short tons to Tg
 
 # Cubic meters (m3) to billion cubic meters (bm3)
