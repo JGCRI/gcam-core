@@ -22,7 +22,7 @@ Dedicated data chunk to read \code{Maddison_population.csv} file.
 \details{
 The \code{Maddison_population.csv} file has a blank column, which
 generates a warning message in the general purpose \code{\link{load_csv_files}}
-that we'd rather not suppress universally.
+that we'd rather not suppress universally. We also need to skip a goofy initial couple of lines.
 }
 \author{
 BBL
