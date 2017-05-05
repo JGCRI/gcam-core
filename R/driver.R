@@ -32,10 +32,11 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
   # Check that the chunk has provided required data for all objects
   empty_precursors <- TRUE
   for(obj in names(chunk_data)) {
+    obj_flags <- get_flags(chunk_data[[obj]])
     # Chunks have to returns tibbles, unless they're tagged as being XML
     if(!outputs_xml[which(obj == promised_outputs)]) {
       assert_that(tibble::is.tibble(chunk_data[[obj]]))
-      assert_that(! FLAG_XML %in% get_flags(chunk_data[[obj]]))  # TODO: need to update tests for this!
+      assert_that(! FLAG_XML %in% obj_flags)  # TODO: need to update tests for this!
 
       # Make sure objects have required attributes
       for(at in c(ATTR_TITLE, ATTR_UNITS, ATTR_COMMENTS, ATTR_LEGACY_NAME)) {
@@ -44,7 +45,7 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
         }
       }
     } else {
-      chunk_data[[obj]] <- add_flags(chunk_data[[obj]], FLAG_XML)  # TODO: udpate tests!
+      assert_that(FLAG_XML %in% obj_flags)  # TODO: need to update tests for this!
     }
     # Data precursors should all appear in input list
     pc <- attr(chunk_data[[obj]], ATTR_PRECURSORS)
