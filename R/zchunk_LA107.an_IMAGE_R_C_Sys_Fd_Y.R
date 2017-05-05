@@ -103,7 +103,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
       # mixed animal production = total animal production * fraction mixed for each country, commodity, year:
       mutate(value = value.x * value.y) %>%
       # drop columns don't care about:
-      select(-value.x, -value.y, - IMAGE_region_ID) %>%
+      select(-value.x, -value.y, -IMAGE_region_ID) %>%
       # add the system identifier indicating this is mixed production:
       mutate(system = "Mixed") ->
       # store in a table specifying mixed animal production by country, commodity, and year
