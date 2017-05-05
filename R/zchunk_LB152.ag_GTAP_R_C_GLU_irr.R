@@ -1,4 +1,4 @@
-#' module_energy_LA1231.elec_tech
+#' module_aglu_LB152.ag_GTAP_R_C_GLU_irr
 #'
 #' Briefly describe what this chunk does.
 #'
@@ -6,35 +6,38 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L1231.in_EJ_R_elec_F_tech_Yh}, \code{L1231.out_EJ_R_elec_F_tech_Yh}, \code{L1231.eff_R_elec_F_tech_Yh}. The corresponding file in the
-#' original data system was \code{LA1231.elec_tech.R} (energy level1).
+#' the generated outputs: \code{L152.ag_irrHA_bm2_R_C_GLU}, \code{L152.ag_rfdHA_bm2_R_C_GLU}, \code{L152.ag_irrProd_Mt_R_C_GLU}, \code{L152.ag_rfdProd_Mt_R_C_GLU}. The corresponding file in the
+#' original data system was \code{LB152.ag_GTAP_R_C_GLU_irr.R} (aglu level1).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_energy_LA1231.elec_tech_DISABLED <- function(command, ...) {
+module_aglu_LB152.ag_GTAP_R_C_GLU_irr_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "energy/A23.globaltech_eff",
-             FILE = "energy/calibrated_techs",
-             "L123.in_EJ_R_elec_F_Yh",
-             "L123.out_EJ_R_elec_F_Yh",
-             "L123.eff_R_elec_F_Yh"))
+    return(c(FILE = "common/iso_GCAM_regID",
+             FILE = "aglu/FAO_ag_items_PRODSTAT",
+             "L151.ag_irrHA_ha_ctry_crop",
+             "L151.ag_rfdHA_ha_ctry_crop",
+             "L151.ag_irrProd_t_ctry_crop",
+             "L151.ag_rfdProd_t_ctry_crop"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L1231.in_EJ_R_elec_F_tech_Yh",
-             "L1231.out_EJ_R_elec_F_tech_Yh",
-             "L1231.eff_R_elec_F_tech_Yh"))
+    return(c("L152.ag_irrHA_bm2_R_C_GLU",
+             "L152.ag_rfdHA_bm2_R_C_GLU",
+             "L152.ag_irrProd_Mt_R_C_GLU",
+             "L152.ag_rfdProd_Mt_R_C_GLU"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    A23.globaltech_eff <- get_data(all_data, "energy/A23.globaltech_eff")
-    calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
-    L123.in_EJ_R_elec_F_Yh <- get_data(all_data, "L123.in_EJ_R_elec_F_Yh")
-    L123.out_EJ_R_elec_F_Yh <- get_data(all_data, "L123.out_EJ_R_elec_F_Yh")
-    L123.eff_R_elec_F_Yh <- get_data(all_data, "L123.eff_R_elec_F_Yh")
+    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
+    FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO_ag_items_PRODSTAT")
+    L151.ag_irrHA_ha_ctry_crop <- get_data(all_data, "L151.ag_irrHA_ha_ctry_crop")
+    L151.ag_rfdHA_ha_ctry_crop <- get_data(all_data, "L151.ag_rfdHA_ha_ctry_crop")
+    L151.ag_irrProd_t_ctry_crop <- get_data(all_data, "L151.ag_irrProd_t_ctry_crop")
+    L151.ag_rfdProd_t_ctry_crop <- get_data(all_data, "L151.ag_rfdProd_t_ctry_crop")
 
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
@@ -53,8 +56,6 @@ module_energy_LA1231.elec_tech_DISABLED <- function(command, ...) {
     #
     # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
     # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses vecpaste
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # ===================================================
 
     # Produce outputs
@@ -67,33 +68,43 @@ module_energy_LA1231.elec_tech_DISABLED <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L1231.in_EJ_R_elec_F_tech_Yh") %>%
+      add_legacy_name("L152.ag_irrHA_bm2_R_C_GLU") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L1231.in_EJ_R_elec_F_tech_Yh
+      L152.ag_irrHA_bm2_R_C_GLU
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L1231.out_EJ_R_elec_F_tech_Yh") %>%
+      add_legacy_name("L152.ag_rfdHA_bm2_R_C_GLU") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L1231.out_EJ_R_elec_F_tech_Yh
+      L152.ag_rfdHA_bm2_R_C_GLU
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L1231.eff_R_elec_F_tech_Yh") %>%
+      add_legacy_name("L152.ag_irrProd_Mt_R_C_GLU") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L1231.eff_R_elec_F_tech_Yh
+      L152.ag_irrProd_Mt_R_C_GLU
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L152.ag_rfdProd_Mt_R_C_GLU") %>%
+      add_precursors("precursor1", "precursor2", "etc") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L152.ag_rfdProd_Mt_R_C_GLU
 
-    return_data(L1231.in_EJ_R_elec_F_tech_Yh, L1231.out_EJ_R_elec_F_tech_Yh, L1231.eff_R_elec_F_tech_Yh)
+    return_data(L152.ag_irrHA_bm2_R_C_GLU, L152.ag_rfdHA_bm2_R_C_GLU, L152.ag_irrProd_Mt_R_C_GLU, L152.ag_rfdProd_Mt_R_C_GLU)
   } else {
     stop("Unknown command")
   }

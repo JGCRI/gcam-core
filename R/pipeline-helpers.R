@@ -35,6 +35,38 @@ left_join_error_no_match <- function(d, ...) {
   d
 }
 
+#' Compute a left join, taking only the first match.
+#'
+#' In an ordinary \code{\link{left_join}}, if a row in the left operand has
+#' multiple matches in the right operand, you get a copy of the row for each
+#' match in the right operand.  Sometimes you want just one arbitrary member of
+#' the matching set.  This could be because the right operand is a one-to-many
+#' mapping, and you don't care which one you get (but you want only one), or it
+#' could be that you're trying to reproduce the behavior of legacy code that
+#' uses \code{\link{match}}, which has this behavior.  This function performs
+#' such a join.
+#'
+#' This function performs a left join, except that if the right operand has
+#' multiple matches for a row in the left operand, \emph{only} the first match
+#' is kept.  \strong{Use this function with caution.}  The results will depend
+#' on the order of the rows in the right operand, meaning that seemingly
+#' innocuous changes can produce changes in output.  Consider yourself warned.
+#'
+#' @param x Left table to join
+#' @param y Right table to join
+#' @param by Vector of id columns.  Unlike in other join variants, these must be
+#' supplied explicitly.
+#' @return Joined table.  In case of multiple matches, only the first will be
+#' included.
+left_join_keep_first_only <- function(x, y, by) {
+    ## Our strategy is to use "distinct" to filter y to a single element for
+    ## each match category, then join that to x.
+    ll <- as.list(by)
+    names(ll) <- NULL
+    do.call(distinct_, c(list(y), ll, list(.keep_all = TRUE))) %>%
+      left_join(x, ., by = by)
+}
+
 
 #' approx_fun
 #'
@@ -175,7 +207,7 @@ unprotect_integer_cols <- function(d) {
 #' specific base year; it allows us to back out the effects of inflation when we
 #' compare prices over time.  This function calculates a deflator given a base
 #' year (the year to convert from) and a conversion year (the year to convert
-#' to).  To use the deflator, prices in base-year dollars by the deflator; the
+#' to).  To use the deflator, multiply prices in base-year dollars by the deflator; the
 #' result will be prices in the converted dollar year.
 #'
 #' @param year Year to convert TO.

@@ -1,4 +1,4 @@
-#' module_emissions_L1221.ghg_agr_R_S_T_Y_IRR
+#' module_water_L133.water.demand.livestock
 #'
 #' Briefly describe what this chunk does.
 #'
@@ -6,27 +6,35 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L1221.ghg_tg_R_agr_C_Y_GLU_IRR}. The corresponding file in the
-#' original data system was \code{L1221.ghg_agr_R_S_T_Y_IRR.R} (emissions level1).
+#' the generated outputs: \code{L133.water_demand_livestock_R_C_W_km3_Mt}. The corresponding file in the
+#' original data system was \code{L133.water.demand.livestock.R} (water level1).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_emissions_L1221.ghg_agr_R_S_T_Y_IRR_DISABLED <- function(command, ...) {
+module_water_L133.water.demand.livestock_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L1211.ag_irrShare_R_C_Y_GLU_irr",
-             FILE = "temp-data-inject/L122.ghg_tg_R_agr_C_Y_GLU"))
+    return(c(FILE = "common/iso_GCAM_regID",
+             "L105.an_Prod_Mt_R_C_Y",
+             FILE = "water/LivestockWaterFootprint_MH2010",
+             FILE = "water/FAO_an_items_Stocks",
+             "L100.FAO_an_Stocks",
+             "L100.FAO_an_Dairy_Stocks"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L1221.ghg_tg_R_agr_C_Y_GLU_IRR"))
+    return(c("L133.water_demand_livestock_R_C_W_km3_Mt"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    L1211.ag_irrShare_R_C_Y_GLU_irr <- get_data(all_data, "L1211.ag_irrShare_R_C_Y_GLU_irr")
-    L122.ghg_tg_R_agr_C_Y_GLU <- get_data(all_data, "temp-data-inject/L122.ghg_tg_R_agr_C_Y_GLU")
+    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
+    L105.an_Prod_Mt_R_C_Y <- get_data(all_data, "L105.an_Prod_Mt_R_C_Y")
+    LivestockWaterFootprint_MH2010 <- get_data(all_data, "water/LivestockWaterFootprint_MH2010")
+    FAO_an_items_Stocks <- get_data(all_data, "water/FAO_an_items_Stocks")
+    L100.FAO_an_Stocks <- get_data(all_data, "L100.FAO_an_Stocks")
+    L100.FAO_an_Dairy_Stocks <- get_data(all_data, "L100.FAO_an_Dairy_Stocks")
 
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
@@ -43,8 +51,10 @@ module_emissions_L1221.ghg_agr_R_S_T_Y_IRR_DISABLED <- function(command, ...) {
     # }
     #
     #
-    # NOTE: there are `merge` and/or 'match' calls in this code. Be careful!
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Merge-and-Match
+    # NOTE: there are `merge` calls in this code. Be careful!
+    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
+    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
+    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # ===================================================
 
     # Produce outputs
@@ -57,13 +67,13 @@ module_emissions_L1221.ghg_agr_R_S_T_Y_IRR_DISABLED <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L1221.ghg_tg_R_agr_C_Y_GLU_IRR") %>%
+      add_legacy_name("L133.water_demand_livestock_R_C_W_km3_Mt") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L1221.ghg_tg_R_agr_C_Y_GLU_IRR
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L133.water_demand_livestock_R_C_W_km3_Mt
 
-    return_data(L1221.ghg_tg_R_agr_C_Y_GLU_IRR)
+    return_data(L133.water_demand_livestock_R_C_W_km3_Mt)
   } else {
     stop("Unknown command")
   }
