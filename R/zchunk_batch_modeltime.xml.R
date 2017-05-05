@@ -29,11 +29,10 @@ module_modeltime_batch_modeltime.xml <- function(command, ...) {
     L200.ModelTimeInterYears <- get_data(all_data, "L200.ModelTimeInterYears")
 
     # Produce outputs
-    create_xml("modeltime.xml") %>%
+    create_xml("xml/modeltime.xml") %>%
       add_xml_data(L200.ModelTime, "ModelTime") %>%
       add_xml_data(L200.ModelTimeInterYears, "ModelTimeInterYears") %>%
-      add_precursors("L200.ModelTime", "L200.ModelTimeInterYears")
-      run_xml_conversion() ->
+      add_precursors("L200.ModelTime", "L200.ModelTimeInterYears") ->
       modeltime.xml
 
     return_data(modeltime.xml)
