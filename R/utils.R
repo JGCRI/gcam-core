@@ -411,7 +411,9 @@ create_xml <- function(xml_file, mi_header = NULL) {
                              package = "gcamdata")
   }
 
-  xml_obj <- list(xml_file = xml_file, mi_header = mi_header, data_tables = list())
+  xml_obj <- list(xml_file = file.path(XML_DIR, xml_file),
+                  mi_header = mi_header,
+                  data_tables = list())
   xml_obj <- add_flags(xml_obj, FLAG_XML)
 
   xml_obj
