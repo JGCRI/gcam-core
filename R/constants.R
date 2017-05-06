@@ -35,6 +35,7 @@ PREAGLU_YEARS <- c(1700, 1750,1800, 1850, 1900, 1950)
 aglu.LAND_COVER_YEARS <- sort(unique(c(LAND_HISTORY_YEARS, AGLU_HISTORICAL_YEARS)))
 GTAP_HISTORICAL_YEAR <- 2000
 CROSIT_HISTORICAL_YEAR <- 2005
+SPEC_AG_PROD_YEARS <- seq(2010, 2050, 5) # Specified ag productivity years
 
 # ======================================================================
 # socioeconomics constants
@@ -96,7 +97,7 @@ CONV_T_METRIC_SHORT <- 1000/908  # Ratio between metric ton and short ton
 CONV_MCAL_PCAL <- 1e-9
 CONV_HA_BM2 <- 1e-5
 CONV_THA_KGM2 <- 0.1   # tons C/ha -> kg C/m2
-CONV_GG_TG <- 0.001
+CONV_GG_TG <- 0.001 # gigagrams to tegagrams
 CONV_TST_TG <- 0.000907 # thousand short tons to Tg
 
 # Cubic meters (m3) to billion cubic meters (bm3)
@@ -160,6 +161,8 @@ IRRIGATION <- "Irrigation"
 MAPPED_WATER_TYPES <- c("water consumption", "water withdrawals")
 MAPPED_WATER_TYPES_SHORT <- c("C", "W")
 names(MAPPED_WATER_TYPES_SHORT) <- MAPPED_WATER_TYPES
+DEFAULT_UNLIMITED_WATER_PRICE <- 0
+DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.001
 
 # ======================================================================
 # emissions constants
@@ -169,3 +172,6 @@ emissions.TST_TO_TG <- 0.000907 # Conversion from thousand short tons to Tg
 emissions.NH3_HISTORICAL_YEARS <- 1990:2002
 emissions.NH3_EXTRA_YEARS <- 1971:1989
 emissions.EDGAR_YEARS <- 1971:2008
+emissions.EPA_MACC_YEAR <- 2030  # Must be either 2020 or 2030
+emissions.MAC_TAXES <- c( 0, 5, 10, 15, 32, 66, 129, 243, 486, 1093 ) # Range of costs in 1990 USD
+emissions.CONV_C_CO2 <- 44/12 # Convert Carbon to CO2
