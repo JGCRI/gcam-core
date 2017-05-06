@@ -71,7 +71,6 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
     HDDCDD_data <- HDDCDD_data %>%
       gather(year, value, -file, -country) %>%
       mutate(
-        # Remove X years
         year = as.integer(year),
         # Assuming that the variable is the first three letters
         variable = substr(file, 1, 3),
@@ -124,7 +123,7 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
     GCAM3_population_df <- repeat_add_columns(iso_list, all_years) %>%
       left_join(L101.Pop_thous_GCAM3_ctry_Y, by = c("iso", "year")) %>%
       group_by(iso) %>%
-      mutate(population = approx_fun(year,population) )
+      mutate(population = approx_fun(year, population) )
 
     # Add population data and region data
     L143.wtHDDCDD_scen_ctry_Y <- L143.HDDCDD_scen_ctry_Y %>%
