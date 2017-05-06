@@ -331,7 +331,9 @@ find_chunks <- function(pattern = "^module_[a-zA-Z\\.]*_.*$", include_disabled =
 #' chunk_inputs
 #'
 #' @param chunks A character vector of chunks names
-#' @return A tibble with columns 'name' (chunk name) and 'input' (name of data)
+#' @return A tibble with columns 'name' (chunk name), 'input' (name of data),
+#' 'file_file' (whether object is read from a file), and 'optional' (whether
+#' the object is optional or not).
 #' @export
 chunk_inputs <- function(chunks = find_chunks()$name) {
   assertthat::assert_that(is.character(chunks))
@@ -366,7 +368,8 @@ chunk_inputs <- function(chunks = find_chunks()$name) {
 #' List all chunk outputs.
 #'
 #' @param chunks A character vector of chunks names
-#' @return A tibble with columns 'name' (chunk name) and 'output' (name of data)
+#' @return A tibble with columns 'name' (chunk name), 'output' (name of data),
+#' and 'to_xml' (whether or not this is an XML structure).
 #' @export
 chunk_outputs <- function(chunks = find_chunks()$name) {
   assertthat::assert_that(is.character(chunks))

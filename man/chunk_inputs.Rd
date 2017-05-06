@@ -10,7 +10,9 @@ chunk_inputs(chunks = find_chunks()$name)
 \item{chunks}{A character vector of chunks names}
 }
 \value{
-A tibble with columns 'name' (chunk name) and 'input' (name of data)
+A tibble with columns 'name' (chunk name), 'input' (name of data),
+'file_file' (whether object is read from a file), and 'optional' (whether
+the object is optional or not).
 }
 \description{
 chunk_inputs
