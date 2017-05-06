@@ -18,11 +18,5 @@ the generated outputs: \code{modeltime.xml}. The corresponding file in the
 original data system was \code{batch_modeltime.xml.R} (modeltime XML).
 }
 \description{
-Briefly describe what this chunk does.
-}
-\details{
-Describe in detail what this chunk does.
-}
-\author{
-YourInitials CurrentMonthName 2017
+Construct XML data structure for \code{modeltime.xml}.
 }
