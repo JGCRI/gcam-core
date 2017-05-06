@@ -66,6 +66,3 @@ module_aglu_LB131.LV_R_GLU <- function(command, ...) {
     stop("Unknown command")
   }
 }
-
-
-
