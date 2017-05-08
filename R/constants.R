@@ -99,6 +99,8 @@ CONV_TST_TG <- 0.000907 # thousand short tons to Tg
 CONV_M3_BM3 <- 1e-09
 CONV_MILLION_M3_KM3 <- 1e-03
 
+CONV_M2_ACR <- 0.0002471058
+
 
 # ======================================================================
 # Driver constants
