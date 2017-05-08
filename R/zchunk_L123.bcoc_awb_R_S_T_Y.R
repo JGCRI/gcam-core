@@ -51,9 +51,9 @@ module_emissions_L123.bcoc_awb_R_S_T_Y <- function(command, ...) {
       bind_rows(OC_AWB_2000, BC_AWB_2000) %>%
       left_join(iso_GCAM_regID, by = "iso") %>% #Not all iso's will necesarilly have an input value. This is ok.
       group_by(Non.CO2, GCAM_region_ID) %>%
-      summarise( awb = first( awb ) )  %>%
-      filter( !is.na(awb) ) %>%
-      mutate( awb = awb * CONV_KG_TO_TG ) %>%
+      summarise(awb = first(awb))  %>%
+      filter(!is.na(awb)) %>%
+      mutate(awb = awb * CONV_KG_TO_TG) %>%
       ungroup() ->
       BCOC_AWB_2000
     } else {
@@ -61,36 +61,36 @@ module_emissions_L123.bcoc_awb_R_S_T_Y <- function(command, ...) {
         left_join(iso_GCAM_regID, by = "iso") %>% #Not all iso's will necesarilly have an input value. This is ok.
         group_by(Non.CO2, GCAM_region_ID) %>%
         summarize_if(is.numeric , sum) %>%
-        filter( !is.na(awb) ) %>%
-        mutate( awb = awb * CONV_KG_TO_TG ) %>%
+        filter(!is.na(awb)) %>%
+        mutate(awb = awb * CONV_KG_TO_TG) %>%
         ungroup() ->
         BCOC_AWB_2000
    }
 
     # Extract only 2000 data from ag production data
-    filter( L103.ag_Prod_Mt_R_C_Y_GLU, year == 2000 ) %>%
-      select( -year ) %>%
-      mutate(GLU = as.character(GLU), GCAM_commodity = as.character(GCAM_commodity) ) ->
+    filter(L103.ag_Prod_Mt_R_C_Y_GLU, year == 2000) %>%
+      select(-year) %>%
+      mutate(GLU = as.character(GLU), GCAM_commodity = as.character(GCAM_commodity)) ->
       L103.ag_Prod_Mt_R_C_Y_GLU_2000
 
     # Allocate aggreate regional year 2000 AWB emissions into GCAM crop and GLU
     # This is done using shares from L121.AWBshare_R_C_Y_GLU, which is calculated in another chunk
     filter(L121.AWBshare_R_C_Y_GLU, year == "X2000")  %>%
-      select( -year ) %>%
+      select(-year) %>%
       # Add BC and OC emissions data
-      repeat_add_columns( tibble::tibble( Non.CO2 = c("BC_AWB","OC_AWB") ) ) %>%
+      repeat_add_columns(tibble::tibble(Non.CO2 = c("BC_AWB","OC_AWB"))) %>%
       # Use left_join since adding additional identifier ("Non.CO2"), so will double number of rows
-      left_join_error_no_match(BCOC_AWB_2000, by = c( "GCAM_region_ID", "Non.CO2") ) %>%
+      left_join_error_no_match(BCOC_AWB_2000, by = c("GCAM_region_ID", "Non.CO2")) %>%
       # Calculate AWB emissions by crop and GLU by sharing out regional total awb emissions
       # by the share for each individual GCAM technology
-      mutate( awb_emission = AWB_emiss_share * awb ) %>%
+      mutate(awb_emission = AWB_emiss_share * awb) %>%
       # Add production data
-      left_join_error_no_match( L103.ag_Prod_Mt_R_C_Y_GLU_2000, by = c("GCAM_region_ID", "GCAM_commodity", "GLU") ) %>%
+      left_join_error_no_match(L103.ag_Prod_Mt_R_C_Y_GLU_2000, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
       # Calculate emission factor, which is
-      mutate( emfact = awb_emission / value ) %>%
-      select( -awb_emission, -value, -AWB_emiss_share, -awb )  %>%
+      mutate(emfact = awb_emission / value) %>%
+      select(-awb_emission, -value, -AWB_emiss_share, -awb)  %>%
       # Replace NaNs with zeros
-      mutate_all( funs( replace(., is.na(.), 0))) ->
+      mutate_all(funs(replace(., is.na(.), 0))) ->
       L121.AWB_Emissions_FactorR_C_Y_GLU
 
     # Produce outputs
