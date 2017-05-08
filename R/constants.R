@@ -37,6 +37,7 @@ aglu.LAND_COVER_YEARS <- sort(unique(c(LAND_HISTORY_YEARS, AGLU_HISTORICAL_YEARS
 GTAP_HISTORICAL_YEAR <- 2000
 CROSIT_HISTORICAL_YEAR <- 2005
 SPEC_AG_PROD_YEARS <- seq(2010, 2050, 5) # Specified ag productivity years
+MIN_PROFIT_MARGIN <- 0.15
 
 # ======================================================================
 # socioeconomics constants
