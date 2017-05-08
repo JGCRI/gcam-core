@@ -18,11 +18,11 @@ the generated outputs: \code{L1233.out_EJ_R_elec_F_tech_Yh_cool}, \code{L1233.in
 original data system was \code{L1233.Elec_water.R} (water level1).
 }
 \description{
-Briefly describe what this chunk does.
+Water consumption and withdrawals for electricity.
 }
 \details{
-Describe in detail what this chunk does.
+Categorizes electiricty generating technologies by water type, and computes water withdrawals and consumption.
 }
 \author{
-YourInitials CurrentMonthName 2017
+SWDT May 2017
 }

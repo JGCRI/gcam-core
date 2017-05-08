@@ -13,7 +13,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author SWDT May 2017
-#' @export
 module_water_L1233.Elec_water <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
@@ -259,7 +258,7 @@ module_water_L1233.Elec_water <- function(command, ...) {
     L1233.out_EJ_R_elec_F_tech_Yh_cool %>%
       add_title("Electricity output by region, fuel, technology, cooling system, and water type") %>%
       add_units("EJ") %>%
-      add_comments("") %>%
+      add_comments("Computed by multiplying shares by technology-level output") %>%
       add_legacy_name("L1233.out_EJ_R_elec_F_tech_Yh_cool") %>%
       add_precursors("common/iso_GCAM_regID",
                      "energy/calibrated_techs",
@@ -275,7 +274,7 @@ module_water_L1233.Elec_water <- function(command, ...) {
     L1233.in_EJ_R_elec_F_tech_Yh_cool %>%
       add_title("Fuel inputs to electricity generation by region, fuel, technology, cooling system, and water type") %>%
       add_units("EJ") %>%
-      add_comments("") %>%
+      add_comments("Computed by multiplying shares by technology-level input") %>%
       add_legacy_name("L1233.in_EJ_R_elec_F_tech_Yh_cool") %>%
       add_precursors("common/iso_GCAM_regID",
                      "energy/calibrated_techs",
@@ -291,7 +290,7 @@ module_water_L1233.Elec_water <- function(command, ...) {
     L1233.wdraw_km3_R_elec %>%
       add_title("Water withdrawals for electricity generation by region and water type") %>%
       add_units("km^3") %>%
-      add_comments("") %>%
+      add_comments("Computed by multiplying generation by water withdrawal coefficients") %>%
       add_legacy_name("L1233.wdraw_km3_R_elec") %>%
       add_precursors("common/iso_GCAM_regID",
                      "energy/calibrated_techs",
@@ -307,7 +306,7 @@ module_water_L1233.Elec_water <- function(command, ...) {
     L1233.wcons_km3_R_elec %>%
       add_title("Water consumption for electricity generation by region and water type") %>%
       add_units("km^3") %>%
-      add_comments("") %>%
+      add_comments("Computed by multiplying generation by water consumption coefficients") %>%
       add_legacy_name("L1233.wcons_km3_R_elec") %>%
       add_precursors("common/iso_GCAM_regID",
                      "energy/calibrated_techs",
@@ -323,7 +322,7 @@ module_water_L1233.Elec_water <- function(command, ...) {
     L1233.shrwt_R_elec_cool_Yf %>%
       add_title("Future cooling system shareweights by region, electric sector, and technology ") %>%
       add_units("Unitless") %>%
-      add_comments("") %>%
+      add_comments("Filled out using cooling shares table") %>%
       add_legacy_name("L1233.shrwt_R_elec_cool_Yf") %>%
       add_precursors("common/iso_GCAM_regID",
                      "energy/calibrated_techs",
