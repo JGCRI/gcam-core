@@ -145,7 +145,8 @@ ELECTRICITY_INPUT_FUELS<- c( "biomass", "coal", "gas", "refined liquids" )
 # and should contain all historical years used by other modules
 socioeconomics.MADDISON_HISTORICAL_YEARS <- seq(1700, 1900, 50) # Years for which to use Maddison data
 socioeconomics.UN_HISTORICAL_YEARS <- c(1950, 1971:2010) # Years for which to use UN data
-
+socioeconomics.AGG_BASE_YEAR <- 1950 # Year used to generate ratios for region -> country downscaling
+socioeconomics.FINAL_HIST_YEAR <- 2010 # Final historical year
 socioeconomics.BASE_POP_SCEN <- "SSP2"
 
 # ======================================================================
