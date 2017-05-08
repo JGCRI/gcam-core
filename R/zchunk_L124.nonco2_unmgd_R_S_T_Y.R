@@ -14,20 +14,19 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_emissions_L124.nonco2_unmgd_R_S_T_Y_DISABLED <- function(command, ...) {
+module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "emissions/EDGAR_nation",
-             FILE = "emissions/EDGAR_sector",
-             "L124.LC_bm2_R_Grass_Yh_GLU_adj",
-             "L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj",
+             FILE = "emissions/EDGAR/EDGAR_sector",
+             FILE = "temp-data-inject/L124.LC_bm2_R_Grass_Yh_GLU_adj",
+             FILE = "temp-data-inject/L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj",
              "EDGAR_gases",
-             FILE = "emissions/GFED_ForestFire_SO2",
-             FILE = "emissions/GFED_Deforest_SO2",
-             FILE = "emissions/GFED_ForestFire_CO",
-             FILE = "emissions/GFED_Deforest_CO",
-             FILE = "emissions/GFED_ForestFire_NOx",
-             FILE = "emissions/GFED_Deforest_NOx"))
+             FILE = "emissions/GFED/GFED_ForestFire_SO2",
+             FILE = "emissions/GFED/GFED_Deforest_SO2",
+             FILE = "emissions/GFED/GFED_ForestFire_CO",
+             FILE = "emissions/GFED/GFED_Deforest_CO",
+             FILE = "emissions/GFED/GFED_ForestFire_NOx",
+             FILE = "emissions/GFED/GFED_Deforest_NOx"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L124.nonco2_tg_R_grass_Y_GLU",
              "L124.nonco2_tg_R_forest_Y_GLU",
@@ -38,17 +37,16 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y_DISABLED <- function(command, ...) {
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    EDGAR_nation <- get_data(all_data, "emissions/EDGAR_nation")
-    EDGAR_sector <- get_data(all_data, "emissions/EDGAR_sector")
-    L124.LC_bm2_R_Grass_Yh_GLU_adj <- get_data(all_data, "L124.LC_bm2_R_Grass_Yh_GLU_adj")
-    L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj <- get_data(all_data, "L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj")
+    EDGAR_sector <- get_data(all_data, "emissions/EDGAR/EDGAR_sector")
+    L124.LC_bm2_R_Grass_Yh_GLU_adj <- get_data(all_data, "temp-data-inject/L124.LC_bm2_R_Grass_Yh_GLU_adj")
+    L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj <- get_data(all_data, "temp-data-inject/L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj")
     EDGAR_gases <- get_data(all_data, "EDGAR_gases")
-    GFED_ForestFire_SO2 <- get_data(all_data, "emissions/GFED_ForestFire_SO2")
-    GFED_Deforest_SO2 <- get_data(all_data, "emissions/GFED_Deforest_SO2")
-    GFED_ForestFire_CO <- get_data(all_data, "emissions/GFED_ForestFire_CO")
-    GFED_Deforest_CO <- get_data(all_data, "emissions/GFED_Deforest_CO")
-    GFED_ForestFire_NOx <- get_data(all_data, "emissions/GFED_ForestFire_NOx")
-    GFED_Deforest_NOx <- get_data(all_data, "emissions/GFED_Deforest_NOx")
+    GFED_ForestFire_SO2 <- get_data(all_data, "emissions/GFED/GFED_ForestFire_SO2")
+    GFED_Deforest_SO2 <- get_data(all_data, "emissions/GFED/GFED_Deforest_SO2")
+    GFED_ForestFire_CO <- get_data(all_data, "emissions/GFED/GFED_ForestFire_CO")
+    GFED_Deforest_CO <- get_data(all_data, "emissions/GFED/GFED_Deforest_CO")
+    GFED_ForestFire_NOx <- get_data(all_data, "emissions/GFED/GFED_ForestFire_NOx")
+    GFED_Deforest_NOx <- get_data(all_data, "emissions/GFED/GFED_Deforest_NOx")
 
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
@@ -84,7 +82,7 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L124.nonco2_tg_R_grass_Y_GLU") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_sector", "temp-data-inject/L124.LC_bm2_R_Grass_Yh_GLU_adj", "EDGAR_gases") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L124.nonco2_tg_R_grass_Y_GLU
@@ -94,7 +92,9 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L124.nonco2_tg_R_forest_Y_GLU") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_sector", "temp-data-inject/L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj", "EDGAR_gases",
+                     "emissions/GFED/GFED_ForestFire_SO2", "emissions/GFED/GFED_Deforest_SO2", "emissions/GFED/GFED_ForestFire_CO",
+                     "emissions/GFED/GFED_Deforest_CO", "emissions/GFED/GFED_ForestFire_NOx", "emissions/GFED/GFED_Deforest_NOx") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L124.nonco2_tg_R_forest_Y_GLU
@@ -104,7 +104,7 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L124.deforest_coefs") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      same_precursors_as("L124.nonco2_tg_R_forest_Y_GLU") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L124.deforest_coefs
