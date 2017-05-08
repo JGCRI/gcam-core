@@ -18,10 +18,10 @@ module_modeltime_L200.modeltime <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(NULL)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c(XML = "L200.ModelTime",
-             XML = "L200.ModelTimeInterYears",
-             XML = "L200.MAGICC",
-             XML = "L200.hector"))
+    return(c("L200.ModelTime",
+             "L200.ModelTimeInterYears",
+             "L200.MAGICC",
+             "L200.hector"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
