@@ -14,7 +14,7 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_aglu_LB133.ag_Costs_USA_C_2005_DISABLED <- function(command, ...) {
+module_aglu_LB133.ag_Costs_USA_C_2005 <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "aglu/USDA_crops",
              FILE = "aglu/USDA_item_cost",
