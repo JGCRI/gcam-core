@@ -1,4 +1,4 @@
-#' module_modeltime_batch_modeltime.xml
+#' module_modeltime_batch_modeltime_xml
 #'
 #' Construct XML data structure for \code{modeltime.xml}.
 #'
@@ -7,8 +7,8 @@
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{modeltime.xml}. The corresponding file in the
-#' original data system was \code{batch_modeltime.xml.R} (modeltime XML).
-module_modeltime_batch_modeltime.xml <- function(command, ...) {
+#' original data system was \code{batch_modeltime_xml.R} (modeltime XML).
+module_modeltime_batch_modeltime_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L200.ModelTime",
               "L200.ModelTimeInterYears"))
