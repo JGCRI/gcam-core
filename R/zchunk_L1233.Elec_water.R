@@ -1,6 +1,6 @@
 #' module_water_L1233.Elec_water
 #'
-#' Briefly describe what this chunk does.
+#' Water consumption and withdrawals for electricity.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,11 +8,11 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L1233.out_EJ_R_elec_F_tech_Yh_cool}, \code{L1233.in_EJ_R_elec_F_tech_Yh_cool}, \code{L1233.wdraw_km3_R_elec}, \code{L1233.wcons_km3_R_elec}, \code{L1233.shrwt_R_elec_cool_Yf}. The corresponding file in the
 #' original data system was \code{L1233.Elec_water.R} (water level1).
-#' @details Describe in detail what this chunk does.
+#' @details Categorizes electiricty generating technologies by water type, and computes water withdrawals and consumption.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
+#' @author SWDT May 2017
 #' @export
 module_water_L1233.Elec_water <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -74,20 +74,22 @@ module_water_L1233.Elec_water <- function(command, ...) {
       group_by(iso, year, fuel) %>%
       summarise(value = sum(value)) %>%
       ungroup() %>%
-      filter(is.na(fuel)==F) %>%
+      filter(is.na(fuel) == F) %>%
       mutate(sector = "electricity generation") -> L1233.out_EJ_ctry_elec_F_Yh
 
-    # INTERPOLATE A23.CoolingSystemShares_RG3 FOR HISTORICAL YEARS
+    # INTERPOLATE A23.CoolingSystemShares_RG3 FOR HISTORICAL YEARS AND HISTORICAL + FUTURE YEARS
     A23.CoolingSystemShares_RG3 %>%
       gather(year, value, -region_GCAM3, -plant_type, -cooling_system, -water_type) %>%
       mutate(year = as.integer(year)) -> A23.CoolingSystemShares_RG3_LF
 
-    INTPERPOLATED_YEARS <- HISTORICAL_YEARS[HISTORICAL_YEARS %in%
+    INTERPOLATED_YEARS <- HISTORICAL_YEARS[HISTORICAL_YEARS %in%
                                               unique(A23.CoolingSystemShares_RG3_LF$year) == F]
+    EXTRAPOLATED_YEARS <- c(HISTORICAL_YEARS, FUTURE_YEARS)[c(HISTORICAL_YEARS, FUTURE_YEARS) %in%
+                                                              unique(A23.CoolingSystemShares_RG3_LF$year) == F]
 
-    setNames(data.frame(matrix(ncol = length(INTPERPOLATED_YEARS),
+    setNames(data.frame(matrix(ncol = length(INTERPOLATED_YEARS),
                                nrow = nrow(A23.CoolingSystemShares_RG3))),
-             as.character(INTPERPOLATED_YEARS)) %>%
+             as.character(INTERPOLATED_YEARS)) %>%
       as_tibble() %>%
       bind_cols(A23.CoolingSystemShares_RG3) %>%
       gather(year, value, -region_GCAM3, -plant_type, -cooling_system, -water_type) %>%
@@ -96,6 +98,18 @@ module_water_L1233.Elec_water <- function(command, ...) {
       group_by(region_GCAM3, plant_type, cooling_system, water_type) %>%
       mutate(value = approx_fun(year, value, rule = 1)) %>%
       ungroup() -> A23.CoolingSystemShares_RG3_LF_interp
+
+    setNames(data.frame(matrix(ncol = length(EXTRAPOLATED_YEARS),
+                               nrow = nrow(A23.CoolingSystemShares_RG3))),
+             as.character(EXTRAPOLATED_YEARS)) %>%
+      as_tibble() %>%
+      bind_cols(A23.CoolingSystemShares_RG3) %>%
+      gather(year, value, -region_GCAM3, -plant_type, -cooling_system, -water_type) %>%
+      mutate(year = as.integer(year)) %>%
+      arrange(year) %>%
+      group_by(region_GCAM3, plant_type, cooling_system, water_type) %>%
+      mutate(value = approx_fun(year, value, rule = 1)) %>%
+      ungroup() -> A23.CoolingSystemShares_RG3_LF_future
 
     # WRITE OUT REGIONAL LEVEL COOLING INFORMATION TO ALL COUNTRIES...
     # ... AND MATCH GCAM region_GCAM3 INTO TIBBLE
@@ -154,7 +168,7 @@ module_water_L1233.Elec_water <- function(command, ...) {
                 by = c("GCAM_region_ID", "sector", "fuel", "technology", "year")) %>%
       mutate(share = output_cool / output) %>% select(-output_cool, -output) %>%
       arrange(GCAM_region_ID, sector, fuel, technology, cooling_system, water_type, plant_type, year) %>%
-      mutate(share = if_else(year == 2010 & is.na(share), -1, share)) ->
+      mutate(share = if_else(year == tail(HISTORICAL_YEARS, 1) & is.na(share), -1, share)) ->
       L1233.shares_R_elec_F_tech_Yh_cool
 
     ## REMOVE NA VALUES BY PULLING FROM YEAR AHEAD IN EACH GROUP
@@ -167,7 +181,7 @@ module_water_L1233.Elec_water <- function(command, ...) {
 
     # STEP 5: MULTIPLY SHARES BY TECHNOLOGY-LEVEL OUTPUT TO COMPUTE NEW CALIBRATION DATASET
     L1233.shares_R_elec_F_tech_Yh_cool %>%
-      left_join_error_no_match(L1231.out_EJ_R_elec_F_tech_Yh,
+      left_join(L1231.out_EJ_R_elec_F_tech_Yh,
                                by = c("GCAM_region_ID", "sector", "fuel", "technology", "year")) %>%
       mutate(value = share * value) %>% select(-share) -> L1233.out_EJ_R_elec_F_tech_Yh_cool
 
@@ -178,70 +192,74 @@ module_water_L1233.Elec_water <- function(command, ...) {
     L1233.shares_R_elec_F_tech_Yh_cool %>%
       filter(fuel %in% L1231.in_EJ_R_elec_F_tech_Yh$fuel) %>%
       filter(technology %in% L1231.in_EJ_R_elec_F_tech_Yh$technology) %>%
-      left_join_error_no_match(L1231.in_EJ_R_elec_F_tech_Yh,
+      left_join(L1231.in_EJ_R_elec_F_tech_Yh,
                                by = c("GCAM_region_ID", "sector", "fuel", "technology", "year")) %>%
       mutate(value = share * value) %>% select(-share) -> L1233.in_EJ_R_elec_F_tech_Yh_cool
 
+
     # STEP 7: MULTIPLY ELECTRICITY GENERATION BY WITHDRAWAL AND CONSUMPTION...
     # ... COEFFICIENTS, AND AGGREGATE BY REGION
+
+    # WITHDRAWALS
     L1233.out_EJ_R_elec_F_tech_Yh_cool %>%
       left_join_error_no_match(Macknick_elec_water_m3MWh,
                                by = c("sector", "fuel", "technology", "cooling_system", "water_type")) %>%
       mutate(value = value * water_withdrawals / CONV_MWH_GJ) %>%
       select(-water_withdrawals, - water_consumption) -> L1233.wdraw_km3_R_elec_F_tech_Yh_cool
-
     L1233.wdraw_km3_R_elec_F_tech_Yh_cool %>%
       group_by(GCAM_region_ID, sector, water_type, year) %>%
       summarise(value = sum(value)) %>%
       ungroup() %>%
-      filter(water_type != "none") -> check
+      filter(water_type != "none") -> L1233.wdraw_km3_R_elec
+
+    # CONSUMPTION
+    L1233.out_EJ_R_elec_F_tech_Yh_cool %>%
+      left_join_error_no_match(Macknick_elec_water_m3MWh,
+                               by = c("sector", "fuel", "technology", "cooling_system", "water_type")) %>%
+      mutate(value = value * water_consumption / CONV_MWH_GJ) %>%
+      select(-water_withdrawals, - water_consumption) -> L1233.wcons_km3_R_elec_F_tech_Yh_cool
+    L1233.wcons_km3_R_elec_F_tech_Yh_cool %>%
+      group_by(GCAM_region_ID, sector, water_type, year) %>%
+      summarise(value = sum(value)) %>%
+      ungroup() %>%
+      filter(water_type != "none") -> L1233.wcons_km3_R_elec
+
+    # STEP 8: COMPUTE REGIONAL-LEVEL FUTURE SHARE WEIGHTS...
+    # ... BASED ON GCAM 3.0, 14-REGION ASSUMPTIONS. NOTE: USES ...
+    # ... REPRESENTATIVE COUNTRIES RATHER THAN WEIGHTED AVERAGES ...
+    # ... (COUNTRY WITH MOST ELEC AS THE REPRESENTATIVE)
+    L1233.out_EJ_ctry_elec_Fi_Yh_full %>%
+      filter(year == tail(HISTORICAL_YEARS, 1)) %>%
+      group_by(iso, GCAM_region_ID) %>%
+      summarise(value = sum(value)) %>%
+      arrange(GCAM_region_ID) %>% ungroup() -> L1233.out_EJ_ctry_elec_Yfby
+
+    L1233.out_EJ_ctry_elec_Yfby %>%
+      group_by(GCAM_region_ID) %>%
+      filter(value == max(value)) %>% ungroup() %>%
+      left_join_error_no_match(select(iso_GCAM_regID, -country_name),
+                               by = c("iso", "GCAM_region_ID")) -> L1233.R_iso_RG3
 
 
+    # STEP 9: FILL OUT TABLE OF ALL TECHNOLOGIES TO MATCH IN SHARES
+    elec_tech_water_map %>%
+      select(sector, fuel, technology, cooling_system, water_type, plant_type) %>%
+      repeat_add_columns(select(iso_GCAM_regID, GCAM_region_ID) %>% unique()) %>%
+      arrange(GCAM_region_ID) %>%
+      left_join(select(L1233.R_iso_RG3, -value, -iso),
+                by = "GCAM_region_ID") %>%
+      mutate(plant_type = sub( "\\ \\(CCS\\)", "", plant_type)) %>%
+      right_join(A23.CoolingSystemShares_RG3_LF_future,
+                by = c("cooling_system", "water_type", "plant_type", "region_GCAM3")) %>%
+      select(-region_GCAM3, -plant_type) ->
+      L1233.shrwt_R_elec_cool_Yf
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses vecpaste
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses repeat_and_add_vector
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # ===================================================
-
-    # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    ## OUTPUTS
+    L1233.out_EJ_R_elec_F_tech_Yh_cool %>%
+      add_title("Electricity output by region, fuel, technology, cooling system, and water type") %>%
+      add_units("EJ") %>%
+      add_comments("") %>%
       add_legacy_name("L1233.out_EJ_R_elec_F_tech_Yh_cool") %>%
       add_precursors("common/iso_GCAM_regID",
                      "energy/calibrated_techs",
@@ -252,14 +270,12 @@ module_water_L1233.Elec_water <- function(command, ...) {
                      "water/A23.CoolingSystemShares_RG3",
                      "water/elec_tech_water_map",
                      "water/Macknick_elec_water_m3MWh") %>%
-      # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1233.out_EJ_R_elec_F_tech_Yh_cool
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L1233.in_EJ_R_elec_F_tech_Yh_cool %>%
+      add_title("Fuel inputs to electricity generation by region, fuel, technology, cooling system, and water type") %>%
+      add_units("EJ") %>%
+      add_comments("") %>%
       add_legacy_name("L1233.in_EJ_R_elec_F_tech_Yh_cool") %>%
       add_precursors("common/iso_GCAM_regID",
                      "energy/calibrated_techs",
@@ -270,14 +286,12 @@ module_water_L1233.Elec_water <- function(command, ...) {
                      "water/A23.CoolingSystemShares_RG3",
                      "water/elec_tech_water_map",
                      "water/Macknick_elec_water_m3MWh") %>%
-      # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1233.in_EJ_R_elec_F_tech_Yh_cool
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L1233.wdraw_km3_R_elec %>%
+      add_title("Water withdrawals for electricity generation by region and water type") %>%
+      add_units("km^3") %>%
+      add_comments("") %>%
       add_legacy_name("L1233.wdraw_km3_R_elec") %>%
       add_precursors("common/iso_GCAM_regID",
                      "energy/calibrated_techs",
@@ -288,14 +302,12 @@ module_water_L1233.Elec_water <- function(command, ...) {
                      "water/A23.CoolingSystemShares_RG3",
                      "water/elec_tech_water_map",
                      "water/Macknick_elec_water_m3MWh") %>%
-      # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1233.wdraw_km3_R_elec
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L1233.wcons_km3_R_elec %>%
+      add_title("Water consumption for electricity generation by region and water type") %>%
+      add_units("km^3") %>%
+      add_comments("") %>%
       add_legacy_name("L1233.wcons_km3_R_elec") %>%
       add_precursors("common/iso_GCAM_regID",
                      "energy/calibrated_techs",
@@ -306,14 +318,12 @@ module_water_L1233.Elec_water <- function(command, ...) {
                      "water/A23.CoolingSystemShares_RG3",
                      "water/elec_tech_water_map",
                      "water/Macknick_elec_water_m3MWh") %>%
-      # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1233.wcons_km3_R_elec
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L1233.shrwt_R_elec_cool_Yf %>%
+      add_title("Future cooling system shareweights by region, electric sector, and technology ") %>%
+      add_units("Unitless") %>%
+      add_comments("") %>%
       add_legacy_name("L1233.shrwt_R_elec_cool_Yf") %>%
       add_precursors("common/iso_GCAM_regID",
                      "energy/calibrated_techs",
@@ -324,7 +334,6 @@ module_water_L1233.Elec_water <- function(command, ...) {
                      "water/A23.CoolingSystemShares_RG3",
                      "water/elec_tech_water_map",
                      "water/Macknick_elec_water_m3MWh") %>%
-      # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1233.shrwt_R_elec_cool_Yf
 
