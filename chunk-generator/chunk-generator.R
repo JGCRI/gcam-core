@@ -158,6 +158,7 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
     midata <- midata_arr[i]
     miheader <- midata_arr[i+1]
     mibatch <- midata_arr[i+2]
+    mibatch <- sub('.xml$', '_xml', mibatch)
     i <- i + 3
     if(is.null(XMLBATCH_LIST[[mibatch]])) {
       XMLBATCH_LIST[[mibatch]] <<- list(data=c(), header=c(), xml="", module="")
@@ -170,6 +171,7 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
   i <- 1
   while(i < length(batchxml_arr)) {
     mibatch <- batchxml_arr[i]
+    mibatch <- sub('.xml$', '_xml', mibatch)
     mimodule <- tolower(gsub("_XML_FINAL", "", batchxml_arr[i+1]))
     mixml <- batchxml_arr[i+2]
     i <- i + 3
