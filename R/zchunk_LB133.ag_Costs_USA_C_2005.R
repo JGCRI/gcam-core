@@ -40,19 +40,22 @@ module_aglu_LB133.ag_Costs_USA_C_2005 <- function(command, ...) {
 
     # convert USDA_cost_data to long form:
     USDA_cost_data %>%
-      gather(year, value, -Crop, -Region, -Item, -Unit) %>%
+      gather(year, value, -Crop, -Item, -Unit) %>%
       # force year to integer
       mutate(year = as.integer(year)) ->
       USDA_cost_data
 
     # 2. Perform computations
 
-    # Lines 35-43 in original file
-    # old comment: Add vectors for GCAM commodity and cost component
-    # Take USDA item cost data from input table USDA_cost_data, and add GCAM commodity and GTAP crop mapping info
+    # Lines 35-67 in original file
+    # Get the cost in 1975 dollars for each GCAM commodity - Item combination covered in the USDA_data_cost table.
+    # First, Take USDA item cost data from input table USDA_cost_data, and add GCAM commodity and GTAP crop mapping info
     # from the USDA crop mapping input table, USDA_crops.
     # Then add cost type (variable or na) from the USDA_item_cost input table.
-    # Finally, select only vairable price data, only in MODEL_COST_YEARS = 2001:2005 by default
+    # Next, select only vairable price data, only in MODEL_COST_YEARS = 2001:2005 by default
+    # Finally, convert each cost from the given nominal year dollars to 1975 dollars, average across MODEL_COST_YEARS,
+    # and convert from dollars/acre to dollars/m2.
+    #
     # Take USDA item cost data:
     USDA_cost_data %>%
       # join in the GCAM and GTAP mapping information:
@@ -62,11 +65,130 @@ module_aglu_LB133.ag_Costs_USA_C_2005 <- function(command, ...) {
       # select only variable cost data and only MODEL_COST_YEARS
       filter(cost_type == "variable", year %in% MODEL_COST_YEARS)  %>%
       # select just identifying information of interest:
-      select(GCAM_commodity, GTAP_crop, Item, year, value) ->
-      # in a table of costs ub US Dollars/acre by commodity and year:
-      L133.ag_Cost_USDacr_C_Y
+      select(GCAM_commodity, GTAP_crop, Item, year, value) %>%
+      # Convert costs from the given nominal dollars to 1975 dollars:
+      # have to group by years and store in a dummy value1 column to get the conversion correct:
+      group_by(GCAM_commodity, GTAP_crop, Item, year, value) %>%
+      mutate(value1 = value * gdp_deflator(1975, base_year = year)) %>%
+      # ungroup, drop value and rename value1 to value to get the correct table of 1975 dollars/acre:
+      ungroup() %>% select(-value) %>% rename(value = value1) %>%
+      # Calculate the average across years for each commodity-item combination, and convert to dollars/m2:
+      #   (In particular, the average is computed across non-NA years. So if only 3 of 5 years are non-NA,
+      #   the average is over those 3 numbers, not over 5 with 0's filled in for the NA's.)
+      group_by(GCAM_commodity, GTAP_crop, Item) %>%
+      mutate(cost_75USDm2 = mean(value[!(is.na(value))]) * CONV_M2_ACR) %>%
+      # if all years in MODEL_COST_YEARS have NA values, the above calculation will give NaN for the
+      # mean value. Overwrite this to 0:
+      # old comment: (indicates a variable cost not disaggregated in the target years)
+      mutate(cost_75USDm2 = if_else(is.na(cost_75USDm2), 0, cost_75USDm2)) ->
+      # store in a table of costs in 1975 dollars per square meter, by commodity and year:
+      L133.ag_Cost_75USDm2_Cusda_Yusda
 
 
+    # Lines 69-72 in original file
+    # Process cost data from the level of USDA commodity and years to the level of USDA commodity =
+    # GCAM_commodity - GTAP_crop combination.
+    # This is an intermediate calculation used for multiple other calculations.
+    #
+    # To calculate this intermediate step:
+    # Aggregate variable cost components by summing cost_75USDm2 in L133.ag_Cost_75USDm2_Cusda_Yusda
+    # to the level of GCAM commodity and GTAP Crop.
+    #
+    # Take the table L133.ag_Cost_75USDm2_Cusda_Yusda
+    L133.ag_Cost_75USDm2_Cusda_Yusda %>%
+      # drop information related to year and keep only unique resulting rows:
+      select(-year, -value) %>% unique() %>%
+      # aggregate average cost to the level of GCAM_commodity and GTAP_crop:
+      group_by(GCAM_commodity, GTAP_crop) %>%
+      summarise(cost_75USDm2 = sum(cost_75USDm2)) ->
+      # store in a table of cost in 1975 dollars/m2 by commodity:
+      L133.ag_Cost_75USDm2_Cusda
+
+
+    # Lines 74-95 in original file.
+    # Cost in 1975 USD/kg is calculated for each GCAM_commodity.
+
+    # First,
+    # LDS harvested area information is aggregated and joined to the USDA commodity cost data, L133.ag_Cost_75USDm2_Cudsa
+    # This harvested area information is then used to compute:
+    # aggregated expenditures at the GCAM_commodity level,
+    # aggregated harvested area at the GCAM_commodity level,
+    # and aggregated Cost = aggregated expenditures / aggregated harvested area at the GCAM_commodity level.
+    # Second,
+
+    # Lines 74-77
+    # Prepare LDS harvested area data, input L100.LDS_ag_HA_ha, by subsetting to USA only data and aggregating
+    # to the level of GTAP_crop:
+    L100.LDS_ag_HA_ha %>%
+      # only consider USA data and the GTAP crops present in above USDA data:
+      filter(iso == "usa", GTAP_crop %in% L133.ag_Cost_75USDm2_Cusda$GTAP_crop) %>%
+      # aggregate to the level of GTAP crop:
+      group_by(GTAP_crop) %>%
+      summarise(value = sum(value)) ->
+      # store in a table of USA harvested area data:
+      L133.LDS_ag_HA_ha_USA
+
+    # Use the LDS data to calculate harvested area and expenditure  = cost * harvested area for each GCAM_commdity-GTAP_crop
+    # combination. Then expenditure and harvested area are aggregated over GTAP_crops to get  aggregate expediture and
+    # aggregate harvested area for each GCAM_commodity.
+    # Finally, aggregated cost is calculated for each GCAM_commodity by aggregate cost = aggregate expenditure/ aggregate HA.
+    #
+    # Take the USDA commodity cost data:
+    L133.ag_Cost_75USDm2_Cusda %>%
+      # add harvested area in billion square meters for each GTAP crop by joining the process LDS HA data,
+      # L133.LDS_ag_HA_ha_USA and converting the value:
+      left_join_error_no_match(L133.LDS_ag_HA_ha_USA, by = c("GTAP_crop")) %>%
+      rename(HA_bm2 = value) %>% mutate(HA_bm2 = HA_bm2 * CONV_HA_BM2) %>%
+      # Calculate the total expenditure in billion 1975 dollars for each USDA commodity = GCAM_commodity-GTAP_crop combo
+      # by Expenditures in bil75USD = Cost in 1975 dollars/square metere * Harvested area in billion square meters
+      #    Expenditures_bil75USD    = cost_75USDm2                        * HA_bm2:
+      mutate(Expenditures_bil75USD = cost_75USDm2 * HA_bm2)  %>%
+      # aggregate over GTAP_crops to get Expenditures and harvested area at the level of GCAM_commodity:
+      group_by(GCAM_commodity) %>%
+      summarise(HA_bm2 = sum(HA_bm2), Expenditures_bil75USD = sum(Expenditures_bil75USD)) %>%
+      # recalculate Cost for each GCAM commodity accounting for this aggregation;
+      # aggregated cost = aggregated expenditures/aggregated harvested area:
+      mutate(Cost_75USDm2 = Expenditures_bil75USD / HA_bm2) ->
+      L133.ag_Cost_75USDm2_C
+
+
+    # Lines 86-95 in original file:
+    # printlog( "Computing national average yields to translate costs per m2 to costs per kg")
+    # LDS agricultural production information is aggregated and joined to the  commodity cost data, L133.ag_Cost_75USDm2_C
+    # This production information is then used to compute Yield = kg/m^2 for each commodity.
+    # This yield information is then used to convert Cost/m^2 to Cost/kg.
+
+
+    # Lines 88-90
+    # Prepare LDS ag production data, input L100.LDS_ag_prod_t, by subsetting to USA only data and aggregating
+    # to the level of GCAM_commodity:
+    L100.LDS_ag_prod_t %>%
+      # only consider USA data and the GTAP crops present in above USDA data:
+      filter(iso == "usa", GTAP_crop %in% L133.ag_Cost_75USDm2_Cusda$GTAP_crop) %>%
+      # add GCAM_commodity information
+      left_join_error_no_match(USDA_crops, by = c("GTAP_crop")) %>%
+      # convert data from t to Mt:
+      mutate(value = value * CONV_TON_MEGATON) %>%
+      # aggregate to the level of GCAM_commodity:
+      group_by(GCAM_commodity) %>%
+      summarise(value = sum(value)) ->
+      # store in a table of LDS production for the USA by commodity in Mt:
+      L133.ag_Prod_Mt_USA_C
+
+    # Take the Cost by commodity table:
+    L133.ag_Cost_75USDm2_C %>%
+      # join the production data by Commodity:
+      left_join_error_no_match(L133.ag_Prod_Mt_USA_C, by = c("GCAM_commodity")) %>%
+      rename(Prod_Mt = value) %>%
+      # use the Aggregated Production and Aggregated Harvested Area information to compute
+      # aggregate yield = production / harvested area for each GCAM_commdity in kg/m^2:
+      mutate(Yield_kgm2 = Prod_Mt / HA_bm2) %>%
+      # Calculate Cost in USD/kg by using yield to convert from Cost in USD/m2;
+      # Cost_75USDkg = Cost_75USDm2 / Yield_kgm2
+      # USD/kg       = (USD/m2)     / (kg/m2):
+      mutate(Cost_75USDkg = Cost_75USDm2 / Yield_kgm2) ->
+      # store in the table of costs in USD/m2 by GCAM commodity"
+      L133.ag_Cost_75USDm2_C
 
 
     # Produce outputs
