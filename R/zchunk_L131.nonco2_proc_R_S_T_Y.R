@@ -21,7 +21,6 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "common/iso_GCAM_regID",
              FILE = "emissions/EDGAR/EDGAR_sector",
-             FILE = "emissions/EDGAR/EDGAR_nation",
              FILE = "emissions/EPA_ghg_tech",
              FILE = "emissions/GCAM_sector_tech",
              "EDGAR_gases",
@@ -37,7 +36,6 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     EDGAR_sector <- get_data(all_data, "emissions/EDGAR/EDGAR_sector")
-    EDGAR_nation <- get_data(all_data, "emissions/EDGAR/EDGAR_nation")
     EPA_ghg_tech <- get_data(all_data, "emissions/EPA_ghg_tech")
     GCAM_sector_tech <- get_data(all_data, "emissions/GCAM_sector_tech")
     EPA_Ind <- get_data(all_data, "emissions/EPA_FCCC_IndProc_2005")
@@ -85,7 +83,6 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
       mutate(tech_share = tech_emissions.x / sector_emissions) -> # calculate tech_share
       L131.nonco2_pct_R_prc_S_S_2005
 
-
     # Third: Disaggregate EDGAR emissions to subsectors
     # First aggregate all EDGAR data and subset for processing sectors
 
@@ -95,7 +92,8 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
       bind_rows(filter(EDGAR_gases, Non.CO2 != "NMVOC")) %>%
       left_join(EDGAR_sector, by = c("IPCC_description", "IPCC")) %>%
       rename(EDGAR_agg_sector = agg_sector) %>%
-      left_join_keep_first_only(EDGAR_nation, by = "ISO_A3") %>%
+      mutate( iso = tolower(ISO_A3), ISO_A3 = NULL ) %>%
+      change_iso_code("rou", "rom") %>%
       left_join(iso_GCAM_regID, by = "iso") %>%
       filter(EDGAR_agg_sector %in% c("industry_processes", "chemicals", "landfills", "wastewater", "aerosols",
                                      "metals", "foams", "solvents", "semiconductors")) %>%
@@ -142,7 +140,6 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
       add_precursors("common/GCAM_region_names",
                      "common/iso_GCAM_regID",
                      "emissions/EDGAR/EDGAR_sector",
-                     "emissions/EDGAR/EDGAR_nation",
                      "emissions/EPA_ghg_tech",
                      "emissions/GCAM_sector_tech",
                      "EDGAR_gases",
