@@ -21,12 +21,7 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y_DISABLED <- function(command, ...) {
              FILE = "emissions/EDGAR_sector",
              "L124.LC_bm2_R_Grass_Yh_GLU_adj",
              "L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj",
-             FILE = "emissions/EDGAR_SO2",
-             FILE = "emissions/EDGAR_CO",
-             FILE = "emissions/EDGAR_NOx",
-             FILE = "emissions/EDGAR_NMVOC",
-             FILE = "emissions/EDGAR_CH4",
-             FILE = "emissions/EDGAR_N2O",
+             "EDGAR_gases",
              FILE = "emissions/GFED_ForestFire_SO2",
              FILE = "emissions/GFED_Deforest_SO2",
              FILE = "emissions/GFED_ForestFire_CO",
@@ -47,12 +42,7 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y_DISABLED <- function(command, ...) {
     EDGAR_sector <- get_data(all_data, "emissions/EDGAR_sector")
     L124.LC_bm2_R_Grass_Yh_GLU_adj <- get_data(all_data, "L124.LC_bm2_R_Grass_Yh_GLU_adj")
     L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj <- get_data(all_data, "L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj")
-    EDGAR_SO2 <- get_data(all_data, "emissions/EDGAR_SO2")
-    EDGAR_CO <- get_data(all_data, "emissions/EDGAR_CO")
-    EDGAR_NOx <- get_data(all_data, "emissions/EDGAR_NOx")
-    EDGAR_NMVOC <- get_data(all_data, "emissions/EDGAR_NMVOC")
-    EDGAR_CH4 <- get_data(all_data, "emissions/EDGAR_CH4")
-    EDGAR_N2O <- get_data(all_data, "emissions/EDGAR_N2O")
+    EDGAR_gases <- get_data(all_data, "EDGAR_gases")
     GFED_ForestFire_SO2 <- get_data(all_data, "emissions/GFED_ForestFire_SO2")
     GFED_Deforest_SO2 <- get_data(all_data, "emissions/GFED_Deforest_SO2")
     GFED_ForestFire_CO <- get_data(all_data, "emissions/GFED_ForestFire_CO")
