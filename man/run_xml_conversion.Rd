@@ -9,6 +9,10 @@ run_xml_conversion(dot)
 \arguments{
 \item{dot}{The current state of the pipeline started from \code{create_xml}}
 }
+\value{
+The argument passed in unmodified in case a user wanted run the
+conversion again at a later time.
+}
 \description{
 Run the CSV to XML conversion using the model interface tool.  This method
 should be the final call in a pipeline started with \code{\link{create_xml}}
