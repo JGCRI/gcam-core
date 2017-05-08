@@ -10,7 +10,7 @@ check_chunk_outputs(chunk, chunk_data, chunk_inputs, promised_outputs,
 \arguments{
 \item{chunk}{Chunk name, character}
 
-\item{chunk_data}{Data produced by chunk}
+\item{chunk_data}{Data produced by chunk, generally a tibble}
 
 \item{chunk_inputs}{Names of chunk inputs, character}
 

@@ -22,7 +22,7 @@ run_chunk <- function(chunk, all_data) {
 #' warnings and/or errors if any deviance.
 #'
 #' @param chunk Chunk name, character
-#' @param chunk_data Data produced by chunk
+#' @param chunk_data Data produced by chunk, generally a tibble
 #' @param chunk_inputs Names of chunk inputs, character
 #' @param promised_outputs Names of chunk's promised outputs, character
 #' @param outputs_xml Logical vector: are outputs XML?
