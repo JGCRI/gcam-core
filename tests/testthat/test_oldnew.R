@@ -12,9 +12,10 @@ test_that("matches old data system output", {
   # Look for output data in OUTPUTS_DIR under top level
   # (as this code will be run in tests/testthat)
   outputs_dir <- normalizePath(file.path("../..", OUTPUTS_DIR))
+  xml_dir <- normalizePath(file.path("../..", XML_DIR))
 
   if (identical(Sys.getenv("TRAVIS"), "true")) {
-    driver(write_outputs = TRUE, outdir = outputs_dir)
+    driver(write_outputs = TRUE, outdir = outputs_dir, xmldir = xml_dir)
     # The following two tests are only run on Travis because they will fail
     # during the R CMD CHECK process locally (as the R build process removes outputs/)
     expect_equivalent(file.access(outputs_dir, mode = 4), 0,  # outputs_dir exists and is readable
