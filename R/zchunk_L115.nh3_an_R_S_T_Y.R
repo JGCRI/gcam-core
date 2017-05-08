@@ -1,4 +1,4 @@
-#' module_emissions_L142.pfc_R_S_T_Y
+#' module_emissions_L115.nh3_an_R_S_T_Y
 #'
 #' Briefly describe what this chunk does.
 #'
@@ -6,47 +6,37 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L142.pfc_R_S_T_Yh}. The corresponding file in the
-#' original data system was \code{L142.pfc_R_S_T_Y.R} (emissions level1).
+#' the generated outputs: \code{L115.nh3_tg_R_an_C_Sys_Fd_Yh}. The corresponding file in the
+#' original data system was \code{L115.nh3_an_R_S_T_Y.R} (emissions level1).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_emissions_L142.pfc_R_S_T_Y_DISABLED <- function(command, ...) {
+module_emissions_L115.nh3_an_R_S_T_Y_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/GCAM_region_names",
-             FILE = "emissions/gcam_fgas_tech",
-             FILE = "emissions/other_f_gases",
-             FILE = "temp-data-inject/L144.in_EJ_R_bld_serv_F_Yh",
-             FILE = "common/iso_GCAM_regID",
-             FILE = "emissions/EDGAR_sector_fgas",
-             # ** NOTE *** the following file has been removed from the repo
-             # please talk to Kate about why and how to work around this. Thanks
-             # FILE = "emissions/EDGAR_nation",
-             FILE = "emissions/A41.GWP",
-             FILE = "emissions/EDGAR_SF6",
-             FILE = "emissions/EDGAR_C2F6",
-             FILE = "emissions/EDGAR_CF4"))
+    return(c(FILE = "common/iso_GCAM_regID",
+             FILE = "emissions/EDGAR/EDGAR_sector",
+             FILE = "emissions/EDGAR/EDGAR_nation",
+             FILE = "emissions/GCAM_sector_tech",
+             "L107.an_Prod_Mt_R_C_Sys_Fd_Y",
+             "L105.nh3_tgmt_USA_an_Yh",
+             FILE = "emissions/EDGAR/EDGAR_NH3"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L142.pfc_R_S_T_Yh"))
+    return(c("L115.nh3_tg_R_an_C_Sys_Fd_Yh"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    gcam_fgas_tech <- get_data(all_data, "emissions/gcam_fgas_tech")
-    other_f_gases <- get_data(all_data, "emissions/other_f_gases")
-    L144.in_EJ_R_bld_serv_F_Yh <- get_data(all_data, "temp-data-inject/L144.in_EJ_R_bld_serv_F_Yh")
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    EDGAR_sector_fgas <- get_data(all_data, "emissions/EDGAR_sector_fgas")
+    EDGAR_sector <- get_data(all_data, "emissions/EDGAR_sector")
     EDGAR_nation <- get_data(all_data, "emissions/EDGAR_nation")
-    A41.GWP <- get_data(all_data, "emissions/A41.GWP")
-    EDGAR_SF6 <- get_data(all_data, "emissions/EDGAR_SF6")
-    EDGAR_C2F6 <- get_data(all_data, "emissions/EDGAR_C2F6")
-    EDGAR_CF4 <- get_data(all_data, "emissions/EDGAR_CF4")
+    GCAM_sector_tech <- get_data(all_data, "emissions/GCAM_sector_tech")
+    L107.an_Prod_Mt_R_C_Sys_Fd_Y <- get_data(all_data, "L107.an_Prod_Mt_R_C_Sys_Fd_Y")
+    L105.nh3_tgmt_USA_an_Yh <- get_data(all_data, "L105.nh3_tgmt_USA_an_Yh")
+    EDGAR_NH3 <- get_data(all_data, "emissions/EDGAR_NH3")
 
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
@@ -67,8 +57,6 @@ module_emissions_L142.pfc_R_S_T_Y_DISABLED <- function(command, ...) {
     # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # NOTE: This code uses vecpaste
     # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses repeat_and_add_vector
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # ===================================================
 
     # Produce outputs
@@ -81,13 +69,13 @@ module_emissions_L142.pfc_R_S_T_Y_DISABLED <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L142.pfc_R_S_T_Yh") %>%
+      add_legacy_name("L115.nh3_tg_R_an_C_Sys_Fd_Yh") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L142.pfc_R_S_T_Yh
+      L115.nh3_tg_R_an_C_Sys_Fd_Yh
 
-    return_data(L142.pfc_R_S_T_Yh)
+    return_data(L115.nh3_tg_R_an_C_Sys_Fd_Yh)
   } else {
     stop("Unknown command")
   }
