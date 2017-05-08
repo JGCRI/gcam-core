@@ -436,7 +436,6 @@ create_xml <- function(xml_file, mi_header = NULL) {
 #' @return A "data structure" to hold the various parts needed to run the model
 #' interface CSV to XML conversion.
 #' @author PP March 2017
-#' @export
 add_xml_data <- function(dot, data, header) {
   curr_table <- list(data = data, header = header)
   dot$data_tables[[length(dot$data_tables)+1]] <- curr_table
@@ -452,7 +451,7 @@ make_run_xml_conversion <- function() {
   function(dot) {
     use_java <- getOption("gcamdata.use_java")
     if(!isTRUE(use_java) && !XML_WARNING_GIVEN) {
-      warning("Skipping conversion as global option gcamdata.use_java is not TRUE")
+      message("Skipping XML conversion as global option gcamdata.use_java is not TRUE")
       # set the flag to avoid repeating the warning.
       XML_WARNING_GIVEN <<- TRUE
     } else if(isTRUE(use_java)) {
@@ -501,7 +500,6 @@ make_run_xml_conversion <- function() {
 #' @return The argument passed in unmodified in case a user wanted run the
 #' conversion again at a later time.
 #' @author PP March 2017
-#' @export
 run_xml_conversion <- make_run_xml_conversion()
 
 
