@@ -19,8 +19,10 @@ original data system was \code{LA131.enduse.R} (energy level1).
 }
 \description{
 This chunk generates the following two tables:
-     Final scaled energy input by GCAM region / end-use sector, incl CHP / fuel / historical year; and
-     Share of heat consumption by end-use sector within GCAM region / historical year
+\itemize{
+ \item{Final scaled energy input by GCAM region / end-use sector, incl CHP / fuel / historical year; and}
+ \item{Share of heat consumption by end-use sector within GCAM region / historical year}
+}
 }
 \details{
 Describe in detail what this chunk does.

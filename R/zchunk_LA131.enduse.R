@@ -1,8 +1,10 @@
 #' module_energy_LA131.enduse
 #'
 #' This chunk generates the following two tables:
-#'      Final scaled energy input by GCAM region / end-use sector, incl CHP / fuel / historical year; and
-#'      Share of heat consumption by end-use sector within GCAM region / historical year
+#' \itemize{
+#'  \item{Final scaled energy input by GCAM region / end-use sector, incl CHP / fuel / historical year; and}
+#'  \item{Share of heat consumption by end-use sector within GCAM region / historical year}
+#' }
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -15,7 +17,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author AJS May 2017
-#'
 module_energy_LA131.enduse <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "energy/A_regions",
@@ -35,34 +36,30 @@ module_energy_LA131.enduse <- function(command, ...) {
 
     # Load required inputs
     A_regions <- get_data(all_data, "energy/A_regions")
+
     enduse_sector_aggregation <- get_data(all_data, "energy/enduse_sector_aggregation")
-    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh")
-    L1011.en_bal_EJ_R_Si_Fi_Yh %>%
+
+    get_data(all_data, "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh") %>%
       gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
       mutate(year = as.integer(substr(year, 2, 5))) -> L1011.en_bal_EJ_R_Si_Fi_Yh
 
-    L121.in_EJ_R_unoil_F_Yh <- get_data(all_data, "temp-data-inject/L121.in_EJ_R_unoil_F_Yh")
-    L121.in_EJ_R_unoil_F_Yh %>%
+    get_data(all_data, "temp-data-inject/L121.in_EJ_R_unoil_F_Yh") %>%
       gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
       mutate(year = as.integer(substr(year, 2, 5))) -> L121.in_EJ_R_unoil_F_Yh
 
-    L122.in_EJ_R_refining_F_Yh <- get_data(all_data, "temp-data-inject/L122.in_EJ_R_refining_F_Yh")
-    L122.in_EJ_R_refining_F_Yh %>%
+    get_data(all_data, "temp-data-inject/L122.in_EJ_R_refining_F_Yh") %>%
       gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
       mutate(year = as.integer(substr(year, 2, 5))) -> L122.in_EJ_R_refining_F_Yh
 
-    L124.out_EJ_R_heat_F_Yh <- get_data(all_data, "temp-data-inject/L124.out_EJ_R_heat_F_Yh")
-    L124.out_EJ_R_heat_F_Yh %>%
+    get_data(all_data, "temp-data-inject/L124.out_EJ_R_heat_F_Yh") %>%
       gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
       mutate(year = as.integer(substr(year, 2, 5))) -> L124.out_EJ_R_heat_F_Yh
 
-    L124.out_EJ_R_heatfromelec_F_Yh <- get_data(all_data, "temp-data-inject/L124.out_EJ_R_heatfromelec_F_Yh")
-    L124.out_EJ_R_heatfromelec_F_Yh %>%
+   get_data(all_data, "temp-data-inject/L124.out_EJ_R_heatfromelec_F_Yh") %>%
       gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
       mutate(year = as.integer(substr(year, 2, 5))) -> L124.out_EJ_R_heatfromelec_F_Yh
 
-    L126.out_EJ_R_electd_F_Yh <- get_data(all_data, "temp-data-inject/L126.out_EJ_R_electd_F_Yh")
-    L126.out_EJ_R_electd_F_Yh %>%
+   get_data(all_data, "temp-data-inject/L126.out_EJ_R_electd_F_Yh") %>%
       gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
       mutate(year = as.integer(substr(year, 2, 5))) -> L126.out_EJ_R_electd_F_Yh
 
@@ -136,7 +133,7 @@ module_energy_LA131.enduse <- function(command, ...) {
 
     # Subset the end use sectors and aggregate by fuel. Only in regions where heat is modeled as a separate fuel.
     A_regions %>%
-      filter(heat == "1") %>%
+      filter(heat == 1) %>%
       select(GCAM_region_ID) %>%
       .$GCAM_region_ID ->
       GCAM_region_ID_heat
@@ -165,15 +162,15 @@ module_energy_LA131.enduse <- function(command, ...) {
 
     # Replace unscaled estimates of end use sector heat consumption in full table
     Enduse_elect_scaled_heat_unscaled %>%
-      mutate(fuel = replace(fuel, GCAM_region_ID %in% GCAM_region_ID_heat & fuel == "heat", "heat2")) %>%
-      filter(fuel != "heat2") %>%
+      mutate(fuel = replace(fuel, GCAM_region_ID %in% GCAM_region_ID_heat & fuel == "heat", "heat_scaled")) %>%
+      filter(fuel != "heat_scaled") %>%
       bind_rows(Enduse_heat_scaled) %>%
       arrange(GCAM_region_ID, sector, fuel, year) ->
       L131.in_EJ_R_Senduse_F_Yh # Output table 1
 
     # Heat in some regions is not modeled separately from the fuels used to produce it
     A_regions %>%
-      filter(heat == "0") %>%
+      filter(heat == 0) %>%
       select(GCAM_region_ID) %>%
       .$GCAM_region_ID ->
       GCAM_region_ID_no_heat
