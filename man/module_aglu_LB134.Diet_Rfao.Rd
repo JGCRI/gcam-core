@@ -18,7 +18,7 @@ the generated outputs: \code{L134.pcFood_kcald_R_Dmnd_Y}, \code{L134.pcFood_kcal
 original data system was \code{LB134.Diet_Rfao.R} (aglu level1).
 }
 \description{
-Briefly describe what this chunk does.
+Build historic and future time series of per-capita caloric demands.
 }
 \details{
 Describe in detail what this chunk does.

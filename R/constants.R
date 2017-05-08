@@ -36,12 +36,8 @@ PREAGLU_YEARS <- c(1700, 1750,1800, 1850, 1900, 1950)
 aglu.LAND_COVER_YEARS <- sort(unique(c(LAND_HISTORY_YEARS, AGLU_HISTORICAL_YEARS)))
 GTAP_HISTORICAL_YEAR <- 2000
 CROSIT_HISTORICAL_YEAR <- 2005
-SPEC_AG_PROD_YEARS <- seq(2010, 2050, 5) # Specified ag productivity years
-
-# ======================================================================
-# socioeconomics constants
-BASE_POP_SCENARIO <- "SSP2"
-BASE_GDP_SCENARIO <- "SSP2"
+SPEC_AG_PROD_YEARS <- seq(max(AGLU_HISTORICAL_YEARS), 2050, by = 5) # Specified ag productivity years
+aglu.DIET_YEARS <- seq(max(AGLU_HISTORICAL_YEARS), 2050, by = 5)
 
 # GLU (Geographic Land Unit) settings - see module_aglu_LA100.0_LDS_preprocessing
 aglu.GLU <- "GLU"
@@ -72,6 +68,13 @@ MIN_HA_TO_CROPLAND <- 1
 # Source: Dalrymple, D.G. 1971, Survey of Multiple Cropping in Less Developed Nations, Foreign Econ. Dev. Serv., U.S. Dep. of Agricul., Washington, D.C.
 # Cited in: Monfreda et al. 2008, Farming the Planet: 2., Global Biogeochemical Cycles 22, GB1022, http://dx.doi.org/10.1029/2007GB002947
 MAX_HA_TO_CROPLAND <- 3
+
+
+# ======================================================================
+# socioeconomics constants
+BASE_POP_SCENARIO <- "SSP2"
+BASE_GDP_SCENARIO <- "SSP2"
+
 
 # ======================================================================
 # energy constants
