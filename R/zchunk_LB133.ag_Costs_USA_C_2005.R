@@ -38,40 +38,51 @@ module_aglu_LB133.ag_Costs_USA_C_2005 <- function(command, ...) {
     L100.LDS_ag_prod_t <- get_data(all_data, "L100.LDS_ag_prod_t")
     L132.ag_an_For_Prices <- get_data(all_data, "L132.ag_an_For_Prices")
 
-    # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are `merge` calls in this code. Be careful!
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # ===================================================
+    # convert USDA_cost_data to long form:
+    USDA_cost_data %>%
+      gather(year, value, -Crop, -Region, -Item, -Unit) %>%
+      # force year to integer
+      mutate(year = as.integer(year)) ->
+      USDA_cost_data
+
+    # 2. Perform computations
+
+    # Lines 35-43 in original file
+    # old comment: Add vectors for GCAM commodity and cost component
+    # Take USDA item cost data from input table USDA_cost_data, and add GCAM commodity and GTAP crop mapping info
+    # from the USDA crop mapping input table, USDA_crops.
+    # Then add cost type (variable or na) from the USDA_item_cost input table.
+    # Finally, select only vairable price data, only in MODEL_COST_YEARS = 2001:2005 by default
+    # Take USDA item cost data:
+    USDA_cost_data %>%
+      # join in the GCAM and GTAP mapping information:
+      left_join_error_no_match(USDA_crops, by = c("Crop" = "USDA_crop")) %>%
+      # then join cost_type information:
+      left_join_error_no_match(USDA_item_cost, by = c("Item")) %>%
+      # select only variable cost data and only MODEL_COST_YEARS
+      filter(cost_type == "variable", year %in% MODEL_COST_YEARS)  %>%
+      # select just identifying information of interest:
+      select(GCAM_commodity, GTAP_crop, Item, year, value) ->
+      # in a table of costs ub US Dollars/acre by commodity and year:
+      L133.ag_Cost_USDacr_C_Y
+
+
+
 
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L133.ag_Cost_75USDkg_C") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
+      add_precursors("aglu/USDA_crops",
+                     "aglu/USDA_item_cost",
+                     "aglu/FAO_ag_items_PRODSTAT",
+                     "aglu/USDA_cost_data",
+                     "L100.LDS_ag_HA_ha",
+                     "L100.LDS_ag_prod_t",
+                     "L132.ag_an_For_Prices") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L133.ag_Cost_75USDkg_C
 
