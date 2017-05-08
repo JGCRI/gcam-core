@@ -59,80 +59,80 @@ module_energy_LA126.distribution <- function(command, ...) {
     # Summing electricity generation by GCAM region ID and year
     L123.out_EJ_R_elec_F_Yh %>%
       group_by(GCAM_region_ID, year) %>%
-      summarise(value_elec_F_Yh = sum(value)) ->
-      a
+      summarise(value_electricity_generation = sum(value)) ->
+      Electricity_generation
 
     # Summing industrial CHP electricity generation and then joining it with electricity generation
     L123.out_EJ_R_indchp_F_Yh %>%
       group_by(GCAM_region_ID, year) %>%
-      summarise(value_indchp_F_Yh = sum(value)) %>%
-      left_join_error_no_match(a, by = c("GCAM_region_ID", "year")) %>%
-      mutate(value_b = value_elec_F_Yh + value_indchp_F_Yh) %>% # Summing electricity generation and industrial CHP electricity generation. This creates values for table, L126.in_EJ_R_elecownuse_F_Yh (i.e., input).
-      select(-value_elec_F_Yh, -value_indchp_F_Yh) ->
-      b
+      summarise(value_industryCHP = sum(value)) %>%
+      left_join_error_no_match(Electricity_generation, by = c("GCAM_region_ID", "year")) %>%
+      mutate(value_electricity_ownuse_in = value_electricity_generation + value_industryCHP) %>% # Summing electricity generation and industrial CHP electricity generation. This creates values for table, L126.in_EJ_R_elecownuse_F_Yh (i.e., input).
+      select(-value_electricity_generation, -value_industryCHP) ->
+      Electricity_total
 
     # Filtering energy balance by "net_electricity ownuse" sector and joining with previous table
     L1011.en_bal_EJ_R_Si_Fi_Yh %>%
       filter(sector == "net_electricity ownuse") %>%
-      mutate(sector = substr(sector, 5, 30)) %>% # Renaming sector as "electricity ownuse"
+      mutate(sector = replace(sector, sector == "net_electricity ownuse", "electricity ownuse")) %>% # Renaming sector as "electricity ownuse"
       group_by(GCAM_region_ID, sector, fuel, year) %>%
-      summarise(value_a = sum(value)) %>%
-      left_join_error_no_match(b, by = c("GCAM_region_ID", "year")) %>% # Joining previous table (electricity sector generation, which includes industrial CHP electricity generation)
-      mutate(value_c = value_b - value_a) %>% # Creating values for table, L126.out_EJ_R_elecownuse_F_Yh (i.e., output), by subtracting electricity generation by elecricity ownuse
-      mutate(value_d = value_b / value_c) -> # Creating values for table, L126.IO_R_elecownuse_F_Yh,  by dividing input by output
-      c
+      summarise(value_electricity_ownuse = sum(value)) %>%
+      left_join_error_no_match(Electricity_total, by = c("GCAM_region_ID", "year")) %>% # Joining previous table (electricity sector generation, which includes industrial CHP electricity generation)
+      mutate(value_electricity_ownuse_out = value_electricity_ownuse_in - value_electricity_ownuse) %>% # Creating values for table, L126.out_EJ_R_elecownuse_F_Yh (i.e., output), by subtracting electricity generation by elecricity ownuse
+      mutate(value_electricity_ownuse_IO = value_electricity_ownuse_in / value_electricity_ownuse_out) -> # Creating values for table, L126.IO_R_elecownuse_F_Yh,  by dividing input by output
+      Electricity_ownuse_all
 
-    # Table b is separated to create the final tables
-    c %>% select(GCAM_region_ID, sector, fuel, year, value = value_b) -> L126.in_EJ_R_elecownuse_F_Yh
-    c %>% select(GCAM_region_ID, sector, fuel, year, value = value_c) -> L126.out_EJ_R_elecownuse_F_Yh
-    c %>% select(GCAM_region_ID, sector, fuel, year, value = value_d) -> L126.IO_R_elecownuse_F_Yh
+    # Table Electricity_ownuse_all is separated to create the final tables
+    Electricity_ownuse_all %>% select(GCAM_region_ID, sector, fuel, year, value = value_electricity_ownuse_in) -> L126.in_EJ_R_elecownuse_F_Yh
+    Electricity_ownuse_all %>% select(GCAM_region_ID, sector, fuel, year, value = value_electricity_ownuse_out) -> L126.out_EJ_R_elecownuse_F_Yh
+    Electricity_ownuse_all %>% select(GCAM_region_ID, sector, fuel, year, value = value_electricity_ownuse_IO) -> L126.IO_R_elecownuse_F_Yh
 
     # ELECTRICITY TRANSMISSION AND DISTRIBUTION
     # Preparing electricity generation output (i.e., L126.out_EJ_R_elecownuse_F_Yh) to be joined later with energy balance
     L126.out_EJ_R_elecownuse_F_Yh %>%
       ungroup() %>% # Need to ungroup to deselect sector and fuel
       select(-sector, -fuel) ->
-      d
+      Electricity_ownuse_out
 
     # Filtering energy balance by "net_electricity distribution" sector and joining with electricity generation output
     L1011.en_bal_EJ_R_Si_Fi_Yh %>%
       filter(sector == "net_electricity distribution") %>%
-      mutate(sector = substr(sector, 5, 30)) %>% # Renaming sector as "electricity distribution"
+      mutate(sector = replace(sector, sector == "net_electricity distribution", "electricity distribution")) %>% # Renaming sector as "electricity distribution"
       group_by(GCAM_region_ID, sector, fuel, year) %>%
-      summarise(value_a = sum(value)) %>%
-      left_join_error_no_match(d, by = c("GCAM_region_ID", "year")) %>% # Joining electricity generation output (L126.out_EJ_R_elecownuse_F_Yh, wherein electricity ownuse was subtracted from electricity generation)
-      mutate(value_b = value - value_a) %>% # Creating values for table, L126.out_EJ_R_electd_F_Yh (i.e. ouput), by subtracting electricity generation (without ownuse) by transmission and distribution consumption
-      mutate(value_c = value / value_b) -> # Creating values for table, L126.IO_R_electd_F_Yh, by dividing input by output
-      d
+      summarise(value_electd = sum(value)) %>%
+      left_join_error_no_match(Electricity_ownuse_out, by = c("GCAM_region_ID", "year")) %>% # Joining electricity generation output (L126.out_EJ_R_elecownuse_F_Yh, wherein electricity ownuse was subtracted from electricity generation)
+      mutate(value_electd_out = value - value_electd) %>% # Creating values for table, L126.out_EJ_R_electd_F_Yh (i.e. ouput), by subtracting electricity generation (without ownuse) by transmission and distribution consumption
+      mutate(value_electd_IO = value / value_electd_out) -> # Creating values for table, L126.IO_R_electd_F_Yh, by dividing input by output
+      Electricity_distribution_all
 
-    # Table c is separated to create the final tables
-    d %>% select(GCAM_region_ID, sector, fuel, year, value) -> L126.in_EJ_R_electd_F_Yh
-    d %>% select(GCAM_region_ID, sector, fuel, year, value = value_b) -> L126.out_EJ_R_electd_F_Yh
-    d %>% select(GCAM_region_ID, sector, fuel, year, value = value_c) -> L126.IO_R_electd_F_Yh
+    # Table Electricity_distribution_all is separated to create the final tables
+    Electricity_distribution_all %>% select(GCAM_region_ID, sector, fuel, year, value) -> L126.in_EJ_R_electd_F_Yh
+    Electricity_distribution_all %>% select(GCAM_region_ID, sector, fuel, year, value = value_electd_out) -> L126.out_EJ_R_electd_F_Yh
+    Electricity_distribution_all %>% select(GCAM_region_ID, sector, fuel, year, value = value_electd_IO) -> L126.IO_R_electd_F_Yh
 
     # GAS PIPELINE
     # Preparing to be joined later - summing by GCAM region ID and year
     L122.out_EJ_R_gasproc_F_Yh %>%
       group_by(GCAM_region_ID, year) %>%
-      summarise(value_b = sum(value)) -> # Creating values for table, L126.in_EJ_R_gaspipe_F_Yh (i.e., input)
-      e
+      summarise(value_gaspipe_in = sum(value)) -> # Creating values for table, L126.in_EJ_R_gaspipe_F_Yh (i.e., input)
+      Gasproc_out
 
     # Filtering energy balance by "net_gas pipeline" sector and joining with gas output
     L1011.en_bal_EJ_R_Si_Fi_Yh %>%
       filter(sector == "net_gas pipeline") %>%
-      mutate(sector = substr(sector, 5, 30)) %>% # Renaming sector as "gas pipeline"
+      mutate(sector = replace(sector, sector == "net_gas pipeline", "gas pipeline")) %>% # Renaming sector as "gas pipeline"
       group_by(GCAM_region_ID, sector, fuel, year) %>%
-      summarise(value_a = sum(value)) %>%
-      left_join(e, by = c("GCAM_region_ID", "year")) %>% # Joining gas output
-      mutate(value_c = value_b - value_a) %>% # Creating values for table, L126.out_EJ_R_gaspipe_F_Yh (i.e., output), by subtracting gas pipeline input by gas pipeline consumption
-      mutate(value_d = value_b / value_c) %>% # Creating values for table, L126.IO_R_gaspipe_F_Yh, by dividing input by output. Note that some regions have zero gas in some of the base years. Reset their IO coefs to 1 in the next step.
-      mutate(value_d = if_else(is.na(value_d),1,value_d)) -> # Reset NaN IO coefs to 1, since some regions have no gas in some base years.
-      f
+      summarise(value_gaspipe = sum(value)) %>%
+      left_join(Gasproc_out, by = c("GCAM_region_ID", "year")) %>% # Joining gas output
+      mutate(value_gaspipe_out = value_gaspipe_in - value_gaspipe) %>% # Creating values for table, L126.out_EJ_R_gaspipe_F_Yh (i.e., output), by subtracting gas pipeline input by gas pipeline consumption
+      mutate(value_gaspipe_IO = value_gaspipe_in / value_gaspipe_out) %>% # Creating values for table, L126.IO_R_gaspipe_F_Yh, by dividing input by output. Note that some regions have zero gas in some of the base years. Reset their IO coefs to 1 in the next step.
+      mutate(value_gaspipe_IO = if_else(is.na(value_gaspipe_IO),1,value_gaspipe_IO)) -> # Reset NaN IO coefs to 1, since some regions have no gas in some base years.
+      Gas_pipeline_all
 
-    # Table d is separated to create the final tables
-    f %>% select(GCAM_region_ID, sector, fuel, year, value = value_b) -> L126.in_EJ_R_gaspipe_F_Yh
-    f %>% select(GCAM_region_ID, sector, fuel, year, value = value_c) -> L126.out_EJ_R_gaspipe_F_Yh
-    f %>% select(GCAM_region_ID, sector, fuel, year, value = value_d) -> L126.IO_R_gaspipe_F_Yh
+    # Table Gas_pipeline_all is separated to create the final tables
+    Gas_pipeline_all %>% select(GCAM_region_ID, sector, fuel, year, value = value_gaspipe_in) -> L126.in_EJ_R_gaspipe_F_Yh
+    Gas_pipeline_all %>% select(GCAM_region_ID, sector, fuel, year, value = value_gaspipe_out) -> L126.out_EJ_R_gaspipe_F_Yh
+    Gas_pipeline_all %>% select(GCAM_region_ID, sector, fuel, year, value = value_gaspipe_IO) -> L126.IO_R_gaspipe_F_Yh
 
     # ===================================================
     L126.in_EJ_R_elecownuse_F_Yh %>%
