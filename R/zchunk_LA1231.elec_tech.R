@@ -38,20 +38,25 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
     L123.eff_R_elec_F_Yh <- get_data(all_data, "L123.eff_R_elec_F_Yh")
 
     # ===================================================
+    # Obtaining supply sector, gas technologies, minicam.energy.input and creating template to be used to create L1231.eff_R_elec_gas_tech
+    calibrated_techs %>%
+      filter(subsector == "gas")%>%
+      filter(supplysector == "electricity")%>%
+      distinct(supplysector, technology, minicam.energy.input) -> energy.GAS_TECH
+
     # Natural gas: Disaggregate to CC and CT/steam on the basis of assumed efficiencies
     # Subset the actual efficiencies of gas -> electricity
     L123.eff_R_elec_F_Yh %>%
       filter(fuel == "gas") %>%
       rename(efficiency = value) -> L1231.eff_R_elec_gas_Yh_gathered
 
-    # Create auxiliar tibbles to perform interpolation (aprox_fun) on efficiencies for natural gas technologies
+    # Create auxiliar tibble to perform interpolation (aprox_fun) on efficiencies for natural gas technologies
     # Interpolation is needed since input data is only provided for some intermediate years in the range 1971-2010.
     # Therefore there is not efficiency values for every historical year. Efficiencies for all historical years are needed
     # To estimate outputs from fuel/technology by region in the electricity sector
-    tibble(technology = energy.GAS_TECH, supplysector = "electricity") -> Gas_tech_elec
     tibble(supplysector = "electricity", subsector="gas", year = HISTORICAL_YEARS) %>%
       mutate(year = as.numeric(year)) %>%
-      full_join(Gas_tech_elec, by = "supplysector") -> Aux_gas_tech_elec
+      full_join(energy.GAS_TECH, by = "supplysector") -> Aux_gas_tech_elec
 
     # Perform interpolation for gas technologies efficiencies , max, and rate
     # Interpolation is needed since efficiencies are given for 1971, 1990, 2005 and 2010 only. Not for every historical year.
@@ -62,12 +67,11 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
       mutate(year = as.numeric(year)) %>%
       mutate(efficiency_tech = as.numeric(efficiency_tech)) %>%
       semi_join(Aux_gas_tech_elec, by = "year") %>%
-      full_join(Aux_gas_tech_elec, by = c("supplysector", "subsector", "technology","year")) %>%
+      full_join(Aux_gas_tech_elec, by = c("supplysector", "subsector", "technology","minicam.energy.input","year")) %>%
       group_by(supplysector, subsector, technology) %>%
       mutate(efficiency_tech = approx_fun(year, efficiency_tech)) %>%
       mutate(improvement.max = approx_fun(year, improvement.max)) %>%
-      mutate(improvement.rate = approx_fun(year, improvement.rate)) %>%
-      mutate(minicam.energy.input = "wholesale gas") -> L1231.eff_R_elec_gas_tech
+      mutate(improvement.rate = approx_fun(year, improvement.rate)) -> L1231.eff_R_elec_gas_tech
 
     # Reset upper and lower bound efficiencies, as needed
     # Where avg efficiency is outside of the range of the two technologies, set the lower bound equal to the average, and the upper equal to
@@ -75,9 +79,8 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
     # NOTE: this is complicated. Heat output is not allowed for combined cycle power plants--it is assumed that CHP plants are all single-cycle.
     # However if a region has very high efficiencies of CC power plants that bring the weighted average higher than our assumed CC efficiency (e.g. Turkey),
     # this could set the market share of single-cycle power plants to 0 and therefore zero out any heat production from these technologies.
-    # Adding this small adjustment factor to the efficiencies avoids this outcome.
-
-    # Small adjustment factor for elec efficienies
+    # Adding this small adjustment factor to the efficiencies avoids this outcome:
+    # Small adjustment factor for elec efficienies (explaining its need in the above comment)
     ELEC_ADJ <- 0.03
 
     L1231.eff_R_elec_gas_Yh_gathered %>%

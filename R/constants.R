@@ -150,11 +150,4 @@ emissions.NH3_HISTORICAL_YEARS <- 1990:2002
 emissions.NH3_EXTRA_YEARS <- 1971:1989
 emissions.EDGAR_YEARS <- 1971:2008
 
-# ======================================================================
-# Gas technologies
-
-energy.GAS_TECH <- c( "gas (steam/CT)", "gas (CC)" )
-
-
-
 
