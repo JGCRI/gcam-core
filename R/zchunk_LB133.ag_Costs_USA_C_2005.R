@@ -1,4 +1,4 @@
-#' module_emissions_L142.pfc_R_S_T_Y
+#' module_aglu_LB133.ag_Costs_USA_C_2005
 #'
 #' Briefly describe what this chunk does.
 #'
@@ -6,47 +6,37 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L142.pfc_R_S_T_Yh}. The corresponding file in the
-#' original data system was \code{L142.pfc_R_S_T_Y.R} (emissions level1).
+#' the generated outputs: \code{L133.ag_Cost_75USDkg_C}. The corresponding file in the
+#' original data system was \code{LB133.ag_Costs_USA_C_2005.R} (aglu level1).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_emissions_L142.pfc_R_S_T_Y_DISABLED <- function(command, ...) {
+module_aglu_LB133.ag_Costs_USA_C_2005_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/GCAM_region_names",
-             FILE = "emissions/gcam_fgas_tech",
-             FILE = "emissions/other_f_gases",
-             FILE = "temp-data-inject/L144.in_EJ_R_bld_serv_F_Yh",
-             FILE = "common/iso_GCAM_regID",
-             FILE = "emissions/EDGAR_sector_fgas",
-             # ** NOTE *** the following file has been removed from the repo
-             # please talk to Kate about why and how to work around this. Thanks
-             # FILE = "emissions/EDGAR_nation",
-             FILE = "emissions/A41.GWP",
-             FILE = "emissions/EDGAR_SF6",
-             FILE = "emissions/EDGAR_C2F6",
-             FILE = "emissions/EDGAR_CF4"))
+    return(c(FILE = "aglu/USDA_crops",
+             FILE = "aglu/USDA_item_cost",
+             FILE = "aglu/FAO_ag_items_PRODSTAT",
+             FILE = "aglu/USDA_cost_data",
+             "L100.LDS_ag_HA_ha",
+             "L100.LDS_ag_prod_t",
+             "L132.ag_an_For_Prices"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L142.pfc_R_S_T_Yh"))
+    return(c("L133.ag_Cost_75USDkg_C"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    gcam_fgas_tech <- get_data(all_data, "emissions/gcam_fgas_tech")
-    other_f_gases <- get_data(all_data, "emissions/other_f_gases")
-    L144.in_EJ_R_bld_serv_F_Yh <- get_data(all_data, "temp-data-inject/L144.in_EJ_R_bld_serv_F_Yh")
-    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    EDGAR_sector_fgas <- get_data(all_data, "emissions/EDGAR_sector_fgas")
-    EDGAR_nation <- get_data(all_data, "emissions/EDGAR_nation")
-    A41.GWP <- get_data(all_data, "emissions/A41.GWP")
-    EDGAR_SF6 <- get_data(all_data, "emissions/EDGAR_SF6")
-    EDGAR_C2F6 <- get_data(all_data, "emissions/EDGAR_C2F6")
-    EDGAR_CF4 <- get_data(all_data, "emissions/EDGAR_CF4")
+    USDA_crops <- get_data(all_data, "aglu/USDA_crops")
+    USDA_item_cost <- get_data(all_data, "aglu/USDA_item_cost")
+    FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO_ag_items_PRODSTAT")
+    USDA_cost_data <- get_data(all_data, "aglu/USDA_cost_data")
+    L100.LDS_ag_HA_ha <- get_data(all_data, "L100.LDS_ag_HA_ha")
+    L100.LDS_ag_prod_t <- get_data(all_data, "L100.LDS_ag_prod_t")
+    L132.ag_an_For_Prices <- get_data(all_data, "L132.ag_an_For_Prices")
 
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
@@ -63,12 +53,10 @@ module_emissions_L142.pfc_R_S_T_Y_DISABLED <- function(command, ...) {
     # }
     #
     #
+    # NOTE: there are `merge` calls in this code. Be careful!
+    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
     # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses vecpaste
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses repeat_and_add_vector
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # ===================================================
 
     # Produce outputs
@@ -81,13 +69,13 @@ module_emissions_L142.pfc_R_S_T_Y_DISABLED <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L142.pfc_R_S_T_Yh") %>%
+      add_legacy_name("L133.ag_Cost_75USDkg_C") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L142.pfc_R_S_T_Yh
+      L133.ag_Cost_75USDkg_C
 
-    return_data(L142.pfc_R_S_T_Yh)
+    return_data(L133.ag_Cost_75USDkg_C)
   } else {
     stop("Unknown command")
   }
