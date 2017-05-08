@@ -4,16 +4,19 @@
 \alias{check_chunk_outputs}
 \title{check_chunk_outputs}
 \usage{
-check_chunk_outputs(chunk, chunk_data, chunk_inputs, promised_outputs)
+check_chunk_outputs(chunk, chunk_data, chunk_inputs, promised_outputs,
+  outputs_xml)
 }
 \arguments{
 \item{chunk}{Chunk name, character}
 
-\item{chunk_data}{Data produced by chunk}
+\item{chunk_data}{Data produced by chunk, generally a tibble}
 
 \item{chunk_inputs}{Names of chunk inputs, character}
 
 \item{promised_outputs}{Names of chunk's promised outputs, character}
+
+\item{outputs_xml}{Logical vector: are outputs XML?}
 }
 \description{
 Checks chunk outputs for a variety of problems: correct structure,

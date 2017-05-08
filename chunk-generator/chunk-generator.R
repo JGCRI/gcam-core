@@ -299,12 +299,27 @@ batch_substitutions <- function(mibatch, patternfile = PATTERNFILE) {
                   pattern,
                   fixed = TRUE)
 
+  # Remove @details to @import lines as they are not applicable for batch XML chunks.
+  fl <- grep("@details", pattern)
+  ll <- grep("@export", pattern)
+  pattern <- pattern[-fl:-ll]
+
+  # Insert main chunk description in place of "Briefly describe..." text
+  fl <- grep("Briefly describe", pattern)
+  pattern[fl] <- paste0("#' Construct XML data structure for \\code{", batchdata$xml, "}.")
+
+  # Remove TRANSLATED PROCESSING CODE GOES HERE comment up to WARNING_PATTERN
+  # as they are not applicable for batch XML chunks.
+  fl <- grep("TRANSLATED PROCESSING CODE GOES HERE", pattern)
+  ll <- grep("WARNING_PATTERN", pattern)
+  pattern <- pattern[-fl:-(ll+1)]
+
   # Find output lines
 
   if(batchdata$xml == "") {
     stop("No outputs for ", basename(fn))
   } else {
-    replacement <- paste0("c( XML=\"", batchdata$xml, "\")")
+    replacement <- paste0("c(XML = \"", batchdata$xml, "\")")
   }
 
   # Replace OUTPUTS_PATTERN
@@ -325,14 +340,23 @@ batch_substitutions <- function(mibatch, patternfile = PATTERNFILE) {
                   fixed = TRUE)
 
   # Replace MAKEOUT_PATTERN
+
+  # Batch XML chunks will generate precursors so we can remove the comments
+  # asking the users to add them.
+  fl <- grep("Temporary code below sends back empty data frames marked", pattern)
+  ll <- grep("If no precursors", pattern)
+  pattern <- pattern[-fl:-ll]
+
   if(no_inputs) {
     makeoutputs_string <- ""
   } else {
     header_quote <- paste0('"', batchdata$header, '"')
     create_xml_string <- paste0("create_xml(\"", batchdata$xml, "\")")
     add_data_string <- paste0("add_xml_data(", paste(batchdata$data, header_quote, sep=","), ")")
-    run_conversion_string <- "run_xml_conversion()"
-    makeoutputs_string <- paste(c(create_xml_string, add_data_string, run_conversion_string), collapse = " %>%\n")
+    precursors_string <- paste0("add_precursors(",
+                                paste(paste0('"', batchdata$data, '"'), collapse=", "),
+                                ") ->\n", batchdata$xml)
+    makeoutputs_string <- paste(c(create_xml_string, add_data_string, precursors_string), collapse = " %>%\n")
   }
 
 
@@ -343,7 +367,7 @@ batch_substitutions <- function(mibatch, patternfile = PATTERNFILE) {
 
   # Replace RETURNOUT_PATTERN
   pattern <- gsub(pattern = "RETURNOUT_PATTERN",
-                  replacement = paste0('"', batchdata$xml, '"'), # TODO: what to return?
+                  replacement = batchdata$xml,
                   pattern,
                   fixed = TRUE)
 
@@ -400,6 +424,10 @@ for(bf in names(XMLBATCH_LIST)) {
     warning("Ran into error with ", basename(bf))
   } else {
     newfn <- paste0("chunk-generator/outputs/zchunk_", basename(bf), ".R")
+    if(file.exists(file.path("R", basename(newfn)))) {
+      cat("- already exists in ./R; skipping\n")
+      next
+    }
     cat(out, "\n", file = newfn, sep = "\n", append = FALSE)
   }
 }
