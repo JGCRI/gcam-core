@@ -9,6 +9,7 @@
 
 # Files produced by data system
 outputs/
+xml/
 sample-generator/outputs/
 
 # R directory files - using data_system_source instead

@@ -1,0 +1,48 @@
+# File: USDA_item_cost.csv
+# Title: USDA_item_cost
+# Units: Unitless
+# Description: Specifies cost type from USDA database
+# ----------
+Item,cost_type
+Primary output,na
+Secondary output,na
+Secondary output (straw),na
+Secondary output (hay),na
+Total output,na
+Seed,variable
+Fertilizer,variable
+Soil conditioners,variable
+Manure,variable
+Chemicals,variable
+Custom operations,variable
+"Fuel, lube, and electricity",variable
+Repairs,variable
+Purchased irrigation water,variable
+Straw baling,variable
+Other variable expenses,variable
+Interest on operating capital,variable
+Commercial Drying,variable
+Coop share,variable
+Freight and dirt hauling,variable
+Ginning,na
+Hauling allowance,variable
+Miscellaneous,variable
+Total operating costs,na
+Hired labor,na
+Opportunity cost of unpaid labor,na
+Capital recovery of machinery and equipment,na
+Opportunity cost of land (rental rate),na
+Opportunity cost of quota,na
+Taxes and insurance,na
+General farm overhead,na
+Total allocated overhead,na
+Total costs listed,na
+Value of production less total costs listed,na
+Value of production less operating costs,na
+Yield,na
+Yield (seed),na
+Price,na
+Price (seed),na
+Enterprise size,na
+Irrigated,na
+Dryland,na

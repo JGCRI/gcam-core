@@ -2,6 +2,7 @@
 # ======================================================================
 # General behavior constants
 OUTPUTS_DIR  <- "outputs/"
+XML_DIR      <- "xml/"
 COMMENT_CHAR <- "#"
 OLD_DATA_SYSTEM_BEHAVIOR <- TRUE
 
@@ -14,6 +15,7 @@ FLAG_NO_XYEAR   <- "NO_XYEAR"
 FLAG_NO_TEST    <- "NO_TEST"
 FLAG_SUM_TEST   <- "FLAG_SUM_TEST"
 FLAG_PROTECT_FLOAT <- "FLAG_PROTECT_FLOAT"
+FLAG_XML <- "FLAG_XML"
 
 # ======================================================================
 # Time constants
@@ -30,12 +32,14 @@ gcam.USA_CODE <- 1
 AGLU_HISTORICAL_YEARS <- 1971:2010
 FAO_HISTORICAL_YEARS <- 1961:2011
 MODEL_PRICE_YEARS <- 2001:2005
+MODEL_COST_YEARS <- 2001:2005
 LAND_HISTORY_YEARS <- c(1700, 1750, 1800, 1850, 1900, 1950, 1975)
 PREAGLU_YEARS <- c(1700, 1750,1800, 1850, 1900, 1950)
 aglu.LAND_COVER_YEARS <- sort(unique(c(LAND_HISTORY_YEARS, AGLU_HISTORICAL_YEARS)))
 GTAP_HISTORICAL_YEAR <- 2000
 CROSIT_HISTORICAL_YEAR <- 2005
 SPEC_AG_PROD_YEARS <- seq(2010, 2050, 5) # Specified ag productivity years
+MIN_PROFIT_MARGIN <- 0.15
 
 # ======================================================================
 # socioeconomics constants
@@ -91,12 +95,15 @@ CONV_T_METRIC_SHORT <- 1000/908  # Ratio between metric ton and short ton
 CONV_MCAL_PCAL <- 1e-9
 CONV_HA_BM2 <- 1e-5
 CONV_THA_KGM2 <- 0.1   # tons C/ha -> kg C/m2
-CONV_GG_TG <- 0.001
+CONV_GG_TG <- 0.001 # gigagrams to tegagrams
 CONV_TST_TG <- 0.000907 # thousand short tons to Tg
+CONV_KG_TO_TG <- 1e-9
 
 # Cubic meters (m3) to billion cubic meters (bm3)
 CONV_M3_BM3 <- 1e-09
 CONV_MILLION_M3_KM3 <- 1e-03
+
+CONV_M2_ACR <- 0.0002471058
 
 
 # ======================================================================
@@ -166,3 +173,6 @@ emissions.TST_TO_TG <- 0.000907 # Conversion from thousand short tons to Tg
 emissions.NH3_HISTORICAL_YEARS <- 1990:2002
 emissions.NH3_EXTRA_YEARS <- 1971:1989
 emissions.EDGAR_YEARS <- 1971:2008
+emissions.EPA_MACC_YEAR <- 2030  # Must be either 2020 or 2030
+emissions.MAC_TAXES <- c( 0, 5, 10, 15, 32, 66, 129, 243, 486, 1093 ) # Range of costs in 1990 USD
+emissions.CONV_C_CO2 <- 44/12 # Convert Carbon to CO2
