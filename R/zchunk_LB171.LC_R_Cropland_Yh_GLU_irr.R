@@ -14,14 +14,14 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr_DISABLED <- function(command, ...) {
+module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c( "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",
-              "L161.ag_irrHA_bm2_R_C_Y_GLU",
-              "L161.ag_rfdHA_bm2_R_C_Y_GLU",
-              "L161.ag_irrProd_Mt_R_C_Y_GLU",
-              "L161.ag_rfdProd_Mt_R_C_Y_GLU",
-              "L161.ag_irrHA_frac_R_C_GLU"))
+              FILE = "temp-data-inject/L161.ag_irrHA_bm2_R_C_Y_GLU",
+              FILE = "temp-data-inject/L161.ag_rfdHA_bm2_R_C_Y_GLU",
+              FILE = "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
+              FILE = "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU",
+              FILE = "temp-data-inject/L161.ag_irrHA_frac_R_C_GLU"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU",
              "L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU",
@@ -33,11 +33,27 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr_DISABLED <- function(command, ...) {
 
     # Load required inputs
     L122.LC_bm2_R_HarvCropLand_C_Yh_GLU <- get_data(all_data, "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU")
-    L161.ag_irrHA_bm2_R_C_Y_GLU <- get_data(all_data, "L161.ag_irrHA_bm2_R_C_Y_GLU")
-    L161.ag_rfdHA_bm2_R_C_Y_GLU <- get_data(all_data, "L161.ag_rfdHA_bm2_R_C_Y_GLU")
-    L161.ag_irrProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_irrProd_Mt_R_C_Y_GLU")
-    L161.ag_rfdProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_rfdProd_Mt_R_C_Y_GLU")
-    L161.ag_irrHA_frac_R_C_GLU <- get_data(all_data, "L161.ag_irrHA_frac_R_C_GLU")
+    L161.ag_irrHA_bm2_R_C_Y_GLU <- get_data(all_data, "temp-data-inject/L161.ag_irrHA_bm2_R_C_Y_GLU") %>%
+      # The following two lines of code will be removed later, when we're using 'real' data
+      gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%   # reshape
+      mutate(year = as.integer(substr(year, 2, 5)))    # change Xyear to year
+
+    L161.ag_rfdHA_bm2_R_C_Y_GLU <- get_data(all_data, "temp-data-inject/L161.ag_rfdHA_bm2_R_C_Y_GLU") %>%
+      # The following two lines of code will be removed later, when we're using 'real' data
+      gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%   # reshape
+      mutate(year = as.integer(substr(year, 2, 5)))    # change Xyear to year
+
+    L161.ag_irrProd_Mt_R_C_Y_GLU <- get_data(all_data, "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU") %>%
+      # The following two lines of code will be removed later, when we're using 'real' data
+      gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%   # reshape
+      mutate(year = as.integer(substr(year, 2, 5)))    # change Xyear to year
+
+    L161.ag_rfdProd_Mt_R_C_Y_GLU <- get_data(all_data, "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU") %>%
+      # The following two lines of code will be removed later, when we're using 'real' data
+      gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%   # reshape
+      mutate(year = as.integer(substr(year, 2, 5)))    # change Xyear to year
+
+    L161.ag_irrHA_frac_R_C_GLU <- get_data(all_data, "temp-data-inject/L161.ag_irrHA_frac_R_C_GLU") # No year in this data
 
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
@@ -71,7 +87,12 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",
+                     "temp-data-inject/L161.ag_irrHA_bm2_R_C_Y_GLU",
+                     "temp-data-inject/L161.ag_rfdHA_bm2_R_C_Y_GLU",
+                     "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
+                     "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU",
+                     "temp-data-inject/L161.ag_irrHA_frac_R_C_GLU") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU
@@ -81,7 +102,12 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",
+                     "temp-data-inject/L161.ag_irrHA_bm2_R_C_Y_GLU",
+                     "temp-data-inject/L161.ag_rfdHA_bm2_R_C_Y_GLU",
+                     "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
+                     "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU",
+                     "temp-data-inject/L161.ag_irrHA_frac_R_C_GLU") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU
@@ -91,7 +117,12 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L171.ag_irrEcYield_kgm2_R_C_Y_GLU") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",
+                     "temp-data-inject/L161.ag_irrHA_bm2_R_C_Y_GLU",
+                     "temp-data-inject/L161.ag_rfdHA_bm2_R_C_Y_GLU",
+                     "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
+                     "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU",
+                     "temp-data-inject/L161.ag_irrHA_frac_R_C_GLU") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L171.ag_irrEcYield_kgm2_R_C_Y_GLU
@@ -101,7 +132,12 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L171.ag_rfdEcYield_kgm2_R_C_Y_GLU") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",
+                     "temp-data-inject/L161.ag_irrHA_bm2_R_C_Y_GLU",
+                     "temp-data-inject/L161.ag_rfdHA_bm2_R_C_Y_GLU",
+                     "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
+                     "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU",
+                     "temp-data-inject/L161.ag_irrHA_frac_R_C_GLU") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L171.ag_rfdEcYield_kgm2_R_C_Y_GLU
