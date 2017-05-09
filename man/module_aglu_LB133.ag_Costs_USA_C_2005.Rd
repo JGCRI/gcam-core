@@ -18,11 +18,18 @@ the generated outputs: \code{L133.ag_Cost_75USDkg_C}. The corresponding file in 
 original data system was \code{LB133.ag_Costs_USA_C_2005.R} (aglu level1).
 }
 \description{
-Briefly describe what this chunk does.
+This module computes costs for each GCAM commodity (used by each region-GLU) using USDA cost
+information for USA when available. For commodities without USDA cost data, the average profit
+among USDA commodities and LDS harvested area and production information are used to compute
+cost.
 }
 \details{
-Describe in detail what this chunk does.
+USDA cost information is scaled to the level of GCAM commodity using LDS harvested area and
+production data to compute weighting factors for aggregation and convert cost from USD/square meter
+to the more useful USD/kg. Cost information is converted to the GCAM base of 1975 USD before aggregation.
+For commodities without USDA cost information, the average profit among USDA commodities is combined
+with LDS harvested area and production data to calculate cost.
 }
 \author{
-YourInitials CurrentMonthName 2017
+ACS May 2017
 }

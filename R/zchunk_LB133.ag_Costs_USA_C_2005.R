@@ -1,6 +1,9 @@
 #' module_aglu_LB133.ag_Costs_USA_C_2005
 #'
-#' Briefly describe what this chunk does.
+#' This module computes costs for each GCAM commodity (used by each region-GLU) using USDA cost
+#' information for USA when available. For commodities without USDA cost data, the average profit
+#' among USDA commodities and LDS harvested area and production information are used to compute
+#' cost.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,12 +11,15 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L133.ag_Cost_75USDkg_C}. The corresponding file in the
 #' original data system was \code{LB133.ag_Costs_USA_C_2005.R} (aglu level1).
-#' @details Describe in detail what this chunk does.
+#' @details USDA cost information is scaled to the level of GCAM commodity using LDS harvested area and
+#' production data to compute weighting factors for aggregation and convert cost from USD/square meter
+#' to the more useful USD/kg. Cost information is converted to the GCAM base of 1975 USD before aggregation.
+#' For commodities without USDA cost information, the average profit among USDA commodities is combined
+#' with LDS harvested area and production data to calculate cost.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
-#' @export
+#' @author ACS May 2017
 module_aglu_LB133.ag_Costs_USA_C_2005 <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "aglu/USDA_crops",
@@ -277,10 +283,11 @@ module_aglu_LB133.ag_Costs_USA_C_2005 <- function(command, ...) {
 
     # Produce outputs
     L133.ag_Cost_75USDkg_C %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Costs of GCAM commodities") %>%
+      add_units("Units = 1975$/kg (75USDkg)") %>%
+      add_comments("GCAM commodity costs are determined by USDA cost data for USA, when available.") %>%
+      add_comments("Commodities without USDA cost data have costs calculated using the average profit") %>%
+      add_comments("among USDA commodities and LDS harvested area and production data.") %>%
       add_legacy_name("L133.ag_Cost_75USDkg_C") %>%
       add_precursors("aglu/USDA_crops",
                      "aglu/USDA_item_cost",
