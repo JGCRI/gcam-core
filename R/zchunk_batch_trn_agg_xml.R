@@ -1,14 +1,14 @@
-#' module_socio_batch_trn_agg_GCAM3_xml
+#' module_socio_batch_trn_agg_xml
 #'
-#' Construct XML data structure for \code{trn_agg_GCAM3.xml} and all the SSP and gSSP ones as well.
+#' Construct XML data structure for \code{trn_agg.xml} and all the SSP and gSSP ones as well.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{trn_agg_GCAM3.xml}. The corresponding file in the
-#' original data system was \code{batch_trn_agg_GCAM3.xml.R} (socio XML).
-module_socio_batch_trn_agg_GCAM3_xml <- function(command, ...) {
+#' the generated outputs: \code{trn_agg.xml}. The corresponding file in the
+#' original data system was \code{batch_trn_agg.xml.R} (socio XML).
+module_socio_batch_trn_agg_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L252.IncomeElasticity_trn_gSSP1",
              "L252.IncomeElasticity_trn_gSSP2",
