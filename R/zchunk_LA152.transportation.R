@@ -17,7 +17,7 @@ module_energy_LA152.transportation <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "energy/enduse_fuel_aggregation",
              FILE = "energy/enduse_sector_aggregation",
-             FILE = "temp-data-inject/L131.in_EJ_R_Senduse_F_Yh"))
+             FILE = "L131.in_EJ_R_Senduse_F_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L152.in_EJ_R_trn_F_Yh"))
   } else if(command == driver.MAKE) {
@@ -27,11 +27,7 @@ module_energy_LA152.transportation <- function(command, ...) {
     # Load required inputs
     enduse_fuel_aggregation <- get_data(all_data, "energy/enduse_fuel_aggregation")
     enduse_sector_aggregation <- get_data(all_data, "energy/enduse_sector_aggregation")
-    get_data(all_data, "temp-data-inject/L131.in_EJ_R_Senduse_F_Yh") %>%
-      # temporary lines for data inject
-      gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) ->
-      L131.in_EJ_R_Senduse_F_Yh
+    L131.in_EJ_R_Senduse_F_Yh <- get_data(all_data, "L131.in_EJ_R_Senduse_F_Yh")
 
     # Calculation of transportation sector energy consumption
     L131.in_EJ_R_Senduse_F_Yh %>%
@@ -57,7 +53,7 @@ module_energy_LA152.transportation <- function(command, ...) {
       add_legacy_name("L152.in_EJ_R_trn_F_Yh") %>%
       add_precursors("energy/enduse_fuel_aggregation",
                      "energy/enduse_sector_aggregation",
-                     "temp-data-inject/L131.in_EJ_R_Senduse_F_Yh") %>%
+                     "L131.in_EJ_R_Senduse_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L152.in_EJ_R_trn_F_Yh
 
