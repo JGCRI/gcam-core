@@ -32,12 +32,14 @@ gcam.USA_CODE <- 1
 AGLU_HISTORICAL_YEARS <- 1971:2010
 FAO_HISTORICAL_YEARS <- 1961:2011
 MODEL_PRICE_YEARS <- 2001:2005
+MODEL_COST_YEARS <- 2001:2005
 LAND_HISTORY_YEARS <- c(1700, 1750, 1800, 1850, 1900, 1950, 1975)
 PREAGLU_YEARS <- c(1700, 1750,1800, 1850, 1900, 1950)
 aglu.LAND_COVER_YEARS <- sort(unique(c(LAND_HISTORY_YEARS, AGLU_HISTORICAL_YEARS)))
 GTAP_HISTORICAL_YEAR <- 2000
 CROSIT_HISTORICAL_YEAR <- 2005
 SPEC_AG_PROD_YEARS <- seq(2010, 2050, 5) # Specified ag productivity years
+MIN_PROFIT_MARGIN <- 0.15
 
 # ======================================================================
 # socioeconomics constants
@@ -99,6 +101,8 @@ CONV_TST_TG <- 0.000907 # thousand short tons to Tg
 # Cubic meters (m3) to billion cubic meters (bm3)
 CONV_M3_BM3 <- 1e-09
 CONV_MILLION_M3_KM3 <- 1e-03
+
+CONV_M2_ACR <- 0.0002471058
 
 
 # ======================================================================
