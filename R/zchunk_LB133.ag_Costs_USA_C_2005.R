@@ -82,7 +82,7 @@ module_aglu_LB133.ag_Costs_USA_C_2005 <- function(command, ...) {
       #   (In particular, the average is computed across non-NA years. So if only 3 of 5 years are non-NA,
       #   the average is over those 3 numbers, not over 5 with 0's filled in for the NA's.)
       group_by(GCAM_commodity, GTAP_crop, Item) %>%
-      mutate(cost_75USDm2 = mean(value[!(is.na(value))]) * CONV_M2_ACR) %>%
+      mutate(cost_75USDm2 = mean(value, na.rm = TRUE) * CONV_M2_ACR) %>%
       # if all years in MODEL_COST_YEARS have NA values, the above calculation will give NaN for the
       # mean value. Overwrite this to 0:
       # old comment: (indicates a variable cost not disaggregated in the target years)
