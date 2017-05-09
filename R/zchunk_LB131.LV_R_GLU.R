@@ -18,7 +18,7 @@ module_aglu_LB131.LV_R_GLU <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              "L100.GTAP_LV_milUSD",
-             FILE = "temp-data-inject/L122.LC_bm2_R_HarvCropLand_Yh_GLU"))
+             "L122.LC_bm2_R_HarvCropLand_Yh_GLU"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L131.LV_USD75_m2_R_GLU"))
   } else if(command == driver.MAKE) {
@@ -28,11 +28,7 @@ module_aglu_LB131.LV_R_GLU <- function(command, ...) {
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     L100.GTAP_LV_milUSD <- get_data(all_data, "L100.GTAP_LV_milUSD")
-    get_data(all_data, "temp-data-inject/L122.LC_bm2_R_HarvCropLand_Yh_GLU") %>%
-      # Two temporary lines for data injection
-      gather(year, value, -GCAM_region_ID, -Land_Type, -GLU) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) ->
-      L122.LC_bm2_R_HarvCropLand_Yh_GLU
+    L122.LC_bm2_R_HarvCropLand_Yh_GLU <- get_data(all_data, "L122.LC_bm2_R_HarvCropLand_Yh_GLU")
 
     # Calculate the total value of each geographic land unit (GLU)
     L100.GTAP_LV_milUSD %>%
@@ -62,7 +58,7 @@ module_aglu_LB131.LV_R_GLU <- function(command, ...) {
       add_units("1975$ per m2") %>%
       add_comments("Compute average value of land using total value from L100 and harvested area from L122") %>%
       add_legacy_name("L131.LV_USD75_m2_R_GLU") %>%
-      add_precursors("L100.GTAP_LV_milUSD", "temp-data-inject/L122.LC_bm2_R_HarvCropLand_Yh_GLU", "common/iso_GCAM_regID") ->
+      add_precursors("L100.GTAP_LV_milUSD", "L122.LC_bm2_R_HarvCropLand_Yh_GLU", "common/iso_GCAM_regID") ->
       L131.LV_USD75_m2_R_GLU
 
     return_data(L131.LV_USD75_m2_R_GLU)
@@ -70,6 +66,3 @@ module_aglu_LB131.LV_R_GLU <- function(command, ...) {
     stop("Unknown command")
   }
 }
-
-
-

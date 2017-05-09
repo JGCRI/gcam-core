@@ -22,7 +22,9 @@ module_emissions_L142.pfc_R_S_T_Y_DISABLED <- function(command, ...) {
              FILE = "temp-data-inject/L144.in_EJ_R_bld_serv_F_Yh",
              FILE = "common/iso_GCAM_regID",
              FILE = "emissions/EDGAR_sector_fgas",
-             FILE = "emissions/EDGAR_nation",
+             # ** NOTE *** the following file has been removed from the repo
+             # please talk to Kate about why and how to work around this. Thanks
+             # FILE = "emissions/EDGAR_nation",
              FILE = "emissions/A41.GWP",
              FILE = "emissions/EDGAR_SF6",
              FILE = "emissions/EDGAR_C2F6",

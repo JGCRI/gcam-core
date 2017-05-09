@@ -12,9 +12,10 @@ test_that("matches old data system output", {
   # Look for output data in OUTPUTS_DIR under top level
   # (as this code will be run in tests/testthat)
   outputs_dir <- normalizePath(file.path("../..", OUTPUTS_DIR))
+  xml_dir <- normalizePath(file.path("../..", XML_DIR))
 
   if (identical(Sys.getenv("TRAVIS"), "true")) {
-    driver(write_outputs = TRUE, outdir = outputs_dir)
+    driver(write_outputs = TRUE, outdir = outputs_dir, xmldir = xml_dir)
     # The following two tests are only run on Travis because they will fail
     # during the R CMD CHECK process locally (as the R build process removes outputs/)
     expect_equivalent(file.access(outputs_dir, mode = 4), 0,  # outputs_dir exists and is readable
@@ -82,12 +83,14 @@ test_that("matches old data system output", {
       DIGITS <- 3
       round_df <- function(x, digits = DIGITS) {
         integer_columns <- sapply(x, class) == "integer"
-        x[, integer_columns] <- sapply(x[, integer_columns], as.numeric)
+        x[integer_columns] <- lapply(x[integer_columns], as.numeric)
 
         numeric_columns <- sapply(x, class) == "numeric"
         x[numeric_columns] <- round(x[numeric_columns], digits)
         x
       }
+
+      expect_identical(dim(olddata), dim(newdata), info = paste("Dimensions are not the same for", basename(newf)))
 
       # Some datasets throw errors when tested via `expect_equivalent` because of
       # rounding issues, even when we verify that they're identical to three s.d.
