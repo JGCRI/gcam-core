@@ -17,8 +17,6 @@
 module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c( "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",
-              FILE = "temp-data-inject/L161.ag_irrHA_bm2_R_C_Y_GLU",
-              FILE = "temp-data-inject/L161.ag_rfdHA_bm2_R_C_Y_GLU",
               FILE = "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
               FILE = "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU",
               FILE = "temp-data-inject/L161.ag_irrHA_frac_R_C_GLU"))
@@ -33,16 +31,6 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
 
     # Load required inputs
     L122.LC_bm2_R_HarvCropLand_C_Yh_GLU <- get_data(all_data, "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU")
-    L161.ag_irrHA_bm2_R_C_Y_GLU <- get_data(all_data, "temp-data-inject/L161.ag_irrHA_bm2_R_C_Y_GLU") %>%
-      # The following two lines of code will be removed later, when we're using 'real' data
-      gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%   # reshape
-      mutate(year = as.integer(substr(year, 2, 5)))    # change Xyear to year
-
-    L161.ag_rfdHA_bm2_R_C_Y_GLU <- get_data(all_data, "temp-data-inject/L161.ag_rfdHA_bm2_R_C_Y_GLU") %>%
-      # The following two lines of code will be removed later, when we're using 'real' data
-      gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%   # reshape
-      mutate(year = as.integer(substr(year, 2, 5)))    # change Xyear to year
-
     L161.ag_irrProd_Mt_R_C_Y_GLU <- get_data(all_data, "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU") %>%
       # The following two lines of code will be removed later, when we're using 'real' data
       gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%   # reshape
@@ -56,89 +44,87 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
     L161.ag_irrHA_frac_R_C_GLU <- get_data(all_data, "temp-data-inject/L161.ag_irrHA_frac_R_C_GLU") # No year in this data
 
     # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses vecpaste
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # ===================================================
+    L161.ag_irrHA_frac_R_C_GLU %>%
+      select(GCAM_region_ID, GCAM_commodity, GLU, irrHA_frac) %>%
+      mutate(rfd_share = 1 - irrHA_frac) ->
+    L171.ag_irrHA_frac_R_C_GLU
+
+    # Downscaling cropland by region, crop, and GLU to irrigated/rainfed according to irrigated/rainfed shares in base year
+    # NOTE: Assuming the same irrigated:rainfed share in all historical periods (due to lack of data indicating otherwise)
+    L122.LC_bm2_R_HarvCropLand_C_Yh_GLU %>%
+      left_join_error_no_match(L171.ag_irrHA_frac_R_C_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
+      mutate(value = value * irrHA_frac,
+             # Where values are missing, assume rainfed. This is left as a check; there are none currently (5/10/17).
+             value = if_else(is.na(value), 0, value)) %>%
+      select(GCAM_region_ID, GCAM_commodity, GLU, year, value) ->
+      L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU
+
+    L122.LC_bm2_R_HarvCropLand_C_Yh_GLU %>%
+      rename(land = value) %>%
+      left_join_error_no_match(L171.ag_irrHA_frac_R_C_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
+      mutate(value = land * rfd_share,
+             # For the rainfed cropland table, missing values default to cropland quantities; presently all zero (5/10/17).
+             value = if_else(is.na(value), land, value)) %>%
+      select(GCAM_region_ID, GCAM_commodity, GLU, year, value) ->
+      L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU
+
+    # Calculating economic yields as production divided by cropland
+    L161.ag_irrProd_Mt_R_C_Y_GLU %>%
+      rename(prod = value) %>%
+      left_join_error_no_match(L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year")) %>%
+      mutate(value = prod / value,
+             value = if_else(is.na(value), 0, value)) %>%
+      select(-prod) ->
+      L171.ag_irrEcYield_kgm2_R_C_Y_GLU
+
+    L161.ag_rfdProd_Mt_R_C_Y_GLU %>%
+      rename(prod = value) %>%
+      left_join_error_no_match(L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year")) %>%
+      mutate(value = prod / value,
+             value = if_else(is.na(value), 0, value)) %>%
+      select(-prod) ->
+      L171.ag_rfdEcYield_kgm2_R_C_Y_GLU
 
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
+    L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU") %>%
       add_precursors("L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",
-                     "temp-data-inject/L161.ag_irrHA_bm2_R_C_Y_GLU",
-                     "temp-data-inject/L161.ag_rfdHA_bm2_R_C_Y_GLU",
-                     "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
-                     "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU",
                      "temp-data-inject/L161.ag_irrHA_frac_R_C_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT) ->
       L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU
-    tibble() %>%
+
+    L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU") %>%
       add_precursors("L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",
-                     "temp-data-inject/L161.ag_irrHA_bm2_R_C_Y_GLU",
-                     "temp-data-inject/L161.ag_rfdHA_bm2_R_C_Y_GLU",
-                     "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
-                     "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU",
                      "temp-data-inject/L161.ag_irrHA_frac_R_C_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT) ->
       L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU
-    tibble() %>%
+
+    L171.ag_irrEcYield_kgm2_R_C_Y_GLU %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L171.ag_irrEcYield_kgm2_R_C_Y_GLU") %>%
-      add_precursors("L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",
-                     "temp-data-inject/L161.ag_irrHA_bm2_R_C_Y_GLU",
-                     "temp-data-inject/L161.ag_rfdHA_bm2_R_C_Y_GLU",
-                     "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
-                     "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU",
-                     "temp-data-inject/L161.ag_irrHA_frac_R_C_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
+      add_precursors("temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L171.ag_irrEcYield_kgm2_R_C_Y_GLU
-    tibble() %>%
+
+    L171.ag_rfdEcYield_kgm2_R_C_Y_GLU %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L171.ag_rfdEcYield_kgm2_R_C_Y_GLU") %>%
-      add_precursors("L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",
-                     "temp-data-inject/L161.ag_irrHA_bm2_R_C_Y_GLU",
-                     "temp-data-inject/L161.ag_rfdHA_bm2_R_C_Y_GLU",
-                     "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
-                     "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU",
-                     "temp-data-inject/L161.ag_irrHA_frac_R_C_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
+      add_precursors("temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L171.ag_rfdEcYield_kgm2_R_C_Y_GLU
 
