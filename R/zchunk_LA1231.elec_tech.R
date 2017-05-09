@@ -51,7 +51,7 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
       filter(supplysector == "electricity")%>%
       distinct(technology) -> energy.GAS_TECH_CONST
 
-     # GAS_TECH1: gas steam/CT
+    # GAS_TECH1: gas steam/CT
     energy.GAS_TECH_CONST$technology[1] -> GAS_TECH1
 
     # GAS_TECH2: gas CC
