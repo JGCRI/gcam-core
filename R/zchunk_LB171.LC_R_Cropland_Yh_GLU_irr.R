@@ -8,12 +8,11 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU}, \code{L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU}, \code{L171.ag_irrEcYield_kgm2_R_C_Y_GLU}, \code{L171.ag_rfdEcYield_kgm2_R_C_Y_GLU}. The corresponding file in the
 #' original data system was \code{LB171.LC_R_Cropland_Yh_GLU_irr.R} (aglu level1).
-#' @details This chunk downscales cropland by GCAM region / commodity / year / GLU to irrigated/rainfed according to irrigated/rainfed shares in the base year, and calculates the economic yields as production divided by cropland.
+#' @details This chunk downscales total harvested cropland by GCAM region / commodity / year / GLU to irrigated/rainfed according to irrigated/rainfed shares in the base year, and calculates the economic yields as production divided by cropland.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RC May 2017
-#' @export
 module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c( "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",
@@ -46,11 +45,11 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
     # First, calculate the share of irrigated vs. rainfed cropland in the base year by GCAM region, commodity and GLU.
     L161.ag_irrHA_frac_R_C_GLU %>%
       select(GCAM_region_ID, GCAM_commodity, GLU, irrHA_frac) %>%
-      # Get the share of rainfed cropland,
+      # Get the share of rainfed cropland
       mutate(rfd_share = 1 - irrHA_frac) ->
     L171.ag_irrHA_frac_R_C_GLU
 
-    # Second, downscale total cropland to irrigated and rainfed by GCAM region, commodity, year and GLU.
+    # Second, downscale total harvested cropland to irrigated and rainfed by GCAM region, commodity, year and GLU.
     # Apply the base year share of irrigated vs. rainfed cropland to all historial periods (due to lack of data indicating otherwise).
     L122.LC_bm2_R_HarvCropLand_C_Yh_GLU %>%
       # Match the base year share by GCAM region, commodity, year and GLU.
@@ -136,7 +135,6 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
       add_title("Adjusted economic yield for rainfed crops by GCAM region / commodity / year / GLU") %>%
       add_units("kg/m2") %>%
       add_comments("Adjusted economic yield for rainfed crops are calculated as rainfed crop production devided by rainfed cropland cover.") %>%
-      add_comments("can be multiple lines") %>%
       add_legacy_name("L171.ag_rfdEcYield_kgm2_R_C_Y_GLU") %>%
       add_precursors("temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->

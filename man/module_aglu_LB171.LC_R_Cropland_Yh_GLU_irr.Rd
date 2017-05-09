@@ -18,11 +18,11 @@ the generated outputs: \code{L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU}, \code{L171
 original data system was \code{LB171.LC_R_Cropland_Yh_GLU_irr.R} (aglu level1).
 }
 \description{
-Briefly describe what this chunk does.
+Calculate irrigated/rainfed harvested cropland cover and economic yields by GCAM region / commodity / year / GLU.
 }
 \details{
-Describe in detail what this chunk does.
+This chunk downscales total harvested cropland by GCAM region / commodity / year / GLU to irrigated/rainfed according to irrigated/rainfed shares in the base year, and calculates the economic yields as production divided by cropland.
 }
 \author{
-YourInitials CurrentMonthName 2017
+RC May 2017
 }
