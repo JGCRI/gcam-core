@@ -1,6 +1,6 @@
-# File: A21.globaltech_coef.csv,,,,,,
-# Title: Primary energy handling default coefficients,,,,,,
-# Units: NA,,,,,,
+# File: A21.globaltech_coef.csv
+# Title: Primary energy handling default coefficients
+# Units: NA
 supplysector,subsector,technology,minicam.energy.input,1971,2010,2100
 regional biomass,regional biomass,regional biomass,biomass,1,1,1
 regional coal,regional coal,regional coal,coal,1,1,1
