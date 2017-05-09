@@ -21,7 +21,7 @@ original data system was \code{L123.bcoc_awb_R_S_T_Y.R} (emissions level1).
 Produces BC and OC AWB emission factors for each Ag production technology.
 }
 \details{
-Use year 2000 BC and OC AWB emissions to calculate emission factors for each ag production technology.
+Use RCP year 2000 BC and OC emissions from agricultural waste burning on fields (AWB) to calculate emission factors for each ag production technology. Allocates regional AWB emissions to GCAM technology according to above-ground non-harvested biomass.
 }
 \author{
 SJS May 2017
