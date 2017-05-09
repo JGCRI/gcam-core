@@ -50,7 +50,11 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
       filter(subsector == "gas")%>%
       filter(supplysector == "electricity")%>%
       distinct(technology) -> energy.GAS_TECH_CONST
+
+     # GAS_TECH1: gas steam/CT
     energy.GAS_TECH_CONST$technology[1] -> GAS_TECH1
+
+    # GAS_TECH2: gas CC
     energy.GAS_TECH_CONST$technology[2] -> GAS_TECH2
 
     # Natural gas: Disaggregate to CC and CT/steam on the basis of assumed efficiencies
