@@ -44,6 +44,16 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
       filter(supplysector == "electricity")%>%
       distinct(supplysector, technology, minicam.energy.input) -> energy.GAS_TECH
 
+    # Obtain unique gas technologies
+    # NOTE: It is assumed that there are 2 gas technologies only. If new gas technologies are added in the future, then this chunk has to be updated.
+    calibrated_techs %>%
+      filter(subsector == "gas")%>%
+      filter(supplysector == "electricity")%>%
+      distinct(technology) -> energy.GAS_TECH_CONST
+
+    energy.GAS_TECH_CONST$technology[1] -> GAS_TECH1
+    energy.GAS_TECH_CONST$technology[2] -> GAS_TECH2
+
     # Natural gas: Disaggregate to CC and CT/steam on the basis of assumed efficiencies
     # Subset the actual efficiencies of gas -> electricity
     L123.eff_R_elec_F_Yh %>%
@@ -80,13 +90,13 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
     # However if a region has very high efficiencies of CC power plants that bring the weighted average higher than our assumed CC efficiency (e.g. Turkey),
     # this could set the market share of single-cycle power plants to 0 and therefore zero out any heat production from these technologies.
     # Adding this small adjustment factor to the efficiencies avoids this outcome:
-    # Small adjustment factor for elec efficienies (explaining its need in the above comment)
+    # Small adjustment factor for elec efficienies (explaining its need in the comment above)
     ELEC_ADJ <- 0.03
 
     L1231.eff_R_elec_gas_Yh_gathered %>%
-      full_join(select(filter(L1231.eff_R_elec_gas_tech, technology == "gas (steam/CT)"), year,efficiency_tech, supplysector, subsector, technology),by="year") %>%
+      full_join(select(filter(L1231.eff_R_elec_gas_tech, technology == GAS_TECH1), year,efficiency_tech, supplysector, subsector, technology),by="year") %>%
       select(-supplysector, -subsector, -technology) %>%
-      left_join(select(filter(L1231.eff_R_elec_gas_tech, technology == "gas (CC)"), year, efficiency_tech, supplysector, subsector, technology), by = "year") %>%
+      left_join(select(filter(L1231.eff_R_elec_gas_tech, technology == GAS_TECH2), year, efficiency_tech, supplysector, subsector, technology), by = "year") %>%
       select(-supplysector, -subsector, -technology) %>%
       rename(efficiency_tech1 = efficiency_tech.x, efficiency_tech2 = efficiency_tech.y) %>%
       # performing adjustments here
@@ -96,13 +106,13 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
     # Create tibble for gas (steam/CT) that is going to binded with gas(CC) to create output for gas technologies
     L1231.eff_R_elec_gas_Yh_gathered %>%
       select(-efficiency_tech2, -efficiency) %>%
-      mutate(technology = "gas (steam/CT)") %>%
+      mutate(technology = GAS_TECH1) %>%
       rename(efficiency = efficiency_tech1) -> L1231.eff_R_elec_gas_tech1_Yh_gathered
 
     # Combined both gas technologies (efficiencies) in long format
     L1231.eff_R_elec_gas_Yh_gathered %>%
       select(-efficiency_tech1, -efficiency) %>%
-      mutate(technology = "gas (CC)") %>%
+      mutate(technology = GAS_TECH2) %>%
       rename(efficiency = efficiency_tech2) %>%
       bind_rows(L1231.eff_R_elec_gas_tech1_Yh_gathered) %>%
       select(GCAM_region_ID, sector, fuel, technology, year, efficiency) -> L1231.eff_R_elec_gas_tech_Yh
@@ -122,12 +132,12 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
     # Combined gas technologies (inputs) in long format
     L1231.in_EJ_R_elec_gas_Yh_gathered %>%
       select(-in_EJ, -share_tech1, -in_EJ_tech2) %>%
-      mutate(technology = "gas (steam/CT)") %>%
+      mutate(technology = GAS_TECH1) %>%
       rename(value = in_EJ_tech1) -> L1231.eff_R_elec_gas_tech1_Yh_gathered
 
     L1231.in_EJ_R_elec_gas_Yh_gathered %>%
       select(-in_EJ, -share_tech1, -in_EJ_tech1) %>%
-      mutate(technology = "gas (CC)") %>%
+      mutate(technology = GAS_TECH2) %>%
       rename(value = in_EJ_tech2) %>%
       bind_rows(L1231.eff_R_elec_gas_tech1_Yh_gathered) %>%
       select(GCAM_region_ID, sector, fuel, technology, year, value) -> L1231.in_EJ_R_elec_gas_tech_Yh
