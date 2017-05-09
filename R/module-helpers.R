@@ -45,5 +45,30 @@ set_water_input_name <- function(water_sector, water_type, water_mapping, GLU = 
            # irrigation mapped types - needs the GLU column
            new_name = if_else(water_sector == IRRIGATION & water_type %in% MAPPED_WATER_TYPES,
                               paste(supplysector, GLU, wt_short, sep = "_"), new_name)) %>%
-  .$new_name
+    .$new_name
+}
+
+
+#' rename_SO2
+#'
+#' Rename SO2 to regional SO2. (TODO)
+#'
+#' @param x Data object (typically from pipeline)
+#' @param so2_map TODO
+#' @param is_awb TODO
+#' @return Data object with \code{Non.CO2} changed to SO2 name for SO2 data.
+#' @author BBL May 2017
+rename_SO2 <- function(x, so2_map, is_awb = FALSE) {
+
+  extension <- if_else(is_awb, "_AWB", "")
+  data_so2 <- filter(x, Non.CO2 == paste0("SO2", extension))
+  data_notso2 <- filter(x, Non.CO2 != paste0("SO2", extension))
+
+  so2_map %>%
+    mutate(SO2_name = paste0(SO2_name, extension)) %>%
+    # pull so2_map information into SO2 data
+    select(region, SO2_name) %>%
+    left_join_error_no_match(data_so2, ., by = "region") %>%
+    rename(Non.CO2 = SO2_name) %>%
+    bind_rows(data_notso2)
 }
