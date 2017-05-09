@@ -1,8 +1,8 @@
-# File: USDA_item_cost.csv,
-# Title: USDA_item_cost,
-# Units: Unitless,
-# Description: Specifies cost type from USDA database,
-# ----------,
+# File: USDA_item_cost.csv
+# Title: USDA_item_cost
+# Units: Unitless
+# Description: Specifies cost type from USDA database
+# ----------
 Item,cost_type
 Primary output,na
 Secondary output,na

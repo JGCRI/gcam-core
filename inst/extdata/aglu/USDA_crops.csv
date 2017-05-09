@@ -1,8 +1,8 @@
-# File: USDA_crops.csv,,
-# Title: USDA_crops,,
-# Units: Unitless,,
-# Description: Maps crops in USDA cost database to GCAM commodities,,
-# ----------,,
+# File: USDA_crops.csv
+# Title: USDA_crops
+# Units: Unitless
+# Description: Maps crops in USDA cost database to GCAM commodities
+# ----------
 USDA_crop,GTAP_crop,GCAM_commodity
 Barley,Barley,OtherGrain
 Corn,Maize,Corn
