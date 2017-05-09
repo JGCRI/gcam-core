@@ -20,8 +20,8 @@ FLAG_XML <- "FLAG_XML"
 # ======================================================================
 # Time constants
 HISTORICAL_YEARS <- 1971:2010
-FUTURE_YEARS <- seq(2015, 2100, 5)
 IMF_GDP_YEARS <- 2010:2020
+FUTURE_YEARS <- seq(2015, 2100, 5)
 
 # ======================================================================
 # GCAM constants
@@ -40,11 +40,6 @@ GTAP_HISTORICAL_YEAR <- 2000
 CROSIT_HISTORICAL_YEAR <- 2005
 SPEC_AG_PROD_YEARS <- seq(2010, 2050, 5) # Specified ag productivity years
 MIN_PROFIT_MARGIN <- 0.15
-
-# ======================================================================
-# socioeconomics constants
-BASE_POP_SCENARIO <- "SSP2"
-BASE_GDP_SCENARIO <- "SSP2"
 
 # GLU (Geographic Land Unit) settings - see module_aglu_LA100.0_LDS_preprocessing
 aglu.GLU <- "GLU"
@@ -76,6 +71,13 @@ MIN_HA_TO_CROPLAND <- 1
 # Cited in: Monfreda et al. 2008, Farming the Planet: 2., Global Biogeochemical Cycles 22, GB1022, http://dx.doi.org/10.1029/2007GB002947
 MAX_HA_TO_CROPLAND <- 3
 
+
+# ======================================================================
+# socioeconomics constants
+BASE_POP_SCENARIO <- "SSP2"
+BASE_GDP_SCENARIO <- "SSP2"
+
+
 # ======================================================================
 # energy constants
 
@@ -85,8 +87,9 @@ energy.CDIAC_CO2_HISTORICAL_YEARS <- HISTORICAL_YEARS[HISTORICAL_YEARS < 2010]
 
 ## ======================================================================
 ## Conversion constants.  The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
+## ======================================================================
 CONV_BIL_MIL <- 1000
-CONV_MIL_BIL <- 0.001
+CONV_MIL_BIL <- 1 / CONV_BIL_MIL
 CONV_MIL_THOUS <- 1000
 CONV_ONES_THOUS <- 0.001
 CONV_TON_MEGATON <- 1e-6
@@ -139,21 +142,18 @@ modeltime.HECTOR_INI_FILE <- "../input/climate/hector-gcam.ini"
 DEFAULT_ELECTRIC_EFFICIENCY <- 0.33
 
 # ======================================================================
-#Set a default electric efficiency
+# Set a default electric efficiency
 ELECTRICITY_INPUT_FUELS<- c( "biomass", "coal", "gas", "refined liquids" )
 
 # ======================================================================
-#Create X_HISTORICAL_YEARS
-#X_HISTORICAL_YEARS <- paste( "X", HISTORICAL_YEARS, sep = "" )
-
 # socioeconomics constants
 
 # Population years - note that these sequences shouldn't have any overlap,
 # and should contain all historical years used by other modules
 socioeconomics.MADDISON_HISTORICAL_YEARS <- seq(1700, 1900, 50) # Years for which to use Maddison data
 socioeconomics.UN_HISTORICAL_YEARS <- c(1950, 1971:2010) # Years for which to use UN data
-
 socioeconomics.BASE_POP_SCEN <- "SSP2"
+
 
 # ======================================================================
 # water constants
@@ -165,6 +165,7 @@ names(MAPPED_WATER_TYPES_SHORT) <- MAPPED_WATER_TYPES
 DEFAULT_UNLIMITED_WATER_PRICE <- 0
 DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.001
 
+
 # ======================================================================
 # emissions constants
 
@@ -175,4 +176,4 @@ emissions.NH3_EXTRA_YEARS <- 1971:1989
 emissions.EDGAR_YEARS <- 1971:2008
 emissions.EPA_MACC_YEAR <- 2030  # Must be either 2020 or 2030
 emissions.MAC_TAXES <- c( 0, 5, 10, 15, 32, 66, 129, 243, 486, 1093 ) # Range of costs in 1990 USD
-emissions.CONV_C_CO2 <- 44/12 # Convert Carbon to CO2
+emissions.CONV_C_CO2 <- 44 / 12 # Convert Carbon to CO2

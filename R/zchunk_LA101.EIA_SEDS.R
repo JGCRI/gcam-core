@@ -38,7 +38,7 @@ module_gcam.usa_LA101.EIA_SEDS <- function(command, ...) {
 
     # ===================================================
 
-    # Prep for output tables - add columns for GCAM sector and fuel names, using the substrings of the MSN code, and filter out U.S.
+    # Prep for output tables - add columns for GCAM sector and fuel names, using the substrings of the Mnemonic Series Name (MSN) code, and filter out U.S.
     EIA_use_all_Bbtu %>%
       gather(year, value, -Data_Status, -State, -MSN) %>%
       mutate(year = as.integer(year)) %>%
@@ -48,10 +48,10 @@ module_gcam.usa_LA101.EIA_SEDS <- function(command, ...) {
       left_join(EIA_SEDS_sectors, by = "EIA_sector") %>%
       filter(State != "US") %>%
       mutate(state = State, fuel = GCAM_fuel, sector = GCAM_sector) ->
-      x
+      Bbtu_with_GCAM_names
 
     # Create 1 of the 2 output tables: narrow years from 1971-2010, convert billion BTU to EJ (fuel specific), remove rows that have no defined sector or fuel name
-    x %>%
+    Bbtu_with_GCAM_names %>%
       select(state, sector, fuel, year, value) %>%
       filter(year %in% HISTORICAL_YEARS, !is.na(fuel), !is.na(sector)) %>%
       left_join(A_fuel_conv, by = "fuel") %>%
@@ -61,17 +61,17 @@ module_gcam.usa_LA101.EIA_SEDS <- function(command, ...) {
       arrange(fuel, sector) ->
       L101.inEIA_EJ_state_S_F
 
-    # Create other output table: leave units as billion BTU, replace NAs in 1971-1979 with values from one year more recent
-    x %>%
+    # Create other output table: leave units as billion BTU, getting rid of missing values: prior to 1980, lots are missing. These data are only used for state-wise allocations
+    Bbtu_with_GCAM_names %>%
       select(Data_Status, state, MSN, year, value, EIA_fuel, EIA_sector, sector, fuel, -State, -description.x, -description.y) %>%
-      arrange(Data_Status, state, MSN, EIA_fuel, EIA_sector, sector, fuel, -year) ->
-      y
+      arrange(Data_Status, state, MSN, EIA_fuel, EIA_sector, sector, fuel, -year) -> # Year needs to be in descending order to use fill function
+      Bbtu_with_GCAM_names_intermediate
 
     # To create this second output table, I need to split the dataframe and recombine
-    y %>%
-      filter(year %in% 1971:2011) %>% # custom year range, want to keep NAs in 1960-1970
-      fill(value) %>%
-      bind_rows(filter(y, year %in% 1960:1970)) %>% # Reattaching 1960-1970 rows
+    Bbtu_with_GCAM_names_intermediate %>%
+      filter(year %in% 1971:2011) %>% # Custom year range, want to keep NAs in 1960-1970
+      fill(value) %>% # Replace NAs in 1971-1979 with values from one year more recent
+      bind_rows(filter(Bbtu_with_GCAM_names_intermediate, year %in% 1960:1970)) %>% # Reattaching 1960-1970 rows
       arrange(Data_Status, state, MSN, EIA_fuel, EIA_sector, sector, fuel, -year) ->
       L101.EIA_use_all_Bbtu
 
