@@ -83,9 +83,15 @@ module_energy_LA126.distribution <- function(command, ...) {
       Electricity_ownuse_all
 
     # Table Electricity_ownuse_all is separated to create the final tables
-    Electricity_ownuse_all %>% select(GCAM_region_ID, sector, fuel, year, value = value_electricity_ownuse_in) -> L126.in_EJ_R_elecownuse_F_Yh
-    Electricity_ownuse_all %>% select(GCAM_region_ID, sector, fuel, year, value = value_electricity_ownuse_out) -> L126.out_EJ_R_elecownuse_F_Yh
-    Electricity_ownuse_all %>% select(GCAM_region_ID, sector, fuel, year, value = value_electricity_ownuse_IO) -> L126.IO_R_elecownuse_F_Yh
+    Electricity_ownuse_all %>%
+      select(GCAM_region_ID, sector, fuel, year, value = value_electricity_ownuse_in) ->
+      L126.in_EJ_R_elecownuse_F_Yh
+    Electricity_ownuse_all %>%
+      select(GCAM_region_ID, sector, fuel, year, value = value_electricity_ownuse_out) ->
+      L126.out_EJ_R_elecownuse_F_Yh
+    Electricity_ownuse_all %>%
+      select(GCAM_region_ID, sector, fuel, year, value = value_electricity_ownuse_IO) ->
+      L126.IO_R_elecownuse_F_Yh
 
     # ELECTRICITY TRANSMISSION AND DISTRIBUTION
     # Preparing electricity generation output (i.e., L126.out_EJ_R_elecownuse_F_Yh) to be joined later with energy balance
@@ -106,9 +112,15 @@ module_energy_LA126.distribution <- function(command, ...) {
       Electricity_distribution_all
 
     # Table Electricity_distribution_all is separated to create the final tables
-    Electricity_distribution_all %>% select(GCAM_region_ID, sector, fuel, year, value) -> L126.in_EJ_R_electd_F_Yh
-    Electricity_distribution_all %>% select(GCAM_region_ID, sector, fuel, year, value = value_electd_out) -> L126.out_EJ_R_electd_F_Yh
-    Electricity_distribution_all %>% select(GCAM_region_ID, sector, fuel, year, value = value_electd_IO) -> L126.IO_R_electd_F_Yh
+    Electricity_distribution_all %>%
+      select(GCAM_region_ID, sector, fuel, year, value) ->
+      L126.in_EJ_R_electd_F_Yh
+    Electricity_distribution_all %>%
+      select(GCAM_region_ID, sector, fuel, year, value = value_electd_out) ->
+      L126.out_EJ_R_electd_F_Yh
+    Electricity_distribution_all %>%
+      select(GCAM_region_ID, sector, fuel, year, value = value_electd_IO) ->
+      L126.IO_R_electd_F_Yh
 
     # GAS PIPELINE
     # Preparing to be joined later - summing by GCAM region ID and year
@@ -126,13 +138,19 @@ module_energy_LA126.distribution <- function(command, ...) {
       left_join(Gasproc_out, by = c("GCAM_region_ID", "year")) %>% # Joining gas output
       mutate(value_gaspipe_out = value_gaspipe_in - value_gaspipe) %>% # Creating values for table, L126.out_EJ_R_gaspipe_F_Yh (i.e., output), by subtracting gas pipeline input by gas pipeline consumption
       mutate(value_gaspipe_IO = value_gaspipe_in / value_gaspipe_out) %>% # Creating values for table, L126.IO_R_gaspipe_F_Yh, by dividing input by output. Note that some regions have zero gas in some of the base years. Reset their IO coefs to 1 in the next step.
-      mutate(value_gaspipe_IO = if_else(is.na(value_gaspipe_IO),1,value_gaspipe_IO)) -> # Reset NaN IO coefs to 1, since some regions have no gas in some base years.
+      mutate(value_gaspipe_IO = if_else(is.na(value_gaspipe_IO), 1, value_gaspipe_IO)) -> # Reset NaN IO coefs to 1, since some regions have no gas in some base years.
       Gas_pipeline_all
 
     # Table Gas_pipeline_all is separated to create the final tables
-    Gas_pipeline_all %>% select(GCAM_region_ID, sector, fuel, year, value = value_gaspipe_in) -> L126.in_EJ_R_gaspipe_F_Yh
-    Gas_pipeline_all %>% select(GCAM_region_ID, sector, fuel, year, value = value_gaspipe_out) -> L126.out_EJ_R_gaspipe_F_Yh
-    Gas_pipeline_all %>% select(GCAM_region_ID, sector, fuel, year, value = value_gaspipe_IO) -> L126.IO_R_gaspipe_F_Yh
+    Gas_pipeline_all %>%
+      select(GCAM_region_ID, sector, fuel, year, value = value_gaspipe_in) ->
+      L126.in_EJ_R_gaspipe_F_Yh
+    Gas_pipeline_all %>%
+      select(GCAM_region_ID, sector, fuel, year, value = value_gaspipe_out) ->
+      L126.out_EJ_R_gaspipe_F_Yh
+    Gas_pipeline_all %>%
+      select(GCAM_region_ID, sector, fuel, year, value = value_gaspipe_IO) ->
+      L126.IO_R_gaspipe_F_Yh
 
     # ===================================================
     L126.in_EJ_R_elecownuse_F_Yh %>%
