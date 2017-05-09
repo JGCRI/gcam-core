@@ -50,7 +50,8 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
                                           input = "i1",
                                           from_file = TRUE),
       chunk_outputs = function(...) tibble(name = chunknames,
-                                           output = "o1"),
+                                           output = c("o1", "o2"),
+                                           to_xml = FALSE),
       load_csv_files = function(...) { i1 <- tibble(); return_data(i1) },
       run_chunk = function(...) {
         tibble() %>% add_title("o2") %>% add_units("units") %>%
@@ -70,40 +71,49 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
     tibble() %>% add_title("o1") %>% add_units("units") %>%
       add_comments("comments") %>% add_legacy_name("legacy") %>%
       add_precursors("i1") -> o1
-    expect_silent(check_chunk_outputs("c1", return_data(o1), "i1", po))
+    expect_silent(check_chunk_outputs("c1", return_data(o1), "i1", po, FALSE))
 
     # Missing title
     tibble() %>% add_units("units") %>%
       add_comments("comments") %>% add_legacy_name("legacy") %>%
       add_precursors("i1") -> o1
-    expect_warning(check_chunk_outputs("c1", return_data(o1), "i1", po))
+    expect_warning(check_chunk_outputs("c1", return_data(o1), "i1", po, FALSE))
 
     # Missing legacy name
     tibble() %>% add_units("units") %>%
       add_comments("comments") %>% add_legacy_name("legacy") %>%
       add_precursors("i1") -> o1
-    expect_warning(check_chunk_outputs("c1", return_data(o1), "i1", po))
+    expect_warning(check_chunk_outputs("c1", return_data(o1), "i1", po, FALSE))
 
     # Missing units
     tibble() %>% add_title("o1") %>%
       add_comments("comments") %>% add_legacy_name("legacy") %>%
       add_precursors("i1") -> o1
-    expect_warning(check_chunk_outputs("c1", return_data(o1), "i1", po))
+    expect_warning(check_chunk_outputs("c1", return_data(o1), "i1", po, FALSE))
 
     # Missing comments
     tibble() %>% add_title("o1") %>% add_units("units") %>%
       add_legacy_name("legacy") %>% add_precursors("i1") -> o1
-    expect_warning(check_chunk_outputs("c1", return_data(o1), "i1", po))
+    expect_warning(check_chunk_outputs("c1", return_data(o1), "i1", po, FALSE))
+
+    # XML flag but not marked in input
+    tibble() %>% add_title("o1") %>% add_flags(FLAG_XML) %>%
+      add_precursors("i1") -> o1
+    expect_error(check_chunk_outputs("c1", return_data(o1), "i1", po, FALSE))
+
+    # XML marked in input but no flag
+    tibble() %>% add_title("o1") %>% add_precursors("i1") -> o1
+    expect_error(check_chunk_outputs("c1", return_data(o1), "i1", po, TRUE))
 
     # No precursors at all, even with inputs
     tibble() %>% add_title("o1") %>% add_units("units") %>%
       add_legacy_name("legacy") %>% add_comments("comments") -> o1
-    expect_error(check_chunk_outputs("c1", return_data(o1), "i1", po))
+    expect_error(check_chunk_outputs("c1", return_data(o1), "i1", po, FALSE))
 
     # Recursive precursor
     tibble() %>% add_title("o1") %>% add_units("units") %>%
       add_legacy_name("legacy") %>% add_comments("comments") %>% add_precursors("o1") -> o1
-    expect_error(check_chunk_outputs("c1", return_data(o1), "i1", po))
+    expect_error(check_chunk_outputs("c1", return_data(o1), "i1", po, FALSE))
 
     # Precursor can be another chunk product
     po <- c("o1", "o2")  # promised outputs
@@ -113,7 +123,7 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
     tibble() %>% add_title("o2") %>% add_units("units") %>%
       add_comments("comments") %>% add_legacy_name("legacy") %>%
       add_precursors("o1") -> o2
-    expect_silent(check_chunk_outputs("c1", return_data(o1, o2), "i1", po))
+    expect_silent(check_chunk_outputs("c1", return_data(o1, o2), "i1", po, c(FALSE, FALSE)))
   })
 
   test_that("catches stuck", {
