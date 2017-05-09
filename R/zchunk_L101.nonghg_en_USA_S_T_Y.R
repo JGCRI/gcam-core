@@ -24,7 +24,7 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
              FILE = "energy/mappings/IEA_product_fuel",
              FILE = "emissions/mappings/GCAM_sector_tech",
              FILE = "emissions/mappings/EPA_tech",
-             FILE = "temp-data-inject/L1231.in_EJ_R_elec_F_tech_Yh",
+             "L1231.in_EJ_R_elec_F_tech_Yh",
              FILE = "temp-data-inject/L1322.in_EJ_R_indenergy_F_Yh",
              FILE = "temp-data-inject/L144.in_EJ_R_bld_serv_F_Yh",
              FILE = "temp-data-inject/L154.in_EJ_R_trn_m_sz_tech_F_Yh",
@@ -59,7 +59,7 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
     EPA_VOC <- get_data(all_data, "emissions/EPA_VOC")
     EPA_NH3 <- get_data(all_data, "emissions/EPA_NH3")
 
-    L1231.in_EJ_R_elec_F_tech_Yh <- get_data(all_data, "temp-data-inject/L1231.in_EJ_R_elec_F_tech_Yh")
+    L1231.in_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.in_EJ_R_elec_F_tech_Yh")
     L1322.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "temp-data-inject/L1322.in_EJ_R_indenergy_F_Yh")
     L144.in_EJ_R_bld_serv_F_Yh <- get_data(all_data, "temp-data-inject/L144.in_EJ_R_bld_serv_F_Yh")
     L154.in_EJ_R_trn_m_sz_tech_F_Yh <- get_data(all_data, "temp-data-inject/L154.in_EJ_R_trn_m_sz_tech_F_Yh")
@@ -82,10 +82,15 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
       select(-mode, -UCD_sector, -size.class, -UCD_technology, -UCD_fuel) %>%
 
       # Bind all together
-      bind_rows(L1231.in_EJ_R_elec_F_tech_Yh, temp) ->
+      bind_rows(temp, spread(mutate(L1231.in_EJ_R_elec_F_tech_Yh, year = paste0("X", year)), year, value)) ->
+      # once the rest of the data above are not coming from data-temp-inject, need to
+      # spread them too I guess
       L101.in_EJ_R_en_Si_F_Yh
 
+    # NOTE we need to pass the L101.in_EJ_R_en_Si_F_Yh dataset on in WIDE, not
+    # long, format, because it doesn't reshape cleanly (there are multiple year/row combinations)
     L101.in_EJ_R_en_Si_F_Yh %>%
+      # Temporary data-inject reshape
       gather(year, value, -GCAM_region_ID, -sector, -fuel, -technology) %>%
       mutate(year = as.integer(substr(year, 2, 5))) ->
       L101.in_EJ_USA_en_Sepa_F_Yh.mlt
@@ -179,7 +184,7 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
                      "energy/mappings/IEA_product_fuel",
                      "emissions/mappings/GCAM_sector_tech",
                      "emissions/mappings/EPA_tech",
-                     "temp-data-inject/L1231.in_EJ_R_elec_F_tech_Yh",
+                     "L1231.in_EJ_R_elec_F_tech_Yh",
                      "temp-data-inject/L1322.in_EJ_R_indenergy_F_Yh",
                      "temp-data-inject/L144.in_EJ_R_bld_serv_F_Yh",
                      "temp-data-inject/L154.in_EJ_R_trn_m_sz_tech_F_Yh",
