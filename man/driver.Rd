@@ -5,7 +5,7 @@
 \title{driver}
 \usage{
 driver(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE,
-  outdir = OUTPUTS_DIR)
+  outdir = OUTPUTS_DIR, xmldir = XML_DIR)
 }
 \arguments{
 \item{all_data}{Data to be pre-loaded into data system}
@@ -15,6 +15,8 @@ driver(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE,
 \item{quiet}{Suppress output?}
 
 \item{outdir}{Location to write output data.  (Ignored if \code{write_outputs} is \code{FALSE}.)}
+
+\item{xmldir}{Location to write output XML.  (Ignored if \code{write_outputs} is \code{FALSE}.)}
 }
 \value{
 A list of all built data.
