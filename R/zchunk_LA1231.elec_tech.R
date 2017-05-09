@@ -44,13 +44,12 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
       filter(supplysector == "electricity")%>%
       distinct(supplysector, technology, minicam.energy.input) -> energy.GAS_TECH
 
-    # Obtain unique gas technologies
+    # Obtain unique gas technologies to avoid hard coding technologies later in the code
     # NOTE: It is assumed that there are 2 gas technologies only. If new gas technologies are added in the future, then this chunk has to be updated.
     calibrated_techs %>%
       filter(subsector == "gas")%>%
       filter(supplysector == "electricity")%>%
       distinct(technology) -> energy.GAS_TECH_CONST
-
     energy.GAS_TECH_CONST$technology[1] -> GAS_TECH1
     energy.GAS_TECH_CONST$technology[2] -> GAS_TECH2
 
@@ -103,7 +102,7 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
       mutate(efficiency_tech1 = if_else(efficiency < efficiency_tech1, efficiency, efficiency_tech1)) %>%
       mutate(efficiency_tech2 = if_else(efficiency > efficiency_tech2, efficiency + ELEC_ADJ, efficiency_tech2)) -> L1231.eff_R_elec_gas_Yh_gathered
 
-    # Create tibble for gas (steam/CT) that is going to binded with gas(CC) to create output for gas technologies
+    # Create tibble for gas (steam/CT) that is going to be binded with gas(CC) to create output for gas technologies
     L1231.eff_R_elec_gas_Yh_gathered %>%
       select(-efficiency_tech2, -efficiency) %>%
       mutate(technology = GAS_TECH1) %>%
