@@ -10,7 +10,8 @@ chunk_outputs(chunks = find_chunks()$name)
 \item{chunks}{A character vector of chunks names}
 }
 \value{
-A tibble with columns 'name' (chunk name) and 'output' (name of data)
+A tibble with columns 'name' (chunk name), 'output' (name of data),
+and 'to_xml' (whether or not this is an XML structure).
 }
 \description{
 List all chunk outputs.
