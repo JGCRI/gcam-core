@@ -2,6 +2,7 @@
 # ======================================================================
 # General behavior constants
 OUTPUTS_DIR  <- "outputs/"
+XML_DIR      <- "xml/"
 COMMENT_CHAR <- "#"
 OLD_DATA_SYSTEM_BEHAVIOR <- TRUE
 
@@ -14,11 +15,13 @@ FLAG_NO_XYEAR   <- "NO_XYEAR"
 FLAG_NO_TEST    <- "NO_TEST"
 FLAG_SUM_TEST   <- "FLAG_SUM_TEST"
 FLAG_PROTECT_FLOAT <- "FLAG_PROTECT_FLOAT"
+FLAG_XML <- "FLAG_XML"
 
 # ======================================================================
 # Time constants
 HISTORICAL_YEARS <- 1971:2010
-FUTURE_YEARS <- seq( 2015, 2100, 5 )
+IMF_GDP_YEARS <- 2010:2020
+FUTURE_YEARS <- seq(2015, 2100, 5)
 
 # ======================================================================
 # GCAM constants
@@ -29,10 +32,14 @@ gcam.USA_CODE <- 1
 AGLU_HISTORICAL_YEARS <- 1971:2010
 FAO_HISTORICAL_YEARS <- 1961:2011
 MODEL_PRICE_YEARS <- 2001:2005
+MODEL_COST_YEARS <- 2001:2005
 LAND_HISTORY_YEARS <- c(1700, 1750, 1800, 1850, 1900, 1950, 1975)
+PREAGLU_YEARS <- c(1700, 1750,1800, 1850, 1900, 1950)
 aglu.LAND_COVER_YEARS <- sort(unique(c(LAND_HISTORY_YEARS, AGLU_HISTORICAL_YEARS)))
 GTAP_HISTORICAL_YEAR <- 2000
 CROSIT_HISTORICAL_YEAR <- 2005
+SPEC_AG_PROD_YEARS <- seq(2010, 2050, 5) # Specified ag productivity years
+MIN_PROFIT_MARGIN <- 0.15
 
 # GLU (Geographic Land Unit) settings - see module_aglu_LA100.0_LDS_preprocessing
 aglu.GLU <- "GLU"
@@ -58,6 +65,19 @@ aglu.DIGITS_CALOUTPUT <- 7 # production
 # Carbon content of all cellulose
 aglu.CCONTENT_CELLULOSE <- 0.45
 
+# Minimum and maximum harvested:cropped ratios
+MIN_HA_TO_CROPLAND <- 1
+# Source: Dalrymple, D.G. 1971, Survey of Multiple Cropping in Less Developed Nations, Foreign Econ. Dev. Serv., U.S. Dep. of Agricul., Washington, D.C.
+# Cited in: Monfreda et al. 2008, Farming the Planet: 2., Global Biogeochemical Cycles 22, GB1022, http://dx.doi.org/10.1029/2007GB002947
+MAX_HA_TO_CROPLAND <- 3
+
+
+# ======================================================================
+# socioeconomics constants
+BASE_POP_SCENARIO <- "SSP2"
+BASE_GDP_SCENARIO <- "SSP2"
+
+
 # ======================================================================
 # energy constants
 
@@ -65,9 +85,11 @@ aglu.CCONTENT_CELLULOSE <- 0.45
 energy.CDIAC_CO2_HISTORICAL_YEARS <- HISTORICAL_YEARS[HISTORICAL_YEARS < 2010]
 
 
-# ======================================================================
-# Conversion constants
+## ======================================================================
+## Conversion constants.  The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
+## ======================================================================
 CONV_BIL_MIL <- 1000
+CONV_MIL_BIL <- 1 / CONV_BIL_MIL
 CONV_MIL_THOUS <- 1000
 CONV_ONES_THOUS <- 0.001
 CONV_TON_MEGATON <- 1e-6
@@ -76,12 +98,15 @@ CONV_T_METRIC_SHORT <- 1000/908  # Ratio between metric ton and short ton
 CONV_MCAL_PCAL <- 1e-9
 CONV_HA_BM2 <- 1e-5
 CONV_THA_KGM2 <- 0.1   # tons C/ha -> kg C/m2
-CONV_GG_TG <- 0.001
+CONV_GG_TG <- 0.001 # gigagrams to tegagrams
 CONV_TST_TG <- 0.000907 # thousand short tons to Tg
+CONV_KG_TO_TG <- 1e-9
 
 # Cubic meters (m3) to billion cubic meters (bm3)
 CONV_M3_BM3 <- 1e-09
 CONV_MILLION_M3_KM3 <- 1e-03
+
+CONV_M2_ACR <- 0.0002471058
 
 
 # ======================================================================
@@ -117,21 +142,18 @@ modeltime.HECTOR_INI_FILE <- "../input/climate/hector-gcam.ini"
 DEFAULT_ELECTRIC_EFFICIENCY <- 0.33
 
 # ======================================================================
-#Set a default electric efficiency
+# Set a default electric efficiency
 ELECTRICITY_INPUT_FUELS<- c( "biomass", "coal", "gas", "refined liquids" )
 
 # ======================================================================
-#Create X_HISTORICAL_YEARS
-#X_HISTORICAL_YEARS <- paste( "X", HISTORICAL_YEARS, sep = "" )
-
 # socioeconomics constants
 
 # Population years - note that these sequences shouldn't have any overlap,
 # and should contain all historical years used by other modules
 socioeconomics.MADDISON_HISTORICAL_YEARS <- seq(1700, 1900, 50) # Years for which to use Maddison data
 socioeconomics.UN_HISTORICAL_YEARS <- c(1950, 1971:2010) # Years for which to use UN data
-
 socioeconomics.BASE_POP_SCEN <- "SSP2"
+
 
 # ======================================================================
 # water constants
@@ -140,6 +162,9 @@ IRRIGATION <- "Irrigation"
 MAPPED_WATER_TYPES <- c("water consumption", "water withdrawals")
 MAPPED_WATER_TYPES_SHORT <- c("C", "W")
 names(MAPPED_WATER_TYPES_SHORT) <- MAPPED_WATER_TYPES
+DEFAULT_UNLIMITED_WATER_PRICE <- 0
+DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.001
+
 
 # ======================================================================
 # emissions constants
@@ -149,5 +174,6 @@ emissions.TST_TO_TG <- 0.000907 # Conversion from thousand short tons to Tg
 emissions.NH3_HISTORICAL_YEARS <- 1990:2002
 emissions.NH3_EXTRA_YEARS <- 1971:1989
 emissions.EDGAR_YEARS <- 1971:2008
-
-
+emissions.EPA_MACC_YEAR <- 2030  # Must be either 2020 or 2030
+emissions.MAC_TAXES <- c( 0, 5, 10, 15, 32, 66, 129, 243, 486, 1093 ) # Range of costs in 1990 USD
+emissions.CONV_C_CO2 <- 44 / 12 # Convert Carbon to CO2
