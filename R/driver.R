@@ -22,20 +22,30 @@ run_chunk <- function(chunk, all_data) {
 #' warnings and/or errors if any deviance.
 #'
 #' @param chunk Chunk name, character
-#' @param chunk_data Data produced by chunk
+#' @param chunk_data Data produced by chunk, generally a tibble
 #' @param chunk_inputs Names of chunk inputs, character
 #' @param promised_outputs Names of chunk's promised outputs, character
-check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_outputs) {
+#' @param outputs_xml Logical vector: are outputs XML?
+check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_outputs, outputs_xml) {
   assert_that(is_data_list(chunk_data))
 
   # Check that the chunk has provided required data for all objects
   empty_precursors <- TRUE
   for(obj in names(chunk_data)) {
-    assert_that(tibble::is.tibble(chunk_data[[obj]]))
-    for(at in c(ATTR_TITLE, ATTR_UNITS, ATTR_COMMENTS, ATTR_LEGACY_NAME)) {
-      if(is.null(attr(chunk_data[[obj]], at))) {
-        warning("No '", at, "' attached to ", obj, " - chunk ", chunk)
+    obj_flags <- get_flags(chunk_data[[obj]])
+    # Chunks have to returns tibbles, unless they're tagged as being XML
+    if(!outputs_xml[which(obj == promised_outputs)]) {
+      assert_that(tibble::is.tibble(chunk_data[[obj]]))
+      assert_that(! FLAG_XML %in% obj_flags)
+
+      # Make sure objects have required attributes
+      for(at in c(ATTR_TITLE, ATTR_UNITS, ATTR_COMMENTS, ATTR_LEGACY_NAME)) {
+        if(is.null(attr(chunk_data[[obj]], at))) {
+          warning("No '", at, "' attached to ", obj, " - chunk ", chunk)
+        }
       }
+    } else {
+      assert_that(FLAG_XML %in% obj_flags)
     }
     # Data precursors should all appear in input list
     pc <- attr(chunk_data[[obj]], ATTR_PRECURSORS)
@@ -68,6 +78,7 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 #' @param write_outputs Write all chunk outputs to disk?
 #' @param quiet Suppress output?
 #' @param outdir Location to write output data.  (Ignored if \code{write_outputs} is \code{FALSE}.)
+#' @param xmldir Location to write output XML.  (Ignored if \code{write_outputs} is \code{FALSE}.)
 #' @return A list of all built data.
 #' @details The driver loads any necessary data from input files,
 #' runs all code chunks in an order dictated by their dependencies,
@@ -77,7 +88,7 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 #' @importFrom assertthat assert_that
 #' @export
 #' @author BBL
-driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE, outdir = OUTPUTS_DIR) {
+driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE, outdir = OUTPUTS_DIR, xmldir = XML_DIR) {
   assert_that(is.logical(write_outputs))
 
   chunklist <- find_chunks()
@@ -137,7 +148,8 @@ driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE,
       if(!quiet) print(paste("- make", format(round(tdiff, 2), nsmall = 2)))
 
       check_chunk_outputs(chunk, chunk_data, input_names,
-                          promised_outputs = subset(chunkoutputs, name == chunk)$output)
+                          promised_outputs = subset(chunkoutputs, name == chunk)$output,
+                          outputs_xml = subset(chunkoutputs, name == chunk)$to_xml)
 
       # Add this chunk's data to the global data store
       all_data <- add_data(chunk_data, all_data)
@@ -156,7 +168,7 @@ driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE,
 
   if(write_outputs) {
     if(!quiet) cat("Writing chunk data...\n")
-    save_chunkdata(all_data, outputs_dir = outdir)
+    save_chunkdata(all_data, outputs_dir = outdir, xml_dir = xmldir)
   }
 
   if(!quiet) cat("All done.\n")

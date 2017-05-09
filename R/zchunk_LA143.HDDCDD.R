@@ -71,7 +71,6 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
     HDDCDD_data <- HDDCDD_data %>%
       gather(year, value, -file, -country) %>%
       mutate(
-        # Remove X years
         year = as.integer(year),
         # Assuming that the variable is the first three letters
         variable = substr(file, 1, 3),
@@ -118,10 +117,18 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
         mutate(iso = if_else(iso == "scg", "mne", iso))
     }
 
+    # Extend population data to all years
+    iso_list <- tibble(iso = L101.Pop_thous_GCAM3_ctry_Y$iso %>% unique())
+    all_years <- tibble(year = seq(min(HISTORICAL_YEARS), max(FUTURE_YEARS)))
+    GCAM3_population_df <- repeat_add_columns(iso_list, all_years) %>%
+      left_join(L101.Pop_thous_GCAM3_ctry_Y, by = c("iso", "year")) %>%
+      group_by(iso) %>%
+      mutate(population = approx_fun(year, population) )
+
     # Add population data and region data
     L143.wtHDDCDD_scen_ctry_Y <- L143.HDDCDD_scen_ctry_Y %>%
       # Join with population data converted to long format
-      left_join_error_no_match(L101.Pop_thous_GCAM3_ctry_Y,
+      left_join_error_no_match(GCAM3_population_df,
                                by = c("iso", "year")) %>%
       # Join with region ID data
       left_join_error_no_match(iso_GCAM_regID, by = "iso")
@@ -131,11 +138,11 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
     # New behavior finds weighted mean with DD as values and population as weights.
     if(OLD_DATA_SYSTEM_BEHAVIOR) {
       # Join region data with population data, aggregate by region_ID, GCAM3 regions
-      L101.Pop_thous_GCAM3_ctry_Y <- L101.Pop_thous_GCAM3_ctry_Y %>%
+      GCAM3_population_df <- GCAM3_population_df %>%
         left_join_error_no_match(iso_GCAM_regID, by = "iso")
 
       # Aggregate population data to GCAM 4 region
-      L101.Pop_thous_GCAM3_R_Y <- L101.Pop_thous_GCAM3_ctry_Y %>%
+      R_population_df <- GCAM3_population_df %>%
         group_by(GCAM_region_ID, year) %>%
         summarise(aggpop = sum(population))
 
@@ -143,13 +150,13 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
       L143.HDDCDD_scen_R_Y <- L143.wtHDDCDD_scen_ctry_Y %>%
         group_by(GCAM_region_ID, SRES, GCM, variable, year) %>%
         summarise(wtDD = sum(value * population)) %>%
-        left_join_error_no_match(L101.Pop_thous_GCAM3_R_Y,
+        left_join_error_no_match(R_population_df,
                                  by = c("GCAM_region_ID", "year")) %>%
         mutate(value = wtDD / aggpop) %>%
         select(-wtDD, -aggpop)
 
       # Aggregate population data to GCAM 3 region
-      L101.Pop_thous_GCAM3_RG3_Y <- L101.Pop_thous_GCAM3_ctry_Y %>%
+      GCAM3_R_population_df <- GCAM3_population_df %>%
         group_by(region_GCAM3, year) %>%
         summarise(aggpop = sum(population))
 
@@ -157,7 +164,7 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
       L143.HDDCDD_scen_RG3_Y <- L143.wtHDDCDD_scen_ctry_Y %>%
         group_by(region_GCAM3, SRES, GCM, variable, year) %>%
         summarise(wtDD = sum(value * population)) %>%
-        left_join_error_no_match(L101.Pop_thous_GCAM3_RG3_Y,
+        left_join_error_no_match(GCAM3_R_population_df,
                                  by = c("region_GCAM3", "year")) %>%
         mutate(value = wtDD / aggpop)%>%
         select(-wtDD, -aggpop)

@@ -26,7 +26,7 @@ The GDP deflator is a measure of price inflation with respect to a
 specific base year; it allows us to back out the effects of inflation when we
 compare prices over time.  This function calculates a deflator given a base
 year (the year to convert from) and a conversion year (the year to convert
-to).  To use the deflator, prices in base-year dollars by the deflator; the
+to).  To use the deflator, multiply prices in base-year dollars by the deflator; the
 result will be prices in the converted dollar year.
 }
 \note{
