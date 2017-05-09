@@ -58,7 +58,7 @@ module_aglu_LB133.ag_Costs_USA_C_2005 <- function(command, ...) {
     # First, Take USDA item cost data from input table USDA_cost_data, and add GCAM commodity and GTAP crop mapping info
     # from the USDA crop mapping input table, USDA_crops.
     # Then add cost type (variable or na) from the USDA_item_cost input table.
-    # Next, select only vairable price data, only in MODEL_COST_YEARS = 2001:2005 by default
+    # Next, select only variable price data, only in MODEL_COST_YEARS = 2001:2005 by default.
     # Finally, convert each cost from the given nominal year dollars to 1975 dollars, average across MODEL_COST_YEARS,
     # and convert from dollars/acre to dollars/m2.
     #
@@ -73,7 +73,7 @@ module_aglu_LB133.ag_Costs_USA_C_2005 <- function(command, ...) {
       # select just identifying information of interest:
       select(GCAM_commodity, GTAP_crop, Item, year, value) %>%
       # Convert costs from the given nominal dollars to 1975 dollars:
-      # have to group by years and store in a dummy value1 column to get the conversion correct:
+      # (have to group by years and store in a dummy value1 column to get the conversion correct)
       group_by(GCAM_commodity, GTAP_crop, Item, year, value) %>%
       mutate(value1 = value * gdp_deflator(1975, base_year = year)) %>%
       # ungroup, drop value and rename value1 to value to get the correct table of 1975 dollars/acre:
@@ -154,11 +154,11 @@ module_aglu_LB133.ag_Costs_USA_C_2005 <- function(command, ...) {
       # store in a table of LDS production for the USA by commodity in Mt:
       L133.ag_Prod_Mt_USA_C
 
-    # 2. and 3. Calculate Cost is USD/kg for each Commodity:
+    # 2. and 3. Calculate Cost in USD/kg for each Commodity:
     #
     # 2.
-    # Use the LDS data to calculate harvested area and expenditure  = cost * harvested area for each GCAM_commdity-GTAP_crop
-    # combination. Then expenditure and harvested area are aggregated over GTAP_crops to get aggregate expediture and
+    # Use the LDS data to calculate harvested area and expenditure  = cost * harvested area for each GCAM_commodity-GTAP_crop
+    # combination. Then expenditure and harvested area are aggregated over GTAP_crops to get aggregate expenditure and
     # aggregate harvested area for each GCAM_commodity.
     # Finally, aggregated cost is calculated for each GCAM_commodity by aggregate cost = aggregate expenditure/ aggregate HA.
     #
@@ -177,7 +177,7 @@ module_aglu_LB133.ag_Costs_USA_C_2005 <- function(command, ...) {
       left_join_error_no_match(L133.LDS_ag_HA_ha_USA, by = c("GTAP_crop")) %>%
       rename(HA_bm2 = value) %>% mutate(HA_bm2 = HA_bm2 * CONV_HA_BM2) %>%
       # Calculate the total expenditure in billion 1975 dollars for each USDA commodity = GCAM_commodity-GTAP_crop combo
-      # by Expenditures in bil75USD = Cost in 1975 dollars/square metere * Harvested area in billion square meters
+      # by Expenditures in bil75USD = Cost in 1975 dollars/square meter   * Harvested area in billion square meters
       #    Expenditures_bil75USD    = cost_75USDm2                        * HA_bm2:
       mutate(Expenditures_bil75USD = cost_75USDm2 * HA_bm2)  %>%
       # aggregate over GTAP_crops to get Expenditures and harvested area at the level of GCAM_commodity:
@@ -199,13 +199,13 @@ module_aglu_LB133.ag_Costs_USA_C_2005 <- function(command, ...) {
       # Cost_75USDkg = Cost_75USDm2 / Yield_kgm2
       # USD/kg       = (USD/m2)     / (kg/m2):
       mutate(Cost_75USDkg = Cost_75USDm2 / Yield_kgm2) ->
-      # store in the table of costs in USD/m2 by GCAM commodity"
+      # store in the table of costs in USD/m2 by GCAM commodity:
       L133.ag_Cost_75USDm2_C
 
 
     # Lines 98-106 in original file
     # Agricultural Prices in table L132.ag_an_For_Prices are joined to the Commodity Cost table, L133.ag_Cost_75USDm2_C,
-    # and used to ensure that Cost in 1975USD/kg don't lead to profits below a minimum profit margin, MIN_PROFIT_MARGIN.
+    # and used to ensure that Costs in 1975USD/kg don't lead to profits below a minimum profit margin, MIN_PROFIT_MARGIN.
     # Finally, revenue in Billion 1975 USD is calculated as Production * Price.
     L133.ag_Cost_75USDm2_C %>%
       # Join Agricultural Prices table to get a calPrice column:
