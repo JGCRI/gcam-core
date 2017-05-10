@@ -57,8 +57,13 @@ set_water_input_name <- function(water_sector, water_type, water_mapping, GLU = 
 #' @param so2_map TODO
 #' @param is_awb TODO
 #' @return Data object with \code{Non.CO2} changed to SO2 name for SO2 data.
+#' @importFrom tibble is_tibble
 #' @author BBL May 2017
 rename_SO2 <- function(x, so2_map, is_awb = FALSE) {
+
+  assert_that(is_tibble(x))
+  assert_that(is_tibble(so2_map))
+  assert_that(is.logical(is_awb))
 
   extension <- if_else(is_awb, "_AWB", "")
   data_so2 <- filter(x, Non.CO2 == paste0("SO2", extension))
