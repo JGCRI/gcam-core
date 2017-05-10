@@ -34,3 +34,32 @@ test_that("set_water_input_name", {
   water_type = c(MAPPED_WATER_TYPES[1], "y", MAPPED_WATER_TYPES[1], MAPPED_WATER_TYPES[2])
   expect_error(set_water_input_name(water_sector, water_type, water_mapping))
 })
+
+test_that("rename_SO2", {
+
+  # Bad inputs
+  expect_error(rename_SO2(1, tibble()))
+  expect_error(rename_SO2(tibble(), 1))
+  expect_error(rename_SO2(tibble(), tibble(), 1))
+
+  for(awb in c(TRUE, FALSE)) {
+    # No SO2 in x - no change to x
+    x <- tibble(region = letters[1:3], Non.CO2 = LETTERS[1:3])
+    so2_map <- tibble(region = letters[1:3], SO2_name = 1:3)
+    expect_silent(res <- rename_SO2(x, so2_map, is_awb = awb))
+    expect_equal(res, x)
+
+    # No SO2_AWB when awb TRUE; no SO2 when awb FALSE
+    x <- tibble(region = letters[1:3], Non.CO2 = paste0("SO2", if_else(awb, "", "_AWB")))
+    expect_silent(res <- rename_SO2(x, so2_map, is_awb = awb))
+    expect_equal(res, x)
+
+    # region and SO2 name looked up correctly
+    x <- tibble(region = letters[1:3], Non.CO2 = paste0("SO2", if_else(awb, "_AWB", "")))
+    so2_map <- tibble(region = letters[1:3], SO2_name = 1:3)
+    expect_silent(res <- rename_SO2(x, so2_map, is_awb = awb))
+    expect_equal(nrow(res), nrow(x))
+    expect_identical(res$Non.CO2, paste0(1:3, if_else(awb, "_AWB", "")))
+  }
+
+})
