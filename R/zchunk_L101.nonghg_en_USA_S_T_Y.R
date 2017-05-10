@@ -66,14 +66,12 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
 
     L1231.in_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.in_EJ_R_elec_F_tech_Yh")
 
-    # The following two data frames can't be reshape from long to wide
+    # The following two data frames can't be reshaped from long to wide by the test system
     # So leave them wide, and strip off X's
     L144.in_EJ_R_bld_serv_F_Yh <- get_data(all_data, "temp-data-inject/L144.in_EJ_R_bld_serv_F_Yh")
-    # temporary
-    names(L144.in_EJ_R_bld_serv_F_Yh)[5:44] <- as.character(1971:2010)
+    names(L144.in_EJ_R_bld_serv_F_Yh)[5:44] <- as.character(1971:2010) # temporary
     L154.in_EJ_R_trn_m_sz_tech_F_Yh <- get_data(all_data, "temp-data-inject/L154.in_EJ_R_trn_m_sz_tech_F_Yh")
-    # temporary
-    names(L154.in_EJ_R_trn_m_sz_tech_F_Yh)[8:47] <- as.character(1971:2010)
+    names(L154.in_EJ_R_trn_m_sz_tech_F_Yh)[8:47] <- as.character(1971:2010) # temporary
 
     L1322.Fert_Prod_MtN_R_F_Y <- get_data(all_data, "temp-data-inject/L1322.Fert_Prod_MtN_R_F_Y") %>%
       gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
@@ -105,13 +103,13 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
       select(-mode, -UCD_sector, -size.class, -UCD_technology, -UCD_fuel) %>%
 
       # Bind all together
-      bind_rows(temp, spread(L1231.in_EJ_R_elec_F_tech_Yh, year, value)) ->
+      bind_rows(temp,
+                spread(L1231.in_EJ_R_elec_F_tech_Yh, year, value)) ->
       # NOTE we need to pass the L101.in_EJ_R_en_Si_F_Yh dataset on in WIDE, not
       # long, format, because it doesn't reshape cleanly (there are multiple year/row combinations)
       L101.in_EJ_R_en_Si_F_Yh
 
     L101.in_EJ_R_en_Si_F_Yh %>%
-      # Temporary data-inject reshape
       gather(year, value, -GCAM_region_ID, -sector, -fuel, -technology) %>%
       mutate(year = as.integer(year)) ->
       L101.in_EJ_USA_en_Sepa_F_Yh.mlt
