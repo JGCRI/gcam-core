@@ -22,6 +22,7 @@ FLAG_XML <- "FLAG_XML"
 HISTORICAL_YEARS <- 1971:2010
 FUTURE_YEARS <- seq(2015, 2100, 5)
 IMF_GDP_YEARS <- 2010:2020
+SSP_FUTURE_YEARS <- c( 2010, FUTURE_YEARS)
 
 # ======================================================================
 # GCAM constants
@@ -80,7 +81,6 @@ MAX_HA_TO_CROPLAND <- 3
 # At present the CO2 emissions inventory from CDIAC stops at 2009
 energy.CDIAC_CO2_HISTORICAL_YEARS <- HISTORICAL_YEARS[HISTORICAL_YEARS < 2010]
 
-
 ## ======================================================================
 ## Conversion constants.  The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
 CONV_BIL_MIL <- 1000
@@ -99,7 +99,6 @@ CONV_TST_TG <- 0.000907 # thousand short tons to Tg
 # Cubic meters (m3) to billion cubic meters (bm3)
 CONV_M3_BM3 <- 1e-09
 CONV_MILLION_M3_KM3 <- 1e-03
-
 
 # ======================================================================
 # Driver constants
@@ -136,7 +135,7 @@ DEFAULT_ELECTRIC_EFFICIENCY <- 0.33
 # ======================================================================
 #Set a default electric efficiency
 ELECTRICITY_INPUT_FUELS<- c( "biomass", "coal", "gas", "refined liquids" )
-
+StubTechYr <- c( "GCAM_region_ID", "supplysector", "subsector", "stub.technology", "xyear" )
 # ======================================================================
 #Create X_HISTORICAL_YEARS
 #X_HISTORICAL_YEARS <- paste( "X", HISTORICAL_YEARS, sep = "" )
