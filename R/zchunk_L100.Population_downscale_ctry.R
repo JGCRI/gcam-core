@@ -203,7 +203,7 @@ if(1) {
       add_legacy_name("L100.Pop_thous_ctry_Yh") %>%
       add_precursors("socioeconomics/socioeconomics_ctry", "Maddison_population") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L100.Pop_thous_ctry_Yh
 
     L100.Pop_thous_SSP_ctry_Yfut %>%
@@ -214,7 +214,7 @@ if(1) {
       add_legacy_name("L100.Pop_thous_SSP_ctry_Yfut") %>%
       add_precursors("socioeconomics/socioeconomics_ctry", "socioeconomics/SSP_database_v9", "socioeconomics/UN_popTot") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT, FLAG_SUM_TEST) ->
       L100.Pop_thous_SSP_ctry_Yfut
 
     return_data(L100.Pop_thous_ctry_Yh, L100.Pop_thous_SSP_ctry_Yfut)
