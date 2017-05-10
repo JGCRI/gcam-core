@@ -141,24 +141,20 @@ module_energy_LA124.heat <- function(command, ...) {
 
     L124.in_EJ_R_heat_F_Yh %>%
       group_by(sector, GCAM_region_ID, year) %>%
-      summarise(value = sum(value)) %>%
-      # Creating an intermediary table - for years with 0 heat output, set value to 1e-3, for all others, set value to 0
-      mutate(value = if_else(value == 0, output_scalar, 0)) -> L124.mult_R_heat_Yh
+      summarise(dist_heat = sum(value)) -> L124.mult_R_heat_Yh
 
     L124.out_EJ_R_heatfromelec_F_Yh %>%
       group_by(sector, GCAM_region_ID, year) %>%
-      summarise(elec_heat = sum(value)) %>%
-      # Creating an intermediary table - for years with nonzero heat from CHP, set value to 1, for 0 values, leave as 0
-      mutate(elec_heat = if_else(elec_heat != 0, 1, elec_heat))-> L124.mult_R_heatfromelec_Yh
+      summarise(elec_heat = sum(value)) -> L124.mult_R_heatfromelec_Yh
 
     # If heat output is 0 and heat from CHP is nonzero, multiplier will be nonzero (1e-3)
     # All other cases, multiplier is 0
     L124.mult_R_heat_Yh %>%
       left_join(L124.mult_R_heatfromelec_Yh %>%
-                  rename(temp=sector),
+                  rename(sector.y=sector),
                   by = c("year", "GCAM_region_ID")) %>%
-      mutate(value = value * elec_heat) %>%
-      select(-temp, -elec_heat) %>%
+      mutate(value = if_else(dist_heat == 0 & elec_heat !=0, output_scalar, 0)) %>%
+      select(-sector.y, -elec_heat) %>%
       mutate(value = if_else(is.na(value), 0, value))-> L124.mult_R_heat_Yh
 
     L124.in_EJ_R_heat_F_Yh %>%
