@@ -82,10 +82,10 @@ module_energy_LA124.heat <- function(command, ...) {
     # Heat output: fuel inputs to heat divided by exogenous input-output coefficients
     L124.in_EJ_R_heat_F_Yh %>%
       left_join(L124.globaltech_coef %>%
-                  rename(temp = value),
+                  rename(IO_Coef = value),
                       by = c("sector", "fuel", "year")) %>%
-      mutate(value = value / temp) %>%
-      select(-temp) %>%
+      mutate(value = value / IO_Coef) %>%
+      select(-IO_Coef) %>%
       filter(GCAM_region_ID %in% heat_regionIDs$GCAM_region_ID)-> L124.out_EJ_R_heat_F_Yh
 
     # Secondary output of heat from main activity CHP plants
@@ -106,26 +106,27 @@ module_energy_LA124.heat <- function(command, ...) {
       # Select only technologies that have heat output in calibrated techs mapping
       filter(technology %in% calibrated_techs$technology[calibrated_techs$secondary.output == "heat"]) %>%
       left_join(L124.out_EJ_R_heatfromelec_F_Yh %>%
-                  rename(value_elec = value) %>%
+                  rename(value_heatfromelec = value) %>%
                   rename(temp = sector), by=c("GCAM_region_ID", "fuel", "year")) %>%
-      mutate(value = value_elec / value) %>%
+      # Heat output divided by electricity output
+      mutate(value = value_heatfromelec / value) %>%
       select(GCAM_region_ID, sector, fuel, technology, year, value) %>%
       # Reset missing and infinite values (applicable for CC in the base years) to 0
       mutate(value = if_else(is.na(value)|is.infinite(value), 0, value)) -> L124.heatoutratio_R_elec_F_tech_Yh
 
 
-    # Drop all rows where all years are 0
-    # Create a table of all the years of all 0
+    # Drop all rows where value = 0 for all years
+    # Create a table of all the years of all value = 0
     L124.heatoutratio_R_elec_F_tech_Yh %>%
       group_by(GCAM_region_ID, technology, sector, fuel) %>%
       summarise(sum = sum(value)) %>%
-      filter(sum == 0) -> all_years_0
+      filter(sum == 0) -> years_heatout_0
 
-    # Filter out the years in all_years_0 from heatoutratio
+    # Filter out the years in years_heatout_0 from heatoutratio
     L124.heatoutratio_R_elec_F_tech_Yh %>%
-      left_join(all_years_0) %>%
-      #2 is a random, non-zero option for temporary use
-      mutate(sum = if_else(is.na(sum), 2, sum)) %>%
+      left_join(years_heatout_0) %>%
+      #Using 1 for all rows where heatout is not 0 for all years
+      mutate(sum = if_else(is.na(sum), 1, sum)) %>%
       filter(sum != 0)  %>%
       select(-sum) -> L124.heatoutratio_R_elec_F_tech_Yh
 
@@ -135,12 +136,14 @@ module_energy_LA124.heat <- function(command, ...) {
     # in the zero years. The code below sets an exogenous year as the one to use to extract fuel shares for each region. In all 0 region / years,
     # output is equal to the output in the fuel-share year times 1e-3 to avoid throwing off the energy balances.
 
-    fuel_share_year <- 2010
+    norm_year <- 2010
+    output_scalar <- 1e-3
+
     L124.in_EJ_R_heat_F_Yh %>%
       group_by(sector, GCAM_region_ID, year) %>%
       summarise(value = sum(value)) %>%
       # Creating an intermediary table - for years with 0 heat output, set value to 1e-3, for all others, set value to 0
-      mutate(value = if_else(value == 0, 1e-3, 0)) -> L124.mult_R_heat_Yh
+      mutate(value = if_else(value == 0, output_scalar, 0)) -> L124.mult_R_heat_Yh
 
     L124.out_EJ_R_heatfromelec_F_Yh %>%
       group_by(sector, GCAM_region_ID, year) %>%
@@ -159,31 +162,31 @@ module_energy_LA124.heat <- function(command, ...) {
       mutate(value = if_else(is.na(value), 0, value))-> L124.mult_R_heat_Yh
 
     L124.in_EJ_R_heat_F_Yh %>%
-      filter(year == fuel_share_year) %>%
+      filter(year == norm_year) %>%
       select(-year) %>%
-      rename(fsy_val = value)-> fsy_in
+      rename(norm_val = value)-> norm_in
 
     # If heat output is 0 and heat from CHP is nonzero, value for heat input will be equal to
     # the heat input plus the fuel share year input times 1e-3
     L124.in_EJ_R_heat_F_Yh %>%
-      left_join(fsy_in, by= c("fuel", "sector", "GCAM_region_ID")) %>%
+      left_join(norm_in, by= c("fuel", "sector", "GCAM_region_ID")) %>%
       left_join(L124.mult_R_heat_Yh %>%
                   rename(mult_val = value), by=c("sector", "GCAM_region_ID", "year")) %>%
-      mutate(value = value + (fsy_val * mult_val)) %>%
+      mutate(value = value + (norm_val * mult_val)) %>%
       select(fuel, sector, GCAM_region_ID, year, value) -> L124.in_EJ_R_heat_F_Yh
 
     L124.out_EJ_R_heat_F_Yh %>%
-      filter(year == fuel_share_year) %>%
+      filter(year == norm_year) %>%
       select(fuel, sector, GCAM_region_ID, value) %>%
-      rename(fsy_val = value) -> fsy_out
+      rename(norm_val = value) -> norm_out
 
     # If heat output is 0 and heat from CHP is nonzero, value for heat output will be equal to
     # the heat output plus the fuel share year output times 1e-3
     L124.out_EJ_R_heat_F_Yh %>%
-      left_join(fsy_out, by = c("fuel", "sector", "GCAM_region_ID")) %>%
+      left_join(norm_out, by = c("fuel", "sector", "GCAM_region_ID")) %>%
       left_join(L124.mult_R_heat_Yh %>%
                   rename(heat_val = value), by=c("sector", "GCAM_region_ID", "year")) %>%
-      mutate(value = value + (fsy_val * heat_val)) %>%
+      mutate(value = value + (norm_val * heat_val)) %>%
       select(fuel, sector, GCAM_region_ID, year, value) -> L124.out_EJ_R_heat_F_Yh
 
     # ===================================================
