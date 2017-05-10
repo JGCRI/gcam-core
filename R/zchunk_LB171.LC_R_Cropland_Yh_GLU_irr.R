@@ -73,12 +73,38 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
       select(GCAM_region_ID, GCAM_commodity, GLU, year, value) ->
       L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU
 
+    # Extend irrigated cropland cover data to all years, 1700-2010
+    # Note: 1700, 1750, 1800, 1850, 1900, and 1950 are all zero; and this interpolation fills 1700-1970 with zeros, but no missing elsewhere.
+    id_list <- L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU %>%
+      select(GCAM_region_ID, GCAM_commodity, GLU) %>%
+      unique()
+    all_years <- tibble(year = seq(1700, max(HISTORICAL_YEARS)))
+    id_list %>%
+      repeat_add_columns(all_years) %>%
+      left_join(L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year")) %>%
+      group_by(GCAM_region_ID, GCAM_commodity, GLU) %>%
+      mutate(value = approx_fun(year, value)) %>%
+      ungroup() -> irrHarvCropLand_interp
+
+    # Extend rainfed and cropland cover data to all years, 1700-2010
+    # Note: 1700, 1750, 1800, 1850, 1900, and 1950 are all zero; and this interpolation fills 1700-1970 with zeros, but no missing elsewhere.
+    id_list <- L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU %>%
+      select(GCAM_region_ID, GCAM_commodity, GLU) %>%
+      unique()
+    all_years <- tibble(year = seq(1700, max(HISTORICAL_YEARS)))
+    id_list %>%
+      repeat_add_columns(all_years) %>%
+      left_join(L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year")) %>%
+      group_by(GCAM_region_ID, GCAM_commodity, GLU) %>%
+      mutate(value = approx_fun(year, value)) %>%
+      ungroup() -> rfdHarvCropLand_interp
+
     # Calculate economic yields for irrigated crops, as production divided by cropland
     L161.ag_irrProd_Mt_R_C_Y_GLU %>%
       # Irrigated production in Mt by GCAM region, commodity, year, and GLU
       rename(prod = value) %>%
       # Match with the irrigated cropland cover in bm2 by GCAM region, commodity, year, and GLU
-      left_join_error_no_match(L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year")) %>%
+      left_join_error_no_match(irrHarvCropLand_interp, by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year")) %>%
       # Calculate economic yields as irrigated production divided by irrigated cropland, Mt/bm2 = kg/m2
       mutate(value = prod / value,
              # Replace missing value with zero
@@ -91,7 +117,7 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
       # Rainfed production in Mt by GCAM region, commodity, year, and GLU
       rename(prod = value) %>%
       # Match with the rainfed cropland cover in bm2 by GCAM region, commodity, year, and GLU
-      left_join_error_no_match(L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year")) %>%
+      left_join_error_no_match(rfdHarvCropLand_interp, by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year")) %>%
       # Calculate economic yields as rainfed production divided by rainfed cropland, Mt/bm2 = kg/m2
       mutate(value = prod / value,
              # Replace missing value with zero
