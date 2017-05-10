@@ -18,10 +18,11 @@ the generated outputs: \code{L124.in_EJ_R_heat_F_Yh}, \code{L124.out_EJ_R_heat_F
 original data system was \code{LA124.heat.R} (energy level1).
 }
 \description{
-This chunk processes historical heat data
+This chunk processes historical heat data into input, output from district heat, output from CHP, CHP ratio
 }
 \details{
-Describe in detail what this chunk does.
+This chunk takes in the energy balance, electricity output and mapping files on technology and fuel aggregations.
+From this, it creates tables of heat input and output and uses the electricity gen. to determine heat from CHP.
 }
 \author{
 JDH April 2017

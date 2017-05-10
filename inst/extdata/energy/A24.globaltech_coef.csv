@@ -1,6 +1,6 @@
-# File: A24.globaltech_coef.csv,,,,,
-# Title: District heat input-ouput coefficients,,,,,
-# Units: unitless,,,,,
+# File: A24.globaltech_coef.csv
+# Title: District heat input-ouput coefficients
+# Units: unitless
 supplysector,subsector,technology,minicam.energy.input,1971,2100
 district heat,biomass,biomass,delivered biomass,1.25,1.25
 district heat,coal,coal,delivered coal,1.25,1.25
