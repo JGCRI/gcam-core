@@ -22,7 +22,7 @@ module_energy_LA124.heat <- function(command, ...) {
              FILE = "energy/calibrated_techs",
              FILE = "energy/enduse_fuel_aggregation",
              FILE = "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh",
-             FILE = "temp-data-inject/L1231.out_EJ_R_elec_F_tech_Yh"))
+              "L1231.out_EJ_R_elec_F_tech_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L124.in_EJ_R_heat_F_Yh",
              "L124.out_EJ_R_heat_F_Yh",
@@ -43,10 +43,7 @@ module_energy_LA124.heat <- function(command, ...) {
       mutate(year = sub("X", "", year)) %>%
       mutate(year = as.integer(year)) -> L1011.en_bal_EJ_R_Si_Fi_Yh
 
-    get_data(all_data, "temp-data-inject/L1231.out_EJ_R_elec_F_tech_Yh") %>%
-      gather(year, value, -fuel, -sector, -GCAM_region_ID, -technology) %>%
-      mutate(year = sub("X", "", year)) %>%
-      mutate(year = as.integer(year)) -> L1231.out_EJ_R_elec_F_tech_Yh
+    L1231.out_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.out_EJ_R_elec_F_tech_Yh")
 
     # ===================================================
     # Create list of heat regions
@@ -62,7 +59,7 @@ module_energy_LA124.heat <- function(command, ...) {
       left_join(enduse_fuel_aggregation, by="fuel") %>%
       select(GCAM_region_ID, sector, year, value, heat) %>%
       rename(fuel = heat) %>%
-      group_by(fuel, sector, GCAM_region_ID, year) -> temp %>%
+      group_by(fuel, sector, GCAM_region_ID, year) %>% # removed -> temp
       summarise(value = sum(value)) -> L124.in_EJ_R_heat_F_Yh
 
     # Heat production from district heat sector
@@ -218,7 +215,7 @@ module_energy_LA124.heat <- function(command, ...) {
       add_units("GJ heat / GJ elec") %>%
       add_comments("Data on CHP electricity generation read in, heat from elec divided by electricity gives ratio") %>%
       add_legacy_name("L124.heatoutratio_R_elec_F_tech_Yh") %>%
-      add_precursors("temp-data-inject/L1231.out_EJ_R_elec_F_tech_Yh", "energy/calibrated_techs") %>%
+      add_precursors("L1231.out_EJ_R_elec_F_tech_Yh", "energy/calibrated_techs") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L124.heatoutratio_R_elec_F_tech_Yh
 
