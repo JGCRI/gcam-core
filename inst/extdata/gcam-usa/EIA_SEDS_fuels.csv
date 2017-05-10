@@ -1,1 +1,60 @@
-EIA_fuel,GCAM_fuel,descriptionAB,refined liquids,aviation gasoline blending componentsAR,refined liquids (const feed),asphalt and road oilAV,refined liquids,aviation gasolineBM,,CL,coal,coalCO,crude oil,"crude oil, including lease condensate"DF,refined liquids,distillate fuel oilDK,refined liquids,"distillate fuel oil, including kerosene-type jet fuel"EL,electricity,electricityEM,refined liquids (ethanol),"fuel ethanol, excluding denaturant"ES,electricity,electricity salesFF,,fossil fuelsFN,refined liquids (petchem feed),"petrochemical feedstocks, naphtha less than 401o F"FO,refined liquids (petchem feed),"petrochemical feedstocks, other oils equal to or greater than 401o F"FS,refined liquids (petchem feed),"petrochemical feedstocks, still gas"GD,,GDPGE,geothermal,geothermal energyHY,hydro,"hydroelectric power, all types"JF,refined liquids,jet fuelJK,,"jet fuel, kerosene-type"JN,,"jet fuel, naphtha-type"KS,refined liquids,keroseneLG,refined liquids,liquefied petroleum gasesLO,,electrical system energy lossesLU,,lubricantsMB,crude oil,motor gasoline blending componentsMG,refined liquids,motor gasolineMM,,"motor gasoline, excluding fuel ethanol"MS,refined liquids,miscellaneous petroleum productsNA,,natural gasoline (including isopentane)NG,gas,natural gas (including supplemental gaseous fuels)NN,,natural gas (excluding supplemental gaseous fuels)NU,nuclear,nuclear electric powerP1,,"asphalt and road oil, aviation gasoline, kerosene, lubricants, and ñother petroleum productsî"PA,,all petroleum productsPC,refined liquids,petroleum cokePL,refined liquids,plant condensatePM,,"all petroleum products, excluding fuel ethanol"PO,,other petroleum productsPP,refined liquids,pentanes plusRE,,renewable energyRF,refined liquids,residual fuel oilSF,,supplemental gaseous fuelsSG,crude oil,still gasSN,refined liquids,special naphthaSO,solar,photovoltaic and solar thermal energyTE,,total energyTN,,total net energy (net of electrical system energy losses)TP,,populationUO,refined liquids,unfinished oilsUS,refined liquids,unfractionated streamWD,biomass,woodWS,biomass,wasteWW,,wood and wasteWX,refined liquids,waxesWY,wind,wind
+# File: EIA_SEDS_fuels.csv,,
+# Title: Convert EIA_fuel code to GCAM_fuel name,,
+# Units: NA,,
+EIA_fuel,GCAM_fuel,description
+AB,refined liquids,aviation gasoline blending components
+AR,refined liquids (const feed),asphalt and road oil
+AV,refined liquids,aviation gasoline
+BM,,
+CL,coal,coal
+CO,crude oil,"crude oil, including lease condensate"
+DF,refined liquids,distillate fuel oil
+DK,refined liquids,"distillate fuel oil, including kerosene-type jet fuel"
+EL,electricity,electricity
+EM,refined liquids (ethanol),"fuel ethanol, excluding denaturant"
+ES,electricity,electricity sales
+FF,,fossil fuels
+FN,refined liquids (petchem feed),"petrochemical feedstocks, naphtha less than 401o F"
+FO,refined liquids (petchem feed),"petrochemical feedstocks, other oils equal to or greater than 401o F"
+FS,refined liquids (petchem feed),"petrochemical feedstocks, still gas"
+GD,,GDP
+GE,geothermal,geothermal energy
+HY,hydro,"hydroelectric power, all types"
+JF,refined liquids,jet fuel
+JK,,"jet fuel, kerosene-type"
+JN,,"jet fuel, naphtha-type"
+KS,refined liquids,kerosene
+LG,refined liquids,liquefied petroleum gases
+LO,,electrical system energy losses
+LU,,lubricants
+MB,crude oil,motor gasoline blending components
+MG,refined liquids,motor gasoline
+MM,,"motor gasoline, excluding fuel ethanol"
+MS,refined liquids,miscellaneous petroleum products
+NA,,natural gasoline (including isopentane)
+NG,gas,natural gas (including supplemental gaseous fuels)
+NN,,natural gas (excluding supplemental gaseous fuels)
+NU,nuclear,nuclear electric power
+P1,,"asphalt and road oil, aviation gasoline, kerosene, lubricants, and ñother petroleum productsî"
+PA,,all petroleum products
+PC,refined liquids,petroleum coke
+PL,refined liquids,plant condensate
+PM,,"all petroleum products, excluding fuel ethanol"
+PO,,other petroleum products
+PP,refined liquids,pentanes plus
+RE,,renewable energy
+RF,refined liquids,residual fuel oil
+SF,,supplemental gaseous fuels
+SG,crude oil,still gas
+SN,refined liquids,special naphtha
+SO,solar,photovoltaic and solar thermal energy
+TE,,total energy
+TN,,total net energy (net of electrical system energy losses)
+TP,,population
+UO,refined liquids,unfinished oils
+US,refined liquids,unfractionated stream
+WD,biomass,wood
+WS,biomass,waste
+WW,,wood and waste
+WX,refined liquids,waxes
+WY,wind,wind

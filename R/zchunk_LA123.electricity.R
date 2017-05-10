@@ -150,7 +150,7 @@ module_energy_LA123.electricity <- function(command, ...) {
       select(-outputs_ratio) ->
       L123.in_EJ_R_indchp_F_Yh
 
-    #Save results and write CSV files
+    # Save results and write CSV files
     L123.out_EJ_R_elec_F_Yh %>%
       add_title("Outputs of electricity sector by GCAM region / fuel / historical year") %>%
       add_units("EJ") %>%
