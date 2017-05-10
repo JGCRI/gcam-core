@@ -98,7 +98,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
       ungroup() %>%
       # Discard columns that are not needed.
       select(-MAC_region, -bio_N2O_coef, -SO2_name, -GAINS_region, -GCAM_region_ID, -agg_sector, -value) ->
-      L251.ssp2_ef
+    L251.ssp2_ef
 
     # Then data is reordered to match old.
     L251.ssp2_ef <- L251.ssp2_ef[c(6,3:5,1:2,7)]
@@ -119,7 +119,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
       ungroup() %>%
       # Discard columns that are not needed.
       select(-MAC_region, -bio_N2O_coef, -SO2_name, -GAINS_region, -GCAM_region_ID, -agg_sector, -value) ->
-      L251.ssp34_ef
+    L251.ssp34_ef
 
     # Then data is reordered to match old.
     L251.ssp34_ef <- L251.ssp34_ef[c(6,3:5,1:2,7)]
