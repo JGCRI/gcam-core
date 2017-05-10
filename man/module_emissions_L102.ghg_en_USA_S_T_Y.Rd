@@ -18,10 +18,10 @@ the generated outputs: \code{L102.ghg_tgej_USA_en_Sepa_F_2005}. The correspondin
 original data system was \code{L102.ghg_en_USA_S_T_Y.R} (emissions level1).
 }
 \description{
-Briefly describe what this chunk does.
+Calculates CH4 and N2O emission factors derived from EPA GHG inventory and GCAM energy balances for the US in 2005.
 }
 \details{
-Describe in detail what this chunk does.
+Divides CH4 and N2O emissions from EPA GHG inventory by GCAM energy sector activity to get emissions factors for a single historical year 2005 in the US.
 }
 \author{
 HCM April 2017
