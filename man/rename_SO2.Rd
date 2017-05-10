@@ -7,17 +7,23 @@
 rename_SO2(x, so2_map, is_awb = FALSE)
 }
 \arguments{
-\item{x}{Data object (typically from pipeline)}
+\item{x}{A tibble, with columns \code{region} and \code{Non.CO2}}
 
-\item{so2_map}{TODO}
+\item{so2_map}{A tibble, with columns \code{region} and \code{SO2_name}}
 
-\item{is_awb}{TODO}
+\item{is_awb}{Logical flag - use "_AWB" suffix?}
 }
 \value{
 Data object with \code{Non.CO2} changed to SO2 name for SO2 data.
 }
 \description{
-Rename SO2 to regional SO2. (TODO)
+Add a suffix to the SO2 gas name indicating which of four major world regions to assign the emissions to
+}
+\details{
+Add a suffix to the SO2 gas name indicating which of four major world regions to assign the emissions to,
+as Hector considers the geographic location of sulfur emissions. Any code writing out CSVs for conversion to XML
+handling SO2 related data should use this function. Agricultural waste burning emissions already have a suffix
+assigned (_AWB), so in this case, the SO2 region number is assigned between the "SO2" and "AWB" strings.
 }
 \author{
 BBL May 2017

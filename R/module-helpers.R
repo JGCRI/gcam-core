@@ -51,12 +51,16 @@ set_water_input_name <- function(water_sector, water_type, water_mapping, GLU = 
 
 #' rename_SO2
 #'
-#' Rename SO2 to regional SO2. (TODO)
+#' Add a suffix to the SO2 gas name indicating which of four major world regions to assign the emissions to
 #'
-#' @param x Data object (typically from pipeline)
-#' @param so2_map TODO
-#' @param is_awb TODO
+#' @param x A tibble, with columns \code{region} and \code{Non.CO2}
+#' @param so2_map A tibble, with columns \code{region} and \code{SO2_name}
+#' @param is_awb Logical flag - use "_AWB" suffix?
 #' @return Data object with \code{Non.CO2} changed to SO2 name for SO2 data.
+#' @details Add a suffix to the SO2 gas name indicating which of four major world regions to assign the emissions to,
+#' as Hector considers the geographic location of sulfur emissions. Any code writing out CSVs for conversion to XML
+#' handling SO2 related data should use this function. Agricultural waste burning emissions already have a suffix
+#' assigned (_AWB), so in this case, the SO2 region number is assigned between the "SO2" and "AWB" strings.
 #' @importFrom tibble is_tibble
 #' @author BBL May 2017
 rename_SO2 <- function(x, so2_map, is_awb = FALSE) {
