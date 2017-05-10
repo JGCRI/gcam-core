@@ -45,5 +45,39 @@ set_water_input_name <- function(water_sector, water_type, water_mapping, GLU = 
            # irrigation mapped types - needs the GLU column
            new_name = if_else(water_sector == IRRIGATION & water_type %in% MAPPED_WATER_TYPES,
                               paste(supplysector, GLU, wt_short, sep = "_"), new_name)) %>%
-  .$new_name
+    .$new_name
+}
+
+
+#' rename_SO2
+#'
+#' Add a suffix to the SO2 gas name indicating which of four major world regions to assign the emissions to
+#'
+#' @param x A tibble, with columns \code{region} and \code{Non.CO2}
+#' @param so2_map A tibble, with columns \code{region} and \code{SO2_name}
+#' @param is_awb Logical flag - use "_AWB" suffix?
+#' @return Data object with \code{Non.CO2} changed to SO2 name for SO2 data.
+#' @details Add a suffix to the SO2 gas name indicating which of four major world regions to assign the emissions to,
+#' as Hector considers the geographic location of sulfur emissions. Any code writing out CSVs for conversion to XML
+#' handling SO2 related data should use this function. Agricultural waste burning emissions already have a suffix
+#' assigned (_AWB), so in this case, the SO2 region number is assigned between the "SO2" and "AWB" strings.
+#' @importFrom tibble is_tibble
+#' @author BBL May 2017
+rename_SO2 <- function(x, so2_map, is_awb = FALSE) {
+
+  assert_that(is_tibble(x))
+  assert_that(is_tibble(so2_map))
+  assert_that(is.logical(is_awb))
+
+  extension <- if_else(is_awb, "_AWB", "")
+  data_so2 <- filter(x, Non.CO2 == paste0("SO2", extension))
+  data_notso2 <- filter(x, Non.CO2 != paste0("SO2", extension))
+
+  so2_map %>%
+    mutate(SO2_name = paste0(SO2_name, extension)) %>%
+    # pull so2_map information into SO2 data
+    select(region, SO2_name) %>%
+    left_join_error_no_match(data_so2, ., by = "region") %>%
+    rename(Non.CO2 = SO2_name) %>%
+    bind_rows(data_notso2)
 }
