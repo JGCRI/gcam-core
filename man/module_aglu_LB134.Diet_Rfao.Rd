@@ -18,10 +18,16 @@ the generated outputs: \code{L134.pcFood_kcald_R_Dmnd_Y}, \code{L134.pcFood_kcal
 original data system was \code{LB134.Diet_Rfao.R} (aglu level1).
 }
 \description{
-Build historic and future time series of per-capita caloric demands.
+Build historical and future time series of per-capita caloric demands.
 }
 \details{
-Describe in detail what this chunk does.
+Build historical time series of per-capita caloric demands;
+divide by population to calculate the historical per-capita food demands;
+extrapolate this to future periods based on FAO projections;
+calculate the future demand ratios by FAO2050 region for each demand type;
+aggregate by GCAM demand and FAO region, and compute future diet ratios by FAO2050 region;
+extend the projected diets to all years, assuming convergence year and demand levels;
+make SSP-specific projections based on GDP changes.
 }
 \author{
 BBL May 2017

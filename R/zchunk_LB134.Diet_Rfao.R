@@ -1,6 +1,6 @@
 #' module_aglu_LB134.Diet_Rfao
 #'
-#' Build historic and future time series of per-capita caloric demands.
+#' Build historical and future time series of per-capita caloric demands.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,7 +8,13 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L134.pcFood_kcald_R_Dmnd_Y}, \code{L134.pcFood_kcald_R_Dmnd_Y_ssp1}, \code{L134.pcFood_kcald_R_Dmnd_Y_ssp2}, \code{L134.pcFood_kcald_R_Dmnd_Y_ssp3}, \code{L134.pcFood_kcald_R_Dmnd_Y_ssp4}, \code{L134.pcFood_kcald_R_Dmnd_Y_ssp5}. The corresponding file in the
 #' original data system was \code{LB134.Diet_Rfao.R} (aglu level1).
-#' @details Describe in detail what this chunk does.
+#' @details Build historical time series of per-capita caloric demands;
+#' divide by population to calculate the historical per-capita food demands;
+#' extrapolate this to future periods based on FAO projections;
+#' calculate the future demand ratios by FAO2050 region for each demand type;
+#' aggregate by GCAM demand and FAO region, and compute future diet ratios by FAO2050 region;
+#' extend the projected diets to all years, assuming convergence year and demand levels;
+#' make SSP-specific projections based on GDP changes.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -135,7 +141,15 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
       mutate(GCAM_demand = if_else(GCAM_demand == "total", "crops", GCAM_demand)) ->
       L134.Diet_kcald_Rfao_Dmnd_Y
 
-    # TODO: what's the logic behind this next step? (original lines 100-102)
+    # Note on this next section from Page: can't just use exogenous caloric contents for the crop and meat commodities, which we're estimating
+    # as averages without knowing the exact composition of the commodities (e.g., what portion of "cereals"
+    # is corn vs wheat in each region, as they have different caloric contents), and still hit the target
+    # reported "Total food (kcal/person/day)" in each region and time period. It looks like there were three
+    # options: (1) assign the crop caloric contents exogenously and allow the meat caloric contents to float;
+    # (2) vice versa; or (3) assign both crop and meat caloric contents, and then scale them all to hit the
+    # target value. It looks like I went with (2), maybe because I figured that the meat commodities probably
+    # have less heterogeneity in average caloric contents, and maybe also because it happened to be the easiest
+    # to implement.
     L134.Diet_kcald_Rfao_Dmnd_Y %>%
       filter(GCAM_demand == "meat") %>%
       select(-GCAM_demand) %>%
@@ -265,6 +279,8 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
         select(GCAM_region_ID, GCAM_demand, year, value)
     }
 
+    # L102.pcgdp_thous90USD_Scen_R_Y is good here - differences are <10^-12
+
     L134.pcFood_est_R_Dmnd_Y_ssp1_crops <- create_ssp(L102.pcgdp_thous90USD_Scen_R_Y, "SSP1", "crops", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
     L134.pcFood_est_R_Dmnd_Y_ssp1_meat <- create_ssp(L102.pcgdp_thous90USD_Scen_R_Y, "SSP1", "meat", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
     L134.pcFood_est_R_Dmnd_Y_ssp2_crops <- create_ssp(L102.pcgdp_thous90USD_Scen_R_Y, "SSP2", "crops", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
@@ -280,8 +296,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
     L134.pcFood_kcald_R_Dmnd_Y %>%
       add_title("Per-capita food demands by region / demand type / year (historical and future)") %>%
       add_units("kcal / person / day") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("Built from historical and future time series of per-capita caloric demands") %>%
       add_legacy_name("L134.pcFood_kcald_R_Dmnd_Y") %>%
       add_precursors("common/iso_GCAM_regID", "aglu/AGLU_ctry",
                      "aglu/FAO2050_items_cal", "aglu/FAO2050_Diet",
@@ -295,8 +310,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
               L134.pcFood_est_R_Dmnd_Y_ssp1_meat) %>%
       add_title("SSP1 Per-capita food demands by region / demand type / year (historical and future)") %>%
       add_units("kcal / person / day") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("Scales using SSP1 GDP changes") %>%
       add_legacy_name("L134.pcFood_kcald_R_Dmnd_Y_ssp1") %>%
       same_precursors_as(L134.pcFood_kcald_R_Dmnd_Y) %>%
       add_precursors("aglu/A_FoodDemand_SSPs", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
@@ -307,8 +321,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
               L134.pcFood_est_R_Dmnd_Y_ssp2_meat) %>%
       add_title("SSP2 Per-capita food demands by region / demand type / year (historical and future)") %>%
       add_units("kcal / person / day") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("Scales using SSP2 GDP changes") %>%
       add_legacy_name("L134.pcFood_kcald_R_Dmnd_Y_ssp2") %>%
       same_precursors_as(L134.pcFood_kcald_R_Dmnd_Y) %>%
       add_precursors("aglu/A_FoodDemand_SSPs", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
@@ -319,8 +332,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
               L134.pcFood_est_R_Dmnd_Y_ssp3_meat) %>%
       add_title("SSP3 Per-capita food demands by region / demand type / year (historical and future)") %>%
       add_units("kcal / person / day") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("Scales using SSP3 GDP changes") %>%
       add_legacy_name("L134.pcFood_kcald_R_Dmnd_Y_ssp3") %>%
       same_precursors_as(L134.pcFood_kcald_R_Dmnd_Y) %>%
       add_precursors("aglu/A_FoodDemand_SSPs", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
@@ -331,8 +343,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
               L134.pcFood_est_R_Dmnd_Y_ssp4_meat) %>%
       add_title("SSP5 Per-capita food demands by region / demand type / year (historical and future)") %>%
       add_units("kcal / person / day") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("Scales using SSP4 GDP changes") %>%
       add_legacy_name("L134.pcFood_kcald_R_Dmnd_Y_ssp4") %>%
       same_precursors_as(L134.pcFood_kcald_R_Dmnd_Y) %>%
       add_precursors("aglu/A_FoodDemand_SSPs", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
@@ -343,8 +354,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
               L134.pcFood_est_R_Dmnd_Y_ssp5_meat) %>%
       add_title("SSP5 Per-capita food demands by region / demand type / year (historical and future)") %>%
       add_units("kcal / person / day") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("Scales using SSP5 GDP changes") %>%
       add_legacy_name("L134.pcFood_kcald_R_Dmnd_Y_ssp5") %>%
       same_precursors_as(L134.pcFood_kcald_R_Dmnd_Y) %>%
       add_precursors("aglu/A_FoodDemand_SSPs", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
