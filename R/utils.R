@@ -216,9 +216,10 @@ find_csv_file <- function(filename, optional, quiet = FALSE) {
 #' @param chunkdata Named list of tibbles (data frames) to write
 #' @param write_inputs Write data that were read as inputs, not computed?
 #' @param outputs_dir Directory to save data into
+#' @param xml_dir Directory to save XML results into
 #' @importFrom assertthat assert_that
 save_chunkdata <- function(chunkdata, write_inputs = FALSE, outputs_dir =
-                             OUTPUTS_DIR) {
+                             OUTPUTS_DIR, xml_dir = XML_DIR) {
   assert_that(is_data_list(chunkdata))
   assert_that(!is.null(names(chunkdata)))
   assert_that(is.logical(write_inputs))
@@ -227,10 +228,16 @@ save_chunkdata <- function(chunkdata, write_inputs = FALSE, outputs_dir =
   # Create directory if necessary, and remove any previous outputs
   dir.create(outputs_dir, showWarnings = FALSE, recursive = TRUE)
   unlink(file.path(outputs_dir, "*.csv"))
+  dir.create(xml_dir, showWarnings = FALSE, recursive = TRUE)
+  unlink(file.path(xml_dir, "*.xml"))
 
   for(cn in names(chunkdata)) {
     cd <- chunkdata[[cn]]
-    if(!isTRUE(identical(NA, cd))) {   # NA means an optional file that wasn't found
+    if(FLAG_XML %in% get_flags(cd)) {
+      # TODO: worry about absolute paths?
+      cd$xml_file <- file.path(xml_dir, cd$xml_file)
+      run_xml_conversion(cd)
+    } else if(!isTRUE(identical(NA, cd))) {   # NA means an optional file that wasn't found
 
       fqfn <- file.path(outputs_dir, paste0(cn, ".csv"))
       suppressWarnings(file.remove(fqfn))
@@ -324,7 +331,9 @@ find_chunks <- function(pattern = "^module_[a-zA-Z\\.]*_.*$", include_disabled =
 #' chunk_inputs
 #'
 #' @param chunks A character vector of chunks names
-#' @return A tibble with columns 'name' (chunk name) and 'input' (name of data)
+#' @return A tibble with columns 'name' (chunk name), 'input' (name of data),
+#' 'file_file' (whether object is read from a file), and 'optional' (whether
+#' the object is optional or not).
 #' @export
 chunk_inputs <- function(chunks = find_chunks()$name) {
   assertthat::assert_that(is.character(chunks))
@@ -359,7 +368,8 @@ chunk_inputs <- function(chunks = find_chunks()$name) {
 #' List all chunk outputs.
 #'
 #' @param chunks A character vector of chunks names
-#' @return A tibble with columns 'name' (chunk name) and 'output' (name of data)
+#' @return A tibble with columns 'name' (chunk name), 'output' (name of data),
+#' and 'to_xml' (whether or not this is an XML structure).
 #' @export
 chunk_outputs <- function(chunks = find_chunks()$name) {
   assertthat::assert_that(is.character(chunks))
@@ -404,7 +414,12 @@ create_xml <- function(xml_file, mi_header = NULL) {
                              package = "gcamdata")
   }
 
-  list(xml_file = xml_file, mi_header = mi_header, data_tables = list())
+  xml_obj <- list(xml_file = xml_file,
+                  mi_header = mi_header,
+                  data_tables = list())
+  xml_obj <- add_flags(xml_obj, FLAG_XML)
+
+  xml_obj
 }
 
 #' add_xml_data
@@ -421,7 +436,6 @@ create_xml <- function(xml_file, mi_header = NULL) {
 #' @return A "data structure" to hold the various parts needed to run the model
 #' interface CSV to XML conversion.
 #' @author PP March 2017
-#' @export
 add_xml_data <- function(dot, data, header) {
   curr_table <- list(data = data, header = header)
   dot$data_tables[[length(dot$data_tables)+1]] <- curr_table
@@ -437,7 +451,7 @@ make_run_xml_conversion <- function() {
   function(dot) {
     use_java <- getOption("gcamdata.use_java")
     if(!isTRUE(use_java) && !XML_WARNING_GIVEN) {
-      warning("Skipping conversion as global option gcamdata.use_java is not TRUE")
+      message("Skipping XML conversion as global option gcamdata.use_java is not TRUE")
       # set the flag to avoid repeating the warning.
       XML_WARNING_GIVEN <<- TRUE
     } else if(isTRUE(use_java)) {
@@ -465,6 +479,8 @@ make_run_xml_conversion <- function() {
         cat("", file = conv_pipe, sep = "\n")
       }
     }
+
+    dot
   }
 }
 
@@ -481,8 +497,9 @@ make_run_xml_conversion <- function() {
 #' To enable the use of Java a user can set \code{options(gcamdata.use_java=TRUE)}
 #'
 #' @param dot The current state of the pipeline started from \code{create_xml}
+#' @return The argument passed in unmodified in case a user wanted run the
+#' conversion again at a later time.
 #' @author PP March 2017
-#' @export
 run_xml_conversion <- make_run_xml_conversion()
 
 

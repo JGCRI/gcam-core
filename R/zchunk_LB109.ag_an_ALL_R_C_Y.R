@@ -22,8 +22,8 @@ module_aglu_LB109.ag_an_ALL_R_C_Y <- function(command, ...) {
               FILE = "temp-data-inject/L105.an_Prod_Mt_R_C_Y",
               FILE = "temp-data-inject/L106.ag_NetExp_Mt_R_C_Y",
               FILE = "temp-data-inject/L106.an_NetExp_Mt_R_C_Y",
-              FILE = "temp-data-inject/L108.ag_Feed_Mt_R_C_Y",
-              FILE = "temp-data-inject/L108.ag_NetExp_Mt_R_FodderHerb_Y",
+              "L108.ag_Feed_Mt_R_C_Y",
+              "L108.ag_NetExp_Mt_R_FodderHerb_Y",
               FILE = "temp-data-inject/L122.in_Mt_R_C_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L109.ag_ALL_Mt_R_C_Y",
@@ -55,15 +55,8 @@ module_aglu_LB109.ag_an_ALL_R_C_Y <- function(command, ...) {
       gather(year, value, -GCAM_region_ID, -GCAM_commodity) %>%   # reshape
       mutate(year = as.integer(substr(year, 2, 5)))   # change Xyear to year
 
-    L108.ag_Feed_Mt_R_C_Y <- get_data(all_data, "temp-data-inject/L108.ag_Feed_Mt_R_C_Y") %>%
-      # The following two lines of code will be removed later, when we're using 'real' data
-      gather(year, value, -GCAM_region_ID, -GCAM_commodity) %>%   # reshape
-      mutate(year = as.integer(substr(year, 2, 5)))   # change Xyear to year
-
-    L108.ag_NetExp_Mt_R_FodderHerb_Y <- get_data(all_data, "temp-data-inject/L108.ag_NetExp_Mt_R_FodderHerb_Y") %>%
-      # The following two lines of code will be removed later, when we're using 'real' data
-      gather(year, value, -GCAM_region_ID, -GCAM_commodity) %>%   # reshape
-      mutate(year = as.integer(substr(year, 2, 5)))   # change Xyear to year
+    L108.ag_Feed_Mt_R_C_Y <- get_data(all_data, "L108.ag_Feed_Mt_R_C_Y")
+    L108.ag_NetExp_Mt_R_FodderHerb_Y <- get_data(all_data, "L108.ag_NetExp_Mt_R_FodderHerb_Y")
 
     L122.in_Mt_R_C_Yh <- get_data(all_data, "temp-data-inject/L122.in_Mt_R_C_Yh") %>%
       # The following two lines of code will be removed later, when we're using 'real' data
@@ -225,8 +218,8 @@ module_aglu_LB109.ag_an_ALL_R_C_Y <- function(command, ...) {
       add_precursors("L101.ag_Food_Mt_R_C_Y",
                      "L103.ag_Prod_Mt_R_C_Y",
                      "temp-data-inject/L106.ag_NetExp_Mt_R_C_Y",
-                     "temp-data-inject/L108.ag_Feed_Mt_R_C_Y",
-                     "temp-data-inject/L108.ag_NetExp_Mt_R_FodderHerb_Y",
+                     "L108.ag_Feed_Mt_R_C_Y",
+                     "L108.ag_NetExp_Mt_R_FodderHerb_Y",
                      "temp-data-inject/L122.in_Mt_R_C_Yh") ->
       L109.ag_ALL_Mt_R_C_Y
 

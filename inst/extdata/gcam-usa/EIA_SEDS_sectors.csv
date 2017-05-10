@@ -1,1 +1,33 @@
-EIA_sector,GCAM_sector,descriptionAC,trn_all,transportation sector consumptionAP,,transportation sector per capita consumptionCC,comm,commercial sector consumptionCP,,commercial sector per capita consumptionEG,electricity_output,electric power sector generationEI,electricity_input,electric power sector consumptionET,,"electricity ""total"" (equal to generation)"EX,,electricity exports to outside the USHC,,"distributed photovoltaic and solar thermal energy consumed by the residential, commercial, and industrial sectors, other than power generated at commercial and industrial facilities with capacity of 1 megawatt or greater"IC,industry,industrial sector consumptionIM,,electricity imports from other countriesIN,,"industrial sector, for supplemental gases only"IP,,industrial sector per capita consumptionIS,electricity dom imports,net electricity imports from other states (positive = import; negative = export)KC,,coke plantsLC,corn ethanol,biofuels energy losses and coproductsLP,,lease and plant fuelNI,electricity intl imports,net electricity imports from other countries (positive = import; negative = export)OC,,other industrial usersOP,,population queryPR,,GDP variable namePZ,gas pipeline,gas pipeline lossesRC,resid,residential sector consumptionRP,,residential sector per capita consumptionTC,,total consumption of all sectorsTG,,total GDP (used for computing energy intensity)TP,,total population (used for computing energy use per capita)TX,,total end-use energy consumptionVH,trn_bus_CNG,vehicle consumption (natural gas only)
+# File: EIA_SEDS_sectors.csv,,
+# Title: Convert EIA_sector code to GCAM_sector name,,
+# Units: NA,,
+EIA_sector,GCAM_sector,description
+AC,trn_all,transportation sector consumption
+AP,,transportation sector per capita consumption
+CC,comm,commercial sector consumption
+CP,,commercial sector per capita consumption
+EG,electricity_output,electric power sector generation
+EI,electricity_input,electric power sector consumption
+ET,,"electricity ""total"" (equal to generation)"
+EX,,electricity exports to outside the US
+HC,,"distributed photovoltaic and solar thermal energy consumed by the residential, commercial, and industrial sectors, other than power generated at commercial and industrial facilities with capacity of 1 megawatt or greater"
+IC,industry,industrial sector consumption
+IM,,electricity imports from other countries
+IN,,"industrial sector, for supplemental gases only"
+IP,,industrial sector per capita consumption
+IS,electricity dom imports,net electricity imports from other states (positive = import; negative = export)
+KC,,coke plants
+LC,corn ethanol,biofuels energy losses and coproducts
+LP,,lease and plant fuel
+NI,electricity intl imports,net electricity imports from other countries (positive = import; negative = export)
+OC,,other industrial users
+OP,,population query
+PR,,GDP variable name
+PZ,gas pipeline,gas pipeline losses
+RC,resid,residential sector consumption
+RP,,residential sector per capita consumption
+TC,,total consumption of all sectors
+TG,,total GDP (used for computing energy intensity)
+TP,,total population (used for computing energy use per capita)
+TX,,total end-use energy consumption
+VH,trn_bus_CNG,vehicle consumption (natural gas only)

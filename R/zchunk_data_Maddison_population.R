@@ -29,6 +29,7 @@ module_data_Maddison_population <- function(command, ...) {
     readr::read_csv(fqfn, comment = COMMENT_CHAR, col_names = cn, col_types = ct, skip = 2) %>%
       select(-deleteme) %>%
       gather(year, value, -Country) %>%
+      mutate(year = as.integer(year)) %>%
       # Remove all the blanks and "Total..." lines
       filter(!(substr(Country, 1, 5) == "Total" & Country != "Total Former USSR"),
              !is.na(Country)) %>%
