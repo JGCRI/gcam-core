@@ -34,7 +34,7 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
     SSP_database_v9 <- get_data(all_data, "socioeconomics/SSP_database_v9")
     UN_popTot <- get_data(all_data, "socioeconomics/UN_popTot")
 
-
+if(1) {
     # ===================================================
 
     ## (1) Historical population by country
@@ -63,18 +63,18 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
       rename(Downscale_from = Maddison_ctry) %>%  # Will match each country in the region to this ratio
       select(-pop) %>%
       left_join(filter(pop_thous_ctry_reg, year == socioeconomics.AGG_BASE_YEAR), by = "Downscale_from") %>%  # Join with the 1950 populations for each member country
-      mutate(pop = pop * ratio) %>%  # Create population values prior to 1950 for downscaled countries based on their 1950 populations and pop ratio from aggregate regions
+      mutate(pop_scale = pop * ratio) %>%  # Create population values prior to 1950 for downscaled countries based on their 1950 populations and pop ratio from aggregate regions
       rename(year = year.x) %>%  # Want to keep the scaled years
       ungroup() %>%  # Need to remove grouping so that we can keep only the variables we want and join with the primary data
       filter(year != socioeconomics.AGG_BASE_YEAR) %>% # Remove base aggregation year (it's in the next step, don't want to duplicate it)
-      select(Maddison_ctry, iso, year, pop)
+      select(Maddison_ctry, iso, year, pop_scale)
     # Bind these with the other countries
     reg_scaled <- as_tibble(pop_thous_ctry_reg) %>%
-      select(Maddison_ctry, iso, year, pop) %>% # Keep only necessary variables
-      mutate(iso = if_else(Maddison_ctry == "World Total", "world_total", iso)) %>% # Temporarily iso id for global population, will need this in step 4.
+      left_join(agg_ratio, by = c("Maddison_ctry", "iso", "year")) %>%
+      mutate(pop = if_else((year < socioeconomics.AGG_BASE_YEAR & !is.na(pop_scale)), pop_scale, pop)) %>% # Replace NA values for countries with downscaled population values
+      mutate(iso = if_else(Maddison_ctry == "World Total", "world_total", iso)) %>% # Will need total world population in step 4
       filter(!is.na(iso)) %>%  # Remove rows with no iso code (generally aggregate regions)
-      bind_rows(agg_ratio) %>% # Add downscaled country population values
-      select(iso, year, pop)
+      select(iso, year, pop)  # Keep only necessary variables
 
     # Third, interpolate available population data to generate values for required historical years (1700, 1750, 1800, 1850, 1900)
     hist_interp <- tibble(year = socioeconomics.MADDISON_HISTORICAL_YEARS) %>%  # Create tibble with required years (not all are in the original Maddison data)
@@ -143,17 +143,19 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
       select(-Region, -Sex, -Scenario) %>%
       rename(iso = Country, year = Year, pop = Value) %>%
       mutate(iso = tolower(iso)) %>%
-      filter(year %in% socioeconomics.UN_HISTORICAL_YEARS) %>%  # Keep only the years that we are using
+      filter(year %in% c(socioeconomics.AGG_BASE_YEAR, socioeconomics.UN_HISTORICAL_YEARS)) %>%  # Keep only the years that we are using
       mutate(iso = gsub("xea", "twn", iso)) # Correct iso code for Taiwan
     # Multiply UN 1950 population by Maddison historic ratios to get values for pre-1950 years
     un_maddison_hist <- filter(un_clean, year == socioeconomics.AGG_BASE_YEAR) %>%
       select(-year) %>%
       full_join(maddison_hist_ratio, by = "iso") %>%
-      mutate(pop = pop * pop_ratio_1950) %>%
+      complete(year, nesting(iso)) %>%  # Completes tibble to include all years for all iso (creates missing values)
+      mutate(pop = if_else(!is.na(pop_ratio_1950), (pop * pop_ratio_1950), 0)) %>% # Set the remaining mismatched (very small) countries to zero
       select(iso, year, pop)
     # Combine scaled population for Maddison historic years with UN population 1950+
     L100.Pop_thous_ctry_Yh <- bind_rows(un_clean, un_maddison_hist) %>%
-      filter(year %in% c(socioeconomics.MADDISON_HISTORICAL_YEARS, socioeconomics.UN_HISTORICAL_YEARS)) %>%
+      filter(year %in% c(socioeconomics.MADDISON_HISTORICAL_YEARS, socioeconomics.AGG_BASE_YEAR, socioeconomics.UN_HISTORICAL_YEARS)) %>%
+      mutate(pop = if_else(is.na(pop), 0, pop)) %>%
       rename(value = pop) %>%
       arrange(iso, year) # Just for easier visual checking
 
@@ -191,10 +193,9 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
       select(-pop_final_hist, -ratio_iso_ssp)
 
     # ===================================================
-
+}
     # Produce outputs
     L100.Pop_thous_ctry_Yh %>%
-    # tibble() %>%
       add_title("Population by country, 1700-2010") %>%
       add_units("thousand") %>%
       add_comments("Maddison population data cleaned to develop complete data for all years, (dis)aggregated to modern country boundaries") %>%
@@ -206,7 +207,6 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
       L100.Pop_thous_ctry_Yh
 
     L100.Pop_thous_SSP_ctry_Yfut %>%
-    # tibble() %>%
       add_title("SSP population projections by country, 2010-2100") %>%
       add_units("thousand") %>%
       add_comments("Future population calculated as final historical year (2010) population times ratio of SSP future years to SSP 2010") %>%
@@ -214,7 +214,7 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
       add_legacy_name("L100.Pop_thous_SSP_ctry_Yfut") %>%
       add_precursors("socioeconomics/socioeconomics_ctry", "socioeconomics/SSP_database_v9", "socioeconomics/UN_popTot") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT) ->
       L100.Pop_thous_SSP_ctry_Yfut
 
     return_data(L100.Pop_thous_ctry_Yh, L100.Pop_thous_SSP_ctry_Yfut)
