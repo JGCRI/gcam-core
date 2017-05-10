@@ -59,18 +59,41 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
     EPA_VOC <- get_data(all_data, "emissions/EPA_VOC")
     EPA_NH3 <- get_data(all_data, "emissions/EPA_NH3")
 
+    # get_data calls followed by temporary (temp-data-inject) reshapes
+    L1322.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "temp-data-inject/L1322.in_EJ_R_indenergy_F_Yh") %>%
+      gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
+      mutate(year = as.integer(substr(year, 2, 5)))
+
     L1231.in_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.in_EJ_R_elec_F_tech_Yh")
-    L1322.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "temp-data-inject/L1322.in_EJ_R_indenergy_F_Yh")
+
+    # The following two data frames can't be reshape from long to wide
+    # So leave them wide, and strip off X's
     L144.in_EJ_R_bld_serv_F_Yh <- get_data(all_data, "temp-data-inject/L144.in_EJ_R_bld_serv_F_Yh")
+    # temporary
+    names(L144.in_EJ_R_bld_serv_F_Yh)[5:44] <- as.character(1971:2010)
     L154.in_EJ_R_trn_m_sz_tech_F_Yh <- get_data(all_data, "temp-data-inject/L154.in_EJ_R_trn_m_sz_tech_F_Yh")
-    L1322.Fert_Prod_MtN_R_F_Y <- get_data(all_data, "temp-data-inject/L1322.Fert_Prod_MtN_R_F_Y")
-    L1321.in_EJ_R_cement_F_Y <- get_data(all_data, "temp-data-inject/L1321.in_EJ_R_cement_F_Y")
-    L124.in_EJ_R_heat_F_Yh <- get_data(all_data, "temp-data-inject/L124.in_EJ_R_heat_F_Yh")
-    L111.Prod_EJ_R_F_Yh <- get_data(all_data, "temp-data-inject/L111.Prod_EJ_R_F_Yh")
+    # temporary
+    names(L154.in_EJ_R_trn_m_sz_tech_F_Yh)[8:47] <- as.character(1971:2010)
+
+    L1322.Fert_Prod_MtN_R_F_Y <- get_data(all_data, "temp-data-inject/L1322.Fert_Prod_MtN_R_F_Y") %>%
+      gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
+      mutate(year = as.integer(substr(year, 2, 5)))
+    L1321.in_EJ_R_cement_F_Y <- get_data(all_data, "temp-data-inject/L1321.in_EJ_R_cement_F_Y") %>%
+      gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
+      mutate(year = as.integer(substr(year, 2, 5)))
+    L124.in_EJ_R_heat_F_Yh <- get_data(all_data, "temp-data-inject/L124.in_EJ_R_heat_F_Yh") %>%
+      gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
+      mutate(year = as.integer(substr(year, 2, 5)))
+    L111.Prod_EJ_R_F_Yh <- get_data(all_data, "temp-data-inject/L111.Prod_EJ_R_F_Yh") %>%
+      gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
+      mutate(year = as.integer(substr(year, 2, 5)))
 
     # Add technology columns and combine all energy driver data into a single dataframe
-    bind_rows(L1322.in_EJ_R_indenergy_F_Yh, L1322.Fert_Prod_MtN_R_F_Y,
-              L1321.in_EJ_R_cement_F_Y, L124.in_EJ_R_heat_F_Yh, L111.Prod_EJ_R_F_Yh,
+    bind_rows(spread(L1322.in_EJ_R_indenergy_F_Yh, year, value),
+              spread(L1322.Fert_Prod_MtN_R_F_Y, year, value),
+              spread(L1321.in_EJ_R_cement_F_Y, year, value),
+              spread(L124.in_EJ_R_heat_F_Yh, year, value),
+              spread(L111.Prod_EJ_R_F_Yh, year, value),
               rename(L144.in_EJ_R_bld_serv_F_Yh, sector = service)) %>%
       mutate(technology = fuel) ->
       temp
@@ -82,17 +105,15 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
       select(-mode, -UCD_sector, -size.class, -UCD_technology, -UCD_fuel) %>%
 
       # Bind all together
-      bind_rows(temp, spread(mutate(L1231.in_EJ_R_elec_F_tech_Yh, year = paste0("X", year)), year, value)) ->
-      # once the rest of the data above are not coming from data-temp-inject, need to
-      # spread them too I guess
+      bind_rows(temp, spread(L1231.in_EJ_R_elec_F_tech_Yh, year, value)) ->
+      # NOTE we need to pass the L101.in_EJ_R_en_Si_F_Yh dataset on in WIDE, not
+      # long, format, because it doesn't reshape cleanly (there are multiple year/row combinations)
       L101.in_EJ_R_en_Si_F_Yh
 
-    # NOTE we need to pass the L101.in_EJ_R_en_Si_F_Yh dataset on in WIDE, not
-    # long, format, because it doesn't reshape cleanly (there are multiple year/row combinations)
     L101.in_EJ_R_en_Si_F_Yh %>%
       # Temporary data-inject reshape
       gather(year, value, -GCAM_region_ID, -sector, -fuel, -technology) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) ->
+      mutate(year = as.integer(year)) ->
       L101.in_EJ_USA_en_Sepa_F_Yh.mlt
 
     # Subset for USA only and aggregate to EPA categories
@@ -191,7 +212,8 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
                      "temp-data-inject/L1322.Fert_Prod_MtN_R_F_Y",
                      "temp-data-inject/L1321.in_EJ_R_cement_F_Y",
                      "temp-data-inject/L124.in_EJ_R_heat_F_Yh",
-                     "temp-data-inject/L111.Prod_EJ_R_F_Yh") ->
+                     "temp-data-inject/L111.Prod_EJ_R_F_Yh") %>%
+      add_flags(FLAG_NO_XYEAR) ->
       L101.in_EJ_R_en_Si_F_Yh
 
     L101.so2_tgej_USA_en_Sepa_F_Yh %>%
