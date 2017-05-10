@@ -203,7 +203,7 @@ if(1) {
       add_legacy_name("L100.Pop_thous_ctry_Yh") %>%
       add_precursors("socioeconomics/socioeconomics_ctry", "Maddison_population") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L100.Pop_thous_ctry_Yh
 
     L100.Pop_thous_SSP_ctry_Yfut %>%
