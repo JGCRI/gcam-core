@@ -64,10 +64,6 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
     # ===================================================
 
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -82,7 +78,6 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
                      "L102.ag_HA_bm2_R_C_GLU",
                      "aglu/IFA2002_Fert_ktN",
                      "aglu/IFA_Fert_ktN") %>%
-      # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L141.ag_Fert_Cons_MtN_ctry_crop
 
