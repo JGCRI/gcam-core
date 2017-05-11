@@ -82,6 +82,9 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
       select(-MAC_region, -bio_N2O_coef, -SO2_name, -GAINS_region, -GCAM_region_ID, -agg_sector, -value) ->
     L251.ssp15_ef
 
+    # Reorder data.
+    L251.ssp15_ef <- L251.ssp15_ef[c(6,3:5,1:2,7)]
+
     L161.SSP2_EF %>%
       # Input data only contains 3 future years.  Need to include years between 2010-2100 in 5 year segments,
       # and interpolate between each time segment.
@@ -100,6 +103,9 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
       select(-MAC_region, -bio_N2O_coef, -SO2_name, -GAINS_region, -GCAM_region_ID, -agg_sector, -value) ->
     L251.ssp2_ef
 
+    # Reorder data.
+    L251.ssp2_ef <- L251.ssp2_ef[c(6,3:5,1:2,7)]
+
     L161.SSP34_EF %>%
       # Input data only contains 3 future years.  Need to include years between 2010-2100 in 5 year segments,
       # and interpolate between each time segment.
@@ -117,6 +123,9 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
       # Discard columns that are not needed.
       select(-MAC_region, -bio_N2O_coef, -SO2_name, -GAINS_region, -GCAM_region_ID, -agg_sector, -value) ->
     L251.ssp34_ef
+
+    # Reorder data.
+    L251.ssp34_ef <- L251.ssp34_ef[c(6,3:5,1:2,7)]
 
 # Create a control table where year 2010 is the control period and renamed 1975, discarding all other years.
      L251.ssp2_ef %>%
@@ -139,6 +148,9 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
               year = 1975)->
       L251.ssp15_ef_vin
 
+     # Reorder data.
+     L251.ssp15_ef_vin <- L251.ssp15_ef_vin[c(1:6,9,8,7)]
+
      L251.ssp2_ef %>%
        # Isolate the "electricity" supply sector.
        subset(supplysector == "electricity") %>%
@@ -151,6 +163,9 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
               year = 1975)->
       L251.ssp2_ef_vin
 
+     # Reorder data.
+     L251.ssp2_ef_vin <- L251.ssp2_ef_vin[c(1:6,9,8,7)]
+
      L251.ssp34_ef %>%
        # Isolate the "electricity" supply sector.
        subset(supplysector == "electricity") %>%
@@ -162,6 +177,9 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
               # Previous year column that only includes the electricity supply sector is now a constant.
               year = 1975)->
       L251.ssp34_ef_vin
+
+     # Reorder data.
+     L251.ssp34_ef_vin <- L251.ssp34_ef_vin[c(1:6,9,8,7)]
 
 # This section renames SO2 variables so that it has regional SO2 emission species.
      L251.ctrl.delete <- rename_SO2( L251.ctrl.delete, A_regions, FALSE )
