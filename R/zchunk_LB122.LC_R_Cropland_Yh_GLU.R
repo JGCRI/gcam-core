@@ -460,7 +460,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
     # First, make a table with cropland in the pre-aglu years
     L120.LC_bm2_R_LT_Yh_GLU %>%
       # only save the years in pre-AGLU years:
-      filter(year %in% PREAGLU_YEARS) %>%
+      filter(year %in% PREAGLU_YEARS) %>% ungroup() %>%
       # insure that there is cropland for each GCAM region-glu that appear L122.LC_bm2_R_CropLand_Y_GLU:
       tidyr::complete(Land_Type = unique(L122.LC_bm2_R_CropLand_Y_GLU$Land_Type),
                       tidyr::nesting(GCAM_region_ID, GLU, year), fill = list(value = NA)) %>%
