@@ -18,7 +18,7 @@ the generated outputs: \code{L100.Pop_thous_ctry_Yh}, \code{L100.Pop_thous_SSP_c
 original data system was \code{L100.Population_downscale_ctry.R} (socioeconomics level1).
 }
 \description{
-Briefly describe what this chunk does.
+Clean and interpolate both Maddison historical population data (1700-2010) and SSP population scenarios.
 }
 \details{
 (1) Cleans Maddison historical population data and interpolates to country and year (1700-2010). (2) Cleans SSP population scenarios for smooth join with final base year population.

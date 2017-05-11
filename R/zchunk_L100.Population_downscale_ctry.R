@@ -1,6 +1,6 @@
 #' module_socioeconomics_L100.Population_downscale_ctry
 #'
-#' Briefly describe what this chunk does.
+#'  Clean and interpolate both Maddison historical population data (1700-2010) and SSP population scenarios.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -13,7 +13,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author STW May 2017
-
 module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "socioeconomics/socioeconomics_ctry",
@@ -99,7 +98,7 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
     pop_missing <- left_join(pop_global, pop_notmissing, by = "year") %>%
       mutate(pop_allocate = pop.x - pop.y) %>%
       select(year, pop_allocate) %>%
-      mutate(year = paste("X", year, sep = "")) %>%
+      mutate(year = paste0("X", year)) %>%
       spread(year, pop_allocate) # The next set of calculations are much easier to do in wide format.
 
     # Fifth, estimate historic population values for countries with missing values and calculate ratios relative to 1950
@@ -130,6 +129,7 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
       rename(mne = scg, tls = idn) %>%
       mutate(srb = mne) %>%
       gather(iso, pop_ratio_1950, -year)
+
     # Combine with other ratio_iso values
     maddison_hist_ratio <- filter(maddison_hist_ratio, iso != "scg") %>% # Remove Serbia & Montenegro (scg) because we will replace with Serbia (srb) and Montenegro (mne)
       bind_rows(mne_srb_tls)
@@ -165,12 +165,14 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
 
     # Second, generate ratios of future population to base year (2010) for all SSPs. The ratios will be applied to the historical year populations so there are no jumps/inconsistencies.
     L100.Pop_thous_SSP_ctry_Yfut <- SSP_database_v9 %>% # Note units in SSP database are millions, but convert to thousands when we multiply by historic year
-      filter(MODEL == "IIASA-WiC POP" & VARIABLE == "Population") %>%  # IIASA-WiC is the official SSP population data set
-      mutate(iso = tolower(REGION), scenario = substr(SCENARIO, 1,4)) %>%
+      filter(MODEL == "IIASA-WiC POP", VARIABLE == "Population") %>%  # IIASA-WiC is the official SSP population data set
+      mutate(iso = tolower(REGION),
+             scenario = substr(SCENARIO, 1, 4)) %>%
       select(-MODEL, -VARIABLE, -UNIT, -REGION, -SCENARIO) %>%
       mutate(iso = gsub("rou", "rom", iso)) %>%  # SSP uses "rou" for the iso for Romania; replace with "rom" for consistency with other data sources
       gather(year, pop, -iso, -scenario) %>%  # Long format
-      mutate(year = as.integer(year), pop = as.numeric(pop)) %>%  # Clean year variable
+      mutate(year = as.integer(year),
+             pop = as.numeric(pop)) %>%  # Clean year variable
       filter(year %in% c(socioeconomics.FINAL_HIST_YEAR, modeltime.FUTURE_YEARS)) %>% # Retain only years needed for GCAM
       group_by(scenario, iso) %>%
       mutate(ratio_iso_ssp = pop / pop[year == socioeconomics.FINAL_HIST_YEAR]) %>%  # Calculate population ratios to final historical year (2010), no units
