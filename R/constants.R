@@ -21,11 +21,8 @@ FLAG_XML <- "FLAG_XML"
 # Time constants
 HISTORICAL_YEARS <- 1971:2010
 IMF_GDP_YEARS <- 2010:2020
-<<<<<<< HEAD
-SSP_FUTURE_YEARS <- c( 2010, FUTURE_YEARS)
-=======
 FUTURE_YEARS <- seq(2015, 2100, 5)
->>>>>>> master
+SSP_FUTURE_YEARS <- c( 2010, FUTURE_YEARS)
 
 # ======================================================================
 # GCAM constants
@@ -109,12 +106,12 @@ CONV_KG_TO_TG <- 1e-9
 CONV_M3_BM3 <- 1e-09
 CONV_MILLION_M3_KM3 <- 1e-03
 
-<<<<<<< HEAD
-=======
+
+
 CONV_M2_ACR <- 0.0002471058
 
 
->>>>>>> master
+
 # ======================================================================
 # Driver constants
 driver.MAKE <- "MAKE"
@@ -150,7 +147,7 @@ DEFAULT_ELECTRIC_EFFICIENCY <- 0.33
 # ======================================================================
 # Set a default electric efficiency
 ELECTRICITY_INPUT_FUELS<- c( "biomass", "coal", "gas", "refined liquids" )
-StubTechYr <- c( "GCAM_region_ID", "supplysector", "subsector", "stub.technology", "xyear" )
+STUBTECHYR <- c( "GCAM_region_ID", "supplysector", "subsector", "stub.technology", "xyear" )
 # ======================================================================
 # socioeconomics constants
 

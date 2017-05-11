@@ -1,6 +1,6 @@
 #' module_emissions_L251.en_ssp_nonco2
 #'
-#' Briefly describe what this chunk does.
+#' This chunk produces regional non-CO2 emissions coefficient data for SSPs 1/5, 2, and 3/4 as well as a GDP control.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,12 +8,16 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L251.ctrl.delete}, \code{L251.ssp15_ef}, \code{L251.ssp2_ef}, \code{L251.ssp34_ef}, \code{L251.ssp15_ef_vin}, \code{L251.ssp2_ef_vin}, \code{L251.ssp34_ef_vin}. The corresponding file in the
 #' original data system was \code{L251.en_ssp_nonco2.R} (emissions level2).
-#' @details Describe in detail what this chunk does.
+#' @details This section takes in the non-CO2 emissions factors for SSP 1.5, 2, and 3/4 across sectors.
+#' First, create data that spans the years 2010-2100 in five year increments by interpolation of input data.
+#' Next, add emissions controls for future years of vintaged technologies for SSP emission factors.
+#' Then, add columns that have regional SO2 emission species.
+#' A GDP control of regional non-CO2 emissions in all regions is also created.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
-#' @export
+#' @author CDL May 2017
+
 module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "emissions/A_regions",
@@ -57,20 +61,19 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
 
     # ===================================================
 
-# This section takes in the Emissions factors for SSP 1.5, 2, and 3/4 across sectors.
-# Output tables have the emission coefficients for non-CO2 emissions (*ef.csv)
-# and non-CO2 emission coefficient for the historical control and future periods (*ef_vin.csv).
+# This section takes in the non-CO2 emissions factors for SSP 1/5, 2, and 3/4 across sectors and
+# interpolates across years 2010-2100 in 5 year segments.
 
     L161.SSP15_EF %>%
       # Input data only contains 3 future years.  Need to include years between 2010-2100 in 5 year segments,
       # and interpolate between each time segment.
       tidyr::complete(year = SSP_FUTURE_YEARS,
-      tidyr::nesting(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, agg_sector),
-      fill = list(value = NA)) %>%
+          tidyr::nesting(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, agg_sector),
+          fill = list(value = NA)) %>%
       mutate(year = as.integer(year))  %>%
       group_by(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, agg_sector) %>%
       mutate(value = approx_fun(year, value))  %>%
-      # Now add regional data
+      # Now add regional information.
       left_join_error_no_match(A_regions, by = c("GCAM_region_ID")) %>%
       # Emission coefficients values are too long, so we round to the 10th decimal point.
       mutate(emiss.coeff = round(value, 10)) %>%
@@ -79,19 +82,19 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
       select(-MAC_region, -bio_N2O_coef, -SO2_name, -GAINS_region, -GCAM_region_ID, -agg_sector, -value) ->
     L251.ssp15_ef
 
-    # Then data is reordered to match old.
+    # Reorder data.
     L251.ssp15_ef <- L251.ssp15_ef[c(6,3:5,1:2,7)]
 
     L161.SSP2_EF %>%
       # Input data only contains 3 future years.  Need to include years between 2010-2100 in 5 year segments,
       # and interpolate between each time segment.
       tidyr::complete(year = SSP_FUTURE_YEARS,
-                      tidyr::nesting(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, agg_sector),
-                      fill = list(value = NA)) %>%
+          tidyr::nesting(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, agg_sector),
+          fill = list(value = NA)) %>%
       mutate(year = as.integer(year))  %>%
       group_by(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, agg_sector) %>%
       mutate(value = approx_fun(year, value))  %>%
-      # Now add regional data
+      # Now add regional information.
       left_join_error_no_match(A_regions, by = c("GCAM_region_ID"))  %>%
       # Emission coefficients values are too long, so we round to the 10th decimal point.
       mutate(emiss.coeff = round(value, 10)) %>%
@@ -100,19 +103,19 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
       select(-MAC_region, -bio_N2O_coef, -SO2_name, -GAINS_region, -GCAM_region_ID, -agg_sector, -value) ->
     L251.ssp2_ef
 
-    # Then data is reordered to match old.
+    # Reorder data.
     L251.ssp2_ef <- L251.ssp2_ef[c(6,3:5,1:2,7)]
 
     L161.SSP34_EF %>%
       # Input data only contains 3 future years.  Need to include years between 2010-2100 in 5 year segments,
       # and interpolate between each time segment.
       tidyr::complete(year = SSP_FUTURE_YEARS,
-      tidyr::nesting(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, agg_sector),
-      fill = list(value = NA)) %>%
+          tidyr::nesting(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, agg_sector),
+          fill = list(value = NA)) %>%
       mutate(year = as.integer(year))  %>%
       group_by(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, agg_sector) %>%
       mutate(value = approx_fun(year, value))  %>%
-      # Now add regional data
+      # Now add regional information.
       left_join_error_no_match(A_regions, by = c("GCAM_region_ID"))  %>%
       # Emission coefficients values are too long, so we round to the 10th decimal point.
       mutate(emiss.coeff = round(value, 10)) %>%
@@ -121,10 +124,10 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
       select(-MAC_region, -bio_N2O_coef, -SO2_name, -GAINS_region, -GCAM_region_ID, -agg_sector, -value) ->
     L251.ssp34_ef
 
-    # Then data is reordered to match old.
+    # Reorder data.
     L251.ssp34_ef <- L251.ssp34_ef[c(6,3:5,1:2,7)]
 
-# +++++++++++++++++++++++++++++++
+# Create a control table where year 2010 is the control period and renamed 1975, discarding all other years.
      L251.ssp2_ef %>%
       select(-emiss.coeff) %>%
       subset(year == min(year)) %>%
@@ -132,117 +135,137 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
              ctrl.name ="GDP_control") ->
       L251.ctrl.delete
 
+# This section adds emissions controls for future years of vintaged technologies for SSP emission factors.
      L251.ssp15_ef %>%
+       # Isolate the "electricity" supply sector.
        subset(supplysector == "electricity") %>%
+       # Create 2 new columns for future emission factors.
+       # Future emission coefficient year is based on pre-existing "year" column.
+       # Future emission coefficient name is a descriptor, and is constant.
        mutate(future.emiss.coeff.year = year,
               future.emiss.coeff.name = "SSP_GAINS",
+              # Previous year column that only includes the electricity supply sector is now a constant.
               year = 1975)->
-       L251.ssp15_ef_vin
+      L251.ssp15_ef_vin
+
+     # Reorder data.
+     L251.ssp15_ef_vin <- L251.ssp15_ef_vin[c(1:6,9,8,7)]
 
      L251.ssp2_ef %>%
+       # Isolate the "electricity" supply sector.
        subset(supplysector == "electricity") %>%
+       # Create 2 new columns for future emission factors.
+       # Future emission coefficient year is based on pre-existing "year" column.
+       # Future emission coefficient name is a descriptor, and is constant.
        mutate(future.emiss.coeff.year = year,
               future.emiss.coeff.name = "SSP_GAINS",
+              # Previous year column that only includes the electricity supply sector is now a constant.
               year = 1975)->
-       L251.ssp2_ef_vin
+      L251.ssp2_ef_vin
+
+     # Reorder data.
+     L251.ssp2_ef_vin <- L251.ssp2_ef_vin[c(1:6,9,8,7)]
 
      L251.ssp34_ef %>%
+       # Isolate the "electricity" supply sector.
        subset(supplysector == "electricity") %>%
+       # Create 2 new columns for future emission factors.
+       # Future emission coefficient year is based on pre-existing "year" column.
+       # Future emission coefficient name is a descriptor, and is constant.
        mutate(future.emiss.coeff.year = year,
               future.emiss.coeff.name = "SSP_GAINS",
+              # Previous year column that only includes the electricity supply sector is now a constant.
               year = 1975)->
-       L251.ssp34_ef_vin
+      L251.ssp34_ef_vin
 
-# ++++++++++++++
-# ++++++++++++++
+     # Reorder data.
+     L251.ssp34_ef_vin <- L251.ssp34_ef_vin[c(1:6,9,8,7)]
+
+# This section renames SO2 variables so that it has regional SO2 emission species.
+     L251.ctrl.delete <- rename_SO2( L251.ctrl.delete, A_regions, FALSE )
+     L251.ssp15_ef <- rename_SO2( L251.ssp15_ef, A_regions, FALSE )
+     L251.ssp2_ef <- rename_SO2( L251.ssp2_ef, A_regions, FALSE )
+     L251.ssp34_ef <- rename_SO2( L251.ssp34_ef, A_regions, FALSE )
+     L251.ssp15_ef_vin <- rename_SO2( L251.ssp15_ef_vin, A_regions, FALSE )
+     L251.ssp2_ef_vin <- rename_SO2( L251.ssp2_ef_vin, A_regions, FALSE )
+     L251.ssp34_ef_vin <- rename_SO2( L251.ssp34_ef_vin, A_regions, FALSE )
+
+# This section deletes GDP control functions that exist for the supply sector in all
+# regions for non-CO2 emission species for the 1975 control period.
      L251.ctrl.delete %>%
        semi_join(L201.nonghg_steepness,
                  by = c("region", "supplysector", "subsector", "stub.technology", "Non.CO2")) ->
        L251.ctrl.delete
 
 # ===================================================
+# Produce outputs
+     # No flags are neccessary because old data is in 'long' format.
 
-    # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
-    #   L251.ctrl.delete %>%
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L251.ctrl.delete %>%
+      add_title("GDP control of regional non-CO2 emissions.") %>%
+      add_units("NA") %>%
+      add_comments("Make year 2010 the control period in creation of GDP control data.") %>%
+      add_comments("Then, created a new column for data that has regional non-CO2 emission species.") %>%
+      add_comments("Then, delete GDP control functions that exist.") %>%
       add_legacy_name("L251.ctrl.delete") %>%
-      add_precursors("temp-data-inject/L161.SSP2_EF","temp-data-inject/L201.nonghg_steepness","emissions/A_regions") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("temp-data-inject/L161.SSP2_EF","temp-data-inject/L201.nonghg_steepness","emissions/A_regions") ->
       L251.ctrl.delete
-    #   L251.ssp15_ef %>%
-    tibble()%>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L251.ssp15_ef %>%
+      add_title("Regional non-CO2 emissions coefficient data for SSP 1/5.") %>%
+      add_units("Tg / EJ") %>%
+      add_comments("First, the non-CO2 emissions factors for SSP 1/5 are interpolated across years 2010-2100 in 5 year segments.") %>%
+      add_comments("Then, regional non-CO2 emission species information is added.") %>%
       add_legacy_name("L251.ssp15_ef") %>%
-      add_precursors("temp-data-inject/L161.SSP15_EF","emissions/A_regions") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("temp-data-inject/L161.SSP15_EF","emissions/A_regions") ->
+      #add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L251.ssp15_ef
-    #   L251.ssp2_ef %>%
-    tibble()%>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L251.ssp2_ef %>%
+      add_title("Regional non-CO2 emissions coefficient data for SSP 2.") %>%
+      add_units("Tg / EJ") %>%
+      add_comments("First, the non-CO2 emissions factors for SSP 2 are interpolated across years 2010-2100 in 5 year segments.") %>%
+      add_comments("Then, regional non-CO2 emission species information is added.") %>%
       add_legacy_name("L251.ssp2_ef") %>%
-      add_precursors("temp-data-inject/L161.SSP2_EF","emissions/A_regions") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("temp-data-inject/L161.SSP2_EF","emissions/A_regions") ->
+      #add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L251.ssp2_ef
-    #    L251.ssp34_ef %>%
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L251.ssp34_ef %>%
+      add_title("Regional non-CO2 emissions coefficient data for SSP 3/4.") %>%
+      add_units("Tg / EJ") %>%
+      add_comments("First, the non-CO2 emissions factors for SSP 3/4 are interpolated across years 2010-2100 in 5 year segments.") %>%
+      add_comments("Then, regional non-CO2 emission species information is added.") %>%
       add_legacy_name("L251.ssp34_ef") %>%
-      add_precursors("temp-data-inject/L161.SSP34_EF","emissions/A_regions") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("temp-data-inject/L161.SSP34_EF","emissions/A_regions") ->
+      #add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L251.ssp34_ef
-    #    L251.ssp15_ef_vin %>%
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L251.ssp15_ef_vin %>%
+      add_title("Regional SO2 emissions coefficient data of vintaged technologies for SSP 1/5.") %>%
+      add_units("Tg / EJ") %>%
+      add_comments("First, the non-CO2 emissions factors for SSP 1/5 are interpolated across years 2010-2100 in 5 year segments.") %>%
+      add_comments("Then, emissions controls are added for future years of vintaged technologies for SSP emission factors.") %>%
+      add_comments("Finally, regional non-CO2 emission species information is added.") %>%
       add_legacy_name("L251.ssp15_ef_vin") %>%
-      add_precursors("temp-data-inject/L161.SSP15_EF","emissions/A_regions") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("temp-data-inject/L161.SSP15_EF","emissions/A_regions") ->
+      #add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L251.ssp15_ef_vin
-    #   L251.ssp2_ef_vin %>%
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L251.ssp2_ef_vin %>%
+      add_title("Regional non-CO2 emissions coefficient data of vintaged technologies for SSP 2.") %>%
+      add_units("Tg / EJ") %>%
+      add_comments("First, the non-CO2 emissions factors for SSP 2 are interpolated across years 2010-2100 in 5 year segments.") %>%
+      add_comments("Then, emissions controls are added for future years of vintaged technologies for SSP emission factors.") %>%
+      add_comments("Finally, regional non-CO2 emission species information is added.") %>%
       add_legacy_name("L251.ssp2_ef_vin") %>%
-      add_precursors("temp-data-inject/L161.SSP2_EF","emissions/A_regions") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("temp-data-inject/L161.SSP2_EF","emissions/A_regions") ->
+      #add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L251.ssp2_ef_vin
-    #   L251.ssp34_ef_vin %>%
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L251.ssp34_ef_vin %>%
+      add_title("Regional non-CO2 emissions coefficient data of vintaged technologies for SSP 3/4.") %>%
+      add_units("Tg / EJ") %>%
+      add_comments("First, the non-CO2 emissions factors for SSP 3/4 are interpolated across years 2010-2100 in 5 year segments.") %>%
+      add_comments("Then, emissions controls are added for future years of vintaged technologies for SSP emission factors.") %>%
+      add_comments("Finally, regional non-CO2 emission species information is added.") %>%
       add_legacy_name("L251.ssp34_ef_vin") %>%
-      add_precursors("temp-data-inject/L161.SSP34_EF","emissions/A_regions") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("temp-data-inject/L161.SSP34_EF","emissions/A_regions") ->
+      #add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L251.ssp34_ef_vin
 
     return_data(L251.ctrl.delete, L251.ssp15_ef, L251.ssp2_ef, L251.ssp34_ef, L251.ssp15_ef_vin, L251.ssp2_ef_vin, L251.ssp34_ef_vin)
