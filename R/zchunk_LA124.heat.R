@@ -63,15 +63,15 @@ module_energy_LA124.heat <- function(command, ...) {
       summarise(value = sum(value)) -> L124.in_EJ_R_heat_F_Yh
 
     # Heat production from district heat sector
-    # Adding empty table of historical years (except 1971) to later fill in with interpolation
-    A24.globaltech_coef[,as.character(HISTORICAL_YEARS[-1])] <- NA
-
-    # Interpolate to fill in missing globaltech_coef historical years
     A24.globaltech_coef %>%
       gather(year, value, -supplysector, -subsector, -technology, -minicam.energy.input) %>%
       mutate(year = as.integer(year))  %>%
+      # Adding empty historical years to fill in with interpolation
+      complete(year = unique(c(HISTORICAL_YEARS, year)),
+               nesting(supplysector, subsector, technology, minicam.energy.input)) %>%
       arrange(year) %>%
       group_by(technology, subsector, supplysector, minicam.energy.input)  %>%
+      # Interpolate to fill in missing globaltech_coef historical years
       mutate(value = approx_fun(year, value)) %>%
       left_join(distinct(calibrated_techs), by = c("supplysector", "subsector", "technology", "minicam.energy.input")) %>%
       select(supplysector, subsector, technology, minicam.energy.input, year, value, sector, fuel) -> L124.globaltech_coef
@@ -150,14 +150,14 @@ module_energy_LA124.heat <- function(command, ...) {
       left_join(L124.mult_R_heatfromelec_Yh %>%
                   rename(sector.y=sector),
                   by = c("year", "GCAM_region_ID")) %>%
-      mutate(value = if_else(dist_heat == 0 & elec_heat !=0, output_scalar, 0)) %>%
+      mutate(value = if_else(dist_heat == 0 & elec_heat != 0, output_scalar, 0)) %>%
       select(-sector.y, -elec_heat) %>%
       mutate(value = if_else(is.na(value), 0, value))-> L124.mult_R_heat_Yh
 
     L124.in_EJ_R_heat_F_Yh %>%
       filter(year == norm_year) %>%
       select(-year) %>%
-      rename(norm_val = value)-> norm_in
+      rename(norm_val = value) -> norm_in
 
     # If heat output is 0 and heat from CHP is nonzero, value for heat input will be equal to
     # the heat input plus the fuel share year input times 1e-3
