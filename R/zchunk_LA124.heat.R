@@ -104,7 +104,7 @@ module_energy_LA124.heat <- function(command, ...) {
       filter(technology %in% calibrated_techs$technology[calibrated_techs$secondary.output == "heat"]) %>%
       left_join(L124.out_EJ_R_heatfromelec_F_Yh %>%
                   rename(value_heatfromelec = value) %>%
-                  rename(temp = sector), by=c("GCAM_region_ID", "fuel", "year")) %>%
+                  rename(temp = sector), by = c("GCAM_region_ID", "fuel", "year")) %>%
       # Heat output divided by electricity output
       mutate(value = value_heatfromelec / value) %>%
       select(GCAM_region_ID, sector, fuel, technology, year, value) %>%
@@ -121,7 +121,8 @@ module_energy_LA124.heat <- function(command, ...) {
 
     # Filter out the years in years_heatout_0 from heatoutratio
     L124.heatoutratio_R_elec_F_tech_Yh %>%
-      left_join(years_heatout_0) %>%
+      left_join(years_heatout_0,
+                by = c("GCAM_region_ID", "sector", "fuel", "technology")) %>%
       #Using 1 for all rows where heatout is not 0 for all years
       mutate(sum = if_else(is.na(sum), 1, sum)) %>%
       filter(sum != 0)  %>%
@@ -162,9 +163,9 @@ module_energy_LA124.heat <- function(command, ...) {
     # If heat output is 0 and heat from CHP is nonzero, value for heat input will be equal to
     # the heat input plus the fuel share year input times 1e-3
     L124.in_EJ_R_heat_F_Yh %>%
-      left_join(norm_in, by= c("fuel", "sector", "GCAM_region_ID")) %>%
-      left_join(L124.mult_R_heat_Yh %>%
-                  rename(mult_val = value), by=c("sector", "GCAM_region_ID", "year")) %>%
+      left_join(norm_in, by = c("fuel", "sector", "GCAM_region_ID")) %>%
+      left_join(rename(L124.mult_R_heat_Yh, mult_val = value)
+                , by = c("sector", "GCAM_region_ID", "year")) %>%
       mutate(value = value + (norm_val * mult_val)) %>%
       select(fuel, sector, GCAM_region_ID, year, value) -> L124.in_EJ_R_heat_F_Yh
 
@@ -178,7 +179,7 @@ module_energy_LA124.heat <- function(command, ...) {
     L124.out_EJ_R_heat_F_Yh %>%
       left_join(norm_out, by = c("fuel", "sector", "GCAM_region_ID")) %>%
       left_join(L124.mult_R_heat_Yh %>%
-                  rename(heat_val = value), by=c("sector", "GCAM_region_ID", "year")) %>%
+                  rename(heat_val = value), by = c("sector", "GCAM_region_ID", "year")) %>%
       mutate(value = value + (norm_val * heat_val)) %>%
       select(fuel, sector, GCAM_region_ID, year, value) -> L124.out_EJ_R_heat_F_Yh
 
