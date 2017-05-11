@@ -46,9 +46,9 @@ module_energy_LA124.heat <- function(command, ...) {
     L1231.out_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.out_EJ_R_elec_F_tech_Yh")
 
     # ===================================================
-    # Create list of heat regions
+    # Create list of regions with district heat modeled
     A_regions %>%
-      filter(heat == 1) %>%
+      filter(has_district_heat == 1) %>%
       select(GCAM_region_ID) -> heat_regionIDs
 
     # Fuel inputs to district heat
@@ -78,7 +78,7 @@ module_energy_LA124.heat <- function(command, ...) {
 
     # Heat output: fuel inputs to heat divided by exogenous input-output coefficients
     L124.in_EJ_R_heat_F_Yh %>%
-      left_join(L124.globaltech_coef %>%
+      left_join_error_no_match(L124.globaltech_coef %>%
                   rename(IO_Coef = value),
                       by = c("sector", "fuel", "year")) %>%
       mutate(value = value / IO_Coef) %>%
@@ -90,19 +90,18 @@ module_energy_LA124.heat <- function(command, ...) {
       filter(sector == "out_electricity_heat" , GCAM_region_ID %in% heat_regionIDs$GCAM_region_ID) %>%
       mutate(sector = sub("out_", "", sector)) %>%
       left_join(enduse_fuel_aggregation, by = "fuel") %>%
-      select(GCAM_region_ID, sector, year, value, heat) %>%
+      select(GCAM_region_ID,   sector, year, value, heat) %>%
       rename(fuel = heat) %>%
       group_by(fuel, sector, GCAM_region_ID, year) %>%
       summarise(value = sum(value)) %>%
       filter(fuel != is.na(fuel)) -> L124.out_EJ_R_heatfromelec_F_Yh
-
 
     # Secondary output coefficients on heat produced by main activity CHP plants
     L1231.out_EJ_R_elec_F_tech_Yh %>%
       filter(GCAM_region_ID %in% heat_regionIDs$GCAM_region_ID) %>%
       # Select only technologies that have heat output in calibrated techs mapping
       filter(technology %in% calibrated_techs$technology[calibrated_techs$secondary.output == "heat"]) %>%
-      left_join(L124.out_EJ_R_heatfromelec_F_Yh %>%
+      left_join_error_no_match(L124.out_EJ_R_heatfromelec_F_Yh %>%
                   rename(value_heatfromelec = value) %>%
                   rename(temp = sector), by = c("GCAM_region_ID", "fuel", "year")) %>%
       # Heat output divided by electricity output
@@ -163,8 +162,8 @@ module_energy_LA124.heat <- function(command, ...) {
     # If heat output is 0 and heat from CHP is nonzero, value for heat input will be equal to
     # the heat input plus the fuel share year input times 1e-3
     L124.in_EJ_R_heat_F_Yh %>%
-      left_join(norm_in, by = c("fuel", "sector", "GCAM_region_ID")) %>%
-      left_join(rename(L124.mult_R_heat_Yh, mult_val = value)
+      left_join_error_no_match(norm_in, by = c("fuel", "sector", "GCAM_region_ID")) %>%
+      left_join_error_no_match(rename(L124.mult_R_heat_Yh, mult_val = value)
                 , by = c("sector", "GCAM_region_ID", "year")) %>%
       mutate(value = value + (norm_val * mult_val)) %>%
       select(fuel, sector, GCAM_region_ID, year, value) -> L124.in_EJ_R_heat_F_Yh
@@ -177,8 +176,8 @@ module_energy_LA124.heat <- function(command, ...) {
     # If heat output is 0 and heat from CHP is nonzero, value for heat output will be equal to
     # the heat output plus the fuel share year output times 1e-3
     L124.out_EJ_R_heat_F_Yh %>%
-      left_join(norm_out, by = c("fuel", "sector", "GCAM_region_ID")) %>%
-      left_join(L124.mult_R_heat_Yh %>%
+      left_join_error_no_match(norm_out, by = c("fuel", "sector", "GCAM_region_ID")) %>%
+      left_join_error_no_match(L124.mult_R_heat_Yh %>%
                   rename(heat_val = value), by = c("sector", "GCAM_region_ID", "year")) %>%
       mutate(value = value + (norm_val * heat_val)) %>%
       select(fuel, sector, GCAM_region_ID, year, value) -> L124.out_EJ_R_heat_F_Yh
