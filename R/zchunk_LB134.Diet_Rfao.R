@@ -226,12 +226,6 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
     # this same logic happens over and over, so *use a function*
     # scen - scenario
     create_ssp <- function(L102.pcgdp_thous90USD_Scen_R_Y, scen, demand, L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs) {
-      # gdp <- L102.pcgdp_thous90USD_Scen_R_Y
-      # scen <- "SSP1"
-      # demand <- "crops"
-      # a <- 4545
-      # b <- -0.099
-      # pcfood <- L134.pcFood_kcald_R_Dmnd_Y
       if(demand == "crops") {
         a <- 4545
         b <- -0.099
