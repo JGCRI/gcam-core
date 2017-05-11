@@ -18,10 +18,10 @@ the generated outputs: \code{L251.ctrl.delete}, \code{L251.ssp15_ef}, \code{L251
 original data system was \code{L251.en_ssp_nonco2.R} (emissions level2).
 }
 \description{
-This chunk produces regional non-CO2 emissions coefficient data for SSPs 1/5, 2, and 3/4 as well as a GDP control.
+This chunk produces regional non-CO2 emissions coefficient data for SSPs 1.5, 2, and 3.4 as well as a GDP control.
 }
 \details{
-This section takes in the non-CO2 emissions factors for SSP 1.5, 2, and 3/4 across sectors.
+This section takes in the non-CO2 emissions factors for SSP 1.5, 2, and 3.4 across sectors.
 First, create data that spans the years 2010-2100 in five year increments by interpolation of input data.
 Next, add emissions controls for future years of vintaged technologies for SSP emission factors.
 Then, add columns that have regional SO2 emission species.
