@@ -75,10 +75,10 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
 
     # Extend irrigated cropland cover data to all years, 1700-2010
     # Note: 1700, 1750, 1800, 1850, 1900, and 1950 are all zero; and this interpolation fills 1700-1970 with zeros, but no missing elsewhere.
-    id_list <- L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU %>%
+    L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU %>%
       select(GCAM_region_ID, GCAM_commodity, GLU) %>%
-      unique()
-    all_years <- tibble(year = seq(1700, max(HISTORICAL_YEARS)))
+      unique() -> id_list
+    tibble(year = seq(1700, max(HISTORICAL_YEARS))) -> all_years
     id_list %>%
       repeat_add_columns(all_years) %>%
       left_join(L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year")) %>%
@@ -88,10 +88,10 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
 
     # Extend rainfed and cropland cover data to all years, 1700-2010
     # Note: 1700, 1750, 1800, 1850, 1900, and 1950 are all zero; and this interpolation fills 1700-1970 with zeros, but no missing elsewhere.
-    id_list <- L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU %>%
+    L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU %>%
       select(GCAM_region_ID, GCAM_commodity, GLU) %>%
-      unique()
-    all_years <- tibble(year = seq(1700, max(HISTORICAL_YEARS)))
+      unique() -> id_list
+    tibble(year = seq(1700, max(HISTORICAL_YEARS))) -> all_years
     id_list %>%
       repeat_add_columns(all_years) %>%
       left_join(L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year")) %>%
