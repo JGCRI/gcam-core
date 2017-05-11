@@ -138,6 +138,7 @@ modeltime.HECTOR_EMISSIONS_YEAR <- 2005
 modeltime.HECTOR_INI_FILE <- "../input/climate/hector-gcam.ini"
 
 # ======================================================================
+
 #Set a default electric efficiency
 DEFAULT_ELECTRIC_EFFICIENCY <- 0.33
 
