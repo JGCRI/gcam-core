@@ -14,7 +14,7 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_aglu_LB141.ag_Fert_IFA_ctry_crop_DISABLED <- function(command, ...) {
+module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "aglu/FAO_ag_items_PRODSTAT",
              FILE = "common/iso_GCAM_regID",
@@ -74,7 +74,14 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L141.ag_Fert_Cons_MtN_ctry_crop") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("aglu/FAO_ag_items_PRODSTAT",
+                     "common/iso_GCAM_regID",
+                     "aglu/AGLU_ctry",
+                     "L100.LDS_ag_HA_ha",
+                     "L101.ag_HA_bm2_R_C_Y",
+                     "L102.ag_HA_bm2_R_C_GLU",
+                     "aglu/IFA2002_Fert_ktN",
+                     "aglu/IFA_Fert_ktN") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L141.ag_Fert_Cons_MtN_ctry_crop
