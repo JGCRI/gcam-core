@@ -19,7 +19,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author BBL May 2017
-#' @export
 module_aglu_LB134.Diet_Rfao <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "aglu/A_FoodDemand_SSPs",
@@ -270,40 +269,35 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
         left_join_error_no_match(A_FoodDemand_SSPs, by = c("scenario", "GCAM_demand")) ->
         ssp_gdp
 
-      # Project values for the future, capping both maximum annual change (ratio)
-      # and absolute value based on values in A_FoodDemand_SSPs
-      ssp_gdp %>%
-        filter(year %in% FUTURE_YEARS & demand == "meat") %>%
-        arrange(GCAM_demand, GCAM_region_ID, desc(year)) %>%
-        group_by(GCAM_demand, GCAM_region_ID) %>%
-        mutate(ratio = value / lead(value),
-               ratio = pmin(ratio, max.mult),
-               value = ratio * lead(value),
-               value = pmin(value, satiation.level)) %>%
-        bind_rows(filter(ssp_gdp, ! (year %in% FUTURE_YEARS & demand == "meat"))) %>%
-        select(GCAM_region_ID, GCAM_demand, year, value) -> df
+      # Cap future values, both maximum annual change (ratio)
+      # and absolute value, based on values in A_FoodDemand_SSPs
+      # Because of the dependencies involved, I couldn't figure out a way
+      # not to use a loop here.
 
-      # The old code has a bug: in line 168 a loop starts without correctly
-      # resetting the `prev_i` variable; as a result, if the value in the
-      # final historical year is 0, 'NaN' is written to all future years
-      # -- but only for meat. We replicate this craptastic behavior below.
-      # (The code above correctly fills in zeroes in this case.)
-      if(OLD_DATA_SYSTEM_BEHAVIOR && demand == "meat") {
-        df %>%
-          group_by(GCAM_region_ID) %>%
-          mutate(value = if_else(year %in% FUTURE_YEARS &
-                                   value[which(year == max(HISTORICAL_YEARS))] == 0,
-                                 NaN, value)) ->
-          df
+      # Note that the old code has a bug: in line 168 a loop starts without
+      # correctly resetting the `prev_i` variable; as a result, if the value in
+      # the final historical year is 0, incorrect values get written to all future
+      # years -- but only for meat. We replicate this craptastic behavior below.
+      if(OLD_DATA_SYSTEM_BEHAVIOR) {
+        prev_yr <- max(FUTURE_YEARS)  # bug
+      } else {
+        prev_yr <- max(HISTORICAL_YEARS)
+      }
+      for(yr in sort(FUTURE_YEARS)) {
+        d <- filter(ssp_gdp, year == yr)
+        d_prev <- filter(ssp_gdp, year == prev_yr)
+        capped_ratio <- pmin(d$value / d_prev$value, d$max.mult)
+        capped_value <- pmin(d_prev$value * capped_ratio, d$satiation.level)
+        ssp_gdp$value[ssp_gdp$year == yr] <- capped_value
+        prev_yr <- yr
       }
 
-      # finally, replace any NAs with zeroes
-      df %>%
+      # Finally, replace any NAs with zeroes
+      ssp_gdp %>%
         ungroup %>%
+        select(GCAM_region_ID, GCAM_demand, year, value) %>%
         mutate(value = if_else(is.na(value), 0.0, value))
     }
-
-    # L102.pcgdp_thous90USD_Scen_R_Y is good here - differences are <10^-12
 
     L134.pcFood_est_R_Dmnd_Y_ssp1_crops <- create_ssp(L102.pcgdp_thous90USD_Scen_R_Y, "SSP1", "crops", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
     L134.pcFood_est_R_Dmnd_Y_ssp1_meat <- create_ssp(L102.pcgdp_thous90USD_Scen_R_Y, "SSP1", "meat", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
