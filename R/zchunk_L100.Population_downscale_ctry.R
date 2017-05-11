@@ -83,7 +83,7 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
       group_by(iso) %>%
       mutate(pop = approx_fun(year, pop)) %>%  # Interpolate -- note that there will still be missing values for countries that do not have end values (1500, 1600, or 1700)
       mutate(pop = if_else(is.na(pop) & year == 1800, pop[year == 1820], pop)) %>%  # Replace missing 1800 values with 1820 for countries that begin in 1820 (note that Panama has a value in 1820 = 0, not NA)
-      filter(year %in% socioeconomics.MADDISON_HISTORICAL_YEARS) # Keep only needed years
+      filter(year %in% c(socioeconomics.MADDISON_HISTORICAL_YEARS, min(socioeconomics.UN_HISTORICAL_YEARS))) # Keep only needed years
 
     # Fourth, assign population values to countries with missing values in historical years
     # Extract total world population for historic years

@@ -149,7 +149,8 @@ socioeconomics.FINAL_HIST_YEAR <- 2010 # Final historical year,
     # NOTE that we use this because it's also the first year of the SSP database.
     # Using a different year if the final historical year in the UN historical years changes would result in different SSP projections.
     # (Because the SSP scenarios begin to diverge in 2015, so we'd have to reconsider how we do the SSP scenarios if we update to UN 2015 population.)
-BASE_POP_SCENARIO <- "SSP2"
+socioeconomics.BASE_POP_SCEN <- "SSP2" # These are both being used in the data system by different files.
+BASE_POP_SCENARIO <- "SSP2" # These are both being used in the data system by different files.
 BASE_GDP_SCENARIO <- "SSP2"
 
 
