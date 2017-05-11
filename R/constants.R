@@ -100,7 +100,7 @@ CONV_HA_BM2 <- 1e-5
 CONV_THA_KGM2 <- 0.1   # tons C/ha -> kg C/m2
 CONV_GG_TG <- 0.001 # gigagrams to tegagrams
 CONV_TST_TG <- 0.000907 # thousand short tons to Tg
-CONV_MWH_GJ <- 3.6 # Convert Megawatt hours to Gigajoules
+CONV_MWH_GJ <- 3.6 # Megawatt hours to Gigajoules
 CONV_KG_TO_TG <- 1e-9
 
 # Cubic meters (m3) to billion cubic meters (bm3)
