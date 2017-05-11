@@ -56,7 +56,7 @@ module_energy_LA124.heat <- function(command, ...) {
     L1011.en_bal_EJ_R_Si_Fi_Yh  %>%
       filter(sector == "in_heat") %>%
       mutate(sector = sub("in_", "", sector)) %>%
-      left_join(enduse_fuel_aggregation, by="fuel") %>%
+      left_join(enduse_fuel_aggregation, by = "fuel") %>%
       select(GCAM_region_ID, sector, year, value, heat) %>%
       rename(fuel = heat) %>%
       group_by(fuel, sector, GCAM_region_ID, year) %>% # removed -> temp
@@ -73,7 +73,7 @@ module_energy_LA124.heat <- function(command, ...) {
       arrange(year) %>%
       group_by(technology, subsector, supplysector, minicam.energy.input)  %>%
       mutate(value = approx_fun(year, value)) %>%
-      left_join(distinct(calibrated_techs)) %>%
+      left_join(distinct(calibrated_techs), by = c("supplysector", "subsector", "technology", "minicam.energy.input")) %>%
       select(supplysector, subsector, technology, minicam.energy.input, year, value, sector, fuel) -> L124.globaltech_coef
 
     # Heat output: fuel inputs to heat divided by exogenous input-output coefficients
