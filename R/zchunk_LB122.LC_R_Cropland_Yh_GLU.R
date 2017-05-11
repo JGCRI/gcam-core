@@ -459,6 +459,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
     # soil carbon contents, and similar/small vegetative carbon contents, the net emissions signal should be negligible.
     # First, make a table with cropland in the pre-aglu years
     L120.LC_bm2_R_LT_Yh_GLU %>%
+      ungroup %>%
       # only save the years in pre-AGLU years:
       filter(year %in% PREAGLU_YEARS) %>% ungroup() %>%
       # insure that there is cropland for each GCAM region-glu that appear L122.LC_bm2_R_CropLand_Y_GLU:
@@ -467,15 +468,17 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       unique() %>%
       # join this historical cropland information to the region-glu-landtypes of L122.LC_bm2_R_CropLand_Y_GLU, preserving
       # NAs as in old DS:
-      left_join(unique(L122.LC_bm2_R_CropLand_Y_GLU[, colnames(L122.LC_bm2_R_CropLand_Y_GLU)
-                                                    %in% c("GCAM_region_ID", "GLU", "Land_Type")]), .,
-                by = c("GCAM_region_ID", "GLU", "Land_Type") ) %>%
+      left_join(
+          unique(select(L122.LC_bm2_R_CropLand_Y_GLU, GCAM_region_ID, GLU,
+                        Land_Type)),
+          .,
+          by = c("GCAM_region_ID", "GLU", "Land_Type") ) %>%
       # missing values are overwritten to 0:
       mutate(value = if_else(is.na(value), 0, value)) %>%
       # bind to the table of OtherArableLand information by region-glu-year:
       bind_rows(L122.LC_bm2_R_OtherArableLand_Y_GLU, .) %>%
       # update the landtype identifier
-      ungroup() %>% mutate(Land_Type = "OtherArableLand") ->
+      mutate(Land_Type = "OtherArableLand") ->
       # store in a table of OtherArableLand by region-glu-year, including historical years:
       L122.LC_bm2_R_OtherArableLand_Yh_GLU
 
@@ -498,6 +501,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
     # HarvCropLand is expanded to include historical years for each region-glu-commodity, with a value of 0.
     # Take HarvCropLand by region-commodity-glu-year:
     L122.LC_bm2_R_HarvCropLand_C_Y_GLU %>%
+      ungroup %>%
       # expand to include history years and fill in those values to be 0:
       tidyr::complete(year = c(PREAGLU_YEARS, AGLU_HISTORICAL_YEARS),
                       nesting(GCAM_region_ID, GCAM_commodity, GLU, Land_Type),
