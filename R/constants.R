@@ -73,12 +73,6 @@ MAX_HA_TO_CROPLAND <- 3
 
 
 # ======================================================================
-# socioeconomics constants
-BASE_POP_SCENARIO <- "SSP2"
-BASE_GDP_SCENARIO <- "SSP2"
-
-
-# ======================================================================
 # energy constants
 
 # At present the CO2 emissions inventory from CDIAC stops at 2009
@@ -142,7 +136,6 @@ modeltime.HECTOR_INI_FILE <- "../input/climate/hector-gcam.ini"
 DEFAULT_ELECTRIC_EFFICIENCY <- 0.33
 
 # ======================================================================
-# Set a default electric efficiency
 ELECTRICITY_INPUT_FUELS<- c( "biomass", "coal", "gas", "refined liquids" )
 
 # ======================================================================
@@ -156,7 +149,8 @@ socioeconomics.FINAL_HIST_YEAR <- 2010 # Final historical year,
     # NOTE that we use this because it's also the first year of the SSP database.
     # Using a different year if the final historical year in the UN historical years changes would result in different SSP projections.
     # (Because the SSP scenarios begin to diverge in 2015, so we'd have to reconsider how we do the SSP scenarios if we update to UN 2015 population.)
-socioeconomics.BASE_POP_SCEN <- "SSP2"
+BASE_POP_SCENARIO <- "SSP2"
+BASE_GDP_SCENARIO <- "SSP2"
 
 
 # ======================================================================
