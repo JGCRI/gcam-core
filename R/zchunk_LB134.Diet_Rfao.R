@@ -267,16 +267,40 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
                value = if_else(year > max(HISTORICAL_YEARS), ratio * nth(value, which(year == max(HISTORICAL_YEARS))), value)) %>%
         # ensure the year-to-year change, and absolute values, don't exceed certain levels (given in 'A_FoodDemand_SSPs')
         mutate(scenario = scen) %>%
-        left_join_error_no_match(A_FoodDemand_SSPs, by = c("scenario", "GCAM_demand")) %>%
-        arrange(GCAM_region_ID, GCAM_demand, desc(year)) %>%
-        group_by(GCAM_region_ID, GCAM_demand) %>%
+        left_join_error_no_match(A_FoodDemand_SSPs, by = c("scenario", "GCAM_demand")) ->
+        ssp_gdp
+
+      # Project values for the future, capping both maximum annual change (ratio)
+      # and absolute value based on values in A_FoodDemand_SSPs
+      ssp_gdp %>%
+        filter(year %in% FUTURE_YEARS & demand == "meat") %>%
+        arrange(GCAM_demand, GCAM_region_ID, desc(year)) %>%
+        group_by(GCAM_demand, GCAM_region_ID) %>%
         mutate(ratio = value / lead(value),
                ratio = pmin(ratio, max.mult),
-               newvalue = ratio * lead(value),
-               value = pmin(value, satiation.level),
-               # finally, replace any NAs with zeroes
-               value = if_else(is.na(value), 0.0, value)) %>%
-        select(GCAM_region_ID, GCAM_demand, year, value)
+               value = ratio * lead(value),
+               value = pmin(value, satiation.level)) %>%
+        bind_rows(filter(ssp_gdp, ! (year %in% FUTURE_YEARS & demand == "meat"))) %>%
+        select(GCAM_region_ID, GCAM_demand, year, value) -> df
+
+      # The old code has a bug: in line 168 a loop starts without correctly
+      # resetting the `prev_i` variable; as a result, if the value in the
+      # final historical year is 0, 'NaN' is written to all future years
+      # -- but only for meat. We replicate this craptastic behavior below.
+      # (The code above correctly fills in zeroes in this case.)
+      if(OLD_DATA_SYSTEM_BEHAVIOR && demand == "meat") {
+        df %>%
+          group_by(GCAM_region_ID) %>%
+          mutate(value = if_else(year %in% FUTURE_YEARS &
+                                   value[which(year == max(HISTORICAL_YEARS))] == 0,
+                                 NaN, value)) ->
+          df
+      }
+
+      # finally, replace any NAs with zeroes
+      df %>%
+        ungroup %>%
+        mutate(value = if_else(is.na(value), 0.0, value))
     }
 
     # L102.pcgdp_thous90USD_Scen_R_Y is good here - differences are <10^-12
