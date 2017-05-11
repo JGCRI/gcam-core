@@ -10,7 +10,7 @@ context("timeshift")
 if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
 
   test_that("chunks handle timeshift", {
-
+skip("test-is this causing Travis 'pure virtual method called' error?")
     hy <- HISTORICAL_YEARS
     HISTORICAL_YEARS <<- HISTORICAL_YEARS + 1
     ahy <- AGLU_HISTORICAL_YEARS
