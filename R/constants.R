@@ -105,12 +105,7 @@ CONV_KG_TO_TG <- 1e-9
 # Cubic meters (m3) to billion cubic meters (bm3)
 CONV_M3_BM3 <- 1e-09
 CONV_MILLION_M3_KM3 <- 1e-03
-
-
-
 CONV_M2_ACR <- 0.0002471058
-
-
 
 # ======================================================================
 # Driver constants
@@ -148,6 +143,7 @@ DEFAULT_ELECTRIC_EFFICIENCY <- 0.33
 # Set a default electric efficiency
 ELECTRICITY_INPUT_FUELS<- c( "biomass", "coal", "gas", "refined liquids" )
 STUBTECHYR <- c( "GCAM_region_ID", "supplysector", "subsector", "stub.technology", "xyear" )
+
 # ======================================================================
 # socioeconomics constants
 
@@ -156,7 +152,6 @@ STUBTECHYR <- c( "GCAM_region_ID", "supplysector", "subsector", "stub.technology
 socioeconomics.MADDISON_HISTORICAL_YEARS <- seq(1700, 1900, 50) # Years for which to use Maddison data
 socioeconomics.UN_HISTORICAL_YEARS <- c(1950, 1971:2010) # Years for which to use UN data
 socioeconomics.BASE_POP_SCEN <- "SSP2"
-
 
 # ======================================================================
 # water constants
@@ -167,7 +162,6 @@ MAPPED_WATER_TYPES_SHORT <- c("C", "W")
 names(MAPPED_WATER_TYPES_SHORT) <- MAPPED_WATER_TYPES
 DEFAULT_UNLIMITED_WATER_PRICE <- 0
 DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.001
-
 
 # ======================================================================
 # emissions constants

@@ -1,6 +1,6 @@
 #' module_emissions_L251.en_ssp_nonco2
 #'
-#' This chunk produces regional non-CO2 emissions coefficient data for SSPs 1/5, 2, and 3/4 as well as a GDP control.
+#' This chunk produces regional non-CO2 emissions coefficient data for SSPs 1.5, 2, and 3.4 as well as a GDP control.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L251.ctrl.delete}, \code{L251.ssp15_ef}, \code{L251.ssp2_ef}, \code{L251.ssp34_ef}, \code{L251.ssp15_ef_vin}, \code{L251.ssp2_ef_vin}, \code{L251.ssp34_ef_vin}. The corresponding file in the
 #' original data system was \code{L251.en_ssp_nonco2.R} (emissions level2).
-#' @details This section takes in the non-CO2 emissions factors for SSP 1.5, 2, and 3/4 across sectors.
+#' @details This section takes in the non-CO2 emissions factors for SSP 1.5, 2, and 3.4 across sectors.
 #' First, create data that spans the years 2010-2100 in five year increments by interpolation of input data.
 #' Next, add emissions controls for future years of vintaged technologies for SSP emission factors.
 #' Then, add columns that have regional SO2 emission species.
@@ -61,7 +61,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
 
     # ===================================================
 
-# This section takes in the non-CO2 emissions factors for SSP 1/5, 2, and 3/4 across sectors and
+# This section takes in the non-CO2 emissions factors for SSP 1.5, 2, and 3.4 across sectors and
 # interpolates across years 2010-2100 in 5 year segments.
 
     L161.SSP15_EF %>%
@@ -211,9 +211,9 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
       add_precursors("temp-data-inject/L161.SSP2_EF","temp-data-inject/L201.nonghg_steepness","emissions/A_regions") ->
       L251.ctrl.delete
     L251.ssp15_ef %>%
-      add_title("Regional non-CO2 emissions coefficient data for SSP 1/5.") %>%
+      add_title("Regional non-CO2 emissions coefficient data for SSP 1.5.") %>%
       add_units("Tg / EJ") %>%
-      add_comments("First, the non-CO2 emissions factors for SSP 1/5 are interpolated across years 2010-2100 in 5 year segments.") %>%
+      add_comments("First, the non-CO2 emissions factors for SSP 1.5 are interpolated across years 2010-2100 in 5 year segments.") %>%
       add_comments("Then, regional non-CO2 emission species information is added.") %>%
       add_legacy_name("L251.ssp15_ef") %>%
       add_precursors("temp-data-inject/L161.SSP15_EF","emissions/A_regions") ->
@@ -229,18 +229,18 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
       #add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L251.ssp2_ef
     L251.ssp34_ef %>%
-      add_title("Regional non-CO2 emissions coefficient data for SSP 3/4.") %>%
+      add_title("Regional non-CO2 emissions coefficient data for SSP 3.4.") %>%
       add_units("Tg / EJ") %>%
-      add_comments("First, the non-CO2 emissions factors for SSP 3/4 are interpolated across years 2010-2100 in 5 year segments.") %>%
+      add_comments("First, the non-CO2 emissions factors for SSP 3.4 are interpolated across years 2010-2100 in 5 year segments.") %>%
       add_comments("Then, regional non-CO2 emission species information is added.") %>%
       add_legacy_name("L251.ssp34_ef") %>%
       add_precursors("temp-data-inject/L161.SSP34_EF","emissions/A_regions") ->
       #add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L251.ssp34_ef
     L251.ssp15_ef_vin %>%
-      add_title("Regional SO2 emissions coefficient data of vintaged technologies for SSP 1/5.") %>%
+      add_title("Regional SO2 emissions coefficient data of vintaged technologies for SSP 1.5.") %>%
       add_units("Tg / EJ") %>%
-      add_comments("First, the non-CO2 emissions factors for SSP 1/5 are interpolated across years 2010-2100 in 5 year segments.") %>%
+      add_comments("First, the non-CO2 emissions factors for SSP 1.5 are interpolated across years 2010-2100 in 5 year segments.") %>%
       add_comments("Then, emissions controls are added for future years of vintaged technologies for SSP emission factors.") %>%
       add_comments("Finally, regional non-CO2 emission species information is added.") %>%
       add_legacy_name("L251.ssp15_ef_vin") %>%
@@ -258,9 +258,9 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
       #add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L251.ssp2_ef_vin
     L251.ssp34_ef_vin %>%
-      add_title("Regional non-CO2 emissions coefficient data of vintaged technologies for SSP 3/4.") %>%
+      add_title("Regional non-CO2 emissions coefficient data of vintaged technologies for SSP 3.4.") %>%
       add_units("Tg / EJ") %>%
-      add_comments("First, the non-CO2 emissions factors for SSP 3/4 are interpolated across years 2010-2100 in 5 year segments.") %>%
+      add_comments("First, the non-CO2 emissions factors for SSP 3.4 are interpolated across years 2010-2100 in 5 year segments.") %>%
       add_comments("Then, emissions controls are added for future years of vintaged technologies for SSP emission factors.") %>%
       add_comments("Finally, regional non-CO2 emission species information is added.") %>%
       add_legacy_name("L251.ssp34_ef_vin") %>%
