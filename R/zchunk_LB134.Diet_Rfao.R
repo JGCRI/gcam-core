@@ -19,7 +19,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author BBL May 2017
-#' @export
 module_aglu_LB134.Diet_Rfao <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "aglu/A_FoodDemand_SSPs",
