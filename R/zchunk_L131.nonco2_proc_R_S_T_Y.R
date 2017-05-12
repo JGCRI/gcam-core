@@ -21,8 +21,8 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "common/iso_GCAM_regID",
              FILE = "emissions/EDGAR/EDGAR_sector",
-             FILE = "emissions/EPA_ghg_tech",
-             FILE = "emissions/GCAM_sector_tech",
+             FILE = "emissions/mappings/EPA_ghg_tech",
+             FILE = "emissions/mappings/GCAM_sector_tech",
              "EDGAR_gases",
              FILE = "emissions/EPA_FCCC_IndProc_2005"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -36,8 +36,8 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     EDGAR_sector <- get_data(all_data, "emissions/EDGAR/EDGAR_sector")
-    EPA_ghg_tech <- get_data(all_data, "emissions/EPA_ghg_tech")
-    GCAM_sector_tech <- get_data(all_data, "emissions/GCAM_sector_tech")
+    EPA_ghg_tech <- get_data(all_data, "emissions/mappings/EPA_ghg_tech")
+    GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
     EPA_Ind <- get_data(all_data, "emissions/EPA_FCCC_IndProc_2005")
     EDGAR_gases <- get_data(all_data, "EDGAR_gases")
 
@@ -140,8 +140,8 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
       add_precursors("common/GCAM_region_names",
                      "common/iso_GCAM_regID",
                      "emissions/EDGAR/EDGAR_sector",
-                     "emissions/EPA_ghg_tech",
-                     "emissions/GCAM_sector_tech",
+                     "emissions/mappings/EPA_ghg_tech",
+                     "emissions/mappings/GCAM_sector_tech",
                      "EDGAR_gases",
                      "emissions/EPA_FCCC_IndProc_2005") %>%
       add_flags(FLAG_SUM_TEST,FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
