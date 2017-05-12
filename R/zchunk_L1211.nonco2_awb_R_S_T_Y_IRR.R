@@ -15,6 +15,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
+#' @importFrom data.table data.table
 #' @author CDL April 2017
 module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -83,14 +84,16 @@ module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR <- function(command, ...) {
     # Multiply emissions by region/GLU/crop/nonCO2 by irr/rfd production shares
     # Non-CO2 emissions by R_C_GLU_irr = non-CO2 emissions by R_C_GLU * irrShare
     L121.nonco2_tg_R_awb_C_Y_GLU %>%
+      ## Need to filter for historical years to ensure the join will work, ie. there will be a 1 to 1 match
+      ## Note this step was NOT in the original data system
+      filter(year %in% dplyr::intersect(HISTORICAL_YEARS, emissions.EDGAR_YEARS)) %>%
       repeat_add_columns(tibble::tibble(Irr_Rfd = c("IRR", "RFD") )) %>%
-      # Need to filter for historical years to ensure the join will work, ie. there will be a 1 to 1 match
-      # Note this step was NOT in the original data system
-      filter(year %in% HISTORICAL_YEARS) %>%
-      left_join_error_no_match(L1211.ag_irrShare_R_C_Y_GLU_irr, by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year", "Irr_Rfd")) %>%
+      fast_left_join(L1211.ag_irrShare_R_C_Y_GLU_irr,
+                     by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year",
+                     "Irr_Rfd")) %>%
+      rename(value.x = i.value, value.y = value) %>%
       mutate(value = value.x * value.y) %>%
-      select(-value.x, -value.y) %>%
-      filter(year %in% emissions.EDGAR_YEARS) ->
+      select(-value.x, -value.y) ->
       L1211.nonco2_tg_R_awb_C_Y_GLU_IRR
 
     # ===================================================

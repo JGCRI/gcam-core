@@ -120,7 +120,14 @@ fast_left_join <- function(left, right, by) {
     assert_that(is.data.frame(left))
     assert_that(is.data.frame(right))
 
-    dtl <- data.table(left, key=by)
+    ## To key or not to key?  A key is required for the right table, but it is
+    ## optional for the left, *provided* that the join columns are in order and
+    ## come before the non-join columns.  Keying takes time, but it makes the
+    ## join eventually go a little faster.  In the one example we have, it
+    ## keying the left table doesn't seem to pay for itself in the join, but
+    ## it's possible that depends on the specifics of the input.  For now we
+    ## *won't* key, instead opting to reorder the columns of the left table.
+    dtl <- data.table(left[ , union(by, names(left))])
     dtr <- data.table(right, key=by)
 
     as.tibble(dtr[dtl, allow.cartesian=TRUE])
