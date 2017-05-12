@@ -1,6 +1,6 @@
 #' module_emissions_L102.ghg_en_USA_S_T_Y
 #'
-#' Briefly describe what this chunk does.
+#' Calculates CH4 and N2O emission factors derived from EPA GHG inventory and GCAM energy balances for the US in 2005.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,12 +8,11 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L102.ghg_tgej_USA_en_Sepa_F_2005}. The corresponding file in the
 #' original data system was \code{L102.ghg_en_USA_S_T_Y.R} (emissions level1).
-#' @details Describe in detail what this chunk does.
+#' @details Divides CH4 and N2O emissions from EPA GHG inventory by GCAM energy sector activity to get emissions factors for a single historical year 2005 in the US.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author HCM April 2017
-#' @export
 module_emissions_L102.ghg_en_USA_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
@@ -35,7 +34,10 @@ module_emissions_L102.ghg_en_USA_S_T_Y <- function(command, ...) {
     IEA_product_fuel <- get_data(all_data, "energy/mappings/IEA_product_fuel")
     EPA_ghg_tech <- get_data(all_data, "emissions/EPA_ghg_tech")
     GCAM_sector_tech <- get_data(all_data, "emissions/GCAM_sector_tech")
-    L101.in_EJ_R_en_Si_F_Yh <- get_data(all_data, "L101.in_EJ_R_en_Si_F_Yh")
+    get_data(all_data, "L101.in_EJ_R_en_Si_F_Yh") %>%
+      gather(year, energy, -sector, -fuel, -technology, -GCAM_region_ID) %>%
+      mutate(year = as.integer(year)) ->
+      L101.in_EJ_R_en_Si_F_Yh
     EPA_FCCC_GHG_2005 <- get_data(all_data, "emissions/EPA_FCCC_GHG_2005")
 
     # Convert EPA GHG emissions inventory to Tg and aggregate by sector and fuel
@@ -51,29 +53,25 @@ module_emissions_L102.ghg_en_USA_S_T_Y <- function(command, ...) {
       L102.ghg_tg_USA_en_Sepa_F_2005 # GHG balance in 2005
 
     if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    # incorrect fuel name for transport from input mapping.
-    # organize energy balances in USA 2005
-        L101.in_EJ_R_en_Si_F_Yh %>% # start from energy balances
-        filter(GCAM_region_ID == gcam.USA_CODE) %>% # USA region only
-        select(-GCAM_region_ID) %>%
-        gather(variable, energy, -sector, -fuel, -technology) %>%
-        filter(variable == "X2005") %>%  # 2005 data only
+      # incorrect fuel name for transport from input mapping.
+      # organize energy balances in USA 2005
+      L101.in_EJ_R_en_Si_F_Yh %>% # start from energy balances
+        filter(GCAM_region_ID == gcam.USA_CODE, year == 2005) %>% # 2005 USA data only
+        select(-GCAM_region_ID, -year) %>%
         left_join_keep_first_only(select(GCAM_sector_tech, sector, fuel, EPA_agg_sector, EPA_agg_fuel_ghg),
-                    by = c("sector", "fuel")) %>% # assign aggregate sector and fuel names
+                                  by = c("sector", "fuel")) %>% # assign aggregate sector and fuel names
         group_by(EPA_agg_sector, EPA_agg_fuel_ghg) %>%
         summarize_if(is.numeric, sum) -> # sum by aggregate sector and fuel
         L102.in_EJ_USA_en_Sepa_F_2005 # energy balance in 2005
 
     } else {
-      # fool proof solution is to use both fuel and technology for categorization.
+      # foolproof solution is to use both fuel and technology for categorization.
       # organize energy balances in USA 2005
       L101.in_EJ_R_en_Si_F_Yh %>% # start from energy balances
-        filter(GCAM_region_ID == gcam.USA_CODE) %>% # USA region only
-        select(-GCAM_region_ID) %>%
-        gather(variable, energy, -sector, -fuel, -technology) %>%
-        filter(variable == "X2005") %>%  # 2005 data only
+        filter(GCAM_region_ID == gcam.USA_CODE, year == 2005) %>% # 2005 USA data only
+        select(-GCAM_region_ID, -year) %>%
         left_join(select(GCAM_sector_tech, sector, fuel, technology, EPA_agg_sector, EPA_agg_fuel_ghg),
-                   by = c("sector", "fuel", "technology")) %>% # assign aggregate sector and fuel names
+                  by = c("sector", "fuel", "technology")) %>% # assign aggregate sector and fuel names
         group_by(EPA_agg_sector, EPA_agg_fuel_ghg) %>%
         summarize_if(is.numeric, sum) -> # sum by aggregate sector and fuel
         L102.in_EJ_USA_en_Sepa_F_2005 # energy balance in 2005
