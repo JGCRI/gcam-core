@@ -53,7 +53,7 @@ module_socioeconomics_L242.Bld_Inc_Elas_scenarios <- function(command, ...) {
                                         xout = pcgdp_90thousUSD,
                                         # Rule 2 means that data outside of the interval of input
                                         # data will be assigned the cloest data extreme
-                                        rule = 2)$y %>% round(3),
+                                        rule = 2)[['y']] %>% round(3),
              energy.final.demand = "building") %>%
       select(scenario, region, energy.final.demand, year, income.elasticity) %>%
       arrange(year)
