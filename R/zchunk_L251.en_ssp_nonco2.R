@@ -17,7 +17,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author CDL May 2017
-
+#' @export
 module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "emissions/A_regions",
@@ -78,7 +78,9 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
       # Emission coefficients values are too long, so we round to the 10th decimal point.
       mutate(emiss.coeff = round(value, 10)) %>%
       ungroup() %>%
-      # Discard columns that are not needed.
+      # Discard columns that are not needed.  Resulting table retains 7 columns.
+      # Columns include "region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", and "emiss.coeff".
+      # This applies to the next 2 tables as well.
       select(-MAC_region, -bio_N2O_coef, -SO2_name, -GAINS_region, -GCAM_region_ID, -agg_sector, -value) ->
     L251.ssp15_ef
 
@@ -121,7 +123,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
 # Create a control table where year 2010 is the control period and renamed 1975, discarding all other years.
      L251.ssp2_ef %>%
       select(-emiss.coeff) %>%
-      subset(year == min(year)) %>%
+      filter(year == min(year)) %>%
       mutate(year = 1975,
              ctrl.name ="GDP_control") ->
       L251.ctrl.delete
@@ -129,7 +131,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
 # This section adds emissions controls for future years of vintaged technologies for SSP emission factors.
      L251.ssp15_ef %>%
        # Isolate the "electricity" supply sector.
-       subset(supplysector == "electricity") %>%
+       filter(supplysector == "electricity") %>%
        # Create 2 new columns for future emission factors.
        # Future emission coefficient year is based on pre-existing "year" column.
        # Future emission coefficient name is a descriptor, and is constant.
@@ -141,7 +143,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
 
      L251.ssp2_ef %>%
        # Isolate the "electricity" supply sector.
-       subset(supplysector == "electricity") %>%
+       filter(supplysector == "electricity") %>%
        # Create 2 new columns for future emission factors.
        # Future emission coefficient year is based on pre-existing "year" column.
        # Future emission coefficient name is a descriptor, and is constant.
@@ -153,7 +155,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
 
      L251.ssp34_ef %>%
        # Isolate the "electricity" supply sector.
-       subset(supplysector == "electricity") %>%
+       filter(supplysector == "electricity") %>%
        # Create 2 new columns for future emission factors.
        # Future emission coefficient year is based on pre-existing "year" column.
        # Future emission coefficient name is a descriptor, and is constant.
@@ -172,8 +174,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
      L251.ssp2_ef_vin <- rename_SO2( L251.ssp2_ef_vin, A_regions, FALSE )
      L251.ssp34_ef_vin <- rename_SO2( L251.ssp34_ef_vin, A_regions, FALSE )
 
-# This section deletes GDP control functions that exist for the supply sector in all
-# regions for non-CO2 emission species for the 1975 control period.
+# This section deletes GDP control functions that exist for the 1975 control period.
      L251.ctrl.delete %>%
        semi_join(L201.nonghg_steepness,
                  by = c("region", "supplysector", "subsector", "stub.technology", "Non.CO2")) ->
@@ -185,7 +186,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
 
     L251.ctrl.delete %>%
       add_title("GDP control of regional non-CO2 emissions.") %>%
-      add_units("NA") %>%
+      add_units("unitless") %>%
       add_comments("Make year 2010 the control period in creation of GDP control data.") %>%
       add_comments("Then, created a new column for data that has regional non-CO2 emission species.") %>%
       add_comments("Then, delete GDP control functions that exist.") %>%
