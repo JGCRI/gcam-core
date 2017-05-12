@@ -73,7 +73,7 @@ module_water_L210.water.demand.primary <- function(command, ...) {
       L210.TechCoef.v2[rep(1:L210.orig_num_rows, times=length(MODEL_YEARS)),] %>%
         mutate(year = MODEL_YEARS[sort(rep(1:length(MODEL_YEARS), times=L210.orig_num_rows))]) %>%
         select(one_of(names_TechCoef)) -> results
-    }
+
 
     # Produce outputs
     results %>%
@@ -91,4 +91,4 @@ module_water_L210.water.demand.primary <- function(command, ...) {
   } else {
     stop("Unknown command")
   }
-
+}
