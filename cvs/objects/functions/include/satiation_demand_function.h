@@ -137,11 +137,11 @@ protected:
         //! The satiation level to use during calcDemand.  This could have been read
         //! in directly by the user or set as a percentage increase from the base year
         //! demand.
-        DEFINE_VARIABLE( SIMPLE, "satiation-level", mSatiationLevel, Value ),
+        DEFINE_VARIABLE( SIMPLE | STATE, "satiation-level", mSatiationLevel, Value ),
 
         //! Satiation impedance or midpoint demand driver.  Note that this value is
         //! calibrated via calibrateSatiationImpedance.
-        DEFINE_VARIABLE( SIMPLE, "satiation-impedance", mSatiationImpedance, Value ),
+        DEFINE_VARIABLE( SIMPLE | STATE, "satiation-impedance", mSatiationImpedance, Value ),
 
         //! Satiation adder, determines subsistence level.  This is the parsed value
         //! and will not change.
@@ -149,7 +149,7 @@ protected:
 
         //! Satiation adder, determines subsistence level.  This value may be adjusted
         //! from the parsed value during some calibration periods.
-        DEFINE_VARIABLE( SIMPLE, "satiation-adder", mSatiationAdder, Value )
+        DEFINE_VARIABLE( SIMPLE | STATE, "satiation-adder", mSatiationAdder, Value )
     )
     
     void copy( const SatiationDemandFunction& aOther );

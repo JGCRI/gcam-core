@@ -208,8 +208,9 @@ void DepletingFixedResource::initCalc( const string& aRegionName,
         // trapezoidal area formed by the previous annual production and the
         // current annual production.
         // Cumulative(t) = Cumulative(t-1) + 1/2 * (Annual(t) - Annual(t-1))* timestep.
-        mFixedResource -= ( .5 * ( depletedResourceAnnual  - depletedResourcePrevAnnual ) + depletedResourcePrevAnnual )
-            * scenario->getModeltime()->gettimestep( aPeriod - 1 );
+        Value cumulDepletion( ( .5 * ( depletedResourceAnnual  - depletedResourcePrevAnnual ) + depletedResourcePrevAnnual )
+            * scenario->getModeltime()->gettimestep( aPeriod - 1 ) );
+        mFixedResource -= cumulDepletion;
 
         // check for overuse of the resource which may happen due to no formal
         // constraint in the extraction of this resource

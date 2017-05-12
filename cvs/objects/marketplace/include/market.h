@@ -52,6 +52,7 @@
 #include "marketplace/include/imarket_type.h"
 #include "util/base/include/iyeared.h"
 #include "util/base/include/ivisitable.h"
+#include "util/base/include/value.h"
 #include "util/base/include/data_definition_util.h"
 
 #if GCAM_PARALLEL_ENABLED
@@ -195,7 +196,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "solved_Market_Flag", mSolveMarket, bool ),
         
         //! The market price.
-        DEFINE_VARIABLE( SIMPLE, "price", mPrice, double ),
+        DEFINE_VARIABLE( SIMPLE | STATE, "price", mPrice, Value ),
         
         //! The stored market price.
         DEFINE_VARIABLE( SIMPLE, "storedPrice", mStoredPrice, double ),
@@ -214,7 +215,7 @@ protected:
         // have to make this mutable because tbb::combinable::combine is not const
         DEFINE_VARIABLE( SIMPLE, "demand", mDemand, mutable tbb::combinable<double> ),
 #else*/
-        DEFINE_VARIABLE( SIMPLE, "demand", mDemand, double ),
+        DEFINE_VARIABLE( SIMPLE | STATE, "demand", mDemand, Value ),
 //#endif
         
         //! The stored demand.
@@ -225,7 +226,7 @@ protected:
         // have to make this mutable because tbb::combinable::combine is not const
         DEFINE_VARIABLE( SIMPLE, "supply", mSupply, mutable tbb::combinable<double> ),
 #else*/
-        DEFINE_VARIABLE( SIMPLE, "supply", mSupply, double ),
+        DEFINE_VARIABLE( SIMPLE | STATE, "supply", mSupply, Value ),
 //#endif
         
         //! The stored supply.

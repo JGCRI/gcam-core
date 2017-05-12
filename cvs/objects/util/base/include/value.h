@@ -58,6 +58,7 @@
 */
 
 class Value {
+    friend class ManageStateVariables;
     /*!
      * \brief Output stream operator to print a Value.
      * \details Output stream operators allow classes to be printed using the <<
@@ -89,16 +90,23 @@ public:
     };
 
     Value();
-    Value( const double aValue, const Unit aUnit = DEFAULT );
+    explicit Value( const double aValue, const Unit aUnit = DEFAULT );
     void init( const double aNewValue, const Unit aUnit = DEFAULT );
     void set( const double aNewValue, const Unit aUnit = DEFAULT );
     operator double() const;
     double get() const;
     bool isInited() const;
+    void setCopyState( const bool aIsStateCopy );
     Value& operator+=( const Value& aValue );
     Value& operator-=( const Value& aValue );
     Value& operator*=( const Value& aValue );
     Value& operator/=( const Value& aValue );
+    Value& operator=( const Value& aValue );
+    Value& operator+=( const double& aValue );
+    Value& operator-=( const double& aValue );
+    Value& operator*=( const double& aValue );
+    Value& operator/=( const double& aValue );
+    Value& operator=( const double& aDblValue );
 
     // XML Function here.
 private:
@@ -106,11 +114,19 @@ private:
     std::istream& read( std::istream& aIStream );
 
     double mValue;
+    static double** mAltValue;
+    size_t mAltValueIndex;
     bool mIsInit;
+    static bool* mIsPartialDeriv;
     Unit mUnit;
+    bool mIsStateCopy;
+    
+    //void doCheck() const;
+    double& getInternal();
+    const double& getInternal() const;
 };
 
-inline Value::Value(): mValue( 0 ), mIsInit( false ), mUnit( DEFAULT ){}
+inline Value::Value(): mValue( 0 ), mIsInit( false ), mUnit( DEFAULT ), mIsStateCopy( false ){}
 
 /*! 
  * \brief Create a value from a double and a unit.
@@ -120,7 +136,8 @@ inline Value::Value(): mValue( 0 ), mIsInit( false ), mUnit( DEFAULT ){}
 inline Value::Value( const double aValue, const Unit aUnit ):
 mValue( aValue ),
 mIsInit( true ),
-mUnit( aUnit )
+mUnit( aUnit ),
+mIsStateCopy( false )
 {
 }
 
@@ -134,17 +151,30 @@ inline void Value::init( const double aNewValue, const Unit aUnit ){
     }
 }
 
+inline double& Value::getInternal() {
+    return mIsStateCopy ? mAltValue[/*(size_t)*mIsPartialDeriv*/ *mIsPartialDeriv ? 1 : 0 ][mAltValueIndex] : mValue;
+}
+
+inline const double& Value::getInternal() const {
+    return mIsStateCopy ? mAltValue[/*(size_t)*mIsPartialDeriv*/ *mIsPartialDeriv ? 1 : 0 ][mAltValueIndex] : mValue;
+}
+
 //! Set the value.
 inline void Value::set( const double aNewValue, const Unit aUnit ){
     assert( util::isValidNumber( aNewValue ) );
-    mValue = aNewValue;
+    getInternal() = aNewValue;
     mUnit = aUnit;
     mIsInit = true;
+    //doCheck();
+}
+
+inline void Value::setCopyState(const bool aIsStateCopy) {
+    mIsStateCopy = aIsStateCopy;
 }
 
 //! Get the value.
 inline Value::operator double() const {
-    return mValue;
+    return getInternal();
 }
 
 /*!
@@ -154,7 +184,7 @@ inline Value::operator double() const {
  * \return The value.
  */
 inline double Value::get() const {
-    return mValue;
+    return getInternal();
 }
 
 /*! 
@@ -169,7 +199,8 @@ inline Value& Value::operator+=( const Value& aValue ){
 
     // Make sure the units match up.
     assert( mUnit == aValue.mUnit );
-    mValue += aValue.mValue;
+    getInternal() += aValue.getInternal();
+    //doCheck();
     return *this;
 }
 
@@ -185,7 +216,8 @@ inline Value& Value::operator-=( const Value& aValue ){
 
     // Make sure the units match up.
     assert( mUnit == aValue.mUnit );
-    mValue -= aValue.mValue;
+    getInternal() -= aValue.getInternal();
+    //doCheck();
     return *this;
 }
 
@@ -200,7 +232,8 @@ inline Value& Value::operator*=( const Value& aValue ){
 
     // Make sure the units match up.
     assert( mUnit == aValue.mUnit );
-    mValue *= aValue.mValue;
+    getInternal() *= aValue.getInternal();
+    //doCheck();
     return *this;
 }
 
@@ -216,7 +249,52 @@ inline Value& Value::operator/=( const Value& aValue ){
 
     // Make sure the units match up.
     assert( mUnit == aValue.mUnit );
-    mValue /= aValue.mValue;
+    getInternal() /= aValue.getInternal();
+    //doCheck();
+    return *this;
+}
+
+inline Value& Value::operator=( const Value& aValue ) {
+    getInternal() = aValue.getInternal();
+    mIsInit = aValue.mIsInit;
+    mUnit = aValue.mUnit;
+    /*
+    if( aValue.mIsStateCopy ) {
+        mAltValue = aValue.mAltValue;
+        mAltValueIndex = aValue.mAltValueIndex;
+        mIsPartialDeriv = aValue.mIsPartialDeriv;
+        mIsStateCopy = aValue.mIsStateCopy;
+    }*/
+    
+    return *this;
+}
+
+// TODO: supply these here or just make the users do it themselves
+inline Value& Value::operator+=( const double& aValue ) {
+    return operator+=( Value( aValue ) );
+}
+
+inline Value& Value::operator-=( const double& aValue ) {
+    return operator-=( Value( aValue ) );
+}
+
+inline Value& Value::operator*=( const double& aValue ) {
+    return operator*=( Value( aValue ) );
+}
+
+inline Value& Value::operator/=( const double& aValue ) {
+    return operator/=( Value( aValue ) );
+}
+
+/*!
+ * \breif An explicit assignment from type double which will just forward to the
+ *        set() method.
+ * \param aDblValue The value as double to try to set.
+ * \return This value by reference for chaining.
+ */
+inline Value& Value::operator=( const double& aDblValue ) {
+    set( aDblValue );
+    
     return *this;
 }
 

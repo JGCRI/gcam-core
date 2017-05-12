@@ -40,10 +40,14 @@
 #include "containers/include/iactivity.h"
 #include "util/base/include/util.h"
 #include "util/logger/include/ilogger.h"
+#include "containers/include/scenario.h"
+#include "util/base/include/manage_state_variables.hpp"
 
 #include "util/base/include/timer.h"
 
 #define UBVECTOR boost::numeric::ublas::vector 
+
+extern Scenario* scenario;
 
 const double LogEDFun::PMAX = 1.0e24;
 const double LogEDFun::ARGMAX = 55.262042; // log(PMAX)
@@ -53,7 +57,7 @@ LogEDFun::LogEDFun(SolutionInfoSet &sisin,
                    World *w, Marketplace *m, int per, bool aLogPricep) :
     mkts(sisin.getSolvableSet()),
     solnset(sisin),
-    world(w), mktplc(m), period(per), partj(-1),
+    world(w), mktplc(m), period(per), /*partj(-1),*/
     mLogPricep(aLogPricep)
 {
     na=nr=mkts.size();
@@ -107,7 +111,38 @@ void LogEDFun::scaleInitInputs(UBVECTOR<double> &ax)
 
 void LogEDFun::partial(int ip)
 {
-    partj = ip;
+    Timer& edfunAnResetTimer = TimerRegistry::getInstance().getTimer( TimerRegistry::EDFUN_AN_RESET );
+    edfunAnResetTimer.start();
+    //partj = ip;
+    if(ip >= 0) {
+        //ManageStateVariables collect( period );
+        //collect.collectState();
+        scenario->mManageStateVars->copyState();
+        // We are about to perform partial derviatives so store all market
+        // prices/supplies/demands so that we can snap back to them between
+        // each partial derivative calculation.
+        //solnset.storeValues();
+    }
+    else if(ip == -1 ) {
+        // reset flags
+        /*const std::vector<IActivity*>& affectedNodes = mkts[partj].getDependencies();
+        for( size_t nodeIndex = 0 ; nodeIndex < affectedNodes.size(); ++nodeIndex ) {
+            affectedNodes[ nodeIndex ]->setStale();
+        }
+        mktplc->mIsDerivativeCalc = false;
+        if(partj == (mkts.size() -1 )) {
+
+        }
+        partj = -1;
+         */
+        //ManageStateVariables collect( period );
+        
+        //collect.resetState();
+        mktplc->mIsDerivativeCalc = false;
+        //solnset.restoreValues();    // reset all markets to values stored above
+        
+    }
+    edfunAnResetTimer.stop();
 }
 
 
@@ -116,7 +151,7 @@ double LogEDFun::partialSize(int ip) const
   return double(mkts[ip].getDependencies().size()) / double(world->getGlobalOrderingSize());
 }
 
-void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx)
+void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx, const int partj)
 {
   assert(x.size() == mkts.size());
   assert(fx.size() == mkts.size());
@@ -190,12 +225,7 @@ void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx)
      * 1B Set the model inputs using the solutionInfo objects (partial derivative version)
      ****/ 
     mktplc->mIsDerivativeCalc = true;
-    if(partj == 0) {
-        // We are about to perform partial derviatives so store all market
-        // prices/supplies/demands so that we can snap back to them between
-        // each partial derivative calculation.
-        solnset.storeValues();
-    }
+
 
     if(mdiagnostic) {
       ILogger &solverlog = ILogger::getLogger("solver_log");
@@ -351,20 +381,6 @@ void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx)
   
   edfunPostTimer.stop();
 
-  Timer& edfunAnResetTimer = TimerRegistry::getInstance().getTimer( TimerRegistry::EDFUN_AN_RESET );
-  edfunAnResetTimer.start();
-  
-  if(partj >= 0) {
-    // reset flags
-      const std::vector<IActivity*>& affectedNodes = mkts[partj].getDependencies();
-      for( size_t nodeIndex = 0 ; nodeIndex < affectedNodes.size(); ++nodeIndex ) {
-          affectedNodes[ nodeIndex ]->setStale();
-      }
-    partj = -1;
-    mktplc->mIsDerivativeCalc = false;
-    solnset.restoreValues();    // reset all markets to values stored above
-  }
-  edfunAnResetTimer.stop();
   edfunMiscTimer.stop();
 }
 

@@ -67,6 +67,7 @@ class IClimateModel;
 class OutputMetaData;
 class SolutionInfoParamParser;
 class IModelFeedbackCalc;
+class ManageStateVariables;
 
 /*!
 * \ingroup Objects
@@ -87,6 +88,7 @@ class IModelFeedbackCalc;
 
 class Scenario: public IParsable, public IVisitable, public IRoundTrippable
 {
+    friend class LogEDFun;
 public:
     Scenario();
     ~Scenario();
@@ -157,6 +159,8 @@ protected:
     //! Objects that may take model results and provide some sort of feedback as
     //! the scenario progresses through the model periods.
     std::vector<IModelFeedbackCalc*> mModelFeedbacks;
+    
+    ManageStateVariables* mManageStateVars;
 
     bool solve( const int period );
 

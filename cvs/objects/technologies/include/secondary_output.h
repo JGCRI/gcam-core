@@ -182,7 +182,7 @@ protected:
         IOutput,
 
         //! Physical output by period.
-        DEFINE_VARIABLE( ARRAY, "physical-output", mPhysicalOutputs, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE, "physical-output", mPhysicalOutputs, objects::PeriodVector<Value> ),
 
         //! Name of the secondary output. Corresponds to a market for this good and
         //! a supply sector which supplies this good as its primary output.

@@ -49,6 +49,7 @@
 #include <map>
 #include "resources/include/aresource.h"
 #include "util/base/include/object_meta_info.h"
+#include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
 
 // Forward declaration.
@@ -99,16 +100,16 @@ protected:
         DEFINE_VARIABLE( CONTAINER, "subresource", mSubResource, std::vector<SubResource*> ),
 
         //! Resource price
-        DEFINE_VARIABLE( ARRAY, "price", mResourcePrice, objects::PeriodVector<double> ),
+        DEFINE_VARIABLE( ARRAY | STATE, "price", mResourcePrice, objects::PeriodVector<Value> ),
 
         //! total Resource available
-        DEFINE_VARIABLE( ARRAY, "available", mAvailable, objects::PeriodVector<double> ),
+        DEFINE_VARIABLE( ARRAY | STATE, "available", mAvailable, objects::PeriodVector<Value> ),
 
         //! annual production rate of Resource
-        DEFINE_VARIABLE( ARRAY, "annualprod", mAnnualProd, objects::PeriodVector<double> ),
+        DEFINE_VARIABLE( ARRAY | STATE, "annualprod", mAnnualProd, objects::PeriodVector<Value> ),
 
         //! cumulative production of Resource
-        DEFINE_VARIABLE( ARRAY, "cummprod", mCumulProd, objects::PeriodVector<double> )
+        DEFINE_VARIABLE( ARRAY | STATE, "cummprod", mCumulProd, objects::PeriodVector<Value> )
     )
     
     //! Pointer to the resource's information store.

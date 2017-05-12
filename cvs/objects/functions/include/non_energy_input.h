@@ -166,7 +166,7 @@ protected:
 
         //! Cost of the non-energy input adjusted for the additional costs of the
         //! capture component.
-        DEFINE_VARIABLE( ARRAY, "adjusted-cost", mAdjustedCosts, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE, "adjusted-cost", mAdjustedCosts, objects::PeriodVector<Value> ),
 
         //! Coefficient for production or demand function. Coefficients are not
         // read in and are initialized to 1, but can increase over time with

@@ -52,7 +52,6 @@
 
 #include "marketplace/include/imarket_type.h"
 #include "util/base/include/ivisitable.h"
-#include "util/base/include/fltcmp.hpp"
 #include "util/base/include/data_definition_util.h"
 
 #if GCAM_PARALLEL_ENABLED
@@ -137,6 +136,8 @@ class Marketplace: public IVisitable, private boost::noncopyable
     friend class SolverLibrary;
     friend class MarketDependencyFinder;
     friend class LogEDFun;
+    friend class Value;
+    friend class ManageStateVariables;
 public:
     Marketplace();
     ~Marketplace();

@@ -65,11 +65,11 @@ extern Scenario* scenario;
 //! Default constructor.
 SubResource::SubResource()
 {
-    mAvailable.assign( mAvailable.size() , 0.0 );
-    mAnnualProd.assign( mAnnualProd.size() , 0.0 );
-    mCumulProd.assign( mCumulProd.size() , 0.0 );
+    mAvailable.assign( mAvailable.size() , Value( 0.0 ) );
+    mAnnualProd.assign( mAnnualProd.size() , Value( 0.0 ) );
+    mCumulProd.assign( mCumulProd.size() , Value( 0.0 ) );
     mCumulativeTechChange.assign( mCumulativeTechChange.size() , 1.0 );
-    mEffectivePrice.assign( mEffectivePrice.size() , -1.0 );
+    mEffectivePrice.assign( mEffectivePrice.size() , Value( -1.0 ) );
     mCalProduction.assign( mCalProduction.size() , -1.0 );
 }
 
@@ -104,7 +104,7 @@ void SubResource::XMLParse( const DOMNode* node ){
             parseContainerNode( curr, mGrade, new Grade );
         }
         else if( nodeName == "annualprod" ){
-            XMLHelper<double>::insertValueIntoVector( curr, mAnnualProd, modeltime );
+            XMLHelper<Value>::insertValueIntoVector( curr, mAnnualProd, modeltime );
         }
         else if( nodeName == "techChange" ){
             XMLHelper<Value>::insertValueIntoVector( curr, mTechChange, modeltime );
@@ -245,7 +245,7 @@ void SubResource::postCalc( const string& aRegionName, const string& aResourceNa
     updateAvailable( aPeriod ); // reinitialize available amount
     if( aPeriod > 0 ) {
         mAvailable[ aPeriod ] -= mCumulProd[ aPeriod - 1 ];
-        mAvailable[ aPeriod ] = max( mAvailable[ aPeriod ], 0.0 );
+        mAvailable[ aPeriod ] = max( mAvailable[ aPeriod ].get(), 0.0 );
     }
 
     // call grade post calculations.
@@ -266,13 +266,13 @@ void SubResource::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag( getXMLName(), out, tabs, mName );
 
     // write the xml for the class members.
-    const Value VALUE_DEFAULT = 0.0; // enables template function to recognize Value Class
+    const Value VALUE_DEFAULT( 0.0 ); // enables template function to recognize Value Class
     XMLWriteVector( mEnvironCost, "environCost", out, tabs, modeltime, VALUE_DEFAULT );
     XMLWriteVector( mSeveranceTax, "severanceTax", out, tabs, modeltime, VALUE_DEFAULT );
     XMLWriteVector( mTechChange, "techChange", out, tabs, modeltime, VALUE_DEFAULT );
     
     // for base year only
-    XMLWriteElementCheckDefault(mAnnualProd[0],"annualprod",out, tabs, 0.0 , modeltime->getper_to_yr(0)); 
+    XMLWriteElementCheckDefault(mAnnualProd[0],"annualprod",out, tabs, VALUE_DEFAULT , modeltime->getper_to_yr(0));
 
     XMLWriteVector( mCalProduction, "cal-production", out, tabs, modeltime, -1.0 );
     XMLWriteVector( mPriceAdder, "price-adder", out, tabs, modeltime, VALUE_DEFAULT  );
@@ -380,12 +380,12 @@ void SubResource::cumulsupply( double aPrice, int aPeriod )
             }
             // add subrsrcs up to the lower grade
             for ( i = 0; i <= iL; i++ ) {
-                mCumulProd[ aPeriod ] += mGrade[i]->getAvail();
+                mCumulProd[ aPeriod ] += Value( mGrade[i]->getAvail() );
             }
             // price must reach upper grade cost to produce all of lower grade
             double slope = mGrade[iL]->getAvail()
                 / ( mGrade[iU]->getCost( aPeriod ) - mGrade[iL]->getCost( aPeriod ) );
-            mCumulProd[ aPeriod ] -= slope * ( mGrade[iU]->getCost( aPeriod ) - mEffectivePrice[ aPeriod ] );
+            mCumulProd[ aPeriod ] -= Value( slope * ( mGrade[iU]->getCost( aPeriod ) - mEffectivePrice[ aPeriod ] ) );
         }
         
         // Case 3
@@ -394,7 +394,7 @@ void SubResource::cumulsupply( double aPrice, int aPeriod )
         if ( mEffectivePrice[ aPeriod ] > mGrade[ mGrade.size() - 1 ]->getCost( aPeriod ) ) {
             mCumulProd[ aPeriod ] = 0;
             for ( unsigned int i = 0; i < mGrade.size(); i++ ) {
-                mCumulProd[ aPeriod ] += mGrade[i]->getAvail();
+                mCumulProd[ aPeriod ] += Value( mGrade[i]->getAvail() );
             }
         }
     }
@@ -413,7 +413,7 @@ double SubResource::getCumulProd( const int aPeriod ) const {
 void SubResource::updateAvailable( const int aPeriod ){
     mAvailable[ aPeriod ] = 0;
     for ( unsigned int i = 0; i < mGrade.size(); ++i ) {
-        mAvailable[ aPeriod ] += mGrade[ i ]->getAvail();
+        mAvailable[ aPeriod ] += Value( mGrade[ i ]->getAvail() );
     }
 }
 
@@ -441,7 +441,7 @@ void SubResource::annualsupply( int aPeriod, const GDP* aGdp, double aPrice, dou
 
         // mAvailable is the total resource (stock) remaining
         mAvailable[ aPeriod ] = mAvailable[ aPeriod - 1 ] - ( mAnnualProd[ aPeriod ] * modeltime->gettimestep( aPeriod ) );
-        mAvailable[ aPeriod ] = max( mAvailable[ aPeriod ], 0.0 );
+        mAvailable[ aPeriod ] = max( mAvailable[ aPeriod ].get(), 0.0 );
     }
 }
 

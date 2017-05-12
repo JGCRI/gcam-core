@@ -247,14 +247,14 @@ BOOST_MPL_HAS_XXX_TRAIT_DEF( iterator );
 struct FilterStep {
     using FilterPtrTypes = typename boost::mpl::transform<FilterTypes, boost::add_pointer<boost::mpl::_> >::type;
     using FilterMapType = typename boost::fusion::result_of::as_map<typename boost::fusion::result_of::as_vector<typename boost::mpl::transform_view<boost::mpl::zip_view< boost::mpl::vector<FilterTypes, FilterPtrTypes> >, boost::mpl::unpack_args<boost::fusion::pair<boost::mpl::_1, boost::mpl::_2> > > >::type>::type;
-    FilterStep( const std::string& aDataName ):mDataName( aDataName ), mFilterMap(), mNoFilters( true ) {}
-    FilterStep( const std::string& aDataName, IndexFilter* aFilter ):mDataName( aDataName ), mFilterMap(), mNoFilters( false ) {
+    FilterStep( const std::string& aDataName, const int aDataFlag = 0 ):mDataName( aDataName ), mDataFlag( aDataFlag ), mFilterMap(), mNoFilters( true ) {}
+    FilterStep( const std::string& aDataName, IndexFilter* aFilter ):mDataName( aDataName ), mDataFlag( 0 ), mFilterMap(), mNoFilters( false ) {
         boost::fusion::at_key<IndexFilter>( mFilterMap ) = aFilter;
     }
-    FilterStep( const std::string& aDataName, NamedFilter* aFilter ):mDataName( aDataName ), mFilterMap(), mNoFilters( false ) {
+    FilterStep( const std::string& aDataName, NamedFilter* aFilter ):mDataName( aDataName ), mDataFlag( 0 ), mFilterMap(), mNoFilters( false ) {
         boost::fusion::at_key<NamedFilter>( mFilterMap ) = aFilter;
     }
-    FilterStep( const std::string& aDataName, YearFilter* aFilter ):mDataName( aDataName ), mFilterMap(), mNoFilters( false ) {
+    FilterStep( const std::string& aDataName, YearFilter* aFilter ):mDataName( aDataName ), mDataFlag( 0 ), mFilterMap(), mNoFilters( false ) {
         boost::fusion::at_key<YearFilter>( mFilterMap ) = aFilter;
     }
     ~FilterStep() {
@@ -263,14 +263,15 @@ struct FilterStep {
         } );
     }
     const std::string mDataName;
+    const int mDataFlag;
     FilterMapType mFilterMap;
     bool mNoFilters;
     bool isDescendantStep() const {
-        return mDataName.empty() && mNoFilters;
+        return mDataName.empty() && mDataFlag == 0 && mNoFilters;
     }
     template<typename DataType>
     bool matchesDataName( const DataType& aData ) {
-        return mDataName.empty() || mDataName == aData.mDataName;
+        return ( mDataName.empty() || mDataName == aData.mDataName ) && ( mDataFlag == 0 || aData.hasDataFlag( mDataFlag ) );
     }
 
     // Specializations for containers
@@ -584,7 +585,9 @@ class GCAMFusion {
                 // both handle taking one step down and no steps down.
                 if( !isAtLastStep && this->mFilterSteps[ mCurrStep ]->isDescendantStep() ) {
                     ++this->mCurrStep;
+            if( this->mFilterSteps[ mCurrStep ]->matchesDataName( aData ) ) {
                     this->mFilterSteps[ mCurrStep ]->applyFilter( aData, *this, this->isAtLastStep() );
+                    }
                     --this->mCurrStep;
                 }
             }

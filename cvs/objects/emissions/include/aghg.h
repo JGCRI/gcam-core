@@ -55,6 +55,7 @@
 #include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iround_trippable.h"
+#include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
 #include "util/base/include/data_definition_util.h"
 
@@ -211,7 +212,7 @@ protected:
         //! TODO: These are sized to store emissions for all periods however only
         //!       a fraction of that will actually be used (depending on the technology
         //!       vintage and lifetime.
-        DEFINE_VARIABLE( ARRAY, "emissions", mEmissions, objects::PeriodVector<double> ),
+        DEFINE_VARIABLE( ARRAY | STATE, "emissions", mEmissions, objects::PeriodVector<Value> ),
 
         //! Emissions sequestered by a ICaptureComponent
         //! TODO: These are sized to store emissions for all periods however only

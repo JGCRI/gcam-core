@@ -257,7 +257,10 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "name", name, std::string ),
         
         //! The root of the nested inputs
-        DEFINE_VARIABLE( CONTAINER, "nodeInput", mNestedInputRoot, INestedInput* )
+        DEFINE_VARIABLE( CONTAINER, "nodeInput", mNestedInputRoot, INestedInput* ),
+
+        //! The outputs.
+        DEFINE_VARIABLE( CONTAINER, "output", mOutputs, std::vector<IOutput*> )
     )
 
     std::string categoryName; //!< Category name, used for reporting
@@ -267,8 +270,6 @@ protected:
     //! A temporary list of the leaf inputs from mNestedInputRoot
     std::vector<IInput*> mLeafInputs;
     std::vector<AGHG*> mGhgs; //!< Green-House gases.
-    
-    std::vector<IOutput*> mOutputs; //!< Outputs
 
     std::vector<Expenditure> expenditures; //!< Keep track of expenditures
 

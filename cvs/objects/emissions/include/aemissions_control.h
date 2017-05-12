@@ -49,6 +49,7 @@
 #include <string>
 #include "util/base/include/inamed.h"
 #include "util/base/include/iround_trippable.h"
+#include "util/base/include/value.h"
 #include "util/base/include/data_definition_util.h"
 
 // Forward declarations
@@ -169,7 +170,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
         
         //! Reduction (usually calculated)
-        DEFINE_VARIABLE( SIMPLE, "reduction", mReduction, double )
+        DEFINE_VARIABLE( SIMPLE | STATE, "reduction", mReduction, Value )
     )
 
 private:

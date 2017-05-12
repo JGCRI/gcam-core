@@ -189,7 +189,7 @@ protected:
         ALandAllocatorItem,
 
         //! Land allocated -- used for conceptual roots
-        DEFINE_VARIABLE( ARRAY, "landAllocation", mLandAllocation, objects::PeriodVector<double> ),
+        DEFINE_VARIABLE( ARRAY | STATE, "landAllocation", mLandAllocation, objects::PeriodVector<Value> ),
             
         //! Logit exponent -- should be positive since we are sharing on profit
         DEFINE_VARIABLE( ARRAY, "logit-exponent", mLogitExponent, objects::PeriodVector<double> ),

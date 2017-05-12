@@ -422,7 +422,7 @@ protected:
          *          allocated to node above. This is always the normalized share and
          *          so is always between zero and one inclusive.
          */
-        DEFINE_VARIABLE( ARRAY, "share", mShare, objects::PeriodVector<double> ),
+        DEFINE_VARIABLE( ARRAY | STATE, "share", mShare, objects::PeriodVector<Value> ),
         
         //! Profit scaler 
         DEFINE_VARIABLE( ARRAY, "profit-scaler", mProfitScaler, objects::PeriodVector<double> ),
@@ -440,7 +440,7 @@ protected:
         DEFINE_VARIABLE( ARRAY, "CalProfitRate", mCalibrationProfitRate, objects::PeriodVector<double> ),
 
         //! Land observed profit rate
-        DEFINE_VARIABLE( ARRAY, "ProfitRate", mProfitRate, objects::PeriodVector<double> ),
+        DEFINE_VARIABLE( ARRAY | STATE, "ProfitRate", mProfitRate, objects::PeriodVector<Value> ),
         
         //! Name of the land allocator item. This is the name of the product for
         //! leafs and name of the type of land for nodes.

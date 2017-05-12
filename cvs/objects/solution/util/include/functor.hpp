@@ -77,7 +77,7 @@ public:
    * @remark Not declared as const because a functor may maintain some internal
    *         state that is modified by a normal call.
    */
-  virtual void operator()(const UBVECTOR<Ta> &arg, UBVECTOR<Tr> &rval) = 0;
+  virtual void operator()(const UBVECTOR<Ta> &arg, UBVECTOR<Tr> &rval, const int partj = -1) = 0;
   /*!
    * Returns the length of the argument vector required by the function
    */

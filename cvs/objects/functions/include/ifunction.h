@@ -105,6 +105,8 @@ typedef InputSet::iterator InputSetIterator;
 */
 class IFunction {
 public:
+    virtual ~IFunction() { }
+
 	virtual double calcDemand( InputSet& aInputs, double aConsumption, 
         const std::string& aRegionName, const std::string& aSectorName, 
         const double aShutdownCoef,

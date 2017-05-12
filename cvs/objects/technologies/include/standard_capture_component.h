@@ -49,6 +49,7 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include "technologies/include/icapture_component.h"
 #include "util/base/include/time_vector.h"
+#include "util/base/include/value.h"
 
 /*! 
  * \ingroup Objects
@@ -163,7 +164,7 @@ protected:
         ICaptureComponent,
 
         //! Sequestered quantity by period.
-        DEFINE_VARIABLE( ARRAY, "sequestered-amount", mSequesteredAmount, objects::PeriodVector<double> ),
+        DEFINE_VARIABLE( ARRAY | STATE, "sequestered-amount", mSequesteredAmount, objects::PeriodVector<Value> ),
 
         //! Name of the storage market.
         DEFINE_VARIABLE( SIMPLE, "storage-market", mStorageMarket, std::string ),

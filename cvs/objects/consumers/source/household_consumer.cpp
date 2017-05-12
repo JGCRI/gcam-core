@@ -224,13 +224,13 @@ bool HouseholdConsumer::XMLDerivedClassParse( const string &nodeName, const DOMN
         socialSecurityTaxRate = XMLHelper<double>::getValue( curr );
     }
     else if (nodeName == "land-income-tax-rate" ) {
-        landIncomeTaxRate = XMLHelper<double>::getValue( curr );
+        landIncomeTaxRate = XMLHelper<Value>::getValue( curr );
     }
     else if (nodeName == "labor-income-tax-rate" ) {
-        laborIncomeTaxRate = XMLHelper<double>::getValue( curr );
+        laborIncomeTaxRate = XMLHelper<Value>::getValue( curr );
     }
     else if (nodeName == "dividends-income-tax-rate" ) {
-        dividendsIncomeTaxRate = XMLHelper<double>::getValue( curr );
+        dividendsIncomeTaxRate = XMLHelper<Value>::getValue( curr );
     }
     else if (nodeName == "personsPerHousehold" ) {
         personsPerHousehold = XMLHelper<double>::getValue( curr );

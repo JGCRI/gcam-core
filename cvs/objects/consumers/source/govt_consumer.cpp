@@ -110,14 +110,14 @@ void GovtConsumer::copyParamsInto( GovtConsumer& aGovtConsumer,
 //! Parse xml file for data
 bool GovtConsumer::XMLDerivedClassParse( const string &nodeName, const DOMNode* curr ) {
     if ( nodeName == "deficit" ) {
-        mBaseDeficit = XMLHelper<double>::getValue( curr );
+        mBaseDeficit = XMLHelper<Value>::getValue( curr );
     }
     else if ( nodeName == "rho" ){
-        mRho = XMLHelper<double>::getValue( curr );
+        mRho = XMLHelper<Value>::getValue( curr );
     }
     // base year transfer to household
     else if ( nodeName == "baseTransfer" ){
-        mBaseTransfer = XMLHelper<double>::getValue( curr );
+        mBaseTransfer = XMLHelper<Value>::getValue( curr );
     }
     else {
         return false;

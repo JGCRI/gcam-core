@@ -164,7 +164,7 @@ protected:
         ALandAllocatorItem,
 
         //! Land allocated in 1000's of hectares
-        DEFINE_VARIABLE( ARRAY, "landAllocation", mLandAllocation, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE, "landAllocation", mLandAllocation, objects::PeriodVector<Value> ),
 
         //! Carbon content and emissions calculator for the leaf.
         DEFINE_VARIABLE( CONTAINER, "carbon-calc", mCarbonContentCalc, ICarbonCalc* ),

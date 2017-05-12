@@ -142,14 +142,14 @@ void InputOMFixed::XMLParse( const xercesc::DOMNode* node ) {
 
         const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
         if ( nodeName == "OM-fixed" ) {
-            mOMFixed = XMLHelper<double>::getValue( curr );
+            mOMFixed = XMLHelper<Value>::getValue( curr );
         }
         // TODO: Create capacity factor for technology and use that instead.
         else if( nodeName == "capacity-factor" ){
             mCapacityFactor = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "tech-change" ){
-            mTechChange = XMLHelper<double>::getValue( curr );
+            mTechChange = XMLHelper<Value>::getValue( curr );
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );

@@ -76,13 +76,13 @@ LandLeaf::LandLeaf( const ALandAllocatorItem* aParent, const std::string &aName 
     // not LandLeaf.
     mName = aName;
     
-    mLandAllocation.assign( mLandAllocation.size(), 0.0 );
+    mLandAllocation.assign( mLandAllocation.size(), Value( 0.0 ) );
     mCarbonContentCalc = 0;
     mMinAboveGroundCDensity = 0.0;
     mMinBelowGroundCDensity = 0.0;
-    mCarbonPriceIncreaseRate.assign( mCarbonPriceIncreaseRate.size(), 0.0 );
+    mCarbonPriceIncreaseRate.assign( mCarbonPriceIncreaseRate.size(), Value( 0.0 ) );
     mLandUseHistory = 0;
-    mReadinLandAllocation.assign( mReadinLandAllocation.size(), 0.0 );
+    mReadinLandAllocation.assign( mReadinLandAllocation.size(), Value( 0.0 ) );
     mLastCalcCO2Value = 0.0;
     mLastCalcExpansionValue = 0.0;
 }

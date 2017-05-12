@@ -130,7 +130,7 @@ protected:
         DEFINE_VARIABLE( ARRAY, "degree-days", mDegreeDays, objects::PeriodVector<Value> ),
         
         //! Demand function coefficients to capture base year thermal characteristics.
-        DEFINE_VARIABLE( SIMPLE, "coefficient", mCoefficient, Value )
+        DEFINE_VARIABLE( SIMPLE | STATE, "coefficient", mCoefficient, Value )
     )
     
     void copy( const ThermalBuildingServiceInput& aInput );

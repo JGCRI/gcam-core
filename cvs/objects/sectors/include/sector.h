@@ -57,6 +57,7 @@
 #include "util/base/include/inamed.h"
 #include "util/base/include/object_meta_info.h"
 #include "util/base/include/time_vector.h"
+#include "util/base/include/value.h"
 #include "util/base/include/data_definition_util.h"
 #include "util/base/include/summary.h"
 
@@ -132,7 +133,7 @@ protected:
         DEFINE_VARIABLE( CONTAINER, "subsector", mSubsectors, std::vector<Subsector*> ),
         
         //! Sector price by period updated with solution prices.
-        DEFINE_VARIABLE( ARRAY, "price", mPrice, objects::PeriodVector<double> ),
+        DEFINE_VARIABLE( ARRAY | STATE, "price", mPrice, objects::PeriodVector<Value> ),
 
         //! A map of a keyword to its keyword group
         DEFINE_VARIABLE( SIMPLE, "keyword", mKeywordMap, std::map<std::string, std::string> ),

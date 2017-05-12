@@ -59,11 +59,11 @@ ALandAllocatorItem::ALandAllocatorItem( const ALandAllocatorItem* aParent,
                                         const LandAllocatorItemType aType )
     : mParent( aParent )
 {
-    mShare.assign( mShare.size(), -1.0 ); // this is so initialization can be checked.
+    mShare.assign( mShare.size(), Value( -1.0 ) ); // this is so initialization can be checked.
     mProfitScaler.assign( mProfitScaler.size(), -1.0 ); // this is so initialization can be checked.
     mIsNewTech.assign( mIsNewTech.size(), false );
     mAdjustForNewTech.assign( mAdjustForNewTech.size(), 1.0 );
-    mProfitRate.assign( mProfitRate.size(), 0 );
+    mProfitRate.assign( mProfitRate.size(), Value() );
     mType = aType;
     mIsLandExpansionCost = false;
 }

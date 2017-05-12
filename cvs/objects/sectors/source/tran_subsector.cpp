@@ -79,7 +79,7 @@ extern Scenario* scenario;
 */
 TranSubsector::TranSubsector( const string& regionName, const string& sectorName ): Subsector( regionName, sectorName )
 {
-    mTimeValueMult.assign( mTimeValueMult.size(), 1.0 );
+    mTimeValueMult.assign( mTimeValueMult.size(), Value( 1.0 ) );
     mPopDensity = 1; // initialize to 1 for now
     mAddTimeValue = false; // initialize to false
 }

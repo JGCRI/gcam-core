@@ -66,6 +66,7 @@
 #include "solution/util/include/solution_info_param_parser.h" 
 #include "containers/include/imodel_feedback_calc.h"
 #include "containers/include/degree_days_feedback.h"
+#include "util/base/include/manage_state_variables.hpp"
 
 #if GCAM_PARALLEL_ENABLED && PARALLEL_DEBUG
 #include <stdlib.h>
@@ -88,6 +89,8 @@ Scenario::Scenario() {
     mMarketplace = new Marketplace();
     mWorld = 0;
     mSolutionInfoParamParser = 0;
+    
+    mManageStateVars = 0;
 }
 
 //! Destructor
@@ -95,6 +98,7 @@ Scenario::~Scenario() {
     delete mMarketplace;
     delete mWorld;
     delete mSolutionInfoParamParser;
+    delete mManageStateVars;
     // model time is really a singleton and so don't
     // try to delete it
 }
@@ -426,6 +430,8 @@ bool Scenario::calculatePeriod( const int aPeriod,
     for( auto modelFeedback : mModelFeedbacks ) {
         modelFeedback->calcFeedbacksBeforePeriod( this, mWorld->getClimateModel(), aPeriod );
     }
+    delete mManageStateVars;
+    mManageStateVars = new ManageStateVariables( aPeriod );
     
     // SGM Period 0 needs to clear out the supplies and demands put in by initCalc.
     if( aPeriod == 0 ){
@@ -491,6 +497,9 @@ bool Scenario::calculatePeriod( const int aPeriod,
     
     
     bool success = solve( aPeriod ); // solution uses Bisect and NR routine to clear markets
+    
+    delete mManageStateVars;
+    mManageStateVars = 0;
 
     mWorld->postCalc( aPeriod );
     for( auto modelFeedback : mModelFeedbacks ) {

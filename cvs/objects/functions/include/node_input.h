@@ -325,7 +325,7 @@ protected:
          * Value used for initialization.  This is the same thing as the sum
          * of the children's currency demand
          */
-        DEFINE_VARIABLE( SIMPLE, "demandCurrency", mNodeCurrencyDemand, Value ),
+        DEFINE_VARIABLE( SIMPLE | STATE, "demandCurrency", mNodeCurrencyDemand, Value ),
                                 
         //! Sigma used to operate new capital
         DEFINE_VARIABLE( SIMPLE, "Sigma1", mSigmaNewCapital, Value ),
@@ -340,7 +340,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "coefficient", mAlphaCoef, Value ),
 
         //! Price paid, for the root this would be price recieved
-        DEFINE_VARIABLE( SIMPLE, "price-recieved", mPricePaid, Value ),
+        DEFINE_VARIABLE( SIMPLE | STATE, "price-recieved", mPricePaid, Value ),
 
         //! Price paid in the base year, for the root this would be price recieved
         DEFINE_VARIABLE( SIMPLE, "base-price-paid", mBasePricePaid, Value ),

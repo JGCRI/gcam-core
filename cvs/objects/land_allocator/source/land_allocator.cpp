@@ -93,7 +93,7 @@ bool LandAllocator::XMLParse( const DOMNode* aNode ){
 
 bool LandAllocator::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aCurr ){
     if( aNodeName == "landAllocation" ){
-        XMLHelper<double>::insertValueIntoVector( aCurr, mLandAllocation, scenario->getModeltime() );
+        XMLHelper<Value>::insertValueIntoVector( aCurr, mLandAllocation, scenario->getModeltime() );
     }
     else if( aNodeName == "carbonPriceIncreaseRate" ){
         XMLHelper<double>::insertValueIntoVector( aCurr, mCarbonPriceIncreaseRate, scenario->getModeltime() );

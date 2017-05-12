@@ -115,19 +115,19 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
         
         //! total available resource
-        DEFINE_VARIABLE( ARRAY, "available", mAvailable, objects::PeriodVector<double> ),
+        DEFINE_VARIABLE( ARRAY | STATE, "available", mAvailable, objects::PeriodVector<Value> ),
         
         //! annual production of SubResource
-        DEFINE_VARIABLE( ARRAY, "annualprod", mAnnualProd, objects::PeriodVector<double> ),
+        DEFINE_VARIABLE( ARRAY | STATE, "annualprod", mAnnualProd, objects::PeriodVector<Value> ),
         
         //! cumulative production of SubResource
-        DEFINE_VARIABLE( ARRAY, "cumulprod", mCumulProd, objects::PeriodVector<double> ),
+        DEFINE_VARIABLE( ARRAY | STATE, "cumulprod", mCumulProd, objects::PeriodVector<Value> ),
         
         //! Cumulative Technical Change for this subsector
         DEFINE_VARIABLE( ARRAY, "cumulative-tech-change", mCumulativeTechChange, objects::PeriodVector<double> ),
         
         //! effective price (global price + price adder)
-        DEFINE_VARIABLE( ARRAY, "effective-price", mEffectivePrice, objects::PeriodVector<double> ),
+        DEFINE_VARIABLE( ARRAY | STATE, "effective-price", mEffectivePrice, objects::PeriodVector<Value> ),
         
         //! calibrated production
         DEFINE_VARIABLE( ARRAY, "cal-production", mCalProduction, objects::PeriodVector<double> ),
@@ -142,7 +142,7 @@ protected:
         DEFINE_VARIABLE( ARRAY, "severanceTax", mSeveranceTax, objects::PeriodVector<Value> ),
         
         //! price adder used for calibration purposes
-        DEFINE_VARIABLE( ARRAY, "price-adder", mPriceAdder, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE, "price-adder", mPriceAdder, objects::PeriodVector<Value> ),
     
         //! amount of SubResource for each grade
         DEFINE_VARIABLE( CONTAINER, "grade", mGrade, std::vector<Grade*> )

@@ -100,9 +100,20 @@ enum DataFlags {
      *          earlier both "single containers" or "arrays of containers" can be
      *          tagged with just this flag (i.e. no need to add the ARRAY flag too).
      */
-    CONTAINER = 1 << 2
+    CONTAINER = 1 << 2,
+
+    /*!
+     * \brief A flag to indicate this Data is a "state" variable or in other words
+     *        it's value changes during World.calc.
+     * \details This flag would generally be used in conjunction with a SIMPLE or
+     *          ARRAY who's data type is Value or an array of Values.  Data marked
+     *          with this flag can be searched for and re-organized so that "state"
+     *          can be managed centrally stored/restored for instance during partial
+     *          derivative calculations.
+     */
+    STATE = 1 << 3
     
-    // potentially more flags here such as to tag "state" or "non-parsable" Data
+    // potentially more flags here such as to tag "non-parsable" Data etc
 };
 
 /*!
@@ -240,7 +251,7 @@ struct Data {
  *          a member variable equally well through the variable name
  *          or through the vector of member variables.
  * \param r The next available BOOST_PP_FOR repetition.
- * \param data A base token to be always passed in (note used).
+ * \param data A base token to be always passed in (not used).
  * \param i The current iteration of the data definitions.
  * \param elem The variable name to define for direct access to the current Data.
  */
@@ -295,7 +306,7 @@ struct Data {
  *          ```
  *          DEFINE_DATA_INTERNAL( DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ) )
  *          ```
- *          Would then be transformed to (although perhaps to so well fomatted):
+ *          Would then be transformed to (although perhaps not so well formatted):
  *          ```
  *          typedef boost::mpl::vector<Data<std::string, SIMPLE> > DataVectorType;
  *          boost::fusion::result_of::as_vector<DataVectorType>::type mDataVector =

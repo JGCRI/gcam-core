@@ -197,7 +197,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
         
         //! Total end-use sector service after technical change is applied.
-        DEFINE_VARIABLE( ARRAY, "service", mServiceDemands, objects::PeriodVector<double> ),
+        DEFINE_VARIABLE( ARRAY | STATE, "service", mServiceDemands, objects::PeriodVector<Value> ),
 
         //! Income elasticity 
         DEFINE_VARIABLE( ARRAY, "income-elasticity", mIncomeElasticity, objects::PeriodVector<Value> ),

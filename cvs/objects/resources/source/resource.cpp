@@ -82,10 +82,10 @@ typedef vector<AGHG*>::const_iterator CGHGIterator;
 Resource::Resource():
 mObjectMetaInfo()
 {
-    mResourcePrice.assign( mResourcePrice.size(), 0.0 );
-    mAvailable.assign( mAvailable.size(), 0.0 );
-    mAnnualProd.assign( mAnnualProd.size(), 0.0 );
-    mCumulProd.assign( mCumulProd.size(), 0.0 );
+    mResourcePrice.assign( mResourcePrice.size(), Value( 0.0 ) );
+    mAvailable.assign( mAvailable.size(), Value( 0.0 ) );
+    mAnnualProd.assign( mAnnualProd.size(), Value( 0.0 ) );
+    mCumulProd.assign( mCumulProd.size(), Value( 0.0 ) );
 }
 
 //! Destructor.
@@ -135,7 +135,7 @@ void Resource::XMLParse( const DOMNode* node ){
             mMarket = XMLHelper<string>::getValue( curr ); // only one market element.
         }
         else if( nodeName == "price" ){
-            XMLHelper<double>::insertValueIntoVector( curr, mResourcePrice, modeltime );
+            XMLHelper<Value>::insertValueIntoVector( curr, mResourcePrice, modeltime );
         }
         else if( nodeName == "keyword" ){
             DOMNamedNodeMap* keywordAttributes = curr->getAttributes();
@@ -422,7 +422,7 @@ void Resource::calcSupply( const string& aRegionName, const GDP* aGDP, const int
 
     // There is only one primary output at the first position.
     // Setting market supply of resource occurs in setPhysicalOutput().
-    mOutputs[0]->setPhysicalOutput( aPeriod > 0 ? mAnnualProd[ aPeriod ] : 0, aRegionName, 0, aPeriod );
+    mOutputs[0]->setPhysicalOutput( aPeriod > 0 ? mAnnualProd[ aPeriod ] : 0.0, aRegionName, 0, aPeriod );
 
     for( unsigned int i = 0; i < mGHG.size(); ++i ) {
         // no inputs or capture components
@@ -439,7 +439,7 @@ void Resource::cumulsupply( double aPrice, int aPeriod )
     // sum cumulative production of each subsector
     for ( i = 0; i < mSubResource.size(); i++ ) {
         mSubResource[ i ]->cumulsupply( aPrice, aPeriod );
-        mCumulProd[ aPeriod ] += mSubResource[ i ]->getCumulProd( aPeriod );
+        mCumulProd[ aPeriod ] += Value( mSubResource[ i ]->getCumulProd( aPeriod ) );
     }
 }
 
@@ -456,8 +456,8 @@ void Resource::annualsupply( const string& aRegionName, int aPeriod, const GDP* 
     // sum annual production of each subsector
     for ( i = 0; i < mSubResource.size(); i++) {
         mSubResource[i]->annualsupply( aPeriod, aGdp, aPrice, aPrevPrice );
-        mAnnualProd[ aPeriod ] += mSubResource[i]->getAnnualProd( aPeriod );
-        mAvailable[ aPeriod ] += mSubResource[i]->getAvailable( aPeriod );
+        mAnnualProd[ aPeriod ] += Value( mSubResource[i]->getAnnualProd( aPeriod ) );
+        mAvailable[ aPeriod ] += Value( mSubResource[i]->getAvailable( aPeriod ) );
     }
 }
 
@@ -789,10 +789,10 @@ void RenewableResource::annualsupply( const string& aRegionName, int aPeriod, co
     // sum annual production of each subsector
     for (int i=0;i<mSubResource.size();i++) {
         mSubResource[i]->annualsupply( aPeriod, aGdp, aPrice, aPrevPrice );
-        mAnnualProd[ aPeriod ] += mSubResource[i]->getAnnualProd( aPeriod );
+        mAnnualProd[ aPeriod ] += Value( mSubResource[i]->getAnnualProd( aPeriod ) );
         double adjustedSubResourceProd = max( mSubResource[i]->getAnnualProd( aPeriod ), MIN_RESOURCE_PROD );
         adjustedProduction += adjustedSubResourceProd;
-        mAvailable[ aPeriod ] += mSubResource[i]->getAvailable( aPeriod );
+        mAvailable[ aPeriod ] += Value( mSubResource[i]->getAvailable( aPeriod ) );
         
         // and compute weighted average variance
         mResourceVariance[ aPeriod ] += adjustedSubResourceProd * mSubResource[i]->getVariance();

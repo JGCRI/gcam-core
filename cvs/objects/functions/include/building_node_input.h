@@ -382,7 +382,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "prodDmdFnType", mFunctionType, std::string ),
 
         //! Building size by period.
-        DEFINE_VARIABLE( ARRAY, "base-building-size", mBuildingSize, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE, "base-building-size", mBuildingSize, objects::PeriodVector<Value> ),
 
         //! Price exponent by period.
         DEFINE_VARIABLE( ARRAY, "price-exponent", mPriceExponent, objects::PeriodVector<Value> ),
@@ -414,7 +414,7 @@ protected:
         DEFINE_VARIABLE( ARRAY, "internal-gains-trial-supply", mInternalGainsTrialSupply, objects::PeriodVector<double> ),
 
         //! The sum product of energy service price necessary to drive demands.
-        DEFINE_VARIABLE( ARRAY, "price", mPrice, objects::PeriodVector<double> )
+        DEFINE_VARIABLE( ARRAY | STATE, "price", mPrice, objects::PeriodVector<Value> )
     )
                            
     //! Pointer to function this class will use

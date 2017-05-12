@@ -149,10 +149,6 @@ protected:
          */
         LandNode,
 
-        //! Land allocated in 1000's of hectares
-        // TODO: redefinition from LandNode?
-        DEFINE_VARIABLE( ARRAY, "landAllocation", mLandAllocation, objects::PeriodVector<double> ),
-
         //! Rate at which carbon price is expected to increase
         DEFINE_VARIABLE( ARRAY, "carbonPriceIncreaseRate", mCarbonPriceIncreaseRate, objects::PeriodVector<double> ),
 

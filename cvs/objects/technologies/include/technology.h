@@ -317,7 +317,7 @@ protected:
          * \note calcCost must be called in an iteration before this value is valid.
          * \sa Technology::calcCost
          */
-        DEFINE_VARIABLE( ARRAY, "cost", mCosts, objects::PeriodVector<double> ),
+        DEFINE_VARIABLE( ARRAY | STATE, "cost", mCosts, objects::PeriodVector<Value> ),
 
         //! A map of a keyword to its keyword group
         DEFINE_VARIABLE( SIMPLE, "keyword", mKeywordMap, std::map<std::string, std::string> ),
@@ -326,7 +326,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
         //! Logit share weight
-        DEFINE_VARIABLE( SIMPLE, "share-weight", mShareWeight, Value ),
+        DEFINE_VARIABLE( SIMPLE | STATE, "share-weight", mShareWeight, Value ),
 
         //! The Logit share weight that was parsed by the user
         DEFINE_VARIABLE( SIMPLE, "parsed-share-weight", mParsedShareWeight, Value ),

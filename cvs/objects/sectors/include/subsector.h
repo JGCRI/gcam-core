@@ -133,7 +133,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "sector-name", mSectorName, std::string ),
 
         //! Subsector logit share weights
-        DEFINE_VARIABLE( ARRAY, "share-weight", mShareWeights, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE, "share-weight", mShareWeights, objects::PeriodVector<Value> ),
 
         //! The original subsector logit share weights that were parsed
         DEFINE_VARIABLE( ARRAY, "parsed-share-weight", mParsedShareWeights, objects::PeriodVector<Value> ),

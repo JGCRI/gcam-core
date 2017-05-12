@@ -252,7 +252,7 @@ void EnergyInput::toDebugXML( const int aPeriod,
     XMLWriteElement( mCO2Coefficient.isInited() ? mCO2Coefficient.get() : -1,
                      "cached-co2-coef", aOut, aTabs );
     XMLWriteElement( mPhysicalDemand[ aPeriod ], "physical-demand", aOut, aTabs );
-    XMLWriteElement( mCarbonContent[ aPeriod ], "carbon-content", aOut, aTabs );
+    //XMLWriteElement( mCarbonContent[ aPeriod ], "carbon-content", aOut, aTabs );
     XMLWriteElement( mPriceUnitConversionFactor, "price-unit-conversion", aOut, aTabs );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
@@ -272,7 +272,7 @@ void EnergyInput::completeInit( const string& aRegionName,
 
     // If there is a coefficient, initialize it and determine the current
     // coefficient. Otherwise use a default intensity of 1.
-    double currCoef = 1;
+    Value currCoef( 1 );
     if( mCoefficient ){
         mCoefficient->completeInit();
         currCoef = mCoefficient->getCoefficient();
@@ -347,7 +347,7 @@ double EnergyInput::getPhysicalDemand( const int aPeriod ) const {
 }
 
 double EnergyInput::getCarbonContent( const int aPeriod ) const {
-    return mCarbonContent[ aPeriod ];
+    return 0.0;//mCarbonContent[ aPeriod ];
 }
 
 void EnergyInput::setPhysicalDemand( double aPhysicalDemand,
@@ -358,7 +358,7 @@ void EnergyInput::setPhysicalDemand( double aPhysicalDemand,
     mCachedMarket->addToDemand( mName, mMarketName,
                                        mPhysicalDemand[ aPeriod ],
                                        aPeriod, true );
-    mCarbonContent[ aPeriod ].set( aPhysicalDemand * mCO2Coefficient );
+    //mCarbonContent[ aPeriod ].set( aPhysicalDemand * mCO2Coefficient );
 }
 
 double EnergyInput::getCoefficient( const int aPeriod ) const {

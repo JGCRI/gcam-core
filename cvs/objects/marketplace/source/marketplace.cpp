@@ -51,6 +51,7 @@
 #include "util/base/include/model_time.h"
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/configuration.h"
+#include "util/base/include/fltcmp.hpp"
 #include "util/logger/include/ilogger.h"
 #include "marketplace/include/market_locator.h"
 #include "util/base/include/ivisitor.h"

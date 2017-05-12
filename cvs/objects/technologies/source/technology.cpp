@@ -207,7 +207,7 @@ void Technology::init()
     // year is known.
     mLifetimeYears = -1;
 
-    mCosts.assign( mCosts.size(), -1.0 );
+    mCosts.assign( mCosts.size(), Value( -1.0 ) );
     mProductionState.assign( mProductionState.size(), 0 );
     mProductionFunction = 0;
     mPMultiplier = 1;
@@ -1377,7 +1377,7 @@ void Technology::calcCost( const string& aRegionName,
     // rest of the code, you know instantly that you have a problem.
     if( !mProductionState[ aPeriod ]->isOperating() )
     {
-        mCosts[ aPeriod ] = numeric_limits<double>::signaling_NaN();
+        //mCosts[ aPeriod ] = numeric_limits<double>::signaling_NaN();
     }
     else {
         // Note we now allow costs in any sector to be <= 0.  If,

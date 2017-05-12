@@ -106,7 +106,7 @@ protected:
         AGHG,
 
         //! The emissions coefficient.
-        DEFINE_VARIABLE( SIMPLE, "emiss-coef", mEmissionsCoef, Value ),
+        DEFINE_VARIABLE( SIMPLE | STATE, "emiss-coef", mEmissionsCoef, Value ),
 
         //! Emissions to calibrate to if provided.
         DEFINE_VARIABLE( SIMPLE, "input-emissions", mInputEmissions, Value ),

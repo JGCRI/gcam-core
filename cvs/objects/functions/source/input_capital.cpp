@@ -144,11 +144,11 @@ void InputCapital::XMLParse( const xercesc::DOMNode* node ) {
 
         const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
         if ( nodeName == "capital-overnight" ) {
-            mCapitalOvernight = XMLHelper<double>::getValue( curr );
+            mCapitalOvernight = XMLHelper<Value>::getValue( curr );
         }
         // Capital lifetime may be different from technology lifetime.
         else if( nodeName == "lifetime-capital" ){
-            mLifetimeCapital = XMLHelper<double>::getValue( curr );
+            mLifetimeCapital = XMLHelper<Value>::getValue( curr );
         }
         else if( nodeName == "fixed-charge-rate" ){
             mFixedChargeRate = XMLHelper<double>::getValue( curr );
@@ -158,7 +158,7 @@ void InputCapital::XMLParse( const xercesc::DOMNode* node ) {
             mCapacityFactor = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "tech-change" ){
-            mTechChange = XMLHelper<double>::getValue( curr );
+            mTechChange = XMLHelper<Value>::getValue( curr );
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );

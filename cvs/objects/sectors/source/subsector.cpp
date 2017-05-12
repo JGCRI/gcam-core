@@ -883,7 +883,7 @@ double Subsector::getTotalCalOutputs( const int period ) const {
 bool Subsector::allOutputFixed( const int period ) const {
     // If there is no shareweight for this subsector than it cannot produce any
     // output, and so the output must be fixed.
-    if( util::isEqual<Value>( mShareWeights[ period ], 0.0 ) ){
+    if( util::isEqual( mShareWeights[ period ].get(), 0.0 ) ){
         return true;
     }
 

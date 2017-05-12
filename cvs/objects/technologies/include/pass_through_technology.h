@@ -111,7 +111,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "pass-through-market-name", mPassThroughMarketName, std::string ),
 
         //! The level of fixed output that exists in mPassThroughSectorName.
-        DEFINE_VARIABLE( SIMPLE, "pass-through-fixed-output", mPassThroughFixedOutput, double )
+        DEFINE_VARIABLE( SIMPLE | STATE, "pass-through-fixed-output", mPassThroughFixedOutput, Value )
     )
     
     void copy( const PassThroughTechnology& aOther );

@@ -154,7 +154,7 @@ void Sector::XMLParse( const DOMNode* node ){
             continue;
         }
         else if( nodeName == "price" ){
-            XMLHelper<double>::insertValueIntoVector( curr, mPrice, modeltime );
+            XMLHelper<Value>::insertValueIntoVector( curr, mPrice, modeltime );
         }
         else if( nodeName == "output-unit" ){
             mOutputUnit = XMLHelper<string>::getValue( curr );

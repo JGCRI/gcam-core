@@ -11,6 +11,7 @@
 		0E0BB18F1CB2CF3F002F78F2 /* market_container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E0BB18E1CB2CF3F002F78F2 /* market_container.cpp */; };
 		0E36093313F03D350002F67C /* price_greater_than_solution_info_filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E36093213F03D350002F67C /* price_greater_than_solution_info_filter.cpp */; };
 		0E36094413F0457A0002F67C /* price_less_than_solution_info_filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E36094313F0457A0002F67C /* price_less_than_solution_info_filter.cpp */; };
+		0E3C496A1EC4BBD8005EDC19 /* manage_state_variables.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E3C49691EC4BBD8005EDC19 /* manage_state_variables.cpp */; };
 		0E4247B7143D00AC00A8BBD3 /* resource_activity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E4247B6143D00AC00A8BBD3 /* resource_activity.cpp */; };
 		0E4247C1143D022E00A8BBD3 /* land_allocator_activity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E4247C0143D022E00A8BBD3 /* land_allocator_activity.cpp */; };
 		0E4247C9143D033700A8BBD3 /* final_demand_activity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E4247C8143D033700A8BBD3 /* final_demand_activity.cpp */; };
@@ -371,6 +372,9 @@
 		0E36093213F03D350002F67C /* price_greater_than_solution_info_filter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = price_greater_than_solution_info_filter.cpp; sourceTree = "<group>"; };
 		0E36094113F045080002F67C /* price_less_than_solution_info_filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = price_less_than_solution_info_filter.h; sourceTree = "<group>"; };
 		0E36094313F0457A0002F67C /* price_less_than_solution_info_filter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = price_less_than_solution_info_filter.cpp; sourceTree = "<group>"; };
+		0E3C49651EC4BBC6005EDC19 /* iyeared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iyeared.h; sourceTree = "<group>"; };
+		0E3C49661EC4BBC6005EDC19 /* manage_state_variables.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = manage_state_variables.hpp; sourceTree = "<group>"; };
+		0E3C49691EC4BBD8005EDC19 /* manage_state_variables.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = manage_state_variables.cpp; sourceTree = "<group>"; };
 		0E4247AD143CFDEE00A8BBD3 /* iactivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iactivity.h; sourceTree = "<group>"; };
 		0E4247B5143D009700A8BBD3 /* resource_activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = resource_activity.h; sourceTree = "<group>"; };
 		0E4247B6143D00AC00A8BBD3 /* resource_activity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = resource_activity.cpp; sourceTree = "<group>"; };
@@ -2264,6 +2268,8 @@
 		CD4886CA122873C200F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
+				0E3C49651EC4BBC6005EDC19 /* iyeared.h */,
+				0E3C49661EC4BBC6005EDC19 /* manage_state_variables.hpp */,
 				0E052F511CB6C39600AFDDAC /* gcam_data_containers.h */,
 				0E7338661CB4361700B1CD82 /* expand_data_vector.h */,
 				0E7338671CB4361700B1CD82 /* factory.h */,
@@ -2312,6 +2318,7 @@
 		CD4886EE122873C200F5A88A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				0E3C49691EC4BBD8005EDC19 /* manage_state_variables.cpp */,
 				0E05C9001E435B3600C73D94 /* gcam_fusion.cpp */,
 				CD4886EF122873C200F5A88A /* atom.cpp */,
 				CD4886F0122873C200F5A88A /* atom_registry.cpp */,
@@ -2560,6 +2567,7 @@
 				CD488735122873C200F5A88A /* dependency_finder.cpp in Sources */,
 				CD488736122873C200F5A88A /* gdp.cpp in Sources */,
 				CD693FA31AEFF0A100805384 /* absolute_cost_logit.cpp in Sources */,
+				0E3C496A1EC4BBD8005EDC19 /* manage_state_variables.cpp in Sources */,
 				CD488737122873C200F5A88A /* info.cpp in Sources */,
 				CD488738122873C200F5A88A /* info_factory.cpp in Sources */,
 				CD488739122873C200F5A88A /* mac_generator_scenario_runner.cpp in Sources */,

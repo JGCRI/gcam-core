@@ -139,7 +139,7 @@ protected :
         IOutput,
 
         //! Physical output by period.
-        DEFINE_VARIABLE( ARRAY, "physical-output", mPhysicalOutputs, value_vector_type ),
+        DEFINE_VARIABLE( ARRAY | STATE, "physical-output", mPhysicalOutputs, value_vector_type ),
 
         /*!
         * Name of the secondary output. Corresponds to a market for this good

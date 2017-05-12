@@ -80,7 +80,7 @@ inline void jacol(VecFVec<FTYPE,FTYPE> &F, const UBLAS::vector<FTYPE> &x,
       (*diagnostic) << "j= " << j << "\th= " << h << "\nxx:\n" << xx << "\n";
   } 
   if(usepartial) {F.partial(j);}    // hint to the function that this is a partial derivative calculation
-  F(xx,fxx);       // eval the function
+    F(xx,fxx, usepartial ? j : -1);       // eval the function
   xx[j] = t;       // restore the old value
   
   if(diagnostic) {
@@ -144,6 +144,7 @@ void fdjac(VecFVec<FTYPE,FTYPE> &F, const UBLAS::vector<FTYPE> &x,
   for(size_t j=0; j<x.size(); ++j) {
     jacol(F, x, fx, j, J, usepartial, diagnostic);
   }
+    if(usepartial) { F.partial(-1); }
 
   jacTimer.stop();
 }
