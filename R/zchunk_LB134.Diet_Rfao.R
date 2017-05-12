@@ -160,7 +160,6 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
       group_by(FAO2050_reg, GCAM_demand) %>%
       arrange(year) %>%
       mutate(value = value / first(value)) ->
-      # mutate(value = value / first(value, order_by = year)) ->
       L134.DietRatio_Rfao_Dmnd_Y
 
     # Multiply these ratios by the starting values (final historical year value, fhy_value) at the country level
