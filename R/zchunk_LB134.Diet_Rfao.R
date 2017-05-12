@@ -88,7 +88,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
       select(-value.x, -value.y) ->
       L134.pcFood_kcald_R_Dmnd_Y
 
-    # Extrapolate this to the future periods based on the FAO projections
+    # In preparation for future extrapolation, get the last historical numbers and aggregate by ISO
     # Original lines 58-69
     L100.FAO_ag_Food_t %>%
       filter(year == max(HISTORICAL_YEARS)) %>%
@@ -140,15 +140,18 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
       mutate(GCAM_demand = if_else(GCAM_demand == "total", "crops", GCAM_demand)) ->
       L134.Diet_kcald_Rfao_Dmnd_Y
 
-    # Note on this next section from Page: can't just use exogenous caloric contents for the crop and meat commodities, which we're estimating
+    # Note on this next section from Page:
+    # Can't just use exogenous caloric contents for the crop and meat commodities, which we're estimating
     # as averages without knowing the exact composition of the commodities (e.g., what portion of "cereals"
     # is corn vs wheat in each region, as they have different caloric contents), and still hit the target
-    # reported "Total food (kcal/person/day)" in each region and time period. It looks like there were three
-    # options: (1) assign the crop caloric contents exogenously and allow the meat caloric contents to float;
-    # (2) vice versa; or (3) assign both crop and meat caloric contents, and then scale them all to hit the
-    # target value. It looks like I went with (2), maybe because I figured that the meat commodities probably
-    # have less heterogeneity in average caloric contents, and maybe also because it happened to be the easiest
-    # to implement.
+    # reported "Total food (kcal/person/day)" in each region and time period. There were three options:
+    # (1) assign the crop caloric contents exogenously and allow the meat caloric contents to float;
+    # (2) vice versa; or
+    # (3) assign both crop and meat caloric contents, and then scale them all to hit the target value.
+    # It looks like I went with (2), maybe because I figured that the meat commodities probably have less
+    # heterogeneity in average caloric contents, and maybe also because it happened to be the easiest to implement.
+
+    # Compute diet ratios based on meat caloric contents and demand (option 2 above)
     L134.Diet_kcald_Rfao_Dmnd_Y %>%
       filter(GCAM_demand == "meat") %>%
       select(-GCAM_demand) %>%
@@ -226,9 +229,9 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
     # Original lines 140-
     # this same logic happens over and over, so *use a function*
     # scen - scenario
-    create_ssp <- function(L102.pcgdp_thous90USD_Scen_R_Y, scen, demand, L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs) {
+    create_ssp_diet <- function(L102.pcgdp_thous90USD_Scen_R_Y, scen, demand, L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs) {
       if(demand == "crops") {
-        a <- 4545
+        a <- 4545    # a and b are parameters for demand scaling function below
         b <- -0.099
       } else if(demand == "meat") {
         a <- 818
@@ -266,18 +269,18 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
 
       # Cap future values, both maximum annual change (ratio)
       # and absolute value, based on values in A_FoodDemand_SSPs
-      # Because of the dependencies involved, I couldn't figure out a way
-      # not to use a loop here.
 
       # Note that the old code has a bug: in line 168 a loop starts without
       # correctly resetting the `prev_i` variable; as a result, if the value in
       # the final historical year is 0, incorrect values get written to all future
-      # years -- but only for meat. We replicate this craptastic behavior below.
+      # years -- but only for meat. We replicate this faulty behavior below.
       if(OLD_DATA_SYSTEM_BEHAVIOR) {
         prev_yr <- max(FUTURE_YEARS)  # bug
       } else {
         prev_yr <- max(HISTORICAL_YEARS)
       }
+      # Because of the dependencies involved, I couldn't figure out a way
+      # not to use a loop here.  :(
       for(yr in sort(FUTURE_YEARS)) {
         d <- filter(ssp_gdp, year == yr)
         d_prev <- filter(ssp_gdp, year == prev_yr)
@@ -294,16 +297,16 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
         mutate(value = if_else(is.na(value), 0.0, value))
     }
 
-    L134.pcFood_est_R_Dmnd_Y_ssp1_crops <- create_ssp(L102.pcgdp_thous90USD_Scen_R_Y, "SSP1", "crops", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
-    L134.pcFood_est_R_Dmnd_Y_ssp1_meat <- create_ssp(L102.pcgdp_thous90USD_Scen_R_Y, "SSP1", "meat", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
-    L134.pcFood_est_R_Dmnd_Y_ssp2_crops <- create_ssp(L102.pcgdp_thous90USD_Scen_R_Y, "SSP2", "crops", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
-    L134.pcFood_est_R_Dmnd_Y_ssp2_meat <- create_ssp(L102.pcgdp_thous90USD_Scen_R_Y, "SSP2", "meat", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
-    L134.pcFood_est_R_Dmnd_Y_ssp3_crops <- create_ssp(L102.pcgdp_thous90USD_Scen_R_Y, "SSP3", "crops", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
-    L134.pcFood_est_R_Dmnd_Y_ssp3_meat <- create_ssp(L102.pcgdp_thous90USD_Scen_R_Y, "SSP3", "meat", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
-    L134.pcFood_est_R_Dmnd_Y_ssp4_crops <- create_ssp(L102.pcgdp_thous90USD_Scen_R_Y, "SSP4", "crops", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
-    L134.pcFood_est_R_Dmnd_Y_ssp4_meat <- create_ssp(L102.pcgdp_thous90USD_Scen_R_Y, "SSP4", "meat", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
-    L134.pcFood_est_R_Dmnd_Y_ssp5_crops <- create_ssp(L102.pcgdp_thous90USD_Scen_R_Y, "SSP5", "crops", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
-    L134.pcFood_est_R_Dmnd_Y_ssp5_meat <- create_ssp(L102.pcgdp_thous90USD_Scen_R_Y, "SSP5", "meat", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
+    L134.pcFood_est_R_Dmnd_Y_ssp1_crops <- create_ssp_diet(L102.pcgdp_thous90USD_Scen_R_Y, "SSP1", "crops", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
+    L134.pcFood_est_R_Dmnd_Y_ssp1_meat <- create_ssp_diet(L102.pcgdp_thous90USD_Scen_R_Y, "SSP1", "meat", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
+    L134.pcFood_est_R_Dmnd_Y_ssp2_crops <- create_ssp_diet(L102.pcgdp_thous90USD_Scen_R_Y, "SSP2", "crops", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
+    L134.pcFood_est_R_Dmnd_Y_ssp2_meat <- create_ssp_diet(L102.pcgdp_thous90USD_Scen_R_Y, "SSP2", "meat", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
+    L134.pcFood_est_R_Dmnd_Y_ssp3_crops <- create_ssp_diet(L102.pcgdp_thous90USD_Scen_R_Y, "SSP3", "crops", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
+    L134.pcFood_est_R_Dmnd_Y_ssp3_meat <- create_ssp_diet(L102.pcgdp_thous90USD_Scen_R_Y, "SSP3", "meat", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
+    L134.pcFood_est_R_Dmnd_Y_ssp4_crops <- create_ssp_diet(L102.pcgdp_thous90USD_Scen_R_Y, "SSP4", "crops", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
+    L134.pcFood_est_R_Dmnd_Y_ssp4_meat <- create_ssp_diet(L102.pcgdp_thous90USD_Scen_R_Y, "SSP4", "meat", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
+    L134.pcFood_est_R_Dmnd_Y_ssp5_crops <- create_ssp_diet(L102.pcgdp_thous90USD_Scen_R_Y, "SSP5", "crops", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
+    L134.pcFood_est_R_Dmnd_Y_ssp5_meat <- create_ssp_diet(L102.pcgdp_thous90USD_Scen_R_Y, "SSP5", "meat", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
 
     # Produce outputs
     L134.pcFood_kcald_R_Dmnd_Y %>%
