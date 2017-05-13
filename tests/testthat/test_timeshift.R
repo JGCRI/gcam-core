@@ -10,8 +10,6 @@ context("timeshift")
 if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
 
   test_that("chunks handle timeshift", {
-    skip("Let's not do the time warp again.")
-
     hy <- HISTORICAL_YEARS
     HISTORICAL_YEARS <<- HISTORICAL_YEARS + 1
     ahy <- AGLU_HISTORICAL_YEARS

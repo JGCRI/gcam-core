@@ -69,17 +69,18 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
                               year = allyr) %>%
       left_join(IrrRfdCropland, by=idvars) %>%
       group_by(GCAM_region_ID, GCAM_commodity, GLU) %>%
-      mutate(irr.harvarea = approx_fun(year, irr.harvarea),
-             rfd.harvarea = approx_fun(year, rfd.harvarea)) %>%
+      mutate(irr.harvarea = approx_fun(year, irr.harvarea, rule=2),
+             rfd.harvarea = approx_fun(year, rfd.harvarea, rule=2)) %>%
       ungroup -> IrrRfdCropland.interp
 
     ## Compute economic yield for each category as production divided by
     ## harvested area.
-    prod.both <- full_join(rename(L161.ag_rfdProd_Mt_R_C_Y_GLU, prod.rfd =
-                                     value),
-                           rename(L161.ag_irrProd_Mt_R_C_Y_GLU, prod.irr =
-                                    value),
-                           by = idvars)
+    prod.both <-
+        full_join(rename(L161.ag_rfdProd_Mt_R_C_Y_GLU, prod.rfd = value),
+                  rename(L161.ag_irrProd_Mt_R_C_Y_GLU, prod.irr = value),
+                  by = idvars) %>%
+          filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS))
+
     ecyield.both <- left_join_error_no_match(prod.both, IrrRfdCropland.interp,
                                              by = idvars) %>%
       mutate(irr.yld = prod.irr / irr.harvarea,
