@@ -18,11 +18,12 @@ the generated outputs: \code{L210.TechCoef}. The corresponding file in the
 original data system was \code{L210.water.demand.primary.R} (water level2).
 }
 \description{
-Briefly describe what this chunk does.
+Generate (water demand) technology coefficients for each GCAM region for base years and future years.
 }
 \details{
-Describe in detail what this chunk does.
+This chunk generate (water demand) technology coefficients for each GCAM region for base years and future years,
+with information of supplysector, subsector, technology, minicam.energy.input and market.name.
 }
 \author{
-YourInitials CurrentMonthName 2017
+YL May 2017
 }
