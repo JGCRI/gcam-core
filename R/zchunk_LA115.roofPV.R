@@ -17,7 +17,7 @@ module_energy_LA115.roofPV <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "energy/A15.roofPV_curves",
-             FILE = "temp-data-inject/L100.Pop_thous_ctry_Yh"))
+             "L100.Pop_thous_ctry_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L115.RsrcCurves_EJ_R_roofPV"))
   } else if(command == driver.MAKE) {
@@ -27,13 +27,11 @@ module_energy_LA115.roofPV <- function(command, ...) {
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     A15.roofPV_curves <- get_data(all_data, "energy/A15.roofPV_curves")
-    L100.Pop_thous_ctry_Yh <- get_data(all_data, "temp-data-inject/L100.Pop_thous_ctry_Yh")
+    L100.Pop_thous_ctry_Yh <- get_data(all_data, "L100.Pop_thous_ctry_Yh")
 
     # ===================================================
     # Categorizing countries and regions to GCAM Region ID; selecting population in 2010
     L100.Pop_thous_ctry_Yh %>%
-      gather(year, value, X1700:X2010) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) %>%
       filter(year == 2010) %>%
       left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%
       select(-iso, -country_name, -year) ->
@@ -64,7 +62,7 @@ module_energy_LA115.roofPV <- function(command, ...) {
       add_units("EJ for maxSubResource; 1975 $/GJ for midprice; unitless for gdpSupplyElast and subResourceCapacityFactor") %>%
       add_comments("Resources converted from 14 GCAM regions to 32 GCAM region IDs") %>%
       add_legacy_name("L115.RsrcCurves_EJ_R_roofPV") %>%
-      add_precursors("common/iso_GCAM_regID", "energy/A15.roofPV_curves", "temp-data-inject/L100.Pop_thous_ctry_Yh") ->
+      add_precursors("common/iso_GCAM_regID", "energy/A15.roofPV_curves", "L100.Pop_thous_ctry_Yh") ->
       L115.RsrcCurves_EJ_R_roofPV
 
     return_data(L115.RsrcCurves_EJ_R_roofPV)

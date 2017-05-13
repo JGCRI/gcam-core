@@ -18,8 +18,8 @@ module_socioeconomics_L101.Population <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "socioeconomics/GCAM3_population",
-             FILE = "temp-data-inject/L100.Pop_thous_ctry_Yh",
-             FILE = "temp-data-inject/L100.Pop_thous_SSP_ctry_Yfut"))
+             "L100.Pop_thous_ctry_Yh",
+             "L100.Pop_thous_SSP_ctry_Yfut"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L101.Pop_thous_R_Yh",
              "L101.Pop_thous_Scen_R_Yfut",
@@ -35,14 +35,8 @@ module_socioeconomics_L101.Population <- function(command, ...) {
       gather(year, value, -region_GCAM3) %>%
       mutate(year = as.integer(year)) ->
       GCAM3_population
-    get_data(all_data, "temp-data-inject/L100.Pop_thous_ctry_Yh") %>%
-      # temporary for data inject
-      gather(year, value, -iso) %>% mutate(year = as.integer(substr(year, 2, 5))) ->
-      L100.Pop_thous_ctry_Yh
-    get_data(all_data, "temp-data-inject/L100.Pop_thous_SSP_ctry_Yfut") %>%
-      # temporary for data inject
-      gather(year, value, -scenario, -iso) %>% mutate(year = as.integer(substr(year, 2, 5))) ->
-      L100.Pop_thous_SSP_ctry_Yfut
+    L100.Pop_thous_ctry_Yh <- get_data(all_data, "L100.Pop_thous_ctry_Yh")
+    L100.Pop_thous_SSP_ctry_Yfut <- get_data(all_data, "L100.Pop_thous_SSP_ctry_Yfut")
 
     # Historical population by region
     L100.Pop_thous_ctry_Yh %>%
@@ -153,7 +147,7 @@ module_socioeconomics_L101.Population <- function(command, ...) {
       add_comments("Population by region over the historical time period") %>%
       add_legacy_name("L101.Pop_thous_R_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "socioeconomics/GCAM3_population",
-                     "temp-data-inject/L100.Pop_thous_ctry_Yh", "temp-data-inject/L100.Pop_thous_SSP_ctry_Yfut") %>%
+                     "L100.Pop_thous_ctry_Yh", "L100.Pop_thous_SSP_ctry_Yfut") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L101.Pop_thous_R_Yh
 
@@ -163,8 +157,8 @@ module_socioeconomics_L101.Population <- function(command, ...) {
       add_comments("Population by region and gSSP SSP in future periods") %>%
       add_legacy_name("L101.Pop_thous_Scen_R_Yfut") %>%
       add_precursors("common/iso_GCAM_regID", "socioeconomics/GCAM3_population",
-                     "temp-data-inject/L100.Pop_thous_ctry_Yh", "temp-data-inject/L100.Pop_thous_SSP_ctry_Yfut") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L100.Pop_thous_ctry_Yh", "L100.Pop_thous_SSP_ctry_Yfut") %>%
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L101.Pop_thous_Scen_R_Yfut
 
     L101.Pop_thous_GCAM3_R_Y %>%
@@ -173,7 +167,7 @@ module_socioeconomics_L101.Population <- function(command, ...) {
       add_comments("GCAM population data interpolated to all historical and future years") %>%
       add_legacy_name("L101.Pop_thous_GCAM3_R_Y") %>%
       add_precursors("common/iso_GCAM_regID", "socioeconomics/GCAM3_population",
-                     "temp-data-inject/L100.Pop_thous_ctry_Yh", "temp-data-inject/L100.Pop_thous_SSP_ctry_Yfut") %>%
+                     "L100.Pop_thous_ctry_Yh", "L100.Pop_thous_SSP_ctry_Yfut") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L101.Pop_thous_GCAM3_R_Y
 
@@ -185,7 +179,7 @@ module_socioeconomics_L101.Population <- function(command, ...) {
       add_comments("GCAM population data interpolated to all historical and future years") %>%
       add_legacy_name("L101.Pop_thous_GCAM3_ctry_Y") %>%
       add_precursors("common/iso_GCAM_regID", "socioeconomics/GCAM3_population",
-                     "temp-data-inject/L100.Pop_thous_ctry_Yh", "temp-data-inject/L100.Pop_thous_SSP_ctry_Yfut") %>%
+                     "L100.Pop_thous_ctry_Yh", "L100.Pop_thous_SSP_ctry_Yfut") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L101.Pop_thous_GCAM3_ctry_Y
 
