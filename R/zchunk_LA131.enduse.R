@@ -140,7 +140,7 @@ module_energy_LA131.enduse <- function(command, ...) {
     Enduse_heat %>%
       left_join_error_no_match(Enduse_heat_unscaled, by = c("GCAM_region_ID", "year")) %>%
       mutate(value = value.x / value.y) %>%
-      mutate(value = if_else(is.na(value),0,value)) %>%
+      replace_na(list(value = 0)) %>%
       select(-value.x, -value.y) ->
       Enduse_heat_scaler
 
@@ -184,12 +184,12 @@ module_energy_LA131.enduse <- function(command, ...) {
     # Regions may have zero heat consumption by demand sectors while nevertheless having heat production. Assign this to industry
     Enduse_heat_scaled_share %>%
       filter(sector == "in_industry_general") %>%
-      mutate(value = if_else(is.na(value),1,value)) ->
+      replace_na(list(value = 1)) ->
       Enduse_heat_scaled_share_indust
 
     Enduse_heat_scaled_share %>%
       filter(sector != "in_industry_general") %>%
-      mutate(value = if_else(is.na(value),0,value)) %>%
+      replace_na(list(value = 0)) %>%
       bind_rows(Enduse_heat_scaled_share_indust) %>%
       arrange(GCAM_region_ID, sector, year) ->
       L131.share_R_Senduse_heat_Yh # Output table 2

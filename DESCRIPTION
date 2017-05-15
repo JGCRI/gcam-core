@@ -1,7 +1,7 @@
 Package: gcamdata
 Type: Package
 Title: Build the GCAM Input Datasets
-Version: 0.2
+Version: 0.2.1
 Author: PNNL/JGCRI
 Maintainer: Ben Bond-Lamberty <bondlamberty@pnnl.gov>
 Description: Build the GCAM XML input files.
@@ -12,7 +12,8 @@ Imports:
     magrittr (>= 1.5),
     tibble (>= 1.1),
     tidyr (>= 0.6.0),
-    readr (>= 1.0.0)
+    readr (>= 1.0.0),
+    data.table (>= 1.10.4)
 Suggests:
     igraph (>= 1.0.1),
     testthat (>= 1.0.2),

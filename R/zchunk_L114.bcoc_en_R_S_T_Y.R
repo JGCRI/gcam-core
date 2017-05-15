@@ -17,8 +17,8 @@
 module_emissions_L114.bcoc_en_R_S_T_Y_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "emissions/EPA_ghg_tech",
-             FILE = "emissions/GCAM_sector_tech",
+             FILE = "emissions/mappings/EPA_ghg_tech",
+             FILE = "emissions/mappings/GCAM_sector_tech",
              "L101.in_EJ_R_en_Si_F_Yh",
              FILE = "temp-data-inject/L104.bcoc_tgej_USA_en_T_1990",
              FILE = "emissions/RCP_BC_2000",
@@ -31,8 +31,8 @@ module_emissions_L114.bcoc_en_R_S_T_Y_DISABLED <- function(command, ...) {
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    EPA_ghg_tech <- get_data(all_data, "emissions/EPA_ghg_tech")
-    GCAM_sector_tech <- get_data(all_data, "emissions/GCAM_sector_tech")
+    EPA_ghg_tech <- get_data(all_data, "emissions/mappings/EPA_ghg_tech")
+    GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
     L101.in_EJ_R_en_Si_F_Yh <- get_data(all_data, "L101.in_EJ_R_en_Si_F_Yh")
     L104.bcoc_tgej_USA_en_T_1990 <- get_data(all_data, "temp-data-inject/L104.bcoc_tgej_USA_en_T_1990")
     RCP_BC_2000 <- get_data(all_data, "emissions/RCP_BC_2000")

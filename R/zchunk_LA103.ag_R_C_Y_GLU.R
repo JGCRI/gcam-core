@@ -49,8 +49,8 @@ module_aglu_LA103.ag_R_C_Y_GLU <- function(command, ...) {
       group_by(GCAM_region_ID, GCAM_commodity) %>%
       summarise(value = sum(value)) %>%
       right_join(L102.ag_Prod_Mt_R_C_GLU, by = c("GCAM_region_ID", "GCAM_commodity")) %>%
-      mutate(value = value.y / value.x,
-             value = if_else(is.na(value), 0, value)) %>%
+      mutate(value = value.y / value.x) %>%
+      replace_na(list(value = 0)) %>%
       select(-value.x, -value.y) ->
       L103.ag_Prod_frac_R_C_GLU
 
@@ -59,8 +59,8 @@ module_aglu_LA103.ag_R_C_Y_GLU <- function(command, ...) {
       group_by(GCAM_region_ID, GCAM_commodity) %>%
       summarise(value = sum(value)) %>%
       right_join(L102.ag_HA_bm2_R_C_GLU, by = c("GCAM_region_ID", "GCAM_commodity")) %>%
-      mutate(value = value.y / value.x,
-             value = if_else(is.na(value), 0, value)) %>%
+      mutate(value = value.y / value.x) %>%
+      replace_na(list(value = 0)) %>%
       select(-value.x, -value.y) ->
       L103.ag_HA_frac_R_C_GLU
 
@@ -103,8 +103,8 @@ module_aglu_LA103.ag_R_C_Y_GLU <- function(command, ...) {
     # Yield in kilograms per square meter
     L103.ag_Prod_Mt_R_C_Y_GLU %>%
       left_join(L103.ag_HA_bm2_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year")) %>%
-      mutate(value = value.x / value.y,
-             value = if_else(is.na(value), 0, value)) %>%
+      mutate(value = value.x / value.y) %>%
+      replace_na(list(value = 0)) %>%
       select(-value.x, -value.y) %>%
       arrange(GLU) ->  # so we match old d.s. order
       L103.ag_Yield_kgm2_R_C_Y_GLU

@@ -138,7 +138,7 @@ module_energy_LA126.distribution <- function(command, ...) {
       left_join(Gasproc_out, by = c("GCAM_region_ID", "year")) %>% # Joining gas output
       mutate(value_gaspipe_out = value_gaspipe_in - value_gaspipe) %>% # Creating values for table, L126.out_EJ_R_gaspipe_F_Yh (i.e., output), by subtracting gas pipeline input by gas pipeline consumption
       mutate(value_gaspipe_IO = value_gaspipe_in / value_gaspipe_out) %>% # Creating values for table, L126.IO_R_gaspipe_F_Yh, by dividing input by output. Note that some regions have zero gas in some of the base years. Reset their IO coefs to 1 in the next step.
-      mutate(value_gaspipe_IO = if_else(is.na(value_gaspipe_IO), 1, value_gaspipe_IO)) -> # Reset NaN IO coefs to 1, since some regions have no gas in some base years.
+      replace_na(list(value_gaspipe_IO = 1)) -> # Reset NaN IO coefs to 1, since some regions have no gas in some base years.
       Gas_pipeline_all
 
     # Table Gas_pipeline_all is separated to create the final tables
