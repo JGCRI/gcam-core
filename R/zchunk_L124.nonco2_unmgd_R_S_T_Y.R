@@ -159,30 +159,25 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
       L124.nonco2_tg_R_forest_Y_GLU
 
     # # Compute driver data to write out some average coefficients. Note that the driver can't be negative, and is annualized, so divide by timestep
-    # L124.deforest_driver <- L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj[ c( R_LT_GLU, X_Deforest_coef_years ) ]
-    # L124.deforest_driver$driver <- pmax(
-    #   L124.deforest_driver[[X_Deforest_coef_years[1] ]] - L124.deforest_driver[[ X_Deforest_coef_years[2] ]],
-    #   0 ) / ( Deforest_coef_years[2] - Deforest_coef_years[1] )
-    #
-    # #Repeat by species, and match in the emissions quantities
-    # L124.deforest_coefs_R_GLU <- repeat_and_add_vector( L124.deforest_driver[ c( R_LT_GLU, "driver" ) ],
-    #                                                     "Non.CO2",
-    #                                                     unique( L124.nonco2_tg_R_forest_Y_GLU$Non.CO2 ) )
-    # L124.deforest_coefs_R_GLU$technology <- "Deforest"
-    # L124.deforest_coefs_R_GLU$emissions <- L124.nonco2_tg_R_forest_Y_GLU[[ X_Deforest_coef_years[2 ] ]][
-    #   match( vecpaste( L124.deforest_coefs_R_GLU[ c( R_LT_GLU, "Non.CO2", "technology" ) ] ),
-    #          vecpaste( L124.nonco2_tg_R_forest_Y_GLU[ c( R_LT_GLU, "Non.CO2", "technology" ) ] ) ) ]
-    #
-    # # where the driver is (net) zero, re-set the emissions to zero to remove them from the calculation
-    # L124.deforest_coefs_R_GLU$emissions[ L124.deforest_coefs_R_GLU$driver == 0 ] <- 0
-    # L124.deforest_coefs_R_GLU$emissions[ is.na( L124.deforest_coefs_R_GLU$emissions ) ] <- 0
-    #
-    # #Aggregate the totals to compute the default coefficients
-    # L124.deforest_coefs <- aggregate( L124.deforest_coefs_R_GLU[ c( "driver", "emissions" ) ],
-    #                                   by = L124.deforest_coefs_R_GLU[ c( LT, "technology", "Non.CO2" ) ],
-    #                                   sum )
-    # L124.deforest_coefs$emiss.coef <- with( L124.deforest_coefs, emissions / driver )
-    #
+    gas_list <- tibble(Non.CO2 = L124.nonco2_tg_R_forest_Y_GLU$Non.CO2 %>% unique())
+    L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj %>%
+      filter(year %in% emissions.DEFOREST_COEF_YEARS) %>%
+      mutate(year = if_else(year == min(emissions.DEFOREST_COEF_YEARS), "year1", "year2")) %>%
+      spread(year, value) %>%
+      mutate(driver = (year1 - year2) / (emissions.DEFOREST_COEF_YEARS[2] - emissions.DEFOREST_COEF_YEARS[1])) %>%
+      mutate(driver = if_else(driver < 0, 0, driver)) %>%
+      repeat_add_columns(gas_list) %>%
+      left_join(filter(L124.nonco2_tg_R_forest_Y_GLU,
+                       year == emissions.DEFOREST_COEF_YEARS[2],
+                       technology == "Deforest"), by = c( "GCAM_region_ID", "Land_Type", "GLU", "Non.CO2" )) %>%
+      mutate(technology = if_else(is.na(technology), "Deforest", technology)) %>%
+      mutate(value = if_else(is.na(value), 0, value)) %>%
+      mutate(value = if_else(driver == 0, 0, value)) %>%  # where the driver is (net) zero, re-set the emissions to zero to remove them from the calculation
+      group_by(Land_Type, technology, Non.CO2) %>%
+      summarize(driver = sum(driver), emissions = sum(value)) %>%
+      mutate(emiss.coef = emissions / driver) %>%
+      na.omit() ->
+      L124.deforest_coefs
 
     # Produce outputs
     # Temporary code below sends back empty data frames marked "don't test"
@@ -197,7 +192,7 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
       add_legacy_name("L124.nonco2_tg_R_grass_Y_GLU") %>%
       add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_sector", "temp-data-inject/L124.LC_bm2_R_Grass_Yh_GLU_adj", "EDGAR_gases") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L124.nonco2_tg_R_grass_Y_GLU
     L124.nonco2_tg_R_forest_Y_GLU %>%
       add_title("descriptive title of data") %>%
@@ -211,15 +206,13 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L124.nonco2_tg_R_forest_Y_GLU
-    tibble() %>%
+    L124.deforest_coefs %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L124.deforest_coefs") %>%
-      same_precursors_as("L124.nonco2_tg_R_forest_Y_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
+      same_precursors_as("L124.nonco2_tg_R_forest_Y_GLU") ->
       L124.deforest_coefs
 
     return_data(L124.nonco2_tg_R_grass_Y_GLU, L124.nonco2_tg_R_forest_Y_GLU, L124.deforest_coefs)
