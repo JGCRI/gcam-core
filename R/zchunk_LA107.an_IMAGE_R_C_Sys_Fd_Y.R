@@ -203,7 +203,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
       # drop the columns we don't care about:
       select(-value.x, -value.y) %>%
       # replace NA/NaN with the value 100
-      mutate(value=if_else(is.na(value), 100, value))->
+      replace_na(list(value = 100)) ->
       # store in a table specifying IO coefficients by region, commodity, system, feed type, and year:
       L107.an_FeedIO_R_C_Sys_Fd_Y
 

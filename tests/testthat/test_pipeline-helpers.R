@@ -115,3 +115,29 @@ test_that("left_join_keep_first_only works", {
   expect_equal(r4, r5)
 
 })
+
+test_that("fast_left_join produces results equivalent to left_join", {
+    x <- as.integer(100*rnorm(100))
+    y <- rnorm(100)
+    z1 <- rnorm(100)
+    z2 <- rnorm(100)
+
+    A <- tibble(x=x, y=y, z1=z1)
+    B <- tibble(x=x, y=y, z2=z2)
+
+    ## Two join columns, no duplicate unjoined columns
+    ABdp <- dplyr::left_join(A, B, by=c('x','y')) %>% arrange(x,y)
+    ABdt <- fast_left_join(A, B, by=c('x','y')) %>% arrange(x,y)
+
+    expect_equal(ABdp, ABdt)
+
+    ## One join column, y is a duplicate
+    ABdp <- dplyr::left_join(A, B, by='x') %>% arrange(x, y.x, y.y)
+    ABdt <- fast_left_join(A, B, by='x') %>% rename(y.x = i.y, y.y = y) %>%
+      arrange(x, y.x, y.y)
+
+    expect_equal(ABdp, ABdt)
+})
+
+
+
