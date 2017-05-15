@@ -171,12 +171,6 @@ driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE,
     save_chunkdata(all_data, outputs_dir = outdir, xml_dir = xmldir)
   }
 
-  # Strip "no output", input, and XML data from driver output
-  if(!quiet) cat("Cleaning up...")
-  all_data <- lapply(all_data, function(x) {
-    if(any(c(FLAG_NO_OUTPUT, FLAG_INPUT_DATA, FLAG_XML) %in% get_flags(x))) NULL else x
-  })
-
   if(!quiet) cat("All done.\n")
   invisible(all_data)
 }
