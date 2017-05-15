@@ -83,20 +83,20 @@ class Value {
      }
 
 public:
-    enum Unit {
+    /*enum Unit {
         DEFAULT,
         PETAJOULE,
 		EXAJOULE
-    };
+    };*/
 
     Value();
-    explicit Value( const double aValue, const Unit aUnit = DEFAULT );
-    void init( const double aNewValue, const Unit aUnit = DEFAULT );
-    void set( const double aNewValue, const Unit aUnit = DEFAULT );
+    explicit Value( const double aValue/*, const Unit aUnit = DEFAULT*/ );
+    void init( const double aNewValue/*, const Unit aUnit = DEFAULT*/ );
+    void set( const double aNewValue/*, const Unit aUnit = DEFAULT*/ );
     operator double() const;
     double get() const;
     bool isInited() const;
-    void setCopyState( const bool aIsStateCopy );
+    //void setCopyState( const bool aIsStateCopy );
     Value& operator+=( const Value& aValue );
     Value& operator-=( const Value& aValue );
     Value& operator*=( const Value& aValue );
@@ -114,67 +114,78 @@ private:
     std::istream& read( std::istream& aIStream );
 
     double mValue;
-    static double** mAltValue;
-    size_t mAltValueIndex;
+    static double* mAltValue;
+    /*size_t*/unsigned int mAltValueIndex;
     bool mIsInit;
-    static bool* mIsPartialDeriv;
-    Unit mUnit;
-    bool mIsStateCopy;
+    //static bool* mIsPartialDeriv;
+    //Unit mUnit;
+    //bool mIsStateCopy;
     
     //void doCheck() const;
-    double& getInternal();
-    const double& getInternal() const;
+    //double& getInternal();
+    //const double& getInternal() const;
+    double& (*getInternal)(Value&);
+    static double& getInternalValue(Value& aValue);
+    static double& getInternalAltValue(Value& aValue);
 };
 
-inline Value::Value(): mValue( 0 ), mIsInit( false ), mUnit( DEFAULT ), mIsStateCopy( false ){}
+inline Value::Value(): mValue( 0 ), mIsInit( false )/*, mUnit( DEFAULT ), mIsStateCopy( false )*/{
+    getInternal = &Value::getInternalValue;
+}
 
 /*! 
  * \brief Create a value from a double and a unit.
  * \param aValue Initial value.
  * \param aUnit Unit.
  */
-inline Value::Value( const double aValue, const Unit aUnit ):
+inline Value::Value( const double aValue/*, const Unit aUnit*/ ):
 mValue( aValue ),
-mIsInit( true ),
+mIsInit( true )/*,
 mUnit( aUnit ),
-mIsStateCopy( false )
+mIsStateCopy( false )*/
 {
+    getInternal = &Value::getInternalValue;
 }
 
 //! Initialize the value, can only be done once.
-inline void Value::init( const double aNewValue, const Unit aUnit ){
+inline void Value::init( const double aNewValue/*, const Unit aUnit*/ ){
     assert( util::isValidNumber( aNewValue ) );
     if( !mIsInit ){
         mValue = aNewValue;
-        mUnit = aUnit;
+        //mUnit = aUnit;
         mIsInit = true;
     }
 }
 
-inline double& Value::getInternal() {
-    return mIsStateCopy ? mAltValue[/*(size_t)*mIsPartialDeriv*/ *mIsPartialDeriv ? 1 : 0 ][mAltValueIndex] : mValue;
+inline double& Value::getInternalValue(Value& aValue) {
+    return aValue.mValue;
 }
 
-inline const double& Value::getInternal() const {
-    return mIsStateCopy ? mAltValue[/*(size_t)*mIsPartialDeriv*/ *mIsPartialDeriv ? 1 : 0 ][mAltValueIndex] : mValue;
+
+inline double& Value::getInternalAltValue(Value& aValue) {
+    return aValue.mAltValue[aValue.mAltValueIndex];
 }
+
+/*inline const double& Value::getInternal() const {
+    return mIsStateCopy ? mAltValue[mAltValueIndex] : mValue;
+}*/
 
 //! Set the value.
-inline void Value::set( const double aNewValue, const Unit aUnit ){
+inline void Value::set( const double aNewValue/*, const Unit aUnit*/ ){
     assert( util::isValidNumber( aNewValue ) );
-    getInternal() = aNewValue;
-    mUnit = aUnit;
+    getInternal(*this) = aNewValue;
+    //mUnit = aUnit;
     mIsInit = true;
     //doCheck();
 }
 
-inline void Value::setCopyState(const bool aIsStateCopy) {
+/*inline void Value::setCopyState(const bool aIsStateCopy) {
     mIsStateCopy = aIsStateCopy;
-}
+}*/
 
 //! Get the value.
 inline Value::operator double() const {
-    return getInternal();
+    return getInternal((*const_cast<Value*>(this)));
 }
 
 /*!
@@ -184,7 +195,7 @@ inline Value::operator double() const {
  * \return The value.
  */
 inline double Value::get() const {
-    return getInternal();
+    return getInternal((*const_cast<Value*>(this)));
 }
 
 /*! 
@@ -198,8 +209,8 @@ inline Value& Value::operator+=( const Value& aValue ){
     mIsInit = true;
 
     // Make sure the units match up.
-    assert( mUnit == aValue.mUnit );
-    getInternal() += aValue.getInternal();
+    //assert( mUnit == aValue.mUnit );
+    getInternal(*this) += aValue.getInternal((const_cast<Value&>(aValue)));
     //doCheck();
     return *this;
 }
@@ -215,8 +226,8 @@ inline Value& Value::operator-=( const Value& aValue ){
     mIsInit = true;
 
     // Make sure the units match up.
-    assert( mUnit == aValue.mUnit );
-    getInternal() -= aValue.getInternal();
+    //assert( mUnit == aValue.mUnit );
+    getInternal(*this) -= aValue.getInternal((const_cast<Value&>(aValue)));
     //doCheck();
     return *this;
 }
@@ -231,8 +242,8 @@ inline Value& Value::operator*=( const Value& aValue ){
     assert( mIsInit );
 
     // Make sure the units match up.
-    assert( mUnit == aValue.mUnit );
-    getInternal() *= aValue.getInternal();
+    //assert( mUnit == aValue.mUnit );
+    getInternal(*this) *= aValue.getInternal((const_cast<Value&>(aValue)));
     //doCheck();
     return *this;
 }
@@ -248,16 +259,16 @@ inline Value& Value::operator/=( const Value& aValue ){
     assert( aValue > util::getSmallNumber() );
 
     // Make sure the units match up.
-    assert( mUnit == aValue.mUnit );
-    getInternal() /= aValue.getInternal();
+    //assert( mUnit == aValue.mUnit );
+    getInternal(*this) /= aValue.getInternal((const_cast<Value&>(aValue)));
     //doCheck();
     return *this;
 }
 
 inline Value& Value::operator=( const Value& aValue ) {
-    getInternal() = aValue.getInternal();
+    getInternal(*this) = aValue.getInternal((const_cast<Value&>(aValue)));
     mIsInit = aValue.mIsInit;
-    mUnit = aValue.mUnit;
+    //mUnit = aValue.mUnit;
     /*
     if( aValue.mIsStateCopy ) {
         mAltValue = aValue.mAltValue;
@@ -310,7 +321,7 @@ inline bool Value::isInited() const {
  * \param aOut Output stream into which to print.
  */
 inline void Value::print( std::ostream& aOut ) const {
-    aOut << mValue;
+    aOut << getInternal(*const_cast<Value*>(this));
 }
 
 /*!
@@ -322,7 +333,7 @@ inline std::istream& Value::read( std::istream& aIStream ){
     double streamValue;
     if( aIStream >> streamValue ) {
         mIsInit = true;
-        mValue = streamValue;
+        getInternal(*this) = streamValue;
     }
     return aIStream;
 }

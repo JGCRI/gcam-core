@@ -59,6 +59,7 @@ public:
     ~ManageStateVariables();
     
     void copyState();
+    void setPartialDeriv( const bool aIsPartialDeriv );
     
 private:
     void collectState();

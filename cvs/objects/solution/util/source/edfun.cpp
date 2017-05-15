@@ -139,6 +139,7 @@ void LogEDFun::partial(int ip)
         
         //collect.resetState();
         mktplc->mIsDerivativeCalc = false;
+        scenario->mManageStateVars->setPartialDeriv(false);
         //solnset.restoreValues();    // reset all markets to values stored above
         
     }
@@ -225,6 +226,7 @@ void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx, cons
      * 1B Set the model inputs using the solutionInfo objects (partial derivative version)
      ****/ 
     mktplc->mIsDerivativeCalc = true;
+      scenario->mManageStateVars->setPartialDeriv(true);
 
 
     if(mdiagnostic) {

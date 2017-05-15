@@ -51,8 +51,8 @@ using namespace std;
 
 extern Scenario* scenario;
 
-double** Value::mAltValue = 0;
-bool* Value::mIsPartialDeriv = 0;
+double* Value::mAltValue = 0;
+//size_t Value::mIsPartialDeriv = 0;
 
 ManageStateVariables::ManageStateVariables( const int aPeriod ):
 mStateData( new double*[2] ),
@@ -60,8 +60,8 @@ mPeriodToCollect( aPeriod ),
 mYearToCollect( scenario->getModeltime()->getper_to_yr( aPeriod ) ),
 mNumCollected( 0 )
 {
-    Value::mAltValue = mStateData;
-    Value::mIsPartialDeriv = &scenario->getMarketplace()->mIsDerivativeCalc;
+    //Value::mAltValue = mStateData[0];
+    //Value::mIsPartialDeriv = 0;
     collectState();
 }
 
@@ -87,16 +87,13 @@ void ManageStateVariables::collectState() {
     vector<FilterStep*> collectStateSteps( 2, 0 );
     collectStateSteps[ 0 ] = new FilterStep( "" );
     collectStateSteps[ 1 ] = new FilterStep( "", DataFlags::STATE );
-    cout << "Num steps: " << collectStateSteps.size() << endl;
-    for( auto filterStep : collectStateSteps ) {
-        cout << "Name: " << filterStep->mDataName << ", NoFilter? " << filterStep->isDescendantStep() << endl;
-    }
     GCAMFusion<DoCollect, true, true, true> gatherState( doCollectProc, collectStateSteps );
     gatherState.startFilter( scenario );
     cout << "Collected: " << mNumCollected << endl;
     for( size_t stateInd = 0; stateInd < 2; ++stateInd ) {
         mStateData[ stateInd ] = new double[ mNumCollected ];
     }
+    Value::mAltValue = mStateData[0];
     cout << "Mem allocated" << endl;
     mNumCollected = 0;
     doCollectProc.mMemIsAllocated = true;
@@ -127,6 +124,10 @@ void ManageStateVariables::resetState() {
     }
 }
 
+void ManageStateVariables::setPartialDeriv( const bool aIsPartialDeriv ) {
+    Value::mAltValue = mStateData[aIsPartialDeriv ? 1 : 0];
+}
+
 /*void Value::doCheck() const {
     const bool isPartialDeriv = scenario->getMarketplace()->mIsDerivativeCalc;
     if( !mIsStateCopy && isPartialDeriv ) {
@@ -143,14 +144,15 @@ void ManageStateVariables::DoCollect::processData( DataType& aData ) {
 template<>
 void ManageStateVariables::DoCollect::processData<Value>( Value& aData ) {
     if( !mIgnoreCurrValue ) {
-        aData.mIsStateCopy = mIsCollect;
+        //aData.mIsStateCopy = mIsCollect;
+        aData.getInternal = mIsCollect ? &Value::getInternalAltValue : &Value::getInternalValue;
         //aData.mIsPartialDeriv = &scenario->getMarketplace()->mIsDerivativeCalc;
         if( mIsCollect ) {
             //aData.mAltValue = mParentClass->mStateData;
             aData.mAltValueIndex = mParentClass->mNumCollected;
             if( mMemIsAllocated ) {
-                aData.mAltValue[0][aData.mAltValueIndex] = aData.mValue;
-                aData.mAltValue[1][aData.mAltValueIndex] = aData.mValue;
+                //aData.mAltValue = mParentClass->mStateData[0];
+                aData.mAltValue[ mParentClass->mNumCollected ] = aData.mValue;
             }
         }
         else {
@@ -158,7 +160,7 @@ void ManageStateVariables::DoCollect::processData<Value>( Value& aData ) {
                 cout << "Reset didn't match " << aData.mAltValueIndex << " != " << mParentClass->mNumCollected << endl;
                 abort();
             }
-            aData.mValue = aData.mAltValue[0][aData.mAltValueIndex];
+            aData.mValue = aData.mAltValue[ mParentClass->mNumCollected ];
         }
         ++mParentClass->mNumCollected;
     }
@@ -167,14 +169,14 @@ void ManageStateVariables::DoCollect::processData<Value>( Value& aData ) {
 template<>
 void ManageStateVariables::DoCollect::processData<objects::PeriodVector<Value> >( objects::PeriodVector<Value >& aData ) {
     if( !mIgnoreCurrValue ) {
-        aData[mParentClass->mPeriodToCollect].mIsStateCopy = mIsCollect;
+        //aData[mParentClass->mPeriodToCollect].mIsStateCopy = mIsCollect;
+        aData[mParentClass->mPeriodToCollect].getInternal = mIsCollect ? &Value::getInternalAltValue : &Value::getInternalValue;
         //aData[mParentClass->mPeriodToCollect].mIsPartialDeriv = &scenario->getMarketplace()->mIsDerivativeCalc;
         if( mIsCollect ) {
             //aData[mParentClass->mPeriodToCollect].mAltValue = mParentClass->mStateData;
             aData[mParentClass->mPeriodToCollect].mAltValueIndex = mParentClass->mNumCollected;
             if( mMemIsAllocated ) {
-                aData[mParentClass->mPeriodToCollect].mAltValue[0][aData[mParentClass->mPeriodToCollect].mAltValueIndex] = aData[mParentClass->mPeriodToCollect].mValue;
-                aData[mParentClass->mPeriodToCollect].mAltValue[1][aData[mParentClass->mPeriodToCollect].mAltValueIndex] = aData[mParentClass->mPeriodToCollect].mValue;
+                aData[mParentClass->mPeriodToCollect].mAltValue[ mParentClass->mNumCollected ] = aData[mParentClass->mPeriodToCollect].mValue;
             }
         }
         else {
@@ -182,7 +184,7 @@ void ManageStateVariables::DoCollect::processData<objects::PeriodVector<Value> >
                 cout << "Reset didn't match " << aData[mParentClass->mPeriodToCollect].mAltValueIndex << " != " << mParentClass->mNumCollected << endl;
                 abort();
             }
-            aData[mParentClass->mPeriodToCollect].mValue = aData[mParentClass->mPeriodToCollect].mAltValue[0][aData[mParentClass->mPeriodToCollect].mAltValueIndex];
+            aData[mParentClass->mPeriodToCollect].mValue = aData[mParentClass->mPeriodToCollect].mAltValue[ mParentClass->mNumCollected ];
         }
         ++mParentClass->mNumCollected;
     }
