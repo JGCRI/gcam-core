@@ -41,7 +41,7 @@ module_energy_LA100.CDIAC_downscale_ctry <- function(command, ...) {
       right_join(CDIAC_CO2_by_nation, by = c("nation", "year")) %>%
 
       # Zero out NAs and subset to years being processed
-      mutate(liquids.sequestration = if_else(is.na(liquids.sequestration), 0, liquids.sequestration)) %>%
+      replace_na(list(liquids.sequestration = 0)) %>%
       filter(year %in% energy.CDIAC_CO2_HISTORICAL_YEARS ) ->
       L100.CDIAC_CO2_ctry_hist
 
@@ -102,7 +102,7 @@ module_energy_LA100.CDIAC_downscale_ctry <- function(command, ...) {
       right_join(L100.CO2_Yug_hist_repCtry, by = c("iso", "category")) %>%
       mutate(value = value * share) %>%
       select(-share) %>%
-      mutate(value = if_else(is.na(value), 0, value)) %>%
+      replace_na(list(value = 0)) %>%
       spread(category, value) ->
       L100.CO2_FYug_hist
 

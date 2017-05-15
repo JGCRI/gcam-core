@@ -68,7 +68,7 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
       group_by(EPA_agg_sector, EPA_agg_fuel_ghg, Non.CO2) %>%
       left_join(L131.EPA_nonco2_indproc.mlt, by = c(EPA_agg_sector = "sector", EPA_agg_fuel_ghg = "subsector", "Non.CO2")) %>%
       rename(tech_emissions = x) %>%
-      mutate(tech_emissions = if_else(is.na(tech_emissions), 1, tech_emissions)) -> # set missing values to 1, emissions coef will be overwritten below.
+      replace_na(list(tech_emissions = 1)) -> # set missing values to 1, emissions coef will be overwritten below.
       L131.nonco2_pct_R_prc_S_S_2005
 
     L131.nonco2_pct_R_prc_S_S_2005 %>%
@@ -129,7 +129,7 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
       # which introduces NA's that are then converted to 0. Convert back to long format for new data system.
       spread(year, value) %>%
       gather(year, value, -GCAM_region_ID, -supplysector, -subsector, -stub.technology, -Non.CO2) %>%
-      mutate(value = if_else(is.na(value), 0, value)) %>%
+      replace_na(list(value = 0)) %>%
 
       # Produce outputs
       add_title("GHG emissions by GCAM region / sector / technology / historical year") %>%
