@@ -94,7 +94,7 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
       FAO_ag_Prod_t
 
     # Set production to zero when harvested area is zero and vice versa
-    FAO_ag_HA_ha %>%
+    FAO_ag_HA_ha %>% ungroup %>%
       inner_join(FAO_ag_Prod_t, by = c("iso", "item", "year")) %>%                                              # Join production and harvested area
       rename(harvested.area = value.x, production = value.y)   %>%                                              # Rename variables
       mutate(harvested.area = if_else(production == 0, 0, harvested.area)) %>%                                  # Set harvested area to zero if production is zero
