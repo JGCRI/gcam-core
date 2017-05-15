@@ -115,7 +115,7 @@ left_join_keep_first_only <- function(x, y, by) {
 #' as a \code{tbl_df}, irrespective of the type of the inputs.
 #' @importFrom data.table data.table
 #' @importFrom assertthat assert_that
-#' @importFrom tibble as.tibble
+#' @importFrom tibble as_tibble
 fast_left_join <- function(left, right, by) {
     assert_that(is.data.frame(left))
     assert_that(is.data.frame(right))
@@ -130,7 +130,7 @@ fast_left_join <- function(left, right, by) {
     dtl <- data.table(left[ , union(by, names(left))])
     dtr <- data.table(right, key=by)
 
-    as.tibble(dtr[dtl, allow.cartesian=TRUE])
+    as_tibble(dtr[dtl, allow.cartesian=TRUE])
 }
 
 
