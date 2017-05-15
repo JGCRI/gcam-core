@@ -233,7 +233,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
                                          #                                  otherwise, use the available fallow land data:
                                          fallow_frac)) %>%
       #   This step determines (3) when (1) and (2) are not available:
-      mutate(nonharvested_frac = if_else(is.na(nonharvested_frac), 0, nonharvested_frac)) ->
+      replace_na(list(nonharvested_frac = 0)) ->
       # store in a table of nonharvested cropland fractions by region:
       L122.nonharvested_cropland_R
 
@@ -353,7 +353,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       # remove unnecessary columns:
       select(-value.x, -value.y) %>%
       # set any NA values to 0 yield:
-      mutate(value = if_else(is.na(value), 0, value)) %>%
+      replace_na(list(value = 0)) %>%
       # remove now-unneeded land type data:
       select(-Land_Type) ->
       # store in a table of Economic Yield by region-commodity-glu-year:
@@ -474,7 +474,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
           .,
           by = c("GCAM_region_ID", "GLU", "Land_Type") ) %>%
       # missing values are overwritten to 0:
-      mutate(value = if_else(is.na(value), 0, value)) %>%
+      replace_na(list(value = 0)) %>%
       # bind to the table of OtherArableLand information by region-glu-year:
       bind_rows(L122.LC_bm2_R_OtherArableLand_Y_GLU, .) %>%
       # update the landtype identifier

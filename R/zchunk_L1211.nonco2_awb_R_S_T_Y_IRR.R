@@ -76,7 +76,7 @@ module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR <- function(command, ...) {
       # value.y is now the total (rfd+irr) production
       mutate(value = value.x / value.y) %>%
       select(-value.x, -value.y) %>%
-      mutate(value = if_else(is.na(value), 0, value)) ->
+      replace_na(list(value = 0)) ->
       L1211.ag_irrShare_R_C_Y_GLU_irr
 
     # This section creates L1211.nonco2_tg_R_awb_C_Y_GLU_IRR

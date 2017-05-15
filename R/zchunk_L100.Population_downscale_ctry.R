@@ -91,8 +91,8 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
       select(-iso)
     # Sum all countries' populations in each period
     pop_notmissing <- filter(hist_interp, iso != "world_total") %>%
+      replace_na(list(pop = 0)) %>%
       group_by(year) %>%
-      mutate(pop = if_else(is.na(pop), 0, pop)) %>%
       summarize(pop = sum(pop))
     # Subtract reported countries from total global - these are the total population values in each period that will be allocated to countries with missing values
     pop_missing <- left_join(pop_global, pop_notmissing, by = "year") %>%
@@ -153,7 +153,7 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
     # Combine scaled population for Maddison historic years with UN population 1950+
     L100.Pop_thous_ctry_Yh <- bind_rows(un_clean, un_maddison_hist) %>%
       filter(year %in% c(socioeconomics.MADDISON_HISTORICAL_YEARS, socioeconomics.UN_HISTORICAL_YEARS)) %>%
-      mutate(pop = if_else(is.na(pop), 0, pop)) %>%
+      replace_na(list(pop = 0)) %>%
       rename(value = pop)
 
     ## (2) SSP population projections by country
@@ -184,7 +184,7 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
                year = unique(year),
                iso = unique(L100.Pop_thous_ctry_Yh$iso)) %>%
       # For these countries, the ratio will be set to 1 (per the old data system).
-      mutate(ratio_iso_ssp = if_else(is.na(ratio_iso_ssp), 1, ratio_iso_ssp)) %>%
+      replace_na(list(ratio_iso_ssp = 1)) %>%
       ## Note: In the old data system, Taiwan is in this category and has constant population. Issue has been opened to deal with this later. ##
       left_join(pop_final_hist, by = "iso") %>% # Join with final historic period population
       mutate(value = pop_final_hist * ratio_iso_ssp) %>%  # Units are 1000 persons (UN 2010 value is in thousands)

@@ -55,7 +55,7 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
                GCAM_commodity, year, fill = list(value = 0)) %>%                                   # Fill in missing region/commodity combinations with 0
       group_by(GCAM_region_ID, year) %>%
       mutate(Feedfrac = value / sum(value)) %>%                                                    # Calculate each crop's share of total feed in a region
-      mutate(Feedfrac = if_else(is.na(Feedfrac), 0, Feedfrac)) ->                                  # Replace missing data with 0 (assumes no share for those crops)
+      replace_na(list(Feedfrac = 0)) ->                                  # Replace missing data with 0 (assumes no share for those crops)
       ag_Feed_Mt_R_Cnf_Y
 
     # Compute aggregate demand by region, feed, and year from the IMAGE data
