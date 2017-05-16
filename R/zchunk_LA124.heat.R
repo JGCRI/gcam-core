@@ -108,7 +108,8 @@ module_energy_LA124.heat <- function(command, ...) {
       mutate(value = value_heatfromelec / value) %>%
       select(GCAM_region_ID, sector, fuel, technology, year, value) %>%
       # Reset missing and infinite values (applicable for CC in the base years) to 0
-      mutate(value = if_else(is.na(value)|is.infinite(value), 0, value)) -> L124.heatoutratio_R_elec_F_tech_Yh
+      mutate(value = if_else(is.na(value) | is.infinite(value), 0, value)) ->
+      L124.heatoutratio_R_elec_F_tech_Yh
 
 
     # Drop all rows where value = 0 for all years
@@ -122,8 +123,8 @@ module_energy_LA124.heat <- function(command, ...) {
     L124.heatoutratio_R_elec_F_tech_Yh %>%
       left_join(years_heatout_0,
                 by = c("GCAM_region_ID", "sector", "fuel", "technology")) %>%
-      #Using 1 for all rows where heatout is not 0 for all years
-      mutate(sum = if_else(is.na(sum), 1, sum)) %>%
+      # Using 1 for all rows where heatout is not 0 for all years
+      replace_na(list(sum = 1)) %>%
       filter(sum != 0)  %>%
       select(-sum) -> L124.heatoutratio_R_elec_F_tech_Yh
 
@@ -152,7 +153,7 @@ module_energy_LA124.heat <- function(command, ...) {
                   by = c("year", "GCAM_region_ID")) %>%
       mutate(value = if_else(dist_heat == 0 & elec_heat != 0, output_scalar, 0)) %>%
       select(-sector.y, -elec_heat) %>%
-      mutate(value = if_else(is.na(value), 0, value))-> L124.mult_R_heat_Yh
+      replace_na(list(value = 0)) -> L124.mult_R_heat_Yh
 
     L124.in_EJ_R_heat_F_Yh %>%
       filter(year == norm_year) %>%
