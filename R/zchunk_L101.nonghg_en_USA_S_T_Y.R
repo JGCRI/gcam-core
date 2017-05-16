@@ -138,7 +138,7 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
         # summarise and convert to Tg
         summarise(value = sum(value) * emissions.TST_TO_TG) %>%
         # set missing values to zero
-        mutate(value = if_else(is.na(value), 0, value))
+        replace_na(list(value = 0))
     }
 
     L101.so2_tg_USA_en_Sepa_F_Yh <- EPA_convert_and_aggregate(EPA_SO2, EPA_tech)
@@ -153,8 +153,8 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
       L101.in_EJ_USA_en_Sepa_F_Yh.mlt %>%
         left_join(x, by = c("EPA_agg_sector" = "sector", "EPA_agg_fuel" = "fuel", "year" = "year")) %>%
         rename(emissions = value) %>%
-        mutate(emissions = if_else(is.na(emissions), 0, emissions),
-               em_factor = emissions / energy,
+        replace_na(list(emissions = 0)) %>%
+        mutate(em_factor = emissions / energy,
                em_factor = if_else(is.nan(em_factor) | is.infinite(em_factor), 0, em_factor)) ->
         x_em_factor
 

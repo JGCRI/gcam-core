@@ -19,7 +19,7 @@ module_emissions_L115.nh3_an_R_S_T_Y_DISABLED <- function(command, ...) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "emissions/EDGAR/EDGAR_sector",
              FILE = "emissions/EDGAR/EDGAR_nation",
-             FILE = "emissions/GCAM_sector_tech",
+             FILE = "emissions/mappings/GCAM_sector_tech",
              "L107.an_Prod_Mt_R_C_Sys_Fd_Y",
              "L105.nh3_tgmt_USA_an_Yh",
              FILE = "emissions/EDGAR/EDGAR_NH3"))
@@ -33,7 +33,7 @@ module_emissions_L115.nh3_an_R_S_T_Y_DISABLED <- function(command, ...) {
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     EDGAR_sector <- get_data(all_data, "emissions/EDGAR_sector")
     EDGAR_nation <- get_data(all_data, "emissions/EDGAR_nation")
-    GCAM_sector_tech <- get_data(all_data, "emissions/GCAM_sector_tech")
+    GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
     L107.an_Prod_Mt_R_C_Sys_Fd_Y <- get_data(all_data, "L107.an_Prod_Mt_R_C_Sys_Fd_Y")
     L105.nh3_tgmt_USA_an_Yh <- get_data(all_data, "L105.nh3_tgmt_USA_an_Yh")
     EDGAR_NH3 <- get_data(all_data, "emissions/EDGAR_NH3")

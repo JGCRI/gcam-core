@@ -74,12 +74,6 @@ MAX_HA_TO_CROPLAND <- 3
 
 
 # ======================================================================
-# socioeconomics constants
-BASE_POP_SCENARIO <- "SSP2"
-BASE_GDP_SCENARIO <- "SSP2"
-
-
-# ======================================================================
 # energy constants
 
 # At present the CO2 emissions inventory from CDIAC stops at 2009
@@ -141,7 +135,6 @@ modeltime.HECTOR_INI_FILE <- "../input/climate/hector-gcam.ini"
 DEFAULT_ELECTRIC_EFFICIENCY <- 0.33
 
 # ======================================================================
-# Set a default electric efficiency
 ELECTRICITY_INPUT_FUELS<- c( "biomass", "coal", "gas", "refined liquids" )
 STUBTECHYR <- c( "GCAM_region_ID", "supplysector", "subsector", "stub.technology", "xyear" )
 
@@ -152,7 +145,13 @@ STUBTECHYR <- c( "GCAM_region_ID", "supplysector", "subsector", "stub.technology
 # and should contain all historical years used by other modules
 socioeconomics.MADDISON_HISTORICAL_YEARS <- seq(1700, 1900, 50) # Years for which to use Maddison data
 socioeconomics.UN_HISTORICAL_YEARS <- c(1950, 1971:2010) # Years for which to use UN data
-socioeconomics.BASE_POP_SCEN <- "SSP2"
+socioeconomics.FINAL_HIST_YEAR <- 2010 # Final historical year,
+    # NOTE that we use this because it's also the first year of the SSP database.
+    # Using a different year if the final historical year in the UN historical years changes would result in different SSP projections.
+    # (Because the SSP scenarios begin to diverge in 2015, so we'd have to reconsider how we do the SSP scenarios if we update to UN 2015 population.)
+socioeconomics.BASE_POP_SCEN <- "SSP2" # These are both being used in the data system by different files.
+BASE_POP_SCENARIO <- "SSP2" # These are both being used in the data system by different files.
+BASE_GDP_SCENARIO <- "SSP2"
 
 # ======================================================================
 # water constants
