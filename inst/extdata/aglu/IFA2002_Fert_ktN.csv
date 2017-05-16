@@ -5,7 +5,7 @@
 # Description: IFA N-Fertilizer Application Rates (kg N/ha)
 # Original source: IFA (2002) and FAO (2006)
 # ----------
-country,year,crop,area_thousHa,N_kt,P205_kt,K20_kt
+COUNTRY, YEAR, CROP, AREA_thousHa, N_kt, P2O5_kt, K2O_kt
 ALBANIA,1999,Alfalfa,11,0,0,0
 ALBANIA,1999,Barley,2,0,0,0
 ALBANIA,1999,Citrus fruits,1,0,0,0
