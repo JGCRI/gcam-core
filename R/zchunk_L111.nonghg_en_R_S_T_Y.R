@@ -22,7 +22,7 @@ module_emissions_L111.nonghg_en_R_S_T_Y_DISABLED <- function(command, ...) {
              # ** NOTE *** the following file has been removed from the repo
              # please talk to Kate about why and how to work around this. Thanks
              # FILE = "emissions/EDGAR_nation",
-             FILE = "emissions/GCAM_sector_tech",
+             FILE = "emissions/mappings/GCAM_sector_tech",
              "L101.in_EJ_R_en_Si_F_Yh",
              "L101.so2_tgej_USA_en_Sepa_F_Yh",
              "L101.co_tgej_USA_en_Sepa_F_Yh",
@@ -46,7 +46,7 @@ module_emissions_L111.nonghg_en_R_S_T_Y_DISABLED <- function(command, ...) {
     EDGAR_sector <- get_data(all_data, "emissions/EDGAR_sector")
     EPA_tech <- get_data(all_data, "emissions/EPA_tech")
     EDGAR_nation <- get_data(all_data, "emissions/EDGAR_nation")
-    GCAM_sector_tech <- get_data(all_data, "emissions/GCAM_sector_tech")
+    GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
     L101.in_EJ_R_en_Si_F_Yh <- get_data(all_data, "L101.in_EJ_R_en_Si_F_Yh")
     L101.so2_tgej_USA_en_Sepa_F_Yh <- get_data(all_data, "L101.so2_tgej_USA_en_Sepa_F_Yh")
     L101.co_tgej_USA_en_Sepa_F_Yh <- get_data(all_data, "L101.co_tgej_USA_en_Sepa_F_Yh")

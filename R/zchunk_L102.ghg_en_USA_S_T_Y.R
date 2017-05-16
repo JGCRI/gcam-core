@@ -18,8 +18,8 @@ module_emissions_L102.ghg_en_USA_S_T_Y <- function(command, ...) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "energy/mappings/IEA_flow_sector",
              FILE = "energy/mappings/IEA_product_fuel",
-             FILE = "emissions/EPA_ghg_tech",
-             FILE = "emissions/GCAM_sector_tech",
+             FILE = "emissions/mappings/EPA_ghg_tech",
+             FILE = "emissions/mappings/GCAM_sector_tech",
              FILE = "L101.in_EJ_R_en_Si_F_Yh",
              FILE = "emissions/EPA_FCCC_GHG_2005"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -32,8 +32,8 @@ module_emissions_L102.ghg_en_USA_S_T_Y <- function(command, ...) {
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     IEA_flow_sector <- get_data(all_data, "energy/mappings/IEA_flow_sector")
     IEA_product_fuel <- get_data(all_data, "energy/mappings/IEA_product_fuel")
-    EPA_ghg_tech <- get_data(all_data, "emissions/EPA_ghg_tech")
-    GCAM_sector_tech <- get_data(all_data, "emissions/GCAM_sector_tech")
+    EPA_ghg_tech <- get_data(all_data, "emissions/mappings/EPA_ghg_tech")
+    GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
     get_data(all_data, "L101.in_EJ_R_en_Si_F_Yh") %>%
       gather(year, energy, -sector, -fuel, -technology, -GCAM_region_ID) %>%
       mutate(year = as.integer(year)) ->
@@ -97,8 +97,8 @@ module_emissions_L102.ghg_en_USA_S_T_Y <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID",
                      "energy/mappings/IEA_flow_sector",
                      "energy/mappings/IEA_product_fuel",
-                     "emissions/EPA_ghg_tech",
-                     "emissions/GCAM_sector_tech",
+                     "emissions/mappings/EPA_ghg_tech",
+                     "emissions/mappings/GCAM_sector_tech",
                      "emissions/EPA_FCCC_GHG_2005") ->
       L102.ghg_tgej_USA_en_Sepa_F_2005
 
