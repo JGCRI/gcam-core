@@ -17,7 +17,7 @@ module_energy_LA100.CDIAC_downscale_ctry <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "emissions/CDIAC_CO2_by_nation",
              FILE = "emissions/CDIAC_Cseq_by_nation",
-             FILE = "emissions/CDIAC_nation"))
+             FILE = "emissions/mappings/CDIAC_nation_iso"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L100.CDIAC_CO2_ctry_hist"))
   } else if(command == driver.MAKE) {
@@ -27,10 +27,10 @@ module_energy_LA100.CDIAC_downscale_ctry <- function(command, ...) {
     # Load required inputs
     CDIAC_CO2_by_nation <- get_data(all_data, "emissions/CDIAC_CO2_by_nation")
     CDIAC_Cseq_by_nation <- get_data(all_data, "emissions/CDIAC_Cseq_by_nation")
-    CDIAC_nation <- get_data(all_data, "emissions/CDIAC_nation")
+    CDIAC_nation_iso <- get_data(all_data, "emissions/mappings/CDIAC_nation_iso")
 
     # Merge the sequestration and emissions datasets
-    CDIAC_nation %>%
+    CDIAC_nation_iso %>%
       select(nation, UN_code) %>%
       distinct(UN_code, .keep_all = TRUE) %>%
       left_join_error_no_match(CDIAC_Cseq_by_nation, ., by = "UN_code") %>%
@@ -41,7 +41,7 @@ module_energy_LA100.CDIAC_downscale_ctry <- function(command, ...) {
       right_join(CDIAC_CO2_by_nation, by = c("nation", "year")) %>%
 
       # Zero out NAs and subset to years being processed
-      mutate(liquids.sequestration = if_else(is.na(liquids.sequestration), 0, liquids.sequestration)) %>%
+      replace_na(list(liquids.sequestration = 0)) %>%
       filter(year %in% energy.CDIAC_CO2_HISTORICAL_YEARS ) ->
       L100.CDIAC_CO2_ctry_hist
 
@@ -53,11 +53,11 @@ module_energy_LA100.CDIAC_downscale_ctry <- function(command, ...) {
     USSR_years <- unique(L100.CO2_USSR_hist$year)
 
     L100.CO2_USSR_hist %>%
-      repeat_add_columns(tibble(iso = CDIAC_nation$iso[CDIAC_nation$nation == USSR])) %>%
+      repeat_add_columns(tibble(iso = CDIAC_nation_iso$iso[CDIAC_nation_iso$nation == USSR])) %>%
       gather(category, value, -nation, -year, -iso) ->
       L100.CO2_USSR_hist_repCtry
 
-    CDIAC_nation %>%
+    CDIAC_nation_iso %>%
       select(nation, iso) %>%
       distinct(nation, .keep_all = TRUE) %>%
       right_join(L100.CO2_ctry_noUSSR_hist, by = "nation") %>%
@@ -87,7 +87,7 @@ module_energy_LA100.CDIAC_downscale_ctry <- function(command, ...) {
 
     L100.CO2_Yug_hist %>%
       select(-iso) %>%
-      repeat_add_columns(tibble(iso = CDIAC_nation$iso[CDIAC_nation$nation == YUGOSLAVIA])) %>%
+      repeat_add_columns(tibble(iso = CDIAC_nation_iso$iso[CDIAC_nation_iso$nation == YUGOSLAVIA])) %>%
       gather(category, value, -nation, -year, -iso) ->
       L100.CO2_Yug_hist_repCtry
 
@@ -102,7 +102,7 @@ module_energy_LA100.CDIAC_downscale_ctry <- function(command, ...) {
       right_join(L100.CO2_Yug_hist_repCtry, by = c("iso", "category")) %>%
       mutate(value = value * share) %>%
       select(-share) %>%
-      mutate(value = if_else(is.na(value), 0, value)) %>%
+      replace_na(list(value = 0)) %>%
       spread(category, value) ->
       L100.CO2_FYug_hist
 
@@ -121,7 +121,7 @@ module_energy_LA100.CDIAC_downscale_ctry <- function(command, ...) {
       add_legacy_name("L100.CDIAC_CO2_ctry_hist") %>%
       add_precursors("emissions/CDIAC_CO2_by_nation",
                      "emissions/CDIAC_Cseq_by_nation",
-                     "emissions/CDIAC_nation") ->
+                     "emissions/mappings/CDIAC_nation_iso") ->
       L100.CDIAC_CO2_ctry_hist
 
     return_data(L100.CDIAC_CO2_ctry_hist)

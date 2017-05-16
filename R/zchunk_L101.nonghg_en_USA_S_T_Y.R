@@ -30,7 +30,7 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
              FILE = "temp-data-inject/L154.in_EJ_R_trn_m_sz_tech_F_Yh",
              FILE = "temp-data-inject/L1322.Fert_Prod_MtN_R_F_Y",
              FILE = "temp-data-inject/L1321.in_EJ_R_cement_F_Y",
-             FILE = "temp-data-inject/L124.in_EJ_R_heat_F_Yh",
+             "L124.in_EJ_R_heat_F_Yh",
              FILE = "temp-data-inject/L111.Prod_EJ_R_F_Yh",
              FILE = "emissions/EPA_SO2",
              FILE = "emissions/EPA_CO",
@@ -79,9 +79,7 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
     L1321.in_EJ_R_cement_F_Y <- get_data(all_data, "temp-data-inject/L1321.in_EJ_R_cement_F_Y") %>%
       gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
       mutate(year = as.integer(substr(year, 2, 5)))
-    L124.in_EJ_R_heat_F_Yh <- get_data(all_data, "temp-data-inject/L124.in_EJ_R_heat_F_Yh") %>%
-      gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
-      mutate(year = as.integer(substr(year, 2, 5)))
+    L124.in_EJ_R_heat_F_Yh <- get_data(all_data, "L124.in_EJ_R_heat_F_Yh")
     L111.Prod_EJ_R_F_Yh <- get_data(all_data, "temp-data-inject/L111.Prod_EJ_R_F_Yh") %>%
       gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
       mutate(year = as.integer(substr(year, 2, 5)))
@@ -140,7 +138,7 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
         # summarise and convert to Tg
         summarise(value = sum(value) * emissions.TST_TO_TG) %>%
         # set missing values to zero
-        mutate(value = if_else(is.na(value), 0, value))
+        replace_na(list(value = 0))
     }
 
     L101.so2_tg_USA_en_Sepa_F_Yh <- EPA_convert_and_aggregate(EPA_SO2, EPA_tech)
@@ -155,8 +153,8 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
       L101.in_EJ_USA_en_Sepa_F_Yh.mlt %>%
         left_join(x, by = c("EPA_agg_sector" = "sector", "EPA_agg_fuel" = "fuel", "year" = "year")) %>%
         rename(emissions = value) %>%
-        mutate(emissions = if_else(is.na(emissions), 0, emissions),
-               em_factor = emissions / energy,
+        replace_na(list(emissions = 0)) %>%
+        mutate(em_factor = emissions / energy,
                em_factor = if_else(is.nan(em_factor) | is.infinite(em_factor), 0, em_factor)) ->
         x_em_factor
 
@@ -209,7 +207,7 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
                      "temp-data-inject/L154.in_EJ_R_trn_m_sz_tech_F_Yh",
                      "temp-data-inject/L1322.Fert_Prod_MtN_R_F_Y",
                      "temp-data-inject/L1321.in_EJ_R_cement_F_Y",
-                     "temp-data-inject/L124.in_EJ_R_heat_F_Yh",
+                     "L124.in_EJ_R_heat_F_Yh",
                      "temp-data-inject/L111.Prod_EJ_R_F_Yh") %>%
       add_flags(FLAG_NO_XYEAR) ->
       L101.in_EJ_R_en_Si_F_Yh
