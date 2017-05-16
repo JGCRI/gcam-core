@@ -376,7 +376,7 @@ void SGMInput::setPhysicalDemand( double aPhysicalDemand, const string& aRegionN
     // this physical demand is a quantity of capital and the Capital market
     // works in annual dollar amounts
     if( !hasTypeFlag( IInput::CAPITAL ) && aPhysicalDemand > util::getSmallNumber() ) {
-        mCachedMarket->addToDemand( mName, aRegionName, aPhysicalDemand, aPeriod );
+        mCachedMarket->addToDemand( mName, aRegionName, mPhysicalDemand[ aPeriod ], aPeriod );
     }
 }
 

@@ -195,9 +195,6 @@ protected:
 
     //! Stored emissions coefficient for the fuel.
     Value mCachedFuelCoef;
-    
-    //! State value necessary to use Marketplace::addToDemand
-    double mLastCalcValue;
 };
 
 #endif // _POWER_PLANT_CAPTURE_COMPONENT_H_

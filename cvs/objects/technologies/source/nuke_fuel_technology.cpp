@@ -346,15 +346,15 @@ void NukeFuelTechnology::production( const string& aRegionName,
     // add demand for fertile material
     Marketplace* marketplace = scenario->getMarketplace();
     if( fertileFuelName != "none" ) {
-        double inputFertile = primaryOutput / getFertileEfficiency( aPeriod );
-        mLastFertileValue = marketplace->addToDemand( fertileFuelName, aRegionName,
-                                                      inputFertile, mLastFertileValue, aPeriod );
+        mLastFertileValue = primaryOutput / getFertileEfficiency( aPeriod );
+        marketplace->addToDemand( fertileFuelName, aRegionName,
+                                  mLastFertileValue, aPeriod );
     }
     // add demand for blanket material
     if( blanketFuelName != "none" ) {
-        double inputBlanket = primaryOutput / getBlanketEfficiency( aPeriod );
-        mLastBlanketValue = marketplace->addToDemand( blanketFuelName, aRegionName,
-                                                      inputBlanket, mLastBlanketValue, aPeriod );
+        mLastBlanketValue = primaryOutput / getBlanketEfficiency( aPeriod );
+        marketplace->addToDemand( blanketFuelName, aRegionName,
+                                  mLastBlanketValue, aPeriod );
     }
 
     // calculate by-products from technology (shk 10/11/04) mass of initial

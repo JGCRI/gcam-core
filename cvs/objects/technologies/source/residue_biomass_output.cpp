@@ -329,8 +329,8 @@ void ResidueBiomassOutput::setPhysicalOutput( const double aPrimaryOutput, const
 
     // Add output to the supply
     Marketplace* marketplace = scenario->getMarketplace();
-    mLastCalcValue = marketplace->addToSupply( getName(), aRegionName, mPhysicalOutputs[ aPeriod ],
-            mLastCalcValue, aPeriod, true );
+    marketplace->addToSupply( getName(), aRegionName, mPhysicalOutputs[ aPeriod ],
+            aPeriod, true );
 }
 
 void ResidueBiomassOutput::toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const

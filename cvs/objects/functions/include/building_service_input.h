@@ -330,9 +330,6 @@ protected:
         DEFINE_VARIABLE( CONTAINER, "satiation-demand-function", mSatiationDemandFunction, SatiationDemandFunction* )
     )
     
-    //! State value necessary to use Marketplace::addToDemand
-    double mLastCalcValue;
-    
     void copy( const BuildingServiceInput& aInput );
 };
 

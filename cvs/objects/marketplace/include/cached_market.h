@@ -48,6 +48,7 @@
 
 class Market;
 class IInfo;
+class Value;
 
 /*!
  * \brief A wrapper around a market which has been located through the marketplace.
@@ -75,10 +76,10 @@ public:
     void setPrice( const std::string& aGoodName, const std::string& aRegionName, const double aValue,
                    const int aPeriod, bool aMustExist = true );
     
-    void addToSupply( const std::string& aGoodName, const std::string& aRegionName, const double aValue,
+    void addToSupply( const std::string& aGoodName, const std::string& aRegionName, const Value& aValue,
                       const int aPeriod, bool aMustExist = true );
     
-    void addToDemand( const std::string& aGoodName, const std::string& aRegionName, const double aValue,
+    void addToDemand( const std::string& aGoodName, const std::string& aRegionName, const Value& aValue,
                       const int aPeriod, bool aMustExist = true );
     
     double getPrice( const std::string& aGoodName, const std::string& aRegionName, const int aPeriod,
@@ -108,12 +109,6 @@ private:
 #endif
     //! The actual market which is cached.
     Market* mCachedMarket;
-    
-    //! The demand last added during a non-derivative calc.
-    double mLastDemand;
-    
-    //! The supply last added during a non-derivative calc.
-    double mLastSupply;
 };
 
 #endif // _CACHED_MARKET_H_

@@ -497,7 +497,7 @@ void MarketDependencyFinder::createOrdering() {
                     ++numDependencies[ (*it)->getFirstDemandVertex() ];
                     // These implied in edges will be added to the list of verticies to calculate
                     // any time the land-allocator needs to be recalculated for any reason.
-                    (*dependIt)->getLastDemandVertex()->mImpliedInEdges.insert( (*it)->getLastPriceVertex() );
+                    //(*dependIt)->getLastDemandVertex()->mImpliedInEdges.insert( (*it)->getLastPriceVertex() );
                 }
                 else {
                     if( !(*dependIt)->mPriceVertices.empty() ) {

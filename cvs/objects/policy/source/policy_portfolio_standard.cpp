@@ -284,19 +284,19 @@ void PolicyPortfolioStandard::completeInit( const string& aRegionName ) {
         if( tempConstraint[ per ] != -1 ){
             if ( mPolicyType == "tax" ){
                 marketplace->setMarketToSolve( mName, aRegionName, per );
-                marketplace->addToSupply( mName, aRegionName, tempConstraint[ per ] - 
-                    marketplace->getSupply( mName, aRegionName, per ), 0, per, false );
+                marketplace->addToSupply( mName, aRegionName, Value( tempConstraint[ per ] -
+                    marketplace->getSupply( mName, aRegionName, per ) ), per, false );
             }
             else if ( mPolicyType == "RES" ){  // maw doesn't understand this
                 marketplace->setMarketToSolve( mName, aRegionName, per );
             //	maw doesn't understand this.  But it doesn;t work otherwise
-                marketplace->addToSupply( mName, aRegionName, tempConstraint[ per ] - 
-                    marketplace->getSupply( mName, aRegionName, per ), 0, per, false );
+                marketplace->addToSupply( mName, aRegionName, Value( tempConstraint[ per ] -
+                    marketplace->getSupply( mName, aRegionName, per ) ), per, false );
             }
             else {
                 marketplace->setMarketToSolve( mName, aRegionName, per );
-                marketplace->addToDemand( mName, aRegionName, tempConstraint[ per ] - 
-                    marketplace->getDemand( mName, aRegionName, per ), 0, per, false );
+                marketplace->addToDemand( mName, aRegionName, Value( tempConstraint[ per ] -
+                    marketplace->getDemand( mName, aRegionName, per ) ), per, false );
             }
             // Constraint policies must have a price >= mMinPrice.  It may be the case that the constraint is
             // non-binding at the minimum price in which case the solver can use this information to

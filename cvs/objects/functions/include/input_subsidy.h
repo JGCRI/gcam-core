@@ -165,15 +165,12 @@ protected:
         MiniCAMInput,
         
         //! Physical Demand.
-        DEFINE_VARIABLE( ARRAY, "physical-demand", mPhysicalDemand, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE, "physical-demand", mPhysicalDemand, objects::PeriodVector<Value> ),
         
         //! Current coefficient after adjustments have been made by the technology's
         //! capture component.
         DEFINE_VARIABLE( ARRAY, "current-coef", mAdjustedCoefficients, objects::PeriodVector<Value> )
     )
-    
-    //! State value necessary to use Marketpalce::addToSupply
-    double mLastCalcValue;
 
     //! Stash the current sector name for use in setPhysicalDemand
     std::string mSectorName;

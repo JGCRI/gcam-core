@@ -273,8 +273,8 @@ void GHGPolicy::completeInit( const string& aRegionName ) {
             // Adding the difference between the constraint for this period
             // and the current supply because addToSupply adds to the current
             // supply.  Passing false to suppress a warning the first time through.
-            marketplace->addToSupply( mName, aRegionName, mConstraint[ i ] - 
-                marketplace->getSupply( mName, aRegionName, i ), 0, i, false );
+            marketplace->addToSupply( mName, aRegionName, Value( mConstraint[ i ] -
+                marketplace->getSupply( mName, aRegionName, i ) ), i, false );
         }
 
         // GHG policies must have a price >= 0.  It may be the case that the constraint is

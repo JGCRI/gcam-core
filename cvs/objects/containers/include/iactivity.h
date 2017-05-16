@@ -66,14 +66,6 @@ public:
     virtual void calc( const int aPeriod ) = 0;
     
     /*!
-     * \brief Sets the stale flag with in the object indicating that a price may
-     *        need to be recalculated before calculating this activity.
-     * \details This is a hack to allow lazy re-evaluation of sectors to ensure
-     *          they reset their shares after a partial derivative calc.
-     */
-    virtual void setStale() = 0;
-    
-    /*!
      * \brief Get a description of this activity which could be used in error
      *        and debug messages.
      * \return A description of this activity.

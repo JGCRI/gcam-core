@@ -226,16 +226,6 @@ double SolutionInfo::getEDRight() const {
     return EDR;
 }
 
-//! Store X, demand and supply so that they can later be used to calculate derivatives.
-void SolutionInfo::storeValues() {
-    linkedMarket->storeInfo();
-}
-
-//! Restore X, demand and supply.
-void SolutionInfo::restoreValues() {
-    linkedMarket->restoreInfo();
-}
-
 /*! \brief Return the name of the SolutionInfo object.
 * \author Josh Lurz
 * \return The name of the market the SolutionInfo is connected to.
@@ -300,7 +290,7 @@ bool SolutionInfo::shouldSolve( const bool isNR ) const {
 */
 double SolutionInfo::getLogChangeInRawPrice() const {
    double change = 0;
-    double storedX = linkedMarket->getStoredRawPrice();
+    double storedX = 0.0; // TODO: could fix but why? linkedMarket->getStoredRawPrice();
     double X = getPrice();
    // Case 1: price or Previous price is zero.
    if( storedX == 0 || X == 0 ) {
@@ -329,7 +319,7 @@ double SolutionInfo::getLogChangeInRawPrice() const {
 */
 double SolutionInfo::getLogChangeInRawDemand() const {
    double change = 0;
-    double storedDemand = linkedMarket->getStoredRawDemand();
+    double storedDemand = 0.0; // TODO: could fix but why? linkedMarket->getStoredRawDemand();
     double demand = getDemand();
 
    // Case 1: Demand or Previous Demand is zero.
@@ -355,7 +345,7 @@ double SolutionInfo::getLogChangeInRawDemand() const {
 */
 double SolutionInfo::getLogChangeInRawSupply() const {
    double change = 0;
-    double storedSupply = linkedMarket->getStoredRawSupply();
+    double storedSupply = 0.0; // TODO: could fix but why? linkedMarket->getStoredRawSupply();
     double supply = getSupply();
 
    // Case 1: supply or Previous supply is zero.

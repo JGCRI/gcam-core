@@ -191,9 +191,6 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "output-ratio", mOutputRatio, Value )
     )
     
-    //! State value necessary to use addToTrialDemand
-    double mLastCalcValue;
-    
     void copy( const InternalGains& aOther );
 };
 

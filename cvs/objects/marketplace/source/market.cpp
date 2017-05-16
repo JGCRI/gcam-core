@@ -85,9 +85,6 @@ mMarketInfo( InfoFactory::constructInfo( 0, aContainer->getName() ) )
     mSupply.local() = 0.0;
     mDemand.local() = 0.0;
 #endif
-    mStoredPrice = 0.0;
-    mStoredSupply = 0.0;
-    mStoredDemand = 0.0;
     mForecastPrice = 0.0;
     mForecastDemand = 0.0;
     mOriginal_price = 0.0;
@@ -106,9 +103,6 @@ void Market::copy( const Market& aMarket ) {
     mPrice = aMarket.mPrice;
     mSupply = aMarket.mSupply;
     mDemand = aMarket.mDemand;
-    mStoredPrice = aMarket.mStoredPrice;
-    mStoredSupply = aMarket.mStoredSupply;
-    mStoredDemand = aMarket.mStoredDemand;
     mForecastPrice = aMarket.mForecastPrice;
     mForecastDemand = aMarket.mForecastDemand;
     mOriginal_price = aMarket.mOriginal_price;
@@ -130,11 +124,8 @@ void Market::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( mContainer->getGoodName(), "MarketGoodOrFuel", out, tabs );
     XMLWriteElement( mContainer->getRegionName(), "MarketRegion", out, tabs );
     XMLWriteElement( mPrice, "price", out, tabs );
-    XMLWriteElement( mStoredPrice, "storedPrice", out, tabs );
     XMLWriteElement( getRawDemand(), "demand", out, tabs );
-    XMLWriteElement( mStoredDemand, "storedDemand", out, tabs );
     XMLWriteElement( getRawSupply(), "supply", out, tabs );
-    XMLWriteElement( mStoredSupply, "storedSupply", out, tabs );
 
     const vector<const Atom*>& containedRegions = getContainedRegions();
     for( vector<const Atom*>::const_iterator i = containedRegions.begin(); i != containedRegions.end(); ++i ) {
@@ -325,19 +316,6 @@ double Market::getRawPrice() const {
     return mPrice;
 }
 
-/*! \brief Get the stored price.
-* \details This method is used to get the value of the storedPrice variable in
-*          the Market. It is often used in the solution mechanism. This is used
-*          when calculating the derivative of a market, so that the price can be
-*          changed and the solution mechanism can determine the difference in
-*          price, supply, and demand.
-* \return The value of the storedPrice variable.
-* \sa getPrice
-*/
-double Market::getStoredRawPrice() const {
-    return mStoredPrice;
-}
-
 /*! \brief Null the demand.
 * This function stores the demand and resets demand to zero. 
 */
@@ -393,19 +371,6 @@ double Market::getSolverDemand() const {
 #endif
 }
 
-/*! \brief Get the stored demand.
-* \details This method is used to get the value of the storedDemand variable in
-*          the Market. It is often used in the solution mechanism. This is used
-*          when calculating the derivative of a market, so that the price can be
-*          changed and the solution mechanism can determine the difference in
-*          price, supply, and demand.
-* \return The value of the storedDemand variable.
-* \sa getPrice
-*/
-double Market::getStoredRawDemand() const {
-    return mStoredDemand;
-}
-
 /*! \brief Get the demand.
 * \details Get the demand out of the market.
 * \return Market demand.
@@ -458,19 +423,6 @@ double Market::getSolverSupply() const {
 #else
     return mSupply;
 #endif
-}
-
-/*! \brief Get the storedSupply.
-* \details This method is used to get the value of the storedSupply variable in
-*          the Market. It is often used in the solution mechanism. This is used
-*          when calculating the derivative of a market, so that the price can be
-*          changed and the solution mechanism can determine the difference in
-*          price, supply, and demand.
-* \return The value of the storedSupply variable.
-* \sa getSupply
-*/
-double Market::getStoredRawSupply() const {
-    return mStoredSupply;
 }
 
 /*! \brief Get the supply.
@@ -557,49 +509,6 @@ const IInfo* Market::getMarketInfo() const {
 */
 IInfo* Market::getMarketInfo() {
     return mMarketInfo.get();
-}
-
-/*! \brief Store the current demand, supply, and price.
-* \details This function stores the current values of demand, supply and price
-*          into their respective stored variables. 
-*/
-void Market::storeInfo() {
-#if GCAM_PARALLEL_ENABLED
-    mStoredDemand = mDemand.combine(std::plus<double>());
-    mStoredSupply = mSupply.combine(std::plus<double>());
-#else
-    mStoredDemand = mDemand;
-    mStoredSupply = mSupply;
-#endif
-    mStoredPrice = mPrice;
-}
-
-/*! \brief Restore the previous demand, supply, and price.
-* \details This function sets the market's demand, supply and price to the
-*          stored values of those variables. 
-*/
-void Market::restoreInfo() {
-#if GCAM_PARALLEL_ENABLED
-    // reset the demand to the stored demand.  demand.clear() is
-    // expensive, so do it by adjusting the local value
-#if NOCLEARRESTORE
-    double dtmp = mDemand.combine(std::plus<double>());
-    mDemand.local() += mStoredDemand - dtmp;
-
-    double stmp = mSupply.combine(std::plus<double>());
-    mSupply.local() += mStoredSupply - stmp;
-#else
-    mDemand.clear();
-    mDemand.local() = mStoredDemand;
-
-    mSupply.clear();
-    mSupply.local() = mStoredSupply;
-#endif
-#else
-    mDemand = mStoredDemand;
-    mSupply = mStoredSupply;
-#endif
-    mPrice = mStoredPrice;
 }
 
 /*! \brief Store the original price.

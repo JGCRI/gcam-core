@@ -62,10 +62,6 @@ void FinalDemandActivity::calc( const int aPeriod ) {
     mFinalDemand->setFinalDemand( mRegionName, mDemographic, mGDP, aPeriod );
 }
 
-void FinalDemandActivity::setStale() {
-    // nothing to do
-}
-
 string FinalDemandActivity::getDescription() const {
     return mRegionName + " " + mFinalDemand->getName();
 }

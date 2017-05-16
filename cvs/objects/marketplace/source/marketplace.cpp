@@ -474,36 +474,31 @@ void Marketplace::setPrice( const string& goodName, const string& regionName, co
 * \param goodName Name of the good for which to add supply.
 * \param regionName Name of the region in which supply should be added for the market.
 * \param value Amount of supply to add.
-* \param lastDerivValue The value added by the object the last time.  Necessary to
-*                       speed up partial derivatives.
 * \param per Period in which to add supply.
 * \param aMustExist Whether it is an error for the market not to exist.
-* \return The proper value to set for the calling objects last calc state value.
 */
-double Marketplace::addToSupply( const string& goodName, const string& regionName, const double value,
-                                 const double lastDerivValue, const int per, bool aMustExist )
+void Marketplace::addToSupply( const string& goodName, const string& regionName, const Value& value,
+                               const int per, bool aMustExist )
 {
     // Print a warning message when adding infinity values to the supply.
     if ( !util::isValidNumber( value ) ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Error adding to supply in markeplace for: " << goodName << ", region: " << regionName << ", value: " << value << endl;
-        return 0;
+        return;
     }
 
     const int marketNumber = mMarketLocator->getMarketNumber( regionName, goodName );
 
     if ( marketNumber != MarketLocator::MARKET_NOT_FOUND ) {
-        mMarkets[ marketNumber ]->getMarket( per )->addToSupply( mIsDerivativeCalc ? value - lastDerivValue : value );
+        mMarkets[ marketNumber ]->getMarket( per )->addToSupply( mIsDerivativeCalc ? value.getDiff() : value.get() );
     }
     else if( aMustExist ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Cannot add to supply for market as it does not exist: " << goodName << " " 
             << regionName << endl;
-        return 0;
     }
-    return mIsDerivativeCalc ? lastDerivValue : value;
 }
 
 /*! \brief Add to the demand for this market.
@@ -514,35 +509,30 @@ double Marketplace::addToSupply( const string& goodName, const string& regionNam
 * \param goodName Name of the good for which to add demand.
 * \param regionName Name of the region in which demand should be added for the market.
 * \param value Amount of demand to add.
-* \param lastDerivValue The value added by the object the last time.  Necessary to
-*                       speed up partial derivatives.
 * \param per Period in which to add demand.
 * \param aMustExist Whether it is an error for the market not to exist.
-* \return The proper value to set for the calling objects last calc state value.
 */
-double Marketplace::addToDemand( const string& goodName, const string& regionName, const double value,
-                                 const double lastDerivValue, const int per, bool aMustExist )
+void Marketplace::addToDemand( const string& goodName, const string& regionName, const Value& value,
+                               const int per, bool aMustExist )
 {
     // Print a warning message when adding infinity values to the demand
     if ( !util::isValidNumber( value ) ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Error adding to demand in markeplace for: " << goodName << ", region: " << regionName << ", value: " << value << endl;
-        return 0;
+        return;
     }
 
     const int marketNumber = mMarketLocator->getMarketNumber( regionName, goodName );
     if ( marketNumber != MarketLocator::MARKET_NOT_FOUND ) {
-        mMarkets[ marketNumber ]->getMarket( per )->addToDemand( mIsDerivativeCalc ? value - lastDerivValue : value );
+        mMarkets[ marketNumber ]->getMarket( per )->addToDemand( mIsDerivativeCalc ? value.getDiff() : value.get() );
     }
     else if( aMustExist ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Cannot add to demand for market as it does not exist: " << goodName << " " 
             << regionName << endl;
-        return 0;
     }
-    return mIsDerivativeCalc ? lastDerivValue : value;
 }
 
 /*! \brief Return the market price. 
@@ -684,49 +674,6 @@ void Marketplace::init_to_last( const int period ) {
             mMarkets[ i ]->forecastDemand( period );
         }
     }
-}
-
-/*! \brief Store the demand, supply and price for each market. 
-*
-* This function called the Market::storenfo function on each market in the marketplace,
-* which causes them to set their stored demand, supply, and price to the respective current values
-* for those variables.
-*
-* \author Sonny Kim
-* \param period Period for which to store demands, supplies and prices.
-*/
-void Marketplace::storeinfo( const int period ) {
-    for ( unsigned int i = 0; i  < mMarkets.size(); i++ ) {
-        mMarkets[ i ]->getMarket( period )->storeInfo();
-    }
-}
-
-#if GCAM_PARALLEL_ENABLED
-void Marketplace::RestoreHelper::operator()( const tbb::blocked_range<int>& aRange ) const
-{
-    for( int marketIndex = aRange.begin(); marketIndex != aRange.end(); ++marketIndex ) {
-        mMarkets[ marketIndex ]->getMarket( mPeriod )->restoreInfo();
-    }
-}
-#endif
-
-/*! \brief Restore the stored demand, supply and price for each market. 
-*
-* This function called the Market::restoreInfo function on each market in the marketplace,
-* which causes them to set their demand, supply, and price to the respective stored values
-* for those variables.
-*
-* \param period Period for which to restore demands, supplies, and prices.
-*/
-void Marketplace::restoreinfo( const int period) {
-#if GCAM_PARALLEL_ENABLED
-    RestoreHelper restore( mMarkets, period );
-    tbb::parallel_for( tbb::blocked_range<int>( 0, markets.size() ), restore ); 
-#else
-    for ( unsigned int i = 0; i < mMarkets.size(); i++ ) {
-        mMarkets[ i ]->getMarket( period )->restoreInfo();
-    }
-#endif
 }
 
 /*! \brief Store market prices for policy cost caluclation.

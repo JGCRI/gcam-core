@@ -143,14 +143,14 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "geologicWasteDisposalCost", geologicWasteDisposalCost, double ),
 
         //! reprocessing cost of spent fuel ($/kgHM)
-        DEFINE_VARIABLE( SIMPLE, "reprocessingCost", reprocessingCost, double )
+        DEFINE_VARIABLE( SIMPLE, "reprocessingCost", reprocessingCost, double ),
+
+        //! State value for fertile fuel market necessary to use Marketplace::addToDemand
+        DEFINE_VARIABLE( SIMPLE | STATE, "fertile-fuel-state", mLastFertileValue, Value ),
+
+        //! State value for blanket fuel market necessary to use Marketplace::addToDemand
+        DEFINE_VARIABLE( SIMPLE | STATE, "blanket-fuel-state", mLastBlanketValue, Value )
     )
-    
-    //! State value for fertile fuel market necessary to use Marketplace::addToDemand
-    double mLastFertileValue;
-    
-    //! State value for blanket fuel market necessary to use Marketplace::addToDemand
-    double mLastBlanketValue;
     
     void copy( const NukeFuelTechnology& aOther );
 

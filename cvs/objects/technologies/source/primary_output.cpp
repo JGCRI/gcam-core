@@ -176,7 +176,7 @@ void PrimaryOutput::setPhysicalOutput( const double aPrimaryOutput,
     mPhysicalOutputs[ aPeriod ] = aPrimaryOutput;
 
     // Add the primary output to the marketplace.
-    mCachedMarket->addToSupply( mName, aRegionName, aPrimaryOutput, aPeriod, false );
+    mCachedMarket->addToSupply( mName, aRegionName, mPhysicalOutputs[ aPeriod ], aPeriod, false );
 }
 
 double PrimaryOutput::getPhysicalOutput( const int aPeriod ) const {

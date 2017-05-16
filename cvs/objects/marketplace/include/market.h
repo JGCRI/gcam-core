@@ -130,7 +130,6 @@ public:
     virtual void set_price_to_last( const double lastPrice );
     virtual double getPrice() const;
     double getRawPrice() const;
-    double getStoredRawPrice() const;
 
     void setForecastPrice( double aForecastPrice );
     double getForecastPrice() const;
@@ -141,13 +140,11 @@ public:
     virtual void addToDemand( const double demandIn );
     virtual double getSolverDemand() const;
     double getRawDemand() const;
-    double getStoredRawDemand() const;
     virtual double getDemand() const;
 
     virtual void nullSupply();
     virtual double getSolverSupply() const;
     double getRawSupply() const;
-    double getStoredRawSupply() const;
     virtual double getSupply() const;
     virtual void addToSupply( const double supplyIn );
     
@@ -156,8 +153,6 @@ public:
     const std::string& getGoodName() const;
     const IInfo* getMarketInfo() const;
     IInfo* getMarketInfo();
-    void storeInfo();
-    void restoreInfo();
     void store_original_price();
     void restore_original_price();
 
@@ -198,10 +193,7 @@ protected:
         //! The market price.
         DEFINE_VARIABLE( SIMPLE | STATE, "price", mPrice, Value ),
         
-        //! The stored market price.
-        DEFINE_VARIABLE( SIMPLE, "storedPrice", mStoredPrice, double ),
-        
-        //! The original market price.
+        //! The original market price, used in re/store_original_price.
         DEFINE_VARIABLE( SIMPLE, "orginal_price", mOriginal_price, double ),
 
         //! Forecast price (used for setting solver initial guess)
@@ -218,9 +210,6 @@ protected:
         DEFINE_VARIABLE( SIMPLE | STATE, "demand", mDemand, Value ),
 //#endif
         
-        //! The stored demand.
-        DEFINE_VARIABLE( SIMPLE, "storedDemand", mStoredDemand, double ),
-        
         //! The market supply.
 /*#if GCAM_PARALLEL_ENABLED
         // have to make this mutable because tbb::combinable::combine is not const
@@ -228,9 +217,6 @@ protected:
 #else*/
         DEFINE_VARIABLE( SIMPLE | STATE, "supply", mSupply, Value ),
 //#endif
-        
-        //! The stored supply.
-        DEFINE_VARIABLE( SIMPLE, "storedSupply", mStoredSupply, double ),
                 
         //! The year associated with this market.
         DEFINE_VARIABLE( SIMPLE, "year", mYear, int )

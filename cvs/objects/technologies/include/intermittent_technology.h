@@ -172,7 +172,10 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "average-grid-capacity-factor", mAveGridCapacityFactor, Value ),
 
         //! Trial market price updated with solution price.
-        DEFINE_VARIABLE( SIMPLE, "trial-market-price", mTrialMarketPrice, Value )
+        DEFINE_VARIABLE( SIMPLE, "trial-market-price", mTrialMarketPrice, Value ),
+
+        //! State value necessary to track tech output ration
+        DEFINE_VARIABLE( SIMPLE | STATE, "tech-output-ratio", mIntermitOutTechRatio, Value )
     )
     
     //! Info object used to pass parameter information into backup calculators.
@@ -221,9 +224,6 @@ protected:
     virtual const std::string& getBackupCapCostName( ) const;
 
     virtual const std::string& getTechCostName( ) const;
-    
-    //! State value necessary to use addToTrialDemand
-    double mLastCalcValue;
 };
 
 #endif // _ITERMITTENT_TECHNOLOGY_H_

@@ -72,10 +72,6 @@ void ResourceActivity::calc( const int aPeriod ) {
     mResource->calcSupply( mRegionName, mGDP, aPeriod );
 }
 
-void ResourceActivity::setStale() {
-    // nothing to do
-}
-
 string ResourceActivity::getDescription() const {
     return mRegionName + " " + mResource->getName();
 }

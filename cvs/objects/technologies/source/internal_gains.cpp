@@ -214,7 +214,7 @@ void InternalGains::setPhysicalOutput( const double aPrimaryOutput,
     mPhysicalOutputs[ aPeriod ] = internalGains;
 
     // Add to the actual internal gains in the trials market
-    SectorUtils::addToTrialDemand( aRegionName, mTrialMarketName, internalGains, mLastCalcValue, aPeriod );
+    SectorUtils::addToTrialDemand( aRegionName, mTrialMarketName, mPhysicalOutputs[ aPeriod ], aPeriod );
 }
 
 double InternalGains::getPhysicalOutput( const int aPeriod ) const

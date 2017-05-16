@@ -171,10 +171,6 @@ void CalcFixedOutputActivity::calc( const int aPeriod ) {
     mSector->setFixedDemandsToMarket( aPeriod );
 }
 
-void CalcFixedOutputActivity::setStale() {
-    // nothing to do
-}
-
 string CalcFixedOutputActivity::getDescription() const {
     return mSector->mRegionName + " " + mSector->getName() + "-fixed-output";
 }

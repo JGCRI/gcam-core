@@ -232,20 +232,20 @@ void SecondaryOutput::setPhysicalOutput( const double aPrimaryOutput,
                                          const int aPeriod )
 {
     // Secondary output is the primary output multiplied by the output ratio.
-    mPhysicalOutputs[ aPeriod ] = calcPhysicalOutputInternal( aPrimaryOutput );
+    mPhysicalOutputs[ aPeriod ] = -1 * calcPhysicalOutputInternal( aPrimaryOutput );
 
     // Remove the secondary output from demand instead of adding to supply
     // because the sector which has this output as a primary will attempt to
     // fill all of demand. If this technology also added to supply, supply would
     // not equal demand.
     Marketplace* marketplace = scenario->getMarketplace();
-    mLastCalcValue = marketplace->addToDemand( mName, mMarketName.empty() ? aRegionName : mMarketName, -1 * mPhysicalOutputs[ aPeriod ], mLastCalcValue, aPeriod, true );
+    marketplace->addToDemand( mName, mMarketName.empty() ? aRegionName : mMarketName, mPhysicalOutputs[ aPeriod ], aPeriod, true );
 }
 
 double SecondaryOutput::getPhysicalOutput( const int aPeriod ) const
 {
     assert( mPhysicalOutputs[ aPeriod ].isInited() );
-    return mPhysicalOutputs[ aPeriod ];
+    return -1 * mPhysicalOutputs[ aPeriod ];
 }
 
 double SecondaryOutput::getValue( const string& aRegionName,

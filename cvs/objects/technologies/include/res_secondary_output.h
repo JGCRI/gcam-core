@@ -96,6 +96,8 @@ public:
                                    const std::string& aRegionName,
                                    ICaptureComponent* aCaptureComponent,
                                    const int aPeriod );
+    
+    virtual double getPhysicalOutput( const int aPeriod ) const;
 
 protected:
     /*!

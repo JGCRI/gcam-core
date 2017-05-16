@@ -84,7 +84,6 @@ LandLeaf::LandLeaf( const ALandAllocatorItem* aParent, const std::string &aName 
     mLandUseHistory = 0;
     mReadinLandAllocation.assign( mReadinLandAllocation.size(), Value( 0.0 ) );
     mLastCalcCO2Value = 0.0;
-    mLastCalcExpansionValue = 0.0;
 }
 
 //! Destructor
@@ -570,8 +569,8 @@ void LandLeaf::calcLandAllocation( const string& aRegionName,
     // compute any demands for land use constraint resources
     if ( mIsLandExpansionCost ) {
         Marketplace* marketplace = scenario->getMarketplace();
-        mLastCalcExpansionValue = marketplace->addToDemand( mLandExpansionCostName, aRegionName, 
-            mLandAllocation[ aPeriod ], mLastCalcExpansionValue, aPeriod, true );      
+        marketplace->addToDemand( mLandExpansionCostName, aRegionName,
+            mLandAllocation[ aPeriod ], aPeriod, true );
     }
 
 }
@@ -591,10 +590,10 @@ void LandLeaf::calcLUCEmissions( const string& aRegionName,
     // Add emissions to the carbon market. 
     const Modeltime* modeltime = scenario->getModeltime();
     if ( ( aEndYear != CarbonModelUtils::getEndYear() || aPeriod == modeltime->getmaxper() - 1 ) ) {
-        double LUCEmissions = mCarbonContentCalc
+        mLastCalcCO2Value = mCarbonContentCalc
             ->getNetLandUseChangeEmission( modeltime->getper_to_yr( aPeriod ) );
         Marketplace* marketplace = scenario->getMarketplace();
-        mLastCalcCO2Value = marketplace->addToDemand( "CO2_LUC", aRegionName, LUCEmissions,
+        marketplace->addToDemand( "CO2_LUC", aRegionName,
                                                       mLastCalcCO2Value, aPeriod, false );
     }  
 }

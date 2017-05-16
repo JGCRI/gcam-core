@@ -100,6 +100,7 @@ void SupplyDemandCurve::calculatePoints( const int numPoints, World* world, Mark
         }
     }
 
+    /* TODO!! switch this to use EDFun
     // Store the market info.
     marketplace->storeinfo( period );
 
@@ -130,7 +131,7 @@ void SupplyDemandCurve::calculatePoints( const int numPoints, World* world, Mark
     marketplace->nullSuppliesAndDemands( period );
 
     // Call world.calc a final time to restore information for summary.
-    world->calc( period );
+    world->calc( period );*/
 }
 
 /*! \brief Print the supply demand curve.

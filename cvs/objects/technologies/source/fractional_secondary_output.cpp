@@ -276,8 +276,8 @@ void FractionalSecondaryOutput::setPhysicalOutput( const double aPrimaryOutput,
      *          regular SecondaryOutput should be used which will subtract from demand.
      */
     Marketplace* marketplace = scenario->getMarketplace();
-    mLastCalcValue = marketplace->addToSupply( mName, mMarketName.empty() ? aRegionName : mMarketName,
-            mPhysicalOutputs[ aPeriod ], mLastCalcValue, aPeriod, true );
+    marketplace->addToSupply( mName, mMarketName.empty() ? aRegionName : mMarketName,
+            mPhysicalOutputs[ aPeriod ], aPeriod, true );
 }
 
 double FractionalSecondaryOutput::getPhysicalOutput( const int aPeriod ) const {

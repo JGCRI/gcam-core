@@ -85,8 +85,6 @@ public:
                const SolutionInfoParamParser* aSolutionInfoParamParser );
     UpdateCode updateSolvable( const ISolutionInfoFilter* aSolutionInfoFilter );
     void updateElasticities();
-    void storeValues();
-    void restoreValues();
     void resetBrackets();
     bool checkAndResetBrackets();
     SolutionInfo* getWorstSolutionInfo( const bool aIgnoreBisected = false );

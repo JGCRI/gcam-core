@@ -268,8 +268,8 @@ void InputSubsidy::setPhysicalDemand( double aPhysicalDemand,
     // This is so solver can use the excess demand to determine
     // whether to increase or decrease a subsidy. 
     // Each technology share is additive.
-    mLastCalcValue = marketplace->addToSupply( mName, aRegionName, mPhysicalDemand[ aPeriod ],
-                              mLastCalcValue, aPeriod, true );
+    marketplace->addToSupply( mName, aRegionName, mPhysicalDemand[ aPeriod ],
+                              aPeriod, true );
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::NOTICE );
 }

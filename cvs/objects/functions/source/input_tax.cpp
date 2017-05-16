@@ -265,8 +265,8 @@ void InputTax::setPhysicalDemand( double aPhysicalDemand,
     // mPhysicalDemand can be a share if tax is share based.
     mPhysicalDemand[ aPeriod ].set( aPhysicalDemand );
     // Each technology share is additive.
-    mLastCalcValue = marketplace->addToDemand( mName, aRegionName, mPhysicalDemand[ aPeriod ],
-                              mLastCalcValue, aPeriod, true );
+    marketplace->addToDemand( mName, aRegionName, mPhysicalDemand[ aPeriod ],
+                              aPeriod, true );
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::NOTICE );
 }

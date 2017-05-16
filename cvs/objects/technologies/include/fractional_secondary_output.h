@@ -206,9 +206,6 @@ protected:
         //! the current region is assumed.
         DEFINE_VARIABLE( SIMPLE, "market-name", mMarketName, std::string )
     )
-    
-    //! State value necessary to use Marketplace::addToDemand
-    double mLastCalcValue;
 };
 
 #endif // _FRACTIONAL_SECONDARY_OUTPUT_H_

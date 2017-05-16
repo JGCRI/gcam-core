@@ -113,8 +113,9 @@ double UtilityDemandFunction::calcDemand( InputSet& input, double personalIncome
     assert( marketplace->getDemand( utilityMarketName, regionName, period ) 
         < util::getVerySmallNumber() );
     // the constraint for input utility is that it should sum to 1
-    marketplace->addToSupply( utilityMarketName, regionName, 1, period, true );
-    marketplace->addToDemand( utilityMarketName, regionName, totalUtility, period, true );
+    // TODO: what to do with this?
+    /*marketplace->addToSupply( utilityMarketName, regionName, 1, period, true );
+    marketplace->addToDemand( utilityMarketName, regionName, totalUtility, period, true );*/
     return totalDemand;
 }
 

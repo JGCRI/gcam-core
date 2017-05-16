@@ -95,6 +95,7 @@ public:
     void set( const double aNewValue/*, const Unit aUnit = DEFAULT*/ );
     operator double() const;
     double get() const;
+    double getDiff() const;
     bool isInited() const;
     //void setCopyState( const bool aIsStateCopy );
     Value& operator+=( const Value& aValue );
@@ -115,22 +116,19 @@ private:
 
     double mValue;
     static double* mAltValue;
+    static double* mGoodValue;
     /*size_t*/unsigned int mAltValueIndex;
     bool mIsInit;
     //static bool* mIsPartialDeriv;
     //Unit mUnit;
-    //bool mIsStateCopy;
+    bool mIsStateCopy;
     
     //void doCheck() const;
-    //double& getInternal();
-    //const double& getInternal() const;
-    double& (*getInternal)(Value&);
-    static double& getInternalValue(Value& aValue);
-    static double& getInternalAltValue(Value& aValue);
+    double& getInternal();
+    const double& getInternal() const;
 };
 
-inline Value::Value(): mValue( 0 ), mIsInit( false )/*, mUnit( DEFAULT ), mIsStateCopy( false )*/{
-    getInternal = &Value::getInternalValue;
+inline Value::Value(): mValue( 0 ), mIsInit( false )/*, mUnit( DEFAULT )*/, mIsStateCopy( false ){
 }
 
 /*! 
@@ -141,10 +139,9 @@ inline Value::Value(): mValue( 0 ), mIsInit( false )/*, mUnit( DEFAULT ), mIsSta
 inline Value::Value( const double aValue/*, const Unit aUnit*/ ):
 mValue( aValue ),
 mIsInit( true )/*,
-mUnit( aUnit ),
-mIsStateCopy( false )*/
+mUnit( aUnit )*/,
+mIsStateCopy( false )
 {
-    getInternal = &Value::getInternalValue;
 }
 
 //! Initialize the value, can only be done once.
@@ -157,35 +154,31 @@ inline void Value::init( const double aNewValue/*, const Unit aUnit*/ ){
     }
 }
 
-inline double& Value::getInternalValue(Value& aValue) {
-    return aValue.mValue;
-}
-
-
-inline double& Value::getInternalAltValue(Value& aValue) {
-    return aValue.mAltValue[aValue.mAltValueIndex];
-}
-
-/*inline const double& Value::getInternal() const {
+inline double& Value::getInternal() {
     return mIsStateCopy ? mAltValue[mAltValueIndex] : mValue;
-}*/
+}
+
+inline const double& Value::getInternal() const {
+    return mIsStateCopy ? mAltValue[mAltValueIndex] : mValue;
+}
 
 //! Set the value.
 inline void Value::set( const double aNewValue/*, const Unit aUnit*/ ){
     assert( util::isValidNumber( aNewValue ) );
-    getInternal(*this) = aNewValue;
+    getInternal() = aNewValue;
     //mUnit = aUnit;
     mIsInit = true;
     //doCheck();
 }
 
-/*inline void Value::setCopyState(const bool aIsStateCopy) {
-    mIsStateCopy = aIsStateCopy;
-}*/
+inline double Value::getDiff() const {
+    assert( !mIsStateCopy );
+    return getInternal() - mGoodValue[ mAltValueIndex ];
+}
 
 //! Get the value.
 inline Value::operator double() const {
-    return getInternal((*const_cast<Value*>(this)));
+    return getInternal();
 }
 
 /*!
@@ -195,7 +188,7 @@ inline Value::operator double() const {
  * \return The value.
  */
 inline double Value::get() const {
-    return getInternal((*const_cast<Value*>(this)));
+    return getInternal();
 }
 
 /*! 
@@ -210,7 +203,7 @@ inline Value& Value::operator+=( const Value& aValue ){
 
     // Make sure the units match up.
     //assert( mUnit == aValue.mUnit );
-    getInternal(*this) += aValue.getInternal((const_cast<Value&>(aValue)));
+    getInternal() += aValue.getInternal();
     //doCheck();
     return *this;
 }
@@ -227,7 +220,7 @@ inline Value& Value::operator-=( const Value& aValue ){
 
     // Make sure the units match up.
     //assert( mUnit == aValue.mUnit );
-    getInternal(*this) -= aValue.getInternal((const_cast<Value&>(aValue)));
+    getInternal() -= aValue.getInternal();
     //doCheck();
     return *this;
 }
@@ -243,7 +236,7 @@ inline Value& Value::operator*=( const Value& aValue ){
 
     // Make sure the units match up.
     //assert( mUnit == aValue.mUnit );
-    getInternal(*this) *= aValue.getInternal((const_cast<Value&>(aValue)));
+    getInternal() *= aValue.getInternal();
     //doCheck();
     return *this;
 }
@@ -260,13 +253,13 @@ inline Value& Value::operator/=( const Value& aValue ){
 
     // Make sure the units match up.
     //assert( mUnit == aValue.mUnit );
-    getInternal(*this) /= aValue.getInternal((const_cast<Value&>(aValue)));
+    getInternal() /= aValue.getInternal();
     //doCheck();
     return *this;
 }
 
 inline Value& Value::operator=( const Value& aValue ) {
-    getInternal(*this) = aValue.getInternal((const_cast<Value&>(aValue)));
+    getInternal() = aValue.getInternal();
     mIsInit = aValue.mIsInit;
     //mUnit = aValue.mUnit;
     /*
@@ -321,7 +314,7 @@ inline bool Value::isInited() const {
  * \param aOut Output stream into which to print.
  */
 inline void Value::print( std::ostream& aOut ) const {
-    aOut << getInternal(*const_cast<Value*>(this));
+    aOut << getInternal();
 }
 
 /*!
@@ -333,7 +326,7 @@ inline std::istream& Value::read( std::istream& aIStream ){
     double streamValue;
     if( aIStream >> streamValue ) {
         mIsInit = true;
-        getInternal(*this) = streamValue;
+        getInternal() = streamValue;
     }
     return aIStream;
 }

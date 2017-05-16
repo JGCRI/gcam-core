@@ -66,7 +66,8 @@ class MarketLocator;
 class IVisitor;
 class IInfo;
 class CachedMarket;
-class MarketDependencyFinder; 
+class MarketDependencyFinder;
+class Value;
 
 /*! 
  * \ingroup Objects
@@ -136,7 +137,6 @@ class Marketplace: public IVisitable, private boost::noncopyable
     friend class SolverLibrary;
     friend class MarketDependencyFinder;
     friend class LogEDFun;
-    friend class Value;
     friend class ManageStateVariables;
 public:
     Marketplace();
@@ -154,10 +154,10 @@ public:
                    const int period, bool aMustExist = true );
     void setPriceVector( const std::string& goodName, const std::string& regionName,
                          const std::vector<double>& prices );
-    double addToSupply( const std::string& goodName, const std::string& regionName, const double value,
-                      const double lastDerivValue, const int period, bool aMustExist = true );
-    double addToDemand( const std::string& goodName, const std::string& regionName, const double value,
-                      const double lastDerivValue, const int period, bool aMustExist = true );
+    void addToSupply( const std::string& goodName, const std::string& regionName, const Value& value,
+                      const int period, bool aMustExist = true );
+    void addToDemand( const std::string& goodName, const std::string& regionName, const Value& value,
+                      const int period, bool aMustExist = true );
     double getPrice( const std::string& goodName, const std::string& regionName, const int period,
                      bool aMustExist = true ) const;
     double getSupply( const std::string& goodName, const std::string& regionName,
@@ -192,13 +192,6 @@ public:
     //! The price to return if no market exists.
     const static double NO_MARKET_PRICE;
     
-    // TODO: replace these these store/restore with something more flexible and
-    // that does not get confused with store/restore state that occurrs during
-    // partial derivative calculations.  Perhaps a way of extracting all prices
-    // which can then held and restored as needed by which ever driver needs this
-    // functionality.
-    void storeinfo( const int period );
-    void restoreinfo( const int period );
     void store_prices_for_cost_calculation();
     void restore_prices_for_cost_calculation();
     
@@ -231,27 +224,6 @@ protected:
     
     //! Flag indicating whether the next call to world->calc() will be part of a partial derivative calculation 
     bool mIsDerivativeCalc;
-
-#if GCAM_PARALLEL_ENABLED
-    //! helper class for tbb parallel_for over null supplies and demands
-    struct NullSDHelper {
-        const std::vector<MarketContainer*>& mMarkets;
-        const int mPeriod;
-        NullSDHelper( const std::vector<MarketContainer*>& aMarkets, const int aPeriod )
-            : mMarkets( aMarkets ), mPeriod( aPeriod ) {}
-        void operator()( const tbb::blocked_range<int>& aRange ) const;
-    };
-
-    //! helper class for tbb parallel_for over restore info
-    struct RestoreHelper {
-        const std::vector<MarketContainer*>& mMarkets;
-        const int mPeriod;
-        RestoreHelper( const std::vector<MarketContainer*>& aMarkets, const int aPeriod )
-            : mMarkets( aMarkets ), mPeriod( aPeriod ) {}
-        void operator()( const tbb::blocked_range<int>& aRange ) const;
-    };
-    
-#endif
 };
 
 #endif

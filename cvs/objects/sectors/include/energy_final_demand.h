@@ -235,9 +235,6 @@ protected:
     virtual const std::string& getXMLName() const;
 private:    
     void acceptDerived( IVisitor* aVisitor, const int aPeriod ) const;
-    
-    //! State value necessary to use Marketplace::addToDemand
-    double mLastCalcValue;
 };
 
 #endif // _ENERGY_FINAL_DEMAND_H_

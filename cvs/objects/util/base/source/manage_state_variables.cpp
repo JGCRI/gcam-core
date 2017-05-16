@@ -52,6 +52,7 @@ using namespace std;
 extern Scenario* scenario;
 
 double* Value::mAltValue = 0;
+double* Value::mGoodValue = 0;
 //size_t Value::mIsPartialDeriv = 0;
 
 ManageStateVariables::ManageStateVariables( const int aPeriod ):
@@ -72,6 +73,7 @@ ManageStateVariables::~ManageStateVariables() {
     }
     delete[] mStateData;
     Value::mAltValue = 0;
+    Value::mGoodValue = 0;
 }
 
 void ManageStateVariables::copyState() {
@@ -94,6 +96,7 @@ void ManageStateVariables::collectState() {
         mStateData[ stateInd ] = new double[ mNumCollected ];
     }
     Value::mAltValue = mStateData[0];
+    Value::mGoodValue = mStateData[0];
     cout << "Mem allocated" << endl;
     mNumCollected = 0;
     doCollectProc.mMemIsAllocated = true;
@@ -144,8 +147,7 @@ void ManageStateVariables::DoCollect::processData( DataType& aData ) {
 template<>
 void ManageStateVariables::DoCollect::processData<Value>( Value& aData ) {
     if( !mIgnoreCurrValue ) {
-        //aData.mIsStateCopy = mIsCollect;
-        aData.getInternal = mIsCollect ? &Value::getInternalAltValue : &Value::getInternalValue;
+        aData.mIsStateCopy = mIsCollect;
         //aData.mIsPartialDeriv = &scenario->getMarketplace()->mIsDerivativeCalc;
         if( mIsCollect ) {
             //aData.mAltValue = mParentClass->mStateData;
@@ -169,8 +171,7 @@ void ManageStateVariables::DoCollect::processData<Value>( Value& aData ) {
 template<>
 void ManageStateVariables::DoCollect::processData<objects::PeriodVector<Value> >( objects::PeriodVector<Value >& aData ) {
     if( !mIgnoreCurrValue ) {
-        //aData[mParentClass->mPeriodToCollect].mIsStateCopy = mIsCollect;
-        aData[mParentClass->mPeriodToCollect].getInternal = mIsCollect ? &Value::getInternalAltValue : &Value::getInternalValue;
+        aData[mParentClass->mPeriodToCollect].mIsStateCopy = mIsCollect;
         //aData[mParentClass->mPeriodToCollect].mIsPartialDeriv = &scenario->getMarketplace()->mIsDerivativeCalc;
         if( mIsCollect ) {
             //aData[mParentClass->mPeriodToCollect].mAltValue = mParentClass->mStateData;

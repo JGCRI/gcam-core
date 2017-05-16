@@ -204,9 +204,6 @@ protected:
     )
     
     void copy( const SecondaryOutput& aOther );
-    
-    //! State value necessary to use Marketplace::addToDemand
-    double mLastCalcValue;
 };
 
 #endif // _SECONDARY_OUTPUT_H_

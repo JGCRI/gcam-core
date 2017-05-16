@@ -61,8 +61,7 @@ extern Scenario* scenario;
 SectorActivity::SectorActivity( Sector* aSector, const GDP* aGDP, const string& aRegionName ):
 mSector( aSector ),
 mGDP( aGDP ),
-mRegionName( aRegionName ),
-mIsStale( true )
+mRegionName( aRegionName )
 {
     // Create a shared pointer such that when both the price and supply activities
     // get deleted this object will also be deleted.
@@ -90,9 +89,6 @@ void SectorActivity::setPrices( const int aPeriod ) {
         mSector->accept( &calibrator, aPeriod );
     }
     mSector->calcFinalSupplyPrice( mGDP, aPeriod );
-    // Calculating prices will reset the shares and thus the shares are no longer
-    // stale.
-    mIsStale = false;
 }
 
 /*!
@@ -100,20 +96,7 @@ void SectorActivity::setPrices( const int aPeriod ) {
  * \param aPeriod Model period to calculate.
  */
 void SectorActivity::setDemands( const int aPeriod ) {
-    // In case the sector shares where last set during a previous partial derivative
-    // calc (stale) they will need to be reset before distributing the supply.
-    if( mIsStale ) {
-        setPrices( aPeriod );
-    }
     mSector->supply( mGDP, aPeriod );
-}
-
-/*!
- * \brief Set that sector shares might be stale and require an extra price
- *        calculation.
- */
-void SectorActivity::setStale() {
-    mIsStale = true;
 }
 
 /*!
@@ -161,10 +144,6 @@ void SectorPriceActivity::calc( const int aPeriod ) {
     mSectorActivity->setPrices( aPeriod );
 }
 
-void SectorPriceActivity::setStale() {
-    mSectorActivity->setStale();
-}
-
 string SectorPriceActivity::getDescription() const {
     return mSectorActivity->getDescription() + " Price";
 }
@@ -187,10 +166,6 @@ SectorDemandActivity::~SectorDemandActivity() {
 
 void SectorDemandActivity::calc( const int aPeriod ) {
     mSectorActivity->setDemands( aPeriod );
-}
-
-void SectorDemandActivity::setStale() {
-    mSectorActivity->setStale();
 }
 
 string SectorDemandActivity::getDescription() const {

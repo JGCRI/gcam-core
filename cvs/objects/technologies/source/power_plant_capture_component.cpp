@@ -269,8 +269,8 @@ double PowerPlantCaptureComponent::calcSequesteredAmount( const string& aRegionN
         // set sequestered amount as demand side of carbon storage market
         Marketplace* marketplace = scenario->getMarketplace();
         if( aGHGName == mTargetGas ){
-            mLastCalcValue = marketplace->addToDemand( mStorageMarket, aRegionName, mSequesteredAmount[ aPeriod ],
-                mLastCalcValue, aPeriod, false );
+            marketplace->addToDemand( mStorageMarket, aRegionName, mSequesteredAmount[ aPeriod ],
+                aPeriod, false );
         }
     }
     return mSequesteredAmount[ aPeriod ];

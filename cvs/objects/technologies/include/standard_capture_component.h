@@ -184,9 +184,6 @@ protected:
         //! Multiplicative non-energy cost penalty.
         DEFINE_VARIABLE( SIMPLE, "non-energy-penalty", mNonEnergyCostPenalty, double )
     )
-    
-    //! State value necessary to use Marketplace::addToDemand
-    double mLastCalcValue;
 };
 
 #endif // _STANDARD_CAPTURE_COMPONENT_H_

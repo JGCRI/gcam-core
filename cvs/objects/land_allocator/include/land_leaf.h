@@ -184,7 +184,11 @@ protected:
         //! Container of historical land use.
         DEFINE_VARIABLE( CONTAINER, "land-use-history", mLandUseHistory, LandUseHistory* ),
         
-        DEFINE_VARIABLE( ARRAY, "parsed-landAllocation", mReadinLandAllocation, objects::PeriodVector<Value> )
+        DEFINE_VARIABLE( ARRAY, "parsed-landAllocation", mReadinLandAllocation, objects::PeriodVector<Value> ),
+                            
+        //! State value necessary to use Marketplace::addToDemand for CO2 emissions
+        //! TODO: fix LUC State
+        DEFINE_VARIABLE( SIMPLE | STATE, "luc-state", mLastCalcCO2Value, Value )
     )
 
     double getCarbonSubsidy( const std::string& aRegionName,
@@ -200,12 +204,6 @@ protected:
     virtual const std::string& getXMLName() const;
 
     virtual void initLandUseHistory( const std::string& aRegionName );
-    
-    //! State value necessary to use Marketplace::addToDemand for CO2 emissions
-    double mLastCalcCO2Value;
-    
-    //! State value necessary to use Marketplace::addToDemand for expansion constraint
-    double mLastCalcExpansionValue;
 
 };
 

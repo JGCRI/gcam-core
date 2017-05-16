@@ -257,8 +257,8 @@ void BuildingServiceInput::setPhysicalDemand( double aPhysicalDemand, const stri
         mServiceDemand[ aPeriod ].set( aPhysicalDemand );
     }
     
-    mLastCalcValue = scenario->getMarketplace()->addToDemand( mName, aRegionName,
-        aPhysicalDemand, mLastCalcValue, aPeriod );
+    scenario->getMarketplace()->addToDemand( mName, aRegionName,
+        mServiceDemand[ aPeriod ], aPeriod );
 }
 
 /*!

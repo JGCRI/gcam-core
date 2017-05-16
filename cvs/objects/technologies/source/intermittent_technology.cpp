@@ -396,14 +396,16 @@ void IntermittentTechnology::production( const string& aRegionName,
     // the ratio of intermittent-technology output to the electricity output.
     double dependentSectorOutput = scenario->getMarketplace()->getDemand( mElectricSectorName, mElectricSectorMarket, aPeriod );
 
-    double currentTechRatio = 0;
     if ( dependentSectorOutput > 0 ){
-        currentTechRatio = getOutput( aPeriod ) / dependentSectorOutput;
+        mIntermitOutTechRatio = getOutput( aPeriod ) / dependentSectorOutput;
+    }
+    else {
+        mIntermitOutTechRatio = 0.0;
     }
 
     // Multiple vintaged intermittent technology ratios are additive. This gives one 
     // share for backup calculation and proper behavior for vintaging intermittent technologies.
-    SectorUtils::addToTrialDemand( aRegionName, mTrialMarketName, currentTechRatio, mLastCalcValue, aPeriod );
+    SectorUtils::addToTrialDemand( aRegionName, mTrialMarketName, mIntermitOutTechRatio, aPeriod );
 }
 
 /*! \brief Set tech shares based on backup energy needs for an intermittent

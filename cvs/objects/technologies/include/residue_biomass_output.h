@@ -188,9 +188,6 @@ protected :
 
     //! Fraction of max available residue harvested for energy
     mutable double mFractProduced;
-
-    //! State value necessary to use Marketplace::addToDemand
-    double mLastCalcValue;
     
     //! Weak pointer to the land leaf which corresponds to this biomass output
     //! used to save time finding it over and over
