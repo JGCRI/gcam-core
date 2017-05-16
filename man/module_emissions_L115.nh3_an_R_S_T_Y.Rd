@@ -18,9 +18,11 @@ the generated outputs: \code{L115.nh3_tg_R_an_C_Sys_Fd_Yh}. The corresponding fi
 original data system was \code{L115.nh3_an_R_S_T_Y.R} (emissions level1).
 }
 \description{
+Annual animal NH3 emissions by GCAM region, sector and technology.
 }
 \details{
 Describe in detail what this chunk does.
 }
 \author{
+KD May 2017
 }
