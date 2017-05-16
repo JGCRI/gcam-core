@@ -234,7 +234,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
     # Original lines 140-
     # this same logic happens over and over, so *use a function*
     # scen - scenario
-    create_ssp_diet <- function(L102.pcgdp_thous90USD_Scen_R_Y, scen, demand, L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs) {
+    create_ssp_demand <- function(L102.pcgdp_thous90USD_Scen_R_Y, scen, demand, L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs) {
       if(demand == "crops") {
         a <- 4545    # a and b are parameters for demand scaling function below
         b <- -0.099
@@ -244,16 +244,17 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
       } else {
         stop("Unknown demand ", demand)
       }
+      # Calculate a raw demand number based on GDP changes
       L102.pcgdp_thous90USD_Scen_R_Y %>%
         filter(scenario == scen) %>%
         mutate(GCAM_demand = demand,
                value = a / (1 + exp(b * log(value)))) %>%
         select(GCAM_region_ID, GCAM_demand, year, value) %>%
         filter(year %in% c(max(HISTORICAL_YEARS), FUTURE_YEARS)) ->
-        ssp_gdp
+        raw_demand
 
-      ssp_gdp %>%
-        # compute gdp ratios for future years
+      # Compute food demand ratios for future years
+      raw_demand %>%
         arrange(GCAM_region_ID, GCAM_demand, desc(year)) %>%
         group_by(GCAM_region_ID, GCAM_demand) %>%
         mutate(ratio = value / lead(value)) %>%
@@ -267,15 +268,16 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
         # same mathematically as multiplying each year's ratio by the previous year's value
         mutate(ratio = cumprod(ratio),
                demand_kcal = if_else(year > max(HISTORICAL_YEARS), ratio * nth(demand_kcal, which(year == max(HISTORICAL_YEARS))), demand_kcal)) %>%
-        # ensure the year-to-year change, and absolute values, don't exceed certain levels (given in 'A_FoodDemand_SSPs')
+        # Next step will be to ensure the year-to-year change, and absolute values, don't exceed certain levels
+        # These levels are given in 'A_FoodDemand_SSPs', so merge that in
         mutate(scenario = scen) %>%
         left_join_error_no_match(A_FoodDemand_SSPs, by = c("scenario", "GCAM_demand")) ->
-        ssp_gdp
+        raw_demand
 
       # Cap future values, both maximum annual change (ratio)
       # and absolute value, based on values in A_FoodDemand_SSPs
 
-      # Note that the old code has a bug: in line 168 a loop starts without
+      # Note that the old code has a bug: in line 168 (old file) a loop starts without
       # correctly resetting the `prev_i` variable; as a result, if the value in
       # the final historical year is 0, incorrect values get written to all future
       # years -- but only for meat. We replicate this faulty behavior below.
@@ -287,31 +289,31 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
       # Because of the dependencies involved, I couldn't figure out a way
       # not to use a loop here.  :(
       for(yr in sort(FUTURE_YEARS)) {
-        d <- filter(ssp_gdp, year == yr)
-        d_prev <- filter(ssp_gdp, year == prev_yr)
+        d <- filter(raw_demand, year == yr)
+        d_prev <- filter(raw_demand, year == prev_yr)
         capped_ratio <- pmin(d$demand_kcal / d_prev$demand_kcal, d$max.mult)
         capped_value <- pmin(d_prev$demand_kcal * capped_ratio, d$satiation.level)
-        ssp_gdp$demand_kcal[ssp_gdp$year == yr] <- capped_value
+        raw_demand$demand_kcal[raw_demand$year == yr] <- capped_value
         prev_yr <- yr
       }
 
       # Finally, replace any NAs with zeroes
-      ssp_gdp %>%
+      raw_demand %>%
         ungroup %>%
         select(GCAM_region_ID, GCAM_demand, year, demand_kcal) %>%
         replace_na(list(demand_kcal = 0.0))
     }
 
-    L134.pcFood_est_R_Dmnd_Y_ssp1_crops <- create_ssp_diet(L102.pcgdp_thous90USD_Scen_R_Y, "SSP1", "crops", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
-    L134.pcFood_est_R_Dmnd_Y_ssp1_meat <- create_ssp_diet(L102.pcgdp_thous90USD_Scen_R_Y, "SSP1", "meat", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
-    L134.pcFood_est_R_Dmnd_Y_ssp2_crops <- create_ssp_diet(L102.pcgdp_thous90USD_Scen_R_Y, "SSP2", "crops", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
-    L134.pcFood_est_R_Dmnd_Y_ssp2_meat <- create_ssp_diet(L102.pcgdp_thous90USD_Scen_R_Y, "SSP2", "meat", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
-    L134.pcFood_est_R_Dmnd_Y_ssp3_crops <- create_ssp_diet(L102.pcgdp_thous90USD_Scen_R_Y, "SSP3", "crops", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
-    L134.pcFood_est_R_Dmnd_Y_ssp3_meat <- create_ssp_diet(L102.pcgdp_thous90USD_Scen_R_Y, "SSP3", "meat", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
-    L134.pcFood_est_R_Dmnd_Y_ssp4_crops <- create_ssp_diet(L102.pcgdp_thous90USD_Scen_R_Y, "SSP4", "crops", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
-    L134.pcFood_est_R_Dmnd_Y_ssp4_meat <- create_ssp_diet(L102.pcgdp_thous90USD_Scen_R_Y, "SSP4", "meat", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
-    L134.pcFood_est_R_Dmnd_Y_ssp5_crops <- create_ssp_diet(L102.pcgdp_thous90USD_Scen_R_Y, "SSP5", "crops", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
-    L134.pcFood_est_R_Dmnd_Y_ssp5_meat <- create_ssp_diet(L102.pcgdp_thous90USD_Scen_R_Y, "SSP5", "meat", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
+    L134.pcFood_est_R_Dmnd_Y_ssp1_crops <- create_ssp_demand(L102.pcgdp_thous90USD_Scen_R_Y, "SSP1", "crops", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
+    L134.pcFood_est_R_Dmnd_Y_ssp1_meat <- create_ssp_demand(L102.pcgdp_thous90USD_Scen_R_Y, "SSP1", "meat", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
+    L134.pcFood_est_R_Dmnd_Y_ssp2_crops <- create_ssp_demand(L102.pcgdp_thous90USD_Scen_R_Y, "SSP2", "crops", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
+    L134.pcFood_est_R_Dmnd_Y_ssp2_meat <- create_ssp_demand(L102.pcgdp_thous90USD_Scen_R_Y, "SSP2", "meat", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
+    L134.pcFood_est_R_Dmnd_Y_ssp3_crops <- create_ssp_demand(L102.pcgdp_thous90USD_Scen_R_Y, "SSP3", "crops", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
+    L134.pcFood_est_R_Dmnd_Y_ssp3_meat <- create_ssp_demand(L102.pcgdp_thous90USD_Scen_R_Y, "SSP3", "meat", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
+    L134.pcFood_est_R_Dmnd_Y_ssp4_crops <- create_ssp_demand(L102.pcgdp_thous90USD_Scen_R_Y, "SSP4", "crops", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
+    L134.pcFood_est_R_Dmnd_Y_ssp4_meat <- create_ssp_demand(L102.pcgdp_thous90USD_Scen_R_Y, "SSP4", "meat", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
+    L134.pcFood_est_R_Dmnd_Y_ssp5_crops <- create_ssp_demand(L102.pcgdp_thous90USD_Scen_R_Y, "SSP5", "crops", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
+    L134.pcFood_est_R_Dmnd_Y_ssp5_meat <- create_ssp_demand(L102.pcgdp_thous90USD_Scen_R_Y, "SSP5", "meat", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
 
     # Produce outputs
     L134.pcFood_kcald_R_Dmnd_Y %>%
