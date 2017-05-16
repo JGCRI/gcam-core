@@ -205,9 +205,9 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
       filter(year == max(HISTORICAL_YEARS)) %>%
       select(-year) %>%
       right_join(L134.FoodRatio_R_Dmnd_Y, by = c("GCAM_region_ID", "GCAM_demand")) %>%
-      mutate(demand_kcal = demand_ratio * food_demand_percapita) %>%
+      mutate(food_demand_percapita = demand_ratio * food_demand_percapita) %>%
       bind_rows(filter(L134.pcFood_kcald_R_Dmnd_Y, year < max(HISTORICAL_YEARS))) %>%
-      select(-food_demand_percapita, -demand_ratio) ->
+      select(-demand_ratio) ->
       L134.pcFood_kcald_R_Dmnd_Y
 
     # Extend the projected diets to all years, assuming convergence year and demand levels
@@ -217,6 +217,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
     CONVERENCE_KCALD_MEAT <- 1000
 
     L134.pcFood_kcald_R_Dmnd_Y %>%
+      rename(demand_kcal = food_demand_percapita) %>%
       complete(GCAM_region_ID, GCAM_demand,
                year = unique(c(year, HISTORICAL_YEARS, FUTURE_YEARS, DIET_CONVERGENCE_YEAR))) %>%
       # fill in convergence year (9999) value
@@ -314,6 +315,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
 
     # Produce outputs
     L134.pcFood_kcald_R_Dmnd_Y %>%
+      rename(value = demand_kcal) %>%
       add_title("Per-capita food demands by region / demand type / year (historical and future)") %>%
       add_units("kcal / person / day") %>%
       add_comments("Built from historical and future time series of per-capita caloric demands") %>%
@@ -328,6 +330,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
 
     bind_rows(L134.pcFood_est_R_Dmnd_Y_ssp1_crops,
               L134.pcFood_est_R_Dmnd_Y_ssp1_meat) %>%
+      rename(value = demand_kcal) %>%
       add_title("SSP1 Per-capita food demands by region / demand type / year (historical and future)") %>%
       add_units("kcal / person / day") %>%
       add_comments("Scales using SSP1 GDP changes") %>%
@@ -339,6 +342,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
 
     bind_rows(L134.pcFood_est_R_Dmnd_Y_ssp2_crops,
               L134.pcFood_est_R_Dmnd_Y_ssp2_meat) %>%
+      rename(value = demand_kcal) %>%
       add_title("SSP2 Per-capita food demands by region / demand type / year (historical and future)") %>%
       add_units("kcal / person / day") %>%
       add_comments("Scales using SSP2 GDP changes") %>%
@@ -350,6 +354,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
 
     bind_rows(L134.pcFood_est_R_Dmnd_Y_ssp3_crops,
               L134.pcFood_est_R_Dmnd_Y_ssp3_meat) %>%
+      rename(value = demand_kcal) %>%
       add_title("SSP3 Per-capita food demands by region / demand type / year (historical and future)") %>%
       add_units("kcal / person / day") %>%
       add_comments("Scales using SSP3 GDP changes") %>%
@@ -361,6 +366,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
 
     bind_rows(L134.pcFood_est_R_Dmnd_Y_ssp4_crops,
               L134.pcFood_est_R_Dmnd_Y_ssp4_meat) %>%
+      rename(value = demand_kcal) %>%
       add_title("SSP5 Per-capita food demands by region / demand type / year (historical and future)") %>%
       add_units("kcal / person / day") %>%
       add_comments("Scales using SSP4 GDP changes") %>%
@@ -372,6 +378,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
 
     bind_rows(L134.pcFood_est_R_Dmnd_Y_ssp5_crops,
               L134.pcFood_est_R_Dmnd_Y_ssp5_meat) %>%
+      rename(value = demand_kcal) %>%
       add_title("SSP5 Per-capita food demands by region / demand type / year (historical and future)") %>%
       add_units("kcal / person / day") %>%
       add_comments("Scales using SSP5 GDP changes") %>%
