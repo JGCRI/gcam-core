@@ -108,7 +108,7 @@ module_water_L1233.Elec_water <- function(command, ...) {
       rename(gen = value) %>%
       mutate(output = share * gen) %>%
       select(-share, -gen) %>%
-      mutate(output = if_else(is.na(output), 0, output)) -> L1233.output_ctry_elec_F_Yh_cool
+      replace_na(list(output = 0)) -> L1233.output_ctry_elec_F_Yh_cool
 
     ## STEP 3: AGGREGATE COUNTRY-LEVEL DATA TO NEW GCAM REGIONS
     # (a) ...WITH COOLING TECHNOLOGIES
@@ -139,7 +139,7 @@ module_water_L1233.Elec_water <- function(command, ...) {
       arrange(GCAM_region_ID, sector, fuel, technology, cooling_system, water_type, plant_type, year) %>%
       group_by(GCAM_region_ID, sector, fuel, technology, cooling_system, water_type, plant_type) %>%
       fill(share, .direction = "up") %>% ungroup() %>%
-      mutate(share = if_else(is.na(share), -1, share)) ->
+      replace_na(list(share = -1)) ->
       L1233.shares_R_elec_F_tech_Yh_cool
 
     ## STEP 5: MULTIPLY SHARES BY TECHNOLOGY-LEVEL OUTPUT TO COMPUTE NEW CALIBRATION DATASET
