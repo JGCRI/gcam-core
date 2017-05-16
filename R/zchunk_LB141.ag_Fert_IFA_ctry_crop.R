@@ -40,6 +40,20 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
     IFA2002_Fert_ktN <- get_data(all_data, "aglu/IFA2002_Fert_ktN")
     IFA_Fert_ktN <- get_data(all_data, "aglu/IFA_Fert_ktN")
 
+    # Lines 64-69 in original file
+    # Convert IFA fertilizer consumption to long form and convert units
+    IFA_Fert_ktN %>%
+      filter(Country != "World Total") %>%
+      gather(IFA_commodity, value, -Country) %>%
+      # convert units from kt to Mt of Nitrogen
+      mutate(Fert_MtN = value * CONV_KT_MT) %>%
+      # rename Country
+      rename(IFA_region = Country) %>%
+      # rename value to be more informative
+      rename (Fert_ktN = value) ->
+      # Store
+      L141.IFA_Fert_ktN
+
 
     # Perform Calculations
 
@@ -104,8 +118,33 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
       L141.LDS_ag_HA_ha
 
 
-    #
 
+
+    # Lines 70-79 in original file
+    # PURPOSE????????
+    # Process IFA2002 fertilizer consumption data
+    IFA2002_Fert_ktN %>%
+      # calculate nitrogen consumption in tons per hectare N_tha = N_kt / AREA_thousHa
+      mutate(N_tha = N_kt /AREA_thousHa) %>%
+      na.omit() %>%
+      # get the max fertilizer consumption across years for each country and crop
+      group_by(COUNTRY, CROP) %>%
+      summarise(Area_thousHa = max(AREA_thousHa), N_kt = max(N_kt), N_tha = max(N_tha)) %>%
+      rename(IFA2002_country= COUNTRY, IFA2002_crop = CROP) ->
+      L141.IFA2002_Fert_ktN
+
+    ### COMMENTSSSSSS
+
+
+
+    # Lines 80 - 95 in original file
+    # Calculate fertilizer demand coefficients for 97 countries / 106 crops where available
+    # Calculate fertilizer demand = harvested area * fertilizer application rate for each
+    # country-crop
+    # Take scaled LDS harvested area data at the country-crop level, L141.LDS_ag_HA_ha,
+    # sum to iso and GTAPcrop level, join IFA2002_crop information from the FAO_PRODSTAT table,
+    # adjust unspecified cereals in Ethiopia, join in the fertilizer application rate for
+    # each country-crop,
 
 
 
