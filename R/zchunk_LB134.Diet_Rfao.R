@@ -82,7 +82,10 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
 
       # Divide by population to calculate the historical per-capita food demands, in kcal per person per day
       # Original lines 51-56
-      left_join_error_no_match(L101.Pop_thous_R_Yh, by = c("GCAM_region_ID", "year")) %>%
+      left_join(L101.Pop_thous_R_Yh, by = c("GCAM_region_ID", "year")) %>%
+      # make sure we have population data for all years
+      group_by(GCAM_region_ID) %>%
+      mutate(value = approx_fun(year, value)) %>%
       mutate(food_demand_percapita = consumption * CONV_DAYS_YEAR * (1 / CONV_MCAL_PCAL ) / value) %>%
       select(-consumption, -value) ->
       L134.pcFood_kcald_R_Dmnd_Y
