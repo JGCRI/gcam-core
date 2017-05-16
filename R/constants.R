@@ -96,7 +96,7 @@ CONV_GG_TG <- 0.001 # gigagrams to tegagrams
 CONV_TST_TG <- 0.000907 # thousand short tons to Tg
 CONV_KG_TO_TG <- 1e-9
 CONV_GWH_EJ <- 3.6e-6
-CONV_YEAR_HOURS <- 8766
+CONV_YEAR_HOURS <- 24 * 365.25
 
 # Cubic meters (m3) to billion cubic meters (bm3)
 CONV_M3_BM3 <- 1e-09
