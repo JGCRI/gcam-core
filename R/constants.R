@@ -23,6 +23,7 @@ HISTORICAL_YEARS <- 1971:2010
 IMF_GDP_YEARS <- 2010:2020
 FUTURE_YEARS <- seq(2015, 2100, 5)
 SSP_FUTURE_YEARS <- c( 2010, FUTURE_YEARS)
+GHG_CONTROL_READIN_YEAR <- 1975
 
 # ======================================================================
 # GCAM constants

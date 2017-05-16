@@ -124,12 +124,12 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
 
 # This section deletes the default GCAM default GDP control functions, so they can be replaced with
 # explicit emission factors by year.
-
-# Create a control table where year 2010 is the control period and renamed 1975, discarding all other years.
+# Create a control table where year 2010 is the control period (later renamed 1975), discarding all other years.
+# 1975 is a constant called "GHG_CONTROL_READIN_YEAR"
     L251.ssp2_ef %>%
       select(-emiss.coeff) %>%
       filter(year == min(year)) %>%
-      mutate(year = 1975,
+      mutate(year = GHG_CONTROL_READIN_YEAR,
              ctrl.name ="GDP_control") ->
     L251.ctrl.delete
 
@@ -144,7 +144,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
        mutate(future.emiss.coeff.year = year,
               future.emiss.coeff.name = "SSP_GAINS",
               # Previous year column that only includes the electricity supply sector is now a constant.
-              year = 1975)->
+              year = GHG_CONTROL_READIN_YEAR)->
      L251.ssp15_ef_vin
 
      L251.ssp2_ef %>%
@@ -156,7 +156,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
        mutate(future.emiss.coeff.year = year,
               future.emiss.coeff.name = "SSP_GAINS",
               # Previous year column that only includes the electricity supply sector is now a constant.
-              year = 1975)->
+              year = GHG_CONTROL_READIN_YEAR)->
      L251.ssp2_ef_vin
 
      L251.ssp34_ef %>%
@@ -168,7 +168,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
        mutate(future.emiss.coeff.year = year,
               future.emiss.coeff.name = "SSP_GAINS",
               # Previous year column that only includes the electricity supply sector is now a constant.
-              year = 1975)->
+              year = GHG_CONTROL_READIN_YEAR)->
      L251.ssp34_ef_vin
 
 # This section renames SO2 variables so that it has regional SO2 emission species.
