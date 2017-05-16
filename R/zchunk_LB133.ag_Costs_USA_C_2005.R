@@ -86,7 +86,7 @@ module_aglu_LB133.ag_Costs_USA_C_2005 <- function(command, ...) {
       # if all years in MODEL_COST_YEARS have NA values, the above calculation will give NaN for the
       # mean value. Overwrite this to 0:
       # old comment: (indicates a variable cost not disaggregated in the target years)
-      mutate(cost_75USDm2 = if_else(is.na(cost_75USDm2), 0, cost_75USDm2)) ->
+      replace_na(list(cost_75USDm2 = 0)) ->
       # store in a table of costs in 1975 dollars per square meter, by commodity and year:
       L133.ag_Cost_75USDm2_Cusda_Yusda
 

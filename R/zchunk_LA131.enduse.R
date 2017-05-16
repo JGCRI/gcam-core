@@ -24,8 +24,8 @@ module_energy_LA131.enduse <- function(command, ...) {
              FILE = "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh",
              FILE = "temp-data-inject/L121.in_EJ_R_unoil_F_Yh",
              FILE = "temp-data-inject/L122.in_EJ_R_refining_F_Yh",
-             FILE = "temp-data-inject/L124.out_EJ_R_heat_F_Yh",
-             FILE = "temp-data-inject/L124.out_EJ_R_heatfromelec_F_Yh",
+             "L124.out_EJ_R_heat_F_Yh",
+             "L124.out_EJ_R_heatfromelec_F_Yh",
              "L126.out_EJ_R_electd_F_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L131.in_EJ_R_Senduse_F_Yh",
@@ -51,15 +51,9 @@ module_energy_LA131.enduse <- function(command, ...) {
       gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
       mutate(year = as.integer(substr(year, 2, 5))) -> L122.in_EJ_R_refining_F_Yh
 
-    get_data(all_data, "temp-data-inject/L124.out_EJ_R_heat_F_Yh") %>%
-      gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) -> L124.out_EJ_R_heat_F_Yh
-
-   get_data(all_data, "temp-data-inject/L124.out_EJ_R_heatfromelec_F_Yh") %>%
-      gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) -> L124.out_EJ_R_heatfromelec_F_Yh
-
-   L126.out_EJ_R_electd_F_Yh <- get_data(all_data, "L126.out_EJ_R_electd_F_Yh")
+    L124.out_EJ_R_heat_F_Yh <- get_data(all_data, "L124.out_EJ_R_heat_F_Yh")
+    L124.out_EJ_R_heatfromelec_F_Yh <- get_data(all_data, "L124.out_EJ_R_heatfromelec_F_Yh")
+    L126.out_EJ_R_electd_F_Yh <- get_data(all_data, "L126.out_EJ_R_electd_F_Yh")
 
     # ===================================================
     # ELECTRICITY SCALING
@@ -131,7 +125,7 @@ module_energy_LA131.enduse <- function(command, ...) {
 
     # Subset the end use sectors and aggregate by fuel. Only in regions where heat is modeled as a separate fuel.
     A_regions %>%
-      filter(heat == 1) %>% # Filtering for regions where heat is modeled as a separate fuel
+      filter(has_district_heat == 1) %>% # Filtering for regions where heat is modeled as a separate fuel
       select(GCAM_region_ID) %>%
       .$GCAM_region_ID ->
       GCAM_region_ID_heat
@@ -146,7 +140,7 @@ module_energy_LA131.enduse <- function(command, ...) {
     Enduse_heat %>%
       left_join_error_no_match(Enduse_heat_unscaled, by = c("GCAM_region_ID", "year")) %>%
       mutate(value = value.x / value.y) %>%
-      mutate(value = if_else(is.na(value),0,value)) %>%
+      replace_na(list(value = 0)) %>%
       select(-value.x, -value.y) ->
       Enduse_heat_scaler
 
@@ -168,7 +162,7 @@ module_energy_LA131.enduse <- function(command, ...) {
 
     # Heat in some regions is not modeled separately from the fuels used to produce it
     A_regions %>%
-      filter(heat == 0) %>% # Filtering for regions where heat is not modeled as a separate fuel
+      filter(has_district_heat == 0) %>% # Filtering for regions where heat is not modeled as a separate fuel
       select(GCAM_region_ID) %>%
       .$GCAM_region_ID ->
       GCAM_region_ID_no_heat
@@ -190,12 +184,12 @@ module_energy_LA131.enduse <- function(command, ...) {
     # Regions may have zero heat consumption by demand sectors while nevertheless having heat production. Assign this to industry
     Enduse_heat_scaled_share %>%
       filter(sector == "in_industry_general") %>%
-      mutate(value = if_else(is.na(value),1,value)) ->
+      replace_na(list(value = 1)) ->
       Enduse_heat_scaled_share_indust
 
     Enduse_heat_scaled_share %>%
       filter(sector != "in_industry_general") %>%
-      mutate(value = if_else(is.na(value),0,value)) %>%
+      replace_na(list(value = 0)) %>%
       bind_rows(Enduse_heat_scaled_share_indust) %>%
       arrange(GCAM_region_ID, sector, year) ->
       L131.share_R_Senduse_heat_Yh # Output table 2
@@ -213,7 +207,12 @@ module_energy_LA131.enduse <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Share of regional heat demand by each sector was calculated for regions where heat is not modeled separately from the fuels used to produce it. Moreoever, regions having zero heat consumption by demand sectors while nevertheless also having heat production, this was assigned to industry") %>%
       add_legacy_name("L131.share_R_Senduse_heat_Yh") %>%
-      add_precursors("energy/A_regions", "energy/enduse_sector_aggregation", "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "temp-data-inject/L121.in_EJ_R_unoil_F_Yh", "temp-data-inject/L122.in_EJ_R_refining_F_Yh", "temp-data-inject/L124.out_EJ_R_heat_F_Yh", "temp-data-inject/L124.out_EJ_R_heatfromelec_F_Yh", "L126.out_EJ_R_electd_F_Yh") %>%
+      add_precursors("energy/A_regions", "energy/enduse_sector_aggregation",
+                     "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh",
+                     "temp-data-inject/L121.in_EJ_R_unoil_F_Yh",
+                     "temp-data-inject/L122.in_EJ_R_refining_F_Yh",
+                     "L124.out_EJ_R_heat_F_Yh", "L124.out_EJ_R_heatfromelec_F_Yh",
+                     "L126.out_EJ_R_electd_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L131.share_R_Senduse_heat_Yh
 
