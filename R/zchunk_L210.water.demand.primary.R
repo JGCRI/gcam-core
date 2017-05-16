@@ -53,13 +53,14 @@ module_water_L210.water.demand.primary <- function(command, ...) {
       mutate(water_sector = "Mining") %>%
       mutate(minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector)) %>%
       # Add in GCAM region names
-      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      mutate(market.name = region) ->
       L210.TechCoef
 
     # Repeat coefficients across all model years
     tibble(year = MODEL_YEARS, MERGEFIELD = 1) %>%
       left_join(mutate(L210.TechCoef, MERGEFIELD = 1), by = "MERGEFIELD") %>%
-      select(region, supplysector, subsector, technology, year, minicam.energy.input, coefficient, market.name = region) %>%
+      select(region, supplysector, subsector, technology, year, minicam.energy.input, coefficient, market.name) %>%
 
       # Produce outputs
       add_title("Global water demand technology coefficients") %>%
