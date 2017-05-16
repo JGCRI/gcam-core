@@ -40,28 +40,75 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
     IFA2002_Fert_ktN <- get_data(all_data, "aglu/IFA2002_Fert_ktN")
     IFA_Fert_ktN <- get_data(all_data, "aglu/IFA_Fert_ktN")
 
-    # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
+
+    # Perform Calculations
+
+    # Lines 37-60 in original file
+    # Bring together disparate LDS and FAO harvested area data in order to calculate an FAO_LDS scaler for
+    # each region-commodity combination.
+    # This region-commodity level scaler is used to scale the LDS harvested area data given at the
+    # isoCountry-GLU-GTAPcrop level. This scaled harvested area is then multiplied by Fert application rates
+    # and summed to calculate fertilizer demands at the iso-GTAPcrop level.
     #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
+    # old comment: printlog( "Briefly reconciling Monfreda/LDS and FAO datasets for the 1998-2002 time period" )
+    #              This part of the methods is sensitive to any discrepancies between the two data sources, as the Monfreda/LDS
+    #              based data are used to estimate fertilizer by crop and country, and then the actual fertilizer IO coefs are derived
+    #              using FAO Prodstat data. For most crops this is OK, but some differ by 10-50 and can cause fertilizer costs well
+    #              in excess of crop production revenues.
+    #              printlog( "Using harvested area totals by GCAM region and commodity as the basis for scaling back LDS harvested area by country, GLU, and GTAP crop" )
     #
     #
-    # NOTE: there are `merge` calls in this code. Be careful!
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses vecpaste
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # ===================================================
+    # First, calculate the FAO_LDS scaler for each region-commodity combination
+    # Take the FAO Harvested area data in table L101.ag_HA_bm2_R_C_Y and get the average value for each
+    # region-commodity combination over the LDS years = 1998-2002 default.
+    # Then Take the LDS harvested area data, L102.ag_HA_bm2_R_C_GLU, sum to the region-commodity level,
+    # join it to the averaged FAO data and compute an FAO_LDS scaler as FAO/LDS:
+    #
+    # Take FAO HA data and calulate the average value over FAO_LDS_years for each region-commodity combo:
+    L101.ag_HA_bm2_R_C_Y %>%
+      filter(year %in% FAO_LDS_YEARS) %>%
+      group_by(GCAM_region_ID, GCAM_commodity) %>%
+      summarise(FAO = mean(value)) %>% ungroup() ->
+      L141.FAO
+    # Take LDS HA data and aggregate to the GCAM region-commodity level:
+    L102.ag_HA_bm2_R_C_GLU %>%
+      group_by(GCAM_region_ID, GCAM_commodity) %>%
+      summarise(LDS = sum(value)) %>% ungroup() %>%
+      # Join in the FAO data from the previous pipeline
+      left_join_error_no_match(L141.FAO, by = c("GCAM_region_ID", "GCAM_commodity")) %>%
+      # Calculate the FAO_LDS scaler value = FAO/LDS
+      mutate(scaler = FAO/LDS) ->
+      # store in an FAO_LDS table:
+      L141.FAO_LDS
+
+    # Second, use the region-commodity scalers to sclae LDS harvested area data at the iso-GLU-GTAPcrop level.
+    # old comment: Match the GCAM region and commodity class into the LDS dataset, and multiply by the scaler above
+    #
+    # Take LDS harvested area data at the iso-GLU-GTAPcrop level, L100.LDS_ag_HA_ha, join in the GCAM_region_ID info for
+    # each iso, join in the GCAM_commodity info for each GTAPcrop, join the FAO_LDS scaler calculated in the previous
+    # pipeline, and use the FAO_LDS scaler to scale the iso-GLU-GTAPcrop harvested area data
+    L100.LDS_ag_HA_ha %>%
+      # join GCAM region ID information
+      left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = c("iso")) %>%
+      # join GCAM commodity information and preserve NAs to be omitted, as in original code
+      left_join(select(FAO_ag_items_PRODSTAT, GTAP_crop, GCAM_commodity), by = c("GTAP_crop")) %>%
+      na.omit() %>%
+      # join FAO_LDS scaler for each region-commodity
+      left_join_error_no_match(select(L141.FAO_LDS, GCAM_region_ID, GCAM_commodity, scaler),
+                               by = c("GCAM_region_ID", "GCAM_commodity")) %>%
+      # use the region-commodity scaler to scale down each iso-GLU-GTAP harvested area
+      mutate(value = value * scaler) %>%
+      # drop unwanted columns
+      select(-GCAM_region_ID, -GCAM_commodity, -scaler) ->
+      # store in an LDS harvested area table
+      L141.LDS_ag_HA_ha
+
+
+    #
+
+
+
+
 
     # Produce outputs
     tibble() %>%
