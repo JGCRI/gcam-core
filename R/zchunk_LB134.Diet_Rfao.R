@@ -65,43 +65,46 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
 
     # Historical time series of ag and animal product consumption
     # Original lines 41-49
+    # Start by summing food and animal (below) demand for each year and GCAM region
     L101.ag_Food_Pcal_R_C_Y %>%
       filter(year %in% AGLU_HISTORICAL_YEARS) %>%
       group_by(GCAM_region_ID, year) %>%
-      summarise(value = sum(value)) %>%
+      summarise(consumption = sum(value)) %>%
       mutate(GCAM_demand = "crops") ->
       L134.ag_Food_Pcal_R_Y
 
     L105.an_Food_Pcal_R_C_Y %>%
       filter(year %in% AGLU_HISTORICAL_YEARS) %>%
       group_by(GCAM_region_ID, year) %>%
-      summarise(value = sum(value)) %>%
+      summarise(consumption = sum(value)) %>%
       mutate(GCAM_demand = "meat") %>%
-      bind_rows(L134.ag_Food_Pcal_R_Y) ->
-      L134.Food_Pcal_R_Dmnd_Y
+      bind_rows(L134.ag_Food_Pcal_R_Y) %>%
 
-    # Divide by population to calculate the historical per-capita food demands, in kcal per person per day
-    # Original lines 51-56
-    L134.Food_Pcal_R_Dmnd_Y %>%
+      # Divide by population to calculate the historical per-capita food demands, in kcal per person per day
+      # Original lines 51-56
       left_join_error_no_match(L101.Pop_thous_R_Yh, by = c("GCAM_region_ID", "year")) %>%
-      mutate(value = value.x * CONV_DAYS_YEAR * (1 / CONV_MCAL_PCAL ) / value.y) %>%
-      select(-value.x, -value.y) ->
+      mutate(food_demand_percapita = consumption * CONV_DAYS_YEAR * (1 / CONV_MCAL_PCAL ) / value) %>%
+      select(-consumption, -value) ->
       L134.pcFood_kcald_R_Dmnd_Y
 
-    # In preparation for future extrapolation, get the last historical numbers and aggregate by ISO
+    # In preparation for future extrapolation, get the last historical numbers for both
+    # food and animal demand and aggregate by ISO
     # Original lines 58-69
     L100.FAO_ag_Food_t %>%
       filter(year == max(HISTORICAL_YEARS)) %>%
       group_by(iso) %>%
-      summarise(value = sum(value)) %>%
+      summarise(end_history_demand = sum(value)) %>%
       mutate(GCAM_demand = "crops") ->
       L134.FAO_ag_Food_t
 
     L100.FAO_an_Food_t %>%
       filter(year == max(HISTORICAL_YEARS)) %>%
       group_by(iso) %>%
-      summarise(value = sum(value)) %>%
+      summarise(end_history_demand = sum(value)) %>%
       mutate(GCAM_demand = "meat") %>%
+
+      # bind these two data frames together, to produce a unified food demand dataset,
+      # and match (by ISO code) with FAO2050 region name
       bind_rows(L134.FAO_ag_Food_t) %>%
       left_join_keep_first_only(select(AGLU_ctry, FAO2050_reg, iso), by = "iso") ->
       L134.Food_t_ctry_Dmnd_Y
@@ -110,88 +113,90 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
     # Drop unnecessary composite regions from FAO diet table
     # Original lines 71-85
     FAO2050_Diet %>%
+      arrange(year) %>%
       filter(FAO2050_reg %in% L134.Food_t_ctry_Dmnd_Y$FAO2050_reg) %>%
       # Calculate FAO2050 diet for specified diet years
       # Use linear interpolation to convert FAO2050 model time periods to GCAM "diet years"
       group_by(FAO2050_reg, FAO2050_item) %>%
       # Extend years in dataset to include DIET_YEARS
-      complete(year = unique(c(.$year, aglu.DIET_YEARS))) %>%
+      complete(year = unique(c(year, aglu.DIET_YEARS))) %>%
       mutate(value = approx_fun(year, value)) %>%
       # Add caloric content and demand category
-      left_join(select(FAO2050_items_cal, FAO2050_item, GCAM_demand, kcalkg, conv_d), by = "FAO2050_item") ->
-      L134.Diet_Rfao_Cfao_Yfao
-
-    # Build new table with only diet years subsetted
-    # Multiply through by caloric contents to get all measures in kcal/pers/d, by FAO region and food categories
-    # Original lines 87-92
-    L134.Diet_Rfao_Cfao_Yfao %>%
+      left_join(select(FAO2050_items_cal, FAO2050_item, GCAM_demand, kcalkg, conv_d), by = "FAO2050_item") %>%
+      # Build new table with only diet years subsetted
+      # Multiply through by caloric contents to get all measures in kcal/pers/d, by FAO region and food categories
+      # Original lines 87-92
       filter(year %in% aglu.DIET_YEARS) %>%
-      mutate(value = value * kcalkg / conv_d) %>%
-      select(FAO2050_reg, FAO2050_item, GCAM_demand, year, value) ->
-      L134.Diet_kcald_Rfao_Cfao_Y
+      mutate(demand_kcal = value * kcalkg / conv_d) %>%
+      select(FAO2050_reg, FAO2050_item, GCAM_demand, year, demand_kcal) %>%
 
-    # Aggregate by GCAM demand and FAO region, and compute future diet ratios by FAO2050 region
-    # Original lines 94-104
-    L134.Diet_kcald_Rfao_Cfao_Y %>%
+      # Aggregate by GCAM demand and FAO region
+      # Original lines 94-104
       filter(year %in% aglu.DIET_YEARS, !is.na(GCAM_demand)) %>%
       group_by(FAO2050_reg, GCAM_demand, year) %>%
-      summarise(value = sum(value)) %>%
+      summarise(demand_kcal = sum(demand_kcal)) %>%
       ungroup %>%
+      # everything assigned as "total" demand gets re-assigned to "crops" because...
       mutate(GCAM_demand = if_else(GCAM_demand == "total", "crops", GCAM_demand)) ->
       L134.Diet_kcald_Rfao_Dmnd_Y
 
+    # Compute diet ratios (change from last historical year) based on meat caloric contents and demand
     # Note on this next section from Page:
     # Can't just use exogenous caloric contents for the crop and meat commodities, which we're estimating
-    # as averages without knowing the exact composition of the commodities (e.g., what portion of "cereals"
-    # is corn vs wheat in each region, as they have different caloric contents), and still hit the target
-    # reported "Total food (kcal/person/day)" in each region and time period. There were three options:
+    # as averages without knowing the exact composition of the commodities. (We can't know exactly where
+    # their split is in any year because this FAO AT2050 table just uses a few food groupings that are far
+    # coarser than the FAOSTAT data underlying these reported trends, and generally reports the flows in
+    # kilograms per person per day. While the total is reported in kcal/pers/d, ideally we'd this information
+    # for all of groupings, or at least for crop and meat subtotals.)
+    # In particular, we want to calculate what portion of "cereals" is corn vs wheat in each region, as they
+    # have different caloric contents, and still hit the target reported "Total food (kcal/person/day)" in
+    # each region and time period. There are three options to do so:
     # (1) assign the crop caloric contents exogenously and allow the meat caloric contents to float;
     # (2) vice versa; or
     # (3) assign both crop and meat caloric contents, and then scale them all to hit the target value.
-    # It looks like I went with (2), maybe because I figured that the meat commodities probably have less
-    # heterogeneity in average caloric contents, and maybe also because it happened to be the easiest to implement.
+    # This code does (2) (because GPK figured that the meat commodities probably have less
+    # heterogeneity in caloric contents, and it was the easiest to implement).
 
     # Compute diet ratios based on meat caloric contents and demand (option 2 above)
     L134.Diet_kcald_Rfao_Dmnd_Y %>%
       filter(GCAM_demand == "meat") %>%
       select(-GCAM_demand) %>%
-      rename(meat_value = value) %>%
+      rename(meat_demand_kcal = demand_kcal) %>%
       right_join(L134.Diet_kcald_Rfao_Dmnd_Y, by = c("FAO2050_reg", "year")) %>%
-      mutate(value = if_else(GCAM_demand == "crops", value - meat_value, value)) %>%
-      select(-meat_value) %>%
+      mutate(demand_kcal = if_else(GCAM_demand == "crops", demand_kcal - meat_demand_kcal, demand_kcal)) %>%
+      select(-meat_demand_kcal) %>%
       # compute future diet ratios by FAO2050 region
       group_by(FAO2050_reg, GCAM_demand) %>%
       arrange(year) %>%
-      mutate(value = value / first(value)) ->
+      mutate(demand_ratio = demand_kcal / first(demand_kcal)) %>%
+      select(-demand_kcal) ->
       L134.DietRatio_Rfao_Dmnd_Y
 
     # Multiply these ratios by the starting values (final historical year value, fhy_value) at the country level
     # Original lines 106-110
     L134.DietRatio_Rfao_Dmnd_Y %>%
-      left_join(rename(L134.Food_t_ctry_Dmnd_Y, fhy_value = value), by = c("FAO2050_reg", "GCAM_demand")) %>%
-      mutate(value = value * fhy_value) %>%
-      select(-fhy_value) ->
-      L134.Food_t_ctry_Dmnd_Y
+      left_join(L134.Food_t_ctry_Dmnd_Y, by = c("FAO2050_reg", "GCAM_demand")) %>%
+      mutate(demand_kcal = demand_ratio * end_history_demand) %>%
+      select(-end_history_demand, -demand_ratio) %>%
 
-    # Match in GCAM regions, aggregate, and compute ratios from final historical year
-    # Original lines 112-125
-    L134.Food_t_ctry_Dmnd_Y %>%
+      # Match in GCAM regions, aggregate, and compute ratios from final historical year
+      # Original lines 112-125
       left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
       group_by(GCAM_region_ID, GCAM_demand, year) %>%
-      summarise(value = sum(value)) ->
+      summarise(demand_kcal = sum(demand_kcal)) ->
       L134.Food_t_R_Dmnd_Y
 
     L134.Food_t_R_Dmnd_Y %>%
       filter(year == max(HISTORICAL_YEARS)) %>%
       select(-year) %>%
-      rename(value_fhy = value) %>%
+      rename(demand_fhy = demand_kcal) %>%
       left_join(L134.Food_t_R_Dmnd_Y, by = c("GCAM_region_ID", "GCAM_demand")) %>%
-      mutate(value = value / value_fhy) %>%
-      select(-value_fhy) %>%
+      mutate(demand_ratio = demand_kcal / demand_fhy) %>%
+      select(-demand_fhy, -demand_kcal) %>%
       # Fill in missing values for regions that do not exist
       ungroup %>%
       complete(GCAM_region_ID = unique(iso_GCAM_regID$GCAM_region_ID),
-               nesting(GCAM_demand, year), fill = list(value = 1.0)) ->
+               nesting(GCAM_demand, year), fill = list(demand_ratio = 1.0)) ->
       L134.FoodRatio_R_Dmnd_Y
 
     # Multiply ratios by the caloric demands in the final historical year
@@ -199,29 +204,28 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
     L134.pcFood_kcald_R_Dmnd_Y %>%
       filter(year == max(HISTORICAL_YEARS)) %>%
       select(-year) %>%
-      rename(value_fhy = value) %>%
       right_join(L134.FoodRatio_R_Dmnd_Y, by = c("GCAM_region_ID", "GCAM_demand")) %>%
-      mutate(value = value * value_fhy) %>%
-      select(-value_fhy) %>%
-      bind_rows(filter(L134.pcFood_kcald_R_Dmnd_Y, year < max(HISTORICAL_YEARS)))->
+      mutate(demand_kcal = demand_ratio * food_demand_percapita) %>%
+      bind_rows(filter(L134.pcFood_kcald_R_Dmnd_Y, year < max(HISTORICAL_YEARS))) %>%
+      select(-food_demand_percapita, -demand_ratio) ->
       L134.pcFood_kcald_R_Dmnd_Y
 
     # Extend the projected diets to all years, assuming convergence year and demand levels
     # Original lines 133-138
     DIET_CONVERGENCE_YEAR <- 9999
-    CONGERENCE_KCALD_CROPS <- 2500
-    CONGERENCE_KCALD_MEAT <- 1000
+    CONVERENCE_KCALD_CROPS <- 2500
+    CONVERENCE_KCALD_MEAT <- 1000
 
     L134.pcFood_kcald_R_Dmnd_Y %>%
       complete(GCAM_region_ID, GCAM_demand,
-               year = unique(c(L134.pcFood_kcald_R_Dmnd_Y$year, HISTORICAL_YEARS, FUTURE_YEARS, DIET_CONVERGENCE_YEAR))) %>%
+               year = unique(c(year, HISTORICAL_YEARS, FUTURE_YEARS, DIET_CONVERGENCE_YEAR))) %>%
       # fill in convergence year (9999) value
-      mutate(value = if_else(year == DIET_CONVERGENCE_YEAR,
-                             if_else(GCAM_demand == "crops", CONGERENCE_KCALD_CROPS, CONGERENCE_KCALD_MEAT),
-                             value)) %>%
+      mutate(demand_kcal = if_else(year == DIET_CONVERGENCE_YEAR,
+                                   if_else(GCAM_demand == "crops", CONVERENCE_KCALD_CROPS, CONVERENCE_KCALD_MEAT),
+                                   demand_kcal)) %>%
       # interpolate out to that convergence year
       group_by(GCAM_region_ID, GCAM_demand) %>%
-      mutate(value = approx_fun(year, value)) %>%
+      mutate(demand_kcal = approx_fun(year, demand_kcal)) %>%
       filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS)) ->
       L134.pcFood_kcald_R_Dmnd_Y
 
@@ -261,7 +265,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
         # computing the cumulative product, and then multiplying by the last historical year value, is the
         # same mathematically as multiplying each year's ratio by the previous year's value
         mutate(ratio = cumprod(ratio),
-               value = if_else(year > max(HISTORICAL_YEARS), ratio * nth(value, which(year == max(HISTORICAL_YEARS))), value)) %>%
+               demand_kcal = if_else(year > max(HISTORICAL_YEARS), ratio * nth(demand_kcal, which(year == max(HISTORICAL_YEARS))), demand_kcal)) %>%
         # ensure the year-to-year change, and absolute values, don't exceed certain levels (given in 'A_FoodDemand_SSPs')
         mutate(scenario = scen) %>%
         left_join_error_no_match(A_FoodDemand_SSPs, by = c("scenario", "GCAM_demand")) ->
@@ -284,17 +288,17 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
       for(yr in sort(FUTURE_YEARS)) {
         d <- filter(ssp_gdp, year == yr)
         d_prev <- filter(ssp_gdp, year == prev_yr)
-        capped_ratio <- pmin(d$value / d_prev$value, d$max.mult)
-        capped_value <- pmin(d_prev$value * capped_ratio, d$satiation.level)
-        ssp_gdp$value[ssp_gdp$year == yr] <- capped_value
+        capped_ratio <- pmin(d$demand_kcal / d_prev$demand_kcal, d$max.mult)
+        capped_value <- pmin(d_prev$demand_kcal * capped_ratio, d$satiation.level)
+        ssp_gdp$demand_kcal[ssp_gdp$year == yr] <- capped_value
         prev_yr <- yr
       }
 
       # Finally, replace any NAs with zeroes
       ssp_gdp %>%
         ungroup %>%
-        select(GCAM_region_ID, GCAM_demand, year, value) %>%
-        mutate(value = if_else(is.na(value), 0.0, value))
+        select(GCAM_region_ID, GCAM_demand, year, demand_kcal) %>%
+        replace_na(list(demand_kcal = 0.0))
     }
 
     L134.pcFood_est_R_Dmnd_Y_ssp1_crops <- create_ssp_diet(L102.pcgdp_thous90USD_Scen_R_Y, "SSP1", "crops", L134.pcFood_kcald_R_Dmnd_Y, A_FoodDemand_SSPs)
