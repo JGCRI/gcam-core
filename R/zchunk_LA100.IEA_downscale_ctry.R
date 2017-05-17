@@ -36,9 +36,12 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
     IEA_ctry <- get_data(all_data, "energy/mappings/IEA_ctry")
 
     # Perform computations
+
+    # The two IEA datasets are LARGE and we keep them in wide format for most of the
+    # computations below, as they are very expensive to reshape. As a result, much of
+    # the logic below closely parallels that in the original data system.
+
     # Subset only the relevant years and combine OECD with non-OECD
-    # The two IEA datasets are LARGE and we keep them in wide format for now--
-    # too expensive to reshape
     hy <- as.character(HISTORICAL_YEARS)
     cols <- c("COUNTRY", "FLOW", "PRODUCT", hy)
     bind_rows(en_OECD[cols], en_nonOECD[cols]) %>%
@@ -48,7 +51,7 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
                                c("Natural gas", "Other kerosene", "Total of all energy sources"))) ->
       L100.IEAfull
 
-    # UP FRONT ADJUSTMENTS (UFA)
+    # UP FRONT ADJUSTMENTS (UFA) original lines 42-67
 
     # UFA1. Nearly the entire supply of natural gas in other Africa between 2001 and 2004 is allocated
     # to GTL plants operating at nearly 100% efficiency. We adjust the energy input quantities
@@ -80,6 +83,59 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
       L100.IEAfull[CHP_entries & L100.IEAfull$FLOW == "ELAUTOC", CHP_ADJ_YEARS] *
       CHP_IO_COEF * CONV_GWH_KTOE * -1
 
+    # Split the country mapping table into composite regions and single-countries (69-77)
+    IEA_ctry_composite <- filter(IEA_ctry, IEA_ctry %in% c("Former Soviet Union (if no detail)",
+                                                           "Former Yugoslavia (if no detail)",
+                                                           "Other Africa",
+                                                           "Other Non-OECD Americas",
+                                                           "Other Asia"))
+    IEA_ctry_single <- filter(IEA_ctry, ! IEA_ctry %in% IEA_ctry_composite$IEA_ctry)
+
+    # Split IEA energy balances into table of single countries and composite regions
+    # (keeping only desired composite regions)
+    L100.IEAcomposite <- filter(L100.IEAfull, COUNTRY %in% IEA_ctry_composite$IEA_ctry)
+    L100.IEAsingle <- filter(L100.IEAfull, COUNTRY %in% IEA_ctry_single$IEA_ctry)
+    L100.IEAfull %>%
+      filter(COUNTRY %in% IEA_ctry_single$IEA_ctry) %>%
+      left_join_error_no_match(IEA_ctry_single, by = c("COUNTRY" = "IEA_ctry")) ->
+      L100.IEAsingle
+
+    # Subset countries that are being downscaled in certain years using historical
+    # energy data in a specified year. Former Soviet Union and Yugoslavia: use specified
+    # flows for each product. The IEA dataset has many inter-sectoral inconsistencies between
+    # the USSR and separated countries thereafter, resulting in unrealistic fuel shares.
+    USSR_YUG_SPLIT_YEAR <- 1990
+    USSR_YUG_YEARS <- HISTORICAL_YEARS[HISTORICAL_YEARS < USSR_YUG_SPLIT_YEAR]
+    POST_USSR_YUG_YEARS_IEA <- HISTORICAL_YEARS[HISTORICAL_YEARS >= USSR_YUG_SPLIT_YEAR]
+    L100.USSR_Yug <- filter(L100.IEAcomposite, COUNTRY %in% c("Former Soviet Union (if no detail)",
+                                                              "Former Yugoslavia (if no detail)"))
+
+    # Re-map the "if no detail" forms of coal in the historical years prior to the relevant
+    # coal types for matching with the more recent years (89-107)
+    NO_DETAIL_COAL_YEARS <- as.character(1971:1977)
+
+    # Hard coal needs to be split proportionally between coking coal and other bituminous coal
+    # in order to minimize bias from different country-wise shares of the two fuel types.
+    # Note that anthracite is not considered in these regions.
+    # NOTE: using round() to avoid NA's for any values whose base value is >1e6. This seems to work
+    prod <- L100.USSR_Yug$PRODUCT
+    prod_obc <- prod == "Other bituminous coal"
+    prod_hcind <- prod == "Hard coal (if no detail)"
+    prod_cc <- prod == "Coking coal"
+    L100.USSR_Yug[prod_obc, NO_DETAIL_COAL_YEARS] <-
+      L100.USSR_Yug[prod_hcind, NO_DETAIL_COAL_YEARS ] *
+      round(L100.USSR_Yug$`1978`[prod_obc] /
+              (L100.USSR_Yug$`1978`[prod_cc] + L100.USSR_Yug$`1978`[prod_obc] + 1e-3), digits = 2)
+    L100.USSR_Yug[prod_cc, NO_DETAIL_COAL_YEARS ] <-
+      L100.USSR_Yug[prod_hcind, NO_DETAIL_COAL_YEARS ] - L100.USSR_Yug[prod_obc, NO_DETAIL_COAL_YEARS ]
+    L100.USSR_Yug[prod_hcind, NO_DETAIL_COAL_YEARS ] <- 0
+
+    # Brown coal is simpler, as lignite is the only relevant fuel
+    # (sub-bituminous coal is not considered in these regions)
+    prod_bcind <- prod == "Brown coal (if no detail)"
+    L100.USSR_Yug[prod == "Lignite", NO_DETAIL_COAL_YEARS ] <- L100.USSR_Yug[prod_bcind, NO_DETAIL_COAL_YEARS ]
+    L100.USSR_Yug[prod_bcind, NO_DETAIL_COAL_YEARS ] <- 0
+
 
     # Produce outputs
     tibble() %>%
@@ -98,6 +154,3 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
     stop("Unknown command")
   }
 }
-
-
-
