@@ -128,6 +128,10 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
       left_join(select(FAO2050_items_cal, FAO2050_item, GCAM_demand, kcalkg, conv_d), by = "FAO2050_item") %>%
       # Build new table with only diet years subsetted
       # Multiply through by caloric contents to get all measures in kcal/pers/d, by FAO region and food categories
+      # Note: FAO data includes information on crops, meat, and total demand in tons. However, these are inconsistent
+      # when converted to calories (i.e., total does not equal crops + meat). To address this, we only use total and
+      # meat from FAO and calculate the difference between the two to get crops. To do this, the FAO2050_items_cal file
+      # only includes "GCAM_demand" for total and meat. Crops are mapped to "NA".
       # Original lines 87-92
       filter(year %in% aglu.DIET_YEARS) %>%
       mutate(demand_kcal = value * kcalkg / conv_d) %>%
@@ -139,35 +143,14 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
       group_by(FAO2050_reg, GCAM_demand, year) %>%
       summarise(demand_kcal = sum(demand_kcal)) %>%
       ungroup %>%
-      # everything assigned as "total" demand gets re-assigned to "crops" because...
-      mutate(GCAM_demand = if_else(GCAM_demand == "total", "crops", GCAM_demand)) ->
-      L134.Diet_kcald_Rfao_Dmnd_Y
-
-    # Compute diet ratios (change from last historical year) based on meat caloric contents and demand
-    # Note on this next section from Page:
-    # Can't just use exogenous caloric contents for the crop and meat commodities, which we're estimating
-    # as averages without knowing the exact composition of the commodities. (We can't know exactly where
-    # their split is in any year because this FAO AT2050 table just uses a few food groupings that are far
-    # coarser than the FAOSTAT data underlying these reported trends, and generally reports the flows in
-    # kilograms per person per day. While the total is reported in kcal/pers/d, ideally we'd this information
-    # for all of groupings, or at least for crop and meat subtotals.)
-    # In particular, we want to calculate what portion of "cereals" is corn vs wheat in each region, as they
-    # have different caloric contents, and still hit the target reported "Total food (kcal/person/day)" in
-    # each region and time period. There are three options to do so:
-    # (1) assign the crop caloric contents exogenously and allow the meat caloric contents to float;
-    # (2) vice versa; or
-    # (3) assign both crop and meat caloric contents, and then scale them all to hit the target value.
-    # This code does (2) (because GPK figured that the meat commodities probably have less
-    # heterogeneity in caloric contents, and it was the easiest to implement).
-
-    # Compute diet ratios based on meat caloric contents and demand (option 2 above)
-    L134.Diet_kcald_Rfao_Dmnd_Y %>%
-      filter(GCAM_demand == "meat") %>%
-      select(-GCAM_demand) %>%
-      rename(meat_demand_kcal = demand_kcal) %>%
-      right_join(L134.Diet_kcald_Rfao_Dmnd_Y, by = c("FAO2050_reg", "year")) %>%
-      mutate(demand_kcal = if_else(GCAM_demand == "crops", demand_kcal - meat_demand_kcal, demand_kcal)) %>%
-      select(-meat_demand_kcal) %>%
+      spread(GCAM_demand, demand_kcal) %>%
+      # Calculate crop demand as difference between total and meat from FAO.
+      # Again, FAO provides information on crops, meat, and total, but they are inconsistent
+      # when converted to kcal. We have chosen to use meat and total from FAO and adjust crops
+      # to be consistent, but other options were possible (e.g., use crops and total; use crops and meat).
+      mutate(crops = total - meat) %>%
+      select(-total) %>%
+      gather(GCAM_demand, demand_kcal, -FAO2050_reg, -year) %>%
       # compute future diet ratios by FAO2050 region
       group_by(FAO2050_reg, GCAM_demand) %>%
       arrange(year) %>%
