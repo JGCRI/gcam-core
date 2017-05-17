@@ -20,7 +20,7 @@ module_emissions_L104.bcoc_en_USA_S_T_Y_DISABLED <- function(command, ...) {
              FILE = "energy/IEA_flow_sector",
              FILE = "energy/IEA_product_fuel",
              FILE = "emissions/bc.oc_tech",
-             FILE = "emissions/GCAM_sector_tech",
+             FILE = "emissions/mappings/GCAM_sector_tech",
              "L101.in_EJ_R_en_Si_F_Yh",
              FILE = "emissions/Bond_BC_1990",
              FILE = "emissions/Bond_OC_1990"))
@@ -35,7 +35,7 @@ module_emissions_L104.bcoc_en_USA_S_T_Y_DISABLED <- function(command, ...) {
     IEA_flow_sector <- get_data(all_data, "energy/IEA_flow_sector")
     IEA_product_fuel <- get_data(all_data, "energy/IEA_product_fuel")
     bc.oc_tech <- get_data(all_data, "emissions/bc.oc_tech")
-    GCAM_sector_tech <- get_data(all_data, "emissions/GCAM_sector_tech")
+    GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
     L101.in_EJ_R_en_Si_F_Yh <- get_data(all_data, "L101.in_EJ_R_en_Si_F_Yh")
     Bond_BC_1990 <- get_data(all_data, "emissions/Bond_BC_1990")
     Bond_OC_1990 <- get_data(all_data, "emissions/Bond_OC_1990")

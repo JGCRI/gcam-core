@@ -97,9 +97,9 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
       # Nigeria: CitrusFrtNES, CowPeasDry, Plantains, and FrtFrshNES.
       # If we want to replace these with defaults, the blue water coef (i.e., the important one) will still be zero,
       # because it's in Nigeria, where ~100% of crop production is rainfed (according to the inventories). So, if we
-      # do implement a different method, we'll get a slightly higher estimate of biophysical water consumption for
-      # MiscCrop in Africa_Western.
-      mutate(coef_m3kg = if_else(is.na(coef_m3kg), 0, coef_m3kg)) %>%
+    # do implement a different method, we'll get a slightly higher estimate of biophysical water consumption for
+    # MiscCrop in Africa_Western.
+    replace_na(list(coef_m3kg = 0)) %>%
       spread(water_type, coef_m3kg) ->
       L165.Mekonnen_Hoekstra_Rep47_A2
 
@@ -114,7 +114,7 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
       left_join(L165.ag_Prod_t_ctry_crop_GLU, by = c("iso", "GTAP_crop", "GLU")) %>%
       # M+H have some country/crop/GLU combinations that Monfreda doesn't
       # Set missing values to 0
-      mutate(Prod_t = if_else(is.na(Prod_t), 0L, Prod_t)) %>%
+      replace_na(list(Prod_t = 0L)) %>%
       # For the 18 M+H gridded crops, calculate the coefs by country, GLU, and crop (original lines 79-82)
       # NOTE: dropping all country / GLU / crops with zero production; these won't have any water anyway
       filter(Prod_t > 0) %>%

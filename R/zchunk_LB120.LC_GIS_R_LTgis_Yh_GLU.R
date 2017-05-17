@@ -43,25 +43,33 @@ module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
 
     # Perform computations
 
-    L100.Land_type_area_ha %>%
-      # Add data for GCAM region ID and GLU
-      left_join_error_no_match(distinct(iso_GCAM_regID, iso, .keep_all = TRUE), by = "iso") %>%
-      # Add vectors for land type ( SAGE, HYDE, and WDPA )
-      left_join_error_no_match(LDS_land_types, by = c("land_code" = "Category")) %>%
-      left_join(SAGE_LT, by = "LT_SAGE") %>%  # includes NAs
-      rename(LT_SAGE_5 = Land_Type) %>%
-      # Drop all rows with missing values (inland bodies of water)
-      na.omit %>%
-      # Reset WDPA classification to "Non-protected" where HYDE classification is cropland, pasture, or urban land
-      mutate(LT_WDPA = if_else(LT_HYDE!="Unmanaged", "Non-protected", "Unmanaged"),
-             Land_Type = LT_SAGE_5,
-             # These multi-tiered classifications will be used for C contents, but for all land cover processing, collapse into GCAM land types
-             Land_Type = if_else(LT_HYDE == "Cropland", "Cropland", Land_Type),
-             Land_Type = if_else(LT_HYDE == "Pasture", "Pasture", Land_Type),
-             Land_Type = if_else(LT_HYDE == "UrbanLand", "UrbanLand", Land_Type),
-             # Area in thousand square kilometers (bm2)
-             Area_bm2 =  value * CONV_HA_BM2) ->
-      L100.Land_type_area_ha
+    land.type <-
+        L100.Land_type_area_ha %>%
+          ## Add data for GCAM region ID and GLU
+          left_join_error_no_match(distinct(iso_GCAM_regID, iso, .keep_all = TRUE), by = "iso") %>%
+          ## Add vectors for land type ( SAGE, HYDE, and WDPA )
+          left_join_error_no_match(LDS_land_types, by = c("land_code" = "Category")) %>%
+          left_join(SAGE_LT, by = "LT_SAGE") %>%  # includes NAs
+          rename(LT_SAGE_5 = Land_Type) %>%
+          ## Drop all rows with missing values (inland bodies of water)
+          na.omit
+
+    ## Reset WDPA classification to "Non-protected" where HYDE classification
+    ## is cropland, pasture, or urban land
+    hyde <- land.type$LT_HYDE
+    ltype <- land.type$LT_SAGE_5
+
+    land.type$LT_WDPA <- replace(hyde, hyde != "Unmanaged", "Non-protected")
+
+    land.type$Land_Type <-
+        ltype %>%
+          replace(hyde=='Cropland', 'Cropland') %>%
+          replace(hyde=='Pasture', 'Pasture') %>%
+          replace(hyde=='UrbanLand', 'UrbanLand')
+
+    land.type$Area_bm2 <- land.type$value * CONV_HA_BM2
+    L100.Land_type_area_ha <- land.type # Rename to the convention used in the
+                                        # rest of the module
 
     # LAND COVER FOR LAND ALLOCATION
     # Aggregate into GCAM regions and land types
