@@ -86,6 +86,7 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 #' the relevant wiki page at \url{ https://github.com/bpbond/gcamdata/wiki/Driver}.
 #' @importFrom magrittr "%>%"
 #' @importFrom assertthat assert_that
+#' @importFrom dplyr filter mutate select
 #' @export
 #' @author BBL
 driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE, outdir = OUTPUTS_DIR, xmldir = XML_DIR) {
@@ -132,10 +133,12 @@ driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE,
     for(chunk in chunks_to_run) {
       if(!quiet) print(chunk)
 
-      input_names <- dplyr::filter(chunkinputs, name == chunk)$input
-      if(!all(input_names %in% names(all_data))) {
+      inputs <- filter(chunkinputs, name == chunk)
+      input_names <- inputs$input
+      required_inputs <- filter(inputs, !optional)
+      if(!all(required_inputs$input %in% names(all_data))) {
         if(!quiet) print("- data not available yet")
-        next  # chunk's inputs are not all available
+        next  # chunk's required inputs are not all available
       }
 
       # Order chunk to build its data
