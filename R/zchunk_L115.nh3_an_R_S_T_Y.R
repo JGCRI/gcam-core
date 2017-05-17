@@ -11,7 +11,7 @@
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr gather spread unite separate
 #' @author KD May 2017
 module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -46,17 +46,19 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
 
     # Match emissions factors by year and compute unscaled emissions
     L115.nh3_tg_R_an_C_Sys_Fd_Yh %>%
-      left_join(L105.nh3_tgmt_USA_an_Yh, by = "year") %>%
+      left_join_error_no_match(L105.nh3_tgmt_USA_an_Yh, by = "year") %>%
       rename(emfact = value) %>%
       mutate(epa_emissions = production * emfact) %>%
       na.omit() ->
       L115.nh3_tg_R_an_C_Sys_Fd_Yh.mlt
 
-    # Match by sector, technology and fuel
-    left_join(tidyr::unite(L115.nh3_tg_R_an_C_Sys_Fd_Yh.mlt, col = "commodity_system_feed", c(GCAM_commodity, system, feed), sep = "~"),
-              tidyr::unite(GCAM_sector_tech, col = "sector_tech_fuel", c(sector, fuel, technology), sep = "~"),
-              by = c("commodity_system_feed"="sector_tech_fuel")) %>%
-      tidyr::separate(commodity_system_feed, c("GCAM_commodity", "system", "feed"), sep = "~") %>%
+    # Create commodity_system_feed column from GCAM_commodity, system, and feed or sector, fuel, technology columns
+    # Join by the commodity_system_feed column to match by sector, technology and fuel
+    # Then separate the commodity_system_feed column back into GCAM_commodity, system, and feed
+    left_join_error_no_match(unite(L115.nh3_tg_R_an_C_Sys_Fd_Yh.mlt, col = "commodity_system_feed", c(GCAM_commodity, system, feed), sep = "~"),
+              unite(GCAM_sector_tech, col = "commodity_system_feed", c(sector, fuel, technology), sep = "~"),
+              by = c("commodity_system_feed")) %>%
+      separate(commodity_system_feed, c("GCAM_commodity", "system", "feed"), sep = "~") %>%
       select(GCAM_region_ID, GCAM_commodity, system, feed, year, production, Non.CO2, emfact, epa_emissions, EDGAR_agg_sector) ->
       L115.nh3_tg_R_an_C_Sys_Fd_Yh.mlt
 
@@ -70,14 +72,15 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
     # Compute EDGAR emissions by region and sector
     L115.EDGAR <- EDGAR_NH3
 
-    # Renaming L115.EDGAR variable names - Note: may remove if names for L115.EDGAR change
-    names(L115.EDGAR)[1] <- "IPCC_Annex"
-    names(L115.EDGAR)[2] <- "World_Region"
+    # Renaming L115.EDGAR variable names
+    L115.EDGAR %>%
+      rename(IPCC_Annex = `IPCC-Annex`, World_Region = `World Region`) ->
+      L115.EDGAR
 
     # Add gas name and match by emissions factors
     L115.EDGAR %>%
       mutate(Non.CO2 = "NH3_AGR") %>%
-      left_join(EDGAR_sector, by = "IPCC") %>%
+      left_join_error_no_match(EDGAR_sector, by = "IPCC") %>%
       rename(EDGAR_agg_sector = agg_sector) ->
       L115.EDGAR
 
@@ -85,10 +88,9 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
     L115.EDGAR %>%
       mutate( iso = tolower( ISO_A3 ), ISO_A3 = NULL ) %>%
       change_iso_code('rou', 'rom') %>%
-      left_join(iso_GCAM_regID, by = "iso") ->
+      left_join_error_no_match(iso_GCAM_regID, by = "iso") ->
       L115.EDGAR
 
-    # Note : the old data system drops values from 1970, it is unclear if that is intentional or an accident.
     # Drop unnecessary columns, make long, and aggregate by region.
     L115.EDGAR %>%
       select(-c(IPCC_Annex, World_Region, iso, Name, IPCC, IPCC_description.x, IPCC_description.y, country_name, region_GCAM3)) %>%
@@ -101,26 +103,28 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
     # Scale EPA emission by tech to match EDGAR tools
     L115.emiss_scaler <- L115.nh3_tg_R_an_C_Yh.mlt
 
-    # First match by GCAM Region ID, gas, EDGAR_agg_sector and year, then compute scalers
-    tidyr::unite(L115.emiss_scaler, col = "Region_GHG_Sector_Yr", c(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year), sep = "~") %>%
-      left_join(tidyr::unite(L115.EDGAR, col = "Region_GHG_Sector_Yr", c(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year), sep = "~"), by = "Region_GHG_Sector_Yr") %>%
+    # Create Region_GHG_Sector_Yr column from GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year
+    # Match by Region_GHG_Sector_Yr
+    # Separate back into  Region_GHG_Sector_Yr back into GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year
+    # Compute scalers
+    unite(L115.emiss_scaler, col = "Region_GHG_Sector_Yr", c(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year), sep = "~") %>%
+      left_join_error_no_match(unite(L115.EDGAR, col = "Region_GHG_Sector_Yr", c(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year), sep = "~"), by = "Region_GHG_Sector_Yr") %>%
       rename(EDGAR_emissions = value) %>%
-      tidyr::separate(Region_GHG_Sector_Yr, c("GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector", "year"), sep = "~") %>%
+      separate(Region_GHG_Sector_Yr, c("GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector", "year"), sep = "~") %>%
       mutate( ., scaler = EDGAR_emissions / EPA_emissions / 1000.0 ) ->
       L115.emiss_scaler
 
     # Now, match by GCAM Region ID, gas, EDGAR_agg_sector and year, then scale EPA emission by tech to match EDGAR tools
-    tidyr::unite(L115.nh3_tg_R_an_C_Sys_Fd_Yh.mlt, col = "Region_GHG_Sector_Yr", c(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year), sep = "~") %>%
-      left_join(tidyr::unite(L115.emiss_scaler, col = "Region_GHG_Sector_Yr", c(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year), sep = "~"), by = "Region_GHG_Sector_Yr") %>%
-      tidyr::separate(Region_GHG_Sector_Yr, c("GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector", "year"), sep = "~") %>%
+    unite(L115.nh3_tg_R_an_C_Sys_Fd_Yh.mlt, col = "Region_GHG_Sector_Yr", c(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year), sep = "~") %>%
+      left_join_error_no_match(unite(L115.emiss_scaler, col = "Region_GHG_Sector_Yr", c(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year), sep = "~"), by = "Region_GHG_Sector_Yr") %>%
+      separate(Region_GHG_Sector_Yr, c("GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector", "year"), sep = "~") %>%
       mutate(emissions = epa_emissions * scaler) %>%
-      mutate_all(funs(replace(., is.na(.), 0))) ->
+      replace_na(list(emissions = 0)) ->
       L115.nh3_tg_R_an_C_Sys_Fd_Yh.mlt
 
     # Rename columns and reshape data
     L115.nh3_tg_R_an_C_Sys_Fd_Yh.mlt %>%
-      rename(supplysector = GCAM_commodity, subsector = system, stub.technology = feed, value = emissions) %>%
-      select(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, year, value) ->
+      select(GCAM_region_ID, Non.CO2, supplysector = GCAM_commodity, subsector = system, stub.technology = feed, year, value = emissions) ->
     L115.nh3_tg_R_an_C_Sys_Fd_Yh.mlt
 
     # ===================================================
@@ -132,8 +136,8 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
       add_comments("Annual animal NH3 emissions is computed using EPA emissions factors and FAO animal production.") %>%
       add_comments("EPA emissions are scaled by technology to match EDGAR totals.") %>%
       add_legacy_name("L115.nh3_tg_R_an_C_Sys_Fd_Yh") %>%
-      add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_sector",
-                     "emissions/GCAM_sector_tech", "L107.an_Prod_Mt_R_C_Sys_Fd_Y", "L105.nh3_tgmt_USA_an_Yh",
+      add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_NH3",
+                     "emissions/mappings/GCAM_sector_tech", "L107.an_Prod_Mt_R_C_Sys_Fd_Y", "L105.nh3_tgmt_USA_an_Yh",
                      "emissions/EDGAR/EDGAR_NH3") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L115.nh3_tg_R_an_C_Sys_Fd_Yh
