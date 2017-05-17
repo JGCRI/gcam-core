@@ -21,7 +21,10 @@ FLAG_XML <- "FLAG_XML"
 # Time constants
 HISTORICAL_YEARS <- 1971:2010
 IMF_GDP_YEARS <- 2010:2020
+CONV_DAYS_YEAR <- 1 / 365.25
 FUTURE_YEARS <- seq(2015, 2100, 5)
+SSP_FUTURE_YEARS <- c( 2010, FUTURE_YEARS)
+GHG_CONTROL_READIN_YEAR <- 1975
 
 # ======================================================================
 # GCAM constants
@@ -38,7 +41,8 @@ PREAGLU_YEARS <- c(1700, 1750,1800, 1850, 1900, 1950)
 aglu.LAND_COVER_YEARS <- sort(unique(c(LAND_HISTORY_YEARS, AGLU_HISTORICAL_YEARS)))
 GTAP_HISTORICAL_YEAR <- 2000
 CROSIT_HISTORICAL_YEAR <- 2005
-SPEC_AG_PROD_YEARS <- seq(2010, 2050, 5) # Specified ag productivity years
+SPEC_AG_PROD_YEARS <- seq(max(AGLU_HISTORICAL_YEARS), 2050, by = 5) # Specified ag productivity years
+aglu.DIET_YEARS <- seq(max(AGLU_HISTORICAL_YEARS), 2050, by = 5)
 MIN_PROFIT_MARGIN <- 0.15
 
 # GLU (Geographic Land Unit) settings - see module_aglu_LA100.0_LDS_preprocessing
@@ -78,7 +82,6 @@ MAX_HA_TO_CROPLAND <- 3
 # At present the CO2 emissions inventory from CDIAC stops at 2009
 energy.CDIAC_CO2_HISTORICAL_YEARS <- HISTORICAL_YEARS[HISTORICAL_YEARS < 2010]
 
-
 ## ======================================================================
 ## Conversion constants.  The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
 ## ======================================================================
@@ -101,9 +104,7 @@ CONV_YEAR_HOURS <- 24 * 365.25
 # Cubic meters (m3) to billion cubic meters (bm3)
 CONV_M3_BM3 <- 1e-09
 CONV_MILLION_M3_KM3 <- 1e-03
-
 CONV_M2_ACR <- 0.0002471058
-
 
 # ======================================================================
 # Driver constants
@@ -140,6 +141,7 @@ DEFAULT_ELECTRIC_EFFICIENCY <- 0.33
 
 # ======================================================================
 ELECTRICITY_INPUT_FUELS<- c( "biomass", "coal", "gas", "refined liquids" )
+STUBTECHYR <- c( "GCAM_region_ID", "supplysector", "subsector", "stub.technology", "xyear" )
 
 # ======================================================================
 # socioeconomics constants
@@ -156,7 +158,6 @@ socioeconomics.BASE_POP_SCEN <- "SSP2" # These are both being used in the data s
 BASE_POP_SCENARIO <- "SSP2" # These are both being used in the data system by different files.
 BASE_GDP_SCENARIO <- "SSP2"
 
-
 # ======================================================================
 # water constants
 
@@ -166,7 +167,6 @@ MAPPED_WATER_TYPES_SHORT <- c("C", "W")
 names(MAPPED_WATER_TYPES_SHORT) <- MAPPED_WATER_TYPES
 DEFAULT_UNLIMITED_WATER_PRICE <- 0
 DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.001
-
 
 # ======================================================================
 # emissions constants
