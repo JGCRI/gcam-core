@@ -37,6 +37,17 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
              "L165.ag_IrrEff_R"))
   } else if(command == driver.MAKE) {
 
+    ## Silence package check.
+    GTAP_crop <- MH_crop <- iso <- coef_m3t <- FAO_crop <- water_type <-
+        coef_m3kg <- value <- Prod_t <- Blue <- Green <- item <- value_other <-
+        blue_m3kg <- green_m3kg <- irrProd <- blue_thousm3 <- irrProd_t <-
+        BlueIrr_m3kg <- total_m3kg <- GreenIrr_m3kg <- green_thousm3 <-
+        GreenIrr_thousm3 <- rfdProd <- rfdProd_t <- GreenRfd_thousm3 <-
+        MH2014_proxy <- GLU <- NULL
+    GreenRfd_m3kg <- GCAM_region_ID <- GCAM_commodity <- BlueIrr_thousm3 <-
+        TotIrr_m3kg <- application.eff <- management.eff <- irrHA <-
+        field.eff <- conveyance.eff <- NULL
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

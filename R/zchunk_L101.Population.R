@@ -27,6 +27,10 @@ module_socioeconomics_L101.Population <- function(command, ...) {
              "L101.Pop_thous_GCAM3_ctry_Y"))
   } else if(command == driver.MAKE) {
 
+    year <- value <- region_GCAM3 <- GCAM_region_ID <- iso <- scenario <- . <-
+        country_name <- value.x <- value.y <- SSPbase2100 <- SSPbase2095 <-
+        year.y <- year.x <- NULL        # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

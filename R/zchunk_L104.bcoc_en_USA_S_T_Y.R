@@ -27,6 +27,10 @@ module_emissions_L104.bcoc_en_USA_S_T_Y <- function(command, ...) {
     return(c("L104.bcoc_tgej_USA_en_T_1990"))
   } else if(command == driver.MAKE) {
 
+    Technology <- USA <- OC_em <- BC_em <- sector <- technology <-
+        GCAM_region_ID <- fuel <- `2000` <- BCOC_agg_sector <- BCOC_agg_fuel <-
+        Fuel_Use <- . <- NULL           # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

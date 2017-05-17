@@ -26,6 +26,9 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
     return(c("L110.For_ALL_bm3_R_Y"))
   } else if(command == driver.MAKE) {
 
+    value <- flow <- GCAM_region_ID <- GCAM_commodity <- year <- Prod_bm3 <-
+        NetExp_bm3 <- Cons_bm3 <- Cons_scaler <- . <- NULL # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

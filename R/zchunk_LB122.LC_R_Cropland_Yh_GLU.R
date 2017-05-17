@@ -44,6 +44,11 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
              "L122.LC_bm2_R_HarvCropLand_Yh_GLU"))
   } else if(command == driver.MAKE) {
 
+    Land_Type <- year <- . <- GCAM_region_ID <- GLU <- GCAM_commodity <-
+        value <- iso <- countries <- cropland <- fallow <- fallow_frac <- cropped <-
+        cropped_frac <- uncropped_frac <- nonharvested_frac <- value.x <-
+        value.y <- Land_Type.y <- Land_Type.x <- NULL # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
