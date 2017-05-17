@@ -83,7 +83,7 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
 
     # Convert from EDGAR iso to GCAM_region_ID
     L115.EDGAR %>%
-      mutate( iso = tolower( ISO_A3 ), ISO_A3 = NULL ) %>%
+      mutate(iso = tolower(ISO_A3), ISO_A3 = NULL) %>%
       change_iso_code('rou', 'rom') %>%
       left_join(iso_GCAM_regID, by = "iso") ->
       L115.EDGAR
@@ -106,7 +106,7 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
       left_join(tidyr::unite(L115.EDGAR, col = "Region_GHG_Sector_Yr", c(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year), sep = "~"), by = "Region_GHG_Sector_Yr") %>%
       rename(EDGAR_emissions = value) %>%
       tidyr::separate(Region_GHG_Sector_Yr, c("GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector", "year"), sep = "~") %>%
-      mutate( ., scaler = EDGAR_emissions / EPA_emissions / 1000.0 ) ->
+      mutate(., scaler = EDGAR_emissions / EPA_emissions / 1000.0) ->
       L115.emiss_scaler
 
     # Now, match by GCAM Region ID, gas, EDGAR_agg_sector and year, then scale EPA emission by tech to match EDGAR tools
@@ -133,7 +133,7 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
       add_comments("EPA emissions are scaled by technology to match EDGAR totals.") %>%
       add_legacy_name("L115.nh3_tg_R_an_C_Sys_Fd_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_sector",
-                     "emissions/GCAM_sector_tech", "L107.an_Prod_Mt_R_C_Sys_Fd_Y", "L105.nh3_tgmt_USA_an_Yh",
+                     "emissions/mappings/GCAM_sector_tech", "L107.an_Prod_Mt_R_C_Sys_Fd_Y", "L105.nh3_tgmt_USA_an_Yh",
                      "emissions/EDGAR/EDGAR_NH3") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L115.nh3_tg_R_an_C_Sys_Fd_Yh
@@ -143,5 +143,3 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
     stop("Unknown command")
   }
 }
-
-
