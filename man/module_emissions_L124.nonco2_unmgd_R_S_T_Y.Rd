@@ -18,11 +18,15 @@ the generated outputs: \code{L124.nonco2_tg_R_grass_Y_GLU}, \code{L124.nonco2_tg
 original data system was \code{L124.nonco2_unmgd_R_S_T_Y.R} (emissions level1).
 }
 \description{
-Briefly describe what this chunk does.
+Calculate non-CO2 emissions from unmanaged lands (savanna burning, forest fires, deforestation)
 }
 \details{
-Describe in detail what this chunk does.
+Calculate non-CO2 emissions from unmanaged lands (savanna burning, forest fires, deforestation).
+Downscale EDGAR regional emissions to GLU using shares of land area in each GLU within each region.
+Divide forest-related emissions into deforestation and forest fires using GFED data
+Compute global average deforestation emissions coefficients using deforestation from 2000 to 2005.
+Note: File does not calculate emissions from BC/OC (separate chunk) or NH3 (seemingly omitted)
 }
 \author{
-YourInitials CurrentMonthName 2017
+KVC May 2017
 }
