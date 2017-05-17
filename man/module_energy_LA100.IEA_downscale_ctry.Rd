@@ -18,11 +18,13 @@ the generated outputs: \code{L100.IEA_en_bal_ctry_hist}. The corresponding file 
 original data system was \code{LA100.IEA_downscale_ctry.R} (energy level1).
 }
 \description{
-Briefly describe what this chunk does.
+Downscale IEA energy balances to 201 countries, by iso, FLOW, PRODUCT, and historical year.
 }
 \details{
-Describe in detail what this chunk does.
+We build from the raw (and proprietary) \code{en_OCED} and \code{en_nonOECD} files if
+they are available; if not, this chunk reads in a pre-generated \code{L100.IEA_en_bal_ctry_hist}
+file and returns that. (In other words, our output is an optional input.)
 }
 \author{
-YourInitials CurrentMonthName 2017 TODO: input file documentation
+BBL May 2017
 }
