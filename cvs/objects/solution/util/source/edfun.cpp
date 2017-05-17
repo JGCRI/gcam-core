@@ -226,7 +226,7 @@ void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx, cons
      * 1B Set the model inputs using the solutionInfo objects (partial derivative version)
      ****/ 
     mktplc->mIsDerivativeCalc = true;
-      scenario->mManageStateVars->setPartialDeriv(true);
+      //scenario->mManageStateVars->setPartialDeriv(true);
 
 
     if(mdiagnostic) {
@@ -272,11 +272,11 @@ void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx, cons
     edfunPreTimer.stop();
     Timer& evalPartTimer = TimerRegistry::getInstance().getTimer( TimerRegistry::EVAL_PART );
     evalPartTimer.start();
-#if GCAM_PARALLEL_ENABLED
+/*#if GCAM_PARALLEL_ENABLED
     world->calc(period, mkts[partj].getFlowGraph(), &affectedNodes);
-#else
+#else*/
     world->calc(period, affectedNodes);
-#endif
+//#endif
     evalPartTimer.stop();
 
     if(mdiagnostic) {

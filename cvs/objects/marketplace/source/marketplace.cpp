@@ -64,6 +64,7 @@ using namespace std;
 
 extern Scenario* scenario;
 const double Marketplace::NO_MARKET_PRICE = util::getLargeNumber();
+bool Marketplace::mIsDerivativeCalc = false;
 
 /*! \brief Default constructor 
 *
@@ -74,8 +75,7 @@ const double Marketplace::NO_MARKET_PRICE = util::getLargeNumber();
 */
 Marketplace::Marketplace():
 mMarketLocator( new MarketLocator() ),
-mDependencyFinder( new MarketDependencyFinder( this ) ),
-mIsDerivativeCalc( false )
+mDependencyFinder( new MarketDependencyFinder( this ) )
 {
 }
 
@@ -366,7 +366,7 @@ void Marketplace::unsetMarketToSolve ( const string& goodName, const string& reg
     }
 }
 
-#if GCAM_PARALLEL_ENABLED
+/*#if GCAM_PARALLEL_ENABLED
 void Marketplace::NullSDHelper::operator()( const tbb::blocked_range<int>& aRange) const
 {
     for( int marketIndex = aRange.begin(); marketIndex != aRange.end(); ++marketIndex ) {
@@ -374,7 +374,7 @@ void Marketplace::NullSDHelper::operator()( const tbb::blocked_range<int>& aRang
         mMarkets[ marketIndex ]->getMarket( mPeriod )->nullSupply();
     }
 }
-#endif
+#endif*/
 
 /*! \brief Clear all market supplies and demands for the given period.
 * 
@@ -384,15 +384,15 @@ void Marketplace::NullSDHelper::operator()( const tbb::blocked_range<int>& aRang
 * \param period Period in which to null the supplies and demands. 
 */
 void Marketplace::nullSuppliesAndDemands( const int period ) {
-#if GCAM_PARALLEL_ENABLED
+/*#if GCAM_PARALLEL_ENABLED
     NullSDHelper nsd( markets, period );
     tbb::parallel_for( tbb::blocked_range<int>( 0, markets.size() ), nsd );
-#else
+#else*/
     for ( unsigned int i = 0; i < mMarkets.size(); i++ ) {
         mMarkets[ i ]->getMarket( period )->nullDemand();
         mMarkets[ i ]->getMarket( period )->nullSupply();
     }
-#endif
+//#endif
 }
 
 /*! \brief Assign a serial number to each market we are attempting to solve

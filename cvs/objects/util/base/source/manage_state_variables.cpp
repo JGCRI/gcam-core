@@ -43,20 +43,52 @@
 #include "util/base/include/manage_state_variables.hpp"
 #include "util/base/include/value.h"
 #include "containers/include/scenario.h"
-#include "marketplace/include/marketplace.h"
 #include "util/base/include/gcam_fusion.hpp"
 #include "util/base/include/gcam_data_containers.h"
+
+#if GCAM_PARALLEL_ENABLED
+#include <tbb/concurrent_queue.h>
+#endif
 
 using namespace std;
 
 extern Scenario* scenario;
 
-double* Value::mAltValue = 0;
-double* Value::mGoodValue = 0;
+Value::AltValueType Value::mAltValue( (double*)0 );
+double* Value::mGoodValue( 0 );
 //size_t Value::mIsPartialDeriv = 0;
 
+#if GCAM_PARALLEL_ENABLED
+struct AssignThreadStateFun {
+    double** mArr;
+    const int mMaxStates;
+    tbb::concurrent_queue<int> mThreadStateIndex;
+    AssignThreadStateFun( double** aArr, const int aMaxStates ):mArr( aArr ), mMaxStates( aMaxStates ) {
+        for( int i = 1; i < mMaxStates; ++i ) {
+            mThreadStateIndex.push( i );
+        }
+    }
+    double* operator()() {
+        int nextState;
+        bool gotState = mThreadStateIndex.try_pop( nextState );
+        if( !gotState ) {
+            std::cout << "Failed to get state!!" << std::endl;
+            abort();
+        }
+        
+        return mArr[ nextState ];
+    }
+};
+#endif
+
+
 ManageStateVariables::ManageStateVariables( const int aPeriod ):
+#if !GCAM_PARALLEL_ENABLED
 mStateData( new double*[2] ),
+#else
+mThreadPool(),
+mStateData( new double*[mThreadPool.max_concurrency()+1] ),
+#endif
 mPeriodToCollect( aPeriod ),
 mYearToCollect( scenario->getModeltime()->getper_to_yr( aPeriod ) ),
 mNumCollected( 0 )
@@ -68,16 +100,29 @@ mNumCollected( 0 )
 
 ManageStateVariables::~ManageStateVariables() {
     resetState();
-    for( size_t stateInd = 0; stateInd < 2; ++stateInd ) {
+#if !GCAM_PARALLEL_ENABLED
+    const int maxStates = 2;
+#else
+    const int maxStates = mThreadPool.max_concurrency()+1;
+#endif
+    for( size_t stateInd = 0; stateInd < maxStates; ++stateInd ) {
         delete[] mStateData[ stateInd ];
     }
     delete[] mStateData;
+#if !GCAM_PARALLEL_ENABLED
     Value::mAltValue = 0;
+#else
+    Value::mAltValue.clear();
+#endif
     Value::mGoodValue = 0;
 }
 
 void ManageStateVariables::copyState() {
+#if !GCAM_PARALLEL_ENABLED
     memcpy( mStateData[1], mStateData[0], (sizeof( double)) * mNumCollected );
+#else
+    memcpy( Value::mAltValue.local(), mStateData[0], (sizeof( double)) * mNumCollected );
+#endif
 }
 
 void ManageStateVariables::collectState() {
@@ -92,10 +137,15 @@ void ManageStateVariables::collectState() {
     GCAMFusion<DoCollect, true, true, true> gatherState( doCollectProc, collectStateSteps );
     gatherState.startFilter( scenario );
     cout << "Collected: " << mNumCollected << endl;
-    for( size_t stateInd = 0; stateInd < 2; ++stateInd ) {
+#if !GCAM_PARALLEL_ENABLED
+    const int maxStates = 2;
+#else
+    const int maxStates = mThreadPool.max_concurrency()+1;
+#endif
+    for( size_t stateInd = 0; stateInd < maxStates; ++stateInd ) {
         mStateData[ stateInd ] = new double[ mNumCollected ];
     }
-    Value::mAltValue = mStateData[0];
+    setPartialDeriv( false );
     Value::mGoodValue = mStateData[0];
     cout << "Mem allocated" << endl;
     mNumCollected = 0;
@@ -128,7 +178,16 @@ void ManageStateVariables::resetState() {
 }
 
 void ManageStateVariables::setPartialDeriv( const bool aIsPartialDeriv ) {
-    Value::mAltValue = mStateData[aIsPartialDeriv ? 1 : 0];
+#if !GCAM_PARALLEL_ENABLED
+    Value::mAltValue = mStateData[ aIsPartialDeriv ? 1 : 0 ];
+#else
+    if( !aIsPartialDeriv ) {
+        Value::mAltValue = Value::AltValueType( mStateData[0] );
+    }
+    else {
+        Value::mAltValue = Value::AltValueType( AssignThreadStateFun( mStateData, mThreadPool.max_concurrency()+1 ) );
+    }
+#endif
 }
 
 /*void Value::doCheck() const {
@@ -154,7 +213,7 @@ void ManageStateVariables::DoCollect::processData<Value>( Value& aData ) {
             aData.mAltValueIndex = mParentClass->mNumCollected;
             if( mMemIsAllocated ) {
                 //aData.mAltValue = mParentClass->mStateData[0];
-                aData.mAltValue[ mParentClass->mNumCollected ] = aData.mValue;
+                aData.mGoodValue[ mParentClass->mNumCollected ] = aData.mValue;
             }
         }
         else {
@@ -162,7 +221,7 @@ void ManageStateVariables::DoCollect::processData<Value>( Value& aData ) {
                 cout << "Reset didn't match " << aData.mAltValueIndex << " != " << mParentClass->mNumCollected << endl;
                 abort();
             }
-            aData.mValue = aData.mAltValue[ mParentClass->mNumCollected ];
+            aData.mValue = aData.mGoodValue[ mParentClass->mNumCollected ];
         }
         ++mParentClass->mNumCollected;
     }
@@ -177,7 +236,7 @@ void ManageStateVariables::DoCollect::processData<objects::PeriodVector<Value> >
             //aData[mParentClass->mPeriodToCollect].mAltValue = mParentClass->mStateData;
             aData[mParentClass->mPeriodToCollect].mAltValueIndex = mParentClass->mNumCollected;
             if( mMemIsAllocated ) {
-                aData[mParentClass->mPeriodToCollect].mAltValue[ mParentClass->mNumCollected ] = aData[mParentClass->mPeriodToCollect].mValue;
+                aData[mParentClass->mPeriodToCollect].mGoodValue[ mParentClass->mNumCollected ] = aData[mParentClass->mPeriodToCollect].mValue;
             }
         }
         else {
@@ -185,7 +244,7 @@ void ManageStateVariables::DoCollect::processData<objects::PeriodVector<Value> >
                 cout << "Reset didn't match " << aData[mParentClass->mPeriodToCollect].mAltValueIndex << " != " << mParentClass->mNumCollected << endl;
                 abort();
             }
-            aData[mParentClass->mPeriodToCollect].mValue = aData[mParentClass->mPeriodToCollect].mAltValue[ mParentClass->mNumCollected ];
+            aData[mParentClass->mPeriodToCollect].mValue = aData[mParentClass->mPeriodToCollect].mGoodValue[ mParentClass->mNumCollected ];
         }
         ++mParentClass->mNumCollected;
     }

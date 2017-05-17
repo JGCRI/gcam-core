@@ -48,6 +48,10 @@
 #include <cassert>
 #include "util/base/include/util.h"
 
+#if GCAM_PARALLEL_ENABLED
+#include <tbb/enumerable_thread_specific.h>
+#endif
+
 /*! 
 * \ingroup Objects
 * \brief A class containing a single value in the model.
@@ -115,7 +119,12 @@ private:
     std::istream& read( std::istream& aIStream );
 
     double mValue;
-    static double* mAltValue;
+#if !GCAM_PARALLEL_ENABLED
+    typedef double* AltValueType;
+#else
+    typedef tbb::enumerable_thread_specific<double*, tbb::cache_aligned_allocator<double*>, tbb::ets_key_per_instance> AltValueType;
+#endif
+    static AltValueType mAltValue;
     static double* mGoodValue;
     /*size_t*/unsigned int mAltValueIndex;
     bool mIsInit;
@@ -155,11 +164,23 @@ inline void Value::init( const double aNewValue/*, const Unit aUnit*/ ){
 }
 
 inline double& Value::getInternal() {
-    return mIsStateCopy ? mAltValue[mAltValueIndex] : mValue;
+    return mIsStateCopy ?
+#if !GCAM_PARALLEL_ENABLED
+        mAltValue[mAltValueIndex]
+#else
+        mAltValue.local()[mAltValueIndex]
+#endif
+        : mValue;
 }
 
 inline const double& Value::getInternal() const {
-    return mIsStateCopy ? mAltValue[mAltValueIndex] : mValue;
+    return mIsStateCopy ?
+#if !GCAM_PARALLEL_ENABLED
+        mAltValue[mAltValueIndex]
+#else
+        mAltValue.local()[mAltValueIndex]
+#endif
+        : mValue;
 }
 
 //! Set the value.

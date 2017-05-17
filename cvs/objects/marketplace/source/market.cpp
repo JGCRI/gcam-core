@@ -58,6 +58,7 @@
 #include "util/base/include/atom.h"
 #include "containers/include/iinfo.h"
 #include "util/logger/include/ilogger.h"
+#include "marketplace/include/marketplace.h"
 
 using namespace std;
 using namespace objects;
@@ -78,13 +79,13 @@ mMarketInfo( InfoFactory::constructInfo( 0, aContainer->getName() ) )
 {
     mSolveMarket = false;
     mPrice = 0.0;
-#if !GCAM_PARALLEL_ENABLED
+//#if !GCAM_PARALLEL_ENABLED
     mSupply = 0.0;
     mDemand = 0.0;
-#else
+/*#else
     mSupply.local() = 0.0;
     mDemand.local() = 0.0;
-#endif
+#endif*/
     mForecastPrice = 0.0;
     mForecastDemand = 0.0;
     mOriginal_price = 0.0;
@@ -320,11 +321,11 @@ double Market::getRawPrice() const {
 * This function stores the demand and resets demand to zero. 
 */
 void Market::nullDemand() {
-#if GCAM_PARALLEL_ENABLED
+/*#if GCAM_PARALLEL_ENABLED
     mDemand.clear();
-#else
+#else*/
     mDemand = 0;
-#endif
+//#endif
 }
 
 /*! \brief Add to the the Market an amount of demand in a method based on the
@@ -334,8 +335,14 @@ void Market::nullDemand() {
 * \sa setRawDemand
 */
 void Market::addToDemand( const double demandIn ) {
-#if GCAM_PARALLEL_ENABLED  
-    mDemand.local() += demandIn;
+#if GCAM_PARALLEL_ENABLED
+    if( !Marketplace::mIsDerivativeCalc ) {
+        Mutex::scoped_lock writeLock( mDemandMutex, true );
+        mDemand += demandIn;
+    }
+    else {
+        mDemand += demandIn;
+    }
 #else
     mDemand += demandIn;
 #endif
@@ -350,7 +357,13 @@ void Market::addToDemand( const double demandIn ) {
 */
 double Market::getRawDemand() const {
 #if GCAM_PARALLEL_ENABLED
-    return mDemand.combine(std::plus<double>());
+    if( !Marketplace::mIsDerivativeCalc ) {
+        Mutex::scoped_lock readLock( mDemandMutex, false );
+        return mDemand;
+    }
+    else {
+        return mDemand;
+    }
 #else
     return mDemand;
 #endif
@@ -365,7 +378,13 @@ double Market::getRawDemand() const {
  */
 double Market::getSolverDemand() const {
 #if GCAM_PARALLEL_ENABLED
-    return mDemand.combine(std::plus<double>());
+    if( !Marketplace::mIsDerivativeCalc ) {
+        Mutex::scoped_lock readLock( mDemandMutex, false );
+        return mDemand;
+    }
+    else {
+        return mDemand;
+    }
 #else
     return mDemand;
 #endif
@@ -377,7 +396,13 @@ double Market::getSolverDemand() const {
 */
 double Market::getDemand() const {
 #if GCAM_PARALLEL_ENABLED
-    return mDemand.combine(std::plus<double>());
+    if( !Marketplace::mIsDerivativeCalc ) {
+        Mutex::scoped_lock readLock( mDemandMutex, false );
+        return mDemand;
+    }
+    else {
+        return mDemand;
+    }
 #else
     return mDemand;
 #endif
@@ -387,11 +412,11 @@ double Market::getDemand() const {
 * \details This function stores the supply and resets supply to zero. 
 */
 void Market::nullSupply() {
-#if GCAM_PARALLEL_ENABLED
+/*#if GCAM_PARALLEL_ENABLED
     mSupply.clear();
-#else
+#else*/
     mSupply = 0;
-#endif
+//#endif
 }
 
 /*! \brief Get the raw supply.
@@ -403,7 +428,13 @@ void Market::nullSupply() {
 */
 double Market::getRawSupply() const {
 #if GCAM_PARALLEL_ENABLED
-    return mSupply.combine(std::plus<double>());
+    if( !Marketplace::mIsDerivativeCalc ) {
+        Mutex::scoped_lock readLock( mSupplyMutex, false );
+        return mSupply;
+    }
+    else {
+        return mSupply;
+    }
 #else
     return mSupply;
 #endif
@@ -419,7 +450,13 @@ double Market::getRawSupply() const {
 */
 double Market::getSolverSupply() const {
 #if GCAM_PARALLEL_ENABLED
-    return mSupply.combine(std::plus<double>());
+    if( !Marketplace::mIsDerivativeCalc ) {
+        Mutex::scoped_lock readLock( mSupplyMutex, false );
+        return mSupply;
+    }
+    else {
+        return mSupply;
+    }
 #else
     return mSupply;
 #endif
@@ -431,7 +468,13 @@ double Market::getSolverSupply() const {
 */
 double Market::getSupply() const {
 #if GCAM_PARALLEL_ENABLED
-    return mSupply.combine(std::plus<double>());
+    if( !Marketplace::mIsDerivativeCalc ) {
+        Mutex::scoped_lock readLock( mSupplyMutex, false );
+        return mSupply;
+    }
+    else {
+        return mSupply;
+    }
 #else
     return mSupply;
 #endif
@@ -445,7 +488,13 @@ double Market::getSupply() const {
 */
 void Market::addToSupply( const double supplyIn ) {
 #if GCAM_PARALLEL_ENABLED
-    mSupply.local() += supplyIn;
+    if( !Marketplace::mIsDerivativeCalc ) {
+        Mutex::scoped_lock writeLock( mSupplyMutex, true );
+        mSupply += supplyIn;
+    }
+    else {
+        mSupply += supplyIn;
+    }
 #else
     mSupply += supplyIn;
 #endif

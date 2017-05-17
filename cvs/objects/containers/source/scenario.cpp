@@ -876,3 +876,11 @@ void Scenario::invalidatePeriod( const int aPeriod ) {
     mIsValidPeriod[ aPeriod ] = false;
 }
 
+/*!
+ * \brief Get a reference to the object responsible for managing state.
+ * \return The ManageStateVariables object.
+ */
+ManageStateVariables* Scenario::getManageStateVariables() const {
+    return mManageStateVars;
+}
+

@@ -49,6 +49,10 @@
 #include <iosfwd>
 #include <map>
 
+#if GCAM_PARALLEL_ENABLED
+#include "tbb/spin_mutex.h"
+#endif
+
 /*!
 * \ingroup Solution
 * \brief A class used to count iterations of world.calc.
@@ -79,6 +83,9 @@ private:
     std::map<std::string, double> methodCounts;
     double totalCount;
     double periodCount;
+#if GCAM_PARALLEL_ENABLED
+    tbb::spin_mutex mCounterLock;
+#endif
     static int convertToInt( double );
     void print( std::ostream& out ) const;
 };

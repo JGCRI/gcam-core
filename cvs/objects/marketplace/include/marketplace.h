@@ -54,10 +54,10 @@
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/data_definition_util.h"
 
-#if GCAM_PARALLEL_ENABLED
+/*#if GCAM_PARALLEL_ENABLED
 #include "tbb/parallel_for.h"
 #include "tbb/blocked_range.h"
-#endif 
+#endif*/
 
 class Tabs;
 class Market;
@@ -133,11 +133,11 @@ class Value;
 
 class Marketplace: public IVisitable, private boost::noncopyable
 {
+    friend class Market;
     friend class CachedMarket;
     friend class SolverLibrary;
     friend class MarketDependencyFinder;
     friend class LogEDFun;
-    friend class ManageStateVariables;
 public:
     Marketplace();
     ~Marketplace();
@@ -223,7 +223,7 @@ protected:
     std::auto_ptr<MarketDependencyFinder> mDependencyFinder;
     
     //! Flag indicating whether the next call to world->calc() will be part of a partial derivative calculation 
-    bool mIsDerivativeCalc;
+    static bool mIsDerivativeCalc;
 };
 
 #endif

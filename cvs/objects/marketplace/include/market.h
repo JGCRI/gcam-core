@@ -56,7 +56,8 @@
 #include "util/base/include/data_definition_util.h"
 
 #if GCAM_PARALLEL_ENABLED
-#include <tbb/combinable.h>
+//#include <tbb/combinable.h>
+#include "tbb/spin_rw_mutex.h"
 #endif
 
 class IInfo;
@@ -221,6 +222,15 @@ protected:
         //! The year associated with this market.
         DEFINE_VARIABLE( SIMPLE, "year", mYear, int )
     )
+    
+#if GCAM_PARALLEL_ENABLED
+    typedef tbb::speculative_spin_rw_mutex Mutex;
+    //! A fast lock to protect conccurent adds to demand.
+    mutable Mutex mDemandMutex;
+    
+    //! A fast lock to protect concurrent adds to supply.
+    mutable Mutex mSupplyMutex;
+#endif
     
     //! Object containing information related to the market.
     std::auto_ptr<IInfo> mMarketInfo;

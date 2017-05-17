@@ -48,28 +48,34 @@
 #include <iosfwd>
 #include <string>
 #include <boost/date_time/posix_time/posix_time_types.hpp>
+#include <boost/core/noncopyable.hpp>
+
+#if GCAM_PARALLEL_ENABLED
+#include <tbb/spin_mutex.h>
+#endif
+
 /*!
 * \ingroup Objects
 * \brief A very basic class which times and prints events.
 * \author Josh Lurz
 */
-class Timer {
+class Timer : private boost::noncopyable {
 public:
     Timer();        
     void start();
     void stop();
-    double getTimeDifference() const;
     double getTotalTimeDifference() const;
     void print( std::ostream& aOut, const std::string& aTitle = "Time: " ) const;
 private:
     //! Time the timer started
     boost::posix_time::ptime mStartTime;
-    
-    //! Time the timer stopped
-    boost::posix_time::ptime mStopTime;
 
     //! State flag
-    bool mRunning;
+    int mRunning;
+    
+#if GCAM_PARALLEL_ENABLED
+    tbb::spin_mutex mMutex;
+#endif
     
     //! The total time measured by this timer between all starts and stops.
     double mTotalTime;
@@ -83,12 +89,7 @@ private:
  *          therefore it provides two interfaces.  One where timers are named by
  *          predefined enumerations where performance is critical and another they
  *          are named by string which is more convenient.
- * \warning Timers are not thread safe.
- * \note We will probably need to make the timers thread safe
- *          eventually.  The easiest way to do that would be to make
- *          the state flag a counter, starting when we increment from
- *          zero and stopping when we decrement to zero.
-* \author Pralit Patel and Robert Link
+ * \author Pralit Patel and Robert Link
  */
 class TimerRegistry {
 public:

@@ -46,6 +46,10 @@
 #include <cassert>
 #include "util/base/include/definitions.h"
 
+#if GCAM_PARALLEL_ENABLED
+#include <tbb/task_arena.h>
+#endif
+
 /*!
  * \brief A utility for collecting all self declared GCAM state variables so that
  *        they can be managed and reset as appropriate.
@@ -60,6 +64,10 @@ public:
     
     void copyState();
     void setPartialDeriv( const bool aIsPartialDeriv );
+    
+#if GCAM_PARALLEL_ENABLED
+    tbb::task_arena mThreadPool;
+#endif
     
 private:
     void collectState();

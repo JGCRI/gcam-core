@@ -54,7 +54,16 @@
 
 #define UBLAS boost::numeric::ublas
 
+#if GCAM_PARALLEL_ENABLED
+#include <tbb/task_group.h>
+#include <tbb/parallel_for_each.h>
+#endif
+
 #include "util/base/include/timer.h"
+#include "containers/include/scenario.h"
+#include "util/base/include/manage_state_variables.hpp"
+
+extern Scenario* scenario;
 
 /*!
  * Compute a single column in a Jacobian matrix.  We have broken this
@@ -140,10 +149,24 @@ void fdjac(VecFVec<FTYPE,FTYPE> &F, const UBLAS::vector<FTYPE> &x,
 
   Timer& jacTimer = TimerRegistry::getInstance().getTimer( TimerRegistry::JACOBIAN );
   jacTimer.start();
+    if(usepartial) { scenario->getManageStateVariables()->setPartialDeriv(true); }
   
+#if !GCAM_PARALLEL_ENABLED
   for(size_t j=0; j<x.size(); ++j) {
     jacol(F, x, fx, j, J, usepartial, diagnostic);
   }
+#else
+    tbb::task_arena& threadPool = scenario->getManageStateVariables()->mThreadPool;
+    tbb::task_group tg;
+    threadPool.execute([&](){
+        tg.run([&](){
+            tbb::parallel_for_each( x, [&]( const FTYPE& j ) {
+                jacol(F, x, fx, (&j - &x[0]), J, usepartial, 0/*diagnostic*/);
+            });
+        });
+    });
+    threadPool.execute([&tg](){ tg.wait(); });
+#endif
     if(usepartial) { F.partial(-1); }
 
   jacTimer.stop();

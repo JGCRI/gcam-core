@@ -302,7 +302,7 @@ GcamFlowGraph* MarketDependencyFinder::getFlowGraph( const int aMarketNumber ) {
             // Somehow this market was not linked to any entry points into the graph.
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Could not find market: " << mMarketplace->markets[ aMarketNumber ][ 0 ]->getName()
+            mainLog << "Could not find market: " << mMarketplace->mMarkets[ aMarketNumber ]->getName()
                     << " to get an ordering for." << endl;
             exit( 1 );
         }

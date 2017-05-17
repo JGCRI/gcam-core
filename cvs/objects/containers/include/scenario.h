@@ -114,6 +114,7 @@ public:
     static const std::string& getXMLNameStatic();
     const std::vector<int>& getUnsolvedPeriods() const;
     void invalidatePeriod( const int aPeriod );
+    ManageStateVariables* getManageStateVariables() const;
 
     //! Constant which when passed to the run method means to run all model periods.
     const static int RUN_ALL_PERIODS = -1;
