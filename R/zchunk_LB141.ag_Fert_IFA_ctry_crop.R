@@ -137,14 +137,51 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
 
 
 
-    # Lines 80 - 95 in original file
+    # Lines 80 - 119 in original file
     # Calculate fertilizer demand coefficients for 97 countries / 106 crops where available
     # Calculate fertilizer demand = harvested area * fertilizer application rate for each
     # country-crop
+
+
+    # old comment: Multiply harvested area by application rates to get a bottom-up estimate of fertilizer demands
+    # printlog( "Compiling specific fertilizer demand coefficients for the 87 countries / 106 crops where available" )
+    #
     # Take scaled LDS harvested area data at the country-crop level, L141.LDS_ag_HA_ha,
     # sum to iso and GTAPcrop level, join IFA2002_crop information from the FAO_PRODSTAT table,
-    # adjust unspecified cereals in Ethiopia, join in the fertilizer application rate for
-    # each country-crop,
+    # adjust unspecified cereals in Ethiopia, join in the application rate in N_tha from L141.IFA2002+Fert_ktN,
+    # Take LDS harvested area table, L141.LDS_ag_HA_ha
+
+    # process ALGU_ctry - we only need iso and IFA2002_country to join to L141.LDS_ag_HA_ha.
+    # Joining as-is to L141.LDS_ag_HA_ha leads to several duplications due to multiple countries sharing iso codes.
+    # This is incorrect, and inflates the number of rows.
+    # The below pipeline fixes for all but iso = "hrv" corresponding to both Croatia and Yugoslav Republic.
+    # Joining by left_join_keep_first_only then keeps Croatia information only, as in original code.
+    AGLU_ctry %>%
+      # take only the isos we need
+      filter(iso %in% L141.LDS_ag_HA_ha$iso) %>%
+      # keep only the columns we need
+      select(iso, IFA2002_country) %>%
+      # keep unique combinations only
+      unique () ->
+      # store in a table to join to L141.LDS_ag_HA_ha
+      AGLU_ctry_iso_IFA2002_LDS
+
+    # process L141.LDS_ag_HA_ha
+    L141.LDS_ag_HA_ha %>%
+      # Aggregate to the iso-GTAPcrop level
+      group_by(iso, GTAP_crop) %>%
+      summarise(HA_ha = sum(value)) %>%
+      ungroup() %>%
+      # join in IFA2002_crop info from the FAO PRODSTAT table, preserving NAs as in original code for later processing
+      left_join(select(FAO_ag_items_PRODSTAT, GTAP_crop, IFA2002_crop), by = c("GTAP_crop")) %>%
+      # In Ethiopia, replace unspecified cereals with teff
+      mutate(IFA2002_crop = if_else(iso == "eth" & GTAP_crop == "cerealsnes", "Teff", IFA2002_crop)) %>%
+      # add IFA2002_country information
+      # The keep first only correctly selects CROATIA for iso = "hrv".
+      left_join_keep_first_only(AGLU_ctry_iso_IFA2002_LDS, by = c("iso")) %>%
+      # join in the fertilizer application rate in N_tha from L141.IFA2002_Fert_ktN, keeping NA for later processing
+      left_join(select(L141.IFA2002_Fert_ktN, IFA2002_crop, IFA2002_country, N_tha))
+
 
 
 
