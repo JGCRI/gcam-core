@@ -6,11 +6,16 @@
 #' @param include_disabled Plots nodes of disabled chunks?
 #' @param quiet Suppress messages?
 #' @return Adjacency matrix showing chunk-to-chunk data flows
+#' @importFrom grDevices rainbow
+#' @importFrom graphics plot title
 #' @export
 graph_chunks <- function(module_filter = NULL,
                          plot_gcam = FALSE,
                          include_disabled = FALSE,
                          quiet = TRUE) {
+
+  output <- to_xml <- module <- name.y <- name <- disabled <- input <- num <-
+      NULL                              # silence notes on package check.
 
   assert_that(is.null(module_filter) | is.character(module_filter))
   assert_that(is.logical(plot_gcam))

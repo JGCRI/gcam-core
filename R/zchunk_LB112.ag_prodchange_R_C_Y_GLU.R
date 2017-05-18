@@ -14,6 +14,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
+#' @importFrom stats median
 #' @author RC April 2017
 module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -29,6 +30,14 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
              "L112.ag_YieldRate_R_C_Y_GLU",
              "L112.bio_YieldRate_R_Y_GLU"))
   } else if(command == driver.MAKE) {
+
+    CROSIT_ctry <- CROSIT_country_ID <- CROSIT_crop <- CROSIT_cropID <- year <-
+        HA_kha <- Yield_kgHa <- Prod_kt <- HA_kha_rainfed <- Yield_kgHa_rainfed <-
+        NULL
+    Prod_kt_rainfed <- HA_kha_irrigated <- Yield_kgHa_irrigated <-
+        Prod_kt_irrigated <- NULL
+    Yield_base <- iso <- GTAP_crop <- . <- GLU <- value <- CROSIT <- Mult <-
+        GCAM_region_ID <- GCAM_commodity <- Prod_mod <- YieldRatio <- NULL # silence package check.
 
     all_data <- list(...)[[1]]
 
