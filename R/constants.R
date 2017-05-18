@@ -99,7 +99,7 @@ CONV_THA_KGM2 <- 0.1   # tons C/ha -> kg C/m2
 CONV_GG_TG <- 0.001 # gigagrams to tegagrams
 CONV_TST_TG <- 0.000907 # thousand short tons to Tg
 CONV_KG_TO_TG <- 1e-9
-CONV_KT_MT <- 0.001 #kt to Mt
+CONV_KT_MT <- 0.001 # kt to Mt
 CONV_T_MT <- 1e-6 # t to Mt
 
 # Cubic meters (m3) to billion cubic meters (bm3)

@@ -52,13 +52,8 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
     IFA_Fert_ktN %>%
       filter(Country != "World Total") %>%
       gather(IFA_commodity, value, -Country) %>%
-      # convert units from kt to Mt of Nitrogen
       mutate(Fert_MtN = value * CONV_KT_MT) %>%
-      # rename Country
-      rename(IFA_region = Country) %>%
-      # rename value to be more informative
-      rename (Fert_ktN = value) ->
-      # Store
+      rename(IFA_region = Country, Fert_ktN = value) ->
       L141.IFA_Fert_ktN
 
 
@@ -87,18 +82,17 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
     L101.ag_HA_bm2_R_C_Y %>%
       filter(year %in% FAO_LDS_YEARS) %>%
       group_by(GCAM_region_ID, GCAM_commodity) %>%
-      summarise(FAO = mean(value)) %>%
-      ungroup() ->
+      summarise(FAO = mean(value)) ->
       L141.FAO
     # Take LDS HA data and aggregate to the GCAM region-commodity level:
     L102.ag_HA_bm2_R_C_GLU %>%
       group_by(GCAM_region_ID, GCAM_commodity) %>%
       summarise(LDS = sum(value)) %>% ungroup() %>%
-      ungroup() %>%
       # Join in the FAO data from the previous pipeline
       left_join_error_no_match(L141.FAO, by = c("GCAM_region_ID", "GCAM_commodity")) %>%
+      ungroup() %>%
       # Calculate the FAO_LDS scaler value = FAO/LDS
-      mutate(scaler = FAO/LDS) ->
+      mutate(scaler = FAO / LDS) ->
       # store in an FAO_LDS table:
       L141.FAO_LDS
 
@@ -110,16 +104,15 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
     # pipeline, and use the FAO_LDS scaler to scale the iso-GLU-GTAPcrop harvested area data
     L100.LDS_ag_HA_ha %>%
       # join GCAM region ID information
-      left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = c("iso")) %>%
+      left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
       # join GCAM commodity information and preserve NAs to be omitted, as in original code
-      left_join(select(FAO_ag_items_PRODSTAT, GTAP_crop, GCAM_commodity), by = c("GTAP_crop")) %>%
+      left_join(select(FAO_ag_items_PRODSTAT, GTAP_crop, GCAM_commodity), by = "GTAP_crop") %>%
       na.omit() %>%
       # join FAO_LDS scaler for each region-commodity
       left_join_error_no_match(select(L141.FAO_LDS, GCAM_region_ID, GCAM_commodity, scaler),
                                by = c("GCAM_region_ID", "GCAM_commodity")) %>%
       # use the region-commodity scaler to scale down each iso-GLU-GTAP harvested area
       mutate(value = value * scaler) %>%
-      # drop unwanted columns
       select(-GCAM_region_ID, -GCAM_commodity, -scaler) ->
       # store in an LDS harvested area table
       L141.LDS_ag_HA_ha
@@ -137,7 +130,7 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
     # max N_kt / max Area_ha,which has the possibility of cancellation.
     IFA2002_Fert_ktN %>%
       # calculate nitrogen consumption in tons per hectare N_tha = N_kt / AREA_thousHa
-      mutate(N_tha = N_kt /AREA_thousHa) %>%
+      mutate(N_tha = N_kt / AREA_thousHa) %>%
       na.omit() %>%
       # get the max fertilizer consumption across years for each country and crop
       group_by(COUNTRY, CROP) %>%
@@ -172,10 +165,8 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
     AGLU_ctry %>%
       # take only the isos we need
       filter(iso %in% L141.LDS_ag_HA_ha$iso) %>%
-      # keep only the columns we need
       select(iso, IFA2002_country, IFA_region) %>%
-      # keep unique
-      unique() ->
+      dplyr::distinct() ->
       # store in a table to join to L141.LDS_ag_HA_ha
       AGLU_ctry_iso_IFA_LDS
 
@@ -186,11 +177,11 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
       summarise(HA_ha = sum(value)) %>%
       ungroup() %>%
       # join in IFA2002_crop and IFA_commodity info from the FAO PRODSTAT table, preserving NAs as in original code for later processing
-      left_join(select(FAO_ag_items_PRODSTAT, GTAP_crop, IFA2002_crop, IFA_commodity), by = c("GTAP_crop")) %>%
+      left_join(select(FAO_ag_items_PRODSTAT, GTAP_crop, IFA2002_crop, IFA_commodity), by = "GTAP_crop") %>%
       # In Ethiopia, replace unspecified cereals with teff
       mutate(IFA2002_crop = if_else(iso == "eth" & GTAP_crop == "cerealsnes", "Teff", IFA2002_crop)) %>%
       # add IFA2002_country and IFA_region information, keeping NA information for later processing
-      left_join(AGLU_ctry_iso_IFA_LDS, by = c("iso")) %>%
+      left_join(AGLU_ctry_iso_IFA_LDS, by = "iso") %>%
       # join in the fertilizer application rate in N_tha for each iso-GTAPcrop combo from L141.IFA2002_Fert_ktN,
       # keeping NA for later processing
       left_join(select(L141.IFA2002_Fert_ktN, IFA2002_crop, IFA2002_country, N_tha), by = c("IFA2002_crop", "IFA2002_country")) %>%
@@ -253,9 +244,8 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
     # Pipeline 1:
     # take ctry crop bottom up estimate of N consumption
     L141.IFA_Fert_Cons_MtN_ctry_crop %>%
-      # keep relevant columns only
       select(IFA_region, IFA_commodity, IFA_N_Mt_unscaled) %>%
-      # aggregte to IFA_region, IFA_commodity via summing
+      # aggregate to IFA_region, IFA_commodity via summing
       group_by(IFA_region, IFA_commodity) %>%
       summarise(IFA_N_Mt_unscaled = sum(IFA_N_Mt_unscaled)) %>%
       ungroup() %>%
@@ -263,7 +253,6 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
       left_join_error_no_match(select(L141.IFA_Fert_ktN, -Fert_ktN), by = c("IFA_region", "IFA_commodity")) %>%
       # calculate scaler = top down / bottom up N consumption = Fert_MtN / IFA_N_Mt_unscaled
       mutate(scaler = Fert_MtN / IFA_N_Mt_unscaled) %>%
-      # replace any NA scalers witha  value of 1
       replace_na(list(scaler = 1)) ->
       L141.IFA_Fert_Cons_Rifa_Cifa
 
