@@ -68,7 +68,7 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
     EDGAR_gases %>%
       left_join(EDGAR_sector, by = "IPCC") %>%                                          # Add GCAM sector from the sector mapping
       rename(sector = agg_sector) %>%
-      mutate(iso = tolower( ISO_A3 ), ISO_A3 = NULL) %>%
+      standardize_iso(col = "ISO_A3") %>%
       change_iso_code('rou', 'rom') %>%                                                 # Switch Romania iso code to its pre-2002 value
       left_join(iso_GCAM_regID, by = "iso") %>%                                         # Map in GCAM regions
       select(IPCC, Non.CO2, sector, iso, GCAM_region_ID, year, value) ->
@@ -95,14 +95,13 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
     # Prepare EDGAR emissions for use (continued)
     EDGAR_history %>%
       # Extrapolate using average of last five years --- 2010 is problematic here because of deforestation (i.e., we don't want to rely on 2005 as last year of data)
-      filter(year %in% 2004:2008) %>%
+      filter(year %in% tail(emissions.EDGAR_YEARS,5)) %>%
       group_by(GCAM_region_ID, iso, sector, Non.CO2, IPCC) %>%
       summarize(value = mean(value)) %>%
-      mutate(year = as.integer(2010)) %>%
+      mutate(year = as.integer(max(modeltime.BASE_YEARS))) %>%
       bind_rows(EDGAR_history) %>%                                                      # Bind extrapolated 2010 data to the rest of the EDGAR data
-      group_by(GCAM_region_ID, sector, Non.CO2, year) %>%
-      summarize(value = sum(value)) %>%                                                 # Aggregate by region, sector, gas, and year
-      na.omit() %>%
+      group_by(GCAM_region_ID, sector, Non.CO2, year) %>%                               # Aggregate by region, sector, gas, and year
+      summarize(value = sum(value)) %>%                                                 # This will sum over IPCC category (e.g., grassland = grassland fires + savanna burning)
       mutate(value = value * CONV_GG_TG) ->                                             # Convert to Tg
       EDGAR_history
 
@@ -112,9 +111,9 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
       group_by(GCAM_region_ID, year) %>%
       mutate(land_share = value / sum(value)) %>%                                                           # Compute the share of regional grassland in each GLU
       select(-value) %>%
-      left_join(filter(EDGAR_history, sector == "grassland"), by = c("GCAM_region_ID", "year")) %>%         # Map in EDGAR grassland emissions
+      # There are regions (e.g., region #3) where we have grassland area, but no emissions. Use inner join to remove
+      inner_join(filter(EDGAR_history, sector == "grassland"), by = c("GCAM_region_ID", "year")) %>%         # Map in EDGAR grassland emissions
       mutate(value = value * land_share) %>%                                                                # Compute emissions by GLU using EDGAR totals and land shares
-      na.omit() %>%
       select(-sector, -land_share) ->
       L124.nonco2_tg_R_grass_Y_GLU
 
@@ -138,14 +137,17 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
       gather(year, value, -Country, -Non.CO2, -type) %>%                                             # Convert from wide to long
       mutate(year = as.integer(year)) %>%
       spread(type, value) %>%                                                                        # Spread data so deforestation and forest fires are in columns
-      mutate(iso = tolower( Country ), Country = NULL) %>%
+      standardize_iso(col = "Country") %>%
       change_iso_code('rou', 'rom') %>%                                                              # Convert Romania iso code to pre-2002 value
       left_join(iso_GCAM_regID, by = "iso") %>%
+      # There are a set of iso codes in the GFED data that don't exist in the GCAM region mapping. Remove those now.
+      na.omit() %>%
       group_by(GCAM_region_ID, Non.CO2, year ) %>%
       summarize(ForestFire = sum(ForestFire), Deforest = sum(Deforest) ) %>%                         # Aggregate emissions by region, gas, and year
-      na.omit() %>%
       mutate(PctForestFire = ForestFire / (ForestFire + Deforest)) %>%                               # Compute share of emissions from forest fires
-      mutate(PctForestFire = if_else( is.na(PctForestFire), 1, PctForestFire )) %>%                  # Assume missing values mean 100% forest fires since these are easier to model in GCAM
+      # There are regions where GFED data is zero for both forest fires and deforestation, leading to NAs
+      # Assume those missing values are places with 100% forest fires since these are easier to model in GCAM
+      replace_na(list(PctForestFire = 1)) %>%
       mutate(PctDeforest = 1 - PctForestFire) %>%                                                    # Compute share of emissions from deforestation
       select(-ForestFire, -Deforest) ->
       FireShares_R_G_Y
@@ -156,13 +158,14 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
       group_by(GCAM_region_ID, year) %>%
       mutate(land_share = value / sum(value)) %>%                                                      # Compute share of regional forest area in each GLU
       select(-value) %>%
-      left_join(filter(EDGAR_history, sector == "forest"), by = c("GCAM_region_ID", "year")) %>%       # Map in EDGAR emissions information
+      # There are places with land area but no emissions and vice versa. Use an inner_join to only get places with both
+      inner_join(filter(EDGAR_history, sector == "forest"), by = c("GCAM_region_ID", "year")) %>%       # Map in EDGAR emissions information
       mutate(value = value * land_share) %>%                                                           # Compute forest emissions from EDGAR totals and land shares
-      na.omit() %>%
       select(-sector, -land_share) %>%
       left_join(FireShares_R_G_Y, by = c("GCAM_region_ID", "Non.CO2", "year")) %>%                     # Map in GFED fire shares
-      mutate(PctForestFire = if_else( is.na(PctForestFire), 1, PctForestFire)) %>%                     # Assume missing values mean 100% forest fires since these are easier to model in GCAM
-      mutate(PctDeforest = if_else( is.na(PctDeforest), 0, PctDeforest)) %>%
+      # Assume missing values mean 100% forest fires since these are easier to model in GCAM
+      replace_na(list(PctForestFire = 1)) %>%
+      replace_na(list(PctDeforest = 0)) %>%
       mutate(ForestFire = value * PctForestFire) %>%                                                   # Compute forest fire emissions
       mutate(Deforest = value * PctDeforest) %>%                                                       # Compute deforestation emissions
       select(-value, -PctForestFire, -PctDeforest) %>%
@@ -171,7 +174,7 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
 
     # Compute global average deforestation emissions coefficients
     # Compute total change in forest area from 2000 to 2005, total global emissions, and average annualized coefficients (emissions / change in land area / number of years)
-    gas_list <- tibble(Non.CO2 = L124.nonco2_tg_R_forest_Y_GLU$Non.CO2 %>% unique())                  # Set up list of gases (we'll use this to add columns later)
+    gas_list <- tibble(Non.CO2 = unique(L124.nonco2_tg_R_forest_Y_GLU$Non.CO2))                       # Set up list of gases (we'll use this to add columns later)
     L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj %>%
       filter(year %in% emissions.DEFOREST_COEF_YEARS) %>%                                             # Get years that we'll use for deforestation calculation (as of 5/14/17 this was 2000 & 2005)
       mutate(year = if_else(year == min(emissions.DEFOREST_COEF_YEARS), "year1", "year2")) %>%        # Rename years so we can use them as column headings (this also makes this robust to changes in years later)
@@ -183,7 +186,7 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
                        year == emissions.DEFOREST_COEF_YEARS[2],
                        technology == "Deforest"), by = c( "GCAM_region_ID", "Land_Type", "GLU", "Non.CO2")) %>%
       mutate(technology = if_else(is.na(technology), "Deforest", technology)) %>%                     # Make sure the technology name is "Deforest" (not sure why I have to do this but it is required)
-      mutate(value = if_else(is.na(value), 0, value)) %>%
+      replace_na(list(value = 0)) %>%                                                                 # Note: "value" are the emissions calculated above
       mutate(value = if_else(driver == 0, 0, value)) %>%                                              # Zero out emissions in places where there wasn't any deforestation
       group_by(Land_Type, technology, Non.CO2) %>%
       summarize(driver = sum(driver), emissions = sum(value)) %>%                                     # Calculate global total emissions and deforestation
