@@ -42,6 +42,7 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
 
     # Lines 64-69 in original file
     # Convert IFA fertilizer consumption to long form and convert units
+    # top down fertilizer consumption to be reconciled with bottom up consumption estimate useing IFA2002, X table, XX table, etc
     IFA_Fert_ktN %>%
       filter(Country != "World Total") %>%
       gather(IFA_commodity, value, -Country) %>%
@@ -210,6 +211,7 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
       # store in a table by IFAregion and IFAcommodity:
       L141.HA_ha_Rifa_Cifa
 
+    # can probably  combine ^v
 
     #use spec coeff where available, defaults where not to get bottom up
     L141.IFA_Fert_Cons_MtN_ctry_crop %>%
@@ -217,11 +219,52 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
       left_join_error_no_match(select(L141.HA_ha_Rifa_Cifa, IFA_region, IFA_commodity, IFA_N_tha_default),
                                by = c("IFA_region", "IFA_commodity")) %>%
       # calculate bottom up = ha * consumpstion rate/area,  using defaults where missing
-      mutate(IFA_N_Mt_unscaled = HA_ha * IFA2002_N_tha) %>%
+      mutate(IFA_N_Mt_unscaled = HA_ha * IFA2002_N_tha * CONV_T_MT) %>%
       mutate(IFA_N_Mt_unscaled = replace(IFA_N_Mt_unscaled,
                                          is.na(IFA_N_Mt_unscaled),
-                                         (HA_ha * IFA_N_tha_default)[is.na(IFA_N_Mt_unscaled)])) ->
+                                         (HA_ha * IFA_N_tha_default)[is.na(IFA_N_Mt_unscaled)] * CONV_T_MT)) ->
+      # store in table of ctry-crop level bottom up estimates of N consumption
       L141.IFA_Fert_Cons_MtN_ctry_crop
+
+
+
+    # Lines 125-141 in original file
+    # printlog( "Step 2: Re-scale fertilizer consumption estimates so that totals match the IFA top-down inventory" )
+    # Take unscaled ctry-crop level fertilizer consumption rates in table L141.IFA_Fert_Cons_MtN_ctry_crop,
+    # aggregate tot the IFAregion-IFAcrop level,
+    # join IFAregion-IFAcommodity Fertilizer estimates from table L141.IFA_Fert_ktN,
+    # use these two different estimates to calulate a saceler = IFA_N_Mt / IFA_N_Mt_unscaled,
+    # replace any NA scalers with 1.
+
+    #ctry crop bottom up estimate of N consumption
+    L141.IFA_Fert_Cons_MtN_ctry_crop %>%
+      # keep relevant columns only
+      select(IFA_region, IFA_commodity, IFA_N_Mt_unscaled) %>%
+      # aggregte to IFA_region, IFA_commodity via summing
+      group_by(IFA_region, IFA_commodity) %>%
+      summarise(IFA_N_Mt_unscaled = sum(IFA_N_Mt_unscaled)) %>%
+      ungroup() %>%
+      # join top down IFA fertilizer estimates
+      left_join_error_no_match(select(L141.IFA_Fert_ktN, -Fert_ktN), by = c("IFA_region", "IFA_commodity")) %>%
+      # calculate scaler = top down / bottom up N consumption = Fert_MtN / IFA_N_Mt_unscaled
+      mutate(scaler = Fert_MtN / IFA_N_Mt_unscaled) %>%
+      # replace any NA scalers witha  value of 1
+      replace_na(list(scaler = 1)) ->
+      L141.IFA_Fert_Cons_Rifa_Cifa
+
+    # again can probably combine
+    # join this scaler to the bottom up country-crop Fertilizer consumption, L141.IFA_Fert_Cons_MtN_ctry_crop,
+    # multiply by unscaled consumption to get final N consumption.
+    # ouput only iso, GTAP_crop, and N consumption data.
+    L141.IFA_Fert_Cons_MtN_ctry_crop %>%
+      left_join_error_no_match(select(L141.IFA_Fert_Cons_Rifa_Cifa, IFA_region, IFA_commodity, scaler),
+                               by = c("IFA_region", "IFA_commodity")) %>%
+      mutate(Fert_Cons_MtN = IFA_N_Mt_unscaled * scaler) %>%
+      select(iso, GTAP_crop, Fert_Cons_MtN) ->
+      L141.ag_Fert_Cons_MtN_ctry_crop
+
+
+
 
 
 
@@ -229,7 +272,7 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
 
 
     # Produce outputs
-    tibble() %>%
+    L141.ag_Fert_Cons_MtN_ctry_crop %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -242,8 +285,7 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
                      "L101.ag_HA_bm2_R_C_Y",
                      "L102.ag_HA_bm2_R_C_GLU",
                      "aglu/IFA2002_Fert_ktN",
-                     "aglu/IFA_Fert_ktN") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "aglu/IFA_Fert_ktN") ->
       L141.ag_Fert_Cons_MtN_ctry_crop
 
     return_data(L141.ag_Fert_Cons_MtN_ctry_crop)
