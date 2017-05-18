@@ -91,7 +91,7 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
 
     # Convert from EDGAR iso to GCAM_region_ID
     L115.EDGAR_G_sec %>%
-      mutate(iso = tolower( ISO_A3 ), ISO_A3 = NULL) %>%
+      mutate( iso = tolower( ISO_A3 ), ISO_A3 = NULL ) %>%
       change_iso_code('rou', 'rom') %>%
       left_join_error_no_match(iso_GCAM_regID, by = "iso") ->
       L115.EDGAR_GCAM
@@ -113,7 +113,7 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
       left_join_error_no_match_error_no_match(unite(L115.EDGAR_R_G_sec_yr_v, col = "Region_GHG_Sector_Yr", c(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year), sep = "~"), by = "Region_GHG_Sector_Yr") %>%
       rename(EDGAR_emissions = value) %>%
       separate(Region_GHG_Sector_Yr, c("GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector", "year"), sep = "~") %>%
-      mutate(., scaler = EDGAR_emissions / total_hybrid_emissions / 1000.0) ->
+      mutate( ., scaler = EDGAR_emissions / total_hybrid_emissions / 1000.0 ) ->
       L115.emiss_scaler
 
 
