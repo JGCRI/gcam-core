@@ -110,11 +110,19 @@ graph_chunks <- function(module_filter = NULL,
   g <- igraph::graph.adjacency(mat)
   coords <- igraph::layout_nicely(g)
 
+  # Use 'disabled' status as color if we're plotting them; otherwise, module
+  if(include_disabled) {
+    vc <- rainbow(2)[chunklist$disabled + 1]
+  } else {
+    vc <- vertexcolors[chunklist$modulenum]
+  }
+
   plot(g,
-       vertex.color = vertexcolors[chunklist$modulenum],
+       vertex.color = vc,
        #      vertex.size = chunklist$noutputs p* 3,
        #      vertex.label.dist = 1,
        vertex.label.cex = .5,
+       vertex.label.color = "grey",
        vertex.size = 5,
        edge.arrow.size = 0.3,
        layout = coords)
