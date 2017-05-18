@@ -1,0 +1,17 @@
+# File: A_FoodDemand_SSPs.csv
+# Title: Satiation level & maximum increase in per capita food in the SSPs
+# Description: max.mult is supposed to be the maximum growth rate in per capital caloric intake from one period to the next. It is currently set very large for crops (i.e., non-binding) and to 2% per year (10.4% per 5-year time period) for meat. The idea is that the SSPs use GDP per capita to forecast future caloric intake, but in some regions income grows super-fast. We thought that the predicted meat consumption growth, based on this income, was unreasonable and capped it at 2% per year
+# Units: kcal/person/day (satiation.level), unitless (max.mult)
+# Source: Developed by Kate Calvin
+# ----------
+scenario,GCAM_demand,satiation.level,max.mult
+SSP1,crops,10000,100
+SSP2,crops,10000,100
+SSP3,crops,10000,100
+SSP4,crops,10000,100
+SSP5,crops,10000,100
+SSP1,meat,1000,1.104080803
+SSP2,meat,1100,1.104080803
+SSP3,meat,1400,1.104080803
+SSP4,meat,1100,1.104080803
+SSP5,meat,1400,1.104080803

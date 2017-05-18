@@ -13,6 +13,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
+#' @importFrom stats weighted.mean
 #' @author BBL April 2017
 module_aglu_LB121.Carbon_LT <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -25,6 +26,10 @@ module_aglu_LB121.Carbon_LT <- function(command, ...) {
     return(c("L121.CarbonContent_kgm2_R_LT_GLU",
              "L121.Yield_kgm2_R_Past_GLU"))
   } else if(command == driver.MAKE) {
+
+    unit <- value <- Source <- variable <- pasture_yield <- GCAM_region_ID <-
+        Land_Type <- GLU <- `mature age` <- Area_bm2 <- veg_c <- soil_c <-
+        year <- NULL                    # silence package check.
 
     all_data <- list(...)[[1]]
 

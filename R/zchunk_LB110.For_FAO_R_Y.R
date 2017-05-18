@@ -26,6 +26,9 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
     return(c("L110.For_ALL_bm3_R_Y"))
   } else if(command == driver.MAKE) {
 
+    value <- flow <- GCAM_region_ID <- GCAM_commodity <- year <- Prod_bm3 <-
+        NetExp_bm3 <- Cons_bm3 <- Cons_scaler <- . <- NULL # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
@@ -67,7 +70,7 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
       # do a left join on For_ALL tibble, match up the iso labels from the iso tibble,
       #   This appends to the For_ALL tibble all of the information from the iso_GCAM_regID, including the column we actually
       #   want, GCAM_region_ID. This column is all that we save:
-      mutate(GCAM_region_ID =  left_join_error_no_match( L110.FAO_For_ALL_m3, iso_GCAM_regID, by = c("iso"))$GCAM_region_ID ) %>%
+      mutate(GCAM_region_ID =  left_join_error_no_match( L110.FAO_For_ALL_m3, iso_GCAM_regID, by = c("iso"))[['GCAM_region_ID']] ) %>%
       #
       mutate(GCAM_commodity = "Forest") %>%                   # add the forest commodity label
       mutate(value = CONV_M3_BM3*value) %>%                   # convert the value units from m3 to bm3, had to add this constant to constants.R
@@ -121,7 +124,7 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
     # Lines 74-78 in original file
     # old comment: Translate to full table for any regions with no forest data
     L110.For_ALL_bm3_R_Y %>%                                                   # take the region year R_Y table
-      tidyr::complete( GCAM_region_ID = unique( iso_GCAM_regID$GCAM_region_ID),# use complete to make sure every commodity (forest)
+      tidyr::complete( GCAM_region_ID = unique( iso_GCAM_regID[['GCAM_region_ID']]),# use complete to make sure every commodity (forest)
                 tidyr::nesting(GCAM_commodity, year),                          # and year is represented for every GCAM region.
                 fill = list(Prod_bm3=0, NetExp_bm3 = 0, Cons_bm3 = 0) ) ->     # Fill in the new regions with 0 Prod, NetExp, Cons.
       L110.For_ALL_bm3_R_Y                                                     # store in the R_Y table.

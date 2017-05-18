@@ -26,6 +26,9 @@ module_emissions_L105.nh3_an_USA_S_T_Y <- function(command, ...) {
     return(c("L105.nh3_tgmt_USA_an_Yh"))
   } else if(command == driver.MAKE) {
 
+    sector <- fuel <- Source_Category_Raw <- Source_Category <- year <- value <-
+        GCAM_region_ID <- emissions <- production <- NULL # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

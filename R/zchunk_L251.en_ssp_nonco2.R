@@ -36,6 +36,10 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
              "L251.ssp34_ef_vin"))
   } else if(command == driver.MAKE) {
 
+    year <- value <- GCAM_region_ID <- Non.CO2 <- supplysector <- subsector <-
+        stub.technology <- agg_sector <- MAC_region <- bio_N2O_coef <-
+        SO2_name <- GAINS_region <- emiss.coeff <- NULL # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

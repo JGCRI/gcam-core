@@ -4,6 +4,7 @@
 
 # Make sure year and value are numeric, and within historical years
 PH_year_value_historical <- function(d) {
+  year <- value <- NULL                 # silence notes in package check
   d %>%
     mutate(year = as.numeric(year),
            value = as.numeric(value)) %>%
@@ -62,6 +63,7 @@ left_join_error_no_match <- function(d, ...) {
 left_join_keep_first_only <- function(x, y, by) {
     ## Our strategy is to use "distinct" to filter y to a single element for
     ## each match category, then join that to x.
+    . <- NULL                           # silence notes on package check
     ll <- as.list(by)
     names(ll) <- NULL
     do.call(distinct_, c(list(y), ll, list(.keep_all = TRUE))) %>%
@@ -177,6 +179,7 @@ approx_fun <- function(year, value, rule = 1) {
 #' y <- tibble::tibble(y = c(4, 5), z = c(6, 7))
 #' repeat_add_columns(x, y)
 repeat_add_columns <- function(x, y) {
+  UNIQUE_JOIN_FIELD <- NULL           # silence package checks.
   assert_that(tibble::is_tibble(x))
   assert_that(tibble::is_tibble(y))
 
