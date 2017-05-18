@@ -267,11 +267,11 @@ Viet Nam,vnm,vnm,VIET,90,Vietnam,,Vietnam,21,Southeastern Asia,East Asia
 Wallis and Futuna Islands,wlf,xoc,,,Wallis and Futuna Islands,,Rest of world,24,Oceania,Industrial countries
 Western Sahara,esh,,,,Western Sahara,,Rest of world,7,Northern Africa,sub-Saharan Africa
 Yemen,yem,xme,YEME,74,Yemen,,Rest of world,17,Middle East,Near East / North Africa
-Yugoslav SFR,bih,xer,,,,,,12,Central Europe,Transition countries
-Yugoslav SFR,hrv,xer,,,,CROATIA,,12,Central Europe,Transition countries
-Yugoslav SFR,mkd,xer,,,,,,12,Central Europe,Transition countries
+Yugoslav SFR,bih,xer,,,,,Rest of world,12,Central Europe,Transition countries
+Yugoslav SFR,hrv,xer,,,,CROATIA,Rest of world,12,Central Europe,Transition countries
+Yugoslav SFR,mkd,xer,,,,,Rest of world,12,Central Europe,Transition countries
 Yugoslav SFR,mne,xer,,,,,,12,Central Europe,Transition countries
 Yugoslav SFR,srb,xer,,,,,,12,Central Europe,Transition countries
-Yugoslav SFR,svn,xer,,,,,,12,Central Europe,Transition countries
+Yugoslav SFR,svn,xer,,,,,EU-27,12,Central Europe,Transition countries
 Zambia,zmb,zmb,ZAMB,37,Zambia,ZAMBIA,Rest of world,10,Southern Africa,sub-Saharan Africa
 Zimbabwe,zwe,zwe,ZIMB,32,Zimbabwe,ZIMBABWE,Rest of world,10,Southern Africa,sub-Saharan Africa
