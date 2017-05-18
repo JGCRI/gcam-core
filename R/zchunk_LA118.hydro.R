@@ -42,11 +42,9 @@ module_energy_LA118.hydro <- function(command, ...) {
     # Calculation of economic hydropower potential by country, in EJ/yr
     # Calculate a capacity factor for translating MW to GWh, using weighted average capacity factor of all existing dams
     Hydropower_potential %>%
-      gather(variable, value, -Country, -iso) %>%
-      group_by(variable) %>%
-      summarise(value = sum(value, na.rm = TRUE)) %>%
-      # Calculation of capacity factor
-      summarise(value = value[variable == "Installed_GWh"] / (value[variable == "Installed_MW"] * CONV_YEAR_HOURS * CONV_MIL_BIL)) %>%
+      select(Installed_GWh, Installed_MW) %>%
+      summarise(Installed_GWh = sum(Installed_GWh), Installed_MW = sum(Installed_MW)) %>%
+      mutate(value = Installed_GWh / (Installed_MW * CONV_YEAR_HOURS * CONV_MIL_BIL)) %>%
       .$value -> # Convert table to single number
       Hydro_capfac
 
@@ -56,8 +54,8 @@ module_energy_LA118.hydro <- function(command, ...) {
     # First, for countries reporting in MW, convert to GWh (most countries have potentials as GWh but some are in MW)
     Hydropower_potential %>%
       mutate_if(is.integer, as.numeric) %>% # Convert columns that are getting read in as integers to numbers
-      mutate(Technical_GWh = if_else(is.na(Technical_GWh), Technical_MW * CONV_YEAR_HOURS * CONV_MIL_BIL * Hydro_capfac, Technical_GWh)) %>%
-      mutate(Economic_GWh = if_else(is.na(Economic_GWh), Economic_MW * CONV_YEAR_HOURS * CONV_MIL_BIL * Hydro_capfac, Economic_GWh)) ->
+      mutate(Technical_GWh = replace(Technical_GWh, is.na(Technical_GWh), (Technical_MW * CONV_YEAR_HOURS * CONV_MIL_BIL * Hydro_capfac)[is.na(Technical_GWh)])) %>%
+      mutate(Economic_GWh = replace(Economic_GWh, is.na(Economic_GWh), (Economic_MW * CONV_YEAR_HOURS * CONV_MIL_BIL * Hydro_capfac)[is.na(Economic_GWh)])) ->
       Hydropower_potential
 
     # Among countries with both technical and economic potential reported, calculate an average translation from one to the other
@@ -68,7 +66,7 @@ module_energy_LA118.hydro <- function(command, ...) {
 
     # For countries with technical potential reported but no economic potential, estimate the economic potential
     Hydropower_potential %>%
-      mutate(Economic_GWh = if_else(is.na(Economic_GWh), Technical_GWh * Hydro_tech_econ, Economic_GWh)) %>%
+      mutate(Economic_GWh = replace(Economic_GWh, is.na(Economic_GWh), (Technical_GWh * Hydro_tech_econ)[is.na(Economic_GWh)])) %>%
       # This still leaves a few countries for which no estimates of hydro potentials are provided.
       # The largest among them is North Korea; most of the others are islands or deserts that probably don't have much beyond present-day production.
       # Not worrying about these (future growth rates will be set to 0)
