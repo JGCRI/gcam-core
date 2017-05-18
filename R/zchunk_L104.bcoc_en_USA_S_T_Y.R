@@ -13,7 +13,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author SJS May 2017
-#' @export
 module_emissions_L104.bcoc_en_USA_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
@@ -51,29 +50,29 @@ module_emissions_L104.bcoc_en_USA_S_T_Y <- function(command, ...) {
 
 	# Combine BC & OC data and convert to Tg
 	Bond_OC_USA_1990 %>%
-	  left_join_error_no_match(Bond_BC_USA_1990, by=("Technology")) %>%
-	  mutate(OC_em = OC_em * CONV_GG_TG)  %>%
-	  mutate(BC_em = BC_em * CONV_GG_TG) ->
+	  left_join_error_no_match(Bond_BC_USA_1990, by = ("Technology")) %>%
+	  mutate(OC_em = OC_em * CONV_GG_TG, BC_em = BC_em * CONV_GG_TG) ->
 	  Bond_BCOC_USA_1990
 
 	# Aggregate by GCAM sector and technology
 	Bond_BCOC_USA_1990 %>%
 	  rename(BCOC.Technology = Technology) %>%
-	  # Not all items in the BCOC input dataset have GCAM equivalents, so will have some NAs. 
+	  # Not all items in the BCOC input dataset have GCAM equivalents, so will have some NAs.
   	  # This is expected. Use left_join for this reason.
 	  left_join(Bond_bc.oc_tech,by = c("BCOC.Technology")) %>%
 	  group_by(sector, technology) %>%
-	  summarize_if(is.numeric , sum) %>%
+	  summarize(OC_em = sum(OC_em) , BC_em = sum(BC_em)) %>%
 	  filter(!is.na(sector)) %>%
 	  rename(BCOC_agg_sector = sector) %>%
 	  ungroup() ->
 	  USA_bcoc_in_tg_1990
 
 	# Extract year 2000 Energy data
+	# See note below on why year 2000 is used
 	L101.in_EJ_R_en_Si_F_Yh %>%
 	  select(GCAM_region_ID, sector, technology, fuel, `2000`) %>%
  	  rename(Fuel_Use = `2000`) %>%
- 	  filter(GCAM_region_ID == 1) %>%
+ 	  filter(GCAM_region_ID == gcam.USA_CODE) %>%
 	  select(-GCAM_region_ID)  ->
  	  GCAM_USA_energy_2000
 
@@ -86,7 +85,7 @@ module_emissions_L104.bcoc_en_USA_S_T_Y <- function(command, ...) {
     # Aggregate GCAM energy consumption to Bond BCOC categories
  	GCAM_USA_energy_2000 %>%
       # Not all GCAM sectors have energy inputs, so use left_join since not all elements will have a match
-      left_join(BCOC_GCAM_sector_tech,by=c("sector","technology","fuel")) %>%
+      left_join(BCOC_GCAM_sector_tech, by = c("sector","technology","fuel")) %>%
       # Where there is no correspondence remove those rows
       filter(!is.na(BCOC_agg_sector)) %>%
       # Now aggregate to BCOC aggregate sector/tech
@@ -136,7 +135,7 @@ module_emissions_L104.bcoc_en_USA_S_T_Y <- function(command, ...) {
     mutate(oc_em_factor = OC_em / Fuel_Use) %>%
     select(-BC_em, -OC_em, -Fuel_Use) %>%
     rename(sector = BCOC_agg_sector) %>%
-    mutate_all(funs(replace(., is.na(.), 0))) %>%
+    replace_na(list(bc_em_factor=0, oc_em_factor = 0)) %>%
     mutate_all(funs(replace(., is.infinite(.), 0))) ->
     USA_BCOC_Emission_Factors
 
