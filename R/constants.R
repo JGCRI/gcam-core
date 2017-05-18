@@ -82,16 +82,12 @@ MAX_HA_TO_CROPLAND <- 3
 # At present the CO2 emissions inventory from CDIAC stops at 2009
 energy.CDIAC_CO2_HISTORICAL_YEARS <- HISTORICAL_YEARS[HISTORICAL_YEARS < 2010]
 
-<<<<<<< HEAD
 # Constant to select SSP database to use for transportation UCD
 energy.TRN_SSP <- "CORE"
 
 # UCD transportation year to use to compute shares for allocation of energy to mode/technology/fuel within category/fuel
 energy.UCD_EN_YEAR <- 2005
 
-
-=======
->>>>>>> master
 ## ======================================================================
 ## Conversion constants.  The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
 ## ======================================================================
