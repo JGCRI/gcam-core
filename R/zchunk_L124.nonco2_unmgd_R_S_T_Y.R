@@ -68,6 +68,7 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
     EDGAR_gases %>%
       left_join(EDGAR_sector, by = "IPCC") %>%                                          # Add GCAM sector from the sector mapping
       rename(sector = agg_sector) %>%
+      filter(sector %in% c("grassland", "forest")) %>%                                  # Filter for the two sectors we use in this file.
       standardize_iso(col = "ISO_A3") %>%
       change_iso_code('rou', 'rom') %>%                                                 # Switch Romania iso code to its pre-2002 value
       left_join(iso_GCAM_regID, by = "iso") %>%                                         # Map in GCAM regions
