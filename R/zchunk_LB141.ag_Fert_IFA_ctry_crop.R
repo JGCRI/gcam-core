@@ -166,15 +166,17 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
     # consumption estimates below.
     # Joining as-is to L141.LDS_ag_HA_ha leads to several duplications due to multiple countries sharing iso codes.
     # This is incorrect, and inflates the number of rows.
-    # The below pipeline fixes for all but iso = "hrv" corresponding to both Croatia and Yugoslav Republic.
-    # Joining by left_join_keep_first_only then keeps Croatia information only, as in original code.
+    # The below pipeline fixes, now that IFA2002_country information has been added for Yugoslav FSR w/ iso = "hrv".
+    # Some IFA_region information was added to other Yugoslav/iso's when present for corresponding iso's (to allow
+    # the call to unique).
+    # This avoids the use of left_join_keep_first_only in the subsequent pipeline.
     AGLU_ctry %>%
       # take only the isos we need
       filter(iso %in% L141.LDS_ag_HA_ha$iso) %>%
       # keep only the columns we need
       select(iso, IFA2002_country, IFA_region) %>%
-      # keep unique combinations only
-      unique () ->
+      # keep unique
+      unique() ->
       # store in a table to join to L141.LDS_ag_HA_ha
       AGLU_ctry_iso_IFA_LDS
 
@@ -188,10 +190,8 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
       left_join(select(FAO_ag_items_PRODSTAT, GTAP_crop, IFA2002_crop, IFA_commodity), by = c("GTAP_crop")) %>%
       # In Ethiopia, replace unspecified cereals with teff
       mutate(IFA2002_crop = if_else(iso == "eth" & GTAP_crop == "cerealsnes", "Teff", IFA2002_crop)) %>%
-      # add IFA2002_country and IFA_region information
-      # The keep first only correctly selects CROATIA for iso = "hrv".
-      # COULD DO DROP_NA INSTEAD
-      left_join_keep_first_only(AGLU_ctry_iso_IFA_LDS, by = c("iso")) %>%
+      # add IFA2002_country and IFA_region information, keeping NA information for later processing
+      left_join(AGLU_ctry_iso_IFA_LDS, by = c("iso")) %>%
       # join in the fertilizer application rate in N_tha for each iso-GTAPcrop combo from L141.IFA2002_Fert_ktN,
       # keeping NA for later processing
       left_join(select(L141.IFA2002_Fert_ktN, IFA2002_crop, IFA2002_country, N_tha), by = c("IFA2002_crop", "IFA2002_country")) %>%
