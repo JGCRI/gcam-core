@@ -49,7 +49,8 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
     UCD_techs <- get_data(all_data, "energy/mappings/UCD_techs")
     UCD_trn_data <- get_data(all_data,  paste0("energy/UCD_trn_data_",energy.TRN_SSP)) %>%
       # Might want to gather in a different way
-      gather(year, value, `2005`:`2095`)
+      gather(year, value, `2005`:`2095`) %>%
+      mutate(year = as.integer(year))
     L101.in_EJ_ctry_trn_Fi_Yh <- get_data(all_data, "temp-data-inject/L101.in_EJ_ctry_trn_Fi_Yh") %>%
       # temp-data-inject code
       gather(year, value, starts_with("X")) %>%
@@ -66,10 +67,8 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       # temp-data-inject code
       gather(year, value, starts_with("X")) %>%
       mutate(year = as.integer(substr(year,2,5)))
-
     # ===================================================
-    # 2. Perform computations
-    # Part 1: downscaling country-level transportation energy data to UCD transportation technologies"
+    # Part 1: downscaling country-level transportation energy data to UCD transportation technologies
     # NOTE: We are currently aggregating IEA's data on rail and road due to inconsistencies (e.g. no rail in the Middle East)
 
     # First, replace the international shipping data (swapping in EIA for IEA)
@@ -81,14 +80,15 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
                                fuel == "refined liquids" &
                                !is.na(EIA_value), EIA_value, value),
              sector = sub("in_", "", sector)) %>%
-      select(-Country, -GCAM_region_ID, -EIA_value)
+      select(iso, sector, fuel, year, value)
 
     # Need to map sector to UCD_category, calibrated_techs_trn_agg data is too busy
     UCD_category_mapping <- calibrated_techs_trn_agg %>% select(sector, UCD_category) %>% distinct
 
+    # Aggregate to UCD_category in each country/year instead of sector
     L154.in_EJ_ctry_trn_Fi_Yh <- L154.in_EJ_ctry_trn_Fi_Yh %>%
       left_join_error_no_match(UCD_category_mapping, by = "sector") %>%
-      group_by(iso, UCD_category, fuel) %>%
+      group_by(iso, UCD_category, fuel, year) %>%
       summarise(value = sum(value))
 
     # Aggregating UCD transportation database by the general categories used for the IEA transportation data
@@ -98,22 +98,54 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       left_join_error_no_match(UCD_techs, by = c("UCD_sector", "mode", "size.class", "UCD_technology", "UCD_fuel"))
 
     L154.in_PJ_Rucd_trn_Cat_F <- L154.in_PJ_Rucd_trn_m_sz_tech_F %>%
+      # Filtering only to base year for computing shares
       filter(year == energy.UCD_EN_YEAR) %>%
       group_by(UCD_region, UCD_category, fuel) %>%
       summarise(agg = sum(value))
 
     # Match these energy quantities back into the complete table for computation of shares
     L154.in_PJ_Rucd_trn_m_sz_tech_F <- L154.in_PJ_Rucd_trn_m_sz_tech_F %>%
+      filter(year == energy.UCD_EN_YEAR) %>%
       left_join_error_no_match(L154.in_PJ_Rucd_trn_Cat_F, by = c("UCD_region", "UCD_category", "fuel")) %>%
       # If the aggregate is 0 or value is NA, set share to 0, rather than NA
       mutate(UCD_share = if_else(agg == 0 | is.na(value), 0, value/agg))
 
-    #Line 89
+    # Writing out the UC Davis mode/technology/fuel shares within category/fuel at the country level
+    # First, creating a table of desired countries with their UCD regions
+    ctry_iso_region <- tibble::tibble(iso = unique(L101.in_EJ_ctry_trn_Fi_Yh$iso)) %>%
+      left_join_error_no_match(UCD_ctry, by = "iso")
 
-    # NOTE: This code uses vecpaste
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses repeat_and_add_vector
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
+    L154.share_ctry_trn_m_sz_tech_F <- L154.in_PJ_Rucd_trn_m_sz_tech_F %>%
+      repeat_add_columns(ctry_iso_region) %>%
+      filter(UCD_region.x == UCD_region.y) %>%
+      select(iso, UCD_sector, mode, size.class, UCD_technology,
+             UCD_fuel, UCD_category, fuel, UCD_share)
+
+    # Multiplying historical energy by country/category/fuel by shares of country/mode/tech/fuel within country/category/fuel
+    # Need a value for each iso, year, UCD category, and fuel combo, even if not currently in L154.in_EJ_ctry_trn_Fi_Yh
+     UCD_cat_fuel <- L154.share_ctry_trn_m_sz_tech_F %>%
+       select(UCD_category, fuel) %>%
+       distinct
+     iso_year <- L154.in_EJ_ctry_trn_Fi_Yh %>%
+       ungroup %>%
+       select(iso, year) %>%
+       distinct
+
+     L154.in_EJ_ctry_trn_m_sz_tech_F <- UCD_cat_fuel %>%
+       repeat_add_columns(iso_year) %>%
+       left_join(L154.share_ctry_trn_m_sz_tech_F, by = c("UCD_category", "fuel", "iso")) %>%
+       left_join(L154.in_EJ_ctry_trn_Fi_Yh, by = c("UCD_category", "fuel", "iso", "year")) %>%
+       left_join_error_no_match(iso_GCAM_regID %>% select(iso, GCAM_region_ID), by = "iso") %>%
+       # Multiply value by share. Set missing values to 0. These are combinations not available in the data from IEA.
+       mutate(value = if_else(is.na(value), 0, value*UCD_share)) %>%
+       select(iso, UCD_sector, mode, size.class, UCD_technology,
+              UCD_fuel, UCD_category, fuel, GCAM_region_ID, year, value)
+
+     # Aggregating by GCAM region
+     L154.in_EJ_R_trn_m_sz_tech_F <- L154.in_EJ_ctry_trn_m_sz_tech_F %>%
+       group_by(GCAM_region_ID, UCD_sector, mode, size.class, UCD_technology, UCD_fuel, fuel, year) %>%
+       summarise(value = sum(value))
+
     # ===================================================
 
     # Produce outputs
