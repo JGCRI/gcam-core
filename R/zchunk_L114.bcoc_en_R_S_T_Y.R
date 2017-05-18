@@ -16,7 +16,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author GPK May 2017
-#' @export
 module_emissions_L114.bcoc_en_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
@@ -45,7 +44,7 @@ module_emissions_L114.bcoc_en_R_S_T_Y <- function(command, ...) {
     BCOC_drivers <- L101.in_EJ_R_en_Si_F_Yh %>%
       gather(year, energy, -GCAM_region_ID, -sector, -fuel, -technology) %>%
       mutate(year = as.numeric(year)) %>%
-      filter(year == "2000") %>%
+      filter(year == 2000) %>%
       # Repeat by the names of the gases whose default coefficients will be joined in
       repeat_add_columns(tibble(Non.CO2 = c("BC", "OC"))) %>%
       # Join in the sectors and fuels that correspond to the default BC and OC emissions coefs
@@ -86,7 +85,8 @@ module_emissions_L114.bcoc_en_R_S_T_Y <- function(command, ...) {
     BCOC_emissions_RCP <- bind_rows(RCP_BC_2000, RCP_OC_2000) %>%
       gather(RCP_agg_sector, scaled_emissions, -Country, -iso, -Non.CO2) %>%
       mutate(scaled_emissions = scaled_emissions * CONV_KG_TO_TG)
-    # in the old data system, the Bahamas had a missing value for the iso, so their emissions data were dropped
+    # We only want to drop the Bahamas so that the oldnew comparison check works. The RCP_BC_2000 and RCP_OC_2000 files
+    # have been modified from the old data system, in that the "#N/A" for the iso of The Bahamas has been replaced with "bhs".
     if(OLD_DATA_SYSTEM_BEHAVIOR){
       BCOC_emissions_RCP <- subset( BCOC_emissions_RCP, iso != "bhs")
     }
@@ -116,14 +116,14 @@ module_emissions_L114.bcoc_en_R_S_T_Y <- function(command, ...) {
 
     # Compile energy consumption by the corresponding technologies in order to compute emissions coefficients
     BCOC_drivers_GCAMtech <- BCOC_drivers %>%
-      filter(Non.CO2 == "BC") %>% #we only need one of the two
+      filter(Non.CO2 == "BC") %>% # we only need one of the two
       left_join_keep_first_only(select(GCAM_sector_tech, sector, fuel, technology, supplysector, subsector, stub.technology),
                                 by = c("sector", "fuel", "technology")) %>%
       group_by(GCAM_region_ID, supplysector, subsector, stub.technology) %>%
       summarise(energy = sum(energy)) %>%
       ungroup()
 
-    #Compute the emissions coefficients for the year 2000
+    # Compute the emissions coefficients for the year 2000
     L114.bcoc_tgej_R_en_S_F_2000 <- BCOC_scaled_emissions %>%
       left_join_error_no_match(BCOC_drivers_GCAMtech,
                                 by = c("GCAM_region_ID", "supplysector", "subsector", "stub.technology")) %>%
@@ -132,7 +132,7 @@ module_emissions_L114.bcoc_en_R_S_T_Y <- function(command, ...) {
       mutate(year = 2000) %>%
       select(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, year, emissions.factor) %>%
       spread(year, emissions.factor)
-      #Document for output
+      # Document for output
     L114.bcoc_tgej_R_en_S_F_2000 %>%
       add_title("BC / OC emissions factors for energy technologies by GCAM region / sector / technology / 2000") %>%
       add_units("Tg / EJ (kg/GJ)") %>%
