@@ -172,7 +172,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
     # take country level animal production data:
     L107.an_Prod_Mt_ctry_C_Sys_Fd_Y %>%
       # add in the GCAM region id corresponding to the country:
-      mutate(GCAM_region_ID =  left_join_error_no_match(., iso_GCAM_regID, by = c("iso"))$GCAM_region_ID) %>%
+      mutate(GCAM_region_ID =  left_join_error_no_match(., iso_GCAM_regID, by = c("iso"))[['GCAM_region_ID']]) %>%
       # drop the country:
       select(-iso) %>%
       # group unique identifiers:
@@ -185,7 +185,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
     # take country level feed consumption data:
     L107.an_Feed_Mt_ctry_C_Sys_Fd_Y %>%
       # add in the GCAM region id corresponding to the country:
-      mutate(GCAM_region_ID =  left_join_error_no_match(., iso_GCAM_regID, by = c("iso"))$GCAM_region_ID) %>%
+      mutate(GCAM_region_ID =  left_join_error_no_match(., iso_GCAM_regID, by = c("iso"))[['GCAM_region_ID']]) %>%
       # drop the country:
       select(-iso) %>%
       # group unique identifiers:
