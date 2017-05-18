@@ -74,7 +74,7 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
       L115.nh3_tg_R_G_sec_yr_tHyb
 
 
-    # Compute scalers for EDGAR totals look i made changes
+    # Compute scalers for EDGAR totals
 
 
     # Rename EDGAR variable names
