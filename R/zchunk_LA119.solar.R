@@ -22,6 +22,9 @@ module_gcam.usa_LA119.Solar <- function(command, ...) {
              "L119.CapFacScaler_CSP_state"))
   } else if(command == driver.MAKE) {
 
+    fuel <- value <- State <- . <- value.x <- value.y <- sector <- scaler <-
+        state <- state_name <- NULL     # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

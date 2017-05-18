@@ -30,6 +30,12 @@ module_energy_LA124.heat <- function(command, ...) {
              "L124.heatoutratio_R_elec_F_tech_Yh"))
   } else if(command == driver.MAKE) {
 
+    ## silence package check
+    year <- value <- fuel <- sector <- GCAM_region_ID <- has_district_heat <-
+        heat <- supplysector <- subsector <- technology <- minicam.energy.input <- NULL
+    IO_Coef <- value_heatfromelec <- dist_heat <- elec_heat <- sector.y <-
+        norm_val <- mult_val <- heat_val <- NULL
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

@@ -26,6 +26,10 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
              "L171.ag_rfdEcYield_kgm2_R_C_Y_GLU"))
   } else if(command == driver.MAKE) {
 
+    year <- value <- GCAM_region_ID <- GCAM_commodity <- GLU <- irrHA_frac <-
+        irr.harvarea <- rfd_share <- rfd.harvarea <- prod.irr <- irr.yld <-
+        prod.rfd <- rfd.yld <- NULL     # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

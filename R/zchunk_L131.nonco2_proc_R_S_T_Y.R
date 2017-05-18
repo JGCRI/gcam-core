@@ -29,6 +29,13 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
     return(c("L131.nonco2_tg_R_prc_S_S_Yh"))
   } else if(command == driver.MAKE) {
 
+    fuel <- EPA_Source_Category_Raw <- Source_Category <- Non.CO2 <- value <-
+        sector <- subsector <- supplysector <- stub.technology <-
+        EPA_agg_sector <- EPA_agg_fuel_ghg <- EDGAR_agg_sector <- x <-
+        tech_emissions <- tech_emissions.y <- tech_emissions.x <- sector_emissions <- year <-
+        agg_sector <- ISO_A3 <- GCAM_region_ID <- EDGAR_emissions <-
+        tech_share <- input.emissions <- NULL # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs, set to long format and change column names where needed

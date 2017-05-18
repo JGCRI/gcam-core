@@ -27,6 +27,9 @@ module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR <- function(command, ...) {
              "L1211.ag_irrShare_R_C_Y_GLU_irr"))
   } else if(command == driver.MAKE) {
 
+    year <- value <- GCAM_region_ID <- GCAM_commodity <- GLU <- Non.CO2 <-
+        value.x <- value.y <- i.value <- NULL # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
