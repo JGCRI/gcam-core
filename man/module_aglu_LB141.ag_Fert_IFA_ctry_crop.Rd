@@ -18,11 +18,14 @@ the generated outputs: \code{L141.ag_Fert_Cons_MtN_ctry_crop}. The corresponding
 original data system was \code{LB141.ag_Fert_IFA_ctry_crop.R} (aglu level1).
 }
 \description{
-Briefly describe what this chunk does.
+This chunk reconciles disparate IFA fertilizer consumption data to calculate fertilizer consumption (demand) for each GTAP country/crop.
 }
 \details{
-Describe in detail what this chunk does.
+Multiple harvested area data sources (LDS, FAO) are reconciled and used with bottom-up fertilizer consumption data from
+IFA2002 to calculate fertilizer demand for each country and crop.
+Top down estimates are calculated using IFA fertilizer data, and the top down estimates are used to fill in missing data from
+the bottom up estimates and scale the bottom-up estimates, making the final output.
 }
 \author{
-YourInitials CurrentMonthName 2017
+ACS May 2017
 }
