@@ -1,4 +1,4 @@
-#' module_energy_LA121.oil
+#' module_gcam.usa_LA1321.Cement
 #'
 #' Briefly describe what this chunk does.
 #'
@@ -6,41 +6,33 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L121.in_EJ_R_unoil_F_Yh}, \code{L121.in_EJ_R_TPES_crude_Yh}, \code{L121.in_EJ_R_TPES_unoil_Yh}. The corresponding file in the
-#' original data system was \code{LA121.oil.R} (energy level1).
+#' the generated outputs: \code{L1321.out_Mt_state_cement_Yh}, \code{L1321.IO_GJkg_state_cement_F_Yh}, \code{L1321.in_EJ_state_cement_F_Y}. The corresponding file in the
+#' original data system was \code{LA1321.Cement.R} (gcam-usa level1).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_energy_LA121.oil_DISABLED <- function(command, ...) {
+module_gcam.usa_LA1321.Cement_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "energy/calibrated_techs",
-             FILE = "energy/IEA_product_rsrc",
-             FILE = "energy/A21.unoil_demandshares",
-             FILE = "energy/A21.globaltech_coef",
-             FILE = "temp-data-inject/L100.IEA_en_bal_ctry_hist",
-             "L1011.en_bal_EJ_R_Si_Fi_Yh",
-             "L111.Prod_EJ_R_F_Yh"))
+    return(c(FILE = "gcam-usa/Census_ind_VoS_state",
+             FILE = "temp-data-inject/L1321.out_Mt_R_cement_Yh",
+             FILE = "temp-data-inject/L1321.IO_GJkg_R_cement_F_Yh",
+             FILE = "temp-data-inject/L1321.in_EJ_R_cement_F_Y"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L121.in_EJ_R_unoil_F_Yh",
-             "L121.in_EJ_R_TPES_crude_Yh",
-             "L121.in_EJ_R_TPES_unoil_Yh"))
+    return(c("L1321.out_Mt_state_cement_Yh",
+             "L1321.IO_GJkg_state_cement_F_Yh",
+             "L1321.in_EJ_state_cement_F_Y"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
-    IEA_product_rsrc <- get_data(all_data, "energy/IEA_product_rsrc")
-    A21.unoil_demandshares <- get_data(all_data, "energy/A21.unoil_demandshares")
-    A21.globaltech_coef <- get_data(all_data, "energy/A21.globaltech_coef")
-    L100.IEA_en_bal_ctry_hist <- get_data(all_data, "temp-data-inject/L100.IEA_en_bal_ctry_hist")
-    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
-    L111.Prod_EJ_R_F_Yh <- get_data(all_data, "L111.Prod_EJ_R_F_Yh")
+    Census_ind_VoS_state <- get_data(all_data, "gcam-usa/Census_ind_VoS_state")
+    L1321.out_Mt_R_cement_Yh <- get_data(all_data, "temp-data-inject/L1321.out_Mt_R_cement_Yh")
+    L1321.IO_GJkg_R_cement_F_Yh <- get_data(all_data, "temp-data-inject/L1321.IO_GJkg_R_cement_F_Yh")
+    L1321.in_EJ_R_cement_F_Y <- get_data(all_data, "temp-data-inject/L1321.in_EJ_R_cement_F_Y")
 
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
@@ -59,8 +51,6 @@ module_energy_LA121.oil_DISABLED <- function(command, ...) {
     #
     # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
     # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses vecpaste
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # NOTE: This code uses repeat_and_add_vector
     # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # ===================================================
@@ -75,33 +65,35 @@ module_energy_LA121.oil_DISABLED <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L121.in_EJ_R_unoil_F_Yh") %>%
+      add_legacy_name("L1321.out_Mt_state_cement_Yh") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L121.in_EJ_R_unoil_F_Yh
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L121.in_EJ_R_TPES_crude_Yh") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L121.in_EJ_R_TPES_crude_Yh
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L121.in_EJ_R_TPES_unoil_Yh") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L121.in_EJ_R_TPES_unoil_Yh
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L1321.out_Mt_state_cement_Yh
 
-    return_data(L121.in_EJ_R_unoil_F_Yh, L121.in_EJ_R_TPES_crude_Yh, L121.in_EJ_R_TPES_unoil_Yh)
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L1321.IO_GJkg_state_cement_F_Yh") %>%
+      add_precursors("precursor1", "precursor2", "etc") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L1321.IO_GJkg_state_cement_F_Yh
+
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L1321.in_EJ_state_cement_F_Y") %>%
+      add_precursors("precursor1", "precursor2", "etc") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L1321.in_EJ_state_cement_F_Y
+
+    return_data(L1321.out_Mt_state_cement_Yh, L1321.IO_GJkg_state_cement_F_Yh, L1321.in_EJ_state_cement_F_Y)
   } else {
     stop("Unknown command")
   }
