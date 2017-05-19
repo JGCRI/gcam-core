@@ -45,10 +45,10 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
 
     # Perform Calculations
 
-    # Lines 65-69 in original file
-    # Convert IFA fertilizer consumption to long form and convert units to Mt of N consumed.
-    # This is top down fertilizer consumption data, to be reconciled with bottom up consumption
-    # estimate using IFA2002 fertilizer consumption, and LDS, FAO and Monfreda harvested area data.
+    # Convert IFA (Heffer 2009) fertilizer consumption to long form and convert units to Mt of N consumed.
+    # This is a top-down fertilizer consumption inventory by 24 large countries + regions and commodity
+    # classes for a 2006-2007 base year, to be supplemented with bottom-up application rates estimated by
+    # IFA2002, multiplied by LDS/Monfreda harvested area to get consumption quantities.
     IFA_Fert_ktN %>%
       filter(Country != "World Total") %>%
       gather(IFA_commodity, value, -Country) %>%
@@ -57,24 +57,21 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
       L141.IFA_Fert_ktN
 
 
-    # Lines 37-60 in original file
-    # Bring together disparate LDS and FAO harvested area data in order to calculate an FAO_LDS scaler for
-    # each region-commodity combination.
+    # Bring together LDS/Monfreda and FAO harvested area by country and crop, in order to calculate an FAO_LDS
+    # scaler for each region-commodity combination.
     # This region-commodity level scaler is used to scale the LDS harvested area data given at the
     # isoCountry-GLU-GTAPcrop level. This scaled harvested area is then multiplied by Fert application rates
     # and summed to get a bottom-up estimate of fertilizer demands at the iso-GTAPcrop level.
     #
-    # old comment: printlog( "Briefly reconciling Monfreda/LDS and FAO datasets for the 1998-2002 time period" )
-    #              This part of the methods is sensitive to any discrepancies between the two data sources, as the Monfreda/LDS
-    #              based data are used to estimate fertilizer by crop and country, and then the actual fertilizer IO coefs are derived
-    #              using FAO Prodstat data. For most crops this is OK, but some differ by 10-50 and can cause fertilizer costs well
-    #              in excess of crop production revenues.
-    #              printlog( "Using harvested area totals by GCAM region and commodity as the basis for scaling back LDS harvested area by country, GLU, and GTAP crop" )
-    #
-    #
+    # The reason for computing and applying this scaler is that Monfreda/LDS harvested area are used to downscale
+    # fertilizer consumption quantities from the inventories, but GCAM's area and production are (downscaled) from FAO's
+    # land area and production quantities. Since the Monfreda/LDS data are constructed to be consistent with FAO national
+    # data, this shouldn't be an issue, however for some crops, particularly fodder crops, there are significant
+    # discrepancies (up to 50x), which if unaddressed, would return high fertilizer IO coefs and therefore negative profit rates.
+
     # First, calculate the FAO_LDS scaler for each region-commodity combination
     # Take the FAO Harvested area data in table L101.ag_HA_bm2_R_C_Y and get the average value for each
-    # region-commodity combination over the LDS years = 1998-2002 default.
+    # region-commodity combination over the Monfreda/LDS years = 1998-2002 default.
     # Then Take the LDS harvested area data, L102.ag_HA_bm2_R_C_GLU, sum to the region-commodity level,
     # join it to the averaged FAO data and compute an FAO_LDS scaler as FAO/LDS:
     #
@@ -97,7 +94,6 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
       L141.FAO_LDS
 
     # Second, use the region-commodity scalers to scale LDS harvested area data at the iso-GLU-GTAPcrop level.
-    # old comment: Match the GCAM region and commodity class into the LDS dataset, and multiply by the scaler above
     #
     # Take LDS harvested area data at the iso-GLU-GTAPcrop level, L100.LDS_ag_HA_ha, join in the GCAM_region_ID info for
     # each iso, join in the GCAM_commodity info for each GTAPcrop, join the FAO_LDS scaler calculated in the previous
@@ -117,17 +113,15 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
       # store in an LDS harvested area table
       L141.LDS_ag_HA_ha
 
-
-
-    # printlog( "Step 1: Modify IFA global fertilizer consumption by commodity and region to more detailed inventory with partial coverage" )
-    # Lines 70-79 in original file
+    # Step 1: Supplement IFA (Heffer 2009) global fertilizer consumption by commodity and region to more detailed inventory
+    # with partial coverage. The purpose of this step is to improve the specificity of both crops and regions, where possible.
     # This ultimately leads to the bottom-up estimate of fertilizer consumption at the iso-GTAPcrop level, using scaled
     # LDS data from L141.LDS_ag_HA_ha, IFA2002 fertlizer consumption data, and the top down consumption data in L141.IFA_Fert_ktN.
     #
     # Calculate a bottom up consumption RATE of N in units of tons/hectare for each IFA2002 country and crop.
-    # There is a time component of IFA2002 that is handeled by taking the max values over time for each country-crop.
+    # There is a time component of IFA2002 that is handled by taking the max values over time for each country-crop.
     # specifically, the rate is calculated first and THEN the max is taken, rather than taking the rate as
-    # max N_kt / max Area_ha,which has the possibility of cancellation.
+    # max N_kt / max Area_ha (each of which could be from different years).
     IFA2002_Fert_ktN %>%
       # calculate nitrogen consumption in tons per hectare N_tha = N_kt / AREA_thousHa
       mutate(N_tha = N_kt / AREA_thousHa) %>%
@@ -140,25 +134,21 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
       # store in a table of ferlizer application rates for each iso-GTAPcrop combo
       L141.IFA2002_Fert_ktN
 
-    # Lines 80 - 119 in original file
-    # Calculate fertilizer demand coefficients for 97 countries / 106 crops where available
-    # Calculate fertilizer demand = harvested area * fertilizer application rate for each country-crop.
-    #
-    # old comment: Multiply harvested area by application rates to get a bottom-up estimate of fertilizer demands
-    # printlog( "Compiling specific fertilizer demand coefficients for the 87 countries / 106 crops where available" )
-    #
-    # To do so, take scaled LDS harvested area data at the country-crop level, L141.LDS_ag_HA_ha,
-    # sum to iso and GTAPcrop level, join IFA2002_crop  and IFA_commodity information from the FAO_PRODSTAT table,
-    # adjust unspecified cereals in Ethiopia, process and join IFA2002_country information from AGLU_ctry (processed first),
-    # join in the application rate in N_tha from L141.IFA2002_Fert_ktN,
-    # join in IFA_commodity information from FAO_PRODSTAT table
+    # Calculate fertilizer demand coefficients for 87 countries / 106 crops where available
+    #  Fertilizer demand = harvested area * fertilizer application rate for each country-crop.
+    #  Use FAO-scaled Monfreda/LDS harvested area by country-crop level, L141.LDS_ag_HA_ha,
+    #  sum to iso and GTAPcrop level, join IFA2002_crop and IFA_commodity (i.e., Heffer 2009) information.
+    #  Assign "unspecified cereals" in Ethiopia to teff,
+    #  join IFA2002_country information from AGLU_ctry (processed first),
+    #  join in the N application rate (N_tha = tN/ha) from L141.IFA2002_Fert_ktN,
+    #  join in IFA_commodity information from FAO_PRODSTAT table
 
     # process ALGU_ctry
     # we only need iso, IFA2002_country, and IFA_region to join to L141.LDS_ag_HA_ha when calculating bottom-up
     # consumption estimates below.
     # Joining as-is to L141.LDS_ag_HA_ha leads to several duplications due to multiple countries sharing iso codes.
     # This is incorrect, and inflates the number of rows.
-    # The below pipeline fixes, now that IFA2002_country information has been added for Yugoslav FSR w/ iso = "hrv".
+    # The below pipeline fixes, now that IFA2002_country information has been added for Yugoslav SFR w/ iso = "hrv".
     # Some IFA_region information was added to other Yugoslav/iso's when present for corresponding iso's (to allow
     # the call to unique).
     # This avoids the use of left_join_keep_first_only in the subsequent pipeline.
@@ -182,7 +172,7 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
       mutate(IFA2002_crop = if_else(iso == "eth" & GTAP_crop == "cerealsnes", "Teff", IFA2002_crop)) %>%
       # add IFA2002_country and IFA_region information, keeping NA information for later processing
       left_join(AGLU_ctry_iso_IFA_LDS, by = "iso") %>%
-      # join in the fertilizer application rate in N_tha for each iso-GTAPcrop combo from L141.IFA2002_Fert_ktN,
+      # join in the fertilizer application rate in N_tha (tN/ha) for each iso-GTAPcQrop combo from L141.IFA2002_Fert_ktN,
       # keeping NA for later processing
       left_join(select(L141.IFA2002_Fert_ktN, IFA2002_crop, IFA2002_country, N_tha), by = c("IFA2002_crop", "IFA2002_country")) %>%
       rename(IFA2002_N_tha = N_tha) %>%
@@ -192,7 +182,7 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
       L141.IFA_Fert_Cons_MtN_ctry_crop
 
     # Take the above-processed country-crop specific Fertilizer information, aggregate to IFAregion-IFAcommodity
-    # and use the top down estimates in table L141.IFA_Fert_ktN to calculate a default fertilizer demand for
+    # and use the top down estimates in table L141.IFA_Fert_ktN to calculate a default fertilizer consumption rate for
     # later use to fill in missing fertilizer demands from the bottom up estimate.
     L141.IFA_Fert_Cons_MtN_ctry_crop  %>%
       # aggregate harvested area to IFA_region-IFA_commodity level
@@ -209,7 +199,7 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
       # store in a table by IFAregion and IFAcommodity:
       L141.HA_ha_Rifa_Cifa
 
-    # Use the bottom up country crop table of harvested area and N application rate, L141.IFA_Fert_Cons_MtN_ctry_crop,
+    # Use the bottom-up country crop table of harvested area and N application rate, L141.IFA_Fert_Cons_MtN_ctry_crop,
     # to calculate specific bottom up fertilizer demand = harvested area * application rate.
     # When such information is missing from the bottom up tables, use the default estimate from the top-down estimate
     # in table L141.HA_ha_Rifa_Cifa.
@@ -226,8 +216,7 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
       L141.IFA_Fert_Cons_MtN_ctry_crop
 
 
-    # printlog( "Step 2: Re-scale fertilizer consumption estimates so that totals match the IFA top-down inventory" )
-    # Lines 125-141 in original file
+    # Step 2: Re-scale fertilizer consumption estimates so that totals match the IFA top-down inventory
     # Reconcile top down consumption of N (table L141.IFA_Fert_ktN, based on input IFA_Fert_ktN) with the bottom up
     # consumption of N (table L141.IFA_Fert_Cons_MtN_ctry_crop, based on input IFA2002_Fert_ktN, harvested area data
     # from multiple sources, and top-down estimates where necessary).
