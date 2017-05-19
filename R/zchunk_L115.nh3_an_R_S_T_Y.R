@@ -25,6 +25,13 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
     return(c("L115.nh3_tg_R_an_C_Sys_Fd_Yh"))
   } else if(command == driver.MAKE) {
 
+    EDGAR_agg_sector <- . <- EDGAR_emissions <- GCAM_commodity <- GCAM_region_ID <- IPCC <-
+      `IPCC-Annex` <- IPCC_Annex <- IPCC_description.x <- IPCC_description.y <- ISO_A3 <-
+      Name <- Non.CO2 <- Region_GHG_Sector_Yr <- World <- Region <- World_Region <-
+      agg_sector <- commodity_system_feed <- country_name <- emfact <- emissions <- feed <-
+      fuel <- hybrid_emissions <- iso <- production <- region_GCAM3 <- scaler <- sector <-
+      technology <- total_hybrid_emissions <- value <- year <- NULL  # silence package check notes
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
@@ -60,8 +67,8 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
 
     # Match hybrid emissions with GCAM technology by region, system, and fuel
     left_join_error_no_match(unite(L115.nh3_tg_R_C_yr_Sys_Fd_pro_G_fu_emf_hyb, col = "commodity_system_feed", c(GCAM_commodity, system, feed), sep = "~"),
-              unite(GCAM_sector_tech, col = "commodity_system_feed", c(sector, fuel, technology), sep = "~"),
-              by = c("commodity_system_feed")) %>%
+                             unite(GCAM_sector_tech, col = "commodity_system_feed", c(sector, fuel, technology), sep = "~"),
+                             by = c("commodity_system_feed")) %>%
       separate(commodity_system_feed, c("GCAM_commodity", "system", "feed"), sep = "~") %>%
       select(GCAM_region_ID, GCAM_commodity, system, feed, year, production, Non.CO2, emfact, hybrid_emissions, EDGAR_agg_sector) ->
       L115.nh3_tg_R_C_Sys_Fd_yr_pro_G_emf_hyb_sec
@@ -132,7 +139,7 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
     # Rename columns and reshape data
     L115.nh3_tg_R_G_sec_yr_C_Sys_Fd_pro_emf_hy_tHy_ED_sc_em %>%
       select(GCAM_region_ID, Non.CO2, supplysector = GCAM_commodity, subsector = system, stub.technology = feed, year, value = emissions) ->
-    L115.nh3_tg_R_G_Sup_sub_Tec_yr_v_final
+      L115.nh3_tg_R_G_Sup_sub_Tec_yr_v_final
 
     # ===================================================
 
