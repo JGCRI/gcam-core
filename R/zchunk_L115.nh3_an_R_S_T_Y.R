@@ -90,8 +90,8 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
       L115.EDGAR_G_sec
 
     # Convert from EDGAR iso to GCAM_region_ID
-    L115.EDGAR_G_sec %>%
-      mutate( iso = tolower( ISO_A3 ), ISO_A3 = NULL ) %>%
+    L115.EDGAR %>%
+      mutate(iso = tolower(ISO_A3), ISO_A3 = NULL) %>%
       change_iso_code('rou', 'rom') %>%
       left_join_error_no_match(iso_GCAM_regID, by = "iso") ->
       L115.EDGAR_GCAM
@@ -112,8 +112,8 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
       unite(col = "Region_GHG_Sector_Yr", c(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year), sep = "~") %>%
       left_join_error_no_match_error_no_match(unite(L115.EDGAR_R_G_sec_yr_v, col = "Region_GHG_Sector_Yr", c(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year), sep = "~"), by = "Region_GHG_Sector_Yr") %>%
       rename(EDGAR_emissions = value) %>%
-      separate(Region_GHG_Sector_Yr, c("GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector", "year"), sep = "~") %>%
-      mutate( ., scaler = EDGAR_emissions / total_hybrid_emissions / 1000.0 ) ->
+      tidyr::separate(Region_GHG_Sector_Yr, c("GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector", "year"), sep = "~") %>%
+      mutate(., scaler = EDGAR_emissions / total_hybrid_emissions / 1000.0) ->
       L115.emiss_scaler
 
 
@@ -143,7 +143,7 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
       add_comments("Annual animal NH3 emissions is computed using EPA emissions factors and FAO animal production.") %>%
       add_comments("EPA emissions are scaled by technology to match EDGAR totals.") %>%
       add_legacy_name("L115.nh3_tg_R_an_C_Sys_Fd_Yh") %>%
-      add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_NH3",
+      add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_sector",
                      "emissions/mappings/GCAM_sector_tech", "L107.an_Prod_Mt_R_C_Sys_Fd_Y", "L105.nh3_tgmt_USA_an_Yh",
                      "emissions/EDGAR/EDGAR_NH3") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
@@ -154,5 +154,3 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
     stop("Unknown command")
   }
 }
-
-
