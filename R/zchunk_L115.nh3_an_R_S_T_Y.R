@@ -27,7 +27,7 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
 
     EDGAR_agg_sector <- . <- EDGAR_emissions <- GCAM_commodity <- GCAM_region_ID <- IPCC <-
       `IPCC-Annex` <- IPCC_Annex <- IPCC_description.x <- IPCC_description.y <- ISO_A3 <-
-      Name <- Non.CO2 <- Region_GHG_Sector_Yr <- World <- Region <- World_Region <-
+      Name <- Non.CO2 <- Region_GHG_Sector_Yr <- `World Region` <- World_Region <-
       agg_sector <- commodity_system_feed <- country_name <- emfact <- emissions <- feed <-
       fuel <- hybrid_emissions <- iso <- production <- region_GCAM3 <- scaler <- sector <-
       technology <- total_hybrid_emissions <- value <- year <- NULL  # silence package check notes
