@@ -89,6 +89,9 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 #' @export
 #' @author BBL
 driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE, outdir = OUTPUTS_DIR, xmldir = XML_DIR) {
+
+  input <- from_file <- name <- NULL    # silence notes from package check.
+
   assert_that(is.logical(write_outputs))
 
   chunklist <- find_chunks()
@@ -182,6 +185,9 @@ driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE,
 #'
 #' @return Number of temporary data objects being used inappropriately.
 warn_data_injects <- function() {
+
+  name <- input <- base_input <- upstream_chunk <- output <- NULL
+                                        # silence package check.
 
   # Are any chunks are using temp-data-inject data that are also available to them through the data system?
   ci <- chunk_inputs(find_chunks(include_disabled = FALSE)$name)

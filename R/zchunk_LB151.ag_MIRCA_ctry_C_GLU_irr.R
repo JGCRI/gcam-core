@@ -33,6 +33,12 @@ module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr <- function(command, ...) {
              "L151.ag_rfdProd_t_ctry_crop"))
   } else if(command == driver.MAKE) {
 
+    MIRCA_crop <- value <- HA_irr <- HA_rfd <- iso <- GLU <- irrshareHA <-
+        avg_irrshare <- totHA <- irrHA <- rfdHA <- CROSIT_country_ID <-
+        GTAP_crop <- CROSIT_cropID <- country_ID <- crop_ID <-
+        Yield_kgHa_irrigated <- Yield_kgHa_rainfed <- year <- yieldratio <-
+        irrshareProd <- rfdProd <- irrProd <- NULL
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

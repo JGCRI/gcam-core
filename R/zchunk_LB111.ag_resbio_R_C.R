@@ -24,6 +24,9 @@ module_aglu_LB111.ag_resbio_R_C <- function(command, ...) {
     return(c("L111.ag_resbio_R_C"))
   } else if(command == driver.MAKE) {
 
+    iso <- item <- year <- value <- resbio_params <- GCAM_region_ID <-
+        GCAM_commodity <- NULL          # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

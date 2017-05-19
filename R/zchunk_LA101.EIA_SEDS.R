@@ -28,6 +28,10 @@ module_gcam.usa_LA101.EIA_SEDS <- function(command, ...) {
              "L101.inEIA_EJ_state_S_F"))
   } else if(command == driver.MAKE) {
 
+    year <- value <- Data_Status <- State <- MSN <- GCAM_fuel <- GCAM_sector <-
+        state <- sector <- fuel <- conv_Bbtu_EJ <- EIA_fuel <- EIA_sector <-
+        description.x <- description.y <- NULL # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

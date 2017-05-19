@@ -27,6 +27,9 @@ module_aglu_LA102.ag_LDS_R_C_GLU <- function(command, ...) {
              "L102.ag_Prod_Mt_R_C_GLU"))
   } else if(command == driver.MAKE) {
 
+    country_name <- region_GCAM3 <- . <- GCAM_region_ID <- GCAM_commodity <-
+        GLU <- value <- NULL            # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

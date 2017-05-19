@@ -30,6 +30,9 @@ module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
              "L120.LC_bm2_ctry_LTpast_GLU"))
   } else if(command == driver.MAKE) {
 
+    iso <- GCAM_region_ID <- Land_Type <- year <- GLU <- Area_bm2 <- LT_HYDE <-
+        land_code <- LT_SAGE <- NULL    # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

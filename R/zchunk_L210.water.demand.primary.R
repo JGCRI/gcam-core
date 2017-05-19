@@ -25,6 +25,9 @@ module_water_L210.water.demand.primary <- function(command, ...) {
     return(c("L210.TechCoef"))
   } else if(command == driver.MAKE) {
 
+    supplysector <- subsector <- technology <- . <- water_sector <- water_type <- region <-
+      year <- minicam.energy.input <- coefficient <- market.name <- NULL  # silence notes on package check
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

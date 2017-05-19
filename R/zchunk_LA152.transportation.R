@@ -22,6 +22,9 @@ module_energy_LA152.transportation <- function(command, ...) {
     return(c("L152.in_EJ_R_trn_F_Yh"))
   } else if(command == driver.MAKE) {
 
+    sector <- sector_agg <- fuel <- trn <- year <- GCAM_region_ID <- value <-
+        NULL                            # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

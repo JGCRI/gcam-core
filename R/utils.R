@@ -64,6 +64,9 @@ load_csv_files <- function(filenames, optionals, quiet = FALSE, ...) {
 #' by \code{\link{parse_csv_header}}.
 #' @return Extracted label information, as a character vector
 extract_header_info <- function(header_lines, label, filename, required = FALSE, multiline = FALSE) {
+
+  . <- NULL                             # silence notes on package check.
+
   assert_that(is.character(header_lines))
   assert_that(is.character(label))
   assert_that(is.character(filename))
@@ -316,6 +319,9 @@ protect_float <- function(df) {
 #' @importFrom magrittr "%>%"
 #' @export
 find_chunks <- function(pattern = "^module_[a-zA-Z\\.]*_.*$", include_disabled = FALSE) {
+
+  . <- name <- disabled <- x <- NULL    # silence notes on package check.
+
   assertthat::assert_that(is.character(pattern))
 
   ls(name = parent.env(environment()), pattern = pattern) %>%
@@ -516,6 +522,7 @@ run_xml_conversion <- make_run_xml_conversion()
 #' @return Nx2 Character matrix of flagged lines and the test that tripped them
 #' (empty vector, if none)
 #' @author RL 19 Apr 2017
+#' @importFrom utils capture.output
 screen_forbidden <- function(fn) {
   forbidden <- c("(?<!error_no_)match", "ifelse",
                  "melt", "cast",
