@@ -68,6 +68,8 @@ module_water_L2233.electricity_water_DISABLED <- function(command, ...) {
              "L2233.InputEmissCoeff_fut_elecPassthru"))
   } else if(command == driver.MAKE) {
 
+    curr_table <- NULL                  # silence package checks
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

@@ -25,6 +25,10 @@ module_water_L110.water.demand.primary <- function(command, ...) {
     return(c("L110.water_demand_primary_R_S_W_m3_GJ"))
   } else if(command == driver.MAKE) {
 
+    fuel <- supplysector <- water.coefficient.m3.per.TJ <- region <-
+        GCAM_region_ID <- region_GCAM3 <- fresh <- coefficient_WC <- cons_fr <-
+        cal <- water_type <- coefficient <- sal <- NULL # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

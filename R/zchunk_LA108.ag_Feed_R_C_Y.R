@@ -29,6 +29,11 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
              "L108.ag_NetExp_Mt_R_FodderHerb_Y"))
   } else if(command == driver.MAKE) {
 
+    iso <- item <- year <- value <- GCAM_commodity <- GCAM_region_ID <- feed <-
+        Feedfrac <- FodderHerb <- FodderHerb_Residue <- residual <-
+            total_residual <- share <- Residue <- PastFodderGrass_Demand <-
+                Production <- Feed <- OtherUses <- NULL # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
