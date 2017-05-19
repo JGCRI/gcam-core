@@ -132,12 +132,12 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
     # Rename columns and reshape data
     L115.nh3_tg_R_G_sec_yr_C_Sys_Fd_pro_emf_hy_tHy_ED_sc_em %>%
       select(GCAM_region_ID, Non.CO2, supplysector = GCAM_commodity, subsector = system, stub.technology = feed, year, value = emissions) ->
-    L115.nh3_tg_R_G_Sup_sub_Tec_yr_v
+    L115.nh3_tg_R_G_Sup_sub_Tec_yr_v_final
 
     # ===================================================
 
     # Produce outputs
-    L115.nh3_tg_R_G_Sup_sub_Tec_yr_v %>%
+    L115.nh3_tg_R_G_Sup_sub_Tec_yr_v_final %>%
       add_title(" Animal NH3 emissions by GCAM region / sector / technology / historical year") %>%
       add_units("Tg") %>%
       add_comments("Annual animal NH3 emissions is computed using EPA emissions factors and FAO animal production.") %>%
