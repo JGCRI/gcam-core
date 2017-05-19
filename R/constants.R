@@ -34,6 +34,7 @@ gcam.USA_CODE <- 1
 # aglu constants
 AGLU_HISTORICAL_YEARS <- 1971:2010
 FAO_HISTORICAL_YEARS <- 1961:2011
+FAO_LDS_YEARS <- 1998:2002
 MODEL_PRICE_YEARS <- 2001:2005
 MODEL_COST_YEARS <- 2001:2005
 LAND_HISTORY_YEARS <- c(1700, 1750, 1800, 1850, 1900, 1950, 1975)
@@ -98,6 +99,8 @@ CONV_THA_KGM2 <- 0.1   # tons C/ha -> kg C/m2
 CONV_GG_TG <- 0.001 # gigagrams to tegagrams
 CONV_TST_TG <- 0.000907 # thousand short tons to Tg
 CONV_KG_TO_TG <- 1e-9
+CONV_KT_MT <- 0.001 # kt to Mt
+CONV_T_MT <- 1e-6 # t to Mt
 
 # Cubic meters (m3) to billion cubic meters (bm3)
 CONV_M3_BM3 <- 1e-09
