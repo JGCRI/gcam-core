@@ -22,6 +22,11 @@ module_energy_LA117.tradbio <- function(command, ...) {
     return(c("L117.RsrcCurves_EJ_R_tradbio"))
   } else if(command == driver.MAKE) {
 
+    ## silence package check.
+    year <- value <- GCAM_region_ID <- sector <- fuel <- available <-
+        resource <- subresource <- grade <- extractioncost <- NULL
+
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

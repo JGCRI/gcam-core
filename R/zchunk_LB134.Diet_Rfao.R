@@ -41,6 +41,12 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
              "L134.pcFood_kcald_R_Dmnd_Y_ssp5"))
   } else if(command == driver.MAKE) {
 
+    year <- value <- FAO2050_reg <- FAO2050_item <- GCAM_region_ID <-
+        GCAM_commodity <- consumption <- iso <- GCAM_demand <- kcalkg <-
+        conv_d <- demand_kcal <- total <- meat <- demand_ratio <- end_history_demand <-
+        demand_fhy <- food_demand_percapita <- scenario <- year <- . <- ratio <-
+        NULL # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

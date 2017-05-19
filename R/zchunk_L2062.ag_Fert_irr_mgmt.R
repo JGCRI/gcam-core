@@ -1,4 +1,4 @@
-#' module_energy_LA1321.cement
+#' module_aglu_L2062.ag_Fert_irr_mgmt
 #'
 #' Briefly describe what this chunk does.
 #'
@@ -6,50 +6,34 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L1321.out_Mt_R_cement_Yh}, \code{L1321.IO_GJkg_R_cement_F_Yh}, \code{L1321.in_EJ_R_cement_F_Y}, \code{L1321.in_EJ_R_indenergy_F_Yh}. The corresponding file in the
-#' original data system was \code{LA1321.cement.R} (energy level1).
+#' the generated outputs: \code{L2062.AgCoef_Fert_ag_irr_mgmt}, \code{L2062.AgCoef_Fert_bio_irr_mgmt}, \code{L2062.AgCost_ag_irr_mgmt_adj}, \code{L2062.AgCost_bio_irr_mgmt_adj}. The corresponding file in the
+#' original data system was \code{L2062.ag_Fert_irr_mgmt.R} (aglu level2).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_energy_LA1321.cement_DISABLED <- function(command, ...) {
+module_aglu_L2062.ag_Fert_irr_mgmt_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "emissions/A_PrimaryFuelCCoef",
-             FILE = "energy/cement_regions",
-             FILE = "energy/Worrell_1994_cement",
-             FILE = "energy/IEA_cement_elec_kwht",
-             FILE = "energy/IEA_cement_TPE_GJt",
-             FILE = "energy/IEA_cement_fuelshares",
-             "L100.CDIAC_CO2_ctry_hist",
-             "L102.CO2_Mt_R_F_Yh",
-             "L123.in_EJ_R_elec_F_Yh",
-             "L123.out_EJ_R_elec_F_Yh",
-             "L132.in_EJ_R_indenergy_F_Yh"))
+    return(c( "L2061.AgCoef_Fert_ag_irr",
+              "L2061.AgCoef_Fert_bio_irr",
+              "L2061.AgCost_ag_irr_adj",
+              "L2061.AgCost_bio_irr_adj"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L1321.out_Mt_R_cement_Yh",
-             "L1321.IO_GJkg_R_cement_F_Yh",
-             "L1321.in_EJ_R_cement_F_Y",
-             "L1321.in_EJ_R_indenergy_F_Yh"))
+    return(c("L2062.AgCoef_Fert_ag_irr_mgmt",
+             "L2062.AgCoef_Fert_bio_irr_mgmt",
+             "L2062.AgCost_ag_irr_mgmt_adj",
+             "L2062.AgCost_bio_irr_mgmt_adj"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    A_PrimaryFuelCCoef <- get_data(all_data, "emissions/A_PrimaryFuelCCoef")
-    cement_regions <- get_data(all_data, "energy/cement_regions")
-    Worrell_1994_cement <- get_data(all_data, "energy/Worrell_1994_cement")
-    IEA_cement_elec_kwht <- get_data(all_data, "energy/IEA_cement_elec_kwht")
-    IEA_cement_TPE_GJt <- get_data(all_data, "energy/IEA_cement_TPE_GJt")
-    IEA_cement_fuelshares <- get_data(all_data, "energy/IEA_cement_fuelshares")
-    L100.CDIAC_CO2_ctry_hist <- get_data(all_data, "L100.CDIAC_CO2_ctry_hist")
-    L102.CO2_Mt_R_F_Yh <- get_data(all_data, "L102.CO2_Mt_R_F_Yh")
-    L123.in_EJ_R_elec_F_Yh <- get_data(all_data, "L123.in_EJ_R_elec_F_Yh")
-    L123.out_EJ_R_elec_F_Yh <- get_data(all_data, "L123.out_EJ_R_elec_F_Yh")
-    L132.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L132.in_EJ_R_indenergy_F_Yh")
+    L2061.AgCoef_Fert_ag_irr <- get_data(all_data, "L2061.AgCoef_Fert_ag_irr")
+    L2061.AgCoef_Fert_bio_irr <- get_data(all_data, "L2061.AgCoef_Fert_bio_irr")
+    L2061.AgCost_ag_irr_adj <- get_data(all_data, "L2061.AgCost_ag_irr_adj")
+    L2061.AgCost_bio_irr_adj <- get_data(all_data, "L2061.AgCost_bio_irr_adj")
 
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
@@ -66,9 +50,7 @@ module_energy_LA1321.cement_DISABLED <- function(command, ...) {
     # }
     #
     #
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses vecpaste
+    # NOTE: This code uses repeat_and_add_vector
     # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # ===================================================
 
@@ -82,43 +64,43 @@ module_energy_LA1321.cement_DISABLED <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L1321.out_Mt_R_cement_Yh") %>%
+      add_legacy_name("L2062.AgCoef_Fert_ag_irr_mgmt") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L1321.out_Mt_R_cement_Yh
+      L2062.AgCoef_Fert_ag_irr_mgmt
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L1321.IO_GJkg_R_cement_F_Yh") %>%
+      add_legacy_name("L2062.AgCoef_Fert_bio_irr_mgmt") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L1321.IO_GJkg_R_cement_F_Yh
+      L2062.AgCoef_Fert_bio_irr_mgmt
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L1321.in_EJ_R_cement_F_Y") %>%
+      add_legacy_name("L2062.AgCost_ag_irr_mgmt_adj") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L1321.in_EJ_R_cement_F_Y
+      L2062.AgCost_ag_irr_mgmt_adj
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L1321.in_EJ_R_indenergy_F_Yh") %>%
+      add_legacy_name("L2062.AgCost_bio_irr_mgmt_adj") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L1321.in_EJ_R_indenergy_F_Yh
+      L2062.AgCost_bio_irr_mgmt_adj
 
-    return_data(L1321.out_Mt_R_cement_Yh, L1321.IO_GJkg_R_cement_F_Yh, L1321.in_EJ_R_cement_F_Y, L1321.in_EJ_R_indenergy_F_Yh)
+    return_data(L2062.AgCoef_Fert_ag_irr_mgmt, L2062.AgCoef_Fert_bio_irr_mgmt, L2062.AgCost_ag_irr_mgmt_adj, L2062.AgCost_bio_irr_mgmt_adj)
   } else {
     stop("Unknown command")
   }

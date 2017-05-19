@@ -26,6 +26,11 @@ module_water_L132.water.demand.manufacturing <- function(command, ...) {
     return(c("L132.water_coef_manufacturing_R_W_m3_GJ"))
   } else if(command == driver.MAKE) {
 
+    year <- value <- GCAM_region_ID <- sector <- fuel <- continent <-
+        withdrawals <- consumption <- `water withdrawals` <-
+        `water consumption` <- water_type <- coefficient <- region <-
+         NULL                           # silence package checks.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
