@@ -83,8 +83,5 @@ importFrom(tidyr,nesting)
 importFrom(tidyr,replace_na)
 importFrom(tidyr,separate)
 importFrom(tidyr,spread)
-<<<<<<< HEAD
 importFrom(tidyr,unite)
-=======
 importFrom(utils,capture.output)
->>>>>>> refs/remotes/origin/master
