@@ -50,7 +50,7 @@ module_gcam.usa_LA1321.Cement <- function(command, ...) {
     # ===================================================
 
     variable <- value_state <- value_share <- value_national <- NAICS_code <- state <-
-      VoS_thousUSD <- sector <- fuel <- year <- value <- GCAM_region_ID <- NULL
+      VoS_thousUSD <- sector <- fuel <- year <- value <- GCAM_region_ID <- NULL   # silence package check notes
 
     # Assigning national cement production to states on the basis of value of shipments (VoS) of
     # the North American Industry Classification System (NAICS) code 3273 by state
