@@ -21,6 +21,8 @@ module_water_L102.water.supply.unlimited <- function(command, ...) {
     return(c("L102.unlimited_water_price_R_W_Y_75USDm3"))
   } else if(command == driver.MAKE) {
 
+    region <- NULL                      # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

@@ -6,6 +6,8 @@
 #' @importFrom tidyr gather spread
 #' @export
 chunk_readylist <- function() {
+  disabled <- output <- name <- available <- from_file <- module <- chunk <-
+      filename <- . <- NULL             # silence notes in package check
   chunklist <- find_chunks(include_disabled = TRUE)
   ci <- chunk_inputs(chunklist$name)
   co <- chunk_outputs(chunklist$name)
@@ -42,6 +44,7 @@ chunk_readylist <- function() {
 
 # internal function, used by chunk_readylist above
 count_downstream_dependencies <- function(chunkname, chunklist, ci, co, recurse = FALSE, excludes = NA) {
+  name <- chunk <- output <- NULL       # silence notes in package check
   chunklist %>%
     select(name, chunk) %>%
     right_join(co, by = "name") %>%

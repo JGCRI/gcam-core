@@ -34,6 +34,9 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
              "L143.HDDCDD_scen_ctry_Y"))
   } else if(command == driver.MAKE) {
 
+    value <- year <- `2099` <- country <- iso <- population <- GCAM_region_ID <-
+        SRES <- GCM <- variable <- wtDD <- aggpop <- region_GCAM3 <- NULL
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

@@ -59,6 +59,10 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
              "L100.FAO_For_Prod_m3"))
   } else if(command == driver.MAKE) {
 
+    iso <- FAO_country <- `country codes` <- `element codes` <- `item codes` <-
+        year <- value <- countries <- country.codes <- item <- item.codes <-
+            element <- element.codes <- NULL # silence package chck.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
@@ -385,6 +389,7 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
 downscale_FAO_country <- function(data, country_name, dissolution_year, item_name = "item",
                                   element_name = "element", years = AGLU_HISTORICAL_YEARS) {
 
+  countries <- NULL                     # silence package check notes
   # Compute the ratio for all years leading up to the dissolution year, and including it
   # I.e. normalizing the time series by the value in the dissolution year
   ctry_years <- years[years < dissolution_year]
