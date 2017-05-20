@@ -44,7 +44,7 @@ module_energy_LA118.hydro <- function(command, ...) {
       fuel <- Technical_GWh <- Economic_GWh <-  Installed_GWh <- Installed_MW <-
       FLOW <- PRODUCT <- .  <- Technical_MW <- Economic_MW <- Growth_potential_EJ <-
       value_interpolated <- Growth_potential_EJ_sum <- year.x <- year.y <- year_base <-
-      year_future <- value_future <- NULL
+      year_future <- value_future <- NULL   # silence package check notes
 
     # Calculation of economic hydropower potential by country, in EJ/yr
     # Calculate a capacity factor for translating MW to GWh, using weighted average capacity factor of all existing dams
@@ -83,19 +83,19 @@ module_energy_LA118.hydro <- function(command, ...) {
       Hydropower_potential
 
     # Calculate the growth potential by country, which is the economic potential minus the actual generation in the most recent historical year (from the IEA balances)
-      L100.IEA_en_bal_ctry_hist %>%
-        filter(FLOW == "ELOUTPUT", PRODUCT == "Hydro", year == max(HISTORICAL_YEARS)) %>%
-        mutate(value_base = value * CONV_GWH_EJ) %>%
-        left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%
-        select(iso, region_GCAM3, year, value_base) ->
-        L118.out_EJ_ctry_elec_hydro_fby
+    L100.IEA_en_bal_ctry_hist %>%
+      filter(FLOW == "ELOUTPUT", PRODUCT == "Hydro", year == max(HISTORICAL_YEARS)) %>%
+      mutate(value_base = value * CONV_GWH_EJ) %>%
+      left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%
+      select(iso, region_GCAM3, year, value_base) ->
+      L118.out_EJ_ctry_elec_hydro_fby
 
-      # Aggregate by region
-      L118.out_EJ_ctry_elec_hydro_fby %>%
-        group_by(region_GCAM3, year) %>%
-        summarise(value = sum(value_base)) %>%
-        ungroup() ->
-        L118.out_EJ_RG3_elec_hydro_fby
+    # Aggregate by region
+    L118.out_EJ_ctry_elec_hydro_fby %>%
+      group_by(region_GCAM3, year) %>%
+      summarise(value = sum(value_base)) %>%
+      ungroup() ->
+      L118.out_EJ_RG3_elec_hydro_fby
 
     # Calculate the future growth potential in each country as the economic potential minus the present-day generation
     Hydropower_potential %>%
@@ -104,9 +104,7 @@ module_energy_LA118.hydro <- function(command, ...) {
       mutate(Growth_potential_EJ = if_else(is.na(Growth_potential_EJ) | Growth_potential_EJ < 0, 0, Growth_potential_EJ)) %>%
       select(-region_GCAM3, -Economic_EJ, -value_base) %>%
       # Some countries (e.g., Bostwana) have NAs for RG3 names. This step is updating them (except Kosovo).
-      left_join(
-        select(iso_GCAM_regID, -country_name, -GCAM_region_ID),
-        by = "iso") ->
+      left_join(select(iso_GCAM_regID, -country_name, -GCAM_region_ID), by = "iso") ->
       Hydropower_potential
 
     # Downscaling of GCAM 3.0 scenario to the country level: Assign future growth according to shares of growth potential by country
@@ -164,13 +162,13 @@ module_energy_LA118.hydro <- function(command, ...) {
     Hydropower_potential %>%
       left_join(Hydropower_potential_RG3, by = "region_GCAM3") %>%
       mutate(share = Growth_potential_EJ / Growth_potential_EJ_sum) %>% # Calculating share
-    # Add future years to table of base-year hydropower generation as base-year output plus region_GCAM3 growth times country-wise share
+      # Add future years to table of base-year hydropower generation as base-year output plus region_GCAM3 growth times country-wise share
       select(iso, share) %>% # Need only share of each iso
       group_by(iso) %>%
       summarise(share = sum(share)) -> # Summing up Serbia...was listed twice
       Hydropower_potential
 
-      # Adding future years
+    # Adding future years
     L118.out_EJ_ctry_elec_hydro_fby %>%
       left_join(Hydropower_potential, by = "iso") %>% # Adding share column
       left_join(L118.growth_EJ_RG3_elec_hydro_Y, by = "region_GCAM3") %>% # Adding RG3 growth
@@ -184,7 +182,7 @@ module_energy_LA118.hydro <- function(command, ...) {
       L118.out_EJ_ctry_elec_hydro_Y
 
     # For countries not in the world dams database (all are very small), copy final historical year forward
-      # First create list to use as filter
+    # First create list to use as filter
     iso_list <- Hydropower_potential$iso
 
     L118.out_EJ_ctry_elec_hydro_Y %>%
@@ -193,7 +191,7 @@ module_energy_LA118.hydro <- function(command, ...) {
       fill(value) -> # Copying final historical year forward
       countries_not_in_WDdatabase
 
-      # Adding these countries not in the world dams database back in
+    # Adding these countries not in the world dams database back in
     L118.out_EJ_ctry_elec_hydro_Y %>%
       filter(iso %in% iso_list) %>%
       bind_rows(countries_not_in_WDdatabase) ->
