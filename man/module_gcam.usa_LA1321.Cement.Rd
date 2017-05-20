@@ -18,10 +18,14 @@ the generated outputs: \code{L1321.out_Mt_state_cement_Yh}, \code{L1321.IO_GJkg_
 original data system was \code{LA1321.Cement.R} (gcam-usa level1).
 }
 \description{
-This chunk does allocates nation energy inputs to cement production, cement production, and input-output cofficients across the states
+This chunk allocates across the states national cement production, input-output cofficients, and energy inputs to cement production
 }
 \details{
-Describe in detail what this chunk does.
+The tables for cement production, i.e., out, and energy inputs, i.e., in, were calculated by applying state shares to national data.
+
+The state shares were determined by the states' relative values of cement shipments.
+
+The input-out coefficients were downscaled to the states in proportation to the national data.
 }
 \author{
 AS May 2017

@@ -1,6 +1,6 @@
 #' module_gcam.usa_LA1321.Cement
 #'
-#' This chunk does allocates nation energy inputs to cement production, cement production, and input-output cofficients across the states
+#' This chunk allocates across the states national cement production, input-output cofficients, and energy inputs to cement production
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,12 +8,13 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L1321.out_Mt_state_cement_Yh}, \code{L1321.IO_GJkg_state_cement_F_Yh}, \code{L1321.in_EJ_state_cement_F_Y}. The corresponding file in the
 #' original data system was \code{LA1321.Cement.R} (gcam-usa level1).
-#' @details Describe in detail what this chunk does.
+#' @details The tables for cement production, i.e., out, and energy inputs, i.e., in, were calculated by applying state shares to national data.
+#' @details The state shares were determined by the states' relative values of cement shipments.
+#' @details The input-out coefficients were downscaled to the states in proportation to the national data.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author AS May 2017
-#' @export
 module_gcam.usa_LA1321.Cement <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/Census_ind_VoS_state",
@@ -48,86 +49,100 @@ module_gcam.usa_LA1321.Cement <- function(command, ...) {
 
     # ===================================================
 
-    # Assigning national cement production to states on the basis of value of shipments of NAICS 3273 by state
-    # Note: The NAICS code 3273 includes cement and concrete product manufacturing. Includes cement, ready-mix concrete,
+    variable <- value_state <- value_share <- value_national <- NAICS_code <- state <-
+      VoS_thousUSD <- sector <- fuel <- year <- value <- GCAM_region_ID <- NULL
+
+    # Assigning national cement production to states on the basis of value of shipments (VoS) of
+    # the North American Industry Classification System (NAICS) code 3273 by state
+    # The NAICS code 3273 includes cement and concrete product manufacturing. Includes cement, ready-mix concrete,
     # concrete pipe, brick, and block, and other concrete products
     Census_ind_VoS_state %>%
-      filter(NAICS_code == 3273) %>% # This is the code for cement and concrete product
-      select(state, VoS_thousUSD) %>%
-      gather(variable, value, -state) %>% # Converting to long form
-      repeat_add_columns(tibble::tibble(year = HISTORICAL_YEARS)) ->
-      x
+      filter(NAICS_code == 3273) %>% # This is the code for cement and concrete product manufacturing
+      select(state, VoS_thousUSD) %>% # Selecting value of shipments
+      gather(variable, value_state, -state) %>% # Converting to long form
+      select(-variable) ->
+      Cement_VoS_state
 
-    x %>%
-      group_by(year) %>%
-      summarise(value_sum = sum(value)) %>%
-      ungroup() ->
-      Census_ind_VoS_state_sum
+    # Here the relative state shares will be calculated. First the states will be summed to get the national total.
+    # The national total is a single value
+    Cement_VoS_state %>%
+      select(-state) %>%
+      summarise(value_national = sum(value_state)) %>%
+      .[["value_national"]] ->
+      Cement_VoS_national
 
-    x %>%
-      left_join_error_no_match(Census_ind_VoS_state_sum, by = "year") %>%
-      mutate(value_share = value / value_sum) %>%
-      select(state, year, value_share) ->
-      #mutate(sector = "cement") -> #might be able to leave off
-      #looks like the share doesn't change by year??
-      L1321.VoS_share_state_cement #can connect with next section (might be using it below)
+    # The national total will be added as a separate column, so that the state share can be calculated
+    Cement_VoS_state %>%
+      # The national total is a single value, so left_join cannot be used
+      repeat_add_columns(tibble::tibble(value_national = Cement_VoS_national)) %>%
+      mutate(value_share = value_state / value_national) %>% # Calculating the state share
+      select(state, value_share) ->
+      Cement_share_state
 
-    L1321.VoS_share_state_cement %>%
-      left_join_error_no_match(
-        filter(L1321.out_Mt_R_cement_Yh, GCAM_region_ID == gcam.USA_CODE), #assumes its in long form
-        by = "year") %>%
-      mutate(value = value * value_share) %>%
+    # Creating a list of states
+    # This will be helpful when expanding the national table into state-level
+    # Note that not every state has cement manufacturing
+    state_list <- unique(Cement_share_state$state)
+
+    # This section is calculating state-level data by multiplying the state share by the USA component in the global data
+    # This will generate an output table: Cement production by state / historical year
+    L1321.out_Mt_R_cement_Yh %>%
+      filter(GCAM_region_ID == gcam.USA_CODE) %>% # Filtering for the USA component
+      repeat_add_columns(tibble::tibble(state = state_list)) %>% # Expanding the table to the state-level
+      left_join_error_no_match(Cement_share_state, by = "state") %>% # Adding the state share we calculated above
+      mutate(value = value * value_share) %>% # Multiplying the national amount with the state share
       select(state, sector, year, value) ->
       L1321.out_Mt_state_cement_Yh
 
+    # This section is downscaling the national input/output (IO) coefficients to the state level
     # Assuming all states have the same IO coefficients for heat, electricity, and limestone
+    # This will generate an output table: Input-output coefficients of cement production by state / fuel / historical year
     L1321.IO_GJkg_R_cement_F_Yh %>%
-      filter(GCAM_region_ID == USA_regID) %>%
-      repeat_add_columns(tibble::tibble(state = L1321.out_Mt_state_cement_Yh$state, year = HISTORICAL_YEARS)) ->
-      L1321.IO_GJkg_state_cement_F_Yh # not sure if this will duplicate heat, electricity, and limestone values
+      filter(GCAM_region_ID == gcam.USA_CODE) %>%
+      repeat_add_columns(tibble::tibble(state = state_list)) %>%
+      select(state, sector, fuel, year, value) ->
+      L1321.IO_GJkg_state_cement_F_Yh
 
-    # Calculating inputs to cement production by state
-    # NOTE: assuming the same fuel blend in all states
-    L1321.VoS_share_state_cement %>%
-      repeat_add_columns(tibble::tibble(state = L1321.out_Mt_state_cement_Yh$state, year = HISTORICAL_YEARS)) %>%
-      left_join_error_no_match(
-        filter(L1321.in_EJ_R_cement_F_Y, GCAM_region_ID == USA_regID),
-        by = c("sector", "fuel", "year")) %>%
-      mutate(value = value_share * value) -> #not sure if value labels are correct
+    # Calculating energy inputs to cement production by state
+    # Again, this section is downscaling the national data to the state level, using the state share calculated above
+    # Note that this assumes the same fuel blend in all states
+    # This will generate an output table: Energy inputs to cement production by state / fuel / historical year
+    L1321.in_EJ_R_cement_F_Y %>%
+      filter(GCAM_region_ID == gcam.USA_CODE) %>%
+      repeat_add_columns(tibble::tibble(state = state_list)) %>%
+      left_join_error_no_match(Cement_share_state, by = "state") %>%
+      mutate(value = value_share * value) %>%
+      select(state, sector, fuel, year, value) ->
       L1321.in_EJ_state_cement_F_Y
 
     # ===================================================
 
     L1321.out_Mt_state_cement_Yh %>%
-      #add_title("Cement production by state / historical year ") %>%
+      add_title("Cement production by state / historical year ") %>%
       add_units("Mt") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("downscaling national data using state shares") %>%
+      add_comments("these state shares were calculated to be proportional to the their values of cement shipments") %>%
       add_legacy_name("L1321.out_Mt_state_cement_Yh") %>%
-      add_precursors("gcam-usa/Census_ind_VoS_state", "temp-data-inject/L1321.out_Mt_R_cement_Yh",
-                     "temp-data-inject/L1321.IO_GJkg_R_cement_F_Yh", "temp-data-inject/L1321.in_EJ_R_cement_F_Y") %>%
+      add_precursors("gcam-usa/Census_ind_VoS_state", "temp-data-inject/L1321.out_Mt_R_cement_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1321.out_Mt_state_cement_Yh
 
     L1321.IO_GJkg_state_cement_F_Yh %>%
-      #add_title(" Input-output coefficients of cement production by state / input / historical year") %>%
-      add_units("GJ/kg") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Input-output coefficients of cement production by state / fuel / historical year") %>%
+      add_units("GJ/kg and kg/kg") %>%
+      add_comments("downscaling national data assuming the same IO coefficients for each respective fuel") %>%
       add_legacy_name("L1321.IO_GJkg_state_cement_F_Yh") %>%
-      add_precursors("gcam-usa/Census_ind_VoS_state", "temp-data-inject/L1321.out_Mt_R_cement_Yh",
-                     "temp-data-inject/L1321.IO_GJkg_R_cement_F_Yh", "temp-data-inject/L1321.in_EJ_R_cement_F_Y") %>%
+      add_precursors("temp-data-inject/L1321.IO_GJkg_R_cement_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1321.IO_GJkg_state_cement_F_Yh
 
     L1321.in_EJ_state_cement_F_Y %>%
-      #add_title("Energy inputs to cement production by GCAM region / fuel / historical year") %>%
+      add_title("Energy inputs to cement production by state / fuel / historical year") %>%
       add_units("EJ") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("downscaling national data using state shares") %>%
+      add_comments("these state shares were calculated to be proportional to the their values of cement shipments") %>%
       add_legacy_name("L1321.in_EJ_state_cement_F_Y") %>%
-      add_precursors("gcam-usa/Census_ind_VoS_state", "temp-data-inject/L1321.out_Mt_R_cement_Yh",
-                     "temp-data-inject/L1321.IO_GJkg_R_cement_F_Yh", "temp-data-inject/L1321.in_EJ_R_cement_F_Y" ) %>%
+      add_precursors("gcam-usa/Census_ind_VoS_state", "temp-data-inject/L1321.in_EJ_R_cement_F_Y" ) %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1321.in_EJ_state_cement_F_Y
 
