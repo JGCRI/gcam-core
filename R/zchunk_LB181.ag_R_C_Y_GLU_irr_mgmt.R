@@ -52,12 +52,6 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
     L171.ag_irrEcYield_kgm2_R_C_Y_GLU <- get_data(all_data, "L171.ag_irrEcYield_kgm2_R_C_Y_GLU")
     L171.ag_rfdEcYield_kgm2_R_C_Y_GLU <- get_data(all_data, "L171.ag_rfdEcYield_kgm2_R_C_Y_GLU")
 
-    # Yield multiplier that goes from the observed yield to the "hi" and "lo" yields
-    # observed plus or minus observed times this number
-    MGMT_YIELD_ADJ <- 0.1
-    MIN_YIELD_ADJ <- 0.05
-    MAX_BIO_MULTI_HI <- 3
-    
     # Combine country level irrigated and rainfed files
     # Harvest area by ctry / GLU / crop / irr
     L151.ag_irrHA_ha_ctry_crop %>%
@@ -75,9 +69,10 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
       mutate(Irr_Rfd = sub("Prod", "", Irr_Rfd)) ->
       L181.ag_Prod_t_ctry_crop_irr
 
-    # Calulate yields by ctry / GLU / crop / irr, as production divided by harvest area
+    # Combine harvest area and production data by ctry / GLU / crop / irr
     L181.ag_HA_ha_ctry_crop_irr %>%
       left_join_error_no_match(L181.ag_Prod_t_ctry_crop_irr, by = c("iso", "GLU", "GTAP_crop", "Irr_Rfd")) %>%
+      # Calulate yields by ctry / GLU / crop / irr, as production divided by harvest area
       mutate(yield_tha = Prod_t / HA_ha ) ->
       L181.ag_Yield_tha_ctry_crop_irr
 
@@ -93,25 +88,26 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
       left_join_error_no_match(Muller_crops, by = "crop") ->     # Match Mueller crop
       L181.Mueller_yield_levels
 
-    # Separate low yields - 2nd percentile
+    # Separate lo yields - 2nd percentile
     L181.Mueller_yield_levels %>%
       filter(yield_level == "_02ndpercentileyield") ->
       L181.Mueller_yield_levels_lo
 
-    # Separate high yields - 95th percentile, and rainfed yield ceilings
+    # Separate hi yields - 95th percentile, and rainfed yield ceilings
     L181.Mueller_yield_levels %>%
       filter(yield_level %in% c("_95thpercentileyield", "_rainfedyieldceilings"))%>%
       mutate(Irr_Rfd = "irr",
              Irr_Rfd = replace(Irr_Rfd, yield_level == "_rainfedyieldceilings", "rfd")) ->
       L181.Mueller_yield_levels_hi
 
-    # Match low and high yields by crop / ctry / GLU / irr, adjust where the observed yields were not within the bound
+    # Match observed data with lo and hi yields by crop / ctry / GLU / irr
+    # Adjust lo and hi yields where the observed yields were not within the bound
     L181.ag_Yield_tha_ctry_crop_irr %>%
       # Subset only the crops, countries, and GLUs from the GTAP database that are represented in the Mueller data
       semi_join(L181.Mueller_yield_levels, by = c("iso", "GTAP_crop", "GLU")) %>%
       # Only use data where production (and harvested area) is non-zero
       filter(HA_ha > 0) %>%
-      # Match in Mueller's low yields, use the 2nd percentile average to estimate the "lower" yielding technology
+      # Match in Mueller's lo yields, use the 2nd percentile average to estimate the "lower" yielding technology
       left_join_keep_first_only(select(L181.Mueller_yield_levels_lo, iso, GTAP_crop, GLU, average), by = c("iso", "GTAP_crop", "GLU")) %>%
       rename(lo = average) %>%
       # Where Muller's 2nd percentile averages are higher than observed yields, use observed times an adjustment fraction
@@ -347,8 +343,7 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
                      "L151.ag_rfdProd_t_ctry_crop",
                      "L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU",
                      "L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT) ->
       L181.LC_bm2_R_C_Yh_GLU_irr_level
 
     L181.ag_EcYield_kgm2_R_C_Y_GLU_irr_level %>%
@@ -367,8 +362,7 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
                      "L151.ag_rfdProd_t_ctry_crop",
                      "L171.ag_irrEcYield_kgm2_R_C_Y_GLU",
                      "L171.ag_rfdEcYield_kgm2_R_C_Y_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L181.ag_EcYield_kgm2_R_C_Y_GLU_irr_level
 
     L181.ag_Prod_Mt_R_C_Y_GLU_irr_level %>%
@@ -389,7 +383,6 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
                      "L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU",
                      "L171.ag_irrEcYield_kgm2_R_C_Y_GLU",
                      "L171.ag_rfdEcYield_kgm2_R_C_Y_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L181.ag_Prod_Mt_R_C_Y_GLU_irr_level
 
