@@ -16,7 +16,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RC May 2017
-#' @export
 module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
