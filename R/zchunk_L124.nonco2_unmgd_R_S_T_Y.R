@@ -90,7 +90,7 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
         EDGAR_history
 
     } else {
-      #   ... new code with a fix
+
     }
 
     # Prepare EDGAR emissions for use (continued)
@@ -159,7 +159,8 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
       group_by(GCAM_region_ID, year) %>%
       mutate(land_share = value / sum(value)) %>%                                                      # Compute share of regional forest area in each GLU
       select(-value) %>%
-      # There are places with land area but no emissions and vice versa. Use an inner_join to only get places with both
+      # There are places with land area but no emissions and vice versa. Use an inner_join to only get places with both.
+      # Note: this means that some regions get zero emissions coefficients in the historic period (future deforestation emissions coefs are defined below)
       inner_join(filter(EDGAR_history, sector == "forest"), by = c("GCAM_region_ID", "year")) %>%       # Map in EDGAR emissions information
       mutate(value = value * land_share) %>%                                                           # Compute forest emissions from EDGAR totals and land shares
       select(-sector, -land_share) %>%
@@ -174,6 +175,7 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
       L124.nonco2_tg_R_forest_Y_GLU
 
     # Compute global average deforestation emissions coefficients
+    # These coefficients are used for future model time periods.
     # Compute total change in forest area from 2000 to 2005, total global emissions, and average annualized coefficients (emissions / change in land area / number of years)
     gas_list <- tibble(Non.CO2 = unique(L124.nonco2_tg_R_forest_Y_GLU$Non.CO2))                       # Set up list of gases (we'll use this to add columns later)
     L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj %>%
