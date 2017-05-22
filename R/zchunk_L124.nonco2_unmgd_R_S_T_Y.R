@@ -90,7 +90,9 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
         EDGAR_history
 
     } else {
-
+      EDGAR_history %>%
+        na.omit() ->
+        EDGAR_history
     }
 
     # Prepare EDGAR emissions for use (continued)
@@ -158,6 +160,7 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
     L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj %>%
       group_by(GCAM_region_ID, year) %>%
       mutate(land_share = value / sum(value)) %>%                                                      # Compute share of regional forest area in each GLU
+      na.omit() %>%
       select(-value) %>%
       # There are places with land area but no emissions and vice versa. Use an inner_join to only get places with both.
       # Note: this means that some regions get zero emissions coefficients in the historic period (future deforestation emissions coefs are defined below)
