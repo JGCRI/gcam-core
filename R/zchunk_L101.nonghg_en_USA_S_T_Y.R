@@ -46,6 +46,12 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
              "L101.in_EJ_R_en_Si_F_Yh"))
   } else if(command == driver.MAKE) {
 
+    year <- value <- GCAM_region_ID <- sector <- fuel <- service <-
+        size.class <- UCD_sector <- UCD_technology <- UCD_fuel <- technology <-
+        EPA_agg_sector <- EPA_agg_fuel <- NULL # silence package check
+    Source_Category_Raw <- Source_Category <- emissions <- energy <-
+        em_factor <- sector_emissions <- NULL
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
