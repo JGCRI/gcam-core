@@ -227,22 +227,26 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
         select(iso, year, pop_share) ->
         L100.Others_pop_share
 
+      # Spread L100.Others_pop_share to wide format in preparation for computing L100.Others_ctry_bal
+      # This is relatively inexpensive
+      L100.Others_pop_share <- spread(L100.Others_pop_share, year, pop_share)
 
       # Multiply the repeated country databases by the population shares to get the energy balances by country (159-162)
       L100.Others_repCtry %>%
         select(iso, FLOW, PRODUCT, COUNTRY) %>%
         left_join_error_no_match(L100.Others_repCtry, by = c("iso", "FLOW", "PRODUCT", "COUNTRY")) %>%
-        rename(IEAcomposite = COUNTRY) %>%
-        # go to long format: expensive, but has to be done at some point
-        gather(year, value, matches(YEAR_PATTERN)) %>%
-        ungroup %>% mutate(year = as.integer(year)) %>%
-        left_join_error_no_match(L100.Others_pop_share, by = c("iso", "year")) %>%
-        mutate(value = value * pop_share) %>%
-        select(-pop_share) %>%
-        # Subset each of these final energy balances to only the rows that aren't zero in all years
-        group_by(iso, FLOW, PRODUCT, IEAcomposite) %>%
-        filter(sum(value != 0) > 0) ->
+        rename(IEAcomposite = COUNTRY) ->
         L100.Others_ctry_bal
+
+      L100.Others_repCtry %>%
+        select(iso) %>%
+        left_join_error_no_match(L100.Others_pop_share, by = "iso") %>%
+        select(-iso) ->
+        pop_share
+
+      hyc <- which(names(L100.Others_ctry_bal) %in% HISTORICAL_YEARS)
+      L100.Others_ctry_bal[hyc] <- L100.Others_ctry_bal[hyc] * pop_share
+
 
       # Subset each of these final energy balances to only the rows that aren't zero in all years
       hyc <- which(names(L100.IEAsingle) %in% HISTORICAL_YEARS)
@@ -253,12 +257,15 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
         mutate(year = as.integer(year)) ->
         L100.IEAsingle_noUSSR_Yug
 
-      hyc <- which(names(L100.USSR_Yug_ctry_bal) %in% HISTORICAL_YEARS)
-      L100.USSR_Yug_ctry_bal <- L100.USSR_Yug_ctry_bal[rowSums(L100.USSR_Yug_ctry_bal[hyc]) !=0, ]
-      L100.USSR_Yug_ctry_bal %>%
+      hyc <- which(names(L100.Others_ctry_bal) %in% HISTORICAL_YEARS)
+      L100.Others_ctry_bal <- L100.Others_ctry_bal[rowSums(L100.Others_ctry_bal[hyc]) !=0, ]
+      L100.Others_ctry_bal %>%
         gather(year, value, matches(YEAR_PATTERN)) %>%
         mutate(year = as.integer(year)) ->
-        L100.USSR_Yug_ctry_bal
+        L100.Others_ctry_bal
+
+      hyc <- which(names(L100.USSR_Yug_ctry_bal) %in% HISTORICAL_YEARS)
+      L100.USSR_Yug_ctry_bal <- L100.USSR_Yug_ctry_bal[rowSums(L100.USSR_Yug_ctry_bal[hyc]) !=0, ]
 
       # Combine the country-level data tables and write out energy balances (using iso codes rather than IEA's country names)
       IEA_isoID <- c( "iso", "FLOW", "PRODUCT" )
