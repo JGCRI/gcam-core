@@ -24,6 +24,13 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
              "L100.Pop_thous_SSP_ctry_Yfut"))
   } else if(command == driver.MAKE) {
 
+    ## silence package check.
+    Country <- value <- Maddison_ctry <- year <- pop <- Downscale_from <- ratio <-
+        year.x <- iso <- pop_scale <- pop.x <- pop.y <- pop_allocate <- X1900 <-
+        X1950 <- X1850 <- X1800 <- X1750 <- X1700 <- pop_ratio_1950 <- scg <-
+        idn <- mne <- Scenario <- Region <- Sex <- Year <- Value <- MODEL <-
+        VARIABLE <- REGION <- SCENARIO <- UNIT <- scenario <- ratio_iso_ssp <- NULL
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

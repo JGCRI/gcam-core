@@ -21,6 +21,7 @@ FLAG_XML <- "FLAG_XML"
 # Time constants
 HISTORICAL_YEARS <- 1971:2010
 IMF_GDP_YEARS <- 2010:2020
+CONV_DAYS_YEAR <- 1 / 365.25
 FUTURE_YEARS <- seq(2015, 2100, 5)
 SSP_FUTURE_YEARS <- c( 2010, FUTURE_YEARS)
 GHG_CONTROL_READIN_YEAR <- 1975
@@ -33,6 +34,7 @@ gcam.USA_CODE <- 1
 # aglu constants
 AGLU_HISTORICAL_YEARS <- 1971:2010
 FAO_HISTORICAL_YEARS <- 1961:2011
+FAO_LDS_YEARS <- 1998:2002
 MODEL_PRICE_YEARS <- 2001:2005
 MODEL_COST_YEARS <- 2001:2005
 LAND_HISTORY_YEARS <- c(1700, 1750, 1800, 1850, 1900, 1950, 1975)
@@ -40,7 +42,8 @@ PREAGLU_YEARS <- c(1700, 1750,1800, 1850, 1900, 1950)
 aglu.LAND_COVER_YEARS <- sort(unique(c(LAND_HISTORY_YEARS, AGLU_HISTORICAL_YEARS)))
 GTAP_HISTORICAL_YEAR <- 2000
 CROSIT_HISTORICAL_YEAR <- 2005
-SPEC_AG_PROD_YEARS <- seq(2010, 2050, 5) # Specified ag productivity years
+SPEC_AG_PROD_YEARS <- seq(max(AGLU_HISTORICAL_YEARS), 2050, by = 5) # Specified ag productivity years
+aglu.DIET_YEARS <- seq(max(AGLU_HISTORICAL_YEARS), 2050, by = 5)
 MIN_PROFIT_MARGIN <- 0.15
 
 # GLU (Geographic Land Unit) settings - see module_aglu_LA100.0_LDS_preprocessing
@@ -96,6 +99,8 @@ CONV_THA_KGM2 <- 0.1   # tons C/ha -> kg C/m2
 CONV_GG_TG <- 0.001 # gigagrams to tegagrams
 CONV_TST_TG <- 0.000907 # thousand short tons to Tg
 CONV_KG_TO_TG <- 1e-9
+CONV_KT_MT <- 0.001 # kt to Mt
+CONV_T_MT <- 1e-6 # t to Mt
 
 # Cubic meters (m3) to billion cubic meters (bm3)
 CONV_M3_BM3 <- 1e-09
