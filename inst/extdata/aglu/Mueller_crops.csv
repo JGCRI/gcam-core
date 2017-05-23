@@ -1,6 +1,7 @@
-# File: Muller_crops.csv,
+# File: Mueller_crops.csv,
 # Title: Mueller crop and GTAP crop mapping file,
 # Units: Unitless,
+# Source: Mueller, N. D.; Gerber, J. S.; Johnston, M.; Ray, D. K.; Ramankutty, N.; Foley, J. A. Closing yield gaps through nutrient and water management. Nature 2012, 490 (7419), 254–257.,
 crop,GTAP_crop
 maize,Maize
 rice,PaddyRice

@@ -20,7 +20,7 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "aglu/LDS/Mueller_yield_levels",
-             FILE = "aglu/Muller_crops",
+             FILE = "aglu/Mueller_crops",
              FILE = "aglu/FAO_ag_items_PRODSTAT",
              "L151.ag_irrHA_ha_ctry_crop",
              "L151.ag_rfdHA_ha_ctry_crop",
@@ -43,7 +43,7 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     Mueller_yield_levels <- get_data(all_data, "aglu/LDS/Mueller_yield_levels")
-    Muller_crops <- get_data(all_data, "aglu/Muller_crops")
+    Mueller_crops <- get_data(all_data, "aglu/Mueller_crops")
     FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO_ag_items_PRODSTAT")
     L151.ag_irrHA_ha_ctry_crop <- get_data(all_data, "L151.ag_irrHA_ha_ctry_crop")
     L151.ag_rfdHA_ha_ctry_crop <- get_data(all_data, "L151.ag_rfdHA_ha_ctry_crop")
@@ -84,32 +84,32 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
       na.omit(  ) %>%
       rename(iso = Country) %>%
       filter(iso != "mne") %>%                                   # Drop mne
-      mutate(iso = replace(iso, iso == "srb", "scg"),            # Replace Serbia iso from srb to scg
-             iso = replace(iso, iso == "twn", "chn"),            # Taiwan (re-set to China)
-             GLU = paste0("GLU", sprintf("%03d", Basin))) %>%    # GLU ID
-      left_join_error_no_match(Muller_crops, by = "crop") ->     # Match Mueller crop
+      change_iso_code("srb", "scg", col = "iso") %>%             # Replace Serbia iso from srb to scg
+      change_iso_code("twn", "chn", col = "iso") %>%             # Taiwan (re-set to China)
+      mutate(GLU = paste0("GLU", sprintf("%03d", Basin))) %>%    # GLU ID
+      left_join_error_no_match(Mueller_crops, by = "crop") ->    # Match Mueller crop
       L181.Mueller_yield_levels
 
-    # Separate lo yields - 2nd percentile
+    # Separate low yields - 2nd percentile
     L181.Mueller_yield_levels %>%
       filter(yield_level == "_02ndpercentileyield") ->
       L181.Mueller_yield_levels_lo
 
-    # Separate hi yields - 95th percentile, and rainfed yield ceilings
+    # Separate high yields - 95th percentile, and rainfed yield ceilings
     L181.Mueller_yield_levels %>%
       filter(yield_level %in% c("_95thpercentileyield", "_rainfedyieldceilings"))%>%
       mutate(Irr_Rfd = "irr",
              Irr_Rfd = replace(Irr_Rfd, yield_level == "_rainfedyieldceilings", "rfd")) ->
       L181.Mueller_yield_levels_hi
 
-    # Match observed data with lo and hi yields by crop / ctry / GLU / irr
-    # Adjust lo and hi yields where the observed yields were not within the bound
+    # Match observed data with low and high yields by crop / ctry / GLU / irr
+    # Adjust low and high yields where the observed yields were not within the bound
     L181.ag_Yield_tha_ctry_crop_irr %>%
       # Subset only the crops, countries, and GLUs from the GTAP database that are represented in the Mueller data
       semi_join(L181.Mueller_yield_levels, by = c("iso", "GTAP_crop", "GLU")) %>%
       # Only use data where production (and harvested area) is non-zero
       filter(HA_ha > 0) %>%
-      # Match in Mueller's lo yields, multiple rows for a few iso/GTAP_crop/GLU combination, use the first one
+      # Match in Mueller's low yields, multiple rows for a few iso/GTAP_crop/GLU combination, use the first one
       left_join_keep_first_only(select(L181.Mueller_yield_levels_lo, iso, GTAP_crop, GLU, average), by = c("iso", "GTAP_crop", "GLU")) %>%
       # Use the 2nd percentile average to estimate the "lower" yielding technology
       rename(lo = average) %>%
@@ -142,7 +142,7 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
       mutate(derating = wt_derating / HA_ha) ->
       L181.RfdDerating_ctry_GLU
 
-    # Use the derating factors and hi yields to calculate the rainfel yield ceilings for missing values
+    # Use the derating factors and high yields to calculate the rainfel yield ceilings for missing values
     L181.Mueller_ag_Yield_tha_irr %>%
       # Join the derating factors, which creates NA, use left_join instead of left_join_error_no_match
       left_join(select(L181.RfdDerating_ctry_GLU, iso, GLU, derating), by = c("iso", "GLU")) %>%
@@ -151,15 +151,15 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
       mutate(derating = replace(derating, Irr_Rfd == "irr", 1),
              # Set missing derating factors to zero. These will be over-written later
              derating = replace(derating, is.na(derating), 0),
-             # Use the derated hi yields for missing rainfed yield ceilings,
+             # Use the derated high yields for missing rainfed yield ceilings,
              hi = replace(hi, is.na(hi), average[is.na(hi)] * derating[is.na(hi)]),
-             # Where Muller's 95th percentile / rainfed ceiling averages are less than observed yields times (1 + min adjustment factor), use the adjusted observed value
+             # Where Mueller's 95th percentile / rainfed ceiling averages are less than observed yields times (1 + min adjustment factor), use the adjusted observed value
              hi = replace(hi, hi < (yield_tha * (1 + MIN_YIELD_ADJ)), yield_tha[hi < yield_tha * (1 + MIN_YIELD_ADJ)] * (1 + MIN_YIELD_ADJ))) %>%
       select(-derating, -average) ->
       L181.Mueller_ag_Yield_tha_irr
 
-    # Calculate lo and hi yields of crops and regions in the GTAP database that aren't represented in the Mueller database
-    # Apply a generic functional form in order to get "hi" yields of crops not covered by Mueller
+    # Calculate low and high yields of crops and regions in the GTAP database that aren't represented in the Mueller database
+    # Apply a generic functional form in order to get "high" yields of crops not covered by Mueller
     L181.ag_Yield_tha_ctry_crop_irr %>%
       # Separate the crops that are not in the Muller data.
       anti_join(L181.Mueller_yield_levels, by = c("iso", "GTAP_crop", "GLU")) %>%
@@ -193,16 +193,16 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
       summarise(maxYield_C = quantile(yield_tha, probs = 0.95)) ->
       L181.noMueller_maxYield_crop
 
-    # Finally, set the "lo" and "hi" yields for crops not represented in the Mueller database
+    # Finally, set the "low" and "high" yields for crops not represented in the Mueller database
     L181.noMueller_ag_Yield_tha_irr %>%
-      # Final "lo" yields are half of the observed
+      # Final "low" yields are half of the observed
       mutate(lo = yield_tha / 2) %>%
       left_join_error_no_match(L181.noMueller_maxYield_crop, by = "GTAP_crop") %>%
       # This creates NA, becuase not all countries, basins, and irrigation levels are necessarily represented in the yield index data
       left_join(select(L181.YieldIndex_ctry_GLU_irr, -wt_YieldIndex, -HA_ha), by = c("iso", "GLU", "Irr_Rfd")) %>%
       # Set NAs to zero
       replace_na(list(YieldIndex = 0)) %>%
-      # Final "hi" yields are max between (95th percentile observed for each crop times iso/GLU/Irr_Rfd specific yield index)
+      # Final "high" yields are max between (95th percentile observed for each crop times iso/GLU/Irr_Rfd specific yield index)
       # vs. (observed plus observed times min-yield-adj)
       mutate(hi = pmax(maxYield_C * YieldIndex, yield_tha * (1 + MIN_YIELD_ADJ))) %>%
       select(-maxYield_C, -YieldIndex) %>%
@@ -218,17 +218,17 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
 
     # Instead, two methods are developed to calculate the multipiers, and the data-system currently adopts Method TWO.
     # Method ONE is kept as a placeholder for future development:
-    # each crop's lo and hi yields are simply indexed to the observed yield, and these multipliers are weighted by harvested area and aggregated.
+    # each crop's low and high yields are simply indexed to the observed yield, and these multipliers are weighted by harvested area and aggregated.
     # Method TWO: SET THE SAME YIELD MULTIPLIERS EVERYWHERE, 1 plus or minus an adj fraction. (All calculations above are not needed for method TWO)
 
-    # Calculating multipliers from observed to lo and to hi yields, in order to aggregate by GCAM regions and commodities
+    # Calculating multipliers from observed to low and to high yields, in order to aggregate by GCAM regions and commodities
     L181.ag_Yield_tha_ctry_crop_irr_mgmt %>%
       # Have GCAM regions matched in
       left_join_error_no_match(select(iso_GCAM_regID, GCAM_region_ID, iso), by = "iso") %>%
       # Have GCAM commodity matched in, creates NAs, missing GCAM_commodity, use left_join
       left_join(select(FAO_ag_items_PRODSTAT, GCAM_commodity, GTAP_crop), by = "GTAP_crop") %>%
       filter(!is.na(GCAM_commodity)) %>%
-      # Method ONE: lo and hi yields are indexed to the observed yields, and weighted by production (observed, lo, and hi)
+      # Method ONE: low and high yields are indexed to the observed yields, and weighted by production (observed, low, and high)
       mutate(wt_yieldmult_lo = (lo / yield_tha) * HA_ha, wt_yieldmult_hi = (hi / yield_tha) * HA_ha) %>%
       group_by(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd) %>%
       summarise(HA_ha = sum(HA_ha), wt_yieldmult_lo = sum(wt_yieldmult_lo), wt_yieldmult_hi = sum(wt_yieldmult_hi)) %>%
@@ -237,7 +237,7 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
       L181.YieldLevels_R_C_GLU_irr
 
     # Method TWO: HACK TO SET THE SAME YIELD MULTIPLIERS EVERYWHERE
-    # First, set the yield multiplier that goes from the observed to the "hi". "lo" will be the reciprocal of this
+    # First, set the yield multiplier that goes from the observed to the "high". "low" will be the reciprocal of this
     L181.YieldLevels_R_C_GLU_irr %>%
       mutate(yieldmult_hi = 1 + MGMT_YIELD_ADJ, yieldmult_lo = 1 - MGMT_YIELD_ADJ) ->
       L181.YieldLevels_R_C_GLU_irr
@@ -246,7 +246,7 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
     # Multipliers are applied to economic yields (kg/m2/yr, not kg/m2/harvest), and shares are applied to land areas.
     # Production is calculated as land area times yield
 
-    # First, calculate the new EcYields as the former yields times the yield mults, for hi and lo
+    # First, calculate the new EcYields as the former yields times the yield mults, for high and low
     # EcYields are done first because a feasibility check will re-write some of the multipliers
     L171.ag_rfdEcYield_kgm2_R_C_Y_GLU %>%
       mutate(Irr_Rfd = "rfd") %>%
@@ -262,7 +262,7 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
              # These would be included in Monfreda/LDS/FAO/MIRCA, for commodities considered by Mueller, but not in the final Mueller aggregation
              # Set the multipliers to 1
              yieldmult_lo = replace(yieldmult_lo, is.na(yieldmult_lo), 1), yieldmult_hi = replace(yieldmult_hi, is.na(yieldmult_lo), 1),
-             # Hi and lo yields are now calculated as the observed yield times the multipliers
+             # high and low yields are now calculated as the observed yield times the multipliers
              EcYield_kgm2_lo = value * yieldmult_lo, EcYield_kgm2_hi = value * yieldmult_hi) %>%
       select(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd, year, EcYield_kgm2_hi, EcYield_kgm2_lo) %>%
       gather(level, value, -GCAM_region_ID, -GCAM_commodity, -GLU, -Irr_Rfd, -year) %>%
@@ -271,11 +271,11 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
 
     # Second, calculate land shares to each technology in to return correct average yields
     L181.YieldLevels_R_C_GLU_irr %>%
-      # Calculate the land shares to allocate to lo, and hi is the rest (currently the shares are set at 0.5/0.5 to all)
+      # Calculate the land shares to allocate to low, and high is the rest (currently the shares are set at 0.5/0.5 to all)
       mutate(landshare_lo = (1 - yieldmult_hi) / (yieldmult_lo - yieldmult_hi), landshare_hi = 1 - landshare_lo) ->
       L181.YieldLevels_R_C_GLU_irr
 
-    # Apply land shares to disaggregate lo- and hi-input land
+    # Apply land shares to disaggregate low- and high-input land
     L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU %>%
       mutate(Irr_Rfd = "rfd") %>%
       # Combine rainfed and irrigated data
@@ -289,9 +289,9 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
              # As above, any remaining missing values would be minor combinations of region / crop / GLU / irrigation.
              # Leaving this step here in case observations are included in Monfreda/LDS/FAO/MIRCA crop data, for commodities considered by Mueller,
              # but not reported in the Mueller aggregation
-             # Set the shares to 0.5 hi/lo, as no further information is available
+             # Set the shares to 0.5 high/low, as no further information is available
              landshare_lo = replace(landshare_lo, is.na(landshare_lo), 0.5), landshare_hi = replace(landshare_hi, is.na(landshare_lo), 0.5),
-             # lo- and hi-input land are calculated as the total times the shares
+             # low- and high-input land are calculated as the total times the shares
              LC_bm2_lo = value * landshare_lo, LC_bm2_hi = value * landshare_hi) %>%
       select(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd, year, LC_bm2_hi, LC_bm2_lo) %>%
       gather(level, value, -GCAM_region_ID, -GCAM_commodity, -GLU, -Irr_Rfd, -year) %>%
@@ -309,13 +309,13 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
 
     # Calculate bioenergy yield levels
     # Again, two methods are developed, and currently adopts method TWO
-    # Method ONE: calculate a generic weighted lo, observed, and hi yield across all crops
+    # Method ONE: calculate a generic weighted low, observed, and high yield across all crops
     L181.YieldLevels_R_C_GLU_irr %>%
       group_by(GCAM_region_ID, GLU, Irr_Rfd) %>%
       summarise(HA_ha = sum(HA_ha), wt_yieldmult_lo = sum(wt_yieldmult_lo), wt_yieldmult_hi = sum(wt_yieldmult_hi)) %>%
       ungroup %>%
       mutate(yieldmult_lo = wt_yieldmult_lo / HA_ha, yieldmult_hi = wt_yieldmult_hi / HA_ha,
-             # Do not allow the bioenergy "hi" yield multipliers exceed some exogenous threshold
+             # Do not allow the bioenergy "high" yield multipliers exceed some exogenous threshold
              yieldmult_hi = pmin(yieldmult_hi, MAX_BIO_MULTI_HI)) ->
       L181.YieldLevels_R_GLU_irr
 
@@ -346,7 +346,7 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
       add_legacy_name("L181.LC_bm2_R_C_Yh_GLU_irr_level") %>%
       add_precursors("common/iso_GCAM_regID",
                      "aglu/LDS/Mueller_yield_levels",
-                     "aglu/Muller_crops",
+                     "aglu/Mueller_crops",
                      "aglu/FAO_ag_items_PRODSTAT",
                      "L151.ag_irrHA_ha_ctry_crop",
                      "L151.ag_rfdHA_ha_ctry_crop",
@@ -365,7 +365,7 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
       add_legacy_name("L181.ag_EcYield_kgm2_R_C_Y_GLU_irr_level") %>%
       add_precursors("common/iso_GCAM_regID",
                      "aglu/LDS/Mueller_yield_levels",
-                     "aglu/Muller_crops",
+                     "aglu/Mueller_crops",
                      "aglu/FAO_ag_items_PRODSTAT",
                      "L151.ag_irrHA_ha_ctry_crop",
                      "L151.ag_rfdHA_ha_ctry_crop",
