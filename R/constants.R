@@ -76,14 +76,8 @@ MIN_HA_TO_CROPLAND <- 1
 # Cited in: Monfreda et al. 2008, Farming the Planet: 2., Global Biogeochemical Cycles 22, GB1022, http://dx.doi.org/10.1029/2007GB002947
 MAX_HA_TO_CROPLAND <- 3
 
-# The min adjustment factor, used to adjust "hi" and "lo" yields where the observed yields were not within the bounds
-MIN_YIELD_ADJ <- 0.05
-
-# Yield multiplier that goes from the observed yield to the "hi" and "lo" yields: observed plus or minus observed times this number
+# Yield multiplier that goes from the observed yield to the "high" and "low" yields: observed plus or minus observed times this number
 MGMT_YIELD_ADJ <- 0.1
-
-# The threshold that bioenergy "hi" yield multipliers do not exceed
-MAX_BIO_MULTI_HI <- 3
 
 # ======================================================================
 # energy constants
