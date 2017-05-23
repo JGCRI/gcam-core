@@ -20,3 +20,4 @@ R/*.html
 inst/doc
 vignettes/intro-luzlogr.html
 vignettes/intro-luzlogr.R
+tests/testthat/Rplots.pdf
