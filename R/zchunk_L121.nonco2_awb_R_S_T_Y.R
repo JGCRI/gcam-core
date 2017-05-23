@@ -14,22 +14,19 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_emissions_L121.nonco2_awb_R_S_T_Y_DISABLED <- function(command, ...) {
+module_emissions_L121.nonco2_awb_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
-             # ** NOTE *** the following file has been removed from the repo
-             # please talk to Kate about why and how to work around this. Thanks
-             # FILE = "emissions/EDGAR_nation",
-             FILE = "emissions/EDGAR_sector",
+             FILE = "emissions/EDGAR/EDGAR_sector",
              "L103.ag_Prod_Mt_R_C_Y_GLU",
              "L111.ag_resbio_R_C",
-             FILE = "emissions/EDGAR_SO2",
-             FILE = "emissions/EDGAR_CO",
-             FILE = "emissions/EDGAR_NOx",
-             FILE = "emissions/EDGAR_NMVOC",
-             FILE = "emissions/EDGAR_CH4",
-             FILE = "emissions/EDGAR_N2O",
-             FILE = "emissions/EDGAR_NH3"))
+             FILE = "emissions/EDGAR/EDGAR_SO2",
+             FILE = "emissions/EDGAR/EDGAR_CO",
+             FILE = "emissions/EDGAR/EDGAR_NOx",
+             FILE = "emissions/EDGAR/EDGAR_NMVOC",
+             FILE = "emissions/EDGAR/EDGAR_CH4",
+             FILE = "emissions/EDGAR/EDGAR_N2O",
+             FILE = "emissions/EDGAR/EDGAR_NH3"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L121.AWBshare_R_C_Y_GLU",
              "L121.nonco2_tg_R_awb_C_Y_GLU"))
@@ -39,39 +36,62 @@ module_emissions_L121.nonco2_awb_R_S_T_Y_DISABLED <- function(command, ...) {
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    EDGAR_nation <- get_data(all_data, "emissions/EDGAR_nation")
-    EDGAR_sector <- get_data(all_data, "emissions/EDGAR_sector")
+    EDGAR_sector <- get_data(all_data, "emissions/EDGAR/EDGAR_sector")
     L103.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L103.ag_Prod_Mt_R_C_Y_GLU")
     L111.ag_resbio_R_C <- get_data(all_data, "L111.ag_resbio_R_C")
-    EDGAR_SO2 <- get_data(all_data, "emissions/EDGAR_SO2")
-    EDGAR_CO <- get_data(all_data, "emissions/EDGAR_CO")
-    EDGAR_NOx <- get_data(all_data, "emissions/EDGAR_NOx")
-    EDGAR_NMVOC <- get_data(all_data, "emissions/EDGAR_NMVOC")
-    EDGAR_CH4 <- get_data(all_data, "emissions/EDGAR_CH4")
-    EDGAR_N2O <- get_data(all_data, "emissions/EDGAR_N2O")
-    EDGAR_NH3 <- get_data(all_data, "emissions/EDGAR_NH3")
+    EDGAR_SO2 <- get_data(all_data, "emissions/EDGAR/EDGAR_SO2")
+    EDGAR_CO <- get_data(all_data, "emissions/EDGAR/EDGAR_CO")
+    EDGAR_NOx <- get_data(all_data, "emissions/EDGAR/EDGAR_NOx")
+    EDGAR_NMVOC <- get_data(all_data, "emissions/EDGAR/EDGAR_NMVOC")
+    EDGAR_CH4 <- get_data(all_data, "emissions/EDGAR/EDGAR_CH4")
+    EDGAR_N2O <- get_data(all_data, "emissions/EDGAR/EDGAR_N2O")
+    EDGAR_NH3 <- get_data(all_data, "emissions/EDGAR/EDGAR_NH3")
 
     # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses vecpaste
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses repeat_and_add_vector
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
+
+    lenght(d)
+    # Agricultural waste burning emissions by region are assigned to crops and land use regions on the basis of excess dry biomass...
+    # estimated from production, harvest index, and water content
+
+    L103.ag_Prod_Mt_R_C_Y_GLU %>%
+      left_join(L111.ag_resbio_R_C, by = c("GCAM_region_ID", "GCAM_commodity")) %>%
+      select(-c(ErosCtrl_tHa, ResEnergy_GJt, Root_Shoot)) ->
+      L121.ag_ExcessDryBiomass_Mt_R_C_Y_GLU
+
+    #For fiber and fodder crops, default to harvest index of 1 and water content of 0.15 OKAY MAY BE HAVING ISSUES HERE MAY NEED TO ASS as.nuermic(facotr())
+    L121.ag_ExcessDryBiomass_Mt_R_C_Y_GLU %>%
+      mutate(HarvestIndex = as.numeric(ifelse(is.na(HarvestIndex), 1, HarvestIndex))) %>%
+      mutate(WaterContent = as.numeric(ifelse(is.na(WaterContent), 0.15, WaterContent))) ->
+      L121.ag_ExcessDryBiomass_Mt_R_C_Y_GLU_replaced
+
+    # Burnable excess biomass is equal to ( ( Production / HarvestIndex ) - Production ) * ( 1 - WaterContent )
+    # For root crops, the calculation could be done differently, if the root mass is excluded from the denominator of the reported harvest index.
+    # This doesn't seem to be the case in the literature--while for other crops, root mass is excluded from the harvest index, it is included for potatoes.
+    # If excluded, then the harvest index could be greater than 1 (if the tubers weigh more than the above-ground shoots), and the above calculation would
+    # return a negative number. None of the crops in the underlying harvested index database have values greater than 1 so this isn't currently an issue.
+    L112.ag_ExcessDryBiomass_Mt_R_C_Y_GLU_replaced %>%
+      mutate(burnable = ( ( value / HarvestIndex ) - value ) * ( 1 - WaterContent )) %>%
+      group_by(GCAM_region_ID, year) %>%
+      summarise(value = sum(burnable)) ->
+      L112.ag_ExcessDryBiomass_Mt_R_Y
+
+    ###  OKAY HAVING SOME ISSUES HERE!!!!!
+
+    # Make table of ag waste burning share of emissions, for downscaling regional emissions to region/GLU/crop
+
+    L121.ag_ExcessDryBiomass_Mt_R_C_Y_GLU_replaced %>%
+      group_by(year, GCAM_region_ID, GCAM_commodity, GLU) %>%
+      summarize(sum(value)) %>%
+      select(-value) %>%
+      left_join_error_no_match(L121.ag_ExcessDryBiomass_Mt_R_Y, by = c("GCAM_region_ID", "year")) %>%
+      rename(total_ecxess_bio = value) ->
+      L121.AWBshare_R_C_Y_GLU
+
+
+
+
+
+
     # ===================================================
 
     # Produce outputs
@@ -85,7 +105,11 @@ module_emissions_L121.nonco2_awb_R_S_T_Y_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L121.AWBshare_R_C_Y_GLU") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/iso_GCAM_regID") %>%
+      add_precursors("emissions/EDGAR/EDGAR_sector", "emissions/EDGAR/EDGAR_SO2","emissions/EDGAR/EDGAR_CO",
+                     "emissions/EDGAR/EDGAR_NOx", "emissions/EDGAR/EDGAR_NMVOC", "emissions/EDGAR/EDGAR_CH4",
+                     "emissions/EDGAR/EDGAR_N2O", "emissions/EDGAR/EDGAR_NH3") %>%
+      add_precursors("L103.ag_Prod_Mt_R_C_Y_GLU", "L111.ag_resbio_R_C") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L121.AWBshare_R_C_Y_GLU
@@ -95,7 +119,11 @@ module_emissions_L121.nonco2_awb_R_S_T_Y_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L121.nonco2_tg_R_awb_C_Y_GLU") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/iso_GCAM_regID") %>%
+      add_precursors("emissions/EDGAR/EDGAR_sector", "emissions/EDGAR/EDGAR_SO2","emissions/EDGAR/EDGAR_CO",
+                     "emissions/EDGAR/EDGAR_NOx", "emissions/EDGAR/EDGAR_NMVOC", "emissions/EDGAR/EDGAR_CH4",
+                     "emissions/EDGAR/EDGAR_N2O", "emissions/EDGAR/EDGAR_NH3") %>%
+      add_precursors("L103.ag_Prod_Mt_R_C_Y_GLU", "L111.ag_resbio_R_C") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L121.nonco2_tg_R_awb_C_Y_GLU
