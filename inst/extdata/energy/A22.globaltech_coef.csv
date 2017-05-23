@@ -1,0 +1,28 @@
+# File: A22.globaltech_coef.csv,,,,,,
+# Title: Primary energy transformation technologies default coefficient assumptions,,,,,,
+# Units: Unitless,,,,,,
+supplysector,subsector,technology,minicam.energy.input,1971,2020,2100
+gas processing,natural gas,natural gas,regional natural gas,1,1,1
+gas processing,biomass gasification,biomass gasification,regional biomass,1.343,1.343,1.227
+gas processing,coal gasification,coal gasification,regional coal,1.326,1.326,1.211
+nuclearFuelGenII,enrichedUranium,enrichedUranium,uranium,0.002373172,0.002373172,0.002373172
+nuclearFuelGenIII,enrichedUranium,enrichedUranium,uranium,0.002373172,0.002373172,0.002373172
+refining,oil refining,oil refining,regional oil,1.055,1.055,1.02
+refining,oil refining,oil refining,wholesale gas,0.018,0.018,0.018
+refining,oil refining,oil refining,elect_td_ind,0.005,0.005,0.005
+refining,coal to liquids,coal to liquids,regional coal,2.112,2.112,1.959
+refining,coal to liquids,coal to liquids CCS level 1,regional coal,2.196,2.196,2.037
+refining,coal to liquids,coal to liquids CCS level 2,regional coal,2.323,2.323,2.155
+refining,gas to liquids,gas to liquids,regional natural gas,1.654,1.654,1.534
+refining,biomass liquids,cellulosic ethanol,regional biomass,2.057,2.057,1.771
+refining,biomass liquids,cellulosic ethanol CCS level 1,regional biomass,2.139,2.139,1.842
+refining,biomass liquids,cellulosic ethanol CCS level 2,regional biomass,2.263,2.263,1.948
+refining,biomass liquids,FT biofuels,regional biomass,1.961,1.961,1.739
+refining,biomass liquids,FT biofuels CCS level 1,regional biomass,2.039,2.039,1.809
+refining,biomass liquids,FT biofuels CCS level 2,regional biomass,2.157,2.157,1.913
+refining,biomass liquids,corn ethanol,regional corn for ethanol,1,1,1
+refining,biomass liquids,corn ethanol,wholesale gas,0.318,0.318,0.318
+refining,biomass liquids,corn ethanol,elect_td_ind,0.026,0.026,0.026
+refining,biomass liquids,sugar cane ethanol,regional sugar for ethanol,1,1,1
+refining,biomass liquids,biodiesel,regional biomassOil,1.0309,1.0309,1.03
+refining,biomass liquids,biodiesel,wholesale gas,0.05767,0.05767,0.06
