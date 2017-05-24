@@ -26,6 +26,10 @@ module_data_EDGAR_gases <- function(command, ...) {
     return(c("EDGAR_gases"))
   } else if(command == driver.MAKE) {
 
+
+    year <- value <- Non.CO2 <- `IPCC-Annex` <- `World Region` <- ISO_A3 <-
+            Name <- IPCC <- IPCC_description <- NULL # silence package check.
+
     all_data <- list(...)[[1]]
 
     get_data(all_data, "emissions/EDGAR/EDGAR_NH3") %>%

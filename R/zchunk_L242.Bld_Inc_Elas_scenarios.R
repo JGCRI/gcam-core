@@ -13,6 +13,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
+#' @importFrom stats approx
 #' @author RH April 2017
 
 module_socioeconomics_L242.Bld_Inc_Elas_scenarios <- function(command, ...) {
@@ -32,6 +33,9 @@ module_socioeconomics_L242.Bld_Inc_Elas_scenarios <- function(command, ...) {
              "L242.IncomeElasticity_bld_SSP4",
              "L242.IncomeElasticity_bld_SSP5"))
   } else if(command == driver.MAKE) {
+
+    GCAM_region_ID <- value <- year <- pcgdp_90thousUSD <- scenario <-
+        region <- energy.final.demand <- income.elasticity <- . <- NULL # silence package check.
 
     all_data <- list(...)[[1]]
 
