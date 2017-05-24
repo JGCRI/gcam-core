@@ -21,6 +21,8 @@ module_socioeconomics_L100.GDP_hist <- function(command, ...) {
     return(c("L100.gdp_mil90usd_ctry_Yh"))
   } else if(command == driver.MAKE) {
 
+    Country <- year <- value <- iso <- NULL # silence package checks.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

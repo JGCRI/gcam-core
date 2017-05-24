@@ -26,6 +26,10 @@ module_emissions_L103.ghg_an_USA_S_T_Y <- function(command, ...) {
     return(c("L103.ghg_tgmt_USA_an_Sepa_F_2005"))
   } else if(command == driver.MAKE) {
 
+    ## silence package check.
+    sector <- fuel <- . <- technology <- EPA_agg_sector <- EPA_agg_fuel <-
+        year <- GCAM_region_ID <- value <- CH4 <- ch4_em_factor <- NULL
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
