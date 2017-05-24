@@ -32,6 +32,9 @@ module_energy_LA131.enduse <- function(command, ...) {
              "L131.share_R_Senduse_heat_Yh"))
   } else if(command == driver.MAKE) {
 
+    year <- value <- GCAM_region_ID <- sector <- fuel <- value.y <- value.x <-
+        has_district_heat <- . <- NULL  # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

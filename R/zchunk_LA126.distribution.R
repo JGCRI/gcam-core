@@ -37,6 +37,14 @@ module_energy_LA126.distribution <- function(command, ...) {
              "L126.IO_R_gaspipe_F_Yh"))
   } else if(command == driver.MAKE) {
 
+    year <- value <- GCAM_region_ID <- sector <- fuel <-
+        value_electricity_generation <- value_industryCHP <-
+         value_electricity_ownuse_in <- value_electricity_ownuse <-
+         value_electricity_ownuse_out <- value_electricity_ownuse_IO <-
+         value_electd <- value_electd_out <- value_electd_IO <-
+         value_gaspipe_in <- value_gaspipe <- value_gaspipe_out <-
+         value_gaspipe_IO <- NULL       # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

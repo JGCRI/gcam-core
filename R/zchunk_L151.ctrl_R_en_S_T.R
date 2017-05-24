@@ -27,6 +27,9 @@ module_emissions_L151.ctrl_R_en_S_T <- function(command, ...) {
     return(c("L151.nonghg_ctrl_R_en_S_T"))
   } else if(command == driver.MAKE) {
 
+    year <- value <- Non.CO2 <- supplysector <- subsector <- stub.technology <-
+        curr_coeff <- min_coeff <- max_reduction <- . <- NULL # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

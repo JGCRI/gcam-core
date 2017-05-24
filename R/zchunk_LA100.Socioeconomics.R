@@ -28,6 +28,9 @@ module_gcam.usa_LA100.Socioeconomics <- function(command, ...) {
              "L100.Pop_thous_state"))
   } else if(command == driver.MAKE) {
 
+    state <- state_name <- year <- value <- Fips <- Area <- population <- iso <-
+        share <- pop_ratio <- NULL      # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

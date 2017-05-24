@@ -22,6 +22,9 @@ module_energy_LA100.CDIAC_downscale_ctry <- function(command, ...) {
     return(c("L100.CDIAC_CO2_ctry_hist"))
   } else if(command == driver.MAKE) {
 
+    nation <- UN_code <- . <- liquids.sequestration <- year <- category <-
+        value <- iso <- share <- NULL   # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

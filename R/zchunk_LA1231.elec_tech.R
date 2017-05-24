@@ -28,6 +28,13 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
              "L1231.eff_R_elec_F_tech_Yh"))
   } else if(command == driver.MAKE) {
 
+    ## silence package check.
+    subsector <- supplysector <- technology <- minicam.energy.input <- fuel <-
+        value <- year <- efficiency_tech <- improvement.max <- improvement.rate <- NULL
+    improvement.shadow.technology <- efficiency_tech.x <- efficiency_tech.y <-
+        efficiency <- efficiency_tech1 <- efficiency_tech2 <- GCAM_region_ID <- NULL
+    sector <- share_tech1 <- in_EJ <- in_EJ_tech1 <- in_EJ_tech2 <- output <- NULL
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
