@@ -19,7 +19,6 @@
 module_emissions_L105.nh3_an_USA_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "emissions/mappings/EPA_tech",
-             FILE = "emissions/mappings/GCAM_sector_tech",
              "L107.an_Prod_Mt_R_C_Sys_Fd_Y",
              FILE = "emissions/EPA_NH3"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -33,7 +32,6 @@ module_emissions_L105.nh3_an_USA_S_T_Y <- function(command, ...) {
 
     # Load required inputs
     EPA_tech <- get_data(all_data, "emissions/mappings/EPA_tech")
-    GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
     L107.an_Prod_Mt_R_C_Sys_Fd_Y <- get_data(all_data, "L107.an_Prod_Mt_R_C_Sys_Fd_Y")
     EPA_NH3 <- get_data(all_data, "emissions/EPA_NH3")
 
@@ -92,7 +90,6 @@ module_emissions_L105.nh3_an_USA_S_T_Y <- function(command, ...) {
       add_comments("Historical years 1971 - 1989 are estimated as 1990 values") %>%
       add_legacy_name("L105.nh3_tgmt_USA_an_Yh") %>%
       add_precursors("emissions/mappings/EPA_tech",
-                     "emissions/mappings/GCAM_sector_tech",
                      "L107.an_Prod_Mt_R_C_Sys_Fd_Y",
                      "emissions/EPA_NH3") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
