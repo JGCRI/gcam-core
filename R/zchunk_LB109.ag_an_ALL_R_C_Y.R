@@ -30,6 +30,12 @@ module_aglu_LB109.ag_an_ALL_R_C_Y <- function(command, ...) {
              "L109.an_ALL_Mt_R_C_Y"))
   } else if(command == driver.MAKE) {
 
+    year <- value <- GCAM_region_ID <- GCAM_commodity <- . <- flow <- Feed_Mt <-
+        Prod_Mt <- NetExp_Mt <- Supply_Mt <- Food_Mt <- Biofuels_Mt <-
+            OtherUses_Mt <- NegOtherUses_Mt <- OtherUses_Mt_adj <-
+                GlobalOtherUses_Mt <- NetExp_Mt_adj <- NetExpAdjFrac <-
+                    GlobalNetExpAdj <- NULL # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

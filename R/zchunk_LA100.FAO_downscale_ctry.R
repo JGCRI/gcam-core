@@ -59,6 +59,10 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
              "L100.FAO_For_Prod_m3"))
   } else if(command == driver.MAKE) {
 
+    iso <- FAO_country <- `country codes` <- `element codes` <- `item codes` <-
+        year <- value <- countries <- country.codes <- item <- item.codes <-
+            element <- element.codes <- NULL # silence package chck.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
@@ -152,7 +156,9 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
       FAO_data_ALL
 
     # Replace all missing values with 0
-    FAO_data_ALL[is.na(FAO_data_ALL)] <- 0
+    repl <- as.list(rep(0, ncol(FAO_data_ALL)))
+    names(repl) <- names(FAO_data_ALL)
+    FAO_data_ALL <- replace_na(FAO_data_ALL, repl)
 
     # Match the iso names
     FAO_data_ALL %>%
@@ -232,111 +238,112 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
       mutate(year = as.integer(year)) ->
       FAO_data_ALL_5yr
 
-    # Re-split into separate tables for each element
-    for(i in unique(FAO_data_ALL_5yr$element)) {
-      legacy_name <- paste0("L100.FAO_", i)
-      filter(FAO_data_ALL_5yr, element == i) %>%
-        add_comments("Downscale countries; calculate 5-yr averages") %>%
-        add_legacy_name(legacy_name) %>%
-        add_flags(FLAG_NO_XYEAR, FLAG_LONG_YEAR_FORM) ->
-        df
-      assign(legacy_name, df)
+    ## Re-split into separate tables for each element
+    L100.FAOlist <- split(seq(1,nrow(FAO_data_ALL_5yr)), FAO_data_ALL_5yr$element)
+    names(L100.FAOlist) <- lapply(names(L100.FAOlist), function(x) {paste0("L100.FAO_", x)})
+                                        # change list names to match the legacy
+                                        # names
+    fixup <- function(irows, legacy.name) {
+        FAO_data_ALL_5yr[irows,] %>%
+          add_comments("Downscale countries; calculate 5-yr averages") %>%
+          add_legacy_name(legacy.name) %>%
+          add_flags(FLAG_NO_XYEAR, FLAG_LONG_YEAR_FORM)
     }
+    L100.FAOlist <- Map(fixup, L100.FAOlist, names(L100.FAOlist))
 
-    # Add description, units, process (done above), and precursor information
-
-    L100.FAO_ag_HA_ha %>%
+    ## Add description, units, process (done above), and precursor information
+    L100.FAOlist[["L100.FAO_ag_HA_ha"]] %>%
       add_title("FAO agricultural harvested area by country, item, year") %>%
       add_units("t") %>%
       add_precursors("aglu/FAO_ag_HA_ha_PRODSTAT", "aglu/AGLU_ctry") ->
       L100.FAO_ag_HA_ha
-    L100.FAO_ag_Prod_t %>%
+    L100.FAOlist[["L100.FAO_ag_Prod_t"]] %>%
       add_title("FAO agricultural production by country, item, year") %>%
       add_units("t") %>%
       add_precursors("aglu/FAO_ag_Prod_t_PRODSTAT", "aglu/AGLU_ctry") ->
       L100.FAO_ag_Prod_t
-    L100.FAO_ag_Exp_t %>%
+    L100.FAOlist[["L100.FAO_ag_Exp_t"]] %>%
       add_title("FAO agricultural exports by country, item, year") %>%
       add_units("t") %>%
       add_precursors("aglu/FAO_ag_Exp_t_SUA", "aglu/AGLU_ctry") ->
       L100.FAO_ag_Exp_t
-    L100.FAO_ag_Feed_t %>%
+    L100.FAOlist[["L100.FAO_ag_Feed_t"]] %>%
       add_title("FAO agricultural feed by country, item, year") %>%
       add_units("t") %>%
       add_precursors("aglu/FAO_ag_Feed_t_SUA", "aglu/AGLU_ctry") ->
       L100.FAO_ag_Feed_t
-    L100.FAO_ag_Food_t %>%
+    L100.FAOlist[["L100.FAO_ag_Food_t"]] %>%
       add_title("FAO agricultural food consumption by country, item, year") %>%
       add_units("t") %>%
       add_precursors("aglu/FAO_ag_Food_t_SUA", "aglu/AGLU_ctry") ->
       L100.FAO_ag_Food_t
-    L100.FAO_ag_Imp_t %>%
+    L100.FAOlist[["L100.FAO_ag_Imp_t"]] %>%
       add_title("FAO agricultural imports by country, item, year") %>%
       add_units("t") %>%
       add_precursors("aglu/FAO_ag_Imp_t_SUA", "aglu/AGLU_ctry") ->
       L100.FAO_ag_Imp_t
-    L100.FAO_an_Exp_t %>%
+    L100.FAOlist[["L100.FAO_an_Exp_t"]] %>%
       add_title("FAO animal exports by country, item, year") %>%
       add_units("t") %>%
       add_precursors("aglu/FAO_an_Exp_t_SUA", "aglu/AGLU_ctry") ->
       L100.FAO_an_Exp_t
-    L100.FAO_an_Food_t %>%
+    L100.FAOlist[["L100.FAO_an_Food_t"]] %>%
       add_title("FAO animal food consumption by country, item, year") %>%
       add_units("t") %>%
       add_precursors("aglu/FAO_an_Food_t_SUA", "aglu/AGLU_ctry") ->
       L100.FAO_an_Food_t
-    L100.FAO_an_Imp_t %>%
+    L100.FAOlist[["L100.FAO_an_Imp_t"]] %>%
       add_title("FAO animal imports by country, item, year") %>%
       add_units("t") %>%
       add_precursors("aglu/FAO_an_Imp_t_SUA", "aglu/AGLU_ctry") ->
       L100.FAO_an_Imp_t
-    L100.FAO_an_Prod_t %>%
+    L100.FAOlist[["L100.FAO_an_Prod_t"]] %>%
       add_title("FAO animal production by country, item, year") %>%
       add_units("t") %>%
       add_precursors("aglu/FAO_an_Prod_t_SUA", "aglu/AGLU_ctry") ->
       L100.FAO_an_Prod_t
-    L100.FAO_CL_kha %>%
+    L100.FAOlist[["L100.FAO_CL_kha"]] %>%
       add_title("FAO cropland area by country, year") %>%
       add_units("kha") %>%
       add_precursors("aglu/FAO_CL_kha_RESOURCESTAT", "aglu/AGLU_ctry") ->
       L100.FAO_CL_kha
-    L100.FAO_fallowland_kha %>%
+    L100.FAOlist[["L100.FAO_fallowland_kha"]] %>%
       add_title("FAO fallow land area by country, year") %>%
       add_units("kha") %>%
       add_flags(FLAG_PROTECT_FLOAT) %>%
       add_precursors("aglu/FAO_fallowland_kha_RESOURCESTAT", "aglu/AGLU_ctry") ->
       L100.FAO_fallowland_kha
-    L100.FAO_harv_CL_kha %>%
+    L100.FAOlist[["L100.FAO_harv_CL_kha"]] %>%
       add_title("FAO harvested cropland (temporary crops) area by country, year") %>%
       add_units("kha") %>%
       add_flags(FLAG_PROTECT_FLOAT) %>%
       add_precursors("aglu/FAO_harv_CL_kha_RESOURCESTAT", "aglu/AGLU_ctry") ->
       L100.FAO_harv_CL_kha
-    L100.FAO_Fert_Cons_tN %>%
+    L100.FAOlist[["L100.FAO_Fert_Cons_tN"]] %>%
       add_title("FAO fertilizer consumption by country, year") %>%
       add_units("tonnes N") %>%
       add_precursors("aglu/FAO_Fert_Cons_tN_RESOURCESTAT",
                      "aglu/FAO_Fert_Cons_tN_RESOURCESTAT_archv",
                      "aglu/AGLU_ctry") ->
       L100.FAO_Fert_Cons_tN
-    L100.FAO_Fert_Prod_tN %>%
+    L100.FAOlist[["L100.FAO_Fert_Prod_tN"]] %>%
       add_title("FAO fertilizer production by country, year") %>%
       add_units("tonnes N") %>%
       add_precursors("aglu/FAO_Fert_Prod_tN_RESOURCESTAT",
                      "aglu/FAO_Fert_Prod_tN_RESOURCESTAT_archv",
                      "aglu/AGLU_ctry") ->
       L100.FAO_Fert_Prod_tN
-    L100.FAO_For_Exp_m3 %>%
+    L100.FAOlist[["L100.FAO_For_Exp_m3"]] %>%
       add_title("FAO forestry exports by country, year") %>%
       add_units("m3") %>%
       add_precursors("aglu/FAO_For_Exp_m3_FORESTAT", "aglu/AGLU_ctry") ->
       L100.FAO_For_Exp_m3
-    L100.FAO_For_Imp_m3 %>%
+    L100.FAOlist[["L100.FAO_For_Imp_m3"]] %>%
       add_title("FAO forestry imports by country, year") %>%
       add_units("m3") %>%
       add_precursors("aglu/FAO_For_Imp_m3_FORESTAT", "aglu/AGLU_ctry") ->
       L100.FAO_For_Imp_m3
-    L100.FAO_For_Prod_m3 %>%
+    L100.FAOlist[["L100.FAO_For_Prod_m3"]] %>%
       add_title("FAO forestry production by country, year") %>%
       add_units("m3") %>%
       add_precursors("aglu/FAO_For_Prod_m3_FORESTAT", "aglu/AGLU_ctry") ->
@@ -382,6 +389,7 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
 downscale_FAO_country <- function(data, country_name, dissolution_year, item_name = "item",
                                   element_name = "element", years = AGLU_HISTORICAL_YEARS) {
 
+  countries <- NULL                     # silence package check notes
   # Compute the ratio for all years leading up to the dissolution year, and including it
   # I.e. normalizing the time series by the value in the dissolution year
   ctry_years <- years[years < dissolution_year]

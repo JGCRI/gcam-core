@@ -25,6 +25,9 @@ module_emissions_L123.bcoc_awb_R_S_T_Y <- function(command, ...) {
     return(c("L123.bcoc_tgmt_R_awb_2000"))
   } else if(command == driver.MAKE) {
 
+    year <- iso <- awb <- Non.CO2 <- GCAM_region_ID <- AWB_emiss_share <-
+        awb_emission <- value <- . <- NULL # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

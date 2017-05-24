@@ -29,6 +29,10 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
              "L107.an_FeedIO_R_C_Sys_Fd_Y"))
   } else if(command == driver.MAKE) {
 
+    year <- value <- iso <- IMAGE_region_ID <- commodity <- input <-
+        GCAM_commodity <- value.x <- value.y <- . <- GCAM_region_ID <- feed <-
+            NULL                        # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
@@ -168,7 +172,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
     # take country level animal production data:
     L107.an_Prod_Mt_ctry_C_Sys_Fd_Y %>%
       # add in the GCAM region id corresponding to the country:
-      mutate(GCAM_region_ID =  left_join_error_no_match(., iso_GCAM_regID, by = c("iso"))$GCAM_region_ID) %>%
+      mutate(GCAM_region_ID =  left_join_error_no_match(., iso_GCAM_regID, by = c("iso"))[['GCAM_region_ID']]) %>%
       # drop the country:
       select(-iso) %>%
       # group unique identifiers:
@@ -181,7 +185,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
     # take country level feed consumption data:
     L107.an_Feed_Mt_ctry_C_Sys_Fd_Y %>%
       # add in the GCAM region id corresponding to the country:
-      mutate(GCAM_region_ID =  left_join_error_no_match(., iso_GCAM_regID, by = c("iso"))$GCAM_region_ID) %>%
+      mutate(GCAM_region_ID =  left_join_error_no_match(., iso_GCAM_regID, by = c("iso"))[['GCAM_region_ID']]) %>%
       # drop the country:
       select(-iso) %>%
       # group unique identifiers:
@@ -203,7 +207,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
       # drop the columns we don't care about:
       select(-value.x, -value.y) %>%
       # replace NA/NaN with the value 100
-      mutate(value=if_else(is.na(value), 100, value))->
+      replace_na(list(value = 100)) ->
       # store in a table specifying IO coefficients by region, commodity, system, feed type, and year:
       L107.an_FeedIO_R_C_Sys_Fd_Y
 

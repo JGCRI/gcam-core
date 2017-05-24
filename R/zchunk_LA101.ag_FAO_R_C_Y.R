@@ -35,6 +35,10 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    countries <- country.codes <- item.codes <- element <- element.codes <-
+        GCAM_commodity <- value <- GCAM_region_ID <- year <- Mcal_t <- value.y <-
+            value.x <- item <- iso <- production <- harvested.area <- NULL # silence package check.
+
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO_ag_items_PRODSTAT")
@@ -94,7 +98,7 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
       FAO_ag_Prod_t
 
     # Set production to zero when harvested area is zero and vice versa
-    FAO_ag_HA_ha %>%
+    FAO_ag_HA_ha %>% ungroup %>%
       inner_join(FAO_ag_Prod_t, by = c("iso", "item", "year")) %>%                                              # Join production and harvested area
       rename(harvested.area = value.x, production = value.y)   %>%                                              # Rename variables
       mutate(harvested.area = if_else(production == 0, 0, harvested.area)) %>%                                  # Set harvested area to zero if production is zero

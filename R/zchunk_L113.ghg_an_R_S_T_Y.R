@@ -18,11 +18,11 @@ module_emissions_L113.ghg_an_R_S_T_Y_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "emissions/EDGAR_sector",
-             FILE = "emissions/EPA_ghg_tech",
+             FILE = "emissions/mappings/EPA_ghg_tech",
              # ** NOTE *** the following file has been removed from the repo
              # please talk to Kate about why and how to work around this. Thanks
              # FILE = "emissions/EDGAR_nation",
-             FILE = "emissions/GCAM_sector_tech",
+             FILE = "emissions/mappings/GCAM_sector_tech",
              "L107.an_Prod_Mt_R_C_Sys_Fd_Y",
              "L103.ghg_tgmt_USA_an_Sepa_F_2005",
              FILE = "emissions/EDGAR_CH4",
@@ -36,9 +36,9 @@ module_emissions_L113.ghg_an_R_S_T_Y_DISABLED <- function(command, ...) {
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     EDGAR_sector <- get_data(all_data, "emissions/EDGAR_sector")
-    EPA_ghg_tech <- get_data(all_data, "emissions/EPA_ghg_tech")
+    EPA_ghg_tech <- get_data(all_data, "emissions/mappings/EPA_ghg_tech")
     EDGAR_nation <- get_data(all_data, "emissions/EDGAR_nation")
-    GCAM_sector_tech <- get_data(all_data, "emissions/GCAM_sector_tech")
+    GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
     L107.an_Prod_Mt_R_C_Sys_Fd_Y <- get_data(all_data, "L107.an_Prod_Mt_R_C_Sys_Fd_Y")
     L103.ghg_tgmt_USA_an_Sepa_F_2005 <- get_data(all_data, "L103.ghg_tgmt_USA_an_Sepa_F_2005")
     EDGAR_CH4 <- get_data(all_data, "emissions/EDGAR_CH4")

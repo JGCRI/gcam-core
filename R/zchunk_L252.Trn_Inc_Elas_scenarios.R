@@ -12,6 +12,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
+#' @importFrom stats approx
 #' @author RH May 2017
 
 module_socioeconomics_L252.Trn_Inc_Elas_scenarios <- function(command, ...) {
@@ -32,6 +33,9 @@ module_socioeconomics_L252.Trn_Inc_Elas_scenarios <- function(command, ...) {
              "L252.IncomeElasticity_trn_SSP5"))
   } else if(command == driver.MAKE) {
 
+    value <- year <- pcgdp_90thousUSD <- GCAM_region_ID <- . <- scenario <-
+        NULL                            # silence package checks
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
@@ -48,7 +52,7 @@ module_socioeconomics_L252.Trn_Inc_Elas_scenarios <- function(command, ...) {
       mutate(income.elasticity = approx(x = A52.inc_elas$pcgdp_90thousUSD, y = A52.inc_elas$inc_elas,
                                         # Rule 2 means that data outside of the interval of input
                                         # data will be assigned the closest data extreme
-                                        xout = pcgdp_90thousUSD, rule = 2 )$y,
+                                        xout = pcgdp_90thousUSD, rule = 2 )[['y']],
              energy.final.demand = "transportation") %>%
       # Add in region names
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%

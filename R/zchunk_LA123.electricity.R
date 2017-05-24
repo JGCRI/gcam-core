@@ -26,6 +26,10 @@ module_energy_LA123.electricity <- function(command, ...) {
              "L123.in_EJ_R_indchp_F_Yh"))
   } else if(command == driver.MAKE) {
 
+    year <- value <- GCAM_region_ID <- fuel <- sector <- electricity <-
+        outputs <- input <- outputs_new <- industry <- elec_ratio <-
+        outputs_ratio <- NULL           # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

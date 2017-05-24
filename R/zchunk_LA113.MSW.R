@@ -23,6 +23,9 @@ module_energy_LA113.MSW <- function(command, ...) {
     return(c("L113.RsrcCurves_EJ_R_MSW"))
   } else if(command == driver.MAKE) {
 
+    year <- region_GCAM3 <- value <- sumvalue <- share <- maxSubResource <- NULL
+    ## silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
