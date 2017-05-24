@@ -18,11 +18,11 @@ the generated outputs: \code{L121.AWBshare_R_C_Y_GLU}, \code{L121.nonco2_tg_R_aw
 original data system was \code{L121.nonco2_awb_R_S_T_Y.R} (emissions level1).
 }
 \description{
-Briefly describe what this chunk does.
+Agricultural waste burning emissions by region are assigned to crops and land use regions on the basis of excess dry biomass estimated from production, harvest index, and water content.
 }
 \details{
 Describe in detail what this chunk does.
 }
 \author{
-YourInitials CurrentMonthName 2017
+KD May 2017
 }
