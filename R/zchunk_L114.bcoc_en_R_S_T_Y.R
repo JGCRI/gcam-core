@@ -29,6 +29,11 @@ module_emissions_L114.bcoc_en_R_S_T_Y <- function(command, ...) {
     return(c("L114.bcoc_tgej_R_en_S_F_2000"))
   } else if(command == driver.MAKE) {
 
+    BCOC_agg_fuel <- BCOC_agg_sector <- Country <- Non.CO2 <- GCAM_region_ID <-
+      RCP_agg_sector <- emissions.factor <- energy <- fuel <- input.emissions <-
+      iso  <- scaled_emissions <- scaler <- sector <- stub.technology <- subsector <-
+      supplysector <- technology <- unscaled_emissions <- year <- NULL # silence package check notes
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
@@ -71,7 +76,7 @@ module_emissions_L114.bcoc_en_R_S_T_Y <- function(command, ...) {
       mutate(unscaled_emissions = energy * emissions.factor) %>%
       # Match in the RCP sectors used for scaling these emissions prior to aggregation
       left_join_keep_first_only(select(GCAM_sector_tech, sector, technology, RCP_agg_sector),
-                                 by = c("sector", "technology"))
+                                by = c("sector", "technology"))
 
     # Aggregate by the broader "RCP" categories for computing scalers
     BCOC_unscaled_emissions_RCP <- BCOC_unscaled_emissions %>%
@@ -108,7 +113,7 @@ module_emissions_L114.bcoc_en_R_S_T_Y <- function(command, ...) {
       mutate(input.emissions = unscaled_emissions * scaler) %>%
       # Join in the supplysector/subsector/technology from the mapping table
       left_join_keep_first_only(select(GCAM_sector_tech, sector, fuel, technology, supplysector, subsector, stub.technology),
-                               by = c("sector", "fuel", "technology")) %>%
+                                by = c("sector", "fuel", "technology")) %>%
       # Group by categories for GCAM and aggregate the emissions
       group_by(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology) %>%
       summarise(input.emissions = sum(input.emissions)) %>%
@@ -126,13 +131,13 @@ module_emissions_L114.bcoc_en_R_S_T_Y <- function(command, ...) {
     # Compute the emissions coefficients for the year 2000
     L114.bcoc_tgej_R_en_S_F_2000 <- BCOC_scaled_emissions %>%
       left_join_error_no_match(BCOC_drivers_GCAMtech,
-                                by = c("GCAM_region_ID", "supplysector", "subsector", "stub.technology")) %>%
+                               by = c("GCAM_region_ID", "supplysector", "subsector", "stub.technology")) %>%
       mutate(emissions.factor = input.emissions / energy) %>%
       na.omit() %>%
       mutate(year = 2000) %>%
       select(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, year, emissions.factor) %>%
       spread(year, emissions.factor)
-      # Document for output
+    # Document for output
     L114.bcoc_tgej_R_en_S_F_2000 %>%
       add_title("BC / OC emissions factors for energy technologies by GCAM region / sector / technology / 2000") %>%
       add_units("Tg / EJ (kg/GJ)") %>%

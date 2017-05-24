@@ -28,7 +28,7 @@ module_emissions_L151.ctrl_R_en_S_T <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     year <- value <- Non.CO2 <- supplysector <- subsector <- stub.technology <-
-        curr_coeff <- min_coeff <- max_reduction <- . <- NULL # silence package check.
+        GCAM_region_ID <- curr_coeff <- min_coeff <- max_reduction <- . <- NULL # silence package check.
 
     all_data <- list(...)[[1]]
 
