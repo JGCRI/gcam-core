@@ -14,6 +14,7 @@
 #' @importFrom tidyr gather spread
 #' @author FF, May 2017
 
+
 module_energy_LA122.gasproc_refining <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
@@ -55,7 +56,6 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
       mutate(year = as.integer(substr(year, 2, 5))) -> L121.in_EJ_R_unoil_F_Yh
 
     # ===================================================
-
     # Perform computations: Will start with refining
 
     # Most of the technologies (in calibrated_techs.csv) have inputs from outputs based on exogenous coefficients (A22.globaltech_coef).
@@ -188,6 +188,7 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
       select(-value_ctl_oil, -value_gtl_oil) -> gtlctl_oil
 
     # Final adjustments to fuel outputs for CTL and GTL to tackle the Note (NOTE*1) made above
+    # left_join_error_no_match could be used here since it has some problems with the timeshifting test
     L122.out_EJ_R_oilrefining_Yh %>%
       left_join(en_bal_oil, by = c("GCAM_region_ID", "sector", "year")) %>%
       left_join(gtlctl_oil, by = c("GCAM_region_ID", "sector", "year")) %>%
