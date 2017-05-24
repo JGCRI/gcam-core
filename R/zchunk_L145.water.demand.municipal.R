@@ -14,7 +14,7 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_water_L145.water.demand.municipal_DISABLED <- function(command, ...) {
+module_water_L145.water.demand.municipal <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "common/GCAM_region_names",
@@ -43,6 +43,10 @@ module_water_L145.water.demand.municipal_DISABLED <- function(command, ...) {
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
     #
+
+
+
+
     # If you find a mistake/thing to update in the old code and
     # fixing it will change the output data, causing the tests to fail,
     # (i) open an issue on GitHub, (ii) consult with colleagues, and
@@ -72,7 +76,11 @@ module_water_L145.water.demand.municipal_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L145.municipal_water_R_W_Yh_km3") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/iso_GCAM_regID", "common/GCAM_region_names", "aglu/AGLU_ctry",
+                     "water/FAO_municipal_water_AQUASTAT",
+                     "water/IBNET_municipal_water_cost_USDm3",
+                     "water/municipal_water_use_efficiency",
+                     "water/manufacturing_water_mapping") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L145.municipal_water_R_W_Yh_km3
@@ -82,7 +90,11 @@ module_water_L145.water.demand.municipal_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L145.municipal_water_cost_R_75USD_m3") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/iso_GCAM_regID", "common/GCAM_region_names", "aglu/AGLU_ctry",
+                     "water/FAO_municipal_water_AQUASTAT",
+                     "water/IBNET_municipal_water_cost_USDm3",
+                     "water/municipal_water_use_efficiency",
+                     "water/manufacturing_water_mapping") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L145.municipal_water_cost_R_75USD_m3
@@ -92,7 +104,11 @@ module_water_L145.water.demand.municipal_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L145.municipal_water_eff_R_Y") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/iso_GCAM_regID", "common/GCAM_region_names", "aglu/AGLU_ctry",
+                     "water/FAO_municipal_water_AQUASTAT",
+                     "water/IBNET_municipal_water_cost_USDm3",
+                     "water/municipal_water_use_efficiency",
+                     "water/manufacturing_water_mapping") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L145.municipal_water_eff_R_Y
