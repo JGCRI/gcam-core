@@ -21,7 +21,7 @@ original data system was \code{L115.nh3_an_R_S_T_Y.R} (emissions level1).
 Annual animal NH3 emissions by GCAM region, sector and technology.
 }
 \details{
-Describe in detail what this chunk does.
+This chunk uses EPA emissions and FAO data to estimate agricultural NH3 emissions which are scaled to regional values using EDGAR data.
 }
 \author{
 KD May 2017
