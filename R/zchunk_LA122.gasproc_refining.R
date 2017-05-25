@@ -63,10 +63,10 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
     # Remove "x" year
     A22.globaltech_coef %>%
       semi_join(select(calibrated_techs, supplysector, subsector, technology), by = c("supplysector", "subsector", "technology")) %>%
-      left_join_error_no_match(select(calibrated_techs, supplysector, subsector, technology, minicam.energy.input, sector, fuel), by = c("supplysector", "subsector", "technology","minicam.energy.input")) %>%
+      left_join(select(calibrated_techs, supplysector, subsector, technology, minicam.energy.input, sector, fuel), by = c("supplysector", "subsector", "technology","minicam.energy.input")) %>%
       gather(hist_year, value, -supplysector, -subsector, -technology, -minicam.energy.input, -sector, -fuel) %>%
       mutate(hist_year = as.numeric(hist_year)) %>%
-      filter(hist_year == "1971") %>%
+      filter(hist_year == min(HISTORICAL_YEARS)) %>%
       repeat_add_columns(tibble::tibble(year = HISTORICAL_YEARS)) %>%
       select(-hist_year) -> L122.globaltech_coef
 
@@ -245,7 +245,7 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
     # 1971 and the repeat the corresponding value (repeat_add_columns) for historical years
     A21.globaltech_coef %>%
       gather(hist_year, value, -supplysector, -subsector, -technology, -minicam.energy.input) %>%
-      filter(hist_year == "1971") %>%
+      filter(hist_year == min(HISTORICAL_YEARS)) %>%
       repeat_add_columns(tibble::tibble(year = HISTORICAL_YEARS) ) %>%
       select(-hist_year) -> L121.globaltech_coef
 
@@ -265,10 +265,10 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
       gather(hist_year, value, -supplysector, -subsector, -technology, -minicam.energy.input) %>%
     # Filter 1971 since the value associated to this year is the same till 2100, but all historical years are missing. Therefore filter
     # 1971 and the repeat the corresponding value (repeat_add_columns) for historical years
-      filter(hist_year == "1971") %>%
+      filter(hist_year == min(HISTORICAL_YEARS)) %>%
       repeat_add_columns(tibble::tibble(year = HISTORICAL_YEARS)) %>%
       select(-hist_year) %>%
-      left_join_error_no_match(select(calibrated_techs, supplysector, subsector, technology, sector, fuel), by = c("supplysector", "subsector" ,"technology")) -> L122.gasproc_coef
+      left_join(select(calibrated_techs, supplysector, subsector, technology, sector, fuel), by = c("supplysector", "subsector" ,"technology")) -> L122.gasproc_coef
 
     # Gas processing output from biomass gasification is equal to regional TPES
     L1011.en_bal_EJ_R_Si_Fi_Yh %>%
