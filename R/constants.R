@@ -99,6 +99,8 @@ CONV_THA_KGM2 <- 0.1   # tons C/ha -> kg C/m2
 CONV_GG_TG <- 0.001 # gigagrams to tegagrams
 CONV_TST_TG <- 0.000907 # thousand short tons to Tg
 CONV_KG_TO_TG <- 1e-9
+CONV_GWH_EJ <- 3.6e-6
+CONV_YEAR_HOURS <- 24 * 365.25
 CONV_KT_MT <- 0.001 # kt to Mt
 CONV_T_MT <- 1e-6 # t to Mt
 
@@ -181,3 +183,4 @@ emissions.EDGAR_HISTORICAL <- 1971:2008
 emissions.EPA_MACC_YEAR <- 2030  # Must be either 2020 or 2030
 emissions.MAC_TAXES <- c( 0, 5, 10, 15, 32, 66, 129, 243, 486, 1093 ) # Range of costs in 1990 USD
 emissions.CONV_C_CO2 <- 44 / 12 # Convert Carbon to CO2
+emissions.DEFOREST_COEF_YEARS <- c(2000, 2005)
