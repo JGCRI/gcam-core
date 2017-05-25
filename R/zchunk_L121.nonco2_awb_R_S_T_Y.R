@@ -33,6 +33,12 @@ module_emissions_L121.nonco2_awb_R_S_T_Y <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    `2009` <- `2010` <- AWB_emiss_share <- ErosCtrl_tHa <- GCAM_commodity <- GCAM_region_ID <-
+      GLU <- HarvestIndex <- IPCC <- IPCC-Annex <- IPCC_description <- Name <- Non.CO2 <-
+      ResEnergy_GJt <- Root_Shoot <- WaterContent <- World <- Region <- agg_sector <-
+      burnable <- country_name <- emissions <- iso <- region_GCAM3 <- sector <- total_emiss <-
+      total_excess_bio <- value <- year <- NULL  # silence package check notes
+
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     EDGAR_sector <- get_data(all_data, "emissions/EDGAR/EDGAR_sector")
