@@ -161,47 +161,38 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
         ungroup ->
         L100.USSR_Yug_FLOW_PRODUCT
 
-
       L100.USSR_Yug_ctry_FLOW_PRODUCT %>%
         left_join_error_no_match(distinct(select(L100.USSR_Yug_FLOW_PRODUCT, -FLOW), IEAcomposite, PRODUCT, .keep_all = TRUE),
                                  by = c("IEAcomposite", "PRODUCT")) %>%
         mutate(`1990_share` = `1990` / `1990_sum`) %>%
-        replace_na(list(`1990_share` = 0)) %>%
-        select(iso, PRODUCT, FLOW, `1990_share`) ->
+        replace_na(list(`1990_share` = 0)) ->
         L100.USSR_Yug_ctry_FLOW_PRODUCT_1990
 
       # Calculate the energy balances of the individual countries during the USSR years as
       # the total in the composite region times the country-wise shares in 1990 (121-131)
       L100.USSR_Yug_ctry %>%
-        select(iso, FLOW, PRODUCT, IEAcomposite) %>%
+        select(one_of("iso", "FLOW", "PRODUCT", "IEAcomposite", POST_USSR_YUG_YEARS_IEA)) %>%
         left_join_keep_first_only(select(L100.USSR_Yug, one_of("COUNTRY", "FLOW", "PRODUCT", USSR_YUG_YEARS)),
-                                  by = c("IEAcomposite" = "COUNTRY", "FLOW", "PRODUCT")) ->
-        L100.USSR_Yug_ctry_bal
-
-      #        if(OLD_DATA_SYSTEM_BEHAVIOR) {
-      L100.USSR_Yug_ctry_bal %>%
+                                  by = c("IEAcomposite" = "COUNTRY", "FLOW", "PRODUCT")) %>%
         left_join_keep_first_only(select(L100.USSR_Yug_ctry_FLOW_PRODUCT_1990, iso, PRODUCT, `1990_share`),
                                   by = c("iso", "PRODUCT")) ->
         L100.USSR_Yug_ctry_bal
-      # } else {
-      #   L100.USSR_Yug_ctry_bal %>%
-      #     left_join_error_no_match(L100.USSR_Yug_ctry_FLOW_PRODUCT_1990, by = c("iso", "PRODUCT", "FLOW")) ->
-      #     L100.USSR_Yug_ctry_bal
-      # }
 
       USSR_YUG_COLUMNS <- which(names(L100.USSR_Yug_ctry_bal) %in% USSR_YUG_YEARS)
       L100.USSR_Yug_ctry_bal[USSR_YUG_COLUMNS] <- L100.USSR_Yug_ctry_bal[USSR_YUG_COLUMNS] * L100.USSR_Yug_ctry_bal$`1990_share`
+      L100.USSR_Yug_ctry_bal$`1990_share` <- NULL
 
       # Composite regions where population is used to downscale energy to countries over all historical years
-      # Subset composite regions
-      L100.Afr <- filter(L100.IEAcomposite, COUNTRY == "Other Africa")
-      L100.LAM <- filter(L100.IEAcomposite, COUNTRY == "Other Non-OECD Americas")
-      L100.Asia <- filter(L100.IEAcomposite, COUNTRY == "Other Asia")
-
-      # Repeat by number of countries in each (139-142)
-      L100.Afr_repCtry <- repeat_add_columns(L100.Afr, tibble(iso = IEA_ctry_composite$iso[IEA_ctry_composite$IEA_ctry == "Other Africa"]))
-      L100.LAM_repCtry <- repeat_add_columns(L100.LAM, tibble(iso = IEA_ctry_composite$iso[IEA_ctry_composite$IEA_ctry == "Other Non-OECD Americas"]))
-      L100.Asia_repCtry <- repeat_add_columns(L100.Asia, tibble(iso = IEA_ctry_composite$iso[IEA_ctry_composite$IEA_ctry == "Other Asia"]))
+      # Subset composite regions and repeat by number of countries in each (139-142)
+      filter(L100.IEAcomposite, COUNTRY == "Other Africa") %>%
+        repeat_add_columns(tibble(iso = IEA_ctry_composite$iso[IEA_ctry_composite$IEA_ctry == "Other Africa"])) ->
+        L100.Afr_repCtry
+      filter(L100.IEAcomposite, COUNTRY == "Other Non-OECD Americas") %>%
+        repeat_add_columns(tibble(iso = IEA_ctry_composite$iso[IEA_ctry_composite$IEA_ctry == "Other Non-OECD Americas"])) ->
+        L100.LAM_repCtry
+      filter(L100.IEAcomposite, COUNTRY == "Other Asia") %>%
+        repeat_add_columns(tibble(iso = IEA_ctry_composite$iso[IEA_ctry_composite$IEA_ctry == "Other Asia"])) ->
+        L100.Asia_repCtry
 
       # Combine these into a single data table and calculate population shares (144-149)
       L100.Others_repCtry <- bind_rows(L100.Afr_repCtry, L100.LAM_repCtry, L100.Asia_repCtry)
@@ -247,32 +238,26 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
       hyc <- which(names(L100.Others_ctry_bal) %in% HISTORICAL_YEARS)
       L100.Others_ctry_bal[hyc] <- L100.Others_ctry_bal[hyc] * pop_share
 
-
       # Subset each of these final energy balances to only the rows that aren't zero in all years
-      hyc <- which(names(L100.IEAsingle) %in% HISTORICAL_YEARS)
-      L100.IEAsingle <- L100.IEAsingle[rowSums(L100.IEAsingle[hyc]) != 0, ]
-      L100.IEAsingle %>%
-        filter(! iso %in% L100.USSR_Yug_ctry_bal$iso) %>%
-        gather(year, value, matches(YEAR_PATTERN)) %>%
-        mutate(year = as.integer(year)) ->
-        L100.IEAsingle_noUSSR_Yug
-
-      hyc <- which(names(L100.Others_ctry_bal) %in% HISTORICAL_YEARS)
-      L100.Others_ctry_bal <- L100.Others_ctry_bal[rowSums(L100.Others_ctry_bal[hyc]) !=0, ]
-      L100.Others_ctry_bal %>%
-        gather(year, value, matches(YEAR_PATTERN)) %>%
-        mutate(year = as.integer(year)) ->
+      L100.Others_ctry_bal[rowSums(L100.Others_ctry_bal[hyc]) !=0, ] %>%
+        select(-IEAcomposite) ->
         L100.Others_ctry_bal
 
+      hyc <- which(names(L100.IEAsingle) %in% HISTORICAL_YEARS)
+      L100.IEAsingle[rowSums(L100.IEAsingle[hyc]) != 0, ] %>%
+        select(-COUNTRY) %>%
+        filter(! iso %in% L100.USSR_Yug_ctry_bal$iso) ->
+        L100.IEAsingle_noUSSR_Yug
+
       hyc <- which(names(L100.USSR_Yug_ctry_bal) %in% HISTORICAL_YEARS)
-      L100.USSR_Yug_ctry_bal <- L100.USSR_Yug_ctry_bal[rowSums(L100.USSR_Yug_ctry_bal[hyc]) !=0, ]
+      L100.USSR_Yug_ctry_bal[rowSums(L100.USSR_Yug_ctry_bal[hyc]) !=0, ] %>%
+        select(-IEAcomposite) ->
+        L100.USSR_Yug_ctry_bal
 
       # Combine the country-level data tables and write out energy balances (using iso codes rather than IEA's country names)
-      IEA_isoID <- c( "iso", "FLOW", "PRODUCT" )
       bind_rows(L100.IEAsingle_noUSSR_Yug,
                 L100.USSR_Yug_ctry_bal,
-                L100.Others_ctry_bal) %>%
-        filter(year %in% HISTORICAL_YEARS) ->
+                L100.Others_ctry_bal) ->
         L100.IEA_en_bal_ctry_hist
 
     } else {
@@ -291,7 +276,8 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L100.IEA_en_bal_ctry_hist") %>%
       add_precursors("L100.Pop_thous_ctry_Yh", "energy/en_OECD", "energy/en_nonOECD",
-                     "energy/mappings/IEA_product_downscaling", "energy/mappings/IEA_ctry") ->
+                     "energy/mappings/IEA_product_downscaling", "energy/mappings/IEA_ctry") %>%
+      add_flags(FLAG_PROTECT_FLOAT, FLAG_NO_XYEAR) ->
       L100.IEA_en_bal_ctry_hist
 
     return_data(L100.IEA_en_bal_ctry_hist)
