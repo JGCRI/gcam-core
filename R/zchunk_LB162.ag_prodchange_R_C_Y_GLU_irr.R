@@ -14,7 +14,7 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
+module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "aglu/A_defaultYieldRate",
