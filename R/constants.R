@@ -76,6 +76,8 @@ MIN_HA_TO_CROPLAND <- 1
 # Cited in: Monfreda et al. 2008, Farming the Planet: 2., Global Biogeochemical Cycles 22, GB1022, http://dx.doi.org/10.1029/2007GB002947
 MAX_HA_TO_CROPLAND <- 3
 
+# Yield multiplier that goes from the observed yield to the "high" and "low" yields: observed plus or minus observed times this number
+MGMT_YIELD_ADJ <- 0.1
 
 # ======================================================================
 # energy constants
@@ -100,6 +102,8 @@ CONV_THA_KGM2 <- 0.1   # tons C/ha -> kg C/m2
 CONV_GG_TG <- 0.001 # gigagrams to tegagrams
 CONV_TST_TG <- 0.000907 # thousand short tons to Tg
 CONV_KG_TO_TG <- 1e-9
+CONV_GWH_EJ <- 3.6e-6
+CONV_YEAR_HOURS <- 24 * 365.25
 CONV_KT_MT <- 0.001 # kt to Mt
 CONV_T_MT <- 1e-6 # t to Mt
 
