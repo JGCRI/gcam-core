@@ -1,6 +1,6 @@
 #' module_emissions_L121.nonco2_awb_R_S_T_Y
 #'
-#' Agricultural waste burning emissions by region are assigned to crops and land use regions on the basis of excess dry biomass estimated from production, harvest index, and water content.
+#' Calculates 1) share of agricultural waste burning emissions by crop and land use unit, and 2) a default set of agricultural waste burning emissions at this same level.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L121.AWBshare_R_C_Y_GLU}, \code{L121.nonco2_tg_R_awb_C_Y_GLU}. The corresponding file in the
 #' original data system was \code{L121.nonco2_awb_R_S_T_Y.R} (emissions level1).
-#' @details Describe in detail what this chunk does.
+#' @details  The share of AWB emissions within each region is calculated on the basis of excess dry biomass estimated from production, harvest index, and water content. EDGAR AWB emissions are then used to estimate emissions for each GCAM production technology
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -84,8 +84,8 @@ module_emissions_L121.nonco2_awb_R_S_T_Y <- function(command, ...) {
       summarise(value = sum(burnable)) ->
       L112.ag_ExcessDryBiomass_Mt_R_Y
 
-    # Find the burning share of excess biomass that is burnable (AWB_emiss_share). This will be used to make
-    # table of ag waste burning share of emissions, for downscaling regional emissions to region/GLU/crop
+    # Calculate the share by production technology of each region's burnable excess biomass (AWB_emiss_share).
+    # This will be used to create the ag waste burning share of emissions, for downscaling regional emissions to region/GLU/crop
     L112.ag_ExcessDryBiomass_Mt_R_Y %>%
       rename(total_excess_bio = value) %>%
       left_join(L121.ag_ExcessDryBiomass_Mt_R_C_Y_GLU_burn, by = c("GCAM_region_ID", "year")) %>%
@@ -108,7 +108,7 @@ module_emissions_L121.nonco2_awb_R_S_T_Y <- function(command, ...) {
       select(-`2009`, -`2010`) ->
       EDGAR_VOC
 
-    # Match all of the EDGAR emissions with agg sector and IPCC region, since there is
+    # Match all of the EDGAR emissions with agg sector and IPCC region, since there should be
     # emission data for each region and sector can use left_join.
     bind_rows(EDGAR_SO2, EDGAR_CO, EDGAR_NOx, EDGAR_VOC, EDGAR_CH4, EDGAR_N2O, EDGAR_NH3) %>%
       left_join(select(EDGAR_sector, c(IPCC, sector = agg_sector)), by = "IPCC") ->
@@ -139,8 +139,8 @@ module_emissions_L121.nonco2_awb_R_S_T_Y <- function(command, ...) {
       repeat_add_columns(tibble::tibble(`Non.CO2` = c("SO2_AWB", "NOx_AWB", "CO_AWB", "NMVOC_AWB", "CH4_AWB", "N2O_AWB", "NH3_AWB"))) ->
       L121.nonco2_tg_R_awb_C_Y_GLU
 
-    # Find the regional ag waste burning emissions from the estimated share (fraction)
-    # burning emissions * the total ag emissions from
+    # Estimate ag waste burning emissions using the estimated share (fraction) times total regional AWB emissions
+    # Emissions(R, GLU, crop) =  regional total  * AWB share
     L121.nonco2_tg_R_awb_C_Y_GLU %>%
       left_join(L121.EDGAR_awb, by = c("GCAM_region_ID", "year", "Non.CO2")) %>%
       rename(total_emiss = value) %>%
