@@ -43,6 +43,15 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
     L151.ag_rfdHA_ha_ctry_crop <- get_data(all_data, "L151.ag_rfdHA_ha_ctry_crop")
     L161.ag_irrProd_Mt_R_C_Y_GLU <- get_data(all_data, "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU")
     L161.ag_rfdProd_Mt_R_C_Y_GLU <- get_data(all_data, "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU")
+    # These lines are only while using temp-data-inject:
+    L161.ag_irrProd_Mt_R_C_Y_GLU %>%
+      gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%
+      mutate(year = as.integer(substr(year, 2, 5))) ->
+      L161.ag_irrProd_Mt_R_C_Y_GLU
+    L161.ag_rfdProd_Mt_R_C_Y_GLU %>%
+      gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%
+      mutate(year = as.integer(substr(year, 2, 5))) ->
+      L161.ag_rfdProd_Mt_R_C_Y_GLU
 
 
     # Perform calculations
@@ -278,11 +287,11 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
       mutate(lagyear = year + timestep)  %>%
       # There is no lag for SPEC_AG_PROD_YEARS[1] but there is for a year not in SPEC_AG_PROD_YEARS
       # SPEC_AG_PROD_YEARS[1] gets left alone, so for lagyear = not in SPEC_AG_PROD_YEAR, overwrite
-      # the ratio to be ratio/2, the timestep to be 1, and lagyear = SPEC_AG_PROD_YEAR[1]. This allows
+      # the ratio to be 0.52, the timestep to be 1, and lagyear = SPEC_AG_PROD_YEAR[1]. This allows
       # the same pipeline to be used for all SPEC_AG_PROD_YEARS
       mutate(YieldRatio = replace(YieldRatio,
                                   ! lagyear %in% SPEC_AG_PROD_YEARS,
-                                  YieldRatio / 2),
+                                  0.5),
              timestep = replace(timestep,
                                 ! lagyear %in% SPEC_AG_PROD_YEARS,
                                 1),
@@ -303,7 +312,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
 
     # Match These Annual Improvement Rates, L162.agBio_YieldRate_R_C_Ysy_GLU_irr, into a table of existing crop yields.
     #
-    # Step 1: make a table of default improvement rates
+    # Step 1: make a table of default improvement rates by interpolating available rates to relevant years.
     A_defaultYieldRate %>%
       gather(year, value, -GCAM_commodity) %>%
       mutate(year = as.integer(year)) %>%
@@ -312,8 +321,43 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
       arrange(year) %>%
       group_by(GCAM_commodity) %>%
       mutate(value = approx_fun(year, value, rule = 2)) %>%
-      ungroup() ->
+      ungroup() %>%
+      filter(year %in% unique(c(max(HISTORICAL_YEARS), FUTURE_YEARS))) %>%
+      rename(defaultRate = value) ->
       L162.defaultYieldRate
+
+    # Step 2: The GCAM region-commodity-glu-irrigation combinations contained in L161.ag_irrProd_Mt_R_C_Y_GLU, L161.ag_rfdProd_Mt_R_C_Y_GLU
+    # represent all relevant combinations.
+    # Get the set of possible combinations and join in the YieldRates from L162.agBio_YieldRate_R_C_Ysy_GLU_irr.
+    # For combinations not covered by L162.agBio_YieldRate_R_C_Ysy_GLU_irr, fill in the values from the default table above.
+    L161.ag_irrProd_Mt_R_C_Y_GLU %>%
+      mutate(Irr_Rfd = "IRR") %>%
+      bind_rows(mutate(L161.ag_rfdProd_Mt_R_C_Y_GLU, Irr_Rfd = "RFD"))  %>%
+      select(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd) %>%
+      dplyr::distinct() ->
+      L162.ag_Prod_Mt_R_C_Y_GLU_irr
+
+    L162.ag_Prod_Mt_R_C_Y_GLU_irr %>%
+      left_join(L162.agBio_YieldRate_R_C_Ysy_GLU_irr, by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "Irr_Rfd")) %>%
+      # NA's include NA years, address
+      tidyr::complete(year = unique(c(max(HISTORICAL_YEARS), FUTURE_YEARS)),
+                      nesting(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd)) %>%
+      # join in default Rates and use to replace NA YieldRates
+      left_join_error_no_match(L162.defaultYieldRate, by = c("GCAM_commodity", "year")) %>%
+      group_by(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd) %>%
+      mutate(YieldRate = replace(YieldRate,
+                                 is.na(YieldRate),
+                                 defaultRate)) %>%
+      ungroup() %>%
+      select(-defaultRate) ->
+      L162.ag_YieldRate_R_C_Y_GLU_irr
+
+
+    # Step 3: Expand to future years
+
+
+
+
 
 
 
