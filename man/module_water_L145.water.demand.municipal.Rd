@@ -18,11 +18,14 @@ the generated outputs: \code{L145.municipal_water_R_W_Yh_km3}, \code{L145.munici
 original data system was \code{L145.water.demand.municipal.R} (water level1).
 }
 \description{
-Briefly describe what this chunk does.
+It is used to generate 3 files:
+1. Municipal water withdrawals by GCAM_region_ID for all historical years
+2. Municipal water base deleivery cost by GCAM_region_ID
+3. Municipal water use efficiency by GCAM_region_ID for all years
 }
 \details{
 Describe in detail what this chunk does.
 }
 \author{
-YourInitials CurrentMonthName 2017
+YL May 2017
 }
