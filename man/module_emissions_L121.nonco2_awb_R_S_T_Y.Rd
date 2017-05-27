@@ -18,10 +18,10 @@ the generated outputs: \code{L121.AWBshare_R_C_Y_GLU}, \code{L121.nonco2_tg_R_aw
 original data system was \code{L121.nonco2_awb_R_S_T_Y.R} (emissions level1).
 }
 \description{
-Agricultural waste burning emissions by region are assigned to crops and land use regions on the basis of excess dry biomass estimated from production, harvest index, and water content.
+Calculates 1) share of agricultural waste burning emissions by crop and land use unit, and 2) a default set of agricultural waste burning emissions at this same level.
 }
 \details{
-Describe in detail what this chunk does.
+The share of AWB emissions within each region is calculated on the basis of excess dry biomass estimated from production, harvest index, and water content. EDGAR AWB emissions are then used to estimate emissions for each GCAM production technology
 }
 \author{
 KD May 2017
