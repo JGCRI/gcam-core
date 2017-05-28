@@ -191,10 +191,18 @@ private:
     //! Market specific delta price for derivative calcs
     double mDeltaPrice;
     
+    //! Market specific lower bound price for expected supply/demand behavior.
+    double mLowerBoundSupplyPrice;
+    
+    //! Market specific upper bound price for expected supply/demand behavior.
+    double mUpperBoundSupplyPrice;
+    
     void print( std::ostream& out ) const;
     double getLogChangeInRawPrice() const;
     double getLogChangeInRawDemand() const;
     double getLogChangeInRawSupply() const;
+    double getLowerBoundSupplyPriceInternal() const;
+    double getUpperBoundSupplyPriceInternal() const;
 };
 
 #endif // _SOLUTION_INFO_H_

@@ -73,7 +73,9 @@ mFlowGraph( aFlowGraph ),
 mSolutionTolerance( 0 ),
 mSolutionFloor( 0 ),
 mBracketInterval( 0 ),
-mMaxNRPriceJump( 0 )
+mMaxNRPriceJump( 0 ),
+mLowerBoundSupplyPrice( getLowerBoundSupplyPriceInternal() ),
+mUpperBoundSupplyPrice( getUpperBoundSupplyPriceInternal() )
 {
     assert( aLinkedMarket );
 }
@@ -593,13 +595,23 @@ GcamFlowGraph* SolutionInfo::getFlowGraph() const {
 
 double SolutionInfo::getLowerBoundSupplyPrice() const
 {
+    return mLowerBoundSupplyPrice;
+}
+
+double SolutionInfo::getUpperBoundSupplyPrice() const
+{
+    return mUpperBoundSupplyPrice;
+}
+
+double SolutionInfo::getLowerBoundSupplyPriceInternal() const
+{
     const string LOWER_BOUND_KEY = "lower-bound-supply-price";
     return linkedMarket->getMarketInfo()->hasValue( LOWER_BOUND_KEY ) ?
         linkedMarket->getMarketInfo()->getDouble( LOWER_BOUND_KEY, true ) :
         -util::getLargeNumber();
 }
 
-double SolutionInfo::getUpperBoundSupplyPrice() const
+double SolutionInfo::getUpperBoundSupplyPriceInternal() const
 {
     const string UPPER_BOUND_KEY = "upper-bound-supply-price";
     return linkedMarket->getMarketInfo()->hasValue( UPPER_BOUND_KEY ) ?
