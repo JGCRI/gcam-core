@@ -46,6 +46,8 @@
 #include <cassert>
 #include "util/base/include/definitions.h"
 
+class Value;
+
 #if GCAM_PARALLEL_ENABLED
 #include <tbb/task_arena.h>
 #endif
@@ -76,6 +78,7 @@ private:
     double** mStateData;
     int mPeriodToCollect;
     int mYearToCollect;
+    unsigned int mCCStartYear;
     size_t mNumCollected;
     
     struct DoCollect {
@@ -83,6 +86,7 @@ private:
         bool mIsCollect;
         bool mMemIsAllocated;
         bool mIgnoreCurrValue = false;
+        void setupState( Value& aData );
         template<typename DataType>
         void processData( DataType& aData );
         template<typename DataType>

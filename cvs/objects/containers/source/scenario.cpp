@@ -502,9 +502,6 @@ bool Scenario::calculatePeriod( const int aPeriod,
     mManageStateVars = 0;
 
     mWorld->postCalc( aPeriod );
-    for( auto modelFeedback : mModelFeedbacks ) {
-        modelFeedback->calcFeedbacksAfterPeriod( this, mWorld->getClimateModel(), aPeriod );
-    }
     
     // Output metadata is not required to exist.
     const list<string>& primaryFuelList = mOutputMetaData.get() ? 
@@ -525,6 +522,10 @@ bool Scenario::calculatePeriod( const int aPeriod,
         climatelog.setLevel( ILogger::WARNING );
         climatelog << "Solver unsuccessful for period " << aPeriod
                    << ".  Climate model run skipped." << endl;
+    }
+    
+    for( auto modelFeedback : mModelFeedbacks ) {
+        modelFeedback->calcFeedbacksAfterPeriod( this, mWorld->getClimateModel(), aPeriod );
     }
 
     logPeriodEnding( aPeriod );

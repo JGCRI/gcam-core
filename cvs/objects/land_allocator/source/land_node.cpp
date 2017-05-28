@@ -721,16 +721,19 @@ void LandNode::calcLandAllocation( const string& aRegionName,
  * \param aRegionName Region name.
  * \param aPeriod The current model period.
  * \param aEndYear The year to calculate LUC emissions to.
+ * \param aStoreFullEmiss Flag to pass on to the carbon calc used as an optimization
+ *                        to avoid store full LUC emissins during World.calc.
  */
 void LandNode::calcLUCEmissions( const string& aRegionName,
-                                 const int aPeriod, const int aEndYear )
+                                 const int aPeriod, const int aEndYear,
+                                 const bool aStoreFullEmiss )
 {
     if( mCarbonCalc ) {
-        mCarbonCalc->calc( aPeriod, aEndYear );
+        mCarbonCalc->calc( aPeriod, aEndYear, aStoreFullEmiss );
     }
     
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        mChildren[ i ]->calcLUCEmissions( aRegionName, aPeriod, aEndYear );
+        mChildren[ i ]->calcLUCEmissions( aRegionName, aPeriod, aEndYear, aStoreFullEmiss );
     }
 }
 

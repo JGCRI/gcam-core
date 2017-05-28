@@ -91,6 +91,7 @@ mStateData( new double*[mThreadPool.max_concurrency()+1] ),
 #endif
 mPeriodToCollect( aPeriod ),
 mYearToCollect( scenario->getModeltime()->getper_to_yr( aPeriod ) ),
+mCCStartYear( mYearToCollect - scenario->getModeltime()->gettimestep( aPeriod ) + 1 ),
 mNumCollected( 0 )
 {
     //Value::mAltValue = mStateData[0];
@@ -198,6 +199,27 @@ void ManageStateVariables::setPartialDeriv( const bool aIsPartialDeriv ) {
     }
 }*/
 
+void ManageStateVariables::DoCollect::setupState( Value& aData ) {
+    aData.mIsStateCopy = mIsCollect;
+    //aData.mIsPartialDeriv = &scenario->getMarketplace()->mIsDerivativeCalc;
+    if( mIsCollect ) {
+        //aData.mAltValue = mParentClass->mStateData;
+        aData.mAltValueIndex = mParentClass->mNumCollected;
+        if( mMemIsAllocated ) {
+            //aData.mAltValue = mParentClass->mStateData[0];
+            aData.mGoodValue[ mParentClass->mNumCollected ] = aData.mValue;
+        }
+    }
+    else {
+        if( aData.mAltValueIndex != mParentClass->mNumCollected ) {
+            cout << "Reset didn't match " << aData.mAltValueIndex << " != " << mParentClass->mNumCollected << endl;
+            abort();
+        }
+        aData.mValue = aData.mGoodValue[ mParentClass->mNumCollected ];
+    }
+    ++mParentClass->mNumCollected;
+}
+
 template<typename DataType>
 void ManageStateVariables::DoCollect::processData( DataType& aData ) {
     cout << "Found an unexpected state var type: " << typeid( aData ).name() << endl;
@@ -206,47 +228,33 @@ void ManageStateVariables::DoCollect::processData( DataType& aData ) {
 template<>
 void ManageStateVariables::DoCollect::processData<Value>( Value& aData ) {
     if( !mIgnoreCurrValue ) {
-        aData.mIsStateCopy = mIsCollect;
-        //aData.mIsPartialDeriv = &scenario->getMarketplace()->mIsDerivativeCalc;
-        if( mIsCollect ) {
-            //aData.mAltValue = mParentClass->mStateData;
-            aData.mAltValueIndex = mParentClass->mNumCollected;
-            if( mMemIsAllocated ) {
-                //aData.mAltValue = mParentClass->mStateData[0];
-                aData.mGoodValue[ mParentClass->mNumCollected ] = aData.mValue;
-            }
-        }
-        else {
-            if( aData.mAltValueIndex != mParentClass->mNumCollected ) {
-                cout << "Reset didn't match " << aData.mAltValueIndex << " != " << mParentClass->mNumCollected << endl;
-                abort();
-            }
-            aData.mValue = aData.mGoodValue[ mParentClass->mNumCollected ];
-        }
-        ++mParentClass->mNumCollected;
+        setupState( aData );
     }
 }
 
 template<>
-void ManageStateVariables::DoCollect::processData<objects::PeriodVector<Value> >( objects::PeriodVector<Value >& aData ) {
+void ManageStateVariables::DoCollect::processData<objects::PeriodVector<Value> >( objects::PeriodVector<Value>& aData ) {
     if( !mIgnoreCurrValue ) {
-        aData[mParentClass->mPeriodToCollect].mIsStateCopy = mIsCollect;
-        //aData[mParentClass->mPeriodToCollect].mIsPartialDeriv = &scenario->getMarketplace()->mIsDerivativeCalc;
-        if( mIsCollect ) {
-            //aData[mParentClass->mPeriodToCollect].mAltValue = mParentClass->mStateData;
-            aData[mParentClass->mPeriodToCollect].mAltValueIndex = mParentClass->mNumCollected;
-            if( mMemIsAllocated ) {
-                aData[mParentClass->mPeriodToCollect].mGoodValue[ mParentClass->mNumCollected ] = aData[mParentClass->mPeriodToCollect].mValue;
-            }
+        setupState( aData[ mParentClass->mPeriodToCollect ] );
+    }
+}
+
+template<>
+void ManageStateVariables::DoCollect::processData<objects::PeriodVector<objects::YearVector<Value>*> >( objects::PeriodVector<objects::YearVector<Value>*>& aData ) {
+    if( !mIgnoreCurrValue && mParentClass->mPeriodToCollect > 0 ) {
+        objects::YearVector<Value>& currEmiss = *aData[ mParentClass->mPeriodToCollect ];
+        for( int year = mParentClass->mCCStartYear; year <= mParentClass->mYearToCollect; ++year ) {
+            setupState( currEmiss[ year ] );
         }
-        else {
-            if( aData[mParentClass->mPeriodToCollect].mAltValueIndex != mParentClass->mNumCollected ) {
-                cout << "Reset didn't match " << aData[mParentClass->mPeriodToCollect].mAltValueIndex << " != " << mParentClass->mNumCollected << endl;
-                abort();
-            }
-            aData[mParentClass->mPeriodToCollect].mValue = aData[mParentClass->mPeriodToCollect].mGoodValue[ mParentClass->mNumCollected ];
+    }
+}
+
+template<>
+void ManageStateVariables::DoCollect::processData<objects::YearVector<Value> >( objects::YearVector<Value>& aData ) {
+    if( !mIgnoreCurrValue ) {
+        for( int year = std::max( mParentClass->mCCStartYear, aData.getStartYear() ); year <= mParentClass->mYearToCollect; ++year ) {
+            setupState( aData[ year ] );
         }
-        ++mParentClass->mNumCollected;
     }
 }
 

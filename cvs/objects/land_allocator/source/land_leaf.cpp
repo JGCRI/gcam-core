@@ -263,6 +263,8 @@ void LandLeaf::initCalc( const string& aRegionName, const int aPeriod )
                 << " for region " << aRegionName << endl;
         exit( -1 );
     }
+    
+    mCarbonContentCalc->initCalc( aPeriod );
 }
 
 /*!
@@ -300,7 +302,7 @@ void LandLeaf::initLandUseHistory( const string& aRegionName )
                 << getName() << " in region " << aRegionName << endl;
         abort();
     }
-    mCarbonContentCalc->initLandUseHistory( mLandUseHistory );
+    mCarbonContentCalc->setLandUseObjects( mLandUseHistory, this );
 }
 
 void LandLeaf::toInputXML( ostream& aOut, Tabs* aTabs ) const {
@@ -563,9 +565,6 @@ void LandLeaf::calcLandAllocation( const string& aRegionName,
         mLandAllocation[ aPeriod ] = 0.0;
     }
 
-    // Set the land use in the carbon content calculator.
-    mCarbonContentCalc->setTotalLandUse( mLandAllocation[ aPeriod ], aPeriod );
-
     // compute any demands for land use constraint resources
     if ( mIsLandExpansionCost ) {
         Marketplace* marketplace = scenario->getMarketplace();
@@ -580,21 +579,21 @@ void LandLeaf::calcLandAllocation( const string& aRegionName,
 * \param aRegionName Region.
 * \param aPeriod Current model period.
 * \param aEndYear The year to calculate LUC emissions to.
+* \param aStoreFullEmiss Flag to pass on to the carbon calc used as an optimization
+*                        to avoid store full LUC emissins during World.calc.
 */
 void LandLeaf::calcLUCEmissions( const string& aRegionName,
-                                 const int aPeriod, const int aEndYear )
+                                 const int aPeriod, const int aEndYear,
+                                 const bool aStoreFullEmiss )
 {
     // Calculate the amount of emissions attributed to land use change in the current period
-    mCarbonContentCalc->calc( aPeriod, aEndYear );
+    mLastCalcCO2Value = mCarbonContentCalc->calc( aPeriod, aEndYear, aStoreFullEmiss );
 
-    // Add emissions to the carbon market. 
-    const Modeltime* modeltime = scenario->getModeltime();
-    if ( ( aEndYear != CarbonModelUtils::getEndYear() || aPeriod == modeltime->getmaxper() - 1 ) ) {
-        mLastCalcCO2Value = mCarbonContentCalc
-            ->getNetLandUseChangeEmission( modeltime->getper_to_yr( aPeriod ) );
+    // Add emissions to the carbon market.
+    if ( !aStoreFullEmiss ) {
         Marketplace* marketplace = scenario->getMarketplace();
         marketplace->addToDemand( "CO2_LUC", aRegionName,
-                                                      mLastCalcCO2Value, aPeriod, false );
+                                  mLastCalcCO2Value, aPeriod, false );
     }  
 }
 

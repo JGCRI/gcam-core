@@ -57,6 +57,7 @@
 class IInfo;
 class Tabs;
 class LandUseHistory;
+class LandLeaf;
 
 // Need to forward declare the subclasses as well.
 class ASimpleCarbonCalc;
@@ -106,15 +107,21 @@ public:
      * \brief Complete the initialization of the carbon calculator.
      */
     virtual void completeInit() = 0;
+    
+    /*!
+     * \brief Period specific initiliazations before calculations begin.
+     * \param aPeriod The period which is about to begin.
+     */
+    virtual void initCalc( const int aPeriod ) = 0;
 
     /*!
-     * \brief Initialize the historical land use for the carbon calculation.
-     * \details Initializes the carbon calculation with values for the historical
-     *          land use of the leaf containing the carbon calculator.
+     * \brief Sets objects to retrieve historial and future land use.
+     * \details Initializes the carbon calculation with objects for the historical
+     *          land use and the leaf containing the carbon calculator.
      * \param aHistory Historical land use object which may be null.
-     * \param aShare Estimated share of total land used by the containing leaf.
+     * \param aLandLeaf The containing land leaf which must exist.
      */
-    virtual void initLandUseHistory( const LandUseHistory* aHistory ) = 0;
+    virtual void setLandUseObjects( const LandUseHistory* aHistory, const LandLeaf* aLandLeaf ) = 0;
 
     /*!
      * \brief Conduct carbon calculations for a period.
@@ -126,8 +133,11 @@ public:
      *          calculated to the given end year.
      * \param aPeriod The current model period that is being calculated.
      * \param aEndYear The year to calculate future emissions to.
+     * \param aStoreFullEmiss Flag used as an optimization to avoid storing the
+     *                        full LUC emissins during World.calc.
+     * \return The total LUC emissions in aEndYear.
      */
-    virtual void calc( const int aPeriod, const int aEndYear ) = 0;
+    virtual double calc( const int aPeriod, const int aEndYear, const bool aStoreFullEmiss ) = 0;
 
     /*!
      * \brief Get the net land use change emissions for a given year.
@@ -139,16 +149,6 @@ public:
      * \return Annual net land use change emission for the year.
      */
     virtual double getNetLandUseChangeEmission( const int aYear ) const = 0;
-
-    /*!
-     * \brief Set the total land use for a period.
-     * \details Sets the total land area used by the containing land leaf for a
-     *          period.
-     * \param aLandUse Amount of land used.
-     * \param aPeriod Model period.
-     */
-    virtual void setTotalLandUse( const double aLandUse,
-                                  const int aPeriod ) = 0;
 
     virtual double getActualAboveGroundCarbonDensity( const int aYear ) const = 0;
     

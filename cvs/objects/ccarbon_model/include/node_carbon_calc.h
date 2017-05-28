@@ -96,7 +96,7 @@ public:
     
     void completeInit();
     
-    void calc( const int aPeriod, const int aEndYear );
+    void calc( const int aPeriod, const int aEndYear, const bool aStoreFullEmiss );
     
 protected:
     

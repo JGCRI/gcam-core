@@ -118,7 +118,8 @@ public:
                                      const int aPeriod );
 
     virtual void calcLUCEmissions( const std::string& aRegionName,
-                                   const int aPeriod, const int aEndYear );
+                                   const int aPeriod, const int aEndYear,
+                                   const bool aStoreFullEmiss );
 
     virtual double getLandAllocation( const std::string& aProductName,
                                       const int aPeriod ) const;
@@ -187,7 +188,6 @@ protected:
         DEFINE_VARIABLE( ARRAY, "parsed-landAllocation", mReadinLandAllocation, objects::PeriodVector<Value> ),
                             
         //! State value necessary to use Marketplace::addToDemand for CO2 emissions
-        //! TODO: fix LUC State
         DEFINE_VARIABLE( SIMPLE | STATE, "luc-state", mLastCalcCO2Value, Value )
     )
 

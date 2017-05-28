@@ -314,7 +314,8 @@ public:
      *        land-use change emissions.
      */
     virtual void calcLUCEmissions( const std::string& aRegionName,
-                                   const int aPeriod, const int aEndYear ) {}
+                                   const int aPeriod, const int aEndYear,
+                                   const bool aStoreFullEmiss ) {}
 
      /*!
      * \brief Set the profit rate of unmanaged land leafs

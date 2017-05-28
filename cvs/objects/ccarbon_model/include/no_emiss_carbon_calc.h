@@ -64,7 +64,7 @@ public:
 
     virtual const std::string& getXMLName() const;
     
-    virtual void calc( const int aPeriod, const int aEndYear );
+    virtual double calc( const int aPeriod, const int aEndYear, const bool aStoreFullEmiss );
     
     virtual void acceptDerived( IVisitor* aVisitor, const int aPeriod ) const;
 protected:

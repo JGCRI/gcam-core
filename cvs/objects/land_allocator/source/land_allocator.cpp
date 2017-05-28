@@ -369,12 +369,12 @@ void LandAllocator::calcLandAllocation( const string& aRegionName,
 }
 
 void LandAllocator::calcLUCEmissions( const string& aRegionName, const int aPeriod,
-                                      const int aEndYear )
+                                      const int aEndYear, const bool aStoreFullEmiss )
 {
     // Calculate emissions for all years in this model period.  Note that in
     // period 0 historical emissions are also calculated.
     for ( unsigned int i = 0; i < mChildren.size(); ++i ){
-        mChildren[ i ]->calcLUCEmissions( aRegionName, aPeriod, aEndYear );
+        mChildren[ i ]->calcLUCEmissions( aRegionName, aPeriod, aEndYear, aStoreFullEmiss );
     } 
 }
 
@@ -401,12 +401,12 @@ void LandAllocator::calcFinalLandAllocation( const string& aRegionName,
     // period for performance reasons.
     calcLUCEmissions( aRegionName,
                       aPeriod,
-                      scenario->getModeltime()->getper_to_yr( aPeriod ) );
+                      scenario->getModeltime()->getper_to_yr( aPeriod ), false );
 }
 
 void LandAllocator::postCalc( const string& aRegionName, const int aPeriod ) {
     // Calculate land-use change emissions for the entire model time horizon.
-    calcLUCEmissions( aRegionName, aPeriod, CarbonModelUtils::getEndYear() );
+    calcLUCEmissions( aRegionName, aPeriod, CarbonModelUtils::getEndYear(), true );
 }
 
 ALandAllocatorItem* LandAllocator::findProductLeaf( const string& aProductName ) {

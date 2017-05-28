@@ -128,7 +128,8 @@ public:
                                      const int aYear );
 
     virtual void calcLUCEmissions( const std::string& aRegionName,
-                                   const int aPeriod, const int aEndYear );
+                                   const int aPeriod, const int aEndYear,
+                                   const bool aStoreFullEmiss );
                               
     virtual ALandAllocatorItem* findProductLeaf( const std::string& aProductName );
 protected:

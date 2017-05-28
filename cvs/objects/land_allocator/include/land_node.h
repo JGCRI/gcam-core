@@ -131,7 +131,8 @@ public:
                                      const int aPeriod );
     
     virtual void calcLUCEmissions( const std::string& aRegionName,
-                                   const int aYear, const int aEndYear );
+                                   const int aYear, const int aEndYear,
+                                   const bool aStoreFullEmiss );
     
     virtual double getLandAllocation( const std::string& aProductName,
                                       const int aPeriod ) const;
