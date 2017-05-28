@@ -43,6 +43,10 @@
 #include <vector>
 #include <iomanip>
 
+#if GCAM_PARALLEL_ENABLED
+#include <tbb/parallel_for.h>
+#endif
+
 #include "marketplace/include/marketplace.h"
 #include "marketplace/include/market.h"
 #include "marketplace/include/market_container.h"
@@ -384,15 +388,20 @@ void Marketplace::NullSDHelper::operator()( const tbb::blocked_range<int>& aRang
 * \param period Period in which to null the supplies and demands. 
 */
 void Marketplace::nullSuppliesAndDemands( const int period ) {
-/*#if GCAM_PARALLEL_ENABLED
-    NullSDHelper nsd( markets, period );
-    tbb::parallel_for( tbb::blocked_range<int>( 0, markets.size() ), nsd );
-#else*/
+#if GCAM_PARALLEL_ENABLED
+    //NullSDHelper nsd( markets, period );
+    tbb::parallel_for( tbb::blocked_range<int>( 0, mMarkets.size() ), [this, period]( const tbb::blocked_range<int>& aRange) {
+        for( int marketIndex = aRange.begin(); marketIndex != aRange.end(); ++marketIndex ) {
+            this->mMarkets[ marketIndex ]->getMarket( period )->nullDemand();
+            this->mMarkets[ marketIndex ]->getMarket( period )->nullSupply();
+        }
+    });
+#else
     for ( unsigned int i = 0; i < mMarkets.size(); i++ ) {
         mMarkets[ i ]->getMarket( period )->nullDemand();
         mMarkets[ i ]->getMarket( period )->nullSupply();
     }
-//#endif
+#endif
 }
 
 /*! \brief Assign a serial number to each market we are attempting to solve
