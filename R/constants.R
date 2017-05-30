@@ -88,6 +88,10 @@ energy.TRN_SSP <- "CORE"
 
 # UCD transportation year to use to compute shares for allocation of energy to mode/technology/fuel within category/fuel
 energy.UCD_EN_YEAR <- 2005
+energy.MIN_WEIGHT_EJ <- 1e-08
+# Transportation fixed charge rate information
+energy.DISCOUNT_RATE_VEH <- 0.1   # Consumer discount rate for vehicle purchases
+energy.NPER_AMORT_VEH <- 10    # Number of periods (years) over which vehicle capital payments are amortized
 
 ## ======================================================================
 ## Conversion constants.  The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
