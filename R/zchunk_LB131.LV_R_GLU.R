@@ -23,6 +23,9 @@ module_aglu_LB131.LV_R_GLU <- function(command, ...) {
     return(c("L131.LV_USD75_m2_R_GLU"))
   } else if(command == driver.MAKE) {
 
+    value <- GCAM_region_ID <- GLU <- year <- LV_milUSD75 <- HarvCropLand_bm2 <-
+        Land_Type <- NULL               # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

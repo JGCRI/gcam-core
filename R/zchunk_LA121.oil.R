@@ -21,7 +21,7 @@ module_energy_LA121.oil_DISABLED <- function(command, ...) {
              FILE = "energy/IEA_product_rsrc",
              FILE = "energy/A21.unoil_demandshares",
              FILE = "energy/A21.globaltech_coef",
-             "L100.IEA_en_bal_ctry_hist",
+             FILE = "temp-data-inject/L100.IEA_en_bal_ctry_hist",
              "L1011.en_bal_EJ_R_Si_Fi_Yh",
              "L111.Prod_EJ_R_F_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -38,7 +38,7 @@ module_energy_LA121.oil_DISABLED <- function(command, ...) {
     IEA_product_rsrc <- get_data(all_data, "energy/IEA_product_rsrc")
     A21.unoil_demandshares <- get_data(all_data, "energy/A21.unoil_demandshares")
     A21.globaltech_coef <- get_data(all_data, "energy/A21.globaltech_coef")
-    L100.IEA_en_bal_ctry_hist <- get_data(all_data, "L100.IEA_en_bal_ctry_hist")
+    L100.IEA_en_bal_ctry_hist <- get_data(all_data, "temp-data-inject/L100.IEA_en_bal_ctry_hist")
     L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
     L111.Prod_EJ_R_F_Yh <- get_data(all_data, "L111.Prod_EJ_R_F_Yh")
 

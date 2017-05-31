@@ -39,6 +39,11 @@ module_aglu_LA100.0_LDS_preprocessing <- function(command, ...) {
     return(paste0("L100.", namelist))
   } else if(command == driver.MAKE) {
 
+    . <- value <- iso <- NULL             # silence package check.
+    L100.Land_type_area_ha <- L100.LDS_value_milUSD <- L100.MIRCA_irrHA_ha <-
+        L100.MIRCA_rfdHA_ha <- L100.Mueller_yield_levels <-
+        L100.Pot_veg_carbon_Mg_per_ha <- L100.Water_footprint_m3 <- NULL
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

@@ -24,6 +24,10 @@ module_emissions_L152.MACC <- function(command, ...) {
     return(c("L152.MAC_pct_R_S_Proc_EPA"))
   } else if(command == driver.MAKE) {
 
+    Process <- EPA_region <- cost_2010USD_tCO2e <- reduction_MtCO2e <- Sector <-
+        EPA_region_code <- cost_1990USD_tCe <- year <- baseline_MtCO2e <-
+            reduction_pct <- NULL       # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
