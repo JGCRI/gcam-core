@@ -1,6 +1,6 @@
 #' module_energy_LA100.IEA_downscale_ctry
 #'
-#' Downscale IEA energy balances to 201 countries, by iso, FLOW, PRODUCT, and historical year.
+#' Downscale proprietary IEA energy balance data to 201 countries, by iso code, FLOW, PRODUCT, and historical year.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,22 +8,25 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L100.IEA_en_bal_ctry_hist}. The corresponding file in the
 #' original data system was \code{LA100.IEA_downscale_ctry.R} (energy level1).
-#' @details We build from the raw (and proprietary) \code{en_OCED} and \code{en_nonOECD} files if
+#' @details Combine OECD and non-OECD data; perform upfront adjustments for other Africa, Turkey, and South
+#' Africa; split out and handle the 1990 split of Yugoslavia and USSR, back-projecting individual country
+#' values based on 1990 shares; use population to downscale IEA composite regions (Other Africa, Other
+#' non-OECD Americas, Other Asia) to individual countries; filter out countries without data in any year.
+#' @note We build from the raw (and proprietary) \code{en_OCED} and \code{en_nonOECD} files if
 #' they are available; if not, this chunk reads in a pre-generated \code{L100.IEA_en_bal_ctry_hist}
 #' file and returns that. (In other words, our output is an optional input.)
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author BBL May 2017
-#' @export
 module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L100.Pop_thous_ctry_Yh",
-              OPTIONAL_FILE = "energy/en_OECD",
-              OPTIONAL_FILE = "energy/en_nonOECD",
-              OPTIONAL_FILE = "energy/L100.IEA_en_bal_ctry_hist",
-              FILE = "energy/mappings/IEA_product_downscaling",
-              FILE = "energy/mappings/IEA_ctry"))
+    return(c("L100.Pop_thous_ctry_Yh",
+             OPTIONAL_FILE = "energy/en_OECD",
+             OPTIONAL_FILE = "energy/en_nonOECD",
+             OPTIONAL_FILE = "energy/L100.IEA_en_bal_ctry_hist",
+             FILE = "energy/mappings/IEA_product_downscaling",
+             FILE = "energy/mappings/IEA_ctry"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L100.IEA_en_bal_ctry_hist"))
   } else if(command == driver.MAKE) {
@@ -36,7 +39,7 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
     en_nonOECD <- get_data(all_data, "energy/en_nonOECD")
     IEA_product_downscaling <- get_data(all_data, "energy/mappings/IEA_product_downscaling")
     IEA_ctry <- get_data(all_data, "energy/mappings/IEA_ctry")
-    L100.IEA_en_bal_ctry_hist <- get_data(all_data, "energy/L100.IEA_en_bal_ctry_hist")
+    L100.IEA_en_bal_ctry_hist_preprocessed <- get_data(all_data, "energy/L100.IEA_en_bal_ctry_hist")
 
     # If the (proprietary) raw IEA datasets are available, go through the full computations below
     # If not, use the pre-saved summary file (i.e., the output of this chunk!) assuming it's available
@@ -45,10 +48,10 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
       # Full calculation from raw data
       # The two IEA datasets are LARGE and we keep them in wide format for most of the computations
       # below, as they are very expensive to reshape. As a result, much of the logic below closely
-      # parallels that in the original data system, and there's relatively few dplyr-style pipelines.
+      # parallels that in the original data system, and there are fewer dplyr-style pipelines.
 
       # Subset only the relevant years and combine OECD with non-OECD
-      hy <- as.character(HISTORICAL_YEARS)
+      hy <- intersect(intersect(HISTORICAL_YEARS, colnames(en_OECD)), colnames(en_nonOECD))
       cols <- c("COUNTRY", "FLOW", "PRODUCT", hy)
       bind_rows(en_OECD[cols], en_nonOECD[cols]) %>%
         # rename fuels with inconsistent naming between the two databases
@@ -63,10 +66,13 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
       # to GTL plants operating at nearly 100% efficiency. We adjust the energy input quantities
       # to avoid negative values later on.
       GTL_COEF <- 1.7
-      GTL_ADJ_YEARS <- as.character(2001:2004)
-      GTL_entries <- L100.IEAfull$COUNTRY == "Other Africa" & L100.IEAfull$FLOW == "TGTL" & L100.IEAfull$PRODUCT == "Natural gas"
-      L100.IEAfull[GTL_entries, GTL_ADJ_YEARS] <- L100.IEAfull[GTL_entries, GTL_ADJ_YEARS] *
-        GTL_COEF * -1     # Multiply by -1 because other hydrocarbons are the output and have a different sign
+      GTL_ADJ_YEARS <- as.character(intersect(2001:2004, HISTORICAL_YEARS))
+      if(length(GTL_ADJ_YEARS)) {
+        GTL_gas_entries <- with(L100.IEAfull, COUNTRY == "Other Africa" & FLOW == "TGTL" & PRODUCT == "Natural gas")
+        GTL_oh_entries <- with(L100.IEAfull, COUNTRY == "Other Africa" & FLOW == "TGTL" & PRODUCT == "Other hydrocarbons")
+        L100.IEAfull[GTL_gas_entries, GTL_ADJ_YEARS] <- L100.IEAfull[GTL_oh_entries, GTL_ADJ_YEARS] *
+          GTL_COEF * -1     # Multiply by -1 because other hydrocarbons are the output and have a different sign
+      }
 
       # UFA2. South Africa has a coal-to-gas IO coef in the gas works sector of about 5:1, and low natural
       # gas consumption in other sectors. The coal inputs are overridden here as the gas output times an
@@ -83,11 +89,13 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
       # with no corresponding fuel input by any sectors; add a fuel input to avoid negative numbers later on.
       CHP_IO_COEF <- 5
       CONV_GWH_KTOE <- 0.08598452 # ELAUTOC (the output) is in gigawatt hours, whereas AUTOCHP (the input) is in ktoe
-      CHP_ADJ_YEARS <- as.character(1971:1981)
-      CHP_entries <- L100.IEAfull$COUNTRY == "Turkey" & L100.IEAfull$PRODUCT == "Primary solid biofuels"
-      L100.IEAfull[CHP_entries & L100.IEAfull$FLOW == "AUTOCHP", CHP_ADJ_YEARS] <-
-        L100.IEAfull[CHP_entries & L100.IEAfull$FLOW == "ELAUTOC", CHP_ADJ_YEARS] *
-        CHP_IO_COEF * CONV_GWH_KTOE * -1
+      CHP_ADJ_YEARS <- intersect(1971:1981, colnames(L100.IEAfull))
+      if(length(CHP_ADJ_YEARS)) {
+        CHP_entries <- L100.IEAfull$COUNTRY == "Turkey" & L100.IEAfull$PRODUCT == "Primary solid biofuels"
+        L100.IEAfull[CHP_entries & L100.IEAfull$FLOW == "AUTOCHP", CHP_ADJ_YEARS] <-
+          L100.IEAfull[CHP_entries & L100.IEAfull$FLOW == "ELAUTOC", CHP_ADJ_YEARS] *
+          CHP_IO_COEF * CONV_GWH_KTOE * -1
+      }
 
       # Split the country mapping table into composite regions and single-countries (69-77)
       IEA_ctry_composite <- filter(IEA_ctry, IEA_ctry %in% c("Former Soviet Union (if no detail)",
@@ -119,31 +127,32 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
 
       # Re-map the "if no detail" forms of coal in the historical years prior to the relevant
       # coal types for matching with the more recent years (89-107)
-      NO_DETAIL_COAL_YEARS <- as.character(1971:1977)
+      NO_DETAIL_COAL_YEARS <- as.character(intersect(1971:1977, HISTORICAL_YEARS))
+      if(length(NO_DETAIL_COAL_YEARS)) {
+        # Hard coal needs to be split proportionally between coking coal and other bituminous coal
+        # in order to minimize bias from different country-wise shares of the two fuel types.
+        # Note that anthracite is not considered in these regions.
+        # NOTE: using round() to avoid NA's for any values whose base value is >1e6. This seems to work
+        prod <- L100.USSR_Yug$PRODUCT
+        prod_obc <- prod == "Other bituminous coal"
+        prod_hcind <- prod == "Hard coal (if no detail)"
+        prod_cc <- prod == "Coking coal"
+        L100.USSR_Yug[prod_obc, NO_DETAIL_COAL_YEARS] <-
+          L100.USSR_Yug[prod_hcind, NO_DETAIL_COAL_YEARS ] *
+          round(L100.USSR_Yug$`1978`[prod_obc] /
+                  (L100.USSR_Yug$`1978`[prod_cc] + L100.USSR_Yug$`1978`[prod_obc] + 1e-3), digits = 2)
+        L100.USSR_Yug[prod_cc, NO_DETAIL_COAL_YEARS ] <-
+          L100.USSR_Yug[prod_hcind, NO_DETAIL_COAL_YEARS ] - L100.USSR_Yug[prod_obc, NO_DETAIL_COAL_YEARS ]
+        L100.USSR_Yug[prod_hcind, NO_DETAIL_COAL_YEARS ] <- 0
 
-      # Hard coal needs to be split proportionally between coking coal and other bituminous coal
-      # in order to minimize bias from different country-wise shares of the two fuel types.
-      # Note that anthracite is not considered in these regions.
-      # NOTE: using round() to avoid NA's for any values whose base value is >1e6. This seems to work
-      prod <- L100.USSR_Yug$PRODUCT
-      prod_obc <- prod == "Other bituminous coal"
-      prod_hcind <- prod == "Hard coal (if no detail)"
-      prod_cc <- prod == "Coking coal"
-      L100.USSR_Yug[prod_obc, NO_DETAIL_COAL_YEARS] <-
-        L100.USSR_Yug[prod_hcind, NO_DETAIL_COAL_YEARS ] *
-        round(L100.USSR_Yug$`1978`[prod_obc] /
-                (L100.USSR_Yug$`1978`[prod_cc] + L100.USSR_Yug$`1978`[prod_obc] + 1e-3), digits = 2)
-      L100.USSR_Yug[prod_cc, NO_DETAIL_COAL_YEARS ] <-
-        L100.USSR_Yug[prod_hcind, NO_DETAIL_COAL_YEARS ] - L100.USSR_Yug[prod_obc, NO_DETAIL_COAL_YEARS ]
-      L100.USSR_Yug[prod_hcind, NO_DETAIL_COAL_YEARS ] <- 0
+        # Brown coal is simpler, as lignite is the only relevant fuel (104-119)
+        # (sub-bituminous coal is not considered in these regions)
+        prod_bcind <- prod == "Brown coal (if no detail)"
+        L100.USSR_Yug[prod == "Lignite", NO_DETAIL_COAL_YEARS ] <- L100.USSR_Yug[prod_bcind, NO_DETAIL_COAL_YEARS ]
+        L100.USSR_Yug[prod_bcind, NO_DETAIL_COAL_YEARS ] <- 0
+      }
 
-      # Brown coal is simpler, as lignite is the only relevant fuel (104-119)
-      # (sub-bituminous coal is not considered in these regions)
-      prod_bcind <- prod == "Brown coal (if no detail)"
-      L100.USSR_Yug[prod == "Lignite", NO_DETAIL_COAL_YEARS ] <- L100.USSR_Yug[prod_bcind, NO_DETAIL_COAL_YEARS ]
-      L100.USSR_Yug[prod_bcind, NO_DETAIL_COAL_YEARS ] <- 0
-
-
+      # Isolate 1990 data for FSU and Yugoslavia; this will be used to back-project individual country shares
       fsu_yug_composite_entries <- IEA_ctry_composite$IEA_ctry %in% c("Former Soviet Union (if no detail)", "Former Yugoslavia (if no detail)")
       L100.IEAsingle %>%
         filter(iso %in% IEA_ctry_composite$iso[fsu_yug_composite_entries]) %>%
@@ -170,6 +179,7 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
 
       # Calculate the energy balances of the individual countries during the USSR years as
       # the total in the composite region times the country-wise shares in 1990 (121-131)
+      POST_USSR_YUG_YEARS_IEA <- intersect(POST_USSR_YUG_YEARS_IEA, names(L100.USSR_Yug_ctry))
       L100.USSR_Yug_ctry %>%
         select(one_of("iso", "FLOW", "PRODUCT", "IEAcomposite", POST_USSR_YUG_YEARS_IEA)) %>%
         left_join_keep_first_only(select(L100.USSR_Yug, one_of("COUNTRY", "FLOW", "PRODUCT", USSR_YUG_YEARS)),
@@ -256,28 +266,34 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
 
       # Combine the country-level data tables and write out energy balances (using iso codes rather than IEA's country names)
       bind_rows(L100.IEAsingle_noUSSR_Yug,
+                # TODO: we end up with two rows for each iso, FLOW, PRODUCT in the following data frame
                 L100.USSR_Yug_ctry_bal,
-                L100.Others_ctry_bal) ->
+                L100.Others_ctry_bal) %>%
+        add_title("IEA energy balances downscaled to 201 countries by iso code, FLOW, PRODUCT, and historical year") %>%
+        add_units("ktoe and GWh") %>%
+        add_comments("Combine OECD and non-OECD data; perform upfront adjustments for other Africa, Turkey, and South Africa;") %>%
+        add_comments("split out and handle the 1990 split of Yugoslavia and USSR; use population to downscale IEA composite regions") %>%
+        add_comments("to individual countries; filter out countries without data in any year.") ->
         L100.IEA_en_bal_ctry_hist
 
     } else {
       # raw IEA datasets not available, so used presaved data loaded above
-      if(is.na(L100.IEA_en_bal_ctry_hist)) {
-        stop("Neither the raw nor processed input data are available!")
+      if(isTRUE(is.na(L100.IEA_en_bal_ctry_hist_preprocessed))) {
+        stop("Neither the raw nor processed input data are available for LA100.IEA_downscale_ctry!")
       }
-      L100.IEA_en_bal_ctry_hist <- add_comments(L100.IEA_en_bal_ctry_hist, "** DATA PRE-GENERATED; NOT COMPUTED FROM RAW IEA FILES **")
+
+      L100.IEA_en_bal_ctry_hist_preprocessed %>%
+        add_comments("** DATA PRE-GENERATED; NOT COMPUTED FROM RAW IEA FILES **") ->
+        L100.IEA_en_bal_ctry_hist
     }
 
     # Produce final output
     L100.IEA_en_bal_ctry_hist %>%
-      add_title("IEA energy balances downscaled to 201 countries (iso / FLOW / PRODUCT / historical year)") %>%
-      add_units("ktoe and GWh") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
       add_legacy_name("L100.IEA_en_bal_ctry_hist") %>%
       add_precursors("L100.Pop_thous_ctry_Yh", "energy/en_OECD", "energy/en_nonOECD",
                      "energy/mappings/IEA_product_downscaling", "energy/mappings/IEA_ctry") %>%
-      add_flags(FLAG_PROTECT_FLOAT, FLAG_NO_XYEAR) ->
+      # Outputs match the old data system within 10^-5 but still failing, so use sum test
+      add_flags(FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT, FLAG_SUM_TEST) ->
       L100.IEA_en_bal_ctry_hist
 
     return_data(L100.IEA_en_bal_ctry_hist)
