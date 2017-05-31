@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L1233.out_EJ_R_elec_F_tech_Yh_cool}, \code{L1233.in_EJ_R_elec_F_tech_Yh_cool}, \code{L1233.wdraw_km3_R_elec}, \code{L1233.wcons_km3_R_elec}, \code{L1233.shrwt_R_elec_cool_Yf}. The corresponding file in the
 #' original data system was \code{L1233.Elec_water.R} (water level1).
-#' @details Categorizes electiricty generating technologies by water type, and computes water withdrawals and consumption.
+#' @details Categorizes electricity generating technologies by cooling water type, and computes water withdrawals and consumption.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select last
 #' @importFrom tidyr gather spread complete fill

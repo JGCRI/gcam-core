@@ -21,7 +21,7 @@ original data system was \code{L1233.Elec_water.R} (water level1).
 Water consumption and withdrawals for electricity.
 }
 \details{
-Categorizes electiricty generating technologies by water type, and computes water withdrawals and consumption.
+Categorizes electricity generating technologies by cooling water type, and computes water withdrawals and consumption.
 }
 \author{
 SWDT May 2017
