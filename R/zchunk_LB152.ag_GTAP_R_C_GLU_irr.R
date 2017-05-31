@@ -28,6 +28,9 @@ module_aglu_LB152.ag_GTAP_R_C_GLU_irr <- function(command, ...) {
              "L152.ag_rfdProd_Mt_R_C_GLU"))
   } else if(command == driver.MAKE) {
 
+    iso <- GCAM_region_ID <- GTAP_crop <- GCAM_commodity <- irrHA <- GLU <-
+        rfdHA <- irrProd <- rfdProd <- NULL # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

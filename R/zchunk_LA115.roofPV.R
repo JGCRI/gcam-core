@@ -22,6 +22,11 @@ module_energy_LA115.roofPV <- function(command, ...) {
     return(c("L115.RsrcCurves_EJ_R_roofPV"))
   } else if(command == driver.MAKE) {
 
+    year <- iso <- country_name <- region_GCAM3 <- value <- maxSubResource <-
+        popSum <- `curve-exponent` <- `mid-price` <- GCAM_region_ID <-
+        resource <- subresource <- curve.exponent <- gdpSupplyElast <-
+        subResourceCapacityFactor <- mid.price <- NULL # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

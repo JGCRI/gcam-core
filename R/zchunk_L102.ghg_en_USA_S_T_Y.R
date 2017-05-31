@@ -26,6 +26,10 @@ module_emissions_L102.ghg_en_USA_S_T_Y <- function(command, ...) {
     return(c("L102.ghg_tgej_USA_en_Sepa_F_2005"))
   } else if(command == driver.MAKE) {
 
+    year <- energy <- sector <- fuel <- technology <- GCAM_region_ID <- CO2 <-
+        . <- EPA_agg_sector <- EPA_agg_sector <- EPA_agg_fuel_ghg <- CH4 <-
+        N2O <- ch4_em_factor <- n2o_em_factor <- NULL # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
