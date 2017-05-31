@@ -34,6 +34,13 @@ module_water_L1233.Elec_water <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    EcYield_kgm2_hi <- EcYield_kgm2_lo <- GCAM_commodity <- GCAM_region_ID <- GLU <-
+      Irr_Rfd <- LC_bm2_hi <- LC_bm2_lo <- cooling_system <- country_name <- electricity <-
+      fuel <- gen <- iso <- landshare_hi <- landshare_lo <- level <- output <- output_cool <-
+      plant_type <- region_GCAM3 <- sector <- share <- technology <- value <-
+      water_consumption <- water_type <- water_withdrawals <- year <- yield <-
+      yieldmult_hi <- yieldmult_lo <- NULL  # silence package check notes
+
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
