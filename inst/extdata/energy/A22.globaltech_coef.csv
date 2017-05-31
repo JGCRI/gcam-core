@@ -1,6 +1,6 @@
-# File:A22.globaltech_coef.csv
+# File: A22.globaltech_coef.csv
 # Title: Primary energy transformation technologies default coefficient assumptions
-# Units: NA
+# Units: Unitless
 supplysector,subsector,technology,minicam.energy.input,1971,2020,2100
 gas processing,natural gas,natural gas,regional natural gas,1,1,1
 gas processing,biomass gasification,biomass gasification,regional biomass,1.343,1.343,1.227
