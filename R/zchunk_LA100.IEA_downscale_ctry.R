@@ -31,6 +31,11 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
     return(c("L100.IEA_en_bal_ctry_hist"))
   } else if(command == driver.MAKE) {
 
+    `1990` <- `1990_share` <- `1990_sum` <- COUNTRY <- EcYield_kgm2_hi <- EcYield_kgm2_lo <- FLOW <-
+      GCAM_commodity <- GCAM_region_ID <- GLU <- IEAcomposite <- Irr_Rfd <- LC_bm2_hi <-
+      LC_bm2_lo <- PRODUCT <- composite_population <- iso <- landshare_hi <- landshare_lo <-
+      level <- optional <- value <- year <- yield <- yieldmult_hi <- yieldmult_lo <- NULL # silence package check notes
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
