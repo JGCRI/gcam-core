@@ -64,19 +64,18 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
     # ===================================================
     # Part 1: downscaling country-level transportation energy data to UCD transportation technologies
     # NOTE: We are currently aggregating IEA's data on rail and road due to inconsistencies (e.g. no rail in the Middle East)
-    %>% filter(iso == "usa", year == 1986, fuel == "refined liquids")
     # First, replace the international shipping data (swapping in EIA for IEA)
     # Only perform this swap for international shipping / refined liquids, and in countries in the EIA database
     L154.in_EJ_ctry_trn_Fi_Yh <- L101.in_EJ_ctry_trn_Fi_Yh %>%
       # left_join used here because we only want to replace certain values
-      left_join(L1011.in_EJ_ctry_intlship_TOT_Yh %>% rename(EIA_value = value), by = c("iso","year")) %>%
+      left_join_keep_first_only(L1011.in_EJ_ctry_intlship_TOT_Yh %>% rename(EIA_value = value), by = c("iso","year")) %>%
       mutate(value = if_else(sector == "in_trn_international ship" &
                                fuel == "refined liquids" &
                                !is.na(EIA_value), EIA_value, value),
              sector = sub("in_", "", sector)) %>%
-      select(iso, sector, fuel, year, value) %>%
+      select(iso, sector, fuel, year, value) #%>%
       # Get rid of multiple territories with same country name
-      distinct()
+      #distinct()
 
     # Need to map sector to UCD_category, calibrated_techs_trn_agg data is too busy
     UCD_category_mapping <- calibrated_techs_trn_agg %>% select(sector, UCD_category) %>% distinct
