@@ -13,12 +13,11 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author SJS May 2017
-
 module_emissions_L123.bcoc_awb_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              "L103.ag_Prod_Mt_R_C_Y_GLU",
-             FILE = "temp-data-inject/L121.AWBshare_R_C_Y_GLU",
+             "L121.AWBshare_R_C_Y_GLU",
              FILE = "emissions/RCP_BC_2000",
              FILE = "emissions/RCP_OC_2000"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -33,9 +32,7 @@ module_emissions_L123.bcoc_awb_R_S_T_Y <- function(command, ...) {
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     L103.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L103.ag_Prod_Mt_R_C_Y_GLU")
-    get_data(all_data, "temp-data-inject/L121.AWBshare_R_C_Y_GLU") %>%
-      mutate(year = as.integer(substr(year, 2, 5))) ->
-      L121.AWBshare_R_C_Y_GLU
+    L121.AWBshare_R_C_Y_GLU <- get_data(all_data, "L121.AWBshare_R_C_Y_GLU")
     RCP_BC_2000 <- get_data(all_data, "emissions/RCP_BC_2000")
     RCP_OC_2000 <- get_data(all_data, "emissions/RCP_OC_2000")
 
@@ -106,7 +103,7 @@ module_emissions_L123.bcoc_awb_R_S_T_Y <- function(command, ...) {
                      "emissions/RCP_BC_2000",
                      "emissions/RCP_OC_2000",
                      "L103.ag_Prod_Mt_R_C_Y_GLU",
-                     "temp-data-inject/L121.AWBshare_R_C_Y_GLU") ->
+                     "L121.AWBshare_R_C_Y_GLU") ->
       L123.bcoc_tgmt_R_awb_2000
 
     return_data(L123.bcoc_tgmt_R_awb_2000)
