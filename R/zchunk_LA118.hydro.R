@@ -18,7 +18,7 @@ module_energy_LA118.hydro <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "energy/Hydropower_potential",
-             FILE = "temp-data-inject/L100.IEA_en_bal_ctry_hist",
+             "L100.IEA_en_bal_ctry_hist",
              FILE = "energy/A18.hydro_output"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L118.out_EJ_R_elec_hydro_Yfut"))
@@ -30,9 +30,9 @@ module_energy_LA118.hydro <- function(command, ...) {
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     Hydropower_potential <- get_data(all_data, "energy/Hydropower_potential")
 
-    get_data(all_data, "temp-data-inject/L100.IEA_en_bal_ctry_hist") %>%
+    get_data(all_data, "L100.IEA_en_bal_ctry_hist") %>%
       gather(year, value, -iso, -FLOW, -PRODUCT) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) ->
+      mutate(year = as.integer(year)) ->
       L100.IEA_en_bal_ctry_hist
 
     A18.hydro_output <- get_data(all_data, "energy/A18.hydro_output")
@@ -218,7 +218,7 @@ module_energy_LA118.hydro <- function(command, ...) {
                    multiplied by its share in the region, and added to the base-year ouput") %>%
       add_legacy_name("L118.out_EJ_R_elec_hydro_Yfut") %>%
       add_precursors("common/iso_GCAM_regID", "energy/Hydropower_potential",
-                     "temp-data-inject/L100.IEA_en_bal_ctry_hist", "energy/A18.hydro_output") %>%
+                     "L100.IEA_en_bal_ctry_hist", "energy/A18.hydro_output") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L118.out_EJ_R_elec_hydro_Yfut
 
