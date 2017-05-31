@@ -13,8 +13,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author FF, May 2017
-
-
 module_energy_LA122.gasproc_refining <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
@@ -34,6 +32,14 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
              "L122.in_Mt_R_C_Yh"))
   } else if(command == driver.MAKE) {
 
+    EcYield_kgm2_hi <- EcYield_kgm2_lo <- GCAM_commodity <- GCAM_region_ID <- GLU <-
+      Irr_Rfd <- LC_bm2_hi <- LC_bm2_lo <- biodiesel <- biomassOil_tech <- ethanol <- fuel <-
+      fuel.x <- fuelInput <- gas_coef <- hist_year <- in_value <- landshare_hi <-
+      landshare_lo <- level <- minicam.energy.input <- passthrough.sector <- sector <-
+      subsector <- supplysector <- technology <- value <- value.x <- value.y <- valueInput <-
+      value_ctl_oil <- value_en_bal <- value_en_bal_TPES <- value_en_bal_net_oil <-
+      value_gtl_oil <- value_gtlctl <- year <- yield <- yieldmult_hi <- yieldmult_lo <- NULL # silence package check notes
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
@@ -48,7 +54,7 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
 
     # Data in long format and removing "X" year
     L1011.en_bal_EJ_R_Si_Fi_Yh%>%
-    gather(year,value,-GCAM_region_ID,-fuel,-sector) %>%
+      gather(year,value,-GCAM_region_ID,-fuel,-sector) %>%
       mutate(year = as.integer(substr(year, 2, 5))) -> L1011.en_bal_EJ_R_Si_Fi_Yh
 
     L121.in_EJ_R_unoil_F_Yh%>%
@@ -108,7 +114,7 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
 
     # subset L122.biofuel_coef_repR based on A_regions by region and sector (ethanol)
     L122.biofuel_coef_repR %>%
-    # Using semi_join to keep the sector = ethanol in L122.biofuel_coef_repR based on A_regions
+      # Using semi_join to keep the sector = ethanol in L122.biofuel_coef_repR based on A_regions
       semi_join(select(A_regions, GCAM_region_ID, sector = ethanol), by = c("sector", "GCAM_region_ID")) -> L122.biofuel_coef_repR_Ethanol
 
     # subset L122.biofuel_coef_repR based on A_regions by region and sector (biodisiel). Then adding ethanol sector (L122.biofuel_coef_repR_Ethanol)
@@ -209,7 +215,7 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
 
     # Calculating region- and fuel-specific coefficients of crude oil refining
     L122.in_EJ_R_oilrefining_F_Yh %>%
-     left_join(select(L122.out_EJ_R_oilrefining_Yh, -fuel), by = c("GCAM_region_ID", "sector", "year")) %>%
+      left_join(select(L122.out_EJ_R_oilrefining_Yh, -fuel), by = c("GCAM_region_ID", "sector", "year")) %>%
       mutate(value = value.x/value.y) %>%
       select(-value.x, -value.y) -> L122.IO_R_oilrefining_F_Yh
 
@@ -263,8 +269,8 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
     A22.globaltech_coef %>%
       filter(supplysector == "gas processing") %>%
       gather(hist_year, value, -supplysector, -subsector, -technology, -minicam.energy.input) %>%
-    # Filter 1971 since the value associated to this year is the same till 2100, but all historical years are missing. Therefore filter
-    # 1971 and the repeat the corresponding value (repeat_add_columns) for historical years
+      # Filter 1971 since the value associated to this year is the same till 2100, but all historical years are missing. Therefore filter
+      # 1971 and the repeat the corresponding value (repeat_add_columns) for historical years
       filter(hist_year == min(HISTORICAL_YEARS)) %>%
       repeat_add_columns(tibble::tibble(year = HISTORICAL_YEARS)) %>%
       select(-hist_year) %>%
