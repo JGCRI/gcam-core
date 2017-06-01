@@ -13,6 +13,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author STW May 2017
+#' @export
 module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "socioeconomics/socioeconomics_ctry",
@@ -101,6 +102,53 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
       replace_na(list(pop = 0)) %>%
       group_by(year) %>%
       summarize(pop = sum(pop))
+    #ppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp
+    ### trying to loop in long-form
+    pop_missing2 <- left_join(pop_global, pop_notmissing, by = "year") %>%
+      mutate(pop_allocate = pop.x - pop.y) %>%
+      select(year, pop_allocate)
+
+    maddison_hist_ratio2 <-
+      filter(hist_interp, iso != "world_total") %>%
+      #filter(hist_interp, iso %in% c( "abw", "afg", "ago", "arg")) %>%
+      left_join(pop_missing2, by = "year")
+
+    # solve <- small %>%
+    #   arrange(iso) %>%
+    #   group_by(iso) %>%
+    #   # This fills in all values with the value one timestep ahead (necessary because approx_fun needs 2 data points)
+    #   mutate(pop2 = if_else(is.na(pop), (lead(pop, n = 1L, order_by = iso)), pop)) %>%
+    #   # Linearly interpolates all values, giving extremes the same value as closest point
+    #   mutate(pop2 = approx_fun(year, pop2, rule = 2)) %>%
+    #   group_by(year) %>%
+    #   mutate(sum.pop.next.time = sum(pop2)) %>%
+    #   group_by(iso) %>%
+    #   mutate(sum.pop.next.time = lead(sum.pop.next.time, n = 1L)) %>%
+    #   mutate(pop = if_else(is.na(pop),(pop2/sum.pop.next.time) * pop_allocate, pop))
+    #   replace_na(list(pop = .$pop2 / .$sum.pop.next.time * .$pop_allocate))
+
+      #mutate(pop3 =  pmax(pop, pop2/sum.pop.next.time) * pop_allocate, na.rm = FALSE))
+
+
+
+    for( i in rev(unique(maddison_hist_ratio2$year))[-1]){
+      ungroup(maddison_hist_ratio2) %>%
+        mutate(pop2 = if_else(is.na(pop), (lead(pop, n = 1L, order_by = iso)), 0)) %>%
+        group_by(year) %>%
+        mutate(pop = if_else(year == i, pmax(pop, pop2/sum(pop2) * pop_allocate, na.rm = TRUE), pop)) ->
+        maddison_hist_ratio2
+    }
+
+      maddison_hist_ratio2.1 <- maddison_hist_ratio2 %>%
+        group_by(iso) %>%
+        mutate(pop_ratio_1950 = pop / pop[year == 1950]) %>%
+        filter(year != rev(unique(maddison_hist_ratio2$year))[1]) %>%
+        arrange(rev(year)) %>%
+        select(iso, year, pop_ratio_1950) %>%
+        mutate(year = as.integer(year))
+    ### trying to loop in long-form
+    #ppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp
+
     # Subtract reported countries from total global - these are the total population values in each period that will be allocated to countries with missing values
     pop_missing <- left_join(pop_global, pop_notmissing, by = "year") %>%
       mutate(pop_allocate = pop.x - pop.y) %>%
