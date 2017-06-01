@@ -12,9 +12,9 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
+#' @author HM&RH June 2017
 #' @export
-module_socioeconomics_L201.Pop_GDP_scenarios_DISABLED <- function(command, ...) {
+module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              "L101.Pop_thous_GCAM3_R_Y",
@@ -24,6 +24,7 @@ module_socioeconomics_L201.Pop_GDP_scenarios_DISABLED <- function(command, ...) 
              "L102.gdp_mil90usd_Scen_R_Y",
              "L102.pcgdp_thous90USD_Scen_R_Y",
              "L102.PPP_MER_R"))
+
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L201.InterestRate",
              "L201.Pop_GCAM3",
@@ -33,9 +34,7 @@ module_socioeconomics_L201.Pop_GDP_scenarios_DISABLED <- function(command, ...) 
              "L201.PPPConvert",
              "object",
              "L201.BaseGDP_Scen",
-             "L201.LaborForceFillout",
-             "object2",
-             "L201.PPPConvert"))
+             "object2"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -82,7 +81,9 @@ module_socioeconomics_L201.Pop_GDP_scenarios_DISABLED <- function(command, ...) 
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L201.InterestRate") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/GCAM_region_names", "L101.Pop_thous_GCAM3_R_Y", "L101.Pop_thous_R_Yh",
+                     "L101.Pop_thous_Scen_R_Yfut", "L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
+                     "L102.pcgdp_thous90USD_Scen_R_Y", "L102.PPP_MER_R") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L201.InterestRate
@@ -92,7 +93,9 @@ module_socioeconomics_L201.Pop_GDP_scenarios_DISABLED <- function(command, ...) 
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L201.Pop_GCAM3") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/GCAM_region_names", "L101.Pop_thous_GCAM3_R_Y", "L101.Pop_thous_R_Yh",
+                     "L101.Pop_thous_Scen_R_Yfut", "L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
+                     "L102.pcgdp_thous90USD_Scen_R_Y", "L102.PPP_MER_R") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L201.Pop_GCAM3
@@ -102,7 +105,9 @@ module_socioeconomics_L201.Pop_GDP_scenarios_DISABLED <- function(command, ...) 
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L201.BaseGDP_GCAM3") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/GCAM_region_names", "L101.Pop_thous_GCAM3_R_Y", "L101.Pop_thous_R_Yh",
+                     "L101.Pop_thous_Scen_R_Yfut", "L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
+                     "L102.pcgdp_thous90USD_Scen_R_Y", "L102.PPP_MER_R") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L201.BaseGDP_GCAM3
@@ -112,8 +117,9 @@ module_socioeconomics_L201.Pop_GDP_scenarios_DISABLED <- function(command, ...) 
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L201.LaborForceFillout") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
+      add_precursors("common/GCAM_region_names", "L101.Pop_thous_GCAM3_R_Y", "L101.Pop_thous_R_Yh",
+                     "L101.Pop_thous_Scen_R_Yfut", "L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
+                     "L102.pcgdp_thous90USD_Scen_R_Y", "L102.PPP_MER_R") %>%      # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L201.LaborForceFillout
     tibble() %>%
@@ -122,7 +128,9 @@ module_socioeconomics_L201.Pop_GDP_scenarios_DISABLED <- function(command, ...) 
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L201.LaborProductivity_GCAM3") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/GCAM_region_names", "L101.Pop_thous_GCAM3_R_Y", "L101.Pop_thous_R_Yh",
+                     "L101.Pop_thous_Scen_R_Yfut", "L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
+                     "L102.pcgdp_thous90USD_Scen_R_Y", "L102.PPP_MER_R") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L201.LaborProductivity_GCAM3
@@ -132,7 +140,9 @@ module_socioeconomics_L201.Pop_GDP_scenarios_DISABLED <- function(command, ...) 
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L201.PPPConvert") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/GCAM_region_names", "L101.Pop_thous_GCAM3_R_Y", "L101.Pop_thous_R_Yh",
+                     "L101.Pop_thous_Scen_R_Yfut", "L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
+                     "L102.pcgdp_thous90USD_Scen_R_Y", "L102.PPP_MER_R") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L201.PPPConvert
@@ -142,7 +152,9 @@ module_socioeconomics_L201.Pop_GDP_scenarios_DISABLED <- function(command, ...) 
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("object") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/GCAM_region_names", "L101.Pop_thous_GCAM3_R_Y", "L101.Pop_thous_R_Yh",
+                     "L101.Pop_thous_Scen_R_Yfut", "L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
+                     "L102.pcgdp_thous90USD_Scen_R_Y", "L102.PPP_MER_R") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       object
@@ -152,7 +164,9 @@ module_socioeconomics_L201.Pop_GDP_scenarios_DISABLED <- function(command, ...) 
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L201.BaseGDP_Scen") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/GCAM_region_names", "L101.Pop_thous_GCAM3_R_Y", "L101.Pop_thous_R_Yh",
+                     "L101.Pop_thous_Scen_R_Yfut", "L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
+                     "L102.pcgdp_thous90USD_Scen_R_Y", "L102.PPP_MER_R") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L201.BaseGDP_Scen
@@ -161,31 +175,14 @@ module_socioeconomics_L201.Pop_GDP_scenarios_DISABLED <- function(command, ...) 
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L201.LaborForceFillout") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L201.LaborForceFillout
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
       add_legacy_name("object2") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/GCAM_region_names", "L101.Pop_thous_GCAM3_R_Y", "L101.Pop_thous_R_Yh",
+                     "L101.Pop_thous_Scen_R_Yfut", "L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
+                     "L102.pcgdp_thous90USD_Scen_R_Y", "L102.PPP_MER_R") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       object2
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L201.PPPConvert") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L201.PPPConvert
+
 
     return_data(L201.InterestRate, L201.Pop_GCAM3, L201.BaseGDP_GCAM3, L201.LaborForceFillout, L201.LaborProductivity_GCAM3, L201.PPPConvert, object, L201.BaseGDP_Scen, L201.LaborForceFillout, object2, L201.PPPConvert)
   } else {
