@@ -21,7 +21,11 @@ original data system was \code{L125.bcoc_unmgd_R_S_T_Y.R} (emissions level1).
 Historical emissions from unmanaged land by land cover type, computed from RCP emissions data.
 }
 \details{
-Describe in detail what this chunk does.
+Calculate BC/OC emissions from unmanaged lands (savanna burning, forest fires, deforestation).
+Downscale EDGAR regional emissions to GLU using shares of land area in each GLU within each region.
+Divide forest-related emissions into deforestation and forest fires using GFED data
+Compute global average deforestation emissions coefficients using deforestation from 2000 to 2005 using RCP emissions.
+Note: Non-CO2s are calculated in a separate chunk.
 }
 \author{
 RMH May 2017
