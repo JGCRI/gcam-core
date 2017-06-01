@@ -20,7 +20,7 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
              "L101.Pop_thous_GCAM3_R_Y",
              "L101.Pop_thous_R_Yh",
              "L101.Pop_thous_Scen_R_Yfut",
-             "L102.gdp_mil90usd_GCAM3_R_Y",
+             FILE = "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y",
              "L102.gdp_mil90usd_Scen_R_Y",
              "L102.pcgdp_thous90USD_Scen_R_Y",
              "L102.PPP_MER_R"))
@@ -44,7 +44,7 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
     L101.Pop_thous_GCAM3_R_Y <- get_data(all_data, "L101.Pop_thous_GCAM3_R_Y")
     L101.Pop_thous_R_Yh <- get_data(all_data, "L101.Pop_thous_R_Yh")
     L101.Pop_thous_Scen_R_Yfut <- get_data(all_data, "L101.Pop_thous_Scen_R_Yfut")
-    L102.gdp_mil90usd_GCAM3_R_Y <- get_data(all_data, "L102.gdp_mil90usd_GCAM3_R_Y")
+    L102.gdp_mil90usd_GCAM3_R_Y <- get_data(all_data, "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y")
     L102.gdp_mil90usd_Scen_R_Y <- get_data(all_data, "L102.gdp_mil90usd_Scen_R_Y")
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y")
     L102.PPP_MER_R <- get_data(all_data, "L102.PPP_MER_R")
@@ -82,7 +82,7 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L201.InterestRate") %>%
       add_precursors("common/GCAM_region_names", "L101.Pop_thous_GCAM3_R_Y", "L101.Pop_thous_R_Yh",
-                     "L101.Pop_thous_Scen_R_Yfut", "L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
+                     "L101.Pop_thous_Scen_R_Yfut", "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
                      "L102.pcgdp_thous90USD_Scen_R_Y", "L102.PPP_MER_R") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
@@ -94,7 +94,7 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L201.Pop_GCAM3") %>%
       add_precursors("common/GCAM_region_names", "L101.Pop_thous_GCAM3_R_Y", "L101.Pop_thous_R_Yh",
-                     "L101.Pop_thous_Scen_R_Yfut", "L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
+                     "L101.Pop_thous_Scen_R_Yfut", "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
                      "L102.pcgdp_thous90USD_Scen_R_Y", "L102.PPP_MER_R") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
@@ -106,7 +106,7 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L201.BaseGDP_GCAM3") %>%
       add_precursors("common/GCAM_region_names", "L101.Pop_thous_GCAM3_R_Y", "L101.Pop_thous_R_Yh",
-                     "L101.Pop_thous_Scen_R_Yfut", "L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
+                     "L101.Pop_thous_Scen_R_Yfut", "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
                      "L102.pcgdp_thous90USD_Scen_R_Y", "L102.PPP_MER_R") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
@@ -118,7 +118,7 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L201.LaborForceFillout") %>%
       add_precursors("common/GCAM_region_names", "L101.Pop_thous_GCAM3_R_Y", "L101.Pop_thous_R_Yh",
-                     "L101.Pop_thous_Scen_R_Yfut", "L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
+                     "L101.Pop_thous_Scen_R_Yfut", "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
                      "L102.pcgdp_thous90USD_Scen_R_Y", "L102.PPP_MER_R") %>%      # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L201.LaborForceFillout
@@ -129,7 +129,7 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L201.LaborProductivity_GCAM3") %>%
       add_precursors("common/GCAM_region_names", "L101.Pop_thous_GCAM3_R_Y", "L101.Pop_thous_R_Yh",
-                     "L101.Pop_thous_Scen_R_Yfut", "L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
+                     "L101.Pop_thous_Scen_R_Yfut", "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
                      "L102.pcgdp_thous90USD_Scen_R_Y", "L102.PPP_MER_R") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
@@ -141,7 +141,7 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L201.PPPConvert") %>%
       add_precursors("common/GCAM_region_names", "L101.Pop_thous_GCAM3_R_Y", "L101.Pop_thous_R_Yh",
-                     "L101.Pop_thous_Scen_R_Yfut", "L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
+                     "L101.Pop_thous_Scen_R_Yfut", "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
                      "L102.pcgdp_thous90USD_Scen_R_Y", "L102.PPP_MER_R") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
@@ -153,7 +153,7 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("object") %>%
       add_precursors("common/GCAM_region_names", "L101.Pop_thous_GCAM3_R_Y", "L101.Pop_thous_R_Yh",
-                     "L101.Pop_thous_Scen_R_Yfut", "L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
+                     "L101.Pop_thous_Scen_R_Yfut", "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
                      "L102.pcgdp_thous90USD_Scen_R_Y", "L102.PPP_MER_R") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
@@ -165,7 +165,7 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L201.BaseGDP_Scen") %>%
       add_precursors("common/GCAM_region_names", "L101.Pop_thous_GCAM3_R_Y", "L101.Pop_thous_R_Yh",
-                     "L101.Pop_thous_Scen_R_Yfut", "L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
+                     "L101.Pop_thous_Scen_R_Yfut", "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
                      "L102.pcgdp_thous90USD_Scen_R_Y", "L102.PPP_MER_R") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
@@ -177,14 +177,14 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("object2") %>%
       add_precursors("common/GCAM_region_names", "L101.Pop_thous_GCAM3_R_Y", "L101.Pop_thous_R_Yh",
-                     "L101.Pop_thous_Scen_R_Yfut", "L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
+                     "L101.Pop_thous_Scen_R_Yfut", "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
                      "L102.pcgdp_thous90USD_Scen_R_Y", "L102.PPP_MER_R") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       object2
 
 
-    return_data(L201.InterestRate, L201.Pop_GCAM3, L201.BaseGDP_GCAM3, L201.LaborForceFillout, L201.LaborProductivity_GCAM3, L201.PPPConvert, object, L201.BaseGDP_Scen, L201.LaborForceFillout, object2, L201.PPPConvert)
+    return_data(L201.InterestRate, L201.Pop_GCAM3, L201.BaseGDP_GCAM3, L201.LaborForceFillout, L201.LaborProductivity_GCAM3, L201.PPPConvert, object, L201.BaseGDP_Scen, object2)
   } else {
     stop("Unknown command")
   }
