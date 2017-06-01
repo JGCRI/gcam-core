@@ -23,6 +23,8 @@ HISTORICAL_YEARS <- 1971:2010
 IMF_GDP_YEARS <- 2010:2020
 CONV_DAYS_YEAR <- 1 / 365.25
 FUTURE_YEARS <- seq(2015, 2100, 5)
+BASE_YEARS <- c(1975, 1990, 2005, 2010)
+MODEL_YEARS <- c(BASE_YEARS, FUTURE_YEARS)
 SSP_FUTURE_YEARS <- c( 2010, FUTURE_YEARS)
 GHG_CONTROL_READIN_YEAR <- 1975
 
@@ -101,6 +103,7 @@ CONV_HA_BM2 <- 1e-5
 CONV_THA_KGM2 <- 0.1   # tons C/ha -> kg C/m2
 CONV_GG_TG <- 0.001 # gigagrams to tegagrams
 CONV_TST_TG <- 0.000907 # thousand short tons to Tg
+CONV_MWH_GJ <- 3.6 # Megawatt hours to Gigajoules
 CONV_KG_TO_TG <- 1e-9
 CONV_GWH_EJ <- 3.6e-6
 CONV_YEAR_HOURS <- 24 * 365.25
@@ -182,6 +185,7 @@ emissions.TST_TO_TG <- 0.000907 # Conversion from thousand short tons to Tg
 emissions.NH3_HISTORICAL_YEARS <- 1990:2002
 emissions.NH3_EXTRA_YEARS <- 1971:1989
 emissions.EDGAR_YEARS <- 1971:2008
+emissions.EDGAR_HISTORICAL <- 1971:2008
 emissions.EPA_MACC_YEAR <- 2030  # Must be either 2020 or 2030
 emissions.MAC_TAXES <- c( 0, 5, 10, 15, 32, 66, 129, 243, 486, 1093 ) # Range of costs in 1990 USD
 emissions.CONV_C_CO2 <- 44 / 12 # Convert Carbon to CO2
