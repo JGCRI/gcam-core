@@ -48,7 +48,7 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
 
     # If the (proprietary) raw IEA datasets are available, go through the full computations below
     # If not, use the pre-saved summary file (i.e., the output of this chunk!) assuming it's available
-    if(!is.na(en_nonOECD) && !is.na(en_OECD)) {
+    if(!is.null(en_nonOECD) && !is.null(en_OECD)) {
 
       # Full calculation from raw data
       # The two IEA datasets are LARGE and we keep them in wide format for most of the computations
@@ -283,7 +283,7 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
 
     } else {
       # raw IEA datasets not available, so used presaved data loaded above
-      if(isTRUE(is.na(L100.IEA_en_bal_ctry_hist_preprocessed))) {
+      if(is.null(L100.IEA_en_bal_ctry_hist_preprocessed)) {
         stop("Neither the raw nor processed input data are available for LA100.IEA_downscale_ctry!")
       }
 
