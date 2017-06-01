@@ -32,6 +32,10 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    EcYield_kgm2_hi <- EcYield_kgm2_lo <- GCAM_commodity <- GCAM_region_ID <- GLU <-
+      Irr_Rfd <- LC_bm2_hi <- LC_bm2_lo <- landshare_hi <- landshare_lo <- level <- value <-
+      year <- yield <- yieldmult_hi <- yieldmult_lo <- NULL  # silence package check notes
+
     # Load required inputs
     L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU <- get_data(all_data, "L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU")
     L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU <- get_data(all_data, "L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU")
