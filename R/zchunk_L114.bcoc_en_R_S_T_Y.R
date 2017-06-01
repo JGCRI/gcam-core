@@ -22,7 +22,7 @@ module_emissions_L114.bcoc_en_R_S_T_Y <- function(command, ...) {
              FILE = "emissions/mappings/EPA_ghg_tech",
              FILE = "emissions/mappings/GCAM_sector_tech",
              "L101.in_EJ_R_en_Si_F_Yh",
-             FILE = "temp-data-inject/L104.bcoc_tgej_USA_en_T_1990",
+             "L104.bcoc_tgej_USA_en_T_1990",
              FILE = "emissions/RCP_BC_2000",
              FILE = "emissions/RCP_OC_2000"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -41,7 +41,7 @@ module_emissions_L114.bcoc_en_R_S_T_Y <- function(command, ...) {
     EPA_ghg_tech <- get_data(all_data, "emissions/mappings/EPA_ghg_tech")
     GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
     L101.in_EJ_R_en_Si_F_Yh <- get_data(all_data, "L101.in_EJ_R_en_Si_F_Yh")
-    L104.bcoc_tgej_USA_en_T_1990 <- get_data(all_data, "temp-data-inject/L104.bcoc_tgej_USA_en_T_1990")
+    L104.bcoc_tgej_USA_en_T_1990 <- get_data(all_data, "L104.bcoc_tgej_USA_en_T_1990")
     RCP_BC_2000 <- get_data(all_data, "emissions/RCP_BC_2000")
     RCP_OC_2000 <- get_data(all_data, "emissions/RCP_OC_2000")
 
@@ -148,7 +148,7 @@ module_emissions_L114.bcoc_en_R_S_T_Y <- function(command, ...) {
                      "emissions/mappings/EPA_ghg_tech",
                      "emissions/mappings/GCAM_sector_tech",
                      "L101.in_EJ_R_en_Si_F_Yh",
-                     "temp-data-inject/L104.bcoc_tgej_USA_en_T_1990",
+                     "L104.bcoc_tgej_USA_en_T_1990",
                      "emissions/RCP_BC_2000",
                      "emissions/RCP_OC_2000") %>%
       add_flags(FLAG_NO_XYEAR) ->
