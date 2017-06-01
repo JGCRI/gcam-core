@@ -13,7 +13,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author STW May 2017
-#' @export
+
 module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "socioeconomics/socioeconomics_ctry",
@@ -126,13 +126,13 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
     }
 
     # Population ratios for historic years compared to last historical year (1950) for all countries (will be used to scale UN populations from 1950)
-      maddison_hist_ratio <- maddison_hist_ratio %>%
-        group_by(iso) %>%
-        mutate(pop_ratio = pop / pop[year == rev(maddison_hist_years)[1]]) %>%
-        filter(year != rev(maddison_hist_years)[1]) %>%
-        select(iso, year, pop_ratio) %>%
-        mutate(year = as.integer(year)) %>%
-        ungroup
+    maddison_hist_ratio <- maddison_hist_ratio %>%
+      group_by(iso) %>%
+      mutate(pop_ratio = pop / pop[year == rev(maddison_hist_years)[1]]) %>%
+      filter(year != rev(maddison_hist_years)[1]) %>%
+      select(iso, year, pop_ratio) %>%
+      mutate(year = as.integer(year)) %>%
+      ungroup
 
     # Need to create matching iso codes for three countries in UN, but not Maddison.
     # Set Serbia and Montenegro ratio equal to Serbia & Montenegro and use Indonesia population ratio for East Timor
