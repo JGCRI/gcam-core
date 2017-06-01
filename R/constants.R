@@ -186,3 +186,4 @@ emissions.EPA_MACC_YEAR <- 2030  # Must be either 2020 or 2030
 emissions.MAC_TAXES <- c( 0, 5, 10, 15, 32, 66, 129, 243, 486, 1093 ) # Range of costs in 1990 USD
 emissions.CONV_C_CO2 <- 44 / 12 # Convert Carbon to CO2
 emissions.DEFOREST_COEF_YEARS <- c(2000, 2005)
+emissions.PFCs <- c("CF4", "C2F6", "SF6")

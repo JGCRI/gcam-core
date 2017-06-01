@@ -14,21 +14,21 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_emissions_L142.pfc_R_S_T_Y_DISABLED <- function(command, ...) {
+module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "emissions/gcam_fgas_tech",
              FILE = "emissions/other_f_gases",
              FILE = "temp-data-inject/L144.in_EJ_R_bld_serv_F_Yh",
              FILE = "common/iso_GCAM_regID",
-             FILE = "emissions/EDGAR_sector_fgas",
+             FILE = "emissions/EDGAR/EDGAR_sector_fgas",
              # ** NOTE *** the following file has been removed from the repo
              # please talk to Kate about why and how to work around this. Thanks
              # FILE = "emissions/EDGAR_nation",
              FILE = "emissions/A41.GWP",
-             FILE = "emissions/EDGAR_SF6",
-             FILE = "emissions/EDGAR_C2F6",
-             FILE = "emissions/EDGAR_CF4"))
+             FILE = "emissions/EDGAR/EDGAR_SF6",
+             FILE = "emissions/EDGAR/EDGAR_C2F6",
+             FILE = "emissions/EDGAR/EDGAR_CF4"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L142.pfc_R_S_T_Yh"))
   } else if(command == driver.MAKE) {
@@ -36,17 +36,35 @@ module_emissions_L142.pfc_R_S_T_Y_DISABLED <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    gcam_fgas_tech <- get_data(all_data, "emissions/gcam_fgas_tech")
-    other_f_gases <- get_data(all_data, "emissions/other_f_gases")
-    L144.in_EJ_R_bld_serv_F_Yh <- get_data(all_data, "temp-data-inject/L144.in_EJ_R_bld_serv_F_Yh")
-    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    EDGAR_sector_fgas <- get_data(all_data, "emissions/EDGAR_sector_fgas")
-    EDGAR_nation <- get_data(all_data, "emissions/EDGAR_nation")
-    A41.GWP <- get_data(all_data, "emissions/A41.GWP")
-    EDGAR_SF6 <- get_data(all_data, "emissions/EDGAR_SF6")
-    EDGAR_C2F6 <- get_data(all_data, "emissions/EDGAR_C2F6")
-    EDGAR_CF4 <- get_data(all_data, "emissions/EDGAR_CF4")
+    get_data(all_data, "common/GCAM_region_names") ->
+      GCAM_region_names
+    get_data(all_data, "emissions/gcam_fgas_tech") ->
+      GCAM_tech
+    get_data(all_data, "emissions/other_f_gases") ->
+      Other_F
+    get_data(all_data, "temp-data-inject/L144.in_EJ_R_bld_serv_F_Yh")  %>%
+      gather(year, value, -GCAM_region_ID, -sector, -fuel, -service) %>%
+      mutate(year = as.integer(substr(year, 2, 5))) ->
+      L144.in_EJ_R_bld_serv_F_Yh
+    get_data(all_data, "common/iso_GCAM_regID") ->
+      iso_GCAM_regID
+    get_data(all_data, "emissions/EDGAR/EDGAR_sector_fgas") ->
+      EDGAR_sector
+#    EDGAR_nation <- get_data(all_data, "emissions/EDGAR_nation")
+    get_data(all_data, "emissions/A41.GWP") ->
+      GWP
+    get_data(all_data, "emissions/EDGAR/EDGAR_SF6")  %>%
+      gather(year, value, -IPCC_Annex, -World_Region, -ISO_A3, -Name, -IPCC, -IPCC_description) %>%
+      mutate(year = as.integer(substr(year, 1, 5))) ->
+      EDGAR_SF6
+    get_data(all_data, "emissions/EDGAR/EDGAR_C2F6") %>%
+      gather(year, value, -IPCC_Annex, -World_Region, -ISO_A3, -Name, -IPCC, -IPCC_description) %>%
+      mutate(year = as.integer(substr(year, 1, 5))) ->
+      EDGAR_C2F6
+    get_data(all_data, "emissions/EDGAR/EDGAR_CF4") %>%
+      gather(year, value, -IPCC_Annex, -World_Region, -ISO_A3, -Name, -IPCC, -IPCC_description) %>%
+      mutate(year = as.integer(substr(year, 1, 5))) ->
+      EDGAR_CF4
 
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
@@ -61,14 +79,87 @@ module_emissions_L142.pfc_R_S_T_Y_DISABLED <- function(command, ...) {
     # } else {
     #   ... new code with a fix
     # }
-    #
-    #
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses vecpaste
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses repeat_and_add_vector
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
+
+    #First, bind all gases together
+
+    EDGAR_SF6 %>%
+      mutate(Non.CO2 = "SF6") ->
+      EDGAR_SF6
+
+    EDGAR_C2F6 %>%
+      mutate(Non.CO2 = "C2F6") ->
+      EDGAR_C2F6
+
+    EDGAR_CF4 %>%
+      mutate(Non.CO2 = "CF4") ->
+      EDGAR_CF4
+
+    #Then, prepare EDGAR data for use
+
+   EDGAR_SF6 %>%
+     bind_rows(EDGAR_C2F6, EDGAR_CF4) %>%
+     left_join_error_no_match(EDGAR_sector, by = "IPCC_description") %>%
+     standardize_iso(col = "ISO_A3") %>%
+     change_iso_code('rou','rom') %>%
+     left_join_error_no_match(iso_GCAM_regID, by = "iso")  %>%
+     rename(EDGAR_agg_sector = agg_sector) %>%
+     select(GCAM_region_ID, EDGAR_agg_sector, Non.CO2, year, value)  %>%
+     filter(year !="1970") ->
+     L142.EDGAR_PFC
+
+   L142.EDGAR_PFC %>%
+      group_by(GCAM_region_ID, EDGAR_agg_sector, Non.CO2, year) %>%
+      summarize(value = sum(value))  %>%
+      rename(EDGAR_emissions = value) ->
+      L142.EDGAR_PFC_R_S_T_Yh.melt
+
+   #Map in other f-gas sector, which varies by gas
+
+   L142.EDGAR_PFC_R_S_T_Yh.melt %>%
+     filter(EDGAR_agg_sector != "other_f_gases") ->
+     L142.EDGAR_PFC_R_S_T_Yh_rest
+
+   Other_F %>%
+     rename(Non.CO2 = Gas) ->
+     Other_F
+
+   L142.EDGAR_PFC_R_S_T_Yh.melt %>%
+     filter(EDGAR_agg_sector == "other_f_gases")  %>%
+     left_join(Other_F, by = "Non.CO2")   %>%
+     ungroup() %>%
+     select(-EDGAR_agg_sector)  %>%
+     rename(EDGAR_agg_sector = Sector)  %>%
+     bind_rows(L142.EDGAR_PFC_R_S_T_Yh_rest) ->
+     L142.EDGAR_PFC_R_S_T_Yh.melt
+
+   #Map to GCAM technologies
+  GCAM_tech %>%
+    repeat_add_columns(tibble(GCAM_region_ID = GCAM_region_names$GCAM_region_ID)) %>%
+    repeat_add_columns(tibble(year = emissions.EDGAR_YEARS)) %>%
+    repeat_add_columns(tibble("Non.CO2" = emissions.PFCs))  %>%
+    ungroup() %>%
+    left_join(L142.EDGAR_PFC_R_S_T_Yh.melt, by = c("GCAM_region_ID", "year", "EDGAR_agg_sector", "Non.CO2"))  %>%
+    select(GCAM_region_ID, supplysector, subsector, stub.technology, Non.CO2, year, EDGAR_emissions)  %>%
+    mutate_all(funs(replace(., is.na(.), 0))) ->
+    L142.pfc_R_S_T_Yh.melt
+
+  L144.in_EJ_R_bld_serv_F_Yh %>%
+    filter(service %in% c("comm cooling", "resid cooling") & fuel == "electricity") ->
+    L142.R_cooling_T_Yh
+
+  L142.R_cooling_T_Yh %>%
+    group_by(GCAM_region_ID, year)  %>%
+    summarize(value = sum(value)) ->
+   L142.R_cooling_Yh
+
+ L142.R_cooling_Yh %>%
+    left_join(L142.R_cooling_T_Yh, by = c("GCAM_region_ID", "year"))  %>%
+   mutate(share = value.y /value.x) ->
+   L142.R_cooling_T_Yh.melt
+
+ L142.R_cooling_T_Yh.melt %>%
+   left_join(L142.R_cooling_Yh, by = c("GCAM_region_ID", "year"))  %>%
+
     # ===================================================
 
     # Produce outputs
@@ -82,7 +173,16 @@ module_emissions_L142.pfc_R_S_T_Y_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L142.pfc_R_S_T_Yh") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/GCAM_region_names",
+                     "emissions/gcam_fgas_tech",
+                     "emissions/other_f_gases",
+                     "temp-data-inject/L144.in_EJ_R_bld_serv_F_Yh",
+                     "common/iso_GCAM_regID",
+                     "emissions/EDGAR/EDGAR_sector_fgas",
+                     "emissions/A41.GWP",
+                     "emissions/EDGAR/EDGAR_SF6",
+                     "emissions/EDGAR/EDGAR_C2F6",
+                     "emissions/EDGAR/EDGAR_CF4") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L142.pfc_R_S_T_Yh
