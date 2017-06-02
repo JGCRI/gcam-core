@@ -18,11 +18,16 @@ the generated outputs: \code{L162.ag_YieldRatio_R_C_Ysy_GLU_irr}, \code{L162.ag_
 original data system was \code{LB162.ag_prodchange_R_C_Y_GLU_irr.R} (aglu level1).
 }
 \description{
-Briefly describe what this chunk does.
+This module calculates the first level production/yield change assumptions that are exogenous to GCAM. These rates are calculated for each commodity
+at the region-glu-irrigation level in each model year, including the calibration year.
 }
 \details{
-Describe in detail what this chunk does.
+The CROSIT agriculture database is processed and reconciled with LDS and GCAM data system production and harvested area information at the irrigation
+level. Yield Ratios are calculated as future year reconciled production / base year reconciled production. The biomass yield ratio in each year is taken to
+be the median of all other commodities at the region-glu-irrigation level. The yield ratios are used to calculate annual yield rate assumptions
+(Yield Rate(year i) = Yield Ratio(year i) / Yield ratio(year i-1) ). Externally defined default yield rates are used to fill in missing data at the GCAM
+region-commodity-glu-irrigation level for all model years.
 }
 \author{
-YourInitials CurrentMonthName 2017
+ACS June 2017
 }
