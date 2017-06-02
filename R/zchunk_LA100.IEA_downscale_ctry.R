@@ -184,7 +184,7 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
         ungroup ->
         L100.USSR_Yug_FLOW_PRODUCT
 
-      # Selec the first 1990 value (by category and product) and merge in; then compute the country-specific shares of the 1990 total
+      # Select the first 1990 value (by category and product) and merge in; then compute the country-specific shares of the 1990 total
       L100.USSR_Yug_ctry_FLOW_PRODUCT %>%
         left_join_error_no_match(distinct(select(L100.USSR_Yug_FLOW_PRODUCT, -FLOW), IEAcomposite, PRODUCT, .keep_all = TRUE),
                                  by = c("IEAcomposite", "PRODUCT")) %>%
