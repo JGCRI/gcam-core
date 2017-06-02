@@ -60,9 +60,9 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
       cols <- c("COUNTRY", "FLOW", "PRODUCT", hy)
       bind_rows(en_OECD[cols], en_nonOECD[cols]) %>%
         # rename fuels with inconsistent naming between the two databases
-        mutate(PRODUCT = replace(PRODUCT,
-                                 PRODUCT %in% c("Natural Gas", "Other Kerosene", "Total"),
-                                 c("Natural gas", "Other kerosene", "Total of all energy sources"))) ->
+        mutate(PRODUCT = replace(PRODUCT, PRODUCT == "Natural Gas", "Natural gas")) %>%
+        mutate(PRODUCT = replace(PRODUCT, PRODUCT == "Other Kerosene", "Other kerosene")) %>%
+        mutate(PRODUCT = replace(PRODUCT, PRODUCT == "Total", "Total of all energy sources")) ->
         L100.IEAfull
 
       # UP FRONT ADJUSTMENTS (UFA) original lines 42-67
@@ -70,9 +70,12 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
       # UFA1. Nearly the entire supply of natural gas in other Africa between 2001 and 2004 is allocated
       # to GTL plants operating at nearly 100% efficiency. We adjust the energy input quantities
       # to avoid negative values later on.
+      # We use 1.7 below (i.e. 70% more gas input for about 60% efficiency for GTL) as
+      # ~60% is a pretty standard efficiency for gas-to-liquids.
+      # https://www.chevron.com/stories/gas-to-liquids (input/output of that modern GTL plant resolves to about 1.65)
       GTL_COEF <- 1.7
       GTL_ADJ_YEARS <- as.character(intersect(2001:2004, HISTORICAL_YEARS))
-      if(length(GTL_ADJ_YEARS)) {
+      if(length(GTL_ADJ_YEARS) > 0) {
         GTL_gas_entries <- with(L100.IEAfull, COUNTRY == "Other Africa" & FLOW == "TGTL" & PRODUCT == "Natural gas")
         GTL_oh_entries <- with(L100.IEAfull, COUNTRY == "Other Africa" & FLOW == "TGTL" & PRODUCT == "Other hydrocarbons")
         L100.IEAfull[GTL_gas_entries, GTL_ADJ_YEARS] <- L100.IEAfull[GTL_oh_entries, GTL_ADJ_YEARS] *
@@ -82,6 +85,9 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
       # UFA2. South Africa has a coal-to-gas IO coef in the gas works sector of about 5:1, and low natural
       # gas consumption in other sectors. The coal inputs are overridden here as the gas output times an
       # exogenous IO coef
+      # Note that a 5:1 ratio is not representative of coal gasification; we are adjusting it here to be
+      # consistent with actual conversion efficiencies and also for smooth transition between historical
+      # and future technologies in GCAM.
       COAL_TO_GAS_COEF <- 1.3
       CTG_entries <- L100.IEAfull$COUNTRY == "South Africa" & L100.IEAfull$FLOW == "TGASWKS"
       # Only use other bituminous coal; no need to maintain distinction between coal (if no detail) and other bituminous coal
@@ -95,7 +101,7 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
       CHP_IO_COEF <- 5
       CONV_GWH_KTOE <- 0.08598452 # ELAUTOC (the output) is in gigawatt hours, whereas AUTOCHP (the input) is in ktoe
       CHP_ADJ_YEARS <- intersect(1971:1981, colnames(L100.IEAfull))
-      if(length(CHP_ADJ_YEARS)) {
+      if(length(CHP_ADJ_YEARS) > 0) {
         CHP_entries <- L100.IEAfull$COUNTRY == "Turkey" & L100.IEAfull$PRODUCT == "Primary solid biofuels"
         L100.IEAfull[CHP_entries & L100.IEAfull$FLOW == "AUTOCHP", CHP_ADJ_YEARS] <-
           L100.IEAfull[CHP_entries & L100.IEAfull$FLOW == "ELAUTOC", CHP_ADJ_YEARS] *
@@ -133,7 +139,7 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
       # Re-map the "if no detail" forms of coal in the historical years prior to the relevant
       # coal types for matching with the more recent years (89-107)
       NO_DETAIL_COAL_YEARS <- as.character(intersect(1971:1977, HISTORICAL_YEARS))
-      if(length(NO_DETAIL_COAL_YEARS)) {
+      if(length(NO_DETAIL_COAL_YEARS) > 0) {
         # Hard coal needs to be split proportionally between coking coal and other bituminous coal
         # in order to minimize bias from different country-wise shares of the two fuel types.
         # Note that anthracite is not considered in these regions.
@@ -142,10 +148,11 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
         prod_obc <- prod == "Other bituminous coal"
         prod_hcind <- prod == "Hard coal (if no detail)"
         prod_cc <- prod == "Coking coal"
-        L100.USSR_Yug[prod_obc, NO_DETAIL_COAL_YEARS] <-
-          L100.USSR_Yug[prod_hcind, NO_DETAIL_COAL_YEARS ] *
+        # see discussion in PR #433 re this next step
+        L100.USSR_Yug[prod_obc, NO_DETAIL_COAL_YEARS] <- L100.USSR_Yug[prod_hcind, NO_DETAIL_COAL_YEARS ] *
           round(L100.USSR_Yug$`1978`[prod_obc] /
-                  (L100.USSR_Yug$`1978`[prod_cc] + L100.USSR_Yug$`1978`[prod_obc] + 1e-3), digits = 2)
+                  (L100.USSR_Yug$`1978`[prod_cc] + L100.USSR_Yug$`1978`[prod_obc] + 1e-3), digits = 2)   # ensure no zero in demoninator
+
         L100.USSR_Yug[prod_cc, NO_DETAIL_COAL_YEARS ] <-
           L100.USSR_Yug[prod_hcind, NO_DETAIL_COAL_YEARS ] - L100.USSR_Yug[prod_obc, NO_DETAIL_COAL_YEARS ]
         L100.USSR_Yug[prod_hcind, NO_DETAIL_COAL_YEARS ] <- 0
@@ -165,16 +172,19 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
         rename(IEAcomposite = IEA_ctry) ->
         L100.USSR_Yug_ctry
 
+      # Isolate rows with product/flow combinations that appear in IEA_product_downscaling...
       L100.USSR_Yug_ctry %>%
-        filter(paste(PRODUCT, FLOW) %in% paste(IEA_product_downscaling$PRODUCT, IEA_product_downscaling$FLOW)) ->
+        semi_join(IEA_product_downscaling, by = c("PRODUCT", "FLOW")) ->
         L100.USSR_Yug_ctry_FLOW_PRODUCT
 
+      # ...and sum up the 1990 data by category, flow, and product
       L100.USSR_Yug_ctry_FLOW_PRODUCT %>%
         group_by(IEAcomposite, FLOW, PRODUCT) %>%
         summarise(`1990_sum` = sum(`1990`)) %>%
         ungroup ->
         L100.USSR_Yug_FLOW_PRODUCT
 
+      # Selec the first 1990 value (by category and product) and merge in; then compute the country-specific shares of the 1990 total
       L100.USSR_Yug_ctry_FLOW_PRODUCT %>%
         left_join_error_no_match(distinct(select(L100.USSR_Yug_FLOW_PRODUCT, -FLOW), IEAcomposite, PRODUCT, .keep_all = TRUE),
                                  by = c("IEAcomposite", "PRODUCT")) %>%
@@ -193,7 +203,7 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
                                   by = c("iso", "PRODUCT")) ->
         L100.USSR_Yug_ctry_bal
 
-      USSR_YUG_COLUMNS <- which(names(L100.USSR_Yug_ctry_bal) %in% USSR_YUG_YEARS)
+      USSR_YUG_COLUMNS <- names(L100.USSR_Yug_ctry_bal) %in% USSR_YUG_YEARS
       L100.USSR_Yug_ctry_bal[USSR_YUG_COLUMNS] <- L100.USSR_Yug_ctry_bal[USSR_YUG_COLUMNS] * L100.USSR_Yug_ctry_bal$`1990_share`
       L100.USSR_Yug_ctry_bal$`1990_share` <- NULL
 
@@ -250,7 +260,7 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
         select(-iso) ->
         pop_share
 
-      hyc <- which(names(L100.Others_ctry_bal) %in% HISTORICAL_YEARS)
+      hyc <- names(L100.Others_ctry_bal) %in% HISTORICAL_YEARS
       L100.Others_ctry_bal[hyc] <- L100.Others_ctry_bal[hyc] * pop_share
 
       # Subset each of these final energy balances to only the rows that aren't zero in all years
@@ -258,13 +268,13 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
         select(-IEAcomposite) ->
         L100.Others_ctry_bal
 
-      hyc <- which(names(L100.IEAsingle) %in% HISTORICAL_YEARS)
+      hyc <- names(L100.IEAsingle) %in% HISTORICAL_YEARS
       L100.IEAsingle[rowSums(L100.IEAsingle[hyc]) != 0, ] %>%
         select(-COUNTRY) %>%
         filter(! iso %in% L100.USSR_Yug_ctry_bal$iso) ->
         L100.IEAsingle_noUSSR_Yug
 
-      hyc <- which(names(L100.USSR_Yug_ctry_bal) %in% HISTORICAL_YEARS)
+      hyc <- names(L100.USSR_Yug_ctry_bal) %in% HISTORICAL_YEARS
       L100.USSR_Yug_ctry_bal[rowSums(L100.USSR_Yug_ctry_bal[hyc]) !=0, ] %>%
         select(-IEAcomposite) ->
         L100.USSR_Yug_ctry_bal
