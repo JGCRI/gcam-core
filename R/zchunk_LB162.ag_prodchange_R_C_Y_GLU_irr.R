@@ -340,11 +340,39 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
     L162.ag_Prod_Mt_R_C_Y_GLU_irr %>%
       left_join(L162.agBio_YieldRate_R_C_Ysy_GLU_irr, by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "Irr_Rfd")) %>%
       # NA's include NA years, address
-      tidyr::complete(year = unique(c(max(HISTORICAL_YEARS), FUTURE_YEARS)),
-                      nesting(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd)) %>%
-      # join in default Rates and use to replace NA YieldRates
-      left_join_error_no_match(L162.defaultYieldRate, by = c("GCAM_commodity", "year")) %>%
+      tidyr::complete(year = SPEC_AG_PROD_YEARS, nesting(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd)) ->
+      # store in a table for further processing
+      L162.ag_YieldRate_R_C_Y_GLU_irr
+
+    # Subset to only the complete cases - group by region-commodity-glu-irrigation and keep only the members with non-na entries
+    # for every year
+    L162.ag_YieldRate_R_C_Y_GLU_irr %>%
+      # isolate the incomplete rows, wipe out their existing data, and pull in default yield rates
       group_by(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd) %>%
+      filter(!any(is.na(YieldRate))) %>%
+      ungroup() ->
+      L162.ag_YieldRate_R_C_Y_GLU_irr_completecases
+
+    # Isolate the incomplete cases, fill in default yield rates for each year, and join to the complete cases
+    L162.ag_YieldRate_R_C_Y_GLU_irr %>%
+      # isolate the incomplete rows, wipe out their existing data, and pull in default yield rates
+      group_by(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd) %>%
+      filter(any(is.na(YieldRate))) %>%
+      ungroup() %>%
+      select(-YieldRate) %>%
+      left_join_error_no_match(L162.defaultYieldRate, by = c("year", "GCAM_commodity")) %>%
+      rename(YieldRate = defaultRate) %>%
+      # incorporate back into main data frame
+      bind_rows(L162.ag_YieldRate_R_C_Y_GLU_irr_completecases) ->
+      L162.ag_YieldRate_R_C_Y_GLU_irr
+
+
+    # Step 3: Expand to future years by applying the default rate in each year
+    L162.ag_YieldRate_R_C_Y_GLU_irr %>%
+      tidyr::complete(year = c(max(HISTORICAL_YEARS),FUTURE_YEARS), nesting(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd)) %>%
+      left_join_error_no_match(L162.defaultYieldRate, by = c("year", "GCAM_commodity")) %>%
+      # replace NA's - which correspond to years we just filled in - with the default yield for that year we just joined
+      group_by(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd, year) %>%
       mutate(YieldRate = replace(YieldRate,
                                  is.na(YieldRate),
                                  defaultRate)) %>%
@@ -353,28 +381,72 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
       L162.ag_YieldRate_R_C_Y_GLU_irr
 
 
-    # Step 3: Expand to future years
+    # Step 4: Write out biomass yields
+    # Essentially repeating steps 1-3 with biomass only.
+    L162.ag_Prod_Mt_R_C_Y_GLU_irr %>%
+      select(GCAM_region_ID, GLU, Irr_Rfd) %>%
+      dplyr::distinct() %>%
+      mutate(GCAM_commodity = "biomass") %>%
+      # number of rows will change because joining in yearly information, so each Region-Commodity-GLU-Irrigation is not multiplied
+      # by the number of years
+      left_join(L162.agBio_YieldRate_R_C_Ysy_GLU_irr, by = c("GCAM_region_ID", "GLU", "GCAM_commodity", "Irr_Rfd")) %>%
+      # ensure every region-glu-irrigation level of biomass has every year
+      tidyr::complete(year = SPEC_AG_PROD_YEARS, nesting(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd)) ->
+      # store to manage complete versus incomplete cases
+      L162.bio_YieldRate_R_Y_GLU_irr
+
+    # Subset to only the complete cases - group by region-commodity-glu-irrigation and keep only the members with non-na entries
+    # for every year
+    L162.bio_YieldRate_R_Y_GLU_irr %>%
+      # isolate the incomplete rows, wipe out their existing data, and pull in default yield rates
+      group_by(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd) %>%
+      filter(!any(is.na(YieldRate))) %>%
+      ungroup() ->
+      L162.bio_YieldRate_R_Y_GLU_irr_completecases
+
+    # Isolate the incomplete cases, fill in default yield rates for each year, and join to the complete cases
+    L162.bio_YieldRate_R_Y_GLU_irr %>%
+      # isolate the incomplete rows, wipe out their existing data, and pull in default yield rates
+      group_by(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd) %>%
+      filter(any(is.na(YieldRate))) %>%
+      ungroup() %>%
+      select(-YieldRate) %>%
+      left_join_error_no_match(L162.defaultYieldRate, by = c("year", "GCAM_commodity")) %>%
+      rename(YieldRate = defaultRate) %>%
+      # incorporate back into main data frame
+      bind_rows(L162.bio_YieldRate_R_Y_GLU_irr_completecases) ->
+      L162.bio_YieldRate_R_Y_GLU_irr
+
+    # Expand to future years by applying the default rate in each year
+    L162.bio_YieldRate_R_Y_GLU_irr %>%
+      tidyr::complete(year = c(max(HISTORICAL_YEARS),FUTURE_YEARS), nesting(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd)) %>%
+      left_join_error_no_match(L162.defaultYieldRate, by = c("year", "GCAM_commodity")) %>%
+      # replace NA's - which correspond to years we just filled in - with the default yield for that year we just joined
+      group_by(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd, year) %>%
+      mutate(YieldRate = replace(YieldRate,
+                                 is.na(YieldRate),
+                                 defaultRate)) %>%
+      ungroup() %>%
+      select(-defaultRate) ->
+      L162.bio_YieldRate_R_Y_GLU_irr
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    # rename columns of output tables to value for testing
+    # In old DS, L162.ag_YieldRatio_R_C_Ysy_GLU_irr is long-form with the informative name YieldRatio.
+    # Therefore here, L162.ag_YieldRatio_R_C_Ysy_GLU_irr can be left alone.
+    # Old L162.ag_YieldRate_R_C_Y_GLU_irr and L162.bio_YieldRate_R_Y_GLU_irr are in wide-form, so new
+    # L162.ag_YieldRate_R_C_Y_GLU_irr and L162.bio_YieldRate_R_Y_GLU_irr need column names of value rather
+    # than the informative YieldRate used so far for readability. They also need appropriate flags.
+    L162.ag_YieldRate_R_C_Y_GLU_irr %>%
+      rename(value = YieldRate) ->
+      L162.ag_YieldRate_R_C_Y_GLU_irr
+    L162.bio_YieldRate_R_Y_GLU_irr %>%
+      rename(value = YieldRate) ->
+      L162.bio_YieldRate_R_Y_GLU_irr
 
 
     # Produce outputs
-    tibble() %>%
+    L162.ag_YieldRatio_R_C_Ysy_GLU_irr %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -388,10 +460,9 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
                      "L151.ag_irrHA_ha_ctry_crop",
                      "L151.ag_rfdHA_ha_ctry_crop",
                      "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
-                     "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU") ->
       L162.ag_YieldRatio_R_C_Ysy_GLU_irr
-    tibble() %>%
+    L162.ag_YieldRate_R_C_Y_GLU_irr %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -408,7 +479,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
                      "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L162.ag_YieldRate_R_C_Y_GLU_irr
-    tibble() %>%
+    L162.bio_YieldRate_R_Y_GLU_irr %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
