@@ -24,7 +24,6 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
     return(c("L100.Pop_thous_ctry_Yh",
              OPTIONAL_FILE = "energy/en_OECD",
              OPTIONAL_FILE = "energy/en_nonOECD",
-             OPTIONAL_FILE = "energy/L100.IEA_en_bal_ctry_hist",
              FILE = "energy/mappings/IEA_product_downscaling",
              FILE = "energy/mappings/IEA_ctry"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -44,7 +43,6 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
     en_nonOECD <- get_data(all_data, "energy/en_nonOECD")
     IEA_product_downscaling <- get_data(all_data, "energy/mappings/IEA_product_downscaling")
     IEA_ctry <- get_data(all_data, "energy/mappings/IEA_ctry")
-    L100.IEA_en_bal_ctry_hist_preprocessed <- get_data(all_data, "energy/L100.IEA_en_bal_ctry_hist")
 
     # If the (proprietary) raw IEA datasets are available, go through the full computations below
     # If not, use the pre-saved summary file (i.e., the output of this chunk!) assuming it's available
@@ -284,31 +282,29 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
                 # TODO: we end up with two rows for each iso, FLOW, PRODUCT in the following data frame
                 L100.USSR_Yug_ctry_bal,
                 L100.Others_ctry_bal) %>%
-        add_title("IEA energy balances downscaled to 201 countries by iso code, FLOW, PRODUCT, and historical year") %>%
-        add_units("ktoe and GWh") %>%
         add_comments("Combine OECD and non-OECD data; perform upfront adjustments for other Africa, Turkey, and South Africa;") %>%
         add_comments("split out and handle the 1990 split of Yugoslavia and USSR; use population to downscale IEA composite regions") %>%
-        add_comments("to individual countries; filter out countries without data in any year.") ->
+        add_comments("to individual countries; filter out countries without data in any year.") %>%
+        # Outputs match the old data system within 10^-5 but still failing, so use sum test
+        add_flags(FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT, FLAG_SUM_TEST) ->
         L100.IEA_en_bal_ctry_hist
-
     } else {
-      # raw IEA datasets not available, so used presaved data loaded above
-      if(is.null(L100.IEA_en_bal_ctry_hist_preprocessed)) {
-        stop("Neither the raw nor processed input data are available for LA100.IEA_downscale_ctry!")
-      }
+      # raw IEA datasets not available, so return NA
+      # Downstream chunks will be responsible for checking this
 
-      L100.IEA_en_bal_ctry_hist_preprocessed %>%
-        add_comments("** DATA PRE-GENERATED; NOT COMPUTED FROM RAW IEA FILES **") ->
+      tibble(x = NA) %>%
+        add_comments("** RAW DATA NOT READ FROM IEA FILES **") %>%
+        add_flags(FLAG_NO_TEST) ->
         L100.IEA_en_bal_ctry_hist
     }
 
     # Produce final output
     L100.IEA_en_bal_ctry_hist %>%
+      add_title("IEA energy balances downscaled to 201 countries by iso code, FLOW, PRODUCT, and historical year") %>%
+      add_units("ktoe and GWh") %>%
       add_legacy_name("L100.IEA_en_bal_ctry_hist") %>%
       add_precursors("L100.Pop_thous_ctry_Yh", "energy/en_OECD", "energy/en_nonOECD",
-                     "energy/mappings/IEA_product_downscaling", "energy/mappings/IEA_ctry") %>%
-      # Outputs match the old data system within 10^-5 but still failing, so use sum test
-      add_flags(FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT, FLAG_SUM_TEST) ->
+                     "energy/mappings/IEA_product_downscaling", "energy/mappings/IEA_ctry") ->
       L100.IEA_en_bal_ctry_hist
 
     return_data(L100.IEA_en_bal_ctry_hist)
