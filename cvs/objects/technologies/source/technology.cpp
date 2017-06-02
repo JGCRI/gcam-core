@@ -1054,7 +1054,7 @@ const string& Technology::getName() const
 * \author Steve Smith
 * \return share weight
 */
-Value Technology::getShareWeight() const
+double Technology::getShareWeight() const
 {
     /*! \post Share weight is a valid number and greater than or equal to zero. */
     assert( util::isValidNumber( mShareWeight ) && mShareWeight >= 0 );

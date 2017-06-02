@@ -357,7 +357,7 @@ namespace objects {
     * \return Returns whether the number is valid.
     */
     template <class T>
-    inline typename boost::enable_if<boost::is_convertible<T, double>, bool>::type isValidNumber( const T aNumber ) {
+    inline typename boost::enable_if<boost::is_convertible<T, double>, bool>::type isValidNumber( const T& aNumber ) {
 
         // We assume here that we're running on an implementation that
         // has NaN and infinity.  We also assume that no legitimate
@@ -366,7 +366,7 @@ namespace objects {
         // should take corrective action, or abort if none is
         // possible.
         const double doubleValue( aNumber );
-        return boost::math::isfinite( aNumber );
+        return boost::math::isfinite( doubleValue );
     }
 
     /*!
@@ -377,7 +377,7 @@ namespace objects {
      * \return true since this wouldn't be a valid check anyway.
      */
     template <class T>
-    inline typename boost::disable_if<boost::is_convertible<T, double>, bool>::type isValidNumber( const T aNumber ){
+    inline typename boost::disable_if<boost::is_convertible<T, double>, bool>::type isValidNumber( const T& aNumber ){
         return true;
     }
 

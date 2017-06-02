@@ -56,7 +56,6 @@ extern Scenario* scenario;
 
 Value::AltValueType Value::mAltValue( (double*)0 );
 double* Value::mGoodValue( 0 );
-//size_t Value::mIsPartialDeriv = 0;
 
 #if GCAM_PARALLEL_ENABLED
 struct AssignThreadStateFun {
@@ -94,8 +93,6 @@ mYearToCollect( scenario->getModeltime()->getper_to_yr( aPeriod ) ),
 mCCStartYear( mYearToCollect - scenario->getModeltime()->gettimestep( aPeriod ) + 1 ),
 mNumCollected( 0 )
 {
-    //Value::mAltValue = mStateData[0];
-    //Value::mIsPartialDeriv = 0;
     collectState();
 }
 
@@ -130,8 +127,6 @@ void ManageStateVariables::collectState() {
     DoCollect doCollectProc;
     mNumCollected = 0;
     doCollectProc.mParentClass = this;
-    doCollectProc.mIsCollect = true;
-    doCollectProc.mMemIsAllocated = false;
     vector<FilterStep*> collectStateSteps( 2, 0 );
     collectStateSteps[ 0 ] = new FilterStep( "" );
     collectStateSteps[ 1 ] = new FilterStep( "", DataFlags::STATE );
@@ -150,8 +145,12 @@ void ManageStateVariables::collectState() {
     Value::mGoodValue = mStateData[0];
     cout << "Mem allocated" << endl;
     mNumCollected = 0;
-    doCollectProc.mMemIsAllocated = true;
-    gatherState.startFilter( scenario );
+    for( auto currValue : mStateValues ) {
+        currValue->mIsStateCopy = true;
+        currValue->mAltValueIndex = mNumCollected;
+        currValue->mGoodValue[ mNumCollected ] = currValue->mValue;
+        ++mNumCollected;
+    }
     
     for( auto filterStep : collectStateSteps ) {
         delete filterStep;
@@ -159,22 +158,14 @@ void ManageStateVariables::collectState() {
 }
 
 void ManageStateVariables::resetState() {
-    DoCollect doCollectProc;
-    mNumCollected = 0;
-    doCollectProc.mParentClass = this;
-    doCollectProc.mIsCollect = false;
-    doCollectProc.mMemIsAllocated = true;
-    vector<FilterStep*> collectStateSteps( 2, 0 );
-    collectStateSteps[ 0 ] = new FilterStep( "" );
-    collectStateSteps[ 1 ] = new FilterStep( "", DataFlags::STATE );
-    /*cout << "Num steps: " << collectStateSteps.size() << endl;
-     for( auto filterStep : collectStateSteps ) {
-     cout << "Name: " << filterStep->mDataName << ", NoFilter? " << filterStep->isDescendantStep() << endl;
-     }*/
-    GCAMFusion<DoCollect, true, true, true> gatherState( doCollectProc, collectStateSteps );
-    gatherState.startFilter( scenario );
-    for( auto filterStep : collectStateSteps ) {
-        delete filterStep;
+    //unsigned int count = 0;
+    for( auto currValue : mStateValues ) {
+        currValue->mIsStateCopy = false;
+        /*if( currValue->mAltValueIndex != count ) {
+            cout << "Reset didn't match " << currValue->mAltValueIndex << " != " << count << endl;
+            abort();
+        }*/
+        currValue->mValue = currValue->mGoodValue[ currValue->mAltValueIndex ];
     }
 }
 
@@ -199,27 +190,6 @@ void ManageStateVariables::setPartialDeriv( const bool aIsPartialDeriv ) {
     }
 }*/
 
-void ManageStateVariables::DoCollect::setupState( Value& aData ) {
-    aData.mIsStateCopy = mIsCollect;
-    //aData.mIsPartialDeriv = &scenario->getMarketplace()->mIsDerivativeCalc;
-    if( mIsCollect ) {
-        //aData.mAltValue = mParentClass->mStateData;
-        aData.mAltValueIndex = mParentClass->mNumCollected;
-        if( mMemIsAllocated ) {
-            //aData.mAltValue = mParentClass->mStateData[0];
-            aData.mGoodValue[ mParentClass->mNumCollected ] = aData.mValue;
-        }
-    }
-    else {
-        if( aData.mAltValueIndex != mParentClass->mNumCollected ) {
-            cout << "Reset didn't match " << aData.mAltValueIndex << " != " << mParentClass->mNumCollected << endl;
-            abort();
-        }
-        aData.mValue = aData.mGoodValue[ mParentClass->mNumCollected ];
-    }
-    ++mParentClass->mNumCollected;
-}
-
 template<typename DataType>
 void ManageStateVariables::DoCollect::processData( DataType& aData ) {
     cout << "Found an unexpected state var type: " << typeid( aData ).name() << endl;
@@ -228,14 +198,16 @@ void ManageStateVariables::DoCollect::processData( DataType& aData ) {
 template<>
 void ManageStateVariables::DoCollect::processData<Value>( Value& aData ) {
     if( !mIgnoreCurrValue ) {
-        setupState( aData );
+        mParentClass->mStateValues.push_front( &aData );
+        ++mParentClass->mNumCollected;
     }
 }
 
 template<>
 void ManageStateVariables::DoCollect::processData<objects::PeriodVector<Value> >( objects::PeriodVector<Value>& aData ) {
     if( !mIgnoreCurrValue ) {
-        setupState( aData[ mParentClass->mPeriodToCollect ] );
+        mParentClass->mStateValues.push_front( &aData[ mParentClass->mPeriodToCollect ] );
+        ++mParentClass->mNumCollected;
     }
 }
 
@@ -244,7 +216,8 @@ void ManageStateVariables::DoCollect::processData<objects::PeriodVector<objects:
     if( !mIgnoreCurrValue && mParentClass->mPeriodToCollect > 0 ) {
         objects::YearVector<Value>& currEmiss = *aData[ mParentClass->mPeriodToCollect ];
         for( int year = mParentClass->mCCStartYear; year <= mParentClass->mYearToCollect; ++year ) {
-            setupState( currEmiss[ year ] );
+            mParentClass->mStateValues.push_front( &currEmiss[ year ] );
+            ++mParentClass->mNumCollected;
         }
     }
 }
@@ -253,7 +226,8 @@ template<>
 void ManageStateVariables::DoCollect::processData<objects::YearVector<Value> >( objects::YearVector<Value>& aData ) {
     if( !mIgnoreCurrValue ) {
         for( int year = std::max( mParentClass->mCCStartYear, aData.getStartYear() ); year <= mParentClass->mYearToCollect; ++year ) {
-            setupState( aData[ year ] );
+            mParentClass->mStateValues.push_front( &aData[ year ] );
+            ++mParentClass->mNumCollected;
         }
     }
 }

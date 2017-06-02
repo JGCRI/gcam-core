@@ -196,7 +196,7 @@ public:
     virtual double getTotalGHGCost( const std::string& aRegionName, const std::string& aSectorName, 
                             const int aPeriod ) const = 0;
 
-    virtual Value getShareWeight() const = 0;
+    virtual double getShareWeight() const = 0;
     virtual Value getParsedShareWeight() const = 0;
     virtual int getNumbGHGs()  const = 0;
     virtual void copyGHGParameters( const AGHG* prevGHG ) = 0;

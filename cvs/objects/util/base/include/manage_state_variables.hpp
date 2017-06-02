@@ -44,6 +44,7 @@
  */
 
 #include <cassert>
+#include <forward_list>
 #include "util/base/include/definitions.h"
 
 class Value;
@@ -80,13 +81,11 @@ private:
     int mYearToCollect;
     unsigned int mCCStartYear;
     size_t mNumCollected;
+    std::forward_list<Value*> mStateValues;
     
     struct DoCollect {
         ManageStateVariables* mParentClass;
-        bool mIsCollect;
-        bool mMemIsAllocated;
         bool mIgnoreCurrValue = false;
-        void setupState( Value& aData );
         template<typename DataType>
         void processData( DataType& aData );
         template<typename DataType>

@@ -153,11 +153,9 @@ const string& EmptyTechnology::getName() const
     return name;
 }
 
-Value EmptyTechnology::getShareWeight() const
+double EmptyTechnology::getShareWeight() const
 {
-    const Value zeroShareWeight( 0 );
-    
-    return zeroShareWeight;
+    return 0.0;
 }
 
 Value EmptyTechnology::getParsedShareWeight() const {
