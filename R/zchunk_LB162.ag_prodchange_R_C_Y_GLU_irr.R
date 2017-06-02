@@ -1,6 +1,7 @@
 #' module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr
 #'
-#' Briefly describe what this chunk does.
+#' This module calculates the first level production/yield change assumptions that are exogenous to GCAM. These rates are calculated for each commodity
+#' at the region-glu-irrigation level in each model year, including the calibration year.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -12,7 +13,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
+#' @author ACS June 2017
 #' @export
 module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -183,7 +184,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
       repeat_add_columns(tibble::tibble(year = SPEC_AG_PROD_YEARS)) %>%
       left_join_error_no_match(L162.ag_Yieldmult_Rcrs_Ccrs_Y_irr,
                                by = c("CROSIT_ctry", "CROSIT_crop", "Irr_Rfd", "year")) ->
-      L162.ag_HA_ha_Rcrs_Ccrs_Ysy_GLU_irr # agree perfectly
+      L162.ag_HA_ha_Rcrs_Ccrs_Ysy_GLU_irr
 
 
 
@@ -205,7 +206,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
         select(CROSIT_ctry, CROSIT_crop, year, Mult) %>%
         semi_join(L162.ag_HA_ha_ctry_crop_irr, by = c("CROSIT_ctry", "CROSIT_crop")) %>%
         dplyr::distinct() ->
-        CROSIT_mult #NO NA multipliers, as in old
+        CROSIT_mult
 
       L162.ag_HA_ha_ctry_crop_irr %>%
         na.omit() %>%
@@ -214,7 +215,6 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
         na.omit() %>%
         left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
         left_join_error_no_match(select(FAO_ag_items_PRODSTAT, GTAP_crop, GCAM_commodity), by = "GTAP_crop") %>%
-        #THINK GOOD TO HERE
         # Multiply base-year harvested area by the future productivity multipliers to calculate prod_mod and aggregate
         mutate(Prod_mod = HA * Mult)  %>%
         group_by(GCAM_region_ID, GCAM_commodity, year, GLU, Irr_Rfd) %>%
@@ -232,7 +232,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
         select(CROSIT_ctry, CROSIT_crop, Irr_Rfd, year, Mult) %>%
         semi_join(L162.ag_HA_ha_ctry_crop_irr, by = c("CROSIT_ctry", "CROSIT_crop", "Irr_Rfd")) %>%
         dplyr::distinct() ->
-        CROSIT_mult #NO NA multipliers, as in old
+        CROSIT_mult
 
       L162.ag_HA_ha_ctry_crop_irr %>%
         na.omit() %>%
@@ -241,7 +241,6 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
         na.omit() %>%
         left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
         left_join_error_no_match(select(FAO_ag_items_PRODSTAT, GTAP_crop, GCAM_commodity), by = "GTAP_crop") %>%
-        #THINK GOOD TO HERE
         # Multiply base-year harvested area by the future productivity multipliers to calculate prod_mod and aggregate
         mutate(Prod_mod = HA * Mult)  %>%
         group_by(GCAM_region_ID, GCAM_commodity, year, GLU, Irr_Rfd) %>%
@@ -447,10 +446,10 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
 
     # Produce outputs
     L162.ag_YieldRatio_R_C_Ysy_GLU_irr %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Yield change ratios from final historical year by GCAM region / commodity / future year / GLU / irrigation") %>%
+      add_units("Unitless") %>%
+      add_comments("Future year production multipliers are calculated at the CROSIT country-crop level as future production / base-year production.") %>%
+      add_comments("These are used to aggregate to the GCAM region-commodity-GLU level and calculate future year yield ratios.") %>%
       add_legacy_name("L162.ag_YieldRatio_R_C_Ysy_GLU_irr") %>%
       add_precursors("common/iso_GCAM_regID",
                      "aglu/A_defaultYieldRate",
@@ -463,10 +462,11 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
                      "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU") ->
       L162.ag_YieldRatio_R_C_Ysy_GLU_irr
     L162.ag_YieldRate_R_C_Y_GLU_irr %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Yield change rates by GCAM region / commodity / future year / GLU / irrigation") %>%
+      add_units("Annual rate") %>%
+      add_comments("Yield Ratios are used to calculate Yield Rates for each GCAM region-commodity-GLU for externally specified agricultural") %>%
+      add_comments("production years. Externally provided default Yield Rates are used to fill in missing information and to extend from ") %>%
+      add_comments("specified years to all future years.") %>%
       add_legacy_name("L162.ag_YieldRate_R_C_Y_GLU_irr") %>%
       add_precursors("common/iso_GCAM_regID",
                      "aglu/A_defaultYieldRate",
@@ -477,13 +477,15 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
                      "L151.ag_rfdHA_ha_ctry_crop",
                      "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
                      "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT) ->
       L162.ag_YieldRate_R_C_Y_GLU_irr
     L162.bio_YieldRate_R_Y_GLU_irr %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Biomass yield change rates by GCAM region / commodity / future year / GLU / irrigation") %>%
+      add_units("Annual rate") %>%
+      add_comments("Biomass Yield Ratios are the median ratio of all other commodities at the region-GLU-irrigation level in each year and are used to") %>%
+      add_comments("calculate Yield Rates for each GCAM region-commodity-GLU for externally specified agricultural") %>%
+      add_comments("production years. Externally provided default Yield Rates are used to fill in missing information and to extend from ") %>%
+      add_comments("specified years to all future years.") %>%
       add_legacy_name("L162.bio_YieldRate_R_Y_GLU_irr") %>%
       add_precursors("common/iso_GCAM_regID",
                      "aglu/A_defaultYieldRate",
