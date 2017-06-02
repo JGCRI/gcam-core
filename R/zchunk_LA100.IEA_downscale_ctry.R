@@ -106,6 +106,18 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
           CHP_IO_COEF * CONV_GWH_KTOE * -1
       }
 
+      # The basic problem below is that for the USSR and Yugoslavia, for most years between 1971 and 1989, the IEA
+      # didn't have much info on the sectoral allocation of fuel consumption, and a lot of the energy consumption
+      # is assigned to flows like ONONSPEC (other non-specified) and INONSPEC (industry non-specified). In other words
+      # the definition of the flows changes over the course of the time series.
+
+      # This method is computing each (modern) nation's share of the total consumption of each product (i.e., fuel)
+      # in 1990 within the composite nation (i.e., USSR and Yugoslavia). The appropriate total for each product/fuel
+      # is set in the IEA_product_downscaling mapping file; the complication here is that the flow corresponding to
+      # total consumption differs by fuel. Total consumption of most fuels is indicated by the TPES (total primary
+      # energy supply) flow, but the TPES of secondary fuels (e.g., electricity, heat) is typically zero because
+      # these aren't primary energy, so other flows like TFC (total final consumption) are used.
+
       # Split the country mapping table into composite regions and single-countries (69-77)
       IEA_ctry_composite <- filter(IEA_ctry, IEA_ctry %in% c("Former Soviet Union (if no detail)",
                                                              "Former Yugoslavia (if no detail)",
