@@ -186,11 +186,17 @@ get_reference <- function(x) { attr(x, ATTR_REFERENCE) }
 #'
 #' @param all_data Data structure
 #' @param name Name of data to return
-#' @return Data object (currently, a tibble or data frame).
+#' @return Data object (currently, a tibble or data frame). If the object was marked
+#' \code{NA} in the data store, indicating an optional input that was not found,
+#' a \code{NULL} is returned.
 get_data <- function(all_data, name) {
   assertthat::assert_that(is_data_list(all_data))
   if(is.null(all_data[[name]])) {
     stop("Data system: couldn't find ", name)
+  }
+
+  if(isTRUE(is.na(all_data[[name]]))) {
+    return(NULL)
   }
   all_data[[name]]
 }
