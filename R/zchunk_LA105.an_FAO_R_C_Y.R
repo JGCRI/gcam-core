@@ -19,8 +19,8 @@ module_aglu_LA105.an_FAO_R_C_Y_DISABLED <- function(command, ...) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "common/GCAM_region_names",
              FILE = "aglu/AGLU_ctry",
-             FILE = "aglu/FAO_an_items_cal_SUA",
-             FILE = "aglu/FAO_an_items_PRODSTAT",
+             FILE = "aglu/FAO/FAO_an_items_cal_SUA",
+             FILE = "aglu/FAO/FAO_an_items_PRODSTAT",
              "L100.FAO_an_Food_t",
              "L100.FAO_an_Prod_t",
              "L100.FAO_an_Stocks"))
@@ -39,8 +39,8 @@ module_aglu_LA105.an_FAO_R_C_Y_DISABLED <- function(command, ...) {
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     AGLU_ctry <- get_data(all_data, "aglu/AGLU_ctry")
-    FAO_an_items_cal_SUA <- get_data(all_data, "aglu/FAO_an_items_cal_SUA")
-    FAO_an_items_PRODSTAT <- get_data(all_data, "aglu/FAO_an_items_PRODSTAT")
+    FAO_an_items_cal_SUA <- get_data(all_data, "aglu/FAO/FAO_an_items_cal_SUA")
+    FAO_an_items_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_an_items_PRODSTAT")
     L100.FAO_an_Food_t <- get_data(all_data, "L100.FAO_an_Food_t")
     L100.FAO_an_Prod_t <- get_data(all_data, "L100.FAO_an_Prod_t")
     L100.FAO_an_Stocks <- get_data(all_data, "L100.FAO_an_Stocks")
