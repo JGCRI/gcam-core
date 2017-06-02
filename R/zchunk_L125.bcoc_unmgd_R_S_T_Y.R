@@ -1,6 +1,6 @@
 #' module_emissions_L125.bcoc_unmgd_R_S_T_Y
 #'
-#' Historical emissions from unmanaged land by land cover type, computed from RCP emissions data.
+#' Generate historical BC/OC emission factors for unmanaged land by land cover type, computed from RCP emissions data.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
