@@ -171,10 +171,6 @@ module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {
       mutate(emiss.coef = DeforestEmiss / D_driver)
 
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
     L125.bcoc_tgbkm2_R_grass_2000 <- L125.bcoc_tgbkm2_R_grass_2000 %>%
       add_title("BC/OC grassland burning emissions factors by GCAM region / 2000") %>%
       add_units("Tg / bm2") %>%
