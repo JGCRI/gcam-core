@@ -18,11 +18,11 @@ the generated outputs: \code{L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y}, \code{L100
 original data system was \code{LA100.IMAGE_downscale_ctry_yr.R} (aglu level1).
 }
 \description{
-Briefly describe what this chunk does.
+Extrapolate IMAGE data to all AGLU historical years and countries.
 }
 \details{
-Describe in detail what this chunk does.
+Each IMAGE table is extrapolated to all AGLU historical years and then downscaled from IMAGE region to all AGLU countries.
 }
 \author{
-YourInitials CurrentMonthName 2017
+BBL June 2017
 }

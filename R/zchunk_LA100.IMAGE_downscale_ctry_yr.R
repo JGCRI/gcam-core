@@ -1,6 +1,6 @@
 #' module_aglu_LA100.IMAGE_downscale_ctry_yr
 #'
-#' Briefly describe what this chunk does.
+#' Extrapolate IMAGE data to all AGLU historical years and countries.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,12 +8,11 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y}, \code{L100.IMAGE_an_FeedIO_ctry_C_Sys_Y}, \code{L100.IMAGE_an_Prodmixfrac_ctry_C_Y}. The corresponding file in the
 #' original data system was \code{LA100.IMAGE_downscale_ctry_yr.R} (aglu level1).
-#' @details Describe in detail what this chunk does.
+#' @details Each IMAGE table is extrapolated to all AGLU historical years and then downscaled from IMAGE region to all AGLU countries.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
-#' @export
+#' @author BBL June 2017
 module_aglu_LA100.IMAGE_downscale_ctry_yr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "aglu/AGLU_ctry",
@@ -42,7 +41,10 @@ module_aglu_LA100.IMAGE_downscale_ctry_yr <- function(command, ...) {
         bind_rows(x)
     }
 
-    # Extrapolate out each IMAGE table to all historical years
+    # Extrapolate each IMAGE table to all historical years
+    # For each table, same basic steps: extrapolate to 1960; fill out all AGLU
+    # historical years; interpolate.
+
     IMAGE_an_Feedfrac_Rimg_C_Sys_Fd_Y %>%
       extrapolate_1960 %>%
       gather(IMAGE_region_ID, value, -commodity, -system, -input, -year) %>%
@@ -93,7 +95,8 @@ module_aglu_LA100.IMAGE_downscale_ctry_yr <- function(command, ...) {
         left_join(hyd, by = by) %>%
         na.omit %>%
         gather(year, value, matches(YEAR_PATTERN)) %>%
-        mutate(year = as.integer(year))
+        mutate(year = as.integer(year)) %>%
+        filter(year %in% AGLU_HISTORICAL_YEARS)
     }
 
     L100.IMAGE_an_Feedfrac_Rimg_C_Sys_Fd_Y %>%
@@ -109,22 +112,21 @@ module_aglu_LA100.IMAGE_downscale_ctry_yr <- function(command, ...) {
       L100.IMAGE_an_Prodmixfrac_ctry_C_Y
 
     # Produce outputs
+
     L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("IMAGE feed fractions by country / commodity / system / feed type / year") %>%
+      add_units("Unitless") %>%
+      add_comments("Each IMAGE table extrapolated to all AGLU historical years and downscaled from IMAGE region to all AGLU countries") %>%
       add_legacy_name("L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y") %>%
       add_precursors("aglu/AGLU_ctry",
                      "aglu/IMAGE/IMAGE_an_Feedfrac_Rimg_C_Sys_Fd_Y") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y
 
     L100.IMAGE_an_FeedIO_ctry_C_Sys_Y %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("IMAGE input-output coefficients by country / commodity / system / year") %>%
+      add_units("Unitless") %>%
+      add_comments("Each IMAGE table extrapolated to all AGLU historical years and downscaled from IMAGE region to all AGLU countries") %>%
       add_legacy_name("L100.IMAGE_an_FeedIO_ctry_C_Sys_Y") %>%
       add_precursors("aglu/AGLU_ctry",
                      "aglu/IMAGE/IMAGE_an_FeedIO_Rimg_C_Sys_Y") %>%
@@ -132,14 +134,13 @@ module_aglu_LA100.IMAGE_downscale_ctry_yr <- function(command, ...) {
       L100.IMAGE_an_FeedIO_ctry_C_Sys_Y
 
     L100.IMAGE_an_Prodmixfrac_ctry_C_Y %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("IMAGE mixed fractions by country / commodity / year") %>%
+      add_units("Unitless") %>%
+      add_comments("Each IMAGE table extrapolated to all AGLU historical years and downscaled from IMAGE region to all AGLU countries") %>%
       add_legacy_name("L100.IMAGE_an_Prodmixfrac_ctry_C_Y") %>%
       add_precursors("aglu/AGLU_ctry",
                      "aglu/IMAGE/IMAGE_an_Prodmixfrac_Rimg_C_Y") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L100.IMAGE_an_Prodmixfrac_ctry_C_Y
 
     return_data(L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y, L100.IMAGE_an_FeedIO_ctry_C_Sys_Y, L100.IMAGE_an_Prodmixfrac_ctry_C_Y)
