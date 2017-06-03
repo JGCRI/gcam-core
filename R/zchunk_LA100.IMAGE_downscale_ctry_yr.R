@@ -95,7 +95,8 @@ module_aglu_LA100.IMAGE_downscale_ctry_yr <- function(command, ...) {
         left_join(hyd, by = by) %>%
         na.omit %>%
         gather(year, value, matches(YEAR_PATTERN)) %>%
-        mutate(year = as.integer(year)) %>%
+        mutate(year = as.integer(year),
+               IMAGE_region_ID = as.integer(IMAGE_region_ID)) %>%
         filter(year %in% AGLU_HISTORICAL_YEARS)
     }
 
