@@ -24,7 +24,7 @@ module_aglu_LB133.ag_Costs_USA_C_2005 <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "aglu/USDA_crops",
              FILE = "aglu/USDA_item_cost",
-             FILE = "aglu/FAO_ag_items_PRODSTAT",
+             FILE = "aglu/FAO/FAO_ag_items_PRODSTAT",
              FILE = "aglu/USDA_cost_data",
              "L100.LDS_ag_HA_ha",
              "L100.LDS_ag_prod_t",
@@ -44,7 +44,7 @@ module_aglu_LB133.ag_Costs_USA_C_2005 <- function(command, ...) {
     # Load required inputs
     USDA_crops <- get_data(all_data, "aglu/USDA_crops")
     USDA_item_cost <- get_data(all_data, "aglu/USDA_item_cost")
-    FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO_ag_items_PRODSTAT")
+    FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_ag_items_PRODSTAT")
     USDA_cost_data <- get_data(all_data, "aglu/USDA_cost_data")
     L100.LDS_ag_HA_ha <- get_data(all_data, "L100.LDS_ag_HA_ha")
     L100.LDS_ag_prod_t <- get_data(all_data, "L100.LDS_ag_prod_t")
@@ -297,7 +297,7 @@ module_aglu_LB133.ag_Costs_USA_C_2005 <- function(command, ...) {
       add_legacy_name("L133.ag_Cost_75USDkg_C") %>%
       add_precursors("aglu/USDA_crops",
                      "aglu/USDA_item_cost",
-                     "aglu/FAO_ag_items_PRODSTAT",
+                     "aglu/FAO/FAO_ag_items_PRODSTAT",
                      "aglu/USDA_cost_data",
                      "L100.LDS_ag_HA_ha",
                      "L100.LDS_ag_prod_t",

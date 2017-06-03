@@ -18,8 +18,8 @@ module_aglu_LA106.ag_an_NetExp_FAO_R_C_Y_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "aglu/AGLU_ctry",
-             FILE = "aglu/FAO_ag_items_cal_SUA",
-             FILE = "aglu/FAO_an_items_cal_SUA",
+             FILE = "aglu/FAO/FAO_ag_items_cal_SUA",
+             FILE = "aglu/FAO/FAO_an_items_cal_SUA",
              "L100.FAO_ag_Exp_t",
              "L100.FAO_ag_Imp_t",
              "L100.FAO_an_Exp_t",
@@ -34,8 +34,8 @@ module_aglu_LA106.ag_an_NetExp_FAO_R_C_Y_DISABLED <- function(command, ...) {
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     AGLU_ctry <- get_data(all_data, "aglu/AGLU_ctry")
-    FAO_ag_items_cal_SUA <- get_data(all_data, "aglu/FAO_ag_items_cal_SUA")
-    FAO_an_items_cal_SUA <- get_data(all_data, "aglu/FAO_an_items_cal_SUA")
+    FAO_ag_items_cal_SUA <- get_data(all_data, "aglu/FAO/FAO_ag_items_cal_SUA")
+    FAO_an_items_cal_SUA <- get_data(all_data, "aglu/FAO/FAO_an_items_cal_SUA")
     L100.FAO_ag_Exp_t <- get_data(all_data, "L100.FAO_ag_Exp_t")
     L100.FAO_ag_Imp_t <- get_data(all_data, "L100.FAO_ag_Imp_t")
     L100.FAO_an_Exp_t <- get_data(all_data, "L100.FAO_an_Exp_t")

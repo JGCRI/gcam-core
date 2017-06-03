@@ -22,7 +22,7 @@
 module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "aglu/FAO_ag_items_PRODSTAT",
+             FILE = "aglu/FAO/FAO_ag_items_PRODSTAT",
              "L100.Water_footprint_m3",
              "L100.LDS_ag_prod_t",
              FILE = "aglu/Mekonnen_Hoekstra_Rep47_A2",
@@ -52,7 +52,7 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO_ag_items_PRODSTAT")
+    FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_ag_items_PRODSTAT")
     L100.Water_footprint_m3 <- get_data(all_data, "L100.Water_footprint_m3")
     Mekonnen_Hoekstra_Rep47_A2 <- get_data(all_data, "aglu/Mekonnen_Hoekstra_Rep47_A2")
     Rohwer_2007_IrrigationEff <- get_data(all_data, "aglu/Rohwer_2007_IrrigationEff")
@@ -384,7 +384,7 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
       add_comments("the total volume of green water on rainfed crops; and the green water coef for rainfed crops") %>%
       add_legacy_name("L165.BlueIrr_m3kg_R_C_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
-                     "aglu/FAO_ag_items_PRODSTAT",
+                     "aglu/FAO/FAO_ag_items_PRODSTAT",
                      "L100.Water_footprint_m3",
                      "L100.LDS_ag_prod_t",
                      "aglu/Mekonnen_Hoekstra_Rep47_A2",
