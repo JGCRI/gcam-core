@@ -21,7 +21,7 @@ module_aglu_LA105.an_FAO_R_C_Y <- function(command, ...) {
              FILE = "aglu/FAO_an_items_cal_SUA",
              "L100.FAO_an_Food_t",
              "L100.FAO_an_Prod_t",
-             "L100.FAO_an_Stocks"))
+             FILE = "temp-data-inject/L100.FAO_an_Stocks"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L105.an_Food_Mt_R_C_Y",
              "L105.an_Food_Pcal_R_C_Y",
@@ -36,12 +36,13 @@ module_aglu_LA105.an_FAO_R_C_Y <- function(command, ...) {
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    AGLU_ctry <- get_data(all_data, "aglu/AGLU_ctry")
     FAO_an_items_cal_SUA <- get_data(all_data, "aglu/FAO_an_items_cal_SUA")
-    FAO_an_items_PRODSTAT <- get_data(all_data, "aglu/FAO_an_items_PRODSTAT")
     L100.FAO_an_Food_t <- get_data(all_data, "L100.FAO_an_Food_t")
     L100.FAO_an_Prod_t <- get_data(all_data, "L100.FAO_an_Prod_t")
-    L100.FAO_an_Stocks <- get_data(all_data, "L100.FAO_an_Stocks")
+    L100.FAO_an_Stocks <- get_data(all_data, "temp-data-inject/L100.FAO_an_Stocks") %>%
+      # The following two lines of code will be removed later, when we're using 'real' data
+      gather(year, value, -countries, -country.codes, -item, -item.codes, -element, -element.codes, -iso) %>%   # reshape
+      mutate(year = as.integer(substr(year, 2, 5)))   # change Xyear to year
 
     # Process FAO animal products food consumption data: map in GCAM region and commodities, convert units, aggregate to region and commodity
     L100.FAO_an_Food_t %>%
@@ -198,7 +199,7 @@ module_aglu_LA105.an_FAO_R_C_Y <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L105.an_StockShares_R_BufGoat_2005") %>%
       add_precursors("common/GCAM_region_names",
-                     "L100.FAO_an_Stocks") %>%
+                     "temp-data-inject/L100.FAO_an_Stocks") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L105.an_StockShares_R_BufGoat_2005
 
