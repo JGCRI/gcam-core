@@ -28,6 +28,8 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
              FILE = "aglu/FAO/FAO_an_Food_t_SUA",
              FILE = "aglu/FAO/FAO_an_Imp_t_SUA",
              FILE = "aglu/FAO/FAO_an_Prod_t_SUA",
+             FILE = "aglu/FAO/FAO_an_Stocks",
+             FILE = "aglu/FAO/FAO_an_Dairy_Stocks",
              FILE = "aglu/FAO/FAO_CL_kha_RESOURCESTAT",
              FILE = "aglu/FAO/FAO_fallowland_kha_RESOURCESTAT",
              FILE = "aglu/FAO/FAO_harv_CL_kha_RESOURCESTAT",
@@ -49,6 +51,8 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
              "L100.FAO_an_Food_t",
              "L100.FAO_an_Imp_t",
              "L100.FAO_an_Prod_t",
+             "L100.FAO_an_Stocks",
+             "L100.FAO_an_Dairy_Stocks",
              "L100.FAO_CL_kha",
              "L100.FAO_fallowland_kha",
              "L100.FAO_harv_CL_kha",
@@ -81,6 +85,8 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
     FAO_an_Food_t_SUA <- get_data(all_data, "aglu/FAO/FAO_an_Food_t_SUA")
     FAO_an_Imp_t_SUA <- get_data(all_data, "aglu/FAO/FAO_an_Imp_t_SUA")
     FAO_an_Prod_t_SUA <- get_data(all_data, "aglu/FAO/FAO_an_Prod_t_SUA")
+    FAO_an_Stocks <- get_data(all_data, "aglu/FAO/FAO_an_Stocks")
+    FAO_an_Dairy_Stocks <- get_data(all_data, "aglu/FAO/FAO_an_Dairy_Stocks")
     FAO_CL_kha_RESOURCESTAT <- get_data(all_data, "aglu/FAO/FAO_CL_kha_RESOURCESTAT")
     FAO_fallowland_kha_RESOURCESTAT <- get_data(all_data, "aglu/FAO/FAO_fallowland_kha_RESOURCESTAT")
     FAO_harv_CL_kha_RESOURCESTAT <- get_data(all_data, "aglu/FAO/FAO_harv_CL_kha_RESOURCESTAT")
@@ -123,6 +129,13 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
                                                by = as.list(prod[coitel_colnames]),
                                                sum, na.rm = TRUE)
 
+    # Some data in an_Stocks are in 1000s of heads instead of just heads; convert them
+    # Also remove the units column to be consistent with the other FAO tables.
+    fhyc <- names(FAO_an_Stocks) %in% FAO_HISTORICAL_YEARS
+    thr <- FAO_an_Stocks$units == "1000 Head"
+    FAO_an_Stocks[thr, fhyc] <- FAO_an_Stocks[thr, fhyc] * 1000
+    FAO_an_Stocks$units <- FAO_an_Dairy_Stocks$units <- NULL
+
     # Not all databases go to 2011. Extrapolate each dataset to 2011, repeating
     # the data for 2009/10. Where missing 1961, substitute 1962
     list("FAO_ag_Exp_t_SUA" = FAO_ag_Exp_t_SUA,
@@ -133,6 +146,8 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
          "FAO_an_Food_t_SUA" = FAO_an_Food_t_SUA,
          "FAO_an_Imp_t_SUA" = FAO_an_Imp_t_SUA,
          "FAO_an_Prod_t_SUA" = FAO_an_Prod_t_SUA,
+         "FAO_an_Stocks" = FAO_an_Stocks,
+         "FAO_an_Dairy_Stocks" = FAO_an_Dairy_Stocks,
          "FAO_Fert_Cons_tN_RESOURCESTAT" = FAO_Fert_Cons_tN_RESOURCESTAT,
          "FAO_Fert_Prod_tN_RESOURCESTAT" = FAO_Fert_Prod_tN_RESOURCESTAT,
          "FAO_ag_HA_ha_PRODSTAT" = FAO_ag_HA_ha_PRODSTAT,
@@ -180,7 +195,7 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
       downscale_FAO_country("USSR", 1992, years = FAO_HISTORICAL_YEARS) ->
       FAO_data_ALL_ussr
 
-    # # Yugoslavia
+    # Yugoslavia
     FAO_data_ALL %>%
       filter(iso %in% AGLU_ctry$iso[AGLU_ctry$FAO_country == "Yugoslav SFR"]) %>%
       downscale_FAO_country("Yugoslav SFR", 1992, years = FAO_HISTORICAL_YEARS) ->
@@ -229,8 +244,8 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
              item.codes = `item codes`) ->
       FAO_data_ALL_5yr
 
-    # Reorder columns and change `element` columns to match old data and reshape
-    FAO_data_ALL_5yr <- FAO_data_ALL_5yr[c(1:6,8:47,7)]
+    # Change `element` columns to match old data and reshape
+#    FAO_data_ALL_5yr <- FAO_data_ALL_5yr[c(1:6,8:47,7)]
     FAO_data_ALL_5yr$element <- gsub(pattern = "_[A-Z]*$", "", FAO_data_ALL_5yr$element)
     FAO_data_ALL_5yr$element <- gsub(pattern = "^FAO_", "", FAO_data_ALL_5yr$element)
     FAO_data_ALL_5yr %>%
@@ -238,9 +253,9 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
       mutate(year = as.integer(year)) ->
       FAO_data_ALL_5yr
 
-    ## Re-split into separate tables for each element
-    L100.FAOlist <- split(seq(1,nrow(FAO_data_ALL_5yr)), FAO_data_ALL_5yr$element)
-    names(L100.FAOlist) <- lapply(names(L100.FAOlist), function(x) {paste0("L100.FAO_", x)})
+    # Re-split into separate tables for each element
+    L100.FAOlist <- split(seq(1, nrow(FAO_data_ALL_5yr)), FAO_data_ALL_5yr$element)
+    names(L100.FAOlist) <- lapply(names(L100.FAOlist), function(x) { paste0("L100.FAO_", x) })
                                         # change list names to match the legacy
                                         # names
     fixup <- function(irows, legacy.name) {
@@ -251,7 +266,7 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
     }
     L100.FAOlist <- Map(fixup, L100.FAOlist, names(L100.FAOlist))
 
-    ## Add description, units, process (done above), and precursor information
+    # Add description, units, process (done above), and precursor information
     L100.FAOlist[["L100.FAO_ag_HA_ha"]] %>%
       add_title("FAO agricultural harvested area by country, item, year") %>%
       add_units("t") %>%
@@ -302,6 +317,16 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
       add_units("t") %>%
       add_precursors("aglu/FAO/FAO_an_Prod_t_SUA", "aglu/AGLU_ctry") ->
       L100.FAO_an_Prod_t
+    L100.FAOlist[["L100.FAO_an_Stocks"]] %>%
+      add_title("FAO animal stocks country, item, year") %>%
+      add_units("number") %>%
+      add_precursors("aglu/FAO/FAO_an_Stocks", "aglu/AGLU_ctry") ->
+      L100.FAO_an_Stocks
+    L100.FAOlist[["L100.FAO_an_Dairy_Stocks"]] %>%
+      add_title("FAO dairy producing animal stocks country, item, year") %>%
+      add_units("number") %>%
+      add_precursors("aglu/FAO/FAO_an_Dairy_Stocks", "aglu/AGLU_ctry") ->
+      L100.FAO_an_Dairy_Stocks
     L100.FAOlist[["L100.FAO_CL_kha"]] %>%
       add_title("FAO cropland area by country, year") %>%
       add_units("kha") %>%
@@ -359,6 +384,8 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
                 L100.FAO_an_Food_t,
                 L100.FAO_an_Imp_t,
                 L100.FAO_an_Prod_t,
+                L100.FAO_an_Stocks,
+                L100.FAO_an_Dairy_Stocks,
                 L100.FAO_CL_kha,
                 L100.FAO_fallowland_kha,
                 L100.FAO_harv_CL_kha,
