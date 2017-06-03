@@ -1,6 +1,6 @@
 #' module_gcam.usa_LA154.Transport
 #'
-#' Briefly describe what this chunk does.
+#' This chunk downscales transportation energy consumption and nonmotor data to the state level, generating three ouput tables
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,19 +8,18 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L154.in_EJ_state_trn_m_sz_tech_F}, \code{L154.out_mpkm_state_trn_nonmotor_Yh}, \code{L154.in_EJ_state_trn_F}. The corresponding file in the
 #' original data system was \code{LA154.Transport.R} (gcam-usa level1).
-#' @details Describe in detail what this chunk does.
+#' @details Transportation energy data was downscaled in proportion to EIA state-level transportation energy data
+#' @details Transportation nonmotor data was downscaled in proportion to state population
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author AS May 2017
-#' @export
+#' @author AS June 2017
 module_gcam.usa_LA154.Transport <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/trnUCD_EIA_mapping",
              FILE = "temp-data-inject/L154.in_EJ_R_trn_m_sz_tech_F_Yh",
              FILE = "temp-data-inject/L154.out_mpkm_R_trn_nonmotor_Yh",
              "L100.Pop_thous_state",
-             "L101.inEIA_EJ_state_S_F",
              "L101.EIA_use_all_Bbtu"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L154.in_EJ_state_trn_m_sz_tech_F",
@@ -32,145 +31,210 @@ module_gcam.usa_LA154.Transport <- function(command, ...) {
 
     # Load required inputs
     trnUCD_EIA_mapping <- get_data(all_data, "gcam-usa/trnUCD_EIA_mapping")
-    L154.in_EJ_R_trn_m_sz_tech_F_Yh <- get_data(all_data, "temp-data-inject/L154.in_EJ_R_trn_m_sz_tech_F_Yh")
-    L154.out_mpkm_R_trn_nonmotor_Yh <- get_data(all_data, "temp-data-inject/L154.out_mpkm_R_trn_nonmotor_Yh")
+
+    get_data(all_data, "temp-data-inject/L154.in_EJ_R_trn_m_sz_tech_F_Yh") %>%
+      gather(year, value, -GCAM_region_ID, -UCD_sector, -mode, -size.class, -UCD_technology, -UCD_fuel, -fuel) %>%
+      mutate(year = as.integer(substr(year, 2, 5))) ->
+      L154.in_EJ_R_trn_m_sz_tech_F_Yh
+
+    get_data(all_data, "temp-data-inject/L154.out_mpkm_R_trn_nonmotor_Yh") %>%
+      gather(year, value, -GCAM_region_ID, -mode) %>%
+      mutate(year = as.integer(substr(year, 2, 5))) ->
+      L154.out_mpkm_R_trn_nonmotor_Yh
+
     L100.Pop_thous_state <- get_data(all_data, "L100.Pop_thous_state")
-    L101.inEIA_EJ_state_S_F <- get_data(all_data, "L101.inEIA_EJ_state_S_F")
     L101.EIA_use_all_Bbtu <- get_data(all_data, "L101.EIA_use_all_Bbtu")
 
     # ===================================================
 
-    EIA_fuel <- NULL
+      # Silence package notes
+      GCAM_region_ID <- UCD_sector <- mode <- size.class <- UCD_technology <- UCD_fuel <- fuel <- EIA_fuel <-
+        year <- value <- EIA_sector <- . <- fuel_sector <- state <- sector <- value_state <- value_national <-
+        value_share <- value_mode <- NULL
 
-    # Calculate the state-wise percentages for each of EIA's sector/fuel combinations that is relevant for disaggregating
-    # nation-level transportation energy to the states
+      # Calculate the state-wise percentages for each of EIA's sector/fuel combinations that is relevant for disaggregating
+      # nation-level transportation energy to the states
 
-    # Creates lists
-    trnUCD_EIA_mapping %>%
-      mutate(sector_fuel = paste(EIA_fuel, EIA_sector, sep = '_')) ->
-      trnUCD_EIA_mapping_concatenate
+      # This starting table is transportation energy consumption by GCAM region (and other variables)
+      # We will first subset this data for only the USA and values that are > 0 in the historical periods
+      L154.in_EJ_R_trn_m_sz_tech_F_Yh %>%
+        filter(year %in% HISTORICAL_YEARS, GCAM_region_ID == gcam.USA_CODE) %>% # Filter for the USA and for historical years only
+        filter(value != 0) %>% # Here any rows with value of 0 will be lost, even if other years of the same group are nonzero
+        # To get these rows back, the dataframe will be spread and gathered to reintroduce those rows with NAs, which will then be replaced with 0
+        spread(year, value) %>%
+        gather(year, value, -GCAM_region_ID, -UCD_sector, -mode, -size.class, -UCD_technology, -UCD_fuel, -fuel) %>%
+        mutate(year = as.integer(year)) %>%
+        replace_na(list(value = 0)) %>%
+        # Fuel and mode will be mapped to EIA fuel and sector
+        left_join_error_no_match(trnUCD_EIA_mapping, by = c("fuel", "mode")) ->
+        Transportation_energy_consumption
 
-    list_sector_fuel <- unique(trnUCD_EIA_mapping_concatenate$sector_fuel) # May need to use tru list instead
+      # From the full state database, state shares will be calculated based on relevant EIA sector and fuel combinations
+      # These shares will later be multipled by the transportation energy consumption data above
+      # We will create a list first, concatenating EIA-fuel and -sector, so as to selectively remove those pairs from the dataset
+      trnUCD_EIA_mapping %>%
+        mutate(fuel_sector = paste(EIA_fuel, EIA_sector)) %>%
+        .[["fuel_sector"]] %>%
+        unique() ->
+        list_fuel_sector
 
-    list_states <- unique(L100.Pop_thous_state$state)
+      # Here is the state-level data for which to calculate state shares
+      # We will first filter for only relevant EIA-fuel and -sector pairs
+      L101.EIA_use_all_Bbtu %>%
+        filter(year %in% HISTORICAL_YEARS) %>% # Ensure within historical period
+        mutate(fuel_sector = paste(EIA_fuel, EIA_sector)) %>% # Create concatenate list in base dataframe to match the syntax of our list above
+        filter(fuel_sector %in% list_fuel_sector) %>% # Filtering for just EIA-fuel/sector pairs
+        rename(value_state = value) %>%
+        select(state, EIA_fuel, EIA_sector, sector, fuel, year, value_state) ->
+        EIA_transportation_state
 
-    # Subset only the usa, and only values that are > 0 in the historical periods
-    L154.in_EJ_R_trn_m_sz_tech_F_Yh %>%
-      gather(year, value, -GCAM_region_ID, -UCD_sector, -mode, -size.class, -UCD_technology, -UCD_fuel, -fuel) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) %>%
-      filter(GCAM_region_ID == gcam.USA_CODE) %>%
-      #mutate(sector_fuel = paste(EIA_fuel, EIA_sector, sep = '_')) %>%
-      #filter(sector_fuel %in% list_sector_fuel) %>%
-      group_by(GCAM_region_ID, UCD_sector, mode, size.class, UCD_technology, UCD_fuel, fuel, year) %>%
-      summarize(value = sum(value)) %>%
-      ungroup() %>%
-      filter(value != 0) %>% # %>% also took out two lines in dataset I want. May want to do this last?
-      spread(year, value) %>%
-      gather(year, value, -GCAM_region_ID, -UCD_sector, -mode, -size.class, -UCD_technology, -UCD_fuel, -fuel) %>%
-      mutate(year = as.integer(year)) %>%
-      replace_na(list(value = 0)) %>%
-      left_join_error_no_match(trnUCD_EIA_mapping, by = c("fuel", "mode")) -> # May want to filter in tru lists
-      a
+      # To calculate the state share, we need to calculate the national amount
+      EIA_transportation_state %>%
+        group_by(EIA_fuel, EIA_sector, sector, fuel, year) %>% # Dropping state
+        summarise(value_national = sum(value_state)) %>%
+        ungroup() ->
+        EIA_transportation_national
 
-    # Next, extract the relevant EIA sector & fuel combinations from the full state database
-    L101.EIA_use_all_Bbtu %>%
-      filter(year %in% HISTORICAL_YEARS) %>% # Ensure within historical period
-      mutate(sector_fuel = paste(EIA_fuel, EIA_sector, sep = '_')) %>%
-      filter(sector_fuel %in% list_sector_fuel) %>%
-      # Aggregate states to compute each state's share (change note)
-      group_by(state, EIA_fuel, EIA_sector, sector, fuel, year) %>% #would be nice to get rid of some of these
-      summarise(value_state = sum(value)) %>%
-      ungroup() ->
-      b
+      # Now the state shares can be calculated by dividing the state data by the national
+      EIA_transportation_state %>%
+        left_join_error_no_match(EIA_transportation_national, by = c("EIA_fuel", "EIA_sector", "sector", "fuel", "year")) %>%
+        mutate(value_share = value_state / value_national) %>% # Calculating state's share
+        # NAs were introduced where national values were 0. Replace NAs with zeros.
+        replace_na(list(value_share = 0)) %>%
+        select(state, EIA_fuel, EIA_sector, year, value_share) ->
+        EIA_transportation_state_share
 
-    # Calculate state's share
-    b %>%
-      group_by(EIA_fuel, EIA_sector, sector, fuel, year) %>% #would be nice to get rid of some of these
-      summarise(value_national = sum(value_state)) %>%
-      ungroup() ->
-      c
+      # The full USA tran UCD database can now be apportioned to the states
+      # A list of states is created for when expanding the transportation table to include states
+      list_states <- unique(L100.Pop_thous_state$state)
 
-    b %>%
-      left_join_error_no_match(c, by = c("EIA_fuel", "EIA_sector", "sector", "fuel", "year")) %>%
-      mutate(value_share = value_state / value_national) %>%
-      select(-value_state, -value_national) %>% #NG AC is still there...need to exclude
-      replace_na(list(value_share = 0)) %>%
-      select(-sector, -fuel) -> # Replace NAs with zeros
-      d
+      # Creating the first of the three output tables
+      Transportation_energy_consumption %>%
+        repeat_add_columns(tibble::tibble(state = list_states)) %>%
+        left_join_error_no_match(EIA_transportation_state_share, by = c("state", "EIA_fuel", "EIA_sector", "year")) %>%
+        mutate(value = value * value_share) %>% # Allocating across the states
+        select(state, UCD_sector, mode, size.class, UCD_technology, UCD_fuel, fuel, year, value) ->
+        L154.in_EJ_state_trn_m_sz_tech_F
 
-    # Match these percentages into a table of all transportation technologies that will be written out
-    # Now, the full USA tran UCD database can be apportioned to the states
-    # Creating a final output table
-    a %>%
-      repeat_add_columns(tibble::tibble(state = list_states)) %>%
-      #why
-      left_join_error_no_match(d, by = c("state", "EIA_fuel", "EIA_sector", "year")) %>%
-      mutate(value = value * value_share) %>% #need to rename value
-      select(state, UCD_sector, mode, size.class, UCD_technology, UCD_fuel, fuel, year, value) ->
-      L154.in_EJ_state_trn_m_sz_tech_F
+      # As a final step, aggregate by fuel and name the sector
+      # This creates the second of three output tables
+      L154.in_EJ_state_trn_m_sz_tech_F %>%
+        group_by(state, fuel, year) %>%
+        summarise(value = sum(value)) %>%
+        ungroup() %>%
+        mutate("sector" = "transportation") %>%
+        select(state, sector, fuel, year, value) ->
+        L154.in_EJ_state_trn_F
 
-    # As a final step, aggregate by fuel and name the sector
-    L154.in_EJ_state_trn_m_sz_tech_F %>%
-      group_by(state, fuel, year) %>%
-      summarise(value = sum(value)) %>%
-      ungroup() %>%
-      mutate("sector" = "transportation") %>%
-      select(state, sector, fuel, year, value) ->
-      L154.in_EJ_state_trn_F
+      # Apportion non-motorized energy consumption to states on the basis of population
+      # First we will create the state shares based on population
+      L100.Pop_thous_state %>%
+        group_by(year) %>%
+        summarise(value_national = sum(value)) ->
+        Pop_national
 
-    # Apportion non-motorized energy consumption to states on the basis of population
-    L154.out_mpkm_R_trn_nonmotor_Yh %>%
-      gather(year, value_mode, -GCAM_region_ID, -mode) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) %>%
-      filter(GCAM_region_ID == gcam.USA_CODE) %>%
-      select(mode, year, value_mode) ->
-      i
+      L100.Pop_thous_state %>%
+        left_join_error_no_match(Pop_national, by = "year") %>%
+        mutate(value_share = value / value_national) %>% # Creating state share based on population
+        select(state, year, value_share) ->
+        Pop_state_share
 
-    L100.Pop_thous_state %>%
-      group_by(year) %>%
-      summarise(value_national = sum(value)) ->
-      g
+      if(OLD_DATA_SYSTEM_BEHAVIOR) {
+        # Old code used the function, apportion_to_states, but did not match modes.
+        # I will force these datasets to the same order as before and apply the same function to reproduce the data.
 
-    L100.Pop_thous_state %>%
-      left_join_error_no_match(g, by = "year") %>%
-      #comment
-      left_join(i, by = "year") %>%
-      filter(year %in% HISTORICAL_YEARS) %>%
-      mutate(value_share = value / value_national) %>%
-      mutate(value = value_mode * value_share) %>%
-      select(state, mode, year, value) ->
-      L154.out_mpkm_state_trn_nonmotor_Yh
+        # This is how the old dataframe was ordered (i.e., by full state name)
+        old_df_order <- c("AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI", "ID", "IL", "IN", "IA",
+                          "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM",
+                          "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA",
+                          "WV", "WI", "WY")
+
+        L154.out_mpkm_R_trn_nonmotor_Yh %>%
+          rename(value_mode = value) %>%
+          filter(GCAM_region_ID == gcam.USA_CODE) %>%
+          spread(year, value_mode) %>%
+          select(-GCAM_region_ID, -mode) ->
+          nation_data
+
+        Pop_state_share %>%
+          filter(year %in% HISTORICAL_YEARS) %>%
+          mutate(mode = "Walk") %>%
+          spread(year, value_share) %>%
+          mutate(state = factor(state, levels = old_df_order)) %>% # Need to reorder based on old dataframe
+          arrange(state) ->
+          State_walk
+
+        Pop_state_share %>%
+          filter(year %in% HISTORICAL_YEARS) %>%
+          mutate(mode = "Cycle") %>%
+          spread(year, value_share) %>%
+          mutate(state = factor(state, levels = old_df_order)) %>% # Need to reorder based on old dataframe
+          arrange(state) %>%
+          bind_rows(State_walk) %>% # Need to reorder based on old dataframe
+          select(-state, -mode) ->
+          state_share_data
+
+        # This is the underlying code of the function, apportion_to_states
+        data_final <- state_share_data[  ] *
+          nation_data[ rep( 1:nrow( nation_data ), length.out = nrow( state_share_data ) ),  ]
+
+        data_final <- as_tibble(data_final) # Need to convert the dataframe back to a tibble
+
+        data_final %>%
+          filter(row_number() <= 51) %>%
+          mutate(mode = "Cycle") %>%
+          mutate(state = old_df_order) ->
+          State_cycle
+
+        data_final %>%
+          filter(row_number() > 51) %>%
+          mutate(mode = "Walk") %>%
+          mutate(state = old_df_order) %>%
+          bind_rows(State_cycle) %>%
+          gather(year, value, -state, -mode) %>%
+          select(state, mode, year, value) %>%
+          mutate(year = as.integer(year)) ->
+          L154.out_mpkm_state_trn_nonmotor_Yh
+
+        } else {
+
+        # Now we can use these shares to allocate the national data across the states
+        L154.out_mpkm_R_trn_nonmotor_Yh %>%
+          rename(value_mode = value) %>%
+          filter(GCAM_region_ID == gcam.USA_CODE) %>%
+          # Number of rows will change by adding states, so left_join_error_no_match cannot be used
+          left_join(Pop_state_share, by = "year") %>%
+          mutate(value = value_mode * value_share) %>% # Apportioning across the modes using the share data
+          filter(year %in% HISTORICAL_YEARS) %>% # Ensuring within historical period
+          select(state, mode, year, value) %>%
+          mutate(year = as.integer(year)) ->
+          L154.out_mpkm_state_trn_nonmotor_Yh
+        }
 
     # ===================================================
 
     L154.in_EJ_state_trn_m_sz_tech_F %>%
-      add_title("placeholder") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Transportation energy consumption by state") %>%
+      add_units("EJ") %>%
+      add_comments("Transportation energy consumption data was downscaled to the state level using EIA state energy data") %>%
       add_legacy_name("L154.in_EJ_state_trn_m_sz_tech_F") %>%
-      add_precursors("temp-data-inject/L154.in_EJ_R_trn_m_sz_tech_F_Yh", "gcam-usa/trnUCD_EIA_mapping", "temp-data-inject/L154.out_mpkm_R_trn_nonmotor_Yh",
-                     "L100.Pop_thous_state", "L101.inEIA_EJ_state_S_F", "L101.EIA_use_all_Bbtu") %>%
+      add_precursors("temp-data-inject/L154.in_EJ_R_trn_m_sz_tech_F_Yh", "gcam-usa/trnUCD_EIA_mapping", "L101.EIA_use_all_Bbtu") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L154.in_EJ_state_trn_m_sz_tech_F
     L154.out_mpkm_state_trn_nonmotor_Yh %>%
-      add_title("placeholder") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Transportation energy consumption by state and fuel") %>%
+      add_units("EJ") %>%
+      add_comments("Transportation energy consumption was aggregated by fuel, and the sector was named transportation") %>%
       add_legacy_name("L154.out_mpkm_state_trn_nonmotor_Yh") %>%
-      add_precursors("temp-data-inject/L154.in_EJ_R_trn_m_sz_tech_F_Yh", "gcam-usa/trnUCD_EIA_mapping", "temp-data-inject/L154.out_mpkm_R_trn_nonmotor_Yh",
-                     "L100.Pop_thous_state", "L101.inEIA_EJ_state_S_F", "L101.EIA_use_all_Bbtu") %>%
+      add_precursors("temp-data-inject/L154.out_mpkm_R_trn_nonmotor_Yh", "L100.Pop_thous_state") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L154.out_mpkm_state_trn_nonmotor_Yh
     L154.in_EJ_state_trn_F %>%
-      add_title("placeholder") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Transportation non-motorized travel by mode and state") %>%
+      add_units("million person-km") %>%
+      add_comments("National data was allocated across the states in proportion to population") %>%
       add_legacy_name("L154.in_EJ_state_trn_F") %>%
-      add_precursors("temp-data-inject/L154.in_EJ_R_trn_m_sz_tech_F_Yh", "gcam-usa/trnUCD_EIA_mapping", "temp-data-inject/L154.out_mpkm_R_trn_nonmotor_Yh",
-                     "L100.Pop_thous_state", "L101.inEIA_EJ_state_S_F", "L101.EIA_use_all_Bbtu") %>%
+      add_precursors("temp-data-inject/L154.in_EJ_R_trn_m_sz_tech_F_Yh", "gcam-usa/trnUCD_EIA_mapping", "L101.EIA_use_all_Bbtu") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L154.in_EJ_state_trn_F
 
