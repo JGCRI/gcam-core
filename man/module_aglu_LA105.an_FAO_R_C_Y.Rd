@@ -18,11 +18,12 @@ the generated outputs: \code{L105.an_Food_Mt_R_C_Y}, \code{L105.an_Food_Pcal_R_C
 original data system was \code{LA105.an_FAO_R_C_Y.R} (aglu level1).
 }
 \description{
-Briefly describe what this chunk does.
+Aggregates FAO animal products consumption and production data to GCAM region / commodity.
 }
 \details{
-Describe in detail what this chunk does.
+This chunk aggregates FAO animal products food consumption and production data up to GCAM commodities and GCAM regions,
+and calculates the average animal products caloric content by GCAM region / commodity / year.
 }
 \author{
-YourInitials CurrentMonthName 2017
+RC June 2017
 }
