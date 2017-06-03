@@ -18,10 +18,10 @@ module_aglu_LA105.an_FAO_R_C_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "common/GCAM_region_names",
-             FILE = "aglu/FAO_an_items_cal_SUA",
+             FILE = "aglu/FAO/FAO_an_items_cal_SUA",
              "L100.FAO_an_Food_t",
              "L100.FAO_an_Prod_t",
-             FILE = "temp-data-inject/L100.FAO_an_Stocks"))
+             "L100.FAO_an_Stocks"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L105.an_Food_Mt_R_C_Y",
              "L105.an_Food_Pcal_R_C_Y",
@@ -36,13 +36,10 @@ module_aglu_LA105.an_FAO_R_C_Y <- function(command, ...) {
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    FAO_an_items_cal_SUA <- get_data(all_data, "aglu/FAO_an_items_cal_SUA")
+    FAO_an_items_cal_SUA <- get_data(all_data, "aglu/FAO/FAO_an_items_cal_SUA")
     L100.FAO_an_Food_t <- get_data(all_data, "L100.FAO_an_Food_t")
     L100.FAO_an_Prod_t <- get_data(all_data, "L100.FAO_an_Prod_t")
-    L100.FAO_an_Stocks <- get_data(all_data, "temp-data-inject/L100.FAO_an_Stocks") %>%
-      # The following two lines of code will be removed later, when we're using 'real' data
-      gather(year, value, -countries, -country.codes, -item, -item.codes, -element, -element.codes, -iso) %>%   # reshape
-      mutate(year = as.integer(substr(year, 2, 5)))   # change Xyear to year
+    L100.FAO_an_Stocks <- get_data(all_data, "L100.FAO_an_Stocks")
 
     # Process FAO animal products food consumption data: map in GCAM region and commodities, convert units, aggregate to region and commodity
     L100.FAO_an_Food_t %>%
@@ -135,7 +132,7 @@ module_aglu_LA105.an_FAO_R_C_Y <- function(command, ...) {
       add_comments("Convert data from ton to Mt") %>%
       add_legacy_name("L105.an_Food_Mt_R_C_Y") %>%
       add_precursors("common/iso_GCAM_regID",
-                     "aglu/FAO_an_items_cal_SUA",
+                     "aglu/FAO/FAO_an_items_cal_SUA",
                      "L100.FAO_an_Food_t") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L105.an_Food_Mt_R_C_Y
@@ -147,7 +144,7 @@ module_aglu_LA105.an_FAO_R_C_Y <- function(command, ...) {
       add_comments("Convert data from ton to Pcal") %>%
       add_legacy_name("L105.an_Food_Pcal_R_C_Y") %>%
       add_precursors("common/iso_GCAM_regID",
-                     "aglu/FAO_an_items_cal_SUA",
+                     "aglu/FAO/FAO_an_items_cal_SUA",
                      "L100.FAO_an_Food_t") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L105.an_Food_Pcal_R_C_Y
@@ -169,7 +166,7 @@ module_aglu_LA105.an_FAO_R_C_Y <- function(command, ...) {
       add_comments("Convert data from ton to Mt") %>%
       add_legacy_name("L105.an_Prod_Mt_R_C_Y") %>%
       add_precursors("common/iso_GCAM_regID",
-                     "aglu/FAO_an_items_cal_SUA",
+                     "aglu/FAO/FAO_an_items_cal_SUA",
                      "L100.FAO_an_Prod_t") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT) ->
       L105.an_Prod_Mt_R_C_Y
@@ -181,7 +178,7 @@ module_aglu_LA105.an_FAO_R_C_Y <- function(command, ...) {
       add_comments("Convert data from ton to Mt") %>%
       add_legacy_name("L105.an_Prod_Mt_ctry_C_Y") %>%
       add_precursors("common/iso_GCAM_regID",
-                     "aglu/FAO_an_items_cal_SUA",
+                     "aglu/FAO/FAO_an_items_cal_SUA",
                      "L100.FAO_an_Prod_t") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT) ->
       L105.an_Prod_Mt_ctry_C_Y
@@ -192,7 +189,7 @@ module_aglu_LA105.an_FAO_R_C_Y <- function(command, ...) {
       add_comments("Calculate buffalo and goat stock shares of animal type by GCAM region") %>%
       add_legacy_name("L105.an_StockShares_R_BufGoat_2005") %>%
       add_precursors("common/GCAM_region_names",
-                     "temp-data-inject/L100.FAO_an_Stocks") ->
+                     "L100.FAO_an_Stocks") ->
       L105.an_StockShares_R_BufGoat_2005
 
     return_data(L105.an_Food_Mt_R_C_Y, L105.an_Food_Pcal_R_C_Y, L105.an_kcalg_R_C_Y, L105.an_Prod_Mt_R_C_Y, L105.an_Prod_Mt_ctry_C_Y, L105.an_StockShares_R_BufGoat_2005)
