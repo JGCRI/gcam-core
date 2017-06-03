@@ -177,7 +177,7 @@ module_aglu_LA105.an_FAO_R_C_Y <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID",
                      "aglu/FAO_an_items_cal_SUA",
                      "L100.FAO_an_Prod_t") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT) ->
       L105.an_Prod_Mt_R_C_Y
 
     L105.an_Prod_Mt_ctry_C_Y %>%
@@ -189,7 +189,7 @@ module_aglu_LA105.an_FAO_R_C_Y <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID",
                      "aglu/FAO_an_items_cal_SUA",
                      "L100.FAO_an_Prod_t") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT) ->
       L105.an_Prod_Mt_ctry_C_Y
 
     L105.an_StockShares_R_BufGoat_2005 %>%
@@ -199,8 +199,7 @@ module_aglu_LA105.an_FAO_R_C_Y <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L105.an_StockShares_R_BufGoat_2005") %>%
       add_precursors("common/GCAM_region_names",
-                     "temp-data-inject/L100.FAO_an_Stocks") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "temp-data-inject/L100.FAO_an_Stocks") ->
       L105.an_StockShares_R_BufGoat_2005
 
     return_data(L105.an_Food_Mt_R_C_Y, L105.an_Food_Pcal_R_C_Y, L105.an_kcalg_R_C_Y, L105.an_Prod_Mt_R_C_Y, L105.an_Prod_Mt_ctry_C_Y, L105.an_StockShares_R_BufGoat_2005)
