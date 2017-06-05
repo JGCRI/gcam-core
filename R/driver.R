@@ -91,7 +91,7 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 #' @author BBL
 driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE, outdir = OUTPUTS_DIR, xmldir = XML_DIR) {
 
-  input <- from_file <- name <- NULL    # silence notes from package check.
+  optional <- input <- from_file <- name <- NULL    # silence notes from package check.
 
   assert_that(is.logical(write_outputs))
 
