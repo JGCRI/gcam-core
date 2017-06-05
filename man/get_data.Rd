@@ -12,7 +12,9 @@ get_data(all_data, name)
 \item{name}{Name of data to return}
 }
 \value{
-Data object (currently, a tibble or data frame).
+Data object (currently, a tibble or data frame). If the object was marked
+\code{NA} in the data store, indicating an optional input that was not found,
+a \code{NULL} is returned.
 }
 \description{
 This function returns a tibble (currently) in \code{all_data},

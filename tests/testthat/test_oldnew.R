@@ -41,12 +41,7 @@ test_that("matches old data system output", {
     flag_no_xyear_form <- grepl(FLAG_NO_XYEAR, new_firstline)
     flag_sum_test <- grepl(FLAG_SUM_TEST, new_firstline)
 
-    newskip <- 0
-    if(flag_long_year_form | flag_no_xyear_form | flag_sum_test) {
-      newskip <- 1
-    }
-
-    newdata <- read_csv(newf, comment = COMMENT_CHAR, skip = newskip)
+    newdata <- read_csv(newf, comment = COMMENT_CHAR)
 
     # Reshape new data if necessary--see comment above
     if(flag_long_year_form) {
