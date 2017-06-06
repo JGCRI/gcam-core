@@ -16,27 +16,33 @@
 #' @author RC April 2017
 module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "aglu/FAO_ag_items_PRODSTAT",
-             FILE = "aglu/FAO_an_items_PRODSTAT",
-             FILE = "aglu/FAO_USA_ag_an_P_USDt_PRICESTAT",
-             FILE = "aglu/FAO_USA_For_Exp_t_USD_FORESTAT",
+    return(c(FILE = "aglu/FAO/FAO_ag_items_PRODSTAT",
+             FILE = "aglu/FAO/FAO_an_items_PRODSTAT",
+             FILE = "aglu/FAO/FAO_USA_ag_an_P_USDt_PRICESTAT",
+             FILE = "aglu/FAO/FAO_USA_For_Exp_t_USD_FORESTAT",
              FILE = "aglu/USDA_Alfalfa_prices_USDt",
              "L100.FAO_ag_Prod_t",
-             FILE = "aglu/FAO_USA_an_Prod_t_PRODSTAT"))
+             FILE = "aglu/FAO/FAO_USA_an_Prod_t_PRODSTAT"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return("L132.ag_an_For_Prices")
   } else if(command == driver.MAKE) {
 
+    country.codes <- item.codes <- element <- element.codes <- year <- price <-
+        countries <- item <- Cotton_lint <- Cottonseed <- Cattle_meat <-
+        value <- GCAM_commodity <- V_USD <- Price_USDt <- calPrice <- avg <-
+        FodderHerb <- FodderGrass <- ExpV_USD <- Exp_m3 <- Price_USDm3 <-
+        . <- NULL                       # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO_ag_items_PRODSTAT")
-    FAO_an_items_PRODSTAT <- get_data(all_data, "aglu/FAO_an_items_PRODSTAT")
-    FAO_USA_ag_an_P_USDt_PRICESTAT <- get_data(all_data, "aglu/FAO_USA_ag_an_P_USDt_PRICESTAT")
-    FAO_USA_For_Exp_t_USD_FORESTAT <- get_data(all_data, "aglu/FAO_USA_For_Exp_t_USD_FORESTAT")
+    FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_ag_items_PRODSTAT")
+    FAO_an_items_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_an_items_PRODSTAT")
+    FAO_USA_ag_an_P_USDt_PRICESTAT <- get_data(all_data, "aglu/FAO/FAO_USA_ag_an_P_USDt_PRICESTAT")
+    FAO_USA_For_Exp_t_USD_FORESTAT <- get_data(all_data, "aglu/FAO/FAO_USA_For_Exp_t_USD_FORESTAT")
     USDA_Alfalfa_prices_USDt <- get_data(all_data, "aglu/USDA_Alfalfa_prices_USDt")
     L100.FAO_ag_Prod_t <- get_data(all_data, "L100.FAO_ag_Prod_t")
-    FAO_USA_an_Prod_t_PRODSTAT <- get_data(all_data, "aglu/FAO_USA_an_Prod_t_PRODSTAT")
+    FAO_USA_an_Prod_t_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_USA_an_Prod_t_PRODSTAT")
 
     # Converting cotton back to primary equivalent (seed cotton)
     # Seed cotton has no price in PRICESTAT. Need to derive its price from cotton lint and cottonseed
@@ -217,13 +223,13 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
       add_comments("Calculate average prices over calibration years by GCAM commodity.") %>%
       add_comments("Averages across years are unweighted; averages over FAO item are weighted by production.") %>%
       add_legacy_name("L132.ag_an_For_Prices") %>%
-      add_precursors("aglu/FAO_ag_items_PRODSTAT",
-                     "aglu/FAO_an_items_PRODSTAT",
-                     "aglu/FAO_USA_ag_an_P_USDt_PRICESTAT",
-                     "aglu/FAO_USA_For_Exp_t_USD_FORESTAT",
+      add_precursors("aglu/FAO/FAO_ag_items_PRODSTAT",
+                     "aglu/FAO/FAO_an_items_PRODSTAT",
+                     "aglu/FAO/FAO_USA_ag_an_P_USDt_PRICESTAT",
+                     "aglu/FAO/FAO_USA_For_Exp_t_USD_FORESTAT",
                      "aglu/USDA_Alfalfa_prices_USDt",
                      "L100.FAO_ag_Prod_t",
-                     "aglu/FAO_USA_an_Prod_t_PRODSTAT") ->
+                     "aglu/FAO/FAO_USA_an_Prod_t_PRODSTAT") ->
       L132.ag_an_For_Prices
     return_data(L132.ag_an_For_Prices)
   } else {

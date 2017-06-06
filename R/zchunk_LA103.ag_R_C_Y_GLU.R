@@ -30,6 +30,10 @@ module_aglu_LA103.ag_R_C_Y_GLU <- function(command, ...) {
              "L103.ag_Yield_kgm2_R_C_Y_GLU"))
   } else if(command == driver.MAKE) {
 
+        year <- GCAM_region_ID <- GCAM_commodity <- value <- value.y <- value.x <-
+            GLU <- valuesum <- NULL     # silence package check.
+
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

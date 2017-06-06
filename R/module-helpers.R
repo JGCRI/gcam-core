@@ -19,6 +19,8 @@
 #' @author BBL April 2017
 set_water_input_name <- function(water_sector, water_type, water_mapping, GLU = NA_character_) {
 
+  water.sector <- supplysector <- wt_short <- new_name <- . <- NULL  # silence package check.
+
   # Sanity checks
   assert_that(is.character(water_sector))
   assert_that(is.character(water_type))
@@ -64,6 +66,8 @@ set_water_input_name <- function(water_sector, water_type, water_mapping, GLU = 
 #' @importFrom tibble is_tibble
 #' @author BBL May 2017
 rename_SO2 <- function(x, so2_map, is_awb = FALSE) {
+
+  Non.CO2 <- SO2_name <- region <- . <- NULL # silence package checks.
 
   assert_that(is_tibble(x))
   assert_that(is_tibble(so2_map))
