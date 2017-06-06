@@ -92,8 +92,15 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
     # Use the total animal production table, L107.an_Prod_Mt_ctry_C_Y, and the mixed animal production table, L107.an_Prod_Mt_ctry_C_mix_Y
     # to calculate the amount of pastoral animal production. Add an identifier, system
     L107.an_Prod_Mt_ctry_C_Y %>%
+      rename(totAnProd = value) %>%
       # pastoral animal production = total animal production - mixed animal production for each country, commodity, year:
-      mutate(value = value - L107.an_Prod_Mt_ctry_C_mix_Y$value) %>%
+      # ACS old code:
+      # mutate(value = value - L107.an_Prod_Mt_ctry_C_mix_Y$value) %>%
+      left_join(select(L107.an_Prod_Mt_ctry_C_mix_Y, iso, GCAM_commodity, year, value),
+                by = c("iso","GCAM_commodity", "year")) %>%
+      rename(mixAnProd = value) %>%
+      mutate(value = totAnProd - mixAnProd) %>%
+      select(-totAnProd, -mixAnProd) %>%
       # add the system identifier indicating this is pastoral production:
       mutate(system = "Pastoral") ->
       # store in a table specifying pastoral animal production by country, commodity, and year
@@ -170,21 +177,38 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
 
     # take the region, commodity, system, feed type, year feed consumption:
     L107.an_Feed_Mt_R_C_Sys_Fd_Y %>%
-      # add in the corresponding animal production amount as value.y
-      left_join_error_no_match(L107.an_Prod_Mt_R_C_Sys_Fd_Y, by = c("GCAM_region_ID", "GCAM_commodity", "year", "system", "feed")) %>%
+      arrange(GCAM_region_ID, GCAM_commodity, system, feed, year) ->
+      L107.an_Feed_arranged
+    L107.an_Prod_Mt_R_C_Sys_Fd_Y %>%
+      arrange(GCAM_region_ID, GCAM_commodity, system, feed, year) ->
+      L107.an_Prod_arranged
+    L107.an_Feed_arranged %>%
+      rename(feedVal = value) %>%
+      # add in the corresponding animal production amount
+      left_join_error_no_match(L107.an_Prod_arranged, by = c("GCAM_region_ID", "GCAM_commodity", "year", "system", "feed")) %>%
+      rename(prodVal = value) %>%
       # calculate the region, commodity, system, feed type, year IO coefficient as feed consumption/animal production
-      mutate(value = value.x / value.y) %>%
-      select(-value.x, -value.y) %>%
+      mutate(value = feedVal / prodVal) %>%
+      select(-feedVal, -prodVal) %>%
       # replace NA/NaN with the value 100
       replace_na(list(value = 100)) ->
       # store in a table specifying IO coefficients by region, commodity, system, feed type, and year:
       L107.an_FeedIO_R_C_Sys_Fd_Y
 
+
+    # ACS old code:
+    # L107.an_Feed_Mt_R_C_Sys_Fd_Y %>%
+    #   # add in the corresponding animal production amount as value.y
+    #   left_join_error_no_match(L107.an_Prod_Mt_R_C_Sys_Fd_Y, by = c("GCAM_region_ID", "GCAM_commodity", "year", "system", "feed")) %>%
+    #   # calculate the region, commodity, system, feed type, year IO coefficient as feed consumption/animal production
+    #   mutate(value = value.x / value.y) %>%
+    #   select(-value.x, -value.y) %>%
+    #   # replace NA/NaN with the value 100
+    #   replace_na(list(value = 100)) ->
+    #   # store in a table specifying IO coefficients by region, commodity, system, feed type, and year:
+    #   L107.an_FeedIO_R_C_Sys_Fd_Y
+
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
     L107.an_Prod_Mt_R_C_Sys_Fd_Y %>%
       add_title("Animal production by GCAM region / commodity / system / feed type / year") %>%
       add_units("Megatons (Mt)") %>%
