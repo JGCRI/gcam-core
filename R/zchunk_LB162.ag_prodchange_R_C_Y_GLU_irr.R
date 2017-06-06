@@ -23,8 +23,8 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "aglu/A_defaultYieldRate",
              FILE = "aglu/AGLU_ctry",
-             FILE = "aglu/FAO_ag_CROSIT",
-             FILE = "aglu/FAO_ag_items_PRODSTAT",
+             FILE = "aglu/FAO/FAO_ag_CROSIT",
+             FILE = "aglu/FAO/FAO_ag_items_PRODSTAT",
              "L151.ag_irrHA_ha_ctry_crop",
              "L151.ag_rfdHA_ha_ctry_crop",
              FILE = "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
@@ -41,8 +41,8 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     A_defaultYieldRate <- get_data(all_data, "aglu/A_defaultYieldRate")
     AGLU_ctry <- get_data(all_data, "aglu/AGLU_ctry")
-    FAO_ag_CROSIT <- get_data(all_data, "aglu/FAO_ag_CROSIT")
-    FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO_ag_items_PRODSTAT")
+    FAO_ag_CROSIT <- get_data(all_data, "aglu/FAO/FAO_ag_CROSIT")
+    FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_ag_items_PRODSTAT")
     L151.ag_irrHA_ha_ctry_crop <- get_data(all_data, "L151.ag_irrHA_ha_ctry_crop")
     L151.ag_rfdHA_ha_ctry_crop <- get_data(all_data, "L151.ag_rfdHA_ha_ctry_crop")
     L161.ag_irrProd_Mt_R_C_Y_GLU <- get_data(all_data, "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU")
@@ -430,8 +430,8 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID",
                      "aglu/A_defaultYieldRate",
                      "aglu/AGLU_ctry",
-                     "aglu/FAO_ag_CROSIT",
-                     "aglu/FAO_ag_items_PRODSTAT",
+                     "aglu/FAO/FAO_ag_CROSIT",
+                     "aglu/FAO/FAO_ag_items_PRODSTAT",
                      "L151.ag_irrHA_ha_ctry_crop",
                      "L151.ag_rfdHA_ha_ctry_crop",
                      "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
@@ -447,8 +447,8 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID",
                      "aglu/A_defaultYieldRate",
                      "aglu/AGLU_ctry",
-                     "aglu/FAO_ag_CROSIT",
-                     "aglu/FAO_ag_items_PRODSTAT",
+                     "aglu/FAO/FAO_ag_CROSIT",
+                     "aglu/FAO/FAO_ag_items_PRODSTAT",
                      "L151.ag_irrHA_ha_ctry_crop",
                      "L151.ag_rfdHA_ha_ctry_crop",
                      "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
@@ -466,8 +466,8 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID",
                      "aglu/A_defaultYieldRate",
                      "aglu/AGLU_ctry",
-                     "aglu/FAO_ag_CROSIT",
-                     "aglu/FAO_ag_items_PRODSTAT",
+                     "aglu/FAO/FAO_ag_CROSIT",
+                     "aglu/FAO/FAO_ag_items_PRODSTAT",
                      "L151.ag_irrHA_ha_ctry_crop",
                      "L151.ag_rfdHA_ha_ctry_crop",
                      "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
