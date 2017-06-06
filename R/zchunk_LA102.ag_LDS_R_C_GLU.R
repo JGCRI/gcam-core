@@ -19,7 +19,7 @@
 module_aglu_LA102.ag_LDS_R_C_GLU <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "aglu/FAO_ag_items_PRODSTAT",
+             FILE = "aglu/FAO/FAO_ag_items_PRODSTAT",
              "L100.LDS_ag_HA_ha",
              "L100.LDS_ag_prod_t"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -34,7 +34,7 @@ module_aglu_LA102.ag_LDS_R_C_GLU <- function(command, ...) {
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO_ag_items_PRODSTAT")
+    FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_ag_items_PRODSTAT")
     L100.LDS_ag_HA_ha <- get_data(all_data, "L100.LDS_ag_HA_ha")
     L100.LDS_ag_prod_t <- get_data(all_data, "L100.LDS_ag_prod_t")
 
@@ -103,7 +103,7 @@ module_aglu_LA102.ag_LDS_R_C_GLU <- function(command, ...) {
       add_comments("regions, commodities, and units.") %>%
       add_legacy_name("L102.ag_HA_bm2_R_C_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
-                     "aglu/FAO_ag_items_PRODSTAT",
+                     "aglu/FAO/FAO_ag_items_PRODSTAT",
                      "L100.LDS_ag_HA_ha")  %>%
       add_flags(FLAG_SUM_TEST) ->
       L102.ag_HA_bm2_R_C_GLU
@@ -115,7 +115,7 @@ module_aglu_LA102.ag_LDS_R_C_GLU <- function(command, ...) {
       add_comments("regions, commodities, and units.") %>%
       add_legacy_name("L102.ag_Prod_Mt_R_C_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
-                     "aglu/FAO_ag_items_PRODSTAT",
+                     "aglu/FAO/FAO_ag_items_PRODSTAT",
                      "L100.LDS_ag_prod_t") %>%
       add_flags(FLAG_SUM_TEST) ->
       L102.ag_Prod_Mt_R_C_GLU

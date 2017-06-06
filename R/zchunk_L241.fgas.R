@@ -1,4 +1,4 @@
-#' module_aglu_LA106.ag_an_NetExp_FAO_R_C_Y
+#' module_emissions_L241.fgas
 #'
 #' Briefly describe what this chunk does.
 #'
@@ -6,40 +6,38 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L106.ag_NetExp_Mt_R_C_Y}, \code{L106.an_NetExp_Mt_R_C_Y}. The corresponding file in the
-#' original data system was \code{LA106.ag_an_NetExp_FAO_R_C_Y.R} (aglu level1).
+#' the generated outputs: \code{L241.hfc_all}, \code{L241.pfc_all}, \code{L241.hfc_future}, \code{L241.fgas_all_units}. The corresponding file in the
+#' original data system was \code{L241.fgas.R} (emissions level2).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_aglu_LA106.ag_an_NetExp_FAO_R_C_Y_DISABLED <- function(command, ...) {
+module_emissions_L241.fgas_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "aglu/AGLU_ctry",
-             FILE = "aglu/FAO/FAO_ag_items_cal_SUA",
-             FILE = "aglu/FAO/FAO_an_items_cal_SUA",
-             "L100.FAO_ag_Exp_t",
-             "L100.FAO_ag_Imp_t",
-             "L100.FAO_an_Exp_t",
-             "L100.FAO_an_Imp_t"))
+    return(c(FILE = "common/GCAM_region_names",
+             FILE = "emissions/A_regions",
+             FILE = "emissions/FUT_EMISS_GV",
+             "L141.hfc_R_S_T_Yh",
+             "L142.pfc_R_S_T_Yh",
+             "L141.hfc_ef_R_cooling_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L106.ag_NetExp_Mt_R_C_Y",
-             "L106.an_NetExp_Mt_R_C_Y"))
+    return(c("L241.hfc_all",
+             "L241.pfc_all",
+             "L241.hfc_future",
+             "L241.fgas_all_units"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    AGLU_ctry <- get_data(all_data, "aglu/AGLU_ctry")
-    FAO_ag_items_cal_SUA <- get_data(all_data, "aglu/FAO/FAO_ag_items_cal_SUA")
-    FAO_an_items_cal_SUA <- get_data(all_data, "aglu/FAO/FAO_an_items_cal_SUA")
-    L100.FAO_ag_Exp_t <- get_data(all_data, "L100.FAO_ag_Exp_t")
-    L100.FAO_ag_Imp_t <- get_data(all_data, "L100.FAO_ag_Imp_t")
-    L100.FAO_an_Exp_t <- get_data(all_data, "L100.FAO_an_Exp_t")
-    L100.FAO_an_Imp_t <- get_data(all_data, "L100.FAO_an_Imp_t")
+    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
+    A_regions <- get_data(all_data, "emissions/A_regions")
+    FUT_EMISS_GV <- get_data(all_data, "emissions/FUT_EMISS_GV")
+    L141.hfc_R_S_T_Yh <- get_data(all_data, "L141.hfc_R_S_T_Yh")
+    L142.pfc_R_S_T_Yh <- get_data(all_data, "L142.pfc_R_S_T_Yh")
+    L141.hfc_ef_R_cooling_Yh <- get_data(all_data, "L141.hfc_ef_R_cooling_Yh")
 
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
@@ -58,8 +56,6 @@ module_aglu_LA106.ag_an_NetExp_FAO_R_C_Y_DISABLED <- function(command, ...) {
     #
     # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
     # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses translate_to_full_table
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # NOTE: This code uses vecpaste
     # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # ===================================================
@@ -74,23 +70,43 @@ module_aglu_LA106.ag_an_NetExp_FAO_R_C_Y_DISABLED <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L106.ag_NetExp_Mt_R_C_Y") %>%
+      add_legacy_name("L241.hfc_all") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L106.ag_NetExp_Mt_R_C_Y
+      L241.hfc_all
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L106.an_NetExp_Mt_R_C_Y") %>%
+      add_legacy_name("L241.pfc_all") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L106.an_NetExp_Mt_R_C_Y
+      L241.pfc_all
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L241.hfc_future") %>%
+      add_precursors("precursor1", "precursor2", "etc") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L241.hfc_future
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L241.fgas_all_units") %>%
+      add_precursors("precursor1", "precursor2", "etc") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L241.fgas_all_units
 
-    return_data(L106.ag_NetExp_Mt_R_C_Y, L106.an_NetExp_Mt_R_C_Y)
+    return_data(L241.hfc_all, L241.pfc_all, L241.hfc_future, L241.fgas_all_units)
   } else {
     stop("Unknown command")
   }
