@@ -8,6 +8,8 @@ module_emissions_L125.bcoc_unmgd_R_S_T_Y(command, ...)
 }
 \arguments{
 \item{command}{API command to execute}
+
+\item{...}{other optional parameters, depending on command}
 }
 \value{
 Depends on \code{command}: either a vector of required inputs,

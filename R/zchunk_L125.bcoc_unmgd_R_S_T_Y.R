@@ -3,6 +3,7 @@
 #' Generate historical BC/OC emission factors for unmanaged land by land cover type, computed from RCP emissions data.
 #'
 #' @param command API command to execute
+#' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L125.bcoc_tgbkm2_R_grass_2000}, \code{L125.bcoc_tgbkm2_R_forest_2000}, \code{L125.deforest_coefs_bcoc}. The corresponding file in the
