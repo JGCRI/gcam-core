@@ -163,7 +163,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
       left_join(AGLU_ctry_iso_CROSIT, by = "iso") %>%
       left_join(dplyr::distinct(select(FAO_ag_items_PRODSTAT, CROSIT_crop, GTAP_crop)),
                                by = "GTAP_crop") ->
-      L162.ag_HA_ha_ctry_crop_irr # agrees to 10e-8
+      L162.ag_HA_ha_ctry_crop_irr
 
 
     # Aggregate the above table of LDS area to CROSIT country and crop levels.
@@ -173,8 +173,10 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
     # This results in a table of harvested area and yield multipliers by CROSIT country and crop, glu,
     # and irrigation for each SPEC_AG_PROD_YEARS year, based on LDS harvested area tables L151....
     #
-    # In this method, compositional shifts of CROSIT commodities within GCAM commodities do not
-    # translate to modified yields. Harvested area multipliers are 1 in all periods.
+    # Compositional shifts of CROSIT commodities within GCAM commodities do not translate to modified yields.
+    # This is because Harvested area multipliers are 1 in all periods, meaning the yield multipliers are
+    # equivalent to production multipliers and subsequent aggregation to the GCAM commodity level is not
+    # area weighted.
     L162.ag_HA_ha_ctry_crop_irr %>%
       group_by(CROSIT_ctry, CROSIT_crop, GLU, Irr_Rfd) %>%
       summarise(HA = sum(HA)) %>%
@@ -201,6 +203,11 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
     #
     # There is a small error in the old data system. The intention is to match in multipliers by CROSIT_ctry, CROSIT_crop, irrigation,
     # and year. The old DS only does so by CROSIT_ctry, CROSIT_crop, and year.
+    #
+    # The YieldRatio calculated in the following pipeline is so named to reflect that "the value was the yield the given year divided
+    # by the yield in the base year"; in otherwords, YieldRatio = Prod_mod / HA rather than Yield = Prod / HA.
+    # And modified Production, Prod_mod = Harvested Area * Yield Multiplier -> Prod_mod is not a physical quantity as
+    # production is, and so the YieldRatio is distinct from Yield.
 
     if(OLD_DATA_SYSTEM_BEHAVIOR) {
       # preprocess table of multipliers before joining, restricting to the CROSIT country-crop-glu-irrigation present in
@@ -213,7 +220,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
 
       L162.ag_HA_ha_ctry_crop_irr %>%
         na.omit() %>%
-        repeat_add_columns(tibble::tibble(year = SPEC_AG_PROD_YEARS)) %>% # agree fine to here; it's the next join
+        repeat_add_columns(tibble::tibble(year = SPEC_AG_PROD_YEARS)) %>%
         left_join_keep_first_only(CROSIT_mult, by = c("CROSIT_ctry", "CROSIT_crop", "year")) %>%
         na.omit() %>%
         left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
@@ -289,7 +296,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
       mutate(lagyear = year + timestep)  %>%
       # There is no lag for SPEC_AG_PROD_YEARS[1] but there is for a year not in SPEC_AG_PROD_YEARS
       # SPEC_AG_PROD_YEARS[1] gets left alone, so for lagyear = not in SPEC_AG_PROD_YEAR, overwrite
-      # the ratio to be 0.52, the timestep to be 1, and lagyear = SPEC_AG_PROD_YEAR[1]. This allows
+      # the ratio to be 0.5, the timestep to be 1, and lagyear = SPEC_AG_PROD_YEAR[1]. This allows
       # the same pipeline to be used for all SPEC_AG_PROD_YEARS
       mutate(YieldRatio = replace(YieldRatio,
                                   ! lagyear %in% SPEC_AG_PROD_YEARS,

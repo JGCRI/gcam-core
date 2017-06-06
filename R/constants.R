@@ -97,7 +97,7 @@ CONV_MIL_THOUS <- 1000
 CONV_ONES_THOUS <- 0.001
 CONV_TON_MEGATON <- 1e-6
 CONV_T_KG <- 1e3
-CONV_KG_T <- 1e-3
+CONV_KG_T <- 1 / CONV_T_KG
 CONV_T_METRIC_SHORT <- 1000/908  # Ratio between metric ton and short ton
 CONV_MCAL_PCAL <- 1e-9
 CONV_HA_BM2 <- 1e-5
