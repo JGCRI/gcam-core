@@ -3,7 +3,6 @@
 #' Generate historical BC/OC emission factors for unmanaged land by land cover type, computed from RCP emissions data.
 #'
 #' @param command API command to execute
-#' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L125.bcoc_tgbkm2_R_grass_2000}, \code{L125.bcoc_tgbkm2_R_forest_2000}, \code{L125.deforest_coefs_bcoc}. The corresponding file in the
@@ -17,7 +16,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RMH May 2017
-
 module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
@@ -181,7 +179,6 @@ module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {
       add_title("BC/OC grassland burning emissions factors by GCAM region / 2000") %>%
       add_units("Tg / bm2") %>%
       add_comments("Grassland EFs from RCP emissions and land area") %>%
-      add_comments("can be multiple lines") %>%
       add_legacy_name("L125.bcoc_tgbkm2_R_grass_2000") %>%
       add_precursors("common/iso_GCAM_regID",
                      "temp-data-inject/L124.LC_bm2_R_Grass_Yh_GLU_adj",
@@ -196,8 +193,7 @@ module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {
     L125.bcoc_tgbkm2_R_forest_2000 <- L125.bcoc_tgbkm2_R_forest_2000 %>%
       add_title("BC/OC forest fires and deforestation emissions factors by GCAM region / 2000") %>%
       add_units("Tg / bm2") %>%
-      add_comments("") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("EFs calculated from RCP emissions (divided into forest fire and deforestation by GFED data) and GCAM land area") %>%
       add_legacy_name("L125.bcoc_tgbkm2_R_forest_2000") %>%
       add_precursors("common/iso_GCAM_regID",
                      "temp-data-inject/L124.LC_bm2_R_Grass_Yh_GLU_adj",
@@ -212,8 +208,7 @@ module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {
     L125.deforest_coefs_bcoc <- L125.deforest_coefs_bcoc %>%
       add_title("Default deforestation coefficients by BC and OC") %>%
         add_units("kg/m2/yr") %>%
-        add_comments("comments describing how data generated") %>%
-        add_comments("can be multiple lines") %>%
+        add_comments("EFs calculated from rate of change of RCP emissions (divided into forest fire and deforestation by GFED data) and GCAM land area") %>%
         add_legacy_name("L125.deforest_coefs_bcoc") %>%
         add_precursors("common/iso_GCAM_regID",
                        "temp-data-inject/L124.LC_bm2_R_Grass_Yh_GLU_adj",

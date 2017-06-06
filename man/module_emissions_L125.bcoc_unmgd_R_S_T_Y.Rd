@@ -8,8 +8,6 @@ module_emissions_L125.bcoc_unmgd_R_S_T_Y(command, ...)
 }
 \arguments{
 \item{command}{API command to execute}
-
-\item{...}{other optional parameters, depending on command}
 }
 \value{
 Depends on \code{command}: either a vector of required inputs,
@@ -18,7 +16,7 @@ the generated outputs: \code{L125.bcoc_tgbkm2_R_grass_2000}, \code{L125.bcoc_tgb
 original data system was \code{L125.bcoc_unmgd_R_S_T_Y.R} (emissions level1).
 }
 \description{
-Historical emissions from unmanaged land by land cover type, computed from RCP emissions data.
+Generate historical BC/OC emission factors for unmanaged land by land cover type, computed from RCP emissions data.
 }
 \details{
 Calculate BC/OC emissions from unmanaged lands (savanna burning, forest fires, deforestation).
