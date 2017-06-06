@@ -65,21 +65,21 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
       gather(year, value, -IPCC_Annex, -World_Region, -ISO_A3, -Name, -IPCC, -IPCC_description) %>%
       mutate(year = as.integer(substr(year, 1, 5))) ->
       EDGAR_CF4
-
-    # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-
+#
+#     # ===================================================
+#     # TRANSLATED PROCESSING CODE GOES HERE...
+#     #
+#     # If you find a mistake/thing to update in the old code and
+#     # fixing it will change the output data, causing the tests to fail,
+#     # (i) open an issue on GitHub, (ii) consult with colleagues, and
+#     # then (iii) code a fix:
+#     #
+#     # if(OLD_DATA_SYSTEM_BEHAVIOR) {
+#     #   ... code that replicates old, incorrect behavior
+#     # } else {
+#     #   ... new code with a fix
+#     # }
+#
     #First, bind all gases together
 
     EDGAR_SF6 %>%
@@ -158,9 +158,14 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
    L142.R_cooling_T_Yh.melt
 
  L142.R_cooling_T_Yh.melt %>%
-   left_join(L142.R_cooling_Yh, by = c("GCAM_region_ID", "year"))  %>%
+    rename(supplysector = service)  %>%
+    left_join(L142.pfc_R_S_T_Yh.melt, by = c("GCAM_region_ID", "year", "supplysector")) %>%
+   mutate_all(funs(replace(.,is.na(.),1))) ->
+   jointest
 
-    # ===================================================
+
+#
+#     # ===================================================
 
     # Produce outputs
     # Temporary code below sends back empty data frames marked "don't test"
@@ -191,4 +196,4 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
   } else {
     stop("Unknown command")
   }
-}
+ }
