@@ -17,7 +17,7 @@
 module_aglu_LB111.ag_resbio_R_C <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "aglu/FAO_ag_items_PRODSTAT",
+             FILE = "aglu/FAO/FAO_ag_items_PRODSTAT",
              "L100.FAO_ag_Prod_t",
              FILE = "aglu/Various_ag_resbio_data"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -31,7 +31,7 @@ module_aglu_LB111.ag_resbio_R_C <- function(command, ...) {
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO_ag_items_PRODSTAT")
+    FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_ag_items_PRODSTAT")
     L100.FAO_ag_Prod_t <- get_data(all_data, "L100.FAO_ag_Prod_t")
     Various_ag_resbio_data <- get_data(all_data, "aglu/Various_ag_resbio_data")
 
@@ -67,7 +67,7 @@ module_aglu_LB111.ag_resbio_R_C <- function(command, ...) {
       add_comments("These parameters are weighted by production when calculating the average by GCAM region and commodity") %>%
       add_legacy_name("L111.ag_resbio_R_C") %>%
       add_precursors("common/iso_GCAM_regID",
-                     "aglu/FAO_ag_items_PRODSTAT",
+                     "aglu/FAO/FAO_ag_items_PRODSTAT",
                      "L100.FAO_ag_Prod_t",
                      "aglu/Various_ag_resbio_data") ->
       L111.ag_resbio_R_C

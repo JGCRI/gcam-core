@@ -21,8 +21,8 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "aglu/A_defaultYieldRate",
              FILE = "aglu/AGLU_ctry",
-             FILE = "aglu/FAO_ag_items_PRODSTAT",
-             FILE = "aglu/FAO_ag_CROSIT",
+             FILE = "aglu/FAO/FAO_ag_items_PRODSTAT",
+             FILE = "aglu/FAO/FAO_ag_CROSIT",
              "L100.LDS_ag_HA_ha",
              "L103.ag_Prod_Mt_R_C_Y_GLU"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -45,8 +45,8 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     A_defaultYieldRate <- get_data(all_data, "aglu/A_defaultYieldRate")
     AGLU_ctry <- get_data(all_data, "aglu/AGLU_ctry")
-    FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO_ag_items_PRODSTAT")
-    FAO_ag_CROSIT <- get_data(all_data, "aglu/FAO_ag_CROSIT")
+    FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_ag_items_PRODSTAT")
+    FAO_ag_CROSIT <- get_data(all_data, "aglu/FAO/FAO_ag_CROSIT")
     L100.LDS_ag_HA_ha <- get_data(all_data, "L100.LDS_ag_HA_ha")
     L103.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L103.ag_Prod_Mt_R_C_Y_GLU")
 
@@ -371,8 +371,8 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
       add_legacy_name("L112.ag_YieldRatio_R_C_Ysy_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
                      "aglu/AGLU_ctry",
-                     "aglu/FAO_ag_items_PRODSTAT",
-                     "aglu/FAO_ag_CROSIT",
+                     "aglu/FAO/FAO_ag_items_PRODSTAT",
+                     "aglu/FAO/FAO_ag_CROSIT",
                      "L100.LDS_ag_HA_ha") ->
       L112.ag_YieldRatio_R_C_Ysy_GLU
 
