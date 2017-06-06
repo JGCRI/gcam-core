@@ -13,7 +13,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author AS June 2017
+#' @author AJS June 2017
 module_gcam.usa_LA154.Transport <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/trnUCD_EIA_mapping",
@@ -61,6 +61,7 @@ module_gcam.usa_LA154.Transport <- function(command, ...) {
         filter(year %in% HISTORICAL_YEARS, GCAM_region_ID == gcam.USA_CODE) %>% # Filter for the USA and for historical years only
         filter(value != 0) %>% # Here any rows with value of 0 will be lost, even if other years of the same group are nonzero
         # To get these rows back, the dataframe will be spread and gathered to reintroduce those rows with NAs, which will then be replaced with 0
+        # Tidyr::complete cannot be used because I don't know where the missing values are, and I don't want to introduce every combination.
         spread(year, value) %>%
         gather(year, value, -GCAM_region_ID, -UCD_sector, -mode, -size.class, -UCD_technology, -UCD_fuel, -fuel) %>%
         mutate(year = as.integer(year)) %>%
@@ -72,11 +73,7 @@ module_gcam.usa_LA154.Transport <- function(command, ...) {
       # From the full state database, state shares will be calculated based on relevant EIA sector and fuel combinations
       # These shares will later be multipled by the transportation energy consumption data above
       # We will create a list first, concatenating EIA-fuel and -sector, so as to selectively remove those pairs from the dataset
-      trnUCD_EIA_mapping %>%
-        mutate(fuel_sector = paste(EIA_fuel, EIA_sector)) %>%
-        .[["fuel_sector"]] %>%
-        unique() ->
-        list_fuel_sector
+      list_fuel_sector <- unique(paste(trnUCD_EIA_mapping$EIA_fuel, trnUCD_EIA_mapping$EIA_sector))
 
       # Here is the state-level data for which to calculate state shares
       # We will first filter for only relevant EIA-fuel and -sector pairs
@@ -84,8 +81,7 @@ module_gcam.usa_LA154.Transport <- function(command, ...) {
         filter(year %in% HISTORICAL_YEARS) %>% # Ensure within historical period
         mutate(fuel_sector = paste(EIA_fuel, EIA_sector)) %>% # Create concatenate list in base dataframe to match the syntax of our list above
         filter(fuel_sector %in% list_fuel_sector) %>% # Filtering for just EIA-fuel/sector pairs
-        rename(value_state = value) %>%
-        select(state, EIA_fuel, EIA_sector, sector, fuel, year, value_state) ->
+        select(state, EIA_fuel, EIA_sector, sector, fuel, year, value_state = value) ->
         EIA_transportation_state
 
       # To calculate the state share, we need to calculate the national amount
@@ -122,7 +118,7 @@ module_gcam.usa_LA154.Transport <- function(command, ...) {
         group_by(state, fuel, year) %>%
         summarise(value = sum(value)) %>%
         ungroup() %>%
-        mutate("sector" = "transportation") %>%
+        mutate(sector = "transportation") %>% # Adding a column named "sector" with "transportation" as the entries
         select(state, sector, fuel, year, value) ->
         L154.in_EJ_state_trn_F
 
@@ -140,7 +136,11 @@ module_gcam.usa_LA154.Transport <- function(command, ...) {
         Pop_state_share
 
       if(OLD_DATA_SYSTEM_BEHAVIOR) {
-        # Old code used the function, apportion_to_states, but did not match modes.
+        # Old code used the function, apportion_to_states, but did not match transportation mode (i.e., cycle and walk).
+        # For every year, there is a single national value for each mode. I believe the old code alternated between the cycle and walk
+        # values for each state down the list. However, the list was arranged with the first half being cycle and the last half being walk.
+        # Therefore, the wrong mode was applied for every other state.
+
         # I will force these datasets to the same order as before and apply the same function to reproduce the data.
 
         # This is how the old dataframe was ordered (i.e., by full state name)
@@ -181,13 +181,13 @@ module_gcam.usa_LA154.Transport <- function(command, ...) {
         data_final <- as_tibble(data_final) # Need to convert the dataframe back to a tibble
 
         data_final %>%
-          filter(row_number() <= 51) %>%
+          filter(row_number() <= length(old_df_order)) %>% # Labeling the top half of rows to the "cycle" mode
           mutate(mode = "Cycle") %>%
           mutate(state = old_df_order) ->
           State_cycle
 
         data_final %>%
-          filter(row_number() > 51) %>%
+          filter(row_number() > length(old_df_order)) %>% # Labeling the bottom half of rows to the "walk" mode
           mutate(mode = "Walk") %>%
           mutate(state = old_df_order) %>%
           bind_rows(State_cycle) %>%

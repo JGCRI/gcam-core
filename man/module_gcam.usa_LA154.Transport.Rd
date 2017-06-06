@@ -26,5 +26,5 @@ Transportation energy data was downscaled in proportion to EIA state-level trans
 Transportation nonmotor data was downscaled in proportion to state population
 }
 \author{
-AS June 2017
+AJS June 2017
 }
