@@ -391,7 +391,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
 
 
     # Step 4: Write out biomass yields
-    # Essentially repeating steps 1-3 with biomass only.
+    # Essentially repeating steps 2-3 with biomass only.
     L162.ag_Prod_Mt_R_C_Y_GLU_irr %>%
       select(GCAM_region_ID, GLU, Irr_Rfd) %>%
       dplyr::distinct() %>%
