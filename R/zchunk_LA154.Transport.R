@@ -60,12 +60,8 @@ module_gcam.usa_LA154.Transport <- function(command, ...) {
       L154.in_EJ_R_trn_m_sz_tech_F_Yh %>%
         filter(year %in% HISTORICAL_YEARS, GCAM_region_ID == gcam.USA_CODE) %>% # Filter for the USA and for historical years only
         filter(value != 0) %>% # Here any rows with value of 0 will be lost, even if other years of the same group are nonzero
-        # To get these rows back, the dataframe will be spread and gathered to reintroduce those rows with NAs, which will then be replaced with 0
-        # Tidyr::complete cannot be used because I don't know where the missing values are, and I don't want to introduce every combination.
-        spread(year, value) %>%
-        gather(year, value, -GCAM_region_ID, -UCD_sector, -mode, -size.class, -UCD_technology, -UCD_fuel, -fuel) %>%
-        mutate(year = as.integer(year)) %>%
-        replace_na(list(value = 0)) %>%
+        # We will next reintroduce those rows using "complete" and assign those values to be 0
+        complete(year, nesting(GCAM_region_ID, UCD_sector, mode, size.class, UCD_technology, UCD_fuel, fuel), fill = list(value = 0)) %>%
         # Fuel and mode will be mapped to EIA fuel and sector
         left_join_error_no_match(trnUCD_EIA_mapping, by = c("fuel", "mode")) ->
         Transportation_energy_consumption
