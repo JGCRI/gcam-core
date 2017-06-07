@@ -20,7 +20,7 @@
 module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "aglu/FAO_ag_items_cal_SUA",
+             FILE = "aglu/FAO/FAO_ag_items_cal_SUA",
              "L100.FAO_ag_Feed_t",
              "L103.ag_Prod_Mt_R_C_Y",
              "L107.an_Feed_Mt_R_C_Sys_Fd_Y"))
@@ -38,7 +38,7 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    FAO_ag_items_cal_SUA <- get_data(all_data, "aglu/FAO_ag_items_cal_SUA")
+    FAO_ag_items_cal_SUA <- get_data(all_data, "aglu/FAO/FAO_ag_items_cal_SUA")
     L100.FAO_ag_Feed_t <- get_data(all_data, "L100.FAO_ag_Feed_t")
     L103.ag_Prod_Mt_R_C_Y <- get_data(all_data, "L103.ag_Prod_Mt_R_C_Y")
     L107.an_Feed_Mt_R_C_Sys_Fd_Y <- get_data(all_data, "L107.an_Feed_Mt_R_C_Sys_Fd_Y")
@@ -210,7 +210,7 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
       add_comments("FodderHerb: based on FAO production, but adjusted if this exceeds FodderHerb_Residue demand in IMAGE") %>%
       add_comments("Note: excess FodderGrass and FodderHerb production are mapped to OtherUses") %>%
       add_legacy_name("L108.ag_Feed_Mt_R_C_Y") %>%
-      add_precursors("common/iso_GCAM_regID", "aglu/FAO_ag_items_cal_SUA", "L100.FAO_ag_Feed_t",
+      add_precursors("common/iso_GCAM_regID", "aglu/FAO/FAO_ag_items_cal_SUA", "L100.FAO_ag_Feed_t",
                      "L103.ag_Prod_Mt_R_C_Y", "L107.an_Feed_Mt_R_C_Sys_Fd_Y") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L108.ag_Feed_Mt_R_C_Y
