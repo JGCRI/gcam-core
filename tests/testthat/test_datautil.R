@@ -31,12 +31,14 @@ test_that("add/get data work", {
   expect_equal(length(all_data), 0)
 
   d1 <- tibble(x=1:3)
+  d2 <- NA   # optional input, not found
 
   expect_error(add_data(list(d1, cars, iris))) # no names
-  all_data <- add_data(return_data(d1, cars, iris), all_data)
+  all_data <- add_data(return_data(d1, cars, iris, d2), all_data)
 
   expect_identical(get_data(all_data, "d1"), d1)
   expect_identical(get_data(all_data, "cars"), cars)
   expect_identical(get_data(all_data, "iris"), iris)
+  expect_true(is.null(get_data(all_data, "d2")))
   expect_error(get_data(all_data, "not_there"))
 })

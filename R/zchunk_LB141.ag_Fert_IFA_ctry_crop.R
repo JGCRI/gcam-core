@@ -18,7 +18,7 @@
 #' @author ACS May 2017
 module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "aglu/FAO_ag_items_PRODSTAT",
+    return(c(FILE = "aglu/FAO/FAO_ag_items_PRODSTAT",
              FILE = "common/iso_GCAM_regID",
              FILE = "aglu/AGLU_ctry",
              "L100.LDS_ag_HA_ha",
@@ -39,7 +39,7 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
       all_data <- list(...)[[1]]
 
       # Load required inputs
-      FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO_ag_items_PRODSTAT")
+      FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_ag_items_PRODSTAT")
       iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
       AGLU_ctry <- get_data(all_data, "aglu/AGLU_ctry")
       L100.LDS_ag_HA_ha <- get_data(all_data, "L100.LDS_ag_HA_ha")
@@ -270,7 +270,7 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
         add_comments("multiple harvested area data sources. Top down estimates are calculated using IFA fertilizer data,") %>%
         add_comments("and the top down estimates are used to scale the bottom-up estimates, making the final output.") %>%
         add_legacy_name("L141.ag_Fert_Cons_MtN_ctry_crop") %>%
-        add_precursors("aglu/FAO_ag_items_PRODSTAT",
+        add_precursors("aglu/FAO/FAO_ag_items_PRODSTAT",
                        "common/iso_GCAM_regID",
                        "aglu/AGLU_ctry",
                        "L100.LDS_ag_HA_ha",

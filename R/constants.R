@@ -5,14 +5,15 @@ OUTPUTS_DIR  <- "outputs/"
 XML_DIR      <- "xml/"
 COMMENT_CHAR <- "#"
 OLD_DATA_SYSTEM_BEHAVIOR <- TRUE
+YEAR_PATTERN <- "^(1|2)[0-9]{3}$"   # a 1 or 2 followed by three digits, and nothing else
 
 # ======================================================================
 # Flags used by chunks
-FLAG_INPUT_DATA <- "INPUT_DATA"
+FLAG_INPUT_DATA <- "FLAG_INPUT_DATA"
 FLAG_LONG_YEAR_FORM  <- "FLAG_LONG_YEAR_FORM"
-FLAG_NO_OUTPUT  <- "NO_OUTPUT"
-FLAG_NO_XYEAR   <- "NO_XYEAR"
-FLAG_NO_TEST    <- "NO_TEST"
+FLAG_NO_OUTPUT  <- "FLAG_NO_OUTPUT"
+FLAG_NO_XYEAR   <- "FLAG_NO_XYEAR"
+FLAG_NO_TEST    <- "FLAG_NO_TEST"
 FLAG_SUM_TEST   <- "FLAG_SUM_TEST"
 FLAG_PROTECT_FLOAT <- "FLAG_PROTECT_FLOAT"
 FLAG_XML <- "FLAG_XML"
@@ -23,6 +24,8 @@ HISTORICAL_YEARS <- 1971:2010
 IMF_GDP_YEARS <- 2010:2020
 CONV_DAYS_YEAR <- 1 / 365.25
 FUTURE_YEARS <- seq(2015, 2100, 5)
+BASE_YEARS <- c(1975, 1990, 2005, 2010)
+MODEL_YEARS <- c(BASE_YEARS, FUTURE_YEARS)
 SSP_FUTURE_YEARS <- c( 2010, FUTURE_YEARS)
 GHG_CONTROL_READIN_YEAR <- 1975
 
@@ -76,6 +79,8 @@ MIN_HA_TO_CROPLAND <- 1
 # Cited in: Monfreda et al. 2008, Farming the Planet: 2., Global Biogeochemical Cycles 22, GB1022, http://dx.doi.org/10.1029/2007GB002947
 MAX_HA_TO_CROPLAND <- 3
 
+# Yield multiplier that goes from the observed yield to the "high" and "low" yields: observed plus or minus observed times this number
+MGMT_YIELD_ADJ <- 0.1
 
 # ======================================================================
 # energy constants
@@ -98,7 +103,10 @@ CONV_HA_BM2 <- 1e-5
 CONV_THA_KGM2 <- 0.1   # tons C/ha -> kg C/m2
 CONV_GG_TG <- 0.001 # gigagrams to tegagrams
 CONV_TST_TG <- 0.000907 # thousand short tons to Tg
+CONV_MWH_GJ <- 3.6 # Megawatt hours to Gigajoules
 CONV_KG_TO_TG <- 1e-9
+CONV_GWH_EJ <- 3.6e-6
+CONV_YEAR_HOURS <- 24 * 365.25
 CONV_KT_MT <- 0.001 # kt to Mt
 CONV_T_MT <- 1e-6 # t to Mt
 
@@ -177,6 +185,7 @@ emissions.TST_TO_TG <- 0.000907 # Conversion from thousand short tons to Tg
 emissions.NH3_HISTORICAL_YEARS <- 1990:2002
 emissions.NH3_EXTRA_YEARS <- 1971:1989
 emissions.EDGAR_YEARS <- 1971:2008
+emissions.EDGAR_HISTORICAL <- 1971:2008
 emissions.EPA_MACC_YEAR <- 2030  # Must be either 2020 or 2030
 emissions.MAC_TAXES <- c( 0, 5, 10, 15, 32, 66, 129, 243, 486, 1093 ) # Range of costs in 1990 USD
 emissions.CONV_C_CO2 <- 44 / 12 # Convert Carbon to CO2

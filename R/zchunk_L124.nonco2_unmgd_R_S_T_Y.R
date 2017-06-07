@@ -39,6 +39,11 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    year <- value <- GCAM_region_ID <- Land_Type <- GLU <- agg_sector <-
+      sector <- IPCC <- Non.CO2 <- iso <- tail <- land_share <- Country <-
+      type <- ForestFire <- Deforest <- PctForestFire <- PctDeforest <-
+      technology <- year1 <- year2 <- emissions <- NULL  # silence package check notes
+
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     EDGAR_sector <- get_data(all_data, "emissions/EDGAR/EDGAR_sector")
