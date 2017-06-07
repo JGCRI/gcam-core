@@ -1,8 +1,8 @@
-# File: FAO_an_items_cal_SUA.csv,,,
-# Title: Mapping file of FAO and GCAM animal commodities and caloric content,,,
-# Unit: Mcal per tonne,,,
-# Description: Maps FAO Supply Utilization Accounts animal commodities to GCAM animal commodities and reports caloric content,,,
-# Original source: http://www.fao.org/DOCREP/003/X9892E/X9892e05.htm#P8217_125315,,,
+# File: FAO_an_items_cal_SUA.csv
+# Title: Mapping file of FAO and GCAM animal commodities and caloric content
+# Unit: Mcal per tonne
+# Description: Maps FAO Supply Utilization Accounts animal commodities to GCAM animal commodities and reports caloric content
+# Original source: http://www.fao.org/DOCREP/003/X9892E/X9892e05.htm#P8217_125315
 item,GCAM_commodity,crop_cal,Mcal_t
 "Aquatic Animals, Others",OtherMeat_Fish,AQUATIC ANIMALS NES FRESH,300
 Aquatic Plants,,,0

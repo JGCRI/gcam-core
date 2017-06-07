@@ -6,7 +6,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L105.an_Food_Mt_R_C_Y}, \code{L105.an_Food_Pcal_R_C_Y}, \code{L105.an_kcalg_R_C_Y}, \code{L105.an_Prod_Mt_R_C_Y}, \code{L105.an_Prod_Mt_ctry_C_Y}, \code{L105.an_StockShares_R_BufGoat_2005}. The corresponding file in the
+#' the generated outputs: \code{L105.an_Food_Mt_R_C_Y}, \code{L105.an_Food_Pcal_R_C_Y}, \code{L105.an_kcalg_R_C_Y}, \code{L105.an_Prod_Mt_R_C_Y}, \code{L105.an_Prod_Mt_ctry_C_Y}. The corresponding file in the
 #' original data system was \code{LA105.an_FAO_R_C_Y.R} (aglu level1).
 #' @details This chunk aggregates FAO animal products food consumption and production data up to GCAM commodities and GCAM regions,
 #' and calculates the average animal products caloric content by GCAM region / commodity / year.
@@ -20,15 +20,13 @@ module_aglu_LA105.an_FAO_R_C_Y <- function(command, ...) {
              FILE = "common/GCAM_region_names",
              FILE = "aglu/FAO/FAO_an_items_cal_SUA",
              "L100.FAO_an_Food_t",
-             "L100.FAO_an_Prod_t",
-             "L100.FAO_an_Stocks"))
+             "L100.FAO_an_Prod_t"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L105.an_Food_Mt_R_C_Y",
              "L105.an_Food_Pcal_R_C_Y",
              "L105.an_kcalg_R_C_Y",
              "L105.an_Prod_Mt_R_C_Y",
-             "L105.an_Prod_Mt_ctry_C_Y",
-             "L105.an_StockShares_R_BufGoat_2005"))
+             "L105.an_Prod_Mt_ctry_C_Y"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -39,12 +37,11 @@ module_aglu_LA105.an_FAO_R_C_Y <- function(command, ...) {
     FAO_an_items_cal_SUA <- get_data(all_data, "aglu/FAO/FAO_an_items_cal_SUA")
     L100.FAO_an_Food_t <- get_data(all_data, "L100.FAO_an_Food_t")
     L100.FAO_an_Prod_t <- get_data(all_data, "L100.FAO_an_Prod_t")
-    L100.FAO_an_Stocks <- get_data(all_data, "L100.FAO_an_Stocks")
 
     # Process FAO animal products food consumption data: map in GCAM region and commodities, convert units, aggregate to region and commodity
     L100.FAO_an_Food_t %>%
       left_join_error_no_match(iso_GCAM_regID, by = "iso")  %>%                               # Map in GCAM regions
-      left_join(FAO_an_items_cal_SUA, by = "item")  %>%                                       # Map in GCAM commodities
+      left_join(FAO_an_items_cal_SUA, by = "item")  %>%                                       # Map in GCAM commodities, creates NAs
       filter(!is.na(GCAM_commodity)) %>%                                                      # Remove commodities not included in GCAM
       mutate(Mt = value * CONV_TON_MEGATON, Pcal = value * Mcal_t * CONV_MCAL_PCAL)  %>%      # Convert from tons to Mt and Pcal
       group_by(GCAM_region_ID, GCAM_commodity, year) %>%                                      # Group by region, commodity, year
@@ -52,19 +49,17 @@ module_aglu_LA105.an_FAO_R_C_Y <- function(command, ...) {
       ungroup() %>%                                                                           # Ungroup before complete
       complete(GCAM_region_ID = unique(iso_GCAM_regID$GCAM_region_ID),                        # Fill in missing region/commodity combinations with 0
                GCAM_commodity, year, fill = list(Mt = 0, Pcal = 0)) %>%
-      # Calculate average caloric content of consumed commodities (kcal/g) for each region and animal type, set NA values to 1
+      # Calculate average caloric content of consumed commodities (Pcal/Mt = 10e12 kcal / 10e12 g = kcal/g) for each region and animal type, set NA values to 1
       mutate(value = if_else(Mt == 0, 1, Pcal / Mt))  ->
       L105.an_Food_R_C_Y
 
     # Build table of food consumption in Mt
     L105.an_Food_R_C_Y %>%
-      select(GCAM_region_ID, GCAM_commodity, year, Mt) %>%
-      rename(value = Mt) ->
+      select(GCAM_region_ID, GCAM_commodity, year, value = Mt) ->
       L105.an_Food_Mt_R_C_Y
     # Build table of food consumption in Pcal
     L105.an_Food_R_C_Y %>%
-      select(GCAM_region_ID, GCAM_commodity, year, Pcal) %>%
-      rename(value = Pcal) ->
+      select(GCAM_region_ID, GCAM_commodity, year, value = Pcal) ->
       L105.an_Food_Pcal_R_C_Y
     # Build table of caloric content in kcal/g
     L105.an_Food_R_C_Y %>%
@@ -74,7 +69,7 @@ module_aglu_LA105.an_FAO_R_C_Y <- function(command, ...) {
     # Process FAO animal products production data: map in GCAM region and commodities, convert units
     L100.FAO_an_Prod_t %>%
       left_join_error_no_match(iso_GCAM_regID, by = "iso")  %>%                               # Map in GCAM regions
-      left_join(FAO_an_items_cal_SUA, by = "item")  %>%                                       # Map in GCAM commodities
+      left_join(FAO_an_items_cal_SUA, by = "item")  %>%                                       # Map in GCAM commodities, creates NAs
       filter(!is.na(GCAM_commodity)) %>%                                                      # Remove commodities not included in GCAM
       mutate(value = value * CONV_TON_MEGATON )  ->                                           # Convert from tons to Mt
       L105.FAO_an_Prod_Mt
@@ -95,35 +90,6 @@ module_aglu_LA105.an_FAO_R_C_Y <- function(command, ...) {
                GCAM_commodity, year, fill = list(value = 0)) ->
       L105.an_Prod_Mt_R_C_Y
 
-    # For water downscaling to specific animal types, calculate the stock shares of selected animal types by GCAM region
-    L100.FAO_an_Stocks %>%
-      left_join_error_no_match(iso_GCAM_regID, by = "iso")  %>%                                            # Map in GCAM regions
-      mutate(animal_type = "Bovine",                                                                       # Assign animal types
-             animal_type = replace(animal_type, item %in% c("Sheep", "Goats"), "SheepGoat")) %>%
-      filter(year == 2005) ->                                                                              # Only look at 2005 right now
-      L105.FAO_an_Stocks_2005
-    # Aggregate total animal type stocks by GCAM region
-    L105.FAO_an_Stocks_2005 %>%
-      group_by(GCAM_region_ID, animal_type) %>%
-      summarise(value = sum(value)) %>%
-      ungroup() ->
-      L105.an_Stocks_R_type_2005
-    # Calculate the stock shares of buffalo and goat of animal type in each region for the final output
-    L105.FAO_an_Stocks_2005 %>%
-      filter(item %in% c("Buffaloes", "Goats")) %>%                                                        # Filter buffaloes and goats
-      group_by(GCAM_region_ID, item, animal_type) %>%
-      summarise(value_item = sum(value)) %>%                                                               # Aggregate buffalo and goat stocks by region
-      ungroup() %>%
-      left_join_error_no_match(L105.an_Stocks_R_type_2005, by = c("GCAM_region_ID", "animal_type")) %>%    # Combine with total animal type stocks by region
-      mutate(value = value_item / value) %>%                                                               # Calculate shares of buffalo and goat of animal type
-      select(-value_item, -animal_type) %>%
-      full_join(GCAM_region_names, by = "GCAM_region_ID") %>%                                              # Add GCAM region names
-      select(-GCAM_region_ID) %>%
-      complete(region, item, fill = list(value = 0)) %>%                                                   # Fill in missing regions with 0
-      spread(item, value) %>%
-      rename(bfracFAO2005 = Buffaloes, gfracFAO2005 = Goats) ->
-      L105.an_StockShares_R_BufGoat_2005
-
     # Produce outputs
     L105.an_Food_Mt_R_C_Y %>%
       add_title("Animal consumption by GCAM region / commodity / year") %>%
@@ -143,9 +109,7 @@ module_aglu_LA105.an_FAO_R_C_Y <- function(command, ...) {
       add_comments("Aggregate FAO country and item data by GCAM region, commodity, and year") %>%
       add_comments("Convert data from ton to Pcal") %>%
       add_legacy_name("L105.an_Food_Pcal_R_C_Y") %>%
-      add_precursors("common/iso_GCAM_regID",
-                     "aglu/FAO/FAO_an_items_cal_SUA",
-                     "L100.FAO_an_Food_t") %>%
+      same_precursors_as(L105.an_Food_Mt_R_C_Y) %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L105.an_Food_Pcal_R_C_Y
 
@@ -155,7 +119,7 @@ module_aglu_LA105.an_FAO_R_C_Y <- function(command, ...) {
       add_comments("Combine animal consumption in Mt (L105.an_Food_Mt_R_C_Y) and in Pcal (L105.an_Food_Pcal_R_C_Y)") %>%
       add_comments("Calculate the average caloric content as Pcal devided by Mt") %>%
       add_legacy_name("L105.an_kcalg_R_C_Y") %>%
-      add_precursors() %>%
+      same_precursors_as(L105.an_Food_Mt_R_C_Y) %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L105.an_kcalg_R_C_Y
 
@@ -177,22 +141,11 @@ module_aglu_LA105.an_FAO_R_C_Y <- function(command, ...) {
       add_comments("Aggregate FAO country and item data by GCAM commodity, and year") %>%
       add_comments("Convert data from ton to Mt") %>%
       add_legacy_name("L105.an_Prod_Mt_ctry_C_Y") %>%
-      add_precursors("common/iso_GCAM_regID",
-                     "aglu/FAO/FAO_an_items_cal_SUA",
-                     "L100.FAO_an_Prod_t") %>%
+      same_precursors_as(L105.an_Prod_Mt_R_C_Y) %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT) ->
       L105.an_Prod_Mt_ctry_C_Y
 
-    L105.an_StockShares_R_BufGoat_2005 %>%
-      add_title("Animal stock shares in 2005 by GCAM region / animal type") %>%
-      add_units("Unitless") %>%
-      add_comments("Calculate buffalo and goat stock shares of animal type by GCAM region") %>%
-      add_legacy_name("L105.an_StockShares_R_BufGoat_2005") %>%
-      add_precursors("common/GCAM_region_names",
-                     "L100.FAO_an_Stocks") ->
-      L105.an_StockShares_R_BufGoat_2005
-
-    return_data(L105.an_Food_Mt_R_C_Y, L105.an_Food_Pcal_R_C_Y, L105.an_kcalg_R_C_Y, L105.an_Prod_Mt_R_C_Y, L105.an_Prod_Mt_ctry_C_Y, L105.an_StockShares_R_BufGoat_2005)
+    return_data(L105.an_Food_Mt_R_C_Y, L105.an_Food_Pcal_R_C_Y, L105.an_kcalg_R_C_Y, L105.an_Prod_Mt_R_C_Y, L105.an_Prod_Mt_ctry_C_Y)
   } else {
     stop("Unknown command")
   }
