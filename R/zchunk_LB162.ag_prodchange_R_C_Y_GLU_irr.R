@@ -206,9 +206,9 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
     # and year. The old DS only does so by CROSIT_ctry, CROSIT_crop, and year.
     #
     # The YieldRatio calculated in the following pipeline is so named to reflect that "the value was the yield the given year divided
-    # by the yield in the base year"; in otherwords, YieldRatio = Prod_mod / HA rather than Yield = Prod / HA.
-    # And modified Production, Prod_mod = Harvested Area * Yield Multiplier -> Prod_mod is not a physical quantity as
-    # production is, and so the YieldRatio is distinct from Yield.
+    # by the yield in the base year"; in other words, YieldRatio = Prod_mod / HA rather than Yield = Prod / HA.
+    # And modified Production, Prod_mod = Harvested Area * Yield Multiplier -> Prod_mod is productivity growth weighted by
+    # harvested area, and so the YieldRatio is distinct from Yield.
 
     if(OLD_DATA_SYSTEM_BEHAVIOR) {
       # preprocess table of multipliers before joining, restricting to the CROSIT country-crop-glu-irrigation present in
