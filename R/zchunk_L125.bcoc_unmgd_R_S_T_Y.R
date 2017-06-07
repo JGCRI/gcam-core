@@ -87,7 +87,7 @@ module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {
     L125.GFED_ALL <- bind_rows(
       left_join_error_no_match(L125.GFED_ForestFire_BC, L125.GFED_Deforest_BC, by = c("GCAM_region_ID", "Non.CO2")),
       left_join_error_no_match(L125.GFED_ForestFire_OC, L125.GFED_Deforest_OC, by = c("GCAM_region_ID", "Non.CO2"))) %>%
-      mutate(PctForestFire = ForestFire/(ForestFire+Deforest)) %>% # calculate % forest first of total emissions
+      mutate(PctForestFire = ForestFire / (ForestFire + Deforest)) %>% # calculate % forest first of total emissions
       mutate(PctForestFire = replace(PctForestFire, is.na(PctForestFire),1)) %>%
       # There are regions where GFED data is zero for both forest fires and deforestation, leading to NAs
       # Assume those missing values are places with 100% forest fires since these are easier to model in GCAM
@@ -115,10 +115,10 @@ module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {
     L125.bcoc_tgbkm2_R_grass_2000 <- L124.LC_bm2_R_Grass_Yh_GLU_adj %>%
       filter(year == 2000) %>%
       group_by(GCAM_region_ID, Land_Type, year) %>%
-      summarize_at(vars(value),sum) %>% # aggregate grassland land area by regions/land type
+      summarize_at(vars(value), sum) %>% # aggregate grassland land area by regions/land type
       repeat_add_columns(tibble::tibble(Non.CO2 = unique(L125.RCP$Non.CO2))) %>% # repeat for both BC and OC
       left_join_error_no_match(L125.RCP %>% select(-lcf), by = c("GCAM_region_ID", "Non.CO2")) %>% # add emissions to land region area
-      mutate(em_factor = sav/value) %>% # calculate emission factor (emissions/area)
+      mutate(em_factor = sav / value) %>% # calculate emission factor (emissions/area)
       select(GCAM_region_ID, Land_Type, Non.CO2, em_factor) %>%
       arrange(Non.CO2, Land_Type,GCAM_region_ID)
 
@@ -140,12 +140,12 @@ module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {
       filter(year %in% emissions.DEFOREST_COEF_YEARS) %>%      # select only deforestation coefficient years (used to estiamte rate of change - D-driver)
       group_by(GCAM_region_ID, Land_Type, GLU) %>%
       spread(year, value) %>%
-      mutate(D_driver = pmax(`2000`-`2005`,0) / (emissions.DEFOREST_COEF_YEARS[2] - emissions.DEFOREST_COEF_YEARS[1])) # Compute total change in forest area from 2000 to 2005,
+      mutate(D_driver = pmax(`2000` - `2005`, 0) / (emissions.DEFOREST_COEF_YEARS[2] - emissions.DEFOREST_COEF_YEARS[1])) # Compute total change in forest area from 2000 to 2005,
 
     # aggregate the D_driver by region and land type
     L125.bcoc_tgbkm2_R_defor_2000 <-  L125.bcoc_tgbkm2_R_GLU_defor_2000 %>%
       group_by(GCAM_region_ID, Land_Type) %>%
-      summarize_at(vars(D_driver),sum)
+      summarize_at(vars(D_driver), sum)
 
     # calculate deforestation and forest fire emission factors
     # from deforestation and FF drivers (calculated above) and BC and OC emissions
@@ -167,7 +167,7 @@ module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {
       replace_na(em_factor = 0) %>% # replace nas, nans, and infinite values with zero
       mutate(em_factor = replace(em_factor, is.infinite(em_factor), 0)) %>%
       mutate(em_factor = replace(em_factor, is.nan(em_factor), 0)) %>%
-      arrange(Non.CO2, Land_Type,GCAM_region_ID)
+      arrange(Non.CO2, Land_Type, GCAM_region_ID)
 
   # Calculating average default deforestation emissions factors (to be used in future periods)
     L125.deforest_coefs_bcoc <- L125.bcoc_tgbkm2_R_forest_2000_calculations %>%
