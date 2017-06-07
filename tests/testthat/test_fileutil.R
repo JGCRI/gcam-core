@@ -84,7 +84,7 @@ test_that("save_chunkdata does comments and flags", {
   save_chunkdata(all_data, outputs_dir = td)
   lines2 <- readLines(out)
   expect_equal(length(lines2), nrow(df) + length(cmnts) + 1 + 1)
-  expect_equal(lines2[1], paste(flags, collapse = " "))
+  expect_equal(lines2[1], paste(COMMENT_CHAR, paste(flags, collapse = " ")))
 })
 
 
