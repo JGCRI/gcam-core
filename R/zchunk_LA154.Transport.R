@@ -57,15 +57,13 @@ module_gcam.usa_LA154.Transport <- function(command, ...) {
 
       # This starting table is transportation energy consumption by GCAM region (and other variables)
       # We will first subset this data for only the USA and values that are > 0 in the historical periods
+        # Nonzero data are filtered out because it adds no useful information. By doing so, the number of rows of the tibble
+        # will be reduced from 1840 to 800, and this is before expanding the table to apportion to states.
       L154.in_EJ_R_trn_m_sz_tech_F_Yh %>%
         filter(year %in% HISTORICAL_YEARS, GCAM_region_ID == gcam.USA_CODE) %>% # Filter for the USA and for historical years only
         filter(value != 0) %>% # Here any rows with value of 0 will be lost, even if other years of the same group are nonzero
-        # To get these rows back, the dataframe will be spread and gathered to reintroduce those rows with NAs, which will then be replaced with 0
-        # Tidyr::complete cannot be used because I don't know where the missing values are, and I don't want to introduce every combination.
-        spread(year, value) %>%
-        gather(year, value, -GCAM_region_ID, -UCD_sector, -mode, -size.class, -UCD_technology, -UCD_fuel, -fuel) %>%
-        mutate(year = as.integer(year)) %>%
-        replace_na(list(value = 0)) %>%
+        # We will next reintroduce those rows using "complete" and assign those values to be 0
+        complete(year, nesting(GCAM_region_ID, UCD_sector, mode, size.class, UCD_technology, UCD_fuel, fuel), fill = list(value = 0)) %>%
         # Fuel and mode will be mapped to EIA fuel and sector
         left_join_error_no_match(trnUCD_EIA_mapping, by = c("fuel", "mode")) ->
         Transportation_energy_consumption
@@ -222,17 +220,17 @@ module_gcam.usa_LA154.Transport <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L154.in_EJ_state_trn_m_sz_tech_F
     L154.out_mpkm_state_trn_nonmotor_Yh %>%
-      add_title("Transportation energy consumption by state and fuel") %>%
-      add_units("EJ") %>%
-      add_comments("Transportation energy consumption was aggregated by fuel, and the sector was named transportation") %>%
+      add_title("Transportation non-motorized travel by mode and state") %>%
+      add_units("million person-km") %>%
+      add_comments("National data was allocated across the states in proportion to population") %>%
       add_legacy_name("L154.out_mpkm_state_trn_nonmotor_Yh") %>%
       add_precursors("temp-data-inject/L154.out_mpkm_R_trn_nonmotor_Yh", "L100.Pop_thous_state") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L154.out_mpkm_state_trn_nonmotor_Yh
     L154.in_EJ_state_trn_F %>%
-      add_title("Transportation non-motorized travel by mode and state") %>%
-      add_units("million person-km") %>%
-      add_comments("National data was allocated across the states in proportion to population") %>%
+      add_title("Transportation energy consumption by state and fuel") %>%
+      add_units("EJ") %>%
+      add_comments("Transportation energy consumption was aggregated by fuel, and the sector was named transportation") %>%
       add_legacy_name("L154.in_EJ_state_trn_F") %>%
       add_precursors("temp-data-inject/L154.in_EJ_R_trn_m_sz_tech_F_Yh", "gcam-usa/trnUCD_EIA_mapping", "L101.EIA_use_all_Bbtu") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
