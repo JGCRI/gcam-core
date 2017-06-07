@@ -154,6 +154,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
       mutate(Irr_Rfd = "IRR") %>%
       rename(HA = irrHA) ->
       L151.ag_irrHA_ha_ctry_crop
+
     L151.ag_rfdHA_ha_ctry_crop %>%
       mutate(Irr_Rfd = "RFD") %>%
       rename(HA = rfdHA) %>%
@@ -262,9 +263,6 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
         select(GCAM_region_ID, GCAM_commodity, year, GLU, Irr_Rfd, YieldRatio) ->
         L162.ag_YieldRatio_R_C_Ysy_GLU_irr
     }
-
-
-
 
     # Create a comparable table of YieldRatio for each year by GCAM region / commodity / GLU for biomass.
     # The biomass YieldRatio in each year is taken to be the median of YieldRatios for all commodities that year.
@@ -387,7 +385,6 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
       bind_rows(L162.agbio_YieldRate_R_C_Y_GLU_irr_completecases) ->
       L162.agbio_YieldRate_R_C_Y_GLU_irr
 
-
     # Step 4: Expand to future years by applying the default rate in each year
     L162.agbio_YieldRate_R_C_Y_GLU_irr %>%
       tidyr::complete(year = c(max(HISTORICAL_YEARS),FUTURE_YEARS), nesting(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd)) %>%
@@ -418,8 +415,6 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
       rename(value = YieldRate) ->
       L162.ag_YieldRate_R_C_Y_GLU_irr
 
-
-
     # Produce outputs
     L162.ag_YieldRatio_R_C_Ysy_GLU_irr %>%
       add_title("Yield change ratios from final historical year by GCAM region / commodity / future year / GLU / irrigation") %>%
@@ -437,6 +432,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
                      "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
                      "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU") ->
       L162.ag_YieldRatio_R_C_Ysy_GLU_irr
+
     L162.ag_YieldRate_R_C_Y_GLU_irr %>%
       add_title("Yield change rates by GCAM region / commodity / future year / GLU / irrigation") %>%
       add_units("Annual rate") %>%
@@ -455,6 +451,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
                      "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT) ->
       L162.ag_YieldRate_R_C_Y_GLU_irr
+
     L162.bio_YieldRate_R_Y_GLU_irr %>%
       add_title("Biomass yield change rates by GCAM region / commodity / future year / GLU / irrigation") %>%
       add_units("Annual rate") %>%
