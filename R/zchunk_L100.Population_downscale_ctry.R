@@ -183,7 +183,7 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
       gather(year, pop, -iso, -scenario) %>%  # Long format
       mutate(year = as.integer(year),
              pop = as.numeric(pop)) %>%  # Clean year variable
-      filter(year %in% c(socioeconomics.FINAL_HIST_YEAR, modeltime.FUTURE_YEARS)) %>% # Retain only years needed for GCAM
+      filter(year %in% c(socioeconomics.FINAL_HIST_YEAR, FUTURE_YEARS)) %>% # Retain only years needed for GCAM
       group_by(scenario, iso) %>%
       mutate(ratio_iso_ssp = pop / pop[year == socioeconomics.FINAL_HIST_YEAR]) %>%  # Calculate population ratios to final historical year (2010), no units
       select(-pop) %>%
