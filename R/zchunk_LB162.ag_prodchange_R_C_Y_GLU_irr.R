@@ -37,6 +37,12 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    year <- value <- GCAM_region_ID <- GCAM_commodity <- GLU <- CROSIT_country_ID <- CROSIT_ctry <-
+      CROSIT_crop <- CROSIT_cropID <- country_ID <- crop_ID <- Prod_kt_irrigated <- HA_kha_irrigated <-
+      Yield_kgHa_irrigated <- Prod_kt_rainfed <- HA_kha_rainfed <- Yield_kgHa_rainfed <- Irr_Rfd <-
+      yield_kgHa <- iso <- irrHA <- rfdHA <- GTAP_crop <- HA <- Mult <- Prod_mod <- YieldRatio <-
+      timestep <- lagyear <- YieldRatio_lag <- YieldRate <- defaultRate <- NULL  # silence package check notes
+
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     A_defaultYieldRate <- get_data(all_data, "aglu/A_defaultYieldRate")
@@ -79,14 +85,14 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
                                          Prod_kt_irrigated == 0 & HA_kha_irrigated != 0,
                                          Yield_kgHa_irrigated * HA_kha_irrigated * CONV_KG_T)) %>%
       mutate(Prod_kt_rainfed = replace(Prod_kt_rainfed,
-                                         Prod_kt_rainfed == 0 & HA_kha_rainfed != 0,
-                                         Yield_kgHa_rainfed * HA_kha_rainfed * CONV_KG_T)) %>%
+                                       Prod_kt_rainfed == 0 & HA_kha_rainfed != 0,
+                                       Yield_kgHa_rainfed * HA_kha_rainfed * CONV_KG_T)) %>%
       mutate(HA_kha_irrigated = replace(HA_kha_irrigated,
                                         Prod_kt_irrigated == 0 & HA_kha_irrigated != 0,
                                         0)) %>%
       mutate(HA_kha_rainfed = replace(HA_kha_rainfed,
                                       Prod_kt_rainfed == 0 & HA_kha_rainfed != 0,
-                                        0)) %>%
+                                      0)) %>%
       ungroup() ->
       FAO_ag_CROSIT
 
@@ -163,7 +169,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
       # keeping NA's for later processing
       left_join(AGLU_ctry_iso_CROSIT, by = "iso") %>%
       left_join(dplyr::distinct(select(FAO_ag_items_PRODSTAT, CROSIT_crop, GTAP_crop)),
-                               by = "GTAP_crop") ->
+                by = "GTAP_crop") ->
       L162.ag_HA_ha_ctry_crop_irr
 
 
