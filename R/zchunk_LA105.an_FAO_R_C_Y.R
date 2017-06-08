@@ -17,7 +17,6 @@
 module_aglu_LA105.an_FAO_R_C_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "common/GCAM_region_names",
              FILE = "aglu/FAO/FAO_an_items_cal_SUA",
              "L100.FAO_an_Food_t",
              "L100.FAO_an_Prod_t"))
@@ -31,9 +30,17 @@ module_aglu_LA105.an_FAO_R_C_Y <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    Country <- D_driver <- Deforest <- DeforestEmiss <- FF_driver <- ForestFire <-
+      ForestFireEmiss <- GCAM_commodity <- GCAM_region_ID <- GLU <- GTAP_crop <- HA <-
+      HA_kha_irrigated <- HA_kha_rainfed <- Irr_Rfd <- Land_Type <- Mcal_t <- Mt <- Mult <-
+      Non.CO2 <- Pcal <- PctForestFire <- Prod_kt_irrigated <- Prod_kt_rainfed <- Prod_mod <-
+      YieldRate <- YieldRatio <- YieldRatio_lag <- Yield_kgHa_irrigated <-
+      Yield_kgHa_rainfed <- country_ID <- crop_ID <- defaultRate <- em_factor <- irrHA <- iso <-
+      lagyear <- lcf <- pop2 <- rfdHA <- sav <- setNames <- technology <- timestep <- value <- year <-
+      yield_kgHa <- NULL   # silence package check notes
+
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     FAO_an_items_cal_SUA <- get_data(all_data, "aglu/FAO/FAO_an_items_cal_SUA")
     L100.FAO_an_Food_t <- get_data(all_data, "L100.FAO_an_Food_t")
     L100.FAO_an_Prod_t <- get_data(all_data, "L100.FAO_an_Prod_t")
