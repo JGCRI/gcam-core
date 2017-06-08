@@ -29,6 +29,8 @@ module_gcam.usa_LA1321.Cement <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    . <- NULL   # silence package check notes
+
     # Load required inputs
     Census_ind_VoS_state <- get_data(all_data, "gcam-usa/Census_ind_VoS_state")
 

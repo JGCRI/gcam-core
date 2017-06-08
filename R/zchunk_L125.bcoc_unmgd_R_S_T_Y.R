@@ -36,10 +36,14 @@ module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    year <- value <- GCAM_region_ID <- Land_Type <- GLU <- ForestFire <- Deforest <- PctForestFire <-
+      Non.CO2 <- iso <- lcf <- sav <- em_factor <- `2000` <- `2005` <- D_driver <- ForestFireEmiss <-
+      FF_driver <- DeforestEmiss <- technology <- NULL  # silence package check notes
+
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     L124.LC_bm2_R_Grass_Yh_GLU_adj <- get_data(all_data, "temp-data-inject/L124.LC_bm2_R_Grass_Yh_GLU_adj") %>%
-    # The following two lines of code will be removed later, when we're using 'real' data
+      # The following two lines of code will be removed later, when we're using 'real' data
       gather(year, value, -GCAM_region_ID, -Land_Type, -GLU) %>%   # reshape
       mutate(year = as.integer(substr(year, 2, 5)))  # change Xyear to year
     L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj <- get_data(all_data, "temp-data-inject/L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj") %>%
@@ -63,14 +67,16 @@ module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {
 
     # Define function to map from EDGAR to GCAM, and select year 2000,
     # rename the value column by forest fire type, and add a Non.CO2 emission species
-    edgar_to_gcam <- function(x, fire_type, em_name){ x %>%
-      mutate(iso = tolower(Country), Country = NULL) %>%
+    edgar_to_gcam <- function(x, fire_type, em_name) {
+      Country <- GCAM_region_ID <- `2000` <- NULL # silence package check notes
+      x %>%
+        mutate(iso = tolower(Country), Country = NULL) %>%
         change_iso_code('rou', 'rom') %>% # Convert Romania iso code to pre-2002 value
         left_join(iso_GCAM_regID, by = "iso") %>% # There are a set of iso codes in the GFED data that don't exist in the GCAM region mapping. Remove.
         filter(!is.na(GCAM_region_ID)) %>%
         group_by(GCAM_region_ID) %>%
         summarize_at(vars(`2000`), sum) %>% # sum over emission in year 2000 over GCAM_region_ID - result, a column named '2000'
-        mutate_(.dots = setNames(list(~`2000`), fire_type)) %>% # create a new column identical to the '2000' column named after fire_type (the string that argument holds, such as "ForestFire", rather than the string "fire_type")
+        mutate_(.dots = stats::setNames(list(~`2000`), fire_type)) %>% # create a new column identical to the '2000' column named after fire_type (the string that argument holds, such as "ForestFire", rather than the string "fire_type")
         select(-`2000`) %>%
         mutate(Non.CO2 = em_name)
     }
@@ -129,14 +135,14 @@ module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {
     #     calculating a deforestation coefficient (rate of deforestion over time - estimated between 2000 and 2005)
 
     # aggregate grassland area by region/land type - FF_driver
-     L125.bcoc_tgbkm2_R_forestfire_2000 <- L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj %>%
+    L125.bcoc_tgbkm2_R_forestfire_2000 <- L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj %>%
       filter(year == 2000) %>% # use only year 2000 to estimate emission factor
       select(-year) %>%
       group_by(GCAM_region_ID, Land_Type) %>%
       summarise(FF_driver = sum(value))
 
     # Calculate deforestation coefficient - D-driver
-     L125.bcoc_tgbkm2_R_GLU_defor_2000 <- L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj %>%
+    L125.bcoc_tgbkm2_R_GLU_defor_2000 <- L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj %>%
       filter(year %in% emissions.DEFOREST_COEF_YEARS) %>%      # select only deforestation coefficient years (used to estiamte rate of change - D-driver)
       group_by(GCAM_region_ID, Land_Type, GLU) %>%
       spread(year, value) %>%
@@ -150,8 +156,8 @@ module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {
     # calculate deforestation and forest fire emission factors
     # from deforestation and FF drivers (calculated above) and BC and OC emissions
     L125.bcoc_tgbkm2_R_forest_2000_calculations <- left_join_error_no_match(L125.bcoc_tgbkm2_R_forestfire_2000,
-                                                               L125.bcoc_tgbkm2_R_defor_2000,
-                                                               by = c("GCAM_region_ID", "Land_Type")) %>% # combine FF and Deforestation drivers
+                                                                            L125.bcoc_tgbkm2_R_defor_2000,
+                                                                            by = c("GCAM_region_ID", "Land_Type")) %>% # combine FF and Deforestation drivers
       repeat_add_columns(tibble::tibble(Non.CO2 = unique(L125.RCP$Non.CO2))) %>% # repeat for both BC and OC
       left_join_error_no_match(L125.RCP %>% select(-sav), by = c("GCAM_region_ID", "Non.CO2")) %>% # add emissions to land regions
       left_join(L125.GFED_ALL %>% select(-Deforest, -ForestFire), by = c("GCAM_region_ID", "Non.CO2")) %>%
@@ -160,7 +166,7 @@ module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {
              ForestFire = ForestFireEmiss / FF_driver,  # calc forest EF
              Deforest = DeforestEmiss / D_driver) # calc deforestation EF
 
-  # format calculated EFs for output
+    # format calculated EFs for output
     L125.bcoc_tgbkm2_R_forest_2000 <- L125.bcoc_tgbkm2_R_forest_2000_calculations %>%
       select(GCAM_region_ID, Land_Type, Non.CO2, ForestFire, Deforest) %>%
       gather(technology, em_factor, -GCAM_region_ID, -Land_Type, -Non.CO2) %>%
@@ -169,7 +175,7 @@ module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {
       mutate(em_factor = replace(em_factor, is.nan(em_factor), 0)) %>%
       arrange(Non.CO2, Land_Type, GCAM_region_ID)
 
-  # Calculating average default deforestation emissions factors (to be used in future periods)
+    # Calculating average default deforestation emissions factors (to be used in future periods)
     L125.deforest_coefs_bcoc <- L125.bcoc_tgbkm2_R_forest_2000_calculations %>%
       group_by(Non.CO2) %>%
       summarize_at(vars(D_driver, DeforestEmiss), sum) %>%
@@ -208,18 +214,18 @@ module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {
 
     L125.deforest_coefs_bcoc <- L125.deforest_coefs_bcoc %>%
       add_title("Default deforestation coefficients by BC and OC") %>%
-        add_units("kg/m2/yr") %>%
-        add_comments("EFs calculated from rate of change of RCP emissions (divided into forest fire and deforestation by GFED data) and GCAM land area") %>%
-        add_legacy_name("L125.deforest_coefs_bcoc") %>%
-        add_precursors("common/iso_GCAM_regID",
-                       "temp-data-inject/L124.LC_bm2_R_Grass_Yh_GLU_adj",
-                       "temp-data-inject/L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj",
-                       "emissions/RCP_BC_2000",
-                       "emissions/RCP_OC_2000",
-                       "emissions/GFED_ForestFire_BC",
-                       "emissions/GFED_Deforest_BC",
-                       "emissions/GFED_ForestFire_OC",
-                       "emissions/GFED_Deforest_OC")
+      add_units("kg/m2/yr") %>%
+      add_comments("EFs calculated from rate of change of RCP emissions (divided into forest fire and deforestation by GFED data) and GCAM land area") %>%
+      add_legacy_name("L125.deforest_coefs_bcoc") %>%
+      add_precursors("common/iso_GCAM_regID",
+                     "temp-data-inject/L124.LC_bm2_R_Grass_Yh_GLU_adj",
+                     "temp-data-inject/L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj",
+                     "emissions/RCP_BC_2000",
+                     "emissions/RCP_OC_2000",
+                     "emissions/GFED_ForestFire_BC",
+                     "emissions/GFED_Deforest_BC",
+                     "emissions/GFED_ForestFire_OC",
+                     "emissions/GFED_Deforest_OC")
 
     return_data(L125.bcoc_tgbkm2_R_grass_2000, L125.bcoc_tgbkm2_R_forest_2000, L125.deforest_coefs_bcoc)
   } else {

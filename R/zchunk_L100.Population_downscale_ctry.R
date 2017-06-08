@@ -27,7 +27,7 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
 
     ## silence package check.
     Country <- value <- Maddison_ctry <- year <- pop <- Downscale_from <- ratio <-
-        year.x <- iso <- pop_scale <- pop.x <- pop.y <- pop_allocate <- X1900 <-
+        year.x <- iso <- pop_scale <- pop2 <- pop.x <- pop.y <- pop_allocate <- X1900 <-
         X1950 <- X1850 <- X1800 <- X1750 <- X1700 <- pop_ratio <- scg <-
         idn <- mne <- Scenario <- Region <- Sex <- Year <- Value <- MODEL <-
         VARIABLE <- REGION <- SCENARIO <- UNIT <- scenario <- ratio_iso_ssp <- NULL
