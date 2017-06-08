@@ -17,7 +17,6 @@
 module_aglu_LA105.an_FAO_R_C_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "common/GCAM_region_names",
              FILE = "aglu/FAO/FAO_an_items_cal_SUA",
              "L100.FAO_an_Food_t",
              "L100.FAO_an_Prod_t"))
@@ -33,7 +32,6 @@ module_aglu_LA105.an_FAO_R_C_Y <- function(command, ...) {
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     FAO_an_items_cal_SUA <- get_data(all_data, "aglu/FAO/FAO_an_items_cal_SUA")
     L100.FAO_an_Food_t <- get_data(all_data, "L100.FAO_an_Food_t")
     L100.FAO_an_Prod_t <- get_data(all_data, "L100.FAO_an_Prod_t")

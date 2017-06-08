@@ -14,7 +14,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author JDH April 2017
-
 module_energy_LA124.heat <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "energy/A_regions",
@@ -197,32 +196,35 @@ module_energy_LA124.heat <- function(command, ...) {
       add_comments("Input heat is extracted from energy balance, aggregated based on aggregate fuel types") %>%
       add_comments("To avoid processing failure, 0 years have base year (2010) * 1e-3 added") %>%
       add_legacy_name("L124.in_EJ_R_heat_F_Yh") %>%
-      add_precursors("temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/enduse_fuel_aggregation") %>%
+      add_precursors("energy/A_regions", "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/enduse_fuel_aggregation") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L124.in_EJ_R_heat_F_Yh
+
     L124.out_EJ_R_heat_F_Yh %>%
       add_title("Output of district heat sector by GCAM region / fuel / historical year") %>%
       add_units("EJ") %>%
       add_comments("Output heat calculated based on input divided by a technology coefficient") %>%
       add_comments("To avoid processing failure, 0 years have base year (2010) * 1e-3 added") %>%
       add_legacy_name("L124.out_EJ_R_heat_F_Yh") %>%
-      add_precursors("energy/A24.globaltech_coef", "energy/calibrated_techs") %>%
+      add_precursors("energy/A_regions", "energy/A24.globaltech_coef", "energy/calibrated_techs") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L124.out_EJ_R_heat_F_Yh
+
     L124.out_EJ_R_heatfromelec_F_Yh %>%
       add_title("Heat output from electricity generation by GCAM region / fuel / historical year") %>%
       add_units("EJ") %>%
       add_comments("Data on heat from CHP is read in, aggregated") %>%
       add_legacy_name("L124.out_EJ_R_heatfromelec_F_Yh") %>%
-      add_precursors("temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/enduse_fuel_aggregation") %>%
+      add_precursors("energy/A_regions", "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/enduse_fuel_aggregation") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L124.out_EJ_R_heatfromelec_F_Yh
+
     L124.heatoutratio_R_elec_F_tech_Yh %>%
       add_title("Heat output ratio from electricity generation by GCAM region / fuel / historical year") %>%
       add_units("GJ heat / GJ elec") %>%
       add_comments("Data on CHP electricity generation read in, heat from elec divided by electricity gives ratio") %>%
       add_legacy_name("L124.heatoutratio_R_elec_F_tech_Yh") %>%
-      add_precursors("L1231.out_EJ_R_elec_F_tech_Yh", "energy/calibrated_techs") %>%
+      add_precursors("energy/A_regions", "L1231.out_EJ_R_elec_F_tech_Yh", "energy/calibrated_techs") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L124.heatoutratio_R_elec_F_tech_Yh
 
