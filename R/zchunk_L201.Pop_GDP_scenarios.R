@@ -45,29 +45,55 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
     L101.Pop_thous_R_Yh <- get_data(all_data, "L101.Pop_thous_R_Yh")
     L101.Pop_thous_Scen_R_Yfut <- get_data(all_data, "L101.Pop_thous_Scen_R_Yfut")
     L102.gdp_mil90usd_GCAM3_R_Y <- get_data(all_data, "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y")
-    L102.gdp_mil90usd_Scen_R_Y <- get_data(all_data, "L102.gdp_mil90usd_Scen_R_Y")
-    L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y")
+    L102.gdp_mil90usd_Scen_R_Y <- get_data(all_data, "L102.gdp_mil90usd_Scen_R_Y") %>%
+      mutate(year = as.integer(year)) %>%
+      ungroup()
+    L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y") %>%
+      ungroup
     L102.PPP_MER_R <- get_data(all_data, "L102.PPP_MER_R")
 
     # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are `merge` calls in this code. Be careful!
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
+    # Set default interest rate for all regions
+    L201.InterestRate <- GCAM_region_names %>%
+      select(region) %>%
+      mutate(interest.rate = socioeconomics.DEFAULT_INTEREST_RATE)
+
+    # Stitch together history and future population
+    # First, repeat hisotry for all scenarios
+    L101.Pop_thous_Scen_R_Y <- L101.Pop_thous_R_Yh %>%
+      repeat_add_columns(tibble(scenario = unique(L101.Pop_thous_Scen_R_Yfut$scenario))) %>%
+      bind_rows(L101.Pop_thous_Scen_R_Yfut) %>% # add future
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS)) # delete unused years
+
+    # L201.BaseGDP_Scen: Base GDP for all Scen scenarios
+    # Get base GDP in start year
+    L201.BaseGDP_Scen <- L102.gdp_mil90usd_Scen_R_Y %>%
+      filter(scenario == BASE_GDP_SCENARIO) %>% # use the standard scenario
+      filter(year == min(BASE_YEARS)) %>% # find the first year
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      mutate(value = round(value, socioeconomics.GDP_DIGITS)) %>%
+      select(region, value)
+
+    # L201.LaborForceFillout: Labor force participation and productivity for all scenarios
+    # NOTE: No model of labor force used; labor force participation set to a constant
+    # Simply fill out default rate
+    L201.LaborForceFillout <- GCAM_region_names %>%
+      select(region) %>%
+      mutate(laborforce = socioeconomics.DEFAULT_LABORFORCE,
+             year.fillout = min(BASE_YEARS))
+
+    # Labor productivity growth is calculated from the change in per-capita GDP ratio in each time period
+    L201.pcgdpGrowth_Scen_R_Y <- L102.pcgdp_thous90USD_Scen_R_Y %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      filter(year %in% MODEL_YEARS) %>%
+      group_by(scenario, GCAM_region_ID) %>%
+      mutate(timesteps = year - lag(year, n = 1L, order_by = c(GCAM_region_ID))) %>% # calculate time step
+      mutate(lag_pcgdp = lag(value, n = 1L, order_by = c(GCAM_region_ID))) %>% # last period pcgdp
+      mutate(ratio_pcgdp = value / lag_pcgdp) %>% # this year, last year ratio
+      filter(year != min(BASE_YEARS)) %>% # drop first period with NA ratio
+      mutate(rate_pcgdp = round(ratio_pcgdp ^ (1 / timesteps) - 1, socioeconomics.LABOR_PRODUCTIVITY_DIGITS)) %>% # Annualize the ratios to return annual growth rates
+      select(-value, -lag_pcgdp, - ratio_pcgdp)
     # ===================================================
 
     # Produce outputs

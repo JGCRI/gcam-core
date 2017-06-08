@@ -168,6 +168,11 @@ socioeconomics.BASE_POP_SCEN <- "SSP2" # These are both being used in the data s
 BASE_POP_SCENARIO <- "SSP2" # These are both being used in the data system by different files.
 BASE_GDP_SCENARIO <- "SSP2"
 
+socioeconomics.DEFAULT_INTEREST_RATE <- 0.05
+socioeconomics.GDP_DIGITS <- 0
+socioeconomics.DEFAULT_LABORFORCE <- 0.5
+socioeconomics.LABOR_PRODUCTIVITY_DIGITS <- 5
+
 # ======================================================================
 # water constants
 
