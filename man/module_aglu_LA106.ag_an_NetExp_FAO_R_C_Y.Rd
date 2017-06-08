@@ -18,11 +18,12 @@ the generated outputs: \code{L106.ag_NetExp_Mt_R_C_Y}, \code{L106.an_NetExp_Mt_R
 original data system was \code{LA106.ag_an_NetExp_FAO_R_C_Y.R} (aglu level1).
 }
 \description{
-Briefly describe what this chunk does.
+Calculate the net exports of primary agricultural goods and animal products by GCAM region / commodity / year.
 }
 \details{
-Describe in detail what this chunk does.
+This chunk calculate the net exports of primary agricultural goods and animal products by GCAM region / commodity / year.
+Regional gross exports are adjusted so that global net exports are zero of each commodity / year.
 }
 \author{
-YourInitials CurrentMonthName 2017
+RC June 2017
 }
