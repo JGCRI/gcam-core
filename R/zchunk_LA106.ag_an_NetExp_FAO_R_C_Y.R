@@ -39,7 +39,7 @@ module_aglu_LA106.ag_an_NetExp_FAO_R_C_Y <- function(command, ...) {
     L100.FAO_an_Exp_t <- get_data(all_data, "L100.FAO_an_Exp_t")
     L100.FAO_an_Imp_t <- get_data(all_data, "L100.FAO_an_Imp_t")
 
-    # Combine FAO-GCAM mapping files of primarey agriculture goods and animal products
+    # Combine FAO-GCAM mapping files of primary agriculture goods and animal products
     FAO_ag_items_cal_SUA %>%
       select(item, GCAM_commodity) %>%
       bind_rows(select(FAO_an_items_cal_SUA, item, GCAM_commodity)) ->
