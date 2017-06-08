@@ -77,7 +77,7 @@ module_gcam.usa_LA154.Transport <- function(command, ...) {
       # We will first filter for only relevant EIA-fuel and -sector pairs
       L101.EIA_use_all_Bbtu %>%
         filter(year %in% HISTORICAL_YEARS) %>% # Ensure within historical period
-        mutate(fuel_sector = paste(EIA_fuel, EIA_sector)) %>% # Create concatenate list in base dataframe to match the syntax of our list above
+        mutate(fuel_sector = paste(EIA_fuel, EIA_sector)) %>% # Create concatenated list in base dataframe to match the syntax of our list above
         filter(fuel_sector %in% list_fuel_sector) %>% # Filtering for just EIA-fuel/sector pairs
         select(state, EIA_fuel, EIA_sector, sector, fuel, year, value_state = value) ->
         EIA_transportation_state
@@ -172,10 +172,9 @@ module_gcam.usa_LA154.Transport <- function(command, ...) {
           select(-state, -mode) ->
           state_share_data
 
-        # This is the underlying code of the function, apportion_to_states
-        data_final <- state_share_data[  ] *
-          nation_data[ rep( 1:nrow( nation_data ), length.out = nrow( state_share_data ) ),  ]
-
+        # This is the underlying code of the old data system function, apportion_to_states
+        data_final <- state_share_data *
+          nation_data[rep(seq_len(nrow(nation_data)), length.out = nrow(state_share_data)), ]
         data_final <- as_tibble(data_final) # Need to convert the dataframe back to a tibble
 
         data_final %>%
@@ -219,6 +218,7 @@ module_gcam.usa_LA154.Transport <- function(command, ...) {
       add_precursors("temp-data-inject/L154.in_EJ_R_trn_m_sz_tech_F_Yh", "gcam-usa/trnUCD_EIA_mapping", "L101.EIA_use_all_Bbtu") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L154.in_EJ_state_trn_m_sz_tech_F
+
     L154.out_mpkm_state_trn_nonmotor_Yh %>%
       add_title("Transportation non-motorized travel by mode and state") %>%
       add_units("million person-km") %>%
@@ -227,6 +227,7 @@ module_gcam.usa_LA154.Transport <- function(command, ...) {
       add_precursors("temp-data-inject/L154.out_mpkm_R_trn_nonmotor_Yh", "L100.Pop_thous_state") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L154.out_mpkm_state_trn_nonmotor_Yh
+
     L154.in_EJ_state_trn_F %>%
       add_title("Transportation energy consumption by state and fuel") %>%
       add_units("EJ") %>%
@@ -235,8 +236,6 @@ module_gcam.usa_LA154.Transport <- function(command, ...) {
       add_precursors("temp-data-inject/L154.in_EJ_R_trn_m_sz_tech_F_Yh", "gcam-usa/trnUCD_EIA_mapping", "L101.EIA_use_all_Bbtu") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L154.in_EJ_state_trn_F
-
-
 
     return_data(L154.in_EJ_state_trn_m_sz_tech_F, L154.out_mpkm_state_trn_nonmotor_Yh, L154.in_EJ_state_trn_F)
   } else {
