@@ -24,11 +24,11 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
              # This file is currently using a constant to select the correct SSP database
              # All SSP databases will be included in the input files
              # needs source, better description
-             FILE = paste0("energy/UCD_trn_data_",energy.TRN_SSP),
+             "UCD_trn_data",
              FILE = "temp-data-inject/L101.in_EJ_ctry_trn_Fi_Yh",
              FILE = "temp-data-inject/L1011.in_EJ_ctry_intlship_TOT_Yh",
-             FILE = "L131.in_EJ_R_Senduse_F_Yh",
-             FILE = "L100.Pop_thous_ctry_Yh"))
+             "L131.in_EJ_R_Senduse_F_Yh",
+             "L100.Pop_thous_ctry_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L154.in_EJ_R_trn_m_sz_tech_F_Yh",
              "L154.in_EJ_ctry_trn_m_sz_tech_F",
@@ -47,10 +47,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
     enduse_fuel_aggregation <- get_data(all_data, "energy/enduse_fuel_aggregation")
     UCD_ctry <- get_data(all_data, "energy/mappings/UCD_ctry")
     UCD_techs <- get_data(all_data, "energy/mappings/UCD_techs")
-    UCD_trn_data <- get_data(all_data,  paste0("energy/UCD_trn_data_",energy.TRN_SSP)) %>%
-      # Might want to gather in a different way
-      gather(year, value, `2005`:`2095`) %>%
-      mutate(year = as.integer(year))
+    UCD_trn_data <- get_data(all_data, "UCD_trn_data")
     L101.in_EJ_ctry_trn_Fi_Yh <- get_data(all_data, "temp-data-inject/L101.in_EJ_ctry_trn_Fi_Yh") %>%
       # temp-data-inject code
       gather(year, value, starts_with("X")) %>%
@@ -218,13 +215,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
        arrange(UCD_region, UCD_sector, mode, size.class, UCD_technology, UCD_fuel, variable, unit, year) %>%
        mutate(value = if_else(is.na(value), approx_fun(year, value, rule = 2), value))
 
-     #Split into different tables, one per variable
-     # L154.UCD_trn_intensity_Y <- subset( L154.UCD_trn_data_Y.melt, variable == "intensity" )
-     # L154.UCD_trn_load_Y <- subset( L154.UCD_trn_data_Y.melt, variable == "load factor" )
-     # L154.UCD_trn_speed_Y <- subset( L154.UCD_trn_data_Y.melt, variable == "speed" )
-     # L154.UCD_trn_nonfuel_Y <- subset( L154.UCD_trn_data_Y.melt, variable == "non-fuel costs" )
-
-     #Aggregate the country-level energy consumption by sector and mode. First need to add in the future years for matching purposes
+     # Aggregate the country-level energy consumption by sector and mode. First need to add in the future years for matching purposes
      L154.in_EJ_ctry_trn_m_sz_tech_F_future_years <- L154.in_EJ_ctry_trn_m_sz_tech_F %>%
        select(-year, -value) %>%
        distinct() %>%
@@ -232,6 +223,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
 
      L154.in_EJ_ctry_trn_m_sz_tech_F_Y <- L154.in_EJ_ctry_trn_m_sz_tech_F %>%
        bind_rows(L154.in_EJ_ctry_trn_m_sz_tech_F_future_years) %>%
+       group_by(iso, UCD_sector, mode, size.class, UCD_technology, UCD_fuel, UCD_category, fuel) %>%
        mutate(value = if_else(is.na(value), approx_fun(year, value, rule = 2), value))
      L154.in_EJ_ctry_trn_m_Y <- L154.in_EJ_ctry_trn_m_sz_tech_F_Y %>%
        group_by(iso, UCD_sector, mode, year) %>%
@@ -250,7 +242,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
        select(-value) %>%
        left_join_error_no_match(L154.in_EJ_ctry_trn_m_Y, by = c("iso", "UCD_sector", "mode", "year")) %>%
        # Using a floor on the weighting factor to avoid having zero weights for any countries
-       mutate(weight_EJ = max(value, energy.MIN_WEIGHT_EJ)) %>%
+       mutate(weight_EJ = pmax(value, energy.MIN_WEIGHT_EJ)) %>%
        # Next, match in the derived variables, specific to each individual country/sector/mode/size.class/tech/fuel, except speed
        # There will be NA non-fuel costs which can be set to zero
        left_join(L154.UCD_trn_data_variable_spread %>% select(-speed),
@@ -335,7 +327,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L154.in_EJ_R_trn_m_sz_tech_F_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "energy/mappings/calibrated_techs_trn_agg", "energy/enduse_fuel_aggregation",
-                     "energy/mappings/UCD_ctry","energy/mappings/UCD_techs",paste0("energy/UCD_trn_data_",energy.TRN_SSP),
+                     "energy/mappings/UCD_ctry","energy/mappings/UCD_techs","UCD_trn_data",
                      "temp-data-inject/L101.in_EJ_ctry_trn_Fi_Yh","temp-data-inject/L1011.in_EJ_ctry_intlship_TOT_Yh",
                      "L131.in_EJ_R_Senduse_F_Yh", "L100.Pop_thous_ctry_Yh") %>%
       # typical flags, but there are others--see `constants.R`
@@ -348,7 +340,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L154.in_EJ_ctry_trn_m_sz_tech_F") %>%
       add_precursors("common/iso_GCAM_regID", "energy/mappings/calibrated_techs_trn_agg", "energy/enduse_fuel_aggregation",
-                     "energy/mappings/UCD_ctry","energy/mappings/UCD_techs",paste0("energy/UCD_trn_data_",energy.TRN_SSP),
+                     "energy/mappings/UCD_ctry","energy/mappings/UCD_techs","UCD_trn_data",
                      "temp-data-inject/L101.in_EJ_ctry_trn_Fi_Yh","temp-data-inject/L1011.in_EJ_ctry_intlship_TOT_Yh",
                      "L131.in_EJ_R_Senduse_F_Yh", "L100.Pop_thous_ctry_Yh") %>%
       # typical flags, but there are others--see `constants.R`
@@ -361,11 +353,11 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y") %>%
       add_precursors("common/iso_GCAM_regID", "energy/mappings/calibrated_techs_trn_agg", "energy/enduse_fuel_aggregation",
-                     "energy/mappings/UCD_ctry","energy/mappings/UCD_techs",paste0("energy/UCD_trn_data_",energy.TRN_SSP),
+                     "energy/mappings/UCD_ctry","energy/mappings/UCD_techs","UCD_trn_data",
                      "temp-data-inject/L101.in_EJ_ctry_trn_Fi_Yh","temp-data-inject/L1011.in_EJ_ctry_intlship_TOT_Yh",
                      "L131.in_EJ_R_Senduse_F_Yh", "L100.Pop_thous_ctry_Yh") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      # Using FLAG_SUM_TEST because all differences are due to rounding - less than 1e-11 different
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y
     out_var_df[["loadfactor"]] %>%
       add_title("descriptive title of data") %>%
@@ -374,11 +366,11 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L154.loadfactor_R_trn_m_sz_tech_F_Y") %>%
       add_precursors("common/iso_GCAM_regID", "energy/mappings/calibrated_techs_trn_agg", "energy/enduse_fuel_aggregation",
-                     "energy/mappings/UCD_ctry","energy/mappings/UCD_techs",paste0("energy/UCD_trn_data_",energy.TRN_SSP),
+                     "energy/mappings/UCD_ctry","energy/mappings/UCD_techs","UCD_trn_data",
                      "temp-data-inject/L101.in_EJ_ctry_trn_Fi_Yh","temp-data-inject/L1011.in_EJ_ctry_intlship_TOT_Yh",
                      "L131.in_EJ_R_Senduse_F_Yh", "L100.Pop_thous_ctry_Yh") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L154.loadfactor_R_trn_m_sz_tech_F_Y
     out_var_df[["cost_usdvkm"]] %>%
       add_title("descriptive title of data") %>%
@@ -387,11 +379,11 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L154.cost_usdvkm_R_trn_m_sz_tech_F_Y") %>%
       add_precursors("common/iso_GCAM_regID", "energy/mappings/calibrated_techs_trn_agg", "energy/enduse_fuel_aggregation",
-                     "energy/mappings/UCD_ctry","energy/mappings/UCD_techs",paste0("energy/UCD_trn_data_",energy.TRN_SSP),
+                     "energy/mappings/UCD_ctry","energy/mappings/UCD_techs","UCD_trn_data",
                      "temp-data-inject/L101.in_EJ_ctry_trn_Fi_Yh","temp-data-inject/L1011.in_EJ_ctry_intlship_TOT_Yh",
                      "L131.in_EJ_R_Senduse_F_Yh", "L100.Pop_thous_ctry_Yh") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L154.cost_usdvkm_R_trn_m_sz_tech_F_Y
     out_var_df[["speed_kmhr"]] %>%
       add_title("descriptive title of data") %>%
@@ -400,7 +392,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L154.speed_kmhr_R_trn_m_sz_tech_F_Y") %>%
       add_precursors("common/iso_GCAM_regID", "energy/mappings/calibrated_techs_trn_agg", "energy/enduse_fuel_aggregation",
-                     "energy/mappings/UCD_ctry","energy/mappings/UCD_techs",paste0("energy/UCD_trn_data_",energy.TRN_SSP),
+                     "energy/mappings/UCD_ctry","energy/mappings/UCD_techs","UCD_trn_data",
                      "temp-data-inject/L101.in_EJ_ctry_trn_Fi_Yh","temp-data-inject/L1011.in_EJ_ctry_intlship_TOT_Yh",
                      "L131.in_EJ_R_Senduse_F_Yh", "L100.Pop_thous_ctry_Yh") %>%
       # typical flags, but there are others--see `constants.R`
@@ -413,7 +405,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L154.out_mpkm_R_trn_nonmotor_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "energy/mappings/calibrated_techs_trn_agg", "energy/enduse_fuel_aggregation",
-                     "energy/mappings/UCD_ctry","energy/mappings/UCD_techs",paste0("energy/UCD_trn_data_",energy.TRN_SSP),
+                     "energy/mappings/UCD_ctry","energy/mappings/UCD_techs","UCD_trn_data",
                      "temp-data-inject/L101.in_EJ_ctry_trn_Fi_Yh","temp-data-inject/L1011.in_EJ_ctry_intlship_TOT_Yh",
                      "L131.in_EJ_R_Senduse_F_Yh", "L100.Pop_thous_ctry_Yh") %>%
       #typical flags, but there are others--see `constants.R`
