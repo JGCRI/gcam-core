@@ -39,30 +39,15 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
     L205.AgCost_ag <- get_data(all_data, "temp-data-inject/L205.AgCost_ag")
     L205.AgCost_bio <- get_data(all_data, "temp-data-inject/L205.AgCost_bio")
 
-    # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: This code uses repeat_and_add_vector
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # ===================================================
+    # TEMPORARY: tidying until chunk LB142 complete
+    L142.ag_Fert_IO_R_C_Y_GLU %>%
+      gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%
+      mutate(year = as.integer(substr(year, 2, 5))) ->
+      L142.ag_Fert_IO_R_C_Y_GLU
+
+
 
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
