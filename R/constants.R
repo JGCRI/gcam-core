@@ -106,6 +106,7 @@ CONV_TST_TG <- 0.000907 # thousand short tons to Tg
 CONV_KG_TO_TG <- 1e-9
 CONV_KT_MT <- 0.001 # kt to Mt
 CONV_T_MT <- 1e-6 # t to Mt
+CONV_NH3_N <- 14 / 17 # mass of nitrogen in ammonia
 
 # Time
 CONV_YEAR_HOURS <- 24 * 365.25
