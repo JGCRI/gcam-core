@@ -89,10 +89,7 @@ module_aglu_LB125.LC_tot <- function(command, ...) {
 
     # Stop if the changing rate out of the tolerance boundaries
     if (max(abs(LC_check - 1)) > LAND_TOLERANCE)
-    {
-      print(max(abs(LC_check - 1)))
-      stop("ERROR: Interannual fluctuation in global land cover exceeds tolerance threshold")
-      }
+    {stop("ERROR: Interannual fluctuation in global land cover exceeds tolerance threshold")}
 
     #Write out the totals, by region and by region x GLU
     L125.LC_bm2_R_Yh_GLU %>%
