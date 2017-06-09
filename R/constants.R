@@ -170,6 +170,7 @@ BASE_GDP_SCENARIO <- "SSP2"
 
 socioeconomics.DEFAULT_INTEREST_RATE <- 0.05
 socioeconomics.GDP_DIGITS <- 0
+socioeconomics.POP_DIGITS <- 0
 socioeconomics.DEFAULT_LABORFORCE <- 0.5
 socioeconomics.LABOR_PRODUCTIVITY_DIGITS <- 5
 

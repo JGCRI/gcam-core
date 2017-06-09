@@ -14,14 +14,15 @@ module_socioeconomics_L201.Pop_GDP_scenarios(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L201.InterestRate}, \code{L201.Pop_GCAM3}, \code{L201.BaseGDP_GCAM3}, \code{L201.LaborForceFillout}, \code{L201.LaborProductivity_GCAM3}, \code{L201.PPPConvert}, \code{object}, \code{L201.BaseGDP_Scen}, \code{L201.LaborForceFillout}, \code{object2}, \code{L201.PPPConvert}. The corresponding file in the
+the generated outputs: \code{L201.InterestRate}, \code{L201.LaborForceFillout}, \code{L201.PPPConvert}, \code{L201.BaseGDP_Scen}, \code{L201.Pop_gSSP1}, \code{L201.Pop_gSSP2}, \code{L201.Pop_gSSP3}, \code{L201.Pop_gSSP4}, \code{L201.Pop_gSSP5}, \code{L201.Pop_SSP1}, \code{L201.Pop_SSP2}, \code{L201.Pop_SSP3}, \code{L201.Pop_SSP4}, \code{L201.Pop_SSP5}, \code{L201.LaborProductivity_gSSP1}, \code{L201.LaborProductivity_gSSP2}, \code{L201.LaborProductivity_gSSP3}, \code{L201.LaborProductivity_gSSP4}, \code{L201.LaborProductivity_gSSP5}, \code{L201.LaborProductivity_SSP1}, \code{L201.LaborProductivity_SSP2}, \code{L201.LaborProductivity_SSP3}, \code{L201.LaborProductivity_SSP4}, and \code{L201.LaborProductivity_SSP5}. The corresponding file in the
 original data system was \code{L201.Pop_GDP_scenarios.R} (socioeconomics level2).
 }
 \description{
-Briefly describe what this chunk does.
+Labor productivity and population by scenario and region.
 }
 \details{
-Describe in detail what this chunk does.
+Produces default interest rate by region, historical and future population by region and SSP scenario,
+and uses per-capita GDP to calculate labor productivity by region and scenario.
 }
 \author{
 HM&RH June 2017
