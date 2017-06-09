@@ -27,7 +27,7 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
 
     ## silence package check.
     Country <- value <- Maddison_ctry <- year <- pop <- Downscale_from <- ratio <-
-        year.x <- iso <- pop_scale <- pop.x <- pop.y <- pop_allocate <- X1900 <-
+        year.x <- iso <- pop_scale <- pop2 <- pop.x <- pop.y <- pop_allocate <- X1900 <-
         X1950 <- X1850 <- X1800 <- X1750 <- X1700 <- pop_ratio <- scg <-
         idn <- mne <- Scenario <- Region <- Sex <- Year <- Value <- MODEL <-
         VARIABLE <- REGION <- SCENARIO <- UNIT <- scenario <- ratio_iso_ssp <- NULL
@@ -183,7 +183,7 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
       gather(year, pop, -iso, -scenario) %>%  # Long format
       mutate(year = as.integer(year),
              pop = as.numeric(pop)) %>%  # Clean year variable
-      filter(year %in% c(socioeconomics.FINAL_HIST_YEAR, modeltime.FUTURE_YEARS)) %>% # Retain only years needed for GCAM
+      filter(year %in% c(socioeconomics.FINAL_HIST_YEAR, FUTURE_YEARS)) %>% # Retain only years needed for GCAM
       group_by(scenario, iso) %>%
       mutate(ratio_iso_ssp = pop / pop[year == socioeconomics.FINAL_HIST_YEAR]) %>%  # Calculate population ratios to final historical year (2010), no units
       select(-pop) %>%

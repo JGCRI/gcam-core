@@ -31,6 +31,7 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 
   # Check that the chunk has provided required data for all objects
   empty_precursors <- TRUE
+  pc_all <- c()
   for(obj in names(chunk_data)) {
     obj_flags <- get_flags(chunk_data[[obj]])
     # Chunks have to returns tibbles, unless they're tagged as being XML
@@ -49,6 +50,7 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
     }
     # Data precursors should all appear in input list
     pc <- attr(chunk_data[[obj]], ATTR_PRECURSORS)
+    pc_all <- c(pc_all, pc)
     empty_precursors <- empty_precursors & is.null(pc)
     matches <- pc %in% c(chunk_inputs, promised_outputs)
     if(!all(matches)) {
@@ -57,6 +59,11 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
     if(obj %in% pc) {
       stop("Precursors for '", obj, "' include itself - chunk ", chunk)
     }
+  }
+
+  # Every input should be a precursor for something
+  if(!all(chunk_inputs %in% pc_all)) {
+    message("Inputs ", setdiff(chunk_inputs, pc_all), " don't appear as precursors for any outputs - chunk ", chunk)
   }
 
   # If chunk has inputs, some output should have a precursor
