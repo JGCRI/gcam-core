@@ -178,3 +178,10 @@ emissions.EDGAR_YEARS <- 1971:2008
 emissions.EPA_MACC_YEAR <- 2030  # Must be either 2020 or 2030
 emissions.MAC_TAXES <- c( 0, 5, 10, 15, 32, 66, 129, 243, 486, 1093 ) # Range of costs in 1990 USD
 emissions.CONV_C_CO2 <- 44 / 12 # Convert Carbon to CO2
+
+#======================================================================
+# Land area aggregation constants
+
+LAND_TOLERANCE <- 0.001
+DIGITS_LAND_TOTAL <- 2
+DIGITS_LAND_USE <- 7
