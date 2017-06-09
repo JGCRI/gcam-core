@@ -1,6 +1,6 @@
 #' module_socioeconomics_L201.Pop_GDP_scenarios
 #'
-#' Briefly describe what this chunk does.
+#' Labor productivity and population by scenario and region.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,7 +8,8 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L201.InterestRate}, \code{L201.Pop_GCAM3}, \code{L201.BaseGDP_GCAM3}, \code{L201.LaborForceFillout}, \code{L201.LaborProductivity_GCAM3}, \code{L201.PPPConvert}, \code{object}, \code{L201.BaseGDP_Scen}, \code{L201.LaborForceFillout}, \code{object2}, \code{L201.PPPConvert}. The corresponding file in the
 #' original data system was \code{L201.Pop_GDP_scenarios.R} (socioeconomics level2).
-#' @details Describe in detail what this chunk does.
+#' @details Produces default interest rate by region, historical and future population by region and SSP scenario,
+#' and uses per-capita GDP to calculate labor productivity by region and scenario.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -17,34 +18,29 @@
 module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
-             "L101.Pop_thous_GCAM3_R_Y",
              "L101.Pop_thous_R_Yh",
              "L101.Pop_thous_Scen_R_Yfut",
-             FILE = "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y",
              "L102.gdp_mil90usd_Scen_R_Y",
              "L102.pcgdp_thous90USD_Scen_R_Y",
              "L102.PPP_MER_R"))
 
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L201.InterestRate",
-             "L201.Pop_GCAM3",
-             "L201.BaseGDP_GCAM3",
-             "L201.LaborForceFillout",
-             "L201.LaborProductivity_GCAM3",
-             "L201.PPPConvert",
-             "object",
              "L201.BaseGDP_Scen",
-             "object2"))
+             "L201.LaborForceFillout",
+             paste0("L201.Pop_gSSP",seq(1,5)),
+             paste0("L201.Pop_SSP",seq(1,5)),
+             paste0("L201.LaborProductivity_gSSP",seq(1,5)),
+             paste0("L201.LaborProductivity_SSP",seq(1,5)),
+             "L201.PPPConvert"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    L101.Pop_thous_GCAM3_R_Y <- get_data(all_data, "L101.Pop_thous_GCAM3_R_Y")
     L101.Pop_thous_R_Yh <- get_data(all_data, "L101.Pop_thous_R_Yh")
     L101.Pop_thous_Scen_R_Yfut <- get_data(all_data, "L101.Pop_thous_Scen_R_Yfut")
-    L102.gdp_mil90usd_GCAM3_R_Y <- get_data(all_data, "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y")
     L102.gdp_mil90usd_Scen_R_Y <- get_data(all_data, "L102.gdp_mil90usd_Scen_R_Y") %>%
       mutate(year = as.integer(year)) %>%
       ungroup()
@@ -80,8 +76,8 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
     # Simply fill out default rate
     L201.LaborForceFillout <- GCAM_region_names %>%
       select(region) %>%
-      mutate(laborforce = socioeconomics.DEFAULT_LABORFORCE,
-             year.fillout = min(BASE_YEARS))
+      mutate(year.fillout = min(BASE_YEARS),
+             laborforce = socioeconomics.DEFAULT_LABORFORCE)
 
     # Labor productivity growth is calculated from the change in per-capita GDP ratio in each time period
     L201.pcgdpGrowth_Scen_R_Y <- L102.pcgdp_thous90USD_Scen_R_Y %>%
@@ -94,123 +90,89 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
       filter(year != min(BASE_YEARS)) %>% # drop first period with NA ratio
       mutate(rate_pcgdp = round(ratio_pcgdp ^ (1 / timesteps) - 1, socioeconomics.LABOR_PRODUCTIVITY_DIGITS)) %>% # Annualize the ratios to return annual growth rates
       select(-value, -lag_pcgdp, - ratio_pcgdp)
+
+    # Write out the PPP:MER conversion factors (purely used for reporting)
+    # Define local constant: default is to keep PPP ratio constant
+    constantPPPratio <- 1
+
+    L201.PPPConvert <- L102.PPP_MER_R %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      mutate(constRatio = constantPPPratio) %>%
+      mutate(PPPConvert = round(PPP_MER, socioeconomics.LABOR_PRODUCTIVITY_DIGITS)) %>%
+      select(region, constRatio, PPPConvert)
+
+    # Split by scenario and remove scenario column from each tibble
+    L201.pcgdpGrowth_Scen_R_Y_split <- L201.pcgdpGrowth_Scen_R_Y %>%
+      ungroup() %>%
+      split(.$scenario) %>%
+      lapply(function(df) {select(df, region, year, laborproductivity = rate_pcgdp) %>%
+          add_units("Unitless (annual rate of growth)") %>%
+          add_comments("Per capita GDP growth rate is used for labor productivity growth rate, by scenario") %>%
+          add_precursors("common/GCAM_region_names",
+                         "L102.pcgdp_thous90USD_Scen_R_Y")})
+    # Assign each tibble in list
+    for (i in names(L201.pcgdpGrowth_Scen_R_Y_split)){
+      assign(paste0("L201.LaborProductivity_", i), L201.pcgdpGrowth_Scen_R_Y_split[[i]] %>%
+      add_title(paste0("Labor productivity: ", i)) %>%
+      add_legacy_name(paste0("L201.LaborProductivity_", i)))
+    }
+
+    # Repeat for population outputs
+    L101.Pop_thous_Scen_R_Y_split <- L101.Pop_thous_Scen_R_Y %>%
+      ungroup() %>%
+      split(.$scenario) %>%
+      lapply(function(df) {select(df, region, year, totalPop = value) %>%
+          add_units("Thousand persons)") %>%
+          add_comments("Population by scenario and region") %>%
+          add_precursors("common/GCAM_region_names",
+                         "L101.Pop_thous_Scen_R_Y",
+                         "L101.Pop_thous_Scen_R_Yfut")})
+    # Assign each tibble in list
+    for (i in names(L101.Pop_thous_Scen_R_Y_split)){
+      assign(paste0("L201.Pop_", i), L101.Pop_thous_Scen_R_Y_split[[i]] %>%
+               add_title(paste0("Population: ", i)) %>%
+               add_legacy_name(paste0("L201.Pop_", i)))
+    }
+
     # ===================================================
 
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L201.InterestRate %>%
+      add_title("Interest Rate by region") %>%
+      add_units("Unitless") %>%
+      add_comments("Default interest rate applied to all regions") %>%
       add_legacy_name("L201.InterestRate") %>%
-      add_precursors("common/GCAM_region_names", "L101.Pop_thous_GCAM3_R_Y", "L101.Pop_thous_R_Yh",
-                     "L101.Pop_thous_Scen_R_Yfut", "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
-                     "L102.pcgdp_thous90USD_Scen_R_Y", "L102.PPP_MER_R") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/GCAM_region_names") ->
       L201.InterestRate
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L201.Pop_GCAM3") %>%
-      add_precursors("common/GCAM_region_names", "L101.Pop_thous_GCAM3_R_Y", "L101.Pop_thous_R_Yh",
-                     "L101.Pop_thous_Scen_R_Yfut", "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
-                     "L102.pcgdp_thous90USD_Scen_R_Y", "L102.PPP_MER_R") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L201.Pop_GCAM3
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L201.BaseGDP_GCAM3") %>%
-      add_precursors("common/GCAM_region_names", "L101.Pop_thous_GCAM3_R_Y", "L101.Pop_thous_R_Yh",
-                     "L101.Pop_thous_Scen_R_Yfut", "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
-                     "L102.pcgdp_thous90USD_Scen_R_Y", "L102.PPP_MER_R") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L201.BaseGDP_GCAM3
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L201.LaborForceFillout %>%
+      add_title("Labor force participation and productivity for all scenarios") %>%
+      add_units("Unitless") %>%
+      add_comments("Constant used for all regions") %>%
       add_legacy_name("L201.LaborForceFillout") %>%
-      add_precursors("common/GCAM_region_names", "L101.Pop_thous_GCAM3_R_Y", "L101.Pop_thous_R_Yh",
-                     "L101.Pop_thous_Scen_R_Yfut", "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
-                     "L102.pcgdp_thous90USD_Scen_R_Y", "L102.PPP_MER_R") %>%      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/GCAM_region_names")  ->
       L201.LaborForceFillout
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L201.LaborProductivity_GCAM3") %>%
-      add_precursors("common/GCAM_region_names", "L101.Pop_thous_GCAM3_R_Y", "L101.Pop_thous_R_Yh",
-                     "L101.Pop_thous_Scen_R_Yfut", "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
-                     "L102.pcgdp_thous90USD_Scen_R_Y", "L102.PPP_MER_R") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L201.LaborProductivity_GCAM3
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L201.PPPConvert %>%
+      add_title("Conversion factor from MER to PPP") %>%
+      add_units("PPP/MER") %>%
+      add_comments("Uses division of PPP by MER performed in L102.PPP_MER_R") %>%
       add_legacy_name("L201.PPPConvert") %>%
-      add_precursors("common/GCAM_region_names", "L101.Pop_thous_GCAM3_R_Y", "L101.Pop_thous_R_Yh",
-                     "L101.Pop_thous_Scen_R_Yfut", "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
-                     "L102.pcgdp_thous90USD_Scen_R_Y", "L102.PPP_MER_R") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/GCAM_region_names", "L102.PPP_MER_R") ->
       L201.PPPConvert
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("object") %>%
-      add_precursors("common/GCAM_region_names", "L101.Pop_thous_GCAM3_R_Y", "L101.Pop_thous_R_Yh",
-                     "L101.Pop_thous_Scen_R_Yfut", "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
-                     "L102.pcgdp_thous90USD_Scen_R_Y", "L102.PPP_MER_R") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      object
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L201.BaseGDP_Scen %>%
+      add_title("GDP in base scenario and year") %>%
+      add_units("Million 1990USD") %>%
+      add_comments(paste("Base scenario is", BASE_GDP_SCENARIO)) %>%
+      add_comments(paste("Base year is", min(BASE_YEARS))) %>%
       add_legacy_name("L201.BaseGDP_Scen") %>%
-      add_precursors("common/GCAM_region_names", "L101.Pop_thous_GCAM3_R_Y", "L101.Pop_thous_R_Yh",
-                     "L101.Pop_thous_Scen_R_Yfut", "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
-                     "L102.pcgdp_thous90USD_Scen_R_Y", "L102.PPP_MER_R") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/GCAM_region_names",  "L102.gdp_mil90usd_Scen_R_Y") ->
       L201.BaseGDP_Scen
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("object2") %>%
-      add_precursors("common/GCAM_region_names", "L101.Pop_thous_GCAM3_R_Y", "L101.Pop_thous_R_Yh",
-                     "L101.Pop_thous_Scen_R_Yfut", "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y", "L102.gdp_mil90usd_Scen_R_Y",
-                     "L102.pcgdp_thous90USD_Scen_R_Y", "L102.PPP_MER_R") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      object2
 
 
-    return_data(L201.InterestRate, L201.Pop_GCAM3, L201.BaseGDP_GCAM3, L201.LaborForceFillout, L201.LaborProductivity_GCAM3, L201.PPPConvert, object, L201.BaseGDP_Scen, object2)
+    return_data(L201.InterestRate, L201.LaborForceFillout, L201.PPPConvert, L201.BaseGDP_Scen,
+                L201.Pop_gSSP1, L201.Pop_gSSP2, L201.Pop_gSSP3, L201.Pop_gSSP4, L201.Pop_gSSP5,
+                L201.Pop_SSP1, L201.Pop_gSSP2, L201.Pop_SSP3, L201.Pop_SSP4, L201.Pop_SSP5,
+                L201.LaborProductivity_gSSP1, L201.LaborProductivity_gSSP2, L201.LaborProductivity_gSSP3, L201.LaborProductivity_gSSP4, L201.LaborProductivity_gSSP5,
+                L201.LaborProductivity_SSP1, L201.LaborProductivity_SSP2, L201.LaborProductivity_SSP3, L201.LaborProductivity_SSP4, L201.LaborProductivity_SSP5)
   } else {
     stop("Unknown command")
   }
