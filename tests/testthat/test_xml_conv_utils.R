@@ -106,3 +106,30 @@ test_that("get warning for missing header", {
   expect_identical(test_xml, '<?xml version="1.0" encoding="UTF-8"?><scenario><world><region name="USA"><interest-rate>1.0</interest-rate></region></world></scenario>')
 })
 
+test_that("automatic column re-ordering works after add", {
+  test_fn <- "test.xml"
+  data1 <- data.frame(interest.rate = "1.0", region = "USA")
+  create_xml(test_fn) %>%
+    add_xml_data(data1, "InterestRate") ->
+    conv_test
+
+  expect_identical(names(conv_test$data_tables[[1]]$data), c("region", "interest.rate"))
+})
+
+test_that("column_order_lookup=NULL skips column reordering", {
+  test_fn <- "test.xml"
+  data1 <- data.frame(interest.rate = "1.0", region = "USA")
+  create_xml(test_fn) %>%
+    add_xml_data(data1, "InterestRate", NULL) ->
+    conv_test
+
+  expect_identical(names(conv_test$data_tables[[1]]$data), c("interest.rate", "region"))
+})
+
+test_that("automatic column re-ordering fails for unknown header", {
+  test_fn <- "test.xml"
+  data1 <- data.frame(interest.rate = "1.0", region = "USA")
+  conv_test <- create_xml(test_fn)
+  expect_error(add_xml_data(data1, "InterestRate", "Will_Not_Find"))
+})
+
