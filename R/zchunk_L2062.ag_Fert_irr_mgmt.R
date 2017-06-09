@@ -14,12 +14,14 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_aglu_L2062.ag_Fert_irr_mgmt_DISABLED <- function(command, ...) {
+module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L2061.AgCoef_Fert_ag_irr",
-              "L2061.AgCoef_Fert_bio_irr",
-              "L2061.AgCost_ag_irr_adj",
-              "L2061.AgCost_bio_irr_adj"))
+    return(c( FILE = "common/GCAM_region_names",
+              FILE = "water/basin_to_country_mapping",
+              FILE = "aglu/A_Fodderbio_chars",
+              FILE = "temp-data-inject/L142.ag_Fert_IO_R_C_Y_GLU",
+              FILE = "temp-data-inject/L205.AgCost_ag",
+              FILE = "temp-data-inject/L205.AgCost_bio"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2062.AgCoef_Fert_ag_irr_mgmt",
              "L2062.AgCoef_Fert_bio_irr_mgmt",
@@ -30,10 +32,12 @@ module_aglu_L2062.ag_Fert_irr_mgmt_DISABLED <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    L2061.AgCoef_Fert_ag_irr <- get_data(all_data, "L2061.AgCoef_Fert_ag_irr")
-    L2061.AgCoef_Fert_bio_irr <- get_data(all_data, "L2061.AgCoef_Fert_bio_irr")
-    L2061.AgCost_ag_irr_adj <- get_data(all_data, "L2061.AgCost_ag_irr_adj")
-    L2061.AgCost_bio_irr_adj <- get_data(all_data, "L2061.AgCost_bio_irr_adj")
+    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
+    basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
+    A_Fodderbio_chars <- get_data(all_data, "aglu/A_Fodderbio_chars")
+    L142.ag_Fert_IO_R_C_Y_GLU <- get_data(all_data, "temp-data-inject/L142.ag_Fert_IO_R_C_Y_GLU")
+    L205.AgCost_ag <- get_data(all_data, "temp-data-inject/L205.AgCost_ag")
+    L205.AgCost_bio <- get_data(all_data, "temp-data-inject/L205.AgCost_bio")
 
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
@@ -65,7 +69,8 @@ module_aglu_L2062.ag_Fert_irr_mgmt_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2062.AgCoef_Fert_ag_irr_mgmt") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/GCAM_region_names", "water/basin_to_country_mapping", "aglu/A_Fodderbio_chars",
+                     "temp-data-inject/L142.ag_Fert_IO_R_C_Y_GLU", "temp-data-inject/L205.AgCost_ag", "temp-data-inject/L205.AgCost_bio") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2062.AgCoef_Fert_ag_irr_mgmt
@@ -75,7 +80,8 @@ module_aglu_L2062.ag_Fert_irr_mgmt_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2062.AgCoef_Fert_bio_irr_mgmt") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/GCAM_region_names", "water/basin_to_country_mapping", "aglu/A_Fodderbio_chars",
+                     "temp-data-inject/L142.ag_Fert_IO_R_C_Y_GLU", "temp-data-inject/L205.AgCost_ag", "temp-data-inject/L205.AgCost_bio") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2062.AgCoef_Fert_bio_irr_mgmt
@@ -85,7 +91,8 @@ module_aglu_L2062.ag_Fert_irr_mgmt_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2062.AgCost_ag_irr_mgmt_adj") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/GCAM_region_names", "water/basin_to_country_mapping", "aglu/A_Fodderbio_chars",
+                     "temp-data-inject/L142.ag_Fert_IO_R_C_Y_GLU", "temp-data-inject/L205.AgCost_ag", "temp-data-inject/L205.AgCost_bio") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2062.AgCost_ag_irr_mgmt_adj
@@ -95,7 +102,8 @@ module_aglu_L2062.ag_Fert_irr_mgmt_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2062.AgCost_bio_irr_mgmt_adj") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/GCAM_region_names", "water/basin_to_country_mapping", "aglu/A_Fodderbio_chars",
+                     "temp-data-inject/L142.ag_Fert_IO_R_C_Y_GLU", "temp-data-inject/L205.AgCost_ag", "temp-data-inject/L205.AgCost_bio") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2062.AgCost_bio_irr_mgmt_adj

@@ -1,0 +1,11 @@
+# File: A_Fodderbio_chars.csv
+# Title: Fodder and bioenergy crop characteristics
+# Description: Characteristics of crops not included in residue biomass data
+# Source: see documentation (mostly ORNL)
+# Units: ???
+# ----------,,,
+GCAM_commodity,HarvestIndex,Root_Shoot,WaterContent
+FodderGrass,0.95,1.5,0.65
+FodderHerb,0.95,1.1,0.65
+biomass_grass,1,0.77,0.15
+biomass_tree,1,0.77,0.15
