@@ -13,6 +13,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author STW May 2017
+
 module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "socioeconomics/socioeconomics_ctry",
@@ -26,8 +27,8 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
 
     ## silence package check.
     Country <- value <- Maddison_ctry <- year <- pop <- Downscale_from <- ratio <-
-        year.x <- iso <- pop_scale <- pop.x <- pop.y <- pop_allocate <- X1900 <-
-        X1950 <- X1850 <- X1800 <- X1750 <- X1700 <- pop_ratio_1950 <- scg <-
+        year.x <- iso <- pop_scale <- pop2 <- pop.x <- pop.y <- pop_allocate <- X1900 <-
+        X1950 <- X1850 <- X1800 <- X1750 <- X1700 <- pop_ratio <- scg <-
         idn <- mne <- Scenario <- Region <- Sex <- Year <- Value <- MODEL <-
         VARIABLE <- REGION <- SCENARIO <- UNIT <- scenario <- ratio_iso_ssp <- NULL
 
@@ -101,45 +102,47 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
       replace_na(list(pop = 0)) %>%
       group_by(year) %>%
       summarize(pop = sum(pop))
+
     # Subtract reported countries from total global - these are the total population values in each period that will be allocated to countries with missing values
     pop_missing <- left_join(pop_global, pop_notmissing, by = "year") %>%
       mutate(pop_allocate = pop.x - pop.y) %>%
-      select(year, pop_allocate) %>%
-      mutate(year = paste0("X", year)) %>%
-      spread(year, pop_allocate) # The next set of calculations are much easier to do in wide format.
+      select(year, pop_allocate)
 
-    # Fifth, estimate historic population values for countries with missing values and calculate ratios relative to 1950
-    maddison_hist_ratio <- filter(hist_interp, iso != "world_total") %>%
-      ungroup() %>%
-      mutate(year = paste("X", year, sep = "")) %>% # Getting the syntax correct with a numeric column name is difficult, use character instead.
-      spread(year, pop) %>%
-      # Fill in missing values for period t using ratio of country to total population in period t+1 times the missing share in period t.
-      # Could write a function for this but it wouldn't save much space.
-      mutate(X1900 = if_else(is.na(X1900), ((X1950 / sum(X1950[is.na(X1900)])) * pop_missing$X1900), X1900)) %>%
-      mutate(X1850 = if_else(is.na(X1850), ((X1900 / sum(X1900[is.na(X1850)])) * pop_missing$X1850), X1850)) %>%
-      mutate(X1800 = if_else(is.na(X1800), ((X1850 / sum(X1850[is.na(X1800)])) * pop_missing$X1800), X1800)) %>%
-      mutate(X1750 = if_else(is.na(X1750), ((X1800 / sum(X1800[is.na(X1750)])) * pop_missing$X1750), X1750)) %>%
-      mutate(X1700 = if_else(is.na(X1700), ((X1750 / sum(X1750[is.na(X1700)])) * pop_missing$X1700), X1700)) %>%
-      # Population ratios for historic years compared to 1950 for all countries (will be used to scale UN populations from 1950)
-      mutate(R1900 = X1900 / X1950,
-             R1850 = X1850 / X1950,
-             R1800 = X1800 / X1950,
-             R1750 = X1750 / X1950,
-             R1700 = X1700 / X1950) %>%
-      select(-X1950, -X1900, -X1850, -X1800, -X1750, -X1700) %>%
-      gather(year, pop_ratio_1950, -iso) %>%
-      mutate(year = as.integer(substr(year, 2, 5)))
+    # Fifth, estimate historic population values for countries with missing values and calculate ratios relative to last historical year (1950)
+    maddison_hist_ratio <-
+      filter(hist_interp, iso != "world_total") %>%
+      left_join(pop_missing, by = "year")
+
+    maddison_hist_years <- unique(maddison_hist_ratio$year)
+
+    # Fill in missing values for period t using ratio of country to total population in period t+1 times the missing share in period t.
+    for( i in rev(maddison_hist_years)[-1]){
+      maddison_hist_ratio %>%
+        ungroup() %>%
+        mutate(pop2 = if_else(is.na(pop), (lead(pop, n = 1L, order_by = iso)), 0)) %>%
+        group_by(year) %>%
+        mutate(pop = if_else(year == i, pmax(pop, pop2/sum(pop2) * pop_allocate, na.rm = TRUE), pop)) ->
+        maddison_hist_ratio
+    }
+
+    # Population ratios for historic years compared to last historical year (1950) for all countries (will be used to scale UN populations from 1950)
+    maddison_hist_ratio <- maddison_hist_ratio %>%
+      group_by(iso) %>%
+      mutate(pop_ratio = pop / pop[year == rev(maddison_hist_years)[1]]) %>%
+      filter(year != rev(maddison_hist_years)[1]) %>%
+      select(iso, year, pop_ratio) %>%
+      mutate(year = as.integer(year)) %>%
+      ungroup
+
     # Need to create matching iso codes for three countries in UN, but not Maddison.
     # Set Serbia and Montenegro ratio equal to Serbia & Montenegro and use Indonesia population ratio for East Timor
     mne_srb_tls <- filter(maddison_hist_ratio, iso %in% c("idn", "scg")) %>%
-      spread(iso, pop_ratio_1950) %>%
-      rename(mne = scg, tls = idn) %>%
-      mutate(srb = mne) %>%
-      gather(iso, pop_ratio_1950, -year)
+      mutate(iso = replace(iso, iso == "idn","tls"), iso = replace(iso, iso == "scg", "mne"))
 
     # Combine with other ratio_iso values
-    maddison_hist_ratio <- filter(maddison_hist_ratio, iso != "scg") %>% # Remove Serbia & Montenegro (scg) because we will replace with Serbia (srb) and Montenegro (mne)
-      bind_rows(mne_srb_tls)
+    maddison_hist_ratio <- maddison_hist_ratio %>%
+      bind_rows(mne_srb_tls) %>%
+      mutate(iso = replace(iso, iso == "scg","srb"))
 
     # Sixth, apply Maddison ratios for historic periods to UN populatio data that begin in 1950
     # Clean raw UN population data
@@ -155,7 +158,7 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
       select(-year) %>%
       full_join(maddison_hist_ratio, by = "iso") %>%
       complete(year, nesting(iso)) %>%  # Completes tibble to include all years for all iso (creates missing values)
-      mutate(pop = if_else(!is.na(pop_ratio_1950), (pop * pop_ratio_1950), 0)) %>% # Set the remaining mismatched (very small) countries to zero
+      mutate(pop = if_else(!is.na(pop_ratio), (pop * pop_ratio), 0)) %>% # Set the remaining mismatched (very small) countries to zero
       select(iso, year, pop)
     # Combine scaled population for Maddison historic years with UN population 1950+
     L100.Pop_thous_ctry_Yh <- bind_rows(un_clean, un_maddison_hist) %>%
@@ -180,7 +183,7 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
       gather(year, pop, -iso, -scenario) %>%  # Long format
       mutate(year = as.integer(year),
              pop = as.numeric(pop)) %>%  # Clean year variable
-      filter(year %in% c(socioeconomics.FINAL_HIST_YEAR, modeltime.FUTURE_YEARS)) %>% # Retain only years needed for GCAM
+      filter(year %in% c(socioeconomics.FINAL_HIST_YEAR, FUTURE_YEARS)) %>% # Retain only years needed for GCAM
       group_by(scenario, iso) %>%
       mutate(ratio_iso_ssp = pop / pop[year == socioeconomics.FINAL_HIST_YEAR]) %>%  # Calculate population ratios to final historical year (2010), no units
       select(-pop) %>%
