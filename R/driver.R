@@ -84,6 +84,7 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 #' @param all_data Data to be pre-loaded into data system
 #' @param write_outputs Write all chunk outputs to disk?
 #' @param quiet Suppress output?
+#' @param stop_before Stop immediately before this chunk and return accumulated data
 #' @param outdir Location to write output data.  (Ignored if \code{write_outputs} is \code{FALSE}.)
 #' @param xmldir Location to write output XML.  (Ignored if \code{write_outputs} is \code{FALSE}.)
 #' @return A list of all built data.
@@ -96,7 +97,8 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 #' @importFrom dplyr filter mutate select
 #' @export
 #' @author BBL
-driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE, outdir = OUTPUTS_DIR, xmldir = XML_DIR) {
+driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE, stop_before = "",
+                   outdir = OUTPUTS_DIR, xmldir = XML_DIR) {
 
   optional <- input <- from_file <- name <- NULL    # silence notes from package check.
 
@@ -153,6 +155,8 @@ driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE,
 
       # Order chunk to build its data
       time1 <- Sys.time()
+      if(chunk == stop_before) return(all_data)
+
       chunk_data <- run_chunk(chunk, all_data[input_names])
       # Disabled this code because `capture.output` causes problems in debugging
       #out <- capture.output(chunk_data <- run_chunk(chunk, all_data[input_names]))
