@@ -5,7 +5,8 @@
 \title{driver}
 \usage{
 driver(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE,
-  stop_before = "", outdir = OUTPUTS_DIR, xmldir = XML_DIR)
+  stop_before = "", stop_after = "", outdir = OUTPUTS_DIR,
+  xmldir = XML_DIR)
 }
 \arguments{
 \item{all_data}{Data to be pre-loaded into data system}
@@ -14,11 +15,13 @@ driver(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE,
 
 \item{quiet}{Suppress output?}
 
-\item{stop_before}{Stop immediately before this chunk and return accumulated data}
+\item{stop_before}{Stop immediately before this chunk (character)}
 
-\item{outdir}{Location to write output data.  (Ignored if \code{write_outputs} is \code{FALSE}.)}
+\item{outdir}{Location to write output data (ignored if \code{write_outputs} is \code{FALSE})}
 
-\item{xmldir}{Location to write output XML.  (Ignored if \code{write_outputs} is \code{FALSE}.)}
+\item{xmldir}{Location to write output XML (ignored if \code{write_outputs} is \code{FALSE})}
+
+\item{stop_before}{Stop immediately after this chunk  (character)}
 }
 \value{
 A list of all built data.
