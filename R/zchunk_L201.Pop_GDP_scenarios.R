@@ -13,7 +13,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author HM&RH June 2017
+#' @author HM & RH June 2017
 module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
@@ -27,10 +27,10 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
              "L201.BaseGDP_Scen",
              "L201.LaborForceFillout",
              "L201.PPPConvert",
-             paste0("L201.Pop_gSSP",seq(1,5)),
-             paste0("L201.Pop_SSP",seq(1,5)),
-             paste0("L201.LaborProductivity_gSSP",seq(1,5)),
-             paste0("L201.LaborProductivity_SSP",seq(1,5))))
+             paste0("L201.Pop_gSSP", seq(1, 5)),
+             paste0("L201.Pop_SSP", seq(1, 5)),
+             paste0("L201.LaborProductivity_gSSP", seq(1, 5)),
+             paste0("L201.LaborProductivity_SSP", seq(1, 5))))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -39,12 +39,10 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     L101.Pop_thous_R_Yh <- get_data(all_data, "L101.Pop_thous_R_Yh")
     L101.Pop_thous_Scen_R_Yfut <- get_data(all_data, "L101.Pop_thous_Scen_R_Yfut")
-    L102.gdp_mil90usd_Scen_R_Y <- get_data(all_data, "L102.gdp_mil90usd_Scen_R_Y") %>%
-      mutate(year = as.integer(year)) %>%
-      ungroup()
-    L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y") %>%
-      ungroup
+    L102.gdp_mil90usd_Scen_R_Y <- get_data(all_data, "L102.gdp_mil90usd_Scen_R_Y")
+    L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y")
     L102.PPP_MER_R <- get_data(all_data, "L102.PPP_MER_R")
+
     # ===================================================
     # Set default interest rate for all regions
     L201.InterestRate <- GCAM_region_names %>%
@@ -103,27 +101,31 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
     # Split by scenario and remove scenario column from each tibble
     L201.pcgdpGrowth_Scen_R_Y_split <- L201.pcgdpGrowth_Scen_R_Y %>%
       split(.$scenario) %>%
-      lapply(function(df) {select(df, -scenario) %>%
+      lapply(function(df) {
+        select(df, -scenario) %>%
           add_units("Unitless (annual rate of growth)") %>%
           add_comments("Per capita GDP growth rate is used for labor productivity growth rate, by scenario") %>%
-          add_precursors("common/GCAM_region_names", "L102.pcgdp_thous90USD_Scen_R_Y")})
+          add_precursors("common/GCAM_region_names", "L102.pcgdp_thous90USD_Scen_R_Y")
+      })
     # Assign each tibble in list
-    for (i in names(L201.pcgdpGrowth_Scen_R_Y_split)){
+    for(i in names(L201.pcgdpGrowth_Scen_R_Y_split)) {
       assign(paste0("L201.LaborProductivity_", i), L201.pcgdpGrowth_Scen_R_Y_split[[i]] %>%
-      add_title(paste0("Labor productivity: ", i)) %>%
-      add_legacy_name(paste0("L201.LaborProductivity_", i)))
+               add_title(paste0("Labor productivity: ", i)) %>%
+               add_legacy_name(paste0("L201.LaborProductivity_", i)))
     }
 
     # Repeat for population outputs
     L101.Pop_thous_Scen_R_Y_split <- L101.Pop_thous_Scen_R_Y %>%
       ungroup() %>%
       split(.$scenario) %>%
-      lapply(function(df) {select(df, region, year, totalPop) %>%
+      lapply(function(df) {
+        select(df, region, year, totalPop) %>%
           add_units("Thousand persons)") %>%
           add_comments("Population by scenario and region") %>%
-          add_precursors("common/GCAM_region_names", "L101.Pop_thous_R_Yh", "L101.Pop_thous_Scen_R_Yfut")})
+          add_precursors("common/GCAM_region_names", "L101.Pop_thous_R_Yh", "L101.Pop_thous_Scen_R_Yfut")
+      })
     # Assign each tibble in list
-    for (i in names(L101.Pop_thous_Scen_R_Y_split)){
+    for(i in names(L101.Pop_thous_Scen_R_Y_split)) {
       assign(paste0("L201.Pop_", i), L101.Pop_thous_Scen_R_Y_split[[i]] %>%
                add_title(paste0("Population: ", i)) %>%
                add_legacy_name(paste0("L201.Pop_", i)))
