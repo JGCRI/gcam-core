@@ -54,6 +54,8 @@ join.gdp.ts <- function(past, future, grouping) {
 
   ## Find the base year
   base.year <- max(dplyr::intersect(past$year, future$year))
+  assert_that(length(base.year) == 1 && is.finite(base.year))
+
   ## Base year gdp from the future dataset
   baseyear.future.gdp <- filter(future, year == base.year) %>%
     rename(base.gdp = gdp) %>%
@@ -71,7 +73,7 @@ join.gdp.ts <- function(past, future, grouping) {
     select(-year)
 
   rslt <- left_join(baseyear.past.gdp, gdp.future.ratio,
-                    by = c('scenario',grouping)) %>%
+                    by = c('scenario', grouping)) %>%
     mutate(gdp = base.gdp * gdp.ratio) %>%
     select(one_of(c('scenario', grouping, 'year', 'gdp'))) %>%
     bind_rows(gdp.past, .)
@@ -152,7 +154,7 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
 
     ## Get the future GDP in the SSP scenarios.  These are PPP values in 2005 dollars
     gdp_bilusd_rgn_Yfut <-
-      filter(SSP_database_v9,MODEL == 'OECD Env-Growth' & VARIABLE == 'GDP|PPP') %>%
+      filter(SSP_database_v9, MODEL == 'OECD Env-Growth' & VARIABLE == 'GDP|PPP') %>%
       standardize_iso('REGION') %>%
       change_iso_code('rou', 'rom') %>%
       left_join_error_no_match(iso_region32_lookup, by = 'iso') %>%
@@ -186,9 +188,9 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
       mutate(gdp.rate = if_else(gdp.rate == 'n/a', '0', gdp.rate)) %>% # Treat string 'n/a' as missing.
       mutate(year = as.integer(year),
              gdp.rate = as.numeric(gdp.rate)) %>%
-      replace_na(list(year=2010)) %>% # have to do this for `complete` to work as expected.
+      replace_na(list(year = 2010)) %>% # have to do this for `complete` to work as expected.
       complete(iso, year) %>%
-      replace_na(list(gdp.rate=0.0))
+      replace_na(list(gdp.rate = 0.0))
 
     imfgdp.ratio <-
       imfgdp.growth %>%
@@ -200,15 +202,14 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
       select(iso, year, gdp)
 
     gdp.mil90usd.imf.country.yr <-
-      select(gdp_mil90usd_ctry, iso, year, gdp) %>% #strip region id col b/c
-      #imfgdp.ratio doesn't have one.
+      select(gdp_mil90usd_ctry, iso, year, gdp) %>% # strip region id col b/c imfgdp.ratio doesn't have one.
       join.gdp.ts(imfgdp.ratio, 'iso')
     ## columns: iso, year, gdp
 
     ## Aggregate by GCAM region
     gdp.mil90usd.imf.rgn.yr <-
       left_join_error_no_match(gdp.mil90usd.imf.country.yr,
-                               iso_region32_lookup, by= 'iso') %>%
+                               iso_region32_lookup, by = 'iso') %>%
       group_by(GCAM_region_ID, year) %>%
       summarise(gdp = sum(gdp)) %>%
       filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS))
