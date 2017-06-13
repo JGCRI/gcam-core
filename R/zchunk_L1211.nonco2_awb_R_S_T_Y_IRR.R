@@ -15,16 +15,20 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
+#' @importFrom data.table data.table
 #' @author CDL April 2017
 module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
              FILE = "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU",
-             FILE = "temp-data-inject/L121.nonco2_tg_R_awb_C_Y_GLU"))
+             "L121.nonco2_tg_R_awb_C_Y_GLU"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L1211.nonco2_tg_R_awb_C_Y_GLU_IRR",
              "L1211.ag_irrShare_R_C_Y_GLU_irr"))
   } else if(command == driver.MAKE) {
+
+    year <- value <- GCAM_region_ID <- GCAM_commodity <- GLU <- Non.CO2 <-
+        value.x <- value.y <- i.value <- NULL # silence package check.
 
     all_data <- list(...)[[1]]
 
@@ -39,11 +43,8 @@ module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR <- function(command, ...) {
       gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%
       mutate(year = as.integer(substr(year, 2, 5))) ->
       L161.ag_rfdProd_Mt_R_C_Y_GLU
-    # Temporary - these next two lines should be removed when 'real' data are available
-    get_data(all_data, "temp-data-inject/L121.nonco2_tg_R_awb_C_Y_GLU") %>%
-      gather(year, value, -GCAM_region_ID, -Non.CO2, -GCAM_commodity, -GLU) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) ->
-      L121.nonco2_tg_R_awb_C_Y_GLU
+    L121.nonco2_tg_R_awb_C_Y_GLU <- get_data(all_data, "L121.nonco2_tg_R_awb_C_Y_GLU")
+
 
     # ===================================================
 
@@ -75,7 +76,7 @@ module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR <- function(command, ...) {
       # value.y is now the total (rfd+irr) production
       mutate(value = value.x / value.y) %>%
       select(-value.x, -value.y) %>%
-      mutate(value = if_else(is.na(value), 0, value)) ->
+      replace_na(list(value = 0)) ->
       L1211.ag_irrShare_R_C_Y_GLU_irr
 
     # This section creates L1211.nonco2_tg_R_awb_C_Y_GLU_IRR
@@ -83,14 +84,16 @@ module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR <- function(command, ...) {
     # Multiply emissions by region/GLU/crop/nonCO2 by irr/rfd production shares
     # Non-CO2 emissions by R_C_GLU_irr = non-CO2 emissions by R_C_GLU * irrShare
     L121.nonco2_tg_R_awb_C_Y_GLU %>%
+      ## Need to filter for historical years to ensure the join will work, ie. there will be a 1 to 1 match
+      ## Note this step was NOT in the original data system
+      filter(year %in% dplyr::intersect(HISTORICAL_YEARS, emissions.EDGAR_YEARS)) %>%
       repeat_add_columns(tibble::tibble(Irr_Rfd = c("IRR", "RFD") )) %>%
-      # Need to filter for historical years to ensure the join will work, ie. there will be a 1 to 1 match
-      # Note this step was NOT in the original data system
-      filter(year %in% HISTORICAL_YEARS) %>%
-      left_join_error_no_match(L1211.ag_irrShare_R_C_Y_GLU_irr, by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year", "Irr_Rfd")) %>%
+      fast_left_join(L1211.ag_irrShare_R_C_Y_GLU_irr,
+                     by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year",
+                     "Irr_Rfd")) %>%
+      rename(value.x = i.value, value.y = value) %>%
       mutate(value = value.x * value.y) %>%
-      select(-value.x, -value.y) %>%
-      filter(year %in% emissions.EDGAR_YEARS) ->
+      select(-value.x, -value.y) ->
       L1211.nonco2_tg_R_awb_C_Y_GLU_IRR
 
     # ===================================================
@@ -101,7 +104,7 @@ module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR <- function(command, ...) {
       add_units("Tg") %>%
       add_comments("Multiply non-CO2 emissions by region/GLU/crop/non-CO2 by irr/rfd production shares") %>%
       add_legacy_name("L1211.nonco2_tg_R_awb_C_Y_GLU_IRR") %>%
-      add_precursors("temp-data-inject/L121.nonco2_tg_R_awb_C_Y_GLU") %>%
+      add_precursors("L121.nonco2_tg_R_awb_C_Y_GLU") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1211.nonco2_tg_R_awb_C_Y_GLU_IRR
 

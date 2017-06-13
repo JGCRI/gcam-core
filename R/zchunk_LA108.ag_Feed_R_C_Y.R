@@ -20,7 +20,7 @@
 module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "aglu/FAO_ag_items_cal_SUA",
+             FILE = "aglu/FAO/FAO_ag_items_cal_SUA",
              "L100.FAO_ag_Feed_t",
              "L103.ag_Prod_Mt_R_C_Y",
              "L107.an_Feed_Mt_R_C_Sys_Fd_Y"))
@@ -29,11 +29,16 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
              "L108.ag_NetExp_Mt_R_FodderHerb_Y"))
   } else if(command == driver.MAKE) {
 
+    iso <- item <- year <- value <- GCAM_commodity <- GCAM_region_ID <- feed <-
+        Feedfrac <- FodderHerb <- FodderHerb_Residue <- residual <-
+            total_residual <- share <- Residue <- PastFodderGrass_Demand <-
+                Production <- Feed <- OtherUses <- NULL # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    FAO_ag_items_cal_SUA <- get_data(all_data, "aglu/FAO_ag_items_cal_SUA")
+    FAO_ag_items_cal_SUA <- get_data(all_data, "aglu/FAO/FAO_ag_items_cal_SUA")
     L100.FAO_ag_Feed_t <- get_data(all_data, "L100.FAO_ag_Feed_t")
     L103.ag_Prod_Mt_R_C_Y <- get_data(all_data, "L103.ag_Prod_Mt_R_C_Y")
     L107.an_Feed_Mt_R_C_Sys_Fd_Y <- get_data(all_data, "L107.an_Feed_Mt_R_C_Sys_Fd_Y")
@@ -55,7 +60,7 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
                GCAM_commodity, year, fill = list(value = 0)) %>%                                   # Fill in missing region/commodity combinations with 0
       group_by(GCAM_region_ID, year) %>%
       mutate(Feedfrac = value / sum(value)) %>%                                                    # Calculate each crop's share of total feed in a region
-      mutate(Feedfrac = if_else(is.na(Feedfrac), 0, Feedfrac)) ->                                  # Replace missing data with 0 (assumes no share for those crops)
+      replace_na(list(Feedfrac = 0)) ->                                  # Replace missing data with 0 (assumes no share for those crops)
       ag_Feed_Mt_R_Cnf_Y
 
     # Compute aggregate demand by region, feed, and year from the IMAGE data
@@ -205,7 +210,7 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
       add_comments("FodderHerb: based on FAO production, but adjusted if this exceeds FodderHerb_Residue demand in IMAGE") %>%
       add_comments("Note: excess FodderGrass and FodderHerb production are mapped to OtherUses") %>%
       add_legacy_name("L108.ag_Feed_Mt_R_C_Y") %>%
-      add_precursors("common/iso_GCAM_regID", "aglu/FAO_ag_items_cal_SUA", "L100.FAO_ag_Feed_t",
+      add_precursors("common/iso_GCAM_regID", "aglu/FAO/FAO_ag_items_cal_SUA", "L100.FAO_ag_Feed_t",
                      "L103.ag_Prod_Mt_R_C_Y", "L107.an_Feed_Mt_R_C_Sys_Fd_Y") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L108.ag_Feed_Mt_R_C_Y

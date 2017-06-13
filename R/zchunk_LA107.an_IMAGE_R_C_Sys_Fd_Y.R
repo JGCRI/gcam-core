@@ -22,12 +22,16 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
              FILE = "temp-data-inject/L100.IMAGE_an_Prodmixfrac_ctry_C_Y",
              FILE = "temp-data-inject/L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y",
              FILE = "temp-data-inject/L100.IMAGE_an_FeedIO_ctry_C_Sys_Y",
-             FILE = "temp-data-inject/L105.an_Prod_Mt_ctry_C_Y"))
+             "L105.an_Prod_Mt_ctry_C_Y"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L107.an_Prod_Mt_R_C_Sys_Fd_Y",
              "L107.an_Feed_Mt_R_C_Sys_Fd_Y",
              "L107.an_FeedIO_R_C_Sys_Fd_Y"))
   } else if(command == driver.MAKE) {
+
+    year <- value <- iso <- IMAGE_region_ID <- commodity <- input <-
+        GCAM_commodity <- value.x <- value.y <- . <- GCAM_region_ID <- feed <-
+            NULL                        # silence package check.
 
     all_data <- list(...)[[1]]
 
@@ -36,7 +40,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
     L100.IMAGE_an_Prodmixfrac_ctry_C_Y <- get_data(all_data, "temp-data-inject/L100.IMAGE_an_Prodmixfrac_ctry_C_Y")
     L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y <- get_data(all_data, "temp-data-inject/L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y")
     L100.IMAGE_an_FeedIO_ctry_C_Sys_Y <- get_data(all_data, "temp-data-inject/L100.IMAGE_an_FeedIO_ctry_C_Sys_Y")
-    L105.an_Prod_Mt_ctry_C_Y <- get_data(all_data, "temp-data-inject/L105.an_Prod_Mt_ctry_C_Y")
+    L105.an_Prod_Mt_ctry_C_Y <- get_data(all_data, "L105.an_Prod_Mt_ctry_C_Y")
 
     # The inputs L100.IMAGE_X and L105.an_Prod  are in wide format. Convert to long:
     if (ncol(L100.IMAGE_an_Prodmixfrac_ctry_C_Y) > 5 ){
@@ -58,13 +62,6 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
         gather(year, value, -iso, -IMAGE_region_ID, -commodity, -system) %>%
         mutate(year = as.integer(substr(year, 2, 5))) ->
         L100.IMAGE_an_FeedIO_ctry_C_Sys_Y
-    }
-
-    if (ncol(L105.an_Prod_Mt_ctry_C_Y) > 4 ){
-      L105.an_Prod_Mt_ctry_C_Y %>%
-        gather(year, value, -iso, -GCAM_commodity) %>%
-        mutate(year = as.integer(substr(year, 2, 5))) ->
-        L105.an_Prod_Mt_ctry_C_Y
     }
 
     # Perform computations:
@@ -168,7 +165,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
     # take country level animal production data:
     L107.an_Prod_Mt_ctry_C_Sys_Fd_Y %>%
       # add in the GCAM region id corresponding to the country:
-      mutate(GCAM_region_ID =  left_join_error_no_match(., iso_GCAM_regID, by = c("iso"))$GCAM_region_ID) %>%
+      mutate(GCAM_region_ID =  left_join_error_no_match(., iso_GCAM_regID, by = c("iso"))[['GCAM_region_ID']]) %>%
       # drop the country:
       select(-iso) %>%
       # group unique identifiers:
@@ -181,7 +178,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
     # take country level feed consumption data:
     L107.an_Feed_Mt_ctry_C_Sys_Fd_Y %>%
       # add in the GCAM region id corresponding to the country:
-      mutate(GCAM_region_ID =  left_join_error_no_match(., iso_GCAM_regID, by = c("iso"))$GCAM_region_ID) %>%
+      mutate(GCAM_region_ID =  left_join_error_no_match(., iso_GCAM_regID, by = c("iso"))[['GCAM_region_ID']]) %>%
       # drop the country:
       select(-iso) %>%
       # group unique identifiers:
@@ -203,7 +200,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
       # drop the columns we don't care about:
       select(-value.x, -value.y) %>%
       # replace NA/NaN with the value 100
-      mutate(value=if_else(is.na(value), 100, value))->
+      replace_na(list(value = 100)) ->
       # store in a table specifying IO coefficients by region, commodity, system, feed type, and year:
       L107.an_FeedIO_R_C_Sys_Fd_Y
 
@@ -223,9 +220,9 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
                      "temp-data-inject/L100.IMAGE_an_Prodmixfrac_ctry_C_Y",
                      "temp-data-inject/L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y",
                      "temp-data-inject/L100.IMAGE_an_FeedIO_ctry_C_Sys_Y",
-                     "temp-data-inject/L105.an_Prod_Mt_ctry_C_Y") %>%
+                     "L105.an_Prod_Mt_ctry_C_Y") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT) ->
       L107.an_Prod_Mt_R_C_Sys_Fd_Y
     L107.an_Feed_Mt_R_C_Sys_Fd_Y %>%
       add_title("Animal feed consumption by GCAM region / commodity / system / feed type / year") %>%
@@ -237,7 +234,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
                      "temp-data-inject/L100.IMAGE_an_Prodmixfrac_ctry_C_Y",
                      "temp-data-inject/L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y",
                      "temp-data-inject/L100.IMAGE_an_FeedIO_ctry_C_Sys_Y",
-                     "temp-data-inject/L105.an_Prod_Mt_ctry_C_Y") %>%
+                     "L105.an_Prod_Mt_ctry_C_Y") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L107.an_Feed_Mt_R_C_Sys_Fd_Y
@@ -251,7 +248,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
                      "temp-data-inject/L100.IMAGE_an_Prodmixfrac_ctry_C_Y",
                      "temp-data-inject/L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y",
                      "temp-data-inject/L100.IMAGE_an_FeedIO_ctry_C_Sys_Y",
-                     "temp-data-inject/L105.an_Prod_Mt_ctry_C_Y") %>%
+                     "L105.an_Prod_Mt_ctry_C_Y") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L107.an_FeedIO_R_C_Sys_Fd_Y

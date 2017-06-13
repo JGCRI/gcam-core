@@ -6,11 +6,16 @@
 #' @param include_disabled Plots nodes of disabled chunks?
 #' @param quiet Suppress messages?
 #' @return Adjacency matrix showing chunk-to-chunk data flows
+#' @importFrom grDevices rainbow
+#' @importFrom graphics plot title
 #' @export
 graph_chunks <- function(module_filter = NULL,
                          plot_gcam = FALSE,
                          include_disabled = FALSE,
                          quiet = TRUE) {
+
+  output <- to_xml <- module <- name.y <- name <- disabled <- input <- num <-
+      NULL                              # silence notes on package check.
 
   assert_that(is.null(module_filter) | is.character(module_filter))
   assert_that(is.logical(plot_gcam))
@@ -110,11 +115,19 @@ graph_chunks <- function(module_filter = NULL,
   g <- igraph::graph.adjacency(mat)
   coords <- igraph::layout_nicely(g)
 
+  # Use 'disabled' status as color if we're plotting them; otherwise, module
+  if(include_disabled) {
+    vc <- rainbow(2)[chunklist$disabled + 1]
+  } else {
+    vc <- vertexcolors[chunklist$modulenum]
+  }
+
   plot(g,
-       vertex.color = vertexcolors[chunklist$modulenum],
+       vertex.color = vc,
        #      vertex.size = chunklist$noutputs p* 3,
        #      vertex.label.dist = 1,
        vertex.label.cex = .5,
+       vertex.label.color = "grey",
        vertex.size = 5,
        edge.arrow.size = 0.3,
        layout = coords)

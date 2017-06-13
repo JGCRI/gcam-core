@@ -22,7 +22,7 @@
 module_energy_LA126.distribution <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh",
-             FILE = "temp-data-inject/L122.out_EJ_R_gasproc_F_Yh",
+             "L122.out_EJ_R_gasproc_F_Yh",
              "L123.out_EJ_R_elec_F_Yh",
              "L123.out_EJ_R_indchp_F_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -37,6 +37,14 @@ module_energy_LA126.distribution <- function(command, ...) {
              "L126.IO_R_gaspipe_F_Yh"))
   } else if(command == driver.MAKE) {
 
+    year <- value <- GCAM_region_ID <- sector <- fuel <-
+      value_electricity_generation <- value_industryCHP <-
+      value_electricity_ownuse_in <- value_electricity_ownuse <-
+      value_electricity_ownuse_out <- value_electricity_ownuse_IO <-
+      value_electd <- value_electd_out <- value_electd_IO <-
+      value_gaspipe_in <- value_gaspipe <- value_gaspipe_out <-
+      value_gaspipe_IO <- NULL       # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
@@ -45,11 +53,7 @@ module_energy_LA126.distribution <- function(command, ...) {
       mutate(year = as.integer(substr(year, 2, 5))) ->
       L1011.en_bal_EJ_R_Si_Fi_Yh
 
-    get_data(all_data, "temp-data-inject/L122.out_EJ_R_gasproc_F_Yh") %>%
-      gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) ->
-      L122.out_EJ_R_gasproc_F_Yh
-
+    L122.out_EJ_R_gasproc_F_Yh <- get_data(all_data, "L122.out_EJ_R_gasproc_F_Yh")
     L123.out_EJ_R_elec_F_Yh <- get_data(all_data, "L123.out_EJ_R_elec_F_Yh")
     L123.out_EJ_R_indchp_F_Yh <- get_data(all_data, "L123.out_EJ_R_indchp_F_Yh")
 
@@ -138,7 +142,7 @@ module_energy_LA126.distribution <- function(command, ...) {
       left_join(Gasproc_out, by = c("GCAM_region_ID", "year")) %>% # Joining gas output
       mutate(value_gaspipe_out = value_gaspipe_in - value_gaspipe) %>% # Creating values for table, L126.out_EJ_R_gaspipe_F_Yh (i.e., output), by subtracting gas pipeline input by gas pipeline consumption
       mutate(value_gaspipe_IO = value_gaspipe_in / value_gaspipe_out) %>% # Creating values for table, L126.IO_R_gaspipe_F_Yh, by dividing input by output. Note that some regions have zero gas in some of the base years. Reset their IO coefs to 1 in the next step.
-      mutate(value_gaspipe_IO = if_else(is.na(value_gaspipe_IO), 1, value_gaspipe_IO)) -> # Reset NaN IO coefs to 1, since some regions have no gas in some base years.
+      replace_na(list(value_gaspipe_IO = 1)) -> # Reset NaN IO coefs to 1, since some regions have no gas in some base years.
       Gas_pipeline_all
 
     # Table Gas_pipeline_all is separated to create the final tables
@@ -212,7 +216,7 @@ module_energy_LA126.distribution <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Energy input to gas pipeline") %>%
       add_legacy_name("L126.in_EJ_R_gaspipe_F_Yh") %>%
-      add_precursors("temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "temp-data-inject/L122.out_EJ_R_gasproc_F_Yh") %>%
+      add_precursors("temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "L122.out_EJ_R_gasproc_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L126.in_EJ_R_gaspipe_F_Yh
 
@@ -221,7 +225,7 @@ module_energy_LA126.distribution <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Energy output of gas pipeline, accounting for pipeline losses") %>%
       add_legacy_name("L126.out_EJ_R_gaspipe_F_Yh") %>%
-      add_precursors("temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "temp-data-inject/L122.out_EJ_R_gasproc_F_Yh") %>%
+      add_precursors("temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "L122.out_EJ_R_gasproc_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L126.out_EJ_R_gaspipe_F_Yh
 
@@ -230,7 +234,7 @@ module_energy_LA126.distribution <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Energy input divided by ouput") %>%
       add_legacy_name("L126.IO_R_gaspipe_F_Yh") %>%
-      add_precursors("temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "temp-data-inject/L122.out_EJ_R_gasproc_F_Yh") %>%
+      add_precursors("temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "L122.out_EJ_R_gasproc_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L126.IO_R_gaspipe_F_Yh
 

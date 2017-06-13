@@ -1,0 +1,94 @@
+# File: FAO2050_Diet.csv
+# Title: Changes in the commodity composition of food by major country groups
+# Units: kg/person/day and kcal/person/day
+# Description: FAO dietary projections to 2050 by world region and commodity class 
+# Source: Tables 2.7 and 2.8 of FAO, 2006, World Agriculture: Towards 2030/2050. Global Perspective Studies Unit, Food and Agriculture Organization of the United Nations. http://www.fao.org/fileadmin/user_upload/esag/docs/Interim_report_AT2050web.pdf
+FAO2050_reg,FAO2050_item,1970,1980,1990,2000,2030,2050
+World,"Cereals, food",148.7,160.1,171,165.4,165,162
+World,"Cereals, all uses",302.8,325,329.3,308.7,331,339
+World,Roots and tubers,83.7,73.4,64.5,69.4,75,75
+World,Sugar (raw sugar equiv.),22.4,23.4,23.3,23.6,26,27
+World,"Pulses, dry",7.6,6.5,6.2,5.9,6,6
+World,"Vegetable oils, oilseeds and products (oil eq.)",6.8,8.3,10.3,12,16,17
+World,Meat (carcass weight),26.1,29.5,33,37.4,47,52
+World,"Milk and dairy, excl. butter (fresh milk eq.)",75.3,76.5,76.9,78.3,92,100
+World,Other food (kcal/person/day),216,224,241,289,325,340
+World,Total food (kcal/person/day),2411,2549,2704,2789,3040,3130
+Developing countries,"Cereals, food",146.3,161.7,173.7,165.7,166,163
+Developing countries,"Cereals, all uses",191.8,219.1,238.6,238,268,279
+Developing countries,Roots and tubers,78.8,69.6,60.1,67,75,77
+Developing countries,(Developing minus China),61.8,59,58.4,62.8,76,80
+Developing countries,Sugar (raw sugar eq.),14.7,17.5,19.2,20.7,25,26
+Developing countries,"Pulses, dry",9.2,7.8,7.3,6.7,7,7
+Developing countries,"Vegetable oils, oilseeds and products (oil eq.)",4.9,6.5,8.6,10.4,14,16
+Developing countries,Meat (carcass weight),10.7,13.7,18.2,26.7,38,44
+Developing countries,(Developing minus China & Brazil),10.7,12.5,13.6,15.9,26,32
+Developing countries,"Milk and dairy, excl. butter (fresh milk eq.)",28.6,34,38.1,45.2,67,78
+Developing countries,Other food (kcal/person/day),123,140,171,242,285,300
+Developing countries,Total food (kcal/person/day),2111,2308,2520,2654,2960,3070
+Industrial countries,"Cereals, food",132.3,139.4,154.4,162.4,159,156
+Industrial countries,"Cereals, all uses",531.1,542,543.7,591.8,641,665
+Industrial countries,Roots and tubers,74.2,67.1,69.4,66.7,61,57
+Industrial countries,Sugar (raw sugar eq.),40.5,36.7,32.6,33.1,32,32
+Industrial countries,"Pulses, dry",3.4,2.8,3.2,3.6,4,4
+Industrial countries,"Vegetable oils, oilseeds and products (oil eq.)",13.2,15.7,18.5,21.5,24,24
+Industrial countries,Meat (carcass weight),69.7,78.5,84.3,90.2,99,103
+Industrial countries,"Milk and dairy, excl. butter (fresh milk eq.)",189.1,201,211.2,214,223,227
+Industrial countries,Other food (kcal/person/day),486,500,521,525,565,580
+Industrial countries,Total food (kcal/person/day),3046,3133,3292,3446,3520,3540
+Transition countries,"Cereals, food",200.5,189.2,179.1,168.7,164,158
+Transition countries,"Cereals, all uses",653,777.6,767.8,499.1,618,688
+Transition countries,Roots and tubers,140.2,118.4,97.1,103.3,99,94
+Transition countries,Sugar (raw sugar eq.),41.9,45.9,43.4,36.5,39,41
+Transition countries,"Pulses, dry",4.1,3.1,2.3,1.6,2,2
+Transition countries,"Vegetable oils, oilseeds and products (oil eq.)",7.4,9.2,10.2,10.1,15,18
+Transition countries,Meat (carcass weight),49.5,62.9,70.7,44.4,59,68
+Transition countries,"Milk and dairy, excl. butter (fresh milk eq.)",185.7,181.3,177.2,160.2,179,193
+Transition countries,Other food (kcal/person/day),331,372,333,317,365,390
+Transition countries,Total food (kcal/person/day),3323,3389,3280,2900,3150,3270
+sub-Saharan Africa,"Cereals, food",115.3,114.3,118.8,123.3,142,155
+sub-Saharan Africa,Roots and tubers,193,175,184.3,191.2,211,205
+sub-Saharan Africa,(sub-Sah. Afr. minus Nigeria and Ghana),184.3,182.6,179.5,165.9,194,191
+sub-Saharan Africa,Sugar (raw sugar eq.),7.8,9.8,8.6,10,12,15
+sub-Saharan Africa,"Pulses, dry",11,9.7,8.9,9.8,12,14
+sub-Saharan Africa,"Vegetable oils, oilseeds and products (oil eq.)",8,8.4,8.5,8.9,12,13
+sub-Saharan Africa,Meat (carcass weight),10.2,10.5,9.8,9.5,14,18
+sub-Saharan Africa,"Milk and dairy, excl. butter (fresh milk eq.)",29.6,33.7,29.8,28.3,34,38
+sub-Saharan Africa,Other food (kcal/person/day),139,141,130,128,170,185
+sub-Saharan Africa,Total food (kcal/person/day),2100,2078,2106,2194,2600,2830
+Near East / North Africa,"Cereals, food",179.3,199.7,211.8,203.5,199,193
+Near East / North Africa,Roots and tubers,16.6,26.5,31.8,33.7,33,33
+Near East / North Africa,Sugar (raw sugar eq.),20.4,28,28.2,27.7,29,30
+Near East / North Africa,"Pulses, dry",6.2,6.3,8,6.6,7,7
+Near East / North Africa,"Vegetable oils, oilseeds and products (oil eq.)",7.5,10.9,12.5,12.1,14,15
+Near East / North Africa,Meat (carcass weight),12.6,17.3,19.6,21.7,35,43
+Near East / North Africa,"Milk and dairy, excl. butter (fresh milk eq.)",68.1,84.1,75,73.2,90,101
+Near East / North Africa,Other food (kcal/person/day),224,277,298,333,370,385
+Near East / North Africa,Total food (kcal/person/day),2382,2834,3011,2974,3130,3190
+Latin America and Caribbean,"Cereals, food",118.7,130.1,130.1,132.6,140,139
+Latin America and Caribbean,Roots and tubers,94.1,74.3,63.9,63.3,62,58
+Latin America and Caribbean,Sugar (raw sugar eq.),40.5,48.1,46,48.5,49,47
+Latin America and Caribbean,"Pulses, dry",14.2,12.6,10.5,11.2,11,10
+Latin America and Caribbean,"Vegetable oils, oilseeds and products (oil eq.)",6.8,10.1,12.1,11.8,15,16
+Latin America and Caribbean,Meat (carcass weight),33.5,40.5,42.8,58.5,79,90
+Latin America and Caribbean,"Milk and dairy, excl. butter (fresh milk eq.)",84,96.9,94.5,108.8,136,150
+Latin America and Caribbean,Other food (kcal/person/day),240,246,258,272,310,330
+Latin America and Caribbean,Total food (kcal/person/day),2465,2698,2689,2836,3120,3200
+South Asia,"Cereals, food",150.4,151.1,164.3,157.1,167,169
+South Asia,Roots and tubers,16.9,19.9,18.7,23.5,31,36
+South Asia,Sugar (raw sugar eq.),20.3,20.6,23.7,25.6,30,32
+South Asia,"Pulses, dry",14.5,11.3,12.3,10.1,8,7
+South Asia,"Vegetable oils, oilseeds and products (oil eq.)",4.6,5.8,7.2,9.7,15,18
+South Asia,Meat (carcass weight),3.9,4.1,5,5.5,12,18
+South Asia,"Milk and dairy, excl. butter (fresh milk eq.)",37,41.6,55.1,67.6,106,129
+South Asia,Other food (kcal/person/day),84,89,104,141,180,200
+South Asia,Total food (kcal/person/day),2066,2084,2329,2392,2790,2980
+East Asia,"Cereals, food",152.2,181.4,199.5,186.7,176,162
+East Asia,Roots and tubers,96.6,80.8,57.1,65.8,61,53
+East Asia,Sugar (raw sugar eq.),5.7,8,10.5,11.6,17,20
+East Asia,"Pulses, dry",4.8,4.3,2.6,2,2,2
+East Asia,"Vegetable oils, oilseeds and products (oil eq.)",3.5,4.7,7.8,10.6,15,17
+East Asia,Meat (carcass weight),9.2,13.2,22.6,39.8,62,73
+East Asia,"Milk and dairy, excl. butter (fresh milk eq.)",3.7,5,7.4,11.3,21,24
+East Asia,Other food (kcal/person/day),98,121,179,322,405,440
+East Asia,Total food (kcal/person/day),2012,2317,2625,2872,3190,3230

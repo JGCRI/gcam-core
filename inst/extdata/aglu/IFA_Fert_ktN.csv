@@ -1,8 +1,10 @@
-# File: IFA_Fert_2006_07.csv,,,,,,,,,,,
-# Author: Mayda Nathan,,,,,,,,,,,
-# Description: Fertilizer application by IFA region and IFA crop category,,,,,,,,,,,
-# Original source: Annex 1 of P Heffer 2009. Assessment of Fertilizer Use by Crop at the Global Level 2009/07 - 2008/08. International Fertilizer Industry Association. AgCom/09/28.,,,,,,,,,,,
-# ----------,,,,,,,,,,,
+# File: IFA_Fert_ktN.csv
+# Title: IFA_Fert_ktN
+# Units: kilotons N
+# Author: Mayda Nathan
+# Description: Fertilizer application by IFA region and IFA crop category
+# Original source: Annex 1 of P Heffer 2009. Assessment of Fertilizer Use by Crop at the Global Level 2009/07 - 2008/08. International Fertilizer Industry Association. AgCom/09/28.
+# ----------
 Country,Wheat,Rice,Maize,OtherCoarseGrains,Soybean,OilPalm,OtherOilSeeds,Cotton,SugarCrops,FruitsAndVeg,Other
 China,4258,5496,4862,302,453,6,1450,1238,453,9060,2621
 India,2892,4132,344,620,138,0,620,895,689,964,2479

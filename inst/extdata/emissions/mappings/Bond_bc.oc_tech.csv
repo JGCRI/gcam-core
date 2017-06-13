@@ -1,0 +1,76 @@
+# File: Bond_bc.oc_tech.csv
+# Title: Mapping between Bond etal BC OC emissions data technology/fuel combinations to GCAM sectors and technology/fuel categories
+# Units: None
+# Source: NA
+BCOC.Technology,sector,technology
+Elec_Coal,electricity generation,coal (conv pul)
+Elec_Gas,electricity generation,gas (steam/CT)
+Elec_Petroleum,electricity generation,refined liquids (steam/CT)
+Elec_Gasoline,electricity generation,refined liquids (steam/CT)
+Elec_Diesel,electricity generation,refined liquids (steam/CT)
+Elec_Biomass,electricity generation,biomass (conv)
+OtherTransf_Coal,heat,coal
+OtherTransf_Gas,heat,gas
+OtherTransf_Petroleum,heat,refined liquids
+OtherTransf_Gasoline,heat,refined liquids
+OtherTransf_Diesel,heat,refined liquids
+OtherTransf_Biomass,heat,biomass
+Industry_Coal,industry_energy,coal
+Industry_Gas,industry_energy,gas
+Industry_Petroleum,industry_energy,refined liquids
+Industry_Gasoline,industry_energy,refined liquids
+Industry_Diesel,industry_energy,refined liquids
+Industry_Biomass,industry_energy,biomass
+Industry_BioLiquid,industry_energy,refined liquids
+AirTransport_Gas,trn_air,gas
+AirTransport_Petroleum,trn_air,refined liquids
+AirTransport_Gasoline,trn_air,refined liquids
+AirTransport_Diesel,trn_air,refined liquids
+RoadTransport_Gas,trn_road,gas
+RoadTransport_Petroleum,trn_road,refined liquids
+RoadTransport_Gasoline,trn_road,refined liquids
+RoadTransport_Diesel,trn_road,refined liquids
+RoadTransport_BioLiquid,trn_road,refined liquids
+RailTransport_Coal,trn_rail,coal
+RailTransport_Gas,trn_rail,gas
+RailTransport_Petroleum,trn_rail,refined liquids
+RailTransport_Gasoline,trn_rail,refined liquids
+RailTransport_Diesel,trn_rail,refined liquids
+RailTransport_Biomass,trn_rail,biomass
+OtherTransport_Coal,,
+OtherTransport_Gas,,
+OtherTransport_Petroleum,,
+OtherTransport_Gasoline,,
+OtherTransport_Diesel,,
+ShipTransport_Coal,trn_ship,coal
+ShipTransport_Gas,trn_ship,gas
+ShipTransport_Petroleum,trn_ship,refined liquids
+ShipTransport_Gasoline,trn_ship,refined liquids
+ShipTransport_Diesel,trn_ship,refined liquids
+InterBunkers_Coal,trn_ship,coal
+InterBunkers_Gas,trn_ship,gas
+InterBunkers_Petroleum,trn_ship,refined liquids
+InterBunkers_Gasoline,trn_ship,refined liquids
+InterBunkers_Diesel,trn_ship,refined liquids
+CommBuildings_Coal,bld_comm,coal
+CommBuildings_Gas,bld_comm,gas
+CommBuildings_Petroleum,bld_comm,refined liquids
+CommBuildings_Gasoline,bld_comm,refined liquids
+CommBuildings_Diesel,bld_comm,refined liquids
+CommBuildings_Biomass,bld_comm,biomass
+Residential_Coal,bld_resid,coal
+Residential_Gas,bld_resid,gas
+Residential_Petroleum,bld_resid,refined liquids
+Residential_Gasoline,bld_resid,refined liquids
+Residential_Diesel,bld_resid,refined liquids
+Residential_Biomass,bld_resid,biomass
+UrbanBurn_OpenWaste,,
+UrbanBurn_OpenBiomass,,
+RuralBurn_OpenWaste,,
+RuralBurn_OpenBiomass,,
+SavannaBurn_OpenWaste,,
+SavannaBurn_OpenBiomass,,
+ForestBurn_OpenWaste,,
+ForestBurn_OpenBiomass,,
+AgResidueBurn_OpenWaste,,
+AgResidueBurn_OpenBiomass,,

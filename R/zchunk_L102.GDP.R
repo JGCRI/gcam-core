@@ -38,6 +38,10 @@
 #' 'GCAM_region_ID', but could be anything
 #' @return Time series with the past and future joined as described in details.
 join.gdp.ts <- function(past, future, grouping) {
+
+    year <- gdp <- base.gdp <- gdp.ratio <- . <- scenario <-
+        NULL                            # silence notes on package check.
+
   if(! 'scenario' %in% names(future)) {
     ## This saves us having to make a bunch of exceptions below when we
     ## include 'scenario' among the columns to join by.
@@ -116,6 +120,10 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
              "L102.pcgdp_thous90USD_Scen_R_Y",
              "L102.PPP_MER_R"))
   } else if(command == driver.MAKE) {
+
+    iso <- GCAM_region_ID <- value <- year <- gdp <- MODEL <- VARIABLE <-
+        UNIT <- SCENARIO <- scenario <- gdp.rate <- gdp.ratio <- population <-
+        pcgdp <- MER <- PPP <- NULL     # silence package check.
 
     all_data <- list(...)[[1]]
 

@@ -22,7 +22,7 @@
 module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "aglu/FAO_ag_items_PRODSTAT",
+             FILE = "aglu/FAO/FAO_ag_items_PRODSTAT",
              "L100.Water_footprint_m3",
              "L100.LDS_ag_prod_t",
              FILE = "aglu/Mekonnen_Hoekstra_Rep47_A2",
@@ -37,11 +37,22 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
              "L165.ag_IrrEff_R"))
   } else if(command == driver.MAKE) {
 
+    ## Silence package check.
+    GTAP_crop <- MH_crop <- iso <- coef_m3t <- FAO_crop <- water_type <-
+        coef_m3kg <- value <- Prod_t <- Blue <- Green <- item <- value_other <-
+        blue_m3kg <- green_m3kg <- irrProd <- blue_thousm3 <- irrProd_t <-
+        BlueIrr_m3kg <- total_m3kg <- GreenIrr_m3kg <- green_thousm3 <-
+        GreenIrr_thousm3 <- rfdProd <- rfdProd_t <- GreenRfd_thousm3 <-
+        MH2014_proxy <- GLU <- NULL
+    GreenRfd_m3kg <- GCAM_region_ID <- GCAM_commodity <- BlueIrr_thousm3 <-
+        TotIrr_m3kg <- application.eff <- management.eff <- irrHA <-
+        field.eff <- conveyance.eff <- NULL
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO_ag_items_PRODSTAT")
+    FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_ag_items_PRODSTAT")
     L100.Water_footprint_m3 <- get_data(all_data, "L100.Water_footprint_m3")
     Mekonnen_Hoekstra_Rep47_A2 <- get_data(all_data, "aglu/Mekonnen_Hoekstra_Rep47_A2")
     Rohwer_2007_IrrigationEff <- get_data(all_data, "aglu/Rohwer_2007_IrrigationEff")
@@ -97,9 +108,9 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
       # Nigeria: CitrusFrtNES, CowPeasDry, Plantains, and FrtFrshNES.
       # If we want to replace these with defaults, the blue water coef (i.e., the important one) will still be zero,
       # because it's in Nigeria, where ~100% of crop production is rainfed (according to the inventories). So, if we
-      # do implement a different method, we'll get a slightly higher estimate of biophysical water consumption for
-      # MiscCrop in Africa_Western.
-      mutate(coef_m3kg = if_else(is.na(coef_m3kg), 0, coef_m3kg)) %>%
+    # do implement a different method, we'll get a slightly higher estimate of biophysical water consumption for
+    # MiscCrop in Africa_Western.
+    replace_na(list(coef_m3kg = 0)) %>%
       spread(water_type, coef_m3kg) ->
       L165.Mekonnen_Hoekstra_Rep47_A2
 
@@ -114,7 +125,7 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
       left_join(L165.ag_Prod_t_ctry_crop_GLU, by = c("iso", "GTAP_crop", "GLU")) %>%
       # M+H have some country/crop/GLU combinations that Monfreda doesn't
       # Set missing values to 0
-      mutate(Prod_t = if_else(is.na(Prod_t), 0L, Prod_t)) %>%
+      replace_na(list(Prod_t = 0L)) %>%
       # For the 18 M+H gridded crops, calculate the coefs by country, GLU, and crop (original lines 79-82)
       # NOTE: dropping all country / GLU / crops with zero production; these won't have any water anyway
       filter(Prod_t > 0) %>%
@@ -373,7 +384,7 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
       add_comments("the total volume of green water on rainfed crops; and the green water coef for rainfed crops") %>%
       add_legacy_name("L165.BlueIrr_m3kg_R_C_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
-                     "aglu/FAO_ag_items_PRODSTAT",
+                     "aglu/FAO/FAO_ag_items_PRODSTAT",
                      "L100.Water_footprint_m3",
                      "L100.LDS_ag_prod_t",
                      "aglu/Mekonnen_Hoekstra_Rep47_A2",

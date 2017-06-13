@@ -11,12 +11,13 @@
 outputs/
 xml/
 sample-generator/outputs/
-
-# R directory files - using data_system_source instead
-#R/*.R
 R/*.html
 
 # Vignette files
 inst/doc
 vignettes/intro-luzlogr.html
 vignettes/intro-luzlogr.R
+
+# Proprietary files
+en_nonOECD.*
+en_OECD.*

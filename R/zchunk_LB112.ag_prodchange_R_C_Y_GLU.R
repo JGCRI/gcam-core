@@ -14,14 +14,15 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
+#' @importFrom stats median
 #' @author RC April 2017
 module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "aglu/A_defaultYieldRate",
              FILE = "aglu/AGLU_ctry",
-             FILE = "aglu/FAO_ag_items_PRODSTAT",
-             FILE = "aglu/FAO_ag_CROSIT",
+             FILE = "aglu/FAO/FAO_ag_items_PRODSTAT",
+             FILE = "aglu/FAO/FAO_ag_CROSIT",
              "L100.LDS_ag_HA_ha",
              "L103.ag_Prod_Mt_R_C_Y_GLU"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -30,14 +31,22 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
              "L112.bio_YieldRate_R_Y_GLU"))
   } else if(command == driver.MAKE) {
 
+    CROSIT_ctry <- CROSIT_country_ID <- CROSIT_crop <- CROSIT_cropID <- year <-
+        HA_kha <- Yield_kgHa <- Prod_kt <- HA_kha_rainfed <- Yield_kgHa_rainfed <-
+        NULL
+    Prod_kt_rainfed <- HA_kha_irrigated <- Yield_kgHa_irrigated <-
+        Prod_kt_irrigated <- NULL
+    Yield_base <- iso <- GTAP_crop <- . <- GLU <- value <- CROSIT <- Mult <-
+        GCAM_region_ID <- GCAM_commodity <- Prod_mod <- YieldRatio <- NULL # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     A_defaultYieldRate <- get_data(all_data, "aglu/A_defaultYieldRate")
     AGLU_ctry <- get_data(all_data, "aglu/AGLU_ctry")
-    FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO_ag_items_PRODSTAT")
-    FAO_ag_CROSIT <- get_data(all_data, "aglu/FAO_ag_CROSIT")
+    FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_ag_items_PRODSTAT")
+    FAO_ag_CROSIT <- get_data(all_data, "aglu/FAO/FAO_ag_CROSIT")
     L100.LDS_ag_HA_ha <- get_data(all_data, "L100.LDS_ag_HA_ha")
     L103.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L103.ag_Prod_Mt_R_C_Y_GLU")
 
@@ -362,8 +371,8 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
       add_legacy_name("L112.ag_YieldRatio_R_C_Ysy_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
                      "aglu/AGLU_ctry",
-                     "aglu/FAO_ag_items_PRODSTAT",
-                     "aglu/FAO_ag_CROSIT",
+                     "aglu/FAO/FAO_ag_items_PRODSTAT",
+                     "aglu/FAO/FAO_ag_CROSIT",
                      "L100.LDS_ag_HA_ha") ->
       L112.ag_YieldRatio_R_C_Ysy_GLU
 
