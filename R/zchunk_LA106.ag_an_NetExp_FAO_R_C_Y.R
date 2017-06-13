@@ -30,6 +30,9 @@ module_aglu_LA106.ag_an_NetExp_FAO_R_C_Y <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    Exp_t <- GCAM_commodity <- GCAM_region_ID <- Imp_t <- curr_table <- element <- item <-
+      netExp <- scaler <- value <- year <- NULL   # silence package check notes
+
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     FAO_ag_items_cal_SUA <- get_data(all_data, "aglu/FAO/FAO_ag_items_cal_SUA")

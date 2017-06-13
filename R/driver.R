@@ -85,7 +85,7 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 #' @param write_outputs Write all chunk outputs to disk?
 #' @param quiet Suppress output?
 #' @param stop_before Stop immediately before this chunk (character)
-#' @param stop_before Stop immediately after this chunk  (character)
+#' @param stop_after Stop immediately after this chunk  (character)
 #' @param outdir Location to write output data (ignored if \code{write_outputs} is \code{FALSE})
 #' @param xmldir Location to write output XML (ignored if \code{write_outputs} is \code{FALSE})
 #' @return A list of all built data.
