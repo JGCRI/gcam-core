@@ -51,7 +51,12 @@ module_socioeconomics_L100.GDP_hist <- function(command, ...) {
       add_units("Million 1990 USD") %>%
       # flag that this dataset is in different form from original
       add_legacy_name("L100.gdp_mil90usd_ctry_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) %>%
+      # We are now no longer filtering this dataset to HISTORICAL_YEARS (as this causes
+      # downstream chunks don't know what to do if HISTORICAL_YEARS changes), but this means
+      # that we fail the oldnew test. I don't see any option but to disable testing for this,
+      # as this is really a "version 2" change.
+      add_flags(FLAG_NO_TEST) ->
       L100.gdp_mil90usd_ctry_Yh
 
     return_data(L100.gdp_mil90usd_ctry_Yh)

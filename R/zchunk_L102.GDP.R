@@ -54,7 +54,7 @@ join.gdp.ts <- function(past, future, grouping) {
 
   ## Find the base year
   base.year <- max(dplyr::intersect(past$year, future$year))
-  assert_that(length(base.year) == 1 && is.finite(base.year))
+  assert_that(is.finite(base.year))
 
   ## Base year gdp from the future dataset
   baseyear.future.gdp <- filter(future, year == base.year) %>%
@@ -143,10 +143,11 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
     ## Add region IDs to historical GDP and aggregate by region. Hang onto the country-level data
     ## because we will use them again when we make the IMF adjustments
     gdp_mil90usd_ctry <-
-      left_join_error_no_match(L100.gdp_mil90usd_ctry_Yh, iso_region32_lookup,
-                               by = 'iso') %>%
+      left_join_error_no_match(L100.gdp_mil90usd_ctry_Yh, iso_region32_lookup, by = 'iso') %>%
       rename(gdp = value)
+
     gdp_mil90usd_rgn <- gdp_mil90usd_ctry %>%
+      filter(year %in% HISTORICAL_YEARS) %>%
       group_by(GCAM_region_ID, year) %>%
       summarise(gdp = sum(gdp))
     ## gdp_mil90usd_ctry:  iso, GCAM_region_ID, year, gdp
@@ -165,7 +166,7 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
       gather(year, gdp, -SCENARIO, -GCAM_region_ID) %>%
       mutate(year = as.integer(year),
              gdp = as.numeric(gdp),
-             scenario=substr(SCENARIO, 1, 4)) %>% # Trim the junk off the end of
+             scenario = substr(SCENARIO, 1, 4)) %>% # Trim the junk off the end of
       # the scenario names, leaving us with
       # just SSP1, SSP2, etc.
       group_by(scenario, GCAM_region_ID, year) %>%
@@ -183,8 +184,7 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
       standardize_iso('ISO') %>%
       change_iso_code('rou', 'rom') %>%
       gather(year, gdp.rate, -iso) %>%
-      full_join( gdp_mil90usd_ctry %>% select(iso) %>% unique,
-                 by = 'iso') %>%
+      full_join(gdp_mil90usd_ctry %>% select(iso) %>% unique, by = 'iso') %>%
       mutate(gdp.rate = if_else(gdp.rate == 'n/a', '0', gdp.rate)) %>% # Treat string 'n/a' as missing.
       mutate(year = as.integer(year),
              gdp.rate = as.numeric(gdp.rate)) %>%
@@ -201,15 +201,21 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
       # that join.gdp.ts() can work with it.
       select(iso, year, gdp)
 
-    gdp.mil90usd.imf.country.yr <-
-      select(gdp_mil90usd_ctry, iso, year, gdp) %>% # strip region id col b/c imfgdp.ratio doesn't have one.
-      join.gdp.ts(imfgdp.ratio, 'iso')
+    gdp_mil90usd_ctry %>%
+      # filter gdp data so that it ends right at the first year of the IMF ratio data
+      filter(year <= min(imfgdp.ratio$year), year >= min(HISTORICAL_YEARS)) %>%
+      select(iso, year, gdp) %>%
+      join.gdp.ts(imfgdp.ratio, 'iso') ->
+      gdp.mil90usd.imf.country.yr
     ## columns: iso, year, gdp
+
+    # gdp.mil90usd.imf.country.yr <-
+    #   select(filter(gdp_mil90usd_ctry, year <= min(imfgdp.ratio$year), year >= min(HISTORICAL_YEARS)), iso, year, gdp) %>% # strip region id col b/c imfgdp.ratio doesn't have one.
+    #   join.gdp.ts(imfgdp.ratio, 'iso')
 
     ## Aggregate by GCAM region
     gdp.mil90usd.imf.rgn.yr <-
-      left_join_error_no_match(gdp.mil90usd.imf.country.yr,
-                               iso_region32_lookup, by = 'iso') %>%
+      left_join_error_no_match(gdp.mil90usd.imf.country.yr, iso_region32_lookup, by = 'iso') %>%
       group_by(GCAM_region_ID, year) %>%
       summarise(gdp = sum(gdp)) %>%
       filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS))
@@ -286,6 +292,7 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
 
     ## Produce outputs
     gdp.mil90usd.scen.rgn.yr %>%
+      filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%
       rename(value = gdp) %>%
       add_title("Gross Domestic Product (GDP) by scenario, region, and year.") %>%
       add_units("Millions of 1990 USD (MER)") %>%
@@ -302,6 +309,7 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
       L102.gdp_mil90usd_Scen_R_Y
 
     pcgdp.thous90usd.scen.rgn.yr %>%
+      filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%
       rename(value = pcgdp) %>%
       add_title("Gross Domestic Product (GDP) per capita, by scenario, region, and year.") %>%
       add_units("Thousands of 1990 USD (MER)") %>%
