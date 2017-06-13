@@ -209,10 +209,6 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
       gdp.mil90usd.imf.country.yr
     ## columns: iso, year, gdp
 
-    # gdp.mil90usd.imf.country.yr <-
-    #   select(filter(gdp_mil90usd_ctry, year <= min(imfgdp.ratio$year), year >= min(HISTORICAL_YEARS)), iso, year, gdp) %>% # strip region id col b/c imfgdp.ratio doesn't have one.
-    #   join.gdp.ts(imfgdp.ratio, 'iso')
-
     ## Aggregate by GCAM region
     gdp.mil90usd.imf.rgn.yr <-
       left_join_error_no_match(gdp.mil90usd.imf.country.yr, iso_region32_lookup, by = 'iso') %>%
