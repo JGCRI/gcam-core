@@ -25,5 +25,5 @@ Produces default interest rate by region, historical and future population by re
 and uses per-capita GDP to calculate labor productivity by region and scenario.
 }
 \author{
-HM&RH June 2017
+HM & RH June 2017
 }
