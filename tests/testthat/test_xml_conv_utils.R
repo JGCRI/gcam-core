@@ -133,3 +133,24 @@ test_that("automatic column re-ordering fails for unknown header", {
   expect_error(add_xml_data(data1, "InterestRate", "Will_Not_Find"))
 })
 
+test_that("LandNode rename works", {
+  if(!isTRUE(getOption("gcamdata.use_java"))) {
+    skip("Skipping test as global option gcamdata.use_java is not TRUE")
+  }
+  test_fn <- "test.xml"
+  data1 <- data.frame(region = "USA", LandAllocatorRoot = "root", LandNode1="node1",
+                      LandNode2="node2", LandLeaf="leaf", year=2017, allocation=875.34)
+  create_xml(test_fn) %>%
+    add_xml_data(data1, "LN2_MgdAllocation") %>%
+    add_rename_landnode_xml() %>%
+    run_xml_conversion()
+
+  expect_true(file.exists(test_fn))
+  test_xml <- readLines(test_fn)
+  unlink(test_fn)
+  test_xml %>%
+    gsub("^\\s+|\\s+$", "", .) %>%
+    paste(., collapse = "") ->
+    test_xml
+  expect_identical(test_xml, '<?xml version="1.0" encoding="UTF-8"?><scenario><world><region name="USA"><LandAllocatorRoot name="root"><LandNode name="node1"><LandNode name="node2"><LandLeaf name="leaf"><landAllocation year="2017">875.34</landAllocation></LandLeaf></LandNode></LandNode></LandAllocatorRoot></region></world></scenario>')
+})

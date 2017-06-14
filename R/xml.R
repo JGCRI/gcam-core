@@ -119,6 +119,27 @@ make_run_xml_conversion <- function() {
 #' @author PP March 2017
 run_xml_conversion <- make_run_xml_conversion()
 
+# Note: the methods below explicitly name XML tags as expected by GCAM and/or
+# the model interface headers thus will need to be maintained to be consistent.
+
+#' add_rename_landnode_xml
+#'
+#' Add a table to an XML pipeline that instructs the ModelInterface to rename
+#' LandNodeX to LandNode.  Such a table is necessary to help work around
+#' limitations in the XML processing that node names of the same name can not be
+#' nested with in each other: LandNode/LandNode thus instead we say
+#' LandNode1/LandNode2 and rename as the last step.  Therefore in most cases a
+#' user should add this table near the end of the XML pipeline.
+#' @param dot The current state of the pipeline started from \code{create_xml}
+#' @return A "data structure" to hold the various parts needed to run the model
+#' interface CSV to XML conversion.
+#' @author Pralit Patel
+add_rename_landnode_xml <- function(dot) {
+  land_name_table <- tibble(from=paste0("LandNode", seq(1,5)),to="LandNode")
+
+  add_xml_data(dot, land_name_table, "NodeRename", NULL)
+}
+
 #' generate_level2_data_names
 #'
 #' Generate the list of "level 2 data names" or really a list of column orderings
