@@ -154,3 +154,28 @@ test_that("LandNode rename works", {
     test_xml
   expect_identical(test_xml, '<?xml version="1.0" encoding="UTF-8"?><scenario><world><region name="USA"><LandAllocatorRoot name="root"><LandNode name="node1"><LandNode name="node2"><LandLeaf name="leaf"><landAllocation year="2017">875.34</landAllocation></LandLeaf></LandNode></LandNode></LandAllocatorRoot></region></world></scenario>')
 })
+
+test_that("add_node_equiv_xml works", {
+  if(!isTRUE(getOption("gcamdata.use_java"))) {
+    skip("Skipping test as global option gcamdata.use_java is not TRUE")
+  }
+  test_fn <- "test.xml"
+  data1 <- data.frame(region = "USA", supplysector = "sector", subsector="sub",
+                      pass.through.technology="ptech")
+  data2 <- data.frame(region = "USA", supplysector = "sector", subsector="sub",
+                      technology="ptech", year=2017, share.weight=0.56)
+  create_xml(test_fn) %>%
+    add_node_equiv_xml("technology") %>%
+    add_xml_data(data1, "PassThroughTech") %>%
+    add_xml_data(data2, "TechShrwt") %>%
+    run_xml_conversion()
+
+  expect_true(file.exists(test_fn))
+  test_xml <- readLines(test_fn)
+  unlink(test_fn)
+  test_xml %>%
+    gsub("^\\s+|\\s+$", "", .) %>%
+    paste(., collapse = "") ->
+    test_xml
+  expect_identical(test_xml, '<?xml version="1.0" encoding="UTF-8"?><scenario><world><region name="USA"><supplysector name="sector"><subsector name="sub"><pass-through-technology name="ptech"><period year="2017"><share-weight>0.56</share-weight><CO2 name="CO2"/></period></pass-through-technology></subsector></supplysector></region></world></scenario>')
+})

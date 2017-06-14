@@ -140,6 +140,32 @@ add_rename_landnode_xml <- function(dot) {
   add_xml_data(dot, land_name_table, "NodeRename", NULL)
 }
 
+#' add_node_equiv_xml
+#'
+#' Add a table to an XML pipeline that instructs the ModelInterface to treat
+#' tags in the same class as the same when enabled.  Thus not requiring multiple
+#' headers for instance to read in a share-weight into a technology
+#' intermittent-technology or tranTechnology.  A user taking advantage of this
+#' feature would then read this table early in the XML pipeline.
+#' @param dot The current state of the pipeline started from \code{create_xml}
+#' @param equiv_class A name of the equivalence class to add.  This could be any
+#' key in the list \code{XML_NODE_EQUIV}.
+#' @return A "data structure" to hold the various parts needed to run the model
+#' interface CSV to XML conversion.
+#' @author Pralit Patel
+add_node_equiv_xml <- function(dot, equiv_class) {
+  equiv_list <- XML_NODE_EQUIV[[equiv_class]]
+  if(is.null(equiv_list)) {
+    stop("Could not find ", equiv_class, " in XML_NODE_EQUIV")
+  }
+
+  tibble(group.name=equiv_class, col=paste0("tag", seq(1,length(equiv_list))), tag=equiv_list) %>%
+    spread(col, tag) ->
+    equiv_table
+
+  add_xml_data(dot, equiv_table, "EQUIV_TABLE", NULL)
+}
+
 #' generate_level2_data_names
 #'
 #' Generate the list of "level 2 data names" or really a list of column orderings
@@ -517,8 +543,24 @@ generate_level2_data_names <- function() {
   level2_data_names
 }
 
-#' Aa list of column orderings keyed by the ModelInterface header so that we can
+#' A list of column orderings keyed by the ModelInterface header so that we can
 #' ensure tables being sent to be converted to XML by the ModelInterface have their
 #' columns arranged in the order the ModelInterface is expecting them.
 #' @author Pralit Patel
 LEVEL2_DATA_NAMES <- generate_level2_data_names()
+
+#' A list of XML tag equivalence classes so that the ModelInterface when converting
+#' data to XML can treat tags in the same class as the same when enabled.  Thus not
+#' requiring multiple headers for instance to read in a share-weight into a technology
+#' intermittent-technology or tranTechnology.
+#' @author Pralit Patel
+XML_NODE_EQUIV <- list(
+  "sector" = c("supplysector", "AgSupplySector", "pass-through-sector"),
+  "subsector" = c("subsector", "AgSupplySubsector", "tranSubsector"),
+  "technology" = c("technology", "stub-technology", "intermittent-technology",
+                    "tranTechnology", "AgProductionTechnology", "pass-through-technology"),
+  "discrete-choice" = c("dummy-logit-tag", "relative-cost-logit",
+                         "absolute-cost-logit"),
+  "LandLeaf" = c("LandLeaf", "UnmanagedLandLeaf"),
+  "carbon-calc" = c("land-carbon-densities", "no-emiss-carbon-calc")
+)
