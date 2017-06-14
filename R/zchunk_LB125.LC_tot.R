@@ -84,32 +84,32 @@ module_aglu_LB125.LC_tot <- function(command, ...) {
       mutate(changing_rate = value / lag(value)) %>%          # calculate the changing rate
       replace_na(list(changing_rate = 1)) %>%                 # assign na to 1 (no change)
       ungroup() %>%
-      select(changing_rate) ->
-      LC_check
+      select(changing_rate) ->                                # only the changing_rate is useful
+      LC_check                                                # save for check the changing rate
 
     # Stop if the changing rate out of the tolerance boundaries
     if (max(abs(LC_check - 1)) > LAND_TOLERANCE)
     {stop("ERROR: Interannual fluctuation in global land cover exceeds tolerance threshold")}
 
-    #Write out the totals, by region and by region x GLU
+    # Write out the totals, by region and by region x GLU
     L125.LC_bm2_R_Yh_GLU %>%
       filter(year == min(year)) %>%                        # using the starting year only
       group_by(GCAM_region_ID, GLU) %>%                    # group by GCAM_region_ID and GLU
-      summarise(value = sum(value)) %>%                    # summarize area by region and GLU
+      summarise(value = sum(value)) %>%                    # calculate the total area for each region and GLU
       rename(LC_bm2 = value) ->                            # rename the column
-      L125.LC_bm2_R_GLU
+      L125.LC_bm2_R_GLU                                    # Total land cover by GCAM region and GLU (unit billion m2)
 
     L125.LC_bm2_R_Yh_GLU %>%
       filter(year == min(year)) %>%                        # using the starting year only
       group_by(GCAM_region_ID) %>%                         # group by GCAM_region_ID
-      summarise(value = sum(value)) %>%                    # summarize area by region
+      summarise(value = sum(value)) %>%                    # calculate the total area for each region
       rename(LC_bm2 = value) %>%                           # rename the column
       mutate(LC_bm2 = round(LC_bm2, DIGITS_LAND_TOTAL)) -> # keep the data with digit precision defined by DIGITS_LAND_TOTAL
-      L125.LC_bm2_R
+      L125.LC_bm2_R                                        # Total land cover by GCAM region (unit billion m2)
 
     L125.LC_bm2_R_LT_Yh_GLU %>%                           # Land cover totals differentiated by land use types
       mutate(value = round(value, DIGITS_LAND_USE)) ->    # round totals to specified number of digits defined by DIGITS_LAND_USE
-      L125.LC_bm2_R_LT_Yh_GLU
+      L125.LC_bm2_R_LT_Yh_GLU                             # Total land cover by GCAM region / land type / historical year / GLU (unit billion m2)
 
     # Produce outputs
     L125.LC_bm2_R %>%
