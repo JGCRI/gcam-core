@@ -1,6 +1,6 @@
 #' module_aglu_LB125.LC_tot
 #'
-#' Build Total Land Cover by GCAM region, or by GCAM region and GLU, or by GCAM region/GLU/year.
+#' Build Total Land Cover by GCAM region, and by GCAM region and GLU, and by GCAM region/GLU/year.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -82,7 +82,7 @@ module_aglu_LB125.LC_tot <- function(command, ...) {
     L125.LC_bm2_R_Yh_GLU %>%
       arrange(GCAM_region_ID, GLU, year) %>%
       mutate(changing_rate = value / lag(value)) %>%          # calculate the changing rate
-      replace_na(list(changing_rate = 1)) %>%                 # assign na to 1 (no change)
+      replace_na(list(changing_rate = 1)) %>%                 # assign na to 1 (na happens when there is no previous year)
       ungroup() %>%
       select(changing_rate) ->                                # only the changing_rate is useful
       LC_check                                                # save for check the changing rate

@@ -19,7 +19,7 @@ The corresponding file in the
 original data system was \code{LB125.LC_tot.R} (aglu level1).
 }
 \description{
-Build Total Land Cover by GCAM region, or by GCAM region and GLU, or by GCAM region/GLU/year.
+Build Total Land Cover by GCAM region, and by GCAM region and GLU, and by GCAM region/GLU/year.
 }
 \details{
 This module builds three total land cover area data from the lower-level raw data.
