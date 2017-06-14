@@ -34,6 +34,9 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
              "L143.HDDCDD_scen_ctry_Y"))
   } else if(command == driver.MAKE) {
 
+    value <- year <- `2099` <- country <- iso <- population <- GCAM_region_ID <-
+      SRES <- GCM <- variable <- wtDD <- aggpop <- region_GCAM3 <- NULL
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
@@ -191,23 +194,35 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
       add_units("Fahrenheit Degree Days") %>%
       add_comments("Population weighted country HDDCDD data from multiple ESMs and scenarios to GCAM region") %>%
       add_legacy_name("L143.HDDCDD_scen_R_Y") %>%
-      add_precursors("common/iso_GCAM_regID", "energy/GIS_ctry", "L101.Pop_thous_GCAM3_ctry_Y") %>%
+      add_precursors("common/iso_GCAM_regID", "energy/GIS_ctry", "L101.Pop_thous_GCAM3_ctry_Y",
+                     "energy/GIS/population_weighted_CDD_CCSM3x_A2",
+                     "energy/GIS/population_weighted_CDD_CCSM3x_B1",
+                     "energy/GIS/population_weighted_CDD_HadCM3_A2",
+                     "energy/GIS/population_weighted_CDD_HadCM3_B1",
+                     "energy/GIS/population_weighted_CDD_no_GCM_constdd",
+                     "energy/GIS/population_weighted_HDD_CCSM3x_A2",
+                     "energy/GIS/population_weighted_HDD_CCSM3x_B1",
+                     "energy/GIS/population_weighted_HDD_HadCM3_A2",
+                     "energy/GIS/population_weighted_HDD_HadCM3_B1",
+                     "energy/GIS/population_weighted_HDD_no_GCM_constdd") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L143.HDDCDD_scen_R_Y
+
     L143.HDDCDD_scen_RG3_Y %>%
       add_title("HDDCDD by GCAM3 region") %>%
       add_units("Fahrenheit Degree Days") %>%
       add_comments("Population weighted country HDDCDD data from multiple ESMs and scenarios to GCAM3 region") %>%
       add_legacy_name("L143.HDDCDD_scen_RG3_Y") %>%
-      add_precursors("common/iso_GCAM_regID", "energy/GIS_ctry", "L101.Pop_thous_GCAM3_ctry_Y") %>%
+      same_precursors_as(L143.HDDCDD_scen_R_Y) %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L143.HDDCDD_scen_RG3_Y
+
     L143.HDDCDD_scen_ctry_Y %>%
       add_title("HDDCDD by country") %>%
       add_units("Fahrenheit Degree Days") %>%
       add_comments("Combined data from multiple ESMs and scenarios") %>%
       add_legacy_name("L143.HDDCDD_scen_ctry_Y") %>%
-      add_precursors("common/iso_GCAM_regID", "energy/GIS_ctry", "L101.Pop_thous_GCAM3_ctry_Y") %>%
+      same_precursors_as(L143.HDDCDD_scen_R_Y) %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L143.HDDCDD_scen_ctry_Y
 

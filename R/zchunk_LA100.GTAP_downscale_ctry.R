@@ -13,22 +13,27 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
+#' @importFrom stats na.omit
 #' @author RC April 2017
 module_aglu_LA100.GTAP_downscale_ctry <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "aglu/AGLU_ctry",
-             FILE = "aglu/FAO_ag_items_PRODSTAT",
+             FILE = "aglu/FAO/FAO_ag_items_PRODSTAT",
              "L100.LDS_value_milUSD",
              "L100.LDS_ag_prod_t"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L100.GTAP_LV_milUSD"))
   } else if(command == driver.MAKE) {
 
+
+    iso <- GTAP_region <- GTAP_use <- GLU <- value <- prod_ctry <- prod_rgn <-
+        share <- NULL                   # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
     AGLU_ctry <- get_data(all_data, "aglu/AGLU_ctry")
-    FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO_ag_items_PRODSTAT")
+    FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_ag_items_PRODSTAT")
     L100.LDS_value_milUSD <- get_data(all_data, "L100.LDS_value_milUSD")
     L100.LDS_ag_prod_t <- get_data(all_data, "L100.LDS_ag_prod_t")
 
@@ -48,7 +53,7 @@ module_aglu_LA100.GTAP_downscale_ctry <- function(command, ...) {
       left_join_error_no_match(GTAP_ctry, by = "iso") %>%
       # Match in the land value for the entire GTAP region. These will be multiplied by country shares
       left_join(L100.LDS_value_milUSD, by = c("GTAP_region", "GLU", "GTAP_use")) %>%
-      mutate(value = if_else(is.na(value), 0, value)) ->
+      replace_na(list(value = 0)) ->
       LV_Rgtap
 
     # Compute production by GTAP region
@@ -75,11 +80,11 @@ module_aglu_LA100.GTAP_downscale_ctry <- function(command, ...) {
       left_join_error_no_match(GTAP_ctry, by = "iso") %>%
       left_join_error_no_match(Ag_Prod_Rgtap, by = c( "GTAP_region", "GLU", "GTAP_use" )) %>%
       mutate(share = prod_ctry / prod_rgn) %>%
-      mutate(share = if_else(is.na(share), 0, share )) %>%
+      replace_na(list(share = 0))  %>%
       # Multiply the land values by the shares
       right_join(LV_Rgtap, by = c("iso", "GTAP_region", "GLU", "GTAP_use")) %>%
       mutate(value = value * share) %>%
-      mutate(value = if_else(is.na(value), 0, value)) %>%
+      replace_na(list(value = 0)) %>%
       select(-prod_ctry, -prod_rgn, -share) %>%
 
       # Produce outputs
@@ -89,7 +94,7 @@ module_aglu_LA100.GTAP_downscale_ctry <- function(command, ...) {
       add_comments("Downscale the GTAP region-level land value to countries by production shares") %>%
       add_legacy_name("L100.GTAP_LV_milUSD") %>%
       add_precursors("aglu/AGLU_ctry",
-                     "aglu/FAO_ag_items_PRODSTAT",
+                     "aglu/FAO/FAO_ag_items_PRODSTAT",
                      "L100.LDS_value_milUSD",
                      "L100.LDS_ag_prod_t") ->
       L100.GTAP_LV_milUSD

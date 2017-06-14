@@ -16,7 +16,7 @@
 module_aglu_LB152.ag_GTAP_R_C_GLU_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "aglu/FAO_ag_items_PRODSTAT",
+             FILE = "aglu/FAO/FAO_ag_items_PRODSTAT",
              "L151.ag_irrHA_ha_ctry_crop",
              "L151.ag_rfdHA_ha_ctry_crop",
              "L151.ag_irrProd_t_ctry_crop",
@@ -28,11 +28,14 @@ module_aglu_LB152.ag_GTAP_R_C_GLU_irr <- function(command, ...) {
              "L152.ag_rfdProd_Mt_R_C_GLU"))
   } else if(command == driver.MAKE) {
 
+    iso <- GCAM_region_ID <- GTAP_crop <- GCAM_commodity <- irrHA <- GLU <-
+        rfdHA <- irrProd <- rfdProd <- NULL # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO_ag_items_PRODSTAT")
+    FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_ag_items_PRODSTAT")
     L151.ag_irrHA_ha_ctry_crop <- get_data(all_data, "L151.ag_irrHA_ha_ctry_crop")
     L151.ag_rfdHA_ha_ctry_crop <- get_data(all_data, "L151.ag_rfdHA_ha_ctry_crop")
     L151.ag_irrProd_t_ctry_crop <- get_data(all_data, "L151.ag_irrProd_t_ctry_crop")
@@ -94,7 +97,7 @@ module_aglu_LB152.ag_GTAP_R_C_GLU_irr <- function(command, ...) {
       add_comments("Irrigated harvested area data are aggregated from country and GTAP crop to GCAM region and commodity by each GLU") %>%
       add_legacy_name("L152.ag_irrHA_bm2_R_C_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
-                     "aglu/FAO_ag_items_PRODSTAT",
+                     "aglu/FAO/FAO_ag_items_PRODSTAT",
                      "L151.ag_irrHA_ha_ctry_crop") ->
       L152.ag_irrHA_bm2_R_C_GLU
 
@@ -104,7 +107,7 @@ module_aglu_LB152.ag_GTAP_R_C_GLU_irr <- function(command, ...) {
       add_comments("Rainfed harvested area data are aggregated from country and GTAP crop to GCAM region and commodity by each GLU") %>%
       add_legacy_name("L152.ag_rfdHA_bm2_R_C_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
-                     "aglu/FAO_ag_items_PRODSTAT",
+                     "aglu/FAO/FAO_ag_items_PRODSTAT",
                      "L151.ag_rfdHA_ha_ctry_crop") %>%
       add_flags(FLAG_SUM_TEST) ->
       L152.ag_rfdHA_bm2_R_C_GLU
@@ -115,7 +118,7 @@ module_aglu_LB152.ag_GTAP_R_C_GLU_irr <- function(command, ...) {
       add_comments("Irrigated crop production data are aggregated from country and GTAP crop to GCAM region and commodity by each GLU") %>%
       add_legacy_name("L152.ag_irrProd_Mt_R_C_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
-                     "aglu/FAO_ag_items_PRODSTAT",
+                     "aglu/FAO/FAO_ag_items_PRODSTAT",
                      "L151.ag_irrProd_t_ctry_crop") ->
       L152.ag_irrProd_Mt_R_C_GLU
 
@@ -125,7 +128,7 @@ module_aglu_LB152.ag_GTAP_R_C_GLU_irr <- function(command, ...) {
       add_comments("Rainfed crop production data are aggregated from country and GTAP crop to GCAM region and commodity by each GLUd") %>%
       add_legacy_name("L152.ag_rfdProd_Mt_R_C_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
-                     "aglu/FAO_ag_items_PRODSTAT",
+                     "aglu/FAO/FAO_ag_items_PRODSTAT",
                      "L151.ag_rfdProd_t_ctry_crop") ->
       L152.ag_rfdProd_Mt_R_C_GLU
 

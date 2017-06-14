@@ -18,50 +18,36 @@ module_aglu_LB109.ag_an_ALL_R_C_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c( "L101.ag_Food_Mt_R_C_Y",
               "L103.ag_Prod_Mt_R_C_Y",
-              FILE = "temp-data-inject/L105.an_Food_Mt_R_C_Y",
-              FILE = "temp-data-inject/L105.an_Prod_Mt_R_C_Y",
-              FILE = "temp-data-inject/L106.ag_NetExp_Mt_R_C_Y",
-              FILE = "temp-data-inject/L106.an_NetExp_Mt_R_C_Y",
+              "L105.an_Food_Mt_R_C_Y",
+              "L105.an_Prod_Mt_R_C_Y",
+              "L106.ag_NetExp_Mt_R_C_Y",
+              "L106.an_NetExp_Mt_R_C_Y",
               "L108.ag_Feed_Mt_R_C_Y",
               "L108.ag_NetExp_Mt_R_FodderHerb_Y",
-              FILE = "temp-data-inject/L122.in_Mt_R_C_Yh"))
+              "L122.in_Mt_R_C_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L109.ag_ALL_Mt_R_C_Y",
              "L109.an_ALL_Mt_R_C_Y"))
   } else if(command == driver.MAKE) {
+
+    year <- value <- GCAM_region_ID <- GCAM_commodity <- . <- flow <- Feed_Mt <-
+      Prod_Mt <- NetExp_Mt <- Supply_Mt <- Food_Mt <- Biofuels_Mt <-
+      OtherUses_Mt <- NegOtherUses_Mt <- OtherUses_Mt_adj <-
+      GlobalOtherUses_Mt <- NetExp_Mt_adj <- NetExpAdjFrac <-
+      GlobalNetExpAdj <- NULL # silence package check.
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
     L101.ag_Food_Mt_R_C_Y <- get_data(all_data, "L101.ag_Food_Mt_R_C_Y")
     L103.ag_Prod_Mt_R_C_Y <- get_data(all_data, "L103.ag_Prod_Mt_R_C_Y")
-    L105.an_Food_Mt_R_C_Y <- get_data(all_data, "temp-data-inject/L105.an_Food_Mt_R_C_Y") %>%
-      # The following two lines of code will be removed later, when we're using 'real' data
-      gather(year, value, -GCAM_region_ID, -GCAM_commodity) %>%   # reshape
-      mutate(year = as.integer(substr(year, 2, 5)))   # change Xyear to year
-
-    L105.an_Prod_Mt_R_C_Y <- get_data(all_data, "temp-data-inject/L105.an_Prod_Mt_R_C_Y") %>%
-      # The following two lines of code will be removed later, when we're using 'real' data
-      gather(year, value, -GCAM_region_ID, -GCAM_commodity) %>%   # reshape
-      mutate(year = as.integer(substr(year, 2, 5)))   # change Xyear to year
-
-    L106.ag_NetExp_Mt_R_C_Y <- get_data(all_data, "temp-data-inject/L106.ag_NetExp_Mt_R_C_Y") %>%
-      # The following two lines of code will be removed later, when we're using 'real' data
-      gather(year, value, -GCAM_region_ID, -GCAM_commodity) %>%   # reshape
-      mutate(year = as.integer(substr(year, 2, 5)))   # change Xyear to year
-
-    L106.an_NetExp_Mt_R_C_Y <- get_data(all_data, "temp-data-inject/L106.an_NetExp_Mt_R_C_Y") %>%
-      # The following two lines of code will be removed later, when we're using 'real' data
-      gather(year, value, -GCAM_region_ID, -GCAM_commodity) %>%   # reshape
-      mutate(year = as.integer(substr(year, 2, 5)))   # change Xyear to year
-
+    L105.an_Food_Mt_R_C_Y <- get_data(all_data, "L105.an_Food_Mt_R_C_Y")
+    L105.an_Prod_Mt_R_C_Y <- get_data(all_data, "L105.an_Prod_Mt_R_C_Y")
+    L106.ag_NetExp_Mt_R_C_Y <- get_data(all_data, "L106.ag_NetExp_Mt_R_C_Y")
+    L106.an_NetExp_Mt_R_C_Y <- get_data(all_data, "L106.an_NetExp_Mt_R_C_Y")
     L108.ag_Feed_Mt_R_C_Y <- get_data(all_data, "L108.ag_Feed_Mt_R_C_Y")
     L108.ag_NetExp_Mt_R_FodderHerb_Y <- get_data(all_data, "L108.ag_NetExp_Mt_R_FodderHerb_Y")
-
-    L122.in_Mt_R_C_Yh <- get_data(all_data, "temp-data-inject/L122.in_Mt_R_C_Yh") %>%
-      # The following two lines of code will be removed later, when we're using 'real' data
-      gather(year, value, -GCAM_region_ID, -GCAM_commodity) %>%   # reshape
-      mutate(year = as.integer(substr(year, 2, 5)))   # change Xyear to year
+    L122.in_Mt_R_C_Yh <- get_data(all_data, "L122.in_Mt_R_C_Yh")
 
     # Part 1: Primary agricultural goods
     # List of all flows for primary agricultural good balances
@@ -143,7 +129,7 @@ module_aglu_LB109.ag_an_ALL_R_C_Y <- function(command, ...) {
                year = as.integer(year)) %>%
         spread(flow, value) ->
         L109.ag_ALL_Mt_R_C_Y
-      }
+    }
 
     # Part 2: Animal commodities
     # List of all flows for animal products
@@ -206,7 +192,7 @@ module_aglu_LB109.ag_an_ALL_R_C_Y <- function(command, ...) {
                value = round(value, aglu.DIGITS_CALOUTPUT)) %>%
         spread(flow, value) ->
         L109.an_ALL_Mt_R_C_Y
-      }
+    }
 
     # Produce outputs
     L109.ag_ALL_Mt_R_C_Y %>%
@@ -217,10 +203,10 @@ module_aglu_LB109.ag_an_ALL_R_C_Y <- function(command, ...) {
       add_legacy_name("L109.ag_ALL_Mt_R_C_Y") %>%
       add_precursors("L101.ag_Food_Mt_R_C_Y",
                      "L103.ag_Prod_Mt_R_C_Y",
-                     "temp-data-inject/L106.ag_NetExp_Mt_R_C_Y",
+                     "L106.ag_NetExp_Mt_R_C_Y",
                      "L108.ag_Feed_Mt_R_C_Y",
                      "L108.ag_NetExp_Mt_R_FodderHerb_Y",
-                     "temp-data-inject/L122.in_Mt_R_C_Yh") ->
+                     "L122.in_Mt_R_C_Yh") ->
       L109.ag_ALL_Mt_R_C_Y
 
     L109.an_ALL_Mt_R_C_Y %>%
@@ -229,9 +215,9 @@ module_aglu_LB109.ag_an_ALL_R_C_Y <- function(command, ...) {
       add_comments("Calculate animal product mass balances by GCAM region, commodity and year") %>%
       add_comments("Adjusts global and regional net exports to remove net negative other uses") %>%
       add_legacy_name("L109.an_ALL_Mt_R_C_Y") %>%
-      add_precursors("temp-data-inject/L105.an_Food_Mt_R_C_Y",
-                     "temp-data-inject/L105.an_Prod_Mt_R_C_Y",
-                     "temp-data-inject/L106.an_NetExp_Mt_R_C_Y") ->
+      add_precursors("L105.an_Food_Mt_R_C_Y",
+                     "L105.an_Prod_Mt_R_C_Y",
+                     "L106.an_NetExp_Mt_R_C_Y") ->
       L109.an_ALL_Mt_R_C_Y
 
     return_data(L109.ag_ALL_Mt_R_C_Y, L109.an_ALL_Mt_R_C_Y)

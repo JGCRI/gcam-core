@@ -44,6 +44,11 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
              "L122.LC_bm2_R_HarvCropLand_Yh_GLU"))
   } else if(command == driver.MAKE) {
 
+    Land_Type <- year <- . <- GCAM_region_ID <- GLU <- GCAM_commodity <-
+        value <- iso <- countries <- cropland <- fallow <- fallow_frac <- cropped <-
+        cropped_frac <- uncropped_frac <- nonharvested_frac <- value.x <-
+        value.y <- Land_Type.y <- Land_Type.x <- NULL # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
@@ -137,7 +142,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       # remove NA values:
       na.omit() %>%
       # add GCAM region information from iso_GCAM_regID
-      mutate(GCAM_region_ID = left_join(., iso_GCAM_regID, by = "iso")$GCAM_region_ID) %>%
+      mutate(GCAM_region_ID = left_join(., iso_GCAM_regID, by = "iso")[['GCAM_region_ID']]) %>%
       # remove all columns that are not GCAM_region_ID, cropland, and fallow values:
       select(GCAM_region_ID, cropland, fallow) %>%
       # ungroup:
@@ -177,14 +182,14 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       # rename value to cropland:
       rename(cropland = value) %>%
       # append in cropped land data in fallowland_year from FAO, L100.FAO_harv_CL_kha, keeping NA values:
-      left_join(L100.FAO_harv_CL_kha[L100.FAO_harv_CL_kha$year == fallowland_year, ],
+      left_join(L100.FAO_harv_CL_kha[L100.FAO_harv_CL_kha[['year']] == fallowland_year, ],
                 by = c("iso", "countries", "year")) %>%
       # rename value to cropped:
       rename(cropped = value) %>%
       # remove NA values:
       na.omit() %>%
       # add GCAM region information from iso_GCAM_regID
-      mutate(GCAM_region_ID = left_join(., iso_GCAM_regID, by = "iso")$GCAM_region_ID) %>%
+      mutate(GCAM_region_ID = left_join(., iso_GCAM_regID, by = "iso")[['GCAM_region_ID']]) %>%
       # remove all columns that are not GCAM_region_ID, cropland, and cropped values:
       select(GCAM_region_ID, cropland, cropped) %>%
       # ungroup:
@@ -219,10 +224,10 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       mutate(Land_Type = "Cropland") %>%
       # join in fallow land table, L122.cropland_fallow_R, to get the fallow_frac for each region,
       # maintaining NA's for use in determining data availability to calculate nonharvested_frac:
-      mutate(fallow_frac = left_join(., L122.cropland_fallow_R, by = "GCAM_region_ID")$fallow_frac) %>%
+      mutate(fallow_frac = left_join(., L122.cropland_fallow_R, by = "GCAM_region_ID")[['fallow_frac']]) %>%
       # join in cropped land table, L122.cropland_cropped_R, to get the cropped_frac for each region, and
       # use to calculate the uncropped fraction, maintaining NA's to set to 0 later:
-      mutate(uncropped_frac = 1 - left_join(., L122.cropland_cropped_R, by = "GCAM_region_ID")$cropped_frac) %>%
+      mutate(uncropped_frac = 1 - left_join(., L122.cropland_cropped_R, by = "GCAM_region_ID")[['cropped_frac']]) %>%
       # calculate the nonharvested fraction of land via nested if statements
       #   based on availability, using (1) fallow land fraction, (2) land not in crop rotations, or (3) 0
       #   This step determines (1) versus (2):
@@ -233,7 +238,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
                                          #                                  otherwise, use the available fallow land data:
                                          fallow_frac)) %>%
       #   This step determines (3) when (1) and (2) are not available:
-      mutate(nonharvested_frac = if_else(is.na(nonharvested_frac), 0, nonharvested_frac)) ->
+      replace_na(list(nonharvested_frac = 0)) ->
       # store in a table of nonharvested cropland fractions by region:
       L122.nonharvested_cropland_R
 
@@ -353,7 +358,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       # remove unnecessary columns:
       select(-value.x, -value.y) %>%
       # set any NA values to 0 yield:
-      mutate(value = if_else(is.na(value), 0, value)) %>%
+      replace_na(list(value = 0)) %>%
       # remove now-unneeded land type data:
       select(-Land_Type) ->
       # store in a table of Economic Yield by region-commodity-glu-year:
@@ -459,23 +464,26 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
     # soil carbon contents, and similar/small vegetative carbon contents, the net emissions signal should be negligible.
     # First, make a table with cropland in the pre-aglu years
     L120.LC_bm2_R_LT_Yh_GLU %>%
+      ungroup %>%
       # only save the years in pre-AGLU years:
       filter(year %in% PREAGLU_YEARS) %>% ungroup() %>%
       # insure that there is cropland for each GCAM region-glu that appear L122.LC_bm2_R_CropLand_Y_GLU:
-      tidyr::complete(Land_Type = unique(L122.LC_bm2_R_CropLand_Y_GLU$Land_Type),
+      tidyr::complete(Land_Type = unique(L122.LC_bm2_R_CropLand_Y_GLU[['Land_Type']]),
                       tidyr::nesting(GCAM_region_ID, GLU, year), fill = list(value = NA)) %>%
       unique() %>%
       # join this historical cropland information to the region-glu-landtypes of L122.LC_bm2_R_CropLand_Y_GLU, preserving
       # NAs as in old DS:
-      left_join(unique(L122.LC_bm2_R_CropLand_Y_GLU[, colnames(L122.LC_bm2_R_CropLand_Y_GLU)
-                                                    %in% c("GCAM_region_ID", "GLU", "Land_Type")]), .,
-                by = c("GCAM_region_ID", "GLU", "Land_Type") ) %>%
+      left_join(
+          unique(select(L122.LC_bm2_R_CropLand_Y_GLU, GCAM_region_ID, GLU,
+                        Land_Type)),
+          .,
+          by = c("GCAM_region_ID", "GLU", "Land_Type") ) %>%
       # missing values are overwritten to 0:
-      mutate(value = if_else(is.na(value), 0, value)) %>%
+      replace_na(list(value = 0)) %>%
       # bind to the table of OtherArableLand information by region-glu-year:
       bind_rows(L122.LC_bm2_R_OtherArableLand_Y_GLU, .) %>%
       # update the landtype identifier
-      ungroup() %>% mutate(Land_Type = "OtherArableLand") ->
+      mutate(Land_Type = "OtherArableLand") ->
       # store in a table of OtherArableLand by region-glu-year, including historical years:
       L122.LC_bm2_R_OtherArableLand_Yh_GLU
 
@@ -498,6 +506,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
     # HarvCropLand is expanded to include historical years for each region-glu-commodity, with a value of 0.
     # Take HarvCropLand by region-commodity-glu-year:
     L122.LC_bm2_R_HarvCropLand_C_Y_GLU %>%
+      ungroup %>%
       # expand to include history years and fill in those values to be 0:
       tidyr::complete(year = c(PREAGLU_YEARS, AGLU_HISTORICAL_YEARS),
                       nesting(GCAM_region_ID, GCAM_commodity, GLU, Land_Type),

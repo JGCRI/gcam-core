@@ -48,7 +48,8 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
       find_chunks = function(...) tibble(name = chunknames),
       chunk_inputs = function(...) tibble(name = chunknames,
                                           input = "i1",
-                                          from_file = TRUE),
+                                          from_file = TRUE,
+                                          optional = FALSE),
       chunk_outputs = function(...) tibble(name = chunknames,
                                            output = c("o1", "o2"),
                                            to_xml = FALSE),
@@ -110,6 +111,11 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
       add_legacy_name("legacy") %>% add_comments("comments") -> o1
     expect_error(check_chunk_outputs("c1", return_data(o1), "i1", po, FALSE))
 
+    # An input that doesn't appear in any precursors
+    tibble() %>% add_title("o1") %>% add_units("units") %>%
+      add_legacy_name("legacy") %>% add_comments("comments") %>% add_precursors("i2") -> o1
+    expect_message(check_chunk_outputs("c1", return_data(o1), c("i1", "i2"), po, FALSE))
+
     # Recursive precursor
     tibble() %>% add_title("o1") %>% add_units("units") %>%
       add_legacy_name("legacy") %>% add_comments("comments") %>% add_precursors("o1") -> o1
@@ -133,7 +139,8 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
       find_chunks = function(...) tibble(name = chunknames),
       chunk_inputs = function(...) tibble(name = chunknames,
                                           input = c("i1", "i2"),
-                                          from_file = FALSE),
+                                          from_file = FALSE,
+                                          optional = FALSE),
       chunk_outputs = function(...) tibble(name = chunknames,
                                            output = c("i1", "i2")),
       expect_error(driver(quiet = TRUE), regexp = "we are stuck")

@@ -21,13 +21,20 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "common/iso_GCAM_regID",
              FILE = "emissions/EDGAR/EDGAR_sector",
-             FILE = "emissions/EPA_ghg_tech",
-             FILE = "emissions/GCAM_sector_tech",
+             FILE = "emissions/mappings/EPA_ghg_tech",
+             FILE = "emissions/mappings/GCAM_sector_tech",
              "EDGAR_gases",
              FILE = "emissions/EPA_FCCC_IndProc_2005"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L131.nonco2_tg_R_prc_S_S_Yh"))
   } else if(command == driver.MAKE) {
+
+    fuel <- EPA_Source_Category_Raw <- Source_Category <- Non.CO2 <- value <-
+        sector <- subsector <- supplysector <- stub.technology <-
+        EPA_agg_sector <- EPA_agg_fuel_ghg <- EDGAR_agg_sector <- x <-
+        tech_emissions <- tech_emissions.y <- tech_emissions.x <- sector_emissions <- year <-
+        agg_sector <- ISO_A3 <- GCAM_region_ID <- EDGAR_emissions <-
+        tech_share <- input.emissions <- NULL # silence package check.
 
     all_data <- list(...)[[1]]
 
@@ -36,8 +43,8 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     EDGAR_sector <- get_data(all_data, "emissions/EDGAR/EDGAR_sector")
-    EPA_ghg_tech <- get_data(all_data, "emissions/EPA_ghg_tech")
-    GCAM_sector_tech <- get_data(all_data, "emissions/GCAM_sector_tech")
+    EPA_ghg_tech <- get_data(all_data, "emissions/mappings/EPA_ghg_tech")
+    GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
     EPA_Ind <- get_data(all_data, "emissions/EPA_FCCC_IndProc_2005")
     EDGAR_gases <- get_data(all_data, "EDGAR_gases")
 
@@ -68,7 +75,7 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
       group_by(EPA_agg_sector, EPA_agg_fuel_ghg, Non.CO2) %>%
       left_join(L131.EPA_nonco2_indproc.mlt, by = c(EPA_agg_sector = "sector", EPA_agg_fuel_ghg = "subsector", "Non.CO2")) %>%
       rename(tech_emissions = x) %>%
-      mutate(tech_emissions = if_else(is.na(tech_emissions), 1, tech_emissions)) -> # set missing values to 1, emissions coef will be overwritten below.
+      replace_na(list(tech_emissions = 1)) -> # set missing values to 1, emissions coef will be overwritten below.
       L131.nonco2_pct_R_prc_S_S_2005
 
     L131.nonco2_pct_R_prc_S_S_2005 %>%
@@ -129,7 +136,7 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
       # which introduces NA's that are then converted to 0. Convert back to long format for new data system.
       spread(year, value) %>%
       gather(year, value, -GCAM_region_ID, -supplysector, -subsector, -stub.technology, -Non.CO2) %>%
-      mutate(value = if_else(is.na(value), 0, value)) %>%
+      replace_na(list(value = 0)) %>%
 
       # Produce outputs
       add_title("GHG emissions by GCAM region / sector / technology / historical year") %>%
@@ -140,8 +147,8 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
       add_precursors("common/GCAM_region_names",
                      "common/iso_GCAM_regID",
                      "emissions/EDGAR/EDGAR_sector",
-                     "emissions/EPA_ghg_tech",
-                     "emissions/GCAM_sector_tech",
+                     "emissions/mappings/EPA_ghg_tech",
+                     "emissions/mappings/GCAM_sector_tech",
                      "EDGAR_gases",
                      "emissions/EPA_FCCC_IndProc_2005") %>%
       add_flags(FLAG_SUM_TEST,FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->

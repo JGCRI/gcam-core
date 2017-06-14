@@ -29,6 +29,10 @@ module_energy_LA116.geo <- function(command, ...) {
              "L116.RsrcCurves_EJ_R_EGS"))
   } else if(command == driver.MAKE) {
 
+    year <- iso <- value <- region_GCAM3 <- sumvalue <- share <- available <-
+        GCAM_region_ID <- resource <- subresource <- grade <- extractioncost <-
+            NULL                        # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
