@@ -65,7 +65,7 @@ test_that("can convert multiple table", {
   }
   test_fn <- "test.xml"
   data1 <- data.frame(region = "USA", interest.rate = "1.0")
-  data2 <- data.frame(region = "USA", PrimaryFuel = "shoes", PrimaryFuelCO2Coef = 0.007653)
+  data2 <- data.frame(region = "USA", PrimaryFuelCO2Coef.name = "shoes", PrimaryFuelCO2Coef = 0.007653)
   create_xml(test_fn) %>%
     add_xml_data(data1, "InterestRate") %>%
     add_xml_data(data2, "CarbonCoef") %>%
@@ -87,7 +87,7 @@ test_that("get warning for missing header", {
   }
   test_fn <- "test.xml"
   data1 <- data.frame(region = "USA", interest.rate = "1.0")
-  data2 <- data.frame(region = "USA", PrimaryFuel = "shoes", PrimaryFuelCO2Coef = 0.007653)
+  data2 <- data.frame(region = "USA", PrimaryFuelCO2Coef.name = "shoes", PrimaryFuelCO2Coef = 0.007653)
   create_xml(test_fn) %>%
     add_xml_data(data1, "InterestRate") %>%
     add_xml_data(data2, "Will_Not_Find") ->

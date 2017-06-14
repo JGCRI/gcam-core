@@ -91,8 +91,6 @@ SmthRenewRsrcCurves, world/+{name}region, region/+{name}renewresource, renewreso
 
 SmthRenewRsrcCurvesGdpElast, world/+{name}region, region/+{name}renewresource, renewresource/+{name}smooth-renewable-subresource, smooth-renewable-subresource/+{year;fillout=1}maxSubResource, smooth-renewable-subresource/+maxSubResource, smooth-renewable-subresource/+mid-price, smooth-renewable-subresource/+curve-exponent, smooth-renewable-subresource/+gdpSupplyElast, scenario, scenario/world
 
-SmthRenewRsrcCurvesGdpElastCapFac, world/+{name}region, region/+{name}renewresource, renewresource/+{name}smooth-renewable-subresource, smooth-renewable-subresource/+{year;fillout=1}maxSubResource, smooth-renewable-subresource/+maxSubResource, smooth-renewable-subresource/+mid-price, smooth-renewable-subresource/+curve-exponent, smooth-renewable-subresource/+gdpSupplyElast, smooth-renewable-subresource/+subResourceCapacityFactor, scenario, scenario/world
-
 GrdRenewRsrcCurves, world/+{name}region, region/+{name}renewresource, renewresource/+{name}sub-renewable-resource, sub-renewable-resource/+{name}grade, grade/+available, grade/+extractioncost, scenario, scenario/world
 
 DepRsrcTechChange, world/+{name}region, region/+{name}depresource, depresource/+{name}subresource, subresource/+{year;fillout=1}techChange, subresource/+techChange, scenario, scenario/world
@@ -556,11 +554,6 @@ LN3_HistMgdAllocation, world/+{name}region, region/+{name}LandAllocatorRoot, Lan
 LN3_MgdAllocation, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{name}LandLeaf, LandLeaf/+{year}landAllocation, LandLeaf/+landAllocation, scenario, scenario/world
 
 LN3_MgdCarbon, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{name}LandLeaf, land-use-history/+above-ground-carbon-density, land-use-history/+below-ground-carbon-density, land-carbon-densities/+above-ground-carbon-density, land-carbon-densities/+below-ground-carbon-density, land-carbon-densities/+{year;fillout=1}mature-age, land-carbon-densities/+mature-age, LandLeaf/+minAboveGroundCDensity, LandLeaf/+minBelowGroundCDensity, scenario, scenario/world, LandLeaf/land-carbon-densities, LandLeaf/land-use-history
-
-LN3_UnmgdNoEmissCarbon, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{name}UnmanagedLandLeaf, land-use-history/+above-ground-carbon-density, land-use-history/+below-ground-carbon-density, no-emiss-carbon-calc/+above-ground-carbon-density, no-emiss-carbon-calc/+below-ground-carbon-density, no-emiss-carbon-calc/+{year;fillout=1}mature-age, no-emiss-carbon-calc/+mature-age, UnmanagedLandLeaf/+minAboveGroundCDensity, UnmanagedLandLeaf/+minBelowGroundCDensity, scenario, scenario/world, UnmanagedLandLeaf/no-emiss-carbon-calc, UnmanagedLandLeaf/land-use-history
-
-LN3_MgdNoEmissCarbon, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{name}LandLeaf, land-use-history/+above-ground-carbon-density, land-use-history/+below-ground-carbon-density, no-emiss-carbon-calc/+above-ground-carbon-density, no-emiss-carbon-calc/+below-ground-carbon-density, no-emiss-carbon-calc/+{year;fillout=1}mature-age, no-emiss-carbon-calc/+mature-age, LandLeaf/+minAboveGroundCDensity, LandLeaf/+minBelowGroundCDensity, scenario, scenario/world, LandLeaf/no-emiss-carbon-calc, LandLeaf/land-use-history
-
 
 LN4_Logit, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{name}LandNode4, dummy-logit-tag/+{year;fillout=1}logit-exponent, dummy-logit-tag/+logit-exponent, LandNode4/dummy-logit-tag, scenario, scenario/world
 
