@@ -31,6 +31,7 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 
   # Check that the chunk has provided required data for all objects
   empty_precursors <- TRUE
+  pc_all <- c()
   for(obj in names(chunk_data)) {
     obj_flags <- get_flags(chunk_data[[obj]])
     # Chunks have to returns tibbles, unless they're tagged as being XML
@@ -49,6 +50,7 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
     }
     # Data precursors should all appear in input list
     pc <- attr(chunk_data[[obj]], ATTR_PRECURSORS)
+    pc_all <- c(pc_all, pc)
     empty_precursors <- empty_precursors & is.null(pc)
     matches <- pc %in% c(chunk_inputs, promised_outputs)
     if(!all(matches)) {
@@ -57,6 +59,11 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
     if(obj %in% pc) {
       stop("Precursors for '", obj, "' include itself - chunk ", chunk)
     }
+  }
+
+  # Every input should be a precursor for something
+  if(!all(chunk_inputs %in% pc_all)) {
+    message("Inputs ", setdiff(chunk_inputs, pc_all), " don't appear as precursors for any outputs - chunk ", chunk)
   }
 
   # If chunk has inputs, some output should have a precursor
@@ -77,8 +84,10 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 #' @param all_data Data to be pre-loaded into data system
 #' @param write_outputs Write all chunk outputs to disk?
 #' @param quiet Suppress output?
-#' @param outdir Location to write output data.  (Ignored if \code{write_outputs} is \code{FALSE}.)
-#' @param xmldir Location to write output XML.  (Ignored if \code{write_outputs} is \code{FALSE}.)
+#' @param stop_before Stop immediately before this chunk (character)
+#' @param stop_after Stop immediately after this chunk  (character)
+#' @param outdir Location to write output data (ignored if \code{write_outputs} is \code{FALSE})
+#' @param xmldir Location to write output XML (ignored if \code{write_outputs} is \code{FALSE})
 #' @return A list of all built data.
 #' @details The driver loads any necessary data from input files,
 #' runs all code chunks in an order dictated by their dependencies,
@@ -89,9 +98,11 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 #' @importFrom dplyr filter mutate select
 #' @export
 #' @author BBL
-driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE, outdir = OUTPUTS_DIR, xmldir = XML_DIR) {
+driver <- function(all_data = empty_data(),
+                   write_outputs = TRUE, quiet = FALSE, stop_before = "", stop_after = "",
+                   outdir = OUTPUTS_DIR, xmldir = XML_DIR) {
 
-  input <- from_file <- name <- NULL    # silence notes from package check.
+  optional <- input <- from_file <- name <- NULL    # silence notes from package check.
 
   assert_that(is.logical(write_outputs))
 
@@ -144,6 +155,11 @@ driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE,
         next  # chunk's required inputs are not all available
       }
 
+      if(chunk == stop_before) {
+        chunks_to_run <- character(0)
+        break
+      }
+
       # Order chunk to build its data
       time1 <- Sys.time()
       chunk_data <- run_chunk(chunk, all_data[input_names])
@@ -159,6 +175,11 @@ driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE,
 
       # Add this chunk's data to the global data store
       all_data <- add_data(chunk_data, all_data)
+
+      if(chunk == stop_after) {
+        chunks_to_run <- character(0)
+        break
+      }
 
       # Remove the current chunk from the to-run list
       chunks_to_run <- chunks_to_run[chunks_to_run != chunk]
@@ -190,7 +211,7 @@ driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE,
 warn_data_injects <- function() {
 
   name <- input <- base_input <- upstream_chunk <- output <- NULL
-                                        # silence package check.
+  # silence package check.
 
   # Are any chunks are using temp-data-inject data that are also available to them through the data system?
   ci <- chunk_inputs(find_chunks(include_disabled = FALSE)$name)
