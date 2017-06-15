@@ -177,15 +177,10 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
 
     # take the region, commodity, system, feed type, year feed consumption:
     L107.an_Feed_Mt_R_C_Sys_Fd_Y %>%
-      arrange(GCAM_region_ID, GCAM_commodity, system, feed, year) ->
-      L107.an_Feed_arranged
-    L107.an_Prod_Mt_R_C_Sys_Fd_Y %>%
-      arrange(GCAM_region_ID, GCAM_commodity, system, feed, year) ->
-      L107.an_Prod_arranged
-    L107.an_Feed_arranged %>%
       rename(feedVal = value) %>%
       # add in the corresponding animal production amount
-      left_join_error_no_match(L107.an_Prod_arranged, by = c("GCAM_region_ID", "GCAM_commodity", "year", "system", "feed")) %>%
+      left_join_error_no_match(L107.an_Prod_arranged,
+                               by = c("GCAM_region_ID", "GCAM_commodity", "year", "system", "feed")) %>%
       rename(prodVal = value) %>%
       # calculate the region, commodity, system, feed type, year IO coefficient as feed consumption/animal production
       mutate(value = feedVal / prodVal) %>%
