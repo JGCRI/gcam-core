@@ -13,17 +13,17 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
 
     # Move the historical/future division back by five years
     hyr <- HISTORICAL_YEARS
-    HISTORICAL_YEARS <<- 1971:2005   # normally 1971:2010
+    HISTORICAL_YEARS <<- 1971:2005       # normally 1971:2010
     fyr <- FUTURE_YEARS
     FUTURE_YEARS <<- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)
     byr <- BASE_YEARS
-    BASE_YEARS <<- c(1975, 1990, 2005) # normally (1975, 1990, 2005, 2010)
+    BASE_YEARS <<- c(1975, 1990, 2005)   # normally (1975, 1990, 2005, 2010)
     myr <- MODEL_YEARS
     MODEL_YEARS <<- c(BASE_YEARS, FUTURE_YEARS)
     ahyr <- AGLU_HISTORICAL_YEARS
     AGLU_HISTORICAL_YEARS <<- 1971:2005  # normally 1971:2010
     fhyr <- FAO_HISTORICAL_YEARS
-    FAO_HISTORICAL_YEARS <<- 1961:2011
+    FAO_HISTORICAL_YEARS <<- 1961:2005   # normally 1961:2011
 
     with_mock(
       run_chunk = function(chunk, all_data) {

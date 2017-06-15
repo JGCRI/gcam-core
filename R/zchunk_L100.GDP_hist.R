@@ -26,7 +26,6 @@ module_socioeconomics_L100.GDP_hist <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    #printlog( "Historical GDP downscaled to modern country" )
     usda_gdp_mer <- get_data(all_data, "socioeconomics/USDA_GDP_MER")
     assert_that(tibble::is.tibble(usda_gdp_mer))
 
@@ -42,21 +41,14 @@ module_socioeconomics_L100.GDP_hist <- function(command, ...) {
       gather(year, value, -iso) %>%
       mutate(year = as.numeric(year)) %>%
       filter(!is.na(value), !is.na(iso)) %>%
-#      filter(year %in% HISTORICAL_YEARS, !is.na(value), !is.na(iso)) %>%
       mutate(value = value * CONV_BIL_MIL * gdp_deflator(1990, base_year = 2010),
              year = as.integer(year)) %>%
       add_title("Historical GDP downscaled to country (iso)") %>%
       add_comments("Units converted to constant 1990 USD") %>%
       add_precursors("socioeconomics/USDA_GDP_MER") %>%
       add_units("Million 1990 USD") %>%
-      # flag that this dataset is in different form from original
       add_legacy_name("L100.gdp_mil90usd_ctry_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) %>%
-      # We are now no longer filtering this dataset to HISTORICAL_YEARS (as this causes
-      # downstream chunks don't know what to do if HISTORICAL_YEARS changes), but this means
-      # that we fail the oldnew test. I don't see any option but to disable testing for this,
-      # as this is really a "version 2" change.
-      add_flags(FLAG_NO_TEST) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L100.gdp_mil90usd_ctry_Yh
 
     return_data(L100.gdp_mil90usd_ctry_Yh)
