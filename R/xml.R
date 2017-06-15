@@ -48,6 +48,7 @@ create_xml <- function(xml_file, mi_header = NULL) {
 #' @return A "data structure" to hold the various parts needed to run the model
 #' interface CSV to XML conversion.
 #' @author PP March 2017
+#' @export
 add_xml_data <- function(dot, data, header, column_order_lookup = header) {
   # Users can skip column reordering by passing NULL as the argument value.
   if(!is.null(column_order_lookup)) {
@@ -117,6 +118,7 @@ make_run_xml_conversion <- function() {
 #' @return The argument passed in unmodified in case a user wanted run the
 #' conversion again at a later time.
 #' @author PP March 2017
+#' @export
 run_xml_conversion <- make_run_xml_conversion()
 
 # Note: the methods below explicitly name XML tags as expected by GCAM and/or
@@ -134,6 +136,7 @@ run_xml_conversion <- make_run_xml_conversion()
 #' @return A "data structure" to hold the various parts needed to run the model
 #' interface CSV to XML conversion.
 #' @author Pralit Patel
+#' @export
 add_rename_landnode_xml <- function(dot) {
   land_name_table <- tibble(from=paste0("LandNode", seq(1,5)),to="LandNode")
 
@@ -153,6 +156,7 @@ add_rename_landnode_xml <- function(dot) {
 #' @return A "data structure" to hold the various parts needed to run the model
 #' interface CSV to XML conversion.
 #' @author Pralit Patel
+#' @export
 add_node_equiv_xml <- function(dot, equiv_class) {
   equiv_list <- XML_NODE_EQUIV[[equiv_class]]
   if(is.null(equiv_list)) {
