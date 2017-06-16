@@ -33,29 +33,30 @@ module_aglu_LA100.IMAGE_downscale_ctry_yr <- function(command, ...) {
     IMAGE_an_FeedIO_Rimg_C_Sys_Y <- get_data(all_data, "aglu/IMAGE/IMAGE_an_FeedIO_Rimg_C_Sys_Y")
     IMAGE_an_Prodmixfrac_Rimg_C_Y <- get_data(all_data, "aglu/IMAGE/IMAGE_an_Prodmixfrac_Rimg_C_Y")
 
-    # Helper function: copy 1970 data to new year 1960
-    extrapolate_1960 <- function(x) {
+    # Helper function: copy data to a new year
+    create_new_yeardata <- function(x, source_year, new_year) {
       x %>%
-        filter(year == 1970) %>%
-        mutate(year = 1960) %>%
+        filter(year == source_year) %>%
+        mutate(year = new_year) %>%
         bind_rows(x)
     }
 
     # Extrapolate each IMAGE table to all historical years
-    # For each table, same basic steps: extrapolate to 1960; fill out all AGLU
+    # For each table, same basic steps: copy 1970 data to 1960; fill out all AGLU
     # historical years; interpolate.
 
     IMAGE_an_Feedfrac_Rimg_C_Sys_Fd_Y %>%
-      extrapolate_1960 %>%
+      create_new_yeardata(1970, 1960) %>%
       gather(IMAGE_region_ID, value, -commodity, -system, -input, -year) %>%
       complete(year = union(AGLU_HISTORICAL_YEARS, year), nesting(commodity, system, input, IMAGE_region_ID)) %>%
       arrange(year) %>%
       group_by(commodity, system, input, IMAGE_region_ID) %>%
-      mutate(value = approx_fun(year, value, rule = 2)) ->
+      mutate(value = approx_fun(year, value, rule = 2)) %>%
+      ungroup ->
       L100.IMAGE_an_Feedfrac_Rimg_C_Sys_Fd_Y
 
     IMAGE_an_FeedIO_Rimg_C_Sys_Y %>%
-      extrapolate_1960 %>%
+      create_new_yeardata(1970, 1960) %>%
       gather(IMAGE_region_ID, value, -commodity, -system, -year) %>%
       complete(year = union(AGLU_HISTORICAL_YEARS, year), nesting(commodity, system, IMAGE_region_ID)) %>%
       arrange(year) %>%
@@ -63,16 +64,18 @@ module_aglu_LA100.IMAGE_downscale_ctry_yr <- function(command, ...) {
       mutate(value = approx_fun(year, value, rule = 2)) %>%
       ungroup %>%
       # Re-set negative values in the feedfrac table to 0
-      mutate(value = if_else(value < 0, 0, value)) ->
+      mutate(value = if_else(value < 0, 0, value)) %>%
+      ungroup ->
       L100.IMAGE_an_FeedIO_Rimg_C_Sys_Y
 
     IMAGE_an_Prodmixfrac_Rimg_C_Y %>%
-      extrapolate_1960 %>%
+      create_new_yeardata(1970, 1960) %>%
       gather(IMAGE_region_ID, value, -commodity, -year) %>%
       complete(year = union(AGLU_HISTORICAL_YEARS, year), nesting(commodity, IMAGE_region_ID)) %>%
       arrange(year) %>%
       group_by(commodity, IMAGE_region_ID) %>%
-      mutate(value = approx_fun(year, value, rule = 2)) ->
+      mutate(value = approx_fun(year, value, rule = 2)) %>%
+      ungroup ->
       L100.IMAGE_an_Prodmixfrac_Rimg_C_Y
 
 
@@ -83,7 +86,7 @@ module_aglu_LA100.IMAGE_downscale_ctry_yr <- function(command, ...) {
 
     # Helper function: filter, repeat and add columns, join with iso data
     downscale_IMAGE_regions <- function(x, AGLU_ctry, by) {
-      hyd <- filter(x, year %in% AGLU_HISTORICAL_YEARS) %>% spread(year, value)
+      historical_data <- filter(x, year %in% AGLU_HISTORICAL_YEARS) %>% spread(year, value)
 
       x %>%
         ungroup %>%
@@ -92,7 +95,7 @@ module_aglu_LA100.IMAGE_downscale_ctry_yr <- function(command, ...) {
         select(-IMAGE_region_ID) %>%
         left_join_keep_first_only(select(AGLU_ctry, iso, IMAGE_region_ID), by = "iso") %>%
         spread(year, value) %>%
-        left_join(hyd, by = by) %>%
+        left_join(historical_data, by = by) %>%
         na.omit %>%
         gather(year, value, matches(YEAR_PATTERN)) %>%
         mutate(year = as.integer(year),
