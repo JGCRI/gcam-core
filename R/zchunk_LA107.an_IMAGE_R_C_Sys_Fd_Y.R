@@ -31,7 +31,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
 
     year <- value <- iso <- IMAGE_region_ID <- commodity <- input <-
       GCAM_commodity <- value.x <- value.y <- . <- GCAM_region_ID <- feed <-
-      NULL                        # silence package check.
+      totAnProd <- mixAnprod <- feedVal <- prodVal <- NULL  # silence package check.
 
     all_data <- list(...)[[1]]
 
@@ -88,8 +88,6 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
     L107.an_Prod_Mt_ctry_C_Y %>%
       rename(totAnProd = value) %>%
       # pastoral animal production = total animal production - mixed animal production for each country, commodity, year:
-      # ACS old code:
-      # mutate(value = value - L107.an_Prod_Mt_ctry_C_mix_Y$value) %>%
       left_join(select(L107.an_Prod_Mt_ctry_C_mix_Y, iso, GCAM_commodity, year, value),
                 by = c("iso","GCAM_commodity", "year")) %>%
       rename(mixAnProd = value) %>%
@@ -146,8 +144,6 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
     L107.an_Prod_Mt_ctry_C_Sys_Fd_Y %>%
       # add in the GCAM region id corresponding to the country:
       left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
-      # ACS old code:
-      #      mutate(GCAM_region_ID =  left_join_error_no_match(., iso_GCAM_regID, by = c("iso"))[['GCAM_region_ID']]) %>%
       select(-iso) %>%
       # sum by GCAM region, commodity, year, system, and feed
       group_by(GCAM_region_ID, GCAM_commodity, year, system, feed) %>%
@@ -158,8 +154,6 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
     L107.an_Feed_Mt_ctry_C_Sys_Fd_Y %>%
       # add in the GCAM region id corresponding to the country:
       left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
-      # ACS old code:
-      #      mutate(GCAM_region_ID = left_join_error_no_match(., iso_GCAM_regID, by = c("iso"))[['GCAM_region_ID']]) %>%
       select(-iso) %>%
       # sum by GCAM region, commodity, year, system, and feed
       group_by(GCAM_region_ID, GCAM_commodity, year, system, feed) %>%
@@ -173,29 +167,16 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
     L107.an_Feed_Mt_R_C_Sys_Fd_Y %>%
       rename(feedVal = value) %>%
       # add in the corresponding animal production amount
-      left_join_error_no_match(L107.an_Feed_Mt_R_C_Sys_Fd_Y,
+      left_join_error_no_match(L107.an_Prod_Mt_R_C_Sys_Fd_Y,
                                by = c("GCAM_region_ID", "GCAM_commodity", "year", "system", "feed")) %>%
       rename(prodVal = value) %>%
       # calculate the region, commodity, system, feed type, year IO coefficient as feed consumption/animal production
-      mutate(value = feedVal / prodVal) %>%
+      # note we're dividing by *tiny* numbers, not robust, so round everything to allow old-new comparison
+      mutate(value = round(round(feedVal, 10) / round(prodVal, 10), 6)) %>%
       select(-feedVal, -prodVal) %>%
-      # replace NA/NaN with the value 100
       replace_na(list(value = 100)) ->
       # store in a table specifying IO coefficients by region, commodity, system, feed type, and year:
       L107.an_FeedIO_R_C_Sys_Fd_Y
-
-
-    # ACS old code:
-    # L107.an_Feed_Mt_R_C_Sys_Fd_Y %>%
-    #   # add in the corresponding animal production amount as value.y
-    #   left_join_error_no_match(L107.an_Prod_Mt_R_C_Sys_Fd_Y, by = c("GCAM_region_ID", "GCAM_commodity", "year", "system", "feed")) %>%
-    #   # calculate the region, commodity, system, feed type, year IO coefficient as feed consumption/animal production
-    #   mutate(value = value.x / value.y) %>%
-    #   select(-value.x, -value.y) %>%
-    #   # replace NA/NaN with the value 100
-    #   replace_na(list(value = 100)) ->
-    #   # store in a table specifying IO coefficients by region, commodity, system, feed type, and year:
-    #   L107.an_FeedIO_R_C_Sys_Fd_Y
 
     # Produce outputs
     L107.an_Prod_Mt_R_C_Sys_Fd_Y %>%
@@ -238,7 +219,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
                      "L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y",
                      "L100.IMAGE_an_FeedIO_ctry_C_Sys_Y",
                      "L105.an_Prod_Mt_ctry_C_Y") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L107.an_FeedIO_R_C_Sys_Fd_Y
 
     return_data(L107.an_Prod_Mt_R_C_Sys_Fd_Y, L107.an_Feed_Mt_R_C_Sys_Fd_Y, L107.an_FeedIO_R_C_Sys_Fd_Y)
