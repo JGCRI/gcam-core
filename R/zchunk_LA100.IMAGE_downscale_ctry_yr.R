@@ -90,6 +90,7 @@ module_aglu_LA100.IMAGE_downscale_ctry_yr <- function(command, ...) {
 
       x %>%
         ungroup %>%
+        # pick out region 1 (Canada in IMAGE 2.4) but there's no significance to this choice; could be any
         filter(IMAGE_region_ID == 1, ! year %in% AGLU_HISTORICAL_YEARS) %>%
         repeat_add_columns(tibble::tibble(iso = sort(unique(AGLU_ctry$iso)))) %>%
         select(-IMAGE_region_ID) %>%
