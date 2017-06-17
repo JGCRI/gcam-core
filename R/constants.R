@@ -31,6 +31,7 @@ GHG_CONTROL_READIN_YEAR <- 1975
 # ======================================================================
 # GCAM constants
 gcam.USA_CODE <- 1
+gcam.LOGIT_TYPES <- c("relative-cost-logit", "absolute-cost-logit")
 
 # ======================================================================
 # aglu constants
