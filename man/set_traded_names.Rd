@@ -4,12 +4,14 @@
 \alias{set_traded_names}
 \title{set_traded_names}
 \usage{
-set_traded_names(data, apply_selected_only = TRUE)
+set_traded_names(data, GCAM_region_names, apply_selected_only = TRUE)
 }
 \arguments{
-\item{data}{Data set to operate on}
+\item{data}{Data set to operate on, tibble}
 
-\item{apply_selected_only}{Logical: only apply to region 1?}
+\item{GCAM_region_names}{GCAM region names, ordered character vector}
+
+\item{apply_selected_only}{Only apply to traded region \code{gcam.USA_CODE} (1)? Logical}
 }
 \value{
 Modified data

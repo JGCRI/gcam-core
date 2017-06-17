@@ -4,13 +4,15 @@
 \alias{get_logit_fn_tables}
 \title{get_logit_fn_tables}
 \usage{
-get_logit_fn_tables(data, names, default.logit.type = gcam.LOGIT_TYPES[1],
-  base.header, include.equiv.table, write.all.regions, ...)
+get_logit_fn_tables(data, names, default_logit_type = gcam.LOGIT_TYPES[1],
+  base_header, include_equiv_table, write_all_regions, ...)
 }
 \arguments{
 \item{data}{Tibble: the data to partition by logit.type}
 
 \item{names}{Character: the column names to use out of data}
+
+\item{...}{Other parameters to pass to \code{\link{write_to_all_regions}}}
 
 \item{default.logit.type}{Character: the default logit function to use if the user did not specify one}
 
@@ -20,8 +22,6 @@ pasted with what the logit.type for each table}
 \item{include.equiv.table}{Logical: should the EQUIV_TABLE be included as well?}
 
 \item{write.all.regions}{Logical: should each table be written to all regions?}
-
-\item{...}{Other parameters to pass to \code{\link{write_to_all_regions}}}
 }
 \value{
 The tables TODO NEEED BETTER DOCUMENTATION
@@ -30,9 +30,9 @@ The tables TODO NEEED BETTER DOCUMENTATION
 Generate a list of tables that sets the appropriate discrete choice function to use.
 }
 \details{
-The data has to be partitioned into multiple tables, one for each logit.type.  The returned
-list has fore each element containing two variables: 1) The header for the table 2) The data for the table.
-If requested an additional table will be added for an EQUIV_TABLE so that the tables that contain the logit
+The data has to be partitioned into multiple tables, one for each logit.type. Each element of
+the returned list has two variables: 1) the header for the table, and 2) the data for the table.
+If requested, an additional \code{EQUIV_TABLE} table will be added so that the tables that contain the logit
 exponents do not themselves have to know what logit.type they are using and thus do not need to be
 partitioned.
 }

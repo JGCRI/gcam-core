@@ -7,11 +7,14 @@
 set_years(data)
 }
 \arguments{
-\item{data}{Data}
+\item{data}{TODO, tibble}
 }
 \value{
-Return
+Modified tibble with \code{start-year}, \code{final-calibration-year}, etc., converted to 'numeric' values
 }
 \description{
-Convert text descriptions of years to numerical values
+Replace text descriptions of years with numerical values
+}
+\note{
+The new 'numeric' values are actually characters; this helper function doesn't touch column types.
 }

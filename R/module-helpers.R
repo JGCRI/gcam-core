@@ -99,20 +99,23 @@ rename_SO2 <- function(x, so2_map, is_awb = FALSE) {
 #' @param include.equiv.table Logical: should the EQUIV_TABLE be included as well?
 #' @param write.all.regions Logical: should each table be written to all regions?
 #' @param ... Other parameters to pass to \code{\link{write_to_all_regions}}
-#' @details The data has to be partitioned into multiple tables, one for each logit.type.  The returned
-#' list has fore each element containing two variables: 1) The header for the table 2) The data for the table.
-#' If requested an additional table will be added for an EQUIV_TABLE so that the tables that contain the logit
+#' @details The data has to be partitioned into multiple tables, one for each logit.type. Each element of
+#' the returned list has two variables: 1) the header for the table, and 2) the data for the table.
+#' If requested, an additional \code{EQUIV_TABLE} table will be added so that the tables that contain the logit
 #' exponents do not themselves have to know what logit.type they are using and thus do not need to be
 #' partitioned.
 #' @return The tables TODO NEEED BETTER DOCUMENTATION
-#' @export
-get_logit_fn_tables <- function(data, names,
-                                default.logit.type = gcam.LOGIT_TYPES[1],
-                                base.header,
-                                include.equiv.table, write.all.regions, ...) {
+get_logit_fn_tables <- function(data, names, default_logit_type = gcam.LOGIT_TYPES[1],
+                                base_header, include_equiv_table, write_all_regions, ...) {
+  assert_that(is_tibble(data))
+  assert_that(is.character(names))
+  assert_that(is.character(default_logit_type))
+  assert_that(is.character(base_header))
+  assert_that(is.logical(include_equiv_table))
+  assert_that(is.logical(write_all_regions))
 
   # Set the logit type to the default if currently unspecified
-  data[is.na(data$logit.type), "logit.type"] <- default.logit.type
+  data[is.na(data$logit.type), "logit.type"] <- default_logit_type
 
   # Note it is safer to create tables for all valid logit types rather than just the
   # ones included in unique(data$logit.type) even if it results in an empty table
@@ -123,7 +126,7 @@ get_logit_fn_tables <- function(data, names,
 
   # Create the EQUIV_TABLE table which allows the Model Interface to be ambiguous about what the
   # actual logit type is when setting the logit exponent.
-  if(include.equiv.table) {
+  if(include_equiv_table) {
     tables[["EQUIV_TABLE"]]$header <- "EQUIV_TABLE"
     d <- tibble(group.name = "LogitType")
     tag <- 1
@@ -137,61 +140,39 @@ get_logit_fn_tables <- function(data, names,
   # Loop through each of the logit types and create a table for it
   # using the appropriate header name and writing to all regions if requested.
   for(curr_logit_type in gcam.LOGIT_TYPES) {
-    tables[[curr_logit_type]]$header <- paste0(base.header, curr_logit_type)
-    curr.data <- data[data$logit.type == curr_logit_type,]
-    if(write.all.regions) {
-      if(nrow(curr.data) > 0) {
-        curr.data <- write_to_all_regions(curr.data, names, ...)
+    tables[[curr_logit_type]]$header <- paste0(base_header, curr_logit_type)
+    currdata <- data[data$logit.type == curr_logit_type,]
+    if(write_all_regions) {
+      if(nrow(currdata) > 0) {
+        currdata <- write_to_all_regions(currdata, names, ...)
       } else {
-        curr.data <- cbind(curr.data, tibble(region = character(0)))
+        currdata <- bind_cols(currdata, tibble(region = character(0)))
       }
     }
-    tables[[curr_logit_type]]$data <- curr.data[, names]
+    tables[[curr_logit_type]]$data <- currdata[, names]
   }
 
-  return(tables)
-}
-
-
-#' read_logit_fn_tables
-#'
-#' Read all logit function type tables
-#'
-#' @param domain The data domain to read the table from
-#' @param table.name The base table name to generate all logit type table names
-#' @param skip Logical: whether to skip any lines (such as head information) when reading the table
-#' @param include.equiv.table Logical: whether to include the EQUIV_TABLE in the list of results
-#' @details Read all logit function type tables given a base table name and return them in a list
-#' where the full table name -> the read data.
-#' @return The tables TODO NEEED BETTER DOCUMENTATION
-#' @export
-read_logit_fn_tables <- function(domain, table.name, skip = 0, include.equiv.table = FALSE) {
-  all_table_names <- paste0(table.name, gcam.LOGIT_TYPES)
-  if(include.equiv.table) {
-    # need to include the appropraite processing code number to append
-    proc_number <- regmatches(table.name, regexpr('^L[[:digit:]]+.', table.name))
-    all_table_names <- c(paste0(proc_number, "EQUIV_TABLE"), all_table_names)
-  }
-  ret_tables <- list()
-  for(curr_table_name in all_table_names) {
-    ret_tables[[curr_table_name]] <- readdata(domain, curr_table_name, skip = skip)
-  }
-  return(ret_tables)
+  tables
 }
 
 
 #' write_to_all_regions
 #'
-#' @param data Data
-#' @param names Names
-#' @param has.traded has.traded
-#' @param apply.to apply.to
-#' @param set.market set.market
-#' @return return
-#' @export
-write_to_all_regions <- function(data, names, has.traded = FALSE,
-                                 apply.to = "selected", set.market = FALSE) {
-  if("logit.year.fillout" %in% names) {
+#' @param data Data set to operate on, tibble
+#' @param names Column names to return, character
+#' @param has.traded has.traded TODO, logical
+#' @param apply_selected_only Only apply to region 1? Logical
+#' @param set_market Overwrite \code{market} column with \code{region} data? Logical
+#' @return TODO
+write_to_all_regions <- function(data, names, has_traded = FALSE,
+                                 apply_selected_only = TRUE, set_market = FALSE) {
+  assert_that(is_tibble(data))
+  assert_that(is.character(names))
+  assert_that(is.logical(has_traded))
+  assert_that(is.logical(apply_selected_only))
+  assert_that(is.logical(set_market))
+
+    if("logit.year.fillout" %in% names) {
     data$logit.year.fillout <- "start-year"
   }
   if("price.exp.year.fillout" %in% names) {
@@ -200,12 +181,14 @@ write_to_all_regions <- function(data, names, has.traded = FALSE,
   data_new <- set_years(data)
   data_new <- repeat_and_add_vector(data_new, "GCAM_region_ID", GCAM_region_names$GCAM_region_ID)
   data_new <- add_region_name(data_new)
-  if("market.name" %in% names) data_new$market.name <- data_new$region
-  if(has.traded) {
-    if(set.market) {
+  if("market.name" %in% names) {
+    data_new$market.name <- data_new$region
+  }
+  if(has_traded) {
+    if(set_market) {
       data_new$market.name <- data_new$region
     }
-    data_new <- set_traded_names(data_new, apply.to)
+    data_new <- set_traded_names(data_new, apply_selected_only)
   }
   data_new[names]
 }
@@ -215,41 +198,48 @@ write_to_all_regions <- function(data, names, has.traded = FALSE,
 #'
 #' Convert names of traded secondary goods to be contained within region 1, with region appended to subsector and tech names
 #'
-#' @param data Data set to operate on
-#' @param apply_selected_only Logical: only apply to region 1?
+#' @param data Data set to operate on, tibble
+#' @param GCAM_region_names GCAM region names, ordered character vector
+#' @param apply_selected_only Only apply to traded region \code{gcam.USA_CODE} (1)? Logical
 #' @return Modified data
-#' @export
-set_traded_names <- function(data, apply_selected_only = TRUE) {
-  sel <- TRUE   # all rows
+set_traded_names <- function(data, GCAM_region_names, apply_selected_only = TRUE) {
+  assert_that(is_tibble(data))
+  assert_that(is.character(GCAM_region_names))
+  assert_that(is.logical(apply_selected_only))
+
+  sel <- TRUE # select all rows
   if(apply_selected_only) {
-    sel <- data$traded == gcam.USA_CODE
+    sel <- data$traded == gcam.USA_CODE  # by default selected only
   }
 
-  data_new <- data
   if("subsector" %in% names(data)) {
-    data_new$subsector[sel] <- paste(data$region[sel], data$subsector[sel])
+    data$subsector[sel] <- paste(data$region[sel], data$subsector[sel])
   }
   if("technology" %in% names(data)) {
-    data_new$technology[sel] <- paste(data$region[sel], data$technology[sel])
+    data$technology[sel] <- paste(data$region[sel], data$technology[sel])
   }
-  data_new$region[sel] <- GCAM_region_names$region[gcam.USA_CODE]
-  data_new
+  if("region" %in% names(data)) {
+    data$region[sel] <- GCAM_region_names[gcam.USA_CODE]
+  }
+
+  data
 }
 
 
 #' set_years
 #'
-#' Convert text descriptions of years to numerical values
-#' @param data Data
-#' @return Return
-#' @export
+#' Replace text descriptions of years with numerical values
+#'
+#' @param data TODO, tibble
+#' @return Modified tibble with \code{start-year}, \code{final-calibration-year}, etc., converted to 'numeric' values
+#' @note The new 'numeric' values are actually characters; this helper function doesn't touch column types.
 set_years <- function(data) {
-  data_new <- data
-  data_new[data_new == "start-year"] <- min(BASE_YEARS)
-  data_new[data_new == "final-calibration-year"] <- max(BASE_YEARS)
-  data_new[data_new == "final-historical-year"] <- max(HISTORICAL_YEARS)
-  data_new[data_new == "initial-future-year"] <- min(FUTURE_YEARS)
-  data_new[data_new == "initial-nonhistorical-year"] <- min(MODEL_YEARS[MODEL_YEARS > max(HISTORICAL_YEARS)])
-  data_new[data_new == "end-year"] <- max(FUTURE_YEARS)
-  data_new
+  assert_that(is_tibble(data))
+  data[data == "start-year"] <- min(BASE_YEARS)
+  data[data == "final-calibration-year"] <- max(BASE_YEARS)
+  data[data == "final-historical-year"] <- max(HISTORICAL_YEARS)
+  data[data == "initial-future-year"] <- min(FUTURE_YEARS)
+  data[data == "initial-nonhistorical-year"] <- min(MODEL_YEARS[MODEL_YEARS > max(HISTORICAL_YEARS)])
+  data[data == "end-year"] <- max(FUTURE_YEARS)
+  data
 }

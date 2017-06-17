@@ -4,22 +4,22 @@
 \alias{write_to_all_regions}
 \title{write_to_all_regions}
 \usage{
-write_to_all_regions(data, names, has.traded = FALSE, apply.to = "selected",
-  set.market = FALSE)
+write_to_all_regions(data, names, has_traded = FALSE,
+  apply_selected_only = TRUE, set_market = FALSE)
 }
 \arguments{
-\item{data}{Data}
+\item{data}{Data set to operate on, tibble}
 
-\item{names}{Names}
+\item{names}{Column names to return, character}
 
-\item{has.traded}{has.traded}
+\item{apply_selected_only}{Only apply to region 1? Logical}
 
-\item{apply.to}{apply.to}
+\item{set_market}{Overwrite \code{market} column with \code{region} data? Logical}
 
-\item{set.market}{set.market}
+\item{has.traded}{has.traded TODO, logical}
 }
 \value{
-return
+TODO
 }
 \description{
 write_to_all_regions

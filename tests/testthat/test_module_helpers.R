@@ -62,3 +62,40 @@ test_that("rename_SO2", {
     expect_identical(res$Non.CO2, paste0(rev(so2_map$SO2_name), if_else(awb, "_AWB", "")))
   }
 })
+
+test_that("set_years", {
+  expect_error(set_years(1))
+  d <- tibble(x = c("start-year", "final-calibration-year", "final-historical-year",
+                    "initial-future-year", "initial-nonhistorical-year", "end-year"))
+  d1 <- set_years(d)
+  expect_identical(d1$x, as.character(c(min(BASE_YEARS),
+                                        max(BASE_YEARS),
+                                        max(HISTORICAL_YEARS),
+                                        min(FUTURE_YEARS),
+                                        min(MODEL_YEARS[MODEL_YEARS > max(HISTORICAL_YEARS)]),
+                                        max(FUTURE_YEARS))))
+})
+
+test_that("set_traded_names", {
+  expect_error(set_traded_names(1, TRUE))
+  expect_error(set_traded_names(tibble(), 1))
+  # There should be a 'traded' column
+  expect_warning(set_traded_names(tibble(trad = 0), letters, apply_selected_only = FALSE))
+
+  # correctly replaces region name
+  d <- tibble(traded = gcam.USA_CODE + 0:2, region = paste0("r", 0:2))
+  d1 <- set_traded_names(d, letters, apply_selected_only = TRUE)
+  expect_identical(d1$region, as.character(c(letters[gcam.USA_CODE], "r1", "r2")))  # "a", r1, r2
+  d1 <- set_traded_names(d, letters, apply_selected_only = FALSE)
+  expect_identical(d1$region, rep(letters[gcam.USA_CODE], 3))  # "a", "a", "a"
+
+  # correctly replaces subsector column
+  d$subsector = paste0("ss", seq_len(nrow(d)))
+  d1 <- set_traded_names(d, letters, apply_selected_only = TRUE)
+  expect_identical(d1$subsector, c("r0 ss1", "ss2", "ss3"))
+
+  # correctly replaces technology column
+  d$technology = paste0("t", seq_len(nrow(d)))
+  d1 <- set_traded_names(d, letters, apply_selected_only = TRUE)
+  expect_identical(d1$technology, c("r0 t1", "t2", "t3"))
+})
