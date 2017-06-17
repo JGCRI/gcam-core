@@ -99,3 +99,26 @@ test_that("set_traded_names", {
   d1 <- set_traded_names(d, letters, apply_selected_only = TRUE)
   expect_identical(d1$technology, c("r0 t1", "t2", "t3"))
 })
+
+test_that("get_logit_fn_tables", {
+  expect_error(get_logit_fn_tables(1, "x"))
+  expect_error(get_logit_fn_tables(tibble(), 1))
+  expect_error(get_logit_fn_tables(tibble(), "x", default_logit_type = 1))
+  expect_error(get_logit_fn_tables(tibble(), "x", base_header = 1))
+  expect_error(get_logit_fn_tables(tibble(), "x", include_equiv_table = 1))
+  expect_error(get_logit_fn_tables(tibble(), "x", write_all_regions = 1))
+
+  # replaces NA logit.type with default_logit_type
+  # d <- tibble(logit.type = NA)
+  # d1 <- get_logit_fn_tables(d, names = "x", default_logit_type = "y")
+  # expect_identical(d1$logit.type, "y")
+  # d <- tibble(logit.type = "x")
+  # d1 <- get_logit_fn_tables(d, names = "x", default_logit_type = "y")
+  # expect_identical(d1$logit.type, d$logit.type)
+
+  # include_equiv_table correctly puts extra table in
+
+  # a table is created for each logit type, whether or not that type appears in data
+
+
+})
