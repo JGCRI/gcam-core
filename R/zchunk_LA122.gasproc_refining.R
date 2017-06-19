@@ -55,11 +55,15 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
     # Data in long format and removing "X" year
     L1011.en_bal_EJ_R_Si_Fi_Yh%>%
       gather(year,value,-GCAM_region_ID,-fuel,-sector) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) -> L1011.en_bal_EJ_R_Si_Fi_Yh
+      mutate(year = as.integer(substr(year, 2, 5))) %>%
+      filter(year %in% HISTORICAL_YEARS) ->   # ensure temp data match our current history
+      L1011.en_bal_EJ_R_Si_Fi_Yh
 
     L121.in_EJ_R_unoil_F_Yh%>%
       gather(year,value,-GCAM_region_ID,-fuel,-sector) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) -> L121.in_EJ_R_unoil_F_Yh
+      mutate(year = as.integer(substr(year, 2, 5))) %>%
+      filter(year %in% HISTORICAL_YEARS) ->   # ensure temp data match our current history
+      L121.in_EJ_R_unoil_F_Yh
 
     # ===================================================
     # Perform computations: Will start with refining
