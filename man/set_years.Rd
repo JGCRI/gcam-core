@@ -7,7 +7,7 @@
 set_years(data)
 }
 \arguments{
-\item{data}{TODO, tibble}
+\item{data}{Data with entries to be replaced, tibble}
 }
 \value{
 Modified tibble with \code{start-year}, \code{final-calibration-year}, etc., converted to 'numeric' values

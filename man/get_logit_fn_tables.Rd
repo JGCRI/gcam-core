@@ -4,24 +4,24 @@
 \alias{get_logit_fn_tables}
 \title{get_logit_fn_tables}
 \usage{
-get_logit_fn_tables(data, names, default_logit_type = gcam.LOGIT_TYPES[1],
-  base_header, include_equiv_table, write_all_regions, ...)
+get_logit_fn_tables(data, names, base_header, include_equiv_table = TRUE,
+  write_all_regions = FALSE, default_logit_type = gcam.LOGIT_TYPES[1], ...)
 }
 \arguments{
-\item{data}{Tibble: the data to partition by logit.type}
+\item{data}{Data to partition by logit.type, tibble}
 
-\item{names}{Character: the column names to use out of data}
+\item{names}{Column names to use out of data, character}
+
+\item{base_header}{Base header that is used for the logit type tables which will get
+pasted with what the logit.type for each table, character}
+
+\item{include_equiv_table}{Include EQUIV_TABLE as well? Logical}
+
+\item{write_all_regions}{Write each table to all regions? Logical}
+
+\item{default_logit_type}{Default logit function to use if the user did not specify one, character}
 
 \item{...}{Other parameters to pass to \code{\link{write_to_all_regions}}}
-
-\item{default.logit.type}{Character: the default logit function to use if the user did not specify one}
-
-\item{base.header}{Character: the base header that is used for the logit type tables which will get
-pasted with what the logit.type for each table}
-
-\item{include.equiv.table}{Logical: should the EQUIV_TABLE be included as well?}
-
-\item{write.all.regions}{Logical: should each table be written to all regions?}
 }
 \value{
 The tables TODO NEEED BETTER DOCUMENTATION

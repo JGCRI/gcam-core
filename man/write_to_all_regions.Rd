@@ -4,22 +4,24 @@
 \alias{write_to_all_regions}
 \title{write_to_all_regions}
 \usage{
-write_to_all_regions(data, names, has_traded = FALSE,
+write_to_all_regions(data, names, GCAM_region_names, has_traded = FALSE,
   apply_selected_only = TRUE, set_market = FALSE)
 }
 \arguments{
 \item{data}{Data set to operate on, tibble}
 
-\item{names}{Column names to return, character}
+\item{names}{Column names to return, character vector}
 
-\item{apply_selected_only}{Only apply to region 1? Logical}
+\item{GCAM_region_names}{GCAM region names and ID numbers, tibble}
+
+\item{has_traded}{TODO, logical}
+
+\item{apply_selected_only}{Only apply to traded region \code{gcam.USA_CODE} (1)? Logical}
 
 \item{set_market}{Overwrite \code{market} column with \code{region} data? Logical}
-
-\item{has.traded}{has.traded TODO, logical}
 }
 \value{
-TODO
+Filled out data with TODO
 }
 \description{
 write_to_all_regions

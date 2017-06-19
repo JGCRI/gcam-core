@@ -79,8 +79,8 @@ test_that("set_years", {
 test_that("set_traded_names", {
   expect_error(set_traded_names(1, TRUE))
   expect_error(set_traded_names(tibble(), 1))
-  # There should be a 'traded' column
-  expect_warning(set_traded_names(tibble(trad = 0), letters, apply_selected_only = FALSE))
+  # There should be a 'traded' column if apply_selected_only
+  expect_warning(set_traded_names(tibble(trad = 0), letters, apply_selected_only = TRUE))
 
   # correctly replaces region name
   d <- tibble(traded = gcam.USA_CODE + 0:2, region = paste0("r", 0:2))
@@ -101,24 +101,74 @@ test_that("set_traded_names", {
 })
 
 test_that("get_logit_fn_tables", {
-  expect_error(get_logit_fn_tables(1, "x"))
-  expect_error(get_logit_fn_tables(tibble(), 1))
-  expect_error(get_logit_fn_tables(tibble(), "x", default_logit_type = 1))
-  expect_error(get_logit_fn_tables(tibble(), "x", base_header = 1))
-  expect_error(get_logit_fn_tables(tibble(), "x", include_equiv_table = 1))
-  expect_error(get_logit_fn_tables(tibble(), "x", write_all_regions = 1))
+  expect_error(get_logit_fn_tables(1, "x", "x"))
+  expect_error(get_logit_fn_tables(tibble(), 1, "x"))
+  expect_error(get_logit_fn_tables(tibble(), "x", "x", include_equiv_table = 1))
+  expect_error(get_logit_fn_tables(tibble(), "x", "x", write_all_regions = 1))
+  expect_error(get_logit_fn_tables(tibble(), "x", "x", default_logit_type = 1))
 
-  # replaces NA logit.type with default_logit_type
-  # d <- tibble(logit.type = NA)
-  # d1 <- get_logit_fn_tables(d, names = "x", default_logit_type = "y")
-  # expect_identical(d1$logit.type, "y")
-  # d <- tibble(logit.type = "x")
-  # d1 <- get_logit_fn_tables(d, names = "x", default_logit_type = "y")
-  # expect_identical(d1$logit.type, d$logit.type)
+  # Structure should be a list with names corresponding to logit types
+  d <- tibble(logit.type = c(NA, gcam.LOGIT_TYPES))
+  BH <- "BH"
+  DLT <- 1
+  NAMES <- "logit.type"
+  d1 <- get_logit_fn_tables(d, names = NAMES, base_header = BH,
+                            default_logit_type = gcam.LOGIT_TYPES[DLT],
+                            include_equiv_table = FALSE)
+  expect_type(d1, "list")
+  expect_identical(names(d1), gcam.LOGIT_TYPES)
 
-  # include_equiv_table correctly puts extra table in
+  for(i in seq_along(d1)) {
+    # Each list element should have 'header' and 'data' sections
+    expect_identical(names(d1[[i]]), c("header", "data"))
+    # Header should be correctly named
+    expect_identical(d1[[i]]$header, paste0(BH, gcam.LOGIT_TYPES[i]))
+    expect_identical(names(d1[[i]]$data), NAMES)
+    # Data section should have one row, except for the default, which
+    # because of NA in `d` above should hvae two
+    if(i == DLT) {
+      expect_equal(nrow(d1[[i]]$data), 2)
+    } else {
+      expect_equal(nrow(d1[[i]]$data), 1)
+    }
+  }
 
-  # a table is created for each logit type, whether or not that type appears in data
+  # The EQUIV_TABLE should be properly structured
+  d1 <- get_logit_fn_tables(d, names = "logit.type", base_header = BH,
+                            default_logit_type = gcam.LOGIT_TYPES[DLT],
+                            include_equiv_table = TRUE)
+  expect_identical(names(d1), c(gcam.EQUIV_TABLE, gcam.LOGIT_TYPES))
+  expect_identical(d1[[gcam.EQUIV_TABLE]]$header, gcam.EQUIV_TABLE)
+  d2 <- d1[[gcam.EQUIV_TABLE]]$data
+  # Should be a single row and columns for group.name, dummy-logit-tag, then the other tags
+  expect_equal(dim(d2), c(1, length(gcam.LOGIT_TYPES) + 2))
+  expect_true(all(gcam.LOGIT_TYPES %in% d2))
+})
 
+test_that("write_to_all_regions", {
+  expect_error(write_to_all_regions(1, "x", tibble()))
+  expect_error(write_to_all_regions(tibble(), 1, tibble()))
+  expect_error(write_to_all_regions(tibble(), 1, 1))
+  expect_error(write_to_all_regions(tibble(), "x", tibble(), has_traded = 1))
+  expect_error(write_to_all_regions(tibble(), "x", tibble(), apply_selected_only = 1))
+  expect_error(write_to_all_regions(tibble(), "x", tibble(), set_market = 1))
 
+  # Fills out data correctly
+  d <- tibble(x = 1)
+  nms <- c("logit.year.fillout", "price.exp.year.fillout", "market.name", "GCAM_region_ID", "region")
+  grn <- tibble(region = c("x", "y"), GCAM_region_ID = 1:2)
+  d1 <- write_to_all_regions(d, nms, grn)
+  expect_equal(nrow(d1), nrow(grn) * nrow(d))
+  expect_identical(names(d1), nms)
+
+  # Replaces fillout and market fields correctly
+  d <- tibble(logit.year.fillout = NA, price.exp.year.fillout = NA, market.name = NA)
+  d1 <- write_to_all_regions(d, nms, grn)
+  expect_identical(d1$market.name, d1$region)
+
+  # Handles has_traded correctly
+  d <- tibble(traded = 1)
+  nms <- c("traded", "GCAM_region_ID", "region")
+  d1 <- write_to_all_regions(d, nms, grn, has_traded = TRUE)
+  expect_equal(nrow(d1), nrow(grn) * nrow(d))
 })
