@@ -43,7 +43,7 @@ module_socioeconomics_L242.Bld_Inc_Elas_scenarios <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A42.inc_elas <- get_data(all_data, "socioeconomics/A42.inc_elas")
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y") %>%
-      ungroup(GCAM_region_ID) %>%
+      ungroup() %>%
       rename(pcgdp_90thousUSD = value) %>%
       mutate(year = as.integer(year))
 
