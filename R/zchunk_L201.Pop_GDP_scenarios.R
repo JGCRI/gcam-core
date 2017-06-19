@@ -35,6 +35,15 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    . <- GCAM_region_ID <- L201.LaborProductivity_SSP1 <- L201.LaborProductivity_SSP2 <-
+      L201.LaborProductivity_SSP3 <- L201.LaborProductivity_SSP4 <- L201.LaborProductivity_SSP5 <-
+      L201.LaborProductivity_gSSP1 <- L201.LaborProductivity_gSSP2 <- L201.LaborProductivity_gSSP3 <-
+      L201.LaborProductivity_gSSP4 <- L201.LaborProductivity_gSSP5 <- L201.Pop_SSP1 <- L201.Pop_SSP2 <-
+      L201.Pop_SSP3 <- L201.Pop_SSP4 <- L201.Pop_SSP5 <- L201.Pop_gSSP1 <- L201.Pop_gSSP2 <-
+      L201.Pop_gSSP3 <- L201.Pop_gSSP4 <- L201.Pop_gSSP5 <- PPPConvert <- PPP_MER <- baseGDP <-
+      constRatio <- curr_table <- lag_pcgdp <- rate_pcgdp <- ratio_pcgdp <- region <- scenario <-
+      timesteps <- totalPop <- value <- year <- NULL  # silence package check notes
+
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     L101.Pop_thous_R_Yh <- get_data(all_data, "L101.Pop_thous_R_Yh")

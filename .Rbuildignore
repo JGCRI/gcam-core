@@ -3,7 +3,8 @@
 .travis.yml
 .remake/
 outputs/
-sample-generator/
+chunk-generator/
+figures/
 network/
 tracking/
 xml/
