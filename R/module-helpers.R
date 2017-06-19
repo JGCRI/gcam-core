@@ -89,22 +89,27 @@ rename_SO2 <- function(x, so2_map, is_awb = FALSE) {
 
 #' get_logit_fn_tables
 #'
-#' Generate a list of tables that sets the appropriate discrete choice function to use.
+#' Generate a list of tables that sets the appropriate logit choice function to use for supplysectors or subsectors.
+#' For documentation of the options for logit choice functions in GCAM, see \url{http://jgcri.github.io/gcam-doc/choice.html}
 #'
-#' @param data Data to partition by logit.type, tibble
-#' @param names Column names to use out of data, character
-#' @param base_header Base header that is used for the logit type tables which will get
-#'  pasted with what the logit.type for each table, character
+#' @param data Base data table indicating sectors and/or subsectors to be assigned a logit function type, tibble
+#' @param names Column names to use in the data returned, character
+#' @param base_header Base table name that is appended with the logit.type to name each data table and header (ID string
+#' for CSV to XML conversion), character
 #' @param default_logit_type Default logit function to use if the user did not specify one, character
-#' @param include_equiv_table Include EQUIV_TABLE as well? Logical
-#' @param write_all_regions Write each table to all regions? Logical
+#' @param include_equiv_table Logical indicating whether to generate an EQUIV_TABLE which will be called in the
+#' CSVtoXML conversion, re-naming default logit type tags to the appropriate logit function type
+#' in any other tables being read by the same batch XML file.
+#' @param write_all_regions Logical indicating whether to call \code{\link{write_to_all_regions}}
 #' @param ... Other parameters to pass to \code{\link{write_to_all_regions}}
-#' @details The data has to be partitioned into multiple tables, one for each logit.type. Each element of
-#' the returned list has two variables: 1) the header for the table, and 2) the data for the table.
-#' If requested, an additional \code{EQUIV_TABLE} table will be added so that the tables that contain the logit
-#' exponents do not themselves have to know what logit.type they are using and thus do not need to be
-#' partitioned.
-#' @return The tables TODO NEEED BETTER DOCUMENTATION
+#' @details The data table is partitioned into multiple lists, one for each logit type. Each element of
+#' the returned list has two elements: 1) the header name (i.e., ID string) for the table, and 2) the data for the table.
+#' If requested, an additional \code{EQUIV_TABLE} list will be included so that other data tables that contain the numerical
+#' values of the logit exponents are assigned to the correct logit type. These tables with the numerical exponent values
+#' are not required to be partitioned into separate tables according to logit type.
+#' \code{EQUIV_TABLE} needs to be read once (and only once) per XML file created
+#' @return A list of lists, each of which contains a data table and a header name to be used as the ID string for the
+#' CSV to XML conversion.
 get_logit_fn_tables <- function(data, names, base_header,
                                 include_equiv_table = TRUE,
                                 write_all_regions = FALSE,
@@ -160,13 +165,19 @@ get_logit_fn_tables <- function(data, names, base_header,
 
 #' write_to_all_regions
 #'
-#' @param data Data set to operate on, tibble
-#' @param names Column names to return, character vector
-#' @param GCAM_region_names GCAM region names and ID numbers, tibble
-#' @param has_traded TODO, logical
-#' @param apply_selected_only Only apply to traded region \code{gcam.USA_CODE} (1)? Logical
-#' @param set_market Overwrite \code{market} column with \code{region} data? Logical
-#' @return Filled out data with TODO
+#' Copy data table to all regions, selecting which columns to keep. Used for data that GCAM contains within each region,
+#' but whose values are not actually differentiated by region
+#'
+#' @param data Base tibble to start from
+#' @param names Character vector indicating the column names of the returned tibble
+#' @param GCAM_region_names Tibble with GCAM region names and ID numbers
+#' @param has_traded Logical indicating whether any rows in the base table have "traded" goods which
+#' will call \code{\link{set_traded_names}}
+#' @param apply_selected_only Logical indating whether \code{\link{set_traded_names}} is applied to
+#' the whole tibble, or only selected rows
+#' @param set_market Logical indicating whether to create a \code{market.name} column whose values are equal
+#' to \code{region} prior to \code{\link{set_traded_names}} re-setting \code{region} names
+#' @return Tibble with data written out to all GCAM regions
 write_to_all_regions <- function(data, names, GCAM_region_names, has_traded = FALSE,
                                  apply_selected_only = TRUE, set_market = FALSE) {
   assert_that(is_tibble(data))
@@ -206,12 +217,14 @@ write_to_all_regions <- function(data, names, GCAM_region_names, has_traded = FA
 
 #' set_traded_names
 #'
-#' Convert names of traded secondary goods to be contained within region 1, with region appended to subsector and tech names
+#' Re-set region names in tables with traded secondary goods so that the traded secondary goods are all contained
+#' within one specified region, with the (actual) region name prepended to the subsector and technology names (where applicable)
 #'
-#' @param data Data set to operate on, tibble
-#' @param GCAM_region_names GCAM region names, ordered character vector
-#' @param apply_selected_only Only apply to traded region \code{gcam.USA_CODE} (1)? Logical
-#' @return Modified data
+#' @param data Tibble to operate on
+#' @param GCAM_region_names Tibble with GCAM region names and ID numbers
+#' @param apply_selected_only Logical indating whether region/subsector/technology re-assignment is applied to
+#' the whole tibble, or only selected rows
+#' @return Tibble returned with modified region, subsector, and/or technology information
 set_traded_names <- function(data, GCAM_region_names, apply_selected_only = TRUE) {
   assert_that(is_tibble(data))
   assert_that(is.character(GCAM_region_names))
@@ -238,11 +251,14 @@ set_traded_names <- function(data, GCAM_region_names, apply_selected_only = TRUE
 
 #' set_years
 #'
-#' Replace text descriptions of years with numerical values
+#' Replace text descriptions of years in exogenous input CSVs with numerical values. This allows model time periods
+#' to be modified without requiring similar modifications in many input CSV tables.
 #'
-#' @param data Data with entries to be replaced, tibble
-#' @return Modified tibble with \code{start-year}, \code{final-calibration-year}, etc., converted to 'numeric' values
-#' @note The new 'numeric' values are actually characters; this helper function doesn't touch column types.
+#' @param data Tibble with text descriptions of model time periods to be replaced with numerical values.
+#' @details Text strings include \code{start-year}, \code{final-calibration-year}, \code{final-historical-year},
+#' \code{initial-future-year}, \code{initial-nonhistorical-year}, and \code{end-year}
+#' @return Modified tibble with 'numerical' values instead of text.
+#' @note The returned 'numerical' values are actually characters; this helper function doesn't touch column types.
 set_years <- function(data) {
   assert_that(is_tibble(data))
   data[data == "start-year"] <- min(BASE_YEARS)

@@ -7,15 +7,17 @@
 set_traded_names(data, GCAM_region_names, apply_selected_only = TRUE)
 }
 \arguments{
-\item{data}{Data set to operate on, tibble}
+\item{data}{Tibble to operate on}
 
-\item{GCAM_region_names}{GCAM region names, ordered character vector}
+\item{GCAM_region_names}{Tibble with GCAM region names and ID numbers}
 
-\item{apply_selected_only}{Only apply to traded region \code{gcam.USA_CODE} (1)? Logical}
+\item{apply_selected_only}{Logical indating whether region/subsector/technology re-assignment is applied to
+the whole tibble, or only selected rows}
 }
 \value{
-Modified data
+Tibble returned with modified region, subsector, and/or technology information
 }
 \description{
-Convert names of traded secondary goods to be contained within region 1, with region appended to subsector and tech names
+Re-set region names in tables with traded secondary goods so that the traded secondary goods are all contained
+within one specified region, with the (actual) region name prepended to the subsector and technology names (where applicable)
 }

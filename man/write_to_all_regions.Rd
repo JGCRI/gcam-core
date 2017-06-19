@@ -8,21 +8,25 @@ write_to_all_regions(data, names, GCAM_region_names, has_traded = FALSE,
   apply_selected_only = TRUE, set_market = FALSE)
 }
 \arguments{
-\item{data}{Data set to operate on, tibble}
+\item{data}{Base tibble to start from}
 
-\item{names}{Column names to return, character vector}
+\item{names}{Character vector indicating the column names of the returned tibble}
 
-\item{GCAM_region_names}{GCAM region names and ID numbers, tibble}
+\item{GCAM_region_names}{Tibble with GCAM region names and ID numbers}
 
-\item{has_traded}{TODO, logical}
+\item{has_traded}{Logical indicating whether any rows in the base table have "traded" goods which
+will call \code{\link{set_traded_names}}}
 
-\item{apply_selected_only}{Only apply to traded region \code{gcam.USA_CODE} (1)? Logical}
+\item{apply_selected_only}{Logical indating whether \code{\link{set_traded_names}} is applied to
+the whole tibble, or only selected rows}
 
-\item{set_market}{Overwrite \code{market} column with \code{region} data? Logical}
+\item{set_market}{Logical indicating whether to create a \code{market.name} column whose values are equal
+to \code{region} prior to \code{\link{set_traded_names}} re-setting \code{region} names}
 }
 \value{
-Filled out data with TODO
+Tibble with data written out to all GCAM regions
 }
 \description{
-write_to_all_regions
+Copy data table to all regions, selecting which columns to keep. Used for data that GCAM contains within each region,
+but whose values are not actually differentiated by region
 }

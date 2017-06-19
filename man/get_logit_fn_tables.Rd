@@ -8,31 +8,36 @@ get_logit_fn_tables(data, names, base_header, include_equiv_table = TRUE,
   write_all_regions = FALSE, default_logit_type = gcam.LOGIT_TYPES[1], ...)
 }
 \arguments{
-\item{data}{Data to partition by logit.type, tibble}
+\item{data}{Base data table indicating sectors and/or subsectors to be assigned a logit function type, tibble}
 
-\item{names}{Column names to use out of data, character}
+\item{names}{Column names to use in the data returned, character}
 
-\item{base_header}{Base header that is used for the logit type tables which will get
-pasted with what the logit.type for each table, character}
+\item{base_header}{Base table name that is appended with the logit.type to name each data table and header (ID string
+for CSV to XML conversion), character}
 
-\item{include_equiv_table}{Include EQUIV_TABLE as well? Logical}
+\item{include_equiv_table}{Logical indicating whether to generate an EQUIV_TABLE which will be called in the
+CSVtoXML conversion, re-naming default logit type tags to the appropriate logit function type
+in any other tables being read by the same batch XML file.}
 
-\item{write_all_regions}{Write each table to all regions? Logical}
+\item{write_all_regions}{Logical indicating whether to call \code{\link{write_to_all_regions}}}
 
 \item{default_logit_type}{Default logit function to use if the user did not specify one, character}
 
 \item{...}{Other parameters to pass to \code{\link{write_to_all_regions}}}
 }
 \value{
-The tables TODO NEEED BETTER DOCUMENTATION
+A list of lists, each of which contains a data table and a header name to be used as the ID string for the
+CSV to XML conversion.
 }
 \description{
-Generate a list of tables that sets the appropriate discrete choice function to use.
+Generate a list of tables that sets the appropriate logit choice function to use for supplysectors or subsectors.
+For documentation of the options for logit choice functions in GCAM, see \url{http://jgcri.github.io/gcam-doc/choice.html}
 }
 \details{
-The data has to be partitioned into multiple tables, one for each logit.type. Each element of
-the returned list has two variables: 1) the header for the table, and 2) the data for the table.
-If requested, an additional \code{EQUIV_TABLE} table will be added so that the tables that contain the logit
-exponents do not themselves have to know what logit.type they are using and thus do not need to be
-partitioned.
+The data table is partitioned into multiple lists, one for each logit type. Each element of
+the returned list has two elements: 1) the header name (i.e., ID string) for the table, and 2) the data for the table.
+If requested, an additional \code{EQUIV_TABLE} list will be included so that other data tables that contain the numerical
+values of the logit exponents are assigned to the correct logit type. These tables with the numerical exponent values
+are not required to be partitioned into separate tables according to logit type.
+\code{EQUIV_TABLE} needs to be read once (and only once) per XML file created
 }
