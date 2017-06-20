@@ -71,8 +71,6 @@ public:
 
     static const std::string& getXMLNameStatic();
 
-    void calcPop();
-   
     double getWorkingAgePopulation( const int period ) const;
     double getWorkingAgePopulationMales( const int per ) const;
     double getWorkingAgePopulationFemales( const int per ) const; 

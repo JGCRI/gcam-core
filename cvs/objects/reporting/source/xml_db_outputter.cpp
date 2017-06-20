@@ -755,11 +755,34 @@ void XMLDBOutputter::startVisitConsumerFinalDemand( const ConsumerFinalDemand
 {
     XMLWriteOpeningTag( aConsumerFinalDemand->getXMLName(), mBuffer,
                         mTabs.get(), aConsumerFinalDemand->getName(),
-                        0, "final-demand" );
+                        0, "" );
 
-    // It's not clear that we actually need to write anything here.
-    // The actual demands will be written by the supply sectors.
-    // Perhaps we will eventually write out the budget fractions?
+    const Modeltime* modeltime = scenario->getModeltime();
+    int nper = modeltime->getmaxper();
+    // array to hold output values
+    vector<vector<double> >demand(nper);
+    // array to hold unit names
+    vector<string> units;
+    aConsumerFinalDemand->getReportingUnits( units );
+    // array to hold component names 
+    vector<string> components;
+    aConsumerFinalDemand->getComponentNames( components );
+    
+    // Collect all of the demands, since this is done by period
+    for( int i=0; i < nper; ++i ) {
+        aConsumerFinalDemand->getDemand( demand[i] , i);
+    }
+
+    // Write out demands for each component in their own quasi-sector
+    // underneath this object.   
+    for( unsigned j=0; j < components.size(); ++j) {
+        XMLWriteOpeningTag("demand-component", mBuffer, mTabs.get(),
+                           components[j]);
+        for( int i=0; i < nper; ++i ) {
+            writeItem("demand", units[j], demand[i][j], i);
+        }
+        XMLWriteClosingTag("demand-component", mBuffer, mTabs.get());
+    }
 }
 
 

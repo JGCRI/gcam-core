@@ -143,12 +143,16 @@ public:
      *          effect, it sets the "demand" side of the trial value
      *          markets for staple and nonstaple budget shares.
      */
-    virtual const std::vector<double> &
-        calcDemand( const std::string & aRegionName,
-                    const Demographic & aDemographics,
-                    const GDP & aGDP,
-                    const std::vector<double> & aprices,
-                    int aPeriod ) const;
+    virtual void calcDemand( const std::string & aRegionName,
+                             const Demographic & aDemographics,
+                             const GDP & aGDP,
+                             const std::vector<double> & aprices,
+                             int aPeriod,
+                             std::vector<double> &aDemandOutput ) const;
+
+    virtual void reportDemand( std::vector<double> &aDemand ) const;
+    virtual void reportUnits(std::vector<std::string> &aUnits) const;
+    
 
     /*!
      * \brief Complete the demand system's initialization, prior to
@@ -177,6 +181,10 @@ public:
     virtual void toInputXML( std::ostream &aOut, Tabs *aTabs ) const;
 
 private:
+    //! Price conversion factor
+    const static double mprice_conversion_fac;
+    //! Output quantity conversion factor
+    const static double mqty_conversion_fac;
 
     //! Name of this object
     std::string mName;

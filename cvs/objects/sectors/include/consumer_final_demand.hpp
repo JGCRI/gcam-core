@@ -96,6 +96,31 @@ public:
                                  const int aPeriod );
 
     /*!
+     * \brief Report the demand for a period 
+     * \details The caller supplies a vector to write the demand
+     *          values into.  The vector will be resized if necessary
+     *          to hold the demand values.  The values returned will
+     *          be converted to the units given by the
+     *          getReportingUnits().
+     */
+    void getDemand( std::vector<double> &aOutDemand, int aPeriod ) const;
+
+    /*!
+     * \brief Get the reporting units for each of the demand components. 
+     * \details The vector argument will be resized as necessary.
+     *          Reporting units may be different from the units used
+     *          internally for calculation.
+     */
+    void getReportingUnits( std::vector<std::string> &aOutUnits ) const;
+
+    /*!
+     * \brief Get the name of each of the demand components. 
+     * \details The vector argument will be resized as necessary and
+     *          filled in with the names of the demand components.
+     */
+    void getComponentNames( std::vector<std::string> &aOutComponents ) const;
+
+    /*!
      * \brief Get the market price of the service 
      * \details It's not clear what this value is supposed to mean, particularly
      *          in the context of a multicomponent demand, where the different
@@ -172,14 +197,55 @@ private:
      */
     std::vector<std::string> mSupplySectors;
 
+    /*!
+     * \brief Prescribed output values during calibration years 
+     * \details Components will be indexed in the same order as the
+     *          entries in mSupplySectors, and within each component
+     *          they will be indexed by year.  One side effect of this
+     *          is that during parsing mSupplySectors must be
+     *          populated with a component's name before any base
+     *          service values can be read for that component.
+     *
+     *          Note that the components are stored row-wise, while
+     *          periods are stored column-wise.  This is the opposite
+     *          of what we do in mDemand.  That is because
+     *          XMLHelper::insertValueIntoVector() needs the values
+     *          for each component to be contiguous.  For the rest of
+     *          the functions here it is more convenient to index
+     *          years in rows and components in columns.
+     *
+     *          Base service values are stored in the units used by
+     *          their respective supply sectors.
+     */
+    std::vector<std::vector<double> > mBaseServices; 
+        
     std::string mName;          //!< name of the sector
 
     /*!
-     * \brief Demand values over the course of the run. 
-     * \details These are stored as a two-dimensional matrix.  The first
-     *          dimension is the demand component (corresponding to the supply
-     *          sectors above), and the second dimension is the period.  Values
-     *          will be filled in in setFinalDemand().
+     * \brief Demand values over the course of the run.
+     *
+     * \details These are stored as a two-dimensional matrix.  The
+     *          first dimension is the period, and the second is the
+     *          demand component (corresponding to the supply sectors
+     *          above).  Values will be filled in in setFinalDemand().
+     *
+     *          Demand is stored in the units used by the supply
+     *          sectors.  When we go to report these values in
+     *          getDemand(), we pass the stored values to the
+     *          reportDemand() method of the demand system, which will
+     *          convert them to the units we want to report.  Why do
+     *          we delegate that to the demand system?  It's because
+     *          we can't know what unit conversions are appropriate
+     *          without knowing what specific demand system is in
+     *          use.
+     *
+     *          If the demand system is per-capita, then these are
+     *          also per-capita values; otherwise they are totals.
+     *          This is not ideal, but we don't have access to the
+     *          population when the reporting happens, so if we want
+     *          to output the values as per-capita, we have to store
+     *          them that way.
+
      */
     std::vector<std::vector<double> > mDemand;
 

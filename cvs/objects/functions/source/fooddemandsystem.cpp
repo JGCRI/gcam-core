@@ -43,6 +43,7 @@
 #include <math.h>
 
 #include "functions/include/fooddemandsystem.hpp"
+#include "functions/include/function_utils.h"
 #include "containers/include/gdp.h"
 #include "marketplace/include/marketplace.h"
 #include "demographics/include/demographic.h"
@@ -80,18 +81,33 @@ namespace {
     // absorbed into Pm during the fitting process.
     const double psscl = 100.0;            //!< Scale factor for staple prices
     const double pnscl = 20.0;             //!< Scale factor for nonstaple prices
+    const std::string food_demand_unit_str = "KCal/(person-day)"; 
 }
 
-const std::vector<double> &FoodDemandSystem::calcDemand(
+
+// Price conversion factor.  Input prices are in 1975$ per Mcal-year.
+// Convert to 2005$ per Mcal-day (these are thermodynamic calories, so
+// 1 Mcal is 1000 dietary Calories.)
+const double FoodDemandSystem::mprice_conversion_fac =
+    1.0 / 365.0 / FunctionUtils::DEFLATOR_1975_PER_DEFLATOR_2005();
+
+// Quantity conversion factor.  Output quantities are in Mcal/day (per
+// capita).  We need to convert to Pcal/year (also per capita).
+const double FoodDemandSystem::mqty_conversion_fac = 365.0 * 1e-9;
+
+void FoodDemandSystem::calcDemand(
     const std::string &aRegionName,
     const Demographic &aDemographics,
     const GDP &aGDP,
     const std::vector<double> &aprices,
-    int aPeriod) const
+    int aPeriod,
+    std::vector<double> &aDemandOutput ) const
 {
-    // XXX Are we going to need to do a dollar-year conversion?  GCAM
-    // prices might be in 1975 dollars, or something ridiculous like
-    // that. 
+    std::vector<double> prices(aprices);
+    for(unsigned i=0; i<aprices.size(); ++i) {
+        prices[i] *= mprice_conversion_fac;
+    }
+    
     // get parameters into more convenient form
     double as = mParams[0] * mParams[9]; // As * (staple-bias-fac)
     double an = mParams[1] * mParams[10]; // An * (nonstaple-bias-fac)
@@ -104,8 +120,8 @@ const std::vector<double> &FoodDemandSystem::calcDemand(
     double pm = mParams[8];
 
     double x = aGDP.getPPPGDPperCap(aPeriod) / pm;
-    double ws = aprices[0] / pm * psscl;
-    double wn = aprices[1] / pm * pnscl;
+    double ws = prices[0] / pm * psscl;
+    double wn = prices[1] / pm * pnscl;
 
     // Get the trial budget fractions.  These will be used to calculate
     // price exponents in the demand equations.
@@ -161,12 +177,32 @@ const std::vector<double> &FoodDemandSystem::calcDemand(
     setActualBudgetFrac( aRegionName, aPeriod, 0, alphas_actual);
     setActualBudgetFrac( aRegionName, aPeriod, 1, alphan_actual);
 
+    // Convert demand output units from thousands of dietary calories per
+    // day to Pcal (1e15 thermodynamic calories) per year.
+    double fac = 1e3 / 1e15 * 365;
+    Qs *= fac;
+    Qn *= fac;
+
     // Set the primary outputs of the demand system
-    mDemandOutput[0] = Qs;
-    mDemandOutput[1] = Qn;
-    return mDemandOutput; 
+    aDemandOutput[0] = Qs*mqty_conversion_fac;
+    aDemandOutput[1] = Qn*mqty_conversion_fac;
 }
 
+void FoodDemandSystem::reportDemand(std::vector<double> &aDemand) const
+{
+    // Convert from Pcal/yr back to KCal/day (both values are per
+    // capita)
+    for(unsigned i=0; i<aDemand.size(); ++i)
+        aDemand[i] /= mqty_conversion_fac;
+}
+
+
+void FoodDemandSystem::reportUnits(std::vector<std::string> &aUnits)
+    const
+{
+    for(unsigned i=0; i < aUnits.size(); ++i)
+        aUnits[i] = food_demand_unit_str;
+}
 
 void FoodDemandSystem::completeInit( const std::string &aRegionName, const
                                      std::string &aSectorName )

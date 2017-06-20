@@ -54,6 +54,7 @@
 
 class Demographic;
 class GDP;
+class Value;
 
 /*!
  * \ingroup Objects
@@ -122,12 +123,42 @@ public:
      *       scratch space.  It's unclear, but this should do for
      *       now.
     */
-    virtual const std::vector<double> &
+    virtual void
         calcDemand( const std::string & aRegionName,
                     const Demographic & aDemographics,
                     const GDP & aGDP,
                     const std::vector<double> & aprices,
-                    int aPeriod ) const = 0;
+                    int aPeriod,
+                    std::vector<double> & aDemandOutput) const = 0; 
+
+    /*!
+     * \brief Return the demand values to be written into the output database. 
+     * \details This function exists to allow for the possibility of
+     *          reporting demand in different units than we use for
+     *          internal calculation.  Whereas calcDemand must return
+     *          demand values in the same units used by the upstream
+     *          sectors, these values may be in units more appropriate
+     *          for analysis.
+     *
+     *          The parameter is used for both input and output.  On
+     *          input it contains the demand originally calculated by
+     *          the demand system (i.e., in GCAM's internal unit).
+     *          The method should convert these values in place to the
+     *          reporting unit.  The default implementation leaves the
+     *          values untouched, and is therefore appropriate for
+     *          cases where the reporting unit is the same as the
+     *          internal unit.
+     */
+    virtual void reportDemand(std::vector<double> &aDemand) const {}
+
+    /*!
+     * \brief Provide unit strings for the demand components
+     *
+     * \details The caller supplies a string array, and this function
+     *          fills it in.  The units can be different for each
+     *          component, but they must be constant over time.
+     */
+    virtual void reportUnits(std::vector<std::string> &aUnits) const = 0;
 
     /*!
      * \brief Complete the demand system's initialization, prior to

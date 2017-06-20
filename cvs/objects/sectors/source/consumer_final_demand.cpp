@@ -47,6 +47,7 @@
 #include "util/logger/include/ilogger.h"
 #include "util/base/include/model_time.h"
 #include "util/base/include/xml_helper.h"
+#include "demographics/include/demographic.h"
 
 // Scenario is supplied as a global
 extern Scenario *scenario;
@@ -56,6 +57,7 @@ namespace {
     const std::string demand_sys_tag = "demand-system";
     const std::string demand_out_tag = "demand";
     const std::string demand_component_attr = "component";
+    const std::string base_service_tag = "base-service";
 }
 
 
@@ -64,28 +66,73 @@ void ConsumerFinalDemand::setFinalDemand( const std::string &aRegionName,
                      const GDP *aGDP,
                      const int aPeriod )
 {
+    Marketplace *mp = scenario->getMarketplace();
     if( aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() ) {
-        // XXX In calibration periods, return the calibration data instead of
-        // running the model.
+        // These values are totals (even if the underlying demand model is per
+        // capita) and are kept in the units of the upstream sector
+        for(unsigned i=0; i<mSupplySectors.size(); ++i) {
+            // add these values to the upstreadm sectors
+            mLastDemand[i] = mp->addToDemand( mSupplySectors[i], aRegionName,
+                                              mBaseServices[i][aPeriod],
+                                              mLastDemand[i], aPeriod );
+            // Store these for later reporting.  If the demand system is per
+            // capita then we convert to per capita values and store those.
+            mDemand[aPeriod][i] = mBaseServices[i][aPeriod];
+            if( mDemandSys->isPerCapita() )
+                mDemand[aPeriod][i] /= aDemographics->getTotal( aPeriod );
+        }
     }
     else {
-        Marketplace *mp = scenario->getMarketplace();
-        // XXX maybe make this a member so it persists?
         std::vector<double> prices(mSupplySectors.size());
         for(unsigned i=0; i<mSupplySectors.size(); ++i)
             prices[i] =
                 mp->getPrice( mSupplySectors[i], aRegionName, aPeriod, true );
-        // XXX Not sure this will work, since mDemand holds "Values" instead of
-        // doubles. 
-        mDemand[aPeriod] = mDemandSys->calcDemand( aRegionName, *aDemographics, *aGDP,
-                                                   prices, aPeriod );
-        for(unsigned i=0; i<mSupplySectors.size(); ++i)
+        mDemandSys->calcDemand( aRegionName, *aDemographics, *aGDP,
+                                prices, aPeriod, mDemand[aPeriod] );
+        for(unsigned i=0; i<mSupplySectors.size(); ++i) {
+            double value = mDemand[aPeriod][i];
+            if( mDemandSys->isPerCapita() ) {
+                // If the demand is calculated per capita, then add
+                // the total demand to the market.  We still record
+                // per capita demand.
+                value *= aDemographics->getTotal( aPeriod );
+            }
             mLastDemand[i] = mp->addToDemand( mSupplySectors[i], aRegionName,
                                               mDemand[aPeriod][i],
-                                              mLastDemand[i], aPeriod );
+                                              mLastDemand[i], aPeriod
+                                            );
+        }
 
     }
 }
+
+
+void ConsumerFinalDemand::getDemand( std::vector<double> &aOutDemand, int aPeriod ) const
+{
+    int ncomp = mDemandSys->ngoods();
+    if( aOutDemand.size() != ncomp ) {
+        aOutDemand.resize( ncomp );
+    }
+    aOutDemand = mDemand[aPeriod]; // get stored demand
+    mDemandSys->reportDemand( aOutDemand ); // convert to reporting units
+}
+
+
+void ConsumerFinalDemand::getReportingUnits( std::vector<std::string> &aOutUnits ) const
+{
+    int ncomp = mDemandSys->ngoods();
+    if( aOutUnits.size() != ncomp ) {
+        aOutUnits.resize( ncomp );
+    }
+    mDemandSys->reportUnits( aOutUnits );
+}
+
+
+void ConsumerFinalDemand::getComponentNames( std::vector<std::string> &aOutComponents ) const
+{
+    aOutComponents = mSupplySectors;
+}
+
 
 void ConsumerFinalDemand::completeInit( const std::string &aRegionName,
                                         const IInfo *aRegionInfo )
@@ -97,9 +144,9 @@ void ConsumerFinalDemand::completeInit( const std::string &aRegionName,
     int nper = modeltime->getmaxper();
 
     mLastDemand.resize(ncomp);
-    mDemand.resize(ncomp);
-    for(int i=0; i<ncomp; ++i)
-        mDemand[i].resize(nper);
+    mDemand.resize(nper);
+    for(int i=0; i<nper; ++i)
+        mDemand[i].resize(ncomp);
 
     mDemandSys->completeInit( aRegionName, getName() ); 
 }
@@ -109,7 +156,7 @@ void ConsumerFinalDemand::initCalc( const std::string &aRegionName,
                                     const Demographic *aDemographics,
                                     const int aPeriod )
 {
-    // currently nothing to do at startup
+    // currently nothing to do at start of period
 }
 
 
@@ -122,6 +169,8 @@ const std::string &ConsumerFinalDemand::getXMLNameStatic( void )
 bool ConsumerFinalDemand::XMLParse( const xercesc::DOMNode *aNode )
 {
     using namespace xercesc;
+    const Modeltime* modeltime = scenario->getModeltime();
+    
     ILogger &mainlog = ILogger::getLogger( "main_log" );
 
     // get all child nodes
@@ -140,6 +189,25 @@ bool ConsumerFinalDemand::XMLParse( const xercesc::DOMNode *aNode )
         else if( nodename == supply_component_tag ) {
             mSupplySectors.push_back(
                 XMLHelper<std::string>::getValue( child ) );
+        }
+        else if( nodename == base_service_tag ) {
+            // A base service child node should have "component" and "year" attributes.  We'll grab
+            // the component here, and the year will be used in XMLHelper::insertValueIntoVector().
+            std::string compname = XMLHelper<std::string>::getAttr( aNode,
+                                                                    "component" );
+            std::vector<std::string>::iterator citer = std::find(mSupplySectors.begin(), mSupplySectors.end(), compname );
+            if( citer == mSupplySectors.end() ) {
+                mainlog.setLevel( ILogger::SEVERE );
+                mainlog << "Error parsing Consumer Final Demand Sector. Component " 
+                        << compname << " has not been defined." << std::endl;
+                abort();
+            }
+            int compindex = std::distance(mSupplySectors.begin(), citer );
+            if( compindex >= mBaseServices.size() ) {
+                mBaseServices.resize( compindex+1 );
+            }
+            XMLHelper<double>::insertValueIntoVector( child, mBaseServices[compindex],
+                                                     modeltime );
         }
         else if( nodename == demand_sys_tag ) {
             std::string dstype = XMLHelper<std::string>::getAttr( child, "type" );
@@ -211,7 +279,7 @@ void ConsumerFinalDemand::toDebugXML( const int aPeriod, std::ostream &aOut,
     std::map<std::string, std::string> attr;
     for(unsigned comp=0; comp < mSupplySectors.size(); ++comp) {
         attr[demand_component_attr] = mSupplySectors[comp];
-        XMLWriteElementWithAttributes( mDemand[comp][aPeriod], demand_out_tag,
+        XMLWriteElementWithAttributes( mDemand[aPeriod][comp], demand_out_tag,
                                        aOut, aTabs, attr );
 
     }
