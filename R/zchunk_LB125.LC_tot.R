@@ -74,23 +74,22 @@ module_aglu_LB125.LC_tot <- function(command, ...) {
 
     # Adding up total land area by region, GLU, and year
     L125.LC_bm2_R_LT_Yh_GLU %>%
-      filter(year %in% HISTORICAL_YEARS) %>%
       group_by(GCAM_region_ID, GLU, year) %>%               # group the data by GCAM_region_id and GLU
       summarise(value = sum(value)) ->                      # Adding up total land area by region, year, and GLU
       L125.LC_bm2_R_Yh_GLU
 
-    # It's necessary to make sure the Land Cover changing rates are within certain tolerances
+    # It's necessary to make sure the Land Cover changing rates are in certain tolerances
     L125.LC_bm2_R_Yh_GLU %>%
       arrange(GCAM_region_ID, GLU, year) %>%
       mutate(changing_rate = value / lag(value)) %>%          # calculate the changing rate
-      replace_na(list(changing_rate = 1)) ->                  # replace NA with 1 (happens when there is no previous year)
+      replace_na(list(changing_rate = 1)) %>%                 # assign na to 1 (na happens when there is no previous year)
+      ungroup() %>%
+      select(changing_rate) ->                                # only the changing_rate is useful
       LC_check                                                # save for check the changing rate
 
     # Stop if the changing rate out of the tolerance boundaries
-    if (max(abs(LC_check$changing_rate - 1)) > LAND_TOLERANCE) {
-      print(LC_check)
-      stop("ERROR: Interannual fluctuation in global land cover exceeds tolerance threshold")
-    }
+    if (max(abs(LC_check - 1)) > LAND_TOLERANCE)
+    {stop("ERROR: Interannual fluctuation in global land cover exceeds tolerance threshold")}
 
     # Write out the totals, by region and by region x GLU
     L125.LC_bm2_R_Yh_GLU %>%
