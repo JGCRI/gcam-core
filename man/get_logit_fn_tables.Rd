@@ -4,8 +4,9 @@
 \alias{get_logit_fn_tables}
 \title{get_logit_fn_tables}
 \usage{
-get_logit_fn_tables(data, names, base_header, include_equiv_table = TRUE,
-  write_all_regions = FALSE, default_logit_type = gcam.LOGIT_TYPES[1], ...)
+get_logit_fn_tables(data, names, base_header, GCAM_region_names,
+  include_equiv_table = TRUE, write_all_regions = FALSE,
+  default_logit_type = gcam.LOGIT_TYPES[1], ...)
 }
 \arguments{
 \item{data}{Data to partition by logit.type, tibble}
@@ -14,6 +15,8 @@ get_logit_fn_tables(data, names, base_header, include_equiv_table = TRUE,
 
 \item{base_header}{Base header that is used for the logit type tables which will get
 pasted with what the logit.type for each table, character}
+
+\item{GCAM_region_names}{GCAM region names and ID numbers, tibble}
 
 \item{include_equiv_table}{Include EQUIV_TABLE as well? Logical}
 

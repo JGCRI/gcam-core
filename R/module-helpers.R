@@ -95,6 +95,7 @@ rename_SO2 <- function(x, so2_map, is_awb = FALSE) {
 #' @param names Column names to use out of data, character
 #' @param base_header Base header that is used for the logit type tables which will get
 #'  pasted with what the logit.type for each table, character
+#' @param GCAM_region_names GCAM region names and ID numbers, tibble
 #' @param default_logit_type Default logit function to use if the user did not specify one, character
 #' @param include_equiv_table Include EQUIV_TABLE as well? Logical
 #' @param write_all_regions Write each table to all regions? Logical
@@ -105,13 +106,14 @@ rename_SO2 <- function(x, so2_map, is_awb = FALSE) {
 #' exponents do not themselves have to know what logit.type they are using and thus do not need to be
 #' partitioned.
 #' @return The tables TODO NEEED BETTER DOCUMENTATION
-get_logit_fn_tables <- function(data, names, base_header,
+get_logit_fn_tables <- function(data, names, base_header, GCAM_region_names,
                                 include_equiv_table = TRUE,
                                 write_all_regions = FALSE,
                                 default_logit_type = gcam.LOGIT_TYPES[1], ...) {
   assert_that(is_tibble(data))
   assert_that(is.character(names))
   assert_that(is.character(base_header))
+  assert_that(is_tibble(GCAM_region_names))
   assert_that(is.logical(include_equiv_table))
   assert_that(is.logical(write_all_regions))
   assert_that(is.character(default_logit_type))
@@ -146,7 +148,7 @@ get_logit_fn_tables <- function(data, names, base_header,
     currdata <- data[data$logit.type == curr_logit_type,]
     if(write_all_regions) {
       if(nrow(currdata) > 0) {
-        currdata <- write_to_all_regions(currdata, names, ...)
+        currdata <- write_to_all_regions(currdata, names, GCAM_region_names, ...)
       } else {
         currdata <- bind_cols(currdata, tibble(region = character(0)))
       }
