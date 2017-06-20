@@ -17,14 +17,13 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author MC May 2017
-#' @export
 module_aglu_LB125.LC_tot <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c( "L120.LC_bm2_R_UrbanLand_Yh_GLU",
               "L120.LC_bm2_R_Tundra_Yh_GLU",
               "L120.LC_bm2_R_RckIceDsrt_Yh_GLU",
-              FILE = "temp-data-inject/L122.LC_bm2_R_HarvCropLand_Yh_GLU",
-              FILE = "temp-data-inject/L122.LC_bm2_R_OtherArableLand_Yh_GLU",
+              "L122.LC_bm2_R_HarvCropLand_Yh_GLU",
+              "L122.LC_bm2_R_OtherArableLand_Yh_GLU",
               FILE = "temp-data-inject/L123.LC_bm2_R_MgdPast_Yh_GLU",
               FILE = "temp-data-inject/L123.LC_bm2_R_MgdFor_Yh_GLU",
               FILE = "temp-data-inject/L124.LC_bm2_R_Shrub_Yh_GLU_adj",
@@ -43,8 +42,8 @@ module_aglu_LB125.LC_tot <- function(command, ...) {
     L120.LC_bm2_R_UrbanLand_Yh_GLU <- get_data(all_data, "L120.LC_bm2_R_UrbanLand_Yh_GLU")
     L120.LC_bm2_R_Tundra_Yh_GLU <- get_data(all_data, "L120.LC_bm2_R_Tundra_Yh_GLU")
     L120.LC_bm2_R_RckIceDsrt_Yh_GLU <- get_data(all_data, "L120.LC_bm2_R_RckIceDsrt_Yh_GLU")
-    L122.LC_bm2_R_HarvCropLand_Yh_GLU <- get_data(all_data, "temp-data-inject/L122.LC_bm2_R_HarvCropLand_Yh_GLU")
-    L122.LC_bm2_R_OtherArableLand_Yh_GLU <- get_data(all_data, "temp-data-inject/L122.LC_bm2_R_OtherArableLand_Yh_GLU")
+    L122.LC_bm2_R_HarvCropLand_Yh_GLU <- get_data(all_data, "L122.LC_bm2_R_HarvCropLand_Yh_GLU")
+    L122.LC_bm2_R_OtherArableLand_Yh_GLU <- get_data(all_data, "L122.LC_bm2_R_OtherArableLand_Yh_GLU")
     L123.LC_bm2_R_MgdPast_Yh_GLU <- get_data(all_data, "temp-data-inject/L123.LC_bm2_R_MgdPast_Yh_GLU")
     L123.LC_bm2_R_MgdFor_Yh_GLU <- get_data(all_data, "temp-data-inject/L123.LC_bm2_R_MgdFor_Yh_GLU")
     L124.LC_bm2_R_Shrub_Yh_GLU_adj <- get_data(all_data, "temp-data-inject/L124.LC_bm2_R_Shrub_Yh_GLU_adj")
@@ -56,9 +55,7 @@ module_aglu_LB125.LC_tot <- function(command, ...) {
     # -----------------------------------------------------------------------------
     # Perform computations
     # Create a table with all land types
-    bind_rows(L122.LC_bm2_R_HarvCropLand_Yh_GLU,
-              L122.LC_bm2_R_OtherArableLand_Yh_GLU,
-              L123.LC_bm2_R_MgdPast_Yh_GLU,
+    bind_rows(L123.LC_bm2_R_MgdPast_Yh_GLU,
               L123.LC_bm2_R_MgdFor_Yh_GLU,
               L124.LC_bm2_R_Shrub_Yh_GLU_adj,
               L124.LC_bm2_R_Grass_Yh_GLU_adj,
@@ -70,7 +67,9 @@ module_aglu_LB125.LC_tot <- function(command, ...) {
       mutate(year = as.integer(substr(year, 2, 5))) %>%
       bind_rows(L120.LC_bm2_R_UrbanLand_Yh_GLU,
                 L120.LC_bm2_R_Tundra_Yh_GLU,
-                L120.LC_bm2_R_RckIceDsrt_Yh_GLU)  ->
+                L120.LC_bm2_R_RckIceDsrt_Yh_GLU,
+                L122.LC_bm2_R_HarvCropLand_Yh_GLU,
+                L122.LC_bm2_R_OtherArableLand_Yh_GLU)  ->
       L125.LC_bm2_R_LT_Yh_GLU
 
     # Adding up total land area by region, GLU, and year
@@ -123,8 +122,8 @@ module_aglu_LB125.LC_tot <- function(command, ...) {
       add_precursors("L120.LC_bm2_R_UrbanLand_Yh_GLU",
                      "L120.LC_bm2_R_Tundra_Yh_GLU",
                      "L120.LC_bm2_R_RckIceDsrt_Yh_GLU",
-                     "temp-data-inject/L122.LC_bm2_R_HarvCropLand_Yh_GLU",
-                     "temp-data-inject/L122.LC_bm2_R_OtherArableLand_Yh_GLU",
+                     "L122.LC_bm2_R_HarvCropLand_Yh_GLU",
+                     "L122.LC_bm2_R_OtherArableLand_Yh_GLU",
                      "temp-data-inject/L123.LC_bm2_R_MgdPast_Yh_GLU",
                      "temp-data-inject/L123.LC_bm2_R_MgdFor_Yh_GLU",
                      "temp-data-inject/L124.LC_bm2_R_Shrub_Yh_GLU_adj",
@@ -140,8 +139,8 @@ module_aglu_LB125.LC_tot <- function(command, ...) {
       add_precursors("L120.LC_bm2_R_UrbanLand_Yh_GLU",
                      "L120.LC_bm2_R_Tundra_Yh_GLU",
                      "L120.LC_bm2_R_RckIceDsrt_Yh_GLU",
-                     "temp-data-inject/L122.LC_bm2_R_HarvCropLand_Yh_GLU",
-                     "temp-data-inject/L122.LC_bm2_R_OtherArableLand_Yh_GLU",
+                     "L122.LC_bm2_R_HarvCropLand_Yh_GLU",
+                     "L122.LC_bm2_R_OtherArableLand_Yh_GLU",
                      "temp-data-inject/L123.LC_bm2_R_MgdPast_Yh_GLU",
                      "temp-data-inject/L123.LC_bm2_R_MgdFor_Yh_GLU",
                      "temp-data-inject/L124.LC_bm2_R_Shrub_Yh_GLU_adj",
@@ -158,8 +157,8 @@ module_aglu_LB125.LC_tot <- function(command, ...) {
       add_precursors("L120.LC_bm2_R_UrbanLand_Yh_GLU",
                      "L120.LC_bm2_R_Tundra_Yh_GLU",
                      "L120.LC_bm2_R_RckIceDsrt_Yh_GLU",
-                     "temp-data-inject/L122.LC_bm2_R_HarvCropLand_Yh_GLU",
-                     "temp-data-inject/L122.LC_bm2_R_OtherArableLand_Yh_GLU",
+                     "L122.LC_bm2_R_HarvCropLand_Yh_GLU",
+                     "L122.LC_bm2_R_OtherArableLand_Yh_GLU",
                      "temp-data-inject/L123.LC_bm2_R_MgdPast_Yh_GLU",
                      "temp-data-inject/L123.LC_bm2_R_MgdFor_Yh_GLU",
                      "temp-data-inject/L124.LC_bm2_R_Shrub_Yh_GLU_adj",
