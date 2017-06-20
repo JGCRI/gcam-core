@@ -27,8 +27,8 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     year <- value <- GCAM_region_ID <- GCAM_commodity <- GLU <- irrHA_frac <-
-        irr.harvarea <- rfd_share <- rfd.harvarea <- prod.irr <- irr.yld <-
-        prod.rfd <- rfd.yld <- NULL     # silence package check.
+      irr.harvarea <- rfd_share <- rfd.harvarea <- prod.irr <- irr.yld <-
+      prod.rfd <- rfd.yld <- NULL     # silence package check.
 
     all_data <- list(...)[[1]]
 
@@ -37,12 +37,14 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
     L161.ag_irrProd_Mt_R_C_Y_GLU <- get_data(all_data, "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU") %>%
       # The following two lines of code will be removed later, when we're using 'real' data
       gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%   # reshape
-      mutate(year = as.integer(substr(year, 2, 5)))    # change Xyear to year
+      mutate(year = as.integer(substr(year, 2, 5))) %>%    # change Xyear to year
+      filter(year %in% HISTORICAL_YEARS)  # ensure temp data match our current history
 
     L161.ag_rfdProd_Mt_R_C_Y_GLU <- get_data(all_data, "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU") %>%
       # The following two lines of code will be removed later, when we're using 'real' data
       gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%   # reshape
-      mutate(year = as.integer(substr(year, 2, 5)))    # change Xyear to year
+      mutate(year = as.integer(substr(year, 2, 5))) %>%   # change Xyear to year
+      filter(year %in% HISTORICAL_YEARS)  # ensure temp data match our current history
 
     L161.ag_irrHA_frac_R_C_GLU <- get_data(all_data, "temp-data-inject/L161.ag_irrHA_frac_R_C_GLU") # No year in this data
 
@@ -51,39 +53,39 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
       select(GCAM_region_ID, GCAM_commodity, GLU, irrHA_frac) %>%
       # Get the share of rainfed cropland
       mutate(rfd_share = 1 - irrHA_frac) ->
-    L171.ag_irrHA_frac_R_C_GLU
+      L171.ag_irrHA_frac_R_C_GLU
 
     # Second, downscale total harvested cropland to irrigated and rainfed by GCAM region, commodity, year and GLU.
     # Apply the base year share of irrigated vs. rainfed cropland to all historial periods (due to lack of data indicating otherwise).
     IrrRfdCropland <-
-        L122.LC_bm2_R_HarvCropLand_C_Yh_GLU %>%
-          left_join_error_no_match(L171.ag_irrHA_frac_R_C_GLU,
-                                   by = c("GCAM_region_ID", "GCAM_commodity",
-                                   "GLU")) %>%
-          mutate(irr.harvarea = value * irrHA_frac,
-                 irr.harvarea = replace(irr.harvarea, is.na(irr.harvarea), 0.0), # if no data, assume irrigated is zero
-                 rfd.harvarea = value * rfd_share,
-                 rfd.harvarea = replace(rfd.harvarea, is.na(rfd.harvarea), value)) # if no data, assume all rainfed
+      L122.LC_bm2_R_HarvCropLand_C_Yh_GLU %>%
+      left_join_error_no_match(L171.ag_irrHA_frac_R_C_GLU,
+                               by = c("GCAM_region_ID", "GCAM_commodity",
+                                      "GLU")) %>%
+      mutate(irr.harvarea = value * irrHA_frac,
+             irr.harvarea = replace(irr.harvarea, is.na(irr.harvarea), 0.0), # if no data, assume irrigated is zero
+             rfd.harvarea = value * rfd_share,
+             rfd.harvarea = replace(rfd.harvarea, is.na(rfd.harvarea), value)) # if no data, assume all rainfed
 
     ## Extend to cover all years 1700-2010.
     idvars <- c('GCAM_region_ID', 'GCAM_commodity', 'GLU', 'year')
     allyr <- seq(min(HISTORICAL_YEARS), max(HISTORICAL_YEARS))
     IrrRfdCropland %>%
       tidyr::expand(nesting(GCAM_region_ID, GCAM_commodity, GLU),
-                              year = allyr) %>%
+                    year = allyr) %>%
       left_join(IrrRfdCropland, by=idvars) %>%
       group_by(GCAM_region_ID, GCAM_commodity, GLU) %>%
-      mutate(irr.harvarea = approx_fun(year, irr.harvarea, rule=2),
-             rfd.harvarea = approx_fun(year, rfd.harvarea, rule=2)) %>%
+      mutate(irr.harvarea = approx_fun(year, irr.harvarea, rule = 2),
+             rfd.harvarea = approx_fun(year, rfd.harvarea, rule = 2)) %>%
       ungroup -> IrrRfdCropland.interp
 
     ## Compute economic yield for each category as production divided by
     ## harvested area.
     prod.both <-
-        full_join(rename(L161.ag_rfdProd_Mt_R_C_Y_GLU, prod.rfd = value),
-                  rename(L161.ag_irrProd_Mt_R_C_Y_GLU, prod.irr = value),
-                  by = idvars) %>%
-          filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS))
+      full_join(rename(L161.ag_rfdProd_Mt_R_C_Y_GLU, prod.rfd = value),
+                rename(L161.ag_irrProd_Mt_R_C_Y_GLU, prod.irr = value),
+                by = idvars) %>%
+      filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS))
 
     ecyield.both <- left_join_error_no_match(prod.both, IrrRfdCropland.interp,
                                              by = idvars) %>%

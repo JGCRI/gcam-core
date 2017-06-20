@@ -34,12 +34,14 @@ module_gcam.usa_LA154.Transport <- function(command, ...) {
 
     get_data(all_data, "temp-data-inject/L154.in_EJ_R_trn_m_sz_tech_F_Yh") %>%
       gather(year, value, -GCAM_region_ID, -UCD_sector, -mode, -size.class, -UCD_technology, -UCD_fuel, -fuel) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) ->
+      mutate(year = as.integer(substr(year, 2, 5))) %>%
+      filter(year %in% HISTORICAL_YEARS) ->   # ensure temp data match our current history
       L154.in_EJ_R_trn_m_sz_tech_F_Yh
 
     get_data(all_data, "temp-data-inject/L154.out_mpkm_R_trn_nonmotor_Yh") %>%
       gather(year, value, -GCAM_region_ID, -mode) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) ->
+      mutate(year = as.integer(substr(year, 2, 5))) %>%
+      filter(year %in% HISTORICAL_YEARS) ->   # ensure temp data match our current history
       L154.out_mpkm_R_trn_nonmotor_Yh
 
     L100.Pop_thous_state <- get_data(all_data, "L100.Pop_thous_state")
