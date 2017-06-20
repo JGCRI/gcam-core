@@ -11,11 +11,11 @@ set_traded_names(data, GCAM_region_names, apply_selected_only = TRUE)
 
 \item{GCAM_region_names}{Tibble with GCAM region names and ID numbers}
 
-\item{apply_selected_only}{Logical indating whether region/subsector/technology re-assignment is applied to
+\item{apply_selected_only}{Logical indicating whether region/subsector/technology re-assignment is applied to
 the whole tibble, or only selected rows}
 }
 \value{
-Tibble returned with modified region, subsector, and/or technology information
+Tibble returned with modified region, subsector, and/or technology information.
 }
 \description{
 Re-set region names in tables with traded secondary goods so that the traded secondary goods are all contained

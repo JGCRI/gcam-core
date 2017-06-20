@@ -12,7 +12,7 @@ get_logit_fn_tables(data, names, base_header, include_equiv_table = TRUE,
 
 \item{names}{Column names to use in the data returned, character}
 
-\item{base_header}{Base table name that is appended with the logit.type to name each data table and header (ID string
+\item{base_header}{Base table name that is concatenated with the \code{logit.type} column to name each data table and header (ID string
 for CSV to XML conversion), character}
 
 \item{include_equiv_table}{Logical indicating whether to generate an EQUIV_TABLE which will be called in the
@@ -26,18 +26,20 @@ in any other tables being read by the same batch XML file.}
 \item{...}{Other parameters to pass to \code{\link{write_to_all_regions}}}
 }
 \value{
-A list of lists, each of which contains a data table and a header name to be used as the ID string for the
+A list, each element of which contains a data table and a header name to be used as the ID string for the
 CSV to XML conversion.
 }
 \description{
 Generate a list of tables that sets the appropriate logit choice function to use for supplysectors or subsectors.
-For documentation of the options for logit choice functions in GCAM, see \url{http://jgcri.github.io/gcam-doc/choice.html}
 }
 \details{
-The data table is partitioned into multiple lists, one for each logit type. Each element of
-the returned list has two elements: 1) the header name (i.e., ID string) for the table, and 2) the data for the table.
+The data table is partitioned into a list, with one element for each logit type. Each element of
+the returned list has two sub-elements: 1) the header name (i.e., ID string) for the table, and 2) the data for the table.
 If requested, an additional \code{EQUIV_TABLE} list will be included so that other data tables that contain the numerical
 values of the logit exponents are assigned to the correct logit type. These tables with the numerical exponent values
 are not required to be partitioned into separate tables according to logit type.
-\code{EQUIV_TABLE} needs to be read once (and only once) per XML file created
+}
+\note{
+For documentation of the options for logit choice functions in GCAM, see \url{http://jgcri.github.io/gcam-doc/choice.html}.
+The \code{EQUIV_TABLE} needs to be read once (and only once) per XML file created.
 }

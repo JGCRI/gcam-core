@@ -90,11 +90,10 @@ rename_SO2 <- function(x, so2_map, is_awb = FALSE) {
 #' get_logit_fn_tables
 #'
 #' Generate a list of tables that sets the appropriate logit choice function to use for supplysectors or subsectors.
-#' For documentation of the options for logit choice functions in GCAM, see \url{http://jgcri.github.io/gcam-doc/choice.html}
 #'
 #' @param data Base data table indicating sectors and/or subsectors to be assigned a logit function type, tibble
 #' @param names Column names to use in the data returned, character
-#' @param base_header Base table name that is appended with the logit.type to name each data table and header (ID string
+#' @param base_header Base table name that is concatenated with the \code{logit.type} column to name each data table and header (ID string
 #' for CSV to XML conversion), character
 #' @param default_logit_type Default logit function to use if the user did not specify one, character
 #' @param include_equiv_table Logical indicating whether to generate an EQUIV_TABLE which will be called in the
@@ -102,13 +101,14 @@ rename_SO2 <- function(x, so2_map, is_awb = FALSE) {
 #' in any other tables being read by the same batch XML file.
 #' @param write_all_regions Logical indicating whether to call \code{\link{write_to_all_regions}}
 #' @param ... Other parameters to pass to \code{\link{write_to_all_regions}}
-#' @details The data table is partitioned into multiple lists, one for each logit type. Each element of
-#' the returned list has two elements: 1) the header name (i.e., ID string) for the table, and 2) the data for the table.
+#' @details The data table is partitioned into a list, with one element for each logit type. Each element of
+#' the returned list has two sub-elements: 1) the header name (i.e., ID string) for the table, and 2) the data for the table.
 #' If requested, an additional \code{EQUIV_TABLE} list will be included so that other data tables that contain the numerical
 #' values of the logit exponents are assigned to the correct logit type. These tables with the numerical exponent values
 #' are not required to be partitioned into separate tables according to logit type.
-#' \code{EQUIV_TABLE} needs to be read once (and only once) per XML file created
-#' @return A list of lists, each of which contains a data table and a header name to be used as the ID string for the
+#' @note For documentation of the options for logit choice functions in GCAM, see \url{http://jgcri.github.io/gcam-doc/choice.html}.
+#' The \code{EQUIV_TABLE} needs to be read once (and only once) per XML file created.
+#' @return A list, each element of which contains a data table and a header name to be used as the ID string for the
 #' CSV to XML conversion.
 get_logit_fn_tables <- function(data, names, base_header,
                                 include_equiv_table = TRUE,
@@ -165,19 +165,19 @@ get_logit_fn_tables <- function(data, names, base_header,
 
 #' write_to_all_regions
 #'
-#' Copy data table to all regions, selecting which columns to keep. Used for data that GCAM contains within each region,
-#' but whose values are not actually differentiated by region
+#' Copy data table to all regions, selecting which columns to keep.
 #'
 #' @param data Base tibble to start from
 #' @param names Character vector indicating the column names of the returned tibble
 #' @param GCAM_region_names Tibble with GCAM region names and ID numbers
-#' @param has_traded Logical indicating whether any rows in the base table have "traded" goods which
-#' will call \code{\link{set_traded_names}}
-#' @param apply_selected_only Logical indating whether \code{\link{set_traded_names}} is applied to
+#' @param has_traded Logical indicating whether any rows in the base table have "traded" goods; if true,
+#' \code{\link{set_traded_names}} will be called
+#' @param apply_selected_only Logical indicating whether \code{\link{set_traded_names}} is applied to
 #' the whole tibble, or only selected rows
 #' @param set_market Logical indicating whether to create a \code{market.name} column whose values are equal
 #' to \code{region} prior to \code{\link{set_traded_names}} re-setting \code{region} names
-#' @return Tibble with data written out to all GCAM regions
+#' @note Used for data that GCAM contains within each region, but whose values are not actually differentiated by region.
+#' @return Tibble with data written out to all GCAM regions.
 write_to_all_regions <- function(data, names, GCAM_region_names, has_traded = FALSE,
                                  apply_selected_only = TRUE, set_market = FALSE) {
   assert_that(is_tibble(data))
@@ -222,9 +222,9 @@ write_to_all_regions <- function(data, names, GCAM_region_names, has_traded = FA
 #'
 #' @param data Tibble to operate on
 #' @param GCAM_region_names Tibble with GCAM region names and ID numbers
-#' @param apply_selected_only Logical indating whether region/subsector/technology re-assignment is applied to
+#' @param apply_selected_only Logical indicating whether region/subsector/technology re-assignment is applied to
 #' the whole tibble, or only selected rows
-#' @return Tibble returned with modified region, subsector, and/or technology information
+#' @return Tibble returned with modified region, subsector, and/or technology information.
 set_traded_names <- function(data, GCAM_region_names, apply_selected_only = TRUE) {
   assert_that(is_tibble(data))
   assert_that(is.character(GCAM_region_names))
@@ -256,7 +256,7 @@ set_traded_names <- function(data, GCAM_region_names, apply_selected_only = TRUE
 #'
 #' @param data Tibble with text descriptions of model time periods to be replaced with numerical values.
 #' @details Text strings include \code{start-year}, \code{final-calibration-year}, \code{final-historical-year},
-#' \code{initial-future-year}, \code{initial-nonhistorical-year}, and \code{end-year}
+#' \code{initial-future-year}, \code{initial-nonhistorical-year}, and \code{end-year}.
 #' @return Modified tibble with 'numerical' values instead of text.
 #' @note The returned 'numerical' values are actually characters; this helper function doesn't touch column types.
 set_years <- function(data) {

@@ -18,7 +18,7 @@ to be modified without requiring similar modifications in many input CSV tables.
 }
 \details{
 Text strings include \code{start-year}, \code{final-calibration-year}, \code{final-historical-year},
-\code{initial-future-year}, \code{initial-nonhistorical-year}, and \code{end-year}
+\code{initial-future-year}, \code{initial-nonhistorical-year}, and \code{end-year}.
 }
 \note{
 The returned 'numerical' values are actually characters; this helper function doesn't touch column types.

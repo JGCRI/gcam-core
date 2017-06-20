@@ -14,19 +14,21 @@ write_to_all_regions(data, names, GCAM_region_names, has_traded = FALSE,
 
 \item{GCAM_region_names}{Tibble with GCAM region names and ID numbers}
 
-\item{has_traded}{Logical indicating whether any rows in the base table have "traded" goods which
-will call \code{\link{set_traded_names}}}
+\item{has_traded}{Logical indicating whether any rows in the base table have "traded" goods; if true,
+\code{\link{set_traded_names}} will be called}
 
-\item{apply_selected_only}{Logical indating whether \code{\link{set_traded_names}} is applied to
+\item{apply_selected_only}{Logical indicating whether \code{\link{set_traded_names}} is applied to
 the whole tibble, or only selected rows}
 
 \item{set_market}{Logical indicating whether to create a \code{market.name} column whose values are equal
 to \code{region} prior to \code{\link{set_traded_names}} re-setting \code{region} names}
 }
 \value{
-Tibble with data written out to all GCAM regions
+Tibble with data written out to all GCAM regions.
 }
 \description{
-Copy data table to all regions, selecting which columns to keep. Used for data that GCAM contains within each region,
-but whose values are not actually differentiated by region
+Copy data table to all regions, selecting which columns to keep.
+}
+\note{
+Used for data that GCAM contains within each region, but whose values are not actually differentiated by region.
 }
