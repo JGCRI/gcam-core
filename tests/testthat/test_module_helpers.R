@@ -101,8 +101,10 @@ test_that("set_traded_names", {
 })
 
 test_that("get_logit_fn_tables", {
-  expect_error(get_logit_fn_tables(1, "x", "x"))
-  expect_error(get_logit_fn_tables(tibble(), 1, "x"))
+  expect_error(get_logit_fn_tables(1, "x", "x", tibble()))
+  expect_error(get_logit_fn_tables(tibble(), 1, "x", tibble()))
+  expect_error(get_logit_fn_tables(tibble(), "x", 1, tibble()))
+  expect_error(get_logit_fn_tables(tibble(), "x", "x", 1))
   expect_error(get_logit_fn_tables(tibble(), "x", "x", include_equiv_table = 1))
   expect_error(get_logit_fn_tables(tibble(), "x", "x", write_all_regions = 1))
   expect_error(get_logit_fn_tables(tibble(), "x", "x", default_logit_type = 1))
@@ -112,7 +114,9 @@ test_that("get_logit_fn_tables", {
   BH <- "BH"
   DLT <- 1
   NAMES <- "logit.type"
-  d1 <- get_logit_fn_tables(d, names = NAMES, base_header = BH,
+  grn <- tibble(region = c("x", "y"), GCAM_region_ID = 1:2)
+  d1 <- get_logit_fn_tables(d, names = NAMES, base_header = BH, GCAM_region_names = grn,
+                            write_to_all_regions = FALSE,
                             default_logit_type = gcam.LOGIT_TYPES[DLT],
                             include_equiv_table = FALSE)
   expect_type(d1, "list")
@@ -134,8 +138,9 @@ test_that("get_logit_fn_tables", {
   }
 
   # The EQUIV_TABLE should be properly structured
-  d1 <- get_logit_fn_tables(d, names = "logit.type", base_header = BH,
+  d1 <- get_logit_fn_tables(d, names = "logit.type", base_header = BH, GCAM_region_names = grn,
                             default_logit_type = gcam.LOGIT_TYPES[DLT],
+                            write_to_all_regions = FALSE,
                             include_equiv_table = TRUE)
   expect_identical(names(d1), c(gcam.EQUIV_TABLE, gcam.LOGIT_TYPES))
   expect_identical(d1[[gcam.EQUIV_TABLE]]$header, gcam.EQUIV_TABLE)
@@ -143,6 +148,13 @@ test_that("get_logit_fn_tables", {
   # Should be a single row and columns for group.name, dummy-logit-tag, then the other tags
   expect_equal(dim(d2), c(1, length(gcam.LOGIT_TYPES) + 2))
   expect_true(all(gcam.LOGIT_TYPES %in% d2))
+
+  # write_to_all_regions gets called OK
+  d1 <- get_logit_fn_tables(d, names = "logit.type", base_header = BH, GCAM_region_names = grn,
+                            default_logit_type = gcam.LOGIT_TYPES[DLT],
+                            write_to_all_regions = TRUE,
+                            include_equiv_table = TRUE)
+  expect_identical(names(d1), c(gcam.EQUIV_TABLE, gcam.LOGIT_TYPES))
 })
 
 test_that("write_to_all_regions", {

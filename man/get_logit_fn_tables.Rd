@@ -4,8 +4,9 @@
 \alias{get_logit_fn_tables}
 \title{get_logit_fn_tables}
 \usage{
-get_logit_fn_tables(data, names, base_header, include_equiv_table = TRUE,
-  write_all_regions = FALSE, default_logit_type = gcam.LOGIT_TYPES[1], ...)
+get_logit_fn_tables(data, names, base_header, GCAM_region_names,
+  include_equiv_table = TRUE, write_all_regions = FALSE,
+  default_logit_type = gcam.LOGIT_TYPES[1], ...)
 }
 \arguments{
 \item{data}{Base data table indicating sectors and/or subsectors to be assigned a logit function type, tibble}

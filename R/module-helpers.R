@@ -95,6 +95,7 @@ rename_SO2 <- function(x, so2_map, is_awb = FALSE) {
 #' @param names Column names to use in the data returned, character
 #' @param base_header Base table name that is concatenated with the \code{logit.type} column to name each data table and header (ID string
 #' for CSV to XML conversion), character
+#' @param GCAM_region_names GCAM region names and ID numbers, tibble
 #' @param default_logit_type Default logit function to use if the user did not specify one, character
 #' @param include_equiv_table Logical indicating whether to generate an EQUIV_TABLE which will be called in the
 #' CSVtoXML conversion, re-naming default logit type tags to the appropriate logit function type
@@ -110,13 +111,14 @@ rename_SO2 <- function(x, so2_map, is_awb = FALSE) {
 #' The \code{EQUIV_TABLE} needs to be read once (and only once) per XML file created.
 #' @return A list, each element of which contains a data table and a header name to be used as the ID string for the
 #' CSV to XML conversion.
-get_logit_fn_tables <- function(data, names, base_header,
+get_logit_fn_tables <- function(data, names, base_header, GCAM_region_names,
                                 include_equiv_table = TRUE,
                                 write_all_regions = FALSE,
                                 default_logit_type = gcam.LOGIT_TYPES[1], ...) {
   assert_that(is_tibble(data))
   assert_that(is.character(names))
   assert_that(is.character(base_header))
+  assert_that(is_tibble(GCAM_region_names))
   assert_that(is.logical(include_equiv_table))
   assert_that(is.logical(write_all_regions))
   assert_that(is.character(default_logit_type))
@@ -151,7 +153,7 @@ get_logit_fn_tables <- function(data, names, base_header,
     currdata <- data[data$logit.type == curr_logit_type,]
     if(write_all_regions) {
       if(nrow(currdata) > 0) {
-        currdata <- write_to_all_regions(currdata, names, ...)
+        currdata <- write_to_all_regions(currdata, names, GCAM_region_names, ...)
       } else {
         currdata <- bind_cols(currdata, tibble(region = character(0)))
       }
