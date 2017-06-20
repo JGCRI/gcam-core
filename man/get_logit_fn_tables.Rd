@@ -16,6 +16,8 @@ get_logit_fn_tables(data, names, base_header, GCAM_region_names,
 \item{base_header}{Base table name that is concatenated with the \code{logit.type} column to name each data table and header (ID string
 for CSV to XML conversion), character}
 
+\item{GCAM_region_names}{GCAM region names and ID numbers, tibble}
+
 \item{include_equiv_table}{Logical indicating whether to generate an EQUIV_TABLE which will be called in the
 CSVtoXML conversion, re-naming default logit type tags to the appropriate logit function type
 in any other tables being read by the same batch XML file.}
