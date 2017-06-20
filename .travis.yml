@@ -12,5 +12,5 @@ r_github_packages:
   - jimhester/covr
   - krlmlr/mockr
 after_success:
-  - time Rscript -e 'library(covr); package_coverage(function_exclusions="atest")'
-  - time Rscript -e 'library(covr); codecov(function_exclusions = "atest")'
+  - time Rscript -e 'library(covr); x <- package_coverage(function_exclusions="atest"); cat("coverage = ", percent_coverage(x), " %\\n"); save(x, file="x.dat")'
+  - time Rscript -e 'library(covr); load("x.dat"); codecov(coverage=x)'
