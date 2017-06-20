@@ -134,4 +134,14 @@ protected:
     Market* createMarket( const IMarketType::Type aMarketType );
 };
 
+
+/*!
+ * \brief Get the contained market at the given model period.
+ * \param aPeriod The model period to look up.
+ * \return the contained Market at the given model period.
+ */
+inline Market* MarketContainer::getMarket( const int aPeriod ) const {
+    return mMarkets[ aPeriod ];
+}
+
 #endif // _MARKET_CONTAINER_H_

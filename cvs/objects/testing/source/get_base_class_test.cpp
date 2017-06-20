@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "util/base/include/expand_data_vector.h"
+#include <boost/fusion/include/filter_view.hpp>
 
 #include "testing_classes_def.hpp"
 
@@ -39,10 +40,10 @@ class GetDataHandler {
     void processDataVector( DataVectorType aDataVector ) {
         // We need to filter here to make sure mData's type is assignable however maybe is_same is too strict?
         // TODO: consider allowing is_convertable instead?
-        boost::fusion::filter_view< DataVectorType, boost::is_same< boost::mpl::_, Data<T> > > simpleDataVec( aDataVector );
+        boost::fusion::filter_view< DataVectorType, boost::is_same< boost::mpl::_, Data<T, SIMPLE> > > simpleDataVec( aDataVector );
         boost::fusion::for_each( simpleDataVec, *this );
     }
-    void operator()( Data<T>& aData ) const {
+    void operator()( Data<T, SIMPLE>& aData ) const {
         if( aData.mDataName == mDataName ) {
             ++mNumFound;
             mData = &aData.mData;
@@ -85,6 +86,7 @@ void runTests( AbstractBase* aContainer ) {
     runTest<int>( expandDataVector, "unknown", 1000 );
     // should not find due to wrong type
     runTest<double>( expandDataVector, "year", 10000.0 );
+    std::cout << "Doing print all: " << std::endl;
 
     // Print all data
     PrintDataHandler printer;
@@ -98,6 +100,11 @@ void runTests( AbstractBase* aContainer ) {
 }
 
 int main() {
+#if BOOST_FUSION_HAS_VARIADIC_VECTOR
+    std::cout << "Has variadic" << std::endl;
+#else
+    std::cout << "Doesn't have variadic" << std::endl;
+#endif
     runTests( new Base() );
     runTests( new D1() );
     runTests( new D2() );

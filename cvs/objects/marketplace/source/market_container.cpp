@@ -232,15 +232,6 @@ void MarketContainer::resetToPriceMarket( MarketContainer* aDemandMarkets ) {
     }
 }
 
-/*!
- * \brief Get the contained market at the given model period.
- * \param aPeriod The model period to look up.
- * \return the contained Market at the given model period.
- */
-Market* MarketContainer::getMarket( const int aPeriod ) const {
-    return mMarkets[ aPeriod ];
-}
-
 /*! \brief Add a region to the list of contained regions.
  * \details This function is used to add a region to the list of model regions
  *          which are contained in the market. If the region already exists in

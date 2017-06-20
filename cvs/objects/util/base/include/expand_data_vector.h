@@ -60,7 +60,8 @@
 #include <boost/fusion/include/at_key.hpp>
 #include <boost/fusion/include/for_each.hpp>
 #include <boost/fusion/include/mpl.hpp>
-#include <boost/fusion/include/filter_view.hpp>
+#include <boost/fusion/include/join.hpp>
+#include <boost/fusion/include/list.hpp>
 
 // Helper meta-functions
 /*!
@@ -108,8 +109,8 @@ struct get_base_class<T, typename boost::enable_if<boost::mpl::not_<has_ParentCl
  *          tree of interest (SubClassFamilyVector). We assume the first class in the
  *          list is the Base of the inheritance tree.
  *          We then use the visitor patter approach to call setSubClass to determine
- *          which member of the SubClassFamilyVector we are looking ot expand.
- *          The gatherDataVector can then be used to walk the inheritance tree to
+ *          which member of the SubClassFamilyVector we are looking to expand.
+ *          Then gatherDataVector can then be used to walk the inheritance tree to
  *          create a joint_view of the full data vector.
  *          Storing this joint_view proves tricky so instead we provide the 
  *          getFullDataVector which takes as an argument some templated class that
@@ -142,7 +143,7 @@ class ExpandDataVector  {
 
     /*!
      * \brief Part of the double dispatch visitor pattern where SubClass will call back
-     *        to this message determining at runtime which member of SubClassFamilyVector
+     *        to this method determining at runtime which member of SubClassFamilyVector
      *        we are dealing with.
      * \details We will just track which subclass we have for now and wait to gather the
      *          full data vector until we have some object that can handle the data.
@@ -158,7 +159,7 @@ class ExpandDataVector  {
     }
 
     /*!
-     * \brief The accessor method to get the full datavector one setSubClass has been
+     * \brief The accessor method to get the full datavector once setSubClass has been
      *        called.
      * \details The full data vector is gathered and passed as an argument to the processDataVector
      *          call back on the aDataHandler argument which can then do something useful with
@@ -203,54 +204,64 @@ class ExpandDataVector  {
 
     /*!
      * \brief Helper meta-function that generates the type of the full data vector by recursively creating
-     *        joint_views with the ParentClass' data vector until we reach the BaseClass.
+     *        joint_views with the ParentClass' data vector until we reach the BaseClass.  Note since the
+     *        data vectors are generated upon request a "view" upon a temporary will not be sufficient so
+     *        we will need to copy the view into a list as a last step.
      */
     template<typename T, typename Enable=void>
     struct get_full_datavector_type {
-        using type = boost::fusion::joint_view<typename get_full_datavector_type<typename T::ParentClass>::type, decltype( T::mDataVector )>;
+        using type = typename boost::fusion::result_of::as_list<
+                boost::fusion::joint_view<
+                    typename get_full_datavector_type<typename T::ParentClass>::type,
+                    typename T::DataVectorType
+                >
+            >::type;
     };
 
     /*!
      * \brief The specialization where we have arrived to a class that has not defined the ParentClass
-     *        type aka the BaseClass.  Here the full data vector is still a joint_view of the BaseClass
-     *        with an empty vector since there is no way to create an identity_view or some such thing.
+     *        type aka the BaseClass.  Here the full data vector is simply the BaseClass data vector.
      *        This is the stop point for the recursion.
      */
     template<typename T>
     struct get_full_datavector_type<T, typename boost::enable_if<boost::mpl::not_<has_ParentClass<T> > >::type> {
-        using type = boost::fusion::joint_view< decltype( T::mDataVector ), boost::fusion::vector<> >;
+        using type = typename T::DataVectorType;
     };
 
     /*!
      * \brief Creates a joint_view of the data vector from aSubClass and of aSubClass's parent.
      * \details This specialization is for the SubClass types in SubClassFamilyVector that have a
      *          parent class.  It will recursively call itself to fully gather the data vector of
-     *          the parent class before creating the joint_view.
+     *          the parent class before creating the joint_view.  Note since the data vectors are
+     *          generated upon request a "view" upon a temporary will not be sufficient so we will
+     *          need to copy the view into a list as a last step.
      * \param aSubClass A SubClass in SubClassFamilyVector that has a parent from which to gather
      *                  the data vector from.
      * \return The full data vector of aSubClass including all of it's parent class' data members.
      */
     template<typename SubClass>
     typename boost::enable_if<has_ParentClass<SubClass>, typename get_full_datavector_type<SubClass>::type>::type gatherDataVector( SubClass* aSubClass ) const {
+        // recursive call to get the full data vector of the parent class
         auto parentDataVec = gatherDataVector( static_cast<typename SubClass::ParentClass*>( aSubClass ) );
-        boost::fusion::joint_view< decltype( parentDataVec ), decltype( aSubClass->mDataVector )> fullDataVector( parentDataVec, aSubClass->mDataVector );
-        return fullDataVector;
+        // have this subclass generate it's own data vector
+        auto subclassDataVec = aSubClass->generateDataVector();
+        // join the parent and child data vectors together than copy to a list since
+        // a view would just hold reference to otherwise temporary objects.
+        // TODO: is there some way to "move" to avoid make extra copies.
+        return boost::fusion::as_list( boost::fusion::join( parentDataVec, subclassDataVec ) );
     }
 
     /*!
-     * \brief Creates a joint_view of the data vector from aSubClass and an empty vector.
+     * \brief Gets the data vector from aSubClass.
      * \details This specialization is for the SubClass types in SubClassFamilyVector that have no
      *          parent class.  It is the stop point for recursion.
      * \param aSubClass A SubClass in SubClassFamilyVector that has no parent from which to gather
      *                  the data vector from.
-     * \return A view of the data vector of aSubClass.
+     * \return The data vector of aSubClass.
      */
     template<typename SubClass>
     typename boost::enable_if<boost::mpl::not_<has_ParentClass<SubClass> >, typename get_full_datavector_type<SubClass>::type>::type gatherDataVector( SubClass* aSubClass ) const {
-        // We need to join an empty vector as there is no identity_view or such type.
-        boost::fusion::vector<> emptyVector;
-        boost::fusion::joint_view< decltype( aSubClass->mDataVector ), decltype( emptyVector )> baseDataVector( aSubClass->mDataVector, emptyVector );
-        return baseDataVector;
+        return aSubClass->generateDataVector();
     }
 };
 

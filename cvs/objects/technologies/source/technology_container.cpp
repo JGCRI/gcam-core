@@ -543,7 +543,7 @@ ITechnologyContainer::TechRangeIterator TechnologyContainer::getVintageEnd( cons
 ITechnologyContainer::CTechRangeIterator TechnologyContainer::getVintageEnd( const int aPeriod ) const {
     // If the given period matches the cached period then we can use the cached
     // end iterator and avoid iterating over unnecessary technologies.
-    return aPeriod == mCachedVintageRangePeriod ? /*static_cast<CTechRangeIterator>(*/ mCachedTechRangeEnd /*)*/ : mVintages.rend();
+    return aPeriod == mCachedVintageRangePeriod ? static_cast<CTechRangeIterator>( mCachedTechRangeEnd ) : mVintages.rend();
 }
 
 /*!
