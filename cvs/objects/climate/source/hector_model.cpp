@@ -386,7 +386,7 @@ void HectorModel::reset( const int aPeriod ) {
             // Replay emissions up to, but not including, the aperiod
             // argument.  We also skip period 0, since it's not a "real"
             // period.
-            for( int i = 1; i < aPeriod; ++i ) {
+            for( int i = 1; i <= aPeriod; ++i ) {
                 if( util::isValidNumber( emissions[ i ] ) ) {
                     setEmissions( gas, i, emissions[ i ] );
                 }
@@ -400,8 +400,8 @@ void HectorModel::reset( const int aPeriod ) {
             // LUC emissions are stored yearly, not just by period.
             // Otherwise, as above.
             int ymin = mModeltime->getper_to_yr( 1 );
-            int ymax = yearlyDataIndex( mModeltime->getper_to_yr( aPeriod ) );
-            for( int yr = ymin; yr < ymax; ++yr ) {
+            int ymax = mModeltime->getper_to_yr( aPeriod );
+            for( int yr = ymin; yr <= ymax; ++yr ) {
                 int i = yearlyDataIndex( yr );
                 if( util::isValidNumber( emissions[ i ] ) ) {
                     setLUCEmissions( gas, yr, emissions[ i ] );
