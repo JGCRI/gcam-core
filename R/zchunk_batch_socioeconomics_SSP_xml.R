@@ -50,23 +50,24 @@ module_socio_batch_SSP.xml <- function(command, ...) {
     for(g in c("g", "")) {
       for(ssp in SSP_NUMS) {
         gssp <- paste0(g, "SSP", ssp)
+        xmlfn <- paste0("socioeconomics_", gssp, ".xml")
         popname <- paste0("L201.Pop_", gssp)
         L201.Pop_SSP <- get_data(all_data, popname)
         laborname <- paste0("L201.LaborProductivity_", gssp)
         L201.LaborProductivity_SSP <- get_data(all_data, laborname)
 
         # Produce output
-        create_xml("socioeconomics_gSSP1.xml") %>%
+        create_xml(xmlfn) %>%
           add_xml_data(L201.Pop_SSP, "Pop") %>%
           add_xml_data(L201.BaseGDP_Scen, "BaseGDP") %>%
           add_xml_data(L201.LaborForceFillout, "LaborForceFillout") %>%
-          add_xml_data(L201.LaborProductivity_SSP, paste0("LaborProductivity_", gssp)) %>%
+          add_xml_data(L201.LaborProductivity_SSP, "LaborProductivity") %>%
           add_xml_data(L201.PPPConvert, "PPPConvert") %>%
           add_precursors(popname, "L201.BaseGDP_Scen", "L201.LaborForceFillout", laborname, "L201.PPPConvert") ->
           x
 
         # ...and assign into environment
-        assign(paste0("socioeconomics_", gssp, ".xml"), x)
+        assign(xmlfn, x)
       }
     }
 
