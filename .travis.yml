@@ -12,4 +12,4 @@ r_github_packages:
   - jimhester/covr
   - krlmlr/mockr
 after_success:
-  - Rscript -e 'library(covr);codecov(function_exclusions = "atest")'
+  - travis_wait Rscript coverage.R
