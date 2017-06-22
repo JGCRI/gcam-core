@@ -61,6 +61,12 @@ namespace {
 }
 
 
+// ConsumerFinalDemand constructor
+ConsumerFinalDemand::ConsumerFinalDemand(void)
+{
+  // nothing to do.
+}
+
 void ConsumerFinalDemand::setFinalDemand( const std::string &aRegionName,
                      const Demographic *aDemographics,
                      const GDP *aGDP,
@@ -187,13 +193,17 @@ bool ConsumerFinalDemand::XMLParse( const xercesc::DOMNode *aNode )
             continue;
         }
         else if( nodename == supply_component_tag ) {
-            mSupplySectors.push_back(
-                XMLHelper<std::string>::getValue( child ) );
+            std::string compname = XMLHelper<std::string>::getValue( child );
+            mSupplySectors.push_back( compname );
+            mainlog.setLevel( ILogger::DEBUG );
+            mainlog << "Found supply component: >"
+                    << compname
+                    << "< .\n";
         }
         else if( nodename == base_service_tag ) {
             // A base service child node should have "component" and "year" attributes.  We'll grab
             // the component here, and the year will be used in XMLHelper::insertValueIntoVector().
-            std::string compname = XMLHelper<std::string>::getAttr( aNode,
+            std::string compname = XMLHelper<std::string>::getAttr( child,
                                                                     "component" );
             std::vector<std::string>::iterator citer = std::find(mSupplySectors.begin(), mSupplySectors.end(), compname );
             if( citer == mSupplySectors.end() ) {
@@ -204,7 +214,10 @@ bool ConsumerFinalDemand::XMLParse( const xercesc::DOMNode *aNode )
             }
             int compindex = std::distance(mSupplySectors.begin(), citer );
             if( compindex >= mBaseServices.size() ) {
+                int s1 = mBaseServices.size();
                 mBaseServices.resize( compindex+1 );
+                for(int i=s1; i<=compindex; ++i)
+                    mBaseServices[i].resize(scenario->getModeltime()->getmaxper());
             }
             XMLHelper<double>::insertValueIntoVector( child, mBaseServices[compindex],
                                                      modeltime );

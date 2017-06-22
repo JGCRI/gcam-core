@@ -49,6 +49,7 @@
 #include "demographics/include/demographic.h"
 #include "containers/include/info.h"
 #include "sectors/include/sector_utils.h"
+#include "containers/include/market_dependency_finder.h"
 
 // canonical parameter names.  The input file is not required to supply
 // parameter names, but if it does, they will be validated against this list.
@@ -56,8 +57,8 @@
 // parameters in the generated XML.
 namespace {
     const std::vector<std::string> pnames = {
-        "A-staple",
-        "A-nonstaple",
+        "As",                   // A-staple
+        "An",                   // A-nonstaple
         "g-ss",
         "g-nn",
         "g-cross",
@@ -215,6 +216,13 @@ void FoodDemandSystem::completeInit( const std::string &aRegionName, const
     mLastValues.resize(2);
     mLastValues[0] = mLastValues[1] = 0.0;
 
+    ILogger &mainlog = ILogger::getLogger( "main_log" );
+    mainlog.setLevel( ILogger::DEBUG );
+
+    mainlog << "Creating trial supply markets:  region = "
+            << aRegionName
+            << "  name1 = " << mTrialValueMktNames[0]
+            << "  name2 = " << mTrialValueMktNames[1] << "\n";
     bool snew = SectorUtils::createTrialSupplyMarket( aRegionName,
                                                       mTrialValueMktNames[0],
                                                       "unitless", "" );
@@ -223,11 +231,18 @@ void FoodDemandSystem::completeInit( const std::string &aRegionName, const
                                                       "unitless", "" );
     // Check to see that the trial value markets were new.
     if( ! (snew && nnew) ) {
-        ILogger & mainlog = ILogger::getLogger( "main_log" );
         mainlog.setLevel(ILogger::ERROR);
         mainlog << "FoodDemandSystem::completeInit:  created duplicate trial value market in region= " 
                 << aRegionName << "  sector= " << aSectorName << std::endl;
     }
+
+    // Make this sector depend on the trial value markets
+    MarketDependencyFinder *df = scenario->getMarketplace()->getDependencyFinder();
+    df->addDependency( aSectorName, aRegionName, SectorUtils::getTrialMarketName( mTrialValueMktNames[0] ),
+                       aRegionName );
+    df->addDependency( aSectorName, aRegionName, SectorUtils::getTrialMarketName( mTrialValueMktNames[1] ),
+                       aRegionName );
+
 }
 
 const std::string &FoodDemandSystem::getXMLNameStatic(void)

@@ -74,7 +74,7 @@ class ConsumerFinalDemand : public AFinalDemand
 {
 public:
     //! Constructor
-    ConsumerFinalDemand(void) {}
+    ConsumerFinalDemand(void);
 
     //! Destructor
     virtual ~ConsumerFinalDemand(void) {}
