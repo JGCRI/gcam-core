@@ -70,6 +70,7 @@ PRICERATIO_GRASS_ALFALFA <- 0.7
 # NUMBERS OF DIGITS FOR MODEL INPUT DATA
 aglu.DIGITS_CALPRICE <- 4 # prices and costs
 aglu.DIGITS_CALOUTPUT <- 7 # production
+aglu.DIGITS_INCELAS <- 4 # food demand income elasticity
 
 # Carbon content of all cellulose
 aglu.CCONTENT_CELLULOSE <- 0.45
@@ -82,6 +83,12 @@ MAX_HA_TO_CROPLAND <- 3
 
 # Yield multiplier that goes from the observed yield to the "high" and "low" yields: observed plus or minus observed times this number
 MGMT_YIELD_ADJ <- 0.1
+
+# Meat price elasticity in the USA
+aglu.FOOD_MEAT_P_ELAS_USA <- -0.09
+
+# Regions in which agriculture and land use are not modeled
+NO_AGLU_REGIONS <- "Taiwan"
 
 # ======================================================================
 # energy constants

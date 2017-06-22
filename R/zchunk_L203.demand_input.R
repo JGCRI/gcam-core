@@ -37,9 +37,9 @@ module_aglu_L203.demand_input <- function(command, ...) {
              "L101.Pop_thous_R_Yh",
              "L102.pcgdp_thous90USD_Scen_R_Y"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L203.SectorLogitTables",
+    return(c("L203.SectorLogitTables[[curr_table]]",
              "L203.Supplysector_demand",
-             "L203.SubsectorLogitTables",
+             "L203.SubsectorLogitTables[[curr_table]]",
              "L203.SubsectorAll_demand",
              "L203.StubTech_demand",
              "L203.GlobalTechCoef_demand",
@@ -66,8 +66,8 @@ module_aglu_L203.demand_input <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    GCAM_commodity <- GCAM_region_ID <- aglu_demand_calyears <- aglu_demand_futureyears <-
-      element <- item <- value <- year <- NULL   # silence package check notes
+    GCAM_commodity <- GCAM_region_ID <- aglu_demand_calyears <- aglu_demand_futureyears <- names_Supplysector <- names_Subsector <-
+      names_SubsectorAll <- names_SubsectorLogitType <- names_Tech <- element <- item <- value <- year <- NULL   # silence package check notes
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
@@ -98,60 +98,53 @@ module_aglu_L203.demand_input <- function(command, ...) {
     aglu_demand_calyears <- HISTORICAL_YEARS[HISTORICAL_YEARS %in% MODEL_YEARS]
     aglu_demand_futureyears <- c(max(aglu_demand_calyears), MODEL_YEARS[!MODEL_YEARS %in% aglu_demand_calyears])
 
+    #Supplysectors
+    names_Supplysector <- c( "region", "supplysector", "output.unit", "input.unit", "price.unit", "logit.year.fillout", "logit.exponent" )
+    names_SupplysectorLogitType <- c( "region", "supplysector", "logit.type" )
+    #Subsectors
+    names_Subsector <- c( "region", "supplysector", "subsector")
+    names_SubsectorAll <- c( names_Subsector, "logit.year.fillout", "logit.exponent", "year.fillout", "share.weight", "apply.to","from.year", "to.year", "interpolation.function" )
+    names_SubsectorLogitType <- c( names_Subsector, "logit.type" )
+    #Technologies
+    names_Tech <- c( "region", "supplysector", "subsector", "technology" )
 
-    L134.pcFood_kcald_R_Dmnd_Y %>%
-      filter(year %in% aglu_demand_futureyears) %>%
-      left_join(GCAM_region_names, by = "GCAM_region_ID") ->
-      L203.pcFood_kcald_R_Dmnd_Y.melt
+    # L203.Supplysector_demand: generic info for demand sectors
+    L203.SectorLogitTables <- get_logit_fn_tables(A_demand_supplysector, names_SupplysectorLogitType, GCAM_region_names = GCAM_region_names,
+                                                  base_header = "Supplysector_", include_equiv_table = TRUE, write_all_regions = TRUE)
+    # Remove any regions for which agriculture and land use are not modeled
+    for(curr_table in names(L203.SectorLogitTables)) {
+      if(curr_table != "EQUIV_TABLE") {
+        L203.SectorLogitTables[[curr_table]]$data <- filter(L203.SectorLogitTables[[curr_table]]$data,
+                                                            !(region %in% NO_AGLU_REGIONS))
+      }
+    }
 
-    L134.pcFood_kcald_R_Dmnd_Y_ssp1 %>%
-      filter(year %in% aglu_demand_futureyears) %>%
-      left_join(GCAM_region_names, by = "GCAM_region_ID") ->
-      L203.pcFood_kcald_R_Dmnd_Y_ssp1.melt
+    A_demand_supplysector %>%
+      write_to_all_regions(names_Supplysector, GCAM_region_names = GCAM_region_names) %>%
+      filter(!region %in% NO_AGLU_REGIONS) ->
+    L203.Supplysector_demand
 
-    L134.pcFood_kcald_R_Dmnd_Y_ssp2 %>%
-      filter(year %in% aglu_demand_futureyears) %>%
-      left_join(GCAM_region_names, by = "GCAM_region_ID") ->
-      L203.pcFood_kcald_R_Dmnd_Y_ssp2.melt
+    # L203.SubsectorAll_demand: generic info for demand subsectors
+    L203.SubsectorLogitTables <- get_logit_fn_tables(A_demand_subsector, names_SubsectorLogitType, GCAM_region_names = GCAM_region_names,
+                                                     base_header = "SubsectorLogit_", include_equiv_table = FALSE, write_all_regions = TRUE)
+    for(curr_table in names(L203.SubsectorLogitTables)) {
+      if(curr_table != "EQUIV_TABLE") {
+        L203.SubsectorLogitTables[[curr_table]]$data <- filter(L203.SubsectorLogitTables[[curr_table]]$data,
+                                                                  !region %in% NO_AGLU_REGIONS)
+      }
+    }
 
-    L134.pcFood_kcald_R_Dmnd_Y_ssp3 %>%
-      filter(year %in% aglu_demand_futureyears) %>%
-      left_join(GCAM_region_names, by = "GCAM_region_ID") ->
-      L203.pcFood_kcald_R_Dmnd_Y_ssp3.melt
+    A_demand_subsector %>%
+      write_to_all_regions(names_SubsectorAll, GCAM_region_names = GCAM_region_names) %>%
+      filter(!region %in% NO_AGLU_REGIONS) ->
+      L203.SubsectorAll_demand
 
-    L134.pcFood_kcald_R_Dmnd_Y_ssp4 %>%
-      filter(year %in% aglu_demand_futureyears) %>%
-      left_join(GCAM_region_names, by = "GCAM_region_ID") ->
-      L203.pcFood_kcald_R_Dmnd_Y_ssp4.melt
-
-    L134.pcFood_kcald_R_Dmnd_Y_ssp5 %>%
-      filter(year %in% aglu_demand_futureyears) %>%
-      left_join(GCAM_region_names, by = "GCAM_region_ID") ->
-      L203.pcFood_kcald_R_Dmnd_Y_ssp5.melt
-
-    L101.Pop_thous_R_Yh %>%
-      filter(year %in% aglu_demand_calyears) %>%
-      left_join(GCAM_region_names, by = "GCAM_region_ID") ->
-      L203.Pop_thous_R_Yh
-
-    L102.pcgdp_thous90USD_Scen_R_Y %>%
-      filter(year %in% MODEL_YEARS) %>%
-      left_join(GCAM_region_names, by = "GCAM_region_ID") ->
-      L203.pcgdp_thous90USD_Scen_R_Y.melt
-
-    # # L203.Supplysector_demand: generic info for demand sectors
-    # L203.SectorLogitTables <- get_logit_fn_tables( A_demand_supplysector, names_SupplysectorLogitType,
-    #                                                base.header="Supplysector_", include.equiv.table=T, write.all.regions=T )
-    # L203.Supplysector_demand <- write_to_all_regions( A_demand_supplysector, names_Supplysector )
-    #
-    # # L203.SubsectorAll_demand: generic info for demand subsectors
-    # L203.SubsectorLogitTables <- get_logit_fn_tables( A_demand_subsector, names_SubsectorLogitType,
-    #                                                   base.header="SubsectorLogit_", include.equiv.table=F, write.all.regions=T )
-    # L203.SubsectorAll_demand <- write_to_all_regions( A_demand_subsector, names_SubsectorAll )
-    #
-    # # L203.StubTech_demand: identification of stub technologies for demands
-    # L203.StubTech_demand <- write_to_all_regions( A_demand_technology, names_Tech )
-    # names( L203.StubTech_demand ) <- gsub( "technology", "stub.technology", names( L203.StubTech_demand ) )
+    # L203.StubTech_demand: identification of stub technologies for demands
+    A_demand_technology %>%
+      write_to_all_regions(names_Tech, GCAM_region_names = GCAM_region_names) %>%
+      rename(stub.technology = technology) %>%
+      filter(!region %in% NO_AGLU_REGIONS) ->
+      L203.StubTech_demand
 
     # L203.GlobalTechCoef_demand: input names of demand technologies
     A_demand_technology %>%
@@ -169,11 +162,9 @@ module_aglu_L203.demand_input <- function(command, ...) {
     # Calibrated food and nonfood demands of crops and meat
     # Create table of regions, technologies, and all base years
     # NOTE: Easiest if the model base years are subsetted from a full table as a last step in the construction of each of these tables
-    A_demand_technology %>%
-      select(supplysector, subsector, technology, minicam.energy.input) %>%
-      repeat_add_columns(select(GCAM_region_names, region)) %>%
-      mutate(market.name = region, stub.technology = technology) ->
-    A_demand_technology_R
+    A_demand_technology_R <- write_to_all_regions(A_demand_technology, c(names_Tech, "minicam.energy.input", "market.name"),
+                                                  GCAM_region_names = GCAM_region_names) %>%
+      mutate(market.name = region, stub.technology = technology)
 
     A_demand_technology_R %>%
       repeat_add_columns(tibble(year = aglu_demand_calyears)) ->
@@ -183,14 +174,17 @@ module_aglu_L203.demand_input <- function(command, ...) {
       repeat_add_columns(tibble(year = MODEL_YEARS)) ->
       A_demand_technology_R_Y
 
+    names_StubTechProd <- c("region", "supplysector", "subsector", "stub.technology", "year", "calOutputValue", "share.weight.year", "subs.share.weight", "tech.share.weight")
+    names_StubTechFixOut <- c("region", "supplysector", "subsector", "stub.technology", "year", "fixedOutput", "share.weight.year", "subs.share.weight", "tech.share.weight")
+    names_StubTechCalorieContent <- c("region", "supplysector", "subsector", "stub.technology", "year", "minicam.energy.input", "efficiency", "market.name")
+
+    # L203.StubTechProd_food_crop: crop food demand by technology and region
+    # L203.StubTechProd_food_meat: meat food demand by technology and region
     L101.ag_Food_Pcal_R_C_Y %>%
       bind_rows(L105.an_Food_Pcal_R_C_Y) %>%
       filter(year %in% aglu_demand_calyears) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
       L203.ag_an_Food_Pcal_R_C_Y.melt
-
-    # L203.StubTechProd_food_crop: crop food demand by technology and region
-    # L203.StubTechProd_food_meat: meat food demand by technology and region
     A_demand_technology_R_Yh %>%
       filter(supplysector %in% c("FoodDemand_Crops", "FoodDemand_Meat")) %>%
       left_join_error_no_match(L203.ag_an_Food_Pcal_R_C_Y.melt, by = c("region", "technology" = "GCAM_commodity", "year")) %>%
@@ -199,18 +193,18 @@ module_aglu_L203.demand_input <- function(command, ...) {
              # Subsector and technology shareweights (subsector requires the year as well)
              subs.share.weight = if_else(calOutputValue > 0, 1, 0),
              tech.share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
-      select(region, supplysector, subsector, stub.technology, year, calOutputValue, share.weight.year, subs.share.weight, tech.share.weight) ->
-    L203.StubTechProd_food
+      select(one_of(names_StubTechProd)) %>%
+      filter(!region %in% NO_AGLU_REGIONS & year %in% BASE_YEARS) ->     ## ALSO SUBSET THE CALIBRATION TABLES TO ONLY THE MODEL BASE YEARS
+      L203.StubTechProd_food
 
+    # L203.StubTechProd_nonfood_crop: crop nonfood demand by technology and region
+    # L203.StubTechProd_nonfood_meat: meat nonfood demand by technology and region
     L109.ag_ALL_Mt_R_C_Y %>%
       bind_rows(L109.an_ALL_Mt_R_C_Y) %>%
       filter(year %in% aglu_demand_calyears) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       select(GCAM_region_ID, region, GCAM_commodity, year, OtherUses_Mt, NetExp_Mt) ->
       L203.ag_an_ALL_Mt_R_C_Y
-
-    # L203.StubTechProd_nonfood_crop: crop nonfood demand by technology and region
-    # L203.StubTechProd_nonfood_meat: meat nonfood demand by technology and region
     A_demand_technology_R_Yh %>%
       filter(supplysector %in% c("NonFoodDemand_Crops", "NonFoodDemand_Meat")) %>%
       left_join_error_no_match(L203.ag_an_ALL_Mt_R_C_Y, by = c("region", "technology" = "GCAM_commodity", "year")) %>%
@@ -219,9 +213,9 @@ module_aglu_L203.demand_input <- function(command, ...) {
              # Subsector and technology shareweights (subsector requires the year as well)
              subs.share.weight = if_else(calOutputValue > 0, 1, 0),
              tech.share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
-      select(region, supplysector, subsector, stub.technology, year, calOutputValue, share.weight.year, subs.share.weight, tech.share.weight) ->
+      select(one_of(names_StubTechProd)) %>%
+      filter(!region %in% NO_AGLU_REGIONS & year %in% BASE_YEARS) ->     ## ALSO SUBSET THE CALIBRATION TABLES TO ONLY THE MODEL BASE YEARS
       L203.StubTechProd_nonfood
-
     # L203.StubTechFixOut_exp: animal exports for net exporting regions in all periods
     A_demand_technology_R_Y %>%
       filter(supplysector == "Exports_Meat") %>%
@@ -232,9 +226,11 @@ module_aglu_L203.demand_input <- function(command, ...) {
              share.weight.year = year,
              # Subsector and technology shareweights (subsector requires the year as well)
              subs.share.weight = 0, tech.share.weight = 0) %>%
-      select(region, supplysector, subsector, stub.technology, year, fixedOutput, share.weight.year, subs.share.weight, tech.share.weight) ->
+      select(one_of(names_StubTechFixOut)) %>%
+      filter(!region %in% NO_AGLU_REGIONS) ->
       L203.StubTechFixOut_exp
 
+    # L203.StubTechProd_For: Forest product demand by technology and region
     L110.For_ALL_bm3_R_Y %>%
       unique() %>%
       filter(year %in% aglu_demand_calyears) %>%
@@ -242,8 +238,6 @@ module_aglu_L203.demand_input <- function(command, ...) {
       ungroup() %>%
       select(GCAM_region_ID, region, year, Cons_bm3) ->
       L203.For_ALL_bm3_R_Y
-
-    # L203.StubTechProd_For: Forest product demand by technology and region
     A_demand_technology_R_Yh %>%
       filter(supplysector == "NonFoodDemand_Forest") %>%
       left_join_error_no_match(L203.For_ALL_bm3_R_Y, by = c("region", "year")) %>%
@@ -252,202 +246,213 @@ module_aglu_L203.demand_input <- function(command, ...) {
              # Subsector and technology shareweights (subsector requires the year as well)
              subs.share.weight = if_else(calOutputValue > 0, 1, 0),
              tech.share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
-      select(region, supplysector, subsector, stub.technology, year, calOutputValue, share.weight.year, subs.share.weight, tech.share.weight) ->
+      select(one_of(names_StubTechProd)) %>%
+      filter(!region %in% NO_AGLU_REGIONS & year %in% BASE_YEARS) ->     ## ALSO SUBSET THE CALIBRATION TABLES TO ONLY THE MODEL BASE YEARS
       L203.StubTechProd_For
 
+    # L203.StubCalorieContent_crop: caloric content of food crops (incl secondary products
+    # L203.StubCalorieContent_meat: caloric content of meat commodities
     L101.ag_kcalg_R_C_Y %>%
       bind_rows(L105.an_kcalg_R_C_Y) %>%
       filter(year %in% aglu_demand_calyears) %>%
       left_join(GCAM_region_names, by = "GCAM_region_ID") ->
       L203.ag_an_kcalg_R_C_Y.melt
-
-    # L203.StubCalorieContent_crop: caloric content of food crops (incl secondary products
-    # L203.StubCalorieContent_meat: caloric content of meat commodities
     A_demand_technology_R_Y %>%
       filter(supplysector %in% c("FoodDemand_Crops", "FoodDemand_Meat")) %>%
       left_join(L203.ag_an_kcalg_R_C_Y.melt, by = c("region", "technology" = "GCAM_commodity", "year")) %>%
       mutate(efficiency = round(value, aglu.DIGITS_CALOUTPUT),
              efficiency = replace(efficiency, year > max(BASE_YEARS), efficiency[year == max(BASE_YEARS)])) %>%
-      select(region, supplysector, subsector, stub.technology, year, minicam.energy.input, efficiency, market.name) ->
+      select(one_of(names_StubTechCalorieContent)) %>%
+      filter(!region %in% NO_AGLU_REGIONS) ->
       L203.StubCalorieContent
 
+    # FINAL DEMANDS
+    names_EnergyFinalDemand <- c("region", "energy.final.demand")
+    names_PerCapitaBased <- c(names_EnergyFinalDemand, "perCapitaBased")
+    # L203.PerCapitaBased: final demand attributes that do not vary by time period
+    L203.PerCapitaBased <- write_to_all_regions(A_demand_supplysector, names_PerCapitaBased, GCAM_region_names = GCAM_region_names)
+    # L203.BaseService: base service of final demands
+    Prod_colnames <- c("region", "supplysector", "year", "calOutputValue")
+    L203.StubTechFixOut_exp %>%
+      filter(year %in% BASE_YEARS) %>%
+      rename(calOutputValue = fixedOutput) %>%
+      select(one_of(Prod_colnames)) %>%
+      bind_rows(L203.StubTechProd_food[Prod_colnames], L203.StubTechProd_nonfood[Prod_colnames], L203.StubTechProd_For[Prod_colnames]) %>%
+      group_by(region, supplysector, year) %>%
+      summarise(calOutputValue = sum(calOutputValue)) %>%
+      rename(energy.final.demand = supplysector, base.service = calOutputValue) %>%
+      filter(!region %in% NO_AGLU_REGIONS & year %in% BASE_YEARS) ->     ## ALSO SUBSET THE CALIBRATION TABLES TO ONLY THE MODEL BASE YEARS
+      L203.BaseService
+
+    # L203.IncomeElasticity: Income elasticities
+    # NOTE: food demands are taken as given in historical validation runs
+    # Note: these steps contain processing normally considered level 1, but are done here because unlike other quantities computed in level 1,
+    # the income elasticities depend on the timestep length chosen, and as such are dependent on the modeltime, which is not a level 1 attribute
+
+    # Step 1: Building historical estimates of changes in per-capita food demands by region and demand type
+    L101.Pop_thous_R_Yh %>%
+      filter(year %in% aglu_demand_calyears) %>%
+      left_join(GCAM_region_names, by = "GCAM_region_ID") ->
+      L203.Pop_thous_R_Yh
+
+    L203.BaseService %>%
+      filter(energy.final.demand %in% c("FoodDemand_Crops", "FoodDemand_Meat")) %>%
+      left_join_error_no_match(L203.Pop_thous_R_Yh, by = c("region", "year")) %>%
+      mutate(value = base.service * (1 / CONV_MCAL_PCAL) * CONV_DAYS_YEAR / value) %>%
+      select(-base.service) %>%
+      group_by(region, GCAM_region_ID, energy.final.demand) %>%
+      mutate(ratio = value / lag(value)) %>%
+      replace_na(list(ratio = 1)) ->
+      L203.pcFoodRatio_R_Yh
+
+    # Step 2: Calculating future changes (ratios) in caloric demands by region and demand type
+    L134.pcFood_kcald_R_Dmnd_Y %>%
+      mutate(scenario = "core") %>%
+      bind_rows(mutate(L134.pcFood_kcald_R_Dmnd_Y_ssp1, scenario = "SSP1"),
+                mutate(L134.pcFood_kcald_R_Dmnd_Y_ssp2, scenario = "SSP2"),
+                mutate(L134.pcFood_kcald_R_Dmnd_Y_ssp3, scenario = "SSP3"),
+                mutate(L134.pcFood_kcald_R_Dmnd_Y_ssp4, scenario = "SSP4"),
+                mutate(L134.pcFood_kcald_R_Dmnd_Y_ssp5, scenario = "SSP5")) %>%
+      filter(year %in% aglu_demand_futureyears) %>%
+      left_join(GCAM_region_names, by = "GCAM_region_ID") ->
+      L203.pcFood_kcald_R_Dmnd_Y.melt
+
+    L203.pcFood_kcald_R_Dmnd_Y.melt %>%
+      mutate(energy.final.demand = "FoodDemand_Crops",
+             energy.final.demand = replace(energy.final.demand, GCAM_demand == "meat", "FoodDemand_Meat")) %>%
+      group_by(GCAM_region_ID, region, energy.final.demand, scenario) %>%
+      mutate(ratio = value / lag(value)) %>%
+      replace_na(list(ratio = 1)) %>%
+      select(-value) ->
+      L203.pcFoodRatio_R_Dmnd_Yfut
+
+    # Step 4: Calculating the per-capita GDP trajectories over the same time period
+    # NOTE: only computing elasticities based on the specified GDP scenario
+    L102.pcgdp_thous90USD_Scen_R_Y %>%
+      filter(year %in% MODEL_YEARS) %>%
+      left_join(GCAM_region_names, by = "GCAM_region_ID") %>%
+      group_by(GCAM_region_ID, region, scenario) %>%
+      mutate(gdp.ratio = value / lag(value)) %>%
+      replace_na(list(gdp.ratio = 1)) %>%
+      select(-value) ->
+      L203.pcgdpRatio_R_Y
+
+    # Step 5: Solving for the income elasticities in each time period
+    L203.pcFoodRatio_R_Dmnd_Yfut %>%
+      left_join(L203.pcgdpRatio_R_Y, by = c("GCAM_region_ID", "region", "year", "scenario")) %>%
+      mutate(gdp.ratio = replace(gdp.ratio, scenario == "core", gdp.ratio[scenario == "SSP2"]),
+             income.elasticity = round(log(ratio) / log(gdp.ratio), aglu.DIGITS_INCELAS)) %>%
+      replace_na(list(income.elasticity = 0)) %>%
+      # Step 6: Converting to appropriate formats
+      filter(year %in% FUTURE_YEARS) %>%
+      select(scenario, region, energy.final.demand, year, income.elasticity) %>%
+      mutate(income.elasticity = replace(income.elasticity, scenario != "core" & income.elasticity > 1, 1),
+             income.elasticity = replace(income.elasticity, scenario != "core" & income.elasticity < 0, 0)) %>%
+      filter(!region %in% NO_AGLU_REGIONS) ->
+      L203.IncomeElasticity_allScen
+
+    # L203.PriceElasticity: Price elasticities
+    names_PriceElasticity <- c("region", "energy.final.demand", "year", "price.elasticity")
+    L203.PriceElasticity <- write_to_all_regions(A_demand_supplysector, c(names_EnergyFinalDemand, "price.elasticity"),
+                                                 GCAM_region_names = GCAM_region_names ) %>%
+      repeat_add_columns(tibble(year = FUTURE_YEARS)) %>% # Price elasticities are only read for future periods
+      #Set the USA price elasticity to a region-specific value
+      mutate(price.elasticity = replace(price.elasticity, region == "USA" & energy.final.demand == "FoodDemand_Meat", aglu.FOOD_MEAT_P_ELAS_USA)) %>%
+      select(one_of(names_PriceElasticity)) %>%
+      filter(!region %in% NO_AGLU_REGIONS) ->
+      L203.PriceElasticity
+
+    # Fuel preference elasticity
+    # L203.FuelPrefElast_ssp1: Fuel preference elasticities for meat in SSP1
+    names_FuelPrefElasticity <- c("region", "supplysector", "subsector", "year.fillout", "fuelprefElasticity")
+    A_fuelprefElasticity_ssp1 %>%
+      mutate(year.fillout = min(BASE_YEARS)) %>%
+      write_to_all_regions(names_FuelPrefElasticity, GCAM_region_names = GCAM_region_names) %>%
+      filter(!region %in% NO_AGLU_REGIONS) ->
+      L203.FuelPrefElast_ssp1
+
     # Produce outputs
-    tibble() %>%
+    L203.SectorLogitTables[[curr_table]] %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L203.SectorLogitTables[[ curr_table ]]$data") %>%
       add_precursors("common/GCAM_region_names",
-                     "aglu/A_demand_supplysector",
-                     "aglu/A_demand_subsector",
-                     "aglu/A_demand_technology",
-                     "aglu/A_fuelprefElasticity_ssp1",
-                     "L101.ag_Food_Pcal_R_C_Y",
-                     "L101.ag_kcalg_R_C_Y",
-                     "L105.an_Food_Pcal_R_C_Y",
-                     "L105.an_kcalg_R_C_Y",
-                     "L109.ag_ALL_Mt_R_C_Y",
-                     "L109.an_ALL_Mt_R_C_Y",
-                     "L110.For_ALL_bm3_R_Y",
-                     "L134.pcFood_kcald_R_Dmnd_Y",
-                     "L134.pcFood_kcald_R_Dmnd_Y_ssp1",
-                     "L134.pcFood_kcald_R_Dmnd_Y_ssp2",
-                     "L134.pcFood_kcald_R_Dmnd_Y_ssp3",
-                     "L134.pcFood_kcald_R_Dmnd_Y_ssp4",
-                     "L134.pcFood_kcald_R_Dmnd_Y_ssp5",
-                     "L101.Pop_thous_R_Yh",
-                     "L102.pcgdp_thous90USD_Scen_R_Y") %>%
+                     "aglu/A_demand_supplysector") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L203.SectorLogitTables
+      L203.SectorLogitTables[[curr_table]]
 
-    tibble() %>%
+    L203.Supplysector_demand %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L203.Supplysector_demand") %>%
       add_precursors("common/GCAM_region_names",
-                     "aglu/A_demand_supplysector",
-                     "aglu/A_demand_subsector",
-                     "aglu/A_demand_technology",
-                     "aglu/A_fuelprefElasticity_ssp1",
-                     "L101.ag_Food_Pcal_R_C_Y",
-                     "L101.ag_kcalg_R_C_Y",
-                     "L105.an_Food_Pcal_R_C_Y",
-                     "L105.an_kcalg_R_C_Y",
-                     "L109.ag_ALL_Mt_R_C_Y",
-                     "L109.an_ALL_Mt_R_C_Y",
-                     "L110.For_ALL_bm3_R_Y",
-                     "L101.Pop_thous_R_Yh",
-                     "L102.pcgdp_thous90USD_Scen_R_Y") %>%
+                     "aglu/A_demand_supplysector") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L203.Supplysector_demand
 
-    tibble() %>%
+    L203.SubsectorLogitTables[[curr_table]] %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L203.SubsectorLogitTables[[ curr_table ]]$data") %>%
       add_precursors("common/GCAM_region_names",
-                     "aglu/A_demand_supplysector",
-                     "aglu/A_demand_subsector",
-                     "aglu/A_demand_technology",
-                     "aglu/A_fuelprefElasticity_ssp1",
-                     "L101.ag_Food_Pcal_R_C_Y",
-                     "L101.ag_kcalg_R_C_Y",
-                     "L105.an_Food_Pcal_R_C_Y",
-                     "L105.an_kcalg_R_C_Y",
-                     "L109.ag_ALL_Mt_R_C_Y",
-                     "L109.an_ALL_Mt_R_C_Y",
-                     "L110.For_ALL_bm3_R_Y",
-                     "L101.Pop_thous_R_Yh",
-                     "L102.pcgdp_thous90USD_Scen_R_Y") %>%
+                     "aglu/A_demand_subsector") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L203.SubsectorLogitTables
+      L203.SubsectorLogitTables[[curr_table]]
 
-    tibble() %>%
+    L203.SubsectorAll_demand %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L203.SubsectorAll_demand") %>%
       add_precursors("common/GCAM_region_names",
-                     "aglu/A_demand_supplysector",
-                     "aglu/A_demand_subsector",
-                     "aglu/A_demand_technology",
-                     "aglu/A_fuelprefElasticity_ssp1",
-                     "L101.ag_Food_Pcal_R_C_Y",
-                     "L101.ag_kcalg_R_C_Y",
-                     "L105.an_Food_Pcal_R_C_Y",
-                     "L105.an_kcalg_R_C_Y",
-                     "L109.ag_ALL_Mt_R_C_Y",
-                     "L109.an_ALL_Mt_R_C_Y",
-                     "L110.For_ALL_bm3_R_Y",
-                     "L101.Pop_thous_R_Yh",
-                     "L102.pcgdp_thous90USD_Scen_R_Y") %>%
+                     "aglu/A_demand_subsector") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L203.SubsectorAll_demand
 
-    tibble() %>%
+    L203.StubTech_demand %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L203.StubTech_demand") %>%
       add_precursors("common/GCAM_region_names",
-                     "aglu/A_demand_supplysector",
-                     "aglu/A_demand_subsector",
-                     "aglu/A_demand_technology",
-                     "aglu/A_fuelprefElasticity_ssp1",
-                     "L101.ag_Food_Pcal_R_C_Y",
-                     "L101.ag_kcalg_R_C_Y",
-                     "L105.an_Food_Pcal_R_C_Y",
-                     "L105.an_kcalg_R_C_Y",
-                     "L109.ag_ALL_Mt_R_C_Y",
-                     "L109.an_ALL_Mt_R_C_Y",
-                     "L110.For_ALL_bm3_R_Y",
-                     "L101.Pop_thous_R_Yh",
-                     "L102.pcgdp_thous90USD_Scen_R_Y") %>%
+                     "aglu/A_demand_technology") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L203.StubTech_demand
 
-    tibble() %>%
+    L203.GlobalTechCoef_demand %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L203.GlobalTechCoef_demand") %>%
-      add_precursors("common/GCAM_region_names",
-                     "aglu/A_demand_supplysector",
-                     "aglu/A_demand_subsector",
-                     "aglu/A_demand_technology",
-                     "aglu/A_fuelprefElasticity_ssp1",
-                     "L101.ag_Food_Pcal_R_C_Y",
-                     "L101.ag_kcalg_R_C_Y",
-                     "L105.an_Food_Pcal_R_C_Y",
-                     "L105.an_kcalg_R_C_Y",
-                     "L109.ag_ALL_Mt_R_C_Y",
-                     "L109.an_ALL_Mt_R_C_Y",
-                     "L110.For_ALL_bm3_R_Y",
-                     "L134.pcFood_kcald_R_Dmnd_Y",
-                     "L101.Pop_thous_R_Yh",
-                     "L102.pcgdp_thous90USD_Scen_R_Y") %>%
+      add_precursors("aglu/A_demand_technology") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L203.GlobalTechCoef_demand
 
-    tibble() %>%
+    L203.GlobalTechShrwt_demand %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L203.GlobalTechShrwt_demand") %>%
-      add_precursors("common/GCAM_region_names",
-                     "aglu/A_demand_supplysector",
-                     "aglu/A_demand_subsector",
-                     "aglu/A_demand_technology",
-                     "aglu/A_fuelprefElasticity_ssp1",
-                     "L101.ag_Food_Pcal_R_C_Y",
-                     "L101.ag_kcalg_R_C_Y",
-                     "L105.an_Food_Pcal_R_C_Y",
-                     "L105.an_kcalg_R_C_Y",
-                     "L109.ag_ALL_Mt_R_C_Y",
-                     "L109.an_ALL_Mt_R_C_Y",
-                     "L110.For_ALL_bm3_R_Y",
-                     "L134.pcFood_kcald_R_Dmnd_Y",
-                     "L101.Pop_thous_R_Yh",
-                     "L102.pcgdp_thous90USD_Scen_R_Y") %>%
+      same_precursors_as(L203.GlobalTechCoef_demand) %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L203.GlobalTechShrwt_demand
-
 
     L203.StubTechProd_food %>%
       filter(supplysector == "FoodDemand_Crops") %>%
@@ -505,7 +510,7 @@ module_aglu_L203.demand_input <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L203.StubTechProd_nonfood_meat
 
-    tibble() %>%
+    L203.StubTechProd_For %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -539,19 +544,9 @@ module_aglu_L203.demand_input <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L203.StubCalorieContent_crop") %>%
       add_precursors("common/GCAM_region_names",
-                     "aglu/A_demand_supplysector",
-                     "aglu/A_demand_subsector",
                      "aglu/A_demand_technology",
-                     "aglu/A_fuelprefElasticity_ssp1",
                      "L101.ag_Food_Pcal_R_C_Y",
-                     "L101.ag_kcalg_R_C_Y",
-                     "L105.an_Food_Pcal_R_C_Y",
-                     "L105.an_kcalg_R_C_Y",
-                     "L109.ag_ALL_Mt_R_C_Y",
-                     "L109.an_ALL_Mt_R_C_Y",
-                     "L110.For_ALL_bm3_R_Y",
-                     "L101.Pop_thous_R_Yh",
-                     "L102.pcgdp_thous90USD_Scen_R_Y") %>%
+                     "L101.ag_kcalg_R_C_Y") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L203.StubCalorieContent_crop
@@ -564,48 +559,26 @@ module_aglu_L203.demand_input <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L203.StubCalorieContent_meat") %>%
       add_precursors("common/GCAM_region_names",
-                     "aglu/A_demand_supplysector",
-                     "aglu/A_demand_subsector",
                      "aglu/A_demand_technology",
-                     "aglu/A_fuelprefElasticity_ssp1",
-                     "L101.ag_Food_Pcal_R_C_Y",
-                     "L101.ag_kcalg_R_C_Y",
                      "L105.an_Food_Pcal_R_C_Y",
-                     "L105.an_kcalg_R_C_Y",
-                     "L109.ag_ALL_Mt_R_C_Y",
-                     "L109.an_ALL_Mt_R_C_Y",
-                     "L110.For_ALL_bm3_R_Y",
-                     "L101.Pop_thous_R_Yh",
-                     "L102.pcgdp_thous90USD_Scen_R_Y") %>%
+                     "L105.an_kcalg_R_C_Y") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L203.StubCalorieContent_meat
 
-    tibble() %>%
+    L203.PerCapitaBased %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L203.PerCapitaBased") %>%
       add_precursors("common/GCAM_region_names",
-                     "aglu/A_demand_supplysector",
-                     "aglu/A_demand_subsector",
-                     "aglu/A_demand_technology",
-                     "aglu/A_fuelprefElasticity_ssp1",
-                     "L101.ag_Food_Pcal_R_C_Y",
-                     "L101.ag_kcalg_R_C_Y",
-                     "L105.an_Food_Pcal_R_C_Y",
-                     "L105.an_kcalg_R_C_Y",
-                     "L109.ag_ALL_Mt_R_C_Y",
-                     "L109.an_ALL_Mt_R_C_Y",
-                     "L110.For_ALL_bm3_R_Y",
-                     "L101.Pop_thous_R_Yh",
-                     "L102.pcgdp_thous90USD_Scen_R_Y") %>%
+                     "aglu/A_demand_supplysector") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L203.PerCapitaBased
 
-    tibble() %>%
+    L203.BaseService %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -613,40 +586,27 @@ module_aglu_L203.demand_input <- function(command, ...) {
       add_legacy_name("L203.BaseService") %>%
       add_precursors("common/GCAM_region_names",
                      "aglu/A_demand_supplysector",
-                     "aglu/A_demand_subsector",
                      "aglu/A_demand_technology",
-                     "aglu/A_fuelprefElasticity_ssp1",
                      "L101.ag_Food_Pcal_R_C_Y",
                      "L101.ag_kcalg_R_C_Y",
                      "L105.an_Food_Pcal_R_C_Y",
                      "L105.an_kcalg_R_C_Y",
                      "L109.ag_ALL_Mt_R_C_Y",
                      "L109.an_ALL_Mt_R_C_Y",
-                     "L110.For_ALL_bm3_R_Y",
-                     "L101.Pop_thous_R_Yh",
-                     "L102.pcgdp_thous90USD_Scen_R_Y") %>%
+                     "L110.For_ALL_bm3_R_Y") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L203.BaseService
 
-    tibble() %>%
+    L203.IncomeElasticity_allScen %>%
+      filter(scenario == "core") %>%
+      select(-scenario) %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L203.IncomeElasticity") %>%
       add_precursors("common/GCAM_region_names",
-                     "aglu/A_demand_supplysector",
-                     "aglu/A_demand_subsector",
-                     "aglu/A_demand_technology",
-                     "aglu/A_fuelprefElasticity_ssp1",
-                     "L101.ag_Food_Pcal_R_C_Y",
-                     "L101.ag_kcalg_R_C_Y",
-                     "L105.an_Food_Pcal_R_C_Y",
-                     "L105.an_kcalg_R_C_Y",
-                     "L109.ag_ALL_Mt_R_C_Y",
-                     "L109.an_ALL_Mt_R_C_Y",
-                     "L110.For_ALL_bm3_R_Y",
                      "L134.pcFood_kcald_R_Dmnd_Y",
                      "L101.Pop_thous_R_Yh",
                      "L102.pcgdp_thous90USD_Scen_R_Y") %>%
@@ -654,88 +614,44 @@ module_aglu_L203.demand_input <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L203.IncomeElasticity
 
-    tibble() %>%
+    L203.PriceElasticity %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L203.PriceElasticity") %>%
-      add_precursors("common/GCAM_region_names",
-                     "aglu/A_demand_supplysector",
-                     "aglu/A_demand_subsector",
-                     "aglu/A_demand_technology",
-                     "aglu/A_fuelprefElasticity_ssp1",
-                     "L101.ag_Food_Pcal_R_C_Y",
-                     "L101.ag_kcalg_R_C_Y",
-                     "L105.an_Food_Pcal_R_C_Y",
-                     "L105.an_kcalg_R_C_Y",
-                     "L109.ag_ALL_Mt_R_C_Y",
-                     "L109.an_ALL_Mt_R_C_Y",
-                     "L110.For_ALL_bm3_R_Y",
-                     "L134.pcFood_kcald_R_Dmnd_Y",
-                     "L101.Pop_thous_R_Yh",
-                     "L102.pcgdp_thous90USD_Scen_R_Y") %>%
+      add_precursors("aglu/A_demand_supplysector") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L203.PriceElasticity
 
-    tibble() %>%
+    L203.FuelPrefElast_ssp1 %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L203.FuelPrefElast_ssp1") %>%
-      add_precursors("common/GCAM_region_names",
-                     "aglu/A_demand_supplysector",
-                     "aglu/A_demand_subsector",
-                     "aglu/A_demand_technology",
-                     "aglu/A_fuelprefElasticity_ssp1",
-                     "L101.ag_Food_Pcal_R_C_Y",
-                     "L101.ag_kcalg_R_C_Y",
-                     "L105.an_Food_Pcal_R_C_Y",
-                     "L105.an_kcalg_R_C_Y",
-                     "L109.ag_ALL_Mt_R_C_Y",
-                     "L109.an_ALL_Mt_R_C_Y",
-                     "L110.For_ALL_bm3_R_Y",
-                     "L134.pcFood_kcald_R_Dmnd_Y",
-                     "L134.pcFood_kcald_R_Dmnd_Y_ssp1",
-                     "L134.pcFood_kcald_R_Dmnd_Y_ssp2",
-                     "L134.pcFood_kcald_R_Dmnd_Y_ssp3",
-                     "L134.pcFood_kcald_R_Dmnd_Y_ssp4",
-                     "L134.pcFood_kcald_R_Dmnd_Y_ssp5",
-                     "L101.Pop_thous_R_Yh",
-                     "L102.pcgdp_thous90USD_Scen_R_Y") %>%
+      add_precursors("aglu/A_fuelprefElasticity_ssp1") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L203.FuelPrefElast_ssp1
 
-    tibble() %>%
+    L203.IncomeElasticity_allScen %>%
+      filter(scenario == "SSP1") %>%
+      select(-scenario) %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L203.IncomeElasticity_SSP1") %>%
-      add_precursors("common/GCAM_region_names",
-                     "aglu/A_demand_supplysector",
-                     "aglu/A_demand_subsector",
-                     "aglu/A_demand_technology",
-                     "aglu/A_fuelprefElasticity_ssp1",
-                     "L101.ag_Food_Pcal_R_C_Y",
-                     "L101.ag_kcalg_R_C_Y",
-                     "L105.an_Food_Pcal_R_C_Y",
-                     "L105.an_kcalg_R_C_Y",
-                     "L109.ag_ALL_Mt_R_C_Y",
-                     "L109.an_ALL_Mt_R_C_Y",
-                     "L110.For_ALL_bm3_R_Y",
-                     "L134.pcFood_kcald_R_Dmnd_Y",
-                     "L134.pcFood_kcald_R_Dmnd_Y_ssp1",
-                     "L101.Pop_thous_R_Yh",
-                     "L102.pcgdp_thous90USD_Scen_R_Y") %>%
+      same_precursors_as(L203.IncomeElasticity) %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L203.IncomeElasticity_SSP1
 
-    tibble() %>%
+    L203.IncomeElasticity_allScen %>%
+      filter(scenario == "SSP2") %>%
+      select(-scenario) %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -761,7 +677,9 @@ module_aglu_L203.demand_input <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L203.IncomeElasticity_SSP2
 
-    tibble() %>%
+    L203.IncomeElasticity_allScen %>%
+      filter(scenario == "SSP3") %>%
+      select(-scenario) %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -787,7 +705,9 @@ module_aglu_L203.demand_input <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L203.IncomeElasticity_SSP3
 
-    tibble() %>%
+    L203.IncomeElasticity_allScen %>%
+      filter(scenario == "SSP4") %>%
+      select(-scenario) %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -812,7 +732,9 @@ module_aglu_L203.demand_input <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L203.IncomeElasticity_SSP4
 
-    tibble() %>%
+    L203.IncomeElasticity_allScen %>%
+      filter(scenario == "SSP5") %>%
+      select(-scenario) %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -839,7 +761,7 @@ module_aglu_L203.demand_input <- function(command, ...) {
 
     # THIS DOESN'T SEEM TO BE FULL, CORRECT RETURN DATA - looks like L203 has a bunch of funkiness in it
     # Take a look at original code and talk to Ben as necessary!
-    return_data(L203.SectorLogitTables, L203.Supplysector_demand, L203.SubsectorLogitTables, L203.SubsectorAll_demand, L203.StubTech_demand, L203.GlobalTechCoef_demand, L203.GlobalTechShrwt_demand, L203.StubTechProd_food_crop, L203.StubTechProd_food_meat, L203.StubTechProd_nonfood_crop, L203.StubTechProd_nonfood_meat, L203.StubTechProd_For, L203.StubTechFixOut_exp, L203.StubCalorieContent_crop, L203.StubCalorieContent_meat, L203.PerCapitaBased, L203.BaseService, L203.IncomeElasticity, L203.PriceElasticity, L203.FuelPrefElast_ssp1, L203.IncomeElasticity_SSP1, L203.IncomeElasticity_SSP2, L203.IncomeElasticity_SSP3, L203.IncomeElasticity_SSP4, L203.IncomeElasticity_SSP5)
+    return_data(L203.SectorLogitTables[[curr_table]], L203.Supplysector_demand, L203.SubsectorLogitTables[[curr_table]], L203.SubsectorAll_demand, L203.StubTech_demand, L203.GlobalTechCoef_demand, L203.GlobalTechShrwt_demand, L203.StubTechProd_food_crop, L203.StubTechProd_food_meat, L203.StubTechProd_nonfood_crop, L203.StubTechProd_nonfood_meat, L203.StubTechProd_For, L203.StubTechFixOut_exp, L203.StubCalorieContent_crop, L203.StubCalorieContent_meat, L203.PerCapitaBased, L203.BaseService, L203.IncomeElasticity, L203.PriceElasticity, L203.FuelPrefElast_ssp1, L203.IncomeElasticity_SSP1, L203.IncomeElasticity_SSP2, L203.IncomeElasticity_SSP3, L203.IncomeElasticity_SSP4, L203.IncomeElasticity_SSP5)
   } else {
     stop("Unknown command")
   }
