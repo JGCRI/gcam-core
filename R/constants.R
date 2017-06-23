@@ -88,7 +88,7 @@ MGMT_YIELD_ADJ <- 0.1
 aglu.FOOD_MEAT_P_ELAS_USA <- -0.09
 
 # Regions in which agriculture and land use are not modeled
-NO_AGLU_REGIONS <- "Taiwan"
+aglu.NO_AGLU_REGIONS <- "Taiwan"
 
 # ======================================================================
 # energy constants
