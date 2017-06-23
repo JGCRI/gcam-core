@@ -1,11 +1,12 @@
 # Column names of tables that are read in to the model interface
 # These correspond to the headers of the same name in the headers/ModelInterface_headers.txt file
 # These are for generic categories; module-specific level2 data names are found in data header files of each module
-# Resources
+
 R <- "region"
 Y <- "year"
 input <- "minicam.energy.input"
 
+# Resources
 aglu.NAMES_DEPRSRC          <- c(R, "depresource", "output.unit", "price.unit", "market")
 aglu.NAMES_RENEWRSRC        <- c(R, "renewresource", "output.unit", "price.unit", "market")
 aglu.NAMES_UNLIMITRSRC      <- c(R, "unlimited.resource", "output.unit", "price.unit", "market", "capacity.factor")
@@ -156,43 +157,45 @@ aglu.NAMES_LN2_UNMGDCARBON         <- c(R, "LandAllocatorRoot", "LandNode1", "La
                                         "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density")
 aglu.NAMES_LN2_MGDCARBON           <- c(R, "LandAllocatorRoot", "LandNode1", "LandNode2", "LandLeaf", "hist.veg.carbon.density", "hist.soil.carbon.density",
                                         "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density")
-aglu.NAMES_LN3_LOGIT               <- c(R, "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "logit.year.fillout", "logit.exponent")
-aglu.NAMES_LN3_LOGITTYPE           <- c(R, "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "logit.type")
-aglu.NAMES_LN3_NODEGHOSTSHARE      <- c(R, "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", Y, "ghost.unnormalized.share")
-aglu.NAMES_LN3_LEAFGHOSTSHARE      <- c(R, "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandLeaf", Y, "ghost.unnormalized.share")
-aglu.NAMES_LN3_LEAFISGHOSTSHAREREL <- c(R, "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandLeaf", "is.ghost.share.relative")
-aglu.NAMES_LN3_HISTUNMGDALLOCATION <- c(R, "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "UnmanagedLandLeaf", Y, "allocation")
+ln13 <- c("LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3")
+aglu.NAMES_LN3_LOGIT               <- c(R, ln13, "logit.year.fillout", "logit.exponent")
+aglu.NAMES_LN3_LOGITTYPE           <- c(R, ln13, "logit.type")
+aglu.NAMES_LN3_NODEGHOSTSHARE      <- c(R, ln13, Y, "ghost.unnormalized.share")
+aglu.NAMES_LN3_LEAFGHOSTSHARE      <- c(R, ln13, "LandLeaf", Y, "ghost.unnormalized.share")
+aglu.NAMES_LN3_LEAFISGHOSTSHAREREL <- c(R, ln13, "LandLeaf", "is.ghost.share.relative")
+aglu.NAMES_LN3_HISTUNMGDALLOCATION <- c(R, ln13, "UnmanagedLandLeaf", Y, "allocation")
 aglu.NAMES_LN3_UNMGDALLOCATION     <- aglu.NAMES_LN3_HISTUNMGDALLOCATION
-aglu.NAMES_LN3_HISTMGDALLOCATION   <- c(R, "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandLeaf", Y, "allocation")
+aglu.NAMES_LN3_HISTMGDALLOCATION   <- c(R, ln13, "LandLeaf", Y, "allocation")
 aglu.NAMES_LN3_MGDALLOCATION       <- aglu.NAMES_LN3_HISTMGDALLOCATION
-aglu.NAMES_LN3_UNMGDCARBON         <- c(R, "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "UnmanagedLandLeaf", "hist.veg.carbon.density", "hist.soil.carbon.density",
+aglu.NAMES_LN3_UNMGDCARBON         <- c(R, ln13, "UnmanagedLandLeaf", "hist.veg.carbon.density", "hist.soil.carbon.density",
                                         "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density")
-aglu.NAMES_LN3_MGDCARBON           <- c(R, "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandLeaf", "hist.veg.carbon.density", "hist.soil.carbon.density",
+aglu.NAMES_LN3_MGDCARBON           <- c(R, ln13, "LandLeaf", "hist.veg.carbon.density", "hist.soil.carbon.density",
                                         "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density")
-aglu.NAMES_LN3_NEWTECH             <- c(R, "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandLeaf", "year.fillout", "isNewTechnology")
-aglu.NAMES_LN4_LOGIT               <- c(R, "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "logit.year.fillout", "logit.exponent")
-aglu.NAMES_LN4_LOGITTYPE           <- c(R, "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "logit.type")
-aglu.NAMES_LN4_HISTUNMGDALLOCATION <- c(R, "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "UnmanagedLandLeaf", Y, "allocation")
+aglu.NAMES_LN3_NEWTECH             <- c(R, ln13, "LandLeaf", "year.fillout", "isNewTechnology")
+aglu.NAMES_LN4_LOGIT               <- c(R, ln13, "LandNode4", "logit.year.fillout", "logit.exponent")
+aglu.NAMES_LN4_LOGITTYPE           <- c(R, ln13, "LandNode4", "logit.type")
+aglu.NAMES_LN4_HISTUNMGDALLOCATION <- c(R, ln13, "LandNode4", "UnmanagedLandLeaf", Y, "allocation")
 aglu.NAMES_LN4_UNMGDALLOCATION     <- aglu.NAMES_LN4_HISTUNMGDALLOCATION
-aglu.NAMES_LN4_HISTMGDALLOCATION   <- c(R, "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandLeaf", Y, "allocation")
+aglu.NAMES_LN4_HISTMGDALLOCATION   <- c(R, ln13, "LandNode4", "LandLeaf", Y, "allocation")
 aglu.NAMES_LN4_MGDALLOCATION       <- aglu.NAMES_LN4_HISTMGDALLOCATION
-aglu.NAMES_LN4_UNMGDCARBON         <- c(R, "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "UnmanagedLandLeaf", "hist.veg.carbon.density", "hist.soil.carbon.density",
+aglu.NAMES_LN4_UNMGDCARBON         <- c(R, ln13, "LandNode4", "UnmanagedLandLeaf", "hist.veg.carbon.density", "hist.soil.carbon.density",
                                         "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density")
-aglu.NAMES_LN4_MGDCARBON           <- c(R, "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandLeaf", "hist.veg.carbon.density", "hist.soil.carbon.density",
+aglu.NAMES_LN4_MGDCARBON           <- c(R, ln13, "LandNode4", "LandLeaf", "hist.veg.carbon.density", "hist.soil.carbon.density",
                                         "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density")
-aglu.NAMES_LN4_LEAFGHOSTSHARE	     <- c(R, "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandLeaf", Y, "ghost.unnormalized.share")
-aglu.NAMES_LN4_NODEGHOSTSHARE	     <- c(R, "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", Y, "ghost.unnormalized.share")
-aglu.NAMES_LN4_NODEISGHOSTSHAREREL <- c(R, "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "is.ghost.share.relative")
+aglu.NAMES_LN4_LEAFGHOSTSHARE	     <- c(R, ln13, "LandNode4", "LandLeaf", Y, "ghost.unnormalized.share")
+aglu.NAMES_LN4_NODEGHOSTSHARE	     <- c(R, ln13, "LandNode4", Y, "ghost.unnormalized.share")
+aglu.NAMES_LN4_NODEISGHOSTSHAREREL <- c(R, ln13, "LandNode4", "is.ghost.share.relative")
 
-aglu.NAMES_LN5_LOGIT               <- c(R, "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5", "logit.year.fillout", "logit.exponent")
-aglu.NAMES_LN5_LOGITTYPE           <- c(R, "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5", "logit.type")
-aglu.NAMES_LN5_HISTUNMGDALLOCATION <- c(R, "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5", "UnmanagedLandLeaf", Y, "allocation")
+aglu.NAMES_LN5_LOGIT               <- c(R, ln13, "LandNode4", "LandNode5", "logit.year.fillout", "logit.exponent")
+aglu.NAMES_LN5_LOGITTYPE           <- c(R, ln13, "LandNode4", "LandNode5", "logit.type")
+aglu.NAMES_LN5_HISTUNMGDALLOCATION <- c(R, ln13, "LandNode4", "LandNode5", "UnmanagedLandLeaf", Y, "allocation")
 aglu.NAMES_LN5_UNMGDALLOCATION     <- aglu.NAMES_LN5_HISTUNMGDALLOCATION
-aglu.NAMES_LN5_HISTMGDALLOCATION   <- c(R, "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5", "LandLeaf", Y, "allocation")
+aglu.NAMES_LN5_HISTMGDALLOCATION   <- c(R, ln13, "LandNode4", "LandNode5", "LandLeaf", Y, "allocation")
 aglu.NAMES_LN5_MGDALLOCATION       <- aglu.NAMES_LN5_HISTMGDALLOCATION
-aglu.NAMES_LN5_UNMGDCARBON         <- c(R, "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5", "UnmanagedLandLeaf", "hist.veg.carbon.density",
+aglu.NAMES_LN5_UNMGDCARBON         <- c(R, ln13, "LandNode4", "LandNode5", "UnmanagedLandLeaf", "hist.veg.carbon.density",
                                         "hist.soil.carbon.density", "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density")
-aglu.NAMES_LN5_MGDCARBON           <- c(R, "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5", "LandLeaf", "hist.veg.carbon.density", "hist.soil.carbon.density",
+aglu.NAMES_LN5_MGDCARBON           <- c(R, ln13, "LandNode4", "LandNode5", "LandLeaf", "hist.veg.carbon.density", "hist.soil.carbon.density",
                                         "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density")
-aglu.NAMES_LN5_LEAFGHOSTSHARE	     <- c(R, "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5", "LandLeaf", Y, "ghost.unnormalized.share")
-rm(input, R, Y)  # don't want these hanging around namespace
+aglu.NAMES_LN5_LEAFGHOSTSHARE	     <- c(R, ln13, "LandNode4", "LandNode5", "LandLeaf", Y, "ghost.unnormalized.share")
+
+rm(input, ln13, R, Y)  # don't want these hanging around namespace

@@ -1,14 +1,16 @@
 
-# ======================================================================
-# General behavior constants
+# General behavior constants ======================================================================
+
 OUTPUTS_DIR  <- "outputs/"
 XML_DIR      <- "xml/"
 COMMENT_CHAR <- "#"
 OLD_DATA_SYSTEM_BEHAVIOR <- TRUE
 YEAR_PATTERN <- "^(1|2)[0-9]{3}$"   # a 1 or 2 followed by three digits, and nothing else
 
-# ======================================================================
+
+# Flags ======================================================================
 # Flags used by chunks
+
 FLAG_INPUT_DATA <- "FLAG_INPUT_DATA"
 FLAG_LONG_YEAR_FORM  <- "FLAG_LONG_YEAR_FORM"
 FLAG_NO_OUTPUT  <- "FLAG_NO_OUTPUT"
@@ -18,8 +20,9 @@ FLAG_SUM_TEST   <- "FLAG_SUM_TEST"
 FLAG_PROTECT_FLOAT <- "FLAG_PROTECT_FLOAT"
 FLAG_XML <- "FLAG_XML"
 
-# ======================================================================
-# Time constants
+
+# Time constants======================================================================
+
 HISTORICAL_YEARS <- 1971:2010
 IMF_GDP_YEARS <- 2010:2020
 FUTURE_YEARS <- seq(2015, 2100, 5)
@@ -28,14 +31,18 @@ MODEL_YEARS <- c(BASE_YEARS, FUTURE_YEARS)
 SSP_FUTURE_YEARS <- c(2010, FUTURE_YEARS)
 GHG_CONTROL_READIN_YEAR <- 1975
 
-# ======================================================================
-# GCAM constants
+
+# GCAM constants ======================================================================
+
 gcam.USA_CODE <- 1
 gcam.LOGIT_TYPES <- c("relative-cost-logit", "absolute-cost-logit")
 gcam.EQUIV_TABLE <- "EQUIV_TABLE"
 
-# ======================================================================
-# aglu constants
+GCAM_REGION_ID <- "GCAM_region_ID"
+
+
+# AgLU constants ======================================================================
+
 AGLU_HISTORICAL_YEARS <- 1971:2010
 FAO_HISTORICAL_YEARS <- 1961:2011
 FAO_LDS_YEARS <- 1998:2002
@@ -95,15 +102,19 @@ aglu.DIGITS_CALOUTPUT <- 7 # production
 aglu.NO_AGLU_REGIONS <- "Taiwan"
 
 
-# ======================================================================
-# energy constants
+# Energy constants ======================================================================
 
 # At present the CO2 emissions inventory from CDIAC stops at 2009
 energy.CDIAC_CO2_HISTORICAL_YEARS <- HISTORICAL_YEARS[HISTORICAL_YEARS < 2010]
 
-## ======================================================================
-## Conversion constants.  The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
-## ======================================================================
+DEFAULT_ELECTRIC_EFFICIENCY <- 0.33
+
+ELECTRICITY_INPUT_FUELS<- c("biomass", "coal", "gas", "refined liquids")
+
+
+# Conversion constants ======================================================================
+# The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
+
 # Mass
 CONV_BIL_MIL <- 1000
 CONV_MIL_BIL <- 1 / CONV_BIL_MIL
@@ -135,18 +146,14 @@ CONV_M3_BM3 <- 1e-09 # Cubic meters (m3) to billion cubic meters (bm3)
 CONV_MILLION_M3_KM3 <- 1e-03
 CONV_M2_ACR <- 0.0002471058
 
-# ======================================================================
-# Driver constants
+# Driver constants ======================================================================
+
 driver.MAKE <- "MAKE"
 driver.DECLARE_OUTPUTS <- "DECLARE_OUTPUTS"
 driver.DECLARE_INPUTS <- "DECLARE_INPUTS"
 
-# ======================================================================
-# Column names (?)
-GCAM_REGION_ID <- "GCAM_region_ID"
 
-# ======================================================================
-# Modeltime constants
+# Modeltime constants ======================================================================
 
 # MAGICC model assumptions
 modeltime.MAGICC_LAST_HISTORICAL_YEAR <- 2005
@@ -158,16 +165,8 @@ modeltime.HECTOR_END_YEAR <- 2100
 modeltime.HECTOR_EMISSIONS_YEAR <- 2005
 modeltime.HECTOR_INI_FILE <- "../input/climate/hector-gcam.ini"
 
-# ======================================================================
 
-# Set a default electric efficiency
-DEFAULT_ELECTRIC_EFFICIENCY <- 0.33
-
-# ======================================================================
-ELECTRICITY_INPUT_FUELS<- c("biomass", "coal", "gas", "refined liquids")
-
-# ======================================================================
-# socioeconomics constants
+# Socioeconomics constants ======================================================================
 
 # Population years - note that these sequences shouldn't have any overlap,
 # and should contain all historical years used by other modules
@@ -187,8 +186,8 @@ socioeconomics.POP_DIGITS <- 0
 socioeconomics.DEFAULT_LABORFORCE <- 0.5
 socioeconomics.LABOR_PRODUCTIVITY_DIGITS <- 5
 
-# ======================================================================
-# water constants
+
+# Water constants ======================================================================
 
 IRRIGATION <- "Irrigation"
 MAPPED_WATER_TYPES <- c("water consumption", "water withdrawals")
@@ -197,8 +196,8 @@ names(MAPPED_WATER_TYPES_SHORT) <- MAPPED_WATER_TYPES
 DEFAULT_UNLIMITED_WATER_PRICE <- 0
 DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.001
 
-# ======================================================================
-# emissions constants
+
+# Emissions constants ======================================================================
 
 emissions.EPA_HISTORICAL_YEARS <- 1971:2002
 emissions.TST_TO_TG <- 0.000907 # Conversion from thousand short tons to Tg
