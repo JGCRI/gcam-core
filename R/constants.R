@@ -83,6 +83,18 @@ MAX_HA_TO_CROPLAND <- 3
 # Yield multiplier that goes from the observed yield to the "high" and "low" yields: observed plus or minus observed times this number
 MGMT_YIELD_ADJ <- 0.1
 
+# GDP per capita thresholds for SSP4 region groupings
+aglu.HIGH_GROWTH_PCGDP <- 12.275
+aglu.LOW_GROWTH_PCGDP  <- 2.75
+
+# Number of digits for model input data
+aglu.DIGITS_CALPRICE  <- 4 # prices and costs
+aglu.DIGITS_CALOUTPUT <- 7 # production
+
+# Regions in which agriculture and land use are not modeled
+aglu.NO_AGLU_REGIONS <- "Taiwan"
+
+
 # ======================================================================
 # energy constants
 
@@ -148,12 +160,11 @@ modeltime.HECTOR_INI_FILE <- "../input/climate/hector-gcam.ini"
 
 # ======================================================================
 
-#Set a default electric efficiency
+# Set a default electric efficiency
 DEFAULT_ELECTRIC_EFFICIENCY <- 0.33
 
 # ======================================================================
-ELECTRICITY_INPUT_FUELS<- c( "biomass", "coal", "gas", "refined liquids" )
-STUBTECHYR <- c( "GCAM_region_ID", "supplysector", "subsector", "stub.technology", "xyear" )
+ELECTRICITY_INPUT_FUELS<- c("biomass", "coal", "gas", "refined liquids")
 
 # ======================================================================
 # socioeconomics constants
@@ -196,6 +207,6 @@ emissions.NH3_EXTRA_YEARS <- 1971:1989
 emissions.EDGAR_YEARS <- 1971:2008
 emissions.EDGAR_HISTORICAL <- 1971:2008
 emissions.EPA_MACC_YEAR <- 2030  # Must be either 2020 or 2030
-emissions.MAC_TAXES <- c( 0, 5, 10, 15, 32, 66, 129, 243, 486, 1093 ) # Range of costs in 1990 USD
+emissions.MAC_TAXES <- c(0, 5, 10, 15, 32, 66, 129, 243, 486, 1093) # Range of costs in 1990 USD
 emissions.CONV_C_CO2 <- 44 / 12 # Convert Carbon to CO2
 emissions.DEFOREST_COEF_YEARS <- c(2000, 2005)
