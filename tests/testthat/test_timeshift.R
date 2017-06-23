@@ -11,8 +11,6 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
 
   test_that("chunks handle timeshift", {
 
-    skip_on_travis()
-
     # Move the historical/future division back by five years
     hyr <- HISTORICAL_YEARS
     HISTORICAL_YEARS <<- 1971:2005       # normally 1971:2010
