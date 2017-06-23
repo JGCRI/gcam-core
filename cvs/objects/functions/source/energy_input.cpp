@@ -347,7 +347,7 @@ double EnergyInput::getPhysicalDemand( const int aPeriod ) const {
 }
 
 double EnergyInput::getCarbonContent( const int aPeriod ) const {
-    return 0.0;//mCarbonContent[ aPeriod ];
+    return mPhysicalDemand[ aPeriod ] * mCO2Coefficient;
 }
 
 void EnergyInput::setPhysicalDemand( double aPhysicalDemand,
@@ -358,7 +358,6 @@ void EnergyInput::setPhysicalDemand( double aPhysicalDemand,
     mCachedMarket->addToDemand( mName, mMarketName,
                                        mPhysicalDemand[ aPeriod ],
                                        aPeriod, true );
-    //mCarbonContent[ aPeriod ].set( aPhysicalDemand * mCO2Coefficient );
 }
 
 double EnergyInput::getCoefficient( const int aPeriod ) const {

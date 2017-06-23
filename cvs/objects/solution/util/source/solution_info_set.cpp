@@ -636,8 +636,8 @@ void SolutionInfoSet::findAndPrintSD( World* aWorld, Marketplace* aMarketplace, 
         if( solvable[ i ].isSolved() ){
             continue;
         }
-        SupplyDemandCurve sdCurve = solvable[ i ].createSDCurve();
-        sdCurve.calculatePoints( numPointsForSD, aWorld, aMarketplace, aPeriod );
+        SupplyDemandCurve sdCurve( i, solvable[ i ].getName() );
+        sdCurve.calculatePoints( numPointsForSD, *this, aWorld, aMarketplace, aPeriod );
         sdCurve.print( aLogger );
     }
 }

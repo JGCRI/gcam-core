@@ -47,11 +47,13 @@
 
 #include <functional>
 #include <vector>
+#include <string>
 
 class ILogger;
 class Market;
 class World;
-class Marketplace; 
+class Marketplace;
+class SolutionInfoSet;
 
 /*!
 * \ingroup Objects
@@ -61,13 +63,18 @@ class Marketplace;
 
 class SupplyDemandCurve {
 public:
-   SupplyDemandCurve( Market* marketIn );
-   ~SupplyDemandCurve();
-   void calculatePoints( const int numPoints, World* world, Marketplace* marketplace, const int period );
+    SupplyDemandCurve( int aMarketNumber, const std::string& aMarketName );
+    ~SupplyDemandCurve();
+    void calculatePoints( const int aNumPoints, SolutionInfoSet& aSolnSet, World* aWorld,
+                          Marketplace* aMarketplace, const int aPeriod );
    void print( ILogger& aSDLog ) const;
 
 private:
-   Market* market; //!< Pointer to the market which the curve is calculating for.
+    //! Index to the market which the curve is calculating for.
+    int mMarketNumber;
+    
+    //! The name of the market which the curve is calculating for.
+    const std::string& mMarketName;
 
 /*!
 * \ingroup Objects
@@ -79,7 +86,7 @@ class SupplyDemandPoint
 {
    
 public:
-   SupplyDemandPoint( const double priceIn = 0, const double demandIn = 0, const double supplyIn = 0 );
+   SupplyDemandPoint( const double aPrice, const double aDemand, const double aSupply, const double aFx );
    double getPrice() const;
    void print( ILogger& aSDLog ) const;
    
@@ -97,12 +104,13 @@ public:
    };
 
    private:
-      double price; //!< Fixed Price
-      double demand; //!< Demand at the price.
-      double supply; //!< Supply at the price. 
+      double mPrice; //!< Fixed Price
+      double mDemand; //!< Demand at the price.
+      double mSupply; //!< Supply at the price.
+      double mFx; //!< F(x) at the price.
    };
    
-   std::vector<SupplyDemandPoint*> points; //!< Vector of points. 
+   std::vector<SupplyDemandPoint*> mPoints; //!< Vector of points.
 
 };
 

@@ -56,7 +56,6 @@
 class Market;
 class IInfo;
 class SolutionInfoSet;
-class SupplyDemandCurve;
 class IActivity;
 namespace objects {
     class Atom;
@@ -139,7 +138,6 @@ public:
 #if GCAM_PARALLEL_ENABLED
     GcamFlowGraph* getFlowGraph() const;
 #endif
-    SupplyDemandCurve createSDCurve();
     void printDerivatives( std::ostream& aOut ) const;
     /*!
     * \brief Binary function used to order SolutionInfo* pointers by decreasing relative excess demand. 

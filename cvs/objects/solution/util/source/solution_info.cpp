@@ -46,7 +46,6 @@
 #include "solution/util/include/solution_info_set.h"
 #include "solution/util/include/solver_library.h"
 #include "marketplace/include/market.h"
-#include "util/base/include/supply_demand_curve.h"
 #include "util/logger/include/ilogger.h"
 #include "containers/include/info.h"
 
@@ -545,10 +544,6 @@ void SolutionInfo::print( ostream& aOut ) const {
     aOut.width( 10 ); aOut << getTypeName() << ", ";
     aOut.width( 36 ); aOut << getName() << ", ";
     aOut.setf(ios_base::fmtflags( 0 ),ios_base::floatfield); //reset to default
-}
-
-SupplyDemandCurve SolutionInfo::createSDCurve(){
-    return SupplyDemandCurve( linkedMarket );
 }
 
 void SolutionInfo::printDerivatives( ostream& aOut ) const {

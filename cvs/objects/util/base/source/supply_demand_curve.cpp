@@ -48,19 +48,24 @@
 #include "util/logger/include/ilogger.h"
 #include "containers/include/world.h"
 #include "marketplace/include/marketplace.h"
+#include "solution/util/include/edfun.hpp"
+#include "containers/include/scenario.h"
+#include "util/base/include/manage_state_variables.hpp"
+
+extern Scenario* scenario;
 
 using namespace std;
 
 //! Constructor
-SupplyDemandCurve::SupplyDemandCurve( Market* marketIn ) {
-    // Make sure the pointer is non-null.
-    assert( marketIn );
-    market = marketIn;
+SupplyDemandCurve::SupplyDemandCurve( int aMarketNumber, const string& aMarketName ):
+mMarketNumber( aMarketNumber ),
+mMarketName(aMarketName )
+{
 }
 
 //! Destructor
 SupplyDemandCurve::~SupplyDemandCurve() {
-    for ( vector<SupplyDemandPoint*>::iterator i = points.begin(); i != points.end(); i++ ) {
+    for ( vector<SupplyDemandPoint*>::iterator i = mPoints.begin(); i != mPoints.end(); i++ ) {
         delete *i;
     }
 }
@@ -73,21 +78,23 @@ SupplyDemandCurve::~SupplyDemandCurve() {
 * demand for the market. It saves that point for printing later, and continues to perform this process for each price.
 * Finally it restores the original market information.
 *
-* \param numPoints The number of points to calculate.
-* \param world The World object to use for World::calc
-* \param marketplace The marketplace to use to store and restore information.
-* \param period The period to perform the calculations on.
-* \todo It would be good if this used a similar logic to SolverLibrary::derivatives to save time. 
+* \param aNumPoints The number of points to calculate.
+* \param aSolnSet The solution set to interact with markets through.
+* \param aWorld The World object to use for World::calc
+* \param aMarketplace The marketplace to use to store and restore information.
+* \param aPeriod The period to perform the calculations on.
 * \todo Un-hardcode the prices. 
 */
 
-void SupplyDemandCurve::calculatePoints( const int numPoints, World* world, Marketplace* marketplace, const int period ) {
+void SupplyDemandCurve::calculatePoints( const int aNumPoints, SolutionInfoSet& aSolnSet, World* aWorld,
+                                         Marketplace* aMarketplace, const int aPeriod )
+{
     vector<double> priceMults;
 
     // Determine price ratios.
-    const int middle = static_cast<int>( floor( double( numPoints ) / double( 2 ) ) );
+    const int middle = static_cast<int>( floor( double( aNumPoints ) / double( 2 ) ) );
 
-    for( int pointNumber = 0; pointNumber < numPoints; pointNumber++ ) {
+    for( int pointNumber = 0; pointNumber < aNumPoints; pointNumber++ ) {
 
         if( pointNumber < middle ) {
             priceMults.push_back( 1 - double( 1 ) / double( middle - abs( middle - pointNumber ) + 2 ) );
@@ -99,39 +106,44 @@ void SupplyDemandCurve::calculatePoints( const int numPoints, World* world, Mark
             priceMults.push_back( 1 + double( 1 ) / double( middle - abs( middle - pointNumber ) + 2 ) );
         }
     }
+    
+    size_t nsolv = aSolnSet.getNumSolvable();
+    using UBVECTOR = boost::numeric::ublas::vector<double>;
+    UBVECTOR x( nsolv ), fx( nsolv );
+    
+    for( size_t i = 0; i < nsolv; ++i ) {
+        x[i] = aSolnSet.getSolvable( i ).getPrice();
+    }
+    
+    // double basePrice = x[ mMarketNumber ];
 
-    /* TODO!! switch this to use EDFun
-    // Store the market info.
-    marketplace->storeinfo( period );
-
-    // get the base price of the market.
-    // const double basePrice = market->getRawPrice();
-
-    // Save the original point as price 1.
-    // ( *iter )->createSDPoint();
+    // This is the closure that will evaluate the ED function
+    LogEDFun F(aSolnSet, aWorld, aMarketplace, aPeriod, false);
+    F.scaleInitInputs( x );
+    
+    // Call F( x ), store the result in fx
+    F(x,fx);
+    // Have the state manage save the current state as a "clean" state.
+    scenario->getManageStateVariables()->setPartialDeriv(true);
 
     // iterate through the points and determine supply and demand.
-    for ( int pointNumber2 = 0; pointNumber2 < numPoints; pointNumber2++ ) {
+    for ( int pointNumber2 = 0; pointNumber2 < aNumPoints; pointNumber2++ ) {
+        
+        F.partial(mMarketNumber);
+        // Note x is a scaled price
+        // x[ mMarketNumber ] = priceMults[ pointNumber2 ] * basePrice;
+        x[ mMarketNumber ] = pointNumber2 * ( double( 10 ) / double( aNumPoints - 1 ) );
+        F(x, fx, mMarketNumber);
 
-        // clear demands and supplies.
-        marketplace->nullSuppliesAndDemands( period );
-
-        // set the price to the current point.
-        // market->setRawPrice( priceMults[ pointNumber2 ] * basePrice );
-        market->setRawPrice( pointNumber2 * ( double( 10 ) / double( numPoints - 1 ) ) );
-
-        // calculate the world.
-        world->calc( period );
-
-        points.push_back( new SupplyDemandPoint(  market->getRawPrice(), market->getSolverDemand(), market->getSolverSupply() ) );
+        mPoints.push_back( new SupplyDemandPoint( aSolnSet.getSolvable( mMarketNumber ).getPrice(),
+                                                  aSolnSet.getSolvable( mMarketNumber ).getDemand(),
+                                                  aSolnSet.getSolvable( mMarketNumber ).getSupply(),
+                                                  fx[ mMarketNumber ] ) );
 
     } // Completed iterating through all price points.
 
-    marketplace->restoreinfo( period );
-    marketplace->nullSuppliesAndDemands( period );
-
-    // Call world.calc a final time to restore information for summary.
-    world->calc( period );*/
+    // restore state information for summary.
+    F.partial(-1);
 }
 
 /*! \brief Print the supply demand curve.
@@ -143,12 +155,12 @@ void SupplyDemandCurve::calculatePoints( const int numPoints, World* world, Mark
 * \param sdLog Logger to print the points to.
 */
 void SupplyDemandCurve::print( ILogger& aSDLog ) const {
-    aSDLog << "Supply and Demand curves for: " << market->getName() << endl;
-    aSDLog << "Price,Demand,Supply," << endl;
+    aSDLog << "Supply and Demand curves for: " << mMarketName << endl;
+    aSDLog << "Price,Demand,Supply,Fx" << endl;
 
     // Create a copy of the points vector so that we can sort it while keeping the print function constant.
     // Since the vector contains pointers to SupplyDemandPoints, this is relatively inexpensive.
-    vector<SupplyDemandPoint*> pointsCopy( points );
+    vector<SupplyDemandPoint*> pointsCopy( mPoints );
 
     // Sort the SupplyDemandPoint object pointers in the pointsCopy vector by increasing price by using the LesserPrice binary operator. 
     sort( pointsCopy.begin(), pointsCopy.end(), SupplyDemandPoint::LesserPrice() );
@@ -160,8 +172,9 @@ void SupplyDemandCurve::print( ILogger& aSDLog ) const {
 }
 
 //! Constructor
-SupplyDemandCurve::SupplyDemandPoint::SupplyDemandPoint( const double priceIn, const double demandIn, const double supplyIn ) 
-: price( priceIn ), demand( demandIn ), supply( supplyIn ){
+SupplyDemandCurve::SupplyDemandPoint::SupplyDemandPoint( const double aPrice, const double aDemand, const double aSupply, const double aFx )
+: mPrice( aPrice ), mDemand( aDemand ), mSupply( aSupply ), mFx( aFx )
+{
 }
 
 /*! \brief Get the price.
@@ -171,7 +184,7 @@ SupplyDemandCurve::SupplyDemandPoint::SupplyDemandPoint( const double priceIn, c
 * \return The price saved within the point.
 */
 double SupplyDemandCurve::SupplyDemandPoint::getPrice() const {
-    return price;
+    return mPrice;
 }
 
 /*! \brief Print the point in a csv format.
@@ -181,6 +194,6 @@ double SupplyDemandCurve::SupplyDemandPoint::getPrice() const {
 * \param sdLog The Logger to print to.
 */
 void SupplyDemandCurve::SupplyDemandPoint::print( ILogger& aSDLog ) const {
-    aSDLog << price << "," << demand << "," << supply << endl;
+    aSDLog << mPrice << "," << mDemand << "," << mSupply << "," << mFx << endl;
 }
 

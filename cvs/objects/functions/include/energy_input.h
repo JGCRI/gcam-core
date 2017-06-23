@@ -201,9 +201,6 @@ protected:
         //! Physical Demand.
         DEFINE_VARIABLE( ARRAY | STATE, "physical-demand", mPhysicalDemand, objects::PeriodVector<Value> ),
 
-        //! Carbon content of input by period.
-        //DEFINE_VARIABLE( ARRAY, "carbon-content", mCarbonContent, objects::PeriodVector<Value> ),
-
         //! Current coefficient after adjustments have been made by the technology's
         //! capture component.
         DEFINE_VARIABLE( ARRAY | STATE, "current-coef", mAdjustedCoefficients, objects::PeriodVector<Value> )
