@@ -18,7 +18,7 @@ the generated outputs: \code{L241.StubAgTradeCoeff_food}, \code{L241.StubAgTrade
 original data system was \code{L241.trade_input.R} (aglu level2).
 }
 \description{
-Briefly describe what this chunk does.
+Build datasets for ssp4 agricultural trade.
 }
 \details{
 Describe in detail what this chunk does.

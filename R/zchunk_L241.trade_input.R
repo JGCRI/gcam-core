@@ -1,6 +1,6 @@
 #' module_aglu_L241.trade_input
 #'
-#' Briefly describe what this chunk does.
+#' Build datasets for ssp4 agricultural trade.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -13,7 +13,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author BBL June 2017
-#' @export
 module_aglu_L241.trade_input <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
@@ -31,6 +30,9 @@ module_aglu_L241.trade_input <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
+
+    scenario <- year <- GCAM_region_ID <- region <- value <- GCAM_commodity <- technology
+      supplysector <- res.secondary.output <- market <- output.ratio <- NULL # silence package check notes
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
@@ -68,11 +70,11 @@ module_aglu_L241.trade_input <- function(command, ...) {
     aglu_demand_calyears <- HISTORICAL_YEARS[HISTORICAL_YEARS %in% MODEL_YEARS]
     aglu_demand_futureyears <- MODEL_YEARS[!MODEL_YEARS %in% aglu_demand_calyears]
     L101.ag_kcalg_R_C_Y %>%
-      # might need to interpolate here
+      filter(year %in% aglu_demand_calyears) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       filter(year == max(aglu_demand_calyears)) %>%
       select(region, GCAM_commodity, value) ->
-      L241.ag_kcalg_R_C_Yf.melt
+      L241.ag_kcalg_R_C_Yf.mlt
 
     # Fraction of food that should be produced locally
     LOCAL_FOOD_FRACT <- 0.8
@@ -80,9 +82,10 @@ module_aglu_L241.trade_input <- function(command, ...) {
     # Coefficient for ag_trade of food crops (incl secondary products) (61-69)
     A_demand_technology_R %>%
       filter(supplysector == "FoodDemand_Crops") %>%
-      left_join_error_no_match(L241.ag_kcalg_R_C_Yf.melt, by = c("region" = "region", "technology" = "GCAM_commodity")) %>%
+      left_join_error_no_match(L241.ag_kcalg_R_C_Yf.mlt, by = c("region" = "region", "technology" = "GCAM_commodity")) %>%
       mutate(coefficient = LOCAL_FOOD_FRACT / round(value, aglu.DIGITS_CALOUTPUT),
              minicam.energy.input = "ag_trade") %>%
+      select(-value) %>%
       repeat_add_columns(tibble(year = aglu_demand_futureyears)) %>%
       select(one_of(aglu.NAMES_STUBTECHCOEF_NM)) ->
       L241.StubAgTradeCoeff_food
@@ -108,6 +111,7 @@ module_aglu_L241.trade_input <- function(command, ...) {
     # Output coefficient for RES ag_trade of food crops (incl secondary products) (85-90)
     L2012.AgProduction_ag_irr_mgmt %>%
       filter(year == max(BASE_YEARS)) %>%
+      select(-year) %>%
       repeat_add_columns(tibble(year = aglu_demand_futureyears)) %>%
       mutate(res.secondary.output = "ag_trade",
              output.ratio = 1) %>%
@@ -141,11 +145,7 @@ module_aglu_L241.trade_input <- function(command, ...) {
       add_legacy_name("L241.StubAgTradeCoeff_food") %>%
       add_precursors("common/GCAM_region_names",
                      "aglu/A_demand_technology",
-                     "aglu/A_an_input_technology",
-                     "L101.ag_kcalg_R_C_Y",
-                     "temp-data-inject/L2012.AgProduction_ag_irr_mgmt",
-                     "L102.pcgdp_thous90USD_Scen_R_Y") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L101.ag_kcalg_R_C_Y") ->
       L241.StubAgTradeCoeff_food
 
     L241.StubAgTradeCoeff_nonfood %>%
@@ -154,8 +154,7 @@ module_aglu_L241.trade_input <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L241.StubAgTradeCoeff_nonfood") %>%
-      same_precursors_as(L241.StubAgTradeCoeff_food) %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      same_precursors_as(L241.StubAgTradeCoeff_food) ->
       L241.StubAgTradeCoeff_nonfood
 
     L241.StubAgTradeCoeff_feed %>%
@@ -164,8 +163,7 @@ module_aglu_L241.trade_input <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L241.StubAgTradeCoeff_feed") %>%
-      same_precursors_as(L241.StubAgTradeCoeff_food) %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("aglu/A_an_input_technology") ->
       L241.StubAgTradeCoeff_feed
 
     L241.AgProdTech_RES_output %>%
@@ -174,8 +172,7 @@ module_aglu_L241.trade_input <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L241.AgProdTech_RES_output") %>%
-      same_precursors_as(L241.StubAgTradeCoeff_food) %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("temp-data-inject/L2012.AgProduction_ag_irr_mgmt") ->
       L241.AgProdTech_RES_output
 
     L241.RES_Market %>%
@@ -184,8 +181,8 @@ module_aglu_L241.trade_input <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L241.RES_Market") %>%
-      same_precursors_as(L241.StubAgTradeCoeff_food) %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/GCAM_region_names",
+                     "L102.pcgdp_thous90USD_Scen_R_Y") ->
       L241.RES_Market
 
     return_data(L241.StubAgTradeCoeff_food, L241.StubAgTradeCoeff_nonfood,
