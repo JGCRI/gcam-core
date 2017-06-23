@@ -192,9 +192,6 @@ protected:
         //! Non-energy cost penalty.
         DEFINE_VARIABLE( SIMPLE, "non-energy-penalty", mNonEnergyCostPenalty, double )
     )
-
-    //! Stored emissions coefficient for the fuel.
-    Value mCachedFuelCoef;
 };
 
 #endif // _POWER_PLANT_CAPTURE_COMPONENT_H_

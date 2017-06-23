@@ -199,9 +199,6 @@ void PowerPlantCaptureComponent::initCalc( const string& aRegionName,
                                            const string& aFuelName,
                                            const int aPeriod )
 {
-    // Calculate the emissions coefficient of the fuel.
-    const IInfo* fuelInfo = scenario->getMarketplace()->getMarketInfo( aFuelName, aRegionName, aPeriod, true );
-    mCachedFuelCoef = fuelInfo ? fuelInfo->getDouble( "CO2Coef", true ) : 0;
 }
 
 /**
@@ -262,18 +259,19 @@ double PowerPlantCaptureComponent::calcSequesteredAmount( const string& aRegionN
                                                           const int aPeriod )
 {
     // Calculate the amount.
-    mSequesteredAmount[ aPeriod ] = mRemoveFraction * aTotalEmissions;
+    // Note the remove fraction is only greater than zero if the current GHG matches
+    // the target gas of this capture component.
+    double sequestered = getRemoveFraction( aGHGName ) * aTotalEmissions;
     
     // Add the demand to the marketplace.
-    if( mSequesteredAmount[ aPeriod ] > 0 ){
+    if( sequestered > 0 ){
+        mSequesteredAmount[ aPeriod ] = sequestered;
         // set sequestered amount as demand side of carbon storage market
         Marketplace* marketplace = scenario->getMarketplace();
-        if( aGHGName == mTargetGas ){
-            marketplace->addToDemand( mStorageMarket, aRegionName, mSequesteredAmount[ aPeriod ],
-                aPeriod, false );
-        }
+        marketplace->addToDemand( mStorageMarket, aRegionName, mSequesteredAmount[ aPeriod ],
+            aPeriod, false );
     }
-    return mSequesteredAmount[ aPeriod ];
+    return sequestered;
 }
 
 /**
@@ -287,7 +285,7 @@ double PowerPlantCaptureComponent::getSequesteredAmount( const string& aGHGName,
                                                          const int aPeriod ) const 
 {
     // Only return emissions if the type of the sequestration equals is geologic.
-    if( aGetGeologic ){
+    if( aGetGeologic && aGHGName == mTargetGas ){
         return mSequesteredAmount[ aPeriod ];
     }
     return 0;

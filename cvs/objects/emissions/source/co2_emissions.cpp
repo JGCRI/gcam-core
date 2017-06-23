@@ -249,10 +249,10 @@ void CO2Emissions::calcEmission( const std::string& aRegionName,
     // Calculate sequestered emissions if there is a sequestration device
     // and subtract from total emissions.
     if( aSequestrationDevice ){
-        mEmissionsSequestered[ aPeriod ] = aSequestrationDevice->calcSequesteredAmount( 
+        double emissionSequestered = aSequestrationDevice->calcSequesteredAmount(
                                                aRegionName, getName(), totalEmissions, aPeriod );
 
-        totalEmissions -= mEmissionsSequestered[ aPeriod ];
+        totalEmissions -= emissionSequestered;
     }
 
 

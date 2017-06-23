@@ -172,8 +172,6 @@ public:
                                const int aPeriod ) = 0;
     
     double getEmission( const int aPeriod ) const;
-    
-    double getEmissionsSequestered( const int aPeriod ) const;
 
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     
@@ -212,13 +210,7 @@ protected:
         //! TODO: These are sized to store emissions for all periods however only
         //!       a fraction of that will actually be used (depending on the technology
         //!       vintage and lifetime.
-        DEFINE_VARIABLE( ARRAY | STATE, "emissions", mEmissions, objects::PeriodVector<Value> ),
-
-        //! Emissions sequestered by a ICaptureComponent
-        //! TODO: These are sized to store emissions for all periods however only
-        //!       a fraction of that will actually be used (depending on the technology
-        //!       vintage and lifetime.
-        DEFINE_VARIABLE( ARRAY, "emissions-sequestered", mEmissionsSequestered, objects::PeriodVector<double> )
+        DEFINE_VARIABLE( ARRAY | STATE, "emissions", mEmissions, objects::PeriodVector<Value> )
     )
     
     //! Pre-located market which has been cached from the marketplace to get the price

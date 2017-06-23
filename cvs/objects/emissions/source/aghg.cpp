@@ -131,7 +131,6 @@ void AGHG::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
 
     // write xml for data members
     XMLWriteElement( mEmissions[ aPeriod ], "emission", aOut, aTabs );
-    XMLWriteElement( mEmissionsSequestered[ aPeriod ], "emissions-sequestered", aOut, aTabs );
 
     toDebugXMLDerived( aPeriod, aOut, aTabs );
     // done writing xml for data members.
@@ -271,17 +270,6 @@ double AGHG::getGHGValue( const IOutput* aOutput, const string& aRegionName,
 double AGHG::getEmission( const int aPeriod ) const {
     assert( aPeriod < static_cast<int>( mEmissions.size() ) );
     return mEmissions[ aPeriod ];
-}
-
-/*!
- * \brief Returns the sequestered amount of GHG gas.
- * \param aPeriod Period for sequestered amount.
- * \return Sequestered amount of GHG gas.
- * \author Sonny Kim
- */
-double AGHG::getEmissionsSequestered( const int aPeriod ) const {
-    assert( aPeriod < static_cast<int>( mEmissionsSequestered.size() ) );
-    return mEmissionsSequestered[ aPeriod ];
 }
 
 /*!

@@ -355,7 +355,6 @@ void NonCO2Emissions::calcEmission( const string& aRegionName,
     if( aSequestrationDevice ) {
         double emissionsSequestered = aSequestrationDevice->calcSequesteredAmount(
            aRegionName, getName(), totalEmissions, aPeriod );
-        mEmissionsSequestered[ aPeriod ] = emissionsSequestered;
         totalEmissions -= emissionsSequestered;
     }
 

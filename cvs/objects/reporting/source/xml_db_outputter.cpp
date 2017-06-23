@@ -57,6 +57,7 @@
 #include "sectors/include/subsector.h"
 #include "technologies/include/technology.h"
 #include "emissions/include/aghg.h"
+#include "technologies/include/icapture_component.h"
 #include "util/base/include/model_time.h"
 #include "containers/include/output_meta_data.h"
 #include "marketplace/include/marketplace.h"
@@ -1115,8 +1116,12 @@ void XMLDBOutputter::startVisitGHG( const AGHG* aGHG, const int aPeriod ){
                 *childBuffer, mTabs.get(), attrs );
         }
 
-        // Write sequestered amount of GHG emissions .
-        currEmission = aGHG->getEmissionsSequestered( i );
+        // Write sequestered amount of GHG emissions.
+        // TODO: Note replicating old behavior of including geologic and feedstock
+        // sequestration but is that what we really wanted in the first place?
+        currEmission = mCurrentTechnology && mCurrentTechnology->mCaptureComponent ?
+            mCurrentTechnology->mCaptureComponent->getSequesteredAmount( aGHG->getName(), true, i ) +
+            mCurrentTechnology->mCaptureComponent->getSequesteredAmount( aGHG->getName(), false, i ) : 0.0;
         if( !objects::isEqual<double>( currEmission, 0.0 ) ) {
             XMLWriteElementWithAttributes( currEmission, "emissions-sequestered",
                 *childBuffer, mTabs.get(), attrs );
