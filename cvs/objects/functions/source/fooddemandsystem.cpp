@@ -82,18 +82,30 @@ namespace {
     // absorbed into Pm during the fitting process.
     const double psscl = 100.0;            //!< Scale factor for staple prices
     const double pnscl = 20.0;             //!< Scale factor for nonstaple prices
+    const double price_min = 1.0e-6;       //!< minimum price of food types.
     const std::string food_demand_unit_str = "KCal/(person-day)"; 
 }
 
 
-// Price conversion factor.  Input prices are in 1975$ per Mcal-year.
-// Convert to 2005$ per Mcal-day (these are thermodynamic calories, so
-// 1 Mcal is 1000 dietary Calories.)
+// Price conversion factor.  Input prices are in 1975$ per Mcal.
+// The price units in the food demand model are kind of a mess.  Price
+// * Quantity should be in units of thousands of dollars per year.
+// Since Quantity is in Mcal/day (and we don't want to convert it to
+// Mcal/yr), that means we hae to absorb the 365 day/year conversion
+// factor into the prices.
 const double FoodDemandSystem::mprice_conversion_fac =
-    1.0 / 365.0 / FunctionUtils::DEFLATOR_1975_PER_DEFLATOR_2005();
+    0.365 / FunctionUtils::DEFLATOR_1975_PER_DEFLATOR_2005();
 
-// Quantity conversion factor.  Output quantities are in Mcal/day (per
-// capita).  We need to convert to Pcal/year (also per capita).
+// Quantity conversion factor on output.  Output quantities are in
+// Mcal/day (per capita).  We need to convert to Pcal/year (also per
+// capita).  This factor will be applied just before output.
+// Importantly, it will be applied *after* the budget fraction is
+// calculated.  In light of this, one might wonder why we didn't just
+// work in converted units all the way through.  It's because the food
+// demand model parameters were calibrated using *these* units, and
+// rejiggering to conform to GCAM unit conventions is a bit of a
+// pain.  Converting on input and again on output seems like the
+// least bad solution.
 const double FoodDemandSystem::mqty_conversion_fac = 365.0 * 1e-9;
 
 void FoodDemandSystem::calcDemand(
@@ -107,6 +119,8 @@ void FoodDemandSystem::calcDemand(
     std::vector<double> prices(aprices);
     for(unsigned i=0; i<aprices.size(); ++i) {
         prices[i] *= mprice_conversion_fac;
+        if(prices[i] < price_min) // protect against NaN values below
+            prices[i] = price_min;
     }
     
     // get parameters into more convenient form
@@ -177,12 +191,6 @@ void FoodDemandSystem::calcDemand(
 
     setActualBudgetFrac( aRegionName, aPeriod, 0, alphas_actual);
     setActualBudgetFrac( aRegionName, aPeriod, 1, alphan_actual);
-
-    // Convert demand output units from thousands of dietary calories per
-    // day to Pcal (1e15 thermodynamic calories) per year.
-    double fac = 1e3 / 1e15 * 365;
-    Qs *= fac;
-    Qn *= fac;
 
     // Set the primary outputs of the demand system
     aDemandOutput[0] = Qs*mqty_conversion_fac;
@@ -333,8 +341,10 @@ double FoodDemandSystem::getTrialBudgetFrac( const std::string &aRegion, int aPe
                                                 aPeriod );
 
     // transform the value from the trial value market (-infinity, infinity) to
-    // (0,1). 
-    return 0.5 * ( 1 + tanh(param) );
+    // (0,1).
+    double bfrac = 0.5 * ( 1 + tanh(param) );
+
+    return bfrac;
 }
 
 
@@ -342,11 +352,18 @@ void FoodDemandSystem::setActualBudgetFrac( const std::string &aRegion, int aPer
                                             int acomp, double alpha ) const
 {
     // transform budget fraction from (0,1) to (-infinity, infinity)
-    double param = atanh( 2.0*alpha - 1 );
-
+    double param;
+    if( alpha < std::numeric_limits<double>::min() )
+        param = std::numeric_limits<double>::lowest();
+    else if( alpha >= 1.0) 
+        param = std::numeric_limits<double>::max();
+    else 
+        param = atanh( 2.0*alpha - 1 );
+    
     // set value in trial value market
     SectorUtils::addToTrialDemand( aRegion, mTrialValueMktNames[acomp], param,
                                    mLastValues[acomp], aPeriod );
+
 }
 
 

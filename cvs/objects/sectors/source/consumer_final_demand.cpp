@@ -85,7 +85,7 @@ void ConsumerFinalDemand::setFinalDemand( const std::string &aRegionName,
             // capita then we convert to per capita values and store those.
             mDemand[aPeriod][i] = mBaseServices[i][aPeriod];
             if( mDemandSys->isPerCapita() )
-                mDemand[aPeriod][i] /= aDemographics->getTotal( aPeriod );
+                mDemand[aPeriod][i] /= 1000.0 * aDemographics->getTotal( aPeriod );
         }
     }
     else {
@@ -101,12 +101,10 @@ void ConsumerFinalDemand::setFinalDemand( const std::string &aRegionName,
                 // If the demand is calculated per capita, then add
                 // the total demand to the market.  We still record
                 // per capita demand.
-                value *= aDemographics->getTotal( aPeriod );
+                value *= 1000.0 * aDemographics->getTotal( aPeriod );
             }
             mLastDemand[i] = mp->addToDemand( mSupplySectors[i], aRegionName,
-                                              mDemand[aPeriod][i],
-                                              mLastDemand[i], aPeriod
-                                            );
+                                              value, mLastDemand[i], aPeriod);
         }
 
     }

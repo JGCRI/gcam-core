@@ -2010,6 +2010,14 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
          <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='FoodDemand_Crops' or @name='FoodDemand_Meat')]//*[@type = 'technology']/*[@type='output']/physical-output/node()</xPath>
          <comments/>
       </supplyDemandQuery>
+
+      <supplyDemandQuery title="Food Final Demand">
+	<axis1 name="Food Type">demand-component[@name]</axis1>
+	<axis2 name="Year">demand[@year]</axis2>
+	<xPath buildList="true" dataName="output" group="false" sumAll="false">/demand-component[@name = 'FoodDemand_Crops' or @name = 'FoodDemand_Meat']/demand/node()</xPath>
+	<comments/>
+      </supplyDemandQuery>
+      
       <supplyDemandQuery title="Demand Balances by Primary Good">
          <axis1 name="sector">sector</axis1>
          <axis2 name="Year">demand-physical[@vintage]</axis2>
