@@ -174,7 +174,6 @@ namespace objects {
             using const_iterator::mPos;
         };
 
-        TimeVectorBase();
         TimeVectorBase( const unsigned int aSize, const T aDefaultValue );
         virtual ~TimeVectorBase();
         TimeVectorBase( const TimeVectorBase& aOther );
@@ -202,9 +201,6 @@ namespace objects {
 
         //! Size of the array.
         size_t mSize;
-
-        void reinitialize( const unsigned int aSize,
-                           const T aDefaultValue );
     private:
         void init( const unsigned int aSize,
                    const T aDefaultValue );
@@ -555,18 +551,6 @@ namespace objects {
     }
 
     /*!
-     * \brief Default constructor which will leave the underlying array empty.
-     *        Such a constructor may be necessary if the appropriate size is not
-     *        known during construction.
-     * \warning The TimeVectorBase will be unusable using this constructor until
-     *          reinitialize is called.
-     */
-    template<class T>
-    TimeVectorBase<T>::TimeVectorBase(): mData( 0 ), mSize( 0 )
-    {
-    }
-
-    /*!
      * \brief Constructor.
      * \param aSize Size of the TimeVectorBase. The size is immutable once
      *              constructed.
@@ -637,18 +621,6 @@ namespace objects {
                 copy( aOther.begin(), aOther.end(), begin() );
             }
             return *this;
-        }
-
-    /*!
-     * \brief Re-initialize the underlying array but destroying the previous contents
-     *        and re-filling it.
-     * \param aSize Size of the TimeVectorBase.
-     * \param aDefaultValue Default for all values.
-     */
-    template<class T>
-        void TimeVectorBase<T>::reinitialize( const unsigned int aSize, const T aDefaultValue ) {
-            clear();
-            init( aSize, aDefaultValue );
         }
 
     /*!
@@ -779,17 +751,11 @@ namespace objects {
         using typename TimeVectorBase<T>::const_iterator;
         using typename TimeVectorBase<T>::iterator;
 
-        YearVector();
-
         YearVector( const unsigned int aStartYear,
                     const unsigned int aEndYear,
                     const T aDefaultValue = T() );
 
         const YearVector& operator=( const YearVector& aOther );
-
-        void reinitialize( const unsigned int aStartYear,
-                           const unsigned int aEndYear,
-                           const T aDefaultValue = T() );
 
         virtual T& operator[]( const size_t aIndex );
         virtual const T& operator[]( const size_t aIndex ) const;
@@ -810,20 +776,6 @@ namespace objects {
         using TimeVectorBase<T>::mData;
         using TimeVectorBase<T>::mSize;
    };
-
-    /*!
-     * \brief Default constructor which will leave the underlying array empty.
-     *        Such a constructor may be necessary if the appropriate size is not
-     *        known during construction.
-     * \warning The YearVector will be unusable using this constructor until
-     *          reinitialize is called.
-     */
-   template<class T>
-   YearVector<T>::YearVector(): TimeVectorBase<T>(),
-                                mStartYear( 0 ),
-                                mEndYear( 0 )
-   {
-   }
 
     /*!
      * \brief Constructor which sizes the vector to the specied number of years.
@@ -859,23 +811,6 @@ namespace objects {
                 TimeVectorBase<T>::operator=( aOther );
             }
             return *this;
-        }
-
-    /*!
-     * \brief Re-initialize the underlying array but destroying the previous contents
-     *        and re-filling it.
-     * \param aStartYear The new start year.
-     * \param aEndYear The new end year.
-     * \param aDefaultValue Default for all values.
-     */
-    template<class T>
-        void YearVector<T>::reinitialize( const unsigned int aStartYear,
-                                          const unsigned int aEndYear,
-                                          const T aDefaultValue )
-        {
-            mStartYear = aStartYear;
-            mEndYear = aEndYear;
-            TimeVectorBase<T>::reinitialize( aEndYear - aStartYear + 1, aDefaultValue );
         }
 
     /*!

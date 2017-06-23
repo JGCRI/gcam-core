@@ -62,22 +62,22 @@ using namespace xercesc;
 extern Scenario* scenario;
 
 /*! \brief Default constructor. */
-GHGPolicy::GHGPolicy()
+GHGPolicy::GHGPolicy():
+mConstraint( -1 ),
+mFixedTax( -1 )
 {
-    mConstraint.assign( mConstraint.size(), -1 );
-    mFixedTax.assign( mFixedTax.size(), -1 );
 }
 
 /*!
 * \brief Constructor which initializes a GHG policy without setting a tax or
 *        constraint.
 */
-GHGPolicy::GHGPolicy( const string aName, const string aMarket )
+GHGPolicy::GHGPolicy( const string aName, const string aMarket ):
+mConstraint( -1 ),
+mFixedTax( -1 )
 {
     mName = aName;
     mMarket = aMarket;
-    mConstraint.assign( mConstraint.size(), -1 );
-    mFixedTax.assign( mFixedTax.size(), -1 );
 }
 
 /*! \brief Constructor used when explicitly constructing a fixed tax.

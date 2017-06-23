@@ -63,14 +63,14 @@ using namespace xercesc;
 extern Scenario* scenario;
 
 //! Default constructor.
-SubResource::SubResource()
+SubResource::SubResource():
+mAvailable( Value( 0.0 ) ),
+mAnnualProd( Value( 0.0 ) ),
+mCumulProd( Value( 0.0 ) ),
+mCumulativeTechChange( 1.0 ),
+mEffectivePrice( Value( -1.0 ) ),
+mCalProduction( -1.0 )
 {
-    mAvailable.assign( mAvailable.size() , Value( 0.0 ) );
-    mAnnualProd.assign( mAnnualProd.size() , Value( 0.0 ) );
-    mCumulProd.assign( mCumulProd.size() , Value( 0.0 ) );
-    mCumulativeTechChange.assign( mCumulativeTechChange.size() , 1.0 );
-    mEffectivePrice.assign( mEffectivePrice.size() , Value( -1.0 ) );
-    mCalProduction.assign( mCalProduction.size() , -1.0 );
 }
 
 //! Destructor.

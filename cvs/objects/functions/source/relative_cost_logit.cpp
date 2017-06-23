@@ -53,9 +53,9 @@ using namespace std;
 using namespace xercesc;
 
 //! default constructor:  arg value <= 0 will get filled in with the default
-RelativeCostLogit::RelativeCostLogit()
+RelativeCostLogit::RelativeCostLogit():
+mLogitExponent( 1.0 )
 {
-    std::fill( mLogitExponent.begin(), mLogitExponent.end(), 1.0 );
 }
 
 //! destructor: nothing to clean up

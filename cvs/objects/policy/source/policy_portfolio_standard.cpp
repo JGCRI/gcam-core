@@ -62,13 +62,13 @@ using namespace xercesc;
 extern Scenario* scenario;
 
 /*! \brief Default constructor. */
-PolicyPortfolioStandard::PolicyPortfolioStandard()
+PolicyPortfolioStandard::PolicyPortfolioStandard():
+mConstraint( -1.0 ),
+mFixedTax( -1.0 ),
+mShareOfSectorOutput( -1.0 ),
+mMinPrice( 0.0 )
 {
     mIsShareBased = false;
-    mConstraint.assign( mConstraint.size(), -1.0 );
-    mFixedTax.assign( mFixedTax.size(), -1.0 );
-    mShareOfSectorOutput.assign( mShareOfSectorOutput.size(), -1.0 );
-    mMinPrice.assign( mShareOfSectorOutput.size(), 0.0 );
 }
 
 /*! \brief Get the XML node name for output to XML.

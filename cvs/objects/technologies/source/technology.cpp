@@ -626,6 +626,14 @@ void Technology::initCalc( const string& aRegionName,
     // decides to produce output.
     setProductionState( aPeriod );
     
+    // If technology is not operating the cost is NaN.  The value
+    // should never be used; therefore, if the NaNs escape into the
+    // rest of the code, you know instantly that you have a problem.
+    if( !mProductionState[ aPeriod ]->isOperating() )
+    {
+        mCosts[ aPeriod ] = numeric_limits<double>::signaling_NaN();
+    }
+    
     mTechnologyInfo->setBoolean( "new-vintage-tech", mProductionState[ aPeriod ]->isNewInvestment() );
 
     for( unsigned int i = 0; i < mGHG.size(); i++ ) {
@@ -1372,12 +1380,12 @@ void Technology::calcCost( const string& aRegionName,
                            const string& aSectorName,
                            const int aPeriod )
 {
-    // If technology is not operating set cost to NaN.  The value
+    // If technology is not operating the cost is NaN.  The value
     // should never be used; therefore, if the NaNs escape into the
     // rest of the code, you know instantly that you have a problem.
     if( !mProductionState[ aPeriod ]->isOperating() )
     {
-        //mCosts[ aPeriod ] = numeric_limits<double>::signaling_NaN();
+        assert( !util::isValidNumber( mCosts[ aPeriod ] ) );
     }
     else {
         // Note we now allow costs in any sector to be <= 0.  If,

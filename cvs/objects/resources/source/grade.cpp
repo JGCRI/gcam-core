@@ -60,11 +60,11 @@ extern Scenario* scenario;
 
 
 //! Default constructor
-Grade::Grade()
+Grade::Grade():
+mTotalCost( 0.0 )
 {
     mAvailable = 0.0;
     mExtractCost = 0.0;
-    mTotalCost.assign( mTotalCost.size(), 0.0 );
 }
 
 //! Initialize data members from XML.

@@ -65,10 +65,10 @@ using namespace xercesc;
 extern Scenario* scenario;
 
 //! Default Constructor
-BuildingNodeInput::BuildingNodeInput()
+BuildingNodeInput::BuildingNodeInput():
+mInternalGainsTrialSupply( 0.001 )
 {
     mSatiationDemandFunction = 0;
-    std::fill( mInternalGainsTrialSupply.begin(), mInternalGainsTrialSupply.end(), 0.001 );
 }
 
 //! Destructor

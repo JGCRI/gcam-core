@@ -57,13 +57,12 @@ extern Scenario* scenario;
  */
 ALandAllocatorItem::ALandAllocatorItem( const ALandAllocatorItem* aParent,
                                         const LandAllocatorItemType aType )
-    : mParent( aParent )
+    : mParent( aParent ),
+      mShare( Value( -1.0 ) ), // this is so initialization can be checked.
+      mProfitScaler( -1.0 ), // this is so initialization can be checked.
+      mIsNewTech( false ),
+      mAdjustForNewTech( 1.0 )
 {
-    mShare.assign( mShare.size(), Value( -1.0 ) ); // this is so initialization can be checked.
-    mProfitScaler.assign( mProfitScaler.size(), -1.0 ); // this is so initialization can be checked.
-    mIsNewTech.assign( mIsNewTech.size(), false );
-    mAdjustForNewTech.assign( mAdjustForNewTech.size(), 1.0 );
-    mProfitRate.assign( mProfitRate.size(), Value() );
     mType = aType;
     mIsLandExpansionCost = false;
 }

@@ -55,16 +55,15 @@ using namespace objects;
 
 extern Scenario* scenario;
 
-ASimpleCarbonCalc::ASimpleCarbonCalc()
+ASimpleCarbonCalc::ASimpleCarbonCalc():
+mTotalEmissions( CarbonModelUtils::getStartYear(), CarbonModelUtils::getEndYear() ),
+mTotalEmissionsAbove( CarbonModelUtils::getStartYear(), CarbonModelUtils::getEndYear() ),
+mTotalEmissionsBelow( CarbonModelUtils::getStartYear(), CarbonModelUtils::getEndYear() ),
+mCarbonStock( scenario->getModeltime()->getStartYear(), CarbonModelUtils::getEndYear() )
 {
-    const int histStartYear = CarbonModelUtils::getStartYear();
     int endYear = CarbonModelUtils::getEndYear();
     const Modeltime* modeltime = scenario->getModeltime();
     
-    mTotalEmissions.reinitialize( histStartYear, endYear );
-    mTotalEmissionsAbove.reinitialize( histStartYear, endYear );
-    mTotalEmissionsBelow.reinitialize( histStartYear, endYear );
-    mCarbonStock.reinitialize( modeltime->getStartYear(), endYear );
     mLandUseHistory = 0;
     mLandLeaf = 0;
     mSoilTimeScale = CarbonModelUtils::getSoilTimeScale();

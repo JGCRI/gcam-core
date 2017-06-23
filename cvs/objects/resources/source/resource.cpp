@@ -80,12 +80,12 @@ typedef vector<AGHG*>::const_iterator CGHGIterator;
 
 //! Default constructor.
 Resource::Resource():
-mObjectMetaInfo()
+mObjectMetaInfo(),
+mResourcePrice( Value( 0.0 ) ),
+mAvailable( Value( 0.0 ) ),
+mAnnualProd( Value( 0.0 ) ),
+mCumulProd( Value( 0.0 ) )
 {
-    mResourcePrice.assign( mResourcePrice.size(), Value( 0.0 ) );
-    mAvailable.assign( mAvailable.size(), Value( 0.0 ) );
-    mAnnualProd.assign( mAnnualProd.size(), Value( 0.0 ) );
-    mCumulProd.assign( mCumulProd.size(), Value( 0.0 ) );
 }
 
 //! Destructor.

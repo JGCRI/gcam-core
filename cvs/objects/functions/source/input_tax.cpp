@@ -93,9 +93,9 @@ const string& InputTax::getXMLReportingName() const{
 }
 
 //! Constructor
-InputTax::InputTax()
+InputTax::InputTax():
+mAdjustedCoefficients( Value( 1.0 ) )
 {
-    std::fill( mAdjustedCoefficients.begin(), mAdjustedCoefficients.end(), 1.0 );
 }
 
 /*!

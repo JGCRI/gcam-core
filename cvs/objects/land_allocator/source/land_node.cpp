@@ -62,12 +62,12 @@ typedef std::map<unsigned int, double> LandMapType;
  * \author James Blackwood
  */
 LandNode::LandNode( const ALandAllocatorItem* aParent )
-: ALandAllocatorItem( aParent, eNode )
+: ALandAllocatorItem( aParent, eNode ),
+  mLogitExponent( 1.0 ),
+  mNewTechProfitScaler( 0.0 ),
+  mGhostShareNumerator( 0.25 )
 {
-    mLogitExponent.assign( mLogitExponent.size(), 1.0 );
     mUnManagedLandValue = 0.0;
-    mNewTechProfitScaler.assign( mNewTechProfitScaler.size(), 0.0 );
-    mGhostShareNumerator.assign( mGhostShareNumerator.size(), 0.25 );
     mAdjustScalersForNewTech = false;
     mLandUseHistory = 0;
     mCarbonCalc = 0;

@@ -67,10 +67,10 @@ extern Scenario* scenario;
 * \param aRegionName The name of the region.
 */
 SupplySector::SupplySector( const string& aRegionName ):
-Sector( aRegionName )
+Sector( aRegionName ),
+// The default price for a trial supply market is 0.001
+mPriceTrialSupplyMarket( 0.001 )
 {
-    // The default price for a trial supply market is 0.001
-    mPriceTrialSupplyMarket.assign( mPriceTrialSupplyMarket.size(), 0.001 );
 }
 
 /*! \brief Get the XML node name for output to XML.
