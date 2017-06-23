@@ -14,7 +14,7 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_aglu_LB163.bio_Yield_R_GLU_irr_DISABLED <- function(command, ...) {
+module_aglu_LB163.bio_Yield_R_GLU_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              "L100.LDS_ag_HA_ha",
@@ -71,7 +71,13 @@ module_aglu_LB163.bio_Yield_R_GLU_irr_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L163.ag_irrBioYield_GJm2_R_GLU") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/iso_GCAM_regID",
+                     "L100.LDS_ag_HA_ha",
+                     "L100.LDS_ag_prod_t",
+                     "L151.ag_irrHA_ha_ctry_crop",
+                     "L151.ag_irrProd_t_ctry_crop",
+                     "L151.ag_rfdHA_ha_ctry_crop",
+                     "L151.ag_rfdProd_t_ctry_crop") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L163.ag_irrBioYield_GJm2_R_GLU
@@ -81,7 +87,13 @@ module_aglu_LB163.bio_Yield_R_GLU_irr_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L163.ag_rfdBioYield_GJm2_R_GLU") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/iso_GCAM_regID",
+                     "L100.LDS_ag_HA_ha",
+                     "L100.LDS_ag_prod_t",
+                     "L151.ag_irrHA_ha_ctry_crop",
+                     "L151.ag_irrProd_t_ctry_crop",
+                     "L151.ag_rfdHA_ha_ctry_crop",
+                     "L151.ag_rfdProd_t_ctry_crop") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L163.ag_rfdBioYield_GJm2_R_GLU
