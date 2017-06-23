@@ -31,8 +31,9 @@ module_aglu_L241.trade_input <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    scenario <- year <- GCAM_region_ID <- region <- value <- GCAM_commodity <- technology
-      supplysector <- res.secondary.output <- market <- output.ratio <- NULL # silence package check notes
+    scenario <- year <- GCAM_region_ID <- region <- value <- GCAM_commodity <-
+      technology <- supplysector <- res.secondary.output <- market <-
+      output.ratio <- NULL # silence package check notes
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
