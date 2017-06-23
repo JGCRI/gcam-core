@@ -31,6 +31,8 @@ GHG_CONTROL_READIN_YEAR <- 1975
 # ======================================================================
 # GCAM constants
 gcam.USA_CODE <- 1
+gcam.LOGIT_TYPES <- c("relative-cost-logit", "absolute-cost-logit")
+gcam.EQUIV_TABLE <- "EQUIV_TABLE"
 
 # ======================================================================
 # aglu constants
@@ -171,6 +173,12 @@ socioeconomics.FINAL_HIST_YEAR <- 2010 # Final historical year,
 socioeconomics.BASE_POP_SCEN <- "SSP2" # These are both being used in the data system by different files.
 BASE_POP_SCENARIO <- "SSP2" # These are both being used in the data system by different files.
 BASE_GDP_SCENARIO <- "SSP2"
+
+socioeconomics.DEFAULT_INTEREST_RATE <- 0.05
+socioeconomics.GDP_DIGITS <- 0
+socioeconomics.POP_DIGITS <- 0
+socioeconomics.DEFAULT_LABORFORCE <- 0.5
+socioeconomics.LABOR_PRODUCTIVITY_DIGITS <- 5
 
 # ======================================================================
 # water constants
