@@ -99,8 +99,6 @@ class LogEDFun : public VecFVec<double,double>
                        //!this to reset their supply and demand as
                        //!required.
   int period;
-  //int partj; //!< flag indicating which variable in the input vector
-             //!has changed in a partial derivative calculation
   bool mLogPricep;               //!< Flag indicating whether inputs are prices or log-prices
 
   // diagnostic variables

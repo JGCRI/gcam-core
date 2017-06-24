@@ -53,13 +53,19 @@
 #endif
 
 /*! 
-* \ingroup Objects
-* \brief A class containing a single value in the model.
-* \details Tracks a value, whether it has been initialized, and an associated
-*          unit.
-* \todo This is only a skeleton, much more to do.
-* \author Josh Lurz
-*/
+ * \ingroup Objects
+ * \brief A class containing a single value in the model.
+ * \details Tracks a value, whether it has been initialized.  It is also utilized
+ *          as a layer of abstraction so that Value objects tagged as STATE (will
+ *          be set during World.calc) can have it's actual data managed in a central
+ *          location and can quickly be reset when needed.  Note that in addition
+ *          when GCAM_PARALLEL_ENABLED it also allows the value to be set independently
+ *          from different threads.  When taking both of these points together
+ *          implies World.calc is thread safe and can be called without any resource
+ *          contention.
+ *
+ * \author Josh Lurz
+ */
 
 class Value {
     friend class ManageStateVariables;
@@ -87,21 +93,15 @@ class Value {
      }
 
 public:
-    /*enum Unit {
-        DEFAULT,
-        PETAJOULE,
-		EXAJOULE
-    };*/
 
     Value();
-    explicit Value( const double aValue/*, const Unit aUnit = DEFAULT*/ );
-    void init( const double aNewValue/*, const Unit aUnit = DEFAULT*/ );
-    void set( const double aNewValue/*, const Unit aUnit = DEFAULT*/ );
+    explicit Value( const double aValue );
+    void init( const double aNewValue );
+    void set( const double aNewValue );
     operator double() const;
     double get() const;
     double getDiff() const;
     bool isInited() const;
-    //void setCopyState( const bool aIsStateCopy );
     Value& operator+=( const Value& aValue );
     Value& operator-=( const Value& aValue );
     Value& operator*=( const Value& aValue );
@@ -118,26 +118,42 @@ private:
     void print( std::ostream& aOutputStream ) const;
     std::istream& read( std::istream& aIStream );
 
+    //! The actual underly value of this class.
     double mValue;
-#if !GCAM_PARALLEL_ENABLED
-    typedef double* AltValueType;
-#else
-    typedef tbb::enumerable_thread_specific<double*, tbb::cache_aligned_allocator<double*>, tbb::ets_key_per_instance> AltValueType;
-#endif
-    static AltValueType mAltValue;
-    static double* mGoodValue;
-    /*size_t*/unsigned int mAltValueIndex;
+    //! A flag to indicate if this Value has been set to any value besides the default.
     bool mIsInit;
-    //static bool* mIsPartialDeriv;
-    //Unit mUnit;
+#if !GCAM_PARALLEL_ENABLED
+    typedef double* CentralValueType;
+#else
+    // When GCAM_PARALLEL_ENABLED each worker thread will have it's own slot of
+    // state assigned to it.  Note it is important that we use tbb::ets_key_per_instance
+    // which as it uses up a finite resource certainly qualifies as a performance
+    // critical use.
+    typedef tbb::enumerable_thread_specific<double*, tbb::cache_aligned_allocator<double*>, tbb::ets_key_per_instance> CentralValueType;
+#endif
+    //! A static reference into ManageStateVariables::mStateData only used if mIsStateCopy
+    //! is true.  Note we make this field static so that we can quickly swap state
+    //! between a "base" state or some "scratch" value from a central location.
+    static CentralValueType sCentralValue;
+    //! A static reference into the "base" state of ManageStateVariables::mStateData
+    //! mostly for convenience.
+    static double* sBaseCentralValue;
+    //! The index into sCentralValue that contains the data for this instance.
+    unsigned int mCentralValueIndex;
+    //! A flag to indicate if this instance of Value has been identified as active
+    //! state.  If so it can assume that mCentralValueIndex has been appropriately
+    //! set and mValue gets copied in/out of sBaseCentralValue at the appropriate
+    //! time.
     bool mIsStateCopy;
     
-    //void doCheck() const;
+#if DEBUG_STATE
+    void doStateCheck() const;
+#endif
     double& getInternal();
     const double& getInternal() const;
 };
 
-inline Value::Value(): mValue( 0 ), mIsInit( false )/*, mUnit( DEFAULT )*/, mIsStateCopy( false ){
+inline Value::Value(): mValue( 0 ), mIsInit( false ), mIsStateCopy( false ){
 }
 
 /*! 
@@ -145,56 +161,76 @@ inline Value::Value(): mValue( 0 ), mIsInit( false )/*, mUnit( DEFAULT )*/, mIsS
  * \param aValue Initial value.
  * \param aUnit Unit.
  */
-inline Value::Value( const double aValue/*, const Unit aUnit*/ ):
+inline Value::Value( const double aValue ):
 mValue( aValue ),
-mIsInit( true )/*,
-mUnit( aUnit )*/,
+mIsInit( true ),
 mIsStateCopy( false )
 {
 }
 
 //! Initialize the value, can only be done once.
-inline void Value::init( const double aNewValue/*, const Unit aUnit*/ ){
+inline void Value::init( const double aNewValue ){
     assert( util::isValidNumber( aNewValue ) );
     if( !mIsInit ){
         mValue = aNewValue;
-        //mUnit = aUnit;
         mIsInit = true;
     }
 }
 
+/*!
+ * \brief An accessor method to get at the actual data held in this class.
+ * \details This method will appropriately get the value locally or the centrally
+ *          managed state if the mIsStateCopy flag is set.
+ * \return A reference the the appropriate value represented by this class.
+ */
 inline double& Value::getInternal() {
     return mIsStateCopy ?
 #if !GCAM_PARALLEL_ENABLED
-        mAltValue[mAltValueIndex]
+        sCentralValue[mCentralValueIndex]
 #else
-        mAltValue.local()[mAltValueIndex]
+        sCentralValue.local()[mCentralValueIndex]
 #endif
         : mValue;
 }
 
+/*!
+ * \brief An accessor method (const) to get at the actual data held in this class.
+ * \details This method will appropriately get the value locally or the centrally
+ *          managed state if the mIsStateCopy flag is set.
+ * \return A const reference the the appropriate value represented by this class.
+ */
 inline const double& Value::getInternal() const {
     return mIsStateCopy ?
 #if !GCAM_PARALLEL_ENABLED
-        mAltValue[mAltValueIndex]
+        sCentralValue[mCentralValueIndex]
 #else
-        mAltValue.local()[mAltValueIndex]
+        sCentralValue.local()[mCentralValueIndex]
 #endif
         : mValue;
 }
 
 //! Set the value.
-inline void Value::set( const double aNewValue/*, const Unit aUnit*/ ){
+inline void Value::set( const double aNewValue ){
     assert( util::isValidNumber( aNewValue ) );
     getInternal() = aNewValue;
-    //mUnit = aUnit;
     mIsInit = true;
-    //doCheck();
+#if DEBUG_STATE
+    doStateCheck();
+#endif
 }
 
+/*!
+ * \brief Get the difference in value between the current value of this class and
+ *        the value of this class in the "base" state.
+ * \details This method is helpful when adding to supply/demand of a market when
+ *          we are calculating partial derivatives.
+ # \return The difference in value between the current value of this class and
+ *         the value of this class in the "base" state
+ * \warning This method is only valid for instances that are mIsStateCopy.
+ */
 inline double Value::getDiff() const {
     assert( !mIsStateCopy );
-    return getInternal() - mGoodValue[ mAltValueIndex ];
+    return getInternal() - sBaseCentralValue[ mCentralValueIndex ];
 }
 
 //! Get the value.
@@ -222,10 +258,10 @@ inline Value& Value::operator+=( const Value& aValue ){
     // correct and the new value is valid.
     mIsInit = true;
 
-    // Make sure the units match up.
-    //assert( mUnit == aValue.mUnit );
     getInternal() += aValue.getInternal();
-    //doCheck();
+#if DEBUG_STATE
+    doStateCheck();
+#endif
     return *this;
 }
 
@@ -239,10 +275,10 @@ inline Value& Value::operator-=( const Value& aValue ){
     // is correct and the new value is valid.
     mIsInit = true;
 
-    // Make sure the units match up.
-    //assert( mUnit == aValue.mUnit );
     getInternal() -= aValue.getInternal();
-    //doCheck();
+#if DEBUG_STATE
+    doStateCheck();
+#endif
     return *this;
 }
 
@@ -255,10 +291,10 @@ inline Value& Value::operator*=( const Value& aValue ){
     // If the value hasn't been initialized it should not be used.
     assert( mIsInit );
 
-    // Make sure the units match up.
-    //assert( mUnit == aValue.mUnit );
     getInternal() *= aValue.getInternal();
-    //doCheck();
+#if DEBUG_STATE
+    doStateCheck();
+#endif
     return *this;
 }
 
@@ -272,47 +308,70 @@ inline Value& Value::operator/=( const Value& aValue ){
     assert( mIsInit );
     assert( aValue > util::getSmallNumber() );
 
-    // Make sure the units match up.
-    //assert( mUnit == aValue.mUnit );
     getInternal() /= aValue.getInternal();
-    //doCheck();
+#if DEBUG_STATE
+    doStateCheck();
+#endif
     return *this;
 }
 
 inline Value& Value::operator=( const Value& aValue ) {
     getInternal() = aValue.getInternal();
     mIsInit = aValue.mIsInit;
-    //mUnit = aValue.mUnit;
-    /*
-    if( aValue.mIsStateCopy ) {
-        mAltValue = aValue.mAltValue;
-        mAltValueIndex = aValue.mAltValueIndex;
-        mIsPartialDeriv = aValue.mIsPartialDeriv;
-        mIsStateCopy = aValue.mIsStateCopy;
-    }*/
     
     return *this;
 }
 
-// TODO: supply these here or just make the users do it themselves
 inline Value& Value::operator+=( const double& aValue ) {
-    return operator+=( Value( aValue ) );
+    // Assume that if this value is not initialized that adding to zero is
+    // correct and the new value is valid.
+    mIsInit = true;
+    
+    getInternal() += aValue;
+#if DEBUG_STATE
+    doStateCheck();
+#endif
+    return *this;
 }
 
 inline Value& Value::operator-=( const double& aValue ) {
-    return operator-=( Value( aValue ) );
+    // Assume that if this value is not initialized that adding to zero is
+    // correct and the new value is valid.
+    mIsInit = true;
+    
+    getInternal() -= aValue;
+#if DEBUG_STATE
+    doStateCheck();
+#endif
+    return *this;
 }
 
 inline Value& Value::operator*=( const double& aValue ) {
-    return operator*=( Value( aValue ) );
+    // Assume that if this value is not initialized that adding to zero is
+    // correct and the new value is valid.
+    mIsInit = true;
+    
+    getInternal() *= aValue;
+#if DEBUG_STATE
+    doStateCheck();
+#endif
+    return *this;
 }
 
 inline Value& Value::operator/=( const double& aValue ) {
-    return operator/=( Value( aValue ) );
+    // Assume that if this value is not initialized that adding to zero is
+    // correct and the new value is valid.
+    mIsInit = true;
+    
+    getInternal() /= aValue;
+#if DEBUG_STATE
+    doStateCheck();
+#endif
+    return *this;
 }
 
 /*!
- * \breif An explicit assignment from type double which will just forward to the
+ * \brief An explicit assignment from type double which will just forward to the
  *        set() method.
  * \param aDblValue The value as double to try to set.
  * \return This value by reference for chaining.

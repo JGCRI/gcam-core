@@ -57,7 +57,7 @@ LogEDFun::LogEDFun(SolutionInfoSet &sisin,
                    World *w, Marketplace *m, int per, bool aLogPricep) :
     mkts(sisin.getSolvableSet()),
     solnset(sisin),
-    world(w), mktplc(m), period(per), /*partj(-1),*/
+    world(w), mktplc(m), period(per),
     mLogPricep(aLogPricep)
 {
     na=nr=mkts.size();
@@ -113,35 +113,17 @@ void LogEDFun::partial(int ip)
 {
     Timer& edfunAnResetTimer = TimerRegistry::getInstance().getTimer( TimerRegistry::EDFUN_AN_RESET );
     edfunAnResetTimer.start();
-    //partj = ip;
     if(ip >= 0) {
-        //ManageStateVariables collect( period );
-        //collect.collectState();
+        // We are about to perform partial derviatives so snap back *all* state
+        // including prices/supplies/demands to a "base" state before we perform
+        // this partial derivative
         scenario->mManageStateVars->copyState();
-        // We are about to perform partial derviatives so store all market
-        // prices/supplies/demands so that we can snap back to them between
-        // each partial derivative calculation.
-        //solnset.storeValues();
     }
     else if(ip == -1 ) {
-        // reset flags
-        /*const std::vector<IActivity*>& affectedNodes = mkts[partj].getDependencies();
-        for( size_t nodeIndex = 0 ; nodeIndex < affectedNodes.size(); ++nodeIndex ) {
-            affectedNodes[ nodeIndex ]->setStale();
-        }
-        mktplc->mIsDerivativeCalc = false;
-        if(partj == (mkts.size() -1 )) {
-
-        }
-        partj = -1;
-         */
-        //ManageStateVariables collect( period );
-        
-        //collect.resetState();
+        // We are calculating a full model run so ensure the partial derivative
+        // flags are turned off and the "base" state is being updated.
         mktplc->mIsDerivativeCalc = false;
         scenario->mManageStateVars->setPartialDeriv(false);
-        //solnset.restoreValues();    // reset all markets to values stored above
-        
     }
     edfunAnResetTimer.stop();
 }
@@ -226,7 +208,6 @@ void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx, cons
      * 1B Set the model inputs using the solutionInfo objects (partial derivative version)
      ****/ 
     mktplc->mIsDerivativeCalc = true;
-      //scenario->mManageStateVars->setPartialDeriv(true);
 
 
     if(mdiagnostic) {
@@ -272,11 +253,10 @@ void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx, cons
     edfunPreTimer.stop();
     Timer& evalPartTimer = TimerRegistry::getInstance().getTimer( TimerRegistry::EVAL_PART );
     evalPartTimer.start();
-/*#if GCAM_PARALLEL_ENABLED
-    world->calc(period, mkts[partj].getFlowGraph(), &affectedNodes);
-#else*/
+    // Note even when running with GCAM_PARALLEL_ENABLED we still run in serial
+    // mode for partial derivatives.  This is because the loop over each partial
+    // derivative to run is a parallel_for.
     world->calc(period, affectedNodes);
-//#endif
     evalPartTimer.stop();
 
     if(mdiagnostic) {

@@ -370,16 +370,6 @@ void Marketplace::unsetMarketToSolve ( const string& goodName, const string& reg
     }
 }
 
-/*#if GCAM_PARALLEL_ENABLED
-void Marketplace::NullSDHelper::operator()( const tbb::blocked_range<int>& aRange) const
-{
-    for( int marketIndex = aRange.begin(); marketIndex != aRange.end(); ++marketIndex ) {
-        mMarkets[ marketIndex ]->getMarket( mPeriod )->nullDemand();
-        mMarkets[ marketIndex ]->getMarket( mPeriod )->nullSupply();
-    }
-}
-#endif*/
-
 /*! \brief Clear all market supplies and demands for the given period.
 * 
 * This function iterates through the markets and nulls the supply and demand 
@@ -389,7 +379,6 @@ void Marketplace::NullSDHelper::operator()( const tbb::blocked_range<int>& aRang
 */
 void Marketplace::nullSuppliesAndDemands( const int period ) {
 #if GCAM_PARALLEL_ENABLED
-    //NullSDHelper nsd( markets, period );
     tbb::parallel_for( tbb::blocked_range<int>( 0, mMarkets.size() ), [this, period]( const tbb::blocked_range<int>& aRange) {
         for( int marketIndex = aRange.begin(); marketIndex != aRange.end(); ++marketIndex ) {
             this->mMarkets[ marketIndex ]->getMarket( period )->nullDemand();
@@ -478,7 +467,10 @@ void Marketplace::setPrice( const string& goodName, const string& regionName, co
 /*! \brief Add to the supply for this market.
 *
 * This function increments the supply for a market determined by the goodName and regionName
-* by a given value. This function is used throughout the model to add supply to markets. 
+* by a given value. This function is used throughout the model to add supply to markets.
+* In order to add to supply a caller must provide a "state" backed Value class this is
+* due to when calculating partial derivatives we are interesed in adding the difference
+* from the current value and the "base" value to supply.
 *
 * \param goodName Name of the good for which to add supply.
 * \param regionName Name of the region in which supply should be added for the market.
@@ -514,6 +506,9 @@ void Marketplace::addToSupply( const string& goodName, const string& regionName,
 *
 * This function increments the demand for a market determined by the goodName and regionName
 * by a given value. This function is used throughout the model to add demand to markets. 
+* In order to add to demand a caller must provide a "state" backed Value class this is
+* due to when calculating partial derivatives we are interesed in adding the difference
+* from the current value and the "base" value to demand.
 *
 * \param goodName Name of the good for which to add demand.
 * \param regionName Name of the region in which demand should be added for the market.
