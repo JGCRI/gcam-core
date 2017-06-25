@@ -92,6 +92,9 @@ aglu.BIO_TREE_YIELD_KGCM2 <- 0.345
 # Energy content of biomass
 aglu.BIO_ENERGY_CONTENT_GJT <- 17.5
 
+# Cost of Fertilizer
+aglu.FERT_COST <- 363 # 2007$ per ton NH3
+
 # ======================================================================
 # energy constants
 
@@ -118,6 +121,7 @@ CONV_KG_TO_TG <- 1e-9
 CONV_KT_MT <- 0.001 # kt to Mt
 CONV_T_MT <- 1e-6 # t to Mt
 CONV_G_KG <- 1e-3 # kilograms to grams
+CONV_NH3_N <- 14/17 # Nitrogen to Ammonia
 
 # Time
 CONV_YEAR_HOURS <- 24 * 365.25
