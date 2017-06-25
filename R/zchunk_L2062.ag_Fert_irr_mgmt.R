@@ -20,8 +20,8 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
               FILE = "water/basin_to_country_mapping",
               FILE = "aglu/A_Fodderbio_chars",
               FILE = "temp-data-inject/L142.ag_Fert_IO_R_C_Y_GLU",
-              FILE = "temp-data-inject/L205.AgCost_ag",
-              FILE = "temp-data-inject/L205.AgCost_bio"))
+              FILE = "temp-data-inject/L2052.AgCost_ag_irr_mgmt",
+              FILE = "temp-data-inject/L2052.AgCost_bio_irr_mgmt"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2062.AgCoef_Fert_ag_irr_mgmt",
              "L2062.AgCoef_Fert_bio_irr_mgmt",
@@ -36,8 +36,8 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
     basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
     A_Fodderbio_chars <- get_data(all_data, "aglu/A_Fodderbio_chars")
     L142.ag_Fert_IO_R_C_Y_GLU <- get_data(all_data, "temp-data-inject/L142.ag_Fert_IO_R_C_Y_GLU")
-    L205.AgCost_ag <- get_data(all_data, "temp-data-inject/L205.AgCost_ag")
-    L205.AgCost_bio <- get_data(all_data, "temp-data-inject/L205.AgCost_bio")
+    L2052.AgCost_ag_irr_mgmt <- get_data(all_data, "temp-data-inject/L2052.AgCost_ag_irr_mgmt")
+    L2052.AgCost_bio_irr_mgmt <- get_data(all_data, "temp-data-inject/L2052.AgCost_bio_irr_mgmt")
 
     # TEMPORARY: tidying until chunk LB142 complete
     L142.ag_Fert_IO_R_C_Y_GLU %>%
@@ -68,6 +68,19 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
       bind_rows(L2062.AgCoef_Fert_ag_irr_mgmt) %>%
       filter(coefficient > 0) ->
       L2062.AgCoef_Fert_ag_irr_mgmt
+
+    # Calculate fertilizer coefficients for bioenergy crops
+    # bio_grass_Fert_IO_kgNGJ <- round(
+    #   bio_grass_Fert_IO_gNm2 * conv_g_kg / bio_grass_Yield_kgCm2 *          #convert from application rate per unit area to per unit carbon
+    #     Ccontent_cellulose * (1 - A_Fodderbio_chars$WaterContent[ A_Fodderbio_chars$GCAM_commodity == "biomass_grass" ] ) /    # convert from carbon to wet biomass
+    #     ( bio_GJt * conv_kg_t ), #convert from biomass to energy
+    #   digits_Fert_IO )
+    # bio_tree_Fert_IO_kgNGJ <- round(
+    #   bio_tree_Fert_IO_gNm2 * conv_g_kg / bio_tree_Yield_kgCm2 *          #convert from application rate per unit area to per unit carbon
+    #     Ccontent_cellulose * (1 - A_Fodderbio_chars$WaterContent[ A_Fodderbio_chars$GCAM_commodity == "biomass_tree" ] ) /    # convert from carbon to wet biomass
+    #     ( bio_GJt * conv_kg_t ), #convert from biomass to energy
+    #   digits_Fert_IO )
+    #
 
     # Produce outputs
     L2062.AgCoef_Fert_ag_irr_mgmt %>%
