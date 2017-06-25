@@ -102,7 +102,18 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
       select(-minicam.energy.input, -coefficient, -FertCost) ->
       L2062.AgCost_ag_irr_mgmt_adj
 
-        # Produce outputs
+    # Adjust nonLandVariableCost to separate fertilizer cost (which is accounted for specifically)
+    L2052.AgCost_bio_irr_mgmt %>%
+      # Note: using left_join because there are instances with cost but no fertilizer use
+      left_join(L2062.AgCoef_Fert_bio_irr_mgmt,
+                by=c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year")) %>%
+      replace_na(list(coefficient = 0)) %>%
+      mutate(FertCost = coefficient * aglu.FERT_COST * gdp_deflator(1975, 2007) * CONV_KG_T / CONV_NH3_N ) %>%
+      mutate(nonLandVariableCost = round(nonLandVariableCost - FertCost, aglu.DIGITS_CALPRICE)) %>%
+      select(-minicam.energy.input, -coefficient, -FertCost) ->
+      L2062.AgCost_bio_irr_mgmt_adj
+
+    # Produce outputs
     L2062.AgCoef_Fert_ag_irr_mgmt %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -128,16 +139,14 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
       same_precursors_as(L2062.AgCoef_Fert_ag_irr_mgmt) %>%
       add_precursors("temp-data-inject/L2052.AgCost_ag_irr_mgmt") ->
       L2062.AgCost_ag_irr_mgmt_adj
-    tibble() %>%
+    L2062.AgCost_bio_irr_mgmt_adj %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2062.AgCost_bio_irr_mgmt_adj") %>%
-      add_precursors("common/GCAM_region_names", "water/basin_to_country_mapping", "aglu/A_Fodderbio_chars",
-                     "temp-data-inject/L142.ag_Fert_IO_R_C_Y_GLU", "temp-data-inject/L2052.AgCost_ag_irr_mgmt", "temp-data-inject/L2052.AgCost_bio_irr_mgmt") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
+      same_precursors_as(L2062.AgCoef_Fert_bio_irr_mgmt) %>%
+      add_precursors("temp-data-inject/L2052.AgCost_bio_irr_mgmt")  ->
       L2062.AgCost_bio_irr_mgmt_adj
 
     return_data(L2062.AgCoef_Fert_ag_irr_mgmt, L2062.AgCoef_Fert_bio_irr_mgmt, L2062.AgCost_ag_irr_mgmt_adj, L2062.AgCost_bio_irr_mgmt_adj)
