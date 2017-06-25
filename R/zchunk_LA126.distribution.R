@@ -50,7 +50,8 @@ module_energy_LA126.distribution <- function(command, ...) {
     # Load required inputs
     get_data(all_data, "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh") %>%
       gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) ->
+      mutate(year = as.integer(substr(year, 2, 5))) %>%
+      filter(year %in% HISTORICAL_YEARS) ->   # ensure temp data match our current history
       L1011.en_bal_EJ_R_Si_Fi_Yh
 
     L122.out_EJ_R_gasproc_F_Yh <- get_data(all_data, "L122.out_EJ_R_gasproc_F_Yh")

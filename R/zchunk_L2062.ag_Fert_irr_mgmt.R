@@ -60,12 +60,13 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
       select(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology, minicam.energy.input, year, coefficient) ->
       L2062.AgCoef_Fert_ag_irr_mgmt
 
-    # Copy 2010 coefficients to all future years, then bind with historic coefficients
+    # Copy 2010 coefficients to all future years, bind with historic coefficients, then remove zeroes
     L2062.AgCoef_Fert_ag_irr_mgmt %>%
       filter(year == max(BASE_YEARS)) %>%
       select(-year) %>%
       repeat_add_columns(tibble::tibble(year = FUTURE_YEARS)) %>%
-      bind_rows(L2062.AgCoef_Fert_ag_irr_mgmt) ->
+      bind_rows(L2062.AgCoef_Fert_ag_irr_mgmt) %>%
+      filter(coefficient > 0) ->
       L2062.AgCoef_Fert_ag_irr_mgmt
 
     # Produce outputs
