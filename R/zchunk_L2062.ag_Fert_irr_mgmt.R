@@ -70,17 +70,26 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
       L2062.AgCoef_Fert_ag_irr_mgmt
 
     # Calculate fertilizer coefficients for bioenergy crops
-    # bio_grass_Fert_IO_kgNGJ <- round(
-    #   bio_grass_Fert_IO_gNm2 * conv_g_kg / bio_grass_Yield_kgCm2 *          #convert from application rate per unit area to per unit carbon
-    #     Ccontent_cellulose * (1 - A_Fodderbio_chars$WaterContent[ A_Fodderbio_chars$GCAM_commodity == "biomass_grass" ] ) /    # convert from carbon to wet biomass
-    #     ( bio_GJt * conv_kg_t ), #convert from biomass to energy
-    #   digits_Fert_IO )
-    # bio_tree_Fert_IO_kgNGJ <- round(
-    #   bio_tree_Fert_IO_gNm2 * conv_g_kg / bio_tree_Yield_kgCm2 *          #convert from application rate per unit area to per unit carbon
-    #     Ccontent_cellulose * (1 - A_Fodderbio_chars$WaterContent[ A_Fodderbio_chars$GCAM_commodity == "biomass_tree" ] ) /    # convert from carbon to wet biomass
-    #     ( bio_GJt * conv_kg_t ), #convert from biomass to energy
-    #   digits_Fert_IO )
-    #
+    A_Fodderbio_chars %>%
+      filter(GCAM_commodity == "biomass_grass") %>%
+      mutate(coefficient = (aglu.BIO_GRASS_FERT_IO_GNM2 * CONV_G_KG / aglu.BIO_GRASS_YIELD_KGCM2    # Convert from application per unit area to per unit carbon
+                            * aglu.CCONTENT_CELLULOSE * (1 - WaterContent))                         # Convert from carbon to wet biomass
+                            / (aglu.BIO_ENERGY_CONTENT_GJT * CONV_KG_T)) ->                         # Convert from biomass to energy
+      bio_grass_coef
+
+    A_Fodderbio_chars %>%
+      filter(GCAM_commodity == "biomass_tree") %>%
+      mutate(coefficient = (aglu.BIO_TREE_FERT_IO_GNM2 * CONV_G_KG / aglu.BIO_TREE_YIELD_KGCM2    # Convert from application per unit area to per unit carbon
+                            * aglu.CCONTENT_CELLULOSE * (1 - WaterContent))                         # Convert from carbon to wet biomass
+             / (aglu.BIO_ENERGY_CONTENT_GJT * CONV_KG_T)) ->                         # Convert from biomass to energy
+      bio_tree_coef
+
+    L2052.AgCost_bio_irr_mgmt %>%
+      select(-nonLandVariableCost) %>%                  # We are just using this data.frame to get the region/sector/tech names
+      mutate(minicam.energy.input = "N fertilizer") %>%
+      mutate(coefficient = if_else(startsWith(AgSupplySubsector, "biomass_grass"),
+                                   bio_grass_coef$coefficient, bio_tree_coef$coefficient)) ->
+      L2062.AgCoef_Fert_bio_irr_mgmt
 
     # Produce outputs
     L2062.AgCoef_Fert_ag_irr_mgmt %>%
@@ -91,16 +100,13 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
       add_legacy_name("L2062.AgCoef_Fert_ag_irr_mgmt") %>%
       add_precursors("common/GCAM_region_names", "water/basin_to_country_mapping", "temp-data-inject/L142.ag_Fert_IO_R_C_Y_GLU") ->
       L2062.AgCoef_Fert_ag_irr_mgmt
-    tibble() %>%
+    L2062.AgCoef_Fert_bio_irr_mgmt %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2062.AgCoef_Fert_bio_irr_mgmt") %>%
-      add_precursors("common/GCAM_region_names", "water/basin_to_country_mapping", "aglu/A_Fodderbio_chars",
-                     "temp-data-inject/L142.ag_Fert_IO_R_C_Y_GLU", "temp-data-inject/L205.AgCost_ag", "temp-data-inject/L205.AgCost_bio") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
+      add_precursors("aglu/A_Fodderbio_chars", "temp-data-inject/L2052.AgCost_bio_irr_mgmt") ->
       L2062.AgCoef_Fert_bio_irr_mgmt
     tibble() %>%
       add_title("descriptive title of data") %>%
@@ -109,7 +115,7 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2062.AgCost_ag_irr_mgmt_adj") %>%
       add_precursors("common/GCAM_region_names", "water/basin_to_country_mapping", "aglu/A_Fodderbio_chars",
-                     "temp-data-inject/L142.ag_Fert_IO_R_C_Y_GLU", "temp-data-inject/L205.AgCost_ag", "temp-data-inject/L205.AgCost_bio") %>%
+                     "temp-data-inject/L142.ag_Fert_IO_R_C_Y_GLU", "temp-data-inject/L2052.AgCost_ag_irr_mgmt") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
       L2062.AgCost_ag_irr_mgmt_adj
@@ -120,7 +126,7 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2062.AgCost_bio_irr_mgmt_adj") %>%
       add_precursors("common/GCAM_region_names", "water/basin_to_country_mapping", "aglu/A_Fodderbio_chars",
-                     "temp-data-inject/L142.ag_Fert_IO_R_C_Y_GLU", "temp-data-inject/L205.AgCost_ag", "temp-data-inject/L205.AgCost_bio") %>%
+                     "temp-data-inject/L142.ag_Fert_IO_R_C_Y_GLU", "temp-data-inject/L2052.AgCost_ag_irr_mgmt", "temp-data-inject/L2052.AgCost_bio_irr_mgmt") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
       L2062.AgCost_bio_irr_mgmt_adj
