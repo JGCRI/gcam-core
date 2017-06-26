@@ -8,7 +8,8 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L241.StubAgTradeCoeff_food}, \code{L241.StubAgTradeCoeff_nonfood}, \code{L241.StubAgTradeCoeff_feed}, \code{L241.AgProdTech_RES_output}, \code{L241.RES_Market}. The corresponding file in the
 #' original data system was \code{L241.trade_input.R} (aglu level2).
-#' @details Describe in detail what this chunk does.
+#' @details Build datasets for ssp4 agricultural trade: food and nonfood trade coefficients, feed trade
+#' coefficients, restricted agricultural trade, and trade regions.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -56,7 +57,7 @@ module_aglu_L241.trade_input <- function(command, ...) {
     L241.low_reg <- L241.pcgdp_2010$region[L241.pcgdp_2010$value < aglu.LOW_GROWTH_PCGDP]
 
     # Create table of regions, technologies, and all base years (47-51)
-    # NOTE: Easiest if the model base years are subsetted from a full table as a last step in the construction of each of these tables
+    # Easiest if the model base years are subsetted from a full table as a last step in the construction of each of these tables
     A_demand_technology %>%
       write_to_all_regions(c(aglu.NAMES_TECH, "minicam.energy.input", "market.name"), GCAM_region_names) %>%
       mutate(stub.technology = technology) ->
@@ -80,6 +81,12 @@ module_aglu_L241.trade_input <- function(command, ...) {
     # Fraction of food that should be produced locally
     LOCAL_FOOD_FRACT <- 0.8
 
+    # Essentially, what we are doing is requiring that some fraction (80%, see LOCAL_FOOD_FRACT above)
+    # of all food is produced domestically. We use the RES policy code in GCAM to do this. The two pipelines
+    # below set up the demand portion of that, requiring the demand sectors to demand ag_trade credits in
+    # addition to crops/livestocks. The demand is equal to 0.8 * the amount of crop/livestock demanded to
+    # ensure that the 80% threshold is met.
+
     # Coefficient for ag_trade of food crops (incl secondary products) (61-69)
     A_demand_technology_R %>%
       filter(supplysector == "FoodDemand_Crops") %>%
@@ -92,6 +99,8 @@ module_aglu_L241.trade_input <- function(command, ...) {
       L241.StubAgTradeCoeff_food
 
     # Coefficient for ag_trade of non-food crops (incl secondary products) (71-76)
+    # Sets up the supply of ag_trade credits. It says that each supply sector generates
+    # 1 credit for each unit of crop/livestock produced.
     A_demand_technology_R %>%
       filter(supplysector == "NonFoodDemand_Crops") %>%
       mutate(coefficient = LOCAL_FOOD_FRACT,
@@ -119,6 +128,12 @@ module_aglu_L241.trade_input <- function(command, ...) {
       select(one_of(aglu.NAMES_AGRES)) ->
       L241.AgProdTech_RES_output
 
+    # Next section sets up the trade regions. For low income regions, we are assuming trade is restricted,
+    # so they have to meet the 80% threshold internally. Medium- to High-Income regions have more open trade,
+    # so those thresholds can be met anywhere in the region. That is, we assume free trade in medium to high-
+    # income regions, and restricted trade in low income regions. Note: these assumptions are derived from
+    # the SSP4 storyline (see O'Neill et al., 2017).
+
     # Market for policy portfolio (92-100)
     GCAM_region_names %>%
       mutate(policy.portfolio.standard = "ag_trade",
@@ -139,10 +154,10 @@ module_aglu_L241.trade_input <- function(command, ...) {
 
     # Produce outputs
     L241.StubAgTradeCoeff_food %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Coefficient for ag_trade of food crops") %>%
+      add_units("None") %>%
+      add_comments("Each supply sector generates 1 credit for each unit of crop/livestock produced.") %>%
+      add_comments("We remove any regions for which agriculture and land use are not modeled.") %>%
       add_legacy_name("L241.StubAgTradeCoeff_food") %>%
       add_precursors("common/GCAM_region_names",
                      "aglu/A_demand_technology",
@@ -150,37 +165,36 @@ module_aglu_L241.trade_input <- function(command, ...) {
       L241.StubAgTradeCoeff_food
 
     L241.StubAgTradeCoeff_nonfood %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Coefficient for ag_trade of nonfood crops") %>%
+      add_units("None") %>%
+      add_comments("Each supply sector generates 1 credit for each unit of crop/livestock produced.") %>%
+      add_comments("We remove any regions for which agriculture and land use are not modeled.") %>%
       add_legacy_name("L241.StubAgTradeCoeff_nonfood") %>%
       same_precursors_as(L241.StubAgTradeCoeff_food) ->
       L241.StubAgTradeCoeff_nonfood
 
     L241.StubAgTradeCoeff_feed %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Coefficient for ag_trade of feed crops") %>%
+      add_units("None") %>%
+      add_comments("Each supply sector generates 1 credit for each unit of crop/livestock produced.") %>%
+      add_comments("We remove any regions for which agriculture and land use are not modeled.") %>%
       add_legacy_name("L241.StubAgTradeCoeff_feed") %>%
       add_precursors("aglu/A_an_input_technology") ->
       L241.StubAgTradeCoeff_feed
 
     L241.AgProdTech_RES_output %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Coefficient for RES ag_trade of food crops (incl secondary products)") %>%
+      add_units("None") %>%
+      add_comments("Each supply sector generates 1 credit for each unit of crop/livestock produced.") %>%
+      add_comments("We remove any regions for which agriculture and land use are not modeled.") %>%
       add_legacy_name("L241.AgProdTech_RES_output") %>%
       add_precursors("temp-data-inject/L2012.AgProduction_ag_irr_mgmt") ->
       L241.AgProdTech_RES_output
 
     L241.RES_Market %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Market for policy portfolio") %>%
+      add_units("None") %>%
+      add_comments("We remove any regions for which agriculture and land use are not modeled.") %>%
       add_legacy_name("L241.RES_Market") %>%
       add_precursors("common/GCAM_region_names",
                      "L102.pcgdp_thous90USD_Scen_R_Y") ->

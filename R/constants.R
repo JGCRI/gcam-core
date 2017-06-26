@@ -91,8 +91,8 @@ MAX_HA_TO_CROPLAND <- 3
 MGMT_YIELD_ADJ <- 0.1
 
 # GDP per capita thresholds for SSP4 region groupings
-aglu.HIGH_GROWTH_PCGDP <- 12.275
-aglu.LOW_GROWTH_PCGDP  <- 2.75
+aglu.HIGH_GROWTH_PCGDP <- 12.275   # thousand 2010$ per person
+aglu.LOW_GROWTH_PCGDP  <- 2.75     # thousand 2010$ per person
 
 # Number of digits for model input data
 aglu.DIGITS_CALPRICE  <- 4 # prices and costs

@@ -21,7 +21,8 @@ original data system was \code{L241.trade_input.R} (aglu level2).
 Build datasets for ssp4 agricultural trade.
 }
 \details{
-Describe in detail what this chunk does.
+Build datasets for ssp4 agricultural trade: food and nonfood trade coefficients, feed trade
+coefficients, restricted agricultural trade, and trade regions.
 }
 \author{
 BBL June 2017
