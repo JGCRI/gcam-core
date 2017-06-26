@@ -288,8 +288,10 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
 
     ## Produce outputs
     gdp.mil90usd.scen.rgn.yr %>%
+      ungroup %>%
       filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%
       rename(value = gdp) %>%
+      mutate(year = as.integer(year)) %>%
       add_title("Gross Domestic Product (GDP) by scenario, region, and year.") %>%
       add_units("Millions of 1990 USD (MER)") %>%
       add_comments("For the SSP scenarios, SSP GDP projections are scaled to match ") %>%
@@ -305,6 +307,7 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
       L102.gdp_mil90usd_Scen_R_Y
 
     pcgdp.thous90usd.scen.rgn.yr %>%
+      ungroup %>%
       filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%
       rename(value = pcgdp) %>%
       add_title("Gross Domestic Product (GDP) per capita, by scenario, region, and year.") %>%

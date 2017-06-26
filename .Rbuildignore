@@ -3,10 +3,12 @@
 .travis.yml
 .remake/
 outputs/
-sample-generator/
+chunk-generator/
+figures/
 network/
 tracking/
 xml/
 README.md
 R/README.md
 R/README.html
+coverage.R
