@@ -39,33 +39,26 @@ module_aglu_LB163.bio_Yield_R_GLU_irr <- function(command, ...) {
     L151.ag_rfdHA_ha_ctry_crop <- get_data(all_data, "L151.ag_rfdHA_ha_ctry_crop")
     L151.ag_rfdProd_t_ctry_crop <- get_data(all_data, "L151.ag_rfdProd_t_ctry_crop")
 
-    # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
+
+    # Perform computations
+    # old comment: This method follows the same method as LB113, with the exception that
+    #              the yield indices are computed separately for rainfed/irrigated, but
+    #              again against the global average for each crop, across both irrigated
+    #              and rainfed. This method should roughly preserve the global average
+    #              bioenergy yields; what we want to avoid here is increasing the global
+    #              average yields just by separating irr/rfd.
     #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses vecpaste
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # ===================================================
+    # Step 1: Aggregate FAO harvested area and production for each GTAP_crop to get global
+    # yields in a base year.
+
+
+    # Step 2: Calculate yield for each region-GLU-crop-irrigation and compare to global
+    # average yield from Step 1, according to the formula
+
+
 
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
+      tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -78,7 +71,6 @@ module_aglu_LB163.bio_Yield_R_GLU_irr <- function(command, ...) {
                      "L151.ag_irrProd_t_ctry_crop",
                      "L151.ag_rfdHA_ha_ctry_crop",
                      "L151.ag_rfdProd_t_ctry_crop") %>%
-      # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L163.ag_irrBioYield_GJm2_R_GLU
     tibble() %>%
@@ -94,7 +86,6 @@ module_aglu_LB163.bio_Yield_R_GLU_irr <- function(command, ...) {
                      "L151.ag_irrProd_t_ctry_crop",
                      "L151.ag_rfdHA_ha_ctry_crop",
                      "L151.ag_rfdProd_t_ctry_crop") %>%
-      # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L163.ag_rfdBioYield_GJm2_R_GLU
 
