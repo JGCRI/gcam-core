@@ -8,12 +8,14 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L163.ag_irrBioYield_GJm2_R_GLU}, \code{L163.ag_rfdBioYield_GJm2_R_GLU}. The corresponding file in the
 #' original data system was \code{LB163.bio_Yield_R_GLU_irr.R} (aglu level1).
-#' @details Describe in detail what this chunk does.
+#' @details A global average yield is calculated for each GTAP crop. This is then used to calculate a yield Ratio for each
+#' iso-GLU-irrigation for each GTAP crop. This ratio and harvested area are then summed across all GTAP crops to the GCAM
+#' region-GLU-irrigation level and are used to calculate a YieldIndex for each region-GLU-irrigation. This YieldIndex is
+#' then multiplied by a base yield (calculated from USA yields) to get bioenergy yields for each region-GLU-irrigation.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
-#' @export
+#' @author ACS June 2017
 module_aglu_LB163.bio_Yield_R_GLU_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
@@ -124,7 +126,7 @@ module_aglu_LB163.bio_Yield_R_GLU_irr <- function(command, ...) {
 
 
     # Step 3: Bioenergy yields are equal to the region-glu-irrigation index,
-    # calculated in Step 2/L163.YieldIndex_R_GLU_irr, multiplied by a base yield.
+    # calculated in Step 2 - L163.YieldIndex_R_GLU_irr, multiplied by a base yield.
     # The base yield is taken to be the maximum of the yields in the USA
     # region, or the region containing the USA because the Wullschleger paper
     # from which the yield estimate was derived was for the USA.
@@ -167,34 +169,32 @@ module_aglu_LB163.bio_Yield_R_GLU_irr <- function(command, ...) {
 
     # Produce outputs
     L163.ag_irrBioYield_GJm2_R_GLU %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Reference base year bioenergy yields for irrigated crops by GCAM region / GLU") %>%
+      add_units("Gigajoule per square meter (GJ/m2)") %>%
+      add_comments("A global average yield is calculated for each GTAP_crop and is used to calculate") %>%
+      add_comments("aggregate irrigated harvested areas to the GCAM region level (summing over all GTAPcrops),") %>%
+      add_comments("and then to calculate a Yield Index for each irrigated region-GLU. The region-GLU ") %>%
+      add_comments("specific index is then multiplied by a base yield to give irrigated bioenergy yields.") %>%
       add_legacy_name("L163.ag_irrBioYield_GJm2_R_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
                      "L100.LDS_ag_HA_ha",
                      "L100.LDS_ag_prod_t",
                      "L151.ag_irrHA_ha_ctry_crop",
-                     "L151.ag_irrProd_t_ctry_crop",
-                     "L151.ag_rfdHA_ha_ctry_crop",
-                     "L151.ag_rfdProd_t_ctry_crop") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L151.ag_irrProd_t_ctry_crop")  ->
       L163.ag_irrBioYield_GJm2_R_GLU
     L163.ag_rfdBioYield_GJm2_R_GLU %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Reference base year bioenergy yields for rainfed crops by GCAM region / GLU") %>%
+      add_units("Gigajoule per square meter (GJ/m2)") %>%
+      add_comments("A global average yield is calculated for each GTAP_crop and is used to calculate") %>%
+      add_comments("aggregate rainfed harvested areas to the GCAM region level (summing over all GTAPcrops),") %>%
+      add_comments("and then to calculate a Yield Index for each rainfed region-GLU. The region-GLU ") %>%
+      add_comments("specific index is then multiplied by a base yield to give rainfed bioenergy yields.") %>%
       add_legacy_name("L163.ag_rfdBioYield_GJm2_R_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
                      "L100.LDS_ag_HA_ha",
                      "L100.LDS_ag_prod_t",
-                     "L151.ag_irrHA_ha_ctry_crop",
-                     "L151.ag_irrProd_t_ctry_crop",
                      "L151.ag_rfdHA_ha_ctry_crop",
-                     "L151.ag_rfdProd_t_ctry_crop") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L151.ag_rfdProd_t_ctry_crop") ->
       L163.ag_rfdBioYield_GJm2_R_GLU
 
     return_data(L163.ag_irrBioYield_GJm2_R_GLU, L163.ag_rfdBioYield_GJm2_R_GLU)
