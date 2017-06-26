@@ -1,6 +1,6 @@
 #' module_aglu_LB163.bio_Yield_R_GLU_irr
 #'
-#' Briefly describe what this chunk does.
+#' This module computes base year rainfed and irrigated bioenergy crop yields for each GCAM region X GLU.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -50,11 +50,58 @@ module_aglu_LB163.bio_Yield_R_GLU_irr <- function(command, ...) {
     #
     # Step 1: Aggregate FAO harvested area and production for each GTAP_crop to get global
     # yields in a base year.
+    # Harvested area:
+    L100.LDS_ag_HA_ha %>%
+      group_by(GTAP_crop) %>%
+      summarise(HA = sum(value)) ->
+      L163.ag_HA_ha_glbl_crop
+
+    # Aggregate Production and join aggregated HA to calculate global average yield for each GTAP crop:
+    L100.LDS_ag_prod_t %>%
+      group_by(GTAP_crop) %>%
+      summarise(Prod = sum(value)) %>%
+      left_join_error_no_match(L163.ag_HA_ha_glbl_crop, by = "GTAP_crop") %>%
+      mutate(Yield_avg = Prod / HA) ->
+      L163.ag_prod_t_glbl_crop
 
 
-    # Step 2: Calculate yield for each region-GLU-crop-irrigation and compare to global
-    # average yield from Step 1, according to the formula
+    # Step 2: Calculate yield for each region-GLU-GTAPcrop-irrigation and compare to global
+    # average yield from Step 1.
+    #
+    # Process irrigated HA and production by iso-GLU-GTAPcrop for joining and calculating yield:
+    L151.ag_irrHA_ha_ctry_crop %>%
+      mutate(Irr_Rfd = "IRR") %>%
+      rename(HA = irrHA) ->
+      L151.ag_irrHA_ha_ctry_crop
 
+    L151.ag_irrProd_t_ctry_crop %>%
+      mutate(Irr_Rfd = "IRR") %>%
+      rename(Prod = irrProd) ->
+      L151.ag_irrProd_t_ctry_crop
+
+    # Process rainfed HA and production by iso-GLU-GTAPcrop for joining and calculating yield:
+    L151.ag_rfdHA_ha_ctry_crop %>%
+      mutate(Irr_Rfd = "RFD") %>%
+      rename(HA = rfdHA) ->
+      L151.ag_rfdHA_ha_ctry_crop
+
+    L151.ag_rfdProd_t_ctry_crop %>%
+      mutate(Irr_Rfd = "RFD") %>%
+      rename(Prod = rfdProd) ->
+      L151.ag_rfdProd_t_ctry_crop
+
+    # Join all four processed L151 data frames and use to calculate yield
+    # by iso-GLU-GTAPcrop-irrigation.
+    # Then, join in global average yield from step 1 for each GTAPcrop,
+    # use it to compute a Ratio = Yield / Yield_avg:
+    L151.ag_irrHA_ha_ctry_crop %>%
+      bind_rows(L151.ag_rfdHA_ha_ctry_crop) %>%
+      left_join_error_no_match(bind_rows(L151.ag_irrProd_t_ctry_crop, L151.ag_rfdProd_t_ctry_crop),
+                               by = c("iso", "GLU", "GTAP_crop", "Irr_Rfd")) %>%
+      mutate(Yield = Prod / HA) %>%
+      # drop NA's - values where HA = 0
+      na.omit() ->
+      L163.ag_Yield_tha_ctry_crop_irr
 
 
     # Produce outputs
