@@ -14,7 +14,7 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_aglu_LB164.ag_Costs_USA_C_2005_irr_DISABLED <- function(command, ...) {
+module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "aglu/USDA_crops",
@@ -60,18 +60,19 @@ module_aglu_LB164.ag_Costs_USA_C_2005_irr_DISABLED <- function(command, ...) {
     # ===================================================
 
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L164.ag_Cost_75USDkg_C") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
+      add_precursors("common/iso_GCAM_regID",
+                     "aglu/USDA_crops",
+                     "aglu/USDA_item_cost",
+                     "aglu/USDA_cost_data",
+                     "L100.LDS_ag_HA_ha",
+                     "L133.ag_Cost_75USDkg_C",
+                     "L161.ag_irrHA_frac_R_C_GLU") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L164.ag_Cost_75USDkg_C
 
