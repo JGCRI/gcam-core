@@ -118,9 +118,6 @@ CONV_MWH_GJ <- 3.6 # Megawatt hours to Gigajoules
 CONV_GWH_EJ <- 3.6e-6
 CONV_KWH_GJ <- 3.6e-3
 
-# Money
-CONV_2007_1975_USD <- 0.317
-
 # Other
 CONV_MCAL_PCAL <- 1e-9
 CONV_M3_BM3 <- 1e-09 # Cubic meters (m3) to billion cubic meters (bm3)
