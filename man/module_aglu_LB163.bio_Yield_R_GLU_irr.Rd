@@ -18,11 +18,14 @@ the generated outputs: \code{L163.ag_irrBioYield_GJm2_R_GLU}, \code{L163.ag_rfdB
 original data system was \code{LB163.bio_Yield_R_GLU_irr.R} (aglu level1).
 }
 \description{
-Briefly describe what this chunk does.
+This module computes base year rainfed and irrigated bioenergy crop yields for each GCAM region X GLU.
 }
 \details{
-Describe in detail what this chunk does.
+A global average yield is calculated for each GTAP crop. This is then used to calculate a yield Ratio for each
+iso-GLU-irrigation for each GTAP crop. This ratio and harvested area are then summed across all GTAP crops to the GCAM
+region-GLU-irrigation level and are used to calculate a YieldIndex for each region-GLU-irrigation. This YieldIndex is
+then multiplied by a base yield (calculated from USA yields) to get bioenergy yields for each region-GLU-irrigation.
 }
 \author{
-YourInitials CurrentMonthName 2017
+ACS June 2017
 }
