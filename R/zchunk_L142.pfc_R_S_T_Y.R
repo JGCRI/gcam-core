@@ -36,12 +36,14 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
+
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     GCAM_tech <- get_data(all_data, "emissions/gcam_fgas_tech")
     Other_F <- get_data(all_data, "emissions/other_f_gases")
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     EDGAR_sector <- get_data(all_data, "emissions/EDGAR/EDGAR_sector_fgas")
     GWP <- get_data(all_data, "emissions/A41.GWP")
+
     get_data(all_data, "temp-data-inject/L144.in_EJ_R_bld_serv_F_Yh")  %>%
       gather(year, value, -GCAM_region_ID, -sector, -fuel, -service) %>%
       mutate(year = as.integer(substr(year, 2, 5))) ->
@@ -60,7 +62,7 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
       EDGAR_CF4
 
     # This chunk maps EDGAR HFC emissions to GCAM technologies
-    # First, create a table with all EDGAR HFCs
+    # First, create a table with all EDGAR HFCs, and prepare "Other_F" gases by renaming column.
 
     EDGAR_SF6 %>%
       mutate(Non.CO2 = "SF6") ->
@@ -75,19 +77,24 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
       bind_rows(EDGAR_SF6,EDGAR_C2F6) ->
       ALL_EDGAR_HFC
 
-    #Then, prepare EDGAR data for use
+    Other_F %>%
+      rename(Non.CO2 = Gas) ->
+      Other_F
+
+    # Then, prepare EDGAR data for use.
+    # Map in region ID and sector name, and remove year 1970 to match "HISTORICAL_YEARS" constant
 
     ALL_EDGAR_HFC %>%
-      left_join_error_no_match(EDGAR_sector, by = "IPCC_description") %>%
+      left_join_error_no_match(EDGAR_sector, by = "IPCC_description") %>%     # Add GCAM sector from the sector mapping
       standardize_iso(col = "ISO_A3") %>%
-      change_iso_code('rou','rom') %>%
+      change_iso_code('rou','rom') %>%                                        # Switch Romania iso code to its pre-2002 value
       left_join_error_no_match(iso_GCAM_regID, by = "iso")  %>%
       rename(EDGAR_agg_sector = agg_sector) %>%
       select(GCAM_region_ID, EDGAR_agg_sector, Non.CO2, year, value)  %>%
       filter(year !="1970") ->
       L142.EDGAR_PFC
 
-   L142.EDGAR_PFC %>%
+    L142.EDGAR_PFC %>%
       group_by(GCAM_region_ID, EDGAR_agg_sector, Non.CO2, year) %>%
       summarize(value = sum(value))  %>%
       rename(EDGAR_emissions = value) ->
@@ -95,10 +102,6 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
 
    # Map in other f-gas sector, which varies by gas.
    # Seperate
-
-   Other_F %>%
-     rename(Non.CO2 = Gas) ->
-     Other_F
 
    L142.EDGAR_PFC_R_S_T_Yh.melt %>%
      filter(EDGAR_agg_sector != "other_f_gases") ->
@@ -141,6 +144,7 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
     mutate(share = value.y /value.x) ->
     L142.R_cooling_T_Yh.melt
 
+  # Resh
   L142.R_cooling_T_Yh.melt %>%
     rename(supplysector = service)  %>%
     right_join(L142.pfc_R_S_T_Yh.melt, by = c("GCAM_region_ID", "year", "supplysector")) %>%
@@ -158,9 +162,10 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
     # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
     # There's also a `same_precursors_as(x)` you can use
     # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+ #   tibble() %>%
+  L142.pfc_R_S_T_Yh %>%
+      add_title("HFC emissions by region, sector, technology, gas, and historical year") %>%
+      add_units("Gg") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L142.pfc_R_S_T_Yh") %>%
