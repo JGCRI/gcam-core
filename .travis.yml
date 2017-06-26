@@ -2,7 +2,6 @@
 
 language: r
 warnings_are_errors: true
-#sudo: required
 cache: packages
 
 env:
@@ -11,5 +10,10 @@ env:
 r_github_packages:
   - jimhester/covr
   - krlmlr/mockr
+
+script:
+  - R CMD build .
+  - travis_wait R CMD check *.tar.gz
+
 after_success:
   - travis_wait Rscript coverage.R
