@@ -53,13 +53,15 @@ module_aglu_LB163.bio_Yield_R_GLU_irr <- function(command, ...) {
     # Harvested area:
     L100.LDS_ag_HA_ha %>%
       group_by(GTAP_crop) %>%
-      summarise(HA = sum(value)) ->
+      summarise(HA = sum(value)) %>%
+      ungroup() ->
       L163.ag_HA_ha_glbl_crop
 
     # Aggregate Production and join aggregated HA to calculate global average yield for each GTAP crop:
     L100.LDS_ag_prod_t %>%
       group_by(GTAP_crop) %>%
       summarise(Prod = sum(value)) %>%
+      ungroup() %>%
       left_join_error_no_match(L163.ag_HA_ha_glbl_crop, by = "GTAP_crop") %>%
       mutate(Yield_avg = Prod / HA) ->
       L163.ag_prod_t_glbl_crop
@@ -93,19 +95,78 @@ module_aglu_LB163.bio_Yield_R_GLU_irr <- function(command, ...) {
     # Join all four processed L151 data frames and use to calculate yield
     # by iso-GLU-GTAPcrop-irrigation.
     # Then, join in global average yield from step 1 for each GTAPcrop,
-    # use it to compute a Ratio = Yield / Yield_avg:
+    # use it to compute a Ratio = Yield / Yield_avg and
+    # a Ratio_weight = Ratio * HA.
+    # HA and Ratio_weight can then be aggregated from iso to GCAM region
+    # and used to calculate YieldIndex = Ratio_weight/HA:
     L151.ag_irrHA_ha_ctry_crop %>%
       bind_rows(L151.ag_rfdHA_ha_ctry_crop) %>%
       left_join_error_no_match(bind_rows(L151.ag_irrProd_t_ctry_crop, L151.ag_rfdProd_t_ctry_crop),
                                by = c("iso", "GLU", "GTAP_crop", "Irr_Rfd")) %>%
       mutate(Yield = Prod / HA) %>%
       # drop NA's - values where HA = 0
-      na.omit() ->
-      L163.ag_Yield_tha_ctry_crop_irr
+      na.omit() %>%
+      # join global average yield for each GTAP crop, and calculate Ratio and Ratio_weight
+      # for aggregation from iso to GCAM region
+      left_join_error_no_match(select(L163.ag_prod_t_glbl_crop, GTAP_crop, Yield_avg),
+                               by = "GTAP_crop") %>%
+      mutate(Ratio = Yield / Yield_avg,
+             Ratio_weight = Ratio * HA) %>%
+      # add GCAM region info and aggregate HA and Ratio_weight
+      left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID),
+                               by = "iso") %>%
+      group_by(GCAM_region_ID, GLU, Irr_Rfd) %>%
+      summarise(HA = sum(HA),
+                Ratio_weight = sum(Ratio_weight)) %>%
+      ungroup() %>%
+      mutate(YieldIndex = Ratio_weight / HA) ->
+      L163.YieldIndex_R_GLU_irr
+
+
+    # Step 3: Bioenergy yields are equal to the region-glu-irrigation index,
+    # calculated in Step 2/L163.YieldIndex_R_GLU_irr, multiplied by a base yield.
+    # The base yield is taken to be the maximum of the yields in the USA
+    # region, or the region containing the USA because the Wullschleger paper
+    # from which the yield estimate was derived was for the USA.
+
+    # USA region ID:
+    iso_GCAM_regID %>%
+      filter(iso == "usa") %>%
+      select(GCAM_region_ID) ->
+      USAreg
+
+    # Calculate the base yield, a scaler value:
+    L163.YieldIndex_R_GLU_irr %>%
+      filter(GCAM_region_ID == USAreg$GCAM_region_ID) %>%
+      summarise(maxYieldIndex = max(YieldIndex)) %>%
+      mutate(BaseYieldIndex = MAX_BIO_YIELD_THA / maxYieldIndex) %>%
+      mutate(BaseYieldIndex_GJm2 = BaseYieldIndex * BIO_GJT / CONV_HA_M2) %>%
+      select(BaseYieldIndex_GJm2) ->
+      L163.base_bio_yield_GJm2
+
+    # Finally, calculate bioenergy yields in each region-glu-irrigation combo:
+    L163.YieldIndex_R_GLU_irr %>%
+      mutate(Yield_GJm2 = YieldIndex * L163.base_bio_yield_GJm2$BaseYieldIndex_GJm2) %>%
+      select(-HA, -Ratio_weight, -YieldIndex) ->
+      L163.ag_bioYield_GJm2_R_GLU_irr
+
+
+
+    # Step 4: Split rainfed and irrigated into separate tables for the write-out
+    # (to be consistent with other files)
+    L163.ag_bioYield_GJm2_R_GLU_irr %>%
+      filter(Irr_Rfd == "IRR") %>%
+      select(-Irr_Rfd) ->
+      L163.ag_irrBioYield_GJm2_R_GLU
+
+    L163.ag_bioYield_GJm2_R_GLU_irr %>%
+      filter(Irr_Rfd == "RFD") %>%
+      select(-Irr_Rfd) ->
+      L163.ag_rfdBioYield_GJm2_R_GLU
 
 
     # Produce outputs
-      tibble() %>%
+    L163.ag_irrBioYield_GJm2_R_GLU %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -120,7 +181,7 @@ module_aglu_LB163.bio_Yield_R_GLU_irr <- function(command, ...) {
                      "L151.ag_rfdProd_t_ctry_crop") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L163.ag_irrBioYield_GJm2_R_GLU
-    tibble() %>%
+    L163.ag_rfdBioYield_GJm2_R_GLU %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%

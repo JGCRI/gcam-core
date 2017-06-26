@@ -83,6 +83,12 @@ MAX_HA_TO_CROPLAND <- 3
 # Yield multiplier that goes from the observed yield to the "high" and "low" yields: observed plus or minus observed times this number
 MGMT_YIELD_ADJ <- 0.1
 
+# Maximum biomass yield
+# Source: Wullschleger doi:10.2134/agronj2010.0087 ??
+MAX_BIO_YIELD_THA <- 20
+
+BIO_GJT <- 17.5
+
 # ======================================================================
 # energy constants
 
@@ -102,6 +108,7 @@ CONV_T_KG <- 1e3
 CONV_KG_T <- 1 / CONV_T_KG
 CONV_T_METRIC_SHORT <- 1000 / 908  # Ratio between metric ton and short ton
 CONV_HA_BM2 <- 1e-5
+CONV_HA_M2 <- 10000
 CONV_THA_KGM2 <- 0.1   # tons C/ha -> kg C/m2
 CONV_GG_TG <- 0.001 # gigagrams to tegagrams
 CONV_TST_TG <- 0.000907 # thousand short tons to Tg
