@@ -5,7 +5,6 @@ OUTPUTS_DIR  <- "outputs/"
 XML_DIR      <- "xml/"
 COMMENT_CHAR <- "#"
 OLD_DATA_SYSTEM_BEHAVIOR <- TRUE
-UNDER_TIMESHIFT <- FALSE
 YEAR_PATTERN <- "^(1|2)[0-9]{3}$"   # a 1 or 2 followed by three digits, and nothing else
 
 # ======================================================================
@@ -50,7 +49,7 @@ CROSIT_HISTORICAL_YEAR <- 2005
 SPEC_AG_PROD_YEARS <- seq(max(AGLU_HISTORICAL_YEARS), 2050, by = 5) # Specified ag productivity years
 aglu.DIET_YEARS <- seq(max(AGLU_HISTORICAL_YEARS), 2050, by = 5)
 MIN_PROFIT_MARGIN <- 0.15
-LAND_TOLERANCE <- 0.001
+LAND_TOLERANCE <- 0.005
 DIGITS_LAND_TOTAL <- 2
 DIGITS_LAND_USE <- 7
 

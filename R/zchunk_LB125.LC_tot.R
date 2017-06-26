@@ -82,21 +82,18 @@ module_aglu_LB125.LC_tot <- function(command, ...) {
 
     # It's necessary to make sure the Land Cover changing rates are within certain tolerances
     # We don't do this under timeshift because the tolerance check fails...and it's not clear if that means anything or not
-    if(!UNDER_TIMESHIFT) {
+    L125.LC_bm2_R_Yh_GLU %>%
+      filter(year %in% AGLU_HISTORICAL_YEARS) %>%
+      arrange(GCAM_region_ID, GLU, year) %>%
+      mutate(change_rate = value / lag(value),
+             change = value - lag(value)) ->          # calculate the rate of change
+      LC_check
 
-      L125.LC_bm2_R_Yh_GLU %>%
-        filter(year %in% AGLU_HISTORICAL_YEARS) %>%
-        arrange(GCAM_region_ID, GLU, year) %>%
-        mutate(change_rate = value / lag(value),
-               change = value - lag(value)) ->          # calculate the rate of change
-        LC_check
-
-      # Stop if the rate is outside of the tolerance boundaries
-      out <- abs(LC_check$change_rate - 1) > LAND_TOLERANCE
-      if(any(out, na.rm = TRUE)) {
-        print(na.omit(LC_check[out,]))
-        stop("ERROR: Interannual fluctuation in global land cover exceeds tolerance threshold of ", LAND_TOLERANCE)
-      }
+    # Stop if the rate is outside of the tolerance boundaries
+    out <- abs(LC_check$change_rate - 1) > LAND_TOLERANCE
+    if(any(out, na.rm = TRUE)) {
+      print(na.omit(LC_check[out,]))
+      stop("ERROR: Interannual fluctuation in global land cover exceeds tolerance threshold of ", LAND_TOLERANCE)
     }
 
     # Write out the totals, by region and by region x GLU
