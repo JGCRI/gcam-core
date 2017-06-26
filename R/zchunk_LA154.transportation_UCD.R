@@ -318,6 +318,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%
       group_by(GCAM_region_ID, mode, year = year.x) %>%
       summarise(value = sum(value)) %>%
+      ungroup %>%
       filter(year %in% HISTORICAL_YEARS)
 
     # ===================================================
@@ -336,6 +337,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
                      paste0("energy/UCD_trn_data_", energy.TRN_SSP)) %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L154.in_EJ_R_trn_m_sz_tech_F_Yh
+
     IEA_hist_data_times_UCD_shares %>%
       add_title("Country-level transportation energy data at UCD transportation technology level") %>%
       add_units("EJ") %>%
@@ -347,6 +349,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
                      "temp-data-inject/L1011.in_EJ_ctry_intlship_TOT_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L154.in_EJ_ctry_trn_m_sz_tech_F
+
     out_var_df[["intensity_MJvkm"]] %>%
       add_title("Transportation energy intensity") %>%
       add_units("MJ / vkm") %>%
@@ -362,6 +365,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
                      "L131.in_EJ_R_Senduse_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y
+
     out_var_df[["loadfactor"]] %>%
       add_title("Transortation load factors") %>%
       add_units("pers / veh or tonnes / veh") %>%
@@ -377,6 +381,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
                      "L131.in_EJ_R_Senduse_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L154.loadfactor_R_trn_m_sz_tech_F_Y
+
     out_var_df[["cost_usdvkm"]] %>%
       add_title("Transportation non-fuel costs") %>%
       add_units("2005USD / vkm") %>%
@@ -392,6 +397,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
                      "L131.in_EJ_R_Senduse_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L154.cost_usdvkm_R_trn_m_sz_tech_F_Y
+
     out_var_df[["speed_kmhr"]] %>%
       add_title("Transportation vehicle speeds") %>%
       add_units("km / hr") %>%
@@ -407,6 +413,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
                      "L131.in_EJ_R_Senduse_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L154.speed_kmhr_R_trn_m_sz_tech_F_Y
+
     PKM_nonmotor_GCAM_R %>%
       add_title("Non-motor transportation service output") %>%
       add_units("Million passenger kilometers") %>%
@@ -417,7 +424,10 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L154.out_mpkm_R_trn_nonmotor_Yh
 
-    return_data(L154.in_EJ_R_trn_m_sz_tech_F_Yh, L154.in_EJ_ctry_trn_m_sz_tech_F, L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y, L154.loadfactor_R_trn_m_sz_tech_F_Y, L154.cost_usdvkm_R_trn_m_sz_tech_F_Y, L154.speed_kmhr_R_trn_m_sz_tech_F_Y, L154.out_mpkm_R_trn_nonmotor_Yh)
+    return_data(L154.in_EJ_R_trn_m_sz_tech_F_Yh, L154.in_EJ_ctry_trn_m_sz_tech_F,
+                L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y, L154.loadfactor_R_trn_m_sz_tech_F_Y,
+                L154.cost_usdvkm_R_trn_m_sz_tech_F_Y, L154.speed_kmhr_R_trn_m_sz_tech_F_Y,
+                L154.out_mpkm_R_trn_nonmotor_Yh)
   } else {
     stop("Unknown command")
   }
