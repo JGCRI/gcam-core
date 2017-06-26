@@ -14,7 +14,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author JDH April 2017
-
 module_energy_LA124.heat <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "energy/A_regions",
@@ -22,7 +21,7 @@ module_energy_LA124.heat <- function(command, ...) {
              FILE = "energy/calibrated_techs",
              FILE = "energy/enduse_fuel_aggregation",
              FILE = "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh",
-              "L1231.out_EJ_R_elec_F_tech_Yh"))
+             "L1231.out_EJ_R_elec_F_tech_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L124.in_EJ_R_heat_F_Yh",
              "L124.out_EJ_R_heat_F_Yh",
@@ -32,9 +31,9 @@ module_energy_LA124.heat <- function(command, ...) {
 
     ## silence package check
     year <- value <- fuel <- sector <- GCAM_region_ID <- has_district_heat <-
-        heat <- supplysector <- subsector <- technology <- minicam.energy.input <- NULL
+      heat <- supplysector <- subsector <- technology <- minicam.energy.input <- NULL
     IO_Coef <- value_heatfromelec <- dist_heat <- elec_heat <- sector.y <-
-        norm_val <- mult_val <- heat_val <- NULL
+      norm_val <- mult_val <- heat_val <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -47,7 +46,9 @@ module_energy_LA124.heat <- function(command, ...) {
     get_data(all_data, "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh") %>%
       gather(year, value, -fuel, -sector, -GCAM_region_ID) %>%
       mutate(year = sub("X", "", year)) %>%
-      mutate(year = as.integer(year)) -> L1011.en_bal_EJ_R_Si_Fi_Yh
+      mutate(year = as.integer(year)) %>%
+      filter(year %in% HISTORICAL_YEARS) ->   # ensure temp data match our current history
+      L1011.en_bal_EJ_R_Si_Fi_Yh
 
     L1231.out_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.out_EJ_R_elec_F_tech_Yh")
 
@@ -85,8 +86,8 @@ module_energy_LA124.heat <- function(command, ...) {
     # Heat output: fuel inputs to heat divided by exogenous input-output coefficients
     L124.in_EJ_R_heat_F_Yh %>%
       left_join_error_no_match(L124.globaltech_coef %>%
-                  rename(IO_Coef = value),
-                      by = c("sector", "fuel", "year")) %>%
+                                 rename(IO_Coef = value),
+                               by = c("sector", "fuel", "year")) %>%
       mutate(value = value / IO_Coef) %>%
       select(-IO_Coef) %>%
       filter(GCAM_region_ID %in% heat_regionIDs$GCAM_region_ID)-> L124.out_EJ_R_heat_F_Yh
@@ -104,12 +105,13 @@ module_energy_LA124.heat <- function(command, ...) {
 
     # Secondary output coefficients on heat produced by main activity CHP plants
     L1231.out_EJ_R_elec_F_tech_Yh %>%
-      filter(GCAM_region_ID %in% heat_regionIDs$GCAM_region_ID) %>%
+      filter(GCAM_region_ID %in% heat_regionIDs$GCAM_region_ID,
+             year %in% HISTORICAL_YEARS) %>%
       # Select only technologies that have heat output in calibrated techs mapping
       filter(technology %in% calibrated_techs$technology[calibrated_techs$secondary.output == "heat"]) %>%
       left_join_error_no_match(L124.out_EJ_R_heatfromelec_F_Yh %>%
-                  rename(value_heatfromelec = value) %>%
-                  rename(temp = sector), by = c("GCAM_region_ID", "fuel", "year")) %>%
+                                 rename(value_heatfromelec = value) %>%
+                                 rename(temp = sector), by = c("GCAM_region_ID", "fuel", "year")) %>%
       # Heat output divided by electricity output
       mutate(value = value_heatfromelec / value) %>%
       select(GCAM_region_ID, sector, fuel, technology, year, value) %>%
@@ -140,7 +142,7 @@ module_energy_LA124.heat <- function(command, ...) {
     # in the zero years. The code below sets an exogenous year as the one to use to extract fuel shares for each region. In all 0 region / years,
     # output is equal to the output in the fuel-share year times 1e-3 to avoid throwing off the energy balances.
 
-    norm_year <- 2010
+    norm_year <- max(HISTORICAL_YEARS) # originally was hardcoded as 2010
     output_scalar <- 1e-3
 
     L124.in_EJ_R_heat_F_Yh %>%
@@ -156,7 +158,7 @@ module_energy_LA124.heat <- function(command, ...) {
     L124.mult_R_heat_Yh %>%
       left_join(L124.mult_R_heatfromelec_Yh %>%
                   rename(sector.y=sector),
-                  by = c("year", "GCAM_region_ID")) %>%
+                by = c("year", "GCAM_region_ID")) %>%
       mutate(value = if_else(dist_heat == 0 & elec_heat != 0, output_scalar, 0)) %>%
       select(-sector.y, -elec_heat) %>%
       replace_na(list(value = 0)) -> L124.mult_R_heat_Yh
@@ -171,7 +173,7 @@ module_energy_LA124.heat <- function(command, ...) {
     L124.in_EJ_R_heat_F_Yh %>%
       left_join_error_no_match(norm_in, by = c("fuel", "sector", "GCAM_region_ID")) %>%
       left_join_error_no_match(rename(L124.mult_R_heat_Yh, mult_val = value)
-                , by = c("sector", "GCAM_region_ID", "year")) %>%
+                               , by = c("sector", "GCAM_region_ID", "year")) %>%
       mutate(value = value + (norm_val * mult_val)) %>%
       select(fuel, sector, GCAM_region_ID, year, value) -> L124.in_EJ_R_heat_F_Yh
 
@@ -185,7 +187,7 @@ module_energy_LA124.heat <- function(command, ...) {
     L124.out_EJ_R_heat_F_Yh %>%
       left_join_error_no_match(norm_out, by = c("fuel", "sector", "GCAM_region_ID")) %>%
       left_join_error_no_match(L124.mult_R_heat_Yh %>%
-                  rename(heat_val = value), by = c("sector", "GCAM_region_ID", "year")) %>%
+                                 rename(heat_val = value), by = c("sector", "GCAM_region_ID", "year")) %>%
       mutate(value = value + (norm_val * heat_val)) %>%
       select(fuel, sector, GCAM_region_ID, year, value) -> L124.out_EJ_R_heat_F_Yh
 
@@ -197,32 +199,35 @@ module_energy_LA124.heat <- function(command, ...) {
       add_comments("Input heat is extracted from energy balance, aggregated based on aggregate fuel types") %>%
       add_comments("To avoid processing failure, 0 years have base year (2010) * 1e-3 added") %>%
       add_legacy_name("L124.in_EJ_R_heat_F_Yh") %>%
-      add_precursors("temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/enduse_fuel_aggregation") %>%
+      add_precursors("energy/A_regions", "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/enduse_fuel_aggregation") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L124.in_EJ_R_heat_F_Yh
+
     L124.out_EJ_R_heat_F_Yh %>%
       add_title("Output of district heat sector by GCAM region / fuel / historical year") %>%
       add_units("EJ") %>%
       add_comments("Output heat calculated based on input divided by a technology coefficient") %>%
       add_comments("To avoid processing failure, 0 years have base year (2010) * 1e-3 added") %>%
       add_legacy_name("L124.out_EJ_R_heat_F_Yh") %>%
-      add_precursors("energy/A24.globaltech_coef", "energy/calibrated_techs") %>%
+      add_precursors("energy/A_regions", "energy/A24.globaltech_coef", "energy/calibrated_techs") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L124.out_EJ_R_heat_F_Yh
+
     L124.out_EJ_R_heatfromelec_F_Yh %>%
       add_title("Heat output from electricity generation by GCAM region / fuel / historical year") %>%
       add_units("EJ") %>%
       add_comments("Data on heat from CHP is read in, aggregated") %>%
       add_legacy_name("L124.out_EJ_R_heatfromelec_F_Yh") %>%
-      add_precursors("temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/enduse_fuel_aggregation") %>%
+      add_precursors("energy/A_regions", "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/enduse_fuel_aggregation") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L124.out_EJ_R_heatfromelec_F_Yh
+
     L124.heatoutratio_R_elec_F_tech_Yh %>%
       add_title("Heat output ratio from electricity generation by GCAM region / fuel / historical year") %>%
       add_units("GJ heat / GJ elec") %>%
       add_comments("Data on CHP electricity generation read in, heat from elec divided by electricity gives ratio") %>%
       add_legacy_name("L124.heatoutratio_R_elec_F_tech_Yh") %>%
-      add_precursors("L1231.out_EJ_R_elec_F_tech_Yh", "energy/calibrated_techs") %>%
+      add_precursors("energy/A_regions", "L1231.out_EJ_R_elec_F_tech_Yh", "energy/calibrated_techs") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L124.heatoutratio_R_elec_F_tech_Yh
 

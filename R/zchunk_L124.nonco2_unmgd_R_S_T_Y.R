@@ -106,7 +106,7 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
       filter(year %in% tail(emissions.EDGAR_YEARS,5)) %>%
       group_by(GCAM_region_ID, iso, sector, Non.CO2, IPCC) %>%
       summarize(value = mean(value)) %>%
-      mutate(year = as.integer(max(modeltime.BASE_YEARS))) %>%
+      mutate(year = as.integer(max(BASE_YEARS))) %>%
       bind_rows(EDGAR_history) %>%                                                      # Bind extrapolated 2010 data to the rest of the EDGAR data
       group_by(GCAM_region_ID, sector, Non.CO2, year) %>%                               # Aggregate by region, sector, gas, and year
       summarize(value = sum(value)) %>%                                                 # This will sum over IPCC category (e.g., grassland = grassland fires + savanna burning)

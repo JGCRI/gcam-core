@@ -111,6 +111,11 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
       add_legacy_name("legacy") %>% add_comments("comments") -> o1
     expect_error(check_chunk_outputs("c1", return_data(o1), "i1", po, FALSE))
 
+    # An input that doesn't appear in any precursors
+    tibble() %>% add_title("o1") %>% add_units("units") %>%
+      add_legacy_name("legacy") %>% add_comments("comments") %>% add_precursors("i2") -> o1
+    expect_message(check_chunk_outputs("c1", return_data(o1), c("i1", "i2"), po, FALSE))
+
     # Recursive precursor
     tibble() %>% add_title("o1") %>% add_units("units") %>%
       add_legacy_name("legacy") %>% add_comments("comments") %>% add_precursors("o1") -> o1

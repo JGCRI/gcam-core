@@ -29,7 +29,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
              "L100.FAO_ag_Food_t",
              "L100.FAO_an_Food_t",
              "L101.ag_Food_Pcal_R_C_Y",
-             FILE = "temp-data-inject/L105.an_Food_Pcal_R_C_Y",
+             "L105.an_Food_Pcal_R_C_Y",
              "L101.Pop_thous_R_Yh",
              "L102.pcgdp_thous90USD_Scen_R_Y"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -61,9 +61,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
     L100.FAO_ag_Food_t <- get_data(all_data, "L100.FAO_ag_Food_t")
     L100.FAO_an_Food_t <- get_data(all_data, "L100.FAO_an_Food_t")
     L101.ag_Food_Pcal_R_C_Y <- get_data(all_data, "L101.ag_Food_Pcal_R_C_Y")
-    L105.an_Food_Pcal_R_C_Y <- get_data(all_data, "temp-data-inject/L105.an_Food_Pcal_R_C_Y") %>%
-      # TEMPORARY - for temp-data-inject data
-      gather(year, value, -GCAM_region_ID, -GCAM_commodity) %>% mutate(year = as.integer(substr(year, 2, 5)))
+    L105.an_Food_Pcal_R_C_Y <- get_data(all_data, "L105.an_Food_Pcal_R_C_Y")
     L101.Pop_thous_R_Yh <- get_data(all_data, "L101.Pop_thous_R_Yh")
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y")
 
@@ -318,7 +316,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
                      "aglu/FAO/FAO2050_items_cal", "aglu/FAO/FAO2050_Diet",
                      "L100.FAO_ag_Food_t", "L100.FAO_an_Food_t",
                      "L101.ag_Food_Pcal_R_C_Y", "L101.Pop_thous_R_Yh",
-                     "temp-data-inject/L105.an_Food_Pcal_R_C_Y") %>%
+                     "L105.an_Food_Pcal_R_C_Y") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L134.pcFood_kcald_R_Dmnd_Y
 
