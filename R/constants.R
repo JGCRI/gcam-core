@@ -83,11 +83,11 @@ MAX_HA_TO_CROPLAND <- 3
 # Yield multiplier that goes from the observed yield to the "high" and "low" yields: observed plus or minus observed times this number
 MGMT_YIELD_ADJ <- 0.1
 
-# Maximum biomass yield
-# Source: Wullschleger doi:10.2134/agronj2010.0087 ??
-MAX_BIO_YIELD_THA <- 20
+# Maximum bioenergy (switchgrass) yield allowable, in tons per hectare
+# Source: Wullschleger doi:10.2134/agronj2010.0087
+aglu.MAX_BIO_YIELD_THA <- 20
 
-BIO_GJT <- 17.5
+aglu.BIO_GJT <- 17.5 # Energy content of biomass
 
 # ======================================================================
 # energy constants

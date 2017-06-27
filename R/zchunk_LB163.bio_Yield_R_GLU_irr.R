@@ -141,8 +141,8 @@ module_aglu_LB163.bio_Yield_R_GLU_irr <- function(command, ...) {
     L163.YieldIndex_R_GLU_irr %>%
       filter(GCAM_region_ID == USAreg$GCAM_region_ID) %>%
       summarise(maxYieldIndex = max(YieldIndex)) %>%
-      mutate(BaseYieldIndex = MAX_BIO_YIELD_THA / maxYieldIndex) %>%
-      mutate(BaseYieldIndex_GJm2 = BaseYieldIndex * BIO_GJT / CONV_HA_M2) %>%
+      mutate(BaseYieldIndex = aglu.MAX_BIO_YIELD_THA / maxYieldIndex) %>%
+      mutate(BaseYieldIndex_GJm2 = BaseYieldIndex * aglu.BIO_GJT / CONV_HA_M2) %>%
       select(BaseYieldIndex_GJm2) ->
       L163.base_bio_yield_GJm2
 
