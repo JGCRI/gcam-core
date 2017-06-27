@@ -8,7 +8,9 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L142.pfc_R_S_T_Yh}. The corresponding file in the
 #' original data system was \code{L142.pfc_R_S_T_Y.R} (emissions level1).
-#' @details Describe in detail what this chunk does.
+#' @details First, a table was created that has all historical HFCs values.
+#' Then, regional and sector information was added.  And finally, HFC emission shares
+#' were calculated by suming emissions over region, sector, technology, and gas by year.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -62,7 +64,7 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
       EDGAR_CF4
 
     # This chunk maps EDGAR HFC emissions to GCAM technologies
-    # First, create a table with all EDGAR HFCs, and prepare "Other_F" gases by renaming column.
+    # First, create a table with all EDGAR HFCs, and prep "Other_F" table for use by renaming column.
 
     EDGAR_SF6 %>%
       mutate(Non.CO2 = "SF6") ->
@@ -82,88 +84,90 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
       Other_F
 
     # Then, prepare EDGAR data for use.
-    # Map in region ID and sector name, and remove year 1970 to match "HISTORICAL_YEARS" constant
+    # Map in region ID and sector name, and remove year 1970 to match "HISTORICAL_YEARS" constant.
 
     ALL_EDGAR_HFC %>%
-      left_join_error_no_match(EDGAR_sector, by = "IPCC_description") %>%
+      left_join_error_no_match(EDGAR_sector, by = "IPCC_description") %>%     # Add GCAM sector from the sector mapping
       standardize_iso(col = "ISO_A3") %>%
       change_iso_code('rou','rom') %>%                                        # Switch Romania iso code to its pre-2002 value
       left_join_error_no_match(iso_GCAM_regID, by = "iso")  %>%
       rename(EDGAR_agg_sector = agg_sector) %>%
       select(GCAM_region_ID, EDGAR_agg_sector, Non.CO2, year, value)  %>%
-      filter(year !="1970")  %>%
+      filter(year !="1970") ->
+      L142.EDGAR_HFC
+
+    L142.EDGAR_HFC %>%
       group_by(GCAM_region_ID, EDGAR_agg_sector, Non.CO2, year) %>%
       summarize(value = sum(value))  %>%
       rename(EDGAR_emissions = value) ->
-      L142.EDGAR_PFC_R_S_T_Yh.allfg
+      L142.EDGAR_PFC_R_S_T_Yh.tmp1
 
-   # Map in other f-gas sector, which varies by gas.
-   # Seperate
+    # Map in other f-gas sector, which varies by gas.
+    # Seperate PFCs and add non-CO2 gas information, then recombine.
 
-    L142.EDGAR_PFC_R_S_T_Yh.allfg %>%
+    L142.EDGAR_PFC_R_S_T_Yh.tmp1 %>%
       filter(EDGAR_agg_sector != "other_f_gases") ->
       L142.EDGAR_PFC_R_S_T_Yh_rest
 
-    L142.EDGAR_PFC_R_S_T_Yh.allfg %>%
+    L142.EDGAR_PFC_R_S_T_Yh.tmp1 %>%
       filter(EDGAR_agg_sector == "other_f_gases")  %>%
       left_join(Other_F, by = "Non.CO2")   %>%
       ungroup() %>%
       select(-EDGAR_agg_sector)  %>%
       rename(EDGAR_agg_sector = Sector)  %>%
-      bind_rows(L142.EDGAR_PFC_R_S_T_Yh_rest) ->
-      L142.EDGAR_PFC_R_S_T_Yh.enhanced
+      bind_rows(L142.EDGAR_PFC_R_S_T_Yh_rest, .) ->
+      L142.EDGAR_PFC_R_S_T_Yh.tmp1
 
-  # Map to GCAM technologies
+    # Map PFC gases to GCAM technologies.
 
     GCAM_tech %>%
       repeat_add_columns(tibble(GCAM_region_ID = GCAM_region_names$GCAM_region_ID)) %>%
       repeat_add_columns(tibble(year = emissions.EDGAR_YEARS)) %>%
-      repeat_add_columns(tibble("Non.CO2" = emissions.PFCS))   %>%
-    left_join(L142.EDGAR_PFC_R_S_T_Yh.enhanced, by = c("GCAM_region_ID", "year", "EDGAR_agg_sector", "Non.CO2"))   %>%
-     select(GCAM_region_ID, supplysector, subsector, stub.technology, Non.CO2, year, EDGAR_emissions)  %>%
-     mutate(EDGAR_emissions = (replace(EDGAR_emissions, is.na(EDGAR_emissions), 0)))  ->
-     L142.pfc_R_S_T_Yh.mapped
- #     test1
+      repeat_add_columns(tibble("Non.CO2" = emissions.PFCS))  %>%
+      left_join(L142.EDGAR_PFC_R_S_T_Yh.tmp1, by = c("GCAM_region_ID", "year", "EDGAR_agg_sector", "Non.CO2")) %>%
+      select(GCAM_region_ID, supplysector, subsector, stub.technology, Non.CO2, year, EDGAR_emissions)  %>%
+      mutate(EDGAR_emissions = (replace(EDGAR_emissions, is.na(EDGAR_emissions), 0))) ->
+      L142.pfc_R_S_T_Yh.tmp1
 
+    # Disaggregate cooling emissions to residential and commercial sectors.
 
-  # Disaggregate cooling emissions to residential and commercial sectors
-
-    L144.in_EJ_R_bld_serv_F_Yh  %>%
+    L144.in_EJ_R_bld_serv_F_Yh %>%
       filter(service %in% c("comm cooling", "resid cooling") & fuel == "electricity") ->
       L142.R_cooling_T_Yh
 
     L142.R_cooling_T_Yh %>%
       group_by(GCAM_region_ID, year)  %>%
-      summarize(value = sum(value))  ->
+      summarize(value = sum(value)) ->
       L142.R_cooling_Yh
+
+    # Calculate emissions by share for residential and commerical sectors.
 
     L142.R_cooling_Yh %>%
       left_join(L142.R_cooling_T_Yh, by = c("GCAM_region_ID", "year"))  %>%
       mutate(share = value.y /value.x) ->
-      L142.R_cooling_T_Yh.all
+      L142.R_cooling_T_Yh.tmp1
 
+    # Calculate emissions by share, then sum up emissions over region, sector, technology, and gas by year.
 
-  # # Resh
-  L142.R_cooling_T_Yh.all %>%
-    rename(supplysector = service)  %>%
-    right_join(L142.pfc_R_S_T_Yh.mapped, by = c("GCAM_region_ID", "year", "supplysector")) %>%
-    mutate(share = (replace(share,is.na(share),1)))  %>%
-    mutate(emissions = EDGAR_emissions * share)  %>%
-    group_by(GCAM_region_ID, supplysector, subsector, stub.technology, Non.CO2, year) %>%
-    summarize(emissions = sum(emissions))  %>%
-    rename(value = emissions) %>%
-    mutate_all(funs(replace(., is.na(.), 0))) ->
-    L142.pfc_R_S_T_Yh
-
- # ===================================================
+    L142.R_cooling_T_Yh.tmp1 %>%
+      rename(supplysector = service)  %>%
+      right_join(L142.pfc_R_S_T_Yh.tmp1, by = c("GCAM_region_ID", "year", "supplysector")) %>%
+      mutate(share = (replace(share,is.na(share),1)))  %>%
+      mutate(emissions = EDGAR_emissions * share)  %>%
+      group_by(GCAM_region_ID, supplysector, subsector, stub.technology, Non.CO2, year) %>%
+      summarize(emissions = sum(emissions))  %>%
+      mutate_all(funs(replace(., is.na(.), 0))) ->
+      L142.pfc_R_S_T_Yh
 
     # Produce outputs
-  tibble() %>%
-#  L142.pfc_R_S_T_Yh %>%
+
+      tibble() %>%
+    #L142.pfc_R_S_T_Yh %>%
       add_title("HFC emissions by region, sector, technology, gas, and historical year") %>%
       add_units("Gg") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("Created a table with all historical HFCs values.") %>%
+      add_comments("Regional and sector information was added.") %>%
+      add_comments("Calculated HFC emissions by share over region, sector, technology, and gas by year.") %>%
       add_legacy_name("L142.pfc_R_S_T_Yh") %>%
       add_precursors("common/GCAM_region_names",
                      "emissions/gcam_fgas_tech",
@@ -175,12 +179,11 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
                      "emissions/EDGAR/EDGAR_SF6",
                      "emissions/EDGAR/EDGAR_C2F6",
                      "emissions/EDGAR/EDGAR_CF4") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L142.pfc_R_S_T_Yh
 
     return_data(L142.pfc_R_S_T_Yh)
   } else {
     stop("Unknown command")
   }
- }
+}
