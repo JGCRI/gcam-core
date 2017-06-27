@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L2062.AgCoef_Fert_ag_irr_mgmt}, \code{L2062.AgCoef_Fert_bio_irr_mgmt}, \code{L2062.AgCost_ag_irr_mgmt_adj}, \code{L2062.AgCost_bio_irr_mgmt_adj}. The corresponding file in the
 #' original data system was \code{L2062.ag_Fert_irr_mgmt.R} (aglu level2).
-#' @details This module maps the fertilizer coefficients calculated in LB142 to all agricultural technologies.
+#' @details This chunk maps the fertilizer coefficients calculated in LB142 to all agricultural technologies.
 #' We assume coefficients (in kgN per kgCrop) are equal for all four technologies (irr v rfd; hi v lo).
 #' Adjust nonLandVariableCost to remove the now explicitly computed fertilizer cost.
 #' @importFrom assertthat assert_that
@@ -49,8 +49,8 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
     # Process Fertilizer Coefficients: Copy coefficients to all four technologies (irr/rfd + hi/lo)
     L142.ag_Fert_IO_R_C_Y_GLU %>%
       filter(year %in% BASE_YEARS) %>%
-      left_join_error_no_match(GCAM_region_names, by="GCAM_region_ID") %>%
-      left_join_error_no_match(basin_to_country_mapping[ c("GLU_code", "GLU_name")], by=c("GLU" = "GLU_code")) %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      left_join_error_no_match(basin_to_country_mapping[ c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) %>%
 
       # Copy coefficients to all four technologies
       repeat_add_columns(tibble::tibble(IRR_RFD = c("IRR", "RFD"))) %>%
@@ -82,7 +82,7 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
       filter(GCAM_commodity == "biomass_grass") %>%
       mutate(coefficient = (aglu.BIO_GRASS_FERT_IO_GNM2 * CONV_G_KG / aglu.BIO_GRASS_YIELD_KGCM2    # Convert from application per unit area to per unit carbon
                             * aglu.CCONTENT_CELLULOSE * (1 - WaterContent))                         # Convert from carbon to wet biomass
-                            / (aglu.BIO_ENERGY_CONTENT_GJT * CONV_KG_T)) ->                         # Convert from biomass to energy
+             / (aglu.BIO_ENERGY_CONTENT_GJT * CONV_KG_T)) ->                         # Convert from biomass to energy
       bio_grass_coef
 
     # Calculate fertilizer coefficients for tree bioenergy crops
@@ -105,7 +105,7 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
     L2052.AgCost_ag_irr_mgmt %>%
       # Note: using left_join because there are instances with cost but no fertilizer use.
       left_join(L2062.AgCoef_Fert_ag_irr_mgmt,
-                               by=c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year")) %>%
+                by = c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year")) %>%
 
       # Set fertilizer coefficient to zero when missing. This will lead to zero fertilizer cost.
       replace_na(list(coefficient = 0)) %>%

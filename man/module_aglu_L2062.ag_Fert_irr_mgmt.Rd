@@ -18,11 +18,13 @@ the generated outputs: \code{L2062.AgCoef_Fert_ag_irr_mgmt}, \code{L2062.AgCoef_
 original data system was \code{L2062.ag_Fert_irr_mgmt.R} (aglu level2).
 }
 \description{
-Briefly describe what this chunk does.
+Specifies fertilizer coefficients for all technologies; adjusts nonLandVariableCost to remove fertilizer cost.
 }
 \details{
-Describe in detail what this chunk does.
+This chunk maps the fertilizer coefficients calculated in LB142 to all agricultural technologies.
+We assume coefficients (in kgN per kgCrop) are equal for all four technologies (irr v rfd; hi v lo).
+Adjust nonLandVariableCost to remove the now explicitly computed fertilizer cost.
 }
 \author{
-YourInitials CurrentMonthName 2017
+KVC June 2017
 }
