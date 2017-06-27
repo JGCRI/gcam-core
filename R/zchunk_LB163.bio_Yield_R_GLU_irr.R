@@ -46,9 +46,7 @@ module_aglu_LB163.bio_Yield_R_GLU_irr <- function(command, ...) {
     # old comment: This method follows the same method as LB113, with the exception that
     #              the yield indices are computed separately for rainfed/irrigated, but
     #              again against the global average for each crop, across both irrigated
-    #              and rainfed. This method should roughly preserve the global average
-    #              bioenergy yields; what we want to avoid here is increasing the global
-    #              average yields just by separating irr/rfd.
+    #              and rainfed.
     #
     # Step 1: Aggregate FAO harvested area and production for each GTAP_crop to get global
     # yields in a base year.
@@ -134,21 +132,16 @@ module_aglu_LB163.bio_Yield_R_GLU_irr <- function(command, ...) {
     # USA region ID:
     iso_GCAM_regID %>%
       filter(iso == "usa") %>%
-      select(GCAM_region_ID) ->
+      .[["GCAM_region_ID"]] ->
       USAreg
 
     # Calculate the base yield, a scaler value:
-    L163.YieldIndex_R_GLU_irr %>%
-      filter(GCAM_region_ID == USAreg$GCAM_region_ID) %>%
-      summarise(maxYieldIndex = max(YieldIndex)) %>%
-      mutate(BaseYieldIndex = aglu.MAX_BIO_YIELD_THA / maxYieldIndex) %>%
-      mutate(BaseYieldIndex_GJm2 = BaseYieldIndex * aglu.BIO_GJT / CONV_HA_M2) %>%
-      select(BaseYieldIndex_GJm2) ->
-      L163.base_bio_yield_GJm2
+     L163.base_bio_yield_tha <- aglu.MAX_BIO_YIELD_THA / max(L163.YieldIndex_R_GLU_irr$YieldIndex[L163.YieldIndex_R_GLU_irr$GCAM_region_ID == USAreg])
+     L163.base_bio_yield_GJm2 <- L163.base_bio_yield_tha * aglu.BIO_GJT / CONV_HA_M2
 
     # Finally, calculate bioenergy yields in each region-glu-irrigation combo:
     L163.YieldIndex_R_GLU_irr %>%
-      mutate(Yield_GJm2 = YieldIndex * L163.base_bio_yield_GJm2$BaseYieldIndex_GJm2) %>%
+      mutate(Yield_GJm2 = YieldIndex * L163.base_bio_yield_GJm2) %>%
       select(-HA, -Ratio_weight, -YieldIndex) ->
       L163.ag_bioYield_GJm2_R_GLU_irr
 
