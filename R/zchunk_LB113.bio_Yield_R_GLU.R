@@ -8,12 +8,16 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L113.ag_bioYield_GJm2_R_GLU}. The corresponding file in the
 #' original data system was \code{LB113.bio_Yield_R_GLU.R} (aglu level1).
-#' @details Describe in detail what this chunk does.
+#' @details Calculate global average yields for each FAO crop in the base year;
+#' calculate each region / zone / crop's comparative yield; compute bioenergy yields as
+#' this region/zone-specific index multiplied by a base yield.
+#' @references Wullschleger, S.D., E.B. Davis, M.E. Borsuk, C.A. Gunderson, and L.R. Lynd. 2010.
+#' Biomass production in switchgrass across the United States: database description and determinants
+#' of yield. Agronomy Journal 102: 1158-1168. doi:10.2134/agronj2010.0087.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author BBL June 2017
-#' @export
 module_aglu_LB113.bio_Yield_R_GLU <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
@@ -43,44 +47,48 @@ module_aglu_LB113.bio_Yield_R_GLU <- function(command, ...) {
       mutate(Yield_avg = value / HA_ha) ->
       L113.ag_prod_t_glbl_crop
 
-    # Calculate each region / zone / crop's comparative yield, to the global average (41-50)
+    # Calculate each region / zone / crop's comparative yield (41-50)
     L100.LDS_ag_HA_ha %>%
       rename(HA = value) %>%
       left_join_error_no_match(L100.LDS_ag_prod_t, by = c("iso", "GLU", "GTAP_crop")) %>%
-      mutate(Yield = prod / HA) %>%
+      mutate(Yield = value / HA) %>%
       # Drop the missing values, where the harvested area was above the min threshold but production was not
       na.omit ->
       LDS_ag_Yield_tha
 
     # Match in the global avg yield for each crop, and compute the ratio from that yield (52-61)
     LDS_ag_Yield_tha %>%
-      left_join_error_no_match(select(L113.ag_prod_t_glbl_crop, GTAP_crop, Yield_avg), yb = "GTAP_crop") %>%
-      mutate(Ratio = Yield / Yield_average,
+      left_join_error_no_match(select(L113.ag_prod_t_glbl_crop, GTAP_crop, Yield_avg), by = "GTAP_crop") %>%
+      mutate(Ratio = Yield / Yield_avg,
              Ratio_weight = Ratio * HA) %>%
-      left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%
-      group_by(region, GLU) %>%
+      left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
+      group_by(GCAM_region_ID, GLU) %>%
       summarise(HA = sum(HA), Ratio_weight = sum(Ratio_weight)) %>%
+      ungroup %>%
       mutate(YieldIndex = Ratio_weight / HA) ->
       L113.YieldIndex_R_GLU
 
     # Bioenergy yields are equal to this region/zone-specific index multiplied by a base yield
     # The base yield is taken to be the maximum of the yields in the USA region, or the region
-    # containing the USA, because the Wullschleger paper (TODO)
+    # containing the USA, because the Wullschleger paper (10.2134/agronj2010.0087)
     # from which the yield estimate was derived was for the USA.
-
-    USAreg <- iso_GCAM_regID[[R]][ iso_GCAM_regID$iso == "usa" ][1]
-    L113.base_bio_yield_tha <- aglu.MAX_BIO_YIELD_THA / max(L113.YieldIndex_R_GLU$YieldIndex[L113.YieldIndex_R_GLU$region == USAreg])
-    L113.base_bio_yield_GJm2 <- L113.base_bio_yield_tha * bio_GJt / CONV_HA_M2
-    tibble(
-      L113.YieldIndex_R_GLU[ R_GLU ],
-      Yield_GJm2 = L113.YieldIndex_R_GLU$YieldIndex * L113.base_bio_yield_GJm2 ) %>%
+    iso_GCAM_regID %>%
+      filter(iso == "usa") %>%
+      .[["GCAM_region_ID"]] ->
+      USAreg
+    L113.base_bio_yield_tha <- aglu.MAX_BIO_YIELD_THA / max(L113.YieldIndex_R_GLU$YieldIndex[L113.YieldIndex_R_GLU$GCAM_region_ID == USAreg])
+    L113.base_bio_yield_GJm2 <- L113.base_bio_yield_tha * aglu.BIO_GJT / CONV_HA_M2
+    L113.YieldIndex_R_GLU %>%
+      select(GCAM_region_ID, GLU, YieldIndex) %>%
+      mutate(Yield_GJm2 = YieldIndex * L113.base_bio_yield_GJm2) %>%
+      select(-YieldIndex) %>%
 
     # Produce outputs
-    L113.ag_bioYield_GJm2_R_GL %>%
       add_title("Base year bioenergy yields by GCAM region and GLU") %>%
       add_units(" GJ/m2") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("Calculate global average yields for each FAO crop in the base year;") %>%
+      add_comments("calculate each region / zone / crop's comparative yield; compute bioenergy yields") %>%
+      add_comments("as this region/zone-specific index multiplied by a base yield")
       add_legacy_name("L113.ag_bioYield_GJm2_R_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
                      "L100.LDS_ag_HA_ha",

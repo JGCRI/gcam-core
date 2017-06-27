@@ -106,6 +106,8 @@ aglu.NO_AGLU_REGIONS <- "Taiwan"
 
 aglu.MAX_BIO_YIELD_THA <- 20 # Maximum bioenergy (switchgrass) yield allowable, in tons per hectare
 
+aglu.BIO_GJT <- 17.5 # Energy content of biomass
+
 
 # Energy constants ======================================================================
 
@@ -152,7 +154,6 @@ CONV_M3_BM3 <- 1e-09 # Cubic meters (m3) to billion cubic meters (bm3)
 CONV_MILLION_M3_KM3 <- 1e-03
 CONV_M2_ACR <- 0.0002471058
 CONV_HA_M2 <- 1e4 # ha to m2
-BIO_GJT <- 17.5 # Energy content of biomass
 
 
 # Driver constants ======================================================================

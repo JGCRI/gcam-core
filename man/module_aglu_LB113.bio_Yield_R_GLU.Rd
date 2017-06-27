@@ -21,7 +21,14 @@ original data system was \code{LB113.bio_Yield_R_GLU.R} (aglu level1).
 Calculate base year bioenergy yields by GCAM region and GLU
 }
 \details{
-Describe in detail what this chunk does.
+Calculate global average yields for each FAO crop in the base year;
+calculate each region / zone / crop's comparative yield; compute bioenergy yields as
+this region/zone-specific index multiplied by a base yield.
+}
+\references{
+Wullschleger, S.D., E.B. Davis, M.E. Borsuk, C.A. Gunderson, and L.R. Lynd. 2010.
+Biomass production in switchgrass across the United States: database description and determinants
+of yield. Agronomy Journal 102: 1158-1168. doi:10.2134/agronj2010.0087.
 }
 \author{
 BBL June 2017
