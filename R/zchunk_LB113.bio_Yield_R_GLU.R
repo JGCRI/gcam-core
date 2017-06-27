@@ -59,7 +59,8 @@ module_aglu_LB113.bio_Yield_R_GLU <- function(command, ...) {
       na.omit ->
       LDS_ag_Yield_tha
 
-    # Match in the global avg yield for each crop, and compute the ratio from that yield (52-61)
+    # Match in the global avg yield for each crop, sum up both area and the yield-to-avg-yield ratio
+    # by region and GLU, and then compute the area-weighted yield index (52-61)
     LDS_ag_Yield_tha %>%
       left_join_error_no_match(select(L113.ag_prod_t_glbl_crop, GTAP_crop, Yield_avg), by = "GTAP_crop") %>%
       mutate(Ratio = Yield / Yield_avg,
