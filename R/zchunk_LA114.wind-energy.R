@@ -129,9 +129,12 @@ module_energy_LA114.wind <- function(command, ...) {
           # Evaluate supply curves for all countries in the region at the current price and sum up the supply
           L114.SupplyPoints.currR <- tibble(GCAM_region_ID = region_ID, price = L114.price, supply = 0)
           for(i in seq_len(nrow(L114.curr_region_RsrcCurves))) {
-            L114.SupplyPoints.currR$supply <- L114.SupplyPoints.currR$supply + do.call(evaluate_smooth_res_curve,
-                                                                                        c(L114.curr_region_RsrcCurves[i, c("curve.exponent", "mid.price", "base.price", "maxSubResource")],
-                                                                                          L114.price))
+            L114.SupplyPoints.currR$supply <- L114.SupplyPoints.currR$supply +
+              evaluate_smooth_res_curve(L114.curr_region_RsrcCurves$curve.exponent[i],
+                                        L114.curr_region_RsrcCurves$mid.price[i],
+                                        L114.curr_region_RsrcCurves$base.price[i],
+                                        L114.curr_region_RsrcCurves$maxSubResource[i],
+                                        L114.price)
           }
           regional_price_supply_points <- bind_rows(regional_price_supply_points, L114.SupplyPoints.currR)
           if(L114.min_calcs <= 0 & (L114.SupplyPoints.currR$supply - L114.prev_supply) < L114.supply_tol) {
