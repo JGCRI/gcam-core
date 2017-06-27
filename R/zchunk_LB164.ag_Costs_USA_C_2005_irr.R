@@ -39,6 +39,44 @@ module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
     L161.ag_irrHA_frac_R_C_GLU <- get_data(all_data, "temp-data-inject/L161.ag_irrHA_frac_R_C_GLU")
 
 
+    # Perform computations
+    # old comment: The method here is to start from the cost file that has already been processed, and
+    #              to deduct costs of purchased irrigation water from each cost estimate. This is less
+    #              repetitive than following all of the same steps in that prior file, but with irrigation
+    #              water mapped elsewhere.
+
+    # Step 1: Compute the share of total variable costs from purchased irrigation water.
+    # CostFrac = IrrCost / TotCost
+    USDA_cost_data %>%
+      gather(year, cost, -Crop, -Item, -Unit) %>%
+      mutate(year = as.integer(year)) %>%
+      filter(Item == "Purchased irrigation water" | Item == "Total operating costs",
+             year %in% MODEL_COST_YEARS) %>%
+      spread(Item, cost) %>%
+      rename(IrrCost = `Purchased irrigation water`,
+             TotCost = `Total operating costs`) %>%
+      mutate(CostFrac = IrrCost / TotCost) %>%
+      select(-Unit, -IrrCost, -TotCost) %>%
+      group_by(Crop) %>%
+      mutate(waterCostFrac = mean(CostFrac, na.rm = T)) %>%
+      ungroup %>%
+      left_join_error_no_match(USDA_crops, by = c("Crop" = "USDA_crop")) ->
+      L164.waterCostFrac_Cusda
+
+    # Step 2: Use L100 LDS harvested area data to weight the waterCostFrac for each USDA
+    # crop when aggregating to USDA commodities.
+    L100.LDS_ag_HA_ha %>%
+      filter(GTAP_crop %in% USDA_crops$GTAP_crop,
+             iso == "usa") %>%
+      group_by(iso, GTAP_crop) %>%
+      summarise(weight = sum(value)) %>%
+      ungroup %>%
+      select(-iso) %>%
+      left_join_error_no_match(L164.waterCostFrac_Cusda, ., by = "GTAP_crop") -> A
+
+
+
+
 
     # Produce outputs
     tibble() %>%
