@@ -1,6 +1,6 @@
 #' module_aglu_LB113.bio_Yield_R_GLU
 #'
-#' Briefly describe what this chunk does.
+#' Calculate base year bioenergy yields by GCAM region and GLU
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -12,9 +12,9 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
+#' @author BBL June 2017
 #' @export
-module_aglu_LB113.bio_Yield_R_GLU_DISABLED <- function(command, ...) {
+module_aglu_LB113.bio_Yield_R_GLU <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              "L100.LDS_ag_HA_ha",
@@ -30,41 +30,61 @@ module_aglu_LB113.bio_Yield_R_GLU_DISABLED <- function(command, ...) {
     L100.LDS_ag_HA_ha <- get_data(all_data, "L100.LDS_ag_HA_ha")
     L100.LDS_ag_prod_t <- get_data(all_data, "L100.LDS_ag_prod_t")
 
-    # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses vecpaste
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # ===================================================
+    # Calculate global average yields for each FAO crop in the base year (31-39 old file)
+    L100.LDS_ag_HA_ha %>%
+      group_by(GTAP_crop) %>%
+      summarise(HA_ha = sum(value)) ->
+      L113.ag_HA_ha_glbl_crop
+
+    L100.LDS_ag_prod_t %>%
+      group_by(GTAP_crop) %>%
+      summarise(value = sum(value)) %>%
+      left_join_error_no_match(L113.ag_HA_ha_glbl_crop, by = "GTAP_crop") %>%
+      mutate(Yield_avg = value / HA_ha) ->
+      L113.ag_prod_t_glbl_crop
+
+    # Calculate each region / zone / crop's comparative yield, to the global average (41-50)
+    L100.LDS_ag_HA_ha %>%
+      rename(HA = value) %>%
+      left_join_error_no_match(L100.LDS_ag_prod_t, by = c("iso", "GLU", "GTAP_crop")) %>%
+      mutate(Yield = prod / HA) %>%
+      # Drop the missing values, where the harvested area was above the min threshold but production was not
+      na.omit ->
+      LDS_ag_Yield_tha
+
+    # Match in the global avg yield for each crop, and compute the ratio from that yield (52-61)
+    LDS_ag_Yield_tha %>%
+      left_join_error_no_match(select(L113.ag_prod_t_glbl_crop, GTAP_crop, Yield_avg), yb = "GTAP_crop") %>%
+      mutate(Ratio = Yield / Yield_average,
+             Ratio_weight = Ratio * HA) %>%
+      left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%
+      group_by(region, GLU) %>%
+      summarise(HA = sum(HA), Ratio_weight = sum(Ratio_weight)) %>%
+      mutate(YieldIndex = Ratio_weight / HA) ->
+      L113.YieldIndex_R_GLU
+
+    # Bioenergy yields are equal to this region/zone-specific index multiplied by a base yield
+    # The base yield is taken to be the maximum of the yields in the USA region, or the region
+    # containing the USA, because the Wullschleger paper (TODO)
+    # from which the yield estimate was derived was for the USA.
+
+    USAreg <- iso_GCAM_regID[[R]][ iso_GCAM_regID$iso == "usa" ][1]
+    L113.base_bio_yield_tha <- aglu.MAX_BIO_YIELD_THA / max(L113.YieldIndex_R_GLU$YieldIndex[L113.YieldIndex_R_GLU$region == USAreg])
+    L113.base_bio_yield_GJm2 <- L113.base_bio_yield_tha * bio_GJt / CONV_HA_M2
+    tibble(
+      L113.YieldIndex_R_GLU[ R_GLU ],
+      Yield_GJm2 = L113.YieldIndex_R_GLU$YieldIndex * L113.base_bio_yield_GJm2 ) %>%
 
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+    L113.ag_bioYield_GJm2_R_GL %>%
+      add_title("Base year bioenergy yields by GCAM region and GLU") %>%
+      add_units(" GJ/m2") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L113.ag_bioYield_GJm2_R_GLU") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/iso_GCAM_regID",
+                     "L100.LDS_ag_HA_ha",
+                     "L100.LDS_ag_prod_t") ->
       L113.ag_bioYield_GJm2_R_GLU
 
     return_data(L113.ag_bioYield_GJm2_R_GLU)
@@ -72,6 +92,3 @@ module_aglu_LB113.bio_Yield_R_GLU_DISABLED <- function(command, ...) {
     stop("Unknown command")
   }
 }
-
-
-

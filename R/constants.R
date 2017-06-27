@@ -104,6 +104,8 @@ aglu.DIGITS_CALOUTPUT <- 7 # production
 # Regions in which agriculture and land use are not modeled
 aglu.NO_AGLU_REGIONS <- "Taiwan"
 
+aglu.MAX_BIO_YIELD_THA <- 20 # Maximum bioenergy (switchgrass) yield allowable, in tons per hectare
+
 
 # Energy constants ======================================================================
 
@@ -135,6 +137,7 @@ CONV_KG_TO_TG <- 1e-9
 CONV_KT_MT <- 0.001 # kt to Mt
 CONV_T_MT <- 1e-6 # t to Mt
 
+
 # Time
 CONV_YEAR_HOURS <- 24 * 365.25
 CONV_DAYS_YEAR <- 1 / 365.25
@@ -148,6 +151,9 @@ CONV_MCAL_PCAL <- 1e-9
 CONV_M3_BM3 <- 1e-09 # Cubic meters (m3) to billion cubic meters (bm3)
 CONV_MILLION_M3_KM3 <- 1e-03
 CONV_M2_ACR <- 0.0002471058
+CONV_HA_M2 <- 1e4 # ha to m2
+BIO_GJT <- 17.5 # Energy content of biomass
+
 
 # Driver constants ======================================================================
 
