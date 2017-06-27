@@ -99,11 +99,17 @@ aglu.BIO_GRASS_YIELD_KGCM2 <- 0.34
 aglu.BIO_TREE_FERT_IO_GNM2 <- 3.36
 aglu.BIO_TREE_YIELD_KGCM2 <- 0.345
 
-# Energy content of biomass
-aglu.BIO_ENERGY_CONTENT_GJT <- 17.5
-
 # Cost of Fertilizer
 aglu.FERT_COST <- 363 # 2007$ per ton NH3
+
+# Maximum bioenergy (switchgrass) yield allowable, in tons per hectare
+# Source: Wullschleger doi:10.2134/agronj2010.0087
+aglu.MAX_BIO_YIELD_THA <- 20
+
+aglu.BIO_ENERGY_CONTENT_GJT <- 17.5  # Energy content of biomass
+
+
+# Energy constants ======================================================================
 
 # GDP per capita thresholds for SSP4 region groupings
 aglu.HIGH_GROWTH_PCGDP <- 12.275   # thousand 2010$ per person
@@ -115,9 +121,6 @@ aglu.DIGITS_CALOUTPUT <- 7 # production
 
 # Regions in which agriculture and land use are not modeled
 aglu.NO_AGLU_REGIONS <- "Taiwan"
-
-
-# Energy constants ======================================================================
 
 # At present the CO2 emissions inventory from CDIAC stops at 2009
 energy.CDIAC_CO2_HISTORICAL_YEARS <- HISTORICAL_YEARS[HISTORICAL_YEARS < 2010]
@@ -140,6 +143,7 @@ CONV_T_KG <- 1e3
 CONV_KG_T <- 1 / CONV_T_KG
 CONV_T_METRIC_SHORT <- 1000 / 908  # Ratio between metric ton and short ton
 CONV_HA_BM2 <- 1e-5
+CONV_HA_M2 <- 10000
 CONV_THA_KGM2 <- 0.1   # tons C/ha -> kg C/m2
 CONV_GG_TG <- 0.001 # gigagrams to tegagrams
 CONV_TST_TG <- 0.000907 # thousand short tons to Tg
