@@ -1,6 +1,6 @@
 #' module_aglu_LB163.bio_Yield_R_GLU_irr
 #'
-#' This module computes base year rainfed and irrigated bioenergy crop yields for each GCAM region X GLU.
+#' Compute base year rainfed and irrigated bioenergy crop yields for each GCAM region and GLU.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -31,6 +31,10 @@ module_aglu_LB163.bio_Yield_R_GLU_irr <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
+
+    GTAP_crop <- value <- Prod <- HA <- irrHA <- irrProd <- rfdHA <- rfdProd <- Yield_avg <-
+      Yield <- Ratio <- iso <- GCAM_region_ID <- GLU <- Irr_Rfd <- Ratio_weight <- . <-
+      YieldIndex <- NULL  # silence package check notes
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")

@@ -18,7 +18,7 @@ the generated outputs: \code{L163.ag_irrBioYield_GJm2_R_GLU}, \code{L163.ag_rfdB
 original data system was \code{LB163.bio_Yield_R_GLU_irr.R} (aglu level1).
 }
 \description{
-This module computes base year rainfed and irrigated bioenergy crop yields for each GCAM region X GLU.
+Compute base year rainfed and irrigated bioenergy crop yields for each GCAM region and GLU.
 }
 \details{
 A global average yield is calculated for each GTAP crop. This is then used to calculate a yield Ratio for each
