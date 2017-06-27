@@ -91,7 +91,7 @@ module_aglu_LB113.bio_Yield_R_GLU <- function(command, ...) {
       add_units(" GJ/m2") %>%
       add_comments("Calculate global average yields for each FAO crop in the base year;") %>%
       add_comments("calculate each region / zone / crop's comparative yield; compute bioenergy yields") %>%
-      add_comments("as this region/zone-specific index multiplied by a base yield")
+      add_comments("as this region/zone-specific index multiplied by a base yield") %>%
       add_legacy_name("L113.ag_bioYield_GJm2_R_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
                      "L100.LDS_ag_HA_ha",
