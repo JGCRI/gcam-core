@@ -81,7 +81,7 @@ module_aglu_LB113.bio_Yield_R_GLU <- function(command, ...) {
       .[["GCAM_region_ID"]] ->
       USAreg
     L113.base_bio_yield_tha <- aglu.MAX_BIO_YIELD_THA / max(L113.YieldIndex_R_GLU$YieldIndex[L113.YieldIndex_R_GLU$GCAM_region_ID == USAreg])
-    L113.base_bio_yield_GJm2 <- L113.base_bio_yield_tha * aglu.BIO_GJT / CONV_HA_M2
+    L113.base_bio_yield_GJm2 <- L113.base_bio_yield_tha * aglu.BIO_ENERGY_CONTENT_GJT / CONV_HA_M2
     L113.YieldIndex_R_GLU %>%
       select(GCAM_region_ID, GLU, YieldIndex) %>%
       mutate(Yield_GJm2 = YieldIndex * L113.base_bio_yield_GJm2) %>%
