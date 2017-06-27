@@ -1,6 +1,6 @@
 #' module_energy_LA114.wind
 #'
-#' This chunk calculates regional supply curves for wind using country-level supply curves.
+#' Calculate regional supply curves for wind using country-level supply curves.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -66,7 +66,7 @@ module_energy_LA114.wind <- function(command, ...) {
       # Note that further down the code, defining the max price to be where supply is 95% of max resource instead of 99%
            # saves a lot of data (31K rows for "regional_price_supply_points" instead of 1.6 million rows)
       L114.supply_tol <- 0.95
-      (L114.supply_tol/ (1-L114.supply_tol))^(1/curve.exponent) * mid.price + base.price # max price
+      (L114.supply_tol / (1-L114.supply_tol)) ^ (1 / curve.exponent) * mid.price + base.price # max price
     }
 
 
@@ -126,8 +126,8 @@ module_energy_LA114.wind <- function(command, ...) {
         L114.prev_supply <- 0
         L114.min_calcs <- 100
         repeat {
-          # Evaluate supply curves for all coutries in the region at the current price and sum up the supply
-          L114.SupplyPoints.currR <- tibble(GCAM_region_ID=region_ID, price=L114.price, supply=0)
+          # Evaluate supply curves for all countries in the region at the current price and sum up the supply
+          L114.SupplyPoints.currR <- tibble(GCAM_region_ID = region_ID, price = L114.price, supply = 0)
           for(i in seq_len(nrow(L114.curr_region_RsrcCurves))) {
             L114.SupplyPoints.currR$supply <- L114.SupplyPoints.currR$supply + do.call(evaluate_smooth_res_curve,
                                                                                         c(L114.curr_region_RsrcCurves[i, c("curve.exponent", "mid.price", "base.price", "maxSubResource")],
@@ -226,7 +226,7 @@ module_energy_LA114.wind <- function(command, ...) {
        L114.RsrcCurves_EJ_R_wind.currR
 
      # We must solve for the curve exponent that best fits the supply-points
-     L114.error_min_curve.exp <- optimize(f = smooth_res_curve_approx_error, interval=c(1.0,15.0),
+     L114.error_min_curve.exp <- optimize(f = smooth_res_curve_approx_error, interval = c(1.0, 15.0),
                                           L114.RsrcCurves_EJ_R_wind.currR$mid.price,
                                           L114.RsrcCurves_EJ_R_wind.currR$base.price,
                                           L114.RsrcCurves_EJ_R_wind.currR$maxSubResource,
