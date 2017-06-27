@@ -15,7 +15,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author KVC June 2017
-#' @export
 module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c( FILE = "common/GCAM_region_names",
@@ -50,17 +49,17 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
     # Process Fertilizer Coefficients: Copy coefficients to all four technologies (irr/rfd + hi/lo)
     L142.ag_Fert_IO_R_C_Y_GLU %>%
       filter(year %in% BASE_YEARS) %>%
-      left_join(GCAM_region_names, by="GCAM_region_ID") %>%
-      left_join(basin_to_country_mapping[ c("GLU_code", "GLU_name")], by=c("GLU" = "GLU_code")) %>%
+      left_join_error_no_match(GCAM_region_names, by="GCAM_region_ID") %>%
+      left_join_error_no_match(basin_to_country_mapping[ c("GLU_code", "GLU_name")], by=c("GLU" = "GLU_code")) %>%
 
       # Copy coefficients to all four technologies
-      repeat_add_columns(tibble::tibble(IRR_RFD = c("IRR", "RFD")) ) %>%
-      repeat_add_columns(tibble::tibble(MGMT = c("hi", "lo")) ) %>%
+      repeat_add_columns(tibble::tibble(IRR_RFD = c("IRR", "RFD"))) %>%
+      repeat_add_columns(tibble::tibble(MGMT = c("hi", "lo"))) %>%
 
       # Add sector, subsector, technology names
       mutate(AgSupplySector = GCAM_commodity,
-             AgSupplySubsector = paste(GCAM_commodity, GLU_name, sep="_"),
-             AgProductionTechnology = paste(GCAM_commodity, GLU_name, IRR_RFD, MGMT, sep="_")) %>%
+             AgSupplySubsector = paste(GCAM_commodity, GLU_name, sep = "_"),
+             AgProductionTechnology = paste(GCAM_commodity, GLU_name, IRR_RFD, MGMT, sep = "_")) %>%
 
       # Add name of minicam.energy.input
       mutate(minicam.energy.input = "N fertilizer") %>%
@@ -141,7 +140,9 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
       add_comments("Map fertilizer coefficients in L142.ag_Fert_IO_R_C_Y_GLU to all technologies") %>%
       add_comments("Note: we are using the same coefficient for all four management technologies (irrigated, rainfed, hi and lo") %>%
       add_legacy_name("L2062.AgCoef_Fert_ag_irr_mgmt") %>%
-      add_precursors("common/GCAM_region_names", "water/basin_to_country_mapping", "temp-data-inject/L142.ag_Fert_IO_R_C_Y_GLU") ->
+      add_precursors("common/GCAM_region_names",
+                     "water/basin_to_country_mapping",
+                     "temp-data-inject/L142.ag_Fert_IO_R_C_Y_GLU") ->
       L2062.AgCoef_Fert_ag_irr_mgmt
     L2062.AgCoef_Fert_bio_irr_mgmt %>%
       add_title("Fertilizer coefficients for bioenergy technologies") %>%
@@ -149,7 +150,8 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
       add_comments("Compute bioenergy fertilizer coefficients from read-in constants") %>%
       add_comments("Note: L2052.AgCost_bio_irr_mgmt is only used to identify all bioenergy technologies") %>%
       add_legacy_name("L2062.AgCoef_Fert_bio_irr_mgmt") %>%
-      add_precursors("aglu/A_Fodderbio_chars", "temp-data-inject/L2052.AgCost_bio_irr_mgmt") ->
+      add_precursors("aglu/A_Fodderbio_chars",
+                     "temp-data-inject/L2052.AgCost_bio_irr_mgmt") ->
       L2062.AgCoef_Fert_bio_irr_mgmt
     L2062.AgCost_ag_irr_mgmt_adj %>%
       add_title("Adjusted non-land variable cost for agricultural technologies") %>%

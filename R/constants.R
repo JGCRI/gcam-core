@@ -93,7 +93,7 @@ MAX_HA_TO_CROPLAND <- 3
 # Yield multiplier that goes from the observed yield to the "high" and "low" yields: observed plus or minus observed times this number
 MGMT_YIELD_ADJ <- 0.1
 
-# Fertilizer application rate for biomass, and carbon yields. Values from Adler et al. 2007
+# Fertilizer application rate for biomass, and carbon yields. Values from Adler et al. 2007 (doi:10.1890/05-2018)
 aglu.BIO_GRASS_FERT_IO_GNM2 <- 5.6
 aglu.BIO_GRASS_YIELD_KGCM2 <- 0.34
 aglu.BIO_TREE_FERT_IO_GNM2 <- 3.36
