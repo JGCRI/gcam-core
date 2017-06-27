@@ -39,11 +39,12 @@ module_energy_LA114.wind <- function(command, ...) {
       optimize <- mid.price <- . <- price <- NULL
 
     # First, define three useful functions that will be used later: evaluate_smooth_res_curve,
-         # smooth_res_curve_approx_error, and generate_max_prices.
+    # smooth_res_curve_approx_error, and generate_max_prices.
 
     # The function, evaluate_smooth_res_curve, computes the smooth renewable resource function
     # supply = (p - base.price) ^ curve.exponent / (mid.price ^ curve.exponent +
-         # (p - base.price) ^ curve.exponent * maxSubResource
+    # (p - base.price) ^ curve.exponent * maxSubResource
+    # Note that all of these can be vectors
     evaluate_smooth_res_curve <- function(curve.exponent, mid.price, base.price, maxSubResource, p) {
       supply <- ((p - base.price) ^ curve.exponent) / (mid.price ^ curve.exponent + ((p - base.price) ^ curve.exponent)) * maxSubResource
       # zero out the supply where the price was less than the base.price
@@ -64,7 +65,7 @@ module_energy_LA114.wind <- function(command, ...) {
       # Max price is defined to be the price at which supply is 95% of the maximum resource.
       # This range should cover the entire curve with sufficient density.
       # Note that further down the code, defining the max price to be where supply is 95% of max resource instead of 99%
-           # saves a lot of data (31K rows for "regional_price_supply_points" instead of 1.6 million rows)
+      # saves a lot of data (31K rows for "regional_price_supply_points" instead of 1.6 million rows)
       L114.supply_tol <- 0.95
       (L114.supply_tol / (1-L114.supply_tol)) ^ (1 / curve.exponent) * mid.price + base.price # max price
     }
@@ -102,9 +103,9 @@ module_energy_LA114.wind <- function(command, ...) {
 
     # Evaluate all supply curves by GCAM_region_ID to generate (price, supply) points
     # All countries within each GCAM region ID will share the same price axis. The minimum and maximum prices
-         # will be from the countries within the region with the lowest minimum and highest maximum prices, respectively.
-         # The minimum prices are taken from the Zhou data. The maximum prices are calculated using the function,
-         # generate_max_prices, which will determine the price at which supply is 95% of the max resource.
+    # will be from the countries within the region with the lowest minimum and highest maximum prices, respectively.
+    # The minimum prices are taken from the Zhou data. The maximum prices are calculated using the function,
+    # generate_max_prices, which will determine the price at which supply is 95% of the max resource.
 
     # The price increment between min and max price is set at 0.1 USD
     L114.price_inc <- 0.1 # 1975 USD
@@ -113,9 +114,9 @@ module_energy_LA114.wind <- function(command, ...) {
     if(OLD_DATA_SYSTEM_BEHAVIOR) {
 
       # The output of this old code is slightly different than the new method. The difference is the calculation of the maximum price.
-           # In the new method, the maximum price is determined to be the price at which supply is 95% of the max resource.
-           # In the old method, the maximum price is the price at which supply does not change more than 1%, evaluated from
-           # low to high price (at least 10 dollars more than minimum price, i.e., 100 min calculations at 0.1 increments).
+      # In the new method, the maximum price is determined to be the price at which supply is 95% of the max resource.
+      # In the old method, the maximum price is the price at which supply does not change more than 1%, evaluated from
+      # low to high price (at least 10 dollars more than minimum price, i.e., 100 min calculations at 0.1 increments).
       L114.supply_tol <- 0.01
       regional_price_supply_points <- tibble()
       for(region_ID in unique(L114.RsrcCurves_EJ_ctry_wind$GCAM_region_ID)) {
@@ -127,29 +128,29 @@ module_energy_LA114.wind <- function(command, ...) {
         L114.min_calcs <- 100
         repeat {
           # Evaluate supply curves for all countries in the region at the current price and sum up the supply
-          L114.SupplyPoints.currR <- tibble(GCAM_region_ID = region_ID, price = L114.price, supply = 0)
-          for(i in seq_len(nrow(L114.curr_region_RsrcCurves))) {
-            L114.SupplyPoints.currR$supply <- L114.SupplyPoints.currR$supply +
-              evaluate_smooth_res_curve(L114.curr_region_RsrcCurves$curve.exponent[i],
-                                        L114.curr_region_RsrcCurves$mid.price[i],
-                                        L114.curr_region_RsrcCurves$base.price[i],
-                                        L114.curr_region_RsrcCurves$maxSubResource[i],
-                                        L114.price)
-          }
-          regional_price_supply_points <- bind_rows(regional_price_supply_points, L114.SupplyPoints.currR)
-          if(L114.min_calcs <= 0 & (L114.SupplyPoints.currR$supply - L114.prev_supply) < L114.supply_tol) {
-            # No longer making any difference in supply, we can stop
-            break
-          } else {
-            # Supply is still changing, need more price points
-            L114.min_calcs <- L114.min_calcs - 1
-            L114.price <- L114.price + L114.price_inc
-            L114.prev_supply <- L114.SupplyPoints.currR$supply
-          }
+          # We do this as a vectorised operation over all the rows in L114.curr_region_RsrcCurves
+          L114.SupplyPoints.currR <- tibble(GCAM_region_ID = region_ID,
+                                            price = L114.price,
+                                            supply = sum(evaluate_smooth_res_curve(L114.curr_region_RsrcCurves$curve.exponent,
+                                                                                   L114.curr_region_RsrcCurves$mid.price,
+                                                                                   L114.curr_region_RsrcCurves$base.price,
+                                                                                   L114.curr_region_RsrcCurves$maxSubResource,
+                                                                                   L114.price)))
+
+        regional_price_supply_points <- bind_rows(regional_price_supply_points, L114.SupplyPoints.currR)
+        if(L114.min_calcs <= 0 & (L114.SupplyPoints.currR$supply - L114.prev_supply) < L114.supply_tol) {
+          # No longer making any difference in supply, we can stop
+          break
+        } else {
+          # Supply is still changing, need more price points
+          L114.min_calcs <- L114.min_calcs - 1
+          L114.price <- L114.price + L114.price_inc
+          L114.prev_supply <- L114.SupplyPoints.currR$supply
         }
       }
+    }
 
-    } else {
+  } else {
 
     # The min and max price points for each region will be determined. Remember that the minimum prices are taken
     # from the Zhou data. The maximum prices are calculated using the function, generate_max_prices.
@@ -162,9 +163,9 @@ module_energy_LA114.wind <- function(command, ...) {
       regional_min_max_price_points
 
     # Supply curves for each GCAM region ID will be generated.
-         # First, a set of price points will be generated for each region and applied to each country.
-         # Supply will then be calculated at each price point for each country.
-         # Finally, supply will be summed for each GCAM region ID.
+    # First, a set of price points will be generated for each region and applied to each country.
+    # Supply will then be calculated at each price point for each country.
+    # Finally, supply will be summed for each GCAM region ID.
     regional_price_supply_points <- lapply(regional_min_max_price_points$GCAM_region_ID, function(region_ID) {
 
       # Data will be evaulated for each GCAM region ID
@@ -197,77 +198,77 @@ module_energy_LA114.wind <- function(command, ...) {
     # One data frame was created for each GCAM region. Need to combine them all into one.
     regional_price_supply_points <- bind_rows(regional_price_supply_points)
 
-    } # End of old system behavior function
+  } # End of old system behavior function
 
-    # Refit the supply curve to the supply points we just calculated by evaluating the ctry level supply curves
-         # so that we can aggregate them to the regional level.
-    L114.RsrcCurves_EJ_R_wind <- lapply(unique(regional_price_supply_points$GCAM_region_ID), function(region_ID) {
+  # Refit the supply curve to the supply points we just calculated by evaluating the ctry level supply curves
+  # so that we can aggregate them to the regional level.
+  L114.RsrcCurves_EJ_R_wind <- lapply(unique(regional_price_supply_points$GCAM_region_ID), function(region_ID) {
 
-     # Data will be evaulated for each GCAM region ID
-     L114.SupplyPoints.currR <- filter(regional_price_supply_points, GCAM_region_ID == region_ID)
+    # Data will be evaulated for each GCAM region ID
+    L114.SupplyPoints.currR <- filter(regional_price_supply_points, GCAM_region_ID == region_ID)
 
-     # Creating table with region ID, base-price, and supply
-     L114.RsrcCurves_EJ_R_wind.currR <- tibble(GCAM_region_ID = region_ID, base.price = min(L114.SupplyPoints.currR$price),
-                                               maxSubResource = max(L114.SupplyPoints.currR$supply))
+    # Creating table with region ID, base-price, and supply
+    L114.RsrcCurves_EJ_R_wind.currR <- tibble(GCAM_region_ID = region_ID, base.price = min(L114.SupplyPoints.currR$price),
+                                              maxSubResource = max(L114.SupplyPoints.currR$supply))
 
-     # The points were calculated in increasing price order with upward sloping curves. Thus we can
-          # approximate the mid.price by looking at the first price point of the supply that is 50% of the max.
-     half_max_resource = 0.5 * L114.RsrcCurves_EJ_R_wind.currR$maxSubResource
+    # The points were calculated in increasing price order with upward sloping curves. Thus we can
+    # approximate the mid.price by looking at the first price point of the supply that is 50% of the max.
+    half_max_resource = 0.5 * L114.RsrcCurves_EJ_R_wind.currR$maxSubResource
 
-     L114.SupplyPoints.currR %>%
-       arrange(price) %>%
-       filter(supply >= half_max_resource) %>%
-       filter(row_number() == 1) %>%
-       .[["price"]] ->
-       mid.price
+    L114.SupplyPoints.currR %>%
+      arrange(price) %>%
+      filter(supply >= half_max_resource) %>%
+      filter(row_number() == 1) %>%
+      .[["price"]] ->
+      mid.price
 
-     # Add mid-price to table
-     L114.RsrcCurves_EJ_R_wind.currR %>%
-       repeat_add_columns(tibble::tibble(mid.price = mid.price)) %>%
-       # GCAM assumes that the base.price has already been taken out of the mid.price
-       mutate(mid.price = mid.price - base.price) ->
-       L114.RsrcCurves_EJ_R_wind.currR
+    # Add mid-price to table
+    L114.RsrcCurves_EJ_R_wind.currR %>%
+      repeat_add_columns(tibble::tibble(mid.price = mid.price)) %>%
+      # GCAM assumes that the base.price has already been taken out of the mid.price
+      mutate(mid.price = mid.price - base.price) ->
+      L114.RsrcCurves_EJ_R_wind.currR
 
-     # We must solve for the curve exponent that best fits the supply-points
-     L114.error_min_curve.exp <- optimize(f = smooth_res_curve_approx_error, interval = c(1.0, 15.0),
-                                          L114.RsrcCurves_EJ_R_wind.currR$mid.price,
-                                          L114.RsrcCurves_EJ_R_wind.currR$base.price,
-                                          L114.RsrcCurves_EJ_R_wind.currR$maxSubResource,
-                                          L114.SupplyPoints.currR)
+    # We must solve for the curve exponent that best fits the supply-points
+    L114.error_min_curve.exp <- optimize(f = smooth_res_curve_approx_error, interval = c(1.0, 15.0),
+                                         L114.RsrcCurves_EJ_R_wind.currR$mid.price,
+                                         L114.RsrcCurves_EJ_R_wind.currR$base.price,
+                                         L114.RsrcCurves_EJ_R_wind.currR$maxSubResource,
+                                         L114.SupplyPoints.currR)
 
-     # Add curve exponent to table
-     L114.RsrcCurves_EJ_R_wind.currR$curve.exponent <- L114.error_min_curve.exp$minimum
+    # Add curve exponent to table
+    L114.RsrcCurves_EJ_R_wind.currR$curve.exponent <- L114.error_min_curve.exp$minimum
 
-     L114.RsrcCurves_EJ_R_wind.currR
+    L114.RsrcCurves_EJ_R_wind.currR
 
-    }) # End of lapply
-
-
-    L114.RsrcCurves_EJ_R_wind %>%
-      # One data frame was created for each GCAM region. Need to combine them all into one.
-      bind_rows() %>%
-      # Creating "resource" and "subresource" columns that report "onshore wind resource"
-      mutate(resource = "onshore wind resource",
-             subresource = "onshore wind resource") %>%
-      # Reorder columns
-      select(GCAM_region_ID, resource, subresource, maxSubResource, mid.price, curve.exponent, base.price) ->
-      L114.RsrcCurves_EJ_R_wind
+  }) # End of lapply
 
 
-    # ===================================================
+  L114.RsrcCurves_EJ_R_wind %>%
+    # One data frame was created for each GCAM region. Need to combine them all into one.
+    bind_rows() %>%
+    # Creating "resource" and "subresource" columns that report "onshore wind resource"
+    mutate(resource = "onshore wind resource",
+           subresource = "onshore wind resource") %>%
+    # Reorder columns
+    select(GCAM_region_ID, resource, subresource, maxSubResource, mid.price, curve.exponent, base.price) ->
+    L114.RsrcCurves_EJ_R_wind
 
-    L114.RsrcCurves_EJ_R_wind %>%
-      add_title("Wind resource curves by GCAM region") %>%
-      add_units("Energy in EJ, price per unit energy in $1975/GJ") %>%
-      add_comments("Regional supply curves were generated by summing up country-level supply curves and then smoothing them out.") %>%
-      add_comments("Country-level supply curves were generated using data from Zhou.
+
+  # ===================================================
+
+  L114.RsrcCurves_EJ_R_wind %>%
+    add_title("Wind resource curves by GCAM region") %>%
+    add_units("Energy in EJ, price per unit energy in $1975/GJ") %>%
+    add_comments("Regional supply curves were generated by summing up country-level supply curves and then smoothing them out.") %>%
+    add_comments("Country-level supply curves were generated using data from Zhou.
                    All countries within a region were evaluated along the same price points.") %>%
-      add_legacy_name("L114.RsrcCurves_EJ_R_wind") %>%
-      add_precursors("common/iso_GCAM_regID", "energy/Zhou_wind_supply_ctry_EJ") ->
-      L114.RsrcCurves_EJ_R_wind
+    add_legacy_name("L114.RsrcCurves_EJ_R_wind") %>%
+    add_precursors("common/iso_GCAM_regID", "energy/Zhou_wind_supply_ctry_EJ") ->
+    L114.RsrcCurves_EJ_R_wind
 
-    return_data(L114.RsrcCurves_EJ_R_wind)
-  } else {
-    stop("Unknown command")
-  }
+  return_data(L114.RsrcCurves_EJ_R_wind)
+} else {
+  stop("Unknown command")
+}
 }
