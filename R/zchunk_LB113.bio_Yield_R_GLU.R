@@ -30,7 +30,7 @@ module_aglu_LB113.bio_Yield_R_GLU <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     value <- HA_ha <- HA <- Yield_avg <- Yield <- Ratio <- iso <- GCAM_region_ID <- GCAM_REGION_ID
-    GLU <- Ratio_weight <- . <- YieldIndex <- NULL # silence package check notes
+    GLU <- Ratio_weight <- . <- YieldIndex <- GTAP_crop <- NULL # silence package check notes
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
