@@ -32,6 +32,11 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    year <- value <- GCAM_region_ID <- GCAM_commodity <- GLU <- GLU_name <- IRR_RFD <-
+      MGMT <- region <- AgSupplySector <- AgSupplySubsector <- AgProductionTechnology <-
+      minicam.energy.input <- coefficient <- WaterContent <- nonLandVariableCost <-
+      FertCost <- NULL  # silence package check notes
+
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
