@@ -124,9 +124,9 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
       repeat_add_columns(tibble(GCAM_region_ID = GCAM_region_names$GCAM_region_ID)) %>%
       repeat_add_columns(tibble(year = emissions.EDGAR_YEARS)) %>%
       repeat_add_columns(tibble("Non.CO2" = emissions.PFCS))  %>%
-      left_join(L142.EDGAR_PFC_R_S_T_Yh.tmp1, by = c("GCAM_region_ID", "year", "EDGAR_agg_sector", "Non.CO2")) %>%
+      left_join_keep_first_only(L142.EDGAR_PFC_R_S_T_Yh.tmp1, by = c("GCAM_region_ID", "year", "EDGAR_agg_sector", "Non.CO2")) %>%
       select(GCAM_region_ID, supplysector, subsector, stub.technology, Non.CO2, year, EDGAR_emissions)  %>%
-      mutate(EDGAR_emissions = (replace(EDGAR_emissions, is.na(EDGAR_emissions), 0))) ->
+      replace_na(list(EDGAR_emissions = 0)) ->
       L142.pfc_R_S_T_Yh.tmp1
 
     # Disaggregate cooling emissions to residential and commercial sectors.
