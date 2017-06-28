@@ -21,7 +21,9 @@ original data system was \code{L142.pfc_R_S_T_Y.R} (emissions level1).
 Briefly describe what this chunk does.
 }
 \details{
-Describe in detail what this chunk does.
+First, a table was created that has all historical HFCs values.
+Then, regional and sector information was added.  And finally, HFC emission shares
+were calculated by suming emissions over region, sector, technology, and gas by year.
 }
 \author{
 CDL June 2017
