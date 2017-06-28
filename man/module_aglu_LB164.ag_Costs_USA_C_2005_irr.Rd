@@ -18,7 +18,7 @@ the generated outputs: \code{L164.ag_Cost_75USDkg_C}. The corresponding file in 
 original data system was \code{LB164.ag_Costs_USA_C_2005_irr.R} (aglu level1).
 }
 \description{
-This module produces production costs of GCAM commodities not including purchased irrigation water.
+This module calculates production costs of GCAM commodities not including purchased irrigation water.
 }
 \details{
 USDA cost data is used to calculate total production costs - purchased irrigation water costs for

@@ -1,6 +1,6 @@
 #' module_aglu_LB164.ag_Costs_USA_C_2005_irr
 #'
-#' This module produces production costs of GCAM commodities not including purchased irrigation water.
+#' This module calculates production costs of GCAM commodities not including purchased irrigation water.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -46,15 +46,13 @@ module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
 
 
     # Perform computations
-    # old comment: The method here is to start from the cost file that has already been processed, and
-    #              to deduct costs of purchased irrigation water from each cost estimate. This is less
-    #              repetitive than following all of the same steps in that prior file, but with irrigation
-    #              water mapped elsewhere.
+    # The method here is to start from the cost file that has already been processed in LB133, and
+    # to deduct costs of purchased irrigation water from each cost estimate.
 
     # Step 1: Compute the share of total variable costs from purchased irrigation water.
     # CostFrac = IrrCost / TotCost
     USDA_cost_data %>%
-      gather(year, cost, -Crop, -Item, -Unit) %>%
+      gather(year, cost, matches(YEAR_PATTERN)) %>%
       mutate(year = as.integer(year)) %>%
       filter(Item == "Purchased irrigation water" | Item == "Total operating costs",
              year %in% MODEL_COST_YEARS) %>%
@@ -67,7 +65,7 @@ module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
       filter(!all(is.na(IrrCost))) %>%
       select(-Unit, -IrrCost, -TotCost) %>%
       # calculate average Cost fraction for each crop, over MODEL_COST_YEARS
-      mutate(waterCostFrac = mean(CostFrac, na.rm = T)) %>%
+      mutate(waterCostFrac = mean(CostFrac, na.rm = TRUE)) %>%
       ungroup %>%
       left_join_error_no_match(USDA_crops, by = c("Crop" = "USDA_crop")) ->
       L164.waterCostFrac_Cusda
@@ -98,7 +96,7 @@ module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
     # For the crops with missing values, make a simple linear regression to predict water cost fraction as a function of
     # irrigation fraction
     L161.ag_irrHA_frac_R_C_GLU %>%
-      filter(GCAM_region_ID == iso_GCAM_regID[["GCAM_region_ID"]][iso_GCAM_regID$iso == "usa"]) %>%
+      filter(GCAM_region_ID == gcam.USA_CODE) %>%
       group_by(GCAM_region_ID, GCAM_commodity) %>%
       summarise(irrHA = sum(irrHA),
                 rfdHA = sum(rfdHA)) %>%
@@ -113,7 +111,7 @@ module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
     # Use L164.ag_irrHA_frac_USA_C to form the linear model waterCostFrac = f(irrHA_frac)
     # and predict the missing water cost fractions in L164.ag_irrHA_frac_USA_C.
     L164.ag_irrHA_frac_USA_C %>%
-      glm(waterCostFrac ~ irrHA_frac, data =.) %>%
+      glm(waterCostFrac ~ irrHA_frac, data = .) %>%
       predict(type = "response",
               newdata = select(filter(L164.ag_irrHA_frac_USA_C,is.na(waterCostFrac)),
                                irrHA_frac, waterCostFrac)) %>%
@@ -157,7 +155,6 @@ module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
       add_comments("irrigated fraction of harvested area. This linear model then predicts the water cost fraction based on") %>%
       add_comments("irrigated fraction of harvested area for the missing commodities. Finally, cost data from LB133.ag_Cost_75USDkg_C") %>%
       add_comments("is adjusted as LB133_cost * (1 - water cost fraction) = production cost - purchased irrigation water for each commodity.") %>%
-      add_comments("can be multiple lines") %>%
       add_legacy_name("L164.ag_Cost_75USDkg_C") %>%
       add_precursors("common/iso_GCAM_regID",
                      "aglu/USDA_crops",
