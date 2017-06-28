@@ -415,7 +415,7 @@ chunk_outputs <- function(chunks = find_chunks()$name) {
 #' @author RL 19 Apr 2017
 #' @importFrom utils capture.output
 screen_forbidden <- function(fn) {
-  forbidden <- c("(?<!error_no_)match", "ifelse",
+  forbidden <- c("(?<!error_no_)match(?!es)", "ifelse",
                  "melt", "cast",
                  "rbind", "cbind", "merge",
                  "read\\.csv", "write\\.csv",
