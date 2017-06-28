@@ -84,11 +84,15 @@ module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
       left_join_error_no_match(L164.waterCostFrac_Cusda, ., by = "GTAP_crop") %>%
       mutate(waterCostFrac_wt = waterCostFrac * weight) %>%
       group_by(GCAM_commodity) %>%
-      summarise(waterCostFrac_wt = sum(waterCostFrac_wt),
-                weight = sum(weight)) %>%
-      ungroup %>%
+      # summarise(waterCostFrac_wt = sum(waterCostFrac_wt),
+      #           weight = sum(weight)) %>%
+      # ungroup %>%
+      # # compute weighted average water cost fraction by GCAM commodities that are represented in USDA cost spreadsheets.
+      # mutate(waterCostFrac = waterCostFrac_wt / weight) ->
+      summarise(waterCostFrac = weighted.mean(waterCostFrac_wt, weight)) %>%
+      ungroup ->
       # compute weighted average water cost fraction by GCAM commodities that are represented in USDA cost spreadsheets.
-      mutate(waterCostFrac = waterCostFrac_wt / weight) ->
+      #mutate(waterCostFrac = waterCostFrac_wt / weight) ->
       L164.waterCostFrac_C
 
 
