@@ -20,7 +20,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author ACS June 2017
-module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
+module_aglu_LB164.ag_Costs_USA_C_2005_irr_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "aglu/USDA_crops",
