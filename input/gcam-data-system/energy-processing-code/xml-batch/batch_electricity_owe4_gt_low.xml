@@ -1,0 +1,24 @@
+<ModelInterfaceBatch>
+	<class name="ModelInterface.ModelGUI2.InputViewer">
+	<command name="CSV file">
+		<headerFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/_common/headers//ModelInterface_headers.txt</headerFile>
+		<csvFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/level2//L223.EQUIV_TABLE.csv</csvFile>
+		<csvFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/new_files//L223.GlobalIntTechEff_elec_owe4.csv</csvFile>
+		<csvFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/new_files//L223.GlobalTechEff_elec_owe4.csv</csvFile>
+		<csvFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/new_files//L223.GlobalTechCapital_elec_owe4_low.csv</csvFile>
+		<csvFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/new_files//L223.GlobalIntTechCapital_elec_owe4_low.csv</csvFile>
+		<csvFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/new_files//L223.GlobalTechOMfixed_elec_owe4_low.csv</csvFile>
+		<csvFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/new_files//L223.GlobalIntTechOMfixed_elec_owe4_low.csv</csvFile>
+		<csvFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/new_files//L223.GlobalTechOMvar_elec_owe4.csv</csvFile>
+		<csvFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/new_files//L223.GlobalIntTechOMvar_elec_owe4.csv</csvFile>
+		<csvFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/new_files//L223.GlobalTechShrwt_elec_owe4.csv</csvFile>
+		<csvFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/new_files//L223.GlobalIntTechShrwt_elec_owe4.csv</csvFile>
+		<csvFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/new_files//L223.PrimaryRenewKeyword_elec_owe4.csv</csvFile>
+		<csvFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/new_files//L223.PrimaryRenewKeywordInt_elec_owe4.csv</csvFile>
+		<csvFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/new_files//L223.GlobalIntTechBackup_elec_owe4.csv</csvFile>
+		<csvFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/new_files//L223.GlobalTechLifetime_elec_owe4.csv</csvFile>
+		<csvFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/new_files//L223.GlobalIntTechLifetime_elec_owe4.csv</csvFile>
+		<outFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/xml/energy-xml//electricity_owe4_gt_low.xml</outFile>
+ 	</command>
+	</class>
+</ModelInterfaceBatch>

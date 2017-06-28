@@ -1,0 +1,11 @@
+<ModelInterfaceBatch>
+	<class name="ModelInterface.ModelGUI2.InputViewer">
+	<command name="CSV file">
+		<headerFile>C:/Users/acranmer/Desktop/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/_common/headers//ModelInterface_headers.txt</headerFile>
+		<csvFile>C:/Users/acranmer/Desktop/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/new_files//L210.RenewRsrc_owe2_usa.csv</csvFile>
+		<csvFile>C:/Users/acranmer/Desktop/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/new_files//L210.RenewRsrcPrice_owe2_usa.csv</csvFile>
+		<csvFile>C:/Users/acranmer/Desktop/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/new_files//L210.RenewRsrcCurves_owe2_smooth_usa_low.csv</csvFile>
+		<outFile>C:/Users/acranmer/Desktop/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/xml/energy-xml//resources_owe2_usa_low.xml</outFile>
+ 	</command>
+	</class>
+</ModelInterfaceBatch>
