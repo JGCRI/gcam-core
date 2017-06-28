@@ -141,7 +141,7 @@ module_aglu_LB163.bio_Yield_R_GLU_irr <- function(command, ...) {
 
     # Calculate the base yield, a scaler value:
      L163.base_bio_yield_tha <- aglu.MAX_BIO_YIELD_THA / max(L163.YieldIndex_R_GLU_irr$YieldIndex[L163.YieldIndex_R_GLU_irr$GCAM_region_ID == USAreg])
-     L163.base_bio_yield_GJm2 <- L163.base_bio_yield_tha * aglu.BIO_GJT / CONV_HA_M2
+     L163.base_bio_yield_GJm2 <- L163.base_bio_yield_tha * aglu.BIO_ENERGY_CONTENT_GJT / CONV_HA_M2
 
     # Finally, calculate bioenergy yields in each region-glu-irrigation combo:
     L163.YieldIndex_R_GLU_irr %>%
