@@ -1,6 +1,6 @@
 #' module_aglu_LB164.ag_Costs_USA_C_2005_irr
 #'
-#' Briefly describe what this chunk does.
+#' This module produces production costs of GCAM commodities not including purchased irrigation water.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,12 +8,18 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L164.ag_Cost_75USDkg_C}. The corresponding file in the
 #' original data system was \code{LB164.ag_Costs_USA_C_2005_irr.R} (aglu level1).
-#' @details Describe in detail what this chunk does.
+#' @details USDA cost data is used to calculate total production costs - purchased irrigation water costs for
+#' GCAM commodities covered in USDA spreadsheets. This produces a commodity level water cost fraction for some
+#' but not all GCAM commodities. L161.ag_irr_HA_frac_R_C_GLU irrigated vs rainfed harvested area data for the
+#' covered GCAM commodities is used to form a linear model describing water cost fraction as a function of the
+#' irrigated fraction of harvested area. This linear model then predicts the water cost fraction based on
+#' irrigated fraction of harvested area for the missing commodities. Finally, cost data from LB133.ag_Cost_75USDkg_C
+#' is adjusted as LB133_cost * (1 - water cost fraction) = production cost - purchased irrigation water for each
+#' commodity.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
-#' @export
+#' @author ACS June 2017
 module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
@@ -142,9 +148,15 @@ module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
 
     # Produce outputs
     L164.ag_Cost_75USDkg_C %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
+      add_title("Production costs of GCAM commodities not including purchased irrigation water") %>%
+      add_units("1975USD/kg") %>%
+      add_comments("USDA cost data is used to calculate total production costs - purchased irrigation water costs for") %>%
+      add_comments("GCAM commodities covered in USDA spreadsheets. This produces a commodity level water cost fraction for some") %>%
+      add_comments("but not all GCAM commodities. L161.ag_irr_HA_frac_R_C_GLU irrigated vs rainfed harvested area data for the") %>%
+      add_comments("covered GCAM commodities is used to form a linear model describing water cost fraction as a function of the") %>%
+      add_comments("irrigated fraction of harvested area. This linear model then predicts the water cost fraction based on") %>%
+      add_comments("irrigated fraction of harvested area for the missing commodities. Finally, cost data from LB133.ag_Cost_75USDkg_C") %>%
+      add_comments("is adjusted as LB133_cost * (1 - water cost fraction) = production cost - purchased irrigation water for each commodity.") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L164.ag_Cost_75USDkg_C") %>%
       add_precursors("common/iso_GCAM_regID",

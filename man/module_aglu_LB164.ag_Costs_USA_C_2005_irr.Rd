@@ -18,11 +18,18 @@ the generated outputs: \code{L164.ag_Cost_75USDkg_C}. The corresponding file in 
 original data system was \code{LB164.ag_Costs_USA_C_2005_irr.R} (aglu level1).
 }
 \description{
-Briefly describe what this chunk does.
+This module produces production costs of GCAM commodities not including purchased irrigation water.
 }
 \details{
-Describe in detail what this chunk does.
+USDA cost data is used to calculate total production costs - purchased irrigation water costs for
+GCAM commodities covered in USDA spreadsheets. This produces a commodity level water cost fraction for some
+but not all GCAM commodities. L161.ag_irr_HA_frac_R_C_GLU irrigated vs rainfed harvested area data for the
+covered GCAM commodities is used to form a linear model describing water cost fraction as a function of the
+irrigated fraction of harvested area. This linear model then predicts the water cost fraction based on
+irrigated fraction of harvested area for the missing commodities. Finally, cost data from LB133.ag_Cost_75USDkg_C
+is adjusted as LB133_cost * (1 - water cost fraction) = production cost - purchased irrigation water for each
+commodity.
 }
 \author{
-YourInitials CurrentMonthName 2017
+ACS June 2017
 }
