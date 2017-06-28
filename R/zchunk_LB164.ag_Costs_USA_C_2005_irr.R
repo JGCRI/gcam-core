@@ -56,30 +56,92 @@ module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
       rename(IrrCost = `Purchased irrigation water`,
              TotCost = `Total operating costs`) %>%
       mutate(CostFrac = IrrCost / TotCost) %>%
-      select(-Unit, -IrrCost, -TotCost) %>%
+      # filter out any crops with IrrCost in all years
       group_by(Crop) %>%
+      filter(!all(is.na(IrrCost))) %>%
+      select(-Unit, -IrrCost, -TotCost) %>%
+      # calculate average Cost fraction for each crop, over MODEL_COST_YEARS
       mutate(waterCostFrac = mean(CostFrac, na.rm = T)) %>%
       ungroup %>%
       left_join_error_no_match(USDA_crops, by = c("Crop" = "USDA_crop")) ->
       L164.waterCostFrac_Cusda
 
     # Step 2: Use L100 LDS harvested area data to weight the waterCostFrac for each USDA
-    # crop when aggregating to USDA commodities.
+    # crop when aggregating to GCAM commodities that are represented in USDA cost spreadsheets.
+    # Use the aggregated weighted waterCostFrac and weights to compute weighted average water
+    # cost fraction by GCAM commodities that are represented in USDA cost spreadsheets.
     L100.LDS_ag_HA_ha %>%
-      filter(GTAP_crop %in% USDA_crops$GTAP_crop,
+      filter(GTAP_crop %in% USDA_crops$GTAP_crop &
              iso == "usa") %>%
       group_by(iso, GTAP_crop) %>%
       summarise(weight = sum(value)) %>%
       ungroup %>%
       select(-iso) %>%
-      left_join_error_no_match(L164.waterCostFrac_Cusda, ., by = "GTAP_crop") -> A
+      left_join_error_no_match(L164.waterCostFrac_Cusda, ., by = "GTAP_crop") %>%
+      mutate(waterCostFrac_wt = waterCostFrac * weight) %>%
+      group_by(GCAM_commodity) %>%
+      summarise(waterCostFrac_wt = sum(waterCostFrac_wt),
+                weight = sum(weight)) %>%
+      ungroup %>%
+      # compute weighted average water cost fraction by GCAM commodities that are represented in USDA cost spreadsheets.
+      mutate(waterCostFrac = waterCostFrac_wt / weight) ->
+      L164.waterCostFrac_C
 
 
+    # Step 3: Compute water cost fractions for crops not in the USDA cost spreadsheets.
+    # For the crops with missing values, make a simple linear regression to predict water cost fraction as a function of
+    # irrigation fraction
+    L161.ag_irrHA_frac_R_C_GLU %>%
+      filter(GCAM_region_ID == iso_GCAM_regID[["GCAM_region_ID"]][iso_GCAM_regID$iso == "usa"]) %>%
+      group_by(GCAM_region_ID, GCAM_commodity) %>%
+      summarise(irrHA = sum(irrHA),
+                rfdHA = sum(rfdHA)) %>%
+      ungroup %>%
+      mutate(irrHA_frac = irrHA / (irrHA + rfdHA)) %>%
+      # join in water costs for the commodities that ARE covered by USDA spreadsheets, L164.waterCostFrac_C
+      # preserve NA's to process
+      left_join(select(L164.waterCostFrac_C, GCAM_commodity, waterCostFrac),
+                               by = "GCAM_commodity") ->
+      L164.ag_irrHA_frac_USA_C
 
+    # Use L164.ag_irrHA_frac_USA_C to form the linear model waterCostFrac = f(irrHA_frac)
+    # and predict the missing water cost fractions in L164.ag_irrHA_frac_USA_C.
+    L164.ag_irrHA_frac_USA_C %>%
+      glm(waterCostFrac ~ irrHA_frac, data =.) %>%
+      predict(type = "response",
+              newdata = select(filter(L164.ag_irrHA_frac_USA_C,is.na(waterCostFrac)),
+                               irrHA_frac, waterCostFrac)) %>%
+      tibble::tibble(missingWaterCost = .) %>%
+      bind_cols(filter(L164.ag_irrHA_frac_USA_C,is.na(waterCostFrac))) %>%
+      mutate(waterCostFrac = missingWaterCost) %>%
+      select(-missingWaterCost) ->
+      L164.ag_irrHA_frac_USA_missingC
+
+    # Finally, bind the table of missing cost commodities, L164.ag_irrHA_frac_USA_missingC,
+    # to the table of commodities covered by USDA spreadsheets
+    L164.ag_irrHA_frac_USA_C %>%
+      filter(!is.na(waterCostFrac)) %>%
+      bind_rows(L164.ag_irrHA_frac_USA_missingC) ->
+      L164.ag_irrHA_frac_USA_C
+
+
+    # Step 4: Calculate the revised variable cost as the prior total minus the water cost fraction
+    # For any crops not grown in the US, assume no water cost deduction (not used w present dataset
+    # and mappings)
+    L133.ag_Cost_75USDkg_C %>%
+      left_join_error_no_match(select(L164.ag_irrHA_frac_USA_C, GCAM_commodity, waterCostFrac),
+                               by = "GCAM_commodity") %>%
+      mutate(Cost_75USDkg_new = Cost_75USDkg * (1 - waterCostFrac),
+             Cost_75USDkg_new = replace(Cost_75USDkg_new,
+                                        is.na(Cost_75USDkg_new),
+                                        Cost_75USDkg)) %>%
+      select(-Cost_75USDkg, -waterCostFrac) %>%
+      rename(Cost_75USDkg = Cost_75USDkg_new) ->
+      L164.ag_Cost_75USDkg_C
 
 
     # Produce outputs
-    tibble() %>%
+    L164.ag_Cost_75USDkg_C %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -91,8 +153,7 @@ module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
                      "aglu/USDA_cost_data",
                      "L100.LDS_ag_HA_ha",
                      "L133.ag_Cost_75USDkg_C",
-                     "temp-data-inject/L161.ag_irrHA_frac_R_C_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "temp-data-inject/L161.ag_irrHA_frac_R_C_GLU") ->
       L164.ag_Cost_75USDkg_C
 
     return_data(L164.ag_Cost_75USDkg_C)
