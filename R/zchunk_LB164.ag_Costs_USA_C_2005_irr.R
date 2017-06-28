@@ -72,23 +72,20 @@ module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
 
     # Step 2: Use L100 LDS harvested area data to weight the waterCostFrac for each USDA
     # crop when aggregating to GCAM commodities that are represented in USDA cost spreadsheets.
-    # Use the aggregated weighted waterCostFrac and weights to compute weighted average water
-    # cost fraction by GCAM commodities that are represented in USDA cost spreadsheets.
     L100.LDS_ag_HA_ha %>%
+      # get the weights for a weighted average
       filter(GTAP_crop %in% USDA_crops$GTAP_crop &
              iso == "usa") %>%
       group_by(iso, GTAP_crop) %>%
       summarise(weight = sum(value)) %>%
       ungroup %>%
       select(-iso) %>%
+      # join the quantities to be weighted and averaged
       left_join_error_no_match(L164.waterCostFrac_Cusda, ., by = "GTAP_crop") %>%
-      mutate(waterCostFrac_wt = waterCostFrac * weight) %>%
+      # compute the weighted average
       group_by(GCAM_commodity) %>%
-      summarise(waterCostFrac_wt = sum(waterCostFrac_wt),
-                weight = sum(weight)) %>%
-      ungroup %>%
-      # compute weighted average water cost fraction by GCAM commodities that are represented in USDA cost spreadsheets.
-      mutate(waterCostFrac = waterCostFrac_wt / weight) ->
+      summarise(waterCostFrac = weighted.mean(waterCostFrac, weight)) %>%
+      ungroup ->
       L164.waterCostFrac_C
 
 
