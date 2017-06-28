@@ -1,7 +1,17 @@
+# XML-related constants
+
+aglu.GLU_NDIGITS          <- 3    # number of digits in the geographic land unit identifier codes
+aglu.GLU_NAME_DELIMITER   <- ""   # delimiter between the GLU name and number
+aglu.LT_GLU_DELIMITER     <-      # delimiter between the land use type name and GLU name. should be the same as the crop-glu delimiter
+  aglu.CROP_GLU_DELIMITER <- "_"  # delimiter between the crop name and GLU name
+aglu.IRR_DELIMITER        <- "_"  # delimiter between the appended crop x GLU and irrigation level
+aglu.MGMT_DELIMITER       <- "_"  # delimiter between appended tech name and management level
+
 # Column names of tables that are read in to the model interface
 # These correspond to the headers of the same name in the headers/ModelInterface_headers.txt file
 # These are for generic categories; module-specific level2 data names are found in data header files of each module
 
+# Temporary definitions, just to reduce repetition below
 R <- "region"
 Y <- "year"
 input <- "minicam.energy.input"
