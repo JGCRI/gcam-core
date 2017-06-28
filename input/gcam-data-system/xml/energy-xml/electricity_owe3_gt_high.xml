@@ -1,0 +1,1128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <global-technology-database>
+         <location-info sector-name="electricity" subsector-name="offshore wind">
+            <intermittent-technology name="offshore wind 3">
+               <period year="1975">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>1</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>1207.0411</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>152.95</OM-fixed>
+                     <capacity-factor>0.343</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>2.28</OM-var>
+                  </input-OM-var>
+                  <share-weight>0</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <electric-sector-name>electricity</electric-sector-name>
+                  <trial-market-name>renewable</trial-market-name>
+                  <backup-capital-cost>36</backup-capital-cost>
+                  <backup-capacity-factor>0.05</backup-capacity-factor>
+                  <minicam-energy-input name="backup_electricity"/>
+                  <minicam-non-energy-input name="backup-cap-cost"/>
+                  <capacity-limit-backup-calculator>
+                     <capacity-limit>0.35</capacity-limit>
+                  </capacity-limit-backup-calculator>
+               </period>
+               <period year="1990">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>1</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>1207.0411</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>152.95</OM-fixed>
+                     <capacity-factor>0.343</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>2.28</OM-var>
+                  </input-OM-var>
+                  <share-weight>0</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <electric-sector-name>electricity</electric-sector-name>
+                  <trial-market-name>renewable</trial-market-name>
+                  <backup-capital-cost>36</backup-capital-cost>
+                  <backup-capacity-factor>0.05</backup-capacity-factor>
+                  <minicam-energy-input name="backup_electricity"/>
+                  <minicam-non-energy-input name="backup-cap-cost"/>
+                  <capacity-limit-backup-calculator>
+                     <capacity-limit>0.35</capacity-limit>
+                  </capacity-limit-backup-calculator>
+               </period>
+               <period year="2005">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>1</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>1207.0411</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>152.95</OM-fixed>
+                     <capacity-factor>0.343</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>2.28</OM-var>
+                  </input-OM-var>
+                  <share-weight>0</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <electric-sector-name>electricity</electric-sector-name>
+                  <trial-market-name>renewable</trial-market-name>
+                  <backup-capital-cost>36</backup-capital-cost>
+                  <backup-capacity-factor>0.05</backup-capacity-factor>
+                  <minicam-energy-input name="backup_electricity"/>
+                  <minicam-non-energy-input name="backup-cap-cost"/>
+                  <capacity-limit-backup-calculator>
+                     <capacity-limit>0.35</capacity-limit>
+                  </capacity-limit-backup-calculator>
+               </period>
+               <period year="2010">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>1</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>1207.0411</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>152.95</OM-fixed>
+                     <capacity-factor>0.343</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>0</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <electric-sector-name>electricity</electric-sector-name>
+                  <trial-market-name>renewable</trial-market-name>
+                  <backup-capital-cost>36</backup-capital-cost>
+                  <backup-capacity-factor>0.05</backup-capacity-factor>
+                  <minicam-energy-input name="backup_electricity"/>
+                  <minicam-non-energy-input name="backup-cap-cost"/>
+                  <capacity-limit-backup-calculator>
+                     <capacity-limit>0.35</capacity-limit>
+                  </capacity-limit-backup-calculator>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2015">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>1</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>1207.0411</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>152.95</OM-fixed>
+                     <capacity-factor>0.343</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>0.25</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <electric-sector-name>electricity</electric-sector-name>
+                  <trial-market-name>renewable</trial-market-name>
+                  <backup-capital-cost>36</backup-capital-cost>
+                  <backup-capacity-factor>0.05</backup-capacity-factor>
+                  <minicam-energy-input name="backup_electricity"/>
+                  <minicam-non-energy-input name="backup-cap-cost"/>
+                  <capacity-limit-backup-calculator>
+                     <capacity-limit>0.35</capacity-limit>
+                  </capacity-limit-backup-calculator>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2020">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>1</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>1154.476407</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>146.43</OM-fixed>
+                     <capacity-factor>0.343</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>0.5</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <electric-sector-name>electricity</electric-sector-name>
+                  <trial-market-name>renewable</trial-market-name>
+                  <backup-capital-cost>36</backup-capital-cost>
+                  <backup-capacity-factor>0.05</backup-capacity-factor>
+                  <minicam-energy-input name="backup_electricity"/>
+                  <minicam-non-energy-input name="backup-cap-cost"/>
+                  <capacity-limit-backup-calculator>
+                     <capacity-limit>0.35</capacity-limit>
+                  </capacity-limit-backup-calculator>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2025">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>1</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>1111.645917</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>140.9</OM-fixed>
+                     <capacity-factor>0.343</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>0.75</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <electric-sector-name>electricity</electric-sector-name>
+                  <trial-market-name>renewable</trial-market-name>
+                  <backup-capital-cost>36</backup-capital-cost>
+                  <backup-capacity-factor>0.05</backup-capacity-factor>
+                  <minicam-energy-input name="backup_electricity"/>
+                  <minicam-non-energy-input name="backup-cap-cost"/>
+                  <capacity-limit-backup-calculator>
+                     <capacity-limit>0.35</capacity-limit>
+                  </capacity-limit-backup-calculator>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2030">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>1</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>1072.709107</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>136.16</OM-fixed>
+                     <capacity-factor>0.343</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>1</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <electric-sector-name>electricity</electric-sector-name>
+                  <trial-market-name>renewable</trial-market-name>
+                  <backup-capital-cost>36</backup-capital-cost>
+                  <backup-capacity-factor>0.05</backup-capacity-factor>
+                  <minicam-energy-input name="backup_electricity"/>
+                  <minicam-non-energy-input name="backup-cap-cost"/>
+                  <capacity-limit-backup-calculator>
+                     <capacity-limit>0.35</capacity-limit>
+                  </capacity-limit-backup-calculator>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2035">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>1</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>1041.559659</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>132.02</OM-fixed>
+                     <capacity-factor>0.343</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>1</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <electric-sector-name>electricity</electric-sector-name>
+                  <trial-market-name>renewable</trial-market-name>
+                  <backup-capital-cost>36</backup-capital-cost>
+                  <backup-capacity-factor>0.05</backup-capacity-factor>
+                  <minicam-energy-input name="backup_electricity"/>
+                  <minicam-non-energy-input name="backup-cap-cost"/>
+                  <capacity-limit-backup-calculator>
+                     <capacity-limit>0.35</capacity-limit>
+                  </capacity-limit-backup-calculator>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2040">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>1</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>1014.303892</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>128.46</OM-fixed>
+                     <capacity-factor>0.343</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>1</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <electric-sector-name>electricity</electric-sector-name>
+                  <trial-market-name>renewable</trial-market-name>
+                  <backup-capital-cost>36</backup-capital-cost>
+                  <backup-capacity-factor>0.05</backup-capacity-factor>
+                  <minicam-energy-input name="backup_electricity"/>
+                  <minicam-non-energy-input name="backup-cap-cost"/>
+                  <capacity-limit-backup-calculator>
+                     <capacity-limit>0.35</capacity-limit>
+                  </capacity-limit-backup-calculator>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2045">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>1</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>988.9949661</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>125.5</OM-fixed>
+                     <capacity-factor>0.343</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>1</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <electric-sector-name>electricity</electric-sector-name>
+                  <trial-market-name>renewable</trial-market-name>
+                  <backup-capital-cost>36</backup-capital-cost>
+                  <backup-capacity-factor>0.05</backup-capacity-factor>
+                  <minicam-energy-input name="backup_electricity"/>
+                  <minicam-non-energy-input name="backup-cap-cost"/>
+                  <capacity-limit-backup-calculator>
+                     <capacity-limit>0.35</capacity-limit>
+                  </capacity-limit-backup-calculator>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2050">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>1</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>969.5265612</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>122.83</OM-fixed>
+                     <capacity-factor>0.343</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>1</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <electric-sector-name>electricity</electric-sector-name>
+                  <trial-market-name>renewable</trial-market-name>
+                  <backup-capital-cost>36</backup-capital-cost>
+                  <backup-capacity-factor>0.05</backup-capacity-factor>
+                  <minicam-energy-input name="backup_electricity"/>
+                  <minicam-non-energy-input name="backup-cap-cost"/>
+                  <capacity-limit-backup-calculator>
+                     <capacity-limit>0.35</capacity-limit>
+                  </capacity-limit-backup-calculator>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2055">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>1</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>952.0049968</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>120.66</OM-fixed>
+                     <capacity-factor>0.343</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>1</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <electric-sector-name>electricity</electric-sector-name>
+                  <trial-market-name>renewable</trial-market-name>
+                  <backup-capital-cost>36</backup-capital-cost>
+                  <backup-capacity-factor>0.05</backup-capacity-factor>
+                  <minicam-energy-input name="backup_electricity"/>
+                  <minicam-non-energy-input name="backup-cap-cost"/>
+                  <capacity-limit-backup-calculator>
+                     <capacity-limit>0.35</capacity-limit>
+                  </capacity-limit-backup-calculator>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2060">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>1</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>936.430273</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>118.69</OM-fixed>
+                     <capacity-factor>0.343</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>1</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <electric-sector-name>electricity</electric-sector-name>
+                  <trial-market-name>renewable</trial-market-name>
+                  <backup-capital-cost>36</backup-capital-cost>
+                  <backup-capacity-factor>0.05</backup-capacity-factor>
+                  <minicam-energy-input name="backup_electricity"/>
+                  <minicam-non-energy-input name="backup-cap-cost"/>
+                  <capacity-limit-backup-calculator>
+                     <capacity-limit>0.35</capacity-limit>
+                  </capacity-limit-backup-calculator>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2065">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>1</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>922.8023896</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>117.11</OM-fixed>
+                     <capacity-factor>0.343</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>1</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <electric-sector-name>electricity</electric-sector-name>
+                  <trial-market-name>renewable</trial-market-name>
+                  <backup-capital-cost>36</backup-capital-cost>
+                  <backup-capacity-factor>0.05</backup-capacity-factor>
+                  <minicam-energy-input name="backup_electricity"/>
+                  <minicam-non-energy-input name="backup-cap-cost"/>
+                  <capacity-limit-backup-calculator>
+                     <capacity-limit>0.35</capacity-limit>
+                  </capacity-limit-backup-calculator>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2070">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>1</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>913.0681872</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>115.63</OM-fixed>
+                     <capacity-factor>0.343</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>1</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <electric-sector-name>electricity</electric-sector-name>
+                  <trial-market-name>renewable</trial-market-name>
+                  <backup-capital-cost>36</backup-capital-cost>
+                  <backup-capacity-factor>0.05</backup-capacity-factor>
+                  <minicam-energy-input name="backup_electricity"/>
+                  <minicam-non-energy-input name="backup-cap-cost"/>
+                  <capacity-limit-backup-calculator>
+                     <capacity-limit>0.35</capacity-limit>
+                  </capacity-limit-backup-calculator>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2075">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>1</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>903.3339847</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>114.44</OM-fixed>
+                     <capacity-factor>0.343</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>1</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <electric-sector-name>electricity</electric-sector-name>
+                  <trial-market-name>renewable</trial-market-name>
+                  <backup-capital-cost>36</backup-capital-cost>
+                  <backup-capacity-factor>0.05</backup-capacity-factor>
+                  <minicam-energy-input name="backup_electricity"/>
+                  <minicam-non-energy-input name="backup-cap-cost"/>
+                  <capacity-limit-backup-calculator>
+                     <capacity-limit>0.35</capacity-limit>
+                  </capacity-limit-backup-calculator>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2080">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>1</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>893.5997823</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>113.45</OM-fixed>
+                     <capacity-factor>0.343</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>1</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <electric-sector-name>electricity</electric-sector-name>
+                  <trial-market-name>renewable</trial-market-name>
+                  <backup-capital-cost>36</backup-capital-cost>
+                  <backup-capacity-factor>0.05</backup-capacity-factor>
+                  <minicam-energy-input name="backup_electricity"/>
+                  <minicam-non-energy-input name="backup-cap-cost"/>
+                  <capacity-limit-backup-calculator>
+                     <capacity-limit>0.35</capacity-limit>
+                  </capacity-limit-backup-calculator>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2085">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>1</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>887.7592609</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>112.56</OM-fixed>
+                     <capacity-factor>0.343</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>1</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <electric-sector-name>electricity</electric-sector-name>
+                  <trial-market-name>renewable</trial-market-name>
+                  <backup-capital-cost>36</backup-capital-cost>
+                  <backup-capacity-factor>0.05</backup-capacity-factor>
+                  <minicam-energy-input name="backup_electricity"/>
+                  <minicam-non-energy-input name="backup-cap-cost"/>
+                  <capacity-limit-backup-calculator>
+                     <capacity-limit>0.35</capacity-limit>
+                  </capacity-limit-backup-calculator>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2090">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>1</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>881.9187394</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>111.77</OM-fixed>
+                     <capacity-factor>0.343</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>1</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <electric-sector-name>electricity</electric-sector-name>
+                  <trial-market-name>renewable</trial-market-name>
+                  <backup-capital-cost>36</backup-capital-cost>
+                  <backup-capacity-factor>0.05</backup-capacity-factor>
+                  <minicam-energy-input name="backup_electricity"/>
+                  <minicam-non-energy-input name="backup-cap-cost"/>
+                  <capacity-limit-backup-calculator>
+                     <capacity-limit>0.35</capacity-limit>
+                  </capacity-limit-backup-calculator>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2095">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>1</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>876.078218</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>111.08</OM-fixed>
+                     <capacity-factor>0.343</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>1</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <electric-sector-name>electricity</electric-sector-name>
+                  <trial-market-name>renewable</trial-market-name>
+                  <backup-capital-cost>36</backup-capital-cost>
+                  <backup-capacity-factor>0.05</backup-capacity-factor>
+                  <minicam-energy-input name="backup_electricity"/>
+                  <minicam-non-energy-input name="backup-cap-cost"/>
+                  <capacity-limit-backup-calculator>
+                     <capacity-limit>0.35</capacity-limit>
+                  </capacity-limit-backup-calculator>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2100">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>1</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>872.184537</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>110.49</OM-fixed>
+                     <capacity-factor>0.343</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>1</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <electric-sector-name>electricity</electric-sector-name>
+                  <trial-market-name>renewable</trial-market-name>
+                  <backup-capital-cost>36</backup-capital-cost>
+                  <backup-capacity-factor>0.05</backup-capacity-factor>
+                  <minicam-energy-input name="backup_electricity"/>
+                  <minicam-non-energy-input name="backup-cap-cost"/>
+                  <capacity-limit-backup-calculator>
+                     <capacity-limit>0.35</capacity-limit>
+                  </capacity-limit-backup-calculator>
+                  <lifetime>30</lifetime>
+               </period>
+            </intermittent-technology>
+            <technology name="offshore_wind_storage_3">
+               <period year="1975">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>0.96</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>2229.0411</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>166.373</OM-fixed>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>3.91</OM-var>
+                  </input-OM-var>
+                  <share-weight>0</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+               </period>
+               <period year="1990">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>0.96</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>2229.0411</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>166.373</OM-fixed>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>3.91</OM-var>
+                  </input-OM-var>
+                  <share-weight>0</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+               </period>
+               <period year="2005">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>0.96</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>2229.0411</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>166.373</OM-fixed>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>3.91</OM-var>
+                  </input-OM-var>
+                  <share-weight>0</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+               </period>
+               <period year="2010">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>0.96</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>2229.0411</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>166.373</OM-fixed>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>0</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+               </period>
+               <period year="2015">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>0.96</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>2229.0411</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>166.373</OM-fixed>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>0.25</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2020">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>0.96</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>2131.969956</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>159.1277242</OM-fixed>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>0.5</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2025">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>0.96</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>2052.874949</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>153.2241661</OM-fixed>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>0.75</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2030">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>0.96</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>1980.970397</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>147.8572952</OM-fixed>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>1</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2035">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>0.96</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>1923.446756</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>143.5637984</OM-fixed>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>1</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2040">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>0.96</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>1873.11357</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>139.8069887</OM-fixed>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>1</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2045">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>0.96</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>1826.375611</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>136.3185226</OM-fixed>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>1</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2050">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>0.96</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>1790.423335</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>133.6350871</OM-fixed>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>1</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2055">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>0.96</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>1758.066287</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>131.2199952</OM-fixed>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>1</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2060">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>0.96</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>1729.304467</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>129.0732468</OM-fixed>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>1</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2065">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>0.96</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>1704.137873</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>127.1948419</OM-fixed>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>1</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2070">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>0.96</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>1686.161736</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>125.8531242</OM-fixed>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>1</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2075">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>0.96</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>1668.185598</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>124.5114065</OM-fixed>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>1</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2080">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>0.96</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>1650.20946</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>123.1696887</OM-fixed>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>1</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2085">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>0.96</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>1639.423777</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>122.3646581</OM-fixed>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>1</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2090">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>0.96</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>1628.638094</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>121.5596274</OM-fixed>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>1</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2095">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>0.96</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>1617.852412</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>120.7545968</OM-fixed>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>1</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <lifetime>30</lifetime>
+               </period>
+               <period year="2100">
+                  <minicam-energy-input name="offshore wind resource 3">
+                     <efficiency>0.96</efficiency>
+                  </minicam-energy-input>
+                  <CO2 name="CO2"/>
+                  <input-capital name="capital">
+                     <capital-overnight>1610.661956</capital-overnight>
+                     <fixed-charge-rate>0.13</fixed-charge-rate>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-capital>
+                  <input-OM-fixed name="OM-fixed">
+                     <OM-fixed>120.2179097</OM-fixed>
+                     <capacity-factor>0.343229315</capacity-factor>
+                  </input-OM-fixed>
+                  <input-OM-var name="OM-var">
+                     <OM-var>0</OM-var>
+                  </input-OM-var>
+                  <share-weight>1</share-weight>
+                  <keyword primary-renewable="offshore-wind-elect"/>
+                  <lifetime>30</lifetime>
+               </period>
+            </technology>
+         </location-info>
+      </global-technology-database>
+   </world>
+</scenario>
