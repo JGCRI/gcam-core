@@ -2,7 +2,7 @@
 % Please edit documentation in R/xml.R
 \name{run_xml_conversion}
 \alias{run_xml_conversion}
-\title{run_xml_conversion}
+\title{Run the CSV to XML conversion using the model interface tool.}
 \usage{
 run_xml_conversion(dot)
 }
@@ -14,12 +14,12 @@ The argument passed in unmodified in case a user wanted run the
 conversion again at a later time.
 }
 \description{
-Run the CSV to XML conversion using the model interface tool.  This method
-should be the final call in a pipeline started with \code{\link{create_xml}}
+This method should be the final call in a pipeline started with \code{\link{create_xml}}
 and one or more calls to \code{\link{add_xml_data}}.
+Please see the wiki for more details \url{https://github.com/JGCRI/gcamdata/wiki/XML-Conversion}
 }
 \details{
-Not that this method relies on Java to run the conversion.  To avoid errors for
+Note that this method relies on Java to run the conversion.  To avoid errors for
 users who do not have Java installed it will check the global option
 \code{gcamdata.use_java} before attempting to run the conversion.  If the flag
 is set to \code{FALSE} a warning will be issued and the conversion skipped.

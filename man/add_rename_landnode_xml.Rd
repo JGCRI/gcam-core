@@ -2,7 +2,8 @@
 % Please edit documentation in R/xml.R
 \name{add_rename_landnode_xml}
 \alias{add_rename_landnode_xml}
-\title{add_rename_landnode_xml}
+\title{Add a table to an XML pipeline that instructs the ModelInterface to rename
+LandNodeX to LandNode.}
 \usage{
 add_rename_landnode_xml(dot)
 }
@@ -14,12 +15,10 @@ A "data structure" to hold the various parts needed to run the model
 interface CSV to XML conversion.
 }
 \description{
-Add a table to an XML pipeline that instructs the ModelInterface to rename
-LandNodeX to LandNode.  Such a table is necessary to help work around
-limitations in the XML processing that node names of the same name can not be
-nested with in each other: LandNode/LandNode thus instead we say
-LandNode1/LandNode2 and rename as the last step.  Therefore in most cases a
-user should add this table near the end of the XML pipeline.
+Such a table is necessary to help work around limitations in the XML processing
+that node names of the same name can not be nested with in each other:
+LandNode/LandNode thus instead we say LandNode1/LandNode2 and rename as the last step.
+Therefore in most cases a user should add this table near the end of the XML pipeline.
 }
 \author{
 Pralit Patel

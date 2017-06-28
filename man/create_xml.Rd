@@ -2,26 +2,26 @@
 % Please edit documentation in R/xml.R
 \name{create_xml}
 \alias{create_xml}
-\title{create_xml}
+\title{The basis to start a pipeline to convert data to an XML file.}
 \usage{
 create_xml(xml_file, mi_header = NULL)
 }
 \arguments{
-\item{xml_file}{The name to save the XML file to}
+\item{xml_file}{The file name to save the XML file to}
 
-\item{mi_header}{The model interface "header".  This will default to the one
-included in this package}
+\item{mi_header}{The model interface "header" file name.  This will default to
+the one included in this package}
 }
 \value{
 A "data structure" to hold the various parts needed to run the model
 interface CSV to XML conversion.
 }
 \description{
-The basis to define how to convert data to an XML file.  This method
-simple requires the name to save the XML file as and optionally the
+This method simply requires the name to save the XML file as and optionally the
 model interface "header" file that defines the transformation lookup
-to go from tabular data to hierarchical.  The result of this should be
+to go from tabular data to hierarchical.  The result of this function should be
 used in a dplyr pipeline with one or more calls to \code{\link{add_xml_data}}
 to add the data to convert and finally ending with \code{\link{run_xml_conversion}}
 to run the conversion.
+Please see the wiki for more details \url{https://github.com/JGCRI/gcamdata/wiki/XML-Conversion}
 }
