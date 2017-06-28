@@ -1,0 +1,31 @@
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+SmthRenewRsrcCurves,,,,,
+,,,,,
+region,renewresource,smooth.renewable.subresource,maxSubResource,mid.price,curve.exponent
+CA,offshore wind resource 5,offshore wind resource 5,0.845788038,2.568148996,99.45536427
+HI,offshore wind resource 5,offshore wind resource 5,0.498996275,2.521652044,8.626554076
+ME,offshore wind resource 5,offshore wind resource 5,0.540711871,2.429131391,7.969893885
+MA,offshore wind resource 5,offshore wind resource 5,1.305461446,2.374886545,5.026504086
+MI,offshore wind resource 5,offshore wind resource 5,0.559282785,2.573011416,99.16967338
+NH,offshore wind resource 5,offshore wind resource 5,0.00651746,5.60382981,6.305303721
+NY,offshore wind resource 5,offshore wind resource 5,0.47812244,2.417794356,11.32382658
+NC,offshore wind resource 5,offshore wind resource 5,0.001026372,2.464257378,112.3766767
+OR,offshore wind resource 5,offshore wind resource 5,0.474299205,2.564322973,99.84488107
+RI,offshore wind resource 5,offshore wind resource 5,0.093752643,2.197559485,9.028267933
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A

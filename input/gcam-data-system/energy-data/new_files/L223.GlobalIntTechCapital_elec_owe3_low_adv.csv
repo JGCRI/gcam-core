@@ -1,0 +1,27 @@
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+GlobalIntTechCapital,,,,,,,
+,,,,,,,
+sector.name,subsector.name,intermittent.technology,year,input.capital,capital.overnight,fixed.charge.rate,capacity.factor
+electricity,offshore wind,offshore wind 3,1975,capital,894.024061,0.13,0.413505443
+electricity,offshore wind,offshore wind 3,1990,capital,894.024061,0.13,0.413505443
+electricity,offshore wind,offshore wind 3,2005,capital,894.024061,0.13,0.413505443
+electricity,offshore wind,offshore wind 3,2010,capital,894.024061,0.13,0.413505443
+electricity,offshore wind,offshore wind 3,2015,capital,894.024061,0.13,0.413505443
+electricity,offshore wind,offshore wind 3,2020,capital,670.5180457,0.13,0.413505443
+electricity,offshore wind,offshore wind 3,2025,capital,502.8885343,0.13,0.413505443
+electricity,offshore wind,offshore wind 3,2030,capital,377.1664007,0.13,0.413505443
+electricity,offshore wind,offshore wind 3,2035,capital,358.3080807,0.13,0.413505443
+electricity,offshore wind,offshore wind 3,2040,capital,340.3926766,0.13,0.413505443
+electricity,offshore wind,offshore wind 3,2045,capital,323.3730428,0.13,0.413505443
+electricity,offshore wind,offshore wind 3,2050,capital,307.2043907,0.13,0.413505443
+electricity,offshore wind,offshore wind 3,2055,capital,291.8441711,0.13,0.413505443
+electricity,offshore wind,offshore wind 3,2060,capital,277.2519626,0.13,0.413505443
+electricity,offshore wind,offshore wind 3,2065,capital,263.3893645,0.13,0.413505443
+electricity,offshore wind,offshore wind 3,2070,capital,250.2198962,0.13,0.413505443
+electricity,offshore wind,offshore wind 3,2075,capital,237.7089014,0.13,0.413505443
+electricity,offshore wind,offshore wind 3,2080,capital,225.8234563,0.13,0.413505443
+electricity,offshore wind,offshore wind 3,2085,capital,214.5322835,0.13,0.413505443
+electricity,offshore wind,offshore wind 3,2090,capital,203.8056694,0.13,0.413505443
+electricity,offshore wind,offshore wind 3,2095,capital,193.6153859,0.13,0.413505443
+electricity,offshore wind,offshore wind 3,2100,capital,183.9346166,0.13,0.413505443

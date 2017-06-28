@@ -1,0 +1,27 @@
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+GlobalIntTechCapital,,,,,,,
+,,,,,,,
+sector.name,subsector.name,intermittent.technology,year,input.capital,capital.overnight,fixed.charge.rate,capacity.factor
+electricity,offshore wind,offshore wind 4,1975,capital,1207.0411,0.13,0.376336415
+electricity,offshore wind,offshore wind 4,1990,capital,1207.0411,0.13,0.376336415
+electricity,offshore wind,offshore wind 4,2005,capital,1207.0411,0.13,0.376336415
+electricity,offshore wind,offshore wind 4,2010,capital,1207.0411,0.13,0.376336415
+electricity,offshore wind,offshore wind 4,2015,capital,1207.0411,0.13,0.376336415
+electricity,offshore wind,offshore wind 4,2020,capital,1154.476407,0.13,0.376336415
+electricity,offshore wind,offshore wind 4,2025,capital,1111.645917,0.13,0.376336415
+electricity,offshore wind,offshore wind 4,2030,capital,1072.709107,0.13,0.376336415
+electricity,offshore wind,offshore wind 4,2035,capital,1041.559659,0.13,0.376336415
+electricity,offshore wind,offshore wind 4,2040,capital,1014.303892,0.13,0.376336415
+electricity,offshore wind,offshore wind 4,2045,capital,988.9949661,0.13,0.376336415
+electricity,offshore wind,offshore wind 4,2050,capital,969.5265612,0.13,0.376336415
+electricity,offshore wind,offshore wind 4,2055,capital,952.0049968,0.13,0.376336415
+electricity,offshore wind,offshore wind 4,2060,capital,936.430273,0.13,0.376336415
+electricity,offshore wind,offshore wind 4,2065,capital,922.8023896,0.13,0.376336415
+electricity,offshore wind,offshore wind 4,2070,capital,913.0681872,0.13,0.376336415
+electricity,offshore wind,offshore wind 4,2075,capital,903.3339847,0.13,0.376336415
+electricity,offshore wind,offshore wind 4,2080,capital,893.5997823,0.13,0.376336415
+electricity,offshore wind,offshore wind 4,2085,capital,887.7592609,0.13,0.376336415
+electricity,offshore wind,offshore wind 4,2090,capital,881.9187394,0.13,0.376336415
+electricity,offshore wind,offshore wind 4,2095,capital,876.078218,0.13,0.376336415
+electricity,offshore wind,offshore wind 4,2100,capital,872.184537,0.13,0.376336415
