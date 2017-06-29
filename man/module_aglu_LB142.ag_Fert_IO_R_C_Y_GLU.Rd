@@ -18,11 +18,14 @@ the generated outputs: \code{L142.ag_Fert_Prod_MtN_ctry_Y}, \code{L142.ag_Fert_N
 original data system was \code{LB142.ag_Fert_IO_R_C_Y_GLU.R} (aglu level1).
 }
 \description{
-Briefly describe what this chunk does.
+Calculate the adjusted fertilizer production by country / year, fertilizer net exports by GCAM region / year,
+and fertilizer input-output coefficients by GCAM region / commodity / year / GLU.
 }
 \details{
-Describe in detail what this chunk does.
+This chunk calculates fertilizer prodcution by country / year (adjusted to global total consumption),
+fertilizer net exports by GCAM region / year as production minus consumption, and fertilizer input-output coefficients
+by GCAM region / commodity / year / GLU.
 }
 \author{
-YourInitials CurrentMonthName 2017
+RC June 2017
 }
