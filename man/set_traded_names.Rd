@@ -19,5 +19,5 @@ Tibble returned with modified region, subsector, and/or technology information.
 }
 \description{
 Re-set region names in tables with traded secondary goods so that the traded secondary goods are all contained
-within one specified region, with the (actual) region name prepended to the subsector and technology names (where applicable)
+within one specified region, with the(actual) region name prepended to the subsector and technology names(where applicable)
 }

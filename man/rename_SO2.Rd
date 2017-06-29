@@ -23,7 +23,7 @@ Add a suffix to the SO2 gas name indicating which of four major world regions to
 Add a suffix to the SO2 gas name indicating which of four major world regions to assign the emissions to,
 as Hector considers the geographic location of sulfur emissions. Any code writing out CSVs for conversion to XML
 handling SO2 related data should use this function. Agricultural waste burning emissions already have a suffix
-assigned (_AWB), so in this case, the SO2 region number is assigned between the "SO2" and "AWB" strings.
+assigned(_AWB), so in this case, the SO2 region number is assigned between the "SO2" and "AWB" strings.
 }
 \author{
 BBL May 2017

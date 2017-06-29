@@ -13,7 +13,7 @@ get_logit_fn_tables(data, names, base_header, GCAM_region_names,
 
 \item{names}{Column names to use in the data returned, character}
 
-\item{base_header}{Base table name that is concatenated with the \code{logit.type} column to name each data table and header (ID string
+\item{base_header}{Base table name that is concatenated with the \code{logit.type} column to name each data table and header(ID string
 for CSV to XML conversion), character}
 
 \item{GCAM_region_names}{GCAM region names and ID numbers, tibble}
@@ -37,12 +37,12 @@ Generate a list of tables that sets the appropriate logit choice function to use
 }
 \details{
 The data table is partitioned into a list, with one element for each logit type. Each element of
-the returned list has two sub-elements: 1) the header name (i.e., ID string) for the table, and 2) the data for the table.
+the returned list has two sub-elements: 1) the header name(i.e., ID string) for the table, and 2) the data for the table.
 If requested, an additional \code{EQUIV_TABLE} list will be included so that other data tables that contain the numerical
 values of the logit exponents are assigned to the correct logit type. These tables with the numerical exponent values
 are not required to be partitioned into separate tables according to logit type.
 }
 \note{
 For documentation of the options for logit choice functions in GCAM, see \url{http://jgcri.github.io/gcam-doc/choice.html}.
-The \code{EQUIV_TABLE} needs to be read once (and only once) per XML file created.
+The \code{EQUIV_TABLE} needs to be read once(and only once) per XML file created.
 }

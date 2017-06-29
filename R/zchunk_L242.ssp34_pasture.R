@@ -38,7 +38,9 @@ module_aglu_L242.ssp34_pasture <- function(command, ...) {
     GCAMLandLeaf_CdensityLT <- get_data(all_data, "aglu/GCAMLandLeaf_CdensityLT")
     A_LandLeaf_Unmgd2 <- get_data(all_data, "aglu/A_LandLeaf_Unmgd2")
     A_LandLeaf2 <- get_data(all_data, "aglu/A_LandLeaf2")
-    L125.LC_bm2_R_LT_Yh_GLU <- get_data(all_data, "L125.LC_bm2_R_LT_Yh_GLU")
+    get_data(all_data, "L125.LC_bm2_R_LT_Yh_GLU") %>%
+      replace_GLU(basin_to_country_mapping) ->
+      L125.LC_bm2_R_LT_Yh_GLU
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y")
 
     # Build tables

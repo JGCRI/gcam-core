@@ -338,3 +338,27 @@ append_GLU <- function(data, var1 = "LandNode1", var2 = NA, var3 = NA, var4 = NA
   }
   return(data)
 }
+
+
+#' replace_GLU
+#'
+#' Replace GLU numerical codes with names, and vice versa
+#'
+#' @param d A tibble with a column named "GLU"
+#' @param map A tibble with columns \code{GLU_code} and \code{GLU_name}
+#' @param GLU_pattern Regular expression string to identify the GLU codes
+#' @return A tibble with codes substituted for pattern, or vice versa, depending on the original
+#' contents of the \code{GLU} column.
+replace_GLU <- function(d, map = basin_to_country_mapping, GLU_pattern = "^GLU[0-9]{3}$") {
+  if("GLU" %in% names(d)) {
+    # Determine the direction of the change based on character string matching in the first element
+    if(all(grepl(GLU_pattern, d$GLU))) {
+      d$GLU <- map$GLU_name[match(d$GLU, map$GLU_code)]  # switch from GLU numerical codes to names
+    } else {
+      d$GLU <- map$GLU_code[match(d$GLU, map$GLU_name)]  # switch from GLU names to numerical codes
+    }
+  } else {
+    warning("replace_GLU called but no GLU column present")
+  }
+  d
+}
