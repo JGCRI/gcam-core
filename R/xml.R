@@ -142,7 +142,7 @@ add_rename_landnode_xml <- function(dot) {
 #' add_node_equiv_xml
 #'
 #' Add a table to an XML pipeline that instructs the ModelInterface to treat
-#' tags in the same class as the same when enabled.  Thus not requiring multiple
+#' tags in the same class as the same when enabled, thus not requiring multiple
 #' headers for instance to read in a share-weight into a technology
 #' intermittent-technology or tranTechnology.  A user taking advantage of this
 #' feature would then read this table early in the XML pipeline.
@@ -167,7 +167,7 @@ add_node_equiv_xml <- function(dot, equiv_class) {
 }
 
 #' A list of XML tag equivalence classes so that the ModelInterface when converting
-#' data to XML can treat tags in the same class as the same when enabled.  Thus not
+#' data to XML can treat tags in the same class as the same when enabled, thus not
 #' requiring multiple headers for instance to read in a share-weight into a technology
 #' intermittent-technology or tranTechnology.
 #' @author Pralit Patel

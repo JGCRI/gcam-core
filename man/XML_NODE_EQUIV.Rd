@@ -4,7 +4,7 @@
 \name{XML_NODE_EQUIV}
 \alias{XML_NODE_EQUIV}
 \title{A list of XML tag equivalence classes so that the ModelInterface when converting
-data to XML can treat tags in the same class as the same when enabled.  Thus not
+data to XML can treat tags in the same class as the same when enabled, thus not
 requiring multiple headers for instance to read in a share-weight into a technology
 intermittent-technology or tranTechnology.}
 \format{An object of class \code{list} of length 6.}
@@ -13,7 +13,7 @@ XML_NODE_EQUIV
 }
 \description{
 A list of XML tag equivalence classes so that the ModelInterface when converting
-data to XML can treat tags in the same class as the same when enabled.  Thus not
+data to XML can treat tags in the same class as the same when enabled, thus not
 requiring multiple headers for instance to read in a share-weight into a technology
 intermittent-technology or tranTechnology.
 }

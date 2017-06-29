@@ -18,7 +18,7 @@ interface CSV to XML conversion.
 }
 \description{
 Add a table to an XML pipeline that instructs the ModelInterface to treat
-tags in the same class as the same when enabled.  Thus not requiring multiple
+tags in the same class as the same when enabled, thus not requiring multiple
 headers for instance to read in a share-weight into a technology
 intermittent-technology or tranTechnology.  A user taking advantage of this
 feature would then read this table early in the XML pipeline.
