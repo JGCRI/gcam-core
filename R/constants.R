@@ -93,6 +93,21 @@ MAX_HA_TO_CROPLAND <- 3
 # Yield multiplier that goes from the observed yield to the "high" and "low" yields: observed plus or minus observed times this number
 MGMT_YIELD_ADJ <- 0.1
 
+# Fertilizer application rate for biomass, and carbon yields. Values from Adler et al. 2007 (doi:10.1890/05-2018)
+aglu.BIO_GRASS_FERT_IO_GNM2 <- 5.6
+aglu.BIO_GRASS_YIELD_KGCM2 <- 0.34
+aglu.BIO_TREE_FERT_IO_GNM2 <- 3.36
+aglu.BIO_TREE_YIELD_KGCM2 <- 0.345
+
+# Cost of Fertilizer
+aglu.FERT_COST <- 363 # 2007$ per ton NH3
+
+# Maximum bioenergy (switchgrass) yield allowable, in tons per hectare
+# Source: Wullschleger doi:10.2134/agronj2010.0087
+aglu.MAX_BIO_YIELD_THA <- 20
+
+aglu.BIO_ENERGY_CONTENT_GJT <- 17.5  # Energy content of biomass, GJ/ton
+
 # GDP per capita thresholds for SSP4 region groupings
 aglu.HIGH_GROWTH_PCGDP <- 12.275   # thousand 2010$ per person
 aglu.LOW_GROWTH_PCGDP  <- 2.75     # thousand 2010$ per person
@@ -128,12 +143,16 @@ CONV_T_KG <- 1e3
 CONV_KG_T <- 1 / CONV_T_KG
 CONV_T_METRIC_SHORT <- 1000 / 908  # Ratio between metric ton and short ton
 CONV_HA_BM2 <- 1e-5
+CONV_HA_M2 <- 10000
 CONV_THA_KGM2 <- 0.1   # tons C/ha -> kg C/m2
 CONV_GG_TG <- 0.001 # gigagrams to tegagrams
 CONV_TST_TG <- 0.000907 # thousand short tons to Tg
 CONV_KG_TO_TG <- 1e-9
 CONV_KT_MT <- 0.001 # kt to Mt
 CONV_T_MT <- 1e-6 # t to Mt
+CONV_G_KG <- 1e-3 # kilograms to grams
+CONV_NH3_N <- 14/17 # Nitrogen to Ammonia
+
 
 # Time
 CONV_YEAR_HOURS <- 24 * 365.25
@@ -148,6 +167,8 @@ CONV_MCAL_PCAL <- 1e-9
 CONV_M3_BM3 <- 1e-09 # Cubic meters (m3) to billion cubic meters (bm3)
 CONV_MILLION_M3_KM3 <- 1e-03
 CONV_M2_ACR <- 0.0002471058
+CONV_HA_M2 <- 1e4 # ha to m2
+
 
 # Driver constants ======================================================================
 
