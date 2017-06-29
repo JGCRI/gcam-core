@@ -16,7 +16,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RC June 2017
-#' @export
 module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
@@ -32,7 +31,7 @@ module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
              "L142.ag_Fert_IO_R_C_Y_GLU"))
   } else if(command == driver.MAKE) {
 
-    Fert_name <- Fert_Cons_MtN <- Fert_Cons_MtN_unscaled <- Fert_IO <- Fert_IO_unscaled <-
+    Fert_Cons_MtN <- Fert_Cons_MtN_unscaled <- Fert_IO <- Fert_IO_unscaled <- Prod_share <-
       prod <- cons <- total <- adj <- scaler <- GCAM_commodity <- GCAM_region_ID <- GTAP_crop <-
       GLU <- iso <- value <- year <- NULL   # silence package checks
 
@@ -76,7 +75,7 @@ module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
       group_by(GCAM_region_ID, year) %>%
       summarise(value = sum(value)) %>%                                  # Aggregate to region total
       ungroup() %>%                                                      # Ungroup before complete
-      mutate(GCAM_commodity = Fert_name) %>%                             # Add GCAM commodity category for N fertilizer
+      mutate(GCAM_commodity = aglu.FERT_NAME) %>%                             # Add GCAM commodity category for N fertilizer
       complete(GCAM_region_ID = unique(iso_GCAM_regID$GCAM_region_ID),
                GCAM_commodity, year, fill = list(value = 0)) ->          # Fill in missing region with 0
       L142.ag_Fert_Prod_MtN_R_Y
@@ -89,7 +88,7 @@ module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
       summarise(value = sum(value),                                      # Aggregate to region total
                 value = value * CONV_T_MT) %>%                           # Convert unit from ton to million ton
       ungroup() %>%                                                      # Ungroup before complete
-      mutate(GCAM_commodity = Fert_name) %>%                             # Add GCAM commodity category for N fertilizer
+      mutate(GCAM_commodity = aglu.FERT_NAME) %>%                             # Add GCAM commodity category for N fertilizer
       complete(GCAM_region_ID = unique(iso_GCAM_regID$GCAM_region_ID),
                GCAM_commodity, year, fill = list(value = 0)) ->          # Fill in missing region with 0
       L142.ag_Fert_Cons_MtN_R_Y
@@ -187,12 +186,7 @@ module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
       stop( "Fertilizer input-output coefficients need to be specified in all historical years")
     }
 
-
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
     L142.ag_Fert_Prod_MtN_ctry_Y %>%
       add_title("Fertilizer production by country / year") %>%
       add_units("Unit = MtN") %>%
@@ -207,7 +201,7 @@ module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
     L142.ag_Fert_NetExp_MtN_R_Y %>%
       add_title("Fertilizer net exports by GCAM region / year") %>%
       add_units("Unit = MtN") %>%
-      add_comments("Fertilizer consumption and adjusted production are aggregated from country to GCAM region level")
+      add_comments("Fertilizer consumption and adjusted production are aggregated from country to GCAM region level") %>%
       add_comments("Net exports are calculated as production minus consumption") %>%
       add_legacy_name("L142.ag_Fert_NetExp_MtN_R_Y") %>%
       add_precursors("common/iso_GCAM_regID",

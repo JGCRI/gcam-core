@@ -120,7 +120,7 @@ aglu.DIGITS_CALOUTPUT <- 7 # production
 aglu.NO_AGLU_REGIONS <- "Taiwan"
 
 # Define GCAM category name of fertilizer
-Fert_name <- "N fertilizer"
+aglu.FERT_NAME <- "N fertilizer"
 
 # Energy constants ======================================================================
 
