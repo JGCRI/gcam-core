@@ -303,7 +303,7 @@ add_node_leaf_names <- function(data, nesting_table, leaf_name, ..., LT_name = "
   data[[leaf_name]] <- data[[LT_name]]
 
   if(append_GLU) {
-    data <- append_GLU(data, ...)
+    data <- append_GLU(data, leaf_name, ...)
   }
   if("Irr_Rfd" %in% names(data)) {
     data[[leaf_name]] <- paste(data[[leaf_name]], data[["Irr_Rfd"]], sep = aglu.IRR_DELIMITER)
