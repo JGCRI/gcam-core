@@ -96,7 +96,7 @@ module_aglu_L242.ssp34_pasture <- function(command, ...) {
       select(region, LandAllocatorRoot, LandNode1, LandNode2, LandLeaf, year, allocation) ->
       L242.LN2_MgdAllocation_ALL
 
-    # Create SSP4 pasture inputs, isolating low-growth regions for subsequent filtering
+    # Create SSP4 pasture inputs, isolating poor (low GDP) regions for subsequent filtering
     L102.pcgdp_thous90USD_Scen_R_Y %>%
       filter(scenario == "SSP4", year == 2010) %>%
       select(GCAM_region_ID, value) %>%
@@ -104,16 +104,16 @@ module_aglu_L242.ssp34_pasture <- function(command, ...) {
       mutate(value = value * gdp_deflator(2010, 1990)) %>%
       filter(value < aglu.LOW_GROWTH_PCGDP) %>%
       .[["region"]] ->
-      L242.low_reg
+      low_gdp_regions
 
     # Produce outputs
 
     L242.LN2_HistUnmgdAllocation_ALL %>%
-      filter(region %in% L242.low_reg) %>%
-      add_title("Historical unmanaged pasture allocation for low-growth regions") %>%
+      filter(region %in% low_gdp_regions) %>%
+      add_title("Historical unmanaged pasture allocation for low-GDP regions") %>%
       add_units("billion square meters (bm2)") %>%
       add_comments("For unmanaged and managed pasture, adjust data so that their ratio is 0.25; add node leaf names.") %>%
-      add_comments("Do this for both historical and model base periods, isolating low-growth regions.") %>%
+      add_comments("Do this for both historical and model base periods, isolating low-GDP regions.") %>%
       add_legacy_name("L242.LN2_HistUnmgdAllocation_SSP34") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
@@ -125,31 +125,31 @@ module_aglu_L242.ssp34_pasture <- function(command, ...) {
       L242.LN2_HistUnmgdAllocation_SSP34
 
     L242.LN2_UnmgdAllocation_ALL %>%
-      filter(region %in% L242.low_reg) %>%
-      add_title("Model period unmanaged pasture allocation for low-growth regions") %>%
+      filter(region %in% low_gdp_regions) %>%
+      add_title("Model period unmanaged pasture allocation for low-GDP regions") %>%
       add_units("billion square meters (bm2)") %>%
       add_comments("For unmanaged and managed pasture, adjust data so that their ratio is 0.25; add node leaf names.") %>%
-      add_comments("Do this for both historical and model base periods, isolating low-growth regions.") %>%
+      add_comments("Do this for both historical and model base periods, isolating low-GDP regions.") %>%
       add_legacy_name("L242.LN2_UnmgdAllocation_SSP34") %>%
       same_precursors_as(L242.LN2_HistUnmgdAllocation_SSP34) ->
       L242.LN2_UnmgdAllocation_SSP34
 
     L242.LN2_HistMgdAllocation_ALL %>%
-      filter(region %in% L242.low_reg) %>%
-      add_title("Historical managed pasture allocation for low-growth regions") %>%
+      filter(region %in% low_gdp_regions) %>%
+      add_title("Historical managed pasture allocation for low-GDP regions") %>%
       add_units("billion square meters (bm2)") %>%
       add_comments("For unmanaged and managed pasture, adjust data so that their ratio is 0.25; add node leaf names.") %>%
-      add_comments("Do this for both historical and model base periods, isolating low-growth regions.") %>%
+      add_comments("Do this for both historical and model base periods, isolating low-GDP regions.") %>%
       add_legacy_name("L242.LN2_HistMgdAllocation_SSP34") %>%
       same_precursors_as(L242.LN2_HistUnmgdAllocation_SSP34) ->
       L242.LN2_HistMgdAllocation_SSP34
 
     L242.LN2_MgdAllocation_ALL %>%
-      filter(region %in% L242.low_reg) %>%
-      add_title("Model period managed pasture allocation for low-growth regions") %>%
+      filter(region %in% low_gdp_regions) %>%
+      add_title("Model period managed pasture allocation for low-GDP regions") %>%
       add_units("billion square meters (bm2)") %>%
       add_comments("For unmanaged and managed pasture, adjust data so that their ratio is 0.25; add node leaf names.") %>%
-      add_comments("Do this for both historical and model base periods, isolating low-growth regions.") %>%
+      add_comments("Do this for both historical and model base periods, isolating low-GDP regions.") %>%
       add_legacy_name("L242.LN2_MgdAllocation_SSP34") %>%
       same_precursors_as(L242.LN2_HistUnmgdAllocation_SSP34) ->
       L242.LN2_MgdAllocation_SSP34

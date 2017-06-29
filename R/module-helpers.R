@@ -8,7 +8,7 @@
 #' @param water_sector A character vector containing water sector information
 #' @param water_type A character vector containing water type information
 #' @param water_mapping A tibble with a mapping between \code{water.sector} and  \code{supplysector}
-#' @param GLU An optional character vector containing GLU information(only used for irrigation with mapped water types)
+#' @param GLU An optional character vector containing GLU information (only used for irrigation with mapped water types)
 #' @details Get the appropriate minicam.energy.input name to use in the GCAM supplysector
 #' by looking up using a mapping to the water.sector and water_type. The minicam.energy.input
 #' name to use will have to be some water mapping sector for water_types that are "mapped".
@@ -62,7 +62,7 @@ set_water_input_name <- function(water_sector, water_type, water_mapping, GLU = 
 #' @details Add a suffix to the SO2 gas name indicating which of four major world regions to assign the emissions to,
 #' as Hector considers the geographic location of sulfur emissions. Any code writing out CSVs for conversion to XML
 #' handling SO2 related data should use this function. Agricultural waste burning emissions already have a suffix
-#' assigned(_AWB), so in this case, the SO2 region number is assigned between the "SO2" and "AWB" strings.
+#' assigned (_AWB), so in this case, the SO2 region number is assigned between the "SO2" and "AWB" strings.
 #' @importFrom tibble is_tibble
 #' @author BBL May 2017
 rename_SO2 <- function(x, so2_map, is_awb = FALSE) {
@@ -93,7 +93,7 @@ rename_SO2 <- function(x, so2_map, is_awb = FALSE) {
 #'
 #' @param data Base data table indicating sectors and/or subsectors to be assigned a logit function type, tibble
 #' @param names Column names to use in the data returned, character
-#' @param base_header Base table name that is concatenated with the \code{logit.type} column to name each data table and header(ID string
+#' @param base_header Base table name that is concatenated with the \code{logit.type} column to name each data table and header (ID string
 #' for CSV to XML conversion), character
 #' @param GCAM_region_names GCAM region names and ID numbers, tibble
 #' @param default_logit_type Default logit function to use if the user did not specify one, character
@@ -103,12 +103,12 @@ rename_SO2 <- function(x, so2_map, is_awb = FALSE) {
 #' @param write_all_regions Logical indicating whether to call \code{\link{write_to_all_regions}}
 #' @param ... Other parameters to pass to \code{\link{write_to_all_regions}}
 #' @details The data table is partitioned into a list, with one element for each logit type. Each element of
-#' the returned list has two sub-elements: 1) the header name(i.e., ID string) for the table, and 2) the data for the table.
+#' the returned list has two sub-elements: 1) the header name (i.e., ID string) for the table, and 2) the data for the table.
 #' If requested, an additional \code{EQUIV_TABLE} list will be included so that other data tables that contain the numerical
 #' values of the logit exponents are assigned to the correct logit type. These tables with the numerical exponent values
 #' are not required to be partitioned into separate tables according to logit type.
 #' @note For documentation of the options for logit choice functions in GCAM, see \url{http://jgcri.github.io/gcam-doc/choice.html}.
-#' The \code{EQUIV_TABLE} needs to be read once(and only once) per XML file created.
+#' The \code{EQUIV_TABLE} needs to be read once (and only once) per XML file created.
 #' @return A list, each element of which contains a data table and a header name to be used as the ID string for the
 #' CSV to XML conversion.
 get_logit_fn_tables <- function(data, names, base_header, GCAM_region_names,
@@ -220,7 +220,7 @@ write_to_all_regions <- function(data, names, GCAM_region_names, has_traded = FA
 #' set_traded_names
 #'
 #' Re-set region names in tables with traded secondary goods so that the traded secondary goods are all contained
-#' within one specified region, with the(actual) region name prepended to the subsector and technology names(where applicable)
+#' within one specified region, with the (actual) region name prepended to the subsector and technology names (where applicable)
 #'
 #' @param data Tibble to operate on
 #' @param GCAM_region_names Tibble with GCAM region names and ID numbers

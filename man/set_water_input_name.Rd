@@ -14,7 +14,7 @@ set_water_input_name(water_sector, water_type, water_mapping,
 
 \item{water_mapping}{A tibble with a mapping between \code{water.sector} and  \code{supplysector}}
 
-\item{GLU}{An optional character vector containing GLU information(only used for irrigation with mapped water types)}
+\item{GLU}{An optional character vector containing GLU information (only used for irrigation with mapped water types)}
 }
 \value{
 A vector of names of form supplysector_watertype or supplysector_GLU_watertype.
