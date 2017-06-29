@@ -1,6 +1,6 @@
 #' module_aglu_L242.ssp34_pasture
 #'
-#' Briefly describe what this chunk does.
+#' Construct the managed and unmanaged pasture allocation datasets for SSP3 and SSP4
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,12 +8,12 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L242.LN2_HistUnmgdAllocation_SSP34}, \code{L242.LN2_UnmgdAllocation_SSP34}, \code{L242.LN2_HistMgdAllocation_SSP34}, \code{L242.LN2_MgdAllocation_SSP34}. The corresponding file in the
 #' original data system was \code{L242.ssp34_pasture.R} (aglu level2).
-#' @details Describe in detail what this chunk does.
+#' @details For unmanaged and managed pasture, adjust data so that their ratio is 0.25 and add node leaf names.
+#' We do this for both historical and model base periods, isolating low-growth regions (defined by \code{aglu.LOW_GROWTH_PCGDP}).
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author BBL June 2017
-#' @export
 module_aglu_L242.ssp34_pasture <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
@@ -55,7 +55,7 @@ module_aglu_L242.ssp34_pasture <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       # Adjust land cover downwards so more pasture is in the managed category
       mutate(allocation = value * (1 - FRACT_UNMGD_TO_MGD)) %>%
-      add_node_leaf_names(nesting_table = A_LandLeaf_Unmgd2, leaf_name = "UnmanagedLandLeaf", LN1 = "LandNode1", LN2 = "LandNode2") ->
+      add_node_leaf_names(nesting_table = A_LandLeaf_Unmgd2, leaf_name = "UnmanagedLandLeaf", "LandNode1", "LandNode2") ->
       L242.LC_bm2_R_Unmgd2_Yh_GLU.mlt
 
     # Historical land cover, unmanaged land in the second nest
@@ -77,7 +77,7 @@ module_aglu_L242.ssp34_pasture <- function(command, ...) {
       left_join_error_no_match(select(L242.LC_bm2_R_Unmgd2_Yh_GLU.mlt, GCAM_region_ID, year, GLU, value), by = c("GCAM_region_ID", "year", "GLU")) %>%
       mutate(allocation = value.x + FRACT_UNMGD_TO_MGD * value.y) %>%
       select(GCAM_region_ID, Land_Type, GLU, year, value = value.x, region, allocation) %>%
-      add_node_leaf_names(nesting_table = A_LandLeaf2, leaf_name = "LandLeaf", LN1 = "LandNode1", LN2 = "LandNode2") ->
+      add_node_leaf_names(nesting_table = A_LandLeaf2, leaf_name = "LandLeaf", "LandNode1", "LandNode2") ->
       L242.LC_bm2_R_Mgd2_Yh_GLU.mlt
 
     # Historical land cover, managed land in the second nest
@@ -106,10 +106,10 @@ module_aglu_L242.ssp34_pasture <- function(command, ...) {
 
     L242.LN2_HistUnmgdAllocation_ALL %>%
       filter(region %in% L242.low_reg) %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Historical unmanaged pasture allocation for low-growth regions") %>%
+      add_units("billion square meters (bm2)") %>%
+      add_comments("For unmanaged and managed pasture, adjust data so that their ratio is 0.25; add node leaf names.") %>%
+      add_comments("Do this for both historical and model base periods, isolating low-growth regions.") %>%
       add_legacy_name("L242.LN2_HistUnmgdAllocation_SSP34") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
@@ -122,30 +122,30 @@ module_aglu_L242.ssp34_pasture <- function(command, ...) {
 
     L242.LN2_UnmgdAllocation_ALL %>%
       filter(region %in% L242.low_reg) %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Model period unmanaged pasture allocation for low-growth regions") %>%
+      add_units("billion square meters (bm2)") %>%
+      add_comments("For unmanaged and managed pasture, adjust data so that their ratio is 0.25; add node leaf names.") %>%
+      add_comments("Do this for both historical and model base periods, isolating low-growth regions.") %>%
       add_legacy_name("L242.LN2_UnmgdAllocation_SSP34") %>%
       same_precursors_as(L242.LN2_HistUnmgdAllocation_SSP34) ->
       L242.LN2_UnmgdAllocation_SSP34
 
     L242.LN2_HistMgdAllocation_ALL %>%
       filter(region %in% L242.low_reg) %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Historical managed pasture allocation for low-growth regions") %>%
+      add_units("billion square meters (bm2)") %>%
+      add_comments("For unmanaged and managed pasture, adjust data so that their ratio is 0.25; add node leaf names.") %>%
+      add_comments("Do this for both historical and model base periods, isolating low-growth regions.") %>%
       add_legacy_name("L242.LN2_HistMgdAllocation_SSP34") %>%
       same_precursors_as(L242.LN2_HistUnmgdAllocation_SSP34) ->
       L242.LN2_HistMgdAllocation_SSP34
 
     L242.LN2_MgdAllocation_ALL %>%
       filter(region %in% L242.low_reg) %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Model period managed pasture allocation for low-growth regions") %>%
+      add_units("billion square meters (bm2)") %>%
+      add_comments("For unmanaged and managed pasture, adjust data so that their ratio is 0.25; add node leaf names.") %>%
+      add_comments("Do this for both historical and model base periods, isolating low-growth regions.") %>%
       add_legacy_name("L242.LN2_MgdAllocation_SSP34") %>%
       same_precursors_as(L242.LN2_HistUnmgdAllocation_SSP34) ->
       L242.LN2_MgdAllocation_SSP34

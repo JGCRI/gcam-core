@@ -18,10 +18,11 @@ the generated outputs: \code{L242.LN2_HistUnmgdAllocation_SSP34}, \code{L242.LN2
 original data system was \code{L242.ssp34_pasture.R} (aglu level2).
 }
 \description{
-Briefly describe what this chunk does.
+Construct the managed and unmanaged pasture allocation datasets for SSP3 and SSP4
 }
 \details{
-Describe in detail what this chunk does.
+For unmanaged and managed pasture, adjust data so that their ratio is 0.25 and add node leaf names.
+We do this for both historical and model base periods, isolating low-growth regions (defined by \code{aglu.LOW_GROWTH_PCGDP}).
 }
 \author{
 BBL June 2017
