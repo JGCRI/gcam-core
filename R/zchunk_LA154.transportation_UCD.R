@@ -49,7 +49,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
     UCD_ctry <- get_data(all_data, "energy/mappings/UCD_ctry")
     UCD_techs <- get_data(all_data, "energy/mappings/UCD_techs")
     UCD_trn_data <- get_data(all_data, paste0("energy/UCD_trn_data_", energy.TRN_SSP)) %>%
-      gather(year, value, 9:length(names(.))) %>%
+      gather(year, value, matches(YEAR_PATTERN)) %>%
       mutate(year = as.integer(year))
     L101.in_EJ_ctry_trn_Fi_Yh <- get_data(all_data, "temp-data-inject/L101.in_EJ_ctry_trn_Fi_Yh") %>%
       # temp-data-inject code
@@ -70,7 +70,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
     # Only perform this swap for international shipping / refined liquids, and in countries in the EIA database
     IEA_data_EIA_intlship <- L101.in_EJ_ctry_trn_Fi_Yh %>%
       # expecting NAs here because we only want to replace certain values
-      left_join_keep_first_only(L1011.in_EJ_ctry_intlship_TOT_Yh %>% rename(EIA_value = value), by = c("iso","year")) %>%
+      left_join_keep_first_only(L1011.in_EJ_ctry_intlship_TOT_Yh %>% rename(EIA_value = value), by = c("iso", "year")) %>%
       mutate(value = if_else(sector == "in_trn_international ship" &
                                fuel == "refined liquids" &
                                !is.na(EIA_value), EIA_value, value),
@@ -103,7 +103,8 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       filter(year == energy.UCD_EN_YEAR) %>%
       left_join_error_no_match(UCD_trn_data_UCD_cat, by = c("UCD_region", "UCD_category", "fuel")) %>%
       # If the aggregate is 0 or value is NA, set share to 0, rather than NA
-      mutate(UCD_share = if_else(agg == 0 | is.na(value), 0, value/agg))
+      mutate(UCD_share =  value / agg) %>%
+      replace_na(list(UCD_share = 0))
 
     # Writing out the UC Davis mode/technology/fuel shares within category/fuel at the country level
     # First, creating a table of desired countries with their UCD regions
@@ -111,6 +112,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       left_join_error_no_match(UCD_ctry, by = "iso")
 
     UCD_fuel_share_in_cat <- UCD_trn_data_UCD_techs %>%
+      # Adds country name and region for all observations, filtering out by matching region in next step
       repeat_add_columns(ctry_iso_region) %>%
       filter(UCD_region.x == UCD_region.y) %>%
       select(iso, UCD_sector, mode, size.class, UCD_technology,
@@ -148,6 +150,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       summarise(unscaled_value = sum(value))
 
     trn_enduse_data <- L131.in_EJ_R_Senduse_F_Yh %>%
+      # Filtering out transportation sectors only
       filter(grepl("trn", sector)) %>%
       # Need to match "aggregate" fuels from IEA
       left_join_error_no_match(enduse_fuel_aggregation %>% select(fuel, trn), by = c("fuel")) %>%
@@ -176,7 +179,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
     # 2a: Merging of non-fuel costs to assign each technology with a single cost per vkm
     # Exogenous fixed charge rate to convert $/veh to $/veh/yr
     fcr_veh <- energy.DISCOUNT_RATE_VEH +
-      energy.DISCOUNT_RATE_VEH / ( ( ( 1 + energy.DISCOUNT_RATE_VEH ) ^ energy.NPER_AMORT_VEH ) - 1 )
+      energy.DISCOUNT_RATE_VEH / (((1 + energy.DISCOUNT_RATE_VEH) ^ energy.NPER_AMORT_VEH) - 1)
 
     UCD_trn_data_vkm_veh <- UCD_trn_data %>%
       filter(variable == "annual travel per vehicle") %>%
@@ -211,8 +214,8 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
 
     UCD_trn_data_fillout <- bind_rows(
       filter( UCD_trn_data, variable %in% c("intensity", "load factor", "speed")),
-      UCD_trn_cost_data) %>%
-      bind_rows(UCD_trn_data_allyears) %>%
+      UCD_trn_cost_data,
+      UCD_trn_data_allyears) %>%
       # Fill out all missing values with the nearest available year that is not missing
       group_by(UCD_region, UCD_sector, mode, size.class, UCD_technology, UCD_fuel, variable, unit) %>%
       arrange(UCD_region, UCD_sector, mode, size.class, UCD_technology, UCD_fuel, variable, unit, year) %>%
@@ -283,7 +286,10 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
              loadfactor = Tpkm / Tvkm,
              cost_usdvkm = Tusd / Tvkm,
              speed_kmhr = Tvkm / Thr) %>%
-      gather(variable, value, 8:16) %>%
+      # Dropping unnecessary columns
+      select(-Tvkm, -Tpkm, -Tusd, -Thr, -weight_EJ) %>%
+      gather(variable, value, intensity_MJvkm, loadfactor, cost_usdvkm, speed_kmhr) %>%
+      # Reordering columns
       select(GCAM_region_ID, UCD_sector, mode, size.class = size.class.x, UCD_technology, UCD_fuel, variable, year, value)
 
     # Build the final data frames by variable
@@ -352,7 +358,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
 
     out_var_df[["intensity_MJvkm"]] %>%
       add_title("Transportation energy intensity") %>%
-      add_units("MJ / vkm") %>%
+      add_units("MJ/vkm") %>%
       add_comments("UCD transportation database data aggregated to GCAM region") %>%
       add_legacy_name("L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y") %>%
       add_precursors(paste0("energy/UCD_trn_data_", energy.TRN_SSP),"energy/mappings/UCD_ctry",
@@ -368,7 +374,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
 
     out_var_df[["loadfactor"]] %>%
       add_title("Transortation load factors") %>%
-      add_units("pers / veh or tonnes / veh") %>%
+      add_units("pers/veh or tonnes/veh") %>%
       add_comments("UCD transportation database data aggregated to GCAM region") %>%
       add_legacy_name("L154.loadfactor_R_trn_m_sz_tech_F_Y") %>%
       add_precursors(paste0("energy/UCD_trn_data_", energy.TRN_SSP),"energy/mappings/UCD_ctry",
@@ -384,7 +390,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
 
     out_var_df[["cost_usdvkm"]] %>%
       add_title("Transportation non-fuel costs") %>%
-      add_units("2005USD / vkm") %>%
+      add_units("2005USD/vkm") %>%
       add_comments("UCD transportation database data aggregated to GCAM region") %>%
       add_legacy_name("L154.cost_usdvkm_R_trn_m_sz_tech_F_Y") %>%
       add_precursors(paste0("energy/UCD_trn_data_", energy.TRN_SSP),"energy/mappings/UCD_ctry",
@@ -400,7 +406,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
 
     out_var_df[["speed_kmhr"]] %>%
       add_title("Transportation vehicle speeds") %>%
-      add_units("km / hr") %>%
+      add_units("km/hr") %>%
       add_comments("UCD transportation database data aggregated to GCAM region") %>%
       add_legacy_name("L154.speed_kmhr_R_trn_m_sz_tech_F_Y") %>%
       add_precursors(paste0("energy/UCD_trn_data_", energy.TRN_SSP),"energy/mappings/UCD_ctry",
