@@ -46,7 +46,7 @@ module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
     L103.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L103.ag_Prod_Mt_R_C_Y_GLU")
     L141.ag_Fert_Cons_MtN_ctry_crop <- get_data(all_data, "L141.ag_Fert_Cons_MtN_ctry_crop")
 
-    # Compile N fertilizer production by country, and adjust production so that production and consumption balance globally
+    # Compile N fertilizer production and consumption by country, and adjust country production so that production and consumption balance globally
     L100.FAO_Fert_Prod_tN %>%
       select(iso, year, prod = value) %>%
       # Combine with fertilizer consumption, use full_join to keep all observations, such as ones only have consumption
@@ -65,55 +65,50 @@ module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
       select(iso, year, value) %>%
       left_join_error_no_match(L142.ag_Fert_Prod_adj, by = "year") %>%   # Match in the rates for adjustment
       mutate(value = value * adj,                                        # Adjust production
-             value = value * CONV_T_MT) %>%                              # Convert unit from ton to million ton
+             value = value * CONV_T_MT) %>%                              # Convert unit of production from tons to million tons of Nitrogen
       select(-adj) ->
       L142.ag_Fert_Prod_MtN_ctry_Y
 
-    # Aggregate N fertilizer productionto GCAM region level
+    # Aggregate N fertilizer adjusted production and consumption to GCAM region level to calculate net exports
     L142.ag_Fert_Prod_MtN_ctry_Y %>%
+      rename(prod = value) %>%
+      # Combine with fertilizer consumption, use full_join to keep all observations, such as ones only have consumption
+      full_join(select(L100.FAO_Fert_Cons_tN, iso, year, cons = value), by = c("iso", "year")) %>%
+      replace_na(list(prod = 0, cons = 0)) %>%
       left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%           # Match in GCAM region ID
       group_by(GCAM_region_ID, year) %>%
-      summarise(value = sum(value)) %>%                                  # Aggregate to region total
+      summarise(prod = sum(prod), cons = sum(cons)) %>%                  # Aggregate to region total
       ungroup() %>%                                                      # Ungroup before complete
-      mutate(GCAM_commodity = aglu.FERT_NAME) %>%                             # Add GCAM commodity category for N fertilizer
+      mutate(cons = cons * CONV_T_MT,                                    # Convert unit of consumption from tons to million tons of Nitrogen
+             value = prod - cons,                                        # Calculate net exports as production minus consumption
+             GCAM_commodity = aglu.FERT_NAME) %>%                        # Add GCAM commodity category for N fertilizer
+      select(-prod) %>%                                                  # Only regional consumption and net exports are needed
       complete(GCAM_region_ID = unique(iso_GCAM_regID$GCAM_region_ID),
-               GCAM_commodity, year, fill = list(value = 0)) ->          # Fill in missing region with 0
-      L142.ag_Fert_Prod_MtN_R_Y
+               GCAM_commodity, year, fill = list(cons = 0, value = 0)) ->  # Fill in missing regions with 0
+      L142.ag_Fert_MtN_R_Y
 
-    # Aggregate N fertilizer consumption to GCAM region level
-    L100.FAO_Fert_Cons_tN %>%
-      select(iso, year, value) %>%
-      left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%           # Match in GCAM region ID
-      group_by(GCAM_region_ID, year) %>%
-      summarise(value = sum(value),                                      # Aggregate to region total
-                value = value * CONV_T_MT) %>%                           # Convert unit from ton to million ton
-      ungroup() %>%                                                      # Ungroup before complete
-      mutate(GCAM_commodity = aglu.FERT_NAME) %>%                             # Add GCAM commodity category for N fertilizer
-      complete(GCAM_region_ID = unique(iso_GCAM_regID$GCAM_region_ID),
-               GCAM_commodity, year, fill = list(value = 0)) ->          # Fill in missing region with 0
+    # Separate the table for consumption by region / year
+    L142.ag_Fert_MtN_R_Y %>%
+      select(-value) ->
       L142.ag_Fert_Cons_MtN_R_Y
 
-    # Calculate net exports of N fertilizer
-    L142.ag_Fert_Prod_MtN_R_Y %>%
-      rename(prod = value) %>%
-      # Match in fertilizer consumption
-      left_join_error_no_match(L142.ag_Fert_Cons_MtN_R_Y, by = c("GCAM_region_ID", "GCAM_commodity", "year")) %>%
-      # Calculate net exports as production minus consumption
-      mutate(value = prod - value) %>%
-      select(-prod) ->
+    # Separate the table for net exports by region / year
+    L142.ag_Fert_MtN_R_Y %>%
+      select(-cons) ->
       L142.ag_Fert_NetExp_MtN_R_Y
 
     # Calculate fertilizer input-output coefficients, scaled so that consumption of fertilizer balance
     # First, downscale fertilizer demands by country and crop to GLU
     # NOTE: Allocate fertilizer consumption to GLUs on the basis of production, not harvested area
-
-    # Calculate agricultural prodcution total by country and crop
+    # Calculate agriculture prodcution total by country and crop
     L100.LDS_ag_prod_t %>%
       group_by(iso, GTAP_crop) %>%
       summarise(total = sum(value)) %>%
-      ungroup() -> L142.ag_Prod_t_ctry_crop
+      ungroup() ->
+      L142.ag_Prod_t_ctry_crop
 
-    # Agricultural production by country / crop / GLU
+    # Start with agricultural production by country / crop / GLU, calculate the production share of GLU to country,
+    # Use the share to downscale country fertilizer demand to GLU.
     L100.LDS_ag_prod_t %>%
       # Match in country total production
       left_join_error_no_match(L142.ag_Prod_t_ctry_crop, by = c("iso", "GTAP_crop")) %>%
@@ -155,10 +150,10 @@ module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
       # Match in historical total consumption by region
       left_join_error_no_match(L142.ag_Fert_Cons_MtN_R_Y, by = c("GCAM_region_ID", "year")) %>%
       # Calculate the regional scaler so that consumption balance
-      mutate(scaler = value / Fert_Cons_MtN_unscaled) %>%
+      mutate(scaler = cons / Fert_Cons_MtN_unscaled) %>%
       replace_na(list(scaler = 0)) %>%
       select(GCAM_region_ID, year, scaler) %>%
-      # Match the scalers to unscalced fertilizer consumption by region/commodity/GLU (right_join: same scaler for individual region)
+      # Match the scalers to unscaled fertilizer consumption by region/commodity/GLU (right_join: same scaler for individual region)
       right_join(L142.ag_Fert_Cons_MtN_R_C_Y_GLU, by = c("GCAM_region_ID", "year")) %>%
       # Calculate scaled consumption
       mutate(Fert_Cons_MtN = Fert_Cons_MtN_unscaled * scaler,
@@ -182,8 +177,8 @@ module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
       L142.Fert_IO_check
 
     # For those region/commodity/GLU that are not completely missing for all years, no missing for any year
-    if( any( L142.Fert_IO_check$value == 0 ) ){
-      stop( "Fertilizer input-output coefficients need to be specified in all historical years")
+    if(any(L142.Fert_IO_check$value == 0)) {
+      stop("Fertilizer input-output coefficients need to be specified in all historical years")
     }
 
     # Produce outputs
@@ -191,7 +186,7 @@ module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
       add_title("Fertilizer production by country / year") %>%
       add_units("Unit = MtN") %>%
       add_comments("Fertilizer production by country is adjusted so that global total production equals consumption") %>%
-      add_comments("Units are converted from ton to million ton") %>%
+      add_comments("Units are converted from tons to million tons of Nitrogen") %>%
       add_legacy_name("L142.ag_Fert_Prod_MtN_ctry_Y") %>%
       add_precursors("L100.FAO_Fert_Cons_tN",
                      "L100.FAO_Fert_Prod_tN") %>%
@@ -202,7 +197,7 @@ module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
       add_title("Fertilizer net exports by GCAM region / year") %>%
       add_units("Unit = MtN") %>%
       add_comments("Fertilizer consumption and adjusted production are aggregated from country to GCAM region level") %>%
-      add_comments("Net exports are calculated as production minus consumption") %>%
+      add_comments("Net exports are calculated as production minus consumption, in million tons of Nitrogen") %>%
       add_legacy_name("L142.ag_Fert_NetExp_MtN_R_Y") %>%
       add_precursors("common/iso_GCAM_regID",
                      "L100.FAO_Fert_Cons_tN",
