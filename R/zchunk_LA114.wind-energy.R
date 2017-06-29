@@ -113,10 +113,16 @@ module_energy_LA114.wind <- function(command, ...) {
 
     if(OLD_DATA_SYSTEM_BEHAVIOR) {
 
-      # The output of this old code is slightly different than the new method. The difference is the calculation of the maximum price.
-      # In the new method, the maximum price is determined to be the price at which supply is 95% of the max resource.
-      # In the old method, the maximum price is the price at which supply does not change more than 1%, evaluated from
-      # low to high price (at least 10 dollars more than minimum price, i.e., 100 min calculations at 0.1 increments).
+      # The output of this old code is different than the new method. For example, the max resource for GCAM region 1 is
+           # 0.04% less for the new than the old code (i.e., 194.082 EJ vs 194.156 EJ). However, other regions have much
+           # larger differences. The max resource for GCAM region 18 is 43% more for the new than the old (1.669 vs 1.1705).
+           # Note that the small numbers magnify the percentage difference. The largest absolute difference is for GCAM
+           # region 23 (13 EJ, 5% decrease from old to new). The global max resource decreases 1.8%.
+
+      # The difference comes from the difference in the calculation of the maximum price.
+           # In the new method, the maximum price is determined to be the price at which supply is 95% of the max resource.
+           # In the old method, the maximum price is the price at which supply does not change more than 1%, evaluated from
+           # low to high price (at least 10 dollars more than minimum price, i.e., 100 min calculations at 0.1 increments).
       L114.supply_tol <- 0.01
       regional_price_supply_points <- tibble()
       for(region_ID in unique(L114.RsrcCurves_EJ_ctry_wind$GCAM_region_ID)) {
@@ -218,6 +224,8 @@ module_energy_LA114.wind <- function(command, ...) {
     L114.SupplyPoints.currR %>%
       arrange(price) %>%
       filter(supply >= half_max_resource) %>%
+      # The first price point most closely corresponds to the mid.price, which is the price at which
+           # supply is half of the maximum resource. Select the first row to get the mid.price.
       filter(row_number() == 1) %>%
       .[["price"]] ->
       mid.price
