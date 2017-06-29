@@ -60,7 +60,8 @@ module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
       rename(IrrCost = `Purchased irrigation water`,
              TotCost = `Total operating costs`) %>%
       mutate(CostFrac = IrrCost / TotCost) %>%
-      # filter out any crops with IrrCost in all years
+      # keep only crops with IrrCost for at least one MODEL_COST_YEAR.Trivially, these are the only
+      # crops whose production costs will be impacted by purchased irrigation water.
       group_by(Crop) %>%
       filter(!all(is.na(IrrCost))) %>%
       select(-Unit, -IrrCost, -TotCost) %>%
