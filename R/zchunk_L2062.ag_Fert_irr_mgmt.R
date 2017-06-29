@@ -20,7 +20,7 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
     return(c( FILE = "common/GCAM_region_names",
               FILE = "water/basin_to_country_mapping",
               FILE = "aglu/A_Fodderbio_chars",
-              FILE = "temp-data-inject/L142.ag_Fert_IO_R_C_Y_GLU",
+              "L142.ag_Fert_IO_R_C_Y_GLU",
               FILE = "temp-data-inject/L2052.AgCost_ag_irr_mgmt",
               FILE = "temp-data-inject/L2052.AgCost_bio_irr_mgmt"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -41,15 +41,9 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
     A_Fodderbio_chars <- get_data(all_data, "aglu/A_Fodderbio_chars")
-    L142.ag_Fert_IO_R_C_Y_GLU <- get_data(all_data, "temp-data-inject/L142.ag_Fert_IO_R_C_Y_GLU")
+    L142.ag_Fert_IO_R_C_Y_GLU <- get_data(all_data, "L142.ag_Fert_IO_R_C_Y_GLU")
     L2052.AgCost_ag_irr_mgmt <- get_data(all_data, "temp-data-inject/L2052.AgCost_ag_irr_mgmt")
     L2052.AgCost_bio_irr_mgmt <- get_data(all_data, "temp-data-inject/L2052.AgCost_bio_irr_mgmt")
-
-    # TEMPORARY: tidying until chunk LB142 complete
-    L142.ag_Fert_IO_R_C_Y_GLU %>%
-      gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) ->
-      L142.ag_Fert_IO_R_C_Y_GLU
 
     # Process Fertilizer Coefficients: Copy coefficients to all four technologies (irr/rfd + hi/lo)
     L142.ag_Fert_IO_R_C_Y_GLU %>%
@@ -147,7 +141,7 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
       add_legacy_name("L2062.AgCoef_Fert_ag_irr_mgmt") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
-                     "temp-data-inject/L142.ag_Fert_IO_R_C_Y_GLU") ->
+                     "L142.ag_Fert_IO_R_C_Y_GLU") ->
       L2062.AgCoef_Fert_ag_irr_mgmt
     L2062.AgCoef_Fert_bio_irr_mgmt %>%
       add_title("Fertilizer coefficients for bioenergy technologies") %>%

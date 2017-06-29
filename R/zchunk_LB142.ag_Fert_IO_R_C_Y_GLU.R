@@ -17,10 +17,8 @@
 module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "aglu/AGLU_ctry",
              FILE = "aglu/FAO/FAO_ag_items_PRODSTAT",
              "L100.LDS_ag_prod_t",
-             "L100.FAO_ag_Prod_t",
              "L100.FAO_Fert_Cons_tN",
              "L100.FAO_Fert_Prod_tN",
              "L103.ag_Prod_Mt_R_C_Y_GLU",
@@ -35,10 +33,8 @@ module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    AGLU_ctry <- get_data(all_data, "aglu/AGLU_ctry")
     FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_ag_items_PRODSTAT")
     L100.LDS_ag_prod_t <- get_data(all_data, "L100.LDS_ag_prod_t")
-    L100.FAO_ag_Prod_t <- get_data(all_data, "L100.FAO_ag_Prod_t")
     L100.FAO_Fert_Cons_tN <- get_data(all_data, "L100.FAO_Fert_Cons_tN")
     L100.FAO_Fert_Prod_tN <- get_data(all_data, "L100.FAO_Fert_Prod_tN")
     L103.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L103.ag_Prod_Mt_R_C_Y_GLU")
@@ -92,40 +88,48 @@ module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
     L142.ag_Fert_Prod_MtN_R_Y %>%
       rename(prod = value) %>%
       left_join_error_no_match(L142.ag_Fert_Cons_MtN_R_Y, by = c("GCAM_region_ID", "GCAM_commodity", "year")) %>%
-      mutate(prod = value) %>%
+      mutate(value = prod - value) %>%
       select(-prod) ->
       L142.ag_Fert_NetExp_MtN_R_Y
 
-    # Downscaling fertilizer demands by country and crop to GLU
-    # NOTE: Allocating fertilizer consumption to GLUs on the basis of production, not harvested area
+    # Downscale fertilizer demands by country and crop to GLU
+    # NOTE: Allocate fertilizer consumption to GLUs on the basis of production, not harvested area
     L100.LDS_ag_prod_t %>%
       group_by(iso, GTAP_crop) %>%
       summarise(total = sum(value)) %>%
-      ungroup() %>%
-      right_join(L100.LDS_ag_prod_t, by = c("iso", "GTAP_crop")) %>%
+      ungroup() -> L142.ag_Prod_t_ctry_crop
+
+    L100.LDS_ag_prod_t %>%
+      left_join_error_no_match(L142.ag_Prod_t_ctry_crop, by = c("iso", "GTAP_crop")) %>%
       left_join(L141.ag_Fert_Cons_MtN_ctry_crop, by = c("iso", "GTAP_crop")) %>%
-      mutate(Prod_share = value / total, Fert_Cons_MtN = Fert_Cons_MtN * Prod_share) %>%
-      # Aggregating fertilizer demands by GCAM region, commodity, and GLU
+      # Calculate production share by GLU
+      mutate(Prod_share = value / total,
+             # Downscale fertilizer consumption to GLU based on production share
+             Fert_Cons_MtN = Fert_Cons_MtN * Prod_share) %>%
+      replace_na(list(Fert_Cons_MtN = 0)) %>%
       left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%
       left_join(FAO_ag_items_PRODSTAT, by = "GTAP_crop") %>%
+      # Aggregate fertilizer demands by GCAM region, commodity, and GLU
       group_by(GCAM_region_ID, GCAM_commodity, GLU) %>%
       summarise(Fert_Cons_MtN = sum(Fert_Cons_MtN)) %>%
       ungroup() %>%
-      # Calculating unscaled coefficients as unscaled fertilizer demands divided by production
+      # Match in production
       left_join(filter(L103.ag_Prod_Mt_R_C_Y_GLU, year %in% BASE_YEAR_IFA), by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
+      # Calculate unscaled coefficients as unscaled fertilizer demands divided by production
       mutate(Fert_IO_unscaled = Fert_Cons_MtN / value,
              Fert_IO_unscaled = replace(Fert_IO_unscaled, Fert_IO_unscaled == Inf, 0)) %>%
       replace_na(list(Fert_IO_unscaled = 0)) %>%
       select(-year, -value, -Fert_Cons_MtN) %>%
       # match these coefficients in and compute unscaled historical Nfert
       right_join(L103.ag_Prod_Mt_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
+      # Nfert consumption as production multiply coefficients
       mutate(Fert_Cons_MtN_unscaled = value * Fert_IO_unscaled) ->
       L142.ag_Fert_Cons_MtN_R_C_Y_GLU
 
     # Compute region/year scalers so that consumption balances
     L142.ag_Fert_Cons_MtN_R_C_Y_GLU %>%
       group_by(GCAM_region_ID, year) %>%
-      summarise(Fert_Cons_MtN_unscaled= sum(Fert_Cons_MtN_unscaled)) %>%
+      summarise(Fert_Cons_MtN_unscaled = sum(Fert_Cons_MtN_unscaled)) %>%
       ungroup() %>%
       left_join_error_no_match(L142.ag_Fert_Cons_MtN_R_Y, by = c("GCAM_region_ID", "year")) %>%
       mutate(scaler = value / Fert_Cons_MtN_unscaled) %>%
@@ -161,53 +165,41 @@ module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
     # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
     # There's also a `same_precursors_as(x)` you can use
     # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+    L142.ag_Fert_Prod_MtN_ctry_Y %>%
+      add_title("Fertilizer production by country / year") %>%
+      add_units("Unit = MtN") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L142.ag_Fert_Prod_MtN_ctry_Y") %>%
-      add_precursors("common/iso_GCAM_regID",
-                     "aglu/AGLU_ctry",
-                     "aglu/FAO/FAO_ag_items_PRODSTAT",
-                     "L100.LDS_ag_prod_t",
-                     "L100.FAO_ag_Prod_t",
-                     "L100.FAO_Fert_Cons_tN",
-                     "L100.FAO_Fert_Prod_tN",
-                     "L141.ag_Fert_Cons_MtN_ctry_crop") %>%
+      add_precursors("L100.FAO_Fert_Cons_tN",
+                     "L100.FAO_Fert_Prod_tN") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L142.ag_Fert_Prod_MtN_ctry_Y
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+
+    L142.ag_Fert_NetExp_MtN_R_Y %>%
+      add_title("Fertilizer net exports by GCAM region / year") %>%
+      add_units("Unit = MtN") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L142.ag_Fert_NetExp_MtN_R_Y") %>%
       add_precursors("common/iso_GCAM_regID",
-                     "aglu/AGLU_ctry",
-                     "aglu/FAO/FAO_ag_items_PRODSTAT",
-                     "L100.LDS_ag_prod_t",
-                     "L100.FAO_ag_Prod_t",
                      "L100.FAO_Fert_Cons_tN",
-                     "L100.FAO_Fert_Prod_tN",
-                     "L141.ag_Fert_Cons_MtN_ctry_crop") %>%
+                     "L100.FAO_Fert_Prod_tN") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L142.ag_Fert_NetExp_MtN_R_Y
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+
+    L142.ag_Fert_IO_R_C_Y_GLU %>%
+      add_title("Fertilizer input-output coefficients by GCAM region / crop / year / GLU") %>%
+      add_units("Unitless IO") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L142.ag_Fert_IO_R_C_Y_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
-                     "aglu/AGLU_ctry",
                      "aglu/FAO/FAO_ag_items_PRODSTAT",
                      "L100.LDS_ag_prod_t",
-                     "L100.FAO_ag_Prod_t",
-                     "L100.FAO_Fert_Cons_tN",
-                     "L100.FAO_Fert_Prod_tN",
+                     "L103.ag_Prod_Mt_R_C_Y_GLU",
                      "L141.ag_Fert_Cons_MtN_ctry_crop") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
