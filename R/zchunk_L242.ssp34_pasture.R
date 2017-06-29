@@ -32,6 +32,10 @@ module_aglu_L242.ssp34_pasture <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    Land_Type <- value <- year <- region <- LandAllocatorRoot <- LandNode1 <- LandNode2 <-
+      UnmanagedLandLeaf <- allocation <- GCAM_region_ID <- GLU <- value.x <- value.y <-
+      LandLeaf <- scenario <- . <- NULL  # silence package check notes
+
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
