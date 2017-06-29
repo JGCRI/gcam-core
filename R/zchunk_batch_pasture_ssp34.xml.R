@@ -10,7 +10,8 @@
 #' original data system was \code{batch_pasture_ssp34.xml.R} (aglu XML).
 module_aglu_batch_pasture_ssp34.xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L242.LN2_UnmgdAllocation_SSP34",
+    return(c( "L242.LN2_HistUnmgdAllocation_SSP34",
+              "L242.LN2_UnmgdAllocation_SSP34",
               "L242.LN2_HistMgdAllocation_SSP34",
               "L242.LN2_MgdAllocation_SSP34"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -20,6 +21,7 @@ module_aglu_batch_pasture_ssp34.xml <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
+    L242.LN2_HistUnmgdAllocation_SSP34 <- get_data(all_data, "L242.LN2_HistUnmgdAllocation_SSP34")
     L242.LN2_UnmgdAllocation_SSP34 <- get_data(all_data, "L242.LN2_UnmgdAllocation_SSP34")
     L242.LN2_HistMgdAllocation_SSP34 <- get_data(all_data, "L242.LN2_HistMgdAllocation_SSP34")
     L242.LN2_MgdAllocation_SSP34 <- get_data(all_data, "L242.LN2_MgdAllocation_SSP34")
@@ -28,11 +30,12 @@ module_aglu_batch_pasture_ssp34.xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("pasture_ssp34.xml") %>%
+      add_xml_data(L242.LN2_HistUnmgdAllocation_SSP34,"LN2_HistUnmgdAllocation") %>%
       add_xml_data(L242.LN2_UnmgdAllocation_SSP34,"LN2_UnmgdAllocation") %>%
       add_xml_data(L242.LN2_HistMgdAllocation_SSP34,"LN2_HistMgdAllocation") %>%
       add_xml_data(L242.LN2_MgdAllocation_SSP34,"LN2_MgdAllocation") %>%
       add_rename_landnode_xml() %>%
-      add_precursors("L242.LN2_UnmgdAllocation_SSP34", "L242.LN2_HistMgdAllocation_SSP34", "L242.LN2_MgdAllocation_SSP34") ->
+      add_precursors("L242.LN2_HistUnmgdAllocation_SSP34", "L242.LN2_UnmgdAllocation_SSP34", "L242.LN2_HistMgdAllocation_SSP34", "L242.LN2_MgdAllocation_SSP34") ->
       pasture_ssp34.xml
 
     return_data(pasture_ssp34.xml)
