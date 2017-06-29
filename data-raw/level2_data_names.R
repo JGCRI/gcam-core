@@ -13,8 +13,8 @@ library(devtools)
 #' corresponding to header.
 #' @author Pralit Patel
 generate_level2_data_names <- function() {
-  #Column names of tables that are read in to the model interface
-  #These correspond to the headers of the same name in the headers/ModelInterface_headers.txt file
+  # Column names of tables that are read in to the model interface
+  # These correspond to the headers of the same name in the headers/ModelInterface_headers.txt file
   level2_data_names <- list()
 
   # Modeltime
@@ -37,7 +37,7 @@ generate_level2_data_names <- function() {
   # Carbon Coef
   level2_data_names[["CarbonCoef"]] <- c( "region", "PrimaryFuelCO2Coef.name", "PrimaryFuelCO2Coef" )
 
-  #Resources
+  # Resources
   level2_data_names[["DepRsrc"]] <- c( "region", "depresource", "output.unit", "price.unit", "market" )
   level2_data_names[["RenewRsrc"]] <- c( "region", "renewresource", "output.unit", "price.unit", "market" )
   level2_data_names[["UnlimitRsrc"]] <- c( "region", "unlimited.resource", "output.unit", "price.unit", "market", "capacity.factor" )
@@ -49,7 +49,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["DeleteRenewRsrc"]] <- c( "region", "renewresource" )
   level2_data_names[["DeleteUnlimitRsrc"]] <- c( "region", "unlimited.resource" )
 
-  #Subresources
+  # Subresources
   level2_data_names[["SubDepRsrc"]] <- c( "region", "depresource", "subresource" )
   level2_data_names[["SubRenewRsrc"]] <- c( "region", "renewresource", "sub.renewable.resource" )
   level2_data_names[["SmthRenewRsrc"]] <- c( "region", "renewresource", "smooth.renewable.subresource" )
@@ -67,7 +67,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["DepRsrcEnvironCost"]] <- c( "region", "depresource", "subresource", "year.fillout", "environCost" )
   level2_data_names[["SmthRenewRsrcCurvesGdpElast"]] <- c( "region", "renewresource", "smooth.renewable.subresource", "year.fillout", "maxSubResource", "mid.price", "curve.exponent", "gdpSupplyElast" )
 
-  #Supplysectors
+  # Supplysectors
   level2_data_names[["Supplysector"]] <- c( "region", "supplysector", "output.unit", "input.unit", "price.unit", "logit.year.fillout", "logit.exponent" )
   level2_data_names[["FinalEnergyKeyword"]] <- c( "region", "supplysector", "final.energy" )
   level2_data_names[["SupplysectorPrice"]] <- c( "region", "supplysector", "year", "price" )
@@ -79,7 +79,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["SectorUseTrialMarket"]] <- c( "region", "supplysector", "use.trial.market" )
   level2_data_names[["DeleteSupplysector"]] <- c( "region", "supplysector" )
 
-  #Subsectors
+  # Subsectors
   level2_data_names[["Subsector"]] <- c( "region", "supplysector", "subsector")
   level2_data_names[["SubsectorAll"]] <- c( level2_data_names[["Subsector"]], "logit.year.fillout", "logit.exponent", "year.fillout", "share.weight", "apply.to","from.year", "to.year", "interpolation.function" )
   level2_data_names[["SubsectorLogit"]] <- c( level2_data_names[["Subsector"]], "logit.year.fillout", "logit.exponent" )
@@ -103,7 +103,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["tranSubsector_relative-cost-logit"]] <- c( "region", "supplysector", "tranSubsector", "logit.type" )
   level2_data_names[["DeleteSubsector"]] <- level2_data_names[["Subsector"]]
 
-  #Technologies
+  # Technologies
   level2_data_names[["Tech"]] <- c( "region", "supplysector", "subsector", "technology" )
   level2_data_names[["TechInterp"]] <- c( level2_data_names[["Tech"]], "apply.to", "from.year", "to.year", "interpolation.function" )
   level2_data_names[["TechInterpTo"]] <- c( level2_data_names[["Tech"]], "apply.to","from.year", "to.year", "to.value", "interpolation.function" )
@@ -111,7 +111,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["Production"]] <- c( level2_data_names[["TechYr"]], "calOutputValue", "share.weight.year", "subs.share.weight", "tech.share.weight" )
   level2_data_names[["TechShrwt"]] <- c( level2_data_names[["TechYr"]], "share.weight" )
   level2_data_names[["CalInput"]] <- c( level2_data_names[["TechYr"]], "minicam.energy.input", "calibrated.value", "share.weight.year", "subs.share.weight", "tech.share.weight" )
-  #Market name is specified for efficiencies or coefficients
+  # Market name is specified for efficiencies or coefficients
   level2_data_names[["TechCoef"]] <- c( level2_data_names[["TechYr"]], "minicam.energy.input", "coefficient", "market.name" )
   level2_data_names[["TechEff"]] <- c( level2_data_names[["TechYr"]], "minicam.energy.input", "efficiency", "market.name" )
   level2_data_names[["TechCost"]] <- c( level2_data_names[["TechYr"]], "minicam.non.energy.input", "input.cost" )
@@ -130,7 +130,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["CalorieContent"]] <- c( level2_data_names[["TechYr"]], "minicam.energy.input", "efficiency" )
   level2_data_names[["DeleteInput"]] <- c( "region", "supplysector", "subsector", "technology", "year", "minicam.energy.input" )
 
-  #Global technologies
+  # Global technologies
   level2_data_names[["GlobalTech"]] <- c( "sector.name", "subsector.name", "technology" )
   level2_data_names[["GlobalTechInterp"]] <- c( "sector.name", "subsector.name", "technology", "apply.to","from.year", "to.year", "interpolation.function" )
   level2_data_names[["GlobalTechInterpTo"]] <- c( "sector.name", "subsector.name", "technology", "apply.to","from.year", "to.year", "to.value", "interpolation.function" )
@@ -176,7 +176,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["PrimaryRenewKeyword"]] <- c( "sector.name", "subsector.name", "technology", "year", "primary.renewable" )
   level2_data_names[["PrimaryRenewKeywordInt"]] <- c( "sector.name", "subsector.name", "technology", "year", "primary.renewable" )
 
-  #Stub technologies
+  # Stub technologies
   level2_data_names[["StubTech"]] <- c( "region", "supplysector", "subsector", "stub.technology" )
   level2_data_names[["StubTechYr"]] <- c( level2_data_names[["StubTech"]], "year" )
   level2_data_names[["StubTechInterp"]] <- c( level2_data_names[["StubTech"]], "apply.to", "from.year", "to.year", "interpolation.function" )
@@ -211,7 +211,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["StubTranTechProd"]] <- c( "region", "supplysector", "tranSubsector", "stub.technology", "year", "calOutputValue" )
   level2_data_names[["DeleteStubTech"]] <- level2_data_names[["StubTech"]]
 
-  #Agricultural sectors, subsectors, and technologies
+  # Agricultural sectors, subsectors, and technologies
   level2_data_names[["AgSupplySector"]] <- c( "region", "AgSupplySector", "output.unit", "input.unit", "price.unit", "calPrice", "market", "logit.year.fillout", "logit.exponent" )
   level2_data_names[["AgMkt"]] <- c( "region", "AgSupplySector", "market" )
   level2_data_names[["AgSupplySectorLogitType"]] <- c( "region", "AgSupplySector", "logit.type" )
@@ -243,7 +243,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["AgInputTax"]] <- c( level2_data_names[["AgTech"]], "input.tax", "coefficient" )
   level2_data_names[["ItemName"]] <- c( "region", "AgSupplySector", "AgSupplySubsector", "UnmanagedLandTechnology", "year", "itemName" )
 
-  #Demands
+  # Demands
   level2_data_names[["EnergyFinalDemand"]] <- c( "region", "energy.final.demand" )
   level2_data_names[["PerCapitaBased"]] <- c( level2_data_names[["EnergyFinalDemand"]], "perCapitaBased" )
   level2_data_names[["BaseService"]] <- c( level2_data_names[["EnergyFinalDemand"]], "year", "base.service" )
@@ -272,7 +272,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["DeleteThermalService"]] <- c( "region", "gcam.consumer", "nodeInput", "building.node.input", "thermal.building.service.input", "supplysector" )
   level2_data_names[["DeleteGenericService"]] <- c( "region", "gcam.consumer", "nodeInput", "building.node.input", "building.service.input", "supplysector" )
 
-  #Land types
+  # Land types
   level2_data_names[["LN0_Land"]] <- c( "region", "LandAllocatorRoot", "year.fillout", "landAllocation" )
   level2_data_names[["LN0_Logit"]] <- c( "region", "LandAllocatorRoot", "logit.year.fillout", "logit.exponent" )
   level2_data_names[["LN0_LogitType"]] <- c( "region", "LandAllocatorRoot", "logit.type" )
