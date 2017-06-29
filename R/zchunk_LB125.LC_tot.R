@@ -38,7 +38,7 @@ module_aglu_LB125.LC_tot <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    GCAM_region_ID <- Land_Type <- GLU <- LC_bm2 <- NULL   # silence package check notes
+    year <- value <- GCAM_region_ID <- Land_Type <- GLU <- LC_bm2 <- NULL   # silence package check notes
 
     # Load required inputs
     L120.LC_bm2_R_UrbanLand_Yh_GLU <- get_data(all_data, "L120.LC_bm2_R_UrbanLand_Yh_GLU")
