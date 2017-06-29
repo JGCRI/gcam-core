@@ -31,6 +31,7 @@ module_aglu_batch_pasture_ssp34.xml <- function(command, ...) {
       add_xml_data(L242.LN2_UnmgdAllocation_SSP34,"LN2_UnmgdAllocation") %>%
       add_xml_data(L242.LN2_HistMgdAllocation_SSP34,"LN2_HistMgdAllocation") %>%
       add_xml_data(L242.LN2_MgdAllocation_SSP34,"LN2_MgdAllocation") %>%
+      add_rename_landnode_xml() %>%
       add_precursors("L242.LN2_UnmgdAllocation_SSP34", "L242.LN2_HistMgdAllocation_SSP34", "L242.LN2_MgdAllocation_SSP34") ->
       pasture_ssp34.xml
 
