@@ -119,6 +119,8 @@ aglu.DIGITS_CALOUTPUT <- 7 # production
 # Regions in which agriculture and land use are not modeled
 aglu.NO_AGLU_REGIONS <- "Taiwan"
 
+# Define GCAM category name of fertilizer
+Fert_name <- "N fertilizer"
 
 # Energy constants ======================================================================
 
