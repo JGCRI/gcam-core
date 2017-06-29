@@ -24,5 +24,5 @@ Briefly describe what this chunk does.
 Describe in detail what this chunk does.
 }
 \author{
-AJS June 2017
+AJS July 2017
 }

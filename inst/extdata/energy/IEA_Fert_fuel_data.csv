@@ -1,7 +1,7 @@
-# File: IEA_Fert_fuel_data.csv
-# Title: IEA ammonia production technology characteristics by region
-# Units: placeholder
-# Source: Table 4.15 of IEA 2007 Tracking Industrial Energy Efficiency and CO2 Emissions
+# File: IEA_Fert_fuel_data.csv,,,,,,,,,
+# Title: IEA ammonia production technology characteristics by region,,,,,,,,,
+# Units: production is in Mt of NH3; shares are unitless; energy consumption of the three fuels - and avg - are in GJ/tNH3; fuel use - i.e. last column - is in PJ/year,,,,,,,,,
+# Source: Table 4.15 of IEA 2007 Tracking Industrial Energy Efficiency and CO2 Emissions; https://www.iea.org/publications/freepublications/publication/tracking_emissions.pdf,,,,,,,,,
 IEA_Fert_reg,Prod_MtNH3,share_gas,share_oil,share_coal,gas_GJtNH3,oil_GJtNH3,coal_GJtNH3,avg_GJtNH3,energy_PJ
 Western Europe,12.2,0.9,0.1,0,35,36,54,35,427
 North America,14.4,1,0,0,37.9,45,54,37.9,546
