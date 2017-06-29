@@ -1,6 +1,6 @@
 #' module_modeltime_L200.modeltime
 #'
-#' Briefly describe what this chunk does.
+#' Generate the model time information needed to interact with Hector or MAGICC.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L200.ModelTime}, \code{L200.ModelTimeInterYears}, \code{L200.MAGICC}, \code{L200.hector}. The corresponding file in the
 #' original data system was \code{L200.modeltime.R} (modeltime level2).
-#' @details Describe in detail what this chunk does.
+#' @details Generate the model time information needed to interact with Hector or MAGICC.
 #' @importFrom assertthat assert_that
 #' @importFrom tibble tibble
 #' @import dplyr
@@ -29,12 +29,12 @@ module_modeltime_L200.modeltime <- function(command, ...) {
     # No required inputs
 
     # Calculate the read-in timesteps in the model
-    GCAM_timesteps <- diff(modeltime.YEARS)
+    GCAM_timesteps <- diff(MODEL_YEARS)
 
     tibble(start.year.timestep    = GCAM_timesteps[1],
-           start.year             = min(modeltime.BASE_YEARS),
-           final.calibration.year = max(modeltime.BASE_YEARS),
-           end.year               = max(modeltime.FUTURE_YEARS)) %>%
+           start.year             = min(BASE_YEARS),
+           final.calibration.year = max(BASE_YEARS),
+           end.year               = max(FUTURE_YEARS)) %>%
       add_title("GCAM time information") %>%
       add_units("years") %>%
       add_legacy_name("L200.ModelTime") %>%
@@ -42,7 +42,7 @@ module_modeltime_L200.modeltime <- function(command, ...) {
       L200.ModelTime
 
     changeyears <- c(FALSE, GCAM_timesteps[-1] != GCAM_timesteps[-length(GCAM_timesteps)])
-    GCAM_interyears <- modeltime.YEARS[changeyears]
+    GCAM_interyears <- MODEL_YEARS[changeyears]
     GCAM_interyear.timesteps <- GCAM_timesteps[changeyears]
 
     tibble(inter.year.timestep = GCAM_interyear.timesteps,
@@ -77,6 +77,3 @@ module_modeltime_L200.modeltime <- function(command, ...) {
     stop("Unknown command")
   }
 }
-
-
-

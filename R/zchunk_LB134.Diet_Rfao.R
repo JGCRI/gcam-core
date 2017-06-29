@@ -24,12 +24,12 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
     return(c(FILE = "aglu/A_FoodDemand_SSPs",
              FILE = "common/iso_GCAM_regID",
              FILE = "aglu/AGLU_ctry",
-             FILE = "aglu/FAO2050_items_cal",
-             FILE = "aglu/FAO2050_Diet",
+             FILE = "aglu/FAO/FAO2050_items_cal",
+             FILE = "aglu/FAO/FAO2050_Diet",
              "L100.FAO_ag_Food_t",
              "L100.FAO_an_Food_t",
              "L101.ag_Food_Pcal_R_C_Y",
-             FILE = "temp-data-inject/L105.an_Food_Pcal_R_C_Y",
+             "L105.an_Food_Pcal_R_C_Y",
              "L101.Pop_thous_R_Yh",
              "L102.pcgdp_thous90USD_Scen_R_Y"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -53,17 +53,15 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
     A_FoodDemand_SSPs <- get_data(all_data, "aglu/A_FoodDemand_SSPs")
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     AGLU_ctry <- get_data(all_data, "aglu/AGLU_ctry")
-    FAO2050_items_cal <- get_data(all_data, "aglu/FAO2050_items_cal")
-    get_data(all_data, "aglu/FAO2050_Diet")  %>%
+    FAO2050_items_cal <- get_data(all_data, "aglu/FAO/FAO2050_items_cal")
+    get_data(all_data, "aglu/FAO/FAO2050_Diet")  %>%
       gather(year, value, -FAO2050_reg, -FAO2050_item) %>%
       mutate(year = as.integer(year)) ->
       FAO2050_Diet
     L100.FAO_ag_Food_t <- get_data(all_data, "L100.FAO_ag_Food_t")
     L100.FAO_an_Food_t <- get_data(all_data, "L100.FAO_an_Food_t")
     L101.ag_Food_Pcal_R_C_Y <- get_data(all_data, "L101.ag_Food_Pcal_R_C_Y")
-    L105.an_Food_Pcal_R_C_Y <- get_data(all_data, "temp-data-inject/L105.an_Food_Pcal_R_C_Y") %>%
-      # TEMPORARY - for temp-data-inject data
-      gather(year, value, -GCAM_region_ID, -GCAM_commodity) %>% mutate(year = as.integer(substr(year, 2, 5)))
+    L105.an_Food_Pcal_R_C_Y <- get_data(all_data, "L105.an_Food_Pcal_R_C_Y")
     L101.Pop_thous_R_Yh <- get_data(all_data, "L101.Pop_thous_R_Yh")
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y")
 
@@ -315,10 +313,10 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
       add_comments("Built from historical and future time series of per-capita caloric demands") %>%
       add_legacy_name("L134.pcFood_kcald_R_Dmnd_Y") %>%
       add_precursors("common/iso_GCAM_regID", "aglu/AGLU_ctry",
-                     "aglu/FAO2050_items_cal", "aglu/FAO2050_Diet",
+                     "aglu/FAO/FAO2050_items_cal", "aglu/FAO/FAO2050_Diet",
                      "L100.FAO_ag_Food_t", "L100.FAO_an_Food_t",
                      "L101.ag_Food_Pcal_R_C_Y", "L101.Pop_thous_R_Yh",
-                     "temp-data-inject/L105.an_Food_Pcal_R_C_Y") %>%
+                     "L105.an_Food_Pcal_R_C_Y") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L134.pcFood_kcald_R_Dmnd_Y
 

@@ -20,8 +20,8 @@
 module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "aglu/AGLU_ctry",
-             FILE = "aglu/FAO_ag_items_PRODSTAT",
-             FILE = "aglu/FAO_ag_CROSIT",
+             FILE = "aglu/FAO/FAO_ag_items_PRODSTAT",
+             FILE = "aglu/FAO/FAO_ag_CROSIT",
              "L100.LDS_ag_HA_ha",
              "L100.LDS_ag_prod_t",
              "L100.MIRCA_irrHA_ha",
@@ -43,8 +43,8 @@ module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr <- function(command, ...) {
 
     # Load required inputs
     AGLU_ctry <- get_data(all_data, "aglu/AGLU_ctry")
-    FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO_ag_items_PRODSTAT")
-    FAO_ag_CROSIT <- get_data(all_data, "aglu/FAO_ag_CROSIT")
+    FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_ag_items_PRODSTAT")
+    FAO_ag_CROSIT <- get_data(all_data, "aglu/FAO/FAO_ag_CROSIT")
     L100.LDS_ag_HA_ha <- get_data(all_data, "L100.LDS_ag_HA_ha")
     L100.LDS_ag_prod_t <- get_data(all_data, "L100.LDS_ag_prod_t")
     L100.MIRCA_irrHA_ha <- get_data(all_data, "L100.MIRCA_irrHA_ha")
@@ -152,16 +152,18 @@ module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr <- function(command, ...) {
       add_comments("Uses shares of irrigated area from MIRCA, combined with total harvested area, to calculate irrigated harvested area") %>%
       add_comments("Data is for a single year (circa 2000)") %>%
       add_legacy_name("L151.ag_irrHA_ha_ctry_crop") %>%
-      add_precursors("aglu/FAO_ag_items_PRODSTAT","L100.LDS_ag_HA_ha","L100.MIRCA_irrHA_ha","L100.MIRCA_rfdHA_ha") ->
+      add_precursors("aglu/FAO/FAO_ag_items_PRODSTAT", "L100.LDS_ag_HA_ha", "L100.MIRCA_irrHA_ha", "L100.MIRCA_rfdHA_ha") ->
       L151.ag_irrHA_ha_ctry_crop
+
     L151.ag_rfdHA_ha_ctry_crop %>%
       add_title("Irrigated harvested area by country, GTAP crop, GLU") %>%
       add_units("Hectares") %>%
       add_comments("Uses shares of rainfed area from MIRCA, combined with total harvested area, to calculate rainfed harvested area") %>%
       add_comments("Data is for a single year (circa 2000)") %>%
       add_legacy_name("L151.ag_rfdHA_ha_ctry_crop") %>%
-      add_precursors("aglu/FAO_ag_items_PRODSTAT","L100.LDS_ag_HA_ha","L100.MIRCA_irrHA_ha","L100.MIRCA_rfdHA_ha") ->
+      add_precursors("aglu/FAO/FAO_ag_items_PRODSTAT", "L100.LDS_ag_HA_ha", "L100.MIRCA_irrHA_ha", "L100.MIRCA_rfdHA_ha") ->
       L151.ag_rfdHA_ha_ctry_crop
+
     L151.ag_irrProd_t_ctry_crop %>%
       add_title("Irrigated production by country, GTAP crop, GLU") %>%
       add_units("tons") %>%
@@ -171,8 +173,9 @@ module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr <- function(command, ...) {
       add_comments("Data is for a single year (circa 2000)") %>%
       add_legacy_name("L151.ag_irrProd_t_ctry_crop") %>%
       same_precursors_as("L151.ag_irrHA_ha_ctry_crop") %>%
-      add_precursors("aglu/AGLU_ctry","aglu/FAO_ag_CROSIT","L100.LDS_ag_prod_t") ->
+      add_precursors("aglu/AGLU_ctry","aglu/FAO/FAO_ag_CROSIT","L100.LDS_ag_prod_t") ->
       L151.ag_irrProd_t_ctry_crop
+
     L151.ag_rfdProd_t_ctry_crop %>%
       add_title("Rainfed production by country, GTAP crop, GLU") %>%
       add_units("tons") %>%
@@ -182,7 +185,7 @@ module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr <- function(command, ...) {
       add_comments("Data is for a single year (circa 2000)") %>%
       add_legacy_name("L151.ag_rfdProd_t_ctry_crop") %>%
       same_precursors_as("L151.ag_rfdHA_ha_ctry_crop") %>%
-      add_precursors("aglu/AGLU_ctry","aglu/FAO_ag_CROSIT","L100.LDS_ag_prod_t") ->
+      add_precursors("aglu/AGLU_ctry","aglu/FAO/FAO_ag_CROSIT","L100.LDS_ag_prod_t") ->
       L151.ag_rfdProd_t_ctry_crop
 
     return_data(L151.ag_irrHA_ha_ctry_crop, L151.ag_rfdHA_ha_ctry_crop, L151.ag_irrProd_t_ctry_crop, L151.ag_rfdProd_t_ctry_crop)

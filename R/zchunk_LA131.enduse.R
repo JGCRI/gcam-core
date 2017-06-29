@@ -23,7 +23,7 @@ module_energy_LA131.enduse <- function(command, ...) {
              FILE = "energy/enduse_sector_aggregation",
              FILE = "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh",
              FILE = "temp-data-inject/L121.in_EJ_R_unoil_F_Yh",
-             FILE = "temp-data-inject/L122.in_EJ_R_refining_F_Yh",
+             "L122.in_EJ_R_refining_F_Yh",
              "L124.out_EJ_R_heat_F_Yh",
              "L124.out_EJ_R_heatfromelec_F_Yh",
              "L126.out_EJ_R_electd_F_Yh"))
@@ -44,16 +44,17 @@ module_energy_LA131.enduse <- function(command, ...) {
 
     get_data(all_data, "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh") %>%
       gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) -> L1011.en_bal_EJ_R_Si_Fi_Yh
+      mutate(year = as.integer(substr(year, 2, 5))) %>%
+      filter(year %in% HISTORICAL_YEARS) ->   # ensure temp data match our current history
+      L1011.en_bal_EJ_R_Si_Fi_Yh
 
     get_data(all_data, "temp-data-inject/L121.in_EJ_R_unoil_F_Yh") %>%
       gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) -> L121.in_EJ_R_unoil_F_Yh
+      mutate(year = as.integer(substr(year, 2, 5))) %>%
+      filter(year %in% HISTORICAL_YEARS) ->   # ensure temp data match our current history
+      L121.in_EJ_R_unoil_F_Yh
 
-    get_data(all_data, "temp-data-inject/L122.in_EJ_R_refining_F_Yh") %>%
-      gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) -> L122.in_EJ_R_refining_F_Yh
-
+    L122.in_EJ_R_refining_F_Yh <- get_data(all_data, "L122.in_EJ_R_refining_F_Yh")
     L124.out_EJ_R_heat_F_Yh <- get_data(all_data, "L124.out_EJ_R_heat_F_Yh")
     L124.out_EJ_R_heatfromelec_F_Yh <- get_data(all_data, "L124.out_EJ_R_heatfromelec_F_Yh")
     L126.out_EJ_R_electd_F_Yh <- get_data(all_data, "L126.out_EJ_R_electd_F_Yh")
@@ -66,7 +67,7 @@ module_energy_LA131.enduse <- function(command, ...) {
       Unoil_elect
 
     L122.in_EJ_R_refining_F_Yh %>%
-      filter(fuel == "electricity") %>%
+      filter(fuel == "electricity", year %in% HISTORICAL_YEARS) %>%
       bind_rows(Unoil_elect) %>%
       group_by(GCAM_region_ID, fuel, year) %>%
       summarise(value = sum(value)) ->
@@ -81,7 +82,7 @@ module_energy_LA131.enduse <- function(command, ...) {
 
     # Subset the end use sectors and aggregate by fuel
     L1011.en_bal_EJ_R_Si_Fi_Yh %>%
-      filter(sector %in% enduse_sector_aggregation$sector) %>%
+      filter(sector %in% enduse_sector_aggregation$sector, year %in% HISTORICAL_YEARS) %>%
       filter(fuel == "electricity") %>%
       group_by(GCAM_region_ID, fuel, year) %>%
       summarise(value = sum(value)) ->
@@ -119,6 +120,7 @@ module_energy_LA131.enduse <- function(command, ...) {
       Heatfromelect
 
     L124.out_EJ_R_heat_F_Yh %>%
+      filter(year %in% HISTORICAL_YEARS) %>%
       group_by(GCAM_region_ID, year) %>%
       summarise(value = sum(value)) %>%
       left_join_error_no_match(Heatfromelect, by = c("GCAM_region_ID", "year")) %>%
@@ -196,15 +198,18 @@ module_energy_LA131.enduse <- function(command, ...) {
       bind_rows(Enduse_heat_scaled_share_indust) %>%
       arrange(GCAM_region_ID, sector, year) ->
       L131.share_R_Senduse_heat_Yh # Output table 2
+
     # ===================================================
     L131.in_EJ_R_Senduse_F_Yh %>%
       add_title("Final scaled energy input by GCAM region / end-use sector (incl CHP) / fuel / historical year") %>%
       add_units("EJ") %>%
       add_comments("Scalers were used to balance electricity and district heat production and consumption within each region") %>%
       add_legacy_name("L131.in_EJ_R_Senduse_F_Yh") %>%
-      add_precursors("energy/enduse_sector_aggregation", "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "temp-data-inject/L121.in_EJ_R_unoil_F_Yh", "temp-data-inject/L122.in_EJ_R_refining_F_Yh", "L126.out_EJ_R_electd_F_Yh") %>%
+      add_precursors("energy/enduse_sector_aggregation", "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh",
+                     "temp-data-inject/L121.in_EJ_R_unoil_F_Yh", "L122.in_EJ_R_refining_F_Yh", "L126.out_EJ_R_electd_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L131.in_EJ_R_Senduse_F_Yh
+
     L131.share_R_Senduse_heat_Yh %>%
       add_title("Share of heat consumption by end-use sector within GCAM region / historical year") %>%
       add_units("Unitless") %>%
@@ -213,7 +218,7 @@ module_energy_LA131.enduse <- function(command, ...) {
       add_precursors("energy/A_regions", "energy/enduse_sector_aggregation",
                      "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh",
                      "temp-data-inject/L121.in_EJ_R_unoil_F_Yh",
-                     "temp-data-inject/L122.in_EJ_R_refining_F_Yh",
+                     "L122.in_EJ_R_refining_F_Yh",
                      "L124.out_EJ_R_heat_F_Yh", "L124.out_EJ_R_heatfromelec_F_Yh",
                      "L126.out_EJ_R_electd_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->

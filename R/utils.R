@@ -32,6 +32,7 @@ load_csv_files <- function(filenames, optionals, quiet = FALSE, ...) {
     if(is.null(fqfn)) {
       assert_that(optionals[fnum]) # if we get back a NULL, file has to be optional
       filedata[[f]] <- NA
+      if(!quiet) message("Note: optional input ", f, "not found")
       next
     }
     suppressMessages(readr::read_csv(fqfn, comment = COMMENT_CHAR, ...)) %>%
@@ -257,7 +258,7 @@ save_chunkdata <- function(chunkdata, write_inputs = FALSE, outputs_dir =
       # If data is in a different from for original data system, indicate
       # that by writing to first line of file
       if(!is.null(flags)) {
-        cat(paste(flags, collapse = " "), file = fqfn, sep = "\n")
+        cat(paste(COMMENT_CHAR, paste(flags, collapse = " ")), file = fqfn, sep = "\n")
       }
 
       if(FLAG_PROTECT_FLOAT %in% flags) {
@@ -524,7 +525,7 @@ run_xml_conversion <- make_run_xml_conversion()
 #' @author RL 19 Apr 2017
 #' @importFrom utils capture.output
 screen_forbidden <- function(fn) {
-  forbidden <- c("(?<!error_no_)match", "ifelse",
+  forbidden <- c("(?<!error_no_)match(?!es)", "ifelse",
                  "melt", "cast",
                  "rbind", "cbind", "merge",
                  "read\\.csv", "write\\.csv",
