@@ -7,12 +7,12 @@
 append_GLU(data, ...)
 }
 \arguments{
-\item{data}{data, a tibble}
+\item{data}{Data, a tibble}
 
 \item{...}{Names of variables to concatenate with \code{GLU} column, character}
 }
 \value{
-return
+A tibble with the \code{...} variable names concatenated with the \code{GLU}.
 }
 \description{
 Append GLU to all specified variables

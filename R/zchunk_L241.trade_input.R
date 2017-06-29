@@ -59,11 +59,11 @@ module_aglu_L241.trade_input <- function(command, ...) {
     # Create table of regions, technologies, and all base years (47-51)
     # Easiest if the model base years are subsetted from a full table as a last step in the construction of each of these tables
     A_demand_technology %>%
-      write_to_all_regions(c(aglu.NAMES_TECH, "minicam.energy.input", "market.name"), GCAM_region_names) %>%
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Tech"]], "minicam.energy.input", "market.name"), GCAM_region_names) %>%
       mutate(stub.technology = technology) ->
       A_demand_technology_R
     A_an_input_technology %>%
-      write_to_all_regions(c(aglu.NAMES_TECH, "minicam.energy.input", "market.name"), GCAM_region_names) %>%
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Tech"]], "minicam.energy.input", "market.name"), GCAM_region_names) %>%
       mutate(stub.technology = technology) ->
       A_an_input_technology_R
 
@@ -95,7 +95,7 @@ module_aglu_L241.trade_input <- function(command, ...) {
              minicam.energy.input = "ag_trade") %>%
       select(-value) %>%
       repeat_add_columns(tibble(year = aglu_demand_futureyears)) %>%
-      select(one_of(aglu.NAMES_STUBTECHCOEF_NM)) ->
+      select(one_of(LEVEL2_DATA_NAMES[["StubTechCoef_NM"]])) ->
       L241.StubAgTradeCoeff_food
 
     # Coefficient for ag_trade of non-food crops (incl secondary products) (71-76)
@@ -106,7 +106,7 @@ module_aglu_L241.trade_input <- function(command, ...) {
       mutate(coefficient = LOCAL_FOOD_FRACT,
              minicam.energy.input = "ag_trade") %>%
       repeat_add_columns(tibble(year = aglu_demand_futureyears)) %>%
-      select(one_of(aglu.NAMES_STUBTECHCOEF_NM)) ->
+      select(one_of(LEVEL2_DATA_NAMES[["StubTechCoef_NM"]])) ->
       L241.StubAgTradeCoeff_nonfood
 
     # Coefficient for ag_trade of feed crops (incl secondary products) (78-83)
@@ -115,7 +115,7 @@ module_aglu_L241.trade_input <- function(command, ...) {
       mutate(coefficient = LOCAL_FOOD_FRACT,
              minicam.energy.input = "ag_trade") %>%
       repeat_add_columns(tibble(year = aglu_demand_futureyears)) %>%
-      select(one_of(aglu.NAMES_STUBTECHCOEF_NM)) ->
+      select(one_of(LEVEL2_DATA_NAMES[["StubTechCoef_NM"]])) ->
       L241.StubAgTradeCoeff_feed
 
     # Output coefficient for RES ag_trade of food crops (incl secondary products) (85-90)
@@ -125,7 +125,7 @@ module_aglu_L241.trade_input <- function(command, ...) {
       repeat_add_columns(tibble(year = aglu_demand_futureyears)) %>%
       mutate(res.secondary.output = "ag_trade",
              output.ratio = 1) %>%
-      select(one_of(aglu.NAMES_AGRES)) ->
+      select(one_of(LEVEL2_DATA_NAMES[["AgRES"]])) ->
       L241.AgProdTech_RES_output
 
     # Next section sets up the trade regions. For low income regions, we are assuming trade is restricted,

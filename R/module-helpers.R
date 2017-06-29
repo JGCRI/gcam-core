@@ -316,9 +316,9 @@ add_node_leaf_names <- function(data, nesting_table, leaf_name, ..., LT_name = "
 #'
 #' Append GLU to all specified variables
 #'
-#' @param data data, a tibble
+#' @param data Data, a tibble
 #' @param ... Names of variables to concatenate with \code{GLU} column, character
-#' @return return
+#' @return A tibble with the \code{...} variable names concatenated with the \code{GLU}.
 append_GLU <- function(data, ...) {
   assert_that(is_tibble(data))
   dots <- list(...)
