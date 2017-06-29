@@ -277,32 +277,33 @@ set_years <- function(data) {
 #'
 #' Match in the node and leaf names from a land nesting table
 #'
-#' @param data data
-#' @param nesting_table nesting_table
-#' @param leaf_name leaf_name
-#' @param LT_name LT_name
-#' @param LN1 LN1
-#' @param LN2 LN2
-#' @param LN3 LN3
-#' @param LN4 LN4
-#' @param append_GLU append_GLU
-#' @return return
-add_node_leaf_names <- function(data, nesting_table, leaf_name, LT_name = "Land_Type",
-                                LN1 = "LandNode1", LN2 = NA, LN3 = NA, LN4 = NA, append_GLU = TRUE) {
+#' @param data Data, tibble
+#' @param nesting_table Table of node names (as column names) and leaf data (contents), tibble
+#' @param leaf_name Name of leaf name column in \code{nesting_table}, character
+#' @param ... Names of columns to add leaf nodes for, character
+#' @param LT_name Name of land type column in \code{data}, character
+#' @param append_GLU Append GLU column to new leaf name columns? Logical
+#' @return Data with new leaf name columns added.
+add_node_leaf_names <- function(data, nesting_table, leaf_name, ..., LT_name = "Land_Type", append_GLU = TRUE) {
+  assert_that(is_tibble(data))
+  assert_that(is_tibble(nesting_table))
+  assert_that(is.character(leaf_name))
+  assert_that(leaf_name %in% names(nesting_table))
+  assert_that(is.character(LT_name))
+  assert_that(LT_name %in% names(data))
+  assert_that(is.logical(append_GLU))
+
   data$LandAllocatorRoot <- "root"
-  data[[LN1]] <- nesting_table[[LN1]][match(data[[LT_name]], nesting_table[[leaf_name]])]
-  if(!is.na(LN2)) {
-    data[[LN2]] <- nesting_table[[LN2]][match(data[[LT_name]], nesting_table[[leaf_name]])]
+  dots <- list(...)
+  for(x in dots) {
+    assert_that(x %in% names(nesting_table))
+    data[[x]] <- nesting_table[[x]][match(data[[LT_name]], nesting_table[[leaf_name]])]
   }
-  if(!is.na(LN3)) {
-    data[[LN3]] <- nesting_table[[LN3]][match(data[[LT_name]], nesting_table[[leaf_name]])]
-  }
-  if(!is.na(LN4)) {
-    data[[LN4]] <- nesting_table[[LN4]][match(data[[LT_name]], nesting_table[[leaf_name]])]
-  }
+
   data[[leaf_name]] <- data[[LT_name]]
+
   if(append_GLU) {
-    data <- append_GLU(data, var1 = leaf_name, var2 = LN1, var3 = LN2, var4 = LN3, var5 = LN4)
+    data <- append_GLU(data, ...)
   }
   if("Irr_Rfd" %in% names(data)) {
     data[[leaf_name]] <- paste(data[[leaf_name]], data[["Irr_Rfd"]], sep = aglu.IRR_DELIMITER)
@@ -315,28 +316,17 @@ add_node_leaf_names <- function(data, nesting_table, leaf_name, LT_name = "Land_
 #'
 #' Append GLU to all specified variables
 #'
-#' @param data data
-#' @param var1 var1
-#' @param var2 var2
-#' @param var3 var3
-#' @param var4 var4
-#' @param var5 var5
+#' @param data data, a tibble
+#' @param ... Names of variables to concatenate with \code{GLU} column, character
 #' @return return
-append_GLU <- function(data, var1 = "LandNode1", var2 = NA, var3 = NA, var4 = NA, var5 = NA) {
-  data[[var1]] <- paste(data[[var1]], data[["GLU"]], sep = aglu.LT_GLU_DELIMITER)
-  if(!is.na(var2)) {
-    data[[var2]] <- paste(data[[var2]], data[["GLU"]], sep = aglu.LT_GLU_DELIMITER)
+append_GLU <- function(data, ...) {
+  assert_that(is_tibble(data))
+  dots <- list(...)
+  for(x in dots) {
+    assert_that(x %in% names(data))
+    data[[x]] <- paste(data[[x]], data[["GLU"]], sep = aglu.LT_GLU_DELIMITER)
   }
-  if(!is.na(var3)) {
-    data[[var3]] <- paste(data[[var3]], data[["GLU"]], sep = aglu.LT_GLU_DELIMITER)
-  }
-  if(!is.na(var4)) {
-    data[[var4]] <- paste(data[[var4]], data[["GLU"]], sep = aglu.LT_GLU_DELIMITER)
-  }
-  if(!is.na(var5)) {
-    data[[var5]] <- paste(data[[var5]], data[["GLU"]], sep = aglu.LT_GLU_DELIMITER)
-  }
-  return(data)
+  data
 }
 
 
@@ -350,15 +340,19 @@ append_GLU <- function(data, var1 = "LandNode1", var2 = NA, var3 = NA, var4 = NA
 #' @return A tibble with codes substituted for pattern, or vice versa, depending on the original
 #' contents of the \code{GLU} column.
 replace_GLU <- function(d, map = basin_to_country_mapping, GLU_pattern = "^GLU[0-9]{3}$") {
-  if("GLU" %in% names(d)) {
-    # Determine the direction of the change based on character string matching in the first element
-    if(all(grepl(GLU_pattern, d$GLU))) {
-      d$GLU <- map$GLU_name[match(d$GLU, map$GLU_code)]  # switch from GLU numerical codes to names
-    } else {
-      d$GLU <- map$GLU_code[match(d$GLU, map$GLU_name)]  # switch from GLU names to numerical codes
-    }
+  assert_that(is_tibble(d))
+  assert_that("GLU" %in% names(d))
+  assert_that(is_tibble(map))
+  assert_that(all(c("GLU_code", "GLU_name") %in% names(map)))
+  assert_that(!any(duplicated(map$GLU_code)))
+  assert_that(!any(duplicated(map$GLU_name)))
+  assert_that(is.character(GLU_pattern))
+
+  # Determine the direction of the change based on character string matching in the first element
+  if(all(grepl(GLU_pattern, d$GLU))) {
+    d$GLU <- map$GLU_name[match(d$GLU, map$GLU_code)]  # switch from GLU numerical codes to names
   } else {
-    warning("replace_GLU called but no GLU column present")
+    d$GLU <- map$GLU_code[match(d$GLU, map$GLU_name)]  # switch from GLU names to numerical codes
   }
   d
 }

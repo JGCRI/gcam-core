@@ -4,30 +4,24 @@
 \alias{add_node_leaf_names}
 \title{add_node_leaf_names}
 \usage{
-add_node_leaf_names(data, nesting_table, leaf_name, LT_name = "Land_Type",
-  LN1 = "LandNode1", LN2 = NA, LN3 = NA, LN4 = NA, append_GLU = TRUE)
+add_node_leaf_names(data, nesting_table, leaf_name, ...,
+  LT_name = "Land_Type", append_GLU = TRUE)
 }
 \arguments{
-\item{data}{data}
+\item{data}{Data, tibble}
 
-\item{nesting_table}{nesting_table}
+\item{nesting_table}{Table of node names (as column names) and leaf data (contents), tibble}
 
-\item{leaf_name}{leaf_name}
+\item{leaf_name}{Name of leaf name column in \code{nesting_table}, character}
 
-\item{LT_name}{LT_name}
+\item{...}{Names of columns to add leaf nodes for, character}
 
-\item{LN1}{LN1}
+\item{LT_name}{Name of land type column in \code{data}, character}
 
-\item{LN2}{LN2}
-
-\item{LN3}{LN3}
-
-\item{LN4}{LN4}
-
-\item{append_GLU}{append_GLU}
+\item{append_GLU}{Append GLU column to new leaf name columns? Logical}
 }
 \value{
-return
+Data with new leaf name columns added.
 }
 \description{
 Match in the node and leaf names from a land nesting table

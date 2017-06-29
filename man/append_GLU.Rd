@@ -4,21 +4,12 @@
 \alias{append_GLU}
 \title{append_GLU}
 \usage{
-append_GLU(data, var1 = "LandNode1", var2 = NA, var3 = NA, var4 = NA,
-  var5 = NA)
+append_GLU(data, ...)
 }
 \arguments{
-\item{data}{data}
+\item{data}{data, a tibble}
 
-\item{var1}{var1}
-
-\item{var2}{var2}
-
-\item{var3}{var3}
-
-\item{var4}{var4}
-
-\item{var5}{var5}
+\item{...}{Names of variables to concatenate with \code{GLU} column, character}
 }
 \value{
 return
