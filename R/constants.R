@@ -30,7 +30,7 @@ BASE_YEARS <- c(1975, 1990, 2005, 2010)
 MODEL_YEARS <- c(BASE_YEARS, FUTURE_YEARS)
 SSP_FUTURE_YEARS <- c(2010, FUTURE_YEARS)
 GHG_CONTROL_READIN_YEAR <- 1975
-
+BASE_YEAR_IFA <- 2006
 
 # GCAM constants ======================================================================
 
