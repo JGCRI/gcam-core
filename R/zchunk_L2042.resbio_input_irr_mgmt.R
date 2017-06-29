@@ -1,4 +1,4 @@
-#' module_aglu_L2061.ag_Fert_irr
+#' module_aglu_L2042.resbio_input_irr_mgmt
 #'
 #' Briefly describe what this chunk does.
 #'
@@ -6,36 +6,42 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L2061.AgCoef_Fert_ag_irr}, \code{L2061.AgCoef_Fert_bio_irr}, \code{L2061.AgCost_ag_irr_adj}, \code{L2061.AgCost_bio_irr_adj}. The corresponding file in the
-#' original data system was \code{L2061.ag_Fert_irr.R} (aglu level2).
+#' the generated outputs: \code{L2042.AgResBio_For}, \code{L2042.AgResBioCurve_For}, \code{L2042.GlobalResBio_Mill}, \code{L2042.StubResBioCurve_Mill}, \code{L2042.AgResBio_ag_irr_mgmt}, \code{L2042.AgResBioCurve_ag_irr_mgmt}. The corresponding file in the
+#' original data system was \code{L2042.resbio_input_irr_mgmt.R} (aglu level2).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_aglu_L2061.ag_Fert_irr_DISABLED <- function(command, ...) {
+module_aglu_L2042.resbio_input_irr_mgmt_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
-             "L2051.AgCost_ag_irr",
-             "L2051.AgCost_bio_irr",
-             "L206.AgCoef_Fert_ag",
-             "L206.AgCoef_Fert_bio"))
+             "L2041.AgResBio_For",
+             "L2041.GlobalResBio_Mill",
+             "L2041.AgResBio_ag_irr",
+             "L2041.AgResBioCurve_For",
+             "L2041.StubResBioCurve_Mill",
+             "L2041.AgResBioCurve_ag_irr"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L2061.AgCoef_Fert_ag_irr",
-             "L2061.AgCoef_Fert_bio_irr",
-             "L2061.AgCost_ag_irr_adj",
-             "L2061.AgCost_bio_irr_adj"))
+    return(c("L2042.AgResBio_For",
+             "L2042.AgResBioCurve_For",
+             "L2042.GlobalResBio_Mill",
+             "L2042.StubResBioCurve_Mill",
+             "L2042.AgResBio_ag_irr_mgmt",
+             "L2042.AgResBioCurve_ag_irr_mgmt"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    L2051.AgCost_ag_irr <- get_data(all_data, "L2051.AgCost_ag_irr")
-    L2051.AgCost_bio_irr <- get_data(all_data, "L2051.AgCost_bio_irr")
-    L206.AgCoef_Fert_ag <- get_data(all_data, "L206.AgCoef_Fert_ag")
-    L206.AgCoef_Fert_bio <- get_data(all_data, "L206.AgCoef_Fert_bio")
+    L2041.AgResBio_For <- get_data(all_data, "L2041.AgResBio_For")
+    L2041.GlobalResBio_Mill <- get_data(all_data, "L2041.GlobalResBio_Mill")
+    L2041.AgResBio_ag_irr <- get_data(all_data, "L2041.AgResBio_ag_irr")
+    L2041.AgResBioCurve_For <- get_data(all_data, "L2041.AgResBioCurve_For")
+    L2041.StubResBioCurve_Mill <- get_data(all_data, "L2041.StubResBioCurve_Mill")
+    L2041.AgResBioCurve_ag_irr <- get_data(all_data, "L2041.AgResBioCurve_ag_irr")
 
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
@@ -52,10 +58,6 @@ module_aglu_L2061.ag_Fert_irr_DISABLED <- function(command, ...) {
     # }
     #
     #
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses vecpaste
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # NOTE: This code uses repeat_and_add_vector
     # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # ===================================================
@@ -70,43 +72,63 @@ module_aglu_L2061.ag_Fert_irr_DISABLED <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L2061.AgCoef_Fert_ag_irr") %>%
+      add_legacy_name("L2042.AgResBio_For") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L2061.AgCoef_Fert_ag_irr
+      L2042.AgResBio_For
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L2061.AgCoef_Fert_bio_irr") %>%
+      add_legacy_name("L2042.AgResBioCurve_For") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L2061.AgCoef_Fert_bio_irr
+      L2042.AgResBioCurve_For
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L2061.AgCost_ag_irr_adj") %>%
+      add_legacy_name("L2042.GlobalResBio_Mill") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L2061.AgCost_ag_irr_adj
+      L2042.GlobalResBio_Mill
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L2061.AgCost_bio_irr_adj") %>%
+      add_legacy_name("L2042.StubResBioCurve_Mill") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L2061.AgCost_bio_irr_adj
+      L2042.StubResBioCurve_Mill
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L2042.AgResBio_ag_irr_mgmt") %>%
+      add_precursors("precursor1", "precursor2", "etc") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L2042.AgResBio_ag_irr_mgmt
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L2042.AgResBioCurve_ag_irr_mgmt") %>%
+      add_precursors("precursor1", "precursor2", "etc") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L2042.AgResBioCurve_ag_irr_mgmt
 
-    return_data(L2061.AgCoef_Fert_ag_irr, L2061.AgCoef_Fert_bio_irr, L2061.AgCost_ag_irr_adj, L2061.AgCost_bio_irr_adj)
+    return_data(L2042.AgResBio_For, L2042.AgResBioCurve_For, L2042.GlobalResBio_Mill, L2042.StubResBioCurve_Mill, L2042.AgResBio_ag_irr_mgmt, L2042.AgResBioCurve_ag_irr_mgmt)
   } else {
     stop("Unknown command")
   }

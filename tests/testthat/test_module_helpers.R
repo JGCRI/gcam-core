@@ -184,3 +184,79 @@ test_that("write_to_all_regions", {
   d1 <- write_to_all_regions(d, nms, grn, has_traded = TRUE)
   expect_equal(nrow(d1), nrow(grn) * nrow(d))
 })
+
+test_that("add_node_leaf_names", {
+  d <- tibble(Land_Type = 1:2, GLU = c("G1", "G2"))
+  nt <- tibble(LN1 = 1, LN2 = 2, UnmanagedLandLeaf = d$Land_Type)
+  ln <- "UnmanagedLandLeaf"
+
+  expect_error(add_node_leaf_names(1, nt))
+  expect_error(add_node_leaf_names(d, 1))
+  expect_error(add_node_leaf_names(d, nt, 1))
+  expect_error(add_node_leaf_names(d, nt, "1"))  # leaf name not in nesting_table
+  expect_error(add_node_leaf_names(d, nt, ln, LT_name = 1))
+  expect_error(add_node_leaf_names(d, nt, ln, LT_name = "1"))  # LT_name not in data
+  expect_error(add_node_leaf_names(d, nt, ln, append_GLU = 1))
+
+  d1 <- add_node_leaf_names(d, nt, ln)
+  expect_equal(ncol(d) + 2, ncol(d1))
+  expect_equal(nrow(d), nrow(d1))
+  expect_true(ln %in% names(d1))
+  expect_true("LandAllocatorRoot" %in% names(d1))
+
+  d1 <- add_node_leaf_names(d, nt, ln, "LN1")
+  expect_equal(ncol(d) + 3, ncol(d1))
+  expect_true("LN1" %in% names(d1))
+  expect_equal(d1$LN1, paste(nt$LN1, d$GLU, sep = aglu.LT_GLU_DELIMITER))
+
+  d1 <- add_node_leaf_names(d, nt, ln, "LN1", append_GLU = FALSE)
+  expect_equal(ncol(d) + 3, ncol(d1))
+  expect_true("LN1" %in% names(d1))
+  expect_equal(d1$LN1, nt$LN1)  # no GLU appended
+
+  d1 <- add_node_leaf_names(d, nt, ln, "LN1", "LN2", append_GLU = FALSE)
+  expect_true("LN1" %in% names(d1))
+  expect_true("LN2" %in% names(d1))
+  expect_equal(d1$LN1, nt$LN1)
+  expect_equal(d1$LN2, nt$LN2)
+
+  d$Irr_Rfd <- c("I1", "I2")
+  d1 <- add_node_leaf_names(d, nt, ln, "LN1", "LN2", append_GLU = FALSE)
+  expect_equal(d1[[ln]], paste(d$Land_Type, d$Irr_Rfd, sep = aglu.IRR_DELIMITER))
+})
+
+
+test_that("append_GLU", {
+  expect_error(append_GLU(1))
+  expect_silent(append_GLU(tibble()))
+
+  d <- tibble(GLU = "GLU000", x = 1, y = 2)
+  expect_equal(d, append_GLU(d))
+  d1 <- append_GLU(d, "x")
+  expect_equal(d1$x, paste(d$x, d$GLU, sep = aglu.LT_GLU_DELIMITER))
+  d1 <- append_GLU(d, "x", "y")
+  expect_equal(d1$x, paste(d$x, d$GLU, sep = aglu.LT_GLU_DELIMITER))
+  expect_equal(d1$y, paste(d$y, d$GLU, sep = aglu.LT_GLU_DELIMITER))
+  expect_error(append_GLU(d, "z"))
+})
+
+test_that("replace_GLU", {
+  d <- tibble(GLU = "GLU000")
+  map <- tibble(GLU_name = "x", GLU_code = "GLU000")
+  badmap1 <- tibble(GLU_name = "x", GLU_code = c("GLU000", "GLU001"))
+  badmap1 <- tibble(GLU_name = c("x", "y"), GLU_code = "GLU000")
+
+  expect_error(replace_GLU(1, map))
+  expect_error(replace_GLU(tibble(), map))  # no GLU column in d
+  expect_error(replace_GLU(d, tibble()))  # no GLU_code and GLU_name columns in map
+  expect_error(replace_GLU(d, badmap1))
+  expect_error(replace_GLU(d, badmap2))
+  expect_error(replace_GLU(d, GLU, GLU_pattern = 1))
+
+  d1 <- replace_GLU(d, map)
+  expect_equal(dim(d), dim(d1))
+  expect_equal(d1$GLU, "x")  # one way...
+
+  d1 <- replace_GLU(tibble(GLU = "x"), map)
+  expect_equal(d1$GLU, "GLU000") # ...and the other
+})
