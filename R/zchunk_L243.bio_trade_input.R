@@ -58,41 +58,29 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
     L120.LC_bm2_R_LT_Yh_GLU <- get_data(all_data, "L120.LC_bm2_R_LT_Yh_GLU")
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y")
 
-    # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses repeat_and_add_vector
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code converts gdp using a conv_xxxx_xxxx_USD constant
-    # Use the `gdp_deflator(year, base_year)` function instead
-    # ===================================================
+    # First, create a table to delete existing regional biomass input (this needs to include region/sector/subsector/technology/input for all regions & years)
+    # Note: I'm pulling these next two lines out so it is clearer that we have hard-coded this to the GCAM sector names
+    REGIONAL.BIOMASS.NAME <- "regional biomass"
+    BIOMASS.NAME <- "biomass"
+    GCAM_region_names %>%
+      select(region) %>%
+      mutate(supplysector = REGIONAL.BIOMASS.NAME, subsector = REGIONAL.BIOMASS.NAME, technology = REGIONAL.BIOMASS.NAME) %>%
+      repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) %>%
+      mutate(minicam.energy.input = BIOMASS.NAME) ->
+      L243.DeleteInput_RegBio
 
     # Produce outputs
     # Temporary code below sends back empty data frames marked "don't test"
     # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
     # There's also a `same_precursors_as(x)` you can use
     # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
+    L243.DeleteInput_RegBio %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L243.DeleteInput_RegBio") %>%
-      add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector", "aglu/A_bio_subsector_logit", "aglu/A_bio_subsector", "L120.LC_bm2_R_LT_Yh_GLU", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
+      add_precursors("common/GCAM_region_names") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L243.DeleteInput_RegBio
@@ -104,8 +92,8 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       add_legacy_name("L243.SectorLogitTables") %>%
       add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector", "aglu/A_bio_subsector_logit", "aglu/A_bio_subsector", "L120.LC_bm2_R_LT_Yh_GLU", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L243.SectorLogitTables[[ curr_table ]]$data
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
+      L243.SectorLogitTables
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -114,7 +102,7 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       add_legacy_name("L243.TechCoef_RegBio") %>%
       add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector", "aglu/A_bio_subsector_logit", "aglu/A_bio_subsector", "L120.LC_bm2_R_LT_Yh_GLU", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
       L243.TechCoef_RegBio
     tibble() %>%
       add_title("descriptive title of data") %>%
@@ -124,7 +112,7 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       add_legacy_name("L243.Supplysector_Bio") %>%
       add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector", "aglu/A_bio_subsector_logit", "aglu/A_bio_subsector", "L120.LC_bm2_R_LT_Yh_GLU", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
       L243.Supplysector_Bio
     tibble() %>%
       add_title("descriptive title of data") %>%
@@ -134,7 +122,7 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       add_legacy_name("L243.SectorUseTrialMarket_Bio") %>%
       add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector", "aglu/A_bio_subsector_logit", "aglu/A_bio_subsector", "L120.LC_bm2_R_LT_Yh_GLU", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
       L243.SectorUseTrialMarket_Bio
     tibble() %>%
       add_title("descriptive title of data") %>%
@@ -144,8 +132,8 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       add_legacy_name("L243.SubsectorLogitTables") %>%
       add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector", "aglu/A_bio_subsector_logit", "aglu/A_bio_subsector", "L120.LC_bm2_R_LT_Yh_GLU", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L243.SubsectorLogitTables[[ curr_table ]]$data
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
+      L243.SubsectorLogitTables
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -154,7 +142,7 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       add_legacy_name("L243.SubsectorLogit_Bio") %>%
       add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector", "aglu/A_bio_subsector_logit", "aglu/A_bio_subsector", "L120.LC_bm2_R_LT_Yh_GLU", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
       L243.SubsectorLogit_Bio
     tibble() %>%
       add_title("descriptive title of data") %>%
@@ -164,7 +152,7 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       add_legacy_name("L243.SubsectorShrwtFllt_TotBio") %>%
       add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector", "aglu/A_bio_subsector_logit", "aglu/A_bio_subsector", "L120.LC_bm2_R_LT_Yh_GLU", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
       L243.SubsectorShrwtFllt_TotBio
     tibble() %>%
       add_title("descriptive title of data") %>%
@@ -174,7 +162,7 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       add_legacy_name("L243.SubsectorShrwtFllt_TradedBio") %>%
       add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector", "aglu/A_bio_subsector_logit", "aglu/A_bio_subsector", "L120.LC_bm2_R_LT_Yh_GLU", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
       L243.SubsectorShrwtFllt_TradedBio
     tibble() %>%
       add_title("descriptive title of data") %>%
@@ -184,7 +172,7 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       add_legacy_name("L243.GlobalTechCoef_TotBio") %>%
       add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector", "aglu/A_bio_subsector_logit", "aglu/A_bio_subsector", "L120.LC_bm2_R_LT_Yh_GLU", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
       L243.GlobalTechCoef_TotBio
     tibble() %>%
       add_title("descriptive title of data") %>%
@@ -194,7 +182,7 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       add_legacy_name("L243.GlobalTechShrwt_TotBio") %>%
       add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector", "aglu/A_bio_subsector_logit", "aglu/A_bio_subsector", "L120.LC_bm2_R_LT_Yh_GLU", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
       L243.GlobalTechShrwt_TotBio
     tibble() %>%
       add_title("descriptive title of data") %>%
@@ -204,7 +192,7 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       add_legacy_name("L243.StubTech_TotBio") %>%
       add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector", "aglu/A_bio_subsector_logit", "aglu/A_bio_subsector", "L120.LC_bm2_R_LT_Yh_GLU", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
       L243.StubTech_TotBio
     tibble() %>%
       add_title("descriptive title of data") %>%
@@ -214,7 +202,7 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       add_legacy_name("L243.StubTechShrwt_TotBio") %>%
       add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector", "aglu/A_bio_subsector_logit", "aglu/A_bio_subsector", "L120.LC_bm2_R_LT_Yh_GLU", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
       L243.StubTechShrwt_TotBio
     tibble() %>%
       add_title("descriptive title of data") %>%
@@ -224,7 +212,7 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       add_legacy_name("L243.StubTechCoef_ImportedBio") %>%
       add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector", "aglu/A_bio_subsector_logit", "aglu/A_bio_subsector", "L120.LC_bm2_R_LT_Yh_GLU", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
       L243.StubTechCoef_ImportedBio
     tibble() %>%
       add_title("descriptive title of data") %>%
@@ -234,7 +222,7 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       add_legacy_name("L243.StubTechCoef_DomesticBio") %>%
       add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector", "aglu/A_bio_subsector_logit", "aglu/A_bio_subsector", "L120.LC_bm2_R_LT_Yh_GLU", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
       L243.StubTechCoef_DomesticBio
     tibble() %>%
       add_title("descriptive title of data") %>%
@@ -244,7 +232,7 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       add_legacy_name("L243.TechCoef_TradedBio") %>%
       add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector", "aglu/A_bio_subsector_logit", "aglu/A_bio_subsector", "L120.LC_bm2_R_LT_Yh_GLU", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
       L243.TechCoef_TradedBio
     tibble() %>%
       add_title("descriptive title of data") %>%
@@ -254,7 +242,7 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       add_legacy_name("L243.TechShrwt_TradedBio") %>%
       add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector", "aglu/A_bio_subsector_logit", "aglu/A_bio_subsector", "L120.LC_bm2_R_LT_Yh_GLU", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
       L243.TechShrwt_TradedBio
     tibble() %>%
       add_title("descriptive title of data") %>%
@@ -264,7 +252,7 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       add_legacy_name("L243.SubsectorShrwtFllt_TotBio_SSP4") %>%
       add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector", "aglu/A_bio_subsector_logit", "aglu/A_bio_subsector", "L120.LC_bm2_R_LT_Yh_GLU", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
       L243.SubsectorShrwtFllt_TotBio_SSP4
     tibble() %>%
       add_title("descriptive title of data") %>%
@@ -274,7 +262,7 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       add_legacy_name("L243.SubsectorShrwtFllt_TradedBio_SSP4") %>%
       add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector", "aglu/A_bio_subsector_logit", "aglu/A_bio_subsector", "L120.LC_bm2_R_LT_Yh_GLU", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
       L243.SubsectorShrwtFllt_TradedBio_SSP4
     tibble() %>%
       add_title("descriptive title of data") %>%
@@ -284,7 +272,7 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       add_legacy_name("L243.TechShrwt_TradedBio_SSP4") %>%
       add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector", "aglu/A_bio_subsector_logit", "aglu/A_bio_subsector", "L120.LC_bm2_R_LT_Yh_GLU", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
       L243.TechShrwt_TradedBio_SSP4
     tibble() %>%
       add_title("descriptive title of data") %>%
@@ -294,7 +282,7 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       add_legacy_name("L243.StubTechShrwt_TotBio_SSP4") %>%
       add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector", "aglu/A_bio_subsector_logit", "aglu/A_bio_subsector", "L120.LC_bm2_R_LT_Yh_GLU", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
       L243.StubTechShrwt_TotBio_SSP4
     tibble() %>%
       add_title("descriptive title of data") %>%
@@ -304,7 +292,7 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       add_legacy_name("L243.SubsectorShrwtFllt_TotBio_SSP3") %>%
       add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector", "aglu/A_bio_subsector_logit", "aglu/A_bio_subsector", "L120.LC_bm2_R_LT_Yh_GLU", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
       L243.SubsectorShrwtFllt_TotBio_SSP3
     tibble() %>%
       add_title("descriptive title of data") %>%
@@ -314,10 +302,10 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       add_legacy_name("L243.StubTechShrwt_TotBio_SSP3") %>%
       add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector", "aglu/A_bio_subsector_logit", "aglu/A_bio_subsector", "L120.LC_bm2_R_LT_Yh_GLU", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
       L243.StubTechShrwt_TotBio_SSP3
 
-    return_data(L243.DeleteInput_RegBio, L243.SectorLogitTables[[ curr_table ]]$data, L243.TechCoef_RegBio, L243.Supplysector_Bio, L243.SectorUseTrialMarket_Bio, L243.SubsectorLogitTables[[ curr_table ]]$data, L243.SubsectorLogit_Bio, L243.SubsectorShrwtFllt_TotBio, L243.SubsectorShrwtFllt_TradedBio, L243.GlobalTechCoef_TotBio, L243.GlobalTechShrwt_TotBio, L243.StubTech_TotBio, L243.StubTechShrwt_TotBio, L243.StubTechCoef_ImportedBio, L243.StubTechCoef_DomesticBio, L243.TechCoef_TradedBio, L243.TechShrwt_TradedBio, L243.SubsectorShrwtFllt_TotBio_SSP4, L243.SubsectorShrwtFllt_TradedBio_SSP4, L243.TechShrwt_TradedBio_SSP4, L243.StubTechShrwt_TotBio_SSP4, L243.SubsectorShrwtFllt_TotBio_SSP3, L243.StubTechShrwt_TotBio_SSP3)
+    return_data(L243.DeleteInput_RegBio, L243.SectorLogitTables, L243.TechCoef_RegBio, L243.Supplysector_Bio, L243.SectorUseTrialMarket_Bio, L243.SubsectorLogitTables, L243.SubsectorLogit_Bio, L243.SubsectorShrwtFllt_TotBio, L243.SubsectorShrwtFllt_TradedBio, L243.GlobalTechCoef_TotBio, L243.GlobalTechShrwt_TotBio, L243.StubTech_TotBio, L243.StubTechShrwt_TotBio, L243.StubTechCoef_ImportedBio, L243.StubTechCoef_DomesticBio, L243.TechCoef_TradedBio, L243.TechShrwt_TradedBio, L243.SubsectorShrwtFllt_TotBio_SSP4, L243.SubsectorShrwtFllt_TradedBio_SSP4, L243.TechShrwt_TradedBio_SSP4, L243.StubTechShrwt_TotBio_SSP4, L243.SubsectorShrwtFllt_TotBio_SSP3, L243.StubTechShrwt_TotBio_SSP3)
   } else {
     stop("Unknown command")
   }
