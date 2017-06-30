@@ -11,6 +11,8 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
 
   test_that("chunks handle timeshift", {
 
+    UNDER_TIMESHIFT <<- TRUE
+
     # Move the historical/future division back by five years
     hyr <- HISTORICAL_YEARS
     HISTORICAL_YEARS <<- 1971:2005       # normally 1971:2010
@@ -20,10 +22,6 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
     BASE_YEARS <<- c(1975, 1990, 2005)   # normally (1975, 1990, 2005, 2010)
     myr <- MODEL_YEARS
     MODEL_YEARS <<- c(BASE_YEARS, FUTURE_YEARS)
-    ahyr <- AGLU_HISTORICAL_YEARS
-    AGLU_HISTORICAL_YEARS <<- 1971:2005  # normally 1971:2010
-    fhyr <- FAO_HISTORICAL_YEARS
-    FAO_HISTORICAL_YEARS <<- 1961:2005   # normally 1961:2011
 
     with_mock(
       run_chunk = function(chunk, all_data) {
@@ -40,12 +38,11 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
     )
 
     # Reset to what it was before
+    UNDER_TIMESHIFT <<- FALSE
     HISTORICAL_YEARS <<- hyr
     FUTURE_YEARS <<- fyr
     BASE_YEARS <<- byr
-    AGLU_HISTORICAL_YEARS <<- ahyr
-    FAO_HISTORICAL_YEARS <<- fhyr
-
+    MODEL_YEARS <<- myr
   })
 
 }

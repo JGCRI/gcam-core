@@ -151,6 +151,7 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
   writedata_string <- extract_argument("writedata(", filecode, stringpos = 1)
   midata_arr <- extract_argument("write_mi_data(", filecode, stringpos = c(1, 2, 6))
   batchxml_arr <- extract_argument("insert_file_into_batchxml(", filecode, stringpos = c(2, 3, 4))
+  node_rename_arr <- extract_argument("write_mi_data(", filecode, stringpos = c(6, 7))
 
   midata_string <- c()
   i <- 1
@@ -161,7 +162,7 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
     mibatch <- sub('.xml$', '_xml', mibatch)
     i <- i + 3
     if(is.null(XMLBATCH_LIST[[mibatch]])) {
-      XMLBATCH_LIST[[mibatch]] <<- list(data=c(), header=c(), xml="", module="")
+      XMLBATCH_LIST[[mibatch]] <<- list(data=c(), header=c(), xml="", module="", node_rename=F)
     }
     XMLBATCH_LIST[[mibatch]]$data <<- c(XMLBATCH_LIST[[mibatch]]$data, midata)
     XMLBATCH_LIST[[mibatch]]$header <<- c(XMLBATCH_LIST[[mibatch]]$header, miheader)
@@ -176,10 +177,24 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
     mixml <- batchxml_arr[i+2]
     i <- i + 3
     if(is.null(XMLBATCH_LIST[[mibatch]])) {
-      XMLBATCH_LIST[[mibatch]] <<- list(data=c(), header=c(), xml="", module="")
+      XMLBATCH_LIST[[mibatch]] <<- list(data=c(), header=c(), xml="", module="", node_rename=F)
     }
     XMLBATCH_LIST[[mibatch]]$xml <<- mixml
     XMLBATCH_LIST[[mibatch]]$module <<- mimodule
+  }
+
+  i <- 1
+  while(i < length(node_rename_arr)) {
+    mibatch <- node_rename_arr[i]
+    mibatch <- sub('.xml$', '_xml', mibatch)
+    has_node_rename <- grepl('node_rename=T', node_rename_arr[i+1])
+    i <- i + 2
+    if(is.null(XMLBATCH_LIST[[mibatch]])) {
+      XMLBATCH_LIST[[mibatch]] <<- list(data=c(), header=c(), xml="", module="", node_rename=F)
+    }
+    if(has_node_rename) {
+      XMLBATCH_LIST[[mibatch]]$node_rename <<- has_node_rename
+    }
   }
 
   writedata_string <- basename(c(writedata_string, midata_string))
@@ -358,6 +373,14 @@ batch_substitutions <- function(mibatch, patternfile = PATTERNFILE) {
     precursors_string <- paste0("add_precursors(",
                                 paste(paste0('"', batchdata$data, '"'), collapse=", "),
                                 ") ->\n", batchdata$xml)
+    # add rename if this batch file needs it
+    if(batchdata$node_rename) {
+      add_data_string <- c(add_data_string, "add_rename_landnode_xml()")
+    }
+    # the EQUIV_TABLE is a special kind of table and we must ensure no column
+    # name checking occurs since we will not even know how many columns it has
+    add_data_string <- gsub('"EQUIV_TABLE"', '"EQUIV_TABLE", column_order_lookup=NULL', add_data_string)
+
     makeoutputs_string <- paste(c(create_xml_string, add_data_string, precursors_string), collapse = " %>%\n")
   }
 

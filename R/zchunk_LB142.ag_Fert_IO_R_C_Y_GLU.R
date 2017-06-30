@@ -1,4 +1,4 @@
-#' module_aglu_L206.ag_Fert
+#' module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU
 #'
 #' Briefly describe what this chunk does.
 #'
@@ -6,38 +6,41 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L206.AgCoef_Fert_ag}, \code{L206.AgCoef_Fert_bio}, \code{L206.AgCost_ag_adj}, \code{L206.AgCost_bio_adj}. The corresponding file in the
-#' original data system was \code{L206.ag_Fert.R} (aglu level2).
+#' the generated outputs: \code{L142.ag_Fert_Prod_MtN_ctry_Y}, \code{L142.ag_Fert_NetExp_MtN_R_Y}, \code{L142.ag_Fert_IO_R_C_Y_GLU}. The corresponding file in the
+#' original data system was \code{LB142.ag_Fert_IO_R_C_Y_GLU.R} (aglu level1).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_aglu_L206.ag_Fert_DISABLED <- function(command, ...) {
+module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/GCAM_region_names",
-             FILE = "water/basin_to_country_mapping",
-             FILE = "aglu/A_Fodderbio_chars",
-             "L142.ag_Fert_IO_R_C_Y_GLU",
-             "L205.AgCost_ag",
-             "L205.AgCost_bio"))
+    return(c(FILE = "common/iso_GCAM_regID",
+             FILE = "aglu/AGLU_ctry",
+             FILE = "aglu/FAO_ag_items_PRODSTAT",
+             "L100.LDS_ag_prod_t",
+             "L100.FAO_ag_Prod_t",
+             "L100.FAO_Fert_Cons_tN",
+             "L100.FAO_Fert_Prod_tN",
+             "L141.ag_Fert_Cons_MtN_ctry_crop"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L206.AgCoef_Fert_ag",
-             "L206.AgCoef_Fert_bio",
-             "L206.AgCost_ag_adj",
-             "L206.AgCost_bio_adj"))
+    return(c("L142.ag_Fert_Prod_MtN_ctry_Y",
+             "L142.ag_Fert_NetExp_MtN_R_Y",
+             "L142.ag_Fert_IO_R_C_Y_GLU"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
-    A_Fodderbio_chars <- get_data(all_data, "aglu/A_Fodderbio_chars")
-    L142.ag_Fert_IO_R_C_Y_GLU <- get_data(all_data, "L142.ag_Fert_IO_R_C_Y_GLU")
-    L205.AgCost_ag <- get_data(all_data, "L205.AgCost_ag")
-    L205.AgCost_bio <- get_data(all_data, "L205.AgCost_bio")
+    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
+    AGLU_ctry <- get_data(all_data, "aglu/AGLU_ctry")
+    FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO_ag_items_PRODSTAT")
+    L100.LDS_ag_prod_t <- get_data(all_data, "L100.LDS_ag_prod_t")
+    L100.FAO_ag_Prod_t <- get_data(all_data, "L100.FAO_ag_Prod_t")
+    L100.FAO_Fert_Cons_tN <- get_data(all_data, "L100.FAO_Fert_Cons_tN")
+    L100.FAO_Fert_Prod_tN <- get_data(all_data, "L100.FAO_Fert_Prod_tN")
+    L141.ag_Fert_Cons_MtN_ctry_crop <- get_data(all_data, "L141.ag_Fert_Cons_MtN_ctry_crop")
 
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
@@ -56,9 +59,9 @@ module_aglu_L206.ag_Fert_DISABLED <- function(command, ...) {
     #
     # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
     # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses vecpaste
+    # NOTE: This code uses translate_to_full_table
     # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses repeat_and_add_vector
+    # NOTE: This code uses vecpaste
     # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # ===================================================
 
@@ -72,43 +75,33 @@ module_aglu_L206.ag_Fert_DISABLED <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L206.AgCoef_Fert_ag") %>%
+      add_legacy_name("L142.ag_Fert_Prod_MtN_ctry_Y") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L206.AgCoef_Fert_ag
+      L142.ag_Fert_Prod_MtN_ctry_Y
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L206.AgCoef_Fert_bio") %>%
+      add_legacy_name("L142.ag_Fert_NetExp_MtN_R_Y") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L206.AgCoef_Fert_bio
+      L142.ag_Fert_NetExp_MtN_R_Y
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L206.AgCost_ag_adj") %>%
+      add_legacy_name("L142.ag_Fert_IO_R_C_Y_GLU") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L206.AgCost_ag_adj
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L206.AgCost_bio_adj") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L206.AgCost_bio_adj
+      L142.ag_Fert_IO_R_C_Y_GLU
 
-    return_data(L206.AgCoef_Fert_ag, L206.AgCoef_Fert_bio, L206.AgCost_ag_adj, L206.AgCost_bio_adj)
+    return_data(L142.ag_Fert_Prod_MtN_ctry_Y, L142.ag_Fert_NetExp_MtN_R_Y, L142.ag_Fert_IO_R_C_Y_GLU)
   } else {
     stop("Unknown command")
   }
