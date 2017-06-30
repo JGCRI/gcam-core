@@ -43,6 +43,9 @@ test_that("matches old data system output", {
 
     newdata <- read_csv(newf, comment = COMMENT_CHAR)
 
+    # If there's a logit column, delete that sucker immediately
+    newdata[[LOGIT_COLUMN_NAME]] <- NULL
+
     # Reshape new data if necessary--see comment above
     if(flag_long_year_form) {
       expect_true(all(c("year", "value") %in% names(newdata)),
@@ -54,8 +57,10 @@ test_that("matches old data system output", {
         next
       }
     }
+
+    # Change year column names to "xyear" (X1970, etc) names if necessary
     if(flag_no_xyear_form) {
-      yearcols <- grep("^[0-9]{4}$", names(newdata))
+      yearcols <- grep(YEAR_PATTERN, names(newdata))
       expect_true(length(yearcols) > 0,
                   info = paste("FLAG_NO_XYEAR specified in", basename(newf),
                                "but no year-type columns seem to be present"))
