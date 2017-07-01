@@ -44,7 +44,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A_regions <- get_data(all_data, "emissions/A_regions")
-    A_regions <- get_data(all_data, "energy/A_regions")
+    A_regions.en <- get_data(all_data, "energy/A_regions")
     L111.nonghg_tg_R_en_S_F_Yh <- get_data(all_data, "temp-data-inject/L111.nonghg_tg_R_en_S_F_Yh")
     L111.nonghg_tgej_R_en_S_F_Yh <- get_data(all_data, "temp-data-inject/L111.nonghg_tgej_R_en_S_F_Yh")
     L112.ghg_tg_R_en_S_F_Yh <- get_data(all_data, "temp-data-inject/L112.ghg_tg_R_en_S_F_Yh")
@@ -54,10 +54,194 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     A51.steepness <- get_data(all_data, "emissions/A51.steepness")
     L244.DeleteThermalService <- get_data(all_data, "temp-data-inject/L244.DeleteThermalService")
 
+    # L201.en_pol_emissions: Pollutant emissions for energy technologies in all regions
+    L111.nonghg_tg_R_en_S_F_Yh %>%
+      filter(supplysector != "out_resources") %>%
+      # Interpolate and add region name
+      # interpolate_and_melt(L201.nonghg, emiss_model_base_years)
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      select(region, supplysector, subsector, stub.technology, year, Non.CO2) %>%
+      mutate(value = round(value, emissions.DIGITS_EMISSIONS)) ->
+      L201.en_pol_emissions
+
+    # L201.en_ghg_emissions: GHG emissions for energy technologies in all regions
+    # Interpolate and add region name
+    L112.ghg_tg_R_en_S_F_Yh %>%
+      filter(supplysector != "out_resources") %>%
+      # Interpolate and add region name
+      # interpolate_and_melt(L201.en_ghg_emissions, emiss_model_base_years)
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      select(region, supplysector, subsector, stub.technology, year, Non.CO2) %>%
+      mutate(value = round(value, emissions.DIGITS_EMISSIONS)) ->
+      L201.en_ghg_emissions
+
+
+    # L201.en_bcoc_emissions: BC/OC emissions factors for energy technologies in all regions
+    # Interpolate and add region name
+    L114.bcoc_tgej_R_en_S_F_2000 %>%
+      filter(supplysector != "out_resources") %>%
+      # Interpolate and add region name
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      # repeat_and_add_vector(L201.BCOC, "year", model_base_years)
+      select(region, supplysector, subsector, stub.technology, year, Non.CO2) %>%
+      mutate(value = round(value, emissions.DIGITS_EMISSIONS)) ->
+      L201.en_bcoc_emissions
+
+
+    # L201.nonghg_max_reduction: maximum reduction for energy technologies in all regions
+    L151.nonghg_ctrl_R_en_S_T %>%
+      filter(supplysector != "out_resources") %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
+      L201.max_reduction
+
+    L201.max_reduction %>%
+      select(region, supplysector, subsector, stub.technology, year, Non.CO2) %>%
+      mutate(year = emissions.CTRL_BASE_YEAR, ctrl.name = "GDP_control") %>%
+      left_join_error_no_match(select(L201.max_reduction, -year, ctrl.name),
+                               by = c("region", "supplysector", "subsector", "stub.technology", "Non.CO2")) %>%
+      na.omit %>%
+      select(region, supplysector, subsector, stub.technology, year, Non.CO2, ctrl.name, max.reduction) ->
+      L201.nonghg_max_reduction
+
+    # L201.nonghg_steepness: steepness of reduction for energy technologies in all regions
+    A51.steepness %>%
+      gather(year, steepness, SO2, NOx, CO, BC, OC, NMVOC) %>%
+      filter(supplysector != "out_resources") %>%
+      repeat_add_columns(tibble(region = GCAM_region_names$region)) ->
+      L201.steepness
+
+    L201.nonghg_max_reduction %>%
+      select(region, supplysector, subsector, stub.technology, year, Non.CO2) %>%
+      mutate(year = emissions.CTRL_BASE_YEAR, ctrl.name = "GDP_control") %>%
+      left_join_error_no_match(select(L201.steepness, -year, ctrl.name),
+                               by = c("region", "supplysector", "subsector", "stub.technology", "Non.CO2" = "variable")) %>%
+      na.omit %>%
+      select(region, supplysector, subsector, stub.technology, year, Non.CO2, ctrl.name, steepness) ->
+      L201.nonghg_steepness
+
+    # Remove rows where we only have a value for one of max.reduction or steepness
+    # TODO: is this what we want or should we raise an error?
+    L201.nonghg_max_reduction %>%
+      full_join(L201.nonghg_steepness) %>%
+      na.omit %>%
+      # No need to include a GDP control when the max.reduction is zero
+      filter(max.reduction > 0) ->
+      L201.nonghg_gdp_control
+
+    L201.nonghg_max_reduction <- select(L201.nonghg_gdp_control, -steepness)
+    L201.nonghg_steepness <- select(-max.reduction)
+
+    # L201.nonghg_res: Pollutant emissions for energy resources in all regions
+    L111.nonghg_tgej_R_en_S_F_Yh %>%
+      filter(supplysector != "out_resources") %>%
+      # Interpolate and add region name
+      #interpolate_and_melt(L201.nonghg_coef, emiss_model_base_years)
+      filter(year == emissions.FINAL_EMISS_YEAR) %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      rename(depresource = subsector) ->
+      L201.nonghg_coef
+
+    L201.nonghg_coef %>%
+      select(region, depresource, Non.CO2) %>%
+      mutate(emiss.coef = round(value, emissions.DIGITS_EMISSIONS)) ->
+      L201.nonghg_res
+
+    # L201.ghg_res: GHG emissions from resource production in all regions
+    L112.ghg_tgej_R_en_S_F_Yh %>%
+      filter(supplysector != "out_resources") %>%
+      # Interpolate and add region name
+      # interpolate_and_melt(L201.GHG_coef, emiss_model_base_years)
+      filter(year == emissions.FINAL_EMISS_YEAR) %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      rename(depresource = subsector) ->
+      L201.GHG_coef
+
+    L201.GHG_coef %>%
+      select(region, depresource, Non.CO2) %>%
+      mutate(emiss.coef = round(value, emissions.DIGITS_EMISSIONS)) ->
+      L201.ghg_res
+
+    # L201.nonghg_max_reduction_res: maximum reduction for resources in all regions
+    L151.nonghg_ctrl_R_en_S_T %>%
+      filter(supplysector == "out_resources") %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      rename(depresource = subsector) ->
+      L201.max_reduction_res
+
+    L201.max_reduction_res %>%
+      select(region, depresource, Non.CO2) %>%
+      mutate(ctrl.name = "GDP_control") %>%
+      left_join(L201.max_reduction_res, by = c("region", "depresource", "Non.CO2")) %>%
+      na.omit %>%
+      select(region, depresource, Non.CO2, ctrl.name, max.reduction) ->
+      L201.nonghg_max_reduction_res
+
+
+
+    # L201.nonghg_steepness_res: steepness of reduction for resources in all regions
+    A51.steepness %>%
+      gather(year, steepness, SO2, NOx, CO, BC, OC, NMVOC) %>%
+      filter(supplysector == "out_resources") %>%
+      repeat_add_columns(tibble(region = GCAM_region_names$region)) %>%
+      rename(depresource = subsector, Non.CO2 = variable) ->
+      L201.steepness_res
+
+    L201.steepness_res %>%
+      select(region, depresource, Non.CO2) %>%
+      mutate(ctrl.name = "GDP_control") %>%
+      left_join(L201.steepness_res, by = c("region", "depresource", "Non.CO2")) %>%
+      na.omit %>%
+      select(region, depresource, Non.CO2, ctrl.name, steepness) ->
+      L201.nonghg_steepness_res
+
+    # Remove rows where we only have a value for one of max.reduction or steepness
+    # TODO: is this what we want or should we raise an error?
+    L201.nonghg_max_reduction_res %>%
+      full_join(L201.nonghg_steepness_res) %>%
+      na.omit %>%
+      # No need to include a GDP control when the max.reduction is zero
+      filter(max.reduction > 0) ->
+      L201.nonghg_gdp_control_res
+
+    L201.nonghg_max_reduction_res <- select(L201.nonghg_gdp_control_res, -steepness)
+    L201.nonghg_steepness_res <- select(L201.nonghg_gdp_control_res, -max.reduction)
+
+    # Rename to regional SO2
+    L201.en_pol_emissions <- rename_SO2(L201.en_pol_emissions, A_regions, FALSE)
+    L201.nonghg_max_reduction <- rename_SO2(L201.nonghg_max_reduction, A_regions, FALSE)
+    L201.nonghg_steepness <- rename_SO2(L201.nonghg_steepness, A_regions, FALSE)
+    L201.nonghg_res <- rename_SO2(L201.nonghg_res, A_regions, FALSE)
+    L201.nonghg_steepness_res <- rename_SO2(L201.nonghg_steepness_res, A_regions, FALSE)
+    L201.nonghg_max_reduction_res <- rename_SO2(L201.nonghg_max_reduction_res, A_regions, FALSE)
+
+    # Remove district heat from regions that do have have it
+    A_regions.en %>%
+      select(heat == 1) %>%
+      .[["region"]] ->
+      L201.distheat.regions
+    L201.en_pol_emissions <- filter(L201.en_pol_emissions, supplysector != "district heat" | region %in% L201.distheat.regions)
+    L201.en_ghg_emissions <- filter(L201.en_ghg_emissions, supplysector != "district heat" | region %in% L201.distheat.regions)
+    L201.en_bcoc_emissions <- filter(L201.en_bcoc_emissions, supplysector != "district heat" | region %in% L201.distheat.regions)
+    L201.nonghg_max_reduction <- filter(L201.nonghg_max_reduction, supplysector != "district heat" | region %in% L201.distheat.regions)
+    L201.nonghg_steepness <- filter(L201.nonghg_steepness, supplysector != "district heat" | region %in% L201.distheat.regions)
+
+    # It may be the case with certain regional aggregations that regions exist that have no
+    # heating or cooling sectors. We should delete those here.
+    # Delete sectors that do not exist due to zero heating/cooling degree days
+    delete_zerodays <- function(x, L201.delete.sectors) {
+      filter(x, paste0(region, supplysector) %!in% L201.delete.sectors)
+    }
+    L201.delete.sectors <- paste0(EN.L244.DeleteThermalService$region, EN.L244.DeleteThermalService$supplysector )
+    L201.en_pol_emissions <- delete_zerodays(L201.en_pol_emissions, L201.delete.sectors)
+    L201.en_ghg_emissions <- delete_zerodays(L201.en_ghg_emissions, L201.delete.sectors)
+    L201.en_bcoc_emissions <- delete_zerodays(L201.en_bcoc_emissions, L201.delete.sectors)
+    L201.nonghg_max_reduction <- delete_zerodays(L201.nonghg_max_reduction, L201.delete.sectors)
+    L201.nonghg_steepness <- delete_zerodays(L201.nonghg_steepness, L201.delete.sectors)
+
 
     # Produce outputs
     tibble() %>%
-      add_title("descriptive title of data") %>%
+      add_title("Pollutant emissions for energy technologies in all regions") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
@@ -77,7 +261,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       L201.en_pol_emissions
 
     tibble() %>%
-      add_title("descriptive title of data") %>%
+      add_title("GHG emissions for energy technologies in all regions") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
@@ -87,7 +271,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       L201.en_ghg_emissions
 
     tibble() %>%
-      add_title("descriptive title of data") %>%
+      add_title("BC/OC emissions factors for energy technologies in all regions") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
@@ -97,7 +281,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       L201.en_bcoc_emissions
 
     tibble() %>%
-      add_title("descriptive title of data") %>%
+      add_title("Maximum reduction for energy technologies in all regions") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
@@ -107,7 +291,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       L201.nonghg_max_reduction
 
     tibble() %>%
-      add_title("descriptive title of data") %>%
+      add_title("Steepness of reduction for energy technologies in all regions") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
@@ -117,7 +301,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       L201.nonghg_steepness
 
     tibble() %>%
-      add_title("descriptive title of data") %>%
+      add_title("Maximum reduction for resources in all regions") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
@@ -127,7 +311,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       L201.nonghg_max_reduction_res
 
     tibble() %>%
-      add_title("descriptive title of data") %>%
+      add_title("Steepness of reduction for resources in all regions") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
@@ -137,7 +321,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       L201.nonghg_steepness_res
 
     tibble() %>%
-      add_title("descriptive title of data") %>%
+      add_title("Pollutant emissions for energy resources in all regions") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
@@ -147,7 +331,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       L201.nonghg_res
 
     tibble() %>%
-      add_title("descriptive title of data") %>%
+      add_title("GHG emissions from resource production in all regions") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
