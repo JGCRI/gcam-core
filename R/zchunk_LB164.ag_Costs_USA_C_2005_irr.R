@@ -35,6 +35,13 @@ module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    CostFrac <- . <- Cost_75USDkg <- Cost_75USDkg_new <- Crop <- GCAM_commodity <-
+      GCAM_region_ID <- GTAP_crop <- IrrCost <- Item <- LEVEL2_DATA_NAMES <-
+      Purchased <- irrigation <- water <- TotCost <- Total <- operating <- costs <-
+      Unit <- cost <- curr_table <- glm <- irrHA <- irrHA_frac <- iso <- missingWaterCost <-
+      predict <- rfdHA <- value <- waterCostFrac <- weight <- year <-
+      `Purchased irrigation water` <- `Total operating costs` <- NULL  # silence package check notes
+
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     USDA_crops <- get_data(all_data, "aglu/USDA_crops")
@@ -76,7 +83,7 @@ module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
     L100.LDS_ag_HA_ha %>%
       # get the weights for a weighted average
       filter(GTAP_crop %in% USDA_crops$GTAP_crop &
-             iso == "usa") %>%
+               iso == "usa") %>%
       group_by(iso, GTAP_crop) %>%
       summarise(weight = sum(value)) %>%
       ungroup %>%
@@ -103,7 +110,7 @@ module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
       # join in water costs for the commodities that ARE covered by USDA spreadsheets, L164.waterCostFrac_C
       # preserve NA's to process
       left_join(select(L164.waterCostFrac_C, GCAM_commodity, waterCostFrac),
-                               by = "GCAM_commodity") ->
+                by = "GCAM_commodity") ->
       L164.ag_irrHA_frac_USA_C
 
     # Use L164.ag_irrHA_frac_USA_C to form the linear model waterCostFrac = f(irrHA_frac)
