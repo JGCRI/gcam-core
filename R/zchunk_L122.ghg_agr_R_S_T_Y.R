@@ -1,6 +1,6 @@
 #' module_emissions_L122.ghg_agr_R_S_T_Y
 #'
-#' Briefly describe what this chunk does.
+#' Calculates agricultural emissions shares and downscales EDGAR agricultural emissions data
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,11 +8,12 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L122.EmissShare_R_C_Y_GLU}, \code{L122.ghg_tg_R_agr_C_Y_GLU}. The corresponding file in the
 #' original data system was \code{L122.ghg_agr_R_S_T_Y} (emissions level1).
-#' @details Describe in detail what this chunk does.
+#' @details Calculates agriculture emissions shares by GCAM region, commodity, GLU, and historical year.
+#' Downscales EDGAR agricultural emissions to GCAM region, commodity, GLU, and historical year
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
+#' @author RH July 2017
 #' @export
 module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -86,7 +87,7 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
     # Emissions shares: product of region/crop shares and region/crop/glu shares
     L122.EmissShare_R_C_Y_GLU <- L122.ProdGLUshare_R_C_Y_GLU %>%
       left_join_error_no_match(L122.CropAreaShare_R_C_Y, by = c("GCAM_region_ID", "GCAM_commodity", "year")) %>%
-      transmute(GCAM_region_ID, GCAM_commodity, GLU, year, emiss_share = prod_share_GLU * crop_area_share)
+      transmute(GCAM_region_ID, GCAM_commodity, year, GLU, emiss_share = prod_share_GLU * crop_area_share)
 
     # Compute EDGAR emissions by region
     L122.EDGAR <- bind_rows(EDGAR_CH4, EDGAR_N2O, EDGAR_NH3, EDGAR_NOx) %>%
@@ -168,7 +169,7 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
     # Bind together dataframes & aggregate
     L122.ghg_tg_R_agr_C_Y_GLU <- bind_rows( L122.ghg_tg_R_rice_Y_GLU, L122.ghgsoil_tg_R_C_Y_GLU, L122.ghgfert_tg_R_C_Y_GLU) %>%
       group_by(GCAM_region_ID, GCAM_commodity, year, GLU, Non.CO2) %>%
-      summarise(emissions = sum(emissions))
+      summarise(value = sum(emissions))
 
     # ===================================================
     # Produce outputs
@@ -184,10 +185,11 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
     L122.ghg_tg_R_agr_C_Y_GLU %>%
       add_title("Agriculture emissions by GCAM region, commodity, GLU, and historical year") %>%
       add_units("Tg") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("EDGAR emissions shared out by crop production") %>%
       add_legacy_name("L122.ghg_tg_R_agr_C_Y_GLU") %>%
-      add_precursors("L103.ag_Prod_Mt_R_C_Y_GLU") %>%
+      add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_nation", "emissions/EDGAR/EDGAR_sector",
+                     "L103.ag_Prod_Mt_R_C_Y_GLU", "temp-data-inject/L142.ag_Fert_IO_R_C_Y_GLU",
+                     "emissions/EDGAR/EDGAR_CH4", "emissions/EDGAR/EDGAR_N2O", "emissions/EDGAR/EDGAR_NH3", "emissions/EDGAR/EDGAR_NOx") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L122.ghg_tg_R_agr_C_Y_GLU
 
