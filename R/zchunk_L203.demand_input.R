@@ -37,9 +37,7 @@ module_aglu_L203.demand_input <- function(command, ...) {
              "L101.Pop_thous_R_Yh",
              "L102.pcgdp_thous90USD_Scen_R_Y"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L203.SectorLogitTables[[curr_table]]$data",
-             "L203.Supplysector_demand",
-             "L203.SubsectorLogitTables[[curr_table]]$data",
+    return(c("L203.Supplysector_demand",
              "L203.SubsectorAll_demand",
              "L203.StubTech_demand",
              "L203.GlobalTechCoef_demand",
@@ -121,35 +119,13 @@ module_aglu_L203.demand_input <- function(command, ...) {
 
     # L203.Supplysector_demand: generic info for demand sectors
     A_demand_supplysector %>%
-      get_logit_fn_tables(names_SupplysectorLogitType, GCAM_region_names = GCAM_region_names,
-                          base_header = "Supplysector_", include_equiv_table = TRUE, write_all_regions = TRUE) ->
-      L203.SectorLogitTables
-    # Remove any regions for which agriculture and land use are not modeled
-    for(curr_table in names(L203.SectorLogitTables)) {
-      if(curr_table != "EQUIV_TABLE") {
-        L203.SectorLogitTables[[curr_table]]$data <- filter(L203.SectorLogitTables[[curr_table]]$data, !(region %in% aglu.NO_AGLU_REGIONS))
-      }
-    }
-
-    A_demand_supplysector %>%
-      write_to_all_regions(names_Supplysector, GCAM_region_names = GCAM_region_names) %>%
+      write_to_all_regions(c(names_Supplysector, "logit.type"), GCAM_region_names = GCAM_region_names) %>%
       filter(!region %in% aglu.NO_AGLU_REGIONS) ->
     L203.Supplysector_demand
 
     # L203.SubsectorAll_demand: generic info for demand subsectors
     A_demand_subsector %>%
-      get_logit_fn_tables(names_SubsectorLogitType, GCAM_region_names = GCAM_region_names,
-                          base_header = "SubsectorLogit_", include_equiv_table = FALSE, write_all_regions = TRUE) ->
-      L203.SubsectorLogitTables
-    # Remove any regions for which agriculture and land use are not modeled
-    for(curr_table in names(L203.SubsectorLogitTables)) {
-      if(curr_table != "EQUIV_TABLE") {
-        L203.SubsectorLogitTables[[curr_table]]$data <- filter(L203.SubsectorLogitTables[[curr_table]]$data, !region %in% aglu.NO_AGLU_REGIONS)
-      }
-    }
-
-    A_demand_subsector %>%
-      write_to_all_regions(names_SubsectorAll, GCAM_region_names = GCAM_region_names) %>%
+      write_to_all_regions(c(names_SubsectorAll, "logit.type"), GCAM_region_names = GCAM_region_names) %>%
       filter(!region %in% aglu.NO_AGLU_REGIONS) ->
       L203.SubsectorAll_demand
 
@@ -393,17 +369,6 @@ module_aglu_L203.demand_input <- function(command, ...) {
       filter(!region %in% aglu.NO_AGLU_REGIONS) ->
       L203.FuelPrefElast_ssp1
 
-    # Produce outputs
-    L203.SectorLogitTables[[curr_table]]$data %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L203.SectorLogitTables[[ curr_table ]]$data") %>%
-      add_precursors("common/GCAM_region_names",
-                     "aglu/A_demand_supplysector") ->
-      L203.SectorLogitTables[[curr_table]]$data
-
     L203.Supplysector_demand %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -413,16 +378,6 @@ module_aglu_L203.demand_input <- function(command, ...) {
       add_precursors("common/GCAM_region_names",
                      "aglu/A_demand_supplysector") ->
       L203.Supplysector_demand
-
-    L203.SubsectorLogitTables[[curr_table]]$data %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L203.SubsectorLogitTables[[ curr_table ]]$data") %>%
-      add_precursors("common/GCAM_region_names",
-                     "aglu/A_demand_subsector") ->
-      L203.SubsectorLogitTables[[curr_table]]$data
 
     L203.SubsectorAll_demand %>%
       add_title("descriptive title of data") %>%
@@ -688,7 +643,7 @@ module_aglu_L203.demand_input <- function(command, ...) {
                      "L102.pcgdp_thous90USD_Scen_R_Y") ->
       L203.IncomeElasticity_SSP5
 
-    return_data(L203.SectorLogitTables[[curr_table]]$data, L203.Supplysector_demand, L203.SubsectorLogitTables[[curr_table]]$data, L203.SubsectorAll_demand, L203.StubTech_demand, L203.GlobalTechCoef_demand, L203.GlobalTechShrwt_demand, L203.StubTechProd_food_crop, L203.StubTechProd_food_meat, L203.StubTechProd_nonfood_crop, L203.StubTechProd_nonfood_meat, L203.StubTechProd_For, L203.StubTechFixOut_exp, L203.StubCalorieContent_crop, L203.StubCalorieContent_meat, L203.PerCapitaBased, L203.BaseService, L203.IncomeElasticity, L203.PriceElasticity, L203.FuelPrefElast_ssp1, L203.IncomeElasticity_SSP1, L203.IncomeElasticity_SSP2, L203.IncomeElasticity_SSP3, L203.IncomeElasticity_SSP4, L203.IncomeElasticity_SSP5)
+    return_data(L203.Supplysector_demand, L203.SubsectorAll_demand, L203.StubTech_demand, L203.GlobalTechCoef_demand, L203.GlobalTechShrwt_demand, L203.StubTechProd_food_crop, L203.StubTechProd_food_meat, L203.StubTechProd_nonfood_crop, L203.StubTechProd_nonfood_meat, L203.StubTechProd_For, L203.StubTechFixOut_exp, L203.StubCalorieContent_crop, L203.StubCalorieContent_meat, L203.PerCapitaBased, L203.BaseService, L203.IncomeElasticity, L203.PriceElasticity, L203.FuelPrefElast_ssp1, L203.IncomeElasticity_SSP1, L203.IncomeElasticity_SSP2, L203.IncomeElasticity_SSP3, L203.IncomeElasticity_SSP4, L203.IncomeElasticity_SSP5)
   } else {
     stop("Unknown command")
   }
