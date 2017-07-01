@@ -29,6 +29,10 @@ in the way that the Model Interfaces processes information.  In particular all
 XML tag names have to be specified in the header and can not be set dynamically
 as is the intention with the logit.type.
 }
+\note{
+For documentation of the options for logit choice functions in GCAM, see
+\url{http://jgcri.github.io/gcam-doc/choice.html}.
+}
 \author{
 Pralit Patel
 }

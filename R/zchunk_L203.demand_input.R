@@ -65,7 +65,7 @@ module_aglu_L203.demand_input <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     GCAM_commodity <- GCAM_region_ID<- element <- item <- value <- year <- aglu_demand_calyears <- aglu_demand_futureyears <-
-      names_Supplysector <- names_SupplysectorLogitType <- names_Subsector <- names_SubsectorAll <- names_SubsectorLogitType <-
+      names_Supplysector <- names_Subsector <- names_SubsectorAll <-
       names_Tech  <- names_StubTechProd <- names_StubTechFixOut <- names_StubTechCalorieContent <- names_EnergyFinalDemand <-
       names_PerCapitaBased <- Prod_colnames <- names_PriceElasticity <- NULL   # silence package check notes
 
@@ -100,22 +100,20 @@ module_aglu_L203.demand_input <- function(command, ...) {
 
     # Define column names
     # Supplysectors
-    names_Supplysector <- c( "region", "supplysector", "output.unit", "input.unit", "price.unit", "logit.year.fillout", "logit.exponent" )
-    names_SupplysectorLogitType <- c( "region", "supplysector", "logit.type" )
+    names_Supplysector <- LEVEL2_DATA_NAMES[["Supplysector"]]
     # Subsectors
-    names_Subsector <- c( "region", "supplysector", "subsector")
-    names_SubsectorAll <- c( names_Subsector, "logit.year.fillout", "logit.exponent", "year.fillout", "share.weight", "apply.to","from.year", "to.year", "interpolation.function" )
-    names_SubsectorLogitType <- c( names_Subsector, "logit.type" )
+    names_Subsector <- LEVEL2_DATA_NAMES[["Subsector"]]
+    names_SubsectorAll <- LEVEL2_DATA_NAMES[["SubsectorAll"]]
     # Technologies
-    names_Tech <- c( "region", "supplysector", "subsector", "technology" )
-    names_StubTechProd <- c("region", "supplysector", "subsector", "stub.technology", "year", "calOutputValue", "share.weight.year", "subs.share.weight", "tech.share.weight")
-    names_StubTechFixOut <- c("region", "supplysector", "subsector", "stub.technology", "year", "fixedOutput", "share.weight.year", "subs.share.weight", "tech.share.weight")
-    names_StubTechCalorieContent <- c("region", "supplysector", "subsector", "stub.technology", "year", "minicam.energy.input", "efficiency", "market.name")
+    names_Tech <- LEVEL2_DATA_NAMES[["Tech"]]
+    names_StubTechProd <- LEVEL2_DATA_NAMES[["StubTechProd"]]
+    names_StubTechFixOut <- LEVEL2_DATA_NAMES[["StubTechFixOut"]]
+    names_StubTechCalorieContent <- LEVEL2_DATA_NAMES[["StubTechCalorieContent"]]
     # Final demands
-    names_EnergyFinalDemand <- c("region", "energy.final.demand")
-    names_PerCapitaBased <- c(names_EnergyFinalDemand, "perCapitaBased")
+    names_EnergyFinalDemand <- LEVEL2_DATA_NAMES[["EnergyFinalDemand"]]
+    names_PerCapitaBased <- LEVEL2_DATA_NAMES[["PerCapitaBased"]]
     Prod_colnames <- c("region", "supplysector", "year", "calOutputValue")
-    names_PriceElasticity <- c("region", "energy.final.demand", "year", "price.elasticity")
+    names_PriceElasticity <- LEVEL2_DATA_NAMES[["PriceElasticity"]]
 
     # L203.Supplysector_demand: generic info for demand sectors
     A_demand_supplysector %>%
