@@ -18,11 +18,12 @@ the generated outputs: \code{L122.EmissShare_R_C_Y_GLU}, \code{L122.ghg_tg_R_agr
 original data system was \code{L122.ghg_agr_R_S_T_Y} (emissions level1).
 }
 \description{
-Briefly describe what this chunk does.
+Calculates agricultural emissions shares and downscales EDGAR agricultural emissions data
 }
 \details{
-Describe in detail what this chunk does.
+Calculates agriculture emissions shares by GCAM region, commodity, GLU, and historical year.
+Downscales EDGAR agricultural emissions to GCAM region, commodity, GLU, and historical year
 }
 \author{
-YourInitials CurrentMonthName 2017
+RH July 2017
 }

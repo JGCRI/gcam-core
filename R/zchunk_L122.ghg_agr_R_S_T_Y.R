@@ -14,7 +14,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RH July 2017
-#' @export
+
 module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
@@ -50,7 +50,7 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
       mutate(Non.CO2 = "CH4_AGR")
     EDGAR_N2O <- get_data(all_data, "emissions/EDGAR/EDGAR_N2O") %>%
       #gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(Non.CO2 = "N20_AGR")
+      mutate(Non.CO2 = "N2O_AGR")
     EDGAR_NH3 <- get_data(all_data, "emissions/EDGAR/EDGAR_NH3") %>%
       #gather(year, value, matches(YEAR_PATTERN)) %>%
       mutate(Non.CO2 = "NH3_AGR")
@@ -120,6 +120,7 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
     L122.ag_Prod_Mt_R_rice_Y_GLU <- L103.ag_Prod_Mt_R_C_Y_GLU %>%
       filter(GCAM_commodity == "Rice", year %in% emissions.EDGAR_HISTORICAL) %>%
       group_by(GCAM_region_ID, GCAM_commodity, year) %>%
+      # Total production by region, commodity, and year for calculating share
       mutate(total_prod = sum(value)) %>%
       ungroup() %>%
       transmute(GCAM_region_ID, GCAM_commodity, GLU, year, prod_share = value / total_prod)
@@ -155,6 +156,7 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
                                by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year")) %>%
       mutate(fertilizer = ag_production * value) %>%
       group_by(GCAM_region_ID, year) %>%
+      # Total fertilizer by region and year for calculating share
       mutate(tot_fertilizer = sum(fertilizer)) %>%
       ungroup() %>%
       transmute(GCAM_region_ID, GCAM_commodity, year, GLU,
@@ -169,17 +171,18 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
     # Bind together dataframes & aggregate
     L122.ghg_tg_R_agr_C_Y_GLU <- bind_rows( L122.ghg_tg_R_rice_Y_GLU, L122.ghgsoil_tg_R_C_Y_GLU, L122.ghgfert_tg_R_C_Y_GLU) %>%
       group_by(GCAM_region_ID, GCAM_commodity, year, GLU, Non.CO2) %>%
-      summarise(value = sum(emissions))
+      summarise(value = sum(emissions)) %>%
+      ungroup()
 
     # ===================================================
     # Produce outputs
     L122.EmissShare_R_C_Y_GLU %>%
+      mutate(year = paste0("X",year)) %>%
       add_title("Agriculture emissions shares by GCAM region, commodity, GLU, and historical year") %>%
       add_units("unitless share") %>%
       add_comments("Multiply region/crop area shares by region/crop/GLU production shares") %>%
       add_legacy_name("L122.EmissShare_R_C_Y_GLU") %>%
-      add_precursors("L103.ag_Prod_Mt_R_C_Y_GLU", "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU") %>%
-      add_flags(FLAG_NO_XYEAR) ->
+      add_precursors("L103.ag_Prod_Mt_R_C_Y_GLU", "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU") ->
       L122.EmissShare_R_C_Y_GLU
 
     L122.ghg_tg_R_agr_C_Y_GLU %>%
