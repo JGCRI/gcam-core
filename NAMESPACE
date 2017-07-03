@@ -19,17 +19,12 @@ export(module_aglu_L203.demand_input_DISABLED)
 export(module_aglu_L204.resbio_input_DISABLED)
 export(module_aglu_L2041.resbio_input_irr_DISABLED)
 export(module_aglu_L2042.resbio_input_irr_mgmt_DISABLED)
-<<<<<<< HEAD
-export(module_aglu_L243.bio_trade_input)
-export(module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU_DISABLED)
-=======
 export(module_aglu_L205.ag_prodchange_cost_input_DISABLED)
 export(module_aglu_L2051.ag_prodchange_cost_input_irr_DISABLED)
 export(module_aglu_L2052.ag_prodchange_cost_irr_mgmt_DISABLED)
 export(module_aglu_L2071.ag_water_irr_DISABLED)
 export(module_aglu_L2072.ag_water_irr_mgmt_DISABLED)
-export(module_aglu_L243.bio_trade_input_DISABLED)
->>>>>>> master
+export(module_aglu_L243.bio_trade_input)
 export(module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr)
 export(module_emissions_L111.nonghg_en_R_S_T_Y_DISABLED)
 export(module_emissions_L112.ghg_en_R_S_T_Y_DISABLED)
