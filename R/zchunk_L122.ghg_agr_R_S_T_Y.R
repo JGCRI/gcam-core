@@ -22,7 +22,7 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
              FILE = "emissions/EDGAR/EDGAR_sector",
              "L103.ag_Prod_Mt_R_C_Y_GLU",
              "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",
-             FILE = "temp-data-inject/L142.ag_Fert_IO_R_C_Y_GLU",
+             "L142.ag_Fert_IO_R_C_Y_GLU",
              FILE = "emissions/EDGAR/EDGAR_CH4",
              FILE = "emissions/EDGAR/EDGAR_N2O",
              FILE = "emissions/EDGAR/EDGAR_NH3",
@@ -41,21 +41,14 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
     EDGAR_sector <- get_data(all_data, "emissions/EDGAR/EDGAR_sector")
     L103.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L103.ag_Prod_Mt_R_C_Y_GLU")
     L122.LC_bm2_R_HarvCropLand_C_Yh_GLU <- get_data(all_data, "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU")
-    L142.ag_Fert_IO_R_C_Y_GLU <- get_data(all_data, "temp-data-inject/L142.ag_Fert_IO_R_C_Y_GLU") %>%
-      # for temp-data-inject
-      gather(year, value, starts_with("X")) %>%
-      mutate(year = as.integer(substr(year, 2, 5)))
+    L142.ag_Fert_IO_R_C_Y_GLU <- get_data(all_data, "L142.ag_Fert_IO_R_C_Y_GLU")
     EDGAR_CH4 <- get_data(all_data, "emissions/EDGAR/EDGAR_CH4") %>%
-      #gather(year, value, matches(YEAR_PATTERN)) %>%
       mutate(Non.CO2 = "CH4_AGR")
     EDGAR_N2O <- get_data(all_data, "emissions/EDGAR/EDGAR_N2O") %>%
-      #gather(year, value, matches(YEAR_PATTERN)) %>%
       mutate(Non.CO2 = "N2O_AGR")
     EDGAR_NH3 <- get_data(all_data, "emissions/EDGAR/EDGAR_NH3") %>%
-      #gather(year, value, matches(YEAR_PATTERN)) %>%
       mutate(Non.CO2 = "NH3_AGR")
     EDGAR_NOx <- get_data(all_data, "emissions/EDGAR/EDGAR_NOx") %>%
-      #gather(year, value, matches(YEAR_PATTERN)) %>%
       mutate(Non.CO2 = "NOx_AGR")
 
     # ===================================================
@@ -152,7 +145,8 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
     L122.fert_Mt_R_C_Y_GLU <- L103.ag_Prod_Mt_R_C_Y_GLU %>%
       filter(year %in% emissions.EDGAR_YEARS) %>%
       rename(ag_production = value) %>%
-      left_join_error_no_match(L142.ag_Fert_IO_R_C_Y_GLU,
+      left_join_error_no_match(L142.ag_Fert_IO_R_C_Y_GLU %>%
+                                 filter(year %in% emissions.EDGAR_YEARS), ., # Order flipped to deal with timeshift
                                by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year")) %>%
       mutate(fertilizer = ag_production * value) %>%
       group_by(GCAM_region_ID, year) %>%
@@ -191,7 +185,7 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
       add_comments("EDGAR emissions shared out by crop production") %>%
       add_legacy_name("L122.ghg_tg_R_agr_C_Y_GLU") %>%
       add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_nation", "emissions/EDGAR/EDGAR_sector",
-                     "L103.ag_Prod_Mt_R_C_Y_GLU", "temp-data-inject/L142.ag_Fert_IO_R_C_Y_GLU",
+                     "L103.ag_Prod_Mt_R_C_Y_GLU", "L142.ag_Fert_IO_R_C_Y_GLU",
                      "emissions/EDGAR/EDGAR_CH4", "emissions/EDGAR/EDGAR_N2O", "emissions/EDGAR/EDGAR_NH3", "emissions/EDGAR/EDGAR_NOx") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L122.ghg_tg_R_agr_C_Y_GLU
