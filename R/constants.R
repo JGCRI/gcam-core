@@ -80,6 +80,7 @@ PRICERATIO_GRASS_ALFALFA <- 0.7
 # NUMBERS OF DIGITS FOR MODEL INPUT DATA
 aglu.DIGITS_CALPRICE <- 4 # prices and costs
 aglu.DIGITS_CALOUTPUT <- 7 # production
+aglu.DIGITS_AGPRODCHANGE <- 4 # rate of change in yield
 
 # Carbon content of all cellulose
 aglu.CCONTENT_CELLULOSE <- 0.45
@@ -92,6 +93,17 @@ MAX_HA_TO_CROPLAND <- 3
 
 # Yield multiplier that goes from the observed yield to the "high" and "low" yields: observed plus or minus observed times this number
 MGMT_YIELD_ADJ <- 0.1
+
+# Multipliers for high & low ag prod growth scenarios
+aglu.HI_PROD_GROWTH_MULT <- 1.5
+aglu.LOW_PROD_GROWTH_MULT <- 0.5
+
+# Forestry cost (1975$/GJ)
+aglu.FOR_COST_75USDM3 <- 29.59
+
+# Production costs of biomass (from Patrick Luckow's work)
+aglu.BIO_GRASS_COST_75USD_GJ <- 0.75
+aglu.BIO_TREE_COST_75USD_GJ <- 0.67
 
 # Fertilizer application rate for biomass, and carbon yields. Values from Adler et al. 2007 (doi:10.1890/05-2018)
 aglu.BIO_GRASS_FERT_IO_GNM2 <- 5.6
