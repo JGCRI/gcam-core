@@ -58,23 +58,35 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
     L120.LC_bm2_R_LT_Yh_GLU <- get_data(all_data, "L120.LC_bm2_R_LT_Yh_GLU")
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y")
 
-    # First, create a table to delete existing regional biomass input (this needs to include region/sector/subsector/technology/input for all regions & years)
-    # Note: I'm pulling these next two lines out so it is clearer that we have hard-coded this to the GCAM sector names
-    REGIONAL.BIOMASS.NAME <- "regional biomass"
+    # Note: I'm pulling out all of the hard-coded GCAM sector names used in this file to the top so it is clearer
+    OLD.REGIONAL.BIOMASS.NAME <- "regional biomass"
+    NEW.REGIONAL.BIOMASS.NAME <- "total biomass"
     BIOMASS.NAME <- "biomass"
+
+
+    # First, create a table to delete existing regional biomass input (this needs to include region/sector/subsector/technology/input for all regions & years)
     GCAM_region_names %>%
       select(region) %>%
-      mutate(supplysector = REGIONAL.BIOMASS.NAME, subsector = REGIONAL.BIOMASS.NAME, technology = REGIONAL.BIOMASS.NAME) %>%
+      mutate(supplysector = OLD.REGIONAL.BIOMASS.NAME, subsector = OLD.REGIONAL.BIOMASS.NAME, technology = OLD.REGIONAL.BIOMASS.NAME) %>%
       repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) %>%
       mutate(minicam.energy.input = BIOMASS.NAME) ->
       L243.DeleteInput_RegBio
+
+    # Now, create new regional biomass input called "total biomass" with a input-output coefficient of 1 (i.e., a pass through sector)
+    L243.DeleteInput_RegBio %>%
+      mutate(minicam.energy.input = NEW.REGIONAL.BIOMASS.NAME,
+             coefficient = 1,
+             market.name = region) ->
+      L243.TechCoef_RegBio
 
     # Produce outputs
     L243.DeleteInput_RegBio %>%
       add_title("Table of regional biomass sector/subsector/technology/year for deletion") %>%
       add_units("NA") %>%
       add_comments("List all region/year combinations for the regional biomass sector/subsector/technology") %>%
-      add_comments("These will be deleted from the model and recreated in separate tibbles using different names.") %>%
+      add_comments("We need to rename the input from 'biomass' to 'total biomass' so we can separate trade.") %>%
+      add_comments("We also want to change the market from global to regional.") %>%
+      add_comments("The only way to do this in the model is to delete these technologies and re-add them with the right input and market-name.") %>%
       add_legacy_name("L243.DeleteInput_RegBio") %>%
       add_precursors("common/GCAM_region_names") ->
       L243.DeleteInput_RegBio
@@ -88,15 +100,14 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
       L243.SectorLogitTables
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L243.TechCoef_RegBio %>%
+      add_title("Table creating new 'traded biomass' sector/subsector/technology coefficients") %>%
+      add_units("Unitless") %>%
+      add_comments("Copy the L243.DeleteInput_RegBio table. Update the name of the input to 'total biomass'.") %>%
+      add_comments("Add the input-output coefficient (equals 1 since this is a pass through sector).") %>%
+      add_comments("Add the market name (equal to the region name since trade is no longer global).") %>%
       add_legacy_name("L243.TechCoef_RegBio") %>%
-      add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector", "aglu/A_bio_subsector_logit", "aglu/A_bio_subsector", "L120.LC_bm2_R_LT_Yh_GLU", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
+      same_precursors_as(L243.DeleteInput_RegBio) ->
       L243.TechCoef_RegBio
     tibble() %>%
       add_title("descriptive title of data") %>%
