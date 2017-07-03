@@ -1,1 +1,20 @@
-# File: calibrated_techs_trn_agg.csv,,,,,,,# Title: Aggregate transportation and UCD category mapping,,,,,,,# Units: NA,,,,,,,# Description: mapping between sector / fuel to supplysector/subsector/technology in aggregate transportation and UCD_category,,,,,,,# Source: Unknown,,,,,,,sector,fuel,supplysector,subsector,technology,minicam.energy.input,calibration,UCD_categorytrn_domestic air,refined liquids,transportation,refined liquids,refined liquids,refined liquids enduse,input,trn_airtrn_domestic ship,coal,transportation,coal,coal,delivered coal,input,trn_domestic shiptrn_domestic ship,gas,transportation,gas,gas,delivered gas,input,trn_domestic shiptrn_domestic ship,refined liquids,transportation,refined liquids,refined liquids,refined liquids enduse,input,trn_domestic shiptrn_international air,refined liquids,transportation,refined liquids,refined liquids,refined liquids enduse,input,trn_airtrn_international ship,coal,transportation,coal,coal,delivered coal,input,trn_international shiptrn_international ship,refined liquids,transportation,refined liquids,refined liquids,refined liquids enduse,input,trn_international shiptrn_rail,coal,transportation,coal,coal,delivered coal,input,trn_road and railtrn_rail,electricity,transportation,electricity,electricity,elect_td_trn,input,trn_road and railtrn_rail,refined liquids,transportation,refined liquids,refined liquids,refined liquids enduse,input,trn_road and railtrn_road,electricity,transportation,electricity,electricity,elect_td_trn,input,trn_road and railtrn_road,gas,transportation,gas,gas,delivered gas,input,trn_road and railtrn_road,refined liquids,transportation,refined liquids,refined liquids,refined liquids enduse,input,trn_road and railtrn_unspecified,coal,transportation,coal,coal,delivered coal,input,trn_road and railtrn_unspecified,electricity,transportation,electricity,electricity,elect_td_trn,input,trn_road and railtrn_unspecified,gas,transportation,gas,gas,delivered gas,input,trn_road and railtrn_unspecified,refined liquids,transportation,refined liquids,refined liquids,refined liquids enduse,input,trn_road and rail
+# File: calibrated_techs_trn_agg.csv,
+# Title: Aggregate transportation and UCD category mapping,
+# Units: NA,
+# Description: mapping between sector / fuel to supplysector/subsector/technology in aggregate transportation and UCD_category,
+# Source: Unknown,
+sector,fuel,supplysector,subsector,technology,minicam.energy.input,calibration,UCD_category
+trn_domestic air,refined liquids,transportation,refined liquids,refined liquids,refined liquids enduse,input,trn_air
+trn_domestic ship,coal,transportation,coal,coal,delivered coal,input,trn_domestic ship
+trn_domestic ship,gas,transportation,gas,gas,delivered gas,input,trn_domestic ship
+trn_domestic ship,refined liquids,transportation,refined liquids,refined liquids,refined liquids enduse,input,trn_domestic ship
+trn_international air,refined liquids,transportation,refined liquids,refined liquids,refined liquids enduse,input,trn_air
+trn_international ship,coal,transportation,coal,coal,delivered coal,input,trn_international ship
+trn_international ship,refined liquids,transportation,refined liquids,refined liquids,refined liquids enduse,input,trn_international ship
+trn_rail,coal,transportation,coal,coal,delivered coal,input,trn_road and rail
+trn_rail,electricity,transportation,electricity,electricity,elect_td_trn,input,trn_road and rail
+trn_rail,refined liquids,transportation,refined liquids,refined liquids,refined liquids enduse,input,trn_road and railtrn_road,electricity,transportation,electricity,electricity,elect_td_trn,input,trn_road and rail
+trn_road,gas,transportation,gas,gas,delivered gas,input,trn_road and rail
+trn_road,refined liquids,transportation,refined liquids,refined liquids,refined liquids enduse,input,trn_road and railtrn_unspecified,coal,transportation,coal,coal,delivered coal,input,trn_road and railtrn_unspecified,electricity,transportation,electricity,electricity,elect_td_trn,input,trn_road and rail
+trn_unspecified,gas,transportation,gas,gas,delivered gas,input,trn_road and rail
+trn_unspecified,refined liquids,transportation,refined liquids,refined liquids,refined liquids enduse,input,trn_road and rail

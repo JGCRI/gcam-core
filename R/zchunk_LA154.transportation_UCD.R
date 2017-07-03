@@ -43,6 +43,15 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
              "L154.out_mpkm_R_trn_nonmotor_Yh"))
   } else if(command == driver.MAKE) {
 
+    ## silence package check.
+    year <- value <- sector <- fuel <- EIA_value <- iso <- UCD_category <- variable <-
+      UCD_region <- agg <- UCD_region.x <- UCD_region.y <- UCD_sector <- size.class <-
+      UCD_technology <- UCD_fuel <- UCD_share <- GCAM_region_ID <- trn <- unscaled_value <-
+      scaled_value <- unit <- vkt_veh_yr <- speed <- speed.x <- speed.y <- weight_EJ <-
+      intensity <- Tvkm <- `load factor` <- `non-fuel costs` <- size.class.x <- Tpkm <-
+      Tusd <- Thr <- intensity_MJvkm <- loadfactor <- cost_usdvkm <- speed_kmhr <- variable  <-
+      population <- pkm_percap <- country_name <- year.x <- NULL
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
