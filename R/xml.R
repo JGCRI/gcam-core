@@ -154,12 +154,13 @@ add_rename_landnode_xml <- function(dot) {
 #' @author Pralit Patel
 #' @export
 add_node_equiv_xml <- function(dot, equiv_class) {
+  tag <- NULL   # silence package check notes
   equiv_list <- XML_NODE_EQUIV[[equiv_class]]
   if(is.null(equiv_list)) {
     stop("Could not find ", equiv_class, " in XML_NODE_EQUIV")
   }
 
-  tibble(group.name=equiv_class, col=paste0("tag", seq(1,length(equiv_list))), tag=equiv_list) %>%
+  tibble(group.name = equiv_class, col = paste0("tag", seq(1, length(equiv_list))), tag = equiv_list) %>%
     spread(col, tag) ->
     equiv_table
 

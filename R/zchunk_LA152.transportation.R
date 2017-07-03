@@ -17,13 +17,13 @@ module_energy_LA152.transportation <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "energy/enduse_fuel_aggregation",
              FILE = "energy/enduse_sector_aggregation",
-             FILE = "L131.in_EJ_R_Senduse_F_Yh"))
+             "L131.in_EJ_R_Senduse_F_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L152.in_EJ_R_trn_F_Yh"))
   } else if(command == driver.MAKE) {
 
     sector <- sector_agg <- fuel <- trn <- year <- GCAM_region_ID <- value <-
-        NULL                            # silence package check.
+      NULL                            # silence package check.
 
     all_data <- list(...)[[1]]
 
@@ -49,7 +49,7 @@ module_energy_LA152.transportation <- function(command, ...) {
       # Remove "in_" as it's not needed
       mutate(sector = sub("in_", "", sector)) %>%
 
-    # Produce outputs
+      # Produce outputs
       add_title("Transportation energy consumption by GCAM region / mode / fuel / historical year") %>%
       add_units("EJ") %>%
       add_comments("Transportation energy consumption aggregated by fuel and sector lookups.") %>%
