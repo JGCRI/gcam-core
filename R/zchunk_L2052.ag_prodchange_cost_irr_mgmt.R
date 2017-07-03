@@ -8,13 +8,12 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L2052.AgCost_ag_irr_mgmt}, \code{L2052.AgCost_bio_irr_mgmt}, \code{L2052.AgCost_For}, \code{L2052.AgProdChange_ag_irr_ref}, \code{L2052.AgProdChange_bio_irr_ref}, \code{L2052.AgProdChange_irr_high}, \code{L2052.AgProdChange_irr_low}, \code{L2052.AgProdChange_irr_ssp4}. The corresponding file in the
 #' original data system was \code{L2052.ag_prodchange_cost_irr_mgmt.R} (aglu level2).
-#' @details This chunk maps the production costs of crops, biomass and forest to all four technologies (irr v rfd; hi v lo).
-#' Calculates future productivity change of crops and biomass for all technologies along reference, high, low and SSP4 scenarios.
+#' @details This chunk maps the production costs of crops, biomass and forest to all four technologies (irrigated / rainfed; high / low),
+#' and calculates future productivity change of crops and biomass for all technologies along reference, high, low and SSP4 scenarios.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RC July 2017
-#' @export
 module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",

@@ -18,11 +18,12 @@ the generated outputs: \code{L2052.AgCost_ag_irr_mgmt}, \code{L2052.AgCost_bio_i
 original data system was \code{L2052.ag_prodchange_cost_irr_mgmt.R} (aglu level2).
 }
 \description{
-Briefly describe what this chunk does.
+Specifies production costs and future agricultural productivity changes for all technologies.
 }
 \details{
-Describe in detail what this chunk does.
+This chunk maps the production costs of crops, biomass and forest to all four technologies (irrigated / rainfed; high / low),
+and calculates future productivity change of crops and biomass for all technologies along reference, high, low and SSP4 scenarios.
 }
 \author{
-YourInitials CurrentMonthName 2017
+RC July 2017
 }
