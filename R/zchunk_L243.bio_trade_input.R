@@ -70,19 +70,13 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       L243.DeleteInput_RegBio
 
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
     L243.DeleteInput_RegBio %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Table of regional biomass sector/subsector/technology/year for deletion") %>%
+      add_units("NA") %>%
+      add_comments("List all region/year combinations for the regional biomass sector/subsector/technology") %>%
+      add_comments("These will be deleted from the model and recreated in separate tibbles using different names.") %>%
       add_legacy_name("L243.DeleteInput_RegBio") %>%
-      add_precursors("common/GCAM_region_names") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/GCAM_region_names") ->
       L243.DeleteInput_RegBio
     tibble() %>%
       add_title("descriptive title of data") %>%
