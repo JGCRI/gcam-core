@@ -62,7 +62,7 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
     OLD.REGIONAL.BIOMASS.NAME <- "regional biomass"
     NEW.REGIONAL.BIOMASS.NAME <- "total biomass"
     BIOMASS.NAME <- "biomass"
-
+    BIOMASS.TRADE.REGION <- "USA"
 
     # First, create a table to delete existing regional biomass input (this needs to include region/sector/subsector/technology/input for all regions & years)
     GCAM_region_names %>%
@@ -78,6 +78,22 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
              coefficient = 1,
              market.name = region) ->
       L243.TechCoef_RegBio
+
+    # The traded markets tend to be a good candidate to solve explicitly since they tie together many solved markets.
+    # Set flag so traded biomass uses trial markets
+    A_bio_supplysector %>%
+      filter(traded == 1) %>%
+      select(supplysector) %>%
+      mutate(region = BIOMASS.TRADE.REGION, use.trial.market = 1) ->
+      L243.SectorUseTrialMarket_Bio
+
+    if( OLD_DATA_SYSTEM_BEHAVIOR ) {
+      # The old data system repeated the USA row 32 times. The xml conversion only needs the first instance.
+      L243.SectorUseTrialMarket_Bio %>%
+        repeat_add_columns(tibble::tibble(MORE = 1:32)) %>%
+        select(-MORE) ->
+        L243.SectorUseTrialMarket_Bio
+    }
 
     # Produce outputs
     L243.DeleteInput_RegBio %>%
@@ -119,15 +135,12 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
       L243.Supplysector_Bio
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L243.SectorUseTrialMarket_Bio %>%
+      add_title("Table flagging traded biomass sector to use trial markets") %>%
+      add_units("NA") %>%
+      add_comments("Create a table with the traded biomass sector and a boolean (1) for use.trial.markets") %>%
       add_legacy_name("L243.SectorUseTrialMarket_Bio") %>%
-      add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector", "aglu/A_bio_subsector_logit", "aglu/A_bio_subsector", "L120.LC_bm2_R_LT_Yh_GLU", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
+      add_precursors("aglu/A_bio_supplysector") ->
       L243.SectorUseTrialMarket_Bio
     tibble() %>%
       add_title("descriptive title of data") %>%
