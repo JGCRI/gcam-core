@@ -66,7 +66,10 @@ module_aglu_L203.demand_input <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     GCAM_commodity <- GCAM_region_ID <- element <- item <- value <- year <- aglu_demand_calyears <- aglu_demand_futureyears <-
-      Prod_colnames <- names_FuelPrefElasticity <- NULL   # silence package check notes
+      Prod_colnames <- names_FuelPrefElasticity <- Cons_bm3 <- Cost_75USDkg <- GCAM_demand <- LEVEL2_DATA_NAMES <-
+      NetExp_Mt <- OtherUses_Mt <- SSP2 <- base.service <- calOutputValue <- efficiency <- energy.final.demand <- fixedOutput <-
+      gdp.ratio <- income.elasticity <- logit.type <- price.elasticity <- ratio <- region <- scenario <-
+      subsector <- supplysector <- technology <- NULL   # silence package check notes
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
