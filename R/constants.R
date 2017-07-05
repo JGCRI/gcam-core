@@ -30,7 +30,7 @@ BASE_YEARS <- c(1975, 1990, 2005, 2010)
 MODEL_YEARS <- c(BASE_YEARS, FUTURE_YEARS)
 SSP_FUTURE_YEARS <- c(2010, FUTURE_YEARS)
 GHG_CONTROL_READIN_YEAR <- 1975
-
+BASE_YEAR_IFA <- 2006
 
 # GCAM constants ======================================================================
 
@@ -119,6 +119,17 @@ aglu.DIGITS_CALOUTPUT <- 7 # production
 # Regions in which agriculture and land use are not modeled
 aglu.NO_AGLU_REGIONS <- "Taiwan"
 
+# Define GCAM category name of fertilizer
+aglu.FERT_NAME <- "N fertilizer"
+
+# XML-related constants
+aglu.GLU_NDIGITS          <- 3    # number of digits in the geographic land unit identifier codes
+aglu.GLU_NAME_DELIMITER   <- ""   # delimiter between the GLU name and number
+aglu.LT_GLU_DELIMITER     <-      # delimiter between the land use type name and GLU name. should be the same as the crop-glu delimiter
+  aglu.CROP_GLU_DELIMITER <- "_"  # delimiter between the crop name and GLU name
+aglu.IRR_DELIMITER        <- "_"  # delimiter between the appended crop x GLU and irrigation level
+aglu.MGMT_DELIMITER       <- "_"  # delimiter between appended tech name and management level
+
 
 # Energy constants ======================================================================
 
@@ -161,6 +172,7 @@ CONV_DAYS_YEAR <- 1 / 365.25
 # Energy
 CONV_MWH_GJ <- 3.6 # Megawatt hours to Gigajoules
 CONV_GWH_EJ <- 3.6e-6
+CONV_KWH_GJ <- 3.6e-3
 
 # Other
 CONV_MCAL_PCAL <- 1e-9

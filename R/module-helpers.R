@@ -271,3 +271,88 @@ set_years <- function(data) {
   data[data == "end-year"] <- max(FUTURE_YEARS)
   data
 }
+
+
+#' add_node_leaf_names
+#'
+#' Match in the node and leaf names from a land nesting table
+#'
+#' @param data Data, tibble
+#' @param nesting_table Table of node names (as column names) and leaf data (contents), tibble
+#' @param leaf_name Name of leaf name column in \code{nesting_table}, character
+#' @param ... Names of columns to add leaf nodes for, character
+#' @param LT_name Name of land type column in \code{data}, character
+#' @param append_GLU Append GLU column to new leaf name columns? Logical
+#' @return Data with new leaf name columns added.
+add_node_leaf_names <- function(data, nesting_table, leaf_name, ..., LT_name = "Land_Type", append_GLU = TRUE) {
+  assert_that(is_tibble(data))
+  assert_that(is_tibble(nesting_table))
+  assert_that(is.character(leaf_name))
+  assert_that(leaf_name %in% names(nesting_table))
+  assert_that(is.character(LT_name))
+  assert_that(LT_name %in% names(data))
+  assert_that(is.logical(append_GLU))
+
+  data$LandAllocatorRoot <- "root"
+  dots <- list(...)
+  for(x in dots) {
+    assert_that(x %in% names(nesting_table))
+    data[[x]] <- nesting_table[[x]][match(data[[LT_name]], nesting_table[[leaf_name]])]
+  }
+
+  data[[leaf_name]] <- data[[LT_name]]
+
+  if(append_GLU) {
+    data <- append_GLU(data, leaf_name, ...)
+  }
+  if("Irr_Rfd" %in% names(data)) {
+    data[[leaf_name]] <- paste(data[[leaf_name]], data[["Irr_Rfd"]], sep = aglu.IRR_DELIMITER)
+  }
+  data
+}
+
+
+#' append_GLU
+#'
+#' Append GLU to all specified variables
+#'
+#' @param data Data, a tibble
+#' @param ... Names of variables to concatenate with \code{GLU} column, character
+#' @return A tibble with the \code{...} variable names concatenated with the \code{GLU}.
+append_GLU <- function(data, ...) {
+  assert_that(is_tibble(data))
+  dots <- list(...)
+  for(x in dots) {
+    assert_that(x %in% names(data))
+    data[[x]] <- paste(data[[x]], data[["GLU"]], sep = aglu.LT_GLU_DELIMITER)
+  }
+  data
+}
+
+
+#' replace_GLU
+#'
+#' Replace GLU numerical codes with names, and vice versa
+#'
+#' @param d A tibble with a column named "GLU"
+#' @param map A tibble with columns \code{GLU_code} and \code{GLU_name}
+#' @param GLU_pattern Regular expression string to identify the GLU codes
+#' @return A tibble with codes substituted for pattern, or vice versa, depending on the original
+#' contents of the \code{GLU} column.
+replace_GLU <- function(d, map, GLU_pattern = "^GLU[0-9]{3}$") {
+  assert_that(is_tibble(d))
+  assert_that("GLU" %in% names(d))
+  assert_that(is_tibble(map))
+  assert_that(all(c("GLU_code", "GLU_name") %in% names(map)))
+  assert_that(!any(duplicated(map$GLU_code)))
+  assert_that(!any(duplicated(map$GLU_name)))
+  assert_that(is.character(GLU_pattern))
+
+  # Determine the direction of the change based on character string matching in the first element
+  if(all(grepl(GLU_pattern, d$GLU))) {
+    d$GLU <- map$GLU_name[match(d$GLU, map$GLU_code)]  # switch from GLU numerical codes to names
+  } else {
+    d$GLU <- map$GLU_code[match(d$GLU, map$GLU_name)]  # switch from GLU names to numerical codes
+  }
+  d
+}
