@@ -35,6 +35,12 @@ module_emissions_L113.ghg_an_R_S_T_Y <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    value <- GCAM_commodity <- feed <- GCAM_region_ID <- year <- production <-
+      EPA_agg_sector <- EDGAR_agg_sector <- ch4_em_factor <- fuel <- Non.CO2 <-
+      epa_emissions <- IPCC-Annex <- `World Region` <- ISO_A3 <- Name <- IPCC <-
+      IPCC_description <- IPCC_description.y <- agg_sector <- EDGAR_emissions <-
+      EPA_emissions <- scalar <- emissions <- NULL  # silence package check notes
+
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     EDGAR_sector <- get_data(all_data, "emissions/EDGAR/EDGAR_sector")
