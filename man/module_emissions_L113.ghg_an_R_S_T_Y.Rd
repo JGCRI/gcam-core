@@ -24,7 +24,7 @@ This chunk calculates the animal GHG emissions (CH4 and N2O)
 }
 \details{
 "Calculate the animal emissions (CH4 and N2O) first compute unscaled emissions
-by country and technology, then match the CH4 emissions factors from EPA, next
+by country and technology, then match emissions factors from EPA, next
 compute unscaled emissions (production * emfactors) and aggregate by sector and region,
 then compute EDGAR emissions by region and sector and lastly, scale the EPA emissions
 by tech to match EDGAR. Note that file L115, handles NH3."
