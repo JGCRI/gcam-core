@@ -18,11 +18,13 @@ the generated outputs: \code{L203.SectorLogitTables[[ curr_table ]]$data}, \code
 original data system was \code{L203.demand_input.R} (aglu level2).
 }
 \description{
-Briefly describe what this chunk does.
+Builds agriculture demand inputs for the core and each SSP scenario.
 }
 \details{
-Describe in detail what this chunk does.
+This chunk specifies the input tables for agriculture demand: generic information for supply sector, subsector and technology,
+food and non-food demand in calibration years, forest product demand, net exports and caloric contents in calibration and future years,
+income elasticities for future years in core and SSP scenarios, as well as price elasticities.
 }
 \author{
-YourInitials CurrentMonthName 2017
+RC July 2017
 }
