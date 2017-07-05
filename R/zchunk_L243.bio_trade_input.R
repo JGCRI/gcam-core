@@ -72,7 +72,16 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       mutate(minicam.energy.input = BIOMASS.NAME) ->
       L243.DeleteInput_RegBio
 
-    # Now, create new regional biomass input called "total biomass" with a input-output coefficient of 1 (i.e., a pass through sector)
+    # Set up all of the new supply sectors.
+    # Copy sector information to each region.
+    # Note that "traded biomass" only goes in the BIOMASS.TRADE.REGION
+    A_bio_supplysector %>%
+      repeat_add_columns(tibble::tibble(region = GCAM_region_names$region)) %>%
+      mutate(region = if_else(traded == 1, BIOMASS.TRADE.REGION, region)) %>%
+      select(-traded) ->
+      L243.Supplysector_Bio
+
+    # Now, create new regional biomass with input called "total biomass" with a input-output coefficient of 1 (i.e., a pass through sector)
     L243.DeleteInput_RegBio %>%
       mutate(minicam.energy.input = NEW.REGIONAL.BIOMASS.NAME,
              coefficient = 1,
@@ -125,15 +134,13 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       add_legacy_name("L243.TechCoef_RegBio") %>%
       same_precursors_as(L243.DeleteInput_RegBio) ->
       L243.TechCoef_RegBio
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L243.Supplysector_Bio %>%
+      add_title("Units and logit exponents for bio trade supply sectors") %>%
+      add_units("NA") %>%
+      add_comments("Copy bio trade assumption file to all regions") %>%
+      add_comments("Replace region name for 'traded biomass' with the trade region (currently USA).") %>%
       add_legacy_name("L243.Supplysector_Bio") %>%
-      add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector", "aglu/A_bio_subsector_logit", "aglu/A_bio_subsector", "L120.LC_bm2_R_LT_Yh_GLU", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
+      add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector") ->
       L243.Supplysector_Bio
     L243.SectorUseTrialMarket_Bio %>%
       add_title("Table flagging traded biomass sector to use trial markets") %>%
