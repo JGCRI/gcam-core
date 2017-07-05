@@ -399,116 +399,6 @@ chunk_outputs <- function(chunks = find_chunks()$name) {
   dplyr::bind_rows(chunkoutputs)
 }
 
-#' create_xml
-#'
-#' The basis to define how to convert data to an XML file.  This method
-#' simple requires the name to save the XML file as and optionally the
-#' model interface "header" file that defines the transformation lookup
-#' to go from tabular data to hierarchical.  The result of this should be
-#' used in a dplyr pipeline with one or more calls to \code{\link{add_xml_data}}
-#' to add the data to convert and finally ending with \code{\link{run_xml_conversion}}
-#' to run the conversion.
-#'
-#' @param xml_file The name to save the XML file to
-#' @param mi_header The model interface "header".  This will default to the one
-#' included in this package
-#' @return A "data structure" to hold the various parts needed to run the model
-#' interface CSV to XML conversion.
-#' @export
-create_xml <- function(xml_file, mi_header = NULL) {
-  if(is.null(mi_header)) {
-    mi_header <- system.file("extdata/mi_headers", "ModelInterface_headers.txt",
-                             package = "gcamdata")
-  }
-
-  xml_obj <- list(xml_file = xml_file,
-                  mi_header = mi_header,
-                  data_tables = list())
-  xml_obj <- add_flags(xml_obj, FLAG_XML)
-
-  xml_obj
-}
-
-#' add_xml_data
-#'
-#' Add a table to include for conversion to XML.  We need the tibble to convert
-#' and a header tag which can be looked up in the header file to convert the
-#' tibble.  This method is meant to be included in a pipeline between calls of
-#' \code{\link{create_xml}} and \code{\link{run_xml_conversion}}.
-#'
-#' @param dot The current state of the pipeline started from \code{create_xml}
-#' @param data The tibble of data to add to the conversion
-#' @param header The header tag to can be looked up in the header file to
-#' convert \code{data}
-#' @return A "data structure" to hold the various parts needed to run the model
-#' interface CSV to XML conversion.
-#' @author PP March 2017
-add_xml_data <- function(dot, data, header) {
-  curr_table <- list(data = data, header = header)
-  dot$data_tables[[length(dot$data_tables)+1]] <- curr_table
-
-  dot
-}
-
-# Note: we have put the definition of run_xml_conversion inside of the "closure"
-# make_run_xml_conversion so that we may stash the XML_WARNING_GIVEN flag in an
-# environment that can only be reached by run_xml_conversion.
-make_run_xml_conversion <- function() {
-  XML_WARNING_GIVEN <- FALSE
-  function(dot) {
-    use_java <- getOption("gcamdata.use_java")
-    if(!isTRUE(use_java) && !XML_WARNING_GIVEN) {
-      message("Skipping XML conversion as global option gcamdata.use_java is not TRUE")
-      # set the flag to avoid repeating the warning.
-      XML_WARNING_GIVEN <<- TRUE
-    } else if(isTRUE(use_java)) {
-      java_cp <- system.file("extdata/ModelInterface", "CSVToXML.jar",
-                             package = "gcamdata")
-      cmd <- c(
-        "java",
-        "-cp", java_cp,
-        "-Xmx1g", # TODO: memory limits?
-        "ModelInterface.ModelGUI2.csvconv.CSVToXMLMain",
-        "-", # Read from STDIN
-        dot$mi_header,
-        dot$xml_file
-      )
-      conv_pipe <- pipe(paste(cmd, collapse=" "), open = "w")
-      on.exit(close(conv_pipe))
-
-      for(i in seq_along(dot$data_tables)) {
-        table <- dot$data_tables[[i]]
-        cat("INPUT_TABLE", file = conv_pipe, sep = "\n")
-        cat("Variable ID", file = conv_pipe, sep = "\n")
-        cat(table$header, file = conv_pipe, sep = "\n")
-        cat("", file = conv_pipe, sep = "\n")
-        utils::write.table(table$data, file = conv_pipe, sep=",", row.names = FALSE, col.names = TRUE, quote = FALSE)
-        cat("", file = conv_pipe, sep = "\n")
-      }
-    }
-
-    dot
-  }
-}
-
-#' run_xml_conversion
-#'
-#' Run the CSV to XML conversion using the model interface tool.  This method
-#' should be the final call in a pipeline started with \code{\link{create_xml}}
-#' and one or more calls to \code{\link{add_xml_data}}.
-#'
-#' Not that this method relies on Java to run the conversion.  To avoid errors for
-#' users who do not have Java installed it will check the global option
-#' \code{gcamdata.use_java} before attempting to run the conversion.  If the flag
-#' is set to \code{FALSE} a warning will be issued and the conversion skipped.
-#' To enable the use of Java a user can set \code{options(gcamdata.use_java=TRUE)}
-#'
-#' @param dot The current state of the pipeline started from \code{create_xml}
-#' @return The argument passed in unmodified in case a user wanted run the
-#' conversion again at a later time.
-#' @author PP March 2017
-run_xml_conversion <- make_run_xml_conversion()
-
 
 #' screen_forbidden
 #'
@@ -525,7 +415,7 @@ run_xml_conversion <- make_run_xml_conversion()
 #' @author RL 19 Apr 2017
 #' @importFrom utils capture.output
 screen_forbidden <- function(fn) {
-  forbidden <- c("(?<!error_no_)match", "ifelse",
+  forbidden <- c("(?<!error_no_)match(?!es)", "ifelse",
                  "melt", "cast",
                  "rbind", "cbind", "merge",
                  "read\\.csv", "write\\.csv",

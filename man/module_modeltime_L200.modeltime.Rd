@@ -18,10 +18,10 @@ the generated outputs: \code{L200.ModelTime}, \code{L200.ModelTimeInterYears}, \
 original data system was \code{L200.modeltime.R} (modeltime level2).
 }
 \description{
-Briefly describe what this chunk does.
+Generate the model time information needed to interact with Hector or MAGICC.
 }
 \details{
-Describe in detail what this chunk does.
+Generate the model time information needed to interact with Hector or MAGICC.
 }
 \author{
 BBL

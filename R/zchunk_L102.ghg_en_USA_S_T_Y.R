@@ -20,7 +20,7 @@ module_emissions_L102.ghg_en_USA_S_T_Y <- function(command, ...) {
              FILE = "energy/mappings/IEA_product_fuel",
              FILE = "emissions/mappings/EPA_ghg_tech",
              FILE = "emissions/mappings/GCAM_sector_tech",
-             FILE = "L101.in_EJ_R_en_Si_F_Yh",
+             "L101.in_EJ_R_en_Si_F_Yh",
              FILE = "emissions/EPA_FCCC_GHG_2005"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L102.ghg_tgej_USA_en_Sepa_F_2005"))
@@ -103,7 +103,8 @@ module_emissions_L102.ghg_en_USA_S_T_Y <- function(command, ...) {
                      "energy/mappings/IEA_product_fuel",
                      "emissions/mappings/EPA_ghg_tech",
                      "emissions/mappings/GCAM_sector_tech",
-                     "emissions/EPA_FCCC_GHG_2005") ->
+                     "emissions/EPA_FCCC_GHG_2005",
+                     "L101.in_EJ_R_en_Si_F_Yh") ->
       L102.ghg_tgej_USA_en_Sepa_F_2005
 
     return_data(L102.ghg_tgej_USA_en_Sepa_F_2005)
