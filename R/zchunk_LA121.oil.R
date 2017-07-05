@@ -30,6 +30,13 @@ module_energy_LA121.oil <- function(command, ...) {
              "L121.in_EJ_R_TPES_unoil_Yh"))
   } else if(command == driver.MAKE) {
 
+    ## silence package check.
+    year <- value <- iso <- FLOW <- PRODUCT <- fuel <- sector <-
+      share_ctry_RG3 <- value_unoil <- GCAM_region_ID <- calibration <-
+      secondary.output <- supplysector <- region_GCAM3 <- value_RG3 <-
+      share <- share_RG3_world <- subsector <- technology <- minicam.energy.input <-
+      value_coef <- fuel.y <- value_coef_gas <- resource <- NULL
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
@@ -39,9 +46,8 @@ module_energy_LA121.oil <- function(command, ...) {
     A21.unoil_demandshares <- get_data(all_data, "energy/A21.unoil_demandshares")
     A21.globaltech_coef <- get_data(all_data, "energy/A21.globaltech_coef")
 
-   L100.IEA_en_bal_ctry_hist <- get_data(all_data, "L100.IEA_en_bal_ctry_hist") %>%
+    L100.IEA_en_bal_ctry_hist <- get_data(all_data, "L100.IEA_en_bal_ctry_hist") %>%
       gather(year, value, -iso, -FLOW, -PRODUCT) %>%
-      mutate(year = sub("X", "", year)) %>%
       mutate(year = as.integer(year)) -> L100.IEA_en_bal_ctry_hist
 
     L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh")%>%
@@ -59,7 +65,7 @@ module_energy_LA121.oil <- function(command, ...) {
     # Calculating energy inputs (gas) to unconventional oil production in the historical years
     A21.globaltech_coef %>%
       left_join(calibrated_techs, by = c("supplysector", "subsector", "technology", "minicam.energy.input")) %>%
-      filter(sector != "NA") %>%
+      filter(!is.na(sector)) %>%
       select(-sector, -fuel, -calibration, -secondary.output) -> L121.globaltech_coef
 
     L121.globaltech_coef %>%
@@ -77,11 +83,12 @@ module_energy_LA121.oil <- function(command, ...) {
 
     # Energy inputs = production times fuel IO coef
     L111.Prod_EJ_R_F_Yh %>%
+      # Join on sector / fuel, keeping only the rows that are in both tables
       inner_join(L121.globaltech_coef_interp %>%
-                  rename(value_coef=value), by = c("sector", "fuel", "year")) %>%
+                  rename(value_coef = value), by = c("sector", "fuel", "year")) %>%
       select(GCAM_region_ID, sector, fuel, year, value, value_coef ) %>%
       left_join(L121.globaltech_coef_interp %>%
-                  rename(value_coef_gas=value), by = c("sector", "year")) %>%
+                  rename(value_coef_gas = value), by = c("sector", "year")) %>%
       rename(fuel = fuel.y) %>%
       mutate(value = value * value_coef_gas) %>%
       select(GCAM_region_ID, sector, fuel, year, value) -> L121.in_EJ_R_unoil_F_Yh
@@ -94,17 +101,17 @@ module_energy_LA121.oil <- function(command, ...) {
       filter(FLOW == "TPES", PRODUCT %in% product_filters) %>%
       filter(year == max(HISTORICAL_YEARS)) %>%
       select(iso, value) %>%
-      filter(value != "NA") %>%
+      filter(!is.na(value)) %>%
       group_by(iso) %>%
       summarise(value = sum(value)) %>%
-      left_join(iso_GCAM_regID %>%
-                  select(region_GCAM3, iso), by="iso")-> L121.TPES_ktoe_ctry_oil_Yf
+      left_join_error_no_match(iso_GCAM_regID %>%
+                  select(region_GCAM3, iso), by = "iso")-> L121.TPES_ktoe_ctry_oil_Yf
 
     L121.TPES_ktoe_ctry_oil_Yf %>%
       group_by(region_GCAM3) %>%
       summarise(value = sum(value)) -> L121.TPES_ktoe_RG3_oil_Yf
 
-    #Calculate the shares of country-within-GCAM3-region, match in shares of GCAM3-region-within-world, and multiply
+    # Calculate the shares of country-within-GCAM3-region, match in shares of GCAM3-region-within-world, and multiply
     L121.TPES_ktoe_ctry_oil_Yf %>%
       left_join(L121.TPES_ktoe_RG3_oil_Yf %>%
                   rename(value_RG3 = value), by = "region_GCAM3") %>%
