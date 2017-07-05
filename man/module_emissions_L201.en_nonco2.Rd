@@ -18,7 +18,7 @@ the generated outputs: \code{L201.en_pol_emissions}, \code{L201.en_ghg_emissions
 original data system was \code{L201.en_nonco2.R} (emissions level2).
 }
 \description{
-Briefly describe what this chunk does.
+Generate non-CO2 emissions: pollutants, GHGs, non-CO2, BC/OCs, and reduction data.
 }
 \details{
 Describe in detail what this chunk does.

@@ -1,6 +1,6 @@
 #' module_emissions_L201.en_nonco2
 #'
-#' Briefly describe what this chunk does.
+#' Generate non-CO2 emissions: pollutants, GHGs, non-CO2, BC/OCs, and reduction data.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -13,7 +13,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author BBL July 2017
-#' @export
 module_emissions_L201.en_nonco2 <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
@@ -50,14 +49,20 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A_regions <- get_data(all_data, "emissions/A_regions")
     A_regions.en <- get_data(all_data, "energy/A_regions")
+
     L111.nonghg_tg_R_en_S_F_Yh <- get_data(all_data, "temp-data-inject/L111.nonghg_tg_R_en_S_F_Yh") %>%
+      # temporary for temp-data-inject
       gather(year, value, -1:-5) %>% mutate(year = as.integer(substr(year, 2, 5)))
     L111.nonghg_tgej_R_en_S_F_Yh <- get_data(all_data, "temp-data-inject/L111.nonghg_tgej_R_en_S_F_Yh") %>%
+      # temporary for temp-data-inject
       gather(year, value, -1:-5) %>% mutate(year = as.integer(substr(year, 2, 5)))
     L112.ghg_tg_R_en_S_F_Yh <- get_data(all_data, "temp-data-inject/L112.ghg_tg_R_en_S_F_Yh") %>%
+      # temporary for temp-data-inject
       gather(year, value, -1:-5) %>% mutate(year = as.integer(substr(year, 2, 5)))
     L112.ghg_tgej_R_en_S_F_Yh <- get_data(all_data, "temp-data-inject/L112.ghg_tgej_R_en_S_F_Yh") %>%
+      # temporary for temp-data-inject
       gather(year, value, -1:-5) %>% mutate(year = as.integer(substr(year, 2, 5)))
+
     L114.bcoc_tgej_R_en_S_F_2000 <- get_data(all_data, "L114.bcoc_tgej_R_en_S_F_2000")
     L151.nonghg_ctrl_R_en_S_T <- get_data(all_data, "L151.nonghg_ctrl_R_en_S_T")
     A51.steepness <- get_data(all_data, "emissions/A51.steepness")
@@ -254,32 +259,34 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
 
     L201.en_ghg_emissions %>%
       add_title("GHG emissions for energy technologies in all regions") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_units("Tg") %>%
+      add_comments("Take GHG emissions for the energy system, filter to out_resources") %>%
+      add_comments("in model base years, rename to regional SO2, filter to district heat,") %>%
+      add_comments("and delete sectors with zero heating/cooling degree days.") %>%
       add_legacy_name("L201.en_ghg_emissions") %>%
       add_precursors("common/GCAM_region_names",
                      "energy/A_regions",
-                     "temp-data-inject/L201.en_pol_emissions",
+                     "temp-data-inject/L112.ghg_tg_R_en_S_F_Yh",
                      "temp-data-inject/L244.DeleteThermalService") ->
       L201.en_ghg_emissions
 
     L201.en_bcoc_emissions %>%
       add_title("BC/OC emissions factors for energy technologies in all regions") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_units("Tg/EJ") %>%
+      add_comments("Take BC/OC emissions factors for energy technologies, filter to out_resources") %>%
+      add_comments("in model base years, rename to regional SO2, filter to district heat,") %>%
+      add_comments("and delete sectors with zero heating/cooling degree days.") %>%
       add_legacy_name("L201.en_bcoc_emissions") %>%
       add_precursors("common/GCAM_region_names",
                      "energy/A_regions",
-                     "temp-data-inject/L114.bcoc_tgej_R_en_S_F_2000",
+                     "L114.bcoc_tgej_R_en_S_F_2000",
                      "temp-data-inject/L244.DeleteThermalService") ->
       L201.en_bcoc_emissions
 
     L201.nonghg_max_reduction %>%
       rename(max.reduction = max_reduction) %>% # no idea why old data system renamed this
       add_title("Maximum reduction for energy technologies in all regions") %>%
-      add_units("units") %>%
+      add_units("%") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L201.nonghg_max_reduction") %>%
@@ -291,21 +298,21 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
 
     L201.nonghg_steepness %>%
       add_title("Steepness of reduction for energy technologies in all regions") %>%
-      add_units("units") %>%
+      add_units("%") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L201.nonghg_steepness") %>%
       add_precursors("common/GCAM_region_names",
                      "emissions/A_regions", "energy/A_regions",
                      "L151.nonghg_ctrl_R_en_S_T",
-                     "temp-data-inject/A51.steepness",
+                     "emissions/A51.steepness",
                      "temp-data-inject/L244.DeleteThermalService") ->
       L201.nonghg_steepness
 
     L201.nonghg_max_reduction_res %>%
       rename(max.reduction = max_reduction) %>% # no idea why old data system renamed this
       add_title("Maximum reduction for resources in all regions") %>%
-      add_units("units") %>%
+      add_units("%") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L201.nonghg_max_reduction_res") %>%
@@ -314,7 +321,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
 
     L201.nonghg_steepness_res %>%
       add_title("Steepness of reduction for resources in all regions") %>%
-      add_units("units") %>%
+      add_units("%") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L201.nonghg_steepness_res") %>%
@@ -323,9 +330,10 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
 
     L201.nonghg_res %>%
       add_title("Pollutant emissions for energy resources in all regions") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_units("Tg/EJ") %>%
+      add_comments("Take non-GHG emissions for the energy system, filter to out_resources") %>%
+      add_comments("in model base years, rename to regional SO2, filter to district heat,") %>%
+      add_comments("and delete sectors with zero heating/cooling degree days.") %>%
       add_legacy_name("L201.nonghg_res") %>%
       add_precursors("common/GCAM_region_names",
                      "emissions/A_regions",
@@ -334,9 +342,10 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
 
     L201.ghg_res %>%
       add_title("GHG emissions from resource production in all regions") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_units("Tg/EJ") %>%
+      add_comments("Take GHG emissions for the energy system, filter to out_resources") %>%
+      add_comments("in model base years, rename to regional SO2, filter to district heat,") %>%
+      add_comments("and delete sectors with zero heating/cooling degree days.") %>%
       add_legacy_name("L201.ghg_res") %>%
       add_precursors("common/GCAM_region_names",
                      "temp-data-inject/L112.ghg_tgej_R_en_S_F_Yh") ->
