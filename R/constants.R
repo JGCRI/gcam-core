@@ -10,15 +10,14 @@ YEAR_PATTERN <- "^(1|2)[0-9]{3}$"   # a 1 or 2 followed by three digits, and not
 
 # Flags ======================================================================
 # Flags used by chunks
-
-FLAG_INPUT_DATA <- "FLAG_INPUT_DATA"
-FLAG_LONG_YEAR_FORM  <- "FLAG_LONG_YEAR_FORM"
-FLAG_NO_OUTPUT  <- "FLAG_NO_OUTPUT"
-FLAG_NO_XYEAR   <- "FLAG_NO_XYEAR"
-FLAG_NO_TEST    <- "FLAG_NO_TEST"
-FLAG_SUM_TEST   <- "FLAG_SUM_TEST"
-FLAG_PROTECT_FLOAT <- "FLAG_PROTECT_FLOAT"
-FLAG_XML <- "FLAG_XML"
+FLAG_INPUT_DATA     <- "FLAG_INPUT_DATA"
+FLAG_LONG_YEAR_FORM <- "FLAG_LONG_YEAR_FORM"
+FLAG_NO_OUTPUT      <- "FLAG_NO_OUTPUT"
+FLAG_NO_XYEAR       <- "FLAG_NO_XYEAR"
+FLAG_NO_TEST        <- "FLAG_NO_TEST"
+FLAG_SUM_TEST       <- "FLAG_SUM_TEST"
+FLAG_PROTECT_FLOAT  <- "FLAG_PROTECT_FLOAT"
+FLAG_XML            <- "FLAG_XML"
 
 
 # Time constants======================================================================
@@ -135,6 +134,17 @@ aglu.MGMT_DELIMITER       <- "_"  # delimiter between appended tech name and man
 
 # At present the CO2 emissions inventory from CDIAC stops at 2009
 energy.CDIAC_CO2_HISTORICAL_YEARS <- HISTORICAL_YEARS[HISTORICAL_YEARS < 2010]
+
+# Constant to select SSP database to use for transportation UCD
+energy.TRN_SSP <- "CORE"
+
+# UCD transportation year to use to compute shares for allocation of energy to mode/technology/fuel within category/fuel
+energy.UCD_EN_YEAR <- 2005
+energy.MIN_WEIGHT_EJ <- 1e-08
+
+# Transportation fixed charge rate information
+energy.DISCOUNT_RATE_VEH <- 0.1   # Consumer discount rate for vehicle purchases
+energy.NPER_AMORT_VEH <- 10    # Number of periods (years) over which vehicle capital payments are amortized
 
 DEFAULT_ELECTRIC_EFFICIENCY <- 0.33
 

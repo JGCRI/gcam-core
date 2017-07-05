@@ -1,11 +1,12 @@
 Package: gcamdata
 Type: Package
 Title: Build the GCAM Input Datasets
-Version: 0.2.1
+Version: 0.3
 Author: PNNL/JGCRI
 Maintainer: Ben Bond-Lamberty <bondlamberty@pnnl.gov>
 Description: Build the GCAM XML input files.
 License: MIT + file LICENSE
+Depends: R (>= 2.10)
 Imports:
     assertthat (>= 0.1),
     dplyr (>= 0.5.0),
