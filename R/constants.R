@@ -29,7 +29,7 @@ BASE_YEARS <- c(1975, 1990, 2005, 2010)
 MODEL_YEARS <- c(BASE_YEARS, FUTURE_YEARS)
 SSP_FUTURE_YEARS <- c(2010, FUTURE_YEARS)
 GHG_CONTROL_READIN_YEAR <- 1975
-
+BASE_YEAR_IFA <- 2006
 
 # GCAM constants ======================================================================
 
@@ -117,6 +117,9 @@ aglu.DIGITS_CALOUTPUT <- 7 # production
 
 # Regions in which agriculture and land use are not modeled
 aglu.NO_AGLU_REGIONS <- "Taiwan"
+
+# Define GCAM category name of fertilizer
+aglu.FERT_NAME <- "N fertilizer"
 
 # XML-related constants
 aglu.GLU_NDIGITS          <- 3    # number of digits in the geographic land unit identifier codes
