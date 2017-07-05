@@ -19,10 +19,10 @@
 module_aglu_LA103.ag_R_C_Y_GLU <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "L101.ag_Prod_Mt_R_C_Y",
-             FILE = "L101.ag_HA_bm2_R_C_Y",
-             FILE = "L102.ag_Prod_Mt_R_C_GLU",
-             FILE = "L102.ag_HA_bm2_R_C_GLU"))
+             "L101.ag_Prod_Mt_R_C_Y",
+             "L101.ag_HA_bm2_R_C_Y",
+             "L102.ag_Prod_Mt_R_C_GLU",
+             "L102.ag_HA_bm2_R_C_GLU"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L103.ag_Prod_Mt_R_C_Y_GLU",
              "L103.ag_Prod_Mt_R_C_Y",
