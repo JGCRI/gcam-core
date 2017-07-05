@@ -78,7 +78,8 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
     A_bio_supplysector %>%
       repeat_add_columns(tibble::tibble(region = GCAM_region_names$region)) %>%
       mutate(region = if_else(traded == 1, BIOMASS.TRADE.REGION, region)) %>%
-      select(-traded) ->
+      mutate(logit.year.fillout = min(MODEL_YEARS)) %>%
+      select(-traded, -logit.type) ->
       L243.Supplysector_Bio
 
     # Now, create new regional biomass with input called "total biomass" with a input-output coefficient of 1 (i.e., a pass through sector)
