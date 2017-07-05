@@ -11,7 +11,7 @@
 #' the generated outputs: \code{L113.ghg_tg_R_an_C_Sys_Fd_Yh}. The corresponding file in the
 #' original data system was \code{L113.ghg_an_R_S_T_Y.R} (emissions level1).
 #' @details "Calculate the animal emissions (CH4 and N2O) first compute unscaled emissions
-#' by country and technology, then match the CH4 emissions factors from EPA, next
+#' by country and technology, then match emissions factors from EPA, next
 #' compute unscaled emissions (production * emfactors) and aggregate by sector and region,
 #' then compute EDGAR emissions by region and sector and lastly, scale the EPA emissions
 #' by tech to match EDGAR. Note that file L115, handles NH3."
@@ -19,7 +19,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author CH July 2017
-#' @export
+
 module_emissions_L113.ghg_an_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
@@ -52,11 +52,10 @@ module_emissions_L113.ghg_an_R_S_T_Y <- function(command, ...) {
     # and EPA emissions factos.
 
       L107.an_Prod_Mt_R_C_Sys_Fd_Y %>%
-      rename(xyear = year) %>%
       rename(production = value) %>%
       group_by(GCAM_commodity, system, feed) %>%
       left_join(GCAM_sector_tech, by = c("GCAM_commodity" = "sector", "system" = "fuel", "feed" = "technology")) %>%
-      select(GCAM_region_ID, GCAM_commodity, system, feed, xyear, production, EPA_agg_sector, EDGAR_agg_sector) %>%
+      select(GCAM_region_ID, GCAM_commodity, system, feed, year, production, EPA_agg_sector, EDGAR_agg_sector) %>%
       repeat_add_columns(tibble::tibble(Non.CO2 = c("N2O_AGR", "CH4_AGR"))) %>%  # Add Gas Name and AGR for agriculture
       group_by(EPA_agg_sector) %>%
       # match in emissions factors, using left_join and dropping fuel column
@@ -68,7 +67,7 @@ module_emissions_L113.ghg_an_R_S_T_Y <- function(command, ...) {
 
     # Aggregate by sector and region
     L113.ghg_tg_R_an_C_Sys_Fd_Yh.mlt %>%
-      group_by(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, xyear) %>%
+      group_by(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year) %>%
       summarize(EPA_emissions = sum(epa_emissions)) ->
       L113.ghg_tg_R_an_C_Yh.mlt
 
@@ -79,11 +78,12 @@ module_emissions_L113.ghg_an_R_S_T_Y <- function(command, ...) {
 
     L113.EDGAR %>%  # convert to long format
       gather(year, value, -`IPCC-Annex`, -`World Region`, -ISO_A3, -Name, -IPCC, -IPCC_description, -Non.CO2) %>%
+      # Not all IPCC codes in L113.EDGAR (5F2 and 5d) are in EDGAR_sector, so we can't use left_join_error_no_match
       left_join(EDGAR_sector, by = "IPCC") %>%
       select(-IPCC_description.y) %>%
       rename (EDGAR_agg_sector = agg_sector) %>%
       standardize_iso(col = "ISO_A3") %>%
-      change_iso_code('rou', 'rom') %>%
+      change_iso_code('rou', 'rom') %>% # update Romania ISO code
       left_join(iso_GCAM_regID, by = "iso") %>%
       #Drop unnecessary columns, aggregate by region, and melt
       select(year, value, Non.CO2, EDGAR_agg_sector, GCAM_region_ID) %>%
@@ -98,28 +98,26 @@ module_emissions_L113.ghg_an_R_S_T_Y <- function(command, ...) {
 
     # First compute scalers
     L113.ghg_tg_R_an_C_Yh.mlt %>%
-      left_join(L113.EDGAR.mlt, by = c("xyear" = "year","GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector")) %>%
+      left_join(L113.EDGAR.mlt, by = c("year","GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector")) %>%
       rename(EDGAR_emissions = value) %>%
-      mutate(scalar = EDGAR_emissions/EPA_emissions/1000.0) -> # 1000.0 to convert from Gg to Tg
+      mutate(scalar = EDGAR_emissions / EPA_emissions / 1000.0) -> # 1000.0 to convert from Gg to Tg
       L113.emiss_scaler
 
     # Second scale EPA emissions
     L113.ghg_tg_R_an_C_Sys_Fd_Yh.mlt %>%
-      group_by(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, xyear) %>%
-      left_join(L113.emiss_scaler, by = c("GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector", "xyear")) %>%
+      group_by(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year) %>%
+      left_join(L113.emiss_scaler, by = c("GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector", "year")) %>%
       mutate(emissions = epa_emissions * scalar) %>%
       select(-EPA_emissions, -EDGAR_emissions) %>%
-      filter(xyear %in% emissions.EDGAR_YEARS) %>%
+      filter(year %in% emissions.EDGAR_YEARS) %>%
       replace_na(list(emissions = 0)) %>%
-      rename(supplysector = GCAM_commodity, subsector = system, stub.technology = feed,
-             em_factor = ch4_em_factor, value = emissions, year = xyear) %>%
-      select(-em_factor, -EPA_agg_sector, -scalar, -EDGAR_agg_sector, -epa_emissions, -production) %>%
-
+      select(GCAM_region_ID, Non.CO2, supplysector = GCAM_commodity, subsector = system, stub.technology = feed,
+          value = emissions, year) %>%
 
       add_title("Animal GHG emissions (CH4 and N2O) by GCAM region / sector / technology / historical year") %>%
       add_units("Tg") %>%
       add_comments("First: compute unscaled emissions by country and technology") %>%
-      add_comments("Second: match in CH4 emissions factors from EPA") %>%
+      add_comments("Second: match in emissions factors from EPA") %>%
       add_comments("Third: compute unscaled emissions (production * emfactors) and aggregate by sector and region") %>%
       add_comments("Fourth: compute EDGAR emissions by region and sector") %>%
       add_comments("Fifth: scale EPA emissions by tech to match EDGAR" ) %>%

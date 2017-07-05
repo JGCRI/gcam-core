@@ -18,11 +18,17 @@ the generated outputs: \code{L113.ghg_tg_R_an_C_Sys_Fd_Yh}. The corresponding fi
 original data system was \code{L113.ghg_an_R_S_T_Y.R} (emissions level1).
 }
 \description{
-Briefly describe what this chunk does.
+This chunk calculates the animal GHG emissions (CH4 and N2O)
+ by GCAM region / sector / technology / historical year, by scaling EPA
+ emissions by tech to match EDGAR
 }
 \details{
-Describe in detail what this chunk does.
+"Calculate the animal emissions (CH4 and N2O) first compute unscaled emissions
+by country and technology, then match the CH4 emissions factors from EPA, next
+compute unscaled emissions (production * emfactors) and aggregate by sector and region,
+then compute EDGAR emissions by region and sector and lastly, scale the EPA emissions
+by tech to match EDGAR. Note that file L115, handles NH3."
 }
 \author{
-CH June 2017
+CH July 2017
 }
