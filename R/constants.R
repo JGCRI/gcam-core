@@ -245,6 +245,7 @@ DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.001
 
 emissions.DIGITS_EMISSIONS <- 10
 emissions.CTRL_BASE_YEAR   <- 1975  # Year to read in pollution controls
+emissions.MODEL_BASE_YEARS <- BASE_YEARS[BASE_YEARS < 2008]
 emissions.FINAL_EMISS_YEAR <- min(max(BASE_YEARS), 2005)
 
 emissions.EPA_HISTORICAL_YEARS <- 1971:2002
