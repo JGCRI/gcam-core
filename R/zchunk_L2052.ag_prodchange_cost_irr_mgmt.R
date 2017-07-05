@@ -70,7 +70,7 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
     names_AgProdChange <- LEVEL2_DATA_NAMES[["AgProdChange"]]
 
     # Production costs
-    # Assign nonLandVariableCost of crop prodcution, assuming the same level to all four technologies
+    # Assign nonLandVariableCost of crop production, assuming the same level to all four technologies
     # Start with the L161 production tables to specify which region / GLU / crop will need costs assigned
     L161.ag_irrProd_Mt_R_C_Y_GLU %>%
       mutate(IRR_RFD = "IRR") %>%
@@ -313,7 +313,11 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       add_flags(FLAG_PROTECT_FLOAT) ->
       L2052.AgProdChange_irr_ssp4
 
-    return_data(L2052.AgCost_ag_irr_mgmt, L2052.AgCost_bio_irr_mgmt, L2052.AgCost_For, L2052.AgProdChange_ag_irr_ref, L2052.AgProdChange_bio_irr_ref, L2052.AgProdChange_irr_high, L2052.AgProdChange_irr_low, L2052.AgProdChange_irr_ssp4)
+    return_data(L2052.AgCost_ag_irr_mgmt, L2052.AgCost_bio_irr_mgmt,
+                L2052.AgCost_For,
+                L2052.AgProdChange_ag_irr_ref, L2052.AgProdChange_bio_irr_ref,
+                L2052.AgProdChange_irr_high, L2052.AgProdChange_irr_low,
+                L2052.AgProdChange_irr_ssp4)
   } else {
     stop("Unknown command")
   }
