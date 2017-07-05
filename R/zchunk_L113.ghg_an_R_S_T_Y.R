@@ -19,7 +19,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author CH July 2017
-
+#' @export
 module_emissions_L113.ghg_an_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
@@ -49,24 +49,21 @@ module_emissions_L113.ghg_an_R_S_T_Y <- function(command, ...) {
     # ===================================================
     # Computing unscaled emissions by country and technology
     # using animal production from L107.an_Prod_Mt_R_C_SYS_Fd_Y
-    # and EPA emissions factos. 
+    # and EPA emissions factos.
 
       L107.an_Prod_Mt_R_C_Sys_Fd_Y %>%
       rename(xyear = year) %>%
       rename(production = value) %>%
       group_by(GCAM_commodity, system, feed) %>%
       left_join(GCAM_sector_tech, by = c("GCAM_commodity" = "sector", "system" = "fuel", "feed"="technology")) %>%
-      select(GCAM_region_ID, GCAM_commodity, system, feed, xyear, production, EPA_agg_sector) %>%
-      repeat_add_columns(tibble::tibble(Non.CO2 = c("N2O_AGR", "CH4_AGR"))) %>%  # Add Gas Name
+      select(GCAM_region_ID, GCAM_commodity, system, feed, xyear, production, EPA_agg_sector, EDGAR_agg_sector) %>%
+      repeat_add_columns(tibble::tibble(Non.CO2 = c("N2O_AGR", "CH4_AGR"))) %>%  # Add Gas Name and AGR for agriculture
       group_by(EPA_agg_sector) %>%
-      left_join(L103.ghg_tgmt_USA_an_Sepa_F_2005, by = c("EPA_agg_sector" = "sector")) %>%  # match in emissions factors
+      # match in emissions factors, using left_join and dropping fuel column
+      left_join(L103.ghg_tgmt_USA_an_Sepa_F_2005, by = c("EPA_agg_sector" = "sector")) %>%
       mutate(epa_emissions = production * ch4_em_factor) %>%  # compute unscaled emissions
       select(-fuel) %>%
-      na.omit() %>%
-      group_by( GCAM_commodity, system, feed) %>%
-      left_join(GCAM_sector_tech, by =c("GCAM_commodity" = "sector", "system" = "fuel", "feed"="technology" )) %>%
-      select( -IIASA_sector, -EPA_MACC_Sector, -BCOC_agg_fuel, -BCOC_agg_sector, -RCP_agg_sector, -EPA_agg_fuel_ghg,
-              -EPA_agg_fuel, -supplysector, -subsector, -stub.technology, -EPA_agg_sector.y) ->
+      na.omit() ->
       L113.ghg_tg_R_an_C_Sys_Fd_Yh.mlt
 
     # Aggregate by sector and region
@@ -114,14 +111,14 @@ module_emissions_L113.ghg_an_R_S_T_Y <- function(command, ...) {
       select(-EPA_emissions, -EDGAR_emissions) %>%
       filter(xyear %in% emissions.EDGAR_YEARS) %>%
       replace_na(list(emissions = 0)) %>%
-      rename(supplysector = GCAM_commodity, subsector = system, stub.technology = feed, EPA_agg_sector = EPA_agg_sector.x,
+      rename(supplysector = GCAM_commodity, subsector = system, stub.technology = feed,
              em_factor = ch4_em_factor, value = emissions, year = xyear) %>%
       select(-em_factor, -EPA_agg_sector, -scalar, -EDGAR_agg_sector, -epa_emissions, -production) %>%
 
 
-      add_title("Animal GHG emissions by GCAM region / sector / technology / historical year") %>%
+      add_title("Animal GHG emissions (CH4 and N2O) by GCAM region / sector / technology / historical year") %>%
       add_units("Tg") %>%
-      add_comments("Frist: compute unscaled emissions by country and technology") %>%
+      add_comments("First: compute unscaled emissions by country and technology") %>%
       add_comments("Second: match in CH4 emissions factors from EPA") %>%
       add_comments("Third: compute unscaled emissions (production * emfactors) and aggregate by sector and region") %>%
       add_comments("Fourth: compute EDGAR emissions by region and sector") %>%
