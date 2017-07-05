@@ -20,7 +20,6 @@
 module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "emissions/A_regions",
-             FILE = "common/GCAM_region_names",
              FILE = "temp-data-inject/L161.SSP2_EF",
              FILE = "temp-data-inject/L161.SSP15_EF",
              FILE = "temp-data-inject/L161.SSP34_EF",
@@ -37,14 +36,12 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     year <- value <- GCAM_region_ID <- Non.CO2 <- supplysector <- subsector <-
-        stub.technology <- agg_sector <- MAC_region <- bio_N2O_coef <-
-        SO2_name <- GAINS_region <- emiss.coeff <- NULL # silence package check.
+      stub.technology <- agg_sector <- MAC_region <- bio_N2O_coef <-
+      SO2_name <- GAINS_region <- emiss.coeff <- NULL # silence package check.
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    get_data(all_data, "common/GCAM_region_names") ->
-      GCAM_region_names
     get_data(all_data, "emissions/A_regions") ->
       A_regions
     get_data(all_data, "temp-data-inject/L161.SSP2_EF") %>%
@@ -136,43 +133,43 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
              ctrl.name ="GDP_control") ->
       L251.ctrl.delete
 
-# This section adds emissions controls for future years of vintaged electricity technologies for SSP emission factors.
-# They need to be read in seperatly from the *ef.csv files because they have a different csv to xml header.
-     L251.ssp15_ef %>%
-       # Isolate the "electricity" supply sector.
-       filter(supplysector == "electricity") %>%
-       # Create 2 new columns for future emission factors.
-       # Future emission coefficient year is based on pre-existing "year" column.
-       # Future emission coefficient name is a descriptor, and is constant.
-       mutate(future.emiss.coeff.year = year,
-              future.emiss.coeff.name = "SSP_GAINS",
-              # Previous year column that only includes the electricity supply sector is now a constant.
-              year = GHG_CONTROL_READIN_YEAR)->
-     L251.ssp15_ef_vin
+    # This section adds emissions controls for future years of vintaged electricity technologies for SSP emission factors.
+    # They need to be read in seperatly from the *ef.csv files because they have a different csv to xml header.
+    L251.ssp15_ef %>%
+      # Isolate the "electricity" supply sector.
+      filter(supplysector == "electricity") %>%
+      # Create 2 new columns for future emission factors.
+      # Future emission coefficient year is based on pre-existing "year" column.
+      # Future emission coefficient name is a descriptor, and is constant.
+      mutate(future.emiss.coeff.year = year,
+             future.emiss.coeff.name = "SSP_GAINS",
+             # Previous year column that only includes the electricity supply sector is now a constant.
+             year = GHG_CONTROL_READIN_YEAR)->
+      L251.ssp15_ef_vin
 
-     L251.ssp2_ef %>%
-       # Isolate the "electricity" supply sector.
-       filter(supplysector == "electricity") %>%
-       # Create 2 new columns for future emission factors.
-       # Future emission coefficient year is based on pre-existing "year" column.
-       # Future emission coefficient name is a descriptor, and is constant.
-       mutate(future.emiss.coeff.year = year,
-              future.emiss.coeff.name = "SSP_GAINS",
-              # Previous year column that only includes the electricity supply sector is now a constant.
-              year = GHG_CONTROL_READIN_YEAR)->
-     L251.ssp2_ef_vin
+    L251.ssp2_ef %>%
+      # Isolate the "electricity" supply sector.
+      filter(supplysector == "electricity") %>%
+      # Create 2 new columns for future emission factors.
+      # Future emission coefficient year is based on pre-existing "year" column.
+      # Future emission coefficient name is a descriptor, and is constant.
+      mutate(future.emiss.coeff.year = year,
+             future.emiss.coeff.name = "SSP_GAINS",
+             # Previous year column that only includes the electricity supply sector is now a constant.
+             year = GHG_CONTROL_READIN_YEAR)->
+      L251.ssp2_ef_vin
 
-     L251.ssp34_ef %>%
-       # Isolate the "electricity" supply sector.
-       filter(supplysector == "electricity") %>%
-       # Create 2 new columns for future emission factors.
-       # Future emission coefficient year is based on pre-existing "year" column.
-       # Future emission coefficient name is a descriptor, and is constant.
-       mutate(future.emiss.coeff.year = year,
-              future.emiss.coeff.name = "SSP_GAINS",
-              # Previous year column that only includes the electricity supply sector is now a constant.
-              year = GHG_CONTROL_READIN_YEAR)->
-     L251.ssp34_ef_vin
+    L251.ssp34_ef %>%
+      # Isolate the "electricity" supply sector.
+      filter(supplysector == "electricity") %>%
+      # Create 2 new columns for future emission factors.
+      # Future emission coefficient year is based on pre-existing "year" column.
+      # Future emission coefficient name is a descriptor, and is constant.
+      mutate(future.emiss.coeff.year = year,
+             future.emiss.coeff.name = "SSP_GAINS",
+             # Previous year column that only includes the electricity supply sector is now a constant.
+             year = GHG_CONTROL_READIN_YEAR)->
+      L251.ssp34_ef_vin
 
     # This section renames SO2 variables so that it has regional SO2 emission species.
     L251.ctrl.delete <- rename_SO2(L251.ctrl.delete, A_regions, FALSE)
