@@ -19,6 +19,7 @@ FLAG_NO_TEST    <- "FLAG_NO_TEST"
 FLAG_SUM_TEST   <- "FLAG_SUM_TEST"
 FLAG_PROTECT_FLOAT <- "FLAG_PROTECT_FLOAT"
 FLAG_XML <- "FLAG_XML"
+FLAG_YEAR_COL_XYEARS <- "FLAG_YEAR_COL_XYEARS"
 
 
 # Time constants======================================================================
