@@ -90,7 +90,7 @@ module_water_L145.water.demand.municipal <- function(command, ...) {
     # Note names were changed to match manufacturing continent to avoid the need for an additional mapping
 
     #create the variable year2 for temporal interpolation
-    year2 <- sort(c(1900, 1940, 1950, 1960, 1970, 1980, 1990, 1995, 2000,modeltime.YEARS[-2]))
+    year2 <- sort(c(1900, 1940, 1950, 1960, 1970, 1980, 1990, 1995, 2000,MODEL_YEARS[-2]))
 
     #Map municipal water use efficiencies to GCAM regions
     municipal_water_use_efficiency %>%
