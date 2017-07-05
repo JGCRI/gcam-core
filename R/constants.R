@@ -176,6 +176,8 @@ MAPPED_WATER_TYPES_SHORT <- c("C", "W")
 names(MAPPED_WATER_TYPES_SHORT) <- MAPPED_WATER_TYPES
 DEFAULT_UNLIMITED_WATER_PRICE <- 0
 DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.001
+COOLING_SYSTEM_LOGIT <- -5
+DRY_COOLING_EFF_ADJ <- 0.95  # Dry cooling efficiency adjustment
 
 # ======================================================================
 # emissions constants
