@@ -117,6 +117,30 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       repeat_add_columns(tibble::tibble(region = GCAM_region_names$region)) ->
       L243.StubTech_TotBio
 
+    # Share weights for the regional biomass technologies
+    L243.StubTech_TotBio %>%
+      repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) %>%
+      mutate(share.weight = 1) ->
+      L243.StubTechShrwt_TotBio
+
+    # Stub technologies for the regional biomass technologies
+    L243.StubTech_TotBio %>%
+      filter(subsector == INTERNATIONAL.BIOMASS.NAME) %>%
+      repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) %>%
+      mutate(minicam.energy.input = TRADED.BIOMASS.NAME,
+             coefficient = 1,
+             market = BIOMASS.TRADE.REGION) ->
+      L243.StubTechCoef_ImportedBio
+
+    # Stub technologies for the regional biomass technologies
+    L243.StubTech_TotBio %>%
+      filter(subsector == DOMESTIC.BIOMASS.NAME) %>%
+      repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) %>%
+      mutate(minicam.energy.input = BIOMASS.NAME,
+             coefficient = 1,
+             market = region) ->
+      L243.StubTechCoef_DomesticBio
+
     # The traded markets tend to be a good candidate to solve explicitly since they tie together many solved markets.
     # Set flag so traded biomass uses trial markets
     A_bio_supplysector %>%
@@ -252,35 +276,28 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       add_legacy_name("L243.StubTech_TotBio") %>%
       add_precursors("common/GCAM_region_names") ->
       L243.StubTech_TotBio
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L243.StubTechShrwt_TotBio %>%
+      add_title("Share weights for the total biomass sector") %>%
+      add_units("NA") %>%
+      add_comments("Set share weight for 'total biomass' technologies equal to 1 in all regions") %>%
       add_legacy_name("L243.StubTechShrwt_TotBio") %>%
-      add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector", "aglu/A_bio_subsector_logit", "aglu/A_bio_subsector", "L120.LC_bm2_R_LT_Yh_GLU", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
+      same_precursors_as("L243.StubTech_TotBio") ->
       L243.StubTechShrwt_TotBio
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L243.StubTechCoef_ImportedBio %>%
+      add_title("Input-output coefficients for imported biomass technologies") %>%
+      add_units("unitless") %>%
+      add_comments("Filter L243.StubTech_TotBio for the imported biomass sector") %>%
+      add_comments("Set coefficients to 1 and market name to the traded region (currently USA)") %>%
       add_legacy_name("L243.StubTechCoef_ImportedBio") %>%
-      add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector", "aglu/A_bio_subsector_logit", "aglu/A_bio_subsector", "L120.LC_bm2_R_LT_Yh_GLU", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
+      same_precursors_as("L243.StubTech_TotBio") ->
       L243.StubTechCoef_ImportedBio
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L243.StubTechCoef_DomesticBio %>%
+      add_title("Input-output coefficients for domestic biomass technologies") %>%
+      add_units("unitless") %>%
+      add_comments("Filter L243.StubTech_TotBio for the domestic biomass sector") %>%
+      add_comments("Set coefficients to 1 and market name to region name") %>%
       add_legacy_name("L243.StubTechCoef_DomesticBio") %>%
-      add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector", "aglu/A_bio_subsector_logit", "aglu/A_bio_subsector", "L120.LC_bm2_R_LT_Yh_GLU", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
+      same_precursors_as("L243.StubTech_TotBio") ->
       L243.StubTechCoef_DomesticBio
     tibble() %>%
       add_title("descriptive title of data") %>%
