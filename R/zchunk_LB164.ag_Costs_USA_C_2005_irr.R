@@ -19,6 +19,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
+#' @importFrom stats glm predict
 #' @author ACS June 2017
 module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -34,6 +35,11 @@ module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
+
+    year <- cost <- Item <- `Purchased irrigation water` <- `Total operating costs` <- IrrCost <-
+      TotCost <- Crop <- Unit <- CostFrac <- GTAP_crop <- iso <- value <- . <- GCAM_commodity <-
+      waterCostFrac <- weight <- GCAM_region_ID <- irrHA <- rfdHA<- irrHA_frac <- missingWaterCost <-
+      Cost_75USDkg <- Cost_75USDkg_new <- NULL  # silence package check notes
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
