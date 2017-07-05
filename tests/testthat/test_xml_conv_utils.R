@@ -90,7 +90,9 @@ test_that("get warning for missing header", {
   data2 <- tibble(region = "USA", PrimaryFuelCO2Coef.name = "shoes", PrimaryFuelCO2Coef = 0.007653)
   create_xml(test_fn) %>%
     add_xml_data(data1, "InterestRate") %>%
-    add_xml_data(data2, "Will_Not_Find") ->
+    # Be sure to set column_order_lookup to NULL since automatic
+    # column reordering won't work with unknown headers
+    add_xml_data(data2, "Will_Not_Find", column_order_lookup = NULL) ->
     conv_test
   # TODO: need to find a way to get messages from Java (See issue #102)
   #expect_message(run_xml_conversion(conv_test), regex = "Warning: skipping table: Will_Not_Find!", all = FALSE)
