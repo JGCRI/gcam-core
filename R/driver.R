@@ -115,6 +115,8 @@ driver <- function(all_data = empty_data(),
   if(!quiet) cat("Found", nrow(chunkoutputs), "chunk data products\n")
 
   warn_data_injects()
+  warn_datachunk_bypass()
+  warn_mismarked_fileinputs()
 
   # Outputs should all be unique
   dupes <- duplicated(chunkoutputs$output)
@@ -207,8 +209,7 @@ driver <- function(all_data = empty_data(),
 #' @return Number of temporary data objects being used inappropriately.
 warn_data_injects <- function() {
 
-  name <- input <- base_input <- upstream_chunk <- output <- NULL
-  # silence package check.
+  name <- input <- base_input <- upstream_chunk <- output <- NULL # silence package check
 
   # Are any chunks are using temp-data-inject data that are also available to them through the data system?
   ci <- chunk_inputs(find_chunks(include_disabled = FALSE)$name)
@@ -229,4 +230,55 @@ warn_data_injects <- function() {
     message("NOTE: chunk ", ci_tdi$name[i], " reads `", ci_tdi$input[i], "`\n\tbut this is available from ", ci_tdi$upstream_chunk[i])
   }
   nrow(ci_tdi)
+}
+
+#' warn_mismarked_fileinputs
+#'
+#' Look for mislabeled chunk file inputs
+#'
+#' @return Number of data chunk objects marked as \code{from_file} but without a directory path.
+warn_mismarked_fileinputs <- function() {
+
+  from_file <- input <- NULL  # silence package check
+
+  # Every input marked as from a file should have some directory structure in its name
+  chunk_inputs() %>%
+    filter(from_file, input == basename(input)) ->
+    mismarked
+
+  # Print messages
+  for(i in seq_len(nrow(mismarked))) {
+    message("NOTE: chunk ", mismarked$name[i], " file input `", mismarked$input[i], "` doesn't appear to be a file")
+  }
+  nrow(mismarked)
+}
+
+#' warn_datachunk_bypass
+#'
+#' Check whether chunks are bypassing a data chunk
+#'
+#' @details Data chunks read one or more particular files that are quirky: typically, files that generate
+#' warnings or errors when read using the default \code{\link{get_data}} routine, but also ones that need
+#' some special preprocessing. We look for chunks that read a file
+#' @return Number of data chunk objects being read directly.
+warn_datachunk_bypass <- function() {
+
+  from_file <- input <- NULL  # silence package check
+
+  ci <- chunk_inputs()
+  co <- chunk_outputs()
+  ci %>%
+    filter(from_file,
+           basename(input) %in% co$output) %>%
+    mutate(baseinput = basename(input)) %>%
+    # The only time that chunks should be asking for a file whose name appears as another
+    # chunk's outputs is if it's ALSO an output of that chunk--this will be a prebuilt dataset
+    anti_join(co, c("name", "baseinput" = "output")) ->
+    bypassing
+
+  # Print messages
+  for(i in seq_len(nrow(bypassing))) {
+    message("NOTE: chunk ", bypassing$name[i], " reads `", bypassing$input[i], "` but this is handled by a data chunk")
+  }
+  nrow(bypassing)
 }

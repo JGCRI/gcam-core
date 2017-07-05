@@ -11,15 +11,14 @@ LOGIT_COLUMN_NAME <- "logit.type"   # will be removed by test code before old-ne
 
 # Flags ======================================================================
 # Flags used by chunks
-
-FLAG_INPUT_DATA <- "FLAG_INPUT_DATA"
-FLAG_LONG_YEAR_FORM  <- "FLAG_LONG_YEAR_FORM"
-FLAG_NO_OUTPUT  <- "FLAG_NO_OUTPUT"
-FLAG_NO_XYEAR   <- "FLAG_NO_XYEAR"
-FLAG_NO_TEST    <- "FLAG_NO_TEST"
-FLAG_SUM_TEST   <- "FLAG_SUM_TEST"
-FLAG_PROTECT_FLOAT <- "FLAG_PROTECT_FLOAT"
-FLAG_XML <- "FLAG_XML"
+FLAG_INPUT_DATA     <- "FLAG_INPUT_DATA"
+FLAG_LONG_YEAR_FORM <- "FLAG_LONG_YEAR_FORM"
+FLAG_NO_OUTPUT      <- "FLAG_NO_OUTPUT"
+FLAG_NO_XYEAR       <- "FLAG_NO_XYEAR"
+FLAG_NO_TEST        <- "FLAG_NO_TEST"
+FLAG_SUM_TEST       <- "FLAG_SUM_TEST"
+FLAG_PROTECT_FLOAT  <- "FLAG_PROTECT_FLOAT"
+FLAG_XML            <- "FLAG_XML"
 
 
 # Time constants======================================================================
@@ -82,6 +81,7 @@ PRICERATIO_GRASS_ALFALFA <- 0.7
 aglu.DIGITS_CALPRICE <- 4 # prices and costs
 aglu.DIGITS_CALOUTPUT <- 7 # production
 aglu.DIGITS_INCELAS <- 4 # food demand income elasticity
+aglu.DIGITS_AGPRODCHANGE <- 4 # rate of change in yield
 
 # Carbon content of all cellulose
 aglu.CCONTENT_CELLULOSE <- 0.45
@@ -97,6 +97,17 @@ MGMT_YIELD_ADJ <- 0.1
 
 # Meat price elasticity in the USA
 aglu.FOOD_MEAT_P_ELAS_USA <- -0.09
+
+# Multipliers for high & low ag prod growth scenarios
+aglu.HI_PROD_GROWTH_MULT <- 1.5
+aglu.LOW_PROD_GROWTH_MULT <- 0.5
+
+# Forestry cost (1975$/GJ)
+aglu.FOR_COST_75USDM3 <- 29.59
+
+# Production costs of biomass (from Patrick Luckow's work)
+aglu.BIO_GRASS_COST_75USD_GJ <- 0.75
+aglu.BIO_TREE_COST_75USD_GJ <- 0.67
 
 # Fertilizer application rate for biomass, and carbon yields. Values from Adler et al. 2007 (doi:10.1890/05-2018)
 aglu.BIO_GRASS_FERT_IO_GNM2 <- 5.6
@@ -140,6 +151,17 @@ aglu.MGMT_DELIMITER       <- "_"  # delimiter between appended tech name and man
 
 # At present the CO2 emissions inventory from CDIAC stops at 2009
 energy.CDIAC_CO2_HISTORICAL_YEARS <- HISTORICAL_YEARS[HISTORICAL_YEARS < 2010]
+
+# Constant to select SSP database to use for transportation UCD
+energy.TRN_SSP <- "CORE"
+
+# UCD transportation year to use to compute shares for allocation of energy to mode/technology/fuel within category/fuel
+energy.UCD_EN_YEAR <- 2005
+energy.MIN_WEIGHT_EJ <- 1e-08
+
+# Transportation fixed charge rate information
+energy.DISCOUNT_RATE_VEH <- 0.1   # Consumer discount rate for vehicle purchases
+energy.NPER_AMORT_VEH <- 10    # Number of periods (years) over which vehicle capital payments are amortized
 
 DEFAULT_ELECTRIC_EFFICIENCY <- 0.33
 

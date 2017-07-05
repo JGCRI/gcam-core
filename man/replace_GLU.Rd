@@ -4,8 +4,7 @@
 \alias{replace_GLU}
 \title{replace_GLU}
 \usage{
-replace_GLU(d, map = basin_to_country_mapping,
-  GLU_pattern = "^GLU[0-9]{3}$")
+replace_GLU(d, map, GLU_pattern = "^GLU[0-9]{3}$")
 }
 \arguments{
 \item{d}{A tibble with a column named "GLU"}

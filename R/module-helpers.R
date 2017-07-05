@@ -260,7 +260,7 @@ append_GLU <- function(data, ...) {
 #' @param GLU_pattern Regular expression string to identify the GLU codes
 #' @return A tibble with codes substituted for pattern, or vice versa, depending on the original
 #' contents of the \code{GLU} column.
-replace_GLU <- function(d, map = basin_to_country_mapping, GLU_pattern = "^GLU[0-9]{3}$") {
+replace_GLU <- function(d, map, GLU_pattern = "^GLU[0-9]{3}$") {
   assert_that(is_tibble(d))
   assert_that("GLU" %in% names(d))
   assert_that(is_tibble(map))
