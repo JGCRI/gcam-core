@@ -176,7 +176,8 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
       add_units("unitless share") %>%
       add_comments("Multiply region/crop area shares by region/crop/GLU production shares") %>%
       add_legacy_name("L122.EmissShare_R_C_Y_GLU") %>%
-      add_precursors("L103.ag_Prod_Mt_R_C_Y_GLU", "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU") ->
+      add_precursors("L103.ag_Prod_Mt_R_C_Y_GLU", "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU") %>%
+      add_flags(FLAG_YEAR_COL_XYEARS) ->
       L122.EmissShare_R_C_Y_GLU
 
     L122.ghg_tg_R_agr_C_Y_GLU %>%
