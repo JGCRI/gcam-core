@@ -18,7 +18,6 @@
 module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "emissions/EDGAR/EDGAR_nation",
              FILE = "emissions/EDGAR/EDGAR_sector",
              "L103.ag_Prod_Mt_R_C_Y_GLU",
              "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",
@@ -36,8 +35,6 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    EDGAR_nation <- get_data(all_data, "emissions/EDGAR/EDGAR_nation") %>%
-      distinct()
     EDGAR_sector <- get_data(all_data, "emissions/EDGAR/EDGAR_sector")
     L103.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L103.ag_Prod_Mt_R_C_Y_GLU")
     L122.LC_bm2_R_HarvCropLand_C_Yh_GLU <- get_data(all_data, "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU")
@@ -86,8 +83,8 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
     L122.EDGAR <- bind_rows(EDGAR_CH4, EDGAR_N2O, EDGAR_NH3, EDGAR_NOx) %>%
       # Peat fire and forest fire post burn decay not in EDGAR_sector
       left_join(EDGAR_sector %>% select(IPCC, sector = agg_sector), by = "IPCC") %>%
-      # ATA, SEA, and AIR not in EDGAR_nation
-      left_join(EDGAR_nation, by = "ISO_A3") %>%
+      standardize_iso(col = "ISO_A3") %>%
+      change_iso_code('rou', 'rom') %>%
       # umi, bvt, sgs, iot, atf, and hmd not in iso_GCAM_regID
       left_join(iso_GCAM_regID, by = "iso") %>%
       na.omit() %>%
@@ -171,7 +168,6 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
     # ===================================================
     # Produce outputs
     L122.EmissShare_R_C_Y_GLU %>%
-      mutate(year = paste0("X",year)) %>%
       add_title("Agriculture emissions shares by GCAM region, commodity, GLU, and historical year") %>%
       add_units("unitless share") %>%
       add_comments("Multiply region/crop area shares by region/crop/GLU production shares") %>%
@@ -185,7 +181,7 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
       add_units("Tg") %>%
       add_comments("EDGAR emissions shared out by crop production") %>%
       add_legacy_name("L122.ghg_tg_R_agr_C_Y_GLU") %>%
-      add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_nation", "emissions/EDGAR/EDGAR_sector",
+      add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_sector",
                      "L103.ag_Prod_Mt_R_C_Y_GLU", "L142.ag_Fert_IO_R_C_Y_GLU",
                      "emissions/EDGAR/EDGAR_CH4", "emissions/EDGAR/EDGAR_N2O", "emissions/EDGAR/EDGAR_NH3", "emissions/EDGAR/EDGAR_NOx") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
