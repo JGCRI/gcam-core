@@ -17,8 +17,8 @@
 module_gcam.usa_LA154.Transport <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/trnUCD_EIA_mapping",
-             FILE = "temp-data-inject/L154.in_EJ_R_trn_m_sz_tech_F_Yh",
-             FILE = "temp-data-inject/L154.out_mpkm_R_trn_nonmotor_Yh",
+             "L154.in_EJ_R_trn_m_sz_tech_F_Yh",
+             "L154.out_mpkm_R_trn_nonmotor_Yh",
              "L100.Pop_thous_state",
              "L101.EIA_use_all_Bbtu"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -31,19 +31,8 @@ module_gcam.usa_LA154.Transport <- function(command, ...) {
 
     # Load required inputs
     trnUCD_EIA_mapping <- get_data(all_data, "gcam-usa/trnUCD_EIA_mapping")
-
-    get_data(all_data, "temp-data-inject/L154.in_EJ_R_trn_m_sz_tech_F_Yh") %>%
-      gather(year, value, -GCAM_region_ID, -UCD_sector, -mode, -size.class, -UCD_technology, -UCD_fuel, -fuel) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) %>%
-      filter(year %in% HISTORICAL_YEARS) ->   # ensure temp data match our current history
-      L154.in_EJ_R_trn_m_sz_tech_F_Yh
-
-    get_data(all_data, "temp-data-inject/L154.out_mpkm_R_trn_nonmotor_Yh") %>%
-      gather(year, value, -GCAM_region_ID, -mode) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) %>%
-      filter(year %in% HISTORICAL_YEARS) ->   # ensure temp data match our current history
-      L154.out_mpkm_R_trn_nonmotor_Yh
-
+    L154.in_EJ_R_trn_m_sz_tech_F_Yh <- get_data(all_data, "L154.in_EJ_R_trn_m_sz_tech_F_Yh")
+    L154.out_mpkm_R_trn_nonmotor_Yh <- get_data(all_data, "L154.out_mpkm_R_trn_nonmotor_Yh")
     L100.Pop_thous_state <- get_data(all_data, "L100.Pop_thous_state")
     L101.EIA_use_all_Bbtu <- get_data(all_data, "L101.EIA_use_all_Bbtu")
 
@@ -217,7 +206,7 @@ module_gcam.usa_LA154.Transport <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Transportation energy consumption data was downscaled to the state level using EIA state energy data") %>%
       add_legacy_name("L154.in_EJ_state_trn_m_sz_tech_F") %>%
-      add_precursors("temp-data-inject/L154.in_EJ_R_trn_m_sz_tech_F_Yh", "gcam-usa/trnUCD_EIA_mapping", "L101.EIA_use_all_Bbtu") %>%
+      add_precursors("L154.in_EJ_R_trn_m_sz_tech_F_Yh", "gcam-usa/trnUCD_EIA_mapping", "L101.EIA_use_all_Bbtu") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L154.in_EJ_state_trn_m_sz_tech_F
 
@@ -226,7 +215,7 @@ module_gcam.usa_LA154.Transport <- function(command, ...) {
       add_units("million person-km") %>%
       add_comments("National data was allocated across the states in proportion to population") %>%
       add_legacy_name("L154.out_mpkm_state_trn_nonmotor_Yh") %>%
-      add_precursors("temp-data-inject/L154.out_mpkm_R_trn_nonmotor_Yh", "L100.Pop_thous_state") %>%
+      add_precursors("L154.out_mpkm_R_trn_nonmotor_Yh", "L100.Pop_thous_state") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L154.out_mpkm_state_trn_nonmotor_Yh
 
@@ -235,7 +224,7 @@ module_gcam.usa_LA154.Transport <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Transportation energy consumption was aggregated by fuel, and the sector was named transportation") %>%
       add_legacy_name("L154.in_EJ_state_trn_F") %>%
-      add_precursors("temp-data-inject/L154.in_EJ_R_trn_m_sz_tech_F_Yh", "gcam-usa/trnUCD_EIA_mapping", "L101.EIA_use_all_Bbtu") %>%
+      add_precursors("L154.in_EJ_R_trn_m_sz_tech_F_Yh", "gcam-usa/trnUCD_EIA_mapping", "L101.EIA_use_all_Bbtu") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L154.in_EJ_state_trn_F
 
