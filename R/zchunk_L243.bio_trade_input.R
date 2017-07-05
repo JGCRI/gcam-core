@@ -110,6 +110,13 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       left_join_error_no_match(select(A_bio_subsector, subsector, share.weight), by=c("subsector.name" = "subsector")) ->
       L243.GlobalTechShrwt_TotBio
 
+    # Set up stub-technologies
+    tibble(supplysector = NEW.REGIONAL.BIOMASS.NAME) %>%
+      repeat_add_columns(tibble::tibble(subsector = c(DOMESTIC.BIOMASS.NAME, INTERNATIONAL.BIOMASS.NAME))) %>%
+      mutate(stub.technology = subsector) %>%
+      repeat_add_columns(tibble::tibble(region = GCAM_region_names$region)) ->
+      L243.StubTech_TotBio
+
     # The traded markets tend to be a good candidate to solve explicitly since they tie together many solved markets.
     # Set flag so traded biomass uses trial markets
     A_bio_supplysector %>%
@@ -238,15 +245,12 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       same_precursors_as("L243.GlobalTechCoef_TotBio") %>%
       add_precursors("aglu/A_bio_subsector") ->
       L243.GlobalTechShrwt_TotBio
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L243.StubTech_TotBio %>%
+      add_title("Stub technologies for the 'total biomass' sector") %>%
+      add_units("NA") %>%
+      add_comments("Copy technology names to all regions") %>%
       add_legacy_name("L243.StubTech_TotBio") %>%
-      add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector", "aglu/A_bio_subsector_logit", "aglu/A_bio_subsector", "L120.LC_bm2_R_LT_Yh_GLU", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
+      add_precursors("common/GCAM_region_names") ->
       L243.StubTech_TotBio
     tibble() %>%
       add_title("descriptive title of data") %>%
