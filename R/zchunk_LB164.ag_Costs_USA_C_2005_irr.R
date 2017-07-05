@@ -36,19 +36,12 @@ module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-<<<<<<< HEAD
-    year <- cost <- Item <- `Purchased irrigation water` <- `Total operating costs` <- IrrCost <-
-      TotCost <- Crop <- Unit <- CostFrac <- GTAP_crop <- iso <- value <- . <- GCAM_commodity <-
-      waterCostFrac <- weight <- GCAM_region_ID <- irrHA <- rfdHA<- irrHA_frac <- missingWaterCost <-
-      Cost_75USDkg <- Cost_75USDkg_new <- NULL  # silence package check notes
-=======
     CostFrac <- . <- Cost_75USDkg <- Cost_75USDkg_new <- Crop <- GCAM_commodity <-
       GCAM_region_ID <- GTAP_crop <- IrrCost <- Item <- LEVEL2_DATA_NAMES <-
       Purchased <- irrigation <- water <- TotCost <- Total <- operating <- costs <-
       Unit <- cost <- curr_table <- glm <- irrHA <- irrHA_frac <- iso <- missingWaterCost <-
       predict <- rfdHA <- value <- waterCostFrac <- weight <- year <-
       `Purchased irrigation water` <- `Total operating costs` <- NULL  # silence package check notes
->>>>>>> master
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")

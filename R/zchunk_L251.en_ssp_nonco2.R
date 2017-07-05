@@ -23,7 +23,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
              FILE = "temp-data-inject/L161.SSP2_EF",
              FILE = "temp-data-inject/L161.SSP15_EF",
              FILE = "temp-data-inject/L161.SSP34_EF",
-             FILE = "L201.nonghg_steepness"))
+             "L201.nonghg_steepness"))
 
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L251.ctrl.delete",

@@ -154,11 +154,7 @@ add_rename_landnode_xml <- function(dot) {
 #' @author Pralit Patel
 #' @export
 add_node_equiv_xml <- function(dot, equiv_class) {
-<<<<<<< HEAD
-  tag <- NULL  # silence package check notes
-=======
   tag <- NULL   # silence package check notes
->>>>>>> master
   equiv_list <- XML_NODE_EQUIV[[equiv_class]]
   if(is.null(equiv_list)) {
     stop("Could not find ", equiv_class, " in XML_NODE_EQUIV")
