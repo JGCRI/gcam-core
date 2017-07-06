@@ -204,7 +204,7 @@ module_aglu_L203.demand_input <- function(command, ...) {
       mutate(fixedOutput = pmax(0, round(NetExp_Mt, aglu.DIGITS_CALOUTPUT))) %>%
       # For each region / commodity
       group_by(region, subsector) %>%
-      # Set value for future years at the final base year value
+      # Hold the animal exports constant in the future, so set value for future years at the final base year value
       mutate(fixedOutput = replace(fixedOutput, year > max(BASE_YEARS), fixedOutput[year == max(BASE_YEARS)]),
              share.weight.year = year,
              # Subsector and technology shareweights (subsector requires the year as well)
@@ -238,7 +238,7 @@ module_aglu_L203.demand_input <- function(command, ...) {
       L203.StubTechProd_For
 
     # Build L203.StubCalorieContent_crop and L203.StubCalorieContent_meat:
-    # caloric content of food crops (incl secondary products) and meat commodities
+    # calorie content of food crops (incl secondary products) and meat commodities
     L101.ag_kcalg_R_C_Y %>%
       # Combine the weigted average caloric content of crop and meat products
       bind_rows(L105.an_kcalg_R_C_Y) %>%
@@ -253,7 +253,7 @@ module_aglu_L203.demand_input <- function(command, ...) {
       mutate(efficiency = round(value, aglu.DIGITS_CALOUTPUT)) %>%
       # For each region / commodity,
       group_by(region, subsector) %>%
-      # Set value for future years at the final base year value
+      # Calorie content are held constant in the future, so set value for future years at the final base year value
       mutate(efficiency = replace(efficiency, year > max(BASE_YEARS), efficiency[year == max(BASE_YEARS)])) %>%
       ungroup() %>%
       select(one_of(LEVEL2_DATA_NAMES[["StubTechCalorieContent"]])) %>%
@@ -349,11 +349,12 @@ module_aglu_L203.demand_input <- function(command, ...) {
 
     # Step 5: Solve for the income elasticities in each time period
     L203.pcFoodRatio_R_Dmnd_Yfut %>%
-      # Creates NAs, use left_join instead
+      # Taiwan's pcap food demand are missing there are NAs, use left_join instead
       left_join(L203.pcgdpRatio_R_Y, by = c("GCAM_region_ID", "region", "year", "scenario")) %>%
       mutate(income.elasticity = round(log(ratio) / log(gdp.ratio), aglu.DIGITS_INCELAS)) %>%
+      # NAs for Taiwan, replace with zero, but Taiwan is dropped later
       replace_na(list(income.elasticity = 0)) %>%
-      # Step 6: Converte to appropriate formats
+      # Step 6: Convert to appropriate formats
       filter(year %in% FUTURE_YEARS) %>%
       select(scenario, region, energy.final.demand, year, income.elasticity) %>%
       # Adjust income elasticity values between [0,1] for all the SSP scenarios
