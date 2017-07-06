@@ -4,12 +4,14 @@
 \alias{add_title}
 \title{add_title}
 \usage{
-add_title(x, title)
+add_title(x, title, overwrite = FALSE)
 }
 \arguments{
 \item{x}{An object}
 
 \item{title}{Title of object (character)}
+
+\item{overwrite}{Allow overwrite of title? Logical}
 }
 \value{
 \code{x} with units appended to any existing comments.
