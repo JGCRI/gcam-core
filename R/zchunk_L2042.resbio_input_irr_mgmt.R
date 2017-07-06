@@ -64,12 +64,14 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2042.AgResBio_For") %>%
       add_precursors("common/GCAM_region_names",
-                     "L2041.AgResBio_For",
-                     "L2041.GlobalResBio_Mill",
-                     "L2041.AgResBio_ag_irr",
-                     "L2041.AgResBioCurve_For",
-                     "L2041.StubResBioCurve_Mill",
-                     "L2041.AgResBioCurve_ag_irr") %>%
+                     "water/basin_to_country_mapping",
+                     "aglu/A_agSupplySector",
+                     "aglu/A_demand_technology",
+                     "aglu/A_resbio_curves",
+                     "aglu/A_bio_frac_prod_R",
+                     "L111.ag_resbio_R_C",
+                     "L103.ag_Prod_Mt_R_C_Y_GLU",
+                     "temp-data-inject/L123.For_Prod_bm3_R_Y_GLU") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2042.AgResBio_For
@@ -80,12 +82,14 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2042.AgResBioCurve_For") %>%
       add_precursors("common/GCAM_region_names",
-                     "L2041.AgResBio_For",
-                     "L2041.GlobalResBio_Mill",
-                     "L2041.AgResBio_ag_irr",
-                     "L2041.AgResBioCurve_For",
-                     "L2041.StubResBioCurve_Mill",
-                     "L2041.AgResBioCurve_ag_irr") %>%
+                     "water/basin_to_country_mapping",
+                     "aglu/A_agSupplySector",
+                     "aglu/A_demand_technology",
+                     "aglu/A_resbio_curves",
+                     "aglu/A_bio_frac_prod_R",
+                     "L111.ag_resbio_R_C",
+                     "L103.ag_Prod_Mt_R_C_Y_GLU",
+                     "temp-data-inject/L123.For_Prod_bm3_R_Y_GLU") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2042.AgResBioCurve_For
@@ -96,12 +100,14 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2042.GlobalResBio_Mill") %>%
       add_precursors("common/GCAM_region_names",
-                     "L2041.AgResBio_For",
-                     "L2041.GlobalResBio_Mill",
-                     "L2041.AgResBio_ag_irr",
-                     "L2041.AgResBioCurve_For",
-                     "L2041.StubResBioCurve_Mill",
-                     "L2041.AgResBioCurve_ag_irr") %>%
+                     "water/basin_to_country_mapping",
+                     "aglu/A_agSupplySector",
+                     "aglu/A_demand_technology",
+                     "aglu/A_resbio_curves",
+                     "aglu/A_bio_frac_prod_R",
+                     "L111.ag_resbio_R_C",
+                     "L103.ag_Prod_Mt_R_C_Y_GLU",
+                     "temp-data-inject/L123.For_Prod_bm3_R_Y_GLU") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2042.GlobalResBio_Mill
@@ -112,12 +118,14 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2042.StubResBioCurve_Mill") %>%
       add_precursors("common/GCAM_region_names",
-                     "L2041.AgResBio_For",
-                     "L2041.GlobalResBio_Mill",
-                     "L2041.AgResBio_ag_irr",
-                     "L2041.AgResBioCurve_For",
-                     "L2041.StubResBioCurve_Mill",
-                     "L2041.AgResBioCurve_ag_irr") %>%
+                     "water/basin_to_country_mapping",
+                     "aglu/A_agSupplySector",
+                     "aglu/A_demand_technology",
+                     "aglu/A_resbio_curves",
+                     "aglu/A_bio_frac_prod_R",
+                     "L111.ag_resbio_R_C",
+                     "L103.ag_Prod_Mt_R_C_Y_GLU",
+                     "temp-data-inject/L123.For_Prod_bm3_R_Y_GLU") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2042.StubResBioCurve_Mill
@@ -128,12 +136,14 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2042.AgResBio_ag_irr_mgmt") %>%
       add_precursors("common/GCAM_region_names",
-                     "L2041.AgResBio_For",
-                     "L2041.GlobalResBio_Mill",
-                     "L2041.AgResBio_ag_irr",
-                     "L2041.AgResBioCurve_For",
-                     "L2041.StubResBioCurve_Mill",
-                     "L2041.AgResBioCurve_ag_irr") %>%
+                     "water/basin_to_country_mapping",
+                     "aglu/A_agSupplySector",
+                     "aglu/A_demand_technology",
+                     "aglu/A_resbio_curves",
+                     "aglu/A_bio_frac_prod_R",
+                     "L111.ag_resbio_R_C",
+                     "L103.ag_Prod_Mt_R_C_Y_GLU",
+                     "temp-data-inject/L123.For_Prod_bm3_R_Y_GLU") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2042.AgResBio_ag_irr_mgmt
@@ -144,12 +154,14 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2042.AgResBioCurve_ag_irr_mgmt") %>%
       add_precursors("common/GCAM_region_names",
-                     "L2041.AgResBio_For",
-                     "L2041.GlobalResBio_Mill",
-                     "L2041.AgResBio_ag_irr",
-                     "L2041.AgResBioCurve_For",
-                     "L2041.StubResBioCurve_Mill",
-                     "L2041.AgResBioCurve_ag_irr") %>%
+                     "water/basin_to_country_mapping",
+                     "aglu/A_agSupplySector",
+                     "aglu/A_demand_technology",
+                     "aglu/A_resbio_curves",
+                     "aglu/A_bio_frac_prod_R",
+                     "L111.ag_resbio_R_C",
+                     "L103.ag_Prod_Mt_R_C_Y_GLU",
+                     "temp-data-inject/L123.For_Prod_bm3_R_Y_GLU") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2042.AgResBioCurve_ag_irr_mgmt
