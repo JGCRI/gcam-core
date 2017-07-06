@@ -185,28 +185,30 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
              technology = subsector) ->
       L243.TechCoef_TradedBio
 
+    # Compute share weights for subsectors based on cropland area. Largest region gets shareweight of 1.
+    # This will mean that international biomass supply is roughly proportional to
+    # cropland area (larger regions produce more biomass).
+    L120.LC_bm2_R_LT_Yh_GLU %>%
+      filter(Land_Type == "Cropland", year == max(HISTORICAL_YEARS)) %>%
+      group_by(GCAM_region_ID) %>%
+      summarize(Cropland = sum(value)) %>%
+      ungroup() %>%
+      mutate(share.weight = Cropland / max(Cropland)) %>%
+      left_join(GCAM_region_names, by="GCAM_region_ID") %>%
+      select(-GCAM_region_ID, -Cropland) %>%
+      mutate(supplysector = TRADED.BIOMASS.NAME,
+             subsector = paste(region, TRADED.BIOMASS.NAME),
+             region = BIOMASS.TRADE.REGION,
+             year.fillout = min(MODEL_YEARS)) ->
+      L243.SubsectorShrwtFllt_TradedBio
 
-    # # Compute share weights based on cropland area. Largest region gets shareweight of 1
-    # L243.TechShrwt <- subset( L120.LC_bm2_R_LT_Yh_GLU, Land_Type == "Cropland" )
-    # L243.TechShrwt <- aggregate( L243.TechShrwt[[ X_final_historical_year]], by = L243.TechShrwt[ R], sum )
-    # names( L243.TechShrwt )[ names( L243.TechShrwt ) == "x" ] <- "Cropland"
-    # MAX_CROP <- max( L243.TechShrwt$Cropland )
-    # L243.TechShrwt$Max_Cropland <- MAX_CROP
-    # L243.TechShrwt$Shrwt <- round( L243.TechShrwt$Cropland / L243.TechShrwt$Max_Cropland, digits_land_use )
-    # L243.TechShrwt <- add_region_name( L243.TechShrwt )
-    # L243.TechShrwt$subsector <- paste( L243.TechShrwt$region, "traded biomass", sep=" ")
-    #
-    # # L243.TechShrwt_TradedBio -- share weight for traded biomass technologies
-    # # setting to 1 since the competition happens in the subsector
-    # L243.TechShrwt_TradedBio <- L243.TechCoef_TradedBio[ names_TechYr ]
-    # L243.TechShrwt_TradedBio$share.weight <- 1
-    #
-    # # L243.SubsectorShrwtFllt_TradedBio -- share weight for traded biomass subsectors
-    # L243.SubsectorShrwtFllt_TradedBio <- unique( L243.TechCoef_TradedBio[ names_Subsector ] )
-    # L243.SubsectorShrwtFllt_TradedBio$year.fillout <- min( model_years )
-    # L243.SubsectorShrwtFllt_TradedBio$share.weight <- L243.TechShrwt$Shrwt[ match( L243.SubsectorShrwtFllt_TradedBio$subsector ,
-    #                                                                                L243.TechShrwt$subsector )]
-    #
+    # Set share weights for technologies in the traded biomass sector to 1
+    # This is because competition is handled at the subsector level
+    L243.SubsectorShrwtFllt_TradedBio %>%
+      mutate(technology = subsector, share.weight = 1) %>%
+      rename(year = year.fillout) ->
+      L243.TechShrwt_TradedBio
+
     # Produce outputs
     L243.DeleteInput_RegBio %>%
       add_title("Table of regional biomass sector/subsector/technology/year for deletion") %>%
@@ -279,15 +281,14 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       add_precursors("aglu/A_bio_subsector") %>%
       same_precursors_as("L243.StubTech_TotBio") ->
       L243.SubsectorShrwtFllt_TotBio
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L243.SubsectorShrwtFllt_TradedBio %>%
+      add_title("Subsector shareweights for traded biomass sector") %>%
+      add_units("unitless") %>%
+      add_comments("Use cropland area in the final historical year to calculate shareweights.") %>%
+      add_comments("Share weights are proportional to cropland area, with the region with") %>%
+      add_comments("the largest cropland area assigned a share weight of 1.") %>%
       add_legacy_name("L243.SubsectorShrwtFllt_TradedBio") %>%
-      add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector", "aglu/A_bio_subsector_logit", "aglu/A_bio_subsector", "L120.LC_bm2_R_LT_Yh_GLU", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
+      add_precursors("common/GCAM_region_names", "L120.LC_bm2_R_LT_Yh_GLU") ->
       L243.SubsectorShrwtFllt_TradedBio
     L243.GlobalTechCoef_TotBio %>%
       add_title("Total biomass technology coefficients") %>%
@@ -343,15 +344,13 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       add_legacy_name("L243.TechCoef_TradedBio") %>%
       add_precursors("common/GCAM_region_names") ->
       L243.TechCoef_TradedBio
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L243.TechShrwt_TradedBio %>%
+      add_title("Technology shareweights for the traded biomass sector") %>%
+      add_units("unitless") %>%
+      add_comments("Use the region & subsector names from 'L243.SubsectorShrwtFllt_TradedBio") %>%
+      add_comments("Set all share weights to 1 since competition is handled at subsector level.") %>%
       add_legacy_name("L243.TechShrwt_TradedBio") %>%
-      add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector", "aglu/A_bio_subsector_logit", "aglu/A_bio_subsector", "L120.LC_bm2_R_LT_Yh_GLU", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST) ->
+      same_precursors_as("L243.SubsectorShrwtFllt_TradedBio")->
       L243.TechShrwt_TradedBio
     tibble() %>%
       add_title("descriptive title of data") %>%
