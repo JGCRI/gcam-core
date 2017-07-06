@@ -41,9 +41,10 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     names_AgTech <- names_AgCost <- names_AgProdChange <- GLU <- GLU_name <- IRR_RFD <-
-      MGMT <- AgSupplySector <- AgSupplySubsector <- AgProductionTechnology <- AgProdChange <-
-      nonLandVariableCost <- high_reg <- low_reg <- region <- GCAM_region_ID <-
-      year <- value <- GCAM_commodity <- NULL  # silence package check notes
+      MGMT <- AgSupplySector <- AgSupplySubsector <- AgProductionTechnology <-
+      AgProdChange <- nonLandVariableCost <- high_reg <- low_reg <- region <-
+      GCAM_region_ID <- year <- value <- GCAM_commodity <- Cost_75USDkg <-
+      Irr_Rfd <- scenario <- . <- NULL  # silence package check notes
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
@@ -197,36 +198,36 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
 
     # Specify the SSP4 scenario with diverging agricultural productivity change
     # between high, median, and low income regions (not incl biomass)
-     L102.pcgdp_thous90USD_Scen_R_Y %>%
-       filter(scenario == "SSP4" & year == 2010) %>%
-       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-       # Calculate GDP per capita in 2010 USD
-       mutate(value = value / gdp_deflator(1990, 2010)) %>%
-       select(region, value) ->
-       L225.pcgdp_2010
+    L102.pcgdp_thous90USD_Scen_R_Y %>%
+      filter(scenario == "SSP4" & year == 2010) %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      # Calculate GDP per capita in 2010 USD
+      mutate(value = value / gdp_deflator(1990, 2010)) %>%
+      select(region, value) ->
+      L225.pcgdp_2010
 
-     # Get the region list of high income countries
-     L225.pcgdp_2010 %>%
-       filter(value > aglu.HIGH_GROWTH_PCGDP) %>%
-       select(region) %>%
-       # Convert tibble to vector
-       .[["region"]] ->
-       high_reg
-     # Get the region list of low income countries
-     L225.pcgdp_2010 %>%
-       filter(value < aglu.LOW_GROWTH_PCGDP) %>%
-       select(region) %>%
-       # Convert tibble to vector
-       .[["region"]] ->
-       low_reg
+    # Get the region list of high income countries
+    L225.pcgdp_2010 %>%
+      filter(value > aglu.HIGH_GROWTH_PCGDP) %>%
+      select(region) %>%
+      # Convert tibble to vector
+      .[["region"]] ->
+      high_reg
+    # Get the region list of low income countries
+    L225.pcgdp_2010 %>%
+      filter(value < aglu.LOW_GROWTH_PCGDP) %>%
+      select(region) %>%
+      # Convert tibble to vector
+      .[["region"]] ->
+      low_reg
 
-     # Assign the reference agricultural productivity change to median income countries,
-     # high change to high income regions, and low change to low income regions
-     L2052.AgProdChange_ag_irr_ref %>%
-       filter(!region %in% c(high_reg, low_reg)) %>%
-       bind_rows(filter(L2052.AgProdChange_irr_high, region %in% high_reg),
-                 filter(L2052.AgProdChange_irr_low, region %in% low_reg)) ->
-       L2052.AgProdChange_irr_ssp4
+    # Assign the reference agricultural productivity change to median income countries,
+    # high change to high income regions, and low change to low income regions
+    L2052.AgProdChange_ag_irr_ref %>%
+      filter(!region %in% c(high_reg, low_reg)) %>%
+      bind_rows(filter(L2052.AgProdChange_irr_high, region %in% high_reg),
+                filter(L2052.AgProdChange_irr_low, region %in% low_reg)) ->
+      L2052.AgProdChange_irr_ssp4
 
     # Produce outputs
     L2052.AgCost_ag_irr_mgmt %>%
