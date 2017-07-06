@@ -172,7 +172,7 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
     L243.StubTech_TotBio %>%
       select(region, supplysector, subsector) %>%
       mutate(year.fillout = min(MODEL_YEARS)) %>%
-      left_join_error_no_match(select(A_bio_subsector, subsector, share.weight), by=subsector) ->
+      left_join_error_no_match(select(A_bio_subsector, subsector, share.weight), by="subsector") ->
       L243.SubsectorShrwtFllt_TotBio
 
     # Input name, market, coeff for traded biomass
@@ -185,6 +185,28 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
              technology = subsector) ->
       L243.TechCoef_TradedBio
 
+
+    # # Compute share weights based on cropland area. Largest region gets shareweight of 1
+    # L243.TechShrwt <- subset( L120.LC_bm2_R_LT_Yh_GLU, Land_Type == "Cropland" )
+    # L243.TechShrwt <- aggregate( L243.TechShrwt[[ X_final_historical_year]], by = L243.TechShrwt[ R], sum )
+    # names( L243.TechShrwt )[ names( L243.TechShrwt ) == "x" ] <- "Cropland"
+    # MAX_CROP <- max( L243.TechShrwt$Cropland )
+    # L243.TechShrwt$Max_Cropland <- MAX_CROP
+    # L243.TechShrwt$Shrwt <- round( L243.TechShrwt$Cropland / L243.TechShrwt$Max_Cropland, digits_land_use )
+    # L243.TechShrwt <- add_region_name( L243.TechShrwt )
+    # L243.TechShrwt$subsector <- paste( L243.TechShrwt$region, "traded biomass", sep=" ")
+    #
+    # # L243.TechShrwt_TradedBio -- share weight for traded biomass technologies
+    # # setting to 1 since the competition happens in the subsector
+    # L243.TechShrwt_TradedBio <- L243.TechCoef_TradedBio[ names_TechYr ]
+    # L243.TechShrwt_TradedBio$share.weight <- 1
+    #
+    # # L243.SubsectorShrwtFllt_TradedBio -- share weight for traded biomass subsectors
+    # L243.SubsectorShrwtFllt_TradedBio <- unique( L243.TechCoef_TradedBio[ names_Subsector ] )
+    # L243.SubsectorShrwtFllt_TradedBio$year.fillout <- min( model_years )
+    # L243.SubsectorShrwtFllt_TradedBio$share.weight <- L243.TechShrwt$Shrwt[ match( L243.SubsectorShrwtFllt_TradedBio$subsector ,
+    #                                                                                L243.TechShrwt$subsector )]
+    #
     # Produce outputs
     L243.DeleteInput_RegBio %>%
       add_title("Table of regional biomass sector/subsector/technology/year for deletion") %>%
