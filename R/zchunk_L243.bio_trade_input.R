@@ -194,7 +194,8 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       summarize(Cropland = sum(value)) %>%
       ungroup() %>%
       mutate(share.weight = Cropland / max(Cropland)) %>%
-      left_join(GCAM_region_names, by="GCAM_region_ID") %>%
+      full_join(GCAM_region_names, by="GCAM_region_ID") %>%       # Using full join to ensure regions without cropland show up
+      replace_na(list(share.weight = 0)) %>%                      # Assign regions without land a shareweight of 0 (i.e., they won't contribute to international bio supply)
       select(-GCAM_region_ID, -Cropland) %>%
       mutate(supplysector = TRADED.BIOMASS.NAME,
              subsector = paste(region, TRADED.BIOMASS.NAME),
@@ -206,7 +207,8 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
     # This is because competition is handled at the subsector level
     L243.SubsectorShrwtFllt_TradedBio %>%
       mutate(technology = subsector, share.weight = 1) %>%
-      rename(year = year.fillout) ->
+      select(-year.fillout) %>%
+      repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) ->
       L243.TechShrwt_TradedBio
 
     # Produce outputs
