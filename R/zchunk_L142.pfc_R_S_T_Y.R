@@ -1,6 +1,6 @@
 #' module_emissions_L142.pfc_R_S_T_Y
 #'
-#' Briefly describe what this chunk does.
+#' This chunk maps HFC emission shares by region, sector, technology, gas, and year for years 1971-2008.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -15,7 +15,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author CDL June 2017
-
+#' @export
 module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
@@ -74,7 +74,7 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
 
     EDGAR_CF4 %>%
       mutate(Non.CO2 = "CF4") %>%
-      bind_rows(EDGAR_SF6, EDGAR_C2F6,.) ->
+      bind_rows(EDGAR_SF6, EDGAR_C2F6, .) ->
       ALL_EDGAR_HFC
 
     Other_F %>%
@@ -87,7 +87,7 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
     ALL_EDGAR_HFC %>%
       left_join_error_no_match(EDGAR_sector, by = "IPCC_description") %>%
       standardize_iso(col = "ISO_A3") %>%
-      change_iso_code('rou','rom') %>%                                        # Switch Romania iso code to its pre-2002 value
+      change_iso_code('rou', 'rom') %>%                                        # Switch Romania iso code to its pre-2002 value
       left_join_error_no_match(iso_GCAM_regID, by = "iso")  %>%
       select(GCAM_region_ID, EDGAR_agg_sector = agg_sector, Non.CO2, year, value) %>%
       filter(year !="1970") ->
