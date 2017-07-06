@@ -153,8 +153,87 @@ module_energy_L223.electricity <- function(command, ...) {
     L1231.in_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.in_EJ_R_elec_F_tech_Yh")
     L1231.out_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.out_EJ_R_elec_F_tech_Yh")
     L1231.eff_R_elec_F_tech_Yh <- get_data(all_data, "L1231.eff_R_elec_F_tech_Yh")
-    L102.gdp_mil90usd_GCAM3_ctry_Y <- get_data(all_data, "temp-data-inject/L102.gdp_mil90usd_GCAM3_ctry_Y")
+    get_data(all_data, "temp-data-inject/L102.gdp_mil90usd_GCAM3_ctry_Y") %>%
+      # TEMPORARY
+      gather(year, weight, -iso) %>% mutate(year = as.integer(substr(year, 2, 5))) %>%
+      filter(year == max(HISTORICAL_YEARS)) %>%
+      select(-year) ->
+      L102.gdp_mil90usd_GCAM3_ctry_Y
 
+
+    # Supplysector information (original file lines 61-68)
+    # L223.Supplysector_elec: Supply sector information for electricity sector
+    # L223.SectorLogitTables <- get_logit_fn_tables( A23.sector, names_SupplysectorLogitType,
+    #                                                base.header="Supplysector_", include.equiv.table=T, write.all.regions=T )
+    L223.Supplysector_elec <- write_to_all_regions(A23.sector, names_Supplysector, GCAM_region_names)
+
+    # L223.ElecReserve: Electricity reserve margin and average grid capacity factor
+    L223.ElecReserve <- write_to_all_regions(A23.sector, names_ElecReserve, GCAM_region_names)
+
+    # L223.SubsectorLogit_elec: Subsector logit exponents of electricity sector (71-74)
+    # L223.SubsectorLogitTables <- get_logit_fn_tables( A23.subsector_logit, names_SubsectorLogitType,
+    #                                                   base.header="SubsectorLogit_", include.equiv.table=F, write.all.regions=T )
+    L223.SubsectorLogit_elec <- write_to_all_regions(A23.subsector_logit, names_SubsectorLogit, GCAM_region_names)
+
+    # L223.SubsectorShrwt_elec and L223.SubsectorShrwtFllt_elec: Subsector shareweights of electricity sector (76-82)
+    L223.SubsectorShrwt_elec <- write_to_all_regions(filter(A23.subsector_shrwt, !is.na(year)), names_SubsectorShrwt, GCAM_region_names)
+    L223.SubsectorShrwtFllt_elec <- write_to_all_regions(filter(A23.subsector_shrwt, !is.na(year.fillout)), names_SubsectorShrwtFllt, GCAM_region_names)
+
+    # L223.SubsectorShrwt_nuc: Subsector shareweights of nuclear electricity (84-117)
+    # Start out with the list of ISO matched to region_GCAM3
+    iso_GCAM_regID %>%
+      select(iso, region_GCAM3, GCAM_region_ID) %>%
+      left_join_error_no_match(select(A23.subsector_shrwt_nuc_R, region_GCAM3, matches(YEAR_PATTERN)),
+                               by = "region_GCAM3") ->
+      L223.SubsectorShrwt_nuc_ctry
+
+    # Where country-level shareweights are provided, use those
+    L223.SubsectorShrwt_nuc_ctry %>%
+      filter(iso %in% A23.subsector_shrwt_nuc_R$iso) %>%
+      select(-matches(YEAR_PATTERN)) %>%
+      left_join_error_no_match(select(A23.subsector_shrwt_nuc_R, iso, matches(YEAR_PATTERN)),
+                               by = "iso") %>%
+      bind_rows(filter(L223.SubsectorShrwt_nuc_ctry, !iso %in% A23.subsector_shrwt_nuc_R$iso)) %>%
+
+      # Use GDP by country as a weighting factor in going from country-level shareweights to region-level shareweights
+      left_join(L102.gdp_mil90usd_GCAM3_ctry_Y, by = "iso") %>%
+      gather(year, value, matches(YEAR_PATTERN)) %>%
+      mutate(year = as.integer(year)) %>%
+      na.omit %>%
+      group_by(GCAM_region_ID, year) %>%
+      summarise(value = weighted.mean(value, weight)) %>%
+      # Interpolate to model time periods, and add columns specifying the final format
+      complete(GCAM_region_ID, year = FUTURE_YEARS[FUTURE_YEARS >= min(year) & FUTURE_YEARS <= max(year)]) %>%
+      arrange(GCAM_region_ID, year) %>%
+      mutate(value = approx_fun(year, value, rule = 1)) %>%
+      mutate(supplysector = A23.subsector_shrwt_nuc_R$supplysector[1],
+             subsector = A23.subsector_shrwt_nuc_R$subsector[1]) %>%
+      # L223.SubsectorShrwt_nuc[ c( supp, subs ) ] <- A23.subsector_shrwt_nuc_R[ 1, c( supp, subs ) ]
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->   # TODO not sure this is right
+      L223.SubsectorShrwt_nuc_R
+
+    # L223.SubsectorShrwt_renew: Near term subsector shareweights of renewable technologies (119-138)
+    # First, melt the table with near-term shareweights from GCAM 3.0 regions
+    A23.subsector_shrwt_renew_R %>%
+      gather(year, share.weight, matches(YEAR_PATTERN)) %>%
+      mutate(year = as.integer(year)) ->
+      L223.SubsectorShrwt_renew_GCAM3
+
+    # Build a table with all combinations of GCAM regions, electricity technologies, and years
+    expand.grid(GCAM_region_ID = GCAM_region_names$GCAM_region_ID,
+                supplysector = unique(L223.SubsectorShrwt_renew_GCAM3$supplysector),
+                subsector = unique(L223.SubsectorShrwt_renew_GCAM3$subsector),
+                year = unique(L223.SubsectorShrwt_renew_GCAM3$year),
+                stringsAsFactors = FALSE) %>%
+      as_tibble %>%
+      # use an approximate match between current regions and GCAM 3.0 regions
+      left_join_keep_first_only(select(iso_GCAM_regID, GCAM_region_ID, region_GCAM3), by = "GCAM_region_ID") %>%
+      left_join(select(L223.SubsectorShrwt_renew_GCAM3, region_GCAM3, subsector, year, share.weight),
+                by = c("region_GCAM3", "subsector", "year")) %>%
+      replace_na(list(share.weight = 0)) %>%
+      #    L223.SubsectorShrwt_renew <- add_region_name( L223.SubsectorShrwt_renew )[ names_SubsectorShrwt ]
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->   # TODO not sure this is right
+      L223.SubsectorShrwt_renew
 
     # Produce outputs
 
