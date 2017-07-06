@@ -15,7 +15,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author CDL June 2017
-#' @export
 module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
@@ -88,9 +87,9 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
       left_join_error_no_match(EDGAR_sector, by = "IPCC_description") %>%
       standardize_iso(col = "ISO_A3") %>%
       change_iso_code('rou', 'rom') %>%                                        # Switch Romania iso code to its pre-2002 value
-      left_join_error_no_match(iso_GCAM_regID, by = "iso")  %>%
+      left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%
       select(GCAM_region_ID, EDGAR_agg_sector = agg_sector, Non.CO2, year, value) %>%
-      filter(year !="1970") ->
+      filter(year %in% HISTORICAL_YEARS) ->
       L142.EDGAR_HFC
 
     L142.EDGAR_HFC %>%
@@ -106,12 +105,12 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
       L142.EDGAR_PFC_R_S_T_Yh_rest
 
     L142.EDGAR_PFC_R_S_T_Yh.tmp1 %>%
-      filter(EDGAR_agg_sector == "other_f_gases")  %>%
+      filter(EDGAR_agg_sector == "other_f_gases") %>%
       ungroup() %>%
-      left_join_error_no_match(Other_F, by = "Non.CO2")   %>%
-      select(-EDGAR_agg_sector)  %>%
-      rename(EDGAR_agg_sector = Sector)  %>%
-      bind_rows(L142.EDGAR_PFC_R_S_T_Yh_rest, .)  %>%
+      left_join_error_no_match(Other_F, by = "Non.CO2") %>%
+      select(-EDGAR_agg_sector) %>%
+      rename(EDGAR_agg_sector = Sector) %>%
+      bind_rows(L142.EDGAR_PFC_R_S_T_Yh_rest, .) %>%
       ungroup() ->                                              # ungroup needed for later `left_join_keep_first_only`
       L142.EDGAR_PFC_R_S_T_Yh.tmp1
 
@@ -120,9 +119,9 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
     GCAM_tech %>%
       repeat_add_columns(tibble(GCAM_region_ID = GCAM_region_names$GCAM_region_ID)) %>%
       repeat_add_columns(tibble(year = emissions.EDGAR_YEARS)) %>%
-      repeat_add_columns(tibble("Non.CO2" = emissions.PFCS))  %>%
+      repeat_add_columns(tibble("Non.CO2" = emissions.PFCS)) %>%
       left_join_keep_first_only(L142.EDGAR_PFC_R_S_T_Yh.tmp1, by = c("GCAM_region_ID", "year", "EDGAR_agg_sector", "Non.CO2")) %>%
-      select(GCAM_region_ID, supplysector, subsector, stub.technology, Non.CO2, year, EDGAR_emissions)  %>%
+      select(GCAM_region_ID, supplysector, subsector, stub.technology, Non.CO2, year, EDGAR_emissions) %>%
       replace_na(list(EDGAR_emissions = 0)) ->
       L142.pfc_R_S_T_Yh.tmp1
 
@@ -133,27 +132,28 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
       L142.R_cooling_T_Yh
 
     L142.R_cooling_T_Yh %>%
-      group_by(GCAM_region_ID, year)  %>%
-      summarize(value = sum(value)) ->
+      group_by(GCAM_region_ID, year) %>%
+      summarize(value = sum(value)) %>%
+      ungroup() ->
       L142.R_cooling_Yh
 
     # Calculate emission shares for residential and commerical sectors.
     # Use 'left_join' because the number of rows is not equal, and NA values are needed.
 
     L142.R_cooling_Yh %>%
-      left_join(L142.R_cooling_T_Yh, by = c("GCAM_region_ID", "year"))  %>%
+      left_join(L142.R_cooling_T_Yh, by = c("GCAM_region_ID", "year")) %>%
       mutate(share = value.y / value.x) ->
       L142.R_cooling_T_Yh.tmp1
 
     # Calculate emissions by share, then sum up emissions over region, sector, technology, and gas by year.
 
     L142.R_cooling_T_Yh.tmp1 %>%
-      rename(supplysector = service)  %>%
+      rename(supplysector = service) %>%
       right_join(L142.pfc_R_S_T_Yh.tmp1, by = c("GCAM_region_ID", "year", "supplysector")) %>%
       replace_na(list(share = 1)) %>%
-      mutate(emissions = EDGAR_emissions * share)  %>%
+      mutate(emissions = EDGAR_emissions * share) %>%
       group_by(GCAM_region_ID, supplysector, subsector, stub.technology, Non.CO2, year) %>%
-      summarize(emissions = sum(emissions))  %>%
+      summarize(emissions = sum(emissions)) %>%
       replace_na(list(emissions = 0)) %>%
       rename(value = emissions) ->
       L142.pfc_R_S_T_Yh

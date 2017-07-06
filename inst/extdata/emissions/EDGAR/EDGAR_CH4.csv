@@ -1,10 +1,10 @@
-# File: EDGAR_CH4.csv,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-# Title: CH4 Emissions by country and main source category,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-# Units: Gg,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-# Comments: Date calculated December 15 2011 3:12 pm    ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-#  years 1970 to 2008,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-# Dataset v4.2_EM_CH4_final_emitting_111111(edgar)   ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-# Source:  European Commission Joint Research Centre (JRC)/PBL Netherlands Environmental Assessment Agency. Emission Database for Global Atmospheric Research (EDGAR) release version 4.2. http://edgar.jrc.ec.europe.eu 2010 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+# File: EDGAR_CH4.csv
+# Title: CH4 Emissions by country and main source category
+# Units: Gg
+# Comments: Date calculated December 15 2011 3:12 pm 
+#  years 1970 to 2008
+# Dataset v4.2_EM_CH4_final_emitting_111111(edgar) 
+# Source:  European Commission Joint Research Centre (JRC)/PBL Netherlands Environmental Assessment Agency. Emission Database for Global Atmospheric Research (EDGAR) release version 4.2. http://edgar.jrc.ec.europe.eu 2010
 IPCC-Annex,World Region,ISO_A3,Name,IPCC,IPCC_description,1970,1971,1972,1973,1974,1975,1976,1977,1978,1979,1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008
 Annex_I,Canada,CAN,Canada,1A1a,Public electricity and heat production,6.17E-01,6.60E-01,7.10E-01,7.81E-01,7.21E-01,6.81E-01,6.99E-01,7.36E-01,7.31E-01,8.04E-01,9.05E-01,1.18E+00,1.29E+00,1.34E+00,1.46E+00,1.22E+00,1.23E+00,1.24E+00,1.53E+00,1.93E+00,1.92E+00,1.94E+00,2.18E+00,2.26E+00,2.59E+00,2.70E+00,2.72E+00,3.00E+00,3.26E+00,3.59E+00,3.79E+00,3.91E+00,4.00E+00,4.18E+00,4.06E+00,4.11E+00,3.97E+00,4.05E+00,3.87E+00
 Annex_I,Canada,CAN,Canada,1A1bc,Other Energy Industries,9.99E-01,1.06E+00,1.15E+00,1.24E+00,1.15E+00,1.22E+00,1.15E+00,1.23E+00,1.26E+00,1.07E+00,1.04E+00,9.70E-01,9.74E-01,9.37E-01,1.04E+00,1.15E+00,1.26E+00,1.26E+00,1.53E+00,1.41E+00,1.51E+00,1.47E+00,1.49E+00,1.53E+00,1.67E+00,1.72E+00,1.83E+00,1.90E+00,1.95E+00,2.11E+00,2.12E+00,2.24E+00,2.41E+00,2.60E+00,2.46E+00,2.49E+00,2.46E+00,2.54E+00,2.52E+00
