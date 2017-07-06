@@ -41,9 +41,10 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     names_AgTech <- names_AgCost <- names_AgProdChange <- GLU <- GLU_name <- IRR_RFD <-
-      MGMT <- AgSupplySector <- AgSupplySubsector <- AgProductionTechnology <- AgProdChange <-
-      nonLandVariableCost <- high_reg <- low_reg <- region <- GCAM_region_ID <-
-      year <- value <- GCAM_commodity <- NULL  # silence package check notes
+      MGMT <- AgSupplySector <- AgSupplySubsector <- AgProductionTechnology <-
+      AgProdChange <- nonLandVariableCost <- high_reg <- low_reg <- region <-
+      GCAM_region_ID <- year <- value <- GCAM_commodity <- Cost_75USDkg <-
+      Irr_Rfd <- scenario <- . <- NULL  # silence package check notes
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
