@@ -18,11 +18,14 @@ the generated outputs: \code{L121.in_EJ_R_unoil_F_Yh}, \code{L121.in_EJ_R_TPES_c
 original data system was \code{LA121.oil.R} (energy level1).
 }
 \description{
-This chunk processes historical oil data and separates into unconventional oil, crude oil, and energy inputs to oil
+Process historical oil data and separate into unconventional oil, crude oil, and energy inputs to oil.
 }
 \details{
 This chunk uses energy production data to determine the energy inputs to the oil sector. It uses
 the IEA energy balance to separate out unconventional oil production and crude oil (total liquids - unconventional oil).
+}
+\note{
+If the (proprietary) IEA data aren't available, pre-built summaries are used.
 }
 \author{
 JDH June 2017
