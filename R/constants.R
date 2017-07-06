@@ -10,15 +10,14 @@ YEAR_PATTERN <- "^(1|2)[0-9]{3}$"   # a 1 or 2 followed by three digits, and not
 
 # Flags ======================================================================
 # Flags used by chunks
-
-FLAG_INPUT_DATA <- "FLAG_INPUT_DATA"
-FLAG_LONG_YEAR_FORM  <- "FLAG_LONG_YEAR_FORM"
-FLAG_NO_OUTPUT  <- "FLAG_NO_OUTPUT"
-FLAG_NO_XYEAR   <- "FLAG_NO_XYEAR"
-FLAG_NO_TEST    <- "FLAG_NO_TEST"
-FLAG_SUM_TEST   <- "FLAG_SUM_TEST"
-FLAG_PROTECT_FLOAT <- "FLAG_PROTECT_FLOAT"
-FLAG_XML <- "FLAG_XML"
+FLAG_INPUT_DATA     <- "FLAG_INPUT_DATA"
+FLAG_LONG_YEAR_FORM <- "FLAG_LONG_YEAR_FORM"
+FLAG_NO_OUTPUT      <- "FLAG_NO_OUTPUT"
+FLAG_NO_XYEAR       <- "FLAG_NO_XYEAR"
+FLAG_NO_TEST        <- "FLAG_NO_TEST"
+FLAG_SUM_TEST       <- "FLAG_SUM_TEST"
+FLAG_PROTECT_FLOAT  <- "FLAG_PROTECT_FLOAT"
+FLAG_XML            <- "FLAG_XML"
 
 
 # Time constants======================================================================
@@ -30,7 +29,7 @@ BASE_YEARS <- c(1975, 1990, 2005, 2010)
 MODEL_YEARS <- c(BASE_YEARS, FUTURE_YEARS)
 SSP_FUTURE_YEARS <- c(2010, FUTURE_YEARS)
 GHG_CONTROL_READIN_YEAR <- 1975
-
+BASE_YEAR_IFA <- 2006
 
 # GCAM constants ======================================================================
 
@@ -80,6 +79,7 @@ PRICERATIO_GRASS_ALFALFA <- 0.7
 # NUMBERS OF DIGITS FOR MODEL INPUT DATA
 aglu.DIGITS_CALPRICE <- 4 # prices and costs
 aglu.DIGITS_CALOUTPUT <- 7 # production
+aglu.DIGITS_AGPRODCHANGE <- 4 # rate of change in yield
 
 # Carbon content of all cellulose
 aglu.CCONTENT_CELLULOSE <- 0.45
@@ -92,6 +92,17 @@ MAX_HA_TO_CROPLAND <- 3
 
 # Yield multiplier that goes from the observed yield to the "high" and "low" yields: observed plus or minus observed times this number
 MGMT_YIELD_ADJ <- 0.1
+
+# Multipliers for high & low ag prod growth scenarios
+aglu.HI_PROD_GROWTH_MULT <- 1.5
+aglu.LOW_PROD_GROWTH_MULT <- 0.5
+
+# Forestry cost (1975$/GJ)
+aglu.FOR_COST_75USDM3 <- 29.59
+
+# Production costs of biomass (from Patrick Luckow's work)
+aglu.BIO_GRASS_COST_75USD_GJ <- 0.75
+aglu.BIO_TREE_COST_75USD_GJ <- 0.67
 
 # Fertilizer application rate for biomass, and carbon yields. Values from Adler et al. 2007 (doi:10.1890/05-2018)
 aglu.BIO_GRASS_FERT_IO_GNM2 <- 5.6
@@ -119,6 +130,9 @@ aglu.DIGITS_CALOUTPUT <- 7 # production
 # Regions in which agriculture and land use are not modeled
 aglu.NO_AGLU_REGIONS <- "Taiwan"
 
+# Define GCAM category name of fertilizer
+aglu.FERT_NAME <- "N fertilizer"
+
 # XML-related constants
 aglu.GLU_NDIGITS          <- 3    # number of digits in the geographic land unit identifier codes
 aglu.GLU_NAME_DELIMITER   <- ""   # delimiter between the GLU name and number
@@ -132,6 +146,17 @@ aglu.MGMT_DELIMITER       <- "_"  # delimiter between appended tech name and man
 
 # At present the CO2 emissions inventory from CDIAC stops at 2009
 energy.CDIAC_CO2_HISTORICAL_YEARS <- HISTORICAL_YEARS[HISTORICAL_YEARS < 2010]
+
+# Constant to select SSP database to use for transportation UCD
+energy.TRN_SSP <- "CORE"
+
+# UCD transportation year to use to compute shares for allocation of energy to mode/technology/fuel within category/fuel
+energy.UCD_EN_YEAR <- 2005
+energy.MIN_WEIGHT_EJ <- 1e-08
+
+# Transportation fixed charge rate information
+energy.DISCOUNT_RATE_VEH <- 0.1   # Consumer discount rate for vehicle purchases
+energy.NPER_AMORT_VEH <- 10    # Number of periods (years) over which vehicle capital payments are amortized
 
 DEFAULT_ELECTRIC_EFFICIENCY <- 0.33
 
@@ -169,6 +194,7 @@ CONV_DAYS_YEAR <- 1 / 365.25
 # Energy
 CONV_MWH_GJ <- 3.6 # Megawatt hours to Gigajoules
 CONV_GWH_EJ <- 3.6e-6
+CONV_KWH_GJ <- 3.6e-3
 
 # Other
 CONV_MCAL_PCAL <- 1e-9
@@ -254,7 +280,6 @@ emissions.PFCS <- c("CF4", "C2F6", "SF6")
 
 emissions.NH3_EXTRA_YEARS      <- 1971:1989
 emissions.EDGAR_YEARS          <- 1971:2008
-emissions.EDGAR_HISTORICAL     <- 1971:2008
 emissions.EPA_MACC_YEAR        <- 2030  # Must be either 2020 or 2030
 emissions.MAC_TAXES            <- c(0, 5, 10, 15, 32, 66, 129, 243, 486, 1093) # Range of costs in 1990 USD
 emissions.CONV_C_CO2           <- 44 / 12 # Convert Carbon to CO2
