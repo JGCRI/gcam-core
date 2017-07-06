@@ -1,7 +1,7 @@
 # File: A23.subsector_shrwt_nuc_R.csv
 # Title: Region-specific nuclear electric subsector shareweights by GCAM3 region
-# Units: ???
-# Source: ???
+# Units: Unitless share-weights
+# Source: GCAM assumptions; intended consistency nuclear reactors under construction, planned, or proposed in World Nuclear Association's Reactor database (http://www.world-nuclear.org/information-library/facts-and-figures/reactor-database.aspx)
 region_GCAM3,iso,supplysector,subsector,2015,2020,2035,2050
 USA,,electricity,nuclear,0.8,0.8,1,1
 Canada,,electricity,nuclear,0.8,0.8,1.25,1.25

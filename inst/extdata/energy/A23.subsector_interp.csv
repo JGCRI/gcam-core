@@ -1,7 +1,7 @@
 # File: A23.subsector_interp.csv
 # Title: Electricity subsector shareweight interpolation
-# Units: ???
-# Source: ???
+# Units: Unitless share-weights
+# Source: None (GCAM assumptions)
 supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
 electricity,coal,share-weight,final-calibration-year,2300,1,s-curve
 electricity,gas,share-weight,final-calibration-year,2300,1,s-curve

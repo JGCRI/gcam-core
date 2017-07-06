@@ -1,7 +1,7 @@
-# File: A23.globaltech_keyword.csv
-# Title: Electricity technology shareweights
-# Units: ???
-# Source: ???
+# File: A23.globaltech_keyword.csv,
+# Title: Electricity technology shareweights,
+# Units: Unitless; average fossil efficiency is a boolean indicating whether the technology isused in the model's calculation of the average fossil-electric efficiency,
+# Source: None,
 supplysector,subsector,technology,primary.renewable,average.fossil.efficiency
 electricity,coal,coal (conv pul),,1
 electricity,coal,coal (conv pul CCS),,1

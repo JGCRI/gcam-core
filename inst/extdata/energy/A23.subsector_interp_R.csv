@@ -1,8 +1,8 @@
-# File: A23.subsector_interp_R.csv
-# Title: Region-specific electric subsector shareweights interpolation rules by GCAM4 region
-# WARNING: These are hard coding GCAM 4 region names.  If the region definitions change this file may not match.
-# Units: ???
-# Source: ???
+# File: A23.subsector_interp_R.csv,
+# Title: Region-specific electric subsector shareweights interpolation rules by GCAM4 region,
+# WARNING: These are hard coding GCAM 4 region names (i.e. 32 regions).  If the region definitions change this file may not match.,
+# Units: Unitless share-weights,
+# Source: GCAM assumptions; documented in proposal 210_GCAM4p1_Electricity Generation Assumptions.pdf (page 23),
 region,supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
 USA,electricity,refined liquids,share-weight,final-calibration-year,2100,,fixed
 Africa_Eastern,electricity,refined liquids,share-weight,final-calibration-year,2100,,fixed

@@ -1,7 +1,13 @@
 # File: A23.globaltech_retirement.csv
 # Title: Electricity technology retirement parameters
-# Units: ???
-# Source: ???
+# Units: years for some, unitless for others (see below)
+# Source: GCAM assumptions; generally consistent with other models.
+# lifetime: maximum equipment lifetime (100% of cohort is retired after this number of years)
+# shutdown.rate: Percent per year reduction in output (exponential decay) during lifetime. Uses phased-shutdown-decider function.
+# half.life: Number of years at which half of the cohort is retired. Uses s-curve-shutdown-decider function.
+# steepness: Steepness of s-curve shutdown decider function
+# median.shutdown.point: Profit-ratio ((revenue - costs) / costs) at which 50% of cohort is shut down by profit shutdown decider. Only variable costs.
+# profit.shutdown.steepness: steepness of profit shutdown function
 supplysector,subsector,technology,year,lifetime,shutdown.rate,half.life,steepness,median.shutdown.point,profit.shutdown.steepness
 electricity,coal,coal (conv pul),final-calibration-year,60,,30,0.1,-0.1,6
 electricity,gas,gas (steam/CT),final-calibration-year,60,,30,0.1,-0.1,6

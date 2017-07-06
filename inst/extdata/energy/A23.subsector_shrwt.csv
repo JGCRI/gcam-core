@@ -1,7 +1,8 @@
 # File: A23.subsector_shrwt.csv
-# Title: Electricity subsector logit exponents
-# Units: Relative
-# Source: ???
+# Title: Electricity subsector default share-weights
+# Units: Unitless share-weights
+# Source: None (GCAM assumptions)
+# Note: These may be over-written by interpolation rules which take precedence
 supplysector,subsector,year.fillout,year,share.weight
 electricity,coal,start-year,,1
 electricity,gas,start-year,,1

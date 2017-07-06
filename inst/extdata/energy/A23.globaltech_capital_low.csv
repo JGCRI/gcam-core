@@ -1,9 +1,9 @@
 # File: A23.globaltech_capital_low.csv
 # Title: Electricity technology capital costs
-# Units: ???
-# Source: ???
-# Future improvement is based on the maximum % reduction that the literature deems likely and a rate corresponding to the maturity level of the technology,,,,,,,,,,,,,
-# Note that some technologies are the same as another with additional equipment (i.e. CCS) for those technologies the improvement is on the additional equipment,,,,,,,,,,,,,
+# Units: 1975$/kW
+# Source: GCAM assumptions; developed from assumptions to NEMS model in support of the Annual Energy Outlook (https://www.eia.gov/outlooks/aeo/assumptions/pdf/electricity.pdf).
+# Future improvement is based on the maximum % reduction that the literature deems likely and a rate corresponding to the maturity level of the technology
+# Note that some technologies are the same as another with additional equipment (i.e. CCS) for those technologies the improvement is on the additional equipment
 supplysector,subsector,technology,input-capital,fixed.charge.rate,capacity.factor,1971,1990,2005,2010,2015,improvement.max,improvement.rate,improvement.shadow.technology
 electricity,coal,coal (conv pul),capital,0.13,0.85,730,730,800,850,898.4983353,0.75,0.01,
 electricity,coal,coal (conv pul CCS),capital,0.13,0.8,1796.996671,1796.996671,1796.996671,1796.996671,1796.996671,0.6,0.05,coal (conv pul)
