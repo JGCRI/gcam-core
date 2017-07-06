@@ -1,0 +1,166 @@
+# File: L121.in_EJ_R_unoil_F_Yh.csv
+# Title: Pre-built L121.in_EJ_R_unoil_F_Yh.csv
+# Units: NA
+# FLAG_LONG_YEAR_FORM FLAG_NO_XYEAR
+# Inputs to unconventional oil production calculated by multiplying production data by IO coef
+GCAM_region_ID,sector,fuel,year,value
+8,unconventional oil production,gas,1971,0
+8,unconventional oil production,unconventional oil,1971,0
+25,unconventional oil production,gas,1971,0
+25,unconventional oil production,unconventional oil,1971,0
+8,unconventional oil production,gas,1972,0
+8,unconventional oil production,unconventional oil,1972,0
+25,unconventional oil production,gas,1972,0
+25,unconventional oil production,unconventional oil,1972,0
+8,unconventional oil production,gas,1973,0
+8,unconventional oil production,unconventional oil,1973,0
+25,unconventional oil production,gas,1973,0
+25,unconventional oil production,unconventional oil,1973,0
+8,unconventional oil production,gas,1974,0
+8,unconventional oil production,unconventional oil,1974,0
+25,unconventional oil production,gas,1974,0
+25,unconventional oil production,unconventional oil,1974,0
+8,unconventional oil production,gas,1975,0
+8,unconventional oil production,unconventional oil,1975,0
+25,unconventional oil production,gas,1975,0
+25,unconventional oil production,unconventional oil,1975,0
+8,unconventional oil production,gas,1976,0
+8,unconventional oil production,unconventional oil,1976,0
+25,unconventional oil production,gas,1976,0
+25,unconventional oil production,unconventional oil,1976,0
+8,unconventional oil production,gas,1977,0
+8,unconventional oil production,unconventional oil,1977,0
+25,unconventional oil production,gas,1977,0
+25,unconventional oil production,unconventional oil,1977,0
+8,unconventional oil production,gas,1978,0
+8,unconventional oil production,unconventional oil,1978,0
+25,unconventional oil production,gas,1978,0
+25,unconventional oil production,unconventional oil,1978,0
+8,unconventional oil production,gas,1979,0
+8,unconventional oil production,unconventional oil,1979,0
+25,unconventional oil production,gas,1979,0
+25,unconventional oil production,unconventional oil,1979,0
+8,unconventional oil production,gas,1980,0
+8,unconventional oil production,unconventional oil,1980,0
+25,unconventional oil production,gas,1980,0
+25,unconventional oil production,unconventional oil,1980,0
+8,unconventional oil production,gas,1981,0.01108542516
+8,unconventional oil production,unconventional oil,1981,0.08939859
+25,unconventional oil production,gas,1981,0
+25,unconventional oil production,unconventional oil,1981,0
+8,unconventional oil production,gas,1982,0.02217085032
+8,unconventional oil production,unconventional oil,1982,0.17879718
+25,unconventional oil production,gas,1982,0
+25,unconventional oil production,unconventional oil,1982,0
+8,unconventional oil production,gas,1983,0.03325627548
+8,unconventional oil production,unconventional oil,1983,0.26819577
+25,unconventional oil production,gas,1983,0
+25,unconventional oil production,unconventional oil,1983,0
+8,unconventional oil production,gas,1984,0.04434170064
+8,unconventional oil production,unconventional oil,1984,0.35759436
+25,unconventional oil production,gas,1984,0
+25,unconventional oil production,unconventional oil,1984,0
+8,unconventional oil production,gas,1985,0.0554271258
+8,unconventional oil production,unconventional oil,1985,0.44699295
+25,unconventional oil production,gas,1985,0
+25,unconventional oil production,unconventional oil,1985,0
+8,unconventional oil production,gas,1986,0.06374119467
+8,unconventional oil production,unconventional oil,1986,0.5140418925
+25,unconventional oil production,gas,1986,0
+25,unconventional oil production,unconventional oil,1986,0
+8,unconventional oil production,gas,1987,0.07205526354
+8,unconventional oil production,unconventional oil,1987,0.581090835
+25,unconventional oil production,gas,1987,0
+25,unconventional oil production,unconventional oil,1987,0
+8,unconventional oil production,gas,1988,0.08036933241
+8,unconventional oil production,unconventional oil,1988,0.6481397775
+25,unconventional oil production,gas,1988,0
+25,unconventional oil production,unconventional oil,1988,0
+8,unconventional oil production,gas,1989,0.08868340128
+8,unconventional oil production,unconventional oil,1989,0.71518872
+25,unconventional oil production,gas,1989,0
+25,unconventional oil production,unconventional oil,1989,0
+8,unconventional oil production,gas,1990,0.09699747015
+8,unconventional oil production,unconventional oil,1990,0.7822376625
+25,unconventional oil production,gas,1990,0
+25,unconventional oil production,unconventional oil,1990,0
+8,unconventional oil production,gas,1991,0.101431640214
+8,unconventional oil production,unconventional oil,1991,0.8179970985
+25,unconventional oil production,gas,1991,0
+25,unconventional oil production,unconventional oil,1991,0
+8,unconventional oil production,gas,1992,0.105865810278
+8,unconventional oil production,unconventional oil,1992,0.8537565345
+25,unconventional oil production,gas,1992,0
+25,unconventional oil production,unconventional oil,1992,0
+8,unconventional oil production,gas,1993,0.11029998034199999
+8,unconventional oil production,unconventional oil,1993,0.8895159705
+25,unconventional oil production,gas,1993,0
+25,unconventional oil production,unconventional oil,1993,0
+8,unconventional oil production,gas,1994,0.11473415040599999
+8,unconventional oil production,unconventional oil,1994,0.9252754065
+25,unconventional oil production,gas,1994,0
+25,unconventional oil production,unconventional oil,1994,0
+8,unconventional oil production,gas,1995,0.11916832047
+8,unconventional oil production,unconventional oil,1995,0.9610348425
+25,unconventional oil production,gas,1995,0
+25,unconventional oil production,unconventional oil,1995,0
+8,unconventional oil production,gas,1996,0.129145203114
+8,unconventional oil production,unconventional oil,1996,1.0414935735
+25,unconventional oil production,gas,1996,0.01108542516
+25,unconventional oil production,unconventional oil,1996,0.08939859
+8,unconventional oil production,gas,1997,0.139122085758
+8,unconventional oil production,unconventional oil,1997,1.1219523045
+25,unconventional oil production,gas,1997,0.02217085032
+25,unconventional oil production,unconventional oil,1997,0.17879718
+8,unconventional oil production,gas,1998,0.149098968402
+8,unconventional oil production,unconventional oil,1998,1.2024110355
+25,unconventional oil production,gas,1998,0.03325627548
+25,unconventional oil production,unconventional oil,1998,0.26819577
+8,unconventional oil production,gas,1999,0.159075851046
+8,unconventional oil production,unconventional oil,1999,1.2828697665
+25,unconventional oil production,gas,1999,0.04434170064
+25,unconventional oil production,unconventional oil,1999,0.35759436
+8,unconventional oil production,gas,2000,0.16905273368999998
+8,unconventional oil production,unconventional oil,2000,1.3633284975
+25,unconventional oil production,gas,2000,0.0554271258
+25,unconventional oil production,unconventional oil,2000,0.44699295
+8,unconventional oil production,gas,2001,0.196212025332
+8,unconventional oil production,unconventional oil,2001,1.582355043
+25,unconventional oil production,gas,2001,0.07759797612
+25,unconventional oil production,unconventional oil,2001,0.62579012999999994
+8,unconventional oil production,gas,2002,0.223371316974
+8,unconventional oil production,unconventional oil,2002,1.8013815885
+25,unconventional oil production,gas,2002,0.09976882644
+25,unconventional oil production,unconventional oil,2002,0.80458731000000006
+8,unconventional oil production,gas,2003,0.250530608616
+8,unconventional oil production,unconventional oil,2003,2.020408134
+25,unconventional oil production,gas,2003,0.12193967675999999
+25,unconventional oil production,unconventional oil,2003,0.98338448999999994
+8,unconventional oil production,gas,2004,0.277689900258
+8,unconventional oil production,unconventional oil,2004,2.2394346795
+25,unconventional oil production,gas,2004,0.14411052708
+25,unconventional oil production,unconventional oil,2004,1.16218167
+8,unconventional oil production,gas,2005,0.30484919190000004
+8,unconventional oil production,unconventional oil,2005,2.458461225
+25,unconventional oil production,gas,2005,0.16628137739999999
+25,unconventional oil production,unconventional oil,2005,1.34097885
+8,unconventional oil production,gas,2006,0.32147732964
+8,unconventional oil production,unconventional oil,2006,2.59255911
+25,unconventional oil production,gas,2006,0.16628137739999999
+25,unconventional oil production,unconventional oil,2006,1.34097885
+8,unconventional oil production,gas,2007,0.33810546737999997
+8,unconventional oil production,unconventional oil,2007,2.726656995
+25,unconventional oil production,gas,2007,0.16628137739999999
+25,unconventional oil production,unconventional oil,2007,1.34097885
+8,unconventional oil production,gas,2008,0.35473360512
+8,unconventional oil production,unconventional oil,2008,2.86075488
+25,unconventional oil production,gas,2008,0.16628137739999999
+25,unconventional oil production,unconventional oil,2008,1.34097885
+8,unconventional oil production,gas,2009,0.37136174286
+8,unconventional oil production,unconventional oil,2009,2.994852765
+25,unconventional oil production,gas,2009,0.16628137739999999
+25,unconventional oil production,unconventional oil,2009,1.34097885
+8,unconventional oil production,gas,2010,0.3879898806
+8,unconventional oil production,unconventional oil,2010,3.12895065
+25,unconventional oil production,gas,2010,0.16628137739999999
+25,unconventional oil production,unconventional oil,2010,1.34097885
