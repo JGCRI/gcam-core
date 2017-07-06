@@ -1,0 +1,63 @@
+# File: A23.subsector_shrwt_nuc_R.csv
+# Title: Region-specific nuclear electric subsector shareweights by GCAM3 region
+# Units: ???
+# Source: ???
+region_GCAM3,iso,supplysector,subsector,2015,2020,2035,2050
+USA,,electricity,nuclear,0.8,0.8,1,1
+Canada,,electricity,nuclear,0.8,0.8,1.25,1.25
+Western Europe,,electricity,nuclear,0.8,0.8,0.8,1
+Japan,,electricity,nuclear,0,0,2,2
+Australia_NZ,,electricity,nuclear,0,0,0.05,0.2
+Former Soviet Union,,electricity,nuclear,0.8,0.8,1.75,1.75
+China,,electricity,nuclear,0.2,0.3,0.6,1
+Middle East,,electricity,nuclear,0.05,0.1,0.3,0.4
+Africa,,electricity,nuclear,0.01,0.01,0.2,0.3
+Latin America,,electricity,nuclear,0.125,0.125,0.2,0.3
+Southeast Asia,,electricity,nuclear,0.05,0.05,0.2,0.3
+Eastern Europe,,electricity,nuclear,1,1,1,1
+Korea,,electricity,nuclear,2.75,2.25,2.75,2.5
+India,,electricity,nuclear,0.15,0.15,0.15,0.2
+,abw,electricity,nuclear,0,0,0,0
+,aia,electricity,nuclear,0,0,0,0
+,ant,electricity,nuclear,0,0,0,0
+,atg,electricity,nuclear,0,0,0,0
+,bhs,electricity,nuclear,0,0,0,0
+,blz,electricity,nuclear,0,0,0,0.3
+,bol,electricity,nuclear,0,0,0,0.3
+,bra,electricity,nuclear,0.015,0.1,0.2,0.3
+,brb,electricity,nuclear,0,0,0,0
+,chl,electricity,nuclear,0,0,0.2,0.3
+,col,electricity,nuclear,0,0,0,0.3
+,cri,electricity,nuclear,0,0,0,0.3
+,cub,electricity,nuclear,0,0,0,0.3
+,cym,electricity,nuclear,0,0,0,0
+,dma,electricity,nuclear,0,0,0,0
+,dom,electricity,nuclear,0,0,0,0
+,ecu,electricity,nuclear,0,0,0,0.3
+,glp,electricity,nuclear,0,0,0,0
+,grd,electricity,nuclear,0,0,0,0
+,gtm,electricity,nuclear,0,0,0,0.3
+,guf,electricity,nuclear,0,0,0,0.3
+,guy,electricity,nuclear,0,0,0,0.3
+,hnd,electricity,nuclear,0,0,0,0.3
+,hti,electricity,nuclear,0,0,0,0
+,jam,electricity,nuclear,0,0,0,0
+,kna,electricity,nuclear,0,0,0,0
+,lca,electricity,nuclear,0,0,0,0
+,msr,electricity,nuclear,0,0,0,0
+,nic,electricity,nuclear,0,0,0,0.3
+,pan,electricity,nuclear,0,0,0,0.3
+,per,electricity,nuclear,0,0,0,0.3
+,pry,electricity,nuclear,0,0,0,0.3
+,slv,electricity,nuclear,0,0,0,0.3
+,sur,electricity,nuclear,0,0,0,0.3
+,tto,electricity,nuclear,0,0,0,0
+,ury,electricity,nuclear,0,0,0,0.3
+,vct,electricity,nuclear,0,0,0,0
+,ven,electricity,nuclear,0,0,0,0.3
+,che,electricity,nuclear,0,0,0,0.75
+,isl,electricity,nuclear,0,0,0,0.75
+,lie,electricity,nuclear,0,0,0,0.75
+,nor,electricity,nuclear,0,0,0,0.75
+,sjm,electricity,nuclear,0,0,0,0.75
+,pak,electricity,nuclear,0.05,0.05,0.075,0.1
