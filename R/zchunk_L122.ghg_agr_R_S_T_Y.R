@@ -31,6 +31,12 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
              "L122.ghg_tg_R_agr_C_Y_GLU"))
   } else if(command == driver.MAKE) {
 
+    # Silence package checks
+    year <- GCAM_region_ID <- GCAM_commodity <- value <- crop_area_total <- Prod_R_C <-
+      GLU <- prod_share_GLU <- crop_area_share <- IPCC <- agg_sector <- sector <-
+      Non.CO2 <- total_prod <- prod_share <- emiss_share <- . <- ag_production <-
+      fertilizer <- tot_fertilizer <- fert_share <- emissions <- NULL
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
@@ -81,11 +87,11 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
 
     # Compute EDGAR emissions by region
     L122.EDGAR <- bind_rows(EDGAR_CH4, EDGAR_N2O, EDGAR_NH3, EDGAR_NOx) %>%
-      # Peat fire and forest fire post burn decay not in EDGAR_sector
+      # Use left_join because peat fire and forest fire post burn decay not in EDGAR_sector
       left_join(EDGAR_sector %>% select(IPCC, sector = agg_sector), by = "IPCC") %>%
       standardize_iso(col = "ISO_A3") %>%
       change_iso_code('rou', 'rom') %>%
-      # umi, bvt, sgs, iot, atf, and hmd not in iso_GCAM_regID
+      # Use left_join because umi, bvt, sgs, iot, atf, hmd, ata, sea and air not in iso_GCAM_regID
       left_join(iso_GCAM_regID, by = "iso") %>%
       na.omit() %>%
       gather(year, value , matches(YEAR_PATTERN)) %>%
