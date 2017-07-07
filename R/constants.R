@@ -11,14 +11,15 @@ LOGIT_COLUMN_NAME <- "logit.type"   # will be removed by test code before old-ne
 
 # Flags ======================================================================
 # Flags used by chunks
-FLAG_INPUT_DATA     <- "FLAG_INPUT_DATA"
-FLAG_LONG_YEAR_FORM <- "FLAG_LONG_YEAR_FORM"
-FLAG_NO_OUTPUT      <- "FLAG_NO_OUTPUT"
-FLAG_NO_XYEAR       <- "FLAG_NO_XYEAR"
-FLAG_NO_TEST        <- "FLAG_NO_TEST"
-FLAG_SUM_TEST       <- "FLAG_SUM_TEST"
-FLAG_PROTECT_FLOAT  <- "FLAG_PROTECT_FLOAT"
-FLAG_XML            <- "FLAG_XML"
+FLAG_INPUT_DATA      <- "FLAG_INPUT_DATA"       # input data, don't output
+FLAG_LONG_YEAR_FORM  <- "FLAG_LONG_YEAR_FORM"   # 'year' column but original data are wide
+FLAG_NO_OUTPUT       <- "FLAG_NO_OUTPUT"        # don't output
+FLAG_NO_XYEAR        <- "FLAG_NO_XYEAR"         # year names don't have X's in front
+FLAG_NO_TEST         <- "FLAG_NO_TEST"          # don't test
+FLAG_SUM_TEST        <- "FLAG_SUM_TEST"         # use less-restrictive sum test
+FLAG_PROTECT_FLOAT   <- "FLAG_PROTECT_FLOAT"    # protect float columns from readr bug
+FLAG_XML             <- "FLAG_XML"              # xml data
+FLAG_YEAR_COL_XYEARS <- "FLAG_YEAR_COL_XYEARS"  # 'year' column without X's in front
 
 
 # Time constants======================================================================
@@ -289,3 +290,5 @@ emissions.EPA_MACC_YEAR        <- 2030  # Must be either 2020 or 2030
 emissions.MAC_TAXES            <- c(0, 5, 10, 15, 32, 66, 129, 243, 486, 1093) # Range of costs in 1990 USD
 emissions.CONV_C_CO2           <- 44 / 12 # Convert Carbon to CO2
 emissions.DEFOREST_COEF_YEARS  <- c(2000, 2005)
+emissions.AGR_SECTORS          <- c("rice", "fertilizer", "soil")
+emissions.AGR_GASES            <- c("CH4_AGR", "N2O_AGR", "NH3_AGR", "NOx_AGR")
