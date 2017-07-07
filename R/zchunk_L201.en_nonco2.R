@@ -332,8 +332,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       add_title("Pollutant emissions for energy resources in all regions") %>%
       add_units("Tg/EJ") %>%
       add_comments("Take non-GHG emissions for the energy system, filter to include only resources") %>%
-      add_comments("in model base years, rename to regional SO2, filter to district heat,") %>%
-      add_comments("and delete sectors with zero heating and zero cooling degree days.") %>%
+      add_comments("in model base years, and rename to regional SO2.") %>%
       add_legacy_name("L201.nonghg_res") %>%
       add_precursors("common/GCAM_region_names",
                      "emissions/A_regions",
@@ -344,8 +343,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       add_title("GHG emissions from resource production in all regions") %>%
       add_units("Tg/EJ") %>%
       add_comments("Take GHG emissions for the energy system, filter to include only resources") %>%
-      add_comments("in model base years, rename to regional SO2, filter to district heat,") %>%
-      add_comments("and delete sectors with zero heating and zero cooling degree days.") %>%
+      add_comments("in model base years, and rename to regional SO2.") %>%
       add_legacy_name("L201.ghg_res") %>%
       add_precursors("common/GCAM_region_names",
                      "temp-data-inject/L112.ghg_tgej_R_en_S_F_Yh") ->
