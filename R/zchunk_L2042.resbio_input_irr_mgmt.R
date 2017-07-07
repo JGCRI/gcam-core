@@ -133,19 +133,39 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
 
 
     # 4. Mill Residue biomass supply curves
-      A_demand_technology %>%
+
+    # build in a base residue biomass supply curve table, adding in the relevant residual bio forest vs price curve for
+    # each Region - agsupply-year combo, and rename to reflect the fact that For = Fraction of  forest harvested for a
+    # given price level.
+    A_demand_technology %>%
       filter(supplysector == "NonFoodDemand_Forest") %>%
       select(supplysector, subsector, technology) %>%
       write_to_all_regions(names = c("region", "supplysector", "subsector", "technology"),
                            GCAM_region_names) %>%
-      filter(! region %in% aglu.NO_AGLU_REGIONS) ->
-      L204.R_Mill_tech
+      filter(! region %in% aglu.NO_AGLU_REGIONS) %>%
+      repeat_add_columns(bind_cols(tibble::tibble(year = MODEL_YEARS))) %>%
+      repeat_add_columns(select(A_resbio_curves, price, For)) %>%
+      rename(fract.harvested = For,
+             stub.technology = technology) %>%
+      mutate(residue.biomass.production = "biomass") ->
+      # store for rejoinging after further manipulation
+      L204.StubResBioCurve_Mill_tmp
+
+    # In base years, replace the "fraction produced" at specified price aglu.PRICE_BIO_FRAC in the model BASE_YEAR,
+    # in order to calibrate resbio production. The fract.harvested for these prices X years are replaced by
+    # the GCAM_region's Base-year fraction of residue biomass produced by region for Mill, from assumption file
+    # A_bio_frac_prod_R
+    L204.StubResBioCurve_Mill_tmp %>%
+      filter(price == aglu.PRICE_BIO_FRAC, year %in% BASE_YEARS) %>%
+      left_join(select(A_bio_frac_prod_R, region, Mill), by = "region") %>%
+      select(-fract.harvested) %>%
+      rename(fract.harvested = Mill) %>%
+      # join back to full table of AgResBioCurve_For
+      bind_rows(filter(L204.StubResBioCurve_Mill_tmp, !( price == aglu.PRICE_BIO_FRAC & year %in% BASE_YEARS))) ->
+      L204.StubResBioCurve_Mill
 
 
-
-
-
-    # AGRICULTURE
+    # AGRICULTURE RESIDUE BIO
 
 
 
