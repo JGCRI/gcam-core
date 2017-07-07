@@ -53,6 +53,9 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
       mutate(year = as.integer(substr(year, 2, 5))) ->
       L123.For_Prod_bm3_R_Y_GLU
 
+    # following line temproary while L103 is output from zchunk_LA103.ag_R_C_Y_GLU.R as grouped
+    L103.ag_Prod_Mt_R_C_Y_GLU %>% ungroup -> L103.ag_Prod_Mt_R_C_Y_GLU
+
 
     # Build Tables
 
@@ -104,7 +107,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
     # A_bio_frac_prod_R
     L204.AgResBioCurve_For_tmp %>%
       filter(price == aglu.PRICE_BIO_FRAC, year %in% BASE_YEARS) %>%
-      left_join(select(A_bio_frac_prod_R, region, For), by = "region") %>%
+      left_join_error_no_match(select(A_bio_frac_prod_R, region, For), by = "region") %>%
       select(-fract.harvested) %>%
       rename(fract.harvested = For) %>%
       # join back to full table of AgResBioCurve_For
@@ -157,7 +160,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
     # A_bio_frac_prod_R
     L204.StubResBioCurve_Mill_tmp %>%
       filter(price == aglu.PRICE_BIO_FRAC, year %in% BASE_YEARS) %>%
-      left_join(select(A_bio_frac_prod_R, region, Mill), by = "region") %>%
+      left_join_error_no_match(select(A_bio_frac_prod_R, region, Mill), by = "region") %>%
       select(-fract.harvested) %>%
       rename(fract.harvested = Mill) %>%
       # join back to full table of AgResBioCurve_For
@@ -167,10 +170,67 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
 
     # AGRICULTURE RESIDUE BIO
 
+    # 5. Form a table of Agricultural Residue Biomass Paramters by region-glu-year
+    L103.ag_Prod_Mt_R_C_Y_GLU %>%
+      select(GCAM_region_ID, GCAM_commodity, GLU) %>%
+      distinct %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      # have to use left_join + na.omit to match  m e r g e  behavior in old DS
+      left_join(left_join_error_no_match(L111.ag_resbio_R_C, GCAM_region_names, by = "GCAM_region_ID"),
+                by = c("region", "GCAM_commodity")) %>%
+      na.omit %>%
+      mutate(AgSupplySector = GCAM_commodity,
+             AgSupplySubsector = paste(GCAM_commodity, GLU, sep = aglu.CROP_GLU_DELIMITER),
+             AgProductionTechnology = AgSupplySubsector,
+             ### from here down could be a function for all actually
+             ### just add For/Mill identifier and gather a couple of the external tables
+             residue.biomass.production = "biomass",
+             # fill in parameters
+             mass.conversion = aglu.AVG_AG_DENSITY,
+             harvest.index = round(HarvestIndex, aglu.DIGITS_HARVEST_INDEX),
+             eros.ctrl = round(ErosCtrl_tHa * CONV_THA_KGM2, aglu.DIGITS_EROS_CTRL),
+             mass.to.energy = round(ResEnergy_GJt * CONV_KG_T, aglu.DIGITS_RES_ENERGY),
+             water.content = round(WaterContent, aglu.DIGITS_WATER_CONTENT)) %>%
+      repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) %>%
+      select(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology, year, residue.biomass.production,
+             mass.conversion, harvest.index, eros.ctrl, mass.to.energy, water.content) ->
+      L204.AgResBio_ag
+
+    # 6. Agricultural residue biomass supply curves
+    # Much simpler than for Mill or forest, no replacing of base year values.
+    ### IS THERE A REASON WE DON'T FOR AG? THE DATA IS THERE? Open issue
+    L204.AgResBio_ag %>%
+      select(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology, year, residue.biomass.production) %>%
+      repeat_add_columns(select(A_resbio_curves, price, ag)) %>%
+      rename(fract.harvested = ag) ->
+      L204.AgResBioCurve_ag
+
+
+    # 2041 and 2042 code
+    L204.AgResBio_ag %>%
+      repeat_add_columns(tibble::tibble(Irr_Rfd = c( "IRR", "RFD" ))) %>%
+      repeat_add_columns(tibble::tibble(level = c( "lo", "hi" ))) %>%
+      mutate(AgProductionTechnology = paste(paste(AgProductionTechnology, Irr_Rfd, sep = aglu.IRR_DELIMITER),
+                                            level, sep = aglu.MGMT_DELIMITER)) %>%
+      select(-Irr_Rfd, -level) ->
+      L2042.AgResBio_ag_irr_mgmt
+
+    L204.AgResBioCurve_ag %>%
+      repeat_add_columns(tibble::tibble(Irr_Rfd = c( "IRR", "RFD" ))) %>%
+      repeat_add_columns(tibble::tibble(level = c( "lo", "hi" ))) %>%
+      mutate(AgProductionTechnology = paste(paste(AgProductionTechnology, Irr_Rfd, sep = aglu.IRR_DELIMITER),
+                                            level, sep = aglu.MGMT_DELIMITER)) %>%
+      select(-Irr_Rfd, -level) ->
+      L204.AgResBioCurve_ag_irr_mgmt
+
+
+
+
+
 
 
     # Produce outputs
-    tibble() %>%
+    L204.AgResBio_For %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -188,7 +248,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2042.AgResBio_For
-    tibble() %>%
+    L204.AgResBioCurve_For %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -206,7 +266,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2042.AgResBioCurve_For
-    tibble() %>%
+    L204.GlobalResBio_Mill %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -221,10 +281,9 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
                      "L111.ag_resbio_R_C",
                      "L103.ag_Prod_Mt_R_C_Y_GLU",
                      "temp-data-inject/L123.For_Prod_bm3_R_Y_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2042.GlobalResBio_Mill
-    tibble() %>%
+    L204.StubResBioCurve_Mill %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -242,7 +301,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2042.StubResBioCurve_Mill
-    tibble() %>%
+    L2042.AgResBio_ag_irr_mgmt %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -260,7 +319,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2042.AgResBio_ag_irr_mgmt
-    tibble() %>%
+    L2042.AgResBioCurve_ag_irr_mgmt %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
