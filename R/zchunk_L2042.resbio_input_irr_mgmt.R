@@ -221,7 +221,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
       mutate(AgProductionTechnology = paste(paste(AgProductionTechnology, Irr_Rfd, sep = aglu.IRR_DELIMITER),
                                             level, sep = aglu.MGMT_DELIMITER)) %>%
       select(-Irr_Rfd, -level) ->
-      L204.AgResBioCurve_ag_irr_mgmt
+      L2042.AgResBioCurve_ag_irr_mgmt
 
 
 
@@ -244,9 +244,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
                      "aglu/A_bio_frac_prod_R",
                      "L111.ag_resbio_R_C",
                      "L103.ag_Prod_Mt_R_C_Y_GLU",
-                     "temp-data-inject/L123.For_Prod_bm3_R_Y_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "temp-data-inject/L123.For_Prod_bm3_R_Y_GLU") ->
       L2042.AgResBio_For
     L204.AgResBioCurve_For %>%
       add_title("descriptive title of data") %>%
@@ -262,9 +260,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
                      "aglu/A_bio_frac_prod_R",
                      "L111.ag_resbio_R_C",
                      "L103.ag_Prod_Mt_R_C_Y_GLU",
-                     "temp-data-inject/L123.For_Prod_bm3_R_Y_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "temp-data-inject/L123.For_Prod_bm3_R_Y_GLU")  ->
       L2042.AgResBioCurve_For
     L204.GlobalResBio_Mill %>%
       add_title("descriptive title of data") %>%
@@ -280,8 +276,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
                      "aglu/A_bio_frac_prod_R",
                      "L111.ag_resbio_R_C",
                      "L103.ag_Prod_Mt_R_C_Y_GLU",
-                     "temp-data-inject/L123.For_Prod_bm3_R_Y_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "temp-data-inject/L123.For_Prod_bm3_R_Y_GLU")  ->
       L2042.GlobalResBio_Mill
     L204.StubResBioCurve_Mill %>%
       add_title("descriptive title of data") %>%
@@ -297,9 +292,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
                      "aglu/A_bio_frac_prod_R",
                      "L111.ag_resbio_R_C",
                      "L103.ag_Prod_Mt_R_C_Y_GLU",
-                     "temp-data-inject/L123.For_Prod_bm3_R_Y_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "temp-data-inject/L123.For_Prod_bm3_R_Y_GLU") ->
       L2042.StubResBioCurve_Mill
     L2042.AgResBio_ag_irr_mgmt %>%
       add_title("descriptive title of data") %>%
@@ -315,9 +308,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
                      "aglu/A_bio_frac_prod_R",
                      "L111.ag_resbio_R_C",
                      "L103.ag_Prod_Mt_R_C_Y_GLU",
-                     "temp-data-inject/L123.For_Prod_bm3_R_Y_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "temp-data-inject/L123.For_Prod_bm3_R_Y_GLU") ->
       L2042.AgResBio_ag_irr_mgmt
     L2042.AgResBioCurve_ag_irr_mgmt %>%
       add_title("descriptive title of data") %>%
@@ -333,9 +324,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
                      "aglu/A_bio_frac_prod_R",
                      "L111.ag_resbio_R_C",
                      "L103.ag_Prod_Mt_R_C_Y_GLU",
-                     "temp-data-inject/L123.For_Prod_bm3_R_Y_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "temp-data-inject/L123.For_Prod_bm3_R_Y_GLU") ->
       L2042.AgResBioCurve_ag_irr_mgmt
 
     return_data(L2042.AgResBio_For, L2042.AgResBioCurve_For, L2042.GlobalResBio_Mill, L2042.StubResBioCurve_Mill, L2042.AgResBio_ag_irr_mgmt, L2042.AgResBioCurve_ag_irr_mgmt)
