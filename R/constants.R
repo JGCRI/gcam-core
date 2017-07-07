@@ -274,6 +274,16 @@ DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.001
 emissions.EPA_HISTORICAL_YEARS <- 1971:2002
 emissions.TST_TO_TG            <- 0.000907 # Thousand short tons to Tg
 emissions.NH3_HISTORICAL_YEARS <- 1990:2002
+emissions.NH3_EXTRA_YEARS <- 1971:1989
+emissions.EDGAR_YEARS <- 1971:2008
+emissions.EDGAR_HISTORICAL <- 1971:2008
+emissions.EPA_MACC_YEAR <- 2030  # Must be either 2020 or 2030
+emissions.MAC_TAXES <- c( 0, 5, 10, 15, 32, 66, 129, 243, 486, 1093 ) # Range of costs in 1990 USD
+emissions.CONV_C_CO2 <- 44 / 12 # Convert Carbon to CO2
+emissions.DEFOREST_COEF_YEARS <- c(2000, 2005)
+emissions.PFCS <- c("CF4", "C2F6", "SF6")
+# ======================================================================
+
 emissions.NH3_EXTRA_YEARS      <- 1971:1989
 emissions.EDGAR_YEARS          <- 1971:2008
 emissions.EPA_MACC_YEAR        <- 2030  # Must be either 2020 or 2030
