@@ -97,7 +97,7 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
       gather(year, value , matches(YEAR_PATTERN)) %>%
       mutate(year = as.integer(year)) %>%
       select(GCAM_region_ID, sector, Non.CO2, year, value) %>%
-      filter(year %in% emissions.EDGAR_HISTORICAL) %>%
+      filter(year %in% emissions.EDGAR_YEARS) %>%
       # Aggregate and convert to Tg
       group_by(GCAM_region_ID, Non.CO2, sector, year) %>%
       summarise(value = sum(value)) %>%
@@ -114,7 +114,7 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
 
     # Compute share of rice production by GLU in each region / year
     L122.ag_Prod_Mt_R_rice_Y_GLU <- L103.ag_Prod_Mt_R_C_Y_GLU %>%
-      filter(GCAM_commodity == "Rice", year %in% emissions.EDGAR_HISTORICAL) %>%
+      filter(GCAM_commodity == "Rice", year %in% emissions.EDGAR_YEARS) %>%
       group_by(GCAM_region_ID, GCAM_commodity, year) %>%
       # Total production by region, commodity, and year for calculating share
       mutate(total_prod = sum(value)) %>%
@@ -134,7 +134,7 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
 
     # Multiply total emissions by production share
     L122.ghgsoil_tg_R_C_Y_GLU <- L122.EmissShare_R_C_Y_GLU %>%
-      filter(year %in% emissions.EDGAR_HISTORICAL) %>%
+      filter(year %in% emissions.EDGAR_YEARS) %>%
       repeat_add_columns(tibble(Non.CO2 = unique(L122.EDGAR_soil$Non.CO2))) %>%
       left_join_error_no_match(L122.EDGAR_soil, by = c("GCAM_region_ID", "year", "Non.CO2")) %>%
       transmute(GCAM_region_ID, GCAM_commodity, year, GLU, Non.CO2,
