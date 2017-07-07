@@ -137,8 +137,12 @@ aglu.NO_AGLU_REGIONS <- "Taiwan"
 # Define GCAM category name of fertilizer
 aglu.FERT_NAME <- "N fertilizer"
 
-# Average Wood Density kg/m^3
+# Average Wood Density kg/m^3 for mass conversion
 aglu.AVG_WOOD_DENSITY_KGM3 <- 500
+
+# Average Agriculture Density for mass conversion
+# no idea of units, just hardcoded in as 1 in old DS
+aglu.AVG_AG_DENSITY <- 1
 
 # Forest Harvest Index
 aglu.FOREST_HARVEST_INDEX <- 0.8
@@ -147,7 +151,7 @@ aglu.FOREST_HARVEST_INDEX <- 0.8
 aglu.FOREST_EROSION_CTRL_KGM2 <- 0.2
 
 #Mill Erosion Control in kg/m^2
-aglu.MILL_EROSION_CTRL_KGM2 <- 0.2
+aglu.MILL_EROSION_CTRL_KGM2 <- 0
 
 # Wood energy content in GJ/kg
 aglu.WOOD_ENERGY_CONTENT_GJKG <- 0.0189
@@ -160,10 +164,17 @@ aglu.WOOD_WATER_CONTENT <- 0.065
 # XML-related constants
 aglu.GLU_NDIGITS          <- 3    # number of digits in the geographic land unit identifier codes
 aglu.GLU_NAME_DELIMITER   <- ""   # delimiter between the GLU name and number
+# ^ looks like this is in here twice
 aglu.LT_GLU_DELIMITER     <-      # delimiter between the land use type name and GLU name. should be the same as the crop-glu delimiter
 aglu.CROP_GLU_DELIMITER   <- "_"  # delimiter between the crop name and GLU name
 aglu.IRR_DELIMITER        <- "_"  # delimiter between the appended crop x GLU and irrigation level
 aglu.MGMT_DELIMITER       <- "_"  # delimiter between appended tech name and management level
+
+# some more digits for rounding going into XMLs
+aglu.DIGITS_HARVEST_INDEX <- 2
+aglu.DIGITS_EROS_CTRL     <- 2
+aglu.DIGITS_RES_ENERGY    <- 4
+aglu.DIGITS_WATER_CONTENT <- 2
 
 
 # Energy constants ======================================================================
