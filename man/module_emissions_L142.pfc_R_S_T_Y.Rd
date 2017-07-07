@@ -18,7 +18,7 @@ the generated outputs: \code{L142.pfc_R_S_T_Yh}. The corresponding file in the
 original data system was \code{L142.pfc_R_S_T_Y.R} (emissions level1).
 }
 \description{
-This chunk maps HFC emission shares by region, sector, technology, gas, and year for years 1971-2008.
+Map HFC emission shares by region, sector, technology, gas, and year for years 1971-2008.
 }
 \details{
 First, a table was created that has all historical HFCs values.
