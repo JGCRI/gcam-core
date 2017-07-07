@@ -1,6 +1,6 @@
 #' module_emissions_L142.pfc_R_S_T_Y
 #'
-#' This chunk maps HFC emission shares by region, sector, technology, gas, and year for years 1971-2008.
+#' Map HFC emission shares by region, sector, technology, gas, and year for years 1971-2008.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -68,14 +68,11 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
     # First, create a table with all EDGAR HFCs, and prep "Other_F" table for use by renaming column.
 
     EDGAR_SF6$Non.CO2 <- "SF6"
-
     EDGAR_C2F6$Non.CO2 <- "C2F6"
-
     EDGAR_CF4 %>%
       mutate(Non.CO2 = "CF4") %>%
       bind_rows(EDGAR_SF6, EDGAR_C2F6, .) ->
       ALL_EDGAR_HFC
-
     Other_F %>%
       rename(Non.CO2 = Gas) ->
       Other_F
