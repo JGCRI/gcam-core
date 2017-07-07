@@ -6,6 +6,7 @@ XML_DIR      <- "xml/"
 COMMENT_CHAR <- "#"
 OLD_DATA_SYSTEM_BEHAVIOR <- TRUE
 YEAR_PATTERN <- "^(1|2)[0-9]{3}$"   # a 1 or 2 followed by three digits, and nothing else
+LOGIT_COLUMN_NAME <- "logit.type"   # will be removed by test code before old-new comparison
 
 
 # Flags ======================================================================
@@ -80,6 +81,7 @@ PRICERATIO_GRASS_ALFALFA <- 0.7
 # NUMBERS OF DIGITS FOR MODEL INPUT DATA
 aglu.DIGITS_CALPRICE <- 4 # prices and costs
 aglu.DIGITS_CALOUTPUT <- 7 # production
+aglu.DIGITS_INCELAS <- 4 # food demand income elasticity
 aglu.DIGITS_AGPRODCHANGE <- 4 # rate of change in yield
 
 # Carbon content of all cellulose
@@ -93,6 +95,9 @@ MAX_HA_TO_CROPLAND <- 3
 
 # Yield multiplier that goes from the observed yield to the "high" and "low" yields: observed plus or minus observed times this number
 MGMT_YIELD_ADJ <- 0.1
+
+# Meat price elasticity in the USA
+aglu.FOOD_MEAT_P_ELAS_USA <- -0.09
 
 # Multipliers for high & low ag prod growth scenarios
 aglu.HI_PROD_GROWTH_MULT <- 1.5

@@ -1,8 +1,8 @@
 # File: A_demand_technology.csv
-# Title: Technologies and inputs of animal production
-# Units: NA
-# Source: NA
-# ----------
+# Title: Technologies and inputs of agricultural production
+# Unit: NA
+# Description: Generic information of technologies and inputs of agricultural production
+# Source: GCAM assumptions
 supplysector,subsector,technology,apply.to,from.year,to.year,interpolation.function,minicam.energy.input,coefficient
 FoodDemand_Crops,Corn,Corn,share-weight,final-calibration-year,end-year,fixed,Corn,1
 FoodDemand_Crops,FiberCrop,FiberCrop,share-weight,final-calibration-year,end-year,fixed,FiberCrop,1
