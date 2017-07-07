@@ -104,6 +104,10 @@ aglu.FOR_COST_75USDM3 <- 29.59
 aglu.BIO_GRASS_COST_75USD_GJ <- 0.75
 aglu.BIO_TREE_COST_75USD_GJ <- 0.67
 
+# Price biomass fraction
+# Sorry, I have no idea what this is
+aglu.PRICE_BIO_FRAC <- 1.2
+
 # Fertilizer application rate for biomass, and carbon yields. Values from Adler et al. 2007 (doi:10.1890/05-2018)
 aglu.BIO_GRASS_FERT_IO_GNM2 <- 5.6
 aglu.BIO_GRASS_YIELD_KGCM2 <- 0.34
@@ -133,11 +137,31 @@ aglu.NO_AGLU_REGIONS <- "Taiwan"
 # Define GCAM category name of fertilizer
 aglu.FERT_NAME <- "N fertilizer"
 
+# Average Wood Density kg/m^3
+aglu.AVG_WOOD_DENSITY_KGM3 <- 500
+
+# Forest Harvest Index
+aglu.FOREST_HARVEST_INDEX <- 0.8
+
+# Forest Erosion Control in kg/m^2
+aglu.FOREST_EROSION_CTRL_KGM2 <- 0.2
+
+#Mill Erosion Control in kg/m^2
+aglu.MILL_EROSION_CTRL_KGM2 <- 0.2
+
+# Wood energy content in GJ/kg
+aglu.WOOD_ENERGY_CONTENT_GJKG <- 0.0189
+
+# wood water content
+aglu.WOOD_WATER_CONTENT <- 0.065
+
+
+
 # XML-related constants
 aglu.GLU_NDIGITS          <- 3    # number of digits in the geographic land unit identifier codes
 aglu.GLU_NAME_DELIMITER   <- ""   # delimiter between the GLU name and number
 aglu.LT_GLU_DELIMITER     <-      # delimiter between the land use type name and GLU name. should be the same as the crop-glu delimiter
-  aglu.CROP_GLU_DELIMITER <- "_"  # delimiter between the crop name and GLU name
+aglu.CROP_GLU_DELIMITER   <- "_"  # delimiter between the crop name and GLU name
 aglu.IRR_DELIMITER        <- "_"  # delimiter between the appended crop x GLU and irrigation level
 aglu.MGMT_DELIMITER       <- "_"  # delimiter between appended tech name and management level
 
