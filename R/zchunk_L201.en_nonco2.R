@@ -287,6 +287,8 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       rename(max.reduction = max_reduction) %>% # no idea why old data system renamed this
       add_title("Maximum emissions reduction rates for energy technologies in all regions") %>%
       add_units("%") %>%
+      add_comments("The maximum reduction is calculated in L151 to match the maximum emissions controls assumed in GCAM3.") %>%
+      add_comments("Controls are removed when the maximum reduction is zero.") %>%
       add_legacy_name("L201.nonghg_max_reduction") %>%
       add_precursors("common/GCAM_region_names",
                      "emissions/A_regions", "energy/A_regions",
@@ -297,6 +299,8 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     L201.nonghg_steepness %>%
       add_title("Steepness of emissions reduction for energy technologies in all regions") %>%
       add_units("%") %>%
+      add_comments("The steepness is from an assumptions file (A51_steepness). It was chosen to replicate the pollutant reduction rates for SO2 in GCAM3.") %>%
+      add_comments("Steepness is removed for technologies with maximum reduction rates of 0.") %>%
       add_legacy_name("L201.nonghg_steepness") %>%
       add_precursors("common/GCAM_region_names",
                      "emissions/A_regions", "energy/A_regions",
@@ -318,7 +322,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     L201.nonghg_steepness_res %>%
       add_title("Steepness of reduction for resources in all regions") %>%
       add_units("%") %>%
-      add_comments("The steepness is from an assumptions file (L201.nonghg_steepness_res). It was chosen to replicate the pollutant reduction rates for SO2 in GCAM3.") %>%
+      add_comments("The steepness is from an assumptions file (A51_steepness). It was chosen to replicate the pollutant reduction rates for SO2 in GCAM3.") %>%
       add_comments("Steepness is removed for technologies with maximum reduction rates of 0.") %>%
       add_legacy_name("L201.nonghg_steepness_res") %>%
       same_precursors_as(L201.nonghg_steepness) ->
