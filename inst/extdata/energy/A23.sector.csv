@@ -1,7 +1,7 @@
-# File: A23.sector.csv,
-# Title: Electricity sector - supplysector characteristics,
-# Units: Unitless,
-# Source: GCAM assumptions,
+# File: A23.sector.csv
+# Title: Electricity sector - supplysector characteristics
+# Units: Unitless
+# Source: GCAM assumptions
 # Electricity reserve margin: required excess capacity for purposes of grid reliability,
 # Average grid capacity factor: exogenous assumption allowing conversion between explicitly modeled generation and capacity,
 supplysector,output.unit,input.unit,price.unit,logit.exponent,electricity.reserve.margin,average.grid.capacity.factor,logit.type
