@@ -50,30 +50,33 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
     L101.IEA_en_bal_ctry_hist %>%
       left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
       # It is OK having NA at this stage since not every record has a match. NAs will be removed in the next step
-      left_join(select(IEA_flow_sector, FLOW=flow_code, sector), by ="FLOW") %>%
-      left_join(select(IEA_product_fuel, fuel, PRODUCT = product), by ="PRODUCT") %>%
-      left_join(select(IEA_flow_sector, FLOW = flow_code, conversion), by ="FLOW") %>%
+      left_join(select(IEA_flow_sector, FLOW = flow_code, sector), by = "FLOW") %>%
+      left_join(select(IEA_product_fuel, fuel, PRODUCT = product), by = "PRODUCT") %>%
+      left_join(select(IEA_flow_sector, FLOW = flow_code, conversion), by = "FLOW") %>%
       na.omit() -> L101.IEA_en_bal_ctry_hist
 
-    # Rename biofuel fuel name for appropiate sectors
+    # Rename biofuel fuel name for appropiate sectors and regions according to A_regions in GCAM (not following IEA)
     L101.IEA_en_bal_ctry_hist %>%
-      mutate( fuel = if_else(fuel == "biomass_tradbio" & sector != "in_bld_resid", "biomass", fuel)) %>%
+      mutate(fuel = if_else(fuel == "biomass_tradbio" & sector != "in_bld_resid", "biomass", fuel)) %>%
       left_join_error_no_match(select(A_regions, tradbio_region, GCAM_region_ID), by = "GCAM_region_ID") %>%
+      # Rename biomass_tradbio to biomas fuel to tradbio_region 0 (USA)
       mutate(fuel = if_else(fuel == "biomass_tradbio" & tradbio_region == 0, "biomass", fuel)) %>%
-      select(- tradbio_region) -> L101.IEA_en_bal_ctry_hist
+      select(-tradbio_region) -> L101.IEA_en_bal_ctry_hist
 
     # In some countries, "gas works gas" is produced from coal. This is calibrated (coal gasification), so re-name the relevant sectors
     # Rename the sector and the fuel: where the sector is gas works and the fuel is coal, this is the input to gas processing
     L101.IEA_en_bal_ctry_hist %>%
       mutate(sector= if_else(sector == "net_gas works" & fuel == "coal", "in_gas processing", sector)) %>%
       #Where the sector is gas works and the fuel is not coal, this is industry/energy transformation
-      mutate(sector= if_else(sector == "net_gas works" & fuel != "coal", "net_industry_energy transformation", sector)) -> L101.IEA_en_bal_ctry_hist
+      mutate(sector = if_else(sector == "net_gas works" & fuel != "coal", "net_industry_energy transformation", sector)) -> L101.IEA_en_bal_ctry_hist
 
     # Create aux tibble for IEA_sector_fuel_modifications with renamed values for Re-setting sector-fuel combinations as specified in IEA_sector_fuel_modifications
     IEA_sector_fuel_modifications %>%
       mutate(sector = if_else(is.na(sector), "none", sector)) %>%
       mutate(fuel = if_else(is.na(fuel), "none", fuel)) %>%
+      # Rename secotr as sector_IEA since "sector" will be used fo joining next. We need to keep sector/fuel_IEA to replace sectors that are not well defined later on.
       rename(sector_IEA = sector, fuel_IEA = fuel) %>%
+      # Done in two steps for clarity. Sometines repeating names creates errors in the code and it is not easy to follow
       select(sector_IEA, fuel_IEA, sector = sector_initial, fuel = fuel_initial, conversion_IEA = conversion) %>%
       mutate(sector2 = sector, fuel2 = fuel) -> sector_fuel_tochange
 
@@ -85,10 +88,9 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
       mutate(fuel = if_else(is.na(fuel), "none", fuel)) %>%
       mutate(sector3 = sector, fuel3 = fuel) %>%
       left_join(sector_fuel_tochange, by = c("sector" , "fuel")) %>%
-      mutate(sector = if_else(sector3 == sector2 & fuel3 == fuel2&!is.na(sector2)&!is.na(fuel2) , sector_IEA, sector)) %>%
-      mutate(fuel   = if_else(sector3 == sector2 & fuel3 == fuel2&!is.na(sector2)&!is.na(fuel2) , fuel_IEA, fuel)) %>%
-      mutate(conversion = if_else(sector3 == sector2 & fuel3 == fuel2&!is.na(sector2)&!is.na(fuel2) , conversion_IEA, conversion)) %>%
-      select(-sector_IEA, -fuel_IEA, -conversion_IEA, -sector2, -fuel2, -sector3, -fuel3) %>%
+      mutate(sector = if_else(sector3 == sector2 & fuel3 == fuel2 & !is.na(sector2) & !is.na(fuel2) , sector_IEA, sector)) %>%
+      mutate(fuel   = if_else(sector3 == sector2 & fuel3 == fuel2 & !is.na(sector2) & !is.na(fuel2) , fuel_IEA, fuel)) %>%
+      mutate(conversion = if_else(sector3 == sector2 & fuel3 == fuel2 & !is.na(sector2) & !is.na(fuel2) , conversion_IEA, conversion)) %>%
       select(iso, FLOW, PRODUCT, GCAM_region_ID, sector, fuel, conversion, year, value) %>%
       arrange(iso, FLOW, PRODUCT, GCAM_region_ID, sector, fuel, year) %>%
       filter(fuel != "none") %>% na.omit()-> L101.IEA_en_bal_ctry_hist
@@ -96,9 +98,9 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
     # Drop some sector-fuel combinations that are not relevant
     # Electricity-only fuels in sectors other than electricity generation
     L101.IEA_en_bal_ctry_hist %>%
-      mutate(sector=if_else(grepl( "elec_", fuel) & !grepl( "electricity generation",sector),NA_character_, sector)) %>%
-      mutate(sector=if_else(fuel=="biomass" & grepl( "trn_", sector),NA_character_, sector)) %>%
-      mutate(sector=if_else(fuel=="heat" & grepl( "trn_", sector),NA_character_, sector)) %>%
+      mutate(sector = if_else(grepl( "elec_", fuel) & !grepl( "electricity generation",sector),NA_character_, sector)) %>%
+      mutate(sector = if_else(fuel == "biomass" & grepl( "trn_", sector),NA_character_, sector)) %>%
+      mutate(sector = if_else(fuel == "heat" & grepl( "trn_", sector),NA_character_, sector)) %>%
       na.omit() -> L101.IEA_en_bal_ctry_hist_clean
 
 
@@ -128,8 +130,6 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
                 by = c("GCAM_region_ID","sector", "fuel","year")) %>%
       mutate(value = if_else(is.na(value), 0, value)) -> L101.en_bal_EJ_R_Si_Fi_Yh_full
 
-
-
     # Calculate the total primary energy supply (TPES) in each region as the sum of all flows that are inputs
     # This guarantees that our TPES will be consistent with the tracked forms of consumption (i.e. no statdiffs, stock changes, transfers)
     L101.en_bal_EJ_R_Si_Fi_Yh_full %>%
@@ -146,8 +146,8 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
     # a: transport
     L101.IEA_en_bal_ctry_hist_clean %>%
       filter(grepl("trn", sector)) %>%
-      left_join_error_no_match(select(enduse_fuel_aggregation, fuel, trn), by ="fuel") %>%
-      select(-fuel, fuel=trn) -> L101.in_ktoe_ctry_trn_Fiea
+      left_join_error_no_match(select(enduse_fuel_aggregation, fuel, trn), by = "fuel") %>%
+      select(-fuel, fuel = trn) -> L101.in_ktoe_ctry_trn_Fiea
 
     L101.in_ktoe_ctry_trn_Fiea %>%
       select(iso, sector, fuel, year, value, conversion) %>%
@@ -158,8 +158,8 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
     # b: buildings
     L101.IEA_en_bal_ctry_hist_clean %>%
       filter(grepl("bld", sector)) %>%
-      left_join_error_no_match(select(enduse_fuel_aggregation, fuel, bld), by ="fuel") %>%
-      select(-fuel, fuel=bld) -> L101.in_ktoe_ctry_bld_Fiea
+      left_join_error_no_match(select(enduse_fuel_aggregation, fuel, bld), by = "fuel") %>%
+      select(-fuel, fuel = bld) -> L101.in_ktoe_ctry_bld_Fiea
 
     L101.in_ktoe_ctry_bld_Fiea %>%
       select(iso, sector, fuel, year, value, conversion) %>%
@@ -175,7 +175,7 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
       summarise(value = sum(value_int)) -> L101.en_bal_EJ_ctry_Si_Fi_Yh
 
     L101.en_bal_EJ_ctry_Si_Fi_Yh %>%
-      filter(grepl("in_", substr( sector, 1, 3 )) | grepl( "net_", substr( sector, 1, 4 ))) %>%
+      filter(grepl("in_", sector) | grepl( "net_", sector)) %>%
       ungroup() %>%
       mutate(sector = "TPES")%>%
       group_by(iso, GCAM_region_ID, sector, fuel, year) %>%
