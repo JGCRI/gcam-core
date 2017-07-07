@@ -121,6 +121,60 @@ make_run_xml_conversion <- function() {
 #' @export
 run_xml_conversion <- make_run_xml_conversion()
 
+#' Add a table which has definitions with logit.type to be converted to XML
+#'
+#' Such tables need to get partitioned into a series of tables due to limitations
+#' in the way that the Model Interfaces processes information.  In particular all
+#' XML tag names have to be specified in the header and can not be set dynamically
+#' as is the intention with the logit.type.
+#' @param dot The current state of the pipeline started from \code{create_xml}
+#' @param data The tibble of data to add to the conversion
+#' @param header The header tag to can be looked up in the header file to
+#' convert \code{data}
+#' @param base_logit_header The base header tag to use for the generated logit type
+#' tables such that \code{paste(base_logit_header, logit.type, sep="_")} corresponds
+#' to the appropriate model interface header.  Note by default this value is the
+#' same as \code{header} as often this is the case but certainly not always.
+#' @return A "data structure" to hold the various parts needed to run the model
+#' interface CSV to XML conversion.
+#' @note For documentation of the options for logit choice functions in GCAM, see
+#' \url{http://jgcri.github.io/gcam-doc/choice.html}.
+#' @author Pralit Patel
+#' @export
+add_logit_tables_xml <- function(dot, data, header, base_logit_header=header) {
+  # We need to split data into at least three tables based upon the logit.type
+  # column:
+  # 1) The logit group from XML_NODE_EQUIV so that we only need one table to
+  #    read logit parameters into each of the possible gcam.LOGIT_TYPES.
+  # 2) A series of one or more tables for each gcam.LOGIT_TYPES that doesn't
+  #    actually read in any data but sets the proper XML name.
+  # 3) Finally data with the logit.type column dropped.
+
+  dot <- add_node_equiv_xml(dot, "discrete-choice")
+
+  # The default logit type is used if the value of a logit.type is NA
+  default_logit_type <- gcam.LOGIT_TYPES[1]
+
+  # Set the logit type to the default if currently unspecified
+  data$logit.type[is.na(data$logit.type)] <- default_logit_type
+
+  # Loop through each of the logit types and create a table for it
+  # using the appropriate header name.
+  for(curr_logit_type in gcam.LOGIT_TYPES) {
+    curr_header <- paste(base_logit_header, curr_logit_type, sep="_")
+    data %>%
+      filter(logit.type == curr_logit_type) %>%
+      # Note we rely on add_xml_data to select the appropriate columns for us
+      # which it does by using LEVEL2_DATA_NAMES and curr_header
+      add_xml_data(dot, ., curr_header) ->
+      dot
+  }
+
+  # Note we rely on add_xml_data to select the appropriate columns for us
+  # which it does by using LEVEL2_DATA_NAMES and header
+  dot %>% add_xml_data(data, header)
+}
+
 #' Add a table to an XML pipeline that instructs the ModelInterface to rename
 #' LandNodeX to LandNode.
 #'
