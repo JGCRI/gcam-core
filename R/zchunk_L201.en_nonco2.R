@@ -8,7 +8,8 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L201.en_pol_emissions}, \code{L201.en_ghg_emissions}, \code{L201.en_bcoc_emissions}, \code{L201.nonghg_max_reduction}, \code{L201.nonghg_steepness}, \code{L201.nonghg_max_reduction_res}, \code{L201.nonghg_steepness_res}, \code{L201.nonghg_res}, \code{L201.ghg_res}. The corresponding file in the
 #' original data system was \code{L201.en_nonco2.R} (emissions level2).
-#' @details Describe in detail what this chunk does.
+#' @details Set up all of the inputs needed for the energy system non-CO2 emissions in GCAM.
+#' This includes historical emissions, drivers (input or output), and pollution controls.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -89,7 +90,6 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       L201.en_ghg_emissions
 
     # L201.en_bcoc_emissions: BC/OC emissions factors for energy technologies in all regions
-    # Interpolate and add region name
     L114.bcoc_tgej_R_en_S_F_2000 %>%
       filter(supplysector != "out_resources") %>%
       # add region name, extend emissions factors across all base years, and round output
@@ -232,24 +232,24 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     # It may be the case with certain regional aggregations that regions exist that have no
     # heating or cooling sectors. We should delete those here.
     # Delete sectors that do not exist due to zero heating/cooling degree days
-    delete_zerodays <- function(x, L201.delete.sectors) {
+    delete_nonexistent_sectors <- function(x, L201.delete.sectors) {
       filter(x, ! paste0(region, supplysector) %in% L201.delete.sectors)
     }
     L201.delete.sectors <- paste0(L244.DeleteThermalService$region, L244.DeleteThermalService$supplysector )
-    L201.en_pol_emissions <- delete_zerodays(L201.en_pol_emissions, L201.delete.sectors)
-    L201.en_ghg_emissions <- delete_zerodays(L201.en_ghg_emissions, L201.delete.sectors)
-    L201.en_bcoc_emissions <- delete_zerodays(L201.en_bcoc_emissions, L201.delete.sectors)
-    L201.nonghg_max_reduction <- delete_zerodays(L201.nonghg_max_reduction, L201.delete.sectors)
-    L201.nonghg_steepness <- delete_zerodays(L201.nonghg_steepness, L201.delete.sectors)
+    L201.en_pol_emissions <- delete_nonexistent_sectors(L201.en_pol_emissions, L201.delete.sectors)
+    L201.en_ghg_emissions <- delete_nonexistent_sectors(L201.en_ghg_emissions, L201.delete.sectors)
+    L201.en_bcoc_emissions <- delete_nonexistent_sectors(L201.en_bcoc_emissions, L201.delete.sectors)
+    L201.nonghg_max_reduction <- delete_nonexistent_sectors(L201.nonghg_max_reduction, L201.delete.sectors)
+    L201.nonghg_steepness <- delete_nonexistent_sectors(L201.nonghg_steepness, L201.delete.sectors)
 
 
     # Produce outputs
     L201.en_pol_emissions %>%
       add_title("Pollutant emissions for energy technologies in all regions") %>%
       add_units("Tg") %>%
-      add_comments("Take non-GHG emissions for the energy system, filter to out_resources") %>%
+      add_comments("Take non-GHG emissions for the energy system, filter out resources") %>%
       add_comments("in model base years, rename to regional SO2, filter to district heat,") %>%
-      add_comments("and delete sectors with zero heating/cooling degree days.") %>%
+      add_comments("and delete sectors with zero heating and zero cooling degree days.") %>%
       add_legacy_name("L201.en_pol_emissions") %>%
       add_precursors("common/GCAM_region_names",
                      "emissions/A_regions", "energy/A_regions",
@@ -260,9 +260,9 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     L201.en_ghg_emissions %>%
       add_title("GHG emissions for energy technologies in all regions") %>%
       add_units("Tg") %>%
-      add_comments("Take GHG emissions for the energy system, filter to out_resources") %>%
+      add_comments("Take GHG emissions for the energy system, filter out resources") %>%
       add_comments("in model base years, rename to regional SO2, filter to district heat,") %>%
-      add_comments("and delete sectors with zero heating/cooling degree days.") %>%
+      add_comments("and delete sectors with zero heating and zero cooling degree days.") %>%
       add_legacy_name("L201.en_ghg_emissions") %>%
       add_precursors("common/GCAM_region_names",
                      "energy/A_regions",
@@ -273,9 +273,9 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     L201.en_bcoc_emissions %>%
       add_title("BC/OC emissions factors for energy technologies in all regions") %>%
       add_units("Tg/EJ") %>%
-      add_comments("Take BC/OC emissions factors for energy technologies, filter to out_resources") %>%
+      add_comments("Take BC/OC emissions factors for energy technologies, filter out resources") %>%
       add_comments("in model base years, rename to regional SO2, filter to district heat,") %>%
-      add_comments("and delete sectors with zero heating/cooling degree days.") %>%
+      add_comments("and delete sectors with zero heating and zero cooling degree days.") %>%
       add_legacy_name("L201.en_bcoc_emissions") %>%
       add_precursors("common/GCAM_region_names",
                      "energy/A_regions",
@@ -285,10 +285,8 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
 
     L201.nonghg_max_reduction %>%
       rename(max.reduction = max_reduction) %>% # no idea why old data system renamed this
-      add_title("Maximum reduction for energy technologies in all regions") %>%
+      add_title("Maximum emissions reduction rates for energy technologies in all regions") %>%
       add_units("%") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
       add_legacy_name("L201.nonghg_max_reduction") %>%
       add_precursors("common/GCAM_region_names",
                      "emissions/A_regions", "energy/A_regions",
@@ -297,10 +295,8 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       L201.nonghg_max_reduction
 
     L201.nonghg_steepness %>%
-      add_title("Steepness of reduction for energy technologies in all regions") %>%
+      add_title("Steepness of emissions reduction for energy technologies in all regions") %>%
       add_units("%") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
       add_legacy_name("L201.nonghg_steepness") %>%
       add_precursors("common/GCAM_region_names",
                      "emissions/A_regions", "energy/A_regions",
@@ -313,8 +309,8 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       rename(max.reduction = max_reduction) %>% # no idea why old data system renamed this
       add_title("Maximum reduction for resources in all regions") %>%
       add_units("%") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("The maximum reduction is calculated in L151 to match the maximum emissions controls assumed in GCAM3.") %>%
+      add_comments("Controls are removed when the maximum reduction is zero.") %>%
       add_legacy_name("L201.nonghg_max_reduction_res") %>%
       same_precursors_as(L201.nonghg_max_reduction) ->
       L201.nonghg_max_reduction_res
@@ -322,8 +318,8 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     L201.nonghg_steepness_res %>%
       add_title("Steepness of reduction for resources in all regions") %>%
       add_units("%") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("The steepness is from an assumptions file (L201.nonghg_steepness_res). It was chosen to replicate the pollutant reduction rates for SO2 in GCAM3.") %>%
+      add_comments("Steepness is removed for technologies with maximum reduction rates of 0.") %>%
       add_legacy_name("L201.nonghg_steepness_res") %>%
       same_precursors_as(L201.nonghg_steepness) ->
       L201.nonghg_steepness_res
@@ -331,9 +327,9 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     L201.nonghg_res %>%
       add_title("Pollutant emissions for energy resources in all regions") %>%
       add_units("Tg/EJ") %>%
-      add_comments("Take non-GHG emissions for the energy system, filter to out_resources") %>%
+      add_comments("Take non-GHG emissions for the energy system, filter to include only resources") %>%
       add_comments("in model base years, rename to regional SO2, filter to district heat,") %>%
-      add_comments("and delete sectors with zero heating/cooling degree days.") %>%
+      add_comments("and delete sectors with zero heating and zero cooling degree days.") %>%
       add_legacy_name("L201.nonghg_res") %>%
       add_precursors("common/GCAM_region_names",
                      "emissions/A_regions",
@@ -343,9 +339,9 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     L201.ghg_res %>%
       add_title("GHG emissions from resource production in all regions") %>%
       add_units("Tg/EJ") %>%
-      add_comments("Take GHG emissions for the energy system, filter to out_resources") %>%
+      add_comments("Take GHG emissions for the energy system, filter to include only resources") %>%
       add_comments("in model base years, rename to regional SO2, filter to district heat,") %>%
-      add_comments("and delete sectors with zero heating/cooling degree days.") %>%
+      add_comments("and delete sectors with zero heating and zero cooling degree days.") %>%
       add_legacy_name("L201.ghg_res") %>%
       add_precursors("common/GCAM_region_names",
                      "temp-data-inject/L112.ghg_tgej_R_en_S_F_Yh") ->

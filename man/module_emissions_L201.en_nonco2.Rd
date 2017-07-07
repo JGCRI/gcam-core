@@ -21,7 +21,8 @@ original data system was \code{L201.en_nonco2.R} (emissions level2).
 Generate non-CO2 emissions: pollutants, GHGs, non-CO2, BC/OCs, and reduction data.
 }
 \details{
-Describe in detail what this chunk does.
+Set up all of the inputs needed for the energy system non-CO2 emissions in GCAM.
+This includes historical emissions, drivers (input or output), and pollution controls.
 }
 \author{
 BBL July 2017
