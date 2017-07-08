@@ -31,45 +31,89 @@ module_emissions_L232.prc_nonco2 <- function(command, ...) {
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    A_regions <- get_data(all_data, "emissions/A_regions")
-    L131.nonco2_tg_R_prc_S_S_Yh <- get_data(all_data, "L131.nonco2_tg_R_prc_S_S_Yh")
+    A_regions <- get_data(all_data, "emissions/A_regions") %>%
+      select(region, SO2_name)
+    L131.nonco2_tg_R_prc_S_S_Yh <- get_data(all_data, "L131.nonco2_tg_R_prc_S_S_Yh") %>%
+      mutate(year = as.integer(year))
     A32.max_reduction <- get_data(all_data, "emissions/A32.max_reduction")
     A32.steepness <- get_data(all_data, "emissions/A32.steepness")
 
     # ===================================================
+    # L232.nonco2_prc: Pollutant emissions for energy technologies in all regions
+    # Formatting and rounding
+    L232.nonco2_prc <- L131.nonco2_tg_R_prc_S_S_Yh %>%
+      filter(year %in% emissions.MODEL_BASE_YEARS) %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      left_join_error_no_match(A_regions, by = "region") %>%
+      # Rename to regional SO2
+      mutate(Non.CO2 = if_else(Non.CO2 == "SO2", SO2_name, Non.CO2)) %>%
+      select(region, supplysector, subsector, stub.technology, year, Non.CO2, input.emissions = value) %>%
+      mutate(input.emissions = round(input.emissions, emissions.DIGITS_EMISSIONS))
 
+    # L232.max_reduction: write out maximum reductions to all regions
+    L232.max_reduction <- A32.max_reduction %>%
+      gather(variable, max.reduction, -supplysector, -subsector, - stub.technology) %>%
+      # Repeat reductions for all regions
+      repeat_add_columns(GCAM_region_names %>% select(region)) %>%
+      left_join_error_no_match(A_regions, by = "region") %>%
+      # Rename to regional SO2
+      mutate(Non.CO2 = if_else(variable == "SO2", SO2_name, variable)) %>%
+      select(region, supplysector, subsector, stub.technology, Non.CO2, max.reduction)
+
+    # L232.nonco2_max_reduction: maximum reduction for energy technologies in all regions
+    L232.nonco2_max_reduction <- L232.nonco2_prc %>%
+      select(region, supplysector, subsector, stub.technology, Non.CO2) %>%
+      repeat_add_columns(tibble(year = as.integer(BASE_YEARS))) %>%
+      mutate(ctrl.name = "GDP_control") %>%
+      # Use left_join because L232.max_reduction is littered with NA values
+      left_join(L232.max_reduction, by = c("region", "supplysector", "subsector", "stub.technology", "Non.CO2")) %>%
+      na.omit() %>%
+      select(region, supplysector, subsector, stub.technology, year, Non.CO2, ctrl.name, max.reduction)
+
+    # L232.steepness: write out steepness to all regions
+    L232.steepness <- A32.steepness %>%
+      gather(variable, steepness, -supplysector, -subsector, - stub.technology) %>%
+      # Repeat steepness for all regions
+      repeat_add_columns(GCAM_region_names %>% select(region)) %>%
+      left_join_error_no_match(A_regions, by = "region") %>%
+      # Rename to regional SO2
+      mutate(Non.CO2 = if_else(variable == "SO2", SO2_name, variable)) %>%
+      select(region, supplysector, subsector, stub.technology, Non.CO2, steepness)
+
+    # L232.nonco2_steepness: steepness of reduction for energy technologies in all regions
+    L232.nonco2_steepness <- L232.nonco2_max_reduction %>%
+      select(region, supplysector, subsector, stub.technology, Non.CO2) %>%
+      repeat_add_columns(tibble(year = as.integer(BASE_YEARS))) %>%
+      mutate(ctrl.name = "GDP_control") %>%
+      # Use left_join because L232.steepness is littered with NA values
+      left_join(L232.steepness, by = c("region", "supplysector", "subsector", "stub.technology", "Non.CO2")) %>%
+      na.omit() %>%
+      select(region, supplysector, subsector, stub.technology, year, Non.CO2, ctrl.name, steepness)
     # ===================================================
 
     # Produce outputs
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L232.nonco2_prc %>%
+      add_title("Historical GHG emissions by energy technology") %>%
+      add_units("Tg") %>%
+      add_comments("Filtered and rounded L131.nonco2_tg_R_prc_S_S_Yh") %>%
       add_legacy_name("L232.nonco2_prc") %>%
-      add_precursors("common/GCAM_region_names", "emissions/A_regions", "L131.nonco2_tg_R_prc_S_S_Yh",
-                     "emissions/A32.max_reduction", "emissions/A32.steepness") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/GCAM_region_names", "emissions/A_regions", "L131.nonco2_tg_R_prc_S_S_Yh") ->
       L232.nonco2_prc
-    tibble() %>%
-      add_title("descriptive title of data") %>%
+    L232.nonco2_max_reduction %>%
+      add_title("Maximum GHG reduction by energy technology, region, Non-CO2 gas, and base year") %>%
       add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("Applied maximum reductions by technology and gas to all regions") %>%
       add_legacy_name("L232.nonco2_max_reduction") %>%
-      add_precursors("common/GCAM_region_names", "emissions/A_regions", "L131.nonco2_tg_R_prc_S_S_Yh",
-                     "emissions/A32.max_reduction", "emissions/A32.steepness") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/GCAM_region_names", "emissions/A_regions",
+                     "L131.nonco2_tg_R_prc_S_S_Yh", "emissions/A32.max_reduction") ->
       L232.nonco2_max_reduction
-    tibble() %>%
-      add_title("descriptive title of data") %>%
+    L232.nonco2_steepness %>%
+      add_title("GHG reduction steepness by energy technology, region, Non-CO2 gas, and base year") %>%
       add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("Applied maximum steepness by technology and gas to all regions") %>%
       add_legacy_name("L232.nonco2_steepness") %>%
-      add_precursors("common/GCAM_region_names", "emissions/A_regions", "L131.nonco2_tg_R_prc_S_S_Yh",
-                     "emissions/A32.max_reduction", "emissions/A32.steepness") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/GCAM_region_names", "emissions/A_regions",
+                     "L131.nonco2_tg_R_prc_S_S_Yh", "emissions/A32.steepness") ->
       L232.nonco2_steepness
 
     return_data(L232.nonco2_prc, L232.nonco2_max_reduction, L232.nonco2_steepness)
