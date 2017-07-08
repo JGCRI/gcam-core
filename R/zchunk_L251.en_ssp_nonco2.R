@@ -23,7 +23,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
              FILE = "temp-data-inject/L161.SSP2_EF",
              FILE = "temp-data-inject/L161.SSP15_EF",
              FILE = "temp-data-inject/L161.SSP34_EF",
-             FILE = "temp-data-inject/L201.nonghg_steepness"))
+             "L201.nonghg_steepness"))
 
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L251.ctrl.delete",
@@ -56,8 +56,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
       gather(year, value, -GCAM_region_ID, -Non.CO2, -supplysector, -subsector, -stub.technology, -agg_sector) %>%
       mutate(year = as.integer(substr(year, 2, 5))) ->
       L161.SSP34_EF
-    get_data(all_data, "temp-data-inject/L201.nonghg_steepness") ->
-      L201.nonghg_steepness
+    get_data(all_data, "L201.nonghg_steepness") -> L201.nonghg_steepness
 
     # ===================================================
 
@@ -198,7 +197,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
       add_comments("Finally, delete GDP control functions that exist.") %>%
       add_legacy_name("L251.ctrl.delete") %>%
       add_precursors("temp-data-inject/L161.SSP2_EF",
-                     "temp-data-inject/L201.nonghg_steepness",
+                     "L201.nonghg_steepness",
                      "emissions/A_regions") ->
       L251.ctrl.delete
     L251.ssp15_ef %>%
