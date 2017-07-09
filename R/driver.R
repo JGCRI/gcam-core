@@ -86,6 +86,7 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 #' @param quiet Suppress output?
 #' @param stop_before Stop immediately before this chunk (character)
 #' @param stop_after Stop immediately after this chunk  (character)
+#' @param prune_unneeded_inputs Remove large inputs from storage once no longer needed? Logical
 #' @param outdir Location to write output data (ignored if \code{write_outputs} is \code{FALSE})
 #' @param xmldir Location to write output XML (ignored if \code{write_outputs} is \code{FALSE})
 #' @return A list of all built data.
@@ -100,6 +101,7 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 #' @author BBL
 driver <- function(all_data = empty_data(),
                    write_outputs = TRUE, quiet = FALSE, stop_before = "", stop_after = "",
+                   prune_unneeded_inputs = TRUE,
                    outdir = OUTPUTS_DIR, xmldir = XML_DIR) {
 
   optional <- input <- from_file <- name <- NULL    # silence notes from package check.
@@ -113,6 +115,14 @@ driver <- function(all_data = empty_data(),
   if(!quiet) cat("Found", nrow(chunkinputs), "chunk data requirements\n")
   chunkoutputs <- chunk_outputs(chunklist$name)
   if(!quiet) cat("Found", nrow(chunkoutputs), "chunk data products\n")
+
+  # Keep track of input that come from a file for later pruning
+  filter(chunkinputs, from_file) %>%
+    group_by(input) %>%
+    summarise(n = n()) ->
+    from_file_inputs
+  ffi <- from_file_inputs$n
+  names(ffi) <- from_file_inputs$input
 
   warn_data_injects()
   warn_datachunk_bypass()
@@ -142,6 +152,7 @@ driver <- function(all_data = empty_data(),
   }
 
   chunks_to_run <- chunklist$name
+  removed_count <- 0
   while(length(chunks_to_run)) {
     nchunks <- length(chunks_to_run)
 
@@ -175,6 +186,21 @@ driver <- function(all_data = empty_data(),
       # Add this chunk's data to the global data store
       all_data <- add_data(chunk_data, all_data)
 
+      # Decrement the file input count
+      ffi[input_names] <- ffi[input_names] - 1
+      if(prune_unneeded_inputs) {
+        # ...and remove if large and not going to be used again
+        which_zero <- which(ffi[input_names] == 0)
+        for(obj in names(which_zero)) {
+          os <- object.size(all_data[obj])
+          if(os / 1024 / 1024 > 1) {  # remove objects bigger than 1 MB
+            if(!quiet) print(paste("- Removing", format(os, units = "Mb"), obj, "that will not be used again"))
+            all_data[obj] <- tibble(removed_by_driver = NA)
+            removed_count <- removed_count + 1
+          }
+        }
+      }
+
       if(chunk == stop_after) {
         chunks_to_run <- character(0)
         break
@@ -197,6 +223,7 @@ driver <- function(all_data = empty_data(),
     save_chunkdata(all_data, outputs_dir = outdir, xml_dir = xmldir)
   }
 
+  if(!quiet & removed_count) cat("NOTE: removed ", removed_count, "large inputs that were no longer needed.\n")
   if(!quiet) cat("All done.\n")
   invisible(all_data)
 }

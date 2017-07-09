@@ -5,8 +5,8 @@
 \title{driver}
 \usage{
 driver(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE,
-  stop_before = "", stop_after = "", outdir = OUTPUTS_DIR,
-  xmldir = XML_DIR)
+  stop_before = "", stop_after = "", prune_unneeded_inputs = TRUE,
+  outdir = OUTPUTS_DIR, xmldir = XML_DIR)
 }
 \arguments{
 \item{all_data}{Data to be pre-loaded into data system}
@@ -18,6 +18,8 @@ driver(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE,
 \item{stop_before}{Stop immediately before this chunk (character)}
 
 \item{stop_after}{Stop immediately after this chunk  (character)}
+
+\item{prune_unneeded_inputs}{Remove large inputs from storage once no longer needed? Logical}
 
 \item{outdir}{Location to write output data (ignored if \code{write_outputs} is \code{FALSE})}
 
