@@ -150,7 +150,7 @@ module_emissions_L121.nonco2_awb_R_S_T_Y <- function(command, ...) {
 
     # Subset only the historical years in EDGAR, and reshape for write-out
     L121.nonco2_tg_R_awb_C_Y_GLU_total %>%
-      filter(year %in% emissions.EDGAR_HISTORICAL) %>%
+      filter(year %in% emissions.EDGAR_YEARS) %>%
       select(GCAM_region_ID, Non.CO2, GCAM_commodity, GLU, year, value = emissions) ->
       L121.nonco2_tg_R_awb_C_Y_GLU
 

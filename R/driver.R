@@ -147,15 +147,15 @@ driver <- function(all_data = empty_data(),
 
     # Loop through all chunks and see who can run (i.e. all dependencies are available)
     for(chunk in chunks_to_run) {
-      if(!quiet) print(chunk)
 
       inputs <- filter(chunkinputs, name == chunk)
       input_names <- inputs$input
       required_inputs <- filter(inputs, !optional)
       if(!all(required_inputs$input %in% names(all_data))) {
-        if(!quiet) print("- data not available yet")
         next  # chunk's required inputs are not all available
       }
+
+      if(!quiet) print(chunk)
 
       if(chunk == stop_before) {
         chunks_to_run <- character(0)
@@ -165,9 +165,6 @@ driver <- function(all_data = empty_data(),
       # Order chunk to build its data
       time1 <- Sys.time()
       chunk_data <- run_chunk(chunk, all_data[input_names])
-      # Disabled this code because `capture.output` causes problems in debugging
-      #out <- capture.output(chunk_data <- run_chunk(chunk, all_data[input_names]))
-      #if(!quiet & length(out)) cat(out, sep = "\n")
       tdiff <- as.numeric(difftime(Sys.time(), time1, units = "secs"))
       if(!quiet) print(paste("- make", format(round(tdiff, 2), nsmall = 2)))
 
