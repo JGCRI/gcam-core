@@ -168,10 +168,6 @@ DEFAULT_ELECTRIC_EFFICIENCY <- 0.33
 
 ELECTRICITY_INPUT_FUELS<- c("biomass", "coal", "gas", "refined liquids")
 
-DEFAULT_ELECTRIC_EFFICIENCY <- 0.33  # Default electric efficiency
-ELECTRICITY_INPUT_FUELS<- c("biomass", "coal", "gas", "refined liquids")
-STUBTECHYR <- c("GCAM_region_ID", "supplysector", "subsector", "stub.technology", "xyear")
-
 
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
