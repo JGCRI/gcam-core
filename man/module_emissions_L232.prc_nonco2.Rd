@@ -18,10 +18,11 @@ the generated outputs: \code{L232.nonco2_prc}, \code{L232.nonco2_max_reduction},
 original data system was \code{L232.prc_nonco2.R} (emissions level2).
 }
 \description{
-Briefly describe what this chunk does.
+Generates input emissions by energy technology, GHG, and base historical year.
+Writes out max emissions reductions and steepness to all energy technologies and regions.
 }
 \details{
-Describe in detail what this chunk does.
+Generates input emissions by energy technology, GHG, and base historical year. Writes out max emissions reductions and steepness to all energy technologies and regions.
 }
 \author{
 RH July 2017

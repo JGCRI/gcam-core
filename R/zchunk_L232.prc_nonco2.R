@@ -1,6 +1,7 @@
 #' module_emissions_L232.prc_nonco2
 #'
-#' Briefly describe what this chunk does.
+#' Generates input emissions by energy technology, GHG, and base historical year.
+#' Writes out max emissions reductions and steepness to all energy technologies and regions.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,24 +9,27 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L232.nonco2_prc}, \code{L232.nonco2_max_reduction}, \code{L232.nonco2_steepness}. The corresponding file in the
 #' original data system was \code{L232.prc_nonco2.R} (emissions level2).
-#' @details Describe in detail what this chunk does.
+#' @details Generates input emissions by energy technology, GHG, and base historical year. Writes out max emissions reductions and steepness to all energy technologies and regions.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RH July 2017
-#' @export
 module_emissions_L232.prc_nonco2 <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "emissions/A_regions",
              "L131.nonco2_tg_R_prc_S_S_Yh",
-             FILE = "emissions/A32.max_reduction", # Source and Units
-             FILE = "emissions/A32.steepness")) # Source and Units
+             FILE = "emissions/A32.max_reduction",
+             FILE = "emissions/A32.steepness"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L232.nonco2_prc",
              "L232.nonco2_max_reduction",
              "L232.nonco2_steepness"))
   } else if(command == driver.MAKE) {
+
+    # Silence package checks
+    region <- SO2_name <- year <- Non.CO2 <- supplysector <- subsector <- stub.technology <-
+      value <- input.emissions <- variable <- max.reduction <- ctrl.name <- steepness <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -101,7 +105,7 @@ module_emissions_L232.prc_nonco2 <- function(command, ...) {
       L232.nonco2_prc
     L232.nonco2_max_reduction %>%
       add_title("Maximum GHG reduction by energy technology, region, Non-CO2 gas, and base year") %>%
-      add_units("units") %>%
+      add_units("Percentage reduction from baseline") %>%
       add_comments("Applied maximum reductions by technology and gas to all regions") %>%
       add_legacy_name("L232.nonco2_max_reduction") %>%
       add_precursors("common/GCAM_region_names", "emissions/A_regions",
@@ -109,7 +113,7 @@ module_emissions_L232.prc_nonco2 <- function(command, ...) {
       L232.nonco2_max_reduction
     L232.nonco2_steepness %>%
       add_title("GHG reduction steepness by energy technology, region, Non-CO2 gas, and base year") %>%
-      add_units("units") %>%
+      add_units("Unitless") %>%
       add_comments("Applied maximum steepness by technology and gas to all regions") %>%
       add_legacy_name("L232.nonco2_steepness") %>%
       add_precursors("common/GCAM_region_names", "emissions/A_regions",
