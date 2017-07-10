@@ -38,7 +38,7 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
 
     iso <- GCAM_region_ID <- flow_code <- sector <- fuel <- product <- conversion <- tradbio_region <- sector_IEA <-
       fuel_IEA <- sector_initial <- fuel_initial <- sector3 <- sector2 <- fuel3 <- fuel2 <- conversion_IEA <- FLOW <-
-      PRODUCT <- . <- year <- value <- trn <- bld <- NULL  # silence package check notes
+      PRODUCT <- . <- year <- value <- trn <- bld <- reset <- conversion_initial <- NULL  # silence package check notes
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
