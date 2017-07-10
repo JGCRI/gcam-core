@@ -165,19 +165,19 @@ module_energy_L223.electricity <- function(command, ...) {
     # L223.Supplysector_elec: Supply sector information for electricity sector
     # L223.SectorLogitTables <- get_logit_fn_tables( A23.sector, names_SupplysectorLogitType,
     #                                                base.header="Supplysector_", include.equiv.table=T, write.all.regions=T )
-    L223.Supplysector_elec <- write_to_all_regions(A23.sector, names_Supplysector, GCAM_region_names)
+    L223.Supplysector_elec <- write_to_all_regions(A23.sector, LEVEL2_DATA_NAMES[["Supplysector"]], GCAM_region_names)
 
     # L223.ElecReserve: Electricity reserve margin and average grid capacity factor
-    L223.ElecReserve <- write_to_all_regions(A23.sector, names_ElecReserve, GCAM_region_names)
+    L223.ElecReserve <- write_to_all_regions(A23.sector, LEVEL2_DATA_NAMES[["ElecReserve"]], GCAM_region_names)
 
     # L223.SubsectorLogit_elec: Subsector logit exponents of electricity sector (71-74)
     # L223.SubsectorLogitTables <- get_logit_fn_tables( A23.subsector_logit, names_SubsectorLogitType,
     #                                                   base.header="SubsectorLogit_", include.equiv.table=F, write.all.regions=T )
-    L223.SubsectorLogit_elec <- write_to_all_regions(A23.subsector_logit, names_SubsectorLogit, GCAM_region_names)
+    L223.SubsectorLogit_elec <- write_to_all_regions(A23.subsector_logit, LEVEL2_DATA_NAMES[["SubsectorLogit"]], GCAM_region_names)
 
     # L223.SubsectorShrwt_elec and L223.SubsectorShrwtFllt_elec: Subsector shareweights of electricity sector (76-82)
-    L223.SubsectorShrwt_elec <- write_to_all_regions(filter(A23.subsector_shrwt, !is.na(year)), names_SubsectorShrwt, GCAM_region_names)
-    L223.SubsectorShrwtFllt_elec <- write_to_all_regions(filter(A23.subsector_shrwt, !is.na(year.fillout)), names_SubsectorShrwtFllt, GCAM_region_names)
+    #L223.SubsectorShrwt_elec <- write_to_all_regions(filter(A23.subsector_shrwt, !is.na(year)), names_SubsectorShrwt, GCAM_region_names)
+    L223.SubsectorShrwtFllt_elec <- write_to_all_regions(filter(A23.subsector_shrwt, !is.na(year.fillout)), LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]], GCAM_region_names)
 
     # L223.SubsectorShrwt_nuc: Subsector shareweights of nuclear electricity (84-117)
     # Start out with the list of ISO matched to region_GCAM3
@@ -235,9 +235,33 @@ module_energy_L223.electricity <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->   # TODO not sure this is right
       L223.SubsectorShrwt_renew
 
+    # L223.SubsectorInterp_elec and L223.SubsectorInterpTo_elec: Subsector shareweight interpolation of electricity sector (140-146)
+    if(any(is.na(A23.subsector_interp$to.value))) {
+      L223.SubsectorInterp_elec <- write_to_all_regions(A23.subsector_interp[ is.na( A23.subsector_interp$to.value),], LEVEL2_DATA_NAMES[["SubsectorInterp"]])
+    }
+    if( any( !is.na( A23.subsector_interp$to.value ) ) ){
+      L223.SubsectorInterpTo_elec <- write_to_all_regions( A23.subsector_interp[ !is.na( A23.subsector_interp$to.value ), ], LEVEL2_DATA_NAMES[["SubsectorInterpTo"]])
+    }
+
+    # Adjust subsector interp rules regionally (148-159)
+    # Any global interp rules that match by region + sector + subsector name will be replaced by
+    # a regionally specific interp rule
+    L223.SubsectorInterp_elec %>%
+      filter(names_Subsector %in% A23.subsector_interp_R$names_Subsector) %>%
+      bind_rows(A23.subsector_interp_R) %>%
+      set_years() ->
+      L223.SubsectorInterp_elec
+    L223.SubsectorInterpTo_elec %>%
+      filter(names_Subsector %in% A23.subsector_interp_R$names_Subsector) %>%
+      bind_rows(A23.subsector_interp_R) %>%
+      set_years() ->
+      L223.SubsectorInterpTo_elec
+
+
+
     # Produce outputs
 
-    tibble() %>%
+    L223.Supplysector_elec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -247,7 +271,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.Supplysector_elec
 
-    tibble() %>%
+    L223.ElecReserve %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -297,7 +321,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.SubsectorShrwt_nuc
 
-    tibble() %>%
+    L223.SubsectorShrwt_renew %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -307,7 +331,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.SubsectorShrwt_renew
 
-    tibble() %>%
+    L223.SubsectorInterp_elec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -317,7 +341,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.SubsectorInterp_elec
 
-    tibble() %>%
+    L223.SubsectorInterpTo_elec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
