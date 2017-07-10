@@ -181,6 +181,7 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
         select(iso, sector, fuel, matches(YEAR_PATTERN), conversion) %>%
         group_by(iso, sector, fuel) %>%
         summarise_all(funs(sum(. * conversion))) %>%
+        ungroup %>%
         select(-conversion) %>%
         # at this point dataset is much smaller; go to long form
         gather(year, value, matches(YEAR_PATTERN)) %>%
@@ -199,6 +200,7 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
         select(iso, sector, fuel, matches(YEAR_PATTERN), conversion) %>%
         group_by(iso, sector, fuel) %>%
         summarise_all(funs(sum(. * conversion))) %>%
+        ungroup %>%
         select(-conversion) %>%
         # at this point dataset is much smaller; go to long form
         gather(year, value, matches(YEAR_PATTERN)) %>%
@@ -212,6 +214,7 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
         select(iso, GCAM_region_ID, sector, fuel, matches(YEAR_PATTERN), conversion) %>%
         group_by(iso, GCAM_region_ID, sector, fuel) %>%
         summarise_all(funs(sum(. * conversion))) %>%
+        ungroup %>%
         select(-conversion) %>%
         # at this point dataset is much smaller; go to long form
         gather(year, value, matches(YEAR_PATTERN)) %>%
@@ -220,10 +223,10 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
 
       L101.en_bal_EJ_ctry_Si_Fi_Yh %>%
         filter(grepl("in_", sector) | grepl( "net_", sector)) %>%
-        ungroup() %>%
         mutate(sector = "TPES")%>%
         group_by(iso, GCAM_region_ID, sector, fuel, year) %>%
-        summarise(value = sum(value)) ->
+        summarise(value = sum(value)) %>%
+        ungroup ->
         L101.in_EJ_ctry_TPES_Fi_Yh
 
       # bind all final tibbles
