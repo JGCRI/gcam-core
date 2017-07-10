@@ -25,5 +25,5 @@ Rename IEA sectors and fuel data to nomenclature used in GCAM.
 It also adjusts information uploaded from L100.IEA_en_bal_ctry_hist according to IEA_sector_fuel_modifications.
 }
 \author{
-FF July 2017
+FF and BBL July 2017
 }
