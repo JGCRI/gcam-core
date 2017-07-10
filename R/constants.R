@@ -168,6 +168,10 @@ DEFAULT_ELECTRIC_EFFICIENCY <- 0.33
 
 ELECTRICITY_INPUT_FUELS<- c("biomass", "coal", "gas", "refined liquids")
 
+DEFAULT_ELECTRIC_EFFICIENCY <- 0.33  # Default electric efficiency
+ELECTRICITY_INPUT_FUELS<- c("biomass", "coal", "gas", "refined liquids")
+STUBTECHYR <- c("GCAM_region_ID", "supplysector", "subsector", "stub.technology", "xyear")
+
 
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
@@ -228,13 +232,6 @@ modeltime.MAGICC_C_START_YEAR <- 1705
 modeltime.HECTOR_END_YEAR <- 2100
 modeltime.HECTOR_EMISSIONS_YEAR <- 2005
 modeltime.HECTOR_INI_FILE <- "../input/climate/hector-gcam.ini"
-
-
-# Energy constants ======================================================================
-
-DEFAULT_ELECTRIC_EFFICIENCY <- 0.33  # Default electric efficiency
-ELECTRICITY_INPUT_FUELS<- c("biomass", "coal", "gas", "refined liquids")
-STUBTECHYR <- c("GCAM_region_ID", "supplysector", "subsector", "stub.technology", "xyear")
 
 
 # Socioeconomics constants ======================================================================

@@ -21,7 +21,7 @@ original data system was \code{LA101.en_bal_IEA.R} (energy level1).
 Rename IEA sectors and fuel data to nomenclature used in GCAM.
 }
 \details{
-Rename IEA sectors and fuel data to nomenclature used in GCAM.
+Rename IEA sectors and fuel data to nomenclature used in GCAM, summarizing by (generally) iso and/or region, sector, fuel, and year.
 It also adjusts information uploaded from L100.IEA_en_bal_ctry_hist according to IEA_sector_fuel_modifications.
 }
 \author{
