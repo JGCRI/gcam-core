@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L101.en_bal_EJ_R_Si_Fi_Yh_full}, \code{L101.en_bal_EJ_ctry_Si_Fi_Yh_full}, \code{L101.in_EJ_ctry_trn_Fi_Yh}, \code{L101.in_EJ_ctry_bld_Fi_Yh}. The corresponding file in the
 #' original data system was \code{LA101.en_bal_IEA.R} (energy level1).
-#' @details Rename IEA sectors and fuel data to nomenclature used in GCAM.
+#' @details Rename IEA sectors and fuel data to nomenclature used in GCAM, summarizing by (generally) iso and/or region, sector, fuel, and year.
 #' It also adjusts information uploaded from L100.IEA_en_bal_ctry_hist according to IEA_sector_fuel_modifications.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
@@ -168,7 +168,8 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
 
       # Append TPES onto the end of the energy balances
       L101.en_bal_EJ_R_Si_Fi_Yh_full %>%
-        bind_rows(L101.in_EJ_R_TPES_Fi_Yh) ->
+        bind_rows(L101.in_EJ_R_TPES_Fi_Yh) %>%
+        add_title("Energy balances by GCAM region / intermediate sector / intermediate fuel / historical year") ->
         L101.en_bal_EJ_R_Si_Fi_Yh_full
 
       # For downscaling of buildings and transportation energy, aggregate by fuel and country
@@ -185,7 +186,8 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
         select(-conversion) %>%
         # at this point dataset is much smaller; go to long form
         gather(year, value, matches(YEAR_PATTERN)) %>%
-        mutate(year = as.integer(year)) ->
+        mutate(year = as.integer(year)) %>%
+        add_title("Transportation sector energy consumption by country / IEA mode / fuel / historical year") ->
         L101.in_EJ_ctry_trn_Fi_Yh
 
       # b: buildings
@@ -204,7 +206,8 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
         select(-conversion) %>%
         # at this point dataset is much smaller; go to long form
         gather(year, value, matches(YEAR_PATTERN)) %>%
-        mutate(year = as.integer(year)) ->
+        mutate(year = as.integer(year)) %>%
+        add_title("Building energy consumption by country / IEA sector / fuel / historical year") ->
         L101.in_EJ_ctry_bld_Fi_Yh
 
       # For country-level comparisons, keep the iso and aggregate all sectors and fuels
@@ -231,13 +234,13 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
 
       # bind all final tibbles
       L101.en_bal_EJ_ctry_Si_Fi_Yh %>%
-        bind_rows(L101.in_EJ_ctry_TPES_Fi_Yh) ->
+        bind_rows(L101.in_EJ_ctry_TPES_Fi_Yh) %>%
+        add_title("Energy balances by country / GCAM region / intermediate sector / intermediate fuel / historical year") ->
         L101.en_bal_EJ_ctry_Si_Fi_Yh_full
     }
 
     ###############################################################################################################
-    L101.en_bal_EJ_R_Si_Fi_Yh_full%>%
-      add_title("Energy balances by GCAM region / intermediate sector / intermediate fuel / historical year") %>%
+    L101.en_bal_EJ_R_Si_Fi_Yh_full %>%
       add_units("EJ") %>%
       add_comments("L101.en_bal_EJ_R_Si_Fi_Yh_full includes energy balances and assumptions for total primary energy supply (TPES)") %>%
       add_legacy_name("L101.en_bal_EJ_R_Si_Fi_Yh_full") %>%
@@ -247,7 +250,6 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
       L101.en_bal_EJ_R_Si_Fi_Yh_full
 
     L101.en_bal_EJ_ctry_Si_Fi_Yh_full %>%
-      add_title("Energy balances by country / GCAM region / intermediate sector / intermediate fuel / historical year") %>%
       add_units("EJ") %>%
       add_comments("For country-level comparisons, keep the iso and aggregate all sectors and fuels. It also includes TPES by country") %>%
       add_legacy_name("L101.en_bal_EJ_ctry_Si_Fi_Yh_full") %>%
@@ -256,7 +258,6 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
       L101.en_bal_EJ_ctry_Si_Fi_Yh_full
 
     L101.in_EJ_ctry_trn_Fi_Yh %>%
-      add_title("Transportation sector energy consumption by country / IEA mode / fuel / historical year") %>%
       add_units("EJ") %>%
       add_comments("Consumption of energy by the transport sector by fuel and historical year. Aggregated by fuel and country") %>%
       add_legacy_name("L101.in_EJ_ctry_trn_Fi_Yh") %>%
@@ -265,7 +266,6 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
       L101.in_EJ_ctry_trn_Fi_Yh
 
     L101.in_EJ_ctry_bld_Fi_Yh %>%
-      add_title("Building energy consumption by country / IEA sector / fuel / historical year") %>%
       add_units("EJ") %>%
       add_comments("Consumption of energy by the building sector by fuel and historical year. Aggregated by fuel and country") %>%
       add_legacy_name("L101.in_EJ_ctry_bld_Fi_Yh") %>%
