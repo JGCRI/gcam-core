@@ -44,7 +44,7 @@ module_emissions_L232.prc_nonco2 <- function(command, ...) {
 
     # ===================================================
     # L232.nonco2_prc: Pollutant emissions for energy technologies in all regions
-    # Formatting and rounding
+    # Formatting and rounding L131.nonco2_tg_R_prc_S_S_Yh
     L232.nonco2_prc <- L131.nonco2_tg_R_prc_S_S_Yh %>%
       filter(year %in% emissions.MODEL_BASE_YEARS) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
