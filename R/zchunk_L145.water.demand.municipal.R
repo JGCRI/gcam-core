@@ -64,11 +64,11 @@ module_water_L145.water.demand.municipal <- function(command, ...) {
       summarise(Value = sum(Value)) %>%
       ungroup() %>%
       complete(GCAM_region_ID = unique(iso_GCAM_regID$GCAM_region_ID),
-               Year = c(1970, HISTORICAL_YEARS, 2011,2012),
+               Year = unique(ctry_municipal_W$Year),
                fill = list(Value = NA))%>%
       group_by(GCAM_region_ID)%>%
       mutate(Value = approx_fun(Year, Value, rule = 2))  %>%
-      filter(Year >= 1971, Year <= 2010) %>%
+      filter(Year %in% HISTORICAL_YEARS) %>%
       rename(value = Value, year = Year) %>%
       mutate(water_type = "water withdrawals")-> municipal_water_R_W_Yh_km3
 
