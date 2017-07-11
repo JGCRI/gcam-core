@@ -6,8 +6,10 @@
 \usage{
 driver(all_data = empty_data(), stop_before = "", stop_after = "",
   return_inputs_of = inputs_of(stop_before),
-  return_outputs_of = outputs_of(stop_after), write_outputs = TRUE,
-  outdir = OUTPUTS_DIR, xmldir = XML_DIR, quiet = FALSE)
+  return_outputs_of = outputs_of(stop_after),
+  return_data_names = union(return_inputs_of, return_outputs_of),
+  write_outputs = TRUE, outdir = OUTPUTS_DIR, xmldir = XML_DIR,
+  quiet = FALSE)
 }
 \arguments{
 \item{all_data}{Data to be pre-loaded into data system}
@@ -22,6 +24,8 @@ If \code{stop_before} is specified, by default that chunk's inputs are returned.
 \item{return_outputs_of}{Return the data objects that are output from these chunks (character)
 If \code{stop_after} is specified, by default that chunk's outputs are returned.}
 
+\item{return_data_names}{Return these data objects (character). By default this is the union of \code{return_inputs_of} and \code{return_inputs_of}}
+
 \item{write_outputs}{Write all chunk outputs to disk?}
 
 \item{outdir}{Location to write output data (ignored if \code{write_outputs} is \code{FALSE})}
@@ -29,8 +33,6 @@ If \code{stop_after} is specified, by default that chunk's outputs are returned.
 \item{xmldir}{Location to write output XML (ignored if \code{write_outputs} is \code{FALSE})}
 
 \item{quiet}{Suppress output?}
-
-\item{return_inputs_of}{Return these data objects (character)}
 }
 \value{
 A list of all built data.
