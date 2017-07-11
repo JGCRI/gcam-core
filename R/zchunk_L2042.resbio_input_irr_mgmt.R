@@ -85,7 +85,8 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
              eros.ctrl = aglu.FOREST_EROSION_CTRL_KGM2,
              mass.to.energy = aglu.WOOD_ENERGY_CONTENT_GJKG,
              water.content = aglu.WOOD_WATER_CONTENT) %>%
-      repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) ->
+      repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) %>%
+      select(-GCAM_region_ID, -GCAM_commodity, -GLU) ->
       L204.AgResBio_For
 
 
