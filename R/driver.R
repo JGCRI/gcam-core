@@ -82,10 +82,15 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 #' Run the entire data system.
 #'
 #' @param all_data Data to be pre-loaded into data system
-#' @param write_outputs Write all chunk outputs to disk?
 #' @param quiet Suppress output?
 #' @param stop_before Stop immediately before this chunk (character)
 #' @param stop_after Stop immediately after this chunk  (character)
+#' @param return_inputs_of Return the data objects that are inputs for these chunks (character).
+#' If \code{stop_before} is specified, by default that chunk's inputs are returned.
+#' @param return_outputs_of Return the data objects that are output from these chunks (character)
+#' If \code{stop_after} is specified, by default that chunk's outputs are returned.
+#' @param return_data_names Return these data objects (character). By default this is the union of \code{return_inputs_of} and \code{return_inputs_of}
+#' @param write_outputs Write all chunk outputs to disk?
 #' @param outdir Location to write output data (ignored if \code{write_outputs} is \code{FALSE})
 #' @param xmldir Location to write output XML (ignored if \code{write_outputs} is \code{FALSE})
 #' @return A list of all built data.
@@ -99,12 +104,20 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 #' @export
 #' @author BBL
 driver <- function(all_data = empty_data(),
-                   write_outputs = TRUE, quiet = FALSE, stop_before = "", stop_after = "",
-                   outdir = OUTPUTS_DIR, xmldir = XML_DIR) {
+                   stop_before = "", stop_after = "",
+                   return_inputs_of = inputs_of(stop_before),
+                   return_outputs_of = outputs_of(stop_after),
+                   return_data_names = union(return_inputs_of, return_outputs_of),
+                   write_outputs = TRUE, outdir = OUTPUTS_DIR, xmldir = XML_DIR,
+                   quiet = FALSE) {
 
   optional <- input <- from_file <- name <- NULL    # silence notes from package check.
 
+  assert_that(is.null(return_inputs_of) | is.character(return_inputs_of))
+  assert_that(is.null(return_outputs_of) | is.character(return_outputs_of))
+  assert_that(is.null(return_data_names) | is.character(return_data_names))
   assert_that(is.logical(write_outputs))
+  assert_that(is.logical(quiet))
 
   chunklist <- find_chunks()
   if(!quiet) cat("Found", nrow(chunklist), "chunks\n")
@@ -149,9 +162,12 @@ driver <- function(all_data = empty_data(),
     all_data <- add_data(csv_data, all_data)
   }
 
+  # Initialize some stuff before we start to run the chunks
   chunks_to_run <- chunklist$name
   removed_count <- 0
-  save_chunkdata(empty_data(), create_dirs = TRUE, outputs_dir = outdir, xml_dir = xmldir) # clear directories
+  if(write_outputs) {
+    save_chunkdata(empty_data(), create_dirs = TRUE, outputs_dir = outdir, xml_dir = xmldir) # clear directories
+  }
 
   while(length(chunks_to_run)) {
     nchunks <- length(chunks_to_run)
@@ -187,25 +203,24 @@ driver <- function(all_data = empty_data(),
       # Add this chunk's data to the global data store
       all_data <- add_data(chunk_data, all_data)
 
-      # If any outputs don't appear in the chunk input list, they can be immediately written out and removed
-      not_inputs <- !po %in% names(cic)
-      if(any(not_inputs)) {
-        print(paste("Outputs that are not inputs:", paste(po[not_inputs], collapse = " ")))
-        save_chunkdata(all_data[po[not_inputs]], outputs_dir = outdir, xml_dir = xmldir)
-        all_data <- remove_data(po[not_inputs], all_data)
+      # If any outputs don't appear in the chunk input list, and aren't requested for return,
+      # they can be immediately written out and removed
+      prunelist <- !po %in% names(cic) & !po %in% return_data_names
+      if(any(prunelist)) {
+        if(write_outputs) save_chunkdata(all_data[po[prunelist]], outputs_dir = outdir, xml_dir = xmldir)
+        all_data <- remove_data(po[prunelist], all_data)
+        removed_count <- removed_count + length(po[prunelist])
       }
 
       # Decrement the file input count
       cic[input_names] <- cic[input_names] - 1
-      # ...and remove if large and not going to be used again
-      which_zero <- which(cic[input_names] == 0)
+      # ...and remove if not going to be used again, and not requested for return
+      which_zero <- which(cic[input_names] == 0 & !input_names %in% return_data_names)
       for(obj in names(which_zero)) {
         os <- object.size(all_data[obj])
-        #          if(!quiet) print(paste("- Removing", format(os, units = "Mb"), obj, "that will not be used again"))
         all_data <- remove_data(obj, all_data)
         removed_count <- removed_count + 1
       }
-      cat(chunk, object.size(all_data)/1024/1024, "\n", sep = " ", file = "~/Desktop/size.txt", append = TRUE)
 
       if(chunk == stop_after) {
         chunks_to_run <- character(0)
@@ -222,14 +237,14 @@ driver <- function(all_data = empty_data(),
     }
   } # while
 
-  if(!quiet) cat(length(all_data), "data frames generated\n")
-
   if(write_outputs) {
     if(!quiet) cat("Writing chunk data...\n")
     save_chunkdata(all_data, outputs_dir = outdir, xml_dir = xmldir)
   }
 
-  if(!quiet & removed_count) cat("NOTE: removed ", removed_count, "large inputs that were no longer needed.\n")
+  all_data <- all_data[return_data_names]
+
+  if(!quiet) cat("Returning", length(all_data), "tibbles.\n")
   if(!quiet) cat("All done.\n")
   invisible(all_data)
 }

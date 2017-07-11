@@ -374,6 +374,18 @@ chunk_inputs <- function(chunks = find_chunks()$name) {
 }
 
 
+#' inputs_of
+#'
+#' Convenience function for getting the inputs of one or more chunks
+#'
+#' @param chunks Names of chunks, character
+#' @return Character vector of inputs.
+#' @export
+inputs_of <- function(chunks) {
+  if(is.null(chunks) || chunks == "") return(NULL)
+  chunk_inputs(chunks)$input
+}
+
 #' chunk_outputs
 #'
 #' List all chunk outputs.
@@ -403,6 +415,17 @@ chunk_outputs <- function(chunks = find_chunks()$name) {
   dplyr::bind_rows(chunkoutputs)
 }
 
+#' outputs_of
+#'
+#' Convenience function for getting the outputs of one or more chunks
+#'
+#' @param chunks Names of chunks, character
+#' @return Character vector of inputs.
+#' @export
+outputs_of <- function(chunks) {
+  if(is.null(chunks) || chunks == "") return(NULL)
+  chunk_outputs(chunks)$output
+}
 
 #' screen_forbidden
 #'

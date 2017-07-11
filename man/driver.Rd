@@ -4,24 +4,33 @@
 \alias{driver}
 \title{driver}
 \usage{
-driver(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE,
-  stop_before = "", stop_after = "", outdir = OUTPUTS_DIR,
-  xmldir = XML_DIR)
+driver(all_data = empty_data(), stop_before = "", stop_after = "",
+  return_inputs_of = inputs_of(stop_before),
+  return_outputs_of = outputs_of(stop_after), write_outputs = TRUE,
+  outdir = OUTPUTS_DIR, xmldir = XML_DIR, quiet = FALSE)
 }
 \arguments{
 \item{all_data}{Data to be pre-loaded into data system}
-
-\item{write_outputs}{Write all chunk outputs to disk?}
-
-\item{quiet}{Suppress output?}
 
 \item{stop_before}{Stop immediately before this chunk (character)}
 
 \item{stop_after}{Stop immediately after this chunk  (character)}
 
+\item{return_inputs_of}{Return the data objects that are inputs for these chunks (character).
+If \code{stop_before} is specified, by default that chunk's inputs are returned.}
+
+\item{return_outputs_of}{Return the data objects that are output from these chunks (character)
+If \code{stop_after} is specified, by default that chunk's outputs are returned.}
+
+\item{write_outputs}{Write all chunk outputs to disk?}
+
 \item{outdir}{Location to write output data (ignored if \code{write_outputs} is \code{FALSE})}
 
 \item{xmldir}{Location to write output XML (ignored if \code{write_outputs} is \code{FALSE})}
+
+\item{quiet}{Suppress output?}
+
+\item{return_inputs_of}{Return these data objects (character)}
 }
 \value{
 A list of all built data.
