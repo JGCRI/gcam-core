@@ -256,7 +256,7 @@ add_data <- function(data_list, all_data) {
 #' @importFrom assertthat assert_that
 #' @return The modified data store.
 remove_data <- function(data_list, all_data) {
-  assert_that(is.character(data_list))
+  assert_that(is.character(data_list) | is.null(data_list))
   assert_that(is_data_list(all_data))
 
   for(d in data_list) {
