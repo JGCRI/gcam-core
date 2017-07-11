@@ -86,89 +86,21 @@ rename_SO2 <- function(x, so2_map, is_awb = FALSE) {
     bind_rows(data_notso2)
 }
 
-
-#' get_logit_fn_tables
-#'
-#' Generate a list of tables that sets the appropriate discrete choice function to use.
-#'
-#' @param data Data to partition by logit.type, tibble
-#' @param names Column names to use out of data, character
-#' @param base_header Base header that is used for the logit type tables which will get
-#'  pasted with what the logit.type for each table, character
-#' @param GCAM_region_names GCAM region names and ID numbers, tibble
-#' @param default_logit_type Default logit function to use if the user did not specify one, character
-#' @param include_equiv_table Include EQUIV_TABLE as well? Logical
-#' @param write_all_regions Write each table to all regions? Logical
-#' @param ... Other parameters to pass to \code{\link{write_to_all_regions}}
-#' @details The data has to be partitioned into multiple tables, one for each logit.type. Each element of
-#' the returned list has two variables: 1) the header for the table, and 2) the data for the table.
-#' If requested, an additional \code{EQUIV_TABLE} table will be added so that the tables that contain the logit
-#' exponents do not themselves have to know what logit.type they are using and thus do not need to be
-#' partitioned.
-#' @return The tables TODO NEEED BETTER DOCUMENTATION
-get_logit_fn_tables <- function(data, names, base_header, GCAM_region_names,
-                                include_equiv_table = TRUE,
-                                write_all_regions = FALSE,
-                                default_logit_type = gcam.LOGIT_TYPES[1], ...) {
-  assert_that(is_tibble(data))
-  assert_that(is.character(names))
-  assert_that(is.character(base_header))
-  assert_that(is_tibble(GCAM_region_names))
-  assert_that(is.logical(include_equiv_table))
-  assert_that(is.logical(write_all_regions))
-  assert_that(is.character(default_logit_type))
-
-  # Set the logit type to the default if currently unspecified
-  data$logit.type[is.na(data$logit.type)] <- default_logit_type
-
-  # Note it is safer to create tables for all valid logit types rather than just the
-  # ones included in unique(data$logit.type) even if it results in an empty table
-  # since if we switch all from one type to the other and do not clean out the level
-  # 2 CSV and batch file we will be left with both defined for all rows which is bad.
-
-  tables <- list()
-
-  # Create the EQUIV_TABLE table which allows the Model Interface to be ambiguous about what the
-  # actual logit type is when setting the logit exponent.
-  if(include_equiv_table) {
-    tables[[gcam.EQUIV_TABLE]]$header <- gcam.EQUIV_TABLE
-    d <- tibble(group.name = "LogitType")
-    tag <- 1
-    for(lname in c("dummy-logit-tag", gcam.LOGIT_TYPES)) {
-      d[paste0("tag", tag)] <- lname
-      tag <- tag + 1
-    }
-    tables[[gcam.EQUIV_TABLE]]$data <- d
-  }
-
-  # Loop through each of the logit types and create a table for it
-  # using the appropriate header name and writing to all regions if requested.
-  for(curr_logit_type in gcam.LOGIT_TYPES) {
-    tables[[curr_logit_type]]$header <- paste0(base_header, curr_logit_type)
-    currdata <- data[data$logit.type == curr_logit_type,]
-    if(write_all_regions) {
-      if(nrow(currdata) > 0) {
-        currdata <- write_to_all_regions(currdata, names, GCAM_region_names, ...)
-      } else {
-        currdata <- bind_cols(currdata, tibble(region = character(0)))
-      }
-    }
-    tables[[curr_logit_type]]$data <- currdata[, names]
-  }
-
-  tables
-}
-
-
 #' write_to_all_regions
 #'
-#' @param data Data set to operate on, tibble
-#' @param names Column names to return, character vector
-#' @param GCAM_region_names GCAM region names and ID numbers, tibble
-#' @param has_traded TODO, logical
-#' @param apply_selected_only Only apply to traded region \code{gcam.USA_CODE} (1)? Logical
-#' @param set_market Overwrite \code{market} column with \code{region} data? Logical
-#' @return Filled out data with TODO
+#' Copy data table to all regions, selecting which columns to keep.
+#'
+#' @param data Base tibble to start from
+#' @param names Character vector indicating the column names of the returned tibble
+#' @param GCAM_region_names Tibble with GCAM region names and ID numbers
+#' @param has_traded Logical indicating whether any rows in the base table have "traded" goods; if true,
+#' \code{\link{set_traded_names}} will be called
+#' @param apply_selected_only Logical indicating whether \code{\link{set_traded_names}} is applied to
+#' the whole tibble, or only selected rows
+#' @param set_market Logical indicating whether to create a \code{market.name} column whose values are equal
+#' to \code{region} prior to \code{\link{set_traded_names}} re-setting \code{region} names
+#' @note Used for data that GCAM contains within each region, but whose values are not actually differentiated by region.
+#' @return Tibble with data written out to all GCAM regions.
 write_to_all_regions <- function(data, names, GCAM_region_names, has_traded = FALSE,
                                  apply_selected_only = TRUE, set_market = FALSE) {
   assert_that(is_tibble(data))
@@ -208,12 +140,14 @@ write_to_all_regions <- function(data, names, GCAM_region_names, has_traded = FA
 
 #' set_traded_names
 #'
-#' Convert names of traded secondary goods to be contained within region 1, with region appended to subsector and tech names
+#' Re-set region names in tables with traded secondary goods so that the traded secondary goods are all contained
+#' within one specified region, with the (actual) region name prepended to the subsector and technology names (where applicable)
 #'
-#' @param data Data set to operate on, tibble
-#' @param GCAM_region_names GCAM region names, ordered character vector
-#' @param apply_selected_only Only apply to traded region \code{gcam.USA_CODE} (1)? Logical
-#' @return Modified data
+#' @param data Tibble to operate on
+#' @param GCAM_region_names Tibble with GCAM region names and ID numbers
+#' @param apply_selected_only Logical indicating whether region/subsector/technology re-assignment is applied to
+#' the whole tibble, or only selected rows
+#' @return Tibble returned with modified region, subsector, and/or technology information.
 set_traded_names <- function(data, GCAM_region_names, apply_selected_only = TRUE) {
   assert_that(is_tibble(data))
   assert_that(is.character(GCAM_region_names))
@@ -240,11 +174,14 @@ set_traded_names <- function(data, GCAM_region_names, apply_selected_only = TRUE
 
 #' set_years
 #'
-#' Replace text descriptions of years with numerical values
+#' Replace text descriptions of years in exogenous input CSVs with numerical values. This allows model time periods
+#' to be modified without requiring similar modifications in many input CSV tables.
 #'
-#' @param data Data with entries to be replaced, tibble
-#' @return Modified tibble with \code{start-year}, \code{final-calibration-year}, etc., converted to 'numeric' values
-#' @note The new 'numeric' values are actually characters; this helper function doesn't touch column types.
+#' @param data Tibble with text descriptions of model time periods to be replaced with numerical values.
+#' @details Text strings include \code{start-year}, \code{final-calibration-year}, \code{final-historical-year},
+#' \code{initial-future-year}, \code{initial-nonhistorical-year}, and \code{end-year}.
+#' @return Modified tibble with 'numerical' values instead of text.
+#' @note The returned 'numerical' values are actually characters; this helper function doesn't touch column types.
 set_years <- function(data) {
   assert_that(is_tibble(data))
   data[data == "start-year"] <- min(BASE_YEARS)
@@ -254,4 +191,89 @@ set_years <- function(data) {
   data[data == "initial-nonhistorical-year"] <- min(MODEL_YEARS[MODEL_YEARS > max(HISTORICAL_YEARS)])
   data[data == "end-year"] <- max(FUTURE_YEARS)
   data
+}
+
+
+#' add_node_leaf_names
+#'
+#' Match in the node and leaf names from a land nesting table
+#'
+#' @param data Data, tibble
+#' @param nesting_table Table of node names (as column names) and leaf data (contents), tibble
+#' @param leaf_name Name of leaf name column in \code{nesting_table}, character
+#' @param ... Names of columns to add leaf nodes for, character
+#' @param LT_name Name of land type column in \code{data}, character
+#' @param append_GLU Append GLU column to new leaf name columns? Logical
+#' @return Data with new leaf name columns added.
+add_node_leaf_names <- function(data, nesting_table, leaf_name, ..., LT_name = "Land_Type", append_GLU = TRUE) {
+  assert_that(is_tibble(data))
+  assert_that(is_tibble(nesting_table))
+  assert_that(is.character(leaf_name))
+  assert_that(leaf_name %in% names(nesting_table))
+  assert_that(is.character(LT_name))
+  assert_that(LT_name %in% names(data))
+  assert_that(is.logical(append_GLU))
+
+  data$LandAllocatorRoot <- "root"
+  dots <- list(...)
+  for(x in dots) {
+    assert_that(x %in% names(nesting_table))
+    data[[x]] <- nesting_table[[x]][match(data[[LT_name]], nesting_table[[leaf_name]])]
+  }
+
+  data[[leaf_name]] <- data[[LT_name]]
+
+  if(append_GLU) {
+    data <- append_GLU(data, leaf_name, ...)
+  }
+  if("Irr_Rfd" %in% names(data)) {
+    data[[leaf_name]] <- paste(data[[leaf_name]], data[["Irr_Rfd"]], sep = aglu.IRR_DELIMITER)
+  }
+  data
+}
+
+
+#' append_GLU
+#'
+#' Append GLU to all specified variables
+#'
+#' @param data Data, a tibble
+#' @param ... Names of variables to concatenate with \code{GLU} column, character
+#' @return A tibble with the \code{...} variable names concatenated with the \code{GLU}.
+append_GLU <- function(data, ...) {
+  assert_that(is_tibble(data))
+  dots <- list(...)
+  for(x in dots) {
+    assert_that(x %in% names(data))
+    data[[x]] <- paste(data[[x]], data[["GLU"]], sep = aglu.LT_GLU_DELIMITER)
+  }
+  data
+}
+
+
+#' replace_GLU
+#'
+#' Replace GLU numerical codes with names, and vice versa
+#'
+#' @param d A tibble with a column named "GLU"
+#' @param map A tibble with columns \code{GLU_code} and \code{GLU_name}
+#' @param GLU_pattern Regular expression string to identify the GLU codes
+#' @return A tibble with codes substituted for pattern, or vice versa, depending on the original
+#' contents of the \code{GLU} column.
+replace_GLU <- function(d, map, GLU_pattern = "^GLU[0-9]{3}$") {
+  assert_that(is_tibble(d))
+  assert_that("GLU" %in% names(d))
+  assert_that(is_tibble(map))
+  assert_that(all(c("GLU_code", "GLU_name") %in% names(map)))
+  assert_that(!any(duplicated(map$GLU_code)))
+  assert_that(!any(duplicated(map$GLU_name)))
+  assert_that(is.character(GLU_pattern))
+
+  # Determine the direction of the change based on character string matching in the first element
+  if(all(grepl(GLU_pattern, d$GLU))) {
+    d$GLU <- map$GLU_name[match(d$GLU, map$GLU_code)]  # switch from GLU numerical codes to names
+  } else {
+    d$GLU <- map$GLU_code[match(d$GLU, map$GLU_name)]  # switch from GLU names to numerical codes
+  }
+  d
 }

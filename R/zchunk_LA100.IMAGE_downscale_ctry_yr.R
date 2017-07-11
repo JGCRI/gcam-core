@@ -27,6 +27,9 @@ module_aglu_LA100.IMAGE_downscale_ctry_yr <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    year <- IMAGE_region_ID <- value <- commodity <-
+      input <- iso <- year <- NULL # silence package check notes
+
     # Load required inputs
     AGLU_ctry <- get_data(all_data, "aglu/AGLU_ctry")
     IMAGE_an_Feedfrac_Rimg_C_Sys_Fd_Y <- get_data(all_data, "aglu/IMAGE/IMAGE_an_Feedfrac_Rimg_C_Sys_Fd_Y")

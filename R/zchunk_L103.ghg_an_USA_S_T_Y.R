@@ -20,7 +20,7 @@ module_emissions_L103.ghg_an_USA_S_T_Y <- function(command, ...) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "emissions/mappings/EPA_ghg_tech",
              FILE = "emissions/mappings/GCAM_sector_tech",
-             FILE = "L107.an_Prod_Mt_R_C_Sys_Fd_Y",
+             "L107.an_Prod_Mt_R_C_Sys_Fd_Y",
              FILE = "emissions/EPA_FCCC_AG_2005"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L103.ghg_tgmt_USA_an_Sepa_F_2005"))

@@ -31,7 +31,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
 
     year <- value <- iso <- IMAGE_region_ID <- commodity <- input <-
       GCAM_commodity <- value.x <- value.y <- . <- GCAM_region_ID <- feed <-
-      totAnProd <- mixAnprod <- feedVal <- prodVal <- NULL  # silence package check.
+      totAnProd <- mixAnProd <- feedVal <- prodVal <- NULL  # silence package check.
 
     all_data <- list(...)[[1]]
 

@@ -88,7 +88,7 @@ module_aglu_LA106.ag_an_NetExp_FAO_R_C_Y <- function(command, ...) {
 
     # Produce outputs
     L106.NetExp_Mt_R_C_Y %>%
-      semi_join(select(FAO_ag_items_cal_SUA, GCAM_commodity)) %>%
+      semi_join(select(FAO_ag_items_cal_SUA, GCAM_commodity), by = "GCAM_commodity") %>%
       add_title("Net exports of primary agricultural goods by GCAM region / commodity / year") %>%
       add_units("Mt") %>%
       add_comments("Aggregate FAO primary agricultural goods gross exports and imports and calculate net exports by GCAM region, commodity and year") %>%
@@ -103,7 +103,7 @@ module_aglu_LA106.ag_an_NetExp_FAO_R_C_Y <- function(command, ...) {
       L106.ag_NetExp_Mt_R_C_Y
 
     L106.NetExp_Mt_R_C_Y %>%
-      semi_join(select(FAO_an_items_cal_SUA, GCAM_commodity)) %>%
+      semi_join(select(FAO_an_items_cal_SUA, GCAM_commodity), by = "GCAM_commodity") %>%
       add_title("Net exports of animal products by GCAM region / commodity / year") %>%
       add_units("Mt") %>%
       add_comments("Aggregate FAO animal products gross exports and imports and calculate net exports by GCAM region, commodity and year") %>%
