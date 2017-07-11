@@ -216,11 +216,9 @@ driver <- function(all_data = empty_data(),
       cic[input_names] <- cic[input_names] - 1
       # ...and remove if not going to be used again, and not requested for return
       which_zero <- which(cic[input_names] == 0 & !input_names %in% return_data_names)
-      for(obj in names(which_zero)) {
-        os <- object.size(all_data[obj])
-        all_data <- remove_data(obj, all_data)
-        removed_count <- removed_count + 1
-      }
+      if(write_outputs) save_chunkdata(all_data[names(which_zero)], outputs_dir = outdir, xml_dir = xmldir)
+      all_data <- remove_data(names(which_zero), all_data)
+      removed_count <- removed_count + length(which_zero)
 
       if(chunk == stop_after) {
         chunks_to_run <- character(0)
