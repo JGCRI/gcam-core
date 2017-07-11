@@ -86,7 +86,6 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 #' @param quiet Suppress output?
 #' @param stop_before Stop immediately before this chunk (character)
 #' @param stop_after Stop immediately after this chunk  (character)
-#' @param prune_unneeded_inputs Remove large inputs from storage once no longer needed? Logical
 #' @param outdir Location to write output data (ignored if \code{write_outputs} is \code{FALSE})
 #' @param xmldir Location to write output XML (ignored if \code{write_outputs} is \code{FALSE})
 #' @return A list of all built data.
@@ -101,7 +100,6 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 #' @author BBL
 driver <- function(all_data = empty_data(),
                    write_outputs = TRUE, quiet = FALSE, stop_before = "", stop_after = "",
-                   prune_unneeded_inputs = TRUE,
                    outdir = OUTPUTS_DIR, xmldir = XML_DIR) {
 
   optional <- input <- from_file <- name <- NULL    # silence notes from package check.
@@ -116,13 +114,13 @@ driver <- function(all_data = empty_data(),
   chunkoutputs <- chunk_outputs(chunklist$name)
   if(!quiet) cat("Found", nrow(chunkoutputs), "chunk data products\n")
 
-  # Keep track of input that come from a file for later pruning
-  filter(chunkinputs, from_file) %>%
+  # Keep track of chunk inputs for later pruning
+  chunkinputs %>%
     group_by(input) %>%
     summarise(n = n()) ->
-    from_file_inputs
-  ffi <- from_file_inputs$n
-  names(ffi) <- from_file_inputs$input
+    chunk_input_counts
+  cic <- chunk_input_counts$n
+  names(cic) <- chunk_input_counts$input
 
   warn_data_injects()
   warn_datachunk_bypass()
@@ -153,6 +151,8 @@ driver <- function(all_data = empty_data(),
 
   chunks_to_run <- chunklist$name
   removed_count <- 0
+  save_chunkdata(empty_data(), create_dirs = TRUE, outputs_dir = outdir, xml_dir = xmldir) # clear directories
+
   while(length(chunks_to_run)) {
     nchunks <- length(chunks_to_run)
 
@@ -178,28 +178,34 @@ driver <- function(all_data = empty_data(),
       chunk_data <- run_chunk(chunk, all_data[input_names])
       tdiff <- as.numeric(difftime(Sys.time(), time1, units = "secs"))
       if(!quiet) print(paste("- make", format(round(tdiff, 2), nsmall = 2)))
+      po <- subset(chunkoutputs, name == chunk)$output  # promised outputs
 
       check_chunk_outputs(chunk, chunk_data, input_names,
-                          promised_outputs = subset(chunkoutputs, name == chunk)$output,
+                          promised_outputs = po,
                           outputs_xml = subset(chunkoutputs, name == chunk)$to_xml)
 
       # Add this chunk's data to the global data store
       all_data <- add_data(chunk_data, all_data)
 
-      # Decrement the file input count
-      ffi[input_names] <- ffi[input_names] - 1
-      if(prune_unneeded_inputs) {
-        # ...and remove if large and not going to be used again
-        which_zero <- which(ffi[input_names] == 0)
-        for(obj in names(which_zero)) {
-          os <- object.size(all_data[obj])
-          if(os / 1024 / 1024 > 1) {  # remove objects bigger than 1 MB
-            if(!quiet) print(paste("- Removing", format(os, units = "Mb"), obj, "that will not be used again"))
-            all_data[obj] <- tibble(removed_by_driver = NA)
-            removed_count <- removed_count + 1
-          }
-        }
+      # If any outputs don't appear in the chunk input list, they can be immediately written out and removed
+      not_inputs <- !po %in% names(cic)
+      if(any(not_inputs)) {
+        print(paste("Outputs that are not inputs:", paste(po[not_inputs], collapse = " ")))
+        save_chunkdata(all_data[po[not_inputs]], outputs_dir = outdir, xml_dir = xmldir)
+        all_data <- remove_data(po[not_inputs], all_data)
       }
+
+      # Decrement the file input count
+      cic[input_names] <- cic[input_names] - 1
+      # ...and remove if large and not going to be used again
+      which_zero <- which(cic[input_names] == 0)
+      for(obj in names(which_zero)) {
+        os <- object.size(all_data[obj])
+        #          if(!quiet) print(paste("- Removing", format(os, units = "Mb"), obj, "that will not be used again"))
+        all_data <- remove_data(obj, all_data)
+        removed_count <- removed_count + 1
+      }
+      cat(chunk, object.size(all_data)/1024/1024, "\n", sep = " ", file = "~/Desktop/size.txt", append = TRUE)
 
       if(chunk == stop_after) {
         chunks_to_run <- character(0)
