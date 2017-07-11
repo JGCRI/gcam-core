@@ -18,10 +18,13 @@ the generated outputs: \code{L1322.Fert_Prod_MtN_R_F_Y}, \code{L1322.IO_R_Fert_F
 original data system was \code{LB1322.Fert.R} (energy level1).
 }
 \description{
-Briefly describe what this chunk does.
+This chunk computes fertilizer production and energy inputs by technology.
 }
 \details{
-Describe in detail what this chunk does.
+Fertilizer production and energy information was calculated using country-level fuel share and energy intensity data
+to allocate generic fertilizer production data across technologies. Common sense approaches were taken to ensure no unrealistic information was
+reported at the country level before aggratating to the regional level. Also, a final cost table was calculated using USA market fertilizer
+price data and H2A characteristics of hydrogen production technologies.
 }
 \author{
 AJS July 2017
