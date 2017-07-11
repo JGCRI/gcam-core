@@ -49,33 +49,34 @@ module_water_L145.water.demand.municipal <- function(command, ...) {
     #
     # Aggregate FAO_municipal_water_AQUASTAT to GCAM regions and fill out the years for missing data.
 
-    #Map FAO country to GCAM region ID
+    # Map FAO country to GCAM region ID
     iso_GCAM_regID %>% select(iso, GCAM_region_ID) %>%
-      inner_join(AGLU_ctry[,c("iso","FAO_country")], by ="iso") -> FAO_ctry_GCAM_region_ID
+      inner_join(select(AGLU_ctry, iso, FAO_country), by = "iso") -> FAO_ctry_GCAM_region_ID
+
 
     FAO_municipal_water_AQUASTAT %>%
-      rename ( FAO_country =Area ) %>%
-      inner_join(FAO_ctry_GCAM_region_ID[, c( "GCAM_region_ID", "FAO_country" ) ], by ="FAO_country") -> ctry_municipal_W
+      rename (FAO_country = Area) %>%
+      inner_join(FAO_ctry_GCAM_region_ID[, c("GCAM_region_ID", "FAO_country")], by = "FAO_country") -> ctry_municipal_W
 
-    #Aggregate to regions and fill out missing years using rule=2
+    # Aggregate to regions and fill out missing years using rule=2
     ctry_municipal_W %>%
       group_by(GCAM_region_ID, Year) %>%
       summarise(Value = sum(Value)) %>%
       ungroup() %>%
       complete(GCAM_region_ID = unique(iso_GCAM_regID$GCAM_region_ID),
-               Year = HISTORICAL_YEARS,
+               Year = c(1970, HISTORICAL_YEARS, 2011,2012),
                fill = list(Value = NA))%>%
       group_by(GCAM_region_ID)%>%
-      mutate(Value = approx_fun(Year, Value, rule=2)) %>%
-      rename(value = Value, year =Year) %>%
-      mutate(water_type ="water withdrawals")-> municipal_water_R_W_Yh_km3
+      mutate(Value = approx_fun(Year, Value, rule = 2))  %>%
+      filter(Year >= 1971, Year <= 2010) %>%
+      rename(value = Value, year = Year) %>%
+      mutate(water_type = "water withdrawals")-> municipal_water_R_W_Yh_km3
 
-    # Come up with GCAM reginal average prices starting with the country level IBNET data.
+    # Come up with GCAM regional average prices starting with the country level IBNET data.
     # Note since the years are all over the place we will just use the average across years too.
-    #Come up with regional municipal prices from IBNET data
+    # Come up with regional municipal prices from IBNET data
     IBNET_municipal_water_cost_USDm3 %>%
-      mutate(FAO_country = country)%>%
-      inner_join(FAO_ctry_GCAM_region_ID, by="FAO_country")%>%
+      inner_join(FAO_ctry_GCAM_region_ID, by = c("country" = "FAO_country"))%>%
       mutate(expenditure = cost * consumption)  %>%
       group_by(GCAM_region_ID)%>%
       summarise(expenditure = sum(expenditure), consumption=sum(consumption))%>%
@@ -89,41 +90,30 @@ module_water_L145.water.demand.municipal <- function(command, ...) {
     # Map water use efficiencies from the continent scale to GCAM regions
     # Note names were changed to match manufacturing continent to avoid the need for an additional mapping
 
-    #create the variable year2 for temporal interpolation
-    year2 <- sort(c(1900, 1940, 1950, 1960, 1970, 1980, 1990, 1995, 2000,MODEL_YEARS[-2]))
-
-    #Map municipal water use efficiencies to GCAM regions
+    # Map municipal water use efficiencies to GCAM regions
     municipal_water_use_efficiency %>%
       gather(variable,value,-continent)%>%
       mutate(variable = as.numeric(variable))%>%
-      rename (year=variable) %>%
+      rename (year=variable) -> municipal_water_use_efficiency_tmp
+
+    municipal_water_use_efficiency_tmp%>%
       inner_join(manufacturing_water_mapping, by = "continent") %>%
-      inner_join(GCAM_region_names, by = "region") %>%
-      select(-continent, -GCAM_region_ID) %>%
-      complete(region = unique(GCAM_region_names$region),
-               year = year2,
+      left_join_error_no_match(GCAM_region_names, by = "region") %>%
+      select(-continent,-region) %>%
+      ungroup()  %>%
+      complete(GCAM_region_ID = unique(iso_GCAM_regID$GCAM_region_ID),
+               year = unique(c(municipal_water_use_efficiency_tmp$year,MODEL_YEARS)),
                fill = list(value = NA)) %>%
-      group_by(region) %>%
-      #Fillout the coefficients for all years using rule=2
-      mutate(coefficient = approx_fun(year, value, rule=2)) %>%
-      left_join_keep_first_only(GCAM_region_names, by="region")%>%
-      filter(year>=1975, year != 1980, year !=1995, year !=2000)%>%
+      group_by(GCAM_region_ID) %>%
+      # Fillout the coefficients for all years using rule=2
+      mutate(coefficient = approx_fun(year, value, rule = 2)) %>%
+      filter(year %in% MODEL_YEARS)%>%
       ungroup() %>%
       select(GCAM_region_ID,year,coefficient) %>%
       arrange(GCAM_region_ID, year) -> municipal_water_eff_R_Y
 
 
-    # NOTE: there are `merge` calls in this code. Be careful!
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # ===================================================
-
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
     municipal_water_R_W_Yh_km3 %>%
       add_title("Municipal water withdrawals by GCAM_region_ID for all historical years ") %>%
       add_units("km^3") %>%
@@ -172,3 +162,4 @@ module_water_L145.water.demand.municipal <- function(command, ...) {
     stop("Unknown command")
   }
 }
+
