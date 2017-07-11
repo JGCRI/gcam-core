@@ -56,6 +56,17 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
     # following line temproary while L103 is output from zchunk_LA103.ag_R_C_Y_GLU.R as grouped
     L103.ag_Prod_Mt_R_C_Y_GLU %>% ungroup -> L103.ag_Prod_Mt_R_C_Y_GLU
 
+    # the following lines convert basin identification from the current GLU### level 1 names to the
+    # level 2 names.
+    L103.ag_Prod_Mt_R_C_Y_GLU %>%
+      replace_GLU(map = basin_to_country_mapping) ->
+      L103.ag_Prod_Mt_R_C_Y_GLU
+
+    L123.For_Prod_bm3_R_Y_GLU %>%
+      replace_GLU(map = basin_to_country_mapping) ->
+      L123.For_Prod_bm3_R_Y_GLU
+
+
 
     # Build Tables
 
@@ -261,7 +272,8 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
                      "aglu/A_bio_frac_prod_R",
                      "L111.ag_resbio_R_C",
                      "L103.ag_Prod_Mt_R_C_Y_GLU",
-                     "temp-data-inject/L123.For_Prod_bm3_R_Y_GLU")  ->
+                     "temp-data-inject/L123.For_Prod_bm3_R_Y_GLU")  %>%
+      add_flags(FLAG_PROTECT_FLOAT) ->
       L2042.AgResBioCurve_For
     L204.GlobalResBio_Mill %>%
       add_title("descriptive title of data") %>%
@@ -325,7 +337,8 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
                      "aglu/A_bio_frac_prod_R",
                      "L111.ag_resbio_R_C",
                      "L103.ag_Prod_Mt_R_C_Y_GLU",
-                     "temp-data-inject/L123.For_Prod_bm3_R_Y_GLU") ->
+                     "temp-data-inject/L123.For_Prod_bm3_R_Y_GLU") %>%
+      add_flags(FLAG_PROTECT_FLOAT) ->
       L2042.AgResBioCurve_ag_irr_mgmt
 
     return_data(L2042.AgResBio_For, L2042.AgResBioCurve_For, L2042.GlobalResBio_Mill, L2042.StubResBioCurve_Mill, L2042.AgResBio_ag_irr_mgmt, L2042.AgResBioCurve_ag_irr_mgmt)
