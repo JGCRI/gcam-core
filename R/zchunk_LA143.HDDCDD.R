@@ -17,7 +17,7 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "energy/GIS_ctry",
-             FILE = "L101.Pop_thous_GCAM3_ctry_Y",
+             "L101.Pop_thous_GCAM3_ctry_Y",
              FILE = "energy/GIS/population_weighted_CDD_CCSM3x_A2",
              FILE = "energy/GIS/population_weighted_CDD_CCSM3x_B1",
              FILE = "energy/GIS/population_weighted_CDD_HadCM3_A2",

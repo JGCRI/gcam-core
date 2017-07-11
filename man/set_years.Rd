@@ -7,14 +7,19 @@
 set_years(data)
 }
 \arguments{
-\item{data}{Data with entries to be replaced, tibble}
+\item{data}{Tibble with text descriptions of model time periods to be replaced with numerical values.}
 }
 \value{
-Modified tibble with \code{start-year}, \code{final-calibration-year}, etc., converted to 'numeric' values
+Modified tibble with 'numerical' values instead of text.
 }
 \description{
-Replace text descriptions of years with numerical values
+Replace text descriptions of years in exogenous input CSVs with numerical values. This allows model time periods
+to be modified without requiring similar modifications in many input CSV tables.
+}
+\details{
+Text strings include \code{start-year}, \code{final-calibration-year}, \code{final-historical-year},
+\code{initial-future-year}, \code{initial-nonhistorical-year}, and \code{end-year}.
 }
 \note{
-The new 'numeric' values are actually characters; this helper function doesn't touch column types.
+The returned 'numerical' values are actually characters; this helper function doesn't touch column types.
 }
