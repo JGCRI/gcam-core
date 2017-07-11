@@ -69,11 +69,10 @@ module_energy_LB1322.Fert <- function(command, ...) {
     year <- value <- iso <- GCAM_region_ID <- sector <- fuel <- variable <- IEA_Fert_reg <- intensity_GJkgN <-
       value_share <- Fert_Prod_MtN <- in_Fert <- value.x <- value.y <- in_indenergy <- in_indfeed <- check <-
       mult <- value_share_adj <- coal <- gas <- Fert_Prod_MtN <- in_Fert_adj <- feedstock_GJkgN <- energy_GJkgN <-
-      indenergy_to_Fert <- indfeed_to_Fert <- in_indenergy_netFert <- value_indenergy <- resource <- . <- `2005` <-
-      supplysector <- subsector <- technology <- minicam.non.energy.input <- improvement.max <- improvement.rate <-
+      indenergy_to_Fert <- indfeed_to_Fert <- in_indenergy_netFert <- value_indenergy <- resource <- `2005` <-
+      . <- supplysector <- subsector <- technology <- minicam.non.energy.input <- improvement.max <- improvement.rate <-
       improvement.shadow.technology <- NEcost <- Technology <- NEcost_75USDkgN <- `Central Natural Gas Sequestration` <-
-      `Central Natural Gas` <- `Central Coal` <- `Central Coal Sequestration` <- Fert_Prod_MtN_adj <-
-      in_indfeed_netFert <- NULL
+      `Central Natural Gas` <- `Central Coal` <- `Central Coal Sequestration` -< Fert_Prod_MtN_adj <- in_indfeed_netFert <- NULL
 
     # Compute fertilizer production and energy inputs by technology
     # Disaggregating fertilizer production by country / year to production technologies (gas, coal, oil)
@@ -277,42 +276,36 @@ module_energy_LB1322.Fert <- function(command, ...) {
     # First, calculate gas cost per kg N
          # Calculating non-energy costs for gas technology as USA market fertilizer price minus GCAM fuel costs
          # Calculate the gas price as the sum of resource costs plus intermediate sectoral mark-ups
-         # 2005 is used as the fertilizer base price. We will interpolate for 2005 in the latter cost tables to make
-         # sure this year is included
+         # 2005 is used as the fertilizer base price. Interpolate cost tables to make sure this year is included
     A10.rsrc_info %>%
       filter(resource == "natural gas") %>%
       summarise(value = sum(`2005`)) %>% # Ensuring no duplicates
       .[["value"]] -> # Save cost as single number. Units are 1975 USD per GJ.
       A10.rsrc_info_2005
 
-    # Using primary energy handling default costs in 1971 and 2100, interpolate for 2005 for natural gas.
-         # We are interpolating for 2005 since this is the year used as the fertilizer base price (from A10.rsrc_info).
-         # So that we may add up all costs consistently, we are interpolating for this year in the global tech cost tables.
-    # To help prevent any potential mix-up, we will define this year to be base_fertilizer_year
-    base_fertilizer_year <- 2005
-
+    # Using primary energy handling default costs in 1971 and 2100, interpolate for 2005 for natural gas
     A21.globaltech_cost %>%
       mutate(`2005` = NA) %>% # Include placeholder for 2005. Value will be interpolated.
-      gather(year, value, matches(YEAR_PATTERN)) %>% # Convert to long form.
+      gather(year, value, -supplysector, -subsector, -technology, -minicam.non.energy.input) %>% # Convert to long form.
       mutate(year = as.numeric(year)) %>% # Convert year to numeric as needed by the interpolation function.
       group_by(supplysector, subsector, technology, minicam.non.energy.input) %>%
       mutate(value = approx_fun(year, value)) %>% # Interpolation step
       ungroup() %>%
-      filter(technology == "regional natural gas", year == base_fertilizer_year) %>% # Filer only for natural gas and 2005
+      filter(technology == "regional natural gas", year == 2005) %>% # Filer only for natural gas and 2005
       .[["value"]] -> # Save cost as single number. Units are 1975 USD per GJ.
       A21.globaltech_cost_2005
 
     # Using, primary energy transformation technologies default cost assumptions, interpolate for 2005 for natural gas
-         # Justification for using 2005 is given above.
     A22.globaltech_cost %>%
       mutate(`2005` = NA) %>% # Include placeholder for 2005. Value will be interpolated.
-      gather(year, value, matches(YEAR_PATTERN)) %>%  # Convert to long form.
+      gather(year, value, -supplysector, -subsector, -technology, -minicam.non.energy.input,
+             -improvement.max, -improvement.rate, -improvement.shadow.technology) %>%  # Convert to long form.
       mutate(year = as.numeric(year)) %>% # Convert year to numeric as needed by the interpolation function.
       group_by(supplysector, subsector, technology, minicam.non.energy.input, improvement.max,
                improvement.rate, improvement.shadow.technology) %>%
       mutate(value = approx_fun(year, value)) %>% # Interpolation step
       ungroup() %>%
-      filter(technology == "natural gas", year == base_fertilizer_year) %>% # Filer only for natural gas and 2005
+      filter(technology == "natural gas", year == 2005) %>% # Filer only for natural gas and 2005
       .[["value"]] -> # Save cost as single number. Units are 1975 USD per GJ.
       A22.globaltech_cost_2005
 
@@ -321,8 +314,8 @@ module_energy_LB1322.Fert <- function(command, ...) {
 
     # Obtain fertilizer input-output cofficient for natural gas in 2005
     L1322.IO_R_Fert_F_Yh %>%
-      filter(year == base_fertilizer_year,
-             GCAM_region_ID == gcam.USA_CODE,
+      filter(year == 2005,
+             GCAM_region_ID == 1,
              fuel == "gas") %>%
       .[["value"]] -> # Save coefficient as single number
       L1322.IO_GJkgN_Fert_gas
@@ -345,7 +338,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
 
     # First, calculate costs in 1975 USD per kg N
     H2A_Prod_Tech %>%
-      mutate(NEcost_75USDkgN = NEcost * gdp_deflator(1975, base_fertilizer_year) * NH3_H_frac / CONV_NH3_N) ->
+      mutate(NEcost_75USDkgN = NEcost * gdp_deflator(1975, 2005) * NH3_H_frac / CONV_NH3_N) ->
       H2A_Prod_Tech_1975
 
     # Derive costs as the cost of NGSR plus the specified cost adder
@@ -403,7 +396,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID", "energy/IEA_ctry", "energy/IEA_Fert_fuel_data",
                      "temp-data-inject/L142.ag_Fert_Prod_MtN_ctry_Y", "temp-data-inject/L1321.in_EJ_R_indenergy_F_Yh",
                      "temp-data-inject/L132.in_EJ_R_indfeed_F_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1322.IO_R_Fert_F_Yh
 
     L1322.in_EJ_R_indenergy_F_Yh %>%
