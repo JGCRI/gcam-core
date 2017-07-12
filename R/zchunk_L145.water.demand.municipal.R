@@ -43,14 +43,14 @@ module_water_L145.water.demand.municipal <- function(command, ...) {
     # Aggregate FAO_municipal_water_AQUASTAT to GCAM regions and fill out the years for missing data.
 
     # Map FAO country to GCAM region ID
-    iso_GCAM_regID %>%
-      select(iso, GCAM_region_ID) %>%
-      inner_join(select(AGLU_ctry, iso, FAO_country), by = "iso") ->
+    AGLU_ctry %>%
+      select(iso, FAO_country) %>%
+      left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") ->
       FAO_ctry_GCAM_region_ID
 
     FAO_municipal_water_AQUASTAT %>%
-      rename (FAO_country = Area) %>%
-      inner_join(FAO_ctry_GCAM_region_ID[, c("GCAM_region_ID", "FAO_country")], by = "FAO_country") ->
+      rename(FAO_country = Area) %>%
+      inner_join(select(FAO_ctry_GCAM_region_ID, GCAM_region_ID, FAO_country), by = "FAO_country") ->
       ctry_municipal_W
 
     # Aggregate to regions and fill out missing years using rule=2
@@ -59,10 +59,11 @@ module_water_L145.water.demand.municipal <- function(command, ...) {
       summarise(Value = sum(Value)) %>%
       ungroup() %>%
       complete(GCAM_region_ID = unique(iso_GCAM_regID$GCAM_region_ID),
-               Year = unique(ctry_municipal_W$Year),
-               fill = list(Value = NA))%>%
-      group_by(GCAM_region_ID)%>%
-      mutate(Value = approx_fun(Year, Value, rule = 2))  %>%
+               Year = unique(c(ctry_municipal_W$Year, HISTORICAL_YEARS)),
+               fill = list(Value = NA)) %>%
+      arrange(GCAM_region_ID, Year) %>%
+      group_by(GCAM_region_ID) %>%
+      mutate(Value = approx_fun(Year, Value, rule = 2)) %>%
       filter(Year %in% HISTORICAL_YEARS) %>%
       rename(value = Value, year = Year) %>%
       mutate(water_type = "water withdrawals") ->
@@ -89,26 +90,27 @@ module_water_L145.water.demand.municipal <- function(command, ...) {
 
     # Map municipal water use efficiencies to GCAM regions
     municipal_water_use_efficiency %>%
-      gather(variable,value,-continent) %>%
-      mutate(variable = as.numeric(variable)) %>%
-      rename (year = variable) ->
+      gather(year, value, matches(YEAR_PATTERN)) %>%
+      mutate(year = as.integer(year)) ->
       municipal_water_use_efficiency_tmp
 
-    municipal_water_use_efficiency_tmp%>%
+    municipal_water_use_efficiency_tmp %>%
+      # We want all combinations of matches between these two tables so use an inner join
       inner_join(manufacturing_water_mapping, by = "continent") %>%
       left_join_error_no_match(GCAM_region_names, by = "region") %>%
-      select(-continent, -region) %>%
-      ungroup()  %>%
-      complete(GCAM_region_ID = unique(iso_GCAM_regID$GCAM_region_ID),
-               year = unique(c(municipal_water_use_efficiency_tmp$year,MODEL_YEARS)),
-               fill = list(value = NA)) %>%
-      group_by(GCAM_region_ID) %>%
-      # Fill out the coefficients for all years using rule=2
-      mutate(coefficient = approx_fun(year, value, rule = 2)) %>%
-      filter(year %in% MODEL_YEARS)%>%
+      select(GCAM_region_ID, year, value) %>%
       ungroup() %>%
-      select(GCAM_region_ID, year, coefficient) %>%
-      arrange(GCAM_region_ID, year) -> municipal_water_eff_R_Y
+      complete(GCAM_region_ID = unique(iso_GCAM_regID$GCAM_region_ID),
+               year = c(MODEL_YEARS, municipal_water_use_efficiency_tmp$year),
+               fill = list(value = NA)) %>%
+      # Fill out the coefficients for all years using rule=2
+      arrange(GCAM_region_ID, year) %>%
+      group_by(GCAM_region_ID) %>%
+      mutate(value = approx_fun(year, value, rule = 2)) %>%
+      filter(year %in% MODEL_YEARS) %>%
+      ungroup() %>%
+      select(GCAM_region_ID, year, coefficient = value) ->
+      municipal_water_eff_R_Y
 
     # Produce outputs
     municipal_water_R_W_Yh_km3 %>%
@@ -116,35 +118,32 @@ module_water_L145.water.demand.municipal <- function(command, ...) {
       add_units("km^3") %>%
       add_comments("Aggregate FAO_municipal_water_AQUASTAT to GCAM regions and fill out the years for missing data by rule=2") %>%
       add_legacy_name("L145.municipal_water_R_W_Yh_km3") %>%
-      add_precursors("common/iso_GCAM_regID", "common/GCAM_region_names", "aglu/AGLU_ctry",
-                     "water/FAO_municipal_water_AQUASTAT",
-                     "water/IBNET_municipal_water_cost_USDm3",
-                     "water/municipal_water_use_efficiency",
-                     "water/manufacturing_water_mapping") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/iso_GCAM_regID", "aglu/AGLU_ctry",
+                     "water/FAO_municipal_water_AQUASTAT") %>%
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L145.municipal_water_R_W_Yh_km3
-
 
     municipal_water_cost_R_75USD_m3 %>%
       add_title("Municipal water base deleivery cost by GCAM_region_ID") %>%
       add_units("1975$/m^3") %>%
-      add_comments("Gnereate GCAM reginal average prices starting with the country-level IBNET data") %>%
+      add_comments("Generate GCAM regional average prices starting with the country-level IBNET data") %>%
       add_comments("1. Get country-level expenditure (cost * consumption);
                    2. Sum up country-level expenditure and cost to get region-level expenditure and cost;
                    3. Divide region-level expenditure by region-level consumption to get region-level cost") %>%
       add_legacy_name("L145.municipal_water_cost_R_75USD_m3") %>%
-      same_precursors_as(L145.municipal_water_R_W_Yh_km3) ->
+      add_precursors("common/iso_GCAM_regID",
+                     "water/IBNET_municipal_water_cost_USDm3") ->
       L145.municipal_water_cost_R_75USD_m3
-
 
     municipal_water_eff_R_Y %>%
       add_title("Municipal water use efficiency by GCAM_region_ID for all years") %>%
       add_units("%") %>%
-      add_comments("The data is generated through:") %>%
       add_comments("1. Map water use efficiencies from the continent scale to GCAM regions;
                    2. Fill out the coefficients for all years using rule=2") %>%
       add_legacy_name("L145.municipal_water_eff_R_Y") %>%
-      same_precursors_as(L145.municipal_water_R_W_Yh_km3) ->
+      add_precursors("common/GCAM_region_names",
+                     "water/municipal_water_use_efficiency",
+                     "water/manufacturing_water_mapping") ->
     L145.municipal_water_eff_R_Y
 
     return_data(L145.municipal_water_R_W_Yh_km3, L145.municipal_water_cost_R_75USD_m3, L145.municipal_water_eff_R_Y)
