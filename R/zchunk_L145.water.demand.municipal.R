@@ -141,7 +141,9 @@ module_water_L145.water.demand.municipal <- function(command, ...) {
                      "water/FAO_municipal_water_AQUASTAT",
                      "water/IBNET_municipal_water_cost_USDm3",
                      "water/municipal_water_use_efficiency",
-                     "water/manufacturing_water_mapping") ->L145.municipal_water_cost_R_75USD_m3
+                     "water/manufacturing_water_mapping") %>%
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L145.municipal_water_cost_R_75USD_m3
 
 
     municipal_water_eff_R_Y %>%
@@ -155,7 +157,9 @@ module_water_L145.water.demand.municipal <- function(command, ...) {
                      "water/FAO_municipal_water_AQUASTAT",
                      "water/IBNET_municipal_water_cost_USDm3",
                      "water/municipal_water_use_efficiency",
-                     "water/manufacturing_water_mapping") ->  L145.municipal_water_eff_R_Y
+                     "water/manufacturing_water_mapping")
+    add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    L145.municipal_water_eff_R_Y
 
     return_data(L145.municipal_water_R_W_Yh_km3, L145.municipal_water_cost_R_75USD_m3, L145.municipal_water_eff_R_Y)
   } else {
