@@ -12,19 +12,18 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
+#' @author RH July 2017
 #' @export
-module_emissions_L112.ghg_en_R_S_T_Y_DISABLED <- function(command, ...) {
+module_emissions_L112.ghg_en_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "emissions/EDGAR_sector",
+             FILE = "emissions/EDGAR/EDGAR_sector",
              FILE = "emissions/mappings/EPA_ghg_tech",
-             FILE = "emissions/EDGAR_nation",
              FILE = "emissions/mappings/GCAM_sector_tech",
              "L101.in_EJ_R_en_Si_F_Yh",
              "L102.ghg_tgej_USA_en_Sepa_F_2005",
-             FILE = "emissions/EDGAR_CH4",
-             FILE = "emissions/EDGAR_N2O"))
+             FILE = "emissions/EDGAR/EDGAR_CH4",
+             FILE = "emissions/EDGAR/EDGAR_N2O"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L112.ghg_tg_R_en_S_F_Yh",
              "L112.ghg_tgej_R_en_S_F_Yh"))
@@ -34,36 +33,96 @@ module_emissions_L112.ghg_en_R_S_T_Y_DISABLED <- function(command, ...) {
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    EDGAR_sector <- get_data(all_data, "emissions/EDGAR_sector")
+    EDGAR_sector <- get_data(all_data, "emissions/EDGAR/EDGAR_sector")
     EPA_ghg_tech <- get_data(all_data, "emissions/mappings/EPA_ghg_tech")
-    EDGAR_nation <- get_data(all_data, "emissions/EDGAR_nation")
     GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
-    L101.in_EJ_R_en_Si_F_Yh <- get_data(all_data, "L101.in_EJ_R_en_Si_F_Yh")
-    L102.ghg_tgej_USA_en_Sepa_F_2005 <- get_data(all_data, "L102.ghg_tgej_USA_en_Sepa_F_2005")
-    EDGAR_CH4 <- get_data(all_data, "emissions/EDGAR_CH4")
-    EDGAR_N2O <- get_data(all_data, "emissions/EDGAR_N2O")
+    L101.in_EJ_R_en_Si_F_Yh <- get_data(all_data, "L101.in_EJ_R_en_Si_F_Yh") %>%
+      gather(year, energy, `1971`:`2010`)
+    L102.ghg_tgej_USA_en_Sepa_F_2005 <- get_data(all_data, "L102.ghg_tgej_USA_en_Sepa_F_2005") %>%
+      rename(CH4 = ch4_em_factor, N2O = n2o_em_factor) %>%
+      gather(variable, emiss_factor, CH4, N2O) %>%
+      ungroup
+    EDGAR_CH4 <- get_data(all_data, "emissions/EDGAR/EDGAR_CH4") %>%
+      gather(year, value, matches(YEAR_PATTERN)) %>%
+      mutate(Non.CO2 = "CH4")
+    EDGAR_N2O <- get_data(all_data, "emissions/EDGAR/EDGAR_N2O") %>%
+      gather(year, value, matches(YEAR_PATTERN)) %>%
+      mutate(Non.CO2 = "N2O")
 
-    # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses vecpaste
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses repeat_and_add_vector
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
+    # Computing unscaled emissions by country and technology
+    # Is first_only getting rid of different fuels here? #########ERROR FIX LATER
+    L112.ghg_tg_R_en_Si_F_Yh <- L101.in_EJ_R_en_Si_F_Yh %>%
+      left_join_keep_first_only(GCAM_sector_tech %>%
+                                  select(EPA_agg_sector, EPA_agg_fuel, fuel, sector), by = c("fuel", "sector")) %>%
+      # Remove years where we don't have emissions data and add Non.CO2 column
+      filter(year %in% emissions.EDGAR_HISTORICAL) %>%
+      repeat_add_columns(tibble(Non.CO2 = c("CH4","N2O"))) %>%
+      # Match in emissions factors
+      # Use left_join because some cement only in EPA sector
+      left_join(L102.ghg_tgej_USA_en_Sepa_F_2005,
+                by = c("Non.CO2" = "variable", "EPA_agg_sector" = "sector", "EPA_agg_fuel" = "fuel")) %>%
+      #Compute unscaled emissions
+      mutate(epa_emissions = energy * emiss_factor) %>%
+      na.omit() %>%
+      left_join_keep_first_only(GCAM_sector_tech %>% select(EDGAR_agg_sector, sector, fuel),
+                by = c("sector", "fuel"))
+
+    L112.ghg_tg_R_en_Sedgar_Yh <- L112.ghg_tg_R_en_Si_F_Yh %>%
+      group_by(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year) %>%
+      summarise(epa_emissions = sum(epa_emissions)) %>%
+      ungroup()
+
+    # Compute EDGAR emissions by region and sector
+    L112.EDGAR <- bind_rows(EDGAR_CH4, EDGAR_N2O) %>%
+      # Use left_join because EDGAR_sector does not have IPCC 5D (Peat fires) or 5F2 (Forest Fires-Post burn decay)
+      fast_left_join(EDGAR_sector %>% select(IPCC, EDGAR_agg_sector = agg_sector), by = "IPCC") %>%
+      standardize_iso(col = "ISO_A3") %>%
+      change_iso_code('rou', 'rom') %>%
+      left_join(iso_GCAM_regID, by = "iso") %>%
+      na.omit() %>%
+      # Aggregate by region, GHG, and EDGAR sector
+      group_by(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year) %>%
+      summarise(value = sum(value))
+
+    # Scale EPA emissions by tech to match EDGAR totals
+    # First compute scalers
+    L112.emiss_scaler <- L112.ghg_tg_R_en_Sedgar_Yh %>%
+      # Use left_join because a few regions missing oil_gas and coal in L112.EDGAR
+      left_join(L112.EDGAR %>% rename(EDGAR_emissions = value), by = c("GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector", "year")) %>%
+      mutate(scaler = EDGAR_emissions / epa_emissions / 1000) %>%
+      select(GCAM_region_ID, year, Non.CO2, EDGAR_agg_sector, scaler)
+
+    # Now, scale EPA emissions
+    L112.ghg_tg_R_en_Si_F_Yh <- L112.ghg_tg_R_en_Si_F_Yh %>%
+      left_join(L112.emiss_scaler, by = c("GCAM_region_ID", "year", "Non.CO2", "EDGAR_agg_sector")) %>%
+      mutate(emissions = epa_emissions * scaler) %>%
+      replace_na(replace = list(emissions = 0, scaler = 0))
+
+    # Map in GCAM sector, technology, and driver type
+    L112.ghg_tg_R_en_S_F_Yh <- L112.ghg_tg_R_en_Si_F_Yh %>%
+      left_join_keep_first_only(GCAM_sector_tech %>% select(sector, fuel, technology, supplysector, subsector, stub.technology),
+                                by = c("sector", "fuel", "technology")) %>%
+      group_by(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, year) %>%
+      summarise(value = sum(emissions)) %>%
+      na.omit() %>%
+      ungroup
+
+    # Compute emissions factor by GCAM sector, technology, and driver type
+    # First compute energy by sector
+    L112.in_EJ_R_en_S_F_Yh <- L101.in_EJ_R_en_Si_F_Yh %>%
+      left_join_keep_first_only(GCAM_sector_tech %>% select(sector, fuel, technology, supplysector, subsector, stub.technology),
+                by = c("sector", "fuel", "technology")) %>%
+      group_by(GCAM_region_ID, supplysector, subsector, stub.technology, year) %>%
+      summarise(energy = sum(energy))
+
+    L112.ghg_tgej_R_en_S_F_Yh <- L112.ghg_tg_R_en_S_F_Yh %>%
+      rename(input_emissions = value) %>%
+      left_join_error_no_match(L112.in_EJ_R_en_S_F_Yh,
+                               by = c("GCAM_region_ID", "supplysector", "subsector", "stub.technology", "year")) %>%
+      mutate(emfact = input_emissions / energy) %>%
+      replace_na(list(emfact = 0)) %>%
+      select(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, year, value = emfact)
+
     # ===================================================
 
     # Produce outputs
@@ -71,23 +130,27 @@ module_emissions_L112.ghg_en_R_S_T_Y_DISABLED <- function(command, ...) {
     # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
     # There's also a `same_precursors_as(x)` you can use
     # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
+    L112.ghg_tg_R_en_S_F_Yh %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L112.ghg_tg_R_en_S_F_Yh") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_sector", "emissions/mappings/EPA_ghg_tech",
+                     "emissions/mappings/GCAM_sector_tech", "L101.in_EJ_R_en_Si_F_Yh",
+                     "L102.ghg_tgej_USA_en_Sepa_F_2005", "emissions/EDGAR/EDGAR_CH4", "emissions/EDGAR/EDGAR_N2O") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L112.ghg_tg_R_en_S_F_Yh
-    tibble() %>%
+    L112.ghg_tgej_R_en_S_F_Yh %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L112.ghg_tgej_R_en_S_F_Yh") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_sector", "emissions/mappings/EPA_ghg_tech",
+                     "emissions/mappings/GCAM_sector_tech", "L101.in_EJ_R_en_Si_F_Yh",
+                     "L102.ghg_tgej_USA_en_Sepa_F_2005", "emissions/EDGAR/EDGAR_CH4", "emissions/EDGAR/EDGAR_N2O") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L112.ghg_tgej_R_en_S_F_Yh
