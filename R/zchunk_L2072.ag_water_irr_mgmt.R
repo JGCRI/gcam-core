@@ -6,7 +6,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{object}. The corresponding file in the
+#' the generated outputs: \code{L2071.AgCoef_IrrBphysWater_ag}, \code{L2072.AgCoef_IrrWaterWdraw_ag}, \code{L2072.AgCoef_IrrWaterCons_ag}, \code{L2072.AgCoef_RfdBphysWater_ag}, \code{L2072.AgCoef_BphysWater_bio}, \code{L2072.AgCoef_IrrWaterWdraw_bio}, \code{L2072.AgCoef_IrrWaterCons_bio}. The corresponding file in the
 #' original data system was \code{L2072.ag_water_irr_mgmt.R} (aglu level2).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
@@ -14,17 +14,47 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_aglu_L2072.ag_water_irr_mgmt_DISABLED <- function(command, ...) {
+module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "i"))
+    return(c(FILE = "common/GCAM_region_names",
+             FILE = "water/basin_to_country_mapping",
+             "L132.ag_an_For_Prices",
+             FILE = "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
+             FILE = "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU",
+             FILE = "temp-data-inject/L161.ag_irrYield_kgm2_R_C_Y_GLU",
+             "L165.BlueIrr_m3kg_R_C_GLU",
+             "L165.TotIrr_m3kg_R_C_GLU",
+             "L165.GreenRfd_m3kg_R_C_GLU",
+             "L165.ag_IrrEff_R",
+             "L2052.AgCost_ag_irr_mgmt",
+             "L2052.AgCost_bio_irr_mgmt",
+             FILE = "water/A03.sector"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("object"))
+    return(c("L2072.AgCoef_IrrBphysWater_ag",
+             "L2072.AgCoef_IrrWaterWdraw_ag",
+             "L2072.AgCoef_IrrWaterCons_ag",
+             "L2072.AgCoef_RfdBphysWater_ag",
+             "L2072.AgCoef_BphysWater_bio",
+             "L2072.AgCoef_IrrWaterWdraw_bio",
+             "L2072.AgCoef_IrrWaterCons_bio"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    i <- get_data(all_data, "i")
+    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
+    basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
+    L132.ag_an_For_Prices <- get_data(all_data, "L132.ag_an_For_Prices")
+    L161.ag_irrProd_Mt_R_C_Y_GLU <- get_data(all_data, "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU")
+    L161.ag_rfdProd_Mt_R_C_Y_GLU <- get_data(all_data, "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU")
+    L161.ag_irrYield_kgm2_R_C_Y_GLU <- get_data(all_data, "temp-data-inject/L161.ag_irrYield_kgm2_R_C_Y_GLU")
+    L165.BlueIrr_m3kg_R_C_GLU <- get_data(all_data, "L165.BlueIrr_m3kg_R_C_GLU")
+    L165.TotIrr_m3kg_R_C_GLU <- get_data(all_data, "L165.TotIrr_m3kg_R_C_GLU")
+    L165.GreenRfd_m3kg_R_C_GLU <- get_data(all_data, "L165.GreenRfd_m3kg_R_C_GLU")
+    L165.ag_IrrEff_R <- get_data(all_data, "L165.ag_IrrEff_R")
+    L2052.AgCost_ag_irr_mgmt <- get_data(all_data, "L2052.AgCost_ag_irr_mgmt")
+    L2052.AgCost_bio_irr_mgmt <- get_data(all_data, "L2052.AgCost_bio_irr_mgmt")
+    A03.sector <- get_data(all_data, "water/A03.sector")
 
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
@@ -55,13 +85,157 @@ module_aglu_L2072.ag_water_irr_mgmt_DISABLED <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("object") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_legacy_name("L2071.AgCoef_IrrBphysWater_ag") %>%
+      add_precursors("common/GCAM_region_names",
+                     "water/basin_to_country_mapping",
+                     "L132.ag_an_For_Prices",
+                     "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
+                     "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU",
+                     "temp-data-inject/L161.ag_irrYield_kgm2_R_C_Y_GLU",
+                     "L165.BlueIrr_m3kg_R_C_GLU",
+                     "L165.TotIrr_m3kg_R_C_GLU",
+                     "L165.GreenRfd_m3kg_R_C_GLU",
+                     "L165.ag_IrrEff_R",
+                     "L2052.AgCost_ag_irr_mgmt",
+                     "L2052.AgCost_bio_irr_mgmt",
+                     "water/A03.sector") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      object
+      L2072.AgCoef_IrrBphysWater_ag
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L2071.AgCoef_IrrWaterWdraw_ag") %>%
+      add_precursors("common/GCAM_region_names",
+                     "water/basin_to_country_mapping",
+                     "L132.ag_an_For_Prices",
+                     "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
+                     "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU",
+                     "temp-data-inject/L161.ag_irrYield_kgm2_R_C_Y_GLU",
+                     "L165.BlueIrr_m3kg_R_C_GLU",
+                     "L165.TotIrr_m3kg_R_C_GLU",
+                     "L165.GreenRfd_m3kg_R_C_GLU",
+                     "L165.ag_IrrEff_R",
+                     "L2052.AgCost_ag_irr_mgmt",
+                     "L2052.AgCost_bio_irr_mgmt",
+                     "water/A03.sector") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L2072.AgCoef_IrrWaterWdraw_ag
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L2071.AgCoef_IrrWaterCons_ag") %>%
+      add_precursors("common/GCAM_region_names",
+                     "water/basin_to_country_mapping",
+                     "L132.ag_an_For_Prices",
+                     "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
+                     "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU",
+                     "temp-data-inject/L161.ag_irrYield_kgm2_R_C_Y_GLU",
+                     "L165.BlueIrr_m3kg_R_C_GLU",
+                     "L165.TotIrr_m3kg_R_C_GLU",
+                     "L165.GreenRfd_m3kg_R_C_GLU",
+                     "L165.ag_IrrEff_R",
+                     "L2052.AgCost_ag_irr_mgmt",
+                     "L2052.AgCost_bio_irr_mgmt",
+                     "water/A03.sector") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L2072.AgCoef_IrrWaterCons_ag
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L2071.AgCoef_RfdBphysWater_ag") %>%
+      add_precursors("common/GCAM_region_names",
+                     "water/basin_to_country_mapping",
+                     "L132.ag_an_For_Prices",
+                     "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
+                     "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU",
+                     "temp-data-inject/L161.ag_irrYield_kgm2_R_C_Y_GLU",
+                     "L165.BlueIrr_m3kg_R_C_GLU",
+                     "L165.TotIrr_m3kg_R_C_GLU",
+                     "L165.GreenRfd_m3kg_R_C_GLU",
+                     "L165.ag_IrrEff_R",
+                     "L2052.AgCost_ag_irr_mgmt",
+                     "L2052.AgCost_bio_irr_mgmt",
+                     "water/A03.sector") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L2072.AgCoef_RfdBphysWater_ag
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L2071.AgCoef_BphysWater_bio") %>%
+      add_precursors("common/GCAM_region_names",
+                     "water/basin_to_country_mapping",
+                     "L132.ag_an_For_Prices",
+                     "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
+                     "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU",
+                     "temp-data-inject/L161.ag_irrYield_kgm2_R_C_Y_GLU",
+                     "L165.BlueIrr_m3kg_R_C_GLU",
+                     "L165.TotIrr_m3kg_R_C_GLU",
+                     "L165.GreenRfd_m3kg_R_C_GLU",
+                     "L165.ag_IrrEff_R",
+                     "L2052.AgCost_ag_irr_mgmt",
+                     "L2052.AgCost_bio_irr_mgmt",
+                     "water/A03.sector") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L2072.AgCoef_BphysWater_bio
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L2071.AgCoef_IrrWaterWdraw_bio") %>%
+      add_precursors("common/GCAM_region_names",
+                     "water/basin_to_country_mapping",
+                     "L132.ag_an_For_Prices",
+                     "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
+                     "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU",
+                     "temp-data-inject/L161.ag_irrYield_kgm2_R_C_Y_GLU",
+                     "L165.BlueIrr_m3kg_R_C_GLU",
+                     "L165.TotIrr_m3kg_R_C_GLU",
+                     "L165.GreenRfd_m3kg_R_C_GLU",
+                     "L165.ag_IrrEff_R",
+                     "L2052.AgCost_ag_irr_mgmt",
+                     "L2052.AgCost_bio_irr_mgmt",
+                     "water/A03.sector") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L2072.AgCoef_IrrWaterWdraw_bio
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L2071.AgCoef_IrrWaterCons_bio") %>%
+      add_precursors("common/GCAM_region_names",
+                     "water/basin_to_country_mapping",
+                     "L132.ag_an_For_Prices",
+                     "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
+                     "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU",
+                     "temp-data-inject/L161.ag_irrYield_kgm2_R_C_Y_GLU",
+                     "L165.BlueIrr_m3kg_R_C_GLU",
+                     "L165.TotIrr_m3kg_R_C_GLU",
+                     "L165.GreenRfd_m3kg_R_C_GLU",
+                     "L165.ag_IrrEff_R",
+                     "L2052.AgCost_ag_irr_mgmt",
+                     "L2052.AgCost_bio_irr_mgmt",
+                     "water/A03.sector") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L2072.AgCoef_IrrWaterCons_bio
 
-    return_data(object)
+    return_data(L2072.AgCoef_IrrBphysWater_ag, L2072.AgCoef_IrrWaterWdraw_ag, L2072.AgCoef_IrrWaterCons_ag, L2072.AgCoef_RfdBphysWater_ag, L2072.AgCoef_BphysWater_bio, L2072.AgCoef_IrrWaterWdraw_bio, L2072.AgCoef_IrrWaterCons_bio)
   } else {
     stop("Unknown command")
   }
