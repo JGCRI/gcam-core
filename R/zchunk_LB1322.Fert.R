@@ -22,7 +22,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
              FILE = "energy/IEA_ctry",
              FILE = "energy/IEA_Fert_fuel_data",
              FILE = "energy/H2A_Prod_Tech",
-             FILE = "temp-data-inject/L142.ag_Fert_Prod_MtN_ctry_Y",
+             "L142.ag_Fert_Prod_MtN_ctry_Y",
              FILE = "energy/A10.rsrc_info",
              FILE = "energy/A21.globaltech_cost",
              FILE = "energy/A22.globaltech_cost",
@@ -38,17 +38,22 @@ module_energy_LB1322.Fert <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    # Silence package notes
+    year <- value <- iso <- GCAM_region_ID <- sector <- fuel <- variable <- IEA_Fert_reg <- intensity_GJkgN <-
+      value_share <- Fert_Prod_MtN <- in_Fert <- value.x <- value.y <- in_indenergy <- in_indfeed <- check <-
+      mult <- value_share_adj <- coal <- gas <- Fert_Prod_MtN <- in_Fert_adj <- feedstock_GJkgN <- energy_GJkgN <-
+      indenergy_to_Fert <- indfeed_to_Fert <- in_indenergy_netFert <- value_indenergy <- resource <- . <- `2005` <-
+      supplysector <- subsector <- technology <- minicam.non.energy.input <- improvement.max <- improvement.rate <-
+      improvement.shadow.technology <- NEcost <- Technology <- NEcost_75USDkgN <- `Central Natural Gas Sequestration` <-
+      `Central Natural Gas` <- `Central Coal` <- `Central Coal Sequestration` <- Fert_Prod_MtN_adj <-
+      in_indfeed_netFert <- NULL
+
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     IEA_ctry <- get_data(all_data, "energy/IEA_ctry")
     IEA_Fert_fuel_data <- get_data(all_data, "energy/IEA_Fert_fuel_data")
     H2A_Prod_Tech <- get_data(all_data, "energy/H2A_Prod_Tech")
-
-    get_data(all_data, "temp-data-inject/L142.ag_Fert_Prod_MtN_ctry_Y") %>%
-      gather(year, value, -iso) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) ->
-      L142.ag_Fert_Prod_MtN_ctry_Y
-
+    L142.ag_Fert_Prod_MtN_ctry_Y <- get_data(all_data, "L142.ag_Fert_Prod_MtN_ctry_Y")
     A10.rsrc_info <- get_data(all_data, "energy/A10.rsrc_info")
     A21.globaltech_cost <- get_data(all_data, "energy/A21.globaltech_cost")
     A22.globaltech_cost <- get_data(all_data, "energy/A22.globaltech_cost")
@@ -64,16 +69,6 @@ module_energy_LB1322.Fert <- function(command, ...) {
       L132.in_EJ_R_indfeed_F_Yh
 
     # ===================================================
-
-    # Silence package notes
-    year <- value <- iso <- GCAM_region_ID <- sector <- fuel <- variable <- IEA_Fert_reg <- intensity_GJkgN <-
-      value_share <- Fert_Prod_MtN <- in_Fert <- value.x <- value.y <- in_indenergy <- in_indfeed <- check <-
-      mult <- value_share_adj <- coal <- gas <- Fert_Prod_MtN <- in_Fert_adj <- feedstock_GJkgN <- energy_GJkgN <-
-      indenergy_to_Fert <- indfeed_to_Fert <- in_indenergy_netFert <- value_indenergy <- resource <- . <- `2005` <-
-      supplysector <- subsector <- technology <- minicam.non.energy.input <- improvement.max <- improvement.rate <-
-      improvement.shadow.technology <- NEcost <- Technology <- NEcost_75USDkgN <- `Central Natural Gas Sequestration` <-
-      `Central Natural Gas` <- `Central Coal` <- `Central Coal Sequestration` <- Fert_Prod_MtN_adj <-
-      in_indfeed_netFert <- NULL
 
     # Compute fertilizer production and energy inputs by technology
     # Disaggregating fertilizer production by country / year to production technologies (gas, coal, oil)
@@ -392,7 +387,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       add_comments("Common sense approaches were taken to ensure no unrealistic information was reported at the country level before aggregating to the regional level.") %>%
       add_legacy_name("L1322.Fert_Prod_MtN_R_F_Y") %>%
       add_precursors("common/iso_GCAM_regID", "energy/IEA_ctry", "energy/IEA_Fert_fuel_data",
-                     "temp-data-inject/L142.ag_Fert_Prod_MtN_ctry_Y") %>%
+                     "L142.ag_Fert_Prod_MtN_ctry_Y") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1322.Fert_Prod_MtN_R_F_Y
 
@@ -403,7 +398,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       add_comments("Common sense approaches were taken to ensure no unrealistic information was reported at the country level before aggregating to the regional level.") %>%
       add_legacy_name("L1322.IO_R_Fert_F_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "energy/IEA_ctry", "energy/IEA_Fert_fuel_data",
-                     "temp-data-inject/L142.ag_Fert_Prod_MtN_ctry_Y", "temp-data-inject/L1321.in_EJ_R_indenergy_F_Yh",
+                     "L142.ag_Fert_Prod_MtN_ctry_Y", "temp-data-inject/L1321.in_EJ_R_indenergy_F_Yh",
                      "temp-data-inject/L132.in_EJ_R_indfeed_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L1322.IO_R_Fert_F_Yh
@@ -415,7 +410,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       add_comments("Common sense approaches were taken to ensure no unrealistic information was reported at the country level before aggregating to the regional level.") %>%
       add_legacy_name("L1322.in_EJ_R_indenergy_F_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "energy/IEA_ctry", "energy/IEA_Fert_fuel_data",
-                     "temp-data-inject/L142.ag_Fert_Prod_MtN_ctry_Y", "temp-data-inject/L1321.in_EJ_R_indenergy_F_Yh",
+                     "L142.ag_Fert_Prod_MtN_ctry_Y", "temp-data-inject/L1321.in_EJ_R_indenergy_F_Yh",
                      "temp-data-inject/L132.in_EJ_R_indfeed_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1322.in_EJ_R_indenergy_F_Yh
@@ -427,7 +422,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       add_comments("Common sense approaches were taken to ensure no unrealistic information was reported at the country level before aggregating to the regional level.") %>%
       add_legacy_name("L1322.in_EJ_R_indfeed_F_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "energy/IEA_ctry", "energy/IEA_Fert_fuel_data",
-                     "temp-data-inject/L142.ag_Fert_Prod_MtN_ctry_Y", "temp-data-inject/L1321.in_EJ_R_indenergy_F_Yh",
+                     "L142.ag_Fert_Prod_MtN_ctry_Y", "temp-data-inject/L1321.in_EJ_R_indenergy_F_Yh",
                      "temp-data-inject/L132.in_EJ_R_indfeed_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1322.in_EJ_R_indfeed_F_Yh
