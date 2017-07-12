@@ -33,10 +33,10 @@ module_energy_LA118.hydro <- function(command, ...) {
     A18.hydro_output <- get_data(all_data, "energy/A18.hydro_output")
     L100.IEA_en_bal_ctry_hist <- get_data(all_data, "L100.IEA_en_bal_ctry_hist")
 
-    # L100.IEA_en_bal_ctry_hist might be all NA (meaning the data system is running
+    # L100.IEA_en_bal_ctry_hist might be null (meaning the data system is running
     # without the proprietary IEA data files). If this is the case, we substitute a
     # pre-built output dataset and exit.
-    if(all(is.na(L100.IEA_en_bal_ctry_hist))) {
+    if(is.null(L100.IEA_en_bal_ctry_hist)) {
       get_data(all_data, "energy/prebuilt_data/L118.out_EJ_R_elec_hydro_Yfut") %>%
         add_comments("** PRE-BUILT; RAW IEA DATA NOT AVAILABLE **") %>%
         add_precursors("energy/prebuilt_data/L118.out_EJ_R_elec_hydro_Yfut") ->
@@ -230,8 +230,7 @@ module_energy_LA118.hydro <- function(command, ...) {
                    multiplied by its share in the region, and added to the base-year ouput") %>%
       add_legacy_name("L118.out_EJ_R_elec_hydro_Yfut") %>%
       add_precursors("common/iso_GCAM_regID", "energy/Hydropower_potential",
-                     "L100.IEA_en_bal_ctry_hist", "energy/A18.hydro_output",
-                     "energy/prebuilt_data/L118.out_EJ_R_elec_hydro_Yfut") %>%
+                     "L100.IEA_en_bal_ctry_hist", "energy/A18.hydro_output") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L118.out_EJ_R_elec_hydro_Yfut
 
