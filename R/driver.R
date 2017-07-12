@@ -104,15 +104,30 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 #' @export
 #' @author BBL
 driver <- function(all_data = empty_data(),
-                   stop_before = "", stop_after = "",
-                   return_inputs_of = inputs_of(stop_before),
-                   return_outputs_of = outputs_of(stop_after),
-                   return_data_names = union(return_inputs_of, return_outputs_of),
+                   stop_before = NULL, stop_after = NULL,
+                   return_inputs_of = stop_before,
+                   return_outputs_of = stop_after,
+                   return_data_names = union(inputs_of(return_inputs_of),
+                                             outputs_of(return_outputs_of)),
                    write_outputs = TRUE, outdir = OUTPUTS_DIR, xmldir = XML_DIR,
                    quiet = FALSE) {
 
+  # If users ask to stop after a chunk, but also specify they want particular inputs,
+  # or if they ask to stop before a chunk, while asking for outputs, that's confusing.
+  if(missing(return_outputs_of) && !missing(return_inputs_of) && !missing(stop_after)) {
+    return_outputs_of <- NULL  # in this case don't want default of stop_before
+  }
+  if(missing(return_inputs_of) && !missing(return_outputs_of) && !missing(stop_before)) {
+    return_inputs_of <- NULL  # in this case don't want default of stop_after
+  }
+  if(missing(return_data_names)) {
+    return_data_names <- union(inputs_of(return_inputs_of), outputs_of(return_outputs_of))
+  }
+
   optional <- input <- from_file <- name <- NULL    # silence notes from package check.
 
+  assert_that(is.null(stop_before) | is.character(stop_before))
+  assert_that(is.null(stop_after) | is.character(stop_after))
   assert_that(is.null(return_inputs_of) | is.character(return_inputs_of))
   assert_that(is.null(return_outputs_of) | is.character(return_outputs_of))
   assert_that(is.null(return_data_names) | is.character(return_data_names))
@@ -121,7 +136,6 @@ driver <- function(all_data = empty_data(),
 
   chunklist <- find_chunks()
   if(!quiet) cat("Found", nrow(chunklist), "chunks\n")
-
   chunkinputs <- chunk_inputs(chunklist$name)
   if(!quiet) cat("Found", nrow(chunkinputs), "chunk data requirements\n")
   chunkoutputs <- chunk_outputs(chunklist$name)
@@ -184,7 +198,7 @@ driver <- function(all_data = empty_data(),
 
       if(!quiet) print(chunk)
 
-      if(chunk == stop_before) {
+      if(chunk %in% stop_before) {
         chunks_to_run <- character(0)
         break
       }
@@ -220,7 +234,7 @@ driver <- function(all_data = empty_data(),
       all_data <- remove_data(names(which_zero), all_data)
       removed_count <- removed_count + length(which_zero)
 
-      if(chunk == stop_after) {
+      if(chunk %in% stop_after) {
         chunks_to_run <- character(0)
         break
       }
@@ -244,7 +258,7 @@ driver <- function(all_data = empty_data(),
 
   if(!quiet) cat("Returning", length(all_data), "tibbles.\n")
   if(!quiet) cat("All done.\n")
-  invisible(all_data)
+  invisible(all_data[return_data_names])
 }
 
 

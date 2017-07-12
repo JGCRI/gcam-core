@@ -4,12 +4,11 @@
 \alias{driver}
 \title{driver}
 \usage{
-driver(all_data = empty_data(), stop_before = "", stop_after = "",
-  return_inputs_of = inputs_of(stop_before),
-  return_outputs_of = outputs_of(stop_after),
-  return_data_names = union(return_inputs_of, return_outputs_of),
-  write_outputs = TRUE, outdir = OUTPUTS_DIR, xmldir = XML_DIR,
-  quiet = FALSE)
+driver(all_data = empty_data(), stop_before = NULL, stop_after = NULL,
+  return_inputs_of = stop_before, return_outputs_of = stop_after,
+  return_data_names = union(inputs_of(return_inputs_of),
+  outputs_of(return_outputs_of)), write_outputs = TRUE,
+  outdir = OUTPUTS_DIR, xmldir = XML_DIR, quiet = FALSE)
 }
 \arguments{
 \item{all_data}{Data to be pre-loaded into data system}
