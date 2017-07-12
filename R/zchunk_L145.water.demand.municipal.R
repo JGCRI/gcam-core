@@ -157,7 +157,7 @@ module_water_L145.water.demand.municipal <- function(command, ...) {
                      "water/FAO_municipal_water_AQUASTAT",
                      "water/IBNET_municipal_water_cost_USDm3",
                      "water/municipal_water_use_efficiency",
-                     "water/manufacturing_water_mapping")
+                     "water/manufacturing_water_mapping") %>%
     add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
     L145.municipal_water_eff_R_Y
 
