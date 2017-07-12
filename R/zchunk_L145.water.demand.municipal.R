@@ -147,7 +147,7 @@ module_water_L145.water.demand.municipal <- function(command, ...) {
       add_precursors("common/GCAM_region_names",
                      "water/municipal_water_use_efficiency",
                      "water/manufacturing_water_mapping") ->
-    L145.municipal_water_eff_R_Y
+      L145.municipal_water_eff_R_Y
 
     return_data(L145.municipal_water_R_W_Yh_km3, L145.municipal_water_cost_R_75USD_m3, L145.municipal_water_eff_R_Y)
   } else {
