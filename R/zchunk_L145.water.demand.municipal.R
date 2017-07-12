@@ -31,6 +31,9 @@ module_water_L145.water.demand.municipal <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    iso <- FAO_country <- GCAM_region_ID <- Area <- Year <- Value <- cost <- consumption <-
+      expenditure <- input.cost <- year <- value <- NULL  # silence package check notes
+
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
