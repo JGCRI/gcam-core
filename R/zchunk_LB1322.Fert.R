@@ -159,6 +159,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       L1322.Fert_Prod_MtN_ctry_F_Y_share_adj
 
     # For regions whose fuel shares changed, re-assign the production and energy inputs to the oil-based technology
+         # Note that the sum of coal and gas shares never exceed 1. So the minimum share for refined liquids would be 0.
     L1322.Fert_Prod_MtN_ctry_F_Y_share_adj %>%
       select(iso, year, fuel, value_share_adj) %>%
       spread(fuel, value_share_adj) %>% # This is to set up the calculation in the next step
