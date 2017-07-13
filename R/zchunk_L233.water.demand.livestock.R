@@ -14,7 +14,7 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_water_L233.water.demand.livestock_DISABLED <- function(command, ...) {
+module_water_L233.water.demand.livestock <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "water/A03.sector",
@@ -34,25 +34,22 @@ module_water_L233.water.demand.livestock_DISABLED <- function(command, ...) {
 
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are `merge` calls in this code. Be careful!
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # ===================================================
+    #Just read in water coefficients for all years
 
+
+    # L233.TechCoef <- merge( L133.water_demand_livestock_R_C_W_km3_Mt, A_an_technology[, c( supp, subs, tech ) ], by.x="GCAM_commodity", by.y=supp )
+    # names(L233.TechCoef)[names(L233.TechCoef) == "GCAM_commodity"] <- supp
+    # L233.TechCoef[[water_sector]] <- "Livestock"
+    # L233.TechCoef$minicam.energy.input <- get_water_inputs_for_mapping( L233.TechCoef, A03.sector )
+    # L233.TechCoef <- merge( L233.TechCoef, GCAM_region_names )
+    # L233.TechCoef$market.name <- L233.TechCoef[[reg]]
+    # # Set the coef for all years
+    # L233.orig_num_rows <- nrow( L233.TechCoef )
+    # L233.TechCoef <- L233.TechCoef[ rep( 1:nrow( L233.TechCoef ), times=length( model_years ) ), ]
+    # L233.TechCoef$year <- model_years[ sort( rep( 1:length( model_years ), times=L233.orig_num_rows ) ) ]
+    # L233.TechCoef <- L233.TechCoef[, names_TechCoef ]
+
+    # ===================================================
     # Produce outputs
     # Temporary code below sends back empty data frames marked "don't test"
     # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
