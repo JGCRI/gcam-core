@@ -22,9 +22,10 @@ This chunk computes fertilizer production and energy inputs by technology.
 }
 \details{
 Fertilizer production and energy information was calculated using country-level fuel share and energy intensity data
-to allocate generic fertilizer production data across technologies. Common sense approaches were taken to ensure no unrealistic information was
-reported at the country level before aggratating to the regional level. Also, a final cost table was calculated using USA market fertilizer
-price data and H2A characteristics of hydrogen production technologies.
+to allocate generic fertilizer production data across technologies. Re-allocation of energy use between energy and feedstock
+quantities for the industrial sector was done to avoid negative values at the country level, before aggregating
+to the regional level. Also, a final cost table was calculated using USA market fertilizer price data and H2A characteristics
+of hydrogen production technologies.
 }
 \author{
 AJS July 2017
