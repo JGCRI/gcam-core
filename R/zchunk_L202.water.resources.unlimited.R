@@ -25,6 +25,9 @@ module_water_L202.water.resources.unlimited <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    year <- GCAM_region_ID <- water_type <- region <- unlimited.resource <- output.unit <- price.unit <-
+      market <- capacity.factor <- value <- price <- NULL  # silence package check notes
+
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     L102.unlimited_water_price_R_W_Y_75USDm3 <- get_data(all_data, "L102.unlimited_water_price_R_W_Y_75USDm3")
