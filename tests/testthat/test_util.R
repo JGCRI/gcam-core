@@ -1,6 +1,6 @@
-context('util')
+context("util")
 
-test_that('screening for use of forbidden functions works', {
+test_that("screening for use of forbidden functions works", {
   testgood <- function(d1, d2) {
     # This function should pass because we only mention
     # match and ifelse in comments and strings
@@ -26,5 +26,34 @@ test_that('screening for use of forbidden functions works', {
   expect_equal(screen_forbidden(testgood), character())
   tb <- screen_forbidden(testbad)
   expect_equal(tb[,1], c("(?<!error_no_)match(?!es)", "ifelse", "ifelse", "melt", "cast", "rbind",
-                          "cbind", "merge"))
+                         "cbind", "merge"))
 })
+
+
+# This code is written using the `mockr` package, currently only
+# available via GitHub. Apparently `testthat::with_mock` is going
+# to be deprecated soon.
+
+if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
+
+  test_that("inputs_of and outputs_of work", {
+
+    expect_null(inputs_of(NULL))
+    expect_null(inputs_of(""))
+    expect_null(outputs_of(NULL))
+    expect_null(outputs_of(""))
+
+    chunknames <- c("test1", "test2")
+    mockr::with_mock(
+      find_chunks = function(...) tibble(name = chunknames),
+      chunk_inputs = function(chunks, ....) filter(tibble(name = chunknames,
+                                                    input = c("i1", "i2"),
+                                                    from_file = TRUE), name == chunks),
+      chunk_outputs = function(chunks, ...) filter(tibble(name = chunknames,
+                                           output = c("o1", "o2")), name == chunks),
+      expect_identical(inputs_of("test1"), "i1"),
+      expect_identical(outputs_of("test2"), "o2")
+    )
+  })
+
+}

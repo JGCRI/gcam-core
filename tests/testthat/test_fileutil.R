@@ -13,8 +13,9 @@ test_that("error with bad input", {
   expect_error(find_csv_file(c("h", "i")))
   expect_error(find_csv_file("hi"))
   expect_error(save_chunkdata(1))
-  expect_error(save_chunkdata(empty_data()))
-  expect_error(save_chunkdata(write_inputs = 1))
+  expect_error(save_chunkdata(1))
+  expect_error(save_chunkdata(empty_data(), write_inputs = 1))
+  expect_error(save_chunkdata(empty_data(), create_dirs = 1))
 })
 
 test_that("handle empty input", {
