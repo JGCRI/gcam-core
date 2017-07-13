@@ -1,0 +1,5 @@
+# File: A44.HouseholdSize.csv
+# Title: Assumed household size for translating the Odyssee floorspace per house
+# Units: Persons/dwelling
+Variable,Unit,1973,1980,1990,1998
+Household size,Persons/dwelling,3.2,2.9,2.7,2.6
