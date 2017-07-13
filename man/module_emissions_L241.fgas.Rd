@@ -18,11 +18,11 @@ the generated outputs: \code{L241.hfc_all}, \code{L241.pfc_all}, \code{L241.hfc_
 original data system was \code{L241.fgas.R} (emissions level2).
 }
 \description{
-Briefly describe what this chunk does.
+Formats fgases emission inputs for GCAM and estimates future emission factors for f gases.
 }
 \details{
-Describe in detail what this chunk does.
+Formats hfc and pfc gas emissions for input. Calculates future emission factors for hfc gases based on 2010 region emissions and USA emission factors and emission factors from Guus Velders.
 }
 \author{
-YourInitials CurrentMonthName 2017
+KD July 2017
 }
