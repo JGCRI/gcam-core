@@ -1,6 +1,6 @@
 #' module_water_L202.water.resources.unlimited
 #'
-#' Briefly describe what this chunk does.
+#' Create unlimited resource markets for water types, and read in fixed prices for water types.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,13 +8,14 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L202.UnlimitRsrc}, \code{L202.UnlimitRsrcPrice}. The corresponding file in the
 #' original data system was \code{L202.water.resources.unlimited.R} (water level2).
-#' @details Describe in detail what this chunk does.
+#' @details Create unlimited resource markets (i.e.,32 GCAM regions) for water types (i.e., water consumption, withdrawals, biophysical water consumption and seawater),
+#' and read in fixed prices for water types..
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
+#' @author YL July 2017
 #' @export
-module_water_L202.water.resources.unlimited_DISABLED <- function(command, ...) {
+module_water_L202.water.resources.unlimited <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              "L102.unlimited_water_price_R_W_Y_75USDm3"))
@@ -31,50 +32,70 @@ module_water_L202.water.resources.unlimited_DISABLED <- function(command, ...) {
 
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are `merge` calls in this code. Be careful!
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # ===================================================
 
+    water_units_quantity <- "km^3"
+    water_units_price <- "1975$/m^3"
+    no_aglu_regions <- "Taiwan"
+    ag_only_water_types <- "biophysical water consumption"
+
+    #Create unlimited resource markets for water types
+    L102.unlimited_water_price_R_W_Y_75USDm3 %>%
+      group_by(year) %>%
+      filter (year %in% L102.unlimited_water_price_R_W_Y_75USDm3$year[1]) %>%
+      ungroup %>%
+      select(GCAM_region_ID,water_type) %>%
+      left_join_error_no_match(GCAM_region_names,by = "GCAM_region_ID") %>%
+      mutate(market = region) %>%
+      rename(unlimited.resource = water_type) %>%
+      # Capacity factor is not used for water resources
+      mutate(output.unit = water_units_quantity,price.unit = water_units_price, capacity.factor = 1) %>%
+      select(-GCAM_region_ID) %>%
+      # Remove water goods that are only used by ag technologies, in regions with no aglu module
+      filter (!region %in% no_aglu_regions | !unlimited.resource %in% ag_only_water_types) %>%
+      arrange(region, unlimited.resource, output.unit, price.unit, market, capacity.factor) ->
+      UnlimitRsrc
+
+      #Read in fixed prices for water types
+    L102.unlimited_water_price_R_W_Y_75USDm3 %>%
+      filter(year %in% MODEL_YEARS) %>%
+      left_join_keep_first_only(GCAM_region_names,by = "GCAM_region_ID") %>%
+      rename(unlimited.resource = water_type, price = value) %>%
+      filter (!region %in% no_aglu_regions | !unlimited.resource %in% ag_only_water_types) %>%
+      select(-GCAM_region_ID) %>%
+      arrange(region, unlimited.resource, year, price) ->
+      UnlimitRsrcPrice
+
+    #========================================================================
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    UnlimitRsrc %>%
+      add_title("unlimited resources") %>%
+      add_units("NA") %>%
+      add_comments("data is generated through:
+                   1) select the 1st year (1971) data records from the long format of L102.unlimited_water_price_R_W_Y_75USDm3
+                      because only  records for 1 year are needed.
+                   2) left_join with GCAM_region_names by GCAM_region_ID;
+                   3) assign water_units_quantity, water_units_price and capacity.factor;
+                   4) remove water goods that are only used by ag technologies, in regions with no aglu module ") %>%
+      add_comments("The removed record is biophysical water consumption for Taiwan") %>%
       add_legacy_name("L202.UnlimitRsrc") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/GCAM_region_names", "L102.unlimited_water_price_R_W_Y_75USDm3") ->
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      # add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L202.UnlimitRsrc
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    UnlimitRsrcPrice %>%
+      add_title("price for unlimited resources") %>%
+      add_units("1975$/m^3") %>%
+      add_comments("The data is generated through:
+                   1) select the records that cover the  MODEL_YEARS period;
+                   2) left_join with GCAM_region_names by GCAM_region_ID;
+                   3) rename field names;
+                   4) remove water goods that are only used by ag technologies, in regions with no aglu module;")%>%
+      add_comments("The removed record is biophysical water consumption for Taiwan") %>%
       add_legacy_name("L202.UnlimitRsrcPrice") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/GCAM_region_names", "L102.unlimited_water_price_R_W_Y_75USDm3") ->
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      # add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L202.UnlimitRsrcPrice
 
     return_data(L202.UnlimitRsrc, L202.UnlimitRsrcPrice)
