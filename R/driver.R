@@ -256,7 +256,7 @@ driver <- function(all_data = empty_data(),
 
   all_data <- all_data[return_data_names]
 
-  if(!quiet && length(all_data)) cat("Returning", length(all_data), "tibbles.\n")
+  if(!quiet && length(all_data) > 0) cat("Returning", length(all_data), "tibbles.\n")
   if(!quiet) cat("All done.\n")
   invisible(all_data[return_data_names])
 }
