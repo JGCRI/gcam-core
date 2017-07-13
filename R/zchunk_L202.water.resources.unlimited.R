@@ -8,8 +8,8 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L202.UnlimitRsrc}, \code{L202.UnlimitRsrcPrice}. The corresponding file in the
 #' original data system was \code{L202.water.resources.unlimited.R} (water level2).
-#' @details Create unlimited resource markets (i.e.,32 GCAM regions) for water types (i.e., water consumption, withdrawals, biophysical water consumption and seawater),
-#' and read in fixed prices for water types..
+#' @details Create unlimited resource markets (i.e., 32 GCAM regions) for water types (i.e., water consumption, withdrawals, biophysical water consumption and seawater),
+#' and read in fixed prices for water types.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -29,18 +29,13 @@ module_water_L202.water.resources.unlimited <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     L102.unlimited_water_price_R_W_Y_75USDm3 <- get_data(all_data, "L102.unlimited_water_price_R_W_Y_75USDm3")
 
-    # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-
     ag_only_water_types <- "biophysical water consumption"
 
     # Create unlimited resource markets for water types
     L102.unlimited_water_price_R_W_Y_75USDm3 %>%
-      # the file is in long year format (58 years), the intent is to select only the fields GCAM_region_ID and water_type
-      # correspond to one year (the year order does not matter) since all other years are duplicate and not needed.
-      group_by(year) %>%
-      filter (year %in% L102.unlimited_water_price_R_W_Y_75USDm3$year[1]) %>%
-      ungroup %>%
+      # the file is in long year format (58 years), and the intent is to select one year
+      # (the year order does not matter) since all other years are duplicate and not needed.
+      filter(year == first(year)) %>%
       select(GCAM_region_ID, water_type) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       mutate(market = region) %>%
@@ -53,7 +48,7 @@ module_water_L202.water.resources.unlimited <- function(command, ...) {
       arrange(region, unlimited.resource, output.unit, price.unit, market, capacity.factor) ->
       UnlimitRsrc
 
-      #Read in fixed prices for water types
+    # Read in fixed prices for water types
     L102.unlimited_water_price_R_W_Y_75USDm3 %>%
       filter(year %in% MODEL_YEARS) %>%
       left_join_keep_first_only(GCAM_region_names, by = "GCAM_region_ID") %>%
@@ -68,8 +63,7 @@ module_water_L202.water.resources.unlimited <- function(command, ...) {
     UnlimitRsrc %>%
       add_title("unlimited resources of water (i.e., water consumption, withdrawals, biophysical water consumption and seawater)") %>%
       add_units("NA") %>%
-      add_comments("data is generated through:
-                   1) select the 1st year (1971) data records from the long format of L102.unlimited_water_price_R_W_Y_75USDm3
+      add_comments("1) select the 1st year (1971) data records from the long format of L102.unlimited_water_price_R_W_Y_75USDm3
                       because only  records for 1 year are needed.
                    2) left_join with GCAM_region_names by GCAM_region_ID;
                    3) assign WATER_UNITS_QUANTITY, WATER_UNITS_PRICE and capacity.factor;
@@ -77,21 +71,18 @@ module_water_L202.water.resources.unlimited <- function(command, ...) {
       add_comments("The removed record is biophysical water consumption for Taiwan") %>%
       add_legacy_name("L202.UnlimitRsrc") %>%
       add_precursors("common/GCAM_region_names", "L102.unlimited_water_price_R_W_Y_75USDm3") ->
-      # typical flags, but there are others--see `constants.R`
       L202.UnlimitRsrc
 
     UnlimitRsrcPrice %>%
       add_title("price for unlimited resources of water (i.e., water consumption, withdrawals, biophysical water consumption and seawater)") %>%
       add_units("1975$/m^3") %>%
-      add_comments("The data is generated through:
-                   1) select the records that cover the  MODEL_YEARS period;
+      add_comments("1) select the records that cover the MODEL_YEARS period;
                    2) left_join with GCAM_region_names by GCAM_region_ID;
                    3) rename field names;
                    4) remove water goods that are only used by ag technologies, in regions with no aglu module.") %>%
       add_comments("The removed record is biophysical water consumption for Taiwan") %>%
       add_legacy_name("L202.UnlimitRsrcPrice") %>%
       add_precursors("common/GCAM_region_names", "L102.unlimited_water_price_R_W_Y_75USDm3") ->
-      # typical flags, but there are others--see `constants.R`
       L202.UnlimitRsrcPrice
 
     return_data(L202.UnlimitRsrc, L202.UnlimitRsrcPrice)

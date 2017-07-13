@@ -21,8 +21,8 @@ original data system was \code{L202.water.resources.unlimited.R} (water level2).
 Create unlimited resource markets for water types, and read in fixed prices for water types.
 }
 \details{
-Create unlimited resource markets (i.e.,32 GCAM regions) for water types (i.e., water consumption, withdrawals, biophysical water consumption and seawater),
-and read in fixed prices for water types..
+Create unlimited resource markets (i.e., 32 GCAM regions) for water types (i.e., water consumption, withdrawals, biophysical water consumption and seawater),
+and read in fixed prices for water types.
 }
 \author{
 YL July 2017
