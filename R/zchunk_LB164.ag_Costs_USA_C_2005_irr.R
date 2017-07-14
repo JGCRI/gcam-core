@@ -19,6 +19,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
+#' @importFrom stats glm predict
 #' @author ACS June 2017
 module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
