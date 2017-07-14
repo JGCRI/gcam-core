@@ -43,10 +43,8 @@ module_emissions_L112.ghg_en_R_S_T_Y <- function(command, ...) {
       gather(variable, emiss_factor, CH4, N2O) %>%
       ungroup
     EDGAR_CH4 <- get_data(all_data, "emissions/EDGAR/EDGAR_CH4") %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
       mutate(Non.CO2 = "CH4")
     EDGAR_N2O <- get_data(all_data, "emissions/EDGAR/EDGAR_N2O") %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
       mutate(Non.CO2 = "N2O")
 
     # Computing unscaled emissions by country and technology
@@ -80,6 +78,8 @@ module_emissions_L112.ghg_en_R_S_T_Y <- function(command, ...) {
       change_iso_code('rou', 'rom') %>%
       left_join(iso_GCAM_regID, by = "iso") %>%
       na.omit() %>%
+      gather(year, value, matches(YEAR_PATTERN)) %>%
+      filter(year %in% emissions.EDGAR_HISTORICAL) %>%
       # Aggregate by region, GHG, and EDGAR sector
       group_by(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year) %>%
       summarise(value = sum(value))
