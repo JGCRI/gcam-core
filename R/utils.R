@@ -61,8 +61,8 @@ load_csv_files <- function(filenames, optionals, quiet = FALSE, ...) {
 #' @param required Is this label required? (logical)
 #' @param multiline Can this label hold multi-line information? (logical)
 #' @details CSV files can have headers, commented lines of the form "# Title: xxxx",
-#' "# Source: xxxx", etc. Extract this information if present. This function is called
-#' by \code{\link{parse_csv_header}}.
+#' "# Source: xxxx", etc. Extract this information if present. Note that empty headers
+#' are not allowed. This function is called by \code{\link{parse_csv_header}}.
 #' @return Extracted label information, as a character vector
 extract_header_info <- function(header_lines, label, filename, required = FALSE, multiline = FALSE) {
 
@@ -98,7 +98,13 @@ extract_header_info <- function(header_lines, label, filename, required = FALSE,
     header_lines[label_line:comment_end] %>%
       gsub(label_regex, "", .) %>%
       gsub(paste0("^", COMMENT_CHAR), "", .) %>%
-      trimws
+      trimws ->
+      info
+
+    if(nchar(paste(info, collapse = "")) == 0) {
+      stop("Empty metadata label '", label, "' found in ", basename(filename))
+    }
+    return(info)
   } else {
     if(required) {
       stop("Required metadata label '", label, "' not found in ", basename(filename))
@@ -218,31 +224,35 @@ find_csv_file <- function(filename, optional, quiet = FALSE) {
 #' a lot bigger, owing to the large number of digits we have to write.
 #'
 #' @param chunkdata Named list of tibbles (data frames) to write
-#' @param write_inputs Write data that were read as inputs, not computed?
+#' @param write_inputs Write data that were read as inputs, not computed? Logical
+#' @param create_dirs Create directory if necessary, and delete contents? Logical
 #' @param outputs_dir Directory to save data into
 #' @param xml_dir Directory to save XML results into
 #' @importFrom assertthat assert_that
-save_chunkdata <- function(chunkdata, write_inputs = FALSE, outputs_dir =
-                             OUTPUTS_DIR, xml_dir = XML_DIR) {
+save_chunkdata <- function(chunkdata, write_inputs = FALSE, create_dirs = FALSE,
+                           outputs_dir = OUTPUTS_DIR, xml_dir = XML_DIR) {
   assert_that(is_data_list(chunkdata))
-  assert_that(!is.null(names(chunkdata)))
   assert_that(is.logical(write_inputs))
+  assert_that(is.logical(create_dirs))
   assert_that(is.character(outputs_dir))
 
   # Create directory if necessary, and remove any previous outputs
-  dir.create(outputs_dir, showWarnings = FALSE, recursive = TRUE)
-  unlink(file.path(outputs_dir, "*.csv"))
-  dir.create(xml_dir, showWarnings = FALSE, recursive = TRUE)
-  unlink(file.path(xml_dir, "*.xml"))
+  if(create_dirs) {
+    dir.create(outputs_dir, showWarnings = FALSE, recursive = TRUE)
+    unlink(file.path(outputs_dir, "*.csv"))
+    dir.create(xml_dir, showWarnings = FALSE, recursive = TRUE)
+    unlink(file.path(xml_dir, "*.xml"))
+  }
 
   for(cn in names(chunkdata)) {
-    cd <- chunkdata[[cn]]
+    cd <- get_data(chunkdata, cn)
+    if(is.null(cd)) next   # optional file that wasn't found
+
     if(FLAG_XML %in% get_flags(cd)) {
       # TODO: worry about absolute paths?
       cd$xml_file <- file.path(xml_dir, cd$xml_file)
       run_xml_conversion(cd)
-    } else if(!isTRUE(identical(NA, cd))) {   # NA means an optional file that wasn't found
-
+    } else {
       fqfn <- file.path(outputs_dir, paste0(cn, ".csv"))
       suppressWarnings(file.remove(fqfn))
 
@@ -370,6 +380,18 @@ chunk_inputs <- function(chunks = find_chunks()$name) {
 }
 
 
+#' inputs_of
+#'
+#' Convenience function for getting the inputs of one or more chunks
+#'
+#' @param chunks Names of chunks, character
+#' @return Character vector of inputs.
+#' @export
+inputs_of <- function(chunks) {
+  if(is.null(chunks) || chunks == "") return(NULL)
+  chunk_inputs(chunks)$input
+}
+
 #' chunk_outputs
 #'
 #' List all chunk outputs.
@@ -399,6 +421,17 @@ chunk_outputs <- function(chunks = find_chunks()$name) {
   dplyr::bind_rows(chunkoutputs)
 }
 
+#' outputs_of
+#'
+#' Convenience function for getting the outputs of one or more chunks
+#'
+#' @param chunks Names of chunks, character
+#' @return Character vector of inputs.
+#' @export
+outputs_of <- function(chunks) {
+  if(is.null(chunks) || chunks == "") return(NULL)
+  chunk_outputs(chunks)$output
+}
 
 #' screen_forbidden
 #'
