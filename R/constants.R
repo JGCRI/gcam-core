@@ -116,6 +116,10 @@ aglu.BIO_GRASS_YIELD_KGCM2 <- 0.34
 aglu.BIO_TREE_FERT_IO_GNM2 <- 3.36
 aglu.BIO_TREE_YIELD_KGCM2 <- 0.345
 
+# Water characteristics for biomass (from Vaibhav's paper)
+aglu.BIO_GRASS_WATER_IO_KM3EJ <- 25
+aglu.BIO_TREE_WATER_IO_KM3EJ <- 25
+
 # Cost of Fertilizer
 aglu.FERT_COST <- 363 # 2007$ per ton NH3
 
@@ -267,7 +271,7 @@ MAPPED_WATER_TYPES_SHORT            <- c("C", "W")
 names(MAPPED_WATER_TYPES_SHORT)     <- MAPPED_WATER_TYPES
 DEFAULT_UNLIMITED_WATER_PRICE       <- 0
 DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.001
-
+DEFAULT_UNLIMITED_IRR_WATER_PRICE <- 0.001
 
 # Emissions constants ======================================================================
 
