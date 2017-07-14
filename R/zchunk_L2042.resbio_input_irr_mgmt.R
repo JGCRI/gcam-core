@@ -14,7 +14,7 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_aglu_L2042.resbio_input_irr_mgmt_DISABLED <- function(command, ...) {
+module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "water/basin_to_country_mapping",
@@ -53,6 +53,7 @@ module_aglu_L2042.resbio_input_irr_mgmt_DISABLED <- function(command, ...) {
       mutate(year = as.integer(substr(year, 2, 5))) ->
       L123.For_Prod_bm3_R_Y_GLU
 
+
     # following line temproary while L103 is output from zchunk_LA103.ag_R_C_Y_GLU.R as grouped
     L103.ag_Prod_Mt_R_C_Y_GLU %>% ungroup -> L103.ag_Prod_Mt_R_C_Y_GLU
 
@@ -66,18 +67,32 @@ module_aglu_L2042.resbio_input_irr_mgmt_DISABLED <- function(command, ...) {
       replace_GLU(map = basin_to_country_mapping) ->
       L123.For_Prod_bm3_R_Y_GLU
 
-
-
-    # Build Tables
-
     # add actual region names to table A_bio_frac_prod_R for joining later
     A_bio_frac_prod_R %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
       A_bio_frac_prod_R
 
 
-    # FORESTRY RESIDUE BIO
+    # Some helpful functions for building tables
 
+    # The function, add_bio_res_params_For_Mill, takes a data frame and adds user specified parameters and
+    # then repeats the resulting data frame for all MODEL_YEARS to form the  AgResBio_source
+    # output table
+    add_bio_res_params_For_Mill <- function(df, residueBiomassProduction, massConversion, harvestIndex, erosCtrl, massToEnergy, waterContent){
+      df %>%
+        mutate(residue.biomass.production = residueBiomassProduction,
+               mass.conversion = massConversion,
+               harvest.index = harvestIndex,
+               eros.ctrl = erosCtrl,
+               mass.to.energy = massToEnergy,
+               water.content = waterContent) %>%
+        repeat_add_columns(tibble::tibble(year = MODEL_YEARS))  ->
+        df1
+      df1
+    }
+
+
+    # FORESTRY RESIDUE BIO
     # 1. Form a table of Forest Residue Biomass Paramters by region-glu-year
     L123.For_Prod_bm3_R_Y_GLU %>%
       # Set up identifying information to fill in with parameters, incl 2.
@@ -86,20 +101,10 @@ module_aglu_L2042.resbio_input_irr_mgmt_DISABLED <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       mutate(AgSupplySector = GCAM_commodity,
              AgSupplySubsector = paste(GCAM_commodity, GLU, sep = aglu.CROP_GLU_DELIMITER),
-             AgProductionTechnology = AgSupplySubsector,
-             ### from here down could be a function for Forestry and Mill - not Agriculture
-             ### just add For/Mill identifier and gather a couple of the external tables
-             residue.biomass.production = "biomass",
-             # fill in parameters
-             mass.conversion = aglu.AVG_WOOD_DENSITY_KGM3,
-             harvest.index = aglu.FOREST_HARVEST_INDEX,
-             eros.ctrl = aglu.FOREST_EROSION_CTRL_KGM2,
-             mass.to.energy = aglu.WOOD_ENERGY_CONTENT_GJKG,
-             water.content = aglu.WOOD_WATER_CONTENT) %>%
-      repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) %>%
+             AgProductionTechnology = AgSupplySubsector) %>%
+      add_bio_res_params_For_Mill("biomass", aglu.AVG_WOOD_DENSITY_KGM3, aglu.FOREST_HARVEST_INDEX, aglu.FOREST_EROSION_CTRL_KGM2, aglu.WOOD_ENERGY_CONTENT_GJKG, aglu.WOOD_WATER_CONTENT) %>%
       select(-GCAM_region_ID, -GCAM_commodity, -GLU) ->
       L204.AgResBio_For
-
 
     # 2. Forest Residue biomass supply curves
 
@@ -134,18 +139,9 @@ module_aglu_L2042.resbio_input_irr_mgmt_DISABLED <- function(command, ...) {
       filter(supplysector == "NonFoodDemand_Forest") %>%
       select(supplysector, subsector, technology) %>%
       rename(sector.name = supplysector,
-             subsector.name = subsector)%>%
-      # add int he parameters, could be combined/made a function for this and Forest
-      mutate(residue.biomass.production = "biomass",
-             mass.conversion = aglu.AVG_WOOD_DENSITY_KGM3,
-             harvest.index = aglu.FOREST_HARVEST_INDEX,
-             eros.ctrl = aglu.MILL_EROSION_CTRL_KGM2,
-             mass.to.energy = aglu.WOOD_ENERGY_CONTENT_GJKG,
-             water.content = aglu.WOOD_WATER_CONTENT) %>%
-      repeat_add_columns(tibble::tibble(year = MODEL_YEARS))->
+             subsector.name = subsector) %>%
+      add_bio_res_params_For_Mill("biomass", aglu.AVG_WOOD_DENSITY_KGM3, aglu.FOREST_HARVEST_INDEX, aglu.MILL_EROSION_CTRL_KGM2, aglu.WOOD_ENERGY_CONTENT_GJKG, aglu.WOOD_WATER_CONTENT) ->
       L204.GlobalResBio_Mill
-
-
 
     # 4. Mill Residue biomass supply curves
 
@@ -188,8 +184,7 @@ module_aglu_L2042.resbio_input_irr_mgmt_DISABLED <- function(command, ...) {
       distinct %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       # have to use left_join + na.omit to match  m e r g e  behavior in old DS
-      left_join(left_join_error_no_match(L111.ag_resbio_R_C, GCAM_region_names, by = "GCAM_region_ID"),
-                by = c("region", "GCAM_commodity")) %>%
+      left_join(L111.ag_resbio_R_C, by = c("GCAM_region_ID", "GCAM_commodity")) %>%
       na.omit %>%
       mutate(AgSupplySector = GCAM_commodity,
              AgSupplySubsector = paste(GCAM_commodity, GLU, sep = aglu.CROP_GLU_DELIMITER),
@@ -205,21 +200,7 @@ module_aglu_L2042.resbio_input_irr_mgmt_DISABLED <- function(command, ...) {
              water.content = round(WaterContent, aglu.DIGITS_WATER_CONTENT)) %>%
       repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) %>%
       select(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology, year, residue.biomass.production,
-             mass.conversion, harvest.index, eros.ctrl, mass.to.energy, water.content) ->
-      L204.AgResBio_ag
-
-    # 6. Agricultural residue biomass supply curves
-    # Much simpler than for Mill or forest, no replacing of base year values.
-    ### IS THERE A REASON WE DON'T FOR AG? THE DATA IS THERE? Open issue
-    L204.AgResBio_ag %>%
-      select(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology, year, residue.biomass.production) %>%
-      repeat_add_columns(select(A_resbio_curves, price, ag)) %>%
-      rename(fract.harvested = ag) ->
-      L204.AgResBioCurve_ag
-
-
-    # 2041 and 2042 code
-    L204.AgResBio_ag %>%
+             mass.conversion, harvest.index, eros.ctrl, mass.to.energy, water.content) %>%
       repeat_add_columns(tibble::tibble(Irr_Rfd = c( "IRR", "RFD" ))) %>%
       repeat_add_columns(tibble::tibble(level = c( "lo", "hi" ))) %>%
       mutate(AgProductionTechnology = paste(paste(AgProductionTechnology, Irr_Rfd, sep = aglu.IRR_DELIMITER),
@@ -227,18 +208,14 @@ module_aglu_L2042.resbio_input_irr_mgmt_DISABLED <- function(command, ...) {
       select(-Irr_Rfd, -level) ->
       L2042.AgResBio_ag_irr_mgmt
 
-    L204.AgResBioCurve_ag %>%
-      repeat_add_columns(tibble::tibble(Irr_Rfd = c( "IRR", "RFD" ))) %>%
-      repeat_add_columns(tibble::tibble(level = c( "lo", "hi" ))) %>%
-      mutate(AgProductionTechnology = paste(paste(AgProductionTechnology, Irr_Rfd, sep = aglu.IRR_DELIMITER),
-                                            level, sep = aglu.MGMT_DELIMITER)) %>%
-      select(-Irr_Rfd, -level) ->
+    # 6. Agricultural residue biomass supply curves
+    # Much simpler than for Mill or forest, no replacing of base year values.
+    ### IS THERE A REASON WE DON'T FOR AG? THE DATA IS THERE? Open issue
+    L2042.AgResBio_ag_irr_mgmt %>%
+      select(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology, year, residue.biomass.production) %>%
+      repeat_add_columns(select(A_resbio_curves, price, ag)) %>%
+      rename(fract.harvested = ag) ->
       L2042.AgResBioCurve_ag_irr_mgmt
-
-
-
-
-
 
 
     # Produce outputs
