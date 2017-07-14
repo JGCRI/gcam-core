@@ -18,7 +18,7 @@ module_water_L1233.Elec_water <- function(command, ...) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "energy/calibrated_techs",
              FILE = "energy/enduse_fuel_aggregation",
-             FILE = "temp-data-inject/L101.en_bal_EJ_ctry_Si_Fi_Yh_full",
+             "L101.en_bal_EJ_ctry_Si_Fi_Yh_full",
              "L1231.in_EJ_R_elec_F_tech_Yh",
              "L1231.out_EJ_R_elec_F_tech_Yh",
              FILE = "water/A23.CoolingSystemShares_RG3",
@@ -50,11 +50,7 @@ module_water_L1233.Elec_water <- function(command, ...) {
     Macknick_elec_water_m3MWh <- get_data(all_data, "water/Macknick_elec_water_m3MWh")
     L1231.in_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.in_EJ_R_elec_F_tech_Yh")
     L1231.out_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.out_EJ_R_elec_F_tech_Yh")
-
-    L101.en_bal_EJ_ctry_Si_Fi_Yh_full <-
-      get_data(all_data, "temp-data-inject/L101.en_bal_EJ_ctry_Si_Fi_Yh_full") %>%
-      gather(year, value, -iso, -GCAM_region_ID, -sector, -fuel) %>%
-      mutate(year = as.integer(substr(year, 2, 5)))
+    L101.en_bal_EJ_ctry_Si_Fi_Yh_full <- get_data(all_data, "L101.en_bal_EJ_ctry_Si_Fi_Yh_full")
 
     # ===================================================
 
@@ -229,13 +225,14 @@ module_water_L1233.Elec_water <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID",
                      "energy/calibrated_techs",
                      "energy/enduse_fuel_aggregation",
-                     "temp-data-inject/L101.en_bal_EJ_ctry_Si_Fi_Yh_full",
+                     "L101.en_bal_EJ_ctry_Si_Fi_Yh_full",
                      "L1231.in_EJ_R_elec_F_tech_Yh",
                      "L1231.out_EJ_R_elec_F_tech_Yh",
                      "water/A23.CoolingSystemShares_RG3",
                      "water/elec_tech_water_map") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1233.out_EJ_R_elec_F_tech_Yh_cool
+
     L1233.in_EJ_R_elec_F_tech_Yh_cool %>%
       add_title("Fuel inputs to electricity generation by region, fuel, technology, cooling system, and water type") %>%
       add_units("EJ") %>%
@@ -244,13 +241,14 @@ module_water_L1233.Elec_water <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID",
                      "energy/calibrated_techs",
                      "energy/enduse_fuel_aggregation",
-                     "temp-data-inject/L101.en_bal_EJ_ctry_Si_Fi_Yh_full",
+                     "L101.en_bal_EJ_ctry_Si_Fi_Yh_full",
                      "L1231.in_EJ_R_elec_F_tech_Yh",
                      "L1231.out_EJ_R_elec_F_tech_Yh",
                      "water/A23.CoolingSystemShares_RG3",
                      "water/elec_tech_water_map") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1233.in_EJ_R_elec_F_tech_Yh_cool
+
     L1233.wdraw_km3_R_elec %>%
       add_title("Water withdrawals for electricity generation by region and water type") %>%
       add_units("km^3") %>%
@@ -259,13 +257,14 @@ module_water_L1233.Elec_water <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID",
                      "energy/calibrated_techs",
                      "energy/enduse_fuel_aggregation",
-                     "temp-data-inject/L101.en_bal_EJ_ctry_Si_Fi_Yh_full",
+                     "L101.en_bal_EJ_ctry_Si_Fi_Yh_full",
                      "L1231.out_EJ_R_elec_F_tech_Yh",
                      "water/A23.CoolingSystemShares_RG3",
                      "water/elec_tech_water_map",
                      "water/Macknick_elec_water_m3MWh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1233.wdraw_km3_R_elec
+
     L1233.wcons_km3_R_elec %>%
       add_title("Water consumption for electricity generation by region and water type") %>%
       add_units("km^3") %>%
@@ -274,13 +273,14 @@ module_water_L1233.Elec_water <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID",
                      "energy/calibrated_techs",
                      "energy/enduse_fuel_aggregation",
-                     "temp-data-inject/L101.en_bal_EJ_ctry_Si_Fi_Yh_full",
+                     "L101.en_bal_EJ_ctry_Si_Fi_Yh_full",
                      "L1231.out_EJ_R_elec_F_tech_Yh",
                      "water/A23.CoolingSystemShares_RG3",
                      "water/elec_tech_water_map",
                      "water/Macknick_elec_water_m3MWh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1233.wcons_km3_R_elec
+
     L1233.shrwt_R_elec_cool_Yf %>%
       add_title("Future cooling system shareweights by region, electric sector, and technology ") %>%
       add_units("Unitless") %>%
