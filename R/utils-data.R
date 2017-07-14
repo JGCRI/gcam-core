@@ -247,6 +247,26 @@ add_data <- function(data_list, all_data) {
 }
 
 
+#' remove_data
+#'
+#' Remove \code{data_list} from an existing data store.
+#'
+#' @param data_list A character vector of object names
+#' @param all_data An existing (possibly empty) data store
+#' @importFrom assertthat assert_that
+#' @return The modified data store.
+remove_data <- function(data_list, all_data) {
+  assert_that(is.character(data_list) | is.null(data_list))
+  assert_that(is_data_list(all_data))
+
+  for(d in data_list) {
+    assert_that(!is.null(all_data[[d]]))
+    all_data[[d]] <- NULL
+  }
+  all_data
+}
+
+
 #' is_data_list
 #'
 #' Check whether an object is a valid list (collection) of data objects.

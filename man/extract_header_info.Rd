@@ -26,6 +26,6 @@ Extract information from CSV headers.
 }
 \details{
 CSV files can have headers, commented lines of the form "# Title: xxxx",
-"# Source: xxxx", etc. Extract this information if present. This function is called
-by \code{\link{parse_csv_header}}.
+"# Source: xxxx", etc. Extract this information if present. Note that empty headers
+are not allowed. This function is called by \code{\link{parse_csv_header}}.
 }
