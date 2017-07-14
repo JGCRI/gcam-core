@@ -32,8 +32,6 @@ module_water_L202.water.resources.unlimited <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     L102.unlimited_water_price_R_W_Y_75USDm3 <- get_data(all_data, "L102.unlimited_water_price_R_W_Y_75USDm3")
 
-    ag_only_water_types <- "biophysical water consumption"
-
     # Create unlimited resource markets for water types
     L102.unlimited_water_price_R_W_Y_75USDm3 %>%
       # the file is in long year format (58 years), and the intent is to select one year
@@ -47,7 +45,7 @@ module_water_L202.water.resources.unlimited <- function(command, ...) {
       mutate(output.unit = WATER_UNITS_QUANTITY, price.unit = WATER_UNITS_PRICE, capacity.factor = 1) %>%
       select(-GCAM_region_ID) %>%
       # Remove water goods that are only used by ag technologies, in regions with no aglu module
-      filter(!region %in% aglu.NO_AGLU_REGIONS | !unlimited.resource %in% ag_only_water_types) %>%
+      filter(!region %in% aglu.NO_AGLU_REGIONS | !unlimited.resource %in% AG_ONLY_WATER_TYPES) %>%
       arrange(region, unlimited.resource, output.unit, price.unit, market, capacity.factor) ->
       UnlimitRsrc
 
@@ -56,7 +54,7 @@ module_water_L202.water.resources.unlimited <- function(command, ...) {
       filter(year %in% MODEL_YEARS) %>%
       left_join_keep_first_only(GCAM_region_names, by = "GCAM_region_ID") %>%
       rename(unlimited.resource = water_type, price = value) %>%
-      filter(!region %in% aglu.NO_AGLU_REGIONS | !unlimited.resource %in% ag_only_water_types) %>%
+      filter(!region %in% aglu.NO_AGLU_REGIONS | !unlimited.resource %in% AG_ONLY_WATER_TYPES) %>%
       select(-GCAM_region_ID) %>%
       arrange(region, unlimited.resource, year, price) ->
       UnlimitRsrcPrice
