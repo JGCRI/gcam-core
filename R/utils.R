@@ -61,8 +61,8 @@ load_csv_files <- function(filenames, optionals, quiet = FALSE, ...) {
 #' @param required Is this label required? (logical)
 #' @param multiline Can this label hold multi-line information? (logical)
 #' @details CSV files can have headers, commented lines of the form "# Title: xxxx",
-#' "# Source: xxxx", etc. Extract this information if present. This function is called
-#' by \code{\link{parse_csv_header}}.
+#' "# Source: xxxx", etc. Extract this information if present. Note that empty headers
+#' are not allowed. This function is called by \code{\link{parse_csv_header}}.
 #' @return Extracted label information, as a character vector
 extract_header_info <- function(header_lines, label, filename, required = FALSE, multiline = FALSE) {
 
@@ -98,7 +98,13 @@ extract_header_info <- function(header_lines, label, filename, required = FALSE,
     header_lines[label_line:comment_end] %>%
       gsub(label_regex, "", .) %>%
       gsub(paste0("^", COMMENT_CHAR), "", .) %>%
-      trimws
+      trimws ->
+      info
+
+    if(nchar(paste(info, collapse = "")) == 0) {
+      stop("Empty metadata label '", label, "' found in ", basename(filename))
+    }
+    return(info)
   } else {
     if(required) {
       stop("Required metadata label '", label, "' not found in ", basename(filename))

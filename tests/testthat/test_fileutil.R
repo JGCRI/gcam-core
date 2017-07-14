@@ -129,6 +129,7 @@ test_that("parse_csv_header works", {
          "# Description: desc1",
          "# desc2",
          "# Source: source",
+         "# Blank:    ",
          "data,start",
          "1,2")
   tf <- tempfile()
@@ -144,6 +145,9 @@ test_that("parse_csv_header works", {
   expect_equal(get_units(obj), "units")
   expect_equal(get_comments(obj), c("desc1", "desc2"))
   expect_equal(get_reference(obj), "source")
+
+  # Empty metadata not allowed
+  expect_error(extract_header_info(x, "Blank:", "test"))
 
   # GZ'd file
   if(require(R.utils)) {
