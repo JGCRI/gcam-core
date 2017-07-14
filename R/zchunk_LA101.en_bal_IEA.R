@@ -1,6 +1,6 @@
 #' module_energy_LA101.en_bal_IEA
 #'
-#' Rename IEA sectors and fuel data to nomenclature used in GCAM.
+#' Rename IEA products and flows to intermediate fuels and sectors used for constructing GCAM's fuel and sector calibration.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,8 +8,8 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L101.en_bal_EJ_R_Si_Fi_Yh_full}, \code{L101.en_bal_EJ_ctry_Si_Fi_Yh_full}, \code{L101.in_EJ_ctry_trn_Fi_Yh}, \code{L101.in_EJ_ctry_bld_Fi_Yh}. The corresponding file in the
 #' original data system was \code{LA101.en_bal_IEA.R} (energy level1).
-#' @details Rename IEA sectors and fuel data to nomenclature used in GCAM, summarizing by (generally) iso and/or region, sector, fuel, and year.
-#' It also adjusts information uploaded from L100.IEA_en_bal_ctry_hist according to IEA_sector_fuel_modifications.
+#' @details Assign IEA product and flow data to nomenclature used in GCAM (fuel and sector, respectively), summarizing
+#' by (generally) iso and/or region, sector, fuel, and year.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -84,17 +84,20 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
         na.omit() ->
         L101.IEA_en_bal_ctry_hist
 
-      # Rename biofuel fuel name for appropiate sectors and regions according to A_regions in GCAM (not following IEA) (48-65)
+      # The IEA commodity "Primary solid biomass" (i.e., wood, dung, straw, etc) is assigned to the GCAM commodity
+      # "traditional biomass" in selected regions, indicated in A_regions. For all other sectors/regions it is simply
+      # mapped to "biomass" (48-65)
       L101.IEA_en_bal_ctry_hist %>%
         mutate(fuel = if_else(fuel == "biomass_tradbio" & sector != "in_bld_resid", "biomass", fuel)) %>%
         left_join_error_no_match(select(A_regions, tradbio_region, GCAM_region_ID), by = "GCAM_region_ID") %>%
         # Rename biomass_tradbio to biomas fuel to tradbio_region 0 (USA)
         mutate(fuel = if_else(fuel == "biomass_tradbio" & tradbio_region == 0, "biomass", fuel)) %>%
         select(-tradbio_region) %>%
-        # In some countries, "gas works gas" is produced from coal. This is calibrated (coal gasification), so rename the relevant sectors
-        # Rename the sector and the fuel: where the sector is gas works and the fuel is coal, this is the input to gas processing
+        # In some countries, "gas works gas" is produced from coal. This is calibrated, assigned to the coal gasification
+        # technology of gas processing.
+        # Where the sector is gas works and the fuel is coal, re-name the sector to gas processing
         mutate(sector = if_else(sector == "net_gas works" & fuel == "coal", "in_gas processing", sector)) %>%
-        # Where the sector is gas works and the fuel is not coal, this is industry/energy transformation
+        # Where the sector is gas works and the fuel is not coal, this is assigned to industry/energy transformation
         mutate(sector = if_else(sector == "net_gas works" & fuel != "coal", "net_industry_energy transformation", sector)) ->
         L101.IEA_en_bal_ctry_hist
 
@@ -117,7 +120,8 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
         L101.IEA_en_bal_ctry_hist
 
       # Drop some sector-fuel combinations that are not relevant
-      # Electricity-only fuels in sectors other than electricity generation
+      # Electricity-generation-only fuels (e.g., wind, solar, hydro, geothermal) consumed by sectors other than electricity generation
+      # Primary biomass and district heat consumed by the transportation sector
       L101.IEA_en_bal_ctry_hist %>%
         mutate(sector = if_else(grepl( "elec_", fuel) & !grepl( "electricity generation",sector), NA_character_, sector)) %>%
         mutate(sector = if_else(fuel == "biomass" & grepl( "trn_", sector), NA_character_, sector)) %>%
@@ -138,6 +142,7 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
         L101.en_bal_EJ_R_Si_Fi_Yh
 
       # Setting to zero net fuel production from energy transformation sectors modeled under the industrial sector
+      # These processes (e.g., coke ovens) are modeled in GCAM as final energy consumption, not energy transformation/production
       # Setting to zero net production of fuels classified as coal at gas works (gas coke)
       L101.en_bal_EJ_R_Si_Fi_Yh %>%
         mutate(value = if_else(value < 0 & grepl("industry", sector), 0, value),
@@ -157,8 +162,9 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
         replace_na(list(value = 0)) ->
         L101.en_bal_EJ_R_Si_Fi_Yh_full
 
-      # Calculate the total primary energy supply (TPES) in each region as the sum of all flows that are inputs
-      # This guarantees that our TPES will be consistent with the tracked forms of consumption (i.e. no statdiffs, stock changes, transfers)
+      # Calculate the total primary energy supply (TPES) in each region and fuel as the sum of all flows that are inputs
+      # This guarantees that our TPES will be consistent with the tracked forms of consumption
+      # (i.e. no statistical differences, stock changes, transfers)
       L101.en_bal_EJ_R_Si_Fi_Yh_full %>%
         filter(grepl("in_", sector) | grepl("net_", sector)) %>%
         mutate(sector = "TPES")%>%
