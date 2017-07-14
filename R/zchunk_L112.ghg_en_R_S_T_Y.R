@@ -124,12 +124,7 @@ module_emissions_L112.ghg_en_R_S_T_Y <- function(command, ...) {
       select(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, year, value = emfact)
 
     # ===================================================
-
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
     L112.ghg_tg_R_en_S_F_Yh %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -139,7 +134,6 @@ module_emissions_L112.ghg_en_R_S_T_Y <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_sector", "emissions/mappings/EPA_ghg_tech",
                      "emissions/mappings/GCAM_sector_tech", "L101.in_EJ_R_en_Si_F_Yh",
                      "L102.ghg_tgej_USA_en_Sepa_F_2005", "emissions/EDGAR/EDGAR_CH4", "emissions/EDGAR/EDGAR_N2O") %>%
-      # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L112.ghg_tg_R_en_S_F_Yh
     L112.ghg_tgej_R_en_S_F_Yh %>%
@@ -151,7 +145,6 @@ module_emissions_L112.ghg_en_R_S_T_Y <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_sector", "emissions/mappings/EPA_ghg_tech",
                      "emissions/mappings/GCAM_sector_tech", "L101.in_EJ_R_en_Si_F_Yh",
                      "L102.ghg_tgej_USA_en_Sepa_F_2005", "emissions/EDGAR/EDGAR_CH4", "emissions/EDGAR/EDGAR_N2O") %>%
-      # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L112.ghg_tgej_R_en_S_F_Yh
 
