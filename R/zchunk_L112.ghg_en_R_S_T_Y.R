@@ -32,7 +32,7 @@ module_emissions_L112.ghg_en_R_S_T_Y <- function(command, ...) {
       EPA_agg_sector <- GCAM_region_ID <- IPCC <- ch4_em_factor <- n2o_em_factor <-
       emiss_factor <- emissions <- energy <- epa_emissions <- fuel <- input_emissions <-
       scaler <- sector <- stub.technology <- subsector <- supplysector <- technology <-
-      value <- NULL
+      value <- year <- variable <- CH4 <- N2O <- Non.CO2 <- agg_sector <- NULL
     all_data <- list(...)[[1]]
 
     # Load required inputs
@@ -41,11 +41,10 @@ module_emissions_L112.ghg_en_R_S_T_Y <- function(command, ...) {
     EPA_ghg_tech <- get_data(all_data, "emissions/mappings/EPA_ghg_tech")
     GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
     L101.in_EJ_R_en_Si_F_Yh <- get_data(all_data, "L101.in_EJ_R_en_Si_F_Yh") %>%
-      gather(year, energy, `1971`:`2010`)
+      gather(year, energy, matches(YEAR_PATTERN))
     L102.ghg_tgej_USA_en_Sepa_F_2005 <- get_data(all_data, "L102.ghg_tgej_USA_en_Sepa_F_2005") %>%
       rename(CH4 = ch4_em_factor, N2O = n2o_em_factor) %>%
-      gather(variable, emiss_factor, CH4, N2O) %>%
-      ungroup
+      gather(variable, emiss_factor, CH4, N2O)
     EDGAR_CH4 <- get_data(all_data, "emissions/EDGAR/EDGAR_CH4") %>%
       mutate(Non.CO2 = "CH4")
     EDGAR_N2O <- get_data(all_data, "emissions/EDGAR/EDGAR_N2O") %>%
@@ -66,7 +65,7 @@ module_emissions_L112.ghg_en_R_S_T_Y <- function(command, ...) {
       # Use left_join because some "cement" only in EPA sector
       left_join(L102.ghg_tgej_USA_en_Sepa_F_2005,
                 by = c("Non.CO2" = "variable", "EPA_agg_sector" = "sector", "EPA_agg_fuel" = "fuel")) %>%
-      #Compute unscaled emissions
+      # Compute unscaled emissions
       mutate(epa_emissions = energy * emiss_factor) %>%
       na.omit()
     } else {
