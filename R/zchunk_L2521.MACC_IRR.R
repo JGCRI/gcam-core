@@ -33,7 +33,8 @@ module_emissions_L2521.MACC_IRR <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    A_MACC_TechChange <- get_data(all_data, "emissions/A_MACC_TechChange")
+    A_MACC_TechChange <- get_data(all_data, "emissions/A_MACC_TechChange") %>%
+      rename(tech.change = tech_change)
     L252.AgMAC <- get_data(all_data, "temp-data-inject/L252.AgMAC")
     L252.MAC_an <- get_data(all_data, "temp-data-inject/L252.MAC_an")
 
@@ -43,6 +44,11 @@ module_emissions_L2521.MACC_IRR <- function(command, ...) {
       repeat_add_columns(tibble(Irr_Rfd = c("IRR", "RFD"))) %>%
       mutate(AgProductionTechnology = paste(AgSupplySubsector, Irr_Rfd, sep = "_")) %>%
       select(-Irr_Rfd)
+
+    # Need this code to add attributes
+    L2521.MAC_an <- L252.MAC_an %>%
+      # Only adding this to get rid of attributes
+      mutate(region = region)
 
     # Tech Change on Ag MACCs for all available SSPs
     L2521.MAC_Ag_TC <- L2521.AgMAC %>%
@@ -57,7 +63,7 @@ module_emissions_L2521.MACC_IRR <- function(command, ...) {
         add_legacy_name(paste0("L2521.MAC_Ag_TC_", unique(df$scenario))) %>%
         add_units("tax:; mac.reduction:; tech_change:") %>%
         add_comments("Appends scenario-specific tech change to Ag MACC curves") %>%
-        add_precursors("temp-data-inject/L2521.AgMAC", "emissions/A_MACC_TechChange") %>%
+        add_precursors("temp-data-inject/L252.AgMAC", "emissions/A_MACC_TechChange") %>%
           select(-scenario)})
 
     # Tech Change on Ag MACCs for all available SSPs
@@ -86,13 +92,12 @@ module_emissions_L2521.MACC_IRR <- function(command, ...) {
       add_legacy_name("L2521.AgMAC") %>%
       add_precursors("temp-data-inject/L252.AgMAC") ->
       L2521.AgMAC
-    L252.MAC_an %>%
-      add_title("Agricultural MACC Curves") %>%
+    L2521.MAC_an %>%
+      add_title("Animal MACC Curves") %>%
       add_units("tax:; mac.reduction: ") %>%
       add_comments("Same as L252.MAC_an") %>%
       add_legacy_name("L2521.MAC_an") %>%
-      add_precursors("temp-data-inject/L252.MAC_an") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("temp-data-inject/L252.MAC_an") ->
       L2521.MAC_an
     L2521.MAC_Ag_TC[["SSP1"]] ->
       L2521.MAC_Ag_TC_SSP1
