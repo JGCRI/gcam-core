@@ -1,6 +1,6 @@
 #' module_emissions_L2521.MACC_IRR
 #'
-#' Briefly describe what this chunk does.
+#' Adds technology and tech changes to MACC curves for animals and agriculture.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,17 +8,17 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L2521.AgMAC}, \code{L2521.MAC_an}, \code{L2521.MAC_Ag_TC_SSP1}, \code{L2521.MAC_An_TC_SSP1}, \code{L2521.MAC_Ag_TC_SSP2}, \code{L2521.MAC_An_TC_SSP2}, \code{L2521.MAC_Ag_TC_SSP5}, \code{L2521.MAC_An_TC_SSP5}. The corresponding file in the
 #' original data system was \code{L2521.MACC_IRR.R} (emissions level2).
-#' @details Describe in detail what this chunk does.
+#' @details Adds agricultural technology to agriculture MACC curves. Adds SSP-specific tech changes to animal and agriculture MACC curves.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
+#' @author RH July 2017
 #' @export
-module_emissions_L2521.MACC_IRR_DISABLED <- function(command, ...) {
+module_emissions_L2521.MACC_IRR <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "emissions/A_MACC_TechChange",
-             "L252.AgMAC",
-             "L252.MAC_an"))
+    return(c(FILE = "emissions/A_MACC_TechChange", # Check units and source
+             FILE = "temp-data-inject/L252.AgMAC",
+             FILE = "temp-data-inject/L252.MAC_an"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2521.AgMAC",
              "L2521.MAC_an",
@@ -34,114 +34,77 @@ module_emissions_L2521.MACC_IRR_DISABLED <- function(command, ...) {
 
     # Load required inputs
     A_MACC_TechChange <- get_data(all_data, "emissions/A_MACC_TechChange")
-    L252.AgMAC <- get_data(all_data, "L252.AgMAC")
-    L252.MAC_an <- get_data(all_data, "L252.MAC_an")
+    L252.AgMAC <- get_data(all_data, "temp-data-inject/L252.AgMAC")
+    L252.MAC_an <- get_data(all_data, "temp-data-inject/L252.MAC_an")
 
     # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses repeat_and_add_vector
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
+    # L2521.AgMAC: Ag MAC curves are simply copied by irr and rfd technologies
+    L2521.AgMAC <- L252.AgMAC %>%
+      repeat_add_columns(tibble(Irr_Rfd = c("IRR", "RFD"))) %>%
+      mutate(AgProductionTechnology = paste(AgSupplySubsector, Irr_Rfd, sep = "_")) %>%
+      select(-Irr_Rfd)
+
+    # Tech Change on Ag MACCs for all available SSPs
+    L2521.MAC_Ag_TC <- L2521.AgMAC %>%
+      select(-EPA_region) %>%
+      # Using left_join because the number of rows change - there is a value for each SSP
+      left_join(A_MACC_TechChange, by = c("mac.control" = "MAC")) %>%
+      # Split by scenario and add attributes since these are the same except for SSP name
+      split(.$scenario) %>%
+      lapply(function(df){
+        df %>%
+        add_title(paste("Agricultural MACC curves with technology changes for ", unique(df$scenario))) %>%
+        add_legacy_name(paste0("L2521.MAC_Ag_TC_", unique(df$scenario))) %>%
+        add_units("tax:; mac.reduction:; tech_change:") %>%
+        add_comments("Appends scenario-specific tech change to Ag MACC curves") %>%
+        add_precursors("temp-data-inject/L2521.AgMAC", "emissions/A_MACC_TechChange") %>%
+          select(-scenario)})
+
+    # Tech Change on Ag MACCs for all available SSPs
+    L2521.MAC_An_TC <- L252.MAC_an %>%
+      select(-EPA_region) %>%
+      # Using left_join because the number of rows change - there is a value for each SSP
+      left_join(A_MACC_TechChange, by = c("mac.control" = "MAC")) %>%
+      # Split by scenario and add attributes since these are the same except for SSP name
+      split(.$scenario) %>%
+      lapply(function(df){
+        df %>%
+          add_title(paste("Animal MACC curves with technology changes for ", unique(df$scenario))) %>%
+          add_legacy_name(paste0("L2521.MAC_An_TC_", unique(df$scenario))) %>%
+          add_units("tax:; mac.reduction:; tech_change:") %>%
+          add_comments("Appends scenario-specific tech change to animal MACC curves") %>%
+          add_precursors("temp-data-inject/L252.MAC_an", "emissions/A_MACC_TechChange") %>%
+          select(-scenario)})
+
     # ===================================================
 
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L2521.AgMAC %>%
+      add_title("Agricultural MACC Curves") %>%
+      add_units("tax:; mac.reduction: ") %>%
+      add_comments("Adds irrigation and rainfed technology to each subsector in L252.AgMAC") %>%
       add_legacy_name("L2521.AgMAC") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("temp-data-inject/L252.AgMAC") ->
       L2521.AgMAC
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L252.MAC_an %>%
+      add_title("Agricultural MACC Curves") %>%
+      add_units("tax:; mac.reduction: ") %>%
+      add_comments("Same as L252.MAC_an") %>%
       add_legacy_name("L2521.MAC_an") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
+      add_precursors("temp-data-inject/L252.MAC_an") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2521.MAC_an
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L2521.MAC_Ag_TC_SSP1") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    L2521.MAC_Ag_TC[["SSP1"]] ->
       L2521.MAC_Ag_TC_SSP1
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L2521.MAC_An_TC_SSP1") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    L2521.MAC_An_TC[["SSP1"]]  ->
       L2521.MAC_An_TC_SSP1
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L2521.MAC_Ag_TC_SSP2") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    L2521.MAC_Ag_TC[["SSP2"]]  ->
       L2521.MAC_Ag_TC_SSP2
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L2521.MAC_An_TC_SSP2") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    L2521.MAC_An_TC[["SSP2"]] ->
       L2521.MAC_An_TC_SSP2
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L2521.MAC_Ag_TC_SSP5") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    L2521.MAC_Ag_TC[["SSP5"]] ->
       L2521.MAC_Ag_TC_SSP5
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L2521.MAC_An_TC_SSP5") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    L2521.MAC_An_TC[["SSP5"]]  ->
       L2521.MAC_An_TC_SSP5
 
     return_data(L2521.AgMAC, L2521.MAC_an, L2521.MAC_Ag_TC_SSP1, L2521.MAC_An_TC_SSP1, L2521.MAC_Ag_TC_SSP2, L2521.MAC_An_TC_SSP2, L2521.MAC_Ag_TC_SSP5, L2521.MAC_An_TC_SSP5)
