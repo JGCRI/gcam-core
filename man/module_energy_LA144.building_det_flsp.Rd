@@ -21,7 +21,10 @@ original data system was \code{LA144.building_det_flsp.R} (energy level1).
 This chunk calculates residential and commercial floorspace - and floorspace prices - by GCAM region and historical year.
 }
 \details{
-Describe in detail what this chunk does.
+Commercial and residential floorspace was calculated at the country level, before aggregating to the regional level.
+When available, floorspace was calculated from country-specific datasets, including those for the USA, China, and South Africa.
+Floorspace for countries that did not have country-level data was calculated using GCAM 3.0 assumptions.
+Floorspace prices were calculated by dividing an assumed fraction of GDP for buildings by residential floorspace.
 }
 \author{
 AJS July 2017
