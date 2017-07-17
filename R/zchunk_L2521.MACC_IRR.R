@@ -1,6 +1,6 @@
 #' module_emissions_L2521.MACC_IRR
 #'
-#' Adds technology and tech changes to MACC curves for animals and agriculture.
+#' Adds technologies and tech changes to MACC curves for animals and agriculture.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -13,10 +13,9 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RH July 2017
-#' @export
 module_emissions_L2521.MACC_IRR <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "emissions/A_MACC_TechChange", # Check units and source
+    return(c(FILE = "emissions/A_MACC_TechChange",
              FILE = "temp-data-inject/L252.AgMAC",
              FILE = "temp-data-inject/L252.MAC_an"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -29,6 +28,9 @@ module_emissions_L2521.MACC_IRR <- function(command, ...) {
              "L2521.MAC_Ag_TC_SSP5",
              "L2521.MAC_An_TC_SSP5"))
   } else if(command == driver.MAKE) {
+
+    # Silence package checks
+    AgSupplySubsector <- EPA_region <- Irr_Rfd <- scenario <- tech_change <- region <- . <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -45,9 +47,8 @@ module_emissions_L2521.MACC_IRR <- function(command, ...) {
       mutate(AgProductionTechnology = paste(AgSupplySubsector, Irr_Rfd, sep = "_")) %>%
       select(-Irr_Rfd)
 
-    # Need this code to add attributes
+    # Need this code to get rid of attributes
     L2521.MAC_an <- L252.MAC_an %>%
-      # Only adding this to get rid of attributes
       mutate(region = region)
 
     # Tech Change on Ag MACCs for all available SSPs
@@ -59,14 +60,14 @@ module_emissions_L2521.MACC_IRR <- function(command, ...) {
       split(.$scenario) %>%
       lapply(function(df){
         df %>%
-        add_title(paste("Agricultural MACC curves with technology changes for ", unique(df$scenario))) %>%
+        add_title(paste("Agricultural marginal abatement cost curves with technology changes for ", unique(df$scenario))) %>%
         add_legacy_name(paste0("L2521.MAC_Ag_TC_", unique(df$scenario))) %>%
-        add_units("tax:; mac.reduction:; tech_change:") %>%
+        add_units("tax: 1990 USD; mac.reduction: % reduction; tech_change:") %>% # Need to add tech change units
         add_comments("Appends scenario-specific tech change to Ag MACC curves") %>%
         add_precursors("temp-data-inject/L252.AgMAC", "emissions/A_MACC_TechChange") %>%
           select(-scenario)})
 
-    # Tech Change on Ag MACCs for all available SSPs
+    # Tech Change on animal MACCs for all available SSPs
     L2521.MAC_An_TC <- L252.MAC_an %>%
       select(-EPA_region) %>%
       # Using left_join because the number of rows change - there is a value for each SSP
@@ -75,9 +76,9 @@ module_emissions_L2521.MACC_IRR <- function(command, ...) {
       split(.$scenario) %>%
       lapply(function(df){
         df %>%
-          add_title(paste("Animal MACC curves with technology changes for ", unique(df$scenario))) %>%
+          add_title(paste("Animal marginal abatement cost curves with technology changes for ", unique(df$scenario))) %>%
           add_legacy_name(paste0("L2521.MAC_An_TC_", unique(df$scenario))) %>%
-          add_units("tax:; mac.reduction:; tech_change:") %>%
+          add_units("tax: 1990 USD; mac.reduction: % reduction; tech_change:") %>% # Need to add tech change units
           add_comments("Appends scenario-specific tech change to animal MACC curves") %>%
           add_precursors("temp-data-inject/L252.MAC_an", "emissions/A_MACC_TechChange") %>%
           select(-scenario)})
@@ -86,16 +87,16 @@ module_emissions_L2521.MACC_IRR <- function(command, ...) {
 
     # Produce outputs
     L2521.AgMAC %>%
-      add_title("Agricultural MACC Curves") %>%
-      add_units("tax:; mac.reduction: ") %>%
+      add_title("Agricultural Marginal Abatement Cost Curves") %>%
+      add_units("tax: 1990 USD; mac.reduction: % reduction") %>%
       add_comments("Adds irrigation and rainfed technology to each subsector in L252.AgMAC") %>%
       add_legacy_name("L2521.AgMAC") %>%
       add_precursors("temp-data-inject/L252.AgMAC") ->
       L2521.AgMAC
     L2521.MAC_an %>%
-      add_title("Animal MACC Curves") %>%
-      add_units("tax:; mac.reduction: ") %>%
-      add_comments("Same as L252.MAC_an") %>%
+      add_title("Animal Marginal Abatement Cost Curves") %>%
+      add_units("tax: 1990 USD; mac.reduction: % reduction") %>%
+      add_comments("Identical to L252.MAC_an") %>%
       add_legacy_name("L2521.MAC_an") %>%
       add_precursors("temp-data-inject/L252.MAC_an") ->
       L2521.MAC_an

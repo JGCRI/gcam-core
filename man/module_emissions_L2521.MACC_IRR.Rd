@@ -18,10 +18,10 @@ the generated outputs: \code{L2521.AgMAC}, \code{L2521.MAC_an}, \code{L2521.MAC_
 original data system was \code{L2521.MACC_IRR.R} (emissions level2).
 }
 \description{
-Briefly describe what this chunk does.
+Adds technology and tech changes to MACC curves for animals and agriculture.
 }
 \details{
-Describe in detail what this chunk does.
+Adds agricultural technology to agriculture MACC curves. Adds SSP-specific tech changes to animal and agriculture MACC curves.
 }
 \author{
 RH July 2017

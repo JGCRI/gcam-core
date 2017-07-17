@@ -1,0 +1,38 @@
+#' module_emissions_batch_all_aglu_emissions_IRR.xml
+#'
+#' Construct XML data structure for \code{all_aglu_emissions_IRR.xml}.
+#'
+#' @param command API command to execute
+#' @param ... other optional parameters, depending on command
+#' @return Depends on \code{command}: either a vector of required inputs,
+#' a vector of output names, or (if \code{command} is "MAKE") all
+#' the generated outputs: \code{all_aglu_emissions_IRR.xml}. The corresponding file in the
+#' original data system was \code{batch_all_aglu_emissions_IRR.xml} (emissions XML).
+module_emissions_batch_all_aglu_emissions_IRR.xml_DISABLED <- function(command, ...) {
+  if(command == driver.DECLARE_INPUTS) {
+    return(c( "L2521.AgMAC",
+              "L2521.MAC_an"))
+  } else if(command == driver.DECLARE_OUTPUTS) {
+    return(c(XML = "all_aglu_emissions_IRR.xml"))
+  } else if(command == driver.MAKE) {
+
+    all_data <- list(...)[[1]]
+
+    # Load required inputs
+    L2521.AgMAC <- get_data(all_data, "L2521.AgMAC")
+    L2521.MAC_an <- get_data(all_data, "L2521.MAC_an")
+
+    # ===================================================
+
+    # Produce outputs
+    create_xml("all_aglu_emissions_IRR.xml") %>%
+      add_xml_data(L2521.AgMAC, "AgMAC") %>%
+      add_xml_data(L2521.MAC_an, "MAC") %>%
+      add_precursors("L2521.AgMAC", "L2521.MAC_an") ->
+        all_aglu_emissions_IRR.xml
+
+    return_data(all_aglu_emissions_IRR.xml)
+  } else {
+    stop("Unknown command")
+  }
+}
