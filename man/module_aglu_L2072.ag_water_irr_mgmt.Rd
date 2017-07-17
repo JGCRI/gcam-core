@@ -14,15 +14,16 @@ module_aglu_L2072.ag_water_irr_mgmt(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L2071.AgCoef_IrrBphysWater_ag}, \code{L2072.AgCoef_IrrWaterWdraw_ag}, \code{L2072.AgCoef_IrrWaterCons_ag}, \code{L2072.AgCoef_RfdBphysWater_ag}, \code{L2072.AgCoef_BphysWater_bio}, \code{L2072.AgCoef_IrrWaterWdraw_bio}, \code{L2072.AgCoef_IrrWaterCons_bio}. The corresponding file in the
+the generated outputs: \code{L2071.AgCoef_IrrBphysWater_ag_mgmt}, \code{L2072.AgCoef_IrrWaterWdraw_ag_mgmt}, \code{L2072.AgCoef_IrrWaterCons_ag_mgmt}, \code{L2072.AgCoef_RfdBphysWater_ag_mgmt}, \code{L2072.AgCoef_BphysWater_bio_mgmt}, \code{L2072.AgCoef_IrrWaterWdraw_bio_mgmt}, \code{L2072.AgCoef_IrrWaterCons_bio_mgmt}. The corresponding file in the
 original data system was \code{L2072.ag_water_irr_mgmt.R} (aglu level2).
 }
 \description{
-Briefly describe what this chunk does.
+Calculate agriculture water IO coefficients by region / crop / year / GLU / technology.
 }
 \details{
-Describe in detail what this chunk does.
+This chunk calculates the IO coefficients of irrigation water withdrawals and consumption, and biophysical water consumption of irrigated and rainfed crops,
+for each primary and dedicated bioenergy crop by region / year / GLU / management level.
 }
 \author{
-YourInitials CurrentMonthName 2017
+RC July 2017
 }
