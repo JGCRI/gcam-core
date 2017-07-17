@@ -6,7 +6,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L2521.AgMAC}, \code{L2521.MAC_an}, \code{L2521.MAC_Ag_TC_SSP1}, \code{L2521.MAC_An_TC_SSP1}, \code{L2521.MAC_Ag_TC_SSP2}, \code{L2521.MAC_An_TC_SSP2}, \code{L2521.MAC_Ag_TC_SSP5}, \code{L2521.MAC_An_TC_SSP5}. The corresponding file in the
+#' the generated outputs: \code{L2521.AgMAC}, \code{L2521.MAC_Ag_TC_SSP1}, \code{L2521.MAC_An_TC_SSP1}, \code{L2521.MAC_Ag_TC_SSP2}, \code{L2521.MAC_An_TC_SSP2}, \code{L2521.MAC_Ag_TC_SSP5}, \code{L2521.MAC_An_TC_SSP5}. The corresponding file in the
 #' original data system was \code{L2521.MACC_IRR.R} (emissions level2).
 #' @details Adds agricultural technology to agriculture MACC curves. Adds SSP-specific tech changes to animal and agriculture MACC curves.
 #' @importFrom assertthat assert_that
@@ -20,7 +20,6 @@ module_emissions_L2521.MACC_IRR <- function(command, ...) {
              FILE = "temp-data-inject/L252.MAC_an"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2521.AgMAC",
-             "L2521.MAC_an",
              "L2521.MAC_Ag_TC_SSP1",
              "L2521.MAC_An_TC_SSP1",
              "L2521.MAC_Ag_TC_SSP2",
@@ -46,10 +45,6 @@ module_emissions_L2521.MACC_IRR <- function(command, ...) {
       repeat_add_columns(tibble(Irr_Rfd = c("IRR", "RFD"))) %>%
       mutate(AgProductionTechnology = paste(AgSupplySubsector, Irr_Rfd, sep = "_")) %>%
       select(-Irr_Rfd)
-
-    # Need this code to get rid of attributes
-    L2521.MAC_an <- L252.MAC_an %>%
-      mutate(region = region)
 
     # Tech Change on Ag MACCs for all available SSPs
     L2521.MAC_Ag_TC <- L2521.AgMAC %>%
@@ -93,13 +88,6 @@ module_emissions_L2521.MACC_IRR <- function(command, ...) {
       add_legacy_name("L2521.AgMAC") %>%
       add_precursors("temp-data-inject/L252.AgMAC") ->
       L2521.AgMAC
-    L2521.MAC_an %>%
-      add_title("Animal Marginal Abatement Cost Curves") %>%
-      add_units("tax: 1990 USD; mac.reduction: % reduction") %>%
-      add_comments("Identical to L252.MAC_an") %>%
-      add_legacy_name("L2521.MAC_an") %>%
-      add_precursors("temp-data-inject/L252.MAC_an") ->
-      L2521.MAC_an
     L2521.MAC_Ag_TC[["SSP1"]] ->
       L2521.MAC_Ag_TC_SSP1
     L2521.MAC_An_TC[["SSP1"]]  ->
@@ -113,7 +101,7 @@ module_emissions_L2521.MACC_IRR <- function(command, ...) {
     L2521.MAC_An_TC[["SSP5"]]  ->
       L2521.MAC_An_TC_SSP5
 
-    return_data(L2521.AgMAC, L2521.MAC_an, L2521.MAC_Ag_TC_SSP1, L2521.MAC_An_TC_SSP1, L2521.MAC_Ag_TC_SSP2, L2521.MAC_An_TC_SSP2, L2521.MAC_Ag_TC_SSP5, L2521.MAC_An_TC_SSP5)
+    return_data(L2521.AgMAC, L2521.MAC_Ag_TC_SSP1, L2521.MAC_An_TC_SSP1, L2521.MAC_Ag_TC_SSP2, L2521.MAC_An_TC_SSP2, L2521.MAC_Ag_TC_SSP5, L2521.MAC_An_TC_SSP5)
   } else {
     stop("Unknown command")
   }
