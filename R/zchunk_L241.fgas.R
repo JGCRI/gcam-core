@@ -56,24 +56,21 @@ module_emissions_L241.fgas <- function(command, ...) {
       select(-GCAM_region_ID, -value) ->
       L241.hfc_all
 
-
     # L241.pfc: F-gas emissions for technologies in all regions.
     #
     # Remove anything that's zero in all base years for any technology, because no future
     # coefs are read in for any techs.
+    #
+    # Then round future gas emissions and format the data frame.
     L142.pfc_R_S_T_Yh %>%
-      filter(year %in% HISTORICAL_YEARS) %>%
-      filter(sum(value) != 0) %>%
-      gather(year, value, grep(YEAR_PATTERN, names(.))) %>%
-      filter(year %in% BASE_YEARS) ->
-      L142.pfc_R_S_T_Yh_future
-
-    # Format  and round the future gas emissions for technologies data frame.
-    L142.pfc_R_S_T_Yh_future %>%
+      group_by(GCAM_region_ID, supplysector, subsector, stub.technology, Non.CO2) %>%
+      filter(sum(value) != 0, year %in% BASE_YEARS) %>%
+      mutate(input.emissions = round(value, emissions.DIGITS_EMISSIONS), year = as.numeric(year)) %>%
+      ungroup() %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      select(region, supplysector, subsector, stub.technology, year, Non.CO2, input.emissions = value) %>%
-      mutate(input.emissions = round(input.emissions, emissions.DIGITS_EMISSIONS), year = as.numeric(year))->
+      select(-GCAM_region_ID, -value) ->
       L241.pfc_all
+
 
     # F-gas emissions factors for future years
     #
@@ -85,6 +82,7 @@ module_emissions_L241.fgas <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
       L141.hfc_ef_cooling_2010
 
+
     # From the 2010 hfc cooling emission factors select USA emission factors, in
     # subsequent steps the USA emission factors will be used to estimate future
     # emission factors.
@@ -92,6 +90,7 @@ module_emissions_L241.fgas <- function(command, ...) {
       filter(region == "USA") %>%
       select(USA_factor = value, -region, year, Non.CO2, supplysector) ->
       L141.hfc_ef_cooling_2010_USA
+
 
     # Match USA cooling emissions factor from 2010 with the other 2010
     # hfc cooling emission factors by sector, gas, and year.
@@ -103,6 +102,7 @@ module_emissions_L241.fgas <- function(command, ...) {
       mutate(USA_factor = if_else(Non.CO2 == "HFC134a", USA_factor / 3, USA_factor)) ->
       L241.hfc_cool_ef_2010_USfactor
 
+
     # Format the data frame of 2010 regional emission factors and 2010 USA emission factors
     # for the next step where future emission factors are calculated.
     #
@@ -113,21 +113,17 @@ module_emissions_L241.fgas <- function(command, ...) {
     L241.hfc_cool_ef_2010_USfactor %>%
       filter(USA_factor > value) %>%
       rename("2010" = value, "2030" = USA_factor) %>%
-      select(-year) -> # NEED TO CHECK WITH BEN FLAG!
+      select(-year) ->
       L241.hfc_cool_ef_update
 
-    # Estimate future emission factors as the 2010 emission factor plus the difference
-    # the region's and USA's 2010 emission factors multiplied by a scaler for time.
-
-
+    # Linearlly interpolate future regional emission factors from 2010 emission factor and
+    # the 2010 USA emission facor.
     L241.hfc_cool_ef_update %>%
-     mutate(`2015` = `2010`+(5 / 20)*(`2030` - `2010`)) %>%
-     mutate(`2020` = `2010`+(10 / 20)*(`2030` - `2010`)) %>%
-     mutate(`2025` = `2010`+(15 / 20)*(`2030` - `2010`)) ->
-      # mutate(`2015` = NA, `2020` = NA, `2025` = NA) %>%
-      # gather(year, value, matches(YEAR_PATTERN)) %>%
-      # mutate(value = approx_fun(as.numeric(year), value)) %>%
-      # spread(year, value) ->
+      mutate(`2015` = NA, `2020` = NA, `2025` = NA) %>%
+      gather(year, value, matches(YEAR_PATTERN)) %>%
+      group_by(GCAM_region_ID, supplysector, subsector, stub.technology, Non.CO2) %>%
+      mutate(value = approx_fun(as.numeric(year), value)) %>%
+      spread(year, value) ->
       L241.hfc_cool_ef_update_all
 
     # Subset the future emission factors for the hfc model base years.
@@ -152,7 +148,6 @@ module_emissions_L241.fgas <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
       L241.hfc_ef_2010
 
-
     # Use data from Guus Velders (a f-gas expert) of near future f gas
     # emissions to calculate the future to 2010 emission factor ratios.
     # These emission factor ratios will be used to update the non-cooling
@@ -162,7 +157,7 @@ module_emissions_L241.fgas <- function(command, ...) {
     # can be used to join the FUT_EMISS_GV emission factors with L241.hfc_ef_2010
     # in the next step.
     FUT_EMISS_GV %>%
-  #    select(-Emissions, -GDP) %>% remove line?????
+      select(-Emissions, -GDP) %>%
       spread(Year, EF) %>%
       select(`Species`, `Scenario`, `2010`, `2020`, `2030`) %>%
       mutate(Species = gsub("-", "", Species )) %>%
@@ -198,33 +193,36 @@ module_emissions_L241.fgas <- function(command, ...) {
       L241.hfc_future
 
 
-      if(OLD_DATA_SYSTEM_BEHAVIOR){
-    # Now subset only the relevant technologies and gases (i.e., drop ones whose values are zero in all years). The old data system
-    # fails to drop technologies and gases that have zero emissions in all years. I talked to Kate and she said that this
-    # this has no implications for model performance. The if(OLD_DATA_SYSTEM_BEHVAIOR) is technically unnecessary because the 0s
-    # can be left in.
-    L241.hfc_all %>%
-      mutate(year = as.numeric(year)) ->
-      L241.hfc_all
+    if(OLD_DATA_SYSTEM_BEHAVIOR){
+      # Now subset only the relevant technologies and gases (i.e., drop ones whose values are zero in all years). The old data system
+      # fails to drop technologies and gases that have zero emissions in all years. I talked to Kate and she said that this
+      # this has no implications for model performance. The if(OLD_DATA_SYSTEM_BEHVAIOR) is technically unnecessary because the 0s
+      # can be left in.
+      L241.hfc_all %>%
+        mutate(year = as.numeric(year)) ->
+        L241.hfc_all
 
     } else {
 
-      # Subset so that only the relevant technologies and gases (i.e., those whose emission values are zero for all years are dropped).
+      # Now subset only the relevant technologies and gases (i.e., drop ones whose values are zero in all years).
       L241.hfc_all %>%
-        gather(year, value, matches(YEAR_PATTERN)) %>%
-        mutate(year = as.numeric(year)) ->
+        group_by(region, supplysector, subsector, stub.technology, Non.CO2) %>%
+        filter(sum(input.emissions) != 0, year %in% BASE_YEARS) %>%
+        mutate(year = as.numeric(year)) %>%
+        ungroup ->
         L241.hfc_all
-    } # end of if old data system
+
+      } # end of if old data system
+
 
     # Set the units string for the hfc and pfc gases.
     L241.pfc_all %>%
       bind_rows(L241.hfc_all) %>%
       bind_rows(L241.hfc_future) %>%
-      select(-input.emissions, -emiss.coeff) %>%
-      unique %>%
-      mutate(emissions.unit = emissions.F_GAS_UNITS) ->
+      select(region, supplysector, subsector, stub.technology, year, Non.CO2) %>%
+      mutate(emissions.unit = emissions.F_GAS_UNITS) %>%
+      unique() ->
       L241.fgas_all_units
-
 
     # ===================================================
 
@@ -250,7 +248,7 @@ module_emissions_L241.fgas <- function(command, ...) {
 
     L241.hfc_future %>%
       add_title("Future HFC emission factors") %>%
-      add_units("NA") %>%
+      add_units("Gg") %>%
       add_comments("Cooling future emission factors are calculated from 2010 USA emission factors.") %>%
       add_comments("Non-cooling future emission factors are calculated from Guus Velders emission factors.") %>%
       add_legacy_name("L241.hfc_future") %>%
@@ -275,3 +273,4 @@ module_emissions_L241.fgas <- function(command, ...) {
     stop("Unknown command")
   }
 }
+
