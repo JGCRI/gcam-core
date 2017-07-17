@@ -1,6 +1,6 @@
 #' module_emissions_L2521.MACC_IRR
 #'
-#' Adds technologies and tech changes to MACC curves for animals and agriculture.
+#' Adds technologies and tech changes to marginal abatement cost curves, MACC, for animals and agriculture.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L2521.AgMAC}, \code{L2521.MAC_Ag_TC_SSP1}, \code{L2521.MAC_An_TC_SSP1}, \code{L2521.MAC_Ag_TC_SSP2}, \code{L2521.MAC_An_TC_SSP2}, \code{L2521.MAC_Ag_TC_SSP5}, \code{L2521.MAC_An_TC_SSP5}. The corresponding file in the
 #' original data system was \code{L2521.MACC_IRR.R} (emissions level2).
-#' @details Adds agricultural technology to agriculture MACC curves. Adds SSP-specific tech changes to animal and agriculture MACC curves.
+#' @details Adds agricultural technology to agriculture marginal abatement cost curves, MACC. Adds SSP-specific tech changes to animal and agriculture MAC curves.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
