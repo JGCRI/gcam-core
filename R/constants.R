@@ -260,6 +260,10 @@ MAPPED_WATER_TYPES_SHORT            <- c("C", "W")
 names(MAPPED_WATER_TYPES_SHORT)     <- MAPPED_WATER_TYPES
 DEFAULT_UNLIMITED_WATER_PRICE       <- 0
 DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.001
+WATER_UNITS_QUANTITY                <- "km^3"
+WATER_UNITS_PRICE                   <- "1975$/m^3"
+AG_ONLY_WATER_TYPES                 <- "biophysical water consumption"
+
 
 
 # Emissions constants ======================================================================
