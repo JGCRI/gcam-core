@@ -224,7 +224,7 @@ inline void Value::set( const double aNewValue ){
  *        the value of this class in the "base" state.
  * \details This method is helpful when adding to supply/demand of a market when
  *          we are calculating partial derivatives.
- # \return The difference in value between the current value of this class and
+ * \return The difference in value between the current value of this class and
  *         the value of this class in the "base" state
  * \warning This method is only valid for instances that are mIsStateCopy.
  */

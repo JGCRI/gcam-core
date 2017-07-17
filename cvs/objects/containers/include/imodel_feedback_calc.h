@@ -60,11 +60,14 @@ class IClimateModel;
  *        moves forward through the model years.
  * \details This interface will provide two hooks to notify when to calculate feedbacks:
  *          Before a new model period is about to start and after a model period has
- *          has finished solving and climate model results for the period are available. TODO! MAGICC does not currently run between periods
+ *          has finished solving and climate model results for the period are available.
  *          A references to the Scenario and IClimateModel will be provided however
  *          it is implied that the subclasses of this interface will utilize the 
  *          GCAM fusion capabilities to gain access to the internal model state
  *          necessary to compute and/or push feedbacks into GCAM.
+ * \warning MAGICC does not currently run between periods so these feedbacks may
+ *          not work correctly if climate results are needed and MAGICC is configured
+ *          as the climate model.
  *
  * \author Pralit Patel
  */
@@ -83,7 +86,7 @@ public:
      *          from the prior model year should still be available.
      * \param aScenario The Scenario object that contains the full state of the currently
      *                  running model.
-     * \param IClimateModel The climate model instance which can be queries for climate
+     * \param IClimateModel The climate model instance which can be queried for climate
      *                      results.
      * \param aPeriod The model period that is about to begin calculation.
      */
@@ -94,7 +97,7 @@ public:
      *        model has been run updated through this period.
      * \param aScenario The Scenario object that contains the full state of the currently
      *                  running model.
-     * \param IClimateModel The climate model instance which can be queries for climate
+     * \param IClimateModel The climate model instance which can be queried for climate
      *                      results.
      * \param aPeriod The model period that just finished it's calculation.
      */

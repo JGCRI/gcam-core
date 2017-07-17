@@ -427,9 +427,14 @@ bool Scenario::calculatePeriod( const int aPeriod,
     mMarketplace->init_to_last( aPeriod ); // initialize to last period's info
     mWorld->initCalc( aPeriod ); // call to initialize anything that won't change during calc
     mMarketplace->assignMarketSerialNumbers( aPeriod ); // give the markets their serial numbers for this period.
+    
+    // Call any model feedback objects before we begin solving this period but after
+    // we are initialized and ready to go.
     for( auto modelFeedback : mModelFeedbacks ) {
         modelFeedback->calcFeedbacksBeforePeriod( this, mWorld->getClimateModel(), aPeriod );
     }
+    
+    // Set up the state data for the current period.
     delete mManageStateVars;
     mManageStateVars = new ManageStateVariables( aPeriod );
     
@@ -524,6 +529,8 @@ bool Scenario::calculatePeriod( const int aPeriod,
                    << ".  Climate model run skipped." << endl;
     }
     
+    // Call any model feedbacks now that we are done solving the current period and
+    // the climate model has been run.
     for( auto modelFeedback : mModelFeedbacks ) {
         modelFeedback->calcFeedbacksAfterPeriod( this, mWorld->getClimateModel(), aPeriod );
     }

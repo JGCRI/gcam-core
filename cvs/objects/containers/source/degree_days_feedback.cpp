@@ -170,7 +170,7 @@ void DegreeDaysFeedback::GatherEmiss::processData( T& aData ) {
 }
 
 template<>
-void DegreeDaysFeedback::GatherEmiss::processData<double>( double& aData ) {
+void DegreeDaysFeedback::GatherEmiss::processData<Value>( Value& aData ) {
     //cout << "On " << aData << endl;
     mEmiss += aData;
 }

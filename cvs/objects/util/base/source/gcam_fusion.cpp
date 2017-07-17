@@ -43,20 +43,28 @@
 
 #include "util/base/include/gcam_fusion.hpp"
 
+/*!
+ * \brief Parse a string for an individual FilterStep.
+ * \details The string is parsed using the following rules:
+ *            - All characters up to the '[' (or end of the string) is assumed to the data name.
+ *            - All characters in between the '[' and ']' (if they exist) are split by ','.
+ *            - Each element is then processed by the first element being the Filter.
+ *            - The second and third element (must exist unless Filter is NoFilter) is a
+ *              predicate and the value to match in the predicate.
+ * \param aFilterStepStr A string to parse into a FilterStep.
+ * \return A new FilterStep parsed from aFilterStepStr using the rules above.
+ */
 FilterStep* parseFilterStepStr( const std::string& aFilterStepStr ) {
     auto openBracketIter = std::find( aFilterStepStr.begin(), aFilterStepStr.end(), '[' );
     if( openBracketIter == aFilterStepStr.end() ) {
-        std::cout << "Descendant filter step" << std::endl;
         // no filter just the data name
         return new FilterStep( aFilterStepStr );
     }
     else {
         std::string dataName( aFilterStepStr.begin(), openBracketIter );
-        std::cout << "Data name is: >" << dataName << "<" << std::endl;
         std::string filterStr( openBracketIter + 1, std::find( openBracketIter, aFilterStepStr.end(), ']' ) );
         std::vector<std::string> filterOptions;
         boost::split( filterOptions, filterStr, boost::is_any_of( "," ) );
-        std::cout << "matcher is: >" << filterOptions[ 1 ] << "< with value >" << filterOptions[ 2 ] << "< on filter >" << filterOptions[ 0 ] << "<" << std::endl;
         // [0] = filter type (name, year, index)
         // [1] = match type
         // [2:] = match type options
@@ -83,7 +91,9 @@ FilterStep* parseFilterStepStr( const std::string& aFilterStepStr ) {
             matcher = new IntLessThanEq( boost::lexical_cast<int>( filterOptions[ 2 ] ) );
         }
         else {
-            std::cout << "Didn't match matcher" << std::endl;
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unknown subclass of AMatchesValue: " << filterOptions[ 1 ] << std::endl;
         }
         
         FilterStep* filterStep = 0;
@@ -97,12 +107,22 @@ FilterStep* parseFilterStepStr( const std::string& aFilterStepStr ) {
             filterStep = new FilterStep( dataName, new YearFilter( matcher ) );
         }
         else {
-            std::cout << "Didn't match filter" << std::endl;
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unknown filter: " << filterOptions[ 0 ] << std::endl;
         }
         return filterStep;
     }
 }
 
+/*!
+ * \brief Parse a string to create a list of FilterSteps.
+ * \details The string is split on the '/' character so that the contents of each is
+ *          assumed to be one FilterStep definition.  Each split string is therefore
+ *          parsed further using the helper function parseFilterStepStr.
+ * \param aFilterStr A string representing a series of FilterSteps.
+ * \return A list of FilterSteps parsed from aFilterStr as detailed above.
+ */
 std::vector<FilterStep*> parseFilterString( const std::string& aFilterStr ) {
     std::vector<std::string> filterStepsStr;
     boost::split( filterStepsStr, aFilterStr, boost::is_any_of( "/" ) );
