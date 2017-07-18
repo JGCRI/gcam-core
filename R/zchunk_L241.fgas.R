@@ -46,14 +46,19 @@ module_emissions_L241.fgas <- function(command, ...) {
       gather(year, value, -GCAM_region_ID, -supplysector, -subsector, -stub.technology, -Non.CO2) %>%
       mutate(year = as.numeric(substr(year, 2, 5))) -> L141.hfc_ef_R_cooling_Yh
 
+    ## silence package check.
+    "." <- "2010" <- "2020" <-"2030" <- "EF" <- "Emissions" <- "GCAM_region_ID" <-"GDP" <-
+      "Non.CO2" <- "Ratio_2020" <- "Ratio_2030" <- "Scenario" <- "Species" <- "USA_factor" <-
+      "Year" <- "curr_table" <- "emiss.coeff" <- "input.emissions" <- "region" <-
+      "stub.technology" <- "subsector" <- "supplysector" <- "value" <- "year" <- NULL
 
     # ===================================================
     # Format and round emission values for HFC gas emissions for technologies in all regions.
     L141.hfc_R_S_T_Yh %>%
       filter(year %in% BASE_YEARS) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      mutate(input.emissions = round(value, emissions.DIGITS_EMISSIONS)) %>%
-      select(-GCAM_region_ID, -value) ->
+      mutate(input.emissions = round(`value`, emissions.DIGITS_EMISSIONS)) %>%
+      select(-`GCAM_region_ID`, -`value`) ->
       L241.hfc_all
 
     # L241.pfc: F-gas emissions for technologies in all regions.
@@ -63,12 +68,12 @@ module_emissions_L241.fgas <- function(command, ...) {
     #
     # Then round future gas emissions and format the data frame.
     L142.pfc_R_S_T_Yh %>%
-      group_by(GCAM_region_ID, supplysector, subsector, stub.technology, Non.CO2) %>%
-      filter(sum(value) != 0, year %in% BASE_YEARS) %>%
-      mutate(input.emissions = round(value, emissions.DIGITS_EMISSIONS), year = as.numeric(year)) %>%
-      ungroup() %>%
+      group_by(`GCAM_region_ID`, `supplysector`, `subsector`, `stub.technology`, `Non.CO2`) %>%
+      filter(sum(`value`) != 0, year %in% BASE_YEARS) %>%
+      mutate(`input.emissions` = round(`value`, emissions.DIGITS_EMISSIONS), `year` = as.numeric(`year`)) %>%
+      ungroup(.) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      select(-GCAM_region_ID, -value) ->
+      select(-`GCAM_region_ID`, -`value`) ->
       L241.pfc_all
 
 
@@ -78,7 +83,7 @@ module_emissions_L241.fgas <- function(command, ...) {
     # these values will be used to estimate future emission factors by scaling with
     # USA emission factors.
     L141.hfc_ef_R_cooling_Yh %>%
-      filter(year == max(emissions.HFC_MODEL_BASE_YEARS)) %>%
+      filter(`year` == max(emissions.HFC_MODEL_BASE_YEARS)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
       L141.hfc_ef_cooling_2010
 
@@ -87,8 +92,8 @@ module_emissions_L241.fgas <- function(command, ...) {
     # subsequent steps the USA emission factors will be used to estimate future
     # emission factors.
     L141.hfc_ef_cooling_2010 %>%
-      filter(region == "USA") %>%
-      select(USA_factor = value, -region, year, Non.CO2, supplysector) ->
+      filter(`region` == "USA") %>%
+      select(USA_factor = `value`, -`region`, `year`, `Non.CO2`, `supplysector`) ->
       L141.hfc_ef_cooling_2010_USA
 
 
@@ -99,7 +104,7 @@ module_emissions_L241.fgas <- function(command, ...) {
     # is less commonly used now in USA.
     L141.hfc_ef_cooling_2010 %>%
       left_join_error_no_match(L141.hfc_ef_cooling_2010_USA, by = c("supplysector", "Non.CO2", "year")) %>%
-      mutate(USA_factor = if_else(Non.CO2 == "HFC134a", USA_factor / 3, USA_factor)) ->
+      mutate(`USA_factor` = if_else(Non.CO2 == "HFC134a", USA_factor / 3, USA_factor)) ->
       L241.hfc_cool_ef_2010_USfactor
 
 
