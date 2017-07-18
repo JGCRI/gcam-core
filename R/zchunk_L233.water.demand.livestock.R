@@ -42,17 +42,15 @@ module_water_L233.water.demand.livestock <- function(command, ...) {
       mutate(water_sector = "Livestock") %>%
       mutate(minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector)) %>%
       left_join(GCAM_region_names, by = "GCAM_region_ID") %>%
-      mutate(market.name = region) -> L233.TechCoef_tmp
+      mutate(market.name = region) %>%
       # Set the coef for all years
-    L233.TechCoef_tmp[rep(1:nrow(L233.TechCoef_tmp), times = length(MODEL_YEARS)), ] %>%
-      mutate(year = MODEL_YEARS[sort(rep(1:length(MODEL_YEARS), times = nrow(L233.TechCoef_tmp)))]) %>%
-      select(-GCAM_region_ID, -water_type, -water_sector) -> results
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      select(-GCAM_region_ID, -water_type, -water_sector) %>%
 
-    # ===================================================
+      # ===================================================
 
     # Produce outputs
-    results %>%
-      add_title("water coefficient for region-specific livestock") %>%
+    add_title("water coefficient for region-specific livestock") %>%
       add_units("NA") %>%
       add_comments("The data is generated through:
                    1) read in the file L133.water_demand_livestock_R_C_W_km3_Mt and left join with the file A_an_technology;
