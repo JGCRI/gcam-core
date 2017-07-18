@@ -235,13 +235,6 @@ modeltime.HECTOR_EMISSIONS_YEAR <- 2005
 modeltime.HECTOR_INI_FILE <- "../input/climate/hector-gcam.ini"
 
 
-# Energy constants ======================================================================
-
-DEFAULT_ELECTRIC_EFFICIENCY <- 0.33  # Default electric efficiency
-ELECTRICITY_INPUT_FUELS<- c("biomass", "coal", "gas", "refined liquids")
-STUBTECHYR <- c("GCAM_region_ID", "supplysector", "subsector", "stub.technology", "xyear")
-
-
 # Socioeconomics constants ======================================================================
 
 # Population years - note that these sequences shouldn't have any overlap,
@@ -273,6 +266,10 @@ names(MAPPED_WATER_TYPES_SHORT)     <- MAPPED_WATER_TYPES
 DEFAULT_UNLIMITED_WATER_PRICE       <- 0
 DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.001
 DEFAULT_UNLIMITED_IRR_WATER_PRICE   <- 0.001 # (Units: 1975$/m3)
+WATER_UNITS_QUANTITY                <- "km^3"
+WATER_UNITS_PRICE                   <- "1975$/m^3"
+AG_ONLY_WATER_TYPES                 <- "biophysical water consumption"
+
 
 # Emissions constants ======================================================================
 
@@ -292,6 +289,8 @@ emissions.MAC_TAXES <- c( 0, 5, 10, 15, 32, 66, 129, 243, 486, 1093 ) # Range of
 emissions.CONV_C_CO2 <- 44 / 12 # Convert Carbon to CO2
 emissions.DEFOREST_COEF_YEARS <- c(2000, 2005)
 emissions.PFCS <- c("CF4", "C2F6", "SF6")
+emissions.HFC_MODEL_BASE_YEARS <- c(1975, 1990, 2005, 2010)
+emissions.F_GAS_UNITS <- "Gg"
 # ======================================================================
 
 emissions.NH3_EXTRA_YEARS      <- 1971:1989
@@ -302,3 +301,10 @@ emissions.CONV_C_CO2           <- 44 / 12 # Convert Carbon to CO2
 emissions.DEFOREST_COEF_YEARS  <- c(2000, 2005)
 emissions.AGR_SECTORS          <- c("rice", "fertilizer", "soil")
 emissions.AGR_GASES            <- c("CH4_AGR", "N2O_AGR", "NH3_AGR", "NOx_AGR")
+
+
+# Uncomment these lines to run under 'timeshift' conditions
+# HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
+# FUTURE_YEARS <- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)
+# BASE_YEARS <- c(1975, 1990, 2005)   # normally (1975, 1990, 2005, 2010)
+# MODEL_YEARS <- c(BASE_YEARS, FUTURE_YEARS)
