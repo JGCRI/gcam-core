@@ -1,6 +1,6 @@
 #' module_energy_LA144.building_det_flsp
 #'
-#' This chunk calculates residential and commercial floorspace - and floorspace prices - by GCAM region and historical year.
+#' Calculate residential and commercial floorspace - and floorspace prices - by GCAM region and historical year.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -102,7 +102,8 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
     # First, convert household data to long form so it can be joined at a later step
     A44.HouseholdSize_long <- A44.HouseholdSize %>%
       select(-Variable, -Unit) %>%
-      gather(year, value_pcdwelling)
+      gather(year, value_pcdwelling) %>%
+      mutate(year = as.integer(year))
 
     # IEA_PCResFloorspace provides residential floorspace (m2) per person for 16 selected countries for 1980 to 2004
          # Note that IEA data will be chosen over Odyssee for duplicate countries b/c it reports per capita instead of per house
@@ -119,10 +120,10 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
 
     Odyssee_ResFloorspacePerHouse %>%
       gather(year, value_phflsp, matches(YEAR_PATTERN)) %>% # Convert to long form
+      mutate(year = as.integer(year)) %>% # Convert year to integer to both join with A44.HouseholdSize_long and be able to extrapolote later on
       filter(!iso %in% list_iso_IEA) %>% # Remove iso's that are in IEA dataset
       # left_join_error_no_match cannot be used because joining table does not contain every year, which will introduce NAs
       left_join(A44.HouseholdSize_long, by = "year") %>%
-      mutate(year = as.integer(year)) %>% # Convert years to integer (or numeric) to be able to extrapolate
       # Extrapolate, using rule 2 so years outside of min-max range are assigned values from closest data, as opposed to NAs
       mutate(value_pcdwelling = approx_fun(year, value_pcdwelling, rule = 2)) %>%
       # Calculate per capita floorspace

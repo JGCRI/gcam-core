@@ -18,7 +18,7 @@ the generated outputs: \code{L144.flsp_bm2_R_res_Yh}, \code{L144.flsp_bm2_R_comm
 original data system was \code{LA144.building_det_flsp.R} (energy level1).
 }
 \description{
-This chunk calculates residential and commercial floorspace - and floorspace prices - by GCAM region and historical year.
+Calculate residential and commercial floorspace - and floorspace prices - by GCAM region and historical year.
 }
 \details{
 Commercial and residential floorspace was calculated at the country level, before aggregating to the regional level.
