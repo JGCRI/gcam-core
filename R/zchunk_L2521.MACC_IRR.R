@@ -53,14 +53,15 @@ module_emissions_L2521.MACC_IRR <- function(command, ...) {
       left_join(A_MACC_TechChange, by = c("mac.control" = "MAC")) %>%
       # Split by scenario and add attributes since these are the same except for SSP name
       split(.$scenario) %>%
-      lapply(function(df){
+      lapply(function(df) {
         df %>%
-        add_title(paste("Agricultural marginal abatement cost curves with technology changes for ", unique(df$scenario))) %>%
-        add_legacy_name(paste0("L2521.MAC_Ag_TC_", unique(df$scenario))) %>%
-        add_units("tax: 1990 USD; mac.reduction: % reduction; tech_change:") %>% # Need to add tech change units
-        add_comments("Appends scenario-specific tech change to Ag MACC curves") %>%
-        add_precursors("temp-data-inject/L252.AgMAC", "emissions/A_MACC_TechChange") %>%
-          select(-scenario)})
+          add_title(paste("Agricultural marginal abatement cost curves with technology changes for ", unique(df$scenario))) %>%
+          add_legacy_name(paste0("L2521.MAC_Ag_TC_", unique(df$scenario))) %>%
+          add_units("tax: 1990 USD; mac.reduction: % reduction; tech_change:") %>% # Need to add tech change units
+          add_comments("Appends scenario-specific tech change to Ag MACC curves") %>%
+          add_precursors("temp-data-inject/L252.AgMAC", "emissions/A_MACC_TechChange") %>%
+          select(-scenario)
+      })
 
     # Tech Change on animal MACCs for all available SSPs
     L2521.MAC_An_TC <- L252.MAC_an %>%
@@ -69,14 +70,15 @@ module_emissions_L2521.MACC_IRR <- function(command, ...) {
       left_join(A_MACC_TechChange, by = c("mac.control" = "MAC")) %>%
       # Split by scenario and add attributes since these are the same except for SSP name
       split(.$scenario) %>%
-      lapply(function(df){
+      lapply(function(df) {
         df %>%
           add_title(paste("Animal marginal abatement cost curves with technology changes for ", unique(df$scenario))) %>%
           add_legacy_name(paste0("L2521.MAC_An_TC_", unique(df$scenario))) %>%
           add_units("tax: 1990 USD; mac.reduction: % reduction; tech_change:") %>% # Need to add tech change units
           add_comments("Appends scenario-specific tech change to animal MACC curves") %>%
           add_precursors("temp-data-inject/L252.MAC_an", "emissions/A_MACC_TechChange") %>%
-          select(-scenario)})
+          select(-scenario)
+      })
 
     # ===================================================
 
