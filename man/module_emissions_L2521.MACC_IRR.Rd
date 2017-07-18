@@ -14,14 +14,14 @@ module_emissions_L2521.MACC_IRR(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L2521.AgMAC}, \code{L2521.MAC_an}, \code{L2521.MAC_Ag_TC_SSP1}, \code{L2521.MAC_An_TC_SSP1}, \code{L2521.MAC_Ag_TC_SSP2}, \code{L2521.MAC_An_TC_SSP2}, \code{L2521.MAC_Ag_TC_SSP5}, \code{L2521.MAC_An_TC_SSP5}. The corresponding file in the
+the generated outputs: \code{L2521.AgMAC}, \code{L2521.MAC_Ag_TC_SSP1}, \code{L2521.MAC_An_TC_SSP1}, \code{L2521.MAC_Ag_TC_SSP2}, \code{L2521.MAC_An_TC_SSP2}, \code{L2521.MAC_Ag_TC_SSP5}, \code{L2521.MAC_An_TC_SSP5}. The corresponding file in the
 original data system was \code{L2521.MACC_IRR.R} (emissions level2).
 }
 \description{
-Adds technology and tech changes to MACC curves for animals and agriculture.
+Adds technologies and tech changes to marginal abatement cost curves, MACC, for animals and agriculture.
 }
 \details{
-Adds agricultural technology to agriculture MACC curves. Adds SSP-specific tech changes to animal and agriculture MACC curves.
+Adds agricultural technology to agriculture marginal abatement cost curves, MACC. Adds SSP-specific tech changes to animal and agriculture MAC curves.
 }
 \author{
 RH July 2017
