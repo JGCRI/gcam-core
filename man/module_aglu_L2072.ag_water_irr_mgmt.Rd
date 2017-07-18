@@ -18,10 +18,10 @@ the generated outputs: \code{L2071.AgCoef_IrrBphysWater_ag_mgmt}, \code{L2072.Ag
 original data system was \code{L2072.ag_water_irr_mgmt.R} (aglu level2).
 }
 \description{
-Calculate agriculture water IO coefficients by region / crop / year / GLU / technology.
+Calculate agriculture water Input-Output coefficients by region / crop / year / GLU / technology.
 }
 \details{
-This chunk calculates the IO coefficients of irrigation water withdrawals and consumption, and biophysical water consumption of irrigated and rainfed crops,
+This chunk calculates the Input-Output coefficients of irrigation water withdrawals and consumption, and biophysical water consumption of irrigated and rainfed crops,
 for each primary and dedicated bioenergy crop by region / year / GLU / management level.
 }
 \author{

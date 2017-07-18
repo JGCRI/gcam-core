@@ -1,6 +1,6 @@
 #' module_aglu_L2072.ag_water_irr_mgmt
 #'
-#' Calculate agriculture water IO coefficients by region / crop / year / GLU / technology.
+#' Calculate agriculture water Input-Output coefficients by region / crop / year / GLU / technology.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L2071.AgCoef_IrrBphysWater_ag_mgmt}, \code{L2072.AgCoef_IrrWaterWdraw_ag_mgmt}, \code{L2072.AgCoef_IrrWaterCons_ag_mgmt}, \code{L2072.AgCoef_RfdBphysWater_ag_mgmt}, \code{L2072.AgCoef_BphysWater_bio_mgmt}, \code{L2072.AgCoef_IrrWaterWdraw_bio_mgmt}, \code{L2072.AgCoef_IrrWaterCons_bio_mgmt}. The corresponding file in the
 #' original data system was \code{L2072.ag_water_irr_mgmt.R} (aglu level2).
-#' @details This chunk calculates the IO coefficients of irrigation water withdrawals and consumption, and biophysical water consumption of irrigated and rainfed crops,
+#' @details This chunk calculates the Input-Output coefficients of irrigation water withdrawals and consumption, and biophysical water consumption of irrigated and rainfed crops,
 #' for each primary and dedicated bioenergy crop by region / year / GLU / management level.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
@@ -67,73 +67,66 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
     # Primary crops
     # Compute irrigation water consumption IO coefficients (km3/Mt crop = m3/kg) by region / irrigated crop / year / GLU / management level
     L165.BlueIrr_m3kg_R_C_GLU %>%
-      ungroup() %>%
       # Initial adjustment: drop any water coefs for region/crop/GLU combinations that aren't written out
       semi_join(L161.ag_irrProd_Mt_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
+      mutate(IRR_RFD = "IRR", water_type = "water consumption") %>%
+      rename(value = BlueIrr_m3kg) ->
+      L2072.Blue_IRR_IO_R_C_GLU
+
+    # Compute biophysical water consumption IO coefficients (km3/Mt crop = m3/kg) by region / irrigated crop / year / GLU / management level
+    L165.TotIrr_m3kg_R_C_GLU %>%
+      # Initial adjustment: drop any water coefs for region/crop/GLU combinations that aren't written out
+      semi_join(L161.ag_irrProd_Mt_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
+      mutate(IRR_RFD = "IRR", water_type = "biophysical water consumption") %>%
+      rename(value = TotIrr_m3kg) ->
+      L2072.Bio_IRR_IO_R_C_GLU
+
+    # Compute biophysical water consumption IO coefficients (km3/Mt crop = m3/kg) by region / rainfed crop / year / GLU / management level
+    L165.GreenRfd_m3kg_R_C_GLU %>%
+      # Initial adjustment: drop any water coefs for region/crop/GLU combinations that aren't written out
+      semi_join(L161.ag_rfdProd_Mt_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
+      mutate(IRR_RFD = "RFD", water_type = "biophysical water consumption") %>%
+      rename(value = GreenRfd_m3kg) ->
+      L2072.Bio_RFD_IO_R_C_GLU
+
+    # Following are repeated processing steps for the three files, so combine them all togather
+    L2072.Blue_IRR_IO_R_C_GLU %>%
+      bind_rows(L2072.Bio_IRR_IO_R_C_GLU, L2072.Bio_RFD_IO_R_C_GLU) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(basin_to_country_mapping[c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) %>%
       # Copy to both high and low management levels
       repeat_add_columns(tibble::tibble(MGMT = c("hi", "lo"))) %>%
       # Add sector, subsector, technology names
-      mutate(IRR_RFD = "IRR",
-             AgSupplySector = GCAM_commodity,
+      mutate(AgSupplySector = GCAM_commodity,
              AgSupplySubsector = paste(GCAM_commodity, GLU_name, sep = "_"),
              AgProductionTechnology = paste(GCAM_commodity, GLU_name, IRR_RFD, MGMT, sep = "_"),
-             water_type = "water consumption",
-             coefficient = round(BlueIrr_m3kg, aglu.DIGITS_CALOUTPUT)) %>%
+             coefficient = round(value, aglu.DIGITS_CALOUTPUT)) %>%
       filter(coefficient > 0) %>%
       # Assume coefs stay constant, copy to all model years
-      repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) %>%
+      repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) ->
+      L2072.AgCoef_Water_ag_mgmt
+
+    # Separate irrigation water consumption IO coefficients
+    L2072.AgCoef_Water_ag_mgmt %>%
+      filter(water_type == "water consumption") %>%
       # Standardize irrigation water input names
       mutate(water_sector = "Irrigation",
              minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector, GLU = GLU_name)) %>%
       select(one_of(LEVEL2_DATA_NAMES[["AgCoef"]])) ->
       L2072.AgCoef_IrrWaterCons_ag_mgmt
 
-    # Compute biophysical water consumption IO coefficients (km3/Mt crop = m3/kg) by region / irrigated crop / year / GLU / management level
-    L165.TotIrr_m3kg_R_C_GLU %>%
-      ungroup() %>%
-      # Initial adjustment: drop any water coefs for region/crop/GLU combinations that aren't written out
-      semi_join(L161.ag_irrProd_Mt_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
-      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      left_join_error_no_match(basin_to_country_mapping[c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) %>%
-      # Copy to both high and low management levels
-      repeat_add_columns(tibble::tibble(MGMT = c("hi", "lo"))) %>%
-      # Add sector, subsector, technology names
-      mutate(IRR_RFD = "IRR",
-             AgSupplySector = GCAM_commodity,
-             AgSupplySubsector = paste(GCAM_commodity, GLU_name, sep = "_"),
-             AgProductionTechnology = paste(GCAM_commodity, GLU_name, IRR_RFD, MGMT, sep = "_"),
-             water_type = "biophysical water consumption",
-             coefficient = round(TotIrr_m3kg, aglu.DIGITS_CALOUTPUT)) %>%
-      filter(coefficient > 0) %>%
-      # Assume coefs stay constant, copy to all model years
-      repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) %>%
+    # Separate biophysical water consumption IO coefficients
+    L2072.AgCoef_Water_ag_mgmt %>%
+      filter(water_type == "biophysical water consumption" & IRR_RFD == "IRR") %>%
       # Standardize irrigation water input names
       mutate(water_sector = "Irrigation",
              minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector, GLU = GLU_name)) %>%
       select(one_of(LEVEL2_DATA_NAMES[["AgCoef"]])) ->
       L2072.AgCoef_IrrBphysWater_ag_mgmt
 
-    # Compute biophysical water consumption IO coefficients (km3/Mt crop = m3/kg) by region / rainfed crop / year / GLU / management level
-    L165.GreenRfd_m3kg_R_C_GLU %>%
-      ungroup() %>%
-      # Initial adjustment: drop any water coefs for region/crop/GLU combinations that aren't written out
-      semi_join(L161.ag_rfdProd_Mt_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
-      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      left_join_error_no_match(basin_to_country_mapping[c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) %>%
-      # Copy to both high and low management levels
-      repeat_add_columns(tibble::tibble(MGMT = c("hi", "lo"))) %>%
-      # Add sector, subsector, technology names
-      mutate(IRR_RFD = "RFD",
-             AgSupplySector = GCAM_commodity,
-             AgSupplySubsector = paste(GCAM_commodity, GLU_name, sep = "_"),
-             AgProductionTechnology = paste(GCAM_commodity, GLU_name, IRR_RFD, MGMT, sep = "_"),
-             water_type = "biophysical water consumption",
-             coefficient = round(GreenRfd_m3kg, aglu.DIGITS_CALOUTPUT)) %>%
-      filter(coefficient > 0) %>%
-      # Assume coefs stay constant, copy to all model years
-      repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) %>%
+    # Separate biophysical water consumption IO coefficients
+    L2072.AgCoef_Water_ag_mgmt %>%
+      filter(water_type == "biophysical water consumption" & IRR_RFD == "RFD") %>%
       # Standardize irrigation water input names
       mutate(water_sector = "Irrigation",
              minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector, GLU = GLU_name)) %>%
@@ -240,10 +233,6 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
       # Remove the unnecessary columns
       select(one_of(LEVEL2_DATA_NAMES[["AgCoef"]])) ->
       L2072.AgCoef_IrrWaterWdraw_ag_mgmt
-    # # Print out the number of values being changed in each year
-    # L2072.AgCoef_IrrWaterWdraw_ag_mgmt %>% filter(year == 2010) -> tmp1
-    # tmp1 %>% filter(Profit < minProfit) -> tmp2
-    # printlog("Out of", nrow(tmp1), "observations,", nrow(tmp2), "had water coefficients reduced to keep positive profit rates")
 
     # Produce outputs
     L2072.AgCoef_IrrWaterCons_ag_mgmt %>%

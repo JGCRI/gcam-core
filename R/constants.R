@@ -271,7 +271,7 @@ MAPPED_WATER_TYPES_SHORT            <- c("C", "W")
 names(MAPPED_WATER_TYPES_SHORT)     <- MAPPED_WATER_TYPES
 DEFAULT_UNLIMITED_WATER_PRICE       <- 0
 DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.001
-DEFAULT_UNLIMITED_IRR_WATER_PRICE <- 0.001
+DEFAULT_UNLIMITED_IRR_WATER_PRICE   <- 0.001 # (Units: 1975$/m3)
 
 # Emissions constants ======================================================================
 
