@@ -284,6 +284,8 @@ emissions.MAC_TAXES <- c( 0, 5, 10, 15, 32, 66, 129, 243, 486, 1093 ) # Range of
 emissions.CONV_C_CO2 <- 44 / 12 # Convert Carbon to CO2
 emissions.DEFOREST_COEF_YEARS <- c(2000, 2005)
 emissions.PFCS <- c("CF4", "C2F6", "SF6")
+emissions.HFC_MODEL_BASE_YEARS <- c(1975, 1990, 2005, 2010)
+emissions.F_GAS_UNITS <- "Gg"
 # ======================================================================
 
 emissions.NH3_EXTRA_YEARS      <- 1971:1989
