@@ -209,9 +209,9 @@ module_energy_LB1322.Fert <- function(command, ...) {
       # Calculate remaining industrial energy and feedstock consumption re-allocating to avoid negative values
       mutate(in_indenergy_netFert = in_indenergy - indenergy_to_Fert,
              in_indfeed_netFert = in_indfeed - indfeed_to_Fert) %>%
-      # This is complicated. This last step pertains to the available energy and feedstock quantities for the industrial sector, in regions
+      # This next step pertains to the available energy and feedstock quantities for the industrial sector, in regions
       # where either went negative as a result of including the fertilizer industry (using the IEA's shares of production by fuel type,
-      # modified so that no regions went negative, and following the IEA's conventions on disaggregation of feedstocks and energy-use.
+      # modified so that no regions went negative, and following the IEA's conventions on disaggregation of feedstocks and energy-use).
       # We are assuming that for the purposes of re-allocation of energy from the (general) industrial sector to the fertilizer sector, all energy
       # is available, whether initially classified as feedstocks or energy-use. This may zero out both energy and feedstocks or both in the
       # general industrial sector, causing all industrial demands of natural gas to be for the ammonia industry.
