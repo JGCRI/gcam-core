@@ -192,7 +192,6 @@ CONV_T_MT <- 1e-6 # t to Mt
 CONV_G_KG <- 1e-3 # kilograms to grams
 CONV_NH3_N <- 14/17 # Nitrogen to Ammonia
 
-
 # Time
 CONV_YEAR_HOURS <- 24 * 365.25
 CONV_DAYS_YEAR <- 1 / 365.25
@@ -260,6 +259,10 @@ MAPPED_WATER_TYPES_SHORT            <- c("C", "W")
 names(MAPPED_WATER_TYPES_SHORT)     <- MAPPED_WATER_TYPES
 DEFAULT_UNLIMITED_WATER_PRICE       <- 0
 DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.001
+WATER_UNITS_QUANTITY                <- "km^3"
+WATER_UNITS_PRICE                   <- "1975$/m^3"
+AG_ONLY_WATER_TYPES                 <- "biophysical water consumption"
+
 
 
 # Emissions constants ======================================================================
@@ -280,6 +283,8 @@ emissions.MAC_TAXES <- c( 0, 5, 10, 15, 32, 66, 129, 243, 486, 1093 ) # Range of
 emissions.CONV_C_CO2 <- 44 / 12 # Convert Carbon to CO2
 emissions.DEFOREST_COEF_YEARS <- c(2000, 2005)
 emissions.PFCS <- c("CF4", "C2F6", "SF6")
+emissions.HFC_MODEL_BASE_YEARS <- c(1975, 1990, 2005, 2010)
+emissions.F_GAS_UNITS <- "Gg"
 # ======================================================================
 
 emissions.NH3_EXTRA_YEARS      <- 1971:1989
