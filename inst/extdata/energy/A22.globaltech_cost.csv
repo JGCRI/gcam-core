@@ -1,0 +1,23 @@
+# File: A22.globaltech_cost.csv
+# Title: Primary energy transformation technologies default cost assumptions
+# Units: 1975$/GJ
+supplysector,subsector,technology,minicam.non.energy.input,1971,2010,2100,improvement.max,improvement.rate,improvement.shadow.technology
+gas processing,natural gas,natural gas,non-energy,0.2,0.2,0.2,,,
+gas processing,biomass gasification,biomass gasification,non-energy,7.0300865,7.0300865,,0.7,0.03,
+gas processing,coal gasification,coal gasification,non-energy,5.285779323,5.285779323,,0.7,0.03,
+nuclearFuelGenII,enrichedUranium,enrichedUranium,non-energy,0.124464,0.124464,0.124464,,,
+nuclearFuelGenIII,enrichedUranium,enrichedUranium,non-energy,0.124464,0.124464,0.124464,,,
+refining,oil refining,oil refining,non-energy,0.84,0.84,0.84,,,
+refining,coal to liquids,coal to liquids,non-energy,5.294117647,5.294117647,,0.7,0.03,
+refining,coal to liquids,coal to liquids CCS level 1,non-energy,5.980615385,5.980615385,,0.6,0.05,coal to liquids
+refining,coal to liquids,coal to liquids CCS level 2,non-energy,6.467671233,6.467671233,,0.6,0.05,coal to liquids
+refining,gas to liquids,gas to liquids,non-energy,3.970588235,3.970588235,,0.7,0.03,
+refining,biomass liquids,cellulosic ethanol,non-energy,4.74,4.74,,0.7,0.03,
+refining,biomass liquids,cellulosic ethanol CCS level 1,non-energy,4.991818182,4.991818182,,0.6,0.05,cellulosic ethanol
+refining,biomass liquids,cellulosic ethanol CCS level 2,non-energy,6.850561798,6.850561798,,0.6,0.05,cellulosic ethanol
+refining,biomass liquids,FT biofuels,non-energy,7.802307692,7.802307692,,0.7,0.03,
+refining,biomass liquids,FT biofuels CCS level 1,non-energy,8.516923077,8.516923077,,0.6,0.05,FT biofuels
+refining,biomass liquids,FT biofuels CCS level 2,non-energy,8.97527027,8.97527027,,0.6,0.05,FT biofuels
+refining,biomass liquids,corn ethanol,non-energy,2.38,2.38,2.38,,,
+refining,biomass liquids,sugar cane ethanol,non-energy,0,0,0,,,
+refining,biomass liquids,biodiesel,non-energy,1.88,1.88,1.88,,,
