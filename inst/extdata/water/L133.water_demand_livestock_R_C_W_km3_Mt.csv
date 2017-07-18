@@ -1,5 +1,5 @@
 # File: L133.water_demand_livestock_R_C_W_km3_Mt.csv
-# Title: Livestock water coefficients by region ID / GCAM_commodity/ water type
+# Title: Livestock water coefficients by GCAM_region_ID, GCAM_commodity and water type
 # Unit: m^3 / Mt
 # Comments: written by L133.water.demand.livestock.R
 GCAM_region_ID,GCAM_commodity,water_type,coefficient
