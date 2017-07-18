@@ -1,6 +1,6 @@
 #' module_emissions_L241.fgas
 #'
-#' Formats fgases emission inputs for GCAM and estimates future emission factors for f gases.
+#' Formats fgases emission inputs for GCAM and estimates future emission factors for f gases for the  SSP scenarios.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L241.hfc_all}, \code{L241.pfc_all}, \code{L241.hfc_future}, \code{L241.fgas_all_units}. The corresponding file in the
 #' original data system was \code{L241.fgas.R} (emissions level2).
-#' @details Formats hfc and pfc gas emissions for input. Calculates future emission factors for hfc gases based on 2010 region emissions and USA emission factors and emission factors from Guus Velders.
+#' @details Formats hfc and pfc gas emissions for input. Calculates future emission factors for hfc gases based on 2010 region emissions and USA emission factors and emission factors from Guus Velders (http://www.sciencedirect.com/science/article/pii/S135223101530488X) for the  SSP scenarios.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -97,11 +97,12 @@ module_emissions_L241.fgas <- function(command, ...) {
       L141.hfc_ef_cooling_2010_USA
 
 
-    # Match USA cooling emissions factor from 2010 with the other 2010
-    # hfc cooling emission factors by sector, gas, and year.
+    # Match USA cooling hfc emissions factors from by sector and gas with 2010
+    # emission factors for other regions. Eventually the USA factor emissions will
+    # be used to interpolate future emission factors for the other regions.
     #
-    # Scale the the USA factor emissions for HFC134a by dividing by three since it
-    # is less commonly used now in USA.
+    # But first correct the USA factor emissions for HFC134a by dividing by three
+    # since it is less commonly used now in USA.
     L141.hfc_ef_cooling_2010 %>%
       left_join_error_no_match(L141.hfc_ef_cooling_2010_USA, by = c("supplysector", "Non.CO2", "year")) %>%
       mutate(`USA_factor` = if_else(Non.CO2 == "HFC134a", USA_factor / 3, USA_factor)) ->
