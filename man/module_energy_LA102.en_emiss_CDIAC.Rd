@@ -18,11 +18,11 @@ the generated outputs: \code{L102.CO2_Mt_R_F_Yh}, \code{L102.Ccoef_kgCGJ_R_F_Yh}
 original data system was \code{LA102.en_emiss_CDIAC.R} (energy level1).
 }
 \description{
-Briefly describe what this chunk does.
+Calculates regional TPES as well as regional and global emissions coefficients by fuel
 }
 \details{
-Describe in detail what this chunk does.
+This chunk maps the CDIAC country emissions database (L100.CDIAC_CO2_ctry_hist) onto GCAM regions (iso_GCAM_regID) and fuels (CDIAC_fuel) to determine regional emissions by fuel (L102.CO2_Mt_R_F_Yh), extracts non-energy emissions and uses the remainder to calculate regional (L102.Ccoef_kgCGJ_R_F_Yh) and global (L102.Ccoef_kgCGJ_F_Yh) emissions coefficients
 }
 \author{
-YourInitials CurrentMonthName 2017
+CWR July 2017
 }
