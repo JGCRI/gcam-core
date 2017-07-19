@@ -14,7 +14,7 @@ module_emissions_L2111.ag_nonco2_IRR(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L2111.AWBEmissions}, \code{L2111.AGREmissions}, \code{L2111.AnEmissions}, \code{L2111.AnNH3Emissions}, \code{L2111.AGRBio}, \code{L2111.AWB_BCOC_EmissCoeff}, \code{L2111.nonghg_max_reduction}, \code{L2111.nonghg_steepness}. The corresponding file in the
+the generated outputs: \code{L2111.AWBEmissions}, \code{L2111.AGREmissions}, \code{L2111.AGRBio}, \code{L2111.AWB_BCOC_EmissCoeff}, \code{L2111.nonghg_max_reduction}, \code{L2111.nonghg_steepness}. The corresponding file in the
 original data system was \code{L2111.ag_nonco2_IRR.R} (emissions level2).
 }
 \description{
