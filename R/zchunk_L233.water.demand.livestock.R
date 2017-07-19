@@ -1,6 +1,6 @@
 #' module_water_L233.water.demand.livestock
 #'
-#' This chunk generates water coefficients for region-specific livestock for model years.
+#' This chunk is to generate water coefficients for region-specific livestock for model years.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,8 +8,8 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L233.TechCoef}. The corresponding file in the
 #' original data system was \code{L233.water.demand.livestock.R} (water level2).
-#' @details This chunk generates water coefficients (amount of water needed to produce one unit of livestock, unit: m^3/Mt)
-#' for region-specific livestock for model years (1975, 1990,2005, 2010....2100), with the information of supplysector, subsector,
+#' @details This chunk is to generate water coefficients for region-specific livestock for
+#' model years (1975, 1990,2005, 2010....2100), with the information of supplysector, subsector,
 #' technology, and energy input.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
@@ -53,7 +53,7 @@ module_water_L233.water.demand.livestock <- function(command, ...) {
     # Produce outputs
     results %>%
       add_title("water coefficient for region-specific livestock") %>%
-      add_units("m^3/Mt") %>%
+      add_units("NA") %>%
       add_comments("The data is generated through:
                    1) read in the file L133.water_demand_livestock_R_C_W_km3_Mt and left join with the file A_an_technology;
                    2) generate new fields water_sector and minicam.energy.input:
