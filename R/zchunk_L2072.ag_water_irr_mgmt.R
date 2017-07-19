@@ -218,9 +218,7 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
       # Match in non-land variable costs
       left_join_error_no_match(L2052.AgCost_ag_irr_mgmt, by = c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year")) %>%
       # Match in commodity price
-      left_join_error_no_match(L132.ag_an_For_Prices, by = c("AgSupplySector" = "GCAM_commodity")) %>%
-      # Calculate profit as commodity price minus water costs and non-land variable costs
-      mutate(Profit = calPrice - WaterCost - nonLandVariableCost) ->
+      left_join_error_no_match(L132.ag_an_For_Prices, by = c("AgSupplySector" = "GCAM_commodity")) ->
       L2072.AgCoef_IrrWaterWdraw_ag_mgmt
 
     # Assume an exogenous floor on profit rates to prevent negative, zero, and very low profit rates
@@ -251,6 +249,7 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
       add_title("Irrigation water withdrawals IO coefficients by region / irrigated crop / year / GLU / management level") %>%
       add_units("km3/Mt") %>%
       add_comments("Withdrawals coefs are calculated as consumption coefs divided by irrigation efficiency") %>%
+      add_comments("Set a floor on profit and adjust the coefs to ensure the profit floor is met") %>%
       add_comments("The same IO coefficients are assigned to both high and low management and keep constant for all model years") %>%
       add_legacy_name("L2072.AgCoef_IrrWaterWdraw_ag_mgmt") %>%
       same_precursors_as("L2072.AgCoef_IrrWaterCons_ag_mgmt") %>%
