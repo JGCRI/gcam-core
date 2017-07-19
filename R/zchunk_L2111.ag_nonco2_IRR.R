@@ -1,6 +1,7 @@
 #' module_emissions_L2111.ag_nonco2_IRR
 #'
-#' Briefly describe what this chunk does.
+#' Creates agricultural, agricultural waste burning and animal non-CO2 emissions.
+#' Writes biomass N2O coefficients, ag waste burning BC/OC coefficients, non-GHG maximum coefficient reduction, and non-GHG steepness by agricultural technology.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,7 +9,8 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L2111.AWBEmissions}, \code{L2111.AGREmissions}, \code{L2111.AnEmissions}, \code{L2111.AnNH3Emissions}, \code{L2111.AGRBio}, \code{L2111.AWB_BCOC_EmissCoeff}, \code{L2111.nonghg_max_reduction}, \code{L2111.nonghg_steepness}. The corresponding file in the
 #' original data system was \code{L2111.ag_nonco2_IRR.R} (emissions level2).
-#' @details Describe in detail what this chunk does.
+#' @details Writes out agricultural, agricultural waste burning, and animal non-CO2 emissions. Writes biomass N2O coefficients,
+#' ag waste burning BC/OC coefficients, non-GHG maximum coefficient reduction, and non-GHG steepness by agricultural technology.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -44,8 +46,14 @@ module_emissions_L2111.ag_nonco2_IRR <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
     A_regions <- get_data(all_data, "emissions/A_regions")
-    L1211.nonco2_tg_R_awb_C_Y_GLU_IRR <- get_data(all_data, "L1211.nonco2_tg_R_awb_C_Y_GLU_IRR")
+    L1211.nonco2_tg_R_awb_C_Y_GLU_IRR <- get_data(all_data, "L1211.nonco2_tg_R_awb_C_Y_GLU_IRR") %>%
+      # Replace GLU code with GLU name
+      left_join_error_no_match(basin_to_country_mapping %>% select(GLU = GLU_code, GLU_name),
+                               by = "GLU") %>%
+      select(-GLU) %>%
+      rename(GLU = GLU_name)
     L1221.ghg_tg_R_agr_C_Y_GLU_IRR <- get_data(all_data, "temp-data-inject/L1221.ghg_tg_R_agr_C_Y_GLU_IRR") %>%
+      # temp-data-inject code
       gather(year, value, starts_with("X")) %>%
       mutate(year = as.integer(substr(year, 2, 5))) %>%
       # Replace GLU code with GLU name
@@ -62,16 +70,16 @@ module_emissions_L2111.ag_nonco2_IRR <- function(command, ...) {
 
       # ===================================================
     # L2111.AWBEmissions: AWB emissions in all regions
-    # Interpolate and add region name
-    # Note: interpolate takes ages, so I'm not using interpolate_and_melt
     L2111.AWBEmissions <- L1211.nonco2_tg_R_awb_C_Y_GLU_IRR %>%
       filter(year %in% emissions.MODEL_BASE_YEARS) %>%
+      # Add region names and Ag columns
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       rename(AgSupplySector = GCAM_commodity,
              input.emissions = value) %>%
       mutate(AgSupplySubsector = paste(AgSupplySector, GLU, sep = "_"),
              AgProductionTechnology = paste(AgSupplySubsector, Irr_Rfd, sep = "_"),
              input.emissions = round(input.emissions, emissions.DIGITS_EMISSIONS)) %>%
+      # Rename SO2 emissions
       left_join_error_no_match(A_regions %>% select(region, SO2_name), by = "region") %>%
       mutate(SO2_name = paste0(SO2_name, "_AWB"),
              Non.CO2 = if_else(Non.CO2 == "SO2_AWB", SO2_name, Non.CO2)) %>%
@@ -81,6 +89,7 @@ module_emissions_L2111.ag_nonco2_IRR <- function(command, ...) {
     # L2111.AGREmissions: ag AGR emissions in all regions
     L2111.AGREmissions <- L1221.ghg_tg_R_agr_C_Y_GLU_IRR %>%
       filter(year %in% emissions.MODEL_BASE_YEARS) %>%
+      # Add region names and Ag columns
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       rename(AgSupplySector = GCAM_commodity,
              input.emissions = value) %>%
@@ -91,109 +100,87 @@ module_emissions_L2111.ag_nonco2_IRR <- function(command, ...) {
              Non.CO2, input.emissions)
 
     # L2111.AnEmissions and L2111.AnNH3Emissions: Copy tables exactly (irr/rfd irrelevant)
-    L2111.AnEmissions <- L211.AnEmissions
-    L2111.AnNH3Emissions <- L211.AnNH3Emissions
+    L2111.AnEmissions <- L211.AnEmissions %>%
+      mutate(year = year)
+    L2111.AnNH3Emissions <- L211.AnNH3Emissions %>%
+      mutate(year = year)
 
     # L2111.AGRBio, L2111.AWB_BCOC_EmissCoeff, L2111.nonghg_max_reduction, L2111.nonghg_steepness: repeat by irr/rfd and copy
     Irr_Rfd <- tibble(Irr_Rfd = c("IRR", "RFD"))
-    # L2111.AGRBio <- repeat_and_add_vector( L211.AGRBio, irr, c( "IRR", "RFD" ) )
-    # L2111.AGRBio[[agtech]] <- paste( L2111.AGRBio[[agsubs]], L2111.AGRBio[[irr]], sep = irr_delimiter )
-    # L2111.AGRBio[[irr]] <- NULL
-    #
-    # L2111.AWB_BCOC_EmissCoeff <- repeat_and_add_vector( L211.AWB_BCOC_EmissCoeff, irr, c( "IRR", "RFD" ) )
-    # L2111.AWB_BCOC_EmissCoeff[[agtech]] <- paste( L2111.AWB_BCOC_EmissCoeff[[agsubs]], L2111.AWB_BCOC_EmissCoeff[[irr]], sep = irr_delimiter )
-    # L2111.AWB_BCOC_EmissCoeff[[irr]] <- NULL
-    #
-    # L2111.nonghg_max_reduction <- repeat_and_add_vector( L211.nonghg_max_reduction, irr, c( "IRR", "RFD" ) )
-    # L2111.nonghg_max_reduction[[agtech]] <- paste( L2111.nonghg_max_reduction[[agsubs]], L2111.nonghg_max_reduction[[irr]], sep = irr_delimiter )
-    # L2111.nonghg_max_reduction[[irr]] <- NULL
-    #
-    # L2111.nonghg_steepness <- repeat_and_add_vector( L211.nonghg_steepness, irr, c( "IRR", "RFD" ) )
-    # L2111.nonghg_steepness[[agtech]] <- paste( L2111.nonghg_steepness[[agsubs]], L2111.nonghg_steepness[[irr]], sep = irr_delimiter )
-    # L2111.nonghg_steepness[[irr]] <- NULL
+    L2111.AGRBio <- repeat_add_columns(L211.AGRBio, Irr_Rfd) %>%
+      mutate(AgProductionTechnology = paste(AgSupplySubsector, Irr_Rfd, sep = "_")) %>%
+      select(-Irr_Rfd)
+
+    L2111.AWB_BCOC_EmissCoeff <- repeat_add_columns(L211.AWB_BCOC_EmissCoeff, Irr_Rfd) %>%
+      mutate(AgProductionTechnology = paste(AgSupplySubsector, Irr_Rfd, sep = "_")) %>%
+      select(-Irr_Rfd)
+
+    L2111.nonghg_max_reduction <- repeat_add_columns(L211.nonghg_max_reduction, Irr_Rfd) %>%
+      mutate(AgProductionTechnology = paste(AgSupplySubsector, Irr_Rfd, sep = "_")) %>%
+      select(-Irr_Rfd)
+
+    L2111.nonghg_steepness <- repeat_add_columns(L211.nonghg_steepness, Irr_Rfd) %>%
+      mutate(AgProductionTechnology = paste(AgSupplySubsector, Irr_Rfd, sep = "_")) %>%
+      select(-Irr_Rfd)
       # ===================================================
 
       # Produce outputs
-      tibble() %>%
-        add_title("descriptive title of data") %>%
-        add_units("units") %>%
-        add_comments("comments describing how data generated") %>%
-        add_comments("can be multiple lines") %>%
+      L2111.AWBEmissions %>%
+        add_title("Agricultural Waste Burning Emissions") %>%
+        add_units("Tg") %>%
+        add_comments("Add region and SO2 name to AWB emissions") %>%
         add_legacy_name("L2111.AWBEmissions") %>%
-        add_precursors("L1211.nonco2_tg_R_awb_C_Y_GLU_IRR", "common/GCAM_region_names",
-                       "water/basin_to_country_mapping", "emissions/A_regions") %>%
-        # typical flags, but there are others--see `constants.R`
-        add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+        add_precursors("L1211.nonco2_tg_R_awb_C_Y_GLU_IRR", "common/GCAM_region_names", "emissions/A_regions") ->
         L2111.AWBEmissions
-      tibble() %>%
-        add_title("descriptive title of data") %>%
-        add_units("units") %>%
-        add_comments("comments describing how data generated") %>%
-        add_comments("can be multiple lines") %>%
+      L2111.AGREmissions %>%
+        add_title("Agricultural Emissions") %>%
+        add_units("Tg") %>%
+        add_comments("Added region to AGR emissions") %>%
         add_legacy_name("L2111.AGREmissions") %>%
-        add_precursors("temp-data-inject/L1221.ghg_tg_R_agr_C_Y_GLU_IRR") %>%
-        # typical flags, but there are others--see `constants.R`
-        add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+        add_precursors("temp-data-inject/L1221.ghg_tg_R_agr_C_Y_GLU_IRR", "water/basin_to_country_mapping",
+                       "common/GCAM_region_names") ->
         L2111.AGREmissions
-      tibble() %>%
-        add_title("descriptive title of data") %>%
-        add_units("units") %>%
-        add_comments("comments describing how data generated") %>%
-        add_comments("can be multiple lines") %>%
+      L2111.AnEmissions %>%
+        add_title("Animal Emissions") %>%
+        add_units("Tg") %>%
+        add_comments("Copy of L2111.AnEmissions") %>%
         add_legacy_name("L2111.AnEmissions") %>%
-        add_precursors("temp-data-inject/L211.AnEmissions") %>%
-        # typical flags, but there are others--see `constants.R`
-        add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+        add_precursors("temp-data-inject/L211.AnEmissions") ->
         L2111.AnEmissions
-      tibble() %>%
-        add_title("descriptive title of data") %>%
-        add_units("units") %>%
-        add_comments("comments describing how data generated") %>%
-        add_comments("can be multiple lines") %>%
+      L2111.AnNH3Emissions %>%
+        add_title("Animal NH3 Emissions") %>%
+        add_units("Tg") %>%
+        add_comments("Copy of L211.AnNH3Emissions") %>%
         add_legacy_name("L2111.AnNH3Emissions") %>%
-        add_precursors("temp-data-inject/L211.AnNH3Emissions") %>%
-        # typical flags, but there are others--see `constants.R`
-        add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+        add_precursors("temp-data-inject/L211.AnNH3Emissions") ->
         L2111.AnNH3Emissions
-      tibble() %>%
-        add_title("descriptive title of data") %>%
-        add_units("units") %>%
-        add_comments("comments describing how data generated") %>%
-        add_comments("can be multiple lines") %>%
+      L2111.AGRBio %>%
+        add_title("Bio N2O Coefficients by region and technology") %>%
+        add_units("Unitless") %>% # should this be labeled in emissions/A_regions
+        add_comments("L211.AGRBio repeated by IRR and RFD technologies") %>%
         add_legacy_name("L2111.AGRBio") %>%
-        add_precursors("temp-data-inject/L211.AGRBio") %>%
-        # typical flags, but there are others--see `constants.R`
-        add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+        add_precursors("temp-data-inject/L211.AGRBio") ->
         L2111.AGRBio
-      tibble() %>%
-        add_title("descriptive title of data") %>%
-        add_units("units") %>%
-        add_comments("comments describing how data generated") %>%
-        add_comments("can be multiple lines") %>%
+      L2111.AWB_BCOC_EmissCoeff %>%
+        add_title("Agricultural Waste Burning BC/OC Emissions Coefficients") %>%
+        add_units("kt/Mt") %>%
+        add_comments("L211.AWB_BCOC_EmissCoeff repeated by IRR and RFD technologies") %>%
         add_legacy_name("L2111.AWB_BCOC_EmissCoeff") %>%
-        add_precursors("temp-data-inject/L211.AWB_BCOC_EmissCoeff") %>%
-        # typical flags, but there are others--see `constants.R`
-        add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+        add_precursors("temp-data-inject/L211.AWB_BCOC_EmissCoeff") ->
         L2111.AWB_BCOC_EmissCoeff
-      tibble() %>%
-        add_title("descriptive title of data") %>%
-        add_units("units") %>%
-        add_comments("comments describing how data generated") %>%
-        add_comments("can be multiple lines") %>%
+      L2111.nonghg_max_reduction %>%
+        add_title("Non-GHG maximum emissions coefficient reduction by agricultural technology") %>%
+        add_units("Percent reduction from base-year emissions coefficient") %>%
+        add_comments("L211.nonghg_max_reduction repeated by IRR and RFD technologies") %>%
         add_legacy_name("L2111.nonghg_max_reduction") %>%
-        add_precursors("temp-data-inject/L211.nonghg_max_reduction") %>%
-        # typical flags, but there are others--see `constants.R`
-        add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+        add_precursors("temp-data-inject/L211.nonghg_max_reduction") ->
         L2111.nonghg_max_reduction
-      tibble() %>%
-        add_title("descriptive title of data") %>%
-        add_units("units") %>%
-        add_comments("comments describing how data generated") %>%
-        add_comments("can be multiple lines") %>%
+      L2111.nonghg_steepness %>%
+        add_title("Steepness of non-GHG emissions reduction for agricultural technologies") %>%
+        add_units("Unitless") %>%
+        add_comments("L211.nonghg_steepness repeated by IRR and RFD technologies") %>%
         add_legacy_name("L2111.nonghg_steepness") %>%
-        add_precursors("temp-data-inject/L211.nonghg_steepness") %>%
-        # typical flags, but there are others--see `constants.R`
-        add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+        add_precursors("temp-data-inject/L211.nonghg_steepness") ->
         L2111.nonghg_steepness
 
     return_data(L2111.AWBEmissions, L2111.AGREmissions, L2111.AnEmissions, L2111.AnNH3Emissions, L2111.AGRBio, L2111.AWB_BCOC_EmissCoeff, L2111.nonghg_max_reduction, L2111.nonghg_steepness)
