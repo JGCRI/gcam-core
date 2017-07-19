@@ -40,6 +40,11 @@ module_emissions_L2111.ag_nonco2_IRR <- function(command, ...) {
              "L2111.nonghg_steepness"))
   } else if(command == driver.MAKE) {
 
+    # Silence package checks
+    SO2_name <- Non.CO2 <- AgProductionTechnology <- AgSupplySector <-
+      AgSupplySubsector <- GCAM_commodity <- GLU <- GLU_code <- Non.CO2 <-
+      input.emissions <- region <- year <- NULL
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
