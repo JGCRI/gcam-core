@@ -1,6 +1,6 @@
 #' module_water_L233.water.demand.livestock
 #'
-#' This chunk generates water coefficients for region-specific livestock for model years.
+#' Generates water coefficients for region-specific livestock for model years.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -43,7 +43,8 @@ module_water_L233.water.demand.livestock <- function(command, ...) {
       mutate(market.name = region) %>%
       # Set the coef for all years
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
-      select(-GCAM_region_ID, -water_type, -water_sector) %>%
+      select(-GCAM_region_ID, -water_type, -water_sector) ->
+      results
 
       # ===================================================
 
@@ -59,7 +60,6 @@ module_water_L233.water.demand.livestock <- function(command, ...) {
       add_legacy_name("L233.TechCoef") %>%
       add_precursors("common/GCAM_region_names", "water/A03.sector", "aglu/A_an_technology",
                      "temp-data-inject/L133.water_demand_livestock_R_C_W_km3_Mt") %>%
-      # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L233.TechCoef
 

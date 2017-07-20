@@ -18,7 +18,7 @@ the generated outputs: \code{L233.TechCoef}. The corresponding file in the
 original data system was \code{L233.water.demand.livestock.R} (water level2).
 }
 \description{
-This chunk generates water coefficients for region-specific livestock for model years.
+Generates water coefficients for region-specific livestock for model years.
 }
 \details{
 This chunk generates water coefficients (amount of water needed to produce one unit of livestock, unit: m^3/Mt)
