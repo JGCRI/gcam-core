@@ -89,8 +89,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
         repeat_add_columns(tibble::tibble(year = MODEL_YEARS))  ->
         df1
       df1
-    }
-
+    } # end add_bio_res_params_For_Mill
 
     # FORESTRY RESIDUE BIO
     # 1. Form a table of Forest Residue Biomass Paramters by region-glu-year
@@ -102,37 +101,13 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
       mutate(AgSupplySector = GCAM_commodity,
              AgSupplySubsector = paste(GCAM_commodity, GLU, sep = aglu.CROP_GLU_DELIMITER),
              AgProductionTechnology = AgSupplySubsector) %>%
-      add_bio_res_params_For_Mill("biomass", aglu.AVG_WOOD_DENSITY_KGM3, aglu.FOREST_HARVEST_INDEX, aglu.FOREST_EROSION_CTRL_KGM2, aglu.WOOD_ENERGY_CONTENT_GJKG, aglu.WOOD_WATER_CONTENT) %>%
+      add_bio_res_params_For_Mill("biomass", aglu.AVG_WOOD_DENSITY_KGM3, aglu.FOREST_HARVEST_INDEX,
+                                  aglu.FOREST_EROSION_CTRL_KGM2, aglu.WOOD_ENERGY_CONTENT_GJKG,
+                                  aglu.WOOD_WATER_CONTENT) %>%
       select(-GCAM_region_ID, -GCAM_commodity, -GLU) ->
       L204.AgResBio_For
 
-    # 2. Forest Residue biomass supply curves
 
-    # build in a base residue biomass supply curve table, adding in the relevant residual bio forest vs price curve for
-    # each Region - agsupply-year combo, and rename to reflect the fact that For = Fraction of  forest harvested for a
-    # given price level.
-    L204.AgResBio_For %>%
-      select(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology, year, residue.biomass.production) %>%
-      repeat_add_columns(select(A_resbio_curves, price, For)) %>%
-      rename(fract.harvested = For) ->
-      # store for rejoining after further manipulation
-      L204.AgResBioCurve_For_tmp
-
-    # In base years, replace the "fraction produced" at specified price aglu.PRICE_BIO_FRAC in the model BASE_YEAR,
-    # in order to calibrate resbio production. The fract.harvested for these prices X years are replaced by
-    # the GCAM_region's Base-year fraction of residue biomass produced by region for Forest, from assumption file
-    # A_bio_frac_prod_R
-    L204.AgResBioCurve_For_tmp %>%
-      filter(price == aglu.PRICE_BIO_FRAC, year %in% BASE_YEARS) %>%
-      left_join_error_no_match(select(A_bio_frac_prod_R, region, For), by = "region") %>%
-      select(-fract.harvested) %>%
-      rename(fract.harvested = For) %>%
-      # join back to full table of AgResBioCurve_For
-      bind_rows(filter(L204.AgResBioCurve_For_tmp, !( price == aglu.PRICE_BIO_FRAC & year %in% BASE_YEARS))) ->
-      L204.AgResBioCurve_For
-
-
-    # MILL RESIDUE BIO - this IS a technology in the global tech database
 
     # 3. Form a table of Mill Residue Biomass Paramters by region-glu-year
     A_demand_technology %>%
@@ -140,40 +115,165 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
       select(supplysector, subsector, technology) %>%
       rename(sector.name = supplysector,
              subsector.name = subsector) %>%
-      add_bio_res_params_For_Mill("biomass", aglu.AVG_WOOD_DENSITY_KGM3, aglu.FOREST_HARVEST_INDEX, aglu.MILL_EROSION_CTRL_KGM2, aglu.WOOD_ENERGY_CONTENT_GJKG, aglu.WOOD_WATER_CONTENT) ->
+      add_bio_res_params_For_Mill("biomass", aglu.AVG_WOOD_DENSITY_KGM3, aglu.FOREST_HARVEST_INDEX,
+                                  aglu.MILL_EROSION_CTRL_KGM2, aglu.WOOD_ENERGY_CONTENT_GJKG,
+                                  aglu.WOOD_WATER_CONTENT) ->
       L204.GlobalResBio_Mill
+
+    # 2. Forest Residue biomass supply curves
+
+    # build in a base residue biomass supply curve table, adding in the relevant residual bio forest vs price curve for
+    # each Region - agsupply-year combo, and rename to reflect the fact that For = Fraction of  forest harvested for a
+    # given price level.
+
+    L204.AgResBio_For %>%
+      select(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology, year, residue.biomass.production) %>%
+      mutate(colID = "For") ->
+      For.tmp
+
+    if(OLD_DATA_SYSTEM_BEHAVIOR){
+      # Mill outputs are getting For base resbio curves from A_resbio_curves;
+      # Likely a typo in the old DS, since there IS a Mill base curve for
+      # Mill in A_resbio_curves
+      L204.GlobalResBio_Mill %>%
+        # rename columns just for binding and working in a single pipeline
+        rename(AgSupplySector = sector.name,
+               AgSupplySubsector = subsector.name,
+               AgProductionTechnology = technology) %>%
+        select(AgSupplySector, AgSupplySubsector, AgProductionTechnology, residue.biomass.production) %>%
+        write_to_all_regions(names = c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "residue.biomass.production"),
+                             GCAM_region_names) %>%
+        filter(! region %in% aglu.NO_AGLU_REGIONS) %>%
+        distinct %>%
+        repeat_add_columns(bind_cols(tibble::tibble(year = MODEL_YEARS))) %>%
+        mutate(colID = "Mill") %>%
+        # bind to processed Forest data
+        bind_rows(For.tmp) %>%
+        # join in base resbio curves
+        repeat_add_columns(select(A_resbio_curves, price, For)) %>%
+        # assign appropriate fraction harvested based on colID
+        rename(fract.harvested = For) ->
+        # store in a temporary table for further processing
+        For.Mill.tmp
+    } else{
+      # Mill gets its OWN base resbio_curve from A_resbio_curves
+      # Correct one ; need first repeat_add_columns to just do For for both for Old DS behavior
+      L204.GlobalResBio_Mill %>%
+        # rename columns just for binding and working in a single pipeline
+        rename(AgSupplySector = sector.name,
+               AgSupplySubsector = subsector.name,
+               AgProductionTechnology = technology) %>%
+        select(AgSupplySector, AgSupplySubsector, AgProductionTechnology, residue.biomass.production) %>%
+        write_to_all_regions(names = c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "residue.biomass.production"),
+                             GCAM_region_names) %>%
+        filter(! region %in% aglu.NO_AGLU_REGIONS) %>%
+        repeat_add_columns(bind_cols(tibble::tibble(year = MODEL_YEARS))) %>%
+        mutate(colID = "Mill") %>%
+        # bind to processed Forest data
+        bind_rows(For.tmp) %>%
+        # join in base resbio curves
+        repeat_add_columns(select(A_resbio_curves, price, For, Mill)) %>%
+        # assign appropriate fraction harvested based on colID
+        mutate(fract.harvested = if_else(colID == "Mill", Mill, For)) %>%
+        select(-For, -Mill) ->
+        # store in a temporary table for further processing
+        For.Mill.tmp
+    }
+
+
+    For.Mill.tmp %>%
+      filter(price == aglu.PRICE_BIO_FRAC, year %in% BASE_YEARS) %>%
+      left_join_error_no_match(select(A_bio_frac_prod_R, region, For, Mill), by = "region") %>%
+      select(-fract.harvested) %>%
+      # assign appropriate fraction harvested based on colID
+      mutate(fract.harvested = if_else(colID == "Mill", Mill, For)) %>%
+      select(-For, -Mill) %>%
+      bind_rows(filter(For.Mill.tmp, !( price == aglu.PRICE_BIO_FRAC & year %in% BASE_YEARS))) ->
+      For.Mill.tmp2
+
+    # Forest
+    For.Mill.tmp2 %>%
+      filter(colID == "For") %>%
+      select(-colID) ->
+      L204.AgResBioCurve_For
+
+    # Mill
+    For.Mill.tmp2 %>%
+      filter(colID == "Mill") %>%
+      select(-colID) %>%
+      # return correct column names
+      rename(supplysector = AgSupplySector,
+             subsector = AgSupplySubsector,
+             stub.technology = AgProductionTechnology) ->
+      L204.StubResBioCurve_Mill
+
+
+
+
+
+    # L204.AgResBio_For %>%
+    #   select(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology, year, residue.biomass.production) %>%
+    #   repeat_add_columns(select(A_resbio_curves, price, For)) %>%
+    #   rename(fract.harvested = For) ->
+    #   # store for rejoining after further manipulation
+    #   L204.AgResBioCurve_For_tmp
+    #
+    # # In base years, replace the "fraction produced" at specified price aglu.PRICE_BIO_FRAC in the model BASE_YEAR,
+    # # in order to calibrate resbio production. The fract.harvested for these prices X years are replaced by
+    # # the GCAM_region's Base-year fraction of residue biomass produced by region for Forest, from assumption file
+    # # A_bio_frac_prod_R
+    # L204.AgResBioCurve_For_tmp %>%
+    #   filter(price == aglu.PRICE_BIO_FRAC, year %in% BASE_YEARS) %>%
+    #   left_join_error_no_match(select(A_bio_frac_prod_R, region, For), by = "region") %>%
+    #   select(-fract.harvested) %>%
+    #   rename(fract.harvested = For) %>%
+    #   # join back to full table of AgResBioCurve_For
+    #   bind_rows(filter(L204.AgResBioCurve_For_tmp, !( price == aglu.PRICE_BIO_FRAC & year %in% BASE_YEARS))) ->
+    #   L204.AgResBioCurve_For
+
+
+    # MILL RESIDUE BIO - this IS a technology in the global tech database
+
+    # 3. Form a table of Mill Residue Biomass Paramters by region-glu-year
+    # A_demand_technology %>%
+    #   filter(supplysector == "NonFoodDemand_Forest") %>%
+    #   select(supplysector, subsector, technology) %>%
+    #   rename(sector.name = supplysector,
+    #          subsector.name = subsector) %>%
+    #   add_bio_res_params_For_Mill("biomass", aglu.AVG_WOOD_DENSITY_KGM3, aglu.FOREST_HARVEST_INDEX, aglu.MILL_EROSION_CTRL_KGM2, aglu.WOOD_ENERGY_CONTENT_GJKG, aglu.WOOD_WATER_CONTENT) ->
+    #   L204.GlobalResBio_Mill
 
     # 4. Mill Residue biomass supply curves
 
     # build in a base residue biomass supply curve table, adding in the relevant residual bio forest vs price curve for
     # each Region - agsupply-year combo, and rename to reflect the fact that For = Fraction of  forest harvested for a
     # given price level.
-    A_demand_technology %>%
-      filter(supplysector == "NonFoodDemand_Forest") %>%
-      select(supplysector, subsector, technology) %>%
-      write_to_all_regions(names = c("region", "supplysector", "subsector", "technology"),
-                           GCAM_region_names) %>%
-      filter(! region %in% aglu.NO_AGLU_REGIONS) %>%
-      repeat_add_columns(bind_cols(tibble::tibble(year = MODEL_YEARS))) %>%
-      repeat_add_columns(select(A_resbio_curves, price, For)) %>%
-      rename(fract.harvested = For,
-             stub.technology = technology) %>%
-      mutate(residue.biomass.production = "biomass") ->
-      # store for rejoinging after further manipulation
-      L204.StubResBioCurve_Mill_tmp
-
-    # In base years, replace the "fraction produced" at specified price aglu.PRICE_BIO_FRAC in the model BASE_YEAR,
-    # in order to calibrate resbio production. The fract.harvested for these prices X years are replaced by
-    # the GCAM_region's Base-year fraction of residue biomass produced by region for Mill, from assumption file
-    # A_bio_frac_prod_R
-    L204.StubResBioCurve_Mill_tmp %>%
-      filter(price == aglu.PRICE_BIO_FRAC, year %in% BASE_YEARS) %>%
-      left_join_error_no_match(select(A_bio_frac_prod_R, region, Mill), by = "region") %>%
-      select(-fract.harvested) %>%
-      rename(fract.harvested = Mill) %>%
-      # join back to full table of AgResBioCurve_For
-      bind_rows(filter(L204.StubResBioCurve_Mill_tmp, !( price == aglu.PRICE_BIO_FRAC & year %in% BASE_YEARS))) ->
-      L204.StubResBioCurve_Mill
+    # A_demand_technology %>%
+    #   filter(supplysector == "NonFoodDemand_Forest") %>%
+    #   select(supplysector, subsector, technology) %>%
+    #   write_to_all_regions(names = c("region", "supplysector", "subsector", "technology"),
+    #                        GCAM_region_names) %>%
+    #   filter(! region %in% aglu.NO_AGLU_REGIONS) %>%
+    #   repeat_add_columns(bind_cols(tibble::tibble(year = MODEL_YEARS))) %>%
+    #   repeat_add_columns(select(A_resbio_curves, price, For)) %>%
+    #   rename(fract.harvested = For,
+    #          stub.technology = technology) %>%
+    #   mutate(residue.biomass.production = "biomass") ->
+    #   # store for rejoinging after further manipulation
+    #   L204.StubResBioCurve_Mill_tmp
+    #
+    # # In base years, replace the "fraction produced" at specified price aglu.PRICE_BIO_FRAC in the model BASE_YEAR,
+    # # in order to calibrate resbio production. The fract.harvested for these prices X years are replaced by
+    # # the GCAM_region's Base-year fraction of residue biomass produced by region for Mill, from assumption file
+    # # A_bio_frac_prod_R
+    # L204.StubResBioCurve_Mill_tmp %>%
+    #   filter(price == aglu.PRICE_BIO_FRAC, year %in% BASE_YEARS) %>%
+    #   left_join_error_no_match(select(A_bio_frac_prod_R, region, Mill), by = "region") %>%
+    #   select(-fract.harvested) %>%
+    #   rename(fract.harvested = Mill) %>%
+    #   # join back to full table of AgResBioCurve_For
+    #   bind_rows(filter(L204.StubResBioCurve_Mill_tmp, !( price == aglu.PRICE_BIO_FRAC & year %in% BASE_YEARS))) ->
+    #   L204.StubResBioCurve_Mill
 
 
     # AGRICULTURE RESIDUE BIO
