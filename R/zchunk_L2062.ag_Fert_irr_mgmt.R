@@ -96,7 +96,7 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
     L2052.AgCost_bio_irr_mgmt %>%
       select(-nonLandVariableCost) %>%                  # We are just using this data.frame to get the region/sector/tech names
       mutate(minicam.energy.input = "N fertilizer") %>%
-      mutate(coefficient = if_else(startsWith(AgSupplySubsector, "biomass_grass"),
+      mutate(coefficient = if_else(grepl("^biomass_grass", AgSupplySubsector),
                                    bio_grass_coef$coefficient, bio_tree_coef$coefficient)) ->
       L2062.AgCoef_Fert_bio_irr_mgmt
 

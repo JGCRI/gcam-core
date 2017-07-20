@@ -9,16 +9,16 @@ test_that("handles bad input", {
   expect_error(dstrace("1", empty_data(), recurse = 1))
 
   # Make a fake data structure
-  tibble() %>%
+  tibble(x = 1) %>%
     add_title("o1")  ->
     o1
 
-  tibble() %>%
+  tibble(x = 1) %>%
     add_title("o2") %>%
     add_flags(FLAG_INPUT_DATA) ->
     o2
 
-  tibble() %>%
+  tibble(x = 1) %>%
     add_title("o3") %>%
     add_precursors("o1", "o2") ->
     o3
