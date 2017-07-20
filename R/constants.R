@@ -192,7 +192,6 @@ CONV_T_MT <- 1e-6 # t to Mt
 CONV_G_KG <- 1e-3 # kilograms to grams
 CONV_NH3_N <- 14/17 # Nitrogen to Ammonia
 
-
 # Time
 CONV_YEAR_HOURS <- 24 * 365.25
 CONV_DAYS_YEAR <- 1 / 365.25
@@ -284,6 +283,8 @@ emissions.MAC_TAXES <- c( 0, 5, 10, 15, 32, 66, 129, 243, 486, 1093 ) # Range of
 emissions.CONV_C_CO2 <- 44 / 12 # Convert Carbon to CO2
 emissions.DEFOREST_COEF_YEARS <- c(2000, 2005)
 emissions.PFCS <- c("CF4", "C2F6", "SF6")
+emissions.HFC_MODEL_BASE_YEARS <- c(1975, 1990, 2005, 2010)
+emissions.F_GAS_UNITS <- "Gg"
 # ======================================================================
 
 emissions.NH3_EXTRA_YEARS      <- 1971:1989
