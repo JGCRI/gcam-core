@@ -8,7 +8,10 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L102.CO2_Mt_R_F_Yh}, \code{L102.Ccoef_kgCGJ_R_F_Yh}, \code{L102.Ccoef_kgCGJ_F_Yh}. The corresponding file in the
 #' original data system was \code{LA102.en_emiss_CDIAC.R} (energy level1).
-#' @details This chunk maps the CDIAC country emissions database (L100.CDIAC_CO2_ctry_hist) onto GCAM regions (iso_GCAM_regID) and fuels (CDIAC_fuel) to determine regional emissions by fuel (L102.CO2_Mt_R_F_Yh), extracts non-energy emissions and uses the remainder to calculate regional (L102.Ccoef_kgCGJ_R_F_Yh) and global (L102.Ccoef_kgCGJ_F_Yh) emissions coefficients
+#' @details This chunk maps the CDIAC country emissions database (L100.CDIAC_CO2_ctry_hist) onto GCAM
+#' regions (iso_GCAM_regID) and fuels (CDIAC_fuel) to determine regional emissions by fuel (L102.CO2_Mt_R_F_Yh),
+#' extracts non-energy emissions and uses the remainder to calculate regional (L102.Ccoef_kgCGJ_R_F_Yh) and
+#' global (L102.Ccoef_kgCGJ_F_Yh) emissions coefficients
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -57,7 +60,7 @@ module_energy_LA102.en_emiss_CDIAC <- function(command, ...) {
     L100.CDIAC_CO2_ctry_hist %>%
       gather(fuel, value, -iso, -year) %>%
       left_join_error_no_match(iso_GCAM_regID_reg, by = "iso") %>%
-      rename(CDIAC_fuel = `fuel`) %>%
+      rename(CDIAC_fuel = fuel) %>%
       left_join_error_no_match(CDIAC_fuel, by = "CDIAC_fuel") %>%
 
     # Aggregate CO2 emissions by GCAM region and fuel
@@ -69,12 +72,13 @@ module_energy_LA102.en_emiss_CDIAC <- function(command, ...) {
     # Calculate the TPES by fuel, deducting non-energy use of fuels that does not result in CO2 emissions
 
     L1011.en_bal_EJ_R_Si_Fi_Yh %>%
-      filter(sector == "in_industry_feedstocks" & L1011.en_bal_EJ_R_Si_Fi_Yh$fuel %in% L102.CO2_Mt_R_F_Yh$fuel) %>%
+      filter(sector == "in_industry_feedstocks" & fuel %in% L102.CO2_Mt_R_F_Yh$fuel) %>%
       left_join_error_no_match(A32.nonenergy_Cseq, by = c("fuel" = "subsector")) %>%
       mutate(val = value * remove.fraction) %>%
       select(GCAM_region_ID, fuel, year, val) ->
       L102.en_sequestered_EJ_R_Fi_Yh
 
+    # subtracts the non-energy use of fuels (sequestered carbon) from the TPES to get only the emitting energy
     L1011.en_bal_EJ_R_Si_Fi_Yh %>%
       filter(sector == "TPES" & fuel %in% L102.CO2_Mt_R_F_Yh$fuel) %>%
       left_join_error_no_match(L102.en_sequestered_EJ_R_Fi_Yh, by = c("GCAM_region_ID", "fuel", "year")) %>%
@@ -82,8 +86,12 @@ module_energy_LA102.en_emiss_CDIAC <- function(command, ...) {
       select(-sector, -value) ->
       L102.en_emitted_EJ_R_Fi_Yh
 
-    # Calculate the emissions coefficients by fuel, using only the energy whose carbon is assumed to be emitted
-    # regional
+    # Default emissions coefficients to replace NA values where below energy consumption is 0 (kgC/GJ)
+    DEFAULT_GAS_CCOEF <- 14.2
+    DEFAULT_COAL_CCOEF <- 27.3
+    DEFAULT_LIQUIDS_CCOEF <- 19.6
+
+    # Calculate the regional emissions coefficients by fuel, using only the energy whose carbon is assumed to be emitted
     L102.CO2_Mt_R_F_Yh %>%
       filter(fuel %in% L102.en_emitted_EJ_R_Fi_Yh$fuel) %>%
       left_join_error_no_match(L102.en_emitted_EJ_R_Fi_Yh, by = c("GCAM_region_ID", "fuel", "year")) %>%
@@ -91,9 +99,9 @@ module_energy_LA102.en_emiss_CDIAC <- function(command, ...) {
       select(-val) %>%
 
     # reset to defaults wherever NAs result from 0 energy consumption
-      mutate(value = if_else(fuel == "gas" & is.na(value), energy.DEFAULT_GAS_CCOEF, value)) %>%
-      mutate(value = if_else(fuel == "coal" & is.na(value), energy.DEFAULT_COAL_CCOEF, value)) %>%
-      mutate(value = if_else(fuel == "refined liquids" & is.na(value), energy.DEFAULT_LIQUIDS_CCOEF, value)) ->
+      mutate(value = if_else(fuel == "gas" & is.na(value), DEFAULT_GAS_CCOEF, value)) %>%
+      mutate(value = if_else(fuel == "coal" & is.na(value), DEFAULT_COAL_CCOEF, value)) %>%
+      mutate(value = if_else(fuel == "refined liquids" & is.na(value), DEFAULT_LIQUIDS_CCOEF, value)) ->
       L102.Ccoef_kgCGJ_R_F_Yh
 
     # aggregate regional values to global and calculate global coefficients

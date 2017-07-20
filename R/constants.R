@@ -168,11 +168,6 @@ DEFAULT_ELECTRIC_EFFICIENCY <- 0.33
 
 ELECTRICITY_INPUT_FUELS<- c("biomass", "coal", "gas", "refined liquids")
 
-#Default emissions coefficients to replace NA values in LA102.en_emiss_CDIAC (kGC/GJ)
-energy.DEFAULT_GAS_CCOEF <- 14.2
-energy.DEFAULT_COAL_CCOEF <- 27.3
-energy.DEFAULT_LIQUIDS_CCOEF <- 19.6
-
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
 
