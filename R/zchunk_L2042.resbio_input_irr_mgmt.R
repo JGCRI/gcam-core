@@ -89,7 +89,9 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
     # The function, add_bio_res_params_For_Mill, takes a data frame and adds user specified parameters and
     # then repeats the resulting data frame for all MODEL_YEARS to form the  AgResBio_source
     # output table
-    add_bio_res_params_For_Mill <- function(df, residueBiomassProduction, massConversion, harvestIndex, erosCtrl, massToEnergy, waterContent){
+    add_bio_res_params_For_Mill <- function(df, residueBiomassProduction = "biomass", massConversion = aglu.AVG_WOOD_DENSITY_KGM3,
+                                            harvestIndex = aglu.FOREST_HARVEST_INDEX, erosCtrl,
+                                            massToEnergy = aglu.WOOD_ENERGY_CONTENT_GJKG, waterContent = aglu.WOOD_WATER_CONTENT) {
       df %>%
         mutate(residue.biomass.production = residueBiomassProduction,
                mass.conversion = massConversion,
@@ -97,9 +99,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
                eros.ctrl = erosCtrl,
                mass.to.energy = massToEnergy,
                water.content = waterContent) %>%
-        repeat_add_columns(tibble::tibble(year = MODEL_YEARS))  ->
-        df1
-      df1
+        repeat_add_columns(tibble::tibble(year = MODEL_YEARS))
     } # end add_bio_res_params_For_Mill
 
 
@@ -112,9 +112,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
       mutate(AgSupplySector = GCAM_commodity,
              AgSupplySubsector = paste(GCAM_commodity, GLU, sep = aglu.CROP_GLU_DELIMITER),
              AgProductionTechnology = AgSupplySubsector) %>%
-      add_bio_res_params_For_Mill("biomass", aglu.AVG_WOOD_DENSITY_KGM3, aglu.FOREST_HARVEST_INDEX,
-                                  aglu.FOREST_EROSION_CTRL_KGM2, aglu.WOOD_ENERGY_CONTENT_GJKG,
-                                  aglu.WOOD_WATER_CONTENT) %>%
+      add_bio_res_params_For_Mill(erosCtrl = aglu.FOREST_EROSION_CTRL_KGM2) %>%
       select(-GCAM_region_ID, -GCAM_commodity, -GLU) ->
       L204.AgResBio_For
 
@@ -125,9 +123,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
       select(supplysector, subsector, technology) %>%
       rename(sector.name = supplysector,
              subsector.name = subsector) %>%
-      add_bio_res_params_For_Mill("biomass", aglu.AVG_WOOD_DENSITY_KGM3, aglu.FOREST_HARVEST_INDEX,
-                                  aglu.MILL_EROSION_CTRL_KGM2, aglu.WOOD_ENERGY_CONTENT_GJKG,
-                                  aglu.WOOD_WATER_CONTENT) ->
+      add_bio_res_params_For_Mill(erosCtrl = aglu.MILL_EROSION_CTRL_KGM2) ->
       L204.GlobalResBio_Mill
 
 
