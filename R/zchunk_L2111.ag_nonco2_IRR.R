@@ -48,19 +48,13 @@ module_emissions_L2111.ag_nonco2_IRR <- function(command, ...) {
     A_regions <- get_data(all_data, "emissions/A_regions")
     L1211.nonco2_tg_R_awb_C_Y_GLU_IRR <- get_data(all_data, "L1211.nonco2_tg_R_awb_C_Y_GLU_IRR") %>%
       # Replace GLU code with GLU name
-      left_join_error_no_match(basin_to_country_mapping %>% select(GLU = GLU_code, GLU_name),
-                               by = "GLU") %>%
-      select(-GLU) %>%
-      rename(GLU = GLU_name)
+      replace_GLU(basin_to_country_mapping)
     L1221.ghg_tg_R_agr_C_Y_GLU_IRR <- get_data(all_data, "temp-data-inject/L1221.ghg_tg_R_agr_C_Y_GLU_IRR") %>%
       # temp-data-inject code
       gather(year, value, starts_with("X")) %>%
       mutate(year = as.integer(substr(year, 2, 5))) %>%
       # Replace GLU code with GLU name
-      left_join_error_no_match(basin_to_country_mapping %>% select(GLU = GLU_code, GLU_name),
-                               by = "GLU") %>%
-      select(-GLU) %>%
-      rename(GLU = GLU_name)
+      replace_GLU(basin_to_country_mapping)
     L211.AGRBio <- get_data(all_data, "temp-data-inject/L211.AGRBio")
     L211.AWB_BCOC_EmissCoeff <- get_data(all_data, "temp-data-inject/L211.AWB_BCOC_EmissCoeff")
     L211.nonghg_max_reduction <- get_data(all_data, "temp-data-inject/L211.nonghg_max_reduction")
@@ -78,9 +72,7 @@ module_emissions_L2111.ag_nonco2_IRR <- function(command, ...) {
              AgProductionTechnology = paste(AgSupplySubsector, Irr_Rfd, sep = "_"),
              input.emissions = round(input.emissions, emissions.DIGITS_EMISSIONS)) %>%
       # Rename SO2 emissions
-      left_join_error_no_match(A_regions %>% select(region, SO2_name), by = "region") %>%
-      mutate(SO2_name = paste0(SO2_name, "_AWB"),
-             Non.CO2 = if_else(Non.CO2 == "SO2_AWB", SO2_name, Non.CO2)) %>%
+      rename_SO2(A_regions, is_awb = TRUE) %>%
       select(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology, year,
              Non.CO2, input.emissions)
 
@@ -134,7 +126,7 @@ module_emissions_L2111.ag_nonco2_IRR <- function(command, ...) {
         L2111.AGREmissions
       L2111.AGRBio %>%
         add_title("Bio N2O Coefficients by region and technology") %>%
-        add_units("Unitless") %>% # should this be labeled in emissions/A_regions
+        add_units("kg N2O per GJ bioenergy") %>%
         add_comments("L211.AGRBio repeated by IRR and RFD technologies") %>%
         add_legacy_name("L2111.AGRBio") %>%
         add_precursors("temp-data-inject/L211.AGRBio") ->
