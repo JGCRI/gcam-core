@@ -110,8 +110,13 @@ aglu.FOR_COST_75USDM3 <- 29.59
 aglu.BIO_GRASS_COST_75USD_GJ <- 0.75
 aglu.BIO_TREE_COST_75USD_GJ <- 0.67
 
-# Price biomass fraction
-# Sorry, I have no idea what this is
+# Price at which base year bio frac produced is used.
+# The share of residue biomass production in each region,
+# defined as the energy produced divided by the total
+# waste biomass produced, is read in by A_bio_frac_prod_R.csv.
+# This price, in 1975$/GJ, indicates the biomass price at
+# the given shares. It should be close to the model's actual
+# (endogenous) biomass prices in the final calibration year.
 aglu.PRICE_BIO_FRAC <- 1.2
 
 # Fertilizer application rate for biomass, and carbon yields. Values from Adler et al. 2007 (doi:10.1890/05-2018)
