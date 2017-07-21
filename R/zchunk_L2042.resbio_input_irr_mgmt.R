@@ -128,7 +128,9 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
 
 
     # 3. Forestry and Mill residue supply curves
-    # First, the Forest and Mill information bound into a single data frame for processing.
+    # First, the Forest and Mill information are processed and given an additional identifying column, colID. The processed
+    # Forest data is then bound to the processed Mill data to form a single data frame for further calculations of the supply
+    # curves.
     # Then build in a base residue biomass supply curve table, adding in the relevant residual bio forest vs price curve for
     # each Region - agsupply-year combo, and rename to reflect the fact that For = Fraction of  forest harvested for a
     # given price level. Both Forest and Mill get the forest vs price curve in the Old Data System. Assuming this is
