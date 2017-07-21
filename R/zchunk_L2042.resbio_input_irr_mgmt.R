@@ -68,10 +68,6 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
       mutate(year = as.integer(substr(year, 2, 5))) ->
       L123.For_Prod_bm3_R_Y_GLU
 
-
-    # following line temproary while L103 is output from zchunk_LA103.ag_R_C_Y_GLU.R as grouped
-    L103.ag_Prod_Mt_R_C_Y_GLU %>% ungroup -> L103.ag_Prod_Mt_R_C_Y_GLU
-
     # the following lines convert basin identification from the current GLU### level 1 names to the
     # level 2 names.
     L103.ag_Prod_Mt_R_C_Y_GLU %>%
