@@ -32,7 +32,6 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
              "L221.LN0_Logit",
              "L221.LN0_Land",
              "L221.LN0_SoilTimeScale",
-             "curr_table$data",
              "L221.LN1_ValueLogit",
              "L221.LN1_HistUnmgdAllocation",
              "L221.LN1_UnmgdAllocation",
