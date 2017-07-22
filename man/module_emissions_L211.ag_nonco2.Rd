@@ -18,10 +18,12 @@ the generated outputs: \code{L211.AWBEmissions}, \code{L211.AGREmissions}, \code
 original data system was \code{L211.ag_nonco2.R} (emissions level2).
 }
 \description{
-Briefly describe what this chunk does.
+Processes agriculture, agricultural waste burning, and animal emissions.
+Writes out emissions coefficients for biomass and ag waste burning and non-GHG max reductions and steepness.
 }
 \details{
-Describe in detail what this chunk does.
+Processes agriculture, agricultural waste burning, and animal emissions by technology.
+Writes out emissions coefficients for biomass and ag waste burning and non-GHG max reductions and steepness by agricultural technology and gas.
 }
 \author{
 RH July 2017

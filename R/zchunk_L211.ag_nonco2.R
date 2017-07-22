@@ -1,6 +1,7 @@
 #' module_emissions_L211.ag_nonco2
 #'
-#' Briefly describe what this chunk does.
+#' Processes agriculture, agricultural waste burning, and animal emissions.
+#' Writes out emissions coefficients for biomass and ag waste burning and non-GHG max reductions and steepness.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,7 +9,8 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L211.AWBEmissions}, \code{L211.AGREmissions}, \code{L211.AnEmissions}, \code{L211.AnNH3Emissions}, \code{L211.AGRBio}, \code{L211.AWB_BCOC_EmissCoeff}, \code{L211.nonghg_max_reduction}, \code{L211.nonghg_steepness}. The corresponding file in the
 #' original data system was \code{L211.ag_nonco2.R} (emissions level2).
-#' @details Describe in detail what this chunk does.
+#' @details Processes agriculture, agricultural waste burning, and animal emissions by technology.
+#' Writes out emissions coefficients for biomass and ag waste burning and non-GHG max reductions and steepness by agricultural technology and gas.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -19,7 +21,6 @@ module_emissions_L211.ag_nonco2 <- function(command, ...) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "water/basin_to_country_mapping",
              FILE = "emissions/A_regions",
-             "L103.ag_Prod_Mt_R_C_Y_GLU",
              FILE = "temp-data-inject/L205.AgCost_bio",
              "L113.ghg_tg_R_an_C_Sys_Fd_Yh",
              "L115.nh3_tg_R_an_C_Sys_Fd_Yh",
@@ -45,7 +46,6 @@ module_emissions_L211.ag_nonco2 <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
     A_regions <- get_data(all_data, "emissions/A_regions")
-    L103.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L103.ag_Prod_Mt_R_C_Y_GLU")
     L205.AgCost_bio <- get_data(all_data, "temp-data-inject/L205.AgCost_bio")
     L113.ghg_tg_R_an_C_Sys_Fd_Yh <- get_data(all_data, "L113.ghg_tg_R_an_C_Sys_Fd_Yh")
     L115.nh3_tg_R_an_C_Sys_Fd_Yh <- get_data(all_data, "L115.nh3_tg_R_an_C_Sys_Fd_Yh")
@@ -101,7 +101,7 @@ module_emissions_L211.ag_nonco2 <- function(command, ...) {
       # Add region
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       mutate(input.emissions = round(input.emissions, emissions.DIGITS_EMISSIONS)) %>%
-      select(region, supplysector, subsector, stub.technology, year, Non.CO2) %>%
+      select(region, supplysector, subsector, stub.technology, year, Non.CO2, input.emissions) %>%
       filter(region != aglu.NO_AGLU_REGIONS)
 
     # L211.AnNH3Emissions: animal NH3 emissions in all regions
@@ -111,7 +111,7 @@ module_emissions_L211.ag_nonco2 <- function(command, ...) {
       # Add region
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       mutate(input.emissions = round(input.emissions, emissions.DIGITS_EMISSIONS)) %>%
-      select(region, supplysector, subsector, stub.technology, year, Non.CO2) %>%
+      select(region, supplysector, subsector, stub.technology, year, Non.CO2, input.emissions) %>%
       filter(region != aglu.NO_AGLU_REGIONS)
 
     # L211.AWB_BCOC_EmissCoeff: BC / OC AWB emissions coefficients in all regions
@@ -138,7 +138,7 @@ module_emissions_L211.ag_nonco2 <- function(command, ...) {
       mutate(ctrl.name = "GDP_control") %>%
       left_join_error_no_match(A11.max_reduction, by = "AgSupplySector")
 
-    # L211.nonghg_steepness: steepness of reduction for energy technologies in all regions
+    # L211.nonghg_steepness: steepness of reduction for agricultural technologies in all regions
     L211.nonghg_steepness <- L211.nonghg_max_reduction %>%
       select(-max.reduction) %>%
       left_join_error_no_match(A11.steepness, by = "AgSupplySector")
