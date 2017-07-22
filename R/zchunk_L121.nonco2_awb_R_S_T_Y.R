@@ -81,7 +81,8 @@ module_emissions_L121.nonco2_awb_R_S_T_Y <- function(command, ...) {
     # Aggregate the burnable excess biomass by GCAM region and year.
     L121.ag_ExcessDryBiomass_Mt_R_C_Y_GLU_burn %>%
       group_by(GCAM_region_ID, year) %>%
-      summarise(value = sum(burnable)) ->
+      summarise(value = sum(burnable)) %>%
+      ungroup() ->
       L112.ag_ExcessDryBiomass_Mt_R_Y
 
     # Calculate the share by production technology of each region's burnable excess biomass (AWB_emiss_share).
