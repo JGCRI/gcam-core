@@ -71,7 +71,7 @@ module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR <- function(command, ...) {
       # Need to filter for historical years to ensure the join will work, ie. there will be a 1 to 1 match
       # Note this step was NOT in the original data system
       filter(year %in% HISTORICAL_YEARS) %>%
-      left_join_error_no_match(L1211.ag_Prod_Mt_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity","GLU", "year")) %>%
+      left_join_error_no_match(L1211.ag_Prod_Mt_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year")) %>%
       # value.x is irr and rfd production shares, within each region/GLU/crop
       # value.y is now the total (rfd+irr) production
       mutate(value = value.x / value.y) %>%

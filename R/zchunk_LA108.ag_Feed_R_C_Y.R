@@ -128,7 +128,7 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
     # i.e., FodderHerb equals FodderHerb_Residue minus Residue
     ag_Feed_Mt_R_Residue_Y %>%
       rename(Residue = value) %>%                                                                               # Start with newly calculated Residue supply
-      left_join(filter(an_Feed_Mt_R_C_Y,feed == "FodderHerb_Residue"), by = c("GCAM_region_ID","year")) %>%     # Map in FodderHerb_Residue demand
+      left_join(filter(an_Feed_Mt_R_C_Y, feed == "FodderHerb_Residue"), by = c("GCAM_region_ID", "year")) %>%     # Map in FodderHerb_Residue demand
       mutate(FodderHerb_Residue = value) %>%
       mutate(value = FodderHerb_Residue - Residue, GCAM_commodity = "FodderHerb") %>%                           # Compute FodderHerb = FodderHerb_Residue - Residue
       select(-feed, -Residue, -FodderHerb_Residue) ->
