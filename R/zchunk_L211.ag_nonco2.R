@@ -39,6 +39,12 @@ module_emissions_L211.ag_nonco2 <- function(command, ...) {
              "L211.nonghg_steepness"))
   } else if(command == driver.MAKE) {
 
+    # Silence package checks
+    year <- value <- GCAM_commodity <- AgSupplySector <- GLU <- AgSupplySubsector <-
+      input.emissions <- region <- AgProductionTechnology <- Non.CO2 <- nonLandVariableCost <-
+      bio_N2O_coef <- supplysector <- subsector <- stub.technology <- emfact <-
+      emiss.coef <- max.reduction <- NULL
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
