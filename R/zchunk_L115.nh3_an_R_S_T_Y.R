@@ -120,7 +120,7 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
       left_join_error_no_match(unite(L115.EDGAR_R_G_sec_yr_v, col = "Region_GHG_Sector_Yr", c(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year), sep = "~"), by = "Region_GHG_Sector_Yr") %>%
       rename(EDGAR_emissions = value) %>%
       separate(Region_GHG_Sector_Yr, c("GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector", "year"), sep = "~") %>%
-      mutate(., scaler = EDGAR_emissions / total_hybrid_emissions / 1000.0,
+      mutate(scaler = EDGAR_emissions / total_hybrid_emissions / 1000.0,
              GCAM_region_ID = as.integer(GCAM_region_ID)) ->
       L115.emiss_scaler
 

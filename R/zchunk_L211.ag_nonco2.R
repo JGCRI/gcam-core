@@ -1,7 +1,9 @@
 #' module_emissions_L211.ag_nonco2
 #'
-#' Processes agriculture, agricultural waste burning, and animal emissions.
-#' Writes out emissions coefficients for biomass and ag waste burning and non-GHG max reductions and steepness.
+#' Processes agriculture, agricultural waste burning, and animal emissions, adding regions and sectors/technologies.
+#' By region and ag sector/technology, writes out N2O emissions coefficients for biomass and BC/OC emissions coefficients for ag waste burning.
+#' Writes out non-GHG maximum emissions coefficient reduction and steepness,
+#' a shape parameter that reduces emissions coefficient as function of per-capita GDP, by region and ag sector/technology.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -9,8 +11,10 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L211.AWBEmissions}, \code{L211.AGREmissions}, \code{L211.AnEmissions}, \code{L211.AnNH3Emissions}, \code{L211.AGRBio}, \code{L211.AWB_BCOC_EmissCoeff}, \code{L211.nonghg_max_reduction}, \code{L211.nonghg_steepness}. The corresponding file in the
 #' original data system was \code{L211.ag_nonco2.R} (emissions level2).
-#' @details Processes agriculture, agricultural waste burning, and animal emissions by technology.
-#' Writes out emissions coefficients for biomass and ag waste burning and non-GHG max reductions and steepness by agricultural technology and gas.
+#' @details Processes agriculture, agricultural waste burning, and animal emissions, adding regions and sectors/technologies.
+#' By region and ag sector/technology, writes out N2O emissions coefficients for biomass and BC/OC emissions coefficients for ag waste burning.
+#' Writes out non-GHG maximum emissions coefficient reduction and steepness,
+#' a shape parameter that reduces emissions coefficient as function of per-capita GDP, by region and ag sector/technology.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -64,7 +68,7 @@ module_emissions_L211.ag_nonco2 <- function(command, ...) {
     A11.steepness <- get_data(all_data, "emissions/A11.steepness")
 
     # ===================================================
-    # L211.AWBEmissions: AWB emissions in all regions
+    # L211.AWBEmissions: Agricultural Waste Burning emissions in all regions
     L211.AWBEmissions <- L121.nonco2_tg_R_awb_C_Y_GLU %>%
       filter(year %in% emissions.MODEL_BASE_YEARS) %>%
       # Add region, supplysector, subsector and tech names
@@ -78,7 +82,7 @@ module_emissions_L211.ag_nonco2 <- function(command, ...) {
       # Rename SO2 to regional SO2
       rename_SO2(A_regions, is_awb = TRUE)
 
-    # L211.AGREmissions: ag AGR emissions in all regions
+    # L211.AGREmissions: Agricultural emissions in all regions
     L211.AGREmissions <- L122.ghg_tg_R_agr_C_Y_GLU %>%
       filter(year %in% emissions.MODEL_BASE_YEARS) %>%
       # Add region, supplysector, subsector and tech names
@@ -90,7 +94,7 @@ module_emissions_L211.ag_nonco2 <- function(command, ...) {
              input.emissions = round(input.emissions, emissions.DIGITS_EMISSIONS)) %>%
       select(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology, year, Non.CO2, input.emissions)
 
-    # L211.AGRBioEmissions: bio AGR emissions in all regions
+    # L211.AGR: N2O emissions coefficients for biomass in all regions
     # Map in coefficients from assumption file
     L211.AGRBio <- L205.AgCost_bio %>%
       filter(year == emissions.CTRL_BASE_YEAR) %>%
@@ -99,7 +103,7 @@ module_emissions_L211.ag_nonco2 <- function(command, ...) {
       left_join_error_no_match(A_regions %>% select(region, bio_N2O_coef),
                                by = "region")
 
-    # L211.AnAGREmissions: animal AGR emissions in all regions
+    # L211.AnEmissions: Animal emissions in all regions
     L211.AnEmissions <- L113.ghg_tg_R_an_C_Sys_Fd_Yh %>%
       filter(year %in% emissions.MODEL_BASE_YEARS) %>%
       rename(input.emissions = value) %>%
@@ -109,7 +113,7 @@ module_emissions_L211.ag_nonco2 <- function(command, ...) {
       select(region, supplysector, subsector, stub.technology, year, Non.CO2, input.emissions) %>%
       filter(region != aglu.NO_AGLU_REGIONS)
 
-    # L211.AnNH3Emissions: animal NH3 emissions in all regions
+    # L211.AnNH3Emissions: Animal NH3 emissions in all regions
     L211.AnNH3Emissions <- L115.nh3_tg_R_an_C_Sys_Fd_Yh %>%
       filter(year %in% emissions.MODEL_BASE_YEARS) %>%
       rename(input.emissions = value) %>%
@@ -143,7 +147,7 @@ module_emissions_L211.ag_nonco2 <- function(command, ...) {
       mutate(ctrl.name = "GDP_control") %>%
       left_join_error_no_match(A11.max_reduction, by = "AgSupplySector")
 
-    # L211.nonghg_steepness: steepness of reduction for agricultural technologies in all regions
+    # L211.nonghg_steepness: steepness of reduction, as function of per-capita GDP, for agricultural technologies in all regions
     L211.nonghg_steepness <- L211.nonghg_max_reduction %>%
       select(-max.reduction) %>%
       left_join_error_no_match(A11.steepness, by = "AgSupplySector")
@@ -205,7 +209,7 @@ module_emissions_L211.ag_nonco2 <- function(command, ...) {
                      "emissions/A_regions", "L121.nonco2_tg_R_awb_C_Y_GLU") ->
       L211.nonghg_max_reduction
     L211.nonghg_steepness %>%
-      add_title("Steepness of non-GHG emissions reduction ") %>%
+      add_title("Steepness of non-GHG emissions reduction") %>%
       add_units("Unitless") %>%
       add_comments("Steepness added by AgSupplySector") %>%
       add_legacy_name("L211.nonghg_steepness") %>%
