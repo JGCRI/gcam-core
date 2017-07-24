@@ -34,12 +34,12 @@ module_aglu_batch_land_input_1.xml_DISABLED <- function(command, ...) {
 
     # Produce outputs
     create_xml("land_input_1.xml") %>%
-      add_xml_data(L221.LN0_Land,"LN0_Land") %>%
-      add_xml_data(L221.LN0_SoilTimeScale,"LN0_SoilTimeScale") %>%
-      add_xml_data(L221.LN1_ValueLogit,"LN1_ValueLogit") %>%
-      add_xml_data(L221.LN1_HistUnmgdAllocation,"LN1_HistUnmgdAllocation") %>%
-      add_xml_data(L221.LN1_UnmgdAllocation,"LN1_UnmgdAllocation") %>%
-      add_xml_data(L221.LN1_UnmgdCarbon,"LN1_UnmgdCarbon") %>%
+      add_xml_data(L221.LN0_Land, "LN0_Land") %>%
+      add_xml_data(L221.LN0_SoilTimeScale, "LN0_SoilTimeScale") %>%
+      add_xml_data(L221.LN1_ValueLogit, "LN1_ValueLogit") %>%
+      add_xml_data(L221.LN1_HistUnmgdAllocation, "LN1_HistUnmgdAllocation") %>%
+      add_xml_data(L221.LN1_UnmgdAllocation, "LN1_UnmgdAllocation") %>%
+      add_xml_data(L221.LN1_UnmgdCarbon, "LN1_UnmgdCarbon") %>%
       add_precursors("L221.LN0_Land", "L221.LN0_SoilTimeScale", "L221.LN1_ValueLogit", "L221.LN1_HistUnmgdAllocation", "L221.LN1_UnmgdAllocation", "L221.LN1_UnmgdCarbon") ->
       land_input_1.xml
 
