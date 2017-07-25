@@ -73,7 +73,7 @@ module_water_L210.water.demand.primary <- function(command, ...) {
       add_comments("for each year, region, supplysector, subsector, technology, minicam.energy.input and market") %>%
       add_legacy_name("L210.TechCoef") %>%
       add_precursors("common/GCAM_region_names", "water/A03.sector", "energy/A21.globaltech_coef",
-                     "energy/A22.globaltech_coef","L110.water_demand_primary_R_S_W_m3_GJ") ->
+                     "energy/A22.globaltech_coef", "L110.water_demand_primary_R_S_W_m3_GJ") ->
       L210.TechCoef
 
     return_data(L210.TechCoef)
