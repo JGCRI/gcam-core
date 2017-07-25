@@ -24,7 +24,7 @@ curves for Mill, Forest, and Agriculture.
 }
 \details{
 For Forest Residue Biomass, each GCAM region-commodity-GLU combination in L123.For_Prod_bm3_R_Y_GLU is converted to a
-region-supplySector-supplySubsector-ProductionTech combination, and externallyset parameters are added to form the table of Forest
+region-supplySector-supplySubsector-ProductionTech combination, and externally set parameters are added to form the table of Forest
 residue biomass parameters for each region and year. For each region-supplySector-supplySubsector-ProductionTech combination in
 this table, base supply curves are read in from A_resbio_curves and then, in specified calibration years BASE_YEARS, replaced by
 fractions in  A_bio_frac_prod_R to form the table of Forest resbio supply curves for each region and year.
