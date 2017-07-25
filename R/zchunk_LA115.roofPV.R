@@ -1,6 +1,6 @@
 #' module_energy_LA115.roofPV
 #'
-#' This chunk converts rooftop PV resources from the 14 GCAM regions, i.e., "region_GCAM3," to the 32 GCAM region IDs.
+#' This chunk converts rooftop PV resources from the 14 GCAM regions, i.e., "region_GCAM3", to the 32 GCAM region IDs.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
