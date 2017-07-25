@@ -508,27 +508,26 @@ bool HectorModel::setLUCEmissions( const string& aGasName,
  */
 IClimateModel::runModelStatus HectorModel::runModel( const int aYear ) {
     if( aYear <= mLastYear ) {
-        int period = mModeltime->getyr_to_per( aYear );
-        if( period == 0 ) {
-            // invalid year.  Decide what to do
-            if( aYear <= mModeltime->getper_to_yr( 1 )) {
-                // before the first valid period.
-                period = 1;
-            }
-            else if( aYear >= mModeltime->getEndYear() ) {
-                // after the last valid period
-                period = mModeltime->getmaxper();
-            }
-            else {
-                // in the middle somewhere
-                for( int i = 2; i<=mModeltime->getmaxper(); ++i ) {
-                    if( mModeltime->getper_to_yr( i ) > aYear ) {
-                        period = i;
-                        break;
-                    }
-                }
-            }
+        int period;
+        if( aYear <= mModeltime->getper_to_yr( 1 )) {
+            // before the first valid period.
+            period = 1;
         }
+        else if( aYear > mModeltime->getEndYear() ) {
+            // after the last valid period
+            period = mModeltime->getmaxper();
+        }
+        else {
+            // in the middle somewhere
+            // note that model time will convert years that are
+            // inbetween timesteps to the next model period
+            // this is exactly the behavior we want here since
+            // GCAM emissions need to be reset up to the next
+            // time period so hector can have an endpoint to
+            // interpolate from
+            period = mModeltime->getyr_to_per( aYear );
+        }
+
         reset( period );
     }
 
