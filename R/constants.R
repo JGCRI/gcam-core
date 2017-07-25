@@ -149,10 +149,14 @@ aglu.NO_AGLU_REGIONS <- "Taiwan"
 aglu.FERT_NAME <- "N fertilizer"
 
 # Average Wood Density kg/m^3 for mass conversion
+# Source: http://www.engineeringtoolbox.com/wood-density-d_40.html
+# To Page's knowledge, nobody's ever done a weighted average wood density
+# across all tree species that are commercially logged;
+# 500 was was chosen to be towards the middle of the species that are produced.
 aglu.AVG_WOOD_DENSITY_KGM3 <- 500
 
-# Average Agriculture Density for mass conversion
-# no idea of units, just hardcoded in as 1 in old DS
+# Average Agriculture Density kg/m^3 for mass conversion
+# Source: http://www.engineeringtoolbox.com/wood-density-d_40.html
 aglu.AVG_AG_DENSITY <- 1
 
 # Forest Harvest Index
@@ -174,8 +178,6 @@ aglu.WOOD_WATER_CONTENT <- 0.065
 
 # XML-related constants
 aglu.GLU_NDIGITS          <- 3    # number of digits in the geographic land unit identifier codes
-aglu.GLU_NAME_DELIMITER   <- ""   # delimiter between the GLU name and number
-# ^ looks like this is in here twice
 aglu.LT_GLU_DELIMITER     <-      # delimiter between the land use type name and GLU name. should be the same as the crop-glu delimiter
 aglu.CROP_GLU_DELIMITER   <- "_"  # delimiter between the crop name and GLU name
 aglu.IRR_DELIMITER        <- "_"  # delimiter between the appended crop x GLU and irrigation level
