@@ -32,7 +32,7 @@ module_energy_LA102.en_emiss_CDIAC <- function(command, ...) {
 
     ## silence package check.
     GCAM_region_ID <- curr_table <- fuel <- iso <- remove.fraction <-
-      sector <- val <- value <- value.x <- value.y <- year <- NULL
+      sector <- val_energy <- val_non_energy <- value <- value.x <- value.y <- year <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -74,16 +74,16 @@ module_energy_LA102.en_emiss_CDIAC <- function(command, ...) {
     L1011.en_bal_EJ_R_Si_Fi_Yh %>%
       filter(sector == "in_industry_feedstocks" & fuel %in% L102.CO2_Mt_R_F_Yh$fuel) %>%
       left_join_error_no_match(A32.nonenergy_Cseq, by = c("fuel" = "subsector")) %>%
-      mutate(val = value * remove.fraction) %>%
-      select(GCAM_region_ID, fuel, year, val) ->
+      mutate(val_non_energy = value * remove.fraction) %>%
+      select(GCAM_region_ID, fuel, year, val_non_energy) ->
       L102.en_sequestered_EJ_R_Fi_Yh
 
     # subtracts the non-energy use of fuels (sequestered carbon) from the TPES to get only the emitting energy
     L1011.en_bal_EJ_R_Si_Fi_Yh %>%
       filter(sector == "TPES" & fuel %in% L102.CO2_Mt_R_F_Yh$fuel) %>%
       left_join_error_no_match(L102.en_sequestered_EJ_R_Fi_Yh, by = c("GCAM_region_ID", "fuel", "year")) %>%
-      mutate(val = value - val) %>%
-      select(-sector, -value) ->
+      mutate(val_energy = value - val_non_energy) %>%
+      select(-sector, -val_non_energy, -value) ->
       L102.en_emitted_EJ_R_Fi_Yh
 
     # Default emissions coefficients to replace NA values where below energy consumption is 0 (kgC/GJ)
@@ -95,8 +95,8 @@ module_energy_LA102.en_emiss_CDIAC <- function(command, ...) {
     L102.CO2_Mt_R_F_Yh %>%
       filter(fuel %in% L102.en_emitted_EJ_R_Fi_Yh$fuel) %>%
       left_join_error_no_match(L102.en_emitted_EJ_R_Fi_Yh, by = c("GCAM_region_ID", "fuel", "year")) %>%
-      mutate(value = value / val) %>%
-      select(-val) %>%
+      mutate(value = value / val_energy) %>%
+      select(-val_energy) %>%
 
     # reset to defaults wherever NAs result from 0 energy consumption
       mutate(value = if_else(fuel == "gas" & is.na(value), DEFAULT_GAS_CCOEF, value)) %>%
@@ -107,9 +107,10 @@ module_energy_LA102.en_emiss_CDIAC <- function(command, ...) {
     # aggregate regional values to global and calculate global coefficients
     L102.en_emitted_EJ_R_Fi_Yh %>%
       group_by(fuel, year) %>%
-      summarise(value = sum(val)) ->
+      summarise(value = sum(val_energy)) ->
       L102.en_emitted_EJ_Fi_Yh
 
+    # global coefficient (value) calculated by emissions / energy (value.x / value.y)
     L102.CO2_Mt_R_F_Yh %>%
       group_by(fuel, year) %>%
       summarise(value = sum(value)) %>%

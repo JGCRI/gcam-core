@@ -21,7 +21,10 @@ original data system was \code{LA102.en_emiss_CDIAC.R} (energy level1).
 Calculates regional TPES as well as regional and global emissions coefficients by fuel
 }
 \details{
-This chunk maps the CDIAC country emissions database (L100.CDIAC_CO2_ctry_hist) onto GCAM regions (iso_GCAM_regID) and fuels (CDIAC_fuel) to determine regional emissions by fuel (L102.CO2_Mt_R_F_Yh), extracts non-energy emissions and uses the remainder to calculate regional (L102.Ccoef_kgCGJ_R_F_Yh) and global (L102.Ccoef_kgCGJ_F_Yh) emissions coefficients
+This chunk maps the CDIAC country emissions database (L100.CDIAC_CO2_ctry_hist) onto GCAM
+regions (iso_GCAM_regID) and fuels (CDIAC_fuel) to determine regional emissions by fuel (L102.CO2_Mt_R_F_Yh),
+extracts non-energy emissions and uses the remainder to calculate regional (L102.Ccoef_kgCGJ_R_F_Yh) and
+global (L102.Ccoef_kgCGJ_F_Yh) emissions coefficients
 }
 \author{
 CWR July 2017
