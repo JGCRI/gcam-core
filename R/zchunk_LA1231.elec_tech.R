@@ -87,7 +87,7 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
       mutate(year = as.numeric(year)) %>%
       mutate(efficiency_tech = as.numeric(efficiency_tech)) %>%
       semi_join(Aux_gas_tech_elec, by = "year") %>%
-      full_join(Aux_gas_tech_elec, by = c("supplysector", "subsector", "technology","minicam.energy.input","year")) %>%
+      full_join(Aux_gas_tech_elec, by = c("supplysector", "subsector", "technology", "minicam.energy.input", "year")) %>%
       group_by(supplysector, subsector, technology) %>%
       mutate(efficiency_tech = approx_fun(year, efficiency_tech)) %>%
       mutate(improvement.max = approx_fun(year, improvement.max)) %>%

@@ -135,7 +135,7 @@ module_emissions_L104.bcoc_en_USA_S_T_Y <- function(command, ...) {
     # If there is no energy data, then want a zero emission factor for these categories
     USA_bcoc_in_tg_1990 %>%
       # Still don't expect a complete match, so use left_join
-      left_join(GCAM_energy_2000_byBCOC_agg,by = c("BCOC_agg_sector","technology")) %>%
+      left_join(GCAM_energy_2000_byBCOC_agg,by = c("BCOC_agg_sector", "technology")) %>%
       mutate(bc_em_factor = BC_em / Fuel_Use) %>%
       mutate(oc_em_factor = OC_em / Fuel_Use) %>%
       select(-BC_em, -OC_em, -Fuel_Use) %>%
