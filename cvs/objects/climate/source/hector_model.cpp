@@ -383,18 +383,13 @@ void HectorModel::reset( const int aPeriod ) {
         const string& gas = it->first;
         vector<double>& emissions = it->second;
         if( gas != "CO2NetLandUse" ) {
-            // Replay emissions up to, but not including, the aperiod
-            // argument.  We also skip period 0, since it's not a "real"
-            // period.
+            // Replay emissions up to, and including, the aPeriod argument.
+            // Note: We also skip period 0, since it's not a "real" period.
             for( int i = 1; i <= aPeriod; ++i ) {
                 if( util::isValidNumber( emissions[ i ] ) ) {
                     setEmissions( gas, i, emissions[ i ] );
                 }
             }
-            // set subsequent period emissions to NaN to indicate that
-            // they are not valid.
-            // for(int i=aperiod; i<mModeltime->getmaxper(); ++i)
-            //     emissions[i] = numeric_limits<double>::quiet_NaN();
         }
         else {
             // LUC emissions are stored yearly, not just by period.
@@ -407,15 +402,12 @@ void HectorModel::reset( const int aPeriod ) {
                     setLUCEmissions( gas, yr, emissions[ i ] );
                 }
             }
-            // set subsequent to NaN
-            // for(int yr=ymax; yr < mHectorEndYear; ++yr) {
-            //     int i = yearlyDataIndex(yr);
-            //     emissions[i] = numeric_limits<double>::quiet_NaN();
-            // }
         }
     } 
-    // Hector is now ready to run up to the period immediately prior to aperiod.
-    // catch us up to the GCAM start year
+    // Hector is now ready to run up to the year associated with aPeriod.
+    // For now catch us up to the GCAM start year and let runModel catch
+    // us up the rest of the way since it will ensure that it gets any
+    // updated output we would like to report from hector along the way.
     mLastYear = mModeltime->getStartYear();
     mHcore->run( static_cast<double>( mLastYear ) );
 }
