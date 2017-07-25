@@ -11,7 +11,7 @@
 #' the generated outputs: \code{L2042.AgResBio_For}, \code{L2042.AgResBioCurve_For}, \code{L2042.GlobalResBio_Mill}, \code{L2042.StubResBioCurve_Mill}, \code{L2042.AgResBio_ag_irr_mgmt}, \code{L2042.AgResBioCurve_ag_irr_mgmt}. The corresponding file in the
 #' original data system was \code{L2042.resbio_input_irr_mgmt.R} (aglu level2).
 #' @details For Forest Residue Biomass, each GCAM region-commodity-GLU combination in L123.For_Prod_bm3_R_Y_GLU is converted to a
-#' region-supplySector-supplySubsector-ProductionTech combination, and externallyset parameters are added to form the table of Forest
+#' region-supplySector-supplySubsector-ProductionTech combination, and externally set parameters are added to form the table of Forest
 #' residue biomass parameters for each region and year. For each region-supplySector-supplySubsector-ProductionTech combination in
 #' this table, base supply curves are read in from A_resbio_curves and then, in specified calibration years BASE_YEARS, replaced by
 #' fractions in  A_bio_frac_prod_R to form the table of Forest resbio supply curves for each region and year.
@@ -134,7 +134,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
     # Then build in a base residue biomass supply curve table, adding in the relevant residual bio forest vs price curve for
     # each Region - agsupply-year combo, and rename to reflect the fact that For = Fraction of  forest harvested for a
     # given price level. Both Forest and Mill get the forest vs price curve in the Old Data System. Assuming this is
-    # an error, since a mill vs price curve is in A_resbio_curves. Therefore an OLD_DATA_SYSTEM_BEHAVIO flag is used
+    # an error, since a mill vs price curve is in A_resbio_curves. Therefore an OLD_DATA_SYSTEM_BEHAVIOR flag is used
     # to code the two different behaviors.
     L204.AgResBio_For %>%
       select(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology, year, residue.biomass.production) %>%
