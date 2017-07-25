@@ -285,6 +285,7 @@ emissions.DEFOREST_COEF_YEARS <- c(2000, 2005)
 emissions.PFCS <- c("CF4", "C2F6", "SF6")
 emissions.HFC_MODEL_BASE_YEARS <- c(1975, 1990, 2005, 2010)
 emissions.F_GAS_UNITS <- "Gg"
+emissions.GAINS_BASE_YEAR <- 2005
 # ======================================================================
 
 emissions.NH3_EXTRA_YEARS      <- 1971:1989
