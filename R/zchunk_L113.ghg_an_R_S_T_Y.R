@@ -103,7 +103,7 @@ module_emissions_L113.ghg_an_R_S_T_Y <- function(command, ...) {
 
     # First compute scalers
     L113.ghg_tg_R_an_C_Yh.mlt %>%
-      left_join(L113.EDGAR.mlt, by = c("year","GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector")) %>%
+      left_join(L113.EDGAR.mlt, by = c("year", "GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector")) %>%
       rename(EDGAR_emissions = value) %>%
       mutate(scalar = EDGAR_emissions / EPA_emissions / 1000.0) -> # 1000.0 to convert from Gg to Tg
       L113.emiss_scaler
