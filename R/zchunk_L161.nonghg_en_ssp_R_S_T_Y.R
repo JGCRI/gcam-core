@@ -44,8 +44,11 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y")
     L111.nonghg_tgej_R_en_S_F_Yh <- get_data(all_data, "temp-data-inject/L111.nonghg_tgej_R_en_S_F_Yh") %>%
       # temp-data-inject code
-      gather(year, value, starts_with("X"))
-    L114.bcoc_tgej_R_en_S_F_2000 <- get_data(all_data, "L114.bcoc_tgej_R_en_S_F_2000")
+      gather(year, value, starts_with("X")) %>%
+      mutate(year = as.integer(substr(year, 2, 5)))
+    L114.bcoc_tgej_R_en_S_F_2000 <- get_data(all_data, "L114.bcoc_tgej_R_en_S_F_2000") %>%
+      gather(year, value, `2000`) %>%
+      mutate(year = as.integer(year))
 
     # ===================================================
 
@@ -88,14 +91,31 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
     GAINS_emfact_scaler <- GAINS_emfact %>%
       # Get rid of any years before base year
       filter(IDYEARS >= emissions.GAINS_BASE_YEAR) %>%
+      spread(IDYEARS, emfact) %>%
+      na.omit() %>%
+      gather(IDYEARS, emfact, matches(YEAR_PATTERN)) %>%
       group_by(TIMER_REGION, agg_sector, POLL, variable) %>%
-      mutate(scaler = emfact / lag(emfact, n = 1L, order_by = IDYEARS)) %>%
+      mutate(base_value = emfact[IDYEARS == 2005]) %>%
       ungroup() %>%
-      # Set base year scaler equal to 1 and don't allow any value greater than 1
-      mutate(scaler = replace(scaler, IDYEARS == emissions.GAINS_BASE_YEAR, 1),
+      # Set scaler equal to emfact.base_value and don't allow any value greater than 1
+      mutate(scaler = emfact / base_value,
              scaler = replace(scaler, scaler > 1, 1))
 
-# NOTE: This code converts gdp using a conv_xxxx_xxxx_USD constant
+    # Compute future emissions factors for GAINS scenarios
+    nonghg_tgej_R_en_S_F_2005 <- L111.nonghg_tgej_R_en_S_F_Yh %>%
+      filter(year == emissions.GAINS_BASE_YEAR) %>%
+      # Add in BC/OC emissions factors, assumed that 2005 emissions factors are identical to 2000
+      bind_rows(L114.bcoc_tgej_R_en_S_F_2000 %>% mutate(year = 2005)) %>%
+      # Add GAINS regions and sectors
+      left_join_error_no_match(A_regions %>% select(GCAM_region_ID, GAINS_region), by = "GCAM_region_ID") %>%
+      left_join(GCAM_sector_tech %>% select(supplysector, subsector, stub.technology, IIASA_sector),
+                by = c("supplysector", "subsector", "stub.technology")) %>%
+      # Remove non-IIASA sectors and technologies with 0 emissions factor in base year. No reason to read in future zeroes.
+      filter(!is.na(IIASA_sector), value != 0) %>%
+      rename(base_year = year, base_value = value)
+
+
+    # NOTE: This code converts gdp using a conv_xxxx_xxxx_USD constant
 # Use the `gdp_deflator(year, base_year)` function instead
     # ===================================================
 
