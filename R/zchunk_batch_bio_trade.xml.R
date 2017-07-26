@@ -63,8 +63,10 @@ module_aglu_batch_bio_trade.xml <- function(command, ...) {
       add_xml_data(L243.GlobalTechShrwt_TotBio, "GlobalTechShrwt") %>%
       add_xml_data(L243.StubTech_TotBio, "StubTech") %>%
       add_xml_data(L243.StubTechShrwt_TotBio, "StubTechShrwt") %>%
-      add_xml_data(L243.StubTechCoef_ImportedBio, "StubTechCoef") %>%
-      add_xml_data(L243.StubTechCoef_DomesticBio, "StubTechCoef") %>%
+      # The old data system used 'market' for the name of the columns
+      # in the StubTechCoef tibbles. The default here looked for 'market.name'
+      add_xml_data(L243.StubTechCoef_ImportedBio, "StubTechCoef", column_order_lookup = NULL) %>%
+      add_xml_data(L243.StubTechCoef_DomesticBio, "StubTechCoef", column_order_lookup = NULL) %>%
       add_xml_data(L243.TechCoef_TradedBio, "TechCoef") %>%
       add_xml_data(L243.TechShrwt_TradedBio, "TechShrwt") %>%
       add_precursors("L243.DeleteInput_RegBio",
