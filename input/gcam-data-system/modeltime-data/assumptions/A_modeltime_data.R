@@ -22,6 +22,6 @@ Magicc_C_start_year <- 1705
 
 #------------------------------------------------------------------------------------
 # Hector model assumptions
-hector.end.year <- 2100
+hector.end.year <- 2300
 hector.emissions.year <- 2005
 hector.ini.file <- "../input/climate/hector-gcam.ini"
