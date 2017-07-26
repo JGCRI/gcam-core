@@ -18,11 +18,15 @@ the generated outputs: \code{L243.DeleteInput_RegBio}, \code{L243.SectorLogitTab
 original data system was \code{L243.bio_trade_input.R} (aglu level2).
 }
 \description{
-Briefly describe what this chunk does.
+Estabilishes regionally differentiated trade structure for bioenergy.
 }
 \details{
-Describe in detail what this chunk does.
+This chunk sets up a structure for regionally differentiated bioenergy trade. Each
+region consumes a blend of domestic and international bioenergy. Regions can supply to either
+the domestic or international market. Share weights in the default case depend on the amount of
+cropland a region has, with the largest region having a share weight of 1. Share weights in SSP3
+and SSP4 are adjusted to reflect the trade frictions in the SSP storylines.
 }
 \author{
-YourInitials CurrentMonthName 2017
+KVC July 2017
 }
