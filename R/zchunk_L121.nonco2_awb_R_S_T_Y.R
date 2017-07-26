@@ -150,7 +150,7 @@ module_emissions_L121.nonco2_awb_R_S_T_Y <- function(command, ...) {
 
     # Subset only the historical years in EDGAR, and reshape for write-out
     L121.nonco2_tg_R_awb_C_Y_GLU_total %>%
-      filter(year %in% emissions.EDGAR_HISTORICAL) %>%
+      filter(year %in% emissions.EDGAR_YEARS) %>%
       select(GCAM_region_ID, Non.CO2, GCAM_commodity, GLU, year, value = emissions) ->
       L121.nonco2_tg_R_awb_C_Y_GLU
 
@@ -164,7 +164,7 @@ module_emissions_L121.nonco2_awb_R_S_T_Y <- function(command, ...) {
       add_comments("estimated from production, harvest index, and water content") %>%
       add_legacy_name("L121.AWBshare_R_C_Y_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
-                     "emissions/EDGAR/EDGAR_sector", "emissions/EDGAR/EDGAR_SO2","emissions/EDGAR/EDGAR_CO",
+                     "emissions/EDGAR/EDGAR_sector", "emissions/EDGAR/EDGAR_SO2", "emissions/EDGAR/EDGAR_CO",
                      "emissions/EDGAR/EDGAR_NOx", "emissions/EDGAR/EDGAR_NMVOC", "emissions/EDGAR/EDGAR_CH4",
                      "emissions/EDGAR/EDGAR_N2O", "emissions/EDGAR/EDGAR_NH3",
                      "L103.ag_Prod_Mt_R_C_Y_GLU", "L111.ag_resbio_R_C") ->
@@ -177,7 +177,7 @@ module_emissions_L121.nonco2_awb_R_S_T_Y <- function(command, ...) {
       add_comments("estimated from production, harvest index, and water content") %>%
       add_legacy_name("L121.nonco2_tg_R_awb_C_Y_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
-                     "emissions/EDGAR/EDGAR_sector", "emissions/EDGAR/EDGAR_SO2","emissions/EDGAR/EDGAR_CO",
+                     "emissions/EDGAR/EDGAR_sector", "emissions/EDGAR/EDGAR_SO2", "emissions/EDGAR/EDGAR_CO",
                      "emissions/EDGAR/EDGAR_NOx", "emissions/EDGAR/EDGAR_NMVOC", "emissions/EDGAR/EDGAR_CH4",
                      "emissions/EDGAR/EDGAR_N2O", "emissions/EDGAR/EDGAR_NH3",
                      "L103.ag_Prod_Mt_R_C_Y_GLU", "L111.ag_resbio_R_C") %>%

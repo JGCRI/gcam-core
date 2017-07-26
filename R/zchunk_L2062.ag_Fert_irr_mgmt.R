@@ -21,8 +21,8 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
               FILE = "water/basin_to_country_mapping",
               FILE = "aglu/A_Fodderbio_chars",
               "L142.ag_Fert_IO_R_C_Y_GLU",
-              FILE = "temp-data-inject/L2052.AgCost_ag_irr_mgmt",
-              FILE = "temp-data-inject/L2052.AgCost_bio_irr_mgmt"))
+              "L2052.AgCost_ag_irr_mgmt",
+              "L2052.AgCost_bio_irr_mgmt"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2062.AgCoef_Fert_ag_irr_mgmt",
              "L2062.AgCoef_Fert_bio_irr_mgmt",
@@ -42,8 +42,8 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
     basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
     A_Fodderbio_chars <- get_data(all_data, "aglu/A_Fodderbio_chars")
     L142.ag_Fert_IO_R_C_Y_GLU <- get_data(all_data, "L142.ag_Fert_IO_R_C_Y_GLU")
-    L2052.AgCost_ag_irr_mgmt <- get_data(all_data, "temp-data-inject/L2052.AgCost_ag_irr_mgmt")
-    L2052.AgCost_bio_irr_mgmt <- get_data(all_data, "temp-data-inject/L2052.AgCost_bio_irr_mgmt")
+    L2052.AgCost_ag_irr_mgmt <- get_data(all_data, "L2052.AgCost_ag_irr_mgmt")
+    L2052.AgCost_bio_irr_mgmt <- get_data(all_data, "L2052.AgCost_bio_irr_mgmt")
 
     # Process Fertilizer Coefficients: Copy coefficients to all four technologies (irr/rfd + hi/lo)
     L142.ag_Fert_IO_R_C_Y_GLU %>%
@@ -96,7 +96,7 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
     L2052.AgCost_bio_irr_mgmt %>%
       select(-nonLandVariableCost) %>%                  # We are just using this data.frame to get the region/sector/tech names
       mutate(minicam.energy.input = "N fertilizer") %>%
-      mutate(coefficient = if_else(startsWith(AgSupplySubsector, "biomass_grass"),
+      mutate(coefficient = if_else(grepl("^biomass_grass", AgSupplySubsector),
                                    bio_grass_coef$coefficient, bio_tree_coef$coefficient)) ->
       L2062.AgCoef_Fert_bio_irr_mgmt
 
@@ -150,7 +150,7 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
       add_comments("Note: L2052.AgCost_bio_irr_mgmt is only used to identify all bioenergy technologies") %>%
       add_legacy_name("L2062.AgCoef_Fert_bio_irr_mgmt") %>%
       add_precursors("aglu/A_Fodderbio_chars",
-                     "temp-data-inject/L2052.AgCost_bio_irr_mgmt") ->
+                     "L2052.AgCost_bio_irr_mgmt") ->
       L2062.AgCoef_Fert_bio_irr_mgmt
     L2062.AgCost_ag_irr_mgmt_adj %>%
       add_title("Adjusted non-land variable cost for agricultural technologies") %>%
@@ -159,7 +159,7 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
       add_comments("Fertilizer costs is computed using a fixed NH3 cost and the fertilizer coefficient") %>%
       add_legacy_name("L2062.AgCost_ag_irr_mgmt_adj") %>%
       same_precursors_as(L2062.AgCoef_Fert_ag_irr_mgmt) %>%
-      add_precursors("temp-data-inject/L2052.AgCost_ag_irr_mgmt") ->
+      add_precursors("L2052.AgCost_ag_irr_mgmt") ->
       L2062.AgCost_ag_irr_mgmt_adj
     L2062.AgCost_bio_irr_mgmt_adj %>%
       add_title("Adjusted non-land variable cost for agricultural technologies") %>%
@@ -168,7 +168,7 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
       add_comments("Fertilizer costs is computed using a fixed NH3 cost and the fertilizer coefficient") %>%
       add_legacy_name("L2062.AgCost_bio_irr_mgmt_adj") %>%
       same_precursors_as(L2062.AgCoef_Fert_bio_irr_mgmt) %>%
-      add_precursors("temp-data-inject/L2052.AgCost_bio_irr_mgmt")  ->
+      add_precursors("L2052.AgCost_bio_irr_mgmt")  ->
       L2062.AgCost_bio_irr_mgmt_adj
 
     return_data(L2062.AgCoef_Fert_ag_irr_mgmt, L2062.AgCoef_Fert_bio_irr_mgmt, L2062.AgCost_ag_irr_mgmt_adj, L2062.AgCost_bio_irr_mgmt_adj)

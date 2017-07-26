@@ -126,6 +126,7 @@ module_aglu_LA103.ag_R_C_Y_GLU <- function(command, ...) {
 
     # Produce outputs
     L103.ag_Prod_Mt_R_C_Y_GLU %>%
+      ungroup %>%
       add_title("Crop production by GCAM region / commodity / year / GLU") %>%
       add_units("Mt") %>%
       add_comments("Crop production computed based on representative base year, using") %>%
@@ -143,12 +144,11 @@ module_aglu_LA103.ag_R_C_Y_GLU <- function(command, ...) {
       add_legacy_name("L103.ag_Prod_Mt_R_C_Y") %>%
       same_precursors_as(L103.ag_Prod_Mt_R_C_Y_GLU) %>%
       add_precursors("common/iso_GCAM_regID") %>%
-      # The sort order in the old dataset is funky, and I'm having trouble
-      # replicating it; but the data are identical. Use the less-stringent sum test.
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L103.ag_Prod_Mt_R_C_Y
 
     L103.ag_HA_bm2_R_C_Y_GLU %>%
+      ungroup %>%
       add_title("Harvested area by GCAM region / commodity / year / GLU") %>%
       add_units("bm2") %>%
       add_comments("Agricultural harvested area computed based on representative base year, and") %>%
@@ -156,8 +156,6 @@ module_aglu_LA103.ag_R_C_Y_GLU <- function(command, ...) {
       add_legacy_name("L103.ag_HA_bm2_R_C_Y_GLU") %>%
       add_precursors("L101.ag_HA_bm2_R_C_Y",
                      "L102.ag_HA_bm2_R_C_GLU") %>%
-      # The sort order in the old dataset is funky, and I'm having trouble
-      # replicating it; but the data are identical. Use the less-stringent sum test.
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L103.ag_HA_bm2_R_C_Y_GLU
 

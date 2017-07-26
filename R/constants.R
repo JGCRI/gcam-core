@@ -6,19 +6,20 @@ XML_DIR      <- "xml/"
 COMMENT_CHAR <- "#"
 OLD_DATA_SYSTEM_BEHAVIOR <- TRUE
 YEAR_PATTERN <- "^(1|2)[0-9]{3}$"   # a 1 or 2 followed by three digits, and nothing else
+LOGIT_COLUMN_NAME <- "logit.type"   # will be removed by test code before old-new comparison
 
 
 # Flags ======================================================================
 # Flags used by chunks
-
-FLAG_INPUT_DATA <- "FLAG_INPUT_DATA"
-FLAG_LONG_YEAR_FORM  <- "FLAG_LONG_YEAR_FORM"
-FLAG_NO_OUTPUT  <- "FLAG_NO_OUTPUT"
-FLAG_NO_XYEAR   <- "FLAG_NO_XYEAR"
-FLAG_NO_TEST    <- "FLAG_NO_TEST"
-FLAG_SUM_TEST   <- "FLAG_SUM_TEST"
-FLAG_PROTECT_FLOAT <- "FLAG_PROTECT_FLOAT"
-FLAG_XML <- "FLAG_XML"
+FLAG_INPUT_DATA      <- "FLAG_INPUT_DATA"       # input data, don't output
+FLAG_LONG_YEAR_FORM  <- "FLAG_LONG_YEAR_FORM"   # 'year' column but original data are wide
+FLAG_NO_OUTPUT       <- "FLAG_NO_OUTPUT"        # don't output
+FLAG_NO_XYEAR        <- "FLAG_NO_XYEAR"         # year names don't have X's in front
+FLAG_NO_TEST         <- "FLAG_NO_TEST"          # don't test
+FLAG_SUM_TEST        <- "FLAG_SUM_TEST"         # use less-restrictive sum test
+FLAG_PROTECT_FLOAT   <- "FLAG_PROTECT_FLOAT"    # protect float columns from readr bug
+FLAG_XML             <- "FLAG_XML"              # xml data
+FLAG_YEAR_COL_XYEARS <- "FLAG_YEAR_COL_XYEARS"  # 'year' column without X's in front
 
 
 # Time constants======================================================================
@@ -80,6 +81,8 @@ PRICERATIO_GRASS_ALFALFA <- 0.7
 # NUMBERS OF DIGITS FOR MODEL INPUT DATA
 aglu.DIGITS_CALPRICE <- 4 # prices and costs
 aglu.DIGITS_CALOUTPUT <- 7 # production
+aglu.DIGITS_INCELAS <- 4 # food demand income elasticity
+aglu.DIGITS_AGPRODCHANGE <- 4 # rate of change in yield
 
 # Carbon content of all cellulose
 aglu.CCONTENT_CELLULOSE <- 0.45
@@ -92,6 +95,20 @@ MAX_HA_TO_CROPLAND <- 3
 
 # Yield multiplier that goes from the observed yield to the "high" and "low" yields: observed plus or minus observed times this number
 MGMT_YIELD_ADJ <- 0.1
+
+# Meat price elasticity in the USA
+aglu.FOOD_MEAT_P_ELAS_USA <- -0.09
+
+# Multipliers for high & low ag prod growth scenarios
+aglu.HI_PROD_GROWTH_MULT <- 1.5
+aglu.LOW_PROD_GROWTH_MULT <- 0.5
+
+# Forestry cost (1975$/GJ)
+aglu.FOR_COST_75USDM3 <- 29.59
+
+# Production costs of biomass (from Patrick Luckow's work)
+aglu.BIO_GRASS_COST_75USD_GJ <- 0.75
+aglu.BIO_TREE_COST_75USD_GJ <- 0.67
 
 # Fertilizer application rate for biomass, and carbon yields. Values from Adler et al. 2007 (doi:10.1890/05-2018)
 aglu.BIO_GRASS_FERT_IO_GNM2 <- 5.6
@@ -136,10 +153,20 @@ aglu.MGMT_DELIMITER       <- "_"  # delimiter between appended tech name and man
 # At present the CO2 emissions inventory from CDIAC stops at 2009
 energy.CDIAC_CO2_HISTORICAL_YEARS <- HISTORICAL_YEARS[HISTORICAL_YEARS < 2010]
 
+# Constant to select SSP database to use for transportation UCD
+energy.TRN_SSP <- "CORE"
+
+# UCD transportation year to use to compute shares for allocation of energy to mode/technology/fuel within category/fuel
+energy.UCD_EN_YEAR <- 2005
+energy.MIN_WEIGHT_EJ <- 1e-08
+
+# Transportation fixed charge rate information
+energy.DISCOUNT_RATE_VEH <- 0.1   # Consumer discount rate for vehicle purchases
+energy.NPER_AMORT_VEH <- 10    # Number of periods (years) over which vehicle capital payments are amortized
+
 DEFAULT_ELECTRIC_EFFICIENCY <- 0.33
 
 ELECTRICITY_INPUT_FUELS<- c("biomass", "coal", "gas", "refined liquids")
-
 
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
@@ -163,7 +190,6 @@ CONV_KT_MT <- 0.001 # kt to Mt
 CONV_T_MT <- 1e-6 # t to Mt
 CONV_G_KG <- 1e-3 # kilograms to grams
 CONV_NH3_N <- 14/17 # Nitrogen to Ammonia
-
 
 # Time
 CONV_YEAR_HOURS <- 24 * 365.25
@@ -202,13 +228,6 @@ modeltime.HECTOR_EMISSIONS_YEAR <- 2005
 modeltime.HECTOR_INI_FILE <- "../input/climate/hector-gcam.ini"
 
 
-# Energy constants ======================================================================
-
-DEFAULT_ELECTRIC_EFFICIENCY <- 0.33  # Default electric efficiency
-ELECTRICITY_INPUT_FUELS<- c("biomass", "coal", "gas", "refined liquids")
-STUBTECHYR <- c("GCAM_region_ID", "supplysector", "subsector", "stub.technology", "xyear")
-
-
 # Socioeconomics constants ======================================================================
 
 # Population years - note that these sequences shouldn't have any overlap,
@@ -239,17 +258,46 @@ MAPPED_WATER_TYPES_SHORT            <- c("C", "W")
 names(MAPPED_WATER_TYPES_SHORT)     <- MAPPED_WATER_TYPES
 DEFAULT_UNLIMITED_WATER_PRICE       <- 0
 DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.001
+WATER_UNITS_QUANTITY                <- "km^3"
+WATER_UNITS_PRICE                   <- "1975$/m^3"
+AG_ONLY_WATER_TYPES                 <- "biophysical water consumption"
+
 
 
 # Emissions constants ======================================================================
 
+emissions.DIGITS_EMISSIONS <- 10
+emissions.CTRL_BASE_YEAR   <- 1975  # Year to read in pollution controls
+emissions.MODEL_BASE_YEARS <- BASE_YEARS[BASE_YEARS < 2008]
+emissions.FINAL_EMISS_YEAR <- min(max(BASE_YEARS), 2005)
+
 emissions.EPA_HISTORICAL_YEARS <- 1971:2002
 emissions.TST_TO_TG            <- 0.000907 # Thousand short tons to Tg
 emissions.NH3_HISTORICAL_YEARS <- 1990:2002
+emissions.NH3_EXTRA_YEARS <- 1971:1989
+emissions.EDGAR_YEARS <- 1971:2008
+emissions.EDGAR_HISTORICAL <- 1971:2008
+emissions.EPA_MACC_YEAR <- 2030  # Must be either 2020 or 2030
+emissions.MAC_TAXES <- c( 0, 5, 10, 15, 32, 66, 129, 243, 486, 1093 ) # Range of costs in 1990 USD
+emissions.CONV_C_CO2 <- 44 / 12 # Convert Carbon to CO2
+emissions.DEFOREST_COEF_YEARS <- c(2000, 2005)
+emissions.PFCS <- c("CF4", "C2F6", "SF6")
+emissions.HFC_MODEL_BASE_YEARS <- c(1975, 1990, 2005, 2010)
+emissions.F_GAS_UNITS <- "Gg"
+# ======================================================================
+
 emissions.NH3_EXTRA_YEARS      <- 1971:1989
 emissions.EDGAR_YEARS          <- 1971:2008
-emissions.EDGAR_HISTORICAL     <- 1971:2008
 emissions.EPA_MACC_YEAR        <- 2030  # Must be either 2020 or 2030
 emissions.MAC_TAXES            <- c(0, 5, 10, 15, 32, 66, 129, 243, 486, 1093) # Range of costs in 1990 USD
 emissions.CONV_C_CO2           <- 44 / 12 # Convert Carbon to CO2
 emissions.DEFOREST_COEF_YEARS  <- c(2000, 2005)
+emissions.AGR_SECTORS          <- c("rice", "fertilizer", "soil")
+emissions.AGR_GASES            <- c("CH4_AGR", "N2O_AGR", "NH3_AGR", "NOx_AGR")
+
+
+# Uncomment these lines to run under 'timeshift' conditions
+# HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
+# FUTURE_YEARS <- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)
+# BASE_YEARS <- c(1975, 1990, 2005)   # normally (1975, 1990, 2005, 2010)
+# MODEL_YEARS <- c(BASE_YEARS, FUTURE_YEARS)
