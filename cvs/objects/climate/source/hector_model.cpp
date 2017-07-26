@@ -383,39 +383,31 @@ void HectorModel::reset( const int aPeriod ) {
         const string& gas = it->first;
         vector<double>& emissions = it->second;
         if( gas != "CO2NetLandUse" ) {
-            // Replay emissions up to, but not including, the aperiod
-            // argument.  We also skip period 0, since it's not a "real"
-            // period.
-            for( int i = 1; i < aPeriod; ++i ) {
+            // Replay emissions up to, and including, the aPeriod argument.
+            // Note: We also skip period 0, since it's not a "real" period.
+            for( int i = 1; i <= aPeriod; ++i ) {
                 if( util::isValidNumber( emissions[ i ] ) ) {
                     setEmissions( gas, i, emissions[ i ] );
                 }
             }
-            // set subsequent period emissions to NaN to indicate that
-            // they are not valid.
-            // for(int i=aperiod; i<mModeltime->getmaxper(); ++i)
-            //     emissions[i] = numeric_limits<double>::quiet_NaN();
         }
         else {
             // LUC emissions are stored yearly, not just by period.
             // Otherwise, as above.
             int ymin = mModeltime->getper_to_yr( 1 );
-            int ymax = yearlyDataIndex( mModeltime->getper_to_yr( aPeriod ) );
-            for( int yr = ymin; yr < ymax; ++yr ) {
+            int ymax = mModeltime->getper_to_yr( aPeriod );
+            for( int yr = ymin; yr <= ymax; ++yr ) {
                 int i = yearlyDataIndex( yr );
                 if( util::isValidNumber( emissions[ i ] ) ) {
                     setLUCEmissions( gas, yr, emissions[ i ] );
                 }
             }
-            // set subsequent to NaN
-            // for(int yr=ymax; yr < mHectorEndYear; ++yr) {
-            //     int i = yearlyDataIndex(yr);
-            //     emissions[i] = numeric_limits<double>::quiet_NaN();
-            // }
         }
     } 
-    // Hector is now ready to run up to the period immediately prior to aperiod.
-    // catch us up to the GCAM start year
+    // Hector is now ready to run up to the year associated with aPeriod.
+    // For now catch us up to the GCAM start year and let runModel catch
+    // us up the rest of the way since it will ensure that it gets any
+    // updated output we would like to report from hector along the way.
     mLastYear = mModeltime->getStartYear();
     mHcore->run( static_cast<double>( mLastYear ) );
 }
@@ -516,27 +508,26 @@ bool HectorModel::setLUCEmissions( const string& aGasName,
  */
 IClimateModel::runModelStatus HectorModel::runModel( const int aYear ) {
     if( aYear <= mLastYear ) {
-        int period = mModeltime->getyr_to_per( aYear );
-        if( period == 0 ) {
-            // invalid year.  Decide what to do
-            if( aYear <= mModeltime->getper_to_yr( 1 )) {
-                // before the first valid period.
-                period = 1;
-            }
-            else if( aYear >= mModeltime->getEndYear() ) {
-                // after the last valid period
-                period = mModeltime->getmaxper();
-            }
-            else {
-                // in the middle somewhere
-                for( int i = 2; i<=mModeltime->getmaxper(); ++i ) {
-                    if( mModeltime->getper_to_yr( i ) > aYear ) {
-                        period = i;
-                        break;
-                    }
-                }
-            }
+        int period;
+        if( aYear <= mModeltime->getper_to_yr( 1 )) {
+            // before the first valid period.
+            period = 1;
         }
+        else if( aYear > mModeltime->getEndYear() ) {
+            // after the last valid period
+            period = mModeltime->getmaxper();
+        }
+        else {
+            // in the middle somewhere
+            // note that model time will convert years that are
+            // inbetween timesteps to the next model period
+            // this is exactly the behavior we want here since
+            // GCAM emissions need to be reset up to the next
+            // time period so hector can have an endpoint to
+            // interpolate from
+            period = mModeltime->getyr_to_per( aYear );
+        }
+
         reset( period );
     }
 
