@@ -288,7 +288,7 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
               # for other countries (only South Africa at this time)
          # A44.pcflsp_default provides residential and commercial floorspace (m2) per person for 1975, 1990, and 2005 for GCAM3 regions
 
-    # For USA, use RGCAM output
+    # For the USA, use the 50-state-derived data (written by LA144.Commercial.R from GCAM-USA)
     A44.flsp_bm2_state_comm %>%
       gather(year, value_bm2, -state, -GCAM_sector) %>% # Convert to long form
       mutate(year = as.integer(substr(year, 2, 5))) %>% # Strip X's, convert year to integer
