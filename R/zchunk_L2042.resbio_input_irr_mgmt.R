@@ -52,6 +52,13 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    year <- GCAM_region_ID <- GCAM_commodity <- GLU <- AgSupplySubsector <- supplysector <-
+      subsector <- technology <- region <- AgSupplySector <- AgProductionTechnology <-
+      residue.biomass.production <- sector.name <- subsector.name <- price <- For <-
+      Mill <- colID <- fract.harvested <- HarvestIndex <- ErosCtrl_tHa <- ResEnergy_GJt <-
+      WaterContent <- mass.conversion <- harvest.index <- eros.ctrl <- mass.to.energy <-
+      water.content <- Irr_Rfd <- level <- ag <- NULL  # silence package check notes
+
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
