@@ -27,6 +27,9 @@ module_water_L233.water.demand.livestock <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    GCAM_commodity <- supplysector <- subsector <- technology <- water_sector <-
+      water_type <- region <- GCAM_region_ID <- NULL  # silence package check notes
+
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A03.sector <- get_data(all_data, "water/A03.sector")
