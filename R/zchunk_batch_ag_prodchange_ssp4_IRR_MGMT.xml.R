@@ -24,7 +24,7 @@ module_aglu_batch_ag_prodchange_ssp4_IRR_MGMT.xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("ag_prodchange_ssp4_IRR_MGMT.xml") %>%
-      add_xml_data(L2052.AgProdChange_irr_ssp4,"AgProdChange") %>%
+      add_xml_data(L2052.AgProdChange_irr_ssp4, "AgProdChange") %>%
       add_precursors("L2052.AgProdChange_irr_ssp4") ->
       ag_prodchange_ssp4_IRR_MGMT.xml
 
