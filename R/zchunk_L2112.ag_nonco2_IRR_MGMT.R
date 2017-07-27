@@ -14,7 +14,7 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_emissions_L2112.ag_nonco2_IRR_MGMT_DISABLED <- function(command, ...) {
+module_emissions_L2112.ag_nonco2_IRR_MGMT <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "emissions/A_regions",
@@ -24,9 +24,9 @@ module_emissions_L2112.ag_nonco2_IRR_MGMT_DISABLED <- function(command, ...) {
              "L2111.AWB_BCOC_EmissCoeff",
              "L2111.nonghg_max_reduction",
              "L2111.nonghg_steepness",
-             "L2012.AgProduction_ag_irr_mgmt",
-             "L2111.AnEmissions",
-             "L2111.AnNH3Emissions"))
+             FILE = "temp-data-inject/L2012.AgProduction_ag_irr_mgmt",
+             FILE = "temp-data-inject/L2111.AnEmissions",
+             FILE = "temp-data-inject/L2111.AnNH3Emissions"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("object",
              "L2112.AnEmissions",
@@ -40,17 +40,19 @@ module_emissions_L2112.ag_nonco2_IRR_MGMT_DISABLED <- function(command, ...) {
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A_regions <- get_data(all_data, "emissions/A_regions")
-    L2111.AWBEmissions <- get_data(all_data, "L2111.AWBEmissions")
-    L2111.AGREmissions <- get_data(all_data, "L2111.AGREmissions")
+    L2111.AWBEmissions <- get_data(all_data, "L2111.AWBEmissions") # need to put in temp injuest
+    L2111.AGREmissions <- get_data(all_data, "L2111.AGREmissions") # need to put in temp inject
     L2111.AGRBio <- get_data(all_data, "L2111.AGRBio")
     L2111.AWB_BCOC_EmissCoeff <- get_data(all_data, "L2111.AWB_BCOC_EmissCoeff")
     L2111.nonghg_max_reduction <- get_data(all_data, "L2111.nonghg_max_reduction")
     L2111.nonghg_steepness <- get_data(all_data, "L2111.nonghg_steepness")
-    L2012.AgProduction_ag_irr_mgmt <- get_data(all_data, "L2012.AgProduction_ag_irr_mgmt")
-    L2111.AnEmissions <- get_data(all_data, "L2111.AnEmissions")
-    L2111.AnNH3Emissions <- get_data(all_data, "L2111.AnNH3Emissions")
+    L2012.AgProduction_ag_irr_mgmt <- get_data(all_data, "temp-data-inject/L2012.AgProduction_ag_irr_mgmt")
+    L2111.AnEmissions <- get_data(all_data, "temp-data-inject/L2111.AnEmissions")
+    L2111.AnNH3Emissions <- get_data(all_data, "temp-data-inject/L2111.AnNH3Emissions")
 
     # ===================================================
+
+
     # TRANSLATED PROCESSING CODE GOES HERE...
     #
     # If you find a mistake/thing to update in the old code and
