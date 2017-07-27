@@ -62,8 +62,7 @@ module_water_L233.water.demand.livestock <- function(command, ...) {
                    4) replicate the water coefficients for all MODEL_YEARS") %>%
       add_legacy_name("L233.TechCoef") %>%
       add_precursors("common/GCAM_region_names", "water/A03.sector", "aglu/A_an_technology",
-                     "temp-data-inject/L133.water_demand_livestock_R_C_W_km3_Mt") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "temp-data-inject/L133.water_demand_livestock_R_C_W_km3_Mt") ->
       L233.TechCoef
 
     return_data(L233.TechCoef)
