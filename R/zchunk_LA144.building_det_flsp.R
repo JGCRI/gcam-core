@@ -72,6 +72,7 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
          # Other_pcflsp_m2_ctry_Yh provides residential and commercial floorspace (m2) per person for 2004 and 2005
               # for other countries (only South Africa at this time)
          # A44.flsp_bm2_state_res provides residential floorspace by U.S. state from 1975-2005 (in 5-year increments) and 2008
+              # Note that this table is written by LA144.Residential.R from GCAM-USA
          # A44.pcflsp_default provides residential and commercial floorspace (m2) per person for 1975, 1990, and 2005 for GCAM3 regions
          # L100.Pop_thous_ctry_Yh provides country-level population data and will be used to switch between total floorspace and per capita data
 
@@ -215,6 +216,7 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
                                     L144.pcflsp_m2_otherctry_Yh_final)
 
     # Replace the USA data with 50-state-derived data
+         # Note that this table is written by LA144.Residential.R from GCAM-USA
     A44.flsp_bm2_state_res %>%
       gather(year, value_bm2, -state, -GCAM_sector) %>% # Convert to long form
       mutate(year = as.integer(substr(year, 2, 5))) %>%
@@ -281,6 +283,7 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
     # In this section, we aim to create a final output table of commercial floorspace per GCAM region across all historical years
     # Before aggregating to the regional level, floorspace will be calculated at the country level using the following base datasets:
          # A44.flsp_bm2_state_comm provides commercial floorspace by U.S. state from 1975-2005 (in 5-year increments) and 2008
+              # Note that this table is written by LA144.Commercial.R from GCAM-USA
          # Other_pcflsp_m2_ctry_Yh provides residential and commercial floorspace (m2) per person for 2004 and 2005
               # for other countries (only South Africa at this time)
          # A44.pcflsp_default provides residential and commercial floorspace (m2) per person for 1975, 1990, and 2005 for GCAM3 regions
