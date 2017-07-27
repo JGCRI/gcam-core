@@ -32,6 +32,7 @@ MODEL_YEARS <- c(BASE_YEARS, FUTURE_YEARS)
 SSP_FUTURE_YEARS <- c(2010, FUTURE_YEARS)
 GHG_CONTROL_READIN_YEAR <- 1975
 BASE_YEAR_IFA <- 2006
+CLIMATE_NORMAL_YEARS <- 1981:2000
 
 # GCAM constants ======================================================================
 
