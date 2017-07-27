@@ -95,14 +95,23 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
       na.omit() %>%
       gather(IDYEARS, emfact, matches(YEAR_PATTERN)) %>%
       group_by(TIMER_REGION, agg_sector, POLL, variable) %>%
-      mutate(base_value = emfact[IDYEARS == 2005]) %>%
-      ungroup() %>%
       # Set scaler equal to emfact.base_value and don't allow any value greater than 1
-      mutate(scaler = emfact / base_value,
-             scaler = replace(scaler, scaler > 1, 1))
+      mutate(prev = lag(emfact, n = 1L, order = IDYEARS)) %>%
+      ungroup() %>%
+      filter(IDYEARS > emissions.GAINS_BASE_YEAR) %>%
+      mutate(scaler = emfact / prev,
+             scaler = replace(scaler, scaler > 1, 1)) %>%
+      select(GAINS_region = TIMER_REGION, IIASA_sector = agg_sector, Non.CO2 = POLL, variable, year = IDYEARS, scaler)
+
+
+    # Determine region groupings
+    pcgdp_2010 <- L102.pcgdp_thous90USD_Scen_R_Y %>%
+      filter(scenario == "SSP4", year == 2010) %>%
+      mutate(value = value * gdp_deflator(2010, 1990),
+             region_grouping = if_else(value >= emissions.LOW_PCGDP, "highmed", "low"))
 
     # Compute future emissions factors for GAINS scenarios
-    nonghg_tgej_R_en_S_F_2005 <- L111.nonghg_tgej_R_en_S_F_Yh %>%
+    emfact_scaled <- L111.nonghg_tgej_R_en_S_F_Yh %>%
       filter(year == emissions.GAINS_BASE_YEAR) %>%
       # Add in BC/OC emissions factors, assumed that 2005 emissions factors are identical to 2000
       bind_rows(L114.bcoc_tgej_R_en_S_F_2000 %>% mutate(year = 2005)) %>%
@@ -112,15 +121,137 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
                 by = c("supplysector", "subsector", "stub.technology")) %>%
       # Remove non-IIASA sectors and technologies with 0 emissions factor in base year. No reason to read in future zeroes.
       filter(!is.na(IIASA_sector), value != 0) %>%
-      rename(base_year = year, base_value = value)
+      rename(base_year = year, base_value = value) %>%
+      left_join(GAINS_emfact_scaler, by = c("GAINS_region", "IIASA_sector", "Non.CO2")) %>%
+      mutate(emfact = base_value * scaler) %>%
+      left_join_error_no_match(pcgdp_2010 %>% select(GCAM_region_ID, region_grouping), by = "GCAM_region_ID") %>%
+      na.omit() %>%
+      select(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, GAINS_region, IIASA_sector,
+             variable, year, emfact, region_grouping)
 
+    coal_so2 <- emfact_scaled %>%
+      filter(year == "2030", IIASA_sector == "elec_coal", Non.CO2 == "SO2", region_grouping == "highmed") %>%
+      group_by(GCAM_region_ID) %>%
+      mutate(policy = if_else(emfact[variable == "CLE"] <= emissions.COAL_SO2_THRESHOLD, "strong_reg", "weak_reg")) %>%
+      ungroup %>%
+      select(GCAM_region_ID, policy) %>%
+      distinct()
+
+    # Group SSPs by whether we process them the same
+    SSP_groups <- tibble(SSP_group = c("1&5","2","3&4"))
+    marker_region <- 13
+
+    marker_region_df <- emfact_scaled %>%
+      unite(col = varyear, variable, year) %>%
+      spread(varyear, emfact) %>%
+      filter(GCAM_region_ID == marker_region) %>%
+      select(-GCAM_region_ID, -GAINS_region, -region_grouping)
+
+    names(marker_region_df)[grep("CLE|SLE|MFR",names(marker_region_df))] <- paste("marker_region",
+                                                                                  names(marker_region_df)[grep("CLE|SLE|MFR",names(marker_region_df))],
+                                                                                  sep = "_")
+    min_EF_policy <- emfact_scaled %>%
+      filter(year == 2030) %>%
+      # Use left_join because not all regions in coal_so2
+      left_join(coal_so2, by = "GCAM_region_ID") %>%
+      replace_na(list(policy = "low")) %>%
+      group_by(Non.CO2, supplysector, subsector, stub.technology, variable, year, region_grouping, policy) %>%
+      summarise(emfact = min(emfact)) %>%
+      ungroup %>%
+      mutate(variable = paste("min", variable, sep = "_")) %>%
+      unite(col = varyearpol, variable, year, policy) %>%
+      spread(varyearpol, emfact)
+
+    SSP_EF <- emfact_scaled %>%
+      unite(col = varyear, variable, year) %>%
+      spread(varyear, emfact) %>%
+      repeat_add_columns(SSP_groups) %>%
+      repeat_add_columns(tibble(year = c(2010, 2030, 2050, 2100))) %>%
+      # Use left_join because not all regions in coal_so2
+      left_join(coal_so2, by = "GCAM_region_ID") %>%
+      left_join(marker_region_df, by = c("Non.CO2", "supplysector", "subsector", "stub.technology", "IIASA_sector")) %>%
+      left_join(min_EF_policy, by = c("Non.CO2", "supplysector", "subsector", "stub.technology", "region_grouping")) %>%
+      # Initially set all values to CLE_2010, then change all years above 2010
+      mutate(value = CLE_2010,
+             # 1&5, High/Medium Income
+             value = replace(value, SSP_group == "1&5" & region_grouping == "highmed" & year == 2030,
+                             0.75 * CLE_2030[SSP_group == "1&5" & region_grouping == "highmed" & year == 2030]),
+             value = replace(value, SSP_group == "1&5" & region_grouping == "highmed" & year == 2050,
+                             SLE_2030[SSP_group == "1&5" & region_grouping == "highmed" & year == 2050]),
+             value = replace(value, SSP_group == "1&5" & region_grouping == "highmed" & year == 2100,
+                             0.75 * MFR_2030[SSP_group == "1&5" & region_grouping == "highmed" & year == 2100]),
+             # 1&5, Low Income
+             value = replace(value, SSP_group == "1&5" & region_grouping == "low" & year == 2030,
+                             CLE_2030[SSP_group == "1&5" & region_grouping == "low" & year == 2030]),
+             value = replace(value, SSP_group == "1&5" & region_grouping == "low" & year == 2050,
+                             marker_region_CLE_2030[SSP_group == "1&5" & region_grouping == "low" & year == 2050]),
+             value = replace(value, SSP_group == "1&5" & region_grouping == "low" & year == 2100,
+                             MFR_2030[SSP_group == "1&5" & region_grouping == "low" & year == 2100]),
+             # 2, High/Medium Income, Strong Policies
+             value = replace(value, SSP_group == "2" & region_grouping == "highmed" & year == 2030 & policy == "strong_reg",
+                             CLE_2030[SSP_group == "2" & region_grouping == "highmed" & year == 2030 & policy == "strong_reg"]),
+             value = replace(value, SSP_group == "2" & region_grouping == "highmed" & year == 2050 & policy == "strong_reg",
+                             SLE_2030[SSP_group == "2" & region_grouping == "highmed" & year == 2050 & policy == "strong_reg"]),
+             value = replace(value, SSP_group == "2" & region_grouping == "highmed" & year == 2100 & policy == "strong_reg",
+                             min_SLE_2030_strong_reg[SSP_group == "2" & region_grouping == "highmed" & year == 2100 & policy == "strong_reg"]),
+             # 2, High/Medium Income, Weak Policies
+             value = replace(value, SSP_group == "2" & region_grouping == "highmed" & year == 2030 & policy == "weak_reg",
+                            CLE_2030[SSP_group == "2" & region_grouping == "highmed" & year == 2030 & policy == "weak_reg"]),
+             value = replace(value, SSP_group == "2" & region_grouping == "highmed" & year == 2050 & policy == "weak_reg",
+                             min_CLE_2030_weak_reg[SSP_group == "2" & region_grouping == "highmed" & year == 2050] & policy == "weak_reg"),
+             value = replace(value, SSP_group == "2" & region_grouping == "highmed" & year == 2100 & policy == "weak_reg",
+                             marker_region_SLE_2030[SSP_group == "2" & region_grouping == "highmed" & year == 2100 & policy == "weak_reg"]),
+             # 2, Low Income
+             value = replace(value, SSP_group == "2" & region_grouping == "low" & year == 2030,
+                             CLE_2020[SSP_group == "2" & region_grouping == "low" & year == 2030]),
+             value = replace(value, SSP_group == "2" & region_grouping == "low" & year == 2050,
+                             min_CLE_2030_low[SSP_group == "2" & region_grouping == "low" & year == 2050]),
+             value = replace(value, SSP_group == "2" & region_grouping == "low" & year == 2100,
+                             SLE_2030[SSP_group == "2" & region_grouping == "low" & year == 2100]),
+             # 3&4, High/Medium Income
+             value = replace(value, SSP_group == "3&4" & region_grouping == "highmed" & year == 2030,
+                             CLE_2020[SSP_group == "3&4" & region_grouping == "highmed" & year == 2030]),
+             value = replace(value, SSP_group == "3&4" & region_grouping == "highmed" & year == 2050,
+                             CLE_2030[SSP_group == "3&4" & region_grouping == "highmed" & year == 2050]),
+             value = replace(value, SSP_group == "3&4" & region_grouping == "highmed" & year == 2100,
+                             SLE_2030[SSP_group == "3&4" & region_grouping == "highmed" & year == 2100]),
+             # 3&4, Low Income
+             value = replace(value, SSP_group == "3&4" & region_grouping == "low" & year == 2030,
+                             CLE_2010[SSP_group == "3&4" & region_grouping == "low" & year == 2030]),
+             value = replace(value, SSP_group == "3&4" & region_grouping == "low" & year == 2050,
+                             CLE_2030[SSP_group == "3&4" & region_grouping == "low" & year == 2050]),
+             value = replace(value, SSP_group == "3&4" & region_grouping == "low" & year == 2100,
+                             marker_region_CLE_2020[SSP_group == "3&4" & region_grouping == "low" & year == 2100])
+      ) %>%
+      select(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology,
+             agg_sector = IIASA_sector, year, value, SSP_group) %>%
+      group_by(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology,
+               agg_sector, SSP_group) %>%
+      # Set NA values to value 1 or 2 time steps previous
+      mutate(value = if_else(is.na(value), lag(value, n = 1L, order_by = year), value),
+             value = if_else(is.na(value), lag(value, n = 1L, order_by = year), value),
+             # Emission factors cannot increase-if any increases, change it to value from previous time step
+             prev = lag(value, n = 1L, order_by = year),
+             value = if_else(value > prev & !is.na(prev), prev, value),
+             prev = lag(value, n = 1L, order_by = year),
+             value = if_else(value > prev & !is.na(prev), prev, value),
+             prev = lag(value, n = 1L, order_by = year),
+             value = if_else(value > prev & !is.na(prev), prev, value)) %>%
+      select(-prev) %>%
+      ungroup
+
+    out_df <- SSP_EF %>%
+      split(.$SSP_group) %>%
+      lapply(function(df){
+        select(df, -SSP_group)
+      })
 
     # NOTE: This code converts gdp using a conv_xxxx_xxxx_USD constant
 # Use the `gdp_deflator(year, base_year)` function instead
     # ===================================================
 
     # Produce outputs
-    tibble() %>%
+    out_df[["1&5"]] %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -136,7 +267,7 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
                      "L114.bcoc_tgej_R_en_S_F_2000") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L161.SSP15_EF
-      tibble() %>%
+    out_df[["2"]] %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -145,7 +276,7 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
       add_precursors("emissions/A_regions") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L161.SSP2_EF
-      tibble() %>%
+    out_df[["3&4"]] %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
