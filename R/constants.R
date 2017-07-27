@@ -110,6 +110,15 @@ aglu.FOR_COST_75USDM3 <- 29.59
 aglu.BIO_GRASS_COST_75USD_GJ <- 0.75
 aglu.BIO_TREE_COST_75USD_GJ <- 0.67
 
+# Price at which base year bio frac produced is used.
+# The share of residue biomass production in each region,
+# defined as the energy produced divided by the total
+# waste biomass produced, is read in by A_bio_frac_prod_R.csv.
+# This price, in 1975$/GJ, indicates the biomass price at
+# the given shares. It should be close to the model's actual
+# (endogenous) biomass prices in the final calibration year.
+aglu.PRICE_BIO_FRAC <- 1.2
+
 # Fertilizer application rate for biomass, and carbon yields. Values from Adler et al. 2007 (doi:10.1890/05-2018)
 aglu.BIO_GRASS_FERT_IO_GNM2 <- 5.6
 aglu.BIO_GRASS_YIELD_KGCM2 <- 0.34
@@ -139,13 +148,46 @@ aglu.NO_AGLU_REGIONS <- "Taiwan"
 # Define GCAM category name of fertilizer
 aglu.FERT_NAME <- "N fertilizer"
 
+# Average Wood Density kg/m^3 for mass conversion
+# Source: http://www.engineeringtoolbox.com/wood-density-d_40.html
+# To Page's knowledge, nobody's ever done a weighted average wood density
+# across all tree species that are commercially logged;
+# 500 was was chosen to be towards the middle of the species that are produced.
+aglu.AVG_WOOD_DENSITY_KGM3 <- 500
+
+# Average Agriculture Density kg/m^3 for mass conversion
+# Source: http://www.engineeringtoolbox.com/wood-density-d_40.html
+aglu.AVG_AG_DENSITY <- 1
+
+# Forest Harvest Index
+aglu.FOREST_HARVEST_INDEX <- 0.8
+
+# Forest Erosion Control in kg/m^2
+aglu.FOREST_EROSION_CTRL_KGM2 <- 0.2
+
+#Mill Erosion Control in kg/m^2
+aglu.MILL_EROSION_CTRL_KGM2 <- 0
+
+# Wood energy content in GJ/kg
+aglu.WOOD_ENERGY_CONTENT_GJKG <- 0.0189
+
+# wood water content
+aglu.WOOD_WATER_CONTENT <- 0.065
+
+
+
 # XML-related constants
 aglu.GLU_NDIGITS          <- 3    # number of digits in the geographic land unit identifier codes
-aglu.GLU_NAME_DELIMITER   <- ""   # delimiter between the GLU name and number
 aglu.LT_GLU_DELIMITER     <-      # delimiter between the land use type name and GLU name. should be the same as the crop-glu delimiter
-  aglu.CROP_GLU_DELIMITER <- "_"  # delimiter between the crop name and GLU name
+aglu.CROP_GLU_DELIMITER   <- "_"  # delimiter between the crop name and GLU name
 aglu.IRR_DELIMITER        <- "_"  # delimiter between the appended crop x GLU and irrigation level
 aglu.MGMT_DELIMITER       <- "_"  # delimiter between appended tech name and management level
+
+# some more digits for rounding going into XMLs
+aglu.DIGITS_HARVEST_INDEX <- 2
+aglu.DIGITS_EROS_CTRL     <- 2
+aglu.DIGITS_RES_ENERGY    <- 4
+aglu.DIGITS_WATER_CONTENT <- 2
 
 
 # Energy constants ======================================================================
