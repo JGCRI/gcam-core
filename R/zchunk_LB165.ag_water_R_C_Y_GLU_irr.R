@@ -343,6 +343,7 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
       filter(!is.na(GCAM_commodity)) %>%   # to replicate `aggregate` behavior
       group_by(GCAM_region_ID, GCAM_commodity, GLU) %>%
       summarise_at(vars(irrProd_t, rfdProd_t, BlueIrr_thousm3, GreenIrr_thousm3, GreenRfd_thousm3), sum) %>%
+      ungroup %>%
       mutate(BlueIrr_m3kg = BlueIrr_thousm3 / irrProd_t,
              GreenIrr_m3kg = GreenIrr_thousm3 / irrProd_t,
              GreenRfd_m3kg = GreenRfd_thousm3 / rfdProd_t,
