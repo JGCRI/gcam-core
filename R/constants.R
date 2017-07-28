@@ -139,10 +139,6 @@ aglu.NO_AGLU_REGIONS <- "Taiwan"
 # Define GCAM category name of fertilizer
 aglu.FERT_NAME <- "N fertilizer"
 
-# define top-level (zero) land nest logit exponent and logit type
-aglu.N0_LOGIT_EXP <- 0
-aglu.N0_LOGIT_TYPE  NA
-
 # XML-related constants
 aglu.GLU_NDIGITS          <- 3    # number of digits in the geographic land unit identifier codes
 aglu.GLU_NAME_DELIMITER   <- ""   # delimiter between the GLU name and number
