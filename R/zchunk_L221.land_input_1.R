@@ -53,12 +53,51 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
     L125.LC_bm2_R <- get_data(all_data, "L125.LC_bm2_R")
     L131.LV_USD75_m2_R_GLU <- get_data(all_data, "L131.LV_USD75_m2_R_GLU")
 
+    # Replace GLU names
+    L121.CarbonContent_kgm2_R_LT_GLU %>%
+      replace_GLU(map = basin_to_country_mapping) ->
+      L121.CarbonContent_kgm2_R_LT_GLU
+
+    L125.LC_bm2_R_LT_Yh_GLU %>%
+      replace_GLU(map = basin_to_country_mapping) ->
+      L125.LC_bm2_R_LT_Yh_GLU
+
+    L131.LV_USD75_m2_R_GLU %>%
+      replace_GLU(map = basin_to_country_mapping) ->
+      L131.LV_USD75_m2_R_GLU
+
+    # Add region names to inputs
+    L125.LC_bm2_R %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
+      L125.LC_bm2_R
+
+
+    # Perform computations
+
+    # Create a template table of combinations of region, GLUs, land use types
+    L125.LC_bm2_R_LT_Yh_GLU %>%
+      left_join(select(A_LT_Mapping, Land_Type, LandNode1), by = "Land_Type") %>%
+      select(GCAM_region_ID, GLU, LandNode1) %>%
+      distinct %>%
+      na.omit ->
+      L221.LN1
+
+
+    # Calculate logit exponent of the top-level (zero) land nest.
+
+    # Prepare the table of identifying information to be filled in
+    L125.LC_bm2_R %>%
+      select(region) %>%
+      mutate(LandAllocatorRoot = "root",
+             logit.year.fillout = min(BASE_YEARS),
+             logit.exponent = aglu.N0_LOGIT_EXP,
+             logit.type = aglu.N0_LOGIT_TYPE) ->
+      L221.LN0_Logit
+
+
+
 
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
     # tibble() %>%
     #   add_title("descriptive title of data") %>%
     #   add_units("units") %>%
