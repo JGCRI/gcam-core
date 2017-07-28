@@ -18,10 +18,11 @@ the generated outputs: \code{L161.SSP15_EF}, \code{L161.SSP2_EF}, \code{L161.SSP
 original data system was \code{L161.nonghg_en_ssp_R_S_T_Y.R} (emissions level1).
 }
 \description{
-Briefly describe what this chunk does.
+Produces future emissions factors by SSP scenario.
 }
 \details{
-Describe in detail what this chunk does.
+Scales future GAINS emissions factors to L111/L114 base year emissions factors,
+then applies future emissions factors to some GCAM years based on SSP-specific rules.
 }
 \author{
 RLH July 2017

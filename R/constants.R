@@ -286,6 +286,7 @@ emissions.PFCS <- c("CF4", "C2F6", "SF6")
 emissions.HFC_MODEL_BASE_YEARS <- c(1975, 1990, 2005, 2010)
 emissions.F_GAS_UNITS <- "Gg"
 emissions.GAINS_BASE_YEAR <- 2005
+emissions.GAINS_YEARS <- c(2010, 2020, 2030)
 emissions.LOW_PCGDP <- 2.75
 emissions.COAL_SO2_THRESHOLD <- 0.1
 # ======================================================================
