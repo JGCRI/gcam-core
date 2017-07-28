@@ -179,6 +179,9 @@ aglu.WOOD_ENERGY_CONTENT_GJKG <- 0.0189
 # wood water content
 aglu.WOOD_WATER_CONTENT <- 0.065
 
+# define top-level (zero) land nest logit exponent and logit type
+aglu.N0_LOGIT_EXP <- 0
+aglu.N0_LOGIT_TYPE <- NA
 
 
 # XML-related constants
