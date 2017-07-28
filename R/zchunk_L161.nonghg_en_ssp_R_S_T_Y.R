@@ -33,7 +33,12 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    A_regions <- get_data(all_data, "emissions/A_regions")
+    A_regions <- get_data(all_data, "emissions/A_regions") %>%
+      # temporary crutch
+      mutate(GAINS_region = sub("China", "China+", GAINS_region),
+             GAINS_region = sub("Russia", "Russia+", GAINS_region),
+             GAINS_region = sub("Ukraine", "Ukraine+", GAINS_region),
+             GAINS_region = sub("Indonesia", "Indonesia+", GAINS_region))
     GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
     GAINS_sector <- get_data(all_data, "emissions/mappings/gains_to_gcam_sector")
     GAINS_activities <- get_data(all_data, "emissions/GAINS_activities")
@@ -88,12 +93,7 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
 
     # Compute emissions factor scaler.
     # These scalers are relative to the previous time period's numbers.
-    GAINS_emfact_scaler <- GAINS_emfact %>%
-      # Get rid of any years before base year
-      filter(IDYEARS >= emissions.GAINS_BASE_YEAR) %>%
-      spread(IDYEARS, emfact) %>%
-      na.omit() %>%
-      gather(IDYEARS, emfact, matches(YEAR_PATTERN)) %>%
+    GAINS_emfact_scaler <- GAINS_emfact_scaler <- GAINS_emfact %>%
       group_by(TIMER_REGION, agg_sector, POLL, variable) %>%
       # Set scaler equal to emfact.base_value and don't allow any value greater than 1
       mutate(prev = lag(emfact, n = 1L, order = IDYEARS)) %>%
@@ -101,6 +101,9 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
       filter(IDYEARS > emissions.GAINS_BASE_YEAR) %>%
       mutate(scaler = emfact / prev,
              scaler = replace(scaler, scaler > 1, 1)) %>%
+      group_by(TIMER_REGION, agg_sector, POLL, variable) %>%
+      mutate(scaler = cumprod(scaler)) %>%
+      ungroup() %>%
       select(GAINS_region = TIMER_REGION, IIASA_sector = agg_sector, Non.CO2 = POLL, variable, year = IDYEARS, scaler)
 
 
@@ -129,13 +132,15 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
       select(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, GAINS_region, IIASA_sector,
              variable, year, emfact, region_grouping)
 
-    coal_so2 <- emfact_scaled %>%
-      filter(year == "2030", IIASA_sector == "elec_coal", Non.CO2 == "SO2", region_grouping == "highmed") %>%
-      group_by(GCAM_region_ID) %>%
-      mutate(policy = if_else(emfact[variable == "CLE"] <= emissions.COAL_SO2_THRESHOLD, "strong_reg", "weak_reg")) %>%
-      ungroup %>%
-      select(GCAM_region_ID, policy) %>%
-      distinct()
+    coal_so2 <- tibble(GCAM_region_ID = seq(1, 32)) %>%
+      left_join(
+        emfact_scaled %>%
+          filter(year == "2030", IIASA_sector == "elec_coal", Non.CO2 == "SO2", variable == "CLE"),
+        by = "GCAM_region_ID") %>%
+      mutate(policy = if_else(emfact <= emissions.COAL_SO2_THRESHOLD, "strong_reg", "weak_reg"),
+             policy = replace(policy, region_grouping == "low", "low")) %>%
+      replace_na(list(policy = "low")) %>%
+      select(GCAM_region_ID, policy)
 
     # Group SSPs by whether we process them the same
     SSP_groups <- tibble(SSP_group = c("1&5","2","3&4"))
@@ -151,18 +156,26 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
                                                                                   names(marker_region_df)[grep("CLE|SLE|MFR",names(marker_region_df))],
                                                                                   sep = "_")
     min_EF_policy <- emfact_scaled %>%
+      filter(year == 2010) %>%
+      na.omit %>%
+      select(-year, -emfact) %>%
+      left_join(emfact_scaled, by = c("GCAM_region_ID", "Non.CO2", "supplysector", "subsector", "stub.technology",
+                                      "GAINS_region", "IIASA_sector", "variable", "region_grouping")) %>%
       filter(year == 2030) %>%
-      # Use left_join because not all regions in coal_so2
       left_join(coal_so2, by = "GCAM_region_ID") %>%
-      replace_na(list(policy = "low")) %>%
       group_by(Non.CO2, supplysector, subsector, stub.technology, variable, year, region_grouping, policy) %>%
-      summarise(emfact = min(emfact)) %>%
+      summarise(emfact = min(emfact, na.rm = TRUE)) %>%
       ungroup %>%
       mutate(variable = paste("min", variable, sep = "_")) %>%
       unite(col = varyearpol, variable, year, policy) %>%
       spread(varyearpol, emfact)
 
     SSP_EF <- emfact_scaled %>%
+      filter(year == 2010) %>%
+      na.omit %>%
+      select(-year, -emfact) %>%
+      left_join(emfact_scaled, by = c("GCAM_region_ID", "Non.CO2", "supplysector", "subsector", "stub.technology",
+                                      "GAINS_region", "IIASA_sector", "variable", "region_grouping")) %>%
       unite(col = varyear, variable, year) %>%
       spread(varyear, emfact) %>%
       repeat_add_columns(SSP_groups) %>%
@@ -196,9 +209,9 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
                              min_SLE_2030_strong_reg[SSP_group == "2" & region_grouping == "highmed" & year == 2100 & policy == "strong_reg"]),
              # 2, High/Medium Income, Weak Policies
              value = replace(value, SSP_group == "2" & region_grouping == "highmed" & year == 2030 & policy == "weak_reg",
-                            CLE_2030[SSP_group == "2" & region_grouping == "highmed" & year == 2030 & policy == "weak_reg"]),
+                             CLE_2030[SSP_group == "2" & region_grouping == "highmed" & year == 2030 & policy == "weak_reg"]),
              value = replace(value, SSP_group == "2" & region_grouping == "highmed" & year == 2050 & policy == "weak_reg",
-                             min_CLE_2030_weak_reg[SSP_group == "2" & region_grouping == "highmed" & year == 2050] & policy == "weak_reg"),
+                             min_CLE_2030_weak_reg[SSP_group == "2" & region_grouping == "highmed" & year == 2050 & policy == "weak_reg"]),
              value = replace(value, SSP_group == "2" & region_grouping == "highmed" & year == 2100 & policy == "weak_reg",
                              marker_region_SLE_2030[SSP_group == "2" & region_grouping == "highmed" & year == 2100 & policy == "weak_reg"]),
              # 2, Low Income
@@ -245,6 +258,13 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
       lapply(function(df){
         select(df, -SSP_group)
       })
+
+    # Region 25 is dropped in old ds because it does not have policy (elec_coal data does not exist)
+    # In new ds, it is given own policy to avoid error??
+    if (OLD_DATA_SYSTEM_BEHAVIOR){
+      out_df[["2"]] <- out_df[["2"]] %>%
+        filter(GCAM_region_ID != 25)
+    }
 
     # NOTE: This code converts gdp using a conv_xxxx_xxxx_USD constant
 # Use the `gdp_deflator(year, base_year)` function instead
