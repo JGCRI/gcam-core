@@ -125,6 +125,11 @@ aglu.BIO_GRASS_YIELD_KGCM2 <- 0.34
 aglu.BIO_TREE_FERT_IO_GNM2 <- 3.36
 aglu.BIO_TREE_YIELD_KGCM2 <- 0.345
 
+# Water characteristics for biomass
+# Reference: Chaturvedi et al. 2015, Climate mitigation policy implications for global irrigation water demand, Mitig Adapt Strateg Glob Change (2015) 20:389-407. DOI 10.1007/s11027-013-9497-4
+aglu.BIO_GRASS_WATER_IO_KM3EJ <- 25
+aglu.BIO_TREE_WATER_IO_KM3EJ <- 25
+
 # Cost of Fertilizer
 aglu.FERT_COST <- 363 # 2007$ per ton NH3
 
@@ -216,6 +221,8 @@ ELECTRICITY_INPUT_FUELS<- c("biomass", "coal", "gas", "refined liquids")
 # Mass
 CONV_BIL_MIL <- 1000
 CONV_MIL_BIL <- 1 / CONV_BIL_MIL
+CONV_BIL_THOUS <- 1e6
+CONV_THOUS_BIL <- 1 / CONV_BIL_THOUS
 CONV_MIL_THOUS <- 1000
 CONV_ONES_THOUS <- 0.001
 CONV_TON_MEGATON <- 1e-6
@@ -300,10 +307,10 @@ MAPPED_WATER_TYPES_SHORT            <- c("C", "W")
 names(MAPPED_WATER_TYPES_SHORT)     <- MAPPED_WATER_TYPES
 DEFAULT_UNLIMITED_WATER_PRICE       <- 0
 DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.001
+DEFAULT_UNLIMITED_IRR_WATER_PRICE   <- 0.001 # (Units: 1975$/m3)
 WATER_UNITS_QUANTITY                <- "km^3"
 WATER_UNITS_PRICE                   <- "1975$/m^3"
 AG_ONLY_WATER_TYPES                 <- "biophysical water consumption"
-
 
 
 # Emissions constants ======================================================================
