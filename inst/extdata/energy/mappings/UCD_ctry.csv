@@ -1,8 +1,8 @@
-# File:UCD_ctry.csv,,
-# Title:Mapping iso code to country to GCAM3 region,,
-# Units: NA,,
-# Description: Maps iso codes to GCAM regions (including composites as necessary),,
-# Source: Mishra et al. 2013,,
+# File:UCD_ctry.csv
+# Title:Mapping iso code to country to GCAM3 region
+# Units: NA
+# Description: Maps iso codes to GCAM regions (including composites as necessary)
+# Source: Mishra et al. 2013
 iso,country_name,UCD_region
 abw,Aruba,Latin America
 afg,Afghanistan,Southeast Asia

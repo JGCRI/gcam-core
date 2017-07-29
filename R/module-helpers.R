@@ -277,3 +277,39 @@ replace_GLU <- function(d, map, GLU_pattern = "^GLU[0-9]{3}$") {
   }
   d
 }
+
+#' get_ssp4_regions
+#'
+#' Get regions for different income groups in SSP4
+#'
+#' @param pcGDP A tibble with per capita GDP estimates
+#' @param reg_names A tibble with columns \code{GCAM_region_ID} and \code{region}
+#' @param income_group A string indicating which region group (low, medium, high)
+#' @return A list of region names belonging to the specified income group.
+get_ssp4_regions <- function(pcGDP, reg_names, income_group) {
+  pcGDP %>%
+    filter(scenario == "SSP4", year == 2010) %>%
+    select(GCAM_region_ID, value) %>%
+    left_join_error_no_match(reg_names, by = "GCAM_region_ID") %>%
+    mutate(value = value * gdp_deflator(2010, 1990)) ->
+    pcGDP_2010
+
+  if(income_group == "low") {
+    pcGDP_2010 %>%
+      filter(value < aglu.LOW_GROWTH_PCGDP) ->
+      regions
+  } else if(income_group == "high") {
+    pcGDP_2010 %>%
+      filter(value > aglu.HIGH_GROWTH_PCGDP) ->
+      regions
+  } else if(income_group == "medium") {
+    pcGDP_2010 %>%
+      filter(value < aglu.HIGH_GROWTH_PCGDP, value > aglu.LOW_GROWTH_PCGDP) ->
+      regions
+  } else{
+    # ERROR! -- what do I do here?
+  }
+
+  return(regions$region)
+}
+
