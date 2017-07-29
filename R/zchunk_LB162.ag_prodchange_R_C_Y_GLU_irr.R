@@ -254,7 +254,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
       L162.ag_HA_ha_ctry_crop_irr %>%
         na.omit() %>%
         repeat_add_columns(tibble::tibble(year = SPEC_AG_PROD_YEARS)) %>% # agree fine to here; it's the next join
-        left_join(CROSIT_mult, by = c("CROSIT_ctry", "CROSIT_crop","Irr_Rfd", "year")) %>%
+        left_join(CROSIT_mult, by = c("CROSIT_ctry", "CROSIT_crop", "Irr_Rfd", "year")) %>%
         na.omit() %>%
         left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
         left_join_error_no_match(select(FAO_ag_items_PRODSTAT, GTAP_crop, GCAM_commodity), by = "GTAP_crop") %>%

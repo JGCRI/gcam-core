@@ -32,11 +32,11 @@ module_aglu_batch_ssp4_trade.xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("ssp4_trade.xml") %>%
-      add_xml_data(L241.StubAgTradeCoeff_food,"StubTechCoef_NM") %>%
-      add_xml_data(L241.StubAgTradeCoeff_nonfood,"StubTechCoef_NM") %>%
-      add_xml_data(L241.StubAgTradeCoeff_feed,"StubTechCoef_NM") %>%
-      add_xml_data(L241.AgProdTech_RES_output,"AgRES") %>%
-      add_xml_data(L241.RES_Market,"PolicyPortfolioStd") %>%
+      add_xml_data(L241.StubAgTradeCoeff_food, "StubTechCoef_NM") %>%
+      add_xml_data(L241.StubAgTradeCoeff_nonfood, "StubTechCoef_NM") %>%
+      add_xml_data(L241.StubAgTradeCoeff_feed, "StubTechCoef_NM") %>%
+      add_xml_data(L241.AgProdTech_RES_output, "AgRES") %>%
+      add_xml_data(L241.RES_Market, "PolicyPortfolioStd") %>%
       add_precursors("L241.StubAgTradeCoeff_food", "L241.StubAgTradeCoeff_nonfood", "L241.StubAgTradeCoeff_feed", "L241.AgProdTech_RES_output", "L241.RES_Market") ->
       ssp4_trade.xml
 

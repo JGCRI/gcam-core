@@ -173,7 +173,7 @@ module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr <- function(command, ...) {
       add_comments("Data is for a single year (circa 2000)") %>%
       add_legacy_name("L151.ag_irrProd_t_ctry_crop") %>%
       same_precursors_as("L151.ag_irrHA_ha_ctry_crop") %>%
-      add_precursors("aglu/AGLU_ctry","aglu/FAO/FAO_ag_CROSIT","L100.LDS_ag_prod_t") ->
+      add_precursors("aglu/AGLU_ctry", "aglu/FAO/FAO_ag_CROSIT", "L100.LDS_ag_prod_t") ->
       L151.ag_irrProd_t_ctry_crop
 
     L151.ag_rfdProd_t_ctry_crop %>%
@@ -185,7 +185,7 @@ module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr <- function(command, ...) {
       add_comments("Data is for a single year (circa 2000)") %>%
       add_legacy_name("L151.ag_rfdProd_t_ctry_crop") %>%
       same_precursors_as("L151.ag_rfdHA_ha_ctry_crop") %>%
-      add_precursors("aglu/AGLU_ctry","aglu/FAO/FAO_ag_CROSIT","L100.LDS_ag_prod_t") ->
+      add_precursors("aglu/AGLU_ctry", "aglu/FAO/FAO_ag_CROSIT", "L100.LDS_ag_prod_t") ->
       L151.ag_rfdProd_t_ctry_crop
 
     return_data(L151.ag_irrHA_ha_ctry_crop, L151.ag_rfdHA_ha_ctry_crop, L151.ag_irrProd_t_ctry_crop, L151.ag_rfdProd_t_ctry_crop)

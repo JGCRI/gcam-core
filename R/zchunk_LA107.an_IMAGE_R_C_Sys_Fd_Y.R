@@ -89,7 +89,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
       rename(totAnProd = value) %>%
       # pastoral animal production = total animal production - mixed animal production for each country, commodity, year:
       left_join(select(L107.an_Prod_Mt_ctry_C_mix_Y, iso, GCAM_commodity, year, value),
-                by = c("iso","GCAM_commodity", "year")) %>%
+                by = c("iso", "GCAM_commodity", "year")) %>%
       rename(mixAnProd = value) %>%
       mutate(value = totAnProd - mixAnProd) %>%
       select(-totAnProd, -mixAnProd) %>%
