@@ -49,36 +49,36 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
     Odyssee_ResFloorspacePerHouse <- get_data(all_data, "energy/Odyssee_ResFloorspacePerHouse")
     L100.Pop_thous_ctry_Yh <- get_data(all_data, "L100.Pop_thous_ctry_Yh")
     L102.gdp_mil90usd_GCAM3_R_Y <- get_data(all_data, "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y") %>%
-                                            gather(year, value, -GCAM_region_ID) %>%
-                                            mutate(year = as.integer(substr(year, 2, 5)))
+      gather(year, value, -GCAM_region_ID) %>%
+      mutate(year = as.integer(substr(year, 2, 5)))
 
     # ===================================================
 
     # Silence package notes
     . <- `1980` <- `1990` <- `1991` <- `1992` <- `1995` <- `1996` <- `1998` <- `2001` <- `2004` <-
-    GCAM_region_ID <- GCAM_sector <- gcam.consumer <- region_GCAM3 <- state <- value_bm2 <-
-    value_bm2_other <- value_flsp <- value_pcdwelling <- value_pcflsp <- value_pcflsp_USA <-
-    value_phflsp <- year <- value <- iso <- country <- Variable <- Unit <- NULL
+      GCAM_region_ID <- GCAM_sector <- gcam.consumer <- region_GCAM3 <- state <- value_bm2 <-
+      value_bm2_other <- value_flsp <- value_pcdwelling <- value_pcflsp <- value_pcflsp_USA <-
+      value_phflsp <- year <- value <- iso <- country <- Variable <- Unit <- NULL
 
     # FLOORSPACE CALCULATION - RESIDENTIAL
 
     # In this section, we aim to create a final output table of residential floorspace per GCAM region across all historical years
     # Before aggregating to the regional level, floorspace will be calculated at the country level using the following base datasets:
-         # CEDB_ResFloorspace_chn (China Energy Databook) provides residential floorspace (billions m2) from 1985 to 2006 for China
-         # IEA_PCResFloorspace provides residential floorspace (m2) per person for 16 selected countries for 1980 to 2004
-         # Odyssee_ResFloorspacePerHouse provides residential floorspace (m2) per house (not person) from 1980 to 2009 for 29 countries
-              # A44.HouseholdSize provides number of persons/dwelling data, which will be used to calculate floorspace per capita
-              # Note that IEA data will be chosen over Odyssee for duplicate countries b/c it reports per capita instead of per house
-         # Other_pcflsp_m2_ctry_Yh provides residential and commercial floorspace (m2) per person for 2004 and 2005
-              # for other countries (only South Africa at this time)
-         # A44.flsp_bm2_state_res provides residential floorspace by U.S. state from 1975-2005 (in 5-year increments) and 2008
-              # Note that this table is written by LA144.Residential.R from an earlier version of GCAM-USA
-         # A44.pcflsp_default provides residential and commercial floorspace (m2) per person for 1975, 1990, and 2005 for GCAM3 regions
-         # L100.Pop_thous_ctry_Yh provides country-level population data and will be used to switch between total floorspace and per capita data
+    # CEDB_ResFloorspace_chn (China Energy Databook) provides residential floorspace (billions m2) from 1985 to 2006 for China
+    # IEA_PCResFloorspace provides residential floorspace (m2) per person for 16 selected countries for 1980 to 2004
+    # Odyssee_ResFloorspacePerHouse provides residential floorspace (m2) per house (not person) from 1980 to 2009 for 29 countries
+    # A44.HouseholdSize provides number of persons/dwelling data, which will be used to calculate floorspace per capita
+    # Note that IEA data will be chosen over Odyssee for duplicate countries b/c it reports per capita instead of per house
+    # Other_pcflsp_m2_ctry_Yh provides residential and commercial floorspace (m2) per person for 2004 and 2005
+    # for other countries (only South Africa at this time)
+    # A44.flsp_bm2_state_res provides residential floorspace by U.S. state from 1975-2005 (in 5-year increments) and 2008
+    # Note that this table is written by LA144.Residential.R from an earlier version of GCAM-USA
+    # A44.pcflsp_default provides residential and commercial floorspace (m2) per person for 1975, 1990, and 2005 for GCAM3 regions
+    # L100.Pop_thous_ctry_Yh provides country-level population data and will be used to switch between total floorspace and per capita data
 
     # China
-         # China Energy Databook, CEDB_ResFloorspace_chn, provides residential floorspace (billions m2) from 1985 to 2006 for China.
-         # Divide floorspace by population to get per capita floorspace, and extrapolate to all historical years
+    # China Energy Databook, CEDB_ResFloorspace_chn, provides residential floorspace (billions m2) from 1985 to 2006 for China.
+    # Divide floorspace by population to get per capita floorspace, and extrapolate to all historical years
     CEDB_ResFloorspace_chn %>%
       gather(year, value_flsp, -country, -iso) %>% # Convert to long form
       mutate(year = as.integer(year)) %>% # Needs to be integer to combine with L100.Pop_thous_ctry_Yh
@@ -97,7 +97,7 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
       L144.pcflsp_m2_chn_Yh
 
     # Odyssee_ResFloorspacePerHouse provides residential floorspace (m2) per house (not person) from 1980 to 2009 for 29 countries
-         # A44.HouseholdSize provides number of persons/dwelling data, which will be used to calculate floorspace per capita
+    # A44.HouseholdSize provides number of persons/dwelling data, which will be used to calculate floorspace per capita
 
     # We need to prepare some lists and reshape tables first
     # First, convert household data to long form so it can be joined at a later step
@@ -107,12 +107,14 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
       mutate(year = as.integer(year))
 
     # IEA_PCResFloorspace provides residential floorspace (m2) per person for 16 selected countries for 1980 to 2004
-         # Note that IEA data will be chosen over Odyssee for duplicate countries b/c it reports per capita instead of per house
+    # Note that IEA data will be chosen over Odyssee for duplicate countries b/c it reports per capita instead of per house
 
     # Reshape IEA data to long form
-    IEA_PCResFloorspace_long <- gather(IEA_PCResFloorspace, year, value_pcflsp, matches(YEAR_PATTERN)) %>%
+    IEA_PCResFloorspace %>%
+      gather(year, value_pcflsp, matches(YEAR_PATTERN)) %>%
       mutate(year = as.integer(year),
-             value_pcflsp = as.numeric(value_pcflsp))
+             value_pcflsp = as.numeric(value_pcflsp)) ->
+      IEA_PCResFloorspace_long
 
     # Create list of IEA iso's. It will be used to remove these iso's from Odyssee data.
     # Also, create a list of years from IEA data in order to be used for filtering.
@@ -137,8 +139,8 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
       bind_rows(L144.Odyssee_pcflsp_Yh) %>% # Bind with Odyssee table
       filter(year %in% list_years_IEA) %>% # Restrict to year range from IEA table
       # We want to drop any countries with all missing values. First we will drop all rows with missing per capita values,
-           # and then expand to all historical years. Countries with no per capita data for any year will consequently be removed.
-           # Note that this permanently removes Cyprus, which has data post 2004.
+      # and then expand to all historical years. Countries with no per capita data for any year will consequently be removed.
+      # Note that this permanently removes Cyprus, which has data post 2004.
       filter(!is.na(value_pcflsp)) %>%
       group_by(iso) %>%
       complete(year = HISTORICAL_YEARS) %>% # Exand table to all historical years.
@@ -195,7 +197,7 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
       L144.OECD_pcflsp_Yh_final
 
     # Other country - South Africa
-         # Other_pcflsp_m2_ctry_Yh provides residential and commercial floorspace (m2) per person for 2004 and 2005
+    # Other_pcflsp_m2_ctry_Yh provides residential and commercial floorspace (m2) per person for 2004 and 2005
 
     # Time series doesn't span entire "historical" range; need to extrapolate
     # For now, use constant floorspace outside of available time series
@@ -216,7 +218,7 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
                                     L144.pcflsp_m2_otherctry_Yh_final)
 
     # Replace the USA data with 50-state-derived data
-         # Note that this table is written by LA144.Residential.R from an earlier version of GCAM-USA
+    # Note that this table is written by LA144.Residential.R from an earlier version of GCAM-USA
     A44.flsp_bm2_state_res %>%
       gather(year, value_bm2, -state, -GCAM_sector) %>% # Convert to long form
       mutate(year = as.integer(substr(year, 2, 5))) %>%
@@ -242,8 +244,8 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
       L144.ALL_pcflsp_Yh_2
 
     # Apply default estimates of per-capita floorspace to remaining countries in the world
-         # Extrapolate the defaults to all years
-         # First, create list of countries already calculated, so that they can be removed from this more general list
+    # Extrapolate the defaults to all years
+    # First, create list of countries already calculated, so that they can be removed from this more general list
     list_iso_calc <- unique(L144.ALL_pcflsp_Yh_2$iso)
 
     A44.pcflsp_default %>%
@@ -265,8 +267,8 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
 
     # Per capita floorspace was calculated for all countries.
     # Now we can calculate total floorspace and aggregate by GCAM region.
-         # Multiply by population, match in the region names, and aggregate by (new) GCAM region
-         # This produces the final output table for the residential sector.
+    # Multiply by population, match in the region names, and aggregate by (new) GCAM region
+    # This produces the final output table for the residential sector.
     L144.pcflsp_m2_ctry_Yh %>%
       # left_join_error_no_match cannot be used because the population file does not have all the countries
       left_join(L100.Pop_thous_ctry_Yh, by = c("iso", "year")) %>%
@@ -282,11 +284,11 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
 
     # In this section, we aim to create a final output table of commercial floorspace per GCAM region across all historical years
     # Before aggregating to the regional level, floorspace will be calculated at the country level using the following base datasets:
-         # A44.flsp_bm2_state_comm provides commercial floorspace by U.S. state from 1975-2005 (in 5-year increments) and 2008
-              # Note that this table is written by LA144.Commercial.R from an earlier version of GCAM-USA
-         # Other_pcflsp_m2_ctry_Yh provides residential and commercial floorspace (m2) per person for 2004 and 2005
-              # for other countries (only South Africa at this time)
-         # A44.pcflsp_default provides residential and commercial floorspace (m2) per person for 1975, 1990, and 2005 for GCAM3 regions
+    # A44.flsp_bm2_state_comm provides commercial floorspace by U.S. state from 1975-2005 (in 5-year increments) and 2008
+    # Note that this table is written by LA144.Commercial.R from an earlier version of GCAM-USA
+    # Other_pcflsp_m2_ctry_Yh provides residential and commercial floorspace (m2) per person for 2004 and 2005
+    # for other countries (only South Africa at this time)
+    # A44.pcflsp_default provides residential and commercial floorspace (m2) per person for 1975, 1990, and 2005 for GCAM3 regions
 
     # For the USA, use the 50-state-derived data (written by LA144.Commercial.R from an earlier version of GCAM-USA)
     A44.flsp_bm2_state_comm %>%
@@ -333,8 +335,8 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
     list_iso_other_comm <- unique(L144.flsp_bm2_comm_otherctry_Yh$iso)
 
     # GCAM3 region per capita floorspace data for 1975, 1990, and 2005
-         # Regions will be downscaled to the country level.
-         # USA and South Africa will be joined.
+    # Regions will be downscaled to the country level.
+    # USA and South Africa will be joined.
     A44.pcflsp_default %>%
       gather(year, value_pcflsp, matches(YEAR_PATTERN)) %>%
       mutate(year = as.integer(year)) %>%
@@ -364,10 +366,10 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
 
     # Floorspace was calculated for all countries.
     # Now we can aggregate by GCAM region.
-         # This produces the final output table for the commercial sector.
+    # This produces the final output table for the commercial sector.
     L144.flsp_bm2_ctry_comm_Yh %>%
       group_by(GCAM_region_ID, year) %>%
-      summarise(value = sum(value_bm2, na.rm = T)) %>% # Ignore NAs that were introduced via left_join step
+      summarise(value = sum(value_bm2, na.rm = TRUE)) %>% # Ignore NAs that were introduced via left_join step
       ungroup() ->
       L144.flsp_bm2_R_comm_Yh # This is a final output table.
 
@@ -375,7 +377,7 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
     # CALCULATON OF FLOORSPACE PRICES
 
     # Buildings is assumed to be 20% of GDP
-    bld_frac_of_income <- 0.2
+    BLD_FRAC_OF_INCOME <- 0.2
 
     # The residential table will be used to calculate building floorspace prices. Units will be 1990$ / m2
     # Note that this produces a final output table.
@@ -385,7 +387,7 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
       filter(year %in% HISTORICAL_YEARS) %>%
       # Convert to billion $ and divide by floorspace (billion m2), so that final units will be $ / m2
       # Buildings is assumed to be 20% of GDP
-      mutate(value = value * CONV_MIL_BIL * bld_frac_of_income / value_flsp) %>%
+      mutate(value = value * CONV_MIL_BIL * BLD_FRAC_OF_INCOME / value_flsp) %>%
       select(GCAM_region_ID, year, value) ->
       L144.flspPrice_90USDm2_R_bld_Yh # This is a final output table.
 
