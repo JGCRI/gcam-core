@@ -1,8 +1,8 @@
-# File: UCD_techs.csv,,,,,,,,,,
-# Title: UCD technologies mapping,,,,,,,,,,
-# Units: NA,,,,,,,,,,
-# Description: Maps UCD technology to GCAM technology,,,,,,,,,,
-# Source: Mishra et al. 2013,,,,,,,,,,
+# File: UCD_techs.csv
+# Title: UCD technologies mapping
+# Units: NA
+# Description: Maps UCD technology to GCAM technology
+# Source: Mishra et al. 2013
 UCD_sector,mode,size.class,UCD_technology,UCD_fuel,UCD_category,fuel,supplysector,tranSubsector,tranTechnology,minicam.energy.input
 Passenger,Air Domestic,All,Liquids,Liquids,trn_air,refined liquids,trn_pass,Domestic Aviation,Liquids,refined liquids enduse
 Passenger,Air International,All,Liquids,Liquids,trn_air,refined liquids,trn_aviation_intl,International Aviation,Liquids,refined liquids enduse
