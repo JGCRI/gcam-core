@@ -59,21 +59,21 @@ module_energy_LA144.building_det_en <- function(command, ...) {
     # ===================================================
 
     . <- CRF <- CapitalCost <- Energy_EJ <- Energy_EJ_SectorFuel <- Energy_adj_EJ <- Energy_final_EJ <-
-    Energy_tot_EJ <- Energy_unadj_EJ <- GCAM_region_ID <- GCM <- NEcostPerService <- NonEnergyCost <-
-    `O&M cost` <- SRES <- ServiceOutput <- ServiceShare <- UEC <- adjustment <- country <- country_name <-
-    curr_table <- efficiency <- fuel <- fuel_share_of_TFEbysector <- has_district_heat <- input.ratio <-
-    `installed cost` <- iso <- lifetime <- normal <- normal_RG3 <- region_GCAM3 <- region_subsector <-
-    regions_fuel <- scaler <- sector <- sector_fuel <- service <- share_TFEbysector <- share_serv_fuel <-
-    share_serv_fuel_RG3 <- subsector <- supp_tech_2 <- supplysector <- technology <- tradbio_region <-
-    value_eff <- value_ratio <- value_ratio_2000 <- value_shell <- value_tech <- variable <- year <-
-    value <- exponent <- NULL
+      Energy_tot_EJ <- Energy_unadj_EJ <- GCAM_region_ID <- GCM <- NEcostPerService <- NonEnergyCost <-
+      `O&M cost` <- SRES <- ServiceOutput <- ServiceShare <- UEC <- adjustment <- country <- country_name <-
+      curr_table <- efficiency <- fuel <- fuel_share_of_TFEbysector <- has_district_heat <- input.ratio <-
+      `installed cost` <- iso <- lifetime <- normal <- normal_RG3 <- region_GCAM3 <- region_subsector <-
+      regions_fuel <- scaler <- sector <- sector_fuel <- service <- share_TFEbysector <- share_serv_fuel <-
+      share_serv_fuel_RG3 <- subsector <- supp_tech_2 <- supplysector <- technology <- tradbio_region <-
+      value_eff <- value_ratio <- value_ratio_2000 <- value_shell <- value_tech <- variable <- year <-
+      value <- exponent <- NULL
 
     # Create list spanning historical and future years
-    Hist_Fut_Years <- c(HISTORICAL_YEARS, FUTURE_YEARS)
+    HIST_FUT_YEARS <- c(HISTORICAL_YEARS, FUTURE_YEARS)
 
     # 1A
     # Calculate building end-use shell efficiency by GCAM region / RG3 / supplysector / subsector / technology / year
-         # Years will span historical and future time period
+    # Years will span historical and future time period
 
     # Write out the tech change table to all desired years, and convert to ratios from a base year
     # A44.USA_TechChange reports improvement rates of technology (annual rate)
@@ -82,7 +82,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       mutate(year = as.integer(year)) %>% # Year needs to be integer (or numeric) for the interpolation step below
       # Expand table to include all historical and future years
       group_by(supplysector, technology) %>%
-      complete(year = Hist_Fut_Years) %>%
+      complete(year = HIST_FUT_YEARS) %>%
       # Extrapolate to fill out values for all years
       # Rule 2 is used in case there are years outside of min-max range, which will be assigned values from closest data
       mutate(value = approx_fun(year, value, rule = 2)) %>%
@@ -93,7 +93,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       L144.USA_TechChange
 
     # Convert the tech change table into ratios (multipliers) from a base year
-         # This will be a step-dependent process
+    # This will be a step-dependent process
     L144.USA_TechChange %>%
       # Set exponent to incremental year step (i.e., 1 for historical years, 5 for future)
       mutate(exponent = if_else(year %in% HISTORICAL_YEARS, 1,5),
@@ -107,11 +107,11 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       L144.USA_TechMult_unadj
 
     # These multipliers assume a base year of the first historical year. However most of the efficiencies are based on data
-         # from more recent years. This next part adjusts the scale so that the index year is not the first historical year.
-    base_tech_eff_Index_year <- 2000
+    # from more recent years. This next part adjusts the scale so that the index year is not the first historical year.
+    BASE_TECH_EFF_INDEX_YEAR <- 2000
 
     L144.USA_TechMult_unadj %>%
-      filter(year == base_tech_eff_Index_year) %>%
+      filter(year == BASE_TECH_EFF_INDEX_YEAR) %>%
       select(supplysector, technology, subsector, value_ratio_2000 = value_ratio) ->
       L144.USA_TechMult_2000
 
@@ -124,7 +124,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       L144.USA_TechMult
 
     # This table can then be repeated by the number of regions, and multiplied by region-specific
-         # adjustment factors (interpolated)
+    # adjustment factors (interpolated)
 
     # Repeat table by number of regions and match in the associated GCAM 3.0 region
     # NOTE: This just uses an approximate match between the new regions and the GCAM 3.0 regions, based on the first country alphabetically that is
@@ -145,14 +145,14 @@ module_energy_LA144.building_det_en <- function(command, ...) {
     # Shell Efficiency Calculation
 
     # First, interpolate region specific adjustment factors to historical and future years
-         # A44.shell_eff_mult_RG3 reports GCAM 3.0 multipliers from USA to other regions for shell efficiency
-         # Calculated based on per-capita GDP and heating degree days
+    # A44.shell_eff_mult_RG3 reports GCAM 3.0 multipliers from USA to other regions for shell efficiency
+    # Calculated based on per-capita GDP and heating degree days
     A44.shell_eff_mult_RG3 %>%
       gather(year, value, matches(YEAR_PATTERN)) %>% # Convert to long form
       mutate(year = as.integer(year)) %>% # Convert to integer (or numeric) to extrapolate
       # Expand table to include all historical and future years
       group_by(region_GCAM3) %>%
-      complete(year = Hist_Fut_Years) %>%
+      complete(year = HIST_FUT_YEARS) %>%
       # Extrapolate to fill out values for all years
       # Rule 2 is used in case there are years outside of min-max range, which will be assigned values from closest data
       mutate(value_shell = approx_fun(year, value, rule = 2)) %>%
@@ -176,7 +176,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
 
     # 1B
     # Calculate building end-use technology efficiency by GCAM region / RG3 / supplysector / subsector / technology / year
-         # Years will span historical and future time period
+    # Years will span historical and future time period
 
     # A44.tech_eff_mult_RG3 reports efficiency multipliers from the USA to the given GCAM 3.0 regions
     A44.tech_eff_mult_RG3 %>%
@@ -184,7 +184,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       mutate(year = as.integer(year)) %>% # Convert to integer (or numeric) to extrapolate
       # Expand table to include all historical and future years
       group_by(region_GCAM3) %>%
-      complete(year = Hist_Fut_Years) %>%
+      complete(year = HIST_FUT_YEARS) %>%
       # Extrapolate to fill out values for all years
       # Rule 2 is used in case there are years outside of min-max range, which will be assigned values from closest data
       mutate(value_tech = approx_fun(year, value, rule = 2)) %>%
@@ -203,10 +203,10 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       L144.end_use_eff_Index
 
     # These values are indexed to the USA in the base year. Unlike shells, the end-use technology values read to the model
-         # are not just indices, so need to multiply through by assumed base efficiency levels for each technology
+    # are not just indices, so need to multiply through by assumed base efficiency levels for each technology
 
     # First, create two lists, which will be used to exclude district heat and traditional biomass in regions where these
-         # are not modeled.
+    # are not modeled.
     regions_NoDistHeat <- A_regions %>%
       # 0 indicates district heat is not modeled
       filter(has_district_heat == 0) %>%
@@ -256,8 +256,8 @@ module_energy_LA144.building_det_en <- function(command, ...) {
     # Calculate building energy consumption by GCAM region / sector / fuel / service / historical year
 
     # A44.share_serv_fuel reports shares of residential and commercial TFE by region
-         # Service share data is share of total TFE by sector, not share within each fuel
-         # So, re-normalize
+    # Service share data is share of total TFE by sector, not share within each fuel
+    # So, re-normalize
     A44.share_serv_fuel %>%
       # Dropping service
       group_by(region_GCAM3, sector, fuel) %>%
@@ -275,7 +275,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       L144.share_serv_fuel
 
     # For making the energy consumption table, start with the tech list that will be in each region,
-         # and repeat by number of countries from IEA
+    # and repeat by number of countries from IEA
     # First, create list of countries, which will be used to expand the table
     list_iso <- unique(L101.in_EJ_ctry_bld_Fi_Yh$iso)
 
@@ -287,7 +287,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       tech_list_ctry
 
     # The next sequence of steps is intended to modify service shares for countries within region_GCAM3,
-         # to account for sub-regional differences in HDDCDD.
+    # to account for sub-regional differences in HDDCDD.
     # First, need to associate HDD and CDD with the corresponding services (heating and cooling, respectively)
     list_supplysector <- unique(A44.internal_gains$supplysector)
 
@@ -364,7 +364,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       L144.in_EJ_ctry_bld_thrm_F_unscaled
 
     # This adjusted energy is unscaled, in that when aggregated by GCAM3 region, the service allocations will be different
-         # than the original assumed amounts.
+    # than the original assumed amounts.
     # The next steps calculate energy scalers specific to each region_GCAM3, sector, and fuel
     L144.in_EJ_ctry_bld_thrm_F_unscaled %>%
       group_by(region_GCAM3, sector, fuel, service) %>%
@@ -390,7 +390,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       replace_na(list(share_serv_fuel = 0)) %>%
       # Never allow these shares to exceed a maximum assumed threshold
       mutate(share_serv_fuel = replace(share_serv_fuel, service %in% heating_services & share_serv_fuel > max_heating_share,
-                                      max_heating_share),
+                                       max_heating_share),
              share_serv_fuel = replace(share_serv_fuel, service %in% cooling_services & share_serv_fuel > max_cooling_share,
                                        max_cooling_share)) ->
       L144.in_EJ_ctry_bld_thrm_F
@@ -438,15 +438,15 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       L144.EJ_RegionSectorFuel
 
     # Create new list of regions where heat is not modeled as a separate fuel (different syntax for heat from before)
-         # Already have list for traditional biomass regions
+    # Already have list for traditional biomass regions
     regions_noheat <- A_regions %>%
       filter(has_district_heat == 0) %>%
       mutate(regions_noheat = paste(GCAM_region_ID, "heat")) %>%
       .[["regions_noheat"]]
 
     # L142.in_EJ_R_bld_F_Yh reports energy by region, sector, and fuel, but not service. Since we now have
-         # the service share, we can calculate for service
-         # Note that this produces a final output table.
+    # the service share, we can calculate for service
+    # Note that this produces a final output table.
     L144.EJ_RegionSectorFuelService %>%
       # Join energy data that was aggregated to the sector and fuel level (dropped service)
       left_join_error_no_match(L144.EJ_RegionSectorFuel, by = c("GCAM_region_ID", "sector", "fuel")) %>%
@@ -459,9 +459,9 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       filter(year %in% HISTORICAL_YEARS) %>%
       mutate(value = ServiceShare * value) %>%
       # This has a number of combinations that do not apply. Drop the known ones.
-           # This would be regions where heat or traditional biomass are not modeled as separate fuels.
-           # This should take care of all missing values
-           # First, prepare columns concatenating fuel with region and sector
+      # This would be regions where heat or traditional biomass are not modeled as separate fuels.
+      # This should take care of all missing values
+      # First, prepare columns concatenating fuel with region and sector
       mutate(regions_fuel = paste(GCAM_region_ID, fuel)) %>%
       mutate(sector_fuel = paste(sector, fuel)) %>%
       filter(!regions_fuel %in% regions_noheat,
