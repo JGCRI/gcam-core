@@ -13,7 +13,7 @@ env:
 #  - krlmlr/mockr
 
 script:
-  - travis_wait R CMD build .
+  - R CMD build .
   - travis_wait 30 R CMD check *.tar.gz
 
 #after_success:
