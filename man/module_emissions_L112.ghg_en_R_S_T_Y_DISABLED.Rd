@@ -18,11 +18,11 @@ the generated outputs: \code{L112.ghg_tg_R_en_S_F_Yh}, \code{L112.ghg_tgej_R_en_
 original data system was \code{L112.ghg_en_R_S_T_Y.R} (emissions level1).
 }
 \description{
-Briefly describe what this chunk does.
+Calculates emissions and emissions factors using EPA emissions factors and scales to EDGAR emissions.
 }
 \details{
-Describe in detail what this chunk does.
+Calculates emissions using EPA emissions factors and energy data. Then scales to EDGAR emissions and calculates emissions factors.
 }
 \author{
-YourInitials CurrentMonthName 2017
+RH July 2017
 }
