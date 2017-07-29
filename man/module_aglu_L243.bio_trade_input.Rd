@@ -18,7 +18,7 @@ the generated outputs: \code{L243.DeleteInput_RegBio}, \code{L243.SectorLogitTab
 original data system was \code{L243.bio_trade_input.R} (aglu level2).
 }
 \description{
-Estabilishes regionally differentiated trade structure for bioenergy.
+Establish regionally differentiated trade structure for bioenergy.
 }
 \details{
 This chunk sets up a structure for regionally differentiated bioenergy trade. Each
