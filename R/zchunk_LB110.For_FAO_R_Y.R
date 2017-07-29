@@ -111,7 +111,7 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
       select(year,GCAM_commodity, Cons_scaler) ->
       dummyGlobalTable
     L110.For_ALL_bm3_R_Y %>%                                               # take the region year R_Y tibble
-      left_join_error_no_match(., dummyGlobalTable, by = c("year","GCAM_commodity")) %>%
+      left_join_error_no_match(., dummyGlobalTable, by = c("year", "GCAM_commodity")) %>%
       # ^ Use Left Join to add the Global Cons_scaler corresponding to each year in each region. This command adds
       #   more information than we need or care about, so only keep the Cons_scaler column that matters
       mutate(Cons_bm3 = Cons_bm3 * Cons_scaler)  %>%                       # Use the scaler to recalculate Cons_bm3

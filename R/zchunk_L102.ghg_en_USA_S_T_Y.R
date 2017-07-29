@@ -53,7 +53,8 @@ module_emissions_L102.ghg_en_USA_S_T_Y <- function(command, ...) {
       filter(!is.na(sector), !is.na(fuel)) %>% # delete NA sectors and fuel
       mutate_all(funs(replace(., is.na(.), 1))) %>% # placeholder values for existing sectors that has no value.
       # NOTE: THIS IS A HACK. EPA DOESN'T HAVE EMISSIONS IN SOME SECTORS, WHEN EDGAR DOES. THIS WILL MAKE EMISSIONS PROPORTIONAL TO FUEL USE. NOT SURE IF THIS IS THE BEST STRATEGY.
-      mutate_if(is.numeric, funs(. * CONV_GG_TG)) ->  # Convert to Tg
+      mutate_if(is.numeric, funs(. * CONV_GG_TG)) %>% # Convert to Tg
+      ungroup() ->
       L102.ghg_tg_USA_en_Sepa_F_2005 # GHG balance in 2005
 
     if(OLD_DATA_SYSTEM_BEHAVIOR) {
@@ -89,7 +90,7 @@ module_emissions_L102.ghg_en_USA_S_T_Y <- function(command, ...) {
       select(-CH4, -N2O, -energy) %>% # delete orignal data
       arrange(fuel) %>%
       mutate(ch4_em_factor = if_else(is.na(ch4_em_factor) | is.infinite(ch4_em_factor), 0, ch4_em_factor)) %>% # set NA and INF to zero
-      mutate(n2o_em_factor = if_else(is.na(n2o_em_factor) | is.infinite(n2o_em_factor), 0, n2o_em_factor)) ->  # set NA and INF to zero
+      mutate(n2o_em_factor = if_else(is.na(n2o_em_factor) | is.infinite(n2o_em_factor), 0, n2o_em_factor)) -> # set NA and INF to zero
       L102.ghg_tgej_USA_en_Sepa_F_2005
 
     # Produce outputs

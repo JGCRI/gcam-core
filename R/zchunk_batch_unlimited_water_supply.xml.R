@@ -26,8 +26,8 @@ module_water_batch_unlimited_water_supply.xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("unlimited_water_supply.xml") %>%
-      add_xml_data(L202.UnlimitRsrc,"UnlimitRsrc") %>%
-      add_xml_data(L202.UnlimitRsrcPrice,"UnlimitRsrcPrice") %>%
+      add_xml_data(L202.UnlimitRsrc, "UnlimitRsrc") %>%
+      add_xml_data(L202.UnlimitRsrcPrice, "UnlimitRsrcPrice") %>%
       add_precursors("L202.UnlimitRsrc", "L202.UnlimitRsrcPrice") ->
       unlimited_water_supply.xml
 
