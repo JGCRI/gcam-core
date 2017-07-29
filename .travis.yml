@@ -15,5 +15,5 @@ script:
   - R CMD build .
   - travis_wait 30 R CMD check *.tar.gz
 
-after_success:
-  - travis_wait 30 Rscript coverage.R
+#after_success:
+#  - travis_wait 30 Rscript coverage.R
