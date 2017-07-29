@@ -110,11 +110,25 @@ aglu.FOR_COST_75USDM3 <- 29.59
 aglu.BIO_GRASS_COST_75USD_GJ <- 0.75
 aglu.BIO_TREE_COST_75USD_GJ <- 0.67
 
+# Price at which base year bio frac produced is used.
+# The share of residue biomass production in each region,
+# defined as the energy produced divided by the total
+# waste biomass produced, is read in by A_bio_frac_prod_R.csv.
+# This price, in 1975$/GJ, indicates the biomass price at
+# the given shares. It should be close to the model's actual
+# (endogenous) biomass prices in the final calibration year.
+aglu.PRICE_BIO_FRAC <- 1.2
+
 # Fertilizer application rate for biomass, and carbon yields. Values from Adler et al. 2007 (doi:10.1890/05-2018)
 aglu.BIO_GRASS_FERT_IO_GNM2 <- 5.6
 aglu.BIO_GRASS_YIELD_KGCM2 <- 0.34
 aglu.BIO_TREE_FERT_IO_GNM2 <- 3.36
 aglu.BIO_TREE_YIELD_KGCM2 <- 0.345
+
+# Water characteristics for biomass
+# Reference: Chaturvedi et al. 2015, Climate mitigation policy implications for global irrigation water demand, Mitig Adapt Strateg Glob Change (2015) 20:389-407. DOI 10.1007/s11027-013-9497-4
+aglu.BIO_GRASS_WATER_IO_KM3EJ <- 25
+aglu.BIO_TREE_WATER_IO_KM3EJ <- 25
 
 # Cost of Fertilizer
 aglu.FERT_COST <- 363 # 2007$ per ton NH3
@@ -139,13 +153,46 @@ aglu.NO_AGLU_REGIONS <- "Taiwan"
 # Define GCAM category name of fertilizer
 aglu.FERT_NAME <- "N fertilizer"
 
+# Average Wood Density kg/m^3 for mass conversion
+# Source: http://www.engineeringtoolbox.com/wood-density-d_40.html
+# To Page's knowledge, nobody's ever done a weighted average wood density
+# across all tree species that are commercially logged;
+# 500 was was chosen to be towards the middle of the species that are produced.
+aglu.AVG_WOOD_DENSITY_KGM3 <- 500
+
+# Average Agriculture Density kg/m^3 for mass conversion
+# Source: http://www.engineeringtoolbox.com/wood-density-d_40.html
+aglu.AVG_AG_DENSITY <- 1
+
+# Forest Harvest Index
+aglu.FOREST_HARVEST_INDEX <- 0.8
+
+# Forest Erosion Control in kg/m^2
+aglu.FOREST_EROSION_CTRL_KGM2 <- 0.2
+
+#Mill Erosion Control in kg/m^2
+aglu.MILL_EROSION_CTRL_KGM2 <- 0
+
+# Wood energy content in GJ/kg
+aglu.WOOD_ENERGY_CONTENT_GJKG <- 0.0189
+
+# wood water content
+aglu.WOOD_WATER_CONTENT <- 0.065
+
+
+
 # XML-related constants
 aglu.GLU_NDIGITS          <- 3    # number of digits in the geographic land unit identifier codes
-aglu.GLU_NAME_DELIMITER   <- ""   # delimiter between the GLU name and number
 aglu.LT_GLU_DELIMITER     <-      # delimiter between the land use type name and GLU name. should be the same as the crop-glu delimiter
-  aglu.CROP_GLU_DELIMITER <- "_"  # delimiter between the crop name and GLU name
+aglu.CROP_GLU_DELIMITER   <- "_"  # delimiter between the crop name and GLU name
 aglu.IRR_DELIMITER        <- "_"  # delimiter between the appended crop x GLU and irrigation level
 aglu.MGMT_DELIMITER       <- "_"  # delimiter between appended tech name and management level
+
+# some more digits for rounding going into XMLs
+aglu.DIGITS_HARVEST_INDEX <- 2
+aglu.DIGITS_EROS_CTRL     <- 2
+aglu.DIGITS_RES_ENERGY    <- 4
+aglu.DIGITS_WATER_CONTENT <- 2
 
 
 # Energy constants ======================================================================
@@ -167,7 +214,6 @@ energy.NPER_AMORT_VEH <- 10    # Number of periods (years) over which vehicle ca
 DEFAULT_ELECTRIC_EFFICIENCY <- 0.33
 
 ELECTRICITY_INPUT_FUELS<- c("biomass", "coal", "gas", "refined liquids")
-
 
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
@@ -193,7 +239,6 @@ CONV_KT_MT <- 0.001 # kt to Mt
 CONV_T_MT <- 1e-6 # t to Mt
 CONV_G_KG <- 1e-3 # kilograms to grams
 CONV_NH3_N <- 14/17 # Nitrogen to Ammonia
-
 
 # Time
 CONV_YEAR_HOURS <- 24 * 365.25
@@ -232,13 +277,6 @@ modeltime.HECTOR_EMISSIONS_YEAR <- 2005
 modeltime.HECTOR_INI_FILE <- "../input/climate/hector-gcam.ini"
 
 
-# Energy constants ======================================================================
-
-DEFAULT_ELECTRIC_EFFICIENCY <- 0.33  # Default electric efficiency
-ELECTRICITY_INPUT_FUELS<- c("biomass", "coal", "gas", "refined liquids")
-STUBTECHYR <- c("GCAM_region_ID", "supplysector", "subsector", "stub.technology", "xyear")
-
-
 # Socioeconomics constants ======================================================================
 
 # Population years - note that these sequences shouldn't have any overlap,
@@ -269,6 +307,10 @@ MAPPED_WATER_TYPES_SHORT            <- c("C", "W")
 names(MAPPED_WATER_TYPES_SHORT)     <- MAPPED_WATER_TYPES
 DEFAULT_UNLIMITED_WATER_PRICE       <- 0
 DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.001
+DEFAULT_UNLIMITED_IRR_WATER_PRICE   <- 0.001 # (Units: 1975$/m3)
+WATER_UNITS_QUANTITY                <- "km^3"
+WATER_UNITS_PRICE                   <- "1975$/m^3"
+AG_ONLY_WATER_TYPES                 <- "biophysical water consumption"
 
 
 # Emissions constants ======================================================================
@@ -289,6 +331,8 @@ emissions.MAC_TAXES <- c( 0, 5, 10, 15, 32, 66, 129, 243, 486, 1093 ) # Range of
 emissions.CONV_C_CO2 <- 44 / 12 # Convert Carbon to CO2
 emissions.DEFOREST_COEF_YEARS <- c(2000, 2005)
 emissions.PFCS <- c("CF4", "C2F6", "SF6")
+emissions.HFC_MODEL_BASE_YEARS <- c(1975, 1990, 2005, 2010)
+emissions.F_GAS_UNITS <- "Gg"
 # ======================================================================
 
 emissions.NH3_EXTRA_YEARS      <- 1971:1989
@@ -299,3 +343,10 @@ emissions.CONV_C_CO2           <- 44 / 12 # Convert Carbon to CO2
 emissions.DEFOREST_COEF_YEARS  <- c(2000, 2005)
 emissions.AGR_SECTORS          <- c("rice", "fertilizer", "soil")
 emissions.AGR_GASES            <- c("CH4_AGR", "N2O_AGR", "NH3_AGR", "NOx_AGR")
+
+
+# Uncomment these lines to run under 'timeshift' conditions
+# HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
+# FUTURE_YEARS <- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)
+# BASE_YEARS <- c(1975, 1990, 2005)   # normally (1975, 1990, 2005, 2010)
+# MODEL_YEARS <- c(BASE_YEARS, FUTURE_YEARS)
