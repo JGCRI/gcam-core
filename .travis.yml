@@ -8,12 +8,12 @@ env:
   - GCAMDATA_USE_JAVA=TRUE
 
 r_github_packages:
-  - jimhester/covr
+#  - jimhester/covr
   - krlmlr/mockr
 
-script:
-  - travis_wait R CMD build .
-  - travis_wait 30 R CMD check *.tar.gz
+#script:
+#  - travis_wait R CMD build .
+#  - travis_wait 30 R CMD check *.tar.gz
 
 #after_success:
 #  - travis_wait 30 Rscript coverage.R
