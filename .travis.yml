@@ -1,6 +1,7 @@
-# Sample .travis.yml for R projects
+# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
 language: r
+sudo: false
 warnings_are_errors: true
 cache: packages
 
