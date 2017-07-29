@@ -10,7 +10,6 @@ env:
 
 #r_github_packages:
 #  - jimhester/covr
-#  - krlmlr/mockr
 
 script:
   - R CMD build .
