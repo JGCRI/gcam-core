@@ -12,7 +12,7 @@ r_github_packages:
   - krlmlr/mockr
 
 script:
-  - R CMD build .
+  - travis_wait R CMD build .
   - travis_wait R CMD check *.tar.gz
 
 #after_success:
