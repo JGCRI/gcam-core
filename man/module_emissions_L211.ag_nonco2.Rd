@@ -18,12 +18,16 @@ the generated outputs: \code{L211.AWBEmissions}, \code{L211.AGREmissions}, \code
 original data system was \code{L211.ag_nonco2.R} (emissions level2).
 }
 \description{
-Processes agriculture, agricultural waste burning, and animal emissions.
-Writes out emissions coefficients for biomass and ag waste burning and non-GHG max reductions and steepness.
+Processes agriculture, agricultural waste burning, and animal emissions, adding regions and sectors/technologies.
+By region and ag sector/technology, writes out N2O emissions coefficients for biomass and BC/OC emissions coefficients for ag waste burning.
+Writes out non-GHG maximum emissions coefficient reduction and steepness,
+a shape parameter that reduces emissions coefficient as function of per-capita GDP, by region and ag sector/technology.
 }
 \details{
-Processes agriculture, agricultural waste burning, and animal emissions by technology.
-Writes out emissions coefficients for biomass and ag waste burning and non-GHG max reductions and steepness by agricultural technology and gas.
+Processes agriculture, agricultural waste burning, and animal emissions, adding regions and sectors/technologies.
+By region and ag sector/technology, writes out N2O emissions coefficients for biomass and BC/OC emissions coefficients for ag waste burning.
+Writes out non-GHG maximum emissions coefficient reduction and steepness,
+a shape parameter that reduces emissions coefficient as function of per-capita GDP, by region and ag sector/technology.
 }
 \author{
 RH July 2017
