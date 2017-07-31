@@ -1,6 +1,6 @@
 #' module_energy_LA1011.en_bal_adj
 #'
-#' Adjustments to the IEA energy balance.
+#' Adjustments to the IEA energy balance for shipping fuel consumption, Russia, and natural gas TPES.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -14,7 +14,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author JDH July 2017
-#' @export
 module_energy_LA1011.en_bal_adj <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
@@ -31,7 +30,8 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
 
     # silence package check
     technology <- minicam.energy.input <- X_historical_years <- sector <-
-      fuel <- supplysector <- subsector <- GCAM_region_ID <- iso <- value.x <- NULL
+      fuel <- supplysector <- subsector <- GCAM_region_ID <- iso <- value.x <-
+      year <- value <- Country <- value_TOT <- value_diff <- value_RFO <- value.y <- NULL
 
 
     all_data <- list(...)[[1]]
@@ -183,8 +183,8 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
     # (South Africa), dividing the coal input by the IO coef may cause gas production in excess of the demands in the region.
     # If this is the case, need to return to original energy balance data and reduce the coal input to gas works (can re-allocate to another sector if desired)
 
-    if( any( L1011.en_bal_EJ_R_Si_Fi_Yh[ L1011.en_bal_EJ_R_Si_Fi_Yh$sector == "TPES" & L1011.en_bal_EJ_R_Si_Fi_Yh$fuel == "gas", X_historical_years ] < 0 ) ){
-      stop( "Exogenous IO coef on coal input to gas works caused an increase in natural gas beyond the regional TPES of gas")
+    if(nrow(filter(L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "TPES", fuel == "gas", value < 0)) > 0) {
+      stop("Exogenous IO coef on coal input to gas works caused an increase in natural gas beyond the regional TPES of gas")
     }
 
 
