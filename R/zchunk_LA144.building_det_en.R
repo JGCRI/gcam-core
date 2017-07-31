@@ -522,7 +522,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
     L144.end_use_eff_for_intgains %>%
       left_join_error_no_match(A44.internal_gains, by = c("supplysector", "subsector", "technology")) %>%
       mutate(value = input.ratio / value) %>%
-      select(GCAM_region_ID, supplysector, subsector, technology, year, value) ->
+      select(GCAM_region_ID, region_GCAM3, supplysector, subsector, technology, year, value) ->
       L144.internal_gains # This is a final output table.
 
 
