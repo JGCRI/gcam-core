@@ -29,6 +29,11 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
              "L1011.in_EJ_ctry_intlship_TOT_Yh"))
   } else if(command == driver.MAKE) {
 
+    # silence package check
+    technology <- minicam.energy.input <- X_historical_years <- sector <-
+      fuel <- supplysector <- subsector <- GCAM_region_ID <- iso <- value.x <- NULL
+
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
