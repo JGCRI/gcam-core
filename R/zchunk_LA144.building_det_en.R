@@ -535,7 +535,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       add_legacy_name("L144.end_use_eff") %>%
       add_precursors("energy/A44.USA_TechChange", "energy/calibrated_techs_bld_det", "common/iso_GCAM_regID", "energy/A44.tech_eff_mult_RG3",
                      "energy/A_regions", "energy/A44.cost_efficiency", "common/GCAM_region_names") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_SUM_TEST) ->
       L144.end_use_eff
 
     L144.shell_eff_R_Y %>%
