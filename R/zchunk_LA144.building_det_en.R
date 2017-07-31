@@ -96,7 +96,9 @@ module_energy_LA144.building_det_en <- function(command, ...) {
     # This will be a step-dependent process
     L144.USA_TechChange %>%
       # Set exponent to incremental year step (i.e., 1 for historical years, 5 for future)
-      mutate(exponent = if_else(year %in% HISTORICAL_YEARS, 1,5),
+      # Note that using lag in this way will calculate wrong exponent values for the base
+      # historical year, but that will be addressed two steps later
+      mutate(exponent = year - lag(year, n = 1L),
              value_ratio = (1 + value) ^ exponent,
              # Set base year to 1
              value_ratio = replace(value_ratio, year == HISTORICAL_YEARS[1], 1)) %>%
@@ -311,7 +313,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
 
     # Then, calculate the "normals" from the HDD and CDD data, both at the country level and the GCAM 3.0 region level.
     L143.HDDCDD_scen_ctry_Y %>%
-      filter(year %in% CLIMATE_NORMAL_YEARS) %>% # Note that climate normal years are 1981-2000
+      filter(year %in% energy.CLIMATE_NORMAL_YEARS) %>% # Note that climate normal years are 1981-2000
       group_by(country, variable, GCM, SRES, iso) %>%
       summarise(normal = mean(value)) %>%
       ungroup() %>%
@@ -323,7 +325,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
 
     # Calculate the normals at the GCAM 3.0 region level
     L143.HDDCDD_scen_RG3_Y %>%
-      filter(year %in% CLIMATE_NORMAL_YEARS) %>%
+      filter(year %in% energy.CLIMATE_NORMAL_YEARS) %>%
       group_by(region_GCAM3, variable, GCM, SRES) %>%
       summarise(normal_RG3 = mean(value)) %>%
       ungroup() %>%

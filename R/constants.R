@@ -32,7 +32,6 @@ MODEL_YEARS <- c(BASE_YEARS, FUTURE_YEARS)
 SSP_FUTURE_YEARS <- c(2010, FUTURE_YEARS)
 GHG_CONTROL_READIN_YEAR <- 1975
 BASE_YEAR_IFA <- 2006
-CLIMATE_NORMAL_YEARS <- 1981:2000
 
 # GCAM constants ======================================================================
 
@@ -215,6 +214,8 @@ energy.NPER_AMORT_VEH <- 10    # Number of periods (years) over which vehicle ca
 DEFAULT_ELECTRIC_EFFICIENCY <- 0.33
 
 ELECTRICITY_INPUT_FUELS<- c("biomass", "coal", "gas", "refined liquids")
+
+energy.CLIMATE_NORMAL_YEARS <- 1981:2000
 
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
