@@ -58,12 +58,9 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       # temporary for temp-data-inject
       gather(year, value, -1:-5) %>% mutate(year = as.integer(substr(year, 2, 5)))
     L112.ghg_tg_R_en_S_F_Yh <- get_data(all_data, "temp-data-inject/L112.ghg_tg_R_en_S_F_Yh") %>%
-      # temporary for temp-data-inject
       gather(year, value, -1:-5) %>% mutate(year = as.integer(substr(year, 2, 5)))
     L112.ghg_tgej_R_en_S_F_Yh <- get_data(all_data, "temp-data-inject/L112.ghg_tgej_R_en_S_F_Yh") %>%
-      # temporary for temp-data-inject
       gather(year, value, -1:-5) %>% mutate(year = as.integer(substr(year, 2, 5)))
-
     L114.bcoc_tgej_R_en_S_F_2000 <- get_data(all_data, "L114.bcoc_tgej_R_en_S_F_2000")
     L151.nonghg_ctrl_R_en_S_T <- get_data(all_data, "L151.nonghg_ctrl_R_en_S_T")
     A51.steepness <- get_data(all_data, "emissions/A51.steepness")

@@ -1,0 +1,12 @@
+# File: CDIAC_fuel.csv
+# Title: CDIAC Fuel Mappings
+# Units: Unitless
+# Description: Mapping Carbon Dioxide Information Analysis Center fuel classes onto GCAM fuels
+CDIAC_fuel,fuel
+solids,coal
+liquids,refined liquids
+gas,gas
+gas.flaring,gas flaring
+liquids.shipping,refined liquids
+cement,limestone
+liquids.sequestration,non-energy sequestration
