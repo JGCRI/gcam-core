@@ -100,11 +100,105 @@ module_emissions_L231.proc_sector <- function(command, ...) {
 
     # L231.SubsectorShrwt_urb_ind and L231.SubsectorShrwtFllt_urb_ind: Subsector shareweights of urban & industrial processes sectors
     if(any(!is.na(A31.subsector_shrwt$year))){
-      L231.SubsectorShrwt_urb_ind <- write_to_all_regions(A31.subsector_shrwt[!is.na(A31.subsector_shrwt$year), ], names_SubsectorShrwt)
+      L231.SubsectorShrwt_urb_ind <- A31.subsector_shrwt %>%
+        filter(!is.na(year)) %>%
+        write_to_all_regions(c("region", "supplysector", "subsector", "year", "share.weight"),
+                             GCAM_region_names = GCAM_region_names)
     }
     if(any(!is.na(A31.subsector_shrwt$year.fillout))){
-      L231.SubsectorShrwtFllt_urb_ind <- write_to_all_regions(A31.subsector_shrwt[!is.na(A31.subsector_shrwt$year.fillout), ], names_SubsectorShrwtFllt)
+      L231.SubsectorShrwtFllt_urb_ind <- A31.subsector_shrwt %>%
+        filter(!is.na(year.fillout)) %>%
+        write_to_all_regions(c("region", "supplysector", "subsector", "year.fillout", "share.weight"),
+                             GCAM_region_names = GCAM_region_names)
     }
+
+    # L231.SubsectorInterp_urb_ind and L231.SubsectorInterpTo_urb_ind: Subsector shareweight interpolation of urban & industrial processes sector
+    if(any(is.na(A31.subsector_interp$to.value))){
+      L231.SubsectorInterp_urb_ind <- A31.subsector_interp %>%
+        filter(is.na(to.value)) %>%
+        write_to_all_regions(c("region", "supplysector", "subsector", "from.year",
+                               "to.year", "interpolation.function"),
+                             GCAM_region_names = GCAM_region_names)
+    }
+    if(any(!is.na(A31.subsector_interp$to.value))){
+      L231.SubsectorInterpTo_urb_ind <- A31.subsector_interp %>%
+        filter(!is.na(to.value)) %>%
+        write_to_all_regions(c("region", "supplysector", "subsector", "from.year",
+                               "to.year", "to.value", "interpolation.function"),
+                             GCAM_region_names = GCAM_region_names)
+    }
+
+    # Technology information
+    # L231.StubTech_urb_ind: Identification of stub technologies of urban & industrial processes sectors
+    # Note: assuming that technology list in the shareweight table includes the full set (any others would default to a 0 shareweight)
+    L231.StubTech_urb_ind <- A31.globaltech_shrwt %>%
+      write_to_all_regions(c("region", "supplysector", "subsector", "technology"),
+                           GCAM_region_names = GCAM_region_names) %>%
+      rename(stub.technology = technology)
+
+    # L231.GlobalTechShrwt_urb_ind: Shareweights of global urban & industrial processes sector technologies
+    L231.globaltech_shrwt <- A31.globaltech_shrwt %>%
+      gather(year, shareweight, matches(YEAR_PATTERN)) %>%
+      mutate(year = as.integer(year))
+
+    L231.GlobalTechShrwt_urb_ind <- L231.globaltech_shrwt %>%
+      select(-year, -shareweight) %>%
+      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, FUTURE_YEARS))) %>%
+      left_join(L231.globaltech_shrwt, by = c("supplysector", "subsector", "technology", "year")) %>%
+      mutate(shareweight = approx_fun(year, value = shareweight, rule = 1)) %>%
+      filter(year %in% MODEL_YEARS) %>%
+      select(sector.name = supplysector, subsector.name = subsector, technology, year, shareweight)
+
+    # L231.GlobalTechEff_urb_ind: Energy inputs and coefficients of global urban & industrial processes technologies
+    L231.globaltech_eff <- A31.globaltech_eff %>%
+      gather(year, efficiency, matches(YEAR_PATTERN)) %>%
+      mutate(year = as.integer(year))
+
+    L231.GlobalTechEff_urb_ind <- L231.globaltech_eff %>%
+      select(-year, -efficiency) %>%
+      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, FUTURE_YEARS))) %>%
+      left_join(L231.globaltech_eff, by = c("supplysector", "subsector", "technology", "year", "minicam.energy.input")) %>%
+      mutate(efficiency = approx_fun(year, value = efficiency, rule = 1)) %>%
+      filter(year %in% MODEL_YEARS) %>%
+      select(sector.name = supplysector, subsector.name = subsector, technology, year, minicam.energy.input, efficiency)
+
+    # Coefficients on global industry sector technologies (not energy-use or feedstocks)
+    # L231.GlobalTechCoef_urb_ind: Energy inputs and coefficients of global urban & industrial processes technologies
+    L231.globaltech_coef <- A31.globaltech_coef %>%
+      gather(year, coefficient, matches(YEAR_PATTERN)) %>%
+      mutate(year = as.integer(year))
+
+    L231.GlobalTechCoef_urb_ind <- L231.globaltech_coef %>%
+      select(-year, -coefficient) %>%
+      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, FUTURE_YEARS))) %>%
+      left_join(L231.globaltech_coef, by = c("supplysector", "subsector", "technology", "year", "minicam.energy.input")) %>%
+      mutate(coefficient = approx_fun(year, value = coefficient, rule = 1)) %>%
+      filter(year %in% MODEL_YEARS) %>%
+      select(sector.name = supplysector, subsector.name = subsector, technology, year, minicam.energy.input, coefficient)
+
+    # Costs of global technologies
+    # L231.GlobalTechCost_urb_ind: Capital costs of global urban & industrial processes technologies
+    L231.globaltech_cost <- A31.globaltech_cost %>%
+      gather(year, input.cost, matches(YEAR_PATTERN)) %>%
+      mutate(year = as.integer(year))
+
+    L231.GlobalTechCost_urb_ind <- L231.globaltech_cost %>%
+      select(-year, -input.cost) %>%
+      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, FUTURE_YEARS))) %>%
+      left_join(L231.globaltech_cost, by = c("supplysector", "subsector", "technology", "year", "minicam.non.energy.input")) %>%
+      mutate(input.cost = approx_fun(year, value = input.cost, rule = 1)) %>%
+      filter(year %in% MODEL_YEARS) %>%
+      select(sector.name = supplysector, subsector.name = subsector, technology, year, minicam.non.energy.input, input.cost)
+
+    # Calibration and region-specific data
+    # L231.StubTechCalInput_calvalue: calibrated input of urban & industrial processes technologies
+    L231.RegionalTechCalValue_urb_ind <- L231.GlobalTechCost_urb_ind %>%
+      filter(year %in% BASE_YEARS) %>%
+      select(-minicam.non.energy.input, -input.cost) %>%
+      repeat_add_columns(tibble(region = A_regions$region)) %>%
+      mutate(minicam.energy.input = "misc emissions sources",
+             calibrated.value = 0.001) %>%
+      select(region, sector.name, subsector.name, technology, year, minicam.energy.input, calibrated.value)
 
     # ===================================================
 
