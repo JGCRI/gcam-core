@@ -29,7 +29,7 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     # silence package check
-    technology <- minicam.energy.input <- X_historical_years <- sector <-
+    technology <- minicam.energy.input <- sector <-
       fuel <- supplysector <- subsector <- GCAM_region_ID <- iso <- value.x <-
       year <- value <- Country <- value_TOT <- value_diff <- value_RFO <- value.y <- NULL
 
@@ -47,36 +47,37 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
 
     EIA_RFO_intlship_kbbld %>%
       gather(year, value, -Country) %>%
-      mutate(year = sub("X", "", year)) %>%
       mutate(year = as.integer(year)) -> EIA_RFO_intlship_kbbld
 
     EIA_TOT_intlship_kbbld %>%
       gather(year, value, -Country) %>%
-      mutate(year = sub("X", "", year)) %>%
       mutate(year = as.integer(year)) -> EIA_TOT_intlship_kbbld
 
     # ===================================================
 
     # MODIFICATIONS TO IEA ENERGY BALANCES
     # Subset only the relevant years and combine OECD with non-OECD
-    # Replacing IEA estimates of international shipping fuel consumption with EIA estimates
+    # Replacing IEA estimates of international shipping fuel consumption with EIA estimates (former is known
+    # by emissions modeling community as being too low)
     # First, convert available data to EJ per year of total refined liquid products
     EIA_RFO_intlship_kbbld %>%
       filter(year %in% HISTORICAL_YEARS) %>%
-      select(year) %>%
       distinct(year) -> EIA_years
 
     EIA_RFO_intlship_kbbld %>%
-      inner_join(EIA_years, by = "year") %>% #inner joining to only keep years from EIA_years
+      inner_join(EIA_years, by = "year") %>% # inner joining to only keep years from EIA_years
+      # Convert from KBBL/day to EJ/yr
       mutate(value = value * CONV_KBBL_BBL * CONV_BBL_TONNE_RFO *
                CONV_TONNE_GJ_RFO * CONV_GJ_EJ / CONV_DAYS_YEAR ) -> L1011.in_EJ_ctry_intlship_RFO_Yh
 
     EIA_RFO_intlship_kbbld %>%
       left_join(EIA_TOT_intlship_kbbld %>%
                   rename(value_TOT = value), by = c("year", "Country")) %>%
-      inner_join(EIA_years, by = "year") %>%
+      inner_join(EIA_years, by = "year") %>% # inner joining to only keep years from EIA_years
+      # Subtract residual fuel oil from total for distillate
       mutate(value_diff = value_TOT - value) %>%
       select(Country, year, value_diff) %>%
+      # Convert from KBBL/day to EJ/yr
       mutate(value = value_diff * CONV_KBBL_BBL * CONV_BBL_TONNE_DISTILLATE *
                CONV_TONNE_GJ_RFO * CONV_GJ_EJ / CONV_DAYS_YEAR) %>%
       select(Country, year, value) -> L1011.in_EJ_ctry_intlship_distillate_Yh
@@ -84,26 +85,29 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
     L1011.in_EJ_ctry_intlship_distillate_Yh %>%
       left_join(L1011.in_EJ_ctry_intlship_RFO_Yh %>%
                   rename(value_RFO = value), by = c("year", "Country")) %>%
+      # Combine new estimates for RFO and distillate into total refined liquids
       mutate(value = value + value_RFO) %>%
       select(Country, year, value) -> L1011.in_EJ_ctry_intlship_TOT_Yh
 
-    # Several countries blink in and out of the time series. Only changing Russia because it's the only one that is a really large amount of fuel
+    # Several countries blink in and out of the time series.
+    # After 2005, Russia's shipping energy use drops off (mostly from RFO); holding constant at 2005 value
+    # because we know this is not acurate, and Russia is a large percent of global shipping fuel
     L1011.in_EJ_ctry_intlship_TOT_Yh %>%
-      mutate(value = if_else(is.na(value), 0, value)) -> L1011.in_EJ_ctry_intlship_TOT_Yh
+      replace_na(list(value=0)) -> L1011.in_EJ_ctry_intlship_TOT_Yh
 
     L1011.in_EJ_ctry_intlship_TOT_Yh %>%
       filter(Country == "Russia" & year %in% 2005 ) %>%
       select(value) -> Russia_2005
 
     L1011.in_EJ_ctry_intlship_TOT_Yh %>%
-      mutate(value = replace(value, Country == "Russia" & year %in% c(2006, 2007, 2008, 2009, 2010),
+      mutate(value = replace(value, Country == "Russia" & year %in% 2006:2010,
                              Russia_2005$value)) -> L1011.in_EJ_ctry_intlship_TOT_Yh
 
     # Russia's energy use prior to 1991 is assigned to Former Soviet Union; need to re-map this to Russia
     # for country-level information being written out
     L1011.in_EJ_ctry_intlship_TOT_Yh %>%
-      filter(!(Country == "Russia" & year %in% c(1986, 1987, 1988, 1989, 1990, 1991))) %>%
-      mutate(Country = replace(Country, Country == "Former U.S.S.R." & year %in% c(1986, 1987, 1988, 1989, 1990, 1991),
+      filter(!(Country == "Russia" & year %in% 1986:1991)) %>%
+      mutate(Country = replace(Country, Country == "Former U.S.S.R." & year %in% 1986:1991,
                                "Russia")) -> L1011.in_EJ_ctry_intlship_TOT_Yh
 
     # Match in the countries and aggregate by region
@@ -115,23 +119,21 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
       select(Country, year, value, iso, GCAM_region_ID) -> L1011.in_EJ_ctry_intlship_TOT_Yh
 
     L1011.in_EJ_ctry_intlship_TOT_Yh %>%
-      select(GCAM_region_ID, year, value) %>%
       group_by(GCAM_region_ID, year) %>%
       summarize(value = sum(value)) -> L1011.in_EJ_R_intlship_Yh
 
     # Replace the data in the IEA energy balances table
     L101.en_bal_EJ_R_Si_Fi_Yh_full %>%
       left_join(L1011.in_EJ_R_intlship_Yh %>%
-                  mutate(sector = c("in_trn_international ship")) %>%
-                  mutate(fuel = c("refined liquids")),
+                  mutate(sector = "in_trn_international ship") %>%
+                  mutate(fuel = "refined liquids"),
                 by = c("sector", "fuel", "year", "GCAM_region_ID")) %>%
       mutate(value.x = if_else(is.na(value.y), value.x, value.y)) %>%
-      rename(value = value.x) %>%
-      select(GCAM_region_ID, sector, fuel, year, value) -> L1011.en_bal_EJ_R_Si_Fi_Yh
+      select(GCAM_region_ID, sector, fuel, year, value = value.x) -> L1011.en_bal_EJ_R_Si_Fi_Yh
 
     # Re-calculate TPES after all adjustments are made
     L1011.en_bal_EJ_R_Si_Fi_Yh %>%
-      filter((grepl("in_", sector))|(grepl("net_", sector))) %>%
+      filter(grepl("(in_|net_)", sector)) %>%
       mutate(sector = "TPES") %>%
       group_by(GCAM_region_ID, sector, fuel, year) %>%
       summarise(value = sum(value)) -> L1011.in_EJ_R_Si_Fi_Yh
@@ -148,7 +150,7 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
     # TPES at this point for natural gas include both natural gas and gasified coal. This subtraction generally follows the method used in code file L122.
     # Heat production from district heat sector
     A22.globaltech_coef %>%
-      gather(year, value, -supplysector, -subsector, -technology, -minicam.energy.input) %>%
+      gather(year, value, matches(YEAR_PATTERN)) %>%
       mutate(year = as.integer(year))  %>%
       # Adding empty historical years to fill in with interpolation
       complete(year = unique(c(HISTORICAL_YEARS, year)),
@@ -163,7 +165,7 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
 
     L1011.en_bal_EJ_R_Si_Fi_Yh %>%
       filter(sector == "in_gas processing" & fuel=="coal") %>%
-      mutate(sector.x = sub("in_","", sector)) %>%
+      mutate(sector.x = sub("in_", "", sector)) %>%
       left_join(L1011.gasproc_coef %>%
                   rename(sector.x = sector), by = c("sector.x", "fuel", "year")) %>%
       mutate(value = value.x / value.y) %>%
@@ -172,7 +174,7 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
       mutate(fuel = "gas") %>%
       mutate(sector = "TPES") -> L1011.out_EJ_R_gasproc_coal_Yh
 
-    # Subtract
+    # Subtract gasified coal from natural gas TPES
     L1011.en_bal_EJ_R_Si_Fi_Yh %>%
       left_join(L1011.out_EJ_R_gasproc_coal_Yh, by = c("GCAM_region_ID", "sector", "fuel", "year"))%>%
       mutate(value.x = if_else(is.na(value.y), value.x, value.x-value.y)) %>%

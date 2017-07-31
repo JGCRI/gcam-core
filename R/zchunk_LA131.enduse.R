@@ -21,7 +21,7 @@ module_energy_LA131.enduse <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "energy/A_regions",
              FILE = "energy/enduse_sector_aggregation",
-             FILE = "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh",
+             "L1011.en_bal_EJ_R_Si_Fi_Yh",
              "L121.in_EJ_R_unoil_F_Yh",
              "L122.in_EJ_R_refining_F_Yh",
              "L124.out_EJ_R_heat_F_Yh",
@@ -42,11 +42,8 @@ module_energy_LA131.enduse <- function(command, ...) {
 
     enduse_sector_aggregation <- get_data(all_data, "energy/enduse_sector_aggregation")
 
-    get_data(all_data, "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh") %>%
-      gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) %>%
-      filter(year %in% HISTORICAL_YEARS) ->   # ensure temp data match our current history
-      L1011.en_bal_EJ_R_Si_Fi_Yh
+    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
+
 
      get_data(all_data, "L121.in_EJ_R_unoil_F_Yh") %>%
       filter(year %in% HISTORICAL_YEARS) ->   # ensure temp data match our current history
@@ -203,7 +200,7 @@ module_energy_LA131.enduse <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Scalers were used to balance electricity and district heat production and consumption within each region") %>%
       add_legacy_name("L131.in_EJ_R_Senduse_F_Yh") %>%
-      add_precursors("energy/enduse_sector_aggregation", "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh",
+      add_precursors("energy/enduse_sector_aggregation", "L1011.en_bal_EJ_R_Si_Fi_Yh",
                      "L121.in_EJ_R_unoil_F_Yh", "L122.in_EJ_R_refining_F_Yh", "L126.out_EJ_R_electd_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L131.in_EJ_R_Senduse_F_Yh
@@ -214,7 +211,7 @@ module_energy_LA131.enduse <- function(command, ...) {
       add_comments("Share of regional heat demand by each sector was calculated for regions where heat is not modeled separately from the fuels used to produce it. Moreoever, regions having zero heat consumption by demand sectors while nevertheless also having heat production, this was assigned to industry") %>%
       add_legacy_name("L131.share_R_Senduse_heat_Yh") %>%
       add_precursors("energy/A_regions", "energy/enduse_sector_aggregation",
-                     "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh",
+                     "L1011.en_bal_EJ_R_Si_Fi_Yh",
                      "L121.in_EJ_R_unoil_F_Yh",
                      "L122.in_EJ_R_refining_F_Yh",
                      "L124.out_EJ_R_heat_F_Yh", "L124.out_EJ_R_heatfromelec_F_Yh",
