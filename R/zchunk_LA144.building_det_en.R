@@ -379,8 +379,8 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       L144.scalers_RG3_bld_thrm_F
 
     # Never allow these shares to exceed a maximum assumed threshold
-    max_heating_share <- 0.9
-    max_cooling_share <- 0.75
+    MAX_HEATING_SHARE <- 0.9
+    MAX_COOLING_SHARE <- 0.75
 
     # Use the scalers to calculate adjusted and scaled energy consumption by country, sector, fuel, and service
     # These will be used to calculate the final service portions for each country
@@ -391,10 +391,10 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       mutate(share_serv_fuel = Energy_final_EJ / Energy_tot_EJ) %>%
       replace_na(list(share_serv_fuel = 0)) %>%
       # Never allow these shares to exceed a maximum assumed threshold
-      mutate(share_serv_fuel = replace(share_serv_fuel, service %in% heating_services & share_serv_fuel > max_heating_share,
-                                       max_heating_share),
-             share_serv_fuel = replace(share_serv_fuel, service %in% cooling_services & share_serv_fuel > max_cooling_share,
-                                       max_cooling_share)) ->
+      mutate(share_serv_fuel = replace(share_serv_fuel, service %in% heating_services & share_serv_fuel > MAX_HEATING_SHARE,
+                                       MAX_HEATING_SHARE),
+             share_serv_fuel = replace(share_serv_fuel, service %in% cooling_services & share_serv_fuel > MAX_COOLING_SHARE,
+                                       MAX_COOLING_SHARE)) ->
       L144.in_EJ_ctry_bld_thrm_F
 
     # Aggregate the services to calculate the residual to be allocated to non-thermal services
@@ -409,7 +409,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       filter(!service %in% thermal_services) %>%
       # The remaining share will be assigned to the non-thermal services
       left_join_error_no_match(L144.share_ctry_bld_thrm_F, by = c("iso", "sector", "fuel")) %>%
-      mutate(share_serv_fuel = 1- share_serv_fuel) %>%
+      mutate(share_serv_fuel = 1 - share_serv_fuel) %>%
       select(iso, sector, fuel, service, share_serv_fuel) ->
       L144.in_EJ_ctry_bld_oth_F
 
@@ -506,9 +506,10 @@ module_energy_LA144.building_det_en <- function(command, ...) {
     # efficiency, matching on supplysector / subsector / technology
 
     # First, create list pairing supplysector with technology, for which to filter by
-    supp_tech <- A44.internal_gains %>%
+    A44.internal_gains %>%
       mutate(supp_tech = paste(supplysector, technology)) %>%
-      .[["supp_tech"]]
+      .[["supp_tech"]] ->
+      supp_tech
 
     L144.end_use_eff %>%
       # Prepare for filtering
@@ -535,7 +536,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       add_legacy_name("L144.end_use_eff") %>%
       add_precursors("energy/A44.USA_TechChange", "energy/calibrated_techs_bld_det", "common/iso_GCAM_regID", "energy/A44.tech_eff_mult_RG3",
                      "energy/A_regions", "energy/A44.cost_efficiency", "common/GCAM_region_names") %>%
-      add_flags(FLAG_SUM_TEST) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L144.end_use_eff
 
     L144.shell_eff_R_Y %>%
