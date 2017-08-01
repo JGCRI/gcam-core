@@ -18,7 +18,7 @@ the generated outputs: \code{L1011.en_bal_EJ_R_Si_Fi_Yh}, \code{L1011.in_EJ_ctry
 original data system was \code{LA1011.en_bal_adj.R} (energy level1).
 }
 \description{
-Adjustments to the IEA energy balance.
+Adjustments to the IEA energy balance for shipping fuel consumption, Russia, and natural gas TPES.
 }
 \details{
 This chunk replaces IEA international shipping fuel consumption estimates with EIA estimates, remaps USSR data to Russia,

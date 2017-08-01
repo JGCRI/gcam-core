@@ -88,6 +88,9 @@ module_energy_LA102.en_emiss_CDIAC <- function(command, ...) {
     DEFAULT_COAL_CCOEF <- 27.3
     DEFAULT_LIQUIDS_CCOEF <- 19.6
 
+    L102.CO2_Mt_R_F_Yh %>%
+      filter(year %in% HISTORICAL_YEARS) -> L102.CO2_Mt_R_F_Yh
+
     # Calculate the regional emissions coefficients by fuel, using only the energy whose carbon is assumed to be emitted
     L102.CO2_Mt_R_F_Yh %>%
       filter(fuel %in% L102.en_emitted_EJ_R_Fi_Yh$fuel) %>%
