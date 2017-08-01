@@ -278,38 +278,43 @@ replace_GLU <- function(d, map, GLU_pattern = "^GLU[0-9]{3}$") {
   d
 }
 
-#' get_ssp4_regions
+#' get_ssp_regions
 #'
-#' Get regions for different income groups in SSP4
+#' Get regions for different income groups in SSP4 2010 (by default)
 #'
-#' @param pcGDP A tibble with per capita GDP estimates
+#' @param pcGDP A tibble with per capita GDP estimates, including columns \code{GCAM_region_ID},
+#' \code{scenario}, \code{year}, and \code{value}
 #' @param reg_names A tibble with columns \code{GCAM_region_ID} and \code{region}
 #' @param income_group A string indicating which region group (low, medium, high)
-#' @return A list of region names belonging to the specified income group.
-get_ssp4_regions <- function(pcGDP, reg_names, income_group) {
+#' @param ssp_filter A string indicating which SSP to filter to (SSP4 by default)
+#' @param year_filter An integer indicating which year to use (2010 by default)
+#' @return A character vector of region names belonging to the specified income group.
+get_ssp_regions <- function(pcGDP, reg_names, income_group,
+                             ssp_filter = "SSP4", year_filter = 2010) {
+  assert_that(is_tibble(pcGDP))
+  assert_that(is_tibble(reg_names))
+  assert_that(is.character(income_group))
+  assert_that(is.character(ssp_filter))
+  assert_that(is.numeric(year_filter))
+
+  value <- scenario <- year <- GCAM_region_ID <- region <- NULL  # silence package check notes
+
   pcGDP %>%
-    filter(scenario == "SSP4", year == 2010) %>%
-    select(GCAM_region_ID, value) %>%
     left_join_error_no_match(reg_names, by = "GCAM_region_ID") %>%
-    mutate(value = value * gdp_deflator(2010, 1990)) ->
-    pcGDP_2010
+    mutate(value = value * gdp_deflator(year_filter, 1990)) %>%
+    filter(scenario == ssp_filter, year == year_filter) %>%
+    select(GCAM_region_ID, value, region) ->
+    pcGDP_yf
 
   if(income_group == "low") {
-    pcGDP_2010 %>%
-      filter(value < aglu.LOW_GROWTH_PCGDP) ->
-      regions
+    regions <- filter(pcGDP_yf, value < aglu.LOW_GROWTH_PCGDP)
   } else if(income_group == "high") {
-    pcGDP_2010 %>%
-      filter(value > aglu.HIGH_GROWTH_PCGDP) ->
-      regions
+    regions <- filter(pcGDP_yf, value > aglu.HIGH_GROWTH_PCGDP)
   } else if(income_group == "medium") {
-    pcGDP_2010 %>%
-      filter(value < aglu.HIGH_GROWTH_PCGDP, value > aglu.LOW_GROWTH_PCGDP) ->
-      regions
+    regions <- filter(pcGDP_yf, value < aglu.HIGH_GROWTH_PCGDP, value > aglu.LOW_GROWTH_PCGDP)
   } else{
-    # ERROR! -- what do I do here?
+    stop("Unknown income_group!")
   }
 
-  return(regions$region)
+  regions$region
 }
-
