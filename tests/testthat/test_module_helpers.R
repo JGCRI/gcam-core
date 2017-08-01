@@ -203,3 +203,37 @@ test_that("replace_GLU", {
   d1 <- replace_GLU(tibble(GLU = "x"), map)
   expect_equal(d1$GLU, "GLU000") # ...and the other
 })
+
+test_that("get_ssp_regions", {
+  # catches bad input
+  expect_error(get_ssp_regions(1, tibble(), "1"))
+  expect_error(get_ssp_regions(tibble(), 1, "1"))
+  expect_error(get_ssp_regions(tibble(), tibble(), 1))
+  expect_error(get_ssp_regions(tibble(), tibble(), "1", ssp_filter = 1))
+  expect_error(get_ssp_regions(tibble(), tibble(), "1", year_filter = "1"))
+
+  ssp <- formals(get_ssp_regions)$ssp_filter
+  yr <- formals(get_ssp_regions)$year_filter
+
+  pcGDP <- tibble(GCAM_region_ID = 1:3,
+                  scenario = ssp,
+                  year = yr,
+                  value = gdp_deflator(1990, yr) *
+                    c(aglu.LOW_GROWTH_PCGDP - 1,
+                      aglu.HIGH_GROWTH_PCGDP + 1,
+                      mean(c(aglu.LOW_GROWTH_PCGDP, aglu.HIGH_GROWTH_PCGDP))))
+
+    reg_names <- tibble(GCAM_region_ID = 1:3, region = letters[1:3])
+
+  # Should return a single low/high/medium value when year and scenario match
+  expect_equal(get_ssp_regions(pcGDP, reg_names, income_group = "low"), reg_names$region[1])
+  expect_equal(get_ssp_regions(pcGDP, reg_names, income_group = "high"), reg_names$region[2])
+  expect_equal(get_ssp_regions(pcGDP, reg_names, income_group = "medium"), reg_names$region[3])
+
+  # Should error with unknown income_group
+  expect_error(get_ssp_regions(pcGDP, reg_names, income_group = "zzz"))
+
+  # No matches if we change year and/or scenario
+  expect_equal(get_ssp_regions(pcGDP, reg_names, income_group = "low", year_filter = yr - 1), character(0))
+  expect_equal(get_ssp_regions(pcGDP, reg_names, income_group = "high", ssp_filter = paste0(ssp, "x")), character(0))
+})
