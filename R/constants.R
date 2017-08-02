@@ -215,12 +215,16 @@ DEFAULT_ELECTRIC_EFFICIENCY <- 0.33
 
 ELECTRICITY_INPUT_FUELS<- c("biomass", "coal", "gas", "refined liquids")
 
+energy.CLIMATE_NORMAL_YEARS <- 1981:2000
+
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
 
 # Mass
 CONV_BIL_MIL <- 1000
 CONV_MIL_BIL <- 1 / CONV_BIL_MIL
+CONV_BIL_THOUS <- 1e6
+CONV_THOUS_BIL <- 1 / CONV_BIL_THOUS
 CONV_MIL_THOUS <- 1000
 CONV_ONES_THOUS <- 0.001
 CONV_TON_MEGATON <- 1e-6
