@@ -42,18 +42,14 @@ module_aglu_L202.an_input <- function(command, ...) {
              "L202.RenewRsrcCurves",
              "L202.UnlimitedRenewRsrcCurves",
              "L202.UnlimitedRenewRsrcPrice",
-             "L202.SectorLogitTables_in[[ curr_table ]]$data",
              "L202.Supplysector_in",
-             "L202.SubsectorLogitTables_in[[ curr_table ]]$data",
              "L202.SubsectorAll_in",
              "L202.StubTech_in",
              "L202.StubTechInterp_in",
              "L202.GlobalTechCoef_in",
              "L202.GlobalTechShrwt_in",
              "L202.StubTechProd_in",
-             "L202.SectorLogitTables_an[[ curr_table ]]$data",
              "L202.Supplysector_an",
-             "L202.SubsectorLogitTables_an[[ curr_table ]]$data",
              "L202.SubsectorAll_an",
              "L202.StubTech_an",
              "L202.StubTechInterp_an",
@@ -68,7 +64,7 @@ module_aglu_L202.an_input <- function(command, ...) {
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    A_regions  # need this to tell which regions have ddgs available <- get_data(all_data, "energy/A_regions  # need this to tell which regions have ddgs available")
+    A_regions <- get_data(all_data, "energy/A_regions")
     A_agRsrc <- get_data(all_data, "aglu/A_agRsrc")
     A_agSubRsrc <- get_data(all_data, "aglu/A_agSubRsrc")
     A_agRsrcCurves <- get_data(all_data, "aglu/A_agRsrcCurves")
@@ -125,6 +121,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L202.RenewRsrc
+
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -135,6 +132,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L202.RenewRsrcPrice
+
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -145,6 +143,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L202.maxSubResource
+
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -155,6 +154,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L202.RenewRsrcCurves
+
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -165,6 +165,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L202.UnlimitedRenewRsrcCurves
+
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -175,16 +176,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L202.UnlimitedRenewRsrcPrice
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L202.SectorLogitTables_in[[ curr_table ]]$data") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L202.SectorLogitTables_in[[ curr_table ]]$data
+
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -195,16 +187,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L202.Supplysector_in
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L202.SubsectorLogitTables_in[[ curr_table ]]$data") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L202.SubsectorLogitTables_in[[ curr_table ]]$data
+
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -215,6 +198,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L202.SubsectorAll_in
+
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -225,6 +209,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L202.StubTech_in
+
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -235,6 +220,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L202.StubTechInterp_in
+
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -245,6 +231,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L202.GlobalTechCoef_in
+
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -255,6 +242,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L202.GlobalTechShrwt_in
+
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -265,16 +253,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L202.StubTechProd_in
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L202.SectorLogitTables_an[[ curr_table ]]$data") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L202.SectorLogitTables_an[[ curr_table ]]$data
+
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -285,16 +264,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L202.Supplysector_an
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L202.SubsectorLogitTables_an[[ curr_table ]]$data") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L202.SubsectorLogitTables_an[[ curr_table ]]$data
+
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -305,6 +275,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L202.SubsectorAll_an
+
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -315,6 +286,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L202.StubTech_an
+
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -325,6 +297,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L202.StubTechInterp_an
+
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -335,6 +308,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L202.StubTechProd_an
+
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -345,6 +319,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L202.StubTechCoef_an
+
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -355,6 +330,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L202.GlobalTechCost_an
+
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -365,6 +341,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L202.GlobalRenewTech_imp_an
+
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
