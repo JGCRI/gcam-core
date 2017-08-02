@@ -71,8 +71,10 @@ module_energy_LA144.building_det_en <- function(command, ...) {
     # Create list spanning historical and future years
     HIST_FUT_YEARS <- c(HISTORICAL_YEARS, FUTURE_YEARS)
 
+    # Note that RG3, region_GCAM3, and GCAM 3.0 region are used interchangeably.
+
     # 1A
-    # Calculate building end-use shell efficiency by GCAM region / RG3 / supplysector / subsector / technology / year
+    # Calculate building end-use shell efficiency by GCAM region ID / GCAM 3.0 region names / supplysector / subsector / technology / year
     # Years will span historical and future time period
 
     # Write out the tech change table to all desired years, and convert to ratios from a base year
@@ -92,7 +94,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       select(supplysector, subsector, technology, year, value) ->
       L144.USA_TechChange
 
-    # Convert the tech change table into ratios (multipliers) from a base year
+    # Convert the tech change table into ratios (multipliers) from a base year.
     # This will be a step-dependent process
     L144.USA_TechChange %>%
       # Set exponent to incremental year step (i.e., 1 for historical years, 5 for future)
@@ -108,7 +110,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       ungroup() ->
       L144.USA_TechMult_unadj
 
-    # These multipliers assume a base year of the first historical year. However most of the efficiencies are based on data
+    # These technology multipliers assume a base year of the first historical year. However most of the efficiencies are based on data
     # from more recent years. This next part adjusts the scale so that the index year is not the first historical year.
     BASE_TECH_EFF_INDEX_YEAR <- 2000
 
@@ -128,17 +130,17 @@ module_energy_LA144.building_det_en <- function(command, ...) {
     # This table can then be repeated by the number of regions, and multiplied by region-specific
     # adjustment factors (interpolated)
 
-    # Repeat table by number of regions and match in the associated GCAM 3.0 region
+    # Repeat table by number of regions and match in the associated GCAM 3.0 region name
     # NOTE: This just uses an approximate match between the new regions and the GCAM 3.0 regions, based on the first country alphabetically that is
     # matched between the new and old regions. For new composite regions that are quite different from before, this can cause inconsistent mappings
 
-    # Create table to match in RG3 names in next step
+    # Create table to match in GCAM 3.0 region names in next step.
     RG3_GCAMregionID <- unique(select(iso_GCAM_regID, -iso, -country_name))
 
     L144.USA_TechMult %>%
       # Expand table by GCAM region IDs
       repeat_add_columns(GCAM_region_names) %>%
-      # Match RG3 names
+      # Match GCAM 3.0 region names using GCAM region ID
       # Some IDs can span multiple regions, as stated above (e.g., 1 covers both USA and Latin America). Select first one.
       left_join_keep_first_only(RG3_GCAMregionID, by = "GCAM_region_ID") %>%
       select(GCAM_region_ID, region_GCAM3, supplysector, subsector, technology, year, value) ->
@@ -162,14 +164,14 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       select(region_GCAM3, year, value_shell) ->
       A44.shell_eff_mult_RG3_complete
 
-    # Apply RG3 multipliers to get shell efficiency.
+    # Apply shell efficiency multipliers (by GCAM 3.0 region and year) to get shell efficiency.
     # Note that this produces a final output table.
     L144.TechMult_R %>%
-      # Subset the technology/year multiplier table so that it includes only shells
+      # Subset the technology multiplier table so that it includes only shells
       filter(grepl("shell", technology)) %>%
-      # Join RG3 multipliers
+      # Join shell efficiency multipliers (by GCAM 3.0 region and year)
       left_join_error_no_match(A44.shell_eff_mult_RG3_complete, by = c("region_GCAM3", "year")) %>%
-      # Multiply value by RG3 multiplier
+      # Multiply value by shell efficiency multiplier
       mutate(value = value * value_shell,
              year = as.integer(year)) %>%
       select(GCAM_region_ID, region_GCAM3, supplysector, subsector, technology, year, value) ->
@@ -177,10 +179,12 @@ module_energy_LA144.building_det_en <- function(command, ...) {
 
 
     # 1B
-    # Calculate building end-use technology efficiency by GCAM region / RG3 / supplysector / subsector / technology / year
+    # Calculate building end-use technology efficiency by GCAM region ID / GCAM 3.0 region names / supplysector / subsector / technology / year
     # Years will span historical and future time period
 
-    # A44.tech_eff_mult_RG3 reports efficiency multipliers from the USA to the given GCAM 3.0 regions
+    # A44.tech_eff_mult_RG3 reports efficiency multipliers from the USA to the given GCAM 3.0 regions.
+    # These efficiency multipliers will be used for non-shell technologies, as multipliers for shell technologies
+    # were calculated above.
     A44.tech_eff_mult_RG3 %>%
       gather(year, value, matches(YEAR_PATTERN)) %>% # Convert to long form
       mutate(year = as.integer(year)) %>% # Convert to integer (or numeric) to extrapolate
@@ -194,13 +198,13 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       select(region_GCAM3, year, value_tech) ->
       LA44.tech_eff_mult_RG3_complete
 
-    # Apply RG3 multipliers to get efficiency of energy-consuming techs (no shells)
+    # Apply efficiency multipliers (by GCAM 3.0 region and year) to get efficiency of energy-consuming techs (no shells)
     L144.TechMult_R %>%
-      # Subset the technology/year multiplier table so that it includes only energy-consuming techs (no shells)
+      # Subset the technology multiplier table so that it includes only energy-consuming techs (no shells)
       filter(!grepl("shell", technology)) %>%
-      # Join RG3 multipliers
+      # Join efficiency multipliers (by GCAM 3.0 region and year)
       left_join_error_no_match(LA44.tech_eff_mult_RG3_complete, by = c("region_GCAM3", "year")) %>%
-      # Multiply value by RG3 multiplier
+      # Multiply value by efficiency multiplier
       mutate(value = value * value_tech) ->
       L144.end_use_eff_Index
 
@@ -255,7 +259,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
 
 
     # 1D
-    # Calculate building energy consumption by GCAM region / sector / fuel / service / historical year
+    # Calculate building energy consumption by GCAM region ID / sector / fuel / service / historical year
 
     # A44.share_serv_fuel reports shares of residential and commercial TFE by region
     # Service share data is share of total TFE by sector, not share within each fuel
@@ -365,7 +369,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       mutate(Energy_adj_EJ = Energy_unadj_EJ * adjustment) ->
       L144.in_EJ_ctry_bld_thrm_F_unscaled
 
-    # This adjusted energy is unscaled, in that when aggregated by GCAM3 region, the service allocations will be different
+    # This adjusted energy is unscaled, in that when aggregated by GCAM 3.0 region, the service allocations will be different
     # than the original assumed amounts.
     # The next steps calculate energy scalers specific to each region_GCAM3, sector, and fuel
     L144.in_EJ_ctry_bld_thrm_F_unscaled %>%
@@ -474,7 +478,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
 
 
     # 1E
-    # Calculate building energy output by each service by GCAM region / sector / service / fuel / historical year
+    # Calculate building energy output by each service by GCAM region ID / sector / service / fuel / historical year
     # Base service (output by each service) is the product of energy consumption and efficiency, aggregated by region, sector, service
 
     # Match in sector, fuel, service into efficiency table
@@ -530,7 +534,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
     # ===================================================
 
     L144.end_use_eff %>%
-      add_title("Building end-use technology efficiency by GCAM region / RG3 / supplysector / subsector / technology / year") %>%
+      add_title("Building end-use technology efficiency by GCAM region ID / GCAM 3.0 region name / supplysector / subsector / technology / year") %>%
       add_units("Unitless efficiency") %>%
       add_comments("End-use tech efficiency is the product of region-specific adjustment factors, tech-specific improvement rates, and tech-specific efficiency levels") %>%
       add_legacy_name("L144.end_use_eff") %>%
@@ -540,7 +544,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       L144.end_use_eff
 
     L144.shell_eff_R_Y %>%
-      add_title("Building end-use shell efficiency by GCAM region / RG3 / supplysector / subsector / technology / year") %>%
+      add_title("Building end-use shell efficiency by GCAM region ID / GCAM 3.0 region name / supplysector / subsector / technology / year") %>%
       add_units("Unitless efficiency") %>%
       add_comments("Shell efficiency is the product of region-specific adjustment factors and tech-specific improvement rates") %>%
       add_legacy_name("L144.shell_eff_R_Y") %>%
@@ -550,7 +554,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       L144.shell_eff_R_Y
 
     L144.in_EJ_R_bld_serv_F_Yh %>%
-      add_title("Building energy consumption by GCAM region / sector / fuel / service / historical year") %>%
+      add_title("Building energy consumption by GCAM region ID / sector / fuel / service / historical year") %>%
       add_units("EJ/yr") %>%
       add_comments("Energy consumption by service is calculated by allocating energy consumption across services using calculated service shares") %>%
       add_legacy_name("L144.in_EJ_R_bld_serv_F_Yh") %>%
@@ -581,7 +585,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       L144.internal_gains
 
     L144.base_service_EJ_serv %>%
-      add_title("Building energy output by each service by GCAM region / sector / service / fuel / historical year") %>%
+      add_title("Building energy output by each service by GCAM region ID / sector / service / fuel / historical year") %>%
       add_units("EJ/yr") %>%
       add_comments("Product of energy consumption and efficiency aggregated by region, sector, service") %>%
       add_legacy_name("L144.base_service_EJ_serv") %>%
