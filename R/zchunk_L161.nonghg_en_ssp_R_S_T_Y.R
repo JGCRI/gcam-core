@@ -1,6 +1,6 @@
 #' module_emissions_L161.nonghg_en_ssp_R_S_T_Y
 #'
-#' Produces future emissions factors by SSP scenario.
+#' Produces future non-GHG emissions factors by SSP scenario.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,13 +8,12 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L161.SSP15_EF}, \code{L161.SSP2_EF}, \code{L161.SSP34_EF}. The corresponding file in the
 #' original data system was \code{L161.nonghg_en_ssp_R_S_T_Y.R} (emissions level1).
-#' @details Scales future GAINS emissions factors to L111/L114 base year emissions factors,
+#' @details Scales future GAINS, Greenhouse Gas - Air Pollution Interactions and Synergies model, non-GHG emissions factors to L111/L114 base year emissions factors,
 #' then applies future emissions factors to some GCAM years based on SSP-specific rules.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RLH July 2017
-#' @export
 module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "emissions/A_regions",
@@ -40,7 +39,8 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
       marker_region_SLE_2030 <- min_CLE_2030_low <- min_CLE_2030_weak_reg <-
       min_SLE_2030_strong_reg <- policy <- prev <- region_grouping <- scaler <-
       scenario <- stub.technology <- subsector <- supplysector <- value <-
-      variable <- varyear <- varyearpol <- year <- NULL
+      variable <- varyear <- varyearpol <- year <- marker_value <- min_value <-
+      min_value <- multiplier <- . <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -92,10 +92,11 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
       mutate(emfact = value / ACT) %>%
       select(TIMER_REGION, agg_sector, POLL, IDYEARS, scenario, emfact) %>%
       group_by(TIMER_REGION, agg_sector, POLL, IDYEARS) %>%
-      # Replace SLE & MFR base year (2005) emissions factors with CLE emissions factors.
-      # They don't all start from the same value.
+      # Using CLE scenario for base value
       mutate(CLE_base = emfact[scenario == "CLE"]) %>%
       ungroup() %>%
+      # Replace SLE & MFR base year (2005) emissions factors with CLE emissions factors.
+      # They don't all start from the same value.
       mutate(emfact = replace(emfact, IDYEARS == emissions.GAINS_BASE_YEAR, CLE_base[IDYEARS == emissions.GAINS_BASE_YEAR])) %>%
       select(-CLE_base)
 
@@ -107,7 +108,7 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
       mutate(prev = lag(emfact, n = 1L, order = IDYEARS)) %>%
       ungroup() %>%
       filter(IDYEARS > emissions.GAINS_BASE_YEAR) %>%
-      # Divide current value by previous value, not allowing value greater than 1 (emissions factors cannot increase)
+      # Divide current value by previous value, not allowing value greater than 1 (emissions factors cannot increase with time)
       mutate(scaler = emfact / prev,
              scaler = replace(scaler, scaler > 1, 1)) %>%
       group_by(TIMER_REGION, agg_sector, POLL, scenario) %>%
@@ -129,7 +130,8 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
     emfact_scaled <- L111.nonghg_tgej_R_en_S_F_Yh %>%
       filter(year == emissions.GAINS_BASE_YEAR) %>%
       # Add in BC/OC emissions factors, assumed that 2005 emissions factors are identical to 2000
-      bind_rows(L114.bcoc_tgej_R_en_S_F_2000 %>% mutate(year = emissions.GAINS_BASE_YEAR)) %>%
+      bind_rows(L114.bcoc_tgej_R_en_S_F_2000 %>%
+                  mutate(year = emissions.GAINS_BASE_YEAR)) %>%
       # Add GAINS regions and sectors
       left_join_error_no_match(A_regions %>% select(GCAM_region_ID, GAINS_region), by = "GCAM_region_ID") %>%
       left_join(GCAM_sector_tech %>% select(supplysector, subsector, stub.technology, IIASA_sector),
@@ -149,7 +151,8 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
     coal_so2 <- tibble(GCAM_region_ID = seq(1, 32)) %>%
       left_join(
         emfact_scaled %>%
-          filter(year == "2030", IIASA_sector == "elec_coal", Non.CO2 == "SO2", scenario == "CLE"),
+          filter(year == emissions.GAINS_YEARS[length(emissions.GAINS_YEARS)]
+                 , IIASA_sector == "elec_coal", Non.CO2 == "SO2", scenario == "CLE"),
         by = "GCAM_region_ID") %>%
       mutate(policy = if_else(emfact <= emissions.COAL_SO2_THRESHOLD, "strong_reg", "weak_reg"),
              policy = replace(policy, region_grouping == "low", "low")) %>%
@@ -158,8 +161,6 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
 
     # Group SSPs by whether we process them the same
     SSP_groups <- tibble(SSP_group = c("1&5","2","3&4"))
-
-    marker_region <- 13
 
     # Add the rules for each region, gas, technology
     EF_rules <- emfact_scaled %>%
@@ -178,6 +179,8 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
       left_join(A61_emfact_rules, by = c("region_grouping", "year", "SSP_group", "policy"))
 
     # Create a tibble with just marker region values
+    # Marker region is Western Europe (13) - some values will be set to its emissions factors in future
+    marker_region <- 13
     marker_region_df <- emfact_scaled %>%
       filter(GCAM_region_ID == marker_region) %>%
       select(-GCAM_region_ID, -GAINS_region, -region_grouping) %>%
