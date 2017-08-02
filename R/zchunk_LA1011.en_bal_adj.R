@@ -1,6 +1,6 @@
 #' module_energy_LA1011.en_bal_adj
 #'
-#' Adjustments to the IEA energy balance for shipping fuel consumption, Russia, and natural gas TPES.
+#' Adjustments to the IEA energy balance for shipping fuel consumption, Russia, and natural gas total primary energy supply (TPES; i.e., consumption).
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -56,7 +56,6 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
     # ===================================================
 
     # MODIFICATIONS TO IEA ENERGY BALANCES
-    # Subset only the relevant years and combine OECD with non-OECD
     # Replacing IEA estimates of international shipping fuel consumption with EIA estimates (former is known
     # by emissions modeling community as being too low)
     # First, convert available data to EJ per year of total refined liquid products
@@ -121,6 +120,10 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
     L1011.in_EJ_ctry_intlship_TOT_Yh %>%
       group_by(GCAM_region_ID, year) %>%
       summarize(value = sum(value)) -> L1011.in_EJ_R_intlship_Yh
+
+    # Filter for historical years
+    L101.en_bal_EJ_R_Si_Fi_Yh_full %>%
+      filter(year %in% HISTORICAL_YEARS) -> L101.en_bal_EJ_R_Si_Fi_Yh_full
 
     # Replace the data in the IEA energy balances table
     L101.en_bal_EJ_R_Si_Fi_Yh_full %>%
