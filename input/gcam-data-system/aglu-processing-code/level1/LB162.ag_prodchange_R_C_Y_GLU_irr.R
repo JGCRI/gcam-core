@@ -122,8 +122,8 @@ L162.ag_HA_ha_ctry_crop_Ysy_irr <- repeat_and_add_vector( na.omit( L162.ag_HA_ha
 
 #Match in multipliers (from CROSIT database), GCAM regions, and GCAM commodities
 L162.ag_HA_ha_ctry_crop_Ysy_irr$Mult <- L162.ag_HA_ha_Rcrs_Ccrs_Ysy_GLU_irr$Mult[
-  match( vecpaste( L162.ag_HA_ha_ctry_crop_Ysy_irr[ c( crs_ID, Y ) ] ),
-         vecpaste( L162.ag_HA_ha_Rcrs_Ccrs_Ysy_GLU_irr[ c( crs_ID, Y ) ] ) ) ]
+  match( vecpaste( L162.ag_HA_ha_ctry_crop_Ysy_irr[ c( crs_ID, irr, Y ) ] ),
+         vecpaste( L162.ag_HA_ha_Rcrs_Ccrs_Ysy_GLU_irr[ c( crs_ID, irr, Y ) ] ) ) ]
 L162.ag_HA_ha_ctry_crop_Ysy_irr <- na.omit( L162.ag_HA_ha_ctry_crop_Ysy_irr )
 L162.ag_HA_ha_ctry_crop_Ysy_irr$GCAM_region_ID <- iso_GCAM_regID$GCAM_region_ID[
   match( L162.ag_HA_ha_ctry_crop_Ysy_irr$iso, iso_GCAM_regID$iso ) ]
