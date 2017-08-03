@@ -115,24 +115,86 @@ module_aglu_L202.an_input <- function(command, ...) {
       mutate(year = min(BASE_YEARS), price = 1) ->
       L202.RenewRsrcPrice
 
-    # L202.maxSubResource: maximum amount of resource production allowed in any period (72-88)
+    # L202.maxSubResource: maximum amount of resource production allowed in any period (72-97)
     # Compute the maxsubresource as the maximum of all base periods, for each region and resource
     # Note that the supply curves can exceed this number, by setting "available" to a number > 1.
     # In this computation, we're using the sub.renewable.resource for name matching because the resource
     # for scavenging is assigned a different name from the corresponding commodity and supplysector
     # (to avoid having two markets with the same name)
-    L202.an_ALL_Mt_R_C_Y.renewable <- filter(L202.an_ALL_Mt_R_C_Y, GCAM_commodity %in% A_agRsrcCurves$sub.renewable.resource)
+    L202.an_ALL_Mt_R_C_Y %>%
+      filter(GCAM_commodity %in% A_agRsrcCurves$sub.renewable.resource) %>%
+      group_by(region, GCAM_region_ID, GCAM_commodity) %>%
+      summarise(value = max(Prod_Mt)) ->
+      L202.maxSubResource_an
 
-    if(nrow(L202.an_ALL_Mt_R_C_Y.renewable) > 0) {
-      L202.maxSubResource_an <- aggregate( L202.an_ALL_Mt_R_C_Y.renewable$Prod_Mt,
-                                           by = L202.an_ALL_Mt_R_C_Y.renewable[, c( reg, R_C ) ],
-                                           max )
-    } else {
-      L202.maxSubResource_an <- L202.an_ALL_Mt_R_C_Y.renewable[, c( reg, R_C ) ]
-    }
-    L202.maxSubResource_feed <- aggregate( L202.ag_Feed_Mt_R_C_Y.melt$value[ L202.ag_Feed_Mt_R_C_Y.melt[[C]]  %in% A_agRsrcCurves$sub.renewable.resource  ],
-                                           by = L202.ag_Feed_Mt_R_C_Y.melt[ L202.ag_Feed_Mt_R_C_Y.melt[[C]] %in% A_agRsrcCurves$sub.renewable.resource, c( reg, R_C ) ],
-                                           max )
+    L202.ag_Feed_Mt_R_C_Y.melt %>%
+      filter(GCAM_commodity %in% A_agRsrcCurves$sub.renewable.resource) %>%
+      group_by(region, GCAM_region_ID, GCAM_commodity) %>%
+      summarise(value = max(value)) ->
+      L202.maxSubResource_feed
+
+    # Bind the two tables together, re-name the columns to the appropriate headers, and add in a sub.renewable.resource category
+    bind_rows(L202.maxSubResource_an, L202.maxSubResource_feed) %>%
+      ungroup %>%
+      mutate(sub.renewable.resource = GCAM_commodity,
+             maxSubResource = round(value, aglu.DIGITS_CALOUTPUT),
+             year.fillout = min(BASE_YEARS)) %>%
+      left_join_keep_first_only(select(A_agRsrcCurves, sub.renewable.resource, renewresource), by = "sub.renewable.resource") %>%
+      select(one_of(LEVEL2_DATA_NAMES[["maxSubResource"]])) ->
+      L202.maxSubResource
+
+    # L202.RenewRsrcCurves
+    A_agRsrcCurves %>%
+      write_to_all_regions(LEVEL2_DATA_NAMES[["RenewRsrcCurves"]], GCAM_region_names) ->
+      L202.RenewRsrcCurves
+
+    # L202.UnlimitedRenewRsrcCurves
+    A_agUnlimitedRsrcCurves %>%
+      write_to_all_regions(LEVEL2_DATA_NAMES[["UnlimitRsrc"]], GCAM_region_names) ->
+      L202.UnlimitedRenewRsrcCurves
+
+    # L202.UnlimitedRenewRsrcPrice (105-112)
+    A_agUnlimitedRsrcCurves %>%
+      gather(year, price, matches(YEAR_PATTERN)) %>%
+      mutate(year = as.integer(year)) %>%
+      select(unlimited.resource, year, price) %>%
+      filter(year %in% HISTORICAL_YEARS) %>%
+      write_to_all_regions(LEVEL2_DATA_NAMES[["UnlimitRsrcPrice"]], GCAM_region_names) ->
+      L202.UnlimitedRenewRsrcPrice
+
+    # L202.StubTech_in: identification of stub technologies for inputs to animal production (124-140)
+    A_an_input_technology %>%
+      write_to_all_regions(LEVEL2_DATA_NAMES[["Tech"]], GCAM_region_names) %>%
+      rename(stub.technology = technology) ->
+      L202.StubTech_in
+
+    # L202.StubTechInterp_in: generic technology info for inputs to animal production
+    A_an_input_technology %>%
+      write_to_all_regions(LEVEL2_DATA_NAMES[["TechInterp"]], GCAM_region_names) %>%
+      rename(stub.technology = technology) ->
+      L202.StubTechInterp_in
+
+    #L202.GlobalTechCoef_in: coefficients for inputs to animal production
+    A_an_input_technology %>%
+      repeat_add_columns(tibble(year = c(BASE_YEARS, FUTURE_YEARS))) %>%
+      mutate(sector.name = supplysector, subsector.name = subsector) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["GlobalTechCoef"]])) ->
+      L202.GlobalTechCoef_in
+
+    # L202.GlobalTechShrwt_in: Default shareweights for inputs to animal production
+    A_an_input_globaltech_shrwt %>%
+      gather(year, share.weight, matches(YEAR_PATTERN)) %>%
+      mutate(year = as.integer(year)) %>%
+      filter(year %in% MODEL_YEARS) %>%
+      complete(year = MODEL_YEARS, fill = list(supplysector = A_an_input_globaltech_shrwt$supplysector),
+               subsector = A_an_input_globaltech_shrwt$subsector, technology = A_an_input_globaltech_shrwt$technology) %>%
+      mutate(share.weight = approx_fun(year, share.weight, rule = 2),
+             sector.name = supplysector, subsector.name = subsector) %>%
+      select(one_of(c(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "share.weight"))) ->
+      L202.GlobalTechShrwt_in
+
+
+
 
 
     # Produce outputs
