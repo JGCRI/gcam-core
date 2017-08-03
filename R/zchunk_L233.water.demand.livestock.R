@@ -46,14 +46,12 @@ module_water_L233.water.demand.livestock <- function(command, ...) {
       mutate(market.name = region) %>%
       # Set the coef for all years
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
-      select(-GCAM_region_ID, -water_type, -water_sector) ->
-      results
+      select(-GCAM_region_ID, -water_type, -water_sector) %>%
 
       # ===================================================
 
     # Produce outputs
-    results %>%
-      add_title("water coefficient for region-specific livestock") %>%
+    add_title("water coefficient for region-specific livestock") %>%
       add_units("m^3/Mt") %>%
       add_comments("The data is generated through:
                    1) read in the file L133.water_demand_livestock_R_C_W_km3_Mt and left join with the file A_an_technology;
