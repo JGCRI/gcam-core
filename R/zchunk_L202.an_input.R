@@ -76,35 +76,64 @@ module_aglu_L202.an_input <- function(command, ...) {
     A_an_supplysector <- get_data(all_data, "aglu/A_an_supplysector")
     A_an_subsector <- get_data(all_data, "aglu/A_an_subsector")
     A_an_technology <- get_data(all_data, "aglu/A_an_technology")
-    L107.an_Prod_Mt_R_C_Sys_Fd_Y <- get_data(all_data, "L107.an_Prod_Mt_R_C_Sys_Fd_Y")
-    L107.an_FeedIO_R_C_Sys_Fd_Y <- get_data(all_data, "L107.an_FeedIO_R_C_Sys_Fd_Y")
-    L107.an_Feed_Mt_R_C_Sys_Fd_Y <- get_data(all_data, "L107.an_Feed_Mt_R_C_Sys_Fd_Y")
-    L108.ag_Feed_Mt_R_C_Y <- get_data(all_data, "L108.ag_Feed_Mt_R_C_Y")
-    L109.an_ALL_Mt_R_C_Y <- get_data(all_data, "L109.an_ALL_Mt_R_C_Y")
     L132.ag_an_For_Prices <- get_data(all_data, "L132.ag_an_For_Prices")
 
-    # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses vecpaste
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses repeat_and_add_vector
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # ===================================================
+    # 2. Build tables
+    # Base table for resources - add region names to Level1 data tables (lines 49-70 old file)
+
+    # Following datasets are already 'long' so just skip the old interpolate_and_melt step
+    get_data(all_data, "L107.an_Prod_Mt_R_C_Sys_Fd_Y") %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      filter(year %in% BASE_YEARS) ->
+      L202.an_Prod_Mt_R_C_Sys_Fd_Y.melt
+    get_data(all_data, "L107.an_FeedIO_R_C_Sys_Fd_Y") %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      filter(year %in% BASE_YEARS) ->
+      L202.an_FeedIO_R_C_Sys_Fd_Y.melt
+    get_data(all_data, "L107.an_Feed_Mt_R_C_Sys_Fd_Y") %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      filter(year %in% BASE_YEARS) ->
+      L202.an_Feed_Mt_R_C_Sys_Fd_Y.melt
+    get_data(all_data, "L108.ag_Feed_Mt_R_C_Y") %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      filter(year %in% BASE_YEARS) ->
+      L202.ag_Feed_Mt_R_C_Y.melt
+    get_data(all_data, "L109.an_ALL_Mt_R_C_Y") %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      filter(year %in% BASE_YEARS) ->
+      L202.an_ALL_Mt_R_C_Y
+
+    # L202.RenewRsrc: generic resource attributes
+    A_agRsrc %>%
+      write_to_all_regions(LEVEL2_DATA_NAMES[["RenewRsrc"]], GCAM_region_names) %>%
+      mutate(market = if_else(market == "regional", region, market)) ->
+      L202.RenewRsrc
+
+    # L202.RenewRsrcPrice: resource prices
+    L202.RenewRsrc %>%
+      select(region, renewresource) %>%
+      mutate(year = min(BASE_YEARS), price = 1) ->
+      L202.RenewRsrcPrice
+
+    # L202.maxSubResource: maximum amount of resource production allowed in any period (72-88)
+    # Compute the maxsubresource as the maximum of all base periods, for each region and resource
+    # Note that the supply curves can exceed this number, by setting "available" to a number > 1.
+    # In this computation, we're using the sub.renewable.resource for name matching because the resource
+    # for scavenging is assigned a different name from the corresponding commodity and supplysector
+    # (to avoid having two markets with the same name)
+    L202.an_ALL_Mt_R_C_Y.renewable <- filter(L202.an_ALL_Mt_R_C_Y, GCAM_commodity %in% A_agRsrcCurves$sub.renewable.resource)
+
+    if(nrow(L202.an_ALL_Mt_R_C_Y.renewable) > 0) {
+      L202.maxSubResource_an <- aggregate( L202.an_ALL_Mt_R_C_Y.renewable$Prod_Mt,
+                                           by = L202.an_ALL_Mt_R_C_Y.renewable[, c( reg, R_C ) ],
+                                           max )
+    } else {
+      L202.maxSubResource_an <- L202.an_ALL_Mt_R_C_Y.renewable[, c( reg, R_C ) ]
+    }
+    L202.maxSubResource_feed <- aggregate( L202.ag_Feed_Mt_R_C_Y.melt$value[ L202.ag_Feed_Mt_R_C_Y.melt[[C]]  %in% A_agRsrcCurves$sub.renewable.resource  ],
+                                           by = L202.ag_Feed_Mt_R_C_Y.melt[ L202.ag_Feed_Mt_R_C_Y.melt[[C]] %in% A_agRsrcCurves$sub.renewable.resource, c( reg, R_C ) ],
+                                           max )
+
 
     # Produce outputs
     # Temporary code below sends back empty data frames marked "don't test"
