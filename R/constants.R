@@ -241,6 +241,11 @@ CONV_KT_MT <- 0.001 # kt to Mt
 CONV_T_MT <- 1e-6 # t to Mt
 CONV_G_KG <- 1e-3 # kilograms to grams
 CONV_NH3_N <- 14/17 # Nitrogen to Ammonia
+CONV_KBBL_BBL <- 1000 # thousand barrels to barrels
+CONV_BBL_TONNE_RFO <- 1 / 6.66 # barrels to tons residual fuel oil
+CONV_TONNE_GJ_RFO <- 40.87 # tons to GJ residual fuel oil
+CONV_BBL_TONNE_DISTILLATE <- 1 / 7.46 # barrels to tons distillate
+CONV_TONNE_GJ_DISTILLATE <- 42.91 # tons to GJ distillate
 
 # Time
 CONV_YEAR_HOURS <- 24 * 365.25
@@ -250,6 +255,7 @@ CONV_DAYS_YEAR <- 1 / 365.25
 CONV_MWH_GJ <- 3.6 # Megawatt hours to Gigajoules
 CONV_GWH_EJ <- 3.6e-6
 CONV_KWH_GJ <- 3.6e-3
+CONV_GJ_EJ <- 1e-9
 
 # Other
 CONV_MCAL_PCAL <- 1e-9
