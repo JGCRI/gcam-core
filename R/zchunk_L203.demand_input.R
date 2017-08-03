@@ -15,7 +15,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RC July 2017
-module_aglu_L203.demand_input <- function(command, ...) {
+module_aglu_L203.demand_input_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "aglu/A_demand_supplysector",
