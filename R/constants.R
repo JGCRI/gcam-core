@@ -36,6 +36,7 @@ BASE_YEAR_IFA <- 2006
 # GCAM constants ======================================================================
 
 gcam.USA_CODE <- 1
+gcam.WESTERN_EUROPE_CODE <- 13
 gcam.LOGIT_TYPES <- c("relative-cost-logit", "absolute-cost-logit")
 gcam.EQUIV_TABLE <- "EQUIV_TABLE"
 

@@ -180,9 +180,8 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
 
     # Create a tibble with just marker region values
     # Marker region is Western Europe (13) - some values will be set to its emissions factors in future
-    marker_region <- 13
     marker_region_df <- emfact_scaled %>%
-      filter(GCAM_region_ID == marker_region) %>%
+      filter(GCAM_region_ID == gcam.WESTERN_EUROPE_CODE) %>%
       select(-GCAM_region_ID, -GAINS_region, -region_grouping) %>%
       rename(marker_value = emfact)
 
