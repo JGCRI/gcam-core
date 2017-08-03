@@ -14,8 +14,8 @@ module_emissions_batch_all_aglu_emissions_IRR.xml_DISABLED <- function(command, 
               "temp-data-inject/L252.MAC_an",
               "L2111.AWBEmissions",
               "L2111.AGREmissions",
-              "temp-data-inject/L211.AnEmissions",
-              "temp-data-inject/L211.AnNH3Emissions",
+              "L211.AnEmissions",
+              "L211.AnNH3Emissions",
               "L2111.AGRBio",
               "L2111.AWB_BCOC_EmissCoeff",
               "L2111.nonghg_max_reduction",
@@ -31,8 +31,8 @@ module_emissions_batch_all_aglu_emissions_IRR.xml_DISABLED <- function(command, 
     L252.MAC_an <- get_data(all_data, "temp-data-inject/L252.MAC_an")
     L2111.AWBEmissions <- get_data(all_data, "L2111.AWBEmissions")
     L2111.AGREmissions <- get_data(all_data, "L2111.AGREmissions")
-    L211.AnEmissions <- get_data(all_data, "temp-data-inject/L211.AnEmissions")
-    L211.AnNH3Emissions <- get_data(all_data, "temp-data-inject/L211.AnNH3Emissions")
+    L211.AnEmissions <- get_data(all_data, "L211.AnEmissions")
+    L211.AnNH3Emissions <- get_data(all_data, "L211.AnNH3Emissions")
     L2111.AGRBio <- get_data(all_data, "L2111.AGRBio")
     L2111.AWB_BCOC_EmissCoeff <- get_data(all_data, "L2111.AWB_BCOC_EmissCoeff")
     L2111.nonghg_max_reduction <- get_data(all_data, "L2111.nonghg_max_reduction")
@@ -52,8 +52,8 @@ module_emissions_batch_all_aglu_emissions_IRR.xml_DISABLED <- function(command, 
       add_xml_data(L2111.AWB_BCOC_EmissCoeff, "OutputEmissCoeffAg") %>%
       add_xml_data(L2111.nonghg_max_reduction, "AgGDPCtrlMax") %>%
       add_xml_data(L2111.nonghg_steepness, "AgGDPCtrlSteep") %>%
-      add_precursors("L2521.AgMAC", "L252.MAC_an", "L2111.AWBEmissions", "L2111.AGREmissions", "temp-data-inject/L211.AnEmissions",
-                     "temp-data-inject/L211.AnNH3Emissions", "L2111.AGRBio", "L2111.AWB_BCOC_EmissCoeff", "L2111.nonghg_max_reduction", "L2111.nonghg_steepness") ->
+      add_precursors("L2521.AgMAC", "L252.MAC_an", "L2111.AWBEmissions", "L2111.AGREmissions", "L211.AnEmissions",
+                     "L211.AnNH3Emissions", "L2111.AGRBio", "L2111.AWB_BCOC_EmissCoeff", "L2111.nonghg_max_reduction", "L2111.nonghg_steepness") ->
         all_aglu_emissions_IRR.xml
 
     return_data(all_aglu_emissions_IRR.xml)

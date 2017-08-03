@@ -1,7 +1,7 @@
-# File: A_regions.csv,,,,,,,,
-# Title: Region-specific assumptions in the energy system,,,,,,,,
-# Units: NA,,,,,,,,
-# Description: Specifies region-specific assumptions in the energy system,,,,,,,,
+# File: A_regions.csv
+# Title: Region-specific assumptions in the energy system
+# Units: NA
+# Description: Specifies region-specific assumptions in the energy system
 GCAM_region_ID,region,tradbio_region,ethanol,biodiesel,biomassOil_tech,elect_td_techchange,has_district_heat,region.class
 1,USA,0,corn ethanol,biodiesel,OilCrop,0.0001,0,A
 2,Africa_Eastern,1,cellulosic ethanol,FT biofuels,OilCrop,0.00025,0,E
