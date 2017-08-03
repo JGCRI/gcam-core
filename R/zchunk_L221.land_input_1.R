@@ -91,8 +91,12 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
       mutate(LandAllocatorRoot = "root",
              logit.year.fillout = min(BASE_YEARS),
              logit.exponent = aglu.N0_LOGIT_EXP,
-             logit.type = aglu.N0_LOGIT_TYPE) ->
+             logit.type = aglu.N0_LOGIT_TYPE) %>%
+      get_logit_fn_tables(names_LN0_LogitType,
+                          base.header="LN0_Logit_", include.equiv.table=T, write.all.regions=F) ->
       L221.LN0_Logit
+
+
 
 
 
