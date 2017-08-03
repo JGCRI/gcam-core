@@ -85,7 +85,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       mutate(GCAM_commodity = "biomass_tree") ->
       L201.R_C_GLU_biotree
 
-    # Bind Ag, forest, and pasture all together
+    # Bind Ag, forest, pasture and biomass all together
     L103.ag_Prod_Mt_R_C_Y_GLU %>%
       bind_rows(L123.For_Prod_bm3_R_Y_GLU, L123.ag_Prod_Mt_R_Past_Y_GLU) %>%
       select(GCAM_region_ID, GCAM_commodity, GLU) %>%
@@ -120,6 +120,36 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       select(one_of(LEVEL2_DATA_NAMES[["AgSupplySubsector"]])) ->
       L2012.AgSupplySubsector
 
+    # L2011.AgProduction_ag_irr: subsector and technology shareweights
+    L161.ag_irrProd_Mt_R_C_Y_GLU %>%
+      mutate(IRR_RFD = "IRR") %>%
+      bind_rows(mutate(L161.ag_rfdProd_Mt_R_C_Y_GLU, IRR_RFD = "RFD")) %>%
+      filter(year %in% BASE_YEARS) %>%
+      mutate(calOutputValue = round(value, digit = aglu.DIGITS_CALOUTPUT)) %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      left_join_error_no_match(basin_to_country_mapping[c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) %>%
+      # Set technology shareweights (subsector requires the year as well)
+      mutate(share.weight.year = year,
+             tech.share.weight = if_else(calOutputValue > 0, 1, 0)) ->
+      L2011.AgProduction_ag_irr
+
+    # Set subsector shareweights at the aggregate level
+    L2011.AgProduction_ag_irr %>%
+      group_by(region, GCAM_commodity, GLU_name, year) %>%
+      summarise(calOutputValue = sum(calOutputValue)) %>%
+      mutate(subs.share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
+      ungroup %>%
+      select(-calOutputValue) %>%
+      right_join(L2011.AgProduction_ag_irr, by = c("region", "GCAM_commodity", "GLU_name", "year")) %>%
+      # Copy to high and low management levels
+      repeat_add_columns(tibble::tibble(MGMT = c("hi", "lo"))) %>%
+      # Add sector, subsector, technology names
+      mutate(AgSupplySector = GCAM_commodity,
+             AgSupplySubsector = paste(GCAM_commodity, GLU_name, sep = "_"),
+             AgProductionTechnology = paste(GCAM_commodity, GLU_name, IRR_RFD, MGMT, sep = "_")) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["AgProduction"]])) ->
+      L2011.AgProduction_ag_irr
+
     # L2012.AgProduction_ag_irr_mgm: agricultural product calibrated output, with irr/rfd and high/low management disaggregated
     # Match in the values from the management-partitioned data
     L181.ag_Prod_Mt_R_C_Y_GLU_irr_level %>%
@@ -128,15 +158,10 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(basin_to_country_mapping[c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) %>%
       # Add sector, subsector, technology names
-      mutate(AgSupplySector = GCAM_commodity,
-             AgSupplySubsector = paste(GCAM_commodity, GLU_name, sep = "_"),
-             AgProductionTechnology = paste(GCAM_commodity, GLU_name, Irr_Rfd, level, sep = "_")) %>%
-            # Subsector and technology shareweights (subsector requires the year as well)
-      mutate(share.weight.year = year,
-             subs.share.weight = ifelse(calOutputValue > 0, 1, 0),
-             tech.share.weight = ifelse(calOutputValue > 0, 1, 0)) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["AgProduction"]])) ->
-      L2012.AgProduction_ag_irr_mgm
+      mutate(AgProductionTechnology = paste(GCAM_commodity, GLU_name, toupper(Irr_Rfd), level, sep = "_")) %>%
+      right_join(select(L2011.AgProduction_ag_irr, -calOutputValue), by = c("region", "AgProductionTechnology", "year")) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["AgProduction"]]), level, Irr_Rfd, GLU = GLU_name) ->
+      L2012.AgProduction_ag_irr_mgmt
 
     # L2012.AgProduction_For: Forest product calibration (output)
     # L2012.AgProduction_Past: Pasture product calibration (output)
@@ -147,24 +172,24 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(basin_to_country_mapping[c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) %>%
       mutate(AgProductionTechnology = paste(GCAM_commodity, GLU_name, sep = "_")) ->
-      L201.For_Past_Prod_R_Y_GLU.melt
+      L201.For_Past_Prod_R_Y_GLU
 
     # Subset only forest and pasture products from main table and paste in calibrated production, rounded
     L2012.AgSupplySubsector %>%
       mutate(AgProductionTechnology = AgSupplySubsector) %>%
       # Copy to all base years
       repeat_add_columns(tibble::tibble(year = BASE_YEARS)) %>%
-      semi_join(L201.For_Past_Prod_R_Y_GLU.melt, by = c("AgSupplySector" = "GCAM_commodity")) %>%
-      left_join_error_no_match(L201.For_Past_Prod_R_Y_GLU.melt, by = c("region", "AgProductionTechnology", "year")) %>%
-    # Subsector and technology shareweights (subsector requires the year as well)
+      semi_join(L201.For_Past_Prod_R_Y_GLU, by = c("AgSupplySector" = "GCAM_commodity")) %>%
+      left_join_error_no_match(L201.For_Past_Prod_R_Y_GLU, by = c("region", "AgProductionTechnology", "year")) %>%
+      # Subsector and technology shareweights (subsector requires the year as well)
       mutate(share.weight.year = year,
-             subs.share.weight = ifelse(calOutputValue > 0, 1, 0),
-             tech.share.weight = ifelse(calOutputValue > 0, 1, 0)) %>%
+             subs.share.weight = if_else(calOutputValue > 0, 1, 0),
+             tech.share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
       select(one_of(LEVEL2_DATA_NAMES[["AgProduction"]])) ->
       L2012.AgProduction_For_Past
 
     # L2012.AgHAtoCL_irr_mgmt: Harvests per year, repeat by irr/rfd and mgmt techs
-    # Melt Harvested-area-to-cropland table
+    # Harvested-area-to-cropland table
     L122.ag_HA_to_CropLand_R_Y_GLU %>%
       select(GCAM_region_ID, GLU) %>%
       unique %>%
@@ -178,7 +203,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       mutate(harvests.per.year = round(value, digits = aglu.DIGITS_CALOUTPUT)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(basin_to_country_mapping[c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) ->
-      L201.ag_HA_to_CropLand_R_Y_GLU.melt
+      L201.ag_HA_to_CropLand_R_Y_GLU
 
     # Paste in HA:CL to ag crops only
     L2012.AgSupplySubsector %>%
@@ -189,7 +214,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       # Separate the AgProductionTechnology variable to get GLU names for matching in the harvest data
       mutate(AgProductionTechnology = sub("Root_Tuber", "RootTuber", AgProductionTechnology)) %>%
       separate(AgProductionTechnology, c("GCAM_commodity", "GLU_name"), sep = "_") %>%
-      left_join(L201.ag_HA_to_CropLand_R_Y_GLU.melt, by = c("region", "GLU_name", "year")) %>%
+      left_join(L201.ag_HA_to_CropLand_R_Y_GLU, by = c("region", "GLU_name", "year")) %>%
       # Copy to both irrigated and rainfed technologies
       repeat_add_columns(tibble::tibble(IRR_RFD = c("IRR", "RFD"))) %>%
       # Copy to high and low management levels
@@ -316,9 +341,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
                      "aglu/A_agSupplySector",
-                     "L132.ag_an_For_Prices") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L132.ag_an_For_Prices") ->
       L2012.AgSupplySector
 
    L2012.AgSupplySubsector %>%
@@ -332,9 +355,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
                      "aglu/A_agSupplySubsector",
                      "L103.ag_Prod_Mt_R_C_Y_GLU",
                      "temp-data-inject/L123.ag_Prod_Mt_R_Past_Y_GLU",
-                     "temp-data-inject/L123.For_Prod_bm3_R_Y_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "temp-data-inject/L123.For_Prod_bm3_R_Y_GLU") ->
       L2012.AgSupplySubsector
 
     L2012.AgProduction_ag_irr_mgmt %>%
@@ -345,9 +366,9 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       add_legacy_name("L2012.AgProduction_ag_irr_mgmt") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
-                     "L181.ag_Prod_Mt_R_C_Y_GLU_irr_level") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
+                     "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU",
+                     "L181.ag_Prod_Mt_R_C_Y_GLU_irr_level") ->
       L2012.AgProduction_ag_irr_mgmt
 
     L2012.AgProduction_For_Past %>%
@@ -357,9 +378,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2012.AgProduction_For") %>%
-      same_precursors_as("L2012.AgSupplySubsector") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      same_precursors_as("L2012.AgSupplySubsector") ->
       L2012.AgProduction_For
 
     L2012.AgProduction_For_Past %>%
@@ -369,9 +388,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2012.AgProduction_Past") %>%
-      same_precursors_as("L2012.AgSupplySubsector") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      same_precursors_as("L2012.AgSupplySubsector") ->
       L2012.AgProduction_Past
 
     L2012.AgHAtoCL_irr_mgmt %>%
@@ -381,12 +398,10 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2012.AgHAtoCL_irr_mgmt") %>%
       same_precursors_as("L2012.AgProduction_ag_irr_mgmt") %>%
-      add_precursors("L122.ag_HA_to_CropLand_R_Y_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L122.ag_HA_to_CropLand_R_Y_GLU") ->
       L2012.AgHAtoCL_irr_mgmt
 
-        L2012.AgYield_bio_ref %>%
+    L2012.AgYield_bio_ref %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -400,8 +415,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
                      "L163.ag_irrBioYield_GJm2_R_GLU",
                      "L163.ag_rfdBioYield_GJm2_R_GLU",
                      "L181.YieldMult_R_bio_GLU_irr") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_PROTECT_FLOAT) ->
       L2012.AgYield_bio_ref
 
     return_data(L2012.AgSupplySector, L2012.AgSupplySubsector, L2012.AgProduction_ag_irr_mgmt, L2012.AgProduction_For, L2012.AgProduction_Past, L2012.AgHAtoCL_irr_mgmt, L2012.AgYield_bio_ref)
