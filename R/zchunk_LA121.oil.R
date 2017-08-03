@@ -26,7 +26,7 @@ module_energy_LA121.oil <- function(command, ...) {
              FILE = "energy/prebuilt_data/L121.in_EJ_R_unoil_F_Yh",
              FILE = "energy/prebuilt_data/L121.in_EJ_R_TPES_crude_Yh",
              FILE = "energy/prebuilt_data/L121.in_EJ_R_TPES_unoil_Yh",
-             FILE = "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh",
+             "L1011.en_bal_EJ_R_Si_Fi_Yh",
              FILE = "temp-data-inject/L111.Prod_EJ_R_F_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L121.in_EJ_R_unoil_F_Yh",
@@ -50,6 +50,7 @@ module_energy_LA121.oil <- function(command, ...) {
     A21.unoil_demandshares <- get_data(all_data, "energy/A21.unoil_demandshares")
     A21.globaltech_coef <- get_data(all_data, "energy/A21.globaltech_coef")
     L100.IEA_en_bal_ctry_hist <- get_data(all_data, "L100.IEA_en_bal_ctry_hist")
+    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
 
     # L100.IEA_en_bal_ctry_hist might be null (meaning the data system is running
     # without the proprietary IEA data files). If this is the case, we substitute
@@ -75,11 +76,6 @@ module_energy_LA121.oil <- function(command, ...) {
       L100.IEA_en_bal_ctry_hist %>%
         gather(year, value, -iso, -FLOW, -PRODUCT) %>%
         mutate(year = as.integer(year)) -> L100.IEA_en_bal_ctry_hist
-
-      L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh")%>%
-        gather(year, value, -fuel, -sector, -GCAM_region_ID) %>%
-        mutate(year = sub("X", "", year)) %>%
-        mutate(year = as.integer(year)) -> L1011.en_bal_EJ_R_Si_Fi_Yh
 
       L111.Prod_EJ_R_F_Yh <- get_data(all_data, "temp-data-inject/L111.Prod_EJ_R_F_Yh")%>%
         gather(year, value, -fuel, -sector, -GCAM_region_ID) %>%
@@ -197,7 +193,7 @@ module_energy_LA121.oil <- function(command, ...) {
       add_comments("Unconventional oil subtracted from total primary energy supply of liquids") %>%
       add_comments("to determine crude oil supply") %>%
       add_legacy_name("L121.in_EJ_R_TPES_crude_Yh") %>%
-      add_precursors("temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh") %>%
+      add_precursors("L1011.en_bal_EJ_R_Si_Fi_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L121.in_EJ_R_TPES_crude_Yh
 
