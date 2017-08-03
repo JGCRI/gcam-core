@@ -216,6 +216,8 @@ DEFAULT_ELECTRIC_EFFICIENCY <- 0.33
 ELECTRICITY_INPUT_FUELS<- c("biomass", "coal", "gas", "refined liquids")
 
 energy.CLIMATE_NORMAL_YEARS <- 1981:2000
+energy.RSRC_FUELS <- c("coal", "gas", "refined liquids")
+
 
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
@@ -256,6 +258,7 @@ CONV_MWH_GJ <- 3.6 # Megawatt hours to Gigajoules
 CONV_GWH_EJ <- 3.6e-6
 CONV_KWH_GJ <- 3.6e-3
 CONV_GJ_EJ <- 1e-9
+CONV_BBLD_EJYR <- 6.119 * 365.25 * 1e-3 # billion barrels a day to EJ per year
 
 # Other
 CONV_MCAL_PCAL <- 1e-9
