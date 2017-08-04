@@ -111,7 +111,8 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
     L125.LC_bm2_R %>%
       mutate(LandAllocatorRoot = "root",
             year.fillout = min(BASE_YEARS)) %>%
-      rename(landAllocation = LC_bm2) ->
+      rename(landAllocation = LC_bm2) %>%
+      select(-GCAM_region_ID) ->
       L221.LN0_Land
 
 
@@ -193,16 +194,7 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L221.LN0_Logit") %>%
       add_precursors("common/GCAM_region_names",
-                     "water/basin_to_country_mapping",
-                     "aglu/GCAMLandLeaf_CdensityLT",
-                     "aglu/A_LandNode_logit",
-                     "aglu/A_LandLeaf_Unmgd1",
-                     "aglu/A_LT_Mapping",
-                     "aglu/A_soil_time_scale_R",
-                     "L121.CarbonContent_kgm2_R_LT_GLU",
-                     "L125.LC_bm2_R_LT_Yh_GLU",
-                     "L125.LC_bm2_R",
-                     "L131.LV_USD75_m2_R_GLU") ->
+                     "L125.LC_bm2_R") ->
       L221.LN0_Logit
     L221.LN0_Land %>%
       add_title("descriptive title of data") %>%
@@ -211,16 +203,7 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L221.LN0_Land") %>%
       add_precursors("common/GCAM_region_names",
-                     "water/basin_to_country_mapping",
-                     "aglu/GCAMLandLeaf_CdensityLT",
-                     "aglu/A_LandNode_logit",
-                     "aglu/A_LandLeaf_Unmgd1",
-                     "aglu/A_LT_Mapping",
-                     "aglu/A_soil_time_scale_R",
-                     "L121.CarbonContent_kgm2_R_LT_GLU",
-                     "L125.LC_bm2_R_LT_Yh_GLU",
-                     "L125.LC_bm2_R",
-                     "L131.LV_USD75_m2_R_GLU") ->
+                     "L125.LC_bm2_R") ->
       L221.LN0_Land
     L221.LN0_SoilTimeScale %>%
       add_title("descriptive title of data") %>%
@@ -229,16 +212,7 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L221.LN0_SoilTimeScale") %>%
       add_precursors("common/GCAM_region_names",
-                     "water/basin_to_country_mapping",
-                     "aglu/GCAMLandLeaf_CdensityLT",
-                     "aglu/A_LandNode_logit",
-                     "aglu/A_LandLeaf_Unmgd1",
-                     "aglu/A_LT_Mapping",
-                     "aglu/A_soil_time_scale_R",
-                     "L121.CarbonContent_kgm2_R_LT_GLU",
-                     "L125.LC_bm2_R_LT_Yh_GLU",
-                     "L125.LC_bm2_R",
-                     "L131.LV_USD75_m2_R_GLU") ->
+                     "aglu/A_soil_time_scale_R") ->
       L221.LN0_SoilTimeScale
     L221.LN1_ValueLogit %>%
       add_title("descriptive title of data") %>%
@@ -248,14 +222,9 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
       add_legacy_name("L221.LN1_ValueLogit") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
-                     "aglu/GCAMLandLeaf_CdensityLT",
                      "aglu/A_LandNode_logit",
-                     "aglu/A_LandLeaf_Unmgd1",
                      "aglu/A_LT_Mapping",
-                     "aglu/A_soil_time_scale_R",
-                     "L121.CarbonContent_kgm2_R_LT_GLU",
                      "L125.LC_bm2_R_LT_Yh_GLU",
-                     "L125.LC_bm2_R",
                      "L131.LV_USD75_m2_R_GLU") ->
       L221.LN1_ValueLogit
     L221.LN1_HistUnmgdAllocation %>%
@@ -266,14 +235,9 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
       add_legacy_name("L221.LN1_HistUnmgdAllocation") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
-                     "aglu/GCAMLandLeaf_CdensityLT",
                      "aglu/A_LandNode_logit",
-                     "aglu/A_LandLeaf_Unmgd1",
                      "aglu/A_LT_Mapping",
-                     "aglu/A_soil_time_scale_R",
-                     "L121.CarbonContent_kgm2_R_LT_GLU",
                      "L125.LC_bm2_R_LT_Yh_GLU",
-                     "L125.LC_bm2_R",
                      "L131.LV_USD75_m2_R_GLU") ->
       L221.LN1_HistUnmgdAllocation
     L221.LN1_UnmgdAllocation %>%
@@ -284,14 +248,9 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
       add_legacy_name("L221.LN1_UnmgdAllocation") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
-                     "aglu/GCAMLandLeaf_CdensityLT",
                      "aglu/A_LandNode_logit",
-                     "aglu/A_LandLeaf_Unmgd1",
                      "aglu/A_LT_Mapping",
-                     "aglu/A_soil_time_scale_R",
-                     "L121.CarbonContent_kgm2_R_LT_GLU",
                      "L125.LC_bm2_R_LT_Yh_GLU",
-                     "L125.LC_bm2_R",
                      "L131.LV_USD75_m2_R_GLU") ->
       L221.LN1_UnmgdAllocation
     L221.LN1_UnmgdCarbon %>%
@@ -302,14 +261,11 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
       add_legacy_name("L221.LN1_UnmgdCarbon") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
-                     "aglu/GCAMLandLeaf_CdensityLT",
                      "aglu/A_LandNode_logit",
-                     "aglu/A_LandLeaf_Unmgd1",
                      "aglu/A_LT_Mapping",
-                     "aglu/A_soil_time_scale_R",
+                     "aglu/GCAMLandLeaf_CdensityLT",
                      "L121.CarbonContent_kgm2_R_LT_GLU",
                      "L125.LC_bm2_R_LT_Yh_GLU",
-                     "L125.LC_bm2_R",
                      "L131.LV_USD75_m2_R_GLU") ->
       L221.LN1_UnmgdCarbon
 
