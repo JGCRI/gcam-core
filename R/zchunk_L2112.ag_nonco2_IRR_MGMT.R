@@ -6,7 +6,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{object}, \code{L2112.AnEmissions}, \code{L2112.AnNH3Emissions}, \code{L2112.AWBEmissions}, \code{L2112.AGREmissions}. The corresponding file in the
+#' the generated outputs: \code{object}, \code{L2112.AWBEmissions}, \code{L2112.AGREmissions}. The corresponding file in the
 #' original data system was \code{L2112.ag_nonco2_IRR_MGMT.R} (emissions level2).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
@@ -16,63 +16,112 @@
 #' @export
 module_emissions_L2112.ag_nonco2_IRR_MGMT <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/GCAM_region_names",
-             FILE = "emissions/A_regions",
-             "L2111.AWBEmissions",
-             "L2111.AGREmissions",
+    return(c("L2111.AGREmissions",
              "L2111.AGRBio",
              "L2111.AWB_BCOC_EmissCoeff",
              "L2111.nonghg_max_reduction",
              "L2111.nonghg_steepness",
-             FILE = "temp-data-inject/L2012.AgProduction_ag_irr_mgmt",
-             FILE = "temp-data-inject/L2111.AnEmissions",
-             FILE = "temp-data-inject/L2111.AnNH3Emissions"))
+             "L2111.AWBEmissions",
+             FILE = "temp-data-inject/L211.AnEmissions",
+             FILE = "temp-data-inject/L211.AnNH3Emissions",
+             FILE = "temp-data-inject/L2012.AgProduction_ag_irr_mgmt"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("object",
-             "L2112.AnEmissions",
-             "L2112.AnNH3Emissions",
-             "L2112.AWBEmissions",
+    return(c("L2112.AWBEmissions",
              "L2112.AGREmissions"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    A_regions <- get_data(all_data, "emissions/A_regions")
-    L2111.AWBEmissions <- get_data(all_data, "L2111.AWBEmissions") # need to put in temp injuest
-    L2111.AGREmissions <- get_data(all_data, "L2111.AGREmissions") # need to put in temp inject
+    L2111.AGREmissions <- get_data(all_data, "L2111.AGREmissions")
     L2111.AGRBio <- get_data(all_data, "L2111.AGRBio")
     L2111.AWB_BCOC_EmissCoeff <- get_data(all_data, "L2111.AWB_BCOC_EmissCoeff")
     L2111.nonghg_max_reduction <- get_data(all_data, "L2111.nonghg_max_reduction")
     L2111.nonghg_steepness <- get_data(all_data, "L2111.nonghg_steepness")
     L2012.AgProduction_ag_irr_mgmt <- get_data(all_data, "temp-data-inject/L2012.AgProduction_ag_irr_mgmt")
-    L2111.AnEmissions <- get_data(all_data, "temp-data-inject/L2111.AnEmissions")
-    L2111.AnNH3Emissions <- get_data(all_data, "temp-data-inject/L2111.AnNH3Emissions")
+    L211.AnEmissions <- get_data(all_data, "temp-data-inject/L211.AnEmissions")
+    L211.AnNH3Emissions <- get_data(all_data, "temp-data-inject/L211.AnNH3Emissions")
 
     # ===================================================
 
+    # 2. Build tables for CSVs
+    #Pass through the animal tables
+    L2111.AGRBio %>%
+      repeat_add_columns(tibble::tibble(level = c("hi", "lo"))) %>%
+      unite(AgProductionTechnology, AgProductionTechnology, level, sep = "_") ->
+      L2112.AGRBio
 
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses vecpaste
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses repeat_and_add_vector
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
+    L2111.AWB_BCOC_EmissCoeff %>%
+      repeat_add_columns(tibble::tibble(level = c("hi", "lo"))) %>%
+      unite(AgProductionTechnology, AgProductionTechnology, level, sep = "_") ->
+      L2112.AWB_BCOC_EmissCoeff
+
+    L2111.nonghg_max_reduction %>%
+      repeat_add_columns(tibble::tibble(level = c("hi", "lo"))) %>%
+      unite(AgProductionTechnology, AgProductionTechnology, level, sep = "_") ->
+      L2112.nonghg_max_reduction
+
+    L2111.nonghg_steepness %>%
+      repeat_add_columns(tibble::tibble(level = c("hi", "lo"))) %>%
+      unite(AgProductionTechnology, AgProductionTechnology, level, sep = "_") ->
+      L2112.nonghg_steepness
+
+
+    #For the tables whose emissions are read as quantities rather than rates, disaggregate emissions on the basis of production
+    L2012.AgProduction_ag_irr_mgmt %>%
+      filter(year == max(BASE_YEARS)) %>%
+      mutate(AgProductionTechnology = gsub("_hi|_lo", "", AgProductionTechnology)) %>%
+      group_by(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology, year) %>%
+      summarise(total = sum(calOutputValue)) ->
+      L2112.AgProduction_ag_irr_nomgmt
+
+    L2012.AgProduction_ag_irr_mgmt %>%
+      filter(year == max(BASE_YEARS)) %>%
+      select(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology_level = AgProductionTechnology, year, calOutputValue) %>%
+      mutate(m_tech = gsub("_hi|_lo", "", AgProductionTechnology_level)) ->
+      L2112.AgProduction_ag
+
+    # MAY BE ABLE TO DROP THE YEARS.. ALL IN 2010..
+    L2112.AgProduction_ag %>%
+      left_join_error_no_match(L2112.AgProduction_ag_irr_nomgmt,
+                               by = c("region", "AgSupplySector", "year", "AgSupplySubsector", c("m_tech" = "AgProductionTechnology" ))) %>%
+      mutate(share_tech = calOutputValue / total) %>%
+      rename( AgProductionTechnology =  AgProductionTechnology_level) ->
+      L2112.AgProduction_ag
+
+    #These shares can now be matched in to the emissions quantities, and multiplied through
+    L2111.AWBEmissions %>%
+      bind_rows(L2111.AGREmissions) %>%
+      repeat_add_columns(tibble::tibble(level = c("hi", "lo"))) %>%
+      unite(AgProductionTechnology_level, AgProductionTechnology, level, sep = "_", remove = FALSE) ->
+      L2112.awb_agr_emissions
+
+
+    L2112.AgProduction_ag %>%
+      select(-year, -AgSupplySubsector) %>%
+      left_join(L2112.awb_agr_emissions, by = c("region", "AgSupplySector", "AgProductionTechnology" = "AgProductionTechnology_level")) ->
+      L2112.awb_agr_emissions
+
+
+    #Where shares allocated to lo/hi are NA but emissions are positive, split it 50/50 between the techs. For all others, set share to zero
+    L2112.awb_agr_emissions %>%
+      mutate(share_tech = if_else(is.na(share_tech) & input.emissions > 1e-6, 0.5, share_tech)) %>%
+      mutate(share_tech = if_else(is.na(share_tech), 0, share_tech)) %>%
+      mutate(input.emissions  = input.emissions * share_tech) %>%
+      select(-share_tech, -total, -m_tech, -calOutputValue, -AgProductionTechnology) %>%
+      rename(AgProductionTechnology = `AgProductionTechnology.y`)->
+      L2112.awb_agr_emissions
+
+    L2112.awb_agr_emissions %>%
+      filter(grepl( "AWB", Non.CO2 )) %>%
+      rename(value = `input.emissions`)->
+      L2112.AWBEmissions
+
+    L2112.awb_agr_emissions %>%
+      filter(!grepl( "AWB", Non.CO2 )) %>%
+      rename(value = `input.emissions`)->
+      L2112.AGREmissions
+
     # ===================================================
 
     # Produce outputs
@@ -80,58 +129,53 @@ module_emissions_L2112.ag_nonco2_IRR_MGMT <- function(command, ...) {
     # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
     # There's also a `same_precursors_as(x)` you can use
     # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("object") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      object
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L2112.AnEmissions") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L2112.AnEmissions
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L2112.AnNH3Emissions") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L2112.AnNH3Emissions
-    tibble() %>%
-      add_title("descriptive title of data") %>%
+
+#
+#     create_xml("aglu_emissions_IRR_MGMT.xml") %>%
+#       add_xml_data(L2112.AGRBio, "L2112.AGRBio") %>%
+#       add_xml_data(L2112.AWB_BCOC_EmissCoeff, "L2112.AWB_BCOC_EmissCoeff") %>%
+#       add_xml_data(L2112.nonghg_max_reduction, "L2112.nonghg_max_reduction") %>%
+#       add_xml_data(L2112.nonghg_steepness, "L2112.nonghg_steepness") ->
+#       add_precursors("common/GCAM_region_names", "emissions/A_regions","L2111.AWBEmissions",
+#                      "L2111.AGREmissions", "L2111.AGRBio", "L2111.AWB_BCOC_EmissCoeff",
+#                      "L2111.nonghg_max_reduction", "L2111.nonghg_steepness",
+#                      "temp-data-inject/L2012.AgProduction_ag_irr_mgmt",
+#                      "temp-data-inject/L2111.AnEmissions",
+#                      "temp-data-inject/L2111.AnNH3Emissions") ->
+#       batch_all_aglu_emissions_IRR_MGMT.xml
+#     return_data(aglu_emissions_IRR_MGMT.xml)
+    L2112.AWBEmissions %>%
+      add_title("bleh") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2112.AWBEmissions") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L2111.AWBEmissions",
+        "L2111.AGREmissions",
+        "L2111.AGRBio",
+        "L2111.AWB_BCOC_EmissCoeff",
+        "L2111.nonghg_max_reduction",
+        "L2111.nonghg_steepness", "temp-data-inject/L211.AnEmissions",
+        "temp-data-inject/L211.AnNH3Emissions", "temp-data-inject/L2012.AgProduction_ag_irr_mgmt") %>%
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST, FLAG_SUM_TEST) ->
       L2112.AWBEmissions
-    tibble() %>%
-      add_title("descriptive title of data") %>%
+    L2112.AGREmissions %>%
+      add_title("bleh") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2112.AGREmissions") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L2111.AWBEmissions",
+        "L2111.AGREmissions",
+        "L2111.AGRBio",
+        "L2111.AWB_BCOC_EmissCoeff",
+        "L2111.nonghg_max_reduction",
+        "L2111.nonghg_steepness", "temp-data-inject/L211.AnEmissions",
+        "temp-data-inject/L211.AnNH3Emissions", "temp-data-inject/L2012.AgProduction_ag_irr_mgmt") %>%
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L2112.AGREmissions
 
-    return_data(object, L2112.AnEmissions, L2112.AnNH3Emissions, L2112.AWBEmissions, L2112.AGREmissions)
+    return_data(L2112.AWBEmissions, L2112.AGREmissions)
   } else {
     stop("Unknown command")
   }
