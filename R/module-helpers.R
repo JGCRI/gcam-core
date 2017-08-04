@@ -294,11 +294,6 @@ add_carbon_info <- function( data, carbon_info_table, matchvars = c( "region", "
       carbon_info_table
   }
 
-  # data[ c( "hist.veg.carbon.density", "hist.soil.carbon.density", "mature.age" ) ] <-
-  #   carbon_info_table[ match( vecpaste( data[ data_matchvars ] ),
-  #                             vecpaste( carbon_info_table[ carbon_info_matchvars ] ) ),
-  #                      carbon_info_table_names ]
-
   data %>%
     left_join_error_no_match(carbon_info_table, by = matchvars) %>%
     rename(hist.veg.carbon.density = veg_c,
@@ -314,15 +309,6 @@ add_carbon_info <- function( data, carbon_info_table, matchvars = c( "region", "
     select(-GCAM_region_ID) ->
     data
 
-
-  # data[ c( "hist.veg.carbon.density", "hist.soil.carbon.density" ) ] <- round(
-  #   data[ c( "hist.veg.carbon.density", "hist.soil.carbon.density" ) ], aglu.DIGITS_C_DENSITY)
-  # data$mature.age <- round( data$mature.age, aglu.DIGITS_MATUREAGE)
-  # data$mature.age.year.fillout <- min( model_base_years )
-  # data$veg.carbon.density <- data$hist.veg.carbon.density
-  # data$soil.carbon.density <- data$hist.soil.carbon.density
-  # data$min.veg.carbon.density <- min.veg.carbon.density
-  # data$min.soil.carbon.density <- min.soil.carbon.density
   return( data )
 }
 
