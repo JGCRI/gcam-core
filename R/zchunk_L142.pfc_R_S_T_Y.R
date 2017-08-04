@@ -20,7 +20,7 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "emissions/gcam_fgas_tech",
              FILE = "emissions/other_f_gases",
-             FILE = "temp-data-inject/L144.in_EJ_R_bld_serv_F_Yh",
+             "L144.in_EJ_R_bld_serv_F_Yh",
              FILE = "common/iso_GCAM_regID",
              FILE = "emissions/EDGAR/EDGAR_sector_fgas",
              FILE = "emissions/A41.GWP",
@@ -47,21 +47,18 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
     EDGAR_sector <- get_data(all_data, "emissions/EDGAR/EDGAR_sector_fgas")
     GWP <- get_data(all_data, "emissions/A41.GWP")
 
-    get_data(all_data, "temp-data-inject/L144.in_EJ_R_bld_serv_F_Yh")  %>%
-      gather(year, value, -GCAM_region_ID, -sector, -fuel, -service) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) ->
-      L144.in_EJ_R_bld_serv_F_Yh
+    L144.in_EJ_R_bld_serv_F_Yh <- get_data(all_data, "L144.in_EJ_R_bld_serv_F_Yh")
     get_data(all_data, "emissions/EDGAR/EDGAR_SF6")  %>%
-      gather(year, value, -IPCC_Annex, -World_Region, -ISO_A3, -Name, -IPCC, -IPCC_description) %>%
-      mutate(year = as.integer(substr(year, 1, 5))) ->
+      gather(year, value, matches(YEAR_PATTERN)) %>%
+      mutate(year = as.integer(year)) ->
       EDGAR_SF6
     get_data(all_data, "emissions/EDGAR/EDGAR_C2F6") %>%
-      gather(year, value, -IPCC_Annex, -World_Region, -ISO_A3, -Name, -IPCC, -IPCC_description) %>%
-      mutate(year = as.integer(substr(year, 1, 5))) ->
+      gather(year, value, matches(YEAR_PATTERN)) %>%
+      mutate(year = as.integer(year)) ->
       EDGAR_C2F6
     get_data(all_data, "emissions/EDGAR/EDGAR_CF4") %>%
-      gather(year, value, -IPCC_Annex, -World_Region, -ISO_A3, -Name, -IPCC, -IPCC_description) %>%
-      mutate(year = as.integer(substr(year, 1, 5))) ->
+      gather(year, value, matches(YEAR_PATTERN)) %>%
+      mutate(year = as.integer(year)) ->
       EDGAR_CF4
 
     # This chunk maps EDGAR HFC emissions to GCAM technologies
@@ -167,7 +164,7 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
       add_precursors("common/GCAM_region_names",
                      "emissions/gcam_fgas_tech",
                      "emissions/other_f_gases",
-                     "temp-data-inject/L144.in_EJ_R_bld_serv_F_Yh",
+                     "L144.in_EJ_R_bld_serv_F_Yh",
                      "common/iso_GCAM_regID",
                      "emissions/EDGAR/EDGAR_sector_fgas",
                      "emissions/A41.GWP",

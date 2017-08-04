@@ -20,7 +20,7 @@ module_energy_LA124.heat <- function(command, ...) {
              FILE = "energy/A24.globaltech_coef",
              FILE = "energy/calibrated_techs",
              FILE = "energy/enduse_fuel_aggregation",
-             FILE = "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh",
+             "L1011.en_bal_EJ_R_Si_Fi_Yh",
              "L1231.out_EJ_R_elec_F_tech_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L124.in_EJ_R_heat_F_Yh",
@@ -43,13 +43,7 @@ module_energy_LA124.heat <- function(command, ...) {
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
     enduse_fuel_aggregation <- get_data(all_data, "energy/enduse_fuel_aggregation")
 
-    get_data(all_data, "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh") %>%
-      gather(year, value, -fuel, -sector, -GCAM_region_ID) %>%
-      mutate(year = sub("X", "", year)) %>%
-      mutate(year = as.integer(year)) %>%
-      filter(year %in% HISTORICAL_YEARS) ->   # ensure temp data match our current history
-      L1011.en_bal_EJ_R_Si_Fi_Yh
-
+    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
     L1231.out_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.out_EJ_R_elec_F_tech_Yh")
 
     # ===================================================
@@ -199,7 +193,7 @@ module_energy_LA124.heat <- function(command, ...) {
       add_comments("Input heat is extracted from energy balance, aggregated based on aggregate fuel types") %>%
       add_comments("To avoid processing failure, 0 years have base year (2010) * 1e-3 added") %>%
       add_legacy_name("L124.in_EJ_R_heat_F_Yh") %>%
-      add_precursors("energy/A_regions", "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/enduse_fuel_aggregation") %>%
+      add_precursors("energy/A_regions", "L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/enduse_fuel_aggregation") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L124.in_EJ_R_heat_F_Yh
 
@@ -218,7 +212,7 @@ module_energy_LA124.heat <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Data on heat from CHP is read in, aggregated") %>%
       add_legacy_name("L124.out_EJ_R_heatfromelec_F_Yh") %>%
-      add_precursors("energy/A_regions", "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/enduse_fuel_aggregation") %>%
+      add_precursors("energy/A_regions", "L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/enduse_fuel_aggregation") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L124.out_EJ_R_heatfromelec_F_Yh
 
