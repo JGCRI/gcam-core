@@ -9,21 +9,23 @@
 #' the generated outputs: \code{L261.DepRsrc}, \code{L261.UnlimitRsrc}, \code{L261.DepRsrcCurves_C}, \code{L261.SectorLogitTables[[ curr_table ]]$data}, \code{L261.Supplysector_C}, \code{L261.SubsectorLogitTables[[ curr_table ]]$data}, \code{L261.SubsectorLogit_C}, \code{L261.SubsectorShrwtFllt_C}, \code{L261.StubTech_C}, \code{L261.GlobalTechCoef_C}, \code{L261.GlobalTechCost_C}, \code{L261.GlobalTechShrwt_C}, \code{L261.GlobalTechCost_C_High}, \code{L261.GlobalTechShrwt_C_nooffshore}, \code{L261.DepRsrcCurves_C_high}, \code{L261.DepRsrcCurves_C_low}, \code{L261.DepRsrcCurves_C_lowest}. The corresponding file in the
 #' original data system was \code{L261.Cstorage.R} (energy level2).
 #' @details The below fifteen tables pertaining to carbon storage properties are generated:
-#'     Carbon storage information
-#'     Unlimited carbon storage information
-#'     Supply curve of carbon storage resources
-#'     High supply curve of onshore carbon storage resources
-#'     Low supply curve of onshore carbon storage resources
-#'     Lowest supply curve of onshore carbon storage resources
-#'     Carbon storage sector information
-#'     Subsector logit exponents of carbon storage sector
-#'     Subsector shareweights of carbon storage sectors
-#'     Identification of stub technologies of carbon storage
-#'     Carbon storage global technology coefficients across base model years
-#'     Carbon storage global technology costs across base model years
-#'     Carbon storage global technology costs across base model years, high price scenario
-#'     Shareweights of carbon storage technologies across base model years
-#'     Shareweights of offshore carbon storage technologies
+#' \itemize{
+#'  \item{Carbon storage information}
+#'  \item{Unlimited carbon storage information}
+#'  \item{Supply curve of carbon storage resources}
+#'  \item{High supply curve of onshore carbon storage resources}
+#'  \item{Low supply curve of onshore carbon storage resources}
+#'  \item{Lowest supply curve of onshore carbon storage resources}
+#'  \item{Carbon storage sector information}
+#'  \item{Subsector logit exponents of carbon storage sector}
+#'  \item{Subsector shareweights of carbon storage sectors}
+#'  \item{Identification of stub technologies of carbon storage}
+#'  \item{Carbon storage global technology coefficients across base model years}
+#'  \item{Carbon storage global technology costs across base model years}
+#'  \item{Carbon storage global technology costs across base model years, high price scenario}
+#'  \item{Shareweights of carbon storage technologies across base model years}
+#'  \item{Shareweights of offshore carbon storage technologies}
+#' }
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -88,8 +90,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
       # We will use these specific region names to replace the broad term, regional, in the market column.
       repeat_add_columns(GCAM_region_names) %>%
       # Reset regional markets to the names of the specific regions
-      mutate(market = replace(market, market == "regional", region[market == "regional"]),
-             capacity.factor = as.numeric(capacity.factor)) %>%
+      mutate(market = replace(market, market == "regional", region[market == "regional"])) %>%
       rename(output.unit = `output-unit`, price.unit = `price-unit`) ->
       L261.rsrc_info
 
@@ -176,38 +177,30 @@ module_energy_L261.Cstorage <- function(command, ...) {
     # A61.globaltech_coef reports carbon storage global technology coefficients
     A61.globaltech_coef %>%
       gather(year, value, matches(YEAR_PATTERN)) %>% # Convert to long form
-      mutate(year = as.integer(year), # Year needs to be integer or numeric to interpolate
-             value = as.numeric(value)) %>%
+      mutate(year = as.integer(year)) %>% # Year needs to be integer or numeric to interpolate
       # Expand table to include all model base and future years
-      group_by(supplysector, subsector, technology, minicam.energy.input) %>%
-      complete(year = c(year, MODEL_YEARS)) %>%
+      complete(supplysector, subsector, technology, minicam.energy.input, year = c(year, MODEL_YEARS)) %>%
       # Extrapolate to fill out values for all years
       # Rule 2 is used so years outside of min-max range are assigned values from closest data, as opposed to NAs
-      mutate(value = approx_fun(year, value, rule = 2)) %>%
-      ungroup() %>%
-      mutate(year = as.integer(year)) %>% # Year was converted to numeric after interpolation operation. Convert back to integer.
+      mutate(coefficient = approx_fun(year, value, rule = 2)) %>%
       filter(year %in% MODEL_YEARS) %>% # This will drop 1971
       # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
-      select(sector.name = supplysector, subsector.name = subsector, technology, year, minicam.energy.input, coefficient = value) ->
+      select(sector.name = supplysector, subsector.name = subsector, technology, year, minicam.energy.input, coefficient) ->
       L261.GlobalTechCoef_C # This is a final output table.
 
     # Costs of global technologies
     # A61.globaltech_cost reports carbon storage offshore storage cost (1975$/tCO2)
     A61.globaltech_cost %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year),
-             value = as.numeric(value)) %>%
+      gather(year, value, matches(YEAR_PATTERN)) %>% # Convert to long form
+      mutate(year = as.integer(year)) %>% # Year needs to be integer or numeric to interpolate
       # Expand table to include all model base and future years
-      group_by(supplysector, subsector, technology, minicam.non.energy.input) %>%
-      complete(year = c(year, MODEL_YEARS)) %>%
+      complete(supplysector, subsector, technology, minicam.non.energy.input, year = c(year, MODEL_YEARS)) %>%
       # Extrapolate to fill out values for all years
       # Rule 2 is used so years outside of min-max range are assigned values from closest data, as opposed to NAs
-      mutate(value = approx_fun(year, value, rule = 2)) %>%
-      ungroup() %>%
-      mutate(year = as.integer(year)) %>% # Year was converted to numeric after interpolation operation. Convert back to integer.
+      mutate(input.cost = approx_fun(year, value, rule = 2)) %>%
       filter(year %in% MODEL_YEARS) %>% # This will drop 1971
       # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
-      select(sector.name = supplysector, subsector.name = subsector, technology, year, minicam.non.energy.input, input.cost = value) ->
+      select(sector.name = supplysector, subsector.name = subsector, technology, year, minicam.non.energy.input, input.cost) ->
       L261.GlobalTechCost_C # This is a final output table.
 
     # High costs of global technologies for carbon storage -- this prices out CCS
@@ -220,17 +213,15 @@ module_energy_L261.Cstorage <- function(command, ...) {
 
     # Shareweights of global technologies for energy transformation
     A61.globaltech_shrwt %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
-      group_by(supplysector, subsector, technology) %>%
+      gather(year, value, matches(YEAR_PATTERN)) %>% # Convert to long form
+      mutate(year = as.integer(year)) %>% # Year needs to be integer or numeric to interpolate
       # Expand table to include all model base and future years
-      complete(year = c(year, MODEL_YEARS)) %>%
+      complete(supplysector, subsector, technology, year = c(year, MODEL_YEARS)) %>%
       # Extrapolate to fill out values for all years
       # Rule 2 is used so years outside of min-max range are assigned values from closest data, as opposed to NAs
       mutate(share.weight = approx_fun(year, value, rule = 2)) %>%
-      ungroup() %>%
-      mutate(year = as.integer(year)) %>% # Year was converted to numeric after interpolation operation. Convert back to integer.
       filter(year %in% MODEL_YEARS) %>% # This will drop 1971
+      # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
       select(sector.name = supplysector, subsector.name = subsector, technology, year, share.weight) ->
       L261.GlobalTechShrwt_C # This is a final output table.
 

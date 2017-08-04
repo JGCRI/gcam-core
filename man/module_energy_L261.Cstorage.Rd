@@ -22,21 +22,23 @@ Calculates carbon storage resource supply curves, shareweights, technology coeff
 }
 \details{
 The below fifteen tables pertaining to carbon storage properties are generated:
-    Carbon storage information
-    Unlimited carbon storage information
-    Supply curve of carbon storage resources
-    High supply curve of onshore carbon storage resources
-    Low supply curve of onshore carbon storage resources
-    Lowest supply curve of onshore carbon storage resources
-    Carbon storage sector information
-    Subsector logit exponents of carbon storage sector
-    Subsector shareweights of carbon storage sectors
-    Identification of stub technologies of carbon storage
-    Carbon storage global technology coefficients across base model years
-    Carbon storage global technology costs across base model years
-    Carbon storage global technology costs across base model years, high price scenario
-    Shareweights of carbon storage technologies across base model years
-    Shareweights of offshore carbon storage technologies
+\itemize{
+ \item{Carbon storage information}
+ \item{Unlimited carbon storage information}
+ \item{Supply curve of carbon storage resources}
+ \item{High supply curve of onshore carbon storage resources}
+ \item{Low supply curve of onshore carbon storage resources}
+ \item{Lowest supply curve of onshore carbon storage resources}
+ \item{Carbon storage sector information}
+ \item{Subsector logit exponents of carbon storage sector}
+ \item{Subsector shareweights of carbon storage sectors}
+ \item{Identification of stub technologies of carbon storage}
+ \item{Carbon storage global technology coefficients across base model years}
+ \item{Carbon storage global technology costs across base model years}
+ \item{Carbon storage global technology costs across base model years, high price scenario}
+ \item{Shareweights of carbon storage technologies across base model years}
+ \item{Shareweights of offshore carbon storage technologies}
+}
 }
 \author{
 AJS August 2017
