@@ -144,10 +144,6 @@ aglu.BIO_ENERGY_CONTENT_GJT <- 17.5  # Energy content of biomass, GJ/ton
 aglu.HIGH_GROWTH_PCGDP <- 12.275   # thousand 2010$ per person
 aglu.LOW_GROWTH_PCGDP  <- 2.75     # thousand 2010$ per person
 
-# Number of digits for model input data
-aglu.DIGITS_CALPRICE  <- 4 # prices and costs
-aglu.DIGITS_CALOUTPUT <- 7 # production
-
 # Regions in which agriculture and land use are not modeled
 aglu.NO_AGLU_REGIONS <- "Taiwan"
 
@@ -220,13 +216,15 @@ energy.RSRC_FUELS <- c("coal", "gas", "refined liquids")
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
 
-# Mass
+# Numeric (unitless)
 CONV_BIL_MIL <- 1000
 CONV_MIL_BIL <- 1 / CONV_BIL_MIL
 CONV_BIL_THOUS <- 1e6
 CONV_THOUS_BIL <- 1 / CONV_BIL_THOUS
 CONV_MIL_THOUS <- 1000
 CONV_ONES_THOUS <- 0.001
+
+# Mass
 CONV_TON_MEGATON <- 1e-6
 CONV_T_KG <- 1e3
 CONV_KG_T <- 1 / CONV_T_KG
@@ -354,7 +352,7 @@ emissions.AGR_GASES            <- c("CH4_AGR", "N2O_AGR", "NH3_AGR", "NOx_AGR")
 
 
 # Uncomment these lines to run under 'timeshift' conditions
-HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
-FUTURE_YEARS <- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)
-BASE_YEARS <- c(1975, 1990, 2005)   # normally (1975, 1990, 2005, 2010)
-MODEL_YEARS <- c(BASE_YEARS, FUTURE_YEARS)
+# HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
+# FUTURE_YEARS <- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)
+# BASE_YEARS <- c(1975, 1990, 2005)   # normally (1975, 1990, 2005, 2010)
+# MODEL_YEARS <- c(BASE_YEARS, FUTURE_YEARS)
