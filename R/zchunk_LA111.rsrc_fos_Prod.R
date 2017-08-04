@@ -37,7 +37,9 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
     L100.IEA_en_bal_ctry_hist <- get_data(all_data, "L100.IEA_en_bal_ctry_hist")
     L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
 
-    # Historical fossil energy production (lines 38-56 in original)
+    # ------- HISTORICAL FOSSIL ENERGY PRODUCTION
+
+    # (lines 38-56 in original file)
     # NOTE: Regional production is derived for each fuel as global TPES times regional share of global production
     # Determine global total primary energy supply (TPES) for each fuel
     L1011.en_bal_EJ_R_Si_Fi_Yh %>%
@@ -105,28 +107,95 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
       bind_rows(select(L111.Prod_EJ_ctry_unconvOil_Yh, GCAM_region_ID, sector, fuel, year, value)) ->
       L111.Prod_EJ_R_F_Yh
 
+    # ------- FOSSIL RESOURCE SUPPLY CURVES
+
+    # Using supply curves from GCAM 3.0 (same as MiniCAM) (83-93)
+    # These need to be downscaled to the country level (on the basis of resource production) and then
+    # aggregated by the new GCAM regions. This requires that all regions have the same price points
+    L100.IEA_en_bal_ctry_hist %>%
+      filter(FLOW == "INDPROD", PRODUCT %in% IEA_product_rsrc$PRODUCT) %>%
+      gather(year, value, matches(YEAR_PATTERN)) %>%
+      mutate(year = as.integer(year)) %>%
+      # bring in resource information and summarise
+      left_join_error_no_match(IEA_product_rsrc, by = "PRODUCT") %>%
+      group_by(iso, resource) %>%
+      summarise(CumulSum = sum(value)) %>%
+      # calculate production shares of country within GCAM 3.0 region (95-102)
+      left_join_error_no_match(select(iso_GCAM_regID, iso, region_GCAM3), by = "iso") %>%
+      group_by(resource, region_GCAM3) %>%
+      mutate(share = CumulSum / sum(CumulSum)) %>%   # share of iso within region
+      ungroup %>%
+      select(iso, resource, share) ->
+      L111.Prod_share_ctry_F_Yh
+
+    # Downscale available resources by GCAM 3.0 region to countries (104-116)
+    crossing(iso = L111.Prod_share_ctry_F_Yh$iso,
+             subresource = A11.fos_curves$subresource) %>%
+      left_join_keep_first_only(select(A11.fos_curves, resource, subresource), by = "subresource") %>%
+      repeat_add_columns(tibble(grade = unique(A11.fos_curves$grade))) %>%
+      # remove non-existent grades
+      filter(paste(subresource, grade) %in% paste(A11.fos_curves$subresource, A11.fos_curves$grade)) %>%
+      # match in GCAM3 region, along with available resources
+      left_join_error_no_match(select(iso_GCAM_regID, iso, region_GCAM3), by = "iso") %>%
+      left_join_error_no_match(select(A11.fos_curves, region_GCAM3, subresource, grade, available_region_GCAM3 = available),
+                               by = c("region_GCAM3", "subresource", "grade")) %>%
+      # match in the share of resource available by each country within GCAM 3.0 region
+      # there are NAs here, so use left_join
+      left_join(L111.Prod_share_ctry_F_Yh, by = c("iso", "resource")) ->
+      L111.RsrcCurves_EJ_ctry_Ffos
+
+    # Use crude oil production shares as a proxy for unconventional oil resources (123-130)
+    L111.RsrcCurves_EJ_ctry_Ffos %>%
+      filter(resource == "crude oil") %>%
+      select(iso, share) ->
+      co
+
+    L111.RsrcCurves_EJ_ctry_Ffos %>%
+      filter(resource == "unconventional oil") %>%
+      select(-share) %>%
+      left_join_keep_first_only(co, by = "iso") %>%
+      bind_rows(filter(L111.RsrcCurves_EJ_ctry_Ffos, resource != "unconventional oil")) %>%
+      # set all other missing values to 0 (these are small countries)
+      replace_na(list(share = 0)) %>%
+      mutate(available = available_region_GCAM3 * share) ->
+      L111.RsrcCurves_EJ_ctry_Ffos
+
+    # Aggregate by GCAM regions (132-141)
+    L111.RsrcCurves_EJ_ctry_Ffos %>%
+      left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
+      group_by(GCAM_region_ID, resource, subresource, grade) %>%
+      summarise(available = sum(available)) %>%
+      left_join_keep_first_only(select(A11.fos_curves, resource, subresource, grade, extractioncost),
+                                by = c("resource", "subresource", "grade")) ->
+      L111.RsrcCurves_EJ_R_Ffos
+
+    # ------- RESOURCE PRICES
+    # Fossil resource historical prices are currently assumed. No level1 processing is needed.
+
 
     # Produce outputs
     L111.Prod_EJ_R_F_Yh %>%
       add_title("Historical fossil energy production") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_units("EJ") %>%
+      add_comments("Determine regional shares of production for each primary fuel,") %>%
+      add_comments("interpolate unconventional soil production to all historical years,") %>%
+      add_comments("deduct unconventional oil from total oil and include it in calibrated production table.") %>%
       add_legacy_name("L111.Prod_EJ_R_F_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "L1011.en_bal_EJ_R_Si_Fi_Yh",
                      "energy/rsrc_unconv_oil_prod_bbld") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L111.Prod_EJ_R_F_Yh
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L111.RsrcCurves_EJ_R_Ffos %>%
+      add_title("Fossil resource supply curves") %>%
+      add_units("available: EJ; extractioncost: 1975$/GJ") %>%
+      add_comments("Downscale GCAM3.0 supply curves to the country level (on the basis of resource") %>%
+      add_comments("production) and aggregate by the new GCAM regions.") %>%
+      add_comments("Use crude oil production shares as a proxy for unconventional oil resources.") %>%
       add_legacy_name("L111.RsrcCurves_EJ_R_Ffos") %>%
-      add_precursors("common/iso_GCAM_regID", "L1011.en_bal_EJ_R_Si_Fi_Yh",
-                     "energy/rsrc_unconv_oil_prod_bbld") %>%
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/iso_GCAM_regID", "energy/A11.fos_curves",
+                     "energy/IEA_product_rsrc",
+                     "L100.IEA_en_bal_ctry_hist") ->
       L111.RsrcCurves_EJ_R_Ffos
 
     return_data(L111.Prod_EJ_R_F_Yh, L111.RsrcCurves_EJ_R_Ffos)
