@@ -1,6 +1,6 @@
 #' module_emissions_L161.nonghg_en_ssp_R_S_T_Y
 #'
-#' Produces future non-GHG emissions factors by SSP scenario.
+#' Produce future non-GHG emissions factors by SSP scenario.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -151,8 +151,8 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
     coal_so2 <- tibble(GCAM_region_ID = seq(1, 32)) %>%
       left_join(
         emfact_scaled %>%
-          filter(year == emissions.GAINS_YEARS[length(emissions.GAINS_YEARS)]
-                 , IIASA_sector == "elec_coal", Non.CO2 == "SO2", scenario == "CLE"),
+          filter(year == emissions.GAINS_YEARS[length(emissions.GAINS_YEARS)],
+                 IIASA_sector == "elec_coal", Non.CO2 == "SO2", scenario == "CLE"),
         by = "GCAM_region_ID") %>%
       mutate(policy = if_else(emfact <= emissions.COAL_SO2_THRESHOLD, "strong_reg", "weak_reg"),
              policy = replace(policy, region_grouping == "low", "low")) %>%
@@ -243,7 +243,7 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
       })
 
     # Region 25 is dropped in old ds because it does not have policy (elec_coal data does not exist)
-    # Unsure of what correct behavior is
+    # Unsure of what correct behavior is. See issue #596
     if (OLD_DATA_SYSTEM_BEHAVIOR){
       out_df[["2"]] <- out_df[["2"]] %>%
         filter(GCAM_region_ID != 25)
@@ -267,6 +267,7 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
                      "emissions/A61_emfact_rules") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L161.SSP15_EF
+
     out_df[["2"]] %>%
       add_title("Emissions factors for SSP 2") %>%
       add_units("Tg/EJ") %>%
@@ -283,6 +284,7 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
                      "emissions/A61_emfact_rules") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L161.SSP2_EF
+
     out_df[["3&4"]] %>%
       add_title("Emissions factors for SSP 3 and SSP 4") %>%
       add_units("Tg/EJ") %>%
@@ -305,6 +307,3 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
     stop("Unknown command")
   }
 }
-
-
-
