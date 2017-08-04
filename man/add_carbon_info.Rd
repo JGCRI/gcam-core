@@ -8,9 +8,11 @@ add_carbon_info(data, carbon_info_table, matchvars = c("region", "GLU",
   Cdensity_LT = "Land_Type"))
 }
 \arguments{
+\item{data}{= input data tibble to receive carbon info}
+
 \item{carbon_info_table}{= table with veg and soil carbon densities, and mature.age}
 
-\item{match_vars}{=  a character vector for by = in left_join(data, carbon_info_table, by = ...)}
+\item{matchvars}{=  a character vector for by = in left_join(data, carbon_info_table, by = ...)}
 }
 \value{
 the original table with carbon density info added
