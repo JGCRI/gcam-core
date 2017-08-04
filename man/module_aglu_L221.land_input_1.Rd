@@ -18,11 +18,30 @@ the generated outputs: \code{curr_table$data}, \code{L221.LN0_Logit}, \code{L221
 original data system was \code{L221.land_input_1.R} (aglu level2).
 }
 \description{
-Briefly describe what this chunk does.
+This chunk produces L221.LN0_Logit - Logit exponent of the top-level (zero) land nest by region; L221.LN0_Land - Total regional land allocation in top level nest;
+L221.LN0_SoilTimeScale - Soil time scale by region; L221.LN1_ValueLogit - Unmanaged land value by region and GLU, and logit exponent of first nest;
+L221.LN1_HistUnmgdAllocation - Historical land cover fora unmanaged land (LT_GLU) in the first nest by region;
+L221.LN1_UnmgdAllocation - Land cover in the model base periods for unmanaged land (LT_GLU) in the first nest by region; and
+L221.LN1_UnmgdCarbon - Carbon content for unmanaged land (LT_GLU) in first nest by region.
 }
 \details{
-Describe in detail what this chunk does.
+L221.LN0_Logit Logit exponent of the top-level (zero) land nest by region.
+AgLu regions are given externally defined constant logit information.
+L221.LN0_Land Total regional land allocation in top level nest.
+L125 land cover data is assigned proper GCAM region names and nest id.
+L221.LN0_SoilTimeScale Soil time scale by region.
+External soil time scale assumptions for each AGLU region
+L221.LN1_ValueLogit Unmanaged land value by region and GLU, and logit exponent of first nest.
+L131 land value data is joined with LandNode Logit assumptions.A minimum value is set to ensure all
+regins have a nonzero land value.
+L221.LN1_HistUnmgdAllocation Historical land cover fora unmanaged land (LT_GLU) in the first nest by region.
+Historical land cover for unmanaged land in the first nest, from L125 land cover data.
+L221.LN1_UnmgdAllocation Land cover in the model base periods for unmanaged land (LT_GLU) in the first nest by region.
+Land cover in the model base periods for unmanaged land in the first nest, from L125 land cover data.
+L221.LN1_UnmgdCarbon Carbon content for unmanaged land (LT_GLU) in first nest by region.
+Carbon content info for unmanaged land in the first nest including soil and vegetative carbon,
+from L125 land cover data, L121 carbon content data, and GCAMLandLeaf_CdensityLT assumptions.
 }
 \author{
-YourInitials CurrentMonthName 2017
+ACS August 2017
 }
