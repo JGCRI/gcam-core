@@ -53,17 +53,24 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
     L125.LC_bm2_R <- get_data(all_data, "L125.LC_bm2_R")
     L131.LV_USD75_m2_R_GLU <- get_data(all_data, "L131.LV_USD75_m2_R_GLU")
 
-    # Replace GLU names
+
+    # 1. Process inputs
+
+    # Replace GLU names and Add region names
     L121.CarbonContent_kgm2_R_LT_GLU %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       replace_GLU(map = basin_to_country_mapping) ->
       L121.CarbonContent_kgm2_R_LT_GLU
 
     L125.LC_bm2_R_LT_Yh_GLU %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       replace_GLU(map = basin_to_country_mapping) ->
       L125.LC_bm2_R_LT_Yh_GLU
 
     L131.LV_USD75_m2_R_GLU %>%
-      replace_GLU(map = basin_to_country_mapping) ->
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      replace_GLU(map = basin_to_country_mapping) %>%
+      ungroup ->
       L131.LV_USD75_m2_R_GLU
 
     # Add region names to inputs
@@ -71,47 +78,81 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
       L125.LC_bm2_R
 
+    A_soil_time_scale_R %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
+      A_soil_time_scale_R
 
-    # Perform computations
+    # Convert land value to  1975$ per thousand km2 and calculate minimum land value,
+    # setting a minimum threshold on the land values to ensure that no land use regions get a value of zero
+    L131.LV_USD75_m2_R_GLU %>%
+      mutate(LV_USD75_bm2 = round(LV_USD75_m2 * CONV_BM2_M2, aglu.DIGITS_LAND_VALUE)) ->
+      L131.LV_USD75_bm2_R_GLU
 
-    # Create a template table of combinations of region, GLUs, land use types
-    L125.LC_bm2_R_LT_Yh_GLU %>%
-      left_join(select(A_LT_Mapping, Land_Type, LandNode1), by = "Land_Type") %>%
-      select(GCAM_region_ID, GLU, LandNode1) %>%
-      distinct %>%
-      na.omit ->
-      L221.LN1
+    L131.LV_USD75_bm2_R_GLU %>%
+      select(LV_USD75_bm2) %>%
+      filter(LV_USD75_bm2 > 0) %>%
+      min ->
+      min_LV_USD75_bm2
 
 
-    # Calculate logit exponent of the top-level (zero) land nest.
+    # 2. Perform computations
 
-    # Prepare the table of identifying information to be filled in
+    # Build L221.LN0_Logit: Logit exponent of the top-level (zero) land nest
     L125.LC_bm2_R %>%
       select(region) %>%
       mutate(LandAllocatorRoot = "root",
              logit.year.fillout = min(BASE_YEARS),
              logit.exponent = aglu.N0_LOGIT_EXP,
-             logit.type = aglu.N0_LOGIT_TYPE) %>%
-      get_logit_fn_tables(names_LN0_LogitType,
-                          base.header="LN0_Logit_", include.equiv.table=T, write.all.regions=F) ->
+             logit.type = aglu.N0_LOGIT_TYPE) ->
       L221.LN0_Logit
 
 
+    # Build L221.LN0_Land: Total regional land allocation
+    L125.LC_bm2_R %>%
+      mutate(LandAllocatorRoot = "root",
+            year.fillout = min(BASE_YEARS)) %>%
+      rename(landAllocation = LC_bm2) ->
+      L221.LN0_Land
+
+
+    # Build L221.LN0_SoilTimeScale: Soil time scale by region
+    A_soil_time_scale_R %>%
+      filter(!(region %in% aglu.NO_AGLU_REGIONS)) %>%
+      select(-GCAM_region_ID) %>%
+      mutate(LandAllocatorRoot = "root") ->
+      L221.LN0_SoilTimeScale
+
+
+    # Build L221.LN1_ValueLogit: Unmanaged land value by region and AEZ, and logit exponent of first nest
+    L125.LC_bm2_R_LT_Yh_GLU %>%
+      left_join(select(A_LT_Mapping, Land_Type, LandNode1), by = "Land_Type") %>%
+      select(region, GLU, LandNode1) %>%
+      distinct %>%
+      na.omit %>%
+      mutate(LandAllocatorRoot = "root",
+             logit.year.fillout = min(BASE_YEARS))  %>%
+      # add exponents and logit types
+      left_join(A_LandNode_logit, by = c("LandNode1" = "LandNode")) %>%
+      # add land value
+      left_join(select(L131.LV_USD75_bm2_R_GLU, region, GLU, LV_USD75_bm2), by = c("region", "GLU")) %>%
+      rename(unManagedLandValue = LV_USD75_bm2) %>%
+      # update land value with minimum to make sure every region-glu has a nonzero land value
+      mutate(unManagedLandValue = replace(unManagedLandValue,
+                                          is.na(unManagedLandValue) | unManagedLandValue == 0,
+                                          min_LV_USD75_bm2),
+             LandNode1 = paste(LandNode1, GLU, sep = aglu.CROP_GLU_DELIMITER),
+             logit.type = aglu.N0_LOGIT_TYPE) %>%
+      select(region, LandAllocatorRoot, LandNode1, unManagedLandValue, logit.year.fillout, logit.exponent, logit.type) ->
+      L221.LN1_ValueLogit
 
 
 
 
-    # Produce outputs
-    # tibble() %>%
-    #   add_title("descriptive title of data") %>%
-    #   add_units("units") %>%
-    #   add_comments("comments describing how data generated") %>%
-    #   add_comments("can be multiple lines") %>%
-    #   add_legacy_name("curr_table$data") %>%
-    #   add_precursors("precursor1", "precursor2", "etc") %>%
-    #   # typical flags, but there are others--see `constants.R`
-    #   add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-    #   curr_table$data
+
+
+
+
+    # 3. Produce outputs
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -172,16 +213,6 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L221.LN0_SoilTimeScale
-    # tibble() %>%
-    #   add_title("descriptive title of data") %>%
-    #   add_units("units") %>%
-    #   add_comments("comments describing how data generated") %>%
-    #   add_comments("can be multiple lines") %>%
-    #   add_legacy_name("curr_table$data") %>%
-    #   add_precursors("precursor1", "precursor2", "etc") %>%
-    #   # typical flags, but there are others--see `constants.R`
-    #   add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-    #   curr_table$data
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -263,9 +294,7 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L221.LN1_UnmgdCarbon
 
-    return_data(# curr_table$data,
-                L221.LN0_Logit, L221.LN0_Land, L221.LN0_SoilTimeScale,
-                # curr_table$data,
+    return_data(L221.LN0_Logit, L221.LN0_Land, L221.LN0_SoilTimeScale,
                 L221.LN1_ValueLogit, L221.LN1_HistUnmgdAllocation, L221.LN1_UnmgdAllocation, L221.LN1_UnmgdCarbon)
   } else {
     stop("Unknown command")

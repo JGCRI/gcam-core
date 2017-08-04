@@ -181,7 +181,7 @@ aglu.WOOD_WATER_CONTENT <- 0.065
 
 # define top-level (zero) land nest logit exponent and logit type
 aglu.N0_LOGIT_EXP <- 0
-aglu.N0_LOGIT_TYPE <- NA
+aglu.N0_LOGIT_TYPE <- "relative-cost-logit"
 
 
 # XML-related constants
@@ -196,6 +196,7 @@ aglu.DIGITS_HARVEST_INDEX <- 2
 aglu.DIGITS_EROS_CTRL     <- 2
 aglu.DIGITS_RES_ENERGY    <- 4
 aglu.DIGITS_WATER_CONTENT <- 2
+aglu.DIGITS_LAND_VALUE    <- 0
 
 
 # Energy constants ======================================================================
@@ -266,6 +267,7 @@ CONV_M3_BM3 <- 1e-09 # Cubic meters (m3) to billion cubic meters (bm3)
 CONV_MILLION_M3_KM3 <- 1e-03
 CONV_M2_ACR <- 0.0002471058
 CONV_HA_M2 <- 1e4 # ha to m2
+CONV_BM2_M2 <- 1e9
 
 
 # Driver constants ======================================================================
