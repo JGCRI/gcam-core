@@ -149,9 +149,10 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
       na.omit %>%
       mutate(LandAllocatorRoot = "root",
              logit.year.fillout = min(BASE_YEARS))  %>%
-      # add exponents and logit types
-      left_join(A_LandNode_logit, by = c("LandNode1" = "LandNode")) %>%
-      # add land value
+      # add logit exponents
+      # This is where logit types would be added as well, but currently omitting to allow left_join_error_no_match_use
+      left_join_error_no_match(select(A_LandNode_logit, LandNode, logit.exponent), by = c("LandNode1" = "LandNode")) %>%
+      # add land value, maintaining any NA's to be replaced with minimum
       left_join(select(L131.LV_USD75_bm2_R_GLU, region, GLU, LV_USD75_bm2), by = c("region", "GLU")) %>%
       rename(unManagedLandValue = LV_USD75_bm2) %>%
       # update land value with minimum to make sure every region-glu has a nonzero land value
