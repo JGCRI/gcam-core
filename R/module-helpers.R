@@ -283,8 +283,9 @@ replace_GLU <- function(d, map, GLU_pattern = "^GLU[0-9]{3}$") {
 #'
 #' function to translate from soil, veg, and mature age data (already in a table) to the required read-in model parameters
 #'
+#' @param data = input data tibble to receive carbon info
 #' @param carbon_info_table = table with veg and soil carbon densities, and mature.age
-#' @param match_vars =  a character vector for by = in left_join(data, carbon_info_table, by = ...)
+#' @param matchvars =  a character vector for by = in left_join(data, carbon_info_table, by = ...)
 #' @return the original table with carbon density info added
 add_carbon_info <- function( data, carbon_info_table, matchvars = c( "region", "GLU", "Cdensity_LT" = "Land_Type" )){
   if (!("region" %in% names(carbon_info_table))){
