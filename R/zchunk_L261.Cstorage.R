@@ -73,7 +73,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
     # ===================================================
 
     # Silence package notes
-    . <- LEVEL2_DATA_NAMES <- available <- capacity.factor <- curr_table <-
+    . <- available <- capacity.factor <- curr_table <-
       extractioncost <- grade <- logit.type <- minicam.energy.input <-
       minicam.non.energy.input <- `output-unit` <- `price-unit` <- resource <-
       resource_type <- share.weight <- subresource <- subsector <- subsector.name <-
