@@ -125,37 +125,6 @@ module_energy_LA114.wind <- function(command, ...) {
            # low to high price (at least 10 dollars more than minimum price, i.e., 100 min calculations at 0.1 increments).
       L114.supply_tol <- 0.01
       regional_price_supply_points <- L114.OLDregional_price_supply_points
-    #   regional_price_supply_points <- tibble()
-    #   for(region_ID in unique(L114.RsrcCurves_EJ_ctry_wind$GCAM_region_ID)) {
-    #     L114.curr_region_RsrcCurves <- subset(L114.RsrcCurves_EJ_ctry_wind, GCAM_region_ID == region_ID)
-    #     L114.price <- min(L114.curr_region_RsrcCurves$base.price)
-    #     # Evaluate the supply curve until the supply doesn't seem to be changing more than a tolerance
-    #     # with a minimum number of evaluations to ensure we make progress into a very shallow curve as well.
-    #     L114.prev_supply <- 0
-    #     L114.min_calcs <- 100
-    #     repeat {
-    #       # Evaluate supply curves for all countries in the region at the current price and sum up the supply
-    #       # We do this as a vectorised operation over all the rows in L114.curr_region_RsrcCurves
-    #       L114.SupplyPoints.currR <- tibble(GCAM_region_ID = region_ID,
-    #                                         price = L114.price,
-    #                                         supply = sum(evaluate_smooth_res_curve(L114.curr_region_RsrcCurves$curve.exponent,
-    #                                                                                L114.curr_region_RsrcCurves$mid.price,
-    #                                                                                L114.curr_region_RsrcCurves$base.price,
-    #                                                                                L114.curr_region_RsrcCurves$maxSubResource,
-    #                                                                                L114.price)))
-    #
-    #     regional_price_supply_points <- bind_rows(regional_price_supply_points, L114.SupplyPoints.currR)
-    #     if(L114.min_calcs <= 0 & (L114.SupplyPoints.currR$supply - L114.prev_supply) < L114.supply_tol) {
-    #       # No longer making any difference in supply, we can stop
-    #       break
-    #     } else {
-    #       # Supply is still changing, need more price points
-    #       L114.min_calcs <- L114.min_calcs - 1
-    #       L114.price <- L114.price + L114.price_inc
-    #       L114.prev_supply <- L114.SupplyPoints.currR$supply
-    #     }
-    #   } # repeat
-    # }
 
   } else {
 
@@ -207,9 +176,7 @@ module_energy_LA114.wind <- function(command, ...) {
     regional_price_supply_points <- bind_rows(regional_price_supply_points)
 
   } # End of old system behavior function
-  #   write.csv(regional_price_supply_points, "L114.OLDregional_price_supply_points.csv", row.names = F)
-  # return(regional_price_supply_points)
-  #   break
+
 
   # Refit the supply curve to the supply points we just calculated by evaluating the ctry level supply curves
   # so that we can aggregate them to the regional level.
