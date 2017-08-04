@@ -46,9 +46,8 @@ module_water_L232.water.demand.manufacturing <- function(command, ...) {
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       # ^^ expand for all model years
       select(region, supplysector, subsector, technology, year,
-             minicam.energy.input, coefficient, market.name) -> TechCoef
-
-    TechCoef %>%
+             minicam.energy.input, coefficient, market.name) %>%
+      # add attributes for output
       add_title("Water withdrawal and consumption coefficients for manufacturing") %>%
       add_units("m3/GJ") %>%
       add_comments("Coeffients mapped to sector names and expanded to all regions and years") %>%
