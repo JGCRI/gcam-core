@@ -110,11 +110,25 @@ aglu.FOR_COST_75USDM3 <- 29.59
 aglu.BIO_GRASS_COST_75USD_GJ <- 0.75
 aglu.BIO_TREE_COST_75USD_GJ <- 0.67
 
+# Price at which base year bio frac produced is used.
+# The share of residue biomass production in each region,
+# defined as the energy produced divided by the total
+# waste biomass produced, is read in by A_bio_frac_prod_R.csv.
+# This price, in 1975$/GJ, indicates the biomass price at
+# the given shares. It should be close to the model's actual
+# (endogenous) biomass prices in the final calibration year.
+aglu.PRICE_BIO_FRAC <- 1.2
+
 # Fertilizer application rate for biomass, and carbon yields. Values from Adler et al. 2007 (doi:10.1890/05-2018)
 aglu.BIO_GRASS_FERT_IO_GNM2 <- 5.6
 aglu.BIO_GRASS_YIELD_KGCM2 <- 0.34
 aglu.BIO_TREE_FERT_IO_GNM2 <- 3.36
 aglu.BIO_TREE_YIELD_KGCM2 <- 0.345
+
+# Water characteristics for biomass
+# Reference: Chaturvedi et al. 2015, Climate mitigation policy implications for global irrigation water demand, Mitig Adapt Strateg Glob Change (2015) 20:389-407. DOI 10.1007/s11027-013-9497-4
+aglu.BIO_GRASS_WATER_IO_KM3EJ <- 25
+aglu.BIO_TREE_WATER_IO_KM3EJ <- 25
 
 # Cost of Fertilizer
 aglu.FERT_COST <- 363 # 2007$ per ton NH3
@@ -139,13 +153,46 @@ aglu.NO_AGLU_REGIONS <- "Taiwan"
 # Define GCAM category name of fertilizer
 aglu.FERT_NAME <- "N fertilizer"
 
+# Average Wood Density kg/m^3 for mass conversion
+# Source: http://www.engineeringtoolbox.com/wood-density-d_40.html
+# To Page's knowledge, nobody's ever done a weighted average wood density
+# across all tree species that are commercially logged;
+# 500 was was chosen to be towards the middle of the species that are produced.
+aglu.AVG_WOOD_DENSITY_KGM3 <- 500
+
+# Average Agriculture Density kg/m^3 for mass conversion
+# Source: http://www.engineeringtoolbox.com/wood-density-d_40.html
+aglu.AVG_AG_DENSITY <- 1
+
+# Forest Harvest Index
+aglu.FOREST_HARVEST_INDEX <- 0.8
+
+# Forest Erosion Control in kg/m^2
+aglu.FOREST_EROSION_CTRL_KGM2 <- 0.2
+
+#Mill Erosion Control in kg/m^2
+aglu.MILL_EROSION_CTRL_KGM2 <- 0
+
+# Wood energy content in GJ/kg
+aglu.WOOD_ENERGY_CONTENT_GJKG <- 0.0189
+
+# wood water content
+aglu.WOOD_WATER_CONTENT <- 0.065
+
+
+
 # XML-related constants
 aglu.GLU_NDIGITS          <- 3    # number of digits in the geographic land unit identifier codes
-aglu.GLU_NAME_DELIMITER   <- ""   # delimiter between the GLU name and number
 aglu.LT_GLU_DELIMITER     <-      # delimiter between the land use type name and GLU name. should be the same as the crop-glu delimiter
-  aglu.CROP_GLU_DELIMITER <- "_"  # delimiter between the crop name and GLU name
+aglu.CROP_GLU_DELIMITER   <- "_"  # delimiter between the crop name and GLU name
 aglu.IRR_DELIMITER        <- "_"  # delimiter between the appended crop x GLU and irrigation level
 aglu.MGMT_DELIMITER       <- "_"  # delimiter between appended tech name and management level
+
+# some more digits for rounding going into XMLs
+aglu.DIGITS_HARVEST_INDEX <- 2
+aglu.DIGITS_EROS_CTRL     <- 2
+aglu.DIGITS_RES_ENERGY    <- 4
+aglu.DIGITS_WATER_CONTENT <- 2
 
 
 # Energy constants ======================================================================
@@ -168,12 +215,16 @@ DEFAULT_ELECTRIC_EFFICIENCY <- 0.33
 
 ELECTRICITY_INPUT_FUELS<- c("biomass", "coal", "gas", "refined liquids")
 
+energy.CLIMATE_NORMAL_YEARS <- 1981:2000
+
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
 
 # Mass
 CONV_BIL_MIL <- 1000
 CONV_MIL_BIL <- 1 / CONV_BIL_MIL
+CONV_BIL_THOUS <- 1e6
+CONV_THOUS_BIL <- 1 / CONV_BIL_THOUS
 CONV_MIL_THOUS <- 1000
 CONV_ONES_THOUS <- 0.001
 CONV_TON_MEGATON <- 1e-6
@@ -190,6 +241,11 @@ CONV_KT_MT <- 0.001 # kt to Mt
 CONV_T_MT <- 1e-6 # t to Mt
 CONV_G_KG <- 1e-3 # kilograms to grams
 CONV_NH3_N <- 14/17 # Nitrogen to Ammonia
+CONV_KBBL_BBL <- 1000 # thousand barrels to barrels
+CONV_BBL_TONNE_RFO <- 1 / 6.66 # barrels to tons residual fuel oil
+CONV_TONNE_GJ_RFO <- 40.87 # tons to GJ residual fuel oil
+CONV_BBL_TONNE_DISTILLATE <- 1 / 7.46 # barrels to tons distillate
+CONV_TONNE_GJ_DISTILLATE <- 42.91 # tons to GJ distillate
 
 # Time
 CONV_YEAR_HOURS <- 24 * 365.25
@@ -199,6 +255,7 @@ CONV_DAYS_YEAR <- 1 / 365.25
 CONV_MWH_GJ <- 3.6 # Megawatt hours to Gigajoules
 CONV_GWH_EJ <- 3.6e-6
 CONV_KWH_GJ <- 3.6e-3
+CONV_GJ_EJ <- 1e-9
 
 # Other
 CONV_MCAL_PCAL <- 1e-9
@@ -258,10 +315,10 @@ MAPPED_WATER_TYPES_SHORT            <- c("C", "W")
 names(MAPPED_WATER_TYPES_SHORT)     <- MAPPED_WATER_TYPES
 DEFAULT_UNLIMITED_WATER_PRICE       <- 0
 DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.001
+DEFAULT_UNLIMITED_IRR_WATER_PRICE   <- 0.001 # (Units: 1975$/m3)
 WATER_UNITS_QUANTITY                <- "km^3"
 WATER_UNITS_PRICE                   <- "1975$/m^3"
 AG_ONLY_WATER_TYPES                 <- "biophysical water consumption"
-
 
 
 # Emissions constants ======================================================================

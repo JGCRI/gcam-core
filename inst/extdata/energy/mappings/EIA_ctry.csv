@@ -1,0 +1,237 @@
+# File: EIA_ctry.csv,
+# Title: Mapping between iso codes and country names in EIA data,
+# Source: NA,
+# Units: NA,
+EIA_ctry,iso
+Afghanistan,afg
+Africa,
+Albania,alb
+Algeria,dza
+American Samoa,asm
+Angola,ago
+Antarctica,
+Antigua and Barbuda,atg
+Argentina,arg
+Armenia,arm
+Aruba,abw
+Asia & Oceania,
+Australia,aus
+Austria,aut
+Azerbaijan,aze
+"Bahamas, The",bhs
+Bahrain,bhr
+Bangladesh,bgd
+Barbados,brb
+Belarus,blr
+Belgium,bel
+Belize,blz
+Benin,ben
+Bermuda,bmu
+Bhutan,btn
+Bolivia,bol
+Bosnia and Herzegovina,bih
+Botswana,bwa
+Brazil,bra
+Brunei,brn
+Bulgaria,bgr
+Burkina Faso,bfa
+Burma (Myanmar),mmr
+Burundi,bdi
+Cambodia,khm
+Cameroon,cmr
+Canada,can
+Cape Verde,cpv
+Cayman Islands,cym
+Central & South America,
+Central African Republic,caf
+Chad,tcd
+Chile,chl
+China,chn
+Colombia,col
+Comoros,com
+Congo (Brazzaville),cog
+Congo (Kinshasa),cod
+Cook Islands,cok
+Costa Rica,cri
+Cote dIvoire (IvoryCoast),civ
+Croatia,hrv
+Cuba,cub
+Cyprus,cyp
+Czech Republic,cze
+Denmark,dnk
+Djibouti,dji
+Dominica,dma
+Dominican Republic,dom
+Ecuador,ecu
+Egypt,egy
+El Salvador,slv
+Equatorial Guinea,gnq
+Eritrea,eri
+Estonia,est
+Ethiopia,eth
+Eurasia,
+Europe,
+Falkland Islands (Islas Malvinas),flk
+Faroe Islands,fro
+Fiji,fji
+Finland,fin
+Former Czechoslovakia,cze
+Former Serbia and Montenegro,scg
+Former U.S.S.R.,xsu
+Former Yugoslavia,xer
+France,fra
+French Guiana,guf
+French Polynesia,pyf
+Gabon,gab
+"Gambia, The",gmb
+Georgia,geo
+Germany,deu
+"Germany, East",deu
+"Germany, West",deu
+Ghana,gha
+Gibraltar,gib
+Greece,grc
+Greenland,grl
+Grenada,grd
+Guadeloupe,glp
+Guam,gum
+Guatemala,gtm
+Guinea,gin
+Guinea-Bissau,gnb
+Guyana,guy
+Haiti,hti
+Hawaiian Trade Zone,usa
+Honduras,hnd
+Hong Kong,hkg
+Hungary,hun
+Iceland,isl
+India,ind
+Indonesia,idn
+Iran,irn
+Iraq,irq
+Ireland,irl
+Israel,isr
+Italy,ita
+Jamaica,jam
+Japan,jpn
+Jordan,jor
+Kazakhstan,kaz
+Kenya,ken
+Kiribati,kir
+"Korea, North",prk
+"Korea, South",kor
+Kuwait,kwt
+Kyrgyzstan,kgz
+Laos,lao
+Latvia,lva
+Lebanon,lbn
+Lesotho,lso
+Liberia,lbr
+Libya,lby
+Lithuania,ltu
+Luxembourg,lux
+Macau,mac
+Macedonia,mkd
+Madagascar,mdg
+Malawi,mwi
+Malaysia,mys
+Maldives,mdv
+Mali,mli
+Malta,mlt
+Martinique,mtq
+Mauritania,mrt
+Mauritius,mus
+Mexico,mex
+Middle East,
+Moldova,mda
+Mongolia,mng
+Montenegro,mne
+Montserrat,msr
+Morocco,mar
+Mozambique,moz
+Namibia,nam
+Nauru,nru
+Nepal,npl
+Netherlands,nld
+Netherlands Antilles,ant
+New Caledonia,ncl
+New Zealand,nzl
+Nicaragua,nic
+Niger,ner
+Nigeria,nga
+Niue,niu
+North America,
+Norway,nor
+Oman,omn
+Pakistan,pak
+Palestine,pse
+Panama,pan
+Papua New Guinea,png
+Paraguay,pry
+Peru,per
+Philippines,phl
+Poland,pol
+Portugal,prt
+Puerto Rico,pri
+Qatar,qat
+Reunion,reu
+Romania,rom
+Russia,rus
+Rwanda,rwa
+Saint Helena,shn
+Saint Kitts and Nevis,kna
+Saint Lucia,lca
+Saint Pierre and Miquelon,spm
+Saint Vincent/Grenadines,vct
+Samoa,wsm
+Sao Tome and Principe,stp
+Saudi Arabia,sau
+Senegal,sen
+Serbia,srb
+Seychelles,syc
+Sierra Leone,sle
+Singapore,sgp
+Slovakia,svk
+Slovenia,svn
+Solomon Islands,slb
+Somalia,som
+South Africa,zaf
+Spain,esp
+Sri Lanka,lka
+Sudan and South Sudan,sdn
+Suriname,sur
+Swaziland,swz
+Sweden,swe
+Switzerland,che
+Syria,syr
+Taiwan,twn
+Tajikistan,tjk
+Tanzania,tza
+Thailand,tha
+Timor-Leste (East Timor),tls
+Togo,tgo
+Tonga,ton
+Trinidad and Tobago,tto
+Tunisia,tun
+Turkey,tur
+Turkmenistan,tkm
+Turks and Caicos Islands,tca
+U.S. Pacific Islands,mhl
+Uganda,uga
+Ukraine,ukr
+United Arab Emirates,are
+United Kingdom,gbr
+United States,usa
+Uruguay,ury
+Uzbekistan,uzb
+Vanuatu,vut
+Venezuela,ven
+Vietnam,vnm
+"Virgin Islands,  U.S.",vir
+"Virgin Islands, British",vgb
+Wake Island,usa
+Western Sahara,esh
+World,
+Yemen,yem
+Zambia,zmb
+Zimbabwe,zwe
