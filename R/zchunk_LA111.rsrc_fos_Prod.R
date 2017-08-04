@@ -43,8 +43,9 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
     L1011.en_bal_EJ_R_Si_Fi_Yh %>%
       filter(sector == "TPES", fuel %in% energy.RSRC_FUELS, year %in% HISTORICAL_YEARS) %>%
       group_by(sector, fuel, year) %>%
-      summarise(value = sum(value)) ->
-      L111.TPES_EJ_R_F_Yh
+      summarise(value = sum(value)) %>%
+      ungroup ->
+      L111.TPES_EJ_F_Yh
 
     # Determine regional shares of production for each primary fuel
     L1011.en_bal_EJ_R_Si_Fi_Yh %>%
@@ -53,46 +54,68 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
 
     L111.Prod_EJ_R_F_Yh_IEA %>%
       group_by(sector, fuel, year) %>%
-      summarise(share = value / sum(value)) ->
+      mutate(share = value / sum(value)) %>%
+      select(-value) ->
       L111.Prod_share_R_F_Yh
 
     # Multiply through to calculate production by fuel
-
-    left_join_error_no_match(L111.Prod_share_R_F_Yh, by = "fuel")
-
     L111.Prod_EJ_R_F_Yh_IEA %>%
-
-      L111.Prod_EJ_R_F_Yh_IEA_adj <- L111.Prod_EJ_R_F_Yh_IEA
-    L111.Prod_EJ_R_F_Yh_IEA_adj[ X_historical_years ] <- L111.Prod_share_R_F_Yh[ X_historical_years ] *
-      L111.TPES_EJ_F_Yh[ match( L111.Prod_EJ_R_F_Yh_IEA_adj$fuel, L111.TPES_EJ_F_Yh$fuel ),
-                         X_historical_years ]
-
+      select(-value) %>%
+      left_join_error_no_match(select(L111.TPES_EJ_F_Yh, fuel, year, value), by = c("fuel", "year")) %>%
+      left_join_error_no_match(L111.Prod_share_R_F_Yh, by = c("GCAM_region_ID", "sector", "fuel", "year")) %>%
+      mutate(value = value * share) %>%
+      select(-share) ->
+      L111.Prod_EJ_R_F_Yh_IEA_adj
 
     # Determine unconventional oil production (58-67)
-    # Interpolate production to all historical years
     rsrc_unconv_oil_prod_bbld %>%
       gather(year, value, matches(YEAR_PATTERN)) %>%
-      complete(year = HISTORICAL_YEARS) %>%
-      arrange_by(iso, year) %>%
+      mutate(year = as.integer(year)) %>%
+      # interpolate production to all historical years
+      complete(iso, year = HISTORICAL_YEARS) %>%
+      arrange(iso, year) %>%
       group_by(iso) %>%
       mutate(value = approx_fun(year, value, rule = 2)) %>%
       left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
       # summarise by GCAM region and convert to EJ/yr
-      group_by(GCAM_region_ID) %>%
+      group_by(GCAM_region_ID, year) %>%
       summarise(value = sum(value) * CONV_BBLD_EJYR) %>%
       mutate(sector = "unconventional oil production",
              fuel = "unconventional oil") ->
       L111.Prod_EJ_ctry_unconvOil_Yh
 
+    # Subtract the unconventional oil, append the unconventional oil to the table, and write it out
+    # Deduct unconventional oil from total oil and include unconventional oil in calibrated production table
+    # Start by making an 'unconventionals' flag to easily split data
+    L111.Prod_EJ_R_F_Yh_IEA_adj %>%
+      mutate(unconventionals = GCAM_region_ID %in% L111.Prod_EJ_ctry_unconvOil_Yh$GCAM_region_ID &
+               fuel == "refined liquids") ->
+      L111.Prod_EJ_R_F_Yh
+
+    L111.Prod_EJ_R_F_Yh %>%
+      filter(unconventionals) %>%
+      left_join_error_no_match(select(L111.Prod_EJ_ctry_unconvOil_Yh, GCAM_region_ID, year, value),
+                               by = c("GCAM_region_ID", "year")) %>%
+      mutate(value = value.x - value.y) %>%
+      bind_rows(filter(L111.Prod_EJ_R_F_Yh, !unconventionals)) %>%
+      select(-value.x, -value.y, -unconventionals) %>%
+      # switch the names from final to primary
+      mutate(fuel = if_else(fuel == "refined liquids", "crude oil", fuel),
+             fuel = if_else(fuel == "gas", "natural gas", fuel)) %>%
+      bind_rows(select(L111.Prod_EJ_ctry_unconvOil_Yh, GCAM_region_ID, sector, fuel, year, value)) ->
+      L111.Prod_EJ_R_F_Yh
+
+
     # Produce outputs
-    tibble() %>%
-      add_title("descriptive title of data") %>%
+    L111.Prod_EJ_R_F_Yh %>%
+      add_title("Historical fossil energy production") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L111.Prod_EJ_R_F_Yh") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/iso_GCAM_regID", "L1011.en_bal_EJ_R_Si_Fi_Yh",
+                     "energy/rsrc_unconv_oil_prod_bbld") %>%
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L111.Prod_EJ_R_F_Yh
 
     tibble() %>%
@@ -101,7 +124,8 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L111.RsrcCurves_EJ_R_Ffos") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/iso_GCAM_regID", "L1011.en_bal_EJ_R_Si_Fi_Yh",
+                     "energy/rsrc_unconv_oil_prod_bbld") %>%
       add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L111.RsrcCurves_EJ_R_Ffos
 

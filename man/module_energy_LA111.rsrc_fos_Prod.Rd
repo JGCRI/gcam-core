@@ -24,5 +24,5 @@ Briefly describe what this chunk does.
 Describe in detail what this chunk does.
 }
 \author{
-YourInitials CurrentMonthName 2017
+BBL August 2017
 }
