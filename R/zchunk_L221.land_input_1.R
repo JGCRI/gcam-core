@@ -313,8 +313,8 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
                      "L131.LV_USD75_m2_R_GLU") ->
       L221.LN1_UnmgdCarbon
 
-    return_data(L221.LN0_Logit, L221.LN0_Land, L221.LN0_SoilTimeScale,
-                L221.LN1_ValueLogit, L221.LN1_HistUnmgdAllocation, L221.LN1_UnmgdAllocation, L221.LN1_UnmgdCarbon)
+    return_data(L221.LN0_Logit, L221.LN0_Land, L221.LN0_SoilTimeScale, L221.LN1_ValueLogit,
+                L221.LN1_HistUnmgdAllocation, L221.LN1_UnmgdAllocation, L221.LN1_UnmgdCarbon)
   } else {
     stop("Unknown command")
   }
