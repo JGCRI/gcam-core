@@ -30,7 +30,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
              # All SSP databases will be included in the input files
              UCD_trn_data_name,
              "L101.in_EJ_ctry_trn_Fi_Yh",
-             FILE = "temp-data-inject/L1011.in_EJ_ctry_intlship_TOT_Yh",
+             "L1011.in_EJ_ctry_intlship_TOT_Yh",
              "L131.in_EJ_R_Senduse_F_Yh",
              "L100.Pop_thous_ctry_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -64,10 +64,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       gather(year, value, matches(YEAR_PATTERN)) %>%
       mutate(year = as.integer(year))
     L101.in_EJ_ctry_trn_Fi_Yh <- get_data(all_data, "L101.in_EJ_ctry_trn_Fi_Yh")
-    L1011.in_EJ_ctry_intlship_TOT_Yh <- get_data(all_data, "temp-data-inject/L1011.in_EJ_ctry_intlship_TOT_Yh") %>%
-      # temp-data-inject code
-      gather(year, value, starts_with("X")) %>%
-      mutate(year = as.integer(substr(year, 2, 5)))
+    L1011.in_EJ_ctry_intlship_TOT_Yh <- get_data(all_data, "L1011.in_EJ_ctry_intlship_TOT_Yh")
     L131.in_EJ_R_Senduse_F_Yh <- get_data(all_data, "L131.in_EJ_R_Senduse_F_Yh")
     L100.Pop_thous_ctry_Yh <- get_data(all_data, "L100.Pop_thous_ctry_Yh")
     # ===================================================
@@ -346,7 +343,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       add_comments("Scaled to transport end-use data") %>%
       add_legacy_name("L154.in_EJ_R_trn_m_sz_tech_F_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "L101.in_EJ_ctry_trn_Fi_Yh",
-                     "temp-data-inject/L1011.in_EJ_ctry_intlship_TOT_Yh", "L131.in_EJ_R_Senduse_F_Yh",
+                     "L1011.in_EJ_ctry_intlship_TOT_Yh", "L131.in_EJ_R_Senduse_F_Yh",
                      "energy/mappings/calibrated_techs_trn_agg", "energy/enduse_fuel_aggregation",
                      "energy/mappings/UCD_ctry", "energy/mappings/UCD_techs",
                      UCD_trn_data_name) %>%
@@ -361,7 +358,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID", "L101.in_EJ_ctry_trn_Fi_Yh",
                      UCD_trn_data_name, "energy/mappings/calibrated_techs_trn_agg",
                      "energy/mappings/UCD_ctry", "energy/mappings/UCD_techs",
-                     "temp-data-inject/L1011.in_EJ_ctry_intlship_TOT_Yh") %>%
+                     "L1011.in_EJ_ctry_intlship_TOT_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L154.in_EJ_ctry_trn_m_sz_tech_F
 
@@ -375,7 +372,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
                      "energy/mappings/UCD_techs",
                      "L131.in_EJ_R_Senduse_F_Yh", "common/iso_GCAM_regID", "energy/mappings/calibrated_techs_trn_agg",
                      "energy/enduse_fuel_aggregation", "energy/mappings/UCD_techs",
-                     "L101.in_EJ_ctry_trn_Fi_Yh", "temp-data-inject/L1011.in_EJ_ctry_intlship_TOT_Yh",
+                     "L101.in_EJ_ctry_trn_Fi_Yh", "L1011.in_EJ_ctry_intlship_TOT_Yh",
                      "L131.in_EJ_R_Senduse_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y
@@ -390,7 +387,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
                      "energy/mappings/UCD_techs",
                      "L131.in_EJ_R_Senduse_F_Yh", "common/iso_GCAM_regID", "energy/mappings/calibrated_techs_trn_agg",
                      "energy/enduse_fuel_aggregation", "energy/mappings/UCD_techs",
-                     "L101.in_EJ_ctry_trn_Fi_Yh", "temp-data-inject/L1011.in_EJ_ctry_intlship_TOT_Yh",
+                     "L101.in_EJ_ctry_trn_Fi_Yh", "L1011.in_EJ_ctry_intlship_TOT_Yh",
                      "L131.in_EJ_R_Senduse_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L154.loadfactor_R_trn_m_sz_tech_F_Y
@@ -405,7 +402,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
                      "energy/mappings/UCD_techs",
                      "L131.in_EJ_R_Senduse_F_Yh", "common/iso_GCAM_regID", "energy/mappings/calibrated_techs_trn_agg",
                      "energy/enduse_fuel_aggregation", "energy/mappings/UCD_techs",
-                     "L101.in_EJ_ctry_trn_Fi_Yh", "temp-data-inject/L1011.in_EJ_ctry_intlship_TOT_Yh",
+                     "L101.in_EJ_ctry_trn_Fi_Yh", "L1011.in_EJ_ctry_intlship_TOT_Yh",
                      "L131.in_EJ_R_Senduse_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L154.cost_usdvkm_R_trn_m_sz_tech_F_Y
@@ -420,7 +417,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
                      "energy/mappings/UCD_techs",
                      "L131.in_EJ_R_Senduse_F_Yh", "common/iso_GCAM_regID", "energy/mappings/calibrated_techs_trn_agg",
                      "energy/enduse_fuel_aggregation", "energy/mappings/UCD_techs",
-                     "L101.in_EJ_ctry_trn_Fi_Yh", "temp-data-inject/L1011.in_EJ_ctry_intlship_TOT_Yh",
+                     "L101.in_EJ_ctry_trn_Fi_Yh", "L1011.in_EJ_ctry_intlship_TOT_Yh",
                      "L131.in_EJ_R_Senduse_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L154.speed_kmhr_R_trn_m_sz_tech_F_Y
