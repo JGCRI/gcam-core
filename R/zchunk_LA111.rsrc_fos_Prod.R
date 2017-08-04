@@ -1,6 +1,6 @@
 #' module_energy_LA111.rsrc_fos_Prod
 #'
-#' Briefly describe what this chunk does.
+#' Calculate historical fossil energy production and fossil resource supply curves.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,7 +8,12 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L111.Prod_EJ_R_F_Yh}, \code{L111.RsrcCurves_EJ_R_Ffos}. The corresponding file in the
 #' original data system was \code{LA111.rsrc_fos_Prod.R} (energy level1).
-#' @details Describe in detail what this chunk does.
+#' @details For historical fossil energy production, determine regional shares of production for each primary fuel,
+#' interpolate unconventional soil production to all historical years, deduct unconventional oil from total oil,
+#' and include it in calibrated production table.
+#' For fossil resource supply curves, downscale GCAM3.0 supply curves to the country level (on the basis of
+#' resource production) and aggregate by the new GCAM regions, using crude oil production shares as a proxy
+#' for unconventional oil resources.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -148,12 +153,12 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
     L111.RsrcCurves_EJ_ctry_Ffos %>%
       filter(resource == "crude oil") %>%
       select(iso, share) ->
-      co
+      crude
 
     L111.RsrcCurves_EJ_ctry_Ffos %>%
       filter(resource == "unconventional oil") %>%
       select(-share) %>%
-      left_join_keep_first_only(co, by = "iso") %>%
+      left_join_keep_first_only(crude, by = "iso") %>%
       bind_rows(filter(L111.RsrcCurves_EJ_ctry_Ffos, resource != "unconventional oil")) %>%
       # set all other missing values to 0 (these are small countries)
       replace_na(list(share = 0)) %>%

@@ -18,10 +18,15 @@ the generated outputs: \code{L111.Prod_EJ_R_F_Yh}, \code{L111.RsrcCurves_EJ_R_Ff
 original data system was \code{LA111.rsrc_fos_Prod.R} (energy level1).
 }
 \description{
-Briefly describe what this chunk does.
+Calculate historical fossil energy production and fossil resource supply curves.
 }
 \details{
-Describe in detail what this chunk does.
+For historical fossil energy production, determine regional shares of production for each primary fuel,
+interpolate unconventional soil production to all historical years, deduct unconventional oil from total oil,
+and include it in calibrated production table.
+For fossil resource supply curves, downscale GCAM3.0 supply curves to the country level (on the basis of
+resource production) and aggregate by the new GCAM regions, using crude oil production shares as a proxy
+for unconventional oil resources.
 }
 \author{
 BBL August 2017
