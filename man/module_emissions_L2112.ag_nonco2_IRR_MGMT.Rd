@@ -14,7 +14,7 @@ module_emissions_L2112.ag_nonco2_IRR_MGMT(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{object}, \code{L2112.AnEmissions}, \code{L2112.AnNH3Emissions}, \code{L2112.AWBEmissions}, \code{L2112.AGREmissions}. The corresponding file in the
+the generated outputs: \code{object}, \code{L2112.AWBEmissions}, \code{L2112.AGREmissions}. The corresponding file in the
 original data system was \code{L2112.ag_nonco2_IRR_MGMT.R} (emissions level2).
 }
 \description{
