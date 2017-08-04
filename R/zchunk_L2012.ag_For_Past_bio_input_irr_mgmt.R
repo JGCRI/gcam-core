@@ -9,13 +9,12 @@
 #' the generated outputs: \code{L2012.AgSupplySector}, \code{L2012.AgSupplySubsector}, \code{L2012.AgProduction_ag_irr_mgmt}, \code{L2012.AgProduction_For}, \code{L2012.AgProduction_Past}, \code{L2012.AgHAtoCL_irr_mgmt}, \code{L2012.AgYield_bio_ref}. The corresponding file in the
 #' original data system was \code{L2012.ag_For_Past_bio_input_irr_mgmt.R} (aglu level2).
 #' @details This chunk specifies the input tables for agriculture, forest, pasture and biomass supply sectors and subsectors,
-#' agricultural commodity production and harvest area by technologies, forest and pasture production,
+#' agricultural commodity production and harvest area to cropland by technologies, forest and pasture production,
 #' and biomass grass and tree crops yield by technologies.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RC August 2017
-#' @export
 module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
@@ -45,9 +44,10 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     GCAM_commodity <- GCAM_region_ID <- region <- value <- year <- GLU <- GLU_name <- GLU_code <-
-      AgSupplySector <- AgSupplySubsector <- AgSupplyTechnology <- share.weight.year <- subs.share.weight <-
+      AgSupplySector <- AgSupplySubsector <- AgProductionTechnology <- share.weight.year <- subs.share.weight <-
       tech.share.weight <- logit.year.fillout <- logit.exponent <- calPrice <- calOutputValue <-
-      market <- IRR_RFD <- Irr_Rfd <- MGMT <- level <- yield <- yieldmult <- Yield_GJm2 <- NULL   # silence package check notes
+      market <- IRR_RFD <- Irr_Rfd <- MGMT <- level <- yield <- generic.yield <- yield_irr <-
+      yieldmult <- Yield_GJm2 <- NULL   # silence package check notes
 
     all_data <- list(...)[[1]]
 
@@ -131,7 +131,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       mutate(IRR_RFD = "IRR") %>%
       bind_rows(mutate(L161.ag_rfdProd_Mt_R_C_Y_GLU, IRR_RFD = "RFD")) %>%
       filter(year %in% BASE_YEARS) %>%
-      mutate(calOutputValue = round(value, digit = aglu.DIGITS_CALOUTPUT)) %>%
+      mutate(calOutputValue = round(value, digits = aglu.DIGITS_CALOUTPUT)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(basin_to_country_mapping[c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) %>%
       # Set subsector year and technology shareweights, subsector shareweights are set at the aggregate level later
@@ -160,7 +160,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
     # For agricultural product calibrated output, use the specific management-partitioned data
     L181.ag_Prod_Mt_R_C_Y_GLU_irr_level %>%
       filter(year %in% BASE_YEARS) %>%
-      mutate(calOutputValue = round(value, digit = aglu.DIGITS_CALOUTPUT)) %>%
+      mutate(calOutputValue = round(value, digits = aglu.DIGITS_CALOUTPUT)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(basin_to_country_mapping[c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) %>%
       # Add sector, subsector, technology names
@@ -244,7 +244,8 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       # Copy to high and low management levels
       repeat_add_columns(tibble::tibble(MGMT = c("hi", "lo"))) %>%
       # Add subsector and technology names
-      mutate(AgSupplySubsector = paste(GCAM_commodity, GLU_name, sep = "_"),
+      mutate(GCAM_commodity = sub("RootTuber", "Root_Tuber", GCAM_commodity),
+             AgSupplySubsector = paste(GCAM_commodity, GLU_name, sep = "_"),
              AgProductionTechnology = paste(GCAM_commodity, GLU_name, IRR_RFD, MGMT, sep = "_")) %>%
       select(one_of(LEVEL2_DATA_NAMES[["AgHAtoCL"]])) ->
       L2012.AgHAtoCL_irr_mgmt
@@ -285,7 +286,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
     } else {
       # Round yield data
       L2011.AgYield_bio_grass_irr %>%
-        mutate(yield = round(Yield_GJm2, digit = aglu.DIGITS_CALOUTPUT)) ->
+        mutate(yield = round(Yield_GJm2, digits = aglu.DIGITS_CALOUTPUT)) ->
         L2011.AgYield_bio_grass_irr
     }
 
@@ -303,7 +304,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
     L113.ag_bioYield_GJm2_R_GLU %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(basin_to_country_mapping[c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) %>%
-      mutate(yield = round(Yield_GJm2, digit = aglu.DIGITS_CALOUTPUT)) %>%
+      mutate(yield = round(Yield_GJm2, digits = aglu.DIGITS_CALOUTPUT)) %>%
       select(-GCAM_region_ID, -GLU, -Yield_GJm2) ->
       L201.AgYield_bio_grass
 
@@ -360,7 +361,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       mutate(yield_irr = yield * factor,
              # When grass crops are not available, use the generic yields
              yield = replace(yield, !is.na(yield_irr), yield_irr[!is.na(yield_irr)]),
-             yield = round(yield, digit = aglu.DIGITS_CALOUTPUT)) %>%
+             yield = round(yield, digits = aglu.DIGITS_CALOUTPUT)) %>%
       select(one_of(LEVEL2_DATA_NAMES[["AgYield"]])) ->
       L2011.AgYield_bio_tree_irr
 
@@ -396,7 +397,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       add_title("Generic information for agriculture supply sectors") %>%
       add_units("Unitless") %>%
       add_comments("Specify generic supply sector characteristics (units, calprice, market, logit)") %>%
-      add_comments("At the supplysector (market) level, all regions get all supplysectors")
+      add_comments("At the supplysector (market) level, all regions get all supplysectors") %>%
       add_comments("Remove any regions for which agriculture and land use are not modeled") %>%
       add_legacy_name("L2012.AgSupplySector") %>%
       add_precursors("common/GCAM_region_names",

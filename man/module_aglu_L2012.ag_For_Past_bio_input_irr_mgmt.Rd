@@ -18,11 +18,13 @@ the generated outputs: \code{L2012.AgSupplySector}, \code{L2012.AgSupplySubsecto
 original data system was \code{L2012.ag_For_Past_bio_input_irr_mgmt.R} (aglu level2).
 }
 \description{
-Briefly describe what this chunk does.
+Builds agriculture, forest, pasture and biomass production inputs for all technologies.
 }
 \details{
-Describe in detail what this chunk does.
+This chunk specifies the input tables for agriculture, forest, pasture and biomass supply sectors and subsectors,
+agricultural commodity production and harvest area to cropland by technologies, forest and pasture production,
+and biomass grass and tree crops yield by technologies.
 }
 \author{
-YourInitials CurrentMonthName 2017
+RC August 2017
 }
