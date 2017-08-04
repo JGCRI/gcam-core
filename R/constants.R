@@ -178,9 +178,11 @@ aglu.MILL_EROSION_CTRL_KGM2 <- 0
 aglu.WOOD_ENERGY_CONTENT_GJKG <- 0.0189
 
 # wood water content
+# Unitless (mass of water / total wood mass)
 aglu.WOOD_WATER_CONTENT <- 0.065
 
 # Min veg and soil carbon densities
+# kg C per m2
 aglu.MIN_VEG_CARBON_DENSITY  <- 0
 aglu.MIN_SOIL_CARBON_DENSITY <- 0
 
