@@ -33,6 +33,7 @@ SSP_FUTURE_YEARS <- c(2010, FUTURE_YEARS)
 GHG_CONTROL_READIN_YEAR <- 1975
 BASE_YEAR_IFA <- 2006
 
+
 # GCAM constants ======================================================================
 
 gcam.USA_CODE <- 1
@@ -179,9 +180,6 @@ aglu.WOOD_ENERGY_CONTENT_GJKG <- 0.0189
 # wood water content
 aglu.WOOD_WATER_CONTENT <- 0.065
 
-
-
-# XML-related constants
 aglu.GLU_NDIGITS          <- 3    # number of digits in the geographic land unit identifier codes
 aglu.LT_GLU_DELIMITER     <-      # delimiter between the land use type name and GLU name. should be the same as the crop-glu delimiter
 aglu.CROP_GLU_DELIMITER   <- "_"  # delimiter between the crop name and GLU name
@@ -344,7 +342,6 @@ emissions.DEFOREST_COEF_YEARS <- c(2000, 2005)
 emissions.PFCS <- c("CF4", "C2F6", "SF6")
 emissions.HFC_MODEL_BASE_YEARS <- c(1975, 1990, 2005, 2010)
 emissions.F_GAS_UNITS <- "Gg"
-# ======================================================================
 
 emissions.NH3_EXTRA_YEARS      <- 1971:1989
 emissions.EDGAR_YEARS          <- 1971:2008
