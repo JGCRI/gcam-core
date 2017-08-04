@@ -170,7 +170,7 @@ aglu.FOREST_HARVEST_INDEX <- 0.8
 # Forest Erosion Control in kg/m^2
 aglu.FOREST_EROSION_CTRL_KGM2 <- 0.2
 
-#Mill Erosion Control in kg/m^2
+# Mill Erosion Control in kg/m^2
 aglu.MILL_EROSION_CTRL_KGM2 <- 0
 
 # Wood energy content in GJ/kg
@@ -179,9 +179,13 @@ aglu.WOOD_ENERGY_CONTENT_GJKG <- 0.0189
 # wood water content
 aglu.WOOD_WATER_CONTENT <- 0.065
 
+# Min veg and soil carbon densities
+aglu.MIN_VEG_CARBON_DENSITY  <- 0
+aglu.MIN_SOIL_CARBON_DENSITY <- 0
+
 # define top-level (zero) land nest logit exponent and logit type
 aglu.N0_LOGIT_EXP <- 0
-aglu.N0_LOGIT_TYPE <- "relative-cost-logit"
+aglu.N0_LOGIT_TYPE <- NA
 
 
 # XML-related constants
@@ -197,7 +201,9 @@ aglu.DIGITS_EROS_CTRL     <- 2
 aglu.DIGITS_RES_ENERGY    <- 4
 aglu.DIGITS_WATER_CONTENT <- 2
 aglu.DIGITS_LAND_VALUE    <- 0
-
+aglu.DIGITS_LAND_USE      <- 7
+aglu.DIGITS_C_DENSITY     <- 1
+aglu.DIGITS_MATUREAGE     <- 0
 
 # Energy constants ======================================================================
 

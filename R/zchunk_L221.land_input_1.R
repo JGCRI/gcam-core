@@ -59,7 +59,8 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
     # Replace GLU names and Add region names
     L121.CarbonContent_kgm2_R_LT_GLU %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      replace_GLU(map = basin_to_country_mapping) ->
+      replace_GLU(map = basin_to_country_mapping) %>%
+      rename(mature.age = `mature age`) ->
       L121.CarbonContent_kgm2_R_LT_GLU
 
     L125.LC_bm2_R_LT_Yh_GLU %>%
@@ -95,15 +96,14 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
       min_LV_USD75_bm2
 
 
-    # 2. Perform computations
+    # 2. Build tables
 
     # Build L221.LN0_Logit: Logit exponent of the top-level (zero) land nest
     L125.LC_bm2_R %>%
       select(region) %>%
       mutate(LandAllocatorRoot = "root",
              logit.year.fillout = min(BASE_YEARS),
-             logit.exponent = aglu.N0_LOGIT_EXP,
-             logit.type = aglu.N0_LOGIT_TYPE) ->
+             logit.exponent = aglu.N0_LOGIT_EXP) ->
       L221.LN0_Logit
 
 
@@ -140,20 +140,53 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
       mutate(unManagedLandValue = replace(unManagedLandValue,
                                           is.na(unManagedLandValue) | unManagedLandValue == 0,
                                           min_LV_USD75_bm2),
-             LandNode1 = paste(LandNode1, GLU, sep = aglu.CROP_GLU_DELIMITER),
-             logit.type = aglu.N0_LOGIT_TYPE) %>%
-      select(region, LandAllocatorRoot, LandNode1, unManagedLandValue, logit.year.fillout, logit.exponent, logit.type) ->
+             LandNode1 = paste(LandNode1, GLU, sep = aglu.CROP_GLU_DELIMITER)) %>%
+      select(region, LandAllocatorRoot, LandNode1, unManagedLandValue, logit.year.fillout, logit.exponent) ->
       L221.LN1_ValueLogit
 
 
+    # Land use history
+    # Build a temporary table of Land Cover allocated for Unmanaged Land, and then split into different
+    # output tables by years. It is also used for the Carbon Content output table
+    L125.LC_bm2_R_LT_Yh_GLU %>%
+      filter(Land_Type %in% unique(A_LandLeaf_Unmgd1$UnmanagedLandLeaf),
+             year %in% c(LAND_HISTORY_YEARS, BASE_YEARS)) %>%
+      mutate(allocation = round(value, aglu.DIGITS_LAND_USE)) %>%
+      select(-value) %>%
+      mutate(LandNode1 = paste(Land_Type, GLU, sep = aglu.CROP_GLU_DELIMITER),
+             UnmanagedLandLeaf = LandNode1,
+             LandAllocatorRoot = "root") %>%
+      select(region, GLU, LandAllocatorRoot, LandNode1, UnmanagedLandLeaf, year, allocation, Land_Type) ->
+      L221.LC_bm2_R_Unmgd1_Yh_GLU
+
+    # Historical land cover, unmanaged land in the first nest
+    L221.LC_bm2_R_Unmgd1_Yh_GLU %>%
+      filter(year %in% LAND_HISTORY_YEARS) %>%
+      select(-Land_Type, -GLU) ->
+      L221.LN1_HistUnmgdAllocation
+
+    # Land cover in the model base periods, unmanaged land in the first nest
+    L221.LC_bm2_R_Unmgd1_Yh_GLU %>%
+      filter(year %in% BASE_YEARS) %>%
+      select(-Land_Type, -GLU) ->
+      L221.LN1_UnmgdAllocation
 
 
-
-
+    # Carbon contents and mature ages
+    # Carbon content info, unmanaged land in the first nest
+    L221.LC_bm2_R_Unmgd1_Yh_GLU %>%
+      filter(year == max(BASE_YEARS)) %>%
+      select(-year, -allocation) %>%
+      left_join_error_no_match(GCAMLandLeaf_CdensityLT, by = c("Land_Type" = "LandLeaf")) %>%
+      rename(Cdensity_LT = Land_Type.y) %>%
+      add_carbon_info(., carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
+      select(region, LandAllocatorRoot, LandNode1, UnmanagedLandLeaf, hist.veg.carbon.density, hist.soil.carbon.density, veg.carbon.density,
+             soil.carbon.density, mature.age.year.fillout, mature.age, min.veg.carbon.density, min.soil.carbon.density) ->
+      L221.LN1_UnmgdCarbon
 
 
     # 3. Produce outputs
-    tibble() %>%
+    L221.LN0_Logit %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -169,11 +202,9 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
                      "L121.CarbonContent_kgm2_R_LT_GLU",
                      "L125.LC_bm2_R_LT_Yh_GLU",
                      "L125.LC_bm2_R",
-                     "L131.LV_USD75_m2_R_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L131.LV_USD75_m2_R_GLU") ->
       L221.LN0_Logit
-    tibble() %>%
+    L221.LN0_Land %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -189,11 +220,9 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
                      "L121.CarbonContent_kgm2_R_LT_GLU",
                      "L125.LC_bm2_R_LT_Yh_GLU",
                      "L125.LC_bm2_R",
-                     "L131.LV_USD75_m2_R_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L131.LV_USD75_m2_R_GLU") ->
       L221.LN0_Land
-    tibble() %>%
+    L221.LN0_SoilTimeScale %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -209,11 +238,9 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
                      "L121.CarbonContent_kgm2_R_LT_GLU",
                      "L125.LC_bm2_R_LT_Yh_GLU",
                      "L125.LC_bm2_R",
-                     "L131.LV_USD75_m2_R_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L131.LV_USD75_m2_R_GLU") ->
       L221.LN0_SoilTimeScale
-    tibble() %>%
+    L221.LN1_ValueLogit %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -229,11 +256,9 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
                      "L121.CarbonContent_kgm2_R_LT_GLU",
                      "L125.LC_bm2_R_LT_Yh_GLU",
                      "L125.LC_bm2_R",
-                     "L131.LV_USD75_m2_R_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L131.LV_USD75_m2_R_GLU") ->
       L221.LN1_ValueLogit
-    tibble() %>%
+    L221.LN1_HistUnmgdAllocation %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -249,11 +274,9 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
                      "L121.CarbonContent_kgm2_R_LT_GLU",
                      "L125.LC_bm2_R_LT_Yh_GLU",
                      "L125.LC_bm2_R",
-                     "L131.LV_USD75_m2_R_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L131.LV_USD75_m2_R_GLU") ->
       L221.LN1_HistUnmgdAllocation
-    tibble() %>%
+    L221.LN1_UnmgdAllocation %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -269,11 +292,9 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
                      "L121.CarbonContent_kgm2_R_LT_GLU",
                      "L125.LC_bm2_R_LT_Yh_GLU",
                      "L125.LC_bm2_R",
-                     "L131.LV_USD75_m2_R_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L131.LV_USD75_m2_R_GLU") ->
       L221.LN1_UnmgdAllocation
-    tibble() %>%
+    L221.LN1_UnmgdCarbon %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -289,9 +310,7 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
                      "L121.CarbonContent_kgm2_R_LT_GLU",
                      "L125.LC_bm2_R_LT_Yh_GLU",
                      "L125.LC_bm2_R",
-                     "L131.LV_USD75_m2_R_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L131.LV_USD75_m2_R_GLU") ->
       L221.LN1_UnmgdCarbon
 
     return_data(L221.LN0_Logit, L221.LN0_Land, L221.LN0_SoilTimeScale,

@@ -278,6 +278,54 @@ replace_GLU <- function(d, map, GLU_pattern = "^GLU[0-9]{3}$") {
   d
 }
 
+
+#' add_carbon_info
+#'
+#' function to translate from soil, veg, and mature age data (already in a table) to the required read-in model parameters
+#'
+#' @param carbon_info_table = table with veg and soil carbon densities, and mature.age
+#' @param match_vars =  a character vector for by = in left_join(data, carbon_info_table, by = ...)
+#' @return the original table with carbon density info added
+add_carbon_info <- function( data, carbon_info_table, matchvars = c( "region", "GLU", "Cdensity_LT" = "Land_Type" )){
+  if (!("region" %in% names(carbon_info_table))){
+    carbon_info_table %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
+      carbon_info_table
+  }
+
+  # data[ c( "hist.veg.carbon.density", "hist.soil.carbon.density", "mature.age" ) ] <-
+  #   carbon_info_table[ match( vecpaste( data[ data_matchvars ] ),
+  #                             vecpaste( carbon_info_table[ carbon_info_matchvars ] ) ),
+  #                      carbon_info_table_names ]
+
+  data %>%
+    left_join_error_no_match(carbon_info_table, by = matchvars) %>%
+    rename(hist.veg.carbon.density = veg_c,
+           hist.soil.carbon.density = soil_c) %>%
+    mutate(hist.veg.carbon.density = round(hist.veg.carbon.density, aglu.DIGITS_C_DENSITY),
+           hist.soil.carbon.density = round(hist.soil.carbon.density, aglu.DIGITS_C_DENSITY),
+           mature.age = round(mature.age, aglu.DIGITS_MATUREAGE),
+           mature.age.year.fillout = min(BASE_YEARS),
+           veg.carbon.density = hist.veg.carbon.density,
+           soil.carbon.density = hist.soil.carbon.density,
+           min.veg.carbon.density = aglu.MIN_VEG_CARBON_DENSITY,
+           min.soil.carbon.density = aglu.MIN_SOIL_CARBON_DENSITY) %>%
+    select(-GCAM_region_ID) ->
+    data
+
+
+  # data[ c( "hist.veg.carbon.density", "hist.soil.carbon.density" ) ] <- round(
+  #   data[ c( "hist.veg.carbon.density", "hist.soil.carbon.density" ) ], aglu.DIGITS_C_DENSITY)
+  # data$mature.age <- round( data$mature.age, aglu.DIGITS_MATUREAGE)
+  # data$mature.age.year.fillout <- min( model_base_years )
+  # data$veg.carbon.density <- data$hist.veg.carbon.density
+  # data$soil.carbon.density <- data$hist.soil.carbon.density
+  # data$min.veg.carbon.density <- min.veg.carbon.density
+  # data$min.soil.carbon.density <- min.soil.carbon.density
+  return( data )
+}
+
+
 #' get_ssp_regions
 #'
 #' Get regions for different income groups in SSP4 2010 (by default)
