@@ -1,10 +1,7 @@
 #' module_aglu_L221.land_input_1
 #'
-#' This chunk produces L221.LN0_Logit - Logit exponent of the top-level (zero) land nest by region; L221.LN0_Land - Total regional land allocation in top level nest;
-#' L221.LN0_SoilTimeScale - Soil time scale by region; L221.LN1_ValueLogit - Unmanaged land value by region and GLU, and logit exponent of first nest;
-#' L221.LN1_HistUnmgdAllocation - Historical land cover fora unmanaged land (LT_GLU) in the first nest by region;
-#' L221.LN1_UnmgdAllocation - Land cover in the model base periods for unmanaged land (LT_GLU) in the first nest by region; and
-#' L221.LN1_UnmgdCarbon - Carbon content for unmanaged land (LT_GLU) in first nest by region.
+#' This chunk produces L221.LN0_Logit, L221.LN0_Land, L221.LN0_SoilTimeScale, L221.LN1_ValueLogit,
+#' L221.LN1_HistUnmgdAllocation, L221.LN1_UnmgdAllocation, and L221.LN1_UnmgdCarbon.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -46,8 +43,7 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
              "L125.LC_bm2_R",
              "L131.LV_USD75_m2_R_GLU"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c(#"curr_table$data",
-             "L221.LN0_Logit",
+    return(c("L221.LN0_Logit",
              "L221.LN0_Land",
              "L221.LN0_SoilTimeScale",
              "L221.LN1_ValueLogit",
