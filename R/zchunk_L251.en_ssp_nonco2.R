@@ -20,9 +20,9 @@
 module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "emissions/A_regions",
-             FILE = "temp-data-inject/L161.SSP2_EF",
-             FILE = "temp-data-inject/L161.SSP15_EF",
-             FILE = "temp-data-inject/L161.SSP34_EF",
+             "L161.SSP2_EF",
+             "L161.SSP15_EF",
+             "L161.SSP34_EF",
              "L201.nonghg_steepness"))
 
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -44,17 +44,11 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
     # Load required inputs
     get_data(all_data, "emissions/A_regions") ->
       A_regions
-    get_data(all_data, "temp-data-inject/L161.SSP2_EF") %>%
-      gather(year, value, -GCAM_region_ID, -Non.CO2, -supplysector, -subsector, -stub.technology, -agg_sector) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) ->
+    get_data(all_data, "L161.SSP2_EF") ->
       L161.SSP2_EF
-    get_data(all_data, "temp-data-inject/L161.SSP15_EF") %>%
-      gather(year, value, -GCAM_region_ID, -Non.CO2, -supplysector, -subsector, -stub.technology, -agg_sector) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) ->
+    get_data(all_data, "L161.SSP15_EF") ->
       L161.SSP15_EF
-    get_data(all_data, "temp-data-inject/L161.SSP34_EF")  %>%
-      gather(year, value, -GCAM_region_ID, -Non.CO2, -supplysector, -subsector, -stub.technology, -agg_sector) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) ->
+    get_data(all_data, "L161.SSP34_EF") ->
       L161.SSP34_EF
     get_data(all_data, "L201.nonghg_steepness") -> L201.nonghg_steepness
 
@@ -196,7 +190,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
       add_comments("Then, created a new column for data that has regional non-CO2 emission species.") %>%
       add_comments("Finally, delete GDP control functions that exist.") %>%
       add_legacy_name("L251.ctrl.delete") %>%
-      add_precursors("temp-data-inject/L161.SSP2_EF",
+      add_precursors("L161.SSP2_EF",
                      "L201.nonghg_steepness",
                      "emissions/A_regions") ->
       L251.ctrl.delete
@@ -206,7 +200,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
       add_comments("First, the non-CO2 emissions factors for SSP 1/5 are interpolated across years 2010-2100 in 5 year segments.") %>%
       add_comments("Then, regional non-CO2 emission species information is added.") %>%
       add_legacy_name("L251.ssp15_ef") %>%
-      add_precursors("temp-data-inject/L161.SSP15_EF",
+      add_precursors("L161.SSP15_EF",
                      "emissions/A_regions") ->
       L251.ssp15_ef
     L251.ssp2_ef %>%
@@ -215,7 +209,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
       add_comments("First, the non-CO2 emissions factors for SSP 2 are interpolated across years 2010-2100 in 5 year segments.") %>%
       add_comments("Then, regional non-CO2 emission species information is added.") %>%
       add_legacy_name("L251.ssp2_ef") %>%
-      add_precursors("temp-data-inject/L161.SSP2_EF",
+      add_precursors("L161.SSP2_EF",
                      "emissions/A_regions") ->
       L251.ssp2_ef
     L251.ssp34_ef %>%
@@ -224,7 +218,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
       add_comments("First, the non-CO2 emissions factors for SSP 3/4 are interpolated across years 2010-2100 in 5 year segments.") %>%
       add_comments("Then, regional non-CO2 emission species information is added.") %>%
       add_legacy_name("L251.ssp34_ef") %>%
-      add_precursors("temp-data-inject/L161.SSP34_EF",
+      add_precursors("L161.SSP34_EF",
                      "emissions/A_regions") ->
       L251.ssp34_ef
     L251.ssp15_ef_vin %>%
@@ -234,7 +228,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
       add_comments("Then, emissions controls are added for future years of vintaged technologies for SSP emission factors.") %>%
       add_comments("Finally, regional non-CO2 emission species information is added.") %>%
       add_legacy_name("L251.ssp15_ef_vin") %>%
-      add_precursors("temp-data-inject/L161.SSP15_EF",
+      add_precursors("L161.SSP15_EF",
                      "emissions/A_regions") ->
       L251.ssp15_ef_vin
     L251.ssp2_ef_vin %>%
@@ -244,7 +238,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
       add_comments("Then, emissions controls are added for future years of vintaged technologies for SSP emission factors.") %>%
       add_comments("Finally, regional non-CO2 emission species information is added.") %>%
       add_legacy_name("L251.ssp2_ef_vin") %>%
-      add_precursors("temp-data-inject/L161.SSP2_EF",
+      add_precursors("L161.SSP2_EF",
                      "emissions/A_regions") ->
       L251.ssp2_ef_vin
     L251.ssp34_ef_vin %>%
@@ -254,7 +248,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
       add_comments("Then, emissions controls are added for future years of vintaged technologies for SSP emission factors.") %>%
       add_comments("Finally, regional non-CO2 emission species information is added.") %>%
       add_legacy_name("L251.ssp34_ef_vin") %>%
-      add_precursors("temp-data-inject/L161.SSP34_EF",
+      add_precursors("L161.SSP34_EF",
                      "emissions/A_regions") ->
       L251.ssp34_ef_vin
 
