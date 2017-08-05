@@ -1,20 +1,19 @@
 #' module_water_L245.water.demand.municipal
 #'
-#' Briefly describe what this chunk does.
+#' Expands municipal water information (cost, efficiency, coefficients) across regions and model years
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L245.SectorLogitTables[[ curr_table ]]$data}, \code{L245.Supplysector}, \code{L245.SubsectorLogitTables[[ curr_table ]]$data}, \code{L245.SubsectorLogit}, \code{L245.SubsectorShrwtFllt}, \code{L245.TechShrwt}, \code{L245.TechCoef}, \code{L245.TechCost}, \code{L245.PerCapitaBased}, \code{L245.BaseService}, \code{L245.IncomeElasticity}, \code{L245.PriceElasticity}, \code{L245.aeei}. The corresponding file in the
+#' the generated outputs: \code{L245.Supplysector}, \code{L245.SubsectorLogit}, \code{L245.SubsectorShrwtFllt}, \code{L245.TechShrwt}, \code{L245.TechCoef}, \code{L245.TechCost}, \code{L245.PerCapitaBased}, \code{L245.BaseService}, \code{L245.IncomeElasticity}, \code{L245.PriceElasticity}, \code{L245.aeei}. The corresponding file in the
 #' original data system was \code{L245.water.demand.municipal.R} (water level2).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
-#' @export
-module_water_L245.water.demand.municipal_DISABLED <- function(command, ...) {
+#' @author ST August 2017
+module_water_L245.water.demand.municipal <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "water/A03.sector",
@@ -25,9 +24,7 @@ module_water_L245.water.demand.municipal_DISABLED <- function(command, ...) {
              "L145.municipal_water_cost_R_75USD_m3",
              "L145.municipal_water_eff_R_Y"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L245.SectorLogitTables[[ curr_table ]]$data",
-             "L245.Supplysector",
-             "L245.SubsectorLogitTables[[ curr_table ]]$data",
+    return(c("L245.Supplysector",
              "L245.SubsectorLogit",
              "L245.SubsectorShrwtFllt",
              "L245.TechShrwt",
@@ -53,163 +50,204 @@ module_water_L245.water.demand.municipal_DISABLED <- function(command, ...) {
     L145.municipal_water_eff_R_Y <- get_data(all_data, "L145.municipal_water_eff_R_Y")
 
     # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are `merge` calls in this code. Be careful!
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # ===================================================
 
-    # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L245.SectorLogitTables[[ curr_table ]]$data") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L245.SectorLogitTables[[ curr_table ]]$data
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L245.Supplysector") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L245.Supplysector
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L245.SubsectorLogitTables[[ curr_table ]]$data") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L245.SubsectorLogitTables[[ curr_table ]]$data
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L245.SubsectorLogit") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L245.SubsectorLogit
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L245.SubsectorShrwtFllt") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L245.SubsectorShrwtFllt
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L245.TechShrwt") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    # join up all the assumptions into a single tibble and expand for all regions
+    A45.sector %>%
+      left_join_error_no_match(A45.tech_cost, by = "supplysector") %>%
+      bind_cols(A45.demand) %>%
+      mutate(logit.year.fillout = MODEL_YEARS[1]) %>%
+      repeat_add_columns(GCAM_region_names) %>%
+      mutate(logit.type = NA) ->
+      L245.assumptions_all
+
+    L245.assumptions_all %>%
+      select(region, supplysector, output.unit, input.unit, price.unit,
+             logit.year.fillout, logit.exponent, logit.type) ->
+      L245.Supplysector  # Supply sector information
+
+    L245.assumptions_all %>%
+      select(region, supplysector, subsector,
+             logit.year.fillout, logit.exponent, logit.type) ->
+      L245.SubsectorLogit  # Subsector logit detail
+
+    L245.assumptions_all %>%
+      select(region, supplysector, subsector) %>%
+      mutate(year.fillout = MODEL_YEARS[1]) %>%
+      mutate(share.weight = 1) ->
+      # ^^ share weights are 1 due to no competition
+      L245.SubsectorShrwtFllt  # Subsector shareweights
+
+    L245.assumptions_all %>%
+      select(region, supplysector, subsector, technology) %>%
+      mutate(share.weight = 1) %>%
+      # ^^ share weights are 1 due to no competition
+      repeat_add_columns(tibble(year = MODEL_YEARS)) ->
       L245.TechShrwt
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+
+    L245.assumptions_all %>%
+      select(GCAM_region_ID, region, supplysector, subsector, technology) %>%
+      left_join(L145.municipal_water_eff_R_Y, by = "GCAM_region_ID") %>%
+      # ^^ unrestricted left_join allows row expansion for all model years
+      mutate(market.name = region) %>%
+      repeat_add_columns(tibble(water_type = c("water consumption", "water withdrawals"))) %>%
+      # ^^ repeats tibble for consumption and withdrawal coefficients
+      mutate(coefficient = if_else(water_type == "water withdrawals", 1, coefficient)) %>%
+      # ^^ withdrawal coefficient is 1; consumption coefficient is fraction of withdrawal
+      mutate(water_sector = "Municipal") %>%
+      mutate(minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector)) %>%
+      select(-GCAM_region_ID, -water_type, -water_sector) ->
+      L245.TechCoef  # municipal water technology withdrawals and consumption efficiencies
+
+    L245.assumptions_all %>%
+      select(GCAM_region_ID, region, supplysector, subsector, technology, minicam.non.energy.input) %>%
+      left_join_error_no_match(L145.municipal_water_cost_R_75USD_m3, by = "GCAM_region_ID") %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      select(-GCAM_region_ID) ->
+      L245.TechCost  # Municipal water non-energy cost
+
+    L245.assumptions_all %>%
+      select(region, energy.final.demand, perCapitaBased) ->
+      L245.PerCapitaBased  # used to set final demand as per-capita based
+
+    L245.assumptions_all %>%
+      select(region, GCAM_region_ID, energy.final.demand) %>%
+      left_join(L145.municipal_water_R_W_Yh_km3, by = "GCAM_region_ID") %>%
+      # ^^ non-restrictive join used to allow expansion across multiple years
+      filter(year %in% BASE_YEARS) %>% rename(base.service = value) %>%
+      select(-GCAM_region_ID, -water_type) ->
+      L245.BaseService  # municipal water withdrawals for base years
+
+    L245.assumptions_all %>%
+      select(region, energy.final.demand, income.elasticity) %>%
+      repeat_add_columns(tibble(year = FUTURE_YEARS)) ->
+      L245.IncomeElasticity  # income elasticity projections
+
+    L245.assumptions_all %>%
+      select(region, energy.final.demand, price.elasticity) %>%
+      repeat_add_columns(tibble(year = FUTURE_YEARS)) ->
+      L245.PriceElasticity  # price elasticity projections
+
+    L245.assumptions_all %>%
+      select(region, energy.final.demand, aeei) %>%
+      repeat_add_columns(tibble(year = FUTURE_YEARS)) ->
+      L245.aeei  # demand efficiency projections
+
+
+    #==== OUTPUT ===========
+
+    L245.Supplysector %>%
+      add_title("Sector information (municipal water)") %>%
+      add_units("Unitless") %>%
+      add_comments("A selection of columns from the input water assumptions") %>%
+      add_legacy_name("L245.Supplysector") %>%
+      add_precursors("common/GCAM_region_names",
+                     "water/A45.sector",
+                     "water/A45.tech_cost",
+                     "water/A45.demand") ->
+      L245.Supplysector
+
+    L245.SubsectorLogit %>%
+      add_title("Subsector logit detail (municipal water)") %>%
+      add_units("Unitless") %>%
+      add_comments("A selection of columns from the input tibbles") %>%
+      add_legacy_name("L245.SubsectorLogit") %>%
+      add_precursors("common/GCAM_region_names",
+                     "water/A45.sector",
+                     "water/A45.tech_cost") ->
+      L245.SubsectorLogit
+
+    L245.SubsectorShrwtFllt %>%
+      add_title("Subsector shareweights (municipal water)") %>%
+      add_units("Unitless") %>%
+      add_comments("Shareweights of 1 for all regions due to no competition)") %>%
+      add_legacy_name("L245.SubsectorShrwtFllt") %>%
+      add_precursors("common/GCAM_region_names",
+                     "water/A45.sector",
+                     "water/A45.tech_cost") ->
+      L245.SubsectorShrwtFllt
+
+    L245.TechShrwt %>%
+      add_title("Technology share weights (municipal water)") %>%
+      add_units("Unitless") %>%
+      add_comments("Shareweights of 1 for all regions/years due to no competition") %>%
+      add_legacy_name("L245.TechShrwt") %>%
+      add_precursors("common/GCAM_region_names",
+                     "water/A45.sector",
+                     "water/A45.tech_cost") ->
+      L245.TechShrwt
+
+    L245.TechCoef %>%
+      add_title("Municipal water technology consumption efficiencies") %>%
+      add_units("Unitless") %>%
+      add_comments("Withdrawal efficiencies bound to consumption and appropriate minicam.energy.input appended") %>%
       add_legacy_name("L245.TechCoef") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/GCAM_region_names",
+                     "water/A03.sector",
+                     "water/A45.sector",
+                     "water/A45.tech_cost",
+                     "L145.municipal_water_eff_R_Y") ->
       L245.TechCoef
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+
+    L245.TechCost %>%
+      add_title("Municipal water non-energy costs") %>%
+      add_units("1975USD/m3") %>%
+      add_comments("Costs joined to sector infromation and expanded for all model years") %>%
       add_legacy_name("L245.TechCost") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/GCAM_region_names",
+                     "water/A45.sector",
+                     "water/A45.tech_cost",
+                     "water/A45.demand",
+                     "L145.municipal_water_cost_R_75USD_m3") ->
       L245.TechCost
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
+
+    L245.PerCapitaBased %>%
+      add_title("Per-capital based final energy demand switch (municipal water)") %>%
+      add_units("NA") %>%
+      add_comments("final energy demand category repeated for all regions") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L245.PerCapitaBased") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/GCAM_region_names",
+                     "water/A45.demand") ->
       L245.PerCapitaBased
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+
+    L245.BaseService %>%
+      add_title("Municipal water withdrawals for base years") %>%
+      add_units("km^3") %>%
+      add_comments("Withdrawals filtered for base years and combined with demand category") %>%
       add_legacy_name("L245.BaseService") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/GCAM_region_names",
+                     "water/A45.demand",
+                     "L145.municipal_water_R_W_Yh_km3") ->
       L245.BaseService
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+
+    L245.IncomeElasticity %>%
+      add_title("Income elasticity projections (municipal water)") %>%
+      add_units("Unitless") %>%
+      add_comments("Regional income elasticity repeated out for future years") %>%
       add_legacy_name("L245.IncomeElasticity") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/GCAM_region_names",
+                     "water/A45.demand")  ->
       L245.IncomeElasticity
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+
+    L245.PriceElasticity %>%
+      add_title("Price elasticity projections (municipal water)") %>%
+      add_units("Unitless") %>%
+      add_comments("Regional price elasticity repeated out for all years") %>%
       add_legacy_name("L245.PriceElasticity") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/GCAM_region_names",
+                     "water/A45.demand")  ->
       L245.PriceElasticity
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+
+    L245.aeei %>%
+      add_title("Demand efficiency projections (municipal water)") %>%
+      add_units("Unitless") %>%
+      add_comments("Regional efficiency repeated out for all years") %>%
       add_legacy_name("L245.aeei") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/GCAM_region_names",
+                     "water/A45.demand") ->
       L245.aeei
 
-    return_data(L245.SectorLogitTables[[ curr_table ]]$data, L245.Supplysector, L245.SubsectorLogitTables[[ curr_table ]]$data, L245.SubsectorLogit, L245.SubsectorShrwtFllt, L245.TechShrwt, L245.TechCoef, L245.TechCost, L245.PerCapitaBased, L245.BaseService, L245.IncomeElasticity, L245.PriceElasticity, L245.aeei)
+    return_data(L245.Supplysector, L245.SubsectorLogit, L245.SubsectorShrwtFllt, L245.TechShrwt, L245.TechCoef, L245.TechCost, L245.PerCapitaBased, L245.BaseService, L245.IncomeElasticity, L245.PriceElasticity, L245.aeei)
   } else {
     stop("Unknown command")
   }
