@@ -193,8 +193,38 @@ module_aglu_L202.an_input <- function(command, ...) {
       select(one_of(c(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "share.weight"))) ->
       L202.GlobalTechShrwt_in
 
+    # L202.StubTechProd_in: base year output of the inputs (feed types) to animal production (142-149)
+    A_an_input_technology %>%
+      write_to_all_regions(LEVEL2_DATA_NAMES[["Tech"]]) %>%
+      mutate(stub.technology = technology) %>%
+      repeat_add_columns(year, BASE_YEARS) %>%
+      left_join_error_no_match(L202.ag_Feed_Mt_R_C_Y.melt, by = c("region", "technology" = "GCAM_commodity", "year")) %>%
+      mutate(OutputValue = round(value, aglu.DIGITS_CALOUTPUT)) %>%
+      # the DDGS/feedcake rows at this point are all missing values, as they are not
+      # available in the historical years; set them to zero
+      replace_na(list(calOutputValue = 0)) %>%
+      # subsector and technology shareweights (subsector requires the year as well)
+      mutate(share.weight.year = year,
+             subs.share.weight = if_else(calOutputValue > 0, 1, 0),
+             tech.share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["StubTechProd"]])) ->
+      L202.StubTechProd_in
 
+    # L202.Supplysector_an: generic animal production supplysector info (159-162)
+    A_an_supplysector %>%
+      write_to_all_regions(LEVEL2_DATA_NAMES[["Supplysector"]]) ->
+      L202.Supplysector_an
 
+    # L202.SubsectorAll_an: generic animal production subsector info (164-167)
+    A_an_subsector %>%
+      write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorAll"]]) ->
+      L202.SubsectorAll_an
+
+    # L202.StubTech_an: identification of stub technologies for animal production (169-171)
+    A_an_technology %>%
+      write_to_all_regions(LEVEL2_DATA_NAMES[["Tech"]]) %>%
+      rename(stub.technology = technology) ->
+      L202.StubTech_an
 
 
     # Produce outputs
