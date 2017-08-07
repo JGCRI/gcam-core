@@ -59,15 +59,12 @@ module_energy_LA121.oil <- function(command, ...) {
       # Proprietary IEA energy data are not available, so used saved outputs
       warning_comment <- "** PRE-BUILT; RAW IEA DATA NOT AVAILABLE **"
       get_data(all_data, "energy/prebuilt_data/L121.in_EJ_R_unoil_F_Yh") %>%
-        add_precursors("energy/prebuilt_data/L121.in_EJ_R_unoil_F_Yh") %>%
         add_comments(warning_comment) ->
         L121.in_EJ_R_unoil_F_Yh
       get_data(all_data, "energy/prebuilt_data/L121.in_EJ_R_TPES_crude_Yh") %>%
-        add_precursors("energy/prebuilt_data/L121.in_EJ_R_TPES_crude_Yh") %>%
         add_comments(warning_comment) ->
         L121.in_EJ_R_TPES_crude_Yh
       get_data(all_data, "energy/prebuilt_data/L121.in_EJ_R_TPES_unoil_Yh") %>%
-        add_precursors("energy/prebuilt_data/L121.in_EJ_R_TPES_unoil_Yh") %>%
         add_comments(warning_comment) ->
         L121.in_EJ_R_TPES_unoil_Yh
 
@@ -183,7 +180,9 @@ module_energy_LA121.oil <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Inputs to unconventional oil production calculated by multiplying production data by IO coef") %>%
       add_legacy_name("L121.in_EJ_R_unoil_F_Yh") %>%
-      add_precursors("temp-data-inject/L111.Prod_EJ_R_F_Yh", "energy/A21.globaltech_coef", "energy/calibrated_techs") %>%
+      add_precursors("temp-data-inject/L111.Prod_EJ_R_F_Yh", "energy/A21.globaltech_coef",
+                     "energy/calibrated_techs",
+                     "energy/prebuilt_data/L121.in_EJ_R_unoil_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L121.in_EJ_R_unoil_F_Yh
 
@@ -193,7 +192,7 @@ module_energy_LA121.oil <- function(command, ...) {
       add_comments("Unconventional oil subtracted from total primary energy supply of liquids") %>%
       add_comments("to determine crude oil supply") %>%
       add_legacy_name("L121.in_EJ_R_TPES_crude_Yh") %>%
-      add_precursors("L1011.en_bal_EJ_R_Si_Fi_Yh") %>%
+      add_precursors("L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/prebuilt_data/L121.in_EJ_R_TPES_crude_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L121.in_EJ_R_TPES_crude_Yh
 
@@ -202,7 +201,9 @@ module_energy_LA121.oil <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Unconventional oil production shared out to GCAM regions") %>%
       add_legacy_name("L121.in_EJ_R_TPES_unoil_Yh") %>%
-      add_precursors("temp-data-inject/L111.Prod_EJ_R_F_Yh", "energy/A21.unoil_demandshares", "L100.IEA_en_bal_ctry_hist", "common/iso_GCAM_regID", "energy/mappings/IEA_product_rsrc") %>%
+      add_precursors("temp-data-inject/L111.Prod_EJ_R_F_Yh", "energy/A21.unoil_demandshares", "L100.IEA_en_bal_ctry_hist", "common/iso_GCAM_regID",
+                     "energy/mappings/IEA_product_rsrc",
+                     "energy/prebuilt_data/L121.in_EJ_R_TPES_unoil_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L121.in_EJ_R_TPES_unoil_Yh
 
