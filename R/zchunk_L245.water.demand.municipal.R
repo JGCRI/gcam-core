@@ -61,31 +61,29 @@ module_water_L245.water.demand.municipal <- function(command, ...) {
       L245.assumptions_all
 
     L245.assumptions_all %>%
-      select(region, supplysector, output.unit, input.unit, price.unit,
-             logit.year.fillout, logit.exponent, logit.type) ->
+      select(one_of(LEVEL2_DATA_NAMES$Supplysector), logit.type) ->
       L245.Supplysector  # Supply sector information
 
     L245.assumptions_all %>%
-      select(region, supplysector, subsector,
-             logit.year.fillout, logit.exponent, logit.type) ->
+      select(one_of(LEVEL2_DATA_NAMES$SubsectorLogit), logit.type) ->
       L245.SubsectorLogit  # Subsector logit detail
 
     L245.assumptions_all %>%
-      select(region, supplysector, subsector) %>%
       mutate(year.fillout = MODEL_YEARS[1]) %>%
-      mutate(share.weight = 1) ->
+      mutate(share.weight = 1) %>%
       # ^^ share weights are 1 due to no competition
+      select(one_of(LEVEL2_DATA_NAMES$SubsectorShrwtFllt)) ->
       L245.SubsectorShrwtFllt  # Subsector shareweights
 
     L245.assumptions_all %>%
-      select(region, supplysector, subsector, technology) %>%
       mutate(share.weight = 1) %>%
       # ^^ share weights are 1 due to no competition
-      repeat_add_columns(tibble(year = MODEL_YEARS)) ->
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      select(one_of(LEVEL2_DATA_NAMES$TechShrwt)) ->
       L245.TechShrwt
 
     L245.assumptions_all %>%
-      select(GCAM_region_ID, region, supplysector, subsector, technology) %>%
+      select(GCAM_region_ID, one_of(LEVEL2_DATA_NAMES$Tech)) %>%
       left_join(L145.municipal_water_eff_R_Y, by = "GCAM_region_ID") %>%
       # ^^ unrestricted left_join allows row expansion for all model years
       mutate(market.name = region) %>%
@@ -95,41 +93,39 @@ module_water_L245.water.demand.municipal <- function(command, ...) {
       # ^^ withdrawal coefficient is 1; consumption coefficient is fraction of withdrawal
       mutate(water_sector = "Municipal") %>%
       mutate(minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector)) %>%
-      select(-GCAM_region_ID, -water_type, -water_sector) ->
+      select(one_of(LEVEL2_DATA_NAMES$TechCoef)) ->
       L245.TechCoef  # municipal water technology withdrawals and consumption efficiencies
 
     L245.assumptions_all %>%
-      select(GCAM_region_ID, region, supplysector, subsector, technology, minicam.non.energy.input) %>%
       left_join_error_no_match(L145.municipal_water_cost_R_75USD_m3, by = "GCAM_region_ID") %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
-      select(-GCAM_region_ID) ->
+      select(one_of(LEVEL2_DATA_NAMES$TechCost)) ->
       L245.TechCost  # Municipal water non-energy cost
 
     L245.assumptions_all %>%
-      select(region, energy.final.demand, perCapitaBased) ->
+      select(one_of(LEVEL2_DATA_NAMES$PerCapitaBased)) ->
       L245.PerCapitaBased  # used to set final demand as per-capita based
 
     L245.assumptions_all %>%
-      select(region, GCAM_region_ID, energy.final.demand) %>%
       left_join(L145.municipal_water_R_W_Yh_km3, by = "GCAM_region_ID") %>%
       # ^^ non-restrictive join used to allow expansion across multiple years
       filter(year %in% BASE_YEARS) %>% rename(base.service = value) %>%
-      select(-GCAM_region_ID, -water_type) ->
+      select(one_of(LEVEL2_DATA_NAMES$BaseService)) ->
       L245.BaseService  # municipal water withdrawals for base years
 
     L245.assumptions_all %>%
-      select(region, energy.final.demand, income.elasticity) %>%
-      repeat_add_columns(tibble(year = FUTURE_YEARS)) ->
+      repeat_add_columns(tibble(year = FUTURE_YEARS)) %>%
+      select(one_of(LEVEL2_DATA_NAMES$IncomeElasticity)) ->
       L245.IncomeElasticity  # income elasticity projections
 
     L245.assumptions_all %>%
-      select(region, energy.final.demand, price.elasticity) %>%
-      repeat_add_columns(tibble(year = FUTURE_YEARS)) ->
+      repeat_add_columns(tibble(year = FUTURE_YEARS)) %>%
+      select(one_of(LEVEL2_DATA_NAMES$PriceElasticity)) ->
       L245.PriceElasticity  # price elasticity projections
 
     L245.assumptions_all %>%
-      select(region, energy.final.demand, aeei) %>%
-      repeat_add_columns(tibble(year = FUTURE_YEARS)) ->
+      repeat_add_columns(tibble(year = FUTURE_YEARS)) %>%
+      select(one_of(LEVEL2_DATA_NAMES$aeei)) ->
       L245.aeei  # demand efficiency projections
 
 
