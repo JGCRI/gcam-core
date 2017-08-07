@@ -71,6 +71,16 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
     L131.LV_USD75_m2_R_GLU <- get_data(all_data, "L131.LV_USD75_m2_R_GLU")
 
 
+    # silence package check notes
+    GCAM_commodity <- GCAM_region_ID <- region <- value <- year <- GLU <- GLU_name <- GLU_code <-
+      LandLeaf <- Land_Type <- LandNode <- LandNode1 <- LandNode2 <- LandNode3 <- UnmanagedLandLeaf <-
+      logit.year.fillout <- logit.exponent <- logit.type <- soilTimeScale <- `mature age` <- mature.age <-
+      soil_c <- veg_c <- LC_bm2 <- LV_milUSD75 <- LV_USD75_bm2 <- LV_USD75_m2 <- HarvCropLand_bm2 <-
+      unManagedLandValue <- LandAllocatorRoot <- hist.veg.carbon.density <- hist.soil.carbon.density <-
+      veg.carbon.density <- soil.carbon.density <- allocation <- Land_Type.y <- mature.age.year.fillout <-
+      min.veg.carbon.density <- min.soil.carbon.density <- NULL
+
+
     # 1. Process inputs
 
     # Replace GLU names and Add region names
@@ -199,9 +209,10 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
       left_join_error_no_match(GCAMLandLeaf_CdensityLT, by = c("Land_Type" = "LandLeaf")) %>%
       rename(Cdensity_LT = Land_Type.y) %>%
       add_carbon_info(., carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
-      select(region, LandAllocatorRoot, LandNode1, UnmanagedLandLeaf, hist.veg.carbon.density, hist.soil.carbon.density, veg.carbon.density,
-             soil.carbon.density, mature.age.year.fillout, mature.age, min.veg.carbon.density, min.soil.carbon.density) ->
+      select(one_of(LEVEL2_DATA_NAMES[["LN1_UnmgdCarbon"]])) ->
       L221.LN1_UnmgdCarbon
+
+    LEVEL2_DATA_NAMES$LN1_Delete
 
 
     # 3. Produce outputs
