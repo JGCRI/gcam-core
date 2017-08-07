@@ -55,7 +55,9 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A_regions <- get_data(all_data, "emissions/A_regions")
-    A31.rsrc_info <- get_data(all_data, "emissions/A31.rsrc_info")
+    A31.rsrc_info <- get_data(all_data, "emissions/A31.rsrc_info") %>%
+      gather(year, value, matches(YEAR_PATTERN)) %>%
+      mutate(year = as.integer(year))
     A31.sector <- get_data(all_data, "emissions/A31.sector")
     A31.subsector_logit <- get_data(all_data, "emissions/A31.subsector_logit")
     A31.subsector_shrwt <- get_data(all_data, "emissions/A31.subsector_shrwt")
@@ -64,7 +66,9 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     A31.globaltech_eff <- get_data(all_data, "emissions/A31.globaltech_eff")
     A31.globaltech_cost <- get_data(all_data, "emissions/A31.globaltech_cost")
     A31.globaltech_coef <- get_data(all_data, "emissions/A31.globaltech_coef")
-    A32.globaltech_eff <- get_data(all_data, "energy/A32.globaltech_eff")
+    A32.globaltech_eff <- get_data(all_data, "energy/A32.globaltech_eff") %>%
+      gather(year, value, matches(YEAR_PATTERN)) %>%
+      mutate(year = as.integer(year))
     GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
     L1322.in_EJ_R_indfeed_F_Yh <- get_data(all_data, "L1322.in_EJ_R_indfeed_F_Yh")
     L1322.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L1322.in_EJ_R_indenergy_F_Yh")
@@ -199,6 +203,72 @@ module_emissions_L231.proc_sector <- function(command, ...) {
       mutate(minicam.energy.input = "misc emissions sources",
              calibrated.value = 0.001) %>%
       select(region, sector.name, subsector.name, technology, year, minicam.energy.input, calibrated.value)
+
+    # Resource Infomation
+    # Interpolate to specified historical years, as necessary
+    L231.rsrc_info <- A31.rsrc_info %>%
+      select(-year, -value) %>%
+      distinct() %>%
+      repeat_add_columns(tibble(year = HISTORICAL_YEARS)) %>%
+      left_join(A31.rsrc_info, by = c("resource", "resource_type",
+                                      "market", "output-unit", "price-unit", "capacity.factor", "year")) %>%
+      mutate(value = approx_fun(year, value, rule = 1)) %>%
+      filter(year %in% MODEL_YEARS) %>%
+      repeat_add_columns(GCAM_region_names) %>%
+      mutate(market = replace(market, market == "regional", region[market == "regional"]))
+
+    # L231.UnlimitRsrc: output unit, price unit, and market for unlimited resources
+    L231.UnlimitRsrc <- L231.rsrc_info %>%
+      filter(resource_type == "unlimited-resource") %>%
+      select(region, unlimited.resource = resource, output.unit = `output-unit`, price.unit = `price-unit`, market, capacity.factor)
+
+    # L231.UnlimitRsrcPrice: prices for unlimited resources
+    L231.UnlimitRsrcPrice <- L231.rsrc_info %>%
+      filter(resource_type == "unlimited-resource") %>%
+      select(region, unlimited.resource = resource, year, price = value)
+
+    # L231.IndCoef: coefficient on industrial processes as an input to the industry sector
+    # Coefficient = 0.008 / change in industry output from 1990 (0.008 is the sum of calvalue)
+    Ind.globaltech_eff <- A32.globaltech_eff %>%
+      select(-year, -value) %>%
+      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, FUTURE_YEARS))) %>%
+      left_join(A32.globaltech_eff, by = c("supplysector", "subsector", "technology", "minicam.energy.input",
+                                           "secondary.output", "year")) %>%
+      group_by(supplysector, subsector, technology, minicam.energy.input,
+               secondary.output) %>%
+      mutate(value = round(approx_fun(year, value, rule = 1), 3)) %>%
+      ungroup %>%
+      filter(year %in% MODEL_YEARS) %>%
+      select(sector = supplysector, fuel = subsector, year, efficiency = value) %>%
+      distinct()
+
+    L231.IndCoef <- bind_rows(L1322.in_EJ_R_indenergy_F_Yh %>%
+                                       mutate(sector = "industrial energy use"),
+                                     L1322.in_EJ_R_indfeed_F_Yh %>%
+                                       mutate(sector = "industrial feedstocks")) %>%
+      left_join_keep_first_only(Ind.globaltech_eff, by = c("sector", "fuel", "year")) %>%
+      mutate(service = value * efficiency) %>%
+      na.omit() %>%
+      group_by(GCAM_region_ID, year) %>%
+      summarise(ind_output = sum(service)) %>%
+      ungroup() %>%
+      mutate(ind_proc_input = 0.008,
+             coefficient = ind_proc_input / ind_output,
+             supplysector = "industry",
+             subsector = "industry",
+             technology = "industry",
+             minicam.energy.input = "industrial processes") %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID")
+
+    L231.IndCoef <- L231.IndCoef %>%
+      select(-year, -coefficient, -ind_output, -ind_proc_input) %>%
+      distinct %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      left_join(L231.IndCoef, by = c("GCAM_region_ID","region", "supplysector", "subsector", "technology", "minicam.energy.input", "year")) %>%
+      group_by(region, technology) %>%
+      mutate(coefficient = approx_fun(year, coefficient, rule = 2)) %>%
+      ungroup() %>%
+      select(region, supplysector, subsector, technology, year, minicam.energy.input, coefficient)
 
     # ===================================================
 
