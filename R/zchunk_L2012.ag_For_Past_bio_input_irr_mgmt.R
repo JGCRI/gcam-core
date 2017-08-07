@@ -117,11 +117,12 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       arrange(GCAM_region_ID, GLU, GCAM_commodity) %>%
       left_join_error_no_match(A_AgSupplySubsector, by = c("GCAM_commodity" = "AgSupplySubsector")) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      left_join_error_no_match(basin_to_country_mapping[c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) %>%
+      left_join_error_no_match(select(basin_to_country_mapping, GLU_code, GLU_name), by = c("GLU" = "GLU_code")) %>%
       # Subsector isn't just the supplysector & GLU for biomass crops, as this is where the grass/tree split is done
       mutate(AgSupplySubsector = paste(GCAM_commodity, GLU_name, sep = "_"),
              # We do not actually care about the logit here but we need a value to avoid errors
-             logit.year.fillout = min(BASE_YEARS), logit.exponent = -3) %>%
+             logit.year.fillout = min(BASE_YEARS),
+             logit.exponent = -3) %>%
       select(one_of(LEVEL2_DATA_NAMES[["AgSupplySubsector"]])) ->
       L2012.AgSupplySubsector
 
@@ -133,18 +134,20 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       filter(year %in% BASE_YEARS) %>%
       mutate(calOutputValue = round(value, digits = aglu.DIGITS_CALOUTPUT)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      left_join_error_no_match(basin_to_country_mapping[c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) %>%
+      left_join_error_no_match(select(basin_to_country_mapping, GLU_code, GLU_name), by = c("GLU" = "GLU_code")) %>%
       # Set subsector year and technology shareweights, subsector shareweights are set at the aggregate level later
       mutate(share.weight.year = year,
-             tech.share.weight = if_else(calOutputValue > 0, 1, 0)) ->
+             tech.share.weight = 0,
+             tech.share.weight = replace(tech.share.weight, calOutputValue > 0, 1)) ->
       L2011.AgProduction_ag_irr
 
     # Set subsector shareweights at the aggregate level across irrigated and rainfed production
     L2011.AgProduction_ag_irr %>%
       group_by(region, GCAM_commodity, GLU_name, year) %>%
       summarise(calOutputValue = sum(calOutputValue)) %>%
-      mutate(subs.share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
       ungroup %>%
+      mutate(subs.share.weight = 0,
+             subs.share.weight = replace(subs.share.weight, calOutputValue > 0, 1)) %>%
       select(-calOutputValue) %>%
       # Combine with subsector year and technology shareweights
       right_join(L2011.AgProduction_ag_irr, by = c("region", "GCAM_commodity", "GLU_name", "year")) %>%
@@ -162,7 +165,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       filter(year %in% BASE_YEARS) %>%
       mutate(calOutputValue = round(value, digits = aglu.DIGITS_CALOUTPUT)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      left_join_error_no_match(basin_to_country_mapping[c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) %>%
+      left_join_error_no_match(select(basin_to_country_mapping, GLU_code, GLU_name), by = c("GLU" = "GLU_code")) %>%
       # Add sector, subsector, technology names
       mutate(AgProductionTechnology = paste(GCAM_commodity, GLU_name, toupper(Irr_Rfd), level, sep = "_")) %>%
       # Combine with subsector and technology shareweights
@@ -189,12 +192,13 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       filter(year %in% BASE_YEARS) %>%
       mutate(calOutputValue = round(value, digits = aglu.DIGITS_CALOUTPUT)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      left_join_error_no_match(basin_to_country_mapping[c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) %>%
+      left_join_error_no_match(select(basin_to_country_mapping, GLU_code, GLU_name), by = c("GLU" = "GLU_code")) %>%
       mutate(AgProductionTechnology = paste(GCAM_commodity, GLU_name, sep = "_")) ->
       L201.For_Past_Prod_R_Y_GLU
 
     # Subset only forest and pasture products from the main subsector table and paste in calibrated production, rounded
     L2012.AgSupplySubsector %>%
+      # Use semi_join to filter region x GLU that have forest and pasture production
       semi_join(L201.For_Past_Prod_R_Y_GLU, by = c("AgSupplySector" = "GCAM_commodity")) %>%
       # No disaggregation of technologies
       mutate(AgProductionTechnology = AgSupplySubsector) %>%
@@ -203,8 +207,10 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       left_join_error_no_match(L201.For_Past_Prod_R_Y_GLU, by = c("region", "AgProductionTechnology", "year")) %>%
       # Subsector and technology shareweights (subsector requires the year as well)
       mutate(share.weight.year = year,
-             subs.share.weight = if_else(calOutputValue > 0, 1, 0),
-             tech.share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
+             subs.share.weight = 0,
+             subs.share.weight = replace(subs.share.weight, calOutputValue > 0, 1),
+             tech.share.weight = 0,
+             tech.share.weight = replace(tech.share.weight, calOutputValue > 0, 1)) %>%
       select(one_of(LEVEL2_DATA_NAMES[["AgProduction"]])) ->
       L2012.AgProduction_For_Past
 
@@ -227,7 +233,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       filter(year %in% MODEL_YEARS) %>%
       mutate(harvests.per.year = round(value, digits = aglu.DIGITS_CALOUTPUT)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      left_join_error_no_match(basin_to_country_mapping[c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) ->
+      left_join_error_no_match(select(basin_to_country_mapping, GLU_code, GLU_name), by = c("GLU" = "GLU_code")) ->
       L201.ag_HA_to_CropLand_R_Y_GLU
 
     # Paste in harvested-area-to-cropland only for agriculture commodities, repeat by irr/rfd and mgmt techs
@@ -263,7 +269,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       # Combine irrigated and rainfet yield data
       bind_rows(mutate(L163.ag_rfdBioYield_GJm2_R_GLU, IRR_RFD = "RFD")) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      left_join_error_no_match(basin_to_country_mapping[c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) %>%
+      left_join_error_no_match(select(basin_to_country_mapping, GLU_code, GLU_name), by = c("GLU" = "GLU_code")) %>%
       mutate(AgSupplySubsector = paste("biomass_grass", GLU_name, sep = "_")) ->
       L2011.AgYield_bio_grass_irr
 
@@ -303,7 +309,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
     # Start with the grass crop yields with no tech split where available
     L113.ag_bioYield_GJm2_R_GLU %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      left_join_error_no_match(basin_to_country_mapping[c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) %>%
+      left_join_error_no_match(select(basin_to_country_mapping, GLU_code, GLU_name), by = c("GLU" = "GLU_code")) %>%
       mutate(yield = round(Yield_GJm2, digits = aglu.DIGITS_CALOUTPUT)) %>%
       select(-GCAM_region_ID, -GLU, -Yield_GJm2) ->
       L201.AgYield_bio_grass
@@ -372,7 +378,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       mutate(level = sub("yieldmult_", "", level),
              Irr_Rfd = toupper(Irr_Rfd)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      left_join_error_no_match(basin_to_country_mapping[c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) ->
+      left_join_error_no_match(select(basin_to_country_mapping, GLU_code, GLU_name), by = c("GLU" = "GLU_code")) ->
       L2012.YieldMult_R_bio_GLU_irr
 
     # Bind the tree and grass tables, repeat by mgmt level, and match in the yield multipliers
