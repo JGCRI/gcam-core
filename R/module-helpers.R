@@ -85,3 +85,236 @@ rename_SO2 <- function(x, so2_map, is_awb = FALSE) {
     rename(Non.CO2 = SO2_name) %>%
     bind_rows(data_notso2)
 }
+
+#' write_to_all_regions
+#'
+#' Copy data table to all regions, selecting which columns to keep.
+#'
+#' @param data Base tibble to start from
+#' @param names Character vector indicating the column names of the returned tibble
+#' @param GCAM_region_names Tibble with GCAM region names and ID numbers
+#' @param has_traded Logical indicating whether any rows in the base table have "traded" goods; if true,
+#' \code{\link{set_traded_names}} will be called
+#' @param apply_selected_only Logical indicating whether \code{\link{set_traded_names}} is applied to
+#' the whole tibble, or only selected rows
+#' @param set_market Logical indicating whether to create a \code{market.name} column whose values are equal
+#' to \code{region} prior to \code{\link{set_traded_names}} re-setting \code{region} names
+#' @note Used for data that GCAM contains within each region, but whose values are not actually differentiated by region.
+#' @return Tibble with data written out to all GCAM regions.
+write_to_all_regions <- function(data, names, GCAM_region_names, has_traded = FALSE,
+                                 apply_selected_only = TRUE, set_market = FALSE) {
+  assert_that(is_tibble(data))
+  assert_that(is.character(names))
+  assert_that(is_tibble(GCAM_region_names))
+  assert_that(is.logical(has_traded))
+  assert_that(is.logical(apply_selected_only))
+  assert_that(is.logical(set_market))
+
+  GCAM_region_ID <- NULL  # silence package check notes
+
+  if("logit.year.fillout" %in% names) {
+    data$logit.year.fillout <- "start-year"
+  }
+  if("price.exp.year.fillout" %in% names) {
+    data$price.exp.year.fillout <- "start-year"
+  }
+
+  data %>%
+    set_years %>%
+    repeat_add_columns(select(GCAM_region_names, GCAM_region_ID)) %>%
+    left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
+    data_new
+
+  if("market.name" %in% names) {
+    data_new$market.name <- data_new$region
+  }
+  if(has_traded) {
+    if(set_market) {
+      data_new$market.name <- data_new$region
+    }
+    data_new <- set_traded_names(data_new, GCAM_region_names$region, apply_selected_only)
+  }
+  data_new[names]
+}
+
+
+#' set_traded_names
+#'
+#' Re-set region names in tables with traded secondary goods so that the traded secondary goods are all contained
+#' within one specified region, with the (actual) region name prepended to the subsector and technology names (where applicable)
+#'
+#' @param data Tibble to operate on
+#' @param GCAM_region_names Tibble with GCAM region names and ID numbers
+#' @param apply_selected_only Logical indicating whether region/subsector/technology re-assignment is applied to
+#' the whole tibble, or only selected rows
+#' @return Tibble returned with modified region, subsector, and/or technology information.
+set_traded_names <- function(data, GCAM_region_names, apply_selected_only = TRUE) {
+  assert_that(is_tibble(data))
+  assert_that(is.character(GCAM_region_names))
+  assert_that(is.logical(apply_selected_only))
+
+  sel <- TRUE # select all rows
+  if(apply_selected_only) {
+    sel <- data$traded == gcam.USA_CODE  # by default selected only
+  }
+
+  if("subsector" %in% names(data)) {
+    data$subsector[sel] <- paste(data$region[sel], data$subsector[sel])
+  }
+  if("technology" %in% names(data)) {
+    data$technology[sel] <- paste(data$region[sel], data$technology[sel])
+  }
+  if("region" %in% names(data)) {
+    data$region[sel] <- GCAM_region_names[gcam.USA_CODE]
+  }
+
+  data
+}
+
+
+#' set_years
+#'
+#' Replace text descriptions of years in exogenous input CSVs with numerical values. This allows model time periods
+#' to be modified without requiring similar modifications in many input CSV tables.
+#'
+#' @param data Tibble with text descriptions of model time periods to be replaced with numerical values.
+#' @details Text strings include \code{start-year}, \code{final-calibration-year}, \code{final-historical-year},
+#' \code{initial-future-year}, \code{initial-nonhistorical-year}, and \code{end-year}.
+#' @return Modified tibble with 'numerical' values instead of text.
+#' @note The returned 'numerical' values are actually characters; this helper function doesn't touch column types.
+set_years <- function(data) {
+  assert_that(is_tibble(data))
+  data[data == "start-year"] <- min(BASE_YEARS)
+  data[data == "final-calibration-year"] <- max(BASE_YEARS)
+  data[data == "final-historical-year"] <- max(HISTORICAL_YEARS)
+  data[data == "initial-future-year"] <- min(FUTURE_YEARS)
+  data[data == "initial-nonhistorical-year"] <- min(MODEL_YEARS[MODEL_YEARS > max(HISTORICAL_YEARS)])
+  data[data == "end-year"] <- max(FUTURE_YEARS)
+  data
+}
+
+
+#' add_node_leaf_names
+#'
+#' Match in the node and leaf names from a land nesting table
+#'
+#' @param data Data, tibble
+#' @param nesting_table Table of node names (as column names) and leaf data (contents), tibble
+#' @param leaf_name Name of leaf name column in \code{nesting_table}, character
+#' @param ... Names of columns to add leaf nodes for, character
+#' @param LT_name Name of land type column in \code{data}, character
+#' @param append_GLU Append GLU column to new leaf name columns? Logical
+#' @return Data with new leaf name columns added.
+add_node_leaf_names <- function(data, nesting_table, leaf_name, ..., LT_name = "Land_Type", append_GLU = TRUE) {
+  assert_that(is_tibble(data))
+  assert_that(is_tibble(nesting_table))
+  assert_that(is.character(leaf_name))
+  assert_that(leaf_name %in% names(nesting_table))
+  assert_that(is.character(LT_name))
+  assert_that(LT_name %in% names(data))
+  assert_that(is.logical(append_GLU))
+
+  data$LandAllocatorRoot <- "root"
+  dots <- list(...)
+  for(x in dots) {
+    assert_that(x %in% names(nesting_table))
+    data[[x]] <- nesting_table[[x]][match(data[[LT_name]], nesting_table[[leaf_name]])]
+  }
+
+  data[[leaf_name]] <- data[[LT_name]]
+
+  if(append_GLU) {
+    data <- append_GLU(data, leaf_name, ...)
+  }
+  if("Irr_Rfd" %in% names(data)) {
+    data[[leaf_name]] <- paste(data[[leaf_name]], data[["Irr_Rfd"]], sep = aglu.IRR_DELIMITER)
+  }
+  data
+}
+
+
+#' append_GLU
+#'
+#' Append GLU to all specified variables
+#'
+#' @param data Data, a tibble
+#' @param ... Names of variables to concatenate with \code{GLU} column, character
+#' @return A tibble with the \code{...} variable names concatenated with the \code{GLU}.
+append_GLU <- function(data, ...) {
+  assert_that(is_tibble(data))
+  dots <- list(...)
+  for(x in dots) {
+    assert_that(x %in% names(data))
+    data[[x]] <- paste(data[[x]], data[["GLU"]], sep = aglu.LT_GLU_DELIMITER)
+  }
+  data
+}
+
+
+#' replace_GLU
+#'
+#' Replace GLU numerical codes with names, and vice versa
+#'
+#' @param d A tibble with a column named "GLU"
+#' @param map A tibble with columns \code{GLU_code} and \code{GLU_name}
+#' @param GLU_pattern Regular expression string to identify the GLU codes
+#' @return A tibble with codes substituted for pattern, or vice versa, depending on the original
+#' contents of the \code{GLU} column.
+replace_GLU <- function(d, map, GLU_pattern = "^GLU[0-9]{3}$") {
+  assert_that(is_tibble(d))
+  assert_that("GLU" %in% names(d))
+  assert_that(is_tibble(map))
+  assert_that(all(c("GLU_code", "GLU_name") %in% names(map)))
+  assert_that(!any(duplicated(map$GLU_code)))
+  assert_that(!any(duplicated(map$GLU_name)))
+  assert_that(is.character(GLU_pattern))
+
+  # Determine the direction of the change based on character string matching in the first element
+  if(all(grepl(GLU_pattern, d$GLU))) {
+    d$GLU <- map$GLU_name[match(d$GLU, map$GLU_code)]  # switch from GLU numerical codes to names
+  } else {
+    d$GLU <- map$GLU_code[match(d$GLU, map$GLU_name)]  # switch from GLU names to numerical codes
+  }
+  d
+}
+
+#' get_ssp_regions
+#'
+#' Get regions for different income groups in SSP4 2010 (by default)
+#'
+#' @param pcGDP A tibble with per capita GDP estimates, including columns \code{GCAM_region_ID},
+#' \code{scenario}, \code{year}, and \code{value}
+#' @param reg_names A tibble with columns \code{GCAM_region_ID} and \code{region}
+#' @param income_group A string indicating which region group (low, medium, high)
+#' @param ssp_filter A string indicating which SSP to filter to (SSP4 by default)
+#' @param year_filter An integer indicating which year to use (2010 by default)
+#' @return A character vector of region names belonging to the specified income group.
+get_ssp_regions <- function(pcGDP, reg_names, income_group,
+                             ssp_filter = "SSP4", year_filter = 2010) {
+  assert_that(is_tibble(pcGDP))
+  assert_that(is_tibble(reg_names))
+  assert_that(is.character(income_group))
+  assert_that(is.character(ssp_filter))
+  assert_that(is.numeric(year_filter))
+
+  value <- scenario <- year <- GCAM_region_ID <- region <- NULL  # silence package check notes
+
+  pcGDP %>%
+    left_join_error_no_match(reg_names, by = "GCAM_region_ID") %>%
+    mutate(value = value * gdp_deflator(year_filter, 1990)) %>%
+    filter(scenario == ssp_filter, year == year_filter) %>%
+    select(GCAM_region_ID, value, region) ->
+    pcGDP_yf
+
+  if(income_group == "low") {
+    regions <- filter(pcGDP_yf, value < aglu.LOW_GROWTH_PCGDP)
+  } else if(income_group == "high") {
+    regions <- filter(pcGDP_yf, value > aglu.HIGH_GROWTH_PCGDP)
+  } else if(income_group == "medium") {
+    regions <- filter(pcGDP_yf, value < aglu.HIGH_GROWTH_PCGDP, value > aglu.LOW_GROWTH_PCGDP)
+  } else{
+    stop("Unknown income_group!")
+  }
+
+  regions$region
+}

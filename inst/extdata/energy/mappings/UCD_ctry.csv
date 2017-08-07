@@ -1,0 +1,244 @@
+# File:UCD_ctry.csv
+# Title:Mapping iso code to country to GCAM3 region
+# Units: NA
+# Description: Maps iso codes to GCAM regions (including composites as necessary)
+# Source: Mishra et al. 2013
+iso,country_name,UCD_region
+abw,Aruba,Latin America
+afg,Afghanistan,Southeast Asia
+ago,Angola,Africa
+aia,Anguilla,Latin America
+alb,Albania,Eastern Europe
+and,Andorra,Western Europe
+ant,Netherlands Antilles,Latin America
+are,United Arab Emirates,Middle East
+arg,Argentina,Latin America
+arm,Armenia,Former Soviet Union
+asm,American Samoa,Southeast Asia
+atg,Antigua & Barbuda,Latin America
+aus,Australia,Australia_NZ
+aut,Austria,Western Europe
+aze,Azerbaijan,Former Soviet Union
+bdi,Burundi,Africa
+bel,Belgium,Western Europe
+ben,Benin,Africa
+bfa,Burkina Faso,Africa
+bgd,Bangladesh,Southeast Asia
+bgr,Bulgaria,Eastern Europe
+bhr,Bahrain,Middle East
+bhs,Bahamas,Latin America
+bih,Bosnia and Herzegovina,Eastern Europe
+blr,Belarus,Former Soviet Union
+blz,Belize,Latin America
+bmu,Bermuda,Western Europe
+bol,Bolivia,Latin America
+bra,Brazil,Brazil
+brb,Barbados,Latin America
+brn,Brunei Darussalam,Southeast Asia
+btn,Bhutan,Southeast Asia
+bwa,Botswana,Africa
+caf,Central African Republic,Africa
+can,Canada,Canada
+cck,Cocos (Keeling) Islands,Southeast Asia
+che,Switzerland,Western Europe
+chi,Channel Islands,Western Europe
+chl,Chile,Latin America
+chn,China,China
+civ,Cote dIvoire,Africa
+cmr,Cameroon,Africa
+cod,"Congo, the Democratic Republic of the",Africa
+cog,Congo,Africa
+cok,Cook Islands,Australia_NZ
+col,Colombia,Latin America
+com,Comoros,Africa
+cpv,Cape Verde,Africa
+cri,Costa Rica,Latin America
+cub,Cuba,Latin America
+cym,Cayman Islands,Latin America
+cyp,Cyprus,Western Europe
+cxr,Christmas Island,Southeast Asia
+cze,Czech Republic,Eastern Europe
+deu,Germany,Western Europe
+dji,Djibouti,Africa
+dma,Dominica,Latin America
+dnk,Denmark,Western Europe
+dom,Dominican Republic,Latin America
+dza,Algeria,Africa
+ecu,Ecuador,Latin America
+egy,Egypt,Africa
+eri,Eritrea,Africa
+esh,Western Sahara,Africa
+esp,Spain,Western Europe
+est,Estonia,Former Soviet Union
+eth,Ethiopia,Africa
+fin,Finland,Western Europe
+fji,Fiji,Southeast Asia
+flk,Falkland Islands (Malvinas),Latin America
+fra,France,Western Europe
+fro,Faroe Islands,Western Europe
+fsm,"Micronesia, Federated States of",Southeast Asia
+gab,Gabon,Africa
+gbr,United Kingdom,Western Europe
+geo,Georgia,Former Soviet Union
+gha,Ghana,Africa
+gib,Gibraltar,Western Europe
+gin,Guinea,Africa
+glp,Guadeloupe,Latin America
+gmb,Gambia,Africa
+gnb,Guinea-Bissau,Africa
+gnq,Equatorial Guinea,Africa
+grc,Greece,Western Europe
+grd,Grenada,Latin America
+grl,Greenland,Western Europe
+gtm,Guatemala,Latin America
+guf,French Guiana,Latin America
+gum,Guam,Southeast Asia
+guy,Guyana,Latin America
+hkg,Hong Kong,Southeast Asia
+hnd,Honduras,Latin America
+hrv,Croatia,Eastern Europe
+hti,Haiti,Latin America
+hun,Hungary,Eastern Europe
+idn,Indonesia,Southeast Asia
+imn,Isle of Man,Western Europe
+ind,India,India
+irl,Ireland,Western Europe
+irn,"Iran, Islamic Republic of",Middle East
+irq,Iraq,Middle East
+isl,Iceland,Western Europe
+isr,Israel,Middle East
+ita,Italy,Western Europe
+jam,Jamaica,Latin America
+jor,Jordan,Middle East
+jpn,Japan,Japan
+kaz,Kazakhstan,Former Soviet Union
+ken,Kenya,Africa
+kgz,Kyrgyzstan,Former Soviet Union
+khm,Cambodia,China
+kir,Kiribati,Southeast Asia
+kna,Saint Kitts and Nevis,Latin America
+kor,"Korea, Republic of",Korea
+kwt,Kuwait,Middle East
+lao,Lao Peoples Democratic Republic,Southeast Asia
+lbn,Lebanon,Middle East
+lbr,Liberia,Africa
+lby,Libyan Arab Jamahiriya,Africa
+lca,Saint Lucia,Latin America
+lie,Liechtenstein,Western Europe
+lka,Sri Lanka,Southeast Asia
+lso,Lesotho,Africa
+ltu,Lithuania,Former Soviet Union
+lux,Luxembourg,Western Europe
+lva,Latvia,Former Soviet Union
+mac,Macau,Southeast Asia
+mar,Morocco,Africa
+mco,Monaco,Western Europe
+mda,"Moldova, Republic of",Former Soviet Union
+mdg,Madagascar,Africa
+mdv,Maldives,Southeast Asia
+mex,Mexico,Latin America
+mhl,Marshall Islands,Southeast Asia
+mkd,"Macedonia, the former Yugoslav Republic of",Eastern Europe
+mli,Mali,Africa
+mlt,Malta,Western Europe
+mmr,Myanmar,Southeast Asia
+mne,Montenegro,Eastern Europe
+mng,Mongolia,China
+mnp,Northern Mariana Islands,Southeast Asia
+moz,Mozambique,Africa
+mrt,Mauritania,Africa
+msr,Montserrat,Latin America
+mtq,Martinique,Western Europe
+mus,Mauritius,Africa
+mwi,Malawi,Africa
+mys,Malaysia,Southeast Asia
+myt,Mayotte,Africa
+nam,Namibia,Africa
+ncl,New Caledonia,Southeast Asia
+ner,Niger,Africa
+nfk,Norfolk Island,Australia_NZ
+nga,Nigeria,Africa
+nic,Nicaragua,Latin America
+niu,Niue,Australia_NZ
+nld,Netherlands,Western Europe
+nor,Norway,Western Europe
+npl,Nepal,Southeast Asia
+nru,Nauru,Southeast Asia
+nzl,New Zealand,Australia_NZ
+omn,Oman,Middle East
+pak,Pakistan,Southeast Asia
+pan,Panama,Latin America
+pci,Pacific Islands Trust Territory,Southeast Asia
+pcn,Pitcairn Islands,Southeast Asia
+per,Peru,Latin America
+phl,Philippines,Southeast Asia
+plw,Palau,Southeast Asia
+png,Papua New Guinea,Southeast Asia
+pol,Poland,Eastern Europe
+pri,Puerto Rico,USA
+prk,"Korea, Democratic Peoples Republic of",China
+prt,Portugal,Western Europe
+pry,Paraguay,Latin America
+pse,"Palestinian Territory, Occupied",Middle East
+pyf,French Polynesia,Southeast Asia
+qat,Qatar,Middle East
+reu,Reunion,Africa
+rom,Romania,Eastern Europe
+rus,Russian Federation,Former Soviet Union
+rwa,Rwanda,Africa
+sau,Saudi Arabia,Middle East
+scg,Serbia and Montenegro,Eastern Europe
+sdn,Sudan,Africa
+sen,Senegal,Africa
+sgp,Singapore,Southeast Asia
+shn,Saint Helena,Africa
+sjm,Svalbard and Jan Mayen Islands,Western Europe
+slb,Solomon Islands,Southeast Asia
+sle,Sierra Leone,Africa
+slv,El Salvador,Latin America
+smr,San Marino,Western Europe
+som,Somalia,Africa
+spm,Saint Pierre and Miquelon,Canada
+srb,Serbia,Eastern Europe
+stp,Sao Tome and Principe,Africa
+sur,Suriname,Latin America
+svk,Slovakia,Eastern Europe
+svn,Slovenia,Eastern Europe
+swe,Sweden,Western Europe
+swz,Swaziland,Africa
+syc,Seychelles,Africa
+syr,Syrian Arab Republic,Middle East
+tca,Turks and Caicos,Latin America
+tcd,Chad,Africa
+tgo,Togo,Africa
+tha,Thailand,Southeast Asia
+tjk,Tajikistan,Former Soviet Union
+tkl,Tokelau,Australia_NZ
+tkm,Turkmenistan,Former Soviet Union
+tls,Timor Leste,Southeast Asia
+ton,Tonga,Southeast Asia
+tto,Trinidad and Tobago,Latin America
+tun,Tunisia,Africa
+tur,Turkey,Western Europe
+tuv,Tuvalu,Southeast Asia
+twn,Taiwan,Southeast Asia
+tza,"Tanzania, United Republic of",Africa
+uga,Uganda,Africa
+ukr,Ukraine,Former Soviet Union
+ury,Uruguay,Latin America
+usa,United States of America,USA
+uzb,Uzbekistan,Former Soviet Union
+vat,Vatican,Western Europe
+vct,Saint Vincent and the Grenadines,Latin America
+ven,Venezuela,Latin America
+vgb,"Virgin Islands, British",Latin America
+vir,"Virgin Islands, U.S.",Latin America
+vnm,Viet Nam,China
+vut,Vanuatu,Southeast Asia
+wlf,Wallis and Futuna,Australia_NZ
+wsm,Samoa,Southeast Asia
+yem,Yemen,Middle East
+yug,"Yugoslavia, Federal Republic of",Eastern Europe
+zaf,South Africa,Africa
+zmb,Zambia,Africa
+zwe,Zimbabwe,Africa

@@ -25,10 +25,10 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
              FILE = "emissions/mappings/GCAM_sector_tech",
              FILE = "emissions/mappings/EPA_tech",
              "L1231.in_EJ_R_elec_F_tech_Yh",
-             FILE = "temp-data-inject/L1322.in_EJ_R_indenergy_F_Yh",
-             FILE = "temp-data-inject/L144.in_EJ_R_bld_serv_F_Yh",
-             FILE = "temp-data-inject/L154.in_EJ_R_trn_m_sz_tech_F_Yh",
-             FILE = "temp-data-inject/L1322.Fert_Prod_MtN_R_F_Y",
+             "L1322.in_EJ_R_indenergy_F_Yh",
+             "L144.in_EJ_R_bld_serv_F_Yh",
+             "L154.in_EJ_R_trn_m_sz_tech_F_Yh",
+             "L1322.Fert_Prod_MtN_R_F_Y",
              FILE = "temp-data-inject/L1321.in_EJ_R_cement_F_Y",
              "L124.in_EJ_R_heat_F_Yh",
              FILE = "temp-data-inject/L111.Prod_EJ_R_F_Yh",
@@ -64,24 +64,13 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
     EPA_NOx <- get_data(all_data, "emissions/EPA_NOx")
     EPA_VOC <- get_data(all_data, "emissions/EPA_VOC")
     EPA_NH3 <- get_data(all_data, "emissions/EPA_NH3")
-
-    # get_data calls followed by temporary (temp-data-inject) reshapes
-    L1322.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "temp-data-inject/L1322.in_EJ_R_indenergy_F_Yh") %>%
-      gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
-      mutate(year = as.integer(substr(year, 2, 5)))
-
+    L1322.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L1322.in_EJ_R_indenergy_F_Yh")
     L1231.in_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.in_EJ_R_elec_F_tech_Yh")
+    L144.in_EJ_R_bld_serv_F_Yh <- get_data(all_data, "L144.in_EJ_R_bld_serv_F_Yh")
+    L154.in_EJ_R_trn_m_sz_tech_F_Yh <- get_data(all_data, "L154.in_EJ_R_trn_m_sz_tech_F_Yh") %>%
+      spread(year, value)
 
-    # The following two data frames can't be reshaped from long to wide by the test system
-    # So leave them wide, and strip off X's
-    L144.in_EJ_R_bld_serv_F_Yh <- get_data(all_data, "temp-data-inject/L144.in_EJ_R_bld_serv_F_Yh")
-    names(L144.in_EJ_R_bld_serv_F_Yh)[5:44] <- as.character(1971:2010) # temporary
-    L154.in_EJ_R_trn_m_sz_tech_F_Yh <- get_data(all_data, "temp-data-inject/L154.in_EJ_R_trn_m_sz_tech_F_Yh")
-    names(L154.in_EJ_R_trn_m_sz_tech_F_Yh)[8:47] <- as.character(1971:2010) # temporary
-
-    L1322.Fert_Prod_MtN_R_F_Y <- get_data(all_data, "temp-data-inject/L1322.Fert_Prod_MtN_R_F_Y") %>%
-      gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
-      mutate(year = as.integer(substr(year, 2, 5)))
+    L1322.Fert_Prod_MtN_R_F_Y <- get_data(all_data, "L1322.Fert_Prod_MtN_R_F_Y")
     L1321.in_EJ_R_cement_F_Y <- get_data(all_data, "temp-data-inject/L1321.in_EJ_R_cement_F_Y") %>%
       gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
       mutate(year = as.integer(substr(year, 2, 5)))
@@ -96,7 +85,7 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
               spread(L1321.in_EJ_R_cement_F_Y, year, value),
               spread(L124.in_EJ_R_heat_F_Yh, year, value),
               spread(L111.Prod_EJ_R_F_Yh, year, value),
-              rename(L144.in_EJ_R_bld_serv_F_Yh, sector = service)) %>%
+              spread(L144.in_EJ_R_bld_serv_F_Yh, year, value) %>% rename(sector = service)) %>%
       mutate(technology = fuel) ->
       temp
 
@@ -208,10 +197,10 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
                      "emissions/mappings/GCAM_sector_tech",
                      "emissions/mappings/EPA_tech",
                      "L1231.in_EJ_R_elec_F_tech_Yh",
-                     "temp-data-inject/L1322.in_EJ_R_indenergy_F_Yh",
-                     "temp-data-inject/L144.in_EJ_R_bld_serv_F_Yh",
-                     "temp-data-inject/L154.in_EJ_R_trn_m_sz_tech_F_Yh",
-                     "temp-data-inject/L1322.Fert_Prod_MtN_R_F_Y",
+                     "L1322.in_EJ_R_indenergy_F_Yh",
+                     "L144.in_EJ_R_bld_serv_F_Yh",
+                     "L154.in_EJ_R_trn_m_sz_tech_F_Yh",
+                     "L1322.Fert_Prod_MtN_R_F_Y",
                      "temp-data-inject/L1321.in_EJ_R_cement_F_Y",
                      "L124.in_EJ_R_heat_F_Yh",
                      "temp-data-inject/L111.Prod_EJ_R_F_Yh") %>%

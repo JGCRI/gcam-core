@@ -24,7 +24,7 @@ module_water_batch_water_demand_primary.xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("water_demand_primary.xml") %>%
-      add_xml_data(L210.TechCoef,"TechCoef") %>%
+      add_xml_data(L210.TechCoef, "TechCoef") %>%
       add_precursors("L210.TechCoef") ->
       water_demand_primary.xml
 

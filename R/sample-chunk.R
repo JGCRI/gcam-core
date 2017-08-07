@@ -34,7 +34,7 @@ module_sample_sample <- function(command, ...) {
     tibble() %>%
       add_title("First output") %>%
       add_units("None") %>%
-      add_precursors("L200.ModelTime") %>%
+      add_precursors("common/iso_GCAM_regID", "L200.ModelTime") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST, FLAG_NO_OUTPUT) %>%
       add_legacy_name("<none>") %>%
       add_comments("Sample chunk output") ->
@@ -43,7 +43,7 @@ module_sample_sample <- function(command, ...) {
     tibble() %>%
       add_title("Second output") %>%
       add_units("None") %>%
-      add_precursors("L200.ModelTime") %>%
+      add_precursors("common/iso_GCAM_regID", "L200.ModelTime") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST, FLAG_NO_OUTPUT) %>%
       add_legacy_name("<none>") %>%
       add_comments("Sample chunk output") ->

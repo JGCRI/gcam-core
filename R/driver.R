@@ -31,6 +31,7 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 
   # Check that the chunk has provided required data for all objects
   empty_precursors <- TRUE
+  pc_all <- c()
   for(obj in names(chunk_data)) {
     obj_flags <- get_flags(chunk_data[[obj]])
     # Chunks have to returns tibbles, unless they're tagged as being XML
@@ -49,6 +50,7 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
     }
     # Data precursors should all appear in input list
     pc <- attr(chunk_data[[obj]], ATTR_PRECURSORS)
+    pc_all <- c(pc_all, pc)
     empty_precursors <- empty_precursors & is.null(pc)
     matches <- pc %in% c(chunk_inputs, promised_outputs)
     if(!all(matches)) {
@@ -57,6 +59,11 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
     if(obj %in% pc) {
       stop("Precursors for '", obj, "' include itself - chunk ", chunk)
     }
+  }
+
+  # Every input should be a precursor for something
+  if(!all(chunk_inputs %in% pc_all)) {
+    message("Inputs ", setdiff(chunk_inputs, pc_all), " don't appear as precursors for any outputs - chunk ", chunk)
   }
 
   # If chunk has inputs, some output should have a precursor
@@ -75,10 +82,17 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 #' Run the entire data system.
 #'
 #' @param all_data Data to be pre-loaded into data system
-#' @param write_outputs Write all chunk outputs to disk?
 #' @param quiet Suppress output?
-#' @param outdir Location to write output data.  (Ignored if \code{write_outputs} is \code{FALSE}.)
-#' @param xmldir Location to write output XML.  (Ignored if \code{write_outputs} is \code{FALSE}.)
+#' @param stop_before Stop immediately before this chunk (character)
+#' @param stop_after Stop immediately after this chunk  (character)
+#' @param return_inputs_of Return the data objects that are inputs for these chunks (character).
+#' If \code{stop_before} is specified, by default that chunk's inputs are returned.
+#' @param return_outputs_of Return the data objects that are output from these chunks (character)
+#' If \code{stop_after} is specified, by default that chunk's outputs are returned.
+#' @param return_data_names Return these data objects (character). By default this is the union of \code{return_inputs_of} and \code{return_inputs_of}
+#' @param write_outputs Write all chunk outputs to disk?
+#' @param outdir Location to write output data (ignored if \code{write_outputs} is \code{FALSE})
+#' @param xmldir Location to write output XML (ignored if \code{write_outputs} is \code{FALSE})
 #' @return A list of all built data.
 #' @details The driver loads any necessary data from input files,
 #' runs all code chunks in an order dictated by their dependencies,
@@ -89,21 +103,55 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 #' @importFrom dplyr filter mutate select
 #' @export
 #' @author BBL
-driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE, outdir = OUTPUTS_DIR, xmldir = XML_DIR) {
+driver <- function(all_data = empty_data(),
+                   stop_before = NULL, stop_after = NULL,
+                   return_inputs_of = stop_before,
+                   return_outputs_of = stop_after,
+                   return_data_names = union(inputs_of(return_inputs_of),
+                                             outputs_of(return_outputs_of)),
+                   write_outputs = TRUE, outdir = OUTPUTS_DIR, xmldir = XML_DIR,
+                   quiet = FALSE) {
+
+  # If users ask to stop after a chunk, but also specify they want particular inputs,
+  # or if they ask to stop before a chunk, while asking for outputs, that's confusing.
+  if(missing(return_outputs_of) && !missing(return_inputs_of) && !missing(stop_after)) {
+    return_outputs_of <- NULL  # in this case don't want default of stop_before
+  }
+  if(missing(return_inputs_of) && !missing(return_outputs_of) && !missing(stop_before)) {
+    return_inputs_of <- NULL  # in this case don't want default of stop_after
+  }
+  if(missing(return_data_names)) {
+    return_data_names <- union(inputs_of(return_inputs_of), outputs_of(return_outputs_of))
+  }
 
   optional <- input <- from_file <- name <- NULL    # silence notes from package check.
 
+  assert_that(is.null(stop_before) | is.character(stop_before))
+  assert_that(is.null(stop_after) | is.character(stop_after))
+  assert_that(is.null(return_inputs_of) | is.character(return_inputs_of))
+  assert_that(is.null(return_outputs_of) | is.character(return_outputs_of))
+  assert_that(is.null(return_data_names) | is.character(return_data_names))
   assert_that(is.logical(write_outputs))
+  assert_that(is.logical(quiet))
 
   chunklist <- find_chunks()
   if(!quiet) cat("Found", nrow(chunklist), "chunks\n")
-
   chunkinputs <- chunk_inputs(chunklist$name)
   if(!quiet) cat("Found", nrow(chunkinputs), "chunk data requirements\n")
   chunkoutputs <- chunk_outputs(chunklist$name)
   if(!quiet) cat("Found", nrow(chunkoutputs), "chunk data products\n")
 
+  # Keep track of chunk inputs for later pruning
+  chunkinputs %>%
+    group_by(input) %>%
+    summarise(n = n()) ->
+    chunk_input_counts
+  cic <- chunk_input_counts$n
+  names(cic) <- chunk_input_counts$input
+
   warn_data_injects()
+  warn_datachunk_bypass()
+  warn_mismarked_fileinputs()
 
   # Outputs should all be unique
   dupes <- duplicated(chunkoutputs$output)
@@ -128,37 +176,68 @@ driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE,
     all_data <- add_data(csv_data, all_data)
   }
 
+  # Initialize some stuff before we start to run the chunks
   chunks_to_run <- chunklist$name
+  removed_count <- 0
+  if(write_outputs) {
+    save_chunkdata(empty_data(), create_dirs = TRUE, outputs_dir = outdir, xml_dir = xmldir) # clear directories
+  }
+
   while(length(chunks_to_run)) {
     nchunks <- length(chunks_to_run)
 
     # Loop through all chunks and see who can run (i.e. all dependencies are available)
     for(chunk in chunks_to_run) {
-      if(!quiet) print(chunk)
 
       inputs <- filter(chunkinputs, name == chunk)
       input_names <- inputs$input
       required_inputs <- filter(inputs, !optional)
       if(!all(required_inputs$input %in% names(all_data))) {
-        if(!quiet) print("- data not available yet")
         next  # chunk's required inputs are not all available
+      }
+
+      if(!quiet) print(chunk)
+
+      if(chunk %in% stop_before) {
+        chunks_to_run <- character(0)
+        break
       }
 
       # Order chunk to build its data
       time1 <- Sys.time()
       chunk_data <- run_chunk(chunk, all_data[input_names])
-      # Disabled this code because `capture.output` causes problems in debugging
-      #out <- capture.output(chunk_data <- run_chunk(chunk, all_data[input_names]))
-      #if(!quiet & length(out)) cat(out, sep = "\n")
       tdiff <- as.numeric(difftime(Sys.time(), time1, units = "secs"))
       if(!quiet) print(paste("- make", format(round(tdiff, 2), nsmall = 2)))
+      po <- subset(chunkoutputs, name == chunk)$output  # promised outputs
 
       check_chunk_outputs(chunk, chunk_data, input_names,
-                          promised_outputs = subset(chunkoutputs, name == chunk)$output,
+                          promised_outputs = po,
                           outputs_xml = subset(chunkoutputs, name == chunk)$to_xml)
 
       # Add this chunk's data to the global data store
       all_data <- add_data(chunk_data, all_data)
+
+      # If any outputs don't appear in the chunk input list, and aren't requested for return,
+      # they can be immediately written out and removed
+      prunelist <- !po %in% names(cic) & !po %in% return_data_names
+      if(any(prunelist)) {
+        if(write_outputs) save_chunkdata(all_data[po[prunelist]], outputs_dir = outdir, xml_dir = xmldir)
+        all_data <- remove_data(po[prunelist], all_data)
+        removed_count <- removed_count + length(po[prunelist])
+      }
+
+      # Decrement the file input count
+      cic[input_names] <- cic[input_names] - 1
+      # ...and remove if not going to be used again, and not requested for return
+      which_zero <- which(cic[input_names] == 0 & !input_names %in% return_data_names)
+      if(write_outputs) save_chunkdata(all_data[names(which_zero)], outputs_dir = outdir, xml_dir = xmldir)
+      all_data <- remove_data(names(which_zero), all_data)
+      removed_count <- removed_count + length(which_zero)
+
+      if(chunk %in% stop_after) {
+        chunks_to_run <- character(0)
+        break
+      }
 
       # Remove the current chunk from the to-run list
       chunks_to_run <- chunks_to_run[chunks_to_run != chunk]
@@ -170,15 +249,16 @@ driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE,
     }
   } # while
 
-  if(!quiet) cat(length(all_data), "data frames generated\n")
-
   if(write_outputs) {
     if(!quiet) cat("Writing chunk data...\n")
     save_chunkdata(all_data, outputs_dir = outdir, xml_dir = xmldir)
   }
 
+  all_data <- all_data[return_data_names]
+
+  if(!quiet && length(all_data) > 0) cat("Returning", length(all_data), "tibbles.\n")
   if(!quiet) cat("All done.\n")
-  invisible(all_data)
+  invisible(all_data[return_data_names])
 }
 
 
@@ -189,8 +269,7 @@ driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE,
 #' @return Number of temporary data objects being used inappropriately.
 warn_data_injects <- function() {
 
-  name <- input <- base_input <- upstream_chunk <- output <- NULL
-                                        # silence package check.
+  name <- input <- base_input <- upstream_chunk <- output <- NULL # silence package check
 
   # Are any chunks are using temp-data-inject data that are also available to them through the data system?
   ci <- chunk_inputs(find_chunks(include_disabled = FALSE)$name)
@@ -211,4 +290,55 @@ warn_data_injects <- function() {
     message("NOTE: chunk ", ci_tdi$name[i], " reads `", ci_tdi$input[i], "`\n\tbut this is available from ", ci_tdi$upstream_chunk[i])
   }
   nrow(ci_tdi)
+}
+
+#' warn_mismarked_fileinputs
+#'
+#' Look for mislabeled chunk file inputs
+#'
+#' @return Number of data chunk objects marked as \code{from_file} but without a directory path.
+warn_mismarked_fileinputs <- function() {
+
+  from_file <- input <- NULL  # silence package check
+
+  # Every input marked as from a file should have some directory structure in its name
+  chunk_inputs() %>%
+    filter(from_file, input == basename(input)) ->
+    mismarked
+
+  # Print messages
+  for(i in seq_len(nrow(mismarked))) {
+    message("NOTE: chunk ", mismarked$name[i], " file input `", mismarked$input[i], "` doesn't appear to be a file")
+  }
+  nrow(mismarked)
+}
+
+#' warn_datachunk_bypass
+#'
+#' Check whether chunks are bypassing a data chunk
+#'
+#' @details Data chunks read one or more particular files that are quirky: typically, files that generate
+#' warnings or errors when read using the default \code{\link{get_data}} routine, but also ones that need
+#' some special preprocessing. We look for chunks that read a file
+#' @return Number of data chunk objects being read directly.
+warn_datachunk_bypass <- function() {
+
+  from_file <- input <- NULL  # silence package check
+
+  ci <- chunk_inputs()
+  co <- chunk_outputs()
+  ci %>%
+    filter(from_file,
+           basename(input) %in% co$output) %>%
+    mutate(baseinput = basename(input)) %>%
+    # The only time that chunks should be asking for a file whose name appears as another
+    # chunk's outputs is if it's ALSO an output of that chunk--this will be a prebuilt dataset
+    anti_join(co, c("name", "baseinput" = "output")) ->
+    bypassing
+
+  # Print messages
+  for(i in seq_len(nrow(bypassing))) {
+    message("NOTE: chunk ", bypassing$name[i], " reads `", bypassing$input[i], "` but this is handled by a data chunk")
+  }
+  nrow(bypassing)
 }

@@ -26,7 +26,6 @@ module_socioeconomics_L100.GDP_hist <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    #printlog( "Historical GDP downscaled to modern country" )
     usda_gdp_mer <- get_data(all_data, "socioeconomics/USDA_GDP_MER")
     assert_that(tibble::is.tibble(usda_gdp_mer))
 
@@ -41,14 +40,13 @@ module_socioeconomics_L100.GDP_hist <- function(command, ...) {
       select(-Country) %>%
       gather(year, value, -iso) %>%
       mutate(year = as.numeric(year)) %>%
-      filter(year %in% HISTORICAL_YEARS, !is.na(value), !is.na(iso)) %>%
+      filter(!is.na(value), !is.na(iso)) %>%
       mutate(value = value * CONV_BIL_MIL * gdp_deflator(1990, base_year = 2010),
              year = as.integer(year)) %>%
       add_title("Historical GDP downscaled to country (iso)") %>%
-      add_comments("Filtered to historical years, units converted") %>%
+      add_comments("Units converted to constant 1990 USD") %>%
       add_precursors("socioeconomics/USDA_GDP_MER") %>%
       add_units("Million 1990 USD") %>%
-      # flag that this dataset is in different form from original
       add_legacy_name("L100.gdp_mil90usd_ctry_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L100.gdp_mil90usd_ctry_Yh
@@ -58,6 +56,3 @@ module_socioeconomics_L100.GDP_hist <- function(command, ...) {
     stop("Unknown command")
   }
 }
-
-
-

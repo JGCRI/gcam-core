@@ -19,11 +19,12 @@ ATTR_REFERENCE <- "reference"
 #'
 #' @param x An object
 #' @param title Title of object (character)
+#' @param overwrite Allow overwrite of title? Logical
 #' @return \code{x} with units appended to any existing comments.
-add_title <- function(x, title) {
+add_title <- function(x, title, overwrite = FALSE) {
   assertthat::assert_that(is.character(title) | is.null(title))
 
-  if(!is.null(attr(x, ATTR_TITLE))) {
+  if(!overwrite && !is.null(attr(x, ATTR_TITLE))) {
     stop("Not allowed to overwrite current title '", attr(x, ATTR_TITLE), "'")
   }
   attr(x, ATTR_TITLE) <- title
@@ -191,11 +192,15 @@ get_reference <- function(x) { attr(x, ATTR_REFERENCE) }
 #' a \code{NULL} is returned.
 get_data <- function(all_data, name) {
   assertthat::assert_that(is_data_list(all_data))
+
   if(is.null(all_data[[name]])) {
     stop("Data system: couldn't find ", name)
   }
 
-  if(isTRUE(is.na(all_data[[name]]))) {
+  # If a chunk's output is missing, it returns a tibble with all NA values
+  # In this case we don't want to copy it to main data list, so that subsequent
+  # chunks an easily check for its status via is.null()
+  if(all(is.na(all_data[[name]]))) {
     return(NULL)
   }
   all_data[[name]]
@@ -261,7 +266,27 @@ add_data <- function(data_list, all_data) {
   assert_that(is_data_list(all_data))
 
   for(d in names(data_list)) {
-    all_data[[d]] <- data_list[[d]]
+      all_data[[d]] <- data_list[[d]]
+  }
+  all_data
+}
+
+
+#' remove_data
+#'
+#' Remove \code{data_list} from an existing data store.
+#'
+#' @param data_list A character vector of object names
+#' @param all_data An existing (possibly empty) data store
+#' @importFrom assertthat assert_that
+#' @return The modified data store.
+remove_data <- function(data_list, all_data) {
+  assert_that(is.character(data_list) | is.null(data_list))
+  assert_that(is_data_list(all_data))
+
+  for(d in data_list) {
+    assert_that(!is.null(all_data[[d]]))
+    all_data[[d]] <- NULL
   }
   all_data
 }

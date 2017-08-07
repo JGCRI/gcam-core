@@ -79,7 +79,7 @@ module_emissions_L123.bcoc_awb_R_S_T_Y <- function(command, ...) {
     filter(L121.AWBshare_R_C_Y_GLU, year == "2000")  %>%
       select(-year) %>%
       # Add BC and OC emissions data
-      repeat_add_columns(tibble::tibble(Non.CO2 = c("BC_AWB","OC_AWB"))) %>%
+      repeat_add_columns(tibble::tibble(Non.CO2 = c("BC_AWB", "OC_AWB"))) %>%
       left_join_error_no_match(BCOC_AWB_2000, by = c("GCAM_region_ID", "Non.CO2")) %>%
       # Calculate AWB emissions by crop and GLU by sharing out regional total awb emissions
       # by the share for each individual GCAM technology

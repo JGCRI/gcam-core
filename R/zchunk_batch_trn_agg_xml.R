@@ -59,8 +59,8 @@ module_socio_batch_trn_agg_xml <- function(command, ...) {
       add_precursors("L252.IncomeElasticity_trn_gSSP2") ->
       trn_agg_gSSP2.xml
     create_xml("trn_agg_SSP3.xml") %>%
-      add_xml_data(L252.IncomeElasticity_trn_SSP3, "IncomeElasticity") %>%
-      add_precursors("L252.IncomeElasticity_trn_SSP3") ->
+      add_xml_data(L252.IncomeElasticity_trn_gSSP3, "IncomeElasticity") %>%
+      add_precursors("L252.IncomeElasticity_trn_gSSP3") ->
       trn_agg_gSSP3.xml
     create_xml("trn_agg_gSSP4.xml") %>%
       add_xml_data(L252.IncomeElasticity_trn_gSSP4, "IncomeElasticity") %>%

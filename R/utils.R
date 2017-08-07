@@ -61,8 +61,8 @@ load_csv_files <- function(filenames, optionals, quiet = FALSE, ...) {
 #' @param required Is this label required? (logical)
 #' @param multiline Can this label hold multi-line information? (logical)
 #' @details CSV files can have headers, commented lines of the form "# Title: xxxx",
-#' "# Source: xxxx", etc. Extract this information if present. This function is called
-#' by \code{\link{parse_csv_header}}.
+#' "# Source: xxxx", etc. Extract this information if present. Note that empty headers
+#' are not allowed. This function is called by \code{\link{parse_csv_header}}.
 #' @return Extracted label information, as a character vector
 extract_header_info <- function(header_lines, label, filename, required = FALSE, multiline = FALSE) {
 
@@ -98,7 +98,13 @@ extract_header_info <- function(header_lines, label, filename, required = FALSE,
     header_lines[label_line:comment_end] %>%
       gsub(label_regex, "", .) %>%
       gsub(paste0("^", COMMENT_CHAR), "", .) %>%
-      trimws
+      trimws ->
+      info
+
+    if(nchar(paste(info, collapse = "")) == 0) {
+      stop("Empty metadata label '", label, "' found in ", basename(filename))
+    }
+    return(info)
   } else {
     if(required) {
       stop("Required metadata label '", label, "' not found in ", basename(filename))
@@ -218,31 +224,35 @@ find_csv_file <- function(filename, optional, quiet = FALSE) {
 #' a lot bigger, owing to the large number of digits we have to write.
 #'
 #' @param chunkdata Named list of tibbles (data frames) to write
-#' @param write_inputs Write data that were read as inputs, not computed?
+#' @param write_inputs Write data that were read as inputs, not computed? Logical
+#' @param create_dirs Create directory if necessary, and delete contents? Logical
 #' @param outputs_dir Directory to save data into
 #' @param xml_dir Directory to save XML results into
 #' @importFrom assertthat assert_that
-save_chunkdata <- function(chunkdata, write_inputs = FALSE, outputs_dir =
-                             OUTPUTS_DIR, xml_dir = XML_DIR) {
+save_chunkdata <- function(chunkdata, write_inputs = FALSE, create_dirs = FALSE,
+                           outputs_dir = OUTPUTS_DIR, xml_dir = XML_DIR) {
   assert_that(is_data_list(chunkdata))
-  assert_that(!is.null(names(chunkdata)))
   assert_that(is.logical(write_inputs))
+  assert_that(is.logical(create_dirs))
   assert_that(is.character(outputs_dir))
 
   # Create directory if necessary, and remove any previous outputs
-  dir.create(outputs_dir, showWarnings = FALSE, recursive = TRUE)
-  unlink(file.path(outputs_dir, "*.csv"))
-  dir.create(xml_dir, showWarnings = FALSE, recursive = TRUE)
-  unlink(file.path(xml_dir, "*.xml"))
+  if(create_dirs) {
+    dir.create(outputs_dir, showWarnings = FALSE, recursive = TRUE)
+    unlink(file.path(outputs_dir, "*.csv"))
+    dir.create(xml_dir, showWarnings = FALSE, recursive = TRUE)
+    unlink(file.path(xml_dir, "*.xml"))
+  }
 
   for(cn in names(chunkdata)) {
-    cd <- chunkdata[[cn]]
+    cd <- get_data(chunkdata, cn)
+    if(is.null(cd)) next   # optional file that wasn't found
+
     if(FLAG_XML %in% get_flags(cd)) {
       # TODO: worry about absolute paths?
       cd$xml_file <- file.path(xml_dir, cd$xml_file)
       run_xml_conversion(cd)
-    } else if(!isTRUE(identical(NA, cd))) {   # NA means an optional file that wasn't found
-
+    } else {
       fqfn <- file.path(outputs_dir, paste0(cn, ".csv"))
       suppressWarnings(file.remove(fqfn))
 
@@ -370,6 +380,18 @@ chunk_inputs <- function(chunks = find_chunks()$name) {
 }
 
 
+#' inputs_of
+#'
+#' Convenience function for getting the inputs of one or more chunks
+#'
+#' @param chunks Names of chunks, character
+#' @return Character vector of inputs.
+#' @export
+inputs_of <- function(chunks) {
+  if(is.null(chunks) || chunks == "") return(NULL)
+  chunk_inputs(chunks)$input
+}
+
 #' chunk_outputs
 #'
 #' List all chunk outputs.
@@ -399,116 +421,17 @@ chunk_outputs <- function(chunks = find_chunks()$name) {
   dplyr::bind_rows(chunkoutputs)
 }
 
-#' create_xml
+#' outputs_of
 #'
-#' The basis to define how to convert data to an XML file.  This method
-#' simple requires the name to save the XML file as and optionally the
-#' model interface "header" file that defines the transformation lookup
-#' to go from tabular data to hierarchical.  The result of this should be
-#' used in a dplyr pipeline with one or more calls to \code{\link{add_xml_data}}
-#' to add the data to convert and finally ending with \code{\link{run_xml_conversion}}
-#' to run the conversion.
+#' Convenience function for getting the outputs of one or more chunks
 #'
-#' @param xml_file The name to save the XML file to
-#' @param mi_header The model interface "header".  This will default to the one
-#' included in this package
-#' @return A "data structure" to hold the various parts needed to run the model
-#' interface CSV to XML conversion.
+#' @param chunks Names of chunks, character
+#' @return Character vector of inputs.
 #' @export
-create_xml <- function(xml_file, mi_header = NULL) {
-  if(is.null(mi_header)) {
-    mi_header <- system.file("extdata/mi_headers", "ModelInterface_headers.txt",
-                             package = "gcamdata")
-  }
-
-  xml_obj <- list(xml_file = xml_file,
-                  mi_header = mi_header,
-                  data_tables = list())
-  xml_obj <- add_flags(xml_obj, FLAG_XML)
-
-  xml_obj
+outputs_of <- function(chunks) {
+  if(is.null(chunks) || chunks == "") return(NULL)
+  chunk_outputs(chunks)$output
 }
-
-#' add_xml_data
-#'
-#' Add a table to include for conversion to XML.  We need the tibble to convert
-#' and a header tag which can be looked up in the header file to convert the
-#' tibble.  This method is meant to be included in a pipeline between calls of
-#' \code{\link{create_xml}} and \code{\link{run_xml_conversion}}.
-#'
-#' @param dot The current state of the pipeline started from \code{create_xml}
-#' @param data The tibble of data to add to the conversion
-#' @param header The header tag to can be looked up in the header file to
-#' convert \code{data}
-#' @return A "data structure" to hold the various parts needed to run the model
-#' interface CSV to XML conversion.
-#' @author PP March 2017
-add_xml_data <- function(dot, data, header) {
-  curr_table <- list(data = data, header = header)
-  dot$data_tables[[length(dot$data_tables)+1]] <- curr_table
-
-  dot
-}
-
-# Note: we have put the definition of run_xml_conversion inside of the "closure"
-# make_run_xml_conversion so that we may stash the XML_WARNING_GIVEN flag in an
-# environment that can only be reached by run_xml_conversion.
-make_run_xml_conversion <- function() {
-  XML_WARNING_GIVEN <- FALSE
-  function(dot) {
-    use_java <- getOption("gcamdata.use_java")
-    if(!isTRUE(use_java) && !XML_WARNING_GIVEN) {
-      message("Skipping XML conversion as global option gcamdata.use_java is not TRUE")
-      # set the flag to avoid repeating the warning.
-      XML_WARNING_GIVEN <<- TRUE
-    } else if(isTRUE(use_java)) {
-      java_cp <- system.file("extdata/ModelInterface", "CSVToXML.jar",
-                             package = "gcamdata")
-      cmd <- c(
-        "java",
-        "-cp", java_cp,
-        "-Xmx1g", # TODO: memory limits?
-        "ModelInterface.ModelGUI2.csvconv.CSVToXMLMain",
-        "-", # Read from STDIN
-        dot$mi_header,
-        dot$xml_file
-      )
-      conv_pipe <- pipe(paste(cmd, collapse=" "), open = "w")
-      on.exit(close(conv_pipe))
-
-      for(i in seq_along(dot$data_tables)) {
-        table <- dot$data_tables[[i]]
-        cat("INPUT_TABLE", file = conv_pipe, sep = "\n")
-        cat("Variable ID", file = conv_pipe, sep = "\n")
-        cat(table$header, file = conv_pipe, sep = "\n")
-        cat("", file = conv_pipe, sep = "\n")
-        utils::write.table(table$data, file = conv_pipe, sep=",", row.names = FALSE, col.names = TRUE, quote = FALSE)
-        cat("", file = conv_pipe, sep = "\n")
-      }
-    }
-
-    dot
-  }
-}
-
-#' run_xml_conversion
-#'
-#' Run the CSV to XML conversion using the model interface tool.  This method
-#' should be the final call in a pipeline started with \code{\link{create_xml}}
-#' and one or more calls to \code{\link{add_xml_data}}.
-#'
-#' Not that this method relies on Java to run the conversion.  To avoid errors for
-#' users who do not have Java installed it will check the global option
-#' \code{gcamdata.use_java} before attempting to run the conversion.  If the flag
-#' is set to \code{FALSE} a warning will be issued and the conversion skipped.
-#' To enable the use of Java a user can set \code{options(gcamdata.use_java=TRUE)}
-#'
-#' @param dot The current state of the pipeline started from \code{create_xml}
-#' @return The argument passed in unmodified in case a user wanted run the
-#' conversion again at a later time.
-#' @author PP March 2017
-run_xml_conversion <- make_run_xml_conversion()
-
 
 #' screen_forbidden
 #'
@@ -525,7 +448,7 @@ run_xml_conversion <- make_run_xml_conversion()
 #' @author RL 19 Apr 2017
 #' @importFrom utils capture.output
 screen_forbidden <- function(fn) {
-  forbidden <- c("(?<!error_no_)match", "ifelse",
+  forbidden <- c("(?<!error_no_)match(?!es)", "ifelse",
                  "melt", "cast",
                  "rbind", "cbind", "merge",
                  "read\\.csv", "write\\.csv",

@@ -5,6 +5,11 @@ context("driver")
 test_that("catches bad input", {
   expect_error(driver(1, 1))
   expect_error(driver("1", 1))
+  expect_error(driver(return_inputs_of = 1))
+  expect_error(driver(return_outputs_of = 1))
+  expect_error(driver(return_data_names = 1))
+  expect_error(driver(write_outputs = 1))
+  expect_error(driver(quiet = 1))
 })
 
 # The following code is written using the `mockr` package, currently only
@@ -111,6 +116,11 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
       add_legacy_name("legacy") %>% add_comments("comments") -> o1
     expect_error(check_chunk_outputs("c1", return_data(o1), "i1", po, FALSE))
 
+    # An input that doesn't appear in any precursors
+    tibble() %>% add_title("o1") %>% add_units("units") %>%
+      add_legacy_name("legacy") %>% add_comments("comments") %>% add_precursors("i2") -> o1
+    expect_message(check_chunk_outputs("c1", return_data(o1), c("i1", "i2"), po, FALSE))
+
     # Recursive precursor
     tibble() %>% add_title("o1") %>% add_units("units") %>%
       add_legacy_name("legacy") %>% add_comments("comments") %>% add_precursors("o1") -> o1
@@ -189,4 +199,49 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
     )
   })
 
+  test_that("warn_datachunk_bypass works", {
+    # No chunks bypassing data chunk
+    with_mock(
+      find_chunks = function(...) tibble(name = c("A", "B", "C")),
+      chunk_inputs = function(...) tibble(name = c("A", "B", "C"),
+                                          input = c("Ai", "Ao", "Bo"),
+                                          from_file = c(TRUE, FALSE, FALSE)),
+      chunk_outputs = function(...) tibble(name = c("A", "B", "C"),
+                                           output = c("Ao", "Bo", "Co")),
+      expect_silent(warn_datachunk_bypass()),
+      expect_equal(warn_datachunk_bypass(), 0)
+    )
+
+    # Chunk bypassing a data chunk
+    with_mock(
+      find_chunks = function(...) tibble(name = c("dcA", "B", "C")),
+      chunk_inputs = function(...) tibble(name = c("B", "C"),
+                                          input = c("inst/extdata/Ao", "Bo"),
+                                          from_file = c(TRUE, FALSE)),
+      chunk_outputs = function(...) tibble(name = c("dcA", "B", "C"),
+                                           output = c("Ao", "Bo", "Co")),
+      expect_message(warn_datachunk_bypass()),
+      expect_equal(warn_datachunk_bypass(), 1)
+    )
+  })
+
+  test_that("warn_mismarked_fileinputs works", {
+    # No chunks mismarking inputs
+    with_mock(
+      chunk_inputs = function(...) tibble(name = c("A", "B", "C"),
+                                          input = c("inst/extdata/Ai", "Ao", "Bo"),
+                                          from_file = c(TRUE, FALSE, FALSE)),
+      expect_silent(warn_mismarked_fileinputs()),
+      expect_equal(warn_mismarked_fileinputs(), 0)
+    )
+
+    # Chunk mismarking an input as from_file, when it's not
+    with_mock(
+      chunk_inputs = function(...) tibble(name = c("A", "B", "C"),
+                                          input = c("inst/extdata/Ai", "Ao", "Bo"),
+                                          from_file = c(TRUE, FALSE, TRUE)),
+      expect_message(warn_mismarked_fileinputs()),
+      expect_equal(warn_mismarked_fileinputs(), 1)
+    )
+  })
 }

@@ -17,7 +17,7 @@ module_energy_LA123.electricity <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "energy/enduse_fuel_aggregation",
              FILE = "energy/A23.chp_elecratio",
-             FILE = "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh"))
+             "L1011.en_bal_EJ_R_Si_Fi_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L123.out_EJ_R_elec_F_Yh",
              "L123.in_EJ_R_elec_F_Yh",
@@ -35,10 +35,8 @@ module_energy_LA123.electricity <- function(command, ...) {
     # Load required inputs
     enduse_fuel_aggregation <- get_data(all_data, "energy/enduse_fuel_aggregation")
     A23.chp_elecratio <- get_data(all_data, "energy/A23.chp_elecratio")
-    get_data(all_data, "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh") %>%
-      gather(year, value, -GCAM_region_ID, -fuel, -sector) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) ->
-      L1011.en_bal_EJ_R_Si_Fi_Yh
+    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
+
 
     # ===================================================
 
@@ -154,13 +152,14 @@ module_energy_LA123.electricity <- function(command, ...) {
       select(-outputs_ratio) ->
       L123.in_EJ_R_indchp_F_Yh
 
-    # Save results and write CSV files
+    # Save results
     L123.out_EJ_R_elec_F_Yh %>%
       add_title("Outputs of electricity sector by GCAM region / fuel / historical year") %>%
       add_units("EJ") %>%
       add_comments("Written by LA123.electricity.R") %>%
       add_legacy_name("L123.out_EJ_R_elec_F_Yh") %>%
-      add_precursors("energy/enduse_fuel_aggregation", "energy/A23.chp_elecratio") %>%
+      add_precursors("L1011.en_bal_EJ_R_Si_Fi_Yh",
+                     "energy/enduse_fuel_aggregation", "energy/A23.chp_elecratio") %>%
       add_flags(FLAG_NO_XYEAR, FLAG_LONG_YEAR_FORM) ->
       L123.out_EJ_R_elec_F_Yh
 
@@ -169,7 +168,8 @@ module_energy_LA123.electricity <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Written by LA123.electricity.R") %>%
       add_legacy_name("L123.in_EJ_R_elec_F_Yh") %>%
-      add_precursors("energy/enduse_fuel_aggregation", "energy/A23.chp_elecratio") %>%
+      add_precursors("L1011.en_bal_EJ_R_Si_Fi_Yh",
+                     "energy/enduse_fuel_aggregation", "energy/A23.chp_elecratio") %>%
       add_flags(FLAG_NO_XYEAR, FLAG_LONG_YEAR_FORM) ->
       L123.in_EJ_R_elec_F_Yh
 
@@ -178,7 +178,8 @@ module_energy_LA123.electricity <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Written by LA123.electricity.R") %>%
       add_legacy_name("L123.eff_R_elec_F_Yh") %>%
-      add_precursors("energy/enduse_fuel_aggregation", "energy/A23.chp_elecratio") %>%
+      add_precursors("L1011.en_bal_EJ_R_Si_Fi_Yh",
+                     "energy/enduse_fuel_aggregation", "energy/A23.chp_elecratio") %>%
       add_flags(FLAG_NO_XYEAR, FLAG_LONG_YEAR_FORM) ->
       L123.eff_R_elec_F_Yh
 
@@ -187,7 +188,8 @@ module_energy_LA123.electricity <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Written by LA123.electricity.R") %>%
       add_legacy_name("L123.out_EJ_R_indchp_F_Yh") %>%
-      add_precursors("energy/enduse_fuel_aggregation", "energy/A23.chp_elecratio") %>%
+      add_precursors("L1011.en_bal_EJ_R_Si_Fi_Yh",
+                     "energy/enduse_fuel_aggregation", "energy/A23.chp_elecratio") %>%
       add_flags(FLAG_NO_XYEAR, FLAG_LONG_YEAR_FORM) ->
       L123.out_EJ_R_indchp_F_Yh
 
@@ -196,7 +198,8 @@ module_energy_LA123.electricity <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Written by LA123.electricity.R") %>%
       add_legacy_name("L123.in_EJ_R_indchp_F_Yh") %>%
-      add_precursors("energy/enduse_fuel_aggregation", "energy/A23.chp_elecratio") %>%
+      add_precursors("L1011.en_bal_EJ_R_Si_Fi_Yh",
+                     "energy/enduse_fuel_aggregation", "energy/A23.chp_elecratio") %>%
       add_flags(FLAG_NO_XYEAR, FLAG_LONG_YEAR_FORM) ->
       L123.in_EJ_R_indchp_F_Yh
 

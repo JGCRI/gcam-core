@@ -1,15 +1,19 @@
-# Sample .travis.yml for R projects
+# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
 language: r
+sudo: false
 warnings_are_errors: true
-#sudo: required
 cache: packages
 
 env:
   - GCAMDATA_USE_JAVA=TRUE
 
-r_github_packages:
-  - jimhester/covr
-  - krlmlr/mockr
-after_success:
-  - Rscript -e 'library(covr);codecov(function_exclusions = "atest")'
+#r_github_packages:
+#  - jimhester/covr
+
+script:
+  - R CMD build .
+  - travis_wait 30 R CMD check *.tar.gz
+
+#after_success:
+#  - travis_wait 30 Rscript coverage.R

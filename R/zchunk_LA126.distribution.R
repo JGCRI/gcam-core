@@ -21,7 +21,7 @@
 #' @author AS May 2017
 module_energy_LA126.distribution <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh",
+    return(c("L1011.en_bal_EJ_R_Si_Fi_Yh",
              "L122.out_EJ_R_gasproc_F_Yh",
              "L123.out_EJ_R_elec_F_Yh",
              "L123.out_EJ_R_indchp_F_Yh"))
@@ -48,11 +48,7 @@ module_energy_LA126.distribution <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    get_data(all_data, "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh") %>%
-      gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) ->
-      L1011.en_bal_EJ_R_Si_Fi_Yh
-
+    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
     L122.out_EJ_R_gasproc_F_Yh <- get_data(all_data, "L122.out_EJ_R_gasproc_F_Yh")
     L123.out_EJ_R_elec_F_Yh <- get_data(all_data, "L123.out_EJ_R_elec_F_Yh")
     L123.out_EJ_R_indchp_F_Yh <- get_data(all_data, "L123.out_EJ_R_indchp_F_Yh")
@@ -162,7 +158,7 @@ module_energy_LA126.distribution <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Sum of electricty generation, including industrial CHP secondary input") %>%
       add_legacy_name("L126.in_EJ_R_elecownuse_F_Yh") %>%
-      add_precursors("temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "L123.out_EJ_R_elec_F_Yh", "L123.out_EJ_R_indchp_F_Yh") %>%
+      add_precursors("L1011.en_bal_EJ_R_Si_Fi_Yh", "L123.out_EJ_R_elec_F_Yh", "L123.out_EJ_R_indchp_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L126.in_EJ_R_elecownuse_F_Yh
 
@@ -171,7 +167,7 @@ module_energy_LA126.distribution <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Sum of electricty generation adjusted for onsite losses") %>%
       add_legacy_name("L126.out_EJ_R_elecownuse_F_Yh") %>%
-      add_precursors("temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "L123.out_EJ_R_elec_F_Yh", "L123.out_EJ_R_indchp_F_Yh") %>%
+      add_precursors("L1011.en_bal_EJ_R_Si_Fi_Yh", "L123.out_EJ_R_elec_F_Yh", "L123.out_EJ_R_indchp_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L126.out_EJ_R_elecownuse_F_Yh
 
@@ -180,7 +176,7 @@ module_energy_LA126.distribution <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Energy input divided by ouput") %>%
       add_legacy_name("L126.IO_R_elecownuse_F_Yh") %>%
-      add_precursors("temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "L123.out_EJ_R_elec_F_Yh", "L123.out_EJ_R_indchp_F_Yh") %>%
+      add_precursors("L1011.en_bal_EJ_R_Si_Fi_Yh", "L123.out_EJ_R_elec_F_Yh", "L123.out_EJ_R_indchp_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L126.IO_R_elecownuse_F_Yh
 
@@ -189,7 +185,7 @@ module_energy_LA126.distribution <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Sum of electricty generation adjusted for onsite losses") %>%
       add_legacy_name("L126.in_EJ_R_electd_F_Yh") %>%
-      add_precursors("temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "L123.out_EJ_R_elec_F_Yh", "L123.out_EJ_R_indchp_F_Yh") %>%
+      add_precursors("L1011.en_bal_EJ_R_Si_Fi_Yh", "L123.out_EJ_R_elec_F_Yh", "L123.out_EJ_R_indchp_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L126.in_EJ_R_electd_F_Yh
 
@@ -198,7 +194,7 @@ module_energy_LA126.distribution <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Sum of electricty generation adjusted for onsite, transmission, and distribution losses") %>%
       add_legacy_name("L126.out_EJ_R_electd_F_Yh") %>%
-      add_precursors("temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "L123.out_EJ_R_elec_F_Yh", "L123.out_EJ_R_indchp_F_Yh") %>%
+      add_precursors("L1011.en_bal_EJ_R_Si_Fi_Yh", "L123.out_EJ_R_elec_F_Yh", "L123.out_EJ_R_indchp_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L126.out_EJ_R_electd_F_Yh
 
@@ -207,7 +203,7 @@ module_energy_LA126.distribution <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Energy input divided by ouput") %>%
       add_legacy_name("L126.IO_R_electd_F_Yh") %>%
-      add_precursors("temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "L123.out_EJ_R_elec_F_Yh", "L123.out_EJ_R_indchp_F_Yh") %>%
+      add_precursors("L1011.en_bal_EJ_R_Si_Fi_Yh", "L123.out_EJ_R_elec_F_Yh", "L123.out_EJ_R_indchp_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L126.IO_R_electd_F_Yh
 
@@ -216,7 +212,7 @@ module_energy_LA126.distribution <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Energy input to gas pipeline") %>%
       add_legacy_name("L126.in_EJ_R_gaspipe_F_Yh") %>%
-      add_precursors("temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "L122.out_EJ_R_gasproc_F_Yh") %>%
+      add_precursors("L1011.en_bal_EJ_R_Si_Fi_Yh", "L122.out_EJ_R_gasproc_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L126.in_EJ_R_gaspipe_F_Yh
 
@@ -225,7 +221,7 @@ module_energy_LA126.distribution <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Energy output of gas pipeline, accounting for pipeline losses") %>%
       add_legacy_name("L126.out_EJ_R_gaspipe_F_Yh") %>%
-      add_precursors("temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "L122.out_EJ_R_gasproc_F_Yh") %>%
+      add_precursors("L1011.en_bal_EJ_R_Si_Fi_Yh", "L122.out_EJ_R_gasproc_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L126.out_EJ_R_gaspipe_F_Yh
 
@@ -234,7 +230,7 @@ module_energy_LA126.distribution <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Energy input divided by ouput") %>%
       add_legacy_name("L126.IO_R_gaspipe_F_Yh") %>%
-      add_precursors("temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "L122.out_EJ_R_gasproc_F_Yh") %>%
+      add_precursors("L1011.en_bal_EJ_R_Si_Fi_Yh", "L122.out_EJ_R_gasproc_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L126.IO_R_gaspipe_F_Yh
 
