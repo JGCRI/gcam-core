@@ -1,6 +1,6 @@
 #' module_emissions_L2112.ag_nonco2_IRR_MGMT
 #'
-#' Briefly describe what this chunk does.
+#' Disaggregates agricultural emissions the basis of production
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,12 +8,11 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{object}, \code{L2112.AWBEmissions}, \code{L2112.AGREmissions}. The corresponding file in the
 #' original data system was \code{L2112.ag_nonco2_IRR_MGMT.R} (emissions level2).
-#' @details Describe in detail what this chunk does.
+#' @details Disaggregates agricultural emissions the basis of production by scaling emissions by a technology factor
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
-#' @export
+#' @author KD July 2017
 module_emissions_L2112.ag_nonco2_IRR_MGMT <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L2111.AGREmissions",
@@ -22,12 +21,10 @@ module_emissions_L2112.ag_nonco2_IRR_MGMT <- function(command, ...) {
              "L2111.nonghg_max_reduction",
              "L2111.nonghg_steepness",
              "L2111.AWBEmissions",
-             "L211.AnEmissions",
-             "L211.AnNH3Emissions",
              FILE = "temp-data-inject/L2012.AgProduction_ag_irr_mgmt"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L2112.AWBEmissions",
-             "L2112.AGREmissions"))
+    return(c("L2112.AGRBio", "L2112.AWB_BCOC_EmissCoeff", "L2112.nonghg_max_reduction",
+             "L2112.nonghg_steepness", "L2112.AWBEmissions", "L2112.AGREmissions"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -40,12 +37,10 @@ module_emissions_L2112.ag_nonco2_IRR_MGMT <- function(command, ...) {
     L2111.nonghg_max_reduction <- get_data(all_data, "L2111.nonghg_max_reduction")
     L2111.nonghg_steepness <- get_data(all_data, "L2111.nonghg_steepness")
     L2012.AgProduction_ag_irr_mgmt <- get_data(all_data, "temp-data-inject/L2012.AgProduction_ag_irr_mgmt")
-    L211.AnEmissions <- get_data(all_data, "L211.AnEmissions")
-    L211.AnNH3Emissions <- get_data(all_data, "L211.AnNH3Emissions")
 
     # ===================================================
-    # For all of the animal emission tables add level information to the
-    # agricultral production technology column.
+    # For all of the animal emission tables add high and low
+    # management level.
 
     L2111.AGRBio %>%
       repeat_add_columns(tibble::tibble(level = c("hi", "lo"))) %>%
@@ -71,9 +66,9 @@ module_emissions_L2112.ag_nonco2_IRR_MGMT <- function(command, ...) {
     # For the tables whose emissions are read as quantities rather than rates,
     # disaggregate emissions on the basis of production.
 
-    # First calculate the total emissions for each reagion, supply sector, subsector,
+    # First calculate the total emissions for each region, supply sector, subsector,
     # technology level in the most recent model base year. This total will latter be
-    # used to  disaggregate emissions.
+    # used to  calculate share weights.
     L2012.AgProduction_ag_irr_mgmt %>%
       filter(year == max(BASE_YEARS)) %>%
       mutate(AgProductionTechnology_nolvl = gsub("_hi|_lo", "", AgProductionTechnology)) %>%
@@ -82,7 +77,7 @@ module_emissions_L2112.ag_nonco2_IRR_MGMT <- function(command, ...) {
       ungroup(.) ->
       L2112.AgProduction_ag_irr_nomgmt_aggergate
 
-    # Now subset the table of agricultral production for the most recent model base year
+    # Now subset the table of agricultural production for the most recent model base year
     # and format the data frame so that so that the AgProductionTechnology_level column
     # will match the column in the aggeregated data frame.
     L2012.AgProduction_ag_irr_mgmt %>%
@@ -91,8 +86,8 @@ module_emissions_L2112.ag_nonco2_IRR_MGMT <- function(command, ...) {
       mutate(AgProductionTechnology_nolvl = gsub("_hi|_lo", "", AgProductionTechnology_lvl)) ->
       L2112.AgProduction_ag
 
-    # Calcualte the share or the fraction of emissions for each region, sector, subsector,
-    # technology and level for the using the aggerated total emissions determined above.
+    # Calculate the share weights or the fraction of emissions for each region, sector, subsector,
+    # technology and level for the using the aggrated total emissions determined above.
     # Eventually these emission shares will be used as a factor to disaggregate the emissions input.
     L2112.AgProduction_ag %>%
       left_join_error_no_match(L2112.AgProduction_ag_irr_nomgmt_aggergate,
@@ -101,9 +96,9 @@ module_emissions_L2112.ag_nonco2_IRR_MGMT <- function(command, ...) {
       L2112.AgProduction_ag_share
 
 
-    # Combine non agricutal waste burning emissions and agricutural waste burning
-    # emissions into a single data frame. Add level information to production technology
-    # column.
+    # Combine non agricultural waste burning emissions and agricultural waste burning
+    # emissions into a single data frame. Add management level information to production
+    # technology column.
     L2111.AWBEmissions %>%
       bind_rows(L2111.AGREmissions) %>%
       repeat_add_columns(tibble::tibble(level = c("hi", "lo"))) %>%
@@ -111,8 +106,8 @@ module_emissions_L2112.ag_nonco2_IRR_MGMT <- function(command, ...) {
       L2112.awb_agr_emissions
 
     # Match the shares(fraction of emissions) to the data frames containing
-    # emissions quantities for the agirucltral water burning and agricultral
-    # non waste burnign emissions.
+    # emissions quantities for the agricultural water burning and agricultural
+    # non waste burning emissions.
     L2112.AgProduction_ag_share %>%
       select(-year, -AgSupplySubsector) %>%
       left_join(L2112.awb_agr_emissions, by = c("region", "AgSupplySector", "AgProductionTechnology_lvl")) ->
@@ -130,39 +125,69 @@ module_emissions_L2112.ag_nonco2_IRR_MGMT <- function(command, ...) {
              year, Non.CO2, input.emissions, level) ->
       L2112.awb_agr_emissions_disag
 
-    # The disaagregated agiruclutral waste burning emissions.
+    # The disaggregated agricultural waste burning emissions.
     L2112.awb_agr_emissions_disag %>%
-      filter(grepl( "AWB", Non.CO2 )) ->
+      filter(grepl("AWB", Non.CO2)) ->
       L2112.AWBEmissions
 
-    # The diagregated non agriculatal waste bruning emissions.
+    # The disaggregated non agricultural waste burning emissions.
     L2112.awb_agr_emissions_disag %>%
-      filter(!grepl( "AWB", Non.CO2 )) ->
+      filter(!grepl("AWB", Non.CO2)) ->
       L2112.AGREmissions
 
     # ===================================================
-
     # Produce outputs
+    L2112.AGRBio %>%
+      add_title("Bio N2O Coefficients by region, technology, and management level ") %>%
+      add_units("kg N2O per GJ bioenergy") %>%
+      add_comments("L211.AGRBio repeated by IRR and RFD technologies") %>%
+      add_legacy_name("L2112.AGRBio") %>%
+      add_precursors("L2111.AGRBio") ->
+      L2112.AGRBio
+
+    L2112.AWB_BCOC_EmissCoeff %>%
+      add_title("Agricultural Waste Burning BC/OC Emissions Coefficients by management") %>%
+      add_units("kt/Mt") %>%
+      add_comments("L2111.AWB_BCOC_EmissCoeff repeated high and low management") %>%
+      add_legacy_name("L2112.AWB_BCOC_EmissCoeff") %>%
+      add_precursors("L2111.AWB_BCOC_EmissCoeff") ->
+      L2112.AWB_BCOC_EmissCoeff
+
+    L2112.nonghg_max_reduction %>%
+      add_title("Non-GHG maximum emissions coefficient reduction by agricultural technology and management") %>%
+      add_units("Percent reduction from base-year emissions coefficient") %>%
+      add_comments("L2111.nonghg_max_reduction repeated by high and low management") %>%
+      add_legacy_name("L2112.nonghg_max_reduction") %>%
+      add_precursors("L2111.nonghg_max_reduction") ->
+      L2112.nonghg_max_reduction
+
+    L2112.nonghg_steepness %>%
+      add_title("Steepness of non-GHG emissions reduction for agricultural technologies") %>%
+      add_units("Unitless") %>%
+      add_comments("L2111.nonghg_steepness repeated by high and low management level") %>%
+      add_legacy_name("L2112.nonghg_steepness") %>%
+      add_precursors("L2111.nonghg_steepness") ->
+      L2112.nonghg_steepness
 
     L2112.AWBEmissions %>%
-      add_title("dafs") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Input table of agricultural waste burning emissions by production") %>%
+      add_units("Tg") %>%
+      add_comments("Production share weights are set for irrigated vs. rainfed, same for high and low management.") %>%
       add_legacy_name("L2112.AWBEmissions") %>%
       add_precursors("L2111.AWBEmissions", "temp-data-inject/L2012.AgProduction_ag_irr_mgmt") ->
       L2112.AWBEmissions
 
     L2112.AGREmissions %>%
-      add_title("fda") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Input table for the agricultural emissions by production") %>%
+      add_units("Tg") %>%
+      add_comments("Production share weights are set for irrigated vs. rainfed, same for high and low management.") %>%
       add_legacy_name("L2112.AGREmissions") %>%
       add_precursors("L2111.AGREmissions", "temp-data-inject/L2012.AgProduction_ag_irr_mgmt") ->
       L2112.AGREmissions
 
-    return_data(L2112.AWBEmissions, L2112.AGREmissions)
+    return_data(L2112.AGRBio, L2112.AWB_BCOC_EmissCoeff, L2112.nonghg_max_reduction, L2112.AWBEmissions,
+                L2112.nonghg_steepness, L2112.AGREmissions)
+
   } else {
     stop("Unknown command")
   }

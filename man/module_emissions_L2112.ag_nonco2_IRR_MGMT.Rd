@@ -18,11 +18,11 @@ the generated outputs: \code{object}, \code{L2112.AWBEmissions}, \code{L2112.AGR
 original data system was \code{L2112.ag_nonco2_IRR_MGMT.R} (emissions level2).
 }
 \description{
-Briefly describe what this chunk does.
+Disaggregates agricultural emissions the basis of production
 }
 \details{
-Describe in detail what this chunk does.
+Disaggregates agricultural emissions the basis of production by scaling emissions by a technology factor
 }
 \author{
-YourInitials CurrentMonthName 2017
+KD July 2017
 }
