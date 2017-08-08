@@ -22,7 +22,7 @@ Calculate historical fossil energy production and fossil resource supply curves.
 }
 \details{
 For historical fossil energy production, determine regional shares of production for each primary fuel,
-interpolate unconventional soil production to all historical years, deduct unconventional oil from total oil,
+interpolate unconventional oil production to all historical years, deduct unconventional oil from total oil,
 and include it in calibrated production table.
 For fossil resource supply curves, downscale GCAM3.0 supply curves to the country level (on the basis of
 resource production) and aggregate by the new GCAM regions, using crude oil production shares as a proxy

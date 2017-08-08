@@ -168,15 +168,27 @@ aglu.FOREST_HARVEST_INDEX <- 0.8
 # Forest Erosion Control in kg/m^2
 aglu.FOREST_EROSION_CTRL_KGM2 <- 0.2
 
-#Mill Erosion Control in kg/m^2
+# Mill Erosion Control in kg/m^2
 aglu.MILL_EROSION_CTRL_KGM2 <- 0
 
 # Wood energy content in GJ/kg
 aglu.WOOD_ENERGY_CONTENT_GJKG <- 0.0189
 
 # wood water content
+# Unitless (mass of water / total wood mass)
 aglu.WOOD_WATER_CONTENT <- 0.065
 
+# Min veg and soil carbon densities
+# kg C per m2
+aglu.MIN_VEG_CARBON_DENSITY  <- 0
+aglu.MIN_SOIL_CARBON_DENSITY <- 0
+
+# define top-level (zero) land nest logit exponent and logit type
+aglu.N0_LOGIT_EXP <- 0
+aglu.N0_LOGIT_TYPE <- NA
+
+
+# XML-related constants
 aglu.GLU_NDIGITS          <- 3    # number of digits in the geographic land unit identifier codes
 aglu.LT_GLU_DELIMITER     <-      # delimiter between the land use type name and GLU name. should be the same as the crop-glu delimiter
 aglu.CROP_GLU_DELIMITER   <- "_"  # delimiter between the crop name and GLU name
@@ -188,7 +200,10 @@ aglu.DIGITS_HARVEST_INDEX <- 2
 aglu.DIGITS_EROS_CTRL     <- 2
 aglu.DIGITS_RES_ENERGY    <- 4
 aglu.DIGITS_WATER_CONTENT <- 2
-
+aglu.DIGITS_LAND_VALUE    <- 0
+aglu.DIGITS_LAND_USE      <- 7
+aglu.DIGITS_C_DENSITY     <- 1
+aglu.DIGITS_MATUREAGE     <- 0
 
 # Energy constants ======================================================================
 
@@ -263,6 +278,7 @@ CONV_M3_BM3 <- 1e-09 # Cubic meters (m3) to billion cubic meters (bm3)
 CONV_MILLION_M3_KM3 <- 1e-03
 CONV_M2_ACR <- 0.0002471058
 CONV_HA_M2 <- 1e4 # ha to m2
+CONV_BM2_M2 <- 1e9
 
 
 # Driver constants ======================================================================
