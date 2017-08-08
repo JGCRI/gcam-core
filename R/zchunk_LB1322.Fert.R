@@ -217,10 +217,10 @@ module_energy_LB1322.Fert <- function(command, ...) {
       # general industrial sector, causing all industrial demands of natural gas to be for the ammonia industry.
       # Note that the quantities are added because one is negative.
       mutate(in_indenergy_netFert = replace(in_indenergy_netFert, in_indfeed_netFert < 0,
-                                            (in_indenergy_netFert + in_indfeed_netFert)[in_indfeed_netFert < 0])) %>%
+                                            round((in_indenergy_netFert + in_indfeed_netFert)[in_indfeed_netFert < 0], 10))) %>%
       mutate(in_indfeed_netFert = replace(in_indfeed_netFert, in_indfeed_netFert < 0, 0)) %>%
       mutate(in_indfeed_netFert = replace(in_indfeed_netFert, in_indenergy_netFert < 0,
-                                            (in_indfeed_netFert + in_indenergy_netFert)[in_indenergy_netFert < 0])) %>%
+                                            round((in_indfeed_netFert + in_indenergy_netFert)[in_indenergy_netFert < 0], 10))) %>%
       mutate(in_indenergy_netFert = replace(in_indenergy_netFert, in_indenergy_netFert < 0, 0)) %>%
       # Add column for sector, which will be "N fertilizer"
       mutate(sector = "N fertilizer") %>%
