@@ -6,7 +6,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{all_aglu_emissions_IRRMGMT.xml}. The corresponding file in the
+#' the generated outputs: \code{all_aglu_emissions_IRR_MGMT.xml}. The corresponding file in the
 #' original data system was \code{batch_all_aglu_emissions_IRR_MGMT.xml} (emissions XML).
 module_emissions_batch_all_aglu_emissions_IRR_MGMT.xml_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

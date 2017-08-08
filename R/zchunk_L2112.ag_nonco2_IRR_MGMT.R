@@ -1,6 +1,6 @@
 #' module_emissions_L2112.ag_nonco2_IRR_MGMT
 #'
-#' Disaggregates agricultural emissions the basis of production
+#' This chunk disaggregates non CO2 agricultral emissions by production technology
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -41,24 +41,23 @@ module_emissions_L2112.ag_nonco2_IRR_MGMT <- function(command, ...) {
     # ===================================================
     # For all of the animal emission tables add high and low
     # management level.
-
     L2111.AGRBio %>%
-      repeat_add_columns(tibble::tibble(level = c("hi", "lo"))) %>%
+      repeat_add_columns(tibble(level = c("hi", "lo"))) %>%
       unite(AgProductionTechnology, AgProductionTechnology, level, sep = "_") ->
       L2112.AGRBio
 
     L2111.AWB_BCOC_EmissCoeff %>%
-      repeat_add_columns(tibble::tibble(level = c("hi", "lo"))) %>%
+      repeat_add_columns(tibble(level = c("hi", "lo"))) %>%
       unite(AgProductionTechnology, AgProductionTechnology, level, sep = "_") ->
       L2112.AWB_BCOC_EmissCoeff
 
     L2111.nonghg_max_reduction %>%
-      repeat_add_columns(tibble::tibble(level = c("hi", "lo"))) %>%
+      repeat_add_columns(tibble(level = c("hi", "lo"))) %>%
       unite(AgProductionTechnology, AgProductionTechnology, level, sep = "_") ->
       L2112.nonghg_max_reduction
 
     L2111.nonghg_steepness %>%
-      repeat_add_columns(tibble::tibble(level = c("hi", "lo"))) %>%
+      repeat_add_columns(tibble(level = c("hi", "lo"))) %>%
       unite(AgProductionTechnology, AgProductionTechnology, level, sep = "_") ->
       L2112.nonghg_steepness
 
@@ -74,7 +73,7 @@ module_emissions_L2112.ag_nonco2_IRR_MGMT <- function(command, ...) {
       mutate(AgProductionTechnology_nolvl = gsub("_hi|_lo", "", AgProductionTechnology)) %>%
       group_by(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology_nolvl, year) %>%
       summarise(total = sum(calOutputValue)) %>%
-      ungroup(.) ->
+      ungroup() ->
       L2112.AgProduction_ag_irr_nomgmt_aggergate
 
     # Now subset the table of agricultural production for the most recent model base year
@@ -101,7 +100,7 @@ module_emissions_L2112.ag_nonco2_IRR_MGMT <- function(command, ...) {
     # technology column.
     L2111.AWBEmissions %>%
       bind_rows(L2111.AGREmissions) %>%
-      repeat_add_columns(tibble::tibble(level = c("hi", "lo"))) %>%
+      repeat_add_columns(tibble(level = c("hi", "lo"))) %>%
       unite(AgProductionTechnology_lvl, AgProductionTechnology, level, sep = "_", remove = FALSE) ->
       L2112.awb_agr_emissions
 
@@ -119,7 +118,7 @@ module_emissions_L2112.ag_nonco2_IRR_MGMT <- function(command, ...) {
     # shares.
     L2112.awb_agr_emissions %>%
       mutate(share_tech = if_else(is.na(share_tech) & input.emissions > 1e-6, 0.5, share_tech)) %>%
-      mutate(share_tech = if_else(is.na(share_tech), 0, share_tech)) %>%
+      replace_na(list(share_tech = 0)) %>%
       mutate(input.emissions  = input.emissions * share_tech) %>%
       select(region, AgSupplySector, AgProductionTechnology = AgProductionTechnology_lvl, AgSupplySubsector,
              year, Non.CO2, input.emissions, level) ->
