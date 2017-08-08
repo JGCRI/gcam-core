@@ -162,6 +162,16 @@ module_aglu_L202.an_input <- function(command, ...) {
       write_to_all_regions(LEVEL2_DATA_NAMES[["UnlimitRsrcPrice"]], GCAM_region_names) ->
       L202.UnlimitedRenewRsrcPrice
 
+    # L202.Supplysector_in: generic supplysector info for inputs to animal production (114-122)
+    A_an_input_supplysector %>%
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], "logit.type")) ->
+      L202.Supplysector_in
+
+    # L202.SubsectorAll_in: generic subsector info for inputs to animal production technologies
+    A_an_input_subsector %>%
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorAll"]], "logit.type")) ->
+      L202.SubsectorAll_in
+
     # L202.StubTech_in: identification of stub technologies for inputs to animal production (124-140)
     A_an_input_technology %>%
       write_to_all_regions(LEVEL2_DATA_NAMES[["Tech"]], GCAM_region_names) %>%
@@ -212,12 +222,12 @@ module_aglu_L202.an_input <- function(command, ...) {
 
     # L202.Supplysector_an: generic animal production supplysector info (159-162)
     A_an_supplysector %>%
-      write_to_all_regions(LEVEL2_DATA_NAMES[["Supplysector"]]) ->
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], "logit.type")) ->
       L202.Supplysector_an
 
     # L202.SubsectorAll_an: generic animal production subsector info (164-167)
     A_an_subsector %>%
-      write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorAll"]]) ->
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorAll"]], "logit.type")) ->
       L202.SubsectorAll_an
 
     # L202.StubTech_an: identification of stub technologies for animal production (169-171)
@@ -225,6 +235,60 @@ module_aglu_L202.an_input <- function(command, ...) {
       write_to_all_regions(LEVEL2_DATA_NAMES[["Tech"]]) %>%
       rename(stub.technology = technology) ->
       L202.StubTech_an
+
+    # L202.StubTechInterp_an: shareweight interpolation for animal production technologies (173-175)
+    A_an_technology %>%
+      write_to_all_regions(LEVEL2_DATA_NAMES[["TechInterp"]]) %>%
+      rename(stub.technology = technology) ->
+      L202.StubTechInterp_an
+
+    # L202.StubTechProd_an: animal production by technology and region (177-199)
+    A_an_input_technology %>%
+      write_to_all_regions(LEVEL2_DATA_NAMES[["Tech"]]) %>%
+      mutate(stub.technology = technology) %>%
+      repeat_add_columns(year, BASE_YEARS) %>%
+      left_join_error_no_match(L202.an_Prod_Mt_R_C_Sys_Fd_Y.melt,
+                               by = c("region", "supplysector" = "GCAM_commodity",
+                                      "subsector" = "system", "technology" = "feed",
+                                      "year")) %>%
+      mutate(OutputValue = round(value, aglu.DIGITS_CALOUTPUT)) %>%
+      # subsector and technology shareweights (subsector requires the year as well)
+      mutate(share.weight.year = year,
+             subs.share.weight = if_else(calOutputValue > 0, 1, 0),
+             tech.share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["StubTechProd"]])) ->
+      L202.StubTechProd_an
+
+    # Some subsectors have multiple technologies, so shareweights should be derived from aggregation
+    L202.StubTechProd_an %>%
+      group_by(region, supplysector, subsector, year) %>%
+      summarise(calOutputValue = sum(calOutputValue)) %>%
+      ungroup %>%
+      mutate(subs.share.weight = if_else(calOutputValue > 0, 1, 0)) ->
+      L202.an_subs_sw
+
+    # Override the share weights in the production table
+    L202.StubTechProd_an %>%
+      left_join(L202.an_subs_sw, by = c("region", "supplysector", "subsector", "year")) ->
+      L202.StubTechProd_an
+
+    # L202.StubTechCoef_an: animal production input-output coefficients by technology and region (201-214)
+    A_an_input_technology %>%
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Tech"]], "minicam.energy.input", "market.name")) %>%
+      mutate(stub.technology = technology) %>%
+      repeat_add_columns(year, c(BASE_YEARS, FUTURE_YEARS)) %>%
+      left_join_error_no_match(L202.an_FeedIO_R_C_Sys_Fd_Y.melt,
+                               by = c("region", "supplysector" = "GCAM_commodity",
+                                      "subsector" = "system", "minicam.energy.input" = "feed",
+                                      "year")) %>%
+      mutate(OutputValue = round(value, aglu.DIGITS_CALOUTPUT)) %>%
+      # for values beyond the coefficient time series, use the final available year
+      replace(coefficient, year > max(L202.an_FeedIO_R_C_Sys_Fd_Y.melt$year), coefficient[year == max(L202.an_FeedIO_R_C_Sys_Fd_Y.melt$year)]) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["StubTechCoef"]])) ->
+      L202.StubTechCoef_an
+
+    # Supplemental calculation of non-input cost of animal production (216-)
+
 
 
     # Produce outputs
