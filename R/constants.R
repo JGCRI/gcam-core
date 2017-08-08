@@ -293,6 +293,7 @@ driver.DECLARE_INPUTS <- "DECLARE_INPUTS"
 # MAGICC model assumptions
 modeltime.MAGICC_LAST_HISTORICAL_YEAR <- 2005
 modeltime.MAGICC_BC_UNIT_FORCING <- 0
+modeltime.MAGICC_DEFAULT_EMISS_FILE <- "../input/magicc/Historical Emissions/Default Emissions Module/Hist_to_2008_Annual.csv"
 modeltime.MAGICC_C_START_YEAR <- 1705
 
 # Hector model assumptions

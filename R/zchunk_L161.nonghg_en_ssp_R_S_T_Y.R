@@ -40,7 +40,7 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
       min_SLE_2030_strong_reg <- policy <- prev <- region_grouping <- scaler <-
       scenario <- stub.technology <- subsector <- supplysector <- value <-
       variable <- varyear <- varyearpol <- year <- marker_value <- min_value <-
-      min_value <- multiplier <- . <- NULL
+      min_value <- multiplier <- . <- `2000` <- NULL  # silence package check notes
 
     all_data <- list(...)[[1]]
 
@@ -105,7 +105,7 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
     GAINS_emfact_scaler <- GAINS_emfact %>%
       group_by(TIMER_REGION, agg_sector, POLL, scenario) %>%
       # Create column of previous time period value
-      mutate(prev = lag(emfact, n = 1L, order = IDYEARS)) %>%
+      mutate(prev = lag(emfact, n = 1L, order_by = IDYEARS)) %>%
       ungroup() %>%
       filter(IDYEARS > emissions.GAINS_BASE_YEAR) %>%
       # Divide current value by previous value, not allowing value greater than 1 (emissions factors cannot increase with time)
