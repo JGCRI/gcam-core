@@ -29,6 +29,10 @@ module_emissions_L2112.ag_nonco2_IRR_MGMT <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    AgProductionTechnology <- level <- year <- region <- AgSupplySector <- AgSupplySubsector <-
+      AgProductionTechnology_nolvl <- calOutputValue <- AgProductionTechnology_lvl <- total <-
+      share_tech <- input.emissions <- Non.CO2 <- NULL  # silence package check notes
+
     # Load required inputs
     L2111.AWBEmissions <- get_data(all_data, "L2111.AWBEmissions")
     L2111.AGREmissions <- get_data(all_data, "L2111.AGREmissions")

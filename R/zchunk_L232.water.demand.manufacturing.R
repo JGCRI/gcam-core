@@ -25,6 +25,9 @@ module_water_L232.water.demand.manufacturing <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    water_sector <- water_type <- region <- supplysector <- subsector <- technology <-
+      year <- minicam.energy.input <- coefficient <- market.name <- NULL  # silence package check notes
+
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A03.sector <- get_data(all_data, "water/A03.sector")
