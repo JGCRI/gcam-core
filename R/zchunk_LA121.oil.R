@@ -27,7 +27,7 @@ module_energy_LA121.oil <- function(command, ...) {
              FILE = "energy/prebuilt_data/L121.in_EJ_R_TPES_crude_Yh",
              FILE = "energy/prebuilt_data/L121.in_EJ_R_TPES_unoil_Yh",
              "L1011.en_bal_EJ_R_Si_Fi_Yh",
-             FILE = "temp-data-inject/L111.Prod_EJ_R_F_Yh"))
+             "L111.Prod_EJ_R_F_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L121.in_EJ_R_unoil_F_Yh",
              "L121.in_EJ_R_TPES_crude_Yh",
@@ -74,10 +74,7 @@ module_energy_LA121.oil <- function(command, ...) {
         gather(year, value, -iso, -FLOW, -PRODUCT) %>%
         mutate(year = as.integer(year)) -> L100.IEA_en_bal_ctry_hist
 
-      L111.Prod_EJ_R_F_Yh <- get_data(all_data, "temp-data-inject/L111.Prod_EJ_R_F_Yh")%>%
-        gather(year, value, -fuel, -sector, -GCAM_region_ID) %>%
-        mutate(year = sub("X", "", year)) %>%
-        mutate(year = as.integer(year)) -> L111.Prod_EJ_R_F_Yh
+      L111.Prod_EJ_R_F_Yh <- L111.Prod_EJ_R_F_Yh <- get_data(all_data, "L111.Prod_EJ_R_F_Yh")
 
       # ===================================================
 
@@ -180,7 +177,7 @@ module_energy_LA121.oil <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Inputs to unconventional oil production calculated by multiplying production data by IO coef") %>%
       add_legacy_name("L121.in_EJ_R_unoil_F_Yh") %>%
-      add_precursors("temp-data-inject/L111.Prod_EJ_R_F_Yh", "energy/A21.globaltech_coef",
+      add_precursors("L111.Prod_EJ_R_F_Yh", "energy/A21.globaltech_coef",
                      "energy/calibrated_techs",
                      "energy/prebuilt_data/L121.in_EJ_R_unoil_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
@@ -201,7 +198,8 @@ module_energy_LA121.oil <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Unconventional oil production shared out to GCAM regions") %>%
       add_legacy_name("L121.in_EJ_R_TPES_unoil_Yh") %>%
-      add_precursors("temp-data-inject/L111.Prod_EJ_R_F_Yh", "energy/A21.unoil_demandshares", "L100.IEA_en_bal_ctry_hist", "common/iso_GCAM_regID",
+      add_precursors("L111.Prod_EJ_R_F_Yh", "energy/A21.unoil_demandshares",
+                     "L100.IEA_en_bal_ctry_hist", "common/iso_GCAM_regID",
                      "energy/mappings/IEA_product_rsrc",
                      "energy/prebuilt_data/L121.in_EJ_R_TPES_unoil_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
