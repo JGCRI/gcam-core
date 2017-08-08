@@ -13,7 +13,6 @@
 #' @importFrom dplyr filter mutate select first
 #' @importFrom tidyr gather spread
 #' @author ST June 2017
-#' @export
 module_water_L2233.electricity_water <- function(command, ...) {
 
   # Read in 27 L223 file names
