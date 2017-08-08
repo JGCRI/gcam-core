@@ -128,7 +128,6 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
     if(is.null(L100.IEA_en_bal_ctry_hist)) {
       # Proprietary IEA energy data are not available, so used saved outputs
       get_data(all_data, "energy/prebuilt_data/L111.RsrcCurves_EJ_R_Ffos") %>%
-        add_precursors("energy/prebuilt_data/L111.RsrcCurves_EJ_R_Ffos") %>%
         add_comments("** PRE-BUILT; RAW IEA DATA NOT AVAILABLE **") ->
         L111.RsrcCurves_EJ_R_Ffos
     } else {
@@ -217,7 +216,8 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
       add_comments("Use crude oil production shares as a proxy for unconventional oil resources.") %>%
       add_legacy_name("L111.RsrcCurves_EJ_R_Ffos") %>%
       add_precursors("common/iso_GCAM_regID", "energy/A11.fos_curves",
-                     "energy/IEA_product_rsrc", "L100.IEA_en_bal_ctry_hist") ->
+                     "energy/IEA_product_rsrc", "L100.IEA_en_bal_ctry_hist",
+                     "energy/prebuilt_data/L111.RsrcCurves_EJ_R_Ffos") ->
       L111.RsrcCurves_EJ_R_Ffos
 
     return_data(L111.Prod_EJ_R_F_Yh, L111.RsrcCurves_EJ_R_Ffos)

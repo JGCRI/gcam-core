@@ -177,7 +177,7 @@ module_energy_LA121.oil <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Inputs to unconventional oil production calculated by multiplying production data by IO coef") %>%
       add_legacy_name("L121.in_EJ_R_unoil_F_Yh") %>%
-      add_precursors("temp-data-inject/L111.Prod_EJ_R_F_Yh", "energy/A21.globaltech_coef",
+      add_precursors("L111.Prod_EJ_R_F_Yh", "energy/A21.globaltech_coef",
                      "energy/calibrated_techs",
                      "energy/prebuilt_data/L121.in_EJ_R_unoil_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
@@ -198,7 +198,8 @@ module_energy_LA121.oil <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Unconventional oil production shared out to GCAM regions") %>%
       add_legacy_name("L121.in_EJ_R_TPES_unoil_Yh") %>%
-      add_precursors("temp-data-inject/L111.Prod_EJ_R_F_Yh", "energy/A21.unoil_demandshares", "L100.IEA_en_bal_ctry_hist", "common/iso_GCAM_regID",
+      add_precursors("L111.Prod_EJ_R_F_Yh", "energy/A21.unoil_demandshares",
+                     "L100.IEA_en_bal_ctry_hist", "common/iso_GCAM_regID",
                      "energy/mappings/IEA_product_rsrc",
                      "energy/prebuilt_data/L121.in_EJ_R_TPES_unoil_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
