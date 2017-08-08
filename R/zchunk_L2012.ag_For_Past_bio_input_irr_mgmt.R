@@ -88,7 +88,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       mutate(calPrice = replace(calPrice, AgSupplySector == "biomass", 1), # value irrelevant
              # For regional commodities, specify market names with region names
              market = replace(market, market == "regional", region[market == "regional"])) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["AgSupplySector"]])) %>%
+      select(one_of(c(LEVEL2_DATA_NAMES[["AgSupplySector"]], "logit.type"))) %>%
       # Remove any regions for which agriculture and land use are not modeled
       filter(!region %in% aglu.NO_AGLU_REGIONS) ->
       L2012.AgSupplySector
@@ -122,8 +122,9 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       mutate(AgSupplySubsector = paste(GCAM_commodity, GLU_name, sep = "_"),
              # We do not actually care about the logit here but we need a value to avoid errors
              logit.year.fillout = min(BASE_YEARS),
-             logit.exponent = -3) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["AgSupplySubsector"]])) ->
+             logit.exponent = -3,
+             logit.type = NA) %>%
+      select(one_of(c(LEVEL2_DATA_NAMES[["AgSupplySubsector"]], "logit.type"))) ->
       L2012.AgSupplySubsector
 
     # L2012.AgProduction_ag_irr_mgm: Agricultural commodities production by all technoligies

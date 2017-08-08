@@ -10,7 +10,8 @@
 #' original data system was \code{batch_ag_For_Past_bio_base_IRR_MGMT.xml.R} (aglu XML).
 module_aglu_batch_ag_For_Past_bio_base_IRR_MGMT.xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L2012.AgSupplySubsector",
+    return(c("L2012.AgSupplySector",
+             "L2012.AgSupplySubsector",
              "L2012.AgProduction_ag_irr_mgmt",
              "L2012.AgProduction_For",
              "L2012.AgProduction_Past",
@@ -23,6 +24,7 @@ module_aglu_batch_ag_For_Past_bio_base_IRR_MGMT.xml <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
+    L2012.AgSupplySector <- get_data(all_data, "L2012.AgSupplySector")
     L2012.AgSupplySubsector <- get_data(all_data, "L2012.AgSupplySubsector")
     L2012.AgProduction_ag_irr_mgmt <- get_data(all_data, "L2012.AgProduction_ag_irr_mgmt")
     L2012.AgProduction_For <- get_data(all_data, "L2012.AgProduction_For")
@@ -34,7 +36,8 @@ module_aglu_batch_ag_For_Past_bio_base_IRR_MGMT.xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("ag_For_Past_bio_base_IRR_MGMT.xml") %>%
-      add_xml_data(L2012.AgSupplySubsector,"AgSupplySubsector") %>%
+      add_logit_tables_xml(L2012.AgSupplySector,"AgSupplySector") %>%
+      add_logit_tables_xml(L2012.AgSupplySubsector,"AgSupplySubsector") %>%
       add_xml_data(L2012.AgProduction_ag_irr_mgmt,"AgProduction") %>%
       add_xml_data(L2012.AgProduction_For,"AgProduction") %>%
       add_xml_data(L2012.AgProduction_Past,"AgProduction") %>%
