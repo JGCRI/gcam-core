@@ -1,6 +1,6 @@
 #' module_emissions_L2112.ag_nonco2_IRR_MGMT
 #'
-#' This chunk disaggregates non CO2 agricultral emissions by production technology
+#' Disaggregate non-CO2 agricultral emissions by production technology
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -39,8 +39,7 @@ module_emissions_L2112.ag_nonco2_IRR_MGMT <- function(command, ...) {
     L2012.AgProduction_ag_irr_mgmt <- get_data(all_data, "temp-data-inject/L2012.AgProduction_ag_irr_mgmt")
 
     # ===================================================
-    # For all of the animal emission tables add high and low
-    # management level.
+    # For all of the animal emission tables add high and low management level
     L2111.AGRBio %>%
       repeat_add_columns(tibble(level = c("hi", "lo"))) %>%
       unite(AgProductionTechnology, AgProductionTechnology, level, sep = "_") ->

@@ -18,7 +18,7 @@ the generated outputs: \code{object}, \code{L2112.AWBEmissions}, \code{L2112.AGR
 original data system was \code{L2112.ag_nonco2_IRR_MGMT.R} (emissions level2).
 }
 \description{
-Disaggregates agricultural emissions the basis of production
+Disaggregate non-CO2 agricultral emissions by production technology
 }
 \details{
 Disaggregates agricultural emissions the basis of production by scaling emissions by a technology factor
