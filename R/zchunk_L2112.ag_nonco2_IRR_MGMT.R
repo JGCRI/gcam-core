@@ -21,7 +21,7 @@ module_emissions_L2112.ag_nonco2_IRR_MGMT <- function(command, ...) {
              "L2111.nonghg_max_reduction",
              "L2111.nonghg_steepness",
              "L2111.AWBEmissions",
-             FILE = "temp-data-inject/L2012.AgProduction_ag_irr_mgmt"))
+             "L2012.AgProduction_ag_irr_mgmt"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2112.AGRBio", "L2112.AWB_BCOC_EmissCoeff", "L2112.nonghg_max_reduction",
              "L2112.nonghg_steepness", "L2112.AWBEmissions", "L2112.AGREmissions"))
@@ -36,7 +36,7 @@ module_emissions_L2112.ag_nonco2_IRR_MGMT <- function(command, ...) {
     L2111.AWB_BCOC_EmissCoeff <- get_data(all_data, "L2111.AWB_BCOC_EmissCoeff")
     L2111.nonghg_max_reduction <- get_data(all_data, "L2111.nonghg_max_reduction")
     L2111.nonghg_steepness <- get_data(all_data, "L2111.nonghg_steepness")
-    L2012.AgProduction_ag_irr_mgmt <- get_data(all_data, "temp-data-inject/L2012.AgProduction_ag_irr_mgmt")
+    L2012.AgProduction_ag_irr_mgmt <- get_data(all_data, "L2012.AgProduction_ag_irr_mgmt")
 
     # ===================================================
     # For all of the animal emission tables add high and low management level
@@ -172,7 +172,7 @@ module_emissions_L2112.ag_nonco2_IRR_MGMT <- function(command, ...) {
       add_units("Tg") %>%
       add_comments("Production share weights are set for irrigated vs. rainfed, same for high and low management.") %>%
       add_legacy_name("L2112.AWBEmissions") %>%
-      add_precursors("L2111.AWBEmissions", "temp-data-inject/L2012.AgProduction_ag_irr_mgmt") ->
+      add_precursors("L2111.AWBEmissions", "L2012.AgProduction_ag_irr_mgmt") ->
       L2112.AWBEmissions
 
     L2112.AGREmissions %>%
@@ -180,7 +180,7 @@ module_emissions_L2112.ag_nonco2_IRR_MGMT <- function(command, ...) {
       add_units("Tg") %>%
       add_comments("Production share weights are set for irrigated vs. rainfed, same for high and low management.") %>%
       add_legacy_name("L2112.AGREmissions") %>%
-      add_precursors("L2111.AGREmissions", "temp-data-inject/L2012.AgProduction_ag_irr_mgmt") ->
+      add_precursors("L2111.AGREmissions", "L2012.AgProduction_ag_irr_mgmt") ->
       L2112.AGREmissions
 
     return_data(L2112.AGRBio, L2112.AWB_BCOC_EmissCoeff, L2112.nonghg_max_reduction, L2112.AWBEmissions,
