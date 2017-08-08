@@ -287,8 +287,12 @@ replace_GLU <- function(d, map, GLU_pattern = "^GLU[0-9]{3}$") {
 #' @param carbon_info_table = table with veg and soil carbon densities, and mature.age
 #' @param matchvars =  a character vector for by = in left_join(data, carbon_info_table, by = ...)
 #' @return the original table with carbon density info added
-add_carbon_info <- function( data, carbon_info_table, matchvars = c( "region", "GLU", "Cdensity_LT" = "Land_Type" )){
-  if (!("region" %in% names(carbon_info_table))){
+add_carbon_info <- function( data, carbon_info_table, matchvars = c("region", "GLU", "Cdensity_LT" = "Land_Type")) {
+
+  GCAM_region_names <- veg_c <- soil_c <- hist.veg.carbon.density <- hist.soil.carbon.density <-
+    mature.age <- GCAM_region_ID <- NULL  # silence package check notes
+
+  if (!("region" %in% names(carbon_info_table))) {
     carbon_info_table %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
       carbon_info_table
@@ -306,10 +310,7 @@ add_carbon_info <- function( data, carbon_info_table, matchvars = c( "region", "
            soil.carbon.density = hist.soil.carbon.density,
            min.veg.carbon.density = aglu.MIN_VEG_CARBON_DENSITY,
            min.soil.carbon.density = aglu.MIN_SOIL_CARBON_DENSITY) %>%
-    select(-GCAM_region_ID) ->
-    data
-
-  return( data )
+    select(-GCAM_region_ID)
 }
 
 
@@ -325,7 +326,7 @@ add_carbon_info <- function( data, carbon_info_table, matchvars = c( "region", "
 #' @param year_filter An integer indicating which year to use (2010 by default)
 #' @return A character vector of region names belonging to the specified income group.
 get_ssp_regions <- function(pcGDP, reg_names, income_group,
-                             ssp_filter = "SSP4", year_filter = 2010) {
+                            ssp_filter = "SSP4", year_filter = 2010) {
   assert_that(is_tibble(pcGDP))
   assert_that(is_tibble(reg_names))
   assert_that(is.character(income_group))
