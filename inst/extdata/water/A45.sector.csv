@@ -1,0 +1,5 @@
+# File: A45.sector.csv
+# Title: Municipal water demand sector information (units and logit exponents)
+# Units: Unitless
+supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.type
+municipal water,km^3,km^3,1975$/m^3,0,

@@ -1,8 +1,8 @@
-# File: UCD_trn_data_CORE.csv,
-# Title: Core UCD transportation database,
-# Units: Various,
-# Description: UC Davis core transportation database,
-# Source: Mishra et al. 2013,
+# File: UCD_trn_data_CORE.csv
+# Title: Core UCD transportation database
+# Units: Various
+# Description: UC Davis core transportation database
+# Source: Mishra et al. 2013
 UCD_region,UCD_sector,mode,size.class,UCD_technology,UCD_fuel,variable,unit,2005,2020,2035,2050,2065,2080,2095
 Africa,Passenger,LDV_2W,Motorcycle (50-250cc),All,All,annual travel per vehicle,vkt/veh/yr,8478,8478,8478,8478,8478,8478,8478
 Africa,Passenger,LDV_3W,Three-Wheeler,All,All,annual travel per vehicle,vkt/veh/yr,8478,8478,8478,8478,8478,8478,8478
