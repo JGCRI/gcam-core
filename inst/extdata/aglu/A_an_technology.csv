@@ -1,1 +1,36 @@
-# File: A_an_technology.csv# Title: Technologies and inputs of animal production# Units: NA# Original source: NA# ----------supplysector,subsector,technology,apply.to,from.year,to.year,interpolation.function,minicam.energy.inputBeef,Mixed,FodderHerb_Residue,share-weight,final-calibration-year,end-year,fixed,FodderHerb_ResidueBeef,Mixed,Pasture_FodderGrass,share-weight,final-calibration-year,end-year,fixed,Pasture_FodderGrassBeef,Mixed,FeedCrops,share-weight,final-calibration-year,end-year,fixed,FeedCropsBeef,Mixed,Scavenging_Other,share-weight,final-calibration-year,end-year,fixed,Scavenging_OtherBeef,Pastoral,FodderHerb_Residue,share-weight,final-calibration-year,end-year,fixed,FodderHerb_ResidueBeef,Pastoral,Pasture_FodderGrass,share-weight,final-calibration-year,end-year,fixed,Pasture_FodderGrassBeef,Pastoral,FeedCrops,share-weight,final-calibration-year,end-year,fixed,FeedCropsBeef,Pastoral,Scavenging_Other,share-weight,final-calibration-year,end-year,fixed,Scavenging_OtherDairy,Mixed,FodderHerb_Residue,share-weight,final-calibration-year,end-year,fixed,FodderHerb_ResidueDairy,Mixed,Pasture_FodderGrass,share-weight,final-calibration-year,end-year,fixed,Pasture_FodderGrassDairy,Mixed,FeedCrops,share-weight,final-calibration-year,end-year,fixed,FeedCropsDairy,Mixed,Scavenging_Other,share-weight,final-calibration-year,end-year,fixed,Scavenging_OtherDairy,Pastoral,FodderHerb_Residue,share-weight,final-calibration-year,end-year,fixed,FodderHerb_ResidueDairy,Pastoral,Pasture_FodderGrass,share-weight,final-calibration-year,end-year,fixed,Pasture_FodderGrassDairy,Pastoral,FeedCrops,share-weight,final-calibration-year,end-year,fixed,FeedCropsDairy,Pastoral,Scavenging_Other,share-weight,final-calibration-year,end-year,fixed,Scavenging_OtherPork,Mixed,FodderHerb_Residue,share-weight,final-calibration-year,end-year,fixed,FodderHerb_ResiduePork,Mixed,Pasture_FodderGrass,share-weight,final-calibration-year,end-year,fixed,Pasture_FodderGrassPork,Mixed,FeedCrops,share-weight,final-calibration-year,end-year,fixed,FeedCropsPork,Mixed,Scavenging_Other,share-weight,final-calibration-year,end-year,fixed,Scavenging_OtherPoultry,Mixed,FodderHerb_Residue,share-weight,final-calibration-year,end-year,fixed,FodderHerb_ResiduePoultry,Mixed,Pasture_FodderGrass,share-weight,final-calibration-year,end-year,fixed,Pasture_FodderGrassPoultry,Mixed,FeedCrops,share-weight,final-calibration-year,end-year,fixed,FeedCropsPoultry,Mixed,Scavenging_Other,share-weight,final-calibration-year,end-year,fixed,Scavenging_OtherSheepGoat,Mixed,FodderHerb_Residue,share-weight,final-calibration-year,end-year,fixed,FodderHerb_ResidueSheepGoat,Mixed,Pasture_FodderGrass,share-weight,final-calibration-year,end-year,fixed,Pasture_FodderGrassSheepGoat,Mixed,FeedCrops,share-weight,final-calibration-year,end-year,fixed,FeedCropsSheepGoat,Mixed,Scavenging_Other,share-weight,final-calibration-year,end-year,fixed,Scavenging_OtherSheepGoat,Pastoral,FodderHerb_Residue,share-weight,final-calibration-year,end-year,fixed,FodderHerb_ResidueSheepGoat,Pastoral,Pasture_FodderGrass,share-weight,final-calibration-year,end-year,fixed,Pasture_FodderGrassSheepGoat,Pastoral,FeedCrops,share-weight,final-calibration-year,end-year,fixed,FeedCropsSheepGoat,Pastoral,Scavenging_Other,share-weight,final-calibration-year,end-year,fixed,Scavenging_Other
+# File: A_an_technology.csv
+# Title: Technologies and inputs of animal production
+# Units: NA
+supplysector,subsector,technology,apply.to,from.year,to.year,interpolation.function,minicam.energy.input
+Beef,Mixed,FodderHerb_Residue,share-weight,final-calibration-year,end-year,fixed,FodderHerb_Residue
+Beef,Mixed,Pasture_FodderGrass,share-weight,final-calibration-year,end-year,fixed,Pasture_FodderGrass
+Beef,Mixed,FeedCrops,share-weight,final-calibration-year,end-year,fixed,FeedCrops
+Beef,Mixed,Scavenging_Other,share-weight,final-calibration-year,end-year,fixed,Scavenging_Other
+Beef,Pastoral,FodderHerb_Residue,share-weight,final-calibration-year,end-year,fixed,FodderHerb_Residue
+Beef,Pastoral,Pasture_FodderGrass,share-weight,final-calibration-year,end-year,fixed,Pasture_FodderGrass
+Beef,Pastoral,FeedCrops,share-weight,final-calibration-year,end-year,fixed,FeedCrops
+Beef,Pastoral,Scavenging_Other,share-weight,final-calibration-year,end-year,fixed,Scavenging_Other
+Dairy,Mixed,FodderHerb_Residue,share-weight,final-calibration-year,end-year,fixed,FodderHerb_Residue
+Dairy,Mixed,Pasture_FodderGrass,share-weight,final-calibration-year,end-year,fixed,Pasture_FodderGrass
+Dairy,Mixed,FeedCrops,share-weight,final-calibration-year,end-year,fixed,FeedCrops
+Dairy,Mixed,Scavenging_Other,share-weight,final-calibration-year,end-year,fixed,Scavenging_Other
+Dairy,Pastoral,FodderHerb_Residue,share-weight,final-calibration-year,end-year,fixed,FodderHerb_Residue
+Dairy,Pastoral,Pasture_FodderGrass,share-weight,final-calibration-year,end-year,fixed,Pasture_FodderGrass
+Dairy,Pastoral,FeedCrops,share-weight,final-calibration-year,end-year,fixed,FeedCrops
+Dairy,Pastoral,Scavenging_Other,share-weight,final-calibration-year,end-year,fixed,Scavenging_Other
+Pork,Mixed,FodderHerb_Residue,share-weight,final-calibration-year,end-year,fixed,FodderHerb_Residue
+Pork,Mixed,Pasture_FodderGrass,share-weight,final-calibration-year,end-year,fixed,Pasture_FodderGrass
+Pork,Mixed,FeedCrops,share-weight,final-calibration-year,end-year,fixed,FeedCrops
+Pork,Mixed,Scavenging_Other,share-weight,final-calibration-year,end-year,fixed,Scavenging_Other
+Poultry,Mixed,FodderHerb_Residue,share-weight,final-calibration-year,end-year,fixed,FodderHerb_Residue
+Poultry,Mixed,Pasture_FodderGrass,share-weight,final-calibration-year,end-year,fixed,Pasture_FodderGrass
+Poultry,Mixed,FeedCrops,share-weight,final-calibration-year,end-year,fixed,FeedCrops
+Poultry,Mixed,Scavenging_Other,share-weight,final-calibration-year,end-year,fixed,Scavenging_Other
+SheepGoat,Mixed,FodderHerb_Residue,share-weight,final-calibration-year,end-year,fixed,FodderHerb_Residue
+SheepGoat,Mixed,Pasture_FodderGrass,share-weight,final-calibration-year,end-year,fixed,Pasture_FodderGrass
+SheepGoat,Mixed,FeedCrops,share-weight,final-calibration-year,end-year,fixed,FeedCrops
+SheepGoat,Mixed,Scavenging_Other,share-weight,final-calibration-year,end-year,fixed,Scavenging_Other
+SheepGoat,Pastoral,FodderHerb_Residue,share-weight,final-calibration-year,end-year,fixed,FodderHerb_Residue
+SheepGoat,Pastoral,Pasture_FodderGrass,share-weight,final-calibration-year,end-year,fixed,Pasture_FodderGrass
+SheepGoat,Pastoral,FeedCrops,share-weight,final-calibration-year,end-year,fixed,FeedCrops
+SheepGoat,Pastoral,Scavenging_Other,share-weight,final-calibration-year,end-year,fixed,Scavenging_Other

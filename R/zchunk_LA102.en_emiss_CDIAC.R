@@ -23,7 +23,7 @@ module_energy_LA102.en_emiss_CDIAC <- function(command, ...) {
              FILE = "emissions/mappings/CDIAC_fuel",
              FILE = "energy/A32.nonenergy_Cseq",
              "L100.CDIAC_CO2_ctry_hist",
-             FILE = "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh"))
+             "L1011.en_bal_EJ_R_Si_Fi_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L102.CO2_Mt_R_F_Yh",
              "L102.Ccoef_kgCGJ_R_F_Yh",
@@ -41,11 +41,8 @@ module_energy_LA102.en_emiss_CDIAC <- function(command, ...) {
     CDIAC_fuel <- get_data(all_data, "emissions/mappings/CDIAC_fuel")
     A32.nonenergy_Cseq <- get_data(all_data, "energy/A32.nonenergy_Cseq")
     L100.CDIAC_CO2_ctry_hist <- get_data(all_data, "L100.CDIAC_CO2_ctry_hist")
-    get_data(all_data, "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh") %>%
-      # The following two lines of code will be removed later, when we're using 'real' data
-      gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%   # reshape
-      mutate(year = as.integer(substr(year, 2, 5))) ->   # change Xyear to year
-      L1011.en_bal_EJ_R_Si_Fi_Yh
+    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
+
 
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
@@ -90,6 +87,9 @@ module_energy_LA102.en_emiss_CDIAC <- function(command, ...) {
     DEFAULT_GAS_CCOEF <- 14.2
     DEFAULT_COAL_CCOEF <- 27.3
     DEFAULT_LIQUIDS_CCOEF <- 19.6
+
+    L102.CO2_Mt_R_F_Yh %>%
+      filter(year %in% HISTORICAL_YEARS) -> L102.CO2_Mt_R_F_Yh
 
     # Calculate the regional emissions coefficients by fuel, using only the energy whose carbon is assumed to be emitted
     L102.CO2_Mt_R_F_Yh %>%
@@ -141,7 +141,7 @@ module_energy_LA102.en_emiss_CDIAC <- function(command, ...) {
       add_units("kgC/GJ") %>%
       add_comments("ratio of CDIAC carbon emissions to energy consumption") %>%
       add_legacy_name("L102.Ccoef_kgCGJ_R_F_Yh") %>%
-      add_precursors("L100.CDIAC_CO2_ctry_hist", "common/iso_GCAM_regID", "emissions/mappings/CDIAC_fuel", "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/A32.nonenergy_Cseq") %>%
+      add_precursors("L100.CDIAC_CO2_ctry_hist", "common/iso_GCAM_regID", "emissions/mappings/CDIAC_fuel", "L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/A32.nonenergy_Cseq") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L102.Ccoef_kgCGJ_R_F_Yh
 
@@ -150,7 +150,7 @@ module_energy_LA102.en_emiss_CDIAC <- function(command, ...) {
       add_units("kgC/GJ") %>%
       add_comments("aggregated regional data for CDIAC carbon emissions and energy balances to find global ratios") %>%
       add_legacy_name("L102.Ccoef_kgCGJ_F_Yh") %>%
-      add_precursors("L100.CDIAC_CO2_ctry_hist", "common/iso_GCAM_regID", "emissions/mappings/CDIAC_fuel", "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/A32.nonenergy_Cseq") %>%
+      add_precursors("L100.CDIAC_CO2_ctry_hist", "common/iso_GCAM_regID", "emissions/mappings/CDIAC_fuel", "L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/A32.nonenergy_Cseq") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L102.Ccoef_kgCGJ_F_Yh
 
