@@ -36,13 +36,13 @@ module_aglu_batch_ag_For_Past_bio_base_IRR_MGMT.xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("ag_For_Past_bio_base_IRR_MGMT.xml") %>%
-      add_logit_tables_xml(L2012.AgSupplySector,"AgSupplySector") %>%
-      add_logit_tables_xml(L2012.AgSupplySubsector,"AgSupplySubsector") %>%
-      add_xml_data(L2012.AgProduction_ag_irr_mgmt,"AgProduction") %>%
-      add_xml_data(L2012.AgProduction_For,"AgProduction") %>%
-      add_xml_data(L2012.AgProduction_Past,"AgProduction") %>%
-      add_xml_data(L2012.AgHAtoCL_irr_mgmt,"AgHAtoCL") %>%
-      add_xml_data(L2012.AgYield_bio_ref,"AgYield") %>%
+      add_logit_tables_xml(L2012.AgSupplySector, "AgSupplySector") %>%
+      add_logit_tables_xml(L2012.AgSupplySubsector, "AgSupplySubsector") %>%
+      add_xml_data(L2012.AgProduction_ag_irr_mgmt, "AgProduction") %>%
+      add_xml_data(L2012.AgProduction_For, "AgProduction") %>%
+      add_xml_data(L2012.AgProduction_Past, "AgProduction") %>%
+      add_xml_data(L2012.AgHAtoCL_irr_mgmt, "AgHAtoCL") %>%
+      add_xml_data(L2012.AgYield_bio_ref, "AgYield") %>%
       add_precursors("L2012.AgSupplySubsector", "L2012.AgProduction_ag_irr_mgmt", "L2012.AgProduction_For", "L2012.AgProduction_Past", "L2012.AgHAtoCL_irr_mgmt", "L2012.AgYield_bio_ref") ->
       ag_For_Past_bio_base_IRR_MGMT.xml
 
