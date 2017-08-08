@@ -62,10 +62,18 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     A31.subsector_logit <- get_data(all_data, "emissions/A31.subsector_logit")
     A31.subsector_shrwt <- get_data(all_data, "emissions/A31.subsector_shrwt")
     A31.subsector_interp <- get_data(all_data, "emissions/A31.subsector_interp")
-    A31.globaltech_shrwt <- get_data(all_data, "emissions/A31.globaltech_shrwt")
-    A31.globaltech_eff <- get_data(all_data, "emissions/A31.globaltech_eff")
-    A31.globaltech_cost <- get_data(all_data, "emissions/A31.globaltech_cost")
-    A31.globaltech_coef <- get_data(all_data, "emissions/A31.globaltech_coef")
+    A31.globaltech_shrwt <- get_data(all_data, "emissions/A31.globaltech_shrwt") %>%
+      gather(year, shareweight, matches(YEAR_PATTERN)) %>%
+      mutate(year = as.integer(year))
+    A31.globaltech_eff <- get_data(all_data, "emissions/A31.globaltech_eff") %>%
+      gather(year, shareweight, matches(YEAR_PATTERN)) %>%
+      mutate(year = as.integer(year))
+    A31.globaltech_cost <- get_data(all_data, "emissions/A31.globaltech_cost") %>%
+      gather(year, shareweight, matches(YEAR_PATTERN)) %>%
+      mutate(year = as.integer(year))
+    A31.globaltech_coef <- get_data(all_data, "emissions/A31.globaltech_coef") %>%
+      gather(year, shareweight, matches(YEAR_PATTERN)) %>%
+      mutate(year = as.integer(year))
     A32.globaltech_eff <- get_data(all_data, "energy/A32.globaltech_eff") %>%
       gather(year, value, matches(YEAR_PATTERN)) %>%
       mutate(year = as.integer(year))
@@ -74,12 +82,6 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     L1322.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L1322.in_EJ_R_indenergy_F_Yh")
 
     # ===================================================
-    L231.urban <- GCAM_sector_tech %>%
-      filter(sector == "urban processes")
-
-    L231.ind <- GCAM_sector_tech %>%
-      filter(sector == "industrial processes")
-
     # L231.FinalDemand_urb: Final demand information for urban processes sector
     L231.FinalDemand_urb <- tibble(
       region = A_regions$region,
@@ -120,7 +122,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     if(any(is.na(A31.subsector_interp$to.value))){
       L231.SubsectorInterp_urb_ind <- A31.subsector_interp %>%
         filter(is.na(to.value)) %>%
-        write_to_all_regions(c("region", "supplysector", "subsector", "from.year",
+        write_to_all_regions(c("region", "supplysector", "subsector", "apply.to", "from.year",
                                "to.year", "interpolation.function"),
                              GCAM_region_names = GCAM_region_names)
     }
@@ -136,32 +138,28 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     # L231.StubTech_urb_ind: Identification of stub technologies of urban & industrial processes sectors
     # Note: assuming that technology list in the shareweight table includes the full set (any others would default to a 0 shareweight)
     L231.StubTech_urb_ind <- A31.globaltech_shrwt %>%
+      select(supplysector, subsector, technology) %>%
+      distinct %>%
       write_to_all_regions(c("region", "supplysector", "subsector", "technology"),
                            GCAM_region_names = GCAM_region_names) %>%
       rename(stub.technology = technology)
 
     # L231.GlobalTechShrwt_urb_ind: Shareweights of global urban & industrial processes sector technologies
-    L231.globaltech_shrwt <- A31.globaltech_shrwt %>%
-      gather(year, shareweight, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year))
-
-    L231.GlobalTechShrwt_urb_ind <- L231.globaltech_shrwt %>%
-      select(-year, -shareweight) %>%
+    L231.GlobalTechShrwt_urb_ind <- A31.globaltech_shrwt %>%
+      select(supplysector, subsector, technology) %>%
+      distinct %>%
       repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, FUTURE_YEARS))) %>%
-      left_join(L231.globaltech_shrwt, by = c("supplysector", "subsector", "technology", "year")) %>%
+      left_join(A31.globaltech_shrwt, by = c("supplysector", "subsector", "technology", "year")) %>%
       mutate(shareweight = approx_fun(year, value = shareweight, rule = 1)) %>%
       filter(year %in% MODEL_YEARS) %>%
       select(sector.name = supplysector, subsector.name = subsector, technology, year, shareweight)
 
     # L231.GlobalTechEff_urb_ind: Energy inputs and coefficients of global urban & industrial processes technologies
-    L231.globaltech_eff <- A31.globaltech_eff %>%
-      gather(year, efficiency, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year))
-
-    L231.GlobalTechEff_urb_ind <- L231.globaltech_eff %>%
+    L231.GlobalTechEff_urb_ind <- A31.globaltech_eff %>%
       select(-year, -efficiency) %>%
+      distinct %>%
       repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, FUTURE_YEARS))) %>%
-      left_join(L231.globaltech_eff, by = c("supplysector", "subsector", "technology", "year", "minicam.energy.input")) %>%
+      left_join(A31.globaltech_eff, by = c("supplysector", "subsector", "technology", "year", "minicam.energy.input")) %>%
       mutate(efficiency = approx_fun(year, value = efficiency, rule = 1)) %>%
       filter(year %in% MODEL_YEARS) %>%
       select(sector.name = supplysector, subsector.name = subsector, technology, year, minicam.energy.input, efficiency)
