@@ -14,14 +14,20 @@ module_aglu_L202.an_input(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L202.RenewRsrc}, \code{L202.RenewRsrcPrice}, \code{L202.maxSubResource}, \code{L202.RenewRsrcCurves}, \code{L202.UnlimitedRenewRsrcCurves}, \code{L202.UnlimitedRenewRsrcPrice}, \code{L202.SectorLogitTables_in[[ curr_table ]]$data}, \code{L202.Supplysector_in}, \code{L202.SubsectorLogitTables_in[[ curr_table ]]$data}, \code{L202.SubsectorAll_in}, \code{L202.StubTech_in}, \code{L202.StubTechInterp_in}, \code{L202.GlobalTechCoef_in}, \code{L202.GlobalTechShrwt_in}, \code{L202.StubTechProd_in}, \code{L202.SectorLogitTables_an[[ curr_table ]]$data}, \code{L202.Supplysector_an}, \code{L202.SubsectorLogitTables_an[[ curr_table ]]$data}, \code{L202.SubsectorAll_an}, \code{L202.StubTech_an}, \code{L202.StubTechInterp_an}, \code{L202.StubTechProd_an}, \code{L202.StubTechCoef_an}, \code{L202.GlobalTechCost_an}, \code{L202.GlobalRenewTech_imp_an}, \code{L202.StubTechFixOut_imp_an}. The corresponding file in the
+the generated outputs: \code{L202.RenewRsrc}, \code{L202.RenewRsrcPrice}, \code{L202.maxSubResource},
+\code{L202.RenewRsrcCurves}, \code{L202.UnlimitedRenewRsrcCurves}, \code{L202.UnlimitedRenewRsrcPrice},
+\code{L202.Supplysector_in}, \code{L202.SubsectorAll_in}, \code{L202.StubTech_in}, \code{L202.StubTechInterp_in},
+\code{L202.GlobalTechCoef_in}, \code{L202.GlobalTechShrwt_in}, \code{L202.StubTechProd_in},
+\code{L202.Supplysector_an}, \code{L202.SubsectorAll_an}, \code{L202.StubTech_an}, \code{L202.StubTechInterp_an},
+\code{L202.StubTechProd_an}, \code{L202.StubTechCoef_an}, \code{L202.GlobalTechCost_an},
+\code{L202.GlobalRenewTech_imp_an}, \code{L202.StubTechFixOut_imp_an}. The corresponding file in the
 original data system was \code{L202.an_input.R} (aglu level2).
 }
 \description{
-Briefly describe what this chunk does.
+Produce a wide range of animal-related resource tables: production, import, resource curves.
 }
 \details{
-Describe in detail what this chunk does.
+This chunk produces 22 animal-related resource tables: production, import, resource curves.
 }
 \author{
 BBL August 2017
