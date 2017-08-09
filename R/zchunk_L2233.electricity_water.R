@@ -15,7 +15,7 @@
 #' @author ST June 2017
 module_water_L2233.electricity_water <- function(command, ...) {
 
-  # Read in 27 L223 file names
+  # Read in 24 L223 file names
   L223_fileNames <- c("AvgFossilEffKeyword_elec", "GlobalIntTechBackup_elec", "GlobalIntTechCapital_elec",
                       "GlobalIntTechEff_elec", "GlobalIntTechLifetime_elec", "GlobalIntTechOMfixed_elec",
                       "GlobalIntTechOMvar_elec", "GlobalIntTechShrwt_elec", "GlobalTechCapture_elec",
@@ -24,8 +24,6 @@ module_water_L2233.electricity_water <- function(command, ...) {
                       "GlobalTechProfitShutdown_elec", "GlobalTechSCurve_elec", "GlobalTechShrwt_elec",
                       "PrimaryRenewKeyword_elec", "PrimaryRenewKeywordInt_elec", "StubTech_elec",
                       "StubTechEff_elec", "StubTechFixOut_hydro", "Supplysector_elec")
-
-  # "StubTechCalInput_elec", "StubTechFixOut_elec", "StubTechProd_elec"
 
   # TEMPORARY FOR TEMP-INJECT; REMOVE ONCE OUTPUTS ARE READY!!
   L223_fileNames_ <- paste0("temp-data-inject/L223.", L223_fileNames)
@@ -113,7 +111,6 @@ module_water_L2233.electricity_water <- function(command, ...) {
     Macknick_elec_water_m3MWh <- get_data(all_data, "water/Macknick_elec_water_m3MWh")
     L1231.out_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.out_EJ_R_elec_F_tech_Yh")
     L1233.out_EJ_R_elec_F_tech_Yh_cool <- get_data(all_data, "L1233.out_EJ_R_elec_F_tech_Yh_cool")
-    #L1233.in_EJ_R_elec_F_tech_Yh_cool <- get_data(all_data, "L1233.in_EJ_R_elec_F_tech_Yh_cool")
     L1233.shrwt_R_elec_cool_Yf <- get_data(all_data, "L1233.shrwt_R_elec_cool_Yf")
     L223.StubTechEff_elec <- get_data(all_data, "temp-data-inject/L223.StubTechEff_elec")
     L201.en_bcoc_emissions <- get_data(all_data, "L201.en_bcoc_emissions")
