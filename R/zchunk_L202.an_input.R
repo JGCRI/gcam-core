@@ -1,14 +1,20 @@
 #' module_aglu_L202.an_input
 #'
-#' Briefly describe what this chunk does.
+#' Produce a wide range of animal-related resource tables: production, import, resource curves.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L202.RenewRsrc}, \code{L202.RenewRsrcPrice}, \code{L202.maxSubResource}, \code{L202.RenewRsrcCurves}, \code{L202.UnlimitedRenewRsrcCurves}, \code{L202.UnlimitedRenewRsrcPrice}, \code{L202.SectorLogitTables_in[[ curr_table ]]$data}, \code{L202.Supplysector_in}, \code{L202.SubsectorLogitTables_in[[ curr_table ]]$data}, \code{L202.SubsectorAll_in}, \code{L202.StubTech_in}, \code{L202.StubTechInterp_in}, \code{L202.GlobalTechCoef_in}, \code{L202.GlobalTechShrwt_in}, \code{L202.StubTechProd_in}, \code{L202.SectorLogitTables_an[[ curr_table ]]$data}, \code{L202.Supplysector_an}, \code{L202.SubsectorLogitTables_an[[ curr_table ]]$data}, \code{L202.SubsectorAll_an}, \code{L202.StubTech_an}, \code{L202.StubTechInterp_an}, \code{L202.StubTechProd_an}, \code{L202.StubTechCoef_an}, \code{L202.GlobalTechCost_an}, \code{L202.GlobalRenewTech_imp_an}, \code{L202.StubTechFixOut_imp_an}. The corresponding file in the
+#' the generated outputs: \code{L202.RenewRsrc}, \code{L202.RenewRsrcPrice}, \code{L202.maxSubResource},
+#' \code{L202.RenewRsrcCurves}, \code{L202.UnlimitedRenewRsrcCurves}, \code{L202.UnlimitedRenewRsrcPrice},
+#' \code{L202.Supplysector_in}, \code{L202.SubsectorAll_in}, \code{L202.StubTech_in}, \code{L202.StubTechInterp_in},
+#' \code{L202.GlobalTechCoef_in}, \code{L202.GlobalTechShrwt_in}, \code{L202.StubTechProd_in},
+#' \code{L202.Supplysector_an}, \code{L202.SubsectorAll_an}, \code{L202.StubTech_an}, \code{L202.StubTechInterp_an},
+#' \code{L202.StubTechProd_an}, \code{L202.StubTechCoef_an}, \code{L202.GlobalTechCost_an},
+#' \code{L202.GlobalRenewTech_imp_an}, \code{L202.StubTechFixOut_imp_an}. The corresponding file in the
 #' original data system was \code{L202.an_input.R} (aglu level2).
-#' @details Describe in detail what this chunk does.
+#' @details This chunk produces 22 animal-related resource tables: production, import, resource curves.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -19,7 +25,6 @@ module_aglu_L202.an_input <- function(command, ...) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "energy/A_regions",
              FILE = "aglu/A_agRsrc",
-             FILE = "aglu/A_agSubRsrc",
              FILE = "aglu/A_agRsrcCurves",
              FILE = "aglu/A_agUnlimitedRsrcCurves",
              FILE = "aglu/A_an_input_supplysector",
@@ -66,7 +71,6 @@ module_aglu_L202.an_input <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A_regions <- get_data(all_data, "energy/A_regions")
     A_agRsrc <- get_data(all_data, "aglu/A_agRsrc")
-    A_agSubRsrc <- get_data(all_data, "aglu/A_agSubRsrc")
     A_agRsrcCurves <- get_data(all_data, "aglu/A_agRsrcCurves")
     A_agUnlimitedRsrcCurves <- get_data(all_data, "aglu/A_agUnlimitedRsrcCurves")
     A_an_input_supplysector <- get_data(all_data, "aglu/A_an_input_supplysector")
@@ -82,16 +86,16 @@ module_aglu_L202.an_input <- function(command, ...) {
     # Base table for resources - add region names to Level1 data tables (lines 49-70 old file)
 
     # Following datasets are already 'long' so just skip the old interpolate_and_melt step
-    get_join_filter <- function(all_data, x) {   # internal function as we do these steps 5 times below
+    get_join_filter <- function(x) {   # internal function as we do these steps 5 times below
       get_data(all_data, x) %>%
         left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
         filter(year %in% BASE_YEARS)
     }
-    L202.an_Prod_Mt_R_C_Sys_Fd_Y.melt <- get_join_filter(all_data, "L107.an_Prod_Mt_R_C_Sys_Fd_Y")
-    L202.an_FeedIO_R_C_Sys_Fd_Y.melt <- get_join_filter(all_data, "L107.an_FeedIO_R_C_Sys_Fd_Y")
-    L202.an_Feed_Mt_R_C_Sys_Fd_Y.melt <- get_join_filter(all_data, "L107.an_Feed_Mt_R_C_Sys_Fd_Y")
-    L202.ag_Feed_Mt_R_C_Y.melt <- get_join_filter(all_data, "L108.ag_Feed_Mt_R_C_Y")
-    L202.an_ALL_Mt_R_C_Y <- get_join_filter(all_data, "L109.an_ALL_Mt_R_C_Y")
+    L202.an_Prod_Mt_R_C_Sys_Fd_Y.mlt <- get_join_filter("L107.an_Prod_Mt_R_C_Sys_Fd_Y")
+    L202.an_FeedIO_R_C_Sys_Fd_Y.mlt <- get_join_filter("L107.an_FeedIO_R_C_Sys_Fd_Y")
+    L202.an_Feed_Mt_R_C_Sys_Fd_Y.mlt <- get_join_filter("L107.an_Feed_Mt_R_C_Sys_Fd_Y")
+    L202.ag_Feed_Mt_R_C_Y.mlt <- get_join_filter("L108.ag_Feed_Mt_R_C_Y")
+    L202.an_ALL_Mt_R_C_Y <- get_join_filter("L109.an_ALL_Mt_R_C_Y")
 
     # L202.RenewRsrc: generic resource attributes
     A_agRsrc %>%
@@ -117,7 +121,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       summarise(value = max(Prod_Mt)) ->
       L202.maxSubResource_an
 
-    L202.ag_Feed_Mt_R_C_Y.melt %>%
+    L202.ag_Feed_Mt_R_C_Y.mlt %>%
       filter(GCAM_commodity %in% A_agRsrcCurves$sub.renewable.resource) %>%
       group_by(region, GCAM_region_ID, GCAM_commodity) %>%
       summarise(value = max(value))  %>%
@@ -197,7 +201,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       mutate(stub.technology = technology) %>%
       repeat_add_columns(tibble(year = BASE_YEARS)) %>%
       # not every region/technology/year has a match, so need to use left_join
-      left_join(L202.ag_Feed_Mt_R_C_Y.melt, by = c("region", "technology" = "GCAM_commodity", "year")) %>%
+      left_join(L202.ag_Feed_Mt_R_C_Y.mlt, by = c("region", "technology" = "GCAM_commodity", "year")) %>%
       mutate(calOutputValue = round(value, aglu.DIGITS_CALOUTPUT)) %>%
       # the DDGS/feedcake rows at this point are all missing values, as they are not
       # available in the historical years; set them to zero
@@ -211,12 +215,12 @@ module_aglu_L202.an_input <- function(command, ...) {
 
     # L202.Supplysector_an: generic animal production supplysector info (159-162)
     A_an_supplysector %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], "logit.exponent"), GCAM_region_names) ->
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]]), GCAM_region_names) ->
       L202.Supplysector_an
 
     # L202.SubsectorAll_an: generic animal production subsector info (164-167)
     A_an_subsector %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorAll"]], "logit.exponent"), GCAM_region_names) ->
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorAll"]]), GCAM_region_names) ->
       L202.SubsectorAll_an
 
     # L202.StubTech_an: identification of stub technologies for animal production (169-171)
@@ -236,7 +240,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       write_to_all_regions(LEVEL2_DATA_NAMES[["Tech"]], GCAM_region_names) %>%
       mutate(stub.technology = technology) %>%
       repeat_add_columns(tibble(year = BASE_YEARS)) %>%
-      left_join_error_no_match(L202.an_Prod_Mt_R_C_Sys_Fd_Y.melt,
+      left_join_error_no_match(L202.an_Prod_Mt_R_C_Sys_Fd_Y.mlt,
                                by = c("region", "supplysector" = "GCAM_commodity",
                                       "subsector" = "system", "technology" = "feed",
                                       "year")) %>%
@@ -268,7 +272,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       mutate(stub.technology = technology) %>%
       repeat_add_columns(tibble(year = c(BASE_YEARS, FUTURE_YEARS))) %>%
       # not everything has a match so need to use left_join
-      left_join(L202.an_FeedIO_R_C_Sys_Fd_Y.melt,
+      left_join(L202.an_FeedIO_R_C_Sys_Fd_Y.mlt,
                 by = c("region", "supplysector" = "GCAM_commodity",
                        "subsector" = "system", "minicam.energy.input" = "feed",
                        "year")) %>%
@@ -277,7 +281,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       L202.StubTechCoef_an
 
     # For values beyond the coefficient time series, use the final available year
-    final_coef_year <- max(L202.an_FeedIO_R_C_Sys_Fd_Y.melt$year)
+    final_coef_year <- max(L202.an_FeedIO_R_C_Sys_Fd_Y.mlt$year)
     final_coef_year_data <- filter(L202.StubTechCoef_an, year == final_coef_year) %>% select(-year)
     L202.StubTechCoef_an %>%
       filter(year > final_coef_year) %>%
@@ -327,16 +331,13 @@ module_aglu_L202.an_input <- function(command, ...) {
       L202.ag_FeedCost_USDkg_R_F
 
     # Calculate the total cost of all inputs, for each animal commodity, first matching in the feed quantity and the price
-    L202.an_Prod_Mt_R_C_Sys_Fd_Y.melt %>%
+    L202.an_Prod_Mt_R_C_Sys_Fd_Y.mlt %>%
       filter(year == max(BASE_YEARS), region == Index_region) %>%
-      left_join_error_no_match(select(L202.an_Feed_Mt_R_C_Sys_Fd_Y.melt, GCAM_region_ID, GCAM_commodity, system, feed, year, Feed_Mt = value),
+      left_join_error_no_match(select(L202.an_Feed_Mt_R_C_Sys_Fd_Y.mlt, GCAM_region_ID, GCAM_commodity, system, feed, year, Feed_Mt = value),
                                by = c("GCAM_region_ID", "GCAM_commodity", "system", "feed", "year")) %>%
       left_join_error_no_match(L202.ag_FeedCost_USDkg_R_F, by = c("region", "feed" = "supplysector")) %>%
-      rename(FeedPrice_USDkg = wtd_price) ->
-      L202.an_FeedCost_R_C_Sys_Fd
-
-    # Multiply price by quantity to calculate feed expenditure, and aggregat expenditure and production to get weighted avg cost
-    L202.an_FeedCost_R_C_Sys_Fd %>%
+      rename(FeedPrice_USDkg = wtd_price) %>%
+      # multiply price by quantity to calculate feed expenditure, and aggregat expenditure and production to get weighted avg cost
       mutate(FeedCost_bilUSD = Feed_Mt * FeedPrice_USDkg) %>%
       group_by(GCAM_region_ID, GCAM_commodity) %>%
       summarise(value = sum(value), FeedCost_bilUSD = sum(FeedCost_bilUSD)) %>%
@@ -358,10 +359,10 @@ module_aglu_L202.an_input <- function(command, ...) {
 
     # L202.GlobalRenewTech_imp_an: generic technology info for animal imports (272-277)
     tibble::as_tibble(expand.grid(sector.name = A_an_supplysector$supplysector,
-                          subsector.name = "Imports",
-                          technology = "Imports",
-                          renewable.input = "renewable",
-                          year = c(BASE_YEARS, FUTURE_YEARS))) %>%
+                                  subsector.name = "Imports",
+                                  technology = "Imports",
+                                  renewable.input = "renewable",
+                                  year = c(BASE_YEARS, FUTURE_YEARS))) %>%
       write_to_all_regions(LEVEL2_DATA_NAMES[["GlobalRenewTech"]], GCAM_region_names) ->
       L202.GlobalRenewTech_imp_an
 
@@ -420,7 +421,7 @@ module_aglu_L202.an_input <- function(command, ...) {
     L202.RenewRsrcCurves <- filter(L202.RenewRsrcCurves, !region %in% aglu.NO_AGLU_REGIONS)
     L202.UnlimitedRenewRsrcCurves <- filter(L202.UnlimitedRenewRsrcCurves, !region %in% aglu.NO_AGLU_REGIONS)
     L202.UnlimitedRenewRsrcPrice <- filter(L202.UnlimitedRenewRsrcPrice, !region %in% aglu.NO_AGLU_REGIONS)
-    L202.Supplysector_in <- filter(L202.Supplysector_in, !region %in% no_aglu_regions)
+    L202.Supplysector_in <- filter(L202.Supplysector_in, !region %in% aglu.NO_AGLU_REGIONS)
 
     L202.SubsectorAll_in %>%
       filter(!region %in% aglu.NO_AGLU_REGIONS) %>%
@@ -453,7 +454,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       add_units("NA") %>%
       add_comments("A_agRsrc written to all regions") %>%
       add_legacy_name("L202.RenewRsrc") %>%
-      add_precursors("aglu/A_agRsrc") ->
+      add_precursors("aglu/A_agRsrc", "common/GCAM_region_names") ->
       L202.RenewRsrc
 
     L202.RenewRsrcPrice %>%
@@ -461,222 +462,177 @@ module_aglu_L202.an_input <- function(command, ...) {
       add_units("1975$/kg") %>%
       add_comments("A_agRsrc written to all regions with `year` set to first model base year and `price` = 1") %>%
       add_legacy_name("L202.RenewRsrcPrice") %>%
-      add_precursors("aglu/A_agRsrc") ->
+      add_precursors("aglu/A_agRsrc", "common/GCAM_region_names") ->
       L202.RenewRsrcPrice
 
     L202.maxSubResource %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Maximum amount of resource production allowed in any period") %>%
+      add_units("Mt/yr") %>%
+      add_comments("Computed as the maximum of all base periods, for each region and resource") %>%
       add_legacy_name("L202.maxSubResource") %>%
-      add_precursors("L109.an_ALL_Mt_R_C_Y", "L108.ag_Feed_Mt_R_C_Y", "aglu/A_agRsrcCurves") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L109.an_ALL_Mt_R_C_Y", "L108.ag_Feed_Mt_R_C_Y", "aglu/A_agRsrcCurves", "common/GCAM_region_names") ->
       L202.maxSubResource
 
     L202.RenewRsrcCurves %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Renewable resource curves") %>%
+      add_units("units") %>%  # TODO
+      add_comments("A_agRsrcCurves written to all regions") %>%
       add_legacy_name("L202.RenewRsrcCurves") %>%
-      add_precursors("aglu/A_agRsrcCurves") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("aglu/A_agRsrcCurves", "common/GCAM_region_names") ->
       L202.RenewRsrcCurves
 
     L202.UnlimitedRenewRsrcCurves %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Unlimited renewable resource curves") %>%
+      add_units("units") %>%   # TODO
+      add_comments("A_agUnlimitedRsrcCurves written to all regions") %>%
       add_legacy_name("L202.UnlimitedRenewRsrcCurves") %>%
-      add_precursors("aglu/A_agUnlimitedRsrcCurves") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("aglu/A_agUnlimitedRsrcCurves", "common/GCAM_region_names") ->
       L202.UnlimitedRenewRsrcCurves
 
     L202.UnlimitedRenewRsrcPrice %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Unlimited renewable resource price") %>%
+      add_units("1975$/kg") %>%
+      add_comments("A_agUnlimitedRsrcCurves written to all regions") %>%
       add_legacy_name("L202.UnlimitedRenewRsrcPrice") %>%
-      add_precursors("aglu/A_agUnlimitedRsrcCurves") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("aglu/A_agUnlimitedRsrcCurves", "common/GCAM_region_names") ->
       L202.UnlimitedRenewRsrcPrice
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L202.Supplysector_in %>%
+      add_title("Generic supplysector info for inputs to animal production") %>%
+      add_units("NA") %>%
+      add_comments("A_an_input_supplysector written to all regions") %>%
       add_legacy_name("L202.Supplysector_in") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("aglu/A_an_input_supplysector", "common/GCAM_region_names") ->
       L202.Supplysector_in
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L202.SubsectorAll_in %>%
+      add_title("Generic subsector info for inputs to animal production technologies") %>%
+      add_units("NA") %>%
+      add_comments("A_an_input_subsector written to all regions") %>%
       add_legacy_name("L202.SubsectorAll_in") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("aglu/A_an_input_subsector", "energy/A_regions", "common/GCAM_region_names") ->
       L202.SubsectorAll_in
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L202.StubTech_in %>%
+      add_title("Identification of stub technologies for inputs to animal production") %>%
+      add_units("NA") %>%
+      add_comments("A_an_input_technology written to all regions") %>%
       add_legacy_name("L202.StubTech_in") %>%
-      add_precursors("aglu/A_an_input_technology") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("aglu/A_an_input_technology", "energy/A_regions", "common/GCAM_region_names") ->
       L202.StubTech_in
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L202.StubTechInterp_in %>%
+      add_title("Generic technology info for inputs to animal production") %>%
+      add_units("NA") %>%
+      add_comments("A_an_input_technology written to all regions") %>%
       add_legacy_name("L202.StubTechInterp_in") %>%
-      add_precursors("aglu/A_an_input_technology") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("aglu/A_an_input_technology", "energy/A_regions", "common/GCAM_region_names") ->
       L202.StubTechInterp_in
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L202.GlobalTechCoef_in %>%
+      add_title("Coefficients for inputs to animal production") %>%
+      add_units("NA") %>%
+      add_comments("A_an_input_technology across all base and future years") %>%
       add_legacy_name("L202.GlobalTechCoef_in") %>%
-      add_precursors("aglu/A_an_input_technology") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("aglu/A_an_input_technology", "common/GCAM_region_names") ->
       L202.GlobalTechCoef_in
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L202.GlobalTechShrwt_in %>%
+      add_title("Default shareweights for inputs to animal production") %>%
+      add_units("NA") %>%
+      add_comments("A_an_input_globaltech_shrwt interpolated to all model years") %>%
       add_legacy_name("L202.GlobalTechShrwt_in") %>%
-      add_precursors("aglu/A_an_input_globaltech_shrwt") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("aglu/A_an_input_globaltech_shrwt", "common/GCAM_region_names") ->
       L202.GlobalTechShrwt_in
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L202.StubTechProd_in %>%
+      add_title("Base year output of the inputs (feed types) to animal production") %>%
+      add_units("units") %>%   # TODO - what is calOutputValue units here?
+      add_comments("Animal production input-output coefficients written to all regions and base years") %>%
       add_legacy_name("L202.StubTechProd_in") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("aglu/A_an_input_technology", "L107.an_FeedIO_R_C_Sys_Fd_Y",
+                     "energy/A_regions", "common/GCAM_region_names") ->
       L202.StubTechProd_in
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L202.Supplysector_an %>%
+      add_title("Generic animal production supplysector info") %>%
+      add_units("NA") %>%
+      add_comments("A_an_supplysector written to all regions") %>%
       add_legacy_name("L202.Supplysector_an") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("aglu/A_an_supplysector", "common/GCAM_region_names") ->
       L202.Supplysector_an
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L202.SubsectorAll_an %>%
+      add_title("Generic animal production subsector info") %>%
+      add_units("NA") %>%
+      add_comments("A_an_subsector written to all regions") %>%
       add_legacy_name("L202.SubsectorAll_an") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("aglu/A_an_subsector", "common/GCAM_region_names") ->
       L202.SubsectorAll_an
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L202.StubTech_an %>%
+      add_title("Identification of stub technologies for animal production") %>%
+      add_units("NA") %>%
+      add_comments("A_an_technology written to all regions") %>%
       add_legacy_name("L202.StubTech_an") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("aglu/A_an_technology", "common/GCAM_region_names") ->
       L202.StubTech_an
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L202.StubTechInterp_an %>%
+      add_title("Shareweight interpolation for animal production technologies") %>%
+      add_units("NA") %>%
+      add_comments("A_an_technology written to all regions") %>%
       add_legacy_name("L202.StubTechInterp_an") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("aglu/A_an_technology", "common/GCAM_region_names") ->
       L202.StubTechInterp_an
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L202.StubTechProd_an %>%
+      add_title("Animal production by technology and region") %>%
+      add_units("Unitless") %>%
+      add_comments("Animal production written across model base years and regions") %>%
       add_legacy_name("L202.StubTechProd_an") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("aglu/A_an_technology", "L107.an_Prod_Mt_R_C_Sys_Fd_Y", "common/GCAM_region_names") ->
       L202.StubTechProd_an
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L202.StubTechCoef_an %>%
+      add_title("Animal production input-output coefficients by technology and region") %>%
+      add_units("Unitless") %>%
+      add_comments("Animal production input-output coefficients written across model base years and regions") %>%
       add_legacy_name("L202.StubTechCoef_an") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("aglu/A_an_technology", "L107.an_Prod_Mt_R_C_Sys_Fd_Y", "common/GCAM_region_names") ->
       L202.StubTechCoef_an
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L202.GlobalTechCost_an %>%
+      add_title("Costs of animal production technologies") %>%
+      add_units("billion USD") %>%
+      add_comments("Animal feed cost, prices, and technology") %>%
       add_legacy_name("L202.GlobalTechCost_an") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      same_precursors_as(L202.StubTechCoef_an) %>%
+      add_precursors("L132.ag_an_For_Prices", "L107.an_Feed_Mt_R_C_Sys_Fd_Y") ->
       L202.GlobalTechCost_an
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L202.GlobalRenewTech_imp_an %>%
+      add_title("Generic technology info for animal imports") %>%
+      add_units("NA") %>%
+      add_comments("A_an_supplysector written to all model years and regions") %>%
       add_legacy_name("L202.GlobalRenewTech_imp_an") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("aglu/A_an_supplysector", "common/GCAM_region_names") ->
       L202.GlobalRenewTech_imp_an
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L202.StubTechFixOut_imp_an %>%
+      add_title("Animal imports for net importing regions in all periods") %>%
+      add_units("Mt") %>%
+      add_comments("A_an_supplysector and animal product mass balances written to all model years and regions") %>%
       add_legacy_name("L202.StubTechFixOut_imp_an") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("aglu/A_an_supplysector", "L109.an_ALL_Mt_R_C_Y", "common/GCAM_region_names") ->
       L202.StubTechFixOut_imp_an
 
-    return_data(L202.RenewRsrc, L202.RenewRsrcPrice, L202.maxSubResource, L202.RenewRsrcCurves, L202.UnlimitedRenewRsrcCurves, L202.UnlimitedRenewRsrcPrice, L202.SectorLogitTables_in[[ curr_table ]]$data, L202.Supplysector_in, L202.SubsectorLogitTables_in[[ curr_table ]]$data, L202.SubsectorAll_in, L202.StubTech_in, L202.StubTechInterp_in, L202.GlobalTechCoef_in, L202.GlobalTechShrwt_in, L202.StubTechProd_in, L202.SectorLogitTables_an[[ curr_table ]]$data, L202.Supplysector_an, L202.SubsectorLogitTables_an[[ curr_table ]]$data, L202.SubsectorAll_an, L202.StubTech_an, L202.StubTechInterp_an, L202.StubTechProd_an, L202.StubTechCoef_an, L202.GlobalTechCost_an, L202.GlobalRenewTech_imp_an, L202.StubTechFixOut_imp_an)
+    return_data(L202.RenewRsrc, L202.RenewRsrcPrice, L202.maxSubResource, L202.RenewRsrcCurves,
+                L202.UnlimitedRenewRsrcCurves, L202.UnlimitedRenewRsrcPrice, L202.Supplysector_in,
+                L202.SubsectorAll_in, L202.StubTech_in, L202.StubTechInterp_in, L202.GlobalTechCoef_in,
+                L202.GlobalTechShrwt_in, L202.StubTechProd_in, L202.Supplysector_an, L202.SubsectorAll_an,
+                L202.StubTech_an, L202.StubTechInterp_an, L202.StubTechProd_an, L202.StubTechCoef_an,
+                L202.GlobalTechCost_an, L202.GlobalRenewTech_imp_an, L202.StubTechFixOut_imp_an)
   } else {
     stop("Unknown command")
   }
