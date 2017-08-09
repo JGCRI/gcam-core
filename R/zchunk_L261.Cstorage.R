@@ -119,7 +119,8 @@ module_energy_L261.Cstorage <- function(command, ...) {
       L261.DepRsrcCurves_C # This is a final output table.
 
     # Calculate three different supply curves of carbon storage resources: high, low, and lowest.
-    # Multiply the extraction cost by their respective cost multipliers.
+    # Multiply the extraction cost by its respective multiplier below.
+    # Note that the multipliers were created for the SSPs and that high, low, and lowest is the level of CCS use and not cost.
     HI_CCS_COST_MULT <- 0.8
 
     LO_CCS_COST_MULT <- 3
@@ -265,7 +266,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
     L261.DepRsrcCurves_C_high %>%
       add_title("High supply curve of onshore carbon storage resources") %>%
       add_units("Available in MtCO2, Extraction Cost in 1990$/tCO2") %>%
-      add_comments("A cost multiplier was applied to the extraction cost to generate a high supply curve") %>%
+      add_comments("A multiplier (based on high level of CCS use) was applied to the extraction cost to generate a high supply curve") %>%
       add_legacy_name("L261.DepRsrcCurves_C_high") %>%
       add_precursors("common/GCAM_region_names", "temp-data-inject/L161.RsrcCurves_MtC_R") %>%
       add_flags(FLAG_SUM_TEST) ->
@@ -274,7 +275,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
     L261.DepRsrcCurves_C_low %>%
       add_title("Low supply curve of onshore carbon storage resources") %>%
       add_units("Available in MtCO2, Extraction Cost in 1990$/tCO2") %>%
-      add_comments("A cost multiplier was applied to the extraction cost to generate a low supply curve") %>%
+      add_comments("A multiplier (based on low level of CCS use) was applied to the extraction cost to generate a low supply curve") %>%
       add_legacy_name("L261.DepRsrcCurves_C_low") %>%
       add_precursors("common/GCAM_region_names", "temp-data-inject/L161.RsrcCurves_MtC_R") %>%
       add_flags(FLAG_SUM_TEST) ->
@@ -283,7 +284,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
     L261.DepRsrcCurves_C_lowest %>%
       add_title("Lowest supply curve of onshore carbon storage resources") %>%
       add_units("Available in MtCO2, Extraction Cost in 1990$/tCO2") %>%
-      add_comments("A cost multiplier was applied to the extraction cost to generate a lowest supply curve") %>%
+      add_comments("A multiplier (based on lowest level of CCS use) was applied to the extraction cost to generate a lowest supply curve") %>%
       add_legacy_name("L261.DepRsrcCurves_C_lowest") %>%
       add_precursors("common/GCAM_region_names", "temp-data-inject/L161.RsrcCurves_MtC_R") %>%
       add_flags(FLAG_SUM_TEST) ->
