@@ -18,10 +18,10 @@ the generated outputs: \code{L261.DepRsrc}, \code{L261.UnlimitRsrc}, \code{L261.
 original data system was \code{L261.Cstorage.R} (energy level2).
 }
 \description{
-Calculates carbon storage resource supply curves, shareweights, technology coefficients and costs, and other carbon storage information
+Calculate carbon storage resource supply curves, shareweights, technology coefficients and costs, and other carbon storage information.
 }
 \details{
-The below fifteen tables pertaining to carbon storage properties are generated:
+The following fifteen tables pertaining to carbon storage properties are generated:
 \itemize{
  \item{Carbon storage information}
  \item{Unlimited carbon storage information}
