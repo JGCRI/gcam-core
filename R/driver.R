@@ -63,7 +63,8 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 
   # Every input should be a precursor for something
   if(!all(chunk_inputs %in% pc_all)) {
-    message("Inputs ", setdiff(chunk_inputs, pc_all), " don't appear as precursors for any outputs - chunk ", chunk)
+    message("Inputs ", paste(setdiff(chunk_inputs, pc_all), collapse = ", "),
+            " don't appear as precursors for any outputs - chunk ", chunk)
   }
 
   # If chunk has inputs, some output should have a precursor

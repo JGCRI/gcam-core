@@ -150,6 +150,8 @@ add_logit_tables_xml <- function(dot, data, header, base_logit_header=header) {
   #    actually read in any data but sets the proper XML name.
   # 3) Finally data with the logit.type column dropped.
 
+  logit.type <- . <- NULL  # silence package check notes
+
   dot <- add_node_equiv_xml(dot, "discrete-choice")
 
   # The default logit type is used if the value of a logit.type is NA
@@ -230,9 +232,9 @@ XML_NODE_EQUIV <- list(
   "sector" = c("supplysector", "AgSupplySector", "pass-through-sector"),
   "subsector" = c("subsector", "AgSupplySubsector", "tranSubsector"),
   "technology" = c("technology", "stub-technology", "intermittent-technology",
-                    "tranTechnology", "AgProductionTechnology", "pass-through-technology"),
+                   "tranTechnology", "AgProductionTechnology", "pass-through-technology"),
   "discrete-choice" = c("dummy-logit-tag", "relative-cost-logit",
-                         "absolute-cost-logit"),
+                        "absolute-cost-logit"),
   "LandLeaf" = c("LandLeaf", "UnmanagedLandLeaf"),
   "carbon-calc" = c("land-carbon-densities", "no-emiss-carbon-calc")
 )
