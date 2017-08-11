@@ -14,7 +14,7 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_aglu_L222.land_input_2_DISABLED <- function(command, ...) {
+module_aglu_L222.land_input_2 <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "water/basin_to_country_mapping",
@@ -35,8 +35,8 @@ module_aglu_L222.land_input_2_DISABLED <- function(command, ...) {
              "L222.LN2_MgdCarbon",
              "L222.LN2_HistUnmgdAllocation_noprot",
              "L222.LN2_UnmgdAllocation_noprot",
-             "L222.LN2_UnmgdCarbon",
-              "L222.LN1_Logit_prot",
+             #"L222.LN2_UnmgdCarbon",
+             "L222.LN1_Logit_prot",
              "L222.LN1_HistUnmgdAllocation_prot",
              "L222.LN1_UnmgdAllocation_prot",
              "L222.LN1_UnmgdCarbon_prot"))
@@ -55,83 +55,199 @@ module_aglu_L222.land_input_2_DISABLED <- function(command, ...) {
     L121.CarbonContent_kgm2_R_LT_GLU <- get_data(all_data, "L121.CarbonContent_kgm2_R_LT_GLU")
     L125.LC_bm2_R_LT_Yh_GLU <- get_data(all_data, "L125.LC_bm2_R_LT_Yh_GLU")
 
-    # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # ===================================================
+    # silence package check notes
+    GCAM_commodity <- GCAM_region_ID <- region <- value <- year <- GLU <- GLU_name <- GLU_code <-
+      LandLeaf <- Land_Type <- LandNode <- LandNode1 <- LandNode2 <- LandNode3 <- UnmanagedLandLeaf <-
+      logit.year.fillout <- logit.exponent <- logit.type <- soilTimeScale <- `mature age` <- mature.age <-
+      soil_c <- veg_c <- LC_bm2 <- LV_milUSD75 <- LV_USD75_bm2 <- LV_USD75_m2 <- HarvCropLand_bm2 <-
+      unManagedLandValue <- LandAllocatorRoot <- hist.veg.carbon.density <- hist.soil.carbon.density <-
+      veg.carbon.density <- soil.carbon.density <- allocation <- Land_Type.y <- mature.age.year.fillout <-
+      min.veg.carbon.density <- min.soil.carbon.density <- . <- NULL
 
-    # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
+
+    # 1. Process inputs
+
+    # Replace GLU names and Add region names
+    L121.CarbonContent_kgm2_R_LT_GLU %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      replace_GLU(map = basin_to_country_mapping) %>%
+      rename(mature.age = `mature age`) ->
+      L121.CarbonContent_kgm2_R_LT_GLU
+
+    L125.LC_bm2_R_LT_Yh_GLU %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      replace_GLU(map = basin_to_country_mapping) ->
+      L125.LC_bm2_R_LT_Yh_GLU
+
+
+    # 2. Build tables
+
+    # L222.LN2_Logit: Logit exponent of the second nest
+    L125.LC_bm2_R_LT_Yh_GLU %>%
+      # Determine which node combinations apply at this level.
+      # not all land types have node matches, so use left_join
+      left_join(select(A_LT_Mapping, LandNode1, LandNode2, Land_Type), by = "Land_Type") %>%
+      select(region, GLU, LandNode1, LandNode2) %>%
+      distinct() %>%
+      na.omit %>%
+      # Match in logit exponents based on the land node 2
+      mutate(LandAllocatorRoot = "root",
+             logit.year.fillout = min(BASE_YEARS)) %>%
+      # logit.type is NA by default, so left_join
+      left_join(select(A_LandNode_logit, logit.exponent, logit.type, LandNode), by = c("LandNode2" = "LandNode")) %>%
+      append_GLU("LandNode1", "LandNode2") %>%
+      select(one_of(LEVEL2_DATA_NAMES[["LN2_Logit"]]))->
+      L222.LN2_Logit
+
+
+    # L222.LN2_HistUnmgdAllocation: Historical land cover, unmanaged land in the second nest
+    # L222.LN2_UnmgdAllocation: Model base period land cover, unmanaged land in the second nest
+    # These tables are formed by filtering and adding node_leaf_names in L125.LC, and then
+    # separating the result out by historical years and by model base years.
+    L125.LC_bm2_R_LT_Yh_GLU %>%
+      filter(Land_Type %in% A_LandLeaf_Unmgd2$UnmanagedLandLeaf,
+             year %in% c(LAND_HISTORY_YEARS, BASE_YEARS)) %>%
+      mutate(allocation = round(value, aglu.DIGITS_LAND_USE)) %>%
+      add_node_leaf_names(nesting_table = A_LandLeaf_Unmgd2, leaf_name = "UnmanagedLandLeaf",
+                          LN1 = "LandNode1", LN2 = "LandNode2") ->
+      L222.LC_bm2_R_Unmgd2_Yh_GLU
+
+    L222.LC_bm2_R_Unmgd2_Yh_GLU %>%
+      filter(year %in% LAND_HISTORY_YEARS) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["LN2_HistUnmgdAllocation"]])) ->
+      L222.LN2_HistUnmgdAllocation
+
+    L222.LC_bm2_R_Unmgd2_Yh_GLU %>%
+      filter(year %in% BASE_YEARS) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["LN2_UnmgdAllocation"]])) ->
+      L222.LN2_UnmgdAllocation
+
+
+    # L222.LN2_HistMgdAllocation: Historical land cover, managed land in the second nest
+    # L222.LN2_MgdAllocation: Model base period land cover, managed land in the second nest
+    # These tables are formed by filtering and adding node_leaf_names in L125.LC, and then
+    # separating the result out by historical years and by model base years.
+    L125.LC_bm2_R_LT_Yh_GLU %>%
+      filter(Land_Type %in% A_LandLeaf2$LandLeaf,
+             year %in% c(LAND_HISTORY_YEARS, BASE_YEARS)) %>%
+      mutate(allocation = round(value, aglu.DIGITS_LAND_USE)) %>%
+      add_node_leaf_names(nesting_table = A_LandLeaf_Unmgd2, leaf_name = "LandLeaf",
+                          LN1 = "LandNode1", LN2 = "LandNode2") ->
+      L222.LC_bm2_R_Mgd2_Yh_GLU
+
+    L222.LC_bm2_R_Mgd2_Yh_GLU %>%
+      filter(year %in% LAND_HISTORY_YEARS) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["LN2_HistMgdAllocation"]])) ->
+      L222.LN2_HistMgdAllocation
+
+    L222.LC_bm2_R_Mgd2_Yh_GLU %>%
+      filter(year %in% BASE_YEARS) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["LN2_MgdAllocation"]])) ->
+      L222.LN2_MgdAllocation
+
+
+    # L222.LN2_UnmgdCarbon: Carbon content info, unmanaged land in the second nest
+    # Add carbon content info to the unmanaged land allocation table to give the
+    # carbon content infor for unmanaged land in the second nest.
+    L222.LC_bm2_R_Unmgd2_Yh_GLU %>%
+      filter(year == max(BASE_YEARS)) %>%
+      select(-year, -allocation) %>%
+      left_join_error_no_match(GCAMLandLeaf_CdensityLT, by = c("Land_Type" = "LandLeaf")) %>%
+      rename(Cdensity_LT = Land_Type.y) %>%
+      add_carbon_info(., carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["LN2_UnmgdCarbon"]])) ->
+      L221.LN2_UnmgdCarbon
+
+
+
+
+
+
+    # 3. Produce outputs
+
+    L222.LN2_Logit %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L222.LN2_Logit") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/GCAM_region_names",
+                     "water/basin_to_country_mapping",
+                     "aglu/GCAMLandLeaf_CdensityLT",
+                     "aglu/A_LandNode_logit",
+                     "aglu/A_LandLeaf_Unmgd2",
+                     "aglu/A_LandLeaf2",
+                     "aglu/A_LT_Mapping",
+                     "L121.CarbonContent_kgm2_R_LT_GLU",
+                     "L125.LC_bm2_R_LT_Yh_GLU") ->
       L222.LN2_Logit
 
-    tibble() %>%
+    L222.LN2_HistUnmgdAllocation %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L222.LN2_HistUnmgdAllocation") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/GCAM_region_names",
+                     "water/basin_to_country_mapping",
+                     "aglu/GCAMLandLeaf_CdensityLT",
+                     "aglu/A_LandNode_logit",
+                     "aglu/A_LandLeaf_Unmgd2",
+                     "aglu/A_LandLeaf2",
+                     "aglu/A_LT_Mapping",
+                     "L121.CarbonContent_kgm2_R_LT_GLU",
+                     "L125.LC_bm2_R_LT_Yh_GLU") ->
       L222.LN2_HistUnmgdAllocation
 
-    tibble() %>%
+    L222.LN2_UnmgdAllocation %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L222.LN2_UnmgdAllocation") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/GCAM_region_names",
+                     "water/basin_to_country_mapping",
+                     "aglu/GCAMLandLeaf_CdensityLT",
+                     "aglu/A_LandNode_logit",
+                     "aglu/A_LandLeaf_Unmgd2",
+                     "aglu/A_LandLeaf2",
+                     "aglu/A_LT_Mapping",
+                     "L121.CarbonContent_kgm2_R_LT_GLU",
+                     "L125.LC_bm2_R_LT_Yh_GLU") ->
       L222.LN2_UnmgdAllocation
 
-    tibble() %>%
+    L222.LN2_HistMgdAllocation %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L222.LN2_HistMgdAllocation") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/GCAM_region_names",
+                     "water/basin_to_country_mapping",
+                     "aglu/GCAMLandLeaf_CdensityLT",
+                     "aglu/A_LandNode_logit",
+                     "aglu/A_LandLeaf_Unmgd2",
+                     "aglu/A_LandLeaf2",
+                     "aglu/A_LT_Mapping",
+                     "L121.CarbonContent_kgm2_R_LT_GLU",
+                     "L125.LC_bm2_R_LT_Yh_GLU") ->
       L222.LN2_HistMgdAllocation
 
-    tibble() %>%
+    L222.LN2_MgdAllocation %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L222.LN2_MgdAllocation") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/GCAM_region_names",
+                     "water/basin_to_country_mapping",
+                     "aglu/GCAMLandLeaf_CdensityLT",
+                     "aglu/A_LandNode_logit",
+                     "aglu/A_LandLeaf_Unmgd2",
+                     "aglu/A_LandLeaf2",
+                     "aglu/A_LT_Mapping",
+                     "L121.CarbonContent_kgm2_R_LT_GLU",
+                     "L125.LC_bm2_R_LT_Yh_GLU") ->
       L222.LN2_MgdAllocation
 
     tibble() %>%
@@ -140,7 +256,15 @@ module_aglu_L222.land_input_2_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L222.LN2_UnmgdCarbon") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/GCAM_region_names",
+                     "water/basin_to_country_mapping",
+                     "aglu/GCAMLandLeaf_CdensityLT",
+                     "aglu/A_LandNode_logit",
+                     "aglu/A_LandLeaf_Unmgd2",
+                     "aglu/A_LandLeaf2",
+                     "aglu/A_LT_Mapping",
+                     "L121.CarbonContent_kgm2_R_LT_GLU",
+                     "L125.LC_bm2_R_LT_Yh_GLU") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L222.LN2_UnmgdCarbon
@@ -151,7 +275,15 @@ module_aglu_L222.land_input_2_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L222.LN2_MgdCarbon") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/GCAM_region_names",
+                     "water/basin_to_country_mapping",
+                     "aglu/GCAMLandLeaf_CdensityLT",
+                     "aglu/A_LandNode_logit",
+                     "aglu/A_LandLeaf_Unmgd2",
+                     "aglu/A_LandLeaf2",
+                     "aglu/A_LT_Mapping",
+                     "L121.CarbonContent_kgm2_R_LT_GLU",
+                     "L125.LC_bm2_R_LT_Yh_GLU") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L222.LN2_MgdCarbon
@@ -162,7 +294,15 @@ module_aglu_L222.land_input_2_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L222.LN2_HistUnmgdAllocation_noprot") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/GCAM_region_names",
+                     "water/basin_to_country_mapping",
+                     "aglu/GCAMLandLeaf_CdensityLT",
+                     "aglu/A_LandNode_logit",
+                     "aglu/A_LandLeaf_Unmgd2",
+                     "aglu/A_LandLeaf2",
+                     "aglu/A_LT_Mapping",
+                     "L121.CarbonContent_kgm2_R_LT_GLU",
+                     "L125.LC_bm2_R_LT_Yh_GLU") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L222.LN2_HistUnmgdAllocation_noprot
@@ -173,21 +313,37 @@ module_aglu_L222.land_input_2_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L222.LN2_UnmgdAllocation_noprot") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/GCAM_region_names",
+                     "water/basin_to_country_mapping",
+                     "aglu/GCAMLandLeaf_CdensityLT",
+                     "aglu/A_LandNode_logit",
+                     "aglu/A_LandLeaf_Unmgd2",
+                     "aglu/A_LandLeaf2",
+                     "aglu/A_LT_Mapping",
+                     "L121.CarbonContent_kgm2_R_LT_GLU",
+                     "L125.LC_bm2_R_LT_Yh_GLU") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L222.LN2_UnmgdAllocation_noprot
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L222.LN2_UnmgdCarbon") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L222.LN2_UnmgdCarbon
+    # tibble() %>%
+    #   add_title("descriptive title of data") %>%
+    #   add_units("units") %>%
+    #   add_comments("comments describing how data generated") %>%
+    #   add_comments("can be multiple lines") %>%
+    #   add_legacy_name("L222.LN2_UnmgdCarbon") %>%
+    #   add_precursors("common/GCAM_region_names",
+    #                  "water/basin_to_country_mapping",
+    #                  "aglu/GCAMLandLeaf_CdensityLT",
+    #                  "aglu/A_LandNode_logit",
+    #                  "aglu/A_LandLeaf_Unmgd2",
+    #                  "aglu/A_LandLeaf2",
+    #                  "aglu/A_LT_Mapping",
+    #                  "L121.CarbonContent_kgm2_R_LT_GLU",
+    #                  "L125.LC_bm2_R_LT_Yh_GLU") %>%
+    #   # typical flags, but there are others--see `constants.R`
+    #   add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    #   L222.LN2_UnmgdCarbon
 
     tibble() %>%
       add_title("descriptive title of data") %>%
@@ -195,7 +351,15 @@ module_aglu_L222.land_input_2_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L222.LN1_Logit_prot") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/GCAM_region_names",
+                     "water/basin_to_country_mapping",
+                     "aglu/GCAMLandLeaf_CdensityLT",
+                     "aglu/A_LandNode_logit",
+                     "aglu/A_LandLeaf_Unmgd2",
+                     "aglu/A_LandLeaf2",
+                     "aglu/A_LT_Mapping",
+                     "L121.CarbonContent_kgm2_R_LT_GLU",
+                     "L125.LC_bm2_R_LT_Yh_GLU") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L222.LN1_Logit_prot
@@ -206,7 +370,15 @@ module_aglu_L222.land_input_2_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L222.LN1_HistUnmgdAllocation_prot") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/GCAM_region_names",
+                     "water/basin_to_country_mapping",
+                     "aglu/GCAMLandLeaf_CdensityLT",
+                     "aglu/A_LandNode_logit",
+                     "aglu/A_LandLeaf_Unmgd2",
+                     "aglu/A_LandLeaf2",
+                     "aglu/A_LT_Mapping",
+                     "L121.CarbonContent_kgm2_R_LT_GLU",
+                     "L125.LC_bm2_R_LT_Yh_GLU") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L222.LN1_HistUnmgdAllocation_prot
@@ -217,7 +389,15 @@ module_aglu_L222.land_input_2_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L222.LN1_UnmgdAllocation_prot") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/GCAM_region_names",
+                     "water/basin_to_country_mapping",
+                     "aglu/GCAMLandLeaf_CdensityLT",
+                     "aglu/A_LandNode_logit",
+                     "aglu/A_LandLeaf_Unmgd2",
+                     "aglu/A_LandLeaf2",
+                     "aglu/A_LT_Mapping",
+                     "L121.CarbonContent_kgm2_R_LT_GLU",
+                     "L125.LC_bm2_R_LT_Yh_GLU") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L222.LN1_UnmgdAllocation_prot
@@ -228,7 +408,15 @@ module_aglu_L222.land_input_2_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L222.LN1_UnmgdCarbon_prot") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/GCAM_region_names",
+                     "water/basin_to_country_mapping",
+                     "aglu/GCAMLandLeaf_CdensityLT",
+                     "aglu/A_LandNode_logit",
+                     "aglu/A_LandLeaf_Unmgd2",
+                     "aglu/A_LandLeaf2",
+                     "aglu/A_LT_Mapping",
+                     "L121.CarbonContent_kgm2_R_LT_GLU",
+                     "L125.LC_bm2_R_LT_Yh_GLU") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L222.LN1_UnmgdCarbon_prot
