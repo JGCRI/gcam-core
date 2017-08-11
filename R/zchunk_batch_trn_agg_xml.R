@@ -58,7 +58,7 @@ module_socio_batch_trn_agg_xml <- function(command, ...) {
       add_xml_data(L252.IncomeElasticity_trn_gSSP2, "IncomeElasticity") %>%
       add_precursors("L252.IncomeElasticity_trn_gSSP2") ->
       trn_agg_gSSP2.xml
-    create_xml("trn_agg_SSP3.xml") %>%
+    create_xml("trn_agg_gSSP3.xml") %>%
       add_xml_data(L252.IncomeElasticity_trn_gSSP3, "IncomeElasticity") %>%
       add_precursors("L252.IncomeElasticity_trn_gSSP3") ->
       trn_agg_gSSP3.xml
@@ -66,7 +66,7 @@ module_socio_batch_trn_agg_xml <- function(command, ...) {
       add_xml_data(L252.IncomeElasticity_trn_gSSP4, "IncomeElasticity") %>%
       add_precursors("L252.IncomeElasticity_trn_gSSP4") ->
       trn_agg_gSSP4.xml
-    create_xml("trn_agg_SSP5.xml") %>%
+    create_xml("trn_agg_gSSP5.xml") %>%
       add_xml_data(L252.IncomeElasticity_trn_gSSP5, "IncomeElasticity") %>%
       add_precursors("L252.IncomeElasticity_trn_gSSP5") ->
       trn_agg_gSSP5.xml
