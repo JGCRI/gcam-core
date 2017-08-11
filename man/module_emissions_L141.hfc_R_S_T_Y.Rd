@@ -18,8 +18,8 @@ the generated outputs: \code{L141.hfc_R_S_T_Yh}, \code{L141.hfc_ef_R_cooling_Yh}
 original data system was \code{L141.hfc_R_S_T_Y.R} (emissions level1).
 }
 \description{
-Calculated HFC emissions from EDGAR, by residential and commercial cooling shares,
-adjusted to match Guus Velders HFC inventory
+Calculate HFC emissions from EDGAR, by residential and commercial cooling shares,
+adjusted to match the Guus Velders HFC inventory.
 }
 \details{
 Describe in detail what this chunk does.
