@@ -14,7 +14,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RMH Aug 2017
-#' @export
 
 module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -63,6 +62,13 @@ module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
     EDGAR_HFC43 <- get_data(all_data, "emissions/EDGAR/EDGAR_HFC43")
     HFC_Inventory_GV <- get_data(all_data, "emissions/HFC_Inventory_GV")
 
+    # Silence Package check notes
+    "." <- "year" <- "value" <- "GCAM_region_ID" <- "sector" <- "fuel" <- "service" <-
+    "IPCC_description" <- "agg_sector" <- "ISO_A3" <- "iso" <- "EDGAR_agg_sector" <-
+    "Non.CO2" <- "emissions" <- "Sector" <- "total" <- "share" <- "Species" <- "Emissions" <-
+    "SSP2_tot" <- "EDGAR_tot" <- "scaler" <- "supplysector" <- "subsector" <- "stub.technology" <-
+    "adj_emissions" <- "energy" <- "em_fact"
+
     # Beginning processing and Mapping EDGAR HFC emissions to GCAM technologies
 
     # Add column with Non.CO2 gas name
@@ -83,7 +89,7 @@ module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
     format_F_Gas <- function(x){
       x <- x %>%
         left_join_error_no_match(EDGAR_sector %>% select(-IPCC_description), by = "IPCC") %>% # Add Edgar agg_sector
-        mutate(EDGAR_agg_sector = agg_sector) %>% #rename agg_sector to EDGAR_agg_sector
+        rename(EDGAR_agg_sector = agg_sector) %>% #rename agg_sector to EDGAR_agg_sector
         mutate(iso = tolower(ISO_A3), ISO_A3 = NULL) %>% # convert to Edgar ISO
         change_iso_code('rou', 'rom') %>% # Convert Romania iso code to pre-2002 value
         left_join_error_no_match(iso_GCAM_regID,by = "iso") %>% # Map iso to GCAM region
@@ -152,7 +158,7 @@ module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
       replace_na(list(share=1)) %>% # replace those shares with "1"
       mutate(emissions = emissions * share)
 
-    # Scale HFC Emissions to Guus Velders HFC inventory (year 2010), where available
+    # Scale HFC Emissions to SSP2 HFC (Guus Velders) inventory (year 2010), where available
 
     # EDGAR data doesn't have 2010 data, so match EDGAR 2008 data with GV 2010 data
     # Duplicate EDGAR 2008 data and rename as 2010
@@ -160,17 +166,17 @@ module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
     TEMP$year <- 2010
     L141.hfc_R_S_T_Yh_share <- bind_rows(L141.hfc_R_S_T_Yh_share, TEMP)
 
-    # Process Guus inventory
+    # Process SSP2 HFC (Guus Velders) inventory
     HFC_Inventory_GV <- HFC_Inventory_GV %>% mutate(Species = gsub("-","", Species)) %>%
       mutate(Species = gsub("4310mee", "43",Species)) %>%
-      rename(Guus_tot = Emissions)
+      rename(SSP2_tot = Emissions)
 
-    # Add Guus values to HFC emissions then calculate scalar
+    # Add SSP2 values to EDGAR HFC emissions then calculate scalar
     L141.hfc_scaler <- L141.hfc_R_S_T_Yh_share %>% group_by(year,Non.CO2) %>%
       summarize(EDGAR_tot = sum(emissions))%>%
       arrange(Non.CO2,year) %>%
       left_join(HFC_Inventory_GV, by = c(year = "Year", Non.CO2 = "Species")) %>% # some entries not in GUUS data, default to scaler =1
-      mutate(scaler = Guus_tot / EDGAR_tot) %>%
+      mutate(scaler = SSP2_tot / EDGAR_tot) %>%
       replace_na(list(scaler = 1)) %>%
       mutate_at(vars(), funs(replace(., is.infinite(.), 1))) %>% # replace na and Infinite values with 1.
         # If a real scalar isn't calculated (ie: no GV value or EDGAR = 0) to match to GV data, keep the EDGAR value.
@@ -197,7 +203,7 @@ module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
       rename(value = em_fact)
 
     # Produce outputs
-   L141.hfc_R_S_T_Yh %>%
+    L141.hfc_R_S_T_Yh %>%
       add_title("HFC emissions by region / sector / technology / gas / historical year") %>%
       add_units("Gg") %>%
       add_comments("Edgar emissions, scaled to Guus HFC inventory for residential and commercial cooling") %>%
