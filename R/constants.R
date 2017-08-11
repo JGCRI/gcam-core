@@ -94,6 +94,10 @@ MIN_HA_TO_CROPLAND <- 1
 # Cited in: Monfreda et al. 2008, Farming the Planet: 2., Global Biogeochemical Cycles 22, GB1022, http://dx.doi.org/10.1029/2007GB002947
 MAX_HA_TO_CROPLAND <- 3
 
+# Maximum portion of any land use region's pastures that can be in production
+MAX_MGDPAST_FRAC <- 0.95
+MAX_MGDFOR_FRAC <- 1
+
 # Yield multiplier that goes from the observed yield to the "high" and "low" yields: observed plus or minus observed times this number
 MGMT_YIELD_ADJ <- 0.1
 
@@ -159,7 +163,9 @@ aglu.FERT_NAME <- "N fertilizer"
 # To Page's knowledge, nobody's ever done a weighted average wood density
 # across all tree species that are commercially logged;
 # 500 was was chosen to be towards the middle of the species that are produced.
-aglu.AVG_WOOD_DENSITY_KGM3 <- 500
+aglu.AVG_WOOD_DENSITY_KGM3 <- 500 # In kg per m3
+# Carbon content of wood is about 50 percent across species
+aglu.AVG_WOOD_DENSITY_KGCM3 <- 250 # In kg carbon per m3
 
 # Average Agriculture Density kg/m^3 for mass conversion
 # Source: http://www.engineeringtoolbox.com/wood-density-d_40.html
