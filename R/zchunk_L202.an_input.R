@@ -68,7 +68,7 @@ module_aglu_L202.an_input <- function(command, ...) {
 
     year <- market <- region <- renewresource <- GCAM_commodity <- GCAM_region_ID <- Prod_Mt <- value <-
       sub.renewable.resource <- year <- price <- unlimited.resource <- technology <- supplysector <-
-      subsector <- share.weight <- calOutputValue <- subs.share.weight <- coefficient <-
+      subsector <- share.weight <- calOutputValue <- subs.share.weight <- coefficient <- maxSubResource <-
       stub.technology <- output_supplysector <- grade <- extractioncost <- calPrice <- unit <- share_Fd <-
       feed <- wtd_price <- Feed_Mt <- FeedPrice_USDkg <- FeedCost_bilUSD <- CommodityPrice_USDkg <-
       FeedCost_USDkg <- nonFeedCost <- NetExp_Mt <- share.weight.year <- fixedOutput <- ethanol <-
