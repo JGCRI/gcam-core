@@ -17,7 +17,6 @@
 module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L102.ag_Prod_Mt_R_C_GLU",
-             "L102.ag_HA_bm2_R_C_GLU",
              "L108.ag_Feed_Mt_R_C_Y",
              "L110.For_ALL_bm3_R_Y",
              "L120.LC_bm2_R_LT_Yh_GLU",
@@ -37,7 +36,6 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
 
     # Load required inputs
     L102.ag_Prod_Mt_R_C_GLU <- get_data(all_data, "L102.ag_Prod_Mt_R_C_GLU")
-    L102.ag_HA_bm2_R_C_GLU <- get_data(all_data, "L102.ag_HA_bm2_R_C_GLU")
     L108.ag_Feed_Mt_R_C_Y <- get_data(all_data, "L108.ag_Feed_Mt_R_C_Y")
     L110.For_ALL_bm3_R_Y <- get_data(all_data, "L110.For_ALL_bm3_R_Y") %>% unique
     L120.LC_bm2_R_LT_Yh_GLU <- get_data(all_data, "L120.LC_bm2_R_LT_Yh_GLU")
@@ -94,7 +92,7 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
       mutate(frac = replace(frac, frac > MAX_MGDPAST_FRAC, MAX_MGDPAST_FRAC),
              # Recalculate managed pasture land, adjusted by assumed maximum portion that can be managed
              MgdPast_adj = value * frac) %>%
-      select(-frac, -MgdPast, -value) ->
+      select(-MgdPast, -value) ->
       L123.LC_bm2_R_MgdPast_Y_GLU_adj
 
     # Calculate pasture yield (after adjustments)
@@ -103,7 +101,7 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
                                by = c("GCAM_region_ID", "GCAM_commodity" = "Land_Type", "GLU", "year")) %>%
       mutate(value = value / MgdPast_adj) %>%
       replace_na(list(value = 0)) %>%
-      select(-MgdPast_adj) ->
+      select(-MgdPast_adj, -frac) ->
       L123.ag_Yield_kgm2_R_Past_Y_GLU
 
     # Multiply "managed" shares in the earliest available year by prior pasture land cover pathway to get historical managed pasture
@@ -114,9 +112,14 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
       select(-year) %>%
       right_join(filter(L120.LC_bm2_R_LT_Yh_GLU, Land_Type == "Pasture", year %in% PREAGLU_YEARS),
                  by = c("GCAM_region_ID", "Land_Type", "GLU")) %>%
-      mutate(value = value * MgdPast_adj) %>%
-      select(-MgdPast_adj) %>%
-      bind_rows(rename(L123.LC_bm2_R_MgdPast_Y_GLU_adj, value = MgdPast_adj)) %>%
+      mutate(value = value * frac) %>%
+      select(-MgdPast_adj, -frac) ->
+      L123.LC_bm2_R_MgdPast_Yh_GLU
+
+    L123.LC_bm2_R_MgdPast_Y_GLU_adj %>%
+      rename(value = MgdPast_adj) %>%
+      select(-frac) %>%
+      bind_rows(L123.LC_bm2_R_MgdPast_Yh_GLU) %>%
       filter(year %in% aglu.LAND_COVER_YEARS) ->
       L123.LC_bm2_R_MgdPast_Yh_GLU
 
@@ -179,12 +182,12 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
       unique %>%
       repeat_add_columns(tibble(year = PREAGLU_YEARS)) %>%
       bind_rows(L123.LC_bm2_R_MgdFor_Y_GLU) %>%
+      group_by(GCAM_region_ID, GLU) %>%
+      mutate(MgdFor = replace(MgdFor, year %in% PREAGLU_YEARS, MgdFor[year == min(AGLU_HISTORICAL_YEARS)])) %>%
+      ungroup %>%
       left_join(L123.PopRatio_R_Yhh, by = c("GCAM_region_ID", "year")) %>%
       replace_na(list(PopRatio = 1)) %>%
-      group_by(GCAM_region_ID, GLU) %>%
-      mutate(MgdFor = replace(MgdFor, year %in% PREAGLU_YEARS, MgdFor[year == min(AGLU_HISTORICAL_YEARS)]),
-             MgdFor = MgdFor * PopRatio) %>%
-      ungroup %>%
+      mutate(MgdFor = MgdFor * PopRatio) %>%
       select(-PopRatio) %>%
       filter(year %in% aglu.LAND_COVER_YEARS) ->
       L123.LC_bm2_R_MgdFor_Yh_GLU
@@ -201,21 +204,22 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
       # Re-set missing values to zeroes
       replace_na(list(frac = 0)) %>%
       mutate(frac = replace(frac, frac > MAX_MGDFOR_FRAC, MAX_MGDFOR_FRAC)) %>%
-      left_join_error_no_match(L123.LC_bm2_R_MgdFor_Yh_GLU, by = c("GCAM_region_ID", "Land_Type", "GLU", "year")) %>%
+      left_join_error_no_match(filter(L120.LC_bm2_R_LT_Yh_GLU, Land_Type == "Forest", year %in% aglu.LAND_COVER_YEARS),
+                               by = c("GCAM_region_ID", "Land_Type", "GLU", "year")) %>%
       # Recalculate managed forest land, adjusted by assumed maximum portion that can be managed
-      mutate(value = MgdFor * frac) %>%
-      select(-MgdFor, -frac) ->
+      mutate(value = value * frac) %>%
+      select(-frac) ->
       L123.LC_bm2_R_MgdFor_Yh_GLU
 
     # Recalculate forestry yield
     L123.For_Prod_bm3_R_Y_GLU %>%
-      left_join_error_no_match(filter(L123.LC_bm2_R_MgdFor_Y_GLU, year %in% AGLU_HISTORICAL_YEARS),
+      left_join_error_no_match(rename(L123.LC_bm2_R_MgdFor_Yh_GLU, MgdFor = value),
                                by = c("GCAM_region_ID", "GCAM_commodity" = "Land_Type", "GLU", "year")) %>%
       mutate(value = value / MgdFor) %>%
       select(-MgdFor) ->
       L123.For_Yield_m3m2_R_GLU
 
-    #Set missing values to an assumed minimum forestry yield, from the data where available
+    # Set missing values to an assumed minimum forestry yield, from the data where available
     L123.For_Yield_m3m2_R_GLU %>%
       filter(year == min(HISTORICAL_YEARS)) %>%
       select(value) %>%
@@ -284,13 +288,13 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
       same_precursors_as("L123.For_Prod_bm3_R_Y_GLU") %>%
       add_precursors("L101.Pop_thous_R_Yh") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT) ->
       L123.LC_bm2_R_MgdFor_Yh_GLU
 
     L123.For_Yield_m3m2_R_GLU %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
+      add_comments("comments describing how data geonerated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L123.For_Yield_m3m2_R_GLU") %>%
       same_precursors_as("L123.LC_bm2_R_MgdFor_Yh_GLU") %>%
