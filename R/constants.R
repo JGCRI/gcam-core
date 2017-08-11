@@ -33,6 +33,7 @@ SSP_FUTURE_YEARS <- c(2010, FUTURE_YEARS)
 GHG_CONTROL_READIN_YEAR <- 1975
 BASE_YEAR_IFA <- 2006
 
+
 # GCAM constants ======================================================================
 
 gcam.USA_CODE <- 1
@@ -144,10 +145,6 @@ aglu.BIO_ENERGY_CONTENT_GJT <- 17.5  # Energy content of biomass, GJ/ton
 aglu.HIGH_GROWTH_PCGDP <- 12.275   # thousand 2010$ per person
 aglu.LOW_GROWTH_PCGDP  <- 2.75     # thousand 2010$ per person
 
-# Number of digits for model input data
-aglu.DIGITS_CALPRICE  <- 4 # prices and costs
-aglu.DIGITS_CALOUTPUT <- 7 # production
-
 # Regions in which agriculture and land use are not modeled
 aglu.NO_AGLU_REGIONS <- "Taiwan"
 
@@ -229,17 +226,21 @@ DEFAULT_ELECTRIC_EFFICIENCY <- 0.33
 ELECTRICITY_INPUT_FUELS<- c("biomass", "coal", "gas", "refined liquids")
 
 energy.CLIMATE_NORMAL_YEARS <- 1981:2000
+energy.RSRC_FUELS <- c("coal", "gas", "refined liquids")
+
 
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
 
-# Mass
+# Numeric (unitless)
 CONV_BIL_MIL <- 1000
 CONV_MIL_BIL <- 1 / CONV_BIL_MIL
 CONV_BIL_THOUS <- 1e6
 CONV_THOUS_BIL <- 1 / CONV_BIL_THOUS
 CONV_MIL_THOUS <- 1000
 CONV_ONES_THOUS <- 0.001
+
+# Mass
 CONV_TON_MEGATON <- 1e-6
 CONV_T_KG <- 1e3
 CONV_KG_T <- 1 / CONV_T_KG
@@ -269,6 +270,7 @@ CONV_MWH_GJ <- 3.6 # Megawatt hours to Gigajoules
 CONV_GWH_EJ <- 3.6e-6
 CONV_KWH_GJ <- 3.6e-3
 CONV_GJ_EJ <- 1e-9
+CONV_BBLD_EJYR <- 6.119 * 365.25 * 1e-3 # billion barrels a day to EJ per year
 
 # Other
 CONV_MCAL_PCAL <- 1e-9
@@ -291,6 +293,7 @@ driver.DECLARE_INPUTS <- "DECLARE_INPUTS"
 # MAGICC model assumptions
 modeltime.MAGICC_LAST_HISTORICAL_YEAR <- 2005
 modeltime.MAGICC_BC_UNIT_FORCING <- 0
+modeltime.MAGICC_DEFAULT_EMISS_FILE <- "../input/magicc/Historical Emissions/Default Emissions Module/Hist_to_2008_Annual.csv"
 modeltime.MAGICC_C_START_YEAR <- 1705
 
 # Hector model assumptions
@@ -359,7 +362,6 @@ emissions.GAINS_BASE_YEAR <- 2005
 emissions.GAINS_YEARS <- c(2010, 2020, 2030)
 emissions.LOW_PCGDP <- 2.75
 emissions.COAL_SO2_THRESHOLD <- 0.1
-# ======================================================================
 
 emissions.NH3_EXTRA_YEARS      <- 1971:1989
 emissions.EDGAR_YEARS          <- 1971:2008

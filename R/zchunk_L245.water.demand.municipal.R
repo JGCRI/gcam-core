@@ -39,6 +39,9 @@ module_water_L245.water.demand.municipal <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    logit.type <- GCAM_region_ID <- region <- water_type <- coefficient <-
+      water_sector <- year <- value <- NULL  # silence package check notes
+
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A03.sector <- get_data(all_data, "water/A03.sector")
