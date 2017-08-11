@@ -620,7 +620,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       add_title("Costs of animal production technologies") %>%
       add_units("1975$/kg") %>%
       add_comments("Animal feed cost, prices, and technology") %>%
-      qdd_comments("This is the non-feed cost; i.e., all costs of producing animal commodities except for the feed.") %>%
+      add_comments("This is the non-feed cost; i.e., all costs of producing animal commodities except for the feed.") %>%
       add_legacy_name("L202.GlobalTechCost_an") %>%
       same_precursors_as(L202.StubTechCoef_an) %>%
       add_precursors("L132.ag_an_For_Prices", "L107.an_Feed_Mt_R_C_Sys_Fd_Y") ->
