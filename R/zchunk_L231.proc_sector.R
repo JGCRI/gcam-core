@@ -17,7 +17,7 @@
 module_emissions_L231.proc_sector <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
-             FILE = "emissions/A_regions", # Units and source
+             FILE = "emissions/A_regions",
              FILE = "emissions/A31.rsrc_info", # Units and source
              FILE = "emissions/A31.sector", # Units and source
              FILE = "emissions/A31.subsector_logit", # Units and source
@@ -63,7 +63,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     A31.subsector_shrwt <- get_data(all_data, "emissions/A31.subsector_shrwt")
     A31.subsector_interp <- get_data(all_data, "emissions/A31.subsector_interp")
     A31.globaltech_shrwt <- get_data(all_data, "emissions/A31.globaltech_shrwt") %>%
-      gather(year, shareweight, matches(YEAR_PATTERN)) %>%
+      gather(year, share.weight, matches(YEAR_PATTERN)) %>%
       mutate(year = as.integer(year))
     A31.globaltech_eff <- get_data(all_data, "emissions/A31.globaltech_eff") %>%
       gather(year, efficiency, matches(YEAR_PATTERN)) %>%
@@ -150,9 +150,9 @@ module_emissions_L231.proc_sector <- function(command, ...) {
       distinct %>%
       repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, FUTURE_YEARS))) %>%
       left_join(A31.globaltech_shrwt, by = c("supplysector", "subsector", "technology", "year")) %>%
-      mutate(shareweight = approx_fun(year, value = shareweight, rule = 1)) %>%
+      mutate(share.weight = approx_fun(year, value = share.weight, rule = 1)) %>%
       filter(year %in% MODEL_YEARS) %>%
-      select(sector.name = supplysector, subsector.name = subsector, technology, year, shareweight)
+      select(sector.name = supplysector, subsector.name = subsector, technology, year, share.weight)
 
     # L231.GlobalTechEff_urb_ind: Energy inputs and coefficients of global urban & industrial processes technologies
     L231.GlobalTechEff_urb_ind <- A31.globaltech_eff %>%
@@ -287,8 +287,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
                    "energy/A32.globaltech_eff",
                    "emissions/mappings/GCAM_sector_tech",
                    "L1322.in_EJ_R_indfeed_F_Yh",
-                   "L1322.in_EJ_R_indenergy_F_Yh") %>%
-    add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                   "L1322.in_EJ_R_indenergy_F_Yh") ->
     L231.UnlimitRsrc
 
     L231.UnlimitRsrcPrice %>%
@@ -297,8 +296,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     add_comments("comments describing how data generated") %>%
     add_comments("can be multiple lines") %>%
     add_legacy_name("L231.UnlimitRsrcPrice") %>%
-    add_precursors("common/GCAM_region_names") %>%
-    add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    add_precursors("common/GCAM_region_names") ->
     L231.UnlimitRsrcPrice
 
     L231.FinalDemand_urb %>%
@@ -307,8 +305,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     add_comments("comments describing how data generated") %>%
     add_comments("can be multiple lines") %>%
     add_legacy_name("L231.FinalDemand_urb") %>%
-    add_precursors("common/GCAM_region_names") %>%
-    add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    add_precursors("common/GCAM_region_names") ->
     L231.FinalDemand_urb
 
     L231.Supplysector_urb_ind %>%
@@ -317,8 +314,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     add_comments("comments describing how data generated") %>%
     add_comments("can be multiple lines") %>%
     add_legacy_name("L231.Supplysector_urb_ind") %>%
-    add_precursors("common/GCAM_region_names") %>%
-    add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    add_precursors("common/GCAM_region_names") ->
     L231.Supplysector_urb_ind
 
     L231.SubsectorLogit_urb_ind %>%
@@ -327,8 +323,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     add_comments("comments describing how data generated") %>%
     add_comments("can be multiple lines") %>%
     add_legacy_name("L231.SubsectorLogit_urb_ind") %>%
-    add_precursors("common/GCAM_region_names") %>%
-    add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    add_precursors("common/GCAM_region_names") ->
     L231.SubsectorLogit_urb_ind
 
     if (exists("L231.SubsectorShrwt_urb_ind")){
@@ -339,8 +334,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     add_comments("can be multiple lines") %>%
       # This was a mistake in the old data system - the wrong name was assigned, but because it didn't exist, no error was thrown
     add_legacy_name("L231.SubsectorShrwt_ind") %>%
-    add_precursors("common/GCAM_region_names") %>%
-    add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    add_precursors("common/GCAM_region_names") ->
     L231.SubsectorShrwt_urb_ind
     } else {
       tibble(x = NA) %>%
@@ -350,8 +344,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
         add_comments("can be multiple lines") %>%
         # This was a mistake in the old data system - the wrong name was assigned, but because it didn't exist, no error was thrown
         add_legacy_name("L231.SubsectorShrwt_ind") %>%
-        add_precursors("common/GCAM_region_names") %>%
-        add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+        add_precursors("common/GCAM_region_names") ->
         L231.SubsectorShrwt_urb_ind
     }
 
@@ -362,8 +355,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     add_comments("comments describing how data generated") %>%
     add_comments("can be multiple lines") %>%
     add_legacy_name("L231.SubsectorShrwtFllt_urb_ind") %>%
-    add_precursors("common/GCAM_region_names") %>%
-    add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    add_precursors("common/GCAM_region_names") ->
     L231.SubsectorShrwtFllt_urb_ind
     } else {
       tibble(x = NA) %>%
@@ -372,8 +364,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
         add_comments("comments describing how data generated") %>%
         add_comments("can be multiple lines") %>%
         add_legacy_name("L231.SubsectorShrwtFllt_urb_ind") %>%
-        add_precursors("common/GCAM_region_names") %>%
-        add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+        add_precursors("common/GCAM_region_names") ->
         L231.SubsectorShrwtFllt_urb_ind
     }
 
@@ -384,8 +375,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     add_comments("comments describing how data generated") %>%
     add_comments("can be multiple lines") %>%
     add_legacy_name("L231.SubsectorInterp_urb_ind") %>%
-    add_precursors("common/GCAM_region_names") %>%
-    add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    add_precursors("common/GCAM_region_names")  ->
     L231.SubsectorInterp_urb_ind
     } else {
       tibble(x = NA) %>%
@@ -394,8 +384,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
         add_comments("comments describing how data generated") %>%
         add_comments("can be multiple lines") %>%
         add_legacy_name("L231.SubsectorInterp_urb_ind") %>%
-        add_precursors("common/GCAM_region_names") %>%
-        add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+        add_precursors("common/GCAM_region_names") ->
         L231.SubsectorInterp_urb_ind
     }
 
@@ -406,8 +395,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     add_comments("comments describing how data generated") %>%
     add_comments("can be multiple lines") %>%
     add_legacy_name("L231.SubsectorInterpTo_urb_ind") %>%
-    add_precursors("common/GCAM_region_names") %>%
-    add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    add_precursors("common/GCAM_region_names") ->
     L231.SubsectorInterpTo_urb_ind
     } else {
       tibble(x = NA) %>%
@@ -416,8 +404,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
         add_comments("comments describing how data generated") %>%
         add_comments("can be multiple lines") %>%
         add_legacy_name("L231.SubsectorInterpTo_urb_ind") %>%
-        add_precursors("common/GCAM_region_names") %>%
-        add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+        add_precursors("common/GCAM_region_names") ->
         L231.SubsectorInterpTo_urb_ind
     }
 
@@ -427,8 +414,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     add_comments("comments describing how data generated") %>%
     add_comments("can be multiple lines") %>%
     add_legacy_name("L231.StubTech_urb_ind") %>%
-    add_precursors("common/GCAM_region_names") %>%
-    add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    add_precursors("common/GCAM_region_names") ->
     L231.StubTech_urb_ind
 
     L231.GlobalTechShrwt_urb_ind %>%
@@ -437,8 +423,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     add_comments("comments describing how data generated") %>%
     add_comments("can be multiple lines") %>%
     add_legacy_name("L231.GlobalTechShrwt_urb_ind") %>%
-    add_precursors("common/GCAM_region_names") %>%
-    add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    add_precursors("common/GCAM_region_names") ->
     L231.GlobalTechShrwt_urb_ind
 
     L231.GlobalTechEff_urb_ind %>%
@@ -447,8 +432,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     add_comments("comments describing how data generated") %>%
     add_comments("can be multiple lines") %>%
     add_legacy_name("L231.GlobalTechEff_urb_ind") %>%
-    add_precursors("common/GCAM_region_names") %>%
-    add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    add_precursors("common/GCAM_region_names")->
     L231.GlobalTechEff_urb_ind
 
     L231.GlobalTechCoef_urb_ind %>%
@@ -457,8 +441,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     add_comments("comments describing how data generated") %>%
     add_comments("can be multiple lines") %>%
     add_legacy_name("L231.GlobalTechCoef_urb_ind") %>%
-    add_precursors("common/GCAM_region_names") %>%
-    add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    add_precursors("common/GCAM_region_names") ->
     L231.GlobalTechCoef_urb_ind
 
     L231.GlobalTechCost_urb_ind %>%
@@ -467,8 +450,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     add_comments("comments describing how data generated") %>%
     add_comments("can be multiple lines") %>%
     add_legacy_name("L231.GlobalTechCost_urb_ind") %>%
-    add_precursors("common/GCAM_region_names") %>%
-    add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    add_precursors("common/GCAM_region_names") ->
     L231.GlobalTechCost_urb_ind
 
     L231.RegionalTechCalValue_urb_ind %>%
@@ -477,8 +459,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     add_comments("comments describing how data generated") %>%
     add_comments("can be multiple lines") %>%
     add_legacy_name("L231.RegionalTechCalValue_urb_ind") %>%
-    add_precursors("common/GCAM_region_names") %>%
-    add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    add_precursors("common/GCAM_region_names") ->
     L231.RegionalTechCalValue_urb_ind
 
     L231.IndCoef %>%
@@ -487,11 +468,10 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     add_comments("comments describing how data generated") %>%
     add_comments("can be multiple lines") %>%
     add_legacy_name("L231.IndCoef") %>%
-    add_precursors("common/GCAM_region_names") %>%
-    add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    add_precursors("common/GCAM_region_names") ->
     L231.IndCoef
 
-    return_data(L231.UnlimitRsrc, L231.UnlimitRsrcPrice, L231.FinalDemand_urb, L231.SectorLogitTables[[ curr_table ]]$data, L231.Supplysector_urb_ind, L231.SubsectorLogitTables[[ curr_table ]]$data, L231.SubsectorLogit_urb_ind, L231.SubsectorShrwt_urb_ind, L231.SubsectorShrwtFllt_urb_ind, L231.SubsectorInterp_urb_ind, L231.SubsectorInterpTo_urb_ind, L231.StubTech_urb_ind, L231.GlobalTechShrwt_urb_ind, L231.GlobalTechEff_urb_ind, L231.GlobalTechCoef_urb_ind, L231.GlobalTechCost_urb_ind, L231.RegionalTechCalValue_urb_ind, L231.IndCoef)
+    return_data(L231.UnlimitRsrc, L231.UnlimitRsrcPrice, L231.FinalDemand_urb, L231.Supplysector_urb_ind, L231.SubsectorLogit_urb_ind, L231.SubsectorShrwt_urb_ind, L231.SubsectorShrwtFllt_urb_ind, L231.SubsectorInterp_urb_ind, L231.SubsectorInterpTo_urb_ind, L231.StubTech_urb_ind, L231.GlobalTechShrwt_urb_ind, L231.GlobalTechEff_urb_ind, L231.GlobalTechCoef_urb_ind, L231.GlobalTechCost_urb_ind, L231.RegionalTechCalValue_urb_ind, L231.IndCoef)
   } else {
     stop("Unknown command")
   }
