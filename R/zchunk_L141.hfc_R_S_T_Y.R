@@ -61,12 +61,11 @@ module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
     EDGAR_HFC43 <- get_data(all_data, "emissions/EDGAR/EDGAR_HFC43")
     HFC_Inventory_GV <- get_data(all_data, "emissions/HFC_Inventory_GV")
 
-    # Silence Package check notes
-    "." <- "year" <- "value" <- "GCAM_region_ID" <- "sector" <- "fuel" <- "service" <-
-      "IPCC_description" <- "agg_sector" <- "ISO_A3" <- "iso" <- "EDGAR_agg_sector" <-
-      "Non.CO2" <- "emissions" <- "Sector" <- "total" <- "share" <- "Species" <- "Emissions" <-
-      "SSP2_tot" <- "EDGAR_tot" <- "scaler" <- "supplysector" <- "subsector" <- "stub.technology" <-
-      "adj_emissions" <- "energy" <- "em_fact"
+    . <- year <- value <- GCAM_region_ID <- sector <- fuel <- service <-
+      IPCC_description <- agg_sector <- ISO_A3 <- iso <- EDGAR_agg_sector <-
+      Non.CO2 <- emissions <- Sector <- total <- share <- Species <- Emissions <-
+      SSP2_tot <- EDGAR_tot <- scaler <- supplysector <- subsector <- stub.technology <-
+      adj_emissions <- energy <- em_fact <- NULL  # silence package check notes
 
     # Beginning processing and Mapping EDGAR HFC emissions to GCAM technologies
 
@@ -126,9 +125,9 @@ module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
 
     # Map Emissions to GCAM technologies
     L141.hfc_R_S_T_Yh.long <- gcam_fgas_tech %>%
-      repeat_add_columns(tibble::tibble(GCAM_region_ID = unique(GCAM_region_names$GCAM_region_ID))) %>%
-      repeat_add_columns(tibble::tibble(year = emissions.EDGAR_YEARS)) %>%
-      repeat_add_columns(tibble::tibble(Non.CO2 = unique(L141.EDGAR_hfc_R_S_T_Yh.long$Non.CO2))) %>%
+      repeat_add_columns(tibble(GCAM_region_ID = unique(GCAM_region_names$GCAM_region_ID))) %>%
+      repeat_add_columns(tibble(year = emissions.EDGAR_YEARS)) %>%
+      repeat_add_columns(tibble(Non.CO2 = unique(L141.EDGAR_hfc_R_S_T_Yh.long$Non.CO2))) %>%
       left_join(L141.EDGAR_hfc_R_S_T_Yh.long,
                 by = c("EDGAR_agg_sector", "GCAM_region_ID", "year", "Non.CO2")) %>% # there should be NAs as some sectors have no emissions
       replace_na(list(emissions = 0)) # replace NAs with zero
@@ -166,12 +165,14 @@ module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
     L141.hfc_R_S_T_Yh_share <- bind_rows(L141.hfc_R_S_T_Yh_share, TEMP)
 
     # Process SSP2 HFC (Guus Velders) inventory
-    HFC_Inventory_GV <- HFC_Inventory_GV %>% mutate(Species = gsub("-", "", Species)) %>%
-      mutate(Species = gsub("4310mee", "43", Species)) %>%
+    HFC_Inventory_GV <- HFC_Inventory_GV %>%
+      mutate(Species = gsub("-", "", Species),
+             Species = gsub("4310mee", "43", Species)) %>%
       rename(SSP2_tot = Emissions)
 
     # Add SSP2 values to EDGAR HFC emissions then calculate scalar
-    L141.hfc_scaler <- L141.hfc_R_S_T_Yh_share %>% group_by(year,Non.CO2) %>%
+    L141.hfc_scaler <- L141.hfc_R_S_T_Yh_share %>%
+      group_by(year, Non.CO2) %>%
       summarize(EDGAR_tot = sum(emissions))%>%
       arrange(Non.CO2, year) %>%
       left_join(HFC_Inventory_GV, by = c(year = "Year", Non.CO2 = "Species")) %>% # some entries not in GUUS data, default to scaler =1
@@ -194,7 +195,7 @@ module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
     L141.hfc_ef_R_cooling_Yh <- L141.hfc_R_S_T_Yh %>%
       filter(supplysector %in% c("comm cooling", "resid cooling"), year %in% HISTORICAL_YEARS) %>%
       left_join_error_no_match(L141.R_cooling_T_Yh.long %>% select(GCAM_region_ID, year, service, energy = value),
-                               by = c("GCAM_region_ID", "year","supplysector" = "service")) %>%
+                               by = c("GCAM_region_ID", "year", "supplysector" = "service")) %>%
       rename(adj_emissions = value) %>%
       mutate(em_fact = adj_emissions / energy) %>%
       select(GCAM_region_ID, supplysector, subsector, stub.technology, Non.CO2, year, em_fact) %>%
