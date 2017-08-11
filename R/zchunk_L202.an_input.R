@@ -546,8 +546,8 @@ module_aglu_L202.an_input <- function(command, ...) {
       add_units("NA") %>%
       add_comments("A_an_input_technology across all base and future years") %>%
       add_comments("These technologies are pass-through, used for competing different primary sources for animal feed commodities.
-                   No transformations are taking place, and the coefficients are 1 in all years.")
-    add_legacy_name("L202.GlobalTechCoef_in") %>%
+                   No transformations are taking place, and the coefficients are 1 in all years.") %>%
+      add_legacy_name("L202.GlobalTechCoef_in") %>%
       add_precursors("aglu/A_an_input_technology", "common/GCAM_region_names") ->
       L202.GlobalTechCoef_in
 
@@ -562,8 +562,8 @@ module_aglu_L202.an_input <- function(command, ...) {
     L202.StubTechProd_in %>%
       add_title("Base year output of the inputs (feed types) to animal production") %>%
       add_units("Mt/yr") %>%
-      add_comments("Calibrated primary sources of animal feed commodities, specific to each region and time period.")
-    add_legacy_name("L202.StubTechProd_in") %>%
+      add_comments("Calibrated primary sources of animal feed commodities, specific to each region and time period.") %>%
+      add_legacy_name("L202.StubTechProd_in") %>%
       add_precursors("aglu/A_an_input_technology", "L107.an_FeedIO_R_C_Sys_Fd_Y",
                      "energy/A_regions", "common/GCAM_region_names") ->
       L202.StubTechProd_in
@@ -640,8 +640,8 @@ module_aglu_L202.an_input <- function(command, ...) {
       add_comments("A_an_supplysector and animal product mass balances written to all model years and regions") %>%
       add_comments("Prescribed trajectory of animal commodity imports by region; the final base year's values are
                    copied forward to all future model time periods (imports and exports of these secondary
-                   commodities are not represented from economic competition).")
-    add_legacy_name("L202.StubTechFixOut_imp_an") %>%
+                   commodities are not represented from economic competition).") %>%
+      add_legacy_name("L202.StubTechFixOut_imp_an") %>%
       add_precursors("aglu/A_an_supplysector", "L109.an_ALL_Mt_R_C_Y", "common/GCAM_region_names") ->
       L202.StubTechFixOut_imp_an
 
