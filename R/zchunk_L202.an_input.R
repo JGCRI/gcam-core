@@ -93,7 +93,8 @@ module_aglu_L202.an_input <- function(command, ...) {
     # Base table for resources - add region names to Level1 data tables (lines 49-70 old file)
 
     # Following datasets are already 'long' so just skip the old interpolate_and_melt step
-    get_join_filter <- function(x) {   # internal function as we do these steps 5 times below
+    # Helper function to get_data, join with GCAM region names, and filter to base years
+    get_join_filter <- function(x) {   #
       get_data(all_data, x) %>%
         left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
         filter(year %in% BASE_YEARS)
@@ -105,6 +106,8 @@ module_aglu_L202.an_input <- function(command, ...) {
     L202.an_ALL_Mt_R_C_Y <- get_join_filter("L109.an_ALL_Mt_R_C_Y")
 
     # L202.RenewRsrc: generic resource attributes
+    # Here, and in general below, we extend data across all GCAM regions for a particular set of
+    # level 2 output columns; here also substitute region data when market is "regional"
     A_agRsrc %>%
       write_to_all_regions(LEVEL2_DATA_NAMES[["RenewRsrc"]], GCAM_region_names) %>%
       mutate(market = if_else(market == "regional", region, market)) ->
@@ -125,18 +128,18 @@ module_aglu_L202.an_input <- function(command, ...) {
     L202.an_ALL_Mt_R_C_Y %>%
       filter(GCAM_commodity %in% A_agRsrcCurves$sub.renewable.resource) %>%
       group_by(region, GCAM_region_ID, GCAM_commodity) %>%
-      summarise(value = max(Prod_Mt)) ->
+      summarise(maxSubResource = max(Prod_Mt)) ->
       L202.maxSubResource_an
 
     L202.ag_Feed_Mt_R_C_Y.mlt %>%
       filter(GCAM_commodity %in% A_agRsrcCurves$sub.renewable.resource) %>%
       group_by(region, GCAM_region_ID, GCAM_commodity) %>%
-      summarise(value = max(value))  %>%
+      summarise(maxSubResource = max(value))  %>%
       # bind the two tables together, re-name the columns to the appropriate headers, and add in a sub.renewable.resource category
       bind_rows(L202.maxSubResource_an) %>%
       ungroup %>%
       mutate(sub.renewable.resource = GCAM_commodity,
-             maxSubResource = round(value, aglu.DIGITS_CALOUTPUT),
+             maxSubResource = round(maxSubResource, aglu.DIGITS_CALOUTPUT),
              year.fillout = min(BASE_YEARS)) %>%
       left_join_keep_first_only(select(A_agRsrcCurves, sub.renewable.resource, renewresource), by = "sub.renewable.resource") %>%
       select(one_of(LEVEL2_DATA_NAMES[["maxSubResource"]])) ->
@@ -245,20 +248,22 @@ module_aglu_L202.an_input <- function(command, ...) {
     # L202.StubTechProd_an: animal production by technology and region (177-199)
     A_an_technology %>%
       write_to_all_regions(LEVEL2_DATA_NAMES[["Tech"]], GCAM_region_names) %>%
-      mutate(stub.technology = technology) %>%
+      rename(stub.technology = technology) %>%
       repeat_add_columns(tibble(year = BASE_YEARS)) %>%
       left_join_error_no_match(L202.an_Prod_Mt_R_C_Sys_Fd_Y.mlt,
                                by = c("region", "supplysector" = "GCAM_commodity",
-                                      "subsector" = "system", "technology" = "feed",
+                                      "subsector" = "system", "stub.technology" = "feed",
                                       "year")) %>%
-      mutate(calOutputValue = round(value, aglu.DIGITS_CALOUTPUT)) %>%
-      # subsector and technology shareweights (subsector requires the year as well)
-      mutate(share.weight.year = year,
+      mutate(calOutputValue = round(value, aglu.DIGITS_CALOUTPUT),
+             # subsector and technology shareweights (subsector requires the year as well)
+             share.weight.year = year,
              subs.share.weight = if_else(calOutputValue > 0, 1, 0),
              tech.share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
       select(one_of(LEVEL2_DATA_NAMES[["StubTechProd"]])) ->
       L202.StubTechProd_an
 
+    # In general, technologies need to be aggregated to compute subsector share-weights. If any technology
+    # within a subsector has a value > 0, then the subsector share-weight should be 1.
     # Some subsectors have multiple technologies, so shareweights should be derived from aggregation
     L202.StubTechProd_an %>%
       group_by(region, supplysector, subsector, year) %>%
@@ -276,7 +281,7 @@ module_aglu_L202.an_input <- function(command, ...) {
     # L202.StubTechCoef_an: animal production input-output coefficients by technology and region (201-214)
     A_an_technology %>%
       write_to_all_regions(c(LEVEL2_DATA_NAMES[["Tech"]], "minicam.energy.input", "market.name"), GCAM_region_names) %>%
-      mutate(stub.technology = technology) %>%
+      rename(stub.technology = technology) %>%
       repeat_add_columns(tibble(year = c(BASE_YEARS, FUTURE_YEARS))) %>%
       # not everything has a match so need to use left_join
       left_join(L202.an_FeedIO_R_C_Sys_Fd_Y.mlt,
@@ -293,7 +298,7 @@ module_aglu_L202.an_input <- function(command, ...) {
     L202.StubTechCoef_an %>%
       filter(year > final_coef_year) %>%
       select(-coefficient) %>%
-      left_join(final_coef_year_data, by = c("region", "supplysector", "subsector", "technology", "minicam.energy.input", "market.name", "stub.technology")) %>%
+      left_join(final_coef_year_data, by = c("region", "supplysector", "subsector", "stub.technology", "minicam.energy.input", "market.name", "stub.technology")) %>%
       bind_rows(filter(L202.StubTechCoef_an, ! year > final_coef_year)) %>%
       select(one_of(LEVEL2_DATA_NAMES[["StubTechCoef"]])) ->
       L202.StubTechCoef_an
@@ -323,8 +328,8 @@ module_aglu_L202.an_input <- function(command, ...) {
       select(-calPrice, -unit, -extractioncost) ->
       L202.ag_Feed_P_share_R_C
 
-    # Remaining NA's are the ddgs/feedcakes. output is zero so no need for a price
-    # Still, go ahead and extract the name of this commodity for later use
+    # Remaining NA's are the ddgs/feedcakes. Output is zero so no need for a price;
+    # still, go ahead and extract the name of this commodity for later use
     L202.ag_Feed_P_share_R_C %>%
       filter(is.na(price)) %>%
       select(supplysector, subsector, technology = stub.technology) %>%
@@ -482,7 +487,7 @@ module_aglu_L202.an_input <- function(command, ...) {
 
     L202.RenewRsrcCurves %>%
       add_title("Renewable resource curves") %>%
-      add_units("units") %>%  # TODO
+      add_units("available: Unitless fraction of maxSubResource; extractioncost: 1975$/kg") %>%
       add_comments("A_agRsrcCurves written to all regions") %>%
       add_legacy_name("L202.RenewRsrcCurves") %>%
       add_precursors("aglu/A_agRsrcCurves", "common/GCAM_region_names") ->
@@ -490,7 +495,7 @@ module_aglu_L202.an_input <- function(command, ...) {
 
     L202.UnlimitedRenewRsrcCurves %>%
       add_title("Unlimited renewable resource curves") %>%
-      add_units("units") %>%   # TODO
+      add_units("Unitless") %>%
       add_comments("A_agUnlimitedRsrcCurves written to all regions") %>%
       add_legacy_name("L202.UnlimitedRenewRsrcCurves") %>%
       add_precursors("aglu/A_agUnlimitedRsrcCurves", "common/GCAM_region_names") ->
@@ -540,7 +545,9 @@ module_aglu_L202.an_input <- function(command, ...) {
       add_title("Coefficients for inputs to animal production") %>%
       add_units("NA") %>%
       add_comments("A_an_input_technology across all base and future years") %>%
-      add_legacy_name("L202.GlobalTechCoef_in") %>%
+      add_comments("These technologies are pass-through, used for competing different primary sources for animal feed commodities.
+                   No transformations are taking place, and the coefficients are 1 in all years.")
+    add_legacy_name("L202.GlobalTechCoef_in") %>%
       add_precursors("aglu/A_an_input_technology", "common/GCAM_region_names") ->
       L202.GlobalTechCoef_in
 
@@ -554,9 +561,9 @@ module_aglu_L202.an_input <- function(command, ...) {
 
     L202.StubTechProd_in %>%
       add_title("Base year output of the inputs (feed types) to animal production") %>%
-      add_units("units") %>%   # TODO - what is calOutputValue units here?
-      add_comments("Animal production input-output coefficients written to all regions and base years") %>%
-      add_legacy_name("L202.StubTechProd_in") %>%
+      add_units("Mt/yr") %>%
+      add_comments("Calibrated primary sources of animal feed commodities, specific to each region and time period.")
+    add_legacy_name("L202.StubTechProd_in") %>%
       add_precursors("aglu/A_an_input_technology", "L107.an_FeedIO_R_C_Sys_Fd_Y",
                      "energy/A_regions", "common/GCAM_region_names") ->
       L202.StubTechProd_in
@@ -594,16 +601,16 @@ module_aglu_L202.an_input <- function(command, ...) {
       L202.StubTechInterp_an
 
     L202.StubTechProd_an %>%
-      add_title("Animal production by technology and region") %>%
+      add_title("Calibrated animal commodity production by technology") %>%
       add_units("Unitless") %>%
-      add_comments("Animal production written across model base years and regions") %>%
+      add_comments("Animal commodity production by subsector (mixed vs pastoral system) and technology (modeled feed commodity).") %>%
       add_legacy_name("L202.StubTechProd_an") %>%
       add_precursors("aglu/A_an_technology", "L107.an_Prod_Mt_R_C_Sys_Fd_Y", "common/GCAM_region_names") ->
       L202.StubTechProd_an
 
     L202.StubTechCoef_an %>%
       add_title("Animal production input-output coefficients by technology and region") %>%
-      add_units("Unitless") %>%
+      add_units("kg of dry feed per kg of produced animal commodity") %>%
       add_comments("Animal production input-output coefficients written across model base years and regions") %>%
       add_legacy_name("L202.StubTechCoef_an") %>%
       add_precursors("aglu/A_an_technology", "L107.an_Prod_Mt_R_C_Sys_Fd_Y", "common/GCAM_region_names") ->
@@ -611,8 +618,9 @@ module_aglu_L202.an_input <- function(command, ...) {
 
     L202.GlobalTechCost_an %>%
       add_title("Costs of animal production technologies") %>%
-      add_units("billion USD") %>%
+      add_units("1975$/kg") %>%
       add_comments("Animal feed cost, prices, and technology") %>%
+      qdd_comments("This is the non-feed cost; i.e., all costs of producing animal commodities except for the feed.") %>%
       add_legacy_name("L202.GlobalTechCost_an") %>%
       same_precursors_as(L202.StubTechCoef_an) %>%
       add_precursors("L132.ag_an_For_Prices", "L107.an_Feed_Mt_R_C_Sys_Fd_Y") ->
@@ -630,7 +638,10 @@ module_aglu_L202.an_input <- function(command, ...) {
       add_title("Animal imports for net importing regions in all periods") %>%
       add_units("Mt") %>%
       add_comments("A_an_supplysector and animal product mass balances written to all model years and regions") %>%
-      add_legacy_name("L202.StubTechFixOut_imp_an") %>%
+      add_comments("Prescribed trajectory of animal commodity imports by region; the final base year's values are
+                   copied forward to all future model time periods (imports and exports of these secondary
+                   commodities are not represented from economic competition).")
+    add_legacy_name("L202.StubTechFixOut_imp_an") %>%
       add_precursors("aglu/A_an_supplysector", "L109.an_ALL_Mt_R_C_Y", "common/GCAM_region_names") ->
       L202.StubTechFixOut_imp_an
 
