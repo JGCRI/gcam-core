@@ -187,7 +187,7 @@ module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
 
     # Compute final cooling HFC emissions factors
     L141.hfc_ef_R_cooling_Yh <- L141.hfc_R_S_T_Yh %>%
-      subset(supplysector %in% c("comm cooling", "resid cooling")) %>%
+      filter(supplysector %in% c("comm cooling", "resid cooling"), year %in% HISTORICAL_YEARS) %>%
       left_join_error_no_match(L141.R_cooling_T_Yh.long %>% select(GCAM_region_ID, year,service,value) %>% rename(energy = value),
                                by = c("GCAM_region_ID", "year","supplysector"="service")) %>%
       rename(adj_emissions = value) %>%
