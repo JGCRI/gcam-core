@@ -164,10 +164,8 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
              logit.year.fillout = min(BASE_YEARS),
              logit.exponent = aglu.LN1_PROTUNMGD_LOGIT_EXP,
              logit.type = aglu.LN1_PROTUNMGD_LOGIT_TYPE) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["LN1_Logit_prot"]])) ->
+      select(region, LandAllocatorRoot, LandNode1, unManagedLandValue, logit.year.fillout, logit.exponent) ->
       L222.LN1_Logit_prot
-
-
 
 
     # L222.LN2_UnmgdCarbon: Carbon content info, unmanaged land in the second nest
@@ -182,10 +180,16 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
       select(one_of(LEVEL2_DATA_NAMES[["LN2_UnmgdCarbon"]])) ->
       L222.LN2_UnmgdCarbon
 
+    # L222.LN1_UnmgdCarbon_prot: unmanaged carbon info, protected
+    # Manipulate unmanaged land carbon info to cover specifically protected land
+    L222.LN2_UnmgdCarbon %>%
+      mutate(UnmanagedLandLeaf = paste0("Protected", UnmanagedLandLeaf),
+             LandNode1 = UnmanagedLandLeaf) %>%
+      select(-LandNode2) ->
+      L222.LN1_UnmgdCarbon_prot
 
 
-
-    # Managed land tables
+    # Managed land allocation tables
     #
     # These tables are formed from a master table, made by filtering and adding
     # node_leaf_names in L125.LC.
@@ -193,7 +197,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
       filter(Land_Type %in% A_LandLeaf2$LandLeaf,
              year %in% c(LAND_HISTORY_YEARS, BASE_YEARS)) %>%
       mutate(allocation = round(value, aglu.DIGITS_LAND_USE)) %>%
-      add_node_leaf_names(nesting_table = A_LandLeaf_Unmgd2, leaf_name = "LandLeaf",
+      add_node_leaf_names(nesting_table = A_LandLeaf2, leaf_name = "LandLeaf",
                           LN1 = "LandNode1", LN2 = "LandNode2") ->
       L222.LC_bm2_R_Mgd2_Yh_GLU
 
@@ -212,11 +216,17 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
       L222.LN2_MgdAllocation
 
 
-
-
-
-
-
+    # L222.LN2_MgdCarbon: Carbon content info, managed land in the second nest
+    # Add carbon content info to the master  table to give the
+    # carbon content infor for managed land in the second nest.
+    L222.LC_bm2_R_Mgd2_Yh_GLU %>%
+      filter(year == max(BASE_YEARS)) %>%
+      select(-year, -allocation) %>%
+      left_join_error_no_match(GCAMLandLeaf_CdensityLT, by = c("Land_Type" = "LandLeaf")) %>%
+      rename(Cdensity_LT = Land_Type.y) %>%
+      add_carbon_info(., carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["LN2_MgdCarbon"]])) ->
+      L222.LN2_MgdCarbon
 
 
     # 3. Produce outputs
@@ -323,7 +333,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
                      "L125.LC_bm2_R_LT_Yh_GLU") ->
       L222.LN2_UnmgdCarbon
 
-    tibble() %>%
+    L222.LN2_MgdCarbon %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -337,9 +347,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
                      "aglu/A_LandLeaf2",
                      "aglu/A_LT_Mapping",
                      "L121.CarbonContent_kgm2_R_LT_GLU",
-                     "L125.LC_bm2_R_LT_Yh_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L125.LC_bm2_R_LT_Yh_GLU") ->
       L222.LN2_MgdCarbon
 
     L222.LN2_HistUnmgdAllocation_noprot %>%
@@ -376,26 +384,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
                      "L125.LC_bm2_R_LT_Yh_GLU") ->
       L222.LN2_UnmgdAllocation_noprot
 
-    # tibble() %>%
-    #   add_title("descriptive title of data") %>%
-    #   add_units("units") %>%
-    #   add_comments("comments describing how data generated") %>%
-    #   add_comments("can be multiple lines") %>%
-    #   add_legacy_name("L222.LN2_UnmgdCarbon") %>%
-    #   add_precursors("common/GCAM_region_names",
-    #                  "water/basin_to_country_mapping",
-    #                  "aglu/GCAMLandLeaf_CdensityLT",
-    #                  "aglu/A_LandNode_logit",
-    #                  "aglu/A_LandLeaf_Unmgd2",
-    #                  "aglu/A_LandLeaf2",
-    #                  "aglu/A_LT_Mapping",
-    #                  "L121.CarbonContent_kgm2_R_LT_GLU",
-    #                  "L125.LC_bm2_R_LT_Yh_GLU") %>%
-    #   # typical flags, but there are others--see `constants.R`
-    #   add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-    #   L222.LN2_UnmgdCarbon
-
-    tibble() %>%
+    L222.LN1_Logit_prot %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -409,9 +398,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
                      "aglu/A_LandLeaf2",
                      "aglu/A_LT_Mapping",
                      "L121.CarbonContent_kgm2_R_LT_GLU",
-                     "L125.LC_bm2_R_LT_Yh_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L125.LC_bm2_R_LT_Yh_GLU") ->
       L222.LN1_Logit_prot
 
     L222.LN1_HistUnmgdAllocation_prot %>%
@@ -448,7 +435,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
                      "L125.LC_bm2_R_LT_Yh_GLU") ->
       L222.LN1_UnmgdAllocation_prot
 
-    tibble() %>%
+    L222.LN1_UnmgdCarbon_prot %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -462,9 +449,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
                      "aglu/A_LandLeaf2",
                      "aglu/A_LT_Mapping",
                      "L121.CarbonContent_kgm2_R_LT_GLU",
-                     "L125.LC_bm2_R_LT_Yh_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L125.LC_bm2_R_LT_Yh_GLU") ->
       L222.LN1_UnmgdCarbon_prot
 
     return_data(L222.LN2_Logit, L222.LN2_HistUnmgdAllocation, L222.LN2_UnmgdAllocation,
