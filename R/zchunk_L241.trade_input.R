@@ -20,7 +20,7 @@ module_aglu_L241.trade_input <- function(command, ...) {
              FILE = "aglu/A_demand_technology",
              FILE = "aglu/A_an_input_technology",
              "L101.ag_kcalg_R_C_Y",
-             FILE = "temp-data-inject/L2012.AgProduction_ag_irr_mgmt",
+             "L2012.AgProduction_ag_irr_mgmt",
              "L102.pcgdp_thous90USD_Scen_R_Y"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L241.StubAgTradeCoeff_food",
@@ -41,7 +41,7 @@ module_aglu_L241.trade_input <- function(command, ...) {
     A_demand_technology <- get_data(all_data, "aglu/A_demand_technology")
     A_an_input_technology <- get_data(all_data, "aglu/A_an_input_technology")
     L101.ag_kcalg_R_C_Y <- get_data(all_data, "L101.ag_kcalg_R_C_Y")
-    L2012.AgProduction_ag_irr_mgmt <- get_data(all_data, "temp-data-inject/L2012.AgProduction_ag_irr_mgmt")
+    L2012.AgProduction_ag_irr_mgmt <- get_data(all_data, "L2012.AgProduction_ag_irr_mgmt")
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y")
 
     # Build tables (lines 38-43 in old file)
@@ -188,7 +188,7 @@ module_aglu_L241.trade_input <- function(command, ...) {
       add_comments("Each supply sector generates 1 credit for each unit of crop/livestock produced.") %>%
       add_comments("We remove any regions for which agriculture and land use are not modeled.") %>%
       add_legacy_name("L241.AgProdTech_RES_output") %>%
-      add_precursors("temp-data-inject/L2012.AgProduction_ag_irr_mgmt") ->
+      add_precursors("L2012.AgProduction_ag_irr_mgmt") ->
       L241.AgProdTech_RES_output
 
     L241.RES_Market %>%

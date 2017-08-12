@@ -21,3 +21,6 @@ vignettes/intro-luzlogr.R
 # Proprietary files
 en_nonOECD.*
 en_OECD.*
+
+# OS files
+.DS_Store
