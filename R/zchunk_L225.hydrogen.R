@@ -56,25 +56,25 @@ module_energy_L225.hydrogen <- function(command, ...) {
 
     # L225.Supplysector_h2: Supply sector information for hydrogen sectors
     A25.sector %>%
-      write_to_all_regions(LEVEL2_DATA_NAMES[['Supplysector']], GCAM_region_names) ->
+      write_to_all_regions(LEVEL2_DATA_NAMES[["Supplysector"]], GCAM_region_names) ->
       L225.Supplysector_h2
 
     # 1b. Subsector information
 
     # L225.SubsectorLogit_h2: Subsector logit exponents of hydrogen sectors
     A25.subsector_logit %>%
-      write_to_all_regions(LEVEL2_DATA_NAMES[['SubsectorLogit']], GCAM_region_names) ->
+      write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorLogit"]], GCAM_region_names) ->
       L225.SubsectorLogit_h2
 
     # L225.SubsectorShrwt_h2 and L225.SubsectorShrwtFllt_h2: Subsector shareweights of hydrogen sectors
     if(any(!is.na(A25.subsector_shrwt$year))){
       A25.subsector_shrwt[!is.na(A25.subsector_shrwt$year),] %>%
-        write_to_all_regions(LEVEL2_DATA_NAMES[['SubsectorShrwt']], GCAM_region_names) ->
+        write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwt"]], GCAM_region_names) ->
         L225.SubsectorShrwt_h2
     }
     if(any(!is.na(A25.subsector_shrwt$year.fillout))){
       A25.subsector_shrwt[!is.na(A25.subsector_shrwt$year.fillout),] %>%
-        write_to_all_regions(LEVEL2_DATA_NAMES[['SubsectorShrwtFllt']], GCAM_region_names) ->
+        write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]], GCAM_region_names) ->
         L225.SubsectorShrwtFllt_h2
     }
 
@@ -82,12 +82,12 @@ module_energy_L225.hydrogen <- function(command, ...) {
       # L225.SubsectorInterp_h2 and L225.SubsectorInterpTo_h2: Subsector shareweight interpolation of hydrogen sectors
       if(any(is.na(A25.subsector_interp$to.value))){
         A25.subsector_interp[is.na(A25.subsector_interp$to.value),] %>%
-          write_to_all_regions(LEVEL2_DATA_NAMES[['SubsectorInterp']], GCAM_region_names)->
+          write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorInterp"]], GCAM_region_names)->
           L225.SubsectorInterp_h2
       }
       if(any(!is.na(A25.subsector_interp$to.value))){
         A25.subsector_interp[!is.na(A25.subsector_interp$to.value),] %>%
-          write_to_all_regions(LEVEL2_DATA_NAMES[['SubsectorInterpTo']], GCAM_region_names) ->
+          write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorInterpTo"]], GCAM_region_names) ->
           L225.SubsectorInterpTo_h2
       }
     }
@@ -97,8 +97,8 @@ module_energy_L225.hydrogen <- function(command, ...) {
     # L225.StubTech_h2: Identification of stub technologies of hydrogen
     # Note: assuming that technology list in the shareweight table includes the full set (any others would default to a 0 shareweight)
     A25.globaltech_shrwt %>%
-      write_to_all_regions(LEVEL2_DATA_NAMES[['Tech']], GCAM_region_names) -> L225.StubTech_h2
-    names(L225.StubTech_h2) <- LEVEL2_DATA_NAMES[['StubTech']]
+      write_to_all_regions(LEVEL2_DATA_NAMES[["Tech"]], GCAM_region_names) -> L225.StubTech_h2
+    names(L225.StubTech_h2) <- LEVEL2_DATA_NAMES[["StubTech"]]
 
     # L225.GlobalTechEff_h2: Energy inputs and efficiencies of global technologies for hydrogen
     # Efficiencies of global technologies
@@ -111,7 +111,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
     int_years <- c(BASE_YEARS, FUTURE_YEARS)[which(!(c(BASE_YEARS, FUTURE_YEARS) %in% df_years))]
 
     A25.globaltech_eff_raw_long %>%
-      select(-efficiency,-year) %>%
+      select(-efficiency, -year) %>%
       unique() %>%
       repeat_add_columns(tibble(year = int_years)) %>%
       bind_rows(A25.globaltech_eff_raw_long) %>%
@@ -119,7 +119,8 @@ module_energy_L225.hydrogen <- function(command, ...) {
       mutate(efficiency = approx_fun(year, efficiency, rule = 1)) %>%
       mutate(efficiency = round(efficiency,energy.DIGITS_EFFICIENCY)) %>%
       filter(year %in% c(BASE_YEARS, FUTURE_YEARS)) %>%
-      rename(sector.name = supplysector) %>% #Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
+      # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
+      rename(sector.name = supplysector) %>%
       rename(subsector.name = subsector) ->
       L225.GlobalTechEff_h2
 
@@ -134,7 +135,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
     int_years <- c(BASE_YEARS, FUTURE_YEARS)[which(!(c(BASE_YEARS, FUTURE_YEARS) %in% df_years))]
 
     A25.globaltech_cost_raw_long %>%
-      select(-input.cost,-year) %>%
+      select(-input.cost, -year) %>%
       unique() %>%
       repeat_add_columns(tibble(year = int_years)) %>%
       bind_rows(A25.globaltech_cost_raw_long) %>%
@@ -142,7 +143,8 @@ module_energy_L225.hydrogen <- function(command, ...) {
       mutate(input.cost = approx_fun(year, input.cost, rule = 1)) %>%
       mutate(input.cost = round(input.cost,energy.DIGITS_COST)) %>%
       filter(year %in% c(BASE_YEARS,FUTURE_YEARS)) %>%
-      rename(sector.name = supplysector) %>% #Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
+      # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
+      rename(sector.name = supplysector) %>%
       rename(subsector.name = subsector) ->
       L225.GlobalTechCost_h2
 
@@ -157,14 +159,15 @@ module_energy_L225.hydrogen <- function(command, ...) {
     int_years <- c(BASE_YEARS, FUTURE_YEARS)[which(!(c(BASE_YEARS, FUTURE_YEARS) %in% df_years))]
 
     A25.globaltech_shrwt_raw_long %>%
-      select(-share.weight,-year) %>%
+      select(-share.weight, -year) %>%
       unique() %>%
       repeat_add_columns(tibble(year = int_years)) %>%
       bind_rows(A25.globaltech_shrwt_raw_long) %>%
       group_by(supplysector, subsector, technology) %>%
       mutate(share.weight = approx_fun(year, share.weight, rule = 1)) %>%
-      filter(year %in% c(BASE_YEARS,FUTURE_YEARS)) %>%
-      rename(sector.name = supplysector) %>% #Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
+      filter(year %in% c(BASE_YEARS, FUTURE_YEARS)) %>%
+      # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
+      rename(sector.name = supplysector) %>%
       rename(subsector.name = subsector) ->
       L225.GlobalTechShrwt_h2
 
@@ -174,7 +177,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
       rename(sector.name = supplysector) %>%
       rename(subsector.name = subsector) %>%
       filter(!is.na(primary.renewable)) %>%
-      select(LEVEL2_DATA_NAMES[['GlobalTechYr']], 'primary.renewable') ->
+      select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "primary.renewable") ->
       L225.PrimaryRenewKeyword_h2
 
     # L225.GlobalTechCapture_h2: CO2 capture fractions from global fertilizer production technologies with CCS
@@ -188,7 +191,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
     int_years <- FUTURE_YEARS[which(!(FUTURE_YEARS %in% df_years))]
 
     A25.globaltech_co2capture_raw_long %>%
-      select(-remove.fraction,-year) %>%
+      select(-remove.fraction, -year) %>%
       unique() %>%
       repeat_add_columns(tibble(year = int_years)) %>%
       bind_rows(A25.globaltech_co2capture_raw_long) %>%
@@ -196,9 +199,10 @@ module_energy_L225.hydrogen <- function(command, ...) {
       mutate(remove.fraction = approx_fun(year, remove.fraction, rule = 1)) %>%
       mutate(remove.fraction = round(remove.fraction,energy.DIGITS_REMOVE.FRACTION)) %>%
       filter(year %in% FUTURE_YEARS) %>%
-      rename(sector.name = supplysector) %>% #Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
+      # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
+      rename(sector.name = supplysector) %>%
       rename(subsector.name = subsector) %>%
-      select(LEVEL2_DATA_NAMES[['GlobalTechYr']], 'remove.fraction') %>%
+      select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "remove.fraction") %>%
       mutate(storage.market = energy.CO2.STORAGE.MARKET) ->
       L225.GlobalTechCapture_h2
 
@@ -295,6 +299,3 @@ module_energy_L225.hydrogen <- function(command, ...) {
     stop("Unknown command")
   }
 }
-
-
-
