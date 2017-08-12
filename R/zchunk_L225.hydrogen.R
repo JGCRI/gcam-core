@@ -1,6 +1,6 @@
 #' module_energy_L225.hydrogen
 #'
-#' Provides supply sector information, subsector information, technology information for hydrogen sectors
+#' Provides supply sector information, subsector information, technology information for hydrogen sectors.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,12 +8,11 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L225.Supplysector_h2}, \code{L225.SubsectorLogit_h2}, \code{L225.SubsectorShrwtFllt_h2}, \code{L225.StubTech_h2}, \code{L225.GlobalTechEff_h2}, \code{L225.GlobalTechCost_h2}, \code{L225.GlobalTechShrwt_h2}, \code{L225.PrimaryRenewKeyword_h2}, \code{L225.GlobalTechCapture_h2}. The corresponding file in the
 #' original data system was \code{L225.hydrogen.R} (energy level2).
-#' @details Provides supply sector information, subsector information, technology information for hydrogen sectors
+#' @details Provides supply sector information, subsector information, technology information for hydrogen sectors.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author LF Augest 2017
-
 module_energy_L225.hydrogen <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
@@ -105,7 +104,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
     # Efficiencies of global technologies
     A25.globaltech_eff %>%
       gather(year, efficiency, -supplysector, -subsector, -technology, -minicam.energy.input) %>%
-      mutate(year=as.numeric(year)) ->
+      mutate(year = as.numeric(year)) ->
       A25.globaltech_eff_raw_long
 
     df_years <- unique(A25.globaltech_eff_raw_long$year)
@@ -114,21 +113,21 @@ module_energy_L225.hydrogen <- function(command, ...) {
     A25.globaltech_eff_raw_long %>%
       select(-efficiency,-year) %>%
       unique() %>%
-      repeat_add_columns(tibble::tibble(year=int_years)) %>%
+      repeat_add_columns(tibble(year = int_years)) %>%
       bind_rows(A25.globaltech_eff_raw_long) %>%
       group_by(supplysector, subsector, technology, minicam.energy.input) %>%
-      mutate(efficiency=approx_fun(year, efficiency, rule=1)) %>%
-      mutate(efficiency=round(efficiency,energy.DIGITS_EFFICIENCY)) %>%
-      filter(year %in% c(BASE_YEARS,FUTURE_YEARS)) %>%
-      rename(sector.name=supplysector) %>% #Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
-      rename(subsector.name=subsector) ->
+      mutate(efficiency = approx_fun(year, efficiency, rule = 1)) %>%
+      mutate(efficiency = round(efficiency,energy.DIGITS_EFFICIENCY)) %>%
+      filter(year %in% c(BASE_YEARS, FUTURE_YEARS)) %>%
+      rename(sector.name = supplysector) %>% #Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
+      rename(subsector.name = subsector) ->
       L225.GlobalTechEff_h2
 
     # L225.GlobalTechCost_h2: Costs of global technologies for hydrogen
     # Costs of global technologies
     A25.globaltech_cost %>%
       gather(year, input.cost, -supplysector, -subsector, -technology, -minicam.non.energy.input) %>%
-      mutate(year=as.numeric(year)) ->
+      mutate(year = as.numeric(year)) ->
       A25.globaltech_cost_raw_long
 
     df_years <- unique(A25.globaltech_cost_raw_long$year)
@@ -137,21 +136,21 @@ module_energy_L225.hydrogen <- function(command, ...) {
     A25.globaltech_cost_raw_long %>%
       select(-input.cost,-year) %>%
       unique() %>%
-      repeat_add_columns(tibble::tibble(year=int_years)) %>%
+      repeat_add_columns(tibble(year = int_years)) %>%
       bind_rows(A25.globaltech_cost_raw_long) %>%
       group_by(supplysector, subsector, technology, minicam.non.energy.input) %>%
-      mutate(input.cost=approx_fun(year, input.cost, rule=1)) %>%
-      mutate(input.cost=round(input.cost,energy.DIGITS_COST)) %>%
+      mutate(input.cost = approx_fun(year, input.cost, rule = 1)) %>%
+      mutate(input.cost = round(input.cost,energy.DIGITS_COST)) %>%
       filter(year %in% c(BASE_YEARS,FUTURE_YEARS)) %>%
-      rename(sector.name=supplysector) %>% #Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
-      rename(subsector.name=subsector) ->
+      rename(sector.name = supplysector) %>% #Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
+      rename(subsector.name = subsector) ->
       L225.GlobalTechCost_h2
 
     # L225.GlobalTechShrwt_h2: Shareweights of global technologies for hydrogen
     # Shareweights of global technologies
     A25.globaltech_shrwt %>%
       gather(year, share.weight, -supplysector, -subsector, -technology) %>%
-      mutate(year=as.numeric(year)) ->
+      mutate(year = as.numeric(year)) ->
       A25.globaltech_shrwt_raw_long
 
     df_years <- unique(A25.globaltech_shrwt_raw_long$year)
@@ -160,20 +159,20 @@ module_energy_L225.hydrogen <- function(command, ...) {
     A25.globaltech_shrwt_raw_long %>%
       select(-share.weight,-year) %>%
       unique() %>%
-      repeat_add_columns(tibble::tibble(year=int_years)) %>%
+      repeat_add_columns(tibble(year = int_years)) %>%
       bind_rows(A25.globaltech_shrwt_raw_long) %>%
       group_by(supplysector, subsector, technology) %>%
-      mutate(share.weight=approx_fun(year, share.weight, rule=1)) %>%
+      mutate(share.weight = approx_fun(year, share.weight, rule = 1)) %>%
       filter(year %in% c(BASE_YEARS,FUTURE_YEARS)) %>%
-      rename(sector.name=supplysector) %>% #Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
-      rename(subsector.name=subsector) ->
+      rename(sector.name = supplysector) %>% #Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
+      rename(subsector.name = subsector) ->
       L225.GlobalTechShrwt_h2
 
     # L225.PrimaryRenewKeyword_h2: Keywords of primary renewable electric generation technologies
     A25.globaltech_keyword %>%
-      repeat_add_columns(tibble::tibble(year=c(BASE_YEARS, FUTURE_YEARS))) %>%
-      rename(sector.name=supplysector) %>%
-      rename(subsector.name=subsector) %>%
+      repeat_add_columns(tibble(year = c(BASE_YEARS, FUTURE_YEARS))) %>%
+      rename(sector.name = supplysector) %>%
+      rename(subsector.name = subsector) %>%
       filter(!is.na(primary.renewable)) %>%
       select(LEVEL2_DATA_NAMES[['GlobalTechYr']], 'primary.renewable') ->
       L225.PrimaryRenewKeyword_h2
@@ -182,7 +181,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
     # Note: No need to consider historical periods or intermittent technologies here
     A25.globaltech_co2capture %>%
       gather(year, remove.fraction, -supplysector, -subsector, -technology) %>%
-      mutate(year=as.numeric(year)) ->
+      mutate(year = as.numeric(year)) ->
       A25.globaltech_co2capture_raw_long
 
     df_years <- unique(A25.globaltech_co2capture_raw_long$year)
@@ -191,22 +190,22 @@ module_energy_L225.hydrogen <- function(command, ...) {
     A25.globaltech_co2capture_raw_long %>%
       select(-remove.fraction,-year) %>%
       unique() %>%
-      repeat_add_columns(tibble::tibble(year=int_years)) %>%
+      repeat_add_columns(tibble(year = int_years)) %>%
       bind_rows(A25.globaltech_co2capture_raw_long) %>%
       group_by(supplysector, subsector, technology) %>%
-      mutate(remove.fraction=approx_fun(year, remove.fraction, rule=1)) %>%
-      mutate(remove.fraction=round(remove.fraction,energy.DIGITS_REMOVE.FRACTION)) %>%
+      mutate(remove.fraction = approx_fun(year, remove.fraction, rule = 1)) %>%
+      mutate(remove.fraction = round(remove.fraction,energy.DIGITS_REMOVE.FRACTION)) %>%
       filter(year %in% FUTURE_YEARS) %>%
-      rename(sector.name=supplysector) %>% #Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
-      rename(subsector.name=subsector) %>%
+      rename(sector.name = supplysector) %>% #Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
+      rename(subsector.name = subsector) %>%
       select(LEVEL2_DATA_NAMES[['GlobalTechYr']], 'remove.fraction') %>%
-      mutate(storage.market=energy.CO2.STORAGE.MARKET) ->
+      mutate(storage.market = energy.CO2.STORAGE.MARKET) ->
       L225.GlobalTechCapture_h2
 
     # ===================================================
     # Produce outputs
 
-    tibble() %>%
+    L225.Supplysector_h2 %>%
       add_title("Supply sector information for hydrogen sectors") %>%
       add_units("Unitless") %>%
       add_comments("Expand sector information for all GCAM regions") %>%
@@ -214,7 +213,8 @@ module_energy_L225.hydrogen <- function(command, ...) {
       add_precursors("common/GCAM_region_names", "energy/A25.sector") %>%
       add_flags(FLAG_NO_XYEAR) ->
       L225.Supplysector_h2
-    tibble() %>%
+
+    L225.SubsectorLogit_h2 %>%
       add_title("Subsector logit exponents of hydrogen sectors") %>%
       add_units("Unitless") %>%
       add_comments("Expand subsector logit exponents for all GCAM regions") %>%
@@ -222,7 +222,8 @@ module_energy_L225.hydrogen <- function(command, ...) {
       add_precursors("common/GCAM_region_names", "energy/A25.subsector_logit") %>%
       add_flags(FLAG_NO_XYEAR) ->
       L225.SubsectorLogit_h2
-    tibble() %>%
+
+    L225.SubsectorShrwtFllt_h2 %>%
       add_title("Subsector shareweights of hydrogen sectors") %>%
       add_units("Unitless") %>%
       add_comments("Expand Subsector shareweights for all GCAM regions") %>%
@@ -230,7 +231,8 @@ module_energy_L225.hydrogen <- function(command, ...) {
       add_precursors("common/GCAM_region_names", "energy/A25.subsector_shrwt") %>%
       add_flags(FLAG_NO_XYEAR) ->
       L225.SubsectorShrwtFllt_h2
-    tibble() %>%
+
+    L225.StubTech_h2 %>%
       add_title("Identification of stub technologies of hydrogen") %>%
       add_units("NA") %>%
       add_comments("Expand stub technologies information for all GCAM regions") %>%
@@ -239,7 +241,8 @@ module_energy_L225.hydrogen <- function(command, ...) {
       add_precursors("common/GCAM_region_names", "energy/A25.globaltech_shrwt") %>%
       add_flags(FLAG_NO_XYEAR) ->
       L225.StubTech_h2
-    tibble() %>%
+
+    L225.GlobalTechEff_h2 %>%
       add_title("Energy inputs and efficiencies of global technologies for hydrogen") %>%
       add_units("Unitless") %>%
       add_comments("Interpolated orginal data into all model years") %>%
@@ -247,7 +250,8 @@ module_energy_L225.hydrogen <- function(command, ...) {
       add_precursors("energy/A25.globaltech_eff") %>%
       add_flags(FLAG_NO_XYEAR) ->
       L225.GlobalTechEff_h2
-    tibble() %>%
+
+    L225.GlobalTechCost_h2 %>%
       add_title("Costs of global technologies for hydrogen") %>%
       add_units("Unitless") %>%
       add_comments("Interpolated orginal data into all model years") %>%
@@ -255,7 +259,8 @@ module_energy_L225.hydrogen <- function(command, ...) {
       add_precursors("energy/A25.globaltech_cost") %>%
       add_flags(FLAG_NO_XYEAR) ->
       L225.GlobalTechCost_h2
-    tibble() %>%
+
+    L225.GlobalTechShrwt_h2 %>%
       add_title("Shareweights of global technologies for hydrogen") %>%
       add_units("Unitless") %>%
       add_comments("Interpolated orginal data into all model years") %>%
@@ -263,7 +268,8 @@ module_energy_L225.hydrogen <- function(command, ...) {
       add_precursors("energy/A25.globaltech_shrwt") %>%
       add_flags(FLAG_NO_XYEAR) ->
       L225.GlobalTechShrwt_h2
-    tibble() %>%
+
+    L225.PrimaryRenewKeyword_h2 %>%
       add_title("Keywords of primary renewable electric generation technologies") %>%
       add_units("NA") %>%
       add_comments("Identify Keywords of primary renewable electric generation technologies for all model years") %>%
@@ -272,7 +278,8 @@ module_energy_L225.hydrogen <- function(command, ...) {
       add_precursors("energy/A25.globaltech_keyword") %>%
       add_flags(FLAG_NO_XYEAR) ->
       L225.PrimaryRenewKeyword_h2
-    tibble() %>%
+
+    L225.GlobalTechCapture_h2 %>%
       add_title("CO2 capture fractions from global fertilizer production technologies with CCS") %>%
       add_units("Unitless") %>%
       add_comments("Interpolated orginal data into all model years") %>%
@@ -281,7 +288,9 @@ module_energy_L225.hydrogen <- function(command, ...) {
       add_flags(FLAG_NO_XYEAR) ->
       L225.GlobalTechCapture_h2
 
-    return_data(L225.Supplysector_h2, L225.SubsectorLogit_h2, L225.SubsectorShrwtFllt_h2, L225.StubTech_h2, L225.GlobalTechEff_h2, L225.GlobalTechCost_h2, L225.GlobalTechShrwt_h2, L225.PrimaryRenewKeyword_h2, L225.GlobalTechCapture_h2)
+    return_data(L225.Supplysector_h2, L225.SubsectorLogit_h2, L225.SubsectorShrwtFllt_h2,
+                L225.StubTech_h2, L225.GlobalTechEff_h2, L225.GlobalTechCost_h2, L225.GlobalTechShrwt_h2,
+                L225.PrimaryRenewKeyword_h2, L225.GlobalTechCapture_h2)
   } else {
     stop("Unknown command")
   }
