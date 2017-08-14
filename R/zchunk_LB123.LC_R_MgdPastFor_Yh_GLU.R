@@ -16,11 +16,9 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RC August 2017
-#' @export
 module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L102.ag_Prod_Mt_R_C_GLU",
-             "L108.ag_Feed_Mt_R_C_Y",
+    return(c("L108.ag_Feed_Mt_R_C_Y",
              "L110.For_ALL_bm3_R_Y",
              "L120.LC_bm2_R_LT_Yh_GLU",
              "L121.CarbonContent_kgm2_R_LT_GLU",
@@ -42,7 +40,6 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
       `mature age` <- GLU <- Yield_m3m2 <- Prod_bm3 <- MgdFor <- NULL   # silence package check notes
 
     # Load required inputs
-    L102.ag_Prod_Mt_R_C_GLU <- get_data(all_data, "L102.ag_Prod_Mt_R_C_GLU")
     L108.ag_Feed_Mt_R_C_Y <- get_data(all_data, "L108.ag_Feed_Mt_R_C_Y")
     L110.For_ALL_bm3_R_Y <- get_data(all_data, "L110.For_ALL_bm3_R_Y") %>% unique
     L120.LC_bm2_R_LT_Yh_GLU <- get_data(all_data, "L120.LC_bm2_R_LT_Yh_GLU")
@@ -81,7 +78,8 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
       replace_na(list(frac = 0)) %>%
       rename(GCAM_commodity = Land_Type) %>%
       # Match in regional pasture consumption (managed pasture land production) for disaggregation
-      left_join_error_no_match(L108.ag_Feed_Mt_R_C_Y, by = c("GCAM_region_ID", "GCAM_commodity", "year")) %>%
+      # Note: left_join_error_no_match fails timeshift, due to NAs
+      left_join(L108.ag_Feed_Mt_R_C_Y, by = c("GCAM_region_ID", "GCAM_commodity", "year")) %>%
       # Disaggregate production to GLUs
       mutate(value = value * frac) %>%
       select(-frac) ->
