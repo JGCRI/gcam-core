@@ -135,6 +135,9 @@ aglu.BIO_TREE_WATER_IO_KM3EJ <- 25
 # Cost of Fertilizer
 aglu.FERT_COST <- 363 # 2007$ per ton NH3
 
+# Minimum non-input costs of animal production technologies, in $/kg
+aglu.MIN_AN_NONINPUT_COST <- 0.05
+
 # Maximum bioenergy (switchgrass) yield allowable, in tons per hectare
 # Source: Wullschleger doi:10.2134/agronj2010.0087
 aglu.MAX_BIO_YIELD_THA <- 20
@@ -187,6 +190,16 @@ aglu.MIN_SOIL_CARBON_DENSITY <- 0
 aglu.N0_LOGIT_EXP <- 0
 aglu.N0_LOGIT_TYPE <- NA
 
+# fraction of land that is protected
+aglu.PROTECT_LAND_FRACT <- 0.9
+
+# unManaged Land Value
+# 1975$/thou km2 ??
+aglu.UNMANAGED_LAND_VALUE <- 1
+
+# default protected, unmanaged land LN1 logit info
+aglu.LN1_PROTUNMGD_LOGIT_EXP <- 0
+aglu.LN1_PROTUNMGD_LOGIT_TYPE <- NA
 
 # XML-related constants
 aglu.GLU_NDIGITS          <- 3    # number of digits in the geographic land unit identifier codes
