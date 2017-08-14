@@ -18,7 +18,7 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "water/basin_to_country_mapping",
-             FILE = "temp-data-inject/L123.For_Yield_m3m2_R_GLU",
+             "L123.For_Yield_m3m2_R_GLU",
              FILE = "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
              FILE = "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU",
              "L162.ag_YieldRate_R_C_Y_GLU_irr",
@@ -49,9 +49,7 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
-    L123.For_Yield_m3m2_R_GLU <- get_data(all_data, "temp-data-inject/L123.For_Yield_m3m2_R_GLU") %>%
-      gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%  # temporary
-      mutate(year = as.integer(substr(year, 2, 5)))
+    L123.For_Yield_m3m2_R_GLU <- get_data(all_data, "L123.For_Yield_m3m2_R_GLU")
     L161.ag_irrProd_Mt_R_C_Y_GLU <- get_data(all_data, "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU") %>%
       gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%  # temporary
       mutate(year = as.integer(substr(year, 2, 5)))
@@ -258,7 +256,7 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       add_legacy_name("L2052.AgCost_For") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
-                     "temp-data-inject/L123.For_Yield_m3m2_R_GLU") ->
+                     "L123.For_Yield_m3m2_R_GLU") ->
       L2052.AgCost_For
 
     L2052.AgProdChange_ag_irr_ref %>%
