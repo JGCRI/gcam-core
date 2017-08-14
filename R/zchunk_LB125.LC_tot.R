@@ -151,7 +151,7 @@ module_aglu_LB125.LC_tot <- function(command, ...) {
       add_comments("Rounded to 7 digit") %>%
       add_legacy_name("L125.LC_bm2_R_LT_Yh_GLU") %>%
       same_precursors_as(L125.LC_bm2_R) %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT) ->
       L125.LC_bm2_R_LT_Yh_GLU
 
     return_data(L125.LC_bm2_R, L125.LC_bm2_R_GLU, L125.LC_bm2_R_LT_Yh_GLU)
