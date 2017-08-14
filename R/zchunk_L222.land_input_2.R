@@ -113,7 +113,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
 
     # 2. Build tables
 
-    # L222.LN2_Logit: Logit exponent of the second nest
+    # L222.LN2_Logit: Logit exponent of the second land nest (down two nests from the top-level nest)
     L125.LC_bm2_R_LT_Yh_GLU %>%
       # Determine which node combinations apply at this level.
       # not all land types have node matches, so use left_join
@@ -127,7 +127,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
       # logit.type is NA by default, so left_join
       left_join(select(A_LandNode_logit, logit.exponent, logit.type, LandNode), by = c("LandNode2" = "LandNode")) %>%
       append_GLU("LandNode1", "LandNode2") %>%
-      select(one_of(LEVEL2_DATA_NAMES[["LN2_Logit"]]))->
+      select(one_of(c(LEVEL2_DATA_NAMES[["LN2_Logit"]], "logit.type"))) ->
       L222.LN2_Logit
 
 
@@ -195,7 +195,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
              logit.year.fillout = min(BASE_YEARS),
              logit.exponent = aglu.LN1_PROTUNMGD_LOGIT_EXP,
              logit.type = aglu.LN1_PROTUNMGD_LOGIT_TYPE) %>%
-      select(region, LandAllocatorRoot, LandNode1, unManagedLandValue, logit.year.fillout, logit.exponent) ->
+      select(region, LandAllocatorRoot, LandNode1, unManagedLandValue, logit.year.fillout, logit.exponent, logit.type) ->
       L222.LN1_Logit_prot
 
 
@@ -207,7 +207,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
       select(-year, -allocation) %>%
       left_join_error_no_match(GCAMLandLeaf_CdensityLT, by = c("Land_Type" = "LandLeaf")) %>%
       rename(Cdensity_LT = Land_Type.y) %>%
-      add_carbon_info(., carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
+      add_carbon_info(carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
       select(one_of(LEVEL2_DATA_NAMES[["LN2_UnmgdCarbon"]])) ->
       L222.LN2_UnmgdCarbon
 
@@ -255,7 +255,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
       select(-year, -allocation) %>%
       left_join_error_no_match(GCAMLandLeaf_CdensityLT, by = c("Land_Type" = "LandLeaf")) %>%
       rename(Cdensity_LT = Land_Type.y) %>%
-      add_carbon_info(., carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
+      add_carbon_info(carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
       select(one_of(LEVEL2_DATA_NAMES[["LN2_MgdCarbon"]])) ->
       L222.LN2_MgdCarbon
 
