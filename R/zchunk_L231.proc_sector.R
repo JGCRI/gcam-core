@@ -19,11 +19,11 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "emissions/A_regions",
              FILE = "emissions/A31.rsrc_info", # Units and source
-             FILE = "emissions/A31.sector", # Units and source
-             FILE = "emissions/A31.subsector_logit", # Units and source
-             FILE = "emissions/A31.subsector_shrwt", # Units and source
-             FILE = "emissions/A31.subsector_interp", # Units and source
-             FILE = "emissions/A31.globaltech_shrwt", # Units and source
+             FILE = "emissions/A31.sector", # source
+             FILE = "emissions/A31.subsector_logit", # source
+             FILE = "emissions/A31.subsector_shrwt", # source
+             FILE = "emissions/A31.subsector_interp", # source
+             FILE = "emissions/A31.globaltech_shrwt", # source
              FILE = "emissions/A31.globaltech_eff", # Units and source
              FILE = "emissions/A31.globaltech_cost", # Units and source
              FILE = "emissions/A31.globaltech_coef", # Units and source
@@ -300,12 +300,11 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     L231.UnlimitRsrcPrice
 
     L231.FinalDemand_urb %>%
-    add_title("descriptive title of data") %>%
+    add_title("Final demand information for urban processes sector") %>%
     add_units("units") %>%
-    add_comments("comments describing how data generated") %>%
-    add_comments("can be multiple lines") %>%
+    add_comments("Constants added for all values") %>%
     add_legacy_name("L231.FinalDemand_urb") %>%
-    add_precursors("common/GCAM_region_names") ->
+    add_precursors("emissions/A_regions") ->
     L231.FinalDemand_urb
 
     L231.Supplysector_urb_ind %>%
