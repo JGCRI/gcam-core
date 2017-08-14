@@ -111,10 +111,14 @@ module_energy_L261.Cstorage <- function(command, ...) {
 
     # B
     # Supply curves of carbon storage resources
+    # First, define number of decimal places
+    DIGITS_COST <- 1
+
     # L161.RsrcCurves_MtC_R reports carbon storage resource supply curves by GCAM region.
     L161.RsrcCurves_MtC_R %>%
       # Match in GCAM region names using region ID
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      mutate(available = round(available, DIGITS_COST)) %>%
       select(region, depresource = resource, subresource, grade, available, extractioncost) ->
       L261.DepRsrcCurves_C # This is a final output table.
 
@@ -180,7 +184,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
       gather(year, value, matches(YEAR_PATTERN)) %>% # Convert to long form
       mutate(year = as.integer(year)) %>% # Year needs to be integer or numeric to interpolate
       # Expand table to include all model base and future years
-      complete(supplysector, subsector, technology, minicam.energy.input, year = c(year, MODEL_YEARS)) %>%
+      complete(year = c(year, MODEL_YEARS), nesting(supplysector, subsector, technology, minicam.energy.input)) %>%
       # Extrapolate to fill out values for all years
       # Rule 2 is used so years outside of min-max range are assigned values from closest data, as opposed to NAs
       mutate(coefficient = approx_fun(year, value, rule = 2)) %>%
@@ -195,7 +199,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
       gather(year, value, matches(YEAR_PATTERN)) %>% # Convert to long form
       mutate(year = as.integer(year)) %>% # Year needs to be integer or numeric to interpolate
       # Expand table to include all model base and future years
-      complete(supplysector, subsector, technology, minicam.non.energy.input, year = c(year, MODEL_YEARS)) %>%
+      complete(year = c(year, MODEL_YEARS), nesting(supplysector, subsector, technology, minicam.non.energy.input)) %>%
       # Extrapolate to fill out values for all years
       # Rule 2 is used so years outside of min-max range are assigned values from closest data, as opposed to NAs
       mutate(input.cost = approx_fun(year, value, rule = 2)) %>%
@@ -217,7 +221,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
       gather(year, value, matches(YEAR_PATTERN)) %>% # Convert to long form
       mutate(year = as.integer(year)) %>% # Year needs to be integer or numeric to interpolate
       # Expand table to include all model base and future years
-      complete(supplysector, subsector, technology, year = c(year, MODEL_YEARS)) %>%
+      complete(year = c(year, MODEL_YEARS), nesting(supplysector, subsector, technology)) %>%
       # Extrapolate to fill out values for all years
       # Rule 2 is used so years outside of min-max range are assigned values from closest data, as opposed to NAs
       mutate(share.weight = approx_fun(year, value, rule = 2)) %>%
@@ -295,8 +299,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
       add_units("Output, input, and price units are as listed; exponent is unitless") %>%
       add_comments("Carbon storage sector information was expanded to include GCAM region names") %>%
       add_legacy_name("L261.Supplysector_C") %>%
-      add_precursors("common/GCAM_region_names", "energy/A61.sector") %>%
-      add_flags(FLAG_NO_TEST) ->
+      add_precursors("common/GCAM_region_names", "energy/A61.sector") ->
       L261.Supplysector_C
 
     L261.SubsectorLogit_C %>%
@@ -304,8 +307,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Table on subsector logit exponents was expanded to include GCAM region names") %>%
       add_legacy_name("L261.SubsectorLogit_C") %>%
-      add_precursors("common/GCAM_region_names", "energy/A61.subsector_logit") %>%
-      add_flags(FLAG_NO_TEST) ->
+      add_precursors("common/GCAM_region_names", "energy/A61.subsector_logit") ->
       L261.SubsectorLogit_C
 
     L261.SubsectorShrwtFllt_C %>%
@@ -313,8 +315,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Table on subsector shareweights was expanded to include GCAM region names") %>%
       add_legacy_name("L261.SubsectorShrwtFllt_C") %>%
-      add_precursors("common/GCAM_region_names", "energy/A61.subsector_shrwt") %>%
-      add_flags(FLAG_NO_TEST) ->
+      add_precursors("common/GCAM_region_names", "energy/A61.subsector_shrwt") ->
       L261.SubsectorShrwtFllt_C
 
     L261.StubTech_C %>%
@@ -322,8 +323,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
       add_units("Not Applicable") %>%
       add_comments("Technology list in the global shareweight table for carbon storage was expanded to include GCAM regions") %>%
       add_legacy_name("L261.StubTech_C") %>%
-      add_precursors("common/GCAM_region_names", "energy/A61.globaltech_shrwt") %>%
-      add_flags(FLAG_NO_TEST) ->
+      add_precursors("common/GCAM_region_names", "energy/A61.globaltech_shrwt") ->
       L261.StubTech_C
 
     L261.GlobalTechCoef_C %>%
