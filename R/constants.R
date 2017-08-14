@@ -194,6 +194,7 @@ aglu.N0_LOGIT_TYPE <- NA
 aglu.PROTECT_LAND_FRACT <- 0.9
 
 # unManaged Land Value
+# 1975$/thou km2 ??
 aglu.UNMANAGED_LAND_VALUE <- 1
 
 # default protected, unmanaged land LN1 logit info
