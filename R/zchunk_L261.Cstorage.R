@@ -213,6 +213,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
       mutate(subsector.name = "onshore carbon-storage",
              technology = "onshore carbon-storage") %>%
       bind_rows(L261.GlobalTechCost_C) %>%
+      # Price out CCS by using storage cost that is very high (i.e., $10,000/tCO2)
       mutate(input.cost = 10000) -> # 1975$/tCO2
       L261.GlobalTechCost_C_High # This is a final output table.
 
