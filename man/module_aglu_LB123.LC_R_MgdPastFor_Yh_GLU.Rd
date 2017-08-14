@@ -18,11 +18,14 @@ the generated outputs: \code{L123.ag_Prod_Mt_R_Past_Y_GLU}, \code{L123.ag_Yield_
 original data system was \code{LB123.LC_R_MgdPastFor_Yh_GLU.R} (aglu level1).
 }
 \description{
-Briefly describe what this chunk does.
+Calculates pasture and forests production, yields and managed land cover by GCAM region / GLU / year.
 }
 \details{
-Describe in detail what this chunk does.
+This chunk calculates pasture and forests production and yields by GCAM region / GLU / year,
+and the managed pasture and forests land cover by GCAM region / GLU / historical year.
+Managed land area for both are adjusted below the threshold percentage of total pasture and forest land,
+and yields are increased so that production stay unchanged for those regions.
 }
 \author{
-YourInitials CurrentMonthName 2017
+RC August 2017
 }
