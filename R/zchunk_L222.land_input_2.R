@@ -1,6 +1,9 @@
 #' module_aglu_L222.land_input_2
 #'
-#' Briefly describe what this chunk does.
+#' This chunk produces L222.LN2_Logit, L222.LN2_HistUnmgdAllocation, L222.LN2_UnmgdAllocation,
+#' L222.LN2_HistMgdAllocation, L222.LN2_MgdAllocation, L222.LN2_UnmgdCarbon, L222.LN2_MgdCarbon,
+#' L222.LN2_HistUnmgdAllocation_noprot, L222.LN2_UnmgdAllocation_noprot, L222.LN1_Logit_prot,
+#' L222.LN1_HistUnmgdAllocation_prot, L222.LN1_UnmgdAllocation_prot, L222.LN1_UnmgdCarbon_prot
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,12 +11,41 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{curr_table$data}, \code{L222.LN2_Logit}, \code{L222.LN2_HistUnmgdAllocation}, \code{L222.LN2_UnmgdAllocation}, \code{L222.LN2_HistMgdAllocation}, \code{L222.LN2_MgdAllocation}, \code{L222.LN2_UnmgdCarbon}, \code{L222.LN2_MgdCarbon}, \code{L222.LN2_HistUnmgdAllocation_noprot}, \code{L222.LN2_UnmgdAllocation_noprot}, \code{L222.LN2_UnmgdCarbon}, \code{curr_table$data}, \code{L222.LN1_Logit_prot}, \code{L222.LN1_HistUnmgdAllocation_prot}, \code{L222.LN1_UnmgdAllocation_prot}, \code{L222.LN1_UnmgdCarbon_prot}. The corresponding file in the
 #' original data system was \code{L222.land_input_2.R} (aglu level2).
-#' @details Describe in detail what this chunk does.
+#' @details
+#'  \itemize{
+#' \item{"L222.LN2_Logit: Logit exponent of the second land nest by region.
+#' AgLU regions are given externally defined constant logit information."}
+#' \item{"L222.LN2_HistUnmgdAllocation: Historical land cover for unmanaged land (LT_GLU) in the second nest by region.
+#' Historical land cover for unmanaged land in the second nest, from L125 land cover data."}
+#' \item{"L222.LN2_UnmgdAllocation: Land cover in the model base periods for unmanaged land (LT_GLU) in the second nest by region.
+#' Land cover in the model base periods for unmanaged land in the second nest, from L125 land cover data."}
+#' \item{"L222.LN2_HistMgdAllocation: Historical land cover for managed land (LT_GLU) in the second nest by region.
+#' Historical land cover for managed land in the second nest, from L125 land cover data."}
+#' \item{"L222.LN2_MgdAllocation: Land cover in the model base periods for managed land (LT_GLU) in the second nest by region.
+#' Land cover in the model base periods for managed land in the second nest, from L125 land cover data."}
+#' \item{"L222.LN2_UnmgdCarbon: Carbon content for unmanaged land (LT_GLU) in second nest by region.
+#' Carbon content info for unmanaged land in the second nest including soil and vegetative carbon,
+#' from L125 land cover data, L121 carbon content data, and GCAMLandLeaf_CdensityLT assumptions."}
+#' \item{"L222.LN2_MgdCarbon: Carbon content for managed land (LT_GLU) in second nest by region.
+#' Carbon content info for managed land in the second nest including soil and vegetative carbon,
+#' from L125 land cover data, L121 carbon content data, and GCAMLandLeaf_CdensityLT assumptions."}
+#' \item{"L222.LN2_HistUnmgdAllocation_noprot: Historical land cover for unprotected unmanaged land (LT_GLU) in the second nest by region.
+#' Historical land cover for unprotected unmanaged land in the second nest, from L222.LN2_HistUnmgdAllocation."}
+#' \item{" L222.LN2_UnmgdAllocation_noprot: Land cover in the model base periods for unprotected unmanaged land (LT_GLU) in the second nest by region.
+#' Land cover in the model base periods for unprotected unmanaged land in the second nest, from L222.LN2_UnmgdAllocation."}
+#' \item{"L222.LN1_HistUnmgdAllocation_prot: Historical land cover for protected unmanaged land (LT_GLU) in the first nest by region.
+#' Historical land cover for protected unmanaged land in the first nest, from L222.LN2_HistUnmgdAllocation."}
+#' \item{"L222.LN1_UnmgdAllocation_prot: Land cover in the model base periods for protected unmanaged land (LT_GLU) in the first nest by region.
+#' Land cover in the model base periods for protected unmanaged land in the first nest, from L222.LN2_UnmgdAllocation."}
+#' \item{"L222.LN1_UnmgdCarbon_prot: Carbon content for protected unmanaged land (LT_GLU) in first nest by region.
+#' Carbon content info for protected unmanaged land in the first nest including soil and vegetative carbon, from L222.LN2_UnmgdCarbon."}
+#' \item{"L222.LN1_Logit_prot: Logit exponent of protected land in the first nest by region.
+#' AgLU regions are given externally defined constant logit information. From L222.LN1_UnmgdAllocation_prot"}
+#' }
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
-#' @export
+#' @author ACS August 2017
 module_aglu_L222.land_input_2 <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
@@ -35,7 +67,6 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
              "L222.LN2_MgdCarbon",
              "L222.LN2_HistUnmgdAllocation_noprot",
              "L222.LN2_UnmgdAllocation_noprot",
-             #"L222.LN2_UnmgdCarbon",
              "L222.LN1_Logit_prot",
              "L222.LN1_HistUnmgdAllocation_prot",
              "L222.LN1_UnmgdAllocation_prot",
@@ -180,7 +211,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
       select(one_of(LEVEL2_DATA_NAMES[["LN2_UnmgdCarbon"]])) ->
       L222.LN2_UnmgdCarbon
 
-    # L222.LN1_UnmgdCarbon_prot: unmanaged carbon info, protected
+    # L222.LN1_UnmgdCarbon_prot: unmanaged carbon info, protected land in the first nest.
     # Manipulate unmanaged land carbon info to cover specifically protected land
     L222.LN2_UnmgdCarbon %>%
       mutate(UnmanagedLandLeaf = paste0("Protected", UnmanagedLandLeaf),
@@ -232,222 +263,155 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
     # 3. Produce outputs
 
     L222.LN2_Logit %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Logit exponent of the second land nest by region") %>%
+      add_units("NA") %>%
+      add_comments("Logit exponent of the second land nest by region. AgLU regions") %>%
+      add_comments("are given externally defined constant logit information.") %>%
       add_legacy_name("L222.LN2_Logit") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
-                     "aglu/GCAMLandLeaf_CdensityLT",
                      "aglu/A_LandNode_logit",
-                     "aglu/A_LandLeaf_Unmgd2",
-                     "aglu/A_LandLeaf2",
                      "aglu/A_LT_Mapping",
-                     "L121.CarbonContent_kgm2_R_LT_GLU",
                      "L125.LC_bm2_R_LT_Yh_GLU") ->
       L222.LN2_Logit
 
     L222.LN2_HistUnmgdAllocation %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Historical land cover for unmanaged land (LT_GLU) in the second nest by region.") %>%
+      add_units("billion square meters (bm2)") %>%
+      add_comments("Historical land cover for unmanaged land (LT_GLU) in the second nest, from L125 land cover data.") %>%
       add_legacy_name("L222.LN2_HistUnmgdAllocation") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
-                     "aglu/GCAMLandLeaf_CdensityLT",
-                     "aglu/A_LandNode_logit",
                      "aglu/A_LandLeaf_Unmgd2",
-                     "aglu/A_LandLeaf2",
-                     "aglu/A_LT_Mapping",
-                     "L121.CarbonContent_kgm2_R_LT_GLU",
                      "L125.LC_bm2_R_LT_Yh_GLU") ->
       L222.LN2_HistUnmgdAllocation
 
     L222.LN2_UnmgdAllocation %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Land cover in the model base periods for unmanaged land (LT_GLU) in the second nest by region") %>%
+      add_units("billion square meters (bm2) ") %>%
+      add_comments("Land cover in the model base periods for unmanaged land (LT_GLU) in the second nest, from L125 land cover data.") %>%
       add_legacy_name("L222.LN2_UnmgdAllocation") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
-                     "aglu/GCAMLandLeaf_CdensityLT",
-                     "aglu/A_LandNode_logit",
                      "aglu/A_LandLeaf_Unmgd2",
-                     "aglu/A_LandLeaf2",
-                     "aglu/A_LT_Mapping",
-                     "L121.CarbonContent_kgm2_R_LT_GLU",
                      "L125.LC_bm2_R_LT_Yh_GLU") ->
       L222.LN2_UnmgdAllocation
 
     L222.LN2_HistMgdAllocation %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Historical land cover for managed land (LT_GLU) in the second nest by region.") %>%
+      add_units("billion square meters (bm2)") %>%
+      add_comments("Historical land cover for managed land (LT_GLU) in the second nest, from L125 land cover data.") %>%
       add_legacy_name("L222.LN2_HistMgdAllocation") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
-                     "aglu/GCAMLandLeaf_CdensityLT",
-                     "aglu/A_LandNode_logit",
-                     "aglu/A_LandLeaf_Unmgd2",
                      "aglu/A_LandLeaf2",
-                     "aglu/A_LT_Mapping",
-                     "L121.CarbonContent_kgm2_R_LT_GLU",
                      "L125.LC_bm2_R_LT_Yh_GLU") ->
       L222.LN2_HistMgdAllocation
 
     L222.LN2_MgdAllocation %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Land cover in the model base periods for managed land (LT_GLU) in the second nest by region") %>%
+      add_units("billion square meters (bm2) ") %>%
+      add_comments("Land cover in the model base periods for managed land (LT_GLU) in the second nest, from L125 land cover data.") %>%
       add_legacy_name("L222.LN2_MgdAllocation") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
-                     "aglu/GCAMLandLeaf_CdensityLT",
-                     "aglu/A_LandNode_logit",
-                     "aglu/A_LandLeaf_Unmgd2",
                      "aglu/A_LandLeaf2",
-                     "aglu/A_LT_Mapping",
-                     "L121.CarbonContent_kgm2_R_LT_GLU",
                      "L125.LC_bm2_R_LT_Yh_GLU") ->
       L222.LN2_MgdAllocation
 
     L222.LN2_UnmgdCarbon %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Carbon content for unmanaged land (LT_GLU) in second nest by region.") %>%
+      add_units("Varies") %>%
+      add_comments("Carbon content info for unmanaged land (LT_GLU) in the second nest including soil and vegetative carbon,") %>%
+      add_comments("from L125 land cover data, L121 carbon content data, and GCAMLandLeaf_CdensityLT assumptions") %>%
       add_legacy_name("L222.LN2_UnmgdCarbon") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
                      "aglu/GCAMLandLeaf_CdensityLT",
-                     "aglu/A_LandNode_logit",
                      "aglu/A_LandLeaf_Unmgd2",
-                     "aglu/A_LandLeaf2",
-                     "aglu/A_LT_Mapping",
                      "L121.CarbonContent_kgm2_R_LT_GLU",
                      "L125.LC_bm2_R_LT_Yh_GLU") ->
       L222.LN2_UnmgdCarbon
 
     L222.LN2_MgdCarbon %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Carbon content for managed land (LT_GLU) in second nest by region.") %>%
+      add_units("Varies") %>%
+      add_comments("Carbon content info for managed land (LT_GLU) in the second nest including soil and vegetative carbon,") %>%
+      add_comments("from L125 land cover data, L121 carbon content data, and GCAMLandLeaf_CdensityLT assumptions.") %>%
       add_legacy_name("L222.LN2_MgdCarbon") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
                      "aglu/GCAMLandLeaf_CdensityLT",
-                     "aglu/A_LandNode_logit",
-                     "aglu/A_LandLeaf_Unmgd2",
                      "aglu/A_LandLeaf2",
-                     "aglu/A_LT_Mapping",
                      "L121.CarbonContent_kgm2_R_LT_GLU",
                      "L125.LC_bm2_R_LT_Yh_GLU") ->
       L222.LN2_MgdCarbon
 
     L222.LN2_HistUnmgdAllocation_noprot %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Historical land cover for unprotected unmanaged land (LT_GLU) in the second nest by region") %>%
+      add_units("billion square meters (bm2)") %>%
+      add_comments("Historical land cover for unprotected unmanaged land (LT_GLU) in the second nest, from L222.LN2_HistUnmgdAllocation.") %>%
       add_legacy_name("L222.LN2_HistUnmgdAllocation_noprot") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
-                     "aglu/GCAMLandLeaf_CdensityLT",
-                     "aglu/A_LandNode_logit",
                      "aglu/A_LandLeaf_Unmgd2",
-                     "aglu/A_LandLeaf2",
-                     "aglu/A_LT_Mapping",
-                     "L121.CarbonContent_kgm2_R_LT_GLU",
                      "L125.LC_bm2_R_LT_Yh_GLU") ->
       L222.LN2_HistUnmgdAllocation_noprot
 
     L222.LN2_UnmgdAllocation_noprot %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Land cover in the model base periods for unprotected unmanaged land (LT_GLU) in the second nest by region.") %>%
+      add_units("billion square meters (bm2)") %>%
+      add_comments("Land cover in the model base periods for unprotected unmanaged land (LT_GLU) in the second nest, from L222.LN2_UnmgdAllocation.") %>%
       add_legacy_name("L222.LN2_UnmgdAllocation_noprot") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
-                     "aglu/GCAMLandLeaf_CdensityLT",
-                     "aglu/A_LandNode_logit",
                      "aglu/A_LandLeaf_Unmgd2",
-                     "aglu/A_LandLeaf2",
-                     "aglu/A_LT_Mapping",
-                     "L121.CarbonContent_kgm2_R_LT_GLU",
                      "L125.LC_bm2_R_LT_Yh_GLU") ->
       L222.LN2_UnmgdAllocation_noprot
 
     L222.LN1_Logit_prot %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Logit exponent of protected land in the first nest by region") %>%
+      add_units("NA") %>%
+      add_comments("Logit exponent of protected land in the first nest by region. AgLU regions ") %>%
+      add_comments("are given externally defined constant logit information. From L222.LN1_UnmgdAllocation_prot") %>%
       add_legacy_name("L222.LN1_Logit_prot") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
-                     "aglu/GCAMLandLeaf_CdensityLT",
-                     "aglu/A_LandNode_logit",
                      "aglu/A_LandLeaf_Unmgd2",
-                     "aglu/A_LandLeaf2",
-                     "aglu/A_LT_Mapping",
-                     "L121.CarbonContent_kgm2_R_LT_GLU",
                      "L125.LC_bm2_R_LT_Yh_GLU") ->
       L222.LN1_Logit_prot
 
     L222.LN1_HistUnmgdAllocation_prot %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Historical land cover for protected unmanaged land in the first nest by region") %>%
+      add_units("billion square meters (bm2)") %>%
+      add_comments("Historical land cover for protected unmanaged land (LT_GLU) in the first nest, from L222.LN2_HistUnmgdAllocation.") %>%
       add_legacy_name("L222.LN1_HistUnmgdAllocation_prot") %>%
       add_precursors("common/GCAM_region_names",
-                     "water/basin_to_country_mapping",
-                     "aglu/GCAMLandLeaf_CdensityLT",
-                     "aglu/A_LandNode_logit",
-                     "aglu/A_LandLeaf_Unmgd2",
-                     "aglu/A_LandLeaf2",
-                     "aglu/A_LT_Mapping",
-                     "L121.CarbonContent_kgm2_R_LT_GLU",
-                     "L125.LC_bm2_R_LT_Yh_GLU") ->
+                      "water/basin_to_country_mapping",
+                      "aglu/A_LandLeaf_Unmgd2",
+                      "L125.LC_bm2_R_LT_Yh_GLU") ->
       L222.LN1_HistUnmgdAllocation_prot
 
     L222.LN1_UnmgdAllocation_prot %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Land cover in the model base periods for protected unmanaged land in the first nest by region.") %>%
+      add_units("billion square meters (bm2)") %>%
+      add_comments("Land cover in the model base periods for protected unmanaged land (LT_GLU)  in the first nest, from L222.LN2_UnmgdAllocation.") %>%
       add_legacy_name("L222.LN1_UnmgdAllocation_prot") %>%
       add_precursors("common/GCAM_region_names",
-                     "water/basin_to_country_mapping",
-                     "aglu/GCAMLandLeaf_CdensityLT",
-                     "aglu/A_LandNode_logit",
-                     "aglu/A_LandLeaf_Unmgd2",
-                     "aglu/A_LandLeaf2",
-                     "aglu/A_LT_Mapping",
-                     "L121.CarbonContent_kgm2_R_LT_GLU",
-                     "L125.LC_bm2_R_LT_Yh_GLU") ->
+                      "water/basin_to_country_mapping",
+                      "aglu/A_LandLeaf_Unmgd2",
+                      "L125.LC_bm2_R_LT_Yh_GLU") ->
       L222.LN1_UnmgdAllocation_prot
 
     L222.LN1_UnmgdCarbon_prot %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Carbon content for protected unmanaged land in first nest by region.") %>%
+      add_units("Varies") %>%
+      add_comments("Carbon content info for protected unmanaged land (LT_GLU)  in the first nest including soil and vegetative carbon, from L222.LN2_UnmgdCarbon.") %>%
       add_legacy_name("L222.LN1_UnmgdCarbon_prot") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
                      "aglu/GCAMLandLeaf_CdensityLT",
-                     "aglu/A_LandNode_logit",
                      "aglu/A_LandLeaf_Unmgd2",
-                     "aglu/A_LandLeaf2",
-                     "aglu/A_LT_Mapping",
                      "L121.CarbonContent_kgm2_R_LT_GLU",
                      "L125.LC_bm2_R_LT_Yh_GLU") ->
       L222.LN1_UnmgdCarbon_prot
