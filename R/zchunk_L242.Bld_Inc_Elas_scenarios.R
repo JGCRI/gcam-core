@@ -15,6 +15,7 @@
 #' @importFrom tidyr gather spread
 #' @importFrom stats approx
 #' @author RH April 2017
+#' @export
 
 module_socioeconomics_L242.Bld_Inc_Elas_scenarios <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

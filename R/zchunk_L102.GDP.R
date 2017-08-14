@@ -109,12 +109,16 @@ join.gdp.ts <- function(past, future, grouping) {
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RPL March 2017
+#' @export
 module_socioeconomics_L102.GDP <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "socioeconomics/SSP_database_v9",
              FILE = "socioeconomics/IMF_GDP_growth",
+             FILE = "socioeconomics/GCAM3_GDP",
              "L100.gdp_mil90usd_ctry_Yh",
+             "L101.Pop_thous_GCAM3_R_Y",
+             "L101.Pop_thous_GCAM3_ctry_Y",
              "L101.Pop_thous_R_Yh",
              "L101.Pop_thous_Scen_R_Yfut"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -133,7 +137,10 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     SSP_database_v9 <- get_data(all_data, "socioeconomics/SSP_database_v9")
     IMF_GDP_growth <- get_data(all_data, "socioeconomics/IMF_GDP_growth")
+    GCAM3_GDP <- get_data(all_data, "socioeconomics/GCAM3_GDP")
     L100.gdp_mil90usd_ctry_Yh <- get_data(all_data, "L100.gdp_mil90usd_ctry_Yh")
+    L101.Pop_thous_GCAM3_R_Y <- get_data(all_data, "L101.Pop_thous_GCAM3_R_Y")
+    L101.Pop_thous_GCAM3_ctry_Y <- get_data(all_data, "L101.Pop_thous_GCAM3_ctry_Y")
     L101.Pop_thous_R_Yh <- get_data(all_data, "L101.Pop_thous_R_Yh")
     L101.Pop_thous_Scen_R_Yfut <- get_data(all_data, "L101.Pop_thous_Scen_R_Yfut")
 
@@ -284,6 +291,29 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
     ppp.mer.rgn <-
       left_join_error_no_match(mer.rgn, ppp.rgn, by = 'GCAM_region_ID') %>%
       mutate(PPP_MER = PPP / MER)
+
+    # GDP by GCAM region from GCAM 3.0 GDPs.
+    # Downscaling GCAM 3.0 GDP by GCAM 3.0 region to countries, using SSP2 GDP scenario
+    # GDP by GCAM 3.0 region - downscale to country according to actual shares in the historical periods, and SSPbase in the future periods
+
+    SSP_database_iso <- SSP_database_v9 %>%
+      filter(VARIABLE == "GDP|PPP",
+             MODEL == "OECD Env-Growth") %>%
+      select(iso = REGION) %>%
+      distinct() %>%
+      mutate(iso = tolower(iso)) %>%
+      change_iso_code('rou', 'rom')
+
+    L102.gdp_mil90usd_ctry_Yh <- L100.gdp_mil90usd_ctry_Yh %>%
+      filter(iso %in% SSP_database_iso$iso)
+
+    L102.gdp_mil90usd_ctry_Yh[ X_future_years ] <- L102.gdp_bilusd_ctry_Yfut[
+      match( paste( L102.gdp_mil90usd_ctry_Yh$iso, base_pop_scen ),
+             paste( L102.gdp_bilusd_ctry_Yfut$iso, L102.gdp_bilusd_ctry_Yfut[[Scen]] ) ),
+      X_future_years ]
+    L102.gdp_mil90usd_ctry_Yh$region_GCAM3 <- iso_GCAM_regID$region_GCAM3[ match( L102.gdp_mil90usd_ctry_Yh$iso, iso_GCAM_regID$iso ) ]
+    L102.gdp_mil90usd_SSPbase_RG3_Y <- aggregate( L102.gdp_mil90usd_ctry_Yh[ c( X_historical_years, X_future_years ) ],
+                                                  by=as.list( L102.gdp_mil90usd_ctry_Yh[ "region_GCAM3"] ), sum )
 
 
     ## Produce outputs
