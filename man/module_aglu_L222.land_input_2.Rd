@@ -18,43 +18,11 @@ the generated outputs: \code{curr_table$data}, \code{L222.LN2_Logit}, \code{L222
 original data system was \code{L222.land_input_2.R} (aglu level2).
 }
 \description{
-This chunk produces L222.LN2_Logit, L222.LN2_HistUnmgdAllocation, L222.LN2_UnmgdAllocation,
-L222.LN2_HistMgdAllocation, L222.LN2_MgdAllocation, L222.LN2_UnmgdCarbon, L222.LN2_MgdCarbon,
-L222.LN2_HistUnmgdAllocation_noprot, L222.LN2_UnmgdAllocation_noprot, L222.LN1_Logit_prot,
-L222.LN1_HistUnmgdAllocation_prot, L222.LN1_UnmgdAllocation_prot, L222.LN1_UnmgdCarbon_prot
+Briefly describe what this chunk does.
 }
 \details{
-\itemize{
-\item{"L222.LN2_Logit: Logit exponent of the second land nest by region.
-AgLU regions are given externally defined constant logit information."}
-\item{"L222.LN2_HistUnmgdAllocation: Historical land cover for unmanaged land (LT_GLU) in the second nest by region.
-Historical land cover for unmanaged land in the second nest, from L125 land cover data."}
-\item{"L222.LN2_UnmgdAllocation: Land cover in the model base periods for unmanaged land (LT_GLU) in the second nest by region.
-Land cover in the model base periods for unmanaged land in the second nest, from L125 land cover data."}
-\item{"L222.LN2_HistMgdAllocation: Historical land cover for managed land (LT_GLU) in the second nest by region.
-Historical land cover for managed land in the second nest, from L125 land cover data."}
-\item{"L222.LN2_MgdAllocation: Land cover in the model base periods for managed land (LT_GLU) in the second nest by region.
-Land cover in the model base periods for managed land in the second nest, from L125 land cover data."}
-\item{"L222.LN2_UnmgdCarbon: Carbon content for unmanaged land (LT_GLU) in second nest by region.
-Carbon content info for unmanaged land in the second nest including soil and vegetative carbon,
-from L125 land cover data, L121 carbon content data, and GCAMLandLeaf_CdensityLT assumptions."}
-\item{"L222.LN2_MgdCarbon: Carbon content for managed land (LT_GLU) in second nest by region.
-Carbon content info for managed land in the second nest including soil and vegetative carbon,
-from L125 land cover data, L121 carbon content data, and GCAMLandLeaf_CdensityLT assumptions."}
-\item{"L222.LN2_HistUnmgdAllocation_noprot: Historical land cover for unprotected unmanaged land (LT_GLU) in the second nest by region.
-Historical land cover for unprotected unmanaged land in the second nest, from L222.LN2_HistUnmgdAllocation."}
-\item{" L222.LN2_UnmgdAllocation_noprot: Land cover in the model base periods for unprotected unmanaged land (LT_GLU) in the second nest by region.
-Land cover in the model base periods for unprotected unmanaged land in the second nest, from L222.LN2_UnmgdAllocation."}
-\item{"L222.LN1_HistUnmgdAllocation_prot: Historical land cover for protected unmanaged land (LT_GLU) in the first nest by region.
-Historical land cover for protected unmanaged land in the first nest, from L222.LN2_HistUnmgdAllocation."}
-\item{"L222.LN1_UnmgdAllocation_prot: Land cover in the model base periods for protected unmanaged land (LT_GLU) in the first nest by region.
-Land cover in the model base periods for protected unmanaged land in the first nest, from L222.LN2_UnmgdAllocation."}
-\item{"L222.LN1_UnmgdCarbon_prot: Carbon content for protected unmanaged land (LT_GLU) in first nest by region.
-Carbon content info for protected unmanaged land in the first nest including soil and vegetative carbon, from L222.LN2_UnmgdCarbon."}
-\item{"L222.LN1_Logit_prot: Logit exponent of protected land in the first nest by region.
-AgLU regions are given externally defined constant logit information. From L222.LN1_UnmgdAllocation_prot"}
-}
+Describe in detail what this chunk does.
 }
 \author{
-ACS August 2017
+YourInitials CurrentMonthName 2017
 }
