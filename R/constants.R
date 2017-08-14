@@ -190,6 +190,17 @@ aglu.MIN_SOIL_CARBON_DENSITY <- 0
 aglu.N0_LOGIT_EXP <- 0
 aglu.N0_LOGIT_TYPE <- NA
 
+# fraction of land that is protected
+aglu.PROTECT_LAND_FRACT <- 0.9
+
+# unManaged Land Value
+# 1975$/thou km2 ??
+aglu.UNMANAGED_LAND_VALUE <- 1
+
+# default protected, unmanaged land LN1 logit info
+aglu.LN1_PROTUNMGD_LOGIT_EXP <- 0
+aglu.LN1_PROTUNMGD_LOGIT_TYPE <- NA
+
 # XML-related constants
 aglu.GLU_NDIGITS          <- 3    # number of digits in the geographic land unit identifier codes
 aglu.LT_GLU_DELIMITER     <-      # delimiter between the land use type name and GLU name. should be the same as the crop-glu delimiter
