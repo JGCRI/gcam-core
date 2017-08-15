@@ -40,7 +40,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
              FILE = "aglu/A_bio_frac_prod_R",
              "L111.ag_resbio_R_C",
              "L103.ag_Prod_Mt_R_C_Y_GLU",
-             FILE = "temp-data-inject/L123.For_Prod_bm3_R_Y_GLU"))
+             "L123.For_Prod_bm3_R_Y_GLU"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2042.AgResBio_For",
              "L2042.AgResBioCurve_For",
@@ -67,13 +67,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
     A_bio_frac_prod_R <- get_data(all_data, "aglu/A_bio_frac_prod_R")
     L111.ag_resbio_R_C <- get_data(all_data, "L111.ag_resbio_R_C")
     L103.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L103.ag_Prod_Mt_R_C_Y_GLU")
-    L123.For_Prod_bm3_R_Y_GLU <- get_data(all_data, "temp-data-inject/L123.For_Prod_bm3_R_Y_GLU")
-
-    # following lines temporary while L123 is temp-data-inject
-    L123.For_Prod_bm3_R_Y_GLU %>%
-      gather(year, prod, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) ->
-      L123.For_Prod_bm3_R_Y_GLU
+    L123.For_Prod_bm3_R_Y_GLU <- get_data(all_data, "L123.For_Prod_bm3_R_Y_GLU")
 
     # the following lines convert basin identification from the current GLU### level 1 names to the
     # level 2 names.
@@ -275,7 +269,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
       add_legacy_name("L2042.AgResBio_For") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
-                     "temp-data-inject/L123.For_Prod_bm3_R_Y_GLU") ->
+                     "L123.For_Prod_bm3_R_Y_GLU") ->
       L2042.AgResBio_For
     L204.AgResBioCurve_For %>%
       add_title("Forest residue biomass supply curves") %>%
@@ -288,7 +282,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
                      "water/basin_to_country_mapping",
                      "aglu/A_resbio_curves",
                      "aglu/A_bio_frac_prod_R",
-                     "temp-data-inject/L123.For_Prod_bm3_R_Y_GLU")  %>%
+                     "L123.For_Prod_bm3_R_Y_GLU")  %>%
       add_flags(FLAG_PROTECT_FLOAT) ->
       L2042.AgResBioCurve_For
     L204.GlobalResBio_Mill %>%
