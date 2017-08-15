@@ -383,7 +383,7 @@ emissions.GAINS_BASE_YEAR <- 2005
 emissions.GAINS_YEARS <- c(2010, 2020, 2030)
 emissions.LOW_PCGDP <- 2.75
 emissions.COAL_SO2_THRESHOLD <- 0.1
-emissions.NONGHG_GASES         <- c("SO2", "NOx", "CO", "NMVOC", "NH3")
+# emissions.NONGHG_GASES         <- c("SO2", "NOx", "CO", "NMVOC", "NH3")
 emissions.NH3_EXTRA_YEARS      <- 1971:1989
 emissions.EDGAR_YEARS          <- 1971:2008
 emissions.EPA_MACC_YEAR        <- 2030  # Must be either 2020 or 2030
