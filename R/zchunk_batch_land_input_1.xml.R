@@ -43,6 +43,7 @@ module_aglu_batch_land_input_1.xml <- function(command, ...) {
       add_xml_data(L221.LN1_HistUnmgdAllocation, "LN1_HistUnmgdAllocation") %>%
       add_xml_data(L221.LN1_UnmgdAllocation, "LN1_UnmgdAllocation") %>%
       add_xml_data(L221.LN1_UnmgdCarbon, "LN1_UnmgdCarbon") %>%
+      add_rename_landnode_xml() %>%
       add_precursors("L221.LN0_Logit", "L221.LN0_Land", "L221.LN0_SoilTimeScale", "L221.LN1_ValueLogit", "L221.LN1_HistUnmgdAllocation", "L221.LN1_UnmgdAllocation", "L221.LN1_UnmgdCarbon") ->
       land_input_1.xml
 
