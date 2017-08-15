@@ -92,6 +92,7 @@ module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
       group_by(GCAM_region_ID, Land_Type, GLU) %>%
       # Interpolate
       mutate(Area_bm2 = approx_fun(year, Area_bm2)) %>%
+      ungroup %>%
       filter(year %in% aglu.LAND_COVER_YEARS) %>%
       arrange(GCAM_region_ID, Land_Type, GLU, year) %>%
       rename(value = Area_bm2) %>%
@@ -115,14 +116,16 @@ module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
     L100.Land_type_area_ha %>%
       filter(LT_HYDE == "Unmanaged") %>%
       group_by(iso, GCAM_region_ID, GLU, land_code, LT_SAGE, Land_Type) %>%
-      summarise(Area_bm2 = mean(Area_bm2)) ->
+      summarise(Area_bm2 = mean(Area_bm2)) %>%
+      ungroup ->
       L120.LC_bm2_ctry_LTsage_GLU
 
     # Compile data for land carbon content calculation on pasture lands
     L100.Land_type_area_ha %>%
       filter(LT_HYDE == "Pasture") %>%
       group_by(iso, GCAM_region_ID, GLU, land_code, LT_SAGE, Land_Type) %>%
-      summarise(Area_bm2 = mean(Area_bm2)) ->
+      summarise(Area_bm2 = mean(Area_bm2)) %>%
+      ungroup ->
       L120.LC_bm2_ctry_LTpast_GLU
 
     # Produce outputs
