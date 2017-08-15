@@ -122,7 +122,7 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
       # Rename columns for joining.
       rename(energy = value) %>%
       left_join_keep_first_only(select(GCAM_sector_tech, sector, fuel, technology, EPA_agg_sector, EPA_agg_fuel),
-                                by =c("sector", "fuel", "technology"))  %>%
+                                by =c("sector", "fuel", "technology")) %>%
       repeat_add_columns(tibble(Non.CO2 = emissions.NONGHG_GASES)) ->
       L111.nonghg_tg_R_en_Si_F_Yh.tmp1
 
