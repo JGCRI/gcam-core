@@ -1,4 +1,4 @@
-#' module_water_L245.water.demand.municipal
+#' module_energy_L226.en_distribution
 #'
 #' Briefly describe what this chunk does.
 #'
@@ -6,51 +6,63 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L245.SectorLogitTables[[ curr_table ]]$data}, \code{L245.Supplysector}, \code{L245.SubsectorLogitTables[[ curr_table ]]$data}, \code{L245.SubsectorLogit}, \code{L245.SubsectorShrwtFllt}, \code{L245.TechShrwt}, \code{L245.TechCoef}, \code{L245.TechCost}, \code{L245.PerCapitaBased}, \code{L245.BaseService}, \code{L245.IncomeElasticity}, \code{L245.PriceElasticity}, \code{L245.aeei}. The corresponding file in the
-#' original data system was \code{L245.water.demand.municipal.R} (water level2).
+#' the generated outputs: \code{L226.SectorLogitTables[[ curr_table ]]$data}, \code{L226.Supplysector_en}, \code{L226.SubsectorLogitTables[[ curr_table ]]$data}, \code{L226.SubsectorLogit_en}, \code{L226.SubsectorShrwt_en}, \code{L226.SubsectorShrwtFllt_en}, \code{L226.SubsectorInterp_en}, \code{L226.SubsectorInterpTo_en}, \code{L226.StubTech_en}, \code{L226.GlobalTechEff_en}, \code{L226.GlobalTechCost_en}, \code{L226.GlobalTechShrwt_en}, \code{L226.StubTechCoef_elecownuse}, \code{L226.StubTechCoef_electd}, \code{L226.StubTechCoef_gaspipe}. The corresponding file in the
+#' original data system was \code{L226.en_distribution.R} (energy level2).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_water_L245.water.demand.municipal_DISABLED <- function(command, ...) {
+module_energy_L226.en_distribution_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
-             FILE = "water/A03.sector",
-             FILE = "water/A45.sector",
-             FILE = "water/A45.tech_cost",
-             FILE = "water/A45.demand",
-             "L145.municipal_water_R_W_Yh_km3",
-             "L145.municipal_water_cost_R_75USD_m3",
-             "L145.municipal_water_eff_R_Y"))
+             FILE = "energy/fuel_energy_input",
+             FILE = "energy/calibrated_techs",
+             FILE = "energy/A_regions",
+             FILE = "energy/A26.sector",
+             FILE = "energy/A26.subsector_logit",
+             FILE = "energy/A26.subsector_shrwt",
+             FILE = "energy/A26.subsector_interp",
+             FILE = "energy/A26.globaltech_eff",
+             FILE = "energy/A26.globaltech_cost",
+             FILE = "energy/A26.globaltech_shrwt",
+             "L126.IO_R_elecownuse_F_Yh",
+             "L126.IO_R_electd_F_Yh",
+             "L126.IO_R_gaspipe_F_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L245.SectorLogitTables[[ curr_table ]]$data",
-             "L245.Supplysector",
-             "L245.SubsectorLogitTables[[ curr_table ]]$data",
-             "L245.SubsectorLogit",
-             "L245.SubsectorShrwtFllt",
-             "L245.TechShrwt",
-             "L245.TechCoef",
-             "L245.TechCost",
-             "L245.PerCapitaBased",
-             "L245.BaseService",
-             "L245.IncomeElasticity",
-             "L245.PriceElasticity",
-             "L245.aeei"))
+    return(c("L226.Supplysector_en",
+             "L226.SubsectorLogit_en",
+             "L226.SubsectorShrwt_en",
+             "L226.SubsectorShrwtFllt_en",
+             "L226.SubsectorInterp_en",
+             "L226.SubsectorInterpTo_en",
+             "L226.StubTech_en",
+             "L226.GlobalTechEff_en",
+             "L226.GlobalTechCost_en",
+             "L226.GlobalTechShrwt_en",
+             "L226.StubTechCoef_elecownuse",
+             "L226.StubTechCoef_electd",
+             "L226.StubTechCoef_gaspipe"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    A03.sector <- get_data(all_data, "water/A03.sector")
-    A45.sector <- get_data(all_data, "water/A45.sector")
-    A45.tech_cost <- get_data(all_data, "water/A45.tech_cost")
-    A45.demand <- get_data(all_data, "water/A45.demand")
-    L145.municipal_water_R_W_Yh_km3 <- get_data(all_data, "L145.municipal_water_R_W_Yh_km3")
-    L145.municipal_water_cost_R_75USD_m3 <- get_data(all_data, "L145.municipal_water_cost_R_75USD_m3")
-    L145.municipal_water_eff_R_Y <- get_data(all_data, "L145.municipal_water_eff_R_Y")
+    fuel_energy_input <- get_data(all_data, "energy/fuel_energy_input")
+    calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
+    A_regions <- get_data(all_data, "energy/A_regions")
+    A26.sector <- get_data(all_data, "energy/A26.sector")
+    A26.subsector_logit <- get_data(all_data, "energy/A26.subsector_logit")
+    A26.subsector_shrwt <- get_data(all_data, "energy/A26.subsector_shrwt")
+    A26.subsector_interp <- get_data(all_data, "energy/A26.subsector_interp")
+    A26.globaltech_eff <- get_data(all_data, "energy/A26.globaltech_eff")
+    A26.globaltech_cost <- get_data(all_data, "energy/A26.globaltech_cost")
+    A26.globaltech_shrwt <- get_data(all_data, "energy/A26.globaltech_shrwt")
+    L126.IO_R_elecownuse_F_Yh <- get_data(all_data, "L126.IO_R_elecownuse_F_Yh")
+    L126.IO_R_electd_F_Yh <- get_data(all_data, "L126.IO_R_electd_F_Yh")
+    L126.IO_R_gaspipe_F_Yh <- get_data(all_data, "L126.IO_R_gaspipe_F_Yh")
 
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
@@ -67,10 +79,10 @@ module_water_L245.water.demand.municipal_DISABLED <- function(command, ...) {
     # }
     #
     #
-    # NOTE: there are `merge` calls in this code. Be careful!
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
     # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
+    # NOTE: This code uses repeat_and_add_vector
+    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # ===================================================
 
     # Produce outputs
@@ -83,133 +95,148 @@ module_water_L245.water.demand.municipal_DISABLED <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L245.SectorLogitTables[[ curr_table ]]$data") %>%
+      add_legacy_name("L226.Supplysector_en") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L245.SectorLogitTables[[ curr_table ]]$data
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L245.Supplysector") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L245.Supplysector
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L245.SubsectorLogitTables[[ curr_table ]]$data") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L245.SubsectorLogitTables[[ curr_table ]]$data
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L245.SubsectorLogit") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L245.SubsectorLogit
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L245.SubsectorShrwtFllt") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L245.SubsectorShrwtFllt
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L245.TechShrwt") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L245.TechShrwt
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L245.TechCoef") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L245.TechCoef
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L245.TechCost") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L245.TechCost
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L245.PerCapitaBased") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L245.PerCapitaBased
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L245.BaseService") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L245.BaseService
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L245.IncomeElasticity") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L245.IncomeElasticity
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L245.PriceElasticity") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L245.PriceElasticity
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L245.aeei") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L245.aeei
+      L226.Supplysector_en
 
-    return_data(L245.SectorLogitTables[[ curr_table ]]$data, L245.Supplysector, L245.SubsectorLogitTables[[ curr_table ]]$data, L245.SubsectorLogit, L245.SubsectorShrwtFllt, L245.TechShrwt, L245.TechCoef, L245.TechCost, L245.PerCapitaBased, L245.BaseService, L245.IncomeElasticity, L245.PriceElasticity, L245.aeei)
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L226.SubsectorLogit_en") %>%
+      add_precursors("precursor1", "precursor2", "etc") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L226.SubsectorLogit_en
+
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L226.SubsectorShrwt_en") %>%
+      add_precursors("precursor1", "precursor2", "etc") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L226.SubsectorShrwt_en
+
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L226.SubsectorShrwtFllt_en") %>%
+      add_precursors("precursor1", "precursor2", "etc") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L226.SubsectorShrwtFllt_en
+
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L226.SubsectorInterp_en") %>%
+      add_precursors("precursor1", "precursor2", "etc") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L226.SubsectorInterp_en
+
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L226.SubsectorInterpTo_en") %>%
+      add_precursors("precursor1", "precursor2", "etc") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L226.SubsectorInterpTo_en
+
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L226.StubTech_en") %>%
+      add_precursors("precursor1", "precursor2", "etc") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L226.StubTech_en
+
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L226.GlobalTechEff_en") %>%
+      add_precursors("precursor1", "precursor2", "etc") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L226.GlobalTechEff_en
+
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L226.GlobalTechCost_en") %>%
+      add_precursors("precursor1", "precursor2", "etc") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L226.GlobalTechCost_en
+
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L226.GlobalTechShrwt_en") %>%
+      add_precursors("precursor1", "precursor2", "etc") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L226.GlobalTechShrwt_en
+
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L226.StubTechCoef_elecownuse") %>%
+      add_precursors("precursor1", "precursor2", "etc") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L226.StubTechCoef_elecownuse
+
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L226.StubTechCoef_electd") %>%
+      add_precursors("precursor1", "precursor2", "etc") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L226.StubTechCoef_electd
+
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L226.StubTechCoef_gaspipe") %>%
+      add_precursors("precursor1", "precursor2", "etc") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L226.StubTechCoef_gaspipe
+
+    return_data(L226.Supplysector_en, L226.SubsectorLogit_en, L226.SubsectorShrwt_en,
+                L226.SubsectorShrwtFllt_en, L226.SubsectorInterp_en, L226.SubsectorInterpTo_en,
+                L226.StubTech_en, L226.GlobalTechEff_en, L226.GlobalTechCost_en, L226.GlobalTechShrwt_en,
+                L226.StubTechCoef_elecownuse, L226.StubTechCoef_electd, L226.StubTechCoef_gaspipe)
   } else {
     stop("Unknown command")
   }

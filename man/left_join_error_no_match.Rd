@@ -4,12 +4,14 @@
 \alias{left_join_error_no_match}
 \title{left_join_error_no_match}
 \usage{
-left_join_error_no_match(d, ...)
+left_join_error_no_match(d, ..., ignore_columns = NULL)
 }
 \arguments{
 \item{d}{Data frame (typically from pipeline)}
 
 \item{...}{Rest of call to \code{\link{left_join}}}
+
+\item{ignore_columns}{Optional column name(s) to ignore, character vector}
 }
 \value{
 Joined data.

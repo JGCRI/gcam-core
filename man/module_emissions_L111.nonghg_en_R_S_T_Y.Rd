@@ -18,7 +18,7 @@ the generated outputs: \code{L111.nonghg_tg_R_en_S_F_Yh}, \code{L111.nonghg_tgej
 original data system was \code{L111.nonghg_en_R_S_T_Y.R} (emissions level1).
 }
 \description{
-Compute historical emissions factors for energy by GCAM technology, from EPA emissions data and IEA energy balances.
+Briefly describe what this chunk does.
 }
 \details{
 This code produces two outputs: non-ghg emission totals and non-ghg emission shares by total emissions.
