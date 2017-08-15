@@ -128,7 +128,7 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
 
     # Match in emissions factors and then compute unscaled emissions.
 
-    # Aggregate by EDGAR sector and region
+    # Aggregate by EDGAR sector and region.
     L111.nonghg_tg_R_en_Si_F_Yh.tmp1 %>%
       # Join in USA non-ghg emission factor data.  Keep NAs for now.
       left_join(L111.nonghg_tgej_USA_en_Sepa_F_Yh.tmp1, by = c("Non.CO2", "EPA_agg_sector", "EPA_agg_fuel", "year"))  %>%
@@ -140,7 +140,7 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
                                 by =c("sector", "fuel")) ->
       L111.nonghg_tg_R_en_Si_F_Yh.tmp1
 
-    # Create column of total EPA emissions by EDGAR sector and region
+    # Create column of total EPA emissions by EDGAR sector and region.
     L111.nonghg_tg_R_en_Si_F_Yh.tmp1 %>%
       group_by(GCAM_region_ID,Non.CO2, EDGAR_agg_sector, year) %>%
       summarise(EPA_emissions = sum(epa_emissions)) ->
