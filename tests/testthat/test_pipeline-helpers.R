@@ -67,6 +67,26 @@ test_that("protect and unprotect integer cols work", {
   expect_equal(names(d3), c("iso", "2050"))
 })
 
+test_that("left_join_error_no_match works", {
+
+  # Basic join works
+  x <- tibble(year = 2000:2002)
+  y <- tibble(year = 2000:2002, value = 1:3)
+  expect_silent(left_join_error_no_match(x, y, by = "year"))
+  expect_identical(left_join_error_no_match(x, y, by = "year"),
+                   left_join(x, y, by = "year"))
+  # Catches duplicate matches
+  y <- tibble(year = c(2000, 2001, 2001, 2002), value = 1:4)
+  expect_error(left_join_error_no_match(x, y, by = "year"))
+
+  # Catch no match (NAs)
+  y <- tibble(year = c(2000, 2002), value = 1:2)
+  expect_error(left_join_error_no_match(x, y, by = "year"))
+
+  # ignore_columns works
+  y <- tibble(year = 2000:2002, value = 1:3, logit.type = NA)
+  expect_silent(left_join_error_no_match(x, y, by = "year", ignore_columns = "logit.type"))
+})
 
 test_that("left_join_keep_first_only works", {
   x <- tibble(iso = c('gud', 'bad', 'ugy'),
@@ -117,26 +137,26 @@ test_that("left_join_keep_first_only works", {
 })
 
 test_that("fast_left_join produces results equivalent to left_join", {
-    x <- as.integer(100*rnorm(100))
-    y <- rnorm(100)
-    z1 <- rnorm(100)
-    z2 <- rnorm(100)
+  x <- as.integer(100*rnorm(100))
+  y <- rnorm(100)
+  z1 <- rnorm(100)
+  z2 <- rnorm(100)
 
-    A <- tibble(x=x, y=y, z1=z1)
-    B <- tibble(x=x, y=y, z2=z2)
+  A <- tibble(x=x, y=y, z1=z1)
+  B <- tibble(x=x, y=y, z2=z2)
 
-    ## Two join columns, no duplicate unjoined columns
-    ABdp <- dplyr::left_join(A, B, by=c('x','y')) %>% arrange(x,y)
-    ABdt <- fast_left_join(A, B, by=c('x','y')) %>% arrange(x,y)
+  ## Two join columns, no duplicate unjoined columns
+  ABdp <- dplyr::left_join(A, B, by=c('x','y')) %>% arrange(x,y)
+  ABdt <- fast_left_join(A, B, by=c('x','y')) %>% arrange(x,y)
 
-    expect_equal(ABdp, ABdt)
+  expect_equal(ABdp, ABdt)
 
-    ## One join column, y is a duplicate
-    ABdp <- dplyr::left_join(A, B, by='x') %>% arrange(x, y.x, y.y)
-    ABdt <- fast_left_join(A, B, by='x') %>% rename(y.x = i.y, y.y = y) %>%
-      arrange(x, y.x, y.y)
+  ## One join column, y is a duplicate
+  ABdp <- dplyr::left_join(A, B, by='x') %>% arrange(x, y.x, y.y)
+  ABdt <- fast_left_join(A, B, by='x') %>% rename(y.x = i.y, y.y = y) %>%
+    arrange(x, y.x, y.y)
 
-    expect_equal(ABdp, ABdt)
+  expect_equal(ABdp, ABdt)
 })
 
 
