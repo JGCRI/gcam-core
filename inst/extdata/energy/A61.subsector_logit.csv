@@ -1,0 +1,6 @@
+# File: A61.subsector_logit.csv
+# Title: Carbon storage subsector logit exponents
+# Units: Unitless for logit exponent
+supplysector,subsector,logit.exponent,logit.type
+carbon-storage,onshore carbon-storage,-6,
+carbon-storage,offshore carbon-storage,-6,
