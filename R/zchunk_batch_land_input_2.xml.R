@@ -43,6 +43,7 @@ module_aglu_batch_land_input_2.xml <- function(command, ...) {
       add_xml_data(L222.LN2_MgdAllocation,"LN2_MgdAllocation") %>%
       add_xml_data(L222.LN2_UnmgdCarbon,"LN2_UnmgdCarbon") %>%
       add_xml_data(L222.LN2_MgdCarbon,"LN2_MgdCarbon") %>%
+      add_rename_landnode_xml() %>%
       add_precursors("L222.LN2_Logit","L222.LN2_HistUnmgdAllocation", "L222.LN2_UnmgdAllocation", "L222.LN2_HistMgdAllocation", "L222.LN2_MgdAllocation", "L222.LN2_UnmgdCarbon", "L222.LN2_MgdCarbon") ->
       land_input_2.xml
 
