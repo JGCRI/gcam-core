@@ -90,7 +90,8 @@ module_energy_L261.Cstorage <- function(command, ...) {
       # We will use these specific region names to replace the broad term, regional, in the market column.
       repeat_add_columns(GCAM_region_names) %>%
       # Reset regional markets to the names of the specific regions
-      mutate(market = replace(market, market == "regional", region[market == "regional"])) %>%
+      mutate(market = replace(market, market == "regional", region[market == "regional"]),
+             capacity.factor = as.numeric(capacity.factor)) %>%
       rename(output.unit = `output-unit`, price.unit = `price-unit`) ->
       L261.rsrc_info
 
@@ -145,6 +146,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
     # C
     # Carbon storage sector information
     A61.sector %>%
+      mutate(logit.exponent = as.numeric(logit.exponent)) %>%
       write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], "logit.type"),
                            GCAM_region_names = GCAM_region_names) ->
       L261.Supplysector_C # This is a final output table.
@@ -155,6 +157,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
 
     # Subsector logit exponents of carbon storage sector
     A61.subsector_logit %>%
+      mutate(logit.exponent = as.numeric(logit.exponent)) %>%
       write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], "logit.type"),
                            GCAM_region_names = GCAM_region_names) ->
       L261.SubsectorLogit_C # This is a final output table.
@@ -162,6 +165,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
 
     # Subsector shareweights of carbon storage sectors
     A61.subsector_shrwt %>%
+      mutate(share.weight = as.numeric(share.weight)) %>%
       write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]], "logit.type"),
                            GCAM_region_names = GCAM_region_names) ->
       L261.SubsectorShrwtFllt_C # This is a final output table.
@@ -245,8 +249,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
       add_comments("Carbon storage resource information was expanded to include GCAM region names") %>%
       add_comments("and filtered for only depletable resources") %>%
       add_legacy_name("L261.DepRsrc") %>%
-      add_precursors("common/GCAM_region_names", "energy/A61.rsrc_info") %>%
-      add_flags(FLAG_NO_TEST) ->
+      add_precursors("common/GCAM_region_names", "energy/A61.rsrc_info") ->
       L261.DepRsrc
 
     L261.UnlimitRsrc %>%
