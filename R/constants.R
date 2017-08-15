@@ -5,6 +5,7 @@ OUTPUTS_DIR  <- "outputs/"
 XML_DIR      <- "xml/"
 COMMENT_CHAR <- "#"
 OLD_DATA_SYSTEM_BEHAVIOR <- TRUE
+UNDER_TIMESHIFT <- FALSE
 YEAR_PATTERN <- "^(1|2)[0-9]{3}$"   # a 1 or 2 followed by three digits, and nothing else
 LOGIT_COLUMN_NAME <- "logit.type"   # will be removed by test code before old-new comparison
 
