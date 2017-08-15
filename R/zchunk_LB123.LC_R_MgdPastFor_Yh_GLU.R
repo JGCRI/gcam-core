@@ -11,7 +11,7 @@
 #' @details This chunk calculates pasture and forests production and yields by GCAM region / GLU / year,
 #' and the managed pasture and forests land cover by GCAM region / GLU / historical year.
 #' Managed land area for both are adjusted below the threshold percentage of total pasture and forest land,
-#' and yields are increased so that production stay unchanged for those regions.
+#' and yields are increased so that production stays unchanged for those regions.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -220,7 +220,7 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
       ungroup %>%
       # Match in the population ratio by region
       left_join(L123.PopRatio_R_Yhh, by = c("GCAM_region_ID", "year")) %>%
-      # For aglu years, no need to scale, replace the ratio to one
+      # For aglu years, no need to scale, so set the ratio to one
       replace_na(list(PopRatio = 1)) %>%
       # Scale managed forest land based on population in pre-aglu years
       mutate(MgdFor = MgdFor * PopRatio) %>%
