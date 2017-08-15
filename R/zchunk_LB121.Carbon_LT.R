@@ -58,7 +58,8 @@ module_aglu_LB121.Carbon_LT <- function(command, ...) {
       group_by(GCAM_region_ID, Land_Type, GLU) %>%
       summarise(`mature age` = weighted.mean(`mature age`, Area_bm2),
                 veg_c = weighted.mean(veg_c, Area_bm2),
-                soil_c = weighted.mean(soil_c, Area_bm2)) ->
+                soil_c = weighted.mean(soil_c, Area_bm2)) %>%
+      ungroup ->
       L121.CarbonContent_kgm2_R_LTnatveg_GLU
 
     # Urban land and cropland
@@ -82,7 +83,8 @@ module_aglu_LB121.Carbon_LT <- function(command, ...) {
       summarise(`mature age` = weighted.mean(`mature age`, Area_bm2),
                 veg_c = weighted.mean(veg_c, Area_bm2),
                 soil_c = weighted.mean(soil_c, Area_bm2),
-                pasture_yield = weighted.mean(pasture_yield, Area_bm2)) ->
+                pasture_yield = weighted.mean(pasture_yield, Area_bm2)) %>%
+      ungroup ->
       L121.CarbonContent_kgm2_R_LTpast_GLU
 
     # Combine natural vegetation and managed land use tables

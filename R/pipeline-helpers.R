@@ -18,11 +18,12 @@ PH_year_value_historical <- function(d) {
 #'
 #' @param d Data frame (typically from pipeline)
 #' @param ... Rest of call to \code{\link{left_join}}
+#' @param ignore_columns Optional column name(s) to ignore, character vector
 #' @return Joined data.
 #' @details Restrictive version of dplyr::left_join meant for replacing `match` calls.
 # Ensures that number of rows of data doesn't change, and everything has matched data.
 #' @export
-left_join_error_no_match <- function(d, ...) {
+left_join_error_no_match <- function(d, ..., ignore_columns = NULL) {
   assertthat::assert_that(tibble::is.tibble(d))
   dnames <- names(d)
   drows <- nrow(d)
@@ -30,7 +31,8 @@ left_join_error_no_match <- function(d, ...) {
   if(nrow(d) != drows) {
     stop("left_join_no_match: number of rows in data changed")
   }
-  if(any(is.na(d[setdiff(names(d), dnames)]))) {
+  names_to_check <- setdiff(names(d), dnames) %>% setdiff(ignore_columns)
+  if(any(is.na(d[names_to_check]))) {
     stop("left_join_no_match: NA values in new data columns")
   }
   d
