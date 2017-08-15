@@ -6,6 +6,14 @@ library(readr)
 
 test_that("matches old data system output", {
 
+  # If we are running the code coverage tests then let's skip this since
+  # it will take a long to time run and the purpose of this test is to
+  # make sure the chunk outputs match the old data system and not to test
+  # the functionality of any chunks
+  if(isTRUE(as.logical(Sys.getenv("gcamdata.is_coverage_test")))) {
+    skip("Skip old new when only interested in code coverage")
+  }
+
   # If we're on Travis, need to run the driver to ensure chunk outputs saved
   # Don't do this locally, to speed things up
 
@@ -107,8 +115,8 @@ test_that("matches old data system output", {
       # To work around this, we allow chunks to tag datasets with FLAG_SUM_TEST,
       # which is less strict, just comparing the sum of all numeric data
       if(flag_sum_test) {
-        numeric_columns_old <- sapply(olddata, class) == "numeric"
-        numeric_columns_new <- sapply(newdata, class) == "numeric"
+        numeric_columns_old <- sapply(olddata, is.numeric)
+        numeric_columns_new <- sapply(newdata, is.numeric)
         expect_equivalent(sum(olddata[numeric_columns_old]), sum(newdata[numeric_columns_new]),
                           info = paste(basename(newf), "doesn't match (sum test)"))
       } else {

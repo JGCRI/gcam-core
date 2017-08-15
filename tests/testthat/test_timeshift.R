@@ -11,6 +11,14 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
 
   test_that("chunks handle timeshift", {
 
+    # If we are running the code coverage tests then we skip this test since
+    # it will take a long to time run and while it may exercise some code
+    # we would like to ensure works properly the cost just isn't worth it
+    # at the moment.
+    if(isTRUE(as.logical(Sys.getenv("gcamdata.is_coverage_test")))) {
+      skip("Skip timeshift when only interested in code coverage")
+    }
+
     UNDER_TIMESHIFT <<- TRUE
 
     # Move the historical/future division back by five years
