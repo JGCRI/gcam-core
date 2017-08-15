@@ -200,10 +200,6 @@ aglu.N0_LOGIT_TYPE <- NA
 # fraction of land that is protected
 aglu.PROTECT_LAND_FRACT <- 0.9
 
-# unManaged Land Value
-# 1975$/thou km2 ??
-aglu.UNMANAGED_LAND_VALUE <- 1
-
 # default protected, unmanaged land LN1 logit info
 aglu.LN1_PROTUNMGD_LOGIT_EXP <- 0
 aglu.LN1_PROTUNMGD_LOGIT_TYPE <- NA
@@ -383,7 +379,7 @@ emissions.GAINS_BASE_YEAR <- 2005
 emissions.GAINS_YEARS <- c(2010, 2020, 2030)
 emissions.LOW_PCGDP <- 2.75
 emissions.COAL_SO2_THRESHOLD <- 0.1
-
+# emissions.NONGHG_GASES         <- c("SO2", "NOx", "CO", "NMVOC", "NH3")
 emissions.NH3_EXTRA_YEARS      <- 1971:1989
 emissions.EDGAR_YEARS          <- 1971:2008
 emissions.EPA_MACC_YEAR        <- 2030  # Must be either 2020 or 2030
