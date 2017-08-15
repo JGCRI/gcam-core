@@ -75,6 +75,7 @@ test_that("left_join_error_no_match works", {
   expect_silent(left_join_error_no_match(x, y, by = "year"))
   expect_identical(left_join_error_no_match(x, y, by = "year"),
                    left_join(x, y, by = "year"))
+
   # Catches duplicate matches
   y <- tibble(year = c(2000, 2001, 2001, 2002), value = 1:4)
   expect_error(left_join_error_no_match(x, y, by = "year"))
@@ -85,6 +86,7 @@ test_that("left_join_error_no_match works", {
 
   # ignore_columns works
   y <- tibble(year = 2000:2002, value = 1:3, logit.type = NA)
+  expect_error(left_join_error_no_match(x, y, by = "year"))
   expect_silent(left_join_error_no_match(x, y, by = "year", ignore_columns = "logit.type"))
 })
 
