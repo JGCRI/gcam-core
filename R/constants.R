@@ -5,6 +5,7 @@ OUTPUTS_DIR  <- "outputs/"
 XML_DIR      <- "xml/"
 COMMENT_CHAR <- "#"
 OLD_DATA_SYSTEM_BEHAVIOR <- TRUE
+UNDER_TIMESHIFT <- FALSE
 YEAR_PATTERN <- "^(1|2)[0-9]{3}$"   # a 1 or 2 followed by three digits, and nothing else
 LOGIT_COLUMN_NAME <- "logit.type"   # will be removed by test code before old-new comparison
 
@@ -32,6 +33,7 @@ MODEL_YEARS <- c(BASE_YEARS, FUTURE_YEARS)
 SSP_FUTURE_YEARS <- c(2010, FUTURE_YEARS)
 GHG_CONTROL_READIN_YEAR <- 1975
 BASE_YEAR_IFA <- 2006
+
 
 # GCAM constants ======================================================================
 
@@ -94,6 +96,10 @@ MIN_HA_TO_CROPLAND <- 1
 # Cited in: Monfreda et al. 2008, Farming the Planet: 2., Global Biogeochemical Cycles 22, GB1022, http://dx.doi.org/10.1029/2007GB002947
 MAX_HA_TO_CROPLAND <- 3
 
+# Maximum portion of any land use region's pastures that can be in production
+MAX_MGDPAST_FRAC <- 0.95
+MAX_MGDFOR_FRAC <- 1
+
 # Yield multiplier that goes from the observed yield to the "high" and "low" yields: observed plus or minus observed times this number
 MGMT_YIELD_ADJ <- 0.1
 
@@ -134,6 +140,9 @@ aglu.BIO_TREE_WATER_IO_KM3EJ <- 25
 # Cost of Fertilizer
 aglu.FERT_COST <- 363 # 2007$ per ton NH3
 
+# Minimum non-input costs of animal production technologies, in $/kg
+aglu.MIN_AN_NONINPUT_COST <- 0.05
+
 # Maximum bioenergy (switchgrass) yield allowable, in tons per hectare
 # Source: Wullschleger doi:10.2134/agronj2010.0087
 aglu.MAX_BIO_YIELD_THA <- 20
@@ -143,10 +152,6 @@ aglu.BIO_ENERGY_CONTENT_GJT <- 17.5  # Energy content of biomass, GJ/ton
 # GDP per capita thresholds for SSP4 region groupings
 aglu.HIGH_GROWTH_PCGDP <- 12.275   # thousand 2010$ per person
 aglu.LOW_GROWTH_PCGDP  <- 2.75     # thousand 2010$ per person
-
-# Number of digits for model input data
-aglu.DIGITS_CALPRICE  <- 4 # prices and costs
-aglu.DIGITS_CALOUTPUT <- 7 # production
 
 # Regions in which agriculture and land use are not modeled
 aglu.NO_AGLU_REGIONS <- "Taiwan"
@@ -159,7 +164,9 @@ aglu.FERT_NAME <- "N fertilizer"
 # To Page's knowledge, nobody's ever done a weighted average wood density
 # across all tree species that are commercially logged;
 # 500 was was chosen to be towards the middle of the species that are produced.
-aglu.AVG_WOOD_DENSITY_KGM3 <- 500
+aglu.AVG_WOOD_DENSITY_KGM3 <- 500 # In kg per m3
+# Carbon content of wood is about 50 percent across species
+aglu.AVG_WOOD_DENSITY_KGCM3 <- 250 # In kg carbon per m3
 
 # Average Agriculture Density kg/m^3 for mass conversion
 # Source: http://www.engineeringtoolbox.com/wood-density-d_40.html
@@ -171,16 +178,35 @@ aglu.FOREST_HARVEST_INDEX <- 0.8
 # Forest Erosion Control in kg/m^2
 aglu.FOREST_EROSION_CTRL_KGM2 <- 0.2
 
-#Mill Erosion Control in kg/m^2
+# Mill Erosion Control in kg/m^2
 aglu.MILL_EROSION_CTRL_KGM2 <- 0
 
 # Wood energy content in GJ/kg
 aglu.WOOD_ENERGY_CONTENT_GJKG <- 0.0189
 
 # wood water content
+# Unitless (mass of water / total wood mass)
 aglu.WOOD_WATER_CONTENT <- 0.065
 
+# Min veg and soil carbon densities
+# kg C per m2
+aglu.MIN_VEG_CARBON_DENSITY  <- 0
+aglu.MIN_SOIL_CARBON_DENSITY <- 0
 
+# define top-level (zero) land nest logit exponent and logit type
+aglu.N0_LOGIT_EXP <- 0
+aglu.N0_LOGIT_TYPE <- NA
+
+# fraction of land that is protected
+aglu.PROTECT_LAND_FRACT <- 0.9
+
+# unManaged Land Value
+# 1975$/thou km2 ??
+aglu.UNMANAGED_LAND_VALUE <- 1
+
+# default protected, unmanaged land LN1 logit info
+aglu.LN1_PROTUNMGD_LOGIT_EXP <- 0
+aglu.LN1_PROTUNMGD_LOGIT_TYPE <- NA
 
 # XML-related constants
 aglu.GLU_NDIGITS          <- 3    # number of digits in the geographic land unit identifier codes
@@ -194,7 +220,10 @@ aglu.DIGITS_HARVEST_INDEX <- 2
 aglu.DIGITS_EROS_CTRL     <- 2
 aglu.DIGITS_RES_ENERGY    <- 4
 aglu.DIGITS_WATER_CONTENT <- 2
-
+aglu.DIGITS_LAND_VALUE    <- 0
+aglu.DIGITS_LAND_USE      <- 7
+aglu.DIGITS_C_DENSITY     <- 1
+aglu.DIGITS_MATUREAGE     <- 0
 
 # Energy constants ======================================================================
 
@@ -217,17 +246,21 @@ DEFAULT_ELECTRIC_EFFICIENCY <- 0.33
 ELECTRICITY_INPUT_FUELS<- c("biomass", "coal", "gas", "refined liquids")
 
 energy.CLIMATE_NORMAL_YEARS <- 1981:2000
+energy.RSRC_FUELS <- c("coal", "gas", "refined liquids")
+
 
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
 
-# Mass
+# Numeric (unitless)
 CONV_BIL_MIL <- 1000
 CONV_MIL_BIL <- 1 / CONV_BIL_MIL
 CONV_BIL_THOUS <- 1e6
 CONV_THOUS_BIL <- 1 / CONV_BIL_THOUS
 CONV_MIL_THOUS <- 1000
 CONV_ONES_THOUS <- 0.001
+
+# Mass
 CONV_TON_MEGATON <- 1e-6
 CONV_T_KG <- 1e3
 CONV_KG_T <- 1 / CONV_T_KG
@@ -257,6 +290,7 @@ CONV_MWH_GJ <- 3.6 # Megawatt hours to Gigajoules
 CONV_GWH_EJ <- 3.6e-6
 CONV_KWH_GJ <- 3.6e-3
 CONV_GJ_EJ <- 1e-9
+CONV_BBLD_EJYR <- 6.119 * 365.25 * 1e-3 # billion barrels a day to EJ per year
 
 # Other
 CONV_MCAL_PCAL <- 1e-9
@@ -264,6 +298,7 @@ CONV_M3_BM3 <- 1e-09 # Cubic meters (m3) to billion cubic meters (bm3)
 CONV_MILLION_M3_KM3 <- 1e-03
 CONV_M2_ACR <- 0.0002471058
 CONV_HA_M2 <- 1e4 # ha to m2
+CONV_BM2_M2 <- 1e9
 
 
 # Driver constants ======================================================================
@@ -278,6 +313,7 @@ driver.DECLARE_INPUTS <- "DECLARE_INPUTS"
 # MAGICC model assumptions
 modeltime.MAGICC_LAST_HISTORICAL_YEAR <- 2005
 modeltime.MAGICC_BC_UNIT_FORCING <- 0
+modeltime.MAGICC_DEFAULT_EMISS_FILE <- "../input/magicc/Historical Emissions/Default Emissions Module/Hist_to_2008_Annual.csv"
 modeltime.MAGICC_C_START_YEAR <- 1705
 
 # Hector model assumptions
