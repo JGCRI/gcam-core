@@ -1,0 +1,6 @@
+# File: A61.subsector_shrwt.csv
+# Title: Carbon storage subsector shareweights
+# Units: Unitless for share weight
+supplysector,subsector,year.fillout,share.weight,logit.type
+carbon-storage,onshore carbon-storage,start-year,1,
+carbon-storage,offshore carbon-storage,start-year,1,
