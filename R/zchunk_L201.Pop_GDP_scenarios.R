@@ -163,7 +163,7 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
 
     # Labor productivity growth is calculated from the change in per-capita GDP ratio in each time period
     # For the GCAM 3.0 scenario, calculate the per-capita GDP
-    L201.pcgdp_GCAM3_R_Y <- L102.gdp_mil90usd_GCAM3_R_Y %>%
+    L201.LaborProductivity_GCAM3 <- L102.gdp_mil90usd_GCAM3_R_Y %>%
       filter(year %in% MODEL_YEARS) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(L201.Pop_GCAM3, by = c("region", "year")) %>%

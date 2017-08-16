@@ -14,6 +14,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author BBL April 2017
+#' @export
 module_socioeconomics_L101.Population <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
@@ -141,7 +142,8 @@ module_socioeconomics_L101.Population <- function(command, ...) {
     L101.Pop_thous_GCAM3_ctry_Y %>%
       left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
       group_by(GCAM_region_ID, year) %>%
-      summarise(value = sum(value)) ->
+      summarise(value = sum(value)) %>%
+      ungroup() ->
       L101.Pop_thous_GCAM3_R_Y
 
     # Produce outputs
