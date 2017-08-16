@@ -109,7 +109,8 @@ module_socioeconomics_L101.Population <- function(command, ...) {
       arrange(region_GCAM3, year) %>%
       group_by(region_GCAM3) %>%
       mutate(value = approx_fun(year, value)) %>%
-      filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS)) ->
+      filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%
+      ungroup() ->
       L101.Pop_thous_GCAM3_RG3_Y
 
     # If necessary, extend GCAM 3.0 scenario to 2100 using SSPbase population ratios by GCAM 3.0 region

@@ -109,7 +109,6 @@ join.gdp.ts <- function(past, future, grouping) {
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RPL March 2017
-#' @export
 module_socioeconomics_L102.GDP <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
@@ -382,7 +381,8 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
     gdp_mil90usd_GCAM3_R_Y <- gdp_mil90usd_GCAM3_ctry_Y %>%
       left_join_error_no_match(iso_region32_lookup, by = "iso") %>%
       group_by(GCAM_region_ID, year) %>%
-      summarise(value = sum(value))
+      summarise(value = sum(value)) %>%
+      ungroup()
 
     #Calculate per-capita GDP
     pcgdp_thous90USD_GCAM3_R_Y <- gdp_mil90usd_GCAM3_R_Y %>%
