@@ -293,7 +293,7 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
                      "emissions/GAINS_activities",
                      "emissions/GAINS_emissions",
                      "L102.pcgdp_thous90USD_Scen_R_Y",
-                     "temp-data-inject/L111.nonghg_tgej_R_en_S_F_Yh",
+                     "L111.nonghg_tgej_R_en_S_F_Yh",
                      "L114.bcoc_tgej_R_en_S_F_2000",
                      "emissions/A61_emfact_rules") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->

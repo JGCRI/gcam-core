@@ -22,9 +22,9 @@ Briefly describe what this chunk does.
 }
 \details{
 This code produces two outputs: non-ghg emission totals and non-ghg emission shares by total emissions.
-First, non-ghg gas emissions were combined and grouped by sector and region.  Then, emissions were scaled, and international
-shipping & aviation emission data was calculated based on total emission and total emission shares. Then non-ghg emission
-totals and shares were calculated by GCAM sector, fuel, technology, and driver type for EDGAR historical years.
+First, non-ghg gas emissions are combined and grouped by sector and region, and then emissions are scaled, and international
+shipping & aviation emission data calculated based on total emission and total emission shares. Finally, non-ghg emission
+totals and shares are calculated by GCAM sector, fuel, technology, and driver type for EDGAR historical years.
 }
 \author{
 CDL August 2017
