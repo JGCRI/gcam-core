@@ -14,7 +14,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author HM & RH June 2017
-#' @export
 module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
@@ -152,6 +151,7 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
     L201.Pop_GCAM3 <- L101.Pop_thous_GCAM3_R_Y %>%
       filter(year %in% MODEL_YEARS) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      mutate(value = round(value, socioeconomics.POP_DIGITS)) %>%
       select(region, year, totalPop = value)
 
     # L201.BaseGDP_GCAM3: Base GDP for GCAM 3.0 core scenario

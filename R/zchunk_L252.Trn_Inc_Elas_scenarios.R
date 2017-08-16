@@ -14,8 +14,6 @@
 #' @importFrom tidyr gather spread
 #' @importFrom stats approx
 #' @author RH May 2017
-#' @export
-
 module_socioeconomics_L252.Trn_Inc_Elas_scenarios <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
@@ -36,9 +34,10 @@ module_socioeconomics_L252.Trn_Inc_Elas_scenarios <- function(command, ...) {
              "L252.IncomeElasticity_trn_SSP5",
              "L252.IncomeElasticity_trn_GCAM3"))
   } else if(command == driver.MAKE) {
-
+    # silence package checks
     value <- year <- pcgdp_90thousUSD <- GCAM_region_ID <- . <- scenario <-
-        NULL                            # silence package checks
+      income.elasticity <- region <- value.x <- value.y <-
+      energy.final.demand <- NULL
 
     all_data <- list(...)[[1]]
 

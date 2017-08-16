@@ -132,7 +132,8 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
 
     iso <- GCAM_region_ID <- value <- year <- gdp <- MODEL <- VARIABLE <-
         UNIT <- SCENARIO <- scenario <- gdp.rate <- gdp.ratio <- population <-
-        pcgdp <- MER <- PPP <- NULL     # silence package check.
+        pcgdp <- MER <- PPP <- region_GCAM3 <- agg_val <- share <-
+      GCAM3_value <- base <- ratio <- value.x <- value.y <- NULL     # silence package check.
 
     all_data <- list(...)[[1]]
 
