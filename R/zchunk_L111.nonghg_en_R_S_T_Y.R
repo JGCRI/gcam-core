@@ -215,7 +215,7 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
       mutate(emissions = (value * CONV_GG_TG) * (energy / tot_energy))  %>%
       select(-tot_energy, -value) %>%
       na.omit()  %>%
-      # Add domestic domestic emissions back in.
+      # Add domestic emissions back in.
       bind_rows(L111.nonghg_tg_R_en_Si_F_Yh_dom.mlt) ->
       L111.nonghg_tg_R_en_Si_F_Yh.mlt
 
