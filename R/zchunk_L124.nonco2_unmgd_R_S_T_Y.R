@@ -103,7 +103,7 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
     # Prepare EDGAR emissions for use (continued)
     EDGAR_history %>%
       # Extrapolate using average of last five years --- 2010 is problematic here because of deforestation (i.e., we don't want to rely on 2005 as last year of data)
-      filter(year %in% tail(emissions.EDGAR_YEARS,5)) %>%
+      filter(year %in% tail(emissions.EDGAR_YEARS, 5)) %>%
       group_by(GCAM_region_ID, iso, sector, Non.CO2, IPCC) %>%
       summarize(value = mean(value)) %>%
       mutate(year = as.integer(max(BASE_YEARS))) %>%

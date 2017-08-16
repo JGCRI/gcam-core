@@ -59,7 +59,7 @@ module_emissions_L112.ghg_en_R_S_T_Y_DISABLED <- function(command, ...) {
                                   select(EPA_agg_sector, EPA_agg_fuel, EDGAR_agg_sector, fuel, sector),
                                 by = c("fuel", "sector")) %>%
       # Remove years where we don't have emissions data and add Non.CO2 column
-      filter(year %in% emissions.EDGAR_HISTORICAL) %>%
+      filter(year %in% emissions.EDGAR_YEARS) %>%
       repeat_add_columns(tibble(Non.CO2 = c("CH4","N2O"))) %>%
       # Match in emissions factors
       # Use left_join because some "cement" only in EPA sector
@@ -74,7 +74,7 @@ module_emissions_L112.ghg_en_R_S_T_Y_DISABLED <- function(command, ...) {
                                     select(EPA_agg_sector, EPA_agg_fuel, EDGAR_agg_sector, fuel, sector, technology),
                                   by = c("fuel", "sector", "technology")) %>%
         # Remove years where we don't have emissions data and add Non.CO2 column
-        filter(year %in% emissions.EDGAR_HISTORICAL) %>%
+        filter(year %in% emissions.EDGAR_YEARS) %>%
         repeat_add_columns(tibble(Non.CO2 = c("CH4","N2O"))) %>%
         # Match in emissions factors
         # Use left_join because some "cement" only in EPA sector
@@ -100,7 +100,7 @@ module_emissions_L112.ghg_en_R_S_T_Y_DISABLED <- function(command, ...) {
       left_join(iso_GCAM_regID, by = "iso") %>%
       na.omit() %>%
       gather(year, value, matches(YEAR_PATTERN)) %>%
-      filter(year %in% emissions.EDGAR_HISTORICAL) %>%
+      filter(year %in% emissions.EDGAR_YEARS) %>%
       # Aggregate by region, GHG, and EDGAR sector
       group_by(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year) %>%
       summarise(value = sum(value))
