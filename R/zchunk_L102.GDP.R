@@ -295,26 +295,33 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
     # GDP by GCAM region from GCAM 3.0 GDPs.
     # Downscaling GCAM 3.0 GDP by GCAM 3.0 region to countries, using SSP2 GDP scenario
     # GDP by GCAM 3.0 region - downscale to country according to actual shares in the historical periods, and SSPbase in the future periods
+    gdp_bilusd_ctry_Yfut <- SSP_database_v9 %>%
+      filter(MODEL == 'OECD Env-Growth' & VARIABLE == 'GDP|PPP') %>%
+      standardize_iso('REGION') %>%
+      change_iso_code('rou', 'rom') %>%
+      mutate(scenario = substr(SCENARIO, 1, 4)) %>%
+      filter(scenario == socioeconomics.BASE_POP_SCEN) %>%
+      gather(year, value, matches(YEAR_PATTERN)) %>%
+      mutate(year = as.integer(year),
+             value = as.numeric(value)) %>%
+      filter(year %in% FUTURE_YEARS) %>%
+      select(iso, year, value)
 
-    SSP_database_iso <- SSP_database_v9 %>%
-      filter(VARIABLE == "GDP|PPP",
-             MODEL == "OECD Env-Growth") %>%
-      select(iso = REGION) %>%
-      distinct() %>%
-      mutate(iso = tolower(iso)) %>%
-      change_iso_code('rou', 'rom')
+    gdp_mil90usd_ctry_Yh <- L100.gdp_mil90usd_ctry_Yh %>%
+      filter(year %in% HISTORICAL_YEARS,
+             iso %in% gdp_bilusd_ctry_Yfut$iso) %>%
+      bind_rows(gdp_bilusd_ctry_Yfut) %>%
+      left_join_error_no_match(iso_GCAM_regID %>%
+                                 select(iso, region_GCAM3), by = "iso")
 
-    L102.gdp_mil90usd_ctry_Yh <- L100.gdp_mil90usd_ctry_Yh %>%
-      filter(iso %in% SSP_database_iso$iso)
-
-    L102.gdp_mil90usd_ctry_Yh[ X_future_years ] <- L102.gdp_bilusd_ctry_Yfut[
-      match( paste( L102.gdp_mil90usd_ctry_Yh$iso, base_pop_scen ),
-             paste( L102.gdp_bilusd_ctry_Yfut$iso, L102.gdp_bilusd_ctry_Yfut[[Scen]] ) ),
-      X_future_years ]
-    L102.gdp_mil90usd_ctry_Yh$region_GCAM3 <- iso_GCAM_regID$region_GCAM3[ match( L102.gdp_mil90usd_ctry_Yh$iso, iso_GCAM_regID$iso ) ]
-    L102.gdp_mil90usd_SSPbase_RG3_Y <- aggregate( L102.gdp_mil90usd_ctry_Yh[ c( X_historical_years, X_future_years ) ],
-                                                  by=as.list( L102.gdp_mil90usd_ctry_Yh[ "region_GCAM3"] ), sum )
-
+    gdp_mil90usd_SSPbase_RG3_Y <- gdp_mil90usd_ctry_Yh %>%
+      group_by(year, region_GCAM3) %>%
+      summarise(value = sum(value))
+# In africa: different because gcamdata has som
+    #Calculate shares of each country within its region over the historical time series
+    gdpshares_ctryRG3_Y <- gdp_mil90usd_ctry_Yh %>%
+      group_by(year, region_GCAM3) %>%
+      mutate(share = value / sum(value))
 
     ## Produce outputs
     gdp.mil90usd.scen.rgn.yr %>%
