@@ -207,31 +207,6 @@ get_data <- function(all_data, name) {
 }
 
 
-#' getdata v2
-#'
-#' Same as get_data, but with arguments swapped, allowing
-#' apply functions to be used across a vector of
-#'
-#' @param all_data Data structure
-#' @param name Name of data to return
-#' @return Data object (currently, a tibble or data frame). If the object was marked
-#' \code{NA} in the data store, indicating an optional input that was not found,
-#' a \code{NULL} is returned.
-get_data_ <- function(name, all_data) {
-  assertthat::assert_that(is_data_list(all_data))
-  if(is.null(all_data[[name]])) {
-    stop("Data system: couldn't find ", name)
-  }
-
-  if(isTRUE(is.na(all_data[[name]]))) {
-    return(NULL)
-  }
-  all_data[[name]]
-}
-
-
-
-
 #' return_data
 #'
 #' Construct a data structure of objects (\code{...}) and return it.
