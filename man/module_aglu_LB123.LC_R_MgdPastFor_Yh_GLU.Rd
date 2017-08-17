@@ -24,7 +24,7 @@ Calculates pasture and forests production, yields and managed land cover by GCAM
 This chunk calculates pasture and forests production and yields by GCAM region / GLU / year,
 and the managed pasture and forests land cover by GCAM region / GLU / historical year.
 Managed land area for both are adjusted below the threshold percentage of total pasture and forest land,
-and yields are increased so that production stay unchanged for those regions.
+and yields are increased so that production stays unchanged for those regions.
 }
 \author{
 RC August 2017
