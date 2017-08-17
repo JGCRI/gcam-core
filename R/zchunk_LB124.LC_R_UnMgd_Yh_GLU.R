@@ -136,8 +136,7 @@ module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
                      "L122.LC_bm2_R_ExtraCropLand_Yh_GLU",
                      "L123.LC_bm2_R_MgdPast_Yh_GLU",
                      "L123.LC_bm2_R_MgdFor_Yh_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT) ->
       L124.LC_bm2_R_Shrub_Yh_GLU_adj
 
     L124.LC_bm2_R_LTunmgd_Yh_GLU_adj %>%
@@ -151,8 +150,7 @@ module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
                      "L122.LC_bm2_R_ExtraCropLand_Yh_GLU",
                      "L123.LC_bm2_R_MgdPast_Yh_GLU",
                      "L123.LC_bm2_R_MgdFor_Yh_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT) ->
       L124.LC_bm2_R_Grass_Yh_GLU_adj
 
     L124.LC_bm2_R_LTunmgd_Yh_GLU_adj %>%
