@@ -15,7 +15,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RC August 2017
-#' @export
 module_aglu_LB161.ag_R_C_Y_GLU_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L103.ag_Prod_Mt_R_C_Y_GLU",

@@ -18,11 +18,13 @@ the generated outputs: \code{L161.ag_irrProd_Mt_R_C_Y_GLU}, \code{L161.ag_rfdPro
 original data system was \code{LB161.ag_R_C_Y_GLU_irr.R} (aglu level1).
 }
 \description{
-Briefly describe what this chunk does.
+Calculates irrigated and rainfed agriculture production, harvested area and yields by GCAM region / commodity / GLU / year.
 }
 \details{
-Describe in detail what this chunk does.
+This chunk combines FAO annual data and GTAP disaggregated irrigated vs. rainfed data to compute irrigated and rainfed
+agriculture production, harvested area and yields by GCAM region / commodity / GLU / year. The same irrigated and rainfed fraction
+is applied to all historical years for each commodity, region and GLU.
 }
 \author{
-YourInitials CurrentMonthName 2017
+RC August 2017
 }
