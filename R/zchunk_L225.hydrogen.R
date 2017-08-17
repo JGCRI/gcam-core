@@ -27,17 +27,17 @@ module_energy_L225.hydrogen <- function(command, ...) {
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L225.Supplysector_h2",
              "L225.SubsectorLogit_h2",
+             "L225.SubsectorShrwt_h2",
+             "L225.SubsectorInterp_h2",
+             "L225.SubsectorInterpTo_h2",
              "L225.SubsectorShrwtFllt_h2",
              "L225.StubTech_h2",
              "L225.GlobalTechEff_h2",
              "L225.GlobalTechCost_h2",
              "L225.GlobalTechShrwt_h2",
              "L225.PrimaryRenewKeyword_h2",
-             "L225.GlobalTechCapture_h2",
-             "L225.SubsectorShrwt_h2",
-             "L225.SubsectorInterp_h2",
-             "L225.SubsectorInterpTo_h2",
-             "L225.AvgFossilEffKeyword_h2"))
+             "L225.AvgFossilEffKeyword_h2",
+             "L225.GlobalTechCapture_h2"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -106,7 +106,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
     # Note: assuming that technology list in the shareweight table includes the full set (any others would default to a 0 shareweight)
     A25.globaltech_shrwt %>%
       write_to_all_regions(LEVEL2_DATA_NAMES[["Tech"]], GCAM_region_names) %>%
-      rename(stub.technology = technology)->
+      rename(stub.technology = technology) ->
       L225.StubTech_h2
 
     # L225.GlobalTechEff_h2: Energy inputs and efficiencies of global technologies for hydrogen
@@ -187,10 +187,19 @@ module_energy_L225.hydrogen <- function(command, ...) {
     # L225.PrimaryRenewKeyword_h2: Keywords of primary renewable electric generation technologies
     A25.globaltech_keyword %>%
       repeat_add_columns(tibble(year = c(BASE_YEARS, FUTURE_YEARS))) %>%
-      rename(sector.name = supplysector, subsector.name = subsector) %>%
+      rename(sector.name = supplysector, subsector.name = subsector) ->
+      L225.AllKeyword_h2
+
+    L225.AllKeyword_h2 %>%
       filter(!is.na(primary.renewable)) %>%
       select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "primary.renewable") ->
       L225.PrimaryRenewKeyword_h2
+
+    # L225.AvgFossilEffKeyword_h2: Keywords of fossil/bio electric generation technologies
+    L225.AllKeyword_h2 %>%
+      filter(!is.na(average.fossil.efficiency)) %>%
+      select(c(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "average.fossil.efficiency")) ->
+      L225.AvgFossilEffKeyword_h2
 
     # L225.GlobalTechCapture_h2: CO2 capture fractions from global fertilizer production technologies with CCS
     # Note: No need to consider historical periods or intermittent technologies here
@@ -236,13 +245,45 @@ module_energy_L225.hydrogen <- function(command, ...) {
       add_precursors("common/GCAM_region_names", "energy/A25.subsector_logit") ->
       L225.SubsectorLogit_h2
 
-    L225.SubsectorShrwtFllt_h2 %>%
-      add_title("Subsector shareweights of hydrogen sectors") %>%
-      add_units("Unitless") %>%
-      add_comments("Expand Subsector shareweights for all GCAM regions") %>%
-      add_legacy_name("L225.SubsectorShrwtFllt_h2") %>%
-      add_precursors("common/GCAM_region_names", "energy/A25.subsector_shrwt") ->
-      L225.SubsectorShrwtFllt_h2
+    if(exists("L225.SubsectorShrwt_h2")) {
+      L225.SubsectorShrwt_h2 %>%
+        add_title("Subsector shareweights of hydrogen sectors") %>%
+        add_units("Unitless") %>%
+        add_comments("Expand Subsector shareweights for all GCAM regions") %>%
+        add_legacy_name("common/GCAM_region_names", "energy/A25.subsector_shrwt") %>%
+        add_precursors("A25.subsector_shrwt") ->
+        L225.SubsectorShrwt_h2
+    }
+
+    if(exists("L225.SubsectorShrwtFllt_h2")) {
+      L225.SubsectorShrwtFllt_h2 %>%
+        add_title("Subsector shareweights of hydrogen sectors") %>%
+        add_units("Unitless") %>%
+        add_comments("Expand Subsector shareweights for all GCAM regions") %>%
+        add_legacy_name("L225.SubsectorShrwtFllt_h2") %>%
+        add_precursors("common/GCAM_region_names", "energy/A25.subsector_shrwt") ->
+        L225.SubsectorShrwtFllt_h2
+    }
+
+    if(exists("L225.SubsectorInterp_h2")) {
+      L225.SubsectorInterp_h2 %>%
+        add_title("Subsector shareweight interpolation of hydrogen sectors") %>%
+        add_units("unitless") %>%
+        add_comments("Expand Subsector shareweight interpolation for all GCAM regions") %>%
+        add_legacy_name("L225.SubsectorInterp_h2") %>%
+        add_precursors("common/GCAM_region_names", "A25.subsector_interp") ->
+        L225.SubsectorInterp_h2
+    }
+
+    if(exists("L225.SubsectorInterpTo_h2")) {
+      L225.SubsectorInterpTo_h2 %>%
+        add_title("Subsector shareweight interpolation of hydrogen sectors") %>%
+        add_units("unitless") %>%
+        add_comments("Expand Subsector shareweight interpolation for all GCAM regions") %>%
+        add_legacy_name("L225.SubsectorInterpTo_h2") %>%
+        add_precursors("common/GCAM_region_names", "A25.subsector_interp") ->
+        L225.SubsectorInterpTo_h2
+    }
 
     L225.StubTech_h2 %>%
       add_title("Identification of stub technologies of hydrogen") %>%
@@ -286,54 +327,42 @@ module_energy_L225.hydrogen <- function(command, ...) {
       add_precursors("energy/A25.globaltech_keyword") ->
       L225.PrimaryRenewKeyword_h2
 
+    L225.AvgFossilEffKeyword_h2 %>%
+      add_title("Keywords of fossil/bio electric generation technologies") %>%
+      add_units("NA") %>%
+      add_comments("Identify Keywords of fossil/bio electric generation technologies for all model years") %>%
+      add_legacy_name("L225.AvgFossilEffKeyword_h2") %>%
+      add_precursors("precursor1", "precursor2", "etc") ->
+      L225.AvgFossilEffKeyword_h2
+
     L225.GlobalTechCapture_h2 %>%
       add_title("CO2 capture fractions from global fertilizer production technologies with CCS") %>%
       add_units("Unitless") %>%
       add_comments("Interpolated orginal data into all model years") %>%
       add_legacy_name("L225.GlobalTechCapture_h2") %>%
-      add_precursors("energy/A25.globaltech_co2capture")->
+      add_precursors("energy/A25.globaltech_keyword")->
       L225.GlobalTechCapture_h2
 
-    L225.SubsectorShrwt_h2 %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L225.SubsectorShrwt_h2") %>%
-      add_precursors("precursor1", "precursor2", "etc") ->
-      L225.SubsectorShrwt_h2
+    return_data(L225.Supplysector_h2, L225.SubsectorLogit_h2, L225.StubTech_h2,
+                L225.GlobalTechEff_h2, L225.GlobalTechCost_h2, L225.GlobalTechShrwt_h2,
+                L225.PrimaryRenewKeyword_h2, L225.AvgFossilEffKeyword_h2, L225.GlobalTechCapture_h2)
 
-    L225.SubsectorInterp_h2 %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L225.SubsectorInterp_h2") %>%
-      add_precursors("precursor1", "precursor2", "etc") ->
-      L225.SubsectorInterp_h2
+    if(exists("L225.SubsectorShrwt_h2")) {
+      return_data(L225.SubsectorShrwt_h2)
+    }
 
-    L225.SubsectorInterpTo_h2 %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L225.SubsectorInterpTo_h2") %>%
-      add_precursors("precursor1", "precursor2", "etc") ->
-      L225.SubsectorInterpTo_h2
+    if(exists("L225.SubsectorShrwtFllt_h2")) {
+      return_data(L225.SubsectorShrwtFllt_h2)
+    }
 
-    L225.AvgFossilEffKeyword_h2 %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L225.AvgFossilEffKeyword_h2") %>%
-      add_precursors("precursor1", "precursor2", "etc") ->
-      L225.AvgFossilEffKeyword_h2
+    if(exists("L225.SubsectorInterp_h2")) {
+      return_data(L225.SubsectorInterp_h2)
+    }
 
-    return_data(L225.Supplysector_h2, L225.SubsectorLogit_h2, L225.SubsectorShrwtFllt_h2,
-                L225.StubTech_h2, L225.GlobalTechEff_h2, L225.GlobalTechCost_h2, L225.GlobalTechShrwt_h2,
-                L225.PrimaryRenewKeyword_h2, L225.GlobalTechCapture_h2,
-                L225.SubsectorShrwt_h2, L225.SubsectorInterp_h2, L225.SubsectorInterpTo_h2, L225.AvgFossilEffKeyword_h2)
+    if(exists("L225.SubsectorInterpTo_h2")) {
+      return_data(L225.SubsectorInterpTo_h2)
+    }
+
   } else {
     stop("Unknown command")
   }
