@@ -35,72 +35,152 @@ module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
     L123.LC_bm2_R_MgdPast_Yh_GLU <- get_data(all_data, "L123.LC_bm2_R_MgdPast_Yh_GLU")
     L123.LC_bm2_R_MgdFor_Yh_GLU <- get_data(all_data, "L123.LC_bm2_R_MgdFor_Yh_GLU")
 
-    # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
+
+    # Perform Computations:
+
+    # Calculate initial estimates of shrubland and grassland,
+    # taken directly from SAGE minus HYDE and WDPA by subsetting
+    # unadjusted land cover data
+    L120.LC_bm2_R_LT_Yh_GLU %>%
+      filter(Land_Type == "Shrubland") ->
+      L124.LC_bm2_R_Shrub_Yh_GLU
+
+    L120.LC_bm2_R_LT_Yh_GLU %>%
+      filter(Land_Type == "Grassland") ->
+      L124.LC_bm2_R_Grass_Yh_GLU
+
+
+    # Calculate initial estimate of unmanaged pasture = total
+    # pasture from Hyde minus managed pasture
+    L120.LC_bm2_R_LT_Yh_GLU %>%
+      filter(Land_Type == "Pasture") %>%
+      rename(TotPasture = value) %>%
+      left_join_error_no_match(L123.LC_bm2_R_MgdPast_Yh_GLU, by = c("GCAM_region_ID", "GLU","Land_Type", "year")) %>%
+      rename(MgdPasture = value) %>%
+      # have to use value instead of more informative name so that binding all unmanaged land later goes smoothly:
+      mutate(value = TotPasture - MgdPasture,
+             Land_Type = "UnmanagedPasture") %>%
+      select(-TotPasture, -MgdPasture) ->
+      L124.LC_bm2_R_UnMgdPast_Yh_GLU
+
+
+    # Calculate initial estimate of unmanaged forest = total
+    # forest from SAGE/Hyde minus managed forest
+    L120.LC_bm2_R_LT_Yh_GLU %>%
+      filter(Land_Type == "Forest") %>%
+      rename(TotForest = value) %>%
+      left_join_error_no_match(L123.LC_bm2_R_MgdFor_Yh_GLU, by = c("GCAM_region_ID", "GLU","Land_Type", "year")) %>%
+      rename(MgdForest = value) %>%
+      # have to use value instead of more informative name so that binding all unmanaged land later goes smoothly:
+      mutate(value = TotForest - MgdForest,
+             Land_Type = "UnmanagedForest") %>%
+      select(-TotForest, -MgdForest) ->
+      L124.LC_bm2_R_UnMgdFor_Yh_GLU
+
+
+    # Combine all unmanaged land types into a single table for processing in multiple subsequent pipelines
+    bind_rows(L124.LC_bm2_R_Grass_Yh_GLU,
+              L124.LC_bm2_R_Shrub_Yh_GLU,
+              L124.LC_bm2_R_UnMgdFor_Yh_GLU,
+              L124.LC_bm2_R_UnMgdPast_Yh_GLU) ->
+      L124.LC_bm2_R_LTunmgd_Yh_GLU
+
+
+    # The initial estimates of shrubland, grassland, unmanaged pasture,
+    # and unmanaged forest must have land deducted from them to cover
+    # the "extra" cropland calculated in chunk LB122, setting a max
+    # harvested:cropped ratio and resulting in table
+    # L122.LC_bm2_R_ExtraCropLand_Yh_GLU.
     #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses vecpaste
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # ===================================================
+    # Calculate the adjustment ratio for this deduction.
+    # adjustment ratio = (Total Unmgd Land - Extra Cropland) / Total Unmgd Land
+    # First, calculate the total amount of unmanaged land:
+    L124.LC_bm2_R_LTunmgd_Yh_GLU%>%
+      group_by(GCAM_region_ID, GLU, year) %>%
+      summarise(value = sum(value)) %>%
+      ungroup  %>%
+      mutate(Land_Type = "All_Unmanaged") %>%
+      rename(TotUnmgdLand = value) %>%
+      # Then, Calculate adjustment ratio = (Total Unmgd Land - Extra Cropland) / Total Unmgd Land
+      # to get adjusted total unmanaged land, keeping NAs for later processing:
+      left_join(select(L122.LC_bm2_R_ExtraCropLand_Yh_GLU, -Land_Type), by = c("GCAM_region_ID", "GLU", "year")) %>%
+      rename(ExtraCropland = value) %>%
+      mutate(adjustmentRatio = (TotUnmgdLand - ExtraCropland) / TotUnmgdLand) %>%
+      replace_na(list(adjustmentRatio = 1)) %>%
+      select(-TotUnmgdLand, -ExtraCropland, -Land_Type) ->
+      L124.LC_UnMgdAdj_R_Yh_GLU
+
+    #Check that enough unmanaged land is available for the cropland expansion in all regions/GLUs
+    if( any( L124.LC_UnMgdAdj_R_Yh_GLU$adjustmentRatio < 0 ) ) {
+      stop( "Increase in cropland exceeds available unmanaged land")
+    }
+
+
+    # Apply the adjusment ratio to the different land types
+    L124.LC_bm2_R_LTunmgd_Yh_GLU %>%
+      left_join_error_no_match( L124.LC_UnMgdAdj_R_Yh_GLU, by = c("GCAM_region_ID", "GLU", "year")) %>%
+      mutate(value = value * adjustmentRatio) %>%
+      select(- adjustmentRatio) ->
+      L124.LC_bm2_R_LTunmgd_Yh_GLU_adj
+
 
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+    L124.LC_bm2_R_LTunmgd_Yh_GLU_adj %>%
+      filter(Land_Type == "Shrubland") %>%
+      add_title("Shrub land cover by GCAM region / historical year / GLU") %>%
+      add_units("billion square meters (bm2)") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L124.LC_bm2_R_Shrub_Yh_GLU_adj") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("L120.LC_bm2_R_LT_Yh_GLU",
+                     "L122.LC_bm2_R_ExtraCropLand_Yh_GLU",
+                     "L123.LC_bm2_R_MgdPast_Yh_GLU",
+                     "L123.LC_bm2_R_MgdFor_Yh_GLU") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L124.LC_bm2_R_Shrub_Yh_GLU_adj
 
-    tibble() %>%
+    L124.LC_bm2_R_LTunmgd_Yh_GLU_adj %>%
+      filter(Land_Type == "Grassland") %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L124.LC_bm2_R_Grass_Yh_GLU_adj") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("L120.LC_bm2_R_LT_Yh_GLU",
+                     "L122.LC_bm2_R_ExtraCropLand_Yh_GLU",
+                     "L123.LC_bm2_R_MgdPast_Yh_GLU",
+                     "L123.LC_bm2_R_MgdFor_Yh_GLU") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L124.LC_bm2_R_Grass_Yh_GLU_adj
 
-    tibble() %>%
+    L124.LC_bm2_R_LTunmgd_Yh_GLU_adj %>%
+      filter(Land_Type == "UnmanagedPasture") %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L124.LC_bm2_R_UnMgdPast_Yh_GLU_adj") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("L120.LC_bm2_R_LT_Yh_GLU",
+                     "L122.LC_bm2_R_ExtraCropLand_Yh_GLU",
+                     "L123.LC_bm2_R_MgdPast_Yh_GLU",
+                     "L123.LC_bm2_R_MgdFor_Yh_GLU") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L124.LC_bm2_R_UnMgdPast_Yh_GLU_adj
 
-    tibble() %>%
+    L124.LC_bm2_R_LTunmgd_Yh_GLU_adj %>%
+      filter(Land_Type == "UnmanagedForest") %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("L120.LC_bm2_R_LT_Yh_GLU",
+                     "L122.LC_bm2_R_ExtraCropLand_Yh_GLU",
+                     "L123.LC_bm2_R_MgdPast_Yh_GLU",
+                     "L123.LC_bm2_R_MgdFor_Yh_GLU") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj
