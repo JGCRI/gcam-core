@@ -14,7 +14,7 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_aglu_LB124.LC_R_UnMgd_Yh_GLU_DISABLED <- function(command, ...) {
+module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c( "L120.LC_bm2_R_LT_Yh_GLU",
               "L122.LC_bm2_R_ExtraCropLand_Yh_GLU",
