@@ -60,18 +60,14 @@ module_aglu_LB125.LC_tot <- function(command, ...) {
     bind_rows(L124.LC_bm2_R_Shrub_Yh_GLU_adj,
               L124.LC_bm2_R_Grass_Yh_GLU_adj,
               L124.LC_bm2_R_UnMgdPast_Yh_GLU_adj,
-              L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj) %>%
-      # The next two lines are TEMPORARY - because currently we're using temp-data-inject data
-      # When using final data, don't need to reshape them
-      # gather(year, value, -GCAM_region_ID, -Land_Type, -GLU) %>%
-      # mutate(year = as.integer(substr(year, 2, 5))) %>%
-      bind_rows(L123.LC_bm2_R_MgdPast_Yh_GLU,
-                L123.LC_bm2_R_MgdFor_Yh_GLU,
-                L120.LC_bm2_R_UrbanLand_Yh_GLU,
-                L120.LC_bm2_R_Tundra_Yh_GLU,
-                L120.LC_bm2_R_RckIceDsrt_Yh_GLU,
-                L122.LC_bm2_R_HarvCropLand_Yh_GLU,
-                L122.LC_bm2_R_OtherArableLand_Yh_GLU)  ->
+              L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj,
+              L123.LC_bm2_R_MgdPast_Yh_GLU,
+              L123.LC_bm2_R_MgdFor_Yh_GLU,
+              L120.LC_bm2_R_UrbanLand_Yh_GLU,
+              L120.LC_bm2_R_Tundra_Yh_GLU,
+              L120.LC_bm2_R_RckIceDsrt_Yh_GLU,
+              L122.LC_bm2_R_HarvCropLand_Yh_GLU,
+              L122.LC_bm2_R_OtherArableLand_Yh_GLU)  ->
       L125.LC_bm2_R_LT_Yh_GLU
 
     # Adding up total land area by region, GLU, and year
