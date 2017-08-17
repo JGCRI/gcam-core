@@ -141,8 +141,8 @@ module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
 
     L124.LC_bm2_R_LTunmgd_Yh_GLU_adj %>%
       filter(Land_Type == "Grassland") %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("Grass land cover by GCAM region / historical year / GLU") %>%
+      add_units("billion square meters (bm2)") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L124.LC_bm2_R_Grass_Yh_GLU_adj") %>%
@@ -155,8 +155,8 @@ module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
 
     L124.LC_bm2_R_LTunmgd_Yh_GLU_adj %>%
       filter(Land_Type == "UnmanagedPasture") %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("Unmanaged Pasture land cover by GCAM region / historical year / GLU") %>%
+      add_units("billion square meters (bm2)") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L124.LC_bm2_R_UnMgdPast_Yh_GLU_adj") %>%
@@ -164,14 +164,13 @@ module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
                      "L122.LC_bm2_R_ExtraCropLand_Yh_GLU",
                      "L123.LC_bm2_R_MgdPast_Yh_GLU",
                      "L123.LC_bm2_R_MgdFor_Yh_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L124.LC_bm2_R_UnMgdPast_Yh_GLU_adj
 
     L124.LC_bm2_R_LTunmgd_Yh_GLU_adj %>%
       filter(Land_Type == "UnmanagedForest") %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("Unmanaged Forest land cover by GCAM region / historical year / GLU") %>%
+      add_units("billion square meters (bm2)") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj") %>%
@@ -179,7 +178,6 @@ module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
                      "L122.LC_bm2_R_ExtraCropLand_Yh_GLU",
                      "L123.LC_bm2_R_MgdPast_Yh_GLU",
                      "L123.LC_bm2_R_MgdFor_Yh_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj
 
