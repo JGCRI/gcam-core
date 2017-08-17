@@ -332,7 +332,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
       add_units("NA") %>%
       add_comments("Identify Keywords of fossil/bio electric generation technologies for all model years") %>%
       add_legacy_name("L225.AvgFossilEffKeyword_h2") %>%
-      add_precursors("precursor1", "precursor2", "etc") ->
+      add_precursors("energy/A25.globaltech_keyword") ->
       L225.AvgFossilEffKeyword_h2
 
     L225.GlobalTechCapture_h2 %>%
@@ -340,7 +340,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Interpolated orginal data into all model years") %>%
       add_legacy_name("L225.GlobalTechCapture_h2") %>%
-      add_precursors("energy/A25.globaltech_keyword")->
+      add_precursors("energy/A25.globaltech_co2capture")->
       L225.GlobalTechCapture_h2
 
     return_data(L225.Supplysector_h2, L225.SubsectorLogit_h2, L225.StubTech_h2,
