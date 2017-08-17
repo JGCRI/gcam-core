@@ -1,0 +1,19 @@
+# File: A26.globaltech_eff.csv
+# Title: Final energy delivery efficiencies in global technology database
+# Units: Fraction
+# Description: Final energy delivery efficiency in global technology database, many of which are over-written in stub technologies
+# Source: (FILL IN)
+supplysector,subsector,technology,minicam.energy.input,1971,2005,2100
+backup_electricity,gas,gas (steam/CT),wholesale gas,0.377,0.377,0.428
+csp_backup,gas,CSP gas hybrid mode,wholesale gas,0.307,0.307,0.358
+delivered biomass,delivered biomass,delivered biomass,regional biomass,1,1,1
+delivered coal,delivered coal,delivered coal,regional coal,1,1,1
+electricity_net_ownuse,electricity_net_ownuse,electricity_net_ownuse,electricity,1,1,1
+elect_td_bld,elect_td_bld,elect_td_bld,electricity_net_ownuse,1,1,1
+elect_td_ind,elect_td_ind,elect_td_ind,electricity_net_ownuse,1,1,1
+elect_td_trn,elect_td_trn,elect_td_trn,electricity_net_ownuse,1,1,1
+gas pipeline,gas pipeline,gas pipeline,gas processing,1,1,1
+wholesale gas,wholesale gas,wholesale gas,gas pipeline,1,1,1
+delivered gas,delivered gas,delivered gas,gas pipeline,1,1,1
+refined liquids enduse,refined liquids enduse,refined liquids enduse,refining,1,1,1
+refined liquids industrial,refined liquids industrial,refined liquids industrial,refining,1,1,1

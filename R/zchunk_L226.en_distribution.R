@@ -14,10 +14,10 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_energy_L226.en_distribution_DISABLED <- function(command, ...) {
+module_energy_L226.en_distribution <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
-             FILE = "energy/fuel_energy_input",
+             FILE = "energy/mappings/fuel_energy_input",
              FILE = "energy/calibrated_techs",
              FILE = "energy/A_regions",
              FILE = "energy/A26.sector",
@@ -50,7 +50,7 @@ module_energy_L226.en_distribution_DISABLED <- function(command, ...) {
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    fuel_energy_input <- get_data(all_data, "energy/fuel_energy_input")
+    fuel_energy_input <- get_data(all_data, "energy/mappings/fuel_energy_input")
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
     A_regions <- get_data(all_data, "energy/A_regions")
     A26.sector <- get_data(all_data, "energy/A26.sector")
@@ -65,8 +65,28 @@ module_energy_L226.en_distribution_DISABLED <- function(command, ...) {
     L126.IO_R_gaspipe_F_Yh <- get_data(all_data, "L126.IO_R_gaspipe_F_Yh")
 
     # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
+    browser()
+    # 2. Build tables for CSVs
+    # 2a. Supplysector information
+    # "L226.Supplysector_en: Supply sector information for energy distribution sectors"
+    L226.Supplysector_en <- write_to_all_regions( A26.sector, c(names_Supplysector, "logit.type"))
+
+    # 2b. Subsector information
+    # "L226.SubsectorLogit_en: Subsector logit exponents of energy distribution sectors"
+    L226.SubsectorLogit_en <- write_to_all_regions( A26.subsector_logit, c(names_SubsectorLogit, "logit.type"))
+
+    #Efficiencies of global technologies
+    #"L226.GlobalTechEff_en: Energy inputs and efficiencies of global technologies for energy distribution" )
+    L226.globaltech_coef.melt <- interpolate_and_melt( A26.globaltech_eff, approx_fun(c(BASE_YEARS, FUTURE_YEARS), rule=1), value.name="efficiency", digits = digits_efficiency)
+    #Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
+    L226.globaltech_coef.melt[ c( "sector.name", "subsector.name" ) ] <- L226.globaltech_coef.melt[ c( "supplysector", "subsector" ) ]
+    L226.GlobalTechEff_en <- L226.globaltech_coef.melt[ names_GlobalTechEff ]
+
+    #Electricity transmission and distribution
+    L126.IO_R_electd_F_Yh %>%
+      filter(year %in% BASE_YEARS) ->
+      L226.IO_R_electd_F_Yh
+
     # If you find a mistake/thing to update in the old code and
     # fixing it will change the output data, causing the tests to fail,
     # (i) open an issue on GitHub, (ii) consult with colleagues, and
@@ -96,7 +116,7 @@ module_energy_L226.en_distribution_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L226.Supplysector_en") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("A26.sector.csv") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L226.Supplysector_en
@@ -107,7 +127,7 @@ module_energy_L226.en_distribution_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L226.SubsectorLogit_en") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("A26.subsector_logit") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L226.SubsectorLogit_en
@@ -118,7 +138,7 @@ module_energy_L226.en_distribution_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L226.SubsectorShrwt_en") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("A26.subsector_shrwt") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L226.SubsectorShrwt_en
@@ -129,7 +149,7 @@ module_energy_L226.en_distribution_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L226.SubsectorShrwtFllt_en") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("A26.subsector_shrwt") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L226.SubsectorShrwtFllt_en
@@ -140,7 +160,7 @@ module_energy_L226.en_distribution_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L226.SubsectorInterp_en") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("A26.subsector_interp") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L226.SubsectorInterp_en
@@ -151,7 +171,7 @@ module_energy_L226.en_distribution_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L226.SubsectorInterpTo_en") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("A26.subsector_interp") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L226.SubsectorInterpTo_en
@@ -162,7 +182,7 @@ module_energy_L226.en_distribution_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L226.StubTech_en") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("A26.globaltech_shrwt") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L226.StubTech_en
@@ -173,7 +193,7 @@ module_energy_L226.en_distribution_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L226.GlobalTechEff_en") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("L226.globaltech_coef") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L226.GlobalTechEff_en
@@ -184,7 +204,7 @@ module_energy_L226.en_distribution_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L226.GlobalTechCost_en") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("A26.globaltech_cost") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L226.GlobalTechCost_en
@@ -195,7 +215,7 @@ module_energy_L226.en_distribution_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L226.GlobalTechShrwt_en") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("A26.globaltech_shrwt") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L226.GlobalTechShrwt_en
@@ -206,7 +226,7 @@ module_energy_L226.en_distribution_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L226.StubTechCoef_elecownuse") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("L126.IO_R_elecownuse_F_Yh", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L226.StubTechCoef_elecownuse
@@ -217,7 +237,7 @@ module_energy_L226.en_distribution_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L226.StubTechCoef_electd") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("L126.IO_R_electd_F_Yh") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L226.StubTechCoef_electd
@@ -228,7 +248,7 @@ module_energy_L226.en_distribution_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L226.StubTechCoef_gaspipe") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("L126.IO_R_gaspipe_F_Yh") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L226.StubTechCoef_gaspipe
