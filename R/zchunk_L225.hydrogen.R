@@ -71,12 +71,14 @@ module_energy_L225.hydrogen <- function(command, ...) {
       L225.SubsectorLogit_h2
 
     # L225.SubsectorShrwt_h2 and L225.SubsectorShrwtFllt_h2: Subsector shareweights of hydrogen sectors
+    L225.SubsectorShrwt_h2 <- tibble(x = NA)  # placeholder empty table
     if(any(!is.na(A25.subsector_shrwt$year))) {
       A25.subsector_shrwt %>%
         filter(!is.na(year)) %>%
         write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwt"]], GCAM_region_names) ->
         L225.SubsectorShrwt_h2
     }
+    L225.SubsectorShrwtFllt_h2 <- tibble(x = NA)
     if(any(!is.na(A25.subsector_shrwt$year.fillout))) {
       A25.subsector_shrwt %>%
         filter(!is.na(year.fillout)) %>%
@@ -84,6 +86,8 @@ module_energy_L225.hydrogen <- function(command, ...) {
         L225.SubsectorShrwtFllt_h2
     }
 
+    L225.SubsectorInterp_h2 <- tibble(x = NA)
+    L225.SubsectorInterpTo_h2 <- tibble(x = NA)
     if(exists("A25.subsector_interp")) {
       # L225.SubsectorInterp_h2 and L225.SubsectorInterpTo_h2: Subsector shareweight interpolation of hydrogen sectors
       if(any(is.na(A25.subsector_interp$to.value))) {
@@ -192,13 +196,13 @@ module_energy_L225.hydrogen <- function(command, ...) {
 
     L225.AllKeyword_h2 %>%
       filter(!is.na(primary.renewable)) %>%
-      select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "primary.renewable") ->
+      select(one_of(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "primary.renewable")) ->
       L225.PrimaryRenewKeyword_h2
 
     # L225.AvgFossilEffKeyword_h2: Keywords of fossil/bio electric generation technologies
     L225.AllKeyword_h2 %>%
       filter(!is.na(average.fossil.efficiency)) %>%
-      select(c(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "average.fossil.efficiency")) ->
+      select(one_of(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "average.fossil.efficiency")) ->
       L225.AvgFossilEffKeyword_h2
 
     # L225.GlobalTechCapture_h2: CO2 capture fractions from global fertilizer production technologies with CCS
@@ -222,7 +226,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
       filter(year %in% FUTURE_YEARS) %>%
       # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
       rename(sector.name = supplysector, subsector.name = subsector) %>%
-      select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "remove.fraction") %>%
+      select(one_of(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "remove.fraction")) %>%
       mutate(storage.market = energy.CO2.STORAGE.MARKET) ->
       L225.GlobalTechCapture_h2
 
@@ -245,45 +249,37 @@ module_energy_L225.hydrogen <- function(command, ...) {
       add_precursors("common/GCAM_region_names", "energy/A25.subsector_logit") ->
       L225.SubsectorLogit_h2
 
-    if(exists("L225.SubsectorShrwt_h2")) {
-      L225.SubsectorShrwt_h2 %>%
-        add_title("Subsector shareweights of hydrogen sectors") %>%
-        add_units("Unitless") %>%
-        add_comments("Expand Subsector shareweights for all GCAM regions") %>%
-        add_legacy_name("common/GCAM_region_names", "energy/A25.subsector_shrwt") %>%
-        add_precursors("A25.subsector_shrwt") ->
-        L225.SubsectorShrwt_h2
-    }
+    L225.SubsectorShrwt_h2 %>%
+      add_title("Subsector shareweights of hydrogen sectors") %>%
+      add_units("Unitless") %>%
+      add_comments("Expand Subsector shareweights for all GCAM regions") %>%
+      add_legacy_name("L225.SubsectorShrwt_h2") %>%
+      add_precursors("common/GCAM_region_names", "energy/A25.subsector_shrwt") ->
+      L225.SubsectorShrwt_h2
 
-    if(exists("L225.SubsectorShrwtFllt_h2")) {
-      L225.SubsectorShrwtFllt_h2 %>%
-        add_title("Subsector shareweights of hydrogen sectors") %>%
-        add_units("Unitless") %>%
-        add_comments("Expand Subsector shareweights for all GCAM regions") %>%
-        add_legacy_name("L225.SubsectorShrwtFllt_h2") %>%
-        add_precursors("common/GCAM_region_names", "energy/A25.subsector_shrwt") ->
-        L225.SubsectorShrwtFllt_h2
-    }
+    L225.SubsectorShrwtFllt_h2 %>%
+      add_title("Subsector shareweights of hydrogen sectors") %>%
+      add_units("Unitless") %>%
+      add_comments("Expand Subsector shareweights for all GCAM regions") %>%
+      add_legacy_name("L225.SubsectorShrwtFllt_h2") %>%
+      add_precursors("common/GCAM_region_names", "energy/A25.subsector_shrwt") ->
+      L225.SubsectorShrwtFllt_h2
 
-    if(exists("L225.SubsectorInterp_h2")) {
-      L225.SubsectorInterp_h2 %>%
-        add_title("Subsector shareweight interpolation of hydrogen sectors") %>%
-        add_units("unitless") %>%
-        add_comments("Expand Subsector shareweight interpolation for all GCAM regions") %>%
-        add_legacy_name("L225.SubsectorInterp_h2") %>%
-        add_precursors("common/GCAM_region_names", "A25.subsector_interp") ->
-        L225.SubsectorInterp_h2
-    }
+    L225.SubsectorInterp_h2 %>%
+      add_title("Subsector shareweight interpolation of hydrogen sectors") %>%
+      add_units("unitless") %>%
+      add_comments("Expand Subsector shareweight interpolation for all GCAM regions") %>%
+      add_legacy_name("L225.SubsectorInterp_h2") %>%
+      add_precursors("common/GCAM_region_names", "A25.subsector_interp") ->
+      L225.SubsectorInterp_h2
 
-    if(exists("L225.SubsectorInterpTo_h2")) {
-      L225.SubsectorInterpTo_h2 %>%
-        add_title("Subsector shareweight interpolation of hydrogen sectors") %>%
-        add_units("unitless") %>%
-        add_comments("Expand Subsector shareweight interpolation for all GCAM regions") %>%
-        add_legacy_name("L225.SubsectorInterpTo_h2") %>%
-        add_precursors("common/GCAM_region_names", "A25.subsector_interp") ->
-        L225.SubsectorInterpTo_h2
-    }
+    L225.SubsectorInterpTo_h2 %>%
+      add_title("Subsector shareweight interpolation of hydrogen sectors") %>%
+      add_units("unitless") %>%
+      add_comments("Expand Subsector shareweight interpolation for all GCAM regions") %>%
+      add_legacy_name("L225.SubsectorInterpTo_h2") %>%
+      add_precursors("common/GCAM_region_names", "A25.subsector_interp") ->
+      L225.SubsectorInterpTo_h2
 
     L225.StubTech_h2 %>%
       add_title("Identification of stub technologies of hydrogen") %>%
@@ -345,24 +341,9 @@ module_energy_L225.hydrogen <- function(command, ...) {
 
     return_data(L225.Supplysector_h2, L225.SubsectorLogit_h2, L225.StubTech_h2,
                 L225.GlobalTechEff_h2, L225.GlobalTechCost_h2, L225.GlobalTechShrwt_h2,
-                L225.PrimaryRenewKeyword_h2, L225.AvgFossilEffKeyword_h2, L225.GlobalTechCapture_h2)
-
-    if(exists("L225.SubsectorShrwt_h2")) {
-      return_data(L225.SubsectorShrwt_h2)
-    }
-
-    if(exists("L225.SubsectorShrwtFllt_h2")) {
-      return_data(L225.SubsectorShrwtFllt_h2)
-    }
-
-    if(exists("L225.SubsectorInterp_h2")) {
-      return_data(L225.SubsectorInterp_h2)
-    }
-
-    if(exists("L225.SubsectorInterpTo_h2")) {
-      return_data(L225.SubsectorInterpTo_h2)
-    }
-
+                L225.PrimaryRenewKeyword_h2, L225.AvgFossilEffKeyword_h2,
+                L225.GlobalTechCapture_h2, L225.SubsectorShrwt_h2, L225.SubsectorShrwtFllt_h2,
+                L225.SubsectorInterp_h2, L225.SubsectorInterpTo_h2)
   } else {
     stop("Unknown command")
   }
