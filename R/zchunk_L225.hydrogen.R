@@ -33,7 +33,11 @@ module_energy_L225.hydrogen <- function(command, ...) {
              "L225.GlobalTechCost_h2",
              "L225.GlobalTechShrwt_h2",
              "L225.PrimaryRenewKeyword_h2",
-             "L225.GlobalTechCapture_h2"))
+             "L225.GlobalTechCapture_h2",
+             "L225.SubsectorShrwt_h2",
+             "L225.SubsectorInterp_h2",
+             "L225.SubsectorInterpTo_h2",
+             "L225.AvgFossilEffKeyword_h2"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -67,28 +71,28 @@ module_energy_L225.hydrogen <- function(command, ...) {
       L225.SubsectorLogit_h2
 
     # L225.SubsectorShrwt_h2 and L225.SubsectorShrwtFllt_h2: Subsector shareweights of hydrogen sectors
-    if(any(!is.na(A25.subsector_shrwt$year))){
+    if(any(!is.na(A25.subsector_shrwt$year))) {
       A25.subsector_shrwt %>%
         filter(!is.na(year)) %>%
         write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwt"]], GCAM_region_names) ->
         L225.SubsectorShrwt_h2
     }
-    if(any(!is.na(A25.subsector_shrwt$year.fillout))){
+    if(any(!is.na(A25.subsector_shrwt$year.fillout))) {
       A25.subsector_shrwt %>%
         filter(!is.na(year.fillout)) %>%
         write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]], GCAM_region_names) ->
         L225.SubsectorShrwtFllt_h2
     }
 
-    if(exists("A25.subsector_interp")){
+    if(exists("A25.subsector_interp")) {
       # L225.SubsectorInterp_h2 and L225.SubsectorInterpTo_h2: Subsector shareweight interpolation of hydrogen sectors
-      if(any(is.na(A25.subsector_interp$to.value))){
+      if(any(is.na(A25.subsector_interp$to.value))) {
         A25.subsector_interp %>%
           filter(!is.na(to.value)) %>%
           write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorInterp"]], GCAM_region_names)->
           L225.SubsectorInterp_h2
       }
-      if(any(!is.na(A25.subsector_interp$to.value))){
+      if(any(!is.na(A25.subsector_interp$to.value))) {
         A25.subsector_interp %>%
           filter(!is.na(to.value)) %>%
           write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorInterpTo"]], GCAM_region_names) ->
@@ -290,9 +294,46 @@ module_energy_L225.hydrogen <- function(command, ...) {
       add_precursors("energy/A25.globaltech_co2capture")->
       L225.GlobalTechCapture_h2
 
+    L225.SubsectorShrwt_h2 %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L225.SubsectorShrwt_h2") %>%
+      add_precursors("precursor1", "precursor2", "etc") ->
+      L225.SubsectorShrwt_h2
+
+    L225.SubsectorInterp_h2 %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L225.SubsectorInterp_h2") %>%
+      add_precursors("precursor1", "precursor2", "etc") ->
+      L225.SubsectorInterp_h2
+
+    L225.SubsectorInterpTo_h2 %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L225.SubsectorInterpTo_h2") %>%
+      add_precursors("precursor1", "precursor2", "etc") ->
+      L225.SubsectorInterpTo_h2
+
+    L225.AvgFossilEffKeyword_h2 %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L225.AvgFossilEffKeyword_h2") %>%
+      add_precursors("precursor1", "precursor2", "etc") ->
+      L225.AvgFossilEffKeyword_h2
+
     return_data(L225.Supplysector_h2, L225.SubsectorLogit_h2, L225.SubsectorShrwtFllt_h2,
                 L225.StubTech_h2, L225.GlobalTechEff_h2, L225.GlobalTechCost_h2, L225.GlobalTechShrwt_h2,
-                L225.PrimaryRenewKeyword_h2, L225.GlobalTechCapture_h2)
+                L225.PrimaryRenewKeyword_h2, L225.GlobalTechCapture_h2,
+                L225.SubsectorShrwt_h2, L225.SubsectorInterp_h2, L225.SubsectorInterpTo_h2, L225.AvgFossilEffKeyword_h2)
   } else {
     stop("Unknown command")
   }
