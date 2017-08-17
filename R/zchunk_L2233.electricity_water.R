@@ -1,6 +1,6 @@
 #' module_water_L2233.electricity_water
 #'
-#' Generates GCAM model inputs for electricity sector with cooling system types disaggregated
+#' Generates GCAM model inputs for electricity sector with cooling system types disaggregated.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -306,9 +306,9 @@ module_water_L2233.electricity_water <- function(command, ...) {
              technology = from.technology) %>%  unique -> elec_tech_water_map_
     # ^^ reduce and rename elec_tech_water_map for joining to all tables in L2233.Elec_tables_globaltech_cost
 
-    resetTech <- function(x){
+    resetTech <- function(x) {
       names(x)[names(x) == "intermittent.technology"] <- "technology"
-      x %>% left_join_keep_first_only(elec_tech_water_map_,by = c("sector.name", "subsector.name", "technology"))
+      x %>% left_join_keep_first_only(elec_tech_water_map_, by = c("sector.name", "subsector.name", "technology"))
       # ^^ left_join_keep_first_only applied for to.technology column (maintaining arbitrary column from legacy code)
     }
     L2233.Elec_tables_glbTechCost_expanded <- sapply(L2233.Elec_tables_globaltech_cost, resetTech)
@@ -384,7 +384,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
     # ... in L2233.Elec_tables_globaltech_nocost. All tables contain fewer technologies...
     # ... than required for the number of cooling system options, so we work backwards...
     # ... from the tables with all possible global technology names and years available.
-    prepGlobalTechNoCostOutputs <- function(elecTableName){
+    prepGlobalTechNoCostOutputs <- function(elecTableName) {
       tableName <- paste0("L2233.", elecTableName, "_cool")
       elecTable <- L2233.Elec_tables_globaltech_nocost[[which(names(L2233.Elec_tables_globaltech_nocost) == elecTableName)]]
       names(elecTable)[names(elecTable) == "intermittent.technology"] <- "technology"
@@ -406,7 +406,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
                technology = to.technology) %>%
         select(one_of(c(nondataCols, dataCols))) %>%
         unique %>% na.omit -> newTable
-      if ("efficiency" %in% names(newTable)){
+      if ("efficiency" %in% names(newTable)) {
         mutate(newTable,
                efficiency = if_else(grepl("dry", technology),
                                     efficiency * DRY_COOLING_EFF_ADJ, as.double(efficiency))) ->
