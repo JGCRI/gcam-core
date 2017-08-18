@@ -46,6 +46,10 @@ module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
     L123.LC_bm2_R_MgdPast_Yh_GLU <- get_data(all_data, "L123.LC_bm2_R_MgdPast_Yh_GLU")
     L123.LC_bm2_R_MgdFor_Yh_GLU <- get_data(all_data, "L123.LC_bm2_R_MgdFor_Yh_GLU")
 
+    # silence package check notes
+    GCAM_commodity <- GCAM_region_ID <- value <- year <- GLU <-  Land_Type <- TotPasture <-
+      MgdPasture <- TotForest <- MgdForest <- TotUnmgdLand <- ExtraCropland <- adjustmentRatio <-
+      . <- NULL
 
     # Perform Computations:
 
