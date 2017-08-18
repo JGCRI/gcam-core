@@ -125,7 +125,7 @@ module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
       select(-TotUnmgdLand, -ExtraCropland, -Land_Type) ->
       L124.LC_UnMgdAdj_R_Yh_GLU
 
-    #Check that enough unmanaged land is available for the cropland expansion in all regions/GLUs
+    # Check that enough unmanaged land is available for the cropland expansion in all regions/GLUs
     if( any( L124.LC_UnMgdAdj_R_Yh_GLU$adjustmentRatio < 0 ) ) {
       stop( "Increase in cropland exceeds available unmanaged land")
     }
@@ -135,7 +135,7 @@ module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
     L124.LC_bm2_R_LTunmgd_Yh_GLU %>%
       left_join_error_no_match( L124.LC_UnMgdAdj_R_Yh_GLU, by = c("GCAM_region_ID", "GLU", "year")) %>%
       mutate(value = value * adjustmentRatio) %>%
-      select(- adjustmentRatio) ->
+      select(-adjustmentRatio) ->
       L124.LC_bm2_R_LTunmgd_Yh_GLU_adj
 
 
@@ -169,10 +169,7 @@ module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
       add_comments("type in each region-GLU-year so that the extra cropland is deducted from each unmanaged land") %>%
       add_comments("type according to its relative share.") %>%
       add_legacy_name("L124.LC_bm2_R_Grass_Yh_GLU_adj") %>%
-      add_precursors("L120.LC_bm2_R_LT_Yh_GLU",
-                     "L122.LC_bm2_R_ExtraCropLand_Yh_GLU",
-                     "L123.LC_bm2_R_MgdPast_Yh_GLU",
-                     "L123.LC_bm2_R_MgdFor_Yh_GLU") %>%
+      same_precursors_as(L124.LC_bm2_R_Shrub_Yh_GLU_adj) %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT) ->
       L124.LC_bm2_R_Grass_Yh_GLU_adj
 
@@ -189,10 +186,7 @@ module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
       add_comments("type in each region-GLU-year so that the extra cropland is deducted from each unmanaged land") %>%
       add_comments("type according to its relative share.") %>%
       add_legacy_name("L124.LC_bm2_R_UnMgdPast_Yh_GLU_adj") %>%
-      add_precursors("L120.LC_bm2_R_LT_Yh_GLU",
-                     "L122.LC_bm2_R_ExtraCropLand_Yh_GLU",
-                     "L123.LC_bm2_R_MgdPast_Yh_GLU",
-                     "L123.LC_bm2_R_MgdFor_Yh_GLU") %>%
+      same_precursors_as(L124.LC_bm2_R_Shrub_Yh_GLU_adj) %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L124.LC_bm2_R_UnMgdPast_Yh_GLU_adj
 
@@ -209,10 +203,7 @@ module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
       add_comments("type in each region-GLU-year so that the extra cropland is deducted from each unmanaged land") %>%
       add_comments("type according to its relative share.") %>%
       add_legacy_name("L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj") %>%
-      add_precursors("L120.LC_bm2_R_LT_Yh_GLU",
-                     "L122.LC_bm2_R_ExtraCropLand_Yh_GLU",
-                     "L123.LC_bm2_R_MgdPast_Yh_GLU",
-                     "L123.LC_bm2_R_MgdFor_Yh_GLU") %>%
+      same_precursors_as(L124.LC_bm2_R_Shrub_Yh_GLU_adj) %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj
 
