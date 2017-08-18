@@ -1,1 +1,11 @@
-# File: A_an_supplysector.csv# Title: Supplysectors of animal production# Units: Various# Source: NA# ----------supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.typeBeef,Mt,Mt,1975$/kg,-3,Dairy,Mt,Mt,1975$/kg,-3,Pork,Mt,Mt,1975$/kg,-3,Poultry,Mt,Mt,1975$/kg,-3,SheepGoat,Mt,Mt,1975$/kg,-3,
+# File: A_an_supplysector.csv
+# Title: Supplysectors of animal production
+# Units: Various
+# Source: NA
+# ----------
+supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.type
+Beef,Mt,Mt,1975$/kg,-3,
+Dairy,Mt,Mt,1975$/kg,-3,
+Pork,Mt,Mt,1975$/kg,-3,
+Poultry,Mt,Mt,1975$/kg,-3,
+SheepGoat,Mt,Mt,1975$/kg,-3,
