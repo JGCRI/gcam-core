@@ -108,7 +108,7 @@ module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {
       select(GCAM_region_ID, Non.CO2, lcf, sav) %>%
       mutate(lcf = lcf * CONV_KG_TO_TG, sav = sav * CONV_KG_TO_TG) %>% # convert from kg to Tg
       group_by(GCAM_region_ID, Non.CO2) %>%
-      summarize_each(funs(sum)) # sum sav and lcf emissions by GCAM region
+      summarize_all(funs(sum)) # sum sav and lcf emissions by GCAM region
 
     # Compute grassland emissions factors by GCAM region
     # Because grassland and forest fire emissions scale with land quantity, the coefs can be computed at the regional level

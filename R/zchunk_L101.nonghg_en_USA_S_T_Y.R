@@ -88,6 +88,7 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
       temp
 
     L154.in_EJ_R_trn_m_sz_tech_F_Yh %>%
+      ungroup() %>%
       mutate(technology = fuel,
              fuel = paste(mode, size.class, sep = "_"),
              sector = UCD_sector) %>%

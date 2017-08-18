@@ -95,6 +95,7 @@ module_gcam.usa_LA154.Transport <- function(command, ...) {
 
       # Creating the first of the three output tables
       Transportation_energy_consumption %>%
+        ungroup() %>% # TODO: stamp out upstream?  I've traced it as far up as L154.in_EJ_R_trn_m_sz_tech_F_Yh
         repeat_add_columns(tibble::tibble(state = list_states)) %>%
         left_join_error_no_match(EIA_transportation_state_share, by = c("state", "EIA_fuel", "EIA_sector", "year")) %>%
         mutate(value = value * value_share) %>% # Allocating across the states
