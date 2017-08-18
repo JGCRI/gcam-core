@@ -71,18 +71,98 @@ module_energy_L226.en_distribution <- function(command, ...) {
     # "L226.Supplysector_en: Supply sector information for energy distribution sectors"
     L226.Supplysector_en <- write_to_all_regions( A26.sector, c(names_Supplysector, "logit.type"))
 
+
+
+    #OLD=======================start
+    printlog( "L226.SubsectorShrwt_en and L226.SubsectorShrwtFllt_en: Subsector shareweights of energy distribution sectors" )
+    if( any( !is.na( A26.subsector_shrwt$year ) ) ){
+      L226.SubsectorShrwt_en <- write_to_all_regions( A26.subsector_shrwt[ !is.na( A26.subsector_shrwt$year ), ], names_SubsectorShrwt )
+    }
+    if( any( !is.na( A26.subsector_shrwt$year.fillout ) ) ){
+      L226.SubsectorShrwtFllt_en <- write_to_all_regions( A26.subsector_shrwt[ !is.na( A26.subsector_shrwt$year.fillout ), ], names_SubsectorShrwtFllt )
+    }
+
+    printlog( "L226.SubsectorInterp_en and L226.SubsectorInterpTo_en: Subsector shareweight interpolation of energy distribution sectors" )
+    if( any( is.na( A26.subsector_interp$to.value ) ) ){
+      L226.SubsectorInterp_en <- write_to_all_regions( A26.subsector_interp[ is.na( A26.subsector_interp$to.value ), ], names_SubsectorInterp )
+    }
+    if( any( !is.na( A26.subsector_interp$to.value ) ) ){
+      L226.SubsectorInterpTo_en <- write_to_all_regions( A26.subsector_interp[ !is.na( A26.subsector_interp$to.value ), ], names_SubsectorInterpTo )
+    }
+    #OLD=======================end
+
+
+
+
     # 2b. Subsector information
     # "L226.SubsectorLogit_en: Subsector logit exponents of energy distribution sectors"
     L226.SubsectorLogit_en <- write_to_all_regions( A26.subsector_logit, c(names_SubsectorLogit, "logit.type"))
 
-    #Efficiencies of global technologies
-    #"L226.GlobalTechEff_en: Energy inputs and efficiencies of global technologies for energy distribution" )
-    L226.globaltech_coef.melt <- interpolate_and_melt( A26.globaltech_eff, approx_fun(c(BASE_YEARS, FUTURE_YEARS), rule=1), value.name="efficiency", digits = digits_efficiency)
-    #Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
-    L226.globaltech_coef.melt[ c( "sector.name", "subsector.name" ) ] <- L226.globaltech_coef.melt[ c( "supplysector", "subsector" ) ]
-    L226.GlobalTechEff_en <- L226.globaltech_coef.melt[ names_GlobalTechEff ]
 
-    #Electricity transmission and distribution
+    #OLD=======================start
+    # 2c. Technology information
+    printlog( "L226.StubTech_en: Identification of stub technologies of energy distribution" )
+    #Note: assuming that technology list in the shareweight table includes the full set (any others would default to a 0 shareweight)
+    L226.StubTech_en <- write_to_all_regions( A26.globaltech_shrwt, names_Tech )
+    names( L226.StubTech_en ) <- names_StubTech
+    #OLD=======================end
+
+
+
+    #Efficiencies of global technologies
+    #"L226.GlobalTechEff_en: Energy inputs and efficiencies of global technologies for energy distribution"
+    A26.globaltech_eff %>%
+      gather(year, efficiency, -supplysector, -subsector, -technology, -minicam.energy.input) %>%
+      complete(nesting(supplysector, subsector, technology, minicam.energy.input), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
+      arrange(supplysector, year) %>%
+      group_by(supplysector) %>%
+      mutate (efficiency = approx_fun(as.numeric(year), efficiency)) %>%
+      filter(year %in% c(BASE_YEARS, FUTURE_YEARS)) %>%
+      # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
+      rename(sector.name = supplysector, subsector.name = subsector) ->
+      L226.GlobalTechEff_en
+
+    # "L226.GlobalTechCost_en: Costs of global technologies for energy distribution"
+    A26.globaltech_cost %>%
+      gather(year, input.cost, -supplysector, -subsector, -technology, -minicam.non.energy.input) %>%
+      complete(nesting(supplysector, subsector, technology, minicam.non.energy.input), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
+      arrange(supplysector, year) %>%
+      group_by(supplysector) %>%
+      mutate (input.cost = approx_fun(as.numeric(year), input.cost)) %>%
+      filter(year %in% c(BASE_YEARS, FUTURE_YEARS)) %>%
+      #Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
+      rename(sector.name = supplysector, subsector.name = subsector) ->
+      L226.GlobalTechCost_en
+
+    # "L226.GlobalTechShrwt_en: Shareweights of global technologies for energy distribution"
+    A26.globaltech_shrwt %>%
+      gather(year, share.weight, -supplysector, -subsector, -technology) %>%
+      complete(nesting(supplysector, subsector, technology), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
+      arrange(supplysector, year) %>%
+      group_by(supplysector) %>%
+      mutate (share.weight = approx_fun(as.numeric(year), share.weight)) %>%
+      filter(year %in% c(BASE_YEARS, FUTURE_YEARS)) %>%
+      #Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
+      rename(sector.name = supplysector, subsector.name = subsector) ->
+      L226.GlobalTechShrwt_en
+
+    #2d. Calibration and region-specific data
+    # Electricity ownuse IO coefs
+    L126.IO_R_elecownuse_F_Yh %>%
+      complete(nesting(GCAM_region_ID, sector, fuel), year = c(year, BASE_YEARS)) %>%
+      arrange(GCAM_region_ID, sector, fuel, year) %>%
+      group_by(GCAM_region_ID, sector, fuel) %>%
+      mutate (value = approx_fun(as.numeric(year), value)) %>%
+      filter(year %in% c(BASE_YEARS)) %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      left_join(calibrated_techs, by = c("sector", "fuel")) %>%
+      select(-calibration, -secondary.output) ->
+      L226.IO_R_elecownuse_F_Yh
+
+
+
+
+    #Electricity transmission and distribution (#this works now but may need optional interpolation)
     L126.IO_R_electd_F_Yh %>%
       filter(year %in% BASE_YEARS) ->
       L226.IO_R_electd_F_Yh
