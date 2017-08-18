@@ -370,7 +370,7 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
       filter(year %in% FUTURE_YEARS) %>%
       transmute(iso, year, ratio = value / base)
 
-    #Use these ratios to build the GDP trajectories by old GCAM3
+    # Use these ratios to build the GDP trajectories by old GCAM3
     gdp_mil90usd_GCAM3_ctry_Y <- gdp_mil90usd_ctry_Yh %>%
       left_join(gdpRatio_GCAM3_ctry_Yfut, by = c("iso", "year")) %>%
       group_by(iso) %>%
@@ -385,7 +385,7 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
       summarise(value = sum(value)) %>%
       ungroup()
 
-    #Calculate per-capita GDP
+    # Calculate per-capita GDP
     pcgdp_thous90USD_GCAM3_R_Y <- gdp_mil90usd_GCAM3_R_Y %>%
       left_join_error_no_match(L101.Pop_thous_GCAM3_R_Y, by = c("year", "GCAM_region_ID")) %>%
       transmute(GCAM_region_ID, year, value = value.x / value.y)

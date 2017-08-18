@@ -58,6 +58,7 @@ module_socioeconomics_L242.Bld_Inc_Elas_scenarios <- function(command, ...) {
     L242.pcgdp_thous90USD_Scen_R_Y <- L102.pcgdp_thous90USD_Scen_R_Y %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       filter(year %in% FUTURE_YEARS) %>%
+      # Using approx rather than approx_fun because data is from assumption file, not in our tibble
       mutate(income.elasticity = approx(x = A42.inc_elas$pcgdp_90thousUSD, y = A42.inc_elas$inc_elas,
                                         xout = pcgdp_90thousUSD,
                                         # Rule 2 means that data outside of the interval of input
@@ -85,6 +86,7 @@ module_socioeconomics_L242.Bld_Inc_Elas_scenarios <- function(command, ...) {
       filter(year %in% FUTURE_YEARS) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       transmute(region, year, pcgdp_90thousUSD = value.x / value.y) %>%
+      # Using approx rather than approx_fun because data is from assumption file, not in our tibble
       mutate(income.elasticity = approx(x = A42.inc_elas$pcgdp_90thousUSD, y = A42.inc_elas$inc_elas,
                                         xout = pcgdp_90thousUSD,
                                         # Rule 2 means that data outside of the interval of input
