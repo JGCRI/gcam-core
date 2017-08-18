@@ -309,8 +309,7 @@ add_carbon_info <- function( data, carbon_info_table, matchvars = c("region", "G
            veg.carbon.density = hist.veg.carbon.density,
            soil.carbon.density = hist.soil.carbon.density,
            min.veg.carbon.density = aglu.MIN_VEG_CARBON_DENSITY,
-           min.soil.carbon.density = aglu.MIN_SOIL_CARBON_DENSITY) %>%
-    select(-GCAM_region_ID)
+           min.soil.carbon.density = aglu.MIN_SOIL_CARBON_DENSITY)
 }
 
 

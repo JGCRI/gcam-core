@@ -5,6 +5,7 @@ OUTPUTS_DIR  <- "outputs/"
 XML_DIR      <- "xml/"
 COMMENT_CHAR <- "#"
 OLD_DATA_SYSTEM_BEHAVIOR <- TRUE
+UNDER_TIMESHIFT <- FALSE
 YEAR_PATTERN <- "^(1|2)[0-9]{3}$"   # a 1 or 2 followed by three digits, and nothing else
 LOGIT_COLUMN_NAME <- "logit.type"   # will be removed by test code before old-new comparison
 
@@ -95,6 +96,10 @@ MIN_HA_TO_CROPLAND <- 1
 # Cited in: Monfreda et al. 2008, Farming the Planet: 2., Global Biogeochemical Cycles 22, GB1022, http://dx.doi.org/10.1029/2007GB002947
 MAX_HA_TO_CROPLAND <- 3
 
+# Maximum portion of any land use region's pastures that can be in production
+MAX_MGDPAST_FRAC <- 0.95
+MAX_MGDFOR_FRAC <- 1
+
 # Yield multiplier that goes from the observed yield to the "high" and "low" yields: observed plus or minus observed times this number
 MGMT_YIELD_ADJ <- 0.1
 
@@ -135,6 +140,9 @@ aglu.BIO_TREE_WATER_IO_KM3EJ <- 25
 # Cost of Fertilizer
 aglu.FERT_COST <- 363 # 2007$ per ton NH3
 
+# Minimum non-input costs of animal production technologies, in $/kg
+aglu.MIN_AN_NONINPUT_COST <- 0.05
+
 # Maximum bioenergy (switchgrass) yield allowable, in tons per hectare
 # Source: Wullschleger doi:10.2134/agronj2010.0087
 aglu.MAX_BIO_YIELD_THA <- 20
@@ -156,7 +164,9 @@ aglu.FERT_NAME <- "N fertilizer"
 # To Page's knowledge, nobody's ever done a weighted average wood density
 # across all tree species that are commercially logged;
 # 500 was was chosen to be towards the middle of the species that are produced.
-aglu.AVG_WOOD_DENSITY_KGM3 <- 500
+aglu.AVG_WOOD_DENSITY_KGM3 <- 500 # In kg per m3
+# Carbon content of wood is about 50 percent across species
+aglu.AVG_WOOD_DENSITY_KGCM3 <- 250 # In kg carbon per m3
 
 # Average Agriculture Density kg/m^3 for mass conversion
 # Source: http://www.engineeringtoolbox.com/wood-density-d_40.html
@@ -187,6 +197,16 @@ aglu.MIN_SOIL_CARBON_DENSITY <- 0
 aglu.N0_LOGIT_EXP <- 0
 aglu.N0_LOGIT_TYPE <- NA
 
+# fraction of land that is protected
+aglu.PROTECT_LAND_FRACT <- 0.9
+
+# unManaged Land Value
+# 1975$/thou km2 ??
+aglu.UNMANAGED_LAND_VALUE <- 1
+
+# default protected, unmanaged land LN1 logit info
+aglu.LN1_PROTUNMGD_LOGIT_EXP <- 0
+aglu.LN1_PROTUNMGD_LOGIT_TYPE <- NA
 
 # XML-related constants
 aglu.GLU_NDIGITS          <- 3    # number of digits in the geographic land unit identifier codes
