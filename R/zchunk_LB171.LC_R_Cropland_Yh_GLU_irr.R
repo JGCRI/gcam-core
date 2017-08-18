@@ -16,9 +16,9 @@
 module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c( "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",
-              FILE = "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
-              FILE = "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU",
-              FILE = "temp-data-inject/L161.ag_irrHA_frac_R_C_GLU"))
+              "L161.ag_irrProd_Mt_R_C_Y_GLU",
+              "L161.ag_rfdProd_Mt_R_C_Y_GLU",
+              "L161.ag_irrHA_frac_R_C_GLU"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU",
              "L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU",
@@ -34,19 +34,9 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
 
     # Load required inputs
     L122.LC_bm2_R_HarvCropLand_C_Yh_GLU <- get_data(all_data, "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU")
-    L161.ag_irrProd_Mt_R_C_Y_GLU <- get_data(all_data, "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU") %>%
-      # The following two lines of code will be removed later, when we're using 'real' data
-      gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%   # reshape
-      mutate(year = as.integer(substr(year, 2, 5))) %>%    # change Xyear to year
-      filter(year %in% HISTORICAL_YEARS)  # ensure temp data match our current history
-
-    L161.ag_rfdProd_Mt_R_C_Y_GLU <- get_data(all_data, "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU") %>%
-      # The following two lines of code will be removed later, when we're using 'real' data
-      gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%   # reshape
-      mutate(year = as.integer(substr(year, 2, 5))) %>%   # change Xyear to year
-      filter(year %in% HISTORICAL_YEARS)  # ensure temp data match our current history
-
-    L161.ag_irrHA_frac_R_C_GLU <- get_data(all_data, "temp-data-inject/L161.ag_irrHA_frac_R_C_GLU") # No year in this data
+    L161.ag_irrProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_irrProd_Mt_R_C_Y_GLU")
+    L161.ag_rfdProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_rfdProd_Mt_R_C_Y_GLU")
+    L161.ag_irrHA_frac_R_C_GLU <- get_data(all_data, "L161.ag_irrHA_frac_R_C_GLU")
 
     # First, calculate the share of irrigated vs. rainfed cropland in the base year by GCAM region, commodity and GLU.
     L161.ag_irrHA_frac_R_C_GLU %>%
@@ -105,7 +95,7 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
       add_comments("The share of irrigated cropland in the base year is applied to all historical periods.") %>%
       add_legacy_name("L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU") %>%
       add_precursors("L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",
-                     "temp-data-inject/L161.ag_irrHA_frac_R_C_GLU") %>%
+                     "L161.ag_irrHA_frac_R_C_GLU") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT) ->
       L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU
 
@@ -117,7 +107,7 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
       add_comments("The share of rainfed cropland in the base year is applied to all historical periods.") %>%
       add_legacy_name("L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU") %>%
       add_precursors("L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",
-                     "temp-data-inject/L161.ag_irrHA_frac_R_C_GLU") %>%
+                     "L161.ag_irrHA_frac_R_C_GLU") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT) ->
       L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU
 
@@ -127,7 +117,7 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
       add_units("kg/m2") %>%
       add_comments("Adjusted economic yield for irrigated crops are calculated as irrigated crop production devided by irrigated cropland cover.") %>%
       add_legacy_name("L171.ag_irrEcYield_kgm2_R_C_Y_GLU") %>%
-      add_precursors("temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU") %>%
+      add_precursors("L161.ag_irrProd_Mt_R_C_Y_GLU") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L171.ag_irrEcYield_kgm2_R_C_Y_GLU
 
@@ -137,7 +127,7 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
       add_units("kg/m2") %>%
       add_comments("Adjusted economic yield for rainfed crops are calculated as rainfed crop production devided by rainfed cropland cover.") %>%
       add_legacy_name("L171.ag_rfdEcYield_kgm2_R_C_Y_GLU") %>%
-      add_precursors("temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU") %>%
+      add_precursors("L161.ag_rfdProd_Mt_R_C_Y_GLU") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L171.ag_rfdEcYield_kgm2_R_C_Y_GLU
 

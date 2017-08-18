@@ -27,8 +27,8 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
              FILE = "aglu/FAO/FAO_ag_items_PRODSTAT",
              "L151.ag_irrHA_ha_ctry_crop",
              "L151.ag_rfdHA_ha_ctry_crop",
-             FILE = "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
-             FILE = "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU"))
+             "L161.ag_irrProd_Mt_R_C_Y_GLU",
+             "L161.ag_rfdProd_Mt_R_C_Y_GLU"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L162.ag_YieldRatio_R_C_Ysy_GLU_irr",
              "L162.ag_YieldRate_R_C_Y_GLU_irr",
@@ -51,18 +51,8 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
     FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_ag_items_PRODSTAT")
     L151.ag_irrHA_ha_ctry_crop <- get_data(all_data, "L151.ag_irrHA_ha_ctry_crop")
     L151.ag_rfdHA_ha_ctry_crop <- get_data(all_data, "L151.ag_rfdHA_ha_ctry_crop")
-    L161.ag_irrProd_Mt_R_C_Y_GLU <- get_data(all_data, "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU")
-    L161.ag_rfdProd_Mt_R_C_Y_GLU <- get_data(all_data, "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU")
-    # These lines are only while using temp-data-inject:
-    L161.ag_irrProd_Mt_R_C_Y_GLU %>%
-      gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) ->
-      L161.ag_irrProd_Mt_R_C_Y_GLU
-    L161.ag_rfdProd_Mt_R_C_Y_GLU %>%
-      gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) ->
-      L161.ag_rfdProd_Mt_R_C_Y_GLU
-
+    L161.ag_irrProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_irrProd_Mt_R_C_Y_GLU")
+    L161.ag_rfdProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_rfdProd_Mt_R_C_Y_GLU")
 
     # Perform calculations
 
@@ -435,8 +425,8 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
                      "aglu/FAO/FAO_ag_items_PRODSTAT",
                      "L151.ag_irrHA_ha_ctry_crop",
                      "L151.ag_rfdHA_ha_ctry_crop",
-                     "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
-                     "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU") ->
+                     "L161.ag_irrProd_Mt_R_C_Y_GLU",
+                     "L161.ag_rfdProd_Mt_R_C_Y_GLU") ->
       L162.ag_YieldRatio_R_C_Ysy_GLU_irr
 
     L162.ag_YieldRate_R_C_Y_GLU_irr %>%
@@ -453,8 +443,8 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
                      "aglu/FAO/FAO_ag_items_PRODSTAT",
                      "L151.ag_irrHA_ha_ctry_crop",
                      "L151.ag_rfdHA_ha_ctry_crop",
-                     "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
-                     "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU") %>%
+                     "L161.ag_irrProd_Mt_R_C_Y_GLU",
+                     "L161.ag_rfdProd_Mt_R_C_Y_GLU") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT) ->
       L162.ag_YieldRate_R_C_Y_GLU_irr
 
@@ -473,8 +463,8 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
                      "aglu/FAO/FAO_ag_items_PRODSTAT",
                      "L151.ag_irrHA_ha_ctry_crop",
                      "L151.ag_rfdHA_ha_ctry_crop",
-                     "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
-                     "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU") %>%
+                     "L161.ag_irrProd_Mt_R_C_Y_GLU",
+                     "L161.ag_rfdProd_Mt_R_C_Y_GLU") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L162.bio_YieldRate_R_Y_GLU_irr
 
