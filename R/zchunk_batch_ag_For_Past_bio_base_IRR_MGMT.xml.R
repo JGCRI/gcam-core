@@ -43,7 +43,9 @@ module_aglu_batch_ag_For_Past_bio_base_IRR_MGMT.xml <- function(command, ...) {
       add_xml_data(L2012.AgProduction_Past, "AgProduction") %>%
       add_xml_data(L2012.AgHAtoCL_irr_mgmt, "AgHAtoCL") %>%
       add_xml_data(L2012.AgYield_bio_ref, "AgYield") %>%
-      add_precursors("L2012.AgSupplySubsector", "L2012.AgProduction_ag_irr_mgmt", "L2012.AgProduction_For", "L2012.AgProduction_Past", "L2012.AgHAtoCL_irr_mgmt", "L2012.AgYield_bio_ref") ->
+      add_precursors("L2012.AgSupplySubsector", "L2012.AgProduction_ag_irr_mgmt",
+                     "L2012.AgProduction_For", "L2012.AgProduction_Past", "L2012.AgHAtoCL_irr_mgmt",
+                     "L2012.AgYield_bio_ref", "L2012.AgSupplySector") ->
       ag_For_Past_bio_base_IRR_MGMT.xml
 
     return_data(ag_For_Past_bio_base_IRR_MGMT.xml)

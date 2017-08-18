@@ -24,11 +24,11 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
              "L103.ag_Prod_Mt_R_C_Y_GLU",
              "L113.ag_bioYield_GJm2_R_GLU",
              "L122.ag_HA_to_CropLand_R_Y_GLU",
-             FILE = "temp-data-inject/L123.ag_Prod_Mt_R_Past_Y_GLU",
-             FILE = "temp-data-inject/L123.For_Prod_bm3_R_Y_GLU",
+             "L123.ag_Prod_Mt_R_Past_Y_GLU",
+             "L123.For_Prod_bm3_R_Y_GLU",
              "L132.ag_an_For_Prices",
-             FILE = "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
-             FILE = "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU",
+             "L161.ag_irrProd_Mt_R_C_Y_GLU",
+             "L161.ag_rfdProd_Mt_R_C_Y_GLU",
              "L163.ag_irrBioYield_GJm2_R_GLU",
              "L163.ag_rfdBioYield_GJm2_R_GLU",
              "L181.ag_Prod_Mt_R_C_Y_GLU_irr_level",
@@ -59,19 +59,11 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
     L103.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L103.ag_Prod_Mt_R_C_Y_GLU")
     L113.ag_bioYield_GJm2_R_GLU <- get_data(all_data, "L113.ag_bioYield_GJm2_R_GLU")
     L122.ag_HA_to_CropLand_R_Y_GLU <- get_data(all_data, "L122.ag_HA_to_CropLand_R_Y_GLU")
-    L123.ag_Prod_Mt_R_Past_Y_GLU <- get_data(all_data, "temp-data-inject/L123.ag_Prod_Mt_R_Past_Y_GLU") %>%
-      gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%  # temporary
-      mutate(year = as.integer(substr(year, 2, 5)))
-    L123.For_Prod_bm3_R_Y_GLU <- get_data(all_data, "temp-data-inject/L123.For_Prod_bm3_R_Y_GLU") %>%
-      gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%  # temporary
-      mutate(year = as.integer(substr(year, 2, 5)))
+    L123.ag_Prod_Mt_R_Past_Y_GLU <- get_data(all_data, "L123.ag_Prod_Mt_R_Past_Y_GLU")
+    L123.For_Prod_bm3_R_Y_GLU <- get_data(all_data, "L123.For_Prod_bm3_R_Y_GLU")
     L132.ag_an_For_Prices <- get_data(all_data, "L132.ag_an_For_Prices" )
-    L161.ag_irrProd_Mt_R_C_Y_GLU <- get_data(all_data, "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU") %>%
-      gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%  # temporary
-      mutate(year = as.integer(substr(year, 2, 5)))
-    L161.ag_rfdProd_Mt_R_C_Y_GLU <- get_data(all_data, "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU") %>%
-      gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%  # temporary
-      mutate(year = as.integer(substr(year, 2, 5)))
+    L161.ag_irrProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_irrProd_Mt_R_C_Y_GLU")
+    L161.ag_rfdProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_rfdProd_Mt_R_C_Y_GLU")
     L163.ag_irrBioYield_GJm2_R_GLU <- get_data(all_data, "L163.ag_irrBioYield_GJm2_R_GLU")
     L163.ag_rfdBioYield_GJm2_R_GLU <- get_data(all_data, "L163.ag_rfdBioYield_GJm2_R_GLU")
     L181.ag_Prod_Mt_R_C_Y_GLU_irr_level <- get_data(all_data, "L181.ag_Prod_Mt_R_C_Y_GLU_irr_level")
@@ -423,8 +415,8 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
                      "water/basin_to_country_mapping",
                      "aglu/A_agSupplySubsector",
                      "L103.ag_Prod_Mt_R_C_Y_GLU",
-                     "temp-data-inject/L123.ag_Prod_Mt_R_Past_Y_GLU",
-                     "temp-data-inject/L123.For_Prod_bm3_R_Y_GLU") ->
+                     "L123.ag_Prod_Mt_R_Past_Y_GLU",
+                     "L123.For_Prod_bm3_R_Y_GLU") ->
       L2012.AgSupplySubsector
 
     L2012.AgProduction_ag_irr_mgmt %>%
@@ -436,8 +428,8 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       add_legacy_name("L2012.AgProduction_ag_irr_mgmt") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
-                     "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
-                     "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU",
+                     "L161.ag_irrProd_Mt_R_C_Y_GLU",
+                     "L161.ag_rfdProd_Mt_R_C_Y_GLU",
                      "L181.ag_Prod_Mt_R_C_Y_GLU_irr_level") ->
       L2012.AgProduction_ag_irr_mgmt
 
