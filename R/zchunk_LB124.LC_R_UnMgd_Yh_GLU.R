@@ -1,6 +1,8 @@
 #' module_aglu_LB124.LC_R_UnMgd_Yh_GLU
 #'
-#' Briefly describe what this chunk does.
+#' This chunk adjusts land cover data for unmanaged land types (shrub, grass, unmgd pasture, unmgd forest) in L120.LC_bm2_R_LT_Yh_GLU to deduct
+#' the extra cropland needs described in L122.LC_bm2_R_ExtraCropLand_Yh_GLU proportionally according to the relative share of each unmanaged
+#' land type.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,12 +10,21 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L124.LC_bm2_R_Shrub_Yh_GLU_adj}, \code{L124.LC_bm2_R_Grass_Yh_GLU_adj}, \code{L124.LC_bm2_R_UnMgdPast_Yh_GLU_adj}, \code{L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj}. The corresponding file in the
 #' original data system was \code{LB124.LC_R_UnMgd_Yh_GLU.R} (aglu level1).
-#' @details Describe in detail what this chunk does.
+#' @details Initial unmanaged land cover estimates from L120.LC_bm2_R_LT_Yh_GLU for each unmanaged land type (shrub, grass,
+#' unmgd pasture, unmgd forest) are aggregated to produce the total amount of unmanaged land in each region-GLU-year. This
+#' is then used with the extra cropland calculated in L122.LC_bm2_R_ExtraCropLand_Yh_GLU to create an adjustment factor
+#' for each region-GLU-year. This adjustment factor is applied to each unmanaged land type in each region-GLU-year so that
+#' the extra cropland is deducted from each unmanaged land type according to its relative share.
+#'
+#' Initial unmanaged pasture area in each region-glu-year is calculated as total pasture are in L120.LC_bm2_R_LT_Yh_GLU
+#' minus managed pasture area in L123.LC_bm2_R_MgdPast_Yh_GLU.
+#' Initial unmanaged forest area in each region-glu-year is calculated as total forest are in L120.LC_bm2_R_LT_Yh_GLU
+#' minus managed forest area in L123.LC_bm2_R_MgdFor_Yh_GLU.
+#'
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
-#' @export
+#' @author ACS August 2017
 module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c( "L120.LC_bm2_R_LT_Yh_GLU",
@@ -129,8 +140,12 @@ module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
       filter(Land_Type == "Shrubland") %>%
       add_title("Shrub land cover by GCAM region / historical year / GLU") %>%
       add_units("billion square meters (bm2)") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("Initial unmanaged land cover estimates from L120.LC_bm2_R_LT_Yh_GLU are aggregated to produce") %>%
+      add_comments("the total amount of unmanaged land in each region-GLU-year. This is then used with") %>%
+      add_comments("the extra cropland calculated in L122.LC_bm2_R_ExtraCropLand_Yh_GLU to create an adjustment") %>%
+      add_comments("factor for each region-GLU-year. This adjustment factor is applied to each unmanaged land") %>%
+      add_comments("type in each region-GLU-year so that the extra cropland is deducted from each unmanaged land") %>%
+      add_comments("type according to its relative share.") %>%
       add_legacy_name("L124.LC_bm2_R_Shrub_Yh_GLU_adj") %>%
       add_precursors("L120.LC_bm2_R_LT_Yh_GLU",
                      "L122.LC_bm2_R_ExtraCropLand_Yh_GLU",
@@ -143,8 +158,12 @@ module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
       filter(Land_Type == "Grassland") %>%
       add_title("Grass land cover by GCAM region / historical year / GLU") %>%
       add_units("billion square meters (bm2)") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("Initial unmanaged land cover estimates from L120.LC_bm2_R_LT_Yh_GLU are aggregated to produce") %>%
+      add_comments("the total amount of unmanaged land in each region-GLU-year. This is then used with") %>%
+      add_comments("the extra cropland calculated in L122.LC_bm2_R_ExtraCropLand_Yh_GLU to create an adjustment") %>%
+      add_comments("factor for each region-GLU-year. This adjustment factor is applied to each unmanaged land") %>%
+      add_comments("type in each region-GLU-year so that the extra cropland is deducted from each unmanaged land") %>%
+      add_comments("type according to its relative share.") %>%
       add_legacy_name("L124.LC_bm2_R_Grass_Yh_GLU_adj") %>%
       add_precursors("L120.LC_bm2_R_LT_Yh_GLU",
                      "L122.LC_bm2_R_ExtraCropLand_Yh_GLU",
@@ -157,8 +176,14 @@ module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
       filter(Land_Type == "UnmanagedPasture") %>%
       add_title("Unmanaged Pasture land cover by GCAM region / historical year / GLU") %>%
       add_units("billion square meters (bm2)") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("Initial unmanaged pasture area in each region-glu-year is calculated as total pasture are in ") %>%
+      add_comments("L120.LC_bm2_R_LT_Yh_GLU minus managed pasture area in L123.LC_bm2_R_MgdPast_Yh_GLU.") %>%
+      add_comments("Initial unmanaged land cover estimates from L120.LC_bm2_R_LT_Yh_GLU are aggregated to produce") %>%
+      add_comments("the total amount of unmanaged land in each region-GLU-year. This is then used with") %>%
+      add_comments("the extra cropland calculated in L122.LC_bm2_R_ExtraCropLand_Yh_GLU to create an adjustment") %>%
+      add_comments("factor for each region-GLU-year. This adjustment factor is applied to each unmanaged land") %>%
+      add_comments("type in each region-GLU-year so that the extra cropland is deducted from each unmanaged land") %>%
+      add_comments("type according to its relative share.") %>%
       add_legacy_name("L124.LC_bm2_R_UnMgdPast_Yh_GLU_adj") %>%
       add_precursors("L120.LC_bm2_R_LT_Yh_GLU",
                      "L122.LC_bm2_R_ExtraCropLand_Yh_GLU",
@@ -171,8 +196,14 @@ module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
       filter(Land_Type == "UnmanagedForest") %>%
       add_title("Unmanaged Forest land cover by GCAM region / historical year / GLU") %>%
       add_units("billion square meters (bm2)") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("Initial unmanaged forest area in each region-glu-year is calculated as total forest are in ") %>%
+      add_comments("L120.LC_bm2_R_LT_Yh_GLU minus managed forest area in L123.LC_bm2_R_MgdFor_Yh_GLU.") %>%
+      add_comments("Initial unmanaged land cover estimates from L120.LC_bm2_R_LT_Yh_GLU are aggregated to produce") %>%
+      add_comments("the total amount of unmanaged land in each region-GLU-year. This is then used with") %>%
+      add_comments("the extra cropland calculated in L122.LC_bm2_R_ExtraCropLand_Yh_GLU to create an adjustment") %>%
+      add_comments("factor for each region-GLU-year. This adjustment factor is applied to each unmanaged land") %>%
+      add_comments("type in each region-GLU-year so that the extra cropland is deducted from each unmanaged land") %>%
+      add_comments("type according to its relative share.") %>%
       add_legacy_name("L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj") %>%
       add_precursors("L120.LC_bm2_R_LT_Yh_GLU",
                      "L122.LC_bm2_R_ExtraCropLand_Yh_GLU",
