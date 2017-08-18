@@ -110,7 +110,7 @@ module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
     # Calculate the adjustment ratio for this deduction.
     # adjustment ratio = (Total Unmgd Land - Extra Cropland) / Total Unmgd Land
     # First, calculate the total amount of unmanaged land:
-    L124.LC_bm2_R_LTunmgd_Yh_GLU%>%
+    L124.LC_bm2_R_LTunmgd_Yh_GLU %>%
       group_by(GCAM_region_ID, GLU, year) %>%
       summarise(value = sum(value)) %>%
       ungroup  %>%
@@ -133,7 +133,7 @@ module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
 
     # Apply the adjusment ratio to the different land types
     L124.LC_bm2_R_LTunmgd_Yh_GLU %>%
-      left_join_error_no_match( L124.LC_UnMgdAdj_R_Yh_GLU, by = c("GCAM_region_ID", "GLU", "year")) %>%
+      left_join_error_no_match(L124.LC_UnMgdAdj_R_Yh_GLU, by = c("GCAM_region_ID", "GLU", "year")) %>%
       mutate(value = value * adjustmentRatio) %>%
       select(-adjustmentRatio) ->
       L124.LC_bm2_R_LTunmgd_Yh_GLU_adj
