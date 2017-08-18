@@ -18,11 +18,22 @@ the generated outputs: \code{L124.LC_bm2_R_Shrub_Yh_GLU_adj}, \code{L124.LC_bm2_
 original data system was \code{LB124.LC_R_UnMgd_Yh_GLU.R} (aglu level1).
 }
 \description{
-Briefly describe what this chunk does.
+This chunk adjusts land cover data for unmanaged land types (shrub, grass, unmgd pasture, unmgd forest) in L120.LC_bm2_R_LT_Yh_GLU to deduct
+the extra cropland needs described in L122.LC_bm2_R_ExtraCropLand_Yh_GLU proportionally according to the relative share of each unmanaged
+land type.
 }
 \details{
-Describe in detail what this chunk does.
+Initial unmanaged land cover estimates from L120.LC_bm2_R_LT_Yh_GLU for each unmanaged land type (shrub, grass,
+unmgd pasture, unmgd forest) are aggregated to produce the total amount of unmanaged land in each region-GLU-year. This
+is then used with the extra cropland calculated in L122.LC_bm2_R_ExtraCropLand_Yh_GLU to create an adjustment factor
+for each region-GLU-year. This adjustment factor is applied to each unmanaged land type in each region-GLU-year so that
+the extra cropland is deducted from each unmanaged land type according to its relative share.
+
+Initial unmanaged pasture area in each region-glu-year is calculated as total pasture are in L120.LC_bm2_R_LT_Yh_GLU
+minus managed pasture area in L123.LC_bm2_R_MgdPast_Yh_GLU.
+Initial unmanaged forest area in each region-glu-year is calculated as total forest are in L120.LC_bm2_R_LT_Yh_GLU
+minus managed forest area in L123.LC_bm2_R_MgdFor_Yh_GLU.
 }
 \author{
-YourInitials CurrentMonthName 2017
+ACS August 2017
 }
