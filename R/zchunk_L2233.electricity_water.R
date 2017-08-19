@@ -39,8 +39,8 @@ module_water_L2233.electricity_water <- function(command, ...) {
                       "StubTechEff_elec", "StubTechFixOut_hydro", "Supplysector_elec")
 
   # TEMPORARY FOR TEMP-INJECT; REMOVE ONCE OUTPUTS ARE READY!!
-  L223_fileNames_ <- paste0("temp-data-inject/L223.", L223_fileNames)
-  names(L223_fileNames_) <- rep("FILE", length(L223_fileNames))
+  L223_fileNames <- paste0("temp-data-inject/L223.", L223_fileNames)
+  names(L223_fileNames) <- rep("FILE", length(L223_fileNames))
   #  = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
 
@@ -60,7 +60,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
              FILE = "temp-data-inject/L223.StubTechEff_elec",
              "L201.en_bcoc_emissions",
              FILE = "temp-data-inject/L241.nonco2_tech_coeff",
-             L223_fileNames_
+             L223_fileNames
     ))
 
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -111,9 +111,9 @@ module_water_L2233.electricity_water <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     from.supplysector <- from.subsector <- from.technology <- to.supplysector <-
-      to.subsector <- to.technology <- LEVEL2_DATA_NAMES <- year <- share.weight <-
-      supplysector <- subsector <- technology <- minicam.energy.input <-
-      calibration <- secondary.output <- value <- region <- sector <- calOutputValue <-
+      to.subsector <- to.technology <- year <- share.weight <- supplysector <-
+      subsector <- technology <- minicam.energy.input <- calibration <-
+      secondary.output <- value <- region <- sector <- calOutputValue <-
       subs.share.weight <- average.grid.capacity.factor <- plant_type <-
       cooling_system <- water_type <- fuel <- sector.name <- subsector.name <-
       input.capital <- capital.overnight_USD2005 <- capital.overnight <-
@@ -234,7 +234,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
 
     L2233.TechMap %>%
       select(to.supplysector) %>%
-      filter(!(to.supplysector %in% L223_data$StubTech_elec$supplysector)) %>%
+      filter(!(to.supplysector %in% L223_data$StubTech_elec[["supplysector"]])) %>%
       unique() %>%
       rename(supplysector = to.supplysector) -> L2233.elec_cool_supplysectors
     # ^^ generates single column of elec technologies for expansion of Supplysector_elec...
