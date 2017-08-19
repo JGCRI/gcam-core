@@ -39,8 +39,8 @@ module_water_L2233.electricity_water <- function(command, ...) {
                       "StubTechEff_elec", "StubTechFixOut_hydro", "Supplysector_elec")
 
   # TEMPORARY FOR TEMP-INJECT; REMOVE ONCE OUTPUTS ARE READY!!
-  L223_fileNames <- paste0("temp-data-inject/L223.", L223_fileNames)
-  names(L223_fileNames) <- rep("FILE", length(L223_fileNames))
+  L223_fileNames_ <- paste0("temp-data-inject/L223.", L223_fileNames)
+  names(L223_fileNames_) <- rep("FILE", length(L223_fileNames))
   #  = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
 
@@ -60,7 +60,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
              FILE = "temp-data-inject/L223.StubTechEff_elec",
              "L201.en_bcoc_emissions",
              FILE = "temp-data-inject/L241.nonco2_tech_coeff",
-             L223_fileNames
+             L223_fileNames_
     ))
 
   } else if(command == driver.DECLARE_OUTPUTS) {
