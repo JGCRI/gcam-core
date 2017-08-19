@@ -6,9 +6,22 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L2233.EQUIV_TABLE}, \code{L2233.SectorNodeEquiv}, \code{L2233.TechNodeEquiv}, \code{L2233.StubTechProd_elecPassthru}, \code{L2233.GlobalPassThroughTech}, \code{L2233.GlobalTechEff_elecPassthru}, \code{L2233.GlobalTechShrwt_elecPassthru}, \code{L2233.GlobalIntTechCapital_elec}, \code{L2233.GlobalTechCapital_elecPassthru}, \code{L2233.GlobalIntTechOMfixed_elec}, \code{L2233.GlobalTechOMfixed_elecPassthru}, \code{L2233.GlobalIntTechOMvar_elec}, \code{L2233.GlobalTechOMvar_elecPassthru}, \code{L2233.PassThroughSector_elec_cool},\code{L2233.Supplysector_elec_cool}, \code{L2233.ElecReserve_elec_cool}, \code{L2233.SubsectorShrwtFllt_elec_cool}, \code{L2233.SubsectorLogit_elec_cool}, \code{L2233.StubTech_elec_cool}, \code{L2233.StubTechEff_elec_cool}, \code{L2233.StubTechProd_elec_cool}, \code{L2233.StubTechFixOut_hydro}, \code{L2233.StubTechShrwt_elec_cool}, \code{L2233.GlobalTechCapital_elec_cool}, \code{L2233.GlobalIntTechCapital_elec_cool}, \code{L2233.GlobalTechCoef_elec_cool}, \code{L2233.GlobalIntTechCoef_elec_cool}, \code{L2233.InputEmissCoeff_hist_elecPassthru}, \code{L2233.InputEmissCoeff_fut_elecPassthru, \code{L2233.AvgFossilEffKeyword_elec_cool}}. The corresponding file in the
+#' the generated outputs: \code{L2233.EQUIV_TABLE}, \code{L2233.SectorNodeEquiv},
+#' \code{L2233.TechNodeEquiv}, \code{L2233.StubTechProd_elecPassthru}, \code{L2233.GlobalPassThroughTech},
+#' \code{L2233.GlobalTechEff_elecPassthru}, \code{L2233.GlobalTechShrwt_elecPassthru},
+#' \code{L2233.GlobalIntTechCapital_elec}, \code{L2233.GlobalTechCapital_elecPassthru},
+#' \code{L2233.GlobalIntTechOMfixed_elec}, \code{L2233.GlobalTechOMfixed_elecPassthru},
+#' \code{L2233.GlobalIntTechOMvar_elec}, \code{L2233.GlobalTechOMvar_elecPassthru},
+#' \code{L2233.PassThroughSector_elec_cool}, \code{L2233.Supplysector_elec_cool},
+#' \code{L2233.ElecReserve_elec_cool}, \code{L2233.SubsectorShrwtFllt_elec_cool},
+#' \code{L2233.SubsectorLogit_elec_cool}, \code{L2233.StubTech_elec_cool}, \code{L2233.StubTechEff_elec_cool},
+#' \code{L2233.StubTechProd_elec_cool}, \code{L2233.StubTechFixOut_hydro}, \code{L2233.StubTechShrwt_elec_cool},
+#' \code{L2233.GlobalTechCapital_elec_cool}, \code{L2233.GlobalIntTechCapital_elec_cool},
+#' \code{L2233.GlobalTechCoef_elec_cool}, \code{L2233.GlobalIntTechCoef_elec_cool},
+#' \code{L2233.InputEmissCoeff_hist_elecPassthru}, \code{L2233.InputEmissCoeff_fut_elecPassthru},
+#' \code{L2233.AvgFossilEffKeyword_elec_cool}. The corresponding file in the
 #' original data system was \code{L2233.electricity_water.R} (water level2).
-#' @details disaggregates electricity sector for all cooling system types.
+#' @details Disaggregates electricity sector for all cooling system types.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select first
 #' @importFrom tidyr gather spread
@@ -96,6 +109,16 @@ module_water_L2233.electricity_water <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
+
+    from.supplysector <- from.subsector <- from.technology <- to.supplysector <-
+      to.subsector <- to.technology <- LEVEL2_DATA_NAMES <- year <- share.weight <-
+      supplysector <- subsector <- technology <- minicam.energy.input <-
+      calibration <- secondary.output <- value <- region <- sector <- calOutputValue <-
+      subs.share.weight <- average.grid.capacity.factor <- plant_type <-
+      cooling_system <- water_type <- fuel <- sector.name <- subsector.name <-
+      input.capital <- capital.overnight_USD2005 <- capital.overnight <-
+      water_withdrawals <- water_consumption <- coefficient <- water_sector <-
+      share.weight.year <- emiss.coef <- efficiency <- emiss.coeff <- NULL  # silence package check notes
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
@@ -235,8 +258,8 @@ module_water_L2233.electricity_water <- function(command, ...) {
     L2233.TechMap %>%
       select(from.supplysector, from.subsector, from.technology, to.supplysector) %>%
       filter(from.supplysector %in% A23.globalinttech$supplysector,
-               from.subsector %in% A23.globalinttech$subsector,
-               from.technology %in% A23.globalinttech$technology) %>%
+             from.subsector %in% A23.globalinttech$subsector,
+             from.technology %in% A23.globalinttech$technology) %>%
       select(to.supplysector) %>% unique -> L2233.elec_cool_Int_supplysectors
 
     L2233.supplysector_info %>%
@@ -384,13 +407,18 @@ module_water_L2233.electricity_water <- function(command, ...) {
     # ... than required for the number of cooling system options, so we work backwards...
     # ... from the tables with all possible global technology names and years available.
     prepGlobalTechNoCostOutputs <- function(elecTableName) {
+      from.supplysector <- from.subsector <- from.technology <- year <- to.supplysector <-
+        to.subsector <- to.technology <- technology <- efficiency <- NULL  # silence package check notes
+
       tableName <- paste0("L2233.", elecTableName, "_cool")
       elecTable <- L2233.Elec_tables_globaltech_nocost[[which(names(L2233.Elec_tables_globaltech_nocost) == elecTableName)]]
       names(elecTable)[names(elecTable) == "intermittent.technology"] <- "technology"
       defCols <- names(elecTable) %in% c("sector.name","subsector.name", "technology", "year")
       nondataCols <- names(elecTable)[defCols]
       dataCols <- names(elecTable)[!defCols]
-      if (!("year" %in% nondataCols)) elecTable$year <- NA
+      if (!("year" %in% nondataCols)) {
+        elecTable$year <- NA
+      }
       L2233.TechMapYr %>%
         filter(from.supplysector %in% elecTable$sector.name,
                from.subsector %in% elecTable$subsector.name,
@@ -404,18 +432,19 @@ module_water_L2233.electricity_water <- function(command, ...) {
                subsector.name = to.subsector,
                technology = to.technology) %>%
         select(one_of(c(nondataCols, dataCols))) %>%
-        unique %>% na.omit -> newTable
+        unique %>%
+        na.omit -> newTable
       if ("efficiency" %in% names(newTable)) {
         mutate(newTable,
                efficiency = if_else(grepl("dry", technology),
                                     efficiency * DRY_COOLING_EFF_ADJ, as.double(efficiency))) ->
           newTable
       }
-      return(newTable %>%
-               add_comments("Auto-generated by prepGlobalTechNoCostOutputs function in L2233.electricity_water") %>%
-               add_legacy_name(tableName) %>%
-               add_precursors(paste0("temp-data-inject/L223.", elecTableName),
-                              "water/elec_tech_water_map"))
+      newTable %>%
+        add_comments("Auto-generated by prepGlobalTechNoCostOutputs function in L2233.electricity_water") %>%
+        add_legacy_name(tableName) %>%
+        add_precursors(paste0("temp-data-inject/L223.", elecTableName),
+                       "water/elec_tech_water_map")
     }
 
     L2233.Elec_tables_globaltech_nocost_ <- sapply(names(L2233.Elec_tables_globaltech_nocost),
@@ -487,15 +516,15 @@ module_water_L2233.electricity_water <- function(command, ...) {
     # L2233.GlobalTechCoef_elec_cool_all needs to be partitioned into standard and intermittent techs
     L2233.GlobalTechCoef_elec_cool_all %>%
       filter(!(from.supplysector %in% A23.globalinttech$supplysector &
-               from.subsector %in% A23.globalinttech$subsector &
-               from.technology %in% A23.globalinttech$technology)) %>%
+                 from.subsector %in% A23.globalinttech$subsector &
+                 from.technology %in% A23.globalinttech$technology)) %>%
       select(one_of(LEVEL2_DATA_NAMES[["GlobalTechCoef"]])) ->
       L2233.GlobalTechCoef_elec_cool # --OUTPUT--
 
     L2233.GlobalTechCoef_elec_cool_all %>%
       filter(from.supplysector %in% A23.globalinttech$supplysector &
-                 from.subsector %in% A23.globalinttech$subsector &
-                 from.technology %in% A23.globalinttech$technology) %>%
+               from.subsector %in% A23.globalinttech$subsector &
+               from.technology %in% A23.globalinttech$technology) %>%
       select(one_of(LEVEL2_DATA_NAMES[["GlobalTechCoef"]])) ->
       L2233.GlobalIntTechCoef_elec_cool # --OUTPUT--
 
