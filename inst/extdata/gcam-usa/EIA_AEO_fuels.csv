@@ -1,1 +1,5 @@
-EIA_fuel,fuelElectricity,electricityNatural Gas,gasDistillate,refined liquidsLiquefied Petroleum Gas,refined liquids
+EIA_fuel,fuel
+Electricity,electricity
+Natural Gas,gas
+Distillate,refined liquids
+Liquefied Petroleum Gas,refined liquids
