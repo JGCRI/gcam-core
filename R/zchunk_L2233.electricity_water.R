@@ -95,7 +95,6 @@ module_water_L2233.electricity_water <- function(command, ...) {
              "L2233.PrimaryRenewKeywordInt_elec_cool"))
   } else if(command == driver.MAKE) {
 
-
     all_data <- list(...)[[1]]
 
     # Load required inputs
@@ -278,7 +277,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
     #            ... since not all have "GlobalTech" in their name
 
     # Filter the L223 files list for those with "sector.name" as a column header
-    sctrFltr <- sapply(L223_data, function(x) "sector.name" %in% attributes(x)$names)
+    sctrFltr <- sapply(L223_data, function(x) "sector.name" %in% colnames(x))
     L2233.Elec_tables_globaltech <- L223_data[sctrFltr]
 
     # If the table has cost information, then we keep it in the passthrough technology...
@@ -287,8 +286,8 @@ module_water_L2233.electricity_water <- function(command, ...) {
     # ... would be made on < 1% cost differences, which would require very high logit...
     # ... to get any behavior at all.
     costFltr <- sapply(L2233.Elec_tables_globaltech, function(x)
-      grepl("Capital", attributes(x)$title) |
-        grepl("OM", attributes(x)$title))
+      grepl("Capital", get_title(x)) |
+        grepl("OM", get_title(x)))
     L2233.Elec_tables_globaltech_cost <- L2233.Elec_tables_globaltech[costFltr]
     # ^^ filters for tables with capital, fixed O&M and variable O&M
 
