@@ -1,6 +1,6 @@
 #' module_emissions_L231.proc_sector
 #'
-#' Briefly describe what this chunk does.
+#' Writes urban & industrial processing sector outputs.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,7 +8,12 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L231.UnlimitRsrc}, \code{L231.UnlimitRsrcPrice}, \code{L231.FinalDemand_urb}, \code{L231.SectorLogitTables[[ curr_table ]]$data}, \code{L231.Supplysector_urb_ind}, \code{L231.SubsectorLogitTables[[ curr_table ]]$data}, \code{L231.SubsectorLogit_urb_ind}, \code{L231.SubsectorShrwt_urb_ind}, \code{L231.SubsectorShrwtFllt_urb_ind}, \code{L231.SubsectorInterp_urb_ind}, \code{L231.SubsectorInterpTo_urb_ind}, \code{L231.StubTech_urb_ind}, \code{L231.GlobalTechShrwt_urb_ind}, \code{L231.GlobalTechEff_urb_ind}, \code{L231.GlobalTechCoef_urb_ind}, \code{L231.GlobalTechCost_urb_ind}, \code{L231.RegionalTechCalValue_urb_ind}, \code{L231.IndCoef}. The corresponding file in the
 #' original data system was \code{L231.proc_sector.R} (emissions level2).
-#' @details Describe in detail what this chunk does.
+#' @details For urban processes and industrial processes, produces global technology coefficients,
+#' costs, efficiencies, and shareweights by interpolating assumption file data. For urb & ind. processing subsectors
+#' and supplysectors, produces logit, shareweights, and interpolation files by writing assumption file data to all regions.
+#' Writes out coefficients and prices for misc emissions sources from assumption file data.
+#' Outputs urban processing demand using constants. StubTech mapping file created from assumption mappings.
+#' Regional technology calibration values created with constant. Industry input-output coefficient file created.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -268,103 +273,69 @@ module_emissions_L231.proc_sector <- function(command, ...) {
 
     # Produce outputs
     L231.UnlimitRsrc %>%
-    add_title("descriptive title of data") %>%
-    add_units("units") %>%
-    add_comments("comments describing how data generated") %>%
-    add_comments("can be multiple lines") %>%
+    add_title("Processing Resource Capacity Factors") %>%
+    add_units("Unitless") %>%
+    add_comments("Data from A31.rsrc_info") %>%
     add_legacy_name("L231.UnlimitRsrc") %>%
-    add_precursors("common/GCAM_region_names",
-                   "emissions/A_regions",
-                   "emissions/A31.rsrc_info",
-                   "emissions/A31.sector",
-                   "emissions/A31.subsector_logit",
-                   "emissions/A31.subsector_shrwt",
-                   "emissions/A31.subsector_interp",
-                   "emissions/A31.globaltech_shrwt",
-                   "emissions/A31.globaltech_eff",
-                   "emissions/A31.globaltech_cost",
-                   "emissions/A31.globaltech_coef",
-                   "energy/A32.globaltech_eff",
-                   "emissions/mappings/GCAM_sector_tech",
-                   "L1322.in_EJ_R_indfeed_F_Yh",
-                   "L1322.in_EJ_R_indenergy_F_Yh") ->
+    add_precursors("emissions/A31.rsrc_info") ->
     L231.UnlimitRsrc
 
     L231.UnlimitRsrcPrice %>%
-    add_title("descriptive title of data") %>%
+    add_title("Processing Resource Prices") %>%
     add_units("units") %>%
-    add_comments("comments describing how data generated") %>%
-    add_comments("can be multiple lines") %>%
+    add_comments("Interpolated data from A31.rsrc_info") %>%
     add_legacy_name("L231.UnlimitRsrcPrice") %>%
-    add_precursors("common/GCAM_region_names") ->
+    add_precursors("emissions/A31.rsrc_info") ->
     L231.UnlimitRsrcPrice
 
     L231.FinalDemand_urb %>%
-    add_title("descriptive title of data") %>%
+    add_title("Urban Processes Final Energy Demand") %>%
     add_units("units") %>%
-    add_comments("comments describing how data generated") %>%
-    add_comments("can be multiple lines") %>%
+    add_comments("Constants for base service, income elasticity, and aeei") %>%
     add_legacy_name("L231.FinalDemand_urb") %>%
-    add_precursors("common/GCAM_region_names") ->
+    add_precursors("emissions/A_regions") ->
     L231.FinalDemand_urb
 
     L231.Supplysector_urb_ind %>%
-    add_title("descriptive title of data") %>%
-    add_units("units") %>%
-    add_comments("comments describing how data generated") %>%
-    add_comments("can be multiple lines") %>%
-    add_legacy_name("L231.Supplysector_urb_ind") %>%
-    add_precursors("common/GCAM_region_names") ->
+    add_title("Urban and Industrial Processes Supplysector Logit Info") %>%
+    add_units("Unitless") %>%
+    add_comments("A31.sector written to all regions") %>%
+    add_legacy_name("L231.Supplysector_urb_ind", "common/GCAM_region_names") %>%
+    add_precursors("emissions/A31.sector") ->
     L231.Supplysector_urb_ind
 
     L231.SubsectorLogit_urb_ind %>%
-    add_title("descriptive title of data") %>%
-    add_units("units") %>%
-    add_comments("comments describing how data generated") %>%
-    add_comments("can be multiple lines") %>%
+    add_title("Urban and Industrial Processes Subsector Logit Info") %>%
+    add_units("Unitless") %>%
+    add_comments("A31.subsector_logit written to all regions") %>%
     add_legacy_name("L231.SubsectorLogit_urb_ind") %>%
-    add_precursors("common/GCAM_region_names") ->
+    add_precursors("emissions/A31.subsector_logit", "common/GCAM_region_names") ->
     L231.SubsectorLogit_urb_ind
 
     if (exists("L231.SubsectorShrwt_urb_ind")){
       L231.SubsectorShrwt_urb_ind %>%
-    add_title("descriptive title of data") %>%
-    add_units("units") %>%
-    add_comments("comments describing how data generated") %>%
-    add_comments("can be multiple lines") %>%
+    add_title("Urban and Industrial Processes Subsector Shareweights") %>%
+    add_units("Unitless") %>%
+    add_comments("A31.subsector_shrwt written to all regions") %>%
       # This was a mistake in the old data system - the wrong name was assigned, but because it didn't exist, no error was thrown
     add_legacy_name("L231.SubsectorShrwt_ind") %>%
-    add_precursors("common/GCAM_region_names") ->
+    add_precursors("emissions/A31.subsector_shrwt", "common/GCAM_region_names") ->
     L231.SubsectorShrwt_urb_ind
     } else {
-      tibble(x = NA) %>%
-        add_title("descriptive title of data") %>%
-        add_units("units") %>%
-        add_comments("comments describing how data generated") %>%
-        add_comments("can be multiple lines") %>%
-        # This was a mistake in the old data system - the wrong name was assigned, but because it didn't exist, no error was thrown
-        add_legacy_name("L231.SubsectorShrwt_ind") %>%
-        add_precursors("common/GCAM_region_names") ->
+      tibble(x = NA) ->
         L231.SubsectorShrwt_urb_ind
     }
 
     if (exists("L231.SubsectorShrwtFllt_urb_ind")){
       L231.SubsectorShrwtFllt_urb_ind %>%
-    add_title("descriptive title of data") %>%
-    add_units("units") %>%
-    add_comments("comments describing how data generated") %>%
-    add_comments("can be multiple lines") %>%
+    add_title("Urban and Industrial Processes Subsector Shareweights") %>%
+    add_units("Unitless") %>%
+    add_comments("A31.subsector_shrwt written to all regions") %>%
     add_legacy_name("L231.SubsectorShrwtFllt_urb_ind") %>%
-    add_precursors("common/GCAM_region_names") ->
+    add_precursors("emissions/A31.subsector_shrwt", "common/GCAM_region_names") ->
     L231.SubsectorShrwtFllt_urb_ind
     } else {
-      tibble(x = NA) %>%
-        add_title("descriptive title of data") %>%
-        add_units("units") %>%
-        add_comments("comments describing how data generated") %>%
-        add_comments("can be multiple lines") %>%
-        add_legacy_name("L231.SubsectorShrwtFllt_urb_ind") %>%
-        add_precursors("common/GCAM_region_names") ->
+      tibble(x = NA) ->
         L231.SubsectorShrwtFllt_urb_ind
     }
 
@@ -375,16 +346,10 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     add_comments("comments describing how data generated") %>%
     add_comments("can be multiple lines") %>%
     add_legacy_name("L231.SubsectorInterp_urb_ind") %>%
-    add_precursors("common/GCAM_region_names")  ->
+    add_precursors("emissions/A31.subsector_interp", "common/GCAM_region_names")  ->
     L231.SubsectorInterp_urb_ind
     } else {
-      tibble(x = NA) %>%
-        add_title("descriptive title of data") %>%
-        add_units("units") %>%
-        add_comments("comments describing how data generated") %>%
-        add_comments("can be multiple lines") %>%
-        add_legacy_name("L231.SubsectorInterp_urb_ind") %>%
-        add_precursors("common/GCAM_region_names") ->
+      tibble(x = NA) ->
         L231.SubsectorInterp_urb_ind
     }
 
@@ -392,19 +357,12 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     L231.SubsectorInterpTo_urb_ind %>%
     add_title("descriptive title of data") %>%
     add_units("units") %>%
-    add_comments("comments describing how data generated") %>%
-    add_comments("can be multiple lines") %>%
+    add_comments("A31.subsector_interp written to all regions") %>%
     add_legacy_name("L231.SubsectorInterpTo_urb_ind") %>%
-    add_precursors("common/GCAM_region_names") ->
+    add_precursors("emissions/A31.subsector_interp", "common/GCAM_region_names") ->
     L231.SubsectorInterpTo_urb_ind
     } else {
-      tibble(x = NA) %>%
-        add_title("descriptive title of data") %>%
-        add_units("units") %>%
-        add_comments("comments describing how data generated") %>%
-        add_comments("can be multiple lines") %>%
-        add_legacy_name("L231.SubsectorInterpTo_urb_ind") %>%
-        add_precursors("common/GCAM_region_names") ->
+      tibble(x = NA) ->
         L231.SubsectorInterpTo_urb_ind
     }
 
@@ -414,7 +372,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     add_comments("comments describing how data generated") %>%
     add_comments("can be multiple lines") %>%
     add_legacy_name("L231.StubTech_urb_ind") %>%
-    add_precursors("common/GCAM_region_names") ->
+    add_precursors("emissions/A31.globaltech_shrwt", "common/GCAM_region_names") ->
     L231.StubTech_urb_ind
 
     L231.GlobalTechShrwt_urb_ind %>%
@@ -423,7 +381,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     add_comments("comments describing how data generated") %>%
     add_comments("can be multiple lines") %>%
     add_legacy_name("L231.GlobalTechShrwt_urb_ind") %>%
-    add_precursors("common/GCAM_region_names") ->
+    add_precursors("emissions/A31.globaltech_shrwt") ->
     L231.GlobalTechShrwt_urb_ind
 
     L231.GlobalTechEff_urb_ind %>%
@@ -432,7 +390,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     add_comments("comments describing how data generated") %>%
     add_comments("can be multiple lines") %>%
     add_legacy_name("L231.GlobalTechEff_urb_ind") %>%
-    add_precursors("common/GCAM_region_names")->
+    add_precursors("emissions/A31.globaltech_eff")->
     L231.GlobalTechEff_urb_ind
 
     L231.GlobalTechCoef_urb_ind %>%
@@ -441,7 +399,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     add_comments("comments describing how data generated") %>%
     add_comments("can be multiple lines") %>%
     add_legacy_name("L231.GlobalTechCoef_urb_ind") %>%
-    add_precursors("common/GCAM_region_names") ->
+    add_precursors("emissions/A31.globaltech_coef") ->
     L231.GlobalTechCoef_urb_ind
 
     L231.GlobalTechCost_urb_ind %>%
@@ -450,7 +408,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     add_comments("comments describing how data generated") %>%
     add_comments("can be multiple lines") %>%
     add_legacy_name("L231.GlobalTechCost_urb_ind") %>%
-    add_precursors("common/GCAM_region_names") ->
+    add_precursors("emissions/A31.globaltech_cost") ->
     L231.GlobalTechCost_urb_ind
 
     L231.RegionalTechCalValue_urb_ind %>%
@@ -459,7 +417,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     add_comments("comments describing how data generated") %>%
     add_comments("can be multiple lines") %>%
     add_legacy_name("L231.RegionalTechCalValue_urb_ind") %>%
-    add_precursors("common/GCAM_region_names") ->
+    add_precursors("emissions/A31.globaltech_cost") ->
     L231.RegionalTechCalValue_urb_ind
 
     L231.IndCoef %>%
@@ -468,7 +426,10 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     add_comments("comments describing how data generated") %>%
     add_comments("can be multiple lines") %>%
     add_legacy_name("L231.IndCoef") %>%
-    add_precursors("common/GCAM_region_names") ->
+    add_precursors("energy/A32.globaltech_eff",
+                   "L1322.in_EJ_R_indfeed_F_Yh",
+                   "L1322.in_EJ_R_indenergy_F_Yh",
+                   "common/GCAM_region_names") ->
     L231.IndCoef
 
     return_data(L231.UnlimitRsrc, L231.UnlimitRsrcPrice, L231.FinalDemand_urb, L231.Supplysector_urb_ind, L231.SubsectorLogit_urb_ind, L231.SubsectorShrwt_urb_ind, L231.SubsectorShrwtFllt_urb_ind, L231.SubsectorInterp_urb_ind, L231.SubsectorInterpTo_urb_ind, L231.StubTech_urb_ind, L231.GlobalTechShrwt_urb_ind, L231.GlobalTechEff_urb_ind, L231.GlobalTechCoef_urb_ind, L231.GlobalTechCost_urb_ind, L231.RegionalTechCalValue_urb_ind, L231.IndCoef)
