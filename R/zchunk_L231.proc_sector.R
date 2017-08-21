@@ -153,6 +153,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     L231.GlobalTechShrwt_urb_ind <- A31.globaltech_shrwt %>%
       select(supplysector, subsector, technology) %>%
       distinct %>%
+      # Interpolate to all years
       repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, FUTURE_YEARS))) %>%
       left_join(A31.globaltech_shrwt, by = c("supplysector", "subsector", "technology", "year")) %>%
       mutate(share.weight = approx_fun(year, value = share.weight, rule = 1)) %>%
@@ -163,6 +164,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     L231.GlobalTechEff_urb_ind <- A31.globaltech_eff %>%
       select(-year, -efficiency) %>%
       distinct %>%
+      # Interpolate to all years
       repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, FUTURE_YEARS))) %>%
       left_join(A31.globaltech_eff, by = c("supplysector", "subsector", "technology", "year", "minicam.energy.input")) %>%
       mutate(efficiency = approx_fun(year, value = efficiency, rule = 1)) %>%
@@ -174,6 +176,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     L231.GlobalTechCoef_urb_ind <- A31.globaltech_coef %>%
       select(-year, -coefficient) %>%
       distinct %>%
+      # Interpolate to all years
       repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, FUTURE_YEARS))) %>%
       left_join(A31.globaltech_coef, by = c("supplysector", "subsector", "technology", "year", "minicam.energy.input")) %>%
       mutate(coefficient = approx_fun(year, value = coefficient, rule = 1)) %>%
@@ -185,6 +188,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     L231.GlobalTechCost_urb_ind <- A31.globaltech_cost %>%
       select(-year, -input.cost) %>%
       distinct %>%
+      # Interpolate to all years
       repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, FUTURE_YEARS))) %>%
       left_join(A31.globaltech_cost, by = c("supplysector", "subsector", "technology", "year", "minicam.non.energy.input")) %>%
       mutate(input.cost = approx_fun(year, value = input.cost, rule = 1)) %>%
@@ -196,16 +200,18 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     L231.RegionalTechCalValue_urb_ind <- L231.GlobalTechCost_urb_ind %>%
       filter(year %in% BASE_YEARS) %>%
       select(-minicam.non.energy.input, -input.cost) %>%
+      # Assign values to all regions
       repeat_add_columns(tibble(region = A_regions$region)) %>%
       mutate(minicam.energy.input = "misc emissions sources",
              calibrated.value = 0.001) %>%
       select(region, sector.name, subsector.name, technology, year, minicam.energy.input, calibrated.value)
 
-    # Resource Infomation
+    # Resource Information
     # Interpolate to specified historical years, as necessary
     L231.rsrc_info <- A31.rsrc_info %>%
       select(-year, -value) %>%
       distinct() %>%
+      # Interpolate to all years
       repeat_add_columns(tibble(year = HISTORICAL_YEARS)) %>%
       left_join(A31.rsrc_info, by = c("resource", "resource_type",
                                       "market", "output-unit", "price-unit", "capacity.factor", "year")) %>%
@@ -228,6 +234,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
 
     # L231.IndCoef: coefficient on industrial processes as an input to the industry sector
     # Coefficient = 0.008 / change in industry output from 1990 (0.008 is the sum of calvalue)
+    # First, interpolate A32.globaltech_eff efficiency values to all years
     Ind.globaltech_eff <- A32.globaltech_eff %>%
       select(-year, -value) %>%
       repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, FUTURE_YEARS))) %>%
@@ -241,11 +248,13 @@ module_emissions_L231.proc_sector <- function(command, ...) {
       select(sector = supplysector, fuel = subsector, year, efficiency = value) %>%
       distinct()
 
+    # Now combine input energy info and join with efficiency values
     L231.IndCoef <- bind_rows(L1322.in_EJ_R_indenergy_F_Yh %>%
                                        mutate(sector = "industrial energy use"),
                                      L1322.in_EJ_R_indfeed_F_Yh %>%
                                        mutate(sector = "industrial feedstocks")) %>%
       left_join_keep_first_only(Ind.globaltech_eff, by = c("sector", "fuel", "year")) %>%
+      # Calculate service as energy * efficiency
       mutate(service = value * efficiency) %>%
       na.omit() %>%
       group_by(GCAM_region_ID, year) %>%
@@ -259,6 +268,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
              minicam.energy.input = "industrial processes") %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID")
 
+    # Interpolate coefficients to model years
     L231.IndCoef <- L231.IndCoef %>%
       select(-year, -coefficient, -ind_output, -ind_proc_input) %>%
       distinct %>%
@@ -300,8 +310,8 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     add_title("Urban and Industrial Processes Supplysector Logit Info") %>%
     add_units("Unitless") %>%
     add_comments("A31.sector written to all regions") %>%
-    add_legacy_name("L231.Supplysector_urb_ind", "common/GCAM_region_names") %>%
-    add_precursors("emissions/A31.sector") ->
+    add_legacy_name("L231.Supplysector_urb_ind") %>%
+    add_precursors("emissions/A31.sector", "common/GCAM_region_names") ->
     L231.Supplysector_urb_ind
 
     L231.SubsectorLogit_urb_ind %>%
@@ -341,10 +351,9 @@ module_emissions_L231.proc_sector <- function(command, ...) {
 
     if (exists("L231.SubsectorInterp_urb_ind")){
     L231.SubsectorInterp_urb_ind %>%
-    add_title("descriptive title of data") %>%
-    add_units("units") %>%
-    add_comments("comments describing how data generated") %>%
-    add_comments("can be multiple lines") %>%
+    add_title("Urban and Industrial Processes Subsector Shareweight Interpolation") %>%
+    add_units("NA") %>%
+    add_comments("A31.subsector_interp written to all regions") %>%
     add_legacy_name("L231.SubsectorInterp_urb_ind") %>%
     add_precursors("emissions/A31.subsector_interp", "common/GCAM_region_names")  ->
     L231.SubsectorInterp_urb_ind
@@ -355,8 +364,8 @@ module_emissions_L231.proc_sector <- function(command, ...) {
 
     if (exists("L231.SubsectorInterpTo_urb_ind")){
     L231.SubsectorInterpTo_urb_ind %>%
-    add_title("descriptive title of data") %>%
-    add_units("units") %>%
+    add_title("Urban and Industrial Processes Subsector Shareweight Interpolation") %>%
+    add_units("NA") %>%
     add_comments("A31.subsector_interp written to all regions") %>%
     add_legacy_name("L231.SubsectorInterpTo_urb_ind") %>%
     add_precursors("emissions/A31.subsector_interp", "common/GCAM_region_names") ->
@@ -367,64 +376,57 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     }
 
     L231.StubTech_urb_ind %>%
-    add_title("descriptive title of data") %>%
-    add_units("units") %>%
-    add_comments("comments describing how data generated") %>%
-    add_comments("can be multiple lines") %>%
+    add_title("Urban and Industrial Processes Stub Technology Map") %>%
+    add_units("NA") %>%
+    add_comments("A31.globaltech_shrwt filtered and written to all regions") %>%
     add_legacy_name("L231.StubTech_urb_ind") %>%
     add_precursors("emissions/A31.globaltech_shrwt", "common/GCAM_region_names") ->
     L231.StubTech_urb_ind
 
     L231.GlobalTechShrwt_urb_ind %>%
-    add_title("descriptive title of data") %>%
-    add_units("units") %>%
-    add_comments("comments describing how data generated") %>%
-    add_comments("can be multiple lines") %>%
+    add_title("Urban and Industrial Processes Global Technology Shareweights") %>%
+    add_units("Unitless") %>%
+    add_comments("A31.globaltech_shrwt interpolated to model years") %>%
     add_legacy_name("L231.GlobalTechShrwt_urb_ind") %>%
     add_precursors("emissions/A31.globaltech_shrwt") ->
     L231.GlobalTechShrwt_urb_ind
 
     L231.GlobalTechEff_urb_ind %>%
-    add_title("descriptive title of data") %>%
-    add_units("units") %>%
-    add_comments("comments describing how data generated") %>%
-    add_comments("can be multiple lines") %>%
+    add_title("Urban and Industrial Processes Global Technology Efficiency") %>%
+    add_units("Unitless") %>%
+    add_comments("A31.globaltech_eff interpolated to model years") %>%
     add_legacy_name("L231.GlobalTechEff_urb_ind") %>%
     add_precursors("emissions/A31.globaltech_eff")->
     L231.GlobalTechEff_urb_ind
 
     L231.GlobalTechCoef_urb_ind %>%
-    add_title("descriptive title of data") %>%
+    add_title("Urban and Industrial Processes Global Technology Coefficients") %>%
     add_units("units") %>%
-    add_comments("comments describing how data generated") %>%
-    add_comments("can be multiple lines") %>%
+    add_comments("A31.globaltech_coef interpolated to model years") %>%
     add_legacy_name("L231.GlobalTechCoef_urb_ind") %>%
     add_precursors("emissions/A31.globaltech_coef") ->
     L231.GlobalTechCoef_urb_ind
 
     L231.GlobalTechCost_urb_ind %>%
-    add_title("descriptive title of data") %>%
+    add_title("Urban and Industrial Processes Global Technology Costs") %>%
     add_units("units") %>%
-    add_comments("comments describing how data generated") %>%
-    add_comments("can be multiple lines") %>%
+    add_comments("A31.globaltech_cost interpolated to model years") %>%
     add_legacy_name("L231.GlobalTechCost_urb_ind") %>%
     add_precursors("emissions/A31.globaltech_cost") ->
     L231.GlobalTechCost_urb_ind
 
     L231.RegionalTechCalValue_urb_ind %>%
-    add_title("descriptive title of data") %>%
+    add_title("Urban and Industrial Processes Global Technology Calibrated Values") %>%
     add_units("units") %>%
-    add_comments("comments describing how data generated") %>%
-    add_comments("can be multiple lines") %>%
+    add_comments("A31.globaltech_cost interpolated to base years and written to all regions") %>%
     add_legacy_name("L231.RegionalTechCalValue_urb_ind") %>%
-    add_precursors("emissions/A31.globaltech_cost") ->
+    add_precursors("emissions/A31.globaltech_cost", "emissions/A_regions") ->
     L231.RegionalTechCalValue_urb_ind
 
     L231.IndCoef %>%
-    add_title("descriptive title of data") %>%
+    add_title("Industrial Processes Input-Output Coefficients") %>%
     add_units("units") %>%
-    add_comments("comments describing how data generated") %>%
-    add_comments("can be multiple lines") %>%
+    add_comments("Coefficients equal to constant input value divided by calculated output value") %>%
     add_legacy_name("L231.IndCoef") %>%
     add_precursors("energy/A32.globaltech_eff",
                    "L1322.in_EJ_R_indfeed_F_Yh",
@@ -432,7 +434,10 @@ module_emissions_L231.proc_sector <- function(command, ...) {
                    "common/GCAM_region_names") ->
     L231.IndCoef
 
-    return_data(L231.UnlimitRsrc, L231.UnlimitRsrcPrice, L231.FinalDemand_urb, L231.Supplysector_urb_ind, L231.SubsectorLogit_urb_ind, L231.SubsectorShrwt_urb_ind, L231.SubsectorShrwtFllt_urb_ind, L231.SubsectorInterp_urb_ind, L231.SubsectorInterpTo_urb_ind, L231.StubTech_urb_ind, L231.GlobalTechShrwt_urb_ind, L231.GlobalTechEff_urb_ind, L231.GlobalTechCoef_urb_ind, L231.GlobalTechCost_urb_ind, L231.RegionalTechCalValue_urb_ind, L231.IndCoef)
+    return_data(L231.UnlimitRsrc, L231.UnlimitRsrcPrice, L231.FinalDemand_urb, L231.Supplysector_urb_ind, L231.SubsectorLogit_urb_ind,
+                L231.SubsectorShrwt_urb_ind, L231.SubsectorShrwtFllt_urb_ind, L231.SubsectorInterp_urb_ind, L231.SubsectorInterpTo_urb_ind,
+                L231.StubTech_urb_ind, L231.GlobalTechShrwt_urb_ind, L231.GlobalTechEff_urb_ind, L231.GlobalTechCoef_urb_ind,
+                L231.GlobalTechCost_urb_ind, L231.RegionalTechCalValue_urb_ind, L231.IndCoef)
   } else {
     stop("Unknown command")
   }
