@@ -1,1 +1,25 @@
-variable,fuel,serviceBTUELSPH,electricity,resid heatingBTUELCOL,electricity,resid coolingBTUELWTH,electricity,resid hot waterBTUELRFG,electricity,resid appliances and otherBTUELAPL,electricity,resid appliances and otherBTUELOTH,electricity,resid appliances and otherBTUNGSPH,gas,resid heatingBTUNGWTH,gas,resid hot waterBTUNGAPL,gas,resid appliances and otherBTUNGOTH,gas,resid appliances and otherBTULPSPH,refined liquids,resid heatingBTULPWTH,refined liquids,resid hot waterBTULPAPL,refined liquids,resid appliances and otherBTULPOTH,refined liquids,resid appliances and otherBTUFOSPH,refined liquids,resid heatingBTUFOWTH,refined liquids,resid hot waterBTUFOAPL,refined liquids,resid appliances and otherBTUFOOTH,refined liquids,resid appliances and otherBTUKERSPH,refined liquids,resid heatingBTUKERWTH,refined liquids,resid hot waterBTUKEROTH,refined liquids,resid appliances and otherBTUKRSPH,refined liquids,resid heatingBTUKRWTH,refined liquids,resid hot waterBTUKROTH,refined liquids,resid appliances and other
+variable,fuel,service
+BTUELSPH,electricity,resid heating
+BTUELCOL,electricity,resid cooling
+BTUELWTH,electricity,resid hot water
+BTUELRFG,electricity,resid appliances and other
+BTUELAPL,electricity,resid appliances and other
+BTUELOTH,electricity,resid appliances and other
+BTUNGSPH,gas,resid heating
+BTUNGWTH,gas,resid hot water
+BTUNGAPL,gas,resid appliances and other
+BTUNGOTH,gas,resid appliances and other
+BTULPSPH,refined liquids,resid heating
+BTULPWTH,refined liquids,resid hot water
+BTULPAPL,refined liquids,resid appliances and other
+BTULPOTH,refined liquids,resid appliances and other
+BTUFOSPH,refined liquids,resid heating
+BTUFOWTH,refined liquids,resid hot water
+BTUFOAPL,refined liquids,resid appliances and other
+BTUFOOTH,refined liquids,resid appliances and other
+BTUKERSPH,refined liquids,resid heating
+BTUKERWTH,refined liquids,resid hot water
+BTUKEROTH,refined liquids,resid appliances and other
+BTUKRSPH,refined liquids,resid heating
+BTUKRWTH,refined liquids,resid hot water
+BTUKROTH,refined liquids,resid appliances and other

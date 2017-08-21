@@ -121,8 +121,9 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
     L110.For_ALL_bm3_R_Y %>%                                                   # take the region year R_Y table
       tidyr::complete(GCAM_region_ID = unique(iso_GCAM_regID[['GCAM_region_ID']]), # use complete to make sure every commodity (forest)
                       tidyr::nesting(GCAM_commodity, year),                          # and year is represented for every GCAM region.
-                      fill = list(Prod_bm3 = 0, NetExp_bm3 = 0, Cons_bm3 = 0)) ->     # Fill in the new regions with 0 Prod, NetExp, Cons.
-      L110.For_ALL_bm3_R_Y                                                     # store in the R_Y table.
+                      fill = list(Prod_bm3 = 0, NetExp_bm3 = 0, Cons_bm3 = 0)) %>%     # Fill in the new regions with 0 Prod, NetExp, Cons
+      unique ->
+      L110.For_ALL_bm3_R_Y
 
     # Produce outputs
     L110.For_ALL_bm3_R_Y %>%
@@ -134,8 +135,7 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID",
                      "L100.FAO_For_Prod_m3",
                      "L100.FAO_For_Imp_m3",
-                     "L100.FAO_For_Exp_m3") %>%
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L100.FAO_For_Exp_m3") ->
       L110.For_ALL_bm3_R_Y
 
     return_data(L110.For_ALL_bm3_R_Y)

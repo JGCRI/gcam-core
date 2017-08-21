@@ -1,1 +1,24 @@
-variable,fuel,serviceELHTBTU,electricity,comm heatingELCLBTU,electricity,comm coolingELWTBTU,electricity,comm hot waterELVNBTU,electricity,comm ventilationELCKBTU,electricity,comm cookingELLTBTU,electricity,comm lightingELRFBTU,electricity,comm refrigerationELOFBTU,electricity,comm officeELPCBTU,electricity,comm officeELMSBTU,electricity,comm otherNGHTBTU,gas,comm heatingNGCLBTU,gas,comm coolingNGWTBTU,gas,comm hot waterNGCKBTU,gas,comm cookingNGMSBTU,gas,comm otherFKHTBTU,refined liquids,comm heatingFKWTBTU,refined liquids,comm hot waterFKCLBTU,refined liquids,comm otherFKCKBTU,refined liquids,comm otherFKMSBTU,refined liquids,comm otherDHHTBTU,district services,comm heatingDHCLBTU,district services,comm coolingDHWTBTU,district services,comm hot water
+variable,fuel,service
+ELHTBTU,electricity,comm heating
+ELCLBTU,electricity,comm cooling
+ELWTBTU,electricity,comm hot water
+ELVNBTU,electricity,comm ventilation
+ELCKBTU,electricity,comm cooking
+ELLTBTU,electricity,comm lighting
+ELRFBTU,electricity,comm refrigeration
+ELOFBTU,electricity,comm office
+ELPCBTU,electricity,comm office
+ELMSBTU,electricity,comm other
+NGHTBTU,gas,comm heating
+NGCLBTU,gas,comm cooling
+NGWTBTU,gas,comm hot water
+NGCKBTU,gas,comm cooking
+NGMSBTU,gas,comm other
+FKHTBTU,refined liquids,comm heating
+FKWTBTU,refined liquids,comm hot water
+FKCLBTU,refined liquids,comm other
+FKCKBTU,refined liquids,comm other
+FKMSBTU,refined liquids,comm other
+DHHTBTU,district services,comm heating
+DHCLBTU,district services,comm cooling
+DHWTBTU,district services,comm hot water

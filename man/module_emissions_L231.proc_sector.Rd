@@ -14,14 +14,19 @@ module_emissions_L231.proc_sector(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L231.UnlimitRsrc}, \code{L231.UnlimitRsrcPrice}, \code{L231.FinalDemand_urb}, \code{L231.SectorLogitTables[[ curr_table ]]$data}, \code{L231.Supplysector_urb_ind}, \code{L231.SubsectorLogitTables[[ curr_table ]]$data}, \code{L231.SubsectorLogit_urb_ind}, \code{L231.SubsectorShrwt_ind}, \code{L231.SubsectorShrwtFllt_urb_ind}, \code{L231.SubsectorInterp_urb_ind}, \code{L231.SubsectorInterpTo_urb_ind}, \code{L231.StubTech_urb_ind}, \code{L231.GlobalTechShrwt_urb_ind}, \code{L231.GlobalTechEff_urb_ind}, \code{L231.GlobalTechCoef_urb_ind}, \code{L231.GlobalTechCost_urb_ind}, \code{L231.RegionalTechCalValue_urb_ind}, \code{L231.IndCoef}. The corresponding file in the
+the generated outputs: \code{L231.UnlimitRsrc}, \code{L231.UnlimitRsrcPrice}, \code{L231.FinalDemand_urb}, \code{L231.SectorLogitTables[[ curr_table ]]$data}, \code{L231.Supplysector_urb_ind}, \code{L231.SubsectorLogitTables[[ curr_table ]]$data}, \code{L231.SubsectorLogit_urb_ind}, \code{L231.SubsectorShrwt_urb_ind}, \code{L231.SubsectorShrwtFllt_urb_ind}, \code{L231.SubsectorInterp_urb_ind}, \code{L231.SubsectorInterpTo_urb_ind}, \code{L231.StubTech_urb_ind}, \code{L231.GlobalTechShrwt_urb_ind}, \code{L231.GlobalTechEff_urb_ind}, \code{L231.GlobalTechCoef_urb_ind}, \code{L231.GlobalTechCost_urb_ind}, \code{L231.RegionalTechCalValue_urb_ind}, \code{L231.IndCoef}. The corresponding file in the
 original data system was \code{L231.proc_sector.R} (emissions level2).
 }
 \description{
-Briefly describe what this chunk does.
+Writes urban & industrial processing sector outputs.
 }
 \details{
-Describe in detail what this chunk does.
+For urban processes and industrial processes, produces global technology coefficients,
+costs, efficiencies, and shareweights by interpolating assumption file data. For urb & ind. processing subsectors
+and supplysectors, produces logit, shareweights, and interpolation files by writing assumption file data to all regions.
+Writes out coefficients and prices for misc emissions sources from assumption file data.
+Outputs urban processing demand using constants. StubTech mapping file created from assumption mappings.
+Regional technology calibration values created with constant. Industry input-output coefficient file created.
 }
 \author{
 RLH July 2017

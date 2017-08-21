@@ -1,1 +1,36 @@
-Technology.Code,sector,fuel,technology,cooling_system"BP, BG-DR-ST",electricity generation,biomass,biomass (conv),dry cooling"BP, BG-NA-CT",electricity generation,gas,gas (steam/CT),none"BP, BG-OT-ST",electricity generation,biomass,biomass (conv),once through"BP, BG-RC-ST",electricity generation,biomass,biomass (conv),recirculatingCL-DR-ST,electricity generation,coal,coal (conv pul),dry coolingCL-OT-ST,electricity generation,coal,coal (conv pul),once throughCL-PD-ST,electricity generation,coal,coal (conv pul),cooling pondCL-RC-ST,electricity generation,coal,coal (conv pul),recirculatingCSP-RC-SU,electricity generation,solar CSP,CSP,recirculatingGT-RC-GB,electricity generation,geothermal,geothermal,recirculating (binary)GT-RC-GD,electricity generation,geothermal,geothermal,recirculatingGT-RC-GS,electricity generation,geothermal,geothermal,recirculatingHY-NA-HY,electricity generation,hydro,hydro,noneHY-NA-OT,electricity generation,hydro,hydro,noneNG-DR-CC,electricity generation,gas,gas (CC),dry coolingNG-DR-CT,electricity generation,gas,gas (steam/CT),dry coolingNG-NA-CT,electricity generation,gas,gas (steam/CT),noneNG-OT-CC,electricity generation,gas,gas (CC),once throughNG-OT-ST,electricity generation,gas,gas (steam/CT),once throughNG-PD-CC,electricity generation,gas,gas (CC),cooling pondNG-PD-ST,electricity generation,gas,gas (steam/CT),cooling pondNG-RC-CC,electricity generation,gas,gas (CC),recirculatingNG-RC-ST,electricity generation,gas,gas (steam/CT),recirculatingNU-OT-ST,electricity generation,nuclear,Gen_II_LWR,once throughNU-PD-ST,electricity generation,nuclear,Gen_II_LWR,cooling pondNU-RC-ST,electricity generation,nuclear,Gen_II_LWR,recirculatingOL-DR-CC,electricity generation,refined liquids,refined liquids (steam/CT),dry coolingOL-DR-ST,electricity generation,refined liquids,refined liquids (steam/CT),dry coolingOL-NA-CT,electricity generation,refined liquids,refined liquids (steam/CT),noneOL-OT-ST,electricity generation,refined liquids,refined liquids (steam/CT),once throughOL-PD-ST,electricity generation,refined liquids,refined liquids (steam/CT),cooling pondOL-RC-CC,electricity generation,refined liquids,refined liquids (steam/CT),recirculatingOL-RC-ST,electricity generation,refined liquids,refined liquids (steam/CT),recirculatingPV-NA-PV,electricity generation,solar PV,PV,noneWN-NA-WN,electricity generation,wind,wind,none
+Technology.Code,sector,fuel,technology,cooling_system
+"BP, BG-DR-ST",electricity generation,biomass,biomass (conv),dry cooling
+"BP, BG-NA-CT",electricity generation,gas,gas (steam/CT),none
+"BP, BG-OT-ST",electricity generation,biomass,biomass (conv),once through
+"BP, BG-RC-ST",electricity generation,biomass,biomass (conv),recirculating
+CL-DR-ST,electricity generation,coal,coal (conv pul),dry cooling
+CL-OT-ST,electricity generation,coal,coal (conv pul),once through
+CL-PD-ST,electricity generation,coal,coal (conv pul),cooling pond
+CL-RC-ST,electricity generation,coal,coal (conv pul),recirculating
+CSP-RC-SU,electricity generation,solar CSP,CSP,recirculating
+GT-RC-GB,electricity generation,geothermal,geothermal,recirculating (binary)
+GT-RC-GD,electricity generation,geothermal,geothermal,recirculating
+GT-RC-GS,electricity generation,geothermal,geothermal,recirculating
+HY-NA-HY,electricity generation,hydro,hydro,none
+HY-NA-OT,electricity generation,hydro,hydro,none
+NG-DR-CC,electricity generation,gas,gas (CC),dry cooling
+NG-DR-CT,electricity generation,gas,gas (steam/CT),dry cooling
+NG-NA-CT,electricity generation,gas,gas (steam/CT),none
+NG-OT-CC,electricity generation,gas,gas (CC),once through
+NG-OT-ST,electricity generation,gas,gas (steam/CT),once through
+NG-PD-CC,electricity generation,gas,gas (CC),cooling pond
+NG-PD-ST,electricity generation,gas,gas (steam/CT),cooling pond
+NG-RC-CC,electricity generation,gas,gas (CC),recirculating
+NG-RC-ST,electricity generation,gas,gas (steam/CT),recirculating
+NU-OT-ST,electricity generation,nuclear,Gen_II_LWR,once through
+NU-PD-ST,electricity generation,nuclear,Gen_II_LWR,cooling pond
+NU-RC-ST,electricity generation,nuclear,Gen_II_LWR,recirculating
+OL-DR-CC,electricity generation,refined liquids,refined liquids (steam/CT),dry cooling
+OL-DR-ST,electricity generation,refined liquids,refined liquids (steam/CT),dry cooling
+OL-NA-CT,electricity generation,refined liquids,refined liquids (steam/CT),none
+OL-OT-ST,electricity generation,refined liquids,refined liquids (steam/CT),once through
+OL-PD-ST,electricity generation,refined liquids,refined liquids (steam/CT),cooling pond
+OL-RC-CC,electricity generation,refined liquids,refined liquids (steam/CT),recirculating
+OL-RC-ST,electricity generation,refined liquids,refined liquids (steam/CT),recirculating
+PV-NA-PV,electricity generation,solar PV,PV,none
+WN-NA-WN,electricity generation,wind,wind,none

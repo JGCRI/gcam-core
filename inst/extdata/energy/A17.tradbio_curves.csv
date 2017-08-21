@@ -1,1 +1,9 @@
-# File: A17.tradbio_curves.csv# Title: Traditional biomass renewable resource supply curves, inherited from GCAM 3.0# Units: available: unitless multiplier; extractioncost: 1975$/GJ# Description: Available traditional biomass at varying extraction costs# Reference: Unknownresource,subresource,grade,available,extractioncosttraditional biomass,traditional biomass,grade 1,0,0.2traditional biomass,traditional biomass,grade 2,1,0.25traditional biomass,traditional biomass,grade 3,5,1.5
+# File: A17.tradbio_curves.csv
+# Title: Traditional biomass renewable resource supply curves, inherited from GCAM 3.0
+# Units: available: unitless multiplier; extractioncost: 1975$/GJ
+# Description: Available traditional biomass at varying extraction costs
+# Reference: Unknown
+resource,subresource,grade,available,extractioncost
+traditional biomass,traditional biomass,grade 1,0,0.2
+traditional biomass,traditional biomass,grade 2,1,0.25
+traditional biomass,traditional biomass,grade 3,5,1.5

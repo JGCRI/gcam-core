@@ -130,7 +130,8 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
       select(region) %>%
       mutate(LandAllocatorRoot = "root",
              logit.year.fillout = min(BASE_YEARS),
-             logit.exponent = aglu.N0_LOGIT_EXP) ->
+             logit.exponent = aglu.N0_LOGIT_EXP,
+             logit.type = NA) ->
       L221.LN0_Logit
 
 
@@ -158,7 +159,8 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
       distinct %>%
       na.omit %>%
       mutate(LandAllocatorRoot = "root",
-             logit.year.fillout = min(BASE_YEARS))  %>%
+             logit.year.fillout = min(BASE_YEARS),
+             logit.type = NA)  %>%
       # add logit exponents
       # This is where logit types would be added as well, but currently omitting to allow left_join_error_no_match_use
       left_join_error_no_match(select(A_LandNode_logit, LandNode, logit.exponent), by = c("LandNode1" = "LandNode")) %>%
@@ -170,7 +172,7 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
                                           is.na(unManagedLandValue) | unManagedLandValue == 0,
                                           min_LV_USD75_bm2),
              LandNode1 = paste(LandNode1, GLU, sep = aglu.CROP_GLU_DELIMITER)) %>%
-      select(region, LandAllocatorRoot, LandNode1, unManagedLandValue, logit.year.fillout, logit.exponent) ->
+      select(region, LandAllocatorRoot, LandNode1, unManagedLandValue, logit.year.fillout, logit.exponent, logit.type) ->
       L221.LN1_ValueLogit
 
 
