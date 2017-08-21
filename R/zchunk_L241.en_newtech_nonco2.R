@@ -1,6 +1,6 @@
 #' module_emissions_L241.en_newtech_nonco2
 #'
-#' Non-CO2 emission coefficients.
+#' This chunk produces emission coefficient tables for model input tables related to new energy technology.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -151,6 +151,7 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
     # of emission reductions into one data frame.
     L241.steepness %>%
       select(steepness = value, region, supplysector, subsector, stub.technology, Non.CO2) %>%
+      # Use left_join here because we expect there to be NAs.
       left_join(L241.nonco2_steepness, by = c("region", "supplysector", "subsector",  "stub.technology", "Non.CO2")) %>%
       na.omit ->
       L241.nonco2_steepness
@@ -165,7 +166,7 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
     # TODO: better way to handle this, probably these technologies should pull from historical data
     # "Ensure only regions that have first gen biofuels get read in"
     # (This is where the old data system had the note - TODO: better way to handle this,
-    # probably these technologies should pull from historical data. I opened an issue about it.)
+    # probably these technologies should pull from historical data. See GitHub issue #650.)
 
     # Use the may be historic new technology emission coefficients to replace the emission
     # coefficients in the min model base year by a supplysecotr, subsector, stub.technology identifier
@@ -245,7 +246,7 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
     L241.nonco2_tech_coeff %>%
       add_title("Non-CO2 new technology emission coefficients by supply sector") %>%
       add_units("NA") %>%
-      add_comments("Pass through may be historic values into the non CO2 new technology emission coefficients") %>%
+      add_comments("Combine historical and expect emission coefficients for non-CO2 emissions for new energy technologies") %>%
       add_legacy_name("L241.nonco2_tech_coeff") %>%
       add_precursors("common/GCAM_region_names", "emissions/A_regions",
                      "energy/A_regions",

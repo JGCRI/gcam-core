@@ -1,8 +1,8 @@
 # File: A41.tech_coeff.csv
-# Title: NA
+# Title: Emission coefficients for energy technology by sector 
 # Units: NA
 # Source: NA 
-# Description: NA,,,,,,,,,,,,,
+# Description: NA
 supplysector,subsector,stub.technology,SO2,NOx,CO,CH4,N2O,BC,OC,NMVOC,exception,exception_tech,may.be.historic
 refining,coal to liquids,coal to liquids,0.01,0.01,0.01,,0.0001,,,0.0001,CH4,coal (conv pul),1
 refining,coal to liquids,coal to liquids CCS level 1,0.01,0.01,0.01,,0.0001,,,0.0001,CH4,coal (conv pul),
