@@ -19,8 +19,8 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "water/basin_to_country_mapping",
              "L123.For_Yield_m3m2_R_GLU",
-             FILE = "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
-             FILE = "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU",
+             "L161.ag_irrProd_Mt_R_C_Y_GLU",
+             "L161.ag_rfdProd_Mt_R_C_Y_GLU",
              "L162.ag_YieldRate_R_C_Y_GLU_irr",
              "L162.bio_YieldRate_R_Y_GLU_irr",
              "L164.ag_Cost_75USDkg_C",
@@ -50,12 +50,8 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
     L123.For_Yield_m3m2_R_GLU <- get_data(all_data, "L123.For_Yield_m3m2_R_GLU")
-    L161.ag_irrProd_Mt_R_C_Y_GLU <- get_data(all_data, "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU") %>%
-      gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%  # temporary
-      mutate(year = as.integer(substr(year, 2, 5)))
-    L161.ag_rfdProd_Mt_R_C_Y_GLU <- get_data(all_data, "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU") %>%
-      gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%  # temporary
-      mutate(year = as.integer(substr(year, 2, 5)))
+    L161.ag_irrProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_irrProd_Mt_R_C_Y_GLU")
+    L161.ag_rfdProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_rfdProd_Mt_R_C_Y_GLU")
     L162.ag_YieldRate_R_C_Y_GLU_irr <- get_data(all_data, "L162.ag_YieldRate_R_C_Y_GLU_irr")
     L162.bio_YieldRate_R_Y_GLU_irr <- get_data(all_data, "L162.bio_YieldRate_R_Y_GLU_irr")
     L164.ag_Cost_75USDkg_C <- get_data(all_data, "L164.ag_Cost_75USDkg_C")
@@ -235,8 +231,8 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       add_legacy_name("L2052.AgCost_ag_irr_mgmt") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
-                     "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
-                     "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU",
+                     "L161.ag_irrProd_Mt_R_C_Y_GLU",
+                     "L161.ag_rfdProd_Mt_R_C_Y_GLU",
                      "L164.ag_Cost_75USDkg_C") ->
       L2052.AgCost_ag_irr_mgmt
 

@@ -29,7 +29,7 @@ module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
              FILE = "aglu/USDA_cost_data",
              "L100.LDS_ag_HA_ha",
              "L133.ag_Cost_75USDkg_C",
-             FILE = "temp-data-inject/L161.ag_irrHA_frac_R_C_GLU"))
+             "L161.ag_irrHA_frac_R_C_GLU"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L164.ag_Cost_75USDkg_C"))
   } else if(command == driver.MAKE) {
@@ -50,7 +50,7 @@ module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
     USDA_cost_data <- get_data(all_data, "aglu/USDA_cost_data")
     L100.LDS_ag_HA_ha <- get_data(all_data, "L100.LDS_ag_HA_ha")
     L133.ag_Cost_75USDkg_C <- get_data(all_data, "L133.ag_Cost_75USDkg_C")
-    L161.ag_irrHA_frac_R_C_GLU <- get_data(all_data, "temp-data-inject/L161.ag_irrHA_frac_R_C_GLU")
+    L161.ag_irrHA_frac_R_C_GLU <- get_data(all_data, "L161.ag_irrHA_frac_R_C_GLU")
 
 
     # Perform computations
@@ -168,7 +168,7 @@ module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
                      "aglu/USDA_cost_data",
                      "L100.LDS_ag_HA_ha",
                      "L133.ag_Cost_75USDkg_C",
-                     "temp-data-inject/L161.ag_irrHA_frac_R_C_GLU") ->
+                     "L161.ag_irrHA_frac_R_C_GLU") ->
       L164.ag_Cost_75USDkg_C
 
     return_data(L164.ag_Cost_75USDkg_C)

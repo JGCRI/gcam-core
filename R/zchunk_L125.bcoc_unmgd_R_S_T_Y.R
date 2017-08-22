@@ -20,8 +20,8 @@
 module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "temp-data-inject/L124.LC_bm2_R_Grass_Yh_GLU_adj",
-             FILE = "temp-data-inject/L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj",
+             "L124.LC_bm2_R_Grass_Yh_GLU_adj",
+             "L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj",
              FILE = "emissions/RCP_BC_2000",
              FILE = "emissions/RCP_OC_2000",
              FILE = "emissions/GFED_ForestFire_BC",
@@ -42,14 +42,8 @@ module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    L124.LC_bm2_R_Grass_Yh_GLU_adj <- get_data(all_data, "temp-data-inject/L124.LC_bm2_R_Grass_Yh_GLU_adj") %>%
-      # The following two lines of code will be removed later, when we're using 'real' data
-      gather(year, value, -GCAM_region_ID, -Land_Type, -GLU) %>%   # reshape
-      mutate(year = as.integer(substr(year, 2, 5)))  # change Xyear to year
-    L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj <- get_data(all_data, "temp-data-inject/L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj") %>%
-      # The following two lines of code will be removed later, when we're using 'real' data
-      gather(year, value, -GCAM_region_ID, -Land_Type, -GLU) %>%   # reshape
-      mutate(year = as.integer(substr(year, 2, 5)))  # change Xyear to year
+    L124.LC_bm2_R_Grass_Yh_GLU_adj <- get_data(all_data, "L124.LC_bm2_R_Grass_Yh_GLU_adj")
+    L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj <- get_data(all_data, "L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj")
     RCP_BC_2000 <- get_data(all_data, "emissions/RCP_BC_2000")
     RCP_OC_2000 <- get_data(all_data, "emissions/RCP_OC_2000")
     GFED_ForestFire_BC <- get_data(all_data, "emissions/GFED_ForestFire_BC")
@@ -189,8 +183,8 @@ module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {
       add_comments("Grassland EFs from RCP emissions and land area") %>%
       add_legacy_name("L125.bcoc_tgbkm2_R_grass_2000") %>%
       add_precursors("common/iso_GCAM_regID",
-                     "temp-data-inject/L124.LC_bm2_R_Grass_Yh_GLU_adj",
-                     "temp-data-inject/L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj",
+                     "L124.LC_bm2_R_Grass_Yh_GLU_adj",
+                     "L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj",
                      "emissions/RCP_BC_2000",
                      "emissions/RCP_OC_2000",
                      "emissions/GFED_ForestFire_BC",
@@ -204,8 +198,8 @@ module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {
       add_comments("EFs calculated from RCP emissions (divided into forest fire and deforestation by GFED data) and GCAM land area") %>%
       add_legacy_name("L125.bcoc_tgbkm2_R_forest_2000") %>%
       add_precursors("common/iso_GCAM_regID",
-                     "temp-data-inject/L124.LC_bm2_R_Grass_Yh_GLU_adj",
-                     "temp-data-inject/L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj",
+                     "L124.LC_bm2_R_Grass_Yh_GLU_adj",
+                     "L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj",
                      "emissions/RCP_BC_2000",
                      "emissions/RCP_OC_2000",
                      "emissions/GFED_ForestFire_BC",
@@ -219,8 +213,8 @@ module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {
       add_comments("EFs calculated from rate of change of RCP emissions (divided into forest fire and deforestation by GFED data) and GCAM land area") %>%
       add_legacy_name("L125.deforest_coefs_bcoc") %>%
       add_precursors("common/iso_GCAM_regID",
-                     "temp-data-inject/L124.LC_bm2_R_Grass_Yh_GLU_adj",
-                     "temp-data-inject/L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj",
+                     "L124.LC_bm2_R_Grass_Yh_GLU_adj",
+                     "L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj",
                      "emissions/RCP_BC_2000",
                      "emissions/RCP_OC_2000",
                      "emissions/GFED_ForestFire_BC",

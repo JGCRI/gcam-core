@@ -75,12 +75,12 @@ module_energy_L261.Cstorage <- function(command, ...) {
     # ===================================================
 
     # Silence package notes
-    . <- available <- capacity.factor <- curr_table <-
-      extractioncost <- grade <- logit.type <- minicam.energy.input <-
-      minicam.non.energy.input <- `output-unit` <- `price-unit` <- resource <-
-      resource_type <- share.weight <- subresource <- subsector <- subsector.name <-
-      supplysector <- technology <- value <- year <- region <- depresource <-
-      output.unit <- price.unit <- market <- NULL
+    . <- available <- capacity.factor <- curr_table <- extractioncost <-
+      grade <- logit.type <- minicam.energy.input <- minicam.non.energy.input <-
+      `output-unit` <- `price-unit` <- resource <- resource_type <- share.weight <-
+      subresource <- subsector <- subsector.name <- supplysector <- technology <-
+      value <- year <- region <- depresource <- output.unit <- price.unit <-
+      market <- logit.exponent <- coefficient <- input.cost <- NULL
 
     # A
     # Create tables for carbon storage resource information

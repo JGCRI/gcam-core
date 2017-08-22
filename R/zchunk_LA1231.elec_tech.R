@@ -193,7 +193,8 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
       rename(output = value) %>%
       bind_rows(L1231.out_EJ_R_elec_Fin_tech_Yh) %>%
       rename(value = output) %>%
-      select(GCAM_region_ID, sector, fuel, technology, year, value) -> L1231.out_EJ_R_elec_F_tech_Yh
+      select(GCAM_region_ID, sector, fuel, technology, year, value) %>%
+      ungroup -> L1231.out_EJ_R_elec_F_tech_Yh
 
     # add final details to tibbles and save them
     L1231.in_EJ_R_elec_F_tech_Yh%>%

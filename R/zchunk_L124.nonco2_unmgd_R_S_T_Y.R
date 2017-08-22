@@ -22,8 +22,8 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "emissions/EDGAR/EDGAR_sector",
-             FILE = "temp-data-inject/L124.LC_bm2_R_Grass_Yh_GLU_adj",
-             FILE = "temp-data-inject/L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj",
+             "L124.LC_bm2_R_Grass_Yh_GLU_adj",
+             "L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj",
              "EDGAR_gases",
              FILE = "emissions/GFED/GFED_ForestFire_SO2",
              FILE = "emissions/GFED/GFED_Deforest_SO2",
@@ -47,8 +47,8 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     EDGAR_sector <- get_data(all_data, "emissions/EDGAR/EDGAR_sector")
-    L124.LC_bm2_R_Grass_Yh_GLU_adj <- get_data(all_data, "temp-data-inject/L124.LC_bm2_R_Grass_Yh_GLU_adj")
-    L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj <- get_data(all_data, "temp-data-inject/L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj")
+    L124.LC_bm2_R_Grass_Yh_GLU_adj <- get_data(all_data, "L124.LC_bm2_R_Grass_Yh_GLU_adj")
+    L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj <- get_data(all_data, "L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj")
     EDGAR_gases <- get_data(all_data, "EDGAR_gases")
     GFED_ForestFire_SO2 <- get_data(all_data, "emissions/GFED/GFED_ForestFire_SO2")
     GFED_Deforest_SO2 <- get_data(all_data, "emissions/GFED/GFED_Deforest_SO2")
@@ -57,16 +57,6 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
     GFED_ForestFire_NOx <- get_data(all_data, "emissions/GFED/GFED_ForestFire_NOx")
     GFED_Deforest_NOx <- get_data(all_data, "emissions/GFED/GFED_Deforest_NOx")
 
-    # Reformat temporary data -- Note: this can be removed after the upstream files are done
-    L124.LC_bm2_R_Grass_Yh_GLU_adj %>%
-      gather(year, value, -GCAM_region_ID, -Land_Type, -GLU) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) ->
-      L124.LC_bm2_R_Grass_Yh_GLU_adj
-
-    L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj %>%
-      gather(year, value, -GCAM_region_ID, -Land_Type, -GLU) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) ->
-      L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj
 
     # Prepare EDGAR emissions for use
     # Map in region ID and sector name; extrapolate to 2010; aggregate to sector & region; convert from Gg to Tg
@@ -214,7 +204,7 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
       add_units("Tg/yr") %>%
       add_comments("EDGAR grassland emissions are downscaled to GLU using shares of grassland area.") %>%
       add_legacy_name("L124.nonco2_tg_R_grass_Y_GLU") %>%
-      add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_sector", "temp-data-inject/L124.LC_bm2_R_Grass_Yh_GLU_adj", "EDGAR_gases") %>%
+      add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_sector", "L124.LC_bm2_R_Grass_Yh_GLU_adj", "EDGAR_gases") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L124.nonco2_tg_R_grass_Y_GLU
     L124.nonco2_tg_R_forest_Y_GLU %>%
@@ -223,7 +213,7 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
       add_comments("EDGAR forest emissions are downscaled to GLU using shares of forest area.") %>%
       add_comments("These emissions are then separated into forest fire and deforestation using GFED data.") %>%
       add_legacy_name("L124.nonco2_tg_R_forest_Y_GLU") %>%
-      add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_sector", "temp-data-inject/L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj", "EDGAR_gases",
+      add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_sector", "L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj", "EDGAR_gases",
                      "emissions/GFED/GFED_ForestFire_SO2", "emissions/GFED/GFED_Deforest_SO2", "emissions/GFED/GFED_ForestFire_CO",
                      "emissions/GFED/GFED_Deforest_CO", "emissions/GFED/GFED_ForestFire_NOx", "emissions/GFED/GFED_Deforest_NOx") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->

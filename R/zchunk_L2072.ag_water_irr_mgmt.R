@@ -19,8 +19,8 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "water/basin_to_country_mapping",
              "L132.ag_an_For_Prices",
-             FILE = "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
-             FILE = "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU",
+             "L161.ag_irrProd_Mt_R_C_Y_GLU",
+             "L161.ag_rfdProd_Mt_R_C_Y_GLU",
              "L165.BlueIrr_m3kg_R_C_GLU",
              "L165.TotIrr_m3kg_R_C_GLU",
              "L165.GreenRfd_m3kg_R_C_GLU",
@@ -50,12 +50,8 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
     L132.ag_an_For_Prices <- get_data(all_data, "L132.ag_an_For_Prices")
-    L161.ag_irrProd_Mt_R_C_Y_GLU <- get_data(all_data, "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU") %>%
-      gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%  # temporary
-      mutate(year = as.integer(substr(year, 2, 5)))
-    L161.ag_rfdProd_Mt_R_C_Y_GLU <- get_data(all_data, "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU") %>%
-      gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%  # temporary
-      mutate(year = as.integer(substr(year, 2, 5)))
+    L161.ag_irrProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_irrProd_Mt_R_C_Y_GLU")
+    L161.ag_rfdProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_rfdProd_Mt_R_C_Y_GLU")
     L165.BlueIrr_m3kg_R_C_GLU <- get_data(all_data, "L165.BlueIrr_m3kg_R_C_GLU")
     L165.TotIrr_m3kg_R_C_GLU <- get_data(all_data, "L165.TotIrr_m3kg_R_C_GLU")
     L165.GreenRfd_m3kg_R_C_GLU <- get_data(all_data, "L165.GreenRfd_m3kg_R_C_GLU")
@@ -242,7 +238,7 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
                      "L165.BlueIrr_m3kg_R_C_GLU",
-                     "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
+                     "L161.ag_irrProd_Mt_R_C_Y_GLU",
                      "water/A03.sector") ->
       L2072.AgCoef_IrrWaterCons_ag_mgmt
 
@@ -267,7 +263,7 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
                      "L165.TotIrr_m3kg_R_C_GLU",
-                     "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
+                     "L161.ag_irrProd_Mt_R_C_Y_GLU",
                      "water/A03.sector") ->
       L2072.AgCoef_IrrBphysWater_ag_mgmt
 
@@ -279,7 +275,7 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
                      "L165.GreenRfd_m3kg_R_C_GLU",
-                     "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU",
+                     "L161.ag_rfdProd_Mt_R_C_Y_GLU",
                      "water/A03.sector") ->
       L2072.AgCoef_RfdBphysWater_ag_mgmt
 
@@ -302,7 +298,7 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
                      "water/basin_to_country_mapping",
                      "L165.BlueIrr_m3kg_R_C_GLU",
                      "L165.TotIrr_m3kg_R_C_GLU",
-                     "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
+                     "L161.ag_irrProd_Mt_R_C_Y_GLU",
                      "water/A03.sector") ->
       L2072.AgCoef_IrrWaterCons_bio_mgmt
 
