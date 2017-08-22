@@ -217,6 +217,16 @@ get_data <- function(all_data, name) {
 return_data <- function(...) {
   dots <- list(...)
   names(dots) <- as.list(substitute(list(...)))[-1L]
+  # disallow any data which is "grouped" as it may lead to unexpected
+  # behavior, especially for unsuspecting chunks which may use it down
+  # the line not expecting any groupings.
+  lapply(names(dots), function(dname) {
+    # note we wrap the assert in a tryCatch since groups will throw an
+    # error for types it does not know about such as a list() however
+    # in those cases we are happy to just skip the check anyhow
+    assert_that(is.null(tryCatch(groups(dots[[dname]]), error=function(e){NULL})), msg =
+      paste0(dname, " is grouped which is not allowed in return_data, please ungroup()"))
+  })
   dots
 }
 
