@@ -33,7 +33,6 @@ module_emissions_batch_ind_urb_processing_sectors.xml <- function(command, ...) 
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    L2521.AgMAC <- get_data(all_data, "L2521.AgMAC")
     L231.UnlimitRsrc <- get_data(all_data, "L231.UnlimitRsrc")
     L231.UnlimitRsrcPrice <- get_data(all_data, "L231.UnlimitRsrcPrice")
     L231.FinalDemand_urb <- get_data(all_data, "L231.FinalDemand_urb")
@@ -54,12 +53,41 @@ module_emissions_batch_ind_urb_processing_sectors.xml <- function(command, ...) 
 
     # Produce outputs
     create_xml("ind_urb_processing_sectors.xml") %>%
-      add_xml_data(L2521.AgMAC, "AgMAC") %>%
+      add_xml_data(L231.UnlimitRsrc, "UnlimitRsrc") %>%
+      add_xml_data(L231.UnlimitRsrcPrice, "UnlimitRsrcPrice") %>%
+      add_xml_data(L231.FinalDemand_urb, "FinalDemandInfo") %>%
+      add_xml_data(L231.StubTech_urb_ind, "StubTech") %>%
+      add_xml_data(L231.GlobalTechShrwt_urb_ind, "GlobalTechShrwt") %>%
+      add_xml_data(L231.GlobalTechEff_urb_ind, "GlobalTechEff") %>%
+      add_xml_data(L231.GlobalTechCoef_urb_ind, "GlobalTechCoef") %>%
+      add_xml_data(L231.GlobalTechCost_urb_ind, "GlobalTechCost") %>%
+      add_xml_data(L231.RegionalTechCalValue_urb_ind, "StubTechCalInputIndUrb") %>%
+      add_xml_data(L231.IndCoef, "StubTechCoefIndUrb") %>%
+      add_xml_data(L231.Supplysector_urb_ind, "Supplysector") %>%
+      add_xml_data(L231.SubsectorLogit_urb_ind, "SubsectorLogit") %>%
       add_precursors("L231.UnlimitRsrc", "L231.UnlimitRsrcPrice", "L231.FinalDemand_urb", "L231.Supplysector_urb_ind", "L231.SubsectorLogit_urb_ind",
                      "L231.SubsectorShrwt_urb_ind", "L231.SubsectorShrwtFllt_urb_ind", "L231.SubsectorInterp_urb_ind", "L231.SubsectorInterpTo_urb_ind",
                      "L231.StubTech_urb_ind", "L231.GlobalTechShrwt_urb_ind", "L231.GlobalTechEff_urb_ind", "L231.GlobalTechCoef_urb_ind",
                      "L231.GlobalTechCost_urb_ind", "L231.RegionalTechCalValue_urb_ind", "L231.IndCoef")->
       ind_urb_processing_sectors.xml
+
+    # Some data inputs may not actually contain data. If so, do not add_xml_data
+    if (names(L231.SubsectorShrwt_ind) != "x"){
+      ind_urb_processing_sectors.xml <- ind_urb_processing_sectors.xml %>%
+        add_xml_data(L231.SubsectorShrwt_ind)
+    }
+    if (names(L231.SubsectorShrwtFllt_urb_ind) != "x"){
+      ind_urb_processing_sectors.xml <- ind_urb_processing_sectors.xml %>%
+        add_xml_data(L231.SubsectorShrwtFllt_urb_ind)
+    }
+    if (names(L231.SubsectorInterp_urb_ind) != "x"){
+      ind_urb_processing_sectors.xml <- ind_urb_processing_sectors.xml %>%
+        add_xml_data(L231.SubsectorInterp_urb_ind)
+    }
+    if (names(L231.SubsectorInterpTo_urb_ind) != "x"){
+      ind_urb_processing_sectors.xml <- ind_urb_processing_sectors.xml %>%
+        add_xml_data(L231.SubsectorInterpTo_urb_ind)
+    }
 
     return_data(ind_urb_processing_sectors.xml)
   } else {
