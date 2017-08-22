@@ -72,37 +72,30 @@ module_energy_L225.hydrogen <- function(command, ...) {
 
     # L225.SubsectorShrwt_h2 and L225.SubsectorShrwtFllt_h2: Subsector shareweights of hydrogen sectors
     L225.SubsectorShrwt_h2 <- tibble(x = NA)  # placeholder empty table
-    if(any(!is.na(A25.subsector_shrwt$year))) {
-      A25.subsector_shrwt %>%
-        filter(!is.na(year)) %>%
-        write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwt"]], GCAM_region_names) ->
-        L225.SubsectorShrwt_h2
-    }
-    L225.SubsectorShrwtFllt_h2 <- tibble(x = NA)
-    if(any(!is.na(A25.subsector_shrwt$year.fillout))) {
-      A25.subsector_shrwt %>%
-        filter(!is.na(year.fillout)) %>%
-        write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]], GCAM_region_names) ->
-        L225.SubsectorShrwtFllt_h2
-    }
+    A25.subsector_shrwt %>%
+      filter(!is.na(year)) %>%
+      write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwt"]], GCAM_region_names) ->
+      L225.SubsectorShrwt_h2
 
+    L225.SubsectorShrwtFllt_h2 <- tibble(x = NA)
+    A25.subsector_shrwt %>%
+      filter(!is.na(year.fillout)) %>%
+      write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]], GCAM_region_names) ->
+      L225.SubsectorShrwtFllt_h2
+
+
+    # L225.SubsectorInterp_h2 and L225.SubsectorInterpTo_h2: Subsector shareweight interpolation of hydrogen sectors
     L225.SubsectorInterp_h2 <- tibble(x = NA)
+    A25.subsector_interp %>%
+      filter(!is.na(to.value)) %>%
+      write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorInterp"]], GCAM_region_names)->
+      L225.SubsectorInterp_h2
+
     L225.SubsectorInterpTo_h2 <- tibble(x = NA)
-    if(exists("A25.subsector_interp")) {
-      # L225.SubsectorInterp_h2 and L225.SubsectorInterpTo_h2: Subsector shareweight interpolation of hydrogen sectors
-      if(any(is.na(A25.subsector_interp$to.value))) {
-        A25.subsector_interp %>%
-          filter(!is.na(to.value)) %>%
-          write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorInterp"]], GCAM_region_names)->
-          L225.SubsectorInterp_h2
-      }
-      if(any(!is.na(A25.subsector_interp$to.value))) {
-        A25.subsector_interp %>%
-          filter(!is.na(to.value)) %>%
-          write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorInterpTo"]], GCAM_region_names) ->
-          L225.SubsectorInterpTo_h2
-      }
-    }
+    A25.subsector_interp %>%
+      filter(!is.na(to.value)) %>%
+      write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorInterpTo"]], GCAM_region_names) ->
+        L225.SubsectorInterpTo_h2
 
     # 1c. Technology information
 
