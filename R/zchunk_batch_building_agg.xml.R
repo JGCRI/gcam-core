@@ -10,7 +10,8 @@
 #' original data system was \code{batch_building_agg.xml.R} (energy XML).
 module_energy_batch_building_agg.xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L242.FinalEnergyKeyword_bld",
+    return(c( "L242.Supplysector_bld",
+              "L242.FinalEnergyKeyword_bld",
               "L242.SubsectorLogit_bld",
               "L242.SubsectorShrwtFllt_bld",
               "L242.SubsectorInterp_bld",
@@ -31,6 +32,7 @@ module_energy_batch_building_agg.xml <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
+    L242.Supplysector_bld <- get_data(all_data, "L242.Supplysector_bld")
     L242.FinalEnergyKeyword_bld <- get_data(all_data, "L242.FinalEnergyKeyword_bld")
     L242.SubsectorLogit_bld <- get_data(all_data, "L242.SubsectorLogit_bld")
     L242.SubsectorShrwtFllt_bld <- get_data(all_data, "L242.SubsectorShrwtFllt_bld")
@@ -50,8 +52,9 @@ module_energy_batch_building_agg.xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("building_agg.xml") %>%
+      add_logit_tables_xml(L242.Supplysector_bld,"L242.Supplysector_bld") %>%
       add_xml_data(L242.FinalEnergyKeyword_bld,"FinalEnergyKeyword") %>%
-      add_xml_data(L242.SubsectorLogit_bld,"SubsectorLogit") %>%
+      add_logit_tables_xml(L242.SubsectorLogit_bld,"SubsectorLogit") %>%
       add_xml_data(L242.SubsectorShrwtFllt_bld,"L242.SubsectorShrwtFllt_bld") %>%
       add_xml_data(L242.SubsectorInterp_bld,"SubsectorInterp") %>%
       add_xml_data(L242.StubTech_bld,"StubTech") %>%
@@ -64,7 +67,11 @@ module_energy_batch_building_agg.xml <- function(command, ...) {
       add_xml_data(L242.PerCapitaBased_bld,"PerCapitaBased") %>%
       add_xml_data(L242.PriceElasticity_bld,"PriceElasticity") %>%
       add_xml_data(L242.BaseService_bld,"BaseService") %>%
-      add_precursors("L242.FinalEnergyKeyword_bld", "L242.SubsectorLogit_bld", "L242.SubsectorShrwtFllt_bld", "L242.SubsectorInterp_bld", "L242.StubTech_bld", "L242.GlobalTechInterp_bld", "L242.GlobalTechShrwt_bld", "L242.GlobalTechEff_bld", "L242.GlobalTechCost_bld", "L242.StubTechCalInput_bld", "L242.FuelPrefElast_bld", "L242.PerCapitaBased_bld", "L242.PriceElasticity_bld", "L242.BaseService_bld") ->
+      add_precursors("L242.Supplysector_bld", "L242.FinalEnergyKeyword_bld", "L242.SubsectorLogit_bld",
+                     "L242.SubsectorShrwtFllt_bld", "L242.SubsectorInterp_bld", "L242.StubTech_bld",
+                     "L242.GlobalTechInterp_bld", "L242.GlobalTechShrwt_bld", "L242.GlobalTechEff_bld",
+                     "L242.GlobalTechCost_bld", "L242.StubTechCalInput_bld", "L242.FuelPrefElast_bld",
+                     "L242.PerCapitaBased_bld", "L242.PriceElasticity_bld", "L242.BaseService_bld") ->
       building_agg.xml
 
     return_data(building_agg.xml)

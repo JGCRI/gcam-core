@@ -196,7 +196,7 @@ module_energy_L242.building_agg <- function(command, ...) {
       mutate(from.year = min(MODEL_YEARS),
              to.year = max(MODEL_YEARS)) %>%
       rename(sector.name = supplysector, subsector.name = subsector) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["GlobalTechInterp"]])) -> # Drops to.year
+      select(one_of(LEVEL2_DATA_NAMES[["GlobalTechInterp"]])) -> # Drops to.value
       L242.GlobalTechInterp_bld # OUTPUT
 
     # Energy inputs and coefficients of global building energy use and feedstocks technologies
@@ -240,7 +240,7 @@ module_energy_L242.building_agg <- function(command, ...) {
     # Calibration and region-specific data
     # Calibrated input of building energy use technologies (including cogen)
     L142.in_EJ_R_bld_F_Yh %>%
-      # Expand table to include all model base years
+      # Subset table for model base years
       filter(year %in% BASE_YEARS) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       # Match in supplysector, subsector, technology
@@ -256,8 +256,8 @@ module_energy_L242.building_agg <- function(command, ...) {
     L242.in_EJ_R_bld_F_Yh %>%
       select(one_of(c(LEVEL2_DATA_NAMES[["StubTechYr"]], "value"))) %>%
       left_join_error_no_match(A42.globaltech_eff, by = c("supplysector", "subsector", "stub.technology" = "technology")) %>%
-      mutate(value = round(value, digits = DIGITS_CALOUTPUT)) %>%
-      mutate(share.weight.year = year) %>%
+      mutate(value = round(value, digits = DIGITS_CALOUTPUT),
+             share.weight.year = year) %>%
       group_by(region, supplysector, subsector, stub.technology, minicam.energy.input, share.weight.year, year) %>%
       summarise(calibrated.value = sum(value)) %>%
       ungroup() %>%
@@ -314,7 +314,7 @@ module_energy_L242.building_agg <- function(command, ...) {
     L242.Supplysector_bld %>%
       add_title("Supply sector information for building sector") %>%
       add_units("Unitless") %>%
-      add_comments("Supply sector information for building sector was expanded across all regions") %>%
+      add_comments("Supply sector information for building sector was written for all regions") %>%
       add_legacy_name("L242.Supplysector_bld") %>%
       add_precursors("common/GCAM_region_names", "energy/A42.sector") ->
       L242.Supplysector_bld
@@ -322,15 +322,15 @@ module_energy_L242.building_agg <- function(command, ...) {
     L242.FinalEnergyKeyword_bld %>%
       add_title("Supply sector keywords for building sector") %>%
       add_units("NA") %>%
-      add_comments("Supply sector keywords for building sector were expanded across all regions") %>%
+      add_comments("Supply sector keywords for building sector was written for all regions") %>%
       add_legacy_name("L242.FinalEnergyKeyword_bld") %>%
       add_precursors("common/GCAM_region_names", "energy/A42.sector") ->
       L242.FinalEnergyKeyword_bld
 
     L242.SubsectorLogit_bld %>%
       add_title("Subsector logit exponents of building sector") %>%
-      add_units("units") %>%
-      add_comments("Subsector logit exponents of building sector were written across all regions") %>%
+      add_units("Unitless") %>%
+      add_comments("Subsector logit exponents of building sector were written for all regions") %>%
       add_comments("Region/fuel combinations where heat and traditional biomass are not modeled as separate fuels were removed") %>%
       add_legacy_name("L242.SubsectorLogit_bld") %>%
       add_precursors("common/GCAM_region_names", "energy/calibrated_techs_bld_agg",
@@ -340,7 +340,7 @@ module_energy_L242.building_agg <- function(command, ...) {
     L242.SubsectorShrwtFllt_bld %>%
       add_title("Subsector shareweights of building sector") %>%
       add_units("Unitless") %>%
-      add_comments("Subsector shareweights of building sector were written across all regions") %>%
+      add_comments("Subsector shareweights of building sector were written for all regions") %>%
       add_comments("Region/fuel combinations where heat and traditional biomass are not modeled as separate fuels were removed") %>%
       add_legacy_name("L242.SubsectorShrwtFllt_bld") %>%
       add_precursors("common/GCAM_region_names", "energy/calibrated_techs_bld_agg",
@@ -350,7 +350,7 @@ module_energy_L242.building_agg <- function(command, ...) {
     L242.SubsectorInterp_bld %>%
       add_title("Subsector shareweight interpolation data of building sector") %>%
       add_units("NA") %>%
-      add_comments("Subsector shareweight interpolation data of building sector were written across all regions") %>%
+      add_comments("Subsector shareweight interpolation data of building sector were written for all regions") %>%
       add_comments("Region/fuel combinations where heat and traditional biomass are not modeled as separate fuels were removed") %>%
       add_legacy_name("L242.SubsectorInterp_bld") %>%
       add_precursors("common/GCAM_region_names", "energy/calibrated_techs_bld_agg",
@@ -360,7 +360,7 @@ module_energy_L242.building_agg <- function(command, ...) {
     L242.StubTech_bld %>%
       add_title("Identification of stub technologies of building sector") %>%
       add_units("NA") %>%
-      add_comments("Identification of stub technologies of building sector were written across all regions") %>%
+      add_comments("Identification of stub technologies of building sector were written for all regions") %>%
       add_comments("Region/fuel combinations where heat and traditional biomass are not modeled as separate fuels were removed") %>%
       add_legacy_name("L242.StubTech_bld") %>%
       add_precursors("common/GCAM_region_names", "energy/calibrated_techs_bld_agg",
@@ -403,7 +403,7 @@ module_energy_L242.building_agg <- function(command, ...) {
     L242.StubTechCalInput_bld %>%
       add_title("Calibrated input of building energy use technologies (including cogen)") %>%
       add_units("EJ") %>%
-      add_comments("Data was aggregated (dropping fuel) and shareweights were determined from the calibrated value") %>%
+      add_comments("Data were aggregated (dropping fuel) and shareweights were determined from the calibrated value") %>%
       add_legacy_name("L242.StubTechCalInput_bld") %>%
       add_precursors("common/GCAM_region_names", "energy/calibrated_techs_bld_agg",
                      "energy/A42.globaltech_eff", "L142.in_EJ_R_bld_F_Yh") ->
@@ -412,7 +412,7 @@ module_energy_L242.building_agg <- function(command, ...) {
     L242.FuelPrefElast_bld %>%
       add_title("Fuel preference elasticities of building energy use") %>%
       add_units("Unitless") %>%
-      add_comments("Data was expanded across all regions") %>%
+      add_comments("Data were written for all regions") %>%
       add_comments("Region/fuel combinations where heat and traditional biomass are not modeled as separate fuels were removed") %>%
       add_legacy_name("L242.FuelPrefElast_bld") %>%
       add_precursors("common/GCAM_region_names", "energy/calibrated_techs_bld_agg",
@@ -422,7 +422,7 @@ module_energy_L242.building_agg <- function(command, ...) {
     L242.PerCapitaBased_bld %>%
       add_title("Per-capita based flag for building final demand") %>%
       add_units("Unitless") %>%
-      add_comments("Data was expanded across all regions") %>%
+      add_comments("Data were written for all regions") %>%
       add_legacy_name("L242.PerCapitaBased_bld") %>%
       add_precursors("energy/A42.demand") ->
       L242.PerCapitaBased_bld
@@ -430,7 +430,7 @@ module_energy_L242.building_agg <- function(command, ...) {
     L242.PriceElasticity_bld %>%
       add_title("Price elasticity of building final demand") %>%
       add_units("Unitless") %>%
-      add_comments("Price elasticity data was expanded across all regions and only applied to future model years") %>%
+      add_comments("Price elasticity data were written for all regions and only applied to future model years") %>%
       add_legacy_name("L242.PriceElasticity_bld") %>%
       add_precursors("energy/A42.demand") ->
       L242.PriceElasticity_bld
