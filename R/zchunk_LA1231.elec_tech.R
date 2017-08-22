@@ -91,7 +91,8 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
       group_by(supplysector, subsector, technology) %>%
       mutate(efficiency_tech = approx_fun(year, efficiency_tech)) %>%
       mutate(improvement.max = approx_fun(year, improvement.max)) %>%
-      mutate(improvement.rate = approx_fun(year, improvement.rate)) -> L1231.eff_R_elec_gas_tech
+      mutate(improvement.rate = approx_fun(year, improvement.rate)) %>%
+      ungroup() -> L1231.eff_R_elec_gas_tech
 
     # Reset upper and lower bound efficiencies, as needed
     # Where avg efficiency is outside of the range of the two technologies, set the lower bound equal to the average, and the upper equal to

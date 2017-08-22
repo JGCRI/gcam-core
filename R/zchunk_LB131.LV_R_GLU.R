@@ -39,6 +39,7 @@ module_aglu_LB131.LV_R_GLU <- function(command, ...) {
       mutate(value = value * gdp_deflator(1975, base_year = 2001)) %>%                                  # Convert to 1975$
       group_by(GCAM_region_ID, GLU) %>%                                                                 # Group by GCAM_region_ID and GLU
       summarize(value = sum(value)) %>%                                                                 # Aggregate value to GCAM region and GLU
+      ungroup() %>%
       rename(LV_milUSD75 = value) ->                                                                    # Rename column to what is used in old data system
       LV_R_GLU
 

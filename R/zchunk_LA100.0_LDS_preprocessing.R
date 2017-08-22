@@ -96,6 +96,7 @@ module_aglu_LA100.0_LDS_preprocessing <- function(command, ...) {
             # group by everything EXCEPT for value and sum up
             group_by_(.dots = names(d)[-grep("value", names(d))]) %>%
             summarise(value = sum(value)) %>%
+            ungroup() %>%
             # summarise() produces a new tibble, but we don't want to lose file info
             same_attributes_as(d) %>%
             add_comments("Taiwan ISO collapsed into China") ->

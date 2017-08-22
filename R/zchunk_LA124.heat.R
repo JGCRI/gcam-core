@@ -61,7 +61,8 @@ module_energy_LA124.heat <- function(command, ...) {
       select(GCAM_region_ID, sector, year, value, heat) %>%
       rename(fuel = heat) %>%
       group_by(fuel, sector, GCAM_region_ID, year) %>% # removed -> temp
-      summarise(value = sum(value)) -> L124.in_EJ_R_heat_F_Yh
+      summarise(value = sum(value)) %>%
+      ungroup() -> L124.in_EJ_R_heat_F_Yh
 
     # Heat production from district heat sector
     A24.globaltech_coef %>%
@@ -74,6 +75,7 @@ module_energy_LA124.heat <- function(command, ...) {
       group_by(technology, subsector, supplysector, minicam.energy.input)  %>%
       # Interpolate to fill in missing globaltech_coef historical years
       mutate(value = approx_fun(year, value)) %>%
+      ungroup() %>%
       left_join(distinct(calibrated_techs), by = c("supplysector", "subsector", "technology", "minicam.energy.input")) %>%
       select(supplysector, subsector, technology, minicam.energy.input, year, value, sector, fuel) -> L124.globaltech_coef
 
@@ -95,6 +97,7 @@ module_energy_LA124.heat <- function(command, ...) {
       rename(fuel = heat) %>%
       group_by(fuel, sector, GCAM_region_ID, year) %>%
       summarise(value = sum(value)) %>%
+      ungroup() %>%
       filter(fuel != is.na(fuel)) -> L124.out_EJ_R_heatfromelec_F_Yh
 
     # Secondary output coefficients on heat produced by main activity CHP plants
@@ -119,6 +122,7 @@ module_energy_LA124.heat <- function(command, ...) {
     L124.heatoutratio_R_elec_F_tech_Yh %>%
       group_by(GCAM_region_ID, technology, sector, fuel) %>%
       summarise(sum = sum(value)) %>%
+      ungroup() %>%
       filter(sum == 0) -> years_heatout_0
 
     # Filter out the years in years_heatout_0 from heatoutratio
@@ -141,11 +145,13 @@ module_energy_LA124.heat <- function(command, ...) {
 
     L124.in_EJ_R_heat_F_Yh %>%
       group_by(sector, GCAM_region_ID, year) %>%
-      summarise(dist_heat = sum(value)) -> L124.mult_R_heat_Yh
+      summarise(dist_heat = sum(value)) %>%
+      ungroup() -> L124.mult_R_heat_Yh
 
     L124.out_EJ_R_heatfromelec_F_Yh %>%
       group_by(sector, GCAM_region_ID, year) %>%
-      summarise(elec_heat = sum(value)) -> L124.mult_R_heatfromelec_Yh
+      summarise(elec_heat = sum(value)) %>%
+      ungroup() -> L124.mult_R_heatfromelec_Yh
 
     # If heat output is 0 and heat from CHP is nonzero, multiplier will be nonzero (1e-3)
     # All other cases, multiplier is 0

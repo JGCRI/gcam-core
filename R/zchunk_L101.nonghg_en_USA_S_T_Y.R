@@ -88,7 +88,6 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
       temp
 
     L154.in_EJ_R_trn_m_sz_tech_F_Yh %>%
-      ungroup() %>%
       mutate(technology = fuel,
              fuel = paste(mode, size.class, sep = "_"),
              sector = UCD_sector) %>%
@@ -117,6 +116,7 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
       left_join(temp, by = c("sector", "fuel")) %>%
       group_by(EPA_agg_sector, EPA_agg_fuel, year) %>%
       summarise(energy = sum(value)) %>%
+      ungroup() %>%
       filter(!is.na(EPA_agg_sector)) ->
       L101.in_EJ_USA_en_Sepa_F_Yh.mlt
 
@@ -131,6 +131,7 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
         group_by(sector, fuel, year) %>%
         # summarise and convert to Tg
         summarise(value = sum(value) * emissions.TST_TO_TG) %>%
+        ungroup() %>%
         # set missing values to zero
         replace_na(list(value = 0))
     }
@@ -160,7 +161,8 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
 
       x_em_factor %>%
         group_by(EPA_agg_sector, year) %>%
-        summarise(sector_emissions = sum(emissions)) ->
+        summarise(sector_emissions = sum(emissions)) %>%
+        ungroup() ->
         x_sector_emissions
 
       x_em_factor %>%
