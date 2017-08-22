@@ -105,7 +105,6 @@ module_emissions_L211.ag_nonco2 <- function(command, ...) {
 
     # L211.AnEmissions: Animal emissions in all regions
     L211.AnEmissions <- L113.ghg_tg_R_an_C_Sys_Fd_Yh %>%
-      ungroup() %>% # TODO: stamp out groups up stream? -- I've checked as far up as L107.an_Prod_Mt_R_C_Sys_Fd_Y
       filter(year %in% emissions.MODEL_BASE_YEARS) %>%
       rename(input.emissions = value) %>%
       # Add region
