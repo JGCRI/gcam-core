@@ -301,6 +301,7 @@ CONV_HA_M2 <- 1e4 # ha to m2
 CONV_BM2_M2 <- 1e9
 
 
+
 # Driver constants ======================================================================
 
 driver.MAKE <- "MAKE"
@@ -356,7 +357,10 @@ DEFAULT_UNLIMITED_IRR_WATER_PRICE   <- 0.001 # (Units: 1975$/m3)
 WATER_UNITS_QUANTITY                <- "km^3"
 WATER_UNITS_PRICE                   <- "1975$/m^3"
 AG_ONLY_WATER_TYPES                 <- "biophysical water consumption"
-
+COOLING_SYSTEM_LOGIT 				        <- -5    # Cooling system logit (Unitless)
+DRY_COOLING_EFF_ADJ 				        <- 0.95  # Dry cooling efficiency adjustment (Unitless)
+COOLING_SYSTEM_FCR                  <- 0.15  # Cooling system fixed charge rate (Unitless)
+COOLING_SYSTEM_CAPACITY_FACTOR      <- 0.6   # Cooling system capacity factor (Unitless)
 
 # Emissions constants ======================================================================
 
