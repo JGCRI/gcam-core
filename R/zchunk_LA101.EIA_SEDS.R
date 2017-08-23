@@ -62,7 +62,8 @@ module_gcam.usa_LA101.EIA_SEDS <- function(command, ...) {
       mutate(value = value * conv_Bbtu_EJ) %>%
       group_by(state, sector, fuel, year) %>%
       summarise(value = sum(value)) %>%
-      arrange(fuel, sector) ->
+      arrange(fuel, sector) %>%
+      ungroup() ->
       L101.inEIA_EJ_state_S_F
 
     # Create other output table: leave units as billion BTU, getting rid of missing values: prior to 1980, lots are missing. These data are only used for state-wise allocations

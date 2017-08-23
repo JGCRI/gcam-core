@@ -160,6 +160,7 @@ module_aglu_LA103.ag_R_C_Y_GLU <- function(command, ...) {
       L103.ag_HA_bm2_R_C_Y_GLU
 
     L103.ag_Yield_kgm2_R_C_Y_GLU %>%
+      ungroup() %>%
       add_title("Unadjusted agronomic yield by GCAM region / commodity / year / GLU") %>%
       add_units("kg/m2") %>%
       add_comments("Agricultural yield computed based on production and harvest area, and") %>%

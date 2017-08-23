@@ -147,7 +147,8 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
       select(-iso) %>%
       # sum by GCAM region, commodity, year, system, and feed
       group_by(GCAM_region_ID, GCAM_commodity, year, system, feed) %>%
-      summarise(value = sum(value)) ->
+      summarise(value = sum(value)) %>%
+      ungroup() ->
       L107.an_Prod_Mt_R_C_Sys_Fd_Y
 
     # take country level feed consumption data:
@@ -157,7 +158,8 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
       select(-iso) %>%
       # sum by GCAM region, commodity, year, system, and feed
       group_by(GCAM_region_ID, GCAM_commodity, year, system, feed) %>%
-      summarise(value = sum(value)) ->
+      summarise(value = sum(value)) %>%
+      ungroup() ->
       L107.an_Feed_Mt_R_C_Sys_Fd_Y
 
     # Lines 73-80 in original file
