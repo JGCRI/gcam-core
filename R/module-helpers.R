@@ -412,7 +412,7 @@ fill_exp_decay_extrapolate <- function(d, out_years) {
     # data as well as requested in out_years with the exception of the year (which
     # which is the column we are replicating on) and value which we would like to
     # just fill the missing values with NA (which is what complete does)
-    complete(tidyr::nesting_(select(., -year, -value)), year = union(year, out_years)) %>%
+    complete(tidyr::nesting_(paste0('`',names(.)[!(names(.) %in% c("year", "value"))], '`')), year = union(year, out_years)) %>%
     # for the purposes of interpolating (and later extrapolating) we would like
     # to just group by everything except year and value
     dplyr::group_by_(.dots=paste0('`',names(.)[!(names(.) %in% c("year", "value"))], '`')) %>%
