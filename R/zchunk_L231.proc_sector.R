@@ -18,7 +18,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RLH July 2017
-#' @export
 module_emissions_L231.proc_sector <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
@@ -33,7 +32,6 @@ module_emissions_L231.proc_sector <- function(command, ...) {
              FILE = "emissions/A31.globaltech_cost", # Units and source
              FILE = "emissions/A31.globaltech_coef", # Units and source
              FILE = "energy/A32.globaltech_eff", # Units and source
-             FILE = "emissions/mappings/GCAM_sector_tech",
              "L1322.in_EJ_R_indfeed_F_Yh",
              "L1322.in_EJ_R_indenergy_F_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -82,7 +80,6 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     A32.globaltech_eff <- get_data(all_data, "energy/A32.globaltech_eff") %>%
       gather(year, value, matches(YEAR_PATTERN)) %>%
       mutate(year = as.integer(year))
-    GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
     L1322.in_EJ_R_indfeed_F_Yh <- get_data(all_data, "L1322.in_EJ_R_indfeed_F_Yh")
     L1322.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L1322.in_EJ_R_indenergy_F_Yh")
 

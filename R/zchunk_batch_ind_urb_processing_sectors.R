@@ -72,21 +72,21 @@ module_emissions_batch_ind_urb_processing_sectors.xml <- function(command, ...) 
       ind_urb_processing_sectors.xml
 
     # Some data inputs may not actually contain data. If so, do not add_xml_data
-    if (names(L231.SubsectorShrwt_ind) != "x"){
+    if (!is.null(L231.SubsectorShrwt_urb_ind)){
       ind_urb_processing_sectors.xml <- ind_urb_processing_sectors.xml %>%
-        add_xml_data(L231.SubsectorShrwt_ind)
+        add_xml_data(L231.SubsectorShrwt_urb_ind, "SubsectorShrwt")
     }
-    if (names(L231.SubsectorShrwtFllt_urb_ind) != "x"){
+    if (!is.null(L231.SubsectorShrwtFllt_urb_ind)){
       ind_urb_processing_sectors.xml <- ind_urb_processing_sectors.xml %>%
-        add_xml_data(L231.SubsectorShrwtFllt_urb_ind)
+        add_xml_data(L231.SubsectorShrwtFllt_urb_ind, "SubsectorShrwtFllt")
     }
-    if (names(L231.SubsectorInterp_urb_ind) != "x"){
+    if (!is.null(L231.SubsectorInterp_urb_ind)){
       ind_urb_processing_sectors.xml <- ind_urb_processing_sectors.xml %>%
-        add_xml_data(L231.SubsectorInterp_urb_ind)
+        add_xml_data(L231.SubsectorInterp_urb_ind, "SubsectorInterp")
     }
-    if (names(L231.SubsectorInterpTo_urb_ind) != "x"){
+    if (!is.null(L231.SubsectorInterpTo_urb_ind)){
       ind_urb_processing_sectors.xml <- ind_urb_processing_sectors.xml %>%
-        add_xml_data(L231.SubsectorInterpTo_urb_ind)
+        add_xml_data(L231.SubsectorInterpTo_urb_ind, "SubsectorInterpTo")
     }
 
     return_data(ind_urb_processing_sectors.xml)
