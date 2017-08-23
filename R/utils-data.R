@@ -221,11 +221,15 @@ return_data <- function(...) {
   # behavior, especially for unsuspecting chunks which may use it down
   # the line not expecting any groupings.
   lapply(names(dots), function(dname) {
-    # note we wrap the assert in a tryCatch since groups will throw an
-    # error for types it does not know about such as a list() however
-    # in those cases we are happy to just skip the check anyhow
-    assert_that(is.null(tryCatch(groups(dots[[dname]]), error=function(e){NULL})), msg =
-      paste0(dname, " is grouped which is not allowed in return_data, please ungroup()"))
+    # note we may return data which are not tibbles however for any
+    # data which group_by had been called on is_tibble will return
+    # true including for instance data.tables
+    # any other data could not possibly be grouped so we can skip the
+    # check for them
+    if(is_tibble(dots[[dname]])) {
+      assert_that(is.null(groups(dots[[dname]])), msg =
+        paste0(dname, " is grouped which is not allowed in return_data, please ungroup()"))
+    }
   })
   dots
 }
