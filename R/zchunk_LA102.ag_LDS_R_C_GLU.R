@@ -65,6 +65,7 @@ module_aglu_LA102.ag_LDS_R_C_GLU <- function(command, ...) {
       group_by(GCAM_region_ID, GCAM_commodity, GLU) %>%
       # aggregate to the GCAM region, commodity, GLU level:
       summarise(value = sum(value)) %>%
+      ungroup() %>%
       # convert units from hectares (ha) to thou km^2 (=billion m^2, bm2):
       mutate(value = value * CONV_HA_BM2)  %>%
       # omit na values, since they do not appear in the original table:
@@ -86,6 +87,7 @@ module_aglu_LA102.ag_LDS_R_C_GLU <- function(command, ...) {
       group_by(GCAM_region_ID, GCAM_commodity, GLU) %>%
       # aggregate to the GCAM region, commodity, GLU level:
       summarise(value = sum(value)) %>%
+      ungroup() %>%
       # convert units from ton (t) to Megatons (Mt):
       mutate(value = value * CONV_TON_MEGATON) %>%
       # omit na values, since they do not appear in the original table:
