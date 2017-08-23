@@ -217,6 +217,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
       # interpolate out to that convergence year
       group_by(GCAM_region_ID, GCAM_demand) %>%
       mutate(demand_kcal = approx_fun(year, demand_kcal)) %>%
+      ungroup() %>%
       filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS)) ->
       L134.pcFood_kcald_R_Dmnd_Y
 

@@ -278,6 +278,7 @@ module_aglu_L203.demand_input <- function(command, ...) {
       group_by(region, supplysector, year) %>%
       # Sum the total of all commodities by region and supply sector
       summarise(calOutputValue = sum(calOutputValue)) %>%
+      ungroup() %>%
       rename(energy.final.demand = supplysector, base.service = calOutputValue) %>%
       filter(!region %in% aglu.NO_AGLU_REGIONS) %>%           # Remove any regions for which agriculture and land use are not modeled
       filter(year %in% BASE_YEARS) ->                         # ALSO SUBSET THE CALIBRATION TABLES TO ONLY THE MODEL BASE YEARS
@@ -327,6 +328,7 @@ module_aglu_L203.demand_input <- function(command, ...) {
       # Calculate per capita food demand changes (ratios)
       mutate(ratio = value / lag(value)) %>%
       replace_na(list(ratio = 1)) %>%
+      ungroup() %>%
       select(-value) ->
       L203.pcFoodRatio_R_Dmnd_Yfut
 

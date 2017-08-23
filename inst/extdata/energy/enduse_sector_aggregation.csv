@@ -1,1 +1,24 @@
-# File: enduse_sector_aggregation.csv# Title: Mapping from first intermediate sector to aggregated intermediate sector# Units: Nonesector,sector_aggin_bld_comm,in_bld_commin_bld_resid,in_bld_residin_industry_agriculture,in_industry_energyin_industry_chp,in_industry_energyin_industry_ctl,in_industry_energyin_industry_energy distribution,in_industry_energyin_industry_feedstocks,in_industry_feedstocksin_industry_general,in_industry_energyin_industry_gtl,in_industry_energyin_industry_ownuse,in_industry_energyin_industry_pipeline,in_industry_energyin_trn_domestic air,in_trn_domestic airin_trn_domestic ship,in_trn_domestic shipin_trn_international air,in_trn_international airin_trn_international ship,in_trn_international shipin_trn_rail,in_trn_railin_trn_road,in_trn_roadin_trn_unspecified,in_trn_unspecifiednet_industry_energy transformation,in_industry_energynet_industry_oil refining,in_industry_energy
+# File: enduse_sector_aggregation.csv
+# Title: Mapping from first intermediate sector to aggregated intermediate sector
+# Units: None
+sector,sector_agg
+in_bld_comm,in_bld_comm
+in_bld_resid,in_bld_resid
+in_industry_agriculture,in_industry_energy
+in_industry_chp,in_industry_energy
+in_industry_ctl,in_industry_energy
+in_industry_energy distribution,in_industry_energy
+in_industry_feedstocks,in_industry_feedstocks
+in_industry_general,in_industry_energy
+in_industry_gtl,in_industry_energy
+in_industry_ownuse,in_industry_energy
+in_industry_pipeline,in_industry_energy
+in_trn_domestic air,in_trn_domestic air
+in_trn_domestic ship,in_trn_domestic ship
+in_trn_international air,in_trn_international air
+in_trn_international ship,in_trn_international ship
+in_trn_rail,in_trn_rail
+in_trn_road,in_trn_road
+in_trn_unspecified,in_trn_unspecified
+net_industry_energy transformation,in_industry_energy
+net_industry_oil refining,in_industry_energy

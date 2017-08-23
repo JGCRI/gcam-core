@@ -1,1 +1,61 @@
-# Mapping between the sectors / services / fuels in Level1 processing to the technology names in GCAM,,,,,,# Source: Tables_Bld_Data.xlsx,,,,,,supplysector,subsector,technology,minicam.energy.input,sector,fuel,serviceresid heating,biomass,wood furnace,delivered biomass,resid,biomass,resid heatingresid heating,coal,coal furnace,delivered coal,resid,coal,resid heatingresid heating,gas,gas furnace,delivered gas,resid,gas,resid heatingresid heating,gas,gas furnace hi-eff,delivered gas,resid,gas,resid heatingresid heating,electricity,electric furnace,elect_td_bld,resid,electricity,resid heatingresid heating,electricity,electric heat pump,elect_td_bld,resid,electricity,resid heatingresid heating,refined liquids,fuel furnace,refined liquids enduse,resid,refined liquids,resid heatingresid heating,refined liquids,fuel furnace hi-eff,refined liquids enduse,resid,refined liquids,resid heatingresid cooling,electricity,air conditioning,elect_td_bld,resid,electricity,resid coolingresid cooling,electricity,air conditioning hi-eff,elect_td_bld,resid,electricity,resid coolingresid hot water,gas,gas water heater,delivered gas,resid,gas,resid hot waterresid hot water,gas,gas water heater hi-eff,delivered gas,resid,gas,resid hot waterresid hot water,electricity,electric resistance water heater,elect_td_bld,resid,electricity,resid hot waterresid hot water,electricity,electric resistance water heater hi-eff,elect_td_bld,resid,electricity,resid hot waterresid hot water,electricity,electric heat pump water heater,elect_td_bld,resid,electricity,resid hot waterresid hot water,refined liquids,fuel water heater,refined liquids enduse,resid,refined liquids,resid hot waterresid hot water,refined liquids,fuel water heater hi-eff,refined liquids enduse,resid,refined liquids,resid hot waterresid lighting,electricity,incandescent,elect_td_bld,resid,electricity,resid lightingresid lighting,electricity,fluorescent,elect_td_bld,resid,electricity,resid lightingresid lighting,electricity,solid state,elect_td_bld,resid,electricity,resid lightingresid appliances,gas,gas appliances,delivered gas,resid,gas,resid appliancesresid appliances,electricity,electric appliances,elect_td_bld,resid,electricity,resid appliancesresid appliances,electricity,electric appliances hi-eff,elect_td_bld,resid,electricity,resid appliancesresid appliances,refined liquids,fuel appliances,refined liquids enduse,resid,refined liquids,resid appliancesresid other appliances,electricity,electricity,elect_td_bld,resid,electricity,resid other appliancesresid other,gas,gas,delivered gas,resid,gas,resid otherresid other,electricity,electricity,elect_td_bld,resid,electricity,resid otherresid other,refined liquids,refined liquids,refined liquids enduse,resid,refined liquids,resid othercomm heating,biomass,wood furnace,delivered biomass,comm,biomass,comm heatingcomm heating,coal,coal furnace,delivered coal,comm,coal,comm heatingcomm heating,gas,gas furnace,delivered gas,comm,gas,comm heatingcomm heating,gas,gas furnace hi-eff,delivered gas,comm,gas,comm heatingcomm heating,electricity,electric furnace,elect_td_bld,comm,electricity,comm heatingcomm heating,electricity,electric heat pump,elect_td_bld,comm,electricity,comm heatingcomm heating,refined liquids,fuel boiler,refined liquids enduse,comm,refined liquids,comm heatingcomm heating,refined liquids,fuel boiler hi-eff,refined liquids enduse,comm,refined liquids,comm heatingcomm cooling,gas,gas cooling,delivered gas,comm,gas,comm coolingcomm cooling,electricity,air conditioning,elect_td_bld,comm,electricity,comm coolingcomm cooling,electricity,air conditioning hi-eff,elect_td_bld,comm,electricity,comm coolingcomm hot water,gas,gas water heater,delivered gas,comm,gas,comm hot watercomm hot water,gas,gas water heater hi-eff,delivered gas,comm,gas,comm hot watercomm hot water,electricity,electric resistance water heater,elect_td_bld,comm,electricity,comm hot watercomm hot water,electricity,electric heat pump water heater,elect_td_bld,comm,electricity,comm hot watercomm hot water,refined liquids,fuel water heater,refined liquids enduse,comm,refined liquids,comm hot watercomm ventilation,electricity,ventilation,elect_td_bld,comm,electricity,comm ventilationcomm ventilation,electricity,ventilation hi-eff,elect_td_bld,comm,electricity,comm ventilationcomm cooking,gas,gas stove,delivered gas,comm,gas,comm cookingcomm cooking,electricity,electric stove,elect_td_bld,comm,electricity,comm cookingcomm lighting,electricity,incandescent,elect_td_bld,comm,electricity,comm lightingcomm lighting,electricity,fluorescent,elect_td_bld,comm,electricity,comm lightingcomm lighting,electricity,solid state,elect_td_bld,comm,electricity,comm lightingcomm refrigeration,electricity,refrigeration,elect_td_bld,comm,electricity,comm refrigerationcomm refrigeration,electricity,refrigeration hi-eff,elect_td_bld,comm,electricity,comm refrigerationcomm office,electricity,office equipment,elect_td_bld,comm,electricity,comm officecomm other,gas,gas,delivered gas,comm,gas,comm othercomm other,electricity,electricity,elect_td_bld,comm,electricity,comm othercomm other,refined liquids,refined liquids,refined liquids enduse,comm,refined liquids,comm othercomm non-building,electricity,electricity,elect_td_bld,comm,electricity,comm non-building
+# Mapping between the sectors / services / fuels in Level1 processing to the technology names in GCAM,,,,,,
+# Source: Tables_Bld_Data.xlsx,,,,,,
+supplysector,subsector,technology,minicam.energy.input,sector,fuel,service
+resid heating,biomass,wood furnace,delivered biomass,resid,biomass,resid heating
+resid heating,coal,coal furnace,delivered coal,resid,coal,resid heating
+resid heating,gas,gas furnace,delivered gas,resid,gas,resid heating
+resid heating,gas,gas furnace hi-eff,delivered gas,resid,gas,resid heating
+resid heating,electricity,electric furnace,elect_td_bld,resid,electricity,resid heating
+resid heating,electricity,electric heat pump,elect_td_bld,resid,electricity,resid heating
+resid heating,refined liquids,fuel furnace,refined liquids enduse,resid,refined liquids,resid heating
+resid heating,refined liquids,fuel furnace hi-eff,refined liquids enduse,resid,refined liquids,resid heating
+resid cooling,electricity,air conditioning,elect_td_bld,resid,electricity,resid cooling
+resid cooling,electricity,air conditioning hi-eff,elect_td_bld,resid,electricity,resid cooling
+resid hot water,gas,gas water heater,delivered gas,resid,gas,resid hot water
+resid hot water,gas,gas water heater hi-eff,delivered gas,resid,gas,resid hot water
+resid hot water,electricity,electric resistance water heater,elect_td_bld,resid,electricity,resid hot water
+resid hot water,electricity,electric resistance water heater hi-eff,elect_td_bld,resid,electricity,resid hot water
+resid hot water,electricity,electric heat pump water heater,elect_td_bld,resid,electricity,resid hot water
+resid hot water,refined liquids,fuel water heater,refined liquids enduse,resid,refined liquids,resid hot water
+resid hot water,refined liquids,fuel water heater hi-eff,refined liquids enduse,resid,refined liquids,resid hot water
+resid lighting,electricity,incandescent,elect_td_bld,resid,electricity,resid lighting
+resid lighting,electricity,fluorescent,elect_td_bld,resid,electricity,resid lighting
+resid lighting,electricity,solid state,elect_td_bld,resid,electricity,resid lighting
+resid appliances,gas,gas appliances,delivered gas,resid,gas,resid appliances
+resid appliances,electricity,electric appliances,elect_td_bld,resid,electricity,resid appliances
+resid appliances,electricity,electric appliances hi-eff,elect_td_bld,resid,electricity,resid appliances
+resid appliances,refined liquids,fuel appliances,refined liquids enduse,resid,refined liquids,resid appliances
+resid other appliances,electricity,electricity,elect_td_bld,resid,electricity,resid other appliances
+resid other,gas,gas,delivered gas,resid,gas,resid other
+resid other,electricity,electricity,elect_td_bld,resid,electricity,resid other
+resid other,refined liquids,refined liquids,refined liquids enduse,resid,refined liquids,resid other
+comm heating,biomass,wood furnace,delivered biomass,comm,biomass,comm heating
+comm heating,coal,coal furnace,delivered coal,comm,coal,comm heating
+comm heating,gas,gas furnace,delivered gas,comm,gas,comm heating
+comm heating,gas,gas furnace hi-eff,delivered gas,comm,gas,comm heating
+comm heating,electricity,electric furnace,elect_td_bld,comm,electricity,comm heating
+comm heating,electricity,electric heat pump,elect_td_bld,comm,electricity,comm heating
+comm heating,refined liquids,fuel boiler,refined liquids enduse,comm,refined liquids,comm heating
+comm heating,refined liquids,fuel boiler hi-eff,refined liquids enduse,comm,refined liquids,comm heating
+comm cooling,gas,gas cooling,delivered gas,comm,gas,comm cooling
+comm cooling,electricity,air conditioning,elect_td_bld,comm,electricity,comm cooling
+comm cooling,electricity,air conditioning hi-eff,elect_td_bld,comm,electricity,comm cooling
+comm hot water,gas,gas water heater,delivered gas,comm,gas,comm hot water
+comm hot water,gas,gas water heater hi-eff,delivered gas,comm,gas,comm hot water
+comm hot water,electricity,electric resistance water heater,elect_td_bld,comm,electricity,comm hot water
+comm hot water,electricity,electric heat pump water heater,elect_td_bld,comm,electricity,comm hot water
+comm hot water,refined liquids,fuel water heater,refined liquids enduse,comm,refined liquids,comm hot water
+comm ventilation,electricity,ventilation,elect_td_bld,comm,electricity,comm ventilation
+comm ventilation,electricity,ventilation hi-eff,elect_td_bld,comm,electricity,comm ventilation
+comm cooking,gas,gas stove,delivered gas,comm,gas,comm cooking
+comm cooking,electricity,electric stove,elect_td_bld,comm,electricity,comm cooking
+comm lighting,electricity,incandescent,elect_td_bld,comm,electricity,comm lighting
+comm lighting,electricity,fluorescent,elect_td_bld,comm,electricity,comm lighting
+comm lighting,electricity,solid state,elect_td_bld,comm,electricity,comm lighting
+comm refrigeration,electricity,refrigeration,elect_td_bld,comm,electricity,comm refrigeration
+comm refrigeration,electricity,refrigeration hi-eff,elect_td_bld,comm,electricity,comm refrigeration
+comm office,electricity,office equipment,elect_td_bld,comm,electricity,comm office
+comm other,gas,gas,delivered gas,comm,gas,comm other
+comm other,electricity,electricity,elect_td_bld,comm,electricity,comm other
+comm other,refined liquids,refined liquids,refined liquids enduse,comm,refined liquids,comm other
+comm non-building,electricity,electricity,elect_td_bld,comm,electricity,comm non-building
