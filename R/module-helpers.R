@@ -184,12 +184,14 @@ set_traded_names <- function(data, GCAM_region_names, apply_selected_only = TRUE
 #' @note The returned 'numerical' values are actually characters; this helper function doesn't touch column types.
 set_years <- function(data) {
   assert_that(is_tibble(data))
-  data[data == "start-year"] <- min(BASE_YEARS)
-  data[data == "final-calibration-year"] <- max(BASE_YEARS)
-  data[data == "final-historical-year"] <- max(HISTORICAL_YEARS)
-  data[data == "initial-future-year"] <- min(FUTURE_YEARS)
-  data[data == "initial-nonhistorical-year"] <- min(MODEL_YEARS[MODEL_YEARS > max(HISTORICAL_YEARS)])
-  data[data == "end-year"] <- max(FUTURE_YEARS)
+  if(nrow(data)) {
+    data[data == "start-year"] <- min(BASE_YEARS)
+    data[data == "final-calibration-year"] <- max(BASE_YEARS)
+    data[data == "final-historical-year"] <- max(HISTORICAL_YEARS)
+    data[data == "initial-future-year"] <- min(FUTURE_YEARS)
+    data[data == "initial-nonhistorical-year"] <- min(MODEL_YEARS[MODEL_YEARS > max(HISTORICAL_YEARS)])
+    data[data == "end-year"] <- max(FUTURE_YEARS)
+  }
   data
 }
 
