@@ -216,7 +216,6 @@ module_energy_LA118.hydro <- function(command, ...) {
         ungroup %>%
         mutate(sector = "electricity generation", fuel = "hydro") %>%
         select(GCAM_region_ID, sector, fuel, year, value) %>%
-
         add_title("L118.out_EJ_R_elec_hydro_Yfut") ->
         L118.out_EJ_R_elec_hydro_Yfut
     }
