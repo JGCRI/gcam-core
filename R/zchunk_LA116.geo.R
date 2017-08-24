@@ -50,11 +50,11 @@ module_energy_LA116.geo <- function(command, ...) {
     # is the standard in GCAM as long as the model has existed, but still this needs to be
     # confirmed in this initial check
 
-    if(n_distinct(A16.geo_curves[ c("grade", "extractioncost")]) > n_distinct(A16.geo_curves$grade)){
-      stop( "The geothermal (hydrothermal) supply curves have regionally differentiated price points" )
+    if(n_distinct(A16.geo_curves[ c("grade", "extractioncost")]) > n_distinct(A16.geo_curves$grade)) {
+      stop("The geothermal (hydrothermal) supply curves have regionally differentiated price points")
     }
-    if(n_distinct(A16.EGS_curves[ c("grade", "extractioncost")]) > n_distinct( A16.EGS_curves$grade)){
-      stop( "The geothermal (EGS) supply curves have regionally differentiated price points" )
+    if(n_distinct(A16.EGS_curves[ c("grade", "extractioncost")]) > n_distinct( A16.EGS_curves$grade)) {
+      stop("The geothermal (EGS) supply curves have regionally differentiated price points")
     }
 
     # Downscale GCAM 3.0 geothermal resources to countries on the basis of land area
@@ -69,7 +69,7 @@ module_energy_LA116.geo <- function(command, ...) {
 
     Land_type_area_ha %>%
       filter(year == geo_land_year) %>%
-      group_by( iso ) %>%
+      group_by(iso) %>%
       summarise(value = as.numeric(sum(value))) %>%
       left_join_error_no_match(iso_GCAM_regID[c("iso", "region_GCAM3", GCAM_REGION_ID)], by = "iso") ->
       L116.land_ctry
@@ -82,7 +82,7 @@ module_energy_LA116.geo <- function(command, ...) {
     L116.land_ctry %>%
       full_join(L116.land_rg3, by = "region_GCAM3") %>%
       mutate(share = value / sumvalue) %>%
-      select( -value, -sumvalue ) ->
+      select(-value, -sumvalue) ->
       L116.land_share_ctry_rg3
 
     # Repeat land area shares by the number of grades in the hydrothermal geothermal resource assumptions
@@ -102,7 +102,7 @@ module_energy_LA116.geo <- function(command, ...) {
 
     # Specify the names of the resource table that will be written out
     L116.geothermal_rgn %>%
-      select( GCAM_region_ID, resource, subresource, grade, available, extractioncost ) %>%
+      select(GCAM_region_ID, resource, subresource, grade, available, extractioncost) %>%
       # Documentation
       add_title("Hydrothermal geothermal supply curves by GCAM region") %>%
       add_units("EJ/yr") %>%
@@ -129,7 +129,7 @@ module_energy_LA116.geo <- function(command, ...) {
       L116.EGS_rgn
 
     L116.EGS_rgn %>%
-      select( GCAM_region_ID, resource, subresource, grade, available, extractioncost ) %>%
+      select(GCAM_region_ID, resource, subresource, grade, available, extractioncost) %>%
       # Documentation
       add_title("Enhanced Geothermal Systems (EGS) supply curves by GCAM region") %>%
       add_units("EJ/yr") %>%

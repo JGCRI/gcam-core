@@ -92,7 +92,7 @@ module_emissions_L114.bcoc_en_R_S_T_Y <- function(command, ...) {
       mutate(scaled_emissions = scaled_emissions * CONV_KG_TO_TG)
     # We only want to drop the Bahamas so that the oldnew comparison check works. The RCP_BC_2000 and RCP_OC_2000 files
     # have been modified from the old data system, in that the "#N/A" for the iso of The Bahamas has been replaced with "bhs".
-    if(OLD_DATA_SYSTEM_BEHAVIOR){
+    if(OLD_DATA_SYSTEM_BEHAVIOR) {
       BCOC_emissions_RCP <- subset( BCOC_emissions_RCP, iso != "bhs")
     }
     BCOC_emissions_RCP <- BCOC_emissions_RCP %>%

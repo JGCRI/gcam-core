@@ -130,7 +130,7 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
 
     # Solve for share of first technology to be used to estimate gas technology inputs
     L1231.eff_R_elec_gas_Yh_gathered %>%
-      mutate(share_tech1 = (efficiency - efficiency_tech2) / ( efficiency_tech1 - efficiency_tech2 )) -> L1231.eff_R_elec_gas_Yh_gathered
+      mutate(share_tech1 = (efficiency - efficiency_tech2) / (efficiency_tech1 - efficiency_tech2)) -> L1231.eff_R_elec_gas_Yh_gathered
 
     # Use share obtained above to get inputs of gas by technology
     L1231.eff_R_elec_gas_Yh_gathered %>%

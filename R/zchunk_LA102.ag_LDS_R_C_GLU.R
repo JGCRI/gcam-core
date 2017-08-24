@@ -47,9 +47,9 @@ module_aglu_LA102.ag_LDS_R_C_GLU <- function(command, ...) {
     # harvested area table, L100.LDS_ag_HA_ha
     # agricultural production table, L100.LDS_ag_prod_t
     #
-    # printlog( "Adding GCAM region and commodity info to LDS tables" )
-    # printlog( "Collapsing production and harvested area data to GCAM regions and commodities")
-    # printlog( "Converting GTAP mass to Mt and area to thousand km2 (billion m2, or bm2)")
+    # Add GCAM region and commodity info to LDS tables
+    # Collapse production and harvested area data to GCAM regions and commodities
+    # Convert GTAP mass to Mt and area to thousand km2 (billion m2, or bm2)
 
     # Take the harvested area table, L100.LDS_ag_HA_ha
     L100.LDS_ag_HA_ha %>%
@@ -60,7 +60,8 @@ module_aglu_LA102.ag_LDS_R_C_GLU <- function(command, ...) {
       # append GCAM_commodity information from the FAO table using a left_join to preserve NA values as in old system:
       left_join(., FAO_ag_items_PRODSTAT, by = c("GTAP_crop")) %>%
       # select only the relevant columns; iso and GTAP_crop are dropped because they are ommitted from the aggregation:
-      ungroup () %>% select(GCAM_region_ID, GCAM_commodity,GLU, value ) %>%
+      ungroup() %>%
+      select(GCAM_region_ID, GCAM_commodity,GLU, value) %>%
       # group by GCAM region, GCAM commodity, and GLU for the aggregation:
       group_by(GCAM_region_ID, GCAM_commodity, GLU) %>%
       # aggregate to the GCAM region, commodity, GLU level:
@@ -82,7 +83,8 @@ module_aglu_LA102.ag_LDS_R_C_GLU <- function(command, ...) {
       # append GCAM_commodity information from the FAO table using a left_join to preserve NA values as in old system:
       left_join(., FAO_ag_items_PRODSTAT, by = c("GTAP_crop")) %>%
       # select only the relevant columns; iso and GTAP_crop are dropped because they are ommitted from the aggregation:
-      ungroup () %>% select(GCAM_region_ID, GCAM_commodity,GLU, value ) %>%
+      ungroup() %>%
+      select(GCAM_region_ID, GCAM_commodity,GLU, value) %>%
       # group by GCAM region, GCAM commodity, and GLU for the aggregation:
       group_by(GCAM_region_ID, GCAM_commodity, GLU) %>%
       # aggregate to the GCAM region, commodity, GLU level:

@@ -75,7 +75,7 @@ module_emissions_L121.nonco2_awb_R_S_T_Y <- function(command, ...) {
     # If excluded, then the harvest index could be greater than 1 (if the tubers weigh more than the above-ground shoots), and the above calculation would
     # return a negative number. None of the crops in the underlying harvested index database have values greater than 1 so this isn't currently an issue.
     L121.ag_ExcessDryBiomass_Mt_R_C_Y_GLU_replaced %>%
-      mutate(burnable = ((value / HarvestIndex) - value ) * (1 - WaterContent)) ->
+      mutate(burnable = ((value / HarvestIndex) - value) * (1 - WaterContent)) ->
       L121.ag_ExcessDryBiomass_Mt_R_C_Y_GLU_burn
 
     # Aggregate the burnable excess biomass by GCAM region and year.
