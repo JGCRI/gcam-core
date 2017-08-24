@@ -71,10 +71,10 @@ module_energy_L225.hydrogen <- function(command, ...) {
       L225.SubsectorLogit_h2
 
     # L225.SubsectorShrwt_h2 and L225.SubsectorShrwtFllt_h2: Subsector shareweights of hydrogen sectors
-    L225.SubsectorShrwt_h2 <- tibble(x = NA)  # placeholder empty table
-    A25.subsector_shrwt %>%
-      filter(!is.na(year)) %>%
-      write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwt"]], GCAM_region_names) ->
+    tibble(x = NA) %>%
+      add_units("None") %>%
+      add_comments("Not generated") %>%
+      add_flags(FLAG_NO_TEST) ->
       L225.SubsectorShrwt_h2
 
     L225.SubsectorShrwtFllt_h2 <- tibble(x = NA)
@@ -83,19 +83,18 @@ module_energy_L225.hydrogen <- function(command, ...) {
       write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]], GCAM_region_names) ->
       L225.SubsectorShrwtFllt_h2
 
-
     # L225.SubsectorInterp_h2 and L225.SubsectorInterpTo_h2: Subsector shareweight interpolation of hydrogen sectors
-    L225.SubsectorInterp_h2 <- tibble(x = NA)
-    A25.subsector_interp %>%
-      filter(!is.na(to.value)) %>%
-      write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorInterp"]], GCAM_region_names)->
+    tibble(x = NA) %>%
+      add_units("None") %>%
+      add_comments("Not generated") %>%
+      add_flags(FLAG_NO_TEST) ->
       L225.SubsectorInterp_h2
 
-    L225.SubsectorInterpTo_h2 <- tibble(x = NA)
-    A25.subsector_interp %>%
-      filter(!is.na(to.value)) %>%
-      write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorInterpTo"]], GCAM_region_names) ->
-        L225.SubsectorInterpTo_h2
+    tibble(x = NA) %>%
+      add_units("None") %>%
+      add_comments("Not generated") %>%
+      add_flags(FLAG_NO_TEST) ->
+      L225.SubsectorInterpTo_h2
 
     # 1c. Technology information
 
@@ -108,12 +107,12 @@ module_energy_L225.hydrogen <- function(command, ...) {
 
     # L225.GlobalTechEff_h2: Energy inputs and efficiencies of global technologies for hydrogen
     # Efficiencies of global technologies
-    # Notes of the workflow: The below pipeline section functions as the interpolate_and_melt
+    # Notes of the workflow: The pipeline below functions as the interpolate_and_melt
     #                        function in the old data system. The pipeline first extracts the years
     #                        needed in interpolation then constructs the layout with proper id tags (columns)
     #                        for interpolation years, and finally performs interpolation using 'rule=1' as in
     #                        old data system. For more information about 'rule' please see ?approx_fun.
-    #                        Same workflow applys for serval places in this chunk.
+    #                        Same workflow applies at several places in this chunk.
 
     A25.globaltech_eff %>%
       gather(year, efficiency, matches(YEAR_PATTERN)) %>%
@@ -131,6 +130,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
       group_by(supplysector, subsector, technology, minicam.energy.input) %>%
       mutate(efficiency = approx_fun(year, efficiency, rule = 1)) %>%
       mutate(efficiency = round(efficiency,energy.DIGITS_EFFICIENCY)) %>%
+      ungroup %>%
       filter(year %in% c(BASE_YEARS, FUTURE_YEARS)) %>%
       # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
       rename(sector.name = supplysector, subsector.name = subsector) ->
@@ -154,6 +154,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
       group_by(supplysector, subsector, technology, minicam.non.energy.input) %>%
       mutate(input.cost = approx_fun(year, input.cost, rule = 1)) %>%
       mutate(input.cost = round(input.cost,energy.DIGITS_COST)) %>%
+      ungroup %>%
       filter(year %in% c(BASE_YEARS,FUTURE_YEARS)) %>%
       # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
       rename(sector.name = supplysector, subsector.name = subsector) ->
@@ -176,6 +177,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
       bind_rows(A25.globaltech_shrwt_raw_long) %>%
       group_by(supplysector, subsector, technology) %>%
       mutate(share.weight = approx_fun(year, share.weight, rule = 1)) %>%
+      ungroup %>%
       filter(year %in% c(BASE_YEARS, FUTURE_YEARS)) %>%
       # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
       rename(sector.name = supplysector, subsector.name = subsector) ->
@@ -216,6 +218,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
       group_by(supplysector, subsector, technology) %>%
       mutate(remove.fraction = approx_fun(year, remove.fraction, rule = 1)) %>%
       mutate(remove.fraction = round(remove.fraction,energy.DIGITS_REMOVE.FRACTION)) %>%
+      ungroup %>%
       filter(year %in% FUTURE_YEARS) %>%
       # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
       rename(sector.name = supplysector, subsector.name = subsector) %>%
@@ -263,7 +266,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
       add_units("unitless") %>%
       add_comments("Expand Subsector shareweight interpolation for all GCAM regions") %>%
       add_legacy_name("L225.SubsectorInterp_h2") %>%
-      add_precursors("common/GCAM_region_names", "A25.subsector_interp") ->
+      add_precursors("common/GCAM_region_names") ->
       L225.SubsectorInterp_h2
 
     L225.SubsectorInterpTo_h2 %>%
@@ -271,7 +274,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
       add_units("unitless") %>%
       add_comments("Expand Subsector shareweight interpolation for all GCAM regions") %>%
       add_legacy_name("L225.SubsectorInterpTo_h2") %>%
-      add_precursors("common/GCAM_region_names", "A25.subsector_interp") ->
+      add_precursors("common/GCAM_region_names") ->
       L225.SubsectorInterpTo_h2
 
     L225.StubTech_h2 %>%
