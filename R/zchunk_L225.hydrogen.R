@@ -42,6 +42,11 @@ module_energy_L225.hydrogen <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    year.fillout <- technology <- year <- efficiency <- supplysector <-
+      subsector <- minicam.energy.input <- input.cost <- minicam.non.energy.input <-
+      share.weight <- primary.renewable <- average.fossil.efficiency <-
+      remove.fraction <- NULL  # silence package check notes
+
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A25.sector <- get_data(all_data, "energy/A25.sector")
