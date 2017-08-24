@@ -18,10 +18,10 @@ the generated outputs: \code{L252.ResMAC_fos}, \code{L252.AgMAC}, \code{L252.MAC
 original data system was \code{L252.MACC.R} (emissions level2).
 }
 \description{
-Briefly describe what this chunk does.
+Creates marginal abatement cost curves "MACC", for fossil resources, agriculture, animals, and processing.
 }
 \details{
-Describe in detail what this chunk does.
+Creates marginal abatement cost curves "MACC", for fossil resources, agriculture, animals, and processing.
 }
 \author{
 RH August 2017

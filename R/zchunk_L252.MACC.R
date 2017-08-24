@@ -1,6 +1,6 @@
 #' module_emissions_L252.MACC
 #'
-#' Briefly describe what this chunk does.
+#' Creates marginal abatement cost curves "MACC", for fossil resources, agriculture, animals, and processing.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,12 +8,11 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L252.ResMAC_fos}, \code{L252.AgMAC}, \code{L252.MAC_an}, \code{L252.MAC_prc}, \code{L252.MAC_higwp}, \code{L252.MAC_Ag_TC_SSP1}, \code{L252.MAC_An_TC_SSP1}, \code{L252.MAC_prc_TC_SSP1}, \code{L252.MAC_res_TC_SSP1}, \code{L252.MAC_Ag_TC_SSP2}, \code{L252.MAC_An_TC_SSP2}, \code{L252.MAC_prc_TC_SSP2}, \code{L252.MAC_res_TC_SSP2}, \code{L252.MAC_Ag_TC_SSP5}, \code{L252.MAC_An_TC_SSP5}, \code{L252.MAC_prc_TC_SSP5}, \code{L252.MAC_res_TC_SSP5}. The corresponding file in the
 #' original data system was \code{L252.MACC.R} (emissions level2).
-#' @details Describe in detail what this chunk does.
+#' @details Creates marginal abatement cost curves "MACC", for fossil resources, agriculture, animals, and processing.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RH August 2017
-#' @export
 module_emissions_L252.MACC <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "emissions/A_regions",
@@ -68,29 +67,35 @@ module_emissions_L252.MACC <- function(command, ...) {
 
     # ===================================================
     # Prepare the table with all MAC curves for matching
+    # This contains all tax and mac.reduction values
     L252.MAC_pct_R_S_Proc_EPA <- L152.MAC_pct_R_S_Proc_EPA %>%
       gather(tax, mac.reduction, matches("[0-9]+")) %>%
       mutate(tax = as.numeric(tax)) %>%
       rename(mac.control = Process)
 
+    MAC_taxes <- unique(L252.MAC_pct_R_S_Proc_EPA$tax)
+
+    # This is a function to add in the mac.reduction curves to data
+    # Function needed because these steps are repeated 5 times
     mac_reduction_adder <- function(df, order, error_no_match = T){
       df <- df %>%
+        # Add tax values
         repeat_add_columns(tibble(tax = MAC_taxes)) %>%
         arrange_("region", order) %>%
+        # Join in EPA regions
         left_join_error_no_match(A_regions %>%
                                    select(region, EPA_region = MAC_region),
                                  by = "region")
-
+      # Next, add in mac.reduction values
       if (error_no_match){
+        # Usually we use left_join_error_no_match
         df <- df %>%
-          left_join_error_no_match(L252.MAC_pct_R_S_Proc_EPA,
-                                              by = c("EPA_region", "mac.control", "tax"))  %>%
+          left_join_error_no_match(L252.MAC_pct_R_S_Proc_EPA, by = c("EPA_region", "mac.control", "tax"))  %>%
           mutate(mac.reduction = round(mac.reduction, 3))
-
       } else {
+        # There are times where the data does not match, so using left_join is necessary
         df <- df %>%
-          left_join(L252.MAC_pct_R_S_Proc_EPA,
-                                   by = c("EPA_region", "mac.control", "tax"))  %>%
+          left_join(L252.MAC_pct_R_S_Proc_EPA, by = c("EPA_region", "mac.control", "tax"))  %>%
                       mutate(mac.reduction = round(mac.reduction, 3))
       }
       return(df)
@@ -98,11 +103,10 @@ module_emissions_L252.MACC <- function(command, ...) {
 
     # L252.ResMAC_fos: Fossil resource MAC curves
     # NOTE: only applying the fossil resource MAC curves to the CH4 emissions
-    MAC_taxes <- unique(L252.MAC_pct_R_S_Proc_EPA$tax)
-
     L252.ResMAC_fos <- L201.ghg_res %>%
       select(-emiss.coef) %>%
       filter(Non.CO2 == "CH4") %>%
+      # Add in mac.control
       left_join_error_no_match(GCAM_sector_tech %>%
                                  filter(sector == "out_resources") %>%
                                  select(mac.control = EPA_MACC_Sector, subsector),
@@ -117,6 +121,7 @@ module_emissions_L252.MACC <- function(command, ...) {
                   select(-bio_N2O_coef)) %>%
       filter(year == min(L211.AGREmissions$year),
              Non.CO2 %in% emissions.AG_MACC_GHG_NAMES) %>%
+      # Add in mac.control
       left_join_error_no_match(GCAM_sector_tech %>%
                                  select(mac.control = EPA_MACC_Sector, supplysector) %>%
                                  distinct, # taking distinct values because there were repeats for AEZs
@@ -130,6 +135,7 @@ module_emissions_L252.MACC <- function(command, ...) {
       select(-input.emissions) %>%
       filter(year == min(L211.AnEmissions$year),
              Non.CO2 %in% emissions.AG_MACC_GHG_NAMES) %>%
+      # Add in mac.control
       left_join_error_no_match(GCAM_sector_tech %>%
                                  select(mac.control = EPA_MACC_Sector, supplysector) %>%
                                  distinct, # taking distinct values because there are repeats for different technologies
@@ -143,6 +149,7 @@ module_emissions_L252.MACC <- function(command, ...) {
       select(-input.emissions) %>%
       filter(year == min(L232.nonco2_prc$year),
              Non.CO2 %in% emissions.GHG_NAMES) %>%
+      # Add in mac.control
       # Using left_join b/c mac.control for "other industrial processes" is NA
       left_join(GCAM_sector_tech %>%
                                  select(mac.control = EPA_MACC_Sector, supplysector, subsector, stub.technology),
@@ -159,6 +166,7 @@ module_emissions_L252.MACC <- function(command, ...) {
     L252.MAC_higwp <- bind_rows(L241.hfc_all, L241.pfc_all) %>%
       select(-input.emissions) %>%
       filter(year == min(.$year)) %>%
+      # Add in mac.control
       # Using left_join b/c mac.control for "other industrial processes" is NA
       left_join(GCAM_sector_tech %>%
                                  select(mac.control = EPA_MACC_Sector, supplysector, subsector, stub.technology),
@@ -171,11 +179,14 @@ module_emissions_L252.MACC <- function(command, ...) {
       select(region, supplysector, subsector, stub.technology, year, Non.CO2, mac.control, tax, mac.reduction, EPA_region)
 
 
+    # If we want to use Guus Velders data to replace ours
     if (emissions.USE_GV_MAC) {
       # L252.MAC_higwp_GV: Abatement from HFCs, PFCs, and SF6 using Guus Velders data for HFCs
+      # Filter our PFCs
       L252.MAC_pfc <- L252.MAC_higwp %>%
         filter(Non.CO2 %in% c("C2F6", "CF4", "SF6"))
 
+      # Table of abatement potentials
       L252.HFC_Abate_GV <- HFC_Abate_GV %>%
         filter(Species == "Total_HFCs",
                Year %in% unique(GV_mac_reduction$GV_year)) %>%
@@ -184,7 +195,9 @@ module_emissions_L252.MACC <- function(command, ...) {
       L252.MAC_hfc <- L252.MAC_higwp %>%
         filter(!(Non.CO2 %in% c("C2F6", "CF4", "SF6")),
                tax == 0) %>%
+        # Remove our tax and mac.reduction
         select(-tax, -mac.reduction) %>%
+        # Add in GV tax and mac.reduction
         repeat_add_columns(tibble(tax = GV_mac_reduction$tax)) %>%
         left_join_error_no_match(GV_mac_reduction, by = "tax") %>%
         # left_join because some GV_years, but not L252.HFC_Abate_GV Years, are 0, indicating that mac.reduction should also be 0
@@ -197,6 +210,7 @@ module_emissions_L252.MACC <- function(command, ...) {
     }
 
     # L252.MAC_TC: Tech Change on MACCs
+    # For all tibbles, add in scenarios and tech change, then split by scenario and add in documentation
     L252.MAC_Ag_TC <- L252.AgMAC %>%
       select(-EPA_region) %>%
       repeat_add_columns(tibble(scenario = unique(A_MACC_TechChange$scenario))) %>%

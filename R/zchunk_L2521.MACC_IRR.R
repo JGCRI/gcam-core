@@ -16,8 +16,8 @@
 module_emissions_L2521.MACC_IRR <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "emissions/A_MACC_TechChange",
-             FILE = "temp-data-inject/L252.AgMAC",
-             FILE = "temp-data-inject/L252.MAC_an"))
+             "L252.AgMAC",
+             "L252.MAC_an"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2521.AgMAC",
              "L2521.MAC_Ag_TC_SSP1",
@@ -36,8 +36,8 @@ module_emissions_L2521.MACC_IRR <- function(command, ...) {
     # Load required inputs
     A_MACC_TechChange <- get_data(all_data, "emissions/A_MACC_TechChange") %>%
       rename(tech.change = tech_change)
-    L252.AgMAC <- get_data(all_data, "temp-data-inject/L252.AgMAC")
-    L252.MAC_an <- get_data(all_data, "temp-data-inject/L252.MAC_an")
+    L252.AgMAC <- get_data(all_data, "L252.AgMAC")
+    L252.MAC_an <- get_data(all_data, "L252.MAC_an")
 
     # ===================================================
     # L2521.AgMAC: Ag MAC curves are simply copied by irr and rfd technologies
@@ -59,7 +59,7 @@ module_emissions_L2521.MACC_IRR <- function(command, ...) {
           add_legacy_name(paste0("L2521.MAC_Ag_TC_", unique(df$scenario))) %>%
           add_units("tax: 1990 USD; mac.reduction: % reduction; tech_change: Unitless") %>%
           add_comments("Appends scenario-specific tech change to Ag MACC curves") %>%
-          add_precursors("temp-data-inject/L252.AgMAC", "emissions/A_MACC_TechChange") %>%
+          add_precursors("L252.AgMAC", "emissions/A_MACC_TechChange") %>%
           select(-scenario)
       })
 
@@ -76,7 +76,7 @@ module_emissions_L2521.MACC_IRR <- function(command, ...) {
           add_legacy_name(paste0("L2521.MAC_An_TC_", unique(df$scenario))) %>%
           add_units("tax: 1990 USD; mac.reduction: % reduction; tech_change: Unitless") %>%
           add_comments("Appends scenario-specific tech change to animal MACC curves") %>%
-          add_precursors("temp-data-inject/L252.MAC_an", "emissions/A_MACC_TechChange") %>%
+          add_precursors("L252.MAC_an", "emissions/A_MACC_TechChange") %>%
           select(-scenario)
       })
 
@@ -88,7 +88,7 @@ module_emissions_L2521.MACC_IRR <- function(command, ...) {
       add_units("tax: 1990 USD; mac.reduction: % reduction") %>%
       add_comments("Adds irrigation and rainfed technology to each subsector in L252.AgMAC") %>%
       add_legacy_name("L2521.AgMAC") %>%
-      add_precursors("temp-data-inject/L252.AgMAC") ->
+      add_precursors("L252.AgMAC") ->
       L2521.AgMAC
     L2521.MAC_Ag_TC[["SSP1"]] ->
       L2521.MAC_Ag_TC_SSP1
