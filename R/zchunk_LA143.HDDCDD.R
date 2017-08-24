@@ -66,23 +66,22 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
     HDDCDD_data <- bind_rows(HDDCDD_data_list, .id = 'file')
 
     # Currently the HDDCDD data stops at 2099. If this is the case, add 2100
-    if(!"2100" %in% names( HDDCDD_data)){
+    if(!"2100" %in% names( HDDCDD_data)) {
       HDDCDD_data <- HDDCDD_data %>% mutate(`2100` = `2099`)
     }
 
     # Convert data to long format and add in id variables
     HDDCDD_data <- HDDCDD_data %>%
       gather(year, value, -file, -country) %>%
-      mutate(
-        year = as.integer(year),
-        # Assuming that the variable is the first three letters
-        variable = substr(file, 1, 3),
-        # Assuming that the GCM comes after "DD_" and is 6 letters
-        GCM = substr(file,5,10),
-        # Assuming that the last word is the scenario, starting at twelve letters
-        SRES = substr(file,12,length(file)),
-        # Set all negative values to 0
-        value = if_else(value < 0, 0, value)
+      mutate(year = as.integer(year),
+             # Assuming that the variable is the first three letters
+             variable = substr(file, 1, 3),
+             # Assuming that the GCM comes after "DD_" and is 6 letters
+             GCM = substr(file, 5, 10),
+             # Assuming that the last word is the scenario, starting at twelve letters
+             SRES = substr(file, 12, length(file)),
+             # Set all negative values to 0
+             value = if_else(value < 0, 0, value)
       )
 
     if(OLD_DATA_SYSTEM_BEHAVIOR) {
@@ -111,7 +110,7 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
     if("scg" %in% L143.HDDCDD_scen_ctry_Y$iso) {
       # Create Serbia tibble
       L143.HDDCDD_scen_srb_Y <- L143.HDDCDD_scen_ctry_Y %>%
-        filter(iso == "scg" ) %>%
+        filter(iso == "scg") %>%
         mutate(iso = "srb")
 
       # Insert Serbia tibble, change 'scg' iso to 'mne' iso
@@ -126,7 +125,8 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
     GCAM3_population_df <- repeat_add_columns(iso_list, all_years) %>%
       left_join(L101.Pop_thous_GCAM3_ctry_Y, by = c("iso", "year")) %>%
       group_by(iso) %>%
-      mutate(population = approx_fun(year, population) )
+      mutate(population = approx_fun(year, population)) %>%
+      ungroup()
 
     # Add population data and region data
     L143.wtHDDCDD_scen_ctry_Y <- L143.HDDCDD_scen_ctry_Y %>%
@@ -147,7 +147,8 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
       # Aggregate population data to GCAM 4 region
       R_population_df <- GCAM3_population_df %>%
         group_by(GCAM_region_ID, year) %>%
-        summarise(aggpop = sum(population))
+        summarise(aggpop = sum(population)) %>%
+        ungroup()
 
       # Sum weighted degree day by GCAM 4 regions and divide by population
       L143.HDDCDD_scen_R_Y <- L143.wtHDDCDD_scen_ctry_Y %>%
@@ -156,12 +157,14 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
         left_join_error_no_match(R_population_df,
                                  by = c("GCAM_region_ID", "year")) %>%
         mutate(value = wtDD / aggpop) %>%
+        ungroup() %>%
         select(-wtDD, -aggpop)
 
       # Aggregate population data to GCAM 3 region
       GCAM3_R_population_df <- GCAM3_population_df %>%
         group_by(region_GCAM3, year) %>%
-        summarise(aggpop = sum(population))
+        summarise(aggpop = sum(population)) %>%
+        ungroup()
 
       # Sum weighted degree day by GCAM 3 regions and divide by population
       L143.HDDCDD_scen_RG3_Y <- L143.wtHDDCDD_scen_ctry_Y %>%
@@ -170,6 +173,7 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
         left_join_error_no_match(GCAM3_R_population_df,
                                  by = c("region_GCAM3", "year")) %>%
         mutate(value = wtDD / aggpop)%>%
+        ungroup() %>%
         select(-wtDD, -aggpop)
 
     } else {
@@ -177,12 +181,14 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
       # Calculate weighted degree day by GCAM 4 regions
       L143.HDDCDD_scen_R_Y <- L143.wtHDDCDD_scen_ctry_Y %>%
         group_by(GCAM_region_ID, SRES, GCM, variable, year) %>%
-        summarise(value = weighted.mean(value, population))
+        summarise(value = weighted.mean(value, population)) %>%
+        ungroup()
 
       # Calculate weighted degree day by GCAM 3 regions
       L143.HDDCDD_scen_RG3_Y <- L143.wtHDDCDD_scen_ctry_Y %>%
         group_by(region_GCAM3, SRES, GCM, variable, year) %>%
-        summarise(value = weighted.mean(value, population))
+        summarise(value = weighted.mean(value, population)) %>%
+        ungropu()
     }
 
 

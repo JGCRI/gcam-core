@@ -185,6 +185,7 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
         left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
         group_by(GCAM_region_ID, resource, subresource, grade) %>%
         summarise(available = sum(available)) %>%
+        ungroup %>%
         left_join_keep_first_only(select(A11.fos_curves, resource, subresource, grade, extractioncost),
                                   by = c("resource", "subresource", "grade")) ->
         L111.RsrcCurves_EJ_R_Ffos

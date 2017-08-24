@@ -152,6 +152,7 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
       mutate(BlueIrr_km3 = BlueIrr_m3kg * value, TotIrr_km3 = TotIrr_m3kg * value) %>%
       group_by(GCAM_region_ID, GLU) %>%
       summarise(Prod_Mt = sum(value), BlueIrr_km3 = sum(BlueIrr_km3), TotIrr_km3 = sum(TotIrr_km3)) %>%
+      ungroup() %>%
       # Calculate production-weighted blue and green water of all irrigated crops by region / GLU
       mutate(BlueIrr_m3kg = BlueIrr_km3 / Prod_Mt, TotIrr_m3kg = TotIrr_km3  / Prod_Mt,
              # Calculate % of blue water use

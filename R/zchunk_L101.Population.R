@@ -51,7 +51,8 @@ module_socioeconomics_L101.Population <- function(command, ...) {
     L100.Pop_thous_ctry_Yh %>%
       filter(year %in% c(socioeconomics.UN_HISTORICAL_YEARS, socioeconomics.MADDISON_HISTORICAL_YEARS)) %>%
       group_by(GCAM_region_ID, year) %>%
-      summarise(value = sum(value)) ->
+      summarise(value = sum(value)) %>%
+      ungroup() ->
       L101.Pop_thous_R_Yh
 
     # Future population in the SSP scenarios
@@ -63,7 +64,8 @@ module_socioeconomics_L101.Population <- function(command, ...) {
     L100.Pop_thous_SSP_ctry_Yfut %>%
       filter(year %in% c(FUTURE_YEARS)) %>%
       group_by(scenario, GCAM_region_ID, year) %>%
-      summarise(value = sum(value)) ->
+      summarise(value = sum(value)) %>%
+      ungroup() ->
       L101.Pop_thous_SSP_R_Yfut
 
     # Future population in the GCAM-SSP (paP) scenarios
@@ -90,7 +92,8 @@ module_socioeconomics_L101.Population <- function(command, ...) {
     L101.Pop_thous_ctry_Y %>%
       filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%
       group_by(region_GCAM3, year) %>%
-      summarise(value = sum(value)) ->
+      summarise(value = sum(value)) %>%
+      ungroup() ->
       L101.Pop_thous_SSPbase_RG3_Y
 
     # Calculate shares of each country within its region over the historical time series

@@ -102,7 +102,7 @@ module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {
       select(GCAM_region_ID, Non.CO2, lcf, sav) %>%
       mutate(lcf = lcf * CONV_KG_TO_TG, sav = sav * CONV_KG_TO_TG) %>% # convert from kg to Tg
       group_by(GCAM_region_ID, Non.CO2) %>%
-      summarize_each(funs(sum)) # sum sav and lcf emissions by GCAM region
+      summarize_all(funs(sum)) # sum sav and lcf emissions by GCAM region
 
     # Compute grassland emissions factors by GCAM region
     # Because grassland and forest fire emissions scale with land quantity, the coefs can be computed at the regional level
@@ -119,7 +119,8 @@ module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {
       left_join_error_no_match(L125.RCP %>% select(-lcf), by = c("GCAM_region_ID", "Non.CO2")) %>% # add emissions to land region area
       mutate(em_factor = sav / value) %>% # calculate emission factor (emissions/area)
       select(GCAM_region_ID, Land_Type, Non.CO2, em_factor) %>%
-      arrange(Non.CO2, Land_Type,GCAM_region_ID)
+      arrange(Non.CO2, Land_Type,GCAM_region_ID) %>%
+      ungroup()
 
     # Compute forest fire emissions factors by GCAM region for the year 2000.
     # Use this emission factor over all years to estimate emissions.
@@ -166,7 +167,8 @@ module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {
       replace_na(em_factor = 0) %>% # replace nas, nans, and infinite values with zero
       mutate(em_factor = replace(em_factor, is.infinite(em_factor), 0)) %>%
       mutate(em_factor = replace(em_factor, is.nan(em_factor), 0)) %>%
-      arrange(Non.CO2, Land_Type, GCAM_region_ID)
+      arrange(Non.CO2, Land_Type, GCAM_region_ID) %>%
+      ungroup()
 
     # Calculating average default deforestation emissions factors (to be used in future periods)
     L125.deforest_coefs_bcoc <- L125.bcoc_tgbkm2_R_forest_2000_calculations %>%

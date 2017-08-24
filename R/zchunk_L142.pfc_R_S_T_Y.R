@@ -88,7 +88,8 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
 
     L142.EDGAR_HFC %>%
       group_by(GCAM_region_ID, EDGAR_agg_sector, Non.CO2, year) %>%
-      summarise(EDGAR_emissions = sum(value)) ->
+      summarise(EDGAR_emissions = sum(value)) %>%
+      ungroup() ->
       L142.EDGAR_PFC_R_S_T_Yh.tmp1
 
     # Map in other f-gas sector, which varies by gas.
@@ -148,6 +149,7 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
       mutate(emissions = EDGAR_emissions * share) %>%
       group_by(GCAM_region_ID, supplysector, subsector, stub.technology, Non.CO2, year) %>%
       summarize(emissions = sum(emissions)) %>%
+      ungroup() %>%
       replace_na(list(emissions = 0)) %>%
       rename(value = emissions) ->
       L142.pfc_R_S_T_Yh

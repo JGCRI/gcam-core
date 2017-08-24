@@ -99,6 +99,7 @@ module_aglu_LB125.LC_tot <- function(command, ...) {
       filter(year == min(year)) %>%                        # using the starting year only
       group_by(GCAM_region_ID, GLU) %>%                    # group by GCAM_region_ID and GLU
       summarise(value = sum(value)) %>%                    # calculate the total area for each region and GLU
+      ungroup() %>%
       rename(LC_bm2 = value) ->                            # rename the column
       L125.LC_bm2_R_GLU                                    # Total land cover by GCAM region and GLU (unit billion m2)
 
