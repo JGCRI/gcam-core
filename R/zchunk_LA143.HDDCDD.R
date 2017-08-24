@@ -66,23 +66,22 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
     HDDCDD_data <- bind_rows(HDDCDD_data_list, .id = 'file')
 
     # Currently the HDDCDD data stops at 2099. If this is the case, add 2100
-    if(!"2100" %in% names( HDDCDD_data)){
+    if(!"2100" %in% names( HDDCDD_data)) {
       HDDCDD_data <- HDDCDD_data %>% mutate(`2100` = `2099`)
     }
 
     # Convert data to long format and add in id variables
     HDDCDD_data <- HDDCDD_data %>%
       gather(year, value, -file, -country) %>%
-      mutate(
-        year = as.integer(year),
-        # Assuming that the variable is the first three letters
-        variable = substr(file, 1, 3),
-        # Assuming that the GCM comes after "DD_" and is 6 letters
-        GCM = substr(file,5,10),
-        # Assuming that the last word is the scenario, starting at twelve letters
-        SRES = substr(file,12,length(file)),
-        # Set all negative values to 0
-        value = if_else(value < 0, 0, value)
+      mutate(year = as.integer(year),
+             # Assuming that the variable is the first three letters
+             variable = substr(file, 1, 3),
+             # Assuming that the GCM comes after "DD_" and is 6 letters
+             GCM = substr(file, 5, 10),
+             # Assuming that the last word is the scenario, starting at twelve letters
+             SRES = substr(file, 12, length(file)),
+             # Set all negative values to 0
+             value = if_else(value < 0, 0, value)
       )
 
     if(OLD_DATA_SYSTEM_BEHAVIOR) {
@@ -111,7 +110,7 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
     if("scg" %in% L143.HDDCDD_scen_ctry_Y$iso) {
       # Create Serbia tibble
       L143.HDDCDD_scen_srb_Y <- L143.HDDCDD_scen_ctry_Y %>%
-        filter(iso == "scg" ) %>%
+        filter(iso == "scg") %>%
         mutate(iso = "srb")
 
       # Insert Serbia tibble, change 'scg' iso to 'mne' iso
@@ -126,7 +125,7 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
     GCAM3_population_df <- repeat_add_columns(iso_list, all_years) %>%
       left_join(L101.Pop_thous_GCAM3_ctry_Y, by = c("iso", "year")) %>%
       group_by(iso) %>%
-      mutate(population = approx_fun(year, population) ) %>%
+      mutate(population = approx_fun(year, population)) %>%
       ungroup()
 
     # Add population data and region data

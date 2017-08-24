@@ -273,7 +273,7 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
              BlueIrr_m3kg = pmin(BlueIrr_m3kg, total_m3kg),
              # green water coefs of irrigated crops = total biophysical coef minus calculated blue water coef
              GreenIrr_m3kg = total_m3kg - BlueIrr_m3kg,
-             # green water coefs of rainfed crops = total green water minus green water on irrigated" )
+             # green water coefs of rainfed crops = total green water minus green water on irrigated
              GreenIrr_thousm3 = GreenIrr_m3kg * irrProd_t,
              GreenRfd_thousm3 = green_thousm3 - GreenIrr_thousm3) ->
       L165.ag_Water_ctry_MHcropX

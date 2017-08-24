@@ -65,7 +65,7 @@ module_aglu_LB121.Carbon_LT <- function(command, ...) {
     # Urban land and cropland
     L120.LC_bm2_R_LT_Yh_GLU %>%
       spread(year, value) %>%
-      filter(Land_Type %in% c( "Cropland", "UrbanLand" )) %>%
+      filter(Land_Type %in% c("Cropland", "UrbanLand")) %>%
       select(GCAM_region_ID, Land_Type, GLU) %>%
       left_join_error_no_match(select(L121.Various_CarbonData_LTsage, -pasture_yield),
                                by = c("Land_Type" = "LT_SAGE")) ->

@@ -367,7 +367,7 @@ module_aglu_L203.demand_input <- function(command, ...) {
 
     # Build L203.PriceElasticity: Price elasticities
     L203.PriceElasticity <- write_to_all_regions(A_demand_supplysector, c(LEVEL2_DATA_NAMES[["EnergyFinalDemand"]], "price.elasticity"),
-                                                 GCAM_region_names = GCAM_region_names ) %>%
+                                                 GCAM_region_names = GCAM_region_names) %>%
       repeat_add_columns(tibble(year = FUTURE_YEARS)) %>% # Price elasticities are only read for future periods
       # Set the USA meat food price elasticity to a region-specific value
       mutate(price.elasticity = replace(price.elasticity, region == "USA" & energy.final.demand == "FoodDemand_Meat", aglu.FOOD_MEAT_P_ELAS_USA)) %>%

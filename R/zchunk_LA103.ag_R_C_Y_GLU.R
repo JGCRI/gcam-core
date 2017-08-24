@@ -48,7 +48,7 @@ module_aglu_LA103.ag_R_C_Y_GLU <- function(command, ...) {
     L102.ag_HA_bm2_R_C_GLU <- get_data(all_data, "L102.ag_HA_bm2_R_C_GLU")
 
     # Combine FAO and GTAP: create tables with crop production and harvested area by
-    # geographic land unit (GLU) and historical year production ( Mt )
+    # geographic land unit (GLU) and historical year production (Mt)
     L102.ag_Prod_Mt_R_C_GLU %>%
       group_by(GCAM_region_ID, GCAM_commodity) %>%
       summarise(value = sum(value)) %>%

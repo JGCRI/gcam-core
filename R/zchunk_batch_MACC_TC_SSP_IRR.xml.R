@@ -25,25 +25,25 @@ module_emissions_batch_MACC_TC_SSP_IRR.xml <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-   for (i in SSP_NUMS){
-     # Names of inputs and outputs
-     ag_MAC <- paste0("L2521.MAC_Ag_TC_SSP", i)
-     an_MAC <- paste0("L2521.MAC_An_TC_SSP", i)
-     xmlfn <- paste0("MACC_TC_SSP", i, "_IRR.xml")
+    for(i in SSP_NUMS) {
+      # Names of inputs and outputs
+      ag_MAC <- paste0("L2521.MAC_Ag_TC_SSP", i)
+      an_MAC <- paste0("L2521.MAC_An_TC_SSP", i)
+      xmlfn <- paste0("MACC_TC_SSP", i, "_IRR.xml")
 
-     # Load required inputs
-     L2521.MAC_Ag_TC_SSP <- get_data(all_data, ag_MAC)
-     L2521.MAC_An_TC_SSP <- get_data(all_data, an_MAC)
+      # Load required inputs
+      L2521.MAC_Ag_TC_SSP <- get_data(all_data, ag_MAC)
+      L2521.MAC_An_TC_SSP <- get_data(all_data, an_MAC)
 
-    # Produce outputs
-    create_xml(xmlfn) %>%
-      add_xml_data(L2521.MAC_Ag_TC_SSP, "AgMACTC") %>%
-      add_xml_data(L2521.MAC_An_TC_SSP, "MACTC") %>%
-      add_precursors(ag_MAC, an_MAC) ->
-      xml_obj
+      # Produce outputs
+      create_xml(xmlfn) %>%
+        add_xml_data(L2521.MAC_Ag_TC_SSP, "AgMACTC") %>%
+        add_xml_data(L2521.MAC_An_TC_SSP, "MACTC") %>%
+        add_precursors(ag_MAC, an_MAC) ->
+        xml_obj
 
-    # Assign output to output name
-    assign(xmlfn, xml_obj)
+      # Assign output to output name
+      assign(xmlfn, xml_obj)
     }
 
     return_data(MACC_TC_SSP1_IRR.xml, MACC_TC_SSP2_IRR.xml,
