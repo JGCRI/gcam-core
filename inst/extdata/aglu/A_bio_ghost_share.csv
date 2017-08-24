@@ -1,4 +1,7 @@
-#Biomass unormalized ghost shares by year used to phase in biomass as a new crop/technology in future years,
+# File: A_bio_ghost_share.csv
+# Description: Biomass unormalized ghost shares by year used to phase in biomass as a new crop/technology in future years.
+# Original source: Land_nesting_structure.xls
+# ----------
 year,ghost.share
 2020,0.03
 2025,0.06
