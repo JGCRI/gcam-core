@@ -16,11 +16,11 @@
 #' @export
 module_emissions_L252.MACC <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/GCAM_region_names",
-             FILE = "emissions/A_regions",
+    return(c(FILE = "emissions/A_regions",
              FILE = "emissions/A_MACC_TechChange",
              FILE = "emissions/mappings/GCAM_sector_tech",
-             FILE = "emissions/HFC_Abate_GV", # source and units
+             FILE = "emissions/HFC_Abate_GV",
+             FILE = "emissions/GV_mac_reduction",
              "L152.MAC_pct_R_S_Proc_EPA",
              "L201.ghg_res",
              "L211.AGREmissions",
@@ -52,11 +52,11 @@ module_emissions_L252.MACC <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A_regions <- get_data(all_data, "emissions/A_regions")
     A_MACC_TechChange <- get_data(all_data, "emissions/A_MACC_TechChange")
     GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
     HFC_Abate_GV <- get_data(all_data, "emissions/HFC_Abate_GV")
+    GV_mac_reduction <- get_data(all_data, "emissions/GV_mac_reduction")
     L152.MAC_pct_R_S_Proc_EPA <- get_data(all_data, "L152.MAC_pct_R_S_Proc_EPA")
     L201.ghg_res <- get_data(all_data, "L201.ghg_res")
     L211.AGREmissions <- get_data(all_data, "L211.AGREmissions")
@@ -70,213 +70,298 @@ module_emissions_L252.MACC <- function(command, ...) {
     # Prepare the table with all MAC curves for matching
     L252.MAC_pct_R_S_Proc_EPA <- L152.MAC_pct_R_S_Proc_EPA %>%
       gather(tax, mac.reduction, matches("[0-9]+")) %>%
-      mutate(tax = as.numeric(tax))
+      mutate(tax = as.numeric(tax)) %>%
+      rename(mac.control = Process)
+
+    mac_reduction_adder <- function(df, order, error_no_match = T){
+      df <- df %>%
+        repeat_add_columns(tibble(tax = MAC_taxes)) %>%
+        arrange_("region", order) %>%
+        left_join_error_no_match(A_regions %>%
+                                   select(region, EPA_region = MAC_region),
+                                 by = "region")
+
+      if (error_no_match){
+        df <- df %>%
+          left_join_error_no_match(L252.MAC_pct_R_S_Proc_EPA,
+                                              by = c("EPA_region", "mac.control", "tax"))  %>%
+          mutate(mac.reduction = round(mac.reduction, 3))
+
+      } else {
+        df <- df %>%
+          left_join(L252.MAC_pct_R_S_Proc_EPA,
+                                   by = c("EPA_region", "mac.control", "tax"))  %>%
+                      mutate(mac.reduction = round(mac.reduction, 3))
+      }
+      return(df)
+    }
 
     # L252.ResMAC_fos: Fossil resource MAC curves
     # NOTE: only applying the fossil resource MAC curves to the CH4 emissions
+    MAC_taxes <- unique(L252.MAC_pct_R_S_Proc_EPA$tax)
+
     L252.ResMAC_fos <- L201.ghg_res %>%
       select(-emiss.coef) %>%
       filter(Non.CO2 == "CH4") %>%
       left_join_error_no_match(GCAM_sector_tech %>%
                                  filter(sector == "out_resources") %>%
-                                 select(EPA_MACC_Sector, subsector),
+                                 select(mac.control = EPA_MACC_Sector, subsector),
                                by = c("depresource" = "subsector")) %>%
-      repeat_add_columns()
+      mac_reduction_adder(order = "depresource") %>%
+      select(region, depresource, Non.CO2, mac.control, tax, mac.reduction, EPA_region)
+
+    # L252.AgMAC: Agricultural abatement (including bioenergy)
+    L252.AgMAC <- L211.AGREmissions %>%
+      select(-input.emissions) %>%
+      bind_rows(L211.AGRBio %>%
+                  select(-bio_N2O_coef)) %>%
+      filter(year == min(L211.AGREmissions$year),
+             Non.CO2 %in% emissions.AG_MACC_GHG_NAMES) %>%
+      left_join_error_no_match(GCAM_sector_tech %>%
+                                 select(mac.control = EPA_MACC_Sector, supplysector) %>%
+                                 distinct, # taking distinct values because there were repeats for AEZs
+                               by = c("AgSupplySector" = "supplysector")) %>%
+      mac_reduction_adder(order = "AgProductionTechnology") %>%
+      select(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology, year, Non.CO2,
+             mac.control, tax, mac.reduction, EPA_region)
+
+    # L252.MAC_an: Abatement from animal production
+    L252.MAC_an <- L211.AnEmissions %>%
+      select(-input.emissions) %>%
+      filter(year == min(L211.AnEmissions$year),
+             Non.CO2 %in% emissions.AG_MACC_GHG_NAMES) %>%
+      left_join_error_no_match(GCAM_sector_tech %>%
+                                 select(mac.control = EPA_MACC_Sector, supplysector) %>%
+                                 distinct, # taking distinct values because there are repeats for different technologies
+                               by = "supplysector") %>%
+      mac_reduction_adder(order = c("supplysector", "subsector", "stub.technology", "Non.CO2")) %>%
+      select(region, supplysector, subsector, stub.technology, year, Non.CO2, mac.control,
+             tax, mac.reduction, EPA_region)
+
+    # L252.MAC_prc: Abatement from industrial and urban processes
+    L252.MAC_prc <- L232.nonco2_prc %>%
+      select(-input.emissions) %>%
+      filter(year == min(L232.nonco2_prc$year),
+             Non.CO2 %in% emissions.GHG_NAMES) %>%
+      # Using left_join b/c mac.control for "other industrial processes" is NA
+      left_join(GCAM_sector_tech %>%
+                                 select(mac.control = EPA_MACC_Sector, supplysector, subsector, stub.technology),
+                               by = c("supplysector", "subsector", "stub.technology")) %>%
+
+      mac_reduction_adder(order = c("supplysector", "subsector", "stub.technology", "Non.CO2"),
+                          # error_no_match is F, which means we use left_join(L252.MAC_pct_R_S_Proc_EPA)
+                          # because not all mac.controls and regions in L252.MAC_pct_R_S_Proc_EPA
+                          error_no_match = F) %>%
+      na.omit() %>%
+      select(region, supplysector, subsector, stub.technology, year, Non.CO2, mac.control, tax, mac.reduction, EPA_region)
+
+    # L252.MAC_higwp: Abatement from HFCs, PFCs, and SF6
+    L252.MAC_higwp <- bind_rows(L241.hfc_all, L241.pfc_all) %>%
+      select(-input.emissions) %>%
+      filter(year == min(.$year)) %>%
+      # Using left_join b/c mac.control for "other industrial processes" is NA
+      left_join(GCAM_sector_tech %>%
+                                 select(mac.control = EPA_MACC_Sector, supplysector, subsector, stub.technology),
+                               by = c("supplysector", "subsector", "stub.technology")) %>%
+      mac_reduction_adder(order = c("supplysector", "subsector", "stub.technology", "Non.CO2"),
+                          # error_no_match is F, which means we use left_join(L252.MAC_pct_R_S_Proc_EPA)
+                          # because not all mac.controls and regions in L252.MAC_pct_R_S_Proc_EPA
+                          error_no_match = F) %>%
+      na.omit() %>%
+      select(region, supplysector, subsector, stub.technology, year, Non.CO2, mac.control, tax, mac.reduction, EPA_region)
 
 
-    L252.ResMAC_fos <- repeat_and_add_vector( L252.ResMAC_fos, "tax", MAC_taxes )
-    L252.ResMAC_fos <- L252.ResMAC_fos[ order( L252.ResMAC_fos$region, L252.ResMAC_fos$depresource ), ]
-    L252.ResMAC_fos$mac.reduction <- NA #until we have the EPA region for matching
-    L252.ResMAC_fos$EPA_region <- A_regions$MAC_region[ match( L252.ResMAC_fos$region, A_regions$region ) ]
-    L252.ResMAC_fos$mac.reduction <- round(
-      L252.MAC_pct_R_S_Proc_EPA$mac.reduction[
-        match( vecpaste( L252.ResMAC_fos[ c( "EPA_region", "mac.control", "tax" ) ] ),
-               vecpaste( L252.MAC_pct_R_S_Proc_EPA[ c( "EPA_region", "Process", "tax" ) ] ) ) ],
-      digits_MACC )
-    L252.ResMAC_fos <- na.omit( L252.ResMAC_fos )
+    if (emissions.USE_GV_MAC) {
+      # L252.MAC_higwp_GV: Abatement from HFCs, PFCs, and SF6 using Guus Velders data for HFCs
+      L252.MAC_pfc <- L252.MAC_higwp %>%
+        filter(Non.CO2 %in% c("C2F6", "CF4", "SF6"))
+
+      L252.HFC_Abate_GV <- HFC_Abate_GV %>%
+        filter(Species == "Total_HFCs",
+               Year %in% unique(GV_mac_reduction$GV_year)) %>%
+        select(Year, mac.reduction = PCT_ABATE)
+
+      L252.MAC_hfc <- L252.MAC_higwp %>%
+        filter(!(Non.CO2 %in% c("C2F6", "CF4", "SF6")),
+               tax == 0) %>%
+        select(-tax, -mac.reduction) %>%
+        repeat_add_columns(tibble(tax = GV_mac_reduction$tax)) %>%
+        left_join_error_no_match(GV_mac_reduction, by = "tax") %>%
+        # left_join because some GV_years, but not L252.HFC_Abate_GV Years, are 0, indicating that mac.reduction should also be 0
+        left_join(L252.HFC_Abate_GV, by = c("GV_year" = "Year")) %>%
+        # Replace mac.reduction for tax 0 with 0
+        mutate(mac.reduction = replace(mac.reduction, tax == 0, 0)) %>%
+        select(-GV_year)
+
+      L252.MAC_higwp <- bind_rows( L252.MAC_pfc,L252.MAC_hfc)
+    }
+
+    # L252.MAC_TC: Tech Change on MACCs
+    L252.MAC_Ag_TC <- L252.AgMAC %>%
+      select(-EPA_region) %>%
+      repeat_add_columns(tibble(scenario = unique(A_MACC_TechChange$scenario))) %>%
+      left_join_error_no_match(A_MACC_TechChange %>% rename(tech.change = tech_change),
+                               by = c("scenario", "mac.control" = "MAC")) %>%
+      split(.$scenario) %>%
+      lapply(function(df) {
+        df %>%
+          add_title("Marginal Abatement Cost Curves with Technology Changes for Agriculture") %>%
+          add_units("tax: 1990 USD; mac.reduction: % reduction; tech_change: Unitless") %>%
+          add_comments("Category data from L211.AGREmissions and L211.AGRBio given tax and mac.reduction data from L152.MAC_pct_R_S_Proc_EPA") %>%
+          add_comments("Technology change data added in from A_MACC_TechChange") %>%
+          add_precursors("emissions/A_regions", "emissions/mappings/GCAM_sector_tech",
+                         "L152.MAC_pct_R_S_Proc_EPA", "L211.AGREmissions", "L211.AGRBio", "emissions/A_MACC_TechChange") %>%
+          select(-scenario)
+      })
+
+
+    L252.MAC_An_TC <- L252.MAC_an %>%
+      select(-EPA_region) %>%
+      repeat_add_columns(tibble(scenario = unique(A_MACC_TechChange$scenario))) %>%
+      left_join_error_no_match(A_MACC_TechChange %>% rename(tech.change = tech_change),
+                               by = c("scenario", "mac.control" = "MAC")) %>%
+      split(.$scenario) %>%
+      lapply(function(df) {
+        df %>%
+          add_title("Marginal Abatement Cost Curves with Technology Changes for Animals") %>%
+          add_units("tax: 1990 USD; mac.reduction: % reduction; tech_change: Unitless") %>%
+          add_comments("Category data from L211.AnEmissions given tax and mac.reduction data from L152.MAC_pct_R_S_Proc_EPA") %>%
+          add_comments("Technology change data added in from A_MACC_TechChange") %>%
+          add_precursors("emissions/A_regions", "emissions/mappings/GCAM_sector_tech",
+                         "L152.MAC_pct_R_S_Proc_EPA", "L211.AnEmissions", "emissions/A_MACC_TechChange") %>%
+          select(-scenario)
+      })
+
+    L252.MAC_prc_TC <- L252.MAC_prc %>%
+      select(-EPA_region) %>%
+      repeat_add_columns(tibble(scenario = unique(A_MACC_TechChange$scenario))) %>%
+      left_join(A_MACC_TechChange %>% rename(tech.change = tech_change),
+                by = c("scenario", "mac.control" = "MAC")) %>%
+      na.omit %>%
+      split(.$scenario) %>%
+      lapply(function(df) {
+        df %>%
+          add_title("Marginal Abatement Cost Curves with Technology Changes for Industrial and Urban Processing Greenhouse Gases") %>%
+          add_units("tax: 1990 USD; mac.reduction: % reduction; tech_change: Unitless") %>%
+          add_comments("Category data from L232.nonco2_prc given tax and mac.reduction data from L152.MAC_pct_R_S_Proc_EPA") %>%
+          add_comments("Technology change data added in from A_MACC_TechChange") %>%
+          add_precursors("emissions/A_regions", "emissions/mappings/GCAM_sector_tech",
+                         "L152.MAC_pct_R_S_Proc_EPA", "L232.nonco2_prc", "emissions/A_MACC_TechChange") %>%
+          select(-scenario)
+      })
+
+    L252.MAC_res_TC <- L252.ResMAC_fos %>%
+      select(-EPA_region) %>%
+      repeat_add_columns(tibble(scenario = unique(A_MACC_TechChange$scenario))) %>%
+      left_join_error_no_match(A_MACC_TechChange %>% rename(tech.change = tech_change),
+                               by = c("scenario", "mac.control" = "MAC")) %>%
+      split(.$scenario) %>%
+      lapply(function(df) {
+        df %>%
+          add_title("Marginal Abatement Cost Curves with Technology Changes for Fossil Resources") %>%
+          add_units("tax: 1990 USD; mac.reduction: % reduction; tech_change: Unitless") %>%
+          add_comments("Category data from L201.ghg_res given tax and mac.reduction data from L152.MAC_pct_R_S_Proc_EPA") %>%
+          add_comments("Technology change data added in from A_MACC_TechChange") %>%
+          add_precursors("emissions/A_regions", "emissions/mappings/GCAM_sector_tech",
+                         "L152.MAC_pct_R_S_Proc_EPA", "L201.ghg_res", "emissions/A_MACC_TechChange") %>%
+          select(-scenario)
+      })
     # ===================================================
 
     # Produce outputs
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L252.ResMAC_fos %>%
+      add_title("Marginal Abatement Cost Curves for Fossil Resources") %>%
+      add_units("tax: 1990 USD; mac.reduction: % reduction") %>%
+      add_comments("Category data from L201.ghg_res given tax and mac.reduction data from L152.MAC_pct_R_S_Proc_EPA") %>%
       add_legacy_name("L252.ResMAC_fos") %>%
-      add_precursors("common/GCAM_region_names",
-                     "emissions/A_regions",
-                     "emissions/A_MACC_TechChange",
-                     "emissions/mappings/GCAM_sector_tech",
-                     "emissions/HFC_Abate_GV", # source and units
-                     "L152.MAC_pct_R_S_Proc_EPA",
-                     "L201.ghg_res",
-                     "L211.AGREmissions",
-                     "L211.AnEmissions",
-                     "L211.AGRBio",
-                     "L232.nonco2_prc",
-                     "L241.hfc_all",
-                     "L241.pfc_all") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("emissions/A_regions", "emissions/mappings/GCAM_sector_tech",
+                     "L152.MAC_pct_R_S_Proc_EPA", "L201.ghg_res") ->
       L252.ResMAC_fos
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L252.AgMAC %>%
+      add_title("Marginal Abatement Cost Curves for Agriculture") %>%
+      add_units("tax: 1990 USD; mac.reduction: % reduction") %>%
+      add_comments("Category data from L211.AGREmissions and L211.AGRBio given tax and mac.reduction data from L152.MAC_pct_R_S_Proc_EPA") %>%
       add_legacy_name("L252.AgMAC") %>%
-      add_precursors("common/GCAM_region_names") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("emissions/A_regions", "emissions/mappings/GCAM_sector_tech",
+                     "L152.MAC_pct_R_S_Proc_EPA", "L211.AGREmissions", "L211.AGRBio") ->
       L252.AgMAC
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L252.MAC_an %>%
+      add_title("Marginal Abatement Cost Curves for Animals") %>%
+      add_units("tax: 1990 USD; mac.reduction: % reduction") %>%
+      add_comments("Category data from L211.AnEmissions given tax and mac.reduction data from L152.MAC_pct_R_S_Proc_EPA") %>%
       add_legacy_name("L252.MAC_an") %>%
-      add_precursors("common/GCAM_region_names") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("emissions/A_regions", "emissions/mappings/GCAM_sector_tech",
+                     "L152.MAC_pct_R_S_Proc_EPA", "L211.AnEmissions") ->
       L252.MAC_an
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L252.MAC_prc %>%
+      add_title("Marginal Abatement Cost Curves for Industrial and Urban Processing Greenhouse Gases") %>%
+      add_units("tax: 1990 USD; mac.reduction: % reduction") %>%
+      add_comments("Category data from L232.nonco2_prc given tax and mac.reduction data from L152.MAC_pct_R_S_Proc_EPA") %>%
       add_legacy_name("L252.MAC_prc") %>%
-      add_precursors("common/GCAM_region_names") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("emissions/A_regions", "emissions/mappings/GCAM_sector_tech",
+                     "L152.MAC_pct_R_S_Proc_EPA", "L232.nonco2_prc") ->
       L252.MAC_prc
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L252.MAC_higwp %>%
+      add_title("Marginal Abatement Cost Curves for High GWP Gases") %>%
+      add_units("tax: 1990 USD; mac.reduction: % reduction") %>%
+      add_comments("Category data from L241.hfc_all and L241.pfc_all given tax and mac.reduction data from L152.MAC_pct_R_S_Proc_EPA") %>%
+      add_comments("If using Guus Velders data, tax and mac.reduction values taken from HFC_Abate_GV and GV_mac_reduction") %>%
       add_legacy_name("L252.MAC_higwp") %>%
-      add_precursors("common/GCAM_region_names") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("emissions/A_regions", "emissions/mappings/GCAM_sector_tech",
+                     "L152.MAC_pct_R_S_Proc_EPA", "L241.hfc_all", "L241.pfc_all",
+                     "emissions/HFC_Abate_GV", "emissions/GV_mac_reduction") ->
       L252.MAC_higwp
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L252.MAC_Ag_TC_SSP1") %>%
-      add_precursors("common/GCAM_region_names") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    L252.MAC_Ag_TC[["SSP1"]] %>%
+      add_legacy_name("L252.MAC_Ag_TC_SSP1") ->
       L252.MAC_Ag_TC_SSP1
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L252.MAC_An_TC_SSP1") %>%
-      add_precursors("common/GCAM_region_names") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    L252.MAC_An_TC[["SSP1"]] %>%
+      add_legacy_name("L252.MAC_An_TC_SSP1") ->
       L252.MAC_An_TC_SSP1
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L252.MAC_prc_TC_SSP1") %>%
-      add_precursors("common/GCAM_region_names") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    L252.MAC_prc_TC[["SSP1"]] %>%
+      add_legacy_name("L252.MAC_prc_TC_SSP1") ->
       L252.MAC_prc_TC_SSP1
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L252.MAC_res_TC_SSP1") %>%
-      add_precursors("common/GCAM_region_names") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    L252.MAC_res_TC[["SSP1"]] %>%
+      add_legacy_name("L252.MAC_res_TC_SSP1") ->
       L252.MAC_res_TC_SSP1
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L252.MAC_Ag_TC_SSP2") %>%
-      add_precursors("common/GCAM_region_names") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    L252.MAC_Ag_TC[["SSP2"]] %>%
+      add_legacy_name("L252.MAC_Ag_TC_SSP2") ->
       L252.MAC_Ag_TC_SSP2
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L252.MAC_An_TC_SSP2") %>%
-      add_precursors("common/GCAM_region_names") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    L252.MAC_An_TC[["SSP2"]] %>%
+      add_legacy_name("L252.MAC_An_TC_SSP2") ->
       L252.MAC_An_TC_SSP2
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L252.MAC_prc_TC_SSP2") %>%
-      add_precursors("common/GCAM_region_names") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    L252.MAC_prc_TC[["SSP2"]] %>%
+      add_legacy_name("L252.MAC_prc_TC_SSP2") ->
       L252.MAC_prc_TC_SSP2
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L252.MAC_res_TC_SSP2") %>%
-      add_precursors("common/GCAM_region_names") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    L252.MAC_res_TC[["SSP2"]] %>%
+      add_legacy_name("L252.MAC_res_TC_SSP2") ->
       L252.MAC_res_TC_SSP2
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L252.MAC_Ag_TC_SSP5") %>%
-      add_precursors("common/GCAM_region_names") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    L252.MAC_Ag_TC[["SSP5"]] %>%
+      add_legacy_name("L252.MAC_Ag_TC_SSP5") ->
       L252.MAC_Ag_TC_SSP5
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L252.MAC_An_TC_SSP5") %>%
-      add_precursors("common/GCAM_region_names") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    L252.MAC_An_TC[["SSP5"]] %>%
+      add_legacy_name("L252.MAC_An_TC_SSP5") ->
       L252.MAC_An_TC_SSP5
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L252.MAC_prc_TC_SSP5") %>%
-      add_precursors("common/GCAM_region_names") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    L252.MAC_prc_TC[["SSP5"]] %>%
+      add_legacy_name("L252.MAC_prc_TC_SSP5") ->
       L252.MAC_prc_TC_SSP5
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L252.MAC_res_TC_SSP5") %>%
-      add_precursors("common/GCAM_region_names") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    L252.MAC_res_TC[["SSP5"]] %>%
+      add_legacy_name("L252.MAC_res_TC_SSP5") ->
       L252.MAC_res_TC_SSP5
 
     return_data(L252.ResMAC_fos, L252.AgMAC, L252.MAC_an, L252.MAC_prc, L252.MAC_higwp, L252.MAC_Ag_TC_SSP1, L252.MAC_An_TC_SSP1, L252.MAC_prc_TC_SSP1, L252.MAC_res_TC_SSP1, L252.MAC_Ag_TC_SSP2, L252.MAC_An_TC_SSP2, L252.MAC_prc_TC_SSP2, L252.MAC_res_TC_SSP2, L252.MAC_Ag_TC_SSP5, L252.MAC_An_TC_SSP5, L252.MAC_prc_TC_SSP5, L252.MAC_res_TC_SSP5)
