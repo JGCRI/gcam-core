@@ -210,8 +210,9 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
       collect() %>%
       # Convert tibble to vector
       .[['GCAM_commodity']] -> prices
+
     # Check missing commodities
-    if(any(!(commodities %in% prices))){
+    if(any(!(commodities %in% prices))) {
       missing_commodities <- commodities[!(commodities %in% prices)]
       stop("Missing commodity prices for ", missing_commodities)
     }

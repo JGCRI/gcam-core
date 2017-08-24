@@ -1,0 +1,5 @@
+# File: A42.demand.csv
+# Title: Aggregate building final demand perCapitaBased and price elasticity
+# Units: Unitless
+energy.final.demand,perCapitaBased,price.elasticity
+building,1,-1

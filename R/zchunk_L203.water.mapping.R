@@ -1,20 +1,19 @@
 #' module_water_L203.water.mapping
 #'
-#' Briefly describe what this chunk does.
+#' Mapping of water consumption/withdrawal to sectoral demands.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L203.SectorLogitTables[[ curr_table ]]$data}, \code{L203.Supplysector}, \code{L203.SubsectorLogitTables[[ curr_table ]]$data}, \code{L203.SubsectorLogit}, \code{L203.SubsectorShrwtFllt}, \code{L203.TechShrwt}, \code{L203.TechCoef}. The corresponding file in the
+#' the generated outputs: \code{L203.Supplysector}, \code{L203.SubsectorLogit}, \code{L203.SubsectorShrwtFllt}, \code{L203.TechShrwt}, \code{L203.TechCoef}. The corresponding file in the
 #' original data system was \code{L203.water.mapping.R} (water level2).
-#' @details Describe in detail what this chunk does.
+#' @details Generates water mapping sector input files to group demands by sectors.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
-#' @export
-module_water_L203.water.mapping_DISABLED <- function(command, ...) {
+#' @author ST August 2017
+module_water_L203.water.mapping <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "water/basin_to_country_mapping",
              "L125.LC_bm2_R_GLU",
@@ -38,103 +37,141 @@ module_water_L203.water.mapping_DISABLED <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A03.sector <- get_data(all_data, "water/A03.sector")
 
-    # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are `merge` calls in this code. Be careful!
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses repeat_and_add_vector
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # ===================================================
 
-    # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L203.SectorLogitTables[[ curr_table ]]$data") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L203.SectorLogitTables[[ curr_table ]]$data
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L203.Supplysector") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    # Create tibble with all possible mapping sectors...
+
+    # (a) irrigation sectors
+    L125.LC_bm2_R_GLU %>% ungroup %>%
+      select(GCAM_region_ID, GLU) %>%
+      left_join_error_no_match(select(basin_to_country_mapping, GLU_code, GLU_name), by = c("GLU" = "GLU_code")) %>%
+      # ^^ join GLU names, which will replace GLU codes in this tibble
+      select(-GLU) %>% rename(GLU = GLU_name) %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      repeat_add_columns(filter(A03.sector, water.sector %in% IRRIGATION)) %>%
+      repeat_add_columns(tibble(water_type = c("water consumption", "water withdrawals"))) %>%
+      mutate(supplysector = set_water_input_name(water.sector, water_type, A03.sector, GLU)) ->
+      L203.mapping_irr
+
+    # (b) non-irrigation sectors
+    GCAM_region_names %>%
+      repeat_add_columns(filter(A03.sector, !(water.sector %in% IRRIGATION))) %>%
+      mutate(GLU = NA) %>%
+      repeat_add_columns(tibble(water_type = c("water consumption", "water withdrawals"))) %>%
+      mutate(supplysector = set_water_input_name(water.sector, water_type, A03.sector)) ->
+      L203.mapping_nonirr
+
+    # (c) combine irrigation and non-irrigation sectors and add additional required columns
+    L203.mapping_irr %>%
+      bind_rows(L203.mapping_nonirr) %>%
+      mutate(coefficient = 1,
+             subsector = supplysector,
+             technology = supplysector,
+             logit.year.fillout = first(BASE_YEARS)) %>%
+      arrange(GCAM_region_ID) %>%
+      left_join(select(L165.ag_IrrEff_R, -field.eff), by = "GCAM_region_ID") %>%
+      # ^^ non-restrictive join required (NA values generated for region 30, Taiwan)
+      mutate(coefficient = if_else(water.sector == IRRIGATION & water_type == "water withdrawals",
+                                   1 / conveyance.eff, coefficient)) %>%
+      # ^^ conveyance losses for irrigation--applied to withdrawals only
+      # Note: Conveyance losses are taken out of agriculture withdrawals and...
+      # ... instead applied to water distribution sectors (water_td_irr). This means that to get total...
+      # ... ag withdrawals for reporting (i.e., when querying GCAM results)...
+      # ... it is necessary to include the conveyance loss.
+      select(-conveyance.eff) ->
+      L203.mapping_all
+
+    # Sector information
+    L203.mapping_all %>%
+      select(one_of(c(LEVEL2_DATA_NAMES[["Supplysector"]], "logit.type"))) ->
       L203.Supplysector
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L203.SubsectorLogitTables[[ curr_table ]]$data") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L203.SubsectorLogitTables[[ curr_table ]]$data
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L203.SubsectorLogit") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+
+    # Subsector logit exponents for mapping sector
+    L203.mapping_all %>%
+      select(one_of(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], "logit.type"))) ->
       L203.SubsectorLogit
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L203.SubsectorShrwtFllt") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+
+    # Subsector share weights to 1 (no competition)
+    L203.mapping_all %>%
+      mutate(share.weight = 1,
+             year.fillout = first(MODEL_YEARS)) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]])) ->
       L203.SubsectorShrwtFllt
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
+
+    # Pass-through technology to the water resource (no competition)
+    L203.mapping_all %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      mutate(share.weight = 1) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["TechShrwt"]])) ->
+      L203.TechShrwt
+
+    # Pass-through technology to the water resource
+    L203.mapping_all %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      mutate(minicam.energy.input = water_type,
+             market.name = region) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["TechCoef"]])) ->
+      L203.TechCoef
+
+
+    # OUTPUTS
+    # possible future amendment: consider creating water mapping files by demand type ...
+    # ...(irr, dom, ind, ...) rather than by variable (see issue #663 on dsr gcamdata repo)
+
+    L203.Supplysector %>%
+      add_title("Water sector information") %>%
+      add_units("Unitless") %>%
+      add_comments("Supply sector info expanded to GLU regions and water demand sectors") %>%
+      add_legacy_name("L203.Supplysector") %>%
+      add_precursors("water/basin_to_country_mapping",
+                     "L125.LC_bm2_R_GLU",
+                     "L165.ag_IrrEff_R",
+                     "common/GCAM_region_names",
+                     "water/A03.sector") ->
+      L203.Supplysector
+    L203.SubsectorLogit %>%
+      add_title("Water subsector logit exponents for mapping sector") %>%
+      add_units("Unitless") %>%
+      add_comments("Subsector info expanded to GLU regions and water demand sectors") %>%
+      add_legacy_name("L203.SubsectorLogit") %>%
+      add_precursors("water/basin_to_country_mapping",
+                     "L125.LC_bm2_R_GLU",
+                     "L165.ag_IrrEff_R",
+                     "common/GCAM_region_names",
+                     "water/A03.sector") ->
+      L203.SubsectorLogit
+    L203.SubsectorShrwtFllt %>%
+      add_title("Water subsector share weights") %>%
+      add_units("Unitless") %>%
+      add_comments("Subsector shareweights expanded to GLU regions and water demand sectors") %>%
+      add_legacy_name("L203.SubsectorShrwtFllt") %>%
+      add_precursors("water/basin_to_country_mapping",
+                     "L125.LC_bm2_R_GLU",
+                     "L165.ag_IrrEff_R",
+                     "common/GCAM_region_names",
+                     "water/A03.sector") ->
+      L203.SubsectorShrwtFllt
+    L203.TechShrwt %>%
+      add_title("Water technology shareweights") %>%
+      add_units("Unitless") %>%
+      add_comments("Technology shareweights expanded to GLU regions and water demand sectors") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L203.TechShrwt") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("water/basin_to_country_mapping",
+                     "L125.LC_bm2_R_GLU",
+                     "L165.ag_IrrEff_R",
+                     "common/GCAM_region_names",
+                     "water/A03.sector") ->
       L203.TechShrwt
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L203.TechCoef %>%
+      add_title("Water technology coefficients") %>%
+      add_units("Unitless") %>%
+      add_comments("Technology info expanded to GLU regions and water demand sectors") %>%
       add_legacy_name("L203.TechCoef") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("water/basin_to_country_mapping",
+                     "L125.LC_bm2_R_GLU",
+                     "L165.ag_IrrEff_R",
+                     "common/GCAM_region_names",
+                     "water/A03.sector") ->
       L203.TechCoef
 
     return_data(L203.Supplysector, L203.SubsectorLogit, L203.SubsectorShrwtFllt, L203.TechShrwt, L203.TechCoef)

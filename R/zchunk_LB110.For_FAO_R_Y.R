@@ -81,6 +81,7 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
       #   for each commodity (just forest) in each GCAM region:
       group_by(GCAM_region_ID, GCAM_commodity, flow, year) %>%
       summarise(value = sum(value)) %>%
+      ungroup() %>%
       #
       # build volumetric mass balance tibble:
       #   instead of having flow and value for each year, region, commodity, we now want NetExp and Prod columns for each year, region, commodity.
@@ -99,6 +100,7 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
     L110.For_ALL_bm3_R_Y %>%                     # take the region year R_Y tibble
       group_by(GCAM_commodity, year) %>%         # For each commodity and year
       summarise_all(sum) %>%                     # sum over each remaining column
+      ungroup() %>%
       select(-GCAM_region_ID) %>%                # drop the region id, since we are calculating a global quantity
       mutate(Cons_scaler = Prod_bm3 / Cons_bm3) -> # add a variable for the consumption scaler
       L110.For_ALL_bm3_glbl_Y                    # store in the global tibble

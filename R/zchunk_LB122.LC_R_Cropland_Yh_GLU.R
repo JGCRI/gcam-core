@@ -99,7 +99,8 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       select(-GCAM_commodity) %>%
       group_by(GCAM_region_ID, GLU, year) %>%
       # and sum by region-GLU-year:
-      summarise(value = sum(value)) ->
+      summarise(value = sum(value)) %>%
+      ungroup() ->
       L122.ag_HA_bm2_R_Y_GLU
 
 
@@ -458,7 +459,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
         unique(select(L122.LC_bm2_R_CropLand_Y_GLU, GCAM_region_ID, GLU,
                       Land_Type)),
         .,
-        by = c("GCAM_region_ID", "GLU", "Land_Type") ) %>%
+        by = c("GCAM_region_ID", "GLU", "Land_Type")) %>%
       # missing values are overwritten to 0:
       replace_na(list(value = 0)) %>%
       # bind to the table of OtherArableLand information by region-glu-year:

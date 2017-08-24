@@ -126,7 +126,7 @@ module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
       L124.LC_UnMgdAdj_R_Yh_GLU
 
     # Check that enough unmanaged land is available for the cropland expansion in all regions/GLUs
-    if( any( L124.LC_UnMgdAdj_R_Yh_GLU$adjustmentRatio < 0 ) ) {
+    if(any(L124.LC_UnMgdAdj_R_Yh_GLU$adjustmentRatio < 0)) {
       stop( "Increase in cropland exceeds available unmanaged land")
     }
 
