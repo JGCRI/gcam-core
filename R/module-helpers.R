@@ -409,14 +409,14 @@ fill_exp_decay_extrapolate <- function(d, out_years) {
     gather(year, value, matches(YEAR_PATTERN)) %>%
     mutate(year = as.integer(year)) ->
     d
-  # we would like to replicate values for all years including those found in the
+  # We would like to replicate values for all years including those found in the
   # data as well as requested in out_years with the exception of the year (which
   # which is the column we are replicating on) and value which we would like to
   # just fill the missing values with NA (which is what complete does)
   # NOTE: the approach for programmatically selecting columns got completely
-  # overhauled in recent version of dplyr and it seems to have affected the nesting
-  # function particularly as it also seems inconsistent how to specify columns
-  # between the versions thus we had to fall back on checking versions and doing
+  # overhauled in recent version of dplyr, and it seems to have affected the nesting
+  # function particularly. How to specify columns also seems inconsistent
+  # between the versions, and thus we fall back on checking versions and doing
   # something different.
   if(packageVersion("dplyr") < "0.7") {
     d %>%
@@ -431,7 +431,7 @@ fill_exp_decay_extrapolate <- function(d, out_years) {
   d %>%
     # for the purposes of interpolating (and later extrapolating) we would like
     # to just group by everything except year and value
-    dplyr::group_by_(.dots=paste0('`',names(.)[!(names(.) %in% c("year", "value"))], '`')) %>%
+    dplyr::group_by_(.dots = paste0('`',names(.)[!(names(.) %in% c("year", "value"))], '`')) %>%
     # finally do the linearly interpolation between values which are specified
     mutate(value = approx_fun(year, value, rule = 1)) ->
     d
