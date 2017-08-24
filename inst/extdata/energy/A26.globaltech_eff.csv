@@ -2,7 +2,6 @@
 # Title: Final energy delivery efficiencies in global technology database
 # Units: Fraction
 # Description: Final energy delivery efficiency in global technology database, many of which are over-written in stub technologies
-# Source: (FILL IN)
 supplysector,subsector,technology,minicam.energy.input,1971,2005,2100
 backup_electricity,gas,gas (steam/CT),wholesale gas,0.377,0.377,0.428
 csp_backup,gas,CSP gas hybrid mode,wholesale gas,0.307,0.307,0.358

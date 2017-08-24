@@ -1,8 +1,6 @@
 # File: A26.globaltech_cost.csv
 # Title: Final energy delivery cost adders
-# Units: NA
-# Description: (FILL IN)
-# Source: (FILL IN)
+# Units: ?
 supplysector,subsector,technology,minicam.non.energy.input,1971,1975,2005,2100
 backup_electricity,gas,gas (steam/CT),non-energy,1.84,1.84,1.84,1.69
 csp_backup,gas,CSP gas hybrid mode,non-energy,0,0,0,0
