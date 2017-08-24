@@ -33,8 +33,10 @@ module_energy_L242.building_agg <- function(command, ...) {
     return(c("L242.Supplysector_bld",
              "L242.FinalEnergyKeyword_bld",
              "L242.SubsectorLogit_bld",
+             "L242.SubsectorShrwt_bld",
              "L242.SubsectorShrwtFllt_bld",
              "L242.SubsectorInterp_bld",
+             "L242.SubsectorInterpTo_bld",
              "L242.StubTech_bld",
              "L242.GlobalTechInterp_bld",
              "L242.GlobalTechShrwt_bld",
@@ -73,7 +75,11 @@ module_energy_L242.building_agg <- function(command, ...) {
     has_district_heat <- input.cost <- logit.exponent <- minicam.energy.input <-
     minicam.non.energy.input <- output <- region <- region_subsector <- sector <-
     share.weight <- share.weight.year <- stub.technology <- subsector <- supplysector <-
-    tradbio_region <- year <- year.fillout <- value <- NULL
+    tradbio_region <- year <- year.fillout <- value <- apply.to <- from.year <- to.year <-
+    interpolation.function <- sector.name <- subsector.name <- subs.share.weight <-
+    tech.share.weight <- fuelprefElasticity <- perCapitaBased <- energy.final.demand <-
+    price.elasticity <- logit.type <- output.unit <- input.unit <- price.unit <-
+    logit.year.fillout <- final.energy <- NULL
 
     # PART A: PREP
     # Build tables to drop subsectors and technologies in regions where heat and traditional biomass are not
@@ -139,29 +145,58 @@ module_energy_L242.building_agg <- function(command, ...) {
       select(-region_subsector) ->
       L242.SubsectorLogit_bld # OUTPUT
 
-    # Expand subsector shareweights of building sector across all regions and remove
+    # Write subsector shareweights of building sector for all regions and remove
     # region/fuel combinations where heat and traditional biomass are not modeled as separate fuels.
-    A42.subsector_shrwt %>%
-      filter(!is.na(year.fillout)) %>%
-      write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]],
-                           GCAM_region_names = GCAM_region_names) %>%
-      # Remove non-existent heat subsectors from each region
-      mutate(region_subsector = paste(region, subsector)) %>%
-      filter(!region_subsector %in% L242.rm_techs_R) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]])) ->
-      L242.SubsectorShrwtFllt_bld # OUTPUT
+    if(any(!is.na(A42.subsector_shrwt$year))){
+      A42.subsector_shrwt %>%
+        filter(!is.na(year)) %>%
+        write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwt"]],
+                             GCAM_region_names = GCAM_region_names) %>%
+        # Remove non-existent heat subsectors from each region
+        mutate(region_subsector = paste(region, subsector)) %>%
+        filter(!region_subsector %in% L242.rm_techs_R) %>%
+        select(one_of(LEVEL2_DATA_NAMES[["SubsectorShrwt"]])) ->
+        L242.SubsectorShrwt_bld # OUTPUT (not generated at this time)
+    }
 
-    # Expand subsector shareweight interpolation of building sector across all regions and remove
+    if(any(!is.na(A42.subsector_shrwt$year.fillout))){
+      A42.subsector_shrwt %>%
+        filter(!is.na(year.fillout)) %>%
+        write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]],
+                             GCAM_region_names = GCAM_region_names) %>%
+        # Remove non-existent heat subsectors from each region
+        mutate(region_subsector = paste(region, subsector)) %>%
+        filter(!region_subsector %in% L242.rm_techs_R) %>%
+        select(one_of(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]])) ->
+        L242.SubsectorShrwtFllt_bld # OUTPUT
+    }
+
+    # Write subsector shareweight interpolation of building sector for all regions and remove
     # region/fuel combinations where heat and traditional biomass are not modeled as separate fuels.
-    A42.subsector_interp %>%
-      filter(is.na(to.value)) %>%
-      write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorInterp"]],
-                           GCAM_region_names = GCAM_region_names) %>%
-      # Remove non-existent heat subsectors from each region
-      mutate(region_subsector = paste(region, subsector)) %>%
-      filter(!region_subsector %in% L242.rm_techs_R) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["SubsectorInterp"]])) ->
-      L242.SubsectorInterp_bld # OUTPUT
+    if(any(is.na(A42.subsector_interp$to.value))){
+      A42.subsector_interp %>%
+        filter(is.na(to.value)) %>%
+        write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorInterp"]],
+                             GCAM_region_names = GCAM_region_names) %>%
+        # Remove non-existent heat subsectors from each region
+        mutate(region_subsector = paste(region, subsector)) %>%
+        filter(!region_subsector %in% L242.rm_techs_R) %>%
+        select(one_of(LEVEL2_DATA_NAMES[["SubsectorInterp"]])) ->
+        L242.SubsectorInterp_bld # OUTPUT
+    }
+
+    if(any(!is.na(A42.subsector_interp$to.value))){
+      A42.subsector_interp %>%
+        filter(!is.na(to.value)) %>%
+        write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorInterpTo"]],
+                             GCAM_region_names = GCAM_region_names) %>%
+        # Remove non-existent heat subsectors from each region
+        mutate(region_subsector = paste(region, subsector)) %>%
+        filter(!region_subsector %in% L242.rm_techs_R) %>%
+        select(one_of(LEVEL2_DATA_NAMES[["SubsectorInterpTo"]])) ->
+        L242.SubsectorInterpTo_bld # OUTPUT (not generated at this time)
+    }
+
 
     # PART D: TECHNOLOGY INFORMATION
     # Expand stub technologies of building sector across all regions and remove
@@ -337,25 +372,85 @@ module_energy_L242.building_agg <- function(command, ...) {
                      "energy/A_regions", "energy/A42.subsector_logit") ->
       L242.SubsectorLogit_bld
 
-    L242.SubsectorShrwtFllt_bld %>%
-      add_title("Subsector shareweights of building sector") %>%
-      add_units("Unitless") %>%
-      add_comments("Subsector shareweights of building sector were written for all regions") %>%
-      add_comments("Region/fuel combinations where heat and traditional biomass are not modeled as separate fuels were removed") %>%
-      add_legacy_name("L242.SubsectorShrwtFllt_bld") %>%
-      add_precursors("common/GCAM_region_names", "energy/calibrated_techs_bld_agg",
-                     "energy/A_regions", "energy/A42.subsector_shrwt") ->
-      L242.SubsectorShrwtFllt_bld
+    if(exists("L242.SubsectorShrwt_bld")){
+      L242.SubsectorShrwt_bld %>%
+        add_title("Subsector shareweights of building sector") %>%
+        add_units("Unitless") %>%
+        add_comments("Subsector shareweights of building sector were written for all regions") %>%
+        add_comments("Region/fuel combinations where heat and traditional biomass are not modeled as separate fuels were removed") %>%
+        add_legacy_name("L242.SubsectorShrwt_bld") %>%
+        add_precursors("common/GCAM_region_names", "energy/calibrated_techs_bld_agg",
+                       "energy/A_regions", "energy/A42.subsector_shrwt") ->
+        L242.SubsectorShrwt_bld
+      } else {
+        tibble(x = NA) %>%
+        add_title("Data not created") %>%
+        add_units("Data not created") %>%
+        add_comments("Data not created") %>%
+        add_legacy_name("L242.SubsectorShrwt_bld") %>%
+        add_flags(FLAG_NO_TEST) ->
+        L242.SubsectorShrwt_bld
+    }
 
-    L242.SubsectorInterp_bld %>%
-      add_title("Subsector shareweight interpolation data of building sector") %>%
-      add_units("NA") %>%
-      add_comments("Subsector shareweight interpolation data of building sector were written for all regions") %>%
-      add_comments("Region/fuel combinations where heat and traditional biomass are not modeled as separate fuels were removed") %>%
-      add_legacy_name("L242.SubsectorInterp_bld") %>%
-      add_precursors("common/GCAM_region_names", "energy/calibrated_techs_bld_agg",
-                     "energy/A_regions", "energy/A42.subsector_interp") ->
-      L242.SubsectorInterp_bld
+    if(exists("L242.SubsectorShrwtFllt_bld")){
+      L242.SubsectorShrwtFllt_bld %>%
+        add_title("Subsector shareweights of building sector") %>%
+        add_units("Unitless") %>%
+        add_comments("Subsector shareweights of building sector were written for all regions") %>%
+        add_comments("Region/fuel combinations where heat and traditional biomass are not modeled as separate fuels were removed") %>%
+        add_legacy_name("L242.SubsectorShrwtFllt_bld") %>%
+        add_precursors("common/GCAM_region_names", "energy/calibrated_techs_bld_agg",
+                       "energy/A_regions", "energy/A42.subsector_shrwt") ->
+        L242.SubsectorShrwtFllt_bld
+    } else {
+      tibble(x = NA) %>%
+        add_title("Data not created") %>%
+        add_units("Data not created") %>%
+        add_comments("Data not created") %>%
+        add_legacy_name("L242.SubsectorShrwtFllt_bld") %>%
+        add_flags(FLAG_NO_TEST) ->
+        L242.SubsectorShrwtFllt_bld
+    }
+
+    if(exists("L242.SubsectorInterp_bld")){
+      L242.SubsectorInterp_bld %>%
+        add_title("Subsector shareweight interpolation data of building sector") %>%
+        add_units("NA") %>%
+        add_comments("Subsector shareweight interpolation data of building sector were written for all regions") %>%
+        add_comments("Region/fuel combinations where heat and traditional biomass are not modeled as separate fuels were removed") %>%
+        add_legacy_name("L242.SubsectorInterp_bld") %>%
+        add_precursors("common/GCAM_region_names", "energy/calibrated_techs_bld_agg",
+                       "energy/A_regions", "energy/A42.subsector_interp") ->
+        L242.SubsectorInterp_bld
+    } else {
+      tibble(x = NA) %>%
+        add_title("Data not created") %>%
+        add_units("Data not created") %>%
+        add_comments("Data not created") %>%
+        add_legacy_name("L242.SubsectorInterp_bld") %>%
+        add_flags(FLAG_NO_TEST) ->
+        L242.SubsectorInterp_bld
+    }
+
+    if(exists("L242.SubsectorInterpTo_bld")){
+      L242.SubsectorInterpTo_bld %>%
+        add_title("Subsector shareweight interpolation data of building sector") %>%
+        add_units("NA") %>%
+        add_comments("Subsector shareweight interpolation data of building sector were written for all regions") %>%
+        add_comments("Region/fuel combinations where heat and traditional biomass are not modeled as separate fuels were removed") %>%
+        add_legacy_name("L242.SubsectorInterpTo_bld") %>%
+        add_precursors("common/GCAM_region_names", "energy/calibrated_techs_bld_agg",
+                       "energy/A_regions", "energy/A42.subsector_interp") ->
+        L242.SubsectorInterpTo_bld
+    } else {
+      tibble(x = NA) %>%
+        add_title("Data not created") %>%
+        add_units("Data not created") %>%
+        add_comments("Data not created") %>%
+        add_legacy_name("L242.SubsectorInterpTo_bld") %>%
+        add_flags(FLAG_NO_TEST) ->
+        L242.SubsectorInterpTo_bld
+    }
 
     L242.StubTech_bld %>%
       add_title("Identification of stub technologies of building sector") %>%
@@ -444,7 +539,7 @@ module_energy_L242.building_agg <- function(command, ...) {
                      "L142.in_EJ_R_bld_F_Yh", "energy/A42.globaltech_eff") ->
       L242.BaseService_bld
 
-    return_data(L242.Supplysector_bld, L242.FinalEnergyKeyword_bld, L242.SubsectorLogit_bld, L242.SubsectorShrwtFllt_bld, L242.SubsectorInterp_bld, L242.StubTech_bld, L242.GlobalTechInterp_bld, L242.GlobalTechShrwt_bld, L242.GlobalTechEff_bld, L242.GlobalTechCost_bld, L242.StubTechCalInput_bld, L242.FuelPrefElast_bld, L242.PerCapitaBased_bld, L242.PriceElasticity_bld, L242.BaseService_bld)
+    return_data(L242.Supplysector_bld, L242.FinalEnergyKeyword_bld, L242.SubsectorLogit_bld, L242.SubsectorShrwt_bld, L242.SubsectorShrwtFllt_bld, L242.SubsectorInterp_bld, L242.SubsectorInterpTo_bld, L242.StubTech_bld, L242.GlobalTechInterp_bld, L242.GlobalTechShrwt_bld, L242.GlobalTechEff_bld, L242.GlobalTechCost_bld, L242.StubTechCalInput_bld, L242.FuelPrefElast_bld, L242.PerCapitaBased_bld, L242.PriceElasticity_bld, L242.BaseService_bld)
   } else {
     stop("Unknown command")
   }

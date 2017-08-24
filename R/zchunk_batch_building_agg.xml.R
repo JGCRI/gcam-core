@@ -13,8 +13,10 @@ module_energy_batch_building_agg.xml <- function(command, ...) {
     return(c( "L242.Supplysector_bld",
               "L242.FinalEnergyKeyword_bld",
               "L242.SubsectorLogit_bld",
+              "L242.SubsectorShrwt_bld",
               "L242.SubsectorShrwtFllt_bld",
               "L242.SubsectorInterp_bld",
+              "L242.SubsectorInterpTo_bld",
               "L242.StubTech_bld",
               "L242.GlobalTechInterp_bld",
               "L242.GlobalTechShrwt_bld",
@@ -35,8 +37,10 @@ module_energy_batch_building_agg.xml <- function(command, ...) {
     L242.Supplysector_bld <- get_data(all_data, "L242.Supplysector_bld")
     L242.FinalEnergyKeyword_bld <- get_data(all_data, "L242.FinalEnergyKeyword_bld")
     L242.SubsectorLogit_bld <- get_data(all_data, "L242.SubsectorLogit_bld")
+    L242.SubsectorShrwt_bld <- get_data(all_data, "L242.SubsectorShrwt_bld")
     L242.SubsectorShrwtFllt_bld <- get_data(all_data, "L242.SubsectorShrwtFllt_bld")
     L242.SubsectorInterp_bld <- get_data(all_data, "L242.SubsectorInterp_bld")
+    L242.SubsectorInterpTo_bld <- get_data(all_data, "L242.SubsectorInterpTo_bld")
     L242.StubTech_bld <- get_data(all_data, "L242.StubTech_bld")
     L242.GlobalTechInterp_bld <- get_data(all_data, "L242.GlobalTechInterp_bld")
     L242.GlobalTechShrwt_bld <- get_data(all_data, "L242.GlobalTechShrwt_bld")
@@ -52,11 +56,9 @@ module_energy_batch_building_agg.xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("building_agg.xml") %>%
-      add_logit_tables_xml(L242.Supplysector_bld,"L242.Supplysector_bld") %>%
+      add_logit_tables_xml(L242.Supplysector_bld,"Supplysector") %>%
       add_xml_data(L242.FinalEnergyKeyword_bld,"FinalEnergyKeyword") %>%
       add_logit_tables_xml(L242.SubsectorLogit_bld,"SubsectorLogit") %>%
-      add_xml_data(L242.SubsectorShrwtFllt_bld,"L242.SubsectorShrwtFllt_bld") %>%
-      add_xml_data(L242.SubsectorInterp_bld,"SubsectorInterp") %>%
       add_xml_data(L242.StubTech_bld,"StubTech") %>%
       add_xml_data(L242.GlobalTechInterp_bld,"GlobalTechInterp") %>%
       add_xml_data(L242.GlobalTechShrwt_bld,"GlobalTechShrwt") %>%
@@ -71,8 +73,34 @@ module_energy_batch_building_agg.xml <- function(command, ...) {
                      "L242.SubsectorShrwtFllt_bld", "L242.SubsectorInterp_bld", "L242.StubTech_bld",
                      "L242.GlobalTechInterp_bld", "L242.GlobalTechShrwt_bld", "L242.GlobalTechEff_bld",
                      "L242.GlobalTechCost_bld", "L242.StubTechCalInput_bld", "L242.FuelPrefElast_bld",
-                     "L242.PerCapitaBased_bld", "L242.PriceElasticity_bld", "L242.BaseService_bld") ->
+                     "L242.PerCapitaBased_bld", "L242.PriceElasticity_bld", "L242.BaseService_bld",
+                     "L242.SubsectorShrwt_bld", "L242.SubsectorInterpTo_bld") ->
       building_agg.xml
+
+    # Some data inputs may not actually contain data. If so, do not add_xml_data.
+      if(!is.null(L242.SubsectorShrwt_bld)){
+        building_agg.xml %>%
+          add_xml_data(L242.SubsectorShrwt_bld, "SubsectorShrwt") ->
+          building_agg.xml
+      }
+
+    if(!is.null(L242.SubsectorShrwtFllt_bld)){
+      building_agg.xml %>%
+        add_xml_data(L242.SubsectorShrwtFllt_bld, "SubsectorShrwtFllt") ->
+        building_agg.xml
+    }
+
+    if(!is.null(L242.SubsectorInterp_bld)){
+      building_agg.xml %>%
+        add_xml_data(L242.SubsectorInterp_bld, "SubsectorInterp") ->
+        building_agg.xml
+    }
+
+    if(!is.null(L242.SubsectorInterpTo_bld)){
+      building_agg.xml %>%
+        add_xml_data(L242.SubsectorInterpTo_bld, "SubsectorInterpTo") ->
+        building_agg.xml
+    }
 
     return_data(building_agg.xml)
   } else {
