@@ -1,6 +1,6 @@
 #' module_emissions_L241.en_newtech_nonco2
 #'
-#' This chunk produces emission coefficient tables for model input tables related to new energy technology.
+#' Produce emission coefficient tables for model input tables related to new energy technology.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -50,10 +50,9 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
       mutate(year = as.numeric(substr(year, 2, 5))) ->
       L112.ghg_tgej_R_en_S_F_Yh
 
-    # Set variables to NULL
     year <- value <- GCAM_region_ID <- supplysector <- subsector <- stub.technology <- Non.CO2 <-
       exception <- exception_tech <- may.be.historic <- region <- sector_tech_id <- region_eth <-
-      ethanol <- region_bio <- biodiesel <- NULL
+      ethanol <- region_bio <- biodiesel <- emiss.coeff <- NULL  # silence package check notes
 
     # ===================================================
     # Assign new technology emission factors to all GCAM regions
@@ -63,18 +62,17 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
       repeat_add_columns(tibble(region = GCAM_region_names[["region"]])) ->
       L241.nonco2_tech_coeff
 
-
     # Select the most recent CO emission coefficients for the technologies with exceptions.
     L111.nonghg_tgej_R_en_S_F_Yh %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      filter(year == max(year) & Non.CO2 == "CO") ->
+      filter(year == max(year), Non.CO2 == "CO") ->
       L241.co_tgej_R_en_S_F_fy
 
     # Combine the new technology emission factors and the CO emission coefficients into a single data frame.
     L241.nonco2_tech_coeff %>%
       select(-emiss.coeff) %>%
-      filter(exception == "CO" & Non.CO2 == "CO") %>%
-      left_join_error_no_match(L241.co_tgej_R_en_S_F_fy %>% select(-subsector),
+      filter(exception == "CO", Non.CO2 == "CO") %>%
+      left_join_error_no_match(select(L241.co_tgej_R_en_S_F_fy, -subsector),
                                by = c("region", "Non.CO2", "supplysector", "exception_tech" = "stub.technology")) %>%
       select(-GCAM_region_ID, -year) %>%
       rename(emiss.coeff = value) ->
@@ -83,8 +81,7 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
     # Now select the CH4 emission coefficients for technologies with exceptions.
     L112.ghg_tgej_R_en_S_F_Yh %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      filter(year == max(year)) %>%
-      filter(Non.CO2 == "CH4") ->
+      filter(year == max(year), Non.CO2 == "CH4") ->
       L241.ch4_tgej_R_en_S_F_fy
 
     # Combine the CH4 emission coefficients for technologies with exceptions into
@@ -92,7 +89,7 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
     L241.nonco2_tech_coeff %>%
       select(-emiss.coeff) %>%
       filter(exception == "CH4", Non.CO2 == "CH4") %>%
-      left_join_error_no_match(L241.ch4_tgej_R_en_S_F_fy %>% select("value", "region", "Non.CO2", "stub.technology"),
+      left_join_error_no_match(select(L241.ch4_tgej_R_en_S_F_fy, value, region, Non.CO2, stub.technology),
                                by = c("region", "Non.CO2", "exception_tech" = "stub.technology")) %>%
       rename(emiss.coeff = value) ->
       L241.ch4_tech_coeff_except
@@ -106,7 +103,6 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
       select(region, supplysector, subsector, stub.technology, year, Non.CO2, emiss.coeff) ->
       L241.nonco2_tech_coeff
 
-
     # Emission reduction from energy technologies.
     #
     # Assign the assumed emissions reduction from energy technologies to all regions.
@@ -119,15 +115,15 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
     # data frame.
     L241.nonco2_tech_coeff %>%
       select(region, supplysector, subsector, stub.technology, Non.CO2) %>%
-      mutate(year = min(FUTURE_YEARS)) %>%
-      mutate(ctrl.name = "GDP_control") ->
+      mutate(year = min(FUTURE_YEARS),
+             ctrl.name = "GDP_control") ->
       L241.nonco2_max_reduction
 
     # Combine the max emission reduction coefficients and future new technology
     # emission coefficients into one data frame.
     L241.nonco2_max_reduction %>%
-      right_join(L241.max_reduction %>% select("value", "region", "supplysector", "subsector", "stub.technology", "Non.CO2"),
-                               by = c("region", "supplysector", "subsector", "stub.technology", "Non.CO2")) %>%
+      right_join(select(L241.max_reduction, value, region, supplysector, subsector, stub.technology, Non.CO2),
+                 by = c("region", "supplysector", "subsector", "stub.technology", "Non.CO2")) %>%
       na.omit ->
       L241.nonco2_max_reduction
 
@@ -136,7 +132,7 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
     #
     # Assign the steepness of emission reduction based on energy technologies to all regions.
     A51.steepness %>%
-      gather(`Non.CO2`, value, -supplysector, -subsector, -stub.technology) %>%
+      gather(Non.CO2, value, -supplysector, -subsector, -stub.technology) %>%
       repeat_add_columns(tibble(region = GCAM_region_names[["region"]])) ->
       L241.steepness
 
@@ -156,7 +152,6 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
       na.omit ->
       L241.nonco2_steepness
 
-
     # Rename SO2 to regional SO2.
     L241.nonco2_tech_coeff <- rename_SO2(L241.nonco2_tech_coeff, Emiss_A_regions, FALSE)
     L241.nonco2_max_reduction <- rename_SO2(L241.nonco2_max_reduction, Emiss_A_regions, FALSE)
@@ -164,24 +159,23 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
 
 
     # TODO: better way to handle this, probably these technologies should pull from historical data
-    # "Ensure only regions that have first gen biofuels get read in"
-    # (This is where the old data system had the note - TODO: better way to handle this,
-    # probably these technologies should pull from historical data. See GitHub issue #650.)
+    # Ensure only regions that have first gen biofuels get read in
+    # See GitHub issue #650
 
     # Use the may be historic new technology emission coefficients to replace the emission
     # coefficients in the min model base year by a supplysecotr, subsector, stub.technology identifier
     # called sector_tech_id.
     A41.tech_coeff %>%
-      select("supplysector", "subsector", "stub.technology", "may.be.historic") %>%
+      select(supplysector, subsector, stub.technology, may.be.historic) %>%
       na.omit %>%
-      unite(sector_tech_id, c("supplysector", "subsector", "stub.technology"), remove = FALSE) ->
+      unite(sector_tech_id, supplysector, subsector, stub.technology, remove = FALSE) ->
       L241.maybe_historic
 
     # Replace the new technology emission coefficients in the model base year with the may be historic
     # values from the technology assumption file by the unique supplysector, subsector,
     # stub.technology identifier.
     L241.nonco2_tech_coeff %>%
-      unite(sector_tech_id, c("supplysector", "subsector", "stub.technology"), remove = FALSE) %>%
+      unite(sector_tech_id, supplysector, subsector, stub.technology, remove = FALSE) %>%
       mutate(year = replace(year, sector_tech_id %in% L241.maybe_historic$sector_tech_id, min(BASE_YEARS))) %>%
       select(-sector_tech_id) ->
       L241.nonco2_tech_coeff
@@ -190,7 +184,7 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
     # values from the technology assumption file by the unique supplysector, subsector,
     # stub.technology identifier.
     L241.nonco2_max_reduction %>%
-      unite(sector_tech_id, c("supplysector", "subsector" , "stub.technology"), remove = FALSE) %>%
+      unite(sector_tech_id, supplysector, subsector, stub.technology, remove = FALSE) %>%
       mutate(year = replace(year, sector_tech_id %in% L241.maybe_historic$sector_tech_id, min(BASE_YEARS))) %>%
       select(-sector_tech_id) ->
       L241.nonco2_max_reduction
@@ -199,11 +193,10 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
     # may be historic values from the technology assumption file by the unique supplysecotr, subsector,
     # stub.technology identifier.
     L241.nonco2_steepness %>%
-      unite(sector_tech_id, c("supplysector", "subsector" , "stub.technology"), remove = FALSE) %>%
+      unite(sector_tech_id, supplysector, subsector, stub.technology, remove = FALSE) %>%
       mutate(year = replace(year, sector_tech_id %in% L241.maybe_historic$sector_tech_id, min(BASE_YEARS))) %>%
       select(-sector_tech_id) ->
       L241.nonco2_steepness
-
 
     # Create a vector of the first generation biofuel technologies this vector will be used to
     # remove non-applicable first-genbio technologies from the data frames.
@@ -231,7 +224,7 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
       unite(region_bio, region, stub.technology, sep = "~", remove = FALSE) %>%
       filter(!stub.technology %in% L241.firstgenbio_techs | region_bio %in% region_biofuels) %>%
       select(-region_bio) %>%
-      rename(`max.reduction` = value) ->
+      rename(max.reduction = value) ->
       L241.nonco2_max_reduction
 
     L241.nonco2_steepness %>%
@@ -254,6 +247,7 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
                      "temp-data-inject/L111.nonghg_tgej_R_en_S_F_Yh",
                      "temp-data-inject/L112.ghg_tgej_R_en_S_F_Yh")  ->
       L241.nonco2_tech_coeff
+
     L241.nonco2_max_reduction %>%
       add_title("Max reduction of non-CO2 emissions by supply sector") %>%
       add_units("NA") %>%
@@ -267,6 +261,7 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
                      "temp-data-inject/L111.nonghg_tgej_R_en_S_F_Yh",
                      "temp-data-inject/L112.ghg_tgej_R_en_S_F_Yh")  ->
       L241.nonco2_max_reduction
+
     L241.nonco2_steepness %>%
       add_title("Steepness of emissions reduction by supply sector for non CO2 emissions") %>%
       add_units("percentage") %>%
