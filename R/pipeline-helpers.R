@@ -161,7 +161,7 @@ approx_fun <- function(year, value, rule = 1) {
              error = function(e) NA)
 
   } else {
-    stop("Not implemented yet!")
+    stop("Use fill_exp_decay_extrapolate!")
   }
 }
 

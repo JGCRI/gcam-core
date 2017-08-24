@@ -223,7 +223,7 @@ test_that("get_ssp_regions", {
                       aglu.HIGH_GROWTH_PCGDP + 1,
                       mean(c(aglu.LOW_GROWTH_PCGDP, aglu.HIGH_GROWTH_PCGDP))))
 
-    reg_names <- tibble(GCAM_region_ID = 1:3, region = letters[1:3])
+  reg_names <- tibble(GCAM_region_ID = 1:3, region = letters[1:3])
 
   # Should return a single low/high/medium value when year and scenario match
   expect_equal(get_ssp_regions(pcGDP, reg_names, income_group = "low"), reg_names$region[1])
@@ -246,7 +246,8 @@ test_that("fill_exp_decay_extrapolate", {
     calc_data
   expect_equal(unique(calc_data$year), test_years)
   expect_equal(calc_data %>% filter(year == 1985) %>% select(value), tibble(value = 950))
-  expect_equal(calc_data %>% filter(year == 2000) %>% select(value), tibble(value = 1000*0.6+(1000-1000*0.6)*(1.0-0.4)^(2000-1986)))
+  expect_equal(calc_data %>% filter(year == 2000) %>%
+                 select(value), tibble(value = 1000 * 0.6 + (1000-1000 * 0.6) * (1.0-0.4) ^ (2000 - 1986)))
 
   # test improvment.rate/max error checking
   expect_error(test_data %>% mutate(improvement.rate = NA) %>% fill_exp_decay_extrapolate(test_years))
@@ -266,11 +267,15 @@ test_that("fill_exp_decay_extrapolate", {
     test_data
   test_data %>% fill_exp_decay_extrapolate(test_years) ->
     calc_data
-  expect_equal(calc_data %>% filter(technology == "lawnmower",year == 1985) %>% select(value), tibble(value = 950))
-  expect_equal(calc_data %>% filter(technology == "lawnmower",year == 2000) %>% select(value), tibble(value = 1000*0.6+(1000-1000*0.6)*(1.0-0.4)^(2000-1986)))
-  expect_equal(calc_data %>% filter(technology == "riding mower",year == 1985) %>% select(value), tibble(value = 1450))
-  expect_equal(calc_data %>% filter(technology == "riding mower",year == 2000) %>% select(value), tibble(value = (1000*0.6+(1000-1000*0.6)*(1.0-0.4)^(2000-1986)) +
-                 (500*0.9+(500-500*0.9)*(1.0-0.5)^(2000-1986))))
+  expect_equal(calc_data %>% filter(technology == "lawnmower", year == 1985) %>%
+                 select(value), tibble(value = 950))
+  expect_equal(calc_data %>% filter(technology == "lawnmower", year == 2000) %>%
+                 select(value), tibble(value = 1000 * 0.6 + (1000 - 1000 * 0.6) * (1.0 - 0.4) ^ (2000 - 1986)))
+  expect_equal(calc_data %>% filter(technology == "riding mower", year == 1985) %>%
+                 select(value), tibble(value = 1450))
+  expect_equal(calc_data %>% filter(technology == "riding mower", year == 2000) %>%
+                 select(value), tibble(value = (1000 * 0.6+(1000 - 1000 * 0.6)*(1.0-0.4) ^ (2000 - 1986)) +
+                                         (500 * 0.9 + (500 - 500 * 0.9) * (1.0-0.5) ^ (2000 - 1986))))
 
   # test all three cases (no extrap, extrap no shadow, extrap shadow) together
   test_data %>%
@@ -278,13 +283,19 @@ test_that("fill_exp_decay_extrapolate", {
     test_data
   test_data %>% fill_exp_decay_extrapolate(test_years) ->
     calc_data
-  expect_equal(calc_data %>% filter(technology == "lawnmower",year == 1985) %>% select(value), tibble(value = 950))
-  expect_equal(calc_data %>% filter(technology == "lawnmower",year == 2000) %>% select(value), tibble(value = 1000*0.6+(1000-1000*0.6)*(1.0-0.4)^(2000-1986)))
-  expect_equal(calc_data %>% filter(technology == "riding mower",year == 1985) %>% select(value), tibble(value = 1450))
-  expect_equal(calc_data %>% filter(technology == "riding mower",year == 2000) %>% select(value), tibble(value = (1000*0.6+(1000-1000*0.6)*(1.0-0.4)^(2000-1986)) +
-                                                                                                       (500*0.9+(500-500*0.9)*(1.0-0.5)^(2000-1986))))
-  expect_equal(calc_data %>% filter(technology == "goats",year == 1985) %>% select(value), tibble(value = 150))
-  expect_equal(calc_data %>% filter(technology == "goats",year == 2000) %>% select(value), tibble(value = as.numeric(NA)))
+  expect_equal(calc_data %>% filter(technology == "lawnmower", year == 1985) %>%
+                 select(value), tibble(value = 950))
+  expect_equal(calc_data %>% filter(technology == "lawnmower", year == 2000) %>%
+                 select(value), tibble(value = 1000 * 0.6+(1000-1000 * 0.6) * (1.0 - 0.4) ^ (2000 - 1986)))
+  expect_equal(calc_data %>% filter(technology == "riding mower", year == 1985) %>%
+                 select(value), tibble(value = 1450))
+  expect_equal(calc_data %>% filter(technology == "riding mower", year == 2000) %>%
+                 select(value), tibble(value = (1000 * 0.6 + (1000-1000 * 0.6) * (1.0-0.4) ^ (2000 - 1986)) +
+                                         (500 * 0.9+(500-500 * 0.9)*(1.0-0.5) ^ (2000-1986))))
+  expect_equal(calc_data %>% filter(technology == "goats", year == 1985) %>%
+                 select(value), tibble(value = 150))
+  expect_equal(calc_data %>% filter(technology == "goats", year == 2000) %>%
+                 select(value), tibble(value = as.numeric(NA)))
 
   # ensure error with invalid shadow technology
   test_data[!is.na(test_data$improvement.shadow.technology), "improvement.shadow.technology"] <- "scythe"
