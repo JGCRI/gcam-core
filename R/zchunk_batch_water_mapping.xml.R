@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{water_mapping.xml}. The corresponding file in the
 #' original data system was \code{batch_water_mapping.xml.R} (water XML).
-module_water_batch_water_mapping.xml_DISABLED <- function(command, ...) {
+module_water_batch_water_mapping.xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c( "L203.Supplysector",
               "L203.SubsectorLogit",
@@ -32,8 +32,8 @@ module_water_batch_water_mapping.xml_DISABLED <- function(command, ...) {
 
     # Produce outputs
     create_xml("water_mapping.xml") %>%
-      add_xml_data(L203.Supplysector,"Supplysector") %>%
-      add_xml_data(L203.SubsectorLogit,"SubsectorLogit") %>%
+      add_logit_tables_xml(L203.Supplysector,"Supplysector") %>%
+      add_logit_tables_xml(L203.SubsectorLogit, "SubsectorLogit") %>%
       add_xml_data(L203.SubsectorShrwtFllt,"SubsectorShrwtFllt") %>%
       add_xml_data(L203.TechShrwt,"TechShrwt") %>%
       add_xml_data(L203.TechCoef,"TechCoef") %>%
