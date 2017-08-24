@@ -96,7 +96,8 @@ module_energy_LA116.geo <- function(command, ...) {
     # Aggregate country-level hydrothermal geothermal resource supply curves by GCAM region
     L116.geothermal_ctry %>%
       group_by_(GCAM_REGION_ID, "resource", "subresource", "grade", "extractioncost") %>%
-      summarise(available = sum(available)) ->
+      summarise(available = sum(available)) %>%
+      ungroup() ->
       L116.geothermal_rgn
 
     # Specify the names of the resource table that will be written out
@@ -123,7 +124,8 @@ module_energy_LA116.geo <- function(command, ...) {
     # Aggregate country-level EGS geothermal resource supply curves by GCAM region
     L116.EGS_ctry %>%
       group_by_(GCAM_REGION_ID, "resource", "subresource", "grade", "extractioncost") %>%
-      summarise(available = sum(available)) ->
+      summarise(available = sum(available)) %>%
+      ungroup() ->
       L116.EGS_rgn
 
     L116.EGS_rgn %>%

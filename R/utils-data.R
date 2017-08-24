@@ -217,6 +217,20 @@ get_data <- function(all_data, name) {
 return_data <- function(...) {
   dots <- list(...)
   names(dots) <- as.list(substitute(list(...)))[-1L]
+  # disallow any data which is "grouped" as it may lead to unexpected
+  # behavior, especially for unsuspecting chunks which may use it down
+  # the line not expecting any groupings.
+  lapply(names(dots), function(dname) {
+    # note we may return data which are not tibbles however for any
+    # data which group_by had been called on is_tibble will return
+    # true including for instance data.tables
+    # any other data could not possibly be grouped so we can skip the
+    # check for them
+    if(is_tibble(dots[[dname]])) {
+      assert_that(is.null(groups(dots[[dname]])), msg =
+        paste0(dname, " is grouped which is not allowed in return_data, please ungroup()"))
+    }
+  })
   dots
 }
 

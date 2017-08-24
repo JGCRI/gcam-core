@@ -126,7 +126,8 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
     GCAM3_population_df <- repeat_add_columns(iso_list, all_years) %>%
       left_join(L101.Pop_thous_GCAM3_ctry_Y, by = c("iso", "year")) %>%
       group_by(iso) %>%
-      mutate(population = approx_fun(year, population) )
+      mutate(population = approx_fun(year, population) ) %>%
+      ungroup()
 
     # Add population data and region data
     L143.wtHDDCDD_scen_ctry_Y <- L143.HDDCDD_scen_ctry_Y %>%
@@ -147,7 +148,8 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
       # Aggregate population data to GCAM 4 region
       R_population_df <- GCAM3_population_df %>%
         group_by(GCAM_region_ID, year) %>%
-        summarise(aggpop = sum(population))
+        summarise(aggpop = sum(population)) %>%
+        ungroup()
 
       # Sum weighted degree day by GCAM 4 regions and divide by population
       L143.HDDCDD_scen_R_Y <- L143.wtHDDCDD_scen_ctry_Y %>%
@@ -156,12 +158,14 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
         left_join_error_no_match(R_population_df,
                                  by = c("GCAM_region_ID", "year")) %>%
         mutate(value = wtDD / aggpop) %>%
+        ungroup() %>%
         select(-wtDD, -aggpop)
 
       # Aggregate population data to GCAM 3 region
       GCAM3_R_population_df <- GCAM3_population_df %>%
         group_by(region_GCAM3, year) %>%
-        summarise(aggpop = sum(population))
+        summarise(aggpop = sum(population)) %>%
+        ungroup()
 
       # Sum weighted degree day by GCAM 3 regions and divide by population
       L143.HDDCDD_scen_RG3_Y <- L143.wtHDDCDD_scen_ctry_Y %>%
@@ -170,6 +174,7 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
         left_join_error_no_match(GCAM3_R_population_df,
                                  by = c("region_GCAM3", "year")) %>%
         mutate(value = wtDD / aggpop)%>%
+        ungroup() %>%
         select(-wtDD, -aggpop)
 
     } else {
@@ -177,12 +182,14 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
       # Calculate weighted degree day by GCAM 4 regions
       L143.HDDCDD_scen_R_Y <- L143.wtHDDCDD_scen_ctry_Y %>%
         group_by(GCAM_region_ID, SRES, GCM, variable, year) %>%
-        summarise(value = weighted.mean(value, population))
+        summarise(value = weighted.mean(value, population)) %>%
+        ungroup()
 
       # Calculate weighted degree day by GCAM 3 regions
       L143.HDDCDD_scen_RG3_Y <- L143.wtHDDCDD_scen_ctry_Y %>%
         group_by(region_GCAM3, SRES, GCM, variable, year) %>%
-        summarise(value = weighted.mean(value, population))
+        summarise(value = weighted.mean(value, population)) %>%
+        ungropu()
     }
 
 
