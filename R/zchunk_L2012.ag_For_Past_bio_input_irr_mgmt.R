@@ -61,7 +61,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
     L122.ag_HA_to_CropLand_R_Y_GLU <- get_data(all_data, "L122.ag_HA_to_CropLand_R_Y_GLU")
     L123.ag_Prod_Mt_R_Past_Y_GLU <- get_data(all_data, "L123.ag_Prod_Mt_R_Past_Y_GLU")
     L123.For_Prod_bm3_R_Y_GLU <- get_data(all_data, "L123.For_Prod_bm3_R_Y_GLU")
-    L132.ag_an_For_Prices <- get_data(all_data, "L132.ag_an_For_Prices" )
+    L132.ag_an_For_Prices <- get_data(all_data, "L132.ag_an_For_Prices")
     L161.ag_irrProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_irrProd_Mt_R_C_Y_GLU")
     L161.ag_rfdProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_rfdProd_Mt_R_C_Y_GLU")
     L163.ag_irrBioYield_GJm2_R_GLU <- get_data(all_data, "L163.ag_irrBioYield_GJm2_R_GLU")

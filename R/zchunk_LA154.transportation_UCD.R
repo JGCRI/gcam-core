@@ -291,7 +291,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       mutate(Tvkm = weight_EJ / intensity) %>%
       mutate(Tpkm = Tvkm * `load factor`) %>%
       mutate(Tusd = Tvkm * `non-fuel costs`) %>%
-      mutate(Thr = Tvkm / speed.x ) %>%
+      mutate(Thr = Tvkm / speed.x) %>%
       group_by(UCD_technology,UCD_fuel, UCD_sector, mode, size.class.x, year, GCAM_region_ID) %>%
       summarise(weight_EJ = sum(weight_EJ), Tvkm = sum(Tvkm), Tpkm = sum(Tpkm),Tusd = sum(Tusd), Thr = sum(Thr)) %>%
       ungroup()
@@ -323,14 +323,14 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
 
     # Calculating non-motorized passenger-km per person
     PKM_percap_nonmotor_UCD_R <- UCD_trn_data %>%
-      filter(mode %in% c( "Walk", "Cycle" ), variable == "service output") %>%
+      filter(mode %in% c("Walk", "Cycle"), variable == "service output") %>%
       left_join_error_no_match(Pop_thous_UCD_R, by = "UCD_region") %>%
       mutate(pkm_percap = value * CONV_BIL_MIL * CONV_MIL_THOUS / population) %>%
       select(UCD_region, mode, year, pkm_percap)
 
     # Compute the nonmotorized service output at the country level, using the historical population
     PKM_nonmotor_ctry <- L100.Pop_thous_ctry_Yh %>%
-      repeat_add_columns(tibble(mode = c( "Walk", "Cycle" ))) %>%
+      repeat_add_columns(tibble(mode = c( "Walk", "Cycle"))) %>%
       left_join_error_no_match(UCD_ctry %>% select(-country_name), by = "iso")  %>%
       left_join_error_no_match(PKM_percap_nonmotor_UCD_R %>% filter(year == energy.UCD_EN_YEAR),
                                by = c("UCD_region", "mode")) %>%
