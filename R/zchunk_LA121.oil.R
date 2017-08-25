@@ -103,7 +103,7 @@ module_energy_LA121.oil <- function(command, ...) {
       L111.Prod_EJ_R_F_Yh %>%
         # Join on sector / fuel, keeping only the rows that are in both tables
         inner_join(rename(L121.globaltech_coef_interp, value_coef = value), by = c("sector", "fuel", "year")) %>%
-        select(GCAM_region_ID, sector, fuel, year, value, value_coef ) %>%
+        select(GCAM_region_ID, sector, fuel, year, value, value_coef) %>%
         left_join(rename(L121.globaltech_coef_interp, value_coef_gas = value), by = c("sector", "year")) %>%
         mutate(value = value * value_coef_gas) %>%
         select(GCAM_region_ID, sector, fuel = fuel.y, year, value) ->

@@ -37,7 +37,7 @@ module_energy_LA112.U <- function(command, ...) {
            subresource = A12.U_curves$subresource,
            grade = A12.U_curves$grade,
            extractioncost = A12.U_curves$extractioncost,
-           available = A12.U_curves$available ) %>%
+           available = A12.U_curves$available) %>%
 
       # Historical uranium prices (currently assumed at global level, so no level 1 processing necessary)
 

@@ -26,7 +26,7 @@ module_emissions_L105.nh3_an_USA_S_T_Y <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     sector <- fuel <- Source_Category_Raw <- Source_Category <- year <- value <-
-        GCAM_region_ID <- emissions <- production <- NULL # silence package check.
+      GCAM_region_ID <- emissions <- production <- NULL # silence package check.
 
     all_data <- list(...)[[1]]
 
@@ -59,7 +59,7 @@ module_emissions_L105.nh3_an_USA_S_T_Y <- function(command, ...) {
     L105.out_Mt_USA_an_C_Sys_Fd_Yh <- L107.an_Prod_Mt_R_C_Sys_Fd_Y %>%
       filter(GCAM_region_ID == gcam.USA_CODE) %>%
       group_by(year) %>%
-      summarize_at(vars(value), funs(sum ) ) %>%
+      summarize_at(vars(value), funs(sum)) %>%
       rename(production = value) %>%
       mutate(year = as.numeric(year))
 
@@ -75,10 +75,10 @@ module_emissions_L105.nh3_an_USA_S_T_Y <- function(command, ...) {
     extend_value <- L105.nh3_tgmt_USA_an_Yh %>% filter(year == 1990) %>% select(value)%>% as.numeric
 
     L105.nh3_tgmt_USA_an_Yh <- L105.nh3_tgmt_USA_an_Yh %>%
-      bind_rows( tibble(sector = rep(extend_sector, times = length(emissions.NH3_EXTRA_YEARS)),
-                    fuel = rep(extend_fuel, times = length(emissions.NH3_EXTRA_YEARS)),
-                    year = emissions.NH3_EXTRA_YEARS,
-                    value = rep(extend_value, times = length(emissions.NH3_EXTRA_YEARS)) )  ) %>%
+      bind_rows(tibble(sector = rep(extend_sector, times = length(emissions.NH3_EXTRA_YEARS)),
+                       fuel = rep(extend_fuel, times = length(emissions.NH3_EXTRA_YEARS)),
+                       year = emissions.NH3_EXTRA_YEARS,
+                       value = rep(extend_value, times = length(emissions.NH3_EXTRA_YEARS)))) %>%
       arrange(year)
 
     # Produce outputs

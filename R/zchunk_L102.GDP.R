@@ -114,18 +114,26 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "socioeconomics/SSP_database_v9",
              FILE = "socioeconomics/IMF_GDP_growth",
+             FILE = "socioeconomics/GCAM3_GDP",
              "L100.gdp_mil90usd_ctry_Yh",
+             "L101.Pop_thous_GCAM3_R_Y",
+             "L101.Pop_thous_GCAM3_ctry_Y",
              "L101.Pop_thous_R_Yh",
              "L101.Pop_thous_Scen_R_Yfut"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L102.gdp_mil90usd_Scen_R_Y",
              "L102.pcgdp_thous90USD_Scen_R_Y",
-             "L102.PPP_MER_R"))
+             "L102.PPP_MER_R",
+             "L102.gdp_mil90usd_GCAM3_R_Y",
+             "L102.gdp_mil90usd_GCAM3_ctry_Y",
+             "L102.pcgdp_thous90USD_GCAM3_R_Y",
+             "L102.pcgdp_thous90USD_GCAM3_ctry_Y"))
   } else if(command == driver.MAKE) {
 
     iso <- GCAM_region_ID <- value <- year <- gdp <- MODEL <- VARIABLE <-
         UNIT <- SCENARIO <- scenario <- gdp.rate <- gdp.ratio <- population <-
-        pcgdp <- MER <- PPP <- NULL     # silence package check.
+        pcgdp <- MER <- PPP <- region_GCAM3 <- agg_val <- share <-
+      GCAM3_value <- base <- ratio <- value.x <- value.y <- NULL     # silence package check.
 
     all_data <- list(...)[[1]]
 
@@ -133,7 +141,13 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     SSP_database_v9 <- get_data(all_data, "socioeconomics/SSP_database_v9")
     IMF_GDP_growth <- get_data(all_data, "socioeconomics/IMF_GDP_growth")
+    GCAM3_GDP <- get_data(all_data, "socioeconomics/GCAM3_GDP") %>%
+      gather(year, value, matches(YEAR_PATTERN)) %>%
+      mutate(year = as.integer(year),
+             value = as.numeric(value))
     L100.gdp_mil90usd_ctry_Yh <- get_data(all_data, "L100.gdp_mil90usd_ctry_Yh")
+    L101.Pop_thous_GCAM3_R_Y <- get_data(all_data, "L101.Pop_thous_GCAM3_R_Y")
+    L101.Pop_thous_GCAM3_ctry_Y <- get_data(all_data, "L101.Pop_thous_GCAM3_ctry_Y")
     L101.Pop_thous_R_Yh <- get_data(all_data, "L101.Pop_thous_R_Yh")
     L101.Pop_thous_Scen_R_Yfut <- get_data(all_data, "L101.Pop_thous_Scen_R_Yfut")
 
@@ -285,6 +299,100 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
       left_join_error_no_match(mer.rgn, ppp.rgn, by = 'GCAM_region_ID') %>%
       mutate(PPP_MER = PPP / MER)
 
+    # GDP by GCAM region from GCAM 3.0 GDPs.
+    # Downscaling GCAM 3.0 GDP by GCAM 3.0 region to countries, using SSP2 GDP scenario
+    # GDP by GCAM 3.0 region - downscale to country according to actual shares in the historical periods, and SSPbase in the future periods
+
+    # Future GDP
+    gdp_bilusd_ctry_Yfut <- SSP_database_v9 %>%
+      filter(MODEL == 'OECD Env-Growth' & VARIABLE == 'GDP|PPP') %>%
+      standardize_iso('REGION') %>%
+      change_iso_code('rou', 'rom') %>%
+      mutate(scenario = substr(SCENARIO, 1, 4)) %>%
+      # Only Base SSP
+      filter(scenario == socioeconomics.BASE_POP_SCEN) %>%
+      gather(year, value, matches(YEAR_PATTERN)) %>%
+      mutate(year = as.integer(year),
+             value = as.numeric(value)) %>%
+      filter(year %in% FUTURE_YEARS) %>%
+      select(iso, year, value)
+
+    # Historical GDP
+    gdp_mil90usd_ctry_Yh <- L100.gdp_mil90usd_ctry_Yh %>%
+      filter(year %in% HISTORICAL_YEARS,
+             iso %in% gdp_bilusd_ctry_Yfut$iso)
+
+    gdp_mil90usd_ctry_Yh <- gdp_mil90usd_ctry_Yh %>%
+      # Only take future GDP if iso has historical GDP
+      bind_rows(gdp_bilusd_ctry_Yfut %>%
+                  filter(iso %in% gdp_mil90usd_ctry_Yh$iso)) %>%
+      left_join_error_no_match(iso_GCAM_regID %>%
+                                 select(iso, region_GCAM3), by = "iso")
+
+    # Aggregating GDP by GCAM3 region
+    gdp_mil90usd_SSPbase_RG3_Y <- gdp_mil90usd_ctry_Yh %>%
+      group_by(year, region_GCAM3) %>%
+      summarise(agg_val = sum(value))
+
+    # Calculate shares of each country within its region
+    gdpshares_ctryRG3_Y <- gdp_mil90usd_ctry_Yh %>%
+      group_by(year, region_GCAM3) %>%
+      mutate(share = value / sum(value)) %>%
+      ungroup()
+
+    # Interpolate GCAM3 GDP data to all historical and future years
+    gdp_mil90usd_GCAM3_RG3_Y <- iso_GCAM_regID %>%
+      select(region_GCAM3) %>%
+      distinct() %>%
+      repeat_add_columns(tibble(year = as.integer(c(HISTORICAL_YEARS, FUTURE_YEARS)))) %>%
+      left_join(GCAM3_GDP, by = c("region_GCAM3", "year")) %>%
+      # Add in historical values to match in for NA values
+      left_join_error_no_match(gdp_mil90usd_SSPbase_RG3_Y, by = c("region_GCAM3", "year")) %>%
+      group_by(region_GCAM3) %>%
+      # Extending GCAM 3.0 scenario to first historical year using historical GDP ratios by GCAM 3.0 region
+      mutate(value = replace(value, year == min(year),
+                             value[year == min(GCAM3_GDP$year)] * agg_val[year == min(year)] / agg_val[year == min(GCAM3_GDP$year)]),
+             value = approx_fun(year, value, rule = 1)) %>%
+      ungroup() %>%
+      select(region_GCAM3, year, GCAM3_value = value)
+
+    # Multiply these GDP numbers by the shares of each country within GCAM region
+    gdp_mil90usd_GCAM3_ctry_Y <- gdpshares_ctryRG3_Y %>%
+      left_join_error_no_match(gdp_mil90usd_GCAM3_RG3_Y, by = c("year", "region_GCAM3")) %>%
+      transmute(iso, year, value = share * GCAM3_value)
+
+    # rebasing GDP to 2010 USD at country level
+    # Calculate the GDP ratios from the first year in the projections. Use this ratio to project GDP from historical dataset in final historical period
+    gdpRatio_GCAM3_ctry_Yfut <- gdp_mil90usd_GCAM3_ctry_Y %>%
+      group_by(iso) %>%
+      mutate(base = value[year == socioeconomics.FINAL_HIST_YEAR]) %>%
+      ungroup() %>%
+      filter(year %in% FUTURE_YEARS) %>%
+      transmute(iso, year, ratio = value / base)
+
+    # Use these ratios to build the GDP trajectories by old GCAM3
+    gdp_mil90usd_GCAM3_ctry_Y <- gdp_mil90usd_ctry_Yh %>%
+      left_join(gdpRatio_GCAM3_ctry_Yfut, by = c("iso", "year")) %>%
+      group_by(iso) %>%
+      mutate(value = if_else(year %in% FUTURE_YEARS, value[year == socioeconomics.FINAL_HIST_YEAR] * ratio, value)) %>%
+      ungroup() %>%
+      select(iso, year, value)
+
+    # Aggregating by GCAM4 region
+    gdp_mil90usd_GCAM3_R_Y <- gdp_mil90usd_GCAM3_ctry_Y %>%
+      left_join_error_no_match(iso_region32_lookup, by = "iso") %>%
+      group_by(GCAM_region_ID, year) %>%
+      summarise(value = sum(value)) %>%
+      ungroup()
+
+    # Calculate per-capita GDP
+    pcgdp_thous90USD_GCAM3_R_Y <- gdp_mil90usd_GCAM3_R_Y %>%
+      left_join_error_no_match(L101.Pop_thous_GCAM3_R_Y, by = c("year", "GCAM_region_ID")) %>%
+      transmute(GCAM_region_ID, year, value = value.x / value.y)
+
+    pcgdp_thous90USD_GCAM3_ctry_Y <- gdp_mil90usd_GCAM3_ctry_Y %>%
+      left_join_error_no_match(L101.Pop_thous_GCAM3_ctry_Y, by = c("year", "iso")) %>%
+      transmute(iso, year, value = value.x / value.y)
 
     ## Produce outputs
     gdp.mil90usd.scen.rgn.yr %>%
@@ -338,7 +446,59 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
                      "L100.gdp_mil90usd_ctry_Yh") ->
       L102.PPP_MER_R
 
-    return_data(L102.gdp_mil90usd_Scen_R_Y, L102.pcgdp_thous90USD_Scen_R_Y, L102.PPP_MER_R)
+    gdp_mil90usd_GCAM3_R_Y %>%
+      add_title("GDP by GCAM3 Region") %>%
+      add_units("Million 1990 USD") %>%
+      add_comments("Scales historical SSP GDP data to GCAM3 GDP data.") %>%
+      add_comments("Calculates future GDP based on ratio of GCAM3 future to 2010 value.") %>%
+      add_legacy_name("L102.gdp_mil90usd_GCAM3_R_Y") %>%
+      add_precursors("common/iso_GCAM_regID",
+                     "socioeconomics/SSP_database_v9",
+                     "L100.gdp_mil90usd_ctry_Yh",
+                     "socioeconomics/GCAM3_GDP") %>%
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L102.gdp_mil90usd_GCAM3_R_Y
+
+    gdp_mil90usd_GCAM3_ctry_Y %>%
+      add_title("GCAM3 GDP by Country") %>%
+      add_units("Million 1990 USD") %>%
+      add_comments("Scales historical SSP GDP data to GCAM3 GDP data.") %>%
+      add_comments("Calculates future GDP based on ratio of GCAM3 future to 2010 value.") %>%
+      add_legacy_name("L102.gdp_mil90usd_GCAM3_ctry_Y") %>%
+      add_precursors("common/iso_GCAM_regID",
+                     "socioeconomics/SSP_database_v9",
+                     "L100.gdp_mil90usd_ctry_Yh",
+                     "socioeconomics/GCAM3_GDP") %>%
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L102.gdp_mil90usd_GCAM3_ctry_Y
+
+    pcgdp_thous90USD_GCAM3_R_Y %>%
+      add_title("Per-Capita GDP by GCAM3 Region") %>%
+      add_units("Thousand 1990 USD") %>%
+      add_comments("L102.gdp_mil90usd_GCAM3_R_Y divided by population from L101.Pop_thous_GCAM3_R_Y") %>%
+      add_legacy_name("L102.pcgdp_thous90USD_GCAM3_R_Y") %>%
+      add_precursors("common/iso_GCAM_regID",
+                     "socioeconomics/SSP_database_v9",
+                     "L100.gdp_mil90usd_ctry_Yh",
+                     "socioeconomics/GCAM3_GDP",
+                     "L101.Pop_thous_GCAM3_R_Y") %>%
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L102.pcgdp_thous90USD_GCAM3_R_Y
+
+    pcgdp_thous90USD_GCAM3_ctry_Y %>%
+      add_title("GCAM3 Per-Capita GDP by Country") %>%
+      add_units("Thousand 1990 USD") %>%
+      add_comments("L102.gdp_mil90usd_GCAM3_ctry_Y divided by population from L101.Pop_thous_GCAM3_ctry_Y") %>%
+      add_legacy_name("L102.pcgdp_thous90USD_GCAM3_ctry_Y") %>%
+      add_precursors("common/iso_GCAM_regID",
+                     "socioeconomics/SSP_database_v9",
+                     "L100.gdp_mil90usd_ctry_Yh",
+                     "socioeconomics/GCAM3_GDP",
+                     "L101.Pop_thous_GCAM3_ctry_Y") %>%
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L102.pcgdp_thous90USD_GCAM3_ctry_Y
+
+    return_data(L102.gdp_mil90usd_Scen_R_Y, L102.pcgdp_thous90USD_Scen_R_Y, L102.PPP_MER_R, L102.gdp_mil90usd_GCAM3_R_Y, L102.gdp_mil90usd_GCAM3_ctry_Y, L102.pcgdp_thous90USD_GCAM3_R_Y, L102.pcgdp_thous90USD_GCAM3_ctry_Y)
   } else {
     stop("Unknown command")
   }

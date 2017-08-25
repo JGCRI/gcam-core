@@ -235,13 +235,13 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
     # Split data by SSP grouping
     out_df <- SSP_EF %>%
       split(.$SSP_group) %>%
-      lapply(function(df){
+      lapply(function(df) {
         select(df, -SSP_group)
       })
 
     # Region 25 is dropped in old ds because it does not have policy (elec_coal data does not exist)
     # Unsure of what correct behavior is. See issue #596
-    if (OLD_DATA_SYSTEM_BEHAVIOR){
+    if (OLD_DATA_SYSTEM_BEHAVIOR) {
       out_df[["2"]] <- out_df[["2"]] %>%
         filter(GCAM_region_ID != 25)
     }

@@ -142,7 +142,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
       mutate(colID = "For") ->
       For.tmp
 
-    if(OLD_DATA_SYSTEM_BEHAVIOR){
+    if(OLD_DATA_SYSTEM_BEHAVIOR) {
       # Mill outputs are getting For base resbio curves from A_resbio_curves;
       # Likely a typo in the old DS, since there IS a Mill base curve in A_resbio_curves
       L204.GlobalResBio_Mill %>%
@@ -243,8 +243,8 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
       repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) %>%
       select(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology, year, residue.biomass.production,
              mass.conversion, harvest.index, eros.ctrl, mass.to.energy, water.content) %>%
-      repeat_add_columns(tibble::tibble(Irr_Rfd = c( "IRR", "RFD" ))) %>%
-      repeat_add_columns(tibble::tibble(level = c( "lo", "hi" ))) %>%
+      repeat_add_columns(tibble::tibble(Irr_Rfd = c( "IRR", "RFD"))) %>%
+      repeat_add_columns(tibble::tibble(level = c( "lo", "hi"))) %>%
       mutate(AgProductionTechnology = paste(paste(AgProductionTechnology, Irr_Rfd, sep = aglu.IRR_DELIMITER),
                                             level, sep = aglu.MGMT_DELIMITER)) %>%
       select(-Irr_Rfd, -level) ->

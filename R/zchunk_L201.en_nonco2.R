@@ -228,7 +228,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     delete_nonexistent_sectors <- function(x, L201.delete.sectors) {
       filter(x, ! paste0(region, supplysector) %in% L201.delete.sectors)
     }
-    L201.delete.sectors <- paste0(L244.DeleteThermalService$region, L244.DeleteThermalService$supplysector )
+    L201.delete.sectors <- paste0(L244.DeleteThermalService$region, L244.DeleteThermalService$supplysector)
     L201.en_pol_emissions <- delete_nonexistent_sectors(L201.en_pol_emissions, L201.delete.sectors)
     L201.en_ghg_emissions <- delete_nonexistent_sectors(L201.en_ghg_emissions, L201.delete.sectors)
     L201.en_bcoc_emissions <- delete_nonexistent_sectors(L201.en_bcoc_emissions, L201.delete.sectors)
