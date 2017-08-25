@@ -53,6 +53,13 @@ module_emissions_L231.proc_sector <- function(command, ...) {
              "L231.IndCoef"))
   } else if(command == driver.MAKE) {
 
+    # Silence package checks
+    year <- value <- share.weight <- efficiency <- input.cost <- coefficient <-
+      year.fillout <- to.value <- supplysector <- subsector <- technology <- minicam.energy.input <-
+      minicam.non.energy.input <- region <- sector.name <- subsector.name <- calibrated.value <-
+      market <- resource_type <- resource <- `output-unit` <- `price-unit` <- capacity.factor <-
+      secondary.output <- GCAM_region_ID <- service <- ind_proc_input <- ind_output <- NULL
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
@@ -97,43 +104,35 @@ module_emissions_L231.proc_sector <- function(command, ...) {
 
     # L231.Supplysector_ind: Supply sector information for urban & industrial processes sectors
     L231.Supplysector_urb_ind <- A31.sector %>%
-      write_to_all_regions(c("region", "supplysector", "output.unit", "input.unit", "price.unit",
-                             "logit.year.fillout", "logit.exponent",  "logit.type"), GCAM_region_names = GCAM_region_names )
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]],  "logit.type"), GCAM_region_names = GCAM_region_names )
 
     # 2b. Subsector information
     # L231.SubsectorLogit_urb_ind: Subsector logit exponents of urban & industrial processes sectors
     L231.SubsectorLogit_urb_ind <- A31.subsector_logit %>%
-      write_to_all_regions(c("region", "supplysector", "subsector", "logit.year.fillout", "logit.exponent", "logit.type"),
-                           GCAM_region_names = GCAM_region_names)
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], "logit.type"), GCAM_region_names = GCAM_region_names)
 
     # L231.SubsectorShrwt_urb_ind and L231.SubsectorShrwtFllt_urb_ind: Subsector shareweights of urban & industrial processes sectors
     if(any(!is.na(A31.subsector_shrwt$year))){
       L231.SubsectorShrwt_urb_ind <- A31.subsector_shrwt %>%
         filter(!is.na(year)) %>%
-        write_to_all_regions(c("region", "supplysector", "subsector", "year", "share.weight"),
-                             GCAM_region_names = GCAM_region_names)
+        write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwt"]], GCAM_region_names = GCAM_region_names)
     }
     if(any(!is.na(A31.subsector_shrwt$year.fillout))){
       L231.SubsectorShrwtFllt_urb_ind <- A31.subsector_shrwt %>%
         filter(!is.na(year.fillout)) %>%
-        write_to_all_regions(c("region", "supplysector", "subsector", "year.fillout", "share.weight"),
-                             GCAM_region_names = GCAM_region_names)
+        write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]], GCAM_region_names = GCAM_region_names)
     }
 
     # L231.SubsectorInterp_urb_ind and L231.SubsectorInterpTo_urb_ind: Subsector shareweight interpolation of urban & industrial processes sector
     if(any(is.na(A31.subsector_interp$to.value))){
       L231.SubsectorInterp_urb_ind <- A31.subsector_interp %>%
         filter(is.na(to.value)) %>%
-        write_to_all_regions(c("region", "supplysector", "subsector", "apply.to", "from.year",
-                               "to.year", "interpolation.function"),
-                             GCAM_region_names = GCAM_region_names)
+        write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorInterp"]], GCAM_region_names = GCAM_region_names)
     }
     if(any(!is.na(A31.subsector_interp$to.value))){
       L231.SubsectorInterpTo_urb_ind <- A31.subsector_interp %>%
         filter(!is.na(to.value)) %>%
-        write_to_all_regions(c("region", "supplysector", "subsector", "from.year",
-                               "to.year", "to.value", "interpolation.function"),
-                             GCAM_region_names = GCAM_region_names)
+        write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorInterpTo"]], GCAM_region_names = GCAM_region_names)
     }
 
     # Technology information
@@ -142,8 +141,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     L231.StubTech_urb_ind <- A31.globaltech_shrwt %>%
       select(supplysector, subsector, technology) %>%
       distinct %>%
-      write_to_all_regions(c("region", "supplysector", "subsector", "technology"),
-                           GCAM_region_names = GCAM_region_names) %>%
+      write_to_all_regions(LEVEL2_DATA_NAMES[["Tech"]] , GCAM_region_names = GCAM_region_names) %>%
       rename(stub.technology = technology)
 
     # L231.GlobalTechShrwt_urb_ind: Shareweights of global urban & industrial processes sector technologies

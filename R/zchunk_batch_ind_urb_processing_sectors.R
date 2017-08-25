@@ -8,7 +8,6 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{ind_urb_processing_sectors.xml}. The corresponding file in the
 #' original data system was \code{batch_ind_urb_processing_sectors.xml} (emissions XML).
-module_emissions_batch_ind_urb_processing_sectors.xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L231.UnlimitRsrc",
              "L231.UnlimitRsrcPrice",
@@ -25,7 +24,8 @@ module_emissions_batch_ind_urb_processing_sectors.xml <- function(command, ...) 
              "L231.GlobalTechCoef_urb_ind",
              "L231.GlobalTechCost_urb_ind",
              "L231.RegionalTechCalValue_urb_ind",
-             "L231.IndCoef"))
+             "L231.IndCoef",
+             "L252.MAC_prc"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "ind_urb_processing_sectors.xml"))
   } else if(command == driver.MAKE) {
@@ -49,6 +49,7 @@ module_emissions_batch_ind_urb_processing_sectors.xml <- function(command, ...) 
     L231.GlobalTechCost_urb_ind <- get_data(all_data, "L231.GlobalTechCost_urb_ind")
     L231.RegionalTechCalValue_urb_ind <- get_data(all_data, "L231.RegionalTechCalValue_urb_ind")
     L231.IndCoef <- get_data(all_data, "L231.IndCoef")
+    L252.MAC_prc <- get_data(all_data, "L252.MAC_prc")
     # ===================================================
 
     # Produce outputs
@@ -63,12 +64,13 @@ module_emissions_batch_ind_urb_processing_sectors.xml <- function(command, ...) 
       add_xml_data(L231.GlobalTechCost_urb_ind, "GlobalTechCost") %>%
       add_xml_data(L231.RegionalTechCalValue_urb_ind, "StubTechCalInputIndUrb") %>%
       add_xml_data(L231.IndCoef, "StubTechCoefIndUrb") %>%
-      add_xml_data(L231.Supplysector_urb_ind, "Supplysector") %>%
-      add_xml_data(L231.SubsectorLogit_urb_ind, "SubsectorLogit") %>%
+      add_logit_tables_xml(L231.Supplysector_urb_ind, "Supplysector") %>%
+      add_logit_tables_xml(L231.SubsectorLogit_urb_ind, "SubsectorLogit") %>%
+      add_xml_data(L252.MAC_prc, "MAC") %>%
       add_precursors("L231.UnlimitRsrc", "L231.UnlimitRsrcPrice", "L231.FinalDemand_urb", "L231.Supplysector_urb_ind", "L231.SubsectorLogit_urb_ind",
                      "L231.SubsectorShrwt_urb_ind", "L231.SubsectorShrwtFllt_urb_ind", "L231.SubsectorInterp_urb_ind", "L231.SubsectorInterpTo_urb_ind",
                      "L231.StubTech_urb_ind", "L231.GlobalTechShrwt_urb_ind", "L231.GlobalTechEff_urb_ind", "L231.GlobalTechCoef_urb_ind",
-                     "L231.GlobalTechCost_urb_ind", "L231.RegionalTechCalValue_urb_ind", "L231.IndCoef")->
+                     "L231.GlobalTechCost_urb_ind", "L231.RegionalTechCalValue_urb_ind", "L231.IndCoef", "L252.MAC_prc")->
       ind_urb_processing_sectors.xml
 
     # Some data inputs may not actually contain data. If so, do not add_xml_data
