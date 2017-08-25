@@ -163,7 +163,7 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
     # See GitHub issue #650
 
     # Use the may be historic new technology emission coefficients to replace the emission
-    # coefficients in the min model base year by a supplysecotr, subsector, stub.technology identifier
+    # coefficients in the min model base year by a supplysector, subsector, stub.technology identifier
     # called sector_tech_id.
     A41.tech_coeff %>%
       select(supplysector, subsector, stub.technology, may.be.historic) %>%
