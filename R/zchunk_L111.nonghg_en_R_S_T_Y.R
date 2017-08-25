@@ -139,7 +139,7 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
       mutate(Non.CO2 = "NMVOC") %>%
       bind_rows(EDGAR_SO2, EDGAR_CO, EDGAR_NOx, EDGAR_NH3) %>%
       select(-`2009`, -`2010`) %>%
-      left_join(EDGAR_sector, by = c("IPCC", "IPCC_description"))  %>%
+      left_join(EDGAR_sector, by = c("IPCC", "IPCC_description")) %>%
       rename(IPCC_Annex = `IPCC-Annex`, World_Region = `World Region`, EDGAR_agg_sector = agg_sector) %>%
       # Convert from EDGAR iso to GCAM_region_ID, and change Romanian iso code.
       standardize_iso(col = "ISO_A3", delete_original = FALSE) %>%
@@ -212,7 +212,7 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
       rename(tot_energy = energy.y, energy = energy.x) %>%
       left_join(L111_EDGAR_intl, by = c("EDGAR_agg_sector", "Non.CO2", "year")) %>%
       # EDGAR emissions are in Gg, need to convert to Tg.
-      mutate(emissions = (value * CONV_GG_TG) * (energy / tot_energy))  %>%
+      mutate(emissions = (value * CONV_GG_TG) * (energy / tot_energy)) %>%
       select(-tot_energy, -value) %>%
       na.omit()  %>%
       # Add domestic emissions back in.
@@ -222,29 +222,31 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
     # Compute non-ghg emission totals by GCAM sector, fuel, technology, and driver type for EDGAR historical years.
 
     L111.nonghg_tg_R_en_Si_F_Yh.mlt %>%
-      filter(year %in% emissions.EDGAR_YEARS) %>%
       left_join_keep_first_only(GCAM_sector_tech, by = c("sector", "fuel", "technology")) %>%
       # Sum emissions by region, non-CO2, sector, technology, and year.
       group_by(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, year) %>%
       summarise(value = sum(emissions)) %>%
-      ungroup ->
+      ungroup %>%
+      filter(year %in% emissions.EDGAR_YEARS) ->
       L111.nonghg_tg_R_en_S_F_Yh
 
     # Compute non-ghg emission factors for GCAM sector, fuel, technology, and driver type for EDGAR historical years.
 
     # Calculate energy totals by region, sector, and fuel.
     L101.in_EJ_R_en_Si_F_Yh %>%
-      left_join(GCAM_sector_tech, by = c("sector", "fuel", "technology")) %>%
+      left_join_keep_first_only(select(GCAM_sector_tech, sector, fuel, technology, supplysector, subsector, stub.technology),
+                                       by = c("sector", "fuel", "technology")) %>%
+      # need to filter here to replicate behavior of original aggregate()
+      filter(!is.na(supplysector), !is.na(subsector), !is.na(stub.technology)) %>%
       group_by(GCAM_region_ID, supplysector, subsector, stub.technology, year) %>%
       summarise(energy = sum(value)) ->
-      L101.in_EJ_R_en_S_F_Yh.tmp
+      L101.in_EJ_R_en_S_F_Yh.mlt
 
     # Calculate emission shares by energy totals.
     L111.nonghg_tg_R_en_S_F_Yh %>%
-      left_join(L101.in_EJ_R_en_S_F_Yh.tmp, by = c("GCAM_region_ID", "supplysector", "subsector", "stub.technology", "year")) %>%
-      mutate(emfact = value / energy) %>%
-      # Remove unneeded columns, and rename columns to match old.
-      select(-value, -energy, value = emfact) %>%
+      left_join(L101.in_EJ_R_en_S_F_Yh.mlt, by = c("GCAM_region_ID", "supplysector", "subsector", "stub.technology", "year")) %>%
+      mutate(value = value / energy) %>%
+      select(-energy) %>%
       replace_na(list(value = 0)) ->
       L111.nonghg_tgej_R_en_S_F_Yh
 
@@ -274,7 +276,7 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
                      "emissions/EDGAR/EDGAR_NOx",
                      "emissions/EDGAR/EDGAR_NMVOC",
                      "emissions/EDGAR/EDGAR_NH3") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L111.nonghg_tg_R_en_S_F_Yh
 
     L111.nonghg_tgej_R_en_S_F_Yh %>%
