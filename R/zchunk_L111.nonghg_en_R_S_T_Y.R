@@ -45,7 +45,7 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
       iso <- awb <- Non.CO2 <- GCAM_region_ID <- EPA_Category <- technology <- value <-
       EPA_agg_sector <- EPA_agg_fuel <- EPA_agg_fuel_ghg <- RCP_agg_sector <- BCOC_agg_sector <-
       BCOC_agg_fuel <- EPA_MACC_Sector <- IIASA_sector <- EPA_sector <- MAC_type1 <- Gas <-
-      HFC_PFC <- GWP <- country_name <- region_GCAM3 <-. <- NULL # silence package check.
+      HFC_PFC <- GWP <- country_name <- region_GCAM3 <- . <- NULL # silence package check.
 
     all_data <- list(...)[[1]]
 
@@ -222,11 +222,12 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
     # Compute non-ghg emission totals by GCAM sector, fuel, technology, and driver type for EDGAR historical years.
 
     L111.nonghg_tg_R_en_Si_F_Yh.mlt %>%
+      filter(year %in% emissions.EDGAR_YEARS) %>%
       left_join_keep_first_only(GCAM_sector_tech, by = c("sector", "fuel", "technology")) %>%
       # Sum emissions by region, non-CO2, sector, technology, and year.
       group_by(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, year) %>%
       summarise(value = sum(emissions)) %>%
-      filter(year %in% emissions.EDGAR_YEARS) ->
+      ungroup ->
       L111.nonghg_tg_R_en_S_F_Yh
 
     # Compute non-ghg emission factors for GCAM sector, fuel, technology, and driver type for EDGAR historical years.
