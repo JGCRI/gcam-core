@@ -8,6 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{ind_urb_processing_sectors.xml}. The corresponding file in the
 #' original data system was \code{batch_ind_urb_processing_sectors.xml} (emissions XML).
+module_emissions_batch_ind_urb_processing_sectors.xml_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L231.UnlimitRsrc",
              "L231.UnlimitRsrcPrice",
