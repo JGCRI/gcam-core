@@ -1,0 +1,9 @@
+# File: A52.globaltech_cost.csv
+# Title: Aggregate transportation default costs
+# Units: Unitless
+supplysector,subsector,technology,minicam.non.energy.input,1971,2100
+transportation,coal,coal,non-energy,100,100
+transportation,electricity,electricity,non-energy,100,100
+transportation,hydrogen,hydrogen,non-energy,100,100
+transportation,gas,gas,non-energy,100,100
+transportation,refined liquids,refined liquids,non-energy,100,100
