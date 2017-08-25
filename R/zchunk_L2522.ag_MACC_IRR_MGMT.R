@@ -1,6 +1,6 @@
 #' module_emissions_L2522.ag_MACC_IRR_MGMT
 #'
-#' Briefly describe what this chunk does.
+#' Briefly describe what this chunk does. HEY KALYN RUSSEL HAS A CHUNK THAT IS GOING TO MERGE SOON THAT GEN INPUTS FOR THIS FILE AND SO WILL CHANGE THE CODE A BIT
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -14,11 +14,11 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_emissions_L2522.ag_MACC_IRR_MGMT_DISABLED <- function(command, ...) {
+module_emissions_L2522.ag_MACC_IRR_MGMT <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "emissions/A_MACC_TechChange",
-             FILE = "temp-data-inject/L2521.MAC_an",
-             FILE = "temp-data-inject/L2521.AgMAC"))
+             FILE = "temp-data-inject/L252.MAC_an",
+             FILE = "L2521.AgMAC"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2522.MAC_an",
              "L2522.AgMAC",
@@ -34,8 +34,8 @@ module_emissions_L2522.ag_MACC_IRR_MGMT_DISABLED <- function(command, ...) {
 
     # Load required inputs
     A_MACC_TechChange <- get_data(all_data, "emissions/A_MACC_TechChange")
-    L2521.MAC_an <- get_data(all_data, "temp-data-inject/L2521.MAC_an")
-    L2521.AgMAC <- get_data(all_data, "temp-data-inject/L2521.AgMAC")
+    L2521.MAC_an <- get_data(all_data, "temp-data-inject/L252.MAC_an")
+    L2521.AgMAC <- get_data(all_data, "L2521.AgMAC")
 
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
@@ -69,7 +69,7 @@ module_emissions_L2522.ag_MACC_IRR_MGMT_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2522.MAC_an") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("emissions/A_MACC_TechChange", "temp-data-inject/L252.MAC_an", "L2521.AgMAC") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2522.MAC_an
@@ -79,7 +79,7 @@ module_emissions_L2522.ag_MACC_IRR_MGMT_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2522.AgMAC") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("emissions/A_MACC_TechChange", "temp-data-inject/L252.MAC_an", "L2521.AgMAC") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2522.AgMAC
@@ -89,7 +89,7 @@ module_emissions_L2522.ag_MACC_IRR_MGMT_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2522.MAC_Ag_TC_SSP1") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("emissions/A_MACC_TechChange", "temp-data-inject/L252.MAC_an", "L2521.AgMAC") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2522.MAC_Ag_TC_SSP1
@@ -99,7 +99,7 @@ module_emissions_L2522.ag_MACC_IRR_MGMT_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2522.MAC_An_TC_SSP1") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("emissions/A_MACC_TechChange", "temp-data-inject/L252.MAC_an", "L2521.AgMAC") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2522.MAC_An_TC_SSP1
@@ -109,7 +109,7 @@ module_emissions_L2522.ag_MACC_IRR_MGMT_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2522.MAC_Ag_TC_SSP2") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("emissions/A_MACC_TechChange", "temp-data-inject/L252.MAC_an", "L2521.AgMAC") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2522.MAC_Ag_TC_SSP2
@@ -119,7 +119,7 @@ module_emissions_L2522.ag_MACC_IRR_MGMT_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2522.MAC_An_TC_SSP2") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("emissions/A_MACC_TechChange", "temp-data-inject/L252.MAC_an", "L2521.AgMAC") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2522.MAC_An_TC_SSP2
@@ -129,7 +129,7 @@ module_emissions_L2522.ag_MACC_IRR_MGMT_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2522.MAC_Ag_TC_SSP5") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("emissions/A_MACC_TechChange", "temp-data-inject/L252.MAC_an", "L2521.AgMAC") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2522.MAC_Ag_TC_SSP5
@@ -139,7 +139,7 @@ module_emissions_L2522.ag_MACC_IRR_MGMT_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2522.MAC_An_TC_SSP5") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("emissions/A_MACC_TechChange", "temp-data-inject/L252.MAC_an", "L2521.AgMAC") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2522.MAC_An_TC_SSP5
