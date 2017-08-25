@@ -1,0 +1,11 @@
+# File: A42.subsector_interp.csv
+# Title: Aggregate building default subsector shareweight interpolation
+# Units: NA
+supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
+building,biomass,share-weight,final-calibration-year,end-year,,fixed
+building,coal,share-weight,final-calibration-year,end-year,,fixed
+building,district heat,share-weight,final-calibration-year,end-year,,fixed
+building,electricity,share-weight,final-calibration-year,end-year,,fixed
+building,gas,share-weight,final-calibration-year,end-year,,fixed
+building,refined liquids,share-weight,final-calibration-year,end-year,,fixed
+building,traditional biomass,share-weight,final-calibration-year,end-year,,fixed
