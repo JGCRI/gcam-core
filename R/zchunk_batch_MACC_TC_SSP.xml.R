@@ -9,7 +9,7 @@
 #' the generated outputs: \code{MACC_TC_SSP1.xml}, \code{MACC_TC_SSP2.xml}, and \code{MACC_TC_SSP5.xml}.
 module_emissions_batch_MACC_TC_SSP.xml <- function(command, ...) {
 
-  SSP_NUMS <- c(1,2,5)
+  SSP_NUMS <- c(1, 2, 5)
 
   if(command == driver.DECLARE_INPUTS) {
     return(c(paste0("L252.MAC_Ag_TC_SSP", SSP_NUMS),

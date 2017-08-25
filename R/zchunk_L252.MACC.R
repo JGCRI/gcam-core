@@ -75,7 +75,7 @@ module_emissions_L252.MACC <- function(command, ...) {
     # Prepare the table with all MAC curves for matching
     # This contains all tax and mac.reduction values
     L252.MAC_pct_R_S_Proc_EPA <- L152.MAC_pct_R_S_Proc_EPA %>%
-      gather(tax, mac.reduction, matches("[0-9]+")) %>%
+      gather(tax, mac.reduction, matches("^[0-9]+$")) %>%
       mutate(tax = as.numeric(tax)) %>%
       rename(mac.control = Process)
 
@@ -83,7 +83,7 @@ module_emissions_L252.MACC <- function(command, ...) {
 
     # This is a function to add in the mac.reduction curves to data
     # Function needed because these steps are repeated 5 times
-    mac_reduction_adder <- function(df, order, error_no_match = T){
+    mac_reduction_adder <- function(df, order, error_no_match = TRUE){
       df <- df %>%
         # Add tax values
         repeat_add_columns(tibble(tax = MAC_taxes)) %>%
@@ -164,7 +164,7 @@ module_emissions_L252.MACC <- function(command, ...) {
       mac_reduction_adder(order = c("supplysector", "subsector", "stub.technology", "Non.CO2"),
                           # error_no_match is F, which means we use left_join(L252.MAC_pct_R_S_Proc_EPA)
                           # because not all mac.controls and regions in L252.MAC_pct_R_S_Proc_EPA
-                          error_no_match = F) %>%
+                          error_no_match = FALSE) %>%
       na.omit() %>%
       select(region, supplysector, subsector, stub.technology, year, Non.CO2, mac.control, tax, mac.reduction, EPA_region)
 
@@ -180,12 +180,12 @@ module_emissions_L252.MACC <- function(command, ...) {
       mac_reduction_adder(order = c("supplysector", "subsector", "stub.technology", "Non.CO2"),
                           # error_no_match is F, which means we use left_join(L252.MAC_pct_R_S_Proc_EPA)
                           # because not all mac.controls and regions in L252.MAC_pct_R_S_Proc_EPA
-                          error_no_match = F) %>%
+                          error_no_match = FALSE) %>%
       na.omit() %>%
       select(region, supplysector, subsector, stub.technology, year, Non.CO2, mac.control, tax, mac.reduction, EPA_region)
 
 
-    # If we want to use Guus Velders data to replace ours
+    # These steps will be completed if we choose to replace our HiGWP data with data from Guus Velders
     if (emissions.USE_GV_MAC) {
       # L252.MAC_higwp_GV: Abatement from HFCs, PFCs, and SF6 using Guus Velders data for HFCs
       # Filter our PFCs
