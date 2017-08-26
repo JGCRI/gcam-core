@@ -17,7 +17,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author KVC May 2017
-#' @export
 module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
@@ -111,8 +110,7 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
       select(-value) %>%
       # There are regions (e.g., region #3) where we have grassland area, but no emissions. Use inner join to remove
       inner_join(filter(EDGAR_history, sector == "grassland"), by = c("GCAM_region_ID", "year")) %>%         # Map in EDGAR grassland emissions
-      mutate(value = value * land_share,
-             year = as.integer(year)) %>%                                                                # Compute emissions by GLU using EDGAR totals and land shares
+      mutate(value = value * land_share) %>%                                                                # Compute emissions by GLU using EDGAR totals and land shares
       ungroup() %>%
       select(-sector, -land_share) ->
       L124.nonco2_tg_R_grass_Y_GLU
@@ -169,8 +167,7 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
       replace_na(list(PctForestFire = 1)) %>%
       replace_na(list(PctDeforest = 0)) %>%
       mutate(ForestFire = value * PctForestFire) %>%                                                   # Compute forest fire emissions
-      mutate(Deforest = value * PctDeforest,
-             year = as.integer(year)) %>%                                                       # Compute deforestation emissions
+      mutate(Deforest = value * PctDeforest) %>%                                                       # Compute deforestation emissions
       ungroup() %>%
       select(-value, -PctForestFire, -PctDeforest) %>%
       gather(technology, value, -GCAM_region_ID, -GLU, -Land_Type, -Non.CO2, -year) ->

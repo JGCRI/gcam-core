@@ -211,7 +211,7 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
       select(GCAM_region_ID, Land_Type = GCAM_commodity, GLU) %>%
       unique %>%
       # Copy to pre-aglu years
-      repeat_add_columns(tibble(year = PREAGLU_YEARS)) %>%
+      repeat_add_columns(tibble(year = as.integer(PREAGLU_YEARS))) %>%
       # Bind with managed forest land data in aglu years
       bind_rows(L123.LC_bm2_R_MgdFor_Y_GLU) %>%
       group_by(GCAM_region_ID, GLU) %>%

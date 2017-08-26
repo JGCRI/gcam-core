@@ -83,7 +83,9 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
              calPrice = -1,
              market = region,
              logit.year.fillout = min(BASE_YEARS),
-             logit.exponent = -3)
+             logit.exponent = -3,
+             # Not in old-data-system, using because of removal of get_logit_fn_tables
+             logit.type = NA)
 
     # L212.ItemName: Land item to relate emissions to
     # Note: only making unmanaged land technologies in the regions/glus with the corresponding land use type available
@@ -110,6 +112,7 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
              AgSupplySubsector = paste( "GrasslandFires", GLU, sep = "_"),
              UnmanagedLandTechnology = AgSupplySubsector) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      rename_SO2(A_regions) %>%
       select(region, AgSupplySector, AgSupplySubsector, UnmanagedLandTechnology, year, Non.CO2, input.emissions = value)
 
     # Grassland emissions factors for BC/OC
@@ -133,6 +136,7 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
              AgSupplySubsector = paste(technology, GLU, sep = "_"),
              UnmanagedLandTechnology = AgSupplySubsector) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      rename_SO2(A_regions) %>%
       # remove technology later
       select(region, AgSupplySector, AgSupplySubsector, UnmanagedLandTechnology, technology, year, Non.CO2, input.emissions = value)
 
@@ -141,15 +145,49 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
     # Interpolate and add region name
     L212.FORESTEmissionsFactors_BCOC <- L212.FOREST %>%
       select(region, AgSupplySector, AgSupplySubsector, UnmanagedLandTechnology, technology, year) %>%
-      distinct()
+      distinct() %>%
+      repeat_add_columns(tibble(Non.CO2 = unique(L125.bcoc_tgbkm2_R_forest_2000$Non.CO2))) %>%
+      left_join_error_no_match(GCAM_region_names, by = "region") %>%
+      left_join_error_no_match(L125.bcoc_tgbkm2_R_forest_2000, by = c("Non.CO2", "technology", "GCAM_region_ID")) %>%
+      mutate(em_factor = round(em_factor, emissions.DIGITS_EMISSIONS)) %>%
+      select(region, AgSupplySector, AgSupplySubsector, UnmanagedLandTechnology, year, Non.CO2, emiss.coef = em_factor, technology)
 
+    # Reading in default emissions factors for deforestation in future periods.
+    # Because the model's driver for deforestation is not necessarily linked to the estimated quantity of emissions,
+    # the deforestation-related emissions in the base years may be zero (regions with net afforestation), or very high
+    # (regions with slightly net deforestation). This method just uses a global average for future non-co2 emissions
+    # from deforestation
+    L212.default_coefs <- bind_rows(select(L124.deforest_coefs, Non.CO2, emiss.coef),
+                                    select(L125.deforest_coefs_bcoc, Non.CO2, emiss.coef))
 
-    # Split into ForestFire & Deforest -- they have different drivers and this is easier to do now
-    L212.FORESTEmissionsFactors_BCOC_FF <- subset( L212.FORESTEmissionsFactors_BCOC, technology == "ForestFire" )[
-      c( names_UnmgdTech, Y, "Non.CO2", "emiss.coef" ) ]
-    L212.FORESTEmissionsFactors_BCOC_D <- subset( L212.FORESTEmissionsFactors_BCOC, technology == "Deforest" )[
-      c( names_UnmgdTech, Y, "Non.CO2", "emiss.coef" ) ]
+    L212.FORESTEmissionsFactors_future <- L212.FOREST %>%
+      filter(technology == "Deforest") %>%
+      select(region, AgSupplySector, AgSupplySubsector, UnmanagedLandTechnology) %>%
+      distinct() %>%
+      # Take minimum model year greater than emissions model base years
+      mutate(year = as.integer(min(MODEL_YEARS[MODEL_YEARS > max(emissions.MODEL_BASE_YEARS)]))) %>%
+      repeat_add_columns(L212.default_coefs) %>%
+      mutate(emiss.coef = round(emiss.coef, emissions.DIGITS_EMISSIONS)) %>%
+      rename_SO2(A_regions) %>%
+      select(region, AgSupplySector, AgSupplySubsector, UnmanagedLandTechnology, year, Non.CO2, emiss.coef)
 
+    # We do not actually care about the logit here but we need a value to avoid errors
+    L212.AgSupplySubsector <- L212.ItemName %>%
+      select(region, AgSupplySector, AgSupplySubsector) %>%
+      mutate(logit.year.fillout = min(BASE_YEARS),
+             logit.exponent = -3,
+             logit.type = NA)
+
+    # Writing files with modified emissions for protected lands.
+    # Note: the protected lands input file is intended to be read after the normal one,
+    # so rather than copy all of the duplicate information (e.g., supplysector and subsector, itemname),
+    # these files only read in the new technologies and modified emissions levels
+
+    # Land item: protected land use types now prefixed with protected; non-protected keeps the same name so no need to write out
+    # Land item: copy for prot and noprot, prefix the LTs with "Protected" in the prot file
+    L212.ItemName_prot <- L212.ItemName %>%
+      mutate(UnmanagedLandTechnology = paste0("Protected", UnmanagedLandTechnology),
+             itemName = paste0("Protected", itemName))
     # ===================================================
     # Produce outputs
     tibble() %>%
