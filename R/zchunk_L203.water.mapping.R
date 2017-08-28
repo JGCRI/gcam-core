@@ -37,6 +37,9 @@ module_water_L203.water.mapping <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A03.sector <- get_data(all_data, "water/A03.sector")
 
+    GCAM_region_ID <- GLU <- GLU_code <- GLU_name <- water.sector <-
+      water_type <- supplysector <- field.eff <- conveyance.eff <-
+      coefficient <- region <- NULL  # silence package check notes
 
     # Create tibble with all possible mapping sectors...
 
