@@ -6,7 +6,13 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L212.AgSupplySectorLogitTables[[ curr_table ]]$data}, \code{L212.AgSupplySector}, \code{L212.SubsectorLogitTables[[ curr_table ]]$data}, \code{L212.AgSupplySubsector}, \code{L212.ItemName}, \code{L212.GRASSEmissions}, \code{L212.FORESTEmissions_FF}, \code{L212.FORESTEmissions_D}, \code{L212.GRASSEmissionsFactors_BCOC}, \code{L212.FORESTEmissionsFactors_BCOC_FF}, \code{L212.FORESTEmissionsFactors_BCOC_D}, \code{L212.FORESTEmissionsFactors_future}, \code{L212.ItemName_prot}, \code{L212.GRASSEmissions_prot}, \code{L212.GRASSEmissions_noprot}, \code{L212.FORESTEmissions_FF_prot}, \code{L212.FORESTEmissions_FF_noprot}, \code{L212.FORESTEmissions_D_prot}, \code{L212.FORESTEmissions_D_noprot}, \code{L212.GRASSEmissionsFactors_BCOC_prot}, \code{L212.GRASSEmissionsFactors_BCOC_noprot}, \code{L212.FORESTEmissionsFactors_BCOC_FF_prot}, \code{L212.FORESTEmissionsFactors_BCOC_FF_noprot}, \code{L212.FORESTEmissionsFactors_BCOC_D_prot}, \code{L212.FORESTEmissionsFactors_BCOC_D_noprot}. The corresponding file in the
+#' the generated outputs:\code{L212.AgSupplySector}, \code{L212.AgSupplySubsector}, \code{L212.ItemName},
+#' \code{L212.GRASSEmissions}, \code{L212.FORESTEmissions_FF}, \code{L212.FORESTEmissions_D}, \code{L212.GRASSEmissionsFactors_BCOC},
+#' \code{L212.FORESTEmissionsFactors_BCOC_FF}, \code{L212.FORESTEmissionsFactors_BCOC_D}, \code{L212.FORESTEmissionsFactors_future},
+#' \code{L212.ItemName_prot}, \code{L212.GRASSEmissions_prot}, \code{L212.GRASSEmissions_noprot}, \code{L212.FORESTEmissions_FF_prot},
+#' \code{L212.FORESTEmissions_FF_noprot}, \code{L212.FORESTEmissions_D_prot}, \code{L212.FORESTEmissions_D_noprot}, \code{L212.GRASSEmissionsFactors_BCOC_prot},
+#' \code{L212.GRASSEmissionsFactors_BCOC_noprot}, \code{L212.FORESTEmissionsFactors_BCOC_FF_prot}, \code{L212.FORESTEmissionsFactors_BCOC_FF_noprot},
+#' \code{L212.FORESTEmissionsFactors_BCOC_D_prot}, \code{L212.FORESTEmissionsFactors_BCOC_D_noprot}. The corresponding file in the
 #' original data system was \code{L212.unmgd_nonco2.R} (emissions level2).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
@@ -217,26 +223,18 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
     # ===================================================
     # Produce outputs
     L212.AgSupplySector %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("Logit Exponents for Unmanaged Land Sector") %>%
+      add_units("Unitless") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L212.AgSupplySector") %>%
-      add_precursors("common/GCAM_region_names", "L124.nonco2_tg_R_grass_Y_GLU", "L124.nonco2_tg_R_forest_Y_GLU") ->
+      add_precursors("common/GCAM_region_names", "L124.nonco2_tg_R_grass_Y_GLU",
+                     "L124.nonco2_tg_R_forest_Y_GLU") ->
       L212.AgSupplySector
 
-    L212.AgSupplySubsector %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L212.AgSupplySubsector") %>%
-      add_precursors("common/GCAM_region_names") ->
-      L212.AgSupplySubsector
-
     L212.ItemName %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("Mapping File for Unmanaged Land") %>%
+      add_units("NA") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L212.ItemName") %>%
@@ -244,9 +242,18 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
                      "L124.nonco2_tg_R_grass_Y_GLU", "L124.nonco2_tg_R_forest_Y_GLU") ->
       L212.ItemName
 
+    L212.AgSupplySubsector %>%
+      add_title("Logit Exponents for Unmanaged Land Subsectors") %>%
+      add_units("Unitless") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L212.AgSupplySubsector") %>%
+      same_precursors_as(L212.ItemName) ->
+      L212.AgSupplySubsector
+
     L212.GRASSEmissions %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("Historical Emissions-Grassland Fires") %>%
+      add_units("Tg/yr") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L212.GRASSEmissions") %>%
@@ -257,8 +264,8 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
     L212.FOREST %>%
       filter(technology == "ForestFire") %>%
       select(-technology) %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("Historical Emissions-Forest Fires") %>%
+      add_units("Tg/yr") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L212.FORESTEmissions_FF") %>%
@@ -269,8 +276,8 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
     L212.FOREST %>%
       filter(technology == "Deforest") %>%
       select(-technology) %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("Historical Emissions-Deforestation") %>%
+      add_units("Tg/yr") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L212.FORESTEmissions_D") %>%
@@ -278,8 +285,8 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
       L212.FORESTEmissions_D
 
     L212.GRASSEmissionsFactors_BCOC %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("Historical BC/OC Emissions Coefficients-Grassland Fires") %>%
+      add_units("Tg/bm2") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L212.GRASSEmissionsFactors_BCOC") %>%
@@ -290,8 +297,8 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
     L212.FORESTEmissionsFactors_BCOC %>%
       filter(technology == "ForestFire") %>%
       select(-technology) %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("Historical BC/OC Emissions Coefficients-Forest Fires") %>%
+      add_units("Tg/bm2") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L212.FORESTEmissionsFactors_BCOC_FF") %>%
@@ -302,8 +309,8 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
     L212.FORESTEmissionsFactors_BCOC %>%
       filter(technology == "Deforest") %>%
       select(-technology) %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("Historical BC/OC Emissions Coefficients-Deforestation") %>%
+      add_units("Tg/bm2") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L212.FORESTEmissionsFactors_BCOC_D") %>%
@@ -311,8 +318,8 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
       L212.FORESTEmissionsFactors_BCOC_D
 
     L212.FORESTEmissionsFactors_future %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("Future BC/OC Emissions Coefficients-Deforestation") %>%
+      add_units("kg/m2/yr") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L212.FORESTEmissionsFactors_future") %>%
@@ -322,139 +329,146 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
       L212.FORESTEmissionsFactors_future
 
     L212.ItemName_prot %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("Mapping File for Protected Unmanaged Land") %>%
+      add_units("NA") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L212.ItemName_prot") %>%
-      add_precursors("common/GCAM_region_names") ->
+      same_precursors_as(L212.ItemName) ->
       L212.ItemName_prot
 
     L212.GRASSEmissions_prot %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("Historical Protected Emissions-Grassland Fires") %>%
+      add_units("Tg/yr") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L212.GRASSEmissions_prot") %>%
-      add_precursors("common/GCAM_region_names") ->
+      same_precursors_as(L212.GRASSEmissions) ->
       L212.GRASSEmissions_prot
 
     L212.GRASSEmissions_noprot %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("Historical Unprotected Emissions-Grassland Fires") %>%
+      add_units("Tg/yr") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L212.GRASSEmissions_noprot") %>%
-      add_precursors("common/GCAM_region_names") ->
+      same_precursors_as(L212.GRASSEmissions) ->
       L212.GRASSEmissions_noprot
 
     L212.FORESTEmissions_prot %>%
       filter(technology == "ForestFire") %>%
       select(-technology) %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("Historical Protected Emissions-Forest Fires") %>%
+      add_units("Tg/yr") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L212.FORESTEmissions_FF_prot") %>%
-      add_precursors("common/GCAM_region_names") ->
+      same_precursors_as(L212.FORESTEmissions_FF) ->
       L212.FORESTEmissions_FF_prot
 
     L212.FORESTEmissions_noprot %>%
       filter(technology == "ForestFire") %>%
       select(-technology) %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("Historical Unprotected Emissions-Forest Fires") %>%
+      add_units("Tg/yr") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L212.FORESTEmissions_FF_noprot") %>%
-      add_precursors("common/GCAM_region_names") ->
+      same_precursors_as(L212.FORESTEmissions_FF) ->
       L212.FORESTEmissions_FF_noprot
 
     L212.FORESTEmissions_prot %>%
       filter(technology == "Deforest") %>%
       select(-technology) %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("Historical Protected Emissions-Deforestation") %>%
+      add_units("Tg/yr") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L212.FORESTEmissions_D_prot") %>%
-      add_precursors("common/GCAM_region_names") ->
+      same_precursors_as(L212.FORESTEmissions_D) ->
       L212.FORESTEmissions_D_prot
 
     L212.FORESTEmissions_noprot %>%
       filter(technology == "Deforest") %>%
       select(-technology) %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("Historical Unprotected Emissions-Deforestation") %>%
+      add_units("Tg/yr") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L212.FORESTEmissions_D_noprot") %>%
-      add_precursors("common/GCAM_region_names") ->
+      same_precursors_as(L212.FORESTEmissions_D) ->
       L212.FORESTEmissions_D_noprot
 
     L212.GRASSEmissionsFactors_BCOC_prot %>%
-      mutate(region = region) %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("BC/OC Protected Emissions Factors-Grassland Fires") %>%
+      add_units("Tg/bm2") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L212.GRASSEmissionsFactors_BCOC_prot") %>%
-      add_precursors("common/GCAM_region_names") ->
+      same_precursors_as(L212.GRASSEmissionsFactors_BCOC) ->
       L212.GRASSEmissionsFactors_BCOC_prot
 
     L212.GRASSEmissionsFactors_BCOC %>%
       mutate(region = region) %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("BC/OC Unprotected Emissions Factors-Grassland Fires") %>%
+      add_units("Tg/bm2") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L212.GRASSEmissionsFactors_BCOC_noprot") %>%
-      add_precursors("common/GCAM_region_names") ->
+      same_precursors_as(L212.GRASSEmissionsFactors_BCOC) ->
       L212.GRASSEmissionsFactors_BCOC_noprot
 
     L212.FORESTEmissionsFactors_BCOC_prot %>%
       filter(technology == "ForestFire") %>%
       select(-technology) %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("BC/OC Protected Emissions Factors-Forest Fires") %>%
+      add_units("Tg/bm2") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L212.FORESTEmissionsFactors_BCOC_FF_prot") %>%
-      add_precursors("common/GCAM_region_names") ->
+      same_precursors_as(L212.FORESTEmissionsFactors_BCOC_FF) ->
       L212.FORESTEmissionsFactors_BCOC_FF_prot
 
     L212.FORESTEmissionsFactors_BCOC_FF %>%
       mutate(region = region) %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("BC/OC Unprotected Emissions Factors-Forest Fires") %>%
+      add_units("Tg/bm2") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L212.FORESTEmissionsFactors_BCOC_FF_noprot") %>%
-      add_precursors("common/GCAM_region_names") ->
+      same_precursors_as(L212.FORESTEmissionsFactors_BCOC_FF) ->
       L212.FORESTEmissionsFactors_BCOC_FF_noprot
 
     L212.FORESTEmissionsFactors_BCOC_prot %>%
       filter(technology == "Deforest") %>%
       select(-technology) %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("BC/OC Protected Emissions Factors-Deforestation") %>%
+      add_units("Tg/bm2") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L212.FORESTEmissionsFactors_BCOC_D_prot") %>%
-      add_precursors("common/GCAM_region_names") ->
+      same_precursors_as(L212.FORESTEmissionsFactors_BCOC_D) ->
       L212.FORESTEmissionsFactors_BCOC_D_prot
 
     L212.FORESTEmissionsFactors_BCOC_D %>%
       mutate(region = region) %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("BC/OC Unprotected Emissions Factors-Deforestation") %>%
+      add_units("Tg/bm2") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L212.FORESTEmissionsFactors_BCOC_D_noprot") %>%
-      add_precursors("common/GCAM_region_names") ->
+      same_precursors_as(L212.FORESTEmissionsFactors_BCOC_D) ->
       L212.FORESTEmissionsFactors_BCOC_D_noprot
 
-    return_data(L212.AgSupplySector, L212.AgSupplySubsector, L212.ItemName, L212.GRASSEmissions, L212.FORESTEmissions_FF, L212.FORESTEmissions_D, L212.GRASSEmissionsFactors_BCOC, L212.FORESTEmissionsFactors_BCOC_FF, L212.FORESTEmissionsFactors_BCOC_D, L212.FORESTEmissionsFactors_future, L212.ItemName_prot, L212.GRASSEmissions_prot, L212.GRASSEmissions_noprot, L212.FORESTEmissions_FF_prot, L212.FORESTEmissions_FF_noprot, L212.FORESTEmissions_D_prot, L212.FORESTEmissions_D_noprot, L212.GRASSEmissionsFactors_BCOC_prot, L212.GRASSEmissionsFactors_BCOC_noprot, L212.FORESTEmissionsFactors_BCOC_FF_prot, L212.FORESTEmissionsFactors_BCOC_FF_noprot, L212.FORESTEmissionsFactors_BCOC_D_prot, L212.FORESTEmissionsFactors_BCOC_D_noprot)
+    return_data(L212.AgSupplySector, L212.AgSupplySubsector, L212.ItemName, L212.GRASSEmissions,
+                L212.FORESTEmissions_FF, L212.FORESTEmissions_D, L212.GRASSEmissionsFactors_BCOC,
+                L212.FORESTEmissionsFactors_BCOC_FF, L212.FORESTEmissionsFactors_BCOC_D,
+                L212.FORESTEmissionsFactors_future, L212.ItemName_prot, L212.GRASSEmissions_prot,
+                L212.GRASSEmissions_noprot, L212.FORESTEmissions_FF_prot, L212.FORESTEmissions_FF_noprot,
+                L212.FORESTEmissions_D_prot, L212.FORESTEmissions_D_noprot, L212.GRASSEmissionsFactors_BCOC_prot,
+                L212.GRASSEmissionsFactors_BCOC_noprot, L212.FORESTEmissionsFactors_BCOC_FF_prot,
+                L212.FORESTEmissionsFactors_BCOC_FF_noprot, L212.FORESTEmissionsFactors_BCOC_D_prot,
+                L212.FORESTEmissionsFactors_BCOC_D_noprot)
   } else {
     stop("Unknown command")
   }
