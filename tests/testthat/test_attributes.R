@@ -4,7 +4,7 @@ context("attributes")
 
 test_that("commenting system works", {
   cmnt <- "test"
-  d <- tibble::tibble()
+  d <- tibble()
   expect_true(is.null(get_comments(d)))
   expect_error(add_comments(d, 1))
 
@@ -16,7 +16,7 @@ test_that("commenting system works", {
 
 test_that("units system works", {
   unit <- "test"
-  d <- tibble::tibble()
+  d <- tibble()
   expect_true(is.null(get_units(d)))
   expect_error(add_units(d, 1))
 
@@ -28,7 +28,7 @@ test_that("units system works", {
 
 test_that("flag system works", {
   flag <- "test"
-  d <- tibble::tibble()
+  d <- tibble()
   expect_true(is.null(get_flags(d)))
 
   c1 <- get_flags(d)
@@ -39,7 +39,7 @@ test_that("flag system works", {
 
 test_that("title system works", {
   title <- "test"
-  d <- tibble::tibble()
+  d <- tibble()
   expect_true(is.null(get_title(d)))
   expect_error(add_title(d, 1))
 
@@ -50,7 +50,7 @@ test_that("title system works", {
 
 test_that("legacy_name system works", {
   ln <- "test"
-  d <- tibble::tibble()
+  d <- tibble()
   expect_true(is.null(get_legacy_name(d)))
   expect_error(add_legacy_name(d, 1))
 
@@ -81,7 +81,7 @@ test_that("same_precursors_as works", {
 
 test_that("reference system works", {
   ref <- "test"
-  d <- tibble::tibble()
+  d <- tibble()
   expect_true(is.null(get_reference(d)))
   expect_error(add_reference(d, 1))
 
