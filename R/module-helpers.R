@@ -423,9 +423,9 @@ fill_exp_decay_extrapolate <- function(d, out_years) {
       complete(tidyr::nesting_(select(., -year, -value)), year = union(year, out_years)) ->
       d
   } else {
-    nesting_vars <- rlang::syms(names(d)[!(names(d) %in% c("year", "value"))])
+    nesting_vars <- paste0('`', names(d)[!(names(d) %in% c("year", "value"))], '`')
     d %>%
-      complete(tidyr::nesting(!!!nesting_vars), year = union(year, out_years)) ->
+      complete(tidyr::nesting_(nesting_vars), year = union(year, out_years)) ->
       d
   }
   d %>%
