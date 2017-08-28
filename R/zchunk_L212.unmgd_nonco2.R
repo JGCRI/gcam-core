@@ -222,7 +222,7 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L212.AgSupplySector") %>%
-      add_precursors("common/GCAM_region_names") ->
+      add_precursors("common/GCAM_region_names", "L124.nonco2_tg_R_grass_Y_GLU", "L124.nonco2_tg_R_forest_Y_GLU") ->
       L212.AgSupplySector
 
     L212.AgSupplySubsector %>%
@@ -240,7 +240,8 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L212.ItemName") %>%
-      add_precursors("common/GCAM_region_names") ->
+      add_precursors("common/GCAM_region_names", "water/basin_to_country_mapping",
+                     "L124.nonco2_tg_R_grass_Y_GLU", "L124.nonco2_tg_R_forest_Y_GLU") ->
       L212.ItemName
 
     L212.GRASSEmissions %>%
@@ -249,7 +250,8 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L212.GRASSEmissions") %>%
-      add_precursors("common/GCAM_region_names") ->
+      add_precursors("common/GCAM_region_names", "emissions/A_regions",
+                     "L124.nonco2_tg_R_grass_Y_GLU", "water/basin_to_country_mapping") ->
       L212.GRASSEmissions
 
     L212.FOREST %>%
@@ -260,7 +262,8 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L212.FORESTEmissions_FF") %>%
-      add_precursors("common/GCAM_region_names") ->
+      add_precursors("common/GCAM_region_names", "emissions/A_regions",
+                     "L124.nonco2_tg_R_forest_Y_GLU", "water/basin_to_country_mapping") ->
       L212.FORESTEmissions_FF
 
     L212.FOREST %>%
@@ -271,7 +274,7 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L212.FORESTEmissions_D") %>%
-      add_precursors("common/GCAM_region_names") ->
+      same_precursors_as(L212.FORESTEmissions_FF) ->
       L212.FORESTEmissions_D
 
     L212.GRASSEmissionsFactors_BCOC %>%
@@ -280,7 +283,8 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L212.GRASSEmissionsFactors_BCOC") %>%
-      add_precursors("common/GCAM_region_names") ->
+      add_precursors("common/GCAM_region_names", "L125.bcoc_tgbkm2_R_grass_2000",
+                     "L124.nonco2_tg_R_grass_Y_GLU", "water/basin_to_country_mapping") ->
       L212.GRASSEmissionsFactors_BCOC
 
     L212.FORESTEmissionsFactors_BCOC %>%
@@ -291,7 +295,8 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L212.FORESTEmissionsFactors_BCOC_FF") %>%
-      add_precursors("common/GCAM_region_names") ->
+      add_precursors("common/GCAM_region_names", "L125.bcoc_tgbkm2_R_forest_2000",
+                     "L124.nonco2_tg_R_forest_Y_GLU", "water/basin_to_country_mapping") ->
       L212.FORESTEmissionsFactors_BCOC_FF
 
     L212.FORESTEmissionsFactors_BCOC %>%
@@ -302,7 +307,7 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L212.FORESTEmissionsFactors_BCOC_D") %>%
-      add_precursors("common/GCAM_region_names") ->
+      same_precursors_as(L212.FORESTEmissionsFactors_BCOC_FF) ->
       L212.FORESTEmissionsFactors_BCOC_D
 
     L212.FORESTEmissionsFactors_future %>%
@@ -311,7 +316,9 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L212.FORESTEmissionsFactors_future") %>%
-      add_precursors("common/GCAM_region_names") ->
+      add_precursors("common/GCAM_region_names", "emissions/A_regions",
+                     "L124.nonco2_tg_R_forest_Y_GLU", "water/basin_to_country_mapping",
+                     "L124.deforest_coefs", "L125.deforest_coefs_bcoc") ->
       L212.FORESTEmissionsFactors_future
 
     L212.ItemName_prot %>%
