@@ -9,7 +9,7 @@
 #' the generated outputs: \code{L1221.ghg_tg_R_agr_C_Y_GLU_IRR}. The corresponding file in the
 #' original data system was \code{L1221.ghg_agr_R_S_T_Y_IRR.R} (emissions level1).
 #' @details Downscales emissions to irrigated/rainfed technologies. These are already calculated
-#' in \code{\link{module_emissions_L1211.ag_irrShare_R_C_Y_GLU_irr}}.
+#' in \code{\link{module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR}}.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
