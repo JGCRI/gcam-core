@@ -1,0 +1,36 @@
+# File: A41.tech_coeff.csv
+# Title: Emission coefficients for energy technology by sector 
+# Units: NA
+# Source: NA 
+# Description: may.be.historic is an indicator variable that indicates if the “new” technology may be been used historically by some sector.  
+supplysector,subsector,stub.technology,SO2,NOx,CO,CH4,N2O,BC,OC,NMVOC,exception,exception_tech,may.be.historic
+refining,coal to liquids,coal to liquids,0.01,0.01,0.01,,0.0001,,,0.0001,CH4,coal (conv pul),1
+refining,coal to liquids,coal to liquids CCS level 1,0.01,0.01,0.01,,0.0001,,,0.0001,CH4,coal (conv pul),
+refining,coal to liquids,coal to liquids CCS level 2,0.01,0.01,0.01,,0.0001,,,0.0001,CH4,coal (conv pul),
+refining,gas to liquids,gas to liquids,0.01,0.01,0.01,,0.0001,,,0.0001,CH4,gas (steam/CT),1
+refining,biomass liquids,cellulosic ethanol,0.01,0.01,0.01,0.001,0.0001,,,0.0001,,,1
+refining,biomass liquids,cellulosic ethanol CCS level 1,0.01,0.01,0.01,0.001,0.0001,,,0.0001,,,
+refining,biomass liquids,cellulosic ethanol CCS level 2,0.01,0.01,0.01,0.001,0.0001,,,0.0001,,,
+refining,biomass liquids,FT biofuels,0.01,0.01,0.01,0.001,0.0001,,,0.0001,,,
+refining,biomass liquids,FT biofuels CCS level 1,0.01,0.01,0.01,0.001,0.0001,,,0.0001,,,
+refining,biomass liquids,FT biofuels CCS level 2,0.01,0.01,0.01,0.001,0.0001,,,0.0001,,,
+refining,biomass liquids,corn ethanol,0.01,0.01,0.01,,0.0001,,,0.0001,,,1
+refining,biomass liquids,sugar cane ethanol,0.01,0.01,0.01,,0.0001,,,0.0001,,,1
+refining,biomass liquids,biodiesel,0.01,0.01,0.01,,0.0001,,,0.0001,,,1
+electricity,coal,coal (conv pul CCS),0.001,0.03,,0.0005,0.0001,4.07E-07,1.00E-05,0.0001,CO,gas (steam/CT),
+electricity,coal,coal (IGCC),0.001,0.03,,0.0005,0.0001,4.07E-07,1.00E-05,0.0001,CO,gas (steam/CT),
+electricity,coal,coal (IGCC CCS),0.001,0.03,,0.0005,0.0001,4.07E-07,1.00E-05,0.0001,CO,gas (steam/CT),
+electricity,gas,gas (CC),0.001,0.01,,0.0005,0.0001,4.07E-07,1.00E-05,0.0001,CO,gas (steam/CT),
+electricity,gas,gas (CC CCS),0.001,0.01,,0.0005,0.0001,4.07E-07,1.00E-05,0.0001,CO,gas (steam/CT),
+electricity,refined liquids,refined liquids (CC),0.001,0.03,,0.0005,0.0001,4.07E-07,1.00E-05,0.0001,CO,gas (steam/CT),
+electricity,refined liquids,refined liquids (CC CCS),0.001,0.03,,0.0005,0.0001,4.07E-07,1.00E-05,0.0001,CO,gas (steam/CT),
+electricity,biomass,biomass (conv CCS),0.001,0.03,,0.0005,0.0001,4.07E-07,1.00E-05,0.0001,CO,gas (steam/CT),
+electricity,biomass,biomass (IGCC),0.001,0.03,,0.0005,0.0001,4.07E-07,1.00E-05,0.0001,CO,gas (steam/CT),
+electricity,biomass,biomass (IGCC CCS),0.001,0.03,,0.0005,0.0001,4.07E-07,1.00E-05,0.0001,CO,gas (steam/CT),
+H2 central production,coal,coal chemical,0.01,0.001,0.001,0.002,,,,0.0005,,,
+H2 central production,coal,coal chemical CCS,0.01,0.001,0.001,0.002,,,,0.0005,,,
+H2 central production,gas,natural gas steam reforming,,0.005462225,0.00048545,,,,,,,,
+H2 central production,gas,natural gas steam reforming CCS,,0.005462225,0.00048545,,,,,,,,
+H2 central production,biomass,biomass to H2,0.01,0.001,0.001,0.001,,,,0.0005,,,
+H2 central production,biomass,biomass to H2 CCS,0.01,0.001,0.001,0.001,,,,0.0005,,,
+H2 forecourt production,gas,natural gas steam reforming,,0.005462225,0.00048545,,,,,,,,

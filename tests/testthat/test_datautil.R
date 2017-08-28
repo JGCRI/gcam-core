@@ -27,10 +27,10 @@ test_that("return_data works", {
   # test it does not allow grouped data
   cars_grouped <- group_by(cars, speed)
   expect_error(return_data(cars, iris, cars_grouped),
-               regexp = "is grouped which is not allowed in return_data, please ungroup")
+               regexp = "is being returned grouped. This is not allowed; please ungroup")
 
   # ensure no failure with non-groupable types
-  list_data <- list(a="1")
+  list_data <- list(a = "1")
   expect_silent(d <- return_data(cars, iris, list_data))
 })
 
@@ -39,7 +39,7 @@ test_that("add/get data work", {
   expect_true(is_data_list(all_data))
   expect_equal(length(all_data), 0)
 
-  d1 <- tibble(x=1:3)
+  d1 <- tibble(x = 1:3)
   d2 <- NA   # optional input, not found
 
   expect_error(add_data(list(d1, cars, iris))) # no names

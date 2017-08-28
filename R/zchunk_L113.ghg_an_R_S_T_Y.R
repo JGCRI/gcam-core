@@ -124,7 +124,7 @@ module_emissions_L113.ghg_an_R_S_T_Y <- function(command, ...) {
       add_comments("Second: match in emissions factors from EPA") %>%
       add_comments("Third: compute unscaled emissions (production * emfactors) and aggregate by sector and region") %>%
       add_comments("Fourth: compute EDGAR emissions by region and sector") %>%
-      add_comments("Fifth: scale EPA emissions by tech to match EDGAR" ) %>%
+      add_comments("Fifth: scale EPA emissions by tech to match EDGAR") %>%
       add_legacy_name("L113.ghg_tg_R_an_C_Sys_Fd_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_sector", "emissions/mappings/EPA_ghg_tech",
                      "emissions/mappings/GCAM_sector_tech", "L107.an_Prod_Mt_R_C_Sys_Fd_Y",

@@ -30,7 +30,7 @@ module_water_L102.water.supply.unlimited <- function(command, ...) {
     A_unlimited_water_price <- get_data(all_data, "water/A_unlimited_water_price")
 
     # all 4 water types
-    water_type <- c( "water consumption", "water withdrawals", "seawater", "biophysical water consumption" )
+    water_type <- c("water consumption", "water withdrawals", "seawater", "biophysical water consumption")
 
     # copy for ordering later
     water_type_order <- water_type

@@ -46,7 +46,7 @@ module_gcam.usa_LA101.EIA_SEDS <- function(command, ...) {
     EIA_use_all_Bbtu %>%
       gather(year, value, -Data_Status, -State, -MSN) %>%
       mutate(year = as.integer(year)) %>%
-      mutate(EIA_fuel = substr(MSN, 1, 2 )) %>% # First and second digits of MSN is energy code
+      mutate(EIA_fuel = substr(MSN, 1, 2)) %>% # First and second digits of MSN is energy code
       mutate(EIA_sector = substr(MSN, 3, 4)) %>% # Third and fourth digits of MSN is sector code
       left_join(EIA_SEDS_fuels, by = "EIA_fuel") %>%
       left_join(EIA_SEDS_sectors, by = "EIA_sector") %>%
