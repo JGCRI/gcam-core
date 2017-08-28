@@ -244,7 +244,7 @@ module_aglu_LB133.ag_Costs_USA_C_2005 <- function(command, ...) {
     # Take the LDS harvested area information by region, GLU, and GTAP crop:
     L100.LDS_ag_HA_ha %>%
       # select the USA crops and Indonesia Palmfruit:
-      filter(iso == "usa" | iso == "idn" & GTAP_crop == "OilPalmFruit" ) %>%
+      filter(iso == "usa" | iso == "idn" & GTAP_crop == "OilPalmFruit") %>%
       # rename value to HA_ha:
       rename(HA_ha = value) %>%
       # join the corresponding production information:

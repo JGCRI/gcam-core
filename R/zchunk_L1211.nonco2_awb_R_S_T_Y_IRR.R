@@ -19,8 +19,8 @@
 #' @author CDL April 2017
 module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
-             FILE = "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU",
+    return(c("L161.ag_irrProd_Mt_R_C_Y_GLU",
+             "L161.ag_rfdProd_Mt_R_C_Y_GLU",
              "L121.nonco2_tg_R_awb_C_Y_GLU"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L1211.nonco2_tg_R_awb_C_Y_GLU_IRR",
@@ -28,21 +28,13 @@ module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     year <- value <- GCAM_region_ID <- GCAM_commodity <- GLU <- Non.CO2 <-
-        value.x <- value.y <- i.value <- NULL # silence package check.
+      value.x <- value.y <- i.value <- NULL # silence package check.
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    # Temporary - these next two lines should be removed when 'real' data are available
-    get_data(all_data, "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU") %>%
-      gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) ->
-      L161.ag_irrProd_Mt_R_C_Y_GLU
-    # Temporary - these next two lines should be removed when 'real' data are available
-    get_data(all_data, "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU") %>%
-      gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) ->
-      L161.ag_rfdProd_Mt_R_C_Y_GLU
+    L161.ag_irrProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_irrProd_Mt_R_C_Y_GLU")
+    L161.ag_rfdProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_rfdProd_Mt_R_C_Y_GLU")
     L121.nonco2_tg_R_awb_C_Y_GLU <- get_data(all_data, "L121.nonco2_tg_R_awb_C_Y_GLU")
 
 
@@ -87,10 +79,9 @@ module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR <- function(command, ...) {
       ## Need to filter for historical years to ensure the join will work, ie. there will be a 1 to 1 match
       ## Note this step was NOT in the original data system
       filter(year %in% dplyr::intersect(HISTORICAL_YEARS, emissions.EDGAR_YEARS)) %>%
-      repeat_add_columns(tibble::tibble(Irr_Rfd = c("IRR", "RFD") )) %>%
+      repeat_add_columns(tibble::tibble(Irr_Rfd = c("IRR", "RFD"))) %>%
       fast_left_join(L1211.ag_irrShare_R_C_Y_GLU_irr,
-                     by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year",
-                     "Irr_Rfd")) %>%
+                     by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year", "Irr_Rfd")) %>%
       rename(value.x = i.value, value.y = value) %>%
       mutate(value = value.x * value.y) %>%
       select(-value.x, -value.y) ->
@@ -115,8 +106,8 @@ module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR <- function(command, ...) {
       add_comments("Second, aggregate to get the total by region/GLU/crop") %>%
       add_comments("Third, divide to get the share of irr/rfd within region/GLU/crop") %>%
       add_legacy_name("L1211.ag_irrShare_R_C_Y_GLU_irr") %>%
-      add_precursors("temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
-                     "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU") %>%
+      add_precursors("L161.ag_irrProd_Mt_R_C_Y_GLU",
+                     "L161.ag_rfdProd_Mt_R_C_Y_GLU") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1211.ag_irrShare_R_C_Y_GLU_irr
 

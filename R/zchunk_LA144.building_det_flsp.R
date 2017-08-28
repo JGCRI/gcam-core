@@ -28,7 +28,7 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
              FILE = "energy/IEA_PCResFloorspace",
              FILE = "energy/Odyssee_ResFloorspacePerHouse",
              "L100.Pop_thous_ctry_Yh",
-             FILE = "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y"))
+             "L102.gdp_mil90usd_GCAM3_R_Y"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L144.flsp_bm2_R_res_Yh",
              "L144.flsp_bm2_R_comm_Yh",
@@ -48,10 +48,7 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
     IEA_PCResFloorspace <- get_data(all_data, "energy/IEA_PCResFloorspace")
     Odyssee_ResFloorspacePerHouse <- get_data(all_data, "energy/Odyssee_ResFloorspacePerHouse")
     L100.Pop_thous_ctry_Yh <- get_data(all_data, "L100.Pop_thous_ctry_Yh")
-    L102.gdp_mil90usd_GCAM3_R_Y <- get_data(all_data, "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y") %>%
-      gather(year, value, -GCAM_region_ID) %>%
-      mutate(year = as.integer(substr(year, 2, 5)))
-
+    L102.gdp_mil90usd_GCAM3_R_Y <- get_data(all_data, "L102.gdp_mil90usd_GCAM3_R_Y")
     # ===================================================
 
     # Silence package notes
@@ -414,7 +411,7 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
       add_legacy_name("L144.flsp_bm2_R_comm_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "energy/A44.flsp_bm2_state_comm", "energy/A44.pcflsp_default",
                      "energy/Other_pcflsp_m2_ctry_Yh", "L100.Pop_thous_ctry_Yh",
-                     "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y") %>%
+                     "L102.gdp_mil90usd_GCAM3_R_Y") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L144.flsp_bm2_R_comm_Yh
 
@@ -426,7 +423,7 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID", "energy/A44.flsp_bm2_state_res", "energy/A44.pcflsp_default",
                      "energy/A44.HouseholdSize", "energy/CEDB_ResFloorspace_chn", "energy/Other_pcflsp_m2_ctry_Yh",
                      "energy/IEA_PCResFloorspace", "energy/Odyssee_ResFloorspacePerHouse", "L100.Pop_thous_ctry_Yh",
-                     "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y") %>%
+                     "L102.gdp_mil90usd_GCAM3_R_Y") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L144.flspPrice_90USDm2_R_bld_Yh
 

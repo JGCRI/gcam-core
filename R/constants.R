@@ -301,6 +301,7 @@ CONV_HA_M2 <- 1e4 # ha to m2
 CONV_BM2_M2 <- 1e9
 
 
+
 # Driver constants ======================================================================
 
 driver.MAKE <- "MAKE"
@@ -356,7 +357,10 @@ DEFAULT_UNLIMITED_IRR_WATER_PRICE   <- 0.001 # (Units: 1975$/m3)
 WATER_UNITS_QUANTITY                <- "km^3"
 WATER_UNITS_PRICE                   <- "1975$/m^3"
 AG_ONLY_WATER_TYPES                 <- "biophysical water consumption"
-
+COOLING_SYSTEM_LOGIT 				        <- -5    # Cooling system logit (Unitless)
+DRY_COOLING_EFF_ADJ 				        <- 0.95  # Dry cooling efficiency adjustment (Unitless)
+COOLING_SYSTEM_FCR                  <- 0.15  # Cooling system fixed charge rate (Unitless)
+COOLING_SYSTEM_CAPACITY_FACTOR      <- 0.6   # Cooling system capacity factor (Unitless)
 
 # Emissions constants ======================================================================
 
@@ -373,7 +377,7 @@ emissions.EDGAR_YEARS <- 1971:2008
 emissions.EDGAR_HISTORICAL <- 1971:2008
 emissions.EDGAR_F_GASSES_YEARS <- 1970:2000
 emissions.EPA_MACC_YEAR <- 2030  # Must be either 2020 or 2030
-emissions.MAC_TAXES <- c( 0, 5, 10, 15, 32, 66, 129, 243, 486, 1093 ) # Range of costs in 1990 USD
+emissions.MAC_TAXES <- c(0, 5, 10, 15, 32, 66, 129, 243, 486, 1093) # Range of costs in 1990 USD
 emissions.CONV_C_CO2 <- 44 / 12 # Convert Carbon to CO2
 emissions.DEFOREST_COEF_YEARS <- c(2000, 2005)
 emissions.PFCS <- c("CF4", "C2F6", "SF6")

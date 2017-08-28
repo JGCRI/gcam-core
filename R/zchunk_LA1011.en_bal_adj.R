@@ -67,7 +67,7 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
       inner_join(EIA_years, by = "year") %>% # inner joining to only keep years from EIA_years
       # Convert from KBBL/day to EJ/yr
       mutate(value = value * CONV_KBBL_BBL * CONV_BBL_TONNE_RFO *
-               CONV_TONNE_GJ_RFO * CONV_GJ_EJ / CONV_DAYS_YEAR ) -> L1011.in_EJ_ctry_intlship_RFO_Yh
+               CONV_TONNE_GJ_RFO * CONV_GJ_EJ / CONV_DAYS_YEAR) -> L1011.in_EJ_ctry_intlship_RFO_Yh
 
     EIA_RFO_intlship_kbbld %>%
       left_join(EIA_TOT_intlship_kbbld %>%
@@ -95,7 +95,7 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
       replace_na(list(value=0)) -> L1011.in_EJ_ctry_intlship_TOT_Yh
 
     L1011.in_EJ_ctry_intlship_TOT_Yh %>%
-      filter(Country == "Russia" & year %in% 2005 ) %>%
+      filter(Country == "Russia" & year %in% 2005) %>%
       select(value) -> Russia_2005
 
     L1011.in_EJ_ctry_intlship_TOT_Yh %>%

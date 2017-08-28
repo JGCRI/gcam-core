@@ -34,7 +34,6 @@ module_gcam.usa_LA100.Socioeconomics <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    # printlog( "Historical GDP and per-capita GDP by state" )
     states_subregions         <- get_data(all_data, "gcam-usa/states_subregions")
     BEA_pcGDP_09USD_state     <- get_data(all_data, "gcam-usa/BEA_pcGDP_09USD_state")
     BEA_pcGDP_97USD_state     <- get_data(all_data, "gcam-usa/BEA_pcGDP_97USD_state")
@@ -42,9 +41,9 @@ module_gcam.usa_LA100.Socioeconomics <- function(command, ...) {
     PRIMA_pop                 <- get_data(all_data, "gcam-usa/PRIMA_pop")
     L100.gdp_mil90usd_ctry_Yh <- get_data(all_data, "L100.gdp_mil90usd_ctry_Yh")
 
-    # printlog( "Building historical per-capita GDP time series" )
-    # printlog( "NOTE: only using these datasets to disaggregate national GDP totals, so no need to convert units or" )
-    # printlog( "estimate what the actual per-capita GDP trends were in the pre-1987 years that have all missing values")
+    # Build historical per-capita GDP time series
+    # NOTE: only using these datasets to disaggregate national GDP totals, so no need to convert units or
+    # estimate what the actual per-capita GDP trends were in the pre-1987 years that have all missing values
 
     # Reshape and interpolate input datasets
     states_subregions <- select(states_subregions, state, state_name)

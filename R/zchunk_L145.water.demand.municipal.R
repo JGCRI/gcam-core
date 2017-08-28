@@ -66,6 +66,7 @@ module_water_L145.water.demand.municipal <- function(command, ...) {
       arrange(GCAM_region_ID, Year) %>%
       group_by(GCAM_region_ID) %>%
       mutate(Value = approx_fun(Year, Value, rule = 2)) %>%
+      ungroup() %>%
       filter(Year %in% HISTORICAL_YEARS) %>%
       rename(value = Value, year = Year) %>%
       mutate(water_type = "water withdrawals") ->

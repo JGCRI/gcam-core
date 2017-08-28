@@ -144,7 +144,7 @@ module_gcam.usa_LA1321.Cement <- function(command, ...) {
       add_comments("downscaling national data using state shares") %>%
       add_comments("these state shares were calculated to be proportional to the their values of cement shipments") %>%
       add_legacy_name("L1321.in_EJ_state_cement_F_Y") %>%
-      add_precursors("gcam-usa/Census_ind_VoS_state", "temp-data-inject/L1321.in_EJ_R_cement_F_Y" ) %>%
+      add_precursors("gcam-usa/Census_ind_VoS_state", "temp-data-inject/L1321.in_EJ_R_cement_F_Y") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1321.in_EJ_state_cement_F_Y
 

@@ -151,7 +151,7 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
     # In contrast, biofuels are assigned different names, so they are not in the TPES of refined liquids.
 
     #creating tibble with appropiate sectir and fuels for oil refining (output) for L122.out_EJ_R_oilrefining_Yh and adding historical years
-    tibble(GCAM_region_ID = GCAM_region_names$GCAM_region_ID, sector = "oil refining", fuel = "oil" )%>%
+    tibble(GCAM_region_ID = GCAM_region_names$GCAM_region_ID, sector = "oil refining", fuel = "oil")%>%
       repeat_add_columns(tibble::tibble(year = HISTORICAL_YEARS)) -> L122.out_EJ_R_oilrefining_Yh
 
     # Creating en_bal_TPES_OIL, en_bal_oil, ctl_OIL, and gtlctl_oil to adjust the outputs of CTL and GTL given the same fuel names of the oil refininf outputs (as mentioned in the note above)
@@ -246,7 +246,7 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
     A21.globaltech_coef %>%
       gather(hist_year, value, -supplysector, -subsector, -technology, -minicam.energy.input) %>%
       filter(hist_year == min(HISTORICAL_YEARS)) %>%
-      repeat_add_columns(tibble::tibble(year = HISTORICAL_YEARS) ) %>%
+      repeat_add_columns(tibble::tibble(year = HISTORICAL_YEARS)) %>%
       select(-hist_year) -> L121.globaltech_coef
 
     # Multiplying by input quantities by coefficients in L121.globaltech_coef
@@ -318,16 +318,17 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
     # Where the input names for unconv oil or GTL are equal to the name of the input to the gas processing sector,
     # subtract from the gas processing sector's production
 
-    if (gas_to_unconv_oil == reg_nat_gas){
+    if (gas_to_unconv_oil == reg_nat_gas) {
       L122.out_EJ_R_gasproc_gas_Yh %>%
         filter(GCAM_region_ID %in% L121.in_EJ_R_unoil_F_Yh$GCAM_region_ID) %>%
         left_join(select(L121.in_EJ_R_unoil_F_Yh, GCAM_region_ID, fuel, year, in_value = value), by = c("GCAM_region_ID", "fuel", "year")) %>%
         mutate(value = value - in_value) %>%
         select(-in_value)%>%
-        bind_rows(filter(L122.out_EJ_R_gasproc_gas_Yh,!(GCAM_region_ID %in% L121.in_EJ_R_unoil_F_Yh$GCAM_region_ID))) -> L122.out_EJ_R_gasproc_gas_Yh
+        bind_rows(filter(L122.out_EJ_R_gasproc_gas_Yh,!(GCAM_region_ID %in% L121.in_EJ_R_unoil_F_Yh$GCAM_region_ID))) ->
+        L122.out_EJ_R_gasproc_gas_Yh
     }
 
-    if (gas_to_gtl == reg_nat_gas){
+    if (gas_to_gtl == reg_nat_gas) {
       L122.out_EJ_R_gasproc_gas_Yh %>%
         left_join(select(L122.in_EJ_R_gtlctl_F_Yh, GCAM_region_ID, fuel, year, in_value = value), by = c("GCAM_region_ID", "fuel", "year")) %>%
         mutate(value = value - in_value)%>%
