@@ -68,7 +68,8 @@ module_energy_L252.transportation <- function(command, ...) {
       to.value <- technology <- stub.technology <- sector.name <- subsector.name <- minicam.energy.input <-
       efficiency <- minicam.non.energy.input <- input.cost <- calibrated.value <- share.weight.year <-
       subs.share.weight <- tech.share.weight <- energy.final.demand <- perCapitaBased <-
-      price.elasticity <- GAM_region_ID <- base.serive <- coefficient <- curr_table <- value <- . <- NULL
+      price.elasticity <- GAM_region_ID <- base.serive <- coefficient <- curr_table <- value <-
+      . <- output <- base.service <- NULL
 
     # PART A: SUPPLYSECTOR INFORMATION
     # Write supply sector information for transportation sector for all regions
