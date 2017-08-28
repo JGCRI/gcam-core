@@ -35,14 +35,15 @@ module_aglu_LB111.ag_resbio_R_C <- function(command, ...) {
     L100.FAO_ag_Prod_t <- get_data(all_data, "L100.FAO_ag_Prod_t")
     Various_ag_resbio_data <- get_data(all_data, "aglu/Various_ag_resbio_data")
 
-    # Compute weighted averages of each parameter ( HarvestIndex, ErosionControl, and ResidueEnergyContent ) for each crop type in each GCAM region
+    # Compute weighted averages of each parameter (HarvestIndex, ErosionControl, and
+    # ResidueEnergyContent) for each crop type in each GCAM region
     L100.FAO_ag_Prod_t %>%
       select(iso, item, year, value) %>%
       filter(year %in% max(HISTORICAL_YEARS)) %>%
       select(-year) %>%
       rename(prod = value) %>%
       full_join(Various_ag_resbio_data, by = "item") %>%
-      # Drop rows with NA values ( dropping commodities that are not in the resbio dataset )
+      # Drop rows with NA values (dropping commodities that are not in the resbio dataset)
       na.omit() %>%
       # also drop rows where production weights are zero, as these would return missing values later on
       filter(prod != 0) %>%

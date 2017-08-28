@@ -57,6 +57,7 @@ module_energy_LA115.roofPV <- function(command, ...) {
       group_by(GCAM_region_ID, resource, subresource, curve.exponent, gdpSupplyElast, subResourceCapacityFactor) %>%
       summarise(maxSubResource = sum(maxSubResource),
                 mid.price = median(mid.price)) %>%
+      ungroup() %>%
       select(GCAM_region_ID, resource, maxSubResource, mid.price, subresource, curve.exponent, gdpSupplyElast, subResourceCapacityFactor) ->
       L115.RsrcCurves_EJ_R_roofPV
 

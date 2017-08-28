@@ -76,12 +76,12 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
       # Additionally, the old data system never included NH3 in the processing. The emissions are small
       # but we should keep them.
       EDGAR_history %>%
-        filter(Non.CO2 != "NH3" ) %>%                                                    # Remove NH3 for consistency with old data
+        filter(Non.CO2 != "NH3") %>%                                                    # Remove NH3 for consistency with old data
         filter(year <= 2008) %>%                                                         # Old data didn't care if post-2008 data was missing so remove it here
         spread(year, value) %>%                                                          # Convert to wide format
         na.omit() %>%                                                                    # Remove any row with an NA (i.e., incomplete time series)
         gather(year, value, -GCAM_region_ID, -iso, -sector, -Non.CO2, -IPCC) %>%         # Convert back to long format
-        mutate(year = as.integer( year )) ->                                             # Convert year back to integer form (not sure why this changes type)
+        mutate(year = as.integer(year)) ->                                             # Convert year back to integer form (not sure why this changes type)
         EDGAR_history
 
     } else {
@@ -112,6 +112,7 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
       # There are regions (e.g., region #3) where we have grassland area, but no emissions. Use inner join to remove
       inner_join(filter(EDGAR_history, sector == "grassland"), by = c("GCAM_region_ID", "year")) %>%         # Map in EDGAR grassland emissions
       mutate(value = value * land_share) %>%                                                                # Compute emissions by GLU using EDGAR totals and land shares
+      ungroup() %>%
       select(-sector, -land_share) ->
       L124.nonco2_tg_R_grass_Y_GLU
 
@@ -140,8 +141,8 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
       left_join(iso_GCAM_regID, by = "iso") %>%
       # There are a set of iso codes in the GFED data that don't exist in the GCAM region mapping. Remove those now.
       na.omit() %>%
-      group_by(GCAM_region_ID, Non.CO2, year ) %>%
-      summarize(ForestFire = sum(ForestFire), Deforest = sum(Deforest) ) %>%                         # Aggregate emissions by region, gas, and year
+      group_by(GCAM_region_ID, Non.CO2, year) %>%
+      summarize(ForestFire = sum(ForestFire), Deforest = sum(Deforest)) %>%                         # Aggregate emissions by region, gas, and year
       mutate(PctForestFire = ForestFire / (ForestFire + Deforest)) %>%                               # Compute share of emissions from forest fires
       # There are regions where GFED data is zero for both forest fires and deforestation, leading to NAs
       # Assume those missing values are places with 100% forest fires since these are easier to model in GCAM
@@ -168,6 +169,7 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
       replace_na(list(PctDeforest = 0)) %>%
       mutate(ForestFire = value * PctForestFire) %>%                                                   # Compute forest fire emissions
       mutate(Deforest = value * PctDeforest) %>%                                                       # Compute deforestation emissions
+      ungroup() %>%
       select(-value, -PctForestFire, -PctDeforest) %>%
       gather(technology, value, -GCAM_region_ID, -GLU, -Land_Type, -Non.CO2, -year) ->
       L124.nonco2_tg_R_forest_Y_GLU
@@ -192,6 +194,7 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
       group_by(Land_Type, technology, Non.CO2) %>%
       summarize(driver = sum(driver), emissions = sum(value)) %>%                                     # Calculate global total emissions and deforestation
       mutate(emiss.coef = emissions / driver) %>%                                                     # Calculate average annual deforestation emissions coefficients
+      ungroup() %>%
       na.omit() ->
       L124.deforest_coefs
 

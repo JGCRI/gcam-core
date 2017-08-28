@@ -150,7 +150,7 @@ module_emissions_L241.fgas <- function(command, ...) {
       # EF is 1000 x emissions for non-cooling sectors
       mutate(value = value * 1000) %>%
       filter(year == max(emissions.HFC_MODEL_BASE_YEARS)) %>%
-      filter(value > 0 ) %>%
+      filter(value > 0) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
       L241.hfc_ef_2010
 
@@ -166,10 +166,10 @@ module_emissions_L241.fgas <- function(command, ...) {
       select(-Emissions, -GDP) %>%
       spread(Year, EF) %>%
       select(`Species`, `Scenario`, `2010`, `2020`, `2030`) %>%
-      mutate(Species = gsub("-", "", Species )) %>%
+      mutate(Species = gsub("-", "", Species)) %>%
       mutate(Ratio_2020 = `2020` / `2010`) %>%
       mutate(Ratio_2030 =  `2030` / `2010`) %>%
-      mutate(Species = gsub("-", "", Species ))->
+      mutate(Species = gsub("-", "", Species))->
       L241.FUT_EF_Ratio
 
     # Use the future emission factor ratios to update/scale the non-cooling
@@ -198,8 +198,7 @@ module_emissions_L241.fgas <- function(command, ...) {
       select(region, supplysector, subsector, stub.technology, year, Non.CO2, emiss.coeff) ->
       L241.hfc_future
 
-
-    if(OLD_DATA_SYSTEM_BEHAVIOR){
+    if(OLD_DATA_SYSTEM_BEHAVIOR) {
       # Now subset only the relevant technologies and gases (i.e., drop ones whose values are zero in all years). The old data system
       # fails to drop technologies and gases that have zero emissions in all years. I talked to Kate and she said that this
       # this has no implications for model performance. The if(OLD_DATA_SYSTEM_BEHVAIOR) is technically unnecessary because the 0s
@@ -218,7 +217,7 @@ module_emissions_L241.fgas <- function(command, ...) {
         ungroup ->
         L241.hfc_all
 
-      } # end of if old data system
+    } # end of if old data system
 
 
     # Set the units string for the hfc and pfc gases.
