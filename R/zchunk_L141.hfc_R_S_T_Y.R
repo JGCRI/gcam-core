@@ -14,7 +14,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RMH Aug 2017
-
 module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
@@ -176,7 +175,7 @@ module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
       group_by(year, Non.CO2) %>%
       summarize(EDGAR_tot = sum(emissions))%>%
       arrange(Non.CO2, year) %>%
-      left_join(HFC_Inventory_GV, by = c(year = "Year", Non.CO2 = "Species")) %>% # some entries not in GUUS data, default to scaler =1
+      left_join(HFC_Inventory_GV, by = c("year" = "Year", "Non.CO2" = "Species")) %>% # some entries not in GUUS data, default to scaler =1
       mutate(scaler = SSP2_tot / EDGAR_tot) %>%
       replace_na(list(scaler = 1)) %>%
       mutate_at(vars(), funs(replace(., is.infinite(.), 1))) %>% # replace na and Infinite values with 1.
