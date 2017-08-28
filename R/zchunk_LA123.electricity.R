@@ -56,7 +56,8 @@ module_energy_LA123.electricity <- function(command, ...) {
       select(-electricity, -value) %>%
       filter(fuel %in% ELECTRICITY_INPUT_FUELS) %>%
       group_by(GCAM_region_ID, sector, fuel, year) %>%
-      summarise_all(funs(sum)) ->
+      summarise_all(funs(sum)) %>%
+      ungroup() ->
       L123.in_EJ_R_elec_F_Yh
 
     # Creates L123.out_EJ_R_elec_F_Yh based on L1011.en_bal_EJ_R_Si_Fi_Yh and enduse_fuel_aggregation_electricity
@@ -69,6 +70,7 @@ module_energy_LA123.electricity <- function(command, ...) {
       select(-electricity, -value) %>%
       group_by(GCAM_region_ID, sector, fuel, year) %>%
       summarise_all(funs(sum)) %>%
+      ungroup() %>%
       filter(!is.na(fuel)) ->
       L123.out_EJ_R_elec_F_Yh
 
@@ -126,6 +128,7 @@ module_energy_LA123.electricity <- function(command, ...) {
       mutate(fuel = replace(fuel, fuel == "electricity", NA)) %>%
       group_by(GCAM_region_ID, sector, fuel, year) %>%
       summarise_all(funs(sum)) %>%
+      ungroup() %>%
       filter(!is.na(fuel)) ->
       L123.out_EJ_R_indchp_F_Yh
 

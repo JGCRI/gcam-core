@@ -964,7 +964,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
       L2233.InputEmissCoeff_fut_elecPassthru
 
     ## LAST TWO OUTPUTS ARE SIMPLY TAG NAMES (USED TO AVOID HAVING TO PARTITION INPUT TABLES)
-    tibble(X1 = "SectorXMLTags", X2 = "supplysector", X3 = "pass-through-sector" ) %>%
+    tibble(X1 = "SectorXMLTags", X2 = "supplysector", X3 = "pass-through-sector") %>%
       add_title("Equivalent sector tag names") %>%
       add_units("NA") %>%
       add_comments("") %>%

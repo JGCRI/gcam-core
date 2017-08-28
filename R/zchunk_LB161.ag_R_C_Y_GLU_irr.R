@@ -55,7 +55,7 @@ module_aglu_LB161.ag_R_C_Y_GLU_irr <- function(command, ...) {
       # Compute fraction of production that is irrigated for each GCAM region / commodity / GLU
       mutate(irrProd_frac = irrProd / (irrProd + rfdProd)) %>%
       # Repeat the same irrigated fraction to all historical years
-      repeat_add_columns(tibble::tibble(year = HISTORICAL_YEARS)) %>%
+      repeat_add_columns(tibble(year = HISTORICAL_YEARS)) %>%
       # Match to FAO annual total production
       right_join(L103.ag_Prod_Mt_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year")) %>%
       # Calculate irrigated production by multiplying total by fraction irrigated
@@ -78,7 +78,7 @@ module_aglu_LB161.ag_R_C_Y_GLU_irr <- function(command, ...) {
 
     L161.ag_irrHA_frac_R_C_GLU %>%
       # Repeat the same irrigated fraction to all historical years
-      repeat_add_columns(tibble::tibble(year = HISTORICAL_YEARS)) %>%
+      repeat_add_columns(tibble(year = HISTORICAL_YEARS)) %>%
       # Match to FAO annual total harvested area
       right_join(L103.ag_HA_bm2_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year")) %>%
       # Calculate irrigated production by multiplying total by fraction irrigated
