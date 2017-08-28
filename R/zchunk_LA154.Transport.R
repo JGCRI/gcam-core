@@ -54,7 +54,7 @@ module_gcam.usa_LA154.Transport <- function(command, ...) {
         filter(year %in% HISTORICAL_YEARS, GCAM_region_ID == gcam.USA_CODE) %>% # Filter for the USA and for historical years only
         filter(value != 0) %>% # Here any rows with value of 0 will be lost, even if other years of the same group are nonzero
         # We will next reintroduce those rows using "complete" and assign those values to be 0
-        complete(year, nesting(GCAM_region_ID, UCD_sector, mode, size.class, UCD_technology, UCD_fuel, fuel), fill = list(value = 0)) %>%
+        complete(nesting(GCAM_region_ID, UCD_sector, mode, size.class, UCD_technology, UCD_fuel, fuel), year = HISTORICAL_YEARS, fill = list(value = 0)) %>%
         # Fuel and mode will be mapped to EIA fuel and sector
         left_join_error_no_match(trnUCD_EIA_mapping, by = c("fuel", "mode")) ->
         Transportation_energy_consumption

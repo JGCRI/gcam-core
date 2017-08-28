@@ -301,6 +301,7 @@ CONV_HA_M2 <- 1e4 # ha to m2
 CONV_BM2_M2 <- 1e9
 
 
+
 # Driver constants ======================================================================
 
 driver.MAKE <- "MAKE"
@@ -356,7 +357,10 @@ DEFAULT_UNLIMITED_IRR_WATER_PRICE   <- 0.001 # (Units: 1975$/m3)
 WATER_UNITS_QUANTITY                <- "km^3"
 WATER_UNITS_PRICE                   <- "1975$/m^3"
 AG_ONLY_WATER_TYPES                 <- "biophysical water consumption"
-
+COOLING_SYSTEM_LOGIT 				        <- -5    # Cooling system logit (Unitless)
+DRY_COOLING_EFF_ADJ 				        <- 0.95  # Dry cooling efficiency adjustment (Unitless)
+COOLING_SYSTEM_FCR                  <- 0.15  # Cooling system fixed charge rate (Unitless)
+COOLING_SYSTEM_CAPACITY_FACTOR      <- 0.6   # Cooling system capacity factor (Unitless)
 
 # Emissions constants ======================================================================
 
@@ -368,10 +372,18 @@ emissions.FINAL_EMISS_YEAR <- min(max(BASE_YEARS), 2005)
 emissions.EPA_HISTORICAL_YEARS <- 1971:2002
 emissions.TST_TO_TG            <- 0.000907 # Thousand short tons to Tg
 emissions.NH3_HISTORICAL_YEARS <- 1990:2002
+<<<<<<< HEAD
 emissions.NH3_EXTRA_YEARS      <- 1971:1989
 emissions.EDGAR_YEARS          <- 1971:2008
 emissions.EDGAR_YEARS_PLUS     <- 1970:2008
 emissions.EPA_MACC_YEAR        <- 2030  # Must be either 2020 or 2030
+=======
+emissions.NH3_EXTRA_YEARS <- 1971:1989
+emissions.EDGAR_YEARS <- 1971:2008
+emissions.EDGAR_HISTORICAL <- 1971:2008
+emissions.EDGAR_F_GASSES_YEARS <- 1970:2000
+emissions.EPA_MACC_YEAR <- 2030  # Must be either 2020 or 2030
+>>>>>>> master
 emissions.MAC_TAXES <- c(0, 5, 10, 15, 32, 66, 129, 243, 486, 1093) # Range of costs in 1990 USD
 emissions.CONV_C_CO2 <- 44 / 12 # Convert Carbon to CO2
 emissions.DEFOREST_COEF_YEARS <- c(2000, 2005)
@@ -382,9 +394,13 @@ emissions.GAINS_BASE_YEAR <- 2005
 emissions.GAINS_YEARS <- c(2010, 2020, 2030)
 emissions.LOW_PCGDP <- 2.75
 emissions.COAL_SO2_THRESHOLD <- 0.1
+<<<<<<< HEAD
 emissions.NONGHG_GASES         <- c("SO2", "NOx", "CO", "NMVOC", "NH3")
 emissions.NH3_EXTRA_YEARS      <- 1971:1989
 emissions.EDGAR_YEARS          <- 1971:2008
+=======
+
+>>>>>>> master
 emissions.EPA_MACC_YEAR        <- 2030  # Must be either 2020 or 2030
 emissions.MAC_TAXES            <- c(0, 5, 10, 15, 32, 66, 129, 243, 486, 1093) # Range of costs in 1990 USD
 emissions.CONV_C_CO2           <- 44 / 12 # Convert Carbon to CO2

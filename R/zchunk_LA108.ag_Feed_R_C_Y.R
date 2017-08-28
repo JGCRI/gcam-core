@@ -119,7 +119,7 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
       mutate(share = residual / sum(residual)) %>%                                                              # Compute share of residual in each region
       left_join(ag_Residual_Mt_glbl_FodderHerbResidue_Y, by = "year") %>%                                       # Map in global total residual
       mutate(total_residual = if_else(total_residual > 0, 0, total_residual)) %>%                               # Set all positive residuals to zero
-      mutate(total_residual = total_residual * -1 ) %>%
+      mutate(total_residual = total_residual * -1) %>%
       mutate(value = share * total_residual, GCAM_commodity = "Residue") %>%                                    # Compute regional residual, set commodity name to Residue
       select(-residual, -share, -total_residual) ->
       ag_Feed_Mt_R_Residue_Y

@@ -25,7 +25,7 @@ module_emissions_L2111.ag_nonco2_IRR <- function(command, ...) {
              "L211.AGRBio",
              "L211.AWB_BCOC_EmissCoeff",
              "L211.nonghg_max_reduction",
-             "L211.nonghg_steepness" ))
+             "L211.nonghg_steepness"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2111.AWBEmissions",
              "L2111.AGREmissions",
@@ -60,7 +60,7 @@ module_emissions_L2111.ag_nonco2_IRR <- function(command, ...) {
     L211.nonghg_max_reduction <- get_data(all_data, "L211.nonghg_max_reduction")
     L211.nonghg_steepness <- get_data(all_data, "L211.nonghg_steepness")
 
-      # ===================================================
+    # ===================================================
     # L2111.AWBEmissions: AWB emissions in all regions
     L2111.AWBEmissions <- L1211.nonco2_tg_R_awb_C_Y_GLU_IRR %>%
       filter(year %in% emissions.MODEL_BASE_YEARS) %>%
@@ -106,52 +106,52 @@ module_emissions_L2111.ag_nonco2_IRR <- function(command, ...) {
     L2111.nonghg_steepness <- repeat_add_columns(L211.nonghg_steepness, Irr_Rfd) %>%
       mutate(AgProductionTechnology = paste(AgSupplySubsector, Irr_Rfd, sep = "_")) %>%
       select(-Irr_Rfd)
-      # ===================================================
+    # ===================================================
 
-      # Produce outputs
-      L2111.AWBEmissions %>%
-        add_title("Agricultural Waste Burning Emissions") %>%
-        add_units("Tg") %>%
-        add_comments("Add region and SO2 name to AWB emissions") %>%
-        add_legacy_name("L2111.AWBEmissions") %>%
-        add_precursors("L1211.nonco2_tg_R_awb_C_Y_GLU_IRR", "common/GCAM_region_names", "emissions/A_regions") ->
-        L2111.AWBEmissions
-      L2111.AGREmissions %>%
-        add_title("Agricultural Emissions") %>%
-        add_units("Tg") %>%
-        add_comments("Added region to AGR emissions") %>%
-        add_legacy_name("L2111.AGREmissions") %>%
-        add_precursors("temp-data-inject/L1221.ghg_tg_R_agr_C_Y_GLU_IRR", "water/basin_to_country_mapping",
-                       "common/GCAM_region_names") ->
-        L2111.AGREmissions
-      L2111.AGRBio %>%
-        add_title("Bio N2O Coefficients by region and technology") %>%
-        add_units("kg N2O per GJ bioenergy") %>%
-        add_comments("L211.AGRBio repeated by IRR and RFD technologies") %>%
-        add_legacy_name("L2111.AGRBio") %>%
-        add_precursors("L211.AGRBio") ->
-        L2111.AGRBio
-      L2111.AWB_BCOC_EmissCoeff %>%
-        add_title("Agricultural Waste Burning BC/OC Emissions Coefficients") %>%
-        add_units("kt/Mt") %>%
-        add_comments("L211.AWB_BCOC_EmissCoeff repeated by IRR and RFD technologies") %>%
-        add_legacy_name("L2111.AWB_BCOC_EmissCoeff") %>%
-        add_precursors("L211.AWB_BCOC_EmissCoeff") ->
-        L2111.AWB_BCOC_EmissCoeff
-      L2111.nonghg_max_reduction %>%
-        add_title("Non-GHG maximum emissions coefficient reduction by agricultural technology") %>%
-        add_units("Percent reduction from base-year emissions coefficient") %>%
-        add_comments("L211.nonghg_max_reduction repeated by IRR and RFD technologies") %>%
-        add_legacy_name("L2111.nonghg_max_reduction") %>%
-        add_precursors("L211.nonghg_max_reduction") ->
-        L2111.nonghg_max_reduction
-      L2111.nonghg_steepness %>%
-        add_title("Steepness of non-GHG emissions reduction for agricultural technologies") %>%
-        add_units("Unitless") %>%
-        add_comments("L211.nonghg_steepness repeated by IRR and RFD technologies") %>%
-        add_legacy_name("L2111.nonghg_steepness") %>%
-        add_precursors("L211.nonghg_steepness") ->
-        L2111.nonghg_steepness
+    # Produce outputs
+    L2111.AWBEmissions %>%
+      add_title("Agricultural Waste Burning Emissions") %>%
+      add_units("Tg") %>%
+      add_comments("Add region and SO2 name to AWB emissions") %>%
+      add_legacy_name("L2111.AWBEmissions") %>%
+      add_precursors("L1211.nonco2_tg_R_awb_C_Y_GLU_IRR", "common/GCAM_region_names", "emissions/A_regions") ->
+      L2111.AWBEmissions
+    L2111.AGREmissions %>%
+      add_title("Agricultural Emissions") %>%
+      add_units("Tg") %>%
+      add_comments("Added region to AGR emissions") %>%
+      add_legacy_name("L2111.AGREmissions") %>%
+      add_precursors("temp-data-inject/L1221.ghg_tg_R_agr_C_Y_GLU_IRR", "water/basin_to_country_mapping",
+                     "common/GCAM_region_names") ->
+      L2111.AGREmissions
+    L2111.AGRBio %>%
+      add_title("Bio N2O Coefficients by region and technology") %>%
+      add_units("kg N2O per GJ bioenergy") %>%
+      add_comments("L211.AGRBio repeated by IRR and RFD technologies") %>%
+      add_legacy_name("L2111.AGRBio") %>%
+      add_precursors("L211.AGRBio") ->
+      L2111.AGRBio
+    L2111.AWB_BCOC_EmissCoeff %>%
+      add_title("Agricultural Waste Burning BC/OC Emissions Coefficients") %>%
+      add_units("kt/Mt") %>%
+      add_comments("L211.AWB_BCOC_EmissCoeff repeated by IRR and RFD technologies") %>%
+      add_legacy_name("L2111.AWB_BCOC_EmissCoeff") %>%
+      add_precursors("L211.AWB_BCOC_EmissCoeff") ->
+      L2111.AWB_BCOC_EmissCoeff
+    L2111.nonghg_max_reduction %>%
+      add_title("Non-GHG maximum emissions coefficient reduction by agricultural technology") %>%
+      add_units("Percent reduction from base-year emissions coefficient") %>%
+      add_comments("L211.nonghg_max_reduction repeated by IRR and RFD technologies") %>%
+      add_legacy_name("L2111.nonghg_max_reduction") %>%
+      add_precursors("L211.nonghg_max_reduction") ->
+      L2111.nonghg_max_reduction
+    L2111.nonghg_steepness %>%
+      add_title("Steepness of non-GHG emissions reduction for agricultural technologies") %>%
+      add_units("Unitless") %>%
+      add_comments("L211.nonghg_steepness repeated by IRR and RFD technologies") %>%
+      add_legacy_name("L2111.nonghg_steepness") %>%
+      add_precursors("L211.nonghg_steepness") ->
+      L2111.nonghg_steepness
 
     return_data(L2111.AWBEmissions, L2111.AGREmissions, L2111.AGRBio, L2111.AWB_BCOC_EmissCoeff, L2111.nonghg_max_reduction, L2111.nonghg_steepness)
   } else {

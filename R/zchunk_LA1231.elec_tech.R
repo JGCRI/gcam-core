@@ -91,7 +91,8 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
       group_by(supplysector, subsector, technology) %>%
       mutate(efficiency_tech = approx_fun(year, efficiency_tech)) %>%
       mutate(improvement.max = approx_fun(year, improvement.max)) %>%
-      mutate(improvement.rate = approx_fun(year, improvement.rate)) -> L1231.eff_R_elec_gas_tech
+      mutate(improvement.rate = approx_fun(year, improvement.rate)) %>%
+      ungroup() -> L1231.eff_R_elec_gas_tech
 
     # Reset upper and lower bound efficiencies, as needed
     # Where avg efficiency is outside of the range of the two technologies, set the lower bound equal to the average, and the upper equal to
@@ -129,7 +130,7 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
 
     # Solve for share of first technology to be used to estimate gas technology inputs
     L1231.eff_R_elec_gas_Yh_gathered %>%
-      mutate(share_tech1 = (efficiency - efficiency_tech2) / ( efficiency_tech1 - efficiency_tech2 )) -> L1231.eff_R_elec_gas_Yh_gathered
+      mutate(share_tech1 = (efficiency - efficiency_tech2) / (efficiency_tech1 - efficiency_tech2)) -> L1231.eff_R_elec_gas_Yh_gathered
 
     # Use share obtained above to get inputs of gas by technology
     L1231.eff_R_elec_gas_Yh_gathered %>%
@@ -192,7 +193,8 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
       rename(output = value) %>%
       bind_rows(L1231.out_EJ_R_elec_Fin_tech_Yh) %>%
       rename(value = output) %>%
-      select(GCAM_region_ID, sector, fuel, technology, year, value) -> L1231.out_EJ_R_elec_F_tech_Yh
+      select(GCAM_region_ID, sector, fuel, technology, year, value) %>%
+      ungroup -> L1231.out_EJ_R_elec_F_tech_Yh
 
     # add final details to tibbles and save them
     L1231.in_EJ_R_elec_F_tech_Yh%>%
