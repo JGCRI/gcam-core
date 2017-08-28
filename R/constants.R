@@ -373,10 +373,7 @@ emissions.EPA_HISTORICAL_YEARS <- 1971:2002
 emissions.TST_TO_TG            <- 0.000907 # Thousand short tons to Tg
 emissions.NH3_HISTORICAL_YEARS <- 1990:2002
 
-emissions.NH3_EXTRA_YEARS      <- 1971:1989
-emissions.EDGAR_YEARS          <- 1971:2008
 emissions.EDGAR_YEARS_PLUS     <- 1970:2008
-emissions.EPA_MACC_YEAR        <- 2030  # Must be either 2020 or 2030
 emissions.NH3_EXTRA_YEARS <- 1971:1989
 emissions.EDGAR_YEARS <- 1971:2008
 emissions.EDGAR_HISTORICAL <- 1971:2008
