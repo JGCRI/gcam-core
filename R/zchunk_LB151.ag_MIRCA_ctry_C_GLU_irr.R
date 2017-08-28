@@ -63,27 +63,27 @@ module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr <- function(command, ...) {
       rename(HA_rfd = value) %>%                                              # Rename column to facilitate a future join
       # Join dataframes. Note we want all country/crop combinations even those that only exist in one of the two dataframes.
       full_join(MIRCA_irrHA_ha, by = c( "iso", "GLU", "MIRCA_crop")) %>%
-      replace_na(list(HA_irr = 0, HA_rfd = 0 )) %>%                           # Replace NA's with 0. These are expected.
-      mutate(irrshareHA = HA_irr / ( HA_irr + HA_rfd )) ->                    # Calculate share of irrigated harvested area
+      replace_na(list(HA_irr = 0, HA_rfd = 0)) %>%                           # Replace NA's with 0. These are expected.
+      mutate(irrshareHA = HA_irr / (HA_irr + HA_rfd)) ->                    # Calculate share of irrigated harvested area
       ag_irrshareHA_ctry_Cmir_GLU
 
     # Compute average share of irrigation by country and GLU.
     # This will be used as the default share in the event of missing values.
     ag_irrshareHA_ctry_Cmir_GLU %>%
       group_by(iso, GLU) %>%
-      summarize(HA_irr = sum( HA_irr ), HA_rfd = sum( HA_rfd )) %>%           # Calculate total harvested area by country/GLU
-      mutate(avg_irrshare = HA_irr / ( HA_irr + HA_rfd )) %>%                 # Calculate share of irrigated harvested area
+      summarize(HA_irr = sum(HA_irr), HA_rfd = sum( HA_rfd)) %>%           # Calculate total harvested area by country/GLU
+      mutate(avg_irrshare = HA_irr / (HA_irr + HA_rfd)) %>%                 # Calculate share of irrigated harvested area
       select(-HA_irr, -HA_rfd) ->                                             # Remove extra columns
       Avg_irrshareHA
 
     # Compute harvested area for irrigated and rainfed land by country, GTAP crop, and GLU
     L100.LDS_ag_HA_ha %>%
       rename(totHA = value) %>%
-      left_join(FAO_ag_items_PRODSTAT[ c( "GTAP_crop", "MIRCA_crop" ) ], by = "GTAP_crop") %>%    # Map GTAP crops to MIRCA crops
-      left_join(ag_irrshareHA_ctry_Cmir_GLU, by = c( "iso", "GLU", "MIRCA_crop" )) %>%            # Map crop-specific irrigation share
-      left_join(Avg_irrshareHA, by = c( "iso", "GLU" )) %>%                                       # Map generic irrigation share for cases of missing crops
-      mutate(irrshareHA = if_else( is.na( irrshareHA ), avg_irrshare, irrshareHA)) %>%            # First try setting missing values to average irrigation share
-      mutate(irrshareHA = if_else( is.na( irrshareHA ), 0, irrshareHA)) %>%                       # If that doesn't work, set irrigation share to 0 (all rainfed)
+      left_join(FAO_ag_items_PRODSTAT[c( "GTAP_crop", "MIRCA_crop")], by = "GTAP_crop") %>%    # Map GTAP crops to MIRCA crops
+      left_join(ag_irrshareHA_ctry_Cmir_GLU, by = c("iso", "GLU", "MIRCA_crop")) %>%            # Map crop-specific irrigation share
+      left_join(Avg_irrshareHA, by = c( "iso", "GLU")) %>%                                       # Map generic irrigation share for cases of missing crops
+      mutate(irrshareHA = if_else(is.na(irrshareHA), avg_irrshare, irrshareHA)) %>%            # First try setting missing values to average irrigation share
+      replace_na(list(irrshareHA = 0)) %>%                       # If that doesn't work, set irrigation share to 0 (all rainfed)
       mutate(irrHA = totHA * irrshareHA, rfdHA = totHA * (1 - irrshareHA)) %>%                    # Calculate irrigated and rainfed HA from shares and total harvested area
       select(-totHA, -MIRCA_crop, -HA_rfd, -HA_irr, -irrshareHA, - avg_irrshare) ->               # Remove extra columns
       ag_HA_ha_ctry_crop

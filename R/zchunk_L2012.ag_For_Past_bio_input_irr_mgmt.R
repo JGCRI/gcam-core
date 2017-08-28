@@ -61,7 +61,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
     L122.ag_HA_to_CropLand_R_Y_GLU <- get_data(all_data, "L122.ag_HA_to_CropLand_R_Y_GLU")
     L123.ag_Prod_Mt_R_Past_Y_GLU <- get_data(all_data, "L123.ag_Prod_Mt_R_Past_Y_GLU")
     L123.For_Prod_bm3_R_Y_GLU <- get_data(all_data, "L123.For_Prod_bm3_R_Y_GLU")
-    L132.ag_an_For_Prices <- get_data(all_data, "L132.ag_an_For_Prices" )
+    L132.ag_an_For_Prices <- get_data(all_data, "L132.ag_an_For_Prices")
     L161.ag_irrProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_irrProd_Mt_R_C_Y_GLU")
     L161.ag_rfdProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_rfdProd_Mt_R_C_Y_GLU")
     L163.ag_irrBioYield_GJm2_R_GLU <- get_data(all_data, "L163.ag_irrBioYield_GJm2_R_GLU")
@@ -145,7 +145,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       # Combine with subsector year and technology shareweights
       right_join(L2011.AgProduction_ag_irr, by = c("region", "GCAM_commodity", "GLU_name", "year")) %>%
       # Copy to high and low management levels
-      repeat_add_columns(tibble::tibble(MGMT = c("hi", "lo"))) %>%
+      repeat_add_columns(tibble(MGMT = c("hi", "lo"))) %>%
       # Add sector, subsector, technology names
       mutate(AgSupplySector = GCAM_commodity,
              AgSupplySubsector = paste(GCAM_commodity, GLU_name, sep = "_"),
@@ -196,7 +196,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       # No disaggregation of technologies
       mutate(AgProductionTechnology = AgSupplySubsector) %>%
       # Copy to all base years
-      repeat_add_columns(tibble::tibble(year = BASE_YEARS)) %>%
+      repeat_add_columns(tibble(year = BASE_YEARS)) %>%
       left_join_error_no_match(L201.For_Past_Prod_R_Y_GLU, by = c("region", "AgProductionTechnology", "year")) %>%
       # Subsector and technology shareweights (subsector requires the year as well)
       mutate(share.weight.year = year,
@@ -214,7 +214,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       select(GCAM_region_ID, GLU) %>%
       unique %>%
       # Add all model years
-      repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       # Full_join the original data to keep all model years for extrapolation
       full_join(L122.ag_HA_to_CropLand_R_Y_GLU, by = c("GCAM_region_ID", "GLU", "year")) %>%
       mutate(year = as.numeric(year), value = as.numeric(value)) %>%
@@ -233,15 +233,15 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
     L2012.AgSupplySubsector %>%
       semi_join(L103.ag_Prod_Mt_R_C_Y_GLU, by = c("AgSupplySector" = "GCAM_commodity")) %>%
       # Copy to all model years
-      repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       # Separate the AgSupplySubsector variable to get GLU names for matching in the harvest data
       mutate(AgSupplySubsector = sub("Root_Tuber", "RootTuber", AgSupplySubsector)) %>%
       separate(AgSupplySubsector, c("GCAM_commodity", "GLU_name"), sep = "_") %>%
       left_join(L201.ag_HA_to_CropLand_R_Y_GLU, by = c("region", "GLU_name", "year")) %>%
       # Copy to both irrigated and rainfed technologies
-      repeat_add_columns(tibble::tibble(IRR_RFD = c("IRR", "RFD"))) %>%
+      repeat_add_columns(tibble(IRR_RFD = c("IRR", "RFD"))) %>%
       # Copy to high and low management levels
-      repeat_add_columns(tibble::tibble(MGMT = c("hi", "lo"))) %>%
+      repeat_add_columns(tibble(MGMT = c("hi", "lo"))) %>%
       # Add subsector and technology names
       mutate(GCAM_commodity = sub("RootTuber", "Root_Tuber", GCAM_commodity),
              AgSupplySubsector = paste(GCAM_commodity, GLU_name, sep = "_"),
@@ -270,9 +270,9 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
     L2012.AgSupplySubsector %>%
       filter(grepl("biomass_grass", AgSupplySubsector)) %>%
       # Copy to all base years
-      repeat_add_columns(tibble::tibble(year = BASE_YEARS)) %>%
+      repeat_add_columns(tibble(year = BASE_YEARS)) %>%
       # Copy to both irrigated and rainfed technologies
-      repeat_add_columns(tibble::tibble(IRR_RFD = c("IRR", "RFD"))) %>%
+      repeat_add_columns(tibble(IRR_RFD = c("IRR", "RFD"))) %>%
       # Match in yield data, use left_join instead because of NAs
       left_join(L2011.AgYield_bio_grass_irr, by = c("region", "AgSupplySubsector", "IRR_RFD")) ->
       L2011.AgYield_bio_grass_irr
@@ -313,7 +313,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       # No tech split yet
       mutate(AgProductionTechnology = AgSupplySubsector) %>%
       # Copy to all base years
-      repeat_add_columns(tibble::tibble(year = BASE_YEARS)) %>%
+      repeat_add_columns(tibble(year = BASE_YEARS)) %>%
       select(one_of(LEVEL2_DATA_NAMES[["AgTechYr"]])) %>%
       mutate(GLU_name = AgSupplySubsector,
              GLU_name = sub("biomass_tree_", "", GLU_name)) %>%
@@ -351,7 +351,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
     # simply use the generic defaults, which are likely minor ag regions anyway
     L201.AgYield_bio_tree %>%
       # Copy to both irrigated and rainfed technologies
-      repeat_add_columns(tibble::tibble(IRR_RFD = c("IRR", "RFD"))) %>%
+      repeat_add_columns(tibble(IRR_RFD = c("IRR", "RFD"))) %>%
       mutate(AgProductionTechnology = paste(AgProductionTechnology, IRR_RFD, sep = "_")) %>%
       # Match in conversion factors
       left_join(L2011.irr_rfd_factors,
@@ -378,7 +378,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
     L2011.AgYield_bio_grass_irr %>%
       bind_rows(L2011.AgYield_bio_tree_irr) %>%
       # Copy to high and low management levels
-      repeat_add_columns(tibble::tibble(MGMT = c("hi", "lo"))) %>%
+      repeat_add_columns(tibble(MGMT = c("hi", "lo"))) %>%
       # Separate technology to match in the multipliers
       separate(AgProductionTechnology, c("biomass", "type", "GLU_name", "IRR_RFD")) %>%
       # Match in multipliers, use left_join instead because of NAs

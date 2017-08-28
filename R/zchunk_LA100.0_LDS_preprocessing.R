@@ -68,7 +68,7 @@ module_aglu_LA100.0_LDS_preprocessing <- function(command, ...) {
 
       # Replace numerical GLU code with a concatenation of "GLU" and the
       # three-digit code (padded with zeroes as necessary)
-      if(aglu.GLU %in% names(LDSfiles[[nm]])){
+      if(aglu.GLU %in% names(LDSfiles[[nm]])) {
         LDSfiles[[nm]][[aglu.GLU]] <- paste(aglu.GLU, sprintf("%03d", LDSfiles[[nm]][[aglu.GLU]]), sep = aglu.GLU_NAME_DELIMITER)
       }
 

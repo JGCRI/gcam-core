@@ -50,7 +50,7 @@ module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
         L100.Land_type_area_ha %>%
           ## Add data for GCAM region ID and GLU
           left_join_error_no_match(distinct(iso_GCAM_regID, iso, .keep_all = TRUE), by = "iso") %>%
-          ## Add vectors for land type ( SAGE, HYDE, and WDPA )
+          ## Add vectors for land type (SAGE, HYDE, and WDPA)
           left_join_error_no_match(LDS_land_types, by = c("land_code" = "Category")) %>%
           left_join(SAGE_LT, by = "LT_SAGE") %>%  # includes NAs
           rename(LT_SAGE_5 = Land_Type) %>%

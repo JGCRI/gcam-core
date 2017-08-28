@@ -108,7 +108,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
       select(CROSIT_ctry, CROSIT_crop, year, Yield_kgHa_rainfed) %>%
       mutate(Irr_Rfd = "RFD") %>%
       rename(yield_kgHa = Yield_kgHa_rainfed) %>%
-      bind_rows(L162.ag_irrYield_kgHa_Rcrs_Ccrs_Y ) %>%
+      bind_rows(L162.ag_irrYield_kgHa_Rcrs_Ccrs_Y) %>%
       # add the missing SPEC_AG_PROD_YEARS and interpolate the yields
       tidyr::complete(year = c(year, SPEC_AG_PROD_YEARS) ,
                       CROSIT_ctry, CROSIT_crop, Irr_Rfd) %>%

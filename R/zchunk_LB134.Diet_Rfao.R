@@ -90,7 +90,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
       # make sure we have population data for all years
       group_by(GCAM_region_ID) %>%
       mutate(value = approx_fun(year, value)) %>%
-      mutate(food_demand_percapita = consumption * CONV_DAYS_YEAR * (1 / CONV_MCAL_PCAL ) / value) %>%
+      mutate(food_demand_percapita = consumption * CONV_DAYS_YEAR * (1 / CONV_MCAL_PCAL) / value) %>%
       select(-consumption, -value) ->
       L134.pcFood_kcald_R_Dmnd_Y
 
@@ -252,7 +252,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
         select(-value) %>%
         # ...and use those ratios to scale future food demand
         left_join(filter(L134.pcFood_kcald_R_Dmnd_Y, GCAM_demand == demand), ., by = c("GCAM_region_ID", "GCAM_demand", "year")) %>%
-        mutate(ratio = if_else(is.na(ratio), 1.0, ratio)) %>%
+        replace_na(list(ratio = 1.0)) %>%
         arrange(GCAM_region_ID, GCAM_demand, year) %>%
         group_by(GCAM_region_ID, GCAM_demand) %>%
         # computing the cumulative product, and then multiplying by the last historical year value, is the

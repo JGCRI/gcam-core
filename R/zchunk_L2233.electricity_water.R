@@ -59,7 +59,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
              "L1233.shrwt_R_elec_cool_Yf",
              FILE = "temp-data-inject/L223.StubTechEff_elec",
              "L201.en_bcoc_emissions",
-             FILE = "temp-data-inject/L241.nonco2_tech_coeff",
+             "L241.nonco2_tech_coeff",
              L223_fileNames_
     ))
 
@@ -135,7 +135,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
     L1233.shrwt_R_elec_cool_Yf <- get_data(all_data, "L1233.shrwt_R_elec_cool_Yf")
     L223.StubTechEff_elec <- get_data(all_data, "temp-data-inject/L223.StubTechEff_elec")
     L201.en_bcoc_emissions <- get_data(all_data, "L201.en_bcoc_emissions")
-    L241.nonco2_tech_coeff <- get_data(all_data, "temp-data-inject/L241.nonco2_tech_coeff")
+    L241.nonco2_tech_coeff <- get_data(all_data, "L241.nonco2_tech_coeff")
 
     # Use get_data function with sapply to read in all "L223." inputs at once
     get_data_rev <- function(name, all_data) get_data(all_data, name)
@@ -951,7 +951,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
       add_legacy_name("L2233.InputEmissCoeff_hist_elecPassthru") %>%
       add_precursors("L201.en_bcoc_emissions",
                      "temp-data-inject/L223.StubTechEff_elec",
-                     "temp-data-inject/L241.nonco2_tech_coeff") ->
+                     "L241.nonco2_tech_coeff") ->
       L2233.InputEmissCoeff_hist_elecPassthru
 
     L2233.InputEmissCoeff_fut_elecPassthru %>%
@@ -960,21 +960,21 @@ module_water_L2233.electricity_water <- function(command, ...) {
       add_comments("Emissions coefficients corrected by diving by elec tech efficiencies") %>%
       add_legacy_name("L2233.InputEmissCoeff_fut_elecPassthru") %>%
       add_precursors("temp-data-inject/L223.GlobalTechEff_elec",
-                     "temp-data-inject/L241.nonco2_tech_coeff") ->
+                     "L241.nonco2_tech_coeff") ->
       L2233.InputEmissCoeff_fut_elecPassthru
 
     ## LAST TWO OUTPUTS ARE SIMPLY TAG NAMES (USED TO AVOID HAVING TO PARTITION INPUT TABLES)
-    tibble(X1 = "SectorXMLTags", X2 = "supplysector", X3 = "pass-through-sector" ) %>%
+    tibble(X1 = "SectorXMLTags", X2 = "supplysector", X3 = "pass-through-sector") %>%
       add_title("Equivalent sector tag names") %>%
       add_units("NA") %>%
-      add_comments("") %>%
+      add_comments("Not generated") %>%
       add_legacy_name("L2233.SectorNodeEquiv")  ->
       L2233.SectorNodeEquiv
 
     tibble(X1 = "TechnologyXMLTags", X2 = "technology", X3 = "intermittent-technology", X4 = "pass-through-technology") %>%
       add_title("Equivalent technology tag names") %>%
       add_units("NA") %>%
-      add_comments("") %>%
+      add_comments("Not generated") %>%
       add_legacy_name("L2233.TechNodeEquiv") ->
       L2233.TechNodeEquiv
 

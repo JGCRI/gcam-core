@@ -63,7 +63,7 @@ module_emissions_L152.MACC <- function(command, ...) {
 
     # For in abatement and basebline data:
     # Combine aluminum and magnesium processes: define function, then call in both instances
-    combine_Al_Mg <- function(x){
+    combine_Al_Mg <- function(x) {
       x %>%
         mutate(Process = sub("Primary Aluminum Production", "Aluminum and Magnesium Production", Process)) %>%
         mutate(Process = sub("Magnesium Manufacturing", "Aluminum and Magnesium Production", Process))

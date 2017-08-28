@@ -28,7 +28,7 @@ module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     year <- value <- GCAM_region_ID <- GCAM_commodity <- GLU <- Non.CO2 <-
-        value.x <- value.y <- i.value <- NULL # silence package check.
+      value.x <- value.y <- i.value <- NULL # silence package check.
 
     all_data <- list(...)[[1]]
 
@@ -79,10 +79,9 @@ module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR <- function(command, ...) {
       ## Need to filter for historical years to ensure the join will work, ie. there will be a 1 to 1 match
       ## Note this step was NOT in the original data system
       filter(year %in% dplyr::intersect(HISTORICAL_YEARS, emissions.EDGAR_YEARS)) %>%
-      repeat_add_columns(tibble::tibble(Irr_Rfd = c("IRR", "RFD") )) %>%
+      repeat_add_columns(tibble::tibble(Irr_Rfd = c("IRR", "RFD"))) %>%
       fast_left_join(L1211.ag_irrShare_R_C_Y_GLU_irr,
-                     by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year",
-                     "Irr_Rfd")) %>%
+                     by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year", "Irr_Rfd")) %>%
       rename(value.x = i.value, value.y = value) %>%
       mutate(value = value.x * value.y) %>%
       select(-value.x, -value.y) ->

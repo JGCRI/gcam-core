@@ -76,12 +76,12 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
       # Additionally, the old data system never included NH3 in the processing. The emissions are small
       # but we should keep them.
       EDGAR_history %>%
-        filter(Non.CO2 != "NH3" ) %>%                                                    # Remove NH3 for consistency with old data
+        filter(Non.CO2 != "NH3") %>%                                                    # Remove NH3 for consistency with old data
         filter(year <= 2008) %>%                                                         # Old data didn't care if post-2008 data was missing so remove it here
         spread(year, value) %>%                                                          # Convert to wide format
         na.omit() %>%                                                                    # Remove any row with an NA (i.e., incomplete time series)
         gather(year, value, -GCAM_region_ID, -iso, -sector, -Non.CO2, -IPCC) %>%         # Convert back to long format
-        mutate(year = as.integer( year )) ->                                             # Convert year back to integer form (not sure why this changes type)
+        mutate(year = as.integer(year)) ->                                             # Convert year back to integer form (not sure why this changes type)
         EDGAR_history
 
     } else {
@@ -141,8 +141,8 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
       left_join(iso_GCAM_regID, by = "iso") %>%
       # There are a set of iso codes in the GFED data that don't exist in the GCAM region mapping. Remove those now.
       na.omit() %>%
-      group_by(GCAM_region_ID, Non.CO2, year ) %>%
-      summarize(ForestFire = sum(ForestFire), Deforest = sum(Deforest) ) %>%                         # Aggregate emissions by region, gas, and year
+      group_by(GCAM_region_ID, Non.CO2, year) %>%
+      summarize(ForestFire = sum(ForestFire), Deforest = sum(Deforest)) %>%                         # Aggregate emissions by region, gas, and year
       mutate(PctForestFire = ForestFire / (ForestFire + Deforest)) %>%                               # Compute share of emissions from forest fires
       # There are regions where GFED data is zero for both forest fires and deforestation, leading to NAs
       # Assume those missing values are places with 100% forest fires since these are easier to model in GCAM
