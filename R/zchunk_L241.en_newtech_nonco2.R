@@ -168,36 +168,39 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
     # (This is where the old data system had the note - TODO: better way to handle this,
     # probably these technologies should pull from historical data. See GitHub issue #650.)
 
-    # Use the may be historic new technology emission coefficients to replace the emission
-    # coefficients in the min model base year by a supplysecotr, subsector, stub.technology identifier
-    # called sector_tech_id.
+    # Not all of the regions started using the new technologies, "newtech", at the same time,
+    # some regions started using them in historical years whereas other regions started
+    # using them in future years. For the regions that may have been using these
+    # technologies in historical years replace the first model base year with the maybe
+    # historical value to include the historical "newtech" nonco2 parameters in the historical data.
+    #
+    # First create a list of data frame of region, supply sector, technology and may.be.historic. This
+    # data frame will be used to determine which "newtech" nonco2 parameters should start in historical
+    # years.
     A41.tech_coeff %>%
       select("supplysector", "subsector", "stub.technology", "may.be.historic") %>%
       na.omit %>%
       unite(sector_tech_id, c("supplysector", "subsector", "stub.technology"), remove = FALSE) ->
       L241.maybe_historic
 
-    # Replace the new technology emission coefficients in the model base year with the may be historic
-    # values from the technology assumption file by the unique supplysector, subsector,
-    # stub.technology identifier.
+    # Start the new technology emission coefficients for the technologies & reigons that may be have
+    # used in historical years in the first model base year.
     L241.nonco2_tech_coeff %>%
       unite(sector_tech_id, c("supplysector", "subsector", "stub.technology"), remove = FALSE) %>%
       mutate(year = replace(year, sector_tech_id %in% L241.maybe_historic$sector_tech_id, min(BASE_YEARS))) %>%
       select(-sector_tech_id) ->
       L241.nonco2_tech_coeff
 
-    # Replace the max emission reduction coefficients in the model base year with the may be historic
-    # values from the technology assumption file by the unique supplysector, subsector,
-    # stub.technology identifier.
+    # Start the max emission reduction for the technologies & reigons that may be have
+    # used in historical years in the first model base year.
     L241.nonco2_max_reduction %>%
       unite(sector_tech_id, c("supplysector", "subsector" , "stub.technology"), remove = FALSE) %>%
       mutate(year = replace(year, sector_tech_id %in% L241.maybe_historic$sector_tech_id, min(BASE_YEARS))) %>%
       select(-sector_tech_id) ->
       L241.nonco2_max_reduction
 
-    # Replace the steepness of emission reduction coefficients in the model base year with the
-    # may be historic values from the technology assumption file by the unique supplysecotr, subsector,
-    # stub.technology identifier.
+    # Start the steepness of emission reduction coefficients for the technologies & reigons that may be have
+    # used in historical years in the first model base year.
     L241.nonco2_steepness %>%
       unite(sector_tech_id, c("supplysector", "subsector" , "stub.technology"), remove = FALSE) %>%
       mutate(year = replace(year, sector_tech_id %in% L241.maybe_historic$sector_tech_id, min(BASE_YEARS))) %>%
