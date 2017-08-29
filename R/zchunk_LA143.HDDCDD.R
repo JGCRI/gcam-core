@@ -188,7 +188,7 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
       L143.HDDCDD_scen_RG3_Y <- L143.wtHDDCDD_scen_ctry_Y %>%
         group_by(region_GCAM3, SRES, GCM, variable, year) %>%
         summarise(value = weighted.mean(value, population)) %>%
-        ungropu()
+        ungroup()
     }
 
 

@@ -17,7 +17,9 @@ module_emissions_batch_all_aglu_emissions.xml_DISABLED <- function(command, ...)
               "L211.AGRBio",
               "L211.AWB_BCOC_EmissCoeff",
               "L211.nonghg_max_reduction",
-              "L211.nonghg_steepness"))
+              "L211.nonghg_steepness",
+              "L252.AgMAC",
+              "L252.MAC_an"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "all_aglu_emissions.xml"))
   } else if(command == driver.MAKE) {
@@ -33,7 +35,8 @@ module_emissions_batch_all_aglu_emissions.xml_DISABLED <- function(command, ...)
     L211.AWB_BCOC_EmissCoeff <- get_data(all_data, "L211.AWB_BCOC_EmissCoeff")
     L211.nonghg_max_reduction <- get_data(all_data, "L211.nonghg_max_reduction")
     L211.nonghg_steepness <- get_data(all_data, "L211.nonghg_steepness")
-
+    L252.AgMAC <- get_data(all_data, "L252.AgMAC")
+    L252.MAC_an <- get_data(all_data, "L252.MAC_an")
     # ===================================================
 
     # Produce outputs
@@ -46,8 +49,11 @@ module_emissions_batch_all_aglu_emissions.xml_DISABLED <- function(command, ...)
       add_xml_data(L211.AWB_BCOC_EmissCoeff, "OutputEmissCoeffAg") %>%
       add_xml_data(L211.nonghg_max_reduction, "AgGDPCtrlMax") %>%
       add_xml_data(L211.nonghg_steepness, "AgGDPCtrlSteep") %>%
+      add_xml_data(L252.AgMAC, "AgMAC") %>%
+      add_xml_data(L252.MAC_an, "MAC") %>%
       add_precursors("L211.AWBEmissions", "L211.AGREmissions", "L211.AnEmissions", "L211.AnNH3Emissions",
-                     "L211.AGRBio", "L211.AWB_BCOC_EmissCoeff", "L211.nonghg_max_reduction", "L211.nonghg_steepness") ->
+                     "L211.AGRBio", "L211.AWB_BCOC_EmissCoeff", "L211.nonghg_max_reduction",
+                     "L211.nonghg_steepness", "L252.AgMAC", "L252.MAC_an") ->
       all_aglu_emissions.xml
 
     return_data(all_aglu_emissions.xml)

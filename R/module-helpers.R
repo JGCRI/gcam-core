@@ -184,12 +184,14 @@ set_traded_names <- function(data, GCAM_region_names, apply_selected_only = TRUE
 #' @note The returned 'numerical' values are actually characters; this helper function doesn't touch column types.
 set_years <- function(data) {
   assert_that(is_tibble(data))
-  data[data == "start-year"] <- min(BASE_YEARS)
-  data[data == "final-calibration-year"] <- max(BASE_YEARS)
-  data[data == "final-historical-year"] <- max(HISTORICAL_YEARS)
-  data[data == "initial-future-year"] <- min(FUTURE_YEARS)
-  data[data == "initial-nonhistorical-year"] <- min(MODEL_YEARS[MODEL_YEARS > max(HISTORICAL_YEARS)])
-  data[data == "end-year"] <- max(FUTURE_YEARS)
+  if(nrow(data)) {
+    data[data == "start-year"] <- min(BASE_YEARS)
+    data[data == "final-calibration-year"] <- max(BASE_YEARS)
+    data[data == "final-historical-year"] <- max(HISTORICAL_YEARS)
+    data[data == "initial-future-year"] <- min(FUTURE_YEARS)
+    data[data == "initial-nonhistorical-year"] <- min(MODEL_YEARS[MODEL_YEARS > max(HISTORICAL_YEARS)])
+    data[data == "end-year"] <- max(FUTURE_YEARS)
+  }
   data
 }
 
@@ -423,9 +425,9 @@ fill_exp_decay_extrapolate <- function(d, out_years) {
       complete(tidyr::nesting_(select(., -year, -value)), year = union(year, out_years)) ->
       d
   } else {
-    nesting_vars <- rlang::syms(names(d)[!(names(d) %in% c("year", "value"))])
+    nesting_vars <- paste0('`', names(d)[!(names(d) %in% c("year", "value"))], '`')
     d %>%
-      complete(tidyr::nesting(!!!nesting_vars), year = union(year, out_years)) ->
+      complete(tidyr::nesting_(nesting_vars), year = union(year, out_years)) ->
       d
   }
   d %>%
