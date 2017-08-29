@@ -184,12 +184,14 @@ set_traded_names <- function(data, GCAM_region_names, apply_selected_only = TRUE
 #' @note The returned 'numerical' values are actually characters; this helper function doesn't touch column types.
 set_years <- function(data) {
   assert_that(is_tibble(data))
-  data[data == "start-year"] <- min(BASE_YEARS)
-  data[data == "final-calibration-year"] <- max(BASE_YEARS)
-  data[data == "final-historical-year"] <- max(HISTORICAL_YEARS)
-  data[data == "initial-future-year"] <- min(FUTURE_YEARS)
-  data[data == "initial-nonhistorical-year"] <- min(MODEL_YEARS[MODEL_YEARS > max(HISTORICAL_YEARS)])
-  data[data == "end-year"] <- max(FUTURE_YEARS)
+  if(nrow(data)) {
+    data[data == "start-year"] <- min(BASE_YEARS)
+    data[data == "final-calibration-year"] <- max(BASE_YEARS)
+    data[data == "final-historical-year"] <- max(HISTORICAL_YEARS)
+    data[data == "initial-future-year"] <- min(FUTURE_YEARS)
+    data[data == "initial-nonhistorical-year"] <- min(MODEL_YEARS[MODEL_YEARS > max(HISTORICAL_YEARS)])
+    data[data == "end-year"] <- max(FUTURE_YEARS)
+  }
   data
 }
 
@@ -423,15 +425,15 @@ fill_exp_decay_extrapolate <- function(d, out_years) {
       complete(tidyr::nesting_(select(., -year, -value)), year = union(year, out_years)) ->
       d
   } else {
-    nesting_vars <- rlang::syms(names(d)[!(names(d) %in% c("year", "value"))])
+    nesting_vars <- paste0('`', names(d)[!(names(d) %in% c("year", "value"))], '`')
     d %>%
-      complete(tidyr::nesting(!!!nesting_vars), year = union(year, out_years)) ->
+      complete(tidyr::nesting_(nesting_vars), year = union(year, out_years)) ->
       d
   }
   d %>%
     # for the purposes of interpolating (and later extrapolating) we would like
     # to just group by everything except year and value
-    dplyr::group_by_(.dots = paste0('`',names(.)[!(names(.) %in% c("year", "value"))], '`')) %>%
+    dplyr::group_by_(.dots = paste0('`', names(.)[!(names(.) %in% c("year", "value"))], '`')) %>%
     # finally do the linearly interpolation between values which are specified
     mutate(value = approx_fun(year, value, rule = 1)) ->
     d
@@ -452,14 +454,14 @@ fill_exp_decay_extrapolate <- function(d, out_years) {
     filter(is.na(improvement.shadow.technology)) %>%
     # figure out the last specified year from which we will be extrapolating
     # (adding a -Inf in case there are no extrapolation years, to avoid a warning)
-    mutate(year_base = max(c(-Inf,year[!is.na(value)]))) %>%
+    mutate(year_base = max(c(-Inf, year[!is.na(value)]))) %>%
     # fill out the last specified value from which we will be extrapolating
     mutate(value_base = value[year == year_base]) %>%
     # calculate the exponential decay to extrapolate a new value from the last
     # specified value
     mutate(value = if_else(is.na(value),
                            value_base * improvement.max + (value_base - value_base * improvement.max) *
-                             (1.0 - improvement.rate )^(year - year_base),
+                             (1.0 - improvement.rate ) ^ (year - year_base),
                            value)) %>%
     select(-year_base, -value_base) %>%
     ungroup() ->
@@ -472,10 +474,10 @@ fill_exp_decay_extrapolate <- function(d, out_years) {
     select(technology, year, value) %>%
     rename(shadow.value = value) %>%
     left_join_error_no_match(d_extrap %>% filter(!is.na(improvement.shadow.technology)), .,
-                             by=c("improvement.shadow.technology" = "technology", "year" = "year")) %>%
+                             by = c("improvement.shadow.technology" = "technology", "year" = "year")) %>%
     # figure out the last specified year from which we will be extrapolating
     # (adding a -Inf in case there are no extrapolation years, to avoid a warning)
-    mutate(year_base = max(c(-Inf,year[!is.na(value)]))) %>%
+    mutate(year_base = max(c(-Inf, year[!is.na(value)]))) %>%
     # for shadowing technologies the decay is only applied to the difference
     # in the values in the last year in which one was specified
     # this is to allow for instance a Gas CC plant to have cost reductions at
@@ -486,10 +488,10 @@ fill_exp_decay_extrapolate <- function(d, out_years) {
     mutate(value = if_else(is.na(value),
                            shadow.value +
                              value_base * improvement.max + (value_base - value_base * improvement.max ) *
-                             (1.0 - improvement.rate)^(year - year_base),
+                             (1.0 - improvement.rate) ^ (year - year_base),
                            value)) %>%
     # drop the extra columns created for the shadow / exp decay calculation
-    select_(.dots=paste0('`',names(d_nonshadowed),'`')) %>%
+    select_(.dots = paste0('`', names(d_nonshadowed), '`')) %>%
     ungroup() ->
     d_shadowed
 
