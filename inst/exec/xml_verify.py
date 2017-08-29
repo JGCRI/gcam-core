@@ -147,4 +147,11 @@ if __name__ == "__main__":
 
     stat = eltdiff(left, right)
 
-    exit(stat)
+    if stat==0:
+        exit(0)
+    else:
+        ## Return code will be 1 if it isn't 0, but python exits with
+        ## code 1 when it terminates on an exception, so pick a
+        ## different exit code so we can distinguish between finding
+        ## differences and failing with an exception.
+        exit(3)
