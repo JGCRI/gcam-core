@@ -14,7 +14,13 @@ module_emissions_L212.unmgd_nonco2(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L212.AgSupplySectorLogitTables[[ curr_table ]]$data}, \code{L212.AgSupplySector}, \code{L212.SubsectorLogitTables[[ curr_table ]]$data}, \code{L212.AgSupplySubsector}, \code{L212.ItemName}, \code{L212.GRASSEmissions}, \code{L212.FORESTEmissions_FF}, \code{L212.FORESTEmissions_D}, \code{L212.GRASSEmissionsFactors_BCOC}, \code{L212.FORESTEmissionsFactors_BCOC_FF}, \code{L212.FORESTEmissionsFactors_BCOC_D}, \code{L212.FORESTEmissionsFactors_future}, \code{L212.ItemName_prot}, \code{L212.GRASSEmissions_prot}, \code{L212.GRASSEmissions_noprot}, \code{L212.FORESTEmissions_FF_prot}, \code{L212.FORESTEmissions_FF_noprot}, \code{L212.FORESTEmissions_D_prot}, \code{L212.FORESTEmissions_D_noprot}, \code{L212.GRASSEmissionsFactors_BCOC_prot}, \code{L212.GRASSEmissionsFactors_BCOC_noprot}, \code{L212.FORESTEmissionsFactors_BCOC_FF_prot}, \code{L212.FORESTEmissionsFactors_BCOC_FF_noprot}, \code{L212.FORESTEmissionsFactors_BCOC_D_prot}, \code{L212.FORESTEmissionsFactors_BCOC_D_noprot}. The corresponding file in the
+the generated outputs:\code{L212.AgSupplySector}, \code{L212.AgSupplySubsector}, \code{L212.ItemName},
+\code{L212.GRASSEmissions}, \code{L212.FORESTEmissions_FF}, \code{L212.FORESTEmissions_D}, \code{L212.GRASSEmissionsFactors_BCOC},
+\code{L212.FORESTEmissionsFactors_BCOC_FF}, \code{L212.FORESTEmissionsFactors_BCOC_D}, \code{L212.FORESTEmissionsFactors_future},
+\code{L212.ItemName_prot}, \code{L212.GRASSEmissions_prot}, \code{L212.GRASSEmissions_noprot}, \code{L212.FORESTEmissions_FF_prot},
+\code{L212.FORESTEmissions_FF_noprot}, \code{L212.FORESTEmissions_D_prot}, \code{L212.FORESTEmissions_D_noprot}, \code{L212.GRASSEmissionsFactors_BCOC_prot},
+\code{L212.GRASSEmissionsFactors_BCOC_noprot}, \code{L212.FORESTEmissionsFactors_BCOC_FF_prot}, \code{L212.FORESTEmissionsFactors_BCOC_FF_noprot},
+\code{L212.FORESTEmissionsFactors_BCOC_D_prot}, \code{L212.FORESTEmissionsFactors_BCOC_D_noprot}. The corresponding file in the
 original data system was \code{L212.unmgd_nonco2.R} (emissions level2).
 }
 \description{
