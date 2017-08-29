@@ -45,7 +45,7 @@ module_energy_LA100.CDIAC_downscale_ctry <- function(command, ...) {
 
       # Zero out NAs and subset to years being processed
       replace_na(list(liquids.sequestration = 0)) %>%
-      filter(year %in% energy.CDIAC_CO2_HISTORICAL_YEARS ) ->
+      filter(year %in% energy.CDIAC_CO2_HISTORICAL_YEARS) ->
       L100.CDIAC_CO2_ctry_hist
 
     # Because the USSR broke up in the early 1990s, what was a single time series became multiple
@@ -69,7 +69,7 @@ module_energy_LA100.CDIAC_downscale_ctry <- function(command, ...) {
 
     # For each category, compute shares of countries in first post-USSR year
     L100.CO2_ctry_noUSSR_hist %>%
-      filter(iso %in% L100.CO2_USSR_hist_repCtry$iso, year == max(USSR_years) + 1 ) %>%
+      filter(iso %in% L100.CO2_USSR_hist_repCtry$iso, year == max(USSR_years) + 1) %>%
       gather(category, value, -nation, -iso, -year) %>%
       group_by(category) %>%
       mutate(share = value / sum(value)) %>%

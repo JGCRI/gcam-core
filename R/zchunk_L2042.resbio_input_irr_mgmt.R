@@ -100,7 +100,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
                eros.ctrl = erosCtrl,
                mass.to.energy = massToEnergy,
                water.content = waterContent) %>%
-        repeat_add_columns(tibble::tibble(year = MODEL_YEARS))
+        repeat_add_columns(tibble(year = MODEL_YEARS))
     } # end add_bio_res_params_For_Mill
 
 
@@ -142,7 +142,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
       mutate(colID = "For") ->
       For.tmp
 
-    if(OLD_DATA_SYSTEM_BEHAVIOR){
+    if(OLD_DATA_SYSTEM_BEHAVIOR) {
       # Mill outputs are getting For base resbio curves from A_resbio_curves;
       # Likely a typo in the old DS, since there IS a Mill base curve in A_resbio_curves
       L204.GlobalResBio_Mill %>%
@@ -155,7 +155,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
                              GCAM_region_names) %>%
         filter(! region %in% aglu.NO_AGLU_REGIONS) %>%
         distinct %>%
-        repeat_add_columns(bind_cols(tibble::tibble(year = MODEL_YEARS))) %>%
+        repeat_add_columns(bind_cols(tibble(year = MODEL_YEARS))) %>%
         mutate(colID = "Mill") %>%
         # bind to processed Forest data
         bind_rows(For.tmp) %>%
@@ -177,7 +177,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
         write_to_all_regions(names = c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "residue.biomass.production"),
                              GCAM_region_names) %>%
         filter(! region %in% aglu.NO_AGLU_REGIONS) %>%
-        repeat_add_columns(bind_cols(tibble::tibble(year = MODEL_YEARS))) %>%
+        repeat_add_columns(bind_cols(tibble(year = MODEL_YEARS))) %>%
         mutate(colID = "Mill") %>%
         # bind to processed Forest data
         bind_rows(For.tmp) %>%
@@ -240,11 +240,11 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
              eros.ctrl = round(ErosCtrl_tHa * CONV_THA_KGM2, aglu.DIGITS_EROS_CTRL),
              mass.to.energy = round(ResEnergy_GJt * CONV_KG_T, aglu.DIGITS_RES_ENERGY),
              water.content = round(WaterContent, aglu.DIGITS_WATER_CONTENT)) %>%
-      repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       select(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology, year, residue.biomass.production,
              mass.conversion, harvest.index, eros.ctrl, mass.to.energy, water.content) %>%
-      repeat_add_columns(tibble::tibble(Irr_Rfd = c( "IRR", "RFD" ))) %>%
-      repeat_add_columns(tibble::tibble(level = c( "lo", "hi" ))) %>%
+      repeat_add_columns(tibble(Irr_Rfd = c( "IRR", "RFD"))) %>%
+      repeat_add_columns(tibble(level = c( "lo", "hi"))) %>%
       mutate(AgProductionTechnology = paste(paste(AgProductionTechnology, Irr_Rfd, sep = aglu.IRR_DELIMITER),
                                             level, sep = aglu.MGMT_DELIMITER)) %>%
       select(-Irr_Rfd, -level) ->

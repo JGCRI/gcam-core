@@ -57,7 +57,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
     #
     # Old comment: calculate mixed production as total prod times mixed fraction. Use this to build
     # a table disaggregated by system.
-    # printlog( "Calculating animal production by country, commodity, and system" )
+    # Calculating animal production by country, commodity, and system
     # Old comment: Multiply the total production by the fraction mixed, for the relevant commodities
     #
     #
@@ -107,7 +107,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
     # to further disaggregate animal production, L107.an_Prod_Mt_ctry_C_Sys_Y, by feed type.
     # In the original code, this table omits NA values.
     #
-    # printlog( "Calculating animal production by country, commodity, system, and feed type" )
+    # Calculate animal production by country, commodity, system, and feed type
     #
     # take the table that contains animal production for each unique country, commodity, system, year combo
     L107.an_Prod_Mt_ctry_C_Sys_Y %>%
@@ -147,7 +147,8 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
       select(-iso) %>%
       # sum by GCAM region, commodity, year, system, and feed
       group_by(GCAM_region_ID, GCAM_commodity, year, system, feed) %>%
-      summarise(value = sum(value)) ->
+      summarise(value = sum(value)) %>%
+      ungroup() ->
       L107.an_Prod_Mt_R_C_Sys_Fd_Y
 
     # take country level feed consumption data:
@@ -157,7 +158,8 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
       select(-iso) %>%
       # sum by GCAM region, commodity, year, system, and feed
       group_by(GCAM_region_ID, GCAM_commodity, year, system, feed) %>%
-      summarise(value = sum(value)) ->
+      summarise(value = sum(value)) %>%
+      ungroup() ->
       L107.an_Feed_Mt_R_C_Sys_Fd_Y
 
     # Lines 73-80 in original file

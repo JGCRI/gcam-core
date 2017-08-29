@@ -23,8 +23,8 @@ module_emissions_batch_all_energy_emissions.xml_DISABLED <- function(command, ..
               "L232.nonco2_max_reduction",
               "L232.nonco2_steepness",
               "L241.nonco2_tech_coeff",
-              "L241.nonghg_max_reduction",
-              "L241.nonghg_steepness",
+              "L241.nonco2_max_reduction",
+              "L241.nonco2_steepness",
               "L252.ResMAC_fos"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "all_energy_emissions.xml"))
@@ -46,8 +46,8 @@ module_emissions_batch_all_energy_emissions.xml_DISABLED <- function(command, ..
     L232.nonco2_max_reduction <- get_data(all_data, "L232.nonco2_max_reduction")
     L232.nonco2_steepness <- get_data(all_data, "L232.nonco2_steepness")
     L241.nonco2_tech_coeff <- get_data(all_data, "L241.nonco2_tech_coeff")
-    L241.nonghg_max_reduction <- get_data(all_data, "L241.nonghg_max_reduction")
-    L241.nonghg_steepness <- get_data(all_data, "L241.nonghg_steepness")
+    L241.nonco2_max_reduction <- get_data(all_data, "L241.nonco2_max_reduction")
+    L241.nonco2_steepness <- get_data(all_data, "L241.nonco2_steepness")
     L252.ResMAC_fos <- get_data(all_data, "L252.ResMAC_fos")
 
     # ===================================================
@@ -67,10 +67,10 @@ module_emissions_batch_all_energy_emissions.xml_DISABLED <- function(command, ..
       add_xml_data(L232.nonco2_max_reduction, "GDPCtrlMax") %>%
       add_xml_data(L232.nonco2_steepness, "GDPCtrlSteep") %>%
       add_xml_data(L241.nonco2_tech_coeff, "InputEmissCoeff") %>%
-      add_xml_data(L241.nonghg_max_reduction, "GDPCtrlMax") %>%
-      add_xml_data(L241.nonghg_steepness, "GDPCtrlSteep") %>%
+      add_xml_data(L241.nonco2_max_reduction, "GDPCtrlMax") %>%
+      add_xml_data(L241.nonco2_steepness, "GDPCtrlSteep") %>%
       add_xml_data(L252.ResMAC_fos, "ResMAC") %>%
-      add_precursors("L201.en_pol_emissions", "L201.en_ghg_emissions", "L201.en_bcoc_emissions", "L201.nonghg_max_reduction", "L201.nonghg_steepness", "L201.nonghg_max_reduction_res", "L201.nonghg_steepness_res", "L201.nonghg_res", "L201.ghg_res", "L232.nonco2_prc", "L232.nonco2_max_reduction", "L232.nonco2_steepness", "L241.nonco2_tech_coeff", "L241.nonghg_max_reduction", "L241.nonghg_steepness", "L252.ResMAC_fos") ->
+      add_precursors("L201.en_pol_emissions", "L201.en_ghg_emissions", "L201.en_bcoc_emissions", "L201.nonghg_max_reduction", "L201.nonghg_steepness", "L201.nonghg_max_reduction_res", "L201.nonghg_steepness_res", "L201.nonghg_res", "L201.ghg_res", "L232.nonco2_prc", "L232.nonco2_max_reduction", "L232.nonco2_steepness", "L241.nonco2_tech_coeff", "L241.nonco2_max_reduction", "L241.nonco2_steepness", "L252.ResMAC_fos") ->
       all_energy_emissions.xml
 
     return_data(all_energy_emissions.xml)

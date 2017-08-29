@@ -50,7 +50,7 @@ test_that("loads test file", {
 })
 
 test_that("save_chunkdata saves", {
-  df <- tibble::tibble(x = 1:3)
+  df <- tibble(x = 1:3)
   all_data <- add_data(return_data(df), empty_data())
   td <- tempdir()
   save_chunkdata(all_data, outputs_dir = td)

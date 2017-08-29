@@ -178,7 +178,7 @@ module_aglu_LB109.ag_an_ALL_R_C_Y <- function(command, ...) {
         # Combine with global adjusted other uses and changes in global net exports
         left_join(L109.an_ALL_Mt_glbl_C_Y, by = c("GCAM_commodity", "year")) %>%
         # Calculate the regional share of global adjusted other uses, the share is zero for regions with negative other uses
-        mutate(NetExpAdjFrac = if_else(GlobalOtherUses_Mt == 0, 0, OtherUses_Mt_adj / GlobalOtherUses_Mt ),
+        mutate(NetExpAdjFrac = if_else(GlobalOtherUses_Mt == 0, 0, OtherUses_Mt_adj / GlobalOtherUses_Mt),
                # Allocate the changes in global net exports (total of negative other uses) among regions with positive other uses
                NetExp_Mt = NetExp_Mt_adj - NetExpAdjFrac * GlobalNetExpAdj,
                # Rebuild animal product mass balance table
