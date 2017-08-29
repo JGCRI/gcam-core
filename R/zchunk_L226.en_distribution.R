@@ -9,7 +9,8 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L226.SectorLogitTables[[ curr_table ]]$data}, \code{L226.Supplysector_en}, \code{L226.SubsectorLogitTables[[ curr_table ]]$data}, \code{L226.SubsectorLogit_en}, \code{L226.SubsectorShrwt_en}, \code{L226.SubsectorShrwtFllt_en}, \code{L226.SubsectorInterp_en}, \code{L226.SubsectorInterpTo_en}, \code{L226.StubTech_en}, \code{L226.GlobalTechEff_en}, \code{L226.GlobalTechCost_en}, \code{L226.GlobalTechShrwt_en}, \code{L226.StubTechCoef_elecownuse}, \code{L226.StubTechCoef_electd}, \code{L226.StubTechCoef_gaspipe}. The corresponding file in the
 #' original data system was \code{L226.en_distribution.R} (energy level2).
-#' @details Describe in detail what this chunk does.
+#' @details Prepares Level 2 data on energy distribution sector for the generation of en_distribution.xml.
+#' Creates global technology database info--cost, shareweight, logit, efficiencies, and interpolations--and regional values where applicable for electricity net ownuse, gas pipelines, and transmission and distribution.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -47,9 +48,9 @@ module_energy_L226.en_distribution <- function(command, ...) {
 
     # Silence global variable package check
     year <- year.fillout <- to.value <- technology <- efficiency <- supplysector <- subsector <-
-    minicam.energy.input <- input.cost <- minicam.nonenergy.input <- share.weight <- calibration <-
+    minicam.energy.input <- input.cost <- share.weight <- calibration <-
     secondary.output <- year.x <- year.y <- . <- value <- region <- coefficient <- GCAM_region_ID <-
-    sector <- fuel <- elec_td_techchange <- minicam.non.energy.input <- elect_td_techchange <- NULL
+    sector <- fuel <- minicam.non.energy.input <- elect_td_techchange <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -150,7 +151,7 @@ module_energy_L226.en_distribution <- function(command, ...) {
       mutate(efficiency = round(efficiency, DIGITS_EFFICIENCY))->
       L226.GlobalTechEff_en
 
-    # Generates L226.GlobalTechCost_en: Costs of global technologies for energy distribution by interpolating values for all model years
+    # Generates L226.GlobalTechCost_en by interpolating values of cost adders for final energy delivery for all model years
     A26.globaltech_cost %>%
       gather(year, input.cost, -supplysector, -subsector, -technology, -minicam.non.energy.input) %>%
       complete(nesting(supplysector, subsector, technology, minicam.non.energy.input), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
