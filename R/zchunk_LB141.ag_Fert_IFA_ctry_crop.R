@@ -14,7 +14,7 @@
 #' the bottom up estimates and scale the bottom-up estimates, making the final output.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr gather spread drop_na
 #' @author ACS May 2017
 module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -161,7 +161,7 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
         # take only the isos we need
         filter(iso %in% L141.LDS_ag_HA_ha$iso) %>%
         select(iso, IFA2002_country, IFA_region) %>%
-        dplyr::distinct() ->
+        distinct() ->
         # store in a table to join to L141.LDS_ag_HA_ha
         AGLU_ctry_iso_IFA_LDS
 
@@ -182,7 +182,7 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
         left_join(select(L141.IFA2002_Fert_ktN, IFA2002_crop, IFA2002_country, N_tha), by = c("IFA2002_crop", "IFA2002_country")) %>%
         rename(IFA2002_N_tha = N_tha) %>%
         # drop rows with NA for IFA_commodity
-        tidyr::drop_na(IFA_commodity) ->
+        drop_na(IFA_commodity) ->
         # store in ctry-crop specific table of fertilizer consumption rates in t/ha for use in multiple subsequent pipelines
         L141.IFA_Fert_Cons_MtN_ctry_crop
 

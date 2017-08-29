@@ -1,6 +1,6 @@
 #' module_emissions_L1221.ghg_agr_R_S_T_Y_IRR
 #'
-#' Downscales emissions to irrigated/rainfed technologies on the basis of production share
+#' Downscale emissions to irrigated/rainfed technologies on the basis of production share.
 #'
 #' @param command API command to execute
 #' @return Depends on \code{command}: either a vector of required inputs,
@@ -10,11 +10,11 @@
 #' @details Downscales emissions to irrigated/rainfed technologies by production share.
 #' Multiply total ag emissions (L122.ghg_tg_R_agr_C_Y_GLU) by production share by irr/rfd (L1211.ag_irrShare_R_C_Y_GLU_irr)
 #' which are both calculated in previous script.
+#' in \code{\link{module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR}}.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RMH AUG 2017
-
 module_emissions_L1221.ghg_agr_R_S_T_Y_IRR <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L1211.ag_irrShare_R_C_Y_GLU_irr",
