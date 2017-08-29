@@ -3,13 +3,13 @@
 #' Downscales emissions to irrigated/rainfed technologies on the basis of production share
 #'
 #' @param command API command to execute
-#' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L1221.ghg_tg_R_agr_C_Y_GLU_IRR}. The corresponding file in the
 #' original data system was \code{L1221.ghg_agr_R_S_T_Y_IRR.R} (emissions level1).
-#' @details Downscales emissions to irrigated/rainfed technologies. These are already calculated
-#' in L1211.ag_irrShare_R_C_Y_GLU_irr
+#' @details Downscales emissions to irrigated/rainfed technologies by production share.
+#' Multiply total ag emissions (L122.ghg_tg_R_agr_C_Y_GLU) by production share by irr/rfd (L1211.ag_irrShare_R_C_Y_GLU_irr)
+#' which are both calculated in previous script.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -31,25 +31,26 @@ module_emissions_L1221.ghg_agr_R_S_T_Y_IRR <- function(command, ...) {
 
     # Perform computations
 
-    # Production shares were computed in a prior file and written out, so just rearrange in one step
+    # Production shares were computed in a prior file and written out.
+    # Repeat ag emission (L122.ghg_tg_R_agr_C_Y_GLU) for each irrigation (IRR) and rainfed (RFD)
+    # Join in Production share by IRR/RFD then multiply emissions by production share
     L1221.ghg_tg_R_agr_C_Y_GLU_IRR <- L122.ghg_tg_R_agr_C_Y_GLU %>%
-      select(-value) %>%
       repeat_add_columns( tibble(Irr_Rfd = c( "IRR", "RFD" ) ) ) %>%
-      left_join_error_no_match(L1211.ag_irrShare_R_C_Y_GLU_irr, by = c("GCAM_region_ID","GCAM_commodity","GLU","Irr_Rfd","year"))
+      left_join(L1211.ag_irrShare_R_C_Y_GLU_irr,
+                               by = c("GCAM_region_ID","GCAM_commodity","GLU","Irr_Rfd","year"),
+                               suffix = c(".emissions", ".share")) %>% # under timeshift conditions, L122.ghg_tg_R_agr_C_Y_GLU has NaN values (N2O_AGR), which throws error in left_join_no_error as NA values, even though they are matched correctly.
+    mutate(value = value.emissions*value.share) %>%
+    select(-value.emissions,-value.share)
 
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
     L1221.ghg_tg_R_agr_C_Y_GLU_IRR <- L1221.ghg_tg_R_agr_C_Y_GLU_IRR %>%
       add_title("Agriculture emissions by GCAM region / commodity / GLU / irrigation level / historical year") %>%
       add_units("Tg") %>%
-      add_comments("outputs calculated in L1211.ag_irrShare_R_C_Y_GLU_irr, just add column IRR_Rfd and rearrange") %>%
+      add_comments("outputs calculated in L1211.ag_irrShare_R_C_Y_GLU_irr") %>%
       add_legacy_name("L1221.ghg_tg_R_agr_C_Y_GLU_IRR") %>%
       add_precursors("L1211.ag_irrShare_R_C_Y_GLU_irr",
                      "L122.ghg_tg_R_agr_C_Y_GLU") %>%
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR)
+      add_flags( FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR)
 
     return_data(L1221.ghg_tg_R_agr_C_Y_GLU_IRR)
   } else {
