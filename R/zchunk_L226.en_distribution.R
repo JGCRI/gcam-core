@@ -49,7 +49,7 @@ module_energy_L226.en_distribution <- function(command, ...) {
     year <- year.fillout <- to.value <- technology <- efficiency <- supplysector <- subsector <-
     minicam.energy.input <- input.cost <- minicam.nonenergy.input <- share.weight <- calibration <-
     secondary.output <- year.x <- year.y <- . <- value <- region <- coefficient <- GCAM_region_ID <-
-    sector <- fuel <- elec_td_techchange <- NULL
+    sector <- fuel <- elec_td_techchange <- minicam.non.energy.input <- elect_td_techchange <- NULL
 
     all_data <- list(...)[[1]]
 
