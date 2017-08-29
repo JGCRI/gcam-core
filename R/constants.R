@@ -249,6 +249,12 @@ energy.CLIMATE_NORMAL_YEARS <- 1981:2000
 energy.RSRC_FUELS <- c("coal", "gas", "refined liquids")
 
 
+# below come from ENERGY_ASSUMPTIONS/A_ccs_data.R
+energy.DIGITS_EFFICIENCY <- 3
+energy.DIGITS_COST <- 4
+energy.DIGITS_REMOVE.FRACTION <- 2
+energy.CO2.STORAGE.MARKET <- "carbon-storage"
+
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
 
