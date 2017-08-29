@@ -98,7 +98,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
       perCapitaBased = 1,
       income.elasticity = 0,
       base.service = 0.004,
-      aeei = 0
+      aeei = 0 # Autonomous Energy Efficiency Improvement
     ) %>%
       repeat_add_columns(tibble(year = BASE_YEARS))
 
