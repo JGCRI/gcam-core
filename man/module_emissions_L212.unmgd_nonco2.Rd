@@ -24,10 +24,10 @@ the generated outputs:\code{L212.AgSupplySector}, \code{L212.AgSupplySubsector},
 original data system was \code{L212.unmgd_nonco2.R} (emissions level2).
 }
 \description{
-Briefly describe what this chunk does.
+Outputs unmanaged land emissions and emissions coefficients for forest fires, deforestation, and grassland fires.
 }
 \details{
-Describe in detail what this chunk does.
+Outputs unmanaged land emissions and emissions coefficients for forest fires, deforestation, and grassland fires.
 }
 \author{
 RLH August 2017
