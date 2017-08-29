@@ -3,6 +3,7 @@
 #' Downscale emissions to irrigated/rainfed technologies on the basis of production share.
 #'
 #' @param command API command to execute
+#' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L1221.ghg_tg_R_agr_C_Y_GLU_IRR}. The corresponding file in the
