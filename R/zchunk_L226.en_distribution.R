@@ -45,7 +45,7 @@ module_energy_L226.en_distribution <- function(command, ...) {
              "L226.StubTechCoef_gaspipe"))
   } else if(command == driver.MAKE) {
 
-    #Silence global variable package check
+    # Silence global variable package check
     year <- year.fillout <- to.value <- technology <- efficiency <- supplysector <- subsector <-
     minicam.energy.input <- input.cost <- minicam.nonenergy.input <- share.weight <- calibration <-
     secondary.output <- year.x <- year.y <- . <- value <- region <- coefficient <- GCAM_region_ID <-
@@ -131,7 +131,7 @@ module_energy_L226.en_distribution <- function(command, ...) {
       rename(stub.technology = technology) ->
       L226.StubTech_en
 
-    #Set number of digits to round final values of elecownuse, electd, and elecgaspipe coefficients, globaltech efficiency, and globaltech cost
+    # Set number of digits to round final values of elecownuse, electd, and elecgaspipe coefficients, globaltech efficiency, and globaltech cost
     DIGITS_COEFFICIENT <- 7
     DIGITS_COST <- 4
     DIGITS_EFFICIENCY <- 3
@@ -145,7 +145,7 @@ module_energy_L226.en_distribution <- function(command, ...) {
       mutate(efficiency = approx_fun(as.numeric(year), efficiency)) %>%
       ungroup() %>%
       filter(year %in% c(BASE_YEARS, FUTURE_YEARS)) %>%
-      # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
+    # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
       rename(sector.name = supplysector, subsector.name = subsector) %>%
       mutate(efficiency = round(efficiency, DIGITS_EFFICIENCY))->
       L226.GlobalTechEff_en
@@ -159,7 +159,7 @@ module_energy_L226.en_distribution <- function(command, ...) {
       mutate (input.cost = approx_fun(as.numeric(year), input.cost)) %>%
       ungroup() %>%
       filter(year %in% c(BASE_YEARS, FUTURE_YEARS)) %>%
-      #Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
+    # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
       rename(sector.name = supplysector, subsector.name = subsector) %>%
       mutate(input.cost = round(input.cost, DIGITS_COST)) ->
       L226.GlobalTechCost_en
@@ -177,7 +177,7 @@ module_energy_L226.en_distribution <- function(command, ...) {
       rename(sector.name = supplysector, subsector.name = subsector) ->
       L226.GlobalTechShrwt_en
 
-    #2d. Calibration and region-specific data
+    # 2d. Calibration and region-specific data
     # Electricity ownuse IO coefs - filter down to the base years and append region IDs
     L126.IO_R_elecownuse_F_Yh %>%
       ungroup() %>% #this data apparently came into this chunk grouped, which was preventing deletion of grouped columns
@@ -187,23 +187,23 @@ module_energy_L226.en_distribution <- function(command, ...) {
       select(-calibration, -secondary.output) ->
       L226.IO_R_elecownuse_F_Yh
 
-    #repeat final year's ownuse ratio into future years and append future years to base years (could perhaps be tied to industrial CHP...but also AUTOELEC)
+    # repeat final year's ownuse ratio into future years and append future years to base years (could perhaps be tied to industrial CHP...but also AUTOELEC)
     L226.IO_R_elecownuse_F_Yh %>%
       filter(year == max(BASE_YEARS)) %>%
       repeat_add_columns(tibble("year" = FUTURE_YEARS)) %>%
       select(-year.x) %>%
       rename(year = year.y) %>%
-      bind_rows(L226.IO_R_elecownuse_F_Yh, .) ->
+      bind_rows(L226.IO_R_elecownuse_F_Yh) ->
       L226.IO_R_elecownuse_F_Y
 
-    #rename columns and round coefficients - L226.StubTechCoef_elecownuse: calibrated coefficients on electricity net ownuse
+    # rename columns and round coefficients - L226.StubTechCoef_elecownuse: calibrated coefficients on electricity net ownuse
     L226.IO_R_elecownuse_F_Y %>%
       rename(coefficient = value, stub.technology = technology) %>%
       mutate(market.name = region, coefficient = round(coefficient, DIGITS_COEFFICIENT)) %>%
       select(-GCAM_region_ID, -sector, -fuel) ->
       L226.StubTechCoef_elecownuse
 
-    #Filter electricity transmission and distribution input-output ratio historical data down to base years (#this works now but may need optional interpolation if the assumptions file changes not to include base model years)
+    # Filter electricity transmission and distribution input-output ratio historical data down to base years (#this works now but may need optional interpolation if the assumptions file changes not to include base model years)
     L126.IO_R_electd_F_Yh %>%
       filter(year %in% BASE_YEARS) ->
       L226.IO_R_electd_F_Yh
