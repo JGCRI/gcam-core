@@ -125,3 +125,36 @@ test_that("matches old data system output", {
     }
   }
 })
+
+
+test_that('New XML outputs match old XML outputs', {
+  ## The XML comparison data is huge, so we don't want to try to include it in
+  ## the package.  Instead, we look for an option that indicates where the data
+  ## can be found.  If the option isn't set, then we skip this test.
+  xml_cmp_dir <- getOption('gcamdata.xml_cmpdir')
+  if(is.null(xml_cmp_dir)) {
+    skip("XML comparison data not provided. Set option 'gcamdata.xml_cmpdir' to run this test.")
+  }
+  else {
+    xml_cmp_dir <- normalizePath(xml_cmp_dir)
+  }
+  expect_true(file.exists(xml_cmp_dir))
+
+  xml_dir <- normalizePath(file.path("../..", XML_DIR))
+  expect_true(file.exists(xml_dir))
+
+  for(newxml in list.files(xml_dir, full.names=TRUE)) {
+    oldxml <- list.files(xml_cmp_dir, pattern = basename(newxml), recursive = TRUE,
+                         full.names = TRUE)
+    expect_equal(length(oldxml), 1,
+                 info=paste('Testing file', newxml, ': Found', length(oldxml),
+                            'comparison files.  There can be only one.'))
+    if(length(oldxml) >= 1) {
+      ## If we come back with multiple matching files, we'll try to run the test anyhow, selecting
+      ## the first one as the true comparison.
+      expect_true(cmp_xml_files(oldxml[1], newxml),
+                  info=paste('Sorry to be the one to tell you, but new XML file',
+                             newxml, "is not equivalent to its old version."))
+    }
+  }
+})
