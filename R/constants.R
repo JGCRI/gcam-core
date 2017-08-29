@@ -1,4 +1,3 @@
-
 # General behavior constants ======================================================================
 
 OUTPUTS_DIR  <- "outputs/"
@@ -211,7 +210,7 @@ aglu.LN1_PROTUNMGD_LOGIT_TYPE <- NA
 # XML-related constants
 aglu.GLU_NDIGITS          <- 3    # number of digits in the geographic land unit identifier codes
 aglu.LT_GLU_DELIMITER     <-      # delimiter between the land use type name and GLU name. should be the same as the crop-glu delimiter
-aglu.CROP_GLU_DELIMITER   <- "_"  # delimiter between the crop name and GLU name
+  aglu.CROP_GLU_DELIMITER   <- "_"  # delimiter between the crop name and GLU name
 aglu.IRR_DELIMITER        <- "_"  # delimiter between the appended crop x GLU and irrigation level
 aglu.MGMT_DELIMITER       <- "_"  # delimiter between appended tech name and management level
 
