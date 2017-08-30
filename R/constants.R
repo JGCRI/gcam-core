@@ -1,4 +1,3 @@
-
 # General behavior constants ======================================================================
 
 OUTPUTS_DIR  <- "outputs/"
@@ -211,7 +210,7 @@ aglu.LN1_PROTUNMGD_LOGIT_TYPE <- NA
 # XML-related constants
 aglu.GLU_NDIGITS          <- 3    # number of digits in the geographic land unit identifier codes
 aglu.LT_GLU_DELIMITER     <-      # delimiter between the land use type name and GLU name. should be the same as the crop-glu delimiter
-aglu.CROP_GLU_DELIMITER   <- "_"  # delimiter between the crop name and GLU name
+  aglu.CROP_GLU_DELIMITER   <- "_"  # delimiter between the crop name and GLU name
 aglu.IRR_DELIMITER        <- "_"  # delimiter between the appended crop x GLU and irrigation level
 aglu.MGMT_DELIMITER       <- "_"  # delimiter between appended tech name and management level
 
@@ -248,6 +247,12 @@ ELECTRICITY_INPUT_FUELS<- c("biomass", "coal", "gas", "refined liquids")
 energy.CLIMATE_NORMAL_YEARS <- 1981:2000
 energy.RSRC_FUELS <- c("coal", "gas", "refined liquids")
 
+
+# below come from ENERGY_ASSUMPTIONS/A_ccs_data.R
+energy.DIGITS_EFFICIENCY <- 3
+energy.DIGITS_COST <- 4
+energy.DIGITS_REMOVE.FRACTION <- 2
+energy.CO2.STORAGE.MARKET <- "carbon-storage"
 
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
