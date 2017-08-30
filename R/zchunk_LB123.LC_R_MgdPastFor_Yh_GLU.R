@@ -37,7 +37,7 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
 
     GCAM_commodity <- GCAM_region_ID <- value <- year <- Land_Type <- pasture_yield <-
       frac <- total <- MgdPast <- MgdPast_adj <- veg_c <- VegVolume_m3m2 <- PopRatio <-
-      `mature age` <- GLU <- Yield_m3m2 <- Prod_bm3 <- MgdFor <- NULL   # silence package check notes
+      `mature age` <- GLU <- Yield_m3m2 <- Prod_bm3 <- MgdFor <- MgdFor_adj <- NULL   # silence package check notes
 
     # Load required inputs
     L108.ag_Feed_Mt_R_C_Y <- get_data(all_data, "L108.ag_Feed_Mt_R_C_Y")
