@@ -1,4 +1,4 @@
-#' module_emissions_L2522.ag_MACC_IRR_MGMT
+#' module_emissions_L2522.ag_MACC_IRR_MGMT --- driver is failing to merege, i think tha this has to do with a merge affecting another junk come back to it at a latter date.....
 #'
 #' Briefly describe what this chunk does. HEY KALYN RUSSEL HAS A CHUNK THAT IS GOING TO MERGE SOON THAT GEN INPUTS FOR THIS FILE AND SO WILL CHANGE THE CODE A BIT
 #'
@@ -19,7 +19,6 @@ module_emissions_L2522.ag_MACC_IRR_MGMT <- function(command, ...) {
     return(c(FILE = "emissions/A_MACC_TechChange",
              FILE = "temp-data-inject/L252.MAC_an",
              FILE = "L2521.AgMAC"))
-
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2522.MAC_an",
              "L2522.AgMAC",
