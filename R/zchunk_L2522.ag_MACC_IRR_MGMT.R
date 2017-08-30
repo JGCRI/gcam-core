@@ -17,9 +17,8 @@
 module_emissions_L2522.ag_MACC_IRR_MGMT <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "emissions/A_MACC_TechChange",
-             FILE = "temp-data-inject/L252.MAC_an",
-             FILE = "L2521.AgMAC"))
-
+             "L252.MAC_an",
+             "L2521.AgMAC"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2522.MAC_an",
              "L2522.AgMAC",
@@ -35,7 +34,7 @@ module_emissions_L2522.ag_MACC_IRR_MGMT <- function(command, ...) {
 
     # Load required inputs
     A_MACC_TechChange <- get_data(all_data, "emissions/A_MACC_TechChange")
-    L2521.MAC_an <- get_data(all_data, "temp-data-inject/L252.MAC_an")
+    L252.MAC_an <- get_data(all_data, "L252.MAC_an")
     L2521.AgMAC <- get_data(all_data, "L2521.AgMAC")
 
     # ===================================================
