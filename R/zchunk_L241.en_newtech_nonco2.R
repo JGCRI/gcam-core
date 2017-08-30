@@ -21,7 +21,7 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
              FILE = "emissions/A41.tech_coeff",
              FILE = "emissions/A51.max_reduction",
              FILE = "emissions/A51.steepness",
-             FILE = "temp-data-inject/L111.nonghg_tgej_R_en_S_F_Yh",
+             "L111.nonghg_tgej_R_en_S_F_Yh",
              FILE = "temp-data-inject/L112.ghg_tgej_R_en_S_F_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L241.nonco2_tech_coeff",
@@ -39,10 +39,7 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
     A51.max_reduction <- get_data(all_data, "emissions/A51.max_reduction")
     A51.steepness <- get_data(all_data, "emissions/A51.steepness")
 
-    get_data(all_data, "temp-data-inject/L111.nonghg_tgej_R_en_S_F_Yh") %>%
-      # The following two lines will be removed after we start using 'real' data.
-      gather(year, value, -GCAM_region_ID, -supplysector, -subsector, -stub.technology, -Non.CO2) %>%
-      mutate(year = as.numeric(substr(year, 2, 5))) ->
+    L111.nonghg_tgej_R_en_S_F_Yh <- get_data(all_data, "L111.nonghg_tgej_R_en_S_F_Yh")
       L111.nonghg_tgej_R_en_S_F_Yh
     get_data(all_data, "temp-data-inject/L112.ghg_tgej_R_en_S_F_Yh") %>%
       # The following two lines will be removed after we start using 'real' data.
@@ -248,7 +245,7 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
       add_precursors("common/GCAM_region_names", "emissions/A_regions",
                      "energy/A_regions",
                      "emissions/A41.tech_coeff",
-                     "temp-data-inject/L111.nonghg_tgej_R_en_S_F_Yh",
+                     "L111.nonghg_tgej_R_en_S_F_Yh",
                      "temp-data-inject/L112.ghg_tgej_R_en_S_F_Yh")  ->
       L241.nonco2_tech_coeff
 
@@ -262,7 +259,7 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
                      "emissions/A41.tech_coeff",
                      "emissions/A51.max_reduction",
                      "emissions/A51.steepness",
-                     "temp-data-inject/L111.nonghg_tgej_R_en_S_F_Yh",
+                     "L111.nonghg_tgej_R_en_S_F_Yh",
                      "temp-data-inject/L112.ghg_tgej_R_en_S_F_Yh")  ->
       L241.nonco2_max_reduction
 
@@ -276,7 +273,7 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
                      "emissions/A41.tech_coeff",
                      "emissions/A51.max_reduction",
                      "emissions/A51.steepness",
-                     "temp-data-inject/L111.nonghg_tgej_R_en_S_F_Yh",
+                     "L111.nonghg_tgej_R_en_S_F_Yh",
                      "temp-data-inject/L112.ghg_tgej_R_en_S_F_Yh")  ->
       L241.nonco2_steepness
 

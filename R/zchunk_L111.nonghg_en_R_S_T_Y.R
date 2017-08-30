@@ -287,7 +287,7 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
       add_units("Tg/EJ") %>%
       add_comments("Use non-ghg emission totals by GCAM sector, fuel, technology, and driver type for EDGAR historical years to derive emission shares.") %>%
       add_legacy_name("L111.nonghg_tgej_R_en_S_F_Yh") %>%
-      same_precursors_as(L111.nonghg_tg_R_en_S_F_Yh) ->
+      same_precursors_as(L111.nonghg_tg_R_en_S_F_Yh) %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L111.nonghg_tgej_R_en_S_F_Yh
 
