@@ -118,11 +118,12 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
       left_join_keep_first_only(select(GCAM_sector_tech, EDGAR_agg_sector, sector, fuel),
                                 by = c("sector", "fuel")) ->
       L111.nonghg_tg_R_en_Si_F_Yh.mlt
+    #EVERYTHING MATCHES UP TO HERE
 
     # Create column of total EPA emissions by EDGAR sector and region.
     L111.nonghg_tg_R_en_Si_F_Yh.mlt %>%
       group_by(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year) %>%
-      summarise(EPA_emissions = sum(epa_emissions)) %>%
+      summarise(EPA_emissions = sum(epa_emissions))  %>%
       ungroup ->
       L111.nonghg_tg_R_en_Sedgar_Yh.mlt
 
@@ -150,6 +151,8 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
       mutate(iso = if_else(iso %in% c("ata", "sea", "air"), NA_character_, iso)) ->
       L111.EDGAR
 
+    #MATCHES UP TO HERE
+
     # Create new table for international shipping & aviation emissions only and drop unnecessary columns.
     L111.EDGAR %>%
       filter(ISO_A3 %in% c("SEA", "AIR")) %>%
@@ -158,6 +161,7 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
       select(year, value, Non.CO2, EDGAR_agg_sector) %>%
       na.omit() ->
       L111_EDGAR_intl
+    #MATCHES UP TO HERE
 
     # Drop unnecessary columns, aggregate by region, and group by region, sector, NONGHG, and year.
     L111.EDGAR %>%
@@ -175,10 +179,11 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
 
     # First, compute scalers.
     L111.nonghg_tg_R_en_Sedgar_Yh.mlt %>%
-      left_join(L111.EDGAR.mlt, by = c("GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector", "year"))  %>%
+      left_join_keep_first_only(L111.EDGAR.mlt, by = c("GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector", "year"))  %>%
       rename(EDGAR_emissions = value) %>%
       # EDGAR emissions are in Gg, EPA emissions are in Tg, so convert EDGAR to Tg first for unitless scaler.
-      mutate(scaler = (EDGAR_emissions * CONV_GG_TG) / EPA_emissions) ->
+      mutate(scaler = (EDGAR_emissions * CONV_GG_TG) / EPA_emissions)  %>%
+      select(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year, EPA_emissions, EDGAR_emissions, scaler) ->
       L111.emiss_scaler
 
     # Then, scale EPA emissions.
@@ -206,14 +211,18 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
       summarise(energy = sum(energy)) %>%
       ungroup ->
       L111.en_Si_F_Yh_intl.mlt
+#MATCH UP TO HERE
 
     # Compute international input emissions based on total emission and total emission shares.
     L111.nonghg_tg_R_en_Si_F_Yh_intl.mlt %>%
       left_join(L111.en_Si_F_Yh_intl.mlt, by = c("EDGAR_agg_sector", "Non.CO2", "year")) %>%
-      rename(tot_energy = energy.y, energy = energy.x) %>%
+      rename(tot_energy = energy.y, energy = energy.x)  %>%
       left_join(L111_EDGAR_intl, by = c("EDGAR_agg_sector", "Non.CO2", "year")) %>%
+      # Remove column named "emissions".  All values in emission column are "0".
+      # In old code this column was overwritten.
+      select(-emissions) %>%
       # EDGAR emissions are in Gg, need to convert to Tg.
-      mutate(emissions = (value * CONV_GG_TG) * (energy / tot_energy)) %>%
+      mutate(emissions = (value * CONV_GG_TG) * (energy / tot_energy))  %>%
       select(-tot_energy, -value) %>%
       na.omit()  %>%
       # Add domestic emissions back in.
@@ -240,17 +249,21 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
       # need to filter here to replicate behavior of original aggregate()
       filter(!is.na(supplysector), !is.na(subsector), !is.na(stub.technology)) %>%
       group_by(GCAM_region_ID, supplysector, subsector, stub.technology, year) %>%
-      summarise(energy = sum(value)) ->
+      summarise(energy = sum(value))  %>%
+      ungroup ->
       L101.in_EJ_R_en_S_F_Yh.mlt
-
+#MATCHes up TO HERE
     # Calculate emission shares by energy totals.
 
     L111.nonghg_tg_R_en_S_F_Yh %>%
       left_join(L101.in_EJ_R_en_S_F_Yh.mlt, by = c("GCAM_region_ID", "supplysector", "subsector", "stub.technology", "year")) %>%
       mutate(value = value / energy) %>%
+      ungroup %>%
       select(-energy) %>%
       replace_na(list(value = 0)) ->
       L111.nonghg_tgej_R_en_S_F_Yh
+
+    #EVERYTHING MATCHES, even after spreading to wide format!
 
 
     # Produce outputs
@@ -278,8 +291,8 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
                      "emissions/EDGAR/EDGAR_CO",
                      "emissions/EDGAR/EDGAR_NOx",
                      "emissions/EDGAR/EDGAR_NMVOC",
-                     "emissions/EDGAR/EDGAR_NH3") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+                     "emissions/EDGAR/EDGAR_NH3")  %>%
+     add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L111.nonghg_tg_R_en_S_F_Yh
 
     L111.nonghg_tgej_R_en_S_F_Yh %>%
