@@ -22,7 +22,8 @@ This chunk generates the level 2 data tables for the energy distribution sector,
 including capital costs, shareweights, logits, and interpolations as well as energy use coefficients for electricity and gas pipeline
 }
 \details{
-Describe in detail what this chunk does.
+Prepares Level 2 data on energy distribution sector for the generation of en_distribution.xml.
+Creates global technology database info--cost, shareweight, logit, efficiencies, and interpolations--and regional values where applicable for electricity net ownuse, gas pipelines, and transmission and distribution.
 }
 \author{
 CWR August 2017
