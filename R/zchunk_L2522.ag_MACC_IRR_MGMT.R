@@ -1,4 +1,4 @@
-#' module_emissions_L2522.ag_MACC_IRR_MGMT
+#' module_emissions_L2522.ag_MACC_IRR_MGMT --- driver is failing to merege, i think tha this has to do with a merge affecting another junk come back to it at a latter date.....
 #'
 #' Add new technology data from A_MACC_TechChange to the animal and agircultral marginal abatement cost "MAC" curves.
 #'
@@ -17,7 +17,7 @@
 module_emissions_L2522.ag_MACC_IRR_MGMT <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "emissions/A_MACC_TechChange",
-             "L252.MAC_an",
+             FILE = "temp-data-inject/L252.MAC_an",
              "L2521.AgMAC"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2522.AgMAC",
@@ -33,7 +33,7 @@ module_emissions_L2522.ag_MACC_IRR_MGMT <- function(command, ...) {
 
     # Load required inputs
     A_MACC_TechChange <- get_data(all_data, "emissions/A_MACC_TechChange")
-    L252.MAC_an <- get_data(all_data, "L252.MAC_an")
+    L252.MAC_an <- get_data(all_data, "temp-data-inject/L252.MAC_an")
     L2521.AgMAC <- get_data(all_data, "L2521.AgMAC")
 
     # Silence package checks
