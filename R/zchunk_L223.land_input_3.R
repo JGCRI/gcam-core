@@ -75,9 +75,43 @@ module_aglu_L223.land_input_3 <- function(command, ...) {
     L121.CarbonContent_kgm2_R_LT_GLU <- get_data(all_data, "L121.CarbonContent_kgm2_R_LT_GLU")
     L122.ag_EcYield_kgm2_R_C_Y_GLU <- get_data(all_data, "L122.ag_EcYield_kgm2_R_C_Y_GLU")
     L125.LC_bm2_R_LT_Yh_GLU <- get_data(all_data, "L125.LC_bm2_R_LT_Yh_GLU")
-    #L201.AgYield_bio_grass <- get_data(all_data, "L201.AgYield_bio_grass")
-    #L201.AgYield_bio_tree <- get_data(all_data, "L201.AgYield_bio_tree")
     L2012.AgYield_bio_ref <- get_data(all_data, "L2012.AgYield_bio_ref")
+
+    # silence package check notes
+    GCAM_commodity <- GCAM_region_ID <- region <- value <- year <- GLU <- GLU_name <- GLU_code <-
+      LandLeaf <- Land_Type <- LandNode <- LandNode1 <- LandNode2 <- LandNode3 <- UnmanagedLandLeaf <-
+      logit.year.fillout <- logit.exponent <- logit.type <- soilTimeScale <- `mature age` <- mature.age <-
+      soil_c <- veg_c <- LC_bm2 <- LV_milUSD75 <- LV_USD75_bm2 <- LV_USD75_m2 <- HarvCropLand_bm2 <-
+      unManagedLandValue <- LandAllocatorRoot <- hist.veg.carbon.density <- hist.soil.carbon.density <-
+      veg.carbon.density <- soil.carbon.density <- allocation <- Land_Type.y <- mature.age.year.fillout <-
+      min.veg.carbon.density <- min.soil.carbon.density <- . <- NULL
+
+
+    # Process inputs
+    # Replace GLU names and Add region names as needed
+    L111.ag_resbio_R_C %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
+      L111.ag_resbio_R_C
+
+    L121.CarbonContent_kgm2_R_LT_GLU %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      replace_GLU(map = basin_to_country_mapping) %>%
+      rename(mature.age = `mature age`) ->
+      L121.CarbonContent_kgm2_R_LT_GLU
+
+    L122.ag_EcYield_kgm2_R_C_Y_GLU %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      replace_GLU(map = basin_to_country_mapping) ->
+      L122.ag_EcYield_kgm2_R_C_Y_GLU
+
+    L125.LC_bm2_R_LT_Yh_GLU %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      replace_GLU(map = basin_to_country_mapping) ->
+      L125.LC_bm2_R_LT_Yh_GLU
+
+
+    # Build Tables
+
 
 
 
