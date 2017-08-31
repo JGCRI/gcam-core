@@ -11,7 +11,69 @@ the order of elements will not be flagged as differences.
 import xml.etree.ElementTree as ET
 from sys import stdout
 
+## We will compare GCAM numeric values to 5 significant digits.  This
+## should be sufficient accuracy for just about any quantities we use
+## in GCAM.  Notably, it ensures that years (4 significant figures)
+## will not get rounded.
+comparison_digits = 3
+
+def signif(x, digits=6):
+    """Round a numeric to the specified number of significant digits.
+
+    Examples:
+
+    signif(12345000, 3) == 12300000
+    signif(1.2345, 3) == 1.23
+    signif(0.0012345, 3) == 0.00123
+
+    """
+
+    from math import log10, floor
+
+    ## Using the conventions of the round function, the first
+    ## significant figure is at round(x, -exponent).  Each additional
+    ## significant figure adds one to the rounding position.
+
+    if digits <= 0:
+        raise ValueError('signif: digits argument must be positive')
+
+    try:
+        exponent = int(floor(log10(abs(x))))
+    except ValueError:
+        ## If this happens, it means the input value was zero
+        return 0.0
+    
+    return round(x, -exponent + (digits-1))
+
+
+def strnormalize(s):
+    """Convert input string into canonical form.
+
+    For nonnumeric strings this means stripping leading and trailing
+    whitespace.  For numeric strings, convert to a number and round to
+    a specified number of significant digits (except integers, which
+    are reported as-is), then convert back to string.
+
+    """ 
+
+    from math import floor
+    
+    try:
+        x = float(s)            # strips whitespace if it succeeds
+        if x == floor(x):
+            ## integer: return as-is
+            return str(int(x))
+        else:
+            ## floating point:  round to appropriate significant figures.
+            return str(signif(x,comparison_digits))
+    except ValueError:
+        ## The string isn't a number, so strip leading and trailing
+        ## whitespace and return the rest as-is
+        return s.strip()
+    
+
 def eltsortkey(elt):
+
     """Construct a sort key for an XML Etree element.
 
     The sort criteria are:
@@ -45,13 +107,13 @@ def eltsortkey(elt):
     if text is None:
         sortkey.append('')
     else:
-        sortkey.append(text.strip())
+        sortkey.append(strnormalize(text))
 
     tail = elt.tail
     if tail is None:
         sortkey.append('')
     else:
-        sortkey.append(tail.strip())
+        sortkey.append(strnormalize(tail))
 
     return sortkey
 

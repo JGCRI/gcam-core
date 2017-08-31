@@ -16,6 +16,11 @@ test_that("Ordering of child nodes doesn't matter", {
   expect_silent(cmp_xml_files(basefile, 'test-data/modeltime-rearrange.xml', raw=TRUE))
 })
 
+test_that("Rounding errors don't matter", {
+  expect_silent(cmp_xml_files('test-data/rounding-test1.xml',
+                              'test-data/rounding-test2.xml', raw=TRUE))
+})
+
 test_that('Changed tag is detected', {
   expect_warning({rslt <-
                   cmp_xml_files(basefile, 'test-data/modeltime-chtag.xml', raw=TRUE)},
