@@ -75,6 +75,7 @@ module_gcam.usa_LB1231.Elec_tech_DISABLED <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1231.in_EJ_state_elec_F_tech
+
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%

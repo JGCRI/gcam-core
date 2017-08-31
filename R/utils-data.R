@@ -228,7 +228,7 @@ return_data <- function(...) {
     # check for them
     if(is_tibble(dots[[dname]])) {
       assert_that(is.null(groups(dots[[dname]])), msg =
-        paste0(dname, " is grouped which is not allowed in return_data, please ungroup()"))
+        paste0(dname, " is being returned grouped. This is not allowed; please ungroup()"))
     }
   })
   dots

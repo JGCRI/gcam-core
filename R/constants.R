@@ -1,4 +1,3 @@
-
 # General behavior constants ======================================================================
 
 OUTPUTS_DIR  <- "outputs/"
@@ -211,7 +210,7 @@ aglu.LN1_PROTUNMGD_LOGIT_TYPE <- NA
 # XML-related constants
 aglu.GLU_NDIGITS          <- 3    # number of digits in the geographic land unit identifier codes
 aglu.LT_GLU_DELIMITER     <-      # delimiter between the land use type name and GLU name. should be the same as the crop-glu delimiter
-aglu.CROP_GLU_DELIMITER   <- "_"  # delimiter between the crop name and GLU name
+  aglu.CROP_GLU_DELIMITER   <- "_"  # delimiter between the crop name and GLU name
 aglu.IRR_DELIMITER        <- "_"  # delimiter between the appended crop x GLU and irrigation level
 aglu.MGMT_DELIMITER       <- "_"  # delimiter between appended tech name and management level
 
@@ -248,6 +247,12 @@ ELECTRICITY_INPUT_FUELS<- c("biomass", "coal", "gas", "refined liquids")
 energy.CLIMATE_NORMAL_YEARS <- 1981:2000
 energy.RSRC_FUELS <- c("coal", "gas", "refined liquids")
 
+
+# below come from ENERGY_ASSUMPTIONS/A_ccs_data.R
+energy.DIGITS_EFFICIENCY <- 3
+energy.DIGITS_COST <- 4
+energy.DIGITS_REMOVE.FRACTION <- 2
+energy.CO2.STORAGE.MARKET <- "carbon-storage"
 
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
@@ -375,6 +380,7 @@ emissions.NH3_HISTORICAL_YEARS <- 1990:2002
 emissions.NH3_EXTRA_YEARS <- 1971:1989
 emissions.EDGAR_YEARS <- 1971:2008
 emissions.EDGAR_HISTORICAL <- 1971:2008
+emissions.EDGAR_F_GASSES_YEARS <- 1970:2000
 emissions.EPA_MACC_YEAR <- 2030  # Must be either 2020 or 2030
 emissions.MAC_TAXES <- c(0, 5, 10, 15, 32, 66, 129, 243, 486, 1093) # Range of costs in 1990 USD
 emissions.CONV_C_CO2 <- 44 / 12 # Convert Carbon to CO2
@@ -387,16 +393,15 @@ emissions.GAINS_YEARS <- c(2010, 2020, 2030)
 emissions.LOW_PCGDP <- 2.75
 emissions.COAL_SO2_THRESHOLD <- 0.1
 
-emissions.NH3_EXTRA_YEARS      <- 1971:1989
-emissions.EDGAR_YEARS          <- 1971:2008
 emissions.EPA_MACC_YEAR        <- 2030  # Must be either 2020 or 2030
 emissions.MAC_TAXES            <- c(0, 5, 10, 15, 32, 66, 129, 243, 486, 1093) # Range of costs in 1990 USD
 emissions.CONV_C_CO2           <- 44 / 12 # Convert Carbon to CO2
 emissions.DEFOREST_COEF_YEARS  <- c(2000, 2005)
 emissions.AGR_SECTORS          <- c("rice", "fertilizer", "soil")
 emissions.AGR_GASES            <- c("CH4_AGR", "N2O_AGR", "NH3_AGR", "NOx_AGR")
-
-
+emissions.AG_MACC_GHG_NAMES    <- c("CH4_AGR", "N2O_AGR")
+emissions.GHG_NAMES            <- c("CH4", "N2O")
+emissions.USE_GV_MAC           <- 1
 # Uncomment these lines to run under 'timeshift' conditions
 # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
 # FUTURE_YEARS <- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)
