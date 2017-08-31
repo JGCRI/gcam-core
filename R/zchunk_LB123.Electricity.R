@@ -13,7 +13,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RLH August 2017
-#' @export
 module_gcam.usa_LB123.Electricity <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
@@ -33,6 +32,10 @@ module_gcam.usa_LB123.Electricity <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
+
+    # Silence package checks
+    State <- state <- state_name <- GCAM_region_ID <- year <- value <- sector <-
+      fuel <- CSP_GWh <- value.x <- value.y <- net_EJ_USA <- DirectUse_MWh <- NULL
 
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
@@ -55,15 +58,16 @@ module_gcam.usa_LB123.Electricity <- function(command, ...) {
     L132.out_EJ_state_indchp_F <- get_data(all_data, "temp-data-inject/L132.out_EJ_state_indchp_F") %>%
       # temp-data-inject code
       gather(year, value, starts_with("X")) %>%
-      mutate(year = as.integer(substr(year, 2,5)))
+      mutate(year = as.integer(substr(year, 2,5))) %>%
+      # timeshift fix - probably not necessary once temp-data removed, but will need to check
+      filter(year %in% HISTORICAL_YEARS)
 
     # ===================================================
     # SEDS (EIA) indicates electricity generation technologies either in terms of fuel inputs or fuel outputs (not both)
     # ELECTRICITY_INPUT: coal, gas, oil, biomass
     # ELECTRICITY_OUTPUT: nuclear and renewables
     L123.pct_state_elec_F <- L101.inEIA_EJ_state_S_F %>%
-      filter(sector %in% c("electricity_input", "electricity_output"),
-                           year %in% HISTORICAL_YEARS) %>%
+      filter(sector %in% c("electricity_input", "electricity_output")) %>%
       # Compute each state's percentage, by fuel
       group_by(sector, fuel, year) %>%
       mutate(value = value / sum(value)) %>%
