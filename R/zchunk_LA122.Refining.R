@@ -1,6 +1,6 @@
 #' module_gcam.usa_LA122.Refining
 #'
-#' Briefly describe what this chunk does.
+#' Downscales crude oil, corn ethanol, and biodiesel refining inputs and outputs to state-level.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L122.in_EJ_state_refining_F}, \code{L122.out_EJ_state_refining_F}. The corresponding file in the
 #' original data system was \code{LA122.Refining.R} (gcam-usa level1).
-#' @details Describe in detail what this chunk does.
+#' @details Downscales crude oil, corn ethanol, and biodiesel refining inputs and outputs to state-level.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
