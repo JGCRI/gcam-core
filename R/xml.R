@@ -242,29 +242,29 @@ add_node_equiv_xml <- function(dot, equiv_class) {
 #' @param fright The second file to compare
 #' @param raw Flag: if true run in detail mode
 #' @export
-cmp_xml_files <- function(fleft, fright, raw=FALSE)
+cmp_xml_files <- function(fleft, fright, raw = FALSE)
 {
-    cmd <- system.file('exec/xml_verify.py', package='gcamdata')
-    args <- normalizePath(c(fleft, fright))
-    if(raw) {
-        return(system2(cmd, args, stdout=TRUE))
+  cmd <- system.file('exec/xml_verify.py', package = 'gcamdata')
+  args <- normalizePath(c(fleft, fright))
+  if(raw) {
+    return(system2(cmd, args, stdout = TRUE))
+  }
+  else {
+    for(file in args)
+      if(!file.exists(file))
+        stop("Can't find file: ", file)
+    rslt <- system2(cmd, args)
+    if(rslt == 0) {
+      return(TRUE)
+    }
+    else if(rslt == 3) {
+      return(FALSE)
     }
     else {
-        for(file in args)
-            if(!file.exists(file))
-                stop("Can't find file: ", file)
-        rslt <- system2(cmd, args)
-        if (rslt == 0) {
-            return(TRUE)
-        }
-        else if (rslt == 3) {
-            return(FALSE)
-        }
-        else {
-            ## stderr from the python code will be printed to console.
-            stop("Comparison command failed")
-        }
+      ## stderr from the python code will be printed to console.
+      stop("Comparison command failed")
     }
+  }
 }
 
 
