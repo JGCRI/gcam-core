@@ -1,6 +1,6 @@
-#' module_emissions_L2522.ag_MACC_IRR_MGMT --- driver is failing to merege, i think tha this has to do with a merge affecting another junk come back to it at a latter date.....
+#' module_emissions_L2522.ag_MACC_IRR_MGMT 
 #'
-#' Add new technology data from A_MACC_TechChange to the animal and agircultral marginal abatement cost "MAC" curves.
+#' Add new technology data from A_MACC_TechChange to the animal and agricultural marginal abatement cost "MAC" curves.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L2522.AgMAC}, \code{L2522.MAC_Ag_TC_SSP1}, \code{L2522.MAC_An_TC_SSP1}, \code{L2522.MAC_Ag_TC_SSP2}, \code{L2522.MAC_An_TC_SSP2}, \code{L2522.MAC_Ag_TC_SSP5}, \code{L2522.MAC_An_TC_SSP5}. The corresponding file in the
 #' original data system was \code{L2522.ag_MACC_IRR_MGMT.R} (emissions level2).
-#' @details Add new technology data from A_MACC_TechChange to the animal and agircultral marginal abatement cost "MAC" curves.
+#' @details Add new technology data from A_MACC_TechChange to the animal and agricultural marginal abatement cost "MAC" curves.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -17,7 +17,7 @@
 module_emissions_L2522.ag_MACC_IRR_MGMT <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "emissions/A_MACC_TechChange",
-             FILE = "temp-data-inject/L252.MAC_an",
+             "L252.MAC_an",
              "L2521.AgMAC"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2522.AgMAC",
@@ -33,7 +33,7 @@ module_emissions_L2522.ag_MACC_IRR_MGMT <- function(command, ...) {
 
     # Load required inputs
     A_MACC_TechChange <- get_data(all_data, "emissions/A_MACC_TechChange")
-    L252.MAC_an <- get_data(all_data, "temp-data-inject/L252.MAC_an")
+    L252.MAC_an <- get_data(all_data, "L252.MAC_an")
     L2521.AgMAC <- get_data(all_data, "L2521.AgMAC")
 
     # Silence package checks
@@ -44,15 +44,15 @@ module_emissions_L2522.ag_MACC_IRR_MGMT <- function(command, ...) {
 
     # ===================================================
 
-    # Add irrigation mangement level to the marginal abatement cost (MAC) curves for agriculture.
+    # Add irrigation management level to the marginal abatement cost (MAC) curves for agriculture.
     L2521.AgMAC %>%
       repeat_add_columns(tibble(lvl = c("lo", "hi"))) %>%
       unite(AgProductionTechnology, AgProductionTechnology, lvl, sep = "_") ->
       L2522.AgMAC
 
 
-    # Add technology change data to the agirucultral and animal curve technology MAC curves by
-    # SSP scenario and mac.control (supplysector) then create separte dataframe for each SPP MAC curve.
+    # Add technology change data to the agricultural and animal curve technology MAC curves by
+    # SSP scenario and mac.control (supplysector) then create separate data frames for each SPP MAC curve.
 
     # First save a list of all the SSP-sepcific scenarios in the from the MAC curve technology change parameters
     # assumption file.
@@ -61,7 +61,7 @@ module_emissions_L2522.ag_MACC_IRR_MGMT <- function(command, ...) {
       distinct->
       scenario_list
 
-    # Add SSP scenarios to the the MAC agirucltre data frame.
+    # Add SSP scenarios to the the MAC agriculture data frame.
     L2522.AgMAC %>%
       repeat_add_columns(scenario_list) ->
       L2522.AgMAC_all_SSP
@@ -72,10 +72,10 @@ module_emissions_L2522.ag_MACC_IRR_MGMT <- function(command, ...) {
       L2522.MAC_an_all_SSP
 
 
-    # Add the technology change to the agricutlral and animal MAC curves by matching SSP
+    # Add the technology change to the agricultural and animal MAC curves by matching SSP
     # scenario and mac.control (spplysector).
     #
-    # Agricutral MAC curve
+    # Agricultural MAC curve
     L2522.AgMAC_all_SSP %>%
       left_join_error_no_match(A_MACC_TechChange %>% select(scenario, MAC, tech_change),
                                by = c("scenario", c("mac.control" = "MAC"))) %>%
@@ -95,7 +95,7 @@ module_emissions_L2522.ag_MACC_IRR_MGMT <- function(command, ...) {
 
     # Separate the MAC curves by SPP scenario.
     #
-    # Agricutral MAC curve for SSP1
+    # Agricultural MAC curve for SSP1
     L2522.AgMAC_all_SSP_tech.change %>%
       filter(scenario == "SSP1") %>%
       select(-scenario) ->
@@ -107,7 +107,7 @@ module_emissions_L2522.ag_MACC_IRR_MGMT <- function(command, ...) {
       select(-scenario) ->
       L2522.MAC_An_TC_SSP1
 
-    # Agricutral MAC curve for SSP2
+    # Agricultural MAC curve for SSP2
     L2522.AgMAC_all_SSP_tech.change %>%
       filter(scenario == "SSP2") %>%
       select(-scenario) ->
@@ -119,31 +119,27 @@ module_emissions_L2522.ag_MACC_IRR_MGMT <- function(command, ...) {
       select(-scenario) ->
       L2522.MAC_An_TC_SSP2
 
-    # Agricutral MAC curve for SSP5
+    # Agricultural MAC curve for SSP5
     L2522.AgMAC_all_SSP_tech.change %>%
       filter(scenario == "SSP5") %>%
       select(-scenario) ->
       L2522.MAC_Ag_TC_SSP5
 
-    # Agricutral MAC curve for SSP5
+    # Agricultural MAC curve for SSP5
     L2522.MAC_an_all_SSP_tech.change %>%
       filter(scenario == "SSP5") %>%
       select(-scenario) ->
       L2522.MAC_An_TC_SSP5
 
-
-    # why am i always getting this error message
-    # Error in find_csv_file(f, optionals[fnum], quiet = quiet) :
-    #Couldn't find required data temp-data-inject/L252.AgMAC
     # ===================================================
 
     # Produce outputs
     L2522.AgMAC %>%
       add_title("Marginal Abatement Cost Curves for Agriculture with Irrigation Management Level") %>%
       add_units("tax: 1990 USD; mac.reduction: % reduction") %>%
-      add_comments("Add irrigation mangaement level") %>%
+      add_comments("Add irrigation management level") %>%
       add_legacy_name("L2522.AgMAC") %>%
-      add_precursors("emissions/A_MACC_TechChange", "temp-data-inject/L252.MAC_an", "L2521.AgMAC") ->
+      add_precursors("emissions/A_MACC_TechChange", "L252.MAC_an", "L2521.AgMAC") ->
       L2522.AgMAC
 
     L2522.MAC_Ag_TC_SSP1 %>%
@@ -159,7 +155,7 @@ module_emissions_L2522.ag_MACC_IRR_MGMT <- function(command, ...) {
       add_units("tax: 1990 USD; mac.reduction: % reduction; tech.change: unitless") %>%
       add_comments("Added tech.change from A_MACC_TechChange") %>%
       add_legacy_name("L2522.MAC_An_TC_SSP1") %>%
-      add_precursors("emissions/A_MACC_TechChange", "temp-data-inject/L252.MAC_an") ->
+      add_precursors("emissions/A_MACC_TechChange", "L252.MAC_an") ->
       L2522.MAC_An_TC_SSP1
 
     L2522.MAC_Ag_TC_SSP2 %>%
@@ -175,7 +171,7 @@ module_emissions_L2522.ag_MACC_IRR_MGMT <- function(command, ...) {
       add_units("tax: 1990 USD; mac.reduction: % reduction; tech.change: unitless") %>%
       add_comments("Added tech.change from A_MACC_TechChange") %>%
       add_legacy_name("L2522.MAC_An_TC_SSP2") %>%
-      add_precursors("emissions/A_MACC_TechChange", "temp-data-inject/L252.MAC_an") ->
+      add_precursors("emissions/A_MACC_TechChange", "L252.MAC_an") ->
       L2522.MAC_An_TC_SSP2
 
     L2522.MAC_Ag_TC_SSP5 %>%
@@ -191,7 +187,7 @@ module_emissions_L2522.ag_MACC_IRR_MGMT <- function(command, ...) {
       add_units("tax: 1990 USD; mac.reduction: % reduction; tech.change: unitless") %>%
       add_comments("Added tech.change from A_MACC_TechChange") %>%
       add_legacy_name("L2522.MAC_An_TC_SSP5") %>%
-      add_precursors("emissions/A_MACC_TechChange", "temp-data-inject/L252.MAC_an") ->
+      add_precursors("emissions/A_MACC_TechChange", "L252.MAC_an") ->
       L2522.MAC_An_TC_SSP5
 
     return_data(L2522.AgMAC, L2522.MAC_Ag_TC_SSP1, L2522.MAC_An_TC_SSP1, L2522.MAC_Ag_TC_SSP2, L2522.MAC_An_TC_SSP2, L2522.MAC_Ag_TC_SSP5, L2522.MAC_An_TC_SSP5)

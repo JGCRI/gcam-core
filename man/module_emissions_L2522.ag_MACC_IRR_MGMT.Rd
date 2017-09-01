@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_L2522.ag_MACC_IRR_MGMT.R
 \name{module_emissions_L2522.ag_MACC_IRR_MGMT}
 \alias{module_emissions_L2522.ag_MACC_IRR_MGMT}
-\title{module_emissions_L2522.ag_MACC_IRR_MGMT --- driver is failing to merege, i think tha this has to do with a merge affecting another junk come back to it at a latter date.....}
+\title{module_emissions_L2522.ag_MACC_IRR_MGMT}
 \usage{
 module_emissions_L2522.ag_MACC_IRR_MGMT(command, ...)
 }
@@ -18,10 +18,10 @@ the generated outputs: \code{L2522.AgMAC}, \code{L2522.MAC_Ag_TC_SSP1}, \code{L2
 original data system was \code{L2522.ag_MACC_IRR_MGMT.R} (emissions level2).
 }
 \description{
-Add new technology data from A_MACC_TechChange to the animal and agircultral marginal abatement cost "MAC" curves.
+Add new technology data from A_MACC_TechChange to the animal and agricultural marginal abatement cost "MAC" curves.
 }
 \details{
-Add new technology data from A_MACC_TechChange to the animal and agircultral marginal abatement cost "MAC" curves.
+Add new technology data from A_MACC_TechChange to the animal and agricultural marginal abatement cost "MAC" curves.
 }
 \author{
 KD Aug 2017
