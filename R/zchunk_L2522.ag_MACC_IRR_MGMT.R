@@ -131,9 +131,10 @@ module_emissions_L2522.ag_MACC_IRR_MGMT <- function(command, ...) {
       select(-scenario) ->
       L2522.MAC_An_TC_SSP5
 
-    # belh bleh
 
-
+    # why am i always getting this error message
+    # Error in find_csv_file(f, optionals[fnum], quiet = quiet) :
+    #Couldn't find required data temp-data-inject/L252.AgMAC
     # ===================================================
 
     # Produce outputs
