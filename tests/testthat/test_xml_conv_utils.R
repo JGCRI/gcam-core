@@ -261,3 +261,12 @@ test_that("add_logit_tables_xml sets default logit", {
     test_xml
   expect_identical(test_xml, '<?xml version="1.0" encoding="UTF-8"?><scenario><world><region name="USA"><supplysector name="sector"><subsector name="sub"><relative-cost-logit><logit-exponent fillout="1" year="1900">-3</logit-exponent></relative-cost-logit></subsector></supplysector></region></world></scenario>')
 })
+
+test_that("add_logit_tables_xml fails when not given a logit.type column", {
+  test_fn <- "test.xml"
+  data1 <- tibble(region = "USA", supplysector = "sector", subsector = "sub",
+                  logit.year.fillout = 1900, logit.exponent = -3)
+  expect_error(create_xml(test_fn) %>%
+    add_logit_tables_xml(data1, "SubsectorLogit") ->
+    logit.xml)
+})

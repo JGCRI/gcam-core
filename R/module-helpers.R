@@ -420,7 +420,7 @@ fill_exp_decay_extrapolate <- function(d, out_years) {
   # function particularly. How to specify columns also seems inconsistent
   # between the versions, and thus we fall back on checking versions and doing
   # something different.
-  if(packageVersion("dplyr") < "0.7") {
+  if(utils::packageVersion("dplyr") < "0.7") {
     d %>%
       complete(tidyr::nesting_(select(., -year, -value)), year = union(year, out_years)) ->
       d
