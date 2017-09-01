@@ -74,6 +74,9 @@ test_that("set_years", {
                                         min(FUTURE_YEARS),
                                         min(MODEL_YEARS[MODEL_YEARS > max(HISTORICAL_YEARS)]),
                                         max(FUTURE_YEARS))))
+
+  # Handles an empty tibble
+  expect_silent(set_years(tibble()))
 })
 
 test_that("set_traded_names", {
