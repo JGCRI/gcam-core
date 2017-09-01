@@ -1,4 +1,4 @@
-#' module_gcam.usa_LB1231.Elec_tech
+#' module_gcam.usa_LA122.Refining
 #'
 #' Briefly describe what this chunk does.
 #'
@@ -6,36 +6,32 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L1231.in_EJ_state_elec_F_tech}, \code{L1231.out_EJ_state_elec_F_tech}. The corresponding file in the
-#' original data system was \code{LB1231.Elec_tech.R} (gcam-usa level1).
+#' the generated outputs: \code{L122.in_EJ_state_refining_F}, \code{L122.out_EJ_state_refining_F}. The corresponding file in the
+#' original data system was \code{LA122.Refining.R} (gcam-usa level1).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_gcam.usa_LB1231.Elec_tech_DISABLED <- function(command, ...) {
+module_gcam.usa_LA122.Refining_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L123.in_EJ_R_elec_F_Yh",
-              "L123.out_EJ_R_elec_F_Yh",
-              "L1231.in_EJ_R_elec_F_tech_Yh",
-              "L1231.out_EJ_R_elec_F_tech_Yh",
-              "L123.in_EJ_state_elec_F",
-              "L123.out_EJ_state_elec_F"))
+    return(c( "L122.in_EJ_R_refining_F_Yh",
+              "L122.out_EJ_R_refining_F_Yh",
+              "L101.inEIA_EJ_state_S_F",
+              FILE = "gcam-usa/EIA_biodiesel_Mgal.yr"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L1231.in_EJ_state_elec_F_tech",
-             "L1231.out_EJ_state_elec_F_tech"))
+    return(c("L122.in_EJ_state_refining_F",
+             "L122.out_EJ_state_refining_F"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    L123.in_EJ_R_elec_F_Yh <- get_data(all_data, "L123.in_EJ_R_elec_F_Yh")
-    L123.out_EJ_R_elec_F_Yh <- get_data(all_data, "L123.out_EJ_R_elec_F_Yh")
-    L1231.in_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.in_EJ_R_elec_F_tech_Yh")
-    L1231.out_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.out_EJ_R_elec_F_tech_Yh")
-    L123.in_EJ_state_elec_F <- get_data(all_data, "L123.in_EJ_state_elec_F")
-    L123.out_EJ_state_elec_F <- get_data(all_data, "L123.out_EJ_state_elec_F")
+    L122.in_EJ_R_refining_F_Yh <- get_data(all_data, "L122.in_EJ_R_refining_F_Yh")
+    L122.out_EJ_R_refining_F_Yh <- get_data(all_data, "L122.out_EJ_R_refining_F_Yh")
+    L101.inEIA_EJ_state_S_F <- get_data(all_data, "L101.inEIA_EJ_state_S_F")
+    EIA_biodiesel_Mgal.yr <- get_data(all_data, "gcam-usa/EIA_biodiesel_Mgal.yr")
 
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
@@ -54,8 +50,6 @@ module_gcam.usa_LB1231.Elec_tech_DISABLED <- function(command, ...) {
     #
     # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
     # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses vecpaste
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # NOTE: This code uses repeat_and_add_vector
     # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # ===================================================
@@ -70,24 +64,24 @@ module_gcam.usa_LB1231.Elec_tech_DISABLED <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L1231.in_EJ_state_elec_F_tech") %>%
+      add_legacy_name("L122.in_EJ_state_refining_F") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L1231.in_EJ_state_elec_F_tech
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L122.in_EJ_state_refining_F
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L1231.out_EJ_state_elec_F_tech") %>%
+      add_legacy_name("L122.out_EJ_state_refining_F") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L1231.out_EJ_state_elec_F_tech
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L122.out_EJ_state_refining_F
 
-    return_data(L1231.in_EJ_state_elec_F_tech, L1231.out_EJ_state_elec_F_tech)
+    return_data(L122.in_EJ_state_refining_F, L122.out_EJ_state_refining_F)
   } else {
     stop("Unknown command")
   }

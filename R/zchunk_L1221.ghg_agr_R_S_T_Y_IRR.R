@@ -26,6 +26,8 @@ module_emissions_L1221.ghg_agr_R_S_T_Y_IRR <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    value.emissions <- value.share <- NULL  # silence package check notes
+
     # Load required inputs
     L1211.ag_irrShare_R_C_Y_GLU_irr <- get_data(all_data, "L1211.ag_irrShare_R_C_Y_GLU_irr")
     L122.ghg_tg_R_agr_C_Y_GLU <- get_data(all_data, "L122.ghg_tg_R_agr_C_Y_GLU")
