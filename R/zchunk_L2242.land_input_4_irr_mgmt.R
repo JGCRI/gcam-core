@@ -63,10 +63,7 @@ module_aglu_L2242.land_input_4_irr_mgmt <- function(command, ...) {
       # Match in logit exponent values, use left_join instead because the logit.type variable are NAs, drop later
       left_join(A_LandNode_logit_irr, by = c("LandNode4" = "LandNode")) %>%
       mutate(LandNode4 = paste(LandNode4, GLU_name, sep = "_")) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["LN4_Logit"]])) %>%
-      # Note: The na.omit is intended to get rid of a tailing node-rename table
-      # that may be appended to level2 land alloator tables
-      na.omit ->
+      select(one_of(LEVEL2_DATA_NAMES[["LN4_Logit"]],"logit.type")) ->
       L2242.LN4_Logit
 
     # L2242.LN4_NodeGhostShare:

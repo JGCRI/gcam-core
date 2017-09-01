@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{land_input_4_IRR_MGMT.xml}. The corresponding file in the
 #' original data system was \code{batch_land_input_4_IRR_MGMT.xml.R} (aglu XML).
-module_aglu_batch_land_input_4_IRR_MGMT.xml_DISABLED <- function(command, ...) {
+module_aglu_batch_land_input_4_IRR_MGMT.xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L2242.LN4_Logit",
              "L2242.LN4_NodeGhostShare",
