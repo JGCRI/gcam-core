@@ -1,6 +1,7 @@
 #' module_aglu_L2242.land_input_4_irr_mgmt
 #'
-#' This chunk generates files of the fourth land nest by region.
+#' This chunk generates logit exponent of the fourth land node that specifies crop commodity and GLU by region,
+#' and generates the ghost node share for the bionenergy node.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,8 +9,8 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L2242.LN4_Logit}, \code{L2242.LN4_NodeGhostShare}, \code{L2242.LN4_NodeIsGhostShareRel}. The corresponding file in the
 #' original data system was \code{L2242.land_input_4_irr_mgmt.R} (aglu level2).
-#' @details This chunk generates the logit exponent of the fourth land nest by region, the ghost node share for bionenergy node in future years,
-#' and specifies whether the bionenergy ghost node share is relative.
+#' @details This chunk generates the logit exponent of the fourth land nest that specifies crop commodity and GLU by region,
+#' and the ghost node share for the bionenergy node in future years, and specifies whether the bionenergy ghost node share is relative.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -39,16 +40,14 @@ module_aglu_L2242.land_input_4_irr_mgmt <- function(command, ...) {
     L223.LN3_LeafGhostShare <- get_data(all_data, "temp-data-inject/L223.LN3_LeafGhostShare")
     L223.LN3_LeafIsGhostShareRel <- get_data(all_data, "temp-data-inject/L223.LN3_LeafIsGhostShareRel")
 
-    names_LN3_Leaf <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandLeaf")
-
     # L2242.LN4_Logit: Logit exponent of the fourth land nest by region
     # There are no technologies that are disaggregated to irrigated and rainfed but not to lo- and hi-input techs,
     # so here we only write out the logit exponent for the irrigated/rainfed node competition.
     # Use the cropland and bioenergy allocation tables to establish which region/GLU/node combinations are available
     L223.LN3_MgdAllocation_crop %>%
-      select(one_of(names_LN3_Leaf)) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["LN3_Leaf"]])) %>%
       unique %>%
-      bind_rows(unique(select(L223.LN3_MgdAllocation_bio, one_of(names_LN3_Leaf)))) %>%
+      bind_rows(unique(select(L223.LN3_MgdAllocation_bio, one_of(LEVEL2_DATA_NAMES[["LN3_Leaf"]])))) %>%
       # What was a leaf for level3 is now a node, as it will have the 4th level nested under it
       rename(LandNode4 = LandLeaf) %>%
       # Modify land node variable, prepare to separate the GLU name

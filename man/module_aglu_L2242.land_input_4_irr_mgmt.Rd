@@ -18,11 +18,12 @@ the generated outputs: \code{L2242.LN4_Logit}, \code{L2242.LN4_NodeGhostShare}, 
 original data system was \code{L2242.land_input_4_irr_mgmt.R} (aglu level2).
 }
 \description{
-This chunk generates files of the fourth land nest by region.
+This chunk generates logit exponent of the fourth land node that specifies crop commodity and GLU by region,
+and generates the ghost node share for the bionenergy node.
 }
 \details{
-This chunk generates the logit exponent of the fourth land nest by region, the ghost node share for bionenergy node in future years,
-and specifies whether the bionenergy ghost node share is relative.
+This chunk generates the logit exponent of the fourth land nest that specifies crop commodity and GLU by region,
+and the ghost node share for the bionenergy node in future years, and specifies whether the bionenergy ghost node share is relative.
 }
 \author{
 RC August 2017
