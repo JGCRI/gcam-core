@@ -12,14 +12,14 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
+#' @author RLH September 2017
 #' @export
-module_gcam.usa_LA122.Refining_DISABLED <- function(command, ...) {
+module_gcam.usa_LA122.Refining <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L122.in_EJ_R_refining_F_Yh",
-              "L122.out_EJ_R_refining_F_Yh",
-              "L101.inEIA_EJ_state_S_F",
-              FILE = "gcam-usa/EIA_biodiesel_Mgal.yr"))
+    return(c("L122.in_EJ_R_refining_F_Yh",
+             "L122.out_EJ_R_refining_F_Yh",
+             "L101.inEIA_EJ_state_S_F",
+             FILE = "gcam-usa/EIA_biodiesel_Mgal.yr"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L122.in_EJ_state_refining_F",
              "L122.out_EJ_state_refining_F"))
@@ -28,56 +28,162 @@ module_gcam.usa_LA122.Refining_DISABLED <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    L122.in_EJ_R_refining_F_Yh <- get_data(all_data, "L122.in_EJ_R_refining_F_Yh")
-    L122.out_EJ_R_refining_F_Yh <- get_data(all_data, "L122.out_EJ_R_refining_F_Yh")
+    L122.in_EJ_R_refining_F_Yh <- get_data(all_data, "L122.in_EJ_R_refining_F_Yh") %>%
+      filter(GCAM_region_ID == gcam.USA_CODE)
+    L122.out_EJ_R_refining_F_Yh <- get_data(all_data, "L122.out_EJ_R_refining_F_Yh") %>%
+      filter(GCAM_region_ID == gcam.USA_CODE)
     L101.inEIA_EJ_state_S_F <- get_data(all_data, "L101.inEIA_EJ_state_S_F")
     EIA_biodiesel_Mgal.yr <- get_data(all_data, "gcam-usa/EIA_biodiesel_Mgal.yr")
 
     # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses repeat_and_add_vector
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # ===================================================
+    # CRUDE OIL REFINING
+    # NOTE: using SEDS crude oil input to industry as basis for allocation of crude oil refining to states
 
+    # Crude oil consumption by industry is the energy used at refineries (input - output)
+    L122.net_EJ_state_cor_crude <- L101.inEIA_EJ_state_S_F %>%
+      filter(sector == "industry",
+             fuel == "crude oil") %>%
+      mutate(sector = "oil refining")
+
+    # Calculate the percentages in each state
+    L122.pct_state_cor <- L122.net_EJ_state_cor_crude %>%
+      group_by(year) %>%
+      mutate(value = value / sum(value)) %>%
+      ungroup()
+
+    # Crude oil refining output by state
+    # Apportion the national total to the states
+    L122.out_EJ_state_cor <- L122.pct_state_cor %>%
+      left_join_error_no_match(L122.out_EJ_R_refining_F_Yh, by = c("sector", "year")) %>%
+      # State output value = state proportion * national output value
+      mutate(value = value.x * value.y) %>%
+      select(state, sector, fuel = fuel.x, year, value)
+
+    # Crude oil refining inputs by state and fuel
+    # Inputs to crude oil refining - same method of portional allocations, but with multiple fuels
+
+    # Oil refining input fuels
+    oil_input_fuels <- L122.in_EJ_R_refining_F_Yh %>%
+      filter(sector == "oil refining") %>%
+      select(fuel) %>%
+      distinct()
+
+    L122.pct_state_cor_repF <- L122.pct_state_cor %>%
+      select(-fuel) %>%
+      # Repeat for fuel in oil refining sector
+      repeat_add_columns(oil_input_fuels)
+
+    L122.in_EJ_state_cor_F <- L122.pct_state_cor_repF %>%
+      left_join_error_no_match(L122.in_EJ_R_refining_F_Yh, by = c("sector", "fuel", "year")) %>%
+      # State input value = state proportion * national input value
+      mutate(value = value.x * value.y) %>%
+      select(state, sector, fuel, year, value)
+
+    # BIOMASS LIQUIDS
+    # NOTE: using SEDS biofuel transformation-related losses to disaggregate ethanol production to states
+    # Calculate the percentages of net energy losses from biofuel production in each state
+    L122.net_EJ_state_btl <- L101.inEIA_EJ_state_S_F %>%
+      filter(sector == "corn ethanol")
+
+    L122.pct_state_btle <- L122.net_EJ_state_btl %>%
+      group_by(year) %>%
+      mutate(value = value / sum(value)) %>%
+      ungroup() %>%
+      replace_na(list(value = 0))
+
+    # Corn ethanol output by state
+    L122.out_EJ_state_btle <- L122.pct_state_btle %>%
+      left_join_error_no_match(L122.out_EJ_R_refining_F_Yh, by = c("sector", "year")) %>%
+      # State output value = state proportion * national output value
+      mutate(value = value.x * value.y) %>%
+      select(state, sector, fuel = fuel.x, year, value)
+
+    # Corn ethanol inputs by state and fuel
+    # Repeat percentage-wise table by number of fuel inputs
+
+    # Corn ethanol input fuels
+    corneth_input_fuels <- L122.in_EJ_R_refining_F_Yh %>%
+      filter(sector == "corn ethanol") %>%
+      select(fuel) %>%
+      distinct()
+
+    L122.pct_state_btle_repF <- L122.pct_state_btle %>%
+      select(-fuel) %>%
+      # Repeat for fuel in corn ethanol sector
+      repeat_add_columns(corneth_input_fuels)
+
+    L122.in_EJ_state_btle_F <- L122.pct_state_btle_repF %>%
+      left_join_error_no_match(L122.in_EJ_R_refining_F_Yh, by = c("sector", "fuel", "year")) %>%
+      # State input value = state proportion * national input value
+      mutate(value = value.x * value.y) %>%
+      select(state, sector, fuel, year, value)
+
+    # Biodiesel output by state
+    # NOTE: SEDS does not cover biodiesel; using a separate EIA database for disaggregating this to states
+
+    # Build table of percentages by historical year
+    EIA_biodiesel_Mgal.yr <- EIA_biodiesel_Mgal.yr %>%
+      transmute(pct = Mgal.yr / sum(Mgal.yr), state)
+
+    L122.pct_state_btlbd <- L101.inEIA_EJ_state_S_F %>%
+      select(state, year) %>%
+      distinct() %>%
+      mutate(sector = "biodiesel",
+             fuel = "biomass oil") %>%
+      # Using left_join because not all states in EIA_biodiesel_Mgal.yr
+      left_join(EIA_biodiesel_Mgal.yr, by = "state") %>%
+      replace_na(list(pct = 0))
+
+    # Apportion to the states
+    L122.out_EJ_state_btlbd <- L122.pct_state_btlbd %>%
+      left_join_error_no_match(L122.out_EJ_R_refining_F_Yh, by = c("sector", "year")) %>%
+      # State output value = state proportion * national output value
+      mutate(value = pct * value) %>%
+      select(state, sector, fuel = fuel.x, year, value)
+
+    # Biodiesel inputs by state and fuel
+    # Biodiesel input fuels
+    biodiesel_input_fuels <- L122.in_EJ_R_refining_F_Yh %>%
+      filter(sector == "biodiesel") %>%
+      select(fuel) %>%
+      distinct()
+
+    L122.pct_state_btlbd_repF <- L122.pct_state_btlbd %>%
+      select(-fuel) %>%
+      # Repeat for fuel in corn ethanol sector
+      repeat_add_columns(biodiesel_input_fuels)
+
+    L122.in_EJ_state_btlbd_F <- L122.pct_state_btlbd_repF %>%
+      left_join_error_no_match(L122.in_EJ_R_refining_F_Yh, by = c("sector", "fuel", "year")) %>%
+      # State input value = state proportion * national input value
+      mutate(value = pct * value) %>%
+      select(state, sector, fuel, year, value)
+
+    # Bind the tables of inputs and outputs of all refineries by state in the base years
+    L122.in_EJ_state_refining_F <- bind_rows(L122.in_EJ_state_cor_F, L122.in_EJ_state_btle_F, L122.in_EJ_state_btlbd_F)
+
+    L122.out_EJ_state_refining_F <- bind_rows( L122.out_EJ_state_cor, L122.out_EJ_state_btle, L122.out_EJ_state_btlbd)
+    # ===================================================
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L122.in_EJ_state_refining_F %>%
+      add_title("Refinery energy inputs by state, sector, and fuel") %>%
+      add_units("EJ") %>%
+      add_comments("Crude oil, corn ethanol, and biodiesel input values apportioned to states") %>%
       add_legacy_name("L122.in_EJ_state_refining_F") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
+      add_precursors("L101.inEIA_EJ_state_S_F",
+                     "L122.in_EJ_R_refining_F_Yh",
+                     "gcam-usa/EIA_biodiesel_Mgal.yr") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L122.in_EJ_state_refining_F
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L122.out_EJ_state_refining_F %>%
+      add_title("Refinery output by state and sector") %>%
+      add_units("EJ") %>%
+      add_comments("Crude oil, corn ethanol, and biodiesel output values apportioned to states") %>%
       add_legacy_name("L122.out_EJ_state_refining_F") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
+      add_precursors("L101.inEIA_EJ_state_S_F",
+                     "L122.out_EJ_R_refining_F_Yh",
+                     "gcam-usa/EIA_biodiesel_Mgal.yr") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L122.out_EJ_state_refining_F
 
