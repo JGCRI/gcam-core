@@ -13,7 +13,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RLH September 2017
-#' @export
 module_gcam.usa_LA122.Refining <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L122.in_EJ_R_refining_F_Yh",
@@ -27,6 +26,10 @@ module_gcam.usa_LA122.Refining <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    # Silence package checks
+    GCAM_region_ID <- sector <- fuel <- year <- value <- value.x <- value.y <- state <-
+      fuel.x <- Mgal.yr <- pct <- NULL
+
     # Load required inputs
     L122.in_EJ_R_refining_F_Yh <- get_data(all_data, "L122.in_EJ_R_refining_F_Yh") %>%
       filter(GCAM_region_ID == gcam.USA_CODE)
@@ -38,16 +41,15 @@ module_gcam.usa_LA122.Refining <- function(command, ...) {
     # ===================================================
     # CRUDE OIL REFINING
     # NOTE: using SEDS crude oil input to industry as basis for allocation of crude oil refining to states
-
     # Crude oil consumption by industry is the energy used at refineries (input - output)
-    L122.net_EJ_state_cor_crude <- L101.inEIA_EJ_state_S_F %>%
+
+    # Calculate the percentages of oil consumption in each state
+    L122.pct_state_cor <- L101.inEIA_EJ_state_S_F %>%
       filter(sector == "industry",
              fuel == "crude oil") %>%
-      mutate(sector = "oil refining")
-
-    # Calculate the percentages in each state
-    L122.pct_state_cor <- L122.net_EJ_state_cor_crude %>%
+      mutate(sector = "oil refining") %>%
       group_by(year) %>%
+      # State percentage of total in each year
       mutate(value = value / sum(value)) %>%
       ungroup()
 
@@ -59,20 +61,19 @@ module_gcam.usa_LA122.Refining <- function(command, ...) {
       mutate(value = value.x * value.y) %>%
       select(state, sector, fuel = fuel.x, year, value)
 
-    # Crude oil refining inputs by state and fuel
     # Inputs to crude oil refining - same method of portional allocations, but with multiple fuels
-
     # Oil refining input fuels
     oil_input_fuels <- L122.in_EJ_R_refining_F_Yh %>%
       filter(sector == "oil refining") %>%
       select(fuel) %>%
       distinct()
 
+    # Repeat state proportions for all fuels in oil refining sector
     L122.pct_state_cor_repF <- L122.pct_state_cor %>%
       select(-fuel) %>%
-      # Repeat for fuel in oil refining sector
       repeat_add_columns(oil_input_fuels)
 
+    # Calculate state oil input values
     L122.in_EJ_state_cor_F <- L122.pct_state_cor_repF %>%
       left_join_error_no_match(L122.in_EJ_R_refining_F_Yh, by = c("sector", "fuel", "year")) %>%
       # State input value = state proportion * national input value
@@ -81,11 +82,10 @@ module_gcam.usa_LA122.Refining <- function(command, ...) {
 
     # BIOMASS LIQUIDS
     # NOTE: using SEDS biofuel transformation-related losses to disaggregate ethanol production to states
-    # Calculate the percentages of net energy losses from biofuel production in each state
-    L122.net_EJ_state_btl <- L101.inEIA_EJ_state_S_F %>%
-      filter(sector == "corn ethanol")
 
-    L122.pct_state_btle <- L122.net_EJ_state_btl %>%
+    # Calculate the percentages of corn ethanol consumption in each state
+    L122.pct_state_btle <- L101.inEIA_EJ_state_S_F %>%
+      filter(sector == "corn ethanol") %>%
       group_by(year) %>%
       mutate(value = value / sum(value)) %>%
       ungroup() %>%
@@ -98,20 +98,19 @@ module_gcam.usa_LA122.Refining <- function(command, ...) {
       mutate(value = value.x * value.y) %>%
       select(state, sector, fuel = fuel.x, year, value)
 
-    # Corn ethanol inputs by state and fuel
-    # Repeat percentage-wise table by number of fuel inputs
-
+    # Corn ethanol inputs by state and fuel: Repeat percentage-wise table by number of fuel inputs
     # Corn ethanol input fuels
     corneth_input_fuels <- L122.in_EJ_R_refining_F_Yh %>%
       filter(sector == "corn ethanol") %>%
       select(fuel) %>%
       distinct()
 
+    # Repeat state proportions for all fuels used in corn ethanol sector
     L122.pct_state_btle_repF <- L122.pct_state_btle %>%
       select(-fuel) %>%
-      # Repeat for fuel in corn ethanol sector
       repeat_add_columns(corneth_input_fuels)
 
+    # Corn ethanol inputs by state
     L122.in_EJ_state_btle_F <- L122.pct_state_btle_repF %>%
       left_join_error_no_match(L122.in_EJ_R_refining_F_Yh, by = c("sector", "fuel", "year")) %>%
       # State input value = state proportion * national input value
@@ -125,6 +124,7 @@ module_gcam.usa_LA122.Refining <- function(command, ...) {
     EIA_biodiesel_Mgal.yr <- EIA_biodiesel_Mgal.yr %>%
       transmute(pct = Mgal.yr / sum(Mgal.yr), state)
 
+    # Joining EIA_biodiesel_Mgal.yr to all states and years
     L122.pct_state_btlbd <- L101.inEIA_EJ_state_S_F %>%
       select(state, year) %>%
       distinct() %>%
@@ -148,11 +148,12 @@ module_gcam.usa_LA122.Refining <- function(command, ...) {
       select(fuel) %>%
       distinct()
 
+    # Repeat state proportions for all fuels used in biodiesel sector
     L122.pct_state_btlbd_repF <- L122.pct_state_btlbd %>%
       select(-fuel) %>%
-      # Repeat for fuel in corn ethanol sector
       repeat_add_columns(biodiesel_input_fuels)
 
+    # Biodiesel inputs by state
     L122.in_EJ_state_btlbd_F <- L122.pct_state_btlbd_repF %>%
       left_join_error_no_match(L122.in_EJ_R_refining_F_Yh, by = c("sector", "fuel", "year")) %>%
       # State input value = state proportion * national input value
