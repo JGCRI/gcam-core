@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_L2522.ag_MACC_IRR_MGMT.R
 \name{module_emissions_L2522.ag_MACC_IRR_MGMT}
 \alias{module_emissions_L2522.ag_MACC_IRR_MGMT}
-\title{module_emissions_L2522.ag_MACC_IRR_MGMT}
+\title{module_emissions_L2522.ag_MACC_IRR_MGMT --- driver is failing to merege, i think tha this has to do with a merge affecting another junk come back to it at a latter date.....}
 \usage{
 module_emissions_L2522.ag_MACC_IRR_MGMT(command, ...)
 }

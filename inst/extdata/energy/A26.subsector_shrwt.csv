@@ -1,0 +1,19 @@
+# File: A26.subsector_shrwt.csv
+# Title: Final energy delivery subsector shareweights
+# Units: N/A
+# Description: Shareweights of the distribution of final energy delivery to energy distribution subsectors
+# Source: N/A
+supplysector,subsector,year.fillout,year,share.weight
+backup_electricity,gas,start-year,,1
+csp_backup,gas,start-year,,1
+delivered biomass,delivered biomass,start-year,,1
+delivered coal,delivered coal,start-year,,1
+electricity_net_ownuse,electricity_net_ownuse,start-year,,1
+elect_td_bld,elect_td_bld,start-year,,1
+elect_td_ind,elect_td_ind,start-year,,1
+elect_td_trn,elect_td_trn,start-year,,1
+gas pipeline,gas pipeline,start-year,,1
+wholesale gas,wholesale gas,start-year,,1
+delivered gas,delivered gas,start-year,,1
+refined liquids enduse,refined liquids enduse,start-year,,1
+refined liquids industrial,refined liquids industrial,start-year,,1
