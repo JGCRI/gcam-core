@@ -15,7 +15,7 @@ from sys import stdout
 ## should be sufficient accuracy for just about any quantities we use
 ## in GCAM.  Notably, it ensures that years (4 significant figures)
 ## will not get rounded.
-comparison_digits = 3
+comparison_digits = 2
 
 def signif(x, digits=6):
     """Round a numeric to the specified number of significant digits.
