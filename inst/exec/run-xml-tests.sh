@@ -15,7 +15,7 @@ cd $newdir
 for file1 in ./**/*.xml; do
     fn=`basename $file1`
     ## We can't be sure there is only one match, so test against all
-    for file2 in $olddir/**/$fn; do
+    for file2 in $olddir/**/$fn(.N); do
 	## Compare the old on the left to the new on the right
 	echo "*** oldfile: $file2    newfile: $file1"
 	$xml_cmp $file2 $file1
