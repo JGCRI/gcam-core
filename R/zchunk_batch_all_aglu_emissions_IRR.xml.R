@@ -11,7 +11,7 @@
 module_emissions_batch_all_aglu_emissions_IRR.xml_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c( "L2521.AgMAC",
-              "temp-data-inject/L252.MAC_an",
+              "L252.MAC_an",
               "L2111.AWBEmissions",
               "L2111.AGREmissions",
               "L211.AnEmissions",
@@ -28,7 +28,7 @@ module_emissions_batch_all_aglu_emissions_IRR.xml_DISABLED <- function(command, 
 
     # Load required inputs
     L2521.AgMAC <- get_data(all_data, "L2521.AgMAC")
-    L252.MAC_an <- get_data(all_data, "temp-data-inject/L252.MAC_an")
+    L252.MAC_an <- get_data(all_data, "L252.MAC_an")
     L2111.AWBEmissions <- get_data(all_data, "L2111.AWBEmissions")
     L2111.AGREmissions <- get_data(all_data, "L2111.AGREmissions")
     L211.AnEmissions <- get_data(all_data, "L211.AnEmissions")
