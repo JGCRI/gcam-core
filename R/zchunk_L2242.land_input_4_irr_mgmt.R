@@ -1,7 +1,7 @@
 #' module_aglu_L2242.land_input_4_irr_mgmt
 #'
-#' This chunk generates logit exponent of the fourth land node that specifies crop commodity and GLU by region,
-#' and generates the ghost node share for the bionenergy node.
+#' Generate logit exponent of the fourth land node that specifies crop commodity and GLU by region,
+#' and generate the ghost node share for the bionenergy node.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
