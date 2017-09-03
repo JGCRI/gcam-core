@@ -1,6 +1,7 @@
 #' module_gcam.usa_LB123.Electricity
 #'
 #' By state, calculates electricity fuel consumption, electricity generation, and inputs and outputs of net ownuse.
+#' Ownuse is electricity used by production/transformation facilities.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -139,7 +140,7 @@ module_gcam.usa_LB123.Electricity <- function(command, ...) {
       mutate(value = DirectUse_MWh / sum(DirectUse_MWh)) %>%
       ungroup()
 
-    # Net own use = national total by each state's share
+    # Net own use = national total multiplied by each state's share
     L123.net_EJ_state_ownuse_elec <- L123.net_pct_state_USA_ownuse_elec %>%
       left_join_error_no_match(L123.net_EJ_USA_ownuse, by = c("sector", "year")) %>%
       # Multiply state share by USA total
