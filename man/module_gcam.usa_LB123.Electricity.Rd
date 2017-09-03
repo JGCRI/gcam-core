@@ -19,6 +19,7 @@ The corresponding file in the original data system was \code{LB123.Electricity.R
 }
 \description{
 By state, calculates electricity fuel consumption, electricity generation, and inputs and outputs of net ownuse.
+Ownuse is electricity used by production/transformation facilities.
 }
 \details{
 By state, calculates electricity fuel consumption, electricity generation, and inputs and outputs of net ownuse.
