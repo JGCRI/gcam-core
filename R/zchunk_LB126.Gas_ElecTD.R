@@ -25,7 +25,6 @@ module_gcam.usa_LB126.Gas_ElecTD <- function(command, ...) {
               "L101.inEIA_EJ_state_S_F",
               FILE = "temp-data-inject/L122.in_EJ_state_refining_F",
               FILE = "temp-data-inject/L123.out_EJ_state_elec_F",
-              FILE = "temp-data-inject/L123.out_EJ_state_ownuse_elec",
               FILE = "temp-data-inject/L132.in_EJ_state_indchp_F",
               FILE = "temp-data-inject/L132.in_EJ_state_indfeed_F",
               FILE = "temp-data-inject/L132.in_EJ_state_indnochp_F",
@@ -64,9 +63,6 @@ module_gcam.usa_LB126.Gas_ElecTD <- function(command, ...) {
       gather(year, value, starts_with("X")) %>%
       mutate(year = as.integer(substr(year, 2, 5)))
     L123.out_EJ_state_elec_F <- get_data(all_data, "temp-data-inject/L123.out_EJ_state_elec_F") %>%
-      gather(year, value, starts_with("X")) %>%
-      mutate(year = as.integer(substr(year, 2, 5)))
-    L123.out_EJ_state_ownuse_elec <- get_data(all_data, "temp-data-inject/L123.out_EJ_state_ownuse_elec") %>%
       gather(year, value, starts_with("X")) %>%
       mutate(year = as.integer(substr(year, 2, 5)))
     L132.in_EJ_state_indchp_F <- get_data(all_data, "temp-data-inject/L132.in_EJ_state_indchp_F") %>%
@@ -124,6 +120,7 @@ module_gcam.usa_LB126.Gas_ElecTD <- function(command, ...) {
                                       L154.in_EJ_state_trn_F)
 
     L126.in_EJ_state_F <- L126.in_EJ_state_S_F %>%
+      filter(year %in% HISTORICAL_YEARS) %>%
       group_by(state, fuel, year) %>%
       summarise(value = sum(value)) %>%
       ungroup()
@@ -205,7 +202,10 @@ module_gcam.usa_LB126.Gas_ElecTD <- function(command, ...) {
     L126.in_EJ_state_gasproc_bio <- L126.in_pct_state_gasproc_bio %>%
       left_join_error_no_match(L122.in_EJ_R_gasproc_F_Yh %>%
                                  filter(fuel == "biomass"),
-                               by = c("fuel", "year"))
+                               by = c("fuel", "year")) %>%
+      # State output energy = state share * USA output energy
+      mutate(value = value.x * value.y) %>%
+      select(state, sector, fuel, year, value)
 
     # The remainder of each state's consumption of gas is assigned to the natural gas technology
 
@@ -252,21 +252,16 @@ module_gcam.usa_LB126.Gas_ElecTD <- function(command, ...) {
 
     # Produce outputs
     L126.out_EJ_state_pipeline_gas %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("Output of gas pipeline sector by state") %>%
+      add_units("EJ") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L126.out_EJ_state_pipeline_gas") %>%
-      add_precursors("L122.in_EJ_R_gasproc_F_Yh",
-                     "L122.out_EJ_R_gasproc_F_Yh",
-                     "L126.in_EJ_R_gaspipe_F_Yh",
+      add_precursors("L126.in_EJ_R_gaspipe_F_Yh",
                      "L126.out_EJ_R_gaspipe_F_Yh",
-                     "L126.IO_R_electd_F_Yh",
-                     "L101.EIA_use_all_Bbtu",
                      "L101.inEIA_EJ_state_S_F",
                      "temp-data-inject/L122.in_EJ_state_refining_F",
                      "temp-data-inject/L123.out_EJ_state_elec_F",
-                     "temp-data-inject/L123.out_EJ_state_ownuse_elec",
                      "temp-data-inject/L132.in_EJ_state_indchp_F",
                      "temp-data-inject/L132.in_EJ_state_indfeed_F",
                      "temp-data-inject/L132.in_EJ_state_indnochp_F",
@@ -278,52 +273,96 @@ module_gcam.usa_LB126.Gas_ElecTD <- function(command, ...) {
       L126.out_EJ_state_pipeline_gas
 
     L126.in_EJ_state_pipeline_gas %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("Input to gas pipeline sector by state") %>%
+      add_units("EJ") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L126.in_EJ_state_pipeline_gas") %>%
-      add_precursors("L122.in_EJ_R_gasproc_F_Yh") %>%
+      same_precursors_as(L126.out_EJ_state_pipeline_gas) %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L126.in_EJ_state_pipeline_gas
 
     L126.out_EJ_state_gasproc_F %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("Output of gas processing sector by state and technology") %>%
+      add_units("EJ") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L126.out_EJ_state_gasproc_F") %>%
-      add_precursors("L122.in_EJ_R_gasproc_F_Yh") %>%
+      add_precursors("L122.out_EJ_R_gasproc_F_Yh",
+                     "L101.EIA_use_all_Bbtu",
+                     "L126.in_EJ_R_gaspipe_F_Yh",
+                     "L126.out_EJ_R_gaspipe_F_Yh",
+                     "L101.inEIA_EJ_state_S_F",
+                     "temp-data-inject/L122.in_EJ_state_refining_F",
+                     "temp-data-inject/L123.out_EJ_state_elec_F",
+                     "temp-data-inject/L132.in_EJ_state_indchp_F",
+                     "temp-data-inject/L132.in_EJ_state_indfeed_F",
+                     "temp-data-inject/L132.in_EJ_state_indnochp_F",
+                     "L1321.in_EJ_state_cement_F_Y",
+                     "temp-data-inject/L1322.in_EJ_state_Fert_Yh",
+                     "temp-data-inject/L142.in_EJ_state_bld_F",
+                     "L154.in_EJ_state_trn_F") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L126.out_EJ_state_gasproc_F
 
     L126.in_EJ_state_gasproc_F %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("Inputs to gas processing sector by state and technology") %>%
+      add_units("EJ") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L126.in_EJ_state_gasproc_F") %>%
-      add_precursors("L122.in_EJ_R_gasproc_F_Yh") %>%
+      add_precursors("L122.in_EJ_R_gasproc_F_Yh",
+                     "L122.out_EJ_R_gasproc_F_Yh",
+                     "L126.in_EJ_R_gaspipe_F_Yh",
+                     "L126.out_EJ_R_gaspipe_F_Yh",
+                     "L101.EIA_use_all_Bbtu",
+                     "L101.inEIA_EJ_state_S_F",
+                     "temp-data-inject/L122.in_EJ_state_refining_F",
+                     "temp-data-inject/L123.out_EJ_state_elec_F",
+                     "temp-data-inject/L132.in_EJ_state_indchp_F",
+                     "temp-data-inject/L132.in_EJ_state_indfeed_F",
+                     "temp-data-inject/L132.in_EJ_state_indnochp_F",
+                     "L1321.in_EJ_state_cement_F_Y",
+                     "temp-data-inject/L1322.in_EJ_state_Fert_Yh",
+                     "temp-data-inject/L142.in_EJ_state_bld_F",
+                     "L154.in_EJ_state_trn_F") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L126.in_EJ_state_gasproc_F
 
     L126.out_EJ_state_td_elec %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("Output of electricity T&D sector by state") %>%
+      add_units("EJ") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L126.out_EJ_state_td_elec") %>%
-      add_precursors("L122.in_EJ_R_gasproc_F_Yh") %>%
+      add_precursors("temp-data-inject/L122.in_EJ_state_refining_F",
+                     "temp-data-inject/L123.out_EJ_state_elec_F",
+                     "temp-data-inject/L132.in_EJ_state_indchp_F",
+                     "temp-data-inject/L132.in_EJ_state_indfeed_F",
+                     "temp-data-inject/L132.in_EJ_state_indnochp_F",
+                     "L1321.in_EJ_state_cement_F_Y",
+                     "temp-data-inject/L1322.in_EJ_state_Fert_Yh",
+                     "temp-data-inject/L142.in_EJ_state_bld_F",
+                     "L154.in_EJ_state_trn_F") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L126.out_EJ_state_td_elec
 
     L126.in_EJ_state_td_elec %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("Input to electricity T&D sector by state") %>%
+      add_units("EJ") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L126.in_EJ_state_td_elec") %>%
-      add_precursors("L122.in_EJ_R_gasproc_F_Yh") %>%
+      add_precursors("temp-data-inject/L122.in_EJ_state_refining_F",
+                     "temp-data-inject/L123.out_EJ_state_elec_F",
+                     "temp-data-inject/L132.in_EJ_state_indchp_F",
+                     "temp-data-inject/L132.in_EJ_state_indfeed_F",
+                     "temp-data-inject/L132.in_EJ_state_indnochp_F",
+                     "L1321.in_EJ_state_cement_F_Y",
+                     "temp-data-inject/L1322.in_EJ_state_Fert_Yh",
+                     "temp-data-inject/L142.in_EJ_state_bld_F",
+                     "L154.in_EJ_state_trn_F",
+                     "L126.IO_R_electd_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L126.in_EJ_state_td_elec
 
