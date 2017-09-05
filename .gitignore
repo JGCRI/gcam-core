@@ -3,6 +3,7 @@
 .Rhistory
 .RData
 ..Rcheck/
+.Rapp.history
 
 # Remake files
 .remake/

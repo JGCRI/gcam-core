@@ -304,6 +304,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["LN3_Logit_absolute-cost-logit"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "logit.type")
   level2_data_names[["LN3_Logit_relative-cost-logit"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "logit.type")
   level2_data_names[["LN3_NodeGhostShare"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "year", "ghost.unnormalized.share")
+  level2_data_names[["LN3_Leaf"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandLeaf")
   level2_data_names[["LN3_LeafGhostShare"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandLeaf", "year", "ghost.unnormalized.share")
   level2_data_names[["LN3_LeafIsGhostShareRel"]]<- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandLeaf", "is.ghost.share.relative")
   level2_data_names[["LN3_HistUnmgdAllocation"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "UnmanagedLandLeaf", "year", "allocation")
