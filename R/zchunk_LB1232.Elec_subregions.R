@@ -16,7 +16,7 @@
 module_gcam.usa_LB1232.Elec_subregions <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
-             FILE = "temp-data-inject/L1231.out_EJ_state_elec_F_tech"))
+             "L1231.out_EJ_state_elec_F_tech"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L1232.out_EJ_sR_elec"))
   } else if(command == driver.MAKE) {
@@ -29,10 +29,7 @@ module_gcam.usa_LB1232.Elec_subregions <- function(command, ...) {
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions") %>%
       select(state, grid_region)
-    L1231.out_EJ_state_elec_F_tech <- get_data(all_data, "temp-data-inject/L1231.out_EJ_state_elec_F_tech") %>%
-      # temp-data-inject code
-      gather(year, value, starts_with("X")) %>%
-      mutate(year = as.integer(substr(year, 2, 5)))
+    L1231.out_EJ_state_elec_F_tech <- get_data(all_data, "L1231.out_EJ_state_elec_F_tech")
 
     # ===================================================
     # Aggregating states to electricity subregions
@@ -48,7 +45,7 @@ module_gcam.usa_LB1232.Elec_subregions <- function(command, ...) {
       add_comments("L1231.out_EJ_state_elec_F_tech aggregated to FERC region") %>%
       add_legacy_name("L1232.out_EJ_sR_elec") %>%
       add_precursors("gcam-usa/states_subregions",
-                     "temp-data-inject/L1231.out_EJ_state_elec_F_tech") %>%
+                     "L1231.out_EJ_state_elec_F_tech") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR)
 
     return_data(L1232.out_EJ_sR_elec)
