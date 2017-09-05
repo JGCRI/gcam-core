@@ -1,0 +1,10 @@
+# File: A52.subsector_shrwt.csv
+# Title: Aggregate transportation default subsector shareweights
+# Units: Unitless
+supplysector,subsector,year.fillout,year,share.weight
+transportation,coal,start-year,,1
+transportation,electricity,start-year,,1
+transportation,hydrogen,,2020,0.01
+transportation,hydrogen,2050,,0.05
+transportation,gas,start-year,,1
+transportation,refined liquids,start-year,,1
