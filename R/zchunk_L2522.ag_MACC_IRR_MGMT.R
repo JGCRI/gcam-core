@@ -13,7 +13,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author KD Aug 2017
-
 module_emissions_L2522.ag_MACC_IRR_MGMT <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "emissions/A_MACC_TechChange",
@@ -50,7 +49,6 @@ module_emissions_L2522.ag_MACC_IRR_MGMT <- function(command, ...) {
       unite(AgProductionTechnology, AgProductionTechnology, lvl, sep = "_") ->
       L2522.AgMAC
 
-
     # Add technology change data to the agricultural and animal curve technology MAC curves by
     # SSP scenario and mac.control (supplysector) then create separate data frames for each SPP MAC curve.
 
@@ -71,27 +69,24 @@ module_emissions_L2522.ag_MACC_IRR_MGMT <- function(command, ...) {
       repeat_add_columns(scenario_list) ->
       L2522.MAC_an_all_SSP
 
-
     # Add the technology change to the agricultural and animal MAC curves by matching SSP
     # scenario and mac.control (supplysector).
     #
     # Agricultural MAC curve
     L2522.AgMAC_all_SSP %>%
       left_join_error_no_match(A_MACC_TechChange %>% select(scenario, MAC, tech_change),
-                               by = c("scenario", c("mac.control" = "MAC"))) %>%
+                               by = c("scenario", "mac.control" = "MAC")) %>%
       select(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology, year, Non.CO2, mac.control,
              tax, mac.reduction, tech.change = tech_change, scenario) ->
       L2522.AgMAC_all_SSP_tech.change
 
-
     # Animal MAC curve
     L2522.MAC_an_all_SSP %>%
       left_join_error_no_match(A_MACC_TechChange %>% select(scenario, MAC, tech_change),
-                               by = c("scenario", c("mac.control" = "MAC"))) %>%
+                               by = c("scenario", "mac.control" = "MAC")) %>%
       select(region, supplysector, subsector, stub.technology, year, Non.CO2, mac.control,
              tax, mac.reduction, tech.change = tech_change, scenario) ->
       L2522.MAC_an_all_SSP_tech.change
-
 
     # Separate the MAC curves by SPP scenario.
 
@@ -103,36 +98,14 @@ module_emissions_L2522.ag_MACC_IRR_MGMT <- function(command, ...) {
         select(-scenario)
     }
 
-    #
-    # Agricultural MAC curve for SSP1
-    L2522.AgMAC_all_SSP_tech.change %>%
-      filter_spp(ssp = "SSP1") ->
-      L2522.MAC_Ag_TC_SSP1
+    # Agricultural and animal MAC curves for SSPs
+    L2522.MAC_Ag_TC_SSP1 <- filter_spp(L2522.AgMAC_all_SSP_tech.change, ssp = "SSP1")
+    L2522.MAC_An_TC_SSP1 <- filter_spp(L2522.MAC_an_all_SSP_tech.change, ssp = "SSP1")
+    L2522.MAC_Ag_TC_SSP2 <- filter_spp(L2522.AgMAC_all_SSP_tech.change, ssp = "SSP2")
+    L2522.MAC_An_TC_SSP2 <- filter_spp(L2522.MAC_an_all_SSP_tech.change, ssp = "SSP2")
+    L2522.MAC_Ag_TC_SSP5 <- filter_spp(L2522.AgMAC_all_SSP_tech.change, ssp = "SSP5")
+    L2522.MAC_An_TC_SSP5 <- filter_spp(L2522.MAC_an_all_SSP_tech.change, ssp = "SSP5")
 
-    # Animal MAC curve for SSP1
-    L2522.MAC_an_all_SSP_tech.change %>%
-      filter_spp(ssp = "SSP1") ->
-      L2522.MAC_An_TC_SSP1
-
-    # Agricultural MAC curve for SSP2
-    L2522.AgMAC_all_SSP_tech.change %>%
-      filter_spp(ssp = "SSP2") ->
-      L2522.MAC_Ag_TC_SSP2
-
-    # Animal MAC curve for SSP2
-    L2522.MAC_an_all_SSP_tech.change %>%
-      filter_spp(ssp = "SSP2") ->
-      L2522.MAC_An_TC_SSP2
-
-    # Agricultural MAC curve for SSP5
-    L2522.AgMAC_all_SSP_tech.change %>%
-      filter_spp(ssp = "SSP5") ->
-      L2522.MAC_Ag_TC_SSP5
-
-    # Agricultural MAC curve for SSP5
-    L2522.MAC_an_all_SSP_tech.change %>%
-      filter_spp(ssp = "SSP5") ->
-      L2522.MAC_An_TC_SSP5
 
     # ===================================================
 
