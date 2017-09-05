@@ -246,7 +246,9 @@ cmp_xml_files <- function(fleft, fright, raw = FALSE)
 {
   cmd <- system2('which', 'python', stdout=TRUE)
   py <- system.file('exec/xml_verify.py', package = 'gcamdata')
-  args <- normalizePath(c(py, fleft, fright))
+  ## normalizePath prints a warning when one of the files doesn't exist, but we'll
+  ## catch that as an error below.
+  suppressWarnings({args <- normalizePath(c(py, fleft, fright))})
   if(raw) {
     return(system2(cmd, args, stdout = TRUE))
   }

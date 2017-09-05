@@ -69,3 +69,12 @@ test_that('Dropped child node is detected',{
   expect_equal(rslt[4], "\tRight: 3 child nodes")
   expect_equal(rslt[5], "")
 })
+
+test_that('XML logical output mode is equivalent to raw mode', {
+  skip_on_os('windows')
+  expect_true(cmp_xml_files(basefile, basefile))
+  expect_false(cmp_xml_files(basefile, 'test-data/modeltime-chval.xml'))
+  ## Unfortunately, this produces both a warning and an error, so just test for the
+  ## right error text.
+  expect_error(cmp_xml_files(basefile, 'no-such-file.xml'), "Can't find file")
+})
