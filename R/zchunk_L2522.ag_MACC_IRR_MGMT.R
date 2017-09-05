@@ -1,4 +1,4 @@
-#' module_emissions_L2522.ag_MACC_IRR_MGMT 
+#' module_emissions_L2522.ag_MACC_IRR_MGMT
 #'
 #' Add new technology data from A_MACC_TechChange to the animal and agricultural marginal abatement cost "MAC" curves.
 #'
@@ -73,7 +73,7 @@ module_emissions_L2522.ag_MACC_IRR_MGMT <- function(command, ...) {
 
 
     # Add the technology change to the agricultural and animal MAC curves by matching SSP
-    # scenario and mac.control (spplysector).
+    # scenario and mac.control (supplysector).
     #
     # Agricultural MAC curve
     L2522.AgMAC_all_SSP %>%
@@ -94,41 +94,44 @@ module_emissions_L2522.ag_MACC_IRR_MGMT <- function(command, ...) {
 
 
     # Separate the MAC curves by SPP scenario.
+
+    # The filter_ssp function defined here will be used to filter
+    # the agricultural and animal MAC curvers for each SSP
+    filter_spp <- function(x, ssp) {
+      x %>%
+        filter(scenario == ssp) %>%
+        select(-scenario)
+    }
+
     #
     # Agricultural MAC curve for SSP1
     L2522.AgMAC_all_SSP_tech.change %>%
-      filter(scenario == "SSP1") %>%
-      select(-scenario) ->
+      filter_spp(ssp = "SSP1") ->
       L2522.MAC_Ag_TC_SSP1
 
     # Animal MAC curve for SSP1
     L2522.MAC_an_all_SSP_tech.change %>%
-      filter(scenario == "SSP1") %>%
-      select(-scenario) ->
+      filter_spp(ssp = "SSP1") ->
       L2522.MAC_An_TC_SSP1
 
     # Agricultural MAC curve for SSP2
     L2522.AgMAC_all_SSP_tech.change %>%
-      filter(scenario == "SSP2") %>%
-      select(-scenario) ->
+      filter_spp(ssp = "SSP2") ->
       L2522.MAC_Ag_TC_SSP2
 
     # Animal MAC curve for SSP2
     L2522.MAC_an_all_SSP_tech.change %>%
-      filter(scenario == "SSP2") %>%
-      select(-scenario) ->
+      filter_spp(ssp = "SSP2") ->
       L2522.MAC_An_TC_SSP2
 
     # Agricultural MAC curve for SSP5
     L2522.AgMAC_all_SSP_tech.change %>%
-      filter(scenario == "SSP5") %>%
-      select(-scenario) ->
+      filter_spp(ssp = "SSP5") ->
       L2522.MAC_Ag_TC_SSP5
 
     # Agricultural MAC curve for SSP5
     L2522.MAC_an_all_SSP_tech.change %>%
-      filter(scenario == "SSP5") %>%
-      select(-scenario) ->
+      filter_spp(ssp = "SSP5") ->
       L2522.MAC_An_TC_SSP5
 
     # ===================================================
