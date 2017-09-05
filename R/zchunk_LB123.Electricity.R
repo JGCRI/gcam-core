@@ -1,7 +1,7 @@
 #' module_gcam.usa_LB123.Electricity
 #'
-#' By state, calculates electricity fuel consumption, electricity generation, and inputs and outputs of net ownuse.
-#' Ownuse is electricity used by production/transformation facilities.
+#' Calculate electricity fuel consumption, electricity generation, and inputs and outputs of net ownuse
+#' (the electricity used by production/transformation facilities) by state.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -180,7 +180,7 @@ module_gcam.usa_LB123.Electricity <- function(command, ...) {
       add_comments("State fuel shares created from L101.inEIA_EJ_state_S_F multiplied by USA totals from L123.out_EJ_R_elec_F_Yh") %>%
       add_legacy_name("L123.out_EJ_state_elec_F") %>%
       add_precursors("L101.inEIA_EJ_state_S_F", "gcam-usa/NREL_us_re_technical_potential",
-                      "gcam-usa/states_subregions", "L123.out_EJ_R_elec_F_Yh") %>%
+                     "gcam-usa/states_subregions", "L123.out_EJ_R_elec_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L123.out_EJ_state_elec_F
 
@@ -190,7 +190,7 @@ module_gcam.usa_LB123.Electricity <- function(command, ...) {
       add_comments("Sum of all generation from L123.out_EJ_state_elec_F and L132.out_EJ_state_indchp_F") %>%
       add_legacy_name("L123.in_EJ_state_ownuse_elec") %>%
       add_precursors("L101.inEIA_EJ_state_S_F", "gcam-usa/NREL_us_re_technical_potential",
-                      "gcam-usa/states_subregions", "L123.out_EJ_R_elec_F_Yh", "temp-data-inject/L132.out_EJ_state_indchp_F") %>%
+                     "gcam-usa/states_subregions", "L123.out_EJ_R_elec_F_Yh", "temp-data-inject/L132.out_EJ_state_indchp_F") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L123.in_EJ_state_ownuse_elec
 
@@ -201,8 +201,8 @@ module_gcam.usa_LB123.Electricity <- function(command, ...) {
       add_comments("Net values created with states shares from EIA_elect_td_ownuse_prices and USA total net from L126 files") %>%
       add_legacy_name("L123.out_EJ_state_ownuse_elec") %>%
       add_precursors("L101.inEIA_EJ_state_S_F", "gcam-usa/NREL_us_re_technical_potential",
-                      "gcam-usa/states_subregions", "L123.out_EJ_R_elec_F_Yh", "temp-data-inject/L132.out_EJ_state_indchp_F",
-                      "L126.in_EJ_R_elecownuse_F_Yh", "L126.out_EJ_R_elecownuse_F_Yh", "gcam-usa/EIA_elect_td_ownuse_prices") %>%
+                     "gcam-usa/states_subregions", "L123.out_EJ_R_elec_F_Yh", "temp-data-inject/L132.out_EJ_state_indchp_F",
+                     "L126.in_EJ_R_elecownuse_F_Yh", "L126.out_EJ_R_elecownuse_F_Yh", "gcam-usa/EIA_elect_td_ownuse_prices") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L123.out_EJ_state_ownuse_elec
 

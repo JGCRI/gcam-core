@@ -18,8 +18,8 @@ the generated outputs: \code{L123.in_EJ_state_elec_F}, \code{L123.out_EJ_state_e
 The corresponding file in the original data system was \code{LB123.Electricity.R} (gcam-usa level1).
 }
 \description{
-By state, calculates electricity fuel consumption, electricity generation, and inputs and outputs of net ownuse.
-Ownuse is electricity used by production/transformation facilities.
+Calculate electricity fuel consumption, electricity generation, and inputs and outputs of net ownuse
+(the electricity used by production/transformation facilities) by state.
 }
 \details{
 By state, calculates electricity fuel consumption, electricity generation, and inputs and outputs of net ownuse.
