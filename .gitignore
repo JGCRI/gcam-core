@@ -15,8 +15,6 @@ R/*.html
 
 # Vignette files
 inst/doc
-vignettes/intro-luzlogr.html
-vignettes/intro-luzlogr.R
 
 # Proprietary files
 en_nonOECD.*

@@ -1,6 +1,6 @@
 #' module_emissions_L111.nonghg_en_R_S_T_Y
 #'
-#' This code produces non-ghg emission totals and non-ghg emission shares by total emissions.
+#' Calculate non-ghg emission totals and non-ghg emission shares of total emissions.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L111.nonghg_tg_R_en_S_F_Yh}, \code{L111.nonghg_tgej_R_en_S_F_Yh}. The corresponding file in the
 #' original data system was \code{L111.nonghg_en_R_S_T_Y.R} (emissions level1).
-#' @details This code produces two outputs: non-ghg emission totals and non-ghg emission shares by total emissions.
+#' @details This code produces two outputs: non-ghg emission totals and non-ghg emission shares of total emissions.
 #' First, non-ghg gas emissions are combined and grouped by sector and region, and then emissions are scaled, and international
 #' shipping & aviation emission data calculated based on total emission and total emission shares. Finally, non-ghg emission
 #' totals and shares are calculated by GCAM sector, fuel, technology, and driver type for EDGAR historical years.
@@ -16,7 +16,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author CDL September 2017
-
 module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
