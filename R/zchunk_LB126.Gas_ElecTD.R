@@ -23,7 +23,7 @@ module_gcam.usa_LB126.Gas_ElecTD <- function(command, ...) {
               "L101.EIA_use_all_Bbtu",
               "L101.inEIA_EJ_state_S_F",
               FILE = "temp-data-inject/L122.in_EJ_state_refining_F",
-              FILE = "temp-data-inject/L123.out_EJ_state_elec_F",
+              "L123.out_EJ_state_elec_F",
               FILE = "temp-data-inject/L132.in_EJ_state_indchp_F",
               FILE = "temp-data-inject/L132.in_EJ_state_indfeed_F",
               FILE = "temp-data-inject/L132.in_EJ_state_indnochp_F",
@@ -39,6 +39,10 @@ module_gcam.usa_LB126.Gas_ElecTD <- function(command, ...) {
              "L126.out_EJ_state_td_elec",
              "L126.in_EJ_state_td_elec"))
   } else if(command == driver.MAKE) {
+
+    # Silence package checks
+    GCAM_region_ID <- year <- value <- value.x <- value.y <- sector <- fuel <- state <- EIA_sector <-
+      EIA_fuel <- sector.x <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -61,9 +65,7 @@ module_gcam.usa_LB126.Gas_ElecTD <- function(command, ...) {
     L122.in_EJ_state_refining_F <- get_data(all_data, "temp-data-inject/L122.in_EJ_state_refining_F") %>%
       gather(year, value, starts_with("X")) %>%
       mutate(year = as.integer(substr(year, 2, 5)))
-    L123.out_EJ_state_elec_F <- get_data(all_data, "temp-data-inject/L123.out_EJ_state_elec_F") %>%
-      gather(year, value, starts_with("X")) %>%
-      mutate(year = as.integer(substr(year, 2, 5)))
+    L123.out_EJ_state_elec_F <- get_data(all_data, "L123.out_EJ_state_elec_F")
     L132.in_EJ_state_indchp_F <- get_data(all_data, "temp-data-inject/L132.in_EJ_state_indchp_F") %>%
       gather(year, value, starts_with("X")) %>%
       mutate(year = as.integer(substr(year, 2, 5)))
@@ -236,7 +238,7 @@ module_gcam.usa_LB126.Gas_ElecTD <- function(command, ...) {
                      "L126.out_EJ_R_gaspipe_F_Yh",
                      "L101.inEIA_EJ_state_S_F",
                      "temp-data-inject/L122.in_EJ_state_refining_F",
-                     "temp-data-inject/L123.out_EJ_state_elec_F",
+                     "L123.out_EJ_state_elec_F",
                      "temp-data-inject/L132.in_EJ_state_indchp_F",
                      "temp-data-inject/L132.in_EJ_state_indfeed_F",
                      "temp-data-inject/L132.in_EJ_state_indnochp_F",
@@ -268,7 +270,7 @@ module_gcam.usa_LB126.Gas_ElecTD <- function(command, ...) {
                      "L126.out_EJ_R_gaspipe_F_Yh",
                      "L101.inEIA_EJ_state_S_F",
                      "temp-data-inject/L122.in_EJ_state_refining_F",
-                     "temp-data-inject/L123.out_EJ_state_elec_F",
+                     "L123.out_EJ_state_elec_F",
                      "temp-data-inject/L132.in_EJ_state_indchp_F",
                      "temp-data-inject/L132.in_EJ_state_indfeed_F",
                      "temp-data-inject/L132.in_EJ_state_indnochp_F",
@@ -292,7 +294,7 @@ module_gcam.usa_LB126.Gas_ElecTD <- function(command, ...) {
                      "L101.EIA_use_all_Bbtu",
                      "L101.inEIA_EJ_state_S_F",
                      "temp-data-inject/L122.in_EJ_state_refining_F",
-                     "temp-data-inject/L123.out_EJ_state_elec_F",
+                     "L123.out_EJ_state_elec_F",
                      "temp-data-inject/L132.in_EJ_state_indchp_F",
                      "temp-data-inject/L132.in_EJ_state_indfeed_F",
                      "temp-data-inject/L132.in_EJ_state_indnochp_F",
@@ -309,7 +311,7 @@ module_gcam.usa_LB126.Gas_ElecTD <- function(command, ...) {
       add_comments("Sum of all tracked demands of electricity") %>%
       add_legacy_name("L126.out_EJ_state_td_elec") %>%
       add_precursors("temp-data-inject/L122.in_EJ_state_refining_F",
-                     "temp-data-inject/L123.out_EJ_state_elec_F",
+                     "L123.out_EJ_state_elec_F",
                      "temp-data-inject/L132.in_EJ_state_indchp_F",
                      "temp-data-inject/L132.in_EJ_state_indfeed_F",
                      "temp-data-inject/L132.in_EJ_state_indnochp_F",
@@ -327,7 +329,7 @@ module_gcam.usa_LB126.Gas_ElecTD <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L126.in_EJ_state_td_elec") %>%
       add_precursors("temp-data-inject/L122.in_EJ_state_refining_F",
-                     "temp-data-inject/L123.out_EJ_state_elec_F",
+                     "L123.out_EJ_state_elec_F",
                      "temp-data-inject/L132.in_EJ_state_indchp_F",
                      "temp-data-inject/L132.in_EJ_state_indfeed_F",
                      "temp-data-inject/L132.in_EJ_state_indnochp_F",
