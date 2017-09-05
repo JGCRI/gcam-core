@@ -244,9 +244,7 @@ add_node_equiv_xml <- function(dot, equiv_class) {
 #' @export
 cmp_xml_files <- function(fleft, fright, raw = FALSE)
 {
-  skip_on_os('windows')
   cmd <- system2('which', 'python', stdout=TRUE)
-  expect_true(file.exists(cmd))
   py <- system.file('exec/xml_verify.py', package = 'gcamdata')
   args <- normalizePath(c(py, fleft, fright))
   if(raw) {
