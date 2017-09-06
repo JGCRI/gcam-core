@@ -5,6 +5,7 @@ context("XML diff")
 basefile <- 'test-data/modeltime.xml'
 
 test_that('Python is available', {
+  skip_on_os('windows')
   cmd <- system2('which', 'python', stdout=TRUE)
   expect_true(file.exists(cmd), "Can't find python runtime for XML diff.")
 })
