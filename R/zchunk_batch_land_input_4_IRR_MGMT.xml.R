@@ -8,11 +8,11 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{land_input_4_IRR_MGMT.xml}. The corresponding file in the
 #' original data system was \code{batch_land_input_4_IRR_MGMT.xml.R} (aglu XML).
-module_aglu_batch_land_input_4_IRR_MGMT.xml_DISABLED <- function(command, ...) {
+module_aglu_batch_land_input_4_IRR_MGMT.xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L2242.LN4_Logit",
-              "L2242.LN4_NodeGhostShare",
-              "L2242.LN4_NodeIsGhostShareRel"))
+    return(c("L2242.LN4_Logit",
+             "L2242.LN4_NodeGhostShare",
+             "L2242.LN4_NodeIsGhostShareRel"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "land_input_4_IRR_MGMT.xml"))
   } else if(command == driver.MAKE) {
@@ -28,9 +28,10 @@ module_aglu_batch_land_input_4_IRR_MGMT.xml_DISABLED <- function(command, ...) {
 
     # Produce outputs
     create_xml("land_input_4_IRR_MGMT.xml") %>%
-      add_xml_data(L2242.LN4_Logit,"LN4_Logit") %>%
+      add_logit_tables_xml(L2242.LN4_Logit,"LN4_Logit") %>%
       add_xml_data(L2242.LN4_NodeGhostShare,"LN4_NodeGhostShare") %>%
       add_xml_data(L2242.LN4_NodeIsGhostShareRel,"LN4_NodeIsGhostShareRel") %>%
+      add_rename_landnode_xml() %>%
       add_precursors("L2242.LN4_Logit", "L2242.LN4_NodeGhostShare", "L2242.LN4_NodeIsGhostShareRel") ->
       land_input_4_IRR_MGMT.xml
 
