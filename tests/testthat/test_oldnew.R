@@ -142,18 +142,18 @@ test_that('New XML outputs match old XML outputs', {
   xml_dir <- normalizePath(file.path("../..", XML_DIR))
   expect_true(file.exists(xml_dir))
 
-  for(newxml in list.files(xml_dir, full.names=TRUE)) {
+  for(newxml in list.files(xml_dir, full.names = TRUE)) {
     oldxml <- list.files(xml_cmp_dir, pattern = paste0('^',basename(newxml),'$'), recursive = TRUE,
                          full.names = TRUE)
     if(length(oldxml) > 0) {
       expect_equal(length(oldxml), 1,
-                   info=paste('Testing file', newxml, ': Found', length(oldxml),
-                              'comparison files.  There can be only one.'))
+                   info = paste('Testing file', newxml, ': Found', length(oldxml),
+                                'comparison files.  There can be only one.'))
       ## If we come back with multiple matching files, we'll try to run the test anyhow, selecting
       ## the first one as the true comparison.
       expect_true(cmp_xml_files(oldxml[1], newxml),
-                  info=paste('Sorry to be the one to tell you, but new XML file',
-                             newxml, "is not equivalent to its old version."))
+                  info = paste('Sorry to be the one to tell you, but new XML file',
+                               newxml, "is not equivalent to its old version."))
     }
     else {
       ## If no comparison file found, issue a message, but don't fail the test.
