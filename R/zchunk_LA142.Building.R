@@ -14,7 +14,7 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_gcam.usa_LA142.Building_DISABLED <- function(command, ...) {
+module_gcam.usa_LA142.Building <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c( "L142.in_EJ_R_bld_F_Yh",
               "L101.inEIA_EJ_state_S_F"))
@@ -58,7 +58,7 @@ module_gcam.usa_LA142.Building_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L142.in_EJ_state_bld_F") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("L142.in_EJ_R_bld_F_Yh", "L101.inEIA_EJ_state_S_F") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L142.in_EJ_state_bld_F
