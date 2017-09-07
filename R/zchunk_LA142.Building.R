@@ -28,25 +28,24 @@ module_gcam.usa_LA142.Building <- function(command, ...) {
     L142.in_EJ_R_bld_F_Yh <- get_data(all_data, "L142.in_EJ_R_bld_F_Yh")
     L101.inEIA_EJ_state_S_F <- get_data(all_data, "L101.inEIA_EJ_state_S_F")
 
-
     # Silence package checks
     sector <- fuel <- year <- value <- state_val <- usa_val <-
       state <- . <- GCAM_region_ID <- LEVEL2_DATA_NAMES <-
       curr_table <- value.x <- value.y <- NULL
 
     # ===================================================
-    # Scaled national-level building energy consumption
+    # Scale national-level building energy consumption
     # by the portion of total US building energy use by fuel
     # for each state and sector.
 
     # First, subset the SEDS table so that is contains only the fuels that are part of the GCAM buildings for the
     # residential and commercial sectors.
     L101.inEIA_EJ_state_S_F %>%
-      filter(sector %in% c("comm", "resid") , fuel %in% L142.in_EJ_R_bld_F_Yh$fuel) ->
+      filter(sector %in% c("comm", "resid"), fuel %in% L142.in_EJ_R_bld_F_Yh$fuel) ->
       L142.in_EJ_state_bld_F_unscaled
 
-    # Aggergate the SEDS table by fuel to find the annual national building fuel use.
-    # The national values will be used to calculate each state's portional fuel allocation.
+    # Aggregate the SEDS table by fuel to find the annual national building fuel use.
+    # The national values will be used to calculate each state's portion of fuel allocation.
     L142.in_EJ_state_bld_F_unscaled %>%
       filter(year %in% HISTORICAL_YEARS) %>%
       group_by(year, fuel) %>%
@@ -56,9 +55,10 @@ module_gcam.usa_LA142.Building <- function(command, ...) {
     # Calculate the portion of total US building energy use by fuel for each state and sector.
     L142.in_EJ_state_bld_F_unscaled %>%
       rename(state_val = value) %>%
-      left_join_error_no_match(L142.in_EJ_USA_bld_F_unscaled %>% rename(usa_val = value), by = c("fuel", "year")) %>%
+      left_join_error_no_match(L142.in_EJ_USA_bld_F_unscaled %>% rename(usa_val = value),
+                               by = c("fuel", "year")) %>%
       mutate(value = state_val / usa_val) %>%
-      select(-state_val, - usa_val) ->
+      select(-state_val, -usa_val) ->
       L142.in_pct_state_bld_F
 
     # Now aggregate the building sector energy consumption to entire GCAM regions.
@@ -67,7 +67,7 @@ module_gcam.usa_LA142.Building <- function(command, ...) {
       summarise(value = sum(value)) ->
       L142.in_EJ_R_bldtot_F_Yh
 
-    # Assume the GCAM US region Id is 1 and select the aggerated
+    # Assume the GCAM US region Id is 1 and select the aggregated
     # building sector energy consumption for the US.
     L142.in_EJ_R_bldtot_F_Yh %>%
       filter(GCAM_region_ID == 1) %>%
