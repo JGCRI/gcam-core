@@ -1,6 +1,6 @@
 #' module_socioeconomics_L100.GDP_hist
 #'
-#' Briefly describe what this chunk does.
+#' Prepare GDP database for later use: filter missing values and convert units to 1990 USD.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,12 +8,15 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L100.gdp_mil90usd_ctry_Yh}. The corresponding file in the
 #' original data system was \code{L100.GDP_hist.R} (socioeconomics level1).
-#' @details Describe in detail what this chunk does.
+#' @details At present the GDP database used requires no downscaling and all
+#' major countries are included, so really no processing steps are needed.
+#' All that happens in this file right now is filtering out \code{NA} values
+#' and converting the units to GCAM's GDP unit (million 1990 USD).
 #' @importFrom assertthat assert_that
 #' @importFrom tibble tibble
 #' @import dplyr
 #' @importFrom tidyr gather spread
-#' @author BBL
+#' @author BBL February 2017
 module_socioeconomics_L100.GDP_hist <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "socioeconomics/USDA_GDP_MER"))
@@ -28,12 +31,6 @@ module_socioeconomics_L100.GDP_hist <- function(command, ...) {
     # Load required inputs
     usda_gdp_mer <- get_data(all_data, "socioeconomics/USDA_GDP_MER")
     assert_that(tibble::is.tibble(usda_gdp_mer))
-
-    # At present the GDP database used requires no downscaling and all
-    # major countries are included, so really no processing steps are needed.
-    # All that happens in this file right now is subsetting the years that
-    # will be required by later files, and converting the units to GCAM's
-    # GDP unit (million 1990 USD)
 
     # Convert to long form, filter to historical years, convert units
     usda_gdp_mer %>%
