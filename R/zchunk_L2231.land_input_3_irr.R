@@ -29,6 +29,8 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
              "L121.CarbonContent_kgm2_R_LT_GLU",
              "L122.ag_EcYield_kgm2_R_C_Y_GLU",
              "L125.LC_bm2_R_LT_Yh_GLU",
+             FILE = "temp-data-inject/L201.AgYield_bio_grass",
+             FILE = "temp-data-inject/L201.AgYield_bio_tree",
              "L2012.AgYield_bio_ref"))
  #      "L223.LN3_Logit",
  # "L223.LN3_HistUnmgdAllocation",
@@ -42,16 +44,16 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
  # "L223.LN3_MgdCarbon_noncrop"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2231.LN3_LogitTables[[ curr_table_name ]]",
-"L2231.LN3_Logit",
-"L2231.LN3_HistUnmgdAllocation",
-"L2231.LN3_UnmgdAllocation",
-"L2231.NodeEquiv",
-"L2231.LN3_NoEmissCarbon",
-"L2231.LN3_NodeCarbon",
-"L2231.LN3_HistMgdAllocation_noncrop",
-"L2231.LN3_MgdAllocation_noncrop",
-"L2231.LN3_UnmgdCarbon",
-"L2231.LN3_MgdCarbon_noncrop"))
+             "L2231.LN3_Logit",
+             "L2231.LN3_HistUnmgdAllocation",
+             "L2231.LN3_UnmgdAllocation",
+             "L2231.NodeEquiv",
+             "L2231.LN3_NoEmissCarbon",
+             "L2231.LN3_NodeCarbon",
+             "L2231.LN3_HistMgdAllocation_noncrop",
+             "L2231.LN3_MgdAllocation_noncrop",
+             "L2231.LN3_UnmgdCarbon",
+             "L2231.LN3_MgdCarbon_noncrop"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -70,7 +72,11 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     L121.CarbonContent_kgm2_R_LT_GLU <- get_data(all_data, "L121.CarbonContent_kgm2_R_LT_GLU")
     L122.ag_EcYield_kgm2_R_C_Y_GLU <- get_data(all_data, "L122.ag_EcYield_kgm2_R_C_Y_GLU")
     L125.LC_bm2_R_LT_Yh_GLU <- get_data(all_data, "L125.LC_bm2_R_LT_Yh_GLU")
-    L2012.AgYield_bio_ref <- get_data(all_data, "L2012.AgYield_bio_ref")
+    if(OLD_DATA_SYSTEM_BEHAVIOR){
+      L201.AgYield_bio_grass <- get_data(all_data, "temp-data-inject/L201.AgYield_bio_grass")
+      L201.AgYield_bio_tree  <- get_data(all_data, "temp-data-inject/L201.AgYield_bio_tree")
+    }
+    L2012.AgYield_bio_ref  <- get_data(all_data, "L2012.AgYield_bio_ref")
 
     # silence package check notes
     GCAM_commodity <- GCAM_region_ID <- region <- value <- year <- GLU <- GLU_name <- GLU_code <-
@@ -115,6 +121,32 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     # L223.LN3_MgdAllocation_noncrop <- get_data(all_data, "L223.LN3_MgdAllocation_noncrop")
     # L223.LN3_UnmgdCarbon <- get_data(all_data, "L223.LN3_UnmgdCarbon")
     # L223.LN3_MgdCarbon_noncrop <- get_data(all_data, "L223.LN3_MgdCarbon_noncrop")
+
+    # Build table
+
+    # Determine the node combinations applicable at this level:
+    L125.LC_bm2_R_LT_Yh_GLU %>%
+      select(GCAM_region_ID, GLU, Land_Type) %>%
+      # not all land types have node matches, so use left_join
+      left_join(select(A_LT_Mapping, Land_Type, LandNode1, LandNode2, LandNode3),
+                               by = "Land_Type") %>%
+      select(-Land_Type) %>%
+      distinct() %>%
+      na.omit() ->
+      L223.LN3
+
+
+    # Biomass leaves and nodes - matching those created in L201.
+    ### how to handle old vs new? need L201 to match old ds but only have L2012 with different irr_mgmt cases
+    ### shouldn't want temp-data-inject forever? I think L2012 will have to be updated to produce both types of
+    ### outputs? irr_mgmt and not ie L201 and L2012.
+
+    # bind_rows(L201.AgYield_bio_grass, L201.AgYield_bio_tree) %>%
+    #   select(GCAM_region_ID, AgProductionTechnology) %>%
+    #   distinct() %>%
+    #   # not all land types have node matches, so use left_join
+    #   left_join(select(A_LT_Mapping, Land_Type, LandNode1, LandNode2, LandNode3),
+    #             by = "Land_Type") %>%
 
 
 
