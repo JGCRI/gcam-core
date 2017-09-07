@@ -12,23 +12,27 @@ test_that('Python is available', {
 
 test_that('Identical XML files are equivalent', {
   skip_on_os('windows')
-  expect_silent(cmp_xml_files(basefile, basefile, raw=TRUE))
+  expect_silent({rslt <- cmp_xml_files(basefile, basefile, raw=TRUE)})
+  expect_equal(attr(rslt, 'status'), 0)
 })
 
 test_that('Files differing only in whitespace are equivalent',{
   skip_on_os('windows')
-  expect_silent(cmp_xml_files(basefile, 'test-data/modeltime-nows.xml', raw=TRUE))
+  expect_silent({rslt <- cmp_xml_files(basefile, 'test-data/modeltime-nows.xml', raw=TRUE)})
+  expect_equal(attr(rslt, 'status'), 0)
 })
 
 test_that("Ordering of child nodes doesn't matter", {
   skip_on_os('windows')
-  expect_silent(cmp_xml_files(basefile, 'test-data/modeltime-rearrange.xml', raw=TRUE))
+  expect_silent({rslt <- cmp_xml_files(basefile, 'test-data/modeltime-rearrange.xml', raw=TRUE)})
+  expect_equal(attr(rslt, 'status'), 0)
 })
 
 test_that("Rounding errors don't matter", {
   skip_on_os('windows')
-  expect_silent(cmp_xml_files('test-data/rounding-test1.xml',
-                              'test-data/rounding-test2.xml', raw=TRUE))
+  expect_silent({rslt <- cmp_xml_files('test-data/rounding-test1.xml',
+                                       'test-data/rounding-test2.xml', raw=TRUE)})
+  expect_equal(attr(rslt, 'status'), 0)
 })
 
 test_that('Changed tag is detected', {
@@ -71,11 +75,9 @@ test_that('Dropped child node is detected',{
   expect_equal(rslt[5], "")
 })
 
-test_that('XML logical output mode is equivalent to raw mode', {
+test_that('standard output mode is equivalent to raw mode', {
   skip_on_os('windows')
   expect_true(cmp_xml_files(basefile, basefile))
   expect_false(cmp_xml_files(basefile, 'test-data/modeltime-chval.xml'))
-  ## Unfortunately, this produces both a warning and an error, so just test for the
-  ## right error text.
   expect_error(cmp_xml_files(basefile, 'no-such-file.xml'), "Can't find file")
 })
