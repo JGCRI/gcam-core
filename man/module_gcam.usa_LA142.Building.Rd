@@ -18,11 +18,11 @@ the generated outputs: \code{L142.in_EJ_state_bld_F}. The corresponding file in 
 original data system was \code{LA142.Building.R} (gcam-usa level1).
 }
 \description{
-Downscaling each state and sector's shares of USA building energy use by fuel
+Briefly describe what this chunk does.
 }
 \details{
-Scaled national-level building energy consumption by portion of total US building energy use by fuel for each state and sector from the SEDS table.
+Describe in detail what this chunk does.
 }
 \author{
-KD September 2017
+YourInitials CurrentMonthName 2017
 }
