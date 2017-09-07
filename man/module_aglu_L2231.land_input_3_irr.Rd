@@ -18,11 +18,35 @@ the generated outputs: \code{L2231.LN3_LogitTables[[ curr_table_name ]]}, \code{
 original data system was \code{L2231.land_input_3_irr.R} (aglu level2).
 }
 \description{
-Briefly describe what this chunk does.
+This chunk produces L2231.LN3_Logit, L2231.LN3_HistUnmgdAllocation, L2231.LN3_UnmgdAllocation,
+L2231.LN3_HistMgdAllocation_noncrop, L2231.LN3_MgdAllocation_noncrop, L2231.LN3_UnmgdCarbon,
+ L2231.LN3_MgdCarbon_noncrop, L2231.NodeEquiv, L2231.LN3_NoEmissCarbon, L2231.LN3_NodeCarbon.
 }
 \details{
-Describe in detail what this chunk does.
+\itemize{
+\item{"L2231.LN3_Logit: Logit exponent of the third land nest by region.
+AgLU regions are given externally defined constant logit information."}
+\item{"L2231.LN3_HistUnmgdAllocation: Historical land cover for unmanaged land (LT_GLU) in the third nest by region.
+Historical land cover for unmanaged land in the third nest, from L125 land cover data."}
+\item{"L2231.LN3_UnmgdAllocation: Land cover in the model base periods for unmanaged land (LT_GLU) in the third nest by region.
+Land cover in the model base periods for unmanaged land in the third nest, from L125 land cover data."}
+\item{"L2231.LN3_HistMgdAllocation_noncrop: Historical land cover for non-crop managed land (LT_GLU) in the third nest by region.
+Historical land cover for non-crop managed land in the third nest, from L125 land cover data."}
+\item{"L2231.LN3_MgdAllocation_noncrop,: Land cover in the model base periods for non-crop managed land (LT_GLU) in the third nest by region.
+Land cover in the model base periods for non-crop managed land in the third nest, from L125 land cover data."}
+\item{"L2231.LN3_UnmgdCarbon: Carbon content for unmanaged land (LT_GLU) in third nest by region.
+Carbon content info for unmanaged land in the third nest including soil and vegetative carbon,
+from L125 land cover data, L121 carbon content data, and GCAMLandLeaf_CdensityLT assumptions."}
+\item{"L2231.LN3_MgdCarbon_noncrop: Carbon content for non-crop managed land (LT_GLU) in third nest by region.
+Carbon content info for non-crop managed land in the third nest including soil and vegetative carbon,
+from L125 land cover data, L121 carbon content data, and GCAMLandLeaf_CdensityLT assumptions."}
+\item{"L2231.NodeEquiv: Node tag equivalence list to minimize extra tables to read in same parameters;
+manually formed with no inputs."}
+\item{"L2231.LN3_NoEmissCarbon: Sets the no-emiss-carbon-calc as the type of carbon to use in forest leaves by region."}
+\item{"L2231.LN3_NodeCarbon: Sets the node-carbon-calc to drive the carbon calc between forest leaves, by region, and
+places the node carbon calc in the node just above the leaves."}
+}
 }
 \author{
-YourInitials CurrentMonthName 2017
+ACS September 2017
 }
