@@ -28,6 +28,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
              "L111.ag_resbio_R_C",
              "L121.CarbonContent_kgm2_R_LT_GLU",
              "L122.ag_EcYield_kgm2_R_C_Y_GLU",
+             "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",
              "L125.LC_bm2_R_LT_Yh_GLU",
              FILE = "temp-data-inject/L201.AgYield_bio_grass",
              FILE = "temp-data-inject/L201.AgYield_bio_tree",
@@ -71,6 +72,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     L111.ag_resbio_R_C <- get_data(all_data, "L111.ag_resbio_R_C")
     L121.CarbonContent_kgm2_R_LT_GLU <- get_data(all_data, "L121.CarbonContent_kgm2_R_LT_GLU")
     L122.ag_EcYield_kgm2_R_C_Y_GLU <- get_data(all_data, "L122.ag_EcYield_kgm2_R_C_Y_GLU")
+    L122.LC_bm2_R_HarvCropLand_C_Yh_GLU <- get_data(all_data, "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU")
     L125.LC_bm2_R_LT_Yh_GLU <- get_data(all_data, "L125.LC_bm2_R_LT_Yh_GLU")
     if(OLD_DATA_SYSTEM_BEHAVIOR){
       L201.AgYield_bio_grass <- get_data(all_data, "temp-data-inject/L201.AgYield_bio_grass")
@@ -100,10 +102,15 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       rename(mature.age = `mature age`) ->
       L121.CarbonContent_kgm2_R_LT_GLU
 
-    L122.ag_EcYield_kgm2_R_C_Y_GLU %>%
-      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      replace_GLU(map = basin_to_country_mapping) ->
-      L122.ag_EcYield_kgm2_R_C_Y_GLU
+    # L122.ag_EcYield_kgm2_R_C_Y_GLU %>%
+    #   left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+    #   replace_GLU(map = basin_to_country_mapping) ->
+    #   L122.ag_EcYield_kgm2_R_C_Y_GLU
+    #
+    # L122.LC_bm2_R_HarvCropLand_C_Yh_GLU %>%
+    #   left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+    #   replace_GLU(map = basin_to_country_mapping) ->
+    #   L122.LC_bm2_R_HarvCropLand_C_Yh_GLU
 
     L125.LC_bm2_R_LT_Yh_GLU %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
@@ -145,40 +152,170 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       L223.LN3_Logit
 
 
-    # L223.LN3_leaf_bio: Biomass leaves and nodes, matching those created in L201.
-    ### how to handle old vs new? need L201 to match old ds but only have L2012 with different irr_mgmt cases
-    ### shouldn't want temp-data-inject forever? I think L2012 will have to be updated to produce both types of
-    ### outputs? irr_mgmt and not ie L201 and L2012.
-    bind_rows(L201.AgYield_bio_grass, L201.AgYield_bio_tree) %>%
-      select(region, AgProductionTechnology) %>%
-      distinct() %>%
-      # recreate remove_GLU function in old DS with a separate and unite (the latter due to biomass_grass, biomass_tree):
-      separate(AgProductionTechnology, c("tech1", "tech2", "GLU"), sep = "_") %>%
-      unite(AgProductionTechnology, tech1, tech2, sep = aglu.CROP_DELIMITER) %>%
-      # not all land types have node matches, so use left_join
-      left_join(select(A_LT_Mapping, Land_Type, LandNode1, LandNode2, LandNode3),
-                by = c("AgProductionTechnology" ="Land_Type")) %>%
-      append_GLU(var1 = "LandNode1", var2 = "LandNode2", var3 = "LandNode3", var4 = "AgProductionTechnology") %>%
-      mutate(LandLeaf = AgProductionTechnology) ->
-      L223.LN3_leaf_bio
+    # # L223.LN3_leaf_bio: Biomass leaves and nodes, matching those created in L201.
+    # ### how to handle old vs new? need L201 to match old ds but only have L2012 with different irr_mgmt cases
+    # ### shouldn't want temp-data-inject forever? I think L2012 will have to be updated to produce both types of
+    # ### outputs? irr_mgmt and not ie L201 and L2012.
+    # bind_rows(L201.AgYield_bio_grass, L201.AgYield_bio_tree) %>%
+    #   select(region, AgProductionTechnology) %>%
+    #   distinct() %>%
+    #   # recreate remove_GLU function in old DS with a separate and unite (the latter due to biomass_grass, biomass_tree):
+    #   separate(AgProductionTechnology, c("tech1", "tech2", "GLU"), sep = "_") %>%
+    #   unite(AgProductionTechnology, tech1, tech2, sep = aglu.CROP_DELIMITER) %>%
+    #   # not all land types have node matches, so use left_join
+    #   left_join(select(A_LT_Mapping, Land_Type, LandNode1, LandNode2, LandNode3),
+    #             by = c("AgProductionTechnology" ="Land_Type")) %>%
+    #   append_GLU(var1 = "LandNode1", var2 = "LandNode2", var3 = "LandNode3", var4 = "AgProductionTechnology") %>%
+    #   mutate(LandLeaf = AgProductionTechnology) ->
+    #   L223.LN3_leaf_bio
 
 
-    # L223.LN3_LeafGhostShare: Default shares for new technologies in specified years
-    # Default shares do not interpolate in the model, so write it out in all model future years (starting with first bio year)
-    FUTURE_YEARS >= aglu.BIO_START_YEAR
-    L223.LN3_leaf_bio %>%
-      mutate(LandAllocatorRoot = "root") %>%
-      repeat_add_columns(tibble::tibble(year = FUTURE_YEARS)) %>%
-      filter(year >= aglu.BIO_START_YEAR) %>%
-      # left join to keep NA's for interpolation in next step:
-      left_join(A_bio_ghost_share, by = "year") %>%
-      mutate(ghost.unnormalized.share = approx_fun(year, ghost.share, rule = 2)) %>%
-      select(one_of(c(LEVEL2_DATA_NAMES[["LN3_LeafGhostShare"]]))) ->
-      L223.LN3_LeafGhostShare
+    # # L223.LN3_LeafGhostShare: Default shares for new technologies in specified years
+    # # Default shares do not interpolate in the model, so write it out in all model future years (starting with first bio year)
+    # ### uses the L201
+    # L223.LN3_leaf_bio %>%
+    #   mutate(LandAllocatorRoot = "root") %>%
+    #   repeat_add_columns(tibble::tibble(year = FUTURE_YEARS)) %>%
+    #   filter(year >= aglu.BIO_START_YEAR) %>%
+    #   # left join to keep NA's for interpolation in next step:
+    #   left_join(A_bio_ghost_share, by = "year") %>%
+    #   mutate(ghost.unnormalized.share = approx_fun(year, ghost.share, rule = 2)) %>%
+    #   select(one_of(c(LEVEL2_DATA_NAMES[["LN3_LeafGhostShare"]]))) ->
+    #   L223.LN3_LeafGhostShare
+    #
+    #
+    # # L223.LN3_LeafIsGhostShareRel: relative information about the ghost share
+    # ### uses the L201
+    # L223.LN3_leaf_bio %>%
+    #   mutate(LandAllocatorRoot = "root",
+    #          is.ghost.share.relative = 1) %>%
+    #   select(one_of(c(LEVEL2_DATA_NAMES[["LN3_LeafIsGhostShareRel"]]))) ->
+    #   L223.LN3_LeafIsGhostShareRel
+
+
+    # Land Use History
+
+    # Unmanaged land tables
+    #
+    # These tables are formed from a master table, made by filtering and adding
+    # node_leaf_names in L125.LC.
+    L125.LC_bm2_R_LT_Yh_GLU %>%
+      filter(Land_Type %in% A_LandLeaf_Unmgd3$UnmanagedLandLeaf,
+             year %in% c(LAND_HISTORY_YEARS, BASE_YEARS)) %>%
+      mutate(allocation = round(value, aglu.DIGITS_LAND_USE)) %>%
+      add_node_leaf_names(nesting_table = A_LandLeaf_Unmgd3, leaf_name = "UnmanagedLandLeaf",
+                          LN1 = "LandNode1", LN2 = "LandNode2", LN3 = "LandNode3") ->
+      L223.LC_bm2_R_Unmgd3_Yh_GLU
+
+    # L223.LN3_HistUnmgdAllocation: Historical land cover, unmanaged land in the third nest
+    # L223.LN3_UnmgdAllocation: Model base period land cover, unmanaged land in the third nest
+    # Formed from filtering the master table by different years.
+    L223.LC_bm2_R_Unmgd3_Yh_GLU %>%
+      filter(year %in% LAND_HISTORY_YEARS) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["LN3_HistUnmgdAllocation"]])) ->
+      L223.LN3_HistUnmgdAllocation
+
+    L223.LC_bm2_R_Unmgd3_Yh_GLU %>%
+      filter(year %in% BASE_YEARS) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["LN3_UnmgdAllocation"]])) ->
+      L223.LN3_UnmgdAllocation
+
+
+    # Managed land - non-crop (forest)
+    #
+    # These tables are formed from a master table, made by filtering and adding
+    # node_leaf_names in L125.LC.
+    L125.LC_bm2_R_LT_Yh_GLU %>%
+      filter(Land_Type %in% A_LandLeaf3$LandLeaf,
+             year %in% c(LAND_HISTORY_YEARS, BASE_YEARS)) %>%
+      mutate(allocation = round(value, aglu.DIGITS_LAND_USE)) %>%
+      add_node_leaf_names(nesting_table = A_LandLeaf3, leaf_name = "LandLeaf",
+                          LN1 = "LandNode1", LN2 = "LandNode2", LN3 = "LandNode3") ->
+      L223.LC_bm2_R_Mgd3_Yh_GLU
+
+    # L223.LN3_HistMgdAllocation_noncrop: Historical land cover, managed land in the third nest (noncrop)
+    # L223.LN3_MgdAllocation_noncrop: Model base period land cover, managed land in the third nest (noncrop)
+    # Formed from filtering the master table by different years.
+    L223.LC_bm2_R_Mgd3_Yh_GLU %>%
+      filter(year %in% LAND_HISTORY_YEARS) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["LN3_HistMgdAllocation"]])) ->
+      L223.LN3_HistMgdAllocation_noncrop
+
+    L223.LC_bm2_R_Mgd3_Yh_GLU %>%
+      filter(year %in% BASE_YEARS) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["LN3_MgdAllocation"]])) ->
+      L223.LN3_MgdAllocation_noncrop
+
+
+    # L223.LN3_UnmgdCarbon: Carbon content info, unmanaged land in the third nest
+    L223.LC_bm2_R_Unmgd3_Yh_GLU %>%
+      filter(year == max(BASE_YEARS)) %>%
+      left_join_error_no_match(select(GCAMLandLeaf_CdensityLT, Land_Type, LandLeaf), by = c("Land_Type" = "LandLeaf")) %>%
+      rename(Cdensity_LT = Land_Type.y) %>%
+      add_carbon_info(carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
+      replace_na()
+      select(one_of(LEVEL2_DATA_NAMES[["LN2_UnmgdCarbon"]])) ->
+
+
+    L2231.NodeEquiv
+
+    L2231.LN3_NoEmissCarbon
+
+
+    L2231.LN3_NodeCarbon
 
 
 
+    L2231.LN3_MgdCarbon_noncrop
 
+
+    # # Managed land - crop
+    # #
+    # # These tables are formed from a master table, made by filtering and adding
+    # # node_leaf_names in L122.LC
+    # L122.LC_bm2_R_HarvCropLand_C_Yh_GLU %>%
+    #   group_by(GCAM_region_ID, region, GLU, GCAM_commodity) %>%
+    #   mutate(rowSum = sum(value)) %>%
+    #   ungroup %>%
+    #   filter(rowSum != 0,
+    #          year %in% c(LAND_HISTORY_YEARS, BASE_YEARS)) %>%
+    #   select(-rowSum) %>%
+    #   mutate(allocation = round(value, aglu.DIGITS_LAND_USE)) %>%
+    #   add_node_leaf_names(nesting_table = A_LandLeaf3, leaf_name = "LandLeaf",
+    #                       LT_name = "GCAM_commodity",
+    #                       LN1 = "LandNode1", LN2 = "LandNode2", LN3 = "LandNode3") ->
+    #   L223.LC_bm2_R_HarvCropLand_C_Yh_GLU
+    #
+    # # L223.LN3_HistMgdAllocation_crop: Historical land cover, managed land in the third nest, cropland
+    # # L223.LN3_MgdAllocation_crop: Model base year land cover, managed land in the third nest, cropland
+    # L223.LC_bm2_R_HarvCropLand_C_Yh_GLU %>%
+    #   filter(year %in% LAND_HISTORY_YEARS) %>%
+    #   select(one_of(LEVEL2_DATA_NAMES[["LN3_HistMgdAllocation"]])) ->
+    #   L223.LN3_HistMgdAllocation_crop
+    #
+    # L223.LC_bm2_R_HarvCropLand_C_Yh_GLU %>%
+    #   filter(year %in% BASE_YEARS) %>%
+    #   select(one_of(LEVEL2_DATA_NAMES[["LN3_MgdAllocation"]])) ->
+    #   L223.LN3_MgdAllocation_crop
+    #
+    #
+    # # L223.LN3_HistMgdAllocation_bio: Historical land cover, managed land in the third nest, bioenergy
+    # ### Uses L201
+    # L223.LN3_leaf_bio %>%
+    #   mutate(LandAllocatorRoot = "root",
+    #          allocation = 0) %>%
+    #   repeat_add_columns(tibble::tibble(year = LAND_HISTORY_YEARS)) %>%
+    #   select(one_of(LEVEL2_DATA_NAMES[["LN3_HistMgdAllocation"]])) ->
+    #   L223.LN3_HistMgdAllocation_bio
+    #
+    # # L223.LN3_MgdAllocation_bio: Model base year land cover, managed land in the third nest, bioenergy
+    # ### uses L201
+    # L223.LN3_leaf_bio %>%
+    #   mutate(LandAllocatorRoot = "root",
+    #          allocation = 0) %>%
+    #   repeat_add_columns(tibble::tibble(year = BASE_YEARS)) %>%
+    #   select(one_of(LEVEL2_DATA_NAMES[["LN3_MgdAllocation"]])) ->
+    #   L223.LN3_MgdAllocation_bio
 
 
     # Produce outputs
@@ -435,6 +572,7 @@ tibble() %>%
                  "L111.ag_resbio_R_C",
                  "L121.CarbonContent_kgm2_R_LT_GLU",
                  "L122.ag_EcYield_kgm2_R_C_Y_GLU",
+                 "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",
                  "L125.LC_bm2_R_LT_Yh_GLU",
                  "L2012.AgYield_bio_ref") %>%
   # typical flags, but there are others--see `constants.R`
