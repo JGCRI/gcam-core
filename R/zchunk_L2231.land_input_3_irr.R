@@ -253,72 +253,58 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       left_join_error_no_match(select(GCAMLandLeaf_CdensityLT, Land_Type, LandLeaf), by = c("Land_Type" = "LandLeaf")) %>%
       rename(Cdensity_LT = Land_Type.y) %>%
       add_carbon_info(carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
-      replace_na()
-      select(one_of(LEVEL2_DATA_NAMES[["LN2_UnmgdCarbon"]])) ->
+      select(one_of(LEVEL2_DATA_NAMES[["LN3_UnmgdCarbon"]])) ->
+      L223.LN3_UnmgdCarbon
+
+    # If any regions are zero in all periods, they will return missing values here. The specific value doesn't matter because
+    # these land use types will be zero in all periods, but there is an assert in the code prohibiting mature age from being zero.
+    L223.LN3_UnmgdCarbon[is.na(L223.LN3_UnmgdCarbon)] <- 1
 
 
-    L2231.NodeEquiv
-
-    L2231.LN3_NoEmissCarbon
-
-
-    L2231.LN3_NodeCarbon
-
-
-
-    L2231.LN3_MgdCarbon_noncrop
+   # L223.LN3_MgdCarbon_noncrop: Carbon content info, managed land in the third nest, non-crop (forest)
+    L223.LC_bm2_R_Mgd3_Yh_GLU %>%
+      filter(year == max(BASE_YEARS)) %>%
+      left_join_error_no_match(select(GCAMLandLeaf_CdensityLT, Land_Type, LandLeaf), by = c("Land_Type" = "LandLeaf")) %>%
+      rename(Cdensity_LT = Land_Type.y) %>%
+      add_carbon_info(carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["LN3_MgdCarbon"]])) ->
+      L223.LN3_MgdCarbon_noncrop
 
 
-    # # Managed land - crop
-    # #
-    # # These tables are formed from a master table, made by filtering and adding
-    # # node_leaf_names in L122.LC
-    # L122.LC_bm2_R_HarvCropLand_C_Yh_GLU %>%
-    #   group_by(GCAM_region_ID, region, GLU, GCAM_commodity) %>%
-    #   mutate(rowSum = sum(value)) %>%
-    #   ungroup %>%
-    #   filter(rowSum != 0,
-    #          year %in% c(LAND_HISTORY_YEARS, BASE_YEARS)) %>%
-    #   select(-rowSum) %>%
-    #   mutate(allocation = round(value, aglu.DIGITS_LAND_USE)) %>%
-    #   add_node_leaf_names(nesting_table = A_LandLeaf3, leaf_name = "LandLeaf",
-    #                       LT_name = "GCAM_commodity",
-    #                       LN1 = "LandNode1", LN2 = "LandNode2", LN3 = "LandNode3") ->
-    #   L223.LC_bm2_R_HarvCropLand_C_Yh_GLU
-    #
-    # # L223.LN3_HistMgdAllocation_crop: Historical land cover, managed land in the third nest, cropland
-    # # L223.LN3_MgdAllocation_crop: Model base year land cover, managed land in the third nest, cropland
-    # L223.LC_bm2_R_HarvCropLand_C_Yh_GLU %>%
-    #   filter(year %in% LAND_HISTORY_YEARS) %>%
-    #   select(one_of(LEVEL2_DATA_NAMES[["LN3_HistMgdAllocation"]])) ->
-    #   L223.LN3_HistMgdAllocation_crop
-    #
-    # L223.LC_bm2_R_HarvCropLand_C_Yh_GLU %>%
-    #   filter(year %in% BASE_YEARS) %>%
-    #   select(one_of(LEVEL2_DATA_NAMES[["LN3_MgdAllocation"]])) ->
-    #   L223.LN3_MgdAllocation_crop
-    #
-    #
-    # # L223.LN3_HistMgdAllocation_bio: Historical land cover, managed land in the third nest, bioenergy
-    # ### Uses L201
-    # L223.LN3_leaf_bio %>%
-    #   mutate(LandAllocatorRoot = "root",
-    #          allocation = 0) %>%
-    #   repeat_add_columns(tibble::tibble(year = LAND_HISTORY_YEARS)) %>%
-    #   select(one_of(LEVEL2_DATA_NAMES[["LN3_HistMgdAllocation"]])) ->
-    #   L223.LN3_HistMgdAllocation_bio
-    #
-    # # L223.LN3_MgdAllocation_bio: Model base year land cover, managed land in the third nest, bioenergy
-    # ### uses L201
-    # L223.LN3_leaf_bio %>%
-    #   mutate(LandAllocatorRoot = "root",
-    #          allocation = 0) %>%
-    #   repeat_add_columns(tibble::tibble(year = BASE_YEARS)) %>%
-    #   select(one_of(LEVEL2_DATA_NAMES[["LN3_MgdAllocation"]])) ->
-    #   L223.LN3_MgdAllocation_bio
+    # L223.LN3_NoEmissCarbon: Set the no-emiss-carbon-calc as the type of carbon to use in forest leaves.
+    # Set Forests to use node-carbon-calc at the node level and no-emiss-carbon-calc at the leaf
+    # to allow them to switch between each other without lots of emissions+uptake.
+    L223.LN3_UnmgdCarbon %>%
+      filter(grepl("Forest", UnmanagedLandLeaf)) %>%
+      select(region, LandAllocatorRoot, LandNode1, LandNode2, LandNode3, UnmanagedLandLeaf) %>%
+      rename(LandLeaf = UnmanagedLandLeaf) ->
+      L223.LN3_NoEmissCarbon
+
+    L223.LN3_MgdCarbon_noncrop %>%
+      select(region, LandAllocatorRoot, LandNode1, LandNode2, LandNode3, LandLeaf) %>%
+      bind_rows(L223.LN3_NoEmissCarbon, .) %>%
+      mutate(no.emiss.carbon.calc = " ",
+             extra = "junk") ->
+      L223.LN3_NoEmissCarbon
 
 
-    # Produce outputs
+    # L223.LN3_NodeCarbon: Set the node-carbon-calc to drive the carbon calc between forest leaves
+    L223.LN3_NoEmissCarbon %>%
+      select(-LandLeaf) %>%
+      distinct() %>%
+      rename(node.carbon.calc = no.emiss.carbon.calc) ->
+      L223.LN3_NodeCarbon
+
+    # L223.NodeEquiv: Node tag equivalence list to minimize extra tables to read in same params
+    # TODO: better place for these?  they are related to headers since they list tag names
+    data.frame( group.name=c("Leaf"), tag1=c("LandLeaf"), tag2=c("UnmanagedLandLeaf"), stringsAsFactors=FALSE ) %>%
+      rbind(c( "CarbonCalc", "land-carbon-densities", "no-emiss-carbon-calc")) %>%
+      tibble::as_tibble() ->
+      L223.NodeEquiv
+
+
+
+ # Produce outputs
  #    tibble() %>%
  #   add_title("descriptive title of data") %>%
  # add_units("units") %>%
@@ -329,7 +315,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
  # # typical flags, but there are others--see `constants.R`
  # add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
  #   L2231.LN3_LogitTables[[ curr_table_name ]]
-tibble() %>%
+L223.LN3_Logit %>%
   add_title("descriptive title of data") %>%
   add_units("units") %>%
   add_comments("comments describing how data generated") %>%
@@ -348,13 +334,11 @@ tibble() %>%
                  "L121.CarbonContent_kgm2_R_LT_GLU",
                  "L122.ag_EcYield_kgm2_R_C_Y_GLU",
                  "L125.LC_bm2_R_LT_Yh_GLU",
-                 "L2012.AgYield_bio_ref") %>%
-  # typical flags, but there are others--see `constant.R`
-  add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                 "L2012.AgYield_bio_ref") ->
   L2231.LN3_Logit
 
 
-tibble() %>%
+L223.LN3_HistUnmgdAllocation %>%
   add_title("descriptive title of data") %>%
   add_units("units") %>%
   add_comments("comments describing how data generated") %>%
@@ -373,13 +357,11 @@ tibble() %>%
                  "L121.CarbonContent_kgm2_R_LT_GLU",
                  "L122.ag_EcYield_kgm2_R_C_Y_GLU",
                  "L125.LC_bm2_R_LT_Yh_GLU",
-                 "L2012.AgYield_bio_ref") %>%
-  # typical flags, but there are others--see `constants.R`
-  add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                 "L2012.AgYield_bio_ref") ->
   L2231.LN3_HistUnmgdAllocation
 
 
-tibble() %>%
+L223.LN3_UnmgdAllocation %>%
   add_title("descriptive title of data") %>%
   add_units("units") %>%
   add_comments("comments describing how data generated") %>%
@@ -398,13 +380,11 @@ tibble() %>%
                 "L121.CarbonContent_kgm2_R_LT_GLU",
                 "L122.ag_EcYield_kgm2_R_C_Y_GLU",
                 "L125.LC_bm2_R_LT_Yh_GLU",
-                "L2012.AgYield_bio_ref") %>%
-  # typical flags, but there are others--see `constants.R`
-  add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                "L2012.AgYield_bio_ref") ->
   L2231.LN3_UnmgdAllocation
 
 
-tibble() %>%
+L223.NodeEquiv %>%
   add_title("descriptive title of data") %>%
   add_units("units") %>%
   add_comments("comments describing how data generated") %>%
@@ -423,13 +403,11 @@ tibble() %>%
                  "L121.CarbonContent_kgm2_R_LT_GLU",
                  "L122.ag_EcYield_kgm2_R_C_Y_GLU",
                  "L125.LC_bm2_R_LT_Yh_GLU",
-                 "L2012.AgYield_bio_ref") %>%
-  # typical flags, but there are others--see `constants.R`
-  add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                 "L2012.AgYield_bio_ref") ->
   L2231.NodeEquiv
 
 
-tibble() %>%
+L223.LN3_NoEmissCarbon %>%
   add_title("descriptive title of data") %>%
   add_units("units") %>%
   add_comments("comments describing how data generated") %>%
@@ -448,13 +426,11 @@ tibble() %>%
                  "L121.CarbonContent_kgm2_R_LT_GLU",
                  "L122.ag_EcYield_kgm2_R_C_Y_GLU",
                  "L125.LC_bm2_R_LT_Yh_GLU",
-                 "L2012.AgYield_bio_ref") %>%
-  # typical flags, but there are others--see `constants.R`
-  add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                 "L2012.AgYield_bio_ref") ->
   L2231.LN3_NoEmissCarbon
 
 
-tibble() %>%
+L223.LN3_NodeCarbon %>%
   add_title("descriptive title of data") %>%
   add_units("units") %>%
   add_comments("comments describing how data generated") %>%
@@ -473,13 +449,11 @@ tibble() %>%
                  "L121.CarbonContent_kgm2_R_LT_GLU",
                  "L122.ag_EcYield_kgm2_R_C_Y_GLU",
                  "L125.LC_bm2_R_LT_Yh_GLU",
-                 "L2012.AgYield_bio_ref") %>%
-  # typical flags, but there are others--see `constants.R`
-  add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                 "L2012.AgYield_bio_ref") ->
   L2231.LN3_NodeCarbon
 
 
-tibble() %>%
+L223.LN3_HistMgdAllocation_noncrop %>%
   add_title("descriptive title of data") %>%
   add_units("units") %>%
   add_comments("comments describing how data generated") %>%
@@ -498,13 +472,11 @@ tibble() %>%
                  "L121.CarbonContent_kgm2_R_LT_GLU",
                  "L122.ag_EcYield_kgm2_R_C_Y_GLU",
                  "L125.LC_bm2_R_LT_Yh_GLU",
-                 "L2012.AgYield_bio_ref") %>%
-  # typical flags, but there are others--see `constants.R`
-  add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                 "L2012.AgYield_bio_ref") ->
   L2231.LN3_HistMgdAllocation_noncrop
 
 
-tibble() %>%
+L223.LN3_MgdAllocation_noncrop %>%
   add_title("descriptive title of data") %>%
   add_units("units") %>%
   add_comments("comments describing how data generated") %>%
@@ -523,13 +495,11 @@ tibble() %>%
                  "L121.CarbonContent_kgm2_R_LT_GLU",
                  "L122.ag_EcYield_kgm2_R_C_Y_GLU",
                  "L125.LC_bm2_R_LT_Yh_GLU",
-                 "L2012.AgYield_bio_ref") %>%
-  # typical flags, but there are others--see `constants.R`
-  add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                 "L2012.AgYield_bio_ref") ->
   L2231.LN3_MgdAllocation_noncrop
 
 
-tibble() %>%
+L223.LN3_UnmgdCarbon %>%
   add_title("descriptive title of data") %>%
   add_units("units") %>%
   add_comments("comments describing how data generated") %>%
@@ -548,13 +518,11 @@ tibble() %>%
                  "L121.CarbonContent_kgm2_R_LT_GLU",
                  "L122.ag_EcYield_kgm2_R_C_Y_GLU",
                  "L125.LC_bm2_R_LT_Yh_GLU",
-                 "L2012.AgYield_bio_ref") %>%
-  # typical flags, but there are others--see `constants.R`
-  add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                 "L2012.AgYield_bio_ref") ->
   L2231.LN3_UnmgdCarbon
 
 
-tibble() %>%
+L223.LN3_MgdCarbon_noncrop %>%
   add_title("descriptive title of data") %>%
   add_units("units") %>%
   add_comments("comments describing how data generated") %>%
@@ -574,9 +542,7 @@ tibble() %>%
                  "L122.ag_EcYield_kgm2_R_C_Y_GLU",
                  "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",
                  "L125.LC_bm2_R_LT_Yh_GLU",
-                 "L2012.AgYield_bio_ref") %>%
-  # typical flags, but there are others--see `constants.R`
-  add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                 "L2012.AgYield_bio_ref") ->
   L2231.LN3_MgdCarbon_noncrop
 
 
