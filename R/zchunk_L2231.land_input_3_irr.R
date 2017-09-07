@@ -124,29 +124,57 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
 
     # Build table
 
-    # Determine the node combinations applicable at this level:
+    # L223.LN3_Logit: Logit exponent of the third nest.
+    # First, Determine the node combinations applicable at this level.
+    # Then, match in logit exponents based on the land node 2.
+    # Finally, append GLU names and keep only relevant columns
     L125.LC_bm2_R_LT_Yh_GLU %>%
-      select(GCAM_region_ID, GLU, Land_Type) %>%
+      select(region, GLU, Land_Type) %>%
       # not all land types have node matches, so use left_join
       left_join(select(A_LT_Mapping, Land_Type, LandNode1, LandNode2, LandNode3),
                                by = "Land_Type") %>%
       select(-Land_Type) %>%
       distinct() %>%
-      na.omit() ->
-      L223.LN3
+      na.omit() %>%
+      mutate(LandAllocatorRoot = "root",
+             logit.year.fillout = min(BASE_YEARS)) %>%
+      # logit.type is NA by default, so left_join
+      left_join(select(A_LandNode_logit, logit.exponent, logit.type, LandNode), by = c("LandNode3" = "LandNode")) %>%
+      append_GLU(var1 = "LandNode1", var2 = "LandNode2", var3 = "LandNode3") %>%
+      select(one_of(c(LEVEL2_DATA_NAMES[["LN3_Logit"]], "logit.type"))) ->
+      L223.LN3_Logit
 
 
-    # Biomass leaves and nodes - matching those created in L201.
+    # L223.LN3_leaf_bio: Biomass leaves and nodes, matching those created in L201.
     ### how to handle old vs new? need L201 to match old ds but only have L2012 with different irr_mgmt cases
     ### shouldn't want temp-data-inject forever? I think L2012 will have to be updated to produce both types of
     ### outputs? irr_mgmt and not ie L201 and L2012.
+    bind_rows(L201.AgYield_bio_grass, L201.AgYield_bio_tree) %>%
+      select(region, AgProductionTechnology) %>%
+      distinct() %>%
+      # recreate remove_GLU function in old DS with a separate and unite (the latter due to biomass_grass, biomass_tree):
+      separate(AgProductionTechnology, c("tech1", "tech2", "GLU"), sep = "_") %>%
+      unite(AgProductionTechnology, tech1, tech2, sep = aglu.CROP_DELIMITER) %>%
+      # not all land types have node matches, so use left_join
+      left_join(select(A_LT_Mapping, Land_Type, LandNode1, LandNode2, LandNode3),
+                by = c("AgProductionTechnology" ="Land_Type")) %>%
+      append_GLU(var1 = "LandNode1", var2 = "LandNode2", var3 = "LandNode3", var4 = "AgProductionTechnology") %>%
+      mutate(LandLeaf = AgProductionTechnology) ->
+      L223.LN3_leaf_bio
 
-    # bind_rows(L201.AgYield_bio_grass, L201.AgYield_bio_tree) %>%
-    #   select(GCAM_region_ID, AgProductionTechnology) %>%
-    #   distinct() %>%
-    #   # not all land types have node matches, so use left_join
-    #   left_join(select(A_LT_Mapping, Land_Type, LandNode1, LandNode2, LandNode3),
-    #             by = "Land_Type") %>%
+
+    # L223.LN3_LeafGhostShare: Default shares for new technologies in specified years
+    # Default shares do not interpolate in the model, so write it out in all model future years (starting with first bio year)
+    FUTURE_YEARS >= aglu.BIO_START_YEAR
+    L223.LN3_leaf_bio %>%
+      mutate(LandAllocatorRoot = "root") %>%
+      repeat_add_columns(tibble::tibble(year = FUTURE_YEARS)) %>%
+      filter(year >= aglu.BIO_START_YEAR) %>%
+      # left join to keep NA's for interpolation in next step:
+      left_join(A_bio_ghost_share, by = "year") %>%
+      mutate(ghost.unnormalized.share = approx_fun(year, ghost.share, rule = 2)) %>%
+      select(one_of(c(LEVEL2_DATA_NAMES[["LN3_LeafGhostShare"]]))) ->
+      L223.LN3_LeafGhostShare
 
 
 
