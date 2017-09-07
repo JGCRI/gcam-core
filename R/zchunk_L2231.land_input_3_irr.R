@@ -19,32 +19,14 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "water/basin_to_country_mapping",
              FILE = "aglu/GCAMLandLeaf_CdensityLT",
-             FILE = "aglu/A_bio_ghost_share",
-             FILE = "aglu/A_Fodderbio_chars",
              FILE = "aglu/A_LT_Mapping",
              FILE = "aglu/A_LandNode_logit",
              FILE = "aglu/A_LandLeaf_Unmgd3",
              FILE = "aglu/A_LandLeaf3",
-             "L111.ag_resbio_R_C",
              "L121.CarbonContent_kgm2_R_LT_GLU",
-             "L122.ag_EcYield_kgm2_R_C_Y_GLU",
-             "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",
-             "L125.LC_bm2_R_LT_Yh_GLU",
-             FILE = "temp-data-inject/L201.AgYield_bio_grass",
-             FILE = "temp-data-inject/L201.AgYield_bio_tree",
-             "L2012.AgYield_bio_ref"))
- #      "L223.LN3_Logit",
- # "L223.LN3_HistUnmgdAllocation",
- # "L223.LN3_UnmgdAllocation",
- # "L223.NodeEquiv",
- # "L223.LN3_NoEmissCarbon",
- # "L223.LN3_NodeCarbon",
- # "L223.LN3_HistMgdAllocation_noncrop",
- # "L223.LN3_MgdAllocation_noncrop",
- # "L223.LN3_UnmgdCarbon",
- # "L223.LN3_MgdCarbon_noncrop"))
+             "L125.LC_bm2_R_LT_Yh_GLU"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L2231.LN3_LogitTables[[ curr_table_name ]]",
+    return(c(#"L2231.LN3_LogitTables[[ curr_table_name ]]",
              "L2231.LN3_Logit",
              "L2231.LN3_HistUnmgdAllocation",
              "L2231.LN3_UnmgdAllocation",
@@ -63,22 +45,12 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
     GCAMLandLeaf_CdensityLT <- get_data(all_data, "aglu/GCAMLandLeaf_CdensityLT")
-    A_bio_ghost_share <- get_data(all_data, "aglu/A_bio_ghost_share")
-    A_Fodderbio_chars <- get_data(all_data, "aglu/A_Fodderbio_chars")
     A_LT_Mapping <- get_data(all_data, "aglu/A_LT_Mapping")
     A_LandNode_logit <- get_data(all_data, "aglu/A_LandNode_logit")
     A_LandLeaf_Unmgd3 <- get_data(all_data, "aglu/A_LandLeaf_Unmgd3")
     A_LandLeaf3 <- get_data(all_data, "aglu/A_LandLeaf3")
-    L111.ag_resbio_R_C <- get_data(all_data, "L111.ag_resbio_R_C")
     L121.CarbonContent_kgm2_R_LT_GLU <- get_data(all_data, "L121.CarbonContent_kgm2_R_LT_GLU")
-    L122.ag_EcYield_kgm2_R_C_Y_GLU <- get_data(all_data, "L122.ag_EcYield_kgm2_R_C_Y_GLU")
-    L122.LC_bm2_R_HarvCropLand_C_Yh_GLU <- get_data(all_data, "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU")
     L125.LC_bm2_R_LT_Yh_GLU <- get_data(all_data, "L125.LC_bm2_R_LT_Yh_GLU")
-    if(OLD_DATA_SYSTEM_BEHAVIOR){
-      L201.AgYield_bio_grass <- get_data(all_data, "temp-data-inject/L201.AgYield_bio_grass")
-      L201.AgYield_bio_tree  <- get_data(all_data, "temp-data-inject/L201.AgYield_bio_tree")
-    }
-    L2012.AgYield_bio_ref  <- get_data(all_data, "L2012.AgYield_bio_ref")
 
     # silence package check notes
     GCAM_commodity <- GCAM_region_ID <- region <- value <- year <- GLU <- GLU_name <- GLU_code <-
@@ -92,44 +64,19 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
 
     # Process inputs
     # Replace GLU names and Add region names as needed
-    L111.ag_resbio_R_C %>%
-      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
-      L111.ag_resbio_R_C
-
     L121.CarbonContent_kgm2_R_LT_GLU %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       replace_GLU(map = basin_to_country_mapping) %>%
       rename(mature.age = `mature age`) ->
       L121.CarbonContent_kgm2_R_LT_GLU
 
-    # L122.ag_EcYield_kgm2_R_C_Y_GLU %>%
-    #   left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-    #   replace_GLU(map = basin_to_country_mapping) ->
-    #   L122.ag_EcYield_kgm2_R_C_Y_GLU
-    #
-    # L122.LC_bm2_R_HarvCropLand_C_Yh_GLU %>%
-    #   left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-    #   replace_GLU(map = basin_to_country_mapping) ->
-    #   L122.LC_bm2_R_HarvCropLand_C_Yh_GLU
-
     L125.LC_bm2_R_LT_Yh_GLU %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       replace_GLU(map = basin_to_country_mapping) ->
       L125.LC_bm2_R_LT_Yh_GLU
 
-    # Load required inputs
-    # L223.LN3_Logit <- get_data(all_data, "L223.LN3_Logit")
-    # L223.LN3_HistUnmgdAllocation <- get_data(all_data, "L223.LN3_HistUnmgdAllocation")
-    # L223.LN3_UnmgdAllocation <- get_data(all_data, "L223.LN3_UnmgdAllocation")
-    # L223.NodeEquiv <- get_data(all_data, "L223.NodeEquiv")
-    # L223.LN3_NoEmissCarbon <- get_data(all_data, "L223.LN3_NoEmissCarbon")
-    # L223.LN3_NodeCarbon <- get_data(all_data, "L223.LN3_NodeCarbon")
-    # L223.LN3_HistMgdAllocation_noncrop <- get_data(all_data, "L223.LN3_HistMgdAllocation_noncrop")
-    # L223.LN3_MgdAllocation_noncrop <- get_data(all_data, "L223.LN3_MgdAllocation_noncrop")
-    # L223.LN3_UnmgdCarbon <- get_data(all_data, "L223.LN3_UnmgdCarbon")
-    # L223.LN3_MgdCarbon_noncrop <- get_data(all_data, "L223.LN3_MgdCarbon_noncrop")
 
-    # Build table
+    # Build tables
 
     # L223.LN3_Logit: Logit exponent of the third nest.
     # First, Determine the node combinations applicable at this level.
@@ -150,47 +97,6 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       append_GLU(var1 = "LandNode1", var2 = "LandNode2", var3 = "LandNode3") %>%
       select(one_of(c(LEVEL2_DATA_NAMES[["LN3_Logit"]], "logit.type"))) ->
       L223.LN3_Logit
-
-
-    # # L223.LN3_leaf_bio: Biomass leaves and nodes, matching those created in L201.
-    # ### how to handle old vs new? need L201 to match old ds but only have L2012 with different irr_mgmt cases
-    # ### shouldn't want temp-data-inject forever? I think L2012 will have to be updated to produce both types of
-    # ### outputs? irr_mgmt and not ie L201 and L2012.
-    # bind_rows(L201.AgYield_bio_grass, L201.AgYield_bio_tree) %>%
-    #   select(region, AgProductionTechnology) %>%
-    #   distinct() %>%
-    #   # recreate remove_GLU function in old DS with a separate and unite (the latter due to biomass_grass, biomass_tree):
-    #   separate(AgProductionTechnology, c("tech1", "tech2", "GLU"), sep = "_") %>%
-    #   unite(AgProductionTechnology, tech1, tech2, sep = aglu.CROP_DELIMITER) %>%
-    #   # not all land types have node matches, so use left_join
-    #   left_join(select(A_LT_Mapping, Land_Type, LandNode1, LandNode2, LandNode3),
-    #             by = c("AgProductionTechnology" ="Land_Type")) %>%
-    #   append_GLU(var1 = "LandNode1", var2 = "LandNode2", var3 = "LandNode3", var4 = "AgProductionTechnology") %>%
-    #   mutate(LandLeaf = AgProductionTechnology) ->
-    #   L223.LN3_leaf_bio
-
-
-    # # L223.LN3_LeafGhostShare: Default shares for new technologies in specified years
-    # # Default shares do not interpolate in the model, so write it out in all model future years (starting with first bio year)
-    # ### uses the L201
-    # L223.LN3_leaf_bio %>%
-    #   mutate(LandAllocatorRoot = "root") %>%
-    #   repeat_add_columns(tibble::tibble(year = FUTURE_YEARS)) %>%
-    #   filter(year >= aglu.BIO_START_YEAR) %>%
-    #   # left join to keep NA's for interpolation in next step:
-    #   left_join(A_bio_ghost_share, by = "year") %>%
-    #   mutate(ghost.unnormalized.share = approx_fun(year, ghost.share, rule = 2)) %>%
-    #   select(one_of(c(LEVEL2_DATA_NAMES[["LN3_LeafGhostShare"]]))) ->
-    #   L223.LN3_LeafGhostShare
-    #
-    #
-    # # L223.LN3_LeafIsGhostShareRel: relative information about the ghost share
-    # ### uses the L201
-    # L223.LN3_leaf_bio %>%
-    #   mutate(LandAllocatorRoot = "root",
-    #          is.ghost.share.relative = 1) %>%
-    #   select(one_of(c(LEVEL2_DATA_NAMES[["LN3_LeafIsGhostShareRel"]]))) ->
-    #   L223.LN3_LeafIsGhostShareRel
 
 
     # Land Use History
@@ -297,24 +203,13 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
 
     # L223.NodeEquiv: Node tag equivalence list to minimize extra tables to read in same params
     # TODO: better place for these?  they are related to headers since they list tag names
-    data.frame( group.name=c("Leaf"), tag1=c("LandLeaf"), tag2=c("UnmanagedLandLeaf"), stringsAsFactors=FALSE ) %>%
-      rbind(c( "CarbonCalc", "land-carbon-densities", "no-emiss-carbon-calc")) %>%
+    data.frame(group.name = c("Leaf"), tag1 = c("LandLeaf"), tag2=c("UnmanagedLandLeaf"), stringsAsFactors=FALSE ) %>%
+      bind_rows(c(group.name = "CarbonCalc", tag1 = "land-carbon-densities", tag2 = "no-emiss-carbon-calc")) %>%
       tibble::as_tibble() ->
       L223.NodeEquiv
 
 
-
  # Produce outputs
- #    tibble() %>%
- #   add_title("descriptive title of data") %>%
- # add_units("units") %>%
- # add_comments("comments describing how data generated") %>%
- # add_comments("can be multiple lines") %>%
- # add_legacy_name("L2231.LN3_LogitTables[[ curr_table_name ]]") %>%
- # add_precursors("precursor1", "precursor2", "etc") %>%
- # # typical flags, but there are others--see `constants.R`
- # add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
- #   L2231.LN3_LogitTables[[ curr_table_name ]]
 L223.LN3_Logit %>%
   add_title("descriptive title of data") %>%
   add_units("units") %>%
@@ -324,17 +219,12 @@ L223.LN3_Logit %>%
   add_precursors("common/GCAM_region_names",
                  "water/basin_to_country_mapping",
                  "aglu/GCAMLandLeaf_CdensityLT",
-                 "aglu/A_bio_ghost_share",
-                 "aglu/A_Fodderbio_chars",
                  "aglu/A_LT_Mapping",
                  "aglu/A_LandNode_logit",
                  "aglu/A_LandLeaf_Unmgd3",
                  "aglu/A_LandLeaf3",
-                 "L111.ag_resbio_R_C",
                  "L121.CarbonContent_kgm2_R_LT_GLU",
-                 "L122.ag_EcYield_kgm2_R_C_Y_GLU",
-                 "L125.LC_bm2_R_LT_Yh_GLU",
-                 "L2012.AgYield_bio_ref") ->
+                 "L125.LC_bm2_R_LT_Yh_GLU") ->
   L2231.LN3_Logit
 
 
@@ -347,17 +237,12 @@ L223.LN3_HistUnmgdAllocation %>%
   add_precursors("common/GCAM_region_names",
                  "water/basin_to_country_mapping",
                  "aglu/GCAMLandLeaf_CdensityLT",
-                 "aglu/A_bio_ghost_share",
-                 "aglu/A_Fodderbio_chars",
                  "aglu/A_LT_Mapping",
                  "aglu/A_LandNode_logit",
                  "aglu/A_LandLeaf_Unmgd3",
                  "aglu/A_LandLeaf3",
-                 "L111.ag_resbio_R_C",
                  "L121.CarbonContent_kgm2_R_LT_GLU",
-                 "L122.ag_EcYield_kgm2_R_C_Y_GLU",
-                 "L125.LC_bm2_R_LT_Yh_GLU",
-                 "L2012.AgYield_bio_ref") ->
+                 "L125.LC_bm2_R_LT_Yh_GLU") ->
   L2231.LN3_HistUnmgdAllocation
 
 
@@ -370,17 +255,12 @@ L223.LN3_UnmgdAllocation %>%
  add_precursors("common/GCAM_region_names",
                 "water/basin_to_country_mapping",
                 "aglu/GCAMLandLeaf_CdensityLT",
-                "aglu/A_bio_ghost_share",
-                "aglu/A_Fodderbio_chars",
                 "aglu/A_LT_Mapping",
                 "aglu/A_LandNode_logit",
                 "aglu/A_LandLeaf_Unmgd3",
                 "aglu/A_LandLeaf3",
-                "L111.ag_resbio_R_C",
                 "L121.CarbonContent_kgm2_R_LT_GLU",
-                "L122.ag_EcYield_kgm2_R_C_Y_GLU",
-                "L125.LC_bm2_R_LT_Yh_GLU",
-                "L2012.AgYield_bio_ref") ->
+                "L125.LC_bm2_R_LT_Yh_GLU") ->
   L2231.LN3_UnmgdAllocation
 
 
@@ -393,17 +273,12 @@ L223.NodeEquiv %>%
   add_precursors("common/GCAM_region_names",
                  "water/basin_to_country_mapping",
                  "aglu/GCAMLandLeaf_CdensityLT",
-                 "aglu/A_bio_ghost_share",
-                 "aglu/A_Fodderbio_chars",
                  "aglu/A_LT_Mapping",
                  "aglu/A_LandNode_logit",
                  "aglu/A_LandLeaf_Unmgd3",
                  "aglu/A_LandLeaf3",
-                 "L111.ag_resbio_R_C",
                  "L121.CarbonContent_kgm2_R_LT_GLU",
-                 "L122.ag_EcYield_kgm2_R_C_Y_GLU",
-                 "L125.LC_bm2_R_LT_Yh_GLU",
-                 "L2012.AgYield_bio_ref") ->
+                 "L125.LC_bm2_R_LT_Yh_GLU") ->
   L2231.NodeEquiv
 
 
@@ -416,17 +291,12 @@ L223.LN3_NoEmissCarbon %>%
   add_precursors("common/GCAM_region_names",
                  "water/basin_to_country_mapping",
                  "aglu/GCAMLandLeaf_CdensityLT",
-                 "aglu/A_bio_ghost_share",
-                 "aglu/A_Fodderbio_chars",
                  "aglu/A_LT_Mapping",
                  "aglu/A_LandNode_logit",
                  "aglu/A_LandLeaf_Unmgd3",
                  "aglu/A_LandLeaf3",
-                 "L111.ag_resbio_R_C",
                  "L121.CarbonContent_kgm2_R_LT_GLU",
-                 "L122.ag_EcYield_kgm2_R_C_Y_GLU",
-                 "L125.LC_bm2_R_LT_Yh_GLU",
-                 "L2012.AgYield_bio_ref") ->
+                 "L125.LC_bm2_R_LT_Yh_GLU") ->
   L2231.LN3_NoEmissCarbon
 
 
@@ -439,17 +309,12 @@ L223.LN3_NodeCarbon %>%
   add_precursors("common/GCAM_region_names",
                  "water/basin_to_country_mapping",
                  "aglu/GCAMLandLeaf_CdensityLT",
-                 "aglu/A_bio_ghost_share",
-                 "aglu/A_Fodderbio_chars",
                  "aglu/A_LT_Mapping",
                  "aglu/A_LandNode_logit",
                  "aglu/A_LandLeaf_Unmgd3",
                  "aglu/A_LandLeaf3",
-                 "L111.ag_resbio_R_C",
                  "L121.CarbonContent_kgm2_R_LT_GLU",
-                 "L122.ag_EcYield_kgm2_R_C_Y_GLU",
-                 "L125.LC_bm2_R_LT_Yh_GLU",
-                 "L2012.AgYield_bio_ref") ->
+                 "L125.LC_bm2_R_LT_Yh_GLU") ->
   L2231.LN3_NodeCarbon
 
 
@@ -462,17 +327,12 @@ L223.LN3_HistMgdAllocation_noncrop %>%
   add_precursors("common/GCAM_region_names",
                  "water/basin_to_country_mapping",
                  "aglu/GCAMLandLeaf_CdensityLT",
-                 "aglu/A_bio_ghost_share",
-                 "aglu/A_Fodderbio_chars",
                  "aglu/A_LT_Mapping",
                  "aglu/A_LandNode_logit",
                  "aglu/A_LandLeaf_Unmgd3",
                  "aglu/A_LandLeaf3",
-                 "L111.ag_resbio_R_C",
                  "L121.CarbonContent_kgm2_R_LT_GLU",
-                 "L122.ag_EcYield_kgm2_R_C_Y_GLU",
-                 "L125.LC_bm2_R_LT_Yh_GLU",
-                 "L2012.AgYield_bio_ref") ->
+                 "L125.LC_bm2_R_LT_Yh_GLU") ->
   L2231.LN3_HistMgdAllocation_noncrop
 
 
@@ -485,17 +345,12 @@ L223.LN3_MgdAllocation_noncrop %>%
   add_precursors("common/GCAM_region_names",
                  "water/basin_to_country_mapping",
                  "aglu/GCAMLandLeaf_CdensityLT",
-                 "aglu/A_bio_ghost_share",
-                 "aglu/A_Fodderbio_chars",
                  "aglu/A_LT_Mapping",
                  "aglu/A_LandNode_logit",
                  "aglu/A_LandLeaf_Unmgd3",
                  "aglu/A_LandLeaf3",
-                 "L111.ag_resbio_R_C",
                  "L121.CarbonContent_kgm2_R_LT_GLU",
-                 "L122.ag_EcYield_kgm2_R_C_Y_GLU",
-                 "L125.LC_bm2_R_LT_Yh_GLU",
-                 "L2012.AgYield_bio_ref") ->
+                 "L125.LC_bm2_R_LT_Yh_GLU") ->
   L2231.LN3_MgdAllocation_noncrop
 
 
@@ -508,17 +363,12 @@ L223.LN3_UnmgdCarbon %>%
   add_precursors("common/GCAM_region_names",
                  "water/basin_to_country_mapping",
                  "aglu/GCAMLandLeaf_CdensityLT",
-                 "aglu/A_bio_ghost_share",
-                 "aglu/A_Fodderbio_chars",
                  "aglu/A_LT_Mapping",
                  "aglu/A_LandNode_logit",
                  "aglu/A_LandLeaf_Unmgd3",
                  "aglu/A_LandLeaf3",
-                 "L111.ag_resbio_R_C",
                  "L121.CarbonContent_kgm2_R_LT_GLU",
-                 "L122.ag_EcYield_kgm2_R_C_Y_GLU",
-                 "L125.LC_bm2_R_LT_Yh_GLU",
-                 "L2012.AgYield_bio_ref") ->
+                 "L125.LC_bm2_R_LT_Yh_GLU") ->
   L2231.LN3_UnmgdCarbon
 
 
@@ -531,18 +381,12 @@ L223.LN3_MgdCarbon_noncrop %>%
   add_precursors("common/GCAM_region_names",
                  "water/basin_to_country_mapping",
                  "aglu/GCAMLandLeaf_CdensityLT",
-                 "aglu/A_bio_ghost_share",
-                 "aglu/A_Fodderbio_chars",
                  "aglu/A_LT_Mapping",
                  "aglu/A_LandNode_logit",
                  "aglu/A_LandLeaf_Unmgd3",
                  "aglu/A_LandLeaf3",
-                 "L111.ag_resbio_R_C",
                  "L121.CarbonContent_kgm2_R_LT_GLU",
-                 "L122.ag_EcYield_kgm2_R_C_Y_GLU",
-                 "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",
-                 "L125.LC_bm2_R_LT_Yh_GLU",
-                 "L2012.AgYield_bio_ref") ->
+                 "L125.LC_bm2_R_LT_Yh_GLU") ->
   L2231.LN3_MgdCarbon_noncrop
 
 
