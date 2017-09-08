@@ -151,6 +151,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
 
 
     # Managed land - non-crop (forest)
+    # This code will cover any land types we wish to make a `LandLeaf` at level 3 in the future.
     #
     # These tables are formed from a master table, made by filtering and adding
     # node_leaf_names in L125.LC.
@@ -212,6 +213,8 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     L223.LN3_MgdCarbon_noncrop %>%
       select(region, LandAllocatorRoot, LandNode1, LandNode2, LandNode3, LandLeaf) %>%
       bind_rows(L223.LN3_NoEmissCarbon, .) %>%
+      # Need to create an empty tag, to do so we have to have a whitespace column and an
+      # extra column with extraneous data
       mutate(no.emiss.carbon.calc = " ",
              extra = "junk") ->
       L223.LN3_NoEmissCarbon
