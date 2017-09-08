@@ -248,11 +248,17 @@ energy.CLIMATE_NORMAL_YEARS <- 1981:2000
 energy.RSRC_FUELS <- c("coal", "gas", "refined liquids")
 
 
-# below come from ENERGY_ASSUMPTIONS/A_ccs_data.R
+# below come from ENERGY_ASSUMPTIONS/A_ccs_data.R (first four only)
 energy.DIGITS_EFFICIENCY <- 3
 energy.DIGITS_COST <- 4
 energy.DIGITS_REMOVE.FRACTION <- 2
 energy.CO2.STORAGE.MARKET <- "carbon-storage"
+energy.DIGITS_COEFFICIENT <- 7
+energy.DIGITS_MPKM <- 0
+energy.DIGITS_SPEED <- 1
+energy.DIGITS_SHRWT <- 4
+energy.DIGITS_CALOUTPUT <- 7
+energy.DIGITS_LOADFACTOR <- 2
 
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
@@ -296,6 +302,8 @@ CONV_GWH_EJ <- 3.6e-6
 CONV_KWH_GJ <- 3.6e-3
 CONV_GJ_EJ <- 1e-9
 CONV_BBLD_EJYR <- 6.119 * 365.25 * 1e-3 # billion barrels a day to EJ per year
+CONV_MJ_BTU <- 947.777
+CONV_BTU_KJ <- 1.0551
 
 # Other
 CONV_MCAL_PCAL <- 1e-9
