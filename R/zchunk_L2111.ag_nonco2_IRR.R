@@ -21,7 +21,7 @@ module_emissions_L2111.ag_nonco2_IRR <- function(command, ...) {
              FILE = "water/basin_to_country_mapping",
              FILE = "emissions/A_regions",
              "L1211.nonco2_tg_R_awb_C_Y_GLU_IRR",
-             FILE = "temp-data-inject/L1221.ghg_tg_R_agr_C_Y_GLU_IRR",
+             "L1221.ghg_tg_R_agr_C_Y_GLU_IRR",
              "L211.AGRBio",
              "L211.AWB_BCOC_EmissCoeff",
              "L211.nonghg_max_reduction",
@@ -49,10 +49,7 @@ module_emissions_L2111.ag_nonco2_IRR <- function(command, ...) {
     L1211.nonco2_tg_R_awb_C_Y_GLU_IRR <- get_data(all_data, "L1211.nonco2_tg_R_awb_C_Y_GLU_IRR") %>%
       # Replace GLU code with GLU name
       replace_GLU(basin_to_country_mapping)
-    L1221.ghg_tg_R_agr_C_Y_GLU_IRR <- get_data(all_data, "temp-data-inject/L1221.ghg_tg_R_agr_C_Y_GLU_IRR") %>%
-      # temp-data-inject code
-      gather(year, value, starts_with("X")) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) %>%
+    L1221.ghg_tg_R_agr_C_Y_GLU_IRR <- get_data(all_data, "L1221.ghg_tg_R_agr_C_Y_GLU_IRR") %>%
       # Replace GLU code with GLU name
       replace_GLU(basin_to_country_mapping)
     L211.AGRBio <- get_data(all_data, "L211.AGRBio")
@@ -121,7 +118,7 @@ module_emissions_L2111.ag_nonco2_IRR <- function(command, ...) {
       add_units("Tg") %>%
       add_comments("Added region to AGR emissions") %>%
       add_legacy_name("L2111.AGREmissions") %>%
-      add_precursors("temp-data-inject/L1221.ghg_tg_R_agr_C_Y_GLU_IRR", "water/basin_to_country_mapping",
+      add_precursors("L1221.ghg_tg_R_agr_C_Y_GLU_IRR", "water/basin_to_country_mapping",
                      "common/GCAM_region_names") ->
       L2111.AGREmissions
     L2111.AGRBio %>%
