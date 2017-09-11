@@ -293,9 +293,11 @@ CONV_DAYS_YEAR <- 1 / 365.25
 # Energy
 CONV_MWH_GJ <- 3.6 # Megawatt hours to Gigajoules
 CONV_GWH_EJ <- 3.6e-6
+CONV_TWH_EJ <- 3.6e-3
 CONV_KWH_GJ <- 3.6e-3
 CONV_GJ_EJ <- 1e-9
 CONV_BBLD_EJYR <- 6.119 * 365.25 * 1e-3 # billion barrels a day to EJ per year
+CONV_KBTU_EJ <- 1.0551e-12
 
 # Other
 CONV_MCAL_PCAL <- 1e-9
@@ -304,8 +306,8 @@ CONV_MILLION_M3_KM3 <- 1e-03
 CONV_M2_ACR <- 0.0002471058
 CONV_HA_M2 <- 1e4 # ha to m2
 CONV_BM2_M2 <- 1e9
-
-
+CONV_MILFT2_M2 <- 92900
+CONV_FT2_M2 <- 0.0929
 
 # Driver constants ======================================================================
 
@@ -402,6 +404,12 @@ emissions.AGR_GASES            <- c("CH4_AGR", "N2O_AGR", "NH3_AGR", "NOx_AGR")
 emissions.AG_MACC_GHG_NAMES    <- c("CH4_AGR", "N2O_AGR")
 emissions.GHG_NAMES            <- c("CH4", "N2O")
 emissions.USE_GV_MAC           <- 1
+
+# Emissions constants ======================================================================
+gcam_usa.STATES <- c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA",
+                      "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR",
+                      "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY")
+
 # Uncomment these lines to run under 'timeshift' conditions
 # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
 # FUTURE_YEARS <- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)

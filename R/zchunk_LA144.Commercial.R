@@ -40,10 +40,16 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
-    Census_pop_hist <- get_data(all_data, "gcam-usa/Census_pop_hist")
+    states_subregions <- get_data(all_data, "gcam-usa/states_subregions") %>%
+      select(subregion4, subregion9, REGION, DIVISION, state) %>%
+      distinct()
+    Census_pop_hist <- get_data(all_data, "gcam-usa/Census_pop_hist") %>%
+      gather(year, value, matches(YEAR_PATTERN)) %>%
+      mutate(year = as.integer(year))
     CBECS_variables <- get_data(all_data, "gcam-usa/CBECS_variables")
-    EIA_AEO_Tab5 <- get_data(all_data, "gcam-usa/EIA_AEO_Tab5")
+    EIA_AEO_Tab5 <- get_data(all_data, "gcam-usa/EIA_AEO_Tab5") %>%
+      gather(year, value, matches(YEAR_PATTERN)) %>%
+      mutate(year = as.integer(year))
     EIA_distheat <- get_data(all_data, "gcam-usa/EIA_distheat")
     PNNL_Commext_elec <- get_data(all_data, "gcam-usa/PNNL_Commext_elec")
     CBECS_1979_1983 <- get_data(all_data, "gcam-usa/CBECS_1979_1983")
@@ -74,7 +80,9 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
 
     # In order to be able to work with these data across years, the "edition" number needs to be removed from all
     # variable names. E.g., re-naming square footage from "SQFT3" in 1986 and "SQFT4" in 1989 to "SQFT" in all.
-    L144.CBECS_all <- lapply(L144.CBECS_all, setNames, sub("[0-9]{1}", "", names(CBECS_1986)))
+    L144.CBECS_all <- lapply(L144.CBECS_all, function(df) {
+      setNames(df, sub("[0-9]{1}", "", names(df)))
+    })
 
     # Add a vector specifying the census region (subregion4) and census division (subregion9)
     # Census regions (subregion4) are used for 1979-1986 floorspace, as the first editions didn't have census divisions (subregion9)
@@ -82,32 +90,310 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
       select(subregion4, subregion9, REGION, DIVISION) %>%
       distinct()
     L144.CBECS_all <- lapply(L144.CBECS_all, function(df){
-      df <- df %>%
-        left_join_error_no_match(states_subregions %>%
+      # Using left_join_keep_first_only b/c there are two subregion4s for Region 3
+      # WRONG BEHAVIOR?
+        left_join_keep_first_only(df, states_subregions %>%
                                    select(subregion4, subregion9, REGION, DIVISION),
                                  by = c("REGION", "CENDIV" = "DIVISION"))
     })
 
-     for( i in seq( L144.CBECS_all ) ){
-      L144.CBECS_all[[i]][[ "subregion4" ]] <- states_subregions$subregion4[
-        match( L144.CBECS_all[[i]][[ "REGION" ]], states_subregions$REGION ) ]
-      L144.CBECS_all[[i]][[ "subregion9" ]] <- states_subregions$subregion9[
-        match( L144.CBECS_all[[i]][[ "CENDIV" ]], states_subregions$DIVISION ) ]
+    # Convert all missing value strings to 0 in all databases
+    L144.CBECS_all[["CBECS1992"]][is.na(L144.CBECS_all[["CBECS1992"]])] <- 0
+    # In CBECS1995, missing values indicated with 1e14
+    L144.CBECS_all[["CBECS1995"]][L144.CBECS_all[["CBECS1995"]] == 1e14] <- 0
+    L144.CBECS_all[["CBECS2003"]][is.na(L144.CBECS_all[["CBECS2003"]])] <- 0
+
+    # Aggregate population to the subregion9 and subregion9 levels for calculation of per-capita values
+    L144.Census_pop_hist <- Census_pop_hist %>%
+      left_join_error_no_match(states_subregions, by = "state")
+
+    L144.pop_sR4 <- L144.Census_pop_hist %>%
+      filter(year %in% HISTORICAL_YEARS) %>%
+      group_by(subregion4, year) %>%
+      summarise(value = sum(value)) %>%
+      ungroup()
+
+    L144.pop_sR9 <- L144.Census_pop_hist %>%
+      filter(year %in% HISTORICAL_YEARS) %>%
+      group_by(subregion9, year) %>%
+      summarise(value = sum(value)) %>%
+      ungroup()
+
+    # 2b. FLOORSPACE BY STATE AND YEAR
+    # Estimating total floorspace by census region (subregion4) and division (subregion9)
+    L144.CBECS_1979_1983 <- CBECS_1979_1983 %>%
+      # Using left_join_keep_first_only b/c there are two subregion4s for Region 3
+      # WRONG BEHAVIOR?
+      left_join_keep_first_only(states_subregions_CBECS, by = "REGION") %>%
+      # Using left_join because there will be two values for the two years for each subregion
+      left_join(L144.pop_sR4 %>%
+                                 filter(year %in% c(1979, 1983)), by = "subregion4") %>%
+      mutate(pcflsp_m2 = if_else(year == 1979, SQFT1 / value * CONV_MILFT2_M2, SQFT2 / value * CONV_MILFT2_M2))
+
+    # Aggregate CBECS floorspace data by year and subregion
+    for (i in 1:length(L144.CBECS_all)){
+      df <- L144.CBECS_all[[i]]
+      data_year <- substr(names(L144.CBECS_all[i]), 6, 9)
+      df$year <- as.integer(data_year)
+      L144.CBECS_all[[i]] <- df
     }
 
-    #Convert all missing value strings to 0 in all databases
-    L144.CBECS_all[["CBECS1992"]][is.na( L144.CBECS_all[["CBECS1992"]] ) ] <- 0
-    L144.CBECS_all[["CBECS1995"]][L144.CBECS_all[["CBECS1995"]] == 1e14] <- 0
-    L144.CBECS_all[["CBECS2003"]][is.na( L144.CBECS_all[["CBECS2003"]] ) ] <- 0
+    L144.flsp_bm2_sR4 <- L144.CBECS_all %>%
+      # For each tibble, select sqft, weights for summing, year, and subregions
+      lapply(function(df){
+        df %>%
+          select(SQFT, ADJWT, subregion4, subregion9, year)
+      }) %>%
+      # Bind all CBECS tibbles
+      do.call(bind_rows, .)
 
-    #Aggregate population to the subregion9 and subregion9 levels for calculation of per-capita values
-    Census_pop_hist[ c( "subregion4", "subregion9" ) ] <- states_subregions[
-      match( Census_pop_hist$state, states_subregions$state ),
-      c( "subregion4", "subregion9" ) ]
-    L144.pop_sR4 <- aggregate( Census_pop_hist[ X_historical_years ], by=as.list( Census_pop_hist[ "subregion4" ] ), sum )
-    L144.pop_sR9 <- aggregate( Census_pop_hist[ X_historical_years ], by=as.list( Census_pop_hist[ "subregion9" ] ), sum )
+    # Here we aggregate by subregion4, but for all other years, we aggregate by subregion9,
+    L144.flsp_bm2_sR4_CBECS1986 <- L144.flsp_bm2_sR4 %>%
+      filter(year == 1986) %>%
+      group_by(subregion4, year) %>%
+      summarise(SQFT = sum(SQFT * ADJWT * CONV_FT2_M2)) %>%
+      ungroup() %>%
+      left_join_error_no_match(L144.pop_sR4, by = c("year", "subregion4")) %>%
+      mutate(pcflsp_m2 = SQFT / value)
 
+    L144.flsp_bm2_sR9 <- L144.flsp_bm2_sR4 %>%
+      group_by(subregion9, year) %>%
+      summarise(SQFT = sum(SQFT * ADJWT * CONV_FT2_M2)) %>%
+      ungroup() %>%
+      left_join_error_no_match(L144.pop_sR9, by = c("year", "subregion9")) %>%
+      mutate(pcflsp_m2 = SQFT / value) %>%
+      select(subregion9, year, pcflsp_m2)
 
+    # Downscale 1983 and 1979 floorspace to subregion9, using the ratios of per-capita floorspace
+    L144.flsp_conv_4_9 <- L144.flsp_bm2_sR9 %>%
+      filter(year == 1986) %>%
+      # ERROR???
+      left_join_keep_first_only(states_subregions_CBECS, by = "subregion9") %>%
+      left_join_error_no_match(L144.flsp_bm2_sR4_CBECS1986, by = "subregion4") %>%
+      mutate(conv_4_9 = pcflsp_m2.x / pcflsp_m2.y)
+
+    # Multiplying the per-capita floorspace ratios from subregion4 to subregion9, to expand from 4 to 9
+    L144.flsp_bm2_sR9_CBECS1979_1983 <- L144.flsp_conv_4_9 %>%
+      select(subregion4, subregion9, conv_4_9) %>%
+      left_join(L144.CBECS_1979_1983, by = "subregion4") %>%
+      mutate(pcflsp_m2 = pcflsp_m2 * conv_4_9) %>%
+      select(subregion9 = subregion9.x, year, pcflsp_m2)
+
+    L144.pcflsp_m2_sR9_CBECS <- bind_rows(L144.flsp_bm2_sR9, L144.flsp_bm2_sR9_CBECS1979_1983)
+
+    L144.pcflsp_m2_sR9_comm <- L144.pcflsp_m2_sR9_CBECS %>%
+      select(subregion9) %>%
+      distinct() %>%
+      repeat_add_columns(tibble(year = HISTORICAL_YEARS)) %>%
+      left_join(L144.pcflsp_m2_sR9_CBECS, by = c("subregion9", "year")) %>%
+      group_by(subregion9) %>%
+      mutate(pcflsp_m2 = approx_fun(year, pcflsp_m2, rule = 2)) %>%
+      ungroup()
+
+    # Expand to states: multiply per-capita floorspace in each subregion9 times the population of each state
+    L144.flsp_bm2_state_comm <- L144.Census_pop_hist %>%
+      select(state, year, value, subregion9) %>%
+      filter(year %in% HISTORICAL_YEARS) %>%
+      left_join_error_no_match(L144.pcflsp_m2_sR9_comm, by = c("subregion9", "year")) %>%
+      transmute(state, year, subregion9,
+                value = value * pcflsp_m2 / CONV_BM2_M2)
+
+    # NOTE: we are scaling aggregated CBECS floorspace to match AEO base year estimates from 1999 to 2010
+    # The main reason for this step is that the most recent CBECS edition is a decade old (2003)
+    AEO_Tab5_yearcols <- unique(EIA_AEO_Tab5$year)
+
+    AEO_USA_flsp_bm2 <- EIA_AEO_Tab5 %>%
+      filter(variable == "Floorspace") %>%
+      mutate(value = value * CONV_FT2_M2,
+             unit = "Billion square meters")
+
+    L144.flsp_bm2_state_comm_sum <- L144.flsp_bm2_state_comm %>%
+      group_by(year) %>%
+      summarise(sum = sum(value)) %>%
+      ungroup()
+
+    AEO_USA_flsp_bm2_scalers <- AEO_USA_flsp_bm2 %>%
+      left_join_error_no_match(L144.flsp_bm2_state_comm_sum, by = "year") %>%
+      mutate(scaler = value / sum) %>%
+      select(year, scaler)
+
+    L144.flsp_bm2_state_comm <- L144.flsp_bm2_state_comm %>%
+      # Using left_join because we are only scaling for certain years
+      left_join(AEO_USA_flsp_bm2_scalers, by = "year") %>%
+      replace_na(list(scaler = 1)) %>%
+      mutate(value = value * scaler)
+
+    # 2c: ENERGY CONSUMPTION BY STATE, SERVICE, AND YEAR
+    # Aggregating energy consumption by sampling weights
+    # Aggregate in a for loop
+    L144.in_EJ_sR9_comm <- L144.CBECS_all %>%
+      lapply(function(df){
+        cols_to_keep <- which(names(df) %in% CBECS_variables$variable)
+        if (length(cols_to_keep) > 0) {
+          df %>%
+            select(cols_to_keep, ADJWT, subregion9, year) %>%
+            gather(variable, value, contains("BTU")) %>%
+            group_by(subregion9, year, variable) %>%
+            summarise(value = sum(value * ADJWT * CONV_KBTU_EJ)) %>%
+            ungroup()
+        }else{
+          tibble()
+        }
+      }) %>%
+      # Bind all CBECS tibbles
+      do.call(bind_rows, .)
+
+    # Rbind these data frames, match in the fuel and service, and aggregate (this will get rid of the different liquid fuels)
+    L144.in_EJ_sR9_CBECS_F_U_Y <- L144.in_EJ_sR9_comm %>%
+      left_join_error_no_match(CBECS_variables, by = "variable")
+
+    # District services are backed out to their fuel inputs here
+    # NOTE: in GCAM-USA, district services consumed by buildings are indicated by the fuel inputs to the district service plants
+    L144.in_EJ_sR9_CBECS_dist_U_Y <- L144.in_EJ_sR9_CBECS_F_U_Y %>%
+      filter(fuel == "district services")
+    L144.in_EJ_sR9_CBECS_Fdist_U_Y <- L144.in_EJ_sR9_CBECS_dist_U_Y %>%
+      select(-fuel) %>%
+      repeat_add_columns(tibble(fuel = unique(EIA_distheat$fuel))) %>%
+      left_join_error_no_match(EIA_distheat, by = c("fuel", "service")) %>%
+      mutate(value = value * share * efficiency) %>%
+      select(-share, -efficiency)
+
+    # Merge this back into the initial table, but with the district services fuel removed
+    L144.in_EJ_sR9_CBECS_F_U_Y <- L144.in_EJ_sR9_CBECS_F_U_Y %>%
+      filter(fuel != "district services") %>%
+      bind_rows(L144.in_EJ_sR9_CBECS_Fdist_U_Y)
+
+    # Aggregate by fuel and service, cast by year, and interpolate/extrapolate
+    L144.in_EJ_sR9_comm_F_U_Y <- L144.in_EJ_sR9_CBECS_F_U_Y %>%
+      group_by(subregion9, fuel, service, year) %>%
+      summarise(value = sum(value)) %>%
+      ungroup()
+
+    L144.in_EJ_sR9_comm_F_U_Y <- L144.in_EJ_sR9_comm_F_U_Y %>%
+      select(subregion9, fuel, service) %>%
+      distinct() %>%
+      repeat_add_columns(tibble(year = HISTORICAL_YEARS)) %>%
+      left_join(L144.in_EJ_sR9_comm_F_U_Y, by = c("subregion9", "fuel", "service", "year")) %>%
+      group_by(subregion9, fuel, service) %>%
+      mutate(value = approx_fun(year, value, rule = 2)) %>%
+      ungroup()
+
+    # At this point, we have a table of energy by subregion9, fuel, and end use that needs to be (a) apportioned to states, and (b) scaled
+    # The reason for apportioning to states first is that the heating and cooling energy will be modified by pop-weighted HDD and CDD
+    # prior to calculating energy shares
+    # Downscaling heating and cooling energy to states according to person-HDD and -CDD
+    CBECS_heating_fuels <- c("electricity", "gas", "refined liquids")
+    CBECS_cooling_fuels <- c("electricity", "gas")
+
+    L144.in_EJ_state_comm_F_heating_Y <- states_subregions %>%
+      select(state, subregion9) %>%
+      repeat_add_columns(tidyr::crossing(fuel = CBECS_heating_fuels, year = HISTORICAL_YEARS)) %>%
+      mutate(service = "comm heating") %>%
+      left_join_error_no_match(L144.in_EJ_sR9_comm_F_U_Y, by = c("subregion9", "fuel", "service", "year")) %>%
+      left_join_error_no_match(L143.share_state_Pop_HDD_sR9, by = c("state", "subregion9", "year")) %>%
+      mutate(value = value.x * value.y) %>%
+      select(state, subregion9, fuel, service, year, value)
+
+    L144.in_EJ_state_comm_F_cooling_Y <- states_subregions %>%
+      select(state, subregion9) %>%
+      repeat_add_columns(tidyr::crossing(fuel = CBECS_heating_fuels, year = HISTORICAL_YEARS)) %>%
+      mutate(service = "comm cooling") %>%
+      left_join_error_no_match(L144.in_EJ_sR9_comm_F_U_Y, by = c("subregion9", "fuel", "service", "year")) %>%
+      left_join_error_no_match(L143.share_state_Pop_CDD_sR9, by = c("state", "subregion9", "year")) %>%
+      mutate(value = value.x * value.y) %>%
+      select(state, subregion9, fuel, service, year, value)
+
+    # Downscaling all remaining services to states according to floorspace
+    # Calculate the share of each state within its census division's (subregion9's) floorspace
+    L144.flsp_bm2_sR9_comm <- L144.flsp_bm2_state_comm %>%
+      group_by(subregion9, year) %>%
+      summarise(value = sum(value))
+
+    L144.flsp_state_share_sR9 <- L144.flsp_bm2_state_comm %>%
+      left_join_error_no_match(L144.flsp_bm2_sR9_comm, by = c("subregion9", "year")) %>%
+      mutate(value = value.x / value.y) %>%
+      select(state, year, subregion9, value)
+
+    # Start with a table of the service x fuel combinations that are being represented in each state
+    L144.in_EJ_sR9_comm_F_Uoth_Y <- L144.in_EJ_sR9_comm_F_U_Y %>%
+      filter(!(service %in% c("comm heating", "comm cooling")))
+
+    L144.in_EJ_state_comm_F_Uoth_Y <- L144.in_EJ_sR9_comm_F_Uoth_Y %>%
+      select(fuel, service) %>%
+      distinct() %>%
+      repeat_add_columns(tidyr::crossing(state = gcam_usa.STATES, year = HISTORICAL_YEARS)) %>%
+      left_join_error_no_match(states_subregions, by = "state") %>%
+      left_join_error_no_match(L144.flsp_state_share_sR9, by = c("state", "year", "subregion9")) %>%
+      left_join_error_no_match(L144.in_EJ_sR9_comm_F_Uoth_Y,
+                               by = c("subregion9", "fuel", "service", "year")) %>%
+      mutate(value = value.x * value.y) %>%
+      select(state, subregion9, fuel, service, year, value)
+
+    # Assembling unscaled energy consumption by state, fuel, and service
+    L144.in_EJ_state_comm_F_U_Y_unscaled <- bind_rows(L144.in_EJ_state_comm_F_heating_Y,
+                                                      L144.in_EJ_state_comm_F_cooling_Y,
+                                                      L144.in_EJ_state_comm_F_Uoth_Y)
+
+    # Calculating shares of energy consumption by each service, within each state and fuel
+    L144.in_EJ_state_comm_F_Y_unscaled <- L144.in_EJ_state_comm_F_U_Y_unscaled %>%
+      group_by(state, fuel, year) %>%
+      summarise(value = sum(value))
+
+    L144.pct_state_comm_F_U_Y <- L144.in_EJ_state_comm_F_U_Y_unscaled %>%
+      left_join_error_no_match(L144.in_EJ_state_comm_F_Y_unscaled, by = c("state", "fuel", "year")) %>%
+      mutate(value = value.x / value.y,
+             sector = "comm")
+
+    # At this point we can disaggregate the state-level energy consumption by sector and fuel to the specific end uses
+    # Non-building electricity use by state is estimated separately, and deducted from state-wide commercial electricity consumption
+    # National non-building electricity use is disaggregated to states according to population shares
+    L144.in_TWh_USA_commext_elec <- PNNL_Commext_elec %>%
+      gather(variable, value, -Year, -unit) %>%
+      rename(year = Year) %>%
+      mutate(service = "comm non-building",
+             value_EJ = value * CONV_TWH_EJ)
+
+    L144.in_EJ_USA_commext_elec <- L144.in_TWh_USA_commext_elec %>%
+      group_by(year, service) %>%
+      summarise(value_EJ = sum(value_EJ)) %>%
+      ungroup()
+
+    # This dataset needs to be expanded to all historical years. Use population ratios
+    first_year_commext <- min(PNNL_Commext_elec$Year)
+    last_year_commext <- max(PNNL_Commext_elec$Year)
+
+    commext_Census_pop_hist <- Census_pop_hist %>%
+      group_by(year) %>%
+      summarise(sum = sum(value)) %>%
+      ungroup() %>%
+      transmute(year,
+                pre = sum / sum[year == first_year_commext],
+                post = sum / sum[year == last_year_commext])
+
+    L144.in_EJ_USA_commext_elec <- tibble(year = HISTORICAL_YEARS,
+                                                    service = "comm non-building") %>%
+      # Using left_join b/c not all historical years in L144.in_EJ_USA_commext_elec
+      left_join(L144.in_EJ_USA_commext_elec, by = c("year", "service")) %>%
+      left_join_error_no_match(commext_Census_pop_hist, by = "year") %>%
+      mutate(value_EJ = approx_fun(year, value_EJ, rule = 2),
+             value_EJ = if_else(year < first_year_commext, value_EJ * pre, value_EJ),
+             value_EJ = if_else(year > last_year_commext, value_EJ * post, value_EJ)) %>%
+      select(service, year, value_EJ)
+
+    # Table of population ratios
+    L144.pct_state_commext_elec_Y <- Census_pop_hist %>%
+      filter(year %in% HISTORICAL_YEARS) %>%
+      group_by(year) %>%
+      mutate(value = value / sum(value)) %>%
+      ungroup() %>%
+      mutate(sector = "comm",
+             fuel = "electricity",
+             service = "comm non-building")
+
+     # L144.in_EJ_state_commext_F_U_Y <- apportion_to_states(
+     #  nation_data = L144.in_EJ_USA_commext_elec,
+     #  state_share_data = L144.pct_state_commext_elec_Y,
+     #  match_vectors = "service" )
     # ===================================================
 
     # Produce outputs
