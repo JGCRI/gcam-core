@@ -18,10 +18,10 @@ the generated outputs: \code{L122.in_EJ_state_refining_F}, \code{L122.out_EJ_sta
 original data system was \code{LA122.Refining.R} (gcam-usa level1).
 }
 \description{
-Briefly describe what this chunk does.
+Downscales crude oil, corn ethanol, and biodiesel refining inputs and outputs to state-level.
 }
 \details{
-Describe in detail what this chunk does.
+Downscales crude oil, corn ethanol, and biodiesel refining inputs and outputs to state-level.
 }
 \author{
 RLH September 2017
