@@ -221,11 +221,12 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
       # Using left_join because we are only scaling for certain years
       left_join(AEO_USA_flsp_bm2_scalers, by = "year") %>%
       replace_na(list(scaler = 1)) %>%
-      mutate(value = value * scaler)
+      mutate(sector = "comm",
+             value = value * scaler) %>%
+      select(state, subregion9, sector, year, value)
 
     # 2c: ENERGY CONSUMPTION BY STATE, SERVICE, AND YEAR
     # Aggregating energy consumption by sampling weights
-    # Aggregate in a for loop
     L144.in_EJ_sR9_comm <- L144.CBECS_all %>%
       lapply(function(df){
         cols_to_keep <- which(names(df) %in% CBECS_variables$variable)
@@ -255,7 +256,7 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
       select(-fuel) %>%
       repeat_add_columns(tibble(fuel = unique(EIA_distheat$fuel))) %>%
       left_join_error_no_match(EIA_distheat, by = c("fuel", "service")) %>%
-      mutate(value = value * share * efficiency) %>%
+      mutate(value = value * share / efficiency) %>%
       select(-share, -efficiency)
 
     # Merge this back into the initial table, but with the district services fuel removed
@@ -296,7 +297,7 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
 
     L144.in_EJ_state_comm_F_cooling_Y <- states_subregions %>%
       select(state, subregion9) %>%
-      repeat_add_columns(tidyr::crossing(fuel = CBECS_heating_fuels, year = HISTORICAL_YEARS)) %>%
+      repeat_add_columns(tidyr::crossing(fuel = CBECS_cooling_fuels, year = HISTORICAL_YEARS)) %>%
       mutate(service = "comm cooling") %>%
       left_join_error_no_match(L144.in_EJ_sR9_comm_F_U_Y, by = c("subregion9", "fuel", "service", "year")) %>%
       left_join_error_no_match(L143.share_state_Pop_CDD_sR9, by = c("state", "subregion9", "year")) %>%
@@ -321,7 +322,7 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
     L144.in_EJ_state_comm_F_Uoth_Y <- L144.in_EJ_sR9_comm_F_Uoth_Y %>%
       select(fuel, service) %>%
       distinct() %>%
-      repeat_add_columns(tidyr::crossing(state = gcam_usa.STATES, year = HISTORICAL_YEARS)) %>%
+      repeat_add_columns(tidyr::crossing(state = gcamusa.STATES, year = HISTORICAL_YEARS)) %>%
       left_join_error_no_match(states_subregions, by = "state") %>%
       left_join_error_no_match(L144.flsp_state_share_sR9, by = c("state", "year", "subregion9")) %>%
       left_join_error_no_match(L144.in_EJ_sR9_comm_F_Uoth_Y,
@@ -342,7 +343,8 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
     L144.pct_state_comm_F_U_Y <- L144.in_EJ_state_comm_F_U_Y_unscaled %>%
       left_join_error_no_match(L144.in_EJ_state_comm_F_Y_unscaled, by = c("state", "fuel", "year")) %>%
       mutate(value = value.x / value.y,
-             sector = "comm")
+             sector = "comm") %>%
+      select(-value.x, -value.y)
 
     # At this point we can disaggregate the state-level energy consumption by sector and fuel to the specific end uses
     # Non-building electricity use by state is estimated separately, and deducted from state-wide commercial electricity consumption
@@ -390,16 +392,50 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
              fuel = "electricity",
              service = "comm non-building")
 
-     # L144.in_EJ_state_commext_F_U_Y <- apportion_to_states(
-     #  nation_data = L144.in_EJ_USA_commext_elec,
-     #  state_share_data = L144.pct_state_commext_elec_Y,
-     #  match_vectors = "service" )
+     L144.in_EJ_state_commext_F_U_Y <- L144.pct_state_commext_elec_Y %>%
+       left_join_error_no_match(L144.in_EJ_USA_commext_elec, by = c("service", "year")) %>%
+       # State value = state proportion * USA value
+       mutate(state_EJ = value * value_EJ) %>%
+       select(state, sector, fuel, service, year, value = state_EJ)
+
+     # Commercial non-building electricity is not scaled; it is deducted from the top-down estimate of commercial electricity use
+     L144.in_EJ_state_commint_elec <- L142.in_EJ_state_bld_F %>%
+       filter(sector == "comm",
+              fuel == "electricity") %>%
+       left_join_error_no_match(L144.in_EJ_state_commext_F_U_Y, by = c("state", "year", "sector", "fuel")) %>%
+       mutate(value = value.x - value.y) %>%
+       select(-service, -value.x, - value.y)
+
+     # Bind this back to the initial table of commercial energy use by state and fuel
+     L144.in_EJ_state_commint_F <- L142.in_EJ_state_bld_F %>%
+       filter(sector == "comm" & fuel != "electricity") %>%
+       bind_rows(L144.in_EJ_state_commint_elec )
+
+     # This energy can now be apportioned to the end-use services
+     L144.in_EJ_state_commint_F_U_Y <- L144.pct_state_comm_F_U_Y %>%
+       left_join_error_no_match(L144.in_EJ_state_commint_F, by = c("state", "sector", "fuel", "year")) %>%
+       mutate(value = value.x * value.y) %>%
+       select(state, sector, fuel, service, year, value)
+
+     # Bind the building (interior) and non-building (exterior) energy use tables
+     L144.in_EJ_state_comm_F_U_Y <- bind_rows(L144.in_EJ_state_commint_F_U_Y, L144.in_EJ_state_commext_F_U_Y)
+
+     # This table needs to have coal and biomass added; just assign these to heating
+     L144.in_EJ_state_comm_FnoCBECS <- L142.in_EJ_state_bld_F %>%
+       filter(sector == "comm",
+              !(fuel %in% L144.in_EJ_state_comm_F_U_Y$fuel)) %>%
+       mutate(service = "comm heating")
+
+    L144.in_EJ_state_comm_F_U_Y <- L144.in_EJ_state_comm_F_U_Y %>%
+      bind_rows(L144.in_EJ_state_comm_FnoCBECS)
+
+
     # ===================================================
 
     # Produce outputs
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+    L144.flsp_bm2_state_comm %>%
+      add_title("Commercial floorspace by state") %>%
+      add_units("billion m2") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L144.flsp_bm2_state_comm") %>%
@@ -422,9 +458,9 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L144.flsp_bm2_state_comm
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+    L144.in_EJ_state_comm_F_U_Y %>%
+      add_title("Commercial energy consumption by state/fuel/end use") %>%
+      add_units("EJ/yr") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L144.in_EJ_state_comm_F_U_Y") %>%
