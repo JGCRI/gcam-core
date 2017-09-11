@@ -17,7 +17,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author JDH August 2017
-#' @export
 module_energy_L224.heat <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
@@ -90,14 +89,14 @@ module_energy_L224.heat <- function(command, ...) {
       filter(region %in% heat_region$region) -> L224.SubsectorLogit_heat
 
     # L224.SubsectorShrwt_heat and L224.SubsectorShrwtFllt_heat: Subsector shareweights of district heat sectors
-    if( any( !is.na( A24.subsector_shrwt$year ) ) ){
+    if(any(!is.na(A24.subsector_shrwt$year))){
       A24.subsector_shrwt %>%
         filter(!is.na(year)) %>%
         write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwt"]], GCAM_region_names = GCAM_region_names ) %>%
         filter(region %in% heat_region$region) -> L224.SubsectorShrwt_heat
     }
 
-    if( any( !is.na( A24.subsector_shrwt$year.fillout ) ) ){
+    if(any(!is.na(A24.subsector_shrwt$year.fillout))){
       A24.subsector_shrwt %>%
         filter(!is.na(year.fillout)) %>%
         write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]], GCAM_region_names = GCAM_region_names ) %>%
@@ -105,14 +104,14 @@ module_energy_L224.heat <- function(command, ...) {
     }
 
     # Subsector shareweight interpolation of district heat sectors
-    if( any( is.na( A24.subsector_interp$to.value ) ) ){
+    if(any(is.na(A24.subsector_interp$to.value))){
       A24.subsector_interp %>%
         filter(is.na(to.value)) %>%
         write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorInterp"]], GCAM_region_names = GCAM_region_names) %>%
         filter(region %in% heat_region$region) -> L224.SubsectorInterp_heat
     }
 
-    if( any( !is.na( A24.subsector_interp$to.value ) ) ){
+    if(any(!is.na(A24.subsector_interp$to.value))){
       A24.subsector_interp %>%
         filter(!is.na(to.value)) %>%
         write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorInterpTo"]], GCAM_region_names = GCAM_region_names) %>%
@@ -220,7 +219,7 @@ module_energy_L224.heat <- function(command, ...) {
     L224.StubTechSecOut_elec %>%
       select(LEVEL2_DATA_NAMES[["StubTechYr"]], secondary.output) %>%
       mutate(minicam.non.energy.input = "heat plant") %>%
-      mutate(input.cost = round(secondary.output*HEAT_PRICE, energy.DIGITS_COST))-> L224.StubTechCost_elec
+      mutate(input.cost = round(secondary.output*energy.HEAT_PRICE, energy.DIGITS_COST))-> L224.StubTechCost_elec
 
     # For gas-electric technologies whose efficiencies are below the default assumptions, this cost needs to be reduced
     L1231.eff_R_elec_F_tech_Yh %>%
@@ -232,7 +231,7 @@ module_energy_L224.heat <- function(command, ...) {
       filter(region %in% heat_region$region) %>%
       filter(fuel == "gas") %>%
       filter(efficiency < DEFAULT_ELECTRIC_EFFICIENCY) %>%
-      mutate(cost_modifier = GAS_PRICE * (1 / DEFAULT_ELECTRIC_EFFICIENCY - 1 / efficiency)) -> L224.eff_Rh_elec_gas_sc_Y
+      mutate(cost_modifier = energy.GAS_PRICE * (1 / DEFAULT_ELECTRIC_EFFICIENCY - 1 / efficiency)) -> L224.eff_Rh_elec_gas_sc_Y
 
     # Modify the costs
     L224.StubTechCost_elec %>%

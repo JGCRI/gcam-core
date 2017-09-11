@@ -247,9 +247,10 @@ ELECTRICITY_INPUT_FUELS<- c("biomass", "coal", "gas", "refined liquids")
 energy.CLIMATE_NORMAL_YEARS <- 1981:2000
 energy.RSRC_FUELS <- c("coal", "gas", "refined liquids")
 
-#Assumed base year heat price, used for calculating adjustment to non-energy costs of electricity technologies with secondary output of heat
-HEAT_PRICE <- 3.2
-GAS_PRICE <- 2
+# Assumed base year heat price, used for calculating adjustment to non-energy costs of electricity technologies with secondary output of heat
+# in units of 1975$/EJ
+energy.HEAT_PRICE <- 3.2
+energy.GAS_PRICE <- 2
 
 # below come from ENERGY_ASSUMPTIONS/A_ccs_data.R
 energy.DIGITS_EFFICIENCY <- 3
