@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <modeltime>
+      <final-calibration-year>2010</final-calibration-year>
+      <inter-year time-step="5">2005</inter-year>
+      <end-year>2100</end-year>
+      <end-year time-step="15">1975</end-year>
+   </modeltime>
+</scenario>
