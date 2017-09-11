@@ -85,34 +85,146 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       L181.LC_bm2_R_C_Yh_GLU_irr_level
 
     L181.YieldMult_R_bio_GLU_irr %>%
-      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      replace_GLU(map = basin_to_country_mapping) ->
       L181.YieldMult_R_bio_GLU_irr
 
-    # Write a function to carry LN4 information down to LN5
-    convert_LN4_to_LN5 <- function( data, names ){
+    # convert_LN4_to_LN5
+    # A function to carry LN4 information down to LN5
+    convert_LN4_to_LN5 <- function(data, names){
       data %>%
         repeat_add_columns(tibble::tibble(level = c( "lo", "hi" ))) %>%
         mutate(LandNode5 = LandLeaf,
-               LandLeaf = paste(data_new$LandNode5, data_new[[lvl]], sep = aglu.MGMT_DELIMITER)) ->
+               LandLeaf = paste(LandNode5, level, sep = aglu.MGMT_DELIMITER)) ->
         data_new
-      # data_new <- repeat_and_add_vector( data, lvl, c( "lo", "hi" ) )
-      # data_new$LandNode5 <- data_new$LandLeaf
-      # data_new$LandLeaf <- paste( data_new$LandNode5, data_new[[lvl]], sep = mgmt_delimiter )
-
       data_new <- data_new[names]
+
       return( data_new )
-    }
+    } # end convert_LN4_to_LN5
+
+    # remove_zero_production_land_leafs
+    # A function to remove land leafs for each region-year whose production, read in from
+    # a provided table, is 0
+    remove_zero_production_land_leafs <- function(land, prod) {
+
+      # remove 0 production region-years and add an id combining
+      # region, AgProductionTechnology, year info"
+      prod %>%
+        filter(calOutputValue > 0) %>%
+        mutate(id = paste0(region, AgProductionTechnology, year)) %>%
+        select(id) %>%
+        distinct() ->
+        prod1
+
+      # give land a corresponding id and filter to the land ids that
+      # occur in prod1
+      land %>%
+        mutate(id = paste0(region, LandLeaf, year)) %>%
+        semi_join(prod1, by = "id") %>%
+        select(-id) ->
+        land1
+
+      return(land1)
+    } # end remove_zero_production_land_leafs
+
+
+
+    # 2. Build tables
+    #
+    # The methods in this code file will be to start with existing (landnode4) tables, and add another level of detail for management levels
+    # (nitrogen application), hi and lo.
+
+    # L2252.LN5_Logit: Logit exponent between lo and hi managed techs for each crop-irrigationtype combo
+    # ie competition between Corn_IRR_hi and Corn_Irr_lo.
+    L2241.LN4_Logit %>%
+      repeat_add_columns(tibble::tibble(Irr_Rfd = c( "IRR", "RFD" ))) %>%
+      mutate(LandNode5 = paste(LandNode4, Irr_Rfd, sep = aglu.IRR_DELIMITER),
+             logit.exponent = aglu.MGMT_LOGIT_EXP,
+             logit.type = aglu.MGMT_LOGIT_TYPE) %>%
+      select(one_of(c(LEVEL2_DATA_NAMES[["LN5_Logit"]], "logit.type"))) ->
+      L2252.LN5_Logit
+
+
+    # create an intermediary table of land allocation for each landleaf (= crop-glu-irr-mgmt)
+    # in each region-year. This is used for both HistMgdAllocation and MgdAllocation for crops.
+    L181.LC_bm2_R_C_Yh_GLU_irr_level %>%
+      mutate(Irr_Rfd = toupper(Irr_Rfd),
+             LandLeaf = paste(paste(paste(GCAM_commodity, GLU, sep = aglu.CROP_GLU_DELIMITER),
+                                    Irr_Rfd, sep = aglu.IRR_DELIMITER),
+                              level, sep = aglu.MGMT_DELIMITER),
+             value = round(value, aglu.DIGITS_LAND_USE)) %>%
+      rename(allocation = value) %>%
+      select(region, year, LandLeaf, allocation) ->
+      L2252.LC_bm2_R_C_Yh_GLU_irr_mgmt
+
+
+    # L2252.LN5_HistMgdAllocation_crop: historical cropland allocation
+    # in the fifth land nest ie for each crop-irr-mgmt combo in each region-glu-year.
+    L2241.LN4_HistMgdAllocation_crop %>%
+      convert_LN4_to_LN5(names = LEVEL2_DATA_NAMES[["LN5_HistMgdAllocation"]]) %>%
+      select(-allocation) %>%
+      left_join_error_no_match(L2252.LC_bm2_R_C_Yh_GLU_irr_mgmt, by = c("region", "year", "LandLeaf")) ->
+      L2252.LN5_HistMgdAllocation_crop
+
+
+    # L2252.LN5_MgdAllocation_crop: cropland allocation
+    # in the fifth land nest ie for each crop-irr-mgmt combo in each region-glu-year.
+    L2241.LN4_MgdAllocation_crop %>%
+      convert_LN4_to_LN5(names = LEVEL2_DATA_NAMES[["LN5_MgdAllocation"]]) %>%
+      select(-allocation) %>%
+      left_join_error_no_match(L2252.LC_bm2_R_C_Yh_GLU_irr_mgmt, by = c("region", "year", "LandLeaf")) %>%
+      remove_zero_production_land_leafs(prod = L2012.AgProduction_ag_irr_mgmt) ->
+      L2252.LN5_MgdAllocation_crop
+
+
+    # Several outputs are unchanged from their L2241 form. They just undergo relabeling and the addition of
+    # hi/lo management information:
+    #
+    # L2252.LN5_HistMgdAllocation_bio
+    L2241.LN4_HistMgdAllocation_bio %>%
+      convert_LN4_to_LN5(names = LEVEL2_DATA_NAMES[["LN5_HistMgdAllocation"]]) ->
+      L2252.LN5_HistMgdAllocation_bio
+
+    # L2252.LN5_MgdAllocation_bio
+    L2241.LN4_MgdAllocation_bio %>%
+      convert_LN4_to_LN5(names = LEVEL2_DATA_NAMES[["LN5_MgdAllocation"]]) ->
+      L2252.LN5_MgdAllocation_bio
+
+    # L2252.LN5_MgdCarbon_crop
+    L2241.LN4_MgdCarbon_crop %>%
+      convert_LN4_to_LN5(names = LEVEL2_DATA_NAMES[["LN5_MgdCarbon"]]) ->
+      L2252.LN5_MgdCarbon_crop
+
+
+    # L2252.LN5_MgdCarbon_bio
+    # Undergoes relabelling and the addition of hi/lo mgmt information;
+    # vegetative carbon content is multiplied for the hi/lo yield
+    # multipliers as well.
+    #
+    # First, prep multipliers for easier joining to relabeled L2241 data.
+    L181.YieldMult_R_bio_GLU_irr %>%
+            gather(variable, yieldmult, -GCAM_region_ID, -region, -GLU, -Irr_Rfd) %>%
+      separate(variable, c("variable", "level")) %>%
+      select(-GCAM_region_ID, -variable) %>%
+      mutate(Irr_Rfd = toupper(Irr_Rfd)) ->
+      L2252.YieldMult_R_bio_GLU_irr
+
+    # Second, relabel L2241 data and join the multiplier information
+    L2241.LN4_MgdCarbon_bio %>%
+      convert_LN4_to_LN5(names = LEVEL2_DATA_NAMES[["LN5_MgdCarbon"]]) %>%
+      mutate(tmp = LandLeaf) %>%
+      separate(tmp, c("crop1", "crop2", "GLU", "Irr_Rfd", "level")) %>%
+      select(-crop1, -crop2) %>%
+      # some region-glu-irr-mgmt have no info, so less restrictive join and overwrite NAs later
+      left_join(L2252.YieldMult_R_bio_GLU_irr, by = c("region", "GLU", "Irr_Rfd", "level")) %>%
 
 
 
 
-
-    # The methods in this code file will be to start with existing (landnode4) tables, and add another level of detail
-    # Some tables will require post-hoc adjustments, and for others the information simply needs to be passed down to another level
 
 
     # Produce outputs
-    tibble() %>%
+    L2252.LN5_Logit %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -131,12 +243,10 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
                      "temp-data-inject/L2241.LN4_MgdCarbon_crop",
                      "temp-data-inject/L2241.LN4_MgdCarbon_bio",
                      "temp-data-inject/L2241.LN4_LeafGhostShare",
-                     "L2012.AgProduction_ag_irr_mgmt") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L2012.AgProduction_ag_irr_mgmt") ->
       L2252.LN5_Logit
 
-    tibble() %>%
+    L2252.LN5_HistMgdAllocation_crop %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -155,12 +265,10 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
                      "temp-data-inject/L2241.LN4_MgdCarbon_crop",
                      "temp-data-inject/L2241.LN4_MgdCarbon_bio",
                      "temp-data-inject/L2241.LN4_LeafGhostShare",
-                     "L2012.AgProduction_ag_irr_mgmt") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L2012.AgProduction_ag_irr_mgmt") ->
       L2252.LN5_HistMgdAllocation_crop
 
-    tibble() %>%
+    L2252.LN5_MgdAllocation_crop %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -179,12 +287,10 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
                      "temp-data-inject/L2241.LN4_MgdCarbon_crop",
                      "temp-data-inject/L2241.LN4_MgdCarbon_bio",
                      "temp-data-inject/L2241.LN4_LeafGhostShare",
-                     "L2012.AgProduction_ag_irr_mgmt") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L2012.AgProduction_ag_irr_mgmt") ->
       L2252.LN5_MgdAllocation_crop
 
-    tibble() %>%
+    L2252.LN5_HistMgdAllocation_bio %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -203,12 +309,10 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
                      "temp-data-inject/L2241.LN4_MgdCarbon_crop",
                      "temp-data-inject/L2241.LN4_MgdCarbon_bio",
                      "temp-data-inject/L2241.LN4_LeafGhostShare",
-                     "L2012.AgProduction_ag_irr_mgmt") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L2012.AgProduction_ag_irr_mgmt") ->
       L2252.LN5_HistMgdAllocation_bio
 
-    tibble() %>%
+    L2252.LN5_MgdAllocation_bio %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -227,12 +331,10 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
                      "temp-data-inject/L2241.LN4_MgdCarbon_crop",
                      "temp-data-inject/L2241.LN4_MgdCarbon_bio",
                      "temp-data-inject/L2241.LN4_LeafGhostShare",
-                     "L2012.AgProduction_ag_irr_mgmt") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L2012.AgProduction_ag_irr_mgmt") ->
       L2252.LN5_MgdAllocation_bio
 
-    tibble() %>%
+    L2252.LN5_MgdCarbon_crop %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -251,9 +353,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
                      "temp-data-inject/L2241.LN4_MgdCarbon_crop",
                      "temp-data-inject/L2241.LN4_MgdCarbon_bio",
                      "temp-data-inject/L2241.LN4_LeafGhostShare",
-                     "L2012.AgProduction_ag_irr_mgmt") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L2012.AgProduction_ag_irr_mgmt") ->
       L2252.LN5_MgdCarbon_crop
 
     tibble() %>%
