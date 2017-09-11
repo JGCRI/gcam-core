@@ -84,10 +84,23 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       replace_GLU(map = basin_to_country_mapping) ->
       L181.LC_bm2_R_C_Yh_GLU_irr_level
 
-    L181.YieldMult_R_bio_GLU_irr %>%
-      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      replace_GLU(map = basin_to_country_mapping) ->
-      L181.YieldMult_R_bio_GLU_irr
+    # The old data system does not correct the GLU names for this input.
+    # Consequently, in the original L2252, the match on line 119 introduces
+    # hist.veg.carbon.density = NA for all region-glu-irr-mgmt because it
+    # is being told to match GLU008 style names with ArkWhtRedR style names
+    # so there are no matches.
+    # As a result, there is no difference in hist.veg.carbon.density for
+    # hi vs lo nests.
+    if(OLD_DATA_SYSTEM_BEHAVIOR){
+      L181.YieldMult_R_bio_GLU_irr %>%
+        left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
+        L181.YieldMult_R_bio_GLU_irr
+    } else{
+      L181.YieldMult_R_bio_GLU_irr %>%
+        left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+        replace_GLU(map = basin_to_country_mapping) ->
+        L181.YieldMult_R_bio_GLU_irr
+    }
 
     # convert_LN4_to_LN5
     # A function to carry LN4 information down to LN5
@@ -207,16 +220,53 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       separate(variable, c("variable", "level")) %>%
       select(-GCAM_region_ID, -variable) %>%
       mutate(Irr_Rfd = toupper(Irr_Rfd)) ->
-      L2252.YieldMult_R_bio_GLU_irr
+      L2252.YieldMult_R_bio_GLU_irr ### Matches Old
+
 
     # Second, relabel L2241 data and join the multiplier information
     L2241.LN4_MgdCarbon_bio %>%
       convert_LN4_to_LN5(names = LEVEL2_DATA_NAMES[["LN5_MgdCarbon"]]) %>%
       mutate(tmp = LandLeaf) %>%
       separate(tmp, c("crop1", "crop2", "GLU", "Irr_Rfd", "level")) %>%
-      select(-crop1, -crop2) %>%
-      # some region-glu-irr-mgmt have no info, so less restrictive join and overwrite NAs later
+      select(-crop1, -crop2)  %>% ### GOOD TO HERE; matches old to line 114
+      # some region-glu-irr-mgmt have no info, so less restrictive join and overwrite NAs
       left_join(L2252.YieldMult_R_bio_GLU_irr, by = c("region", "GLU", "Irr_Rfd", "level")) %>%
+      # For places with no yieldmult, set hist.veg.carbon.density equal to veg.carbon.density;
+      # otherwise, hist.veg.carbon.density = veg.carbon.density * yieldmult.
+      mutate(hist.veg.carbon.density = if_else(is.na(yieldmult),
+                                             veg.carbon.density,
+                                             round(veg.carbon.density * yieldmult, aglu.DIGITS_C_DENSITY)),
+             veg.carbon.density = hist.veg.carbon.density) %>%
+      select(-yieldmult) ->
+      L2252.LN5_MgdCarbon_bio
+
+
+
+    # L2241.LN4_MgdCarbon_bio %>%
+    #   convert_LN4_to_LN5(names = LEVEL2_DATA_NAMES[["LN5_MgdCarbon"]]) %>%
+    #   mutate(tmp = LandLeaf) %>%
+    #   separate(tmp, c("crop1", "crop2", "GLU", "Irr_Rfd", "level")) %>%
+    #   select(-crop1, -crop2)  %>% ### GOOD TO HERE; matches old to line 114
+    #   # some region-glu-irr-mgmt have no info, so less restrictive join and overwrite NAs
+    #   left_join(L2252.YieldMult_R_bio_GLU_irr, by = c("region", "GLU", "Irr_Rfd", "level")) ->
+    #   L2252.LN5_MgdCarbon_bio
+    # %>%
+    #   mutate(hist.veg.carbon.density = round(veg.carbon.density * yieldmult, aglu.DIGITS_C_DENSITY)) ->
+    #   L2252.LN5_MgdCarbon_bio
+    #
+    #
+    #
+    #
+    #   # For places with no yieldmult, set hist.veg.carbon.density equal to veg.carbon.density;
+    #   # otherwise, hist.veg.carbon.density = veg.carbon.density * yieldmult.
+    #   mutate(hist.veg.carbon.density = if_else(is.na(yieldmult),
+    #                                            veg.carbon.density,
+    #                                            round(veg.carbon.density * yieldmult, aglu.DIGITS_C_DENSITY)),
+    #   # mutate(hist.veg.carbon.density = round(veg.carbon.density * yieldmult, aglu.DIGITS_C_DENSITY),
+    #   #        hist.veg.carbon.density = if_else(is.na(hist.veg.carbon.density), veg.carbon.density, hist.veg.carbon.density),
+    #          veg.carbon.density = hist.veg.carbon.density) %>%
+    #   select(-yieldmult) ->
+    #   L2252.LN5_MgdCarbon_bio
 
 
 
