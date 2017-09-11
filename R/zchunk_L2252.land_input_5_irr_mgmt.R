@@ -21,14 +21,14 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
              "L181.LandShare_R_bio_GLU_irr",
              "L181.LC_bm2_R_C_Yh_GLU_irr_level",
              "L181.YieldMult_R_bio_GLU_irr",
-             "L2241.LN4_Logit",
-             "L2241.LN4_HistMgdAllocation_crop",
-             "L2241.LN4_MgdAllocation_crop",
-             "L2241.LN4_HistMgdAllocation_bio",
-             "L2241.LN4_MgdAllocation_bio",
-             "L2241.LN4_MgdCarbon_crop",
-             "L2241.LN4_MgdCarbon_bio",
-             "L2241.LN4_LeafGhostShare",
+             FILE = "temp-data-inject/L2241.LN4_Logit",
+             FILE = "temp-data-inject/L2241.LN4_HistMgdAllocation_crop",
+             FILE = "temp-data-inject/L2241.LN4_MgdAllocation_crop",
+             FILE = "temp-data-inject/L2241.LN4_HistMgdAllocation_bio",
+             FILE = "temp-data-inject/L2241.LN4_MgdAllocation_bio",
+             FILE = "temp-data-inject/L2241.LN4_MgdCarbon_crop",
+             FILE = "temp-data-inject/L2241.LN4_MgdCarbon_bio",
+             FILE = "temp-data-inject/L2241.LN4_LeafGhostShare",
              "L2012.AgProduction_ag_irr_mgmt"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2252.LN5_Logit",
@@ -50,14 +50,14 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
     L181.LandShare_R_bio_GLU_irr <- get_data(all_data, "L181.LandShare_R_bio_GLU_irr")
     L181.LC_bm2_R_C_Yh_GLU_irr_level <- get_data(all_data, "L181.LC_bm2_R_C_Yh_GLU_irr_level")
     L181.YieldMult_R_bio_GLU_irr <- get_data(all_data, "L181.YieldMult_R_bio_GLU_irr")
-    L2241.LN4_Logit <- get_data(all_data, "L2241.LN4_Logit")
-    L2241.LN4_HistMgdAllocation_crop <- get_data(all_data, "L2241.LN4_HistMgdAllocation_crop")
-    L2241.LN4_MgdAllocation_crop <- get_data(all_data, "L2241.LN4_MgdAllocation_crop")
-    L2241.LN4_HistMgdAllocation_bio <- get_data(all_data, "L2241.LN4_HistMgdAllocation_bio")
-    L2241.LN4_MgdAllocation_bio <- get_data(all_data, "L2241.LN4_MgdAllocation_bio")
-    L2241.LN4_MgdCarbon_crop <- get_data(all_data, "L2241.LN4_MgdCarbon_crop")
-    L2241.LN4_MgdCarbon_bio <- get_data(all_data, "L2241.LN4_MgdCarbon_bio")
-    L2241.LN4_LeafGhostShare <- get_data(all_data, "L2241.LN4_LeafGhostShare")
+    L2241.LN4_Logit <- get_data(all_data, "temp-data-inject/L2241.LN4_Logit")
+    L2241.LN4_HistMgdAllocation_crop <- get_data(all_data, "temp-data-inject/L2241.LN4_HistMgdAllocation_crop")
+    L2241.LN4_MgdAllocation_crop <- get_data(all_data, "temp-data-inject/L2241.LN4_MgdAllocation_crop")
+    L2241.LN4_HistMgdAllocation_bio <- get_data(all_data, "temp-data-inject/L2241.LN4_HistMgdAllocation_bio")
+    L2241.LN4_MgdAllocation_bio <- get_data(all_data, "temp-data-inject/L2241.LN4_MgdAllocation_bio")
+    L2241.LN4_MgdCarbon_crop <- get_data(all_data, "temp-data-inject/L2241.LN4_MgdCarbon_crop")
+    L2241.LN4_MgdCarbon_bio <- get_data(all_data, "temp-data-inject/L2241.LN4_MgdCarbon_bio")
+    L2241.LN4_LeafGhostShare <- get_data(all_data, "temp-data-inject/L2241.LN4_LeafGhostShare")
     L2012.AgProduction_ag_irr_mgmt <- get_data(all_data, "L2012.AgProduction_ag_irr_mgmt")
 
 
@@ -123,14 +123,14 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
                      "L181.LandShare_R_bio_GLU_irr",
                      "L181.LC_bm2_R_C_Yh_GLU_irr_level",
                      "L181.YieldMult_R_bio_GLU_irr",
-                     "L2241.LN4_Logit",
-                     "L2241.LN4_HistMgdAllocation_crop",
-                     "L2241.LN4_MgdAllocation_crop",
-                     "L2241.LN4_HistMgdAllocation_bio",
-                     "L2241.LN4_MgdAllocation_bio",
-                     "L2241.LN4_MgdCarbon_crop",
-                     "L2241.LN4_MgdCarbon_bio",
-                     "L2241.LN4_LeafGhostShare",
+                     "temp-data-inject/L2241.LN4_Logit",
+                     "temp-data-inject/L2241.LN4_HistMgdAllocation_crop",
+                     "temp-data-inject/L2241.LN4_MgdAllocation_crop",
+                     "temp-data-inject/L2241.LN4_HistMgdAllocation_bio",
+                     "temp-data-inject/L2241.LN4_MgdAllocation_bio",
+                     "temp-data-inject/L2241.LN4_MgdCarbon_crop",
+                     "temp-data-inject/L2241.LN4_MgdCarbon_bio",
+                     "temp-data-inject/L2241.LN4_LeafGhostShare",
                      "L2012.AgProduction_ag_irr_mgmt") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
@@ -147,14 +147,14 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
                      "L181.LandShare_R_bio_GLU_irr",
                      "L181.LC_bm2_R_C_Yh_GLU_irr_level",
                      "L181.YieldMult_R_bio_GLU_irr",
-                     "L2241.LN4_Logit",
-                     "L2241.LN4_HistMgdAllocation_crop",
-                     "L2241.LN4_MgdAllocation_crop",
-                     "L2241.LN4_HistMgdAllocation_bio",
-                     "L2241.LN4_MgdAllocation_bio",
-                     "L2241.LN4_MgdCarbon_crop",
-                     "L2241.LN4_MgdCarbon_bio",
-                     "L2241.LN4_LeafGhostShare",
+                     "temp-data-inject/L2241.LN4_Logit",
+                     "temp-data-inject/L2241.LN4_HistMgdAllocation_crop",
+                     "temp-data-inject/L2241.LN4_MgdAllocation_crop",
+                     "temp-data-inject/L2241.LN4_HistMgdAllocation_bio",
+                     "temp-data-inject/L2241.LN4_MgdAllocation_bio",
+                     "temp-data-inject/L2241.LN4_MgdCarbon_crop",
+                     "temp-data-inject/L2241.LN4_MgdCarbon_bio",
+                     "temp-data-inject/L2241.LN4_LeafGhostShare",
                      "L2012.AgProduction_ag_irr_mgmt") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
@@ -171,14 +171,14 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
                      "L181.LandShare_R_bio_GLU_irr",
                      "L181.LC_bm2_R_C_Yh_GLU_irr_level",
                      "L181.YieldMult_R_bio_GLU_irr",
-                     "L2241.LN4_Logit",
-                     "L2241.LN4_HistMgdAllocation_crop",
-                     "L2241.LN4_MgdAllocation_crop",
-                     "L2241.LN4_HistMgdAllocation_bio",
-                     "L2241.LN4_MgdAllocation_bio",
-                     "L2241.LN4_MgdCarbon_crop",
-                     "L2241.LN4_MgdCarbon_bio",
-                     "L2241.LN4_LeafGhostShare",
+                     "temp-data-inject/L2241.LN4_Logit",
+                     "temp-data-inject/L2241.LN4_HistMgdAllocation_crop",
+                     "temp-data-inject/L2241.LN4_MgdAllocation_crop",
+                     "temp-data-inject/L2241.LN4_HistMgdAllocation_bio",
+                     "temp-data-inject/L2241.LN4_MgdAllocation_bio",
+                     "temp-data-inject/L2241.LN4_MgdCarbon_crop",
+                     "temp-data-inject/L2241.LN4_MgdCarbon_bio",
+                     "temp-data-inject/L2241.LN4_LeafGhostShare",
                      "L2012.AgProduction_ag_irr_mgmt") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
@@ -195,14 +195,14 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
                      "L181.LandShare_R_bio_GLU_irr",
                      "L181.LC_bm2_R_C_Yh_GLU_irr_level",
                      "L181.YieldMult_R_bio_GLU_irr",
-                     "L2241.LN4_Logit",
-                     "L2241.LN4_HistMgdAllocation_crop",
-                     "L2241.LN4_MgdAllocation_crop",
-                     "L2241.LN4_HistMgdAllocation_bio",
-                     "L2241.LN4_MgdAllocation_bio",
-                     "L2241.LN4_MgdCarbon_crop",
-                     "L2241.LN4_MgdCarbon_bio",
-                     "L2241.LN4_LeafGhostShare",
+                     "temp-data-inject/L2241.LN4_Logit",
+                     "temp-data-inject/L2241.LN4_HistMgdAllocation_crop",
+                     "temp-data-inject/L2241.LN4_MgdAllocation_crop",
+                     "temp-data-inject/L2241.LN4_HistMgdAllocation_bio",
+                     "temp-data-inject/L2241.LN4_MgdAllocation_bio",
+                     "temp-data-inject/L2241.LN4_MgdCarbon_crop",
+                     "temp-data-inject/L2241.LN4_MgdCarbon_bio",
+                     "temp-data-inject/L2241.LN4_LeafGhostShare",
                      "L2012.AgProduction_ag_irr_mgmt") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
@@ -219,14 +219,14 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
                      "L181.LandShare_R_bio_GLU_irr",
                      "L181.LC_bm2_R_C_Yh_GLU_irr_level",
                      "L181.YieldMult_R_bio_GLU_irr",
-                     "L2241.LN4_Logit",
-                     "L2241.LN4_HistMgdAllocation_crop",
-                     "L2241.LN4_MgdAllocation_crop",
-                     "L2241.LN4_HistMgdAllocation_bio",
-                     "L2241.LN4_MgdAllocation_bio",
-                     "L2241.LN4_MgdCarbon_crop",
-                     "L2241.LN4_MgdCarbon_bio",
-                     "L2241.LN4_LeafGhostShare",
+                     "temp-data-inject/L2241.LN4_Logit",
+                     "temp-data-inject/L2241.LN4_HistMgdAllocation_crop",
+                     "temp-data-inject/L2241.LN4_MgdAllocation_crop",
+                     "temp-data-inject/L2241.LN4_HistMgdAllocation_bio",
+                     "temp-data-inject/L2241.LN4_MgdAllocation_bio",
+                     "temp-data-inject/L2241.LN4_MgdCarbon_crop",
+                     "temp-data-inject/L2241.LN4_MgdCarbon_bio",
+                     "temp-data-inject/L2241.LN4_LeafGhostShare",
                      "L2012.AgProduction_ag_irr_mgmt") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
@@ -243,14 +243,14 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
                      "L181.LandShare_R_bio_GLU_irr",
                      "L181.LC_bm2_R_C_Yh_GLU_irr_level",
                      "L181.YieldMult_R_bio_GLU_irr",
-                     "L2241.LN4_Logit",
-                     "L2241.LN4_HistMgdAllocation_crop",
-                     "L2241.LN4_MgdAllocation_crop",
-                     "L2241.LN4_HistMgdAllocation_bio",
-                     "L2241.LN4_MgdAllocation_bio",
-                     "L2241.LN4_MgdCarbon_crop",
-                     "L2241.LN4_MgdCarbon_bio",
-                     "L2241.LN4_LeafGhostShare",
+                     "temp-data-inject/L2241.LN4_Logit",
+                     "temp-data-inject/L2241.LN4_HistMgdAllocation_crop",
+                     "temp-data-inject/L2241.LN4_MgdAllocation_crop",
+                     "temp-data-inject/L2241.LN4_HistMgdAllocation_bio",
+                     "temp-data-inject/L2241.LN4_MgdAllocation_bio",
+                     "temp-data-inject/L2241.LN4_MgdCarbon_crop",
+                     "temp-data-inject/L2241.LN4_MgdCarbon_bio",
+                     "temp-data-inject/L2241.LN4_LeafGhostShare",
                      "L2012.AgProduction_ag_irr_mgmt") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
@@ -267,14 +267,14 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
                      "L181.LandShare_R_bio_GLU_irr",
                      "L181.LC_bm2_R_C_Yh_GLU_irr_level",
                      "L181.YieldMult_R_bio_GLU_irr",
-                     "L2241.LN4_Logit",
-                     "L2241.LN4_HistMgdAllocation_crop",
-                     "L2241.LN4_MgdAllocation_crop",
-                     "L2241.LN4_HistMgdAllocation_bio",
-                     "L2241.LN4_MgdAllocation_bio",
-                     "L2241.LN4_MgdCarbon_crop",
-                     "L2241.LN4_MgdCarbon_bio",
-                     "L2241.LN4_LeafGhostShare",
+                     "temp-data-inject/L2241.LN4_Logit",
+                     "temp-data-inject/L2241.LN4_HistMgdAllocation_crop",
+                     "temp-data-inject/L2241.LN4_MgdAllocation_crop",
+                     "temp-data-inject/L2241.LN4_HistMgdAllocation_bio",
+                     "temp-data-inject/L2241.LN4_MgdAllocation_bio",
+                     "temp-data-inject/L2241.LN4_MgdCarbon_crop",
+                     "temp-data-inject/L2241.LN4_MgdCarbon_bio",
+                     "temp-data-inject/L2241.LN4_LeafGhostShare",
                      "L2012.AgProduction_ag_irr_mgmt") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
@@ -291,14 +291,14 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
                      "L181.LandShare_R_bio_GLU_irr",
                      "L181.LC_bm2_R_C_Yh_GLU_irr_level",
                      "L181.YieldMult_R_bio_GLU_irr",
-                     "L2241.LN4_Logit",
-                     "L2241.LN4_HistMgdAllocation_crop",
-                     "L2241.LN4_MgdAllocation_crop",
-                     "L2241.LN4_HistMgdAllocation_bio",
-                     "L2241.LN4_MgdAllocation_bio",
-                     "L2241.LN4_MgdCarbon_crop",
-                     "L2241.LN4_MgdCarbon_bio",
-                     "L2241.LN4_LeafGhostShare",
+                     "temp-data-inject/L2241.LN4_Logit",
+                     "temp-data-inject/L2241.LN4_HistMgdAllocation_crop",
+                     "temp-data-inject/L2241.LN4_MgdAllocation_crop",
+                     "temp-data-inject/L2241.LN4_HistMgdAllocation_bio",
+                     "temp-data-inject/L2241.LN4_MgdAllocation_bio",
+                     "temp-data-inject/L2241.LN4_MgdCarbon_crop",
+                     "temp-data-inject/L2241.LN4_MgdCarbon_bio",
+                     "temp-data-inject/L2241.LN4_LeafGhostShare",
                      "L2012.AgProduction_ag_irr_mgmt") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
@@ -315,14 +315,14 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
                      "L181.LandShare_R_bio_GLU_irr",
                      "L181.LC_bm2_R_C_Yh_GLU_irr_level",
                      "L181.YieldMult_R_bio_GLU_irr",
-                     "L2241.LN4_Logit",
-                     "L2241.LN4_HistMgdAllocation_crop",
-                     "L2241.LN4_MgdAllocation_crop",
-                     "L2241.LN4_HistMgdAllocation_bio",
-                     "L2241.LN4_MgdAllocation_bio",
-                     "L2241.LN4_MgdCarbon_crop",
-                     "L2241.LN4_MgdCarbon_bio",
-                     "L2241.LN4_LeafGhostShare",
+                     "temp-data-inject/L2241.LN4_Logit",
+                     "temp-data-inject/L2241.LN4_HistMgdAllocation_crop",
+                     "temp-data-inject/L2241.LN4_MgdAllocation_crop",
+                     "temp-data-inject/L2241.LN4_HistMgdAllocation_bio",
+                     "temp-data-inject/L2241.LN4_MgdAllocation_bio",
+                     "temp-data-inject/L2241.LN4_MgdCarbon_crop",
+                     "temp-data-inject/L2241.LN4_MgdCarbon_bio",
+                     "temp-data-inject/L2241.LN4_LeafGhostShare",
                      "L2012.AgProduction_ag_irr_mgmt") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
