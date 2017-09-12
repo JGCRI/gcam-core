@@ -46,7 +46,7 @@ module_energy_batch_transportation_UCD_xml <- function(command, ...) {
              "L254.IncomeElasticity_trn",
              "L254.BaseService_trn"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c(XML = paste0("transportation_agg_", energy.TRN_SSP, ".xml")))
+    return(c(XML = paste0("transportation_agg_", "CORE", ".xml")))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -89,7 +89,7 @@ module_energy_batch_transportation_UCD_xml <- function(command, ...) {
     # ===================================================
 
     # Produce outputs
-    create_xml(paste0("transportation_agg_", energy.TRN_SSP, ".xml")) %>%
+    create_xml(paste0("transportation_agg_", "CORE", ".xml")) %>%
       add_xml_data(L254.Supplysector_trn, "Supplysector") %>%
       add_xml_data(L254.FinalEnergyKeyword_trn, "FinalEnergyKeyword") %>%
       add_xml_data(L254.tranSubsectorLogit, "tranSubsectorLogit") %>%
@@ -130,31 +130,31 @@ module_energy_batch_transportation_UCD_xml <- function(command, ...) {
                      "L254.StubTranTechCost", "L254.StubTranTechCoef", "L254.StubTechCalInput_passthru",
                      "L254.StubTechProd_nonmotor", "L254.PerCapitaBased_trn", "L254.PriceElasticity_trn",
                      "L254.IncomeElasticity_trn", "L254.BaseService_trn") ->
-      paste0("transportation_agg_", energy.TRN_SSP, ".xml")
+      paste0("transportation_agg_", "CORE", ".xml")
 
     # Some data inputs may not actually contain data. If so, do not add_xml_data.
     if(!is.null(L254.tranSubsectorShrwt)){
-      paste0("transportation_agg_", energy.TRN_SSP, ".xml") %>%
+      paste0("transportation_agg_", "CORE", ".xml") %>%
         add_xml_data(L254.tranSubsectorShrwt, "tranSubsectorShrwt") ->
-        paste0("transportation_agg_", energy.TRN_SSP, ".xml")
+        paste0("transportation_agg_", "CORE", ".xml")
     }
 
     if(!is.null(L254.tranSubsectorShrwtFllt)){
-      paste0("transportation_agg_", energy.TRN_SSP, ".xml") %>%
+      paste0("transportation_agg_", "CORE", ".xml") %>%
         add_xml_data(L254.tranSubsectorShrwtFllt, "tranSubsectorShrwtFllt") ->
-        paste0("transportation_agg_", energy.TRN_SSP, ".xml")
+        paste0("transportation_agg_", "CORE", ".xml")
     }
 
     if(!is.null(L254.tranSubsectorInterp)){
-      paste0("transportation_agg_", energy.TRN_SSP, ".xml") %>%
+      paste0("transportation_agg_", "CORE", ".xml") %>%
         add_xml_data(L254.tranSubsectorInterp, "tranSubsectorInterp") ->
-        paste0("transportation_agg_", energy.TRN_SSP, ".xml")
+        paste0("transportation_agg_", "CORE", ".xml")
     }
 
     if(!is.null(L254.tranSubsectorInterpTo)){
-      paste0("transportation_agg_", energy.TRN_SSP, ".xml") %>%
+      paste0("transportation_agg_", "CORE", ".xml") %>%
         add_xml_data(L254.tranSubsectorInterpTo, "tranSubsectorInterpTo") ->
-        paste0("transportation_agg_", energy.TRN_SSP, ".xml")
+        paste0("transportation_agg_", "CORE", ".xml")
     }
 
     return_data(transportation_agg.xml)
