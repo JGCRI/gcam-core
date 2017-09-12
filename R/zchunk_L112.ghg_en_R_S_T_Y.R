@@ -13,7 +13,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RH July 2017
-module_emissions_L112.ghg_en_R_S_T_Y_DISABLED <- function(command, ...) {
+module_emissions_L112.ghg_en_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "emissions/EDGAR/EDGAR_sector",
@@ -158,6 +158,7 @@ module_emissions_L112.ghg_en_R_S_T_Y_DISABLED <- function(command, ...) {
                      "L102.ghg_tgej_USA_en_Sepa_F_2005", "emissions/EDGAR/EDGAR_CH4", "emissions/EDGAR/EDGAR_N2O") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L112.ghg_tg_R_en_S_F_Yh
+
     L112.ghg_tgej_R_en_S_F_Yh %>%
       add_title("GHG emissions factors by energy sector, gas, region, and historical year") %>%
       add_units("Tg/EJ") %>%
