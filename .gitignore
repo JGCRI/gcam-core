@@ -3,6 +3,7 @@
 .Rhistory
 .RData
 ..Rcheck/
+.Rapp.history
 
 # Remake files
 .remake/
@@ -22,3 +23,7 @@ en_OECD.*
 
 # OS files
 .DS_Store
+
+# emacs backup files
+*~
+

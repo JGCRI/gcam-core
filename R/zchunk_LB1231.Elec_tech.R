@@ -18,8 +18,8 @@ module_gcam.usa_LB1231.Elec_tech<- function(command, ...) {
     return(c("L123.out_EJ_R_elec_F_Yh",
              "L1231.in_EJ_R_elec_F_tech_Yh",
              "L1231.out_EJ_R_elec_F_tech_Yh",
-             FILE = "temp-data-inject/L123.in_EJ_state_elec_F",
-             FILE = "temp-data-inject/L123.out_EJ_state_elec_F"))
+             "L123.in_EJ_state_elec_F",
+             "L123.out_EJ_state_elec_F"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L1231.in_EJ_state_elec_F_tech",
              "L1231.out_EJ_state_elec_F_tech"))
@@ -35,14 +35,8 @@ module_gcam.usa_LB1231.Elec_tech<- function(command, ...) {
     L123.out_EJ_R_elec_F_Yh <- get_data(all_data, "L123.out_EJ_R_elec_F_Yh")
     L1231.in_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.in_EJ_R_elec_F_tech_Yh")
     L1231.out_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.out_EJ_R_elec_F_tech_Yh")
-    L123.in_EJ_state_elec_F <- get_data(all_data, "temp-data-inject/L123.in_EJ_state_elec_F") %>%
-      # temp-data-inject code
-      gather(year, value, starts_with("X")) %>%
-      mutate(year = as.integer(substr(year, 2, 5)))
-    L123.out_EJ_state_elec_F <- get_data(all_data, "temp-data-inject/L123.out_EJ_state_elec_F") %>%
-      # temp-data-inject code
-      gather(year, value, starts_with("X")) %>%
-      mutate(year = as.integer(substr(year, 2, 5)))
+    L123.in_EJ_state_elec_F <- get_data(all_data, "L123.in_EJ_state_elec_F")
+    L123.out_EJ_state_elec_F <- get_data(all_data, "L123.out_EJ_state_elec_F")
 
     # ==================================================
     # Downscaling of electricity by fuel to fuel and technology
@@ -82,8 +76,8 @@ module_gcam.usa_LB1231.Elec_tech<- function(command, ...) {
       add_precursors("L123.out_EJ_R_elec_F_Yh",
                      "L1231.out_EJ_R_elec_F_tech_Yh",
                      "L1231.in_EJ_R_elec_F_tech_Yh",
-                     "temp-data-inject/L123.in_EJ_state_elec_F",
-                     "temp-data-inject/L123.out_EJ_state_elec_F") %>%
+                     "L123.in_EJ_state_elec_F",
+                     "L123.out_EJ_state_elec_F") %>%
       add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1231.in_EJ_state_elec_F_tech
 
@@ -94,7 +88,7 @@ module_gcam.usa_LB1231.Elec_tech<- function(command, ...) {
       add_legacy_name("L1231.out_EJ_state_elec_F_tech") %>%
       add_precursors("L123.out_EJ_R_elec_F_Yh",
                      "L1231.out_EJ_R_elec_F_tech_Yh",
-                     "temp-data-inject/L123.out_EJ_state_elec_F") %>%
+                     "L123.out_EJ_state_elec_F") %>%
       add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1231.out_EJ_state_elec_F_tech
 

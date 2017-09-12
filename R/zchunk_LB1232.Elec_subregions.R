@@ -38,9 +38,9 @@ module_gcam.usa_LB1232.Elec_subregions <- function(command, ...) {
       group_by(grid_region, sector, year) %>%
       summarise(value = sum(value)) %>%
       ungroup() %>%
-    # ===================================================
+      # ===================================================
     # Produce outputs
-      add_title("Electricity generation by FERC region/fuel/technology") %>%
+    add_title("Electricity generation by FERC region/fuel/technology") %>%
       add_units("EJ") %>%
       add_comments("L1231.out_EJ_state_elec_F_tech aggregated to FERC region") %>%
       add_legacy_name("L1232.out_EJ_sR_elec") %>%

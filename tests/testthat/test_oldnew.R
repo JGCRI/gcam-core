@@ -5,7 +5,6 @@ context("oldnew")
 library(readr)
 
 test_that("matches old data system output", {
-
   # If we are running the code coverage tests then let's skip this since
   # it will take a long to time run and the purpose of this test is to
   # make sure the chunk outputs match the old data system and not to test
@@ -122,6 +121,43 @@ test_that("matches old data system output", {
       } else {
         expect_equivalent(round_df(olddata), round_df(newdata), info = paste(basename(newf), "doesn't match"))
       }
+    }
+  }
+})
+
+
+test_that('New XML outputs match old XML outputs', {
+  ## The XML comparison data is huge, so we don't want to try to include it in
+  ## the package.  Instead, we look for an option that indicates where the data
+  ## can be found.  If the option isn't set, then we skip this test.
+  xml_cmp_dir <- getOption('gcamdata.xml_cmpdir')
+  if(is.null(xml_cmp_dir)) {
+    skip("XML comparison data not provided. Set option 'gcamdata.xml_cmpdir' to run this test.")
+  }
+  else {
+    xml_cmp_dir <- normalizePath(xml_cmp_dir)
+  }
+  expect_true(file.exists(xml_cmp_dir))
+
+  xml_dir <- normalizePath(file.path("../..", XML_DIR))
+  expect_true(file.exists(xml_dir))
+
+  for(newxml in list.files(xml_dir, full.names = TRUE)) {
+    oldxml <- list.files(xml_cmp_dir, pattern = paste0('^',basename(newxml),'$'), recursive = TRUE,
+                         full.names = TRUE)
+    if(length(oldxml) > 0) {
+      expect_equal(length(oldxml), 1,
+                   info = paste('Testing file', newxml, ': Found', length(oldxml),
+                                'comparison files.  There can be only one.'))
+      ## If we come back with multiple matching files, we'll try to run the test anyhow, selecting
+      ## the first one as the true comparison.
+      expect_true(cmp_xml_files(oldxml[1], newxml),
+                  info = paste('Sorry to be the one to tell you, but new XML file',
+                               newxml, "is not equivalent to its old version."))
+    }
+    else {
+      ## If no comparison file found, issue a message, but don't fail the test.
+      message('No comparison file found for ', newxml, '. Skipping.')
     }
   }
 })

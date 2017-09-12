@@ -1,0 +1,11 @@
+# File: A_bio_ghost_share.csv
+# Title: A_bio_ghost_share
+# Units: NA
+# Description: Biomass unormalized ghost shares by year used to phase in biomass as a new crop/technology in future years.
+# Original source: Land_nesting_structure.xls
+# ----------
+year,ghost.share
+2020,0.03
+2025,0.06
+2035,0.15
+2100,0.15
