@@ -22,7 +22,7 @@ Calculate non-ghg emission totals and non-ghg emission shares of total emissions
 }
 \details{
 This code produces two outputs: non-ghg emission totals and non-ghg emission shares of total emissions.
-First, non-ghg gas emissions are combined and grouped by sector and region, and then emissions are scaled, and international
+First, non-ghg gas emissions are combined and grouped by sector and region, emissions are scaled, and international
 shipping & aviation emission data calculated based on total emission and total emission shares. Finally, non-ghg emission
 totals and shares are calculated by GCAM sector, fuel, technology, and driver type for EDGAR historical years.
 }
