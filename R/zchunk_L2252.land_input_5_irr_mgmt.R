@@ -220,15 +220,14 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       separate(variable, c("variable", "level")) %>%
       select(-GCAM_region_ID, -variable) %>%
       mutate(Irr_Rfd = toupper(Irr_Rfd)) ->
-      L2252.YieldMult_R_bio_GLU_irr ### Matches Old
-
+      L2252.YieldMult_R_bio_GLU_irr
 
     # Second, relabel L2241 data and join the multiplier information
     L2241.LN4_MgdCarbon_bio %>%
       convert_LN4_to_LN5(names = LEVEL2_DATA_NAMES[["LN5_MgdCarbon"]]) %>%
       mutate(tmp = LandLeaf) %>%
       separate(tmp, c("crop1", "crop2", "GLU", "Irr_Rfd", "level")) %>%
-      select(-crop1, -crop2)  %>% ### GOOD TO HERE; matches old to line 114
+      select(-crop1, -crop2) %>%
       # some region-glu-irr-mgmt have no info, so less restrictive join and overwrite NAs
       left_join(L2252.YieldMult_R_bio_GLU_irr, by = c("region", "GLU", "Irr_Rfd", "level")) %>%
       # For places with no yieldmult, set hist.veg.carbon.density equal to veg.carbon.density;
@@ -241,32 +240,16 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       L2252.LN5_MgdCarbon_bio
 
 
-
-    # L2241.LN4_MgdCarbon_bio %>%
-    #   convert_LN4_to_LN5(names = LEVEL2_DATA_NAMES[["LN5_MgdCarbon"]]) %>%
+    # L2252.LN5_LeafGhostShare: Ghost share of the new landleaf (lo-input versus hi-input)
+    # NOTE: The ghost shares are inferred from average land shares allocated to hi-input
+    # versus lo-input, across all crops
+    # L2241.LN4_LeafGhostShare %>%
+    #   convert_LN4_to_LN5(names = c(LEVEL2_DATA_NAMES[["LN5_LeafGhostShare"]], "level")) %>%
     #   mutate(tmp = LandLeaf) %>%
     #   separate(tmp, c("crop1", "crop2", "GLU", "Irr_Rfd", "level")) %>%
-    #   select(-crop1, -crop2)  %>% ### GOOD TO HERE; matches old to line 114
-    #   # some region-glu-irr-mgmt have no info, so less restrictive join and overwrite NAs
-    #   left_join(L2252.YieldMult_R_bio_GLU_irr, by = c("region", "GLU", "Irr_Rfd", "level")) ->
-    #   L2252.LN5_MgdCarbon_bio
-    # %>%
-    #   mutate(hist.veg.carbon.density = round(veg.carbon.density * yieldmult, aglu.DIGITS_C_DENSITY)) ->
-    #   L2252.LN5_MgdCarbon_bio
-    #
-    #
-    #
-    #
-    #   # For places with no yieldmult, set hist.veg.carbon.density equal to veg.carbon.density;
-    #   # otherwise, hist.veg.carbon.density = veg.carbon.density * yieldmult.
-    #   mutate(hist.veg.carbon.density = if_else(is.na(yieldmult),
-    #                                            veg.carbon.density,
-    #                                            round(veg.carbon.density * yieldmult, aglu.DIGITS_C_DENSITY)),
-    #   # mutate(hist.veg.carbon.density = round(veg.carbon.density * yieldmult, aglu.DIGITS_C_DENSITY),
-    #   #        hist.veg.carbon.density = if_else(is.na(hist.veg.carbon.density), veg.carbon.density, hist.veg.carbon.density),
-    #          veg.carbon.density = hist.veg.carbon.density) %>%
-    #   select(-yieldmult) ->
-    #   L2252.LN5_MgdCarbon_bio
+    #   select(-crop1, -crop2)  ->
+    #   L2252.LN5_LeafGhostShare
+
 
 
 
