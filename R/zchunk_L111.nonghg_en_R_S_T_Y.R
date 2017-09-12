@@ -39,6 +39,11 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
              "L111.nonghg_tgej_R_en_S_F_Yh"))
   } else if(command == driver.MAKE) {
 
+    year <- sector <- fuel <- Non.CO2 <- value <- technology <- EPA_agg_sector <- EPA_agg_fuel <-
+      energy <- emfact <- EDGAR_agg_sector <- GCAM_region_ID <- epa_emissions <- `2009` <- `2010` <-
+      `IPCC-Annex` <- `World Region` <- agg_sector <- iso <- ISO_A3 <- IPCC_Annex <- World_Region <-
+      Name <- IPCC <- IPCC_description <- EDGAR_emissions <- EPA_emissions <- scaler <- tot_energy <-
+      supplysector <- subsector <- stub.technology <- emissions <- NULL  # silence package check notes
 
     all_data <- list(...)[[1]]
 
