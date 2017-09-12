@@ -62,7 +62,9 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
     L142.in_EJ_state_bld_F <- get_data(all_data, "temp-data-inject/L142.in_EJ_state_bld_F") %>%
       # temp-data-inject
       gather(year, value, starts_with("X")) %>%
-      mutate(year = as.integer(substr(year, 2, 5)))
+      mutate(year = as.integer(substr(year, 2, 5))) %>%
+      # This is to fix timeshift error, not sure if needed after temp-data-inject removed
+      filter(year %in% HISTORICAL_YEARS)
     L143.share_state_Pop_CDD_sR9 <- get_data(all_data, "temp-data-inject/L143.share_state_Pop_CDD_sR9") %>%
       # temp-data-inject
       gather(year, value, starts_with("X")) %>%
@@ -73,8 +75,9 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
       mutate(year = as.integer(substr(year, 2, 5)))
 
     # ===================================================
-    # 2a. PREPARATION AND CLEANING OF CBECS DATABASES
-    # The 1979 and 1983 only have floorspace by census region; they aren't microdata and don't have energy information
+    # a) PREPARATION AND CLEANING OF CBECS DATA (Commercial Buildings Energy Consumption Survey)
+    # The 1979 and 1983 only have floorspace by census region
+    # We can't bind_rows because all CBECS have different columns
     L144.CBECS_all <- list(CBECS_1986, CBECS_1989, CBECS_1992, CBECS_1995, CBECS_1999, CBECS_2003)
     names(L144.CBECS_all) <- paste0("CBECS", c( 1986, 1989, 1992, 1995, 1999, 2003))
 
@@ -84,53 +87,55 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
       setNames(df, sub("[0-9]{1}", "", names(df)))
     })
 
-    # Add a vector specifying the census region (subregion4) and census division (subregion9)
+    # Add in the census region (subregion4) and census division (subregion9)
     # Census regions (subregion4) are used for 1979-1986 floorspace, as the first editions didn't have census divisions (subregion9)
     states_subregions_CBECS <- states_subregions %>%
       select(subregion4, subregion9, REGION, DIVISION) %>%
       distinct()
     L144.CBECS_all <- lapply(L144.CBECS_all, function(df){
       # Using left_join_keep_first_only b/c there are two subregion4s for Region 3
-      # WRONG BEHAVIOR?
-        left_join_keep_first_only(df, states_subregions %>%
-                                   select(subregion4, subregion9, REGION, DIVISION),
+      # Locations with region 3, cendiv 5 could be assigned to either South or Midwest
+        left_join_keep_first_only(df, states_subregions_CBECS,
                                  by = c("REGION", "CENDIV" = "DIVISION"))
     })
 
     # Convert all missing value strings to 0 in all databases
     L144.CBECS_all[["CBECS1992"]][is.na(L144.CBECS_all[["CBECS1992"]])] <- 0
-    # In CBECS1995, missing values indicated with 1e14
+    # In CBECS1995, missing values are indicated with 1e14
     L144.CBECS_all[["CBECS1995"]][L144.CBECS_all[["CBECS1995"]] == 1e14] <- 0
     L144.CBECS_all[["CBECS2003"]][is.na(L144.CBECS_all[["CBECS2003"]])] <- 0
 
-    # Aggregate population to the subregion9 and subregion9 levels for calculation of per-capita values
+    # Add subregions to census population for aggregating
     L144.Census_pop_hist <- Census_pop_hist %>%
       left_join_error_no_match(states_subregions, by = "state")
 
+    # Aggregate population to subregion4
     L144.pop_sR4 <- L144.Census_pop_hist %>%
       filter(year %in% HISTORICAL_YEARS) %>%
       group_by(subregion4, year) %>%
       summarise(value = sum(value)) %>%
       ungroup()
 
+    # Aggregate population to subregion9
     L144.pop_sR9 <- L144.Census_pop_hist %>%
       filter(year %in% HISTORICAL_YEARS) %>%
       group_by(subregion9, year) %>%
       summarise(value = sum(value)) %>%
       ungroup()
 
-    # 2b. FLOORSPACE BY STATE AND YEAR
+    # b) FLOORSPACE BY STATE AND YEAR
     # Estimating total floorspace by census region (subregion4) and division (subregion9)
     L144.CBECS_1979_1983 <- CBECS_1979_1983 %>%
       # Using left_join_keep_first_only b/c there are two subregion4s for Region 3
-      # WRONG BEHAVIOR?
+      # Locations with region 3 could be assigned to either South or Midwest
       left_join_keep_first_only(states_subregions_CBECS, by = "REGION") %>%
       # Using left_join because there will be two values for the two years for each subregion
       left_join(L144.pop_sR4 %>%
                                  filter(year %in% c(1979, 1983)), by = "subregion4") %>%
+      # SQFT1 represents 1979 square footage, SQFT2 represents 1983 square footage
       mutate(pcflsp_m2 = if_else(year == 1979, SQFT1 / value * CONV_MILFT2_M2, SQFT2 / value * CONV_MILFT2_M2))
 
-    # Aggregate CBECS floorspace data by year and subregion
+    # Add in a year column to CBECS data so that we can bind rows later
     for (i in 1:length(L144.CBECS_all)){
       df <- L144.CBECS_all[[i]]
       data_year <- substr(names(L144.CBECS_all[i]), 6, 9)
@@ -138,6 +143,7 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
       L144.CBECS_all[[i]] <- df
     }
 
+    # Aggregate CBECS floorspace data by year and subregion
     L144.flsp_bm2_sR4 <- L144.CBECS_all %>%
       # For each tibble, select sqft, weights for summing, year, and subregions
       lapply(function(df){
@@ -147,27 +153,33 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
       # Bind all CBECS tibbles
       do.call(bind_rows, .)
 
-    # Here we aggregate by subregion4, but for all other years, we aggregate by subregion9,
+    # For 1986, calculate per capita floorspace by subregion4
     L144.flsp_bm2_sR4_CBECS1986 <- L144.flsp_bm2_sR4 %>%
       filter(year == 1986) %>%
       group_by(subregion4, year) %>%
+      # Calculate square footage
       summarise(SQFT = sum(SQFT * ADJWT * CONV_FT2_M2)) %>%
       ungroup() %>%
       left_join_error_no_match(L144.pop_sR4, by = c("year", "subregion4")) %>%
+      # Calculate square footage per capita
       mutate(pcflsp_m2 = SQFT / value)
 
+    # Calculate per capita floorspace by subregion9
     L144.flsp_bm2_sR9 <- L144.flsp_bm2_sR4 %>%
       group_by(subregion9, year) %>%
+      # Calculate square footage
       summarise(SQFT = sum(SQFT * ADJWT * CONV_FT2_M2)) %>%
       ungroup() %>%
       left_join_error_no_match(L144.pop_sR9, by = c("year", "subregion9")) %>%
+      # Calculate square footage per capita
       mutate(pcflsp_m2 = SQFT / value) %>%
       select(subregion9, year, pcflsp_m2)
 
-    # Downscale 1983 and 1979 floorspace to subregion9, using the ratios of per-capita floorspace
+    # Downscale 1983 and 1979 floorspace to subregion9, using the ratios of per-capita floorspace in 1986
     L144.flsp_conv_4_9 <- L144.flsp_bm2_sR9 %>%
       filter(year == 1986) %>%
-      # ERROR???
+      # Using left_join_keep_first_only b/c there are two subregion4s for subregion9 Atlantic-S
+      # Locations with region 3 could be assigned to either South or Midwest
       left_join_keep_first_only(states_subregions_CBECS, by = "subregion9") %>%
       left_join_error_no_match(L144.flsp_bm2_sR4_CBECS1986, by = "subregion4") %>%
       mutate(conv_4_9 = pcflsp_m2.x / pcflsp_m2.y)
@@ -203,7 +215,9 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
     AEO_Tab5_yearcols <- unique(EIA_AEO_Tab5$year)
 
     AEO_USA_flsp_bm2 <- EIA_AEO_Tab5 %>%
-      filter(variable == "Floorspace") %>%
+      filter(variable == "Floorspace",
+             # To fix timeshift, year can't be greater than historical years
+             year <= max(HISTORICAL_YEARS)) %>%
       mutate(value = value * CONV_FT2_M2,
              unit = "Billion square meters")
 
