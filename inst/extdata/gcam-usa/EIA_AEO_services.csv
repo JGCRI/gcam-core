@@ -1,3 +1,6 @@
+# File: EIA_AEO_services.csv
+# Title: AEO Services Mappings
+# Units: NA
 EIA_sector,EIA_service,service
 Residential,Space Heating,resid heating
 Residential,Space Cooling,resid cooling
