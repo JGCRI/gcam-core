@@ -216,7 +216,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
     #
     # First, prep multipliers for easier joining to relabeled L2241 data.
     L181.YieldMult_R_bio_GLU_irr %>%
-            gather(variable, yieldmult, -GCAM_region_ID, -region, -GLU, -Irr_Rfd) %>%
+      gather(variable, yieldmult, -GCAM_region_ID, -region, -GLU, -Irr_Rfd) %>%
       separate(variable, c("variable", "level")) %>%
       select(-GCAM_region_ID, -variable) %>%
       mutate(Irr_Rfd = toupper(Irr_Rfd)) ->
@@ -243,17 +243,34 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
     # L2252.LN5_LeafGhostShare: Ghost share of the new landleaf (lo-input versus hi-input)
     # NOTE: The ghost shares are inferred from average land shares allocated to hi-input
     # versus lo-input, across all crops
-    # L2241.LN4_LeafGhostShare %>%
-    #   convert_LN4_to_LN5(names = c(LEVEL2_DATA_NAMES[["LN5_LeafGhostShare"]], "level")) %>%
-    #   mutate(tmp = LandLeaf) %>%
-    #   separate(tmp, c("crop1", "crop2", "GLU", "Irr_Rfd", "level")) %>%
-    #   select(-crop1, -crop2)  ->
-    #   L2252.LN5_LeafGhostShare
+    #
+    # First, prep landshares for easier joining to L2241.LN4_LeafGhostShare data
+    L181.LandShare_R_bio_GLU_irr %>%
+      gather(variable, landshare, -GCAM_region_ID, -region, -GLU, -Irr_Rfd) %>%
+      separate(variable, c("variable", "level")) %>%
+      select(-GCAM_region_ID, -variable) %>%
+      mutate(Irr_Rfd = toupper(Irr_Rfd)) ->
+      L2252.LandShare_R_bio_GLU_irr
+
+    # Second, relabel L2241 data and join the land share information
+    L2241.LN4_LeafGhostShare %>%
+      convert_LN4_to_LN5(names = c(LEVEL2_DATA_NAMES[["LN5_LeafGhostShare"]], "level")) %>%
+      mutate(tmp = LandLeaf) %>%
+      separate(tmp, c("crop1", "crop2", "GLU", "Irr_Rfd", "lev")) %>%
+      select(-lev, -crop1, -crop2)  %>%
+      # use left_join to keep NA's for further manipulation
+      left_join(L2252.LandShare_R_bio_GLU_irr, by = c("region", "GLU", "Irr_Rfd", "level")) %>%
+      mutate(ghost.unnormalized.share = round(landshare, aglu.DIGITS_LAND_USE)) %>%
+      select(-landshare) %>%
+      # For bio techs with no ghost share info, set lo- and hi-input techs to 0.5
+      replace_na(replace = list(ghost.unnormalized.share = 0.5)) ->
+      L2252.LN5_LeafGhostShare
 
 
-
-
-
+    # L2252.LN5_NodeGhostShare: Ghost share of the new nodes (irrigated versus rainfed)
+    L2241.LN4_LeafGhostShare %>%
+      rename(LandNode5 = LandLeaf) ->
+      L2252.LN5_NodeGhostShare
 
 
     # Produce outputs
@@ -389,7 +406,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
                      "L2012.AgProduction_ag_irr_mgmt") ->
       L2252.LN5_MgdCarbon_crop
 
-    tibble() %>%
+    L2252.LN5_MgdCarbon_bio %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -408,12 +425,10 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
                      "temp-data-inject/L2241.LN4_MgdCarbon_crop",
                      "temp-data-inject/L2241.LN4_MgdCarbon_bio",
                      "temp-data-inject/L2241.LN4_LeafGhostShare",
-                     "L2012.AgProduction_ag_irr_mgmt") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L2012.AgProduction_ag_irr_mgmt")  ->
       L2252.LN5_MgdCarbon_bio
 
-    tibble() %>%
+    L2252.LN5_LeafGhostShare %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -432,12 +447,10 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
                      "temp-data-inject/L2241.LN4_MgdCarbon_crop",
                      "temp-data-inject/L2241.LN4_MgdCarbon_bio",
                      "temp-data-inject/L2241.LN4_LeafGhostShare",
-                     "L2012.AgProduction_ag_irr_mgmt") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L2012.AgProduction_ag_irr_mgmt") ->
       L2252.LN5_LeafGhostShare
 
-    tibble() %>%
+    L2252.LN5_NodeGhostShare %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -456,9 +469,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
                      "temp-data-inject/L2241.LN4_MgdCarbon_crop",
                      "temp-data-inject/L2241.LN4_MgdCarbon_bio",
                      "temp-data-inject/L2241.LN4_LeafGhostShare",
-                     "L2012.AgProduction_ag_irr_mgmt") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L2012.AgProduction_ag_irr_mgmt") ->
       L2252.LN5_NodeGhostShare
 
     return_data(L2252.LN5_Logit, L2252.LN5_HistMgdAllocation_crop, L2252.LN5_MgdAllocation_crop, L2252.LN5_HistMgdAllocation_bio, L2252.LN5_MgdAllocation_bio, L2252.LN5_MgdCarbon_crop, L2252.LN5_MgdCarbon_bio, L2252.LN5_LeafGhostShare, L2252.LN5_NodeGhostShare)
