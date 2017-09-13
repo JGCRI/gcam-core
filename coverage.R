@@ -4,6 +4,6 @@
 
 library(covr)
 Sys.setenv("gcamdata.is_coverage_test" = "TRUE")
-x <- package_coverage()
+x <- package_coverage(function_exclusions = "^module_")
 cat("coverage = ", percent_coverage(x), " %\n")
 codecov(coverage = x)

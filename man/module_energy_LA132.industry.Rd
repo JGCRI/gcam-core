@@ -18,11 +18,12 @@ the generated outputs: \code{L132.in_EJ_R_indenergy_F_Yh}, \code{L132.in_EJ_R_in
 original data system was \code{LA132.industry.R} (energy level1).
 }
 \description{
-Briefly describe what this chunk does.
+Provides industrial energy consumption (not including CHP) and industrial feedstock consumption by GCAM region/fuel/historical year.
 }
 \details{
-Describe in detail what this chunk does.
+The chunk calculates industrial feedstock consumption directly separated from enduse energy comsuption and
+         industrial energy consumption by deducting net energy use by unconventional oil production, gas processing, refining, and CHP
 }
 \author{
-YourInitials CurrentMonthName 2017
+LF September 2017
 }

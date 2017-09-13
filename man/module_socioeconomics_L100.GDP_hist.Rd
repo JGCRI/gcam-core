@@ -18,11 +18,14 @@ the generated outputs: \code{L100.gdp_mil90usd_ctry_Yh}. The corresponding file 
 original data system was \code{L100.GDP_hist.R} (socioeconomics level1).
 }
 \description{
-Briefly describe what this chunk does.
+Prepare GDP database for later use: filter missing values and convert units to 1990 USD.
 }
 \details{
-Describe in detail what this chunk does.
+At present the GDP database used requires no downscaling and all
+major countries are included, so really no processing steps are needed.
+All that happens in this file right now is filtering out \code{NA} values
+and converting the units to GCAM's GDP unit (million 1990 USD).
 }
 \author{
-BBL
+BBL February 2017
 }
