@@ -1,5 +1,5 @@
-#ifndef _GDP_CONTROL_H_
-#define _GDP_CONTROL_H_
+#ifndef _LINEAR_CONTROL_H_
+#define _LINEAR_CONTROL_H_
 #if defined(_MSC_VER)
 #pragma once
 #endif
@@ -38,10 +38,10 @@
 
 
 /*! 
- * \file gdp_control.h
+ * \file linear_control.h
  * \ingroup Objects
- * \brief GDPControl class header file.
- * \author Kate Calvin
+ * \brief LinearControl class header file.
+ * \author Steve Smith
  */
 
 #include "emissions/include/aemissions_control.h"
@@ -49,16 +49,16 @@
 
 /*! 
  * \ingroup Objects
- * \brief An class that represents GDP-related emissions controls.
- * \author Kate Calvin
+ * \brief An class that impliments a linear reduction in the emissions factor
+ * \author Steve Smith
  */
-class GDPControl: public AEmissionsControl {
+class LinearControl: public AEmissionsControl {
 public:
-    GDPControl();
+    LinearControl();
     
-    virtual ~GDPControl();
+    virtual ~LinearControl();
     
-    virtual GDPControl* clone() const;
+    virtual LinearControl* clone() const;
     
     static const std::string& getXMLNameStatic();
     
@@ -67,13 +67,13 @@ public:
                                const IInfo* aTechIInfo );
 
     virtual void initCalc( const std::string& aRegionName,
-                           const IInfo* aTechIInfo,
+                           const IInfo* aTechInfo,
                            const NonCO2Emissions* aParentGHG,
                            const int aPeriod );
 
 protected: 
-    GDPControl( const GDPControl& aOther );
-    GDPControl& operator=( const GDPControl& aOther );
+    LinearControl( const LinearControl& aOther );
+    LinearControl& operator=( const LinearControl& aOther );
     
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aCurrNode );
@@ -83,13 +83,22 @@ protected:
     virtual void calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP );
 
 private:
-    //! Steepness -- this parameter dictates how quickly you approach the minimum factor
-    Value mSteepness;
+    //! Target year for final emissions factor. Does not have to be a model period.
+    int mTargetYear;
     
-    //! Maximum reduction
-    Value mMaxReduction;
+    //! Year to start emission factor decline. Must be a model year.
+    //! The default is the final calibration year.
+    int mStartYear;
+    
+    //! Final emissions coefficient
+    Value mFinalEmCoefficient;
+  
+    //! Flag if wish to allow emissions factor increase
+    bool mAllowIncrease;
+    
+    void copy( const LinearControl& aOther );
 
-    void copy( const GDPControl& aOther );
+    virtual void calcEmissionsReductionInternal( const double aBaseEmissionsCoef, const int aPeriod );
 };
 
-#endif // _GDP_CONTROL_H_
+#endif // _LINEAR_CONTROL_H_
