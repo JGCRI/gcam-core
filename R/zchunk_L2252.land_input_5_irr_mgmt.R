@@ -407,7 +407,8 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       L2252.LN5_MgdCarbon_crop
 
     L2252.LN5_MgdCarbon_bio %>%
-      add_title("descriptive title of data") %>%
+      mutate(Irr_Rfd = tolower(Irr_Rfd)) %>%
+      #add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
@@ -425,11 +426,12 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
                      "temp-data-inject/L2241.LN4_MgdCarbon_crop",
                      "temp-data-inject/L2241.LN4_MgdCarbon_bio",
                      "temp-data-inject/L2241.LN4_LeafGhostShare",
-                     "L2012.AgProduction_ag_irr_mgmt")  ->
+                     "L2012.AgProduction_ag_irr_mgmt") ->
       L2252.LN5_MgdCarbon_bio
 
     L2252.LN5_LeafGhostShare %>%
-      add_title("descriptive title of data") %>%
+      mutate(Irr_Rfd = tolower(Irr_Rfd)) %>%
+     # add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
@@ -451,7 +453,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       L2252.LN5_LeafGhostShare
 
     L2252.LN5_NodeGhostShare %>%
-      add_title("descriptive title of data") %>%
+      #add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
