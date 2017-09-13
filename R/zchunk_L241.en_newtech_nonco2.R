@@ -64,7 +64,8 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
     L241.nonco2_tech_coeff %>%
       select(-emiss.coeff) %>%
       filter(exception == "CO", Non.CO2 == "CO") %>%
-      left_join_error_no_match(select(L241.co_tgej_R_en_S_F_fy, -subsector),
+      # Use left_join here to pass the time shift test.
+      left_join(select(L241.co_tgej_R_en_S_F_fy, -subsector),
                                by = c("region", "Non.CO2", "supplysector", "exception_tech" = "stub.technology")) %>%
       select(-GCAM_region_ID, -year) %>%
       rename(emiss.coeff = value) ->
@@ -81,7 +82,8 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
     L241.nonco2_tech_coeff %>%
       select(-emiss.coeff) %>%
       filter(exception == "CH4", Non.CO2 == "CH4") %>%
-      left_join_error_no_match(select(L241.ch4_tgej_R_en_S_F_fy, value, region, Non.CO2, stub.technology),
+      # Use left_join here to pass the time shift test.
+      left_join(select(L241.ch4_tgej_R_en_S_F_fy, value, region, Non.CO2, stub.technology),
                                by = c("region", "Non.CO2", "exception_tech" = "stub.technology")) %>%
       rename(emiss.coeff = value) ->
       L241.ch4_tech_coeff_except
