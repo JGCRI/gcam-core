@@ -56,7 +56,7 @@ module_energy_LA132.industry <- function(command, ...) {
       left_join_error_no_match(enduse_sector_aggregation, by = "sector") %>%
       select(-sector) %>%
       rename(sector = sector_agg) %>%
-      left_join(enduse_fuel_aggregation, by = "fuel") %>%
+      left_join(enduse_fuel_aggregation, by = "fuel") %>% # left_join_error_no_match caused error so left_join was used
       select(-electricity, -heat, -bld, -trn, -fuel) %>%
       rename(fuel = industry) %>%
       group_by(GCAM_region_ID, sector, fuel, year) %>%
@@ -132,7 +132,7 @@ module_energy_LA132.industry <- function(command, ...) {
 
     L124.in_EJ_R_heat_F_Yh %>%
       filter(GCAM_region_ID %in% has_district_heat_GCAM_region_ID) %>%
-      left_join(L132.share_R_indenergy_heat_Yh, by = c("GCAM_region_ID", "year")) %>%
+      left_join_error_no_match(L132.share_R_indenergy_heat_Yh, by = c("GCAM_region_ID", "year")) %>%
       mutate(value = value.x * value.y) %>%
       select(-fuel.y, -value.y, -value.x) %>%
       rename(fuel = fuel.x) ->
@@ -151,6 +151,7 @@ module_energy_LA132.industry <- function(command, ...) {
       L132.in_EJ_R_Sindenergy_F_Yh
 
     # Drop heat in regions where this fuel is backed out to its fuel inputs
+    # first extract regions where doesn't have district_heat
     A_regions %>%
       filter(has_district_heat == 0) %>%
       select(GCAM_region_ID) %>%
@@ -159,7 +160,7 @@ module_energy_LA132.industry <- function(command, ...) {
       region_heat
 
     L132.in_EJ_R_Sindenergy_F_Yh %>%
-      anti_join(region_heat, by = c("GCAM_region_ID", "fuel")) %>%
+      anti_join(region_heat, by = c("GCAM_region_ID", "fuel")) %>% # then drop the regions selected in region_heat
       group_by(GCAM_region_ID, sector, fuel, year) %>%
       summarise(value = sum(value)) ->
       ungroup ->
