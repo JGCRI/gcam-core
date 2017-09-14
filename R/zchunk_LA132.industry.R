@@ -48,6 +48,11 @@ module_energy_LA132.industry <- function(command, ...) {
     L131.share_R_Senduse_heat_Yh <- get_data(all_data, "L131.share_R_Senduse_heat_Yh")
 
     # ===================================================
+    # 0. Give binding for variable names used in pipeline
+    sector <- sector_agg <- electricity <- heat <- bld <-
+      trn <- fuel <- industry <- GCAM_region_ID <- year <-
+      value <- value.x <- value.y <- has_district_heat <- fuel.y <- fuel.x <- NULL
+
     # 1. Perform computations
 
     # Calculation of industrial energy consumption
@@ -169,22 +174,14 @@ module_energy_LA132.industry <- function(command, ...) {
     # Where unit conversions have produced slightly negative numbers that should be 0, re-set to 0
     L132.in_EJ_R_indenergy_F_Yh %>%
       filter(value < 0 & value > -1e-6) %>%
-      mutate(value = 0) ->
-      zero_value_rows
-
-    L132.in_EJ_R_indenergy_F_Yh %>%
-      filter(!(value < 0 & value > -1e-6)) %>%
-      bind_rows(zero_value_rows) %>%
-      ungroup ->
+      mutate(value = 0) %>%
+      bind_rows(filter(L132.in_EJ_R_indenergy_F_Yh, !(value < 0 & value > -1e-6))) %>%
+      ungroup -> # using ungroup to address error when running driver for unknown reason
       L132.in_EJ_R_indenergy_F_Yh
 
     # ===================================================
 
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
     L132.in_EJ_R_indenergy_F_Yh %>%
       add_title("Industrial energy consumption (not including CHP) by GCAM region / fuel / historical year") %>%
       add_units("EJ") %>%
