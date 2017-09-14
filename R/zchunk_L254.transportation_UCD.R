@@ -125,7 +125,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
     UCD_techID <- c("UCD_sector", "mode", "size.class", "UCD_technology", "UCD_fuel")
 
     L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y %>%
-      select(GCAM_REGION_ID, one_of(UCD_techID)) %>%
+      select(GCAM_region_ID, one_of(UCD_techID)) %>%
       # Match in region names and UCD techs
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(UCD_techs, by = c("UCD_sector", "mode", "size.class", "UCD_technology", "UCD_fuel")) %>%
