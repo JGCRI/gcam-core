@@ -301,7 +301,7 @@ add_carbon_info <- function( data, carbon_info_table, matchvars = c("region", "G
   }
 
   data %>%
-    left_join_error_no_match(carbon_info_table, by = matchvars) %>%
+    left_join(carbon_info_table, by = matchvars) %>%
     rename(hist.veg.carbon.density = veg_c,
            hist.soil.carbon.density = soil_c) %>%
     mutate(hist.veg.carbon.density = round(hist.veg.carbon.density, aglu.DIGITS_C_DENSITY),

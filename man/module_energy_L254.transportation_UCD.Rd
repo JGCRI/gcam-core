@@ -18,10 +18,10 @@ the generated outputs: \code{L254.SectorLogitTables[[ curr_table ]]$data}, \code
 original data system was \code{L254.transportation_UCD.R} (energy level2).
 }
 \description{
-Calculate transportation data using information from the global UCD transportation technology database
+Calculate transportation data using information from the global UCD transportation technology database.
 }
 \details{
-Due to asymmetrical nature of the transportation sectors in the various regions, we can't simply write
+Due to the asymmetrical nature of the transportation sectors in the various regions, we can't simply write
 generic information to all regions. Instead, technology information is read from the global UCD transportation
 technology database, and supplysector and subsector attributes are matched in from lookup tables.
 }

@@ -1,4 +1,4 @@
-#' module_aglu_L223.land_input_3
+#' module_energy_L2322.Fert
 #'
 #' Briefly describe what this chunk does.
 #'
@@ -6,76 +6,74 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{curr_table$data}, \code{L223.LN3_Logit}, \code{L223.LN3_LeafGhostShare}, \code{L223.LN3_LeafIsGhostShareRel}, \code{L223.LN3_HistUnmgdAllocation}, \code{L223.LN3_UnmgdAllocation}, \code{L223.NodeEquiv}, \code{L223.LN3_NoEmissCarbon}, \code{L223.LN3_NodeCarbon}, \code{L223.LN3_HistMgdAllocation_noncrop}, \code{L223.LN3_MgdAllocation_noncrop}, \code{L223.LN3_HistMgdAllocation_crop}, \code{L223.LN3_MgdAllocation_crop}, \code{L223.LN3_HistMgdAllocation_bio}, \code{L223.LN3_MgdAllocation_bio}, \code{L223.LN3_UnmgdCarbon}, \code{L223.LN3_MgdCarbon_noncrop}, \code{L223.LN3_MgdCarbon_crop}, \code{L223.LN3_MgdCarbon_bio}, \code{curr_table$data}, \code{L223.LN1_Logit_prot}, \code{L223.LN3_HistUnmgdAllocation_noprot}, \code{L223.LN3_UnmgdAllocation_noprot}, \code{L223.LN1_HistUnmgdAllocation_prot}, \code{L223.LN1_UnmgdAllocation_prot}, \code{L223.LN1_UnmgdCarbon_prot}. The corresponding file in the
-#' original data system was \code{L223.land_input_3.R} (aglu level2).
+#' the generated outputs: \code{L2322.SectorLogitTables[[ curr_table ]]$data}, \code{L2322.Supplysector_Fert}, \code{L2322.FinalEnergyKeyword_Fert}, \code{L2322.SubsectorLogitTables[[ curr_table ]]$data}, \code{L2322.SubsectorLogit_Fert}, \code{L2322.SubsectorShrwt_Fert}, \code{L2322.SubsectorShrwtFllt_Fert}, \code{L2322.SubsectorInterp_Fert}, \code{L2322.SubsectorInterpTo_Fert}, \code{L2322.StubTech_Fert}, \code{L2322.GlobalTechShrwt_Fert}, \code{L2322.GlobalTechCoef_Fert}, \code{L2322.GlobalTechCost_Fert}, \code{L2322.GlobalTechCapture_Fert}, \code{L2322.GlobalTechShutdown_Fert}, \code{L2322.GlobalTechSCurve_Fert}, \code{L2322.GlobalTechLifetime_Fert}, \code{L2322.GlobalTechProfitShutdown_Fert}, \code{L2322.StubTechProd_Fert}, \code{L2322.StubTechCoef_Fert}, \code{L2322.StubTechFixOut_Fert_imp}, \code{L2322.StubTechFixOut_Fert_exp}, \code{L2322.PerCapitaBased_Fert}, \code{L2322.BaseService_Fert}. The corresponding file in the
+#' original data system was \code{L2322.Fert.R} (energy level2).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_aglu_L223.land_input_3_DISABLED <- function(command, ...) {
+module_energy_L2322.Fert_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
-             FILE = "water/basin_to_country_mapping",
-             FILE = "aglu/GCAMLandLeaf_CdensityLT",
-             FILE = "aglu/A_bio_ghost_share",
-             FILE = "aglu/A_Fodderbio_chars",
-             FILE = "aglu/A_LT_Mapping",
-             FILE = "aglu/A_LandNode_logit",
-             FILE = "aglu/A_LandLeaf_Unmgd3",
-             FILE = "aglu/A_LandLeaf3",
-             "L111.ag_resbio_R_C",
-             "L121.CarbonContent_kgm2_R_LT_GLU",
-             "L122.ag_EcYield_kgm2_R_C_Y_GLU",
-             "L125.LC_bm2_R_LT_Yh_GLU",
-             "L201.AgYield_bio_grass",
-             "L201.AgYield_bio_tree"))
+             FILE = "energy/calibrated_techs",
+             FILE = "energy/A322.sector",
+             FILE = "energy/A322.subsector_interp",
+             FILE = "energy/A322.subsector_logit",
+             FILE = "energy/A322.subsector_shrwt",
+             FILE = "energy/A322.globaltech_coef",
+             FILE = "energy/A322.globaltech_shrwt",
+             FILE = "energy/A322.globaltech_co2capture",
+             FILE = "energy/A322.globaltech_renew",
+             FILE = "energy/A322.globaltech_retirement",
+             "L1322.Fert_Prod_MtN_R_F_Y",
+             "L1322.IO_R_Fert_F_Yh",
+             "L1322.Fert_NEcost_75USDkgN_F",
+             "L142.ag_Fert_NetExp_MtN_R_Y"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L223.LN3_Logit",
-             "L223.LN3_LeafGhostShare",
-             "L223.LN3_LeafIsGhostShareRel",
-             "L223.LN3_HistUnmgdAllocation",
-             "L223.LN3_UnmgdAllocation",
-             "L223.NodeEquiv",
-             "L223.LN3_NoEmissCarbon",
-             "L223.LN3_NodeCarbon",
-             "L223.LN3_HistMgdAllocation_noncrop",
-             "L223.LN3_MgdAllocation_noncrop",
-             "L223.LN3_HistMgdAllocation_crop",
-             "L223.LN3_MgdAllocation_crop",
-             "L223.LN3_HistMgdAllocation_bio",
-             "L223.LN3_MgdAllocation_bio",
-             "L223.LN3_UnmgdCarbon",
-             "L223.LN3_MgdCarbon_noncrop",
-             "L223.LN3_MgdCarbon_crop",
-             "L223.LN3_MgdCarbon_bio",
-             "L223.LN1_Logit_prot",
-             "L223.LN3_HistUnmgdAllocation_noprot",
-             "L223.LN3_UnmgdAllocation_noprot",
-             "L223.LN1_HistUnmgdAllocation_prot",
-             "L223.LN1_UnmgdAllocation_prot",
-             "L223.LN1_UnmgdCarbon_prot"))
+    return(c("L2322.Supplysector_Fert",
+             "L2322.FinalEnergyKeyword_Fert",
+             "L2322.SubsectorLogit_Fert",
+             "L2322.SubsectorShrwt_Fert",
+             "L2322.SubsectorShrwtFllt_Fert",
+             "L2322.SubsectorInterp_Fert",
+             "L2322.SubsectorInterpTo_Fert",
+             "L2322.StubTech_Fert",
+             "L2322.GlobalTechShrwt_Fert",
+             "L2322.GlobalTechCoef_Fert",
+             "L2322.GlobalTechCost_Fert",
+             "L2322.GlobalTechCapture_Fert",
+             "L2322.GlobalTechShutdown_Fert",
+             "L2322.GlobalTechSCurve_Fert",
+             "L2322.GlobalTechLifetime_Fert",
+             "L2322.GlobalTechProfitShutdown_Fert",
+             "L2322.StubTechProd_Fert",
+             "L2322.StubTechCoef_Fert",
+             "L2322.StubTechFixOut_Fert_imp",
+             "L2322.StubTechFixOut_Fert_exp",
+             "L2322.PerCapitaBased_Fert",
+             "L2322.BaseService_Fert"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
-    GCAMLandLeaf_CdensityLT <- get_data(all_data, "aglu/GCAMLandLeaf_CdensityLT")
-    A_bio_ghost_share <- get_data(all_data, "aglu/A_bio_ghost_share")
-    A_Fodderbio_chars <- get_data(all_data, "aglu/A_Fodderbio_chars")
-    A_LT_Mapping <- get_data(all_data, "aglu/A_LT_Mapping")
-    A_LandNode_logit <- get_data(all_data, "aglu/A_LandNode_logit")
-    A_LandLeaf_Unmgd3 <- get_data(all_data, "aglu/A_LandLeaf_Unmgd3")
-    A_LandLeaf3 <- get_data(all_data, "aglu/A_LandLeaf3")
-    L111.ag_resbio_R_C <- get_data(all_data, "L111.ag_resbio_R_C")
-    L121.CarbonContent_kgm2_R_LT_GLU <- get_data(all_data, "L121.CarbonContent_kgm2_R_LT_GLU")
-    L122.ag_EcYield_kgm2_R_C_Y_GLU <- get_data(all_data, "L122.ag_EcYield_kgm2_R_C_Y_GLU")
-    L125.LC_bm2_R_LT_Yh_GLU <- get_data(all_data, "L125.LC_bm2_R_LT_Yh_GLU")
-    L201.AgYield_bio_grass <- get_data(all_data, "L201.AgYield_bio_grass")
-    L201.AgYield_bio_tree <- get_data(all_data, "L201.AgYield_bio_tree")
+    calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
+    A322.sector <- get_data(all_data, "energy/A322.sector")
+    A322.subsector_interp <- get_data(all_data, "energy/A322.subsector_interp")
+    A322.subsector_logit <- get_data(all_data, "energy/A322.subsector_logit")
+    A322.subsector_shrwt <- get_data(all_data, "energy/A322.subsector_shrwt")
+    A322.globaltech_coef <- get_data(all_data, "energy/A322.globaltech_coef")
+    A322.globaltech_shrwt <- get_data(all_data, "energy/A322.globaltech_shrwt")
+    A322.globaltech_co2capture <- get_data(all_data, "energy/A322.globaltech_co2capture")
+    A322.globaltech_renew <- get_data(all_data, "energy/A322.globaltech_renew")
+    A322.globaltech_retirement <- get_data(all_data, "energy/A322.globaltech_retirement")
+    L1322.Fert_Prod_MtN_R_F_Y <- get_data(all_data, "L1322.Fert_Prod_MtN_R_F_Y")
+    L1322.IO_R_Fert_F_Yh <- get_data(all_data, "L1322.IO_R_Fert_F_Yh")
+    L1322.Fert_NEcost_75USDkgN_F <- get_data(all_data, "L1322.Fert_NEcost_75USDkgN_F")
+    L142.ag_Fert_NetExp_MtN_R_Y <- get_data(all_data, "L142.ag_Fert_NetExp_MtN_R_Y")
 
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
@@ -110,266 +108,250 @@ module_aglu_L223.land_input_3_DISABLED <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L223.LN3_Logit") %>%
+      add_legacy_name("L2322.Supplysector_Fert") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L223.LN3_Logit
+      L2322.Supplysector_Fert
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L223.LN3_LeafGhostShare") %>%
+      add_legacy_name("L2322.FinalEnergyKeyword_Fert") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L223.LN3_LeafGhostShare
+      L2322.FinalEnergyKeyword_Fert
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L223.LN3_LeafIsGhostShareRel") %>%
+      add_legacy_name("L2322.SubsectorLogit_Fert") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L223.LN3_LeafIsGhostShareRel
+      L2322.SubsectorLogit_Fert
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L223.LN3_HistUnmgdAllocation") %>%
+      add_legacy_name("L2322.SubsectorShrwt_Fert") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L223.LN3_HistUnmgdAllocation
+      L2322.SubsectorShrwt_Fert
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L223.LN3_UnmgdAllocation") %>%
+      add_legacy_name("L2322.SubsectorShrwtFllt_Fert") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L223.LN3_UnmgdAllocation
+      L2322.SubsectorShrwtFllt_Fert
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L223.NodeEquiv") %>%
+      add_legacy_name("L2322.SubsectorInterp_Fert") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L223.NodeEquiv
+      L2322.SubsectorInterp_Fert
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L223.LN3_NoEmissCarbon") %>%
+      add_legacy_name("L2322.SubsectorInterpTo_Fert") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L223.LN3_NoEmissCarbon
+      L2322.SubsectorInterpTo_Fert
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L223.LN3_NodeCarbon") %>%
+      add_legacy_name("L2322.StubTech_Fert") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L223.LN3_NodeCarbon
+      L2322.StubTech_Fert
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L223.LN3_HistMgdAllocation_noncrop") %>%
+      add_legacy_name("L2322.GlobalTechShrwt_Fert") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L223.LN3_HistMgdAllocation_noncrop
+      L2322.GlobalTechShrwt_Fert
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L223.LN3_MgdAllocation_noncrop") %>%
+      add_legacy_name("L2322.GlobalTechCoef_Fert") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L223.LN3_MgdAllocation_noncrop
+      L2322.GlobalTechCoef_Fert
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L223.LN3_HistMgdAllocation_crop") %>%
+      add_legacy_name("L2322.GlobalTechCost_Fert") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L223.LN3_HistMgdAllocation_crop
+      L2322.GlobalTechCost_Fert
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L223.LN3_MgdAllocation_crop") %>%
+      add_legacy_name("L2322.GlobalTechCapture_Fert") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L223.LN3_MgdAllocation_crop
+      L2322.GlobalTechCapture_Fert
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L223.LN3_HistMgdAllocation_bio") %>%
+      add_legacy_name("L2322.GlobalTechShutdown_Fert") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L223.LN3_HistMgdAllocation_bio
+      L2322.GlobalTechShutdown_Fert
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L223.LN3_MgdAllocation_bio") %>%
+      add_legacy_name("L2322.GlobalTechSCurve_Fert") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L223.LN3_MgdAllocation_bio
+      L2322.GlobalTechSCurve_Fert
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L223.LN3_UnmgdCarbon") %>%
+      add_legacy_name("L2322.GlobalTechLifetime_Fert") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L223.LN3_UnmgdCarbon
+      L2322.GlobalTechLifetime_Fert
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L2322.GlobalTechProfitShutdown_Fert") %>%
+      add_precursors("precursor1", "precursor2", "etc") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L2322.GlobalTechProfitShutdown_Fert
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L223.LN3_MgdCarbon_noncrop") %>%
+      add_legacy_name("L2322.StubTechProd_Fert") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L223.LN3_MgdCarbon_noncrop
+      L2322.StubTechProd_Fert
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L223.LN3_MgdCarbon_crop") %>%
+      add_legacy_name("L2322.StubTechCoef_Fert") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L223.LN3_MgdCarbon_crop
+      L2322.StubTechCoef_Fert
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L223.LN3_MgdCarbon_bio") %>%
+      add_legacy_name("L2322.StubTechFixOut_Fert_imp") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L223.LN3_MgdCarbon_bio
+      L2322.StubTechFixOut_Fert_imp
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L223.LN1_Logit_prot") %>%
+      add_legacy_name("L2322.StubTechFixOut_Fert_exp") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L223.LN1_Logit_prot
+      L2322.StubTechFixOut_Fert_exp
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L223.LN3_HistUnmgdAllocation_noprot") %>%
+      add_legacy_name("L2322.PerCapitaBased_Fert") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L223.LN3_HistUnmgdAllocation_noprot
+      L2322.PerCapitaBased_Fert
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L223.LN3_UnmgdAllocation_noprot") %>%
+      add_legacy_name("L2322.BaseService_Fert") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L223.LN3_UnmgdAllocation_noprot
+      L2322.BaseService_Fert
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L223.LN1_HistUnmgdAllocation_prot") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L223.LN1_HistUnmgdAllocation_prot
-
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L223.LN1_UnmgdAllocation_prot") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L223.LN1_UnmgdAllocation_prot
-
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L223.LN1_UnmgdCarbon_prot") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L223.LN1_UnmgdCarbon_prot
-
-    return_data(L223.LN3_Logit, L223.LN3_LeafGhostShare, L223.LN3_LeafIsGhostShareRel, L223.LN3_HistUnmgdAllocation, L223.LN3_UnmgdAllocation, L223.NodeEquiv, L223.LN3_NoEmissCarbon, L223.LN3_NodeCarbon, L223.LN3_HistMgdAllocation_noncrop, L223.LN3_MgdAllocation_noncrop, L223.LN3_HistMgdAllocation_crop, L223.LN3_MgdAllocation_crop, L223.LN3_HistMgdAllocation_bio, L223.LN3_MgdAllocation_bio, L223.LN3_UnmgdCarbon, L223.LN3_MgdCarbon_noncrop, L223.LN3_MgdCarbon_crop, L223.LN3_MgdCarbon_bio, curr_table$data, L223.LN1_Logit_prot, L223.LN3_HistUnmgdAllocation_noprot, L223.LN3_UnmgdAllocation_noprot, L223.LN1_HistUnmgdAllocation_prot, L223.LN1_UnmgdAllocation_prot, L223.LN1_UnmgdCarbon_prot)
+    return_data(L2322.Supplysector_Fert, L2322.FinalEnergyKeyword_Fert, L2322.SubsectorLogit_Fert,
+                L2322.SubsectorShrwt_Fert, L2322.SubsectorShrwtFllt_Fert, L2322.SubsectorInterp_Fert,
+                L2322.SubsectorInterpTo_Fert, L2322.StubTech_Fert, L2322.GlobalTechShrwt_Fert,
+                L2322.GlobalTechCoef_Fert, L2322.GlobalTechCost_Fert, L2322.GlobalTechCapture_Fert,
+                L2322.GlobalTechShutdown_Fert, L2322.GlobalTechSCurve_Fert, L2322.GlobalTechLifetime_Fert,
+                L2322.GlobalTechProfitShutdown_Fert, L2322.StubTechProd_Fert, L2322.StubTechCoef_Fert,
+                L2322.StubTechFixOut_Fert_imp, L2322.StubTechFixOut_Fert_exp, L2322.PerCapitaBased_Fert,
+                L2322.BaseService_Fert)
   } else {
     stop("Unknown command")
   }
