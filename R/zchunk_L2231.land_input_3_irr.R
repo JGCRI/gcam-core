@@ -109,7 +109,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       select(region, GLU, Land_Type) %>%
       # not all land types have node matches, so use left_join
       left_join(select(A_LT_Mapping, Land_Type, LandNode1, LandNode2, LandNode3),
-                               by = "Land_Type") %>%
+                by = "Land_Type") %>%
       select(-Land_Type) %>%
       distinct() %>%
       na.omit() %>%
@@ -191,7 +191,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     L223.LN3_UnmgdCarbon[is.na(L223.LN3_UnmgdCarbon)] <- 1
 
 
-   # L223.LN3_MgdCarbon_noncrop: Carbon content info, managed land in the third nest, non-crop (forest)
+    # L223.LN3_MgdCarbon_noncrop: Carbon content info, managed land in the third nest, non-crop (forest)
     L223.LC_bm2_R_Mgd3_Yh_GLU %>%
       filter(year == max(BASE_YEARS)) %>%
       left_join_error_no_match(select(GCAMLandLeaf_CdensityLT, Land_Type, LandLeaf), by = c("Land_Type" = "LandLeaf")) %>%
@@ -229,131 +229,117 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
 
     # L223.NodeEquiv: Node tag equivalence list to minimize extra tables to read in same params
     # TODO: better place for these?  they are related to headers since they list tag names
-    data.frame(group.name = c("Leaf"), tag1 = c("LandLeaf"), tag2=c("UnmanagedLandLeaf"), stringsAsFactors=FALSE ) %>%
-      bind_rows(c(group.name = "CarbonCalc", tag1 = "land-carbon-densities", tag2 = "no-emiss-carbon-calc")) %>%
-      tibble::as_tibble() ->
+    tibble(group.name = c("Leaf", "CarbonCalc"),
+           tag1 = c("LeafLeaf", "land-carbon-densities"),
+           tag2 = c("UnmanagedLandLeaf", "no-emiss-carbon-calc")) ->
       L223.NodeEquiv
 
+    # Produce outputs
+    L223.LN3_Logit %>%
+      add_title("Logit exponent of the third land nest by region") %>%
+      add_units("NA") %>%
+      add_comments("Logit exponent of the third land nest by region. AgLU regions") %>%
+      add_comments("are given externally defined constant logit information.") %>%
+      add_legacy_name("L2231.LN3_Logit") %>%
+      add_precursors("common/GCAM_region_names",
+                     "water/basin_to_country_mapping",
+                     "aglu/A_LandNode_logit",
+                     "aglu/A_LT_Mapping",
+                     "L125.LC_bm2_R_LT_Yh_GLU") ->
+      L2231.LN3_Logit
 
- # Produce outputs
-L223.LN3_Logit %>%
-  add_title("Logit exponent of the third land nest by region") %>%
-  add_units("NA") %>%
-  add_comments("Logit exponent of the third land nest by region. AgLU regions") %>%
-  add_comments("are given externally defined constant logit information.") %>%
-  add_legacy_name("L2231.LN3_Logit") %>%
-  add_precursors("common/GCAM_region_names",
-                 "water/basin_to_country_mapping",
-                 "aglu/A_LandNode_logit",
-                 "aglu/A_LT_Mapping",
-                 "L125.LC_bm2_R_LT_Yh_GLU") ->
-  L2231.LN3_Logit
+    L223.LN3_HistUnmgdAllocation %>%
+      add_title("Historical land cover for unmanaged land (LT_GLU) in the third nest by region.") %>%
+      add_units("billion square meters (bm2)") %>%
+      add_comments("Historical land cover for unmanaged land (LT_GLU) in the third nest, from L125 land cover data.") %>%
+      add_legacy_name("L2231.LN3_HistUnmgdAllocation") %>%
+      add_precursors("common/GCAM_region_names",
+                     "water/basin_to_country_mapping",
+                     "aglu/A_LandLeaf_Unmgd3",
+                     "L125.LC_bm2_R_LT_Yh_GLU")  ->
+      L2231.LN3_HistUnmgdAllocation
 
+    L223.LN3_UnmgdAllocation %>%
+      add_title("Land cover in the model base periods for unmanaged land (LT_GLU) in the third nest by region") %>%
+      add_units("billion square meters (bm2) ") %>%
+      add_comments("Land cover in the model base periods for unmanaged land (LT_GLU) in the third nest, from L125 land cover data.") %>%
+      add_legacy_name("L2231.LN3_UnmgdAllocation") %>%
+      same_precursors_as("L2231.LN3_HistUnmgdAllocation") ->
+      L2231.LN3_UnmgdAllocation
 
-L223.LN3_HistUnmgdAllocation %>%
-  add_title("Historical land cover for unmanaged land (LT_GLU) in the third nest by region.") %>%
-  add_units("billion square meters (bm2)") %>%
-  add_comments("Historical land cover for unmanaged land (LT_GLU) in the third nest, from L125 land cover data.") %>%
-  add_legacy_name("L2231.LN3_HistUnmgdAllocation") %>%
-  add_precursors("common/GCAM_region_names",
-                 "water/basin_to_country_mapping",
-                 "aglu/A_LandLeaf_Unmgd3",
-                 "L125.LC_bm2_R_LT_Yh_GLU")  ->
-  L2231.LN3_HistUnmgdAllocation
+    L223.NodeEquiv %>%
+      add_title("Node tag equivalence list to minimize extra tables to read in same params") %>%
+      add_units("NA") %>%
+      add_comments("Manually formed with no inputs") %>%
+      add_legacy_name("L2231.NodeEquiv") ->
+      L2231.NodeEquiv
 
+    L223.LN3_NoEmissCarbon %>%
+      add_title("Sets the no-emiss-carbon-calc as the type of carbon to use in forest leaves") %>%
+      add_units("NA") %>%
+      add_comments("Sets the no-emiss-carbon-calc as the type of carbon to use in forest leaves, by region.") %>%
+      add_legacy_name("L2231.LN3_NoEmissCarbon") %>%
+      same_precursors_as("L2231.LN3_UnmgdCarbon") ->
+      L2231.LN3_NoEmissCarbon
 
-L223.LN3_UnmgdAllocation %>%
-  add_title("Land cover in the model base periods for unmanaged land (LT_GLU) in the third nest by region") %>%
-  add_units("billion square meters (bm2) ") %>%
-  add_comments("Land cover in the model base periods for unmanaged land (LT_GLU) in the third nest, from L125 land cover data.") %>%
-  add_legacy_name("L2231.LN3_UnmgdAllocation") %>%
-  same_precursors_as("L2231.LN3_HistUnmgdAllocation") ->
-  L2231.LN3_UnmgdAllocation
+    L223.LN3_NodeCarbon %>%
+      add_title("Sets the node-carbon-calc to drive the carbon calc between forest leaves") %>%
+      add_units("NA") %>%
+      add_comments("Sets the node-carbon-calc to drive the carbon calc between forest leaves, by region,") %>%
+      add_comments("and places the node carbon calc in the node just above the leaves.") %>%
+      add_legacy_name("L2231.LN3_NodeCarbon") %>%
+      same_precursors_as("L2231.LN3_NoEmissCarbon")->
+      L2231.LN3_NodeCarbon
 
+    L223.LN3_HistMgdAllocation_noncrop %>%
+      add_title("Historical land cover for non-crop (forest) managed land (LT_GLU) in the third nest by region.") %>%
+      add_units("billion square meters (bm2)") %>%
+      add_comments("Historical land cover for non-crop (forest) managed land (LT_GLU) in the third nest, from L125 land cover data.") %>%
+      add_legacy_name("L2231.LN3_HistMgdAllocation_noncrop") %>%
+      add_precursors("common/GCAM_region_names",
+                     "water/basin_to_country_mapping",
+                     "aglu/A_LandLeaf3",
+                     "L125.LC_bm2_R_LT_Yh_GLU") ->
+      L2231.LN3_HistMgdAllocation_noncrop
 
-L223.NodeEquiv %>%
-  add_title("Node tag equivalence list to minimize extra tables to read in same params") %>%
-  add_units("NA") %>%
-  add_comments("Manually formed with no inputs") %>%
-  add_legacy_name("L2231.NodeEquiv") ->
-  L2231.NodeEquiv
+    L223.LN3_MgdAllocation_noncrop %>%
+      add_title("Land cover in the model base periods for non-crop (forest) managed land (LT_GLU) in the third nest by region") %>%
+      add_units("billion square meters (bm2) ") %>%
+      add_comments("Land cover in the model base periods for non-crop (forest) managed land (LT_GLU) in the third nest, from L125 land cover data.") %>%
+      add_legacy_name("L2231.LN3_MgdAllocation_noncrop") %>%
+      same_precursors_as("L2231.LN3_HistMgdAllocation_noncrop") ->
+      L2231.LN3_MgdAllocation_noncrop
 
+    L223.LN3_UnmgdCarbon %>%
+      add_title("Carbon content for unmanaged land (LT_GLU) in third nest by region.") %>%
+      add_units("Varies") %>%
+      add_comments("Carbon content info for unmanaged land (LT_GLU) in the third nest including soil and vegetative carbon,") %>%
+      add_comments("from L125 land cover data, L121 carbon content data, and GCAMLandLeaf_CdensityLT assumptions") %>%
+      add_legacy_name("L2231.LN3_UnmgdCarbon") %>%
+      add_precursors("common/GCAM_region_names",
+                     "water/basin_to_country_mapping",
+                     "aglu/GCAMLandLeaf_CdensityLT",
+                     "aglu/A_LandLeaf_Unmgd3",
+                     "L121.CarbonContent_kgm2_R_LT_GLU",
+                     "L125.LC_bm2_R_LT_Yh_GLU") ->
+      L2231.LN3_UnmgdCarbon
 
-L223.LN3_NoEmissCarbon %>%
-  add_title("Sets the no-emiss-carbon-calc as the type of carbon to use in forest leaves") %>%
-  add_units("NA") %>%
-  add_comments("Sets the no-emiss-carbon-calc as the type of carbon to use in forest leaves, by region.") %>%
-  add_legacy_name("L2231.LN3_NoEmissCarbon") %>%
-  same_precursors_as("L2231.LN3_UnmgdCarbon") ->
-  L2231.LN3_NoEmissCarbon
-
-
-L223.LN3_NodeCarbon %>%
-  add_title("Sets the node-carbon-calc to drive the carbon calc between forest leaves") %>%
-  add_units("NA") %>%
-  add_comments("Sets the node-carbon-calc to drive the carbon calc between forest leaves, by region,") %>%
-  add_comments("and places the node carbon calc in the node just above the leaves.") %>%
-  add_legacy_name("L2231.LN3_NodeCarbon") %>%
-  same_precursors_as("L2231.LN3_NoEmissCarbon")->
-  L2231.LN3_NodeCarbon
-
-
-L223.LN3_HistMgdAllocation_noncrop %>%
-  add_title("Historical land cover for non-crop (forest) managed land (LT_GLU) in the third nest by region.") %>%
-  add_units("billion square meters (bm2)") %>%
-  add_comments("Historical land cover for non-crop (forest) managed land (LT_GLU) in the third nest, from L125 land cover data.") %>%
-  add_legacy_name("L2231.LN3_HistMgdAllocation_noncrop") %>%
-  add_precursors("common/GCAM_region_names",
-                 "water/basin_to_country_mapping",
-                 "aglu/A_LandLeaf3",
-                 "L125.LC_bm2_R_LT_Yh_GLU") ->
-  L2231.LN3_HistMgdAllocation_noncrop
-
-
-L223.LN3_MgdAllocation_noncrop %>%
-  add_title("Land cover in the model base periods for non-crop (forest) managed land (LT_GLU) in the third nest by region") %>%
-  add_units("billion square meters (bm2) ") %>%
-  add_comments("Land cover in the model base periods for non-crop (forest) managed land (LT_GLU) in the third nest, from L125 land cover data.") %>%
-  add_legacy_name("L2231.LN3_MgdAllocation_noncrop") %>%
-  same_precursors_as("L2231.LN3_HistMgdAllocation_noncrop") ->
-  L2231.LN3_MgdAllocation_noncrop
-
-
-L223.LN3_UnmgdCarbon %>%
-  add_title("Carbon content for unmanaged land (LT_GLU) in third nest by region.") %>%
-  add_units("Varies") %>%
-  add_comments("Carbon content info for unmanaged land (LT_GLU) in the third nest including soil and vegetative carbon,") %>%
-  add_comments("from L125 land cover data, L121 carbon content data, and GCAMLandLeaf_CdensityLT assumptions") %>%
-  add_legacy_name("L2231.LN3_UnmgdCarbon") %>%
-  add_precursors("common/GCAM_region_names",
-                 "water/basin_to_country_mapping",
-                 "aglu/GCAMLandLeaf_CdensityLT",
-                 "aglu/A_LandLeaf_Unmgd3",
-                 "L121.CarbonContent_kgm2_R_LT_GLU",
-                 "L125.LC_bm2_R_LT_Yh_GLU") ->
-  L2231.LN3_UnmgdCarbon
-
-
-L223.LN3_MgdCarbon_noncrop %>%
-  add_title("Carbon content for non-crop (forest) managed land (LT_GLU) in third nest by region.") %>%
-  add_units("Varies") %>%
-  add_comments("Carbon content info for non-crop (forest) managed land (LT_GLU) in the third nest including soil and vegetative carbon,") %>%
-  add_comments("from L125 land cover data, L121 carbon content data, and GCAMLandLeaf_CdensityLT assumptions.") %>%
-  add_legacy_name("L2231.LN3_MgdCarbon_noncrop") %>%
-  add_precursors("common/GCAM_region_names",
-                 "water/basin_to_country_mapping",
-                 "aglu/GCAMLandLeaf_CdensityLT",
-                 "aglu/A_LandLeaf3",
-                 "L121.CarbonContent_kgm2_R_LT_GLU",
-                 "L125.LC_bm2_R_LT_Yh_GLU") ->
-  L2231.LN3_MgdCarbon_noncrop
-
+    L223.LN3_MgdCarbon_noncrop %>%
+      add_title("Carbon content for non-crop (forest) managed land (LT_GLU) in third nest by region.") %>%
+      add_units("Varies") %>%
+      add_comments("Carbon content info for non-crop (forest) managed land (LT_GLU) in the third nest including soil and vegetative carbon,") %>%
+      add_comments("from L125 land cover data, L121 carbon content data, and GCAMLandLeaf_CdensityLT assumptions.") %>%
+      add_legacy_name("L2231.LN3_MgdCarbon_noncrop") %>%
+      add_precursors("common/GCAM_region_names",
+                     "water/basin_to_country_mapping",
+                     "aglu/GCAMLandLeaf_CdensityLT",
+                     "aglu/A_LandLeaf3",
+                     "L121.CarbonContent_kgm2_R_LT_GLU",
+                     "L125.LC_bm2_R_LT_Yh_GLU") ->
+      L2231.LN3_MgdCarbon_noncrop
 
     return_data(L2231.LN3_Logit, L2231.LN3_HistUnmgdAllocation, L2231.LN3_UnmgdAllocation, L2231.NodeEquiv, L2231.LN3_NoEmissCarbon, L2231.LN3_NodeCarbon, L2231.LN3_HistMgdAllocation_noncrop, L2231.LN3_MgdAllocation_noncrop, L2231.LN3_UnmgdCarbon, L2231.LN3_MgdCarbon_noncrop)
   } else {
     stop("Unknown command")
   }
 }
-
-
-
