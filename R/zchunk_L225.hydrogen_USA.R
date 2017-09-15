@@ -14,7 +14,7 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_gcam.usa_L225.hydrogen_USA_DISABLED <- function(command, ...) {
+module_gcam.usa_L225.hydrogen_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c( "L225.SubsectorLogit_h2"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -48,13 +48,13 @@ module_gcam.usa_L225.hydrogen_USA_DISABLED <- function(command, ...) {
     # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
     # There's also a `same_precursors_as(x)` you can use
     # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
+    L225.DeleteSubsector_h2_USA %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L225.DeleteSubsector_h2_USA") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("L225.SubsectorLogit_h2") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L225.DeleteSubsector_h2_USA
