@@ -18,11 +18,11 @@ the generated outputs: \code{L225.DeleteSubsector_h2_USA}. The corresponding fil
 original data system was \code{L225.hydrogen_USA.R} (gcam-usa level2).
 }
 \description{
-Briefly describe what this chunk does.
+Selects the subsectors to be removed from the hydrogen sectors for GCAM USA
 }
 \details{
-Describe in detail what this chunk does.
+This chunk selects the subsectors to be removed from the hydrogen sectors in GCAM USA on the national level.
 }
 \author{
-YourInitials CurrentMonthName 2017
+KD September 2017
 }
