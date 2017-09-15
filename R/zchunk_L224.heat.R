@@ -72,6 +72,19 @@ module_energy_L224.heat <- function(command, ...) {
     L124.in_EJ_R_heat_F_Yh <- get_data(all_data, "L124.in_EJ_R_heat_F_Yh")
     L124.heatoutratio_R_elec_F_tech_Yh <- get_data(all_data, "L124.heatoutratio_R_elec_F_tech_Yh")
 
+    #Changing input data into long format
+    A24.globaltech_coef %>%
+      gather(year, coef, -supplysector, -subsector, -technology, -minicam.energy.input) %>%
+      mutate(year = as.integer(year)) -> A24.globaltech_coef
+
+    A24.globaltech_cost %>%
+      gather(year, input.cost, -supplysector, -subsector, -technology, -minicam.non.energy.input) %>%
+      mutate(year = as.integer(year)) -> A24.globaltech_cost
+
+    A24.globaltech_shrwt %>%
+      gather(year, share.weight, -supplysector, -subsector, -technology) %>%
+      mutate(year = as.integer(year))  -> A24.globaltech_shrwt
+
     # ===================================================
     # Create list of regions with district heat modeled
     A_regions %>%
@@ -127,9 +140,6 @@ module_energy_L224.heat <- function(command, ...) {
 
     # Coefficients of global technologies
     # L224.GlobalTechCoef_heat: Energy inputs and coefficients of global technologies for district heat
-    A24.globaltech_coef %>%
-      gather(year, coef, -supplysector, -subsector, -technology, -minicam.energy.input) %>%
-      mutate(year = as.integer(year)) -> A24.globaltech_coef
 
     A24.globaltech_coef %>%
       select(supplysector, subsector, technology, minicam.energy.input) %>%
@@ -143,9 +153,6 @@ module_energy_L224.heat <- function(command, ...) {
 
     # Costs of global technologies
     # L224.GlobalTechCost_heat: Costs of global technologies for district heat
-    A24.globaltech_cost %>%
-      gather(year, input.cost, -supplysector, -subsector, -technology, -minicam.non.energy.input) %>%
-      mutate(year = as.integer(year)) -> A24.globaltech_cost
 
     A24.globaltech_cost %>%
       select(supplysector, subsector, technology, minicam.non.energy.input) %>%
@@ -161,9 +168,6 @@ module_energy_L224.heat <- function(command, ...) {
 
     # Shareweights of global technologies
     # L224.GlobalTechShrwt_heat: Shareweights of global technologies for district heat
-    A24.globaltech_shrwt %>%
-      gather(year, share.weight, -supplysector, -subsector, -technology) %>%
-      mutate(year = as.integer(year)) -> A24.globaltech_shrwt
 
     A24.globaltech_shrwt %>%
       select(supplysector, subsector, technology) %>%
@@ -175,7 +179,7 @@ module_energy_L224.heat <- function(command, ...) {
       filter(year %in% MODEL_YEARS) %>%
       select(sector.name = supplysector, subsector.name = subsector, technology, year, share.weight) -> L224.GlobalTechShrwt_heat
 
-    # Calibration and region-specific data
+    # Calibration and region-specific data, calibrated input to district heat
     L124.in_EJ_R_heat_F_Yh %>%
       left_join(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join(calibrated_techs %>%
@@ -183,10 +187,7 @@ module_energy_L224.heat <- function(command, ...) {
                   distinct, by = c("sector", "fuel")) %>%
       rename(stub.technology = technology) %>%
       filter(year %in% MODEL_YEARS) %>%
-      filter(region %in% heat_region$region) -> L224.in_EJ_R_heat_F_Yh
-
-    # L224.StubTechCalInput_heat: calibrated input to district heat
-    L224.in_EJ_R_heat_F_Yh %>%
+      filter(region %in% heat_region$region) %>%
       select(LEVEL2_DATA_NAMES[["StubTechYr"]], minicam.energy.input, value) %>%
       mutate(calibrated.value = round(value, energy.DIGITS_CALOUTPUT)) %>%
       mutate(year.share.weight = year) %>%
@@ -207,10 +208,7 @@ module_energy_L224.heat <- function(command, ...) {
                   select(sector, fuel, supplysector, subsector, technology) %>%
                   distinct, by = c("sector", "fuel", "technology")) %>%
       mutate(stub.technology = technology) %>%
-      mutate(secondary.output.name = A24.sector$supplysector) -> L224.heatoutratio_R_elec_F_tech_Yh
-
-    # L224.StubTechSecOut_elec: secondary output of district heat from electricity technologies
-    L224.heatoutratio_R_elec_F_tech_Yh %>%
+      mutate(secondary.output.name = A24.sector$supplysector)  %>%
       select(LEVEL2_DATA_NAMES[["StubTechYr"]], secondary.output.name, value) %>%
       mutate(secondary.output = round(value, energy.DIGITS_CALOUTPUT)) %>%
       select(-value) -> L224.StubTechSecOut_elec
@@ -221,21 +219,23 @@ module_energy_L224.heat <- function(command, ...) {
       mutate(minicam.non.energy.input = "heat plant") %>%
       mutate(input.cost = round(secondary.output*energy.HEAT_PRICE, energy.DIGITS_COST))-> L224.StubTechCost_elec
 
-    # For gas-electric technologies whose efficiencies are below the default assumptions, this cost needs to be reduced
+    # The secondary output of heat from CHP in the electric sector can cause the price of the technologies
+    # to go very low or negative if the technology cost is not modified to reflect the additional costs of
+    # CHP systems (as compared with electricity-only systems). Low technology costs can cause unrealistically
+    # low electricity prices in the calibration year, distorting behavior in future years. In this method,
+    # costs related to heat production and distribution are backed out from exogenous heat prices and data-derived heat:power ratios.
     L1231.eff_R_elec_F_tech_Yh %>%
       filter(year %in% MODEL_YEARS) %>%
       rename(efficiency = value) %>%
-      left_join(GCAM_region_names, by = "GCAM_region_ID") -> L224.eff_R_elec_F_tech_Y
-
-    L224.eff_R_elec_F_tech_Y %>%
+      left_join(GCAM_region_names, by = "GCAM_region_ID") %>%
       filter(region %in% heat_region$region) %>%
       filter(fuel == "gas") %>%
       filter(efficiency < DEFAULT_ELECTRIC_EFFICIENCY) %>%
-      mutate(cost_modifier = energy.GAS_PRICE * (1 / DEFAULT_ELECTRIC_EFFICIENCY - 1 / efficiency)) -> L224.eff_Rh_elec_gas_sc_Y
+      mutate(cost_modifier = energy.GAS_PRICE * (1 / DEFAULT_ELECTRIC_EFFICIENCY - 1 / efficiency)) -> L224.eff_cost_adj_Rh_elec_gas_sc_Y
 
     # Modify the costs
     L224.StubTechCost_elec %>%
-      left_join(L224.eff_Rh_elec_gas_sc_Y %>%
+      left_join(L224.eff_cost_adj_Rh_elec_gas_sc_Y %>%
                   rename(subsector = fuel, stub.technology = technology) %>%
                   select(region, subsector, stub.technology, year, cost_modifier),
                 by = c("region", "subsector", "stub.technology", "year")) %>%
@@ -285,6 +285,7 @@ module_energy_L224.heat <- function(command, ...) {
       add_precursors("energy/A24.subsector_shrwt", "energy/A_regions", "common/GCAM_region_names") ->
       L224.SubsectorShrwt_heat
     } else {
+      # If year column of A24.subsector_shrwt is all N/A, then a blank tibble is produced (and presumably the following tibble, using year.fillout is made)
       tibble(x = NA) %>%
         add_title("Data not created") %>%
         add_units("Unitless") %>%
@@ -303,6 +304,7 @@ module_energy_L224.heat <- function(command, ...) {
       add_precursors("energy/A24.subsector_shrwt", "energy/A_regions", "common/GCAM_region_names") ->
       L224.SubsectorShrwtFllt_heat
     } else {
+      # If year.fillout column of A24.subsector_shrwt is all N/A, then a blank tibble is produced
       tibble(x = NA) %>%
         add_title("Data not created") %>%
         add_units("Unitless") %>%
@@ -321,6 +323,7 @@ module_energy_L224.heat <- function(command, ...) {
       add_precursors("energy/A24.subsector_interp", "energy/A_regions", "common/GCAM_region_names") ->
       L224.SubsectorInterp_heat
     } else {
+      # If interp.to column of A24.subsector_interp contains no N/A values, then a blank tibble is produced
       tibble(x = NA) %>%
         add_title("Data not created") %>%
         add_units("Unitless") %>%
@@ -339,6 +342,7 @@ module_energy_L224.heat <- function(command, ...) {
       add_precursors("energy/A24.subsector_interp", "energy/A_regions", "common/GCAM_region_names") ->
       L224.SubsectorInterpTo_heat
     } else {
+      # If interp.to column of A24.subsector_interp contains N/A values, then a blank tibble is produced
       tibble(x = NA) %>%
         add_title("Data not created") %>%
         add_units("Unitless") %>%
@@ -382,7 +386,7 @@ module_energy_L224.heat <- function(command, ...) {
 
     L224.StubTechCalInput_heat %>%
       add_title("Calibrated input to district heat") %>%
-      add_units("unitless") %>%
+      add_units("EJ/yr") %>%
       add_comments("L124.in_EJ_R_heat_F_Yh and calibrated_techs are joined, shareweights assigned") %>%
       add_comments("as 0 if the calibrated value is 0 and 1 if it is not 0") %>%
       add_legacy_name("L224.StubTechCalInput_heat") %>%
