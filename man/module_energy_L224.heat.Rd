@@ -18,7 +18,7 @@ the generated outputs: \code{L224.SectorLogitTables[[ curr_table ]]$data}, \code
 original data system was \code{L224.heat.R} (energy level2).
 }
 \description{
-Writes district heat sector outputs.
+Write district heat sector outputs.
 }
 \details{
 This chunk creates level 2 output files for district heat sector. It creates supply sector information,
