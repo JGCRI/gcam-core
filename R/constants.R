@@ -249,6 +249,10 @@ ELECTRICITY_INPUT_FUELS<- c("biomass", "coal", "gas", "refined liquids")
 energy.CLIMATE_NORMAL_YEARS <- 1981:2000
 energy.RSRC_FUELS <- c("coal", "gas", "refined liquids")
 
+# Assumed base year heat price, used for calculating adjustment to non-energy costs of electricity technologies with secondary output of heat
+# in units of 1975$/EJ
+energy.HEAT_PRICE <- 3.2
+energy.GAS_PRICE <- 2
 
 # below come from ENERGY_ASSUMPTIONS/A_ccs_data.R (first four only)
 energy.DIGITS_EFFICIENCY <- 3
@@ -315,6 +319,13 @@ CONV_MILLION_M3_KM3 <- 1e-03
 CONV_M2_ACR <- 0.0002471058
 CONV_HA_M2 <- 1e4 # ha to m2
 CONV_BM2_M2 <- 1e9
+
+# Digits for rounding into XMLs
+energy.DIGITS_CALOUTPUT <- 7
+energy.DIGITS_COEFFICIENT <- 7
+energy.DIGITS_COST <- 4
+energy.DIGITS_EFFICIENCY <- 3
+energy.DIGITS_SHRWT <- 4
 
 
 
