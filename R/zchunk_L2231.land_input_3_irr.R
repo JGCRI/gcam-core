@@ -190,7 +190,6 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     # these land use types will be zero in all periods, but there is an assert in the code prohibiting mature age from being zero.
     L223.LN3_UnmgdCarbon[is.na(L223.LN3_UnmgdCarbon)] <- 1
 
-
     # L223.LN3_MgdCarbon_noncrop: Carbon content info, managed land in the third nest, non-crop (forest)
     L223.LC_bm2_R_Mgd3_Yh_GLU %>%
       filter(year == max(BASE_YEARS)) %>%
@@ -199,7 +198,6 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       add_carbon_info(carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
       select(one_of(LEVEL2_DATA_NAMES[["LN3_MgdCarbon"]])) ->
       L223.LN3_MgdCarbon_noncrop
-
 
     # L223.LN3_NoEmissCarbon: Set the no-emiss-carbon-calc as the type of carbon to use in forest leaves.
     # Set Forests to use node-carbon-calc at the node level and no-emiss-carbon-calc at the leaf
@@ -219,7 +217,6 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
              extra = "junk") ->
       L223.LN3_NoEmissCarbon
 
-
     # L223.LN3_NodeCarbon: Set the node-carbon-calc to drive the carbon calc between forest leaves
     L223.LN3_NoEmissCarbon %>%
       select(-LandLeaf) %>%
@@ -230,7 +227,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     # L223.NodeEquiv: Node tag equivalence list to minimize extra tables to read in same params
     # TODO: better place for these?  they are related to headers since they list tag names
     tibble(group.name = c("Leaf", "CarbonCalc"),
-           tag1 = c("LeafLeaf", "land-carbon-densities"),
+           tag1 = c("LandLeaf", "land-carbon-densities"),
            tag2 = c("UnmanagedLandLeaf", "no-emiss-carbon-calc")) ->
       L223.NodeEquiv
 
