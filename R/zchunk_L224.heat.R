@@ -72,18 +72,18 @@ module_energy_L224.heat <- function(command, ...) {
     L124.in_EJ_R_heat_F_Yh <- get_data(all_data, "L124.in_EJ_R_heat_F_Yh")
     L124.heatoutratio_R_elec_F_tech_Yh <- get_data(all_data, "L124.heatoutratio_R_elec_F_tech_Yh")
 
-    #Changing input data into long format
+    # Changing input data into long format
     A24.globaltech_coef %>%
-      gather(year, coef, -supplysector, -subsector, -technology, -minicam.energy.input) %>%
+      gather(year, coef, matches(YEAR_PATTERN)) %>%
       mutate(year = as.integer(year)) -> A24.globaltech_coef
 
     A24.globaltech_cost %>%
-      gather(year, input.cost, -supplysector, -subsector, -technology, -minicam.non.energy.input) %>%
+      gather(year, input.cost, matches(YEAR_PATTERN)) %>%
       mutate(year = as.integer(year)) -> A24.globaltech_cost
 
     A24.globaltech_shrwt %>%
-      gather(year, share.weight, -supplysector, -subsector, -technology) %>%
-      mutate(year = as.integer(year))  -> A24.globaltech_shrwt
+      gather(year, share.weight, matches(YEAR_PATTERN)) %>%
+      mutate(year = as.integer(year)) -> A24.globaltech_shrwt
 
     # ===================================================
     # Create list of regions with district heat modeled
@@ -134,6 +134,8 @@ module_energy_L224.heat <- function(command, ...) {
     # Identification of stub technologies of district heat
     # Note: assuming that technology list in the shareweight table includes the full set (any others would default to a 0 shareweight)
     A24.globaltech_shrwt %>%
+      select(supplysector, subsector, technology) %>%
+      distinct %>%
       write_to_all_regions(LEVEL2_DATA_NAMES[["Tech"]], GCAM_region_names = GCAM_region_names) %>%
       rename(stub.technology = technology) %>%
       filter(region %in% heat_region$region) -> L224.StubTech_heat
