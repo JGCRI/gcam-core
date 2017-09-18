@@ -404,6 +404,19 @@ emissions.AGR_GASES            <- c("CH4_AGR", "N2O_AGR", "NH3_AGR", "NOx_AGR")
 emissions.AG_MACC_GHG_NAMES    <- c("CH4_AGR", "N2O_AGR")
 emissions.GHG_NAMES            <- c("CH4", "N2O")
 emissions.USE_GV_MAC           <- 1
+
+# PV constants ======================================================================
+
+PV.DERATING_FACTOR <- 0.77  # incorporates various factors: inverters, transformers, mismatch, soiling, and others
+PV.RESID_INSTALLED_COST <- 9500  # 2005USD per kw
+PV.COMM_INSTALLED_COST <- 7290  # 2005USD per kw
+PV.RESID_OM <- 100  # 2005USD per kw per year
+PV.COMM_OM <- 40  # 2005USD per kw per year
+PV.LIFETIME <- 30  # years
+PV.DISCOUNT_RATE <- 0.1  # year^-1
+HOURS_PER_YEAR <- 8760
+
+
 # Uncomment these lines to run under 'timeshift' conditions
 # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
 # FUTURE_YEARS <- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)
