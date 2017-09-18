@@ -314,7 +314,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
     L2252.LN5_MgdAllocation_crop %>%
       add_title("Land cover in the model base periods for managed crop land (LT_GLU) in the fifth nest by region.") %>%
       add_units("billion square meters (bm2)") %>%
-      add_comments("Land cover in the model base periods for managed crop land (LT_GLU) in the fifth nest, from L181 land cover data.")
+      add_comments("Land cover in the model base periods for managed crop land (LT_GLU) in the fifth nest, from L181 land cover data.") %>%
       add_legacy_name("L2252.LN5_MgdAllocation_crop") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
