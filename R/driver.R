@@ -113,8 +113,6 @@ driver <- function(all_data = empty_data(),
                    write_outputs = TRUE, outdir = OUTPUTS_DIR, xmldir = XML_DIR,
                    quiet = FALSE) {
 
-  if(!quiet) cat("GCAM Data System v", as.character(packageVersion("gcamdata")), "\n", sep = "")
-
   # If users ask to stop after a chunk, but also specify they want particular inputs,
   # or if they ask to stop before a chunk, while asking for outputs, that's confusing.
   if(missing(return_outputs_of) && !missing(return_inputs_of) && !missing(stop_after)) {
@@ -136,6 +134,8 @@ driver <- function(all_data = empty_data(),
   assert_that(is.null(return_data_names) | is.character(return_data_names))
   assert_that(is.logical(write_outputs))
   assert_that(is.logical(quiet))
+
+  if(!quiet) cat("GCAM Data System v", as.character(packageVersion("gcamdata")), "\n", sep = "")
 
   chunklist <- find_chunks()
   if(!quiet) cat("Found", nrow(chunklist), "chunks\n")
