@@ -18,11 +18,28 @@ the generated outputs: \code{curr_table$data}, \code{L2252.LN5_Logit}, \code{L22
 original data system was \code{L2252.land_input_5_irr_mgmt.R} (aglu level2).
 }
 \description{
-Briefly describe what this chunk does.
+This chunk produces L2252.LN5_Logit, L2252.LN5_HistMgdAllocation_crop, L2252.LN5_MgdAllocation_crop,
+L2252.LN5_HistMgdAllocation_bio, L2252.LN5_MgdAllocation_bio, L2252.LN5_MgdCarbon_crop,
+L2252.LN5_MgdCarbon_bio, L2252.LN5_LeafGhostShare, L2252.LN5_NodeGhostShare
 }
 \details{
-Describe in detail what this chunk does.
+\itemize{
+\item{"L2252.LN5_Logit: Logit exponent of the fifth land nest by region. AgLU regions are given externally defined constant logit information."}
+\item{"L2252.LN5_HistMgdAllocation_crop: Historical land cover for managed crop land (LT_GLU) in the fifth nest, from L181 land cover data."}
+\item{"L2252.LN5_MgdAllocation_crop: Land cover in the model base periods for managed crop land (LT_GLU) in the fifth nest, from L181 land cover data."}
+\item{"L2252.LN5_HistMgdAllocation_bio: Historical land cover for managed bio land (LT_GLU) in the fifth nest by region,
+generated directly from nest 4 files."}
+\item{"L2252.LN5_MgdAllocation_bio: Land cover in the model base periods for managed bio land (LT_GLU) in the fifth nest by region,
+generated directly from nest 4 files."}
+\item{"L2252.LN5_MgdCarbon_crop: Carbon content info for managed crop land (LT_GLU) in the fifth nest including soil and vegetative carbon,
+generated directly from nest 4 files"}
+\item{"L2252.LN5_MgdCarbon_bio: Carbon content info for biofuel managed land (LT_GLU) in the fifth nest including soil and vegetative carbon,
+from L181 yield multiplier data and L2241.LN4_MgdCarbon_bio."}
+\item{"L2252.LN5_LeafGhostShare: Ghost share of the landleaf in the fifth nest by region. Ghost shares are inferred
+from average land shares allocated to hi-input versus lo-input in L181.LandShare, across all crops"}
+\item{"L2252.LN5_NodeGhostShare: Ghost share of the nest 4 nodes (irrigated versus rainfed)."}
+}
 }
 \author{
-YourInitials CurrentMonthName 2017
+ACS September 2017
 }

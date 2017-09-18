@@ -1,8 +1,8 @@
 #' module_aglu_L2252.land_input_5_irr_mgmt
 #'
-#' This chunk produces L2231.LN3_Logit, L2231.LN3_HistUnmgdAllocation, L2231.LN3_UnmgdAllocation,
-#' L2231.LN3_HistMgdAllocation_noncrop, L2231.LN3_MgdAllocation_noncrop, L2231.LN3_UnmgdCarbon,
-#' L2231.LN3_MgdCarbon_noncrop, L2231.NodeEquiv, L2231.LN3_NoEmissCarbon, L2231.LN3_NodeCarbon.
+#' This chunk produces L2252.LN5_Logit, L2252.LN5_HistMgdAllocation_crop, L2252.LN5_MgdAllocation_crop,
+#' L2252.LN5_HistMgdAllocation_bio, L2252.LN5_MgdAllocation_bio, L2252.LN5_MgdCarbon_crop,
+#' L2252.LN5_MgdCarbon_bio, L2252.LN5_LeafGhostShare, L2252.LN5_NodeGhostShare
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -12,33 +12,25 @@
 #' original data system was \code{L2252.land_input_5_irr_mgmt.R} (aglu level2).
 #' @details
 #' \itemize{
-#' \item{"L2231.LN3_Logit: Logit exponent of the third land nest by region.
-#' AgLU regions are given externally defined constant logit information."}
-#' \item{"L2231.LN3_HistUnmgdAllocation: Historical land cover for unmanaged land (LT_GLU) in the third nest by region.
-#' Historical land cover for unmanaged land in the third nest, from L125 land cover data."}
-#' \item{"L2231.LN3_UnmgdAllocation: Land cover in the model base periods for unmanaged land (LT_GLU) in the third nest by region.
-#' Land cover in the model base periods for unmanaged land in the third nest, from L125 land cover data."}
-#' \item{"L2231.LN3_HistMgdAllocation_noncrop: Historical land cover for non-crop managed land (LT_GLU) in the third nest by region.
-#' Historical land cover for non-crop managed land in the third nest, from L125 land cover data."}
-#' \item{"L2231.LN3_MgdAllocation_noncrop,: Land cover in the model base periods for non-crop managed land (LT_GLU) in the third nest by region.
-#' Land cover in the model base periods for non-crop managed land in the third nest, from L125 land cover data."}
-#' \item{"L2231.LN3_UnmgdCarbon: Carbon content for unmanaged land (LT_GLU) in third nest by region.
-#' Carbon content info for unmanaged land in the third nest including soil and vegetative carbon,
-#' from L125 land cover data, L121 carbon content data, and GCAMLandLeaf_CdensityLT assumptions."}
-#' \item{"L2231.LN3_MgdCarbon_noncrop: Carbon content for non-crop managed land (LT_GLU) in third nest by region.
-#' Carbon content info for non-crop managed land in the third nest including soil and vegetative carbon,
-#' from L125 land cover data, L121 carbon content data, and GCAMLandLeaf_CdensityLT assumptions."}
-#' \item{"L2231.NodeEquiv: Node tag equivalence list to minimize extra tables to read in same parameters;
-#' manually formed with no inputs."}
-#' \item{"L2231.LN3_NoEmissCarbon: Sets the no-emiss-carbon-calc as the type of carbon to use in forest leaves by region."}
-#' \item{"L2231.LN3_NodeCarbon: Sets the node-carbon-calc to drive the carbon calc between forest leaves, by region, and
-#' places the node carbon calc in the node just above the leaves."}
+#' \item{"L2252.LN5_Logit: Logit exponent of the fifth land nest by region. AgLU regions are given externally defined constant logit information."}
+#' \item{"L2252.LN5_HistMgdAllocation_crop: Historical land cover for managed crop land (LT_GLU) in the fifth nest, from L181 land cover data."}
+#' \item{"L2252.LN5_MgdAllocation_crop: Land cover in the model base periods for managed crop land (LT_GLU) in the fifth nest, from L181 land cover data."}
+#' \item{"L2252.LN5_HistMgdAllocation_bio: Historical land cover for managed bio land (LT_GLU) in the fifth nest by region,
+#' generated directly from nest 4 files."}
+#' \item{"L2252.LN5_MgdAllocation_bio: Land cover in the model base periods for managed bio land (LT_GLU) in the fifth nest by region,
+#' generated directly from nest 4 files."}
+#' \item{"L2252.LN5_MgdCarbon_crop: Carbon content info for managed crop land (LT_GLU) in the fifth nest including soil and vegetative carbon,
+#' generated directly from nest 4 files"}
+#' \item{"L2252.LN5_MgdCarbon_bio: Carbon content info for biofuel managed land (LT_GLU) in the fifth nest including soil and vegetative carbon,
+#' from L181 yield multiplier data and L2241.LN4_MgdCarbon_bio."}
+#' \item{"L2252.LN5_LeafGhostShare: Ghost share of the landleaf in the fifth nest by region. Ghost shares are inferred
+#' from average land shares allocated to hi-input versus lo-input in L181.LandShare, across all crops"}
+#' \item{"L2252.LN5_NodeGhostShare: Ghost share of the nest 4 nodes (irrigated versus rainfed)."}
 #' }
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
-#' @export
+#' @author ACS September 2017
 module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
@@ -300,135 +292,62 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
 
     # Produce outputs
     L2252.LN5_Logit %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Logit exponent of the fifth land nest by region") %>%
+      add_units("NA") %>%
+      add_comments("Logit exponent of the fifth land nest by region. AgLU regions") %>%
+      add_comments("are given externally defined constant logit information.") %>%
       add_legacy_name("L2252.LN5_Logit") %>%
-      add_precursors("common/GCAM_region_names",
-                     "water/basin_to_country_mapping",
-                     "L181.LandShare_R_bio_GLU_irr",
-                     "L181.LC_bm2_R_C_Yh_GLU_irr_level",
-                     "L181.YieldMult_R_bio_GLU_irr",
-                     "temp-data-inject/L2241.LN4_Logit",
-                     "temp-data-inject/L2241.LN4_HistMgdAllocation_crop",
-                     "temp-data-inject/L2241.LN4_MgdAllocation_crop",
-                     "temp-data-inject/L2241.LN4_HistMgdAllocation_bio",
-                     "temp-data-inject/L2241.LN4_MgdAllocation_bio",
-                     "temp-data-inject/L2241.LN4_MgdCarbon_crop",
-                     "temp-data-inject/L2241.LN4_MgdCarbon_bio",
-                     "temp-data-inject/L2241.LN4_LeafGhostShare",
-                     "L2012.AgProduction_ag_irr_mgmt") ->
+      add_precursors("temp-data-inject/L2241.LN4_Logit") ->
       L2252.LN5_Logit
 
     L2252.LN5_HistMgdAllocation_crop %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Historical land cover for managed crop land (LT_GLU) in the fifth nest by region.") %>%
+      add_units("billion square meters (bm2)") %>%
+      add_comments("Historical land cover for managed crop land (LT_GLU) in the fifth nest, from L181 land cover data.") %>%
       add_legacy_name("L2252.LN5_HistMgdAllocation_crop") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
-                     "L181.LandShare_R_bio_GLU_irr",
                      "L181.LC_bm2_R_C_Yh_GLU_irr_level",
-                     "L181.YieldMult_R_bio_GLU_irr",
-                     "temp-data-inject/L2241.LN4_Logit",
-                     "temp-data-inject/L2241.LN4_HistMgdAllocation_crop",
-                     "temp-data-inject/L2241.LN4_MgdAllocation_crop",
-                     "temp-data-inject/L2241.LN4_HistMgdAllocation_bio",
-                     "temp-data-inject/L2241.LN4_MgdAllocation_bio",
-                     "temp-data-inject/L2241.LN4_MgdCarbon_crop",
-                     "temp-data-inject/L2241.LN4_MgdCarbon_bio",
-                     "temp-data-inject/L2241.LN4_LeafGhostShare",
-                     "L2012.AgProduction_ag_irr_mgmt") ->
+                     "temp-data-inject/L2241.LN4_HistMgdAllocation_crop") ->
       L2252.LN5_HistMgdAllocation_crop
 
     L2252.LN5_MgdAllocation_crop %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Land cover in the model base periods for managed crop land (LT_GLU) in the fifth nest by region.") %>%
+      add_units("billion square meters (bm2)") %>%
+      add_comments("Land cover in the model base periods for managed crop land (LT_GLU) in the fifth nest, from L181 land cover data.")
       add_legacy_name("L2252.LN5_MgdAllocation_crop") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
-                     "L181.LandShare_R_bio_GLU_irr",
                      "L181.LC_bm2_R_C_Yh_GLU_irr_level",
-                     "L181.YieldMult_R_bio_GLU_irr",
-                     "temp-data-inject/L2241.LN4_Logit",
-                     "temp-data-inject/L2241.LN4_HistMgdAllocation_crop",
                      "temp-data-inject/L2241.LN4_MgdAllocation_crop",
-                     "temp-data-inject/L2241.LN4_HistMgdAllocation_bio",
-                     "temp-data-inject/L2241.LN4_MgdAllocation_bio",
-                     "temp-data-inject/L2241.LN4_MgdCarbon_crop",
-                     "temp-data-inject/L2241.LN4_MgdCarbon_bio",
-                     "temp-data-inject/L2241.LN4_LeafGhostShare",
                      "L2012.AgProduction_ag_irr_mgmt") ->
       L2252.LN5_MgdAllocation_crop
 
     L2252.LN5_HistMgdAllocation_bio %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Historical land cover for managed bio land (LT_GLU) in the fifth nest by region.") %>%
+      add_units("billion square meters (bm2)") %>%
+      add_comments("Historical land cover for managed bio land (LT_GLU) in the fifth nest by region,") %>%
+      add_comments("generated directly from nest 4 files.") %>%
       add_legacy_name("L2252.LN5_HistMgdAllocation_bio") %>%
-      add_precursors("common/GCAM_region_names",
-                     "water/basin_to_country_mapping",
-                     "L181.LandShare_R_bio_GLU_irr",
-                     "L181.LC_bm2_R_C_Yh_GLU_irr_level",
-                     "L181.YieldMult_R_bio_GLU_irr",
-                     "temp-data-inject/L2241.LN4_Logit",
-                     "temp-data-inject/L2241.LN4_HistMgdAllocation_crop",
-                     "temp-data-inject/L2241.LN4_MgdAllocation_crop",
-                     "temp-data-inject/L2241.LN4_HistMgdAllocation_bio",
-                     "temp-data-inject/L2241.LN4_MgdAllocation_bio",
-                     "temp-data-inject/L2241.LN4_MgdCarbon_crop",
-                     "temp-data-inject/L2241.LN4_MgdCarbon_bio",
-                     "temp-data-inject/L2241.LN4_LeafGhostShare",
-                     "L2012.AgProduction_ag_irr_mgmt") ->
+      add_precursors("temp-data-inject/L2241.LN4_HistMgdAllocation_bio") ->
       L2252.LN5_HistMgdAllocation_bio
 
     L2252.LN5_MgdAllocation_bio %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Land cover in the model base periods for managed bio land (LT_GLU) in the fifth nest by region.") %>%
+      add_units("billion square meters (bm2)") %>%
+      add_comments("Land cover in the model base periods for managed bio land (LT_GLU) in the fifth nest by region,") %>%
+      add_comments("generated directly from nest 4 files.") %>%
       add_legacy_name("L2252.LN5_MgdAllocation_bio") %>%
-      add_precursors("common/GCAM_region_names",
-                     "water/basin_to_country_mapping",
-                     "L181.LandShare_R_bio_GLU_irr",
-                     "L181.LC_bm2_R_C_Yh_GLU_irr_level",
-                     "L181.YieldMult_R_bio_GLU_irr",
-                     "temp-data-inject/L2241.LN4_Logit",
-                     "temp-data-inject/L2241.LN4_HistMgdAllocation_crop",
-                     "temp-data-inject/L2241.LN4_MgdAllocation_crop",
-                     "temp-data-inject/L2241.LN4_HistMgdAllocation_bio",
-                     "temp-data-inject/L2241.LN4_MgdAllocation_bio",
-                     "temp-data-inject/L2241.LN4_MgdCarbon_crop",
-                     "temp-data-inject/L2241.LN4_MgdCarbon_bio",
-                     "temp-data-inject/L2241.LN4_LeafGhostShare",
-                     "L2012.AgProduction_ag_irr_mgmt") ->
+      add_precursors("temp-data-inject/L2241.LN4_MgdAllocation_bio") ->
       L2252.LN5_MgdAllocation_bio
 
     L2252.LN5_MgdCarbon_crop %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Carbon content for managed crop land (LT_GLU) in fifth nest by region.") %>%
+      add_units("Varies") %>%
+      add_comments("Carbon content info for managed crop land (LT_GLU) in the fifth nest including soil and vegetative carbon,") %>%
+      add_comments("generated directly from nest 4 files.") %>%
       add_legacy_name("L2252.LN5_MgdCarbon_crop") %>%
-      add_precursors("common/GCAM_region_names",
-                     "water/basin_to_country_mapping",
-                     "L181.LandShare_R_bio_GLU_irr",
-                     "L181.LC_bm2_R_C_Yh_GLU_irr_level",
-                     "L181.YieldMult_R_bio_GLU_irr",
-                     "temp-data-inject/L2241.LN4_Logit",
-                     "temp-data-inject/L2241.LN4_HistMgdAllocation_crop",
-                     "temp-data-inject/L2241.LN4_MgdAllocation_crop",
-                     "temp-data-inject/L2241.LN4_HistMgdAllocation_bio",
-                     "temp-data-inject/L2241.LN4_MgdAllocation_bio",
-                     "temp-data-inject/L2241.LN4_MgdCarbon_crop",
-                     "temp-data-inject/L2241.LN4_MgdCarbon_bio",
-                     "temp-data-inject/L2241.LN4_LeafGhostShare",
-                     "L2012.AgProduction_ag_irr_mgmt") ->
+      add_precursors("temp-data-inject/L2241.LN4_MgdCarbon_crop") ->
       L2252.LN5_MgdCarbon_crop
 
     L2252.LN5_MgdCarbon_bio %>%
@@ -446,47 +365,23 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
 
     L2252.LN5_LeafGhostShare %>%
       mutate(Irr_Rfd = tolower(Irr_Rfd)) %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Ghost share of the landleaf in the fifth nest by region (lo-input versus hi-input)") %>%
+      add_units("NA") %>%
+      add_comments("Ghost share of the landleaf in the fifth nest by region. Ghost shares are inferred") %>%
+      add_comments(" from average land shares allocated to hi-input versus lo-input in L181.LandShare, across all crops") %>%
       add_legacy_name("L2252.LN5_LeafGhostShare") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
                      "L181.LandShare_R_bio_GLU_irr",
-                     "L181.LC_bm2_R_C_Yh_GLU_irr_level",
-                     "L181.YieldMult_R_bio_GLU_irr",
-                     "temp-data-inject/L2241.LN4_Logit",
-                     "temp-data-inject/L2241.LN4_HistMgdAllocation_crop",
-                     "temp-data-inject/L2241.LN4_MgdAllocation_crop",
-                     "temp-data-inject/L2241.LN4_HistMgdAllocation_bio",
-                     "temp-data-inject/L2241.LN4_MgdAllocation_bio",
-                     "temp-data-inject/L2241.LN4_MgdCarbon_crop",
-                     "temp-data-inject/L2241.LN4_MgdCarbon_bio",
-                     "temp-data-inject/L2241.LN4_LeafGhostShare",
-                     "L2012.AgProduction_ag_irr_mgmt") ->
+                     "temp-data-inject/L2241.LN4_LeafGhostShare") ->
       L2252.LN5_LeafGhostShare
 
     L2252.LN5_NodeGhostShare %>%
-      #add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      #add_title("Ghost share of the nest 4 nodes (irrigated versus rainfed)") %>%
+      add_units("NA") %>%
+      add_comments("Ghost share of the nest 4 nodes (irrigated versus rainfed).") %>%
       add_legacy_name("L2252.LN5_NodeGhostShare") %>%
-      add_precursors("common/GCAM_region_names",
-                     "water/basin_to_country_mapping",
-                     "L181.LandShare_R_bio_GLU_irr",
-                     "L181.LC_bm2_R_C_Yh_GLU_irr_level",
-                     "L181.YieldMult_R_bio_GLU_irr",
-                     "temp-data-inject/L2241.LN4_Logit",
-                     "temp-data-inject/L2241.LN4_HistMgdAllocation_crop",
-                     "temp-data-inject/L2241.LN4_MgdAllocation_crop",
-                     "temp-data-inject/L2241.LN4_HistMgdAllocation_bio",
-                     "temp-data-inject/L2241.LN4_MgdAllocation_bio",
-                     "temp-data-inject/L2241.LN4_MgdCarbon_crop",
-                     "temp-data-inject/L2241.LN4_MgdCarbon_bio",
-                     "temp-data-inject/L2241.LN4_LeafGhostShare",
-                     "L2012.AgProduction_ag_irr_mgmt") ->
+      add_precursors("temp-data-inject/L2241.LN4_LeafGhostShare") ->
       L2252.LN5_NodeGhostShare
 
     return_data(L2252.LN5_Logit, L2252.LN5_HistMgdAllocation_crop, L2252.LN5_MgdAllocation_crop, L2252.LN5_HistMgdAllocation_bio, L2252.LN5_MgdAllocation_bio, L2252.LN5_MgdCarbon_crop, L2252.LN5_MgdCarbon_bio, L2252.LN5_LeafGhostShare, L2252.LN5_NodeGhostShare)
