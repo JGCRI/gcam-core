@@ -85,7 +85,9 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       soil_c <- veg_c <- LC_bm2 <- LV_milUSD75 <- LV_USD75_bm2 <- LV_USD75_m2 <- HarvCropLand_bm2 <-
       unManagedLandValue <- LandAllocatorRoot <- hist.veg.carbon.density <- hist.soil.carbon.density <-
       veg.carbon.density <- soil.carbon.density <- allocation <- Land_Type.y <- mature.age.year.fillout <-
-      min.veg.carbon.density <- min.soil.carbon.density <- . <- NULL
+      min.veg.carbon.density <- min.soil.carbon.density <- LandNode4 <- LandNode5 <- level <-
+      calOutputValue <- AgProductionTechnology <- Irr_Rfd <- variable <- yieldmult <- tmp <- crop1 <-
+      crop2 <- landshare <- lev <- . <- NULL
 
 
     # 1. Process inputs
