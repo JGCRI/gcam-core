@@ -1,6 +1,7 @@
 #' module_aglu_L2252.land_input_5_irr_mgmt
 #'
-#' This chunk produces L2252.LN5_Logit, L2252.LN5_HistMgdAllocation_crop, L2252.LN5_MgdAllocation_crop,
+#' This chunk producesthe inputs for the lowest level of the land nest, including disaggregated crop technologies:
+#' L2252.LN5_Logit, L2252.LN5_HistMgdAllocation_crop, L2252.LN5_MgdAllocation_crop,
 #' L2252.LN5_HistMgdAllocation_bio, L2252.LN5_MgdAllocation_bio, L2252.LN5_MgdCarbon_crop,
 #' L2252.LN5_MgdCarbon_bio, L2252.LN5_LeafGhostShare, L2252.LN5_NodeGhostShare
 #'
@@ -125,13 +126,13 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
     # A function to carry LN4 information down to LN5
     convert_LN4_to_LN5 <- function(data, names){
       data %>%
-        repeat_add_columns(tibble::tibble(level = c( "lo", "hi" ))) %>%
+        repeat_add_columns(tibble(level = c( "lo", "hi" ))) %>%
         mutate(LandNode5 = LandLeaf,
                LandLeaf = paste(LandNode5, level, sep = aglu.MGMT_DELIMITER)) ->
         data_new
       data_new <- data_new[names]
 
-      return( data_new )
+      return(data_new)
     } # end convert_LN4_to_LN5
 
     # remove_zero_production_land_leafs
@@ -153,10 +154,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       land %>%
         mutate(id = paste0(region, LandLeaf, year)) %>%
         semi_join(prod1, by = "id") %>%
-        select(-id) ->
-        land1
-
-      return(land1)
+        select(-id)
     } # end remove_zero_production_land_leafs
 
 
