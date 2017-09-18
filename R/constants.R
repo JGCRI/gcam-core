@@ -40,6 +40,7 @@ gcam.USA_CODE <- 1
 gcam.WESTERN_EUROPE_CODE <- 13
 gcam.LOGIT_TYPES <- c("relative-cost-logit", "absolute-cost-logit")
 gcam.EQUIV_TABLE <- "EQUIV_TABLE"
+gcam.IND_ENERGY_USE <- c("biomass", "coal", "gas", "refined liquids")  # GCAM industrial energy use fuels
 
 GCAM_REGION_ID <- "GCAM_region_ID"
 
