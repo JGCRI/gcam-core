@@ -9,9 +9,11 @@
 #' the generated outputs: \code{transportation_UCD_xxx.xml}. The corresponding file in the
 #' original data system was \code{batch_transportation_UCD_xml.R} (energy XML).
 module_energy_batch_transportation_UCD_xml <- function(command, ...) {
-    # The below variable (trn_SPP) controls which scenario to run, as only one scenario can be run at a time.
-    # This is a special case, and the way this is executed will likely change in the future.
-    if(command == driver.DECLARE_INPUTS) {
+  # The below variable (trn_SPP) controls which scenario to run, as only one scenario can be run at a time.
+  # This is a special case, and the way this is executed will likely change in the future.
+  outfile <- paste0("transportation_agg_", energy.TRN_SSP, ".xml")
+
+  if(command == driver.DECLARE_INPUTS) {
     return(c("L254.Supplysector_trn",
              "L254.FinalEnergyKeyword_trn",
              "L254.tranSubsectorLogit",
@@ -46,7 +48,7 @@ module_energy_batch_transportation_UCD_xml <- function(command, ...) {
              "L254.IncomeElasticity_trn",
              "L254.BaseService_trn"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c(XML = paste0("transportation_agg_", energy.TRN_SSP, ".xml")))
+    return(c(XML = outfile))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -89,23 +91,23 @@ module_energy_batch_transportation_UCD_xml <- function(command, ...) {
     # ===================================================
 
     # Produce outputs
-    create_xml(paste0("transportation_agg_", energy.TRN_SSP, ".xml")) %>%
+    create_xml(outfile) %>%
       add_xml_data(L254.Supplysector_trn, "Supplysector") %>%
       add_xml_data(L254.FinalEnergyKeyword_trn, "FinalEnergyKeyword") %>%
       add_xml_data(L254.tranSubsectorLogit, "tranSubsectorLogit") %>%
       add_xml_data(L254.tranSubsectorSpeed, "tranSubsectorSpeed") %>%
-      add_xml_data(L254.tranSubsectorSpeed_passthru, "tranSubsectorSpeed_passthru") %>%
-      add_xml_data(L254.tranSubsectorSpeed_noVOTT, "tranSubsectorSpeed_noVOTT") %>%
-      add_xml_data(L254.tranSubsectorSpeed_nonmotor, "tranSubsectorSpeed_nonmotor") %>%
+      add_xml_data(L254.tranSubsectorSpeed_passthru, "tranSubsectorSpeed_passthru", column_order_lookup = "tranSubsectorSpeed") %>%
+      add_xml_data(L254.tranSubsectorSpeed_noVOTT, "tranSubsectorSpeed_noVOTT", column_order_lookup = "tranSubsectorSpeed") %>%
+      add_xml_data(L254.tranSubsectorSpeed_nonmotor, "tranSubsectorSpeed_nonmotor", column_order_lookup = "tranSubsectorSpeed") %>%
       add_xml_data(L254.tranSubsectorVOTT, "tranSubsectorVOTT") %>%
       add_xml_data(L254.tranSubsectorFuelPref, "tranSubsectorFuelPref") %>%
       add_xml_data(L254.StubTranTech, "StubTranTech") %>%
-      add_xml_data(L254.StubTech_passthru, "StubTech_passthru") %>%
-      add_xml_data(L254.StubTech_nonmotor, "StubTech_nonmotor") %>%
-      add_xml_data(L254.GlobalTechShrwt_passthru, "GlobalTechShrwt_passthru") %>%
-      add_xml_data(L254.GlobalTechShrwt_nonmotor, "GlobalTechShrwt_nonmotor") %>%
-      add_xml_data(L254.GlobalTechCoef_passthru, "GlobalTechCoef_passthru") %>%
-      add_xml_data(L254.GlobalRenewTech_nonmotor, "GlobalRenewTech_nonmotor") %>%
+      add_xml_data(L254.StubTech_passthru, "StubTech_passthru", column_order_lookup = "StubTranTech") %>%
+      add_xml_data(L254.StubTech_nonmotor, "StubTech_nonmotor", column_order_lookup = "StubTranTech") %>%
+      add_xml_data(L254.GlobalTechShrwt_passthru, "GlobalTechShrwt_passthru", column_order_lookup = "GlobalTechShrwt") %>%
+      add_xml_data(L254.GlobalTechShrwt_nonmotor, "GlobalTechShrwt_nonmotor", column_order_lookup = "GlobalTechShrwt") %>%
+      add_xml_data(L254.GlobalTechCoef_passthru, "GlobalTechCoef_passthru", column_order_lookup = "GlobalTechCoef") %>%
+      add_xml_data(L254.GlobalRenewTech_nonmotor, "GlobalRenewTech_nonmotor", column_order_lookup = "GlobalRenewTech") %>%
       add_xml_data(L254.GlobalTranTechInterp, "GlobalTranTechInterp") %>%
       add_xml_data(L254.GlobalTranTechShrwt, "GlobalTranTechShrwt") %>%
       add_xml_data(L254.GlobalTranTechSCurve, "GlobalTranTechSCurve") %>%
@@ -113,12 +115,12 @@ module_energy_batch_transportation_UCD_xml <- function(command, ...) {
       add_xml_data(L254.StubTranTechLoadFactor, "StubTranTechLoadFactor") %>%
       add_xml_data(L254.StubTranTechCost, "StubTranTechCost") %>%
       add_xml_data(L254.StubTranTechCoef, "StubTranTechCoef") %>%
-      add_xml_data(L254.StubTechCalInput_passthru, "StubTechCalInput_passthru") %>%
-      add_xml_data(L254.StubTechProd_nonmotor, "StubTechProd_nonmotor") %>%
+      add_xml_data(L254.StubTechCalInput_passthru, "StubTechCalInput_passthru", column_order_lookup = "StubTranTechCalInput") %>%
+      add_xml_data(L254.StubTechProd_nonmotor, "StubTechProd_nonmotor", column_order_lookup = "StubTranTechProd") %>%
       add_xml_data(L254.PerCapitaBased_trn, "PerCapitaBased") %>%
       add_xml_data(L254.PriceElasticity_trn, "PriceElasticity") %>%
       add_xml_data(L254.IncomeElasticity_trn, "IncomeElasticity") %>%
-      add_xml_data(L254.BaseService_trn, "BaseService_trn") %>%
+      add_xml_data(L254.BaseService_trn, "BaseService") %>%
       add_precursors("L254.Supplysector_trn", "L254.FinalEnergyKeyword_trn", "L254.tranSubsectorLogit",
                      "L254.tranSubsectorShrwt", "L254.tranSubsectorShrwtFllt", "L254.tranSubsectorInterp",
                      "L254.tranSubsectorInterpTo", "L254.tranSubsectorSpeed", "L254.tranSubsectorSpeed_passthru",
@@ -130,34 +132,44 @@ module_energy_batch_transportation_UCD_xml <- function(command, ...) {
                      "L254.StubTranTechCost", "L254.StubTranTechCoef", "L254.StubTechCalInput_passthru",
                      "L254.StubTechProd_nonmotor", "L254.PerCapitaBased_trn", "L254.PriceElasticity_trn",
                      "L254.IncomeElasticity_trn", "L254.BaseService_trn") ->
-      paste0("transportation_agg_", energy.TRN_SSP, ".xml")
+      xml_tmp
 
     # Some data inputs may not actually contain data. If so, do not add_xml_data.
-    if(!is.null(L254.tranSubsectorShrwt)){
-      paste0("transportation_agg_", energy.TRN_SSP, ".xml") %>%
+    if(!is.null(L254.tranSubsectorShrwt)) {
+      xml_tmp %>%
         add_xml_data(L254.tranSubsectorShrwt, "tranSubsectorShrwt") ->
-        paste0("transportation_agg_", energy.TRN_SSP, ".xml")
+        xml_tmp
     }
 
-    if(!is.null(L254.tranSubsectorShrwtFllt)){
-      paste0("transportation_agg_", energy.TRN_SSP, ".xml") %>%
+    if(!is.null(L254.tranSubsectorShrwtFllt)) {
+      xml_tmp %>%
         add_xml_data(L254.tranSubsectorShrwtFllt, "tranSubsectorShrwtFllt") ->
-        paste0("transportation_agg_", energy.TRN_SSP, ".xml")
+        xml_tmp
     }
 
-    if(!is.null(L254.tranSubsectorInterp)){
-      paste0("transportation_agg_", energy.TRN_SSP, ".xml") %>%
+    if(!is.null(L254.tranSubsectorInterp)) {
+      xml_tmp %>%
         add_xml_data(L254.tranSubsectorInterp, "tranSubsectorInterp") ->
-        paste0("transportation_agg_", energy.TRN_SSP, ".xml")
+        xml_tmp
     }
 
-    if(!is.null(L254.tranSubsectorInterpTo)){
-      paste0("transportation_agg_", energy.TRN_SSP, ".xml") %>%
+    if(!is.null(L254.tranSubsectorInterpTo)) {
+      xml_tmp %>%
         add_xml_data(L254.tranSubsectorInterpTo, "tranSubsectorInterpTo") ->
-        paste0("transportation_agg_", energy.TRN_SSP, ".xml")
+        xml_tmp
     }
 
-    return_data(paste0("transportation_agg_", energy.TRN_SSP, ".xml"))
+    # Because `return_data` gets the name of the object from what's actually given in the call,
+    # we need to assign xml_tmp to a correctly-named variable in this current environment
+    assign(paste0("transportation_agg_", energy.TRN_SSP, ".xml"), xml_tmp)
+    if(energy.TRN_SSP == "CORE") {
+      return(transportation_agg_CORE.xml)
+    } else if(energy.TRN_SSP == "SSP1") {
+      return(transportation_agg_SSP1.xml)
+    } else {
+      stop("Unknown energy.TRN_SSP value")
+    }
+
   } else {
     stop("Unknown command")
   }
