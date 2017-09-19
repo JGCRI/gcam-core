@@ -82,6 +82,11 @@ module_energy_LA132.industry <- function(command, ...) {
 
     # Compile the net energy use by unconventional oil production, gas processing, refining, and CHP that were derived elsewhere
     # This energy will need to be deducted from industrial energy use
+    # The electricity demands for unconventional oil has been done in LA121
+    # The refining electricity is estimated in LA122
+    # The ownuse and T&D losses are estimated in LA126
+    # And the remainder is assigned to the end-use sectors in LA131 (LA131 is the one responsible for balancing)
+
     ## Unconventional oil: the only relevant fuel is gas, as electricity (if any) was taken off prior to scaling for end-use sectors
     L121.in_EJ_R_unoil_F_Yh %>%
       filter(fuel == "gas") ->
