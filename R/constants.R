@@ -255,6 +255,10 @@ energy.DIGITS_EFFICIENCY <- 3
 energy.DIGITS_COST <- 4
 energy.DIGITS_REMOVE.FRACTION <- 2
 energy.CO2.STORAGE.MARKET <- "carbon-storage"
+energy.DIGITS_COEFFICIENT <- 7
+energy.DIGITS_REMOVE.FRACTION <- 2
+
+
 
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
