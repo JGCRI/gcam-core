@@ -284,7 +284,9 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       add_precursors("common/GCAM_region_names",
                      "emissions/A_regions", "energy/A_regions",
                      "L151.nonghg_ctrl_R_en_S_T",
-                     "temp-data-inject/L244.DeleteThermalService") ->
+                     "temp-data-inject/L244.DeleteThermalService") %>%
+      # Because of upstream numerical instability/rounding issues (see https://github.com/JGCRI/gcamdata/pull/613) need sum test here
+      add_flags(FLAG_SUM_TEST) ->
       L201.nonghg_max_reduction
 
     L201.nonghg_steepness %>%
