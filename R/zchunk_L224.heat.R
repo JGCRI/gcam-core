@@ -49,11 +49,11 @@ module_energy_L224.heat <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     # Silence package checks
-    has_district_heat <- region <- year.fillout <- to.value <-
+    has_district_heat <- region <- year.fillout <- to.value <- efficiency <-
       technology <- coef <- subsector <- supplysector <- minicam.energy.input <-
       input.cost <- minicam.non.energy.input <- share.weight <- sector <- fuel <-
       value <- subs.share.weight <- calibrated.value <- secondary.output.name <-
-      secondary.output <- stub.technology <- cost_modifier <- NULL
+      secondary.output <- stub.technology <- cost_modifier <- year <- NULL
 
     all_data <- list(...)[[1]]
 
