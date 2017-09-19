@@ -64,8 +64,9 @@ module_gcam.usa_LA132.Industry <- function(command, ...) {
     # Bind above with other fuels considered in GCAM's "industrial energy use" sector
     L101.inEIA_EJ_state_S_F %>%
       filter(sector == "industry",
-             fuel %in% gcam.IND_ENERGY_USE) %>%
-      bind_rows(L132.in_EJ_state_ind_elecgas_adj) %>% unique ->
+             fuel %in% gcam.IND_ENERGY_USE,
+             fuel != "gas") %>%
+      bind_rows(L132.in_EJ_state_ind_elecgas_adj) ->
       L132.in_EJ_state_indenergy_F_unscaled
 
     # Compute fuel consumption by state and sector as proportion of USA total
@@ -99,7 +100,7 @@ module_gcam.usa_LA132.Industry <- function(command, ...) {
       select(-multiplier, -GCAM_region_ID) ->
       L132.in_EJ_state_indchp_F
 
-    #Apportion nation-level industrial cogen output to states
+    # Apportion nation-level industrial cogen output to states
     L132.in_pct_state_ind_F %>%
       filter(fuel %in% gcam.IND_ENERGY_USE) %>%
       mutate(sector = "chp_elec") %>% rename(multiplier = value) %>%
@@ -152,11 +153,12 @@ module_gcam.usa_LA132.Industry <- function(command, ...) {
     L132.pct_state_indfeed_F %>%
       rename(multiplier = value) %>%
       # ^^ prepare for smooth join
-      left_join_error_no_match(filter(L1322.in_EJ_R_indfeed_F_Yh, GCAM_region_ID == 1),
+      left_join_error_no_match(filter(L1322.in_EJ_R_indfeed_F_Yh, GCAM_region_ID == gcam.USA_CODE),
                                by = c("sector", "fuel", "year")) %>%
       mutate(value = value * multiplier) %>%
       # ^^ get state portions
-      select(-multiplier, -GCAM_region_ID) ->
+      select(-multiplier, -GCAM_region_ID) %>%
+      arrange(state) ->
       L132.in_EJ_state_indfeed_F
 
 
@@ -170,7 +172,7 @@ module_gcam.usa_LA132.Industry <- function(command, ...) {
       add_precursors("L1322.in_EJ_R_indenergy_F_Yh",
                      "L101.inEIA_EJ_state_S_F",
                      "L122.in_EJ_state_refining_F") %>%
-      add_flags(FLAG_LONG_YEAR_FORM) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L132.in_EJ_state_indnochp_F
 
     L132.in_EJ_state_indchp_F %>%
@@ -181,7 +183,7 @@ module_gcam.usa_LA132.Industry <- function(command, ...) {
       add_precursors("L123.out_EJ_R_indchp_F_Yh",
                      "L101.inEIA_EJ_state_S_F",
                      "L122.in_EJ_state_refining_F") %>%
-      add_flags(FLAG_LONG_YEAR_FORM) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L132.in_EJ_state_indchp_F
 
     L132.out_EJ_state_indchp_F %>%
@@ -192,7 +194,7 @@ module_gcam.usa_LA132.Industry <- function(command, ...) {
       add_precursors("L123.in_EJ_R_indchp_F_Yh",
                      "L101.inEIA_EJ_state_S_F",
                      "L122.in_EJ_state_refining_F") %>%
-      add_flags(FLAG_LONG_YEAR_FORM) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L132.out_EJ_state_indchp_F
 
     L132.in_EJ_state_indfeed_F %>%
@@ -201,7 +203,7 @@ module_gcam.usa_LA132.Industry <- function(command, ...) {
       add_comments("Computed by apportioning USA-level feedstocks among states") %>%
       add_legacy_name("L132.in_EJ_state_indfeed_F") %>%
       add_precursors("L101.inEIA_EJ_state_S_F", "L1322.in_EJ_R_indfeed_F_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L132.in_EJ_state_indfeed_F
 
     return_data(L132.in_EJ_state_indnochp_F, L132.in_EJ_state_indchp_F, L132.out_EJ_state_indchp_F, L132.in_EJ_state_indfeed_F)

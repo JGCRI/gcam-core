@@ -56,12 +56,7 @@ module_gcam.usa_LB123.Electricity <- function(command, ...) {
     L126.out_EJ_R_elecownuse_F_Yh <- get_data(all_data, "L126.out_EJ_R_elecownuse_F_Yh") %>%
       filter(GCAM_region_ID == gcam.USA_CODE)
     L101.inEIA_EJ_state_S_F <- get_data(all_data, "L101.inEIA_EJ_state_S_F")
-    L132.out_EJ_state_indchp_F <- get_data(all_data, "L132.out_EJ_state_indchp_F") %>%
-      # temp-data-inject code
-      gather(year, value, starts_with("X")) %>%
-      mutate(year = as.integer(substr(year, 2,5))) %>%
-      # timeshift fix - probably not necessary once temp-data removed, but will need to check
-      filter(year %in% HISTORICAL_YEARS)
+    L132.out_EJ_state_indchp_F <- get_data(all_data, "L132.out_EJ_state_indchp_F")
 
     # ===================================================
     # SEDS (EIA) indicates electricity generation technologies either in terms of fuel inputs or fuel outputs (not both)
