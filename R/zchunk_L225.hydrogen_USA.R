@@ -22,6 +22,8 @@ module_gcam.usa_L225.hydrogen_USA <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    region <- subsector <- supplysector <- NULL  # silence package check notes
+
     # Load required inputs
     L225.SubsectorLogit_h2 <- get_data(all_data, "L225.SubsectorLogit_h2")
 
