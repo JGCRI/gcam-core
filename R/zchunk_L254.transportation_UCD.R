@@ -84,7 +84,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
     # The below variable (energy.TRN_SSP) controls which scenario to run, as only one scenario can be run at a time.
     # This is a special case, and the way this is executed will likely change in the future.
     # Note that the variable is defined in constants.R
-    if(energy.TRN_SSP == "SSP1"){
+    if(energy.TRN_SSP == "SSP1") {
       A54.demand <- get_data(all_data, "energy/A54.demand_ssp1")
     }
     A54.sector <- get_data(all_data, "energy/A54.sector")
@@ -92,7 +92,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
     A54.tranSubsector_shrwt <- get_data(all_data, "energy/A54.tranSubsector_shrwt")
     A54.tranSubsector_interp <- get_data(all_data, "energy/A54.tranSubsector_interp")
     A54.tranSubsector_VOTT <- get_data(all_data, "energy/A54.tranSubsector_VOTT")
-    if(energy.TRN_SSP == "SSP1"){
+    if(energy.TRN_SSP == "SSP1") {
       A54.tranSubsector_VOTT <- get_data(all_data, "energy/A54.tranSubsector_VOTT_ssp1")
     }
     A54.globaltech_passthru <- get_data(all_data, "energy/A54.globaltech_passthru")
@@ -231,7 +231,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       L254.tranSubsectorLogit # OUTPUT
 
     # L254.tranSubsectorShrwt and L254.tranSubsectorShrwtFllt: Subsector shareweights of transportation sector
-    if(any(!is.na(A54.tranSubsector_shrwt$year))){
+    if(any(!is.na(A54.tranSubsector_shrwt$year))) {
       A54.tranSubsector_shrwt %>%
         filter(!is.na(year)) %>%
         write_to_all_regions(LEVEL2_DATA_NAMES[["tranSubsectorShrwt"]],
@@ -243,7 +243,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
         L254.tranSubsectorShrwt # OUTPUT
     }
 
-    if(any(!is.na(A54.tranSubsector_shrwt$year.fillout))){
+    if(any(!is.na(A54.tranSubsector_shrwt$year.fillout))) {
       A54.tranSubsector_shrwt %>%
         filter(!is.na(year.fillout)) %>%
         write_to_all_regions(LEVEL2_DATA_NAMES[["tranSubsectorShrwtFllt"]],
@@ -256,7 +256,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
     }
 
     # L254.tranSubsectorInterp and L254.tranSubsectorInterpTo: Subsector shareweight interpolation of transportation sector
-    if(any(is.na(A54.tranSubsector_interp$to.value))){
+    if(any(is.na(A54.tranSubsector_interp$to.value))) {
       A54.tranSubsector_interp %>%
         filter(is.na(to.value)) %>%
         write_to_all_regions(LEVEL2_DATA_NAMES[["tranSubsectorInterp"]],
@@ -268,7 +268,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
         L254.tranSubsectorInterp # OUTPUT
     }
 
-    if(any(!is.na(A54.tranSubsector_interp$to.value))){
+    if(any(!is.na(A54.tranSubsector_interp$to.value))) {
       A54.tranSubsector_interp %>%
         filter(!is.na(to.value)) %>%
         write_to_all_regions(LEVEL2_DATA_NAMES[["tranSubsectorInterpTo"]],
@@ -404,6 +404,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
     # PART D: TECHNOLOGY INFORMATION - GLOBAL TRANTECHNOLOGIES
     # L254.GlobalTranTechInterp: Shareweight interpolation of global tranTechnologies
     A54.globaltranTech_interp %>%
+      mutate(supplysector = supplysector) %>%  # create new tibble, stripping attributes
       set_years() %>%
       rename(sector.name = supplysector, subsector.name = tranSubsector) %>%
       select(one_of(LEVEL2_DATA_NAMES[["GlobalTranTechInterp"]])) ->
@@ -549,8 +550,8 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       # Start with a 0 value for output, and bind this to the table of output by tranTechnology (using only columns whose names match)
       mutate(output = 0) %>%
       bind_rows(
-        select(L254.StubTranTechOutput, one_of(LEVEL2_DATA_NAMES[["tranSubsector"]]),
-               "stub.technology", "year", "output", "minicam.energy.input")) ->
+        select(L254.StubTranTechOutput, one_of(c(LEVEL2_DATA_NAMES[["tranSubsector"]]),
+                                               "stub.technology", "year", "output", "minicam.energy.input"))) ->
       L254.StubTechCalInput_passthru_all_rows
 
     L254.StubTechCalInput_passthru_all_rows %>%
@@ -561,7 +562,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
 
     L254.StubTechCalInput_passthru_all_rows %>%
       left_join(L254.StubTechCalInput_passthru_agg, by = c("region", "year",
-                            "minicam.energy.input" ="supplysector")) %>%
+                                                           "minicam.energy.input" ="supplysector")) %>%
       # Then, remove the technologies that are not pass-through sectors, and rename "output" to "calibrated.value"
       mutate(r_ss_ts_st = paste(region, supplysector, tranSubsector, stub.technology)) %>%
       filter(r_ss_ts_st %in% LIST_r_ss_ts_st) %>%
@@ -576,7 +577,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
 
     L254.StubTechCalInput_passthru_cum %>%
       mutate(calibrated.value = if_else(minicam.energy.input %in% LIST_supplysector,
-                                      output_cum, output_agg)) %>%
+                                        output_cum, output_agg)) %>%
       mutate(share.weight.year = year,
              subs.share.weight = if_else(calibrated.value > 0, 1, 0),
              tech.share.weight = if_else(calibrated.value > 0, 1, 0)) %>%
@@ -668,7 +669,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
     if(OLD_DATA_SYSTEM_BEHAVIOR) {
 
       # Old code applied the if function to the wrong data (L254.SubsectorShrwt_trn instead of L254.tranSubsectorShrwt)
-      if(exists("L254.SubsectorShrwt_trn")){
+      if(exists("L254.SubsectorShrwt_trn")) {
         L254.tranSubsectorShrwt %>%
           add_title("Subsector shareweights of transportation sector") %>%
           add_units("Unitless") %>%
@@ -688,30 +689,30 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
           L254.tranSubsectorShrwt
       }
 
-      } else {
-
-    if(exists("L254.tranSubsectorShrwt")){
-      L254.tranSubsectorShrwt %>%
-        add_title("Subsector shareweights of transportation sector") %>%
-        add_units("Unitless") %>%
-        add_comments("Subsector shareweights of transportation sector were written for all regions and subset for existing combinations of region, supplysector, and tranSubsector") %>%
-        add_comments("Only rows with an entry for year were selected") %>%
-        add_legacy_name("L254.tranSubsectorShrwt") %>%
-        add_precursors("common/GCAM_region_names", "energy/mappings/UCD_techs", "L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y",
-                       "energy/A54.tranSubsector_shrwt", "energy/A54.globaltech_nonmotor") ->
-        L254.tranSubsectorShrwt
     } else {
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Data not created") %>%
-        add_comments("Data not created") %>%
-        add_legacy_name("L254.tranSubsectorShrwt") %>%
-        add_flags(FLAG_NO_TEST) ->
-        L254.tranSubsectorShrwt
-    }
+
+      if(exists("L254.tranSubsectorShrwt")) {
+        L254.tranSubsectorShrwt %>%
+          add_title("Subsector shareweights of transportation sector") %>%
+          add_units("Unitless") %>%
+          add_comments("Subsector shareweights of transportation sector were written for all regions and subset for existing combinations of region, supplysector, and tranSubsector") %>%
+          add_comments("Only rows with an entry for year were selected") %>%
+          add_legacy_name("L254.tranSubsectorShrwt") %>%
+          add_precursors("common/GCAM_region_names", "energy/mappings/UCD_techs", "L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y",
+                         "energy/A54.tranSubsector_shrwt", "energy/A54.globaltech_nonmotor") ->
+          L254.tranSubsectorShrwt
+      } else {
+        tibble(x = NA) %>%
+          add_title("Data not created") %>%
+          add_units("Data not created") %>%
+          add_comments("Data not created") %>%
+          add_legacy_name("L254.tranSubsectorShrwt") %>%
+          add_flags(FLAG_NO_TEST) ->
+          L254.tranSubsectorShrwt
+      }
     }
 
-    if(exists("L254.tranSubsectorShrwtFllt")){
+    if(exists("L254.tranSubsectorShrwtFllt")) {
       L254.tranSubsectorShrwtFllt %>%
         add_title("Subsector shareweights of transportation sector") %>%
         add_units("Unitless") %>%
@@ -731,7 +732,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
         L254.tranSubsectorShrwtFllt
     }
 
-    if(exists("L254.tranSubsectorInterp")){
+    if(exists("L254.tranSubsectorInterp")) {
       L254.tranSubsectorInterp %>%
         add_title("Subsector shareweight interpolation of transportation sector") %>%
         add_units("Unitless") %>%
@@ -751,7 +752,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
         L254.tranSubsectorInterp
     }
 
-    if(exists("L254.tranSubsectorInterpTo")){
+    if(exists("L254.tranSubsectorInterpTo")) {
       L254.tranSubsectorInterpTo %>%
         add_title("Subsector shareweight interpolation of transportation sector") %>%
         add_units("Unitless") %>%
@@ -823,7 +824,8 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       add_comments("Data was written for all regions") %>%
       add_comments("Year.fillout was populated with minimum model year") %>%
       add_legacy_name("L254.tranSubsectorFuelPref") %>%
-      add_precursors("common/GCAM_region_names", "energy/A54.tranSubsector_VOTT",
+      add_precursors("common/GCAM_region_names",
+                     "energy/A54.tranSubsector_VOTT", "energy/A54.tranSubsector_VOTT_ssp1",
                      "energy/mappings/UCD_techs", "L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y",
                      "energy/A54.globaltech_passthru", "energy/A54.globaltech_nonmotor") ->
       L254.tranSubsectorFuelPref
@@ -966,7 +968,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       add_units("NA") %>%
       add_comments("Per-capita based flag information written for all GCAM regions") %>%
       add_legacy_name("L254.PerCapitaBased_trn") %>%
-      add_precursors("common/GCAM_region_names", "energy/A54.demand") ->
+      add_precursors("common/GCAM_region_names", "energy/A54.demand", "energy/A54.demand_ssp1") ->
       L254.PerCapitaBased_trn
 
     L254.PriceElasticity_trn %>%
