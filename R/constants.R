@@ -209,6 +209,10 @@ aglu.UNMANAGED_LAND_VALUE <- 1
 aglu.LN1_PROTUNMGD_LOGIT_EXP <- 0
 aglu.LN1_PROTUNMGD_LOGIT_TYPE <- NA
 
+# default logit exponent and type for LN5, the competition betweein high and lo management
+aglu.MGMT_LOGIT_EXP <- 0.5
+aglu.MGMT_LOGIT_TYPE <- "absolute-cost-logit"
+
 # XML-related constants
 aglu.GLU_NDIGITS          <- 3    # number of digits in the geographic land unit identifier codes
 aglu.LT_GLU_DELIMITER     <-      # delimiter between the land use type name and GLU name. should be the same as the crop-glu delimiter
