@@ -1,0 +1,18 @@
+# File: A322.globaltech_retirement.csv,,,,,,,,,
+# Title: Fertilizer technology retirement parameters,,,,,,,,,
+"# Units: Years for 'lifetime' and 'half.life', Unitless for 'shutdown.rate', 'steepness', 'median.shutdown.point', 'profit.shutdown.steepness'",,,,,,,,,
+"# Comments: maximum lifetime of cohort. If no retirement function is used, the entire cohort is retired in this number of years.",,,,,,,,,
+"# Comments: shutdown.rate: portion of cohort retired each year, used by the phased-shutdown-decider retirement function",,,,,,,,,
+"# Comments: half.life: number of years at which 50% of the cohort is retired, using the s-curve-shutdown-decider retirement function.",,,,,,,,,
+# Comments: steepness: shape parameter used by the s-curve-shutdown-decider retirement function.,,,,,,,,,
+# Comments: median.shutdown.point: profit-ratio at which 50% of the cohort is shut down for lack of profitability.,,,,,,,,,
+# Comments: profit.shutdown.steepness: shape parameter of profit-shutdown-decider function.,,,,,,,,,
+supplysector,subsector,technology,year,lifetime,shutdown.rate,half.life,steepness,median.shutdown.point,profit.shutdown.steepness
+N fertilizer,coal,coal,final-calibration-year,40,,20,0.15,-0.1,6
+N fertilizer,gas,gas,final-calibration-year,40,,20,0.15,-0.1,6
+N fertilizer,refined liquids,refined liquids,final-calibration-year,40,,20,0.15,-0.1,6
+N fertilizer,coal,coal,initial-future-year,40,,30,0.3,-0.1,6
+N fertilizer,coal,coal CCS,initial-future-year,40,,30,0.3,-0.1,6
+N fertilizer,gas,gas,initial-future-year,40,,30,0.3,-0.1,6
+N fertilizer,gas,gas CCS,initial-future-year,40,,30,0.3,-0.1,6
+N fertilizer,refined liquids,refined liquids,initial-future-year,40,,30,0.3,-0.1,6
