@@ -76,33 +76,10 @@ module_energy_L2322.Fert <- function(command, ...) {
     L142.ag_Fert_NetExp_MtN_R_Y <- get_data(all_data, "L142.ag_Fert_NetExp_MtN_R_Y")
 
     # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses vecpaste
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses repeat_and_add_vector
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
+
     # ===================================================
 
-    # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
+
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
