@@ -120,18 +120,7 @@ module_energy_batch_transportation_UCD_xml <- function(command, ...) {
       add_xml_data(L254.PerCapitaBased_trn, "PerCapitaBased") %>%
       add_xml_data(L254.PriceElasticity_trn, "PriceElasticity") %>%
       add_xml_data(L254.IncomeElasticity_trn, "IncomeElasticity") %>%
-      add_xml_data(L254.BaseService_trn, "BaseService") %>%
-      add_precursors("L254.Supplysector_trn", "L254.FinalEnergyKeyword_trn", "L254.tranSubsectorLogit",
-                     "L254.tranSubsectorShrwt", "L254.tranSubsectorShrwtFllt", "L254.tranSubsectorInterp",
-                     "L254.tranSubsectorInterpTo", "L254.tranSubsectorSpeed", "L254.tranSubsectorSpeed_passthru",
-                     "L254.tranSubsectorSpeed_noVOTT", "L254.tranSubsectorSpeed_nonmotor", "L254.tranSubsectorVOTT",
-                     "L254.tranSubsectorFuelPref", "L254.StubTranTech", "L254.StubTech_passthru", "L254.StubTech_nonmotor",
-                     "L254.GlobalTechShrwt_passthru", "L254.GlobalTechShrwt_nonmotor", "L254.GlobalTechCoef_passthru",
-                     "L254.GlobalRenewTech_nonmotor", "L254.GlobalTranTechInterp", "L254.GlobalTranTechShrwt",
-                     "L254.GlobalTranTechSCurve", "L254.StubTranTechCalInput", "L254.StubTranTechLoadFactor",
-                     "L254.StubTranTechCost", "L254.StubTranTechCoef", "L254.StubTechCalInput_passthru",
-                     "L254.StubTechProd_nonmotor", "L254.PerCapitaBased_trn", "L254.PriceElasticity_trn",
-                     "L254.IncomeElasticity_trn", "L254.BaseService_trn") ->
+      add_xml_data(L254.BaseService_trn, "BaseService") ->
       xml_tmp
 
     # Some data inputs may not actually contain data. If so, do not add_xml_data.
@@ -159,15 +148,30 @@ module_energy_batch_transportation_UCD_xml <- function(command, ...) {
         xml_tmp
     }
 
+    xml_tmp %>%
+      add_precursors("L254.Supplysector_trn", "L254.FinalEnergyKeyword_trn", "L254.tranSubsectorLogit",
+                     "L254.tranSubsectorShrwt", "L254.tranSubsectorShrwtFllt", "L254.tranSubsectorInterp",
+                     "L254.tranSubsectorInterpTo", "L254.tranSubsectorSpeed", "L254.tranSubsectorSpeed_passthru",
+                     "L254.tranSubsectorSpeed_noVOTT", "L254.tranSubsectorSpeed_nonmotor", "L254.tranSubsectorVOTT",
+                     "L254.tranSubsectorFuelPref", "L254.StubTranTech", "L254.StubTech_passthru", "L254.StubTech_nonmotor",
+                     "L254.GlobalTechShrwt_passthru", "L254.GlobalTechShrwt_nonmotor", "L254.GlobalTechCoef_passthru",
+                     "L254.GlobalRenewTech_nonmotor", "L254.GlobalTranTechInterp", "L254.GlobalTranTechShrwt",
+                     "L254.GlobalTranTechSCurve", "L254.StubTranTechCalInput", "L254.StubTranTechLoadFactor",
+                     "L254.StubTranTechCost", "L254.StubTranTechCoef", "L254.StubTechCalInput_passthru",
+                     "L254.StubTechProd_nonmotor", "L254.PerCapitaBased_trn", "L254.PriceElasticity_trn",
+                     "L254.IncomeElasticity_trn", "L254.BaseService_trn") ->
+      xml_tmp
+
     # Because `return_data` gets the name of the object from what's actually given in the call,
-    # we need to assign xml_tmp to a correctly-named variable in this current environment
+    # we need to assign xml_tmp to a correctly-named variable in the current environment
+    transportation_agg_CORE.xml <- transportation_agg_SSP1.xml <- NULL  # silence package check notes
     assign(paste0("transportation_agg_", energy.TRN_SSP, ".xml"), xml_tmp)
     if(energy.TRN_SSP == "CORE") {
-      return(transportation_agg_CORE.xml)
+      return_data(transportation_agg_CORE.xml)
     } else if(energy.TRN_SSP == "SSP1") {
-      return(transportation_agg_SSP1.xml)
+      return_data(transportation_agg_SSP1.xml)
     } else {
-      stop("Unknown energy.TRN_SSP value")
+      stop("Unknown energy.TRN_SSP value:", energy.TRN_SSP)
     }
 
   } else {
