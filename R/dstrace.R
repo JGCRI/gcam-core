@@ -22,26 +22,29 @@ dstrace <- function(object_name, all_data, previous_tracelist = NULL, recurse = 
     tracenum <- previous_tracelist$tracenum[which(previous_tracelist$object_name == object_name)]
   }
 
-  stopifnot(object_name %in% GCAM_DATA_MAP$output)
+  if(!object_name %in% GCAM_DATA_MAP$output) {
+    stop("Unknown object name '", object_name, "'")
+  }
 
   co <- chunk_outputs()
   chunk_index <- which(co$output == object_name)
-  obj <- get_data(all_data, object_name)
+  obj_info <- filter(GCAM_DATA_MAP, output == object_name)
 
   # Print basic information about the current object
   cat(tracenum, "-", object_name, "- ")
-  isfile <- FLAG_INPUT_DATA %in% get_flags(obj)
+  isfile <- grepl(FLAG_INPUT_DATA, obj_info$flags)
   if(isfile) {
     cat("read from file\n")
   } else {
     cat("produced by", co$name[chunk_index], "\n")
+    assert_that(co$name[chunk_index] == obj_info$name)  # these should be identical!
   }
-  cat("\t", get_title(obj), " (", get_units(obj), ")\n", sep = "")
-  cat(paste0("\t", get_comments(obj)), sep = "\n")
+  cat("\t", obj_info$title, " (", obj_info$units, ")\n", sep = "")
+  writeLines(paste0("\t", strwrap(obj_info$comments)))
 
   # Print the precursor list, keeping track of which precursors
   # need to get THEIR information printed
-  pcs <- filter(GCAM_DATA_MAP, output == object_name)$precursor
+  pcs <- unlist(strsplit(obj_info$precursors, split = driver.SEPARATOR, fixed = TRUE))
   tn <- max(previous_tracelist$tracenum) + 1
 
   if(is.null(pcs)) {
@@ -70,7 +73,7 @@ dstrace <- function(object_name, all_data, previous_tracelist = NULL, recurse = 
     if(recurse) {
       previous_tracelist <- bind_rows(previous_tracelist, new_tracelist)
       for(i in seq_len(nrow(new_tracelist))) {
-        previous_tracelist <- dstrace(new_tracelist$object_name[i], all_data, previous_tracelist)
+        previous_tracelist <- dstrace(new_tracelist$object_name[i], previous_tracelist)
       } # for
     } #if
   } # if

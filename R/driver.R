@@ -82,22 +82,22 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 #'
 #' Extract precursor and other metadata from chunk output data and convert to tibble form.
 #'
-#' @param chunk_name Name of current chunk, character
 #' @param chunk_outputs List of chunk outputs, a data list (see \link{\code{is_data_list}})
+#' @param chunk_name Name of current chunk, character
 #' @return A tibble with chunk name, output name, title, units, flags, precursors, and comments.
 #' This table has one row per output name; multiple flags, precursors, etc., are concatenated into single entries.
-tibbelize_outputs <- function(chunk_name, chunk_data) {
+tibbelize_outputs <- function(chunk_data, chunk_name) {
   metadata <- list()
   for(cd in names(chunk_data)) {
     if(!is.null(chunk_data[[cd]]) & length(chunk_data[[cd]])) {
       # Here we use paste both to collapse vectors into a single string, and deal with possible NULLs
       metadata[[cd]] <- tibble(name = chunk_name,
                                output = cd,
-                               precursors = paste(get_precursors(chunk_data[[cd]]), collapse = "; "),
-                               title = paste(get_title(chunk_data[[cd]]), collapse = "; "),
-                               units = paste(get_units(chunk_data[[cd]]), collapse = "; "),
-                               comments = paste(get_comments(chunk_data[[cd]]), collapse = "; "),
-                               flags = paste(get_flags(chunk_data[[cd]]), collapse = "; "))
+                               precursors = paste(get_precursors(chunk_data[[cd]]), collapse = driver.SEPARATOR),
+                               title = paste(get_title(chunk_data[[cd]]), collapse = driver.SEPARATOR),
+                               units = paste(get_units(chunk_data[[cd]]), collapse = driver.SEPARATOR),
+                               comments = paste(get_comments(chunk_data[[cd]]), collapse = driver.SEPARATOR),
+                               flags = paste(get_flags(chunk_data[[cd]]), collapse = driver.SEPARATOR))
     }
   }
   bind_rows(metadata)
@@ -210,9 +210,15 @@ driver <- function(all_data = empty_data(),
     all_data <- add_data(csv_data, all_data)
   }
 
+  # Extract metadata from the input data; we'll add output metadata as we run
+  metadata_info <- list()
+  if(return_data_map_only) {
+    if(!quiet) cat("Extracting metadata from inputs...\n")
+    metadata_info <- list(INPUT = tibbelize_outputs(all_data, chunk_name = "INPUT"))
+  }
+
   # Initialize some stuff before we start to run the chunks
   chunks_to_run <- chunklist$name
-  metadata_info <- list()
   removed_count <- 0
   if(write_outputs) {
     save_chunkdata(empty_data(), create_dirs = TRUE, outputs_dir = outdir, xml_dir = xmldir) # clear directories
@@ -251,7 +257,7 @@ driver <- function(all_data = empty_data(),
 
       # Save precursor information and other metadata
       if(return_data_map_only) {
-        metadata_info[[chunk]] <- tibbelize_outputs(chunk, chunk_data)
+        metadata_info[[chunk]] <- tibbelize_outputs(chunk_data, chunk)
       }
 
       # Add this chunk's data to the global data store
