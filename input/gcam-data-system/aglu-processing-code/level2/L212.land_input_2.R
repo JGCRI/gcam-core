@@ -129,6 +129,11 @@ L212.LN2_MgdCarbon <- add_node_leaf_names( L212.LN2_MgdCarbon,
 #Match in carbon densities and mature age and sort the columns to match the model interface header
 L212.LN2_MgdCarbon <- add_carbon_info( L212.LN2_MgdCarbon,
       veg_data = L212.VegC_kgm2_R_LT_AEZ.melt, soil_data = L212.SoilC_kgm2_R_LT_AEZ.melt, age_data = L212.MatureAge_R_LT_AEZ.melt )
+
+printlog( "Reducing managed carbon densities according to exogenous assumptions" )
+# Vegetation carbon is reduced to approximate avg carbon density during time of vegetative re-growth
+# soil carbon may be reduced due to long-term effects of carbon export, disturbance, etc
+L212.LN2_MgdCarbon <- reduce_mgd_carbon( L212.LN2_MgdCarbon )
 L212.LN2_MgdCarbon <- L212.LN2_MgdCarbon[ names_LN2_MgdCarbon ]
 
 printlog( "Removing non-existent AEZs from all tables" )

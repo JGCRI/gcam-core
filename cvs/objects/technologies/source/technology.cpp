@@ -417,7 +417,7 @@ void Technology::completeInit( const string& aRegionName,
         // TODO: Change this when dependencies are determined by period.
         mOutputs[ i ]->completeInit( aSectorName, aRegionName, localInfo, !hasNoInputOrOutput( 0 ) );
     }
-    
+
     for( CGHGIterator it = ghg.begin(); it != ghg.end(); ++it ) {
         (*it)->completeInit( aRegionName, aSectorName, localInfo );
     }
@@ -657,7 +657,8 @@ void Technology::initCalc( const string& aRegionName,
     setProductionState( aPeriod );
     
     mTechnologyInfo->setBoolean( "new-vintage-tech", mProductionState[ aPeriod ]->isNewInvestment() );
-
+    mTechnologyInfo->setBoolean( "is-tech-operating", mProductionState[ aPeriod ]->isOperating() );
+   
     for( unsigned int i = 0; i < ghg.size(); i++ ) {
         ghg[ i ]->initCalc( aRegionName, mTechnologyInfo.get(), aPeriod );
     }

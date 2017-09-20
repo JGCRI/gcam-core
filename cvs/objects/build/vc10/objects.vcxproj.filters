@@ -1082,6 +1082,9 @@
     <ClCompile Include="..\..\technologies\source\pass_through_technology.cpp">
       <Filter>Source Files\technology</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\emissions\source\linear_control.cpp">
+      <Filter>Source Files\emissions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\containers\include\batch_runner.h">
@@ -2205,6 +2208,9 @@
     </ClInclude>
     <ClInclude Include="..\..\technologies\include\pass_through_technology.h">
       <Filter>Header Files\technologies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\emissions\include\linear_control.h">
+      <Filter>Header Files\emissions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

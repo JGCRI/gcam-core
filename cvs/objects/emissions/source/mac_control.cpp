@@ -65,6 +65,9 @@ extern Scenario* scenario;
 MACControl::MACControl():
 AEmissionsControl(),
 mNoZeroCostReductions( false ),
+mZeroCostPhaseInTime( 25 ),
+mCovertPriceValue( 1 ),
+mPriceMarketName( "CO2" ),
 mMacCurve( new PointSetCurve( new ExplicitPointSet() ) )
 {
 }
@@ -98,6 +101,9 @@ MACControl& MACControl::operator=( const MACControl& aOther ){
 void MACControl::copy( const MACControl& aOther ){
     mMacCurve.reset( aOther.mMacCurve->clone() );
     mNoZeroCostReductions = aOther.mNoZeroCostReductions;
+    mZeroCostPhaseInTime = aOther.mZeroCostPhaseInTime;
+    mCovertPriceValue = aOther.mCovertPriceValue;
+    mPriceMarketName = aOther.mPriceMarketName;
 }
 
 /*!
@@ -128,6 +134,15 @@ bool MACControl::XMLDerivedClassParse( const string& aNodeName, const DOMNode* a
     else if ( aNodeName == "no-zero-cost-reductions" ){
         mNoZeroCostReductions = true;
     }
+    else if ( aNodeName == "zero-cost-phase-in-time" ){
+        mZeroCostPhaseInTime = XMLHelper<int>::getValue( aCurrNode );
+    }
+    else if ( aNodeName == "mac-price-conversion" ){
+        mCovertPriceValue = XMLHelper<double>::getValue( aCurrNode );
+    }
+    else if ( aNodeName == "market-name" ){
+        mPriceMarketName = XMLHelper<string>::getValue( aCurrNode );
+    }
     else{
         return false;
     }    
@@ -144,42 +159,87 @@ void MACControl::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
         attrs[ "tax" ] = currPair->first;
         XMLWriteElementWithAttributes( currPair->second, "mac-reduction", aOut, aTabs, attrs );
     }
+    XMLWriteElementCheckDefault( mZeroCostPhaseInTime, "zero-cost-phase-in-time", aOut, aTabs, 25 );
+    XMLWriteElementCheckDefault( mNoZeroCostReductions, "no-zero-cost-reductions", aOut, aTabs, false );    
+    XMLWriteElementCheckDefault( mCovertPriceValue, "mac-price-conversion", aOut, aTabs, 1.0 );
+    XMLWriteElement( mPriceMarketName, "market-name", aOut, aTabs );
 }
 
 void MACControl::toDebugXMLDerived( const int period, ostream& aOut, Tabs* aTabs ) const {
     toInputXMLDerived( aOut, aTabs );
-    XMLWriteElement( mNoZeroCostReductions, "no-zero-cost-reductions", aOut, aTabs);
 }
 
 void MACControl::completeInit( const string& aRegionName, const string& aSectorName,
                                const IInfo* aTechInfo )
 {
-    scenario->getMarketplace()->getDependencyFinder()->addDependency( aSectorName, aRegionName, "CO2", aRegionName );
+    scenario->getMarketplace()->getDependencyFinder()->addDependency( aSectorName, aRegionName, mPriceMarketName, aRegionName );
+
+    if ( mMacCurve->getMaxX() == -DBL_MAX ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "MAC Curve " << getName() << " appears to have no data. " << endl;
+    }
 }
 
 void MACControl::initCalc( const string& aRegionName,
-                           const IInfo* aLocalInfo,
+                           const IInfo* aTechInfo,
+                           const NonCO2Emissions* aParentGHG,
                            const int aPeriod )
 {
-    // TODO: Figure out what gas this is & print more meaningful information
-    if ( mMacCurve->getMaxX() == -DBL_MAX ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "MAC Curve appears to have no data. " << endl;
-    }
 }
 
 void MACControl::calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP ) {
-    const Marketplace* marketplace = scenario->getMarketplace();
-    double effectiveCarbonPrice = marketplace->getPrice( "CO2", aRegionName, aPeriod, false );
-    if( effectiveCarbonPrice == Marketplace::NO_MARKET_PRICE ) {
-        effectiveCarbonPrice = 0;
+    // Check first if MAC curve operation should be turned off
+    if ( mCovertPriceValue < 0 ) { // User flag to turn off MAC curves
+        setEmissionsReduction( 0 );
+        return;
     }
-       
-    double reduction = getMACValue( effectiveCarbonPrice );
     
-    if( mNoZeroCostReductions && effectiveCarbonPrice == 0.0 ) {
+    const Marketplace* marketplace = scenario->getMarketplace();
+    double emissionsPrice = marketplace->getPrice( mPriceMarketName, aRegionName, aPeriod, false );
+    if( emissionsPrice == Marketplace::NO_MARKET_PRICE ) {
+        emissionsPrice = 0;
+    }
+    
+    emissionsPrice *= mCovertPriceValue;
+
+    double reduction = getMACValue( emissionsPrice );
+    
+    if( mNoZeroCostReductions && emissionsPrice <= 0.0 ) {
         reduction = 0.0;
+    }
+
+    // Adjust to smoothly phase-in "no-cost" emission reductions
+    // Some MAC curves have non-zero abatement at zero emissions price. Unless the users sets
+    // mNoZeroCostReductions, this reduction will occur even without an emissions price. This
+    // code smoothly phases in this abatement so that a sudden change in emissions does not
+    // occur. The phase-in period has a default value that can be altered
+    // by the user. This code also reduces this phase-in period if there is a emissions-price,
+    // which avoids an illogical situation where a high emissions price is present and mitigation
+    // is maxed out, but the "no-cost" reductions are not fully phased in.
+    const int lastCalYear = scenario->getModeltime()->getper_to_yr( 
+                            scenario->getModeltime()->getFinalCalibrationPeriod() );
+    int modelYear = scenario->getModeltime()->getper_to_yr( aPeriod );
+
+    // Amount of zero-cost reduction
+    double zeroCostReduction = getMACValue( 0 );
+
+    if ( ( reduction > 0.0 ) && ( zeroCostReduction > 0.0 ) &&
+        ( modelYear <= ( lastCalYear + mZeroCostPhaseInTime ) ) )
+    {
+        const double maxEmissionsTax = mMacCurve->getMaxX();
+
+		// Fraction of zero cost that is removed from original reduction value
+		// Equal to 1 at last calibration year and zero at the zero cost phase in time
+		double multiplier = ( static_cast<double>( lastCalYear ) + mZeroCostPhaseInTime
+		                    - static_cast<double>( modelYear ) ) / mZeroCostPhaseInTime;
+
+		// If emissions price is not zero, accelerate the phase in for consistency if there are 
+		// zero cost reductions to phase in
+        double adjEmissionsPrice = min( emissionsPrice, maxEmissionsTax );
+        multiplier *= ( maxEmissionsTax - adjEmissionsPrice ) / maxEmissionsTax;
+		
+		reduction = reduction - zeroCostReduction * multiplier;
     }
     
     setEmissionsReduction( reduction );
@@ -188,7 +248,6 @@ void MACControl::calcEmissionsReduction( const std::string& aRegionName, const i
 /*! \brief Get MAC curve value
  *  Wrapper function that takes care of error handling for MAC curve values.
  *  If there is an error, a value of zero is returned and a message is logged.
- *  Errors can happen if no MAC curve values are read in, although perhaps other error situations can occur.
  * \param aCarbonPrice carbon price
  */
 double MACControl::getMACValue( const double aCarbonPrice ) const {
@@ -199,8 +258,13 @@ double MACControl::getMACValue( const double aCarbonPrice ) const {
 
     double reduction = mMacCurve->getY( effectiveCarbonPrice );
 
-    // Check to see if an error has occurred.
-    if ( reduction == -DBL_MAX ) {
+    // If no mac curve read in then reduction should be zero.
+    // This is a legitimate option for a user to remove a mac curve
+    if ( ( mMacCurve->getMinX() == mMacCurve->getMaxX() ) && ( mMacCurve->getMaxX() == 0 ) ) {
+         reduction = 0;
+    }
+    // Check to see if some other error has occurred
+    else if ( reduction == -DBL_MAX ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << " An error occured when evaluating MAC curve for a GHG." << endl;

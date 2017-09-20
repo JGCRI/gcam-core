@@ -70,7 +70,8 @@ public:
                                const IInfo* aTechIInfo );
 
     virtual void initCalc( const std::string& aRegionName,
-                           const IInfo* aLocalInfo,
+                           const IInfo* aTechInfo,
+                           const NonCO2Emissions* aParentGHG,
                            const int aPeriod );
 
 protected:
@@ -90,7 +91,16 @@ private:
     
     //! The underlying Curve (as read in)
     std::auto_ptr<PointSetCurve> mMacCurve;
-
+    
+    //! Length of time in years to phase in no-cost MAC reductions
+    int mZeroCostPhaseInTime;
+    
+     //! Conversion factor if getting price from its own market.
+    double mCovertPriceValue;
+    
+    //! Name of market who's price is used to look up the curve.
+    std::string mPriceMarketName;
+    
     void copy( const MACControl& other );
     double getMACValue( const double aCarbonPrice ) const;
 };

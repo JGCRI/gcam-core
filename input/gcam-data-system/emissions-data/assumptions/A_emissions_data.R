@@ -77,7 +77,11 @@ R_G_StubTechYr <- c( "GCAM_region_ID", "Non.CO2", "supplysector", "subsector", "
 R_StubTechYr <- c( "GCAM_region_ID", "supplysector", "subsector", "stub.technology", "xyear" )
 
 #Taxes to use in MAC curves (1990$/tC)
-MAC_taxes <- c( 0, 5, 10, 15, 32, 66, 129, 243, 486, 1093 )
+#These should be the converted numbers that exactly match those given in EPA mac curves
+MAC_taxes <- c( 0, 5, 10, 15, 32, 66, 129, 243, 486, 1093, 2064, 4857, 7285, 12141  )
+
+# Default market that MAC curves will look for
+MAC_Market <- "CO2"
 
 #Final calibration year where we have emissions data
 final_emiss_year <- 2005
