@@ -1,5 +1,5 @@
 
-#' dstrace
+#' A tracing utility for the GCAM Data System.
 #'
 #' @param object_name Name of object to trace (can be either a data object or a code chunk)
 #' @param downstream Trace upstream instead of down? Logical
@@ -7,6 +7,9 @@
 #' @param previous_tracelist Information about previous objects printed
 #' @param recurse Recurse to print information about precursor objects? Logical
 #' @return A tibble with the trace information (object name and trace number)
+#' @details What other data products feed into some particular data system object?
+#' Conversely, to what other products does some object feed? These are the kinds
+#' of questions that \code{dstrace} can help answer.
 #' @importFrom assertthat assert_that
 #' @author BBL
 #' @export
@@ -42,13 +45,15 @@ dstrace <- function(object_name, downstream = FALSE, gcam_data_map = GCAM_DATA_M
   isxml <- grepl(FLAG_XML, obj_info$flags)
   if(isfile) {
     cat("read from file\n")
-  } else if(isxml) {
-    cat("XML data\n")
   } else {
     cat("produced by", obj_info$name, "\n")
   }
-  cat("\t", obj_info$title, " (", obj_info$units, ")\n", sep = "")
-  writeLines(paste0("\t", strwrap(obj_info$comments)))
+  if(isxml) {
+    cat("\tXML data structures to be parsed by GCAM\n")
+  } else {
+    cat("\t", obj_info$title, " (", obj_info$units, ")\n", sep = "")
+    writeLines(paste0("\t", strwrap(obj_info$comments)))
+  }
 
   # Figure out relationships to other objects
   relationship <- NA_character_

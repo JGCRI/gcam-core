@@ -2,7 +2,7 @@
 % Please edit documentation in R/dstrace.R
 \name{dstrace}
 \alias{dstrace}
-\title{dstrace}
+\title{A tracing utility for the GCAM Data System.}
 \usage{
 dstrace(object_name, downstream = FALSE, gcam_data_map = GCAM_DATA_MAP,
   previous_tracelist = NULL, recurse = TRUE)
@@ -22,7 +22,12 @@ dstrace(object_name, downstream = FALSE, gcam_data_map = GCAM_DATA_MAP,
 A tibble with the trace information (object name and trace number)
 }
 \description{
-dstrace
+A tracing utility for the GCAM Data System.
+}
+\details{
+What other data products feed into some particular data system object?
+Conversely, to what other products does some object feed? These are the kinds
+of questions that \code{dstrace} can help answer.
 }
 \examples{
 dstrace("L100.FAO_ag_Exp_t")
