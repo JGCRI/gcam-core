@@ -4,17 +4,19 @@
 \alias{dstrace}
 \title{dstrace}
 \usage{
-dstrace(object_name, gcam_data_map = GCAM_DATA_MAP,
+dstrace(object_name, downstream = FALSE, gcam_data_map = GCAM_DATA_MAP,
   previous_tracelist = NULL, recurse = TRUE)
 }
 \arguments{
 \item{object_name}{Name of object to trace (can be either a data object or a code chunk)}
 
+\item{downstream}{Trace upstream instead of down? Logical}
+
 \item{gcam_data_map}{A tibble of metadata information; normally a built-in package dataset}
 
 \item{previous_tracelist}{Information about previous objects printed}
 
-\item{recurse}{Recurse to print information about precursor objects?}
+\item{recurse}{Recurse to print information about precursor objects? Logical}
 }
 \value{
 A tibble with the trace information (object name and trace number)
@@ -24,6 +26,7 @@ dstrace
 }
 \examples{
 dstrace("L100.FAO_ag_Exp_t")
+dstrace("L100.FAO_ag_Exp_t", downstream = TRUE)
 }
 \author{
 BBL

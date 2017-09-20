@@ -12,6 +12,7 @@
 #' @export
 #' @examples
 #' dstrace("L100.FAO_ag_Exp_t")
+#' dstrace("L100.FAO_ag_Exp_t", downstream = TRUE)
 dstrace <- function(object_name, downstream = FALSE, gcam_data_map = GCAM_DATA_MAP,
                     previous_tracelist = NULL, recurse = TRUE) {
 
