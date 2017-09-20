@@ -38,7 +38,7 @@ the other \code{return_*} parameters above.}
 \item{quiet}{Suppress output?}
 }
 \value{
-A list of all built data.
+A list of all built data (or a data map tibble if requested).
 }
 \description{
 Run the entire data system.

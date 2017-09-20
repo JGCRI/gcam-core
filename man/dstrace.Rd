@@ -7,9 +7,7 @@
 dstrace(object_name, all_data, previous_tracelist = NULL, recurse = TRUE)
 }
 \arguments{
-\item{object_name}{Name of object to trace}
-
-\item{all_data}{Data structure produced by a call to \code{\link{driver}}}
+\item{object_name}{Name of object to trace (can be either a data object or a code chunk)}
 
 \item{previous_tracelist}{Information about previous objects printed}
 
@@ -20,4 +18,7 @@ Boolean (object_name found, or not)
 }
 \description{
 dstrace
+}
+\author{
+BBL
 }

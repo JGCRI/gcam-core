@@ -78,6 +78,32 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 }
 
 
+#' tibbelize_outputs
+#'
+#' Extract precursor and other metadata from chunk output data and convert to tibble form.
+#'
+#' @param chunk_name Name of current chunk, character
+#' @param chunk_outputs List of chunk outputs, a data list (see \link{\code{is_data_list}})
+#' @return A tibble with chunk name, output name, title, units, flags, precursors, and comments.
+#' This table has one row per output name; multiple flags, precursors, etc., are concatenated into single entries.
+tibbelize_outputs <- function(chunk_name, chunk_data) {
+  metadata <- list()
+  for(cd in names(chunk_data)) {
+    if(!is.null(chunk_data[[cd]]) & length(chunk_data[[cd]])) {
+      # Here we use paste both to collapse vectors into a single string, and deal with possible NULLs
+      metadata[[cd]] <- tibble(name = chunk_name,
+                               output = cd,
+                               precursors = paste(get_precursors(chunk_data[[cd]]), collapse = "; "),
+                               title = paste(get_title(chunk_data[[cd]]), collapse = "; "),
+                               units = paste(get_units(chunk_data[[cd]]), collapse = "; "),
+                               comments = paste(get_comments(chunk_data[[cd]]), collapse = "; "),
+                               flags = paste(get_flags(chunk_data[[cd]]), collapse = "; "))
+    }
+  }
+  bind_rows(metadata)
+}
+
+
 #' driver
 #'
 #' Run the entire data system.
@@ -186,7 +212,7 @@ driver <- function(all_data = empty_data(),
 
   # Initialize some stuff before we start to run the chunks
   chunks_to_run <- chunklist$name
-  precursor_data <- list()
+  metadata_info <- list()
   removed_count <- 0
   if(write_outputs) {
     save_chunkdata(empty_data(), create_dirs = TRUE, outputs_dir = outdir, xml_dir = xmldir) # clear directories
@@ -223,8 +249,10 @@ driver <- function(all_data = empty_data(),
                           promised_outputs = po,
                           outputs_xml = subset(chunkoutputs, name == chunk)$to_xml)
 
-      # Save precursor information
-      precursor_data[[chunk]] <- lapply(chunk_data, get_precursors)
+      # Save precursor information and other metadata
+      if(return_data_map_only) {
+        metadata_info[[chunk]] <- tibbelize_outputs(chunk, chunk_data)
+      }
 
       # Add this chunk's data to the global data store
       all_data <- add_data(chunk_data, all_data)
@@ -269,24 +297,16 @@ driver <- function(all_data = empty_data(),
   }
 
   if(return_data_map_only) {
-    data_map <- list()
-    for(chunk in names(precursor_data)) {
-      for(obj in names(precursor_data[[chunk]])) {
-        precs <- precursor_data[[chunk]][[obj]]
-        if(!is.null(precs) & length(precs)) {
-            data_map[[paste(chunk, obj)]] <- tibble(name = chunk, output = obj, precursor = precs)
-        }
-      }
-    }
     if(!quiet) cat("Returning data map.\n")
-    invisible(bind_rows(data_map))
-
+    x <- bind_rows(metadata_info)
   } else {
     all_data <- all_data[return_data_names]
 
     if(!quiet && length(all_data) > 0) cat("Returning", length(all_data), "tibbles.\n")
-    invisible(all_data[return_data_names])
+    x <- all_data[return_data_names]
   }
+  if(!quiet) cat("All done.\n")
+  invisible(x)
 }
 
 
