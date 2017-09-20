@@ -1,17 +1,16 @@
 
 #' dstrace
 #'
-#' @param object_name Name of object to trace
-#' @param all_data Data structure produced by a call to \code{\link{driver}}
+#' @param object_name Name of object to trace (can be either a data object or a code chunk)
 #' @param previous_tracelist Information about previous objects printed
 #' @param recurse Recurse to print information about precursor objects?
 #' @return Boolean (object_name found, or not)
 #' @importFrom assertthat assert_that
+#' @author BBL
 #' @export
 dstrace <- function(object_name, all_data, previous_tracelist = NULL, recurse = TRUE) {
 
   assert_that(is.character(object_name))
-  assert_that(is_data_list(all_data))
   assert_that(is.logical(recurse))
 
   # 'tracenum' is the number that gets printed next to all entries
@@ -23,7 +22,7 @@ dstrace <- function(object_name, all_data, previous_tracelist = NULL, recurse = 
     tracenum <- previous_tracelist$tracenum[which(previous_tracelist$object_name == object_name)]
   }
 
-  stopifnot(object_name %in% names(all_data))
+  stopifnot(object_name %in% GCAM_DATA_MAP$output)
 
   co <- chunk_outputs()
   chunk_index <- which(co$output == object_name)
@@ -42,7 +41,7 @@ dstrace <- function(object_name, all_data, previous_tracelist = NULL, recurse = 
 
   # Print the precursor list, keeping track of which precursors
   # need to get THEIR information printed
-  pcs <- get_precursors(obj)
+  pcs <- filter(GCAM_DATA_MAP, output == object_name)$precursor
   tn <- max(previous_tracelist$tracenum) + 1
 
   if(is.null(pcs)) {
