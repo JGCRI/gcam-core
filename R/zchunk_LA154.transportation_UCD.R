@@ -15,7 +15,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RH May 2017
-
 module_energy_LA154.transportation_UCD <- function(command, ...) {
 
   UCD_trn_data_name <- paste0("UCD_trn_data_", energy.TRN_SSP)
