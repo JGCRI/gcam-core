@@ -1,17 +1,17 @@
-# File: states_subregions.csv
-# Title: State codes-names-groupings mappings
-# Units: NA
-# Description: Mapping between state codes, state names, and state groupings found in various inventories relevant for GCAM-USA
-# grid_region: electricity grid region (n=12)
-# DIVISION: Census division (n=9)
-# LRGSTATE: Large states (CA, FL, NY, TX) specifically indicated in 1993-2005 versions of # the Residential Energy Consumption Survey (n=4)
-# REGION: Census region (n=4)
-# subregion13: Census divisions with 4 large states broken out (n=13)
-# DIVISION2009: Revised census divisions in 2009 (n=10) Breaks up the Mountain division into Northern (CO, ID, MT, UT, WY) and Southern components (AZ, NM, NV).
-# subregion9: named census divisions (n=9)
-# subregion4: named census regions (n=4)
-# REPORTABLE_DOMAIN: most resolved state groupings in 2009 Residential Energy Consumption Survey (n=27)
-# subregion27: named reportable domains (n=27)
+# File: states_subregions.csv,,,,,,,,,,,
+# Title: State codes-names-groupings mappings,,,,,,,,,,,
+# Units: NA,,,,,,,,,,,
+# Description: Mapping between state codes, state names, and state groupings found in various inventories relevant for GCAM-USA,,,,,,,,,
+# grid_region: electricity grid region (n=12),,,,,,,,,,,
+# DIVISION: Census division (n=9),,,,,,,,,,,
+# LRGSTATE: Large states (CA, FL, NY, TX) specifically indicated in 1993-2005 versions of # the Residential Energy Consumption Survey (n=4),,,,,,,,
+# REGION: Census region (n=4),,,,,,,,,,,
+# subregion13: Census divisions with 4 large states broken out (n=13),,,,,,,,,,,
+# DIVISION2009: Revised census divisions in 2009 (n=10) Breaks up the Mountain division into Northern (CO, ID, MT, UT, WY) and Southern components (AZ, NM, NV).,,,,,
+# subregion9: named census divisions (n=9),,,,,,,,,,,
+# subregion4: named census regions (n=4),,,,,,,,,,,
+# REPORTABLE_DOMAIN: most resolved state groupings in 2009 Residential Energy Consumption Survey (n=27),,,,,,,,,,,
+# subregion27: named reportable domains (n=27),,,,,,,,,,,
 state,state_name,grid_region,DIVISION,LRGSTATE,REGION,subregion13,DIVISION2009,subregion9,subregion4,REPORTABLE_DOMAIN,subregion27
 AK,Alaska,Alaska grid,9,0,4,Pacific,10,Pacific,West,27,Other Pacific
 AL,Alabama,Southeast grid,6,0,3,Central-SE,6,Central-SE,South,18,Other Central-SE
@@ -62,5 +62,5 @@ VA,Virginia,Southeast grid,5,0,3,Atlantic-S,5,Atlantic-S,South,13,Virginia
 VT,Vermont,New England grid,1,0,1,New England,1,New England,Northeast,1,Other Northeast
 WA,Washington,Northwest grid,9,0,4,Pacific,10,Pacific,West,27,Other Pacific
 WI,Wisconsin,Central Northeast grid,3,0,2,Central-NE,3,Central-NE,Midwest,9,Wisconsin
-WV,West Virginia,Central East grid,5,0,3,Atlantic-S,5,Atlantic-S,Midwest,14,Other Atlantic-S
+WV,West Virginia,Central East grid,5,0,3,Atlantic-S,5,Atlantic-S,South,14,Other Atlantic-S
 WY,Wyoming,Southwest grid,8,0,4,Mountain,8,Mountain,West,23,Other Mountain-N
