@@ -245,4 +245,34 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
       expect_equal(warn_mismarked_fileinputs(), 1)
     )
   })
+
+  test_that("tibbelize_outputs works", {
+    # Catches bad input
+    expect_error(tibbelize_outputs(1, "1"))
+    expect_error(tibbelize_outputs(empty_data(), 1))
+
+    chunkname <- "chunk"
+    title <- "t"
+    precs <- "p"
+    unts <- "u"
+    com1 <- "c1"
+    com2 <- "c2"
+    f1 <- FLAG_INPUT_DATA
+    f2 <- FLAG_NO_TEST
+    f3 <- FLAG_LONG_YEAR_FORM
+
+    tibble(a = 1) %>%
+      add_title(title) %>% add_precursors(precs) %>% add_units(unts) %>%
+      add_comments(com1) %>% add_comments(com2) %>%
+      add_flags(f1, f2, f3) -> x
+
+    tb <- tibbelize_outputs(add_data(list(output = x), empty_data()), chunkname)
+
+    expect_identical(tb$name, chunkname)
+    expect_identical(tb$output, "output")
+    expect_identical(tb$precursors, precs)
+    expect_identical(tb$units, unts)
+    expect_identical(tb$comments, paste(com1, com2, sep = driver.SEPARATOR))
+    expect_identical(tb$flags, paste(f1, f2, f3, sep = driver.SEPARATOR))
+  })
 }

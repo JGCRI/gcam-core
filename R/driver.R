@@ -87,6 +87,9 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 #' @return A tibble with chunk name, output name, title, units, flags, precursors, and comments.
 #' This table has one row per output name; multiple flags, precursors, etc., are concatenated into single entries.
 tibbelize_outputs <- function(chunk_data, chunk_name) {
+  assert_that(is.character(chunk_name))
+  assert_that(is_data_list(chunk_data))
+
   metadata <- list()
   for(cd in names(chunk_data)) {
     if(!is.null(chunk_data[[cd]]) & length(chunk_data[[cd]])) {
