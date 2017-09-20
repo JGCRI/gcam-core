@@ -9,7 +9,7 @@ test_that("works", {
   expect_error(dstrace("1", gcam_data_map = 1))
   expect_error(dstrace("1", recurse = 1))
 
-  # Make a fake data map structure: i1 input -> chunk 1 o1 -> chunk 2 o2
+  # Make a fake data map structure in which i1 input -> chunk 1 o1 -> chunk 2 o2
   gdm <- tibble(name = c("INPUT", "chunk1", "chunk2"),
                 output = c("i1", "o1", "o2"),
                 precursors = c("", "i1", "o1"),

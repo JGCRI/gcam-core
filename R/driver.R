@@ -82,7 +82,7 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 #'
 #' Extract precursor and other metadata from chunk output data and convert to tibble form.
 #'
-#' @param chunk_outputs List of chunk outputs, a data list (see \link{\code{is_data_list}})
+#' @param chunk_data List of chunk outputs, a data list (see \code{\link{is_data_list}})
 #' @param chunk_name Name of current chunk, character
 #' @return A tibble with chunk name, output name, title, units, flags, precursors, and comments.
 #' This table has one row per output name; multiple flags, precursors, etc., are concatenated into single entries.

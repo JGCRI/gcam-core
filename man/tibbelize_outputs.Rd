@@ -7,9 +7,9 @@
 tibbelize_outputs(chunk_data, chunk_name)
 }
 \arguments{
-\item{chunk_name}{Name of current chunk, character}
+\item{chunk_data}{List of chunk outputs, a data list (see \code{\link{is_data_list}})}
 
-\item{chunk_outputs}{List of chunk outputs, a data list (see \link{\code{is_data_list}})}
+\item{chunk_name}{Name of current chunk, character}
 }
 \value{
 A tibble with chunk name, output name, title, units, flags, precursors, and comments.
