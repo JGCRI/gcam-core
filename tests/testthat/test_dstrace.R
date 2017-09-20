@@ -16,10 +16,12 @@ test_that("works", {
                 title = c("i1", "o1", "o2"),
                 units = "",
                 comments = "",
-                flags = c(gcamdata:::FLAG_INPUT_DATA, "", ""))
+                flags = c(gcamdata:::FLAG_INPUT_DATA, "", gcamdata:::FLAG_XML))
 
   # Errors if object not present
   expect_error(dstrace("o4", gcam_data_map = gdm))
+
+  # UPSTREAM
   # Identifies objects with no precursors
   expect_output(dstrace("i1", gcam_data_map = gdm), regexp = "No precursors")
   # Identifies objects read from file
@@ -29,4 +31,15 @@ test_that("works", {
   # Identifies all precursors
   expect_output(dstrace("o2", gcam_data_map = gdm), regexp = "Precursor: o1")
   expect_output(dstrace("o2", gcam_data_map = gdm), regexp = "Precursor: i1")
+
+  # DOWNSTREAM
+  # Identifies objects with no dependents
+  expect_output(dstrace("o2", gcam_data_map = gdm, downstream = TRUE), regexp = "No dependents")
+  # Identifies objects XML data
+  expect_output(dstrace("o2", gcam_data_map = gdm, downstream = TRUE), regexp = "XML data")
+  # Identifies immediate dependent
+  expect_output(dstrace("i1", gcam_data_map = gdm, downstream = TRUE, recurse = FALSE), regexp = "Dependent: o1")
+  # Identifies all precursors
+  expect_output(dstrace("i1", gcam_data_map = gdm, downstream = TRUE), regexp = "Dependent: o1")
+  expect_output(dstrace("i1", gcam_data_map = gdm, downstream = TRUE), regexp = "Dependent: o2")
 })
