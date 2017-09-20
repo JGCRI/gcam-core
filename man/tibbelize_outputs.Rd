@@ -4,7 +4,7 @@
 \alias{tibbelize_outputs}
 \title{tibbelize_outputs}
 \usage{
-tibbelize_outputs(chunk_name, chunk_data)
+tibbelize_outputs(chunk_data, chunk_name)
 }
 \arguments{
 \item{chunk_name}{Name of current chunk, character}

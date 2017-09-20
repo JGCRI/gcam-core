@@ -2,15 +2,19 @@
 #' dstrace
 #'
 #' @param object_name Name of object to trace (can be either a data object or a code chunk)
+#' @param gcam_data_map A tibble of metadata information; normally a built-in package dataset
 #' @param previous_tracelist Information about previous objects printed
 #' @param recurse Recurse to print information about precursor objects?
-#' @return Boolean (object_name found, or not)
+#' @return A tibble with the trace information (object name and trace number)
 #' @importFrom assertthat assert_that
 #' @author BBL
 #' @export
-dstrace <- function(object_name, all_data, previous_tracelist = NULL, recurse = TRUE) {
+#' @examples
+#' dstrace("L100.FAO_ag_Exp_t")
+dstrace <- function(object_name, gcam_data_map = GCAM_DATA_MAP, previous_tracelist = NULL, recurse = TRUE) {
 
   assert_that(is.character(object_name))
+  assert_that(is_tibble(gcam_data_map))
   assert_that(is.logical(recurse))
 
   # 'tracenum' is the number that gets printed next to all entries
@@ -22,13 +26,11 @@ dstrace <- function(object_name, all_data, previous_tracelist = NULL, recurse = 
     tracenum <- previous_tracelist$tracenum[which(previous_tracelist$object_name == object_name)]
   }
 
-  if(!object_name %in% GCAM_DATA_MAP$output) {
+  if(!object_name %in% gcam_data_map$output) {
     stop("Unknown object name '", object_name, "'")
   }
 
-  co <- chunk_outputs()
-  chunk_index <- which(co$output == object_name)
-  obj_info <- filter(GCAM_DATA_MAP, output == object_name)
+  obj_info <- filter(gcam_data_map, output == object_name)
 
   # Print basic information about the current object
   cat(tracenum, "-", object_name, "- ")
@@ -36,8 +38,7 @@ dstrace <- function(object_name, all_data, previous_tracelist = NULL, recurse = 
   if(isfile) {
     cat("read from file\n")
   } else {
-    cat("produced by", co$name[chunk_index], "\n")
-    assert_that(co$name[chunk_index] == obj_info$name)  # these should be identical!
+    cat("produced by", obj_info$name, "\n")
   }
   cat("\t", obj_info$title, " (", obj_info$units, ")\n", sep = "")
   writeLines(paste0("\t", strwrap(obj_info$comments)))
@@ -47,12 +48,12 @@ dstrace <- function(object_name, all_data, previous_tracelist = NULL, recurse = 
   pcs <- unlist(strsplit(obj_info$precursors, split = driver.SEPARATOR, fixed = TRUE))
   tn <- max(previous_tracelist$tracenum) + 1
 
-  if(is.null(pcs)) {
+  if(is.null(pcs) | length(pcs) == 0) {
     cat("\tNo precursors\n")
   } else {
     # print precursors, checking against previous_tracelist ("see #x above")
     # for any precursors not found and prepare ("see #x below") to recurse
-    new_tracelist <- NULL
+    new_tracelist <- tibble()
     for(pc in pcs) {
       cat("\t", "Precursor: ", pc, " (#", sep = "")
       if(pc %in% previous_tracelist$object_name) {
@@ -73,7 +74,7 @@ dstrace <- function(object_name, all_data, previous_tracelist = NULL, recurse = 
     if(recurse) {
       previous_tracelist <- bind_rows(previous_tracelist, new_tracelist)
       for(i in seq_len(nrow(new_tracelist))) {
-        previous_tracelist <- dstrace(new_tracelist$object_name[i], previous_tracelist)
+        previous_tracelist <- dstrace(new_tracelist$object_name[i], gcam_data_map = gcam_data_map, previous_tracelist)
       } # for
     } #if
   } # if
