@@ -91,10 +91,12 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 #' @param return_outputs_of Return the data objects that are output from these chunks (character)
 #' If \code{stop_after} is specified, by default that chunk's outputs are returned.
 #' @param return_data_names Return these data objects (character). By default this is the union of \code{return_inputs_of} and \code{return_inputs_of}
+#' @param return_data_map_only Return only the precursor information? (logical) This overrides
+#' the other \code{return_*} parameters above.
 #' @param write_outputs Write all chunk outputs to disk?
 #' @param outdir Location to write output data (ignored if \code{write_outputs} is \code{FALSE})
 #' @param xmldir Location to write output XML (ignored if \code{write_outputs} is \code{FALSE})
-#' @return A list of all built data.
+#' @return A list of all built data (or a data map tibble if requested).
 #' @details The driver loads any necessary data from input files,
 #' runs all code chunks in an order dictated by their dependencies,
 #' does error-checking, and writes outputs. For more details, see
@@ -110,7 +112,9 @@ driver <- function(all_data = empty_data(),
                    return_outputs_of = stop_after,
                    return_data_names = union(inputs_of(return_inputs_of),
                                              outputs_of(return_outputs_of)),
-                   write_outputs = TRUE, outdir = OUTPUTS_DIR, xmldir = XML_DIR,
+                   return_data_map_only = FALSE,
+                   write_outputs = !return_data_map_only,
+                   outdir = OUTPUTS_DIR, xmldir = XML_DIR,
                    quiet = FALSE) {
 
   # If users ask to stop after a chunk, but also specify they want particular inputs,
@@ -132,6 +136,7 @@ driver <- function(all_data = empty_data(),
   assert_that(is.null(return_inputs_of) | is.character(return_inputs_of))
   assert_that(is.null(return_outputs_of) | is.character(return_outputs_of))
   assert_that(is.null(return_data_names) | is.character(return_data_names))
+  assert_that(is.logical(return_data_map_only))
   assert_that(is.logical(write_outputs))
   assert_that(is.logical(quiet))
 
@@ -181,6 +186,7 @@ driver <- function(all_data = empty_data(),
 
   # Initialize some stuff before we start to run the chunks
   chunks_to_run <- chunklist$name
+  precursor_data <- list()
   removed_count <- 0
   if(write_outputs) {
     save_chunkdata(empty_data(), create_dirs = TRUE, outputs_dir = outdir, xml_dir = xmldir) # clear directories
@@ -217,6 +223,9 @@ driver <- function(all_data = empty_data(),
                           promised_outputs = po,
                           outputs_xml = subset(chunkoutputs, name == chunk)$to_xml)
 
+      # Save precursor information
+      precursor_data[[chunk]] <- lapply(chunk_data, get_precursors)
+
       # Add this chunk's data to the global data store
       all_data <- add_data(chunk_data, all_data)
 
@@ -252,16 +261,32 @@ driver <- function(all_data = empty_data(),
     }
   } # while
 
+  # Finish up: write outputs, determine return data format
+
   if(write_outputs) {
     if(!quiet) cat("Writing chunk data...\n")
     save_chunkdata(all_data, outputs_dir = outdir, xml_dir = xmldir)
   }
 
-  all_data <- all_data[return_data_names]
+  if(return_data_map_only) {
+    data_map <- list()
+    for(chunk in names(precursor_data)) {
+      for(obj in names(precursor_data[[chunk]])) {
+        precs <- precursor_data[[chunk]][[obj]]
+        if(!is.null(precs) & length(precs)) {
+            data_map[[paste(chunk, obj)]] <- tibble(name = chunk, output = obj, precursor = precs)
+        }
+      }
+    }
+    if(!quiet) cat("Returning data map.\n")
+    invisible(bind_rows(data_map))
 
-  if(!quiet && length(all_data) > 0) cat("Returning", length(all_data), "tibbles.\n")
-  if(!quiet) cat("All done.\n")
-  invisible(all_data[return_data_names])
+  } else {
+    all_data <- all_data[return_data_names]
+
+    if(!quiet && length(all_data) > 0) cat("Returning", length(all_data), "tibbles.\n")
+    invisible(all_data[return_data_names])
+  }
 }
 
 

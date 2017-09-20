@@ -8,6 +8,7 @@ test_that("catches bad input", {
   expect_error(driver(return_inputs_of = 1))
   expect_error(driver(return_outputs_of = 1))
   expect_error(driver(return_data_names = 1))
+  expect_error(driver(return_data_map_only = 1))
   expect_error(driver(write_outputs = 1))
   expect_error(driver(quiet = 1))
 })
