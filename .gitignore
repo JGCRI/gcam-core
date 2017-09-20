@@ -16,8 +16,6 @@ R/*.html
 
 # Vignette files
 inst/doc
-vignettes/intro-luzlogr.html
-vignettes/intro-luzlogr.R
 
 # Proprietary files
 en_nonOECD.*
@@ -25,3 +23,7 @@ en_OECD.*
 
 # OS files
 .DS_Store
+
+# emacs backup files
+*~
+

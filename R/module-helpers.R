@@ -301,7 +301,7 @@ add_carbon_info <- function( data, carbon_info_table, matchvars = c("region", "G
   }
 
   data %>%
-    left_join_error_no_match(carbon_info_table, by = matchvars) %>%
+    left_join(carbon_info_table, by = matchvars) %>%
     rename(hist.veg.carbon.density = veg_c,
            hist.soil.carbon.density = soil_c) %>%
     mutate(hist.veg.carbon.density = round(hist.veg.carbon.density, aglu.DIGITS_C_DENSITY),
@@ -501,3 +501,47 @@ fill_exp_decay_extrapolate <- function(d, out_years) {
     filter(year %in% out_years)
 }
 
+
+#' downscale_FAO_country
+#'
+#' Helper function to downscale the countries that separated into
+#' multiple modern countries (e.g. USSR).
+#'
+#' @param data Data to downscale, tibble
+#' @param country_name Pre-dissolution country name, character
+#' @param dissolution_year Year of country dissolution, integer
+#' @param years Years to operate on, integer vector
+#' @importFrom stats aggregate
+#' @return Downscaled data.
+downscale_FAO_country <- function(data, country_name, dissolution_year, years = AGLU_HISTORICAL_YEARS) {
+
+  assert_that(is_tibble(data))
+  assert_that(is.character(country_name))
+  assert_that(is.integer(dissolution_year))
+  assert_that(is.integer(years))
+  assert_that(dissolution_year %in% years)
+
+  countries <- item <- element <- NULL                     # silence package check notes
+
+  # Compute the ratio for all years leading up to the dissolution year, and including it
+  # I.e. normalizing the time series by the value in the dissolution year
+  ctry_years <- years[years < dissolution_year]
+  yrs <- as.character(c(ctry_years, dissolution_year))
+  data %>%
+    select(one_of(c("item", "element", yrs))) %>%
+    group_by(item, element) %>%
+    summarise_all(sum) %>%
+    ungroup ->
+    data_ratio
+
+  data_ratio[yrs] <- data_ratio[yrs] / data_ratio[[as.character(dissolution_year)]]
+
+  # Use these ratios to project the post-dissolution country data backwards in time
+  newyrs <- as.character(ctry_years)
+  data_new <- filter(data, countries != country_name)
+  data_new[newyrs] <- data_new[[as.character(dissolution_year)]] *
+    data_ratio[match(paste(data_new[["item"]], data_new[["element"]]),
+                     paste(data_ratio[["item"]], data_ratio[["element"]])), newyrs]
+  data_new[newyrs][is.na(data_new[newyrs])] <- 0
+  data_new
+}

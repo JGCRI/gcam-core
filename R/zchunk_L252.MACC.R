@@ -53,7 +53,7 @@ module_emissions_L252.MACC <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     # Silence package checks
-    AgProductionTechnology <- AgSupplySector <- AgSupplySubsector <- EPA_MACC_Sector <- EPA_region <-
+    . <- AgProductionTechnology <- AgSupplySector <- AgSupplySubsector <- EPA_MACC_Sector <- EPA_region <-
       GV_year <- MAC_region <- Non.CO2 <- PCT_ABATE <- Process <- Species <- Year <- bio_N2O_coef <-
       depresource <- emiss.coef <- input.emissions <- mac.control <- mac.reduction <- region <-
       scenario <- sector <- stub.technology <- subsector <- supplysector <- tax <- tech_change <- year <- NULL
