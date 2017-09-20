@@ -135,6 +135,8 @@ driver <- function(all_data = empty_data(),
   assert_that(is.logical(write_outputs))
   assert_that(is.logical(quiet))
 
+  if(!quiet) cat("GCAM Data System v", as.character(utils::packageVersion("gcamdata")), "\n", sep = "")
+
   chunklist <- find_chunks()
   if(!quiet) cat("Found", nrow(chunklist), "chunks\n")
   chunkinputs <- chunk_inputs(chunklist$name)

@@ -186,19 +186,19 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
     # Czechoslovakia
     FAO_data_ALL %>%
       filter(iso %in% AGLU_ctry$iso[AGLU_ctry$FAO_country == "Czechoslovakia"]) %>%
-      downscale_FAO_country("Czechoslovakia", 1993, years = FAO_HISTORICAL_YEARS) ->
+      downscale_FAO_country("Czechoslovakia", 1993L, years = FAO_HISTORICAL_YEARS) ->
       FAO_data_ALL_cze
 
     # USSR
     FAO_data_ALL %>%
       filter(iso %in% AGLU_ctry$iso[AGLU_ctry$FAO_country == "USSR"]) %>%
-      downscale_FAO_country("USSR", 1992, years = FAO_HISTORICAL_YEARS) ->
+      downscale_FAO_country("USSR", 1992L, years = FAO_HISTORICAL_YEARS) ->
       FAO_data_ALL_ussr
 
     # Yugoslavia
     FAO_data_ALL %>%
       filter(iso %in% AGLU_ctry$iso[AGLU_ctry$FAO_country == "Yugoslav SFR"]) %>%
-      downscale_FAO_country("Yugoslav SFR", 1992, years = FAO_HISTORICAL_YEARS) ->
+      downscale_FAO_country("Yugoslav SFR", 1992L, years = FAO_HISTORICAL_YEARS) ->
       FAO_data_ALL_yug
 
     # Drop these countries from the full database and combine
@@ -397,41 +397,4 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
   } else {
     stop("Unknown command")
   }
-}
-
-
-#' downscale_FAO_country
-#'
-#' Helper function to downscale the countries that separated into
-#' multiple modern countries (e.g. USSR).
-#'
-#' @param data Data to downscale
-#' @param country_name Country name, pre-dissolution
-#' @param dissolution_year Year of country dissolution
-#' @param item_name Item column name
-#' @param element_name Element column name
-#' @param years Years to operate on
-#' @importFrom stats aggregate
-#' @return Downscaled data.
-downscale_FAO_country <- function(data, country_name, dissolution_year, item_name = "item",
-                                  element_name = "element", years = AGLU_HISTORICAL_YEARS) {
-
-  countries <- NULL                     # silence package check notes
-  # Compute the ratio for all years leading up to the dissolution year, and including it
-  # I.e. normalizing the time series by the value in the dissolution year
-  ctry_years <- years[years < dissolution_year]
-  yrs <- as.character(c(ctry_years, dissolution_year))
-  data_ratio <- aggregate(data[yrs],
-                          by = as.list(data[c(item_name, element_name)]),
-                          sum)
-  data_ratio[yrs] <- data_ratio[yrs] / data_ratio[[as.character(dissolution_year)]]
-
-  # Use these ratios to project the post-dissolution country data backwards in time
-  newyrs <- as.character(ctry_years)
-  data_new <- subset(data, countries != country_name)
-  data_new[newyrs] <- data_new[[as.character(dissolution_year)]] *
-    data_ratio[match(paste(data_new[[item_name]], data_new[[element_name]]),
-                     paste(data_ratio[[item_name]], data_ratio[[element_name]])), newyrs]
-  data_new[newyrs][is.na(data_new[newyrs])] <- 0
-  data_new
 }

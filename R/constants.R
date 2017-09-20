@@ -208,6 +208,10 @@ aglu.UNMANAGED_LAND_VALUE <- 1
 aglu.LN1_PROTUNMGD_LOGIT_EXP <- 0
 aglu.LN1_PROTUNMGD_LOGIT_TYPE <- NA
 
+# default logit exponent and type for LN5, the competition betweein high and lo management
+aglu.MGMT_LOGIT_EXP <- 0.5
+aglu.MGMT_LOGIT_TYPE <- "absolute-cost-logit"
+
 # XML-related constants
 aglu.GLU_NDIGITS          <- 3    # number of digits in the geographic land unit identifier codes
 aglu.LT_GLU_DELIMITER     <-      # delimiter between the land use type name and GLU name. should be the same as the crop-glu delimiter
@@ -249,6 +253,10 @@ ELECTRICITY_INPUT_FUELS<- c("biomass", "coal", "gas", "refined liquids")
 energy.CLIMATE_NORMAL_YEARS <- 1981:2000
 energy.RSRC_FUELS <- c("coal", "gas", "refined liquids")
 
+# Assumed base year heat price, used for calculating adjustment to non-energy costs of electricity technologies with secondary output of heat
+# in units of 1975$/EJ
+energy.HEAT_PRICE <- 3.2
+energy.GAS_PRICE <- 2
 
 # below come from ENERGY_ASSUMPTIONS/A_ccs_data.R
 energy.DIGITS_EFFICIENCY <- 3
@@ -308,8 +316,19 @@ CONV_MILLION_M3_KM3 <- 1e-03
 CONV_M2_ACR <- 0.0002471058
 CONV_HA_M2 <- 1e4 # ha to m2
 CONV_BM2_M2 <- 1e9
+<<<<<<< HEAD
 CONV_MILFT2_M2 <- 92900
 CONV_FT2_M2 <- 0.0929
+=======
+
+# Digits for rounding into XMLs
+energy.DIGITS_CALOUTPUT <- 7
+energy.DIGITS_COEFFICIENT <- 7
+energy.DIGITS_COST <- 4
+energy.DIGITS_EFFICIENCY <- 3
+energy.DIGITS_SHRWT <- 4
+
+>>>>>>> master
 
 
 # Driver constants ======================================================================
@@ -407,12 +426,15 @@ emissions.AGR_GASES            <- c("CH4_AGR", "N2O_AGR", "NH3_AGR", "NOx_AGR")
 emissions.AG_MACC_GHG_NAMES    <- c("CH4_AGR", "N2O_AGR")
 emissions.GHG_NAMES            <- c("CH4", "N2O")
 emissions.USE_GV_MAC           <- 1
+emissions.NONGHG_GASES         <- c("SO2", "NOx", "CO", "NMVOC", "NH3")
+emissions.EDGAR_YEARS_PLUS     <- 1970:2008
 
 # GCAM-USA constants ======================================================================
 
 gcamusa.STATES <- c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA",
-                     "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR",
-                     "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY")
+                    "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR",
+                    "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY")
+
 # Uncomment these lines to run under 'timeshift' conditions
 # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
 # FUTURE_YEARS <- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)
