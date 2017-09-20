@@ -14,28 +14,28 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
+module_gcam.usa_L223.electricity_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "energy/calibrated_techs",
              FILE = "gcam-usa/NREL_us_re_technical_potential",
              FILE = "energy/A23.globaltech_eff",
-             "L114.CapacityFactor_wind_state",
+             FILE = "temp-data-inject/L114.CapacityFactor_wind_state",
              "L119.CapFacScaler_PV_state",
              "L119.CapFacScaler_CSP_state",
-             "L223.Supplysector_elec",
-             "L223.ElecReserve",
-             "L223.SubsectorLogit_elec",
-             "L223.SubsectorShrwt_elec",
-             "L223.SubsectorShrwtFllt_elec",
-             "L223.SubsectorShrwt_nuc",
-             "L223.SubsectorShrwt_renew",
-             "L223.SubsectorInterp_elec",
-             "L223.SubsectorInterpTo_elec",
-             "L223.StubTech_elec",
-             "L223.StubTechEff_elec",
-             "L223.StubTechCapFactor_elec",
-             "L223.GlobalIntTechBackup_elec",
+             FILE = "temp-data-inject/L223.Supplysector_elec",
+             FILE = "temp-data-inject/L223.ElecReserve",
+             FILE = "temp-data-inject/L223.SubsectorLogit_elec",
+             # FILE = "temp-data-inject/L223.SubsectorShrwt_elec",
+             FILE = "temp-data-inject/L223.SubsectorShrwtFllt_elec",
+             FILE = "temp-data-inject/L223.SubsectorShrwt_nuc",
+             FILE = "temp-data-inject/L223.SubsectorShrwt_renew",
+             FILE = "temp-data-inject/L223.SubsectorInterp_elec",
+             FILE = "temp-data-inject/L223.SubsectorInterpTo_elec",
+             FILE = "temp-data-inject/L223.StubTech_elec",
+             FILE = "temp-data-inject/L223.StubTechEff_elec",
+             FILE = "temp-data-inject/L223.StubTechCapFactor_elec",
+             FILE = "temp-data-inject/L223.GlobalIntTechBackup_elec",
              "L1231.in_EJ_state_elec_F_tech",
              "L1231.out_EJ_state_elec_F_tech",
              "L1232.out_EJ_sR_elec",
@@ -82,48 +82,29 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
     NREL_us_re_technical_potential <- get_data(all_data, "gcam-usa/NREL_us_re_technical_potential")
     A23.globaltech_eff <- get_data(all_data, "energy/A23.globaltech_eff")
-    L114.CapacityFactor_wind_state <- get_data(all_data, "L114.CapacityFactor_wind_state")
+    L114.CapacityFactor_wind_state <- get_data(all_data, "temp-data-inject/L114.CapacityFactor_wind_state")
     L119.CapFacScaler_PV_state <- get_data(all_data, "L119.CapFacScaler_PV_state")
     L119.CapFacScaler_CSP_state <- get_data(all_data, "L119.CapFacScaler_CSP_state")
-    L223.Supplysector_elec <- get_data(all_data, "L223.Supplysector_elec")
-    L223.ElecReserve <- get_data(all_data, "L223.ElecReserve")
-    L223.SubsectorLogit_elec <- get_data(all_data, "L223.SubsectorLogit_elec")
-    L223.SubsectorShrwt_elec <- get_data(all_data, "L223.SubsectorShrwt_elec")
-    L223.SubsectorShrwtFllt_elec <- get_data(all_data, "L223.SubsectorShrwtFllt_elec")
-    L223.SubsectorShrwt_nuc <- get_data(all_data, "L223.SubsectorShrwt_nuc")
-    L223.SubsectorShrwt_renew <- get_data(all_data, "L223.SubsectorShrwt_renew")
-    L223.SubsectorInterp_elec <- get_data(all_data, "L223.SubsectorInterp_elec")
-    L223.SubsectorInterpTo_elec <- get_data(all_data, "L223.SubsectorInterpTo_elec")
-    L223.StubTech_elec <- get_data(all_data, "L223.StubTech_elec")
-    L223.StubTechEff_elec <- get_data(all_data, "L223.StubTechEff_elec")
-    L223.StubTechCapFactor_elec <- get_data(all_data, "L223.StubTechCapFactor_elec")
-    L223.GlobalIntTechBackup_elec <- get_data(all_data, "L223.GlobalIntTechBackup_elec")
+    L223.Supplysector_elec <- get_data(all_data, "temp-data-inject/L223.Supplysector_elec")
+    L223.ElecReserve <- get_data(all_data, "temp-data-inject/L223.ElecReserve")
+    L223.SubsectorLogit_elec <- get_data(all_data, "temp-data-inject/L223.SubsectorLogit_elec")
+    # L223.SubsectorShrwt_elec <- get_data(all_data, "temp-data-inject/L223.SubsectorShrwt_elec")
+    L223.SubsectorShrwtFllt_elec <- get_data(all_data, "temp-data-inject/L223.SubsectorShrwtFllt_elec")
+    L223.SubsectorShrwt_nuc <- get_data(all_data, "temp-data-inject/L223.SubsectorShrwt_nuc")
+    L223.SubsectorShrwt_renew <- get_data(all_data, "temp-data-inject/L223.SubsectorShrwt_renew")
+    L223.SubsectorInterp_elec <- get_data(all_data, "temp-data-inject/L223.SubsectorInterp_elec")
+    L223.SubsectorInterpTo_elec <- get_data(all_data, "temp-data-inject/L223.SubsectorInterpTo_elec")
+    L223.StubTech_elec <- get_data(all_data, "temp-data-inject/L223.StubTech_elec")
+    L223.StubTechEff_elec <- get_data(all_data, "temp-data-inject/L223.StubTechEff_elec")
+    L223.StubTechCapFactor_elec <- get_data(all_data, "temp-data-inject/L223.StubTechCapFactor_elec")
+    L223.GlobalIntTechBackup_elec <- get_data(all_data, "temp-data-inject/L223.GlobalIntTechBackup_elec")
     L1231.in_EJ_state_elec_F_tech <- get_data(all_data, "L1231.in_EJ_state_elec_F_tech")
     L1231.out_EJ_state_elec_F_tech <- get_data(all_data, "L1231.out_EJ_state_elec_F_tech")
     L1232.out_EJ_sR_elec <- get_data(all_data, "L1232.out_EJ_sR_elec")
     L126.out_EJ_state_td_elec <- get_data(all_data, "L126.out_EJ_state_td_elec")
 
     # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses vecpaste
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses repeat_and_add_vector
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
+
     # ===================================================
 
     # Produce outputs
@@ -137,7 +118,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.DeleteSubsector_USAelec") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.DeleteSubsector_USAelec
@@ -148,7 +129,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.SectorNodeEquiv") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.SectorNodeEquiv
@@ -159,7 +140,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.TechNodeEquiv") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.TechNodeEquiv
@@ -170,7 +151,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.PassThroughSector_elec") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.PassThroughSector_elec
@@ -181,7 +162,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.PassThroughTech_elec_FERC") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.PassThroughTech_elec_FERC
@@ -192,7 +173,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("object") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       object
@@ -203,7 +184,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.Supplysector_USAelec") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.Supplysector_USAelec
@@ -214,7 +195,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.SubsectorShrwtFllt_USAelec") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.SubsectorShrwtFllt_USAelec
@@ -225,7 +206,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.SubsectorInterp_USAelec") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.SubsectorInterp_USAelec
@@ -236,7 +217,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.SubsectorLogit_USAelec") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.SubsectorLogit_USAelec
@@ -247,7 +228,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.TechShrwt_USAelec") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.TechShrwt_USAelec
@@ -258,7 +239,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.TechCoef_USAelec") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.TechCoef_USAelec
@@ -269,7 +250,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.Production_USAelec") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.Production_USAelec
@@ -280,7 +261,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.Supplysector_elec_FERC") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.Supplysector_elec_FERC
@@ -291,7 +272,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.SubsectorShrwtFllt_elec_FERC") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.SubsectorShrwtFllt_elec_FERC
@@ -302,7 +283,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.SubsectorInterp_elec_FERC") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.SubsectorInterp_elec_FERC
@@ -313,7 +294,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.SubsectorLogit_elec_FERC") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.SubsectorLogit_elec_FERC
@@ -324,7 +305,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.TechShrwt_elec_FERC") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.TechShrwt_elec_FERC
@@ -335,7 +316,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.TechCoef_elec_FERC") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.TechCoef_elec_FERC
@@ -346,7 +327,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.Production_elec_FERC") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.Production_elec_FERC
@@ -357,7 +338,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.InterestRate_FERC") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.InterestRate_FERC
@@ -368,7 +349,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.Pop_FERC") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.Pop_FERC
@@ -379,7 +360,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.BaseGDP_FERC") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.BaseGDP_FERC
@@ -390,7 +371,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.LaborForceFillout_FERC") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.LaborForceFillout_FERC
@@ -401,7 +382,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.SubsectorShrwt_nuc_USA") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.SubsectorShrwt_nuc_USA
@@ -412,7 +393,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.StubTechFixOut_elec_USA") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.StubTechFixOut_elec_USA
@@ -423,7 +404,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.StubTechFixOut_hydro_USA") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.StubTechFixOut_hydro_USA
@@ -434,7 +415,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.StubTechProd_elec_USA") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.StubTechProd_elec_USA
@@ -445,7 +426,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.StubTechMarket_elec_USA") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.StubTechMarket_elec_USA
@@ -456,7 +437,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.StubTechMarket_backup_USA") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.StubTechMarket_backup_USA
@@ -467,7 +448,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.StubTechElecMarket_backup_USA") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.StubTechElecMarket_backup_USA
@@ -478,7 +459,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.StubTechCapFactor_elec_wind_USA") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.StubTechCapFactor_elec_wind_USA
@@ -489,7 +470,7 @@ module_gcam.usa_L223.electricity_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.StubTechCapFactor_elec_solar_USA") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      # add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.StubTechCapFactor_elec_solar_USA
