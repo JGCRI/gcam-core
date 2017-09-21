@@ -4,12 +4,14 @@
 \alias{dstrace_plot}
 \title{Plot a trace}
 \usage{
-dstrace_plot(object_name, tracelist, downstream, ...)
+dstrace_plot(object_name, tracelist, upstream, downstream, ...)
 }
 \arguments{
 \item{object_name}{Name of original object being traced}
 
 \item{tracelist}{Record of the trace, a tibble}
+
+\item{upstream}{Upstream? Logical}
 
 \item{downstream}{Downstream? Logical}
 
