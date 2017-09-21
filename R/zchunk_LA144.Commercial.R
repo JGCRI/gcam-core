@@ -29,7 +29,7 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
              FILE = "gcam-usa/CBECS_1995",
              FILE = "gcam-usa/CBECS_1999",
              FILE = "gcam-usa/CBECS_2003",
-             FILE = "temp-data-inject/L142.in_EJ_state_bld_F",
+             "L142.in_EJ_state_bld_F",
              FILE = "temp-data-inject/L143.share_state_Pop_CDD_sR9",
              FILE = "temp-data-inject/L143.share_state_Pop_HDD_sR9"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -59,12 +59,7 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
     CBECS_1995 <- get_data(all_data, "gcam-usa/CBECS_1995")
     CBECS_1999 <- get_data(all_data, "gcam-usa/CBECS_1999")
     CBECS_2003 <- get_data(all_data, "gcam-usa/CBECS_2003")
-    L142.in_EJ_state_bld_F <- get_data(all_data, "temp-data-inject/L142.in_EJ_state_bld_F") %>%
-      # temp-data-inject
-      gather(year, value, starts_with("X")) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) %>%
-      # This is to fix timeshift error, not sure if needed after temp-data-inject removed
-      filter(year %in% HISTORICAL_YEARS)
+    L142.in_EJ_state_bld_F <- get_data(all_data, "L142.in_EJ_state_bld_F")
     L143.share_state_Pop_CDD_sR9 <- get_data(all_data, "temp-data-inject/L143.share_state_Pop_CDD_sR9") %>%
       # temp-data-inject
       gather(year, value, starts_with("X")) %>%
@@ -89,13 +84,16 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
 
     # Add in the census region (subregion4) and census division (subregion9)
     # Census regions (subregion4) are used for 1979-1986 floorspace, as the first editions didn't have census divisions (subregion9)
-    states_subregions_CBECS <- states_subregions %>%
+    states_subregions_sub9 <- states_subregions %>%
       select(subregion4, subregion9, REGION, DIVISION) %>%
       distinct()
+
+    states_subregions_sub4 <- states_subregions %>%
+      select(subregion4, REGION) %>%
+      distinct()
+
     L144.CBECS_all <- lapply(L144.CBECS_all, function(df){
-      # Using left_join_keep_first_only b/c there are two subregion4s for Region 3
-      # Locations with region 3, cendiv 5 could be assigned to either South or Midwest
-        left_join_keep_first_only(df, states_subregions_CBECS,
+        left_join_error_no_match(df, states_subregions_sub9,
                                  by = c("REGION", "CENDIV" = "DIVISION"))
     })
 
@@ -107,18 +105,17 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
 
     # Add subregions to census population for aggregating
     L144.Census_pop_hist <- Census_pop_hist %>%
-      left_join_error_no_match(states_subregions, by = "state")
+      left_join_error_no_match(states_subregions, by = "state") %>%
+      filter(year %in% HISTORICAL_YEARS)
 
     # Aggregate population to subregion4
     L144.pop_sR4 <- L144.Census_pop_hist %>%
-      filter(year %in% HISTORICAL_YEARS) %>%
       group_by(subregion4, year) %>%
       summarise(value = sum(value)) %>%
       ungroup()
 
     # Aggregate population to subregion9
     L144.pop_sR9 <- L144.Census_pop_hist %>%
-      filter(year %in% HISTORICAL_YEARS) %>%
       group_by(subregion9, year) %>%
       summarise(value = sum(value)) %>%
       ungroup()
@@ -126,9 +123,7 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
     # b) FLOORSPACE BY STATE AND YEAR
     # Estimating total floorspace by census region (subregion4) and division (subregion9)
     L144.CBECS_1979_1983 <- CBECS_1979_1983 %>%
-      # Using left_join_keep_first_only b/c there are two subregion4s for Region 3
-      # Locations with region 3 could be assigned to either South or Midwest
-      left_join_keep_first_only(states_subregions_CBECS, by = "REGION") %>%
+      left_join_error_no_match(states_subregions_sub4, by = "REGION") %>%
       # Using left_join because there will be two values for the two years for each subregion
       left_join(L144.pop_sR4 %>%
                                  filter(year %in% c(1979, 1983)), by = "subregion4") %>%
@@ -178,25 +173,29 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
     # Downscale 1983 and 1979 floorspace to subregion9, using the ratios of per-capita floorspace in 1986
     L144.flsp_conv_4_9 <- L144.flsp_bm2_sR9 %>%
       filter(year == 1986) %>%
-      # Using left_join_keep_first_only b/c there are two subregion4s for subregion9 Atlantic-S
-      # Locations with region 3 could be assigned to either South or Midwest
-      left_join_keep_first_only(states_subregions_CBECS, by = "subregion9") %>%
-      left_join_error_no_match(L144.flsp_bm2_sR4_CBECS1986, by = "subregion4") %>%
-      mutate(conv_4_9 = pcflsp_m2.x / pcflsp_m2.y)
+      # Add in subregion9 values
+      left_join_error_no_match(states_subregions_sub9, by = "subregion9") %>%
+      # Add in subregion4 values
+      left_join_error_no_match(L144.flsp_bm2_sR4_CBECS1986, by = c("subregion4", "year")) %>%
+      mutate(conv_4_9 = pcflsp_m2.x / pcflsp_m2.y) %>%
+      select(subregion4, subregion9, conv_4_9)
 
     # Multiplying the per-capita floorspace ratios from subregion4 to subregion9, to expand from 4 to 9
     L144.flsp_bm2_sR9_CBECS1979_1983 <- L144.flsp_conv_4_9 %>%
-      select(subregion4, subregion9, conv_4_9) %>%
+      # Using left_join to expand to 2 years per observation
       left_join(L144.CBECS_1979_1983, by = "subregion4") %>%
       mutate(pcflsp_m2 = pcflsp_m2 * conv_4_9) %>%
-      select(subregion9 = subregion9.x, year, pcflsp_m2)
+      select(subregion9, year, pcflsp_m2)
 
+    # Combine all subregion9 floorspace
     L144.pcflsp_m2_sR9_CBECS <- bind_rows(L144.flsp_bm2_sR9, L144.flsp_bm2_sR9_CBECS1979_1983)
 
+    # Interpolate floorspace values to all historical years
     L144.pcflsp_m2_sR9_comm <- L144.pcflsp_m2_sR9_CBECS %>%
       select(subregion9) %>%
       distinct() %>%
       repeat_add_columns(tibble(year = HISTORICAL_YEARS)) %>%
+      # Using left_join because not all years included
       left_join(L144.pcflsp_m2_sR9_CBECS, by = c("subregion9", "year")) %>%
       group_by(subregion9) %>%
       mutate(pcflsp_m2 = approx_fun(year, pcflsp_m2, rule = 2)) %>%
@@ -204,16 +203,16 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
 
     # Expand to states: multiply per-capita floorspace in each subregion9 times the population of each state
     L144.flsp_bm2_state_comm <- L144.Census_pop_hist %>%
-      select(state, year, value, subregion9) %>%
-      filter(year %in% HISTORICAL_YEARS) %>%
       left_join_error_no_match(L144.pcflsp_m2_sR9_comm, by = c("subregion9", "year")) %>%
       transmute(state, year, subregion9,
+                # Floorspace = population * per-capita floorspace
                 value = value * pcflsp_m2 / CONV_BM2_M2)
 
     # NOTE: we are scaling aggregated CBECS floorspace to match AEO base year estimates from 1999 to 2010
     # The main reason for this step is that the most recent CBECS edition is a decade old (2003)
     AEO_Tab5_yearcols <- unique(EIA_AEO_Tab5$year)
 
+    # Convert AEO values to billion square meters
     AEO_USA_flsp_bm2 <- EIA_AEO_Tab5 %>%
       filter(variable == "Floorspace",
              # To fix timeshift, year can't be greater than historical years
@@ -221,11 +220,13 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
       mutate(value = value * CONV_FT2_M2,
              unit = "Billion square meters")
 
+    # Sum floorspace by year to get national value
     L144.flsp_bm2_state_comm_sum <- L144.flsp_bm2_state_comm %>%
       group_by(year) %>%
       summarise(sum = sum(value)) %>%
       ungroup()
 
+    # Calculate scaler to convert from CBECS tp AEO totals
     AEO_USA_flsp_bm2_scalers <- AEO_USA_flsp_bm2 %>%
       left_join_error_no_match(L144.flsp_bm2_state_comm_sum, by = "year") %>%
       mutate(scaler = value / sum) %>%
@@ -234,6 +235,7 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
     L144.flsp_bm2_state_comm <- L144.flsp_bm2_state_comm %>%
       # Using left_join because we are only scaling for certain years
       left_join(AEO_USA_flsp_bm2_scalers, by = "year") %>%
+      # If there isn't a scaler right now, use 1 so value isn't changed
       replace_na(list(scaler = 1)) %>%
       mutate(sector = "comm",
              value = value * scaler) %>%
@@ -450,9 +452,29 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
     L144.flsp_bm2_state_comm %>%
       add_title("Commercial floorspace by state") %>%
       add_units("billion m2") %>%
+      add_comments("CBECS data used to calculate per-capita census division value") %>%
+      add_comments("Floorspace by state calculated by multiplying state population by per-capita census division floorspace") %>%
+      add_comments("Most recent values scaled by ratio of national value from CBECS data to AEO estimates") %>%
+      add_legacy_name("L144.flsp_bm2_state_comm") %>%
+      add_precursors("gcam-usa/states_subregions",
+                     "gcam-usa/Census_pop_hist",
+                     "gcam-usa/EIA_AEO_Tab5",
+                     "gcam-usa/CBECS_1979_1983",
+                     "gcam-usa/CBECS_1986",
+                     "gcam-usa/CBECS_1989",
+                     "gcam-usa/CBECS_1992",
+                     "gcam-usa/CBECS_1995",
+                     "gcam-usa/CBECS_1999",
+                     "gcam-usa/CBECS_2003") %>%
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L144.flsp_bm2_state_comm
+
+    L144.in_EJ_state_comm_F_U_Y %>%
+      add_title("Commercial energy consumption by state/fuel/end use") %>%
+      add_units("EJ/yr") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L144.flsp_bm2_state_comm") %>%
+      add_legacy_name("L144.in_EJ_state_comm_F_U_Y") %>%
       add_precursors("gcam-usa/states_subregions",
                      "gcam-usa/Census_pop_hist",
                      "gcam-usa/CBECS_variables",
@@ -466,19 +488,9 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
                      "gcam-usa/CBECS_1995",
                      "gcam-usa/CBECS_1999",
                      "gcam-usa/CBECS_2003",
-                     "temp-data-inject/L142.in_EJ_state_bld_F",
+                     "L142.in_EJ_state_bld_F",
                      "temp-data-inject/L143.share_state_Pop_CDD_sR9",
                      "temp-data-inject/L143.share_state_Pop_HDD_sR9") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L144.flsp_bm2_state_comm
-
-    L144.in_EJ_state_comm_F_U_Y %>%
-      add_title("Commercial energy consumption by state/fuel/end use") %>%
-      add_units("EJ/yr") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L144.in_EJ_state_comm_F_U_Y") %>%
-      add_precursors("gcam-usa/states_subregions") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L144.in_EJ_state_comm_F_U_Y
 

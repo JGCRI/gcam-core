@@ -264,6 +264,13 @@ energy.DIGITS_COST <- 4
 energy.DIGITS_REMOVE.FRACTION <- 2
 energy.CO2.STORAGE.MARKET <- "carbon-storage"
 
+# Digits for rounding into XMLs
+energy.DIGITS_CALOUTPUT <- 7
+energy.DIGITS_COEFFICIENT <- 7
+energy.DIGITS_COST <- 4
+energy.DIGITS_EFFICIENCY <- 3
+energy.DIGITS_SHRWT <- 4
+
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
 
@@ -316,20 +323,8 @@ CONV_MILLION_M3_KM3 <- 1e-03
 CONV_M2_ACR <- 0.0002471058
 CONV_HA_M2 <- 1e4 # ha to m2
 CONV_BM2_M2 <- 1e9
-<<<<<<< HEAD
 CONV_MILFT2_M2 <- 92900
 CONV_FT2_M2 <- 0.0929
-=======
-
-# Digits for rounding into XMLs
-energy.DIGITS_CALOUTPUT <- 7
-energy.DIGITS_COEFFICIENT <- 7
-energy.DIGITS_COST <- 4
-energy.DIGITS_EFFICIENCY <- 3
-energy.DIGITS_SHRWT <- 4
-
-
->>>>>>> master
 
 # Driver constants ======================================================================
 
