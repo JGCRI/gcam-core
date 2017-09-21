@@ -7,6 +7,7 @@
 #' @param gcam_data_map A tibble of metadata information; normally a built-in package dataset
 #' @param previous_tracelist Information about previous objects printed
 #' @param recurse Recurse to print information about precursor objects? Logical
+#' @param ... Extra arguments passed on to \code{\link{dstrace_plot}}
 #' @return A tibble with the trace information (object name and trace number)
 #' @details What other data products feed into some particular data system object?
 #' Conversely, to what other products does some object feed? These are the kinds
@@ -19,13 +20,15 @@
 #' dstrace("L100.FAO_ag_Exp_t", downstream = TRUE)
 dstrace <- function(object_name, downstream = FALSE, graph = FALSE,
                     gcam_data_map = GCAM_DATA_MAP,
-                    previous_tracelist = NULL, recurse = TRUE) {
+                    previous_tracelist = NULL, recurse = TRUE, ...) {
 
   assert_that(is.character(object_name))
   assert_that(is.logical(downstream))
   assert_that(is.logical(graph))
   assert_that(is_tibble(gcam_data_map))
   assert_that(is.logical(recurse))
+
+  output <- precursors <- . <- NULL  # silence package check notes
 
   # 'tracenum' is the number that gets printed next to all entries
   # Allows easy and consistent referencing in what could be a long list
@@ -124,8 +127,9 @@ dstrace <- function(object_name, downstream = FALSE, graph = FALSE,
 #' @param object_name Name of original object being traced
 #' @param tracelist Record of the trace, a tibble
 #' @param downstream Downstream? Logical
+#' @param ... Extra arguments passed on to \code{\link{plot}}
 #' @return Adjacency matrix, invisible
-dstrace_plot <- function(object_name, tracelist, downstream) {
+dstrace_plot <- function(object_name, tracelist, downstream, ...) {
 
   # Make an adjacency matrix, laboriously
   mat <- matrix(0, nrow = nrow(tracelist), ncol = nrow(tracelist))
@@ -138,7 +142,6 @@ dstrace_plot <- function(object_name, tracelist, downstream) {
           mat[i, which(tracelist$object_name == j)] <- 1
         } else {
           mat[which(tracelist$object_name == j), i] <- 1
-
         }
       }
     }
@@ -146,20 +149,19 @@ dstrace_plot <- function(object_name, tracelist, downstream) {
 
   # Graph it
   g <- igraph::graph.adjacency(mat)
-  coords <- igraph::layout_nicely(g)
+  coords <- igraph::layout_with_drl(g)
 
   direction <- if_else(downstream, "Downstream", "Upstream")
   vc <- rainbow(2)[1 + as.numeric(tracelist$object_name == object_name)]
   lc <- c("darkgrey", "black")[1 + as.numeric(tracelist$object_name == object_name)]
 
-  plot(g,
-       vertex.color = vc,
+  plot(g, vertex.color = vc,
        vertex.label.dist = 3,
        vertex.label.cex = 1.0,
        vertex.label.color = lc,
        vertex.size = 10,
        edge.arrow.size = 0.5,
-       layout = coords)
+       layout = coords, ...)
   title(paste(direction, object_name))
 
   invisible(g)

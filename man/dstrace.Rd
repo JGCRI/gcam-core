@@ -6,7 +6,7 @@
 \usage{
 dstrace(object_name, downstream = FALSE, graph = FALSE,
   gcam_data_map = GCAM_DATA_MAP, previous_tracelist = NULL,
-  recurse = TRUE)
+  recurse = TRUE, ...)
 }
 \arguments{
 \item{object_name}{Name of object to trace (can be either a data object or a code chunk)}
@@ -20,6 +20,8 @@ dstrace(object_name, downstream = FALSE, graph = FALSE,
 \item{previous_tracelist}{Information about previous objects printed}
 
 \item{recurse}{Recurse to print information about precursor objects? Logical}
+
+\item{...}{Extra arguments passed on to \code{\link{dstrace_plot}}}
 }
 \value{
 A tibble with the trace information (object name and trace number)

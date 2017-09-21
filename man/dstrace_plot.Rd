@@ -4,7 +4,7 @@
 \alias{dstrace_plot}
 \title{Plot a trace}
 \usage{
-dstrace_plot(object_name, tracelist, downstream)
+dstrace_plot(object_name, tracelist, downstream, ...)
 }
 \arguments{
 \item{object_name}{Name of original object being traced}
@@ -12,6 +12,8 @@ dstrace_plot(object_name, tracelist, downstream)
 \item{tracelist}{Record of the trace, a tibble}
 
 \item{downstream}{Downstream? Logical}
+
+\item{...}{Extra arguments passed on to \code{\link{plot}}}
 }
 \value{
 Adjacency matrix, invisible
