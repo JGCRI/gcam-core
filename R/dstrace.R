@@ -157,7 +157,7 @@ dstrace <- function(object_name, direction = "upstream", graph = FALSE,
 #' @param ... Extra arguments passed on to \code{\link{plot}}
 #' @return Adjacency matrix, invisible
 dstrace_plot <- function(object_name, tracelist, upstream, downstream, ...) {
-  print(tracelist)
+
   # Make an adjacency matrix, laboriously
   mat <- matrix(0, nrow = nrow(tracelist), ncol = nrow(tracelist))
   colnames(mat) <- paste0(tracelist$tracenum, ". ", tracelist$object_name)
