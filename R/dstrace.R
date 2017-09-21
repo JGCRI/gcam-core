@@ -3,6 +3,7 @@
 #'
 #' @param object_name Name of object to trace (can be either a data object or a code chunk)
 #' @param downstream Trace upstream instead of down? Logical
+#' @param graph Plot a directed graph of relationships? Logical
 #' @param gcam_data_map A tibble of metadata information; normally a built-in package dataset
 #' @param previous_tracelist Information about previous objects printed
 #' @param recurse Recurse to print information about precursor objects? Logical
@@ -16,19 +17,23 @@
 #' @examples
 #' dstrace("L100.FAO_ag_Exp_t")
 #' dstrace("L100.FAO_ag_Exp_t", downstream = TRUE)
-dstrace <- function(object_name, downstream = FALSE, gcam_data_map = GCAM_DATA_MAP,
+dstrace <- function(object_name, downstream = FALSE, graph = FALSE,
+                    gcam_data_map = GCAM_DATA_MAP,
                     previous_tracelist = NULL, recurse = TRUE) {
 
   assert_that(is.character(object_name))
-  assert_that(is_tibble(gcam_data_map))
   assert_that(is.logical(downstream))
+  assert_that(is.logical(graph))
+  assert_that(is_tibble(gcam_data_map))
   assert_that(is.logical(recurse))
 
   # 'tracenum' is the number that gets printed next to all entries
   # Allows easy and consistent referencing in what could be a long list
   if(is.null(previous_tracelist)) {
     tracenum <- 1
-    previous_tracelist <- tibble(object_name = object_name, tracenum = tracenum)
+    previous_tracelist <- tibble(object_name = object_name,
+                                 tracenum = tracenum,
+                                 related = NA_character_)
   } else {
     tracenum <- previous_tracelist$tracenum[which(previous_tracelist$object_name == object_name)]
   }
@@ -73,6 +78,8 @@ dstrace <- function(object_name, downstream = FALSE, gcam_data_map = GCAM_DATA_M
   if(is.null(linked_objects) | length(linked_objects) == 0) {
     cat("\tNo ", tolower(relationship), "s\n", sep = "")
   } else {
+    # insert linked objects into tracelist
+    previous_tracelist$related[which(previous_tracelist$tracenum == tracenum)] <- paste(linked_objects, collapse = driver.SEPARATOR)
     # print precursors/dependents, checking against previous_tracelist ("see #x above")
     new_tracelist <- tibble()
     for(pc in linked_objects) {
@@ -96,12 +103,64 @@ dstrace <- function(object_name, downstream = FALSE, gcam_data_map = GCAM_DATA_M
       previous_tracelist <- bind_rows(previous_tracelist, new_tracelist)
       for(i in seq_len(nrow(new_tracelist))) {
         previous_tracelist <- dstrace(new_tracelist$object_name[i],
-                                      gcam_data_map = gcam_data_map,
                                       downstream = downstream,
-                                      previous_tracelist)
+                                      graph = FALSE,
+                                      gcam_data_map = gcam_data_map,
+                                      previous_tracelist = previous_tracelist)
       } # for
-    } #if
+    } # if
   } # if
 
+  if(graph) {
+    dstrace_plot(object_name, previous_tracelist, downstream = downstream)
+  }
+
   invisible(previous_tracelist)
+}
+
+
+#' Plot a trace
+#'
+#' @param object_name Name of original object being traced
+#' @param tracelist Record of the trace, a tibble
+#' @param downstream Downstream? Logical
+#' @return Adjacency matrix, invisible
+dstrace_plot <- function(object_name, tracelist, downstream) {
+
+  # Make an adjacency matrix, laboriously
+  mat <- matrix(0, nrow = nrow(tracelist), ncol = nrow(tracelist))
+  colnames(mat) <- paste0(tracelist$tracenum, ". ", tracelist$object_name)
+  for(i in seq_len(nrow(tracelist))) {
+    if(!is.na(tracelist$related[i])) {
+      for(j in strsplit(tracelist$related[i], driver.SEPARATOR, fixed = TRUE)[[1]]) {
+        #        cat(tracelist$object_name[i], "->", j, "\n")
+        if(downstream) {
+          mat[i, which(tracelist$object_name == j)] <- 1
+        } else {
+          mat[which(tracelist$object_name == j), i] <- 1
+
+        }
+      }
+    }
+  }
+
+  # Graph it
+  g <- igraph::graph.adjacency(mat)
+  coords <- igraph::layout_nicely(g)
+
+  direction <- if_else(downstream, "Downstream", "Upstream")
+  vc <- rainbow(2)[1 + as.numeric(tracelist$object_name == object_name)]
+  lc <- c("darkgrey", "black")[1 + as.numeric(tracelist$object_name == object_name)]
+
+  plot(g,
+       vertex.color = vc,
+       vertex.label.dist = 3,
+       vertex.label.cex = 1.0,
+       vertex.label.color = lc,
+       vertex.size = 10,
+       edge.arrow.size = 0.5,
+       layout = coords)
+  title(paste(direction, object_name))
+
+  invisible(g)
 }

@@ -4,13 +4,16 @@
 \alias{dstrace}
 \title{A tracing utility for the GCAM Data System.}
 \usage{
-dstrace(object_name, downstream = FALSE, gcam_data_map = GCAM_DATA_MAP,
-  previous_tracelist = NULL, recurse = TRUE)
+dstrace(object_name, downstream = FALSE, graph = FALSE,
+  gcam_data_map = GCAM_DATA_MAP, previous_tracelist = NULL,
+  recurse = TRUE)
 }
 \arguments{
 \item{object_name}{Name of object to trace (can be either a data object or a code chunk)}
 
 \item{downstream}{Trace upstream instead of down? Logical}
+
+\item{graph}{Plot a directed graph of relationships? Logical}
 
 \item{gcam_data_map}{A tibble of metadata information; normally a built-in package dataset}
 
