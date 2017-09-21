@@ -1,6 +1,6 @@
 #' module_gcam.usa_LA144.Commercial
 #'
-#' Briefly describe what this chunk does.
+#' Calculates commercial floorspace by state and energy consumption by state/fuel/end use
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L144.flsp_bm2_state_comm}, \code{L144.in_EJ_state_comm_F_U_Y}. The corresponding file in the
 #' original data system was \code{LA144.Commercial.R} (gcam-usa level1).
-#' @details Describe in detail what this chunk does.
+#' @details Calculates commercial floorspace by state and energy consumption by state/fuel/end use
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -20,7 +20,7 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
              FILE = "gcam-usa/Census_pop_hist",
              FILE = "gcam-usa/CBECS_variables",
              FILE = "gcam-usa/EIA_AEO_Tab5",
-             FILE = "gcam-usa/EIA_distheat", # efficiency units
+             FILE = "gcam-usa/EIA_distheat",
              FILE = "gcam-usa/PNNL_Commext_elec",
              FILE = "gcam-usa/CBECS_1979_1983",
              FILE = "gcam-usa/CBECS_1986",
@@ -74,7 +74,7 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
     # The 1979 and 1983 only have floorspace by census region
     # We can't bind_rows because all CBECS have different columns
     L144.CBECS_all <- list(CBECS_1986, CBECS_1989, CBECS_1992, CBECS_1995, CBECS_1999, CBECS_2003)
-    names(L144.CBECS_all) <- paste0("CBECS", c( 1986, 1989, 1992, 1995, 1999, 2003))
+    names(L144.CBECS_all) <- paste0("CBECS", c(1986, 1989, 1992, 1995, 1999, 2003))
 
     # In order to be able to work with these data across years, the "edition" number needs to be removed from all
     # variable names. E.g., re-naming square footage from "SQFT3" in 1986 and "SQFT4" in 1989 to "SQFT" in all.
@@ -245,31 +245,35 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
     # Aggregating energy consumption by sampling weights
     L144.in_EJ_sR9_comm <- L144.CBECS_all %>%
       lapply(function(df){
+        # We are only keeping certain energy-related columns
         cols_to_keep <- which(names(df) %in% CBECS_variables$variable)
         if (length(cols_to_keep) > 0) {
           df %>%
             select(cols_to_keep, ADJWT, subregion9, year) %>%
+            # All cols_to_keep have BTU in name
             gather(variable, value, contains("BTU")) %>%
             group_by(subregion9, year, variable) %>%
+            # Sum by census division, multiplying by sampling weights
             summarise(value = sum(value * ADJWT * CONV_KBTU_EJ)) %>%
             ungroup()
         }else{
+          # If no cols_to_keep, return an empty tibble so that we can bind rows
           tibble()
         }
       }) %>%
       # Bind all CBECS tibbles
       do.call(bind_rows, .)
 
-    # Rbind these data frames, match in the fuel and service, and aggregate (this will get rid of the different liquid fuels)
+    # Match in GCAM fuel and service
     L144.in_EJ_sR9_CBECS_F_U_Y <- L144.in_EJ_sR9_comm %>%
       left_join_error_no_match(CBECS_variables, by = "variable")
 
     # District services are backed out to their fuel inputs here
     # NOTE: in GCAM-USA, district services consumed by buildings are indicated by the fuel inputs to the district service plants
-    L144.in_EJ_sR9_CBECS_dist_U_Y <- L144.in_EJ_sR9_CBECS_F_U_Y %>%
-      filter(fuel == "district services")
-    L144.in_EJ_sR9_CBECS_Fdist_U_Y <- L144.in_EJ_sR9_CBECS_dist_U_Y %>%
+    L144.in_EJ_sR9_CBECS_Fdist_U_Y <- L144.in_EJ_sR9_CBECS_F_U_Y %>%
+      filter(fuel == "district services") %>%
       select(-fuel) %>%
+      # Convert from total district service value to value for each fuel
       repeat_add_columns(tibble(fuel = unique(EIA_distheat$fuel))) %>%
       left_join_error_no_match(EIA_distheat, by = c("fuel", "service")) %>%
       mutate(value = value * share / efficiency) %>%
@@ -280,12 +284,13 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
       filter(fuel != "district services") %>%
       bind_rows(L144.in_EJ_sR9_CBECS_Fdist_U_Y)
 
-    # Aggregate by fuel and service, cast by year, and interpolate/extrapolate
+    # Aggregate by fuel and service
     L144.in_EJ_sR9_comm_F_U_Y <- L144.in_EJ_sR9_CBECS_F_U_Y %>%
       group_by(subregion9, fuel, service, year) %>%
       summarise(value = sum(value)) %>%
       ungroup()
 
+    # Interpolate fuel and service aggregation to all historical years
     L144.in_EJ_sR9_comm_F_U_Y <- L144.in_EJ_sR9_comm_F_U_Y %>%
       select(subregion9, fuel, service) %>%
       distinct() %>%
@@ -295,15 +300,18 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
       mutate(value = approx_fun(year, value, rule = 2)) %>%
       ungroup()
 
-    # At this point, we have a table of energy by subregion9, fuel, and end use that needs to be (a) apportioned to states, and (b) scaled
+    # At this point, we have a table of energy by subregion9, fuel, and end use that needs to be
+    # apportioned to states, and scaled
     # The reason for apportioning to states first is that the heating and cooling energy will be modified by pop-weighted HDD and CDD
     # prior to calculating energy shares
     # Downscaling heating and cooling energy to states according to person-HDD and -CDD
     CBECS_heating_fuels <- c("electricity", "gas", "refined liquids")
     CBECS_cooling_fuels <- c("electricity", "gas")
 
+    # Expand L144.in_EJ_sR9_comm_F_U_Y heating to all states by multiplying by HDD share within subregion9
     L144.in_EJ_state_comm_F_heating_Y <- states_subregions %>%
       select(state, subregion9) %>%
+      # Add all fuels and years to each state
       repeat_add_columns(tidyr::crossing(fuel = CBECS_heating_fuels, year = HISTORICAL_YEARS)) %>%
       mutate(service = "comm heating") %>%
       left_join_error_no_match(L144.in_EJ_sR9_comm_F_U_Y, by = c("subregion9", "fuel", "service", "year")) %>%
@@ -311,6 +319,7 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
       mutate(value = value.x * value.y) %>%
       select(state, subregion9, fuel, service, year, value)
 
+    # Expand L144.in_EJ_sR9_comm_F_U_Y cooling to all states by multiplying by CDD share within subregion9
     L144.in_EJ_state_comm_F_cooling_Y <- states_subregions %>%
       select(state, subregion9) %>%
       repeat_add_columns(tidyr::crossing(fuel = CBECS_cooling_fuels, year = HISTORICAL_YEARS)) %>%
@@ -322,28 +331,29 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
 
     # Downscaling all remaining services to states according to floorspace
     # Calculate the share of each state within its census division's (subregion9's) floorspace
-    L144.flsp_bm2_sR9_comm <- L144.flsp_bm2_state_comm %>%
-      group_by(subregion9, year) %>%
-      summarise(value = sum(value))
-
     L144.flsp_state_share_sR9 <- L144.flsp_bm2_state_comm %>%
-      left_join_error_no_match(L144.flsp_bm2_sR9_comm, by = c("subregion9", "year")) %>%
-      mutate(value = value.x / value.y) %>%
-      select(state, year, subregion9, value)
+      group_by(subregion9, year) %>%
+      mutate(share = value / sum(value)) %>%
+      ungroup() %>%
+      select(-value)
 
-    # Start with a table of the service x fuel combinations that are being represented in each state
+    # Remove heating and cooling
     L144.in_EJ_sR9_comm_F_Uoth_Y <- L144.in_EJ_sR9_comm_F_U_Y %>%
       filter(!(service %in% c("comm heating", "comm cooling")))
 
+    # Convert to state data by multiplying by floorspace share
     L144.in_EJ_state_comm_F_Uoth_Y <- L144.in_EJ_sR9_comm_F_Uoth_Y %>%
       select(fuel, service) %>%
       distinct() %>%
       repeat_add_columns(tidyr::crossing(state = gcamusa.STATES, year = HISTORICAL_YEARS)) %>%
+      # We now have all combos of fuel, service, state and historical year; add in subregion9
       left_join_error_no_match(states_subregions, by = "state") %>%
+      # Add in floorspace data
       left_join_error_no_match(L144.flsp_state_share_sR9, by = c("state", "year", "subregion9")) %>%
+      # Add in energy data
       left_join_error_no_match(L144.in_EJ_sR9_comm_F_Uoth_Y,
                                by = c("subregion9", "fuel", "service", "year")) %>%
-      mutate(value = value.x * value.y) %>%
+      mutate(value = value * share) %>%
       select(state, subregion9, fuel, service, year, value)
 
     # Assembling unscaled energy consumption by state, fuel, and service
@@ -352,15 +362,11 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
                                                       L144.in_EJ_state_comm_F_Uoth_Y)
 
     # Calculating shares of energy consumption by each service, within each state and fuel
-    L144.in_EJ_state_comm_F_Y_unscaled <- L144.in_EJ_state_comm_F_U_Y_unscaled %>%
-      group_by(state, fuel, year) %>%
-      summarise(value = sum(value))
-
     L144.pct_state_comm_F_U_Y <- L144.in_EJ_state_comm_F_U_Y_unscaled %>%
-      left_join_error_no_match(L144.in_EJ_state_comm_F_Y_unscaled, by = c("state", "fuel", "year")) %>%
-      mutate(value = value.x / value.y,
+      group_by(state, fuel, year) %>%
+      mutate(value = value / sum(value),
              sector = "comm") %>%
-      select(-value.x, -value.y)
+      ungroup()
 
     # At this point we can disaggregate the state-level energy consumption by sector and fuel to the specific end uses
     # Non-building electricity use by state is estimated separately, and deducted from state-wide commercial electricity consumption
@@ -371,6 +377,7 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
       mutate(service = "comm non-building",
              value_EJ = value * CONV_TWH_EJ)
 
+    # Aggregate national non-building electricity use by year
     L144.in_EJ_USA_commext_elec <- L144.in_TWh_USA_commext_elec %>%
       group_by(year, service) %>%
       summarise(value_EJ = sum(value_EJ)) %>%
@@ -384,21 +391,27 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
       group_by(year) %>%
       summarise(sum = sum(value)) %>%
       ungroup() %>%
+      # For each year, add ratio to min and max PNNL_Commext_elec year
       transmute(year,
                 pre = sum / sum[year == first_year_commext],
                 post = sum / sum[year == last_year_commext])
 
+    # Expand to all historical years
     L144.in_EJ_USA_commext_elec <- tibble(year = HISTORICAL_YEARS,
                                                     service = "comm non-building") %>%
       # Using left_join b/c not all historical years in L144.in_EJ_USA_commext_elec
       left_join(L144.in_EJ_USA_commext_elec, by = c("year", "service")) %>%
+      # Add in population ratios
       left_join_error_no_match(commext_Census_pop_hist, by = "year") %>%
+      # Interpolate to all historical years
       mutate(value_EJ = approx_fun(year, value_EJ, rule = 2),
+             # If year is below the min PNNL_Commext_elec year, multiply by population ratio to min year
              value_EJ = if_else(year < first_year_commext, value_EJ * pre, value_EJ),
+             # If year is above the max PNNL_Commext_elec year, multiply by population ratio to max year
              value_EJ = if_else(year > last_year_commext, value_EJ * post, value_EJ)) %>%
       select(service, year, value_EJ)
 
-    # Table of population ratios
+    # Population ratio of each state by year
     L144.pct_state_commext_elec_Y <- Census_pop_hist %>%
       filter(year %in% HISTORICAL_YEARS) %>%
       group_by(year) %>%
@@ -408,6 +421,7 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
              fuel = "electricity",
              service = "comm non-building")
 
+    # Downscale national non-building electricity use to state by population ratio
      L144.in_EJ_state_commext_F_U_Y <- L144.pct_state_commext_elec_Y %>%
        left_join_error_no_match(L144.in_EJ_USA_commext_elec, by = c("service", "year")) %>%
        # State value = state proportion * USA value
@@ -415,6 +429,7 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
        select(state, sector, fuel, service, year, value = state_EJ)
 
      # Commercial non-building electricity is not scaled; it is deducted from the top-down estimate of commercial electricity use
+     # Calculate total commercial building electricity use by subtracting non-building use
      L144.in_EJ_state_commint_elec <- L142.in_EJ_state_bld_F %>%
        filter(sector == "comm",
               fuel == "electricity") %>%
@@ -425,11 +440,12 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
      # Bind this back to the initial table of commercial energy use by state and fuel
      L144.in_EJ_state_commint_F <- L142.in_EJ_state_bld_F %>%
        filter(sector == "comm" & fuel != "electricity") %>%
-       bind_rows(L144.in_EJ_state_commint_elec )
+       bind_rows(L144.in_EJ_state_commint_elec)
 
      # This energy can now be apportioned to the end-use services
      L144.in_EJ_state_commint_F_U_Y <- L144.pct_state_comm_F_U_Y %>%
        left_join_error_no_match(L144.in_EJ_state_commint_F, by = c("state", "sector", "fuel", "year")) %>%
+       # Value for state/sector/service/fuel = value for state/sector/fuel * share of service in state/sector/fuel
        mutate(value = value.x * value.y) %>%
        select(state, sector, fuel, service, year, value)
 
@@ -472,8 +488,8 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
     L144.in_EJ_state_comm_F_U_Y %>%
       add_title("Commercial energy consumption by state/fuel/end use") %>%
       add_units("EJ/yr") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("For commercial building use, scales data from L142.in_EJ_state_bld_F using CBECS data") %>%
+      add_comments("For commercial non-building use, expands PNNL_Commext_elec to all states and historical years ") %>%
       add_legacy_name("L144.in_EJ_state_comm_F_U_Y") %>%
       add_precursors("gcam-usa/states_subregions",
                      "gcam-usa/Census_pop_hist",

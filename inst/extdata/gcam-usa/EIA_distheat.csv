@@ -1,4 +1,14 @@
 # File: EIA_distheat.csv
 # Title: District heat share and efficiency by service and fuel
-# Units: Share: Proportion of fuel in service;Efficiency: 
-# Source: AEO2013 other commercial sector (provided by E. Boedecker pers. comm.)service,fuel,share,efficiencycomm cooling,electricity,0.057251908,2comm cooling,gas,0.942748092,0.75comm cooling,refined liquids,0,0.75comm heating,electricity,0.062651816,0.95comm heating,gas,0.878267989,0.8comm heating,refined liquids,0.059080195,0.8comm hot water,electricity,0.065741884,0.9comm hot water,gas,0.885118745,0.75comm hot water,refined liquids,0.049139371,0.75
+# Units: Share: Proportion of fuel in service;Efficiency: output/input
+# Source: AEO2013 other commercial sector (provided by E. Boedecker pers. comm.)
+service,fuel,share,efficiency
+comm cooling,electricity,0.057251908,2
+comm cooling,gas,0.942748092,0.75
+comm cooling,refined liquids,0,0.75
+comm heating,electricity,0.062651816,0.95
+comm heating,gas,0.878267989,0.8
+comm heating,refined liquids,0.059080195,0.8
+comm hot water,electricity,0.065741884,0.9
+comm hot water,gas,0.885118745,0.75
+comm hot water,refined liquids,0.049139371,0.75
