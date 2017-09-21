@@ -2,7 +2,7 @@
 
 context("dstrace")
 
-test_that("works", {
+test_that("dstrace works", {
 
   # handles bad input
   expect_error(dstrace(1))
@@ -21,25 +21,54 @@ test_that("works", {
   # Errors if object not present
   expect_error(dstrace("o4", gcam_data_map = gdm))
 
-  # UPSTREAM
+  # UPSTREAM ONLY
   # Identifies objects with no precursors
-  expect_output(dstrace("i1", gcam_data_map = gdm), regexp = "No precursors")
+  expect_output(dstrace("i1", gcam_data_map = gdm, direction = "up"), regexp = "No precursors")
   # Identifies objects read from file
-  expect_output(dstrace("i1", gcam_data_map = gdm), regexp = "read from file")
+  expect_output(dstrace("i1", gcam_data_map = gdm, direction = "up"), regexp = "read from file")
   # Identifies immediate precursor
-  expect_output(dstrace("o1", gcam_data_map = gdm, recurse = FALSE), regexp = "Precursor: i1")
+  expect_output(dstrace("o1", gcam_data_map = gdm, direction = "up", recurse = FALSE), regexp = "Precursor: i1")
   # Identifies all precursors
-  expect_output(dstrace("o2", gcam_data_map = gdm), regexp = "Precursor: o1")
-  expect_output(dstrace("o2", gcam_data_map = gdm), regexp = "Precursor: i1")
+  expect_output(dstrace("o2", gcam_data_map = gdm, direction = "up"), regexp = "Precursor: o1")
+  expect_output(dstrace("o2", gcam_data_map = gdm, direction = "up"), regexp = "Precursor: i1")
 
-  # DOWNSTREAM
+  # DOWNSTREAM ONLY
   # Identifies objects with no dependents
-  expect_output(dstrace("o2", gcam_data_map = gdm, downstream = TRUE), regexp = "No dependents")
+  expect_output(dstrace("o2", gcam_data_map = gdm, direction = "down"), regexp = "No dependents")
   # Identifies objects XML data
-  expect_output(dstrace("o2", gcam_data_map = gdm, downstream = TRUE), regexp = "XML data")
+  expect_output(dstrace("o2", gcam_data_map = gdm, direction = "down"), regexp = "XML data")
   # Identifies immediate dependent
-  expect_output(dstrace("i1", gcam_data_map = gdm, downstream = TRUE, recurse = FALSE), regexp = "Dependent: o1")
+  expect_output(dstrace("i1", gcam_data_map = gdm, direction = "down", recurse = FALSE), regexp = "Dependent: o1")
+  # Identifies all dependents
+  expect_output(dstrace("i1", gcam_data_map = gdm, direction = "down"), regexp = "Dependent: o1")
+  expect_output(dstrace("i1", gcam_data_map = gdm, direction = "down"), regexp = "Dependent: o2")
+
+  # BOTH WAYS
+  # Identifies objects with no precursors
+  expect_output(dstrace("i1", gcam_data_map = gdm, direction = "both"), regexp = "No precursors")
+  # Identifies objects read from file
+  expect_output(dstrace("i1", gcam_data_map = gdm, direction = "both"), regexp = "read from file")
+  # Identifies immediate precursor
+  expect_output(dstrace("o1", gcam_data_map = gdm, direction = "both", recurse = FALSE), regexp = "Precursor: i1")
   # Identifies all precursors
-  expect_output(dstrace("i1", gcam_data_map = gdm, downstream = TRUE), regexp = "Dependent: o1")
-  expect_output(dstrace("i1", gcam_data_map = gdm, downstream = TRUE), regexp = "Dependent: o2")
+  expect_output(dstrace("o2", gcam_data_map = gdm, direction = "both"), regexp = "Precursor: o1")
+  expect_output(dstrace("o2", gcam_data_map = gdm, direction = "both"), regexp = "Precursor: i1")
+  # Identifies objects with no dependents
+  expect_output(dstrace("o2", gcam_data_map = gdm, direction = "both"), regexp = "No dependents")
+  # Identifies objects XML data
+  expect_output(dstrace("o2", gcam_data_map = gdm, direction = "both"), regexp = "XML data")
+  # Identifies immediate dependent
+  expect_output(dstrace("i1", gcam_data_map = gdm, direction = "both", recurse = FALSE), regexp = "Dependent: o1")
+  # Identifies all dependents
+  expect_output(dstrace("i1", gcam_data_map = gdm, direction = "both"), regexp = "Dependent: o1")
+  expect_output(dstrace("i1", gcam_data_map = gdm, direction = "both"), regexp = "Dependent: o2")
+
+  # Test ds_plot too, a bit
+  # This tracelist corresponds to the dstrace output for gdm above
+  tracelist <- tibble(object_name = c("i1", "o1", "o2"),
+                      tracenum = 1:3,
+                      relationship = c("Self", "Dependent", "Dependent"),
+                      relatives = c("o1", "o2", ""))
+  mat <- dstrace_plot("i1", tracelist, upstream = TRUE, downstream = TRUE)
+  expect_identical(dim(mat), c(nrow(tracelist), nrow(tracelist)))
 })
