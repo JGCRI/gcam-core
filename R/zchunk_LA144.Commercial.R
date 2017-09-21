@@ -13,7 +13,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RLH September 2017
-#' @export
 module_gcam.usa_LA144.Commercial <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
@@ -37,12 +36,27 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
              "L144.in_EJ_state_comm_F_U_Y"))
   } else if(command == driver.MAKE) {
 
+    # Silence package checks
+    subregion4 <- subregion9 <- REGION <- DIVISION <- state <- year <- value <- setNames <-
+      SQFT1 <- SQFT2 <- SQFT <- ADJWT <- subregion4 <- . <- pcflsp_m2 <- pcflsp_m2.x <- pcflsp_m2.y <-
+      conv_4_9 <- variable <- scaler <- sector <- value <- fuel <- share <- efficiency <- service <-
+      value.x <- value.y <- Year <- unit <- value_EJ <- pre <- post <- state_EJ <- NULL
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions") %>%
       select(subregion4, subregion9, REGION, DIVISION, state) %>%
       distinct()
+    # Because there was a mistake in previous states_subregions file, there are some values that will require
+    # a data frame identical to the mistaken one
+    if (OLD_DATA_SYSTEM_BEHAVIOR){
+      states_subregions_region4calc <- states_subregions %>%
+        mutate(subregion4 = if_else(state == "WV", "Midwest", subregion4))
+    }else{
+      states_subregions_region4calc <- states_subregions_region4calc
+    }
+
     Census_pop_hist <- get_data(all_data, "gcam-usa/Census_pop_hist") %>%
       gather(year, value, matches(YEAR_PATTERN)) %>%
       mutate(year = as.integer(year))
@@ -79,7 +93,7 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
     # In order to be able to work with these data across years, the "edition" number needs to be removed from all
     # variable names. E.g., re-naming square footage from "SQFT3" in 1986 and "SQFT4" in 1989 to "SQFT" in all.
     L144.CBECS_all <- lapply(L144.CBECS_all, function(df) {
-      setNames(df, sub("[0-9]{1}", "", names(df)))
+      stats::setNames(df, sub("[0-9]{1}", "", names(df)))
     })
 
     # Add in the census region (subregion4) and census division (subregion9)
@@ -105,7 +119,7 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
 
     # Add subregions to census population for aggregating
     L144.Census_pop_hist <- Census_pop_hist %>%
-      left_join_error_no_match(states_subregions, by = "state") %>%
+      left_join_error_no_match(states_subregions_region4calc, by = "state") %>%
       filter(year %in% HISTORICAL_YEARS)
 
     # Aggregate population to subregion4
