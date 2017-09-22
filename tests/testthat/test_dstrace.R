@@ -73,6 +73,6 @@ test_that("dstrace works", {
   expect_identical(dim(mat), c(nrow(tracelist), nrow(tracelist)))
 
   # Catches f-ed up relationship
-  tracelist$relationship[1] <- "Cousin marriage"
+  tracelist$relationship[2] <- "Cousin marriage"
   expect_error(dstrace_plot("i1", tracelist, upstream = TRUE, downstream = TRUE))
 })
