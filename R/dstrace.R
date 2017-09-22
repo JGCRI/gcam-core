@@ -8,7 +8,7 @@
 #' @param previous_tracelist Information about previous objects printed
 #' @param recurse Recurse to print information about precursor objects? Logical
 #' @param ... Extra arguments passed on to \code{\link{dstrace_plot}}
-#' @return A tibble with the trace information (object name and trace number)
+#' @return A tibble with the trace information (object name and trace number), invisibly
 #' @details What other data products feed into some particular data system object?
 #' Conversely, to what other products does some object feed? These are the kinds
 #' of questions that \code{dstrace} can help answer.
@@ -17,7 +17,8 @@
 #' @export
 #' @examples
 #' dstrace("L100.FAO_ag_Exp_t")
-#' dstrace("L100.FAO_ag_Exp_t", downstream = TRUE)
+#' dstrace("L100.FAO_ag_Exp_t", direction = "downstream")
+#' dstrace("L100.FAO_ag_Exp_t", direction = "both", graph = TRUE)
 dstrace <- function(object_name, direction = "upstream", graph = FALSE,
                     gcam_data_map = GCAM_DATA_MAP,
                     previous_tracelist = NULL, recurse = TRUE, ...) {

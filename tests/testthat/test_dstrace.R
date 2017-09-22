@@ -71,4 +71,8 @@ test_that("dstrace works", {
                       relatives = c("o1", "o2", ""))
   mat <- dstrace_plot("i1", tracelist, upstream = TRUE, downstream = TRUE)
   expect_identical(dim(mat), c(nrow(tracelist), nrow(tracelist)))
+
+  # Catches f-ed up relationship
+  tracelist$relationship[1] <- "Cousin marriage"
+  expect_error(dstrace_plot("i1", tracelist, upstream = TRUE, downstream = TRUE))
 })

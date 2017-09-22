@@ -24,7 +24,7 @@ dstrace(object_name, direction = "upstream", graph = FALSE,
 \item{...}{Extra arguments passed on to \code{\link{dstrace_plot}}}
 }
 \value{
-A tibble with the trace information (object name and trace number)
+A tibble with the trace information (object name and trace number), invisibly
 }
 \description{
 A tracing utility for the GCAM Data System.
@@ -36,7 +36,8 @@ of questions that \code{dstrace} can help answer.
 }
 \examples{
 dstrace("L100.FAO_ag_Exp_t")
-dstrace("L100.FAO_ag_Exp_t", downstream = TRUE)
+dstrace("L100.FAO_ag_Exp_t", direction = "downstream")
+dstrace("L100.FAO_ag_Exp_t", direction = "both", graph = TRUE)
 }
 \author{
 BBL
