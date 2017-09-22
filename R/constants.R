@@ -208,6 +208,10 @@ aglu.UNMANAGED_LAND_VALUE <- 1
 aglu.LN1_PROTUNMGD_LOGIT_EXP <- 0
 aglu.LN1_PROTUNMGD_LOGIT_TYPE <- NA
 
+# default logit exponent and type for LN5, the competition betweein high and lo management
+aglu.MGMT_LOGIT_EXP <- 0.5
+aglu.MGMT_LOGIT_TYPE <- "absolute-cost-logit"
+
 # XML-related constants
 aglu.GLU_NDIGITS          <- 3    # number of digits in the geographic land unit identifier codes
 aglu.LT_GLU_DELIMITER     <-      # delimiter between the land use type name and GLU name. should be the same as the crop-glu delimiter
@@ -403,8 +407,8 @@ emissions.HFC_MODEL_BASE_YEARS <- c(1975, 1990, 2005, 2010)
 emissions.F_GAS_UNITS <- "Gg"
 emissions.GAINS_BASE_YEAR <- 2005
 emissions.GAINS_YEARS <- c(2010, 2020, 2030)
-emissions.LOW_PCGDP <- 2.75
-emissions.COAL_SO2_THRESHOLD <- 0.1
+emissions.LOW_PCGDP <- 2.75  # thousand 1990 USD
+emissions.COAL_SO2_THRESHOLD <- 0.1 # Tg/EJ (here referring to Tg SO2 per EJ of coal electricity)
 
 emissions.EPA_MACC_YEAR        <- 2030  # Must be either 2020 or 2030
 emissions.MAC_TAXES            <- c(0, 5, 10, 15, 32, 66, 129, 243, 486, 1093) # Range of costs in 1990 USD
@@ -420,6 +424,9 @@ emissions.USE_GCAM3_CCOEFS     <- 1 #Select whether to use GCAM3 fuel carbon coe
 emissions.USE_GLOBAL_CCOEFS    <- 1 #Select whether to use global average carbon coefficients on fuels, or region-specific carbon coefficients
 emissions.INVENTORY_MATCH_YEAR <- 2009 #Select year from which to calculate fuel emissions coefficients (2009 is currently the most recent)
 emissions.DIGITS_CO2COEF <- 1
+
+emissions.NONGHG_GASES         <- c("SO2", "NOx", "CO", "NMVOC", "NH3")
+emissions.EDGAR_YEARS_PLUS     <- 1970:2008
 
 # Uncomment these lines to run under 'timeshift' conditions
 # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010

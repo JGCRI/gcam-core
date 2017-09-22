@@ -28,7 +28,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
              FILE = "energy/A21.globaltech_cost",
              FILE = "energy/A22.globaltech_cost",
              FILE = "temp-data-inject/L1321.in_EJ_R_indenergy_F_Yh",
-             FILE = "temp-data-inject/L132.in_EJ_R_indfeed_F_Yh"))
+             "L132.in_EJ_R_indfeed_F_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L1322.Fert_Prod_MtN_R_F_Y",
              "L1322.IO_R_Fert_F_Yh",
@@ -64,10 +64,8 @@ module_energy_LB1322.Fert <- function(command, ...) {
       mutate(year = as.integer(substr(year, 2, 5))) ->
       L1321.in_EJ_R_indenergy_F_Yh
 
-    get_data(all_data, "temp-data-inject/L132.in_EJ_R_indfeed_F_Yh") %>%
-      gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) ->
-      L132.in_EJ_R_indfeed_F_Yh
+    L132.in_EJ_R_indfeed_F_Yh <- get_data(all_data, "L132.in_EJ_R_indfeed_F_Yh")
+
 
     # ===================================================
 
@@ -405,7 +403,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       add_legacy_name("L1322.IO_R_Fert_F_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "energy/IEA_ctry", "energy/IEA_Fert_fuel_data",
                      "L142.ag_Fert_Prod_MtN_ctry_Y", "temp-data-inject/L1321.in_EJ_R_indenergy_F_Yh",
-                     "temp-data-inject/L132.in_EJ_R_indfeed_F_Yh") %>%
+                     "L132.in_EJ_R_indfeed_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L1322.IO_R_Fert_F_Yh
 
@@ -417,7 +415,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       add_legacy_name("L1322.in_EJ_R_indenergy_F_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "energy/IEA_ctry", "energy/IEA_Fert_fuel_data",
                      "L142.ag_Fert_Prod_MtN_ctry_Y", "temp-data-inject/L1321.in_EJ_R_indenergy_F_Yh",
-                     "temp-data-inject/L132.in_EJ_R_indfeed_F_Yh") %>%
+                     "L132.in_EJ_R_indfeed_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1322.in_EJ_R_indenergy_F_Yh
 
@@ -429,7 +427,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       add_legacy_name("L1322.in_EJ_R_indfeed_F_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "energy/IEA_ctry", "energy/IEA_Fert_fuel_data",
                      "L142.ag_Fert_Prod_MtN_ctry_Y", "temp-data-inject/L1321.in_EJ_R_indenergy_F_Yh",
-                     "temp-data-inject/L132.in_EJ_R_indfeed_F_Yh") %>%
+                     "L132.in_EJ_R_indfeed_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1322.in_EJ_R_indfeed_F_Yh
 
