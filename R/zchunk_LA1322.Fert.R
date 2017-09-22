@@ -14,7 +14,7 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_gcam.usa_LA1322.Fert_DISABLED <- function(command, ...) {
+module_gcam.usa_LA1322.Fert <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/Census_ind_VoS_state",
              "L1322.Fert_Prod_MtN_R_F_Y",
@@ -64,7 +64,7 @@ module_gcam.usa_LA1322.Fert_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L1322.out_Mt_state_Fert_Yh") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("L1322.Fert_Prod_MtN_R_F_Y", "gcam-usa/Census_ind_VoS_state", "L1322.IO_R_Fert_F_Yh") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1322.out_Mt_state_Fert_Yh
@@ -75,7 +75,7 @@ module_gcam.usa_LA1322.Fert_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L1322.IO_GJkg_state_Fert_F_Yh") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("L1322.Fert_Prod_MtN_R_F_Y", "gcam-usa/Census_ind_VoS_state", "L1322.IO_R_Fert_F_Yh") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1322.IO_GJkg_state_Fert_F_Yh
@@ -86,7 +86,7 @@ module_gcam.usa_LA1322.Fert_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L1322.in_EJ_state_Fert_Yh") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("L1322.Fert_Prod_MtN_R_F_Y", "gcam-usa/Census_ind_VoS_state", "L1322.IO_R_Fert_F_Yh") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1322.in_EJ_state_Fert_Yh
