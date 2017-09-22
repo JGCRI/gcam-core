@@ -415,6 +415,12 @@ emissions.AGR_GASES            <- c("CH4_AGR", "N2O_AGR", "NH3_AGR", "NOx_AGR")
 emissions.AG_MACC_GHG_NAMES    <- c("CH4_AGR", "N2O_AGR")
 emissions.GHG_NAMES            <- c("CH4", "N2O")
 emissions.USE_GV_MAC           <- 1
+
+emissions.USE_GCAM3_CCOEFS     <- 1 #Select whether to use GCAM3 fuel carbon coefficients
+emissions.USE_GLOBAL_CCOEFS    <- 1 #Select whether to use global average carbon coefficients on fuels, or region-specific carbon coefficients
+emissions.INVENTORY_MATCH_YEAR <- 2009 #Select year from which to calculate fuel emissions coefficients (2009 is currently the most recent)
+emissions.DIGITS_CO2COEF <- 1
+
 # Uncomment these lines to run under 'timeshift' conditions
 # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
 # FUTURE_YEARS <- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)
