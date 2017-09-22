@@ -33,24 +33,68 @@ module_gcam.usa_LA1322.Fert <- function(command, ...) {
     L1322.IO_R_Fert_F_Yh <- get_data(all_data, "L1322.IO_R_Fert_F_Yh")
 
     # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses repeat_and_add_vector
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
+
+    #RIght now weverything is from the old data system exact ransaltion and comments
+    # 2. Perform computations
+    # "Assigning national fertilizer production to states on the basis of value of shipments of NAICS 3273 by state" )
+    # Note: The NAICS code 3253 includes fertilizers (nitrogenous, phosphatic, and mixed), pesticides, and other agricultural chemicals
+
+    Census_ind_VoS_state %>%
+      filter(NAICS_code == 3253) ->
+      L1322.VoS_share_state_Fert
+
+    L1322.VoS_share_state_Fert %>%
+      group_by(year) %>%
+      mutate(value = VoS_thousUSD/sum(VoS_thousUSD)) %>%
+      ungroup %>%
+      select(-year) %>%
+      repeat_add_columns(tibble(year = HISTORICAL_YEARS)) ->
+      L1322.VoS_share_state_Fert
+
+    L1322.VoS_share_state_Fert %>%
+      mutate(sector = aglu.FERT_NAME) ->
+      L1322.VoS_share_state_Fert
+
+    #Note that the only relevant fuel in the USA is gas
+    L1322.VoS_share_state_Fert %>%
+      mutate(fuel = "gas") ->
+      L1322.VoS_share_state_Fert
+
+
+    L1322.Fert_Prod_MtN_R_F_Y %>%
+      filter(GCAM_region_ID == 1) %>%
+      select(year, value, sector, fuel)->
+      L1322.Fert_Prod_MtN_R_F_Y_USA
+
+
+    L1322.VoS_share_state_Fert %>%
+      left_join(L1322.Fert_Prod_MtN_R_F_Y_USA, by = c("year", "sector", "fuel")) %>%
+      mutate(value = value.x * value.y) %>%
+      select(state, sector, fuel, value, year)->
+      L1322.out_Mt_state_Fert_Yh
+
+  #  printlog( "Assuming all states have the same IO coefficients" )
+
+    L1322.out_Mt_state_Fert_Yh %>%
+      select(state) %>%
+      distinct ->
+      state_list
+
+    L1322.IO_R_Fert_F_Yh %>%
+      filter(GCAM_region_ID == gcam.USA_CODE, fuel == "gas") %>%
+      repeat_add_columns(state_list) %>%
+      select(state, sector, fuel, year, value) ->
+      L1322.IO_GJkg_state_Fert_F_Yh
+
+    L1322.IO_GJkg_state_Fert_F_Yh %>%
+      left_join(L1322.out_Mt_state_Fert_Yh, by = c("state", "sector", "fuel", "year")) %>%
+      na.omit %>%
+      mutate(value = value.x * value.y) %>%
+      select(state, sector, fuel, year, value) ->
+      L1322.in_EJ_state_Fert_Yh
+
+
+
     # ===================================================
 
     # Produce outputs
@@ -58,10 +102,10 @@ module_gcam.usa_LA1322.Fert <- function(command, ...) {
     # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
     # There's also a `same_precursors_as(x)` you can use
     # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
+    L1322.out_Mt_state_Fert_Yh %>%
+      add_title("add") %>%
+      add_units("add") %>%
+      add_comments("added") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L1322.out_Mt_state_Fert_Yh") %>%
       add_precursors("L1322.Fert_Prod_MtN_R_F_Y", "gcam-usa/Census_ind_VoS_state", "L1322.IO_R_Fert_F_Yh") %>%
@@ -69,7 +113,7 @@ module_gcam.usa_LA1322.Fert <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1322.out_Mt_state_Fert_Yh
 
-    tibble() %>%
+    L1322.IO_GJkg_state_Fert_F_Yh %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -80,7 +124,7 @@ module_gcam.usa_LA1322.Fert <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1322.IO_GJkg_state_Fert_F_Yh
 
-    tibble() %>%
+    L1322.in_EJ_state_Fert_Yh %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
