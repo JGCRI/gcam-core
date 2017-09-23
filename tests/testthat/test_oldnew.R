@@ -21,7 +21,7 @@ test_that("matches old data system output", {
   outputs_dir <- normalizePath(file.path("../..", OUTPUTS_DIR))
   xml_dir <- normalizePath(file.path("../..", XML_DIR))
 
-  if(!identical(Sys.getenv("TRAVIS"), "true")) {
+  if(identical(Sys.getenv("TRAVIS"), "true")) {
     gcam_data_map <- driver(write_outputs = TRUE, quiet = TRUE, outdir = outputs_dir, xmldir = xml_dir, return_data_map_only = TRUE)
     # The following two tests are only run on Travis because they will fail
     # during the R CMD CHECK process locally (as the R build process removes outputs/)
