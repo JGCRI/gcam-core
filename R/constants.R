@@ -408,8 +408,8 @@ emissions.HFC_MODEL_BASE_YEARS <- c(1975, 1990, 2005, 2010)
 emissions.F_GAS_UNITS <- "Gg"
 emissions.GAINS_BASE_YEAR <- 2005
 emissions.GAINS_YEARS <- c(2010, 2020, 2030)
-emissions.LOW_PCGDP <- 2.75
-emissions.COAL_SO2_THRESHOLD <- 0.1
+emissions.LOW_PCGDP <- 2.75  # thousand 1990 USD
+emissions.COAL_SO2_THRESHOLD <- 0.1 # Tg/EJ (here referring to Tg SO2 per EJ of coal electricity)
 
 emissions.EPA_MACC_YEAR        <- 2030  # Must be either 2020 or 2030
 emissions.MAC_TAXES            <- c(0, 5, 10, 15, 32, 66, 129, 243, 486, 1093) # Range of costs in 1990 USD
