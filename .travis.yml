@@ -17,3 +17,6 @@ script:
 
 after_success:
   - travis_wait 30 Rscript coverage.R
+
+after_failure:
+  - cat /home/travis/build/JGCRI/gcamdata/gcamdata.Rcheck/00check.log
