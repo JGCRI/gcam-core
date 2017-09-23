@@ -21,8 +21,8 @@ test_that("matches old data system output", {
   outputs_dir <- normalizePath(file.path("../..", OUTPUTS_DIR))
   xml_dir <- normalizePath(file.path("../..", XML_DIR))
 
-  if (identical(Sys.getenv("TRAVIS"), "true")) {
-    gcam_data_map <- driver(write_outputs = TRUE, outdir = outputs_dir, xmldir = xml_dir, return_data_map_only = TRUE)
+  if(identical(Sys.getenv("TRAVIS"), "true")) {
+    gcam_data_map <- driver(write_outputs = TRUE, quiet = TRUE, outdir = outputs_dir, xmldir = xml_dir, return_data_map_only = TRUE)
     # The following two tests are only run on Travis because they will fail
     # during the R CMD CHECK process locally (as the R build process removes outputs/)
     expect_equivalent(file.access(outputs_dir, mode = 4), 0,  # outputs_dir exists and is readable
@@ -31,6 +31,8 @@ test_that("matches old data system output", {
 
     # Now, and also run only on Travis, we compare the data map returned above with the pre-packaged version
     # They should match! See https://github.com/JGCRI/gcamdata/pull/751#issuecomment-331578990
+    print(head(gcam_data_map))
+    print(head(gcamdata:::GCAM_DATA_MAP))
     expect_equivalent(gcam_data_map, gcamdata:::GCAM_DATA_MAP,
                      info = "GCAM_DATA_MAP is out of date; rerun data-raw/generate-package-data.R")
   }
