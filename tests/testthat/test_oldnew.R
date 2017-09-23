@@ -34,6 +34,13 @@ test_that("matches old data system output", {
     expect_true(tibble::is_tibble(gcamdata:::GCAM_DATA_MAP))
     expect_true(tibble::is_tibble(gcam_data_map))
     expect_identical(dim(gcamdata:::GCAM_DATA_MAP), dim(gcam_data_map))
+    expect_identical(gcamdata:::GCAM_DATA_MAP$name, gcam_data_map$name)
+    expect_identical(gcamdata:::GCAM_DATA_MAP$output, gcam_data_map$output)
+    expect_identical(gcamdata:::GCAM_DATA_MAP$precursors, gcam_data_map$precursors)
+    expect_identical(gcamdata:::GCAM_DATA_MAP$title, gcam_data_map$title)
+    expect_identical(gcamdata:::GCAM_DATA_MAP$units, gcam_data_map$units)
+    expect_identical(gcamdata:::GCAM_DATA_MAP$comments, gcam_data_map$comments)
+    expect_identical(gcamdata:::GCAM_DATA_MAP$flags, gcam_data_map$flags)
     expect_equivalent(gcam_data_map, gcamdata:::GCAM_DATA_MAP,
                       info = "GCAM_DATA_MAP is out of date; rerun data-raw/generate-package-data.R")
   }
