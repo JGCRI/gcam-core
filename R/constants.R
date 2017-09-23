@@ -329,7 +329,7 @@ energy.DIGITS_SHRWT <- 4
 driver.MAKE <- "MAKE"
 driver.DECLARE_OUTPUTS <- "DECLARE_OUTPUTS"
 driver.DECLARE_INPUTS <- "DECLARE_INPUTS"
-
+driver.SEPARATOR <- "; "
 
 # Modeltime constants ======================================================================
 
