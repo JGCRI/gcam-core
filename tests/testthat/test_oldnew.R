@@ -20,7 +20,6 @@ test_that("matches old data system output", {
   # (as this code will be run in tests/testthat)
   outputs_dir <- normalizePath(file.path("../..", OUTPUTS_DIR))
   xml_dir <- normalizePath(file.path("../..", XML_DIR))
-stop(head(gcamdata:::GCAM_DATA_MAP))
 
   if(!identical(Sys.getenv("TRAVIS"), "true")) {
     gcam_data_map <- driver(write_outputs = TRUE, quiet = TRUE, outdir = outputs_dir, xmldir = xml_dir, return_data_map_only = TRUE)
@@ -32,9 +31,11 @@ stop(head(gcamdata:::GCAM_DATA_MAP))
 
     # Now, and also run only on Travis, we compare the data map returned above with the pre-packaged version
     # They should match! See https://github.com/JGCRI/gcamdata/pull/751#issuecomment-331578990
-    stop(head(gcam_data_map))
+    expect_true(tibble::is_tibble(gcamdata:::GCAM_DATA_MAP))
+    expect_true(tibble::is_tibble(gcam_data_map))
+    expect_identical(dim(gcamdata:::GCAM_DATA_MAP), dim(gcam_data_map))
     expect_equivalent(gcam_data_map, gcamdata:::GCAM_DATA_MAP,
-                     info = "GCAM_DATA_MAP is out of date; rerun data-raw/generate-package-data.R")
+                      info = "GCAM_DATA_MAP is out of date; rerun data-raw/generate-package-data.R")
   }
 
   # For each file in OUTPUTS_DIR, look for corresponding file in our
