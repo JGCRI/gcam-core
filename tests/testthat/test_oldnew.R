@@ -31,7 +31,7 @@ test_that("matches old data system output", {
 
     # Now, and also run only on Travis, we compare the data map returned above with the pre-packaged version
     # They should match! See https://github.com/JGCRI/gcamdata/pull/751#issuecomment-331578990
-    expect_identical(gcam_data_map, gcamdata:::GCAM_DATA_MAP,
+    expect_equivalent(gcam_data_map, gcamdata:::GCAM_DATA_MAP,
                      info = "GCAM_DATA_MAP is out of date; rerun data-raw/generate-package-data.R")
   }
 
