@@ -127,11 +127,10 @@ module_gcam.usa_LB123.Electricity <- function(command, ...) {
       select(sector, year, net_EJ_USA)
 
     # Then build table with each state's share of the national ownuse. Note that this is assumed invariant over time.
-    L123.net_pct_state_USA_ownuse_elec <- states_subregions %>%
-      select(state) %>%
-      mutate(sector = "electricity ownuse",
-             fuel = "electricity") %>%
-      repeat_add_columns(tibble(year = HISTORICAL_YEARS)) %>%
+    L123.net_pct_state_USA_ownuse_elec <- tidyr::crossing(state = gcamusa.STATES,
+                                                 sector = "electricity ownuse",
+                                                 fuel = "electricity",
+                                                 year = HISTORICAL_YEARS) %>%
       # Add in ownuse by state
       left_join_error_no_match(EIA_elect_td_ownuse_prices %>%
                                  select(State, DirectUse_MWh), by = c("state" = "State")) %>%

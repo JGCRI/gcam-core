@@ -1,4 +1,5 @@
 library(devtools)
+library(gcamdata)
 
 # Note: the methods below explicitly name XML tags as expected by GCAM and/or
 # the model interface headers thus will need to be maintained to be consistent.
