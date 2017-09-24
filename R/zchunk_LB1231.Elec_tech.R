@@ -48,7 +48,7 @@ module_gcam.usa_LB1231.Elec_tech<- function(command, ...) {
       mutate(value = value.x / value.y) %>%
       replace_na(list(value = 0)) %>%
       # Repeat for all states
-      repeat_add_columns(distinct(L123.out_EJ_state_elec_F,state)) %>%
+      repeat_add_columns(tibble(state = gcamusa.STATES)) %>%
       select(state, sector = sector.x, fuel, technology, year, value)
 
     # Multiply the tech shares by the input and output by state and fuel

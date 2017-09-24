@@ -18,11 +18,11 @@ the generated outputs: \code{L1322.out_Mt_state_Fert_Yh}, \code{L1322.IO_GJkg_st
 original data system was \code{LA1322.Fert.R} (gcam-usa level1).
 }
 \description{
-Briefly describe what this chunk does.
+Calculate input-output intensity coefficients and input energy for state fertilizer production
 }
 \details{
-Describe in detail what this chunk does.
+Calculate input-output intensity coefficients and input energy for state fertilizer production from state shares of national values.
 }
 \author{
-YourInitials CurrentMonthName 2017
+KD September 2017
 }
