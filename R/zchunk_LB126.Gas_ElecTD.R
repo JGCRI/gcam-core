@@ -24,9 +24,9 @@ module_gcam.usa_LB126.Gas_ElecTD <- function(command, ...) {
               "L101.inEIA_EJ_state_S_F",
               "L122.in_EJ_state_refining_F",
               "L123.out_EJ_state_elec_F",
-              FILE = "temp-data-inject/L132.in_EJ_state_indchp_F",
-              FILE = "temp-data-inject/L132.in_EJ_state_indfeed_F",
-              FILE = "temp-data-inject/L132.in_EJ_state_indnochp_F",
+              "L132.in_EJ_state_indchp_F",
+              "L132.in_EJ_state_indfeed_F",
+              "L132.in_EJ_state_indnochp_F",
               "L1321.in_EJ_state_cement_F_Y",
               "L1322.in_EJ_state_Fert_Yh",
               "L142.in_EJ_state_bld_F",
@@ -64,15 +64,9 @@ module_gcam.usa_LB126.Gas_ElecTD <- function(command, ...) {
     L101.inEIA_EJ_state_S_F <- get_data(all_data, "L101.inEIA_EJ_state_S_F")
     L122.in_EJ_state_refining_F <- get_data(all_data, "L122.in_EJ_state_refining_F")
     L123.out_EJ_state_elec_F <- get_data(all_data, "L123.out_EJ_state_elec_F")
-    L132.in_EJ_state_indchp_F <- get_data(all_data, "temp-data-inject/L132.in_EJ_state_indchp_F") %>%
-      gather(year, value, starts_with("X")) %>%
-      mutate(year = as.integer(substr(year, 2, 5)))
-    L132.in_EJ_state_indfeed_F <- get_data(all_data, "temp-data-inject/L132.in_EJ_state_indfeed_F") %>%
-      gather(year, value, starts_with("X")) %>%
-      mutate(year = as.integer(substr(year, 2, 5)))
-    L132.in_EJ_state_indnochp_F <- get_data(all_data, "temp-data-inject/L132.in_EJ_state_indnochp_F") %>%
-      gather(year, value, starts_with("X")) %>%
-      mutate(year = as.integer(substr(year, 2, 5)))
+    L132.in_EJ_state_indchp_F <- get_data(all_data, "L132.in_EJ_state_indchp_F")
+    L132.in_EJ_state_indfeed_F <- get_data(all_data, "L132.in_EJ_state_indfeed_F")
+    L132.in_EJ_state_indnochp_F <- get_data(all_data, "L132.in_EJ_state_indnochp_F")
     L1321.in_EJ_state_cement_F_Y <- get_data(all_data, "L1321.in_EJ_state_cement_F_Y")
     L1322.in_EJ_state_Fert_Yh <- get_data(all_data, "L1322.in_EJ_state_Fert_Yh")
     L142.in_EJ_state_bld_F <- get_data(all_data, "L142.in_EJ_state_bld_F")
@@ -233,9 +227,9 @@ module_gcam.usa_LB126.Gas_ElecTD <- function(command, ...) {
                      "L101.inEIA_EJ_state_S_F",
                      "L122.in_EJ_state_refining_F",
                      "L123.out_EJ_state_elec_F",
-                     "temp-data-inject/L132.in_EJ_state_indchp_F",
-                     "temp-data-inject/L132.in_EJ_state_indfeed_F",
-                     "temp-data-inject/L132.in_EJ_state_indnochp_F",
+                     "L132.in_EJ_state_indchp_F",
+                     "L132.in_EJ_state_indfeed_F",
+                     "L132.in_EJ_state_indnochp_F",
                      "L1321.in_EJ_state_cement_F_Y",
                      "L1322.in_EJ_state_Fert_Yh",
                      "L142.in_EJ_state_bld_F",
@@ -265,9 +259,9 @@ module_gcam.usa_LB126.Gas_ElecTD <- function(command, ...) {
                      "L101.inEIA_EJ_state_S_F",
                      "L122.in_EJ_state_refining_F",
                      "L123.out_EJ_state_elec_F",
-                     "temp-data-inject/L132.in_EJ_state_indchp_F",
-                     "temp-data-inject/L132.in_EJ_state_indfeed_F",
-                     "temp-data-inject/L132.in_EJ_state_indnochp_F",
+                     "L132.in_EJ_state_indchp_F",
+                     "L132.in_EJ_state_indfeed_F",
+                     "L132.in_EJ_state_indnochp_F",
                      "L1321.in_EJ_state_cement_F_Y",
                      "L1322.in_EJ_state_Fert_Yh",
                      "L142.in_EJ_state_bld_F",
@@ -289,9 +283,9 @@ module_gcam.usa_LB126.Gas_ElecTD <- function(command, ...) {
                      "L101.inEIA_EJ_state_S_F",
                      "L122.in_EJ_state_refining_F",
                      "L123.out_EJ_state_elec_F",
-                     "temp-data-inject/L132.in_EJ_state_indchp_F",
-                     "temp-data-inject/L132.in_EJ_state_indfeed_F",
-                     "temp-data-inject/L132.in_EJ_state_indnochp_F",
+                     "L132.in_EJ_state_indchp_F",
+                     "L132.in_EJ_state_indfeed_F",
+                     "L132.in_EJ_state_indnochp_F",
                      "L1321.in_EJ_state_cement_F_Y",
                      "L1322.in_EJ_state_Fert_Yh",
                      "L142.in_EJ_state_bld_F",
@@ -306,9 +300,9 @@ module_gcam.usa_LB126.Gas_ElecTD <- function(command, ...) {
       add_legacy_name("L126.out_EJ_state_td_elec") %>%
       add_precursors("L122.in_EJ_state_refining_F",
                      "L123.out_EJ_state_elec_F",
-                     "temp-data-inject/L132.in_EJ_state_indchp_F",
-                     "temp-data-inject/L132.in_EJ_state_indfeed_F",
-                     "temp-data-inject/L132.in_EJ_state_indnochp_F",
+                     "L132.in_EJ_state_indchp_F",
+                     "L132.in_EJ_state_indfeed_F",
+                     "L132.in_EJ_state_indnochp_F",
                      "L1321.in_EJ_state_cement_F_Y",
                      "L1322.in_EJ_state_Fert_Yh",
                      "L142.in_EJ_state_bld_F",
@@ -324,9 +318,9 @@ module_gcam.usa_LB126.Gas_ElecTD <- function(command, ...) {
       add_legacy_name("L126.in_EJ_state_td_elec") %>%
       add_precursors("L122.in_EJ_state_refining_F",
                      "L123.out_EJ_state_elec_F",
-                     "temp-data-inject/L132.in_EJ_state_indchp_F",
-                     "temp-data-inject/L132.in_EJ_state_indfeed_F",
-                     "temp-data-inject/L132.in_EJ_state_indnochp_F",
+                     "L132.in_EJ_state_indchp_F",
+                     "L132.in_EJ_state_indfeed_F",
+                     "L132.in_EJ_state_indnochp_F",
                      "L1321.in_EJ_state_cement_F_Y",
                      "L1322.in_EJ_state_Fert_Yh",
                      "L142.in_EJ_state_bld_F",
