@@ -53,7 +53,7 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
     if (OLD_DATA_SYSTEM_BEHAVIOR){
       states_subregions_region4calc <- states_subregions %>%
         mutate(subregion4 = if_else(state == "WV", "Midwest", subregion4))
-    }else{
+    } else {
       states_subregions_region4calc <- states_subregions_region4calc
     }
 
@@ -93,7 +93,7 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
     # In order to be able to work with these data across years, the "edition" number needs to be removed from all
     # variable names. E.g., re-naming square footage from "SQFT3" in 1986 and "SQFT4" in 1989 to "SQFT" in all.
     L144.CBECS_all <- lapply(L144.CBECS_all, function(df) {
-      stats::setNames(df, sub("[0-9]{1}", "", names(df)))
+      stats::setNames(df, sub("[0-9]{1}$", "", names(df)))
     })
 
     # Add in the census region (subregion4) and census division (subregion9)
@@ -145,7 +145,7 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
       mutate(pcflsp_m2 = if_else(year == 1979, SQFT1 / value * CONV_MILFT2_M2, SQFT2 / value * CONV_MILFT2_M2))
 
     # Add in a year column to CBECS data so that we can bind rows later
-    for (i in 1:length(L144.CBECS_all)){
+    for (i in seq_along(L144.CBECS_all)){
       df <- L144.CBECS_all[[i]]
       data_year <- substr(names(L144.CBECS_all[i]), 6, 9)
       df$year <- as.integer(data_year)
@@ -162,7 +162,7 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
       # Bind all CBECS tibbles
       do.call(bind_rows, .)
 
-    # For 1986, calculate per capita floorspace by subregion4
+    # For 1986, calculate per capita floorspace by subregion4, because it didn't have subregion9 divisions
     L144.flsp_bm2_sR4_CBECS1986 <- L144.flsp_bm2_sR4 %>%
       filter(year == 1986) %>%
       group_by(subregion4, year) %>%
@@ -270,7 +270,7 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
             # Sum by census division, multiplying by sampling weights
             summarise(value = sum(value * ADJWT * CONV_KBTU_EJ)) %>%
             ungroup()
-        }else{
+        } else {
           # If no cols_to_keep, return an empty tibble so that we can bind rows
           tibble()
         }
@@ -293,7 +293,7 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
       mutate(value = value * share / efficiency) %>%
       select(-share, -efficiency)
 
-    # Merge this back into the initial table, but with the district services fuel removed
+    # Replace old district services with new district service values
     L144.in_EJ_sR9_CBECS_F_U_Y <- L144.in_EJ_sR9_CBECS_F_U_Y %>%
       filter(fuel != "district services") %>%
       bind_rows(L144.in_EJ_sR9_CBECS_Fdist_U_Y)
@@ -378,9 +378,9 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
     # Calculating shares of energy consumption by each service, within each state and fuel
     L144.pct_state_comm_F_U_Y <- L144.in_EJ_state_comm_F_U_Y_unscaled %>%
       group_by(state, fuel, year) %>%
-      mutate(value = value / sum(value),
-             sector = "comm") %>%
-      ungroup()
+      mutate(value = value / sum(value)) %>%
+      ungroup() %>%
+      mutate(sector = "comm")
 
     # At this point we can disaggregate the state-level energy consumption by sector and fuel to the specific end uses
     # Non-building electricity use by state is estimated separately, and deducted from state-wide commercial electricity consumption
@@ -453,7 +453,7 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
 
      # Bind this back to the initial table of commercial energy use by state and fuel
      L144.in_EJ_state_commint_F <- L142.in_EJ_state_bld_F %>%
-       filter(sector == "comm" & fuel != "electricity") %>%
+       filter(sector == "comm", fuel != "electricity") %>%
        bind_rows(L144.in_EJ_state_commint_elec)
 
      # This energy can now be apportioned to the end-use services
