@@ -331,7 +331,7 @@ CONV_FT2_M2 <- 0.0929
 driver.MAKE <- "MAKE"
 driver.DECLARE_OUTPUTS <- "DECLARE_OUTPUTS"
 driver.DECLARE_INPUTS <- "DECLARE_INPUTS"
-
+driver.SEPARATOR <- "; "
 
 # Modeltime constants ======================================================================
 
