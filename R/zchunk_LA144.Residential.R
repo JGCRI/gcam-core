@@ -13,7 +13,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RLH September 2017
-#' @export
 module_gcam.usa_LA144.Residential <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
@@ -21,15 +20,15 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
              FILE = "gcam-usa/EIA_AEO_fuels",
              FILE = "gcam-usa/EIA_AEO_services",
              FILE = "gcam-usa/Census_pop_hist",
-             FILE = "gcam-usa/EIA_AEO_Tab4", # check units
-             FILE = "gcam-usa/RECS_1979", # Finish documenting
-             FILE = "gcam-usa/RECS_1984", # Finish documenting
-             FILE = "gcam-usa/RECS_1990", # Finish documenting
-             FILE = "gcam-usa/RECS_1993", # Finish documenting
-             FILE = "gcam-usa/RECS_1997", # Finish documenting
-             FILE = "gcam-usa/RECS_2001", # Finish documenting
-             FILE = "gcam-usa/RECS_2005", # Finish documenting
-             FILE = "gcam-usa/RECS_2009", # Finish documenting
+             FILE = "gcam-usa/EIA_AEO_Tab4",
+             FILE = "gcam-usa/RECS_1979",
+             FILE = "gcam-usa/RECS_1984",
+             FILE = "gcam-usa/RECS_1990",
+             FILE = "gcam-usa/RECS_1993",
+             FILE = "gcam-usa/RECS_1997",
+             FILE = "gcam-usa/RECS_2001",
+             FILE = "gcam-usa/RECS_2005",
+             FILE = "gcam-usa/RECS_2009",
              "L142.in_EJ_state_bld_F",
              FILE = "temp-data-inject/L143.share_state_Pop_CDD_sR13",
              FILE = "temp-data-inject/L143.share_state_Pop_HDD_sR13"))
@@ -37,6 +36,12 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
     return(c("L144.flsp_bm2_state_res",
              "L144.in_EJ_state_res_F_U_Y"))
   } else if(command == driver.MAKE) {
+
+    # Silence package checks
+    year <- value <- subregion9 <- DIVISION2009 <- DIVISION <- subregion13 <- LRGSTATE <- subregion13 <- REPORTABLE_DOMAIN <-
+      state <- subregion9 <- year <- variable <- HOUSEHOLDS <- NWEIGHT <- . <- value.x <- value.y <- variable <- pcflsp_m2 <-
+      pcflsp_m2.x <- pcflsp_m2.y <- conv_9_13 <- sector <- fuel <- service <- DIVISION <- val_1993 <- conv <- val_1990 <-
+      Fuel <- Service <- tv_1995 <- fuel_sum <- share <- service.x <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -76,7 +81,7 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
     names(L144.RECS_all) <- paste0("RECS", c(1979, 1984, 1990, 1993, 1997, 2001, 2005, 2009))
 
     # Add year column to each tibble in list
-    for (i in 1:length(L144.RECS_all)){
+    for (i in seq_along(L144.RECS_all)){
       L144.RECS_all[[i]]$year <- substr(names(L144.RECS_all[i]), 5, 8) %>% as.integer()
     }
 
@@ -88,7 +93,7 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
           left_join_error_no_match(df,
                                    states_subregions %>% select(subregion9, DIVISION2009) %>% distinct,
                                    by = c("DIVISION" = "DIVISION2009"))
-        }else{
+        } else {
           left_join_error_no_match(df,
                     states_subregions %>% select(subregion9, DIVISION) %>% distinct,
                     by = "DIVISION")
@@ -102,7 +107,7 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
           left_join_error_no_match(df,
                                    states_subregions %>% select(subregion13, LRGSTATE, subregion9) %>% distinct,
                                    by = c("LRGSTATE", "subregion9"))
-        }else{
+        } else {
           # Return normal tibble if large states not specified
           df
         }
@@ -120,7 +125,7 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
     # Convert all missing value strings to 0 in all databases
     L144.RECS_all[["RECS1990"]][L144.RECS_all[["RECS1990"]] == 9999999] <- 0
     L144.RECS_all[["RECS2005"]][L144.RECS_all[["RECS2005"]] == 9999999] <- 0
-    L144.RECS_all[["RECS2005"]][is.na( L144.RECS_all[["RECS2005"]] ) ] <- 0
+    L144.RECS_all[["RECS2005"]][is.na(L144.RECS_all[["RECS2005"]]) ] <- 0
 
     # Aggregate population to the subregion9 and subregion13 levels for calculation of per-capita values
     L144.Census_pop_hist <- Census_pop_hist %>%
@@ -153,7 +158,7 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
             tidyr::gather_("variable", "value", flsp_var) %>%
             group_by(year, subregion9, variable) %>%
             summarise(value = sum(value * HOUSEHOLDS * CONV_MILFT2_M2))
-        }else{
+        } else {
           # For all other years that have weight category to multiply by
         if("NWEIGHT" %in% names(df)){
           flsp_var <- names(df)[which(names(df) %in% flsp_vars)]
@@ -162,7 +167,7 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
             tidyr::gather_("variable", "value", flsp_var) %>%
             group_by(year, subregion9, variable) %>%
             summarise(value = sum(value * NWEIGHT * CONV_FT2_M2))
-        }else{
+        } else {
           # Return empty tibble for binding rows
           tibble()
         }
@@ -183,7 +188,7 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
             tidyr::gather_("variable", "value", flsp_var) %>%
             group_by(year, subregion13, variable) %>%
             summarise(value = sum(value * NWEIGHT * CONV_FT2_M2))
-        }else{
+        } else {
           # Return empty tibble for binding rows
           tibble()
         }
@@ -246,7 +251,7 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
             group_by(subregion9, year, variable) %>%
             summarise(value = sum(value * NWEIGHT * CONV_KBTU_EJ, na.rm = TRUE)) %>%
             ungroup()
-        }else{
+        } else {
           tibble()
         }
       }) %>%
@@ -264,7 +269,7 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
             group_by(subregion13, year, variable) %>%
             summarise(value = sum(value * NWEIGHT * CONV_KBTU_EJ, na.rm = TRUE)) %>%
             ungroup()
-        }else{
+        } else {
           tibble()
         }
       }) %>%
@@ -314,7 +319,7 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
        mutate(conv = value / lead(value, n = 1L, order_by = year)) %>%
        ungroup() %>%
        replace_na(list(conv = 1))
-    }else{
+    } else {
       # In the corrected version, we sum by service and fuel first
       L144.RECS_1979 <- RECS_1979 %>%
         left_join_error_no_match(states_subregions %>%

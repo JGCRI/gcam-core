@@ -430,7 +430,7 @@ gcamusa.STATES <- c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", 
                     "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY")
 
 # Uncomment these lines to run under 'timeshift' conditions
-HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
-FUTURE_YEARS <- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)
-BASE_YEARS <- c(1975, 1990, 2005)   # normally (1975, 1990, 2005, 2010)
-MODEL_YEARS <- c(BASE_YEARS, FUTURE_YEARS)
+# HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
+# FUTURE_YEARS <- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)
+# BASE_YEARS <- c(1975, 1990, 2005)   # normally (1975, 1990, 2005, 2010)
+# MODEL_YEARS <- c(BASE_YEARS, FUTURE_YEARS)

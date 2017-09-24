@@ -1,7 +1,7 @@
 # File: RECS_1984.csv
 # Title: Residential Energy Consumption Survey 1984
-# Source: Fill in
-# Units: Fill in
+# Source: https://www.eia.gov/consumption/residential/data/previous
+# Units: See source
 DIVISION,HOUSEHOLDS,UNHEATED,HEATED
 1,4.3,2108,1666
 2,14,1854,1581
