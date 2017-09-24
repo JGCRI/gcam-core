@@ -21,7 +21,7 @@ original data system was \code{LA132.Industry.R} (gcam-usa level1).
 Provides industrial energy consumption and industrial feedstock consumption by region/fuel/historical year.
 }
 \details{
-Describe in detail what this chunk does.
+Provides for each US state industrial energy consumption and industrial feedstock consumption by region/fuel/historical year.
 }
 \author{
 ST September 2017

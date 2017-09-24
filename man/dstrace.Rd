@@ -2,22 +2,43 @@
 % Please edit documentation in R/dstrace.R
 \name{dstrace}
 \alias{dstrace}
-\title{dstrace}
+\title{A tracing utility for the GCAM Data System.}
 \usage{
-dstrace(object_name, all_data, previous_tracelist = NULL, recurse = TRUE)
+dstrace(object_name, direction = "upstream", graph = FALSE,
+  gcam_data_map = GCAM_DATA_MAP, previous_tracelist = NULL,
+  recurse = TRUE, ...)
 }
 \arguments{
-\item{object_name}{Name of object to trace}
+\item{object_name}{Name of object to trace (can be either a data object or a code chunk)}
 
-\item{all_data}{Data structure produced by a call to \code{\link{driver}}}
+\item{direction}{Trace direction (upstream, the default; downstream; or both), character}
+
+\item{graph}{Plot a directed graph of relationships? Logical}
+
+\item{gcam_data_map}{A tibble of metadata information; normally a built-in package dataset}
 
 \item{previous_tracelist}{Information about previous objects printed}
 
-\item{recurse}{Recurse to print information about precursor objects?}
+\item{recurse}{Recurse to print information about precursor objects? Logical}
+
+\item{...}{Extra arguments passed on to \code{\link{dstrace_plot}}}
 }
 \value{
-Boolean (object_name found, or not)
+A tibble with the trace information (object name and trace number), invisibly
 }
 \description{
-dstrace
+A tracing utility for the GCAM Data System.
+}
+\details{
+What other data products feed into some particular data system object?
+Conversely, to what other products does some object feed? These are the kinds
+of questions that \code{dstrace} can help answer.
+}
+\examples{
+dstrace("L100.FAO_ag_Exp_t")
+dstrace("L100.FAO_ag_Exp_t", direction = "downstream")
+dstrace("L100.FAO_ag_Exp_t", direction = "both", graph = TRUE)
+}
+\author{
+BBL
 }

@@ -219,13 +219,14 @@ change_iso_code <- function(d, from, to, col = "iso") {
 #' a column called ISO.
 #' @param d The data to be transformed.
 #' @param col The column currently containing the iso codes (default = 'iso')
+#' @param delete_original Delete original column? Logical
 #' @return Tibble with the iso codes converted to lower case. If the column with
 #'   the codes was not called 'iso', it will be renamed to 'iso'.
 #' @export
-standardize_iso <- function(d, col = "iso") {
+standardize_iso <- function(d, col = "iso", delete_original = TRUE) {
   assertthat::assert_that(tibble::is_tibble(d))
   d[["iso"]] <- tolower(d[[col]])
-  if(col != "iso") {
+  if(delete_original && col != "iso") {
     # This is surprisingly hard to do using dplyr
     d[[col]] <- NULL
   }

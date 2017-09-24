@@ -15,12 +15,12 @@
 #' @author ST September 2017
 module_gcam.usa_LA132.Industry <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L101.inEIA_EJ_state_S_F",
-              "L122.in_EJ_state_refining_F",
-              "L123.in_EJ_R_indchp_F_Yh",
-              "L123.out_EJ_R_indchp_F_Yh",
-              "L1322.in_EJ_R_indenergy_F_Yh",
-              "L1322.in_EJ_R_indfeed_F_Yh"))
+    return(c("L101.inEIA_EJ_state_S_F",
+             "L122.in_EJ_state_refining_F",
+             "L123.in_EJ_R_indchp_F_Yh",
+             "L123.out_EJ_R_indchp_F_Yh",
+             "L1322.in_EJ_R_indenergy_F_Yh",
+             "L1322.in_EJ_R_indfeed_F_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L132.in_EJ_state_indnochp_F",
              "L132.in_EJ_state_indchp_F",
@@ -76,7 +76,7 @@ module_gcam.usa_LA132.Industry <- function(command, ...) {
       L132.in_pct_state_ind_F
 
 
-    # PART 2. Approtion USA consumption and output to state level for non-cogeneration and cogeneration
+    # PART 2. Apportion USA consumption and output to state level for non-cogeneration and cogeneration
 
     # Apportion national-level industrial energy consumption to states - NON-COGEN
     L132.in_pct_state_ind_F %>%
@@ -147,7 +147,7 @@ module_gcam.usa_LA132.Industry <- function(command, ...) {
       bind_rows(L132.pct_state_indfeed_gas) %>%
       bind_rows(L132.in_EJ_state_indfeed_liq_unscaled) ->
       L132.pct_state_indfeed_F
-      # ^^ proportions for petroleum, gas, and coal
+    # ^^ proportions for petroleum, gas, and coal
 
     # Apportion feedstocks among states
     L132.pct_state_indfeed_F %>%
@@ -160,7 +160,6 @@ module_gcam.usa_LA132.Industry <- function(command, ...) {
       select(-multiplier, -GCAM_region_ID) %>%
       arrange(state) ->
       L132.in_EJ_state_indfeed_F
-
 
 
     ## OUTPUTS
