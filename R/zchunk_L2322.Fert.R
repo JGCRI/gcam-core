@@ -76,6 +76,14 @@ module_energy_L2322.Fert <- function(command, ...) {
     L142.ag_Fert_NetExp_MtN_R_Y <- get_data(all_data, "L142.ag_Fert_NetExp_MtN_R_Y")
 
     # ===================================================
+    # 0. Give binding for variable names used in pipeline
+
+    LEVEL2_DATA_NAMES <- year.fillout <- to.value <- technology <- year <-
+      share.weight <- supplysector <- subsector <- coefficient <- minicam.energy.input <-
+      NEcost_75USDkgN <- input.cost <- remove.fraction <- half.life <- median.shutdown.point <-
+      value <- calOutputValue <- sector <- fuel <- subs.share.weight <- region <- fixedOutput <- . <- NULL
+
+    # ===================================================
     # 1. Perform computations
     # Create tables to delete technologies and subsectors in regions where heat is not modeled as a fuel
     # 1a. Supplysector information
