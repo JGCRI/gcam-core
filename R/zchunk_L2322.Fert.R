@@ -1,6 +1,6 @@
 #' module_energy_L2322.Fert
 #'
-#' Briefly describe what this chunk does.
+#' The chunk provides supply sector information/keywords, subsector shareweights, global technology lifetime, energy inputs and coefficients, global fertilizer manufacturing technologies, and etc. for fertilizer sector.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,11 +8,11 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L2322.SectorLogitTables[[ curr_table ]]$data}, \code{L2322.Supplysector_Fert}, \code{L2322.FinalEnergyKeyword_Fert}, \code{L2322.SubsectorLogitTables[[ curr_table ]]$data}, \code{L2322.SubsectorLogit_Fert}, \code{L2322.SubsectorShrwt_Fert}, \code{L2322.SubsectorShrwtFllt_Fert}, \code{L2322.SubsectorInterp_Fert}, \code{L2322.SubsectorInterpTo_Fert}, \code{L2322.StubTech_Fert}, \code{L2322.GlobalTechShrwt_Fert}, \code{L2322.GlobalTechCoef_Fert}, \code{L2322.GlobalTechCost_Fert}, \code{L2322.GlobalTechCapture_Fert}, \code{L2322.GlobalTechShutdown_Fert}, \code{L2322.GlobalTechSCurve_Fert}, \code{L2322.GlobalTechLifetime_Fert}, \code{L2322.GlobalTechProfitShutdown_Fert}, \code{L2322.StubTechProd_Fert}, \code{L2322.StubTechCoef_Fert}, \code{L2322.StubTechFixOut_Fert_imp}, \code{L2322.StubTechFixOut_Fert_exp}, \code{L2322.PerCapitaBased_Fert}, \code{L2322.BaseService_Fert}. The corresponding file in the
 #' original data system was \code{L2322.Fert.R} (energy level2).
-#' @details Describe in detail what this chunk does.
+#' @details The chunk provides supply sector information/keywords, subsector shareweights, global technology lifetime, energy inputs and coefficients, global fertilizer manufacturing technologies, and etc. for fertilizer sector.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
+#' @author LF September 2017
 #' @export
 module_energy_L2322.Fert <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -87,7 +87,7 @@ module_energy_L2322.Fert <- function(command, ...) {
     # L2322.FinalEnergyKeyword_Fert: Supply sector keywords for fertilizer sector
     A322.sector %>%
       write_to_all_regions(LEVEL2_DATA_NAMES[["FinalEnergyKeyword"]], GCAM_region_names) %>%
-      stats::na.omit(.) ->
+      na.omit ->
       L2322.FinalEnergyKeyword_Fert
 
     # 2b. Subsector information
@@ -129,6 +129,12 @@ module_energy_L2322.Fert <- function(command, ...) {
       L2322.StubTech_Fert
 
     # L2322.GlobalTechShrwt_Fert: Shareweights of global fertilizer sector technologies
+    # Notes of the workflow: The pipeline below functions as the interpolate_and_melt
+    #                        function in the old data system. The pipeline first extracts the years
+    #                        needed in interpolation then constructs the layout with proper id tags (columns)
+    #                        for interpolation years, and finally performs interpolation using 'rule=1' as in
+    #                        old data system. For more information about 'rule' please see ?approx_fun.
+    #                        Same workflow applies at several places in this chunk.
     A322.globaltech_shrwt %>%
       gather(year, share.weight, matches(YEAR_PATTERN)) %>%
       mutate(year = as.numeric(year)) ->
@@ -290,13 +296,14 @@ module_energy_L2322.Fert <- function(command, ...) {
       filter(year %in% BASE_YEARS) %>%
       rename(fixedOutput = value) %>%
       left_join_error_no_match(GCAM_region_names, by = 'GCAM_region_ID') %>%
-      mutate(supplysector = A322.globaltech_renew[["supplysector"]], subsector = A322.globaltech_renew[["subsector"]], technology = A322.globaltech_renew[["technology"]]) %>%
+      mutate(supplysector = A322.globaltech_renew[["supplysector"]], subsector = A322.globaltech_renew[["subsector"]], stub.technology = A322.globaltech_renew[["technology"]]) %>%
       mutate(fixedOutput = pmax(0, -1 * fixedOutput)) %>%
       mutate(fixedOutput = round(fixedOutput, energy.DIGITS_CALOUTPUT)) %>%
       mutate(share.weight.year = year) %>%
       mutate(subs.share.weight = 0) %>%
       mutate(tech.share.weight = 0) %>%
-      bind_rows(repeat_add_columns(select(filter(., year == max(BASE_YEARS)), -year), tibble(year = FUTURE_YEARS))) -> #Repeat final year to all future years and rbind
+      bind_rows(repeat_add_columns(select(filter(., year == max(BASE_YEARS)), -year), tibble(year = FUTURE_YEARS))) %>%
+      select(LEVEL2_DATA_NAMES[["StubTechFixOut"]])-> #Repeat final year to all future years and rbind
       L2322.StubTechFixOut_Fert_imp
 
     # L2322.StubTechFixOut_Fert_exp: fixed output of import technology (fixed imports)
