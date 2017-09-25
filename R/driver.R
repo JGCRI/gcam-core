@@ -78,6 +78,35 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 }
 
 
+#' tibbelize_outputs
+#'
+#' Extract precursor and other metadata from chunk output data and convert to tibble form.
+#'
+#' @param chunk_data List of chunk outputs, a data list (see \code{\link{is_data_list}})
+#' @param chunk_name Name of current chunk, character
+#' @return A tibble with chunk name, output name, title, units, flags, precursors, and comments.
+#' This table has one row per output name; multiple flags, precursors, etc., are concatenated into single entries.
+tibbelize_outputs <- function(chunk_data, chunk_name) {
+  assert_that(is.character(chunk_name))
+  assert_that(is_data_list(chunk_data))
+
+  metadata <- list()
+  for(cd in names(chunk_data)) {
+    if(!is.null(chunk_data[[cd]]) & length(chunk_data[[cd]])) {
+      # Here we use paste both to collapse vectors into a single string, and deal with possible NULLs
+      metadata[[cd]] <- tibble(name = chunk_name,
+                               output = cd,
+                               precursors = paste(get_precursors(chunk_data[[cd]]), collapse = driver.SEPARATOR),
+                               title = paste(get_title(chunk_data[[cd]]), collapse = driver.SEPARATOR),
+                               units = paste(get_units(chunk_data[[cd]]), collapse = driver.SEPARATOR),
+                               comments = paste(get_comments(chunk_data[[cd]]), collapse = driver.SEPARATOR),
+                               flags = paste(get_flags(chunk_data[[cd]]), collapse = driver.SEPARATOR))
+    }
+  }
+  bind_rows(metadata)
+}
+
+
 #' driver
 #'
 #' Run the entire data system.
@@ -91,10 +120,12 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 #' @param return_outputs_of Return the data objects that are output from these chunks (character)
 #' If \code{stop_after} is specified, by default that chunk's outputs are returned.
 #' @param return_data_names Return these data objects (character). By default this is the union of \code{return_inputs_of} and \code{return_inputs_of}
+#' @param return_data_map_only Return only the precursor information? (logical) This overrides
+#' the other \code{return_*} parameters above.
 #' @param write_outputs Write all chunk outputs to disk?
 #' @param outdir Location to write output data (ignored if \code{write_outputs} is \code{FALSE})
 #' @param xmldir Location to write output XML (ignored if \code{write_outputs} is \code{FALSE})
-#' @return A list of all built data.
+#' @return A list of all built data (or a data map tibble if requested).
 #' @details The driver loads any necessary data from input files,
 #' runs all code chunks in an order dictated by their dependencies,
 #' does error-checking, and writes outputs. For more details, see
@@ -110,7 +141,9 @@ driver <- function(all_data = empty_data(),
                    return_outputs_of = stop_after,
                    return_data_names = union(inputs_of(return_inputs_of),
                                              outputs_of(return_outputs_of)),
-                   write_outputs = TRUE, outdir = OUTPUTS_DIR, xmldir = XML_DIR,
+                   return_data_map_only = FALSE,
+                   write_outputs = !return_data_map_only,
+                   outdir = OUTPUTS_DIR, xmldir = XML_DIR,
                    quiet = FALSE) {
 
   # If users ask to stop after a chunk, but also specify they want particular inputs,
@@ -132,6 +165,7 @@ driver <- function(all_data = empty_data(),
   assert_that(is.null(return_inputs_of) | is.character(return_inputs_of))
   assert_that(is.null(return_outputs_of) | is.character(return_outputs_of))
   assert_that(is.null(return_data_names) | is.character(return_data_names))
+  assert_that(is.logical(return_data_map_only))
   assert_that(is.logical(write_outputs))
   assert_that(is.logical(quiet))
 
@@ -179,6 +213,13 @@ driver <- function(all_data = empty_data(),
     all_data <- add_data(csv_data, all_data)
   }
 
+  # Extract metadata from the input data; we'll add output metadata as we run
+  metadata_info <- list()
+  if(return_data_map_only) {
+    if(!quiet) cat("Extracting metadata from inputs...\n")
+    metadata_info <- list(INPUT = tibbelize_outputs(all_data, chunk_name = "INPUT"))
+  }
+
   # Initialize some stuff before we start to run the chunks
   chunks_to_run <- chunklist$name
   removed_count <- 0
@@ -217,6 +258,11 @@ driver <- function(all_data = empty_data(),
                           promised_outputs = po,
                           outputs_xml = subset(chunkoutputs, name == chunk)$to_xml)
 
+      # Save precursor information and other metadata
+      if(return_data_map_only) {
+        metadata_info[[chunk]] <- tibbelize_outputs(chunk_data, chunk)
+      }
+
       # Add this chunk's data to the global data store
       all_data <- add_data(chunk_data, all_data)
 
@@ -252,16 +298,24 @@ driver <- function(all_data = empty_data(),
     }
   } # while
 
+  # Finish up: write outputs, determine return data format
+
   if(write_outputs) {
     if(!quiet) cat("Writing chunk data...\n")
     save_chunkdata(all_data, outputs_dir = outdir, xml_dir = xmldir)
   }
 
-  all_data <- all_data[return_data_names]
+  if(return_data_map_only) {
+    if(!quiet) cat("Returning data map.\n")
+    x <- bind_rows(metadata_info)
+  } else {
+    all_data <- all_data[return_data_names]
 
-  if(!quiet && length(all_data) > 0) cat("Returning", length(all_data), "tibbles.\n")
+    if(!quiet && length(all_data) > 0) cat("Returning", length(all_data), "tibbles.\n")
+    x <- all_data[return_data_names]
+  }
   if(!quiet) cat("All done.\n")
-  invisible(all_data[return_data_names])
+  invisible(x)
 }
 
 
