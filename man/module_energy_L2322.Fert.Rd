@@ -18,11 +18,11 @@ the generated outputs: \code{L2322.SectorLogitTables[[ curr_table ]]$data}, \cod
 original data system was \code{L2322.Fert.R} (energy level2).
 }
 \description{
-Briefly describe what this chunk does.
+The chunk provides supply sector information/keywords, subsector shareweights, global technology lifetime, energy inputs and coefficients, global fertilizer manufacturing technologies, and etc. for fertilizer sector.
 }
 \details{
-Describe in detail what this chunk does.
+The chunk provides supply sector information/keywords, subsector shareweights, global technology lifetime, energy inputs and coefficients, global fertilizer manufacturing technologies, and etc. for fertilizer sector.
 }
 \author{
-YourInitials CurrentMonthName 2017
+LF September 2017
 }
