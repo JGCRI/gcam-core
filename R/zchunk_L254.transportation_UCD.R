@@ -336,7 +336,8 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       # Repeat by the number of model time periods
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       # Write in a default value for speed
-      mutate(speed = 1) ->
+      mutate(speed = 1) %>%
+      select(-r_ss_ts) ->
       L254.tranSubsectorSpeed_noVOTT
 
     # L254.tranSubsectorSpeed_nonmotor: Speeds of non-motorized transportation subsectors
