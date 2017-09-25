@@ -254,9 +254,12 @@ energy.RSRC_FUELS <- c("coal", "gas", "refined liquids")
 energy.DIGITS_EFFICIENCY <- 3
 energy.DIGITS_COST <- 4
 energy.DIGITS_REMOVE.FRACTION <- 2
+
+# below are constants needed by chunk L2322.Fert.R
 energy.CO2.STORAGE.MARKET <- "carbon-storage"
 energy.DIGITS_COEFFICIENT <- 7
 energy.DIGITS_REMOVE.FRACTION <- 2
+energy.DIGITS_CALOUTPUT <- 7
 
 
 
