@@ -33,10 +33,15 @@ test_that("matches old data system output", {
     # They should match! See https://github.com/JGCRI/gcamdata/pull/751#issuecomment-331578990
     expect_true(tibble::is_tibble(gcamdata:::GCAM_DATA_MAP))
     expect_true(tibble::is_tibble(gcam_data_map))
-    expect_identical(dim(gcamdata:::GCAM_DATA_MAP), dim(gcam_data_map))
-    expect_identical(gcamdata:::GCAM_DATA_MAP$name, gcam_data_map$name)
-    expect_identical(gcamdata:::GCAM_DATA_MAP$output, gcam_data_map$output)
-    expect_identical(gcamdata:::GCAM_DATA_MAP$precursors, gcam_data_map$precursors)
+    expect_identical(dim(gcamdata:::GCAM_DATA_MAP), dim(gcam_data_map), info =
+                       "GCAM_DATA_MAP size doesn't match.  Rerun generate_package_data to update.")
+    expect_identical(gcamdata:::GCAM_DATA_MAP$name, gcam_data_map$name, info =
+                       "GCAM_DATA_MAP name doesn't match.  Rerun generate_package_data to update.")
+    expect_identical(gcamdata:::GCAM_DATA_MAP$output, gcam_data_map$output,
+                     info = "GCAM_DATA_MAP output doesn't match")
+    expect_identical(gcamdata:::GCAM_DATA_MAP$precursors,
+                     gcam_data_map$precursors, info =
+                       "GCAM_DATA_MAP precursors doesn't match.  Rerun generate_package_data to update.")
     # The following lines fail on Travis. Not sure why. But above we guarantee that the
     # pre-packaged GCAM_DATA_MAP has the same dimensions, object names, output names,
     # and precursors; that's probably good enough.
