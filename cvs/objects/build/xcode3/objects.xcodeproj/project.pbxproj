@@ -2911,7 +2911,7 @@
 					../../../../libs/java/include,
 					../../../../libs/java/include/darwin,
 				);
-				LD_RUNPATH_SEARCH_PATHS = "../libs/xercesc/lib ../libs/java/lib ../libs/boost-lib/stage/lib";
+				LD_RUNPATH_SEARCH_PATHS = "../libs/xercesc/lib ../libs/java/lib ../libs/boost-lib/stage/lib ../libs";
 				LIBRARY_SEARCH_PATHS = (
 					../../../../libs/xercesc/lib,
 					../../../../libs/java/lib,
@@ -2954,7 +2954,7 @@
 					../../../../libs/java/include,
 					../../../../libs/java/include/darwin,
 				);
-				LD_RUNPATH_SEARCH_PATHS = "../libs/xercesc/lib ../libs/java/lib ../libs/boost-lib/stage/lib";
+				LD_RUNPATH_SEARCH_PATHS = "../libs/xercesc/lib ../libs/java/lib ../libs/boost-lib/stage/lib ../libs";
 				LIBRARY_SEARCH_PATHS = (
 					../../../../libs/xercesc/lib,
 					../../../../libs/java/lib,
@@ -2999,7 +2999,7 @@
 					../../../../libs/java/include/darwin,
 					"../../../../libs/boost-numeric-bindings",
 				);
-				LD_RUNPATH_SEARCH_PATHS = "../libs/xercesc/lib ../libs/java/lib ../libs/boost-lib/stage/lib";
+				LD_RUNPATH_SEARCH_PATHS = "../libs/xercesc/lib ../libs/java/lib ../libs/boost-lib/stage/lib ../libs";
 				LIBRARY_SEARCH_PATHS = (
 					../../../../libs/xercesc/lib,
 					../../../../libs/java/lib,
@@ -3061,7 +3061,7 @@
 					"../../../../libs/boost-numeric-bindings",
 					../../../../libs/tbb/include,
 				);
-				LD_RUNPATH_SEARCH_PATHS = "../libs/xercesc/lib ../libs/java/lib ../libs/boost-lib/stage/lib";
+				LD_RUNPATH_SEARCH_PATHS = "../libs/xercesc/lib ../libs/java/lib ../libs/boost-lib/stage/lib ../libs";
 				LIBRARY_SEARCH_PATHS = (
 					../../../../libs/xercesc/lib,
 					../../../../libs/java/lib,
