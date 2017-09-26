@@ -78,7 +78,7 @@ module_energy_L2322.Fert <- function(command, ...) {
     # ===================================================
     # 0. Give binding for variable names used in pipeline
 
-    LEVEL2_DATA_NAMES <- year.fillout <- to.value <- technology <- year <-
+    year.fillout <- to.value <- technology <- year <-
       share.weight <- supplysector <- subsector <- coefficient <- minicam.energy.input <-
       NEcost_75USDkgN <- input.cost <- remove.fraction <- half.life <- median.shutdown.point <-
       value <- calOutputValue <- sector <- fuel <- subs.share.weight <- region <- fixedOutput <- . <- NULL
@@ -166,7 +166,7 @@ module_energy_L2322.Fert <- function(command, ...) {
     # L2322.GlobalTechCoef_Fert: Energy inputs and coefficients of global fertilizer energy use and feedstocks technologies
     A322.globaltech_coef %>%
       gather(year, coefficient, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.numeric(year)) ->
+      mutate(year = as.integer(year)) ->
       A322.globaltech_coef_long
 
     df_years <- unique(A322.globaltech_coef_long$year)
@@ -190,7 +190,7 @@ module_energy_L2322.Fert <- function(command, ...) {
     L2322.GlobalTechCoef_Fert %>%
       select(LEVEL2_DATA_NAMES[["GlobalTechYr"]]) %>%
       mutate(minicam.non.energy.input = "non-energy") %>%
-      left_join(L1322.Fert_NEcost_75USDkgN_F, by = c('technology' = 'fuel') ) %>%
+      left_join(L1322.Fert_NEcost_75USDkgN_F, by = c('technology' = 'fuel') ) %>% # expecting NAs in the joined tibble
       rename(input.cost = NEcost_75USDkgN) %>%
       mutate(input.cost = round(input.cost, energy.DIGITS_COST)) %>%
       na.omit -> #Export technologies have no cost assigned. Just drop the object
@@ -253,7 +253,7 @@ module_energy_L2322.Fert <- function(command, ...) {
     # L2322.GlobalTechSCurve_Fert: Global tech lifetime and s-curve retirement function
     L2322.globaltech_retirement %>%
       filter(!is.na(half.life)) %>%
-      select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "lifetime", "steepness", "half.life") ->
+      select(one_of(c(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "lifetime", "steepness", "half.life"))) ->
       L2322.GlobalTechSCurve_Fert
 
     # L2322.GlobalTechLifetime_Fert: Global tech lifetime
@@ -266,7 +266,7 @@ module_energy_L2322.Fert <- function(command, ...) {
     # L2322.GlobalTechProfitShutdown_Fert: Global tech profit shutdown decider.
     L2322.globaltech_retirement %>%
       filter(!is.na(median.shutdown.point)) %>%
-      select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "median.shutdown.point", "profit.shutdown.steepness") ->
+      select(one_of(c(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "median.shutdown.point", "profit.shutdown.steepness"))) ->
       L2322.GlobalTechProfitShutdown_Fert
 
     # Calibration and region-specific data
@@ -278,10 +278,7 @@ module_energy_L2322.Fert <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = 'GCAM_region_ID') %>%
       left_join_error_no_match(select(calibrated_techs, sector, fuel, supplysector, subsector, technology), by = c("sector", "fuel") ) %>%
       rename(stub.technology = technology) %>%
-      mutate(share.weight.year = year) %>%
-      mutate(subs.share.weight = 0) %>%
-      mutate(subs.share.weight = replace(subs.share.weight, which(calOutputValue > 0), 1)) %>%
-      mutate(tech.share.weight = subs.share.weight) %>%
+      mutate(share.weight.year = year, subs.share.weight = 0, subs.share.weight = replace(subs.share.weight, which(calOutputValue > 0), 1), tech.share.weight = subs.share.weight) %>%
       select(LEVEL2_DATA_NAMES[["StubTechProd"]]) ->
       L2322.StubTechProd_Fert
 
@@ -293,8 +290,7 @@ module_energy_L2322.Fert <- function(command, ...) {
       filter(coefficient != 0) %>% # Where 0, drop from this table (to revert to assumed defaults)
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(select(calibrated_techs, sector, fuel, supplysector, subsector, technology, minicam.energy.input), by = c("sector", "fuel")) %>%
-      mutate(stub.technology = technology) %>%
-      mutate(market.name = region) %>%
+      mutate(stub.technology = technology, market.name = region) %>%
       select(LEVEL2_DATA_NAMES[["StubTechCoef"]]) ->
       L2322.StubTechCoef_Fert
 
@@ -307,11 +303,9 @@ module_energy_L2322.Fert <- function(command, ...) {
       mutate(supplysector = A322.globaltech_renew[["supplysector"]], subsector = A322.globaltech_renew[["subsector"]], stub.technology = A322.globaltech_renew[["technology"]]) %>%
       mutate(fixedOutput = pmax(0, -1 * fixedOutput)) %>%
       mutate(fixedOutput = round(fixedOutput, energy.DIGITS_CALOUTPUT)) %>%
-      mutate(share.weight.year = year) %>%
-      mutate(subs.share.weight = 0) %>%
-      mutate(tech.share.weight = 0) %>%
+      mutate(share.weight.year = year, subs.share.weight = 0, tech.share.weight = 0) %>%
       bind_rows(repeat_add_columns(select(filter(., year == max(BASE_YEARS)), -year), tibble(year = FUTURE_YEARS))) %>%
-      select(LEVEL2_DATA_NAMES[["StubTechFixOut"]])-> #Repeat final year to all future years and rbind
+      select(LEVEL2_DATA_NAMES[["StubTechFixOut"]]) -> #Repeat final year to all future years and rbind
       L2322.StubTechFixOut_Fert_imp
 
     # L2322.StubTechFixOut_Fert_exp: fixed output of import technology (fixed imports)
@@ -324,10 +318,7 @@ module_energy_L2322.Fert <- function(command, ...) {
       mutate(supplysector = filter(A322.globaltech_shrwt, grepl( "Exports", supplysector))[["supplysector"]]) %>%
       mutate(subsector = filter(A322.globaltech_shrwt, grepl( "Exports", supplysector))[["subsector"]]) %>%
       mutate(stub.technology = filter(A322.globaltech_shrwt, grepl( "Exports", supplysector))[["technology"]]) %>%
-      mutate(fixedOutput = pmax(0, fixedOutput)) %>%
-      mutate(share.weight.year = year) %>%
-      mutate(subs.share.weight = 0) %>%
-      mutate(tech.share.weight = 0) ->
+      mutate(fixedOutput = pmax(0, fixedOutput), share.weight.year = year, subs.share.weight = 0, tech.share.weight = 0) ->
       L2322.StubTechFixOut_Fert_exp_base
 
     L2322.StubTechFixOut_Fert_exp_base %>%
