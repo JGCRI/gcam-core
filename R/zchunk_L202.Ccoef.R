@@ -62,7 +62,6 @@ module_energy_L202.Ccoef <- function(command, ...) {
       if(emissions.USE_GLOBAL_CCOEFS == 1) {
         # Using global average emissions coefficients based on CDIAC inventory and IEA energy balances
         L102.Ccoef_kgCGJ_F_Yh %>%
-          filter(year %in% HISTORICAL_YEARS) %>%
           filter(year == emissions.INVENTORY_MATCH_YEAR) -> L202.Ccoef_kgCGJ_F_fby
 
         L202.CarbonCoef %>%
@@ -73,7 +72,6 @@ module_energy_L202.Ccoef <- function(command, ...) {
       else if(emissions.USE_GLOBAL_CCOEFS == 0) {
         # Using region-specific average emissions coefficients based on CDIAC inventory and IEA energy balances
         L102.Ccoef_kgCGJ_R_F_Yh %>%
-          filter(year %in% HISTORICAL_YEARS) %>%
           filter(year == emissions.INVENTORY_MATCH_YEAR) %>%
           left_join(GCAM_region_names, by = "GCAM_region_ID") -> L202.Ccoef_kgCGJ_R_F_fby
 
