@@ -253,6 +253,8 @@ GlobalTechProfitShutdown, global-technology-database/+{sector-name}location-info
 
 GlobalTechSecOut, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{name}secondary-output, secondary-output/+output-ratio, scenario, scenario/world, world/global-technology-database
 
+GlobalTechRESSecOut, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{name}res-secondary-output, res-secondary-output/+output-ratio, scenario, scenario/world, world/global-technology-database
+
 GlobalTechIntGainOutputRatio, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, internal-gains/+output-ratio, internal-gains/+internal-gains-market-name, scenario, scenario/world, world/global-technology-database, period/internal-gains
 
 GlobalTechCapture, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, standard-capture-component/+remove-fraction, standard-capture-component/+storage-market, scenario, scenario/world, world/global-technology-database, period/standard-capture-component
@@ -461,6 +463,11 @@ ResBioCurve, world/+{name}region, region/+{name}supplysector, supplysector/+{nam
 AgProdChange, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+agProdChange, scenario, scenario/world
 
 AgCost, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+nonLandVariableCost, scenario, scenario/world, period/{name=CO2}CO2
+
+
+#####, POLICY
+
+PortfolioStd,world/+{name}region,region/+{name}policy-portfolio-standard, policy-portfolio-standard/+market, policy-portfolio-standard/+policyType, policy-portfolio-standard/+{year}constraint, scenario,scenario/world
 
 
 #####, LAND ALLOCATOR

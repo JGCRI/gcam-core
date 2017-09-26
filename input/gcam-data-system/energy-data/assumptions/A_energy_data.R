@@ -22,3 +22,7 @@ digits_shrwt <- 4
 
 #Range of PMultipliers to use for secondary output feedcrops from biodiesel and corn ethanol
 max_bioliquid_Pmult <- 0.80
+
+#Fraction of liquids for feedstocks and oil electricity that must come from oil
+oilFract_Elec <- 1
+oilFract_Feedstocks <- 1
