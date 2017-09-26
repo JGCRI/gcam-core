@@ -51,6 +51,7 @@
 // #include "emissions/include/by_product.h"
 #include "technologies/include/internal_gains.h"
 #include "technologies/include/fractional_secondary_output.h"
+#include "technologies/include/good_value_output.h"
 
 using namespace std;
 
@@ -66,7 +67,8 @@ bool OutputFactory::isOfType( const string& aType ) {
         || ( aType == RESSecondaryOutput::getXMLNameStatic() )
         || ( aType == InternalGains::getXMLNameStatic() )
         || ( aType == ResidueBiomassOutput::getXMLNameStatic() )
-        || ( aType == FractionalSecondaryOutput::getXMLNameStatic() );
+        || ( aType == FractionalSecondaryOutput::getXMLNameStatic() )
+        || ( aType == GoodValueOutput::getXMLNameStatic() );
     // TODO: Enable byproducts code when nuclear is committed.
     //   || ( aType == ByProduct::getXMLNameStatic() );
 }
@@ -96,6 +98,9 @@ auto_ptr<IOutput> OutputFactory::create( const string& aType ) {
     }
     if( aType == FractionalSecondaryOutput::getXMLNameStatic() ) {
         return auto_ptr<IOutput>( new FractionalSecondaryOutput );
+    }
+    if( aType == GoodValueOutput::getXMLNameStatic() ) {
+        return auto_ptr<IOutput>( new GoodValueOutput );
     }
     // Check for consistency.
     assert( !isOfType( aType ) );
