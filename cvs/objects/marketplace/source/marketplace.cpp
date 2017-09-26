@@ -1199,13 +1199,18 @@ double Marketplace::forecastPrice( const std::vector<Market*>& aMarketHistory, c
  */
 double Marketplace::forecastDemand( const std::vector<Market*>& aMarketHistory, const int aPeriod )
 {
-    double forecastedDemand = extrapolate( aMarketHistory, aPeriod, &Market::getSolverDemand );
-    // set some reasonable limits on what kinds of forecast you get
-    // this is going to use as a scale factor, so lose the sign
-    forecastedDemand = abs( forecastedDemand );
-    if( forecastedDemand < 1.0 ) {
-        // don't scale up small values
-        forecastedDemand = 1.0;
+    double forecastedDemand = 0.0;
+    if( aMarketHistory[ aPeriod ]->getType() == IMarketType::TAX && aMarketHistory[ aPeriod ]->isSolvable() ) {
+        forecastedDemand = abs( aMarketHistory[ aPeriod ]->getSupply() );
+    } else {
+        forecastedDemand = extrapolate( aMarketHistory, aPeriod, &Market::getSolverDemand );
+        // set some reasonable limits on what kinds of forecast you get
+        // this is going to use as a scale factor, so lose the sign
+        forecastedDemand = abs( forecastedDemand );
+        if( forecastedDemand < 1.0 ) {
+            // don't scale up small values
+            forecastedDemand = 1.0;
+        }
     }
 
     aMarketHistory[ aPeriod ]->setForecastDemand( forecastedDemand );
