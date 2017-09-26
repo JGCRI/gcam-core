@@ -308,7 +308,8 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
                      "L181.LC_bm2_R_C_Yh_GLU_irr_level",
-                     "temp-data-inject/L2241.LN4_HistMgdAllocation_crop") ->
+                     "temp-data-inject/L2241.LN4_HistMgdAllocation_crop") %>%
+      add_flags(FLAG_PROTECT_FLOAT) ->
       L2252.LN5_HistMgdAllocation_crop
 
     L2252.LN5_MgdAllocation_crop %>%
