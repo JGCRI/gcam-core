@@ -70,7 +70,7 @@ PolicyPortfolioStandard::PolicyPortfolioStandard():
     mConstraint( scenario->getModeltime()->getmaxper(), -1.0 ),
     mFixedTax( scenario->getModeltime()->getmaxper(), -1 ),
     mShareOfSectorOutput( scenario->getModeltime()->getmaxper(), -1.0 ),
-    mMinPrice( scenario->getModeltime()->getmaxper(), 0.0 )
+    mMinPrice( scenario->getModeltime()->getmaxper(), 0.0000001 )
 {
 }
 

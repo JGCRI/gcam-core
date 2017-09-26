@@ -52,6 +52,14 @@ L270.CreditInput_elec$efficiency <- L270.globaltech_eff.melt$efficiency[ match( 
 L270.CreditInput_elec$coefficient <- oilFract_Elec / L270.CreditInput_elec$efficiency
 L270.CreditInput_elec$efficiency <- NULL
 
+printlog( "L270.CreditInput_feedstocks: minicam-energy-input of oil credits for feedstock techs" )
+L270.CreditInput_feedstocks <- data.frame(sector.name = "industrial feedstocks",
+                                    subsector.name = "refined liquids",
+                                    technology = "refined liquids")
+L270.CreditInput_feedstocks <- repeat_and_add_vector(L270.CreditInput_feedstocks, "year", model_years)
+L270.CreditInput_feedstocks$minicam.energy.input <- "oil-credits"
+L270.CreditInput_feedstocks$coefficient <- oilFract_Feedstocks
+
 printlog( "L270.CreditMkt: Market for oil credits" )
 L270.CreditMkt <- GCAM_region_names[c("region")]
 L270.CreditMkt$policy.portfolio.standard <- "oil-credits"
@@ -64,6 +72,7 @@ L270.CreditMkt$constraint <- 1
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 write_mi_data( L270.CreditOutput, "GlobalTechRESSecOut", "ENERGY_LEVEL2_DATA", "L270.CreditOutput", "ENERGY_XML_BATCH", "batch_liquids_limits.xml" ) 
 write_mi_data( L270.CreditInput_elec, "GlobalTechCoef", "ENERGY_LEVEL2_DATA", "L270.CreditInput_elec", "ENERGY_XML_BATCH", "batch_liquids_limits.xml" ) 
+write_mi_data( L270.CreditInput_feedstocks, "GlobalTechCoef", "ENERGY_LEVEL2_DATA", "L270.CreditInput_feedstocks", "ENERGY_XML_BATCH", "batch_liquids_limits.xml" ) 
 write_mi_data( L270.CreditMkt, "PortfolioStd", "ENERGY_LEVEL2_DATA", "L270.CreditMkt", "ENERGY_XML_BATCH", "batch_liquids_limits.xml" ) 
 
 insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_liquids_limits.xml", "ENERGY_XML_FINAL", "liquids_limits.xml", "", xml_tag="outFile" )

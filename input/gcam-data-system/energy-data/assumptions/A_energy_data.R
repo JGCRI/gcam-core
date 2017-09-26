@@ -25,4 +25,4 @@ max_bioliquid_Pmult <- 0.80
 
 #Fraction of liquids for feedstocks and oil electricity that must come from oil
 oilFract_Elec <- 1
-oilFract_Feedstocks <- 1
+oilFract_Feedstocks <- 0.8
