@@ -129,16 +129,19 @@ module_energy_L222.en_transformation <- function(command, ...) {
     }
 
     # 2c. Technology information
-    # L222.StubTech_en: Identification of stub technologies of energy transformation
 
+    # L222.StubTech_en: Identification of stub technologies of energy transformation
+    # set up filter to keep all non-first gen bio techs in L222.StubTech_en
+    firstgenbio_techs <- c("corn ethanol", "sugarbeet ethanol", "sugar cane ethanol", "biodiesel")
+
+    # create list of regional stub.technologies
     A22.globaltech_shrwt %>%
       write_to_all_regions(c("region", "supplysector", "subsector", "technology"), GCAM_region_names) %>%
-      rename(stub.technology = technology) ->
+      rename(stub.technology = technology) %>%
+      # Drops region x technology combinations that are not applicable, i.e. any first gen bio techs not listed for a region in A_regions
+      filter(!(stub.technology %in% firstgenbio_techs) | paste(region, stub.technology) %in%
+               c(paste(A_regions$region, A_regions$ethanol), paste(A_regions$region, A_regions$biodiesel))) ->
       L222.StubTech_en
-
-
-
-
 
     # L222.GlobalTechInterp_en: Technology shareweight interpolation of energy transformation sectors
     A22.globaltech_interp %>%
@@ -353,20 +356,6 @@ module_energy_L222.en_transformation <- function(command, ...) {
       mutate(coefficient = round(value, energy.DIGITS_COEFFICIENT), market.name = region) %>%
       select(-sector, -GCAM_region_ID, -fuel, -value) ->
       L222.StubTechProd_refining
-
-    # ====================OLD=============
-
-      printlog( "L222.StubTech_en: Identification of stub technologies of energy transformation" )
-      #Note: assuming that technology list in the shareweight table includes the full set (any others would default to a 0 shareweight)
-      L222.StubTech_en <- write_to_all_regions( A22.globaltech_shrwt, names_Tech )
-      names( L222.StubTech_en ) <- names_StubTech
-
-      #Drop region x technology combinations that are not applicable
-      firstgenbio_techs <- c( "corn ethanol", "sugarbeet ethanol", "sugar cane ethanol", "biodiesel" )
-      L222.StubTech_en <- subset( L222.StubTech_en, stub.technology %!in% firstgenbio_techs |
-                                    paste( region, stub.technology ) %in%
-                                    c( paste( A_regions$region, A_regions$ethanol ),
-                                       paste( A_regions$region, A_regions$biodiesel ) ) )
 
     # ===================================================
 
