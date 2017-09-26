@@ -76,3 +76,18 @@ test_that("dstrace works", {
   tracelist$relationship[2] <- "Cousin marriage"
   expect_error(dstrace_plot("i1", tracelist, upstream = TRUE, downstream = TRUE))
 })
+
+test_that("info works", {
+  # handles bad input
+  expect_error(info(1))
+  expect_error(info("1", gcam_data_map = 1))
+  expect_error(info("1", previous_tracelist = 1))
+  expect_error(info("L100.FAO_ag_Exp_t", upstream = 1))
+  expect_error(info("L100.FAO_ag_Exp_t", downstream = 1))
+
+  # opens help page
+  expect_is(info("module_aglu_batch_an_input.xml"), "help_files_with_topic")
+
+  # Most of this functionality is tested through the dstrace tests above
+})
+

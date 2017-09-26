@@ -53,71 +53,19 @@ dstrace <- function(object_name, direction = "upstream", graph = FALSE,
     tracenum <- previous_tracelist$tracenum[which(previous_tracelist$object_name == object_name)]
   }
 
-  # Pull detailed object information from the internal data structure
-  obj_info <- filter(gcam_data_map, output == object_name)
-
-  # Print basic information about the current object
-  cat(tracenum, "-", object_name, "- ")
-  isfile <- grepl(FLAG_INPUT_DATA, obj_info$flags)
-  isxml <- grepl(FLAG_XML, obj_info$flags)
-  if(isfile) {
-    cat("read from file\n")
-  } else {
-    cat("produced by", obj_info$name, "\n")
-  }
-  if(isxml) {
-    cat("\tXML data structures to be parsed by GCAM\n")
-  } else {
-    cat("\t", obj_info$title, " (", obj_info$units, ")\n", sep = "")
-    writeLines(paste0("\t", strwrap(obj_info$comments)))
-  }
-
-  # Figure out relationships to other objects
-  obj_num <- which(previous_tracelist$tracenum == tracenum)
-  relationship <- NA_character_
-  tn <- max(previous_tracelist$tracenum) + 1
-  lo_down <- lo_up <- rel_down <- rel_up <- NULL
-  if(downstream) {
-    # Get the dependents list
-    lo_down <- gcam_data_map %>% filter(grepl(object_name, precursors)) %>% .[["output"]]
-    rel_down <- rep("Dependent", length(lo_down))
-    if(is.null(lo_down) | length(lo_down) == 0) {
-      cat("\tNo dependents\n")
-    }
-  }
-  if(upstream) {
-    # Get the precursor list
-    lo_up <- unlist(strsplit(obj_info$precursors, split = driver.SEPARATOR, fixed = TRUE))
-    rel_up <- rep("Precursor", length(lo_up))
-    if(is.null(lo_up) | length(lo_up) == 0) {
-      cat("\tNo precursors\n")
-    }
-  }
+  # Print object information and get linked objects and new tracelist
+  objectdata <- info(object_name, gcam_data_map = gcam_data_map, previous_tracelist = previous_tracelist,
+                     upstream = upstream, downstream = downstream)
+  linked_objects <- objectdata$linked_objects
+  lo_up <- linked_objects[names(linked_objects) == "Precursor"]
+  lo_down <- linked_objects[names(linked_objects) == "Dependent"]
+  relationship <- names(linked_objects)
+  new_tracelist <- objectdata$new_tracelist
 
   # Insert names of linked (i.e. either immediate precursors, or immediate dependents)
   # objects into tracelist
-  linked_objects <- c(lo_down, lo_up)
-  previous_tracelist$relatives[obj_num] <- paste(c(lo_down, lo_up), collapse = driver.SEPARATOR)
-  relationship <- c(rel_down, rel_up)
-
-  # Print precursors/dependents, checking against previous_tracelist
-  new_tracelist <- tibble()
-  for(i in seq_along(linked_objects)) {
-    obj <- linked_objects[i]
-    cat("\t", relationship[i], ": ", obj, " (#", sep = "")
-    if(obj %in% previous_tracelist$object_name) {
-      # We've already printed info for this precursor/descendent
-      cat(previous_tracelist$tracenum[which(previous_tracelist$object_name == obj)], "above")
-    } else {
-      # Have not (yet) printed info. Add to new_tracelist
-      new_tracelist %>%
-        bind_rows(tibble(object_name = obj, tracenum = tn, relationship = relationship[i])) ->
-        new_tracelist
-      cat(tn, "below")
-      tn <- tn + 1
-    }
-    cat(")\n")
-  }
+  obj_num <- which(previous_tracelist$tracenum == tracenum)
+  previous_tracelist$relatives[obj_num] <- paste(linked_objects, collapse = driver.SEPARATOR)
 
   # Recurse as necessary
   if(recurse) {
@@ -153,8 +101,8 @@ dstrace <- function(object_name, direction = "upstream", graph = FALSE,
 #'
 #' @param object_name Name of original object being traced
 #' @param tracelist Record of the trace, a tibble
-#' @param upstream Upstream? Logical
-#' @param downstream Downstream? Logical
+#' @param upstream Looking upstream? Logical
+#' @param downstream Looking downstream? Logical
 #' @param ... Extra arguments passed on to \code{\link{plot}}
 #' @return Adjacency matrix, invisible
 dstrace_plot <- function(object_name, tracelist, upstream, downstream, ...) {
@@ -195,4 +143,119 @@ dstrace_plot <- function(object_name, tracelist, upstream, downstream, ...) {
   title(paste(direction, object_name))
 
   invisible(mat)
+}
+
+
+
+#' info
+#'
+#' Print and return information about an object.
+#'
+#' @param object_name Name of object to get information about (can be either a data object or a code chunk)
+#' @param gcam_data_map A tibble of metadata information; normally a built-in package dataset
+#' @param previous_tracelist Information about previous objects printed (if called from \code{\link{dstrace}})
+#' @param upstream Looking upstream? Logical
+#' @param downstream Looking downstream? Logical
+#' @return If called directly, returns an entry from \code{GCAM_DATA_MAP}; if called from \code{\link{dstrace}}, a two-
+#' element list with linked object and tracelist information. If called and \code{object_name} if the name of a
+#' code chunk (as opposed to a data object), the relevant help page will be pulled up.
+#' @export
+#' @examples
+#' info("L100.FAO_ag_Exp_t")
+#' info("module_aglu_L222.land_input_2")
+info <- function(object_name, gcam_data_map = GCAM_DATA_MAP, previous_tracelist = NULL, upstream = TRUE, downstream = TRUE) {
+
+  assert_that(is.character(object_name))
+  assert_that(is_tibble(gcam_data_map))
+  assert_that(is.null(previous_tracelist) || is_tibble(previous_tracelist))
+  assert_that(is.logical(upstream))
+  assert_that(is.logical(downstream))
+
+  output <- precursors <- . <- NULL  # silence package check notes
+
+  # If it's a chunk, just pull up relevant help page
+  if(object_name %in% find_chunks()$name) {
+    return(utils::help(object_name))
+  } else if(!object_name %in% gcam_data_map$output) {
+    stop("Unknown object name '", object_name, "'")
+  }
+
+  # Pull detailed object information from the internal data structure
+  obj_info <- filter(gcam_data_map, output == object_name)
+  IN_DSTRACE <- !is.null(previous_tracelist)
+
+  # Print basic information about the current object
+  if(IN_DSTRACE) {
+    tracenum <- previous_tracelist$tracenum[which(previous_tracelist$object_name == object_name)]
+    cat(tracenum, "- ")
+  }
+  cat(object_name, "- ")
+  isfile <- grepl(FLAG_INPUT_DATA, obj_info$flags)
+  isxml <- grepl(FLAG_XML, obj_info$flags)
+  if(isfile) {
+    cat("read from file\n")
+  } else {
+    cat("produced by", obj_info$name, "\n")
+  }
+  if(isxml) {
+    cat("\tXML data structures to be parsed by GCAM\n")
+  } else {
+    cat("\t", obj_info$title, " (", obj_info$units, ")\n", sep = "")
+    writeLines(paste0("\t", strwrap(obj_info$comments)))
+  }
+
+  # Figure out relationships to other objects
+  new_tracelist <- NULL
+  if(IN_DSTRACE) {
+    tn <- max(previous_tracelist$tracenum) + 1
+    new_tracelist <- tibble()
+  }
+
+  lo_down <- lo_up <- NULL
+  if(downstream) {
+    # Get the dependents list
+    lo_down <- gcam_data_map %>% filter(grepl(object_name, precursors)) %>% .[["output"]]
+    names(lo_down) <- rep("Dependent", length(lo_down))
+    if(is.null(lo_down) | length(lo_down) == 0) {
+      cat("\tNo dependents\n")
+    }
+  }
+  if(upstream) {
+    # Get the precursor list
+    lo_up <- unlist(strsplit(obj_info$precursors, split = driver.SEPARATOR, fixed = TRUE))
+    names(lo_up) <- rep("Precursor", length(lo_up))
+    if(is.null(lo_up) | length(lo_up) == 0) {
+      cat("\tNo precursors\n")
+    }
+  }
+
+  linked_objects <- c(lo_down, lo_up)
+
+  # Print precursors/dependents, checking against previous_tracelist if IN_DSTRACE
+  for(i in seq_along(linked_objects)) {
+    obj <- linked_objects[i]
+    cat("\t", names(linked_objects)[i], ": ", obj, sep = "")
+
+    if(IN_DSTRACE) {
+      cat(" (#")
+      if(obj %in% previous_tracelist$object_name) {
+        # We've already printed info for this precursor/descendent
+        cat(previous_tracelist$tracenum[which(previous_tracelist$object_name == obj)], "above)")
+      } else {
+        # Have not (yet) printed info. Add to new_tracelist
+        new_tracelist %>%
+          bind_rows(tibble(object_name = obj, tracenum = tn, relationship = names(linked_objects)[i])) ->
+          new_tracelist
+        cat(tn, "below)")
+        tn <- tn + 1
+      }
+    }
+    cat("\n")
+  }
+
+  if(IN_DSTRACE) {
+    invisible(list(linked_objects = linked_objects, new_tracelist = new_tracelist))  # dstrace needs this info
+  } else {
+    invisible(obj_info)  # if called directly, just the basic info from GCAM_DATA_MAP
+  }
 }
