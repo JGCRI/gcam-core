@@ -27,6 +27,10 @@ module_energy_L202.Ccoef <- function(command, ...) {
     return(c("L202.CarbonCoef"))
   } else if(command == driver.MAKE) {
 
+    # Silence package checks
+    region <- PrimaryFuelCO2Coef.name <- year <- fuel <- value <-
+      PrimaryFuelCO2Coef <- NULL
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
