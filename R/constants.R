@@ -258,7 +258,8 @@ energy.RSRC_FUELS <- c("coal", "gas", "refined liquids")
 energy.HEAT_PRICE <- 3.2
 energy.GAS_PRICE <- 2
 
-# below come from ENERGY_ASSUMPTIONS/A_ccs_data.R
+# below come from ENERGY_ASSUMPTIONS/A_ccs_data.R, used in level 2 energy sector files (e.g. 222, 223, 226) to round interpolated values
+energy.DIGITS_COEFFICIENT <- 7
 energy.DIGITS_EFFICIENCY <- 3
 energy.DIGITS_COST <- 4
 energy.DIGITS_REMOVE.FRACTION <- 2
