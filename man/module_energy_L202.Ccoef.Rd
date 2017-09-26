@@ -18,7 +18,7 @@ the generated outputs: \code{L202.CarbonCoef}. The corresponding file in the
 original data system was \code{L202.Ccoef.R} (energy level2).
 }
 \description{
-This chunk creates the file of CO2 coefficients for primary energy sources.
+This chunk creates the file of CO2 coefficients (carbon emissions/GJ energy consumed) for primary energy sources.
 }
 \details{
 Based on user-defined switches (in constants.R), this code produces the CO2 coefficients for primary energy sources

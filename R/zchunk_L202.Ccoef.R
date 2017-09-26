@@ -1,6 +1,6 @@
 #' module_energy_L202.Ccoef
 #'
-#' This chunk creates the file of CO2 coefficients for primary energy sources.
+#' This chunk creates the file of CO2 coefficients (carbon emissions/GJ energy consumed) for primary energy sources.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -44,12 +44,15 @@ module_energy_L202.Ccoef <- function(command, ...) {
 
     # For regions with no agricultural and land use sector (Taiwan),
     # need to remove the passthrough supplysectors for first-gen biofuels
-    ag_en <- c( "regional corn for ethanol", "regional sugar for ethanol", "regional biomassOil" )
+    ag_en <- c("regional corn for ethanol", "regional sugar for ethanol", "regional biomassOil")
     L202.CarbonCoef %>%
       filter(!region %in% aglu.NO_AGLU_REGIONS | !PrimaryFuelCO2Coef.name %in% ag_en) -> L202.CarbonCoef
 
     # if emissions.USE_GCAM3_CCOEFS = 1, using exogenous C coefs from GCAM 3.0
-    if(emissions.USE_GCAM3_CCOEFS == 0) {
+    if(emissions.USE_GCAM3_CCOEFS == 1) {
+      L202.CarbonCoef <- L202.CarbonCoef
+    }
+    else if(emissions.USE_GCAM3_CCOEFS == 0) {
       L202.CarbonCoef %>%
         left_join(fuel_to_Ccoef, by = "PrimaryFuelCO2Coef.name") -> L202.CarbonCoef
       if(emissions.USE_GLOBAL_CCOEFS == 1) {
@@ -63,7 +66,7 @@ module_energy_L202.Ccoef <- function(command, ...) {
           mutate(PrimaryFuelCO2Coef = if_else(!is.na(fuel), round(value, emissions.DIGITS_CO2COEF), PrimaryFuelCO2Coef)) %>%
           select(one_of(LEVEL2_DATA_NAMES[["CarbonCoef"]])) -> L202.CarbonCoef
       }
-      if(emissions.USE_GLOBAL_CCOEFS == 0) {
+      else if(emissions.USE_GLOBAL_CCOEFS == 0) {
         # Using region-specific average emissions coefficients based on CDIAC inventory and IEA energy balances
         L102.Ccoef_kgCGJ_R_F_Yh %>%
           filter(year %in% HISTORICAL_YEARS) %>%
@@ -75,7 +78,10 @@ module_energy_L202.Ccoef <- function(command, ...) {
           mutate(PrimaryFuelCO2Coef = if_else(!is.na(fuel), round(value, emissions.DIGITS_CO2COEF), PrimaryFuelCO2Coef)) %>%
           select(one_of(LEVEL2_DATA_NAMES[["CarbonCoef"]])) -> L202.CarbonCoef
       }
-}
+      else stop("Unknown emissions.USE_GLOBAL_CCOEFS value ", emissions.USE_GLOBAL_CCOEFS)
+    }
+    else stop("Unknown emissions.USE_GCAM3_CCOEFS value ", emissions.USE_GCAM3_CCOEFS)
+
 
 
     # ===================================================
