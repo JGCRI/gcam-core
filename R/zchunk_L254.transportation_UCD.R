@@ -500,7 +500,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       mutate(loadFactor = round(value, energy.DIGITS_LOADFACTOR)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(UCD_techs, by = c("UCD_sector", "mode", "size.class", "UCD_technology", "UCD_fuel")) %>%
-      rename(stub.technology = UCD_technology) %>%
+      rename(stub.technology = tranTechnology) %>%
       select(one_of(LEVEL2_DATA_NAMES[["StubTranTechLoadFactor"]])) ->
       L254.StubTranTechLoadFactor # OUTPUT
 
