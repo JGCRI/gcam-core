@@ -30,6 +30,17 @@ test_that("screening for use of forbidden functions works", {
 })
 
 
+test_that("protect_float works", {
+  d <- tibble(x = LETTERS, y = runif(length(LETTERS)), z = seq_along(LETTERS))
+  out <- protect_float(d)
+  expect_identical(dim(d), dim(out))
+  expect_true(is.character(out$y))
+  expect_true(is.integer(out$z))
+  expect_identical(d$x, out$x)
+  expect_equal(d$y, as.numeric(out$y))  # equal but not identical
+  expect_identical(d$z, out$z)
+})
+
 # This code is written using the `mockr` package, currently only
 # available via GitHub. Apparently `testthat::with_mock` is going
 # to be deprecated soon.
@@ -47,10 +58,10 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
     mockr::with_mock(
       find_chunks = function(...) tibble(name = chunknames),
       chunk_inputs = function(chunks, ....) filter(tibble(name = chunknames,
-                                                    input = c("i1", "i2"),
-                                                    from_file = TRUE), name == chunks),
+                                                          input = c("i1", "i2"),
+                                                          from_file = TRUE), name == chunks),
       chunk_outputs = function(chunks, ...) filter(tibble(name = chunknames,
-                                           output = c("o1", "o2")), name == chunks),
+                                                          output = c("o1", "o2")), name == chunks),
       expect_identical(inputs_of("test1"), "i1"),
       expect_identical(outputs_of("test2"), "o2")
     )
