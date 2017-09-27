@@ -259,11 +259,17 @@ energy.RSRC_FUELS <- c("coal", "gas", "refined liquids")
 energy.HEAT_PRICE <- 3.2
 energy.GAS_PRICE <- 2
 
-# below come from ENERGY_ASSUMPTIONS/A_ccs_data.R
+# below come from ENERGY_ASSUMPTIONS/A_ccs_data.R (first four only)
 energy.DIGITS_EFFICIENCY <- 3
 energy.DIGITS_COST <- 4
 energy.DIGITS_REMOVE.FRACTION <- 2
 energy.CO2.STORAGE.MARKET <- "carbon-storage"
+energy.DIGITS_COEFFICIENT <- 7
+energy.DIGITS_MPKM <- 0
+energy.DIGITS_SPEED <- 1
+energy.DIGITS_SHRWT <- 4
+energy.DIGITS_CALOUTPUT <- 7
+energy.DIGITS_LOADFACTOR <- 2
 
 # Digits for rounding into XMLs
 energy.DIGITS_CALOUTPUT <- 7
@@ -314,7 +320,10 @@ CONV_GWH_EJ <- 3.6e-6
 CONV_TWH_EJ <- 3.6e-3
 CONV_KWH_GJ <- 3.6e-3
 CONV_GJ_EJ <- 1e-9
+CONV_EJ_GJ <- 1 / CONV_GJ_EJ
 CONV_BBLD_EJYR <- 6.119 * 365.25 * 1e-3 # billion barrels a day to EJ per year
+CONV_MJ_BTU <- 947.777
+CONV_BTU_KJ <- 1.0551
 CONV_KBTU_EJ <- 1.0551e-12
 
 # Other
@@ -430,6 +439,12 @@ emissions.AGR_GASES            <- c("CH4_AGR", "N2O_AGR", "NH3_AGR", "NOx_AGR")
 emissions.AG_MACC_GHG_NAMES    <- c("CH4_AGR", "N2O_AGR")
 emissions.GHG_NAMES            <- c("CH4", "N2O")
 emissions.USE_GV_MAC           <- 1
+
+emissions.USE_GCAM3_CCOEFS     <- 1 # Select whether to use GCAM3 fuel carbon coefficients
+emissions.USE_GLOBAL_CCOEFS    <- 1 # Select whether to use global average carbon coefficients on fuels, or region-specific carbon coefficients
+emissions.INVENTORY_MATCH_YEAR <- 2009 # Select year from which to calculate fuel emissions coefficients (2009 is currently the most recent)
+emissions.DIGITS_CO2COEF <- 1
+
 emissions.NONGHG_GASES         <- c("SO2", "NOx", "CO", "NMVOC", "NH3")
 emissions.EDGAR_YEARS_PLUS     <- 1970:2008
 

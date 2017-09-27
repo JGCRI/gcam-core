@@ -57,17 +57,18 @@ module_gcam.usa_LB1231.Elec_tech<- function(command, ...) {
       filter(fuel %in% L1231.in_EJ_R_elec_F_tech_Yh$fuel) %>%
       left_join_error_no_match(L123.in_EJ_state_elec_F, by = c("state", "sector", "fuel", "year")) %>%
       # State/Technology output = technology share * state/fuel output
-      mutate(value = value.x * value.y)
+      mutate(value = value.x * value.y) %>%
+      select(-value.x, - value.y)
 
     L1231.out_EJ_state_elec_F_tech <- L1231.share_elec_F_tech %>%
       left_join_error_no_match(L123.out_EJ_state_elec_F, by = c("state", "sector", "fuel", "year")) %>%
       # State/Technology output = technology share * state/fuel output
-      mutate(value = value.x * value.y)
+      mutate(value = value.x * value.y) %>%
+      select(-value.x, - value.y)
 
     # ===================================================
 
     # Produce outputs
-
     L1231.in_EJ_state_elec_F_tech %>%
       add_title("Electricity sector energy consumption by state / fuel / technology") %>%
       add_units("EJ") %>%
@@ -78,7 +79,7 @@ module_gcam.usa_LB1231.Elec_tech<- function(command, ...) {
                      "L1231.in_EJ_R_elec_F_tech_Yh",
                      "L123.in_EJ_state_elec_F",
                      "L123.out_EJ_state_elec_F") %>%
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1231.in_EJ_state_elec_F_tech
 
     L1231.out_EJ_state_elec_F_tech %>%
@@ -89,7 +90,7 @@ module_gcam.usa_LB1231.Elec_tech<- function(command, ...) {
       add_precursors("L123.out_EJ_R_elec_F_Yh",
                      "L1231.out_EJ_R_elec_F_tech_Yh",
                      "L123.out_EJ_state_elec_F") %>%
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1231.out_EJ_state_elec_F_tech
 
     return_data(L1231.in_EJ_state_elec_F_tech, L1231.out_EJ_state_elec_F_tech)
