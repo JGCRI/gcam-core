@@ -24,7 +24,7 @@ module_gcam.usa_LB123.Electricity <- function(command, ...) {
              "L126.in_EJ_R_elecownuse_F_Yh",
              "L126.out_EJ_R_elecownuse_F_Yh",
              "L101.inEIA_EJ_state_S_F",
-             FILE = "temp-data-inject/L132.out_EJ_state_indchp_F"))
+             "L132.out_EJ_state_indchp_F"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L123.in_EJ_state_elec_F",
              "L123.out_EJ_state_elec_F",
@@ -56,12 +56,7 @@ module_gcam.usa_LB123.Electricity <- function(command, ...) {
     L126.out_EJ_R_elecownuse_F_Yh <- get_data(all_data, "L126.out_EJ_R_elecownuse_F_Yh") %>%
       filter(GCAM_region_ID == gcam.USA_CODE)
     L101.inEIA_EJ_state_S_F <- get_data(all_data, "L101.inEIA_EJ_state_S_F")
-    L132.out_EJ_state_indchp_F <- get_data(all_data, "temp-data-inject/L132.out_EJ_state_indchp_F") %>%
-      # temp-data-inject code
-      gather(year, value, starts_with("X")) %>%
-      mutate(year = as.integer(substr(year, 2,5))) %>%
-      # timeshift fix - probably not necessary once temp-data removed, but will need to check
-      filter(year %in% HISTORICAL_YEARS)
+    L132.out_EJ_state_indchp_F <- get_data(all_data, "L132.out_EJ_state_indchp_F")
 
     # ===================================================
     # SEDS (EIA) indicates electricity generation technologies either in terms of fuel inputs or fuel outputs (not both)
@@ -189,7 +184,7 @@ module_gcam.usa_LB123.Electricity <- function(command, ...) {
       add_comments("Sum of all generation from L123.out_EJ_state_elec_F and L132.out_EJ_state_indchp_F") %>%
       add_legacy_name("L123.in_EJ_state_ownuse_elec") %>%
       add_precursors("L101.inEIA_EJ_state_S_F", "gcam-usa/NREL_us_re_technical_potential",
-                     "gcam-usa/states_subregions", "L123.out_EJ_R_elec_F_Yh", "temp-data-inject/L132.out_EJ_state_indchp_F") %>%
+                     "gcam-usa/states_subregions", "L123.out_EJ_R_elec_F_Yh", "L132.out_EJ_state_indchp_F") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L123.in_EJ_state_ownuse_elec
 
@@ -200,7 +195,7 @@ module_gcam.usa_LB123.Electricity <- function(command, ...) {
       add_comments("Net values created with states shares from EIA_elect_td_ownuse_prices and USA total net from L126 files") %>%
       add_legacy_name("L123.out_EJ_state_ownuse_elec") %>%
       add_precursors("L101.inEIA_EJ_state_S_F", "gcam-usa/NREL_us_re_technical_potential",
-                     "gcam-usa/states_subregions", "L123.out_EJ_R_elec_F_Yh", "temp-data-inject/L132.out_EJ_state_indchp_F",
+                     "gcam-usa/states_subregions", "L123.out_EJ_R_elec_F_Yh", "L132.out_EJ_state_indchp_F",
                      "L126.in_EJ_R_elecownuse_F_Yh", "L126.out_EJ_R_elecownuse_F_Yh", "gcam-usa/EIA_elect_td_ownuse_prices") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L123.out_EJ_state_ownuse_elec
