@@ -539,8 +539,10 @@ void MarketDependencyFinder::createOrdering() {
                         ++numDependencies[ (*dependIt)->getFirstPriceVertex() ];
                     }
                 }
-                (*dependIt)->getLastDemandVertex()->mOutEdges.push_back( (*it)->getFirstDemandVertex() );
-                ++numDependencies[ (*it)->getFirstDemandVertex() ];
+                if( !(*dependIt)->mDemandVertices.empty()) {
+                    (*dependIt)->getLastDemandVertex()->mOutEdges.push_back( (*it)->getFirstDemandVertex() );
+                    ++numDependencies[ (*it)->getFirstDemandVertex() ];
+                }
             }
         }
     }
