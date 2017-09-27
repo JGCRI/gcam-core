@@ -96,11 +96,11 @@ tibbelize_outputs <- function(chunk_data, chunk_name) {
       # Here we use paste both to collapse vectors into a single string, and deal with possible NULLs
       metadata[[cd]] <- tibble(name = chunk_name,
                                output = cd,
-                               precursors = paste(get_precursors(chunk_data[[cd]]), collapse = driver.SEPARATOR),
-                               title = paste(get_title(chunk_data[[cd]]), collapse = driver.SEPARATOR),
-                               units = paste(get_units(chunk_data[[cd]]), collapse = driver.SEPARATOR),
-                               comments = paste(get_comments(chunk_data[[cd]]), collapse = driver.SEPARATOR),
-                               flags = paste(get_flags(chunk_data[[cd]]), collapse = driver.SEPARATOR))
+                               precursors = paste(get_precursors(chunk_data[[cd]]), collapse = data.SEPARATOR),
+                               title = paste(get_title(chunk_data[[cd]]), collapse = data.SEPARATOR),
+                               units = paste(get_units(chunk_data[[cd]]), collapse = data.SEPARATOR),
+                               comments = paste(get_comments(chunk_data[[cd]]), collapse = data.SEPARATOR),
+                               flags = paste(get_flags(chunk_data[[cd]]), collapse = data.SEPARATOR))
     }
   }
   bind_rows(metadata)

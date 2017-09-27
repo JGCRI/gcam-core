@@ -10,7 +10,7 @@ LOGIT_COLUMN_NAME <- "logit.type"   # will be removed by test code before old-ne
 
 
 # Flags ======================================================================
-# Flags used by chunks
+
 FLAG_INPUT_DATA      <- "FLAG_INPUT_DATA"       # input data, don't output
 FLAG_LONG_YEAR_FORM  <- "FLAG_LONG_YEAR_FORM"   # 'year' column but original data are wide
 FLAG_NO_OUTPUT       <- "FLAG_NO_OUTPUT"        # don't output
@@ -336,12 +336,20 @@ CONV_BM2_M2 <- 1e9
 CONV_MILFT2_M2 <- 92900
 CONV_FT2_M2 <- 0.0929
 
+
 # Driver constants ======================================================================
 
 driver.MAKE <- "MAKE"
 driver.DECLARE_OUTPUTS <- "DECLARE_OUTPUTS"
-driver.DECLARE_INPUTS <- "DECLARE_INPUTS"
-driver.SEPARATOR <- "; "
+driver.DECLARE_INPUTS  <- "DECLARE_INPUTS"
+
+
+# Data and utility constants ======================================================================
+
+data.SEPARATOR <- "; "
+data.PRECURSOR <- "Precursor"
+data.DEPENDENT <- "Dependent"
+
 
 # Modeltime constants ======================================================================
 
@@ -441,6 +449,7 @@ emissions.NONGHG_GASES         <- c("SO2", "NOx", "CO", "NMVOC", "NH3")
 emissions.EDGAR_YEARS_PLUS     <- 1970:2008
 
 # GCAM-USA constants ======================================================================
+
 gcamusa.STATES <- c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA",
                       "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR",
                       "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY")
