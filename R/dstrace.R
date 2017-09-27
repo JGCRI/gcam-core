@@ -2,7 +2,7 @@
 #' A tracing utility for the GCAM Data System.
 #'
 #' @param object_name Name of object to trace (can be either a data object or a code chunk)
-#' @param direction Trace direction (upstream, the default; downstream; or both), character
+#' @param direction Trace direction ("upstream", the default; "downstream"; or "both"), character
 #' @param graph Plot a directed graph of relationships? Logical
 #' @param gcam_data_map A tibble of metadata information; normally a built-in package dataset
 #' @param previous_tracelist Information about previous objects printed
@@ -154,11 +154,11 @@ dstrace_plot <- function(object_name, tracelist, upstream, downstream, ...) {
 #' @param object_name Name of object to get information about (can be either a data object or a code chunk)
 #' @param gcam_data_map A tibble of metadata information; normally a built-in package dataset
 #' @param previous_tracelist Information about previous objects printed (if called from \code{\link{dstrace}})
-#' @param upstream Looking upstream? Logical
-#' @param downstream Looking downstream? Logical
+#' @param upstream Print and return upstream precursors? Logical
+#' @param downstream Print and return downstream dependents? Logical
 #' @return If called directly, returns an entry from \code{GCAM_DATA_MAP}; if called from \code{\link{dstrace}}, a two-
-#' element list with linked object and tracelist information. If called and \code{object_name} if the name of a
-#' code chunk (as opposed to a data object), the relevant help page will be pulled up.
+#' element list with linked object and tracelist information. If called and \code{object_name} is the name of a
+#' code chunk (as opposed to that of a data object), the relevant help page will be pulled up.
 #' @export
 #' @examples
 #' info("L100.FAO_ag_Exp_t")

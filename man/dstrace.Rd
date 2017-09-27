@@ -11,7 +11,7 @@ dstrace(object_name, direction = "upstream", graph = FALSE,
 \arguments{
 \item{object_name}{Name of object to trace (can be either a data object or a code chunk)}
 
-\item{direction}{Trace direction (upstream, the default; downstream; or both), character}
+\item{direction}{Trace direction ("upstream", the default; "downstream"; or "both"), character}
 
 \item{graph}{Plot a directed graph of relationships? Logical}
 

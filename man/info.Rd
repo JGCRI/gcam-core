@@ -14,14 +14,14 @@ info(object_name, gcam_data_map = GCAM_DATA_MAP, previous_tracelist = NULL,
 
 \item{previous_tracelist}{Information about previous objects printed (if called from \code{\link{dstrace}})}
 
-\item{upstream}{Looking upstream? Logical}
+\item{upstream}{Print and return upstream precursors? Logical}
 
-\item{downstream}{Looking downstream? Logical}
+\item{downstream}{Print and return downstream dependents? Logical}
 }
 \value{
 If called directly, returns an entry from \code{GCAM_DATA_MAP}; if called from \code{\link{dstrace}}, a two-
-element list with linked object and tracelist information. If called and \code{object_name} if the name of a
-code chunk (as opposed to a data object), the relevant help page will be pulled up.
+element list with linked object and tracelist information. If called and \code{object_name} is the name of a
+code chunk (as opposed to that of a data object), the relevant help page will be pulled up.
 }
 \description{
 Print and return information about an object.
