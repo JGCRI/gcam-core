@@ -26,7 +26,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author AJS September 2017
-#' @export
 module_energy_L254.transportation_UCD <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
@@ -120,16 +119,11 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
 
     # ===================================================
     # Silence package notes
-    . <- UCD_technology <- Y <- addTimeValue <- base.service <-
-      calOutputValue <- calibrated.value <- coefficient <-
-      curr_table <- energy.final.demand <- from.year <- fuelprefElasticity <- input <-
-      loadFactor <- minicam.energy.input <- model_base_years <- names_tranSubsector <-
-      output <- r_mei <- r_ss <- r_ss_ts <- r_ss_ts_st <- region <- repeat_and_add_vector <-
-      share.weight <- speed.source <- stub.technology <- supplysector <- tech <-
-      technology <- time.value.multiplier <- to.value <- to.year <- tranSubsector <-
-      tranSubsector.x <- tranTechnology <- year <- year.fillout <- value <- output_agg <-
-      output_cum <- share.weight.year <- subs.share.weight <- tech.share.weight <- NULL
-
+    GCAM_region_ID <- tranTechnology <- region <- supplysector <- . <- technology <- minicam.energy.input <- r_mei <-
+      year <- year.fillout <- to.value <- value <- speed.source <- tranSubsector.x <- addTimeValue <- time.value.multiplier <-
+      fuelprefElasticity <- tranSubsector <- share.weight <- calibrated.value <- subs.share.weight <- loadFactor <-
+      coefficient <- stub.technology <- output <- output_agg <- output_cum <- share.weight.year <- tech.share.weight <-
+      calOutputValue <- energy.final.demand <- base.service <- NULL
 
     # PART A: BUILDING TRANSPORTATION SECTORS FROM THE TECHNOLOGY LEVEL UP
     # L254.StubTranTech: Transportation stub technologies (built from technologies with coefficients in the UCD database)
