@@ -1,4 +1,4 @@
-#' module_gcam.usa_L210.resources_USA
+#' module_gcam.usa_L222.en_transformation_USA
 #'
 #' Briefly describe what this chunk does.
 #'
@@ -6,45 +6,51 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L210.DeleteRenewRsrc_USArsrc}, \code{L210.DeleteUnlimitRsrc_USArsrc}, \code{L210.RenewRsrc_USA}, \code{L210.UnlimitRsrc_USA}, \code{L210.UnlimitRsrcPrice_USA}, \code{L210.SmthRenewRsrcTechChange_USA}, \code{L210.SmthRenewRsrcCurves_wind_USA}, \code{L210.GrdRenewRsrcCurves_geo_USA}, \code{L210.GrdRenewRsrcMax_geo_USA}, \code{L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV_USA}, \code{L210.DeleteUnlimitRsrc_USAlimestone}, \code{L210.UnlimitRsrc_limestone_USA}, \code{L210.UnlimitRsrcPrice_limestone_USA}. The corresponding file in the
-#' original data system was \code{L210.resources_USA.R} (gcam-usa level2).
+#' the generated outputs: \code{L222.DeleteStubTech_USAen}, \code{L222.SectorEQUIV}, \code{L222.PassThroughSector_USAen}, \code{object}, \code{L222.TechEQUIV}, \code{L222.Tech_USAen}, \code{L222.TechShrwt_USAen}, \code{L222.TechInterp_USAen}, \code{L222.TechShrwt_USAen}, \code{L222.TechCoef_USAen}, \code{L222.Production_USArefining}, \code{L222.SectorLogitTables_USA[[ curr_table ]]$data}, \code{L222.Supplysector_en_USA}, \code{L222.SubsectorShrwtFllt_en_USA}, \code{L222.StubTechProd_refining_USA}, \code{L222.StubTechMarket_en_USA}, \code{L222.CarbonCoef_en_USA}. The corresponding file in the
+#' original data system was \code{L222.en_transformation_USA.R} (gcam-usa level2).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_gcam.usa_L210.resources_USA_DISABLED <- function(command, ...) {
+module_gcam.usa_L222.en_transformation_USA_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "energy/calibrated_techs",
-             FILE = "gcam-usa/NREL_us_re_technical_potential",
-             "us_state_wind",
-             "L115.rsrc_state_rooftopPV",
-             "L1231.out_EJ_state_elec_F_tech",
-             "L1321.out_Mt_state_cement_Yh",
-             "L210.RenewRsrc",
-             "L210.UnlimitRsrc",
-             "L210.UnlimitRsrcPrice",
-             "L210.SmthRenewRsrcTechChange",
-             "L210.SmthRenewRsrcCurves_wind",
-             "L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV",
-             "L210.GrdRenewRsrcCurves_geo",
-             "L210.GrdRenewRsrcMax_geo"))
+             "L222.Supplysector_en",
+             "L222.SubsectorLogit_en",
+             "L222.StubTech_en",
+             "L222.StubTechCoef_refining",
+             "L222.GlobalTechInterp_en",
+             "L222.GlobalTechCoef_en",
+             "L222.GlobalTechCost_en",
+             "L222.GlobalTechShrwt_en",
+             "L222.GlobalTechCapture_en",
+             "L222.GlobalTechShutdownProfit_en",
+             "L222.GlobalTechShutdown_en",
+             "L222.GlobalTechSCurveProfit_en",
+             "L222.GlobalTechSCurve_en",
+             "L222.GlobalTechLifetimeProfit_en",
+             "L222.GlobalTechLifetime_en",
+             "L122.out_EJ_state_refining_F",
+             "L202.CarbonCoef"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L210.DeleteRenewRsrc_USArsrc",
-             "L210.DeleteUnlimitRsrc_USArsrc",
-             "L210.RenewRsrc_USA",
-             "L210.UnlimitRsrc_USA",
-             "L210.UnlimitRsrcPrice_USA",
-             "L210.SmthRenewRsrcTechChange_USA",
-             "L210.SmthRenewRsrcCurves_wind_USA",
-             "L210.GrdRenewRsrcCurves_geo_USA",
-             "L210.GrdRenewRsrcMax_geo_USA",
-             "L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV_USA",
-             "L210.DeleteUnlimitRsrc_USAlimestone",
-             "L210.UnlimitRsrc_limestone_USA",
-             "L210.UnlimitRsrcPrice_limestone_USA"))
+    return(c("L222.DeleteStubTech_USAen",
+             "L222.SectorEQUIV",
+             "L222.PassThroughSector_USAen",
+             "L222.TechEQUIV",
+             "L222.Tech_USAen",
+             "L222.TechShrwt_USAen",
+             "L222.TechInterp_USAen",
+             "L222.TechShrwt_USAen",
+             "L222.TechCoef_USAen",
+             "L222.Production_USArefining",
+             "L222.Supplysector_en_USA",
+             "L222.SubsectorShrwtFllt_en_USA",
+             "L222.StubTechProd_refining_USA",
+             "L222.StubTechMarket_en_USA",
+             "L222.CarbonCoef_en_USA"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -52,19 +58,23 @@ module_gcam.usa_L210.resources_USA_DISABLED <- function(command, ...) {
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
-    NREL_us_re_technical_potential <- get_data(all_data, "gcam-usa/NREL_us_re_technical_potential")
-    us_state_wind <- get_data(all_data, "us_state_wind")
-    L115.rsrc_state_rooftopPV <- get_data(all_data, "L115.rsrc_state_rooftopPV")
-    L1231.out_EJ_state_elec_F_tech <- get_data(all_data, "L1231.out_EJ_state_elec_F_tech")
-    L1321.out_Mt_state_cement_Yh <- get_data(all_data, "L1321.out_Mt_state_cement_Yh")
-    L210.RenewRsrc <- get_data(all_data, "L210.RenewRsrc")
-    L210.UnlimitRsrc <- get_data(all_data, "L210.UnlimitRsrc")
-    L210.UnlimitRsrcPrice <- get_data(all_data, "L210.UnlimitRsrcPrice")
-    L210.SmthRenewRsrcTechChange <- get_data(all_data, "L210.SmthRenewRsrcTechChange")
-    L210.SmthRenewRsrcCurves_wind <- get_data(all_data, "L210.SmthRenewRsrcCurves_wind")
-    L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV <- get_data(all_data, "L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV")
-    L210.GrdRenewRsrcCurves_geo <- get_data(all_data, "L210.GrdRenewRsrcCurves_geo")
-    L210.GrdRenewRsrcMax_geo <- get_data(all_data, "L210.GrdRenewRsrcMax_geo")
+    L222.Supplysector_en <- get_data(all_data, "L222.Supplysector_en")
+    L222.SubsectorLogit_en <- get_data(all_data, "L222.SubsectorLogit_en")
+    L222.StubTech_en <- get_data(all_data, "L222.StubTech_en")
+    L222.StubTechCoef_refining <- get_data(all_data, "L222.StubTechCoef_refining")
+    L222.GlobalTechInterp_en <- get_data(all_data, "L222.GlobalTechInterp_en")
+    L222.GlobalTechCoef_en <- get_data(all_data, "L222.GlobalTechCoef_en")
+    L222.GlobalTechCost_en <- get_data(all_data, "L222.GlobalTechCost_en")
+    L222.GlobalTechShrwt_en <- get_data(all_data, "L222.GlobalTechShrwt_en")
+    L222.GlobalTechCapture_en <- get_data(all_data, "L222.GlobalTechCapture_en")
+    L222.GlobalTechShutdownProfit_en <- get_data(all_data, "L222.GlobalTechShutdownProfit_en")
+    L222.GlobalTechShutdown_en <- get_data(all_data, "L222.GlobalTechShutdown_en")
+    L222.GlobalTechSCurveProfit_en <- get_data(all_data, "L222.GlobalTechSCurveProfit_en")
+    L222.GlobalTechSCurve_en <- get_data(all_data, "L222.GlobalTechSCurve_en")
+    L222.GlobalTechLifetimeProfit_en <- get_data(all_data, "L222.GlobalTechLifetimeProfit_en")
+    L222.GlobalTechLifetime_en <- get_data(all_data, "L222.GlobalTechLifetime_en")
+    L122.out_EJ_state_refining_F <- get_data(all_data, "L122.out_EJ_state_refining_F")
+    L202.CarbonCoef <- get_data(all_data, "L202.CarbonCoef")
 
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
@@ -83,8 +93,6 @@ module_gcam.usa_L210.resources_USA_DISABLED <- function(command, ...) {
     #
     # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
     # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses vecpaste
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # NOTE: This code uses repeat_and_add_vector
     # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # ===================================================
@@ -99,148 +107,170 @@ module_gcam.usa_L210.resources_USA_DISABLED <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L210.DeleteRenewRsrc_USArsrc") %>%
+      add_legacy_name("L222.DeleteStubTech_USAen") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L210.DeleteRenewRsrc_USArsrc
+      L222.DeleteStubTech_USAen
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L210.DeleteUnlimitRsrc_USArsrc") %>%
+      add_legacy_name("L222.SectorEQUIV") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L210.DeleteUnlimitRsrc_USArsrc
+      L222.SectorEQUIV
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L210.RenewRsrc_USA") %>%
+      add_legacy_name("L222.PassThroughSector_USAen") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L210.RenewRsrc_USA
+      L222.PassThroughSector_USAen
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L210.UnlimitRsrc_USA") %>%
+      add_legacy_name("L222.TechEQUIV") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L210.UnlimitRsrc_USA
+      L222.TechEQUIV
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L210.UnlimitRsrcPrice_USA") %>%
+      add_legacy_name("L222.Tech_USAen") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L210.UnlimitRsrcPrice_USA
+      L222.Tech_USAen
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L210.SmthRenewRsrcTechChange_USA") %>%
+      add_legacy_name("L222.TechShrwt_USAen") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L210.SmthRenewRsrcTechChange_USA
+      L222.TechShrwt_USAen
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L210.SmthRenewRsrcCurves_wind_USA") %>%
+      add_legacy_name("L222.TechInterp_USAen") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L210.SmthRenewRsrcCurves_wind_USA
+      L222.TechInterp_USAen
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L210.GrdRenewRsrcCurves_geo_USA") %>%
+      add_legacy_name("L222.TechShrwt_USAen") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L210.GrdRenewRsrcCurves_geo_USA
+      L222.TechShrwt_USAen
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L210.GrdRenewRsrcMax_geo_USA") %>%
+      add_legacy_name("L222.TechCoef_USAen") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L210.GrdRenewRsrcMax_geo_USA
+      L222.TechCoef_USAen
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV_USA") %>%
+      add_legacy_name("L222.Production_USArefining") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV_USA
+      L222.Production_USArefining
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L210.DeleteUnlimitRsrc_USAlimestone") %>%
+      add_legacy_name("L222.Supplysector_en_USA") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L210.DeleteUnlimitRsrc_USAlimestone
+      L222.Supplysector_en_USA
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L210.UnlimitRsrc_limestone_USA") %>%
+      add_legacy_name("L222.SubsectorShrwtFllt_en_USA") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L210.UnlimitRsrc_limestone_USA
+      L222.SubsectorShrwtFllt_en_USA
 
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L210.UnlimitRsrcPrice_limestone_USA") %>%
+      add_legacy_name("L222.StubTechProd_refining_USA") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L210.UnlimitRsrcPrice_limestone_USA
+      L222.StubTechProd_refining_USA
 
-    return_data(L210.DeleteRenewRsrc_USArsrc, L210.DeleteUnlimitRsrc_USArsrc, L210.RenewRsrc_USA, L210.UnlimitRsrc_USA,
-                L210.UnlimitRsrcPrice_USA, L210.SmthRenewRsrcTechChange_USA, L210.SmthRenewRsrcCurves_wind_USA,
-                L210.GrdRenewRsrcCurves_geo_USA, L210.GrdRenewRsrcMax_geo_USA, L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV_USA,
-                L210.DeleteUnlimitRsrc_USAlimestone, L210.UnlimitRsrc_limestone_USA, L210.UnlimitRsrcPrice_limestone_USA)
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L222.StubTechMarket_en_USA") %>%
+      add_precursors("precursor1", "precursor2", "etc") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L222.StubTechMarket_en_USA
+
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L222.CarbonCoef_en_USA") %>%
+      add_precursors("precursor1", "precursor2", "etc") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L222.CarbonCoef_en_USA
+
+    return_data(L222.DeleteStubTech_USAen, L222.SectorEQUIV, L222.PassThroughSector_USAen, object, L222.TechEQUIV, L222.Tech_USAen,
+                L222.TechShrwt_USAen, L222.TechInterp_USAen, L222.TechShrwt_USAen, L222.TechCoef_USAen, L222.Production_USArefining,
+                L222.Supplysector_en_USA, L222.SubsectorShrwtFllt_en_USA, L222.StubTechProd_refining_USA, L222.StubTechMarket_en_USA,
+                L222.CarbonCoef_en_USA)
   } else {
     stop("Unknown command")
   }
