@@ -57,15 +57,15 @@ dstrace <- function(object_name, direction = "upstream", graph = FALSE,
   objectdata <- info(object_name, gcam_data_map = gcam_data_map, previous_tracelist = previous_tracelist,
                      upstream = upstream, downstream = downstream)
   linked_objects <- objectdata$linked_objects
-  lo_up <- linked_objects[names(linked_objects) == "Precursor"]
-  lo_down <- linked_objects[names(linked_objects) == "Dependent"]
+  lo_up <- linked_objects[names(linked_objects) == data.PRECURSOR]
+  lo_down <- linked_objects[names(linked_objects) == data.DEPENDENT]
   relationship <- names(linked_objects)
   new_tracelist <- objectdata$new_tracelist
 
   # Insert names of linked (i.e. either immediate precursors, or immediate dependents)
   # objects into tracelist
   obj_num <- which(previous_tracelist$tracenum == tracenum)
-  previous_tracelist$relatives[obj_num] <- paste(linked_objects, collapse = driver.SEPARATOR)
+  previous_tracelist$relatives[obj_num] <- paste(linked_objects, collapse = data.SEPARATOR)
 
   # Recurse as necessary
   if(recurse) {
@@ -111,12 +111,12 @@ dstrace_plot <- function(object_name, tracelist, upstream, downstream, ...) {
   mat <- matrix(0, nrow = nrow(tracelist), ncol = nrow(tracelist))
   colnames(mat) <- paste0(tracelist$tracenum, ". ", tracelist$object_name)
   for(i in seq_len(nrow(tracelist))) {
-    for(j in strsplit(tracelist$relatives[i], driver.SEPARATOR, fixed = TRUE)[[1]]) {
+    for(j in strsplit(tracelist$relatives[i], data.SEPARATOR, fixed = TRUE)[[1]]) {
       obj_num <- which(tracelist$object_name == j)
       rel <- tracelist$relationship[obj_num]
-      if(rel == "Dependent") {
+      if(rel == data.DEPENDENT) {
         mat[i, obj_num] <- 1
-      } else if(rel == "Precursor") {
+      } else if(rel == data.PRECURSOR) {
         mat[obj_num, i] <- 1
       } else {
         stop("??? ", rel)
@@ -182,13 +182,17 @@ info <- function(object_name, gcam_data_map = GCAM_DATA_MAP, previous_tracelist 
 
   # Pull detailed object information from the internal data structure
   obj_info <- filter(gcam_data_map, output == object_name)
-  IN_DSTRACE <- !is.null(previous_tracelist)
+  new_tracelist <- NULL
 
-  # Print basic information about the current object
-  if(IN_DSTRACE) {
+  IN_DSTRACE <- !is.null(previous_tracelist)
+  if(IN_DSTRACE) {  # some special initialization and printing to do if we're in the middle of a trace
     tracenum <- previous_tracelist$tracenum[which(previous_tracelist$object_name == object_name)]
     cat(tracenum, "- ")
+    tn <- max(previous_tracelist$tracenum) + 1
+    new_tracelist <- tibble()
   }
+
+  # Print basic information about the current object
   cat(object_name, "- ")
   isfile <- grepl(FLAG_INPUT_DATA, obj_info$flags)
   isxml <- grepl(FLAG_XML, obj_info$flags)
@@ -205,12 +209,6 @@ info <- function(object_name, gcam_data_map = GCAM_DATA_MAP, previous_tracelist 
   }
 
   # Figure out relationships to other objects
-  new_tracelist <- NULL
-  if(IN_DSTRACE) {
-    tn <- max(previous_tracelist$tracenum) + 1
-    new_tracelist <- tibble()
-  }
-
   lo_down <- lo_up <- NULL
   if(downstream) {
     # Get the dependents list
@@ -222,13 +220,12 @@ info <- function(object_name, gcam_data_map = GCAM_DATA_MAP, previous_tracelist 
   }
   if(upstream) {
     # Get the precursor list
-    lo_up <- unlist(strsplit(obj_info$precursors, split = driver.SEPARATOR, fixed = TRUE))
+    lo_up <- unlist(strsplit(obj_info$precursors, split = data.SEPARATOR, fixed = TRUE))
     names(lo_up) <- rep("Precursor", length(lo_up))
     if(is.null(lo_up) | length(lo_up) == 0) {
       cat("\tNo precursors\n")
     }
   }
-
   linked_objects <- c(lo_down, lo_up)
 
   # Print precursors/dependents, checking against previous_tracelist if IN_DSTRACE
@@ -253,9 +250,10 @@ info <- function(object_name, gcam_data_map = GCAM_DATA_MAP, previous_tracelist 
     cat("\n")
   }
 
+  # Return tracing information (if called from dstrace) or just basic from GCAM_DATA_MAP
   if(IN_DSTRACE) {
     invisible(list(linked_objects = linked_objects, new_tracelist = new_tracelist))  # dstrace needs this info
   } else {
-    invisible(obj_info)  # if called directly, just the basic info from GCAM_DATA_MAP
+    invisible(obj_info)
   }
 }
