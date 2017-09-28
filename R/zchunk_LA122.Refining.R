@@ -125,9 +125,8 @@ module_gcam.usa_LA122.Refining <- function(command, ...) {
       transmute(pct = Mgal.yr / sum(Mgal.yr), state)
 
     # Joining EIA_biodiesel_Mgal.yr to all states and years
-    L122.pct_state_btlbd <- L101.inEIA_EJ_state_S_F %>%
-      select(state, year) %>%
-      distinct() %>%
+    L122.pct_state_btlbd <- tidyr::crossing(state = gcamusa.STATES,
+                                            year = HISTORICAL_YEARS) %>%
       mutate(sector = "biodiesel",
              fuel = "biomass oil") %>%
       # Using left_join because not all states in EIA_biodiesel_Mgal.yr

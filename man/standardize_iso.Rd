@@ -4,12 +4,14 @@
 \alias{standardize_iso}
 \title{Standardize the ISO column by converting to lower case and renaming to 'iso'}
 \usage{
-standardize_iso(d, col = "iso")
+standardize_iso(d, col = "iso", delete_original = TRUE)
 }
 \arguments{
 \item{d}{The data to be transformed.}
 
 \item{col}{The column currently containing the iso codes (default = 'iso')}
+
+\item{delete_original}{Delete original column? Logical}
 }
 \value{
 Tibble with the iso codes converted to lower case. If the column with
