@@ -31,35 +31,38 @@ module_gcam.usa_LA115.RooftopPV <- function(command, ...) {
 
     # ===================================================
 
-    # Compute PV fixed charge rate
-    PV_FCR <- ( PV.DISCOUNT_RATE * ( 1 + PV.DISCOUNT_RATE ) ^ PV.LIFETIME ) /
-      ( ( PV.DISCOUNT_RATE + 1 ) ^ PV.LIFETIME - 1 )
+    # COMPUTE CONSTANTS
 
-    # Get maximum residential capacity factor
+    # Compute PV fixed charge rate (a constant)
+    PV_FCR <- (PV_DISCOUNT_RATE * (1 + PV_DISCOUNT_RATE) ^ PV_LIFETIME) /
+      ((PV_DISCOUNT_RATE + 1) ^ PV_LIFETIME - 1)
+
+    # Get maximum residential capacity factor (a constant)
     filter(NREL_Res_PV_supply_curve, Relative_Cost == min(Relative_Cost))$MWh /
       filter(NREL_Res_PV_supply_curve, Relative_Cost == min(Relative_Cost))$MW /
       HOURS_PER_YEAR -> max_resid_capacity_factor
 
-    # Get maximum commerical capacity factor
+    # Get maximum commerical capacity factor (a constant)
     filter(NREL_Com_PV_supply_curve, Rel_Cost == min(Rel_Cost))$GWH * CONV_BIL_MIL /
       filter(NREL_Com_PV_supply_curve, Rel_Cost == min(Rel_Cost))$MW /
       HOURS_PER_YEAR -> max_comm_capacity_factor
 
-    # Get minimum levelized electricity cost (LEC) for residential PV in 2005USD / KW
-    PV_resid_min_LEC_2005 <- (PV.RESID_INSTALLED_COST / PV.DERATING_FACTOR) * PV_FCR /
+    # Get minimum levelized electricity cost (LEC) for residential PV in 2005USD / KW (a constant)
+    PV_resid_min_LEC_2005 <- (PV_RESID_INSTALLED_COST / PV_DERATING_FACTOR) * PV_FCR /
       (max_resid_capacity_factor * HOURS_PER_YEAR) +
-      PV.RESID_OM / (max_resid_capacity_factor * HOURS_PER_YEAR)
-    # ... and in 1975USD / GJ
+      PV_RESID_OM / (max_resid_capacity_factor * HOURS_PER_YEAR)
+    # ... and in 1975USD / GJ (a constant)
     PV_resid_min_LEC_1975 <- PV_resid_min_LEC_2005 * gdp_deflator(1975, 2005) / CONV_KWH_GJ
 
-    # Get minimum levelized electricity cost (LEC) for commercial PV in 2005USD / KW
-    PV_comm_min_LEC_2005 <- (PV.COMM_INSTALLED_COST / PV.DERATING_FACTOR ) * PV_FCR /
+    # Get minimum levelized electricity cost (LEC) for commercial PV in 2005USD / KW (a constant)
+    PV_comm_min_LEC_2005 <- (PV_COMM_INSTALLED_COST / PV_DERATING_FACTOR ) * PV_FCR /
       (max_comm_capacity_factor * HOURS_PER_YEAR) +
-      PV.COMM_OM / (max_comm_capacity_factor * HOURS_PER_YEAR)
-    # ... and in 1975USD / GJ
+      PV_COMM_OM / (max_comm_capacity_factor * HOURS_PER_YEAR)
+    # ... and in 1975USD / GJ (a constant)
     PV_comm_min_LEC_1975 <- PV_comm_min_LEC_2005 * gdp_deflator(1975, 2005) / CONV_KWH_GJ
 
-    # COMPUTE SUPPLY CURVES
+
+    # COMPUTE SUPPLY CURVES AND SMOOTH SUPPLY CURVE PARAMETERS (mid_p,  b_exp)
 
     # Get residential supply curve
     NREL_Res_PV_supply_curve %>%
@@ -85,14 +88,15 @@ module_gcam.usa_LA115.RooftopPV <- function(command, ...) {
       select(-state_name, state, p, generation) %>%
       mutate(p = p - min(p)) %>%
       arrange(p) ->
-      # ^^ note: ordering of generation for matching p values will affect supply curve parameters (fitted below).
       L115.pv_sc
 
     unique(select(L115.pv_sc, state)) %>% mutate(p = 0, generation = 0) %>%
       # ^^ adds a 0,0 row to all states for supply curve fitting)
       bind_rows(L115.pv_sc) %>%
       arrange(state, p) %>%
-      # ^^ sort for cumulative column calcs to follow
+      # ^^ sort for cumulative column calcs to follow...
+      # ...Note that ordering of generation for matching p values...
+      #... will affect supply curve parameters (fitted below)
       group_by(state) %>% mutate(cumul = cumsum(generation),
                                  percent_cumul = cumul / sum(generation)) ->
       # ^^ computes cumulative sum (abs. and percent) for each state separately

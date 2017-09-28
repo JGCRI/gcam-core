@@ -462,11 +462,11 @@ gcamusa.STATES <- c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", 
 
 # PV constants ======================================================================
 
-PV.DERATING_FACTOR <- 0.77  # incorporates various factors: inverters, transformers, mismatch, soiling, and others
-PV.RESID_INSTALLED_COST <- 9500  # 2005USD per kw
-PV.COMM_INSTALLED_COST <- 7290  # 2005USD per kw
-PV.RESID_OM <- 100  # 2005USD per kw per year
-PV.COMM_OM <- 40  # 2005USD per kw per year
-PV.LIFETIME <- 30  # years
-PV.DISCOUNT_RATE <- 0.1  # year^-1
-HOURS_PER_YEAR <- 8760
+PV_DERATING_FACTOR <- 0.77  # incorporates various factors: inverters, transformers, mismatch, soiling, and others
+PV_RESID_INSTALLED_COST <- 9500  # 2005USD per kw
+PV_COMM_INSTALLED_COST <- 7290  # 2005USD per kw
+PV_RESID_OM <- 100  # 2005USD per kw per year
+PV_COMM_OM <- 40  # 2005USD per kw per year
+PV_LIFETIME <- 30  # years
+PV_DISCOUNT_RATE <- 0.1  # year^-1
+HOURS_PER_YEAR <- 24 * 365
