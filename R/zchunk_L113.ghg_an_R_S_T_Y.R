@@ -58,11 +58,9 @@ module_emissions_L113.ghg_an_R_S_T_Y <- function(command, ...) {
 
       L107.an_Prod_Mt_R_C_Sys_Fd_Y %>%
       rename(production = value) %>%
-      group_by(GCAM_commodity, system, feed) %>%
       left_join(GCAM_sector_tech, by = c("GCAM_commodity" = "sector", "system" = "fuel", "feed" = "technology")) %>%
       select(GCAM_region_ID, GCAM_commodity, system, feed, year, production, EPA_agg_sector, EDGAR_agg_sector) %>%
       repeat_add_columns(tibble::tibble(Non.CO2 = c("N2O_AGR", "CH4_AGR"))) %>%  # Add Gas Name and AGR for agriculture
-      group_by(EPA_agg_sector) %>%
       # match in emissions factors, using left_join and dropping fuel column
       left_join(L103.ghg_tgmt_USA_an_Sepa_F_2005, by = c("EPA_agg_sector" = "sector")) %>%
       mutate(epa_emissions = production * ch4_em_factor) %>%  # compute unscaled emissions
@@ -73,7 +71,8 @@ module_emissions_L113.ghg_an_R_S_T_Y <- function(command, ...) {
     # Aggregate by sector and region
     L113.ghg_tg_R_an_C_Sys_Fd_Yh.mlt %>%
       group_by(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year) %>%
-      summarize(EPA_emissions = sum(epa_emissions)) ->
+      summarize(EPA_emissions = sum(epa_emissions)) %>%
+      ungroup() ->
       L113.ghg_tg_R_an_C_Yh.mlt
 
     # Compute EDGAR emissions by region and sector
@@ -96,21 +95,21 @@ module_emissions_L113.ghg_an_R_S_T_Y <- function(command, ...) {
       filter(year %in% emissions.EDGAR_YEARS) %>%
       group_by(GCAM_region_ID, Non.CO2, EDGAR_agg_sector,year) %>%
       summarise(value = sum(value)) %>%
-      mutate(year = as.integer(year))->
+      ungroup() %>%
+      mutate(year = as.integer(year)) ->
       L113.EDGAR.mlt
 
     # Scale EPA emissions by tech to match EDGAR totals
 
     # First compute scalers
     L113.ghg_tg_R_an_C_Yh.mlt %>%
-      left_join(L113.EDGAR.mlt, by = c("year","GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector")) %>%
+      left_join(L113.EDGAR.mlt, by = c("year", "GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector")) %>%
       rename(EDGAR_emissions = value) %>%
       mutate(scalar = EDGAR_emissions / EPA_emissions / 1000.0) -> # 1000.0 to convert from Gg to Tg
       L113.emiss_scaler
 
     # Second scale EPA emissions
     L113.ghg_tg_R_an_C_Sys_Fd_Yh.mlt %>%
-      group_by(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year) %>%
       left_join(L113.emiss_scaler, by = c("GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector", "year")) %>%
       mutate(emissions = epa_emissions * scalar) %>%
       select(-EPA_emissions, -EDGAR_emissions) %>%
@@ -125,7 +124,7 @@ module_emissions_L113.ghg_an_R_S_T_Y <- function(command, ...) {
       add_comments("Second: match in emissions factors from EPA") %>%
       add_comments("Third: compute unscaled emissions (production * emfactors) and aggregate by sector and region") %>%
       add_comments("Fourth: compute EDGAR emissions by region and sector") %>%
-      add_comments("Fifth: scale EPA emissions by tech to match EDGAR" ) %>%
+      add_comments("Fifth: scale EPA emissions by tech to match EDGAR") %>%
       add_legacy_name("L113.ghg_tg_R_an_C_Sys_Fd_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_sector", "emissions/mappings/EPA_ghg_tech",
                      "emissions/mappings/GCAM_sector_tech", "L107.an_Prod_Mt_R_C_Sys_Fd_Y",

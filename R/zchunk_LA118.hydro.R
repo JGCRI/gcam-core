@@ -38,8 +38,7 @@ module_energy_LA118.hydro <- function(command, ...) {
     # pre-built output dataset and exit.
     if(is.null(L100.IEA_en_bal_ctry_hist)) {
       get_data(all_data, "energy/prebuilt_data/L118.out_EJ_R_elec_hydro_Yfut") %>%
-        add_comments("** PRE-BUILT; RAW IEA DATA NOT AVAILABLE **") %>%
-        add_precursors("energy/prebuilt_data/L118.out_EJ_R_elec_hydro_Yfut") ->
+        add_comments("** PRE-BUILT; RAW IEA DATA NOT AVAILABLE **") ->
         L118.out_EJ_R_elec_hydro_Yfut
     } else {
       L100.IEA_en_bal_ctry_hist %>%
@@ -214,9 +213,9 @@ module_energy_LA118.hydro <- function(command, ...) {
           by = "iso") %>%
         group_by(GCAM_region_ID, year) %>%
         summarise(value = sum(value)) %>%
+        ungroup %>%
         mutate(sector = "electricity generation", fuel = "hydro") %>%
         select(GCAM_region_ID, sector, fuel, year, value) %>%
-
         add_title("L118.out_EJ_R_elec_hydro_Yfut") ->
         L118.out_EJ_R_elec_hydro_Yfut
     }
@@ -230,7 +229,8 @@ module_energy_LA118.hydro <- function(command, ...) {
                    multiplied by its share in the region, and added to the base-year ouput") %>%
       add_legacy_name("L118.out_EJ_R_elec_hydro_Yfut") %>%
       add_precursors("common/iso_GCAM_regID", "energy/Hydropower_potential",
-                     "L100.IEA_en_bal_ctry_hist", "energy/A18.hydro_output") %>%
+                     "L100.IEA_en_bal_ctry_hist", "energy/A18.hydro_output",
+                     "energy/prebuilt_data/L118.out_EJ_R_elec_hydro_Yfut") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L118.out_EJ_R_elec_hydro_Yfut
 

@@ -279,3 +279,269 @@ replace_GLU <- function(d, map, GLU_pattern = "^GLU[0-9]{3}$") {
   }
   d
 }
+
+
+#' add_carbon_info
+#'
+#' function to translate from soil, veg, and mature age data (already in a table) to the required read-in model parameters
+#'
+#' @param data = input data tibble to receive carbon info
+#' @param carbon_info_table = table with veg and soil carbon densities, and mature.age
+#' @param matchvars =  a character vector for by = in left_join(data, carbon_info_table, by = ...)
+#' @return the original table with carbon density info added
+add_carbon_info <- function( data, carbon_info_table, matchvars = c("region", "GLU", "Cdensity_LT" = "Land_Type")) {
+
+  GCAM_region_names <- veg_c <- soil_c <- hist.veg.carbon.density <- hist.soil.carbon.density <-
+    mature.age <- GCAM_region_ID <- NULL  # silence package check notes
+
+  if (!("region" %in% names(carbon_info_table))) {
+    carbon_info_table %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
+      carbon_info_table
+  }
+
+  data %>%
+    left_join(carbon_info_table, by = matchvars) %>%
+    rename(hist.veg.carbon.density = veg_c,
+           hist.soil.carbon.density = soil_c) %>%
+    mutate(hist.veg.carbon.density = round(hist.veg.carbon.density, aglu.DIGITS_C_DENSITY),
+           hist.soil.carbon.density = round(hist.soil.carbon.density, aglu.DIGITS_C_DENSITY),
+           mature.age = round(mature.age, aglu.DIGITS_MATUREAGE),
+           mature.age.year.fillout = min(BASE_YEARS),
+           veg.carbon.density = hist.veg.carbon.density,
+           soil.carbon.density = hist.soil.carbon.density,
+           min.veg.carbon.density = aglu.MIN_VEG_CARBON_DENSITY,
+           min.soil.carbon.density = aglu.MIN_SOIL_CARBON_DENSITY)
+}
+
+
+#' get_ssp_regions
+#'
+#' Get regions for different income groups in SSP4 2010 (by default)
+#'
+#' @param pcGDP A tibble with per capita GDP estimates, including columns \code{GCAM_region_ID},
+#' \code{scenario}, \code{year}, and \code{value}
+#' @param reg_names A tibble with columns \code{GCAM_region_ID} and \code{region}
+#' @param income_group A string indicating which region group (low, medium, high)
+#' @param ssp_filter A string indicating which SSP to filter to (SSP4 by default)
+#' @param year_filter An integer indicating which year to use (2010 by default)
+#' @return A character vector of region names belonging to the specified income group.
+get_ssp_regions <- function(pcGDP, reg_names, income_group,
+                            ssp_filter = "SSP4", year_filter = 2010) {
+  assert_that(is_tibble(pcGDP))
+  assert_that(is_tibble(reg_names))
+  assert_that(is.character(income_group))
+  assert_that(is.character(ssp_filter))
+  assert_that(is.numeric(year_filter))
+
+  value <- scenario <- year <- GCAM_region_ID <- region <- NULL  # silence package check notes
+
+  pcGDP %>%
+    left_join_error_no_match(reg_names, by = "GCAM_region_ID") %>%
+    mutate(value = value * gdp_deflator(year_filter, 1990)) %>%
+    filter(scenario == ssp_filter, year == year_filter) %>%
+    select(GCAM_region_ID, value, region) ->
+    pcGDP_yf
+
+  if(income_group == "low") {
+    regions <- filter(pcGDP_yf, value < aglu.LOW_GROWTH_PCGDP)
+  } else if(income_group == "high") {
+    regions <- filter(pcGDP_yf, value > aglu.HIGH_GROWTH_PCGDP)
+  } else if(income_group == "medium") {
+    regions <- filter(pcGDP_yf, value < aglu.HIGH_GROWTH_PCGDP, value > aglu.LOW_GROWTH_PCGDP)
+  } else{
+    stop("Unknown income_group!")
+  }
+
+  regions$region
+}
+
+#' fill_exp_decay_extrapolate
+#'
+#' Takes a wide format tibble with years as columns, coverts to long format, and
+#' ensures values are filled in for all \code{out_years} using the following rules:
+#'   - Linearly interpolated for missing values that have end points
+#'   - Extrapolated using an exponential decay function paramaterized by the columns
+#'     \code{improvement.rate} and \code{improvement.max} using the following formulation
+#'     \code{v_0*max+(v_0-v_0*max)*(1-rate)^(y-y_0)}
+#'   - For rows that specify a char value in the column \code{improvement.shadow.technology}
+#'     exponential decay will be calculated on the difference between the values calculated
+#'     by left joining with itself on the column \code{improvement.shadow.technology} with
+#'     the column \code{technology}.  In other words for shadowing technologies the decay is
+#'     only applied to the difference in the values in the last year in which one was
+#'     specified. This is to allow for instance a Gas CC plant to have cost reductions at a
+#'     moderate pace but a Gas CC+CCS can have rapid cost reductions tothe CCS portion of
+#'     the cost.
+#'
+#' @param d The wide format tibble with values under year columns that will be filled
+#' to ensure the given years are present using the rules mentioned above.
+#' @param out_years A vector of integers specifying which years must have values in the
+#' output data.
+#' @return The filled out data set in long format.  The years will be in the \code{year}
+#' column and will include all values in \code{out_years} and the filled in values will
+#' be in the \code{value} column.  All extrapolation parameters will be cleaned out.
+#' @importFrom tibble has_name
+#' @importFrom dplyr filter mutate select setdiff rename ungroup
+#' @importFrom tidyr gather complete
+#' @importFrom assertthat assert_that
+#' @author Pralit Patel
+fill_exp_decay_extrapolate <- function(d, out_years) {
+  . <- value <- year <- improvement.rate <- improvement.max <-
+    improvement.shadow.technology <- technology <- year_base <-
+    value_base <- shadow.value <- NULL  # silence package check notes
+
+  # Some error checking first
+  assert_that(has_name(d, "improvement.rate"))
+  assert_that(has_name(d, "improvement.max"))
+  # either improvement.rate/max are both NA or neither are
+  assert_that(all(is.na(d$improvement.rate) == is.na(d$improvement.max)))
+
+  # Note we want to allow use of the improvement.shadow.technology feature to be
+  # optional so we will check if they have not provided the column and fill NAs
+  # if not to avoid error
+  if(!has_name(d, "improvement.shadow.technology")) {
+    d %>%
+      mutate(improvement.shadow.technology = as.character(NA)) ->
+      d
+  }
+
+  # The first step is to linearly interpolate missing values that are in between
+  # values which are specified (approx_fun rule=1)
+  d %>%
+    gather(year, value, matches(YEAR_PATTERN)) %>%
+    mutate(year = as.integer(year)) ->
+    d
+  # We would like to replicate values for all years including those found in the
+  # data as well as requested in out_years with the exception of the year (which
+  # which is the column we are replicating on) and value which we would like to
+  # just fill the missing values with NA (which is what complete does)
+  # NOTE: the approach for programmatically selecting columns got completely
+  # overhauled in recent version of dplyr, and it seems to have affected the nesting
+  # function particularly. How to specify columns also seems inconsistent
+  # between the versions, and thus we fall back on checking versions and doing
+  # something different.
+  if(utils::packageVersion("dplyr") < "0.7") {
+    d %>%
+      complete(tidyr::nesting_(select(., -year, -value)), year = union(year, out_years)) ->
+      d
+  } else {
+    nesting_vars <- paste0('`', names(d)[!(names(d) %in% c("year", "value"))], '`')
+    d %>%
+      complete(tidyr::nesting_(nesting_vars), year = union(year, out_years)) ->
+      d
+  }
+  d %>%
+    # for the purposes of interpolating (and later extrapolating) we would like
+    # to just group by everything except year and value
+    dplyr::group_by_(.dots = paste0('`', names(.)[!(names(.) %in% c("year", "value"))], '`')) %>%
+    # finally do the linearly interpolation between values which are specified
+    mutate(value = approx_fun(year, value, rule = 1)) ->
+    d
+
+  # Rows in which improvement.max/rate is not specified should not be extrapolated,
+  # so split those out for now
+  d %>%
+    filter(is.na(improvement.max) | is.na(improvement.rate)) ->
+    d_no_extrap
+
+  d %>%
+    setdiff(d_no_extrap) ->
+    d_extrap
+
+  # First partition the technologies that are not "shadowing" another technology
+  # and apply the exponential decay extrapolation to them
+  d_extrap %>%
+    filter(is.na(improvement.shadow.technology)) %>%
+    # figure out the last specified year from which we will be extrapolating
+    # (adding a -Inf in case there are no extrapolation years, to avoid a warning)
+    mutate(year_base = max(c(-Inf, year[!is.na(value)]))) %>%
+    # fill out the last specified value from which we will be extrapolating
+    mutate(value_base = value[year == year_base]) %>%
+    # calculate the exponential decay to extrapolate a new value from the last
+    # specified value
+    mutate(value = if_else(is.na(value),
+                           value_base * improvement.max + (value_base - value_base * improvement.max) *
+                             (1.0 - improvement.rate ) ^ (year - year_base),
+                           value)) %>%
+    select(-year_base, -value_base) %>%
+    ungroup() ->
+    d_nonshadowed
+
+  # Now we can calculate the exponential decay extrapolation for technologies that
+  # were shadowing another
+  d_nonshadowed %>%
+    # Merge the "shadow" technologies onto those that specified one in the "improvement.shadow.technology"
+    select(technology, year, value) %>%
+    rename(shadow.value = value) %>%
+    left_join_error_no_match(d_extrap %>% filter(!is.na(improvement.shadow.technology)), .,
+                             by = c("improvement.shadow.technology" = "technology", "year" = "year")) %>%
+    # figure out the last specified year from which we will be extrapolating
+    # (adding a -Inf in case there are no extrapolation years, to avoid a warning)
+    mutate(year_base = max(c(-Inf, year[!is.na(value)]))) %>%
+    # for shadowing technologies the decay is only applied to the difference
+    # in the values in the last year in which one was specified
+    # this is to allow for instance a Gas CC plant to have cost reductions at
+    # a moderate pace but a Gas CC+CCS can have rapid cost reductions to
+    # the CCS portion of the cost
+    mutate(value_base = value - shadow.value) %>%
+    mutate(value_base = value_base[year == year_base]) %>%
+    mutate(value = if_else(is.na(value),
+                           shadow.value +
+                             value_base * improvement.max + (value_base - value_base * improvement.max ) *
+                             (1.0 - improvement.rate) ^ (year - year_base),
+                           value)) %>%
+    # drop the extra columns created for the shadow / exp decay calculation
+    select_(.dots = paste0('`', names(d_nonshadowed), '`')) %>%
+    ungroup() ->
+    d_shadowed
+
+  # Pull all the data together and drop exptrapolation parameters.
+  bind_rows(ungroup(d_no_extrap), d_nonshadowed, d_shadowed) %>%
+    select(-matches('improvement.')) %>%
+    filter(year %in% out_years)
+}
+
+
+#' downscale_FAO_country
+#'
+#' Helper function to downscale the countries that separated into
+#' multiple modern countries (e.g. USSR).
+#'
+#' @param data Data to downscale, tibble
+#' @param country_name Pre-dissolution country name, character
+#' @param dissolution_year Year of country dissolution, integer
+#' @param years Years to operate on, integer vector
+#' @importFrom stats aggregate
+#' @return Downscaled data.
+downscale_FAO_country <- function(data, country_name, dissolution_year, years = AGLU_HISTORICAL_YEARS) {
+
+  assert_that(is_tibble(data))
+  assert_that(is.character(country_name))
+  assert_that(is.integer(dissolution_year))
+  assert_that(is.integer(years))
+  assert_that(dissolution_year %in% years)
+
+  countries <- item <- element <- NULL                     # silence package check notes
+
+  # Compute the ratio for all years leading up to the dissolution year, and including it
+  # I.e. normalizing the time series by the value in the dissolution year
+  ctry_years <- years[years < dissolution_year]
+  yrs <- as.character(c(ctry_years, dissolution_year))
+  data %>%
+    select(one_of(c("item", "element", yrs))) %>%
+    group_by(item, element) %>%
+    summarise_all(sum) %>%
+    ungroup ->
+    data_ratio
+
+  data_ratio[yrs] <- data_ratio[yrs] / data_ratio[[as.character(dissolution_year)]]
+
+  # Use these ratios to project the post-dissolution country data backwards in time
+  newyrs <- as.character(ctry_years)
+  data_new <- filter(data, countries != country_name)
+  data_new[newyrs] <- data_new[[as.character(dissolution_year)]] *
+    data_ratio[match(paste(data_new[["item"]], data_new[["element"]]),
+                     paste(data_ratio[["item"]], data_ratio[["element"]])), newyrs]
+  data_new[newyrs][is.na(data_new[newyrs])] <- 0
+  data_new
+}

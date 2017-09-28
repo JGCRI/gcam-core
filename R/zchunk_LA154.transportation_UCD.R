@@ -15,7 +15,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RH May 2017
-
 module_energy_LA154.transportation_UCD <- function(command, ...) {
 
   UCD_trn_data_name <- paste0("UCD_trn_data_", energy.TRN_SSP)
@@ -30,7 +29,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
              # All SSP databases will be included in the input files
              UCD_trn_data_name,
              "L101.in_EJ_ctry_trn_Fi_Yh",
-             FILE = "temp-data-inject/L1011.in_EJ_ctry_intlship_TOT_Yh",
+             "L1011.in_EJ_ctry_intlship_TOT_Yh",
              "L131.in_EJ_R_Senduse_F_Yh",
              "L100.Pop_thous_ctry_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -64,10 +63,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       gather(year, value, matches(YEAR_PATTERN)) %>%
       mutate(year = as.integer(year))
     L101.in_EJ_ctry_trn_Fi_Yh <- get_data(all_data, "L101.in_EJ_ctry_trn_Fi_Yh")
-    L1011.in_EJ_ctry_intlship_TOT_Yh <- get_data(all_data, "temp-data-inject/L1011.in_EJ_ctry_intlship_TOT_Yh") %>%
-      # temp-data-inject code
-      gather(year, value, starts_with("X")) %>%
-      mutate(year = as.integer(substr(year, 2, 5)))
+    L1011.in_EJ_ctry_intlship_TOT_Yh <- get_data(all_data, "L1011.in_EJ_ctry_intlship_TOT_Yh")
     L131.in_EJ_R_Senduse_F_Yh <- get_data(all_data, "L131.in_EJ_R_Senduse_F_Yh")
     L100.Pop_thous_ctry_Yh <- get_data(all_data, "L100.Pop_thous_ctry_Yh")
     # ===================================================
@@ -93,7 +89,8 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
     IEA_data_aggregated_by_UCD_cat <- IEA_data_EIA_intlship %>%
       left_join_error_no_match(UCD_category_mapping, by = "sector") %>%
       group_by(iso, UCD_category, fuel, year) %>%
-      summarise(value = sum(value))
+      summarise(value = sum(value)) %>%
+      ungroup()
 
     # Aggregating UCD transportation database by the general categories used for the IEA transportation data
     # These will be used to compute shares for allocation of energy to mode/technology/fuel within category/fuel
@@ -105,7 +102,8 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       # Filtering only to base year for computing shares
       filter(year == energy.UCD_EN_YEAR) %>%
       group_by(UCD_region, UCD_category, fuel) %>%
-      summarise(agg = sum(value))
+      summarise(agg = sum(value)) %>%
+      ungroup()
 
     # Match these energy quantities back into the complete table for computation of shares of fuel in category
     UCD_trn_data_UCD_techs <- UCD_trn_data_UCD_techs %>%
@@ -151,12 +149,14 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
     # Aggregating by GCAM region
     IEA_hist_data_times_UCD_shares_region <- IEA_hist_data_times_UCD_shares %>%
       group_by(GCAM_region_ID, UCD_sector, mode, size.class, UCD_technology, UCD_fuel, fuel, year) %>%
-      summarise(value = sum(value))
+      summarise(value = sum(value)) %>%
+      ungroup()
 
     # Aggregating by fuel to calculate scalers
     IEA_UCD_shared_region_fuel_sum <- IEA_hist_data_times_UCD_shares_region %>%
       group_by(GCAM_region_ID, fuel, year) %>%
-      summarise(unscaled_value = sum(value))
+      summarise(unscaled_value = sum(value)) %>%
+      ungroup()
 
     trn_enduse_data <- L131.in_EJ_R_Senduse_F_Yh %>%
       # Filtering out transportation sectors only
@@ -167,7 +167,8 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
 
     trn_enduse_data_fuel_aggregated <- trn_enduse_data %>%
       group_by(GCAM_region_ID, fuel, year) %>%
-      summarise(value = sum(value))
+      summarise(value = sum(value)) %>%
+      ungroup()
 
     IEA_UCD_shared_scaled_to_enduse_data <- IEA_UCD_shared_region_fuel_sum %>%
       # Keep NAs and then set to zero
@@ -206,6 +207,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
              unit = if_else(unit == "2005$/veh/yr", "2005$/vkt", unit)) %>%
       group_by(UCD_region, UCD_sector, mode, size.class, UCD_technology, UCD_fuel, unit, year) %>%
       summarise(value = sum(value)) %>%
+      ungroup() %>%
       mutate(variable = "non-fuel costs")
 
     # Creating tibble with all GCAM years to join with. The values will be filled out using the first available year.
@@ -228,7 +230,8 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       # Fill out all missing values with the nearest available year that is not missing
       group_by(UCD_region, UCD_sector, mode, size.class, UCD_technology, UCD_fuel, variable, unit) %>%
       arrange(UCD_region, UCD_sector, mode, size.class, UCD_technology, UCD_fuel, variable, unit, year) %>%
-      mutate(value = if_else(is.na(value), approx_fun(year, value, rule = 2), value))
+      mutate(value = if_else(is.na(value), approx_fun(year, value, rule = 2), value)) %>%
+      ungroup()
 
     # Aggregate the country-level energy consumption by sector and mode. First need to add in the future years for matching purposes
     IEA_fut_data_times_UCD_shares <- IEA_hist_data_times_UCD_shares %>%
@@ -239,11 +242,13 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
     IEA_histfut_data_times_UCD_shares <- IEA_hist_data_times_UCD_shares %>%
       bind_rows(IEA_fut_data_times_UCD_shares) %>%
       group_by(iso, UCD_sector, mode, size.class, UCD_technology, UCD_fuel, UCD_category, fuel) %>%
-      mutate(value = if_else(is.na(value), approx_fun(year, value, rule = 2), value))
+      mutate(value = if_else(is.na(value), approx_fun(year, value, rule = 2), value)) %>%
+      ungroup()
 
     IEA_data_times_UCD_shares_UCD_sector_agg <- IEA_histfut_data_times_UCD_shares %>%
       group_by(iso, UCD_sector, mode, year) %>%
-      summarise(value = sum(value))
+      summarise(value = sum(value)) %>%
+      ungroup()
 
     # Spreading by variable to join all at once
     UCD_trn_data_variable_spread <- UCD_trn_data_fillout %>%
@@ -285,9 +290,10 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       mutate(Tvkm = weight_EJ / intensity) %>%
       mutate(Tpkm = Tvkm * `load factor`) %>%
       mutate(Tusd = Tvkm * `non-fuel costs`) %>%
-      mutate(Thr = Tvkm / speed.x ) %>%
+      mutate(Thr = Tvkm / speed.x) %>%
       group_by(UCD_technology,UCD_fuel, UCD_sector, mode, size.class.x, year, GCAM_region_ID) %>%
-      summarise(weight_EJ = sum(weight_EJ), Tvkm = sum(Tvkm), Tpkm = sum(Tpkm),Tusd = sum(Tusd), Thr = sum(Thr))
+      summarise(weight_EJ = sum(weight_EJ), Tvkm = sum(Tvkm), Tpkm = sum(Tpkm),Tusd = sum(Tusd), Thr = sum(Thr)) %>%
+      ungroup()
 
     # Reverse the calculations to calculate the weighted average of each derived variable
     ALL_region_var <- ALL_region_var %>%
@@ -311,18 +317,19 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       filter(year == energy.UCD_EN_YEAR) %>%
       left_join_error_no_match(UCD_ctry, by = "iso") %>%
       group_by(UCD_region) %>%
-      summarise(population = sum(value))
+      summarise(population = sum(value)) %>%
+      ungroup()
 
     # Calculating non-motorized passenger-km per person
     PKM_percap_nonmotor_UCD_R <- UCD_trn_data %>%
-      filter(mode %in% c( "Walk", "Cycle" ), variable == "service output") %>%
+      filter(mode %in% c("Walk", "Cycle"), variable == "service output") %>%
       left_join_error_no_match(Pop_thous_UCD_R, by = "UCD_region") %>%
       mutate(pkm_percap = value * CONV_BIL_MIL * CONV_MIL_THOUS / population) %>%
       select(UCD_region, mode, year, pkm_percap)
 
     # Compute the nonmotorized service output at the country level, using the historical population
     PKM_nonmotor_ctry <- L100.Pop_thous_ctry_Yh %>%
-      repeat_add_columns(tibble(mode = c( "Walk", "Cycle" ))) %>%
+      repeat_add_columns(tibble(mode = c( "Walk", "Cycle"))) %>%
       left_join_error_no_match(UCD_ctry %>% select(-country_name), by = "iso")  %>%
       left_join_error_no_match(PKM_percap_nonmotor_UCD_R %>% filter(year == energy.UCD_EN_YEAR),
                                by = c("UCD_region", "mode")) %>%
@@ -333,7 +340,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%
       group_by(GCAM_region_ID, mode, year = year.x) %>%
       summarise(value = sum(value)) %>%
-      ungroup %>%
+      ungroup() %>%
       filter(year %in% HISTORICAL_YEARS)
 
     # ===================================================
@@ -346,9 +353,9 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       add_comments("Scaled to transport end-use data") %>%
       add_legacy_name("L154.in_EJ_R_trn_m_sz_tech_F_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "L101.in_EJ_ctry_trn_Fi_Yh",
-                     "temp-data-inject/L1011.in_EJ_ctry_intlship_TOT_Yh", "L131.in_EJ_R_Senduse_F_Yh",
+                     "L1011.in_EJ_ctry_intlship_TOT_Yh", "L131.in_EJ_R_Senduse_F_Yh",
                      "energy/mappings/calibrated_techs_trn_agg", "energy/enduse_fuel_aggregation",
-                     "energy/mappings/UCD_ctry","energy/mappings/UCD_techs",
+                     "energy/mappings/UCD_ctry", "energy/mappings/UCD_techs",
                      UCD_trn_data_name) %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L154.in_EJ_R_trn_m_sz_tech_F_Yh
@@ -361,7 +368,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID", "L101.in_EJ_ctry_trn_Fi_Yh",
                      UCD_trn_data_name, "energy/mappings/calibrated_techs_trn_agg",
                      "energy/mappings/UCD_ctry", "energy/mappings/UCD_techs",
-                     "temp-data-inject/L1011.in_EJ_ctry_intlship_TOT_Yh") %>%
+                     "L1011.in_EJ_ctry_intlship_TOT_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L154.in_EJ_ctry_trn_m_sz_tech_F
 
@@ -370,12 +377,12 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       add_units("MJ/vkm") %>%
       add_comments("UCD transportation database data aggregated to GCAM region") %>%
       add_legacy_name("L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y") %>%
-      add_precursors(UCD_trn_data_name,"energy/mappings/UCD_ctry",
+      add_precursors(UCD_trn_data_name, "energy/mappings/UCD_ctry",
                      "common/iso_GCAM_regID", "energy/mappings/calibrated_techs_trn_agg", "energy/enduse_fuel_aggregation",
                      "energy/mappings/UCD_techs",
                      "L131.in_EJ_R_Senduse_F_Yh", "common/iso_GCAM_regID", "energy/mappings/calibrated_techs_trn_agg",
                      "energy/enduse_fuel_aggregation", "energy/mappings/UCD_techs",
-                     "L101.in_EJ_ctry_trn_Fi_Yh", "temp-data-inject/L1011.in_EJ_ctry_intlship_TOT_Yh",
+                     "L101.in_EJ_ctry_trn_Fi_Yh", "L1011.in_EJ_ctry_intlship_TOT_Yh",
                      "L131.in_EJ_R_Senduse_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y
@@ -385,12 +392,12 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       add_units("pers/veh or tonnes/veh") %>%
       add_comments("UCD transportation database data aggregated to GCAM region") %>%
       add_legacy_name("L154.loadfactor_R_trn_m_sz_tech_F_Y") %>%
-      add_precursors(UCD_trn_data_name,"energy/mappings/UCD_ctry",
+      add_precursors(UCD_trn_data_name, "energy/mappings/UCD_ctry",
                      "common/iso_GCAM_regID", "energy/mappings/calibrated_techs_trn_agg", "energy/enduse_fuel_aggregation",
                      "energy/mappings/UCD_techs",
                      "L131.in_EJ_R_Senduse_F_Yh", "common/iso_GCAM_regID", "energy/mappings/calibrated_techs_trn_agg",
                      "energy/enduse_fuel_aggregation", "energy/mappings/UCD_techs",
-                     "L101.in_EJ_ctry_trn_Fi_Yh", "temp-data-inject/L1011.in_EJ_ctry_intlship_TOT_Yh",
+                     "L101.in_EJ_ctry_trn_Fi_Yh", "L1011.in_EJ_ctry_intlship_TOT_Yh",
                      "L131.in_EJ_R_Senduse_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L154.loadfactor_R_trn_m_sz_tech_F_Y
@@ -400,12 +407,12 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       add_units("2005USD/vkm") %>%
       add_comments("UCD transportation database data aggregated to GCAM region") %>%
       add_legacy_name("L154.cost_usdvkm_R_trn_m_sz_tech_F_Y") %>%
-      add_precursors(UCD_trn_data_name,"energy/mappings/UCD_ctry",
+      add_precursors(UCD_trn_data_name, "energy/mappings/UCD_ctry",
                      "common/iso_GCAM_regID", "energy/mappings/calibrated_techs_trn_agg", "energy/enduse_fuel_aggregation",
                      "energy/mappings/UCD_techs",
                      "L131.in_EJ_R_Senduse_F_Yh", "common/iso_GCAM_regID", "energy/mappings/calibrated_techs_trn_agg",
                      "energy/enduse_fuel_aggregation", "energy/mappings/UCD_techs",
-                     "L101.in_EJ_ctry_trn_Fi_Yh", "temp-data-inject/L1011.in_EJ_ctry_intlship_TOT_Yh",
+                     "L101.in_EJ_ctry_trn_Fi_Yh", "L1011.in_EJ_ctry_intlship_TOT_Yh",
                      "L131.in_EJ_R_Senduse_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L154.cost_usdvkm_R_trn_m_sz_tech_F_Y
@@ -415,12 +422,12 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       add_units("km/hr") %>%
       add_comments("UCD transportation database data aggregated to GCAM region") %>%
       add_legacy_name("L154.speed_kmhr_R_trn_m_sz_tech_F_Y") %>%
-      add_precursors(UCD_trn_data_name,"energy/mappings/UCD_ctry",
+      add_precursors(UCD_trn_data_name, "energy/mappings/UCD_ctry",
                      "common/iso_GCAM_regID", "energy/mappings/calibrated_techs_trn_agg", "energy/enduse_fuel_aggregation",
                      "energy/mappings/UCD_techs",
                      "L131.in_EJ_R_Senduse_F_Yh", "common/iso_GCAM_regID", "energy/mappings/calibrated_techs_trn_agg",
                      "energy/enduse_fuel_aggregation", "energy/mappings/UCD_techs",
-                     "L101.in_EJ_ctry_trn_Fi_Yh", "temp-data-inject/L1011.in_EJ_ctry_intlship_TOT_Yh",
+                     "L101.in_EJ_ctry_trn_Fi_Yh", "L1011.in_EJ_ctry_intlship_TOT_Yh",
                      "L131.in_EJ_R_Senduse_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L154.speed_kmhr_R_trn_m_sz_tech_F_Y

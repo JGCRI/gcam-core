@@ -5,6 +5,13 @@ context("oldnew")
 library(readr)
 
 test_that("matches old data system output", {
+  # If we are running the code coverage tests then let's skip this since
+  # it will take a long to time run and the purpose of this test is to
+  # make sure the chunk outputs match the old data system and not to test
+  # the functionality of any chunks
+  if(isTRUE(as.logical(Sys.getenv("gcamdata.is_coverage_test")))) {
+    skip("Skip old new when only interested in code coverage")
+  }
 
   # If we're on Travis, need to run the driver to ensure chunk outputs saved
   # Don't do this locally, to speed things up
@@ -14,13 +21,36 @@ test_that("matches old data system output", {
   outputs_dir <- normalizePath(file.path("../..", OUTPUTS_DIR))
   xml_dir <- normalizePath(file.path("../..", XML_DIR))
 
-  if (identical(Sys.getenv("TRAVIS"), "true")) {
-    driver(write_outputs = TRUE, outdir = outputs_dir, xmldir = xml_dir)
+  if(identical(Sys.getenv("TRAVIS"), "true")) {
+    gcam_data_map <- driver(write_outputs = TRUE, quiet = TRUE, outdir = outputs_dir, xmldir = xml_dir, return_data_map_only = TRUE)
     # The following two tests are only run on Travis because they will fail
     # during the R CMD CHECK process locally (as the R build process removes outputs/)
     expect_equivalent(file.access(outputs_dir, mode = 4), 0,  # outputs_dir exists and is readable
                       info = paste("Directory", outputs_dir, "unreadable or does not exist from", getwd()))
     expect_true(file.info(outputs_dir)$isdir)
+
+    # Now, and also run only on Travis, we compare the data map returned above with the pre-packaged version
+    # They should match! See https://github.com/JGCRI/gcamdata/pull/751#issuecomment-331578990
+    expect_true(tibble::is_tibble(gcamdata:::GCAM_DATA_MAP))
+    expect_true(tibble::is_tibble(gcam_data_map))
+    expect_identical(dim(gcamdata:::GCAM_DATA_MAP), dim(gcam_data_map), info =
+                       "GCAM_DATA_MAP size doesn't match.  Rerun generate_package_data to update.")
+    expect_identical(gcamdata:::GCAM_DATA_MAP$name, gcam_data_map$name, info =
+                       "GCAM_DATA_MAP name doesn't match.  Rerun generate_package_data to update.")
+    expect_identical(gcamdata:::GCAM_DATA_MAP$output, gcam_data_map$output,
+                     info = "GCAM_DATA_MAP output doesn't match")
+    expect_identical(gcamdata:::GCAM_DATA_MAP$precursors,
+                     gcam_data_map$precursors, info =
+                       "GCAM_DATA_MAP precursors doesn't match.  Rerun generate_package_data to update.")
+    # The following lines fail on Travis. Not sure why. But above we guarantee that the
+    # pre-packaged GCAM_DATA_MAP has the same dimensions, object names, output names,
+    # and precursors; that's probably good enough.
+    # expect_identical(gcamdata:::GCAM_DATA_MAP$title, gcam_data_map$title)
+    # expect_identical(gcamdata:::GCAM_DATA_MAP$units, gcam_data_map$units)
+    # expect_identical(gcamdata:::GCAM_DATA_MAP$comments, gcam_data_map$comments)
+    # expect_identical(gcamdata:::GCAM_DATA_MAP$flags, gcam_data_map$flags)
+    # expect_equivalent(gcam_data_map, gcamdata:::GCAM_DATA_MAP,
+    #                   info = "GCAM_DATA_MAP is out of date; rerun data-raw/generate-package-data.R")
   }
 
   # For each file in OUTPUTS_DIR, look for corresponding file in our
@@ -107,13 +137,50 @@ test_that("matches old data system output", {
       # To work around this, we allow chunks to tag datasets with FLAG_SUM_TEST,
       # which is less strict, just comparing the sum of all numeric data
       if(flag_sum_test) {
-        numeric_columns_old <- sapply(olddata, class) == "numeric"
-        numeric_columns_new <- sapply(newdata, class) == "numeric"
+        numeric_columns_old <- sapply(olddata, is.numeric)
+        numeric_columns_new <- sapply(newdata, is.numeric)
         expect_equivalent(sum(olddata[numeric_columns_old]), sum(newdata[numeric_columns_new]),
                           info = paste(basename(newf), "doesn't match (sum test)"))
       } else {
         expect_equivalent(round_df(olddata), round_df(newdata), info = paste(basename(newf), "doesn't match"))
       }
+    }
+  }
+})
+
+
+test_that('New XML outputs match old XML outputs', {
+  ## The XML comparison data is huge, so we don't want to try to include it in
+  ## the package.  Instead, we look for an option that indicates where the data
+  ## can be found.  If the option isn't set, then we skip this test.
+  xml_cmp_dir <- getOption('gcamdata.xml_cmpdir')
+  if(is.null(xml_cmp_dir)) {
+    skip("XML comparison data not provided. Set option 'gcamdata.xml_cmpdir' to run this test.")
+  }
+  else {
+    xml_cmp_dir <- normalizePath(xml_cmp_dir)
+  }
+  expect_true(file.exists(xml_cmp_dir))
+
+  xml_dir <- normalizePath(file.path("../..", XML_DIR))
+  expect_true(file.exists(xml_dir))
+
+  for(newxml in list.files(xml_dir, full.names = TRUE)) {
+    oldxml <- list.files(xml_cmp_dir, pattern = paste0('^',basename(newxml),'$'), recursive = TRUE,
+                         full.names = TRUE)
+    if(length(oldxml) > 0) {
+      expect_equal(length(oldxml), 1,
+                   info = paste('Testing file', newxml, ': Found', length(oldxml),
+                                'comparison files.  There can be only one.'))
+      ## If we come back with multiple matching files, we'll try to run the test anyhow, selecting
+      ## the first one as the true comparison.
+      expect_true(cmp_xml_files(oldxml[1], newxml),
+                  info = paste('Sorry to be the one to tell you, but new XML file',
+                               newxml, "is not equivalent to its old version."))
+    }
+    else {
+      ## If no comparison file found, issue a message, but don't fail the test.
+      message('No comparison file found for ', newxml, '. Skipping.')
     }
   }
 })

@@ -26,10 +26,10 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
 
     ## silence package check.
     Country <- value <- Maddison_ctry <- year <- pop <- Downscale_from <- ratio <-
-        year.x <- iso <- pop_scale <- pop2 <- pop.x <- pop.y <- pop_allocate <- X1900 <-
-        X1950 <- X1850 <- X1800 <- X1750 <- X1700 <- pop_ratio <- scg <-
-        idn <- mne <- Scenario <- Region <- Sex <- Year <- Value <- MODEL <-
-        VARIABLE <- REGION <- SCENARIO <- UNIT <- scenario <- ratio_iso_ssp <- NULL
+      year.x <- iso <- pop_scale <- pop2 <- pop.x <- pop.y <- pop_allocate <- X1900 <-
+      X1950 <- X1850 <- X1800 <- X1750 <- X1700 <- pop_ratio <- scg <-
+      idn <- mne <- Scenario <- Region <- Sex <- Year <- Value <- MODEL <-
+      VARIABLE <- REGION <- SCENARIO <- UNIT <- scenario <- ratio_iso_ssp <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -53,15 +53,15 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
     agg_ratio <- pop_thous_ctry_reg %>%
       select(Maddison_ctry, year, pop)
     # OLD DATA SYSTEM BEHAVIOR: There is one additional aggregate region (Eritrea & Ethiopia) that wasn't included in the downscaling. New behavior includes it.
-      if(OLD_DATA_SYSTEM_BEHAVIOR) {
-        agg_ratio <- filter(agg_ratio, year <= min(socioeconomics.UN_HISTORICAL_YEARS) &
+    if(OLD_DATA_SYSTEM_BEHAVIOR) {
+      agg_ratio <- filter(agg_ratio, year <= min(socioeconomics.UN_HISTORICAL_YEARS) &
                             Maddison_ctry %in% c("Total Former USSR", "Czechoslovakia", "Yugoslavia"))  # Only want years prior to 1951 for the three regions
-        # Because we changed the mapping file, adding in Eritrea & Ethiopia, for old behavior we need to strip these back out from pop_thous_ctry_reg
-        pop_thous_ctry_reg <- mutate(pop_thous_ctry_reg, Downscale_from = gsub("Eritrea and Ethiopia", NA, Downscale_from))
-      } else {
-        agg_ratio <- filter(agg_ratio, year <=  min(socioeconomics.UN_HISTORICAL_YEARS) &
+      # Because we changed the mapping file, adding in Eritrea & Ethiopia, for old behavior we need to strip these back out from pop_thous_ctry_reg
+      pop_thous_ctry_reg <- mutate(pop_thous_ctry_reg, Downscale_from = gsub("Eritrea and Ethiopia", NA, Downscale_from))
+    } else {
+      agg_ratio <- filter(agg_ratio, year <=  min(socioeconomics.UN_HISTORICAL_YEARS) &
                             Maddison_ctry %in% c("Czechoslovakia", "Eritrea and Ethiopia", "Total Former USSR", "Yugoslavia")) # Only want years prior to 1951 for the four aggregate regions
-      }
+    }
     agg_ratio <- agg_ratio %>%
       group_by(Maddison_ctry) %>%  # Group to perform action on each aggregate region individually
       mutate(ratio = pop / pop[year == min(socioeconomics.UN_HISTORICAL_YEARS)]) %>%  # Create ratio of population in prior years to population in 1950
@@ -115,7 +115,7 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
     maddison_hist_years <- unique(maddison_hist_ratio$year)
 
     # Fill in missing values for period t using ratio of country to total population in period t+1 times the missing share in period t.
-    for( i in rev(maddison_hist_years)[-1]){
+    for( i in rev(maddison_hist_years)[-1]) {
       maddison_hist_ratio %>%
         ungroup() %>%
         mutate(pop2 = if_else(is.na(pop), (lead(pop, n = 1L, order_by = iso)), 0)) %>%
@@ -136,12 +136,12 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
     # Need to create matching iso codes for three countries in UN, but not Maddison.
     # Set Serbia and Montenegro ratio equal to Serbia & Montenegro and use Indonesia population ratio for East Timor
     mne_srb_tls <- filter(maddison_hist_ratio, iso %in% c("idn", "scg")) %>%
-      mutate(iso = replace(iso, iso == "idn","tls"), iso = replace(iso, iso == "scg", "mne"))
+      mutate(iso = replace(iso, iso == "idn", "tls"), iso = replace(iso, iso == "scg", "mne"))
 
     # Combine with other ratio_iso values
     maddison_hist_ratio <- maddison_hist_ratio %>%
       bind_rows(mne_srb_tls) %>%
-      mutate(iso = replace(iso, iso == "scg","srb"))
+      mutate(iso = replace(iso, iso == "scg", "srb"))
 
     # Sixth, apply Maddison ratios for historic periods to UN populatio data that begin in 1950
     # Clean raw UN population data
@@ -186,7 +186,7 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
       group_by(scenario, iso) %>%
       mutate(ratio_iso_ssp = pop / pop[year == socioeconomics.FINAL_HIST_YEAR]) %>%  # Calculate population ratios to final historical year (2010), no units
       select(-pop) %>%
-    # Third, project country population values using SSP ratios and final historical year populations.
+      # Third, project country population values using SSP ratios and final historical year populations.
       # Not all countries in the UN data are in SSP data. Create complete tibble with all UN countries & SSP years.
       ungroup() %>%
       complete(scenario = unique(scenario),

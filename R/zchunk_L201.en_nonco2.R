@@ -19,10 +19,10 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "emissions/A_regions",
              FILE = "energy/A_regions",
-             FILE = "temp-data-inject/L111.nonghg_tg_R_en_S_F_Yh",
-             FILE = "temp-data-inject/L111.nonghg_tgej_R_en_S_F_Yh",
-             FILE = "temp-data-inject/L112.ghg_tg_R_en_S_F_Yh",
-             FILE = "temp-data-inject/L112.ghg_tgej_R_en_S_F_Yh",
+             "L111.nonghg_tg_R_en_S_F_Yh",
+             "L111.nonghg_tgej_R_en_S_F_Yh",
+             "L112.ghg_tg_R_en_S_F_Yh",
+             "L112.ghg_tgej_R_en_S_F_Yh",
              "L114.bcoc_tgej_R_en_S_F_2000",
              "L151.nonghg_ctrl_R_en_S_T",
              FILE = "emissions/A51.steepness",
@@ -51,19 +51,10 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     A_regions <- get_data(all_data, "emissions/A_regions")
     A_regions.en <- get_data(all_data, "energy/A_regions")
 
-    L111.nonghg_tg_R_en_S_F_Yh <- get_data(all_data, "temp-data-inject/L111.nonghg_tg_R_en_S_F_Yh") %>%
-      # temporary for temp-data-inject
-      gather(year, value, -1:-5) %>% mutate(year = as.integer(substr(year, 2, 5)))
-    L111.nonghg_tgej_R_en_S_F_Yh <- get_data(all_data, "temp-data-inject/L111.nonghg_tgej_R_en_S_F_Yh") %>%
-      # temporary for temp-data-inject
-      gather(year, value, -1:-5) %>% mutate(year = as.integer(substr(year, 2, 5)))
-    L112.ghg_tg_R_en_S_F_Yh <- get_data(all_data, "temp-data-inject/L112.ghg_tg_R_en_S_F_Yh") %>%
-      # temporary for temp-data-inject
-      gather(year, value, -1:-5) %>% mutate(year = as.integer(substr(year, 2, 5)))
-    L112.ghg_tgej_R_en_S_F_Yh <- get_data(all_data, "temp-data-inject/L112.ghg_tgej_R_en_S_F_Yh") %>%
-      # temporary for temp-data-inject
-      gather(year, value, -1:-5) %>% mutate(year = as.integer(substr(year, 2, 5)))
-
+    L111.nonghg_tg_R_en_S_F_Yh <- get_data(all_data, "L111.nonghg_tg_R_en_S_F_Yh")
+    L111.nonghg_tgej_R_en_S_F_Yh <- get_data(all_data, "L111.nonghg_tgej_R_en_S_F_Yh")
+    L112.ghg_tg_R_en_S_F_Yh <- get_data(all_data, "L112.ghg_tg_R_en_S_F_Yh")
+    L112.ghg_tgej_R_en_S_F_Yh <- get_data(all_data, "L112.ghg_tgej_R_en_S_F_Yh")
     L114.bcoc_tgej_R_en_S_F_2000 <- get_data(all_data, "L114.bcoc_tgej_R_en_S_F_2000")
     L151.nonghg_ctrl_R_en_S_T <- get_data(all_data, "L151.nonghg_ctrl_R_en_S_T")
     A51.steepness <- get_data(all_data, "emissions/A51.steepness")
@@ -235,7 +226,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     delete_nonexistent_sectors <- function(x, L201.delete.sectors) {
       filter(x, ! paste0(region, supplysector) %in% L201.delete.sectors)
     }
-    L201.delete.sectors <- paste0(L244.DeleteThermalService$region, L244.DeleteThermalService$supplysector )
+    L201.delete.sectors <- paste0(L244.DeleteThermalService$region, L244.DeleteThermalService$supplysector)
     L201.en_pol_emissions <- delete_nonexistent_sectors(L201.en_pol_emissions, L201.delete.sectors)
     L201.en_ghg_emissions <- delete_nonexistent_sectors(L201.en_ghg_emissions, L201.delete.sectors)
     L201.en_bcoc_emissions <- delete_nonexistent_sectors(L201.en_bcoc_emissions, L201.delete.sectors)
@@ -253,7 +244,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       add_legacy_name("L201.en_pol_emissions") %>%
       add_precursors("common/GCAM_region_names",
                      "emissions/A_regions", "energy/A_regions",
-                     "temp-data-inject/L111.nonghg_tg_R_en_S_F_Yh",
+                     "L111.nonghg_tg_R_en_S_F_Yh",
                      "temp-data-inject/L244.DeleteThermalService") ->
       L201.en_pol_emissions
 
@@ -266,7 +257,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       add_legacy_name("L201.en_ghg_emissions") %>%
       add_precursors("common/GCAM_region_names",
                      "energy/A_regions",
-                     "temp-data-inject/L112.ghg_tg_R_en_S_F_Yh",
+                     "L112.ghg_tg_R_en_S_F_Yh",
                      "temp-data-inject/L244.DeleteThermalService") ->
       L201.en_ghg_emissions
 
@@ -293,7 +284,9 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       add_precursors("common/GCAM_region_names",
                      "emissions/A_regions", "energy/A_regions",
                      "L151.nonghg_ctrl_R_en_S_T",
-                     "temp-data-inject/L244.DeleteThermalService") ->
+                     "temp-data-inject/L244.DeleteThermalService") %>%
+      # Because of upstream numerical instability/rounding issues (see https://github.com/JGCRI/gcamdata/pull/613) need sum test here
+      add_flags(FLAG_SUM_TEST) ->
       L201.nonghg_max_reduction
 
     L201.nonghg_steepness %>%
@@ -336,7 +329,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       add_legacy_name("L201.nonghg_res") %>%
       add_precursors("common/GCAM_region_names",
                      "emissions/A_regions",
-                     "temp-data-inject/L111.nonghg_tgej_R_en_S_F_Yh") ->
+                     "L111.nonghg_tgej_R_en_S_F_Yh") ->
       L201.nonghg_res
 
     L201.ghg_res %>%
@@ -346,7 +339,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       add_comments("in model base years, and rename to regional SO2.") %>%
       add_legacy_name("L201.ghg_res") %>%
       add_precursors("common/GCAM_region_names",
-                     "temp-data-inject/L112.ghg_tgej_R_en_S_F_Yh") ->
+                     "L112.ghg_tgej_R_en_S_F_Yh") ->
       L201.ghg_res
 
     return_data(L201.en_pol_emissions, L201.en_ghg_emissions, L201.en_bcoc_emissions, L201.nonghg_max_reduction, L201.nonghg_steepness, L201.nonghg_max_reduction_res, L201.nonghg_steepness_res, L201.nonghg_res, L201.ghg_res)

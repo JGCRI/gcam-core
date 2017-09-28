@@ -19,7 +19,8 @@ module_socio_batch_trn_agg_xml <- function(command, ...) {
              "L252.IncomeElasticity_trn_SSP2",
              "L252.IncomeElasticity_trn_SSP3",
              "L252.IncomeElasticity_trn_SSP4",
-             "L252.IncomeElasticity_trn_SSP5"))
+             "L252.IncomeElasticity_trn_SSP5",
+             "L252.IncomeElasticity_trn_GCAM3"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "trn_agg_gSSP1.xml",
              XML = "trn_agg_gSSP2.xml",
@@ -30,7 +31,8 @@ module_socio_batch_trn_agg_xml <- function(command, ...) {
              XML = "trn_agg_SSP2.xml",
              XML = "trn_agg_SSP3.xml",
              XML = "trn_agg_SSP4.xml",
-             XML = "trn_agg_SSP5.xml"))
+             XML = "trn_agg_SSP5.xml",
+             XML = "trn_agg_GCAM3.xml"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -46,7 +48,7 @@ module_socio_batch_trn_agg_xml <- function(command, ...) {
     L252.IncomeElasticity_trn_SSP3 <- get_data(all_data, "L252.IncomeElasticity_trn_SSP3")
     L252.IncomeElasticity_trn_SSP4 <- get_data(all_data, "L252.IncomeElasticity_trn_SSP4")
     L252.IncomeElasticity_trn_SSP5 <- get_data(all_data, "L252.IncomeElasticity_trn_SSP5")
-
+    L252.IncomeElasticity_trn_GCAM3 <- get_data(all_data, "L252.IncomeElasticity_trn_GCAM3")
     # ===================================================
 
     # Produce outputs
@@ -58,7 +60,7 @@ module_socio_batch_trn_agg_xml <- function(command, ...) {
       add_xml_data(L252.IncomeElasticity_trn_gSSP2, "IncomeElasticity") %>%
       add_precursors("L252.IncomeElasticity_trn_gSSP2") ->
       trn_agg_gSSP2.xml
-    create_xml("trn_agg_SSP3.xml") %>%
+    create_xml("trn_agg_gSSP3.xml") %>%
       add_xml_data(L252.IncomeElasticity_trn_gSSP3, "IncomeElasticity") %>%
       add_precursors("L252.IncomeElasticity_trn_gSSP3") ->
       trn_agg_gSSP3.xml
@@ -66,7 +68,7 @@ module_socio_batch_trn_agg_xml <- function(command, ...) {
       add_xml_data(L252.IncomeElasticity_trn_gSSP4, "IncomeElasticity") %>%
       add_precursors("L252.IncomeElasticity_trn_gSSP4") ->
       trn_agg_gSSP4.xml
-    create_xml("trn_agg_SSP5.xml") %>%
+    create_xml("trn_agg_gSSP5.xml") %>%
       add_xml_data(L252.IncomeElasticity_trn_gSSP5, "IncomeElasticity") %>%
       add_precursors("L252.IncomeElasticity_trn_gSSP5") ->
       trn_agg_gSSP5.xml
@@ -92,8 +94,13 @@ module_socio_batch_trn_agg_xml <- function(command, ...) {
       add_precursors("L252.IncomeElasticity_trn_SSP5") ->
       trn_agg_SSP5.xml
 
+    create_xml("trn_agg_GCAM3.xml") %>%
+      add_xml_data(L252.IncomeElasticity_trn_GCAM3, "IncomeElasticity") %>%
+      add_precursors("L252.IncomeElasticity_trn_GCAM3") ->
+      trn_agg_GCAM3.xml
+
     return_data(trn_agg_gSSP1.xml, trn_agg_gSSP2.xml, trn_agg_gSSP3.xml, trn_agg_gSSP4.xml, trn_agg_gSSP5.xml,
-                trn_agg_SSP1.xml, trn_agg_SSP2.xml, trn_agg_SSP3.xml, trn_agg_SSP4.xml, trn_agg_SSP5.xml)
+                trn_agg_SSP1.xml, trn_agg_SSP2.xml, trn_agg_SSP3.xml, trn_agg_SSP4.xml, trn_agg_SSP5.xml, trn_agg_GCAM3.xml)
   } else {
     stop("Unknown command")
   }

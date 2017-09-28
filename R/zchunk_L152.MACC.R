@@ -63,7 +63,7 @@ module_emissions_L152.MACC <- function(command, ...) {
 
     # For in abatement and basebline data:
     # Combine aluminum and magnesium processes: define function, then call in both instances
-    combine_Al_Mg <- function(x){
+    combine_Al_Mg <- function(x) {
       x %>%
         mutate(Process = sub("Primary Aluminum Production", "Aluminum and Magnesium Production", Process)) %>%
         mutate(Process = sub("Magnesium Manufacturing", "Aluminum and Magnesium Production", Process))
@@ -91,7 +91,7 @@ module_emissions_L152.MACC <- function(command, ...) {
     # (ie. MAC curves in regions where the sector/process does not exist - the baseline is zero)
     L152.EPA_MACC_percent_MtCO2e <- L152.EPA_MACC_MtCO2e %>%
       left_join(L152.EPA_MACC_baselines_MtCO2e ,
-                 by = c("Sector","Process","EPA_region")) %>%
+                 by = c("Sector", "Process", "EPA_region")) %>%
       mutate(reduction_pct = reduction_MtCO2e / baseline_MtCO2e) %>%
       filter(!is.na(reduction_pct)) %>%
       ungroup %>%

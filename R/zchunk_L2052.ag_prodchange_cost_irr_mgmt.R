@@ -18,9 +18,9 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "water/basin_to_country_mapping",
-             FILE = "temp-data-inject/L123.For_Yield_m3m2_R_GLU",
-             FILE = "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
-             FILE = "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU",
+             "L123.For_Yield_m3m2_R_GLU",
+             "L161.ag_irrProd_Mt_R_C_Y_GLU",
+             "L161.ag_rfdProd_Mt_R_C_Y_GLU",
              "L162.ag_YieldRate_R_C_Y_GLU_irr",
              "L162.bio_YieldRate_R_Y_GLU_irr",
              "L164.ag_Cost_75USDkg_C",
@@ -49,15 +49,9 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
-    L123.For_Yield_m3m2_R_GLU <- get_data(all_data, "temp-data-inject/L123.For_Yield_m3m2_R_GLU") %>%
-      gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%  # temporary
-      mutate(year = as.integer(substr(year, 2, 5)))
-    L161.ag_irrProd_Mt_R_C_Y_GLU <- get_data(all_data, "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU") %>%
-      gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%  # temporary
-      mutate(year = as.integer(substr(year, 2, 5)))
-    L161.ag_rfdProd_Mt_R_C_Y_GLU <- get_data(all_data, "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU") %>%
-      gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%  # temporary
-      mutate(year = as.integer(substr(year, 2, 5)))
+    L123.For_Yield_m3m2_R_GLU <- get_data(all_data, "L123.For_Yield_m3m2_R_GLU")
+    L161.ag_irrProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_irrProd_Mt_R_C_Y_GLU")
+    L161.ag_rfdProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_rfdProd_Mt_R_C_Y_GLU")
     L162.ag_YieldRate_R_C_Y_GLU_irr <- get_data(all_data, "L162.ag_YieldRate_R_C_Y_GLU_irr")
     L162.bio_YieldRate_R_Y_GLU_irr <- get_data(all_data, "L162.bio_YieldRate_R_Y_GLU_irr")
     L164.ag_Cost_75USDkg_C <- get_data(all_data, "L164.ag_Cost_75USDkg_C")
@@ -82,7 +76,7 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       left_join_error_no_match(L164.ag_Cost_75USDkg_C, by = "GCAM_commodity") %>%
       mutate(nonLandVariableCost = round(Cost_75USDkg, aglu.DIGITS_CALPRICE)) %>%
       # Copy costs to high and low management levels
-      repeat_add_columns(tibble::tibble(MGMT = c("hi", "lo"))) %>%
+      repeat_add_columns(tibble(MGMT = c("hi", "lo"))) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(basin_to_country_mapping[c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) %>%
       # Add sector, subsector, technology names
@@ -90,7 +84,7 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
              AgSupplySubsector = paste(GCAM_commodity, GLU_name, sep = "_"),
              AgProductionTechnology = paste(GCAM_commodity, GLU_name, IRR_RFD, MGMT, sep = "_")) %>%
       # Copy costs to all model years
-      repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       select(one_of(names_AgCost)) ->
       L2052.AgCost_ag_irr_mgmt
 
@@ -104,12 +98,12 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
              nonLandVariableCost = replace(nonLandVariableCost, grepl("tree", AgProductionTechnology),
                                            aglu.BIO_TREE_COST_75USD_GJ)) %>%
       # Copy coefficients to all four technologies
-      repeat_add_columns(tibble::tibble(IRR_RFD = c("IRR", "RFD"))) %>%
-      repeat_add_columns(tibble::tibble(MGMT = c("hi", "lo"))) %>%
+      repeat_add_columns(tibble(IRR_RFD = c("IRR", "RFD"))) %>%
+      repeat_add_columns(tibble(MGMT = c("hi", "lo"))) %>%
       # Revise technology names, adding info of irr/rfd and hi/lo
       mutate(AgProductionTechnology = paste(AgProductionTechnology, IRR_RFD, MGMT, sep = "_")) %>%
       # Copy costs to all model years
-      repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       select(one_of(names_AgCost)) ->
       L2052.AgCost_bio_irr_mgmt
 
@@ -119,7 +113,7 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       select(GCAM_region_ID, GCAM_commodity, GLU) %>%
       unique() %>%
       # Copy costs to all model years
-      repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       mutate(nonLandVariableCost = aglu.FOR_COST_75USDM3) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(basin_to_country_mapping[c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) %>%
@@ -141,7 +135,7 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       # Set the Inf to 0, and keep the technologies out.
       mutate(AgProdChange = replace(AgProdChange, AgProdChange == Inf, 0)) %>%
       # Copy costs to high and low management levels
-      repeat_add_columns(tibble::tibble(MGMT = c("hi", "lo"))) %>%
+      repeat_add_columns(tibble(MGMT = c("hi", "lo"))) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(basin_to_country_mapping[c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) %>%
       # Add sector, subsector, technology names
@@ -165,9 +159,9 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       unique() %>%
       bind_rows(unique(select(L201.AgYield_bio_tree, one_of(names_AgTech)))) %>%
       # Copy to all future years
-      repeat_add_columns(tibble::tibble(year = FUTURE_YEARS)) %>%
+      repeat_add_columns(tibble(year = FUTURE_YEARS)) %>%
       # Copy to both irrigated and rainfed technologies
-      repeat_add_columns(tibble::tibble(IRR_RFD = c("IRR", "RFD"))) %>%
+      repeat_add_columns(tibble(IRR_RFD = c("IRR", "RFD"))) %>%
       # Separate the AgProductionTechnology variable to get GLU names for matching in the yield change rates
       separate(AgProductionTechnology, c("biomass", "type", "GLU_name"), sep = "_") %>%
       # Map in yield change rates, the same values for bioenergy crops are applied equally to grass and tree crops.
@@ -178,7 +172,7 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       # These regions are assumed minor agriculturally and as such not assigned yield improvement for tree-based bioenergy crops.
       replace_na(list(AgProdChange = 0)) %>%
       # Copy coefficients to high and low management levels
-      repeat_add_columns(tibble::tibble(MGMT = c("hi", "lo"))) %>%
+      repeat_add_columns(tibble(MGMT = c("hi", "lo"))) %>%
       # Revise technology names to add all technologies
       mutate(AgProductionTechnology = paste(AgSupplySubsector, IRR_RFD, MGMT, sep = "_")) %>%
       select(one_of(names_AgProdChange)) ->
@@ -237,8 +231,8 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       add_legacy_name("L2052.AgCost_ag_irr_mgmt") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
-                     "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
-                     "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU",
+                     "L161.ag_irrProd_Mt_R_C_Y_GLU",
+                     "L161.ag_rfdProd_Mt_R_C_Y_GLU",
                      "L164.ag_Cost_75USDkg_C") ->
       L2052.AgCost_ag_irr_mgmt
 
@@ -258,7 +252,7 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       add_legacy_name("L2052.AgCost_For") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
-                     "temp-data-inject/L123.For_Yield_m3m2_R_GLU") ->
+                     "L123.For_Yield_m3m2_R_GLU") ->
       L2052.AgCost_For
 
     L2052.AgProdChange_ag_irr_ref %>%

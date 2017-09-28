@@ -18,11 +18,12 @@ PH_year_value_historical <- function(d) {
 #'
 #' @param d Data frame (typically from pipeline)
 #' @param ... Rest of call to \code{\link{left_join}}
+#' @param ignore_columns Optional column name(s) to ignore, character vector
 #' @return Joined data.
 #' @details Restrictive version of dplyr::left_join meant for replacing `match` calls.
 # Ensures that number of rows of data doesn't change, and everything has matched data.
 #' @export
-left_join_error_no_match <- function(d, ...) {
+left_join_error_no_match <- function(d, ..., ignore_columns = NULL) {
   assertthat::assert_that(tibble::is.tibble(d))
   dnames <- names(d)
   drows <- nrow(d)
@@ -30,7 +31,8 @@ left_join_error_no_match <- function(d, ...) {
   if(nrow(d) != drows) {
     stop("left_join_no_match: number of rows in data changed")
   }
-  if(any(is.na(d[setdiff(names(d), dnames)]))) {
+  names_to_check <- setdiff(names(d), dnames) %>% setdiff(ignore_columns)
+  if(any(is.na(d[names_to_check]))) {
     stop("left_join_no_match: NA values in new data columns")
   }
   d
@@ -154,12 +156,12 @@ approx_fun <- function(year, value, rule = 1) {
   assert_that(is.numeric(year))
   assert_that(is.numeric(value))
 
-  if(rule == 1 | rule == 2 ) {
+  if(rule == 1 | rule == 2) {
     tryCatch(stats::approx(as.vector(year), value, rule = rule, xout = year)$y,
-             error=function(e) NA)
+             error = function(e) NA)
 
   } else {
-    stop("Not implemented yet!")
+    stop("Use fill_exp_decay_extrapolate!")
   }
 }
 
@@ -217,13 +219,14 @@ change_iso_code <- function(d, from, to, col = "iso") {
 #' a column called ISO.
 #' @param d The data to be transformed.
 #' @param col The column currently containing the iso codes (default = 'iso')
+#' @param delete_original Delete original column? Logical
 #' @return Tibble with the iso codes converted to lower case. If the column with
 #'   the codes was not called 'iso', it will be renamed to 'iso'.
 #' @export
-standardize_iso <- function(d, col = "iso") {
+standardize_iso <- function(d, col = "iso", delete_original = TRUE) {
   assertthat::assert_that(tibble::is_tibble(d))
   d[["iso"]] <- tolower(d[[col]])
-  if(col != "iso") {
+  if(delete_original && col != "iso") {
     # This is surprisingly hard to do using dplyr
     d[[col]] <- NULL
   }

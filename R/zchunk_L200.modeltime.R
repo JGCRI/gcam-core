@@ -55,6 +55,7 @@ module_modeltime_L200.modeltime <- function(command, ...) {
 
     tibble(last.historical.year    = modeltime.MAGICC_LAST_HISTORICAL_YEAR,
            bc.unit.forcing         = modeltime.MAGICC_BC_UNIT_FORCING,
+           default.emiss.file      = modeltime.MAGICC_DEFAULT_EMISS_FILE,
            carbon.model.start.year = modeltime.MAGICC_C_START_YEAR) %>%
       add_title("MAGICC time information") %>%
       add_units("years") %>%

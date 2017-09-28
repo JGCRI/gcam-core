@@ -1,6 +1,6 @@
 #' module_aglu_L243.bio_trade_input
 #'
-#' Briefly describe what this chunk does.
+#' Establish regionally differentiated trade structure for bioenergy.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,13 +8,16 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L243.DeleteInput_RegBio}, \code{L243.SectorLogitTables[[ curr_table ]]$data}, \code{L243.TechCoef_RegBio}, \code{L243.Supplysector_Bio}, \code{L243.SectorUseTrialMarket_Bio}, \code{L243.SubsectorLogitTables[[ curr_table ]]$data}, \code{L243.SubsectorLogit_Bio}, \code{L243.SubsectorShrwtFllt_TotBio}, \code{L243.SubsectorShrwtFllt_TradedBio}, \code{L243.GlobalTechCoef_TotBio}, \code{L243.GlobalTechShrwt_TotBio}, \code{L243.StubTech_TotBio}, \code{L243.StubTechShrwt_TotBio}, \code{L243.StubTechCoef_ImportedBio}, \code{L243.StubTechCoef_DomesticBio}, \code{L243.TechCoef_TradedBio}, \code{L243.TechShrwt_TradedBio}, \code{L243.SubsectorShrwtFllt_TotBio_SSP4}, \code{L243.SubsectorShrwtFllt_TradedBio_SSP4}, \code{L243.TechShrwt_TradedBio_SSP4}, \code{L243.StubTechShrwt_TotBio_SSP4}, \code{L243.SubsectorShrwtFllt_TotBio_SSP3}, \code{L243.StubTechShrwt_TotBio_SSP3}. The corresponding file in the
 #' original data system was \code{L243.bio_trade_input.R} (aglu level2).
-#' @details Describe in detail what this chunk does.
+#' @details This chunk sets up a structure for regionally differentiated bioenergy trade. Each
+#' region consumes a blend of domestic and international bioenergy. Regions can supply to either
+#' the domestic or international market. Share weights in the default case depend on the amount of
+#' cropland a region has, with the largest region having a share weight of 1. Share weights in SSP3
+#' and SSP4 are adjusted to reflect the trade frictions in the SSP storylines.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
-#' @export
-module_aglu_L243.bio_trade_input_DISABLED <- function(command, ...) {
+#' @author KVC July 2017
+module_aglu_L243.bio_trade_input <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "aglu/A_bio_supplysector",
@@ -24,11 +27,9 @@ module_aglu_L243.bio_trade_input_DISABLED <- function(command, ...) {
              "L102.pcgdp_thous90USD_Scen_R_Y"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L243.DeleteInput_RegBio",
-             "L243.SectorLogitTables[[ curr_table ]]$data",
              "L243.TechCoef_RegBio",
              "L243.Supplysector_Bio",
              "L243.SectorUseTrialMarket_Bio",
-             "L243.SubsectorLogitTables[[ curr_table ]]$data",
              "L243.SubsectorLogit_Bio",
              "L243.SubsectorShrwtFllt_TotBio",
              "L243.SubsectorShrwtFllt_TradedBio",
@@ -50,6 +51,10 @@ module_aglu_L243.bio_trade_input_DISABLED <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    region <- traded <- subsector.name <- sector.name <- technology <- year <- subsector <-
+      share.weight <- supplysector <- MORE <- market.name <- Land_Type <- GCAM_region_ID <-
+      value <- Cropland <- year.fillout <- trade.region <- NULL  # silence package check notes
+
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A_bio_supplysector <- get_data(all_data, "aglu/A_bio_supplysector")
@@ -58,266 +63,424 @@ module_aglu_L243.bio_trade_input_DISABLED <- function(command, ...) {
     L120.LC_bm2_R_LT_Yh_GLU <- get_data(all_data, "L120.LC_bm2_R_LT_Yh_GLU")
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y")
 
-    # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses repeat_and_add_vector
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code converts gdp using a conv_xxxx_xxxx_USD constant
-    # Use the `gdp_deflator(year, base_year)` function instead
-    # ===================================================
+    # Note: I'm pulling out all of the hard-coded GCAM sector names used in this file to the top so it is clearer
+    OLD.REGIONAL.BIOMASS.NAME <- "regional biomass"
+    NEW.REGIONAL.BIOMASS.NAME <- "total biomass"
+    TRADED.BIOMASS.NAME <- "traded biomass"
+    BIOMASS.NAME <- "biomass"
+    BIOMASS.TRADE.REGION <- "USA"
+    DOMESTIC.BIOMASS.NAME <- "domestic biomass"
+    INTERNATIONAL.BIOMASS.NAME <- "imported biomass"
 
-    # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L243.DeleteInput_RegBio") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    # First, create a table to delete existing regional biomass input (this needs to include region/sector/subsector/technology/input for all regions & years)
+    GCAM_region_names %>%
+      select(region) %>%
+      mutate(supplysector = OLD.REGIONAL.BIOMASS.NAME, subsector = OLD.REGIONAL.BIOMASS.NAME, technology = OLD.REGIONAL.BIOMASS.NAME) %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      mutate(minicam.energy.input = BIOMASS.NAME) ->
       L243.DeleteInput_RegBio
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L243.SectorLogitTables[[ curr_table ]]$data") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L243.SectorLogitTables[[ curr_table ]]$data
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L243.TechCoef_RegBio") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L243.TechCoef_RegBio
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L243.Supplysector_Bio") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+
+    # Set up all of the new supply sectors.
+    # Copy sector information to each region.
+    # Note that "traded biomass" only goes in the BIOMASS.TRADE.REGION
+    A_bio_supplysector %>%
+      repeat_add_columns(tibble(region = GCAM_region_names$region)) %>%
+      mutate(region = if_else(traded == 1, BIOMASS.TRADE.REGION, region)) %>%
+      mutate(logit.year.fillout = min(MODEL_YEARS)) %>%
+      select(-traded) ->
       L243.Supplysector_Bio
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L243.SectorUseTrialMarket_Bio") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L243.SectorUseTrialMarket_Bio
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L243.SubsectorLogitTables[[ curr_table ]]$data") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L243.SubsectorLogitTables[[ curr_table ]]$data
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L243.SubsectorLogit_Bio") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L243.SubsectorLogit_Bio
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L243.SubsectorShrwtFllt_TotBio") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L243.SubsectorShrwtFllt_TotBio
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L243.SubsectorShrwtFllt_TradedBio") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L243.SubsectorShrwtFllt_TradedBio
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L243.GlobalTechCoef_TotBio") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+
+    # Now, create new regional biomass with input called "total biomass" with a input-output coefficient of 1 (i.e., a pass through sector)
+    L243.DeleteInput_RegBio %>%
+      mutate(minicam.energy.input = NEW.REGIONAL.BIOMASS.NAME,
+             coefficient = 1,
+             market.name = region) ->
+      L243.TechCoef_RegBio
+
+    # Set up the technologies for the new regional biomass sector ("total biomass")
+    # This sector will include a domestic component and an international component. The domestic component
+    # consumes "biomass" directly, while the international consumes "traded biomass".
+    # These technologies have input-output coefficients of 1 (i.e., pass through sectors)
+    tibble(sector.name = NEW.REGIONAL.BIOMASS.NAME) %>%
+      repeat_add_columns(tibble(subsector.name = c(DOMESTIC.BIOMASS.NAME, INTERNATIONAL.BIOMASS.NAME))) %>%
+      mutate(technology = subsector.name) %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      mutate(minicam.energy.input = if_else(subsector.name == DOMESTIC.BIOMASS.NAME, BIOMASS.NAME, TRADED.BIOMASS.NAME)) %>%
+      mutate(coefficient = 1) ->
       L243.GlobalTechCoef_TotBio
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L243.GlobalTechShrwt_TotBio") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+
+    # Add share-weights to the global technologies
+    L243.GlobalTechCoef_TotBio %>%
+      select(sector.name, subsector.name, technology, year) %>%
+      left_join_error_no_match(select(A_bio_subsector, subsector, share.weight), by=c("subsector.name" = "subsector")) ->
       L243.GlobalTechShrwt_TotBio
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L243.StubTech_TotBio") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+
+    # Set up stub-technologies
+    tibble(supplysector = NEW.REGIONAL.BIOMASS.NAME) %>%
+      repeat_add_columns(tibble(subsector = c(DOMESTIC.BIOMASS.NAME, INTERNATIONAL.BIOMASS.NAME))) %>%
+      mutate(stub.technology = subsector) %>%
+      repeat_add_columns(tibble(region = GCAM_region_names$region)) ->
       L243.StubTech_TotBio
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L243.StubTechShrwt_TotBio") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+
+    # Share weights for the regional biomass technologies
+    L243.StubTech_TotBio %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      mutate(share.weight = 1) ->
       L243.StubTechShrwt_TotBio
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L243.StubTechCoef_ImportedBio") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+
+    # Stub technologies for the regional biomass technologies
+    L243.StubTech_TotBio %>%
+      filter(subsector == INTERNATIONAL.BIOMASS.NAME) %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      mutate(minicam.energy.input = TRADED.BIOMASS.NAME,
+             coefficient = 1,
+             market = BIOMASS.TRADE.REGION) ->
       L243.StubTechCoef_ImportedBio
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L243.StubTechCoef_DomesticBio") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+
+    # Stub technologies for the regional biomass technologies
+    L243.StubTech_TotBio %>%
+      filter(subsector == DOMESTIC.BIOMASS.NAME) %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      mutate(minicam.energy.input = BIOMASS.NAME,
+             coefficient = 1,
+             market = region) ->
       L243.StubTechCoef_DomesticBio
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L243.TechCoef_TradedBio") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+
+    # The traded markets tend to be a good candidate to solve explicitly since they tie together many solved markets.
+    # Set flag so traded biomass uses trial markets
+    A_bio_supplysector %>%
+      filter(traded == 1) %>%
+      select(supplysector) %>%
+      mutate(region = BIOMASS.TRADE.REGION, use.trial.market = 1) ->
+      L243.SectorUseTrialMarket_Bio
+
+    if( OLD_DATA_SYSTEM_BEHAVIOR) {
+      # The old data system repeated the USA row 32 times. The xml conversion only needs the first instance.
+      L243.SectorUseTrialMarket_Bio %>%
+        repeat_add_columns(tibble(MORE = 1:32)) %>%
+        select(-MORE) ->
+        L243.SectorUseTrialMarket_Bio
+    }
+
+    # Set up all of the new subsectors.
+    # Copy subsector information to each region.
+    # Note that "traded biomass" only goes in the BIOMASS.TRADE.REGION, but the subsector name includes the original region name
+    A_bio_subsector_logit %>%
+      repeat_add_columns(tibble(region = GCAM_region_names$region)) %>%
+      mutate(subsector = if_else(traded == 1, paste(region, subsector), subsector)) %>%
+      mutate(region = if_else(traded == 1, BIOMASS.TRADE.REGION, region)) %>%
+      mutate(logit.year.fillout = min(MODEL_YEARS)) %>%
+      select(-traded) ->
+      L243.SubsectorLogit_Bio
+
+    # Share weights for the regional biomass subsectors
+    L243.StubTech_TotBio %>%
+      select(region, supplysector, subsector) %>%
+      mutate(year.fillout = min(MODEL_YEARS)) %>%
+      left_join_error_no_match(select(A_bio_subsector, subsector, share.weight), by = "subsector") ->
+      L243.SubsectorShrwtFllt_TotBio
+
+    # Input name, market, coeff for traded biomass
+    tibble(region = BIOMASS.TRADE.REGION, supplysector = TRADED.BIOMASS.NAME) %>%
+      mutate(minicam.energy.input = BIOMASS.NAME,
+             coefficient = 1) %>%
+      repeat_add_columns(tibble(market.name = GCAM_region_names$region)) %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      mutate(subsector = paste(market.name, TRADED.BIOMASS.NAME),
+             technology = subsector) ->
       L243.TechCoef_TradedBio
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L243.TechShrwt_TradedBio") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+
+    # Compute share weights for subsectors based on cropland area. Largest region gets shareweight of 1.
+    # This will mean that international biomass supply is roughly proportional to
+    # cropland area (larger regions produce more biomass).
+    L120.LC_bm2_R_LT_Yh_GLU %>%
+      filter(Land_Type == "Cropland", year == max(HISTORICAL_YEARS)) %>%
+      group_by(GCAM_region_ID) %>%
+      summarize(Cropland = sum(value)) %>%
+      ungroup() %>%
+      mutate(share.weight = Cropland / max(Cropland)) %>%
+      full_join(GCAM_region_names, by = "GCAM_region_ID") %>%       # Using full join to ensure regions without cropland show up
+      replace_na(list(share.weight = 0)) %>%                      # Assign regions without land a shareweight of 0 (i.e., they won't contribute to international bio supply)
+      select(-GCAM_region_ID, -Cropland) %>%
+      mutate(supplysector = TRADED.BIOMASS.NAME,
+             subsector = paste(region, TRADED.BIOMASS.NAME),
+             region = BIOMASS.TRADE.REGION,
+             year.fillout = min(MODEL_YEARS)) ->
+      L243.SubsectorShrwtFllt_TradedBio
+
+    # Set share weights for technologies in the traded biomass sector to 1
+    # This is because competition is handled at the subsector level
+    L243.SubsectorShrwtFllt_TradedBio %>%
+      mutate(technology = subsector, share.weight = 1) %>%
+      select(-year.fillout) %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) ->
       L243.TechShrwt_TradedBio
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L243.SubsectorShrwtFllt_TotBio_SSP4") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L243.SubsectorShrwtFllt_TotBio_SSP4
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L243.SubsectorShrwtFllt_TradedBio_SSP4") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+
+    # Set share weights for total biomass in SSP4 low income regions.
+    # SSP4 assumes limited trade with low income regions; so, share weights are set to 0.1
+    # See Calvin et al. (2017) for documentation. https://doi.org/10.1016/j.gloenvcha.2016.06.010
+    L243.SubsectorShrwtFllt_TotBio %>%
+      filter(region %in% get_ssp_regions(L102.pcgdp_thous90USD_Scen_R_Y, GCAM_region_names, "low"),
+             subsector == "imported biomass") %>%
+      mutate(year.fillout = 2025, share.weight = 0.1) ->
+      L243.SubsectorShrwtFllt_TotBio_SSP4_lo
+
+    L243.SubsectorShrwtFllt_TradedBio %>%
+      mutate(trade.region = gsub(" traded biomass", "", subsector)) %>%
+      filter(trade.region %in% get_ssp_regions(L102.pcgdp_thous90USD_Scen_R_Y, GCAM_region_names, "low")) %>%
+      mutate(year.fillout = 2025, share.weight = 0.1) %>%
+      select(-trade.region) ->
       L243.SubsectorShrwtFllt_TradedBio_SSP4
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L243.TechShrwt_TradedBio_SSP4") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+
+    L243.TechShrwt_TradedBio %>%
+      mutate(trade.region = gsub(" traded biomass", "", subsector)) %>%
+      filter(trade.region %in% get_ssp_regions(L102.pcgdp_thous90USD_Scen_R_Y, GCAM_region_names, "low"),
+             year > 2020) %>%
+      mutate(share.weight = 0.1) %>%
+      select(-trade.region) ->
       L243.TechShrwt_TradedBio_SSP4
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L243.StubTechShrwt_TotBio_SSP4") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+
+    L243.StubTechShrwt_TotBio %>%
+      filter(region %in% get_ssp_regions(L102.pcgdp_thous90USD_Scen_R_Y, GCAM_region_names, "low"),
+             subsector == "imported biomass", year > 2020) %>%
+      mutate(share.weight = 0.1) ->
+      L243.StubTechShrwt_TotBio_SSP4_lo
+
+    # Set share weights for total biomass in SSP4 high and medium income regions.
+    # SSP4 assumes free trade within high income regions; so, subsector share weights are set to 0.5 and
+    # technology share weights are set to 0.25
+    # See Calvin et al. (2017) for documentation. https://doi.org/10.1016/j.gloenvcha.2016.06.010
+    L243.SubsectorShrwtFllt_TotBio %>%
+      filter(region %in% c(get_ssp_regions(L102.pcgdp_thous90USD_Scen_R_Y, GCAM_region_names, "high"),
+                          get_ssp_regions(L102.pcgdp_thous90USD_Scen_R_Y, GCAM_region_names, "medium")),
+             subsector == "imported biomass") %>%
+      mutate(year.fillout = 2025, share.weight = 0.5) ->
+      L243.SubsectorShrwtFllt_TotBio_SSP4_hi
+
+    L243.StubTechShrwt_TotBio %>%
+      filter(region %in% c(get_ssp_regions(L102.pcgdp_thous90USD_Scen_R_Y, GCAM_region_names, "high"),
+                            get_ssp_regions(L102.pcgdp_thous90USD_Scen_R_Y, GCAM_region_names, "medium")),
+             subsector == "imported biomass", year > 2020) %>%
+      mutate(share.weight = 0.25) ->
+      L243.StubTechShrwt_TotBio_SSP4_hi
+
+    # Bind SSP4 share weights for all regions into single data frames
+    bind_rows(L243.SubsectorShrwtFllt_TotBio_SSP4_hi, L243.SubsectorShrwtFllt_TotBio_SSP4_lo) ->
+      L243.SubsectorShrwtFllt_TotBio_SSP4
+
+    bind_rows(L243.StubTechShrwt_TotBio_SSP4_hi, L243.StubTechShrwt_TotBio_SSP4_lo) ->
       L243.StubTechShrwt_TotBio_SSP4
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L243.SubsectorShrwtFllt_TotBio_SSP3") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+
+    # Set share weights for total biomass in SSP3.
+    # SSP3 assumes limited trade across regions; so, share weights are set to 0.1
+    # See Calvin et al. (2017) for documentation. https://doi.org/10.1016/j.gloenvcha.2016.06.010
+    L243.SubsectorShrwtFllt_TotBio %>%
+      filter(subsector == "imported biomass") %>%
+      mutate(year.fillout = 2025, share.weight = 0.1) ->
       L243.SubsectorShrwtFllt_TotBio_SSP3
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L243.StubTechShrwt_TotBio_SSP3") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+
+    L243.StubTechShrwt_TotBio %>%
+      filter(subsector == "imported biomass", year > 2020) %>%
+      mutate(share.weight = 0.1) ->
       L243.StubTechShrwt_TotBio_SSP3
 
-    return_data(L243.DeleteInput_RegBio, L243.SectorLogitTables[[ curr_table ]]$data, L243.TechCoef_RegBio, L243.Supplysector_Bio, L243.SectorUseTrialMarket_Bio, L243.SubsectorLogitTables[[ curr_table ]]$data, L243.SubsectorLogit_Bio, L243.SubsectorShrwtFllt_TotBio, L243.SubsectorShrwtFllt_TradedBio, L243.GlobalTechCoef_TotBio, L243.GlobalTechShrwt_TotBio, L243.StubTech_TotBio, L243.StubTechShrwt_TotBio, L243.StubTechCoef_ImportedBio, L243.StubTechCoef_DomesticBio, L243.TechCoef_TradedBio, L243.TechShrwt_TradedBio, L243.SubsectorShrwtFllt_TotBio_SSP4, L243.SubsectorShrwtFllt_TradedBio_SSP4, L243.TechShrwt_TradedBio_SSP4, L243.StubTechShrwt_TotBio_SSP4, L243.SubsectorShrwtFllt_TotBio_SSP3, L243.StubTechShrwt_TotBio_SSP3)
+    # Produce outputs
+    L243.DeleteInput_RegBio %>%
+      add_title("Table of regional biomass sector/subsector/technology/year for deletion") %>%
+      add_units("NA") %>%
+      add_comments("List all region/year combinations for the regional biomass sector/subsector/technology") %>%
+      add_comments("We need to rename the input from 'biomass' to 'total biomass' so we can separate trade.") %>%
+      add_comments("We also want to change the market from global to regional.") %>%
+      add_comments("The only way to do this in the model is to delete these technologies and re-add them with the right input and market-name.") %>%
+      add_legacy_name("L243.DeleteInput_RegBio") %>%
+      add_precursors("common/GCAM_region_names") ->
+      L243.DeleteInput_RegBio
+
+    L243.TechCoef_RegBio %>%
+      add_title("Table creating new 'traded biomass' sector/subsector/technology coefficients") %>%
+      add_units("Unitless") %>%
+      add_comments("Copy the L243.DeleteInput_RegBio table. Update the name of the input to 'total biomass'.") %>%
+      add_comments("Add the input-output coefficient (equals 1 since this is a pass through sector).") %>%
+      add_comments("Add the market name (equal to the region name since trade is no longer global).") %>%
+      add_legacy_name("L243.TechCoef_RegBio") %>%
+      same_precursors_as(L243.DeleteInput_RegBio) ->
+      L243.TechCoef_RegBio
+
+    L243.Supplysector_Bio %>%
+      add_title("Units and logit exponents for bio trade supply sectors") %>%
+      add_units("NA") %>%
+      add_comments("Copy bio trade assumption file to all regions") %>%
+      add_comments("Replace region name for 'traded biomass' with the trade region (currently USA).") %>%
+      add_legacy_name("L243.Supplysector_Bio") %>%
+      add_precursors("common/GCAM_region_names", "aglu/A_bio_supplysector") ->
+      L243.Supplysector_Bio
+
+    L243.SectorUseTrialMarket_Bio %>%
+      add_title("Table flagging traded biomass sector to use trial markets") %>%
+      add_units("NA") %>%
+      add_comments("Create a table with the traded biomass sector and a boolean (1) for use.trial.markets") %>%
+      add_legacy_name("L243.SectorUseTrialMarket_Bio") %>%
+      add_precursors("aglu/A_bio_supplysector") ->
+      L243.SectorUseTrialMarket_Bio
+
+    L243.SubsectorLogit_Bio %>%
+      add_title("Logit exponents for bio trade subsectors") %>%
+      add_units("unitless") %>%
+      add_comments("Copy bio trade subsector assumption file to all regions") %>%
+      add_comments("Modify subsector name to include the region for the 'traded biomass' sectors.") %>%
+      add_comments("Replace region name for 'traded biomass' with the trade region (currently USA).") %>%
+      add_legacy_name("L243.SubsectorLogit_Bio") %>%
+      add_precursors("common/GCAM_region_names", "aglu/A_bio_subsector_logit") ->
+      L243.SubsectorLogit_Bio
+
+    L243.SubsectorShrwtFllt_TotBio %>%
+      add_title("Subsector share weights for the total biomass sector") %>%
+      add_units("unitless") %>%
+      add_comments("Map the share weights specified in the assumption file to all subsectors") %>%
+      add_legacy_name("L243.SubsectorShrwtFllt_TotBio") %>%
+      add_precursors("aglu/A_bio_subsector") %>%
+      same_precursors_as("L243.StubTech_TotBio") ->
+      L243.SubsectorShrwtFllt_TotBio
+
+    L243.SubsectorShrwtFllt_TradedBio %>%
+      add_title("Subsector shareweights for traded biomass sector") %>%
+      add_units("unitless") %>%
+      add_comments("Use cropland area in the final historical year to calculate shareweights.") %>%
+      add_comments("Share weights are proportional to cropland area, with the region with") %>%
+      add_comments("the largest cropland area assigned a share weight of 1.") %>%
+      add_legacy_name("L243.SubsectorShrwtFllt_TradedBio") %>%
+      add_precursors("common/GCAM_region_names", "L120.LC_bm2_R_LT_Yh_GLU") ->
+      L243.SubsectorShrwtFllt_TradedBio
+
+    L243.GlobalTechCoef_TotBio %>%
+      add_title("Total biomass technology coefficients") %>%
+      add_units("unitless") %>%
+      add_comments("Create table with 'domestic' and 'international' biomass subsectors.") %>%
+      add_comments("Set minicam.energy.input for both types of subsector.") %>%
+      add_comments("Set input-output coefficients to 1.") %>%
+      add_comments("Copy to all model years.") %>%
+      add_legacy_name("L243.GlobalTechCoef_TotBio") ->
+      L243.GlobalTechCoef_TotBio
+
+    L243.GlobalTechShrwt_TotBio %>%
+      add_title("Share weights for domestic and imported biomass") %>%
+      add_units("unitless") %>%
+      add_comments("Copy L243.GlobalTechCoef_TotBio. Set share weights based on an assumption file") %>%
+      add_legacy_name("L243.GlobalTechShrwt_TotBio") %>%
+      same_precursors_as("L243.GlobalTechCoef_TotBio") %>%
+      add_precursors("aglu/A_bio_subsector") ->
+      L243.GlobalTechShrwt_TotBio
+
+    L243.StubTech_TotBio %>%
+      add_title("Stub technologies for the 'total biomass' sector") %>%
+      add_units("NA") %>%
+      add_comments("Copy technology names to all regions") %>%
+      add_legacy_name("L243.StubTech_TotBio") %>%
+      add_precursors("common/GCAM_region_names") ->
+      L243.StubTech_TotBio
+
+    L243.StubTechShrwt_TotBio %>%
+      add_title("Share weights for the total biomass sector") %>%
+      add_units("NA") %>%
+      add_comments("Set share weight for 'total biomass' technologies equal to 1 in all regions") %>%
+      add_legacy_name("L243.StubTechShrwt_TotBio") %>%
+      same_precursors_as("L243.StubTech_TotBio") ->
+      L243.StubTechShrwt_TotBio
+
+    L243.StubTechCoef_ImportedBio %>%
+      add_title("Input-output coefficients for imported biomass technologies") %>%
+      add_units("unitless") %>%
+      add_comments("Filter L243.StubTech_TotBio for the imported biomass sector") %>%
+      add_comments("Set coefficients to 1 and market name to the traded region (currently USA)") %>%
+      add_legacy_name("L243.StubTechCoef_ImportedBio") %>%
+      same_precursors_as("L243.StubTech_TotBio") ->
+      L243.StubTechCoef_ImportedBio
+
+    L243.StubTechCoef_DomesticBio %>%
+      add_title("Input-output coefficients for domestic biomass technologies") %>%
+      add_units("unitless") %>%
+      add_comments("Filter L243.StubTech_TotBio for the domestic biomass sector") %>%
+      add_comments("Set coefficients to 1 and market name to region name") %>%
+      add_legacy_name("L243.StubTechCoef_DomesticBio") %>%
+      same_precursors_as("L243.StubTech_TotBio") ->
+      L243.StubTechCoef_DomesticBio
+
+    L243.TechCoef_TradedBio %>%
+      add_title("Input-Output coefficients for traded biomass technologies") %>%
+      add_units("unitless") %>%
+      add_comments("Assign coefficient of 1 to all traded biomass technologies in all years") %>%
+      add_legacy_name("L243.TechCoef_TradedBio") %>%
+      add_precursors("common/GCAM_region_names") ->
+      L243.TechCoef_TradedBio
+
+    L243.TechShrwt_TradedBio %>%
+      add_title("Technology shareweights for the traded biomass sector") %>%
+      add_units("unitless") %>%
+      add_comments("Use the region & subsector names from 'L243.SubsectorShrwtFllt_TradedBio") %>%
+      add_comments("Set all share weights to 1 since competition is handled at subsector level.") %>%
+      add_legacy_name("L243.TechShrwt_TradedBio") %>%
+      same_precursors_as("L243.SubsectorShrwtFllt_TradedBio") ->
+      L243.TechShrwt_TradedBio
+
+    L243.SubsectorShrwtFllt_TotBio_SSP4 %>%
+      add_title("Subsector shareweights for total bioenergy in SSP4") %>%
+      add_units("unitless") %>%
+      add_comments("Uses the structure of L243.SubsectorShrwtFllt_TotBio") %>%
+      add_comments("Replace shareweights with assumed coefficients (0.1 for low income, 0.5 for high income)") %>%
+      add_legacy_name("L243.SubsectorShrwtFllt_TotBio_SSP4") %>%
+      same_precursors_as("L243.SubsectorShrwtFllt_TotBio") %>%
+      add_precursors("common/GCAM_region_names", "L102.pcgdp_thous90USD_Scen_R_Y") ->
+      L243.SubsectorShrwtFllt_TotBio_SSP4
+
+    L243.SubsectorShrwtFllt_TradedBio_SSP4 %>%
+      add_title("Subsector shareweights for traded bioenergy in SSP4") %>%
+      add_units("unitless") %>%
+      add_comments("Uses the structure of L243.SubsectorShrwtFllt_TradedBio") %>%
+      add_comments("Replace shareweights with assumed coefficients (0.1 for low income, 0.5 for high income)") %>%
+      add_legacy_name("L243.SubsectorShrwtFllt_TradedBio_SSP4") %>%
+      same_precursors_as("L243.SubsectorShrwtFllt_TradedBio") %>%
+      add_precursors("common/GCAM_region_names", "L102.pcgdp_thous90USD_Scen_R_Y") ->
+      L243.SubsectorShrwtFllt_TradedBio_SSP4
+
+    L243.TechShrwt_TradedBio_SSP4 %>%
+      add_title("Technology shareweights for traded bioenergy in SSP4") %>%
+      add_units("unitless") %>%
+      add_comments("Uses the structure of L243.TechShrwt_TradedBio") %>%
+      add_comments("Replace shareweights with assumed coefficients (0.1 for low income)") %>%
+      add_legacy_name("L243.TechShrwt_TradedBio_SSP4") %>%
+      same_precursors_as("L243.TechShrwt_TradedBio") %>%
+      add_precursors("common/GCAM_region_names", "L102.pcgdp_thous90USD_Scen_R_Y") ->
+      L243.TechShrwt_TradedBio_SSP4
+
+    L243.StubTechShrwt_TotBio_SSP4 %>%
+      add_title("Technology shareweights for total bioenergy in SSP4") %>%
+      add_units("unitless") %>%
+      add_comments("Uses the structure of L243.StubTechShrwt_TotBio") %>%
+      add_comments("Replace shareweights with assumed coefficients (0.1 for low income, 0.25 for high income)") %>%
+      add_legacy_name("L243.StubTechShrwt_TotBio_SSP4") %>%
+      same_precursors_as("L243.StubTechShrwt_TotBio") %>%
+      add_precursors("common/GCAM_region_names", "L102.pcgdp_thous90USD_Scen_R_Y") ->
+      L243.StubTechShrwt_TotBio_SSP4
+
+    L243.SubsectorShrwtFllt_TotBio_SSP3 %>%
+      add_title("Subsector shareweights for total bioenergy in SSP3") %>%
+      add_units("unitless") %>%
+      add_comments("Uses the structure of L243.SubsectorShrwtFllt_TotBio") %>%
+      add_comments("Replace shareweights with assumed coefficients (0.1)") %>%
+      add_legacy_name("L243.SubsectorShrwtFllt_TotBio_SSP3") %>%
+      same_precursors_as("L243.SubsectorShrwtFllt_TotBio") ->
+      L243.SubsectorShrwtFllt_TotBio_SSP3
+
+    L243.StubTechShrwt_TotBio_SSP3 %>%
+      add_title("Technology shareweights for total bioenergy in SSP3") %>%
+      add_units("unitless") %>%
+      add_comments("Uses the structure of L243.StubTechShrwt_TotBio") %>%
+      add_comments("Replace shareweights with assumed coefficients (0.1)") %>%
+      add_legacy_name("L243.StubTechShrwt_TotBio_SSP3") %>%
+      same_precursors_as("L243.StubTechShrwt_TotBio") ->
+      L243.StubTechShrwt_TotBio_SSP3
+
+    return_data(L243.DeleteInput_RegBio, L243.TechCoef_RegBio, L243.Supplysector_Bio, L243.SectorUseTrialMarket_Bio, L243.SubsectorLogit_Bio, L243.SubsectorShrwtFllt_TotBio, L243.SubsectorShrwtFllt_TradedBio, L243.GlobalTechCoef_TotBio, L243.GlobalTechShrwt_TotBio, L243.StubTech_TotBio, L243.StubTechShrwt_TotBio, L243.StubTechCoef_ImportedBio, L243.StubTechCoef_DomesticBio, L243.TechCoef_TradedBio, L243.TechShrwt_TradedBio, L243.SubsectorShrwtFllt_TotBio_SSP4, L243.SubsectorShrwtFllt_TradedBio_SSP4, L243.TechShrwt_TradedBio_SSP4, L243.StubTechShrwt_TotBio_SSP4, L243.SubsectorShrwtFllt_TotBio_SSP3, L243.StubTechShrwt_TotBio_SSP3)
   } else {
     stop("Unknown command")
   }

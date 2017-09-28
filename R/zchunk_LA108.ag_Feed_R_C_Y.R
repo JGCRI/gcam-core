@@ -119,7 +119,7 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
       mutate(share = residual / sum(residual)) %>%                                                              # Compute share of residual in each region
       left_join(ag_Residual_Mt_glbl_FodderHerbResidue_Y, by = "year") %>%                                       # Map in global total residual
       mutate(total_residual = if_else(total_residual > 0, 0, total_residual)) %>%                               # Set all positive residuals to zero
-      mutate(total_residual = total_residual * -1 ) %>%
+      mutate(total_residual = total_residual * -1) %>%
       mutate(value = share * total_residual, GCAM_commodity = "Residue") %>%                                    # Compute regional residual, set commodity name to Residue
       select(-residual, -share, -total_residual) ->
       ag_Feed_Mt_R_Residue_Y
@@ -128,7 +128,7 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
     # i.e., FodderHerb equals FodderHerb_Residue minus Residue
     ag_Feed_Mt_R_Residue_Y %>%
       rename(Residue = value) %>%                                                                               # Start with newly calculated Residue supply
-      left_join(filter(an_Feed_Mt_R_C_Y,feed == "FodderHerb_Residue"), by = c("GCAM_region_ID","year")) %>%     # Map in FodderHerb_Residue demand
+      left_join(filter(an_Feed_Mt_R_C_Y, feed == "FodderHerb_Residue"), by = c("GCAM_region_ID", "year")) %>%     # Map in FodderHerb_Residue demand
       mutate(FodderHerb_Residue = value) %>%
       mutate(value = FodderHerb_Residue - Residue, GCAM_commodity = "FodderHerb") %>%                           # Compute FodderHerb = FodderHerb_Residue - Residue
       select(-feed, -Residue, -FodderHerb_Residue) ->

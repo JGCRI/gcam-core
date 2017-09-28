@@ -1,0 +1,11 @@
+# File: A23.CoolingSystemCosts.csv
+# Title: Assumed cooling system costs
+# Units: USD2005
+# Source: NETL 2009. Water Requirements for Existing and Emerging Thermoelectric Plant Technologies. Figure 2-2.
+cooling_system,input.capital,1971,2100
+none,cooling system,0,0
+recirculating,cooling system,28,28
+dry_hybrid,cooling system,182,182
+once through,cooling system,19,19
+cooling pond,cooling system,27,27
+dry cooling,cooling system,182,182

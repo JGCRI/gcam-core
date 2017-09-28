@@ -75,13 +75,14 @@ module_emissions_L121.nonco2_awb_R_S_T_Y <- function(command, ...) {
     # If excluded, then the harvest index could be greater than 1 (if the tubers weigh more than the above-ground shoots), and the above calculation would
     # return a negative number. None of the crops in the underlying harvested index database have values greater than 1 so this isn't currently an issue.
     L121.ag_ExcessDryBiomass_Mt_R_C_Y_GLU_replaced %>%
-      mutate(burnable = ((value / HarvestIndex) - value ) * (1 - WaterContent)) ->
+      mutate(burnable = ((value / HarvestIndex) - value) * (1 - WaterContent)) ->
       L121.ag_ExcessDryBiomass_Mt_R_C_Y_GLU_burn
 
     # Aggregate the burnable excess biomass by GCAM region and year.
     L121.ag_ExcessDryBiomass_Mt_R_C_Y_GLU_burn %>%
       group_by(GCAM_region_ID, year) %>%
-      summarise(value = sum(burnable)) ->
+      summarise(value = sum(burnable)) %>%
+      ungroup() ->
       L112.ag_ExcessDryBiomass_Mt_R_Y
 
     # Calculate the share by production technology of each region's burnable excess biomass (AWB_emiss_share).
@@ -164,7 +165,7 @@ module_emissions_L121.nonco2_awb_R_S_T_Y <- function(command, ...) {
       add_comments("estimated from production, harvest index, and water content") %>%
       add_legacy_name("L121.AWBshare_R_C_Y_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
-                     "emissions/EDGAR/EDGAR_sector", "emissions/EDGAR/EDGAR_SO2","emissions/EDGAR/EDGAR_CO",
+                     "emissions/EDGAR/EDGAR_sector", "emissions/EDGAR/EDGAR_SO2", "emissions/EDGAR/EDGAR_CO",
                      "emissions/EDGAR/EDGAR_NOx", "emissions/EDGAR/EDGAR_NMVOC", "emissions/EDGAR/EDGAR_CH4",
                      "emissions/EDGAR/EDGAR_N2O", "emissions/EDGAR/EDGAR_NH3",
                      "L103.ag_Prod_Mt_R_C_Y_GLU", "L111.ag_resbio_R_C") ->
@@ -177,7 +178,7 @@ module_emissions_L121.nonco2_awb_R_S_T_Y <- function(command, ...) {
       add_comments("estimated from production, harvest index, and water content") %>%
       add_legacy_name("L121.nonco2_tg_R_awb_C_Y_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
-                     "emissions/EDGAR/EDGAR_sector", "emissions/EDGAR/EDGAR_SO2","emissions/EDGAR/EDGAR_CO",
+                     "emissions/EDGAR/EDGAR_sector", "emissions/EDGAR/EDGAR_SO2", "emissions/EDGAR/EDGAR_CO",
                      "emissions/EDGAR/EDGAR_NOx", "emissions/EDGAR/EDGAR_NMVOC", "emissions/EDGAR/EDGAR_CH4",
                      "emissions/EDGAR/EDGAR_N2O", "emissions/EDGAR/EDGAR_NH3",
                      "L103.ag_Prod_Mt_R_C_Y_GLU", "L111.ag_resbio_R_C") %>%

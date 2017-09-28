@@ -11,7 +11,15 @@
 module_emissions_batch_all_aglu_emissions_IRR.xml_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c( "L2521.AgMAC",
-              "temp-data-inject/L252.MAC_an"))
+              "L252.MAC_an",
+              "L2111.AWBEmissions",
+              "L2111.AGREmissions",
+              "L211.AnEmissions",
+              "L211.AnNH3Emissions",
+              "L2111.AGRBio",
+              "L2111.AWB_BCOC_EmissCoeff",
+              "L2111.nonghg_max_reduction",
+              "L2111.nonghg_steepness"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "all_aglu_emissions_IRR.xml"))
   } else if(command == driver.MAKE) {
@@ -20,7 +28,15 @@ module_emissions_batch_all_aglu_emissions_IRR.xml_DISABLED <- function(command, 
 
     # Load required inputs
     L2521.AgMAC <- get_data(all_data, "L2521.AgMAC")
-    L252.MAC_an <- get_data(all_data, "temp-data-inject/L252.MAC_an")
+    L252.MAC_an <- get_data(all_data, "L252.MAC_an")
+    L2111.AWBEmissions <- get_data(all_data, "L2111.AWBEmissions")
+    L2111.AGREmissions <- get_data(all_data, "L2111.AGREmissions")
+    L211.AnEmissions <- get_data(all_data, "L211.AnEmissions")
+    L211.AnNH3Emissions <- get_data(all_data, "L211.AnNH3Emissions")
+    L2111.AGRBio <- get_data(all_data, "L2111.AGRBio")
+    L2111.AWB_BCOC_EmissCoeff <- get_data(all_data, "L2111.AWB_BCOC_EmissCoeff")
+    L2111.nonghg_max_reduction <- get_data(all_data, "L2111.nonghg_max_reduction")
+    L2111.nonghg_steepness <- get_data(all_data, "L2111.nonghg_steepness")
 
     # ===================================================
 
@@ -28,7 +44,16 @@ module_emissions_batch_all_aglu_emissions_IRR.xml_DISABLED <- function(command, 
     create_xml("all_aglu_emissions_IRR.xml") %>%
       add_xml_data(L2521.AgMAC, "AgMAC") %>%
       add_xml_data(L252.MAC_an, "MAC") %>%
-      add_precursors("L2521.AgMAC", "L252.MAC_an") ->
+      add_xml_data(L2111.AWBEmissions, "OutputEmissionsAg") %>%
+      add_xml_data(L2111.AGREmissions, "OutputEmissionsAg") %>%
+      add_xml_data(L211.AnEmissions, "StbTechOutputEmissions") %>%
+      add_xml_data(L211.AnNH3Emissions, "StbTechOutputEmissions") %>%
+      add_xml_data(L2111.AGRBio, "OutputEmissCoeffAg") %>%
+      add_xml_data(L2111.AWB_BCOC_EmissCoeff, "OutputEmissCoeffAg") %>%
+      add_xml_data(L2111.nonghg_max_reduction, "AgGDPCtrlMax") %>%
+      add_xml_data(L2111.nonghg_steepness, "AgGDPCtrlSteep") %>%
+      add_precursors("L2521.AgMAC", "L252.MAC_an", "L2111.AWBEmissions", "L2111.AGREmissions", "L211.AnEmissions",
+                     "L211.AnNH3Emissions", "L2111.AGRBio", "L2111.AWB_BCOC_EmissCoeff", "L2111.nonghg_max_reduction", "L2111.nonghg_steepness") ->
         all_aglu_emissions_IRR.xml
 
     return_data(all_aglu_emissions_IRR.xml)

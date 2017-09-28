@@ -1,0 +1,19 @@
+# File: A26.globaltech_cost.csv
+# Title: Final energy delivery cost adders
+# Units: 1975 USD/GJ
+# Description: The added cost to producer prices to get final energy delivery prices. 0 values indicate the delivery cost is included elsewhere. Backup electricity costs represent the costs of a gas turbine to manage base load, but CSP backup is included in the primary tech cost.
+# Source: pre-2006 Minicam model inputs
+supplysector,subsector,technology,minicam.non.energy.input,1971,1975,2005,2100
+backup_electricity,gas,gas (steam/CT),non-energy,1.84,1.84,1.84,1.69
+csp_backup,gas,CSP gas hybrid mode,non-energy,0,0,0,0
+delivered biomass,delivered biomass,delivered biomass,non-energy,0.14,0.14,0.14,0.14
+delivered coal,delivered coal,delivered coal,non-energy,0.14,0.14,0.14,0.14
+electricity_net_ownuse,electricity_net_ownuse,electricity_net_ownuse,non-energy,0,0,0,0
+elect_td_bld,elect_td_bld,elect_td_bld,non-energy,3.03,3.03,2.81,1.79
+elect_td_ind,elect_td_ind,elect_td_ind,non-energy,0.75,0.75,0.7,0.44
+elect_td_trn,elect_td_trn,elect_td_trn,non-energy,3.03,3.03,2.81,1.79
+gas pipeline,gas pipeline,gas pipeline,non-energy,0,0,0,0
+wholesale gas,wholesale gas,wholesale gas,non-energy,0,0,0,0
+delivered gas,delivered gas,delivered gas,non-energy,1.25,1.25,1.25,1.25
+refined liquids enduse,refined liquids enduse,refined liquids enduse,non-energy,1.1,1.1,1.1,1.1
+refined liquids industrial,refined liquids industrial,refined liquids industrial,non-energy,0,0,0,0

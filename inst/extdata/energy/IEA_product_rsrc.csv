@@ -1,0 +1,19 @@
+# File: IEA_product_rsrc.csv
+# Title: Mapping from IEA product names to GCAM primary resource names
+# Units: NA
+# Source: International Energy Agency, 2012, Energy Balances of OECD Countries 1960-2010 and Energy Balances of Non-OECD Countries 1971-2010
+PRODUCT,resource
+Crude/NGL/feedstocks (if no detail),crude oil
+Crude oil,crude oil
+Natural gas liquids,crude oil
+Refinery feedstocks,crude oil
+Additives/blending components,crude oil
+Other hydrocarbons,crude oil
+Natural gas,natural gas
+Hard coal (if no detail),coal
+Brown coal (if no detail),coal
+Anthracite,coal
+Coking coal,coal
+Other bituminous coal,coal
+Sub-bituminous coal,coal
+Lignite,coal

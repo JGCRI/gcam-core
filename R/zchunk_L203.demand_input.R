@@ -278,6 +278,7 @@ module_aglu_L203.demand_input <- function(command, ...) {
       group_by(region, supplysector, year) %>%
       # Sum the total of all commodities by region and supply sector
       summarise(calOutputValue = sum(calOutputValue)) %>%
+      ungroup() %>%
       rename(energy.final.demand = supplysector, base.service = calOutputValue) %>%
       filter(!region %in% aglu.NO_AGLU_REGIONS) %>%           # Remove any regions for which agriculture and land use are not modeled
       filter(year %in% BASE_YEARS) ->                         # ALSO SUBSET THE CALIBRATION TABLES TO ONLY THE MODEL BASE YEARS
@@ -327,6 +328,7 @@ module_aglu_L203.demand_input <- function(command, ...) {
       # Calculate per capita food demand changes (ratios)
       mutate(ratio = value / lag(value)) %>%
       replace_na(list(ratio = 1)) %>%
+      ungroup() %>%
       select(-value) ->
       L203.pcFoodRatio_R_Dmnd_Yfut
 
@@ -365,7 +367,7 @@ module_aglu_L203.demand_input <- function(command, ...) {
 
     # Build L203.PriceElasticity: Price elasticities
     L203.PriceElasticity <- write_to_all_regions(A_demand_supplysector, c(LEVEL2_DATA_NAMES[["EnergyFinalDemand"]], "price.elasticity"),
-                                                 GCAM_region_names = GCAM_region_names ) %>%
+                                                 GCAM_region_names = GCAM_region_names) %>%
       repeat_add_columns(tibble(year = FUTURE_YEARS)) %>% # Price elasticities are only read for future periods
       # Set the USA meat food price elasticity to a region-specific value
       mutate(price.elasticity = replace(price.elasticity, region == "USA" & energy.final.demand == "FoodDemand_Meat", aglu.FOOD_MEAT_P_ELAS_USA)) %>%

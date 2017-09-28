@@ -16,7 +16,7 @@
 #' @author RH March 2017
 module_energy_LA117.tradbio <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh",
+    return(c("L1011.en_bal_EJ_R_Si_Fi_Yh",
              FILE = "energy/A17.tradbio_curves"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L117.RsrcCurves_EJ_R_tradbio"))
@@ -30,10 +30,7 @@ module_energy_LA117.tradbio <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-     get_data(all_data, "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh") %>%
-      gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) ->
-      L1011.en_bal_EJ_R_Si_Fi_Yh
+    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
     A17.tradbio_curves <- get_data(all_data, "energy/A17.tradbio_curves")
 
     # ===================================================
@@ -61,7 +58,7 @@ module_energy_LA117.tradbio <- function(command, ...) {
       add_units("available: EJ; extractioncost: 1975$/GJ") %>%
       add_comments("Multiply the max historical amount used in each region by the supply curve amount") %>%
       add_legacy_name("L117.RsrcCurves_EJ_R_tradbio") %>%
-      add_precursors("temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/A17.tradbio_curves") ->
+      add_precursors("L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/A17.tradbio_curves") ->
       L117.RsrcCurves_EJ_R_tradbio
 
     return_data(L117.RsrcCurves_EJ_R_tradbio)
