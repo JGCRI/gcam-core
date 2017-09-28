@@ -303,8 +303,8 @@ module_energy_L222.en_transformation <- function(command, ...) {
       mutate(subs.share.weight = share.weight) ->
       L222.StubTechProd_gasproc
 
-    # THE FOLLOWING IS IN THE ORIGINAL BUT ALREADY OMITS THOSE REGIONS WITH NO COAL GAS, SO THERE ARE NO MISSING VALUES, JUST MISSING ROWS
-    # IS THIS A MISTAKE? NOT SURE IF WE NEED THOSE ROWS. THE LINE RETURNS AN ERROR IN THE OLD SYSTEM.
+    # THE FOLLOWING IS IN THE ORIGINAL BUT ALREADY OMITS THOSE REGIONS WITH NO COAL GAS, SO THERE ARE NO MISSING VALUES, JUST NO ROWS
+    # IS THIS A MISTAKE? NOT SURE IF WE NEED THOSE ROWS. PASSES ALL CHECKS.
     # "#Coal to gas isn't included in all regions so replace missing values
     # L222.StubTechProd_gasproc$calOutputValue[ is.na( L222.StubTechProd_gasproc$calOutputValue ) ] <- 0"
 
