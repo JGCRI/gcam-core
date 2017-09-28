@@ -1,6 +1,8 @@
 #' module_energy_L222.en_transformation
 #'
-#' Briefly describe what this chunk does.
+#' This chunk prepares the assumptions and calibrated outputs for energy transformation supplysectors, subsectors, and technologies.
+#' It sets up the energy transformation global technology database as well as writing out assumptions to all regions for shareweights and logits.
+#' Calibrated outputs for gas processing and oil refining as well as I:O coefficients are interpolated from historical values to base model years.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -13,7 +15,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author CWR Sept 2017
-#' @export
 module_energy_L222.en_transformation <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
@@ -58,6 +59,13 @@ module_energy_L222.en_transformation <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
+
+    # Silencing global variable package checks
+    GCAM_region_ID <- calOutputValue <- coefficient <- fuel <- half.life <- input.cost <- lifetime <-
+    median.shutdown.point <- minicam.energy.input <- minicam.non.energy.input <- object <-
+    profit.shutdown.steepness <- region <- remove.fraction <- sector <- sector.name <- share.weight <-
+    shutdown.rate <- steepness <- stub.technology <- subsector <- subsector.name <- supplysector <-
+    technology <- to.value <- value <- year <- year.fillout <- year.x <- year.y <- NULL
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
@@ -586,7 +594,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Historical values of output of gas processing for base model years by region") %>%
       add_legacy_name("L222.StubTechProd_gasproc") %>%
-      add_precursors("energy/A22.globaltech_coef", "energy/L122.out_EJ_R_gasproc_F_Yh", "energy/calibrated_techs") ->
+      add_precursors("energy/A22.globaltech_coef", "L122.out_EJ_R_gasproc_F_Yh", "energy/calibrated_techs", "common/GCAM_region_names") ->
       L222.StubTechProd_gasproc
 
     tibble() %>%
@@ -594,7 +602,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Historical values of output for liquid refining for base model years by region") %>%
       add_legacy_name("L222.StubTechProd_refining") %>%
-      add_precursors("L122.out_EJ_R_refining_F_Yh", "energy/calibrated_techs") ->
+      add_precursors("L122.out_EJ_R_refining_F_Yh", "energy/calibrated_techs", "common/GCAM_region_names") ->
       L222.StubTechProd_refining
 
     tibble() %>%
@@ -603,7 +611,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
       add_comments("Historical values of ratio of inputs to outputs in the oil refining sector by region") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L222.StubTechCoef_refining") %>%
-      add_precursors("energy/L122.IO_R_oilrefining_F_Yh", "energy/calibrated_techs") ->
+      add_precursors("L122.IO_R_oilrefining_F_Yh", "energy/calibrated_techs", "common/GCAM_region_names") ->
       L222.StubTechCoef_refining
 
     tibble() %>%
