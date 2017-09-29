@@ -34,7 +34,7 @@ test_that("return_data works", {
   expect_silent(d <- return_data(cars, iris, list_data))
 })
 
-test_that("add/get data work", {
+test_that("add/get/remove data work", {
   all_data <- empty_data()
   expect_true(is_data_list(all_data))
   expect_equal(length(all_data), 0)
@@ -50,4 +50,22 @@ test_that("add/get data work", {
   expect_identical(get_data(all_data, "iris"), iris)
   expect_true(is.null(get_data(all_data, "d2")))
   expect_error(get_data(all_data, "not_there"))
+
+  expect_error(remove_data("not_there", all_data))
+  all_data <- remove_data("cars", all_data)
+  expect_error(remove_data("cars", all_data))
+})
+
+test_that("same_attributes_as works", {
+  tibble(a = 1) %>%
+    add_title("t") %>% add_units("u") %>% add_comments("c") %>% add_precursors("p") %>%
+    add_legacy_name("l") %>% add_reference("r") %>% add_flags("f") -> x
+  tibble(b = 1) %>%
+    same_attributes_as(x) ->
+    y
+
+  expect_identical(get_title(x), get_title(y))
+  expect_identical(get_units(x), get_units(y))
+  expect_identical(get_comments(x), get_comments(y))
+  expect_identical(get_precursors(x), get_precursors(y))
 })
