@@ -7,8 +7,9 @@
 driver(all_data = empty_data(), stop_before = NULL, stop_after = NULL,
   return_inputs_of = stop_before, return_outputs_of = stop_after,
   return_data_names = union(inputs_of(return_inputs_of),
-  outputs_of(return_outputs_of)), write_outputs = TRUE,
-  outdir = OUTPUTS_DIR, xmldir = XML_DIR, quiet = FALSE)
+  outputs_of(return_outputs_of)), return_data_map_only = FALSE,
+  write_outputs = !return_data_map_only, outdir = OUTPUTS_DIR,
+  xmldir = XML_DIR, quiet = FALSE)
 }
 \arguments{
 \item{all_data}{Data to be pre-loaded into data system}
@@ -25,6 +26,9 @@ If \code{stop_after} is specified, by default that chunk's outputs are returned.
 
 \item{return_data_names}{Return these data objects (character). By default this is the union of \code{return_inputs_of} and \code{return_inputs_of}}
 
+\item{return_data_map_only}{Return only the precursor information? (logical) This overrides
+the other \code{return_*} parameters above.}
+
 \item{write_outputs}{Write all chunk outputs to disk?}
 
 \item{outdir}{Location to write output data (ignored if \code{write_outputs} is \code{FALSE})}
@@ -34,7 +38,7 @@ If \code{stop_after} is specified, by default that chunk's outputs are returned.
 \item{quiet}{Suppress output?}
 }
 \value{
-A list of all built data.
+A list of all built data (or a data map tibble if requested).
 }
 \description{
 Run the entire data system.

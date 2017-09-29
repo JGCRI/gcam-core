@@ -10,7 +10,7 @@ LOGIT_COLUMN_NAME <- "logit.type"   # will be removed by test code before old-ne
 
 
 # Flags ======================================================================
-# Flags used by chunks
+
 FLAG_INPUT_DATA      <- "FLAG_INPUT_DATA"       # input data, don't output
 FLAG_LONG_YEAR_FORM  <- "FLAG_LONG_YEAR_FORM"   # 'year' column but original data are wide
 FLAG_NO_OUTPUT       <- "FLAG_NO_OUTPUT"        # don't output
@@ -40,6 +40,7 @@ gcam.USA_CODE <- 1
 gcam.WESTERN_EUROPE_CODE <- 13
 gcam.LOGIT_TYPES <- c("relative-cost-logit", "absolute-cost-logit")
 gcam.EQUIV_TABLE <- "EQUIV_TABLE"
+gcam.IND_ENERGY_USE <- c("biomass", "coal", "gas", "refined liquids")  # GCAM industrial energy use fuels
 
 GCAM_REGION_ID <- "GCAM_region_ID"
 
@@ -258,11 +259,24 @@ energy.RSRC_FUELS <- c("coal", "gas", "refined liquids")
 energy.HEAT_PRICE <- 3.2
 energy.GAS_PRICE <- 2
 
-# below come from ENERGY_ASSUMPTIONS/A_ccs_data.R
+# below come from ENERGY_ASSUMPTIONS/A_ccs_data.R (first four only)
 energy.DIGITS_EFFICIENCY <- 3
 energy.DIGITS_COST <- 4
 energy.DIGITS_REMOVE.FRACTION <- 2
 energy.CO2.STORAGE.MARKET <- "carbon-storage"
+energy.DIGITS_COEFFICIENT <- 7
+energy.DIGITS_MPKM <- 0
+energy.DIGITS_SPEED <- 1
+energy.DIGITS_SHRWT <- 4
+energy.DIGITS_CALOUTPUT <- 7
+energy.DIGITS_LOADFACTOR <- 2
+
+# Digits for rounding into XMLs
+energy.DIGITS_CALOUTPUT <- 7
+energy.DIGITS_COEFFICIENT <- 7
+energy.DIGITS_COST <- 4
+energy.DIGITS_EFFICIENCY <- 3
+energy.DIGITS_SHRWT <- 4
 
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
@@ -303,9 +317,14 @@ CONV_DAYS_YEAR <- 1 / 365.25
 # Energy
 CONV_MWH_GJ <- 3.6 # Megawatt hours to Gigajoules
 CONV_GWH_EJ <- 3.6e-6
+CONV_TWH_EJ <- 3.6e-3
 CONV_KWH_GJ <- 3.6e-3
 CONV_GJ_EJ <- 1e-9
+CONV_EJ_GJ <- 1 / CONV_GJ_EJ
 CONV_BBLD_EJYR <- 6.119 * 365.25 * 1e-3 # billion barrels a day to EJ per year
+CONV_MJ_BTU <- 947.777
+CONV_BTU_KJ <- 1.0551
+CONV_KBTU_EJ <- 1.0551e-12
 
 # Other
 CONV_MCAL_PCAL <- 1e-9
@@ -314,21 +333,22 @@ CONV_MILLION_M3_KM3 <- 1e-03
 CONV_M2_ACR <- 0.0002471058
 CONV_HA_M2 <- 1e4 # ha to m2
 CONV_BM2_M2 <- 1e9
-
-# Digits for rounding into XMLs
-energy.DIGITS_CALOUTPUT <- 7
-energy.DIGITS_COEFFICIENT <- 7
-energy.DIGITS_COST <- 4
-energy.DIGITS_EFFICIENCY <- 3
-energy.DIGITS_SHRWT <- 4
-
+CONV_MILFT2_M2 <- 92900
+CONV_FT2_M2 <- 0.0929
 
 
 # Driver constants ======================================================================
 
 driver.MAKE <- "MAKE"
 driver.DECLARE_OUTPUTS <- "DECLARE_OUTPUTS"
-driver.DECLARE_INPUTS <- "DECLARE_INPUTS"
+driver.DECLARE_INPUTS  <- "DECLARE_INPUTS"
+
+
+# Data and utility constants ======================================================================
+
+data.SEPARATOR <- "; "
+data.PRECURSOR <- "Precursor"
+data.DEPENDENT <- "Dependent"
 
 
 # Modeltime constants ======================================================================
@@ -419,8 +439,22 @@ emissions.AGR_GASES            <- c("CH4_AGR", "N2O_AGR", "NH3_AGR", "NOx_AGR")
 emissions.AG_MACC_GHG_NAMES    <- c("CH4_AGR", "N2O_AGR")
 emissions.GHG_NAMES            <- c("CH4", "N2O")
 emissions.USE_GV_MAC           <- 1
+
+emissions.USE_GCAM3_CCOEFS     <- 1 # Select whether to use GCAM3 fuel carbon coefficients
+emissions.USE_GLOBAL_CCOEFS    <- 1 # Select whether to use global average carbon coefficients on fuels, or region-specific carbon coefficients
+emissions.INVENTORY_MATCH_YEAR <- 2009 # Select year from which to calculate fuel emissions coefficients (2009 is currently the most recent)
+emissions.DIGITS_CO2COEF <- 1
+
 emissions.NONGHG_GASES         <- c("SO2", "NOx", "CO", "NMVOC", "NH3")
 emissions.EDGAR_YEARS_PLUS     <- 1970:2008
+
+# GCAM-USA constants ======================================================================
+
+gcamusa.STATES <- c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA",
+                      "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR",
+                      "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY")
+
+
 # Uncomment these lines to run under 'timeshift' conditions
 # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
 # FUTURE_YEARS <- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)

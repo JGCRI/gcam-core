@@ -75,7 +75,7 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
     # Therefore there is not efficiency values for every historical year. Efficiencies for all historical years are needed
     # To estimate outputs from fuel/technology by region in the electricity sector
     tibble(supplysector = "electricity", subsector="gas", year = HISTORICAL_YEARS) %>%
-      mutate(year = as.numeric(year)) %>%
+      mutate(year = as.integer(year)) %>%
       full_join(energy.GAS_TECH, by = "supplysector") -> Aux_gas_tech_elec
 
     # Perform interpolation for gas technologies efficiencies , max, and rate
@@ -84,7 +84,7 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
       filter(subsector == "gas") %>%
       semi_join(calibrated_techs, by = c("supplysector", "subsector", "technology")) %>%
       gather(year, efficiency_tech, -supplysector, -subsector, -technology, -minicam.energy.input, -improvement.max, -improvement.rate, -improvement.shadow.technology) %>%
-      mutate(year = as.numeric(year)) %>%
+      mutate(year = as.integer(year)) %>%
       mutate(efficiency_tech = as.numeric(efficiency_tech)) %>%
       semi_join(Aux_gas_tech_elec, by = "year") %>%
       full_join(Aux_gas_tech_elec, by = c("supplysector", "subsector", "technology", "minicam.energy.input", "year")) %>%

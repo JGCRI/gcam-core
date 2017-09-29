@@ -1,0 +1,186 @@
+# File: A54.globaltranTech_retire.csv
+# Title: Transportation technology retirement parameters. Only applies to vintaged technologies
+# Units: Lifetime and half.life in years; steepness is unitless
+supplysector,tranSubsector,tranTechnology,year,lifetime,half.life,steepness
+trn_freight_road,Truck,Liquids,final-calibration-year,40,25,0.124
+trn_freight_road,Truck,NG,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (>12t),Liquids,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (>12t),NG,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (>14t),Liquids,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (>14t),NG,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (>15t),Liquids,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (>15t),NG,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (>32t),Liquids,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (>32t),NG,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (0-1t),Liquids,final-calibration-year,25,11,0.23
+trn_freight_road,Truck (0-1t),NG,final-calibration-year,25,11,0.23
+trn_freight_road,Truck (0-2.7t),Liquids,final-calibration-year,25,11,0.23
+trn_freight_road,Truck (0-2.7t),NG,final-calibration-year,25,11,0.23
+trn_freight_road,Truck (0-2t),Liquids,final-calibration-year,25,11,0.23
+trn_freight_road,Truck (0-2t),NG,final-calibration-year,25,11,0.23
+trn_freight_road,Truck (0-3.5t),Liquids,final-calibration-year,25,11,0.23
+trn_freight_road,Truck (0-3.5t),NG,final-calibration-year,25,11,0.23
+trn_freight_road,Truck (0-4.5t),Liquids,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (0-4.5t),NG,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (0-6t),Liquids,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (0-6t),NG,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (1-6t),Liquids,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (1-6t),NG,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (16-32t),Liquids,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (16-32t),NG,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (2-5t),Liquids,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (2-5t),NG,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (2.7-4.5t),Liquids,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (2.7-4.5t),NG,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (3.5-16t),Liquids,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (3.5-16t),NG,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (4.5-12t),Liquids,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (4.5-12t),NG,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (4.5-15t),Liquids,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (4.5-15t),NG,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (5-9t),Liquids,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (5-9t),NG,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (6-14t),Liquids,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (6-14t),NG,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (6-15t),Liquids,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (6-15t),NG,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (6-30t),Liquids,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (6-30t),NG,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (9-16t),Liquids,final-calibration-year,40,25,0.124
+trn_freight_road,Truck (9-16t),NG,final-calibration-year,40,25,0.124
+trn_pass_road_LDV_4W,Compact Car,BEV,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Compact Car,FCEV,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Compact Car,Hybrid Liquids,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Compact Car,Liquids,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Compact Car,NG,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Large Car,BEV,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Large Car,FCEV,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Large Car,Hybrid Liquids,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Large Car,Liquids,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Large Car,NG,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Large Car and SUV,BEV,final-calibration-year,25,11,0.23
+trn_pass_road_LDV_4W,Large Car and SUV,FCEV,final-calibration-year,25,11,0.23
+trn_pass_road_LDV_4W,Large Car and SUV,Hybrid Liquids,final-calibration-year,25,11,0.23
+trn_pass_road_LDV_4W,Large Car and SUV,Liquids,final-calibration-year,25,11,0.23
+trn_pass_road_LDV_4W,Large Car and SUV,NG,final-calibration-year,25,11,0.23
+trn_pass_road_LDV_4W,Light Truck and SUV,BEV,final-calibration-year,25,11,0.23
+trn_pass_road_LDV_4W,Light Truck and SUV,FCEV,final-calibration-year,25,11,0.23
+trn_pass_road_LDV_4W,Light Truck and SUV,Hybrid Liquids,final-calibration-year,25,11,0.23
+trn_pass_road_LDV_4W,Light Truck and SUV,Liquids,final-calibration-year,25,11,0.23
+trn_pass_road_LDV_4W,Light Truck and SUV,NG,final-calibration-year,25,11,0.23
+trn_pass_road_LDV_4W,Midsize Car,BEV,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Midsize Car,FCEV,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Midsize Car,Hybrid Liquids,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Midsize Car,Liquids,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Midsize Car,NG,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Mini Car,BEV,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Mini Car,FCEV,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Mini Car,Hybrid Liquids,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Mini Car,Liquids,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Mini Car,NG,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Multipurpose Vehicle,BEV,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Multipurpose Vehicle,FCEV,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Multipurpose Vehicle,Hybrid Liquids,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Multipurpose Vehicle,Liquids,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Multipurpose Vehicle,NG,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Subcompact Car,BEV,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Subcompact Car,FCEV,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Subcompact Car,Hybrid Liquids,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Subcompact Car,Liquids,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Subcompact Car,NG,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Van,BEV,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Van,FCEV,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Van,Hybrid Liquids,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Van,Liquids,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Van,NG,final-calibration-year,25,11,0.218
+trn_freight_road,Truck,Liquids,initial-future-year,40,20,0.122
+trn_freight_road,Truck,NG,initial-future-year,40,20,0.122
+trn_freight_road,Truck (>12t),Liquids,initial-future-year,40,20,0.122
+trn_freight_road,Truck (>12t),NG,initial-future-year,40,20,0.122
+trn_freight_road,Truck (>14t),Liquids,initial-future-year,40,20,0.122
+trn_freight_road,Truck (>14t),NG,initial-future-year,40,20,0.122
+trn_freight_road,Truck (>15t),Liquids,initial-future-year,40,20,0.122
+trn_freight_road,Truck (>15t),NG,initial-future-year,40,20,0.122
+trn_freight_road,Truck (>32t),Liquids,initial-future-year,40,20,0.122
+trn_freight_road,Truck (>32t),NG,initial-future-year,40,20,0.122
+trn_freight_road,Truck (0-1t),Liquids,initial-future-year,25,12,0.193
+trn_freight_road,Truck (0-1t),NG,initial-future-year,25,12,0.193
+trn_freight_road,Truck (0-2.7t),Liquids,initial-future-year,25,12,0.193
+trn_freight_road,Truck (0-2.7t),NG,initial-future-year,25,12,0.193
+trn_freight_road,Truck (0-2t),Liquids,initial-future-year,25,12,0.193
+trn_freight_road,Truck (0-2t),NG,initial-future-year,25,12,0.193
+trn_freight_road,Truck (0-3.5t),Liquids,initial-future-year,25,12,0.193
+trn_freight_road,Truck (0-3.5t),NG,initial-future-year,25,12,0.193
+trn_freight_road,Truck (0-4.5t),Liquids,initial-future-year,40,20,0.122
+trn_freight_road,Truck (0-4.5t),NG,initial-future-year,40,20,0.122
+trn_freight_road,Truck (0-6t),Liquids,initial-future-year,40,20,0.122
+trn_freight_road,Truck (0-6t),NG,initial-future-year,40,20,0.122
+trn_freight_road,Truck (1-6t),Liquids,initial-future-year,40,20,0.122
+trn_freight_road,Truck (1-6t),NG,initial-future-year,40,20,0.122
+trn_freight_road,Truck (16-32t),Liquids,initial-future-year,40,20,0.122
+trn_freight_road,Truck (16-32t),NG,initial-future-year,40,20,0.122
+trn_freight_road,Truck (2-5t),Liquids,initial-future-year,40,20,0.122
+trn_freight_road,Truck (2-5t),NG,initial-future-year,40,20,0.122
+trn_freight_road,Truck (2.7-4.5t),Liquids,initial-future-year,40,20,0.122
+trn_freight_road,Truck (2.7-4.5t),NG,initial-future-year,40,20,0.122
+trn_freight_road,Truck (3.5-16t),Liquids,initial-future-year,40,20,0.122
+trn_freight_road,Truck (3.5-16t),NG,initial-future-year,40,20,0.122
+trn_freight_road,Truck (4.5-12t),Liquids,initial-future-year,40,20,0.122
+trn_freight_road,Truck (4.5-12t),NG,initial-future-year,40,20,0.122
+trn_freight_road,Truck (4.5-15t),Liquids,initial-future-year,40,20,0.122
+trn_freight_road,Truck (4.5-15t),NG,initial-future-year,40,20,0.122
+trn_freight_road,Truck (5-9t),Liquids,initial-future-year,40,20,0.122
+trn_freight_road,Truck (5-9t),NG,initial-future-year,40,20,0.122
+trn_freight_road,Truck (6-14t),Liquids,initial-future-year,40,20,0.122
+trn_freight_road,Truck (6-14t),NG,initial-future-year,40,20,0.122
+trn_freight_road,Truck (6-15t),Liquids,initial-future-year,40,20,0.122
+trn_freight_road,Truck (6-15t),NG,initial-future-year,40,20,0.122
+trn_freight_road,Truck (6-30t),Liquids,initial-future-year,40,20,0.122
+trn_freight_road,Truck (6-30t),NG,initial-future-year,40,20,0.122
+trn_freight_road,Truck (9-16t),Liquids,initial-future-year,40,20,0.122
+trn_freight_road,Truck (9-16t),NG,initial-future-year,40,20,0.122
+trn_pass_road_LDV_4W,Compact Car,BEV,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Compact Car,FCEV,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Compact Car,Hybrid Liquids,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Compact Car,Liquids,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Compact Car,NG,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Large Car,BEV,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Large Car,FCEV,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Large Car,Hybrid Liquids,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Large Car,Liquids,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Large Car,NG,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Large Car and SUV,BEV,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Large Car and SUV,FCEV,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Large Car and SUV,Hybrid Liquids,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Large Car and SUV,Liquids,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Large Car and SUV,NG,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Light Truck and SUV,BEV,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Light Truck and SUV,FCEV,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Light Truck and SUV,Hybrid Liquids,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Light Truck and SUV,Liquids,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Light Truck and SUV,NG,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Midsize Car,BEV,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Midsize Car,FCEV,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Midsize Car,Hybrid Liquids,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Midsize Car,Liquids,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Midsize Car,NG,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Mini Car,BEV,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Mini Car,FCEV,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Mini Car,Hybrid Liquids,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Mini Car,Liquids,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Mini Car,NG,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Multipurpose Vehicle,BEV,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Multipurpose Vehicle,FCEV,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Multipurpose Vehicle,Hybrid Liquids,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Multipurpose Vehicle,Liquids,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Multipurpose Vehicle,NG,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Subcompact Car,BEV,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Subcompact Car,FCEV,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Subcompact Car,Hybrid Liquids,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Subcompact Car,Liquids,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Subcompact Car,NG,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Van,BEV,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Van,FCEV,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Van,Hybrid Liquids,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Van,Liquids,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Van,NG,initial-future-year,25,12,0.193
