@@ -18,10 +18,10 @@ the generated outputs: \code{L115.rsrc_state_rooftopPV}. The corresponding file 
 original data system was \code{LA115.RooftopPV.R} (gcam-usa level1).
 }
 \description{
-Prepares resource curves for rooftop PV (commercial and residential combined).
+Prepare resource curves for rooftop PV (commercial and residential combined).
 }
 \details{
-Prepares resource curves for rooftop PV (commercial and residential combined).
+Prepare resource curves for rooftop PV (commercial and residential combined).
 }
 \author{
 ST September 2017

@@ -1,6 +1,6 @@
 #' module_gcam.usa_LA115.RooftopPV
 #'
-#' Prepares resource curves for rooftop PV (commercial and residential combined).
+#' Prepare resource curves for rooftop PV (commercial and residential combined).
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L115.rsrc_state_rooftopPV}. The corresponding file in the
 #' original data system was \code{LA115.RooftopPV.R} (gcam-usa level1).
-#' @details Prepares resource curves for rooftop PV (commercial and residential combined).
+#' @details Prepare resource curves for rooftop PV (commercial and residential combined).
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -116,10 +116,10 @@ module_gcam.usa_LA115.RooftopPV <- function(command, ...) {
       p_pow_b <- p ^ b
       f_p <- p_pow_b / ( midp ^ b + p_pow_b )
     }
-    smooth_res_curve_approx_error <- function( b, midp, supply_curve ) {
-      f_p <- smooth_res_curve_approx( b, midp, supply_curve$p )
+    smooth_res_curve_approx_error <- function(b, midp, supply_curve) {
+      f_p <- smooth_res_curve_approx(b, midp, supply_curve$p)
       error <- f_p - supply_curve$percent_cumul
-      crossprod( error, error )
+      crossprod(error, error)
     }
     # ^^ computes the smooth renewable resource function at price points...
     # ... from the actual supply curve, then returns the error between...
@@ -127,13 +127,15 @@ module_gcam.usa_LA115.RooftopPV <- function(command, ...) {
     get_error_min_b <- function(stateAb) {
       midPrice <- filter(L115.pv_midPrice, state == stateAb)$mid_p
       supplyCurve <- filter(ungroup(L115.pv_sc_State), state == stateAb)
-      optimize(f = smooth_res_curve_approx_error, interval = c(1.0, 15.0),
+      stats::optimize(f = smooth_res_curve_approx_error, interval = c(1.0, 15.0),
                midPrice, supplyCurve) %>% unlist
     }
     # Get error_min_b for all states using apply (replaces "for loop" structure of legacy code)
     sapply(unique(L115.pv_sc$state), get_error_min_b) %>% t %>% as.data.frame %>%
-      tibble::rownames_to_column(var = "state") %>% as_tibble %>%
-      select(state, minimum) %>% rename(b_exp = minimum) ->
+      tibble::rownames_to_column(var = "state") %>%
+      as_tibble %>%
+      select(state, minimum) %>%
+      rename(b_exp = minimum) ->
       L115.pv_error_min_b
 
     if(OLD_DATA_SYSTEM_BEHAVIOR) {
