@@ -138,25 +138,11 @@ module_energy_L2322.Fert <- function(command, ...) {
       L2322.StubTech_Fert
 
     # L2322.GlobalTechShrwt_Fert: Shareweights of global fertilizer sector technologies
-    # Notes of the workflow: The pipeline below functions as the interpolate_and_melt
-    #                        function in the old data system. The pipeline first extracts the years
-    #                        needed in interpolation then constructs the layout with proper id tags (columns)
-    #                        for interpolation years, and finally performs interpolation using 'rule=1' as in
-    #                        old data system. For more information about 'rule' please see ?approx_fun.
-    #                        Same workflow applies at several places in this chunk.
     A322.globaltech_shrwt %>%
       gather(year, share.weight, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.numeric(year)) ->
-      A322.globaltech_shrwt_long
-
-    df_years <- unique(A322.globaltech_shrwt_long$year)
-    int_years <- setdiff(c(BASE_YEARS, FUTURE_YEARS), df_years)
-
-    A322.globaltech_shrwt_long %>%
-      select(-share.weight, -year) %>%
-      unique() %>%
-      repeat_add_columns(tibble(year = int_years)) %>%
-      bind_rows(A322.globaltech_shrwt_long) %>%
+      mutate(year = as.integer(year)) %>%
+      complete(nesting(supplysector, subsector, technology), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
+      arrange(supplysector, subsector, technology, year) %>%
       group_by(supplysector, subsector, technology) %>%
       mutate(share.weight = approx_fun(year, share.weight, rule = 1)) %>%
       ungroup %>%
@@ -167,17 +153,9 @@ module_energy_L2322.Fert <- function(command, ...) {
     # L2322.GlobalTechCoef_Fert: Energy inputs and coefficients of global fertilizer energy use and feedstocks technologies
     A322.globaltech_coef %>%
       gather(year, coefficient, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) ->
-      A322.globaltech_coef_long
-
-    df_years <- unique(A322.globaltech_coef_long$year)
-    int_years <- setdiff(c(BASE_YEARS, FUTURE_YEARS), df_years)
-
-    A322.globaltech_coef_long %>%
-      select(-coefficient, -year) %>%
-      unique() %>%
-      repeat_add_columns(tibble(year = int_years)) %>%
-      bind_rows(A322.globaltech_coef_long) %>%
+      mutate(year = as.integer(year)) %>%
+      complete(nesting(supplysector, subsector, technology, minicam.energy.input), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
+      arrange(supplysector, subsector, technology, minicam.energy.input, year) %>%
       group_by(supplysector, subsector, technology, minicam.energy.input) %>%
       mutate(coefficient = approx_fun(year, coefficient, rule = 1)) %>%
       mutate(coefficient = round(coefficient, energy.DIGITS_COEFFICIENT)) %>%
@@ -202,17 +180,9 @@ module_energy_L2322.Fert <- function(command, ...) {
     ## No need to consider historical periods or intermittent technologies here
     A322.globaltech_co2capture %>%
       gather(year, remove.fraction, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.numeric(year)) ->
-      A322.globaltech_co2capture_long
-
-    df_years <- unique(A322.globaltech_co2capture_long$year)
-    int_years <- setdiff(FUTURE_YEARS, df_years)
-
-    A322.globaltech_co2capture_long %>%
-      select(-remove.fraction, -year) %>%
-      unique() %>%
-      repeat_add_columns(tibble(year = int_years)) %>%
-      bind_rows(A322.globaltech_co2capture_long) %>%
+      mutate(year = as.numeric(year)) %>%
+      complete(nesting(supplysector, subsector, technology), year = c(year, FUTURE_YEARS)) %>%
+      arrange(supplysector, subsector, technology, year) %>%
       group_by(supplysector, subsector, technology) %>%
       mutate(remove.fraction = approx_fun(year, remove.fraction, rule = 1)) %>%
       mutate(remove.fraction = round(remove.fraction, energy.DIGITS_REMOVE.FRACTION)) %>%
@@ -225,11 +195,11 @@ module_energy_L2322.Fert <- function(command, ...) {
     # Retirement information
     A322.globaltech_retirement %>%
       set_years %>%
-      mutate(year = as.numeric(year)) %>%
+      mutate(year = as.integer(year)) %>%
       rename(sector.name = supplysector, subsector.name = subsector) ->
       A322.globaltech_retirement_with_years
 
-    # Copy the data in the first future period through to the end year
+    # Copy the data in the last base year period through to the end year
     A322.globaltech_retirement_with_years %>%
       filter(year == max(BASE_YEARS)) ->
       A322.globaltech_retirement_max_baseyear
@@ -279,7 +249,7 @@ module_energy_L2322.Fert <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = 'GCAM_region_ID') %>%
       left_join_error_no_match(select(calibrated_techs, sector, fuel, supplysector, subsector, technology), by = c("sector", "fuel") ) %>%
       rename(stub.technology = technology) %>%
-      mutate(share.weight.year = year, subs.share.weight = 0, subs.share.weight = replace(subs.share.weight, which(calOutputValue > 0), 1), tech.share.weight = subs.share.weight) %>%
+      mutate(share.weight.year = year, subs.share.weight = if_else(calOutputValue > 0, 1, 0), tech.share.weight = subs.share.weight) %>%
       select(LEVEL2_DATA_NAMES[["StubTechProd"]]) ->
       L2322.StubTechProd_Fert
 
