@@ -14,21 +14,27 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_gcam.usa_L2322.Fert_USA_DISABLED <- function(command, ...) {
+module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "energy/calibrated_techs",
              FILE = "energy/A322.globaltech_coef",
-             "L2322.Supplysector_Fert",
-             "L2322.FinalEnergyKeyword_Fert",
-             "L2322.SubsectorLogit_Fert",
-             "L2322.SubsectorShrwt_Fert",
-             "L2322.SubsectorShrwtFllt_Fert",
-             "L2322.SubsectorInterp_Fert",
-             "L2322.SubsectorInterpTo_Fert",
-             "L2322.StubTech_Fert",
-             "L1322.IO_GJkg_state_Fert_F_Yh",
-             "L1322.out_Mt_state_Fert_Yh"))
+          #   "L2322.Supplysector_Fert",
+          FILE = "temp-data-inject/L2322.Supplysector_Fert",
+          #   "L2322.FinalEnergyKeyword_Fert",
+          FILE = "temp-data-inject/L2322.FinalEnergyKeyword_Fert",
+          #   "L2322.SubsectorLogit_Fert",
+          FILE = "temp-data-inject/L2322.SubsectorLogit_Fert",
+          #   "L2322.SubsectorShrwt_Fert", --- FLAG idk if this exsists in the old ds
+          #   "L2322.SubsectorShrwtFllt_Fert",
+          FILE = "temp-data-inject/L2322.SubsectorShrwtFllt_Fert",
+          #   "L2322.SubsectorInterp_Fert",
+          FILE = "temp-data-inject/L2322.SubsectorInterp_Fert",
+          #  "L2322.SubsectorInterpTo_Fert", --- FLAG idk if this exists in the old ds
+          #  "L2322.StubTech_Fert",
+          FILE = "temp-data-inject/L2322.StubTech_Fert",
+             "L1322.IO_GJkg_state_Fert_F_Yh", # product in the new ds
+             "L1322.out_Mt_state_Fert_Yh")) # product in the new ds
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2322.DeleteSubsector_USAFert",
              "L2322.FinalEnergyKeyword_USAFert",
@@ -49,38 +55,38 @@ module_gcam.usa_L2322.Fert_USA_DISABLED <- function(command, ...) {
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
     A322.globaltech_coef <- get_data(all_data, "energy/A322.globaltech_coef")
-    L2322.Supplysector_Fert <- get_data(all_data, "L2322.Supplysector_Fert")
-    L2322.FinalEnergyKeyword_Fert <- get_data(all_data, "L2322.FinalEnergyKeyword_Fert")
-    L2322.SubsectorLogit_Fert <- get_data(all_data, "L2322.SubsectorLogit_Fert")
-    L2322.SubsectorShrwt_Fert <- get_data(all_data, "L2322.SubsectorShrwt_Fert")
-    L2322.SubsectorShrwtFllt_Fert <- get_data(all_data, "L2322.SubsectorShrwtFllt_Fert")
-    L2322.SubsectorInterp_Fert <- get_data(all_data, "L2322.SubsectorInterp_Fert")
-    L2322.SubsectorInterpTo_Fert <- get_data(all_data, "L2322.SubsectorInterpTo_Fert")
-    L2322.StubTech_Fert <- get_data(all_data, "L2322.StubTech_Fert")
+
+    # L2322.Supplysector_Fert <- get_data(all_data, "L2322.Supplysector_Fert")
+    L2322.Supplysector_Fert <- get_data(all_data, "temp-data-inject/L2322.Supplysector_Fert")
+
+
+    # L2322.FinalEnergyKeyword_Fert <- get_data(all_data, "L2322.FinalEnergyKeyword_Fert")
+    L2322.FinalEnergyKeyword_Fert <- get_data(all_data, "temp-data-inject/L2322.FinalEnergyKeyword_Fert")
+
+    # L2322.SubsectorLogit_Fert <- get_data(all_data, "L2322.SubsectorLogit_Fert")
+    L2322.SubsectorLogit_Fert <- get_data(all_data, "temp-data-inject/L2322.SubsectorLogit_Fert")
+
+    # L2322.SubsectorShrwt_Fert <- get_data(all_data, "L2322.SubsectorShrwt_Fert")
+    # L2322.SubsectorShrwt_Fert <- get_data(all_data, "temp-data-inject/L2322.SubsectorShrwt_Fert")
+
+    # L2322.SubsectorShrwtFllt_Fert <- get_data(all_data, "L2322.SubsectorShrwtFllt_Fert")
+    L2322.SubsectorShrwtFllt_Fert <- get_data(all_data, "temp-data-inject/L2322.SubsectorShrwtFllt_Fert")
+
+    # L2322.SubsectorInterp_Fert <- get_data(all_data, "L2322.SubsectorInterp_Fert")
+    L2322.SubsectorInterp_Fert <- get_data(all_data, "temp-data-inject/L2322.SubsectorInterp_Fert")
+
+    # L2322.SubsectorInterpTo_Fert <- get_data(all_data, "L2322.SubsectorInterpTo_Fert")
+    # L2322.SubsectorInterpTo_Fert <- get_data(all_data, "temp-data-inject/L2322.SubsectorInterpTo_Fert")
+
+    # L2322.StubTech_Fert <- get_data(all_data, "L2322.StubTech_Fert")
+    L2322.StubTech_Fert <- get_data(all_data, "temp-data-inject/L2322.StubTech_Fert")
+
     L1322.IO_GJkg_state_Fert_F_Yh <- get_data(all_data, "L1322.IO_GJkg_state_Fert_F_Yh")
     L1322.out_Mt_state_Fert_Yh <- get_data(all_data, "L1322.out_Mt_state_Fert_Yh")
 
     # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses vecpaste
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses repeat_and_add_vector
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
+
+
     # ===================================================
 
     # Produce outputs
@@ -94,7 +100,17 @@ module_gcam.usa_L2322.Fert_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2322.DeleteSubsector_USAFert") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("gcam-usa/states_subregions",
+                     "energy/calibrated_techs",
+                     "energy/A322.globaltech_coef",
+                     "temp-data-inject/L2322.Supplysector_Fert",
+                     "temp-data-inject/L2322.FinalEnergyKeyword_Fert",
+                     "temp-data-inject/L2322.SubsectorLogit_Fert",
+                     "temp-data-inject/L2322.SubsectorShrwtFllt_Fert",
+                     "temp-data-inject/L2322.SubsectorInterp_Fert",
+                     "temp-data-inject/L2322.StubTech_Fert",
+                     "L1322.IO_GJkg_state_Fert_F_Yh",
+                     "L1322.out_Mt_state_Fert_Yh") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2322.DeleteSubsector_USAFert
@@ -105,8 +121,17 @@ module_gcam.usa_L2322.Fert_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2322.FinalEnergyKeyword_USAFert") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
+      add_precursors("gcam-usa/states_subregions",
+                     "energy/calibrated_techs",
+                     "energy/A322.globaltech_coef",
+                     "temp-data-inject/L2322.Supplysector_Fert",
+                     "temp-data-inject/L2322.FinalEnergyKeyword_Fert",
+                     "temp-data-inject/L2322.SubsectorLogit_Fert",
+                     "temp-data-inject/L2322.SubsectorShrwtFllt_Fert",
+                     "temp-data-inject/L2322.SubsectorInterp_Fert",
+                     "temp-data-inject/L2322.StubTech_Fert",
+                     "L1322.IO_GJkg_state_Fert_F_Yh",
+                     "L1322.out_Mt_state_Fert_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2322.FinalEnergyKeyword_USAFert
 
@@ -116,8 +141,17 @@ module_gcam.usa_L2322.Fert_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2322.SubsectorLogit_USAFert") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
+        add_precursors("gcam-usa/states_subregions",
+                       "energy/calibrated_techs",
+                       "energy/A322.globaltech_coef",
+                       "temp-data-inject/L2322.Supplysector_Fert",
+                       "temp-data-inject/L2322.FinalEnergyKeyword_Fert",
+                       "temp-data-inject/L2322.SubsectorLogit_Fert",
+                       "temp-data-inject/L2322.SubsectorShrwtFllt_Fert",
+                       "temp-data-inject/L2322.SubsectorInterp_Fert",
+                       "temp-data-inject/L2322.StubTech_Fert",
+                       "L1322.IO_GJkg_state_Fert_F_Yh",
+                       "L1322.out_Mt_state_Fert_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2322.SubsectorLogit_USAFert
 
@@ -127,8 +161,17 @@ module_gcam.usa_L2322.Fert_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2322.SubsectorShrwtFllt_USAFert") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
+      add_precursors("gcam-usa/states_subregions",
+                     "energy/calibrated_techs",
+                     "energy/A322.globaltech_coef",
+                     "temp-data-inject/L2322.Supplysector_Fert",
+                     "temp-data-inject/L2322.FinalEnergyKeyword_Fert",
+                     "temp-data-inject/L2322.SubsectorLogit_Fert",
+                     "temp-data-inject/L2322.SubsectorShrwtFllt_Fert",
+                     "temp-data-inject/L2322.SubsectorInterp_Fert",
+                     "temp-data-inject/L2322.StubTech_Fert",
+                     "L1322.IO_GJkg_state_Fert_F_Yh",
+                     "L1322.out_Mt_state_Fert_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2322.SubsectorShrwtFllt_USAFert
 
@@ -138,8 +181,17 @@ module_gcam.usa_L2322.Fert_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2322.SubsectorInterp_USAFert") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
+      add_precursors("gcam-usa/states_subregions",
+                     "energy/calibrated_techs",
+                     "energy/A322.globaltech_coef",
+                     "temp-data-inject/L2322.Supplysector_Fert",
+                     "temp-data-inject/L2322.FinalEnergyKeyword_Fert",
+                     "temp-data-inject/L2322.SubsectorLogit_Fert",
+                     "temp-data-inject/L2322.SubsectorShrwtFllt_Fert",
+                     "temp-data-inject/L2322.SubsectorInterp_Fert",
+                     "temp-data-inject/L2322.StubTech_Fert",
+                     "L1322.IO_GJkg_state_Fert_F_Yh",
+                     "L1322.out_Mt_state_Fert_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2322.SubsectorInterp_USAFert
 
@@ -149,8 +201,17 @@ module_gcam.usa_L2322.Fert_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2322.TechShrwt_USAFert") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
+      add_precursors("gcam-usa/states_subregions",
+                     "energy/calibrated_techs",
+                     "energy/A322.globaltech_coef",
+                     "temp-data-inject/L2322.Supplysector_Fert",
+                     "temp-data-inject/L2322.FinalEnergyKeyword_Fert",
+                     "temp-data-inject/L2322.SubsectorLogit_Fert",
+                     "temp-data-inject/L2322.SubsectorShrwtFllt_Fert",
+                     "temp-data-inject/L2322.SubsectorInterp_Fert",
+                     "temp-data-inject/L2322.StubTech_Fert",
+                     "L1322.IO_GJkg_state_Fert_F_Yh",
+                     "L1322.out_Mt_state_Fert_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2322.TechShrwt_USAFert
 
@@ -160,8 +221,17 @@ module_gcam.usa_L2322.Fert_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2322.Production_USAFert") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
+      add_precursors("gcam-usa/states_subregions",
+                     "energy/calibrated_techs",
+                     "energy/A322.globaltech_coef",
+                     "temp-data-inject/L2322.Supplysector_Fert",
+                     "temp-data-inject/L2322.FinalEnergyKeyword_Fert",
+                     "temp-data-inject/L2322.SubsectorLogit_Fert",
+                     "temp-data-inject/L2322.SubsectorShrwtFllt_Fert",
+                     "temp-data-inject/L2322.SubsectorInterp_Fert",
+                     "temp-data-inject/L2322.StubTech_Fert",
+                     "L1322.IO_GJkg_state_Fert_F_Yh",
+                     "L1322.out_Mt_state_Fert_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2322.Production_USAFert
 
@@ -171,8 +241,17 @@ module_gcam.usa_L2322.Fert_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2322.TechCoef_USAFert") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
+      add_precursors("gcam-usa/states_subregions",
+                     "energy/calibrated_techs",
+                     "energy/A322.globaltech_coef",
+                     "temp-data-inject/L2322.Supplysector_Fert",
+                     "temp-data-inject/L2322.FinalEnergyKeyword_Fert",
+                     "temp-data-inject/L2322.SubsectorLogit_Fert",
+                     "temp-data-inject/L2322.SubsectorShrwtFllt_Fert",
+                     "temp-data-inject/L2322.SubsectorInterp_Fert",
+                     "temp-data-inject/L2322.StubTech_Fert",
+                     "L1322.IO_GJkg_state_Fert_F_Yh",
+                     "L1322.out_Mt_state_Fert_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2322.TechCoef_USAFert
 
@@ -182,8 +261,17 @@ module_gcam.usa_L2322.Fert_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2322.StubTechProd_Fert_USA") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
+      add_precursors("gcam-usa/states_subregions",
+                     "energy/calibrated_techs",
+                     "energy/A322.globaltech_coef",
+                     "temp-data-inject/L2322.Supplysector_Fert",
+                     "temp-data-inject/L2322.FinalEnergyKeyword_Fert",
+                     "temp-data-inject/L2322.SubsectorLogit_Fert",
+                     "temp-data-inject/L2322.SubsectorShrwtFllt_Fert",
+                     "temp-data-inject/L2322.SubsectorInterp_Fert",
+                     "temp-data-inject/L2322.StubTech_Fert",
+                     "L1322.IO_GJkg_state_Fert_F_Yh",
+                     "L1322.out_Mt_state_Fert_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2322.StubTechProd_Fert_USA
 
@@ -193,8 +281,17 @@ module_gcam.usa_L2322.Fert_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2322.StubTechCoef_Fert_USA") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
+      add_precursors("gcam-usa/states_subregions",
+                     "energy/calibrated_techs",
+                     "energy/A322.globaltech_coef",
+                     "temp-data-inject/L2322.Supplysector_Fert",
+                     "temp-data-inject/L2322.FinalEnergyKeyword_Fert",
+                     "temp-data-inject/L2322.SubsectorLogit_Fert",
+                     "temp-data-inject/L2322.SubsectorShrwtFllt_Fert",
+                     "temp-data-inject/L2322.SubsectorInterp_Fert",
+                     "temp-data-inject/L2322.StubTech_Fert",
+                     "L1322.IO_GJkg_state_Fert_F_Yh",
+                     "L1322.out_Mt_state_Fert_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2322.StubTechCoef_Fert_USA
 
@@ -204,15 +301,31 @@ module_gcam.usa_L2322.Fert_USA_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2322.StubTechMarket_Fert_USA") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
+      add_precursors("gcam-usa/states_subregions",
+                     "energy/calibrated_techs",
+                     "energy/A322.globaltech_coef",
+                     "temp-data-inject/L2322.Supplysector_Fert",
+                     "temp-data-inject/L2322.FinalEnergyKeyword_Fert",
+                     "temp-data-inject/L2322.SubsectorLogit_Fert",
+                     "temp-data-inject/L2322.SubsectorShrwtFllt_Fert",
+                     "temp-data-inject/L2322.SubsectorInterp_Fert",
+                     "temp-data-inject/L2322.StubTech_Fert",
+                     "L1322.IO_GJkg_state_Fert_F_Yh",
+                     "L1322.out_Mt_state_Fert_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L2322.StubTechMarket_Fert_USA
 
-    return_data(L2322.DeleteSubsector_USAFert, L2322.FinalEnergyKeyword_USAFert, L2322.SubsectorLogit_USAFert,
-                L2322.SubsectorShrwtFllt_USAFert, L2322.SubsectorInterp_USAFert, L2322.TechShrwt_USAFert,
-                L2322.Production_USAFert, L2322.TechCoef_USAFert, L2322.StubTechProd_Fert_USA,
-                L2322.StubTechCoef_Fert_USA, L2322.StubTechMarket_Fert_USA)
+    return_data(L2322.DeleteSubsector_USAFert,
+                L2322.FinalEnergyKeyword_USAFert,
+                L2322.SubsectorLogit_USAFert,
+                L2322.SubsectorShrwtFllt_USAFert,
+                L2322.SubsectorInterp_USAFert,
+                L2322.TechShrwt_USAFert,
+                L2322.Production_USAFert,
+                L2322.TechCoef_USAFert,
+                L2322.StubTechProd_Fert_USA,
+                L2322.StubTechCoef_Fert_USA,
+                L2322.StubTechMarket_Fert_USA)
   } else {
     stop("Unknown command")
   }
