@@ -1,32 +1,30 @@
-# File: A23.globaltech_eff.csv,,,,,,,,,,,,
-# Title: Global technologies efficiencies by fuel and electric sector,,,,,,,,,,,,
-# Units: NA,,,,,,,,,,,,
-# Comments: Future improvement is based on the maximum % reduction that the literature deems likely and a rate. Note that some technologies are the same as another with additional equipment (i.e. CCS) for those technologies the improvement is on the additional equipmentcorresponding to the maturity level of the technology,,,,,,,,,,,,
+# File: A23.globaltech_eff.csv
+# Title: Global technologies efficiencies by fuel and electric sector
+# Units: NA
+# Comments: Future improvement is based on the maximum % reduction that the literature deems likely and a rate. Note that some technologies are the same as another with additional equipment (i.e. CCS) for those technologies the improvement is on the additional equipmentcorresponding to the maturity level of the technology
 supplysector,subsector,technology,minicam.energy.input,1971,1990,2005,2010,2015,2100,improvement.max,improvement.rate,improvement.shadow.technology
-electricity,coal,coal (conv pul),regional coal,0.3,0.35,0.391,0.396656458,0.396656458,,1.462222505,0.015,
+electricity,coal,coal (conv pul),regional coal,0.3,0.35,0.391,0.396656458,0.396656458,,1.462222505,0.015
 electricity,coal,coal (conv pul CCS),regional coal,0.29227318,0.29227318,0.29227318,0.29227318,0.29227318,,-0.256609245,0.05,coal (conv pul)
-electricity,coal,coal (IGCC),regional coal,0.426,0.426,0.426,0.407094786,0.407094786,,1.473858228,0.02,
+electricity,coal,coal (IGCC),regional coal,0.426,0.426,0.426,0.407094786,0.407094786,,1.473858228,0.02
 electricity,coal,coal (IGCC CCS),regional coal,0.356329323,0.356329323,0.356329323,0.334026491,0.334026491,,-0.149688726,0.05,coal (IGCC)
-electricity,gas,gas (steam/CT),wholesale gas,0.25,0.3,0.33,0.376667869,0.376667869,,1.433623743,0.01,
-electricity,gas,gas (CC),wholesale gas,0.45,0.45,0.5,0.57608027,0.565001803,,1.292031275,0.015,
+electricity,gas,gas (steam/CT),wholesale gas,0.25,0.3,0.33,0.376667869,0.376667869,,1.433623743,0.01
+electricity,gas,gas (CC),wholesale gas,0.45,0.45,0.5,0.57608027,0.565001803,,1.292031275,0.015
 electricity,gas,gas (CC CCS),wholesale gas,0.487201482,0.487201482,0.487201482,0.465295603,0.465295603,,-0.10745857,0.05,gas (CC)
-electricity,refined liquids,refined liquids (steam/CT),refined liquids industrial,0.3,0.35,0.384,0.362756407,0.362756407,,1.488602239,0.01,
-electricity,refined liquids,refined liquids (CC),refined liquids industrial,0.426,0.426,0.426,0.554803917,0.554803917,,1.315780184,0.015,
+electricity,refined liquids,refined liquids (steam/CT),refined liquids industrial,0.3,0.35,0.384,0.362756407,0.362756407,,1.488602239,0.01
+electricity,refined liquids,refined liquids (CC),refined liquids industrial,0.426,0.426,0.426,0.554803917,0.554803917,,1.315780184,0.015
 electricity,refined liquids,refined liquids (CC CCS),refined liquids industrial,0.36,0.36,0.36,0.417573266,0.419929971,,-0.119067472,0.05,refined liquids (CC)
-electricity,biomass,biomass (conv),regional biomass,0.3,0.35,0.382,0.26625,0.26625,,1.596244131,0.015,
+electricity,biomass,biomass (conv),regional biomass,0.3,0.35,0.382,0.26625,0.26625,,1.596244131,0.015
 electricity,biomass,biomass (conv CCS),regional biomass,0.196184211,0.196184211,0.196184211,0.196184211,0.196184211,,-0.382293763,0.05,biomass (conv)
-electricity,biomass,biomass (IGCC),regional biomass,0.416,0.416,0.416,0.3195,0.3195,,1.564945227,0.02,
+electricity,biomass,biomass (IGCC),regional biomass,0.416,0.416,0.416,0.3195,0.3195,,1.564945227,0.02
 electricity,biomass,biomass (IGCC CCS),regional biomass,0.356852457,0.356852457,0.356852457,0.262153846,0.262153846,,-0.1907277,0.05,biomass (IGCC)
-electricity,nuclear,Gen_II_LWR,nuclearFuelGenII,0.333,0.333,0.333,0.333,0.333,0.333,,,
-electricity,nuclear,Gen_III,nuclearFuelGenIII,0.333,0.333,0.333,0.333,0.333,0.333,,,
-electricity,wind,wind,onshore wind resource,1,1,1,1,1,1,,,
-electricity,wind,wind_storage,onshore wind resource,0.96,0.96,0.96,0.96,0.96,0.96,,,
-electricity,solar,PV,global solar resource,1,1,1,1,1,1,,,
-electricity,solar,PV,backup_electricity,1,1,1,1,1,1,,,
-electricity,solar,PV_storage,global solar resource,0.96,0.96,0.96,0.96,0.96,0.96,,,
-electricity,solar,CSP,global solar resource,1,1,1,1,1,1,,,
-electricity,solar,CSP,csp_backup,1,1,1,1,1,1,,,
-electricity,solar,CSP_storage,global solar resource,1,1,1,1,1,1,,,
-electricity,geothermal,geothermal,geothermal,0.1,0.1,0.1,0.1,0.1,0.1,,,
-elect_td_bld,rooftop_pv,rooftop_pv,distributed_solar,1,1,1,1,1,1,,,
-elect_td_bld,rooftop_pv,rooftop_pv,backup_electricity,1,1,1,1,1,1,,,
+electricity,nuclear,Gen_II_LWR,nuclearFuelGenII,0.333,0.333,0.333,0.333,0.333,0.333
+electricity,nuclear,Gen_III,nuclearFuelGenIII,0.333,0.333,0.333,0.333,0.333,0.333
+electricity,wind,wind,onshore wind resource,1,1,1,1,1,1
+electricity,wind,wind_storage,onshore wind resource,0.96,0.96,0.96,0.96,0.96,0.96
+electricity,solar,PV,global solar resource,1,1,1,1,1,1
+electricity,solar,PV_storage,global solar resource,0.96,0.96,0.96,0.96,0.96,0.96
+electricity,solar,CSP,global solar resource,1,1,1,1,1,1
+electricity,solar,CSP_storage,global solar resource,1,1,1,1,1,1
+electricity,geothermal,geothermal,geothermal,0.1,0.1,0.1,0.1,0.1,0.1
+elect_td_bld,rooftop_pv,rooftop_pv,distributed_solar,1,1,1,1,1,1
+elect_td_bld,rooftop_pv,rooftop_pv,backup_electricity,1,1,1,1,1,1

@@ -6,7 +6,10 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L223.DeleteSubsector_USAelec}, \code{L223.SectorNodeEquiv}, \code{L223.TechNodeEquiv}, \code{L223.PassThroughSector_elec}, \code{L223.PassThroughTech_elec_FERC}, \code{object}, \code{L223.SectorLogitTables_USAelec[[ curr_table ]]$data}, \code{L223.Supplysector_USAelec}, \code{L223.SubsectorShrwtFllt_USAelec}, \code{L223.SubsectorInterp_USAelec}, \code{L223.SubsectorLogitTables_USAelec[[ curr_table ]]$data}, \code{L223.SubsectorLogit_USAelec}, \code{L223.TechShrwt_USAelec}, \code{L223.TechCoef_USAelec}, \code{L223.Production_USAelec}, \code{L223.SectorLogitTables_elec_FERC[[ curr_table ]]$data}, \code{L223.Supplysector_elec_FERC}, \code{L223.SubsectorShrwtFllt_elec_FERC}, \code{L223.SubsectorInterp_elec_FERC}, \code{L223.SubsectorLogitTables_elec_FERC[[ curr_table ]]$data}, \code{L223.SubsectorLogit_elec_FERC}, \code{L223.TechShrwt_elec_FERC}, \code{L223.TechCoef_elec_FERC}, \code{L223.Production_elec_FERC}, \code{L223.InterestRate_FERC}, \code{L223.Pop_FERC}, \code{L223.BaseGDP_FERC}, \code{L223.LaborForceFillout_FERC}, \code{L223.SubsectorShrwt_nuc_USA}, \code{L223.StubTechFixOut_elec_USA}, \code{L223.StubTechFixOut_hydro_USA}, \code{L223.StubTechProd_elec_USA}, \code{L223.StubTechMarket_elec_USA}, \code{L223.StubTechMarket_backup_USA}, \code{L223.StubTechElecMarket_backup_USA}, \code{L223.StubTechCapFactor_elec_wind_USA}, \code{L223.StubTechCapFactor_elec_solar_USA}. The corresponding file in the
+#' the generated outputs: \code{L223.SectorNodeEquiv}, \code{L223.TechNodeEquiv}, \code{L223.DeleteSubsector_USAelec}, \code{L223.Supplysector_USAelec}, \code{L223.SubsectorShrwtFllt_USAelec}, \code{L223.SubsectorInterp_USAelec}, \code{L223.SubsectorLogit_USAelec}, \code{L223.TechShrwt_USAelec}, \code{L223.TechCoef_USAelec}, \code{L223.Production_USAelec},
+#' \code{L223.PassThroughSector_elec}, \code{L223.PassThroughTech_elec_FERC}, \code{L223.Supplysector_elec_FERC}, \code{L223.SubsectorShrwtFllt_elec_FERC}, \code{L223.SubsectorInterp_elec_FERC}, \code{L223.SubsectorLogit_elec_FERC}, \code{L223.TechShrwt_elec_FERC}, \code{L223.TechCoef_elec_FERC}, \code{L223.Production_elec_FERC}, \code{L223.InterestRate_FERC}, \code{L223.Pop_FERC}, \code{L223.BaseGDP_FERC}, \code{L223.LaborForceFillout_FERC},
+#' \code{L223.Supplysector_elec_USA}, \code{L223.ElecReserve_USA}, \code{L223.SubsectorLogit_elec_USA}, \code{L223.SubsectorShrwtFllt_elec_USA}, \code{L223.SubsectorShrwt_nuc_USA}, \code{L223.SubsectorShrwt_renew_USA}, \code{L223.SubsectorInterp_elec_USA}, \code{L223.SubsectorInterpTo_elec_USA}, \code{L223.StubTech_elec_USA}, \code{L223.StubTechEff_elec_USA}, \code{L223.StubTechCapFactor_elec_USA},
+#' \code{L223.StubTechFixOut_elec_USA}, \code{L223.StubTechFixOut_hydro_USA}, \code{L223.StubTechProd_elec_USA}, \code{L223.StubTechMarket_elec_USA}, \code{L223.StubTechMarket_backup_USA}, \code{L223.StubTechElecMarket_backup_USA}, \code{L223.StubTechCapFactor_elec_wind_USA}, \code{L223.StubTechCapFactor_elec_solar_USA}. The corresponding file in the
 #' original data system was \code{L223.electricity_USA.R} (gcam-usa level2).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
@@ -26,7 +29,6 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
              FILE = "temp-data-inject/L223.Supplysector_elec",
              FILE = "temp-data-inject/L223.ElecReserve",
              FILE = "temp-data-inject/L223.SubsectorLogit_elec",
-             # FILE = "temp-data-inject/L223.SubsectorShrwt_elec",
              FILE = "temp-data-inject/L223.SubsectorShrwtFllt_elec",
              FILE = "temp-data-inject/L223.SubsectorShrwt_nuc",
              FILE = "temp-data-inject/L223.SubsectorShrwt_renew",
@@ -41,11 +43,9 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
              "L1232.out_EJ_sR_elec",
              "L126.out_EJ_state_td_elec"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L223.DeleteSubsector_USAelec",
-             "L223.SectorNodeEquiv",
+    return(c("L223.SectorNodeEquiv",
              "L223.TechNodeEquiv",
-             "L223.PassThroughSector_elec",
-             "L223.PassThroughTech_elec_FERC",
+             "L223.DeleteSubsector_USAelec",
              "L223.Supplysector_USAelec",
              "L223.SubsectorShrwtFllt_USAelec",
              "L223.SubsectorInterp_USAelec",
@@ -53,6 +53,8 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
              "L223.TechShrwt_USAelec",
              "L223.TechCoef_USAelec",
              "L223.Production_USAelec",
+             "L223.PassThroughSector_elec",
+             "L223.PassThroughTech_elec_FERC",
              "L223.Supplysector_elec_FERC",
              "L223.SubsectorShrwtFllt_elec_FERC",
              "L223.SubsectorInterp_elec_FERC",
@@ -64,7 +66,17 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
              "L223.Pop_FERC",
              "L223.BaseGDP_FERC",
              "L223.LaborForceFillout_FERC",
+             "L223.Supplysector_elec_USA",
+             "L223.ElecReserve_USA",
+             "L223.SubsectorLogit_elec_USA",
+             "L223.SubsectorShrwtFllt_elec_USA",
              "L223.SubsectorShrwt_nuc_USA",
+             "L223.SubsectorShrwt_renew_USA",
+             "L223.SubsectorInterp_elec_USA",
+             "L223.SubsectorInterpTo_elec_USA",
+             "L223.StubTech_elec_USA",
+             "L223.StubTechEff_elec_USA",
+             "L223.StubTechCapFactor_elec_USA",
              "L223.StubTechFixOut_elec_USA",
              "L223.StubTechFixOut_hydro_USA",
              "L223.StubTechProd_elec_USA",
@@ -81,7 +93,8 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
     NREL_us_re_technical_potential <- get_data(all_data, "gcam-usa/NREL_us_re_technical_potential")
-    A23.globaltech_eff <- get_data(all_data, "energy/A23.globaltech_eff")
+    A23.globaltech_eff <- get_data(all_data, "energy/A23.globaltech_eff") %>%
+      filter(!(subsector == "solar" & grepl("backup", minicam.energy.input)))
     L114.CapacityFactor_wind_state <- get_data(all_data, "temp-data-inject/L114.CapacityFactor_wind_state")
     L119.CapFacScaler_PV_state <- get_data(all_data, "L119.CapFacScaler_PV_state")
     L119.CapFacScaler_CSP_state <- get_data(all_data, "L119.CapFacScaler_CSP_state")
@@ -104,342 +117,904 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
     L126.out_EJ_state_td_elec <- get_data(all_data, "L126.out_EJ_state_td_elec")
 
     # ===================================================
+    # Set up equivalent sector and technology tag names.
+
+    # L223.SectorNodeEquiv: Sets up equivalent sector tag names to avoid having to partition input tables
+    tibble(X1 = "SectorXMLTags", X2 = "supplysector", X3 = "pass-through-sector") ->
+      L223.SectorNodeEquiv
+
+    # L223.TechNodeEquiv: Sets up equivalent technology tag names to avoid having to partition input tables" )
+    tibble(X1 = "TechnologyXMLTags", X2 = "technology",
+           X3 = "intermittent-technology", X4 = "pass-through-technology") ->
+      L223.TechNodeEquiv
+
+    states_subregions %>%
+      select(grid_region) %>%
+      unique %>%
+      arrange(grid_region) %>%
+      unlist ->
+      grid_regions
+
+    elec_gen_names <- "electricity"
+
+    # Indicate states where geothermal electric technologies will not be created
+    NREL_us_re_technical_potential %>%
+      left_join(states_subregions, by = c("State" = "state_name")) %>%
+      filter(Geothermal_Hydrothermal_GWh == 0) %>%
+      mutate(geo_state_noresource = paste(state, "geothermal", sep = " ")) %>%
+      select(geo_state_noresource) %>%
+      unlist ->
+      geo_states_noresource
+
+    # gcamusa_USE_REGIONAL_ELEC_MARKETS is TURE, indicating to resolve electricity demands at the level of the grid regions.
+    # The entire loop below produces outputs assoicated with resolving demand at the national level, and is currently disabled.
+    if(!gcamusa_USE_REGIONAL_ELEC_MARKETS){
+      # PART 1: THE USA REGION
+      # Define the sector(s) that will be used in this code file. Can be one or multiple sectors
+      # The subsectors of the existing USA electricity sector are deleted.
+      # Keeping the supplysector info, incl. reserve margin
+      # NOTE: This also removes the rooftop PV subsector of the USA elect_td_bld sector
+      L223.SubsectorLogit_elec %>%
+        select(one_of(LEVEL2_DATA_NAMES[["Subsector"]])) %>%
+        filter(region == "USA") ->
+        L223.DeleteSubsector_USAelec
+
+      # L223.Supplysector_USAelec: supplysector for electricity sector in the USA region,
+      # including logit exponent between grid regions
+      # All of the supplysector information is the same as before, except the logit exponent
+      tibble(region = "USA",
+             supplysector = elec_gen_names,
+             output.unit = "EJ",
+             input.unit = "EJ",
+             price.unit = "1975$/GJ",
+             logit.year.fillout = min(BASE_YEARS),
+             logit.exponent = gcamusa_GRID_REGION_LOGIT,
+             logit.type = gcamusa_GRID_REGION_LOGIT_TYPE) %>%
+        select(one_of(LEVEL2_DATA_NAMES[["Supplysector"]])) ->
+        L223.Supplysector_USAelec
+
+      # No need to read in subsector logit exponents, which are applied to the technology competition
+      # L223.SubsectorShrwtFllt_USAelec: subsector (grid region) shareweights in USA electricity
+      tibble(region = "USA",
+             supplysector = elec_gen_names,
+             subsector = paste(grid_regions, elec_gen_names, sep = " " ),
+             year.fillout = min(BASE_YEARS),
+             share.weight = 1) ->
+        L223.SubsectorShrwtFllt_USAelec
+
+      # L223.SubsectorInterp_USAelec: subsector (grid region) shareweights in USA electricity
+      L223.SubsectorShrwtFllt_USAelec %>%
+        select(one_of(LEVEL2_DATA_NAMES[["Subsector"]])) %>%
+        mutate(apply.to = "share-weight",
+               from.year = max(BASE_YEARS),
+               to.year = max(MODEL_YEARS),
+               interpolation.function = "fixed") ->
+        L223.SubsectorInterp_USAelec
+
+      # NOTE: There is only one tech per subsector in the FERC markets so the logit choice does not matter
+      L223.SubsectorShrwtFllt_USAelec %>%
+        select(one_of(LEVEL2_DATA_NAMES[["Subsector"]])) %>%
+        mutate(logit.year.fillout = min(BASE_YEARS),
+               logit.exponent = gcamusa_GRID_REGION_LOGIT,
+               logit.type = gcamusa_GRID_REGION_LOGIT_TYPE) %>%
+        select(one_of(LEVEL2_DATA_NAMES[["SubsectorLogit"]])) ->
+        L223.SubsectorLogit_USAelec
+
+      # L223.TechShrwt_USAelec: technology shareweights, USA region
+      L223.SubsectorShrwtFllt_USAelec %>%
+        select(one_of(LEVEL2_DATA_NAMES[["Subsector"]])) %>%
+        mutate(technology = subsector) %>%
+        repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+        mutate(share.weight = 1) ->
+        L223.TechShrwt_USAelec
+
+      # L223.TechCoef_USAelec: technology coefficients and market names, USA region
+      L223.TechShrwt_USAelec %>%
+        select(one_of(LEVEL2_DATA_NAMES[["TechYr"]])) %>%
+        mutate(minicam.energy.input = supplysector,
+               coefficient = 1,
+               market.name = substr(technology, 1, nchar(subsector) - nchar(supplysector) - 1)) ->
+        L223.TechCoef_USAelec
+
+      # L223.Production_USAelec: calibrated electricity production in USA (consuming output of grid subregions)
+      L1232.out_EJ_sR_elec %>%
+        filter(year %in% BASE_YEARS) %>%
+        mutate(calOutputValue = round(value, digits = energy.DIGITS_CALOUTPUT)) %>%
+        left_join_error_no_match(unique(select(calibrated_techs, sector, supplysector)), by = "sector") %>%
+        mutate(subsector = paste(grid_region, supplysector, sep = " ")) ->
+      L223.out_EJ_sR_elec
+
+      L223.TechCoef_USAelec %>%
+        select(one_of(LEVEL2_DATA_NAMES[["TechYr"]])) %>%
+        filter(year %in% BASE_YEARS) %>%
+        left_join_error_no_match(L223.out_EJ_sR_elec, by = c("supplysector", "subsector", "year")) %>%
+        mutate(share.weight.year = year,
+               tech.share.weight = ifelse(calOutputValue == 0, 0, 1)) %>%
+        set_subsector_shrwt() %>%
+        select(one_of(LEVEL2_DATA_NAMES[["Production"]]))->
+        L223.Production_USAelec
+    }
+
+    # PART 2: THE FERC REGIONS
+    # NOTE: FERC regions function in similar fashion to the USA region: competing electricity from subregions
+
+    # L223.Supplysector_elec_FERC: supplysector for electricity sector in the USA region, including logit exponent between grid regions
+    # NOTE: using the same logit exponent for states within FERC region as for FERC regions within the USA
+    tibble(region = grid_regions,
+           supplysector = elec_gen_names,
+           output.unit = "EJ",
+           input.unit = "EJ",
+           price.unit = "1975$/GJ",
+           logit.year.fillout = min(BASE_YEARS),
+           logit.exponent = gcamusa_GRID_REGION_LOGIT,
+           logit.type = gcamusa_GRID_REGION_LOGIT_TYPE) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["Supplysector"]])) ->
+      L223.Supplysector_elec_FERC
+
+    # L223.SubsectorShrwtFllt_elec_FERC: subsector (grid region) shareweights in USA electricity
+    states_subregions %>%
+      select(region = grid_region, state) %>%
+      mutate(supplysector = elec_gen_names,
+             subsector = paste(state, supplysector, sep = " "),
+             year.fillout = min(BASE_YEARS),
+             share.weight = 1) %>%
+      select(-state) %>%
+      arrange(region) ->
+      L223.SubsectorShrwtFllt_elec_FERC
+
+    # L223.SubsectorInterp_elec_FERC: subsector (grid region) shareweights in USA electricity
+    L223.SubsectorShrwtFllt_elec_FERC %>%
+      select(one_of(LEVEL2_DATA_NAMES[["Subsector"]])) %>%
+      mutate(apply.to = "share-weight",
+             from.year = max(BASE_YEARS),
+             to.year = max(MODEL_YEARS),
+             interpolation.function = "fixed") ->
+      L223.SubsectorInterp_elec_FERC
+
+    # NOTE: There is only one tech per subsector in the FERC markets so the logit choice does not matter
+    L223.SubsectorShrwtFllt_elec_FERC %>%
+      select(one_of(LEVEL2_DATA_NAMES[["Subsector"]])) %>%
+      mutate(logit.year.fillout = min(BASE_YEARS),
+             logit.exponent = gcamusa_GRID_REGION_LOGIT,
+             logit.type = gcamusa_GRID_REGION_LOGIT_TYPE) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["SubsectorLogit"]])) ->
+      L223.SubsectorLogit_elec_FERC
+
+    # L223.TechShrwt_elec_FERC: technology shareweights, USA region
+    L223.SubsectorShrwtFllt_elec_FERC %>%
+      select(one_of(LEVEL2_DATA_NAMES[["Subsector"]])) %>%
+      mutate(technology = subsector) %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      mutate(share.weight = 1) ->
+      L223.TechShrwt_elec_FERC
+
+    # L223.TechCoef_elec_FERC: technology coefficients and market names, USA region
+    L223.TechShrwt_elec_FERC %>%
+      select(one_of(LEVEL2_DATA_NAMES[["TechYr"]])) %>%
+      mutate(minicam.energy.input = supplysector,
+             coefficient = 1,
+             market.name = substr(technology, 1, nchar(subsector) - nchar(supplysector) - 1)) ->
+      L223.TechCoef_elec_FERC
+
+    # Create a L223.PassThroughSector_elec dataframe (to be converted into a csv table later).
+    # The marginal revenue sector is the region's electricity sector
+    # whereas the marginal revenue market is the grid region.
+    states_subregions %>%
+      select(state, grid_region) %>%
+      mutate(passthrough.sector="electricity",
+             marginal.revenue.sector = "electricity",
+             marginal.revenue.market = grid_region) %>%
+      select(-grid_region) ->
+      L223.PassThroughSector_elec
+
+    # Create a L223.PassThroughTech_elec_FERC dataframe (to be converted into a csv table later).
+    # This one should contain region, supplysector, subsector, technology for the grid regions
+    # to which electricity produced in states is passed through.
+    # Note that the "technology" in this data-frame will be called "passthrough technology"
+    L223.TechShrwt_elec_FERC %>%
+      select(region, supplysector, subsector, technology) ->
+      L223.PassThroughTech_elec_FERC
+
+    # L223.Production_elec_FERC: calibrated electricity production in USA (consuming output of grid subregions)
+    L1231.out_EJ_state_elec_F_tech %>%
+      filter(year %in% BASE_YEARS) %>%
+      mutate(calOutputValue = round(value, digits = energy.DIGITS_CALOUTPUT)) %>%
+      left_join_error_no_match(unique(select(calibrated_techs, sector, supplysector)), by = "sector") %>%
+      mutate(subsector = paste(state, supplysector, sep = " ")) %>%
+      # This needs to be aggregated to the supplysector level
+      group_by(supplysector, subsector, year) %>%
+      summarise(calOutputValue = sum(calOutputValue)) %>%
+      ungroup ->
+      L223.out_EJ_state_elec
+
+    L223.TechCoef_elec_FERC %>%
+      select(one_of(LEVEL2_DATA_NAMES[["TechYr"]])) %>%
+      filter(year %in% BASE_YEARS) %>%
+      left_join_error_no_match(L223.out_EJ_state_elec, by = c("supplysector", "subsector", "year")) %>%
+      mutate(share.weight.year = year,
+             tech.share.weight = ifelse(calOutputValue == 0, 0, 1)) %>%
+      set_subsector_shrwt() %>%
+      select(one_of(LEVEL2_DATA_NAMES[["Production"]])) ->
+      L223.Production_elec_FERC
+
+    # Socioeconomic information in the electricity grid regions (required for GCAM to run with these regions)
+
+    # L223.InterestRate_FERC: Interest rates in the FERC grid regions
+    tibble(region = grid_regions,
+           interest.rate = socioeconomics.DEFAULT_INTEREST_RATE) ->
+      L223.InterestRate_FERC
+
+    # L223.Pop_FERC: Population
+    tibble(region = grid_regions,
+           totalPop = 1) %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) ->
+      L223.Pop_FERC
+
+    # L223.BaseGDP_FERC: Base GDP in FERC grid regions
+    tibble(region = grid_regions,
+           baseGDP = 1)  ->
+      L223.BaseGDP_FERC
+
+    # L223.LaborForceFillout_FERC: labor force in the grid regions
+    tibble(region = grid_regions,
+           year.fillout = min(BASE_YEARS),
+           laborforce = socioeconomics.DEFAULT_LABORFORCE) ->
+      L223.LaborForceFillout_FERC
+
+
+    # PART 3: THE STATES
+    # All tables for which processing is identical are done by a function.
+    # This applies to the supplysectors, subsectors, and stub tech characteristics of the states.
+    process_USA_to_states <- function(data){
+      data_new <- data %>%
+        filter(region == "USA") %>%
+        write_to_all_states(names(data))
+
+      if("subsector" %in% names(data_new))
+        data_new <- data_new %>%
+          filter(!paste(region, subsector) %in% geo_states_noresource)
+
+      # Re-set markets from USA to regional markets, if called for in the GCAM-USA assumptions
+      if(gcamusa_USE_REGIONAL_FUEL_MARKETS & "market.name" %in% names(data_new))
+        data_new <- data_new %>%
+          left_join_error_no_match(select(states_subregions,state, grid_region), by = c("region" = "state")) %>%
+          mutate(market.name = replace(market.name, minicam.energy.input %in% gcamusa_REGIONAL_FUEL_MARKETS,
+                                       grid_region[minicam.energy.input %in% gcamusa_REGIONAL_FUEL_MARKETS])) %>%
+          select(-grid_region)
+
+      data_new
+    }
+
+    process_USA_to_states(L223.Supplysector_elec) -> L223.Supplysector_elec_USA
+    process_USA_to_states(L223.ElecReserve) -> L223.ElecReserve_USA
+    process_USA_to_states(L223.SubsectorLogit_elec) -> L223.SubsectorLogit_elec_USA
+    process_USA_to_states(L223.SubsectorShrwtFllt_elec) -> L223.SubsectorShrwtFllt_elec_USA
+    process_USA_to_states(L223.SubsectorShrwt_nuc) -> L223.SubsectorShrwt_nuc_USA
+    process_USA_to_states(L223.SubsectorShrwt_renew) -> L223.SubsectorShrwt_renew_USA
+    process_USA_to_states(L223.SubsectorInterp_elec) -> L223.SubsectorInterp_elec_USA
+    process_USA_to_states(L223.SubsectorInterpTo_elec) -> L223.SubsectorInterpTo_elec_USA
+    process_USA_to_states(L223.StubTech_elec) -> L223.StubTech_elec_USA
+    process_USA_to_states(L223.StubTechEff_elec) -> L223.StubTechEff_elec_USA
+    process_USA_to_states(L223.StubTechCapFactor_elec) -> L223.StubTechCapFactor_elec_USA
+
+    # NOTE: Modifying the shareweight path for nuclear to include state preferences
+    L1231.out_EJ_state_elec_F_tech %>%
+      filter(year == max(HISTORICAL_YEARS)) %>%
+      group_by(state) %>%
+      summarise(elec = sum(value)) %>%
+      ungroup ->
+      L223.out_EJ_state_elec
+
+    L1231.out_EJ_state_elec_F_tech %>%
+      filter(fuel == "nuclear", year == max(HISTORICAL_YEARS)) %>%
+      left_join_error_no_match(L223.out_EJ_state_elec, by = "state") %>%
+      mutate(share = value / elec,
+             avg.share = sum(value) / sum(elec),
+             pref = share / avg.share) %>%
+      select(state, pref) %>%
+      # Just set some bounds on the share weight multiplier
+      mutate(share.weight.mult = pref,
+             share.weight.mult = replace(share.weight.mult, share.weight.mult < 0.1, 0.1),
+             share.weight.mult = replace(share.weight.mult, share.weight.mult > 2, 2),
+             # Set VT to zero because they have already shut down their only nuclear plant
+             # which used to account for ~70% of generation
+             share.weight.mult = replace(share.weight.mult, state == "VT", 0)) ->
+      L223.state_nuc_pref
+
+    L223.SubsectorShrwt_nuc_USA %>%
+      left_join_error_no_match(L223.state_nuc_pref, by = c("region" = "state")) %>%
+      mutate(share.weight = round(share.weight * share.weight.mult, digits = energy.DIGITS_COST)) %>%
+      select(-pref, -share.weight.mult) ->
+      L223.SubsectorShrwt_nuc_USA
+
+    # Stub technology information for state electricity generation
+    # calibration
+    L1231.in_EJ_state_elec_F_tech %>%
+      filter(year %in% BASE_YEARS) %>%
+      mutate(calibrated.value = round(value, digits = energy.DIGITS_CALOUTPUT),
+             region = state) %>%
+      left_join_error_no_match(select(calibrated_techs, -minicam.energy.input, -secondary.output),
+                               by = c("sector", "fuel", "technology")) %>%
+      mutate(stub.technology = technology) %>%
+      filter(calibration == "input") ->
+      L223.in_EJ_state_elec_F_tech
+
+    # NOTE: Fixed output is assumed to apply in all historical years, regardless of final calibration year
+    L1231.out_EJ_state_elec_F_tech %>%
+      filter(year %in% MODEL_YEARS, year %in% HISTORICAL_YEARS) %>%
+      mutate(calOutputValue = round(value, digits = energy.DIGITS_CALOUTPUT),
+             region = state) %>%
+      left_join_error_no_match(select(calibrated_techs, -minicam.energy.input, -secondary.output),
+                               by = c("sector", "fuel", "technology")) %>%
+      mutate(stub.technology = technology) ->
+      L223.out_EJ_state_elec_F_tech
+    L223.out_EJ_state_elec_F_tech %>%
+      filter(calibration == "fixed output") ->
+      L223.fixout_EJ_state_elec_F_tech
+    L223.out_EJ_state_elec_F_tech %>%
+      filter(calibration != "fixed output") ->
+      L223.calout_EJ_state_elec_F_tech
+
+    # L223.StubTechFixOut_elec_USA: fixed output of electricity generation technologies
+    L223.fixout_EJ_state_elec_F_tech %>%
+      select(one_of(LEVEL2_DATA_NAMES[["StubTechYr"]]), calOutputValue) %>%
+      mutate(fixedOutput = round(calOutputValue, digits = energy.DIGITS_CALOUTPUT),
+             share.weight.year = year,
+             subs.share.weight = 0,
+             tech.share.weight = 0) %>%
+      select(-calOutputValue) ->
+      L223.StubTechFixOut_elec_USA
+
+    # Adding in future hydropower generation here
+    # L223.StubTechFixOut_hydro_USA: fixed output of future hydropower
+    # NOTE: This just holds it constant for now;
+    # at some point, should downscale of the (almost completely flat) nation-level projection
+    L223.StubTechFixOut_elec_USA %>%
+      filter(grepl("hydro", stub.technology), year == max(HISTORICAL_YEARS)) %>%
+      repeat_add_columns(tibble(year = FUTURE_YEARS)) ->
+      L223.StubTechFixOut_hydro_USA
+
+    # L223.StubTechProd_elec_USA: calibrated output of electricity generation technologies
+    L223.calout_EJ_state_elec_F_tech %>%
+      select(one_of(LEVEL2_DATA_NAMES[["StubTechYr"]]), calOutputValue) %>%
+      mutate(share.weight.year = year) %>%
+      # set_subsector_shrwt(value.name="calOutputValue") %>%
+      mutate(share.weight = ifelse(calOutputValue > 0, 1, 0)) %>%
+      filter(!paste(region, subsector) %in% geo_states_noresource) ->
+      L223.StubTechProd_elec_USA
+
+    # L223.StubTechMarket_elec_USA: market names of inputs to state electricity sectors
+    L223.StubTech_elec_USA %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      left_join(unique(select(A23.globaltech_eff, supplysector, subsector, technology, minicam.energy.input)),
+                               by = c("supplysector", "subsector", "stub.technology" = "technology")) %>%
+      # Remove NA rows for hydro
+      na.omit %>%
+      mutate(market.name = "USA",
+             market.name = replace(market.name,
+                                   minicam.energy.input %in% c(gcamusa_STATE_RENEWABLE_RESOURCES, gcamusa_STATE_UNLIMITED_RESOURCES),
+                                   region[minicam.energy.input %in% c(gcamusa_STATE_RENEWABLE_RESOURCES, gcamusa_STATE_UNLIMITED_RESOURCES)])) %>%
+      filter(!paste(region, subsector) %in% geo_states_noresource) ->
+      L223.StubTechMarket_elec_USA
+
+    if(gcamusa_USE_REGIONAL_ELEC_MARKETS){
+      L223.StubTechMarket_elec_USA %>%
+        left_join_error_no_match(select(states_subregions, grid_region, state), by = c("region" = "state")) %>%
+        mutate(market.name = replace(market.name, minicam.energy.input %in% gcamusa_REGIONAL_FUEL_MARKETS,
+                                     grid_region[minicam.energy.input %in% gcamusa_REGIONAL_FUEL_MARKETS])) %>%
+        select(-grid_region) ->
+        L223.StubTechMarket_elec_USA
+    }
+
+    # L223.StubTechMarket_backup_USA: market names of backup inputs to state electricity sectors
+    L223.GlobalIntTechBackup_elec %>%
+      mutate(supplysector = sector.name, subsector = subsector.name) %>%
+      repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
+      mutate(market.name = "USA", stub.technology = technology) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["StubTechMarket"]])) ->
+      L223.StubTechMarket_backup_USA
+
+    # The backup electric market is only set here if regional electricity markets are not used (i.e. one national grid)
+    if(!gcamusa_USE_REGIONAL_ELEC_MARKETS){
+      # L223.StubTechElecMarket_backup_USA: market name of electricity sector for backup calculations
+      L223.StubTechMarket_backup_USA %>%
+        select(one_of(LEVEL2_DATA_NAMES[["StubTechYr"]])) %>%
+        mutate(electric.sector.market = "USA")
+    }
+
+    # L223.StubTechCapFactor_elec_wind_USA: capacity factors for wind electricity in the states
+    # Just use the subsector for matching - technologies include storage technologies as well
+    L114.CapacityFactor_wind_state %>%
+      left_join_error_no_match(select(calibrated_techs, sector, fuel, supplysector, subsector),
+                               by = c("sector", "fuel")) ->
+      L223.CapacityFactor_wind_state
+
+    L223.StubTechCapFactor_elec %>%
+      filter(region == "USA") %>%
+      semi_join(L223.CapacityFactor_wind_state, by = c("supplysector", "subsector")) %>%
+      select(-region) %>%
+      repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
+      left_join_error_no_match(L223.CapacityFactor_wind_state,
+                               by = c("region" = "state", "supplysector", "subsector")) %>%
+      mutate(capacity.factor.capital = round(capacity.factor, digits = energy.DIGITS_CAPACITY_FACTOR),
+             capacity.factor.OM = capacity.factor.capital) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["StubTechCapFactor"]])) ->
+      L223.StubTechCapFactor_elec_wind_USA
+
+    # L223.StubTechCapFactor_elec_solar_USA: capacity factors by state and solar electric technology
+    L119.CapFacScaler_PV_state %>%
+      bind_rows(L119.CapFacScaler_CSP_state) %>%
+      left_join_error_no_match(select(calibrated_techs, sector, fuel, supplysector, subsector, technology),
+                               by = c("sector", "fuel")) ->
+      L223.CapFacScaler_solar_state
+
+    # Just use the subsector for matching - technologies include storage technologies as well
+    L223.StubTechCapFactor_elec %>%
+      filter(region == "USA") %>%
+      semi_join(L223.CapFacScaler_solar_state, by = c("supplysector", "subsector")) %>%
+      select(-region) %>%
+      repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
+      # For matching capacity factors to technologies, need to have a name that matches what's in the capacity factor table (which doesn't include storage techs)
+      mutate(match_tech = sub("_storage", "", stub.technology)) %>%
+      left_join_error_no_match(L223.CapFacScaler_solar_state,
+                               by = c("region" = "state", "supplysector", "subsector", "match_tech" = "technology")) %>%
+      mutate(capacity.factor.capital = round(capacity.factor.capital * scaler, digits = energy.DIGITS_COST),
+             capacity.factor.OM = capacity.factor.capital) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["StubTechCapFactor"]])) ->
+      L223.StubTechCapFactor_elec_solar_USA
 
     # ===================================================
 
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
+    L223.SectorNodeEquiv %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L223.DeleteSubsector_USAelec") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L223.DeleteSubsector_USAelec
-
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L223.SectorNodeEquiv") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_legacy_name("L223.SectorNodeEquiv") ->
       L223.SectorNodeEquiv
 
-    tibble() %>%
+    L223.TechNodeEquiv %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L223.TechNodeEquiv") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_legacy_name("L223.TechNodeEquiv") ->
       L223.TechNodeEquiv
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L223.PassThroughSector_elec") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L223.PassThroughSector_elec
+    if (exists("L223.DeleteSubsector_USAelec")){
+      L223.DeleteSubsector_USAelec %>%
+        add_title("descriptive title of data") %>%
+        add_units("units") %>%
+        add_comments("comments describing how data generated") %>%
+        add_comments("can be multiple lines") %>%
+        add_legacy_name("L223.DeleteSubsector_USAelec") %>%
+        add_precursors("temp-data-inject/L223.SubsectorLogit_elec") ->
+        L223.DeleteSubsector_USAelec
+    } else {
+      # If gcamusa_USE_REGIONAL_ELEC_MARKETS is TURE,
+      # indicating to resolve electricity demands at the level of the grid regions,
+      # then blank tibbles of the national level data are produced.
+      tibble(x = NA) %>%
+        add_title("Data not created") %>%
+        add_units("Unitless") %>%
+        add_comments("Data not created") %>%
+        add_legacy_name("L223.DeleteSubsector_USAelec") ->
+        L223.DeleteSubsector_USAelec
+    }
 
-    tibble() %>%
+    if (exists("L223.Supplysector_USAelec")){
+    L223.Supplysector_USAelec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L223.PassThroughTech_elec_FERC") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L223.PassThroughTech_elec_FERC
-
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("object") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      object
-
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L223.Supplysector_USAelec") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_legacy_name("L223.Supplysector_USAelec") ->
       L223.Supplysector_USAelec
+    } else {
+      # If gcamusa_USE_REGIONAL_ELEC_MARKETS is TURE,
+      # indicating to resolve electricity demands at the level of the grid regions,
+      # then blank tibbles of the national level data are produced.
+      tibble(x = NA) %>%
+        add_title("Data not created") %>%
+        add_units("Unitless") %>%
+        add_comments("Data not created") %>%
+        add_legacy_name("L223.Supplysector_USAelec") ->
+        L223.Supplysector_USAelec
+    }
 
-    tibble() %>%
+    if (exists("L223.SubsectorShrwtFllt_USAelec")){
+    L223.SubsectorShrwtFllt_USAelec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.SubsectorShrwtFllt_USAelec") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("gcam-usa/states_subregions") ->
       L223.SubsectorShrwtFllt_USAelec
+    } else {
+      # If gcamusa_USE_REGIONAL_ELEC_MARKETS is TURE,
+      # indicating to resolve electricity demands at the level of the grid regions,
+      # then blank tibbles of the national level data are produced.
+      tibble(x = NA) %>%
+        add_title("Data not created") %>%
+        add_units("Unitless") %>%
+        add_comments("Data not created") %>%
+        add_legacy_name("L223.SubsectorShrwtFllt_USAelec") ->
+        L223.SubsectorShrwtFllt_USAelec
+    }
 
-    tibble() %>%
+    if (exists("L223.SubsectorInterp_USAelec")){
+    L223.SubsectorInterp_USAelec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.SubsectorInterp_USAelec") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      same_precursors_as("L223.SubsectorShrwtFllt_USAelec") ->
       L223.SubsectorInterp_USAelec
+    } else {
+      # If gcamusa_USE_REGIONAL_ELEC_MARKETS is TURE,
+      # indicating to resolve electricity demands at the level of the grid regions,
+      # then blank tibbles of the national level data are produced.
+      tibble(x = NA) %>%
+        add_title("Data not created") %>%
+        add_units("Unitless") %>%
+        add_comments("Data not created") %>%
+        add_legacy_name("L223.SubsectorInterp_USAelec") ->
+        L223.SubsectorInterp_USAelec
+    }
 
-    tibble() %>%
+    if (exists("L223.SubsectorLogit_USAelec")){
+    L223.SubsectorLogit_USAelec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.SubsectorLogit_USAelec") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      same_precursors_as("L223.SubsectorShrwtFllt_USAelec") ->
       L223.SubsectorLogit_USAelec
+    } else {
+      # If gcamusa_USE_REGIONAL_ELEC_MARKETS is TURE,
+      # indicating to resolve electricity demands at the level of the grid regions,
+      # then blank tibbles of the national level data are produced.
+      tibble(x = NA) %>%
+        add_title("Data not created") %>%
+        add_units("Unitless") %>%
+        add_comments("Data not created") %>%
+        add_legacy_name("L223.SubsectorLogit_USAelec") ->
+        L223.SubsectorLogit_USAelec
+    }
 
-    tibble() %>%
+    if (exists("L223.TechShrwt_USAelec")){
+    L223.TechShrwt_USAelec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.TechShrwt_USAelec") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      same_precursors_as("L223.SubsectorShrwtFllt_USAelec") ->
       L223.TechShrwt_USAelec
+    } else {
+      # If gcamusa_USE_REGIONAL_ELEC_MARKETS is TURE,
+      # indicating to resolve electricity demands at the level of the grid regions,
+      # then blank tibbles of the national level data are produced.
+      tibble(x = NA) %>%
+        add_title("Data not created") %>%
+        add_units("Unitless") %>%
+        add_comments("Data not created") %>%
+        add_legacy_name("L223.TechShrwt_USAelec") ->
+        L223.TechShrwt_USAelec
+    }
 
-    tibble() %>%
+    if (exists("L223.TechCoef_USAelec")){
+    L223.TechCoef_USAelec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.TechCoef_USAelec") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      same_precursors_as("L223.TechShrwt_USAelec") ->
       L223.TechCoef_USAelec
+    } else {
+      # If gcamusa_USE_REGIONAL_ELEC_MARKETS is TURE,
+      # indicating to resolve electricity demands at the level of the grid regions,
+      # then blank tibbles of the national level data are produced.
+      tibble(x = NA) %>%
+        add_title("Data not created") %>%
+        add_units("Unitless") %>%
+        add_comments("Data not created") %>%
+        add_legacy_name("L223.TechCoef_USAelec") ->
+        L223.TechCoef_USAelec
+    }
 
-    tibble() %>%
+    if (exists("L223.Production_USAelec")){
+    L223.Production_USAelec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.Production_USAelec") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L1232.out_EJ_sR_elec",
+                     "energy/calibrated_techs") ->
       L223.Production_USAelec
+    } else {
+      # If gcamusa_USE_REGIONAL_ELEC_MARKETS is TURE,
+      # indicating to resolve electricity demands at the level of the grid regions,
+      # then blank tibbles of the national level data are produced.
+      tibble(x = NA) %>%
+        add_title("Data not created") %>%
+        add_units("Unitless") %>%
+        add_comments("Data not created") %>%
+        add_legacy_name("L223.Production_USAelec") ->
+        L223.Production_USAelec
+    }
 
-    tibble() %>%
+    L223.Supplysector_elec_FERC %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.Supplysector_elec_FERC") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("gcam-usa/states_subregions") ->
       L223.Supplysector_elec_FERC
 
-    tibble() %>%
+    L223.SubsectorShrwtFllt_elec_FERC %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.SubsectorShrwtFllt_elec_FERC") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("gcam-usa/states_subregions") ->
       L223.SubsectorShrwtFllt_elec_FERC
 
-    tibble() %>%
+    L223.SubsectorInterp_elec_FERC %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.SubsectorInterp_elec_FERC") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      same_precursors_as("L223.SubsectorShrwtFllt_elec_FERC") ->
       L223.SubsectorInterp_elec_FERC
 
-    tibble() %>%
+    L223.SubsectorLogit_elec_FERC %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.SubsectorLogit_elec_FERC") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      same_precursors_as("L223.SubsectorShrwtFllt_elec_FERC") ->
       L223.SubsectorLogit_elec_FERC
 
-    tibble() %>%
+    L223.TechShrwt_elec_FERC %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.TechShrwt_elec_FERC") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      same_precursors_as("L223.SubsectorShrwtFllt_elec_FERC") ->
       L223.TechShrwt_elec_FERC
 
-    tibble() %>%
+    L223.TechCoef_elec_FERC %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.TechCoef_elec_FERC") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      same_precursors_as("L223.TechShrwt_elec_FERC") ->
       L223.TechCoef_elec_FERC
 
-    tibble() %>%
+    L223.PassThroughSector_elec %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L223.PassThroughSector_elec") %>%
+      add_precursors("gcam-usa/states_subregions") ->
+      L223.PassThroughSector_elec
+
+    L223.PassThroughTech_elec_FERC %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L223.PassThroughTech_elec_FERC") %>%
+      same_precursors_as("L223.TechShrwt_elec_FERC") ->
+      L223.PassThroughTech_elec_FERC
+
+    L223.Production_elec_FERC %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.Production_elec_FERC") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L1231.out_EJ_state_elec_F_tech",
+                     "energy/calibrated_techs") ->
       L223.Production_elec_FERC
 
-    tibble() %>%
+    L223.InterestRate_FERC %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.InterestRate_FERC") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("gcam-usa/states_subregions") ->
       L223.InterestRate_FERC
 
-    tibble() %>%
+    L223.Pop_FERC %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.Pop_FERC") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("gcam-usa/states_subregions") ->
       L223.Pop_FERC
 
-    tibble() %>%
+    L223.BaseGDP_FERC %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.BaseGDP_FERC") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("gcam-usa/states_subregions") ->
       L223.BaseGDP_FERC
 
-    tibble() %>%
+    L223.LaborForceFillout_FERC %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.LaborForceFillout_FERC") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("gcam-usa/states_subregions") ->
       L223.LaborForceFillout_FERC
 
-    tibble() %>%
+    L223.Supplysector_elec_USA %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L223.Supplysector_elec_USA") %>%
+      add_precursors("L223.Supplysector_elec") ->
+      L223.Supplysector_elec_USA
+
+    L223.ElecReserve_USA %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L223.ElecReserve_USA") %>%
+      add_precursors("L223.ElecReserve") ->
+      L223.ElecReserve_USA
+
+    L223.SubsectorLogit_elec_USA %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L223.SubsectorLogit_elec_USA") %>%
+      add_precursors("L223.SubsectorLogit_elec") ->
+      L223.SubsectorLogit_elec_USA
+
+    L223.SubsectorShrwtFllt_elec_USA %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L223.SubsectorShrwtFllt_elec_USA") %>%
+      add_precursors("L223.SubsectorShrwtFllt_elec") ->
+      L223.SubsectorShrwtFllt_elec_USA
+
+    L223.SubsectorShrwt_nuc_USA %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.SubsectorShrwt_nuc_USA") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L223.SubsectorShrwt_nuc",
+                     "L1231.out_EJ_state_elec_F_tech") ->
       L223.SubsectorShrwt_nuc_USA
 
-    tibble() %>%
+    L223.SubsectorShrwt_renew_USA %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L223.SubsectorShrwt_renew_USA") %>%
+      add_precursors("L223.SubsectorShrwt_renew") ->
+      L223.SubsectorShrwt_renew_USA
+
+    L223.SubsectorInterp_elec_USA %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L223.SubsectorInterp_elec_USA") %>%
+      add_precursors("L223.SubsectorInterp_elec") ->
+      L223.SubsectorInterp_elec_USA
+
+    L223.SubsectorInterpTo_elec_USA %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L223.SubsectorInterpTo_elec_USA") %>%
+      add_precursors("L223.SubsectorInterpTo_elec") ->
+      L223.SubsectorInterpTo_elec_USA
+
+    L223.StubTech_elec_USA %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L223.StubTech_elec_USA") %>%
+      add_precursors("L223.StubTech_elec") ->
+      L223.StubTech_elec_USA
+
+    L223.StubTechEff_elec_USA %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L223.StubTechEff_elec_USA") %>%
+      add_precursors("L223.StubTechEff_elec") ->
+      L223.StubTechEff_elec_USA
+
+    L223.StubTechCapFactor_elec_USA %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L223.StubTechCapFactor_elec_USA") %>%
+      add_precursors("L223.StubTechCapFactor_elec") ->
+      L223.StubTechCapFactor_elec_USA
+
+    L223.StubTechFixOut_elec_USA %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.StubTechFixOut_elec_USA") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L1231.out_EJ_state_elec_F_tech",
+                     "energy/calibrated_techs") ->
       L223.StubTechFixOut_elec_USA
 
-    tibble() %>%
+    L223.StubTechFixOut_hydro_USA %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.StubTechFixOut_hydro_USA") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      same_precursors_as("L223.StubTechFixOut_elec_USA") ->
       L223.StubTechFixOut_hydro_USA
 
-    tibble() %>%
+    L223.StubTechProd_elec_USA %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.StubTechProd_elec_USA") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L1231.out_EJ_state_elec_F_tech",
+                     "energy/calibrated_techs") ->
       L223.StubTechProd_elec_USA
 
-    tibble() %>%
+    L223.StubTechMarket_elec_USA %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.StubTechMarket_elec_USA") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      same_precursors_as("L223.StubTech_elec_USA") %>%
+      add_precursors("A23.globaltech_eff") ->
       L223.StubTechMarket_elec_USA
 
-    tibble() %>%
+    L223.StubTechMarket_backup_USA %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.StubTechMarket_backup_USA") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L223.GlobalIntTechBackup_elec",
+                     "gcam-usa/states_subregions") ->
       L223.StubTechMarket_backup_USA
 
     tibble() %>%
@@ -448,42 +1023,73 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.StubTechElecMarket_backup_USA") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      same_precursors_as("L223.StubTechMarket_backup_USA") ->
       L223.StubTechElecMarket_backup_USA
 
-    tibble() %>%
+    L223.StubTechCapFactor_elec_wind_USA %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.StubTechCapFactor_elec_wind_USA") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L114.CapacityFactor_wind_state",
+                     "energy/calibrated_techs",
+                     "gcam-usa/states_subregions") ->
       L223.StubTechCapFactor_elec_wind_USA
 
-    tibble() %>%
+    L223.StubTechCapFactor_elec_solar_USA %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.StubTechCapFactor_elec_solar_USA") %>%
-      # add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L119.CapFacScaler_PV_state",
+                     "L119.CapFacScaler_CSP_state",
+                     "energy/calibrated_techs",
+                     "gcam-usa/states_subregions") ->
       L223.StubTechCapFactor_elec_solar_USA
 
-    return_data(L223.DeleteSubsector_USAelec, L223.SectorNodeEquiv, L223.TechNodeEquiv, L223.PassThroughSector_elec,
-                L223.PassThroughTech_elec_FERC, object, L223.Supplysector_USAelec, L223.SubsectorShrwtFllt_USAelec,
-                L223.SubsectorInterp_USAelec, L223.SubsectorLogit_USAelec, L223.TechShrwt_USAelec, L223.TechCoef_USAelec,
-                L223.Production_USAelec, L223.Supplysector_elec_FERC, L223.SubsectorShrwtFllt_elec_FERC,
-                L223.SubsectorInterp_elec_FERC, L223.SubsectorLogit_elec_FERC, L223.TechShrwt_elec_FERC,
-                L223.TechCoef_elec_FERC, L223.Production_elec_FERC, L223.InterestRate_FERC, L223.Pop_FERC,
-                L223.BaseGDP_FERC, L223.LaborForceFillout_FERC, L223.SubsectorShrwt_nuc_USA, L223.StubTechFixOut_elec_USA,
-                L223.StubTechFixOut_hydro_USA, L223.StubTechProd_elec_USA, L223.StubTechMarket_elec_USA,
-                L223.StubTechMarket_backup_USA, L223.StubTechElecMarket_backup_USA, L223.StubTechCapFactor_elec_wind_USA,
+    return_data(L223.SectorNodeEquiv,
+                L223.TechNodeEquiv,
+                L223.DeleteSubsector_USAelec,
+                L223.Supplysector_USAelec,
+                L223.SubsectorShrwtFllt_USAelec,
+                L223.SubsectorInterp_USAelec,
+                L223.SubsectorLogit_USAelec,
+                L223.TechShrwt_USAelec,
+                L223.TechCoef_USAelec,
+                L223.Production_USAelec,
+                L223.PassThroughSector_elec,
+                L223.PassThroughTech_elec_FERC,
+                L223.Supplysector_elec_FERC,
+                L223.SubsectorShrwtFllt_elec_FERC,
+                L223.SubsectorInterp_elec_FERC,
+                L223.SubsectorLogit_elec_FERC,
+                L223.TechShrwt_elec_FERC,
+                L223.TechCoef_elec_FERC,
+                L223.Production_elec_FERC,
+                L223.InterestRate_FERC,
+                L223.Pop_FERC,
+                L223.BaseGDP_FERC,
+                L223.LaborForceFillout_FERC,
+                L223.Supplysector_elec_USA,
+                L223.ElecReserve_USA,
+                L223.SubsectorLogit_elec_USA,
+                L223.SubsectorShrwtFllt_elec_USA,
+                L223.SubsectorShrwt_nuc_USA,
+                L223.SubsectorShrwt_renew_USA,
+                L223.SubsectorInterp_elec_USA,
+                L223.SubsectorInterpTo_elec_USA,
+                L223.StubTech_elec_USA,
+                L223.StubTechEff_elec_USA,
+                L223.StubTechCapFactor_elec_USA,
+                L223.StubTechFixOut_elec_USA,
+                L223.StubTechFixOut_hydro_USA,
+                L223.StubTechProd_elec_USA,
+                L223.StubTechMarket_elec_USA,
+                L223.StubTechMarket_backup_USA,
+                L223.StubTechElecMarket_backup_USA,
+                L223.StubTechCapFactor_elec_wind_USA,
                 L223.StubTechCapFactor_elec_solar_USA)
   } else {
     stop("Unknown command")

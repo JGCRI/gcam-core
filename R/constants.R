@@ -264,6 +264,14 @@ energy.DIGITS_COST <- 4
 energy.DIGITS_REMOVE.FRACTION <- 2
 energy.CO2.STORAGE.MARKET <- "carbon-storage"
 
+# Digits for rounding into XMLs
+energy.DIGITS_CALOUTPUT <- 7
+energy.DIGITS_COEFFICIENT <- 7
+energy.DIGITS_COST <- 4
+energy.DIGITS_EFFICIENCY <- 3
+energy.DIGITS_SHRWT <- 4
+energy.DIGITS_CAPACITY_FACTOR <- 2
+
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
 
@@ -314,14 +322,6 @@ CONV_MILLION_M3_KM3 <- 1e-03
 CONV_M2_ACR <- 0.0002471058
 CONV_HA_M2 <- 1e4 # ha to m2
 CONV_BM2_M2 <- 1e9
-
-# Digits for rounding into XMLs
-energy.DIGITS_CALOUTPUT <- 7
-energy.DIGITS_COEFFICIENT <- 7
-energy.DIGITS_COST <- 4
-energy.DIGITS_EFFICIENCY <- 3
-energy.DIGITS_SHRWT <- 4
-
 
 
 # Driver constants ======================================================================
@@ -421,6 +421,32 @@ emissions.GHG_NAMES            <- c("CH4", "N2O")
 emissions.USE_GV_MAC           <- 1
 emissions.NONGHG_GASES         <- c("SO2", "NOx", "CO", "NMVOC", "NH3")
 emissions.EDGAR_YEARS_PLUS     <- 1970:2008
+
+
+# GCAM-USA constants ======================================================================
+
+gcamusa.STATES <- c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA",
+                    "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR",
+                    "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY")
+
+# logit exponent regulating competition between different grid regions in USA electricity market (single market approach only)
+gcamusa_GRID_REGION_LOGIT <- -6
+gcamusa_GRID_REGION_LOGIT_TYPE <- "relative-cost-logit"
+
+# indicate whether to resolve electricity demands at the level of the nation or the grid regions
+gcamusa_ELECT_TD_SECTORS <- c("elect_td_bld", "elect_td_ind", "elect_td_trn")
+gcamusa_USE_REGIONAL_ELEC_MARKETS <- TRUE
+
+# fuels whose markets will be modeled at the level of the FERC regions, with prices calibrated
+gcamusa_REGIONAL_FUEL_MARKETS <- c("regional coal", "delivered coal", "wholesale gas", "delivered gas",
+                                   "refined liquids industrial", "refined liquids enduse")
+# indicate whether to use regional as opposed to national fuel markets (FALSE = national markets)
+gcamusa_USE_REGIONAL_FUEL_MARKETS  <- TRUE
+
+# Resources that will be modeled at the state level
+gcamusa_STATE_RENEWABLE_RESOURCES <- c("distributed_solar", "geothermal", "onshore wind resource")
+gcamusa_STATE_UNLIMITED_RESOURCES <- c("global solar resource", "limestone")
+
 # Uncomment these lines to run under 'timeshift' conditions
 # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
 # FUTURE_YEARS <- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)
