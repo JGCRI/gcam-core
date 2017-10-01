@@ -246,8 +246,7 @@ set_subsector_shrwt <- function(data) {
 
   data_new <- data %>%
     left_join_error_no_match(data_aggregated, by = c("region", "supplysector", "subsector", "year")) %>%
-    mutate(subs.share.weight = 0,
-           subs.share.weight = replace(subs.share.weight, calOutputValue_agg > 0, 1)) %>%
+    mutate(subs.share.weight = if_else(calOutputValue_agg > 0, 1, 0)) %>%
     select(-calOutputValue_agg)
 
   return(data_new)

@@ -430,22 +430,22 @@ gcamusa.STATES <- c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", 
                     "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY")
 
 # logit exponent regulating competition between different grid regions in USA electricity market (single market approach only)
-gcamusa_GRID_REGION_LOGIT <- -6
-gcamusa_GRID_REGION_LOGIT_TYPE <- "relative-cost-logit"
+gcamusa.GRID_REGION_LOGIT <- -6
+gcamusa.GRID_REGION_LOGIT_TYPE <- "relative-cost-logit"
 
 # indicate whether to resolve electricity demands at the level of the nation or the grid regions
-gcamusa_ELECT_TD_SECTORS <- c("elect_td_bld", "elect_td_ind", "elect_td_trn")
-gcamusa_USE_REGIONAL_ELEC_MARKETS <- TRUE
+gcamusa.ELECT_TD_SECTORS <- c("elect_td_bld", "elect_td_ind", "elect_td_trn")
+gcamusa.USE_REGIONAL_ELEC_MARKETS <- TRUE
 
 # fuels whose markets will be modeled at the level of the FERC regions, with prices calibrated
-gcamusa_REGIONAL_FUEL_MARKETS <- c("regional coal", "delivered coal", "wholesale gas", "delivered gas",
+gcamusa.REGIONAL_FUEL_MARKETS <- c("regional coal", "delivered coal", "wholesale gas", "delivered gas",
                                    "refined liquids industrial", "refined liquids enduse")
 # indicate whether to use regional as opposed to national fuel markets (FALSE = national markets)
-gcamusa_USE_REGIONAL_FUEL_MARKETS  <- TRUE
+gcamusa.USE_REGIONAL_FUEL_MARKETS  <- TRUE
 
 # Resources that will be modeled at the state level
-gcamusa_STATE_RENEWABLE_RESOURCES <- c("distributed_solar", "geothermal", "onshore wind resource")
-gcamusa_STATE_UNLIMITED_RESOURCES <- c("global solar resource", "limestone")
+gcamusa.STATE_RENEWABLE_RESOURCES <- c("distributed_solar", "geothermal", "onshore wind resource")
+gcamusa.STATE_UNLIMITED_RESOURCES <- c("global solar resource", "limestone")
 
 # Uncomment these lines to run under 'timeshift' conditions
 # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010

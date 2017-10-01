@@ -7,7 +7,7 @@
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L223.SectorNodeEquiv}, \code{L223.TechNodeEquiv}, \code{L223.DeleteSubsector_USAelec}, \code{L223.Supplysector_USAelec}, \code{L223.SubsectorShrwtFllt_USAelec}, \code{L223.SubsectorInterp_USAelec}, \code{L223.SubsectorLogit_USAelec}, \code{L223.TechShrwt_USAelec}, \code{L223.TechCoef_USAelec}, \code{L223.Production_USAelec},
-#' \code{L223.PassThroughSector_elec}, \code{L223.PassThroughTech_elec_FERC}, \code{L223.Supplysector_elec_FERC}, \code{L223.SubsectorShrwtFllt_elec_FERC}, \code{L223.SubsectorInterp_elec_FERC}, \code{L223.SubsectorLogit_elec_FERC}, \code{L223.TechShrwt_elec_FERC}, \code{L223.TechCoef_elec_FERC}, \code{L223.Production_elec_FERC}, \code{L223.InterestRate_FERC}, \code{L223.Pop_FERC}, \code{L223.BaseGDP_FERC}, \code{L223.LaborForceFillout_FERC},
+#' \code{L223.PassthroughSector_elec_USA}, \code{L223.PassthroughTech_elec_FERC}, \code{L223.Supplysector_elec_FERC}, \code{L223.SubsectorShrwtFllt_elec_FERC}, \code{L223.SubsectorInterp_elec_FERC}, \code{L223.SubsectorLogit_elec_FERC}, \code{L223.TechShrwt_elec_FERC}, \code{L223.TechCoef_elec_FERC}, \code{L223.Production_elec_FERC}, \code{L223.InterestRate_FERC}, \code{L223.Pop_FERC}, \code{L223.BaseGDP_FERC}, \code{L223.LaborForceFillout_FERC},
 #' \code{L223.Supplysector_elec_USA}, \code{L223.ElecReserve_USA}, \code{L223.SubsectorLogit_elec_USA}, \code{L223.SubsectorShrwtFllt_elec_USA}, \code{L223.SubsectorShrwt_nuc_USA}, \code{L223.SubsectorShrwt_renew_USA}, \code{L223.SubsectorInterp_elec_USA}, \code{L223.SubsectorInterpTo_elec_USA}, \code{L223.StubTech_elec_USA}, \code{L223.StubTechEff_elec_USA}, \code{L223.StubTechCapFactor_elec_USA},
 #' \code{L223.StubTechFixOut_elec_USA}, \code{L223.StubTechFixOut_hydro_USA}, \code{L223.StubTechProd_elec_USA}, \code{L223.StubTechMarket_elec_USA}, \code{L223.StubTechMarket_backup_USA}, \code{L223.StubTechElecMarket_backup_USA}, \code{L223.StubTechCapFactor_elec_wind_USA}, \code{L223.StubTechCapFactor_elec_solar_USA}. The corresponding file in the
 #' original data system was \code{L223.electricity_USA.R} (gcam-usa level2).
@@ -40,8 +40,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
              FILE = "temp-data-inject/L223.GlobalIntTechBackup_elec",
              "L1231.in_EJ_state_elec_F_tech",
              "L1231.out_EJ_state_elec_F_tech",
-             "L1232.out_EJ_sR_elec",
-             "L126.out_EJ_state_td_elec"))
+             "L1232.out_EJ_sR_elec"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L223.SectorNodeEquiv",
              "L223.TechNodeEquiv",
@@ -53,8 +52,8 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
              "L223.TechShrwt_USAelec",
              "L223.TechCoef_USAelec",
              "L223.Production_USAelec",
-             "L223.PassThroughSector_elec",
-             "L223.PassThroughTech_elec_FERC",
+             "L223.PassthroughSector_elec_USA",
+             "L223.PassthroughTech_elec_FERC",
              "L223.Supplysector_elec_FERC",
              "L223.SubsectorShrwtFllt_elec_FERC",
              "L223.SubsectorInterp_elec_FERC",
@@ -93,15 +92,13 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
     NREL_us_re_technical_potential <- get_data(all_data, "gcam-usa/NREL_us_re_technical_potential")
-    A23.globaltech_eff <- get_data(all_data, "energy/A23.globaltech_eff") %>%
-      filter(!(subsector == "solar" & grepl("backup", minicam.energy.input)))
+    A23.globaltech_eff <- get_data(all_data, "energy/A23.globaltech_eff")
     L114.CapacityFactor_wind_state <- get_data(all_data, "temp-data-inject/L114.CapacityFactor_wind_state")
     L119.CapFacScaler_PV_state <- get_data(all_data, "L119.CapFacScaler_PV_state")
     L119.CapFacScaler_CSP_state <- get_data(all_data, "L119.CapFacScaler_CSP_state")
     L223.Supplysector_elec <- get_data(all_data, "temp-data-inject/L223.Supplysector_elec")
     L223.ElecReserve <- get_data(all_data, "temp-data-inject/L223.ElecReserve")
     L223.SubsectorLogit_elec <- get_data(all_data, "temp-data-inject/L223.SubsectorLogit_elec")
-    # L223.SubsectorShrwt_elec <- get_data(all_data, "temp-data-inject/L223.SubsectorShrwt_elec")
     L223.SubsectorShrwtFllt_elec <- get_data(all_data, "temp-data-inject/L223.SubsectorShrwtFllt_elec")
     L223.SubsectorShrwt_nuc <- get_data(all_data, "temp-data-inject/L223.SubsectorShrwt_nuc")
     L223.SubsectorShrwt_renew <- get_data(all_data, "temp-data-inject/L223.SubsectorShrwt_renew")
@@ -114,9 +111,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
     L1231.in_EJ_state_elec_F_tech <- get_data(all_data, "L1231.in_EJ_state_elec_F_tech")
     L1231.out_EJ_state_elec_F_tech <- get_data(all_data, "L1231.out_EJ_state_elec_F_tech")
     L1232.out_EJ_sR_elec <- get_data(all_data, "L1232.out_EJ_sR_elec")
-    L126.out_EJ_state_td_elec <- get_data(all_data, "L126.out_EJ_state_td_elec")
 
-    # ===================================================
     # Set up equivalent sector and technology tag names.
 
     # L223.SectorNodeEquiv: Sets up equivalent sector tag names to avoid having to partition input tables
@@ -128,6 +123,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
            X3 = "intermittent-technology", X4 = "pass-through-technology") ->
       L223.TechNodeEquiv
 
+    # create a vector of USA grid region names
     states_subregions %>%
       select(grid_region) %>%
       unique %>%
@@ -146,9 +142,9 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       unlist ->
       geo_states_noresource
 
-    # gcamusa_USE_REGIONAL_ELEC_MARKETS is TURE, indicating to resolve electricity demands at the level of the grid regions.
+    # gcamusa.USE_REGIONAL_ELEC_MARKETS is TURE, indicating to resolve electricity demands at the level of the grid regions.
     # The entire loop below produces outputs assoicated with resolving demand at the national level, and is currently disabled.
-    if(!gcamusa_USE_REGIONAL_ELEC_MARKETS){
+    if(!gcamusa.USE_REGIONAL_ELEC_MARKETS){
       # PART 1: THE USA REGION
       # Define the sector(s) that will be used in this code file. Can be one or multiple sectors
       # The subsectors of the existing USA electricity sector are deleted.
@@ -168,8 +164,8 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
              input.unit = "EJ",
              price.unit = "1975$/GJ",
              logit.year.fillout = min(BASE_YEARS),
-             logit.exponent = gcamusa_GRID_REGION_LOGIT,
-             logit.type = gcamusa_GRID_REGION_LOGIT_TYPE) %>%
+             logit.exponent = gcamusa.GRID_REGION_LOGIT,
+             logit.type = gcamusa.GRID_REGION_LOGIT_TYPE) %>%
         select(one_of(LEVEL2_DATA_NAMES[["Supplysector"]])) ->
         L223.Supplysector_USAelec
 
@@ -195,8 +191,8 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       L223.SubsectorShrwtFllt_USAelec %>%
         select(one_of(LEVEL2_DATA_NAMES[["Subsector"]])) %>%
         mutate(logit.year.fillout = min(BASE_YEARS),
-               logit.exponent = gcamusa_GRID_REGION_LOGIT,
-               logit.type = gcamusa_GRID_REGION_LOGIT_TYPE) %>%
+               logit.exponent = gcamusa.GRID_REGION_LOGIT,
+               logit.type = gcamusa.GRID_REGION_LOGIT_TYPE) %>%
         select(one_of(LEVEL2_DATA_NAMES[["SubsectorLogit"]])) ->
         L223.SubsectorLogit_USAelec
 
@@ -229,7 +225,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
         filter(year %in% BASE_YEARS) %>%
         left_join_error_no_match(L223.out_EJ_sR_elec, by = c("supplysector", "subsector", "year")) %>%
         mutate(share.weight.year = year,
-               tech.share.weight = ifelse(calOutputValue == 0, 0, 1)) %>%
+               tech.share.weight = if_else(calOutputValue == 0, 0, 1)) %>%
         set_subsector_shrwt() %>%
         select(one_of(LEVEL2_DATA_NAMES[["Production"]]))->
         L223.Production_USAelec
@@ -246,8 +242,8 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
            input.unit = "EJ",
            price.unit = "1975$/GJ",
            logit.year.fillout = min(BASE_YEARS),
-           logit.exponent = gcamusa_GRID_REGION_LOGIT,
-           logit.type = gcamusa_GRID_REGION_LOGIT_TYPE) %>%
+           logit.exponent = gcamusa.GRID_REGION_LOGIT,
+           logit.type = gcamusa.GRID_REGION_LOGIT_TYPE) %>%
       select(one_of(LEVEL2_DATA_NAMES[["Supplysector"]])) ->
       L223.Supplysector_elec_FERC
 
@@ -275,8 +271,8 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
     L223.SubsectorShrwtFllt_elec_FERC %>%
       select(one_of(LEVEL2_DATA_NAMES[["Subsector"]])) %>%
       mutate(logit.year.fillout = min(BASE_YEARS),
-             logit.exponent = gcamusa_GRID_REGION_LOGIT,
-             logit.type = gcamusa_GRID_REGION_LOGIT_TYPE) %>%
+             logit.exponent = gcamusa.GRID_REGION_LOGIT,
+             logit.type = gcamusa.GRID_REGION_LOGIT_TYPE) %>%
       select(one_of(LEVEL2_DATA_NAMES[["SubsectorLogit"]])) ->
       L223.SubsectorLogit_elec_FERC
 
@@ -296,24 +292,24 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
              market.name = substr(technology, 1, nchar(subsector) - nchar(supplysector) - 1)) ->
       L223.TechCoef_elec_FERC
 
-    # Create a L223.PassThroughSector_elec dataframe (to be converted into a csv table later).
+    # Create a L223.PassthroughSector_elec_USA dataframe (to be converted into a csv table later).
     # The marginal revenue sector is the region's electricity sector
     # whereas the marginal revenue market is the grid region.
     states_subregions %>%
-      select(state, grid_region) %>%
+      select(region = state, grid_region) %>%
       mutate(passthrough.sector="electricity",
              marginal.revenue.sector = "electricity",
              marginal.revenue.market = grid_region) %>%
       select(-grid_region) ->
-      L223.PassThroughSector_elec
+      L223.PassthroughSector_elec_USA
 
-    # Create a L223.PassThroughTech_elec_FERC dataframe (to be converted into a csv table later).
+    # Create a L223.PassthroughTech_elec_FERC dataframe (to be converted into a csv table later).
     # This one should contain region, supplysector, subsector, technology for the grid regions
     # to which electricity produced in states is passed through.
     # Note that the "technology" in this data-frame will be called "passthrough technology"
     L223.TechShrwt_elec_FERC %>%
       select(region, supplysector, subsector, technology) ->
-      L223.PassThroughTech_elec_FERC
+      L223.PassthroughTech_elec_FERC
 
     # L223.Production_elec_FERC: calibrated electricity production in USA (consuming output of grid subregions)
     L1231.out_EJ_state_elec_F_tech %>%
@@ -332,7 +328,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       filter(year %in% BASE_YEARS) %>%
       left_join_error_no_match(L223.out_EJ_state_elec, by = c("supplysector", "subsector", "year")) %>%
       mutate(share.weight.year = year,
-             tech.share.weight = ifelse(calOutputValue == 0, 0, 1)) %>%
+             tech.share.weight = if_else(calOutputValue == 0, 0, 1)) %>%
       set_subsector_shrwt() %>%
       select(one_of(LEVEL2_DATA_NAMES[["Production"]])) ->
       L223.Production_elec_FERC
@@ -375,11 +371,11 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
           filter(!paste(region, subsector) %in% geo_states_noresource)
 
       # Re-set markets from USA to regional markets, if called for in the GCAM-USA assumptions
-      if(gcamusa_USE_REGIONAL_FUEL_MARKETS & "market.name" %in% names(data_new))
+      if(gcamusa.USE_REGIONAL_FUEL_MARKETS & "market.name" %in% names(data_new))
         data_new <- data_new %>%
           left_join_error_no_match(select(states_subregions,state, grid_region), by = c("region" = "state")) %>%
-          mutate(market.name = replace(market.name, minicam.energy.input %in% gcamusa_REGIONAL_FUEL_MARKETS,
-                                       grid_region[minicam.energy.input %in% gcamusa_REGIONAL_FUEL_MARKETS])) %>%
+          mutate(market.name = replace(market.name, minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS,
+                                       grid_region[minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS])) %>%
           select(-grid_region)
 
       data_new
@@ -471,6 +467,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
     # at some point, should downscale of the (almost completely flat) nation-level projection
     L223.StubTechFixOut_elec_USA %>%
       filter(grepl("hydro", stub.technology), year == max(HISTORICAL_YEARS)) %>%
+      select(-year) %>%
       repeat_add_columns(tibble(year = FUTURE_YEARS)) ->
       L223.StubTechFixOut_hydro_USA
 
@@ -478,30 +475,30 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
     L223.calout_EJ_state_elec_F_tech %>%
       select(one_of(LEVEL2_DATA_NAMES[["StubTechYr"]]), calOutputValue) %>%
       mutate(share.weight.year = year) %>%
-      # set_subsector_shrwt(value.name="calOutputValue") %>%
-      mutate(share.weight = ifelse(calOutputValue > 0, 1, 0)) %>%
+      set_subsector_shrwt %>%
+      mutate(share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
       filter(!paste(region, subsector) %in% geo_states_noresource) ->
       L223.StubTechProd_elec_USA
 
     # L223.StubTechMarket_elec_USA: market names of inputs to state electricity sectors
     L223.StubTech_elec_USA %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
-      left_join(unique(select(A23.globaltech_eff, supplysector, subsector, technology, minicam.energy.input)),
-                               by = c("supplysector", "subsector", "stub.technology" = "technology")) %>%
+      left_join_keep_first_only(select(A23.globaltech_eff, supplysector, subsector, technology, minicam.energy.input),
+                                by = c("supplysector", "subsector", "stub.technology" = "technology")) %>%
       # Remove NA rows for hydro
       na.omit %>%
       mutate(market.name = "USA",
              market.name = replace(market.name,
-                                   minicam.energy.input %in% c(gcamusa_STATE_RENEWABLE_RESOURCES, gcamusa_STATE_UNLIMITED_RESOURCES),
-                                   region[minicam.energy.input %in% c(gcamusa_STATE_RENEWABLE_RESOURCES, gcamusa_STATE_UNLIMITED_RESOURCES)])) %>%
+                                   minicam.energy.input %in% c(gcamusa.STATE_RENEWABLE_RESOURCES, gcamusa.STATE_UNLIMITED_RESOURCES),
+                                   region[minicam.energy.input %in% c(gcamusa.STATE_RENEWABLE_RESOURCES, gcamusa.STATE_UNLIMITED_RESOURCES)])) %>%
       filter(!paste(region, subsector) %in% geo_states_noresource) ->
       L223.StubTechMarket_elec_USA
 
-    if(gcamusa_USE_REGIONAL_ELEC_MARKETS){
+    if(gcamusa.USE_REGIONAL_ELEC_MARKETS){
       L223.StubTechMarket_elec_USA %>%
         left_join_error_no_match(select(states_subregions, grid_region, state), by = c("region" = "state")) %>%
-        mutate(market.name = replace(market.name, minicam.energy.input %in% gcamusa_REGIONAL_FUEL_MARKETS,
-                                     grid_region[minicam.energy.input %in% gcamusa_REGIONAL_FUEL_MARKETS])) %>%
+        mutate(market.name = replace(market.name, minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS,
+                                     grid_region[minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS])) %>%
         select(-grid_region) ->
         L223.StubTechMarket_elec_USA
     }
@@ -515,7 +512,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       L223.StubTechMarket_backup_USA
 
     # The backup electric market is only set here if regional electricity markets are not used (i.e. one national grid)
-    if(!gcamusa_USE_REGIONAL_ELEC_MARKETS){
+    if(!gcamusa.USE_REGIONAL_ELEC_MARKETS){
       # L223.StubTechElecMarket_backup_USA: market name of electricity sector for backup calculations
       L223.StubTechMarket_backup_USA %>%
         select(one_of(LEVEL2_DATA_NAMES[["StubTechYr"]])) %>%
@@ -555,15 +552,13 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       select(-region) %>%
       repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
       # For matching capacity factors to technologies, need to have a name that matches what's in the capacity factor table (which doesn't include storage techs)
-      mutate(match_tech = sub("_storage", "", stub.technology)) %>%
+      mutate(tech = sub("_storage", "", stub.technology)) %>%
       left_join_error_no_match(L223.CapFacScaler_solar_state,
-                               by = c("region" = "state", "supplysector", "subsector", "match_tech" = "technology")) %>%
+                               by = c("region" = "state", "supplysector", "subsector", "tech" = "technology")) %>%
       mutate(capacity.factor.capital = round(capacity.factor.capital * scaler, digits = energy.DIGITS_COST),
              capacity.factor.OM = capacity.factor.capital) %>%
       select(one_of(LEVEL2_DATA_NAMES[["StubTechCapFactor"]])) ->
       L223.StubTechCapFactor_elec_solar_USA
-
-    # ===================================================
 
     # Produce outputs
     L223.SectorNodeEquiv %>%
@@ -592,7 +587,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
         add_precursors("temp-data-inject/L223.SubsectorLogit_elec") ->
         L223.DeleteSubsector_USAelec
     } else {
-      # If gcamusa_USE_REGIONAL_ELEC_MARKETS is TURE,
+      # If gcamusa.USE_REGIONAL_ELEC_MARKETS is TURE,
       # indicating to resolve electricity demands at the level of the grid regions,
       # then blank tibbles of the national level data are produced.
       tibble(x = NA) %>%
@@ -612,7 +607,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_legacy_name("L223.Supplysector_USAelec") ->
       L223.Supplysector_USAelec
     } else {
-      # If gcamusa_USE_REGIONAL_ELEC_MARKETS is TURE,
+      # If gcamusa.USE_REGIONAL_ELEC_MARKETS is TURE,
       # indicating to resolve electricity demands at the level of the grid regions,
       # then blank tibbles of the national level data are produced.
       tibble(x = NA) %>%
@@ -633,7 +628,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_precursors("gcam-usa/states_subregions") ->
       L223.SubsectorShrwtFllt_USAelec
     } else {
-      # If gcamusa_USE_REGIONAL_ELEC_MARKETS is TURE,
+      # If gcamusa.USE_REGIONAL_ELEC_MARKETS is TURE,
       # indicating to resolve electricity demands at the level of the grid regions,
       # then blank tibbles of the national level data are produced.
       tibble(x = NA) %>%
@@ -654,7 +649,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       same_precursors_as("L223.SubsectorShrwtFllt_USAelec") ->
       L223.SubsectorInterp_USAelec
     } else {
-      # If gcamusa_USE_REGIONAL_ELEC_MARKETS is TURE,
+      # If gcamusa.USE_REGIONAL_ELEC_MARKETS is TURE,
       # indicating to resolve electricity demands at the level of the grid regions,
       # then blank tibbles of the national level data are produced.
       tibble(x = NA) %>%
@@ -675,7 +670,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       same_precursors_as("L223.SubsectorShrwtFllt_USAelec") ->
       L223.SubsectorLogit_USAelec
     } else {
-      # If gcamusa_USE_REGIONAL_ELEC_MARKETS is TURE,
+      # If gcamusa.USE_REGIONAL_ELEC_MARKETS is TURE,
       # indicating to resolve electricity demands at the level of the grid regions,
       # then blank tibbles of the national level data are produced.
       tibble(x = NA) %>%
@@ -696,7 +691,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       same_precursors_as("L223.SubsectorShrwtFllt_USAelec") ->
       L223.TechShrwt_USAelec
     } else {
-      # If gcamusa_USE_REGIONAL_ELEC_MARKETS is TURE,
+      # If gcamusa.USE_REGIONAL_ELEC_MARKETS is TURE,
       # indicating to resolve electricity demands at the level of the grid regions,
       # then blank tibbles of the national level data are produced.
       tibble(x = NA) %>%
@@ -717,7 +712,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       same_precursors_as("L223.TechShrwt_USAelec") ->
       L223.TechCoef_USAelec
     } else {
-      # If gcamusa_USE_REGIONAL_ELEC_MARKETS is TURE,
+      # If gcamusa.USE_REGIONAL_ELEC_MARKETS is TURE,
       # indicating to resolve electricity demands at the level of the grid regions,
       # then blank tibbles of the national level data are produced.
       tibble(x = NA) %>%
@@ -739,7 +734,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
                      "energy/calibrated_techs") ->
       L223.Production_USAelec
     } else {
-      # If gcamusa_USE_REGIONAL_ELEC_MARKETS is TURE,
+      # If gcamusa.USE_REGIONAL_ELEC_MARKETS is TURE,
       # indicating to resolve electricity demands at the level of the grid regions,
       # then blank tibbles of the national level data are produced.
       tibble(x = NA) %>%
@@ -804,23 +799,23 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       same_precursors_as("L223.TechShrwt_elec_FERC") ->
       L223.TechCoef_elec_FERC
 
-    L223.PassThroughSector_elec %>%
+    L223.PassthroughSector_elec_USA %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L223.PassThroughSector_elec") %>%
+      add_legacy_name("L223.PassthroughSector_elec_USA") %>%
       add_precursors("gcam-usa/states_subregions") ->
-      L223.PassThroughSector_elec
+      L223.PassthroughSector_elec_USA
 
-    L223.PassThroughTech_elec_FERC %>%
+    L223.PassthroughTech_elec_FERC %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L223.PassThroughTech_elec_FERC") %>%
+      add_legacy_name("L223.PassthroughTech_elec_FERC") %>%
       same_precursors_as("L223.TechShrwt_elec_FERC") ->
-      L223.PassThroughTech_elec_FERC
+      L223.PassthroughTech_elec_FERC
 
     L223.Production_elec_FERC %>%
       add_title("descriptive title of data") %>%
@@ -874,7 +869,8 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.Supplysector_elec_USA") %>%
-      add_precursors("L223.Supplysector_elec") ->
+      add_precursors("temp-data-inject/L223.Supplysector_elec",
+                     "gcam-usa/NREL_us_re_technical_potential") ->
       L223.Supplysector_elec_USA
 
     L223.ElecReserve_USA %>%
@@ -883,7 +879,8 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.ElecReserve_USA") %>%
-      add_precursors("L223.ElecReserve") ->
+      add_precursors("temp-data-inject/L223.ElecReserve",
+                     "gcam-usa/NREL_us_re_technical_potential") ->
       L223.ElecReserve_USA
 
     L223.SubsectorLogit_elec_USA %>%
@@ -892,7 +889,8 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.SubsectorLogit_elec_USA") %>%
-      add_precursors("L223.SubsectorLogit_elec") ->
+      add_precursors("temp-data-inject/L223.SubsectorLogit_elec",
+                     "gcam-usa/NREL_us_re_technical_potential") ->
       L223.SubsectorLogit_elec_USA
 
     L223.SubsectorShrwtFllt_elec_USA %>%
@@ -901,7 +899,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.SubsectorShrwtFllt_elec_USA") %>%
-      add_precursors("L223.SubsectorShrwtFllt_elec") ->
+      add_precursors("temp-data-inject/L223.SubsectorShrwtFllt_elec") ->
       L223.SubsectorShrwtFllt_elec_USA
 
     L223.SubsectorShrwt_nuc_USA %>%
@@ -910,8 +908,9 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.SubsectorShrwt_nuc_USA") %>%
-      add_precursors("L223.SubsectorShrwt_nuc",
-                     "L1231.out_EJ_state_elec_F_tech") ->
+      add_precursors("temp-data-inject/L223.SubsectorShrwt_nuc",
+                     "L1231.out_EJ_state_elec_F_tech",
+                     "gcam-usa/NREL_us_re_technical_potential") ->
       L223.SubsectorShrwt_nuc_USA
 
     L223.SubsectorShrwt_renew_USA %>%
@@ -920,7 +919,8 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.SubsectorShrwt_renew_USA") %>%
-      add_precursors("L223.SubsectorShrwt_renew") ->
+      add_precursors("temp-data-inject/L223.SubsectorShrwt_renew",
+                     "gcam-usa/NREL_us_re_technical_potential") ->
       L223.SubsectorShrwt_renew_USA
 
     L223.SubsectorInterp_elec_USA %>%
@@ -929,7 +929,8 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.SubsectorInterp_elec_USA") %>%
-      add_precursors("L223.SubsectorInterp_elec") ->
+      add_precursors("temp-data-inject/L223.SubsectorInterp_elec",
+                     "gcam-usa/NREL_us_re_technical_potential") ->
       L223.SubsectorInterp_elec_USA
 
     L223.SubsectorInterpTo_elec_USA %>%
@@ -938,7 +939,8 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.SubsectorInterpTo_elec_USA") %>%
-      add_precursors("L223.SubsectorInterpTo_elec") ->
+      add_precursors("temp-data-inject/L223.SubsectorInterpTo_elec",
+                     "gcam-usa/NREL_us_re_technical_potential") ->
       L223.SubsectorInterpTo_elec_USA
 
     L223.StubTech_elec_USA %>%
@@ -947,7 +949,8 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.StubTech_elec_USA") %>%
-      add_precursors("L223.StubTech_elec") ->
+      add_precursors("temp-data-inject/L223.StubTech_elec",
+                     "gcam-usa/NREL_us_re_technical_potential") ->
       L223.StubTech_elec_USA
 
     L223.StubTechEff_elec_USA %>%
@@ -956,7 +959,8 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.StubTechEff_elec_USA") %>%
-      add_precursors("L223.StubTechEff_elec") ->
+      add_precursors("temp-data-inject/L223.StubTechEff_elec",
+                     "gcam-usa/NREL_us_re_technical_potential") ->
       L223.StubTechEff_elec_USA
 
     L223.StubTechCapFactor_elec_USA %>%
@@ -965,7 +969,8 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.StubTechCapFactor_elec_USA") %>%
-      add_precursors("L223.StubTechCapFactor_elec") ->
+      add_precursors("temp-data-inject/L223.StubTechCapFactor_elec",
+                     "gcam-usa/NREL_us_re_technical_potential") ->
       L223.StubTechCapFactor_elec_USA
 
     L223.StubTechFixOut_elec_USA %>%
@@ -993,8 +998,10 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.StubTechProd_elec_USA") %>%
-      add_precursors("L1231.out_EJ_state_elec_F_tech",
-                     "energy/calibrated_techs") ->
+      add_precursors("L1231.in_EJ_state_elec_F_tech",
+                     "L1231.out_EJ_state_elec_F_tech",
+                     "energy/calibrated_techs",
+                     "gcam-usa/NREL_us_re_technical_potential") ->
       L223.StubTechProd_elec_USA
 
     L223.StubTechMarket_elec_USA %>%
@@ -1004,7 +1011,8 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.StubTechMarket_elec_USA") %>%
       same_precursors_as("L223.StubTech_elec_USA") %>%
-      add_precursors("A23.globaltech_eff") ->
+      add_precursors("energy/A23.globaltech_eff",
+                     "gcam-usa/NREL_us_re_technical_potential") ->
       L223.StubTechMarket_elec_USA
 
     L223.StubTechMarket_backup_USA %>%
@@ -1013,7 +1021,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.StubTechMarket_backup_USA") %>%
-      add_precursors("L223.GlobalIntTechBackup_elec",
+      add_precursors("temp-data-inject/L223.GlobalIntTechBackup_elec",
                      "gcam-usa/states_subregions") ->
       L223.StubTechMarket_backup_USA
 
@@ -1032,7 +1040,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.StubTechCapFactor_elec_wind_USA") %>%
-      add_precursors("L114.CapacityFactor_wind_state",
+      add_precursors("temp-data-inject/L114.CapacityFactor_wind_state",
                      "energy/calibrated_techs",
                      "gcam-usa/states_subregions") ->
       L223.StubTechCapFactor_elec_wind_USA
@@ -1059,8 +1067,8 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
                 L223.TechShrwt_USAelec,
                 L223.TechCoef_USAelec,
                 L223.Production_USAelec,
-                L223.PassThroughSector_elec,
-                L223.PassThroughTech_elec_FERC,
+                L223.PassthroughSector_elec_USA,
+                L223.PassthroughTech_elec_FERC,
                 L223.Supplysector_elec_FERC,
                 L223.SubsectorShrwtFllt_elec_FERC,
                 L223.SubsectorInterp_elec_FERC,
