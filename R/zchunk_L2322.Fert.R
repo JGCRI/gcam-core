@@ -7,7 +7,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L2322.SectorLogitTables[[ curr_table ]]$data}, \code{L2322.Supplysector_Fert}, \code{L2322.FinalEnergyKeyword_Fert}, \code{L2322.SubsectorLogitTables[[ curr_table ]]$data}, \code{L2322.SubsectorLogit_Fert}, \code{L2322.SubsectorShrwt_Fert}, \code{L2322.SubsectorShrwtFllt_Fert}, \code{L2322.SubsectorInterp_Fert}, \code{L2322.SubsectorInterpTo_Fert}, \code{L2322.StubTech_Fert}, \code{L2322.GlobalTechShrwt_Fert}, \code{L2322.GlobalTechCoef_Fert}, \code{L2322.GlobalTechCost_Fert}, \code{L2322.GlobalTechCapture_Fert}, \code{L2322.GlobalTechShutdown_Fert}, \code{L2322.GlobalTechSCurve_Fert}, \code{L2322.GlobalTechLifetime_Fert}, \code{L2322.GlobalTechProfitShutdown_Fert}, \code{L2322.StubTechProd_Fert}, \code{L2322.StubTechCoef_Fert}, \code{L2322.StubTechFixOut_Fert_imp}, \code{L2322.StubTechFixOut_Fert_exp}, \code{L2322.PerCapitaBased_Fert}, \code{L2322.BaseService_Fert}. The corresponding file in the
+#' the generated outputs:  \code{L2322.Supplysector_Fert}, \code{L2322.FinalEnergyKeyword_Fert}, \code{L2322.SubsectorLogit_Fert}, \code{L2322.SubsectorShrwtFllt_Fert}, \code{L2322.SubsectorInterp_Fert}, \code{L2322.StubTech_Fert}, \code{L2322.GlobalTechShrwt_Fert}, \code{L2322.GlobalTechCoef_Fert}, \code{L2322.GlobalTechCost_Fert}, \code{L2322.GlobalTechCapture_Fert}, \code{L2322.GlobalTechSCurve_Fert}, \code{L2322.GlobalTechProfitShutdown_Fert}, \code{L2322.StubTechProd_Fert}, \code{L2322.StubTechCoef_Fert}, \code{L2322.StubTechFixOut_Fert_imp}, \code{L2322.StubTechFixOut_Fert_exp}, \code{L2322.PerCapitaBased_Fert}, \code{L2322.BaseService_Fert}. The corresponding file in the
 #' original data system was \code{L2322.Fert.R} (energy level2).
 #' @details This chunk provides supply sector information/keywords, subsector shareweights, global technology lifetime,
 #' energy inputs and coefficients, global fertilizer manufacturing technologies, etc. for the fertilizer sector.
@@ -36,18 +36,14 @@ module_energy_L2322.Fert <- function(command, ...) {
     return(c("L2322.Supplysector_Fert",
              "L2322.FinalEnergyKeyword_Fert",
              "L2322.SubsectorLogit_Fert",
-             "L2322.SubsectorShrwt_Fert",
              "L2322.SubsectorShrwtFllt_Fert",
              "L2322.SubsectorInterp_Fert",
-             "L2322.SubsectorInterpTo_Fert",
              "L2322.StubTech_Fert",
              "L2322.GlobalTechShrwt_Fert",
              "L2322.GlobalTechCoef_Fert",
              "L2322.GlobalTechCost_Fert",
              "L2322.GlobalTechCapture_Fert",
-             "L2322.GlobalTechShutdown_Fert",
              "L2322.GlobalTechSCurve_Fert",
-             "L2322.GlobalTechLifetime_Fert",
              "L2322.GlobalTechProfitShutdown_Fert",
              "L2322.StubTechProd_Fert",
              "L2322.StubTechCoef_Fert",
@@ -105,29 +101,17 @@ module_energy_L2322.Fert <- function(command, ...) {
       write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorLogit"]], GCAM_region_names) ->
       L2322.SubsectorLogit_Fert
 
-    # L2322.SubsectorShrwt_Fert and L2322.SubsectorShrwtFllt_Fert: Subsector shareweights of fertilizer sector
-    tibble(x = NA) %>%
-      add_units("None") %>%
-      add_comments("Not generated") %>%
-      add_flags(FLAG_NO_TEST) ->
-      L2322.SubsectorShrwt_Fert
-
+    # L2322.SubsectorShrwtFllt_Fert: Subsector shareweights of fertilizer sector
     A322.subsector_shrwt %>%
       filter(!is.na(year.fillout)) %>%
       write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]], GCAM_region_names) ->
       L2322.SubsectorShrwtFllt_Fert
 
-    # L2322.SubsectorInterp_Fert and L2322.SubsectorInterpTo_Fert: Subsector shareweight interpolation of fertilizer sector
+    # L2322.SubsectorInterp_Fert: Subsector shareweight interpolation of fertilizer sector
     A322.subsector_interp %>%
       filter(is.na(to.value)) %>%
       write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorInterp"]], GCAM_region_names) ->
       L2322.SubsectorInterp_Fert
-
-    tibble(x = NA) %>%
-      add_units("None") %>%
-      add_comments("Not generated") %>%
-      add_flags(FLAG_NO_TEST) ->
-      L2322.SubsectorInterpTo_Fert
 
     # 2c. Technology information
     # L2322.StubTech_Fert: Identification of stub technologies of fertilizer sector
@@ -214,25 +198,11 @@ module_energy_L2322.Fert <- function(command, ...) {
     # Retirement may consist of any of three types of retirement function (phased, s-curve, or none)
     # All of these options have different headers, and all are allowed
 
-    # L2322.GlobalTechShutdown_Fert: Global tech lifetime and shutdown rate
-    tibble(x = NA) %>%
-      add_units("None") %>%
-      add_comments("Not generated") %>%
-      add_flags(FLAG_NO_TEST) ->
-      L2322.GlobalTechShutdown_Fert
-
     # L2322.GlobalTechSCurve_Fert: Global tech lifetime and s-curve retirement function
     L2322.globaltech_retirement %>%
       filter(!is.na(half.life)) %>%
       select(one_of(c(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "lifetime", "steepness", "half.life"))) ->
       L2322.GlobalTechSCurve_Fert
-
-    # L2322.GlobalTechLifetime_Fert: Global tech lifetime
-    tibble(x = NA) %>%
-      add_units("None") %>%
-      add_comments("Not generated") %>%
-      add_flags(FLAG_NO_TEST) ->
-      L2322.GlobalTechLifetime_Fert
 
     # L2322.GlobalTechProfitShutdown_Fert: Global tech profit shutdown decider.
     L2322.globaltech_retirement %>%
@@ -338,14 +308,6 @@ module_energy_L2322.Fert <- function(command, ...) {
       add_precursors("energy/A322.subsector_logit", "common/GCAM_region_names") ->
       L2322.SubsectorLogit_Fert
 
-    L2322.SubsectorShrwt_Fert %>%
-      add_title("Subsector shareweights of fertilizer") %>%
-      add_units("NA") %>%
-      add_comments("Created as empty table") %>%
-      add_legacy_name("L2322.SubsectorShrwt_Fert") %>%
-      add_precursors("energy/A322.subsector_shrwt", 'common/GCAM_region_names') ->
-      L2322.SubsectorShrwt_Fert
-
     L2322.SubsectorShrwtFllt_Fert %>%
       add_title("Subsector shareweights of fertilizer") %>%
       add_units("Unitless") %>%
@@ -361,14 +323,6 @@ module_energy_L2322.Fert <- function(command, ...) {
       add_legacy_name("L2322.SubsectorInterp_Fert") %>%
       add_precursors("energy/A322.subsector_interp", "common/GCAM_region_names") ->
       L2322.SubsectorInterp_Fert
-
-    L2322.SubsectorInterpTo_Fert %>%
-      add_title("Subsector shareweight interpolation of fertilizer sector") %>%
-      add_units("NA") %>%
-      add_comments("Created as empty table") %>%
-      add_legacy_name("L2322.SubsectorInterpTo_Fert") %>%
-      add_precursors("energy/A322.subsector_interp", "common/GCAM_region_names") ->
-      L2322.SubsectorInterpTo_Fert
 
     L2322.StubTech_Fert %>%
       add_title("Identification of stub technologies of fertilizer sector") %>%
@@ -410,14 +364,6 @@ module_energy_L2322.Fert <- function(command, ...) {
       add_precursors("energy/A322.globaltech_co2capture") ->
       L2322.GlobalTechCapture_Fert
 
-    L2322.GlobalTechShutdown_Fert %>%
-      add_title("Global tech lifetime and shutdown rate") %>%
-      add_units("NA") %>%
-      add_comments("Created as empty table") %>%
-      add_legacy_name("L2322.GlobalTechShutdown_Fert") %>%
-      add_precursors("energy/A322.globaltech_retirement")->
-      L2322.GlobalTechShutdown_Fert
-
     L2322.GlobalTechSCurve_Fert %>%
       add_title("Global tech lifetime and s-curve retirement function") %>%
       add_units("year for lifetime and halflife; Unitless for steepness") %>%
@@ -425,14 +371,6 @@ module_energy_L2322.Fert <- function(command, ...) {
       add_legacy_name("L2322.GlobalTechSCurve_Fert") %>%
       add_precursors("energy/A322.globaltech_retirement") ->
       L2322.GlobalTechSCurve_Fert
-
-    L2322.GlobalTechLifetime_Fert %>%
-      add_title("Global tech lifetime") %>%
-      add_units("NA") %>%
-      add_comments("Created as empty table") %>%
-      add_legacy_name("L2322.GlobalTechLifetime_Fert") %>%
-      add_precursors("energy/A322.globaltech_retirement") ->
-      L2322.GlobalTechLifetime_Fert
 
     L2322.GlobalTechProfitShutdown_Fert %>%
       add_title("Global tech profit shutdown decider") %>%
@@ -491,10 +429,10 @@ module_energy_L2322.Fert <- function(command, ...) {
       L2322.BaseService_Fert
 
     return_data(L2322.Supplysector_Fert, L2322.FinalEnergyKeyword_Fert, L2322.SubsectorLogit_Fert,
-                L2322.SubsectorShrwt_Fert, L2322.SubsectorShrwtFllt_Fert, L2322.SubsectorInterp_Fert,
+                L2322.SubsectorShrwtFllt_Fert,
                 L2322.SubsectorInterpTo_Fert, L2322.StubTech_Fert, L2322.GlobalTechShrwt_Fert,
                 L2322.GlobalTechCoef_Fert, L2322.GlobalTechCost_Fert, L2322.GlobalTechCapture_Fert,
-                L2322.GlobalTechShutdown_Fert, L2322.GlobalTechSCurve_Fert, L2322.GlobalTechLifetime_Fert,
+                L2322.GlobalTechSCurve_Fert,
                 L2322.GlobalTechProfitShutdown_Fert, L2322.StubTechProd_Fert, L2322.StubTechCoef_Fert,
                 L2322.StubTechFixOut_Fert_imp, L2322.StubTechFixOut_Fert_exp, L2322.PerCapitaBased_Fert,
                 L2322.BaseService_Fert)
