@@ -24,7 +24,7 @@ module_gcam.usa_LA114.Wind <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     technology <- year <- state <- sector <- capacity.factor <- fuel <- value <- base_cost <-
-      `1971` <- `1990` <- `2005` <- `2010` <- `2015` <- NULL  # silence package check.
+      region <- NULL  # silence package check.
 
     all_data <- list(...)[[1]]
 
@@ -40,7 +40,8 @@ module_gcam.usa_LA114.Wind <- function(command, ...) {
     # ... to get a single value for wind base cost year. Note that the interpolation is...
     # ... redundant whilst gcamusa.WIND_BASE_COST_YEAR = 2005, ...
     # ... since 2005 is an existing data point in all A23 tables.
-    filter_gather_interp_get_cost <- function(x){
+    filter_gather_interp_get_cost <- function(x) {
+      . <- NULL  # silence package check notes
       x %>% filter(technology == "wind") %>%
         gather(year, value, matches(YEAR_PATTERN)) %>%
         select(year, value) %>% mutate(year = as.integer(year)) %>%
