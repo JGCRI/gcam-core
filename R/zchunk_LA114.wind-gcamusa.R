@@ -1,6 +1,6 @@
 #' module_gcam.usa_LA114.Wind
 #'
-#' Computes capacity factors for wind by US state.
+#' Compute capacity factors for wind by US state.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -42,11 +42,12 @@ module_gcam.usa_LA114.Wind <- function(command, ...) {
     # ... since 2005 is an existing data point in all A23 tables.
     filter_gather_interp_get_cost <- function(x){
       x %>% filter(technology == "wind") %>%
-        gather(year,value, `1971`, `1990`, `2005`, `2010`, `2015`) %>%
-        select(year,value) %>% mutate(year = as.integer(year)) %>%
+        gather(year, value, matches(YEAR_PATTERN)) %>%
+        select(year, value) %>% mutate(year = as.integer(year)) %>%
         complete(year = c(year, gcamusa.WIND_BASE_COST_YEAR)) %>%
-        mutate(value = approx_fun(year, value, rule = 2)) -> x_
-      return(filter(x_, year == gcamusa.WIND_BASE_COST_YEAR)$value)
+        mutate(value = approx_fun(year, value, rule = 2)) %>%
+        filter(year == gcamusa.WIND_BASE_COST_YEAR) %>%
+        .[["value"]]
     }
 
     A23.globaltech_capital %>% filter_gather_interp_get_cost -> L114.CapCost
@@ -55,14 +56,14 @@ module_gcam.usa_LA114.Wind <- function(command, ...) {
     # ^^ all above rates are in $1975
 
     # Get fixed charge rate of capital for wind
-    filter(A23.globaltech_capital, technology=="wind")$fixed.charge.rate -> L114.FixedChargeRate
+    filter(A23.globaltech_capital, technology == "wind")$fixed.charge.rate -> L114.FixedChargeRate
 
     # Convert state level wind base cost data to 1975$/GJ, ...
     # ... then compute capacity factor for the base wind turbine in each state
     us_state_wind %>%
       mutate(sector = "electricity generation",
              fuel = "wind",
-             base_cost = base_cost * gcamdata::gdp_deflator(1975, 2007) / CONV_KWH_GJ,
+             base_cost = base_cost * gdp_deflator(1975, 2007) / CONV_KWH_GJ,
              capacity.factor = (L114.CapCost * L114.FixedChargeRate + L114.OMFixedCost) /
                (CONV_KWH_GJ * CONV_YEAR_HOURS) / (base_cost - (L114.OMVarCost / CONV_MWH_GJ))) %>%
       # ^^ capacity factor computed dividing sum of capital and fixed costs (converted to $/GJ) by ...
