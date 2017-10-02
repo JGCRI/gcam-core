@@ -18,7 +18,7 @@ the generated outputs: \code{L114.CapacityFactor_wind_state}. The corresponding 
 original data system was \code{LA114.Wind.R} (gcam-usa level1).
 }
 \description{
-Computes capacity factors for wind by US state.
+Compute capacity factors for wind by US state.
 }
 \details{
 Computes capacity factors for wind by US state.
