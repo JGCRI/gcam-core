@@ -26,7 +26,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RC Oct 2017
-#' @export
 module_gcam.usa_L223.electricity_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
@@ -836,7 +835,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_title("Passthrough technology of the grid regions") %>%
       add_units("Unitless") %>%
       add_comments("This contains region, supplysector, subsector, technology for the grid regions") %>%
-      add_comments("to which electricity produced in states is passed through")
+      add_comments("to which electricity produced in states is passed through") %>%
       add_legacy_name("L223.PassthroughTech_elec_FERC") %>%
       same_precursors_as("L223.TechShrwt_elec_FERC") ->
       L223.PassthroughTech_elec_FERC
