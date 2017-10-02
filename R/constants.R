@@ -259,7 +259,8 @@ energy.RSRC_FUELS <- c("coal", "gas", "refined liquids")
 energy.HEAT_PRICE <- 3.2
 energy.GAS_PRICE <- 2
 
-# below come from ENERGY_ASSUMPTIONS/A_ccs_data.R 
+# below come from ENERGY_ASSUMPTIONS/A_ccs_data.R
+energy.CO2.STORAGE.MARKET <- "carbon-storage"
 energy.DIGITS_EFFICIENCY <- 3
 energy.DIGITS_COST <- 4
 energy.DIGITS_REMOVE.FRACTION <- 2
