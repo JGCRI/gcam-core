@@ -429,8 +429,8 @@ module_energy_L2322.Fert <- function(command, ...) {
       L2322.BaseService_Fert
 
     return_data(L2322.Supplysector_Fert, L2322.FinalEnergyKeyword_Fert, L2322.SubsectorLogit_Fert,
-                L2322.SubsectorShrwtFllt_Fert,
-                L2322.SubsectorInterpTo_Fert, L2322.StubTech_Fert, L2322.GlobalTechShrwt_Fert,
+                L2322.SubsectorShrwtFllt_Fert, L2322.SubsectorInterp_Fert,
+                L2322.StubTech_Fert, L2322.GlobalTechShrwt_Fert,
                 L2322.GlobalTechCoef_Fert, L2322.GlobalTechCost_Fert, L2322.GlobalTechCapture_Fert,
                 L2322.GlobalTechSCurve_Fert,
                 L2322.GlobalTechProfitShutdown_Fert, L2322.StubTechProd_Fert, L2322.StubTechCoef_Fert,
