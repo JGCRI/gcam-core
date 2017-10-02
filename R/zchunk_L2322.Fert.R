@@ -317,7 +317,7 @@ module_energy_L2322.Fert <- function(command, ...) {
     L2322.Supplysector_Fert %>%
       add_title("Supply sector information for fertilizer sector") %>%
       add_units("NA") %>%
-      add_comments("Expanded fertilizer sector supply sector information for all GCAM regions") %>%
+      add_comments("For fertilizer sector, the supply sector information (output.unit, input.unit, price.unit, logit.year.fillout, logit.exponent) from A322.sector is expended into all GCAM regions") %>%
       add_legacy_name("L2322.Supplysector_Fert") %>%
       add_precursors("common/GCAM_region_names", "energy/A322.sector") ->
       L2322.Supplysector_Fert
@@ -325,7 +325,7 @@ module_energy_L2322.Fert <- function(command, ...) {
     L2322.FinalEnergyKeyword_Fert %>%
       add_title("Supply sector keywords for fertilizer sector") %>%
       add_units("NA") %>%
-      add_comments("Expanded fertilizer sector supply sector keywords for all GCAM regions") %>%
+      add_comments("For fertilizer sector, the supply sector final energy keywords from A322.sector are expended into all GCAM regions") %>%
       add_legacy_name("L2322.FinalEnergyKeyword_Fert") %>%
       add_precursors("common/GCAM_region_names", "energy/A322.sector") ->
       L2322.FinalEnergyKeyword_Fert
@@ -333,7 +333,7 @@ module_energy_L2322.Fert <- function(command, ...) {
     L2322.SubsectorLogit_Fert %>%
       add_title("Subsector logit exponents of fertilizer sector") %>%
       add_units("NA") %>%
-      add_comments("Expanded fertilizer sector subsector logit exponents for all GCAM regions") %>%
+      add_comments("For fertilizer sector, the subsector logit exponents from A322.subsector_logit are expanded into all GCAM regions") %>%
       add_legacy_name("L2322.SubsectorLogit_Fert") %>%
       add_precursors("energy/A322.subsector_logit", "common/GCAM_region_names") ->
       L2322.SubsectorLogit_Fert
@@ -349,7 +349,7 @@ module_energy_L2322.Fert <- function(command, ...) {
     L2322.SubsectorShrwtFllt_Fert %>%
       add_title("Subsector shareweights of fertilizer") %>%
       add_units("Unitless") %>%
-      add_comments("Expanded Subsector shareweights of fertilizer to all GCAM regions") %>%
+      add_comments("For fertilizer sector, the subsector shareweights from A322.subsector_shrwt are expanded into all GCAM regions") %>%
       add_legacy_name("L2322.SubsectorShrwtFllt_Fert") %>%
       add_precursors("energy/A322.subsector_shrwt", "common/GCAM_region_names") ->
       L2322.SubsectorShrwtFllt_Fert
@@ -357,7 +357,7 @@ module_energy_L2322.Fert <- function(command, ...) {
     L2322.SubsectorInterp_Fert %>%
       add_title("Subsector shareweight interpolation of fertilizer sector") %>%
       add_units("NA") %>%
-      add_comments("Expanded subsector shareweight interpolation of fertilizer sector to all GCAM regions") %>%
+      add_comments("For fertilizer sector, the subsector shareweight interpolation function infromation from A322.subsector_interp is expanded into all GCAM regions") %>%
       add_legacy_name("L2322.SubsectorInterp_Fert") %>%
       add_precursors("energy/A322.subsector_interp", "common/GCAM_region_names") ->
       L2322.SubsectorInterp_Fert
@@ -373,7 +373,7 @@ module_energy_L2322.Fert <- function(command, ...) {
     L2322.StubTech_Fert %>%
       add_title("Identification of stub technologies of fertilizer sector") %>%
       add_units("NA") %>%
-      add_comments("Expanded identification of stub technologies of fertilizer sector to all GCAM regions") %>%
+      add_comments("For fertilizer sector, the stub technologies from A322.globaltech_shrwt are expanded into all GCAM regions") %>%
       add_legacy_name("L2322.StubTech_Fert") %>%
       add_precursors("energy/A322.globaltech_shrwt", "common/GCAM_region_names") ->
       L2322.StubTech_Fert
@@ -381,7 +381,7 @@ module_energy_L2322.Fert <- function(command, ...) {
     L2322.GlobalTechShrwt_Fert %>%
       add_title("Shareweights of global fertilizer sector technologies") %>%
       add_units("Unitless") %>%
-      add_comments("Interpolated orginal data into all model years") %>%
+      add_comments("For fertilizer sector, the share weights from A322.globaltech_shrwt are interpolated into all base years and future years") %>%
       add_legacy_name("L2322.GlobalTechShrwt_Fert") %>%
       add_precursors("energy/A322.globaltech_shrwt") ->
       L2322.GlobalTechShrwt_Fert
@@ -389,15 +389,15 @@ module_energy_L2322.Fert <- function(command, ...) {
     L2322.GlobalTechCoef_Fert %>%
       add_title("Energy inputs and coefficients of global fertilizer energy use and feedstocks technologies") %>%
       add_units("Unitless") %>%
-      add_comments("Interpolated orginal data into all model years") %>%
+      add_comments("For fertilizer sector, the energy use coefficients from A322.globaltech_coef are interpolated into all model years") %>%
       add_legacy_name("energy/A322.globaltech_coef") %>%
-      add_precursors("L1322.Fert_NEcost_75USDkgN_F") ->
+      add_precursors("energy/A322.globaltech_coef") ->
       L2322.GlobalTechCoef_Fert
 
     L2322.GlobalTechCost_Fert %>%
       add_title("Non-energy costs of global fertilizer manufacturing technologies") %>%
-      add_units("1975USDkgN") %>%
-      add_comments("Claculated cost from L1322.Fert_NEcost_75USDkgN_F") %>%
+      add_units("1975 USD/kg N") %>%
+      add_comments("For fertilizer sector, the non-energy costs of global fertilizer manufacturing technologies are calculated using values from L1322.Fert_NEcost_75USDkgN_F") %>%
       add_legacy_name("L2322.GlobalTechCost_Fert") %>%
       add_precursors("L1322.Fert_NEcost_75USDkgN_F") ->
       L2322.GlobalTechCost_Fert
@@ -405,7 +405,7 @@ module_energy_L2322.Fert <- function(command, ...) {
     L2322.GlobalTechCapture_Fert %>%
       add_title("CO2 capture fractions from global fertilizer production technologies with CCS") %>%
       add_units("Unitless") %>%
-      add_comments("Interpolated orginal data into all model years") %>%
+      add_comments("For fertilizer sector, the remove fractions from A322.globaltech_co2capture are interpolated into all model years") %>%
       add_legacy_name("L2322.GlobalTechCapture_Fert") %>%
       add_precursors("energy/A322.globaltech_co2capture") ->
       L2322.GlobalTechCapture_Fert
@@ -421,7 +421,7 @@ module_energy_L2322.Fert <- function(command, ...) {
     L2322.GlobalTechSCurve_Fert %>%
       add_title("Global tech lifetime and s-curve retirement function") %>%
       add_units("year for lifetime and halflife; Unitless for steepness") %>%
-      add_comments("Extracted from L2322.globaltech_retirement") %>%
+      add_comments("The values are extracted from L2322.globaltech_retirement for entries that half life value is not NA") %>%
       add_legacy_name("L2322.GlobalTechSCurve_Fert") %>%
       add_precursors("energy/A322.globaltech_retirement") ->
       L2322.GlobalTechSCurve_Fert
@@ -437,15 +437,15 @@ module_energy_L2322.Fert <- function(command, ...) {
     L2322.GlobalTechProfitShutdown_Fert %>%
       add_title("Global tech profit shutdown decider") %>%
       add_units("Unitless") %>%
-      add_comments("Extracted from L2322.globaltech_retirement") %>%
+      add_comments("The values are extracted from L2322.globaltech_retirement for entries that median shutdown point is not NA") %>%
       add_legacy_name("L2322.GlobalTechProfitShutdown_Fert") %>%
       add_precursors("energy/A322.globaltech_retirement") ->
       L2322.GlobalTechProfitShutdown_Fert
 
     L2322.StubTechProd_Fert %>%
       add_title("calibrated output of fertilizer technologies") %>%
-      add_units("MtN") %>%
-      add_comments("Calculated from L1322.Fert_Prod_MtN_R_F_Y") %>%
+      add_units("Mt N") %>%
+      add_comments("Values are calculated using L1322.Fert_Prod_MtN_R_F_Y then added GCAM region information") %>%
       add_legacy_name("L2322.StubTechProd_Fert") %>%
       add_precursors("L1322.Fert_Prod_MtN_R_F_Y", "common/GCAM_region_names") ->
       L2322.StubTechProd_Fert
@@ -453,23 +453,23 @@ module_energy_L2322.Fert <- function(command, ...) {
     L2322.StubTechCoef_Fert %>%
       add_title("calibrated base-year coefficients of fertilizer production technologies") %>%
       add_units("Unitless") %>%
-      add_comments("Calculated from L1322.IO_R_Fert_F_Yh") %>%
+      add_comments("Coefficients are calculated using L1322.IO_R_Fert_F_Yh") %>%
       add_legacy_name("L2322.StubTechCoef_Fert") %>%
       add_precursors("L1322.IO_R_Fert_F_Yh", "common/GCAM_region_names") ->
       L2322.StubTechCoef_Fert
 
     L2322.StubTechFixOut_Fert_imp %>%
       add_title("fixed output of import technology (fixed imports)") %>%
-      add_units("Unitless") %>%
-      add_comments("Calculated from L142.ag_Fert_NetExp_MtN_R_Y") %>%
+      add_units("Mt N") %>%
+      add_comments("The fixed import values are calculated using L142.ag_Fert_NetExp_MtN_R_Y then added GCAM region information") %>%
       add_legacy_name("L2322.StubTechFixOut_Fert_imp") %>%
       add_precursors("L142.ag_Fert_NetExp_MtN_R_Y", "common/GCAM_region_names", "energy/A322.globaltech_renew") ->
       L2322.StubTechFixOut_Fert_imp
 
     L2322.StubTechFixOut_Fert_exp %>%
       add_title("fixed output of import technology (fixed imports)") %>%
-      add_units("Unitless") %>%
-      add_comments("Calculated from ") %>%
+      add_units("Mt N") %>%
+      add_comments("The fixed export values are alculated using L142.ag_Fert_NetExp_MtN_R_Y") %>%
       add_legacy_name("L2322.StubTechFixOut_Fert_exp") %>%
       add_precursors("L142.ag_Fert_NetExp_MtN_R_Y", "common/GCAM_region_names", "energy/A322.globaltech_shrwt") ->
       L2322.StubTechFixOut_Fert_exp
@@ -477,15 +477,15 @@ module_energy_L2322.Fert <- function(command, ...) {
     L2322.PerCapitaBased_Fert %>%
       add_title("per-capita based flag for fertilizer exports final demand") %>%
       add_units("Unitless") %>%
-      add_comments("Created based onA322.globaltech_shrwt") %>%
+      add_comments("Per Capita Based value are assigned as 0 for all GCAM regions for Exports_fertilizer of energy final demand") %>%
       add_legacy_name("L2322.PerCapitaBased_Fert") %>%
       add_precursors("common/GCAM_region_names", "energy/A322.globaltech_shrwt") ->
       L2322.PerCapitaBased_Fert
 
     L2322.BaseService_Fert %>%
       add_title("base-year service output of fertilizer exports final demand") %>%
-      add_units("MtN") %>%
-      add_comments("Created based on L2322.StubTechFixOut_Fert_exp_base") %>%
+      add_units("Mt N") %>%
+      add_comments("Base service values are extracted from L2322.StubTechFixOut_Fert_exp_base") %>%
       add_legacy_name("L2322.BaseService_Fert") %>%
       add_precursors("L142.ag_Fert_NetExp_MtN_R_Y", "common/GCAM_region_names", "energy/A322.globaltech_shrwt") ->
       L2322.BaseService_Fert
