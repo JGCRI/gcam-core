@@ -398,7 +398,7 @@ module_energy_L2322.Fert <- function(command, ...) {
       add_units("Mt N") %>%
       add_comments("Values are calculated using L1322.Fert_Prod_MtN_R_F_Y then added GCAM region information") %>%
       add_legacy_name("L2322.StubTechProd_Fert") %>%
-      add_precursors("L1322.Fert_Prod_MtN_R_F_Y", "common/GCAM_region_names") ->
+      add_precursors("L1322.Fert_Prod_MtN_R_F_Y", "common/GCAM_region_names", "energy/calibrated_techs") ->
       L2322.StubTechProd_Fert
 
     L2322.StubTechCoef_Fert %>%
@@ -406,7 +406,7 @@ module_energy_L2322.Fert <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Coefficients are calculated using L1322.IO_R_Fert_F_Yh") %>%
       add_legacy_name("L2322.StubTechCoef_Fert") %>%
-      add_precursors("L1322.IO_R_Fert_F_Yh", "common/GCAM_region_names") ->
+      add_precursors("L1322.IO_R_Fert_F_Yh", "common/GCAM_region_names", "energy/calibrated_techs") ->
       L2322.StubTechCoef_Fert
 
     L2322.StubTechFixOut_Fert_imp %>%
