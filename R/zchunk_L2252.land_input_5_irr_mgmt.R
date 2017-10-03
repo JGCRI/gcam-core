@@ -111,11 +111,11 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
     # so there are no matches.
     # As a result, there is no difference in hist.veg.carbon.density for
     # hi vs lo nests.
-    if(OLD_DATA_SYSTEM_BEHAVIOR){
+    if(OLD_DATA_SYSTEM_BEHAVIOR) {
       L181.YieldMult_R_bio_GLU_irr %>%
         left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
         L181.YieldMult_R_bio_GLU_irr
-    } else{
+    } else {
       L181.YieldMult_R_bio_GLU_irr %>%
         left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
         replace_GLU(map = basin_to_country_mapping) ->
@@ -124,9 +124,9 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
 
     # convert_LN4_to_LN5
     # A function to carry LN4 information down to LN5
-    convert_LN4_to_LN5 <- function(data, names){
+    convert_LN4_to_LN5 <- function(data, names) {
       data %>%
-        repeat_add_columns(tibble(level = c( "lo", "hi" ))) %>%
+        repeat_add_columns(tibble(level = c("lo", "hi"))) %>%
         mutate(LandNode5 = LandLeaf,
                LandLeaf = paste(LandNode5, level, sep = aglu.MGMT_DELIMITER)) ->
         data_new
@@ -167,7 +167,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
     # L2252.LN5_Logit: Logit exponent between lo and hi managed techs for each crop-irrigationtype combo
     # ie competition between Corn_IRR_hi and Corn_Irr_lo.
     L2241.LN4_Logit %>%
-      repeat_add_columns(tibble::tibble(Irr_Rfd = c( "IRR", "RFD" ))) %>%
+      repeat_add_columns(tibble::tibble(Irr_Rfd = c("IRR", "RFD"))) %>%
       mutate(LandNode5 = paste(LandNode4, Irr_Rfd, sep = aglu.IRR_DELIMITER),
              logit.exponent = aglu.MGMT_LOGIT_EXP,
              logit.type = aglu.MGMT_LOGIT_TYPE) %>%
@@ -274,7 +274,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       convert_LN4_to_LN5(names = c(LEVEL2_DATA_NAMES[["LN5_LeafGhostShare"]], "level")) %>%
       mutate(tmp = LandLeaf) %>%
       separate(tmp, c("crop1", "crop2", "GLU", "Irr_Rfd", "lev")) %>%
-      select(-lev, -crop1, -crop2)  %>%
+      select(-lev, -crop1, -crop2) %>%
       # use left_join to keep NA's for further manipulation
       left_join(L2252.LandShare_R_bio_GLU_irr, by = c("region", "GLU", "Irr_Rfd", "level")) %>%
       mutate(ghost.unnormalized.share = round(landshare, aglu.DIGITS_LAND_USE)) %>%

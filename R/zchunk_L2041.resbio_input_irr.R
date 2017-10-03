@@ -16,7 +16,7 @@
 #' @export
 module_aglu_L2041.resbio_input_irr_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L204.AgResBio_For",
+    return(c("L204.AgResBio_For",
               "L204.GlobalResBio_Mill",
               "L204.AgResBio_ag",
               "L204.AgResBioCurve_For",

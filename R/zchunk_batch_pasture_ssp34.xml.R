@@ -10,7 +10,7 @@
 #' original data system was \code{batch_pasture_ssp34.xml.R} (aglu XML).
 module_aglu_batch_pasture_ssp34.xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L242.LN2_HistUnmgdAllocation_SSP34",
+    return(c("L242.LN2_HistUnmgdAllocation_SSP34",
               "L242.LN2_UnmgdAllocation_SSP34",
               "L242.LN2_HistMgdAllocation_SSP34",
               "L242.LN2_MgdAllocation_SSP34"))

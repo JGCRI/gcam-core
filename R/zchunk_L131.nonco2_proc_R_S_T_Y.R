@@ -105,7 +105,7 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
       filter(EDGAR_agg_sector %in% c("industry_processes", "chemicals", "landfills", "wastewater", "aerosols",
                                      "metals", "foams", "solvents", "semiconductors")) %>%
       select(year,value, Non.CO2, EDGAR_agg_sector, GCAM_region_ID) %>%
-      na.omit()  %>%  # delete rows with NA's
+      na.omit() %>%  # delete rows with NA's
       group_by(year, Non.CO2, EDGAR_agg_sector, GCAM_region_ID) %>%
       summarise(EDGAR_emissions = sum(value)) %>%
       mutate(EDGAR_emissions = EDGAR_emissions * CONV_GG_TG) -> # convert from gg to tg

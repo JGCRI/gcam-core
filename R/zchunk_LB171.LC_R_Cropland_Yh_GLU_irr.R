@@ -15,7 +15,7 @@
 #' @author RC May 2017
 module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",
+    return(c("L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",
               "L161.ag_irrProd_Mt_R_C_Y_GLU",
               "L161.ag_rfdProd_Mt_R_C_Y_GLU",
               "L161.ag_irrHA_frac_R_C_GLU"))

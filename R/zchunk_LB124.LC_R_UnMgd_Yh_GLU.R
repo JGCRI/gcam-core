@@ -27,7 +27,7 @@
 #' @author ACS August 2017
 module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L120.LC_bm2_R_LT_Yh_GLU",
+    return(c("L120.LC_bm2_R_LT_Yh_GLU",
               "L122.LC_bm2_R_ExtraCropLand_Yh_GLU",
               "L123.LC_bm2_R_MgdPast_Yh_GLU",
               "L123.LC_bm2_R_MgdFor_Yh_GLU"))
@@ -113,7 +113,7 @@ module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
     L124.LC_bm2_R_LTunmgd_Yh_GLU %>%
       group_by(GCAM_region_ID, GLU, year) %>%
       summarise(value = sum(value)) %>%
-      ungroup  %>%
+      ungroup %>%
       mutate(Land_Type = "All_Unmanaged") %>%
       rename(TotUnmgdLand = value) %>%
       # Then, Calculate adjustment ratio = (Total Unmgd Land - Extra Cropland) / Total Unmgd Land
@@ -127,7 +127,7 @@ module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
 
     # Check that enough unmanaged land is available for the cropland expansion in all regions/GLUs
     if(any(L124.LC_UnMgdAdj_R_Yh_GLU$adjustmentRatio < 0)) {
-      stop( "Increase in cropland exceeds available unmanaged land")
+      stop("Increase in cropland exceeds available unmanaged land")
     }
 
 

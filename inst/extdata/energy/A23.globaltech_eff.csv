@@ -1,7 +1,7 @@
-# File: A23.globaltech_eff.csv,,,,,,,,,,,,
-# Title: Global technologies efficiencies by fuel and electric sector,,,,,,,,,,,,
-# Units: NA,,,,,,,,,,,,
-# Comments: Future improvement is based on the maximum % reduction that the literature deems likely and a rate. Note that some technologies are the same as another with additional equipment (i.e. CCS) for those technologies the improvement is on the additional equipmentcorresponding to the maturity level of the technology,,,,,,,,,,,,
+# File: A23.globaltech_eff.csv
+# Title: Global technologies efficiencies by fuel and electric sector
+# Units: NA
+# Comments: Future improvement is based on the maximum % reduction that the literature deems likely and a rate. Note that some technologies are the same as another with additional equipment (i.e. CCS) for those technologies the improvement is on the additional equipmentcorresponding to the maturity level of the technology
 supplysector,subsector,technology,minicam.energy.input,1971,1990,2005,2010,2015,2100,improvement.max,improvement.rate,improvement.shadow.technology
 electricity,coal,coal (conv pul),regional coal,0.3,0.35,0.391,0.396656458,0.396656458,,1.462222505,0.015,
 electricity,coal,coal (conv pul CCS),regional coal,0.29227318,0.29227318,0.29227318,0.29227318,0.29227318,,-0.256609245,0.05,coal (conv pul)
@@ -22,10 +22,8 @@ electricity,nuclear,Gen_III,nuclearFuelGenIII,0.333,0.333,0.333,0.333,0.333,0.33
 electricity,wind,wind,onshore wind resource,1,1,1,1,1,1,,,
 electricity,wind,wind_storage,onshore wind resource,0.96,0.96,0.96,0.96,0.96,0.96,,,
 electricity,solar,PV,global solar resource,1,1,1,1,1,1,,,
-electricity,solar,PV,backup_electricity,1,1,1,1,1,1,,,
 electricity,solar,PV_storage,global solar resource,0.96,0.96,0.96,0.96,0.96,0.96,,,
 electricity,solar,CSP,global solar resource,1,1,1,1,1,1,,,
-electricity,solar,CSP,csp_backup,1,1,1,1,1,1,,,
 electricity,solar,CSP_storage,global solar resource,1,1,1,1,1,1,,,
 electricity,geothermal,geothermal,geothermal,0.1,0.1,0.1,0.1,0.1,0.1,,,
 elect_td_bld,rooftop_pv,rooftop_pv,distributed_solar,1,1,1,1,1,1,,,

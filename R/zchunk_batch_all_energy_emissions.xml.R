@@ -10,7 +10,7 @@
 #' original data system was \code{batch_all_energy_emissions.xml.R} (emissions XML).
 module_emissions_batch_all_energy_emissions.xml_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L201.en_pol_emissions",
+    return(c("L201.en_pol_emissions",
               "L201.en_ghg_emissions",
               "L201.en_bcoc_emissions",
               "L201.nonghg_max_reduction",

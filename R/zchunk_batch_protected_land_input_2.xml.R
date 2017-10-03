@@ -10,7 +10,7 @@
 #' original data system was \code{batch_protected_land_input_2.xml.R} (aglu XML).
 module_aglu_batch_protected_land_input_2.xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L222.LN2_HistUnmgdAllocation_noprot",
+    return(c("L222.LN2_HistUnmgdAllocation_noprot",
               "L222.LN2_UnmgdAllocation_noprot",
               "L222.LN2_UnmgdCarbon",
               "L222.LN1_HistUnmgdAllocation_prot",

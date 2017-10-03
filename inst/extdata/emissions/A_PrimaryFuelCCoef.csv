@@ -1,0 +1,30 @@
+# File: A_PrimaryFuelCCoef.csv,,
+# Title: Global Default Emissions Factors,,
+# Description: assumed global default emissions factors,,
+# Units: kg C per GJ,,
+# Source: CDIAC inventory IEA energy balance some manual adjustments,,
+PrimaryFuelCO2Coef.name,PrimaryFuelCO2Coef,traded
+biomass,0,0
+regional biomass,23,0
+delivered biomass,23,0
+regional biomassOil,19.6,0
+regional sugar for ethanol,19.6,0
+regional corn for ethanol,19.6,0
+coal,27.3,0
+regional coal,27.3,0
+delivered coal,27.3,0
+natural gas,14.2,0
+regional natural gas,14.2,0
+gas processing,14.2,0
+gas pipeline,14.2,0
+wholesale gas,14.2,0
+delivered gas,14.2,0
+crude oil,19.6,0
+unconventional oil,21.1,0
+unconventional oil production,19.6,0
+traded unconventional oil,19.6,1
+regional oil,19.6,0
+refining,19.6,0
+refined liquids industrial,19.6,0
+refined liquids enduse,19.6,0
+limestone,0.08,0

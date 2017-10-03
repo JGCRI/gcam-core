@@ -195,7 +195,7 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
     # ===================================================
 
     # Produce outputs
-    L143.HDDCDD_scen_R_Y  %>%
+    L143.HDDCDD_scen_R_Y %>%
       add_title("HDDCDD by GCAM region") %>%
       add_units("Fahrenheit Degree Days") %>%
       add_comments("Population weighted country HDDCDD data from multiple ESMs and scenarios to GCAM region") %>%

@@ -10,7 +10,7 @@
 #' original data system was \code{batch_heat.xml.R} (energy XML).
 module_energy_batch_heat.xml_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L224.SubsectorLogit_heat",
+    return(c("L224.SubsectorLogit_heat",
               "L224.SubsectorShrwt_heat",
               "L224.SubsectorInterp_heat",
               "L224.SubsectorInterpTo_heat",

@@ -10,7 +10,7 @@
 #' original data system was \code{batch_land_input_3_IRR.xml.R} (aglu XML).
 module_aglu_batch_land_input_3_IRR.xml_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L2231.LN3_HistUnmgdAllocation",
+    return(c("L2231.LN3_HistUnmgdAllocation",
               "L2231.LN3_UnmgdAllocation",
               "L2231.NodeEquiv",
               "L2231.LN3_NoEmissCarbon",

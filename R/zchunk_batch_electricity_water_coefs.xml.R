@@ -10,7 +10,7 @@
 #' original data system was \code{batch_electricity_water_coefs.xml.R} (water XML).
 module_water_batch_electricity_water_coefs.xml_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L2233.GlobalTechCoef_elec_cool",
+    return(c("L2233.GlobalTechCoef_elec_cool",
               "L2233.GlobalIntTechCoef_elec_cool"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "electricity_water_coefs.xml"))

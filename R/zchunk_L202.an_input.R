@@ -134,7 +134,7 @@ module_aglu_L202.an_input <- function(command, ...) {
     L202.ag_Feed_Mt_R_C_Y.mlt %>%
       filter(GCAM_commodity %in% A_agRsrcCurves$sub.renewable.resource) %>%
       group_by(region, GCAM_region_ID, GCAM_commodity) %>%
-      summarise(maxSubResource = max(value))  %>%
+      summarise(maxSubResource = max(value)) %>%
       # bind the two tables together, re-name the columns to the appropriate headers, and add in a sub.renewable.resource category
       bind_rows(L202.maxSubResource_an) %>%
       ungroup %>%

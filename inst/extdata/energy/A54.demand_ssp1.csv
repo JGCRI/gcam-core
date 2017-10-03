@@ -1,0 +1,8 @@
+# File: A54.demand_ssp1.csv
+# Title: Transportation final demand perCapitaBased / price elasticity / income elasticity
+# Units: Unitless
+energy.final.demand,perCapitaBased,price.elasticity,income.elasticity
+trn_pass,1,-1.25,0.8
+trn_freight,0,-0.65,0.5
+trn_aviation_intl,1,-1,1
+trn_shipping_intl,0,-0.65,0.4

@@ -15,7 +15,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RH May 2017
-
 module_energy_LA154.transportation_UCD <- function(command, ...) {
 
   UCD_trn_data_name <- paste0("UCD_trn_data_", energy.TRN_SSP)
@@ -330,8 +329,8 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
 
     # Compute the nonmotorized service output at the country level, using the historical population
     PKM_nonmotor_ctry <- L100.Pop_thous_ctry_Yh %>%
-      repeat_add_columns(tibble(mode = c( "Walk", "Cycle"))) %>%
-      left_join_error_no_match(UCD_ctry %>% select(-country_name), by = "iso")  %>%
+      repeat_add_columns(tibble(mode = c("Walk", "Cycle"))) %>%
+      left_join_error_no_match(UCD_ctry %>% select(-country_name), by = "iso") %>%
       left_join_error_no_match(PKM_percap_nonmotor_UCD_R %>% filter(year == energy.UCD_EN_YEAR),
                                by = c("UCD_region", "mode")) %>%
       mutate(value = value * 1 / CONV_MIL_THOUS * pkm_percap)

@@ -19,7 +19,7 @@
 #' @author MC May 2017
 module_aglu_LB125.LC_tot <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L120.LC_bm2_R_UrbanLand_Yh_GLU",
+    return(c("L120.LC_bm2_R_UrbanLand_Yh_GLU",
               "L120.LC_bm2_R_Tundra_Yh_GLU",
               "L120.LC_bm2_R_RckIceDsrt_Yh_GLU",
               "L122.LC_bm2_R_HarvCropLand_Yh_GLU",

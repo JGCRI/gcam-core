@@ -15,7 +15,7 @@
 #' @author KD September 2017
 module_gcam.usa_L225.hydrogen_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L225.SubsectorLogit_h2"))
+    return(c("L225.SubsectorLogit_h2"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L225.DeleteSubsector_h2_USA"))
   } else if(command == driver.MAKE) {
