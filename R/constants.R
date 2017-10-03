@@ -312,8 +312,8 @@ CONV_GWH_EJ <- 3.6e-6
 CONV_KWH_GJ <- 3.6e-3
 CONV_GJ_EJ <- 1e-9
 CONV_BBLD_EJYR <- 6.119 * 365.25 * 1e-3 # billion barrels a day to EJ per year
-CONV_KBTU_EJ <- 1.0551e-12
-CONV_TBTU_EJ <- 0.0010551
+CONV_KBTU_EJ <- 1.0551e-12 # KiloBTU to EJ
+CONV_TBTU_EJ <- 0.0010551 # TeraBTU to EJ
 
 # Other
 CONV_MCAL_PCAL <- 1e-9
@@ -322,8 +322,8 @@ CONV_MILLION_M3_KM3 <- 1e-03
 CONV_M2_ACR <- 0.0002471058
 CONV_HA_M2 <- 1e4 # ha to m2
 CONV_BM2_M2 <- 1e9
-CONV_MILFT2_M2 <- 92900
-CONV_FT2_M2 <- 0.0929
+CONV_MILFT2_M2 <- 92900 # Million square feet to square meters
+CONV_FT2_M2 <- 0.0929 # Square feet to square meters
 
 # Driver constants ======================================================================
 

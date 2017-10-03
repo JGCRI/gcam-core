@@ -1,5 +1,5 @@
 # File: EIA_AEO_fuels.csv
-# Title: EIA AEO Fuel Mappings
+# Title: Mapping EIA Fuel to GCAM fuel
 # Units: NA
 EIA_fuel,fuel
 Electricity,electricity
