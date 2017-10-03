@@ -1,0 +1,42 @@
+# File: A23.globaltech_retirement.csv
+# Title: Electricity technology retirement parameters
+# Units: Years for lifetime and half.life; Unitless for shutdown.rate; steepness; median.shutdown.point; profit.shutdown.steepness
+# Comments: maximum lifetime of cohort. If no retirement function is used; the entire cohort is retired in this number of years.
+#           shutdown.rate: portion of cohort retired each year; used by the phased-shutdown-decider retirement function.
+#           half.life: number of years at which 50% of the cohort is retired; using the s-curve-shutdown-decider retirement function.
+#           steepness: shape parameter used by the s-curve-shutdown-decider retirement function.
+#           median.shutdown.point: profit-ratio at which 50% of the cohort is shut down for lack of profitability.
+#           profit.shutdown.steepness: shape parameter of profit-shutdown-decider function.
+supplysector,subsector,technology,year,lifetime,shutdown.rate,half.life,steepness,median.shutdown.point,profit.shutdown.steepness
+electricity,coal,coal (conv pul),final-calibration-year,60,,30,0.1,-0.1,6
+electricity,gas,gas (steam/CT),final-calibration-year,60,,30,0.1,-0.1,6
+electricity,gas,gas (CC),final-calibration-year,60,,30,0.1,-0.1,6
+electricity,refined liquids,refined liquids (steam/CT),final-calibration-year,60,,30,0.1,-0.5,6
+electricity,biomass,biomass (conv),final-calibration-year,60,,30,0.1,-0.1,6
+electricity,nuclear,Gen_II_LWR,final-historical-year,60,,30,0.1,-0.1,6
+electricity,wind,wind,final-calibration-year,30,,,,,
+electricity,solar,PV,final-calibration-year,30,,,,,
+electricity,solar,CSP,final-calibration-year,30,,,,,
+electricity,geothermal,geothermal,final-calibration-year,30,,,,-0.1,6
+electricity,coal,coal (conv pul),initial-future-year,60,,,,-0.1,6
+electricity,coal,coal (conv pul CCS),initial-future-year,60,,,,-0.1,6
+electricity,coal,coal (IGCC),initial-future-year,60,,,,-0.1,6
+electricity,coal,coal (IGCC CCS),initial-future-year,60,,,,-0.1,6
+electricity,gas,gas (steam/CT),initial-future-year,45,,,,-0.1,6
+electricity,gas,gas (CC),initial-future-year,45,,,,-0.1,6
+electricity,gas,gas (CC CCS),initial-future-year,45,,,,-0.1,6
+electricity,refined liquids,refined liquids (steam/CT),initial-future-year,45,,,,-0.5,6
+electricity,refined liquids,refined liquids (CC),initial-future-year,45,,,,-0.1,6
+electricity,refined liquids,refined liquids (CC CCS),initial-future-year,45,,,,-0.1,6
+electricity,biomass,biomass (conv),initial-future-year,60,,,,-0.1,6
+electricity,biomass,biomass (conv CCS),initial-future-year,60,,,,-0.1,6
+electricity,biomass,biomass (IGCC),initial-future-year,60,,,,-0.1,6
+electricity,biomass,biomass (IGCC CCS),initial-future-year,60,,,,-0.1,6
+electricity,nuclear,Gen_III,initial-nonhistorical-year,60,,,,-0.1,6
+electricity,wind,wind,initial-future-year,30,,,,,
+electricity,wind,wind_storage,initial-future-year,30,,,,,
+electricity,solar,PV,initial-future-year,30,,,,,
+electricity,solar,PV_storage,initial-future-year,30,,,,,
+electricity,solar,CSP,initial-future-year,30,,,,,
+electricity,solar,CSP_storage,initial-future-year,30,,,,,
+electricity,geothermal,geothermal,initial-future-year,30,,,,-0.1,6
