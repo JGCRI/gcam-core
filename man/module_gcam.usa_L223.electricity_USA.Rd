@@ -34,7 +34,8 @@ original data system was \code{L223.electricity_USA.R} (gcam-usa level2).
 Generates GCAM-USA model inputs for electrcity sector by grid regions and states.
 }
 \details{
-This chunk disaggregtes the USA electricity sector to subnational grid regions and states.
+This chunk generates input files to create an annualized electricity generation sector for each state
+and creates the demand for the state-level electricity sectors in the grid regions.
 }
 \author{
 RC Oct 2017

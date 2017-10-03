@@ -21,7 +21,8 @@
 #' \code{L223.StubTechMarket_elec_USA}, \code{L223.StubTechMarket_backup_USA}, \code{L223.StubTechElecMarket_backup_USA},
 #' \code{L223.StubTechCapFactor_elec_wind_USA}, \code{L223.StubTechCapFactor_elec_solar_USA}. The corresponding file in the
 #' original data system was \code{L223.electricity_USA.R} (gcam-usa level2).
-#' @details This chunk disaggregtes the USA electricity sector to subnational grid regions and states.
+#' @details This chunk generates input files to create an annualized electricity generation sector for each state
+#' and creates the demand for the state-level electricity sectors in the grid regions.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
