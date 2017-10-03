@@ -165,7 +165,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
         rename(fract.harvested = For) ->
         # store in a temporary table for further processing
         For.Mill.tmp
-    } else{
+    } else {
       # Mill gets its OWN base resbio_curve from A_resbio_curves
       # Correct one ; need first repeat_add_columns to just do For for both for Old DS behavior
       L204.GlobalResBio_Mill %>%
@@ -243,8 +243,8 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       select(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology, year, residue.biomass.production,
              mass.conversion, harvest.index, eros.ctrl, mass.to.energy, water.content) %>%
-      repeat_add_columns(tibble(Irr_Rfd = c( "IRR", "RFD"))) %>%
-      repeat_add_columns(tibble(level = c( "lo", "hi"))) %>%
+      repeat_add_columns(tibble(Irr_Rfd = c("IRR", "RFD"))) %>%
+      repeat_add_columns(tibble(level = c("lo", "hi"))) %>%
       mutate(AgProductionTechnology = paste(paste(AgProductionTechnology, Irr_Rfd, sep = aglu.IRR_DELIMITER),
                                             level, sep = aglu.MGMT_DELIMITER)) %>%
       select(-Irr_Rfd, -level) ->
@@ -282,7 +282,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
                      "water/basin_to_country_mapping",
                      "aglu/A_resbio_curves",
                      "aglu/A_bio_frac_prod_R",
-                     "L123.For_Prod_bm3_R_Y_GLU")  %>%
+                     "L123.For_Prod_bm3_R_Y_GLU") %>%
       add_flags(FLAG_PROTECT_FLOAT) ->
       L2042.AgResBioCurve_For
     L204.GlobalResBio_Mill %>%

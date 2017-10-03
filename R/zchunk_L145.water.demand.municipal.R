@@ -77,7 +77,7 @@ module_water_L145.water.demand.municipal <- function(command, ...) {
     # Come up with regional municipal prices from IBNET data
     IBNET_municipal_water_cost_USDm3 %>%
       inner_join(FAO_ctry_GCAM_region_ID, by = c("country" = "FAO_country")) %>%
-      mutate(expenditure = cost * consumption)  %>%
+      mutate(expenditure = cost * consumption) %>%
       group_by(GCAM_region_ID) %>%
       summarise(expenditure = sum(expenditure), consumption = sum(consumption)) %>%
       mutate(input.cost = expenditure / consumption) %>%

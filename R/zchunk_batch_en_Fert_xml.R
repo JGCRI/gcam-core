@@ -10,7 +10,7 @@
 #' original data system was \code{batch_en_Fert_xml.R} (energy XML).
 module_energy_batch_en_Fert_xml_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L2322.FinalEnergyKeyword_Fert",
+    return(c("L2322.FinalEnergyKeyword_Fert",
               "L2322.SubsectorLogit_Fert",
               "L2322.SubsectorShrwt_Fert",
               "L2322.SubsectorInterp_Fert",

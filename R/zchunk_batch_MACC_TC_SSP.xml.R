@@ -27,7 +27,7 @@ module_emissions_batch_MACC_TC_SSP.xml <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    for (i in SSP_NUMS){
+    for (i in SSP_NUMS) {
       # Names of inputs and outputs
       ag_MAC <- paste0("L252.MAC_Ag_TC_SSP", i)
       an_MAC <- paste0("L252.MAC_An_TC_SSP", i)

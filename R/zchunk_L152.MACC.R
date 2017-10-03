@@ -39,7 +39,7 @@ module_emissions_L152.MACC <- function(command, ...) {
     if(emissions.EPA_MACC_YEAR %in% c(2020, 2030)) {
         if(emissions.EPA_MACC_YEAR == 2020) EPA_MACC_MtCO2e <- EPA_MACC_2020_MtCO2e
         if(emissions.EPA_MACC_YEAR == 2030) EPA_MACC_MtCO2e <- EPA_MACC_2030_MtCO2e
-    } else{
+    } else {
       stop("MAC curve year needs to be either 2020 or 2030")
       }
 

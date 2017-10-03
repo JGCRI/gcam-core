@@ -102,14 +102,14 @@ module_energy_L224.heat <- function(command, ...) {
       filter(region %in% heat_region$region) -> L224.SubsectorLogit_heat
 
     # L224.SubsectorShrwt_heat and L224.SubsectorShrwtFllt_heat: Subsector shareweights of district heat sectors
-    if(any(!is.na(A24.subsector_shrwt$year))){
+    if(any(!is.na(A24.subsector_shrwt$year))) {
       A24.subsector_shrwt %>%
         filter(!is.na(year)) %>%
         write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwt"]], GCAM_region_names = GCAM_region_names ) %>%
         filter(region %in% heat_region$region) -> L224.SubsectorShrwt_heat
     }
 
-    if(any(!is.na(A24.subsector_shrwt$year.fillout))){
+    if(any(!is.na(A24.subsector_shrwt$year.fillout))) {
       A24.subsector_shrwt %>%
         filter(!is.na(year.fillout)) %>%
         write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]], GCAM_region_names = GCAM_region_names ) %>%
@@ -117,14 +117,14 @@ module_energy_L224.heat <- function(command, ...) {
     }
 
     # Subsector shareweight interpolation of district heat sectors
-    if(any(is.na(A24.subsector_interp$to.value))){
+    if(any(is.na(A24.subsector_interp$to.value))) {
       A24.subsector_interp %>%
         filter(is.na(to.value)) %>%
         write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorInterp"]], GCAM_region_names = GCAM_region_names) %>%
         filter(region %in% heat_region$region) -> L224.SubsectorInterp_heat
     }
 
-    if(any(!is.na(A24.subsector_interp$to.value))){
+    if(any(!is.na(A24.subsector_interp$to.value))) {
       A24.subsector_interp %>%
         filter(!is.na(to.value)) %>%
         write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorInterpTo"]], GCAM_region_names = GCAM_region_names) %>%
@@ -277,7 +277,7 @@ module_energy_L224.heat <- function(command, ...) {
       add_precursors("energy/A24.subsector_logit", "energy/A_regions", "common/GCAM_region_names") ->
       L224.SubsectorLogit_heat
 
-    if (exists("L224.SubsectorShrwt_heat")){
+    if (exists("L224.SubsectorShrwt_heat")) {
     L224.SubsectorShrwt_heat %>%
       add_title("Subsector shareweights of district heat sectors") %>%
       add_units("N/A") %>%
@@ -296,7 +296,7 @@ module_energy_L224.heat <- function(command, ...) {
         L224.SubsectorShrwt_heat
     }
 
-    if (exists("L224.SubsectorShrwtFllt_heat")){
+    if (exists("L224.SubsectorShrwtFllt_heat")) {
     L224.SubsectorShrwtFllt_heat %>%
       add_title("Subsector shareweights of district heat sectors with fillout year") %>%
       add_units("N/A") %>%
@@ -315,7 +315,7 @@ module_energy_L224.heat <- function(command, ...) {
         L224.SubsectorShrwtFllt_heat
     }
 
-    if (exists("L224.SubsectorInterp_heat")){
+    if (exists("L224.SubsectorInterp_heat")) {
     L224.SubsectorInterp_heat %>%
       add_title("Subsector shareweight interpolation of district heat sectors") %>%
       add_units("units") %>%
@@ -334,7 +334,7 @@ module_energy_L224.heat <- function(command, ...) {
         L224.SubsectorInterp_heat
     }
 
-    if (exists("L224.SubsectorInterpTo_heat")){
+    if (exists("L224.SubsectorInterpTo_heat")) {
     L224.SubsectorInterpTo_heat %>%
       add_title("Subsector shareweight interpolation of district heat sectors using to.year") %>%
       add_units("units") %>%

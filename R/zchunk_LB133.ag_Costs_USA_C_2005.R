@@ -75,7 +75,7 @@ module_aglu_LB133.ag_Costs_USA_C_2005 <- function(command, ...) {
       # then join cost_type information:
       left_join_error_no_match(USDA_item_cost, by = c("Item")) %>%
       # select only variable cost data and only MODEL_COST_YEARS
-      filter(cost_type == "variable", year %in% MODEL_COST_YEARS)  %>%
+      filter(cost_type == "variable", year %in% MODEL_COST_YEARS) %>%
       # select just identifying information of interest:
       select(GCAM_commodity, GTAP_crop, Item, year, value) %>%
       # Convert costs from the given nominal dollars to 1975 dollars:
@@ -185,7 +185,7 @@ module_aglu_LB133.ag_Costs_USA_C_2005 <- function(command, ...) {
       # Calculate the total expenditure in billion 1975 dollars for each USDA commodity = GCAM_commodity-GTAP_crop combo
       # by Expenditures in bil75USD = Cost in 1975 dollars/square meter   * Harvested area in billion square meters
       #    Expenditures_bil75USD    = cost_75USDm2                        * HA_bm2:
-      mutate(Expenditures_bil75USD = cost_75USDm2 * HA_bm2)  %>%
+      mutate(Expenditures_bil75USD = cost_75USDm2 * HA_bm2) %>%
       # aggregate over GTAP_crops to get Expenditures and harvested area at the level of GCAM_commodity:
       group_by(GCAM_commodity) %>%
       summarise(HA_bm2 = sum(HA_bm2), Expenditures_bil75USD = sum(Expenditures_bil75USD)) %>%

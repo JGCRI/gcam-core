@@ -10,7 +10,7 @@
 #' original data system was \code{batch_high_cost_ccs.xml.R} (energy XML).
 module_energy_batch_high_cost_ccs.xml_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L261.GlobalTechCost_C_High"))
+    return(c("L261.GlobalTechCost_C_High"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "high_cost_ccs.xml"))
   } else if(command == driver.MAKE) {
