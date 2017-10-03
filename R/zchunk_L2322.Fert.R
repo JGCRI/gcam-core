@@ -327,8 +327,8 @@ module_energy_L2322.Fert <- function(command, ...) {
       add_precursors("energy/A322.subsector_interp", "common/GCAM_region_names") ->
       L2322.SubsectorInterp_Fert
 
-    L2322.StubTech_Fert %>%
-      add_title("Identification of stub technologies of fertilizer sector") %>%
+	 L2322.StubTech_Fert %>%
+      add_title("Stub-technology (coal, coal CCS, and etc.) for fertilizer sector") %>%
       add_units("NA") %>%
       add_comments("For fertilizer sector, the stub technologies from A322.globaltech_shrwt are expanded into all GCAM regions") %>%
       add_legacy_name("L2322.StubTech_Fert") %>%
@@ -345,7 +345,7 @@ module_energy_L2322.Fert <- function(command, ...) {
 
     L2322.GlobalTechCoef_Fert %>%
       add_title("Energy inputs and coefficients of global fertilizer energy use and feedstocks technologies") %>%
-      add_units("Unitless") %>%
+      add_units("GJ/kg N for supplysector N fertilizer; Unitless for supplysector Exports_fertilizer") %>%
       add_comments("For fertilizer sector, the energy use coefficients from A322.globaltech_coef are interpolated into all model years") %>%
       add_legacy_name("energy/A322.globaltech_coef") %>%
       add_precursors("energy/A322.globaltech_coef") ->
