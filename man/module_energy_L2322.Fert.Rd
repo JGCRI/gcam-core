@@ -14,14 +14,16 @@ module_energy_L2322.Fert(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L2322.SectorLogitTables[[ curr_table ]]$data}, \code{L2322.Supplysector_Fert}, \code{L2322.FinalEnergyKeyword_Fert}, \code{L2322.SubsectorLogitTables[[ curr_table ]]$data}, \code{L2322.SubsectorLogit_Fert}, \code{L2322.SubsectorShrwt_Fert}, \code{L2322.SubsectorShrwtFllt_Fert}, \code{L2322.SubsectorInterp_Fert}, \code{L2322.SubsectorInterpTo_Fert}, \code{L2322.StubTech_Fert}, \code{L2322.GlobalTechShrwt_Fert}, \code{L2322.GlobalTechCoef_Fert}, \code{L2322.GlobalTechCost_Fert}, \code{L2322.GlobalTechCapture_Fert}, \code{L2322.GlobalTechShutdown_Fert}, \code{L2322.GlobalTechSCurve_Fert}, \code{L2322.GlobalTechLifetime_Fert}, \code{L2322.GlobalTechProfitShutdown_Fert}, \code{L2322.StubTechProd_Fert}, \code{L2322.StubTechCoef_Fert}, \code{L2322.StubTechFixOut_Fert_imp}, \code{L2322.StubTechFixOut_Fert_exp}, \code{L2322.PerCapitaBased_Fert}, \code{L2322.BaseService_Fert}. The corresponding file in the
+the generated outputs:  \code{L2322.Supplysector_Fert}, \code{L2322.FinalEnergyKeyword_Fert}, \code{L2322.SubsectorLogit_Fert}, \code{L2322.SubsectorShrwtFllt_Fert}, \code{L2322.SubsectorInterp_Fert}, \code{L2322.StubTech_Fert}, \code{L2322.GlobalTechShrwt_Fert}, \code{L2322.GlobalTechCoef_Fert}, \code{L2322.GlobalTechCost_Fert}, \code{L2322.GlobalTechCapture_Fert}, \code{L2322.GlobalTechSCurve_Fert}, \code{L2322.GlobalTechProfitShutdown_Fert}, \code{L2322.StubTechProd_Fert}, \code{L2322.StubTechCoef_Fert}, \code{L2322.StubTechFixOut_Fert_imp}, \code{L2322.StubTechFixOut_Fert_exp}, \code{L2322.PerCapitaBased_Fert}, \code{L2322.BaseService_Fert}. The corresponding file in the
 original data system was \code{L2322.Fert.R} (energy level2).
 }
 \description{
-The chunk provides supply sector information/keywords, subsector shareweights, global technology lifetime, energy inputs and coefficients, global fertilizer manufacturing technologies, and etc. for fertilizer sector.
+Provide supply sector information/keywords, subsector shareweights, global technology lifetime,
+energy inputs and coefficients, global fertilizer manufacturing technologies, etc. for the fertilizer sector.
 }
 \details{
-The chunk provides supply sector information/keywords, subsector shareweights, global technology lifetime, energy inputs and coefficients, global fertilizer manufacturing technologies, and etc. for fertilizer sector.
+This chunk provides supply sector information/keywords, subsector shareweights, global technology lifetime,
+energy inputs and coefficients, global fertilizer manufacturing technologies, etc. for the fertilizer sector.
 }
 \author{
 LF September 2017

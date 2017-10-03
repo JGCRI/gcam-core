@@ -151,7 +151,7 @@ module_energy_L2322.Fert <- function(command, ...) {
     # Costs of global technologies
     # L2322.GlobalTechCost_Fert: Non-energy costs of global fertilizer manufacturing technologies
     L2322.GlobalTechCoef_Fert %>%
-      select(LEVEL2_DATA_NAMES[["GlobalTechYr"]]) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["GlobalTechYr"]])) %>%
       mutate(minicam.non.energy.input = "non-energy") %>%
       left_join(L1322.Fert_NEcost_75USDkgN_F, by = c('technology' = 'fuel') ) %>% # expecting NAs in the joined tibble
       rename(input.cost = NEcost_75USDkgN) %>%
@@ -220,7 +220,7 @@ module_energy_L2322.Fert <- function(command, ...) {
       left_join_error_no_match(select(calibrated_techs, sector, fuel, supplysector, subsector, technology), by = c("sector", "fuel") ) %>%
       rename(stub.technology = technology) %>%
       mutate(share.weight.year = year, subs.share.weight = if_else(calOutputValue > 0, 1, 0), tech.share.weight = subs.share.weight) %>%
-      select(LEVEL2_DATA_NAMES[["StubTechProd"]]) ->
+      select(one_of(LEVEL2_DATA_NAMES[["StubTechProd"]])) ->
       L2322.StubTechProd_Fert
 
     # L2322.StubTechCoef_Fert: calibrated base-year coefficients of fertilizer production technologies
@@ -232,7 +232,7 @@ module_energy_L2322.Fert <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(select(calibrated_techs, sector, fuel, supplysector, subsector, technology, minicam.energy.input), by = c("sector", "fuel")) %>%
       mutate(stub.technology = technology, market.name = region) %>%
-      select(LEVEL2_DATA_NAMES[["StubTechCoef"]]) ->
+      select(one_of(LEVEL2_DATA_NAMES[["StubTechCoef"]])) ->
       L2322.StubTechCoef_Fert
 
     # L2322.StubTechFixOut_Fert_imp: fixed output of import technology (fixed imports)
@@ -246,7 +246,7 @@ module_energy_L2322.Fert <- function(command, ...) {
       mutate(fixedOutput = round(fixedOutput, energy.DIGITS_CALOUTPUT)) %>%
       mutate(share.weight.year = year, subs.share.weight = 0, tech.share.weight = 0) %>%
       bind_rows(repeat_add_columns(select(filter(., year == max(BASE_YEARS)), -year), tibble(year = FUTURE_YEARS))) %>%
-      select(LEVEL2_DATA_NAMES[["StubTechFixOut"]]) -> #Repeat final year to all future years and rbind
+      select(one_of(LEVEL2_DATA_NAMES[["StubTechFixOut"]])) -> #Repeat final year to all future years and rbind
       L2322.StubTechFixOut_Fert_imp
 
     # L2322.StubTechFixOut_Fert_exp: fixed output of import technology (fixed imports)
@@ -264,7 +264,7 @@ module_energy_L2322.Fert <- function(command, ...) {
 
     L2322.StubTechFixOut_Fert_exp_base %>%
       bind_rows(repeat_add_columns(select(filter(., year == max(BASE_YEARS)), -year), tibble(year = FUTURE_YEARS))) %>% # Repeat final year to all future years and rbind
-      select(LEVEL2_DATA_NAMES[["StubTechFixOut"]]) ->
+      select(one_of(LEVEL2_DATA_NAMES[["StubTechFixOut"]])) ->
       L2322.StubTechFixOut_Fert_exp
 
     # L2322.PerCapitaBased_Fert: per-capita based flag for fertilizer exports final demand
