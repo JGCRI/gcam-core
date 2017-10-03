@@ -80,7 +80,7 @@ module_aglu_LA100.GTAP_downscale_ctry <- function(command, ...) {
       left_join_error_no_match(GTAP_ctry, by = "iso") %>%
       left_join_error_no_match(Ag_Prod_Rgtap, by = c( "GTAP_region", "GLU", "GTAP_use")) %>%
       mutate(share = prod_ctry / prod_rgn) %>%
-      replace_na(list(share = 0))  %>%
+      replace_na(list(share = 0)) %>%
       # Multiply the land values by the shares
       right_join(LV_Rgtap, by = c("iso", "GTAP_region", "GLU", "GTAP_use")) %>%
       mutate(value = value * share) %>%

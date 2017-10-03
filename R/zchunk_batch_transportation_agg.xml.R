@@ -69,27 +69,27 @@ module_energy_batch_transportation_agg.xml <- function(command, ...) {
                      "L252.GlobalTechEff_trn", "L252.GlobalTechCost_trn", "L252.StubTechCalInput_trn",
                      "L252.PerCapitaBased_trn", "L252.PriceElasticity_trn", "L252.BaseService_trn") ->
       transportation_agg.xml
-    
+
     # Some data inputs may not actually contain data. If so, do not add_xml_data.
-    if(!is.null(L252.SubsectorShrwt_trn)){
+    if(!is.null(L252.SubsectorShrwt_trn)) {
       transportation_agg.xml %>%
         add_xml_data(L252.SubsectorShrwt_trn, "SubsectorShrwt") ->
         transportation_agg.xml
     }
-    
-    if(!is.null(L252.SubsectorShrwtFllt_trn)){
+
+    if(!is.null(L252.SubsectorShrwtFllt_trn)) {
       transportation_agg.xml %>%
         add_xml_data(L252.SubsectorShrwtFllt_trn, "SubsectorShrwtFllt") ->
         transportation_agg.xml
     }
-    
-    if(!is.null(L252.SubsectorInterp_trn)){
+
+    if(!is.null(L252.SubsectorInterp_trn)) {
       transportation_agg.xml %>%
         add_xml_data(L252.SubsectorInterp_trn, "SubsectorInterp") ->
         transportation_agg.xml
     }
-    
-    if(!is.null(L252.SubsectorInterpTo_trn)){
+
+    if(!is.null(L252.SubsectorInterpTo_trn)) {
       transportation_agg.xml %>%
         add_xml_data(L252.SubsectorInterpTo_trn, "SubsectorInterpTo") ->
         transportation_agg.xml

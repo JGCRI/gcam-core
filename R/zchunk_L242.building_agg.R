@@ -147,7 +147,7 @@ module_energy_L242.building_agg <- function(command, ...) {
 
     # Write subsector shareweights of building sector for all regions and remove
     # region/fuel combinations where heat and traditional biomass are not modeled as separate fuels.
-    if(any(!is.na(A42.subsector_shrwt$year))){
+    if(any(!is.na(A42.subsector_shrwt$year))) {
       A42.subsector_shrwt %>%
         filter(!is.na(year)) %>%
         write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwt"]],
@@ -159,7 +159,7 @@ module_energy_L242.building_agg <- function(command, ...) {
         L242.SubsectorShrwt_bld # OUTPUT (not generated at this time)
     }
 
-    if(any(!is.na(A42.subsector_shrwt$year.fillout))){
+    if(any(!is.na(A42.subsector_shrwt$year.fillout))) {
       A42.subsector_shrwt %>%
         filter(!is.na(year.fillout)) %>%
         write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]],
@@ -173,7 +173,7 @@ module_energy_L242.building_agg <- function(command, ...) {
 
     # Write subsector shareweight interpolation of building sector for all regions and remove
     # region/fuel combinations where heat and traditional biomass are not modeled as separate fuels.
-    if(any(is.na(A42.subsector_interp$to.value))){
+    if(any(is.na(A42.subsector_interp$to.value))) {
       A42.subsector_interp %>%
         filter(is.na(to.value)) %>%
         write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorInterp"]],
@@ -185,7 +185,7 @@ module_energy_L242.building_agg <- function(command, ...) {
         L242.SubsectorInterp_bld # OUTPUT
     }
 
-    if(any(!is.na(A42.subsector_interp$to.value))){
+    if(any(!is.na(A42.subsector_interp$to.value))) {
       A42.subsector_interp %>%
         filter(!is.na(to.value)) %>%
         write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorInterpTo"]],
@@ -372,7 +372,7 @@ module_energy_L242.building_agg <- function(command, ...) {
                      "energy/A_regions", "energy/A42.subsector_logit") ->
       L242.SubsectorLogit_bld
 
-    if(exists("L242.SubsectorShrwt_bld")){
+    if(exists("L242.SubsectorShrwt_bld")) {
       L242.SubsectorShrwt_bld %>%
         add_title("Subsector shareweights of building sector") %>%
         add_units("Unitless") %>%
@@ -392,7 +392,7 @@ module_energy_L242.building_agg <- function(command, ...) {
         L242.SubsectorShrwt_bld
     }
 
-    if(exists("L242.SubsectorShrwtFllt_bld")){
+    if(exists("L242.SubsectorShrwtFllt_bld")) {
       L242.SubsectorShrwtFllt_bld %>%
         add_title("Subsector shareweights of building sector") %>%
         add_units("Unitless") %>%
@@ -412,7 +412,7 @@ module_energy_L242.building_agg <- function(command, ...) {
         L242.SubsectorShrwtFllt_bld
     }
 
-    if(exists("L242.SubsectorInterp_bld")){
+    if(exists("L242.SubsectorInterp_bld")) {
       L242.SubsectorInterp_bld %>%
         add_title("Subsector shareweight interpolation data of building sector") %>%
         add_units("NA") %>%
@@ -432,7 +432,7 @@ module_energy_L242.building_agg <- function(command, ...) {
         L242.SubsectorInterp_bld
     }
 
-    if(exists("L242.SubsectorInterpTo_bld")){
+    if(exists("L242.SubsectorInterpTo_bld")) {
       L242.SubsectorInterpTo_bld %>%
         add_title("Subsector shareweight interpolation data of building sector") %>%
         add_units("NA") %>%

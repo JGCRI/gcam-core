@@ -78,25 +78,25 @@ module_energy_batch_building_agg.xml <- function(command, ...) {
       building_agg.xml
 
     # Some data inputs may not actually contain data. If so, do not add_xml_data.
-      if(!is.null(L242.SubsectorShrwt_bld)){
+      if(!is.null(L242.SubsectorShrwt_bld)) {
         building_agg.xml %>%
           add_xml_data(L242.SubsectorShrwt_bld, "SubsectorShrwt") ->
           building_agg.xml
       }
 
-    if(!is.null(L242.SubsectorShrwtFllt_bld)){
+    if(!is.null(L242.SubsectorShrwtFllt_bld)) {
       building_agg.xml %>%
         add_xml_data(L242.SubsectorShrwtFllt_bld, "SubsectorShrwtFllt") ->
         building_agg.xml
     }
 
-    if(!is.null(L242.SubsectorInterp_bld)){
+    if(!is.null(L242.SubsectorInterp_bld)) {
       building_agg.xml %>%
         add_xml_data(L242.SubsectorInterp_bld, "SubsectorInterp") ->
         building_agg.xml
     }
 
-    if(!is.null(L242.SubsectorInterpTo_bld)){
+    if(!is.null(L242.SubsectorInterpTo_bld)) {
       building_agg.xml %>%
         add_xml_data(L242.SubsectorInterpTo_bld, "SubsectorInterpTo") ->
         building_agg.xml

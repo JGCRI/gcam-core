@@ -160,7 +160,7 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
       na.omit %>%
       mutate(LandAllocatorRoot = "root",
              logit.year.fillout = min(BASE_YEARS),
-             logit.type = NA)  %>%
+             logit.type = NA) %>%
       # add logit exponents
       # This is where logit types would be added as well, but currently omitting to allow left_join_error_no_match_use
       left_join_error_no_match(select(A_LandNode_logit, LandNode, logit.exponent), by = c("LandNode1" = "LandNode")) %>%

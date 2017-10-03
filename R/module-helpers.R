@@ -405,7 +405,7 @@ get_ssp_regions <- function(pcGDP, reg_names, income_group,
     regions <- filter(pcGDP_yf, value > aglu.HIGH_GROWTH_PCGDP)
   } else if(income_group == "medium") {
     regions <- filter(pcGDP_yf, value < aglu.HIGH_GROWTH_PCGDP, value > aglu.LOW_GROWTH_PCGDP)
-  } else{
+  } else {
     stop("Unknown income_group!")
   }
 

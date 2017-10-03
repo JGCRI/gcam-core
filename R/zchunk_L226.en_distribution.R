@@ -109,7 +109,7 @@ module_energy_L226.en_distribution <- function(command, ...) {
 
     # Conditionally sorts interpolation of energy distribution sectors depending on whether they use a to.year or to.value to do the interpolation.
 
-    if (any(is.na(A26.subsector_interp$to.value))){
+    if (any(is.na(A26.subsector_interp$to.value))) {
       A26.subsector_interp %>%
         filter(is.na(to.value)) %>%
         write_to_all_regions(NAMES_SUBSECTORINTERP, GCAM_region_names) ->

@@ -530,14 +530,14 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
              GCAM_region_ID = as.integer(GCAM_region_ID)) ->
       L122.LC_bm2_R_HarvCropLand_C_Yh_GLU
 
-    L122.LC_bm2_R_HarvCropLand_Yh_GLU  %>%
+    L122.LC_bm2_R_HarvCropLand_Yh_GLU %>%
       ungroup() %>%
       mutate(year = as.integer(year),
              GCAM_region_ID = as.integer(GCAM_region_ID)) ->
       L122.LC_bm2_R_HarvCropLand_Yh_GLU
 
     # Produce outputs
-    L122.ag_HA_to_CropLand_R_Y_GLU  %>%
+    L122.ag_HA_to_CropLand_R_Y_GLU %>%
       add_title("Harvested area to cropland ratio by GCAM region / year / GLU") %>%
       add_units("Unitless ratio") %>%
       add_comments("FAO harvested area, fallow area and land cover area, with Monfreda harvested area and Hyde") %>%

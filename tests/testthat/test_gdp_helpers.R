@@ -4,7 +4,7 @@ context('gdp-join')
 
 ## set up test data
 past <- tibble(year=c(2000, 2005, 2010)) %>%
-  tidyr::crossing(iso=c('xxl', 'xxp'))  %>%
+  tidyr::crossing(iso=c('xxl', 'xxp')) %>%
   mutate(gdp=if_else(iso == 'xxl', 10 * year, 5 * year))
 
 future <- tibble(year = rep(c(2005, 2010, 2015), 2), iso = c(rep('xxl', 3), rep('xxp', 3)),

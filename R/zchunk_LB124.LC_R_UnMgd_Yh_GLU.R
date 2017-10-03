@@ -113,7 +113,7 @@ module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
     L124.LC_bm2_R_LTunmgd_Yh_GLU %>%
       group_by(GCAM_region_ID, GLU, year) %>%
       summarise(value = sum(value)) %>%
-      ungroup  %>%
+      ungroup %>%
       mutate(Land_Type = "All_Unmanaged") %>%
       rename(TotUnmgdLand = value) %>%
       # Then, Calculate adjustment ratio = (Total Unmgd Land - Extra Cropland) / Total Unmgd Land
