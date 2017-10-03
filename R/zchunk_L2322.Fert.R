@@ -254,15 +254,25 @@ module_energy_L2322.Fert <- function(command, ...) {
 
     # L2322.StubTechFixOut_Fert_exp: fixed output of import technology (fixed imports)
     # Exports are positive net exports
+
+    # Need to do this initial filter and extract outside of main pipeline (at least for dplyr 0.5)
+    exports <- filter(A322.globaltech_shrwt, grepl("Exports", supplysector))
+    sups <- exports[["supplysector"]]
+    subs <- exports[["subsector"]]
+    techs <- exports[["technology"]]
+
     L142.ag_Fert_NetExp_MtN_R_Y %>%
       filter(year %in% BASE_YEARS) %>%
       rename(fixedOutput = value) %>%
       mutate(fixedOutput = round(fixedOutput, energy.DIGITS_CALOUTPUT)) %>%
-      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID" ) %>%
-      mutate(supplysector = filter(A322.globaltech_shrwt, grepl( "Exports", supplysector))[["supplysector"]],
-             subsector = filter(A322.globaltech_shrwt, grepl( "Exports", supplysector))[["subsector"]],
-             stub.technology = filter(A322.globaltech_shrwt, grepl( "Exports", supplysector))[["technology"]]) %>%
-      mutate(fixedOutput = pmax(0, fixedOutput), share.weight.year = year, subs.share.weight = 0, tech.share.weight = 0) ->
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      mutate(supplysector = sups,
+             subsector = subs,
+             stub.technology = techs,
+             fixedOutput = pmax(0, fixedOutput),
+             share.weight.year = year,
+             subs.share.weight = 0,
+             tech.share.weight = 0) ->
       L2322.StubTechFixOut_Fert_exp_base
 
     L2322.StubTechFixOut_Fert_exp_base %>%
@@ -272,7 +282,7 @@ module_energy_L2322.Fert <- function(command, ...) {
 
     # L2322.PerCapitaBased_Fert: per-capita based flag for fertilizer exports final demand
     tibble(region = GCAM_region_names[["region"]]) %>%
-      mutate(energy.final.demand = filter(A322.globaltech_shrwt, grepl( "Exports", supplysector))[["supplysector"]],
+      mutate(energy.final.demand = sups,
              perCapitaBased = 0) ->
       L2322.PerCapitaBased_Fert
 
@@ -327,7 +337,7 @@ module_energy_L2322.Fert <- function(command, ...) {
       add_precursors("energy/A322.subsector_interp", "common/GCAM_region_names") ->
       L2322.SubsectorInterp_Fert
 
-	 L2322.StubTech_Fert %>%
+    L2322.StubTech_Fert %>%
       add_title("Stub-technology (coal, coal CCS, and etc.) for fertilizer sector") %>%
       add_units("NA") %>%
       add_comments("For fertilizer sector, the stub technologies from A322.globaltech_shrwt are expanded into all GCAM regions") %>%
