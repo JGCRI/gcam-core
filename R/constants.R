@@ -439,7 +439,6 @@ emissions.AGR_GASES            <- c("CH4_AGR", "N2O_AGR", "NH3_AGR", "NOx_AGR")
 emissions.AG_MACC_GHG_NAMES    <- c("CH4_AGR", "N2O_AGR")
 emissions.GHG_NAMES            <- c("CH4", "N2O")
 emissions.USE_GV_MAC           <- 1
-
 emissions.USE_GCAM3_CCOEFS     <- 1 # Select whether to use GCAM3 fuel carbon coefficients
 emissions.USE_GLOBAL_CCOEFS    <- 1 # Select whether to use global average carbon coefficients on fuels, or region-specific carbon coefficients
 emissions.INVENTORY_MATCH_YEAR <- 2009 # Select year from which to calculate fuel emissions coefficients (2009 is currently the most recent)
@@ -454,9 +453,21 @@ gcamusa.STATES <- c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", 
                       "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR",
                       "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY")
 
+gcamusa.WIND_BASE_COST_YEAR <- 2005
 
 # Uncomment these lines to run under 'timeshift' conditions
 # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
 # FUTURE_YEARS <- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)
 # BASE_YEARS <- c(1975, 1990, 2005)   # normally (1975, 1990, 2005, 2010)
 # MODEL_YEARS <- c(BASE_YEARS, FUTURE_YEARS)
+
+# PV constants ======================================================================
+
+PV_DERATING_FACTOR <- 0.77  # incorporates various factors: inverters, transformers, mismatch, soiling, and others
+PV_RESID_INSTALLED_COST <- 9500  # 2005USD per kw
+PV_COMM_INSTALLED_COST <- 7290  # 2005USD per kw
+PV_RESID_OM <- 100  # 2005USD per kw per year
+PV_COMM_OM <- 40  # 2005USD per kw per year
+PV_LIFETIME <- 30  # years
+PV_DISCOUNT_RATE <- 0.1  # year^-1
+HOURS_PER_YEAR <- 24 * 365

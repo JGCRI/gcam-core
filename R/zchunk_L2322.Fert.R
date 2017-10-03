@@ -141,8 +141,8 @@ module_energy_L2322.Fert <- function(command, ...) {
       complete(nesting(supplysector, subsector, technology, minicam.energy.input), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
       arrange(supplysector, subsector, technology, minicam.energy.input, year) %>%
       group_by(supplysector, subsector, technology, minicam.energy.input) %>%
-      mutate(coefficient = approx_fun(year, coefficient, rule = 1)) %>%
-      mutate(coefficient = round(coefficient, energy.DIGITS_COEFFICIENT)) %>%
+      mutate(coefficient = approx_fun(year, coefficient, rule = 1),
+             coefficient = round(coefficient, energy.DIGITS_COEFFICIENT)) %>%
       ungroup %>%
       filter(year %in% c(BASE_YEARS, FUTURE_YEARS)) %>%
       rename(sector.name = supplysector, subsector.name = subsector) ->
@@ -168,8 +168,8 @@ module_energy_L2322.Fert <- function(command, ...) {
       complete(nesting(supplysector, subsector, technology), year = c(year, FUTURE_YEARS)) %>%
       arrange(supplysector, subsector, technology, year) %>%
       group_by(supplysector, subsector, technology) %>%
-      mutate(remove.fraction = approx_fun(year, remove.fraction, rule = 1)) %>%
-      mutate(remove.fraction = round(remove.fraction, energy.DIGITS_REMOVE.FRACTION)) %>%
+      mutate(remove.fraction = approx_fun(year, remove.fraction, rule = 1),
+             remove.fraction = round(remove.fraction, energy.DIGITS_REMOVE.FRACTION)) %>%
       ungroup %>%
       filter(year %in% FUTURE_YEARS) %>%
       rename(sector.name = supplysector, subsector.name = subsector) %>%
@@ -219,7 +219,9 @@ module_energy_L2322.Fert <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = 'GCAM_region_ID') %>%
       left_join_error_no_match(select(calibrated_techs, sector, fuel, supplysector, subsector, technology), by = c("sector", "fuel") ) %>%
       rename(stub.technology = technology) %>%
-      mutate(share.weight.year = year, subs.share.weight = if_else(calOutputValue > 0, 1, 0), tech.share.weight = subs.share.weight) %>%
+      mutate(share.weight.year = year,
+             subs.share.weight = if_else(calOutputValue > 0, 1, 0),
+             tech.share.weight = subs.share.weight) %>%
       select(one_of(LEVEL2_DATA_NAMES[["StubTechProd"]])) ->
       L2322.StubTechProd_Fert
 
@@ -241,12 +243,13 @@ module_energy_L2322.Fert <- function(command, ...) {
       filter(year %in% BASE_YEARS) %>%
       rename(fixedOutput = value) %>%
       left_join_error_no_match(GCAM_region_names, by = 'GCAM_region_ID') %>%
-      mutate(supplysector = A322.globaltech_renew[["supplysector"]], subsector = A322.globaltech_renew[["subsector"]], stub.technology = A322.globaltech_renew[["technology"]]) %>%
-      mutate(fixedOutput = pmax(0, -1 * fixedOutput)) %>%
-      mutate(fixedOutput = round(fixedOutput, energy.DIGITS_CALOUTPUT)) %>%
-      mutate(share.weight.year = year, subs.share.weight = 0, tech.share.weight = 0) %>%
+      mutate(supplysector = A322.globaltech_renew[["supplysector"]],
+             subsector = A322.globaltech_renew[["subsector"]],
+             stub.technology = A322.globaltech_renew[["technology"]],
+             fixedOutput = round(pmax(0, -1 * fixedOutput), energy.DIGITS_CALOUTPUT),
+             share.weight.year = year, subs.share.weight = 0, tech.share.weight = 0) %>%
       bind_rows(repeat_add_columns(select(filter(., year == max(BASE_YEARS)), -year), tibble(year = FUTURE_YEARS))) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["StubTechFixOut"]])) -> #Repeat final year to all future years and rbind
+      select(one_of(LEVEL2_DATA_NAMES[["StubTechFixOut"]])) -> # Repeat final year to all future years and rbind
       L2322.StubTechFixOut_Fert_imp
 
     # L2322.StubTechFixOut_Fert_exp: fixed output of import technology (fixed imports)
@@ -256,9 +259,9 @@ module_energy_L2322.Fert <- function(command, ...) {
       rename(fixedOutput = value) %>%
       mutate(fixedOutput = round(fixedOutput, energy.DIGITS_CALOUTPUT)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID" ) %>%
-      mutate(supplysector = filter(A322.globaltech_shrwt, grepl( "Exports", supplysector))[["supplysector"]]) %>%
-      mutate(subsector = filter(A322.globaltech_shrwt, grepl( "Exports", supplysector))[["subsector"]]) %>%
-      mutate(stub.technology = filter(A322.globaltech_shrwt, grepl( "Exports", supplysector))[["technology"]]) %>%
+      mutate(supplysector = filter(A322.globaltech_shrwt, grepl( "Exports", supplysector))[["supplysector"]],
+             subsector = filter(A322.globaltech_shrwt, grepl( "Exports", supplysector))[["subsector"]],
+             stub.technology = filter(A322.globaltech_shrwt, grepl( "Exports", supplysector))[["technology"]]) %>%
       mutate(fixedOutput = pmax(0, fixedOutput), share.weight.year = year, subs.share.weight = 0, tech.share.weight = 0) ->
       L2322.StubTechFixOut_Fert_exp_base
 
@@ -269,16 +272,16 @@ module_energy_L2322.Fert <- function(command, ...) {
 
     # L2322.PerCapitaBased_Fert: per-capita based flag for fertilizer exports final demand
     tibble(region = GCAM_region_names[["region"]]) %>%
-      mutate(energy.final.demand = filter(A322.globaltech_shrwt, grepl( "Exports", supplysector))[["supplysector"]]) %>%
-      mutate(perCapitaBased = 0) ->
+      mutate(energy.final.demand = filter(A322.globaltech_shrwt, grepl( "Exports", supplysector))[["supplysector"]],
+             perCapitaBased = 0) ->
       L2322.PerCapitaBased_Fert
 
     # L2322.BaseService_Fert: base-year service output of fertilizer exports final demand
     # Base service is equal to the output of the exports supplysector
     tibble(region = L2322.StubTechFixOut_Fert_exp_base[["region"]]) %>%
-      mutate(energy.final.demand = L2322.StubTechFixOut_Fert_exp_base[["supplysector"]]) %>%
-      mutate(year = L2322.StubTechFixOut_Fert_exp_base[["year"]]) %>%
-      mutate(base.service = L2322.StubTechFixOut_Fert_exp_base[["fixedOutput"]]) ->
+      mutate(energy.final.demand = L2322.StubTechFixOut_Fert_exp_base[["supplysector"]],
+             year = L2322.StubTechFixOut_Fert_exp_base[["year"]],
+             base.service = L2322.StubTechFixOut_Fert_exp_base[["fixedOutput"]]) ->
       L2322.BaseService_Fert
 
     # ===================================================
