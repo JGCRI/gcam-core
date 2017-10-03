@@ -21,7 +21,8 @@
 #' \code{L223.StubTechMarket_elec_USA}, \code{L223.StubTechMarket_backup_USA}, \code{L223.StubTechElecMarket_backup_USA},
 #' \code{L223.StubTechCapFactor_elec_wind_USA}, \code{L223.StubTechCapFactor_elec_solar_USA}. The corresponding file in the
 #' original data system was \code{L223.electricity_USA.R} (gcam-usa level2).
-#' @details This chunk disaggregtes the USA electricity sector to subnational grid regions and states.
+#' @details This chunk generates input files to create an annualized electricity generation sector for each state
+#' and creates the demand for the state-level electricity sectors in the grid regions.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -156,16 +157,15 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
     NREL_us_re_technical_potential %>%
       left_join(states_subregions, by = c("State" = "state_name")) %>%
       filter(Geothermal_Hydrothermal_GWh == 0) %>%
-      mutate(geo_state_noresource = paste(state, "geothermal", sep = " ")) %>%
-      select(geo_state_noresource) %>%
+      transmute(geo_state_noresource = paste(state, "geothermal", sep = " ")) %>%
       unlist ->
       geo_states_noresource
 
-    # gcamusa.USE_REGIONAL_ELEC_MARKETS is TURE, indicating to resolve electricity demands
+    # gcamusa.USE_REGIONAL_ELEC_MARKETS is TRUE, indicating to resolve electricity demands
     # at the level of the grid regions. The entire loop below produces outputs
     # assoicated with resolving demand at the national level, and is currently disabled.
     # Instead, a set of empty tibbles are produced at the end of this chunk.
-    if(!gcamusa.USE_REGIONAL_ELEC_MARKETS){
+    if(!gcamusa.USE_REGIONAL_ELEC_MARKETS) {
       # PART 1: THE USA REGION
       # Define the sector(s) that will be used in this code file. Can be one or multiple sectors
       # The subsectors of the existing USA electricity sector are deleted.
@@ -194,7 +194,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       # No need to read in subsector logit exponents, which are applied to the technology competition
       tibble(region = "USA",
              supplysector = elec_gen_names,
-             subsector = paste(grid_regions, elec_gen_names, sep = " " ),
+             subsector = paste(grid_regions, elec_gen_names, sep = " "),
              year.fillout = min(BASE_YEARS),
              share.weight = 1) ->
         L223.SubsectorShrwtFllt_USAelec
@@ -249,7 +249,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
         mutate(share.weight.year = year,
                tech.share.weight = if_else(calOutputValue == 0, 0, 1)) %>%
         set_subsector_shrwt() %>%
-        select(one_of(LEVEL2_DATA_NAMES[["Production"]]))->
+        select(one_of(LEVEL2_DATA_NAMES[["Production"]])) ->
         L223.Production_USAelec
     }
 
@@ -387,7 +387,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
     # PART 3: THE STATES
     # All tables for which processing is identical are done by a function.
     # This applies to the supplysectors, subsectors, and stub tech characteristics of the states.
-    process_USA_to_states <- function(data){
+    process_USA_to_states <- function(data) {
       state <- region <- grid_region <- subsector <- market.name <-
         minicam.energy.input <- NULL  # silence package check notes
 
@@ -395,17 +395,19 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
         filter(region == "USA") %>%
         write_to_all_states(names(data))
 
-      if("subsector" %in% names(data_new))
+      if("subsector" %in% names(data_new)) {
         data_new <- data_new %>%
           filter(!paste(region, subsector) %in% geo_states_noresource)
+      }
 
       # Re-set markets from USA to regional markets, if called for in the GCAM-USA assumptions for selected fuels
-      if(gcamusa.USE_REGIONAL_FUEL_MARKETS & "market.name" %in% names(data_new))
+      if(gcamusa.USE_REGIONAL_FUEL_MARKETS & "market.name" %in% names(data_new)) {
         data_new <- data_new %>%
           left_join_error_no_match(select(states_subregions,state, grid_region), by = c("region" = "state")) %>%
           mutate(market.name = replace(market.name, minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS,
                                        grid_region[minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS])) %>%
           select(-grid_region)
+      }
 
       data_new
     }
@@ -441,8 +443,8 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       mutate(share.weight.mult = pref,
              share.weight.mult = replace(share.weight.mult, share.weight.mult < 0.1, 0.1),
              share.weight.mult = replace(share.weight.mult, share.weight.mult > 2, 2),
-             # Set VT to zero because they have already shut down their only nuclear plant
-             # which used to account for ~70% of generation
+             # Set the state of VT to zero because VT has already shut down the only nuclear plant
+             # which used to account for about 70% of generation
              share.weight.mult = replace(share.weight.mult, state == "VT", 0)) ->
       L223.state_nuc_pref
 
@@ -526,7 +528,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       filter(!paste(region, subsector) %in% geo_states_noresource) ->
       L223.StubTechMarket_elec_USA
 
-    if(gcamusa.USE_REGIONAL_ELEC_MARKETS){
+    if(gcamusa.USE_REGIONAL_ELEC_MARKETS) {
       L223.StubTechMarket_elec_USA %>%
         left_join_error_no_match(select(states_subregions, grid_region, state), by = c("region" = "state")) %>%
         mutate(market.name = replace(market.name, minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS,
@@ -545,7 +547,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
 
     # L223.StubTechElecMarket_backup_USA: market name of electricity sector for backup calculations
     # The backup electric market is only set here if regional electricity markets are not used (i.e. one national grid)
-    if(!gcamusa.USE_REGIONAL_ELEC_MARKETS){
+    if(!gcamusa.USE_REGIONAL_ELEC_MARKETS) {
       L223.StubTechMarket_backup_USA %>%
         select(one_of(LEVEL2_DATA_NAMES[["StubTechYr"]])) %>%
         mutate(electric.sector.market = "USA") ->
@@ -608,7 +610,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_legacy_name("L223.TechNodeEquiv") ->
       L223.TechNodeEquiv
 
-    if (exists("L223.DeleteSubsector_USAelec")){
+    if(exists("L223.DeleteSubsector_USAelec")) {
       L223.DeleteSubsector_USAelec %>%
         add_title("Define the electricity sector(s) in the USA region") %>%
         add_units("NA") %>%
@@ -629,11 +631,11 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
         L223.DeleteSubsector_USAelec
     }
 
-    if (exists("L223.Supplysector_USAelec")){
+    if(exists("L223.Supplysector_USAelec")) {
       L223.Supplysector_USAelec %>%
         add_title("Supplysector for electricity sector in the USA region") %>%
         add_units("NA") %>%
-        add_comments("The file is generated if to resolve electricity demands at the US national level") %>%
+        add_comments("The file is generated if resolving electricity demands at the US national level") %>%
         add_comments("All of the supplysector information is the same as before") %>%
         add_comments("except including logit exponent between grid regions")
         add_legacy_name("L223.Supplysector_USAelec") ->
@@ -650,11 +652,11 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
         L223.Supplysector_USAelec
     }
 
-    if (exists("L223.SubsectorShrwtFllt_USAelec")){
+    if(exists("L223.SubsectorShrwtFllt_USAelec")) {
       L223.SubsectorShrwtFllt_USAelec %>%
         add_title("Subsector (grid region) share-weights in USA electricity") %>%
         add_units("Unitless") %>%
-        add_comments("The file is generated if to resolve electricity demands at the US national level") %>%
+        add_comments("The file is generated if resolving electricity demands at the US national level") %>%
         add_legacy_name("L223.SubsectorShrwtFllt_USAelec") %>%
         add_precursors("gcam-usa/states_subregions") ->
         L223.SubsectorShrwtFllt_USAelec
@@ -670,11 +672,11 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
         L223.SubsectorShrwtFllt_USAelec
     }
 
-    if (exists("L223.SubsectorInterp_USAelec")){
+    if(exists("L223.SubsectorInterp_USAelec")) {
       L223.SubsectorInterp_USAelec %>%
         add_title("Table headers for temporal interpolation of subsector (grid region) share-weights") %>%
         add_units("Unitless") %>%
-        add_comments("The file is generated if to resolve electricity demands at the US national level") %>%
+        add_comments("The file is generated if resolving electricity demands at the US national level") %>%
         add_legacy_name("L223.SubsectorInterp_USAelec") %>%
         same_precursors_as("L223.SubsectorShrwtFllt_USAelec") ->
         L223.SubsectorInterp_USAelec
@@ -690,11 +692,11 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
         L223.SubsectorInterp_USAelec
     }
 
-    if (exists("L223.SubsectorLogit_USAelec")){
+    if(exists("L223.SubsectorLogit_USAelec")) {
       L223.SubsectorLogit_USAelec %>%
         add_title("Logit exponent of subsectors (grid regions) in USA electricity") %>%
         add_units("Unitless") %>%
-        add_comments("The file is generated if to resolve electricity demands at the US national level") %>%
+        add_comments("The file is generated if resolving electricity demands at the US national level") %>%
         add_comments("There is only one tech per subsector, so the logit choice does not matter") %>%
         add_legacy_name("L223.SubsectorLogit_USAelec") %>%
         same_precursors_as("L223.SubsectorShrwtFllt_USAelec") ->
@@ -711,11 +713,11 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
         L223.SubsectorLogit_USAelec
     }
 
-    if (exists("L223.TechShrwt_USAelec")){
+    if(exists("L223.TechShrwt_USAelec")) {
       L223.TechShrwt_USAelec %>%
         add_title("Technology share-weights in the USA region") %>%
         add_units("Unitless") %>%
-        add_comments("The file is generated if to resolve electricity demands at the US national level") %>%
+        add_comments("The file is generated if resolving electricity demands at the US national level") %>%
         add_legacy_name("L223.TechShrwt_USAelec") %>%
         same_precursors_as("L223.SubsectorShrwtFllt_USAelec") ->
         L223.TechShrwt_USAelec
@@ -731,11 +733,11 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
         L223.TechShrwt_USAelec
     }
 
-    if (exists("L223.TechCoef_USAelec")){
+    if(exists("L223.TechCoef_USAelec")) {
       L223.TechCoef_USAelec %>%
         add_title("Technology coefficients and market names in the USA region") %>%
         add_units("Unitless") %>%
-        add_comments("The file is generated if to resolve electricity demands at the US national level") %>%
+        add_comments("The file is generated if resolving electricity demands at the US national level") %>%
         add_legacy_name("L223.TechCoef_USAelec") %>%
         same_precursors_as("L223.TechShrwt_USAelec") ->
         L223.TechCoef_USAelec
@@ -751,11 +753,11 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
         L223.TechCoef_USAelec
     }
 
-    if (exists("L223.Production_USAelec")){
+    if(exists("L223.Production_USAelec")) {
       L223.Production_USAelec %>%
         add_title("Calibration electricity production in the USA region") %>%
         add_units("EJ") %>%
-        add_comments("The file is generated if to resolve electricity demands at the US national level") %>%
+        add_comments("The file is generated if resolving electricity demands at the US national level") %>%
         add_legacy_name("L223.Production_USAelec") %>%
         add_precursors("L1232.out_EJ_sR_elec",
                        "energy/calibrated_techs") ->
@@ -768,7 +770,8 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
         add_title("Data not created") %>%
         add_units("Unitless") %>%
         add_comments("Data not created") %>%
-        add_legacy_name("L223.Production_USAelec") ->
+        add_legacy_name("L223.Production_USAelec") %>%
+        add_precursors("L1232.out_EJ_sR_elec") ->
         L223.Production_USAelec
     }
 
@@ -1036,7 +1039,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
                      "gcam-usa/states_subregions") ->
       L223.StubTechMarket_backup_USA
 
-    if (exists("L223.StubTechElecMarket_backup_USA")){
+    if(exists("L223.StubTechElecMarket_backup_USA")) {
       L223.StubTechElecMarket_backup_USA %>%
         add_title("Market name of electricity sector for backup calculations") %>%
         add_units("Unitless") %>%
