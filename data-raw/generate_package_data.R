@@ -1,4 +1,5 @@
 library(devtools)
+library(gcamdata)
 
 # Note: the methods below explicitly name XML tags as expected by GCAM and/or
 # the model interface headers thus will need to be maintained to be consistent.
@@ -144,7 +145,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["GlobalTechOMfixed"]] <- c(level2_data_names[["GlobalTechYr"]], "input.OM.fixed", "OM.fixed", "capacity.factor")
   level2_data_names[["GlobalTechOMvar"]] <- c(level2_data_names[["GlobalTechYr"]], "input.OM.var", "OM.var")
   level2_data_names[["GlobalTechBackup"]] <- c(level2_data_names[["GlobalTechYr"]], "electric.sector.name", "trial.market.name", "backup.capital.cost",
-                                                "backup.capacity.factor", "capacity.limit", "minicam.energy.input", "minicam.non.energy.input", "flag")
+                                               "backup.capacity.factor", "capacity.limit", "minicam.energy.input", "minicam.non.energy.input", "flag")
   level2_data_names[["GlobalCarbonCapture"]] <- c(level2_data_names[["GlobalTechYr"]], "storage.market", "remove.fraction")
   level2_data_names[["GlobalRenewTech"]] <- c(level2_data_names[["GlobalTechYr"]], "renewable.input")
   level2_data_names[["GlobalTechSecOut"]] <- c(level2_data_names[["GlobalTechYr"]], "secondary.output", "output.ratio")
@@ -286,7 +287,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["LN1_HistUnmgdAllocation"]] <- c("region", "LandAllocatorRoot", "LandNode1", "UnmanagedLandLeaf", "year", "allocation")
   level2_data_names[["LN1_UnmgdAllocation"]] <- level2_data_names[["LN1_HistUnmgdAllocation"]]
   level2_data_names[["LN1_UnmgdCarbon"]] <- c("region", "LandAllocatorRoot", "LandNode1", "UnmanagedLandLeaf", "hist.veg.carbon.density", "hist.soil.carbon.density",
-                                               "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density")
+                                              "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density")
   level2_data_names[["LN2_Logit"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "logit.year.fillout", "logit.exponent")
   level2_data_names[["LN2_LogitType"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "logit.type")
   level2_data_names[["LN2_Logit_absolute-cost-logit"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "logit.type")
@@ -296,9 +297,9 @@ generate_level2_data_names <- function() {
   level2_data_names[["LN2_HistMgdAllocation"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandLeaf", "year", "allocation")
   level2_data_names[["LN2_MgdAllocation"]] <- level2_data_names[["LN2_HistMgdAllocation"]]
   level2_data_names[["LN2_UnmgdCarbon"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "UnmanagedLandLeaf", "hist.veg.carbon.density", "hist.soil.carbon.density",
-                                               "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density")
+                                              "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density")
   level2_data_names[["LN2_MgdCarbon"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandLeaf", "hist.veg.carbon.density", "hist.soil.carbon.density",
-                                             "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density")
+                                            "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density")
   level2_data_names[["LN3_Logit"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "logit.year.fillout", "logit.exponent")
   level2_data_names[["LN3_LogitType"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "logit.type")
   level2_data_names[["LN3_Logit_absolute-cost-logit"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "logit.type")
@@ -312,9 +313,9 @@ generate_level2_data_names <- function() {
   level2_data_names[["LN3_HistMgdAllocation"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandLeaf", "year", "allocation")
   level2_data_names[["LN3_MgdAllocation"]] <- level2_data_names[["LN3_HistMgdAllocation"]]
   level2_data_names[["LN3_UnmgdCarbon"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "UnmanagedLandLeaf", "hist.veg.carbon.density", "hist.soil.carbon.density",
-                                               "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density")
+                                              "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density")
   level2_data_names[["LN3_MgdCarbon"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandLeaf", "hist.veg.carbon.density", "hist.soil.carbon.density",
-                                             "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density")
+                                            "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density")
   level2_data_names[["LN3_NoEmissCarbon"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandLeaf", "no.emiss.carbon.calc", "extra")
   level2_data_names[["LN3_NodeCarbon"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "node.carbon.calc", "extra")
   level2_data_names[["LN3_NewTech"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandLeaf", "year.fillout", "isNewTechnology")
@@ -327,9 +328,9 @@ generate_level2_data_names <- function() {
   level2_data_names[["LN4_HistMgdAllocation"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandLeaf", "year", "allocation")
   level2_data_names[["LN4_MgdAllocation"]] <- level2_data_names[["LN4_HistMgdAllocation"]]
   level2_data_names[["LN4_UnmgdCarbon"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "UnmanagedLandLeaf", "hist.veg.carbon.density", "hist.soil.carbon.density",
-                                               "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density")
+                                              "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density")
   level2_data_names[["LN4_MgdCarbon"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandLeaf", "hist.veg.carbon.density", "hist.soil.carbon.density",
-                                             "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density")
+                                            "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density")
   level2_data_names[["LN4_LeafGhostShare"]]<- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandLeaf", "year", "ghost.unnormalized.share")
   level2_data_names[["LN4_NodeGhostShare"]]<- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "year", "ghost.unnormalized.share")
   level2_data_names[["LN4_NodeIsGhostShareRel"]]<- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "is.ghost.share.relative")
@@ -343,9 +344,9 @@ generate_level2_data_names <- function() {
   level2_data_names[["LN5_HistMgdAllocation"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5", "LandLeaf", "year", "allocation")
   level2_data_names[["LN5_MgdAllocation"]] <- level2_data_names[["LN5_HistMgdAllocation"]]
   level2_data_names[["LN5_UnmgdCarbon"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5", "UnmanagedLandLeaf", "hist.veg.carbon.density",
-                                               "hist.soil.carbon.density", "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density")
+                                              "hist.soil.carbon.density", "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density")
   level2_data_names[["LN5_MgdCarbon"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5", "LandLeaf", "hist.veg.carbon.density", "hist.soil.carbon.density",
-                                             "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density")
+                                            "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density")
   level2_data_names[["LN5_NodeGhostShare"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5", "year", "ghost.unnormalized.share")
   level2_data_names[["LN5_LeafGhostShare"]]<- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5", "LandLeaf", "year", "ghost.unnormalized.share")
   level2_data_names[["LN1_Delete"]] <- c("region", "LandAllocatorRoot", "LandNode1")
@@ -387,11 +388,25 @@ generate_level2_data_names <- function() {
   level2_data_names
 }
 
+#' LEVEL2_DATA_NAMES
+#'
 #' A list of column orderings keyed by the ModelInterface header so that we can
 #' ensure tables being sent to be converted to XML by the ModelInterface have their
 #' columns arranged in the order the ModelInterface is expecting them.
 #' @author Pralit Patel
 LEVEL2_DATA_NAMES <- generate_level2_data_names()
 
-# Save the LEVEL2_DATA_NAMES into the exported data
-devtools::use_data(LEVEL2_DATA_NAMES, overwrite = TRUE)
+#' GCAM_DATA_MAP
+#'
+#' There are two levels of information available from the GCAM data system:
+#' chunk dependencies, which are available for "free", i.e. with a fast query to
+#' each chunk on the part of \link{\code{chunk_inputs}} and \link{\code{chunk_outputs}},
+#' and detailed information on data object-level dependencies. This function is
+#' used to generate this latter data, i.e. a tibble of chunk-output-precursor information,
+#' which is used by \link{\code{dstrace}} and various other graphing and diagnostic utilities.
+#' @author BBL
+GCAM_DATA_MAP <- driver(return_data_map_only = TRUE)
+
+
+# Save these objects for use as internal package data
+devtools::use_data(GCAM_DATA_MAP, LEVEL2_DATA_NAMES, overwrite = TRUE, internal = TRUE)
