@@ -10,7 +10,7 @@
 #' original data system was \code{batch_transportation_agg.xml.R} (energy XML).
 module_energy_batch_transportation_agg.xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L252.Supplysector_trn",
+    return(c("L252.Supplysector_trn",
               "L252.FinalEnergyKeyword_trn",
               "L252.SubsectorLogit_trn",
               "L252.SubsectorShrwt_trn",

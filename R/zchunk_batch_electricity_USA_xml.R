@@ -10,7 +10,7 @@
 #' original data system was \code{batch_electricity_USA_xml.R} (gcamusa XML).
 module_gcamusa_batch_electricity_USA_xml_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L223.DeleteSubsector_USAelec",
+    return(c("L223.DeleteSubsector_USAelec",
               "L223.SectorNodeEquiv",
               "L223.TechNodeEquiv",
               "L223.PassThroughSector_elec",

@@ -10,7 +10,7 @@
 #' original data system was \code{batch_demand_input_xml.R} (aglu XML).
 module_aglu_batch_demand_input_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L203.Supplysector_demand",
+    return(c("L203.Supplysector_demand",
               "L203.SubsectorAll_demand",
               "L203.StubTech_demand",
               "L203.GlobalTechCoef_demand",

@@ -10,7 +10,7 @@
 #' original data system was \code{batch_water_elec_emissions.xml.R} (water XML).
 module_water_batch_water_elec_emissions.xml_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L2233.InputEmissCoeff_hist_elecPassthru",
+    return(c("L2233.InputEmissCoeff_hist_elecPassthru",
               "L2233.InputEmissCoeff_fut_elecPassthru"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "water_elec_emissions.xml"))

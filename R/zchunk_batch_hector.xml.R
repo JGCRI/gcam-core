@@ -10,7 +10,7 @@
 #' original data system was \code{batch_hector.xml.R} (climate_xml XML).
 module_climate_xml_batch_hector.xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L200.hector"))
+    return(c("L200.hector"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "hector.xml"))
   } else if(command == driver.MAKE) {

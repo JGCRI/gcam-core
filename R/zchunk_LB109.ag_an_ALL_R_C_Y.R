@@ -16,7 +16,7 @@
 #' @author RC April 2017
 module_aglu_LB109.ag_an_ALL_R_C_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L101.ag_Food_Mt_R_C_Y",
+    return(c("L101.ag_Food_Mt_R_C_Y",
               "L103.ag_Prod_Mt_R_C_Y",
               "L105.an_Food_Mt_R_C_Y",
               "L105.an_Prod_Mt_R_C_Y",

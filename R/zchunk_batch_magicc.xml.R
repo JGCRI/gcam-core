@@ -10,7 +10,7 @@
 #' original data system was \code{batch_magicc.xml.R} (climate_xml XML).
 module_climate_xml_batch_magicc.xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L200.MAGICC"))
+    return(c("L200.MAGICC"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "magicc.xml"))
   } else if(command == driver.MAKE) {

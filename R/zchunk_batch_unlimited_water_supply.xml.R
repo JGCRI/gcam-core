@@ -10,7 +10,7 @@
 #' original data system was \code{batch_unlimited_water_supply.xml.R} (water XML).
 module_water_batch_unlimited_water_supply.xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L202.UnlimitRsrc",
+    return(c("L202.UnlimitRsrc",
               "L202.UnlimitRsrcPrice"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "unlimited_water_supply.xml"))

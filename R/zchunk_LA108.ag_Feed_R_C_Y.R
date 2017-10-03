@@ -142,7 +142,7 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
       filter(feed == "Pasture_FodderGrass") %>%                                                                 # Start with Pasture_FodderGrass demand
       rename(PastFodderGrass_Demand = value) %>%
       left_join(filter(L103.ag_Prod_Mt_R_C_Y, GCAM_commodity == "FodderGrass"),
-                by = c( "GCAM_region_ID", "year")) %>%                                                          # Map in FodderGrass production
+                by = c("GCAM_region_ID", "year")) %>%                                                          # Map in FodderGrass production
       mutate(value = PastFodderGrass_Demand - value, GCAM_commodity = "Pasture") %>%                            # Compute Pasture supply as difference
       select(-feed, -PastFodderGrass_Demand) ->
       ag_Feed_Mt_R_Past_Y

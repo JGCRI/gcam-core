@@ -126,7 +126,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
     # A function to carry LN4 information down to LN5
     convert_LN4_to_LN5 <- function(data, names) {
       data %>%
-        repeat_add_columns(tibble(level = c( "lo", "hi" ))) %>%
+        repeat_add_columns(tibble(level = c("lo", "hi"))) %>%
         mutate(LandNode5 = LandLeaf,
                LandLeaf = paste(LandNode5, level, sep = aglu.MGMT_DELIMITER)) ->
         data_new
@@ -167,7 +167,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
     # L2252.LN5_Logit: Logit exponent between lo and hi managed techs for each crop-irrigationtype combo
     # ie competition between Corn_IRR_hi and Corn_Irr_lo.
     L2241.LN4_Logit %>%
-      repeat_add_columns(tibble::tibble(Irr_Rfd = c( "IRR", "RFD" ))) %>%
+      repeat_add_columns(tibble::tibble(Irr_Rfd = c("IRR", "RFD"))) %>%
       mutate(LandNode5 = paste(LandNode4, Irr_Rfd, sep = aglu.IRR_DELIMITER),
              logit.exponent = aglu.MGMT_LOGIT_EXP,
              logit.type = aglu.MGMT_LOGIT_TYPE) %>%

@@ -51,7 +51,7 @@ module_aglu_LB131.LV_R_GLU <- function(command, ...) {
 
     # Compute value in $/m2
     LV_R_GLU %>%
-      left_join(LC_R_GLU, by = c( "GCAM_region_ID", "GLU")) %>%                                      # Map in GTAP harvested cropland area
+      left_join(LC_R_GLU, by = c("GCAM_region_ID", "GLU")) %>%                                      # Map in GTAP harvested cropland area
       mutate(LV_USD75_m2 = LV_milUSD75 / CONV_BIL_MIL / HarvCropLand_bm2) %>%                         # Calculate land value ($/m2) using value and cropland area
       select(-Land_Type, -year) ->                                                                   # Remove extra columns
       L131.LV_USD75_m2_R_GLU

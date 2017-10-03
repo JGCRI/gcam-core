@@ -138,7 +138,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       L223.SectorNodeEquiv
 
     # L223.TechNodeEquiv: Sets up equivalent technology tag names to avoid
-    # having to partition input tables" )
+    # having to partition input tables")
     tibble(X1 = "TechnologyXMLTags", X2 = "technology",
            X3 = "intermittent-technology", X4 = "pass-through-technology") ->
       L223.TechNodeEquiv

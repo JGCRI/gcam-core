@@ -10,7 +10,7 @@
 #' original data system was \code{batch_all_aglu_emissions_IRR.xml} (emissions XML).
 module_emissions_batch_all_aglu_emissions_IRR.xml_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L2521.AgMAC",
+    return(c("L2521.AgMAC",
               "L252.MAC_an",
               "L2111.AWBEmissions",
               "L2111.AGREmissions",

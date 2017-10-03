@@ -10,7 +10,7 @@
 #' original data system was \code{batch_water_demand_municipal.xml.R} (water XML).
 module_water_batch_water_demand_municipal.xml_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L245.Supplysector",
+    return(c("L245.Supplysector",
               "L245.SubsectorLogit",
               "L245.SubsectorShrwtFllt",
               "L245.TechShrwt",

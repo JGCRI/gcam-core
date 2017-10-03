@@ -10,7 +10,7 @@
 #' original data system was \code{batch_Ccoef_xml.R} (energy XML).
 module_energy_batch_Ccoef_xml_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L202.CarbonCoef"))
+    return(c("L202.CarbonCoef"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "Ccoef.xml"))
   } else if(command == driver.MAKE) {

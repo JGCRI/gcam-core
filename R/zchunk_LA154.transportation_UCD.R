@@ -329,7 +329,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
 
     # Compute the nonmotorized service output at the country level, using the historical population
     PKM_nonmotor_ctry <- L100.Pop_thous_ctry_Yh %>%
-      repeat_add_columns(tibble(mode = c( "Walk", "Cycle"))) %>%
+      repeat_add_columns(tibble(mode = c("Walk", "Cycle"))) %>%
       left_join_error_no_match(UCD_ctry %>% select(-country_name), by = "iso") %>%
       left_join_error_no_match(PKM_percap_nonmotor_UCD_R %>% filter(year == energy.UCD_EN_YEAR),
                                by = c("UCD_region", "mode")) %>%
