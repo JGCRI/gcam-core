@@ -32,7 +32,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
              FILE = "energy/calibrated_techs",
              FILE = "gcam-usa/NREL_us_re_technical_potential",
              FILE = "energy/A23.globaltech_eff",
-             FILE = "temp-data-inject/L114.CapacityFactor_wind_state",
+             "L114.CapacityFactor_wind_state",
              "L119.CapFacScaler_PV_state",
              "L119.CapFacScaler_CSP_state",
              FILE = "temp-data-inject/L223.Supplysector_elec",
@@ -109,7 +109,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
     NREL_us_re_technical_potential <- get_data(all_data, "gcam-usa/NREL_us_re_technical_potential")
     A23.globaltech_eff <- get_data(all_data, "energy/A23.globaltech_eff")
-    L114.CapacityFactor_wind_state <- get_data(all_data, "temp-data-inject/L114.CapacityFactor_wind_state")
+    L114.CapacityFactor_wind_state <- get_data(all_data, "L114.CapacityFactor_wind_state")
     L119.CapFacScaler_PV_state <- get_data(all_data, "L119.CapFacScaler_PV_state")
     L119.CapFacScaler_CSP_state <- get_data(all_data, "L119.CapFacScaler_CSP_state")
     L223.Supplysector_elec <- get_data(all_data, "temp-data-inject/L223.Supplysector_elec")
@@ -1060,7 +1060,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Include storage technologies as well") %>%
       add_legacy_name("L223.StubTechCapFactor_elec_wind_USA") %>%
-      add_precursors("temp-data-inject/L114.CapacityFactor_wind_state",
+      add_precursors("L114.CapacityFactor_wind_state",
                      "energy/calibrated_techs",
                      "gcam-usa/states_subregions") ->
       L223.StubTechCapFactor_elec_wind_USA
