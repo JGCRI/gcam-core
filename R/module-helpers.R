@@ -211,18 +211,19 @@ write_to_all_states <- function(data, names) {
 
   region <- NULL  # silence package check notes
 
-  if ("logit.year.fillout" %in% names)
+  if ("logit.year.fillout" %in% names) {
     data$logit.year.fillout <- "start-year"
+  }
 
-  if ("price.exp.year.fillout" %in% names)
+  if ("price.exp.year.fillout" %in% names) {
     data$price.exp.year.fillout <- "start-year"
+  }
 
-  data_new <- data %>%
+  data %>%
     set_years %>%
     select(-region) %>%
-    repeat_add_columns(tibble(region = gcamusa.STATES))
-
-  return(data_new[names] )
+    repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
+    select(one_of(names))
 }
 
 
@@ -244,12 +245,10 @@ set_subsector_shrwt <- function(data) {
     summarise(calOutputValue_agg = sum(calOutputValue)) %>%
     ungroup
 
-  data_new <- data %>%
+  data %>%
     left_join_error_no_match(data_aggregated, by = c("region", "supplysector", "subsector", "year")) %>%
     mutate(subs.share.weight = if_else(calOutputValue_agg > 0, 1, 0)) %>%
     select(-calOutputValue_agg)
-
-  return(data_new)
 }
 
 
