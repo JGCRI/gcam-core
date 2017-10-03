@@ -1,6 +1,9 @@
 # File: A54.globaltranTech_retire.csv
 # Title: Transportation technology retirement parameters. Only applies to vintaged technologies
-# Units: Lifetime and half.life in years; steepness is unitless
+# Units: Years for lifetime and half.life; Unitless for steepness
+# Comments: maximum lifetime of cohort. If no retirement function is used; the entire cohort is retired in this number of years.
+# half.life: number of years at which 50% of the cohort is retired; using the s-curve-shutdown-decider retirement function.
+# steepness: shape parameter used by the s-curve-shutdown-decider retirement function.
 supplysector,tranSubsector,tranTechnology,year,lifetime,half.life,steepness
 trn_freight_road,Truck,Liquids,final-calibration-year,40,25,0.124
 trn_freight_road,Truck,NG,final-calibration-year,40,25,0.124

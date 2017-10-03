@@ -1,0 +1,10 @@
+# File: A322.globaltech_coef.csv
+# Title: Fertilizer production default coefficients
+# Units: Unitless for supplysector Exports_fertilizer; GJ/kg N for supplysector N fertilizer
+supplysector,subsector,technology,minicam.energy.input,1971,2010,2050,2100
+N fertilizer,coal,coal,delivered coal,0.054,0.054,0.0442,0.039
+N fertilizer,coal,coal CCS,delivered coal,0.06,0.06,0.0491,0.0433
+N fertilizer,gas,gas,wholesale gas,0.04,0.035,0.0286,0.0253
+N fertilizer,gas,gas CCS,wholesale gas,0.045,0.04,0.0327,0.0289
+N fertilizer,refined liquids,refined liquids,refined liquids industrial,0.05,0.045,0.0368,0.0325
+Exports_fertilizer,N fertilizer,N fertilizer,N fertilizer,1,1,1,1
