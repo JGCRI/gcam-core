@@ -10,7 +10,7 @@
 #' original data system was \code{batch_land_input_3.xml.R} (aglu XML).
 module_aglu_batch_land_input_3.xml_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L223.LN3_LeafGhostShare",
+    return(c("L223.LN3_LeafGhostShare",
               "L223.LN3_LeafIsGhostShareRel",
               "L223.LN3_HistUnmgdAllocation",
               "L223.LN3_UnmgdAllocation",

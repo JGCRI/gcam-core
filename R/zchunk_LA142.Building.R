@@ -16,7 +16,7 @@
 
 module_gcam.usa_LA142.Building <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L142.in_EJ_R_bld_F_Yh",
+    return(c("L142.in_EJ_R_bld_F_Yh",
               "L101.inEIA_EJ_state_S_F"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L142.in_EJ_state_bld_F"))

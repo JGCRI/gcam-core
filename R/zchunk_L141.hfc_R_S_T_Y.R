@@ -84,7 +84,7 @@ module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
 
     # Process all F gasses files then combine and aggregate
     # define function to format and process F gases, map to GCAM regions
-    format_F_Gas <- function(x){
+    format_F_Gas <- function(x) {
       x %>%
         left_join_error_no_match(EDGAR_sector %>% select(-IPCC_description), by = "IPCC") %>% # Add Edgar agg_sector
         rename(EDGAR_agg_sector = agg_sector) %>% #rename agg_sector to EDGAR_agg_sector

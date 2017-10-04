@@ -123,7 +123,7 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
       filter(year %in% emissions.MODEL_BASE_YEARS) %>%
       mutate(value = round(value, emissions.DIGITS_EMISSIONS),
              AgSupplySector = "UnmanagedLand",
-             AgSupplySubsector = paste( "GrasslandFires", GLU, sep = "_"),
+             AgSupplySubsector = paste("GrasslandFires", GLU, sep = "_"),
              UnmanagedLandTechnology = AgSupplySubsector) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       rename_SO2(A_regions) %>%

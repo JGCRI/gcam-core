@@ -87,7 +87,7 @@ module_emissions_L252.MACC <- function(command, ...) {
 
     # This is a function to add in the mac.reduction curves to data
     # Function needed because these steps are repeated 5 times
-    mac_reduction_adder <- function(df, order, error_no_match = TRUE){
+    mac_reduction_adder <- function(df, order, error_no_match = TRUE) {
       df <- df %>%
         # Add tax values
         repeat_add_columns(tibble(tax = MAC_taxes)) %>%
@@ -97,15 +97,15 @@ module_emissions_L252.MACC <- function(command, ...) {
                                    select(region, EPA_region = MAC_region),
                                  by = "region")
       # Next, add in mac.reduction values
-      if (error_no_match){
+      if (error_no_match) {
         # Usually we use left_join_error_no_match
         df <- df %>%
-          left_join_error_no_match(L252.MAC_pct_R_S_Proc_EPA, by = c("EPA_region", "mac.control", "tax"))  %>%
+          left_join_error_no_match(L252.MAC_pct_R_S_Proc_EPA, by = c("EPA_region", "mac.control", "tax")) %>%
           mutate(mac.reduction = round(mac.reduction, 3))
       } else {
         # There are times where the data does not match, so using left_join is necessary
         df <- df %>%
-          left_join(L252.MAC_pct_R_S_Proc_EPA, by = c("EPA_region", "mac.control", "tax"))  %>%
+          left_join(L252.MAC_pct_R_S_Proc_EPA, by = c("EPA_region", "mac.control", "tax")) %>%
                       mutate(mac.reduction = round(mac.reduction, 3))
       }
       return(df)

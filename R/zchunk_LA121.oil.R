@@ -87,12 +87,12 @@ module_energy_LA121.oil <- function(command, ...) {
 
       L121.globaltech_coef %>%
         gather(year, value, -supplysector, -subsector, -technology, -minicam.energy.input) %>%
-        mutate(year = as.integer(year))  %>%
+        mutate(year = as.integer(year)) %>%
         # Adding empty historical years to fill in with interpolation
         complete(year = unique(c(HISTORICAL_YEARS, year)),
                  nesting(supplysector, subsector, technology, minicam.energy.input)) %>%
         arrange(year) %>%
-        group_by(technology, subsector, supplysector, minicam.energy.input)  %>%
+        group_by(technology, subsector, supplysector, minicam.energy.input) %>%
         # Interpolate to fill in missing globaltech_coef historical years
         mutate(value = approx_fun(year, value)) %>%
         left_join(distinct(calibrated_techs), by = c("supplysector", "subsector", "technology", "minicam.energy.input")) %>%
@@ -138,7 +138,7 @@ module_energy_LA121.oil <- function(command, ...) {
         L121.TPES_ktoe_ctry_oil_Yf
 
       # Aggregating country shares of unconventional oil demand to GCAM regions
-      L121.TPES_ktoe_ctry_oil_Yf  %>%
+      L121.TPES_ktoe_ctry_oil_Yf %>%
         group_by(GCAM_region_ID) %>%
         summarise(share = sum(share)) %>%
         select(GCAM_region_ID, share) -> L121.share_R_TPES_unoil_Yf

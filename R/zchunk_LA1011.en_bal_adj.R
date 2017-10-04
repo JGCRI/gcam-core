@@ -154,12 +154,12 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
     # Heat production from district heat sector
     A22.globaltech_coef %>%
       gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year))  %>%
+      mutate(year = as.integer(year)) %>%
       # Adding empty historical years to fill in with interpolation
       complete(year = unique(c(HISTORICAL_YEARS, year)),
                nesting(supplysector, subsector, technology, minicam.energy.input)) %>%
       arrange(year) %>%
-      group_by(technology, subsector, supplysector, minicam.energy.input)  %>%
+      group_by(technology, subsector, supplysector, minicam.energy.input) %>%
       # Interpolate to fill in missing globaltech_coef historical years
       mutate(value = approx_fun(year, value)) %>%
       left_join(distinct(calibrated_techs), by = c("supplysector", "subsector", "technology", "minicam.energy.input")) %>%

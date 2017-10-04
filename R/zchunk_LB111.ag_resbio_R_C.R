@@ -51,8 +51,8 @@ module_aglu_LB111.ag_resbio_R_C <- function(command, ...) {
       gather(resbio_params, value, -iso, -item, -prod) %>%
       mutate(value = value * prod) %>%
       # Add vectors for GCAM regions and commodities, collapse, and divide by production to get residue biomass values
-      left_join_error_no_match(iso_GCAM_regID[c( "iso", "GCAM_region_ID")], by = "iso") %>%
-      left_join_error_no_match(FAO_ag_items_PRODSTAT[c( "item", "GCAM_commodity")], by = "item") %>%
+      left_join_error_no_match(iso_GCAM_regID[c("iso", "GCAM_region_ID")], by = "iso") %>%
+      left_join_error_no_match(FAO_ag_items_PRODSTAT[c("item", "GCAM_commodity")], by = "item") %>%
       group_by(GCAM_region_ID, GCAM_commodity, resbio_params) %>%
       summarize_if(is.numeric, sum) %>%
       # Dividing by production to get weighted average residue biomass parameters by region and crop

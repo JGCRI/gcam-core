@@ -10,7 +10,7 @@
 #' original data system was \code{batch_ag_prodchange_ref_IRR_MGMT.xml.R} (aglu XML).
 module_aglu_batch_ag_prodchange_ref_IRR_MGMT.xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L2052.AgProdChange_ag_irr_ref",
+    return(c("L2052.AgProdChange_ag_irr_ref",
               "L2052.AgProdChange_bio_irr_ref"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "ag_prodchange_ref_IRR_MGMT.xml"))
