@@ -18,10 +18,10 @@ the generated outputs: \code{L144.flsp_bm2_state_res}, \code{L144.in_EJ_state_re
 original data system was \code{LA144.Residential.R} (gcam-usa level1).
 }
 \description{
-Calculates residential floorspace by state and residential energy consumption by state/fuel/end use.
+Calculate residential floorspace by state and residential energy consumption by state/fuel/end use.
 }
 \details{
-Calculates residential floorspace by state and residential energy consumption by state/fuel/end use.
+Calculate residential floorspace by state and residential energy consumption by state/fuel/end use.
 }
 \author{
 RLH September 2017

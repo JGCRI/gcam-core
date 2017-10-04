@@ -1,6 +1,6 @@
 #' module_gcam.usa_LA144.Residential
 #'
-#' Calculates residential floorspace by state and residential energy consumption by state/fuel/end use.
+#' Calculate residential floorspace by state and residential energy consumption by state/fuel/end use.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L144.flsp_bm2_state_res}, \code{L144.in_EJ_state_res_F_U_Y}. The corresponding file in the
 #' original data system was \code{LA144.Residential.R} (gcam-usa level1).
-#' @details Calculates residential floorspace by state and residential energy consumption by state/fuel/end use.
+#' @details Calculate residential floorspace by state and residential energy consumption by state/fuel/end use.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -66,7 +66,7 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
     RECS_2009 <- get_data(all_data, "gcam-usa/RECS_2009")
     L142.in_EJ_state_bld_F <- get_data(all_data, "L142.in_EJ_state_bld_F")
     L143.share_state_Pop_CDD_sR13 <- get_data(all_data, "temp-data-inject/L143.share_state_Pop_CDD_sR13") %>%
-    # temp-data-inject code
+      # temp-data-inject code
       gather(year, value, starts_with("X")) %>%
       mutate(year = as.integer(substr(year, 2, 5)))
     L143.share_state_Pop_HDD_sR13 <- get_data(all_data, "temp-data-inject/L143.share_state_Pop_HDD_sR13") %>%
@@ -81,29 +81,29 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
     names(L144.RECS_all) <- paste0("RECS", c(1979, 1984, 1990, 1993, 1997, 2001, 2005, 2009))
 
     # Add year column to each tibble in list
-    for (i in seq_along(L144.RECS_all)){
+    for(i in seq_along(L144.RECS_all)) {
       L144.RECS_all[[i]]$year <- substr(names(L144.RECS_all[i]), 5, 8) %>% as.integer()
     }
 
     # Add a vector specifying the census division (subregion9)
     L144.RECS_all <- L144.RECS_all %>%
-      lapply(function(df){
+      lapply(function(df) {
         # 2009 had different census division numbers
-        if (unique(df$year) == 2009){
+        if (unique(df$year) == 2009) {
           left_join_error_no_match(df,
                                    states_subregions %>% select(subregion9, DIVISION2009) %>% distinct,
                                    by = c("DIVISION" = "DIVISION2009"))
         } else {
           left_join_error_no_match(df,
-                    states_subregions %>% select(subregion9, DIVISION) %>% distinct,
-                    by = "DIVISION")
+                                   states_subregions %>% select(subregion9, DIVISION) %>% distinct,
+                                   by = "DIVISION")
         }
       })
 
     # Add a vector specifying the census division plus four large states (subregion13)
     L144.RECS_all <- L144.RECS_all %>%
-      lapply(function(df){
-        if ("LRGSTATE" %in% names(df)){
+      lapply(function(df) {
+        if ("LRGSTATE" %in% names(df)) {
           left_join_error_no_match(df,
                                    states_subregions %>% select(subregion13, LRGSTATE, subregion9) %>% distinct,
                                    by = c("LRGSTATE", "subregion9"))
@@ -149,9 +149,9 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
     flsp_vars <- c("UNHEATED", "HOMEAREA", "SQFTREG", "TOTSQFT")
     # Per-capita floorspace by subregion9
     L144.flsp_bm2_sR9 <- L144.RECS_all %>%
-      lapply(function(df){
+      lapply(function(df) {
         # For RECS1984
-        if("HOUSEHOLDS" %in% names(df)){
+        if("HOUSEHOLDS" %in% names(df)) {
           flsp_var <- names(df)[which(names(df) %in% flsp_vars)]
           df %>%
             select_("year", "subregion9", "HOUSEHOLDS", flsp_var) %>%
@@ -160,17 +160,17 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
             summarise(value = sum(value * HOUSEHOLDS * CONV_MILFT2_M2))
         } else {
           # For all other years that have weight category to multiply by
-        if("NWEIGHT" %in% names(df)){
-          flsp_var <- names(df)[which(names(df) %in% flsp_vars)]
-          df %>%
-            select_("year", "subregion9", "NWEIGHT", flsp_var) %>%
-            tidyr::gather_("variable", "value", flsp_var) %>%
-            group_by(year, subregion9, variable) %>%
-            summarise(value = sum(value * NWEIGHT * CONV_FT2_M2))
-        } else {
-          # Return empty tibble for binding rows
-          tibble()
-        }
+          if("NWEIGHT" %in% names(df)) {
+            flsp_var <- names(df)[which(names(df) %in% flsp_vars)]
+            df %>%
+              select_("year", "subregion9", "NWEIGHT", flsp_var) %>%
+              tidyr::gather_("variable", "value", flsp_var) %>%
+              group_by(year, subregion9, variable) %>%
+              summarise(value = sum(value * NWEIGHT * CONV_FT2_M2))
+          } else {
+            # Return empty tibble for binding rows
+            tibble()
+          }
         }
       }) %>%
       do.call(bind_rows, .) %>%
@@ -180,8 +180,8 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
 
     # Per-capita floorspace by subregion13
     L144.flsp_bm2_sR13 <- L144.RECS_all %>%
-      lapply(function(df){
-        if("subregion13" %in% names(df)){
+      lapply(function(df) {
+        if("subregion13" %in% names(df)) {
           flsp_var <- names(df)[which(names(df) %in% flsp_vars)]
           df %>%
             select_("year", "subregion13", "NWEIGHT", flsp_var) %>%
@@ -222,7 +222,7 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
 
     # Interpolate to all historical years
     L144.pcflsp_m2_sR13_RECS <- tidyr::crossing(subregion13 = unique(L144.flsp_bm2_sR13$subregion13),
-                                       year = HISTORICAL_YEARS) %>%
+                                                year = HISTORICAL_YEARS) %>%
       # Use left_join b/c not all years in L144.flsp_bm2_sR13
       left_join(L144.flsp_bm2_sR13, by = c("subregion13", "year")) %>%
       group_by(subregion13) %>%
@@ -241,8 +241,8 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
     # Aggregating energy consumption by sampling weights
     # First, do 1990 and 1993 by subregion9
     L144.in_EJ_sR9 <- L144.RECS_all %>%
-      lapply(function(df){
-        if(unique(df$year) %in% c(1990, 1993)){
+      lapply(function(df) {
+        if(unique(df$year) %in% c(1990, 1993)) {
           df %>%
             gather(variable, value, -NWEIGHT, -year, -subregion9) %>%
             filter(variable %in% unique(RECS_variables$variable)) %>%
@@ -259,8 +259,8 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
 
     # Then, aggregate 1993 to 2009 in at the subregion13 level
     L144.in_EJ_sR13 <- L144.RECS_all %>%
-      lapply(function(df){
-        if(unique(df$year) > 1990){
+      lapply(function(df) {
+        if(unique(df$year) > 1990) {
           df %>%
             gather(variable, value, -NWEIGHT, -year, -subregion13) %>%
             filter(variable %in% unique(RECS_variables$variable)) %>%
@@ -289,36 +289,36 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
       ungroup()
 
     # Add 1979 to the 9-region table, and use the 9-subregion data to scale the 13-subregion data back to 1990 and 1979
-    if(OLD_DATA_SYSTEM_BEHAVIOR){
+    if(OLD_DATA_SYSTEM_BEHAVIOR) {
       # There is a mistake here because of using match-there are multiple values for some services,
       # so only the first, not the sum get used
       # We replicate this mistake using left_join_keep_first_only
-     L144.RECS_1979 <- RECS_1979 %>%
-      left_join_error_no_match(states_subregions %>%
-                                 select(subregion9, DIVISION) %>%
-                                 distinct(), by = "DIVISION") %>%
-      gather(variable, value, -DIVISION, -subregion9) %>%
-      # Convert to EJ
-      mutate(value = value * CONV_TBTU_EJ,
-             variable = sub("TBTU", "BTU", variable),
-             year = 1979) %>%
-       # Add in GCAM fuel and service
-      left_join_error_no_match(RECS_variables, by = "variable") %>%
-      select(subregion9, fuel, service, value, year)
+      L144.RECS_1979 <- RECS_1979 %>%
+        left_join_error_no_match(states_subregions %>%
+                                   select(subregion9, DIVISION) %>%
+                                   distinct(), by = "DIVISION") %>%
+        gather(variable, value, -DIVISION, -subregion9) %>%
+        # Convert to EJ
+        mutate(value = value * CONV_TBTU_EJ,
+               variable = sub("TBTU", "BTU", variable),
+               year = 1979) %>%
+        # Add in GCAM fuel and service
+        left_join_error_no_match(RECS_variables, by = "variable") %>%
+        select(subregion9, fuel, service, value, year)
 
-     # Select only first of each fuel and service
-     L144.RECS_1979 <- L144.RECS_1979 %>%
-       select(subregion9, fuel, service, year) %>%
-       distinct() %>%
-       left_join_keep_first_only(L144.RECS_1979, by = c("subregion9", "fuel", "service", "year"))
+      # Select only first of each fuel and service
+      L144.RECS_1979 <- L144.RECS_1979 %>%
+        select(subregion9, fuel, service, year) %>%
+        distinct() %>%
+        left_join_keep_first_only(L144.RECS_1979, by = c("subregion9", "fuel", "service", "year"))
 
-     # Calculate 1990 conversion factor using 1990/1993 ratio
-     L144.in_EJ_sR9_res_F_U_Y <- L144.in_EJ_sR9_res_F_U_Y %>%
-       bind_rows(L144.RECS_1979) %>%
-       group_by(subregion9, fuel, service) %>%
-       mutate(conv = value / lead(value, n = 1L, order_by = year)) %>%
-       ungroup() %>%
-       replace_na(list(conv = 1))
+      # Calculate 1990 conversion factor using 1990/1993 ratio
+      L144.in_EJ_sR9_res_F_U_Y <- L144.in_EJ_sR9_res_F_U_Y %>%
+        bind_rows(L144.RECS_1979) %>%
+        group_by(subregion9, fuel, service) %>%
+        mutate(conv = value / lead(value, n = 1L, order_by = year)) %>%
+        ungroup() %>%
+        replace_na(list(conv = 1))
     } else {
       # In the corrected version, we sum by service and fuel first
       L144.RECS_1979 <- RECS_1979 %>%
