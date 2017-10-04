@@ -38,6 +38,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * A custom class loader which simply expands any wildcard jar specifications
@@ -50,6 +51,17 @@ import java.util.ArrayList;
  * @author Pralit Patel
  */
 public class WildcardExpandingClassLoader extends URLClassLoader {
+    /**
+     * A pattern that looks for BaseX library names.
+     */
+    final static String BASEX_LIB_MATCH = "^.*[Bb][Aa][Ss][Ee][Xx].*$";
+    
+    /**
+     * A pattern that looks for a "prefered" BaseX version if we find
+     * duplicate versions of the library.
+     */
+    final static String PREFERED_BASEX_VER = "^.*[Bb][Aa][Ss][Ee][Xx]-8.6.7.*$";
+
     /**
      * Constructor which will expand any wildcard jar specifications then call
      * the constructor or the base URLClassLoader with this updated list of jars.
@@ -73,6 +85,7 @@ public class WildcardExpandingClassLoader extends URLClassLoader {
      */
     private static URL[] expandWildcardClasspath( URL[] aOriginalURLs ) {
         List<URL> ret = new ArrayList<URL>();
+        int numBaseXJars = 0;
         for( URL currURL : aOriginalURLs ) {
             if( currURL.getFile().endsWith( "*" ) ) {
                 // This URL needs to be expanded
@@ -89,6 +102,9 @@ public class WildcardExpandingClassLoader extends URLClassLoader {
                     if( expandedJars != null ) {
                         for( File currJar : expandedJars ) {
                             ret.add( currJar.toURI().toURL() );
+                            if( currJar.getName().matches(BASEX_LIB_MATCH) ) {
+                                ++numBaseXJars;
+                            }
                         }
                     } else {
                         // could not expand due to some error, we can try to
@@ -104,6 +120,20 @@ public class WildcardExpandingClassLoader extends URLClassLoader {
             else {
                 // Just use this unmodified
                 ret.add( currURL );
+                if( currURL.getFile().matches(BASEX_LIB_MATCH) ) {
+                    ++numBaseXJars;
+                }
+            }
+        }
+        // we've had trouble finding multiple jars of the BaseX of different versions
+        // so if we find more than we will accept the one that matches the "prefered" version
+        // which is hard coded to the version used when this workspace was created
+        if( numBaseXJars > 1 ) {
+            for( Iterator<URL> it = ret.iterator(); it.hasNext(); ) {
+                URL currURL = it.next();
+                if( currURL.getFile().matches(BASEX_LIB_MATCH) && !currURL.getFile().matches(PREFERED_BASEX_VER) ) {
+                    it.remove();
+                }
             }
         }
         return ret.toArray( new URL[ 0 ] );
