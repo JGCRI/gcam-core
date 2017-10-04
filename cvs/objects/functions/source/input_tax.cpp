@@ -95,7 +95,8 @@ const string& InputTax::getXMLReportingName() const{
 //! Constructor
 InputTax::InputTax()
 : mPhysicalDemand( scenario->getModeltime()->getmaxper() ),
-  mAdjustedCoefficients( scenario->getModeltime()->getmaxper(), 1.0 )
+  mAdjustedCoefficients( scenario->getModeltime()->getmaxper(), 1.0 ),
+  mAddToDemand(true)
 {
 }
 
@@ -165,6 +166,9 @@ void InputTax::XMLParse( const xercesc::DOMNode* node ) {
                 mKeywordMap[ XMLHelper<string>::safeTranscode( attrTemp->getNodeName() ) ] = 
                     XMLHelper<string>::safeTranscode( attrTemp->getNodeValue() );
             }
+        }
+        else if( nodeName == "add-to-demand" ){
+            mAddToDemand = XMLHelper<bool>::getValue( curr );
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -255,25 +259,24 @@ void InputTax::setPhysicalDemand( double aPhysicalDemand,
                                      const string& aRegionName,
                                      const int aPeriod )
 {
+    if ( mAddToDemand ) {
+        Marketplace* marketplace = scenario->getMarketplace();
+        IInfo* marketInfo = marketplace->getMarketInfo( mName, aRegionName, 0, true );
 
-    Marketplace* marketplace = scenario->getMarketplace();
-    IInfo* marketInfo = marketplace->getMarketInfo( mName, aRegionName, 0, true );
-
-    // If tax is shared based, then divide by sector output.
-    // Check if marketInfo exists and has the "isShareBased" boolean.
-    if( marketInfo && marketInfo->hasValue( "isShareBased" ) ){
-        if( marketInfo->getBoolean( "isShareBased", true ) ){
-            // Each share is additive
-            aPhysicalDemand/= marketplace->getDemand( mSectorName, aRegionName, aPeriod );
+        // If tax is shared based, then divide by sector output.
+        // Check if marketInfo exists and has the "isShareBased" boolean.
+        if( marketInfo && marketInfo->hasValue( "isShareBased" ) ){
+            if( marketInfo->getBoolean( "isShareBased", true ) ){
+                // Each share is additive
+                aPhysicalDemand/= marketplace->getDemand( mSectorName, aRegionName, aPeriod );
+            }
         }
-    }
-    // mPhysicalDemand can be a share if tax is share based.
-    mPhysicalDemand[ aPeriod ].set( aPhysicalDemand );
-    // Each technology share is additive.
-    mLastCalcValue = marketplace->addToDemand( mName, aRegionName, mPhysicalDemand[ aPeriod ],
+        // mPhysicalDemand can be a share if tax is share based.
+        mPhysicalDemand[ aPeriod ].set( aPhysicalDemand );
+        // Each technology share is additive.
+        mLastCalcValue = marketplace->addToDemand( mName, aRegionName, mPhysicalDemand[ aPeriod ],
                               mLastCalcValue, aPeriod, true );
-    ILogger& mainLog = ILogger::getLogger( "main_log" );
-    mainLog.setLevel( ILogger::NOTICE );
+    }
 }
 
 double InputTax::getCoefficient( const int aPeriod ) const {
@@ -293,7 +296,15 @@ double InputTax::getPrice( const string& aRegionName,
                               const int aPeriod ) const
 {
     // A high tax decreases demand.
-    return scenario->getMarketplace()->getPrice( mName, aRegionName, aPeriod, true );
+    double tax = scenario->getMarketplace()->getPrice( mName, aRegionName, aPeriod, true ) / 1000.0;
+    
+    // For negative emissions constraints, we want to multiply by carbon price
+    // so that the constraint price is in a reasonable range
+    if( !mAddToDemand ) {
+//        tax *= scenario->getMarketplace()->getPrice( "CO2", aRegionName, aPeriod, true );
+    }
+    
+    return tax;
 }
 
 void InputTax::setPrice( const string& aRegionName,

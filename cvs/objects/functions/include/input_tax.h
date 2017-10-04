@@ -168,6 +168,10 @@ protected:
     
     //! State value necessary to use Marketpalce::addToDemand
     double mLastCalcValue;
+    
+    //! Boolean indicating whether we should add to demand. 
+    bool mAddToDemand;
+
 
 private:
     const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 
