@@ -1,0 +1,9 @@
+# File: A22.sector.csv
+# Title: Primary energy transformation supplysectors
+# Units: N/A
+# Description: Energy transformation supplysector units and logit exponents
+supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.type
+gas processing,EJ,EJ,1975$/GJ,-6,
+nuclearFuelGenII,EJ,EJ,1975$/GJ,-3,
+nuclearFuelGenIII,EJ,EJ,1975$/GJ,-3,
+refining,EJ,EJ,1975$/GJ,-6,absolute-cost-logit

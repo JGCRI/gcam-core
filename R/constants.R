@@ -259,23 +259,15 @@ energy.RSRC_FUELS <- c("coal", "gas", "refined liquids")
 energy.HEAT_PRICE <- 3.2
 energy.GAS_PRICE <- 2
 
-# below come from ENERGY_ASSUMPTIONS/A_ccs_data.R
-energy.CO2.STORAGE.MARKET <- "carbon-storage"
-energy.DIGITS_EFFICIENCY <- 3
-energy.DIGITS_COST <- 4
-energy.DIGITS_REMOVE.FRACTION <- 2
+# used in level 2 energy sector files (e.g. 222, 223, 226) to round interpolated values, some below come from ENERGY_ASSUMPTIONS/A_ccs_data.R
 
-energy.DIGITS_COEFFICIENT <- 7
-energy.DIGITS_CALOUTPUT <- 7
+energy.CO2.STORAGE.MARKET <- "carbon-storage"
+
+energy.DIGITS_REMOVE.FRACTION <- 2
 
 energy.DIGITS_MPKM <- 0
 energy.DIGITS_SPEED <- 1
-energy.DIGITS_SHRWT <- 4
 energy.DIGITS_LOADFACTOR <- 2
-
-# Digits for rounding into XMLs
-energy.DIGITS_COST <- 4
-energy.DIGITS_SHRWT <- 4
 
 # Digits for rounding into XMLs
 energy.DIGITS_CALOUTPUT <- 7
@@ -285,13 +277,6 @@ energy.DIGITS_EFFICIENCY <- 3
 energy.DIGITS_SHRWT <- 4
 energy.DIGITS_CAPACITY_FACTOR <- 2
 
-
-# Digits for rounding into XMLs
-energy.DIGITS_CALOUTPUT <- 7
-energy.DIGITS_COEFFICIENT <- 7
-energy.DIGITS_COST <- 4
-energy.DIGITS_EFFICIENCY <- 3
-energy.DIGITS_SHRWT <- 4
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
 
