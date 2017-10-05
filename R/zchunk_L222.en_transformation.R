@@ -255,14 +255,14 @@ module_energy_L222.en_transformation <- function(command, ...) {
     if (any(!is.na(L222.globaltech_retirement$shutdown.rate))){
       L222.globaltech_retirement %>%
         filter(!is.na(L222.globaltech_retirement$shutdown.rate)) %>%
-        select(LEVEL2_DATA_NAMES[["GlobalTech"]], lifetime, shutdown.rate) ->
+        select(one_of(LEVEL2_DATA_NAMES[["GlobalTech"]], "lifetime", "shutdown.rate")) ->
         L222.GlobalTechShutdown_en
     }
 
     if (any(!is.na(L222.globaltech_retirement$half.life))){
       L222.globaltech_retirement %>%
         filter(!is.na(L222.globaltech_retirement$half.life)) %>%
-        select(LEVEL2_DATA_NAMES[["GlobalTech"]], lifetime, steepness, half.life) ->
+        select(one_of(LEVEL2_DATA_NAMES[["GlobalTech"]], "lifetime", "steepness", "half.life")) ->
         L222.GlobalTechSCurve_en
     }
 
@@ -270,7 +270,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
     if (any(is.na(L222.globaltech_retirement$shutdown.rate) & is.na(L222.globaltech_retirement$half.life))){
       L222.globaltech_retirement %>%
         filter(is.na(L222.globaltech_retirement$shutdown.rate) & is.na(L222.globaltech_retirement$half.life)) %>%
-        select(LEVEL2_DATA_NAMES[["GlobalTech"]], lifetime) ->
+        select(one_of(LEVEL2_DATA_NAMES[["GlobalTech"]], "lifetime")) ->
         L222.GlobalTechLifetime_en
     }
 
@@ -278,7 +278,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
     if (any(!is.na(L222.globaltech_retirement$median.shutdown.point))){
       L222.globaltech_retirement %>%
         filter(!is.na(L222.globaltech_retirement$median.shutdown.point)) %>%
-        select(LEVEL2_DATA_NAMES[["GlobalTech"]], median.shutdown.point, profit.shutdown.steepness) ->
+        select(one_of(LEVEL2_DATA_NAMES[["GlobalTech"]], "median.shutdown.point", "profit.shutdown.steepness")) ->
         L222.GlobalTechProfitShutdown_en
     }
 
