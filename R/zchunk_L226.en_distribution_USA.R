@@ -106,6 +106,75 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
       L226.SubsectorLogit_en_USA
 
 
+    # L226.TechShrwt_en_USA: technology shareweights of energy handling and delivery
+    # NOTE: can't use stub technologies because these would inherit the wrong energy-inputs
+    L226.SubsectorShrwtFllt_en_USA %>%
+      select(one_of(LEVEL2_DATA_NAMES[["Subsector"]])) %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      mutate(technology = subsector,
+             share.weight = gcamusa.DEFAULT_SHAREWEIGHT) %>%
+      select(one_of(c(LEVEL2_DATA_NAMES[["TechYr"]], "share.weight"))) ->
+      L226.TechShrwt_en_USA
+
+
+    # L226.TechCoef_en_USA: technology coefficients and market names of energy handling and delivery
+    L226.TechShrwt_en_USA %>%
+      select(one_of(LEVEL2_DATA_NAMES[["TechYr"]])) %>%
+      mutate(minicam.energy.input = supplysector,
+             coefficient = gcamusa.DEFAULT_COEFFICIENT,
+             market.name = gcamusa.DEFAULT_MARKET) ->
+      L226.TechCoef_en_USA
+
+
+    # L226.CostAdj_75USDGJ_FERC_F: grid region specific cost adders
+    # NOTE: the average national costs are already accounted in the corresponding sectors of the USA;
+    # this table implements a price adjustment factor.
+    #
+    # Get US prices for coal, natural gas, distillate fuel oil for use in calculating the adjustments:
+    EIA_state_energy_prices %>%
+      filter(State == "United States") %>%
+      select(Coal, Natural.gas, Distillate.fuel.oil) ->
+      EIA_US_C_NG_DFO_prices
+
+    # Calculate the adjustment factor:
+    # Distillate fuel oil is used as proxy for liquid fuels to avoid composition bias in the petroleum total.
+    # In other words, states with a lot of residual fuel would end up having lower apparent liquid fuel prices.
+    # In states with missing values for coal, assign the maximum price.
+    # For gas, the value in Hawaii is extremely high; just cap it at a max threshold
+    EIA_state_energy_prices %>%
+      # save NA for processing
+      left_join(select(states_subregions, grid_region, state_name), by = c("State" = "state_name")) %>%
+      mutate(coal_adj = (Coal -  EIA_US_C_NG_DFO_prices$Coal) * CONV_BTU_KJ * gdp_deflator(1975, 2009),
+             gas_adj =  if_else(State == "Hawaii", gcamusa.GAS_ADJ_THRESH,
+                                (Natural.gas - EIA_US_C_NG_DFO_prices$Natural.gas) * CONV_BTU_KJ * gdp_deflator(1975, 2009)),
+             liq_adj = (Distillate.fuel.oil - EIA_US_C_NG_DFO_prices$Distillate.fuel.oil)* CONV_BTU_KJ  * gdp_deflator(1975, 2009)) ->
+      EIA_tmp
+
+    # get maximum coal adjustment for replacing NA's:
+    EIA_tmp %>%
+      select(coal_adj) %>%
+      na.omit %>%
+      summarize(coal_adj = max(coal_adj)) %>%
+      as.double ->
+      maxCoalAdj
+
+    # use to replace NAs and finish adjustment calculations:
+    EIA_tmp%>%
+      replace_na(list(coal_adj = maxCoalAdj)) %>%
+      group_by(grid_region) %>%
+      summarize(coal_adj = median(coal_adj),
+                gas_adj = median(gas_adj),
+                liq_adj = median(liq_adj)) %>%
+      ungroup %>%
+      na.omit ->
+      L226.CostAdj_75USDGJ_FERC_F
+
+
+    # L226.TechCost_en_USA: cost adders
+
+
+
+
 
 
 
