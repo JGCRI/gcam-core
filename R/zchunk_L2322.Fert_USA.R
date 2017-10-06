@@ -66,17 +66,11 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     # L2322.SubsectorLogit_Fert <- get_data(all_data, "L2322.SubsectorLogit_Fert")
     L2322.SubsectorLogit_Fert <- get_data(all_data, "temp-data-inject/L2322.SubsectorLogit_Fert")
 
-    # L2322.SubsectorShrwt_Fert <- get_data(all_data, "L2322.SubsectorShrwt_Fert")
-    # L2322.SubsectorShrwt_Fert <- get_data(all_data, "temp-data-inject/L2322.SubsectorShrwt_Fert")
-
     # L2322.SubsectorShrwtFllt_Fert <- get_data(all_data, "L2322.SubsectorShrwtFllt_Fert")
     L2322.SubsectorShrwtFllt_Fert <- get_data(all_data, "temp-data-inject/L2322.SubsectorShrwtFllt_Fert")
 
     # L2322.SubsectorInterp_Fert <- get_data(all_data, "L2322.SubsectorInterp_Fert")
     L2322.SubsectorInterp_Fert <- get_data(all_data, "temp-data-inject/L2322.SubsectorInterp_Fert")
-
-    # L2322.SubsectorInterpTo_Fert <- get_data(all_data, "L2322.SubsectorInterpTo_Fert")
-    # L2322.SubsectorInterpTo_Fert <- get_data(all_data, "temp-data-inject/L2322.SubsectorInterpTo_Fert")
 
     # L2322.StubTech_Fert <- get_data(all_data, "L2322.StubTech_Fert")
     L2322.StubTech_Fert <- get_data(all_data, "temp-data-inject/L2322.StubTech_Fert")
@@ -85,6 +79,149 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     L1322.out_Mt_state_Fert_Yh <- get_data(all_data, "L1322.out_Mt_state_Fert_Yh")
 
     # ===================================================
+
+    stop()
+
+    # 2. Perform computations
+    # For fertilizer, we keep the USA sector because its output is consumed by the techs in the aglu module
+    L2322.SubsectorLogit_Fert %>%
+      filter(region == "USA", supplysector == aglu.FERT_NAME, subsector != "Imports") %>%
+      select(region, supplysector, subsector) ->
+      L2322.DeleteSubsector_USAFert2
+
+    #Remove the keyword
+    L2322.FinalEnergyKeyword_Fert %>%
+      filter(region == "USA") %>%
+      mutate(`final.energy` = "none") ->
+      L2322.FinalEnergyKeyword_USAFert
+
+
+    # printlog( "NOTE: N fertilizer sectors are only created in states where the Census data indicate production" )
+    L1322.out_Mt_state_Fert_Yh %>%
+      select(state) %>%
+      distinct ->
+      Fert_states
+
+    # The USA N fertilizer sector is logited among the states that produce this commodity
+    # Write out each state's fertilizer sector as a subsector in the USA's fertilizer sector
+    L2322.Supplysector_Fert %>%
+      filter(region == "USA", supplysector == aglu.FERT_NAME) %>%
+      select(region, supplysector) %>%
+      repeat_add_columns(Fert_states) %>%
+      mutate(subsector = paste(state, aglu.FERT_NAME)) %>% # there are lots of different ways to do this... idk figure out which one is best
+      mutate(logit.year.fillout = min(HISTORICAL_YEARS)) %>%
+      mutate(logit.exponent = gcamusa.FERT_LOGIT_EXP) ->
+      L2322.SubsectorLogit_USAFert
+
+    # I dont feel good about this
+    L2322.SubsectorLogit_USAFert %>%
+      mutate(logit.type = NA) ->
+      L2322.SubsectorLogitTables_USAFert
+
+    L2322.SubsectorLogit_USAFert %>%
+      select("region", "supplysector", "subsector", "logit.year.fillout", "logit.exponent") ->
+      L2322.SubsectorLogit_USAFert
+
+
+    # #Subsector shareweights
+    # printlog( "L2322.SubsectorShrwtFllt_USAFert: subsector default shareweights, USA region" )
+    L2322.SubsectorLogit_USAFert %>%
+      select("region", "supplysector", "subsector") %>%
+      mutate(year.fillout = min(BASE_YEARS)) %>%
+      mutate(share.weight = 1) ->
+      L2322.SubsectorShrwtFllt_USAFert
+
+    # printlog( "L2322.SubsectorInterp_USAFert: subsector shareweight interpolation, USA region" )
+    L2322.SubsectorLogit_USAFert %>%
+      select("region", "supplysector", "subsector") %>%
+      mutate(technology = subsector) %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      mutate(share.weight = 1) ->
+      L2322.TechShrwt_USAFert
+
+    # printlog( "L2322.Production_USAFert: calibrated production in USA region fertilizer sector (consuming output of states)" )
+    L1322.out_Mt_state_Fert_Yh %>%
+      mutate(region = "USA") %>%
+      mutate(calOutputValue = signif(value, DIGITS_LAND_USE)) %>%
+      select(-value) %>%
+      filter(year %in% BASE_YEARS) %>%
+      mutate(supplysector = aglu.FERT_NAME) %>%
+      unite(subsector, state, supplysector, sep = " ", remove = FALSE) ->
+      L2322.Production_USAFert
+
+    L2322.Production_USAFert %>%
+      mutate(technology = subsector) %>%
+      mutate(input = aglu.FERT_NAME) %>%
+      mutate(share.weight.year = year) %>%
+      mutate(subs.share.weight = if_else(calOutputValue == 0, 0, 1)) %>%
+      mutate(tech.share.weight = subs.share.weight) %>%
+      select(region, supplysector, subsector, technology, year, calOutputValue,
+             `share.weight.year`, `subs.share.weight`,
+             `tech.share.weight`) ->
+      L2322.Production_USAFert
+
+    # printlog( "L2322.TechCoef_USAFert: coefficients of USA region fertilizer" )
+    L2322.TechShrwt_USAFert %>%
+      mutate(`minicam.energy.input` = aglu.FERT_NAME) %>%
+      mutate(coefficient = 1) %>%
+      mutate(market.name = substr(start = 1, stop = 2, subsector)) %>%
+      select(region, supplysector, subsector, technology, year,
+             `minicam.energy.input`, coefficient, `market.name`) ->
+      L2322.TechCoef_USAFert
+
+
+    # printlog( "All tables for which processing is identical are done in a for loop")
+    # printlog( "NOTE: writing out the tables in this step as well")
+    # this is copied and pasted from the old ds... there may be a better way to do thi
+    L2322.tables <- list( L2322.FinalEnergyKeyword_Fert = L2322.FinalEnergyKeyword_Fert,
+                          L2322.Supplysector_Fert = L2322.Supplysector_Fert,
+                          L2322.SubsectorLogit_Fert = L2322.SubsectorLogit_Fert,
+                          L2322.StubTech_Fert = L2322.StubTech_Fert)
+
+    if(!is.null( L2322.SubsectorInterp_Fert )) {
+      L2322.tables[["L2322.SubsectorInterp_Fert"]] <- L2322.SubsectorInterp_Fert
+    }
+
+    if(!is.null( L2322.SubsectorShrwtFllt_Fert )) {
+      L2322.tables[["L2322.SubsectorShrwtFllt_Fert"]] <- L2322.SubsectorShrwtFllt_Fert
+    }
+
+    if(OLD_DATA_SYSTEM_BEHAVIOR){
+      L2322.tables[["L2322.SubsectorShrwt_Fert"]] <- as.null()
+      L2322.tables[["L2322.SubsectorInterpTo_Fert"]] <- as.null()
+    }
+
+    # skip???
+    # # The logit functions should be processed before any other table that needs to read logit exponents
+    # L2322.tables <- c( read_logit_fn_tables( "ENERGY_LEVEL2_DATA", "L2322.Supplysector_", skip=4, include.equiv.table=T ),
+    #                    read_logit_fn_tables( "ENERGY_LEVEL2_DATA", "L2322.SubsectorLogit_", skip=4, include.equiv.table=F ),
+    #                    L2322.tables )
+
+#
+    for(i in 1:length(L2322.tables)){
+      if(!is.null(L2322.tables[[i]])){}
+      name <- paste0(names(L2322.tables[i]), "_USA")
+
+      cond_1 <- grepl(x = name, pattern = "EQUIV_TABLE")
+
+      L2322.tables[[i]] %>%
+        filter(region == "USA", supplysector == aglu.FERT_NAME) ->
+        df
+
+      cond_2 <- ifelse(nrow(df) == 0, TRUE, FALSE)
+
+      if(any(cond_1, cond_2))
+      object <- L2322.tables[[i]]
+    } else {
+      # state-level Exports_fertilizer sector should be excluded
+
+      }
+
+    # printlog( "L2322.StubTechProd_Fert_USA: calibrated fertilizer production by state" )
+    L1322.out_Mt_state_Fert_Yh %>%
+      filter(year %in% BASE_YEARS) %>%
+      mutate(calOutputValue = signif(value, digits = aglu.DIGITS_CALOUTPUT))
+
 
 
     # ===================================================
