@@ -325,10 +325,57 @@ test_that("downscale_FAO_country", {
   dnew <- gcamdata:::downscale_FAO_country(d, country_name = cn, dissolution_year = dy, years = yrs)
   expect_equal(ncol(d), ncol(dnew))
   expect_equal(nrow(d) - 1, nrow(dnew))  # post-dissolution country should be gone
+  # ungrouped return
+  expect_null(groups(dnew))
 
   # Pre-dissolution year should be calculated from ratio of dissolution year data
   expect_equal(dnew[as.character(yrs[yrs < dy])], tibble(`1998` = c(1, 2), `1999` = c(2/3, 4/3)))
 
   # Post-dissolution year should be untouched
   expect_equal(dnew[as.character(yrs[yrs >= dy])], d[1:2, as.character(yrs[yrs >= dy])])
+})
+
+test_that("write_to_all_states", {
+  # catches bad input
+  expect_error(write_to_all_states(1, "1"))
+  expect_error(write_to_all_states(tibble(x = 1), 1))
+  expect_error(write_to_all_states(tibble(x = 1), "x"))  # no "region" column
+
+  # check that write_to_all_states works as it should
+  d <- tibble(region = 1, y = 2)
+  dout <- write_to_all_states(d, names = c("region", "y"))
+  expect_equal(dim(dout), c(length(gcamusa.STATES), ncol(d)))
+  expect_identical(names(dout), names(d))
+
+  # overwrites logit.year.fillout and price.exp.year.fillout with start-year
+  d <- tibble(region = 1, logit.year.fillout = "logit.year.fillout",
+              price.exp.year.fillout = "price.exp.year.fillout")
+  dout <- write_to_all_states(d, names = c("region", "logit.year.fillout", "price.exp.year.fillout"))
+  expect_equal(dim(dout), c(length(gcamusa.STATES), ncol(d)))
+  expect_identical(dout$logit.year.fillout, as.character(rep(min(BASE_YEARS), nrow(dout))))
+  expect_identical(dout$price.exp.year.fillout, as.character(rep(min(BASE_YEARS), nrow(dout))))
+
+  # ungrouped return
+  expect_null(groups(dout))
+})
+
+test_that("set_subsector_shrwt", {
+  # catches bad input
+  expect_error(set_subsector_shrwt(1))
+
+  # needs to have region, supplysector, subsector, year
+  expect_error(set_subsector_shrwt(tibble()))
+
+  # should produce subs.share.weight - no data
+  d <- tibble(region = 1, supplysector = 1, subsector = 1, year = 1)
+  dout <- set_subsector_shrwt(d)
+  expect_identical(names(dout), c(names(d), "subs.share.weight"))
+  expect_equal(dout$subs.share.weight, 0)
+
+  d <- tibble(region = 1, supplysector = 1, subsector = 1, year = 1, calOutputValue = 1)
+  dout <- set_subsector_shrwt(d)
+  expect_equal(dout$subs.share.weight, 1)
+
+  # ungrouped return
+  expect_null(groups(dout))
 })

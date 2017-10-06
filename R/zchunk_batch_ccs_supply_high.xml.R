@@ -10,7 +10,7 @@
 #' original data system was \code{batch_ccs_supply_high.xml.R} (energy XML).
 module_energy_batch_ccs_supply_high.xml_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L261.DepRsrcCurves_C_high"))
+    return(c("L261.DepRsrcCurves_C_high"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "ccs_supply_high.xml"))
   } else if(command == driver.MAKE) {

@@ -10,7 +10,7 @@
 #' original data system was \code{batch_no_offshore_ccs.xml.R} (energy XML).
 module_energy_batch_no_offshore_ccs.xml_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L261.GlobalTechShrwt_C_nooffshore"))
+    return(c("L261.GlobalTechShrwt_C_nooffshore"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "no_offshore_ccs.xml"))
   } else if(command == driver.MAKE) {

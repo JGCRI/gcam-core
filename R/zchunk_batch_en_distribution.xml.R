@@ -10,7 +10,7 @@
 #' original data system was \code{batch_en_distribution.xml.R} (energy XML).
 module_energy_batch_en_distribution.xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L226.SubsectorLogit_en",
+    return(c("L226.SubsectorLogit_en",
               "L226.SubsectorShrwt_en",
               "L226.SubsectorInterp_en",
               "L226.SubsectorInterpTo_en",

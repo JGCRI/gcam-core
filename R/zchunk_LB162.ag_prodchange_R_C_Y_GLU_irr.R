@@ -223,7 +223,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
         left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
         left_join_error_no_match(select(FAO_ag_items_PRODSTAT, GTAP_crop, GCAM_commodity), by = "GTAP_crop") %>%
         # Multiply base-year harvested area by the future productivity multipliers to calculate prod_mod and aggregate
-        mutate(Prod_mod = HA * Mult)  %>%
+        mutate(Prod_mod = HA * Mult) %>%
         group_by(GCAM_region_ID, GCAM_commodity, year, GLU, Irr_Rfd) %>%
         summarise(HA = sum(HA), Prod_mod = sum(Prod_mod)) %>%
         ungroup() %>%
@@ -249,7 +249,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
         left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
         left_join_error_no_match(select(FAO_ag_items_PRODSTAT, GTAP_crop, GCAM_commodity), by = "GTAP_crop") %>%
         # Multiply base-year harvested area by the future productivity multipliers to calculate prod_mod and aggregate
-        mutate(Prod_mod = HA * Mult)  %>%
+        mutate(Prod_mod = HA * Mult) %>%
         group_by(GCAM_region_ID, GCAM_commodity, year, GLU, Irr_Rfd) %>%
         summarise(HA = sum(HA), Prod_mod = sum(Prod_mod)) %>%
         ungroup() %>%
@@ -287,7 +287,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
 
     L162.agBio_YieldRatio_R_C_Ysy_GLU_irr %>%
       left_join_error_no_match(timesteps, by = "year") %>%
-      mutate(lagyear = year + timestep)  %>%
+      mutate(lagyear = year + timestep) %>%
       # There is no lag for SPEC_AG_PROD_YEARS[1] but there is for a year not in SPEC_AG_PROD_YEARS
       # SPEC_AG_PROD_YEARS[1] gets left alone, so for lagyear = not in SPEC_AG_PROD_YEAR, overwrite
       # the ratio to be 0.5, the timestep to be 1, and lagyear = SPEC_AG_PROD_YEAR[1]. This allows
@@ -337,7 +337,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
     # get set of all relevent GCAM Region-Commodity-GLU-Irrigation combos (except biomass)
     L161.ag_irrProd_Mt_R_C_Y_GLU %>%
       mutate(Irr_Rfd = "IRR") %>%
-      bind_rows(mutate(L161.ag_rfdProd_Mt_R_C_Y_GLU, Irr_Rfd = "RFD"))  %>%
+      bind_rows(mutate(L161.ag_rfdProd_Mt_R_C_Y_GLU, Irr_Rfd = "RFD")) %>%
       select(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd) %>%
       dplyr::distinct() ->
       L162.ag_Prod_Mt_R_C_Y_GLU_irr
