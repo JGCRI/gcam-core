@@ -14,25 +14,19 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
+module_gcam.usa_L2322.Fert_USA_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "energy/calibrated_techs",
              FILE = "energy/A322.globaltech_coef",
-          #   "L2322.Supplysector_Fert",
-          FILE = "temp-data-inject/L2322.Supplysector_Fert",
-          #   "L2322.FinalEnergyKeyword_Fert",
-          FILE = "temp-data-inject/L2322.FinalEnergyKeyword_Fert",
-          #   "L2322.SubsectorLogit_Fert",
-          FILE = "temp-data-inject/L2322.SubsectorLogit_Fert",
+             "L2322.Supplysector_Fert",
+             "L2322.FinalEnergyKeyword_Fert",
+             "L2322.SubsectorLogit_Fert",
           #   "L2322.SubsectorShrwt_Fert", --- FLAG idk if this exsists in the old ds
-          #   "L2322.SubsectorShrwtFllt_Fert",
-          FILE = "temp-data-inject/L2322.SubsectorShrwtFllt_Fert",
-          #   "L2322.SubsectorInterp_Fert",
-          FILE = "temp-data-inject/L2322.SubsectorInterp_Fert",
-          #  "L2322.SubsectorInterpTo_Fert", --- FLAG idk if this exists in the old ds
-          #  "L2322.StubTech_Fert",
-          FILE = "temp-data-inject/L2322.StubTech_Fert",
+             "L2322.SubsectorShrwtFllt_Fert",
+             "L2322.SubsectorInterp_Fert",
+          # "L2322.SubsectorInterpTo_Fert", --- FLAG idk if this exists in the old ds
+          "L2322.StubTech_Fert",
              "L1322.IO_GJkg_state_Fert_F_Yh", # product in the new ds
              "L1322.out_Mt_state_Fert_Yh")) # product in the new ds
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -56,25 +50,16 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
     A322.globaltech_coef <- get_data(all_data, "energy/A322.globaltech_coef")
 
-    # L2322.Supplysector_Fert <- get_data(all_data, "L2322.Supplysector_Fert")
-    L2322.Supplysector_Fert <- get_data(all_data, "temp-data-inject/L2322.Supplysector_Fert")
+    L2322.Supplysector_Fert <- get_data(all_data, "L2322.Supplysector_Fert")
 
+    L2322.FinalEnergyKeyword_Fert <- get_data(all_data, "L2322.FinalEnergyKeyword_Fert")
 
-    # L2322.FinalEnergyKeyword_Fert <- get_data(all_data, "L2322.FinalEnergyKeyword_Fert")
-    L2322.FinalEnergyKeyword_Fert <- get_data(all_data, "temp-data-inject/L2322.FinalEnergyKeyword_Fert")
+    L2322.SubsectorLogit_Fert <- get_data(all_data, "L2322.SubsectorLogit_Fert")
+    L2322.SubsectorShrwtFllt_Fert <- get_data(all_data, "L2322.SubsectorShrwtFllt_Fert")
 
-    # L2322.SubsectorLogit_Fert <- get_data(all_data, "L2322.SubsectorLogit_Fert")
-    L2322.SubsectorLogit_Fert <- get_data(all_data, "temp-data-inject/L2322.SubsectorLogit_Fert")
+    L2322.SubsectorInterp_Fert <- get_data(all_data, "L2322.SubsectorInterp_Fert")
 
-    # L2322.SubsectorShrwtFllt_Fert <- get_data(all_data, "L2322.SubsectorShrwtFllt_Fert")
-    L2322.SubsectorShrwtFllt_Fert <- get_data(all_data, "temp-data-inject/L2322.SubsectorShrwtFllt_Fert")
-
-    # L2322.SubsectorInterp_Fert <- get_data(all_data, "L2322.SubsectorInterp_Fert")
-    L2322.SubsectorInterp_Fert <- get_data(all_data, "temp-data-inject/L2322.SubsectorInterp_Fert")
-
-    # L2322.StubTech_Fert <- get_data(all_data, "L2322.StubTech_Fert")
-    L2322.StubTech_Fert <- get_data(all_data, "temp-data-inject/L2322.StubTech_Fert")
-
+    L2322.StubTech_Fert <- get_data(all_data, "L2322.StubTech_Fert")
     L1322.IO_GJkg_state_Fert_F_Yh <- get_data(all_data, "L1322.IO_GJkg_state_Fert_F_Yh")
     L1322.out_Mt_state_Fert_Yh <- get_data(all_data, "L1322.out_Mt_state_Fert_Yh")
 
@@ -169,59 +154,59 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
              `minicam.energy.input`, coefficient, `market.name`) ->
       L2322.TechCoef_USAFert
 
-
-    # printlog( "All tables for which processing is identical are done in a for loop")
-    # printlog( "NOTE: writing out the tables in this step as well")
-    # this is copied and pasted from the old ds... there may be a better way to do thi
-    L2322.tables <- list( L2322.FinalEnergyKeyword_Fert = L2322.FinalEnergyKeyword_Fert,
-                          L2322.Supplysector_Fert = L2322.Supplysector_Fert,
-                          L2322.SubsectorLogit_Fert = L2322.SubsectorLogit_Fert,
-                          L2322.StubTech_Fert = L2322.StubTech_Fert)
-
-    if(!is.null( L2322.SubsectorInterp_Fert )) {
-      L2322.tables[["L2322.SubsectorInterp_Fert"]] <- L2322.SubsectorInterp_Fert
-    }
-
-    if(!is.null( L2322.SubsectorShrwtFllt_Fert )) {
-      L2322.tables[["L2322.SubsectorShrwtFllt_Fert"]] <- L2322.SubsectorShrwtFllt_Fert
-    }
-
-    if(OLD_DATA_SYSTEM_BEHAVIOR){
-      L2322.tables[["L2322.SubsectorShrwt_Fert"]] <- as.null()
-      L2322.tables[["L2322.SubsectorInterpTo_Fert"]] <- as.null()
-    }
-
-    # skip???
-    # # The logit functions should be processed before any other table that needs to read logit exponents
-    # L2322.tables <- c( read_logit_fn_tables( "ENERGY_LEVEL2_DATA", "L2322.Supplysector_", skip=4, include.equiv.table=T ),
-    #                    read_logit_fn_tables( "ENERGY_LEVEL2_DATA", "L2322.SubsectorLogit_", skip=4, include.equiv.table=F ),
-    #                    L2322.tables )
-
 #
-    for(i in 1:length(L2322.tables)){
-      if(!is.null(L2322.tables[[i]])){}
-      name <- paste0(names(L2322.tables[i]), "_USA")
-
-      cond_1 <- grepl(x = name, pattern = "EQUIV_TABLE")
-
-      L2322.tables[[i]] %>%
-        filter(region == "USA", supplysector == aglu.FERT_NAME) ->
-        df
-
-      cond_2 <- ifelse(nrow(df) == 0, TRUE, FALSE)
-
-      if(any(cond_1, cond_2))
-      object <- L2322.tables[[i]]
-    } else {
-      # state-level Exports_fertilizer sector should be excluded
-
-      }
-
-    # printlog( "L2322.StubTechProd_Fert_USA: calibrated fertilizer production by state" )
-    L1322.out_Mt_state_Fert_Yh %>%
-      filter(year %in% BASE_YEARS) %>%
-      mutate(calOutputValue = signif(value, digits = aglu.DIGITS_CALOUTPUT))
-
+#     # printlog( "All tables for which processing is identical are done in a for loop")
+#     # printlog( "NOTE: writing out the tables in this step as well")
+#     # this is copied and pasted from the old ds... there may be a better way to do thi
+#     L2322.tables <- list( L2322.FinalEnergyKeyword_Fert = L2322.FinalEnergyKeyword_Fert,
+#                           L2322.Supplysector_Fert = L2322.Supplysector_Fert,
+#                           L2322.SubsectorLogit_Fert = L2322.SubsectorLogit_Fert,
+#                           L2322.StubTech_Fert = L2322.StubTech_Fert)
+#
+#     if(!is.null( L2322.SubsectorInterp_Fert )) {
+#       L2322.tables[["L2322.SubsectorInterp_Fert"]] <- L2322.SubsectorInterp_Fert
+#     }
+#
+#     if(!is.null( L2322.SubsectorShrwtFllt_Fert )) {
+#       L2322.tables[["L2322.SubsectorShrwtFllt_Fert"]] <- L2322.SubsectorShrwtFllt_Fert
+#     }
+#
+#     if(OLD_DATA_SYSTEM_BEHAVIOR){
+#       L2322.tables[["L2322.SubsectorShrwt_Fert"]] <- as.null()
+#       L2322.tables[["L2322.SubsectorInterpTo_Fert"]] <- as.null()
+#     }
+#
+#     # skip???
+#     # # The logit functions should be processed before any other table that needs to read logit exponents
+#     # L2322.tables <- c( read_logit_fn_tables( "ENERGY_LEVEL2_DATA", "L2322.Supplysector_", skip=4, include.equiv.table=T ),
+#     #                    read_logit_fn_tables( "ENERGY_LEVEL2_DATA", "L2322.SubsectorLogit_", skip=4, include.equiv.table=F ),
+#     #                    L2322.tables )
+#
+# #
+#     for(i in 1:length(L2322.tables)){
+#       if(!is.null(L2322.tables[[i]])){}
+#       name <- paste0(names(L2322.tables[i]), "_USA")
+#
+#       cond_1 <- grepl(x = name, pattern = "EQUIV_TABLE")
+#
+#       L2322.tables[[i]] %>%
+#         filter(region == "USA", supplysector == aglu.FERT_NAME) ->
+#         df
+#
+#       cond_2 <- ifelse(nrow(df) == 0, TRUE, FALSE)
+#
+#       if(any(cond_1, cond_2))
+#       object <- L2322.tables[[i]]
+#     } else {
+#       # state-level Exports_fertilizer sector should be excluded
+#
+#       }
+#
+#     # printlog( "L2322.StubTechProd_Fert_USA: calibrated fertilizer production by state" )
+#     L1322.out_Mt_state_Fert_Yh %>%
+#       filter(year %in% BASE_YEARS) %>%
+#       mutate(calOutputValue = signif(value, digits = aglu.DIGITS_CALOUTPUT))
+#
 
 
     # ===================================================
@@ -261,12 +246,12 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
       add_precursors("gcam-usa/states_subregions",
                      "energy/calibrated_techs",
                      "energy/A322.globaltech_coef",
-                     "temp-data-inject/L2322.Supplysector_Fert",
-                     "temp-data-inject/L2322.FinalEnergyKeyword_Fert",
-                     "temp-data-inject/L2322.SubsectorLogit_Fert",
-                     "temp-data-inject/L2322.SubsectorShrwtFllt_Fert",
-                     "temp-data-inject/L2322.SubsectorInterp_Fert",
-                     "temp-data-inject/L2322.StubTech_Fert",
+                     "L2322.Supplysector_Fert",
+                     "L2322.FinalEnergyKeyword_Fert",
+                     "L2322.SubsectorLogit_Fert",
+                     "L2322.SubsectorShrwtFllt_Fert",
+                     "L2322.SubsectorInterp_Fert",
+                     "L2322.StubTech_Fert",
                      "L1322.IO_GJkg_state_Fert_F_Yh",
                      "L1322.out_Mt_state_Fert_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
@@ -281,12 +266,12 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
         add_precursors("gcam-usa/states_subregions",
                        "energy/calibrated_techs",
                        "energy/A322.globaltech_coef",
-                       "temp-data-inject/L2322.Supplysector_Fert",
-                       "temp-data-inject/L2322.FinalEnergyKeyword_Fert",
-                       "temp-data-inject/L2322.SubsectorLogit_Fert",
-                       "temp-data-inject/L2322.SubsectorShrwtFllt_Fert",
-                       "temp-data-inject/L2322.SubsectorInterp_Fert",
-                       "temp-data-inject/L2322.StubTech_Fert",
+                       "L2322.Supplysector_Fert",
+                       "L2322.FinalEnergyKeyword_Fert",
+                       "L2322.SubsectorLogit_Fert",
+                       "L2322.SubsectorShrwtFllt_Fert",
+                       "L2322.SubsectorInterp_Fert",
+                       "L2322.StubTech_Fert",
                        "L1322.IO_GJkg_state_Fert_F_Yh",
                        "L1322.out_Mt_state_Fert_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
