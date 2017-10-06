@@ -64,6 +64,47 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
     L226.StubTechCoef_electd <- get_data(all_data, "L226.StubTechCoef_electd")
 
 
+    # Build tables
+
+    # Supplysector information
+
+    # PART 1: FUEL HANDLING AND DELIVERY SECTORS
+
+    # L226.Supplysector_en_USA: Supply sector information for energy handling and delivery sectors
+    # NOTE: Currently using FERC regions as a proxy for regional energy markets
+    A21.sector %>%
+      select(supplysector, output.unit, input.unit, price.unit, logit.exponent, logit.type) %>%
+      filter(supplysector %in%gcamusa.REGIONAL_FUEL_MARKETS) ->
+      A21.tmp
+
+    A26.sector  %>%
+      select(supplysector, output.unit, input.unit, price.unit, logit.exponent, logit.type) %>%
+      filter(supplysector %in%gcamusa.REGIONAL_FUEL_MARKETS) %>%
+      bind_rows(A21.tmp, .) %>%
+      repeat_add_columns(tibble(region = unique(states_subregions$grid_region))) %>%
+      mutate(logit.year.fillout = min(BASE_YEARS)) ->
+      L226.Supplysector_en_USA
+
+
+    # L226.SubsectorShrwtFllt_en_USA: subsector shareweights of energy handling and delivery
+    L226.Supplysector_en_USA %>%
+      mutate(subsector = supplysector,
+             year.fillout = min(BASE_YEARS),
+             share.weight = gcamusa.DEFAULT_SHAREWEIGHT) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]])) ->
+      L226.SubsectorShrwtFllt_en_USA
+
+
+    # L226.SubsectorLogit_en_USA
+    # NOTE: There is only one tech per subsector so the logit choice does not matter
+    L226.SubsectorShrwtFllt_en_USA %>%
+      select(one_of(LEVEL2_DATA_NAMES[["Subsector"]])) %>%
+      mutate(logit.year.fillout = min(BASE_YEARS),
+             logit.exponent = gcamusa.DEFAULT_LOGITEXP,
+             logit.type = NA) %>%
+      select(one_of(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], "logit.type"))) ->
+      L226.SubsectorLogit_en_USA
+
 
 
 
