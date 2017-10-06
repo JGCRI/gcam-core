@@ -462,6 +462,7 @@ gcamusa.DEFAULT_LOGITEXP <- -3
 gcamusa.DEFAULT_COEFFICIENT <- 1
 gcamusa.DEFAULT_MARKET <- "USA"
 gcamusa.GAS_ADJ_THRESH <- 5
+gcamusa.DIGITS_COST <- 4
 
 
 # Uncomment these lines to run under 'timeshift' conditions
