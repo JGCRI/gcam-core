@@ -459,6 +459,9 @@ gcamusa.REGIONAL_FUEL_MARKETS <- c("regional coal", "delivered coal", "wholesale
 
 gcamusa.DEFAULT_SHAREWEIGHT <- 1
 gcamusa.DEFAULT_LOGITEXP <- -3
+gcamusa.DEFAULT_COEFFICIENT <- 1
+gcamusa.DEFAULT_MARKET <- "USA"
+gcamusa.GAS_ADJ_THRESH <- 5
 
 
 # Uncomment these lines to run under 'timeshift' conditions
