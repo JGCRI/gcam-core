@@ -1,0 +1,84 @@
+# File: Macknick_elec_water_m3MWh.csv
+# Title: Water withdrawals and consumption for electricity generation
+# Units: m^3/MWh
+# Source: original GCAM water-electricity workbooks. Many values from Macknick et al and IEAGHG
+sector,fuel,technology,cooling_system,water_type,water_withdrawals,water_consumption
+electricity generation,biomass,biomass (conv),dry cooling,fresh,0,0
+electricity generation,biomass,biomass (conv),once through,fresh,152.36,1.14
+electricity generation,biomass,biomass (conv),recirculating,fresh,3.32,2.09
+electricity generation,biomass,biomass (conv),once through,seawater,152.36,1.14
+electricity generation,biomass,biomass (IGCC),dry cooling,fresh,0.396,0.396
+electricity generation,biomass,biomass (IGCC),once through,fresh,147.06,0.144
+electricity generation,biomass,biomass (IGCC),recirculating,fresh,1.476,1.404
+electricity generation,biomass,biomass (IGCC),once through,seawater,147.06,0.144
+electricity generation,biomass,biomass (IGCC CCS),dry cooling,fresh,0,0
+electricity generation,biomass,biomass (IGCC CCS),once through,fresh,185.616,0.396
+electricity generation,biomass,biomass (IGCC CCS),recirculating,fresh,2.232,2.052
+electricity generation,biomass,biomass (IGCC CCS),once through,seawater,185.616,0.396
+electricity generation,coal,coal (conv pul),cooling pond,fresh,53.22,2.06
+electricity generation,coal,coal (conv pul),dry cooling,fresh,0,0
+electricity generation,coal,coal (conv pul),once through,fresh,158.24,0.95
+electricity generation,coal,coal (conv pul),recirculating,fresh,3.8,2.6
+electricity generation,coal,coal (conv pul),once through,seawater,158.24,0.95
+electricity generation,coal,coal (conv pul),recirculating,seawater,3.8,2.6
+electricity generation,coal,coal (IGCC),dry cooling,fresh,0.396,0.396
+electricity generation,coal,coal (IGCC),once through,fresh,147.06,0.144
+electricity generation,coal,coal (IGCC),recirculating,fresh,1.476,1.404
+electricity generation,coal,coal (IGCC),once through,seawater,147.06,0.144
+electricity generation,coal,coal (IGCC CCS),dry cooling,fresh,0,0
+electricity generation,coal,coal (IGCC CCS),once through,fresh,185.616,0.396
+electricity generation,coal,coal (IGCC CCS),recirculating,fresh,2.232,2.052
+electricity generation,coal,coal (IGCC CCS),once through,seawater,185.616,0.396
+electricity generation,gas,gas (steam/CT),cooling pond,fresh,1.7,1.48
+electricity generation,gas,gas (steam/CT),dry cooling,fresh,0,0
+electricity generation,gas,gas (steam/CT),once through,fresh,152.36,1.14
+electricity generation,gas,gas (steam/CT),recirculating,fresh,3.32,2.09
+electricity generation,gas,gas (steam/CT),none,none,0,0
+electricity generation,gas,gas (steam/CT),once through,seawater,152.36,1.14
+electricity generation,gas,gas (steam/CT),recirculating,seawater,3.32,2.09
+electricity generation,gas,gas (CC),cooling pond,fresh,25.9,0.91
+electricity generation,gas,gas (CC),dry cooling,fresh,0,0
+electricity generation,gas,gas (CC),once through,fresh,49.54,0.38
+electricity generation,gas,gas (CC),recirculating,fresh,0.96,0.75
+electricity generation,gas,gas (CC),dry cooling,seawater,0,0
+electricity generation,gas,gas (CC),once through,seawater,49.54,0.38
+electricity generation,gas,gas (CC),recirculating,seawater,0.96,0.75
+electricity generation,gas,gas (CC CCS),dry cooling,fresh,0.41112,0.411
+electricity generation,gas,gas (CC CCS),once through,fresh,62.532,0.663
+electricity generation,gas,gas (CC CCS),recirculating,fresh,1.8792,1.431
+electricity generation,gas,gas (CC CCS),once through,seawater,62.532,0.663
+electricity generation,geothermal,geothermal,recirculating,fresh,6.8,6.8
+electricity generation,geothermal,geothermal,recirculating (binary),fresh,13.6,13.6
+electricity generation,hydro,hydro,none,fresh,0,17
+electricity generation,nuclear,Gen_II_LWR,cooling pond,fresh,30.69,2.31
+electricity generation,nuclear,Gen_II_LWR,once through,fresh,193.07,1.02
+electricity generation,nuclear,Gen_II_LWR,recirculating,fresh,4.17,2.54
+electricity generation,nuclear,Gen_II_LWR,cooling pond,seawater,30.69,2.31
+electricity generation,nuclear,Gen_II_LWR,once through,seawater,193.07,1.02
+electricity generation,nuclear,Gen_III,cooling pond,fresh,30.69,2.31
+electricity generation,nuclear,Gen_III,once through,fresh,193.07,1.02
+electricity generation,nuclear,Gen_III,recirculating,fresh,4.17,2.54
+electricity generation,nuclear,Gen_III,cooling pond,seawater,30.69,2.31
+electricity generation,nuclear,Gen_III,once through,seawater,193.07,1.02
+electricity generation,refined liquids,refined liquids (steam/CT),cooling pond,fresh,4.55,3.13
+electricity generation,refined liquids,refined liquids (steam/CT),dry cooling,fresh,0,0
+electricity generation,refined liquids,refined liquids (steam/CT),once through,fresh,152.36,0.91
+electricity generation,refined liquids,refined liquids (steam/CT),recirculating,fresh,4.55,3.13
+electricity generation,refined liquids,refined liquids (steam/CT),none,none,0,0
+electricity generation,refined liquids,refined liquids (steam/CT),cooling pond,seawater,4.55,3.13
+electricity generation,refined liquids,refined liquids (steam/CT),once through,seawater,152.36,0.91
+electricity generation,refined liquids,refined liquids (steam/CT),recirculating,seawater,4.55,3.13
+electricity generation,refined liquids,refined liquids (IGCC),dry cooling,fresh,0.396,0.396
+electricity generation,refined liquids,refined liquids (IGCC),once through,fresh,147.06,0.144
+electricity generation,refined liquids,refined liquids (IGCC),recirculating,fresh,1.476,1.404
+electricity generation,refined liquids,refined liquids (IGCC),once through,seawater,147.06,0.144
+electricity generation,refined liquids,refined liquids (IGCC CCS),dry cooling,fresh,0,0
+electricity generation,refined liquids,refined liquids (IGCC CCS),once through,fresh,185.616,0.396
+electricity generation,refined liquids,refined liquids (IGCC CCS),recirculating,fresh,2.232,2.052
+electricity generation,refined liquids,refined liquids (IGCC CCS),once through,seawater,185.616,0.396
+electricity generation,solar CSP,CSP,recirculating,fresh,3.3,3.3
+electricity generation,solar CSP,CSP_storage,recirculating,fresh,3.3,3.3
+electricity generation,solar PV,PV,none,fresh,0.02,0.02
+electricity generation,solar PV,PV_storage,none,none,0.02,0.02
+electricity generation,wind,wind,none,none,0,0
+electricity generation,wind,wind_storage,none,none,0,0

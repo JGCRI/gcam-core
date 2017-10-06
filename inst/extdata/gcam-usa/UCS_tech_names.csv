@@ -1,3 +1,6 @@
+# File: UCS_tech_names.csv
+# Title: UCS technology names
+# Units: NA
 Technology.Code,sector,fuel,technology,cooling_system
 "BP, BG-DR-ST",electricity generation,biomass,biomass (conv),dry cooling
 "BP, BG-NA-CT",electricity generation,gas,gas (steam/CT),none
