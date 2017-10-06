@@ -171,6 +171,23 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
 
 
     # L226.TechCost_en_USA: cost adders
+    L226.TechShrwt_en_USA %>%
+      select(one_of(LEVEL2_DATA_NAMES[["TechYr"]])) %>%
+      mutate(minicam.non.energy.input = "regional price adjustment") %>%
+      left_join_error_no_match(L226.CostAdj_75USDGJ_FERC_F, by = c("region" = "grid_region")) %>%
+      rename(coal = coal_adj,
+             gas = gas_adj,
+             liquids = liq_adj) %>%
+      gather(sector1, adjustment, -region, -supplysector, -subsector, -technology, -year, -minicam.non.energy.input) %>%
+      mutate(tmp = supplysector) %>%
+      separate(tmp, c("trash1", "sector2", "trash2"), sep = " ") %>%
+      filter(sector1 == sector2) %>%
+      select(-trash1, -trash2, -sector1, -sector2) %>%
+      rename(input.cost = adjustment) %>%
+      mutate(input.cost = round(input.cost, gcamusa.DIGITS_COST)) ->
+      L226.TechCost_en_USA
+
+
 
 
 
