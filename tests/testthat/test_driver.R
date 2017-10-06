@@ -272,7 +272,7 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
     expect_identical(tb$output, "output")
     expect_identical(tb$precursors, precs)
     expect_identical(tb$units, unts)
-    expect_identical(tb$comments, paste(com1, com2, sep = driver.SEPARATOR))
-    expect_identical(tb$flags, paste(f1, f2, f3, sep = driver.SEPARATOR))
+    expect_identical(tb$comments, paste(com1, com2, sep = data.SEPARATOR))
+    expect_identical(tb$flags, paste(f1, f2, f3, sep = data.SEPARATOR))
   })
 }

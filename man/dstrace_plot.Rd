@@ -11,9 +11,9 @@ dstrace_plot(object_name, tracelist, upstream, downstream, ...)
 
 \item{tracelist}{Record of the trace, a tibble}
 
-\item{upstream}{Upstream? Logical}
+\item{upstream}{Looking upstream? Logical}
 
-\item{downstream}{Downstream? Logical}
+\item{downstream}{Looking downstream? Logical}
 
 \item{...}{Extra arguments passed on to \code{\link{plot}}}
 }

@@ -10,7 +10,7 @@ LOGIT_COLUMN_NAME <- "logit.type"   # will be removed by test code before old-ne
 
 
 # Flags ======================================================================
-# Flags used by chunks
+
 FLAG_INPUT_DATA      <- "FLAG_INPUT_DATA"       # input data, don't output
 FLAG_LONG_YEAR_FORM  <- "FLAG_LONG_YEAR_FORM"   # 'year' column but original data are wide
 FLAG_NO_OUTPUT       <- "FLAG_NO_OUTPUT"        # don't output
@@ -336,12 +336,20 @@ CONV_BM2_M2 <- 1e9
 CONV_MILFT2_M2 <- 92900
 CONV_FT2_M2 <- 0.0929
 
+
 # Driver constants ======================================================================
 
 driver.MAKE <- "MAKE"
 driver.DECLARE_OUTPUTS <- "DECLARE_OUTPUTS"
-driver.DECLARE_INPUTS <- "DECLARE_INPUTS"
-driver.SEPARATOR <- "; "
+driver.DECLARE_INPUTS  <- "DECLARE_INPUTS"
+
+
+# Data and utility constants ======================================================================
+
+data.SEPARATOR <- "; "
+data.PRECURSOR <- "Precursor"
+data.DEPENDENT <- "Dependent"
+
 
 # Modeltime constants ======================================================================
 
@@ -431,7 +439,6 @@ emissions.AGR_GASES            <- c("CH4_AGR", "N2O_AGR", "NH3_AGR", "NOx_AGR")
 emissions.AG_MACC_GHG_NAMES    <- c("CH4_AGR", "N2O_AGR")
 emissions.GHG_NAMES            <- c("CH4", "N2O")
 emissions.USE_GV_MAC           <- 1
-
 emissions.USE_GCAM3_CCOEFS     <- 1 # Select whether to use GCAM3 fuel carbon coefficients
 emissions.USE_GLOBAL_CCOEFS    <- 1 # Select whether to use global average carbon coefficients on fuels, or region-specific carbon coefficients
 emissions.INVENTORY_MATCH_YEAR <- 2009 # Select year from which to calculate fuel emissions coefficients (2009 is currently the most recent)
@@ -441,6 +448,7 @@ emissions.NONGHG_GASES         <- c("SO2", "NOx", "CO", "NMVOC", "NH3")
 emissions.EDGAR_YEARS_PLUS     <- 1970:2008
 
 # GCAM-USA constants ======================================================================
+
 gcamusa.STATES <- c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA",
                       "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR",
                       "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY")
@@ -451,3 +459,14 @@ gcamusa.STATES <- c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", 
 # FUTURE_YEARS <- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)
 # BASE_YEARS <- c(1975, 1990, 2005)   # normally (1975, 1990, 2005, 2010)
 # MODEL_YEARS <- c(BASE_YEARS, FUTURE_YEARS)
+
+# PV constants ======================================================================
+
+PV_DERATING_FACTOR <- 0.77  # incorporates various factors: inverters, transformers, mismatch, soiling, and others
+PV_RESID_INSTALLED_COST <- 9500  # 2005USD per kw
+PV_COMM_INSTALLED_COST <- 7290  # 2005USD per kw
+PV_RESID_OM <- 100  # 2005USD per kw per year
+PV_COMM_OM <- 40  # 2005USD per kw per year
+PV_LIFETIME <- 30  # years
+PV_DISCOUNT_RATE <- 0.1  # year^-1
+HOURS_PER_YEAR <- 24 * 365
