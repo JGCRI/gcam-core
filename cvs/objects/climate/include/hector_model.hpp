@@ -196,9 +196,9 @@ private:
     bool setEmissionsByYear( const std::string& aGasName, const int aYear, double aEmissions );
 
     //! subroutines for getting data from Hector and storing it in the tables
-    void storeConc( const int aYear );
-    void storeRF( const int aYear );
-    void storeGlobals( const int aYear );
+    void storeConc( const int aYear, const bool aHadError );
+    void storeRF( const int aYear, const bool aHadError );
+    void storeGlobals( const int aYear, const bool aHadError );
 
     //! set up the tables used by the functions in the previous block
     void setupConcTbl();
