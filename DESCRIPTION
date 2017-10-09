@@ -2,8 +2,26 @@ Package: gcamdata
 Type: Package
 Title: Build the GCAM Input Datasets
 Version: 0.8
-Author: PNNL/JGCRI
-Maintainer: Ben Bond-Lamberty <bondlamberty@pnnl.gov>
+Date: 2017-10-9
+Authors@R: c(person("Ben", "Bond-Lamberty", 
+                email = "bondlamberty@pnnl.gov", 
+                role = c("cre", "aut"), 
+                comment = c(ORCID = "0000-0001-9525-4633")),
+  person("Katherine", "Calvin",   role = "aut"),
+  person("Ryna", "Cui",           role = "aut"),
+  person("Kalyn", "Dorheim",      role = "aut"),
+  person("Leyang", "Feng",        role = "aut"),
+  person("Jill", "Horing",        role = "aut"),
+  person("Russell", "Horowitz",   role = "aut"),
+  person("G. Page", "Kyle",       role = "aut"),
+  person("Robert", "Link",        role = "aut"),
+  person("Pralit", "Patel",       role = "aut"),
+  person("Christopher", "Roney",  role = "aut"),
+  person("Abigail", "Snyder",     role = "aut"),
+  person("Aaron", "Staniszweski", role = "aut"),
+  person("Sean", "Turner",        role = "aut"),
+  person("Leon", "Clarke",        role = "rth"),
+  person("Pacific Northwest National Laboratory", role = "cph"))
 Description: Build the GCAM XML input files.
 License: MIT + file LICENSE
 Depends: R (>= 3.1.2)
@@ -22,3 +40,4 @@ Suggests:
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
+BugReports: https://github.com/JGCRI/gcamdata/issues
