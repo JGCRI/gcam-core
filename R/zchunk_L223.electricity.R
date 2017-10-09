@@ -402,6 +402,32 @@ module_energy_L223.electricity <- function(command, ...) {
       anti_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) ->
       L223.GlobalTechOMvar_elec
 
+
+    # L223.GlobalTechShrwt_elec: Shareweights of global electricity generation technologies
+    A23.globaltech_shrwt %>%
+      gather(year, share.weight, matches(YEAR_PATTERN)) %>%
+      complete(nesting(supplysector, subsector, technology), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
+      arrange(supplysector, year) %>%
+      group_by(supplysector, subsector, technology) %>%
+      mutate(share.weight = approx_fun(as.numeric(year), share.weight, rule = 1)) %>%
+      ungroup() %>%
+      filter(year %in% MODEL_YEARS) %>%
+      rename(sector.name = supplysector, subsector.name = subsector) ->
+      L223.GlobalTechShrwt_elec_all
+    # reorders columns to match expected model interface input
+    L223.GlobalTechShrwt_elec_all <- L223.GlobalTechShrwt_elec_all[c(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "share.weight")]
+
+    # Subsets the intermittent technologies by checking it against the list in A23.globalinttech
+    L223.GlobalTechShrwt_elec_all %>%
+      semi_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) %>%
+      rename(intermittent.technology = technology) ->
+      L223.GlobalIntTechShrwt_elec
+
+    # Subsets the non-intermittent technologies by checking against any not listed in A23.globalinttech
+    L223.GlobalTechShrwt_elec_all %>%
+      anti_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) ->
+      L223.GlobalTechShrwt_elec
+
 #================================OLD============
     # 2c. Technology information
     printlog( "L223.StubTech_elec: Identification of stub technologies of electricity generation" )
@@ -420,28 +446,6 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.GlobalTechEff_elec <- subset_techs( L223.GlobalTechEff_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
     #Hard code in type "Resource" for intermittent technology resource input only
     L223.GlobalIntTechEff_elec["type"] <- "Resource"
-
-    printlog( "L223.GlobalTechOMfixed_elec: Fixed O&M costs of global electricity generation technologies" )
-    L223.globaltech_OMfixed.melt <- interpolate_and_melt( A23.globaltech_OMfixed, c( model_base_years, model_future_years ), value.name="OM.fixed", digits = digits_OM, rule=3 )
-    L223.globaltech_OMfixed.melt[ c( "sector.name", "subsector.name" ) ] <- L223.globaltech_OMfixed.melt[ c( "supplysector", "subsector" ) ]
-    L223.GlobalTechOMfixed_elec <- L223.globaltech_OMfixed.melt[ names_GlobalTechOMfixed ]
-    L223.GlobalIntTechOMfixed_elec <- subset_inttechs( L223.GlobalTechOMfixed_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
-    L223.GlobalTechOMfixed_elec <- subset_techs( L223.GlobalTechOMfixed_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
-
-    printlog( "L223.GlobalTechOMvar_elec: Variable O&M costs of global electricity generation technologies" )
-    L223.globaltech_OMvar.melt <- interpolate_and_melt( A23.globaltech_OMvar, c( model_base_years, model_future_years ), value.name="OM.var", digits = digits_OM, rule=3 )
-    L223.globaltech_OMvar.melt[ c( "sector.name", "subsector.name" ) ] <- L223.globaltech_OMvar.melt[ c( "supplysector", "subsector" ) ]
-    L223.GlobalTechOMvar_elec <- L223.globaltech_OMvar.melt[ names_GlobalTechOMvar ]
-    L223.GlobalIntTechOMvar_elec <- subset_inttechs( L223.GlobalTechOMvar_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
-    L223.GlobalTechOMvar_elec <- subset_techs( L223.GlobalTechOMvar_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
-
-    #Shareweights of global technologies
-    printlog( "L223.GlobalTechShrwt_elec: Shareweights of global electricity generation technologies" )
-    L223.globaltech_shrwt.melt <- interpolate_and_melt( A23.globaltech_shrwt, c( model_base_years, model_future_years ), value.name="share.weight" )
-    L223.globaltech_shrwt.melt[ c( "sector.name", "subsector.name" ) ] <- L223.globaltech_shrwt.melt[ c( "supplysector", "subsector" ) ]
-    L223.GlobalTechShrwt_elec <- L223.globaltech_shrwt.melt[ c( names_GlobalTechYr, "share.weight" ) ]
-    L223.GlobalIntTechShrwt_elec <- subset_inttechs( L223.GlobalTechShrwt_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
-    L223.GlobalTechShrwt_elec <- subset_techs( L223.GlobalTechShrwt_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
 
 
 #====================OLD=======================
