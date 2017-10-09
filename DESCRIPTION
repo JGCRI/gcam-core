@@ -20,7 +20,7 @@ Authors@R: c(person("Ben", "Bond-Lamberty",
   person("Abigail", "Snyder",     role = "aut"),
   person("Aaron", "Staniszweski", role = "aut"),
   person("Sean", "Turner",        role = "aut"),
-  person("Leon", "Clarke",        role = "rth"),
+  person("Leon", "Clarke",        role = c("rth", "aut")),
   person("Pacific Northwest National Laboratory", role = "cph"))
 Description: Build the GCAM XML input files.
 License: MIT + file LICENSE
