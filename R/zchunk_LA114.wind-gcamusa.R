@@ -1,6 +1,6 @@
 #' module_gcam.usa_LA114.Wind
 #'
-#' Briefly describe what this chunk does.
+#' Compute capacity factors for wind by US state.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,16 +8,14 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L114.CapacityFactor_wind_state}. The corresponding file in the
 #' original data system was \code{LA114.Wind.R} (gcam-usa level1).
-#' @details Describe in detail what this chunk does.
+#' @details Computes capacity factors for wind by US state.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
-#' @export
-module_gcam.usa_LA114.Wind_DISABLED <- function(command, ...) {
+#' @author ST September 2017
+module_gcam.usa_LA114.Wind <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "us_state_wind",
-              FILE = "gcam-usa/states_subregions",
+    return(c( FILE = "gcam-usa/us_state_wind",
               FILE = "energy/A23.globaltech_capital",
               FILE = "energy/A23.globaltech_OMfixed",
               FILE = "energy/A23.globaltech_OMvar"))
@@ -25,46 +23,63 @@ module_gcam.usa_LA114.Wind_DISABLED <- function(command, ...) {
     return(c("L114.CapacityFactor_wind_state"))
   } else if(command == driver.MAKE) {
 
+    technology <- year <- state <- sector <- capacity.factor <- fuel <- value <- base_cost <-
+      region <- NULL  # silence package check.
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    us_state_wind <- get_data(all_data, "us_state_wind")
-    states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
+    us_state_wind <- get_data(all_data, "gcam-usa/us_state_wind")
     A23.globaltech_capital <- get_data(all_data, "energy/A23.globaltech_capital")
     A23.globaltech_OMfixed <- get_data(all_data, "energy/A23.globaltech_OMfixed")
     A23.globaltech_OMvar <- get_data(all_data, "energy/A23.globaltech_OMvar")
 
     # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # ===================================================
 
-    # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    # This function filters A23 tables for wind, then gathers and interpolates...
+    # ... to get a single value for wind base cost year. Note that the interpolation is...
+    # ... redundant whilst gcamusa.WIND_BASE_COST_YEAR = 2005, ...
+    # ... since 2005 is an existing data point in all A23 tables.
+    filter_gather_interp_get_cost <- function(x) {
+      . <- NULL  # silence package check notes
+      x %>% filter(technology == "wind") %>%
+        gather(year, value, matches(YEAR_PATTERN)) %>%
+        select(year, value) %>% mutate(year = as.integer(year)) %>%
+        complete(year = c(year, gcamusa.WIND_BASE_COST_YEAR)) %>%
+        mutate(value = approx_fun(year, value, rule = 2)) %>%
+        filter(year == gcamusa.WIND_BASE_COST_YEAR) %>%
+        .[["value"]]
+    }
+
+    A23.globaltech_capital %>% filter_gather_interp_get_cost -> L114.CapCost
+    A23.globaltech_OMfixed %>% filter_gather_interp_get_cost -> L114.OMFixedCost
+    A23.globaltech_OMvar %>% filter_gather_interp_get_cost -> L114.OMVarCost
+    # ^^ all above rates are in $1975
+
+    # Get fixed charge rate of capital for wind
+    filter(A23.globaltech_capital, technology == "wind")$fixed.charge.rate -> L114.FixedChargeRate
+
+    # Convert state level wind base cost data to 1975$/GJ, ...
+    # ... then compute capacity factor for the base wind turbine in each state
+    us_state_wind %>%
+      mutate(sector = "electricity generation",
+             fuel = "wind",
+             base_cost = base_cost * gdp_deflator(1975, 2007) / CONV_KWH_GJ,
+             capacity.factor = (L114.CapCost * L114.FixedChargeRate + L114.OMFixedCost) /
+               (CONV_KWH_GJ * CONV_YEAR_HOURS) / (base_cost - (L114.OMVarCost / CONV_MWH_GJ))) %>%
+      # ^^ capacity factor computed dividing sum of capital and fixed costs (converted to $/GJ) by ...
+      # ... base cost minus variable cost (converted to $/GJ)
+      rename(state = region) %>%
+      select(state, sector, fuel, capacity.factor) %>%
+      # add attributes for output...
+      add_title("Capacity factor for wind by state") %>%
+      add_units("Unitless") %>%
+      add_comments("Computed from A23 tables for capital, variable and fixed wind costs") %>%
       add_legacy_name("L114.CapacityFactor_wind_state") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("gcam-usa/us_state_wind",
+                     "energy/A23.globaltech_capital",
+                     "energy/A23.globaltech_OMfixed",
+                     "energy/A23.globaltech_OMvar") ->
       L114.CapacityFactor_wind_state
 
     return_data(L114.CapacityFactor_wind_state)

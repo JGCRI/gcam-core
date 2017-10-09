@@ -189,7 +189,7 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
       # Take the above-processed country-crop specific Fertilizer information, aggregate to IFAregion-IFAcommodity
       # and use the top down estimates in table L141.IFA_Fert_ktN to calculate a default fertilizer consumption rate for
       # later use to fill in missing fertilizer demands from the bottom up estimate.
-      L141.IFA_Fert_Cons_MtN_ctry_crop  %>%
+      L141.IFA_Fert_Cons_MtN_ctry_crop %>%
         # aggregate harvested area to IFA_region-IFA_commodity level
         group_by(IFA_region, IFA_commodity) %>%
         summarise(HA_ha = sum(HA_ha, na.rm = TRUE)) %>%

@@ -558,7 +558,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       write_to_all_regions(LEVEL2_DATA_NAMES[["PerCapitaBased"]], GCAM_region_names = GCAM_region_names) ->
       L254.PerCapitaBased_trn # OUTPUT
 
-    # L254.PriceElasticity_trn: price elasticity of transportation final demand" )
+    # L254.PriceElasticity_trn: price elasticity of transportation final demand")
     # Price elasticities are only applied to future periods. Application in base years will cause solution failure
     A54.demand %>%
       repeat_add_columns(tibble(year = FUTURE_YEARS)) %>%

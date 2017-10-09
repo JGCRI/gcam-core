@@ -10,7 +10,7 @@
 #' original data system was \code{batch_water_mapping.xml.R} (water XML).
 module_water_batch_water_mapping.xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L203.Supplysector",
+    return(c("L203.Supplysector",
               "L203.SubsectorLogit",
               "L203.SubsectorShrwtFllt",
               "L203.TechShrwt",

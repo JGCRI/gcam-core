@@ -15,7 +15,7 @@
 #' @author RLH September 2017
 module_gcam.usa_LB126.Gas_ElecTD <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L122.in_EJ_R_gasproc_F_Yh",
+    return(c("L122.in_EJ_R_gasproc_F_Yh",
               "L122.out_EJ_R_gasproc_F_Yh",
               "L126.in_EJ_R_gaspipe_F_Yh",
               "L126.out_EJ_R_gaspipe_F_Yh",

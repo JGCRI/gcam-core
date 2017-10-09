@@ -1,0 +1,10 @@
+# File: A322.subsector_shrwt.csv
+# Title: Fertilizer default subsector shareweights
+# Units: Unitless
+supplysector,subsector,year.fillout,year,share.weight
+N fertilizer,coal,start-year,,1
+N fertilizer,gas,start-year,,1
+N fertilizer,refined liquids,start-year,,1
+N fertilizer,refined liquids,2035,,0
+N fertilizer,Imports,start-year,,0
+Exports_fertilizer,N fertilizer,start-year,,0
