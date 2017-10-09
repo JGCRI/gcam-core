@@ -276,6 +276,8 @@ energy.DIGITS_COST <- 4
 energy.DIGITS_EFFICIENCY <- 3
 energy.DIGITS_SHRWT <- 4
 energy.DIGITS_CAPACITY_FACTOR <- 2
+energy.DIGITS_OM <- 2
+energy.DIGITS_CAPITAL <- 0
 
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
