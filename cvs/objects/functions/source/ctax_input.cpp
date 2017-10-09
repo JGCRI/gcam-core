@@ -32,10 +32,10 @@
 
 
 /*! 
- * \file input_tax.cpp
+ * \file ctax_input.cpp
  * \ingroup Objects
- * \brief The InputTax class source file.
- * \author Kate Calvin
+ * \brief The CTaxInput class source file.
+ * \author Pralit Patel
  */
 
 #include "util/base/include/definitions.h"
@@ -44,14 +44,10 @@
 #include <xercesc/dom/DOMNamedNodeMap.hpp>
 #include <cmath>
 
-#include "functions/include/input_tax.h"
+#include "functions/include/ctax_input.h"
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/xml_helper.h"
-#include "technologies/include/icapture_component.h"
-#include "functions/include/icoefficient.h"
-#include "functions/include/efficiency.h"
-#include "functions/include/intensity.h"
 #include "containers/include/market_dependency_finder.h"
 #include "containers/include/iinfo.h"
 #include "functions/include/function_utils.h"
@@ -61,9 +57,6 @@ using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
-
-// static initialize.
-const string InputTax::XML_REPORTING_NAME = "input-tax";
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
 *
@@ -75,8 +68,8 @@ const string InputTax::XML_REPORTING_NAME = "input-tax";
 * \author Sonny Kim
 * \return The constant XML_NAME as a static.
 */
-const string& InputTax::getXMLNameStatic() {
-    const static string XML_NAME = "input-tax";
+const string& CTaxInput::getXMLNameStatic() {
+    const static string XML_NAME = "ctax-input";
     return XML_NAME;
 }
 
@@ -88,14 +81,13 @@ const string& InputTax::getXMLNameStatic() {
 * \author Sonny Kim
 * \return The constant XML_NAME.
 */
-const string& InputTax::getXMLReportingName() const{
-    return XML_REPORTING_NAME;
+const string& CTaxInput::getXMLReportingName() const{
+    return getXMLNameStatic();
 }
 
 //! Constructor
-InputTax::InputTax()
-: mPhysicalDemand( scenario->getModeltime()->getmaxper() ),
-  mAdjustedCoefficients( scenario->getModeltime()->getmaxper(), 1.0 )
+CTaxInput::CTaxInput()
+: mCachedCCoef( 0.0 )
 {
 }
 
@@ -105,7 +97,7 @@ InputTax::InputTax()
  *       it in the header file before the header file for the type contained in
  *       the auto_ptr is included.
  */
-InputTax::~InputTax() {
+CTaxInput::~CTaxInput() {
 }
 
 /*!
@@ -114,40 +106,30 @@ InputTax::~InputTax() {
  *          allocated memory.
  * \param aOther tax input from which to copy.
  */
-InputTax::InputTax( const InputTax& aOther ){
-    // Do not clone the input coefficient as the calculated
-    // coeffient will be filled out later.
-
-    // Do not copy calibration values into the future
-    // as they are only valid for one period.
+CTaxInput::CTaxInput( const CTaxInput& aOther ){
     mName = aOther.mName;
-    
-    // Resize vectors to the correct size.
-    mPhysicalDemand.resize( scenario->getModeltime()->getmaxper() );
-    mAdjustedCoefficients.resize( scenario->getModeltime()->getmaxper() );
-    
-    // copy keywords
-    mKeywordMap = aOther.mKeywordMap;
+    mFuelName = aOther.mFuelName;
+    mCachedCCoef = aOther.mCachedCCoef;
 }
 
-InputTax* InputTax::clone() const {
-    return new InputTax( *this );
+CTaxInput* CTaxInput::clone() const {
+    return new CTaxInput( *this );
 }
 
-bool InputTax::isSameType( const string& aType ) const {
+bool CTaxInput::isSameType( const string& aType ) const {
     return aType == getXMLNameStatic();
 }
 
-void InputTax::XMLParse( const xercesc::DOMNode* node ) {
+void CTaxInput::XMLParse( const xercesc::DOMNode* aNode ) {
     // TODO: Replace this with the restructured XMLParse.
     // Make sure we were passed a valid node.
-    assert( node );
+    assert( aNode );
 
     // get the name attribute.
-    mName = XMLHelper<string>::getAttr( node, "name" );
+    mName = XMLHelper<string>::getAttr( aNode, "name" );
 
     // get all child nodes.
-    const DOMNodeList* nodeList = node->getChildNodes();
+    const DOMNodeList* nodeList = aNode->getChildNodes();
 
     // loop through the child nodes.
     for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
@@ -158,13 +140,8 @@ void InputTax::XMLParse( const xercesc::DOMNode* node ) {
 
         const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 
-        if( nodeName == "keyword" ){
-            DOMNamedNodeMap* keywordAttributes = curr->getAttributes();
-            for( unsigned int attrNum = 0; attrNum < keywordAttributes->getLength(); ++attrNum ) {
-                DOMNode* attrTemp = keywordAttributes->item( attrNum );
-                mKeywordMap[ XMLHelper<string>::safeTranscode( attrTemp->getNodeName() ) ] = 
-                    XMLHelper<string>::safeTranscode( attrTemp->getNodeValue() );
-            }
+        if( nodeName == "fuel-name" ){
+            mFuelName = XMLHelper<string>::getValue( curr );
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -175,27 +152,25 @@ void InputTax::XMLParse( const xercesc::DOMNode* node ) {
     }
 }
 
-void InputTax::toInputXML( ostream& aOut,
+void CTaxInput::toInputXML( ostream& aOut,
                                Tabs* aTabs ) const
 {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
-    if( !mKeywordMap.empty() ) {
-        XMLWriteElementWithAttributes( "", "keyword", aOut, aTabs, mKeywordMap );
-    }
+    XMLWriteElement( mFuelName, "fuel-name", aOut, aTabs );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-void InputTax::toDebugXML( const int aPeriod,
+void CTaxInput::toDebugXML( const int aPeriod,
                                ostream& aOut,
                                Tabs* aTabs ) const
 {
     XMLWriteOpeningTag ( getXMLNameStatic(), aOut, aTabs, mName );
-    XMLWriteElement( mAdjustedCoefficients[ aPeriod ], "current-coef", aOut, aTabs );
-    XMLWriteElement( mPhysicalDemand[ aPeriod ], "physical-demand", aOut, aTabs );
+    XMLWriteElement( mFuelName, "fuel-name", aOut, aTabs );
+    XMLWriteElement( mCachedCCoef, "fuel-C-coef", aOut, aTabs );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-void InputTax::completeInit( const string& aRegionName,
+void CTaxInput::completeInit( const string& aRegionName,
                                  const string& aSectorName,
                                  const string& aSubsectorName,
                                  const string& aTechName,
@@ -207,11 +182,9 @@ void InputTax::completeInit( const string& aRegionName,
                                                                       aRegionName,
                                                                       getName(),
                                                                       aRegionName );
-    mSectorName = aSectorName;
-    
 }
 
-void InputTax::initCalc( const string& aRegionName,
+void CTaxInput::initCalc( const string& aRegionName,
                              const string& aSectorName,
                              const bool aIsNewInvestmentPeriod,
                              const bool aIsTrade,
@@ -220,107 +193,88 @@ void InputTax::initCalc( const string& aRegionName,
 {
     // There must be a valid region name.
     assert( !aRegionName.empty() );
-    mAdjustedCoefficients[ aPeriod ] = 1.0;
+    mCachedCCoef = FunctionUtils::getCO2Coef( aRegionName, mFuelName, aPeriod );
 }
 
-void InputTax::copyParam( const IInput* aInput,
+void CTaxInput::copyParam( const IInput* aInput,
                              const int aPeriod )
 {
-    aInput->copyParamsInto( *this, aPeriod );
 }
 
-void InputTax::copyParamsInto( InputTax& aInput,
-                                  const int aPeriod ) const
-{
-    // do nothing 
-}
-
-
-double InputTax::getCO2EmissionsCoefficient( const string& aGHGName,
+double CTaxInput::getCO2EmissionsCoefficient( const string& aGHGName,
                                              const int aPeriod ) const
 {
+    // do not double account taxes on mFuelName
     return 0;
 }
 
-double InputTax::getPhysicalDemand( const int aPeriod ) const {
-    assert( mPhysicalDemand[ aPeriod ].isInited() );
-    return mPhysicalDemand[ aPeriod ];
-}
-
-double InputTax::getCarbonContent( const int aPeriod ) const {
+double CTaxInput::getPhysicalDemand( const int aPeriod ) const {
     return 0;
 }
 
-void InputTax::setPhysicalDemand( double aPhysicalDemand,
+double CTaxInput::getCarbonContent( const int aPeriod ) const {
+    return 0;
+}
+
+void CTaxInput::setPhysicalDemand( double aPhysicalDemand,
                                      const string& aRegionName,
                                      const int aPeriod )
 {
-
-    Marketplace* marketplace = scenario->getMarketplace();
-    IInfo* marketInfo = marketplace->getMarketInfo( mName, aRegionName, 0, true );
-
-    // If tax is shared based, then divide by sector output.
-    // Check if marketInfo exists and has the "isShareBased" boolean.
-    if( marketInfo && marketInfo->hasValue( "isShareBased" ) ){
-        if( marketInfo->getBoolean( "isShareBased", true ) ){
-            // Each share is additive
-            aPhysicalDemand/= marketplace->getDemand( mSectorName, aRegionName, aPeriod );
-        }
-    }
-    // mPhysicalDemand can be a share if tax is share based.
-    mPhysicalDemand[ aPeriod ].set( aPhysicalDemand );
-    // Each technology share is additive.
-    mLastCalcValue = marketplace->addToDemand( mName, aRegionName, mPhysicalDemand[ aPeriod ],
-                              mLastCalcValue, aPeriod, true );
-    ILogger& mainLog = ILogger::getLogger( "main_log" );
-    mainLog.setLevel( ILogger::NOTICE );
+    // this input is used in conjunction with a negative emissions
+    // final demand to calculate the constraint demands
 }
 
-double InputTax::getCoefficient( const int aPeriod ) const {
-    // Check that the coefficient has been initialized.
-    assert( mAdjustedCoefficients[ aPeriod ].isInited() );
-
-    return mAdjustedCoefficients[ aPeriod ];
+double CTaxInput::getCoefficient( const int aPeriod ) const {
+    return 1.0;
 }
 
-void InputTax::setCoefficient( const double aCoefficient,
+void CTaxInput::setCoefficient( const double aCoefficient,
                                   const int aPeriod )
 {
     // Do nothing.
 }
 
-double InputTax::getPrice( const string& aRegionName,
+double CTaxInput::getPrice( const string& aRegionName,
                               const int aPeriod ) const
 {
+    // Constants
+    const double CVRT90 = 2.212; // 1975 $ to 1990 $
+    // Conversion from teragrams of carbon per EJ to metric tons of carbon per GJ
+    const double CVRT_TG_MT = 1e-3;
     // A high tax decreases demand.
-    return scenario->getMarketplace()->getPrice( mName, aRegionName, aPeriod, true );
+    const Marketplace* marketplace = scenario->getMarketplace();
+    double tax = marketplace->getPrice( mName, aRegionName, aPeriod, true );
+    double ctax = marketplace->getPrice( "CO2", aRegionName, aPeriod, true );
+    
+    // note we need to perform some unit conversions since C prices and technology
+    // costs in different units
+    return tax == Marketplace::NO_MARKET_PRICE ? 0.0 : tax * ctax * mCachedCCoef / CVRT90 * CVRT_TG_MT;
 }
 
-void InputTax::setPrice( const string& aRegionName,
+void CTaxInput::setPrice( const string& aRegionName,
                             const double aPrice,
                             const int aPeriod )
 {
-    // Not hooking this up yet, it could work.
 }
 
-double InputTax::getCalibrationQuantity( const int aPeriod ) const
+double CTaxInput::getCalibrationQuantity( const int aPeriod ) const
 {
     return -1;
 }
 
-bool InputTax::hasTypeFlag( const int aTypeFlag ) const {
+bool CTaxInput::hasTypeFlag( const int aTypeFlag ) const {
     return ( ( aTypeFlag & ~IInput::TAX ) == 0 );
 }
 
-double InputTax::getIncomeElasticity( const int aPeriod ) const {
+double CTaxInput::getIncomeElasticity( const int aPeriod ) const {
     return 0;
 }
 
-double InputTax::getPriceElasticity( const int aPeriod ) const {
+double CTaxInput::getPriceElasticity( const int aPeriod ) const {
     return 0;
 }
 
-double InputTax::getTechChange( const int aPeriod ) const
+double CTaxInput::getTechChange( const int aPeriod ) const
 {
     return 0;
 }

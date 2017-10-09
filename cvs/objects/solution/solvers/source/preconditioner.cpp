@@ -327,10 +327,36 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                             solvable[i].setPrice(newprice);
                             chg = true;
                             ++nchg;
+                        } else if(oldprice <= 0.0 && olddmnd > 0.0) {
+                            newprice = olddmnd;
+                            solvable[i].setPrice(newprice);
+                            chg = true;
+                            ++nchg;
                         }
                         
                     } 
                     break; 
+                case IMarketType::TAX:
+                    lb = solvable[i].getLowerBoundSupplyPrice();
+                    ub = solvable[i].getUpperBoundSupplyPrice();
+                    if(olddmnd <= 0.0 && olddmnd < oldsply && oldprice > ub ) {
+                        newprice = lb - 0.1;
+                        solvable[i].setPrice(newprice);
+                        chg = true;
+                        ++nchg;
+                    } else if(olddmnd > 0 && oldprice < lb ) {
+                        newprice = lb + 0.1;
+                        solvable[i].setPrice(newprice);
+                        chg = true;
+                        ++nchg;
+                    } else if(oldprice > ub && olddmnd < oldsply) {
+                        newprice = ub - 0.1;
+                        solvable[i].setPrice(newprice);
+                        chg = true;
+                        ++nchg;
+                    }
+                    break;
+
                 default:
                     // no action for tax markets, etc.
                     chg = false;

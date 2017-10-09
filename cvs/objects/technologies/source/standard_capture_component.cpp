@@ -241,7 +241,7 @@ double StandardCaptureComponent::getStorageCost( const string& aRegionName,
         // Use the market cost.
         storageCost = storageMarketPrice;
     }
-    return storageCost + negEmissPenalty;
+    return storageCost + negEmissPenalty * carbonMarketPrice;
 }
 
 /**

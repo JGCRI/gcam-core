@@ -189,7 +189,7 @@ void NegativeEmissionsFinalDemand::setFinalDemand( const string& aRegionName,
         return;
     }
     double regionalCO2Emiss = marketplace->getDemand( mName, aRegionName, aPeriod );
-    regionalCO2Emiss = std::max( -1.0 * regionalCO2Emiss, 0.0 );
+    regionalCO2Emiss = /*std::max(*/ -1.0 * regionalCO2Emiss/*, 0.0 )*/;
     double negativeEmissValue = regionalCO2Emiss * co2Price;
     mLastCalcValue = marketplace->addToDemand( mPolicyName, aRegionName, negativeEmissValue, mLastCalcValue, aPeriod );
 }

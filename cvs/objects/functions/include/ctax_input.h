@@ -1,5 +1,5 @@
-#ifndef _INPUT_TAX_H_
-#define _INPUT_TAX_H_
+#ifndef _CTAX_INPUT_H_
+#define _CTAX_INPUT_H_
 #if defined(_MSC_VER)
 #pragma once
 #endif
@@ -38,56 +38,50 @@
 
 
 /*! 
- * \file input_tax.h
+ * \file ctax_input.h
  * \ingroup Objects
- * \brief InputTax class header file.
- * \author Kate Calvin
+ * \brief CTaxInput class header file.
+ * \author Pralit Patel
  */
 
 #include <string>
 #include <xercesc/dom/DOMNode.hpp>
 #include "functions/include/minicam_input.h"
-#include "util/base/include/value.h"
-#include <vector>
 #include <memory>
 
 class Tabs;
-class ICoefficient;
 
 /*! 
  * \ingroup Objects
- * \brief Defines a tax input to a MiniCAM production function.
- * \details Tax inputs to production functions represent fuel taxes and can be
- *          used to constrain fuel output. The value of an input tax is either
- *          read in or calculated to meet the constraint.
+ * \brief Defines a tax input which is applied relative to a carbon price.
+ * \details This class only applies some price of a policy that is related
+ *          to the carbon price.  It does not add to the supply or demand of
+ *          any constraint.  The intended use would be from something such as
+ *          a constraint on net negative emisssions.
  *
- *          <b>XML specification for InputTax</b>
- *          - XML name: \c input-tax
+ *          <b>XML specification for CTaxInput</b>
+ *          - XML name: \c ctax-input
  *          - Contained by: Technology
  *          - Parsing inherited from class: MiniCAMInput
  *          - Attributes:
  *              - \c name MiniCAMInput::mName
  *          - Elements:
- *              - \c isShareBased Boolean indicating that a constraint is based on 
- *                             share of sector output.
- *              - \c mSectorName String indicating which sector the share based 
- *                             constraint applies to (e.g., a share constraint of 0.15
- *                             and sector name of electricity indicates that whatever 
- *                             fuel is being constrained should not account for more than
- *                             15% of electricity output)
+ *              - \c mFuelName String indicating the name of the fuel to look up the
+ *                             carbon coefficient of.  Generally the same as the fuel
+ *                             name of the primary input to the containing technology.
  *
- * \author Kate Calvin
+ * \author Pralit Patel
  */
-class InputTax: public MiniCAMInput
+class CTaxInput: public MiniCAMInput
 {
     friend class InputFactory;
 public:
 
-    InputTax();
+    CTaxInput();
 
-    virtual ~InputTax();
+    virtual ~CTaxInput();
 
-    virtual InputTax* clone() const;
+    virtual CTaxInput* clone() const;
 
     static const std::string& getXMLNameStatic();
 
@@ -153,26 +147,16 @@ public:
 
     virtual double getTechChange( const int aPeriod ) const;
 
-    virtual void copyParamsInto( InputTax& aInput,
-                                 const int aPeriod ) const;
-
 protected:
-    InputTax( const InputTax& aOther );
+    CTaxInput( const CTaxInput& aOther );
 
-    //! Physical Demand.
-    std::vector<Value> mPhysicalDemand;
+    //! The name of the fuel to use to look up the C coef
+    //! typically the name of the primary input into the
+    //! containing technology
+    std::string mFuelName;
 
-    //! Current coefficient after adjustments have been made by the technology's
-    //! capture component.
-    std::vector<Value> mAdjustedCoefficients;
-    
-    //! State value necessary to use Marketpalce::addToDemand
-    double mLastCalcValue;
-
-private:
-    const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 
-    bool isShareBased; // boolean for determining share or quantity based Tax
-    std::string mSectorName; // sector that Tax applies
+    //! The C coef associated with mFuelName
+    double mCachedCCoef;
 };
 
-#endif // _INPUT_TAX_H_
+#endif // _CTAX_INPUT_H_

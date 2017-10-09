@@ -83,8 +83,11 @@ private:
     std::vector<double> mConstraint; //!< Quantity constraint by year
     std::vector<double> mFixedTax; //!< Fixed tax on Fuel by year($/GJ)
     std::vector<double> mShareOfSectorOutput; //!< Share of total or sectoral output
-    //!< The minimum price below which the constraint is considered non-binding.
+    //! The minimum price below which the constraint is considered non-binding.
     std::vector<double> mMinPrice; 
+    //! A price if known above which this policy will have effectively to behavior
+    //! note this value will only be used as a hint to the solver.
+    std::vector<double> mMaxPrice; 
 };
 
 #endif // _POLICY_PORTFOLIO_STANDARD_H_
