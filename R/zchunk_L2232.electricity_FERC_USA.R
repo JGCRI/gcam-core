@@ -28,9 +28,7 @@ module_gcam.usa_L2232.electricity_FERC_USA <- function(command, ...) {
              "L123.in_EJ_state_ownuse_elec",
              "L123.out_EJ_state_ownuse_elec",
              "L126.in_EJ_state_td_elec",
-             "L126.out_EJ_state_td_elec",
              "L132.out_EJ_state_indchp_F",
-             FILE = "temp-data-inject/L223.Supplysector_elec",
              "L1232.out_EJ_sR_elec",
              "L223.StubTechMarket_backup_USA"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -64,9 +62,7 @@ module_gcam.usa_L2232.electricity_FERC_USA <- function(command, ...) {
     L123.in_EJ_state_ownuse_elec <- get_data(all_data, "L123.in_EJ_state_ownuse_elec")
     L123.out_EJ_state_ownuse_elec <- get_data(all_data, "L123.out_EJ_state_ownuse_elec")
     L126.in_EJ_state_td_elec <- get_data(all_data, "L126.in_EJ_state_td_elec")
-    L126.out_EJ_state_td_elec <- get_data(all_data, "L126.out_EJ_state_td_elec")
     L132.out_EJ_state_indchp_F <- get_data(all_data, "L132.out_EJ_state_indchp_F")
-    L223.Supplysector_elec <- get_data(all_data, "temp-data-inject/L223.Supplysector_elec")
     L1232.out_EJ_sR_elec <- get_data(all_data, "L1232.out_EJ_sR_elec")
     L223.StubTechMarket_backup_USA <- get_data(all_data, "L223.StubTechMarket_backup_USA")
 
@@ -142,6 +138,8 @@ module_gcam.usa_L2232.electricity_FERC_USA <- function(command, ...) {
         repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
         mutate(subsector = replace(subsector, grepl("grid_region", subsector),
                                    paste(grid_region[grepl("grid_region", subsector)], "electricity trade", sep = " ")),
+               technology = replace(technology, grepl("grid_region", technology),
+                                   paste(grid_region[grepl("grid_region", technology)], "electricity trade", sep = " ")),
                share.weight = 1) %>%
         select(one_of(LEVEL2_DATA_NAMES[["TechYr"]]), "share.weight", "grid_region") ->
         L2232.TechShrwt_USAelec
@@ -209,7 +207,7 @@ module_gcam.usa_L2232.electricity_FERC_USA <- function(command, ...) {
       L2232.elec_flows_FERC %>%
         mutate(calOutputValue = round(exports, digit = energy.DIGITS_CALOUTPUT),
                share.weight.year = year,
-               tech.share.weight = ifelse(calOutputValue == 0, 0, 1)) %>%
+               tech.share.weight = if_else(calOutputValue == 0, 0, 1)) %>%
         set_subsector_shrwt() %>%
         select(one_of(LEVEL2_DATA_NAMES[["Production"]])) ->
         L2232.Production_exports_USAelec
@@ -256,7 +254,9 @@ module_gcam.usa_L2232.electricity_FERC_USA <- function(command, ...) {
 
       # NOTE: There is only one tech per subsector in the FERC markets so the logit choice does not matter
       L2232.SubsectorShrwtFllt_elec_FERC %>%
-        left_join(select(A232.FERCstructure, region, technology.logit, technology.logit.type), by = "region") %>%
+        left_join(A232.FERCstructure %>%
+                    select(region, technology.logit, technology.logit.type) %>%
+                    unique, by = "region") %>%
         mutate(logit.year.fillout = min(BASE_YEARS),
                logit.exponent = technology.logit, logit.type = technology.logit.type) %>%
         select(one_of(LEVEL2_DATA_NAMES[["SubsectorLogit"]])) ->
@@ -298,23 +298,23 @@ module_gcam.usa_L2232.electricity_FERC_USA <- function(command, ...) {
       # L2232.Production_elec_gen_FERC: calibrated net electricity generation (from within grid region)
       L2232.TechCoef_elec_FERC %>%
         filter(year %in% BASE_YEARS, market.name == "USA") %>%
-        left_join_error_no_match(select(L2232.elec_flows_FERC, grid_region, year, imports, net.supply),
+        left_join_error_no_match(select(L2232.elec_flows_FERC, grid_region, year, imports),
                                  by = c("region" = "grid_region", "year")) %>%
-        mutate(calOutputValue_imp = round(imports, digit = energy.DIGITS_CALOUTPUT),
-               calOutputValue_gen = round(net.supply, digit = energy.DIGITS_CALOUTPUT),
+        mutate(calOutputValue = round(imports, digit = energy.DIGITS_CALOUTPUT),
                share.weight.year = year,
-               tech.share.weight_imp = ifelse(calOutputValue_imp == 0, 0, 1),
-               tech.share.weight_gen = ifelse(calOutputValue_gen == 0, 0, 1)) %>%
-        set_subsector_shrwt() ->
-        L2232.Production_FERC
-
-      L2232.Production_FERC %>%
-        rename(calOutputValue = calOutputValue_imp, tech.share.weight = tech.share.weight_imp) %>%
+               tech.share.weight = if_else(calOutputValue == 0, 0, 1)) %>%
+        set_subsector_shrwt() %>%
         select(one_of(LEVEL2_DATA_NAMES[["Production"]])) ->
         L2232.Production_imports_FERC
 
-      L2232.Production_FERC %>%
-        rename(calOutputValue = calOutputValue_gen, tech.share.weight = tech.share.weight_gen) %>%
+      L2232.TechCoef_elec_FERC %>%
+        filter(year %in% BASE_YEARS, market.name != "USA") %>%
+        left_join_error_no_match(select(L2232.elec_flows_FERC, grid_region, year, net.supply),
+                                 by = c("region" = "grid_region", "year")) %>%
+        mutate(calOutputValue = round(net.supply, digit = energy.DIGITS_CALOUTPUT),
+               share.weight.year = year,
+               tech.share.weight = if_else(calOutputValue == 0, 0, 1)) %>%
+        set_subsector_shrwt() %>%
         select(one_of(LEVEL2_DATA_NAMES[["Production"]])) ->
         L2232.Production_elec_gen_FERC
 
@@ -353,7 +353,8 @@ module_gcam.usa_L2232.electricity_FERC_USA <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2232.SubsectorShrwtFllt_USAelec") %>%
-      add_precursors("gcam-usa/A232.structure") ->
+      add_precursors("gcam-usa/states_subregions",
+                     "gcam-usa/A232.structure") ->
       L2232.SubsectorShrwtFllt_USAelec
 
     L2232.SubsectorInterp_USAelec %>%
@@ -380,7 +381,8 @@ module_gcam.usa_L2232.electricity_FERC_USA <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2232.TechShrwt_USAelec") %>%
-      add_precursors("gcam-usa/A232.structure") ->
+      add_precursors("gcam-usa/A232.structure",
+                     "gcam-usa/states_subregions") ->
       L2232.TechShrwt_USAelec
 
     L2232.TechCoef_USAelec %>%
@@ -403,7 +405,8 @@ module_gcam.usa_L2232.electricity_FERC_USA <- function(command, ...) {
                      "L123.out_EJ_state_ownuse_elec",
                      "L126.in_EJ_state_td_elec",
                      "L132.out_EJ_state_indchp_F",
-                     "L1232.out_EJ_sR_elec") ->
+                     "L1232.out_EJ_sR_elec") %>%
+      add_flags(FLAG_PROTECT_FLOAT) ->
       L2232.Production_exports_USAelec
 
     L2232.Supplysector_elec_FERC %>%
@@ -412,7 +415,8 @@ module_gcam.usa_L2232.electricity_FERC_USA <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2232.Supplysector_elec_FERC") %>%
-      add_precursors("gcam-usa/A232.structure") ->
+      add_precursors("gcam-usa/A232.structure",
+                     "gcam-usa/states_subregions") ->
       L2232.Supplysector_elec_FERC
 
     L2232.ElecReserve_FERC %>%
@@ -421,7 +425,8 @@ module_gcam.usa_L2232.electricity_FERC_USA <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2232.ElecReserve_FERC") %>%
-      add_precursors("energy/A23.sector") ->
+      add_precursors("energy/A23.sector",
+                     "gcam-usa/states_subregions") ->
       L2232.ElecReserve_FERC
 
     L2232.SubsectorShrwtFllt_elec_FERC %>%
@@ -430,7 +435,8 @@ module_gcam.usa_L2232.electricity_FERC_USA <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2232.SubsectorShrwtFllt_elec_FERC") %>%
-      add_precursors("gcam-usa/A232.structure") ->
+      add_precursors("gcam-usa/A232.structure",
+                     "gcam-usa/states_subregions") ->
       L2232.SubsectorShrwtFllt_elec_FERC
 
     L2232.SubsectorInterp_elec_FERC %>%
@@ -457,7 +463,8 @@ module_gcam.usa_L2232.electricity_FERC_USA <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2232.TechShrwt_elec_FERC") %>%
-      add_precursors("gcam-usa/A232.structure") ->
+      add_precursors("gcam-usa/A232.structure",
+                     "gcam-usa/states_subregions") ->
       L2232.TechShrwt_elec_FERC
 
     L2232.TechCoef_elec_FERC %>%
@@ -486,7 +493,8 @@ module_gcam.usa_L2232.electricity_FERC_USA <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2232.Production_imports_FERC") %>%
       same_precursors_as("L2232.TechCoef_elec_FERC") %>%
-      same_precursors_as("L2232.Production_exports_USAelec") ->
+      same_precursors_as("L2232.Production_exports_USAelec") %>%
+      add_flags(FLAG_PROTECT_FLOAT) ->
       L2232.Production_imports_FERC
 
     L2232.Production_elec_gen_FERC %>%
@@ -496,7 +504,8 @@ module_gcam.usa_L2232.electricity_FERC_USA <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L2232.Production_elec_gen_FERC") %>%
       same_precursors_as("L2232.TechCoef_elec_FERC") %>%
-      same_precursors_as("L2232.Production_exports_USAelec") ->
+      same_precursors_as("L2232.Production_exports_USAelec") %>%
+      add_flags(FLAG_PROTECT_FLOAT) ->
       L2232.Production_elec_gen_FERC
 
     L2232.StubTechElecMarket_backup_USA %>%
