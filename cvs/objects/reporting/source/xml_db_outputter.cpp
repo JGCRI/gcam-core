@@ -181,7 +181,7 @@ XMLDBOutputter::XMLDBOutputter():
 mTabs( new Tabs ),
 mGDP( 0 )
 #if( __HAVE_JAVA__ )
-,mJNIContainer( createContainer() )
+,mJNIContainer( createContainer( false ) )
 #endif
 {
 #if( DEBUG_XML_DB )
@@ -207,6 +207,29 @@ mGDP( 0 )
  *       to be deleted correctly.
  */
 XMLDBOutputter::~XMLDBOutputter(){
+}
+
+/*!
+ * \brief A utility method which can be used as a preliminary check to make sure
+ *        all of the various compononents and libraries required to write to the
+ *        database are found.
+ * \details This method would be used early in the model run rather than wait until
+ *          the entire scenario has run only to find out we were unable to write the
+ *          results.  Note it may still be possible some error occurs when we go
+ *          to actually write to the database since we will not make any attempt
+ *          at writing to it during this check.
+ * \return True if it appears writing to the datbase would have been successful.
+ */
+bool XMLDBOutputter::checkJavaWorking() {
+#if( __HAVE_JAVA__ )
+    auto_ptr<JNIContainer> testContainer = createContainer( true );
+    // if we get back a null container then some error occured
+    // createContainer would have already print any error messages.
+    return testContainer.get();
+#else
+    // we can skip this check if we have disabled Java
+    return true;
+#endif
 }
 
 /*!
@@ -272,11 +295,14 @@ void XMLDBOutputter::finalizeAndClose() {
 #if( __HAVE_JAVA__ )
 /*!
  * \brief Create an initialized Java environment.
+ * \param aTestingOnly A flag if set indicates we don't want to actually start the
+ *                     process for writing, instead are only interested if all of
+ *                     the Java machinery is in place to successfully write to the DB.
  * \return An initialized Java environment with the Write DB class loaded and
  *         ready to accept data to write/alter to the database.  If an error occurs
  *         a null container will be returned.
  */
-auto_ptr<XMLDBOutputter::JNIContainer> XMLDBOutputter::createContainer() {
+auto_ptr<XMLDBOutputter::JNIContainer> XMLDBOutputter::createContainer( const bool aTestingOnly ) {
     // Create a Java instance.
     auto_ptr<JNIContainer> jniContainer( new JNIContainer );
 
@@ -344,6 +370,13 @@ auto_ptr<XMLDBOutputter::JNIContainer> XMLDBOutputter::createContainer() {
         mainLog.setLevel( ILogger::SEVERE );
         mainLog << "Failed to find the appropriate constructor of Java class " << writeDBClassName << "." << endl;
         jniContainer.reset( 0 );
+        return jniContainer;
+    }
+
+    // If we are only testing if Java works we need to exit now as calling the constructor
+    // will initiate the database write
+    if( aTestingOnly ) {
+        jniContainer->mWriteDBInstance = 0;
         return jniContainer;
     }
 

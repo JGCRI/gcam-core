@@ -133,8 +133,12 @@ public class WildcardExpandingClassLoader extends URLClassLoader {
                 URL currURL = it.next();
                 if( currURL.getFile().matches(BASEX_LIB_MATCH) && !currURL.getFile().matches(PREFERED_BASEX_VER) ) {
                     it.remove();
+                    --numBaseXJars;
                 }
             }
+        }
+        if( numBaseXJars == 0 ) {
+            System.out.println( "WARNING: did not recongnize any BaseX jars in classpath.  This may indicate missing jars or duplicate version mismatch.");
         }
         return ret.toArray( new URL[ 0 ] );
     }

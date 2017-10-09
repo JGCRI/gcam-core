@@ -70,6 +70,8 @@ public:
 
     ~XMLDBOutputter();
 
+    static bool checkJavaWorking();
+
     void finish() const;
     void finalizeAndClose();
 
@@ -294,7 +296,7 @@ private:
     //! the like of the XMLDBOutputter.
     const std::auto_ptr<JNIContainer> mJNIContainer;
 
-    static std::auto_ptr<JNIContainer> createContainer();
+    static std::auto_ptr<JNIContainer> createContainer( const bool aTestingOnly );
 #endif
     static const std::string createContainerName( const std::string& aScenarioName );
 
