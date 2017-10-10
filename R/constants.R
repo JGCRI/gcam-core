@@ -216,7 +216,7 @@ aglu.MGMT_LOGIT_TYPE <- "absolute-cost-logit"
 # XML-related constants
 aglu.GLU_NDIGITS          <- 3    # number of digits in the geographic land unit identifier codes
 aglu.LT_GLU_DELIMITER     <-      # delimiter between the land use type name and GLU name. should be the same as the crop-glu delimiter
-aglu.CROP_GLU_DELIMITER   <- "_"  # delimiter between the crop name and GLU name
+  aglu.CROP_GLU_DELIMITER   <- "_"  # delimiter between the crop name and GLU name
 aglu.IRR_DELIMITER        <- "_"  # delimiter between the appended crop x GLU and irrigation level
 aglu.MGMT_DELIMITER       <- "_"  # delimiter between appended tech name and management level
 aglu.CROP_DELIMITER       <- "_"  # delimiter between (some) crop names such as Root_Tuber, biomass_grass, biomass_tree
@@ -259,16 +259,14 @@ energy.RSRC_FUELS <- c("coal", "gas", "refined liquids")
 energy.HEAT_PRICE <- 3.2
 energy.GAS_PRICE <- 2
 
-# below come from ENERGY_ASSUMPTIONS/A_ccs_data.R (first four only)
-energy.DIGITS_EFFICIENCY <- 3
-energy.DIGITS_COST <- 4
-energy.DIGITS_REMOVE.FRACTION <- 2
+# used in level 2 energy sector files (e.g. 222, 223, 226) to round interpolated values, some below come from ENERGY_ASSUMPTIONS/A_ccs_data.R
+
 energy.CO2.STORAGE.MARKET <- "carbon-storage"
-energy.DIGITS_COEFFICIENT <- 7
+
+energy.DIGITS_REMOVE.FRACTION <- 2
+
 energy.DIGITS_MPKM <- 0
 energy.DIGITS_SPEED <- 1
-energy.DIGITS_SHRWT <- 4
-energy.DIGITS_CALOUTPUT <- 7
 energy.DIGITS_LOADFACTOR <- 2
 
 # Digits for rounding into XMLs
@@ -277,6 +275,7 @@ energy.DIGITS_COEFFICIENT <- 7
 energy.DIGITS_COST <- 4
 energy.DIGITS_EFFICIENCY <- 3
 energy.DIGITS_SHRWT <- 4
+energy.DIGITS_CAPACITY_FACTOR <- 2
 
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
@@ -322,9 +321,10 @@ CONV_KWH_GJ <- 3.6e-3
 CONV_GJ_EJ <- 1e-9
 CONV_EJ_GJ <- 1 / CONV_GJ_EJ
 CONV_BBLD_EJYR <- 6.119 * 365.25 * 1e-3 # billion barrels a day to EJ per year
+CONV_KBTU_EJ <- 1.0551e-12 # KiloBTU to EJ
+CONV_TBTU_EJ <- 0.0010551 # TeraBTU to EJ
 CONV_MJ_BTU <- 947.777
 CONV_BTU_KJ <- 1.0551
-CONV_KBTU_EJ <- 1.0551e-12
 
 # Other
 CONV_MCAL_PCAL <- 1e-9
@@ -333,8 +333,8 @@ CONV_MILLION_M3_KM3 <- 1e-03
 CONV_M2_ACR <- 0.0002471058
 CONV_HA_M2 <- 1e4 # ha to m2
 CONV_BM2_M2 <- 1e9
-CONV_MILFT2_M2 <- 92900
-CONV_FT2_M2 <- 0.0929
+CONV_MILFT2_M2 <- 92900 # Million square feet to square meters
+CONV_FT2_M2 <- 0.0929 # Square feet to square meters
 
 
 # Driver constants ======================================================================
@@ -449,6 +449,35 @@ emissions.EDGAR_YEARS_PLUS     <- 1970:2008
 
 # GCAM-USA constants ======================================================================
 
+gcamusa.STATES <- c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA",
+                    "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR",
+                    "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY")
+
+# logit exponent regulating competition between different grid regions in USA electricity market (single market approach only)
+gcamusa.GRID_REGION_LOGIT <- -6
+gcamusa.GRID_REGION_LOGIT_TYPE <- "relative-cost-logit"
+
+# indicate whether to resolve electricity demands at the level of the nation or the grid regions
+gcamusa.ELECT_TD_SECTORS <- c("elect_td_bld", "elect_td_ind", "elect_td_trn")
+gcamusa.USE_REGIONAL_ELEC_MARKETS <- TRUE
+
+# fuels whose markets will be modeled at the level of the FERC regions, with prices calibrated
+gcamusa.REGIONAL_FUEL_MARKETS <- c("regional coal", "delivered coal", "wholesale gas", "delivered gas",
+                                   "refined liquids industrial", "refined liquids enduse")
+# indicate whether to use regional as opposed to national fuel markets (FALSE = national markets)
+gcamusa.USE_REGIONAL_FUEL_MARKETS  <- TRUE
+
+# Resources that will be modeled at the state level
+gcamusa.STATE_RENEWABLE_RESOURCES <- c("distributed_solar", "geothermal", "onshore wind resource")
+gcamusa.STATE_UNLIMITED_RESOURCES <- c("global solar resource", "limestone")
+
+gcamusa.WIND_BASE_COST_YEAR <- 2005
+
+# Uncomment these lines to run under 'timeshift' conditions
+# HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
+# FUTURE_YEARS <- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)
+# BASE_YEARS <- c(1975, 1990, 2005)   # normally (1975, 1990, 2005, 2010)
+# MODEL_YEARS <- c(BASE_YEARS, FUTURE_YEARS)
 
 # PV constants ======================================================================
 
