@@ -64,6 +64,17 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
     L226.StubTechCoef_electd <- get_data(all_data, "L226.StubTechCoef_electd")
 
 
+    write_to_all_states <- function(data, names){
+      if ("logit.year.fillout" %in% names) data$logit.year.fillout <- "start-year"
+      if ("price.exp.year.fillout" %in% names) data$price.exp.year.fillout <- "start-year"
+      data_new <- set_years(data)
+      data_new <- repeat_add_columns(tibble(region = gcamusa.STATES))
+
+      data_new
+    }
+
+
+
     # Build tables
 
     # Supplysector information
@@ -188,20 +199,85 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
       L226.TechCost_en_USA
 
 
+    # L226.Ccoef: carbon coef for cost adder sectors
+    L202.CarbonCoef %>%
+      filter(region == "USA") %>%
+      select(-region) ->
+      L226.Ccoef.usa
+
+    L226.TechCost_en_USA %>%
+      select(region, supplysector) %>%
+      distinct %>%
+      left_join_error_no_match(L226.Ccoef.usa, by = c("supplysector" = "PrimaryFuelCO2Coef.name")) ->
+      L226.Ccoef
 
 
 
+    # PART 2: ELECTRICITY TRANSMISSION AND DISTRIBUTION
+
+    # L226.DeleteSupplysector_USAelec: Removing the electricity T&D sectors of the USA region
+    # This should probably be converted to an assumption and read in at some point.
+    L226.DeleteSupplysector_USAelec <- tibble(region = "USA", supplysector = c("elect_td_bld", "elect_td_ind", "elect_td_trn"))
+
+
+    ### Replacing for loop starting on line 152 in old DS. I /think/ these tibbles should be output in place of the "object" that currently is;
+    ### if that's the case, that needs to be updated and should rewrite below as a function.
+    ### Otherwise just delete all of the below.
+    ### There's also a couple inputs to this chunk that are NULL, and nothing gets done to: L226.SubsectorShrwt_en, L226.SubsectorInterpTo_en
+    L226.Supplysector_en %>%
+      filter(region == "USA",
+             supplysector %in% L226.DeleteSupplysector_USAelec$supplysector) %>%
+      select(-region) %>%
+      set_years() %>%
+      repeat_add_columns(tibble(region = gcamusa.STATES)) ->
+      L226.Supplysector_electd_USA
+
+    L226.SubsectorLogit_en %>%
+      filter(region == "USA",
+             supplysector %in% L226.DeleteSupplysector_USAelec$supplysector) %>%
+      select(-region) %>%
+      set_years() %>%
+      repeat_add_columns(tibble(region = gcamusa.STATES)) ->
+      L226.SubsectorLogit_electd_USA
+
+    L226.SubsectorShrwtFllt_en %>%
+      filter(region == "USA",
+             supplysector %in% L226.DeleteSupplysector_USAelec$supplysector) %>%
+      select(-region) %>%
+      set_years() %>%
+      repeat_add_columns(tibble(region = gcamusa.STATES)) ->
+      L226.SubsectorShrwtFllt_electd_USA
+
+    L226.SubsectorInterp_en %>%
+      filter(region == "USA",
+             supplysector %in% L226.DeleteSupplysector_USAelec$supplysector) %>%
+      select(-region) %>%
+      set_years() %>%
+      repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
+      mutate(from.year = as.integer(from.year),
+             to.year = as.integer(to.year)) ->
+      L226.SubsectorInterp_electd_USA
 
 
 
+    if(!gcamusa.USE_REGIONAL_ELEC_MARKETS){
+      # L226.StubTechCoef_electd_USA: Using national elec markets. State elect_td sectors are treated as stub technologies
+      L226.StubTechCoef_electd %>%
+        filter(region == "USA") %>%
+        select(-region) %>%
+        set_years() %>%
+        repeat_add_columns(tibble(region = gcamusa.STATES)) ->
+        L226.StubTechCoef_electd_USA
+    }
 
 
-
-
+    if(gcamusa.USE_REGIONAL_ELEC_MARKETS){
+      # L226.TechShrwt_electd_USA: using regional elec markets. The elect_td sectors can not use the global tech database as their input is different. Remaking
+    }
 
 
     # Produce outputs
-    tibble() %>%
+    L226.DeleteSupplysector_USAelec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -321,7 +397,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L226.TechCoef_electd_USA
 
-    tibble() %>%
+    L226.Supplysector_en_USA %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -345,7 +421,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L226.Supplysector_en_USA
 
-    tibble() %>%
+    L226.SubsectorShrwtFllt_en_USA %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -369,7 +445,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L226.SubsectorShrwtFllt_en_USA
 
-    tibble() %>%
+    L226.SubsectorLogit_en_USA %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -393,7 +469,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L226.SubsectorLogit_en_USA
 
-    tibble() %>%
+    L226.TechShrwt_en_USA %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -417,7 +493,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L226.TechShrwt_en_USA
 
-    tibble() %>%
+    L226.TechCoef_en_USA %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -441,7 +517,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L226.TechCoef_en_USA
 
-    tibble() %>%
+    L226.TechCost_en_USA %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -465,7 +541,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L226.TechCost_en_USA
 
-    tibble() %>%
+    L226.Ccoef %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%

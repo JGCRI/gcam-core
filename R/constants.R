@@ -464,6 +464,7 @@ gcamusa.DEFAULT_MARKET <- "USA"
 gcamusa.GAS_ADJ_THRESH <- 5
 gcamusa.DIGITS_COST <- 4
 
+gcamusa.USE_REGIONAL_ELEC_MARKETS <- TRUE
 
 # Uncomment these lines to run under 'timeshift' conditions
 # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
