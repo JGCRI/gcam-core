@@ -47,10 +47,10 @@ module_aglu_LA105.an_FAO_R_C_Y <- function(command, ...) {
 
     # Process FAO animal products food consumption data: map in GCAM region and commodities, convert units, aggregate to region and commodity
     L100.FAO_an_Food_t %>%
-      left_join_error_no_match(iso_GCAM_regID, by = "iso")  %>%                               # Map in GCAM regions
-      left_join(FAO_an_items_cal_SUA, by = "item")  %>%                                       # Map in GCAM commodities, creates NAs
+      left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%                               # Map in GCAM regions
+      left_join(FAO_an_items_cal_SUA, by = "item") %>%                                       # Map in GCAM commodities, creates NAs
       filter(!is.na(GCAM_commodity)) %>%                                                      # Remove commodities not included in GCAM
-      mutate(Mt = value * CONV_TON_MEGATON, Pcal = value * Mcal_t * CONV_MCAL_PCAL)  %>%      # Convert from tons to Mt and Pcal
+      mutate(Mt = value * CONV_TON_MEGATON, Pcal = value * Mcal_t * CONV_MCAL_PCAL) %>%      # Convert from tons to Mt and Pcal
       group_by(GCAM_region_ID, GCAM_commodity, year) %>%                                      # Group by region, commodity, year
       summarize(Mt = sum(Mt), Pcal = sum(Pcal)) %>%                                           # Aggregate food consumption in Mt and Pcal
       ungroup() %>%                                                                           # Ungroup before complete
@@ -75,8 +75,8 @@ module_aglu_LA105.an_FAO_R_C_Y <- function(command, ...) {
 
     # Process FAO animal products production data: map in GCAM region and commodities, convert units
     L100.FAO_an_Prod_t %>%
-      left_join_error_no_match(iso_GCAM_regID, by = "iso")  %>%                               # Map in GCAM regions
-      left_join(FAO_an_items_cal_SUA, by = "item")  %>%                                       # Map in GCAM commodities, creates NAs
+      left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%                               # Map in GCAM regions
+      left_join(FAO_an_items_cal_SUA, by = "item") %>%                                       # Map in GCAM commodities, creates NAs
       filter(!is.na(GCAM_commodity)) %>%                                                      # Remove commodities not included in GCAM
       mutate(value = value * CONV_TON_MEGATON)  ->                                           # Convert from tons to Mt
       L105.FAO_an_Prod_Mt

@@ -71,8 +71,8 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
       #   want, GCAM_region_ID. This column is all that we save:
       mutate(GCAM_region_ID = left_join_error_no_match(L110.FAO_For_ALL_m3, iso_GCAM_regID, by = c("iso"))[['GCAM_region_ID']],
              GCAM_commodity = "Forest",                   # add the forest commodity label
-             value = CONV_M3_BM3 * value,                   # convert the value units from m3 to bm3, had to add this constant to constants.R
-             flow = sub("_m3", "_bm3", flow))  %>%         # update the labels in flow to reflect the new units of bm3
+             value = CONV_M3_BM3 * value,                 # convert the value units from m3 to bm3, had to add this constant to constants.R
+             flow = sub("_m3", "_bm3", flow)) %>%         # update the labels in flow to reflect the new units of bm3
       #
       # we don't care about other identifiers anymore, only region id, commodity, flow and year corresponding to value:
       select(GCAM_region_ID, GCAM_commodity, flow, year, value) %>%

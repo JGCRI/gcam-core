@@ -52,8 +52,8 @@ module_aglu_LA106.ag_an_NetExp_FAO_R_C_Y <- function(command, ...) {
     L100.FAO_ag_Exp_t %>%
       # Combine all FAO primary agricultural goods and animal products exports and imports data
       bind_rows(L100.FAO_ag_Imp_t, L100.FAO_an_Exp_t, L100.FAO_an_Imp_t) %>%
-      left_join_error_no_match(iso_GCAM_regID, by = "iso")  %>%                    # Map in GCAM regions
-      left_join(FAO_items_map, by = "item")  %>%                                   # Map in GCAM commodities, creates NAs
+      left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%                     # Map in GCAM regions
+      left_join(FAO_items_map, by = "item") %>%                                    # Map in GCAM commodities, creates NAs
       filter(!is.na(GCAM_commodity)) %>%                                           # Remove commodities not included in GCAM
       group_by(GCAM_region_ID, GCAM_commodity, element, year) %>%                  # Group by region, commodity, year
       summarize(value = sum(value)) %>%                                            # Aggregate exports and imports

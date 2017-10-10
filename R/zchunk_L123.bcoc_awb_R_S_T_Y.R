@@ -52,7 +52,7 @@ module_emissions_L123.bcoc_awb_R_S_T_Y <- function(command, ...) {
       # Not all iso's will necesarilly have an input value. This is ok, but use left_join becuase of this.
       left_join(iso_GCAM_regID, by = "iso") %>%
       group_by(Non.CO2, GCAM_region_ID) %>%
-      summarise(awb = first(awb))  %>%
+      summarise(awb = first(awb)) %>%
       filter(!is.na(awb)) %>%
       mutate(awb = awb * CONV_KG_TO_TG) %>%
       ungroup() ->
@@ -76,7 +76,7 @@ module_emissions_L123.bcoc_awb_R_S_T_Y <- function(command, ...) {
 
     # Allocate aggreate regional year 2000 AWB emissions into GCAM crop and GLU
     # This is done using shares from L121.AWBshare_R_C_Y_GLU, which is calculated in another chunk
-    filter(L121.AWBshare_R_C_Y_GLU, year == "2000")  %>%
+    filter(L121.AWBshare_R_C_Y_GLU, year == "2000") %>%
       select(-year) %>%
       # Add BC and OC emissions data
       repeat_add_columns(tibble::tibble(Non.CO2 = c("BC_AWB", "OC_AWB"))) %>%
@@ -88,7 +88,7 @@ module_emissions_L123.bcoc_awb_R_S_T_Y <- function(command, ...) {
       left_join_error_no_match(L103.ag_Prod_Mt_R_C_Y_GLU_2000, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
       # Calculate emission factor, which is
       mutate(emfact = awb_emission / value) %>%
-      select(-awb_emission, -value, -AWB_emiss_share, -awb)  %>%
+      select(-awb_emission, -value, -AWB_emiss_share, -awb) %>%
       # Replace NaNs with zeros
       mutate_all(funs(replace(., is.na(.), 0))) ->
       L121.AWB_Emissions_FactorR_C_Y_GLU

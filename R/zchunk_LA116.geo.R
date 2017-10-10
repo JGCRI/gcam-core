@@ -117,7 +117,7 @@ module_energy_LA116.geo <- function(command, ...) {
     # and multiply by the available resource quantities
     L116.land_share_ctry_rg3 %>%
       repeat_add_columns(unique(A16.EGS_curves["grade"])) %>%
-      left_join_error_no_match(A16.EGS_curves, by = c( "region_GCAM3", "grade")) %>%
+      left_join_error_no_match(A16.EGS_curves, by = c("region_GCAM3", "grade")) %>%
       mutate(available = share * available) ->
       L116.EGS_ctry
 

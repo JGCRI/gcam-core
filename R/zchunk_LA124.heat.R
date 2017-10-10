@@ -54,7 +54,7 @@ module_energy_LA124.heat <- function(command, ...) {
 
     # Fuel inputs to district heat
     # Process fuel inputs in all regions; some will have the energy assigned to bld/ind, and others have a district heat sector
-    L1011.en_bal_EJ_R_Si_Fi_Yh  %>%
+    L1011.en_bal_EJ_R_Si_Fi_Yh %>%
       filter(sector == "in_heat") %>%
       mutate(sector = sub("in_", "", sector)) %>%
       left_join(enduse_fuel_aggregation, by = "fuel") %>%
@@ -67,12 +67,12 @@ module_energy_LA124.heat <- function(command, ...) {
     # Heat production from district heat sector
     A24.globaltech_coef %>%
       gather(year, value, -supplysector, -subsector, -technology, -minicam.energy.input) %>%
-      mutate(year = as.integer(year))  %>%
+      mutate(year = as.integer(year)) %>%
       # Adding empty historical years to fill in with interpolation
       complete(year = unique(c(HISTORICAL_YEARS, year)),
                nesting(supplysector, subsector, technology, minicam.energy.input)) %>%
       arrange(year) %>%
-      group_by(technology, subsector, supplysector, minicam.energy.input)  %>%
+      group_by(technology, subsector, supplysector, minicam.energy.input) %>%
       # Interpolate to fill in missing globaltech_coef historical years
       mutate(value = approx_fun(year, value)) %>%
       ungroup() %>%
@@ -131,7 +131,7 @@ module_energy_LA124.heat <- function(command, ...) {
                 by = c("GCAM_region_ID", "sector", "fuel", "technology")) %>%
       # Using 1 for all rows where heatout is not 0 for all years
       replace_na(list(sum = 1)) %>%
-      filter(sum != 0)  %>%
+      filter(sum != 0) %>%
       select(-sum) -> L124.heatoutratio_R_elec_F_tech_Yh
 
     # This is complicated. Some historical regions / years have 0 district heat output (all fuels). This is fine unless there is heat output from

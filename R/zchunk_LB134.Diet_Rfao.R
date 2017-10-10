@@ -54,7 +54,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     AGLU_ctry <- get_data(all_data, "aglu/AGLU_ctry")
     FAO2050_items_cal <- get_data(all_data, "aglu/FAO/FAO2050_items_cal")
-    get_data(all_data, "aglu/FAO/FAO2050_Diet")  %>%
+    get_data(all_data, "aglu/FAO/FAO2050_Diet") %>%
       gather(year, value, -FAO2050_reg, -FAO2050_item) %>%
       mutate(year = as.integer(year)) ->
       FAO2050_Diet

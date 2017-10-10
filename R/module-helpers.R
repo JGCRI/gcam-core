@@ -196,6 +196,62 @@ set_years <- function(data) {
 }
 
 
+#' write_to_all_states
+#'
+#' write out data to all states
+#'
+#' @param data Base tibble to start from
+#' @param names Character vector indicating the column names of the returned tibble
+#' @note Used for USA national data by GCAM region, which is repeated for each US state
+#' @return Tibble with data written out to all USA states
+write_to_all_states <- function(data, names) {
+
+  assert_that(is_tibble(data))
+  assert_that(is.character(names))
+
+  region <- NULL  # silence package check notes
+
+  if ("logit.year.fillout" %in% names) {
+    data$logit.year.fillout <- "start-year"
+  }
+
+  if ("price.exp.year.fillout" %in% names) {
+    data$price.exp.year.fillout <- "start-year"
+  }
+
+  data %>%
+    set_years %>%
+    select(-region) %>%
+    repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
+    select(one_of(names))
+}
+
+
+#' set_subsector_shrwt
+#'
+#' Calculate subsector shareweights in calibration periods, where subsectors may have multiple technologies
+#'
+#' @param data Tibble to operate on
+#' @return Tibble returned with a new column of calculated subsector shareweights.
+set_subsector_shrwt <- function(data) {
+
+  assert_that(is_tibble(data))
+
+  region <- supplysector <- subsector <- year <- calOutputValue_agg <- calOutputValue <-
+    subs.share.weight <- NULL  # silence package check notes
+
+  data_aggregated <- data %>%
+    group_by(region, supplysector, subsector, year) %>%
+    summarise(calOutputValue_agg = sum(calOutputValue)) %>%
+    ungroup
+
+  data %>%
+    left_join_error_no_match(data_aggregated, by = c("region", "supplysector", "subsector", "year")) %>%
+    mutate(subs.share.weight = if_else(calOutputValue_agg > 0, 1, 0)) %>%
+    select(-calOutputValue_agg)
+}
+
+
 #' add_node_leaf_names
 #'
 #' Match in the node and leaf names from a land nesting table
@@ -349,7 +405,7 @@ get_ssp_regions <- function(pcGDP, reg_names, income_group,
     regions <- filter(pcGDP_yf, value > aglu.HIGH_GROWTH_PCGDP)
   } else if(income_group == "medium") {
     regions <- filter(pcGDP_yf, value < aglu.HIGH_GROWTH_PCGDP, value > aglu.LOW_GROWTH_PCGDP)
-  } else{
+  } else {
     stop("Unknown income_group!")
   }
 
