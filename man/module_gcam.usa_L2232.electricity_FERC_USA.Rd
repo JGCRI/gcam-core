@@ -24,11 +24,12 @@ the generated outputs: \code{L2232.DeleteSupplysector_USAelec}, \code{L2232.Supp
 original data system was \code{L2232.electricity_FERC_USA.R} (gcam-usa level2).
 }
 \description{
-Briefly describe what this chunk does.
+Generates GCAM-USA model inputs for electrcity trade sectors at the level of grid regions.
 }
 \details{
-Describe in detail what this chunk does.
+This chunk generates input files to create electricity trade and passthrough sectors for the grid regions,
+and balances electricity supply and demand for each grid region.
 }
 \author{
-YourInitials CurrentMonthName 2017
+RC Oct 2017
 }

@@ -20,7 +20,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RC Oct 2017
-#' @export
 module_gcam.usa_L2232.electricity_FERC_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
@@ -443,6 +442,7 @@ module_gcam.usa_L2232.electricity_FERC_USA <- function(command, ...) {
     L2232.ElecReserve_FERC %>%
       add_title("Electricity reserve margin and avg grid capacity factor in grid regions") %>%
       add_units("Unitless") %>%
+      add_comments("For electricity sector") %>%
       add_legacy_name("L2232.ElecReserve_FERC") %>%
       add_precursors("energy/A23.sector",
                      "gcam-usa/states_subregions") ->
@@ -485,6 +485,7 @@ module_gcam.usa_L2232.electricity_FERC_USA <- function(command, ...) {
     L2232.TechCoef_elec_FERC %>%
       add_title("Technology coefficients and market names for electricity domestic supply in grid regions") %>%
       add_units("Unitless") %>%
+      add_comments("Coefficients for electricity domestic supply") %>%
       add_legacy_name("L2232.TechCoef_elec_FERC") %>%
       same_precursors_as("L2232.TechShrwt_elec_FERC") ->
       L2232.TechCoef_elec_FERC
@@ -494,7 +495,7 @@ module_gcam.usa_L2232.electricity_FERC_USA <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Coefficients are calculated as total generation devided by total generation minus own use") %>%
       add_comments("Cogeneration is included in total generation") %>%
-      add_comments("Set the coefficients for future years the same as in the model base year")
+      add_comments("Set the coefficients for future years the same as in the model base year") %>%
       add_legacy_name("L2232.TechCoef_elecownuse_FERC") %>%
       same_precursors_as("L2232.TechShrwt_elec_FERC") %>%
       same_precursors_as("L2232.Production_exports_USAelec") ->
