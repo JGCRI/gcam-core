@@ -252,6 +252,28 @@ module_energy_L223.electricity <- function(command, ...) {
       set_years() ->
       L223.SubsectorInterpTo_elec
 
+    # L223.GlobalTechEff_elec: Energy inputs and coefficients, efficiency, of global electricity generation technologies
+    A23.globaltech_eff %>%
+      fill_exp_decay_extrapolate(MODEL_YEARS) %>%
+      rename(sector.name = supplysector, subsector.name = subsector, efficiency = value) %>%
+      mutate(efficiency = round(efficiency, energy.DIGITS_EFFICIENCY)) ->
+      L223.GlobalTechEff_elec_all
+    # reorders columns to match expected model interface input
+    L223.GlobalTechEff_elec_all <- L223.GlobalTechEff_elec_all[LEVEL2_DATA_NAMES[["GlobalTechEff"]]]
+
+    # Subsets the intermittent technologies by checking it against the list in A23.globalinttech
+    L223.GlobalTechEff_elec_all %>%
+      semi_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) %>%
+      rename(intermittent.technology = technology) ->
+      L223.GlobalIntTechEff_elec
+    #Hard code in type "Resource" for intermittent technology resource input only
+    L223.GlobalIntTechEff_elec["type"] <- "Resource"
+
+    # Subsets the non-intermittent technologies by checking against any not listed in A23.globalinttech
+    L223.GlobalTechEff_elec_all %>%
+      anti_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) ->
+      L223.GlobalTechEff_elec
+
     # L223.GlobalTechCapital_elec: Capital costs of global electricity generation technologies
     A23.globaltech_capital %>%
       fill_exp_decay_extrapolate(MODEL_YEARS) %>%
@@ -402,7 +424,6 @@ module_energy_L223.electricity <- function(command, ...) {
       anti_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) ->
       L223.GlobalTechOMvar_elec
 
-
     # L223.GlobalTechShrwt_elec: Shareweights of global electricity generation technologies
     A23.globaltech_shrwt %>%
       gather(year, share.weight, matches(YEAR_PATTERN)) %>%
@@ -428,6 +449,275 @@ module_energy_L223.electricity <- function(command, ...) {
       anti_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) ->
       L223.GlobalTechShrwt_elec
 
+    # Interpolation rules
+    # TODO: we should subset_inttechs only at the moment there are none
+    A23.globaltech_interp %>%
+      set_years() %>%
+      rename(sector.name = supplysector, subsector.name = subsector) -> L223.GlobalTechInterp_elec
+
+    # L223.PrimaryRenewKeyword_elec: Keywords of primary renewable electric generation technologies
+    A23.globaltech_keyword %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      rename(sector.name = supplysector, subsector.name = subsector) ->
+      L223.AllKeyword_elec
+
+    # select only sector technology combinations with a value in primary renewable and match columns to expected model interface input
+    L223.AllKeyword_elec %>%
+      filter(!is.na(primary.renewable)) %>%
+      select(c(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "primary.renewable")) ->
+      L223.PrimaryRenewKeyword_elec_all
+
+    # Subsets the intermittent technologies by checking it against the list in A23.globalinttech
+    L223.PrimaryRenewKeyword_elec_all %>%
+      semi_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) %>%
+      rename(intermittent.technology = technology) ->
+      L223.PrimaryRenewKeywordInt_elec
+
+    # Subsets the non-intermittent technologies by checking against any not listed in A23.globalinttech
+    L223.PrimaryRenewKeyword_elec_all %>%
+      anti_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) ->
+      L223.PrimaryRenewKeyword_elec
+
+    # L223.AvgFossilEffKeyword_elec: Keywords of fossil/bio electric generation technologies
+    L223.AllKeyword_elec %>%
+      filter(!is.na(average.fossil.efficiency)) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "average.fossil.efficiency")) ->
+      L223.AvgFossilEffKeyword_elec
+
+    # L223.GlobalTechCapture_elec: CO2 capture fractions from global electricity generation technologies
+    A23.globaltech_co2capture %>%
+      gather(year, remove.fraction, matches(YEAR_PATTERN)) %>%
+      complete(nesting(supplysector, subsector, technology), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
+      arrange(supplysector, year) %>%
+      group_by(supplysector, subsector, technology) %>%
+      mutate(remove.fraction = approx_fun(as.numeric(year), remove.fraction, rule = 1)) %>%
+      ungroup() %>%
+      filter(year %in% FUTURE_YEARS) %>%
+      rename(sector.name = supplysector, subsector.name = subsector) %>%
+    # Rounds the fraction to two digits and adds the name of the carbon storage market
+      mutate(remove.fraction = round(remove.fraction, energy.DIGITS_REMOVE.FRACTION), storage.market = energy.CO2.STORAGE.MARKET) ->
+      L223.GlobalTechCapture_elec
+    # reorders columns to match expected model interface input
+    L223.GlobalTechCapture_elec <- L223.GlobalTechCapture_elec[c(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "remove.fraction", "storage.market")]
+
+    # L223.GlobalIntTechBackup_elec: Backup parameters for global electricity generation technologies
+    A23.globalinttech %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      rename(sector.name = supplysector, subsector.name = subsector) ->
+      L223.GlobalIntTechBackup_elec
+    # reorders columns to match expected model interface input
+    L223.GlobalIntTechBackup_elec <- L223.GlobalIntTechBackup_elec[c(LEVEL2_DATA_NAMES[["GlobalTechBackup"]])]
+
+    A23.globaltech_retirement %>%
+      set_years() %>%
+      rename(sector.name = supplysector, subsector.name = subsector) ->
+      L223.globaltech_retirement_base
+
+    # Copies base year retirment information into all future years and appends back onto itself
+    L223.globaltech_retirement_base %>%
+      filter(year == max(BASE_YEARS)) %>%
+      repeat_add_columns(tibble("year" = as.character(FUTURE_YEARS))) %>%
+      select(-year.x) %>%
+      rename(year = year.y) %>%
+      bind_rows(L223.globaltech_retirement_base) ->
+      L223.globaltech_retirement
+
+    # Retirement may consist of any of three types of retirement function (phased, s-curve, or none)
+    # This section checks L223.globaltech_retirement for each of these functions and creates a subset for each option then removes any subsets with 0 rows
+    # All of these options have different headers, and all are allowed
+
+    #Subsets the phased retirement function
+    L223.globaltech_retirement %>%
+      filter(!is.na(L223.globaltech_retirement$shutdown.rate)) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["GlobalTech"]], "lifetime", "shutdown.rate")) ->
+      L223.GlobalTechShutdown_elec_all
+
+    # Subsets the intermittent technologies by checking it against the list in A23.globalinttech
+    L223.GlobalTechShutdown_elec_all %>%
+      semi_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) %>%
+      rename(intermittent.technology = technology) ->
+      L223.GlobalIntTechShutdown_elec
+
+    # Subsets the non-intermittent technologies by checking against any not listed in A23.globalinttech
+    L223.GlobalTechShutdown_elec_all %>%
+      anti_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) ->
+      L223.GlobalTechShutdown_elec
+
+    # Removes any empty data frames
+    if (nrow(L223.GlobalIntTechShutdown_elec) == 0){
+      rm(L223.GlobalIntTechShutdown_elec)
+    }
+    if (nrow(L223.GlobalTechShutdown_elec) == 0){
+      rm(L223.GlobalTechShutdown_elec)
+    }
+
+    # Subsets the S-Curve retirement function
+    L223.globaltech_retirement %>%
+      filter(!is.na(L223.globaltech_retirement$half.life)) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["GlobalTech"]], "lifetime", "steepness", "half.life")) ->
+      L223.GlobalTechSCurve_elec_all
+
+    # Subsets the intermittent technologies by checking it against the list in A23.globalinttech
+    L223.GlobalTechSCurve_elec_all %>%
+      semi_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) %>%
+      rename(intermittent.technology = technology) ->
+      L223.GlobalIntTechSCurve_elec
+
+    # Subsets the non-intermittent technologies by checking against any not listed in A23.globalinttech
+    L223.GlobalTechSCurve_elec_all %>%
+      anti_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) ->
+      L223.GlobalTechSCurve_elec
+
+    # Removes any empty data frames
+    if (nrow(L223.GlobalIntTechSCurve_elec) == 0){
+      rm(L223.GlobalIntTechSCurve_elec)
+    }
+    if (nrow(L223.GlobalTechSCurve_elec) == 0){
+      rm(L223.GlobalTechSCurve_elec)
+    }
+
+    # Subsets the remaining with no retirement function
+    # L223.GlobalTechLifetime_en: Global tech lifetime
+    L223.globaltech_retirement %>%
+      filter(is.na(L223.globaltech_retirement$shutdown.rate) & is.na(L223.globaltech_retirement$half.life)) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["GlobalTech"]], "lifetime")) ->
+      L223.GlobalTechLifetime_elec_all
+
+    # Subsets the intermittent technologies by checking it against the list in A23.globalinttech
+    L223.GlobalTechLifetime_elec_all %>%
+      semi_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) %>%
+      rename(intermittent.technology = technology) ->
+      L223.GlobalIntTechLifetime_elec
+
+    # Subsets the non-intermittent technologies by checking against any not listed in A23.globalinttech
+    L223.GlobalTechLifetime_elec_all %>%
+      anti_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) ->
+      L223.GlobalTechLifetime_elec
+
+    # Removes any empty data frames
+    if (nrow(L223.GlobalIntTechLifetime_elec) == 0){
+      rm(L223.GlobalIntTechLifetime_elec)
+    }
+    if (nrow(L223.GlobalTechLifetime_elec) == 0){
+      rm(L223.GlobalTechLifetime_elec)
+    }
+
+    # Subsets any technologies with a shutdown parameter based on profitability
+    # L223.GlobalTechProfitShutdown_en: Global tech profit shutdown decider and parameters
+    L223.globaltech_retirement %>%
+      filter(!is.na(L223.globaltech_retirement$median.shutdown.point)) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["GlobalTech"]], "median.shutdown.point", "profit.shutdown.steepness")) ->
+      L223.GlobalTechProfitShutdown_elec_all
+
+    # Subsets the intermittent technologies by checking it against the list in A23.globalinttech
+    L223.GlobalTechProfitShutdown_elec_all %>%
+      semi_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) %>%
+      rename(intermittent.technology = technology) ->
+      L223.GlobalIntTechProfitShutdown_elec
+
+    # Subsets the non-intermittent technologies by checking against any not listed in A23.globalinttech
+    L223.GlobalTechProfitShutdown_elec_all %>%
+      anti_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) ->
+      L223.GlobalTechProfitShutdown_elec
+
+    # Removes any empty data frames
+    if (nrow(L223.GlobalIntTechProfitShutdown_elec) == 0){
+      rm(L223.GlobalIntTechProfitShutdown_elec)
+    }
+    if (nrow(L223.GlobalTechProfitShutdown_elec) == 0){
+      rm(L223.GlobalTechProfitShutdown_elec)
+    }
+
+    #2d. Calibration and region-specific data
+    # generate base year calibrated inputs of electricity by interpolating from historical values
+    L1231.in_EJ_R_elec_F_tech_Yh %>%
+      complete(nesting(GCAM_region_ID, sector, fuel), year = c(year, BASE_YEARS)) %>%
+      arrange(GCAM_region_ID, year) %>%
+      group_by(GCAM_region_ID, sector, fuel) %>%
+      mutate(value = approx_fun(as.numeric(year), value, rule = 1)) %>%
+      ungroup() %>%
+      filter(year %in% BASE_YEARS) %>%
+      # append region names
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
+      L223.in_EJ_R_elec_F_tech_Yh_base
+
+    # append matching calibrated technology sector/subsector/technology to calibrated inputs to electricity
+    calibrated_techs %>%
+      semi_join(L223.in_EJ_R_elec_F_tech_Yh_base, by = c("sector", "fuel")) %>%
+      select(sector, fuel, supplysector, subsector, technology, calibration) %>%
+      # left_join because the join changes the number of rows, multiple matches in electricity for every calibrated tech.
+      left_join(L223.in_EJ_R_elec_F_tech_Yh_base, by = c("sector", "fuel", "technology")) %>%
+      # filters out all calibrated techs whose calibration is not an input. With default techs, this is redundant with the above join and removes nothing.
+      filter(calibration == "input") %>%
+      select(-calibration) %>%
+      rename(stub.technology = technology) ->
+      L223.in_EJ_R_elec_F_tech_Yh
+
+    # NOTE: Fixed output is assumed to apply in all historical years, regardless of final calibration year. CWR: This will only include different years if historical years are offset from base years.
+    #  generate base year calibrated inputs of electricity by interpolating from historical values
+    L1231.out_EJ_R_elec_F_tech_Yh %>%
+      complete(nesting(GCAM_region_ID, sector, fuel), year = c(year, MODEL_YEARS[MODEL_YEARS %in% HISTORICAL_YEARS])) %>%
+      arrange(GCAM_region_ID, year) %>%
+      group_by(GCAM_region_ID, sector, fuel) %>%
+      mutate(value = approx_fun(as.numeric(year), value, rule = 1)) %>%
+      ungroup() %>%
+      filter(year %in% MODEL_YEARS[MODEL_YEARS %in% HISTORICAL_YEARS]) %>%
+      # append region names
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
+      L223.out_EJ_R_elec_F_tech_Yh_base
+
+    # append matching calibrated technology sector/subsector/technology to calibrated outputs of electricity
+    calibrated_techs %>%
+      semi_join(L223.out_EJ_R_elec_F_tech_Yh_base, by = c("sector", "fuel")) %>%
+      select(sector, fuel, supplysector, subsector, technology, calibration) %>%
+      # left_join because the join changes the number of rows, multiple matches in electricity for every calibrated tech.
+      left_join(L223.out_EJ_R_elec_F_tech_Yh_base, by = c("sector", "fuel", "technology")) %>%
+      rename(stub.technology = technology) ->
+      L223.out_EJ_R_elec_F_tech_Yh
+
+    # L223.StubTechFixOut_elec: fixed output of electricity generation technologies
+    # filters for all calibrated techs with a fixed output. By default, this is only hydropower.
+    L223.out_EJ_R_elec_F_tech_Yh %>%
+      filter(calibration == "fixed output") %>%
+      select(-calibration) %>%
+      mutate(value = round(value, energy.DIGITS_CALOUTPUT), share.weight.year = year, subsector.share.weight = 0, share.weight = 0) ->
+      L223.StubTechFixOut_elec
+
+    # filters for all calibrated techs with a fixed output. By default, this is nuclear.
+    L223.out_EJ_R_elec_F_tech_Yh %>%
+      filter(calibration == "output" & year %in% BASE_YEARS) %>%
+      select(-calibration) ->
+      L223.calout_EJ_R_elec_F_tech_Yh
+
+    # Adding in future hydropower generation here
+    # L223.StubTechFixOut_hydro: fixed output of future hydropower
+    L118.out_EJ_R_elec_hydro_Yfut %>%
+      complete(nesting(GCAM_region_ID, sector, fuel), year = c(year, FUTURE_YEARS)) %>%
+      arrange(GCAM_region_ID, year) %>%
+      group_by(GCAM_region_ID, sector, fuel) %>%
+      mutate(value = approx_fun(as.numeric(year), value, rule = 1)) %>%
+      ungroup() %>%
+      filter(year %in% MODEL_YEARS[MODEL_YEARS %in% HISTORICAL_YEARS]) %>%
+      # append region names
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
+      L223.StubTechFixOut_hydro
+
+    calibrated_techs %>%
+      semi_join(L223.StubTechFixOut_hydro, by = c("sector", "fuel")) %>%
+      select(sector, fuel, supplysector, subsector, technology, calibration) %>%
+      # left_join because the join changes the number of rows, multiple matches in electricity for every calibrated tech.
+      left_join(L223.StubTechFixOut_hydro, by = c("sector", "fuel", "technology")) %>%
+      mutate(value = round(value, energy.DIGITS_CALOUTPUT), share.weight.year = year, subs.share.weight = 0, tech.share.weight = 0) %>%
+      rename(stub.technology = technology, fixedOutput = value) ->
+      L223.StubTechFixOut_hydro
+    L223.StubTechFixOut_hydro <- L223.StubTechFixOut_hydro[LEVEL2_DATA_NAMES[["StubTechFixOut"]]]
+
+
+
+
+
+
+
 #================================OLD============
     # 2c. Technology information
     printlog( "L223.StubTech_elec: Identification of stub technologies of electricity generation" )
@@ -435,18 +725,16 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.StubTech_elec <- write_to_all_regions( A23.globaltech_shrwt, names_Tech )
     names( L223.StubTech_elec ) <- names_StubTech
 
-    #Efficiencies of global technologies
-    printlog( "L223.GlobalTechEff_elec: Energy inputs and coefficients of global electricity generation technologies" )
-    L223.globaltech_eff.melt <- interpolate_and_melt( A23.globaltech_eff, c( model_base_years, model_future_years ), value.name="efficiency", digits = digits_efficiency, rule=3 )
-    #Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
-    L223.globaltech_eff.melt[ c( "sector.name", "subsector.name" ) ] <- L223.globaltech_eff.melt[ c( "supplysector", "subsector" ) ]
-    L223.GlobalTechEff_elec <- L223.globaltech_eff.melt[ names_GlobalTechEff ]
-
-    L223.GlobalIntTechEff_elec <- subset_inttechs( L223.GlobalTechEff_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
-    L223.GlobalTechEff_elec <- subset_techs( L223.GlobalTechEff_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
-    #Hard code in type "Resource" for intermittent technology resource input only
-    L223.GlobalIntTechEff_elec["type"] <- "Resource"
-
+    printlog( "L223.StubTechCalInput_elec: calibrated input of electricity generation technologies")
+    #Note that there is no need to specify which stub technologies are intermittent
+    L223.StubTechCalInput_elec <- L223.in_EJ_R_elec_F_tech_Yh[ names_StubTechYr ]
+    L223.StubTechCalInput_elec$minicam.energy.input <- A23.globaltech_eff$minicam.energy.input[
+      match( paste( L223.StubTechCalInput_elec$subsector, L223.StubTechCalInput_elec$stub.technology ),
+             paste( A23.globaltech_eff$subsector, A23.globaltech_eff$technology ) ) ]
+    L223.StubTechCalInput_elec$calibrated.value <- round( L223.in_EJ_R_elec_F_tech_Yh$value, digits_calOutput )
+    L223.StubTechCalInput_elec$share.weight.year <- L223.StubTechCalInput_elec$year
+    L223.StubTechCalInput_elec <- set_subsector_shrwt( L223.StubTechCalInput_elec, value.name = "calibrated.value" )
+    L223.StubTechCalInput_elec$tech.share.weight <- ifelse( L223.StubTechCalInput_elec$calibrated.value > 0, 1, 0 )
 
 #====================OLD=======================
 
