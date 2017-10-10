@@ -449,22 +449,7 @@ emissions.EDGAR_YEARS_PLUS     <- 1970:2008
 
 # GCAM-USA constants ======================================================================
 
-gcamusa.STATES <- c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA",
-                      "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR",
-                      "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY")
 
-gcamusa.REGIONAL_FUEL_MARKETS <- c("regional coal", "delivered coal", "wholesale gas", "delivered gas",
-                                   "refined liquids industrial", "refined liquids enduse")
-
-
-gcamusa.DEFAULT_SHAREWEIGHT <- 1
-gcamusa.DEFAULT_LOGITEXP <- -3
-gcamusa.DEFAULT_COEFFICIENT <- 1
-gcamusa.DEFAULT_MARKET <- "USA"
-gcamusa.GAS_ADJ_THRESH <- 5
-gcamusa.DIGITS_COST <- 4
-
-gcamusa.USE_REGIONAL_ELEC_MARKETS <- TRUE
 
 # Uncomment these lines to run under 'timeshift' conditions
 # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
