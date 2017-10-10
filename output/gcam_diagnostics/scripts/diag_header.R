@@ -41,7 +41,7 @@
 # -----------------------------------------------------------------------------
 # Load required libraries
 if( !require( "rgcam", character.only=T ) ) {
-    stop( "Couldn't laod rgcam, please checkout it out from GitHub or use devtools::install_github('JGCRI/rgcam')")
+    stop( "Couldn't load rgcam, please checkout it out from GitHub or use devtools::install_github('JGCRI/rgcam')")
 }
 library(rgcam)
 # NB this diag has been tested with the following libraries:
