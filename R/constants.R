@@ -449,35 +449,6 @@ emissions.EDGAR_YEARS_PLUS     <- 1970:2008
 
 # GCAM-USA constants ======================================================================
 
-gcamusa.STATES <- c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA",
-                    "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR",
-                    "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY")
-
-# logit exponent regulating competition between different grid regions in USA electricity market (single market approach only)
-gcamusa.GRID_REGION_LOGIT <- -6
-gcamusa.GRID_REGION_LOGIT_TYPE <- "relative-cost-logit"
-
-# indicate whether to resolve electricity demands at the level of the nation or the grid regions
-gcamusa.ELECT_TD_SECTORS <- c("elect_td_bld", "elect_td_ind", "elect_td_trn")
-gcamusa.USE_REGIONAL_ELEC_MARKETS <- TRUE
-
-# fuels whose markets will be modeled at the level of the FERC regions, with prices calibrated
-gcamusa.REGIONAL_FUEL_MARKETS <- c("regional coal", "delivered coal", "wholesale gas", "delivered gas",
-                                   "refined liquids industrial", "refined liquids enduse")
-# indicate whether to use regional as opposed to national fuel markets (FALSE = national markets)
-gcamusa.USE_REGIONAL_FUEL_MARKETS  <- TRUE
-
-# Resources that will be modeled at the state level
-gcamusa.STATE_RENEWABLE_RESOURCES <- c("distributed_solar", "geothermal", "onshore wind resource")
-gcamusa.STATE_UNLIMITED_RESOURCES <- c("global solar resource", "limestone")
-
-gcamusa.WIND_BASE_COST_YEAR <- 2005
-
-# Uncomment these lines to run under 'timeshift' conditions
-# HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
-# FUTURE_YEARS <- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)
-# BASE_YEARS <- c(1975, 1990, 2005)   # normally (1975, 1990, 2005, 2010)
-# MODEL_YEARS <- c(BASE_YEARS, FUTURE_YEARS)
 
 # PV constants ======================================================================
 
