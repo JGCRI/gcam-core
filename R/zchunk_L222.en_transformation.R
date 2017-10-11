@@ -21,7 +21,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author CWR Sept 2017
-module_energy_L222.en_transformation <- function(command, ...) {
+module_energy_L222.en_transformation_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "energy/calibrated_techs",
