@@ -64,12 +64,25 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
     L226.StubTechCoef_electd <- get_data(all_data, "L226.StubTechCoef_electd")
 
 
+    # silence check package notes
+
+
+    # global_energy_to_USA_electd - takes global energy inputs from L226.en_distribution.R
+    # and processes for use in USA electricity T&D
     global_energy_to_USA_electd <- function(data){
       data %>%
-        filter(region == "USA") %>%
+        filter(region == "USA",
+               supplysector %in% gcamusa.ELECT_TD_SECTORS) %>%
         write_to_all_states(names(data)) ->
         datanew
-    }
+    } # end global_energy_to_USA_electd
+
+
+    # Process inputs:
+    L226.SubsectorInterp_en %>%
+      mutate(from.year = as.integer(from.year),
+             to.year = as.integer(to.year)) ->
+      L226.SubsectorInterp_en
 
 
     # Build tables
@@ -214,60 +227,51 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
 
     # L226.DeleteSupplysector_USAelec: Removing the electricity T&D sectors of the USA region
     # This should probably be converted to an assumption and read in at some point.
-    L226.DeleteSupplysector_USAelec <- tibble(region = "USA", supplysector = c("elect_td_bld", "elect_td_ind", "elect_td_trn"))
+    L226.DeleteSupplysector_USAelec <- tibble(region = "USA", supplysector = gcamusa.ELECT_TD_SECTORS)
 
 
     ### Replacing for loop starting on line 152 in old DS. I /think/ these tibbles should be output in place of the "object" that currently is;
-    ### if that's the case, that needs to be updated and should rewrite below as a function.
-    ### Otherwise just delete all of the below to like 249
+    ### Otherwise just delete all of the below to line 250
     ### There's also a couple inputs to this chunk that are NULL, and nothing gets done to: L226.SubsectorShrwt_en, L226.SubsectorInterpTo_en
     L226.Supplysector_en %>%
-      filter(region == "USA",
-             supplysector %in% gcamusa.ELECT_TD_SECTORS) %>%
-      select(-region) %>%
-      set_years() %>%
-      repeat_add_columns(tibble(region = gcamusa.STATES)) ->
+      global_energy_to_USA_electd() ->
       L226.Supplysector_electd_USA
 
     L226.SubsectorLogit_en %>%
-      filter(region == "USA",
-             supplysector %in% L226.DeleteSupplysector_USAelec$supplysector) %>%
-      select(-region) %>%
-      set_years() %>%
-      repeat_add_columns(tibble(region = gcamusa.STATES)) ->
+      global_energy_to_USA_electd() ->
       L226.SubsectorLogit_electd_USA
 
     L226.SubsectorShrwtFllt_en %>%
-      filter(region == "USA",
-             supplysector %in% L226.DeleteSupplysector_USAelec$supplysector) %>%
-      select(-region) %>%
-      set_years() %>%
-      repeat_add_columns(tibble(region = gcamusa.STATES)) ->
+      global_energy_to_USA_electd() ->
       L226.SubsectorShrwtFllt_electd_USA
 
     L226.SubsectorInterp_en %>%
-      filter(region == "USA",
-             supplysector %in% L226.DeleteSupplysector_USAelec$supplysector) %>%
-      select(-region) %>%
-      set_years() %>%
-      repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
-      mutate(from.year = as.integer(from.year),
-             to.year = as.integer(to.year)) ->
+      global_energy_to_USA_electd() ->
       L226.SubsectorInterp_electd_USA
 
 
-
+    # Using national electric markets
     if(!gcamusa.USE_REGIONAL_ELEC_MARKETS){
+
       # L226.StubTechCoef_electd_USA: Using national elec markets. State elect_td sectors are treated as stub technologies
       L226.StubTechCoef_electd %>%
-        filter(region == "USA") %>%
-        write_to_all_states(., names(.)) ->
+        global_energy_to_USA_electd() ->
         L226.StubTechCoef_electd_USA
+
     }
 
 
+    # Using regional electric markets
     if(gcamusa.USE_REGIONAL_ELEC_MARKETS){
-      # L226.TechShrwt_electd_USA: using regional elec markets. The elect_td sectors can not use the global tech database as their input is different. Remaking
+
+      # L226.TechShrwt_electd_USA: using regional elec markets. The elect_td sectors can not use the global tech database
+      # as their input is different.
+      L226.GlobalTechShrwt_en %>%
+        filter(sector.name %in% gcamusa.ELECT_TD_SECTORS) %>%
+        write_to_all_states(c("region", names(L226.GlobalTechShrwt_en))) %>%
+        rename(supplysector = sector.name,
+               subsector = subsector.name) ->
+        L226.TechShrwt_electd_USA
     }
 
 
