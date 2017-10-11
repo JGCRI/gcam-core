@@ -63,207 +63,206 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
     L226.GlobalTechShrwt_en <- get_data(all_data, "L226.GlobalTechShrwt_en")
     L226.StubTechCoef_electd <- get_data(all_data, "L226.StubTechCoef_electd")
 
-#
-#
-#     # Build tables
-#
-#     # Supplysector information
-#
-#     # PART 1: FUEL HANDLING AND DELIVERY SECTORS
-#
-#     # L226.Supplysector_en_USA: Supply sector information for energy handling and delivery sectors
-#     # NOTE: Currently using FERC regions as a proxy for regional energy markets
-#     A21.sector %>%
-#       select(supplysector, output.unit, input.unit, price.unit, logit.exponent, logit.type) %>%
-#       filter(supplysector %in%gcamusa.REGIONAL_FUEL_MARKETS) ->
-#       A21.tmp
-#
-#     A26.sector  %>%
-#       select(supplysector, output.unit, input.unit, price.unit, logit.exponent, logit.type) %>%
-#       filter(supplysector %in%gcamusa.REGIONAL_FUEL_MARKETS) %>%
-#       bind_rows(A21.tmp, .) %>%
-#       repeat_add_columns(tibble(region = unique(states_subregions$grid_region))) %>%
-#       mutate(logit.year.fillout = min(BASE_YEARS)) ->
-#       L226.Supplysector_en_USA
-#
-#
-#     # L226.SubsectorShrwtFllt_en_USA: subsector shareweights of energy handling and delivery
-#     L226.Supplysector_en_USA %>%
-#       mutate(subsector = supplysector,
-#              year.fillout = min(BASE_YEARS),
-#              share.weight = gcamusa.DEFAULT_SHAREWEIGHT) %>%
-#       select(one_of(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]])) ->
-#       L226.SubsectorShrwtFllt_en_USA
-#
-#
-#     # L226.SubsectorLogit_en_USA
-#     # NOTE: There is only one tech per subsector so the logit choice does not matter
-#     L226.SubsectorShrwtFllt_en_USA %>%
-#       select(one_of(LEVEL2_DATA_NAMES[["Subsector"]])) %>%
-#       mutate(logit.year.fillout = min(BASE_YEARS),
-#              logit.exponent = gcamusa.DEFAULT_LOGITEXP,
-#              logit.type = NA) %>%
-#       select(one_of(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], "logit.type"))) ->
-#       L226.SubsectorLogit_en_USA
-#
-#
-#     # L226.TechShrwt_en_USA: technology shareweights of energy handling and delivery
-#     # NOTE: can't use stub technologies because these would inherit the wrong energy-inputs
-#     L226.SubsectorShrwtFllt_en_USA %>%
-#       select(one_of(LEVEL2_DATA_NAMES[["Subsector"]])) %>%
-#       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
-#       mutate(technology = subsector,
-#              share.weight = gcamusa.DEFAULT_SHAREWEIGHT) %>%
-#       select(one_of(c(LEVEL2_DATA_NAMES[["TechYr"]], "share.weight"))) ->
-#       L226.TechShrwt_en_USA
-#
-#
-#     # L226.TechCoef_en_USA: technology coefficients and market names of energy handling and delivery
-#     L226.TechShrwt_en_USA %>%
-#       select(one_of(LEVEL2_DATA_NAMES[["TechYr"]])) %>%
-#       mutate(minicam.energy.input = supplysector,
-#              coefficient = gcamusa.DEFAULT_COEFFICIENT,
-#              market.name = gcamusa.DEFAULT_MARKET) ->
-#       L226.TechCoef_en_USA
-#
-#
-#     # L226.CostAdj_75USDGJ_FERC_F: grid region specific cost adders
-#     # NOTE: the average national costs are already accounted in the corresponding sectors of the USA;
-#     # this table implements a price adjustment factor.
-#     #
-#     # Get US prices for coal, natural gas, distillate fuel oil for use in calculating the adjustments:
-#     EIA_state_energy_prices %>%
-#       filter(State == "United States") %>%
-#       select(Coal, Natural.gas, Distillate.fuel.oil) ->
-#       EIA_US_C_NG_DFO_prices
-#
-#     # Calculate the adjustment factor:
-#     # Distillate fuel oil is used as proxy for liquid fuels to avoid composition bias in the petroleum total.
-#     # In other words, states with a lot of residual fuel would end up having lower apparent liquid fuel prices.
-#     # In states with missing values for coal, assign the maximum price.
-#     # For gas, the value in Hawaii is extremely high; just cap it at a max threshold
-#     EIA_state_energy_prices %>%
-#       # save NA for processing
-#       left_join(select(states_subregions, grid_region, state_name), by = c("State" = "state_name")) %>%
-#       mutate(coal_adj = (Coal -  EIA_US_C_NG_DFO_prices$Coal) * CONV_BTU_KJ * gdp_deflator(1975, 2009),
-#              gas_adj =  if_else(State == "Hawaii", gcamusa.GAS_ADJ_THRESH,
-#                                 (Natural.gas - EIA_US_C_NG_DFO_prices$Natural.gas) * CONV_BTU_KJ * gdp_deflator(1975, 2009)),
-#              liq_adj = (Distillate.fuel.oil - EIA_US_C_NG_DFO_prices$Distillate.fuel.oil)* CONV_BTU_KJ  * gdp_deflator(1975, 2009)) ->
-#       EIA_tmp
-#
-#     # get maximum coal adjustment for replacing NA's:
-#     EIA_tmp %>%
-#       select(coal_adj) %>%
-#       na.omit %>%
-#       summarize(coal_adj = max(coal_adj)) %>%
-#       as.double ->
-#       maxCoalAdj
-#
-#     # use to replace NAs and finish adjustment calculations:
-#     EIA_tmp%>%
-#       replace_na(list(coal_adj = maxCoalAdj)) %>%
-#       group_by(grid_region) %>%
-#       summarize(coal_adj = median(coal_adj),
-#                 gas_adj = median(gas_adj),
-#                 liq_adj = median(liq_adj)) %>%
-#       ungroup %>%
-#       na.omit ->
-#       L226.CostAdj_75USDGJ_FERC_F
-#
-#
-#     # L226.TechCost_en_USA: cost adders
-#     L226.TechShrwt_en_USA %>%
-#       select(one_of(LEVEL2_DATA_NAMES[["TechYr"]])) %>%
-#       mutate(minicam.non.energy.input = "regional price adjustment") %>%
-#       left_join_error_no_match(L226.CostAdj_75USDGJ_FERC_F, by = c("region" = "grid_region")) %>%
-#       rename(coal = coal_adj,
-#              gas = gas_adj,
-#              liquids = liq_adj) %>%
-#       gather(sector1, adjustment, -region, -supplysector, -subsector, -technology, -year, -minicam.non.energy.input) %>%
-#       mutate(tmp = supplysector) %>%
-#       separate(tmp, c("trash1", "sector2", "trash2"), sep = " ") %>%
-#       filter(sector1 == sector2) %>%
-#       select(-trash1, -trash2, -sector1, -sector2) %>%
-#       rename(input.cost = adjustment) %>%
-#       mutate(input.cost = round(input.cost, gcamusa.DIGITS_COST)) ->
-#       L226.TechCost_en_USA
-#
-#
-#     # L226.Ccoef: carbon coef for cost adder sectors
-#     L202.CarbonCoef %>%
-#       filter(region == "USA") %>%
-#       select(-region) ->
-#       L226.Ccoef.usa
-#
-#     L226.TechCost_en_USA %>%
-#       select(region, supplysector) %>%
-#       distinct %>%
-#       left_join_error_no_match(L226.Ccoef.usa, by = c("supplysector" = "PrimaryFuelCO2Coef.name")) ->
-#       L226.Ccoef
-#
-#
-#
-#     # PART 2: ELECTRICITY TRANSMISSION AND DISTRIBUTION
-#
-#     # L226.DeleteSupplysector_USAelec: Removing the electricity T&D sectors of the USA region
-#     # This should probably be converted to an assumption and read in at some point.
-#     L226.DeleteSupplysector_USAelec <- tibble(region = "USA", supplysector = c("elect_td_bld", "elect_td_ind", "elect_td_trn"))
-#
-#
-#     ### Replacing for loop starting on line 152 in old DS. I /think/ these tibbles should be output in place of the "object" that currently is;
-#     ### if that's the case, that needs to be updated and should rewrite below as a function.
-#     ### Otherwise just delete all of the below to like 249
-#     ### There's also a couple inputs to this chunk that are NULL, and nothing gets done to: L226.SubsectorShrwt_en, L226.SubsectorInterpTo_en
-#     L226.Supplysector_en %>%
-#       filter(region == "USA",
-#              supplysector %in% L226.DeleteSupplysector_USAelec$supplysector) %>%
-#       select(-region) %>%
-#       set_years() %>%
-#       repeat_add_columns(tibble(region = gcamusa.STATES)) ->
-#       L226.Supplysector_electd_USA
-#
-#     L226.SubsectorLogit_en %>%
-#       filter(region == "USA",
-#              supplysector %in% L226.DeleteSupplysector_USAelec$supplysector) %>%
-#       select(-region) %>%
-#       set_years() %>%
-#       repeat_add_columns(tibble(region = gcamusa.STATES)) ->
-#       L226.SubsectorLogit_electd_USA
-#
-#     L226.SubsectorShrwtFllt_en %>%
-#       filter(region == "USA",
-#              supplysector %in% L226.DeleteSupplysector_USAelec$supplysector) %>%
-#       select(-region) %>%
-#       set_years() %>%
-#       repeat_add_columns(tibble(region = gcamusa.STATES)) ->
-#       L226.SubsectorShrwtFllt_electd_USA
-#
-#     L226.SubsectorInterp_en %>%
-#       filter(region == "USA",
-#              supplysector %in% L226.DeleteSupplysector_USAelec$supplysector) %>%
-#       select(-region) %>%
-#       set_years() %>%
-#       repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
-#       mutate(from.year = as.integer(from.year),
-#              to.year = as.integer(to.year)) ->
-#       L226.SubsectorInterp_electd_USA
-#
-#
-#
-#     if(!gcamusa.USE_REGIONAL_ELEC_MARKETS){
-#       # L226.StubTechCoef_electd_USA: Using national elec markets. State elect_td sectors are treated as stub technologies
-#       L226.StubTechCoef_electd %>%
-#         filter(region == "USA") %>%
-#         select(-region) %>%
-#         set_years() %>%
-#         repeat_add_columns(tibble(region = gcamusa.STATES)) ->
-#         L226.StubTechCoef_electd_USA
-#     }
-#
-#
-#     if(gcamusa.USE_REGIONAL_ELEC_MARKETS){
-#       # L226.TechShrwt_electd_USA: using regional elec markets. The elect_td sectors can not use the global tech database as their input is different. Remaking
-#     }
+
+
+    # Build tables
+
+    # Supplysector information
+
+    # PART 1: FUEL HANDLING AND DELIVERY SECTORS
+
+    # L226.Supplysector_en_USA: Supply sector information for energy handling and delivery sectors
+    # NOTE: Currently using FERC regions as a proxy for regional energy markets
+    A21.sector %>%
+      select(supplysector, output.unit, input.unit, price.unit, logit.exponent, logit.type) %>%
+      filter(supplysector %in%gcamusa.REGIONAL_FUEL_MARKETS) ->
+      A21.tmp
+
+    A26.sector  %>%
+      select(supplysector, output.unit, input.unit, price.unit, logit.exponent, logit.type) %>%
+      filter(supplysector %in%gcamusa.REGIONAL_FUEL_MARKETS) %>%
+      bind_rows(A21.tmp, .) %>%
+      repeat_add_columns(tibble(region = unique(states_subregions$grid_region))) %>%
+      mutate(logit.year.fillout = min(BASE_YEARS)) ->
+      L226.Supplysector_en_USA
+
+
+    # L226.SubsectorShrwtFllt_en_USA: subsector shareweights of energy handling and delivery
+    L226.Supplysector_en_USA %>%
+      mutate(subsector = supplysector,
+             year.fillout = min(BASE_YEARS),
+             share.weight = gcamusa.DEFAULT_SHAREWEIGHT) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]])) ->
+      L226.SubsectorShrwtFllt_en_USA
+
+
+    # L226.SubsectorLogit_en_USA
+    # NOTE: There is only one tech per subsector so the logit choice does not matter
+    L226.SubsectorShrwtFllt_en_USA %>%
+      select(one_of(LEVEL2_DATA_NAMES[["Subsector"]])) %>%
+      mutate(logit.year.fillout = min(BASE_YEARS),
+             logit.exponent = gcamusa.DEFAULT_LOGITEXP,
+             logit.type = NA) %>%
+      select(one_of(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], "logit.type"))) ->
+      L226.SubsectorLogit_en_USA
+
+
+    # L226.TechShrwt_en_USA: technology shareweights of energy handling and delivery
+    # NOTE: can't use stub technologies because these would inherit the wrong energy-inputs
+    L226.SubsectorShrwtFllt_en_USA %>%
+      select(one_of(LEVEL2_DATA_NAMES[["Subsector"]])) %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      mutate(technology = subsector,
+             share.weight = gcamusa.DEFAULT_SHAREWEIGHT) %>%
+      select(one_of(c(LEVEL2_DATA_NAMES[["TechYr"]], "share.weight"))) ->
+      L226.TechShrwt_en_USA
+
+
+    # L226.TechCoef_en_USA: technology coefficients and market names of energy handling and delivery
+    L226.TechShrwt_en_USA %>%
+      select(one_of(LEVEL2_DATA_NAMES[["TechYr"]])) %>%
+      mutate(minicam.energy.input = supplysector,
+             coefficient = gcamusa.DEFAULT_COEFFICIENT,
+             market.name = gcamusa.DEFAULT_MARKET) ->
+      L226.TechCoef_en_USA
+
+
+    # L226.CostAdj_75USDGJ_FERC_F: grid region specific cost adders
+    # NOTE: the average national costs are already accounted in the corresponding sectors of the USA;
+    # this table implements a price adjustment factor.
+    #
+    # Get US prices for coal, natural gas, distillate fuel oil for use in calculating the adjustments:
+    EIA_state_energy_prices %>%
+      filter(State == "United States") %>%
+      select(Coal, Natural.gas, Distillate.fuel.oil) ->
+      EIA_US_C_NG_DFO_prices
+
+    # Calculate the adjustment factor:
+    # Distillate fuel oil is used as proxy for liquid fuels to avoid composition bias in the petroleum total.
+    # In other words, states with a lot of residual fuel would end up having lower apparent liquid fuel prices.
+    # In states with missing values for coal, assign the maximum price.
+    # For gas, the value in Hawaii is extremely high; just cap it at a max threshold
+    EIA_state_energy_prices %>%
+      # save NA for processing
+      left_join(select(states_subregions, grid_region, state_name), by = c("State" = "state_name")) %>%
+      mutate(coal_adj = (Coal -  EIA_US_C_NG_DFO_prices$Coal) * CONV_BTU_KJ * gdp_deflator(1975, 2009),
+             gas_adj =  if_else(State == "Hawaii", gcamusa.GAS_ADJ_THRESH,
+                                (Natural.gas - EIA_US_C_NG_DFO_prices$Natural.gas) * CONV_BTU_KJ * gdp_deflator(1975, 2009)),
+             liq_adj = (Distillate.fuel.oil - EIA_US_C_NG_DFO_prices$Distillate.fuel.oil)* CONV_BTU_KJ  * gdp_deflator(1975, 2009)) ->
+      EIA_tmp
+
+    # get maximum coal adjustment for replacing NA's:
+    EIA_tmp %>%
+      select(coal_adj) %>%
+      na.omit %>%
+      summarize(coal_adj = max(coal_adj)) %>%
+      as.double ->
+      maxCoalAdj
+
+    # use to replace NAs and finish adjustment calculations:
+    EIA_tmp%>%
+      replace_na(list(coal_adj = maxCoalAdj)) %>%
+      group_by(grid_region) %>%
+      summarize(coal_adj = median(coal_adj),
+                gas_adj = median(gas_adj),
+                liq_adj = median(liq_adj)) %>%
+      ungroup %>%
+      na.omit ->
+      L226.CostAdj_75USDGJ_FERC_F
+
+
+    # L226.TechCost_en_USA: cost adders
+    L226.TechShrwt_en_USA %>%
+      select(one_of(LEVEL2_DATA_NAMES[["TechYr"]])) %>%
+      mutate(minicam.non.energy.input = "regional price adjustment") %>%
+      left_join_error_no_match(L226.CostAdj_75USDGJ_FERC_F, by = c("region" = "grid_region")) %>%
+      rename(coal = coal_adj,
+             gas = gas_adj,
+             liquids = liq_adj) %>%
+      gather(sector1, adjustment, -region, -supplysector, -subsector, -technology, -year, -minicam.non.energy.input) %>%
+      mutate(tmp = supplysector) %>%
+      separate(tmp, c("trash1", "sector2", "trash2"), sep = " ") %>%
+      filter(sector1 == sector2) %>%
+      select(-trash1, -trash2, -sector1, -sector2) %>%
+      rename(input.cost = adjustment) %>%
+      mutate(input.cost = round(input.cost, gcamusa.DIGITS_COST)) ->
+      L226.TechCost_en_USA
+
+
+    # L226.Ccoef: carbon coef for cost adder sectors
+    L202.CarbonCoef %>%
+      filter(region == "USA") %>%
+      select(-region) ->
+      L226.Ccoef.usa
+
+    L226.TechCost_en_USA %>%
+      select(region, supplysector) %>%
+      distinct %>%
+      left_join_error_no_match(L226.Ccoef.usa, by = c("supplysector" = "PrimaryFuelCO2Coef.name")) ->
+      L226.Ccoef
+
+
+
+    # PART 2: ELECTRICITY TRANSMISSION AND DISTRIBUTION
+
+    # L226.DeleteSupplysector_USAelec: Removing the electricity T&D sectors of the USA region
+    # This should probably be converted to an assumption and read in at some point.
+    L226.DeleteSupplysector_USAelec <- tibble(region = "USA", supplysector = c("elect_td_bld", "elect_td_ind", "elect_td_trn"))
+
+
+    ### Replacing for loop starting on line 152 in old DS. I /think/ these tibbles should be output in place of the "object" that currently is;
+    ### if that's the case, that needs to be updated and should rewrite below as a function.
+    ### Otherwise just delete all of the below to like 249
+    ### There's also a couple inputs to this chunk that are NULL, and nothing gets done to: L226.SubsectorShrwt_en, L226.SubsectorInterpTo_en
+    L226.Supplysector_en %>%
+      filter(region == "USA",
+             supplysector %in% L226.DeleteSupplysector_USAelec$supplysector) %>%
+      select(-region) %>%
+      set_years() %>%
+      repeat_add_columns(tibble(region = gcamusa.STATES)) ->
+      L226.Supplysector_electd_USA
+
+    L226.SubsectorLogit_en %>%
+      filter(region == "USA",
+             supplysector %in% L226.DeleteSupplysector_USAelec$supplysector) %>%
+      select(-region) %>%
+      set_years() %>%
+      repeat_add_columns(tibble(region = gcamusa.STATES)) ->
+      L226.SubsectorLogit_electd_USA
+
+    L226.SubsectorShrwtFllt_en %>%
+      filter(region == "USA",
+             supplysector %in% L226.DeleteSupplysector_USAelec$supplysector) %>%
+      select(-region) %>%
+      set_years() %>%
+      repeat_add_columns(tibble(region = gcamusa.STATES)) ->
+      L226.SubsectorShrwtFllt_electd_USA
+
+    L226.SubsectorInterp_en %>%
+      filter(region == "USA",
+             supplysector %in% L226.DeleteSupplysector_USAelec$supplysector) %>%
+      select(-region) %>%
+      set_years() %>%
+      repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
+      mutate(from.year = as.integer(from.year),
+             to.year = as.integer(to.year)) ->
+      L226.SubsectorInterp_electd_USA
+
+
+
+    if(!gcamusa.USE_REGIONAL_ELEC_MARKETS){
+      # L226.StubTechCoef_electd_USA: Using national elec markets. State elect_td sectors are treated as stub technologies
+      # L226.StubTechCoef_electd %>%
+      #   filter(region == "USA") %>%
+      #   select(-region) %>%
+      #   write_to_all_states(., names(.)) ->
+      #   L226.StubTechCoef_electd_USA
+    }
+
+
+    if(gcamusa.USE_REGIONAL_ELEC_MARKETS){
+      # L226.TechShrwt_electd_USA: using regional elec markets. The elect_td sectors can not use the global tech database as their input is different. Remaking
+    }
 
 
     # Produce outputs
