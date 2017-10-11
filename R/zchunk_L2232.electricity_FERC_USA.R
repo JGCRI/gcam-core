@@ -1,6 +1,6 @@
 #' module_gcam.usa_L2232.electricity_FERC_USA
 #'
-#' Generates GCAM-USA model inputs for electrcity trade sectors at the level of grid regions.
+#' Generate GCAM-USA model inputs for electrcity trade sectors at the level of grid regions.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -147,7 +147,7 @@ module_gcam.usa_L2232.electricity_FERC_USA <- function(command, ...) {
         mutate(subsector = replace(subsector, grepl("grid_region", subsector),
                                    paste(grid_region[grepl("grid_region", subsector)], "electricity trade", sep = " ")),
                technology = replace(technology, grepl("grid_region", technology),
-                                   paste(grid_region[grepl("grid_region", technology)], "electricity trade", sep = " ")),
+                                    paste(grid_region[grepl("grid_region", technology)], "electricity trade", sep = " ")),
                share.weight = 1) %>%
         select(one_of(c(LEVEL2_DATA_NAMES[["TechYr"]]), "share.weight", "grid_region")) ->
         L2232.TechShrwt_USAelec
@@ -212,7 +212,8 @@ module_gcam.usa_L2232.electricity_FERC_USA <- function(command, ...) {
                # Split net exports into gross imports and exports:
                # When net exports are positive, exports equal net exports, and imports are zero;
                # When net exports are negative, imports equal minus net exports, and exports are zero
-               imports = pmax(0, -1 * net.exports), exports = pmax(0, net.exports),
+               imports = pmax(0, -1 * net.exports),
+               exports = pmax(0, net.exports),
                # Calculate consumption from domestic sources: total consumption minus gross imports
                net.supply = consumption - imports) ->
         L2232.elec_flows_FERC
@@ -236,7 +237,7 @@ module_gcam.usa_L2232.electricity_FERC_USA <- function(command, ...) {
         select(-region) %>%
         repeat_add_columns(tibble(region = grid_regions)) %>%
         mutate(market.name = replace(market.name, grepl("grid_region", market.name),
-                                   region[grepl("grid_region", market.name)])) ->
+                                     region[grepl("grid_region", market.name)])) ->
         A232.FERCstructure
 
       # L2232.Supplysector_elec_FERC: supplysector information for electricity passthrough sectors in the FERC regions
@@ -278,7 +279,8 @@ module_gcam.usa_L2232.electricity_FERC_USA <- function(command, ...) {
                     select(region, technology.logit, technology.logit.type) %>%
                     unique, by = "region") %>%
         mutate(logit.year.fillout = min(BASE_YEARS),
-               logit.exponent = technology.logit, logit.type = technology.logit.type) %>%
+               logit.exponent = technology.logit,
+               logit.type = technology.logit.type) %>%
         select(one_of(LEVEL2_DATA_NAMES[["SubsectorLogit"]])) ->
         L2232.SubsectorLogit_elec_FERC
 
@@ -308,7 +310,7 @@ module_gcam.usa_L2232.electricity_FERC_USA <- function(command, ...) {
         repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
         filter(supplysector == "electricity_net_ownuse") %>%
         left_join(select(L2232.elec_flows_FERC, grid_region, year, coefficient = ownuse_coef),
-                                 by = c("region" = "grid_region", "year")) %>%
+                  by = c("region" = "grid_region", "year")) %>%
         group_by(region) %>%
         # Set future year own use coefficients the same as the base year coefficients
         mutate(coefficient = replace(coefficient, year %in% FUTURE_YEARS, coefficient[year == max(BASE_YEARS)])) %>%
