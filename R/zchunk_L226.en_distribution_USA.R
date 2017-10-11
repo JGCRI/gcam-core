@@ -64,6 +64,13 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
     L226.StubTechCoef_electd <- get_data(all_data, "L226.StubTechCoef_electd")
 
 
+    global_energy_to_USA_electd <- function(data){
+      data %>%
+        filter(region == "USA") %>%
+        write_to_all_states(names(data)) ->
+        datanew
+    }
+
 
     # Build tables
 
@@ -216,7 +223,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
     ### There's also a couple inputs to this chunk that are NULL, and nothing gets done to: L226.SubsectorShrwt_en, L226.SubsectorInterpTo_en
     L226.Supplysector_en %>%
       filter(region == "USA",
-             supplysector %in% L226.DeleteSupplysector_USAelec$supplysector) %>%
+             supplysector %in% gcamusa.ELECT_TD_SECTORS) %>%
       select(-region) %>%
       set_years() %>%
       repeat_add_columns(tibble(region = gcamusa.STATES)) ->
@@ -252,11 +259,10 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
 
     if(!gcamusa.USE_REGIONAL_ELEC_MARKETS){
       # L226.StubTechCoef_electd_USA: Using national elec markets. State elect_td sectors are treated as stub technologies
-      # L226.StubTechCoef_electd %>%
-      #   filter(region == "USA") %>%
-      #   select(-region) %>%
-      #   write_to_all_states(., names(.)) ->
-      #   L226.StubTechCoef_electd_USA
+      L226.StubTechCoef_electd %>%
+        filter(region == "USA") %>%
+        write_to_all_states(., names(.)) ->
+        L226.StubTechCoef_electd_USA
     }
 
 
