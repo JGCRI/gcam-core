@@ -149,7 +149,7 @@ module_gcam.usa_L2232.electricity_FERC_USA <- function(command, ...) {
                technology = replace(technology, grepl("grid_region", technology),
                                    paste(grid_region[grepl("grid_region", technology)], "electricity trade", sep = " ")),
                share.weight = 1) %>%
-        select(one_of(LEVEL2_DATA_NAMES[["TechYr"]]), "share.weight", "grid_region") ->
+        select(one_of(c(LEVEL2_DATA_NAMES[["TechYr"]]), "share.weight", "grid_region")) ->
         L2232.TechShrwt_USAelec
 
       # L2232.TechCoef_USAelec: technology coefficients and market names in USA electricity trade
