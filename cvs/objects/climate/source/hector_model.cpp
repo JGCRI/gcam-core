@@ -794,17 +794,6 @@ void HectorModel::setupRFTbl() {
 void HectorModel::storeGlobals( const int aYear, const bool aHadError ) {
     int idx = yearlyDataIndex( aYear );
 
-        // // XXX DEBUG
-        // ILogger &climatelog = ILogger::getLogger("climate-log");
-        // climatelog.setLevel(ILogger::DEBUG);
-        // climatelog << "Store globals: " << "  year: " << aYear
-        //            << "  index: " << idx
-        //            << "  table sizes: temp=" << mTemperatureTable.size()
-        //            << "  landflux= " << mLandFlux.size()
-        //            << "  oceanflux= " << mOceanFlux.size()
-        //            << "\n";
-        // // XXX end debug
-    
     mTemperatureTable[idx] = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_GLOBAL_TEMP );
     mLandFlux[idx]         = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_LAND_CFLUX );
     mOceanFlux[idx]        = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_OCEAN_CFLUX );
