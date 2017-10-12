@@ -279,6 +279,9 @@ energy.DIGITS_CAPACITY_FACTOR <- 2
 energy.DIGITS_OM <- 2
 energy.DIGITS_CAPITAL <- 0
 
+#base cost year for wind, used in capacity factor calculations
+energy.WIND.BASE.COST.YEAR <- 2005
+
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
 

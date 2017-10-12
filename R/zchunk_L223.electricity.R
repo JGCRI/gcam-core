@@ -653,6 +653,18 @@ module_energy_L223.electricity <- function(command, ...) {
       rename(stub.technology = technology) ->
       L223.in_EJ_R_elec_F_tech_Yh
 
+    # These steps calculate the shareweights and cleans up the format of the data frame for modelinterface
+    # L223.StubTechCalInput_elec: calibrated input of electricity generation technologies
+    # Note that there is no need to specify which stub technologies are intermittent
+    L223.in_EJ_R_elec_F_tech_Yh %>%
+      mutate(calOutputValue = round(value, energy.DIGITS_CALOUTPUT), share.weight.year = year) %>%
+      set_subsector_shrwt() %>%
+      mutate(tech.share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
+      left_join(A23.globaltech_eff, by = c("supplysector", "subsector", "stub.technology" = "technology")) %>%
+      rename(calibrated.value = calOutputValue) ->
+      L223.StubTechCalInput_elec
+    L223.StubTechCalInput_elec <- L223.StubTechCalInput_elec[LEVEL2_DATA_NAMES[["StubTechCalInput"]]]
+
     # NOTE: Fixed output is assumed to apply in all historical years, regardless of final calibration year. CWR: This will only include different years if historical years are offset from base years.
     #  generate base year calibrated inputs of electricity by interpolating from historical values
     L1231.out_EJ_R_elec_F_tech_Yh %>%
@@ -683,7 +695,7 @@ module_energy_L223.electricity <- function(command, ...) {
       mutate(value = round(value, energy.DIGITS_CALOUTPUT), share.weight.year = year, subsector.share.weight = 0, share.weight = 0) ->
       L223.StubTechFixOut_elec
 
-    # filters for all calibrated techs with a fixed output. By default, this is nuclear.
+    # filters for all calibrated techs with a fixed output. By default, this is nuclear, wind, solar, geothermal.
     L223.out_EJ_R_elec_F_tech_Yh %>%
       filter(calibration == "output" & year %in% BASE_YEARS) %>%
       select(-calibration) ->
@@ -706,17 +718,97 @@ module_energy_L223.electricity <- function(command, ...) {
       semi_join(L223.StubTechFixOut_hydro, by = c("sector", "fuel")) %>%
       select(sector, fuel, supplysector, subsector, technology, calibration) %>%
       # left_join because the join changes the number of rows, multiple matches in electricity for every calibrated tech.
-      left_join(L223.StubTechFixOut_hydro, by = c("sector", "fuel", "technology")) %>%
+      left_join(L223.StubTechFixOut_hydro, by = c("sector", "fuel")) %>%
       mutate(value = round(value, energy.DIGITS_CALOUTPUT), share.weight.year = year, subs.share.weight = 0, tech.share.weight = 0) %>%
       rename(stub.technology = technology, fixedOutput = value) ->
       L223.StubTechFixOut_hydro
     L223.StubTechFixOut_hydro <- L223.StubTechFixOut_hydro[LEVEL2_DATA_NAMES[["StubTechFixOut"]]]
 
+    # Cleaning up and setting shareweights for L223.StubTechProd_elec: calibrated output of electricity generation technologies
+    L223.calout_EJ_R_elec_F_tech_Yh %>%
+      mutate(calOutputValue = round(value, energy.DIGITS_CALOUTPUT), share.weight.year = year, share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
+      set_subsector_shrwt() ->
+      L223.StubTechProd_elec
+    L223.StubTechProd_elec <-L223.StubTechProd_elec[c(LEVEL2_DATA_NAMES[["StubTechYr"]], "calOutputValue","share.weight.year" , "subs.share.weight", "share.weight")]
 
+    # L223.StubTechEff_elec: calibrated efficiencies of electricity generation technologies
+    # NOTE: Electric sector efficiencies are assumed to apply for all historical years, regardless of final calibration year
+    L1231.eff_R_elec_F_tech_Yh %>%
+      complete(nesting(GCAM_region_ID, sector, fuel), year = c(year, MODEL_YEARS[MODEL_YEARS %in% HISTORICAL_YEARS])) %>%
+      arrange(GCAM_region_ID, year) %>%
+      group_by(GCAM_region_ID, sector, fuel) %>%
+      mutate(value = approx_fun(as.numeric(year), value, rule = 1)) %>%
+      ungroup() %>%
+      filter(year %in% MODEL_YEARS[MODEL_YEARS %in% HISTORICAL_YEARS]) %>%
+      # append region names
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
+      L223.eff_R_elec_F_tech_Yh
 
+    calibrated_techs %>%
+      semi_join(L223.eff_R_elec_F_tech_Yh, by = c("sector", "fuel")) %>%
+      select(sector, fuel, supplysector, subsector, technology) %>%
+      # left_join because the join changes the number of rows, multiple matches in electricity for every calibrated tech.
+      left_join(L223.eff_R_elec_F_tech_Yh, by = c("sector", "fuel", "technology")) %>%
+      left_join(A23.globaltech_eff, by = c("supplysector", "subsector", "technology")) %>%
+      mutate(value = round(value, energy.DIGITS_CALOUTPUT), market.name = region) %>% # old data system rounds to caloutput. should we round to efficiency?
+      rename(stub.technology = technology, efficiency = value) ->
+      L223.StubTechEff_elec
+    L223.StubTechEff_elec <- L223.StubTechEff_elec[LEVEL2_DATA_NAMES[["StubTechEff"]]]
 
+    # L223.StubTechCapFactor_elec: regional adjustments to wind capacity factors
+    # Regional adjustments to wind to include a "base price" for the wind resource supply
+    # We will have these total levelized cost reconcile by adjusting the capacity factor
+    L114.RsrcCurves_EJ_R_wind %>%
+      select(GCAM_region_ID, base.price) %>%
+      mutate(year = energy.WIND.BASE.COST.YEAR) ->
+      L223.StubTechCapFactor_elec_base
 
+    # filter to the base cost year and match the base capital, fixed OM, and variable OM costs to the base price that year for wind technology.
+    L223.GlobalIntTechCapital_elec %>%
+      filter(intermittent.technology == "wind" & year == energy.WIND.BASE.COST.YEAR) %>%
+      select(LEVEL2_DATA_NAMES[["GlobalIntTechCapital"]], -capacity.factor) %>%
+      left_join(L223.StubTechCapFactor_elec_base, by = "year") %>%
+      left_join(L223.GlobalIntTechOMvar_elec, by = c("year", "sector.name", "subsector.name", "intermittent.technology")) %>%
+      left_join(L223.GlobalIntTechOMfixed_elec, by = c("year", "sector.name", "subsector.name", "intermittent.technology")) %>%
+      select(-input.OM.var, -capacity.factor, -year) %>%
+    # Calculate a new capacity factor to match the regional base.price, append region names and duplicate over all model years.
+    # Note that there is only one capacity factor but the same value needs to be read in for capital
+    # and fixed O&M so the column is duplicated.
+      mutate(capacity.factor.OM = round((capital.overnight * fixed.charge.rate +
+                                OM.fixed) / (CONV_KWH_GJ * CONV_YEAR_HOURS) / (base.price - (OM.var / (1000 * CONV_KWH_GJ))), energy.DIGITS_CAPACITY_FACTOR)) %>%
+      mutate(capacity.factor.capital = capacity.factor.OM) %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      rename(supplysector = sector.name, subsector = subsector.name)->
+      L223.StubTechCapFactor_elec_nostor
 
+     # duplicates rows and appends wind.storage as a stub technology to itself, so capacity factors apply also to wind technology with storage
+    L223.StubTechCapFactor_elec_nostor %>%
+      mutate(stub.technology = "wind.storage") %>%
+      bind_rows(L223.StubTechCapFactor_elec_nostor) ->
+      L223.StubTechCapFactor_elec
+    L223.StubTechCapFactor_elec <- L223.StubTechCapFactor_elec[LEVEL2_DATA_NAMES[["StubTechCapFactor"]]]
+
+    # Regional capacity factor adjustment for solar technologies. We will use relative total and direct irradiance
+    # to scale the capacity factors for central PV and CSP respectively.
+    A23.globaltech_capital %>%
+      filter(subsector %in% c("solar", "rooftop_pv")) %>%
+      select(supplysector, subsector, technology, `input-capital`, capacity.factor) %>%
+      rename(capacity.factor.capital = capacity.factor) ->
+      L223.StubTechCapFactor_solar_cap
+
+    #Filter electricity fixed OM cost assumptions for solar and rooftop PV and remove year columns
+    A23.globaltech_OMfixed %>%
+      filter(subsector %in% c("solar", "rooftop_pv")) %>%
+      select(-matches(YEAR_PATTERN)) %>%
+      rename(capacity.factor.OM = capacity.factor) %>%
+      left_join_error_no_match(L223.StubTechCapFactor_solar_cap, by = c("supplysector", "subsector", "technology")) ->
+      L223.StubTechCapFactor_solar_base
+
+    L119.Irradiance_rel_R %>%
+      mutate(input.OM.fixed = "OM-fixed") %>%
+      left_join(L223.StubTechCapFactor_solar_base, by = "input.OM.fixed") ->
+      L223.StubTechCapFactor_solar
 
 #================================OLD============
     # 2c. Technology information
@@ -725,16 +817,21 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.StubTech_elec <- write_to_all_regions( A23.globaltech_shrwt, names_Tech )
     names( L223.StubTech_elec ) <- names_StubTech
 
-    printlog( "L223.StubTechCalInput_elec: calibrated input of electricity generation technologies")
-    #Note that there is no need to specify which stub technologies are intermittent
-    L223.StubTechCalInput_elec <- L223.in_EJ_R_elec_F_tech_Yh[ names_StubTechYr ]
-    L223.StubTechCalInput_elec$minicam.energy.input <- A23.globaltech_eff$minicam.energy.input[
-      match( paste( L223.StubTechCalInput_elec$subsector, L223.StubTechCalInput_elec$stub.technology ),
-             paste( A23.globaltech_eff$subsector, A23.globaltech_eff$technology ) ) ]
-    L223.StubTechCalInput_elec$calibrated.value <- round( L223.in_EJ_R_elec_F_tech_Yh$value, digits_calOutput )
-    L223.StubTechCalInput_elec$share.weight.year <- L223.StubTechCalInput_elec$year
-    L223.StubTechCalInput_elec <- set_subsector_shrwt( L223.StubTechCalInput_elec, value.name = "calibrated.value" )
-    L223.StubTechCalInput_elec$tech.share.weight <- ifelse( L223.StubTechCalInput_elec$calibrated.value > 0, 1, 0 )
+    # Regional adjustment for solar capacity factors.  We will use relative total and direct irradiance
+    # to scale the capacitfy factors for central PV and CSP respectively.
+    L223.StubTechCapFactor_solar[ grep( 'PV', L223.StubTechCapFactor_solar$technology, ignore.case=TRUE ), c( "capacity.factor.capital", "capacity.factor.OM" ) ] <-
+      L223.StubTechCapFactor_solar[ grep( 'PV', L223.StubTechCapFactor_solar$technology, ignore.case=TRUE ), c( "capacity.factor.capital", "capacity.factor.OM" ) ] *
+      L223.StubTechCapFactor_solar[ grep( 'PV', L223.StubTechCapFactor_solar$technology, ignore.case=TRUE ), "irradiance_avg_rel" ]
+    L223.StubTechCapFactor_solar[ grep( 'CSP', L223.StubTechCapFactor_solar$technology ), c( "capacity.factor.capital", "capacity.factor.OM" ) ] <-
+      L223.StubTechCapFactor_solar[ grep( 'CSP', L223.StubTechCapFactor_solar$technology ), c( "capacity.factor.capital", "capacity.factor.OM" ) ] *
+      L223.StubTechCapFactor_solar[ grep( 'CSP', L223.StubTechCapFactor_solar$technology ), "dni_avg_rel" ]
+    names( L223.StubTechCapFactor_solar )[ names( L223.StubTechCapFactor_solar ) == "technology" ] <- "stub.technology"
+    L223.StubTechCapFactor_solar[ L223.StubTechCapFactor_solar$capacity.factor.capital > 0.85, "capacity.factor.capital" ] <- 0.85
+    L223.StubTechCapFactor_solar[ L223.StubTechCapFactor_solar$capacity.factor.OM > 0.85, "capacity.factor.OM" ] <- 0.85
+    L223.StubTechCapFactor_solar <- add_region_name( L223.StubTechCapFactor_solar )
+    L223.StubTechCapFactor_solar <- repeat_and_add_vector( L223.StubTechCapFactor_solar, Y, model_years )
+    L223.StubTechCapFactor_elec <- rbind( L223.StubTechCapFactor_elec,
+                                          L223.StubTechCapFactor_solar[, names( L223.StubTechCapFactor_elec ) ] )
 
 #====================OLD=======================
 
