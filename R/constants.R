@@ -285,6 +285,9 @@ energy.DIGITS_EFFICIENCY <- 3
 energy.DIGITS_SHRWT <- 4
 energy.DIGITS_CAPACITY_FACTOR <- 2
 
+energy.DIGITS_INCELAS_IND <- 3
+
+
 
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
