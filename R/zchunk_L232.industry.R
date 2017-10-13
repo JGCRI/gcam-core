@@ -35,11 +35,7 @@ module_energy_L232.industry <- function(command, ...) {
              FILE = "energy/A32.demand",
              "L123.in_EJ_R_indchp_F_Yh",
              "L1322.in_EJ_R_indenergy_F_Yh",
-             "L1322.in_EJ_R_indfeed_F_Yh",
-             FILE = "socioeconomics/A32.inc_elas_output",
-             "L101.Pop_thous_GCAM3_R_Y",
-             "L102.pcgdp_thous90USD_GCAM3_R_Y",
-             "L102.pcgdp_thous90USD_Scen_R_Y"))
+             "L1322.in_EJ_R_indfeed_F_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L232.Supplysector_ind",
              "L232.SubsectorLogit_ind",
