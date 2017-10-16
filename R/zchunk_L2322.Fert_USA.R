@@ -6,8 +6,8 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L2322.DeleteSubsector_USAFert}, \code{object}, \code{L2322.FinalEnergyKeyword_USAFert}, \code{L2322.SubsectorLogitTables_USAFert[[ curr_table ]]$data}, \code{L2322.SubsectorLogit_USAFert}, \code{L2322.SubsectorShrwtFllt_USAFert}, \code{L2322.SubsectorInterp_USAFert}, \code{L2322.TechShrwt_USAFert}, \code{L2322.Production_USAFert}, \code{L2322.TechCoef_USAFert}, \code{L2322.StubTechProd_Fert_USA}, \code{L2322.StubTechCoef_Fert_USA}, \code{L2322.StubTechMarket_Fert_USA}. The corresponding file in the
-#' original data system was \code{L2322.Fert_USA.R} (gcam-usa level2).
+#' the generated outputs: \code{L2322.DeleteSubsector_USAFert}, \code{L2322.FinalEnergyKeyword_USAFert}, \code{L2322.FinalEnergyKeyword_Fert_USA}, \code{L2322.StubTech_Fert_USA}, \code{L2322.SubsectorLogit_USAFert}, \code{L2322.SubsectorShrwtFllt_USAFert}, \code{L2322.TechShrwt_USAFert}, \code{L2322.Production_USAFert}, \code{L2322.TechCoef_USAFer}, \code{L2322.StubTechProd_Fert_USA}, \code{L2322.StubTechCoef_Fert_USA}, \code{L2322.StubTechMarket_Fert_USA}, \code{L2322.SubsectorLogit_Fert_USA}, \code{L2322.Supplysector_Fert_USA}, \code{L2322.SubsectorShrwtFllt_Fert_USA}, \code{L2322.SubsectorInterp_Fert_USA},\code{L2322.SubsectorInterp_USAFert}
+#'  The corresponding file in the original data system was \code{L2322.Fert_USA.R} (gcam-usa level2).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
@@ -22,26 +22,29 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
              "L2322.Supplysector_Fert",
              "L2322.FinalEnergyKeyword_Fert",
              "L2322.SubsectorLogit_Fert",
-             "L2322.SubsectorShrwt_Fert",
              "L2322.SubsectorShrwtFllt_Fert",
              "L2322.SubsectorInterp_Fert",
-             "L2322.SubsectorInterpTo_Fert",
              "L2322.StubTech_Fert",
              "L1322.IO_GJkg_state_Fert_F_Yh",
              "L1322.out_Mt_state_Fert_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2322.DeleteSubsector_USAFert",
              "L2322.FinalEnergyKeyword_USAFert",
+             "L2322.FinalEnergyKeyword_Fert_USA",
+             "L2322.StubTech_Fert_USA",
              "L2322.SubsectorLogit_USAFert",
              "L2322.SubsectorShrwtFllt_USAFert",
-             "L2322.SubsectorInterp_USAFert",
-             "L2322.SubsectorInterpTo_Fert_USA",
              "L2322.TechShrwt_USAFert",
              "L2322.Production_USAFert",
              "L2322.TechCoef_USAFert",
              "L2322.StubTechProd_Fert_USA",
              "L2322.StubTechCoef_Fert_USA",
-             "L2322.StubTechMarket_Fert_USA"))
+             "L2322.StubTechMarket_Fert_USA",
+             "L2322.SubsectorLogit_Fert_USA",
+             "L2322.Supplysector_Fert_USA",
+             "L2322.SubsectorShrwtFllt_Fert_USA",
+             "L2322.SubsectorInterp_Fert_USA",
+             "L2322.SubsectorInterp_USAFert"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -53,65 +56,74 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     L2322.Supplysector_Fert <- get_data(all_data, "L2322.Supplysector_Fert")
     L2322.FinalEnergyKeyword_Fert <- get_data(all_data, "L2322.FinalEnergyKeyword_Fert")
     L2322.SubsectorLogit_Fert <- get_data(all_data, "L2322.SubsectorLogit_Fert")
-    L2322.SubsectorShrwt_Fert <- get_data(all_data, "L2322.SubsectorShrwt_Fert")
     L2322.SubsectorShrwtFllt_Fert <- get_data(all_data, "L2322.SubsectorShrwtFllt_Fert")
     L2322.SubsectorInterp_Fert <- get_data(all_data, "L2322.SubsectorInterp_Fert")
-    L2322.SubsectorInterpTo_Fert <- get_data(all_data, "L2322.SubsectorInterpTo_Fert")
     L2322.StubTech_Fert <- get_data(all_data, "L2322.StubTech_Fert")
     L1322.IO_GJkg_state_Fert_F_Yh <- get_data(all_data, "L1322.IO_GJkg_state_Fert_F_Yh")
     L1322.out_Mt_state_Fert_Yh <- get_data(all_data, "L1322.out_Mt_state_Fert_Yh")
 
+    # Silence pacakge checks
+    regions <- supplysector <- subsector <- state <- value <- year <- subs.share.weights <-
+      technology <- share.weight.year <- minicam.energy.input <- coefficient <- market.name <-
+      sector <- fuel <- stub.technology <- grid_region <- NULL
+
+
     # ===================================================
 
-    stop()
+    # add some commenets about how those two things were removed from the upstreadm chunk
+    # as per discussion with Page and Kate.
 
-    # Select the subsector logit exponents of fertilizer sector to remove from the USA sector.
     # In the GCAM region USA N fertilizer is retained as a sector, as is the Imports subsector
-    # but the the fuel subsecotrs will be deleted and replaced with state subsectors.
+    # but the the fuel subsecotrs will be deleted and replaced with state subsectors. Subset the
+    # subsector logit exponents of fertilizer sector for the fuel seubsecotrs to be removed in
+    # GCAM-USA.
     L2322.SubsectorLogit_Fert %>%
       filter(region == "USA", supplysector == aglu.FERT_NAME, subsector != "Imports") %>%
+      mutate(region = region) %>%
       select(region, supplysector, subsector) ->
       L2322.DeleteSubsector_USAFert
 
-    #Remove the keyword
+    # Subset the supply sector keywords for fertilizer sector in the USA region.
     L2322.FinalEnergyKeyword_Fert %>%
       filter(region == "USA") %>%
       mutate(`final.energy` = "none") ->
       L2322.FinalEnergyKeyword_USAFert
 
-    # printlog( "NOTE: N fertilizer sectors are only created in states where the Census data indicate production" )
+
+    # Since N fertilizer sectors are only created in states where the NAICS shipping information
+    # indicates fertlizer production, create a tibble of the fertlizer producing states. This
+    # tibble will be used to create the N fertlizer tables for GCAM-USA.
     L1322.out_Mt_state_Fert_Yh %>%
       select(state) %>%
       distinct ->
       Fert_states
 
-
-    # The USA N fertilizer sector is logited among the states that produce this commodity
-    # Write out each state's fertilizer sector as a subsector in the USA's fertilizer sector
+    # Select the supply sector information for fertilizer sector for the US and expand to all of the
+    # sates that are fterlizer producers then create subsector from state and fertlizer name.
     L2322.Supplysector_Fert %>%
       filter(region == "USA", supplysector == aglu.FERT_NAME) %>%
       select(region, supplysector) %>%
       repeat_add_columns(Fert_states) %>%
-      mutate(subsector = paste(state, aglu.FERT_NAME)) %>% # there are lots of different ways to do this... idk figure out which one is best
-      mutate(logit.year.fillout = min(HISTORICAL_YEARS)) %>%
-      mutate(logit.exponent = gcamusa.FERT_LOGIT_EXP) %>%
-      mutate("logit.type" = NA) ->
-      L2322.SubsectorLogit_USAFert
+      mutate(subsector = paste(state, aglu.FERT_NAME)) ->
+      L2322.Supplysector_Fert_states
 
-    L2322.SubsectorLogit_USAFert %>%
+    # Now add the logit table information to the state feterlizer supply sector data frame.
+    L2322.Supplysector_Fert_states %>%
+      mutate(logit.year.fillout = min(MODEL_YEARS)) %>%
+      mutate(logit.exponent = gcamusa.FERT_LOGIT_EXP) %>%
+      mutate("logit.type" = NA) %>%
       select("region", "supplysector", "subsector", "logit.year.fillout", "logit.exponent") ->
       L2322.SubsectorLogit_USAFert
 
-
-    # #Subsector shareweights
-    # printlog( "L2322.SubsectorShrwtFllt_USAFert: subsector default shareweights, USA region" )
+    # Create the subsector default shareweights for the US.
     L2322.SubsectorLogit_USAFert %>%
       select("region", "supplysector", "subsector") %>%
       mutate(year.fillout = min(BASE_YEARS)) %>%
       mutate(share.weight = 1) ->
       L2322.SubsectorShrwtFllt_USAFert
 
-    # printlog( "L2322.TechShrwt_USAFert: technology shareweights, USA region")
+    # Create the subsector default tecnhology shareweights for the US
+    # for interplation.
     L2322.SubsectorLogit_USAFert %>%
       select(region, supplysector, subsector) %>%
       mutate(`apply.to` = "share-weight") %>%
@@ -120,6 +132,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
       mutate(`interpolation.function` = "fixed") ->
       L2322.SubsectorInterp_USAFert
 
+    # Create the
     L2322.SubsectorLogit_USAFert %>%
       select("region", "supplysector", "subsector") %>%
       mutate(technology = subsector) %>%
@@ -194,17 +207,11 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     L2322.SubsectorLogit_Fert_USA <- Fert_USA_processing(L2322.SubsectorLogit_Fert, Fert_states)
     L2322.StubTech_Fert_USA <- Fert_USA_processing(L2322.StubTech_Fert, Fert_states)
 
-    if(exists("L2322.SubsectorShrwt_Fert")){
-      L2322.SubsectorShrwt_Fert_USA <- Fert_USA_processing(L2322.SubsectorShrwt_Fert, Fert_states)
-      }
     if(exists("L2322.SubsectorShrwtFllt_Fert")){
       L2322.SubsectorShrwtFllt_Fert_USA <- Fert_USA_processing(L2322.SubsectorShrwtFllt_Fert, Fert_states)
       }
     if(exists("L2322.SubsectorInterp_Fert")){
       L2322.SubsectorInterp_Fert_USA <- Fert_USA_processing(L2322.SubsectorInterp_Fert, Fert_states)
-      }
-    if(exists("L2322.SubsectorInterpTo_Fert")){
-      L2322.SubsectorInterpTo_Fert_USA <- Fert_USA_processing(L2322.SubsectorInterpTo_Fert, Fert_states)
       }
 
     # printlog( "L2322.StubTechProd_Fert_USA: calibrated fertilizer production by state" )
@@ -292,11 +299,21 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
 
     # Produce outputs
     L2322.DeleteSubsector_USAFert %>%
-      add_title("Subsector logit exponents of fertilizer sector to remove from GCAMUSA") %>%
+      add_title("Subsector logit exponents of fertilizer sector to remove from GCAM-USA") %>%
       add_units("NA") %>%
       add_comments("Subset L2322.SubsectorLogit_Fert for all observation other than subsector Imports and supplysector N fertlizer in the US") %>%
       add_legacy_name("L2322.DeleteSubsector_USAFert") %>%
-      add_precursors("L2322.SubsectorLogit_Fert", "L1322.out_Mt_state_Fert_Yh") ->
+      add_precursors("gcam-usa/states_subregions",
+                     "energy/calibrated_techs",
+                     "energy/A322.globaltech_coef",
+                     "L2322.Supplysector_Fert",
+                     "L2322.FinalEnergyKeyword_Fert",
+                     "L2322.SubsectorLogit_Fert",
+                     "L2322.SubsectorShrwtFllt_Fert",
+                     "L2322.SubsectorInterp_Fert",
+                     "L2322.StubTech_Fert",
+                     "L1322.IO_GJkg_state_Fert_F_Yh",
+                     "L1322.out_Mt_state_Fert_Yh") ->
       L2322.DeleteSubsector_USAFert
 
     L2322.FinalEnergyKeyword_USAFert %>%
@@ -304,7 +321,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("Supply sector keywords for fertilizer from L2322.FinalEnergyKeyword_Fert are subset for the USA region and expanded to all states with fertlizer cenus data.") %>%
       add_legacy_name("L2322.FinalEnergyKeyword_USAFert") %>%
-      add_precursors("L2322.FinalEnergyKeyword_Fert", "L1322.out_Mt_state_Fert_Yh") ->
+      add_precursors("L1322.out_Mt_state_Fert_Yh") ->
       L2322.FinalEnergyKeyword_USAFert
 
     L2322.FinalEnergyKeyword_Fert_USA %>%
@@ -312,7 +329,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("") %>%
       add_legacy_name("L2322.FinalEnergyKeyword_Fert_USA") %>%
-      add_precursors("") ->
+      add_precursors("L1322.out_Mt_state_Fert_Yh") ->
       L2322.FinalEnergyKeyword_Fert_USA
 
     L2322.StubTech_Fert_USA %>%
@@ -320,7 +337,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("") %>%
       add_legacy_name("L2322.StubTech_Fert_USA") %>%
-      add_precursors("") ->
+      add_precursors("L1322.out_Mt_state_Fert_Yh") ->
       L2322.StubTech_Fert_USA
 
     L2322.SubsectorLogit_USAFert %>%
@@ -328,7 +345,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("For fertilizer sector in the USA region, the subsector logit exponents are expanded for US states with fertlizer census data.") %>%
       add_legacy_name("L2322.SubsectorLogit_USAFert") %>%
-      add_precursors("L2322.Supplysector_Fert", "L1322.out_Mt_state_Fert_Yh") ->
+      add_precursors("L1322.out_Mt_state_Fert_Yh") ->
       L2322.SubsectorLogit_USAFert
 
     L2322.SubsectorShrwtFllt_USAFert %>%
@@ -336,7 +353,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("") %>%
       add_legacy_name("L2322.SubsectorShrwtFllt_USAFert") %>%
-      add_precursors("") ->
+      add_precursors("L1322.out_Mt_state_Fert_Yh") ->
       L2322.SubsectorShrwtFllt_USAFert
 
     L2322.SubsectorInterp_USAFert %>%
@@ -344,7 +361,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("") %>%
       add_legacy_name("L2322.SubsectorInterp_USAFert") %>%
-      add_precursors("") ->
+      add_precursors("L1322.out_Mt_state_Fert_Yh") ->
       L2322.SubsectorInterp_USAFert
 
     L2322.TechShrwt_USAFert %>%
@@ -352,7 +369,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("") %>%
       add_legacy_name("L2322.TechShrwt_USAFert") %>%
-      add_precursors("") ->
+      add_precursors("L1322.out_Mt_state_Fert_Yh") ->
       L2322.TechShrwt_USAFert
 
     L2322.Production_USAFert %>%
@@ -360,7 +377,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("") %>%
       add_legacy_name("L2322.Production_USAFert") %>%
-      add_precursors("") ->
+      add_precursors("L1322.out_Mt_state_Fert_Yh") ->
       L2322.Production_USAFert
 
     L2322.TechCoef_USAFert %>%
@@ -368,7 +385,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("") %>%
       add_legacy_name("L2322.TechCoef_USAFert") %>%
-      add_precursors("") ->
+      add_precursors("L1322.out_Mt_state_Fert_Yh") ->
       L2322.TechCoef_USAFert
 
     L2322.StubTechProd_Fert_USA %>%
@@ -376,7 +393,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("") %>%
       add_legacy_name("L2322.StubTechProd_Fert_USA") %>%
-      add_precursors("") ->
+      add_precursors("L1322.out_Mt_state_Fert_Yh") ->
       L2322.StubTechProd_Fert_USA
 
     L2322.StubTechCoef_Fert_USA %>%
@@ -384,7 +401,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("") %>%
       add_legacy_name("L2322.StubTechCoef_Fert_USA") %>%
-      add_precursors("") ->
+      add_precursors("L1322.out_Mt_state_Fert_Yh") ->
       L2322.StubTechCoef_Fert_USA
 
     L2322.StubTechMarket_Fert_USA %>%
@@ -392,7 +409,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("") %>%
       add_legacy_name("L2322.StubTechMarket_Fert_USA") %>%
-      add_precursors("") ->
+      add_precursors("L1322.out_Mt_state_Fert_Yh") ->
       L2322.StubTechMarket_Fert_USA
 
     L2322.SubsectorLogit_Fert_USA %>%
@@ -400,7 +417,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("") %>%
       add_legacy_name("L2322.SubsectorLogit_Fert_USA") %>%
-      add_precursors("") ->
+      add_precursors("L1322.out_Mt_state_Fert_Yh") ->
       L2322.SubsectorLogit_Fert_USA
 
     L2322.Supplysector_Fert_USA %>%
@@ -408,26 +425,10 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("") %>%
       add_legacy_name("L2322.Supplysector_Fert_USA") %>%
-      add_precursors("") ->
+      add_precursors("L1322.out_Mt_state_Fert_Yh") ->
       L2322.Supplysector_Fert_USA
 
-    if(exists("L2322.SubsectorShrwt_Fert_USA")) {
-      L2322.SubsectorShrwt_Fert_USA %>%
-        add_title("") %>%
-        add_units("NA") %>%
-        add_comments("") %>%
-        add_comments("") %>%
-        add_legacy_name("L2322.SubsectorShrwt_Fert_USA") %>%
-        add_precursors("") ->
-        L2322.SubsectorShrwt_Fert_USA
-    } else {
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Unitless") %>%
-        add_comments("Data not created") %>%
-        add_legacy_name("L2322.SubsectorShrwt_Fert_USA") ->
-        L2322.SubsectorShrwt_Fert_USA
-    }
+
 
     if(exists("L2322.SubsectorShrwtFllt_Fert_USA")) {
       L2322.SubsectorShrwtFllt_Fert_USA %>%
@@ -436,7 +437,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
         add_comments("") %>%
         add_comments("") %>%
         add_legacy_name("L2322.SubsectorShrwtFllt_Fert_USA") %>%
-        add_precursors("") ->
+        add_precursors("L1322.out_Mt_state_Fert_Yh") ->
         L2322.SubsectorShrwtFllt_Fert_USA
     } else {
       tibble(x = NA) %>%
@@ -454,7 +455,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
         add_comments("") %>%
         add_comments("") %>%
         add_legacy_name("L2322.SubsectorInterp_Fert_USA") %>%
-        add_precursors("") ->
+        add_precursors("L1322.out_Mt_state_Fert_Yh") ->
         L2322.SubsectorInterp_Fert_USA
     } else {
       tibble(x = NA) %>%
@@ -463,24 +464,6 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
         add_comments("Data not created") %>%
         add_legacy_name("L2322.SubsectorInterp_Fert_USA") ->
         L2322.SubsectorInterp_Fert_USA
-    }
-
-    if(exists("L2322.SubsectorInterpTo_Fert_USA")) {
-      L2322.SubsectorInterpTo_Fert_USA %>%
-        add_title("") %>%
-        add_units("NA") %>%
-        add_comments("") %>%
-        add_comments("") %>%
-        add_legacy_name("L2322.SubsectorInterpTo_Fert_USA") %>%
-        add_precursors("") ->
-        L2322.SubsectorInterpTo_Fert_USA
-    } else {
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Unitless") %>%
-        add_comments("Data not created") %>%
-        add_legacy_name("L2322.SubsectorInterpTo_Fert_USA") ->
-        L2322.SubsectorInterpTo_Fert_USA
     }
 
     return_data(L2322.DeleteSubsector_USAFert,
@@ -496,11 +479,9 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
                 L2322.StubTechMarket_Fert_USA,
                 L2322.SubsectorLogit_Fert_USA,
                 L2322.Supplysector_Fert_USA,
-                L2322.SubsectorShrwt_Fert_USA,
                 L2322.SubsectorShrwtFllt_Fert_USA,
                 L2322.SubsectorInterp_Fert_USA,
-                L2322.SubsectorInterp_USAFert,
-                L2322.SubsectorInterpTo_Fert_USA)
+                L2322.SubsectorInterp_USAFert)
     } else {
       stop("Unknown command")
     }
