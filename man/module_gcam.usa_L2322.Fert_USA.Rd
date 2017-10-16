@@ -14,15 +14,15 @@ module_gcam.usa_L2322.Fert_USA(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L2322.DeleteSubsector_USAFert}, \code{object}, \code{L2322.FinalEnergyKeyword_USAFert}, \code{L2322.SubsectorLogitTables_USAFert[[ curr_table ]]$data}, \code{L2322.SubsectorLogit_USAFert}, \code{L2322.SubsectorShrwtFllt_USAFert}, \code{L2322.SubsectorInterp_USAFert}, \code{L2322.TechShrwt_USAFert}, \code{L2322.Production_USAFert}, \code{L2322.TechCoef_USAFert}, \code{L2322.StubTechProd_Fert_USA}, \code{L2322.StubTechCoef_Fert_USA}, \code{L2322.StubTechMarket_Fert_USA}. The corresponding file in the
-original data system was \code{L2322.Fert_USA.R} (gcam-usa level2).
+the generated outputs: \code{L2322.DeleteSubsector_USAFert}, \code{L2322.FinalEnergyKeyword_USAFert}, \code{L2322.FinalEnergyKeyword_Fert_USA}, \code{L2322.StubTech_Fert_USA}, \code{L2322.SubsectorLogit_USAFert}, \code{L2322.SubsectorShrwtFllt_USAFert}, \code{L2322.TechShrwt_USAFert}, \code{L2322.Production_USAFert}, \code{L2322.TechCoef_USAFer}, \code{L2322.StubTechProd_Fert_USA}, \code{L2322.StubTechCoef_Fert_USA}, \code{L2322.StubTechMarket_Fert_USA}, \code{L2322.SubsectorLogit_Fert_USA}, \code{L2322.Supplysector_Fert_USA}, \code{L2322.SubsectorShrwtFllt_Fert_USA}, \code{L2322.SubsectorInterp_Fert_USA},\code{L2322.SubsectorInterp_USAFert}
+ The corresponding file in the original data system was \code{L2322.Fert_USA.R} (gcam-usa level2).
 }
 \description{
-Briefly describe what this chunk does.
+This chunk produces the logit tables for the fertilizer sector in GCAM-USA
 }
 \details{
-Describe in detail what this chunk does.
+This chunk produces the logit tables for the fertilizer sector in GCAM-USA
 }
 \author{
-YourInitials CurrentMonthName 2017
+KD October 2017
 }
