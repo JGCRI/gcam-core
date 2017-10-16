@@ -1,6 +1,11 @@
 #' module_energy_L232.industry
 #'
-#' Briefly describe what this chunk does.
+#' The chunk provides final energy keyword, supplysector/subsector information,
+#' supplysector/subsector interpolation information, supplysector/subsector share weights,
+#' global technology share weight, global technology efficiency,
+#' global technology coefficients, global technology cost, price elasticity,
+#' stub technology information, stub technology interpolation information,
+#' stub technology calibrated inputs, and etc.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,16 +13,15 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L232.SectorLogitTables[[ curr_table ]]$data}, \code{L232.Supplysector_ind}, \code{L232.SubsectorLogitTables[[ curr_table ]]$data}, \code{L232.SubsectorLogit_ind}, \code{L232.FinalEnergyKeyword_ind}, \code{L232.SubsectorShrwtFllt_ind}, \code{L232.SubsectorInterp_ind}, \code{L232.StubTech_ind}, \code{L232.GlobalTechShrwt_ind}, \code{L232.StubTechInterp_ind}, \code{L232.GlobalTechEff_ind}, \code{L232.GlobalTechCoef_ind}, \code{L232.GlobalTechCost_ind}, \code{L232.GlobalTechSecOut_ind}, \code{L232.GlobalTechCSeq_ind}, \code{L232.StubTechCalInput_indenergy}, \code{L232.StubTechCalInput_indfeed}, \code{L232.StubTechProd_industry}, \code{L232.StubTechCoef_industry}, \code{L232.FuelPrefElast_indenergy}, \code{L232.PerCapitaBased_ind}, \code{L232.PriceElasticity_ind}, \code{L232.BaseService_ind}, \code{object}. The corresponding file in the
 #' original data system was \code{L232.industry.R} (energy level2).
-#' @details Describe in detail what this chunk does.
+#' @details The chunk provides final energy keyword, supplysector/subsector information, supplysector/subsector interpolation information, supplysector/subsector share weights, global technology share weight, global technology efficiency, global technology coefficients, global technology cost, price elasticity, stub technology information, stub technology interpolation information, stub technology calibrated inputs, and etc.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
+#' @author LF October 2017
 #' @export
 module_energy_L232.industry <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
-             FILE = "energy/fuel_energy_input",
              FILE = "energy/calibrated_techs",
              FILE = "energy/A_regions",
              FILE = "energy/A23.chp_elecratio",
@@ -64,7 +68,6 @@ module_energy_L232.industry <- function(command, ...) {
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    fuel_energy_input <- get_data(all_data, "energy/fuel_energy_input")
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
     A_regions <- get_data(all_data, "energy/A_regions")
     A23.chp_elecratio <- get_data(all_data, "energy/A23.chp_elecratio")
@@ -83,13 +86,17 @@ module_energy_L232.industry <- function(command, ...) {
     L123.in_EJ_R_indchp_F_Yh <- get_data(all_data, "L123.in_EJ_R_indchp_F_Yh")
     L1322.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L1322.in_EJ_R_indenergy_F_Yh")
     L1322.in_EJ_R_indfeed_F_Yh <- get_data(all_data, "L1322.in_EJ_R_indfeed_F_Yh")
-    A32.inc_elas_output <- get_data(all_data, "socioeconomics/A32.inc_elas_output")
-    L101.Pop_thous_GCAM3_R_Y <- get_data(all_data, "L101.Pop_thous_GCAM3_R_Y")
-    L102.pcgdp_thous90USD_GCAM3_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_GCAM3_R_Y")
-    L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y")
 
     # ===================================================
     # 0. Give binding for variable names used in pipeline
+    has_district_heat <- sector <- fuel <- supplysector <- subsector <-
+      technology <- year.fillout <- to.value <- year <- share.weight <-
+      efficiency <- minicam.energy.input <- secondary.output <- coefficient <-
+      elec_ratio <- output.ratio <- . <- year.x <- output.ratio.x <- output.ratio.y <-
+      input.cost <- minicam.non.energy.input <- GCAM_region_ID <- value <-
+      calibrated.value <- sector.name <- subsector.name <- region <-
+      calOutputValue <- subs.share.weight <- calOutputValue.x <- calOutputValue.y <-
+      output_tot <- value.x <- value.y <- total <- fuelprefElasticity <- NULL
 
     # ===================================================
     # 1. Perform computations
@@ -181,9 +188,9 @@ module_energy_L232.industry <- function(command, ...) {
       # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
       rename(sector.name = supplysector,
              subsector.name = subsector) ->
-      L232.globaltech_eff.melt # intermediate tibble
+      L232.globaltech_eff.long # intermediate tibble
 
-    L232.globaltech_eff.melt %>%
+    L232.globaltech_eff.long %>%
       select(one_of(LEVEL2_DATA_NAMES[["GlobalTechEff"]])) ->
       L232.GlobalTechEff_ind
 
@@ -262,7 +269,7 @@ module_energy_L232.industry <- function(command, ...) {
     # L232.StubTechCalInput_indenergy: calibrated input of industrial energy use technologies (including cogen)
     L1322.in_EJ_R_indenergy_F_Yh %>%
       bind_rows(L123.in_EJ_R_indchp_F_Yh) %>%
-      complete(nesting(GCAM_region_ID, sector, fuel), year = BASE_YEARS) %>%
+      complete(nesting(GCAM_region_ID, sector, fuel), year = c(year, BASE_YEARS)) %>%
       arrange(GCAM_region_ID, sector, fuel, year) %>%
       group_by(GCAM_region_ID, sector, fuel) %>%
       mutate(value = approx_fun(year, value, rule = 1)) %>%
@@ -274,11 +281,13 @@ module_energy_L232.industry <- function(command, ...) {
       L232.in_EJ_R_indenergy_F_Yh # intermediate tibble
 
     L232.in_EJ_R_indenergy_F_Yh %>%
-      left_join(select(A32.globaltech_eff, subsector, technology, minicam.energy.input),
+      left_join_error_no_match(unique(select(A32.globaltech_eff, subsector, technology, minicam.energy.input)),
                 by = c("subsector", "stub.technology" = "technology")) %>%
       mutate(calibrated.value = round(value, energy.DIGITS_CALOUTPUT)) %>%
       mutate(share.weight.year = year) %>%
+      rename(calOutputValue = calibrated.value) %>%  # temporary coumn name change to accommodate function set_subsector_shrwt
       set_subsector_shrwt %>%
+      rename(calibrated.value = calOutputValue) %>% # temporary coumn name change to accommodate function set_subsector_shrwt
       mutate(tech.share.weight = if_else(calibrated.value > 0, 1, 0)) %>%
       select(one_of(LEVEL2_DATA_NAMES[["StubTechCalInput"]])) ->
       L232.StubTechCalInput_indenergy
@@ -287,18 +296,21 @@ module_energy_L232.industry <- function(command, ...) {
     L1322.in_EJ_R_indfeed_F_Yh %>%
       filter(year %in% BASE_YEARS) %>%
       left_join_error_no_match(GCAM_region_names, by = 'GCAM_region_ID') %>%
-      left_join_error_no_match(select(calibrated_techs, sector, fuel, supplysector, subsector, technology),
+      left_join_error_no_match(unique(select(calibrated_techs, sector, fuel, supplysector, subsector, technology)),
                                by = c("sector", "fuel")) %>%
       rename(stub.technology = technology) ->
       L232.in_EJ_R_indfeed_F_Yh # intermediate tibble
 
     L232.in_EJ_R_indfeed_F_Yh %>%
       select(one_of(c(LEVEL2_DATA_NAMES[["StubTechYr"]], "value"))) %>%
-      left_join(select(A32.globaltech_eff, subsector, technology, minicam.energy.input),
+      left_join(unique(select(A32.globaltech_eff, subsector, technology, minicam.energy.input)),
                 by = c("subsector", "stub.technology" = "technology")) %>%
       mutate(calibrated.value = round(value, energy.DIGITS_CALOUTPUT)) %>%
+      select(-value) %>%
       mutate(share.weight.year = year) %>%
+      rename(calOutputValue = calibrated.value) %>%  # temporary coumn name change to accommodate function set_subsector_shrwt
       set_subsector_shrwt %>%
+      rename(calibrated.value = calOutputValue) %>% # temporary coumn name change to accommodate function set_subsector_shrwt
       mutate(tech.share.weight = if_else(calibrated.value > 0, 1, 0)) ->
       L232.StubTechCalInput_indfeed
 
@@ -306,7 +318,7 @@ module_energy_L232.industry <- function(command, ...) {
     # First, calculate service output by technology, for energy-use and feedstocks
     L232.in_EJ_R_indenergy_F_Yh %>%
       bind_rows(L232.in_EJ_R_indfeed_F_Yh) %>%
-      left_join_error_no_match(select(L232.globaltech_eff.melt, sector.name, subsector.name, technology, year,efficiency),
+      left_join_error_no_match(select(L232.globaltech_eff.long, sector.name, subsector.name, technology, year,efficiency),
                                by = c("supplysector" = "sector.name", "subsector" = "subsector.name",
                                       "stub.technology" = "technology", "year")) %>%
       mutate(calOutputValue = round(value * efficiency, energy.DIGITS_CALOUTPUT)) ->
@@ -463,7 +475,7 @@ module_energy_L232.industry <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("For industry sector, the subsector logit exponents from A32.subsector_logit are expanded into all GCAM regions with non-existent heat subsectors removed") %>%
       add_legacy_name("L232.SubsectorLogit_ind") %>%
-      add_precursors("energy/A32.subsector_logit", "GCAM_region_names", "energy/A_regions", "energy/calibrated_techs") ->
+      add_precursors("energy/A32.subsector_logit", "common/GCAM_region_names", "energy/A_regions", "energy/calibrated_techs") ->
       L232.SubsectorLogit_ind
 
     L232.FinalEnergyKeyword_ind %>%
@@ -511,7 +523,7 @@ module_energy_L232.industry <- function(command, ...) {
       add_units("NA") %>%
       add_comments("For industry sector, the interpolation function from A32.globaltech_interp are expanded into all GCAM regions") %>%
       add_legacy_name("L232.StubTechInterp_ind") %>%
-      add_precursors("energy/A32.globaltech_interp", "energy/GCAM_region_names") ->
+      add_precursors("energy/A32.globaltech_interp", "common/GCAM_region_names") ->
       L232.StubTechInterp_ind
 
     L232.GlobalTechEff_ind %>%
@@ -543,7 +555,7 @@ module_energy_L232.industry <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Secondary output ratios are calculated as electricity ratio (Assumed CHP electricity output per unit fuel input) over efficiency") %>%
       add_legacy_name("L232.GlobalTechSecOut_ind") %>%
-      add_precursors("energyA23.chp_elecratio", "energy/A32.globaltech_eff") ->
+      add_precursors("energy/A23.chp_elecratio", "energy/A32.globaltech_eff") ->
       L232.GlobalTechSecOut_ind
 
     L232.GlobalTechCSeq_ind %>%
@@ -599,7 +611,7 @@ module_energy_L232.industry <- function(command, ...) {
       add_units("NA") %>%
       add_comments("Extracted per-capita based flag for industry final demand from A32.demand") %>%
       add_legacy_name("L232.PerCapitaBased_ind") %>%
-      add_precursors("common/GCAM_region_names", "energy/A32.demand", "etc") ->
+      add_precursors("common/GCAM_region_names", "energy/A32.demand") ->
       L232.PerCapitaBased_ind
 
     L232.PriceElasticity_ind %>%
