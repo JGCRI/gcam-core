@@ -18,7 +18,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author LF October 2017
-#' @export
 module_energy_L232.industry <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
@@ -107,7 +106,7 @@ module_energy_L232.industry <- function(command, ...) {
       filter(grepl("industry", sector) & fuel == "heat") %>%
       select(supplysector, subsector, technology) %>%
       repeat_add_columns(tibble(GCAM_region_ID = has_not_heat[["GCAM_region_ID"]])) %>%
-      left_join_error_no_match(GCAM_region_names, by = 'GCAM_region_ID') ->
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
       L232.rm_heat_techs_R # intermediate tibble
 
     # 1a. Supplysector information
@@ -285,9 +284,9 @@ module_energy_L232.industry <- function(command, ...) {
                 by = c("subsector", "stub.technology" = "technology")) %>%
       mutate(calibrated.value = round(value, energy.DIGITS_CALOUTPUT)) %>%
       mutate(share.weight.year = year) %>%
-      rename(calOutputValue = calibrated.value) %>%  # temporary coumn name change to accommodate function set_subsector_shrwt
+      rename(calOutputValue = calibrated.value) %>%  # temporary column name change to accommodate function set_subsector_shrwt
       set_subsector_shrwt %>%
-      rename(calibrated.value = calOutputValue) %>% # temporary coumn name change to accommodate function set_subsector_shrwt
+      rename(calibrated.value = calOutputValue) %>% # temporary column name change to accommodate function set_subsector_shrwt
       mutate(tech.share.weight = if_else(calibrated.value > 0, 1, 0)) %>%
       select(one_of(LEVEL2_DATA_NAMES[["StubTechCalInput"]])) ->
       L232.StubTechCalInput_indenergy
@@ -295,7 +294,7 @@ module_energy_L232.industry <- function(command, ...) {
     # L232.StubTechCalInput_indfeed: calibrated input of industrial feedstock technologies
     L1322.in_EJ_R_indfeed_F_Yh %>%
       filter(year %in% BASE_YEARS) %>%
-      left_join_error_no_match(GCAM_region_names, by = 'GCAM_region_ID') %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(unique(select(calibrated_techs, sector, fuel, supplysector, subsector, technology)),
                                by = c("sector", "fuel")) %>%
       rename(stub.technology = technology) ->
@@ -308,9 +307,9 @@ module_energy_L232.industry <- function(command, ...) {
       mutate(calibrated.value = round(value, energy.DIGITS_CALOUTPUT)) %>%
       select(-value) %>%
       mutate(share.weight.year = year) %>%
-      rename(calOutputValue = calibrated.value) %>%  # temporary coumn name change to accommodate function set_subsector_shrwt
+      rename(calOutputValue = calibrated.value) %>%  # temporary column name change to accommodate function set_subsector_shrwt
       set_subsector_shrwt %>%
-      rename(calibrated.value = calOutputValue) %>% # temporary coumn name change to accommodate function set_subsector_shrwt
+      rename(calibrated.value = calOutputValue) %>% # temporary column name change to accommodate function set_subsector_shrwt
       mutate(tech.share.weight = if_else(calibrated.value > 0, 1, 0)) ->
       L232.StubTechCalInput_indfeed
 
