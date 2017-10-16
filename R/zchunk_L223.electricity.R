@@ -252,6 +252,14 @@ module_energy_L223.electricity <- function(command, ...) {
       set_years() ->
       L223.SubsectorInterpTo_elec
 
+    # 2c. Technology information
+    # L223.StubTech_elec: Identification of stub technologies of electricity generation
+    # Note: assuming that technology list in the shareweight table includes the full set (any others would default to a 0 shareweight)
+    A23.globaltech_shrwt %>%
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Tech"]]), GCAM_region_names) %>%
+      rename(stub.technology = technology) ->
+      L223.StubTech_elec
+
     # L223.GlobalTechEff_elec: Energy inputs and coefficients, efficiency, of global electricity generation technologies
     A23.globaltech_eff %>%
       fill_exp_decay_extrapolate(MODEL_YEARS) %>%
@@ -791,13 +799,14 @@ module_energy_L223.electricity <- function(command, ...) {
 
     # Regional capacity factor adjustment for solar technologies. We will use relative total and direct irradiance
     # to scale the capacity factors for central PV and CSP respectively.
+    # Clean up capital assumptions for solar technologies
     A23.globaltech_capital %>%
       filter(subsector %in% c("solar", "rooftop_pv")) %>%
       select(supplysector, subsector, technology, `input-capital`, capacity.factor) %>%
-      rename(capacity.factor.capital = capacity.factor) ->
+      rename(capacity.factor.capital = capacity.factor, input.capital = `input-capital`) ->
       L223.StubTechCapFactor_solar_cap
 
-    #Filter electricity fixed OM cost assumptions for solar and rooftop PV and remove year columns
+    # Filter electricity fixed OM cost assumptions for solar and rooftop PV and remove year columns
     A23.globaltech_OMfixed %>%
       filter(subsector %in% c("solar", "rooftop_pv")) %>%
       select(-matches(YEAR_PATTERN)) %>%
@@ -805,35 +814,37 @@ module_energy_L223.electricity <- function(command, ...) {
       left_join_error_no_match(L223.StubTechCapFactor_solar_cap, by = c("supplysector", "subsector", "technology")) ->
       L223.StubTechCapFactor_solar_base
 
+    # Add data on solar irradiance to base assumptions about solar electricity capacity factors.
     L119.Irradiance_rel_R %>%
       mutate(input.OM.fixed = "OM-fixed") %>%
-      left_join(L223.StubTechCapFactor_solar_base, by = "input.OM.fixed") ->
+      left_join(L223.StubTechCapFactor_solar_base, by = "input.OM.fixed") %>%
+      rename(stub.technology = technology) ->
+      L223.StubTechCapFactor_solar_full
+
+    # Multiply capacity factor for CSP technologies by average direct normal irradiance
+    L223.StubTechCapFactor_solar_full %>%
+      filter(grepl("CSP", stub.technology)) %>%
+      mutate(capacity.factor.capital = capacity.factor.capital * dni_avg_rel, capacity.factor.OM = capacity.factor.OM * dni_avg_rel) ->
+      L223.StubTechCapFactor_solar_base3
+
+    # Multiply capacity factor for PV technologies by average relative irradiance, re-bind solar and CSP into the same data frame, and change any capacity factors that exceed the maximum possible.
+    L223.StubTechCapFactor_solar_full %>%
+      filter(grepl("PV", stub.technology, ignore.case = TRUE)) %>%
+      mutate(capacity.factor.capital = capacity.factor.capital * irradiance_avg_rel, capacity.factor.OM = capacity.factor.OM * irradiance_avg_rel) %>%
+      bind_rows(L223.StubTechCapFactor_solar_base3) %>%
+      mutate(capacity.factor.capital = ifelse(capacity.factor.capital > 0.85, 0.85, capacity.factor.capital),
+             capacity.factor.OM = ifelse(capacity.factor.OM > 0.85, 0.85, capacity.factor.OM)) %>%
+      # Replace region IDs with region names and propagate rows across each model year.
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) ->
       L223.StubTechCapFactor_solar
+    # Match expected model interface names in L223.StubTechCapFactor_elec and then bind solar capacity factors to rest of electricity sector.
+    L223.StubTechCapFactor_solar <- L223.StubTechCapFactor_solar[LEVEL2_DATA_NAMES[["StubTechCapFactor"]]]
+    L223.StubTechCapFactor_elec %>%
+      bind_rows(L223.StubTechCapFactor_solar) ->
+      L223.StubTechCapFactor_elec
 
-#================================OLD============
-    # 2c. Technology information
-    printlog( "L223.StubTech_elec: Identification of stub technologies of electricity generation" )
-    #Note: assuming that technology list in the shareweight table includes the full set (any others would default to a 0 shareweight)
-    L223.StubTech_elec <- write_to_all_regions( A23.globaltech_shrwt, names_Tech )
-    names( L223.StubTech_elec ) <- names_StubTech
-
-    # Regional adjustment for solar capacity factors.  We will use relative total and direct irradiance
-    # to scale the capacitfy factors for central PV and CSP respectively.
-    L223.StubTechCapFactor_solar[ grep( 'PV', L223.StubTechCapFactor_solar$technology, ignore.case=TRUE ), c( "capacity.factor.capital", "capacity.factor.OM" ) ] <-
-      L223.StubTechCapFactor_solar[ grep( 'PV', L223.StubTechCapFactor_solar$technology, ignore.case=TRUE ), c( "capacity.factor.capital", "capacity.factor.OM" ) ] *
-      L223.StubTechCapFactor_solar[ grep( 'PV', L223.StubTechCapFactor_solar$technology, ignore.case=TRUE ), "irradiance_avg_rel" ]
-    L223.StubTechCapFactor_solar[ grep( 'CSP', L223.StubTechCapFactor_solar$technology ), c( "capacity.factor.capital", "capacity.factor.OM" ) ] <-
-      L223.StubTechCapFactor_solar[ grep( 'CSP', L223.StubTechCapFactor_solar$technology ), c( "capacity.factor.capital", "capacity.factor.OM" ) ] *
-      L223.StubTechCapFactor_solar[ grep( 'CSP', L223.StubTechCapFactor_solar$technology ), "dni_avg_rel" ]
-    names( L223.StubTechCapFactor_solar )[ names( L223.StubTechCapFactor_solar ) == "technology" ] <- "stub.technology"
-    L223.StubTechCapFactor_solar[ L223.StubTechCapFactor_solar$capacity.factor.capital > 0.85, "capacity.factor.capital" ] <- 0.85
-    L223.StubTechCapFactor_solar[ L223.StubTechCapFactor_solar$capacity.factor.OM > 0.85, "capacity.factor.OM" ] <- 0.85
-    L223.StubTechCapFactor_solar <- add_region_name( L223.StubTechCapFactor_solar )
-    L223.StubTechCapFactor_solar <- repeat_and_add_vector( L223.StubTechCapFactor_solar, Y, model_years )
-    L223.StubTechCapFactor_elec <- rbind( L223.StubTechCapFactor_elec,
-                                          L223.StubTechCapFactor_solar[, names( L223.StubTechCapFactor_elec ) ] )
-
-#====================OLD=======================
+    # ===================================================
 
     # Produce outputs
 
@@ -843,8 +854,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.Supplysector_elec") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/GCAM_region_names", "energy/A23.sector") ->
       L223.Supplysector_elec
 
     L223.ElecReserve %>%
@@ -853,8 +863,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.ElecReserve") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/GCAM_region_names", "energy/A23.sector") ->
       L223.ElecReserve
 
     tibble() %>%
@@ -863,8 +872,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.SubsectorLogit_elec") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.subsector_logit", "common/GCAM_region_names") ->
       L223.SubsectorLogit_elec
 
     tibble() %>%
@@ -873,8 +881,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.SubsectorShrwt_elec") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.subsector_shrwt", "common/GCAM_region_names") ->
       L223.SubsectorShrwt_elec
 
     tibble() %>%
@@ -883,8 +890,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.SubsectorShrwtFllt_elec") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.subsector_shrwt", "common/GCAM_region_names") ->
       L223.SubsectorShrwtFllt_elec
 
     tibble() %>%
@@ -893,8 +899,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.SubsectorShrwt_nuc") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/iso_GCAM_regID", "energy/A23.subsector_shrwt_nuc_R") ->
       L223.SubsectorShrwt_nuc
 
     L223.SubsectorShrwt_renew %>%
@@ -903,8 +908,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.SubsectorShrwt_renew") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/iso_GCAM_regID", "A23.subsector_shrwt_renew_R", "common/GCAM_region_names") ->
       L223.SubsectorShrwt_renew
 
     L223.SubsectorInterp_elec %>%
@@ -913,8 +917,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.SubsectorInterp_elec") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.subsector_interp", "energy/A23.subsector_interp_R") ->
       L223.SubsectorInterp_elec
 
     L223.SubsectorInterpTo_elec %>%
@@ -923,8 +926,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.SubsectorInterpTo_elec") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.subsector_interp", "energy/A23.subsector_interp_R") ->
       L223.SubsectorInterpTo_elec
 
     tibble() %>%
@@ -1237,14 +1239,13 @@ module_energy_L223.electricity <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.StubTechEff_elec
 
-    tibble() %>%
+    L223.GlobalTechCapital_sol_adv %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.GlobalTechCapital_sol_adv") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.globaltech_capital_adv") ->
       L223.GlobalTechCapital_sol_adv
 
     tibble() %>%
@@ -1253,8 +1254,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.GlobalIntTechCapital_sol_adv") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.globaltech_capital_adv") ->
       L223.GlobalIntTechCapital_sol_adv
 
     tibble() %>%
@@ -1263,8 +1263,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.GlobalTechCapital_wind_adv") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.globaltech_capital_adv") ->
       L223.GlobalTechCapital_wind_adv
 
     tibble() %>%
@@ -1273,8 +1272,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.GlobalIntTechCapital_wind_adv") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.globaltech_capital_adv") ->
       L223.GlobalIntTechCapital_wind_adv
 
     tibble() %>%
@@ -1283,8 +1281,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.GlobalTechCapital_geo_adv") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.globaltech_capital_adv") ->
       L223.GlobalTechCapital_geo_adv
 
     tibble() %>%
@@ -1293,8 +1290,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.GlobalTechCapital_nuc_adv") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.globaltech_capital_adv") ->
       L223.GlobalTechCapital_nuc_adv
 
     tibble() %>%
@@ -1303,8 +1299,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.GlobalTechCapital_sol_low") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.globaltech_capital_low") ->
       L223.GlobalTechCapital_sol_low
 
     tibble() %>%
@@ -1313,8 +1308,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.GlobalIntTechCapital_sol_low") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.globaltech_capital_low") ->
       L223.GlobalIntTechCapital_sol_low
 
     tibble() %>%
@@ -1323,8 +1317,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.GlobalTechCapital_wind_low") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.globaltech_capital_low") ->
       L223.GlobalTechCapital_wind_low
 
     tibble() %>%
@@ -1333,8 +1326,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.GlobalIntTechCapital_wind_low") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.globaltech_capital_low") ->
       L223.GlobalIntTechCapital_wind_low
 
     tibble() %>%
@@ -1343,8 +1335,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.GlobalTechCapital_geo_low") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.globaltech_capital_low") ->
       L223.GlobalTechCapital_geo_low
 
     tibble() %>%
@@ -1353,8 +1344,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.GlobalTechCapital_nuc_low") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.globaltech_capital_low") ->
       L223.GlobalTechCapital_nuc_low
 
     tibble() %>%
@@ -1363,8 +1353,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.GlobalTechCapital_bio_low") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.globaltech_capital_low") ->
       L223.GlobalTechCapital_bio_low
 
     return_data(L223.Supplysector_elec, L223.ElecReserve, L223.SubsectorLogit_elec, L223.SubsectorShrwt_elec, L223.SubsectorShrwtFllt_elec, L223.SubsectorShrwt_nuc, L223.SubsectorShrwt_renew, L223.SubsectorInterp_elec, L223.SubsectorInterpTo_elec, L223.StubTech_elec, L223.GlobalIntTechEff_elec, L223.GlobalTechEff_elec, L223.GlobalTechCapital_elec, L223.GlobalIntTechCapital_elec, L223.GlobalTechOMfixed_elec, L223.GlobalIntTechOMfixed_elec, L223.GlobalTechOMvar_elec, L223.GlobalIntTechOMvar_elec, L223.GlobalTechShrwt_elec, L223.GlobalTechInterp_elec, L223.GlobalIntTechShrwt_elec, L223.PrimaryRenewKeyword_elec, L223.PrimaryRenewKeywordInt_elec, L223.AvgFossilEffKeyword_elec, L223.GlobalTechCapture_elec, L223.GlobalIntTechBackup_elec, L223.StubTechCapFactor_elec, L223.GlobalTechShutdown_elec, L223.GlobalIntTechShutdown_elec, L223.GlobalTechSCurve_elec, L223.GlobalIntTechSCurve_elec, L223.GlobalTechLifetime_elec, L223.GlobalIntTechLifetime_elec, L223.GlobalTechProfitShutdown_elec, L223.GlobalIntTechProfitShutdown_elec, L223.StubTechCalInput_elec, L223.StubTechFixOut_elec, L223.StubTechFixOut_hydro, L223.StubTechProd_elec, L223.StubTechEff_elec, L223.GlobalTechCapital_sol_adv, L223.GlobalIntTechCapital_sol_adv, L223.GlobalTechCapital_wind_adv, L223.GlobalIntTechCapital_wind_adv, L223.GlobalTechCapital_geo_adv, L223.GlobalTechCapital_nuc_adv, L223.GlobalTechCapital_sol_low, L223.GlobalIntTechCapital_sol_low, L223.GlobalTechCapital_wind_low, L223.GlobalIntTechCapital_wind_low, L223.GlobalTechCapital_geo_low, L223.GlobalTechCapital_nuc_low, L223.GlobalTechCapital_bio_low)
