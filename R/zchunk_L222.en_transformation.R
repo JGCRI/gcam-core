@@ -379,7 +379,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
 
     # Produce outputs
 
-    tibble() %>%
+    L222.Supplysector_en %>%
       add_title("Supply sector information for energy transformation sectors") %>%
       add_units("Unitless") %>%
       add_comments("Written to all regions from A22.sector") %>%
@@ -387,7 +387,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
       add_precursors("energy/A22.sector", "common/GCAM_region_names") ->
       L222.Supplysector_en
 
-    tibble() %>%
+    L222.SubsectorLogit_en %>%
       add_title("Subsector logit exponents of energy transformation sectors") %>%
       add_units("Unitless") %>%
       add_comments("Written to all regions from A22.subsector_logit") %>%
@@ -396,7 +396,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
       L222.SubsectorLogit_en
 
     if (exists("L222.SubsectorShrwt_en")) {
-    tibble() %>%
+    L222.SubsectorShrwt_en %>%
       add_title("Subsector shareweights of energy transformation sectors") %>%
       add_units("Unitless") %>%
       add_comments("Conditionally created from the subset of A22.subsector_shrwt with values in column 'year'.") %>%
@@ -414,7 +414,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
   }
 
     if (exists("L222.SubsectorShrwtFllt_en")) {
-    tibble() %>%
+    L222.SubsectorShrwtFllt_en %>%
       add_title("Subsector shareweights of energy transformation sectors") %>%
       add_units("Unitless") %>%
       add_comments("Conditionally created from the subset of A22.subsector_shrwt with values in column 'year.fillout'.") %>%
@@ -432,7 +432,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
     }
 
     if (exists("L222.SubsectorInterp_en")) {
-    tibble() %>%
+    L222.SubsectorInterp_en %>%
       add_title("Subsector shareweight interpolation rules of energy transformation sectors") %>%
       add_units("Unitless") %>%
         add_comments("Conditionally created from the subset of A22.subsector_interp used to define regional shareweights interpolated to a year") %>%
@@ -450,7 +450,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
     }
 
     if (exists("L222.SubsectorInterpTo_en")) {
-    tibble() %>%
+    L222.SubsectorInterpTo_en %>%
       add_title("Subsector shareweights interpolation rules of energy transformation sectors") %>%
       add_units("Unitless") %>%
       add_comments("If A22.subsector_interp is altered to interpolated to a to.value instead of a to.year, will contain any resulting interpolation information") %>%
@@ -466,7 +466,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
       L222.SubsectorInterpTo_en
   }
 
-    tibble() %>%
+    L222.StubTech_en %>%
       add_title("Identification of stub technologies of energy transformation") %>%
       add_units("Unitless") %>%
       add_comments("Writes out subset of stub technologies to all regions where those technologies exist") %>%
@@ -475,7 +475,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
       add_precursors("energy/A22.globaltech_shrwt", "energy/A_regions") ->
       L222.StubTech_en
 
-    tibble() %>%
+    L222.GlobalTechInterp_en %>%
       add_title("Technology shareweight interpolation of energy transformation sectors") %>%
       add_units("Unitless") %>%
       add_comments("fills out model years in A22.globaltech_interp") %>%
@@ -483,7 +483,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
       add_precursors("energy/A22.globaltech_interp") ->
       L222.GlobalTechInterp_en
 
-    tibble() %>%
+    L222.GlobalTechCoef_en %>%
       add_title("Energy inputs and coefficients of global technologies for energy transformation") %>%
       add_units("Coefficients") %>%
       add_comments("Historical and future values interpolated from coefficients in A22.globaltech_coef") %>%
@@ -491,7 +491,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
       add_precursors("energy/A22.globaltech_coef") ->
       L222.GlobalTechCoef_en
 
-    tibble() %>%
+    L222.GlobalTechCost_en %>%
       add_title("Costs of global technologies for energy transformation") %>%
       add_units("1975USD/GJ") %>%
       add_comments("Values interpolated to model years from assumptions in A22.globaltech_cost") %>%
@@ -499,7 +499,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
       add_precursors("energy/A22.globaltech_cost") ->
       L222.GlobalTechCost_en
 
-    tibble() %>%
+    L222.GlobalTechShrwt_en %>%
       add_title("Shareweights of global technologies for energy transformation") %>%
       add_units("Unitless") %>%
       add_comments("Shareweights interpolated to model years from assumptions in A22.globaltech_shrwt") %>%
@@ -507,7 +507,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
       add_precursors("energy/A22.globaltech_shrwt") ->
       L222.GlobalTechShrwt_en
 
-    tibble() %>%
+    L222.GlobalTechCapture_en %>%
       add_title("CO2 capture fractions from global technologies for energy transformation") %>%
       add_units("Unitless") %>%
       add_comments("Fraction of CO2 captured by global CCS tech in energy transformation interpolated from assumptions in A22.globaltech_co2capture") %>%
@@ -516,7 +516,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
       L222.GlobalTechCapture_en
 
     if (exists("L222.GlobalTechShutdown_en")) {
-    tibble() %>%
+    L222.GlobalTechShutdown_en %>%
       add_title("Global tech lifetime for techs with shutdown rate") %>%
       add_units("Lifetime in years") %>%
       add_comments("Filters for any technology that uses a phased retirement function") %>%
@@ -533,7 +533,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
     }
 
     if (exists("L222.GlobalTechSCurve_en")) {
-    tibble() %>%
+    L222.GlobalTechSCurve_en %>%
       add_title("Global tech lifetime for techs with s-curve retirement function") %>%
       add_units("Lifetime in years, half-life in years") %>%
       add_comments("Filters for any technology that uses an S-curve retirement function") %>%
@@ -550,7 +550,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
     }
 
     if (exists("L222.GlobalTechLifetime_en")) {
-    tibble() %>%
+    L222.GlobalTechLifetime_en %>%
       add_title("Global tech lifetime for any technology with no retirement function") %>%
       add_units("Lifetime in years") %>%
       add_comments("Filters for any technology that has no phased or S-curve retirement function, empty by default.") %>%
@@ -567,7 +567,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
     }
 
     if (exists("L222.GlobalTechProfitShutdown_en")) {
-    tibble() %>%
+    L222.GlobalTechProfitShutdown_en %>%
       add_title("Global tech profit shutdown decider and parameters") %>%
       add_units("Unitless, used to determine shape of the function defining the relationship between shutdown rate and profitability") %>%
       add_comments("Filters for any technologies that use a profit-based shutdown parameter") %>%
@@ -583,7 +583,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
         L222.GlobalTechProfitShutdown_en
     }
 
-    tibble() %>%
+    L222.StubTechProd_gasproc %>%
       add_title("Historical calibrated output of gas processing technologies") %>%
       add_units("EJ") %>%
       add_comments("Historical values of output of gas processing for base model years by region") %>%
@@ -591,7 +591,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
       add_precursors("energy/A22.globaltech_coef", "L122.out_EJ_R_gasproc_F_Yh", "energy/calibrated_techs", "common/GCAM_region_names") ->
       L222.StubTechProd_gasproc
 
-    tibble() %>%
+    L222.StubTechProd_refining %>%
       add_title("Historical calibrated output of refining technologies") %>%
       add_units("EJ") %>%
       add_comments("Historical values of output for liquid refining for base model years by region") %>%
@@ -599,7 +599,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
       add_precursors("L122.out_EJ_R_refining_F_Yh", "energy/calibrated_techs", "common/GCAM_region_names") ->
       L222.StubTechProd_refining
 
-    tibble() %>%
+    L222.StubTechCoef_refining %>%
       add_title("Calibrated input-output coefficients of oil refining") %>%
       add_units("unitless ratio") %>%
       add_comments("Historical values of ratio of inputs to outputs in the oil refining sector by region") %>%
@@ -607,7 +607,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
       add_precursors("L122.IO_R_oilrefining_F_Yh", "energy/calibrated_techs", "common/GCAM_region_names") ->
       L222.StubTechCoef_refining
 
-    tibble() %>%
+    L222.GlobalTechCost_low_en %>%
       add_title("Low-tech costs of global technologies for energy transformation") %>%
       add_units("1975 USD/GJ") %>%
       add_comments("Low tech cost projections interpolated to model years from pessmistic cost assumptions contained in A22.globaltech_cost_low") %>%
