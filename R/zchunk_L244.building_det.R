@@ -44,6 +44,7 @@ module_energy_L244.building_det <- function(command, ...) {
              FILE = "energy/A44.internal_gains",
              FILE = "energy/A44.satiation_flsp",
              FILE = "energy/A44.satiation_flsp_SSPs",
+             FILE = "energy/A44.cost_efficiency",
              FILE = "energy/A44.demand_satiation_mult",
              FILE = "energy/A44.demand_satiation_mult_SSPs",
              "L144.flsp_bm2_R_res_Yh",
@@ -53,6 +54,7 @@ module_energy_L244.building_det <- function(command, ...) {
              "L144.end_use_eff",
              "L144.shell_eff_R_Y",
              "L144.NEcost_75USDGJ",
+             "L144.internal_gains",
              "L143.HDDCDD_scen_R_Y",
              "L101.Pop_thous_R_Yh",
              "L102.pcgdp_thous90USD_Scen_R_Y"))
@@ -68,7 +70,7 @@ module_energy_L244.building_det <- function(command, ...) {
              "L244.GenericBaseService", #
              "L244.ThermalServiceSatiation", #
              "L244.GenericServiceSatiation", #
-             "L244.Intgains_scalar",
+             "L244.Intgains_scalar", #
              "L244.ShellConductance_bld", #
              "L244.Supplysector_bld", #
              "L244.FinalEnergyKeyword_bld", #
@@ -76,15 +78,15 @@ module_energy_L244.building_det <- function(command, ...) {
              "L244.SubsectorShrwtFllt_bld", # if exists
              "L244.SubsectorInterp_bld", # if exists
              "L244.SubsectorInterpTo_bld", # if exists
-             "L244.SubsectorLogit_bld",
+             #"L244.SubsectorLogit_bld",
              "L244.FuelPrefElast_bld", # units
              "L244.StubTech_bld", #
-             "L244.StubTechEff_bld",
-             "L244.StubTechCalInput_bld",
-             "L244.StubTechIntGainOutputRatio",
-             "L244.GlobalTechShrwt_bld",
-             "L244.GlobalTechCost_bld",
-             "L244.DeleteGenericService",
+             "L244.StubTechEff_bld", #
+             "L244.StubTechCalInput_bld", #
+             #"L244.StubTechIntGainOutputRatio",
+             "L244.GlobalTechShrwt_bld", #
+             "L244.GlobalTechCost_bld", #
+             "L244.DeleteGenericService", #
              "L244.Satiation_flsp_SSP1", #
              "L244.SatiationAdder_SSP1", #
              "L244.GenericServiceSatiation_SSP1", #
@@ -103,7 +105,7 @@ module_energy_L244.building_det <- function(command, ...) {
              "L244.SatiationAdder_SSP5", #
              "L244.GenericServiceSatiation_SSP5", #
              "L244.FuelPrefElast_bld_SSP15", # units
-             "L244.DeleteThermalService"))
+             "L244.DeleteThermalService")) #
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -120,13 +122,16 @@ module_energy_L244.building_det <- function(command, ...) {
     A44.fuelprefElasticity_SSP3 <- get_data(all_data, "energy/A44.fuelprefElasticity_SSP3")
     A44.fuelprefElasticity_SSP4 <- get_data(all_data, "energy/A44.fuelprefElasticity_SSP4")
     A44.fuelprefElasticity_SSP15 <- get_data(all_data, "energy/A44.fuelprefElasticity_SSP15")
-    A44.globaltech_shrwt <- get_data(all_data, "energy/A44.globaltech_shrwt")
+    A44.globaltech_shrwt <- get_data(all_data, "energy/A44.globaltech_shrwt") %>%
+      gather(year, value, matches(YEAR_PATTERN)) %>%
+      mutate(year = as.integer(year))
     A44.gcam_consumer <- get_data(all_data, "energy/A44.gcam_consumer")
     A44.demandFn_serv <- get_data(all_data, "energy/A44.demandFn_serv")
     A44.demandFn_flsp <- get_data(all_data, "energy/A44.demandFn_flsp")
     A44.internal_gains <- get_data(all_data, "energy/A44.internal_gains")
     A44.satiation_flsp <- get_data(all_data, "energy/A44.satiation_flsp")
     A44.satiation_flsp_SSPs <- get_data(all_data, "energy/A44.satiation_flsp_SSPs")
+    A44.cost_efficiency <- get_data(all_data, "energy/A44.cost_efficiency")
     A44.demand_satiation_mult <- get_data(all_data, "energy/A44.demand_satiation_mult")
     A44.demand_satiation_mult_SSPs <- get_data(all_data, "energy/A44.demand_satiation_mult_SSPs")
     L144.flsp_bm2_R_res_Yh <- get_data(all_data, "L144.flsp_bm2_R_res_Yh")
@@ -136,6 +141,7 @@ module_energy_L244.building_det <- function(command, ...) {
     L144.end_use_eff <- get_data(all_data, "L144.end_use_eff")
     L144.shell_eff_R_Y <- get_data(all_data, "L144.shell_eff_R_Y")
     L144.NEcost_75USDGJ <- get_data(all_data, "L144.NEcost_75USDGJ")
+    L144.internal_gains <- get_data(all_data, "L144.internal_gains")
     L143.HDDCDD_scen_R_Y <- get_data(all_data, "L143.HDDCDD_scen_R_Y")
     L101.Pop_thous_R_Yh <- get_data(all_data, "L101.Pop_thous_R_Yh")
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y") # year comes in as double
@@ -401,13 +407,13 @@ module_energy_L244.building_det <- function(command, ...) {
     # per unit floorspace in the final calibration year. This (increased slightly) is then the minimum satiation level that needs to be read in.
     # TODO: fix the bad code in the model. need a flexible building service function
     L244.BS <- L244.GenericBaseService %>%
-      left_join_error_no_match(L244.Floorspace, by = c(LEVEL2_DATA_NAMES[["BldNodes"]], "year")) %>%
+      left_join_error_no_match(L244.Floorspace, by = c(c("region", "gcam.consumer", "nodeInput", "building.node.input"), "year")) %>% # LEVEL2_DATA_NAMES[["BldNodes"]]
       mutate(service.per.flsp = base.service / base.building.size) %>%
       filter(year == max(BASE_YEARS)) %>%
-      select(LEVEL2_DATA_NAMES[["BldNodes"]], building.service.input, service.per.flsp)
+      select(c("region", "gcam.consumer", "nodeInput", "building.node.input"), building.service.input, service.per.flsp) # LEVEL2_DATA_NAMES[["BldNodes"]]
 
     L244.GenericServiceSatiation <- L244.GenericServiceSatiation %>%
-      left_join_error_no_match(L244.BS, by = c(LEVEL2_DATA_NAMES[["BldNodes"]], "building.service.input")) %>%
+      left_join_error_no_match(L244.BS, by = c(c("region", "gcam.consumer", "nodeInput", "building.node.input"), "building.service.input")) %>% # LEVEL2_DATA_NAMES[["BldNodes"]]
       mutate(satiation.level = pmax(satiation.level, service.per.flsp * 1.0001)) %>%
       select(-service.per.flsp)
 
@@ -431,7 +437,7 @@ module_energy_L244.building_det <- function(command, ...) {
     # per unit floorspace in the final calibration year. This (increased slightly) is then the minimum satiation level that needs to be read in.
     # TODO: fix the bad code in the model. need a flexible building service function
     L244.GenericServiceSatiation_SSPs <- L244.GenericServiceSatiation_SSPs %>%
-      left_join_error_no_match(L244.BS, by = c(LEVEL2_DATA_NAMES[["BldNodes"]], "building.service.input")) %>%
+      left_join_error_no_match(L244.BS, by = c(c("region", "gcam.consumer", "nodeInput", "building.node.input"), "building.service.input")) %>% # LEVEL2_DATA_NAMES[["BldNodes"]]
       mutate(satiation.level = pmax(satiation.level, service.per.flsp * 1.001)) %>%
       select(-service.per.flsp) %>%
       # Split by SSP, creating a list with a tibble for each SSP, then add attributes
@@ -471,14 +477,14 @@ module_energy_L244.building_det <- function(command, ...) {
     # TODO: fix model code.
     # First need to calculate the maximum quantities of demand over the historical time period, expressed per unit floorspace
     L244.tmp <- L244.ThermalBaseService %>%
-      left_join_error_no_match(L244.Floorspace, by = c(LEVEL2_DATA_NAMES[["BldNodes"]], "year")) %>%
+      left_join_error_no_match(L244.Floorspace, by = c(c("region", "gcam.consumer", "nodeInput", "building.node.input"), "year")) %>% # LEVEL2_DATA_NAMES[["BldNodes"]]
       mutate(service.per.flsp = base.service / base.building.size) %>%
       filter(year == max(BASE_YEARS)) %>%
       select(-base.service, - base.building.size, -year)
 
     # Then, match in this quantity into the thermal service satiation and take the max
     L244.ThermalServiceSatiation <- L244.ThermalServiceSatiation %>%
-      left_join_error_no_match(L244.tmp, by = c(LEVEL2_DATA_NAMES[["BldNodes"]], "thermal.building.service.input")) %>%
+      left_join_error_no_match(L244.tmp, by = c(c("region", "gcam.consumer", "nodeInput", "building.node.input"), "thermal.building.service.input")) %>% # LEVEL2_DATA_NAMES[["BldNodes"]]
       mutate(satiation.level = round(pmax(satiation.level, service.per.flsp * 1.0001),
                                        digits = energy.DIGITS_CALOUTPUT)) %>%
       select(LEVEL2_DATA_NAMES[["ThermalServiceSatiation"]])
@@ -598,6 +604,99 @@ module_energy_L244.building_det <- function(command, ...) {
              tech.share.weight = if_else(calibrated.value > 0, 1, 0)) %>%
       select(LEVEL2_DATA_NAMES[["StubTechCalInput"]])
 
+    # L244.StubTechEff_bld: Assumed efficiencies (all years) of buildings technologies
+    L244.StubTechEff_bld <- L144.end_use_eff %>%
+      filter(year %in% MODEL_YEARS) %>%
+      mutate(value = round(value, energy.DIGITS_CALOUTPUT)) %>%
+      rename(efficiency = value) %>%
+      # Add region and input
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      left_join_error_no_match(calibrated_techs_bld_det, by = c("supplysector", "subsector", "technology")) %>%
+      mutate(stub.technology = technology,
+             market.name = region) %>%
+      select(LEVEL2_DATA_NAMES[["StubTechEff"]])
+
+    # L244.GlobalTechShrwt_bld: Default shareweights for global building technologies
+    L244.GlobalTechShrwt_bld <- A44.globaltech_shrwt %>%
+      # Repeat for all model years
+      complete(nesting(supplysector, subsector, technology), year = c(year, MODEL_YEARS)) %>%
+      # Interpolate
+      group_by(supplysector, subsector, technology) %>%
+      mutate(share.weight = approx_fun(year, value, rule = 2)) %>%
+      ungroup() %>%
+      filter(year %in% MODEL_YEARS) %>%
+      rename(sector.name = supplysector,
+             subsector.name = subsector) %>%
+      select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], share.weight)
+
+    # L244.GlobalTechCost_bld: Non-fuel costs of global building technologies
+    L244.GlobalTechCost_bld <- L144.NEcost_75USDGJ %>%
+      mutate(input.cost = round(NEcostPerService, energy.DIGITS_COST)) %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      rename(sector.name = supplysector,
+             subsector.name = subsector) %>%
+      mutate(minicam.non.energy.input = "non-energy") %>%
+      select(LEVEL2_DATA_NAMES[["GlobalTechCost"]])
+
+    # L244.GlobalTechShutdown_bld: Retirement rates for building technologies
+    # NOTE: Retirement and shutdown rates only applied for existing (final cal year) stock
+    L244.GlobalTechShutdown_bld <- A44.cost_efficiency %>%
+      mutate(year = as.integer(max(BASE_YEARS))) %>%
+      rename(sector.name = supplysector,
+             subsector.name = subsector) %>%
+      select(LEVEL2_DATA_NAMES[["GlobalTechShutdown"]])
+
+    # L244.StubTechIntGainOutputRatio: Output ratios of internal gain energy from non-thermal building services
+    # L244.StubTechIntGainOutputRatio <- L144.internal_gains
+    #
+    #
+    # L244.StubTechIntGainOutputRatio <- interpolate_and_melt( L144.internal_gains, model_years, value="internal.gains.output.ratio", digits = digits_efficiency )
+    # L244.StubTechIntGainOutputRatio <- add_region_name( L244.StubTechIntGainOutputRatio )
+    # L244.StubTechIntGainOutputRatio$building.node.input <- calibrated_techs_bld_det[
+    #   match( L244.StubTechIntGainOutputRatio$supplysector, calibrated_techs_bld_det$supplysector ), "building.node.input" ]
+    #
+    # L244.StubTechIntGainOutputRatio$internal.gains.market.name <- A44.gcam_consumer[
+    #   match( L244.StubTechIntGainOutputRatio$building.node.input,
+    #          A44.gcam_consumer$building.node.input ), "internal.gains.market.name" ]
+    #
+    # L244.StubTechIntGainOutputRatio <- L244.StubTechIntGainOutputRatio[c(names_TechYr,
+    #                                                                      "internal.gains.output.ratio", "internal.gains.market.name" ) ]
+
+    # L244.Intgains_scalar: Scalers relating internal gain energy to increased/reduced cooling/heating demands
+    variable <- c("HDD", "CDD")
+    InternalGainsScalar_USA <- c(energy.INTERNALGAINSSCALAR_USA_H, energy.INTERNALGAINSSCALAR_USA_C)
+    US.base.scalar <- tibble(variable, InternalGainsScalar_USA)
+
+    L244.Intgains_scalar <- L244.ThermalServiceSatiation %>%
+      mutate(variable = if_else(thermal.building.service.input %in% heating_services, "HDD", "CDD")) %>%
+      left_join_error_no_match(US.base.scalar, by = "variable") %>%
+      left_join_error_no_match(L244.HDDCDD_normal_R_Y, by = c("region", "variable")) %>%
+      group_by(thermal.building.service.input) %>%
+      mutate(scalar_mult = degree.days / degree.days[region == "USA"]) %>%
+      ungroup() %>%
+      mutate(internal.gains.scalar = round(InternalGainsScalar_USA * scalar_mult, energy.DIGITS_HDDCDD)) %>%
+      select(LEVEL2_DATA_NAMES[["Intgains_scalar"]])
+
+    # Need to remove any services (supplysectors and building-service-inputs) and intgains trial markets for services that don't exist in any years
+    # L244.DeleteThermalService and L244.DeleteGenericService: Removing non-existent services, likely related to 0 HDD or CDD
+    L244.DeleteThermalService <- L244.ThermalBaseService %>%
+      group_by(region, gcam.consumer, nodeInput, building.node.input, thermal.building.service.input) %>%
+      summarise(base.service = max(base.service)) %>%
+      ungroup() %>%
+      filter(base.service == 0) %>%
+      select(-base.service) %>%
+      mutate(supplysector = thermal.building.service.input)
+
+    L244.DeleteGenericService <- L244.GenericBaseService %>%
+      group_by(region, gcam.consumer, nodeInput, building.node.input, building.service.input) %>%
+      summarise(base.service = max(base.service)) %>%
+      ungroup() %>%
+      filter(base.service == 0) %>%
+      select(-base.service) %>%
+      mutate(supplysector = building.service.input)
+
+
+
     # ===================================================
     # Produce outputs
     L244.SubregionalShares %>%
@@ -641,7 +740,7 @@ module_energy_L244.building_det <- function(command, ...) {
       add_comments("A44.demandFn_flsp written to all regions") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L244.DemandFunction_flsp") %>%
-      add_precursors("common/GCAM_region_names", "A44.demandFn_flsp") ->
+      add_precursors("common/GCAM_region_names", "energy/A44.demandFn_flsp") ->
       L244.DemandFunction_flsp
 
     L244.Satiation_flsp %>%
@@ -701,14 +800,12 @@ module_energy_L244.building_det <- function(command, ...) {
                      "L144.flsp_bm2_R_res_Yh", "L144.flsp_bm2_R_comm_Yh", "energy/A44.demand_satiation_mult") ->
       L244.GenericServiceSatiation
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L244.Intgains_scalar %>%
+      add_title("Scalers relating internal gain energy to increased/reduced cooling/heating demands") %>%
+      add_units("Unitless") %>%
+      add_comments("USA base scalar assumption multiplied by ratio of degree days to USA degree days") %>%
       add_legacy_name("L244.Intgains_scalar") %>%
-      add_precursors("L144.base_service_EJ_serv") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      same_precursors_as(L244.ThermalServiceSatiation) ->
       L244.Intgains_scalar
 
     L244.ShellConductance_bld %>%
@@ -830,24 +927,21 @@ module_energy_L244.building_det <- function(command, ...) {
       add_precursors("L144.end_use_eff") ->
       L244.StubTech_bld
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L244.StubTechEff_bld %>%
+      add_title("Assumed efficiencies of buildings technologies") %>%
+      add_units("Unitless efficiency") %>%
+      add_comments("Efficiencies taken from L144.end_use_eff") %>%
       add_legacy_name("L244.StubTechEff_bld") %>%
-      add_precursors("L144.base_service_EJ_serv") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L144.end_use_eff", "common/GCAM_region_names", "energy/calibrated_techs_bld_det") ->
       L244.StubTechEff_bld
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L244.StubTechCalInput_bld %>%
+      add_title("Calibrated energy consumption by buildings technologies") %>%
+      add_units("calibrated.value: EJ; shareweights: Unitless") %>%
+      add_comments("Calibrated values directly from L144.in_EJ_R_bld_serv_F_Yh") %>%
+      add_comments("Shareweights are 1 if subsector/technology total is non-zero, 0 otherwise") %>%
       add_legacy_name("L244.StubTechCalInput_bld") %>%
-      add_precursors("L144.base_service_EJ_serv") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L144.in_EJ_R_bld_serv_F_Yh", "common/GCAM_region_names", "energy/calibrated_techs_bld_det") ->
       L244.StubTechCalInput_bld
 
     tibble() %>%
@@ -860,34 +954,28 @@ module_energy_L244.building_det <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L244.StubTechIntGainOutputRatio
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L244.GlobalTechShrwt_bld %>%
+      add_title("Default shareweights for global building technologies") %>%
+      add_units("Unitless") %>%
+      add_comments("Values interpolated from A44.globaltech_shrwt") %>%
       add_legacy_name("L244.GlobalTechShrwt_bld") %>%
-      add_precursors("L144.base_service_EJ_serv") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A44.globaltech_shrwt") ->
       L244.GlobalTechShrwt_bld
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L244.GlobalTechCost_bld %>%
+      add_title("Non-fuel costs of global building technologies") %>%
+      add_units("1975$/GJ-service") %>%
+      add_comments("Costs from L144.NEcost_75USDGJ expanded to model years") %>%
       add_legacy_name("L244.GlobalTechCost_bld") %>%
-      add_precursors("L144.base_service_EJ_serv") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L144.NEcost_75USDGJ") ->
       L244.GlobalTechCost_bld
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L244.DeleteGenericService %>%
+      add_title("Removing non-existent services") %>%
+      add_units("NA") %>%
+      add_comments("Categories from L244.GenericBaseService with no base.service") %>%
       add_legacy_name("L244.DeleteGenericService") %>%
-      add_precursors("L144.base_service_EJ_serv") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      same_precursors_as(L244.GenericBaseService) ->
       L244.DeleteGenericService
 
     L244.FuelPrefElast_bld_SSP3 %>%
@@ -914,29 +1002,27 @@ module_energy_L244.building_det <- function(command, ...) {
       add_precursors("energy/A44.fuelprefElasticity_SSP15", "common/GCAM_region_names", "L144.end_use_eff") ->
       L244.FuelPrefElast_bld_SSP15
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L244.DeleteThermalService %>%
+      add_title("Removing non-existent thermal services") %>%
+      add_units("NA") %>%
+      add_comments("Categories from L244.ThermalBaseService with no base.service") %>%
       add_legacy_name("L244.DeleteThermalService") %>%
-      add_precursors("L144.base_service_EJ_serv") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      same_precursors_as(L244.ThermalBaseService) ->
       L244.DeleteThermalService
 
     return_data(L244.SubregionalShares, L244.PriceExp_IntGains, L244.Floorspace, L244.DemandFunction_serv, L244.DemandFunction_flsp,
-                L244.Satiation_flsp, L244.SatiationAdder, L244.ThermalBaseService, L244.GenericBaseService, object, L244.ThermalServiceSatiation,
-                L244.GenericServiceSatiation, L244.Intgains_scalar, L244.ShellConductance_bld, L244.SectorLogitTables[[ curr_table ]]$data,
+                L244.Satiation_flsp, L244.SatiationAdder, L244.ThermalBaseService, L244.GenericBaseService, L244.ThermalServiceSatiation,
+                L244.GenericServiceSatiation, L244.Intgains_scalar, L244.ShellConductance_bld,
                 L244.Supplysector_bld, L244.FinalEnergyKeyword_bld, L244.SubsectorShrwt_bld, L244.SubsectorShrwtFllt_bld, L244.SubsectorInterp_bld,
-                L244.SubsectorInterpTo_bld, L244.SubsectorLogitTables[[ curr_table ]]$data, L244.SubsectorLogit_bld, L244.FuelPrefElast_bld,
-                L244.StubTech_bld, L244.StubTechEff_bld, L244.StubTechCalInput_bld, L244.StubTechIntGainOutputRatio, L244.GlobalTechShrwt_bld,
+                L244.SubsectorInterpTo_bld, L244.FuelPrefElast_bld,
+                L244.StubTech_bld, L244.StubTechEff_bld, L244.StubTechCalInput_bld, L244.GlobalTechShrwt_bld,
                 L244.GlobalTechCost_bld, L244.DeleteGenericService, L244.Satiation_flsp_SSP1, L244.SatiationAdder_SSP1,
                 L244.GenericServiceSatiation_SSP1, L244.Satiation_flsp_SSP2,
                 L244.SatiationAdder_SSP2, L244.GenericServiceSatiation_SSP2, L244.Satiation_flsp_SSP3, L244.SatiationAdder_SSP3,
                 L244.GenericServiceSatiation_SSP3, L244.FuelPrefElast_bld_SSP3, L244.Satiation_flsp_SSP4,
                 L244.SatiationAdder_SSP4, L244.GenericServiceSatiation_SSP4, L244.FuelPrefElast_bld_SSP4,
                 L244.Satiation_flsp_SSP5, L244.SatiationAdder_SSP5, L244.GenericServiceSatiation_SSP5, L244.FuelPrefElast_bld_SSP15,
-                L244.DeleteThermalService)
+                L244.DeleteThermalService) # L244.StubTechIntGainOutputRatio, L244.SubsectorLogit_bld
   } else {
     stop("Unknown command")
   }
