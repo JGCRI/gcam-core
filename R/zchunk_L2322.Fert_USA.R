@@ -88,7 +88,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     # Subset the supply sector keywords for fertilizer sector in the USA region.
     L2322.FinalEnergyKeyword_Fert %>%
       filter(region == "USA") %>%
-      mutate(`final.energy` = "none") ->
+      mutate(final.energy = "none") ->
       L2322.FinalEnergyKeyword_USAFert
 
 
@@ -130,10 +130,10 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     # that will be interpolated.
     L2322.SubsectorLogit_USAFert %>%
       select(region, supplysector, subsector) %>%
-      mutate(`apply.to` = "share-weight") %>%
-      mutate(`from.year` = max(BASE_YEARS)) %>%
-      mutate(`to.year` = max(MODEL_YEARS)) %>%
-      mutate(`interpolation.function` = "fixed") ->
+      mutate(apply.to = "share-weight") %>%
+      mutate(from.year = max(BASE_YEARS)) %>%
+      mutate(to.year = max(MODEL_YEARS)) %>%
+      mutate(interpolation.function = "fixed") ->
       L2322.SubsectorInterp_USAFert
 
 
@@ -167,20 +167,20 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
       mutate(subs.share.weight = if_else(calOutputValue == 0, 0, 1)) %>%
       mutate(tech.share.weight = subs.share.weight) %>%
       select(region, supplysector, subsector, technology, year, calOutputValue,
-             `share.weight.year`, `subs.share.weight`,
-             `tech.share.weight`) ->
+             share.weight.year, subs.share.weight,
+             tech.share.weight) ->
       L2322.Production_USAFert
 
 
     # Add minicam energy input information and coefficient to the
     # to the technology share weight data frame.
     L2322.TechShrwt_USAFert %>%
-      mutate(`minicam.energy.input` = aglu.FERT_NAME) %>%
+      mutate(minicam.energy.input = aglu.FERT_NAME) %>%
       mutate(coefficient = 1) %>%
       # Parse out state market name from the fertilizer subsector.
       mutate(market.name = substr(start = 1, stop = 2, subsector)) %>%
       select(region, supplysector, subsector, technology, year,
-             `minicam.energy.input`, coefficient, `market.name`) ->
+             minicam.energy.input, coefficient, market.name) ->
       L2322.TechCoef_USAFert
 
 
@@ -264,12 +264,12 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
 
     # Lastly, add the logit table information.
     L2322.StubTechProd_Fert_USA %>%
-      mutate(`stub.technology` = technology) %>%
-      mutate(`share.weight.year` = year) %>%
-      mutate(`subs.share.weight` = if_else(calOutputValue > 0, 1, 0)) %>%
-      mutate(`tech.share.weight` = `subs.share.weight`) %>%
-      select(region, supplysector, subsector, `stub.technology`, year, calOutputValue, `share.weight.year`,
-             `subs.share.weight`, `tech.share.weight`) ->
+      mutate(stub.technology = technology) %>%
+      mutate(share.weight.year = year) %>%
+      mutate(subs.share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
+      mutate(tech.share.weight = subs.share.weight) %>%
+      select(region, supplysector, subsector, stub.technology, year, calOutputValue, share.weight.year,
+             subs.share.weight, tech.share.weight) ->
       L2322.StubTechProd_Fert_USA
 
 
@@ -288,16 +288,16 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     # intermediate sectors and fuels to supplysector / subsector / technology / input in GCAM
     # data frame.
     L2322.StubTechCoef_Fert_USA %>%
-      left_join(calibrated_techs %>% select(supplysector, subsector, technology, `minicam.energy.input`, sector, fuel),
+      left_join(calibrated_techs %>% select(supplysector, subsector, technology, minicam.energy.input, sector, fuel),
                 by = c("fuel", "sector")) ->
       L2322.StubTechCoef_Fert_USA
 
     # Next add stub.technology and market.name columns and select the columns to include in the final
     # output.
     L2322.StubTechCoef_Fert_USA %>%
-      mutate(`stub.technology` = technology, `market.name` = "USA") %>%
-      select(region, supplysector, subsector, `stub.technology`,
-             year, `minicam.energy.input`, coefficient, `market.name`) ->
+      mutate(stub.technology = technology, market.name = "USA") %>%
+      select(region, supplysector, subsector, stub.technology,
+             year, minicam.energy.input, coefficient, market.name) ->
       L2322.StubTechCoef_Fert_USA
 
 
@@ -310,11 +310,11 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
       # coefficients of fertilizer production technologies market.name with the grid region
       # name for each fertilizer producing state.
       L2322.StubTechCoef_Fert_USA %>%
-        filter(`minicam.energy.input` %in% gcamusa.REGIONAL_FUEL_MARKETS) %>%
+        filter(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS) %>%
         left_join_error_no_match(states_subregions %>% select(state, grid_region),
                                  by = c("region" = "state")) %>%
-        select(-`market.name`) %>%
-        rename(`market.name` = grid_region) ->
+        select(-market.name) %>%
+        rename(market.name = grid_region) ->
         L2322.StubTechCoef_Fert_USA
 
     }
@@ -331,9 +331,9 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     # by supplysector, subsector, and technology, then add USA as the default market name.
     L2322.StubTechMarket_Fert_USA %>%
       left_join_error_no_match(A322.globaltech_coef %>%
-                                 select(supplysector, subsector, technology, `minicam.energy.input`),
+                                 select(supplysector, subsector, technology, minicam.energy.input),
                                by = c("supplysector", "subsector", c("stub.technology" = "technology"))) %>%
-      mutate(`market.name` = "USA") ->
+      mutate(market.name = "USA") ->
       L2322.StubTechMarket_Fert_USA
 
 
@@ -345,9 +345,9 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
       # Use the state codes-names-groupings mappings data frame to replace the  fuel inputs into the state fertilizer sectors
       # market.name with the grid region name for each fertilizer producing state.
       L2322.StubTechMarket_Fert_USA %>%
-        filter(`minicam.energy.input` %in% gcamusa.REGIONAL_FUEL_MARKETS) %>%
-        select(-`market.name`) %>%
-        left_join_error_no_match(states_subregions %>% select(region = state, `market.name` = grid_region),
+        filter(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS) %>%
+        select(-market.name) %>%
+        left_join_error_no_match(states_subregions %>% select(region = state, market.name = grid_region),
                                  by = "region") ->
         L2322.StubTechMarket_Fert_USA
 
