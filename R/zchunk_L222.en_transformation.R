@@ -168,12 +168,12 @@ module_energy_L222.en_transformation <- function(command, ...) {
       complete(nesting(supplysector, subsector, technology, minicam.energy.input), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
       arrange(supplysector, year) %>%
       group_by(supplysector, subsector, technology, minicam.energy.input) %>%
-      mutate(coefficient = approx_fun(as.numeric(year), coefficient, rule =1)) %>%
+      mutate(coefficient = approx_fun(as.numeric(year), coefficient, rule = 1)) %>%
       ungroup() %>%
       filter(year %in% MODEL_YEARS) %>%
       # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
       rename(sector.name = supplysector, subsector.name = subsector) %>%
-      mutate(coefficient = round(coefficient, energy.DIGITS_COEFFICIENT))->
+      mutate(coefficient = round(coefficient, energy.DIGITS_COEFFICIENT)) ->
       L222.GlobalTechCoef_en
     # reorders columns to match expected model interface input
     L222.GlobalTechCoef_en <- L222.GlobalTechCoef_en[LEVEL2_DATA_NAMES[["GlobalTechCoef"]]]
@@ -245,10 +245,9 @@ module_energy_L222.en_transformation <- function(command, ...) {
     # Copies base year retirment information into all future years and appends back onto itself
     L222.globaltech_retirement_base %>%
       filter(year == max(BASE_YEARS)) %>%
-      repeat_add_columns(tibble("year" = as.character(FUTURE_YEARS))) %>%
+      repeat_add_columns(tibble("year" = as.character(c(max(BASE_YEARS), FUTURE_YEARS)))) %>%
       select(-year.x) %>%
-      rename(year = year.y) %>%
-      bind_rows(L222.globaltech_retirement_base) ->
+      rename(year = year.y) ->
       L222.globaltech_retirement
 
     # Retirement may consist of any of three types of retirement function (phased, s-curve, or none)
@@ -257,14 +256,14 @@ module_energy_L222.en_transformation <- function(command, ...) {
     if (any(!is.na(L222.globaltech_retirement$shutdown.rate))){
       L222.globaltech_retirement %>%
         filter(!is.na(L222.globaltech_retirement$shutdown.rate)) %>%
-        select(one_of(LEVEL2_DATA_NAMES[["GlobalTech"]], "lifetime", "shutdown.rate")) ->
+        select(one_of(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "lifetime", "shutdown.rate")) ->
         L222.GlobalTechShutdown_en
     }
 
     if (any(!is.na(L222.globaltech_retirement$half.life))){
       L222.globaltech_retirement %>%
         filter(!is.na(L222.globaltech_retirement$half.life)) %>%
-        select(one_of(LEVEL2_DATA_NAMES[["GlobalTech"]], "lifetime", "steepness", "half.life")) ->
+        select(one_of(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "lifetime", "steepness", "half.life")) ->
         L222.GlobalTechSCurve_en
     }
 
@@ -272,7 +271,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
     if (any(is.na(L222.globaltech_retirement$shutdown.rate) & is.na(L222.globaltech_retirement$half.life))){
       L222.globaltech_retirement %>%
         filter(is.na(L222.globaltech_retirement$shutdown.rate) & is.na(L222.globaltech_retirement$half.life)) %>%
-        select(one_of(LEVEL2_DATA_NAMES[["GlobalTech"]], "lifetime")) ->
+        select(one_of(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "lifetime")) ->
         L222.GlobalTechLifetime_en
     }
 
@@ -280,7 +279,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
     if (any(!is.na(L222.globaltech_retirement$median.shutdown.point))){
       L222.globaltech_retirement %>%
         filter(!is.na(L222.globaltech_retirement$median.shutdown.point)) %>%
-        select(one_of(LEVEL2_DATA_NAMES[["GlobalTech"]], "median.shutdown.point", "profit.shutdown.steepness")) ->
+        select(one_of(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "median.shutdown.point", "profit.shutdown.steepness")) ->
         L222.GlobalTechProfitShutdown_en
     }
 
@@ -346,7 +345,8 @@ module_energy_L222.en_transformation <- function(command, ...) {
       mutate(calOutputValue = round(value, energy.DIGITS_CALOUTPUT), year.share.weight = year) %>%
       select(-sector, -GCAM_region_ID, -fuel, -value) %>%
       # sets shareweight to 1 if output exists, otherwise 0
-      mutate(share.weight = if_else(calOutputValue > 0, 1, 0), subs.share.weight = share.weight) ->
+      mutate(share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
+      set_subsector_shrwt() ->
       L222.StubTechProd_refining
     # reorders columns to match expected model interface input
     L222.StubTechProd_refining <- L222.StubTechProd_refining[c(LEVEL2_DATA_NAMES[["StubTechYr"]], "calOutputValue", "year.share.weight", "subs.share.weight", "share.weight")]
