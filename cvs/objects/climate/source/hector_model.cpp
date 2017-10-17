@@ -531,20 +531,33 @@ IClimateModel::runModelStatus HectorModel::runModel( const int aYear ) {
         reset( period );
     }
 
-    // TODO: handle Hector exceptions 
     // TODO: We have to run in one-year steps so that we can record
     // Hector's current values every year.  If we update hector to
     // store its outputs in time series (as it already does for some
     // outputs), we can bypass this and the local storage for the
     // yearly results.
+    bool hadError = false;
+    int lastSuccessYear;
     for( int year = mLastYear + 1; year <= aYear; ++year ) {
-        mHcore->run( static_cast<double>( year ) );
-        storeConc( year );
-        storeRF( year );
-        storeGlobals( year );
+        if( !hadError ) {
+            try {
+                mHcore->run( static_cast<double>( year ) );
+                lastSuccessYear = year;
+            } catch (h_exception& e) {
+                ILogger& climatelog = ILogger::getLogger( "climate-log" );
+                climatelog.setLevel (ILogger::ERROR );
+                climatelog << "Receieve hector exception while running year " << year << ":" << endl;
+                climatelog << "* Program exception: " << e.msg << "\n* Function " << e.func << ", file "
+                    << e.file << ", line " << e.linenum << endl;
+                hadError = true;
+            }
+        }
+        storeConc( year, hadError );
+        storeRF( year, hadError );
+        storeGlobals( year, hadError );
     }
-    mLastYear = aYear;
-    return SUCCESS;
+    mLastYear = lastSuccessYear;
+    return hadError ? EXCEPTION : SUCCESS;
 }
 
 /* \brief run the climate model through its configured end date 
@@ -676,7 +689,7 @@ int HectorModel::yearlyDataIndex( const int year ) const {
     return year - mModeltime->getStartYear();
 }
 
-void HectorModel::storeConc( const int aYear ) {
+void HectorModel::storeConc( const int aYear, const bool aHadError ) {
     ILogger& climatelog = ILogger::getLogger( "climate-log" );
 
     // No need to check the index because we checked it in runModel
@@ -685,10 +698,10 @@ void HectorModel::storeConc( const int aYear ) {
     // These are all of the atmospheric concentrations that Hector is
     // set up to provide.
     Hector::message_data date( aYear );
-    mConcTable["CH4"][i]   = mHcore->sendMessage( M_GETDATA, D_ATMOSPHERIC_CH4,date ); 
-    mConcTable["N2O"][i]   = mHcore->sendMessage( M_GETDATA, D_ATMOSPHERIC_N2O,date );
-    mConcTable["O3"][i]    = mHcore->sendMessage( M_GETDATA, D_ATMOSPHERIC_O3, date );
-    mConcTable["CO2"][i]   = mHcore->sendMessage( M_GETDATA, D_ATMOSPHERIC_CO2 );
+    mConcTable["CH4"][i]   = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_ATMOSPHERIC_CH4,date );
+    mConcTable["N2O"][i]   = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_ATMOSPHERIC_N2O,date );
+    mConcTable["O3"][i]    = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_ATMOSPHERIC_O3, date );
+    mConcTable["CO2"][i]   = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_ATMOSPHERIC_CO2 );
 
     // Hector doesn't actually compute concentrations for these
     // gasses. (we use their emissions to compute O3 concentration,
@@ -721,19 +734,19 @@ void HectorModel::setupConcTbl() {
 
 // Be sure to keep this in sync with setupRFTbl.  If you add a gas
 // here, you need to add it there too!
-void HectorModel::storeRF(const int aYear ) {
+void HectorModel::storeRF(const int aYear, const bool aHadError ) {
     ILogger& climatelog = ILogger::getLogger( "climate-log" );
     int i = yearlyDataIndex( aYear );
     
     // total
-    mTotRFTable[i]             = mHcore->sendMessage( M_GETDATA, D_RF_TOTAL );
+    mTotRFTable[i]             = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_RF_TOTAL );
 
     // misc gases requested by GCAM
-    mGasRFTable["CO2"][i]      = mHcore->sendMessage( M_GETDATA, D_RF_CO2 );
-    mGasRFTable["CH4"][i]      = mHcore->sendMessage( M_GETDATA, D_RF_CH4 );
-    mGasRFTable["N2O"][i]      = mHcore->sendMessage( M_GETDATA, D_RF_N2O );
-    mGasRFTable["BC"][i]       = mHcore->sendMessage( M_GETDATA, D_RF_BC );
-    mGasRFTable["OC"][i]       = mHcore->sendMessage( M_GETDATA, D_RF_OC );
+    mGasRFTable["CO2"][i]      = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_RF_CO2 );
+    mGasRFTable["CH4"][i]      = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_RF_CH4 );
+    mGasRFTable["N2O"][i]      = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_RF_N2O );
+    mGasRFTable["BC"][i]       = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_RF_BC );
+    mGasRFTable["OC"][i]       = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_RF_OC );
 
 #if 0
     // Forcings that hector can provide, but which are not currently
@@ -778,23 +791,12 @@ void HectorModel::setupRFTbl() {
 
 //! Store the global quantities retrieved from Hector, except total
 //! forcing, which gets stored in storeRF()
-void HectorModel::storeGlobals( const int aYear ) {
+void HectorModel::storeGlobals( const int aYear, const bool aHadError ) {
     int idx = yearlyDataIndex( aYear );
 
-        // // XXX DEBUG
-        // ILogger &climatelog = ILogger::getLogger("climate-log");
-        // climatelog.setLevel(ILogger::DEBUG);
-        // climatelog << "Store globals: " << "  year: " << aYear
-        //            << "  index: " << idx
-        //            << "  table sizes: temp=" << mTemperatureTable.size()
-        //            << "  landflux= " << mLandFlux.size()
-        //            << "  oceanflux= " << mOceanFlux.size()
-        //            << "\n";
-        // // XXX end debug
-    
-    mTemperatureTable[idx] = mHcore->sendMessage( M_GETDATA, D_GLOBAL_TEMP );
-    mLandFlux[idx]         = mHcore->sendMessage( M_GETDATA, D_LAND_CFLUX );
-    mOceanFlux[idx]        = mHcore->sendMessage( M_GETDATA, D_OCEAN_CFLUX );
+    mTemperatureTable[idx] = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_GLOBAL_TEMP );
+    mLandFlux[idx]         = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_LAND_CFLUX );
+    mOceanFlux[idx]        = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_OCEAN_CFLUX );
 } 
     
 
