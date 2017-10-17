@@ -156,7 +156,9 @@ module_energy_L222.en_transformation <- function(command, ...) {
     # L222.GlobalTechInterp_en: Technology shareweight interpolation of energy transformation sectors
     A22.globaltech_interp %>%
       set_years() %>%
-      rename(sector.name = supplysector, subsector.name = subsector) ->
+      rename(sector.name = supplysector, subsector.name = subsector) %>%
+      # included to strip attributes from assumption file
+      mutate(sector.name = sector.name) ->
       L222.GlobalTechInterp_en
 
     # L222.GlobalTechCoef_en: Energy inputs and coefficients of global technologies for energy transformation
