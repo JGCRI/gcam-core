@@ -269,6 +269,9 @@ energy.DIGITS_MPKM <- 0
 energy.DIGITS_SPEED <- 1
 energy.DIGITS_LOADFACTOR <- 2
 
+energy.CEMENT_CCS_COST_2000USDTCO2 <- 50 # Starting point of supply curve in Mahasenan et al 2003; come from ENERGY_ASSUMPTIONS/A_ccs_data.R
+energy.CO2_STORAGE_COST_1990_USDTC <- 42 # #From GCAM 1.0 inputs; come from ENERGY_ASSUMPTIONS/A_ccs_data.R
+
 # Digits for rounding into XMLs
 energy.DIGITS_CALOUTPUT <- 7
 energy.DIGITS_COEFFICIENT <- 7
@@ -335,7 +338,11 @@ CONV_HA_M2 <- 1e4 # ha to m2
 CONV_BM2_M2 <- 1e9
 CONV_MILFT2_M2 <- 92900 # Million square feet to square meters
 CONV_FT2_M2 <- 0.0929 # Square feet to square meters
+CONV_C_CO2 <- 44/12 # come from _common/assumptions/units_conversions.R
 
+# Dollar conversion factors
+CONV_2000_1975_USD <- 0.38 # come from _common/assumptions/units_conversions.R
+CONV_1990_1975_USD <- 0.4649 # come from _common/assumptions/units_conversions.R
 
 # Driver constants ======================================================================
 
