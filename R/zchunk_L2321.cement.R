@@ -1,10 +1,6 @@
 #' module_energy_L2321.cement
 #'
-#' The chunk provides final energy keyword, supplysector/subsector information,
-#' supplysector/subsector interpolation information, global technology share weight,
-#' global technology efficiency, global technology coefficients, global technology cost,
-#' price elasticity, stub technology information, stub technology interpolation information,
-#' stub technology calibrated inputs, and etc for cement sector.
+#' Compute a variety of final energy keyword, sector, share weight, and technology information for cement-related GCAM inputs.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -190,16 +186,33 @@ module_energy_L2321.cement <- function(command, ...) {
       L2321.GlobalTechCost_cement # intermediate tibble
 
     # Note: adjusting non-energy costs of technologies with CCS to include CO2 capture costs
-    # Note: The additional CCS-related non-energy costs are not included in the global technology assessment. Calculate here.
-    # First calculate the additional CCS costs per unit of carbon produced in 1975$
-    cement_CCS_cost_total_1975USDtC <- energy.CEMENT_CCS_COST_2000USDTCO2 * CONV_2000_1975_USD * CONV_C_CO2
-    CO2_storage_cost_1975USDtC <- energy.CO2_STORAGE_COST_1990_USDTC * CONV_1990_1975_USD
+    #       The additional CCS-related non-energy costs are not included in the global technology assessment.
+    #       Calculate here in two steps:
+    #       (1) calculate the additional CCS costs per unit of carbon produced in 1975$
+    #       (2) calculate the quantity of CO2 produced per unit of cement produced (in kgC per kg cement)
+    cement_CCS_cost_total_1975USDtC <- energy.CEMENT_CCS_COST_2000USDTCO2 * gdp_deflator(1975, base_year = 2000) * emissions.CONV_C_CO2
+    CO2_storage_cost_1975USDtC <- energy.CO2_STORAGE_COST_1990_USDTC * gdp_deflator(1975, base_year = 1990)
     cement_CCS_cost_1975USDtC <- cement_CCS_cost_total_1975USDtC - CO2_storage_cost_1975USDtC
 
-    # Next calculate the quantity of CO2 produced per unit of cement produced (in kgC per kg cement)
-    cement_CO2_capture_frac <- mean( L2321.GlobalTechCapture_cement[["remove.fraction"]] )
-    CO2_IO_kgCkgcement <- mean(unlist(select(filter(L2321.GlobalTechCoef_cement, minicam.energy.input == "limestone"), coefficient))) *
-      mean(unlist(select(filter(A_PrimaryFuelCCoef, PrimaryFuelCO2Coef.name == "limestone"), PrimaryFuelCO2Coef)))
+    L2321.GlobalTechCapture_cement %>%
+      .[["remove.fraction"]] %>%
+      mean -> cement_CO2_capture_frac
+
+    L2321.GlobalTechCoef_cement %>%
+      filter(minicam.energy.input == "limestone") %>%
+      select(coefficient) %>%
+      .[["coefficient"]] %>%
+      mean ->
+      coef_mean # temporary value
+
+    A_PrimaryFuelCCoef %>%
+      filter(PrimaryFuelCO2Coef.name == "limestone") %>%
+      select(PrimaryFuelCO2Coef) %>%
+      .[["PrimaryFuelCO2Coef"]] %>%
+      mean ->
+      PrimaryFuelCO2Coef_mean # temporary value
+
+    CO2_IO_kgCkgcement <- coef_mean * PrimaryFuelCO2Coef_mean
     CO2stored_IO_kgCkgcement <- CO2_IO_kgCkgcement * cement_CO2_capture_frac
     cement_CCS_cost_75USD_tcement <- cement_CCS_cost_1975USDtC * CO2stored_IO_kgCkgcement / CONV_T_KG
 
@@ -216,7 +229,7 @@ module_energy_L2321.cement <- function(command, ...) {
     calibrated_techs %>%
       filter(calibration == "output") %>% #O nly take the tech IDs where the calibration is identified as output
       select(sector, supplysector, subsector, technology) %>%
-      unique ->
+      distinct ->
       calibrated_techs_export # temporary tibble
 
     L1321.out_Mt_R_cement_Yh %>%
@@ -236,7 +249,7 @@ module_energy_L2321.cement <- function(command, ...) {
     # Take this as a given in all years for which data is available
     calibrated_techs %>%
       select(sector, fuel, supplysector, subsector, technology, minicam.energy.input) %>%
-      unique ->
+      distinct ->
       calibrated_techs_export # temporary tibble
 
     L1321.IO_GJkg_R_cement_F_Yh %>%
@@ -253,7 +266,7 @@ module_energy_L2321.cement <- function(command, ...) {
     # L2321.StubTechCalInput_cement_heat: calibrated cement production
     calibrated_techs %>%
       select(sector, fuel, supplysector, subsector, technology, minicam.energy.input) %>%
-      unique ->
+      distinct ->
       calibrated_techs_export # temporary tibble
 
     L1321.in_EJ_R_cement_F_Y %>%
