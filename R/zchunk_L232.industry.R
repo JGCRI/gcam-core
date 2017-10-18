@@ -1,11 +1,6 @@
 #' module_energy_L232.industry
 #'
-#' The chunk provides final energy keyword, supplysector/subsector information,
-#' supplysector/subsector interpolation information, supplysector/subsector share weights,
-#' global technology share weight, global technology efficiency,
-#' global technology coefficients, global technology cost, price elasticity,
-#' stub technology information, stub technology interpolation information,
-#' stub technology calibrated inputs, and etc.
+#' Compute a variety of final energy keyword, sector, share weight, and technology information for industry-related GCAM inputs.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -280,7 +275,7 @@ module_energy_L232.industry <- function(command, ...) {
       L232.in_EJ_R_indenergy_F_Yh # intermediate tibble
 
     L232.in_EJ_R_indenergy_F_Yh %>%
-      left_join_error_no_match(unique(select(A32.globaltech_eff, subsector, technology, minicam.energy.input)),
+      left_join_error_no_match(distinct(select(A32.globaltech_eff, subsector, technology, minicam.energy.input)),
                 by = c("subsector", "stub.technology" = "technology")) %>%
       mutate(calibrated.value = round(value, energy.DIGITS_CALOUTPUT)) %>%
       mutate(share.weight.year = year) %>%
@@ -295,14 +290,14 @@ module_energy_L232.industry <- function(command, ...) {
     L1322.in_EJ_R_indfeed_F_Yh %>%
       filter(year %in% BASE_YEARS) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      left_join_error_no_match(unique(select(calibrated_techs, sector, fuel, supplysector, subsector, technology)),
+      left_join_error_no_match(distinct(select(calibrated_techs, sector, fuel, supplysector, subsector, technology)),
                                by = c("sector", "fuel")) %>%
       rename(stub.technology = technology) ->
       L232.in_EJ_R_indfeed_F_Yh # intermediate tibble
 
     L232.in_EJ_R_indfeed_F_Yh %>%
       select(one_of(c(LEVEL2_DATA_NAMES[["StubTechYr"]], "value"))) %>%
-      left_join(unique(select(A32.globaltech_eff, subsector, technology, minicam.energy.input)),
+      left_join(distinct(select(A32.globaltech_eff, subsector, technology, minicam.energy.input)),
                 by = c("subsector", "stub.technology" = "technology")) %>%
       mutate(calibrated.value = round(value, energy.DIGITS_CALOUTPUT)) %>%
       select(-value) %>%
@@ -453,10 +448,10 @@ module_energy_L232.industry <- function(command, ...) {
 
     # L232.BaseService_ind: base-year service output of industry final demand
     # Base service is equal to the output of the industry supplysector
-    tibble(region = L232.StubTechProd_industry[["region"]]) %>%
-      mutate(energy.final.demand = A32.demand[["energy.final.demand"]],
-             year = L232.StubTechProd_industry[["year"]],
-             base.service = L232.StubTechProd_industry[["calOutputValue"]]) ->
+    L232.StubTechProd_industry %>%
+      select(region, year, calOutputValue) %>%
+      rename(base.service = calOutputValue) %>%
+      mutate(energy.final.demand = A32.demand[["energy.final.demand"]]) ->
       L232.BaseService_ind
 
     # ===================================================
