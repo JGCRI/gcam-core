@@ -866,7 +866,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_precursors("common/GCAM_region_names", "energy/A23.sector") ->
       L223.ElecReserve
 
-    tibble() %>%
+    L223.SubsectorLogit_elec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -875,7 +875,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_precursors("energy/A23.subsector_logit", "common/GCAM_region_names") ->
       L223.SubsectorLogit_elec
 
-    tibble() %>%
+    L223.SubsectorShrwt_elec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -884,7 +884,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_precursors("energy/A23.subsector_shrwt", "common/GCAM_region_names") ->
       L223.SubsectorShrwt_elec
 
-    tibble() %>%
+    L223.SubsectorShrwtFllt_elec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -893,7 +893,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_precursors("energy/A23.subsector_shrwt", "common/GCAM_region_names") ->
       L223.SubsectorShrwtFllt_elec
 
-    tibble() %>%
+    L223.SubsectorShrwt_nuc %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -929,7 +929,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_precursors("energy/A23.subsector_interp", "energy/A23.subsector_interp_R") ->
       L223.SubsectorInterpTo_elec
 
-    tibble() %>%
+    L223.StubTech_elec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -939,7 +939,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.StubTech_elec
 
-    tibble() %>%
+    L223.GlobalIntTechEff_elec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -949,7 +949,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.GlobalIntTechEff_elec
 
-    tibble() %>%
+    L223.GlobalTechEff_elec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -959,7 +959,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.GlobalTechEff_elec
 
-    tibble() %>%
+    L223.GlobalTechCapital_elec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -969,7 +969,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.GlobalTechCapital_elec
 
-    tibble() %>%
+    L223.GlobalIntTechCapital_elec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -979,7 +979,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.GlobalIntTechCapital_elec
 
-    tibble() %>%
+    L223.GlobalTechOMfixed_elec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -989,7 +989,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.GlobalTechOMfixed_elec
 
-    tibble() %>%
+    L223.GlobalIntTechOMfixed_elec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -999,7 +999,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.GlobalIntTechOMfixed_elec
 
-    tibble() %>%
+    L223.GlobalTechOMvar_elec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -1009,7 +1009,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.GlobalTechOMvar_elec
 
-    tibble() %>%
+    L223.GlobalIntTechOMvar_elec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -1019,7 +1019,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.GlobalIntTechOMvar_elec
 
-    tibble() %>%
+    L223.GlobalTechShrwt_elec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -1029,7 +1029,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.GlobalTechShrwt_elec
 
-    tibble() %>%
+    L223.GlobalTechInterp_elec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -1039,7 +1039,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.GlobalTechInterp_elec
 
-    tibble() %>%
+    L223.GlobalIntTechShrwt_elec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -1049,7 +1049,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.GlobalIntTechShrwt_elec
 
-    tibble() %>%
+    L223.PrimaryRenewKeyword_elec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -1059,7 +1059,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.PrimaryRenewKeyword_elec
 
-    tibble() %>%
+    L223.PrimaryRenewKeywordInt_elec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -1069,7 +1069,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.PrimaryRenewKeywordInt_elec
 
-    tibble() %>%
+    L223.AvgFossilEffKeyword_elec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -1079,7 +1079,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.AvgFossilEffKeyword_elec
 
-    tibble() %>%
+    L223.GlobalTechCapture_elec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -1089,7 +1089,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.GlobalTechCapture_elec
 
-    tibble() %>%
+    L223.GlobalIntTechBackup_elec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -1099,7 +1099,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.GlobalIntTechBackup_elec
 
-    tibble() %>%
+    L223.StubTechCapFactor_elec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -1109,7 +1109,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.StubTechCapFactor_elec
 
-    tibble() %>%
+    L223.GlobalTechShutdown_elec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -1119,7 +1119,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.GlobalTechShutdown_elec
 
-    tibble() %>%
+    L223.GlobalIntTechShutdown_elec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -1129,7 +1129,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.GlobalIntTechShutdown_elec
 
-    tibble() %>%
+    L223.GlobalTechSCurve_elec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -1139,7 +1139,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.GlobalTechSCurve_elec
 
-    tibble() %>%
+    L223.GlobalIntTechSCurve_elec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -1149,7 +1149,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.GlobalIntTechSCurve_elec
 
-    tibble() %>%
+    L223.GlobalTechLifetime_elec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -1159,7 +1159,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.GlobalTechLifetime_elec
 
-    tibble() %>%
+    L223.GlobalIntTechLifetime_elec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -1169,7 +1169,8 @@ module_energy_L223.electricity <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.GlobalIntTechLifetime_elec
 
-    tibble() %>%
+    if (exists(L223.GlobalTechProfitShutdown_elec)) {
+    L223.GlobalTechProfitShutdown_elec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -1178,8 +1179,17 @@ module_energy_L223.electricity <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.GlobalTechProfitShutdown_elec
+    } else {
+      tibble(x = NA) %>%
+        add_title("Data not created") %>%
+        add_units("Unitless") %>%
+        add_comments("By default, data not created. Contained in ") %>%
+        add_legacy_name("L223.GlobalTechProfitShutdown_elec") ->
+        L223.GlobalTechProfitShutdown_elec
+    }
 
-    tibble() %>%
+    if (exists(L223.GlobalIntTechProfitShutdown_elec)) {
+    L223.GlobalIntTechProfitShutdown_elec %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -1188,169 +1198,173 @@ module_energy_L223.electricity <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L223.GlobalIntTechProfitShutdown_elec
+    } else {
+      tibble(x = NA) %>%
+        add_title("Data not created") %>%
+        add_units("Unitless") %>%
+        add_comments("By default, data not created. Contained in ") %>%
+        add_legacy_name("L223.GlobalIntTechProfitShutdown_elec") ->
+        L223.GlobalIntTechProfitShutdown_elec
+    }
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+    L223.StubTechCalInput_elec %>%
+      add_title("calibrated input values and shareweights for electricity sector by subsector and stub technology for base years") %>%
+      add_units("Exajoules/year") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.StubTechCalInput_elec") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/GCAM_region_names", "energy/calibrated_techs", "L1231.in_EJ_R_elec_F_tech_Yh") ->
       L223.StubTechCalInput_elec
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+    L223.StubTechFixOut_elec %>%
+      add_title("Fixed output of electricity generation by region in all base years") %>%
+      add_units("Exajoules/year") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.StubTechFixOut_elec") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/iso_GCAM_regID") ->
       L223.StubTechFixOut_elec
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+    L223.StubTechFixOut_hydro %>%
+      add_title("Fixed output of hydropower electricity generation by region in final base year") %>%
+      add_units("Exajoules (EJ)/year") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.StubTechFixOut_hydro") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/calibrated_techs", "common/GCAM_region_names", "L118.out_EJ_R_elec_hydro_Yfut") ->
       L223.StubTechFixOut_hydro
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+    L223.StubTechProd_elec %>%
+      add_title("Historical calibrated outputs and shareweights of electricity sector by subsector and technology") %>%
+      add_units("Exajoules (EJ)/year") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.StubTechProd_elec") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L1231.out_EJ_R_elec_F_tech_Yh", "energy/calibrated_techs", "common/GCAM_region_names") ->
       L223.StubTechProd_elec
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+    L223.StubTechEff_elec %>%
+      add_title("conversion efficiency of fuel to energy in electricity sector") %>%
+      add_units("unitless") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.StubTechEff_elec") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/calibrated_techs", "common/GCAM_region_names", "L1231.eff_R_elec_F_tech_Yh", "energy/A23.globaltech_eff") ->
       L223.StubTechEff_elec
 
     L223.GlobalTechCapital_sol_adv %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("high tech/low cost solar capital costs for the electricity sector") %>%
+      add_units("capital overnight - 1975USD/GJ, capacity factor - unitless, fixed.charge.rate - unitless") %>%
+      add_comments("capacity factor - average percent use of maximum rated output") %>%
+      add_comments("fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalTechCapital_sol_adv") %>%
       add_precursors("energy/A23.globaltech_capital_adv") ->
       L223.GlobalTechCapital_sol_adv
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L223.GlobalIntTechCapital_sol_adv %>%
+      add_title("high tech/low cost intermittent solar capital costs for the electricity sector") %>%
+      add_units("capital overnight - 1975USD/GJ, capacity factor - unitless, fixed.charge.rate - unitless") %>%
+      add_comments("capacity factor - average percent use of maximum rated output") %>%
+      add_comments("fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalIntTechCapital_sol_adv") %>%
       add_precursors("energy/A23.globaltech_capital_adv") ->
       L223.GlobalIntTechCapital_sol_adv
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L223.GlobalTechCapital_wind_adv %>%
+      add_title("high tech/low cost wind capital costs for the electricity sector") %>%
+      add_units("capital overnight - 1975USD/GJ, capacity factor - unitless, fixed.charge.rate - unitless") %>%
+      add_comments("capacity factor - average percent use of maximum rated output") %>%
+      add_comments("fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalTechCapital_wind_adv") %>%
       add_precursors("energy/A23.globaltech_capital_adv") ->
       L223.GlobalTechCapital_wind_adv
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L223.GlobalIntTechCapital_wind_adv %>%
+      add_title("high tech/low cost intermittent wind capital costs for the electricity sector") %>%
+      add_units("capital overnight - 1975USD/GJ, capacity factor - unitless, fixed.charge.rate - unitless") %>%
+      add_comments("capacity factor - average percent use of maximum rated output") %>%
+      add_comments("fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalIntTechCapital_wind_adv") %>%
       add_precursors("energy/A23.globaltech_capital_adv") ->
       L223.GlobalIntTechCapital_wind_adv
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L223.GlobalTechCapital_geo_adv %>%
+      add_title("high tech/low cost geothermal capital costs for the electricity sector") %>%
+      add_units("capital overnight - 1975USD/GJ, capacity factor - unitless, fixed.charge.rate - unitless") %>%
+      add_comments("capacity factor - average percent use of maximum rated output") %>%
+      add_comments("fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalTechCapital_geo_adv") %>%
       add_precursors("energy/A23.globaltech_capital_adv") ->
       L223.GlobalTechCapital_geo_adv
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L223.GlobalTechCapital_nuc_adv %>%
+      add_title("high tech/low cost nuclear capital costs for the electricity sector") %>%
+      add_units("capital overnight - 1975USD/GJ, capacity factor - unitless, fixed.charge.rate - unitless") %>%
+      add_comments("capacity factor - average percent use of maximum rated output") %>%
+      add_comments("fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalTechCapital_nuc_adv") %>%
       add_precursors("energy/A23.globaltech_capital_adv") ->
       L223.GlobalTechCapital_nuc_adv
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L223.GlobalTechCapital_sol_low %>%
+      add_title("Low tech/high cost solar capital costs for the electricity sector") %>%
+      add_units("capital overnight - 1975USD/GJ, capacity factor - unitless, fixed.charge.rate - unitless") %>%
+      add_comments("capacity factor - average percent use of maximum rated output") %>%
+      add_comments("fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalTechCapital_sol_low") %>%
       add_precursors("energy/A23.globaltech_capital_low") ->
       L223.GlobalTechCapital_sol_low
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L223.GlobalIntTechCapital_sol_low %>%
+      add_title("Low tech/high cost intermittent solar capital costs for the electricity sector") %>%
+      add_units("capital overnight - 1975USD/GJ, capacity factor - unitless, fixed.charge.rate - unitless") %>%
+      add_comments("capacity factor - average percent use of maximum rated output") %>%
+      add_comments("fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalIntTechCapital_sol_low") %>%
       add_precursors("energy/A23.globaltech_capital_low") ->
       L223.GlobalIntTechCapital_sol_low
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L223.GlobalTechCapital_wind_low %>%
+      add_title("Low tech/high cost wind capital costs for the electricity sector") %>%
+      add_units("capital overnight - 1975USD/GJ, capacity factor - unitless, fixed.charge.rate - unitless") %>%
+      add_comments("capacity factor - average percent use of maximum rated output") %>%
+      add_comments("fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalTechCapital_wind_low") %>%
       add_precursors("energy/A23.globaltech_capital_low") ->
       L223.GlobalTechCapital_wind_low
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L223.GlobalIntTechCapital_wind_low %>%
+      add_title("Low tech/high cost intermittent wind capital costs for the electricity sector") %>%
+      add_units("capital overnight - 1975USD/GJ, capacity factor - unitless, fixed.charge.rate - unitless") %>%
+      add_comments("capacity factor - average percent use of maximum rated output") %>%
+      add_comments("fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalIntTechCapital_wind_low") %>%
       add_precursors("energy/A23.globaltech_capital_low") ->
       L223.GlobalIntTechCapital_wind_low
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L223.GlobalTechCapital_geo_low %>%
+      add_title("Low tech/high cost geothermal capital costs for the electricity sector") %>%
+      add_units("capital overnight - 1975USD/GJ, capacity factor - unitless, fixed.charge.rate - unitless") %>%
+      add_comments("capacity factor - average percent use of maximum rated output") %>%
+      add_comments("fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalTechCapital_geo_low") %>%
       add_precursors("energy/A23.globaltech_capital_low") ->
       L223.GlobalTechCapital_geo_low
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L223.GlobalTechCapital_nuc_low %>%
+      add_title("Low tech/high cost nuclear capital costs for the electricity sector") %>%
+      add_units("capital overnight - 1975USD/GJ, capacity factor - unitless, fixed.charge.rate - unitless") %>%
+      add_comments("capacity factor - average percent use of maximum rated output") %>%
+      add_comments("fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalTechCapital_nuc_low") %>%
       add_precursors("energy/A23.globaltech_capital_low") ->
       L223.GlobalTechCapital_nuc_low
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
+    L223.GlobalTechCapital_bio_low %>%
+      add_title("Low tech/high cost bioenergy capital costs for the electricity sector") %>%
+      add_units("capital overnight - 1975USD/GJ, capacity factor - unitless, fixed.charge.rate - unitless") %>%
+      add_comments("capacity factor - average percent use of maximum rated output") %>%
+      add_comments("fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.GlobalTechCapital_bio_low") %>%
       add_precursors("energy/A23.globaltech_capital_low") ->
