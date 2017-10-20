@@ -227,6 +227,7 @@ void ManageStateVariables::resetState() {
             cout << "Reset didn't match " << currValue->mCentralValueIndex << " != " << count << endl;
             abort();
         }
+        ++count;
 #endif
         currValue->mValue = currValue->sBaseCentralValue[ currValue->mCentralValueIndex ];
     }

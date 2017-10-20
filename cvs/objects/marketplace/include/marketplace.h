@@ -138,6 +138,10 @@ class Marketplace: public IVisitable, private boost::noncopyable
     friend class SolverLibrary;
     friend class MarketDependencyFinder;
     friend class LogEDFun;
+#if DEBUG_STATE
+    friend class ManageStateVariables;
+    friend class Value;
+#endif
 public:
     Marketplace();
     ~Marketplace();
