@@ -18,11 +18,26 @@ the generated outputs: \code{L226.DeleteSupplysector_USAelec}, \code{object}, \c
 original data system was \code{L226.en_distribution_USA.R} (gcam-usa level2).
 }
 \description{
-Briefly describe what this chunk does.
+This chunk creates L226.DeleteSupplysector_USAelec, L226.StubTechCoef_electd_USA, L226.TechShrwt_electd_USA, L226.TechCost_electd_USA,
+L226.TechCoef_electd_USA, L226.Supplysector_en_USA, L226.SubsectorShrwtFllt_en_USA, L226.SubsectorLogit_en_USA,
+L226.TechShrwt_en_USA, L226.TechCoef_en_USA, L226.TechCost_en_USA, and L226.Ccoef
 }
 \details{
-Describe in detail what this chunk does.
+\itemize{
+\item{"L226.DeleteSupplysector_USAelec: Removing the electricity T&D sectors of the USA region." }
+\item{"L226.StubTechCoef_electd_USA: Stub technology coefficients elec T&D when using national elec markets. State elect_td sectors are treated as stub technologies."}
+\item{"L226.TechShrwt_electd_USA: tech share weights for elec T&D when using regional electricity markets. The elect_td sectors can not use the global tech database as their input is different."}
+\item{"L226.TechCost_electd_USA: Tech costs for elec T&D when using regional electricity markets."}
+\item{"L226.TechCoef_electd_USA: Tech coeff for elec T&D when using regional electricity markets."}
+\item{"L226.Supplysector_en_USA: Supply sector information for energy handling and delivery sectors for USA grid regions. Currently using FERC regions as a proxy for regional energy markets."}
+\item{"L226.SubsectorShrwtFllt_en_USA: Subsector shareweights of energy handling and delivery." }
+\item{"L226.SubsectorLogit_en_USA: Logit info for energy subsectors. There is only one tech per subsector so the logit choice does not matter."}
+\item{"L226.TechShrwt_en_USA: Technology shareweights of energy handling and delivery. Can't use stub technologies because these would inherit the wrong energy-inputs."}
+\item{"L226.TechCoef_en_USA: Technology coefficients and market names of energy handling and delivery"}
+\item{"L226.TechCost_en_USA: Regional price adjustments/cost adders for USA energy." }
+\item{"L226.Ccoef: Carbon coef for USA cost adder sectors"}
+}
 }
 \author{
-YourInitials CurrentMonthName 2017
+ACS Oct 2017
 }
