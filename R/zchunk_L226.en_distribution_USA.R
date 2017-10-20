@@ -264,8 +264,9 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
     # Using regional electric markets
     if(gcamusa.USE_REGIONAL_ELEC_MARKETS){
 
-      # L226.TechShrwt_electd_USA: using regional elec markets. The elect_td sectors can not use the global tech database
-      # as their input is different.
+      # The elect_td sectors can not use the global tech database as their input is different.
+
+      # L226.TechShrwt_electd_USA: Tech share weights for elctricity T&D
       L226.GlobalTechShrwt_en %>%
         filter(sector.name %in% gcamusa.ELECT_TD_SECTORS) %>%
         write_to_all_states(c("region", names(L226.GlobalTechShrwt_en))) %>%
@@ -273,6 +274,25 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
                subsector = subsector.name) ->
         L226.TechShrwt_electd_USA
 
+
+      # L226.TechCost_electd_USA: Tech costs for elctricity T&D
+      L226.GlobalTechCost_en %>%
+        filter(sector.name %in% gcamusa.ELECT_TD_SECTORS) %>%
+        write_to_all_states(c("region", names(L226.GlobalTechCost_en))) %>%
+        rename(supplysector = sector.name,
+               subsector = subsector.name) ->
+        L226.TechCost_electd_USA
+
+
+      # L226.TechCoef_electd_USA: Tech coefficients for elctricity T&D
+      L226.StubTechCoef_electd %>%
+        global_energy_to_USA_electd() %>%
+        rename(technology = stub.technology) %>%
+        mutate(minicam.energy.input = "electricity domestic supply") %>%
+        select(-market.name) %>%
+        left_join_error_no_match(select(states_subregions, grid_region, state), by = c("region" = "state")) %>%
+        rename(market.name = grid_region) ->
+        L226.TechCoef_electd_USA
 
     }
 
@@ -302,101 +322,113 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L226.DeleteSupplysector_USAelec
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L226.StubTechCoef_electd_USA") %>%
-      add_precursors("gcam-usa/states_subregions",
-                     "energy/A21.sector",
-                     "energy/A26.sector",
-                     "gcam-usa/EIA_state_energy_prices",
-                     "L202.CarbonCoef",
-                     "L226.Supplysector_en",
-                     "L226.SubsectorLogit_en",
-                     "L226.SubsectorShrwt_en",
-                     "L226.SubsectorShrwtFllt_en",
-                     "L226.SubsectorInterp_en",
-                     "L226.SubsectorInterpTo_en",
-                     "L226.GlobalTechCost_en",
-                     "L226.GlobalTechShrwt_en",
-                     "L226.StubTechCoef_electd") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L226.StubTechCoef_electd_USA
+    if(exists(L226.StubTechCoef_electd_USA)) {
+      L226.StubTechCoef_electd_USA %>%
+        add_title("descriptive title of data") %>%
+        add_units("units") %>%
+        add_comments("comments describing how data generated") %>%
+        add_comments("can be multiple lines") %>%
+        add_legacy_name("L226.StubTechCoef_electd_USA") %>%
+        add_precursors("gcam-usa/states_subregions",
+                       "energy/A21.sector",
+                       "energy/A26.sector",
+                       "gcam-usa/EIA_state_energy_prices",
+                       "L202.CarbonCoef",
+                       "L226.Supplysector_en",
+                       "L226.SubsectorLogit_en",
+                       "L226.SubsectorShrwt_en",
+                       "L226.SubsectorShrwtFllt_en",
+                       "L226.SubsectorInterp_en",
+                       "L226.SubsectorInterpTo_en",
+                       "L226.GlobalTechCost_en",
+                       "L226.GlobalTechShrwt_en",
+                       "L226.StubTechCoef_electd") %>%
+        # typical flags, but there are others--see `constants.R`
+        add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+        L226.StubTechCoef_electd_USA
+    }
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L226.TechShrwt_electd_USA") %>%
-      add_precursors("gcam-usa/states_subregions",
-                     "energy/A21.sector",
-                     "energy/A26.sector",
-                     "gcam-usa/EIA_state_energy_prices",
-                     "L202.CarbonCoef",
-                     "L226.Supplysector_en",
-                     "L226.SubsectorLogit_en",
-                     "L226.SubsectorShrwt_en",
-                     "L226.SubsectorShrwtFllt_en",
-                     "L226.SubsectorInterp_en",
-                     "L226.SubsectorInterpTo_en",
-                     "L226.GlobalTechCost_en",
-                     "L226.GlobalTechShrwt_en",
-                     "L226.StubTechCoef_electd") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L226.TechShrwt_electd_USA
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L226.TechCost_electd_USA") %>%
-      add_precursors("gcam-usa/states_subregions",
-                     "energy/A21.sector",
-                     "energy/A26.sector",
-                     "gcam-usa/EIA_state_energy_prices",
-                     "L202.CarbonCoef",
-                     "L226.Supplysector_en",
-                     "L226.SubsectorLogit_en",
-                     "L226.SubsectorShrwt_en",
-                     "L226.SubsectorShrwtFllt_en",
-                     "L226.SubsectorInterp_en",
-                     "L226.SubsectorInterpTo_en",
-                     "L226.GlobalTechCost_en",
-                     "L226.GlobalTechShrwt_en",
-                     "L226.StubTechCoef_electd") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L226.TechCost_electd_USA
+    if(exists(L226.TechShrwt_electd_USA)){
+      L226.TechShrwt_electd_USA %>%
+        add_title("descriptive title of data") %>%
+        add_units("units") %>%
+        add_comments("comments describing how data generated") %>%
+        add_comments("can be multiple lines") %>%
+        add_legacy_name("L226.TechShrwt_electd_USA") %>%
+        add_precursors("gcam-usa/states_subregions",
+                       "energy/A21.sector",
+                       "energy/A26.sector",
+                       "gcam-usa/EIA_state_energy_prices",
+                       "L202.CarbonCoef",
+                       "L226.Supplysector_en",
+                       "L226.SubsectorLogit_en",
+                       "L226.SubsectorShrwt_en",
+                       "L226.SubsectorShrwtFllt_en",
+                       "L226.SubsectorInterp_en",
+                       "L226.SubsectorInterpTo_en",
+                       "L226.GlobalTechCost_en",
+                       "L226.GlobalTechShrwt_en",
+                       "L226.StubTechCoef_electd") %>%
+        # typical flags, but there are others--see `constants.R`
+        add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+        L226.TechShrwt_electd_USA
+    }
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L226.TechCoef_electd_USA") %>%
-      add_precursors("gcam-usa/states_subregions",
-                     "energy/A21.sector",
-                     "energy/A26.sector",
-                     "gcam-usa/EIA_state_energy_prices",
-                     "L202.CarbonCoef",
-                     "L226.Supplysector_en",
-                     "L226.SubsectorLogit_en",
-                     "L226.SubsectorShrwt_en",
-                     "L226.SubsectorShrwtFllt_en",
-                     "L226.SubsectorInterp_en",
-                     "L226.SubsectorInterpTo_en",
-                     "L226.GlobalTechCost_en",
-                     "L226.GlobalTechShrwt_en",
-                     "L226.StubTechCoef_electd") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L226.TechCoef_electd_USA
+
+    if(exists(L226.TechCost_electd_USA)){
+      L226.TechCost_electd_USA %>%
+        add_title("descriptive title of data") %>%
+        add_units("units") %>%
+        add_comments("comments describing how data generated") %>%
+        add_comments("can be multiple lines") %>%
+        add_legacy_name("L226.TechCost_electd_USA") %>%
+        add_precursors("gcam-usa/states_subregions",
+                       "energy/A21.sector",
+                       "energy/A26.sector",
+                       "gcam-usa/EIA_state_energy_prices",
+                       "L202.CarbonCoef",
+                       "L226.Supplysector_en",
+                       "L226.SubsectorLogit_en",
+                       "L226.SubsectorShrwt_en",
+                       "L226.SubsectorShrwtFllt_en",
+                       "L226.SubsectorInterp_en",
+                       "L226.SubsectorInterpTo_en",
+                       "L226.GlobalTechCost_en",
+                       "L226.GlobalTechShrwt_en",
+                       "L226.StubTechCoef_electd") %>%
+        # typical flags, but there are others--see `constants.R`
+        add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+        L226.TechCost_electd_USA
+    }
+
+
+    if(exists(L226.TechCoef_electd_USA)){
+      L226.TechCoef_electd_USA %>%
+        add_title("descriptive title of data") %>%
+        add_units("units") %>%
+        add_comments("comments describing how data generated") %>%
+        add_comments("can be multiple lines") %>%
+        add_legacy_name("L226.TechCoef_electd_USA") %>%
+        add_precursors("gcam-usa/states_subregions",
+                       "energy/A21.sector",
+                       "energy/A26.sector",
+                       "gcam-usa/EIA_state_energy_prices",
+                       "L202.CarbonCoef",
+                       "L226.Supplysector_en",
+                       "L226.SubsectorLogit_en",
+                       "L226.SubsectorShrwt_en",
+                       "L226.SubsectorShrwtFllt_en",
+                       "L226.SubsectorInterp_en",
+                       "L226.SubsectorInterpTo_en",
+                       "L226.GlobalTechCost_en",
+                       "L226.GlobalTechShrwt_en",
+                       "L226.StubTechCoef_electd") %>%
+        # typical flags, but there are others--see `constants.R`
+        add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+        L226.TechCoef_electd_USA
+    }
+
 
     L226.Supplysector_en_USA %>%
       add_title("descriptive title of data") %>%
