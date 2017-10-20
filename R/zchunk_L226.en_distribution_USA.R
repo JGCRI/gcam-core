@@ -80,6 +80,11 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
 
 
     # silence check package notes
+    region <- supplysector <- from.year <- to.year <- output.unit <- input.unit <- price.unit <-
+      logit.exponent <- logit.type <- . <- subsector <- State <- Coal <- Natural.gas <- Distillate.fuel.oil <-
+      grid_region <- state_name <- coal_adj <- gas_adj <- liq_adju <- sector1 <- adjustment <- technology <-
+      year <- minicam.non.energy.input <- tmp <- sector2 <- trash1 <- trash2 <- input.cost <- sector.name <-
+      subsector.name <- stub.technology <- market.name <- state <- NULL
 
 
     # global_energy_to_USA_electd - takes global energy inputs from L226.en_distribution.R
