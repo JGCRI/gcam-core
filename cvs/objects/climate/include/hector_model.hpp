@@ -92,9 +92,9 @@ public:
     virtual void toDebugXML( const int period, std::ostream& out, Tabs *tabs ) const;
     virtual void completeInit( const std::string& aScenarioName );
     virtual bool setEmissions( const std::string& aGasName,
-                               const int aPeriod, double aEmissions );
+                               const int aPeriod, const double aEmissions );
     virtual bool setLUCEmissions( const std::string &aGasName,
-                                  const int aYear, double aEmissions );
+                                  const int aYear, const double aEmissions );
     virtual double getEmissions( const std::string& aGasName, const int aYear ) const;
     virtual runModelStatus runModel();
     virtual runModelStatus runModel( const int aPeriod );

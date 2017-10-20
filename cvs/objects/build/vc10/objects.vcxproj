@@ -366,7 +366,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalOptions>/WL /MP %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/WL /MP /bigobj %(AdditionalOptions)</AdditionalOptions>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <OmitFramePointers>true</OmitFramePointers>
@@ -541,7 +541,6 @@
     <ClCompile Include="..\..\consumers\source\gcam_consumer.cpp" />
     <ClCompile Include="..\..\containers\source\batch_runner.cpp" />
     <ClCompile Include="..\..\containers\source\consumer_activity.cpp" />
-    <ClCompile Include="..\..\containers\source\degree_days_feedback.cpp" />
     <ClCompile Include="..\..\containers\source\dependency_finder.cpp" />
     <ClCompile Include="..\..\containers\source\final_demand_activity.cpp" />
     <ClCompile Include="..\..\containers\source\gdp.cpp" />
@@ -738,6 +737,7 @@
     <ClCompile Include="..\..\util\base\source\interpolation_function_factory.cpp" />
     <ClCompile Include="..\..\util\base\source\interpolation_rule.cpp" />
     <ClCompile Include="..\..\util\base\source\linear_interpolation_function.cpp" />
+    <ClCompile Include="..\..\util\base\source\manage_state_variables.cpp" />
     <ClCompile Include="..\..\util\base\source\model_time.cpp" />
     <ClCompile Include="..\..\util\base\source\s_curve_interpolation_function.cpp" />
     <ClCompile Include="..\..\util\base\source\summary.cpp" />
@@ -851,7 +851,6 @@
     <ClInclude Include="..\..\consumers\include\gcam_consumer.h" />
     <ClInclude Include="..\..\containers\include\batch_runner.h" />
     <ClInclude Include="..\..\containers\include\consumer_activity.h" />
-    <ClInclude Include="..\..\containers\include\degree_days_feedback.h" />
     <ClInclude Include="..\..\containers\include\dependency_finder.h" />
     <ClInclude Include="..\..\containers\include\final_demand_activity.h" />
     <ClInclude Include="..\..\containers\include\gdp.h" />
@@ -1106,6 +1105,7 @@
     <ClInclude Include="..\..\util\base\include\ivisitor.h" />
     <ClInclude Include="..\..\util\base\include\iyeared.h" />
     <ClInclude Include="..\..\util\base\include\linear_interpolation_function.h" />
+    <ClInclude Include="..\..\util\base\include\manage_state_variables.hpp" />
     <ClInclude Include="..\..\util\base\include\model_time.h" />
     <ClInclude Include="..\..\util\base\include\object_meta_info.h" />
     <ClInclude Include="..\..\util\base\include\s_curve_interpolation_function.h" />

@@ -1079,11 +1079,14 @@
     <ClCompile Include="..\..\util\base\source\gcam_fusion.cpp">
       <Filter>Source Files\util\base</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\containers\source\degree_days_feedback.cpp">
-      <Filter>Source Files\containers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\marketplace\source\market_container.cpp">
       <Filter>Source Files\marketplace</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\emissions\source\linear_control.cpp">
+      <Filter>Source Files\emissions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\util\base\source\manage_state_variables.cpp">
+      <Filter>Source Files\util\base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2200,9 +2203,6 @@
     <ClInclude Include="..\..\technologies\include\pass_through_technology.h">
       <Filter>Header Files\technologies</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\containers\include\degree_days_feedback.h">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\containers\include\imodel_feedback_calc.h">
       <Filter>Header Files\containers</Filter>
     </ClInclude>
@@ -2226,6 +2226,12 @@
     </ClInclude>
     <ClInclude Include="..\..\marketplace\include\market_container.h">
       <Filter>Header Files\marketplace</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\emissions\include\linear_control.h">
+      <Filter>Header Files\emissions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\util\base\include\manage_state_variables.hpp">
+      <Filter>Header Files\util\base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
