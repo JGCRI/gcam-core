@@ -56,7 +56,6 @@
 #include "util/base/include/data_definition_util.h"
 
 #if GCAM_PARALLEL_ENABLED
-//#include <tbb/combinable.h>
 #include "tbb/spin_rw_mutex.h"
 #endif
 
@@ -204,20 +203,10 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "forecast-demand", mForecastDemand, double ),
         
         //! The market demand.
-/*#if GCAM_PARALLEL_ENABLED
-        // have to make this mutable because tbb::combinable::combine is not const
-        DEFINE_VARIABLE( SIMPLE, "demand", mDemand, mutable tbb::combinable<double> ),
-#else*/
         DEFINE_VARIABLE( SIMPLE | STATE, "demand", mDemand, Value ),
-//#endif
         
         //! The market supply.
-/*#if GCAM_PARALLEL_ENABLED
-        // have to make this mutable because tbb::combinable::combine is not const
-        DEFINE_VARIABLE( SIMPLE, "supply", mSupply, mutable tbb::combinable<double> ),
-#else*/
         DEFINE_VARIABLE( SIMPLE | STATE, "supply", mSupply, Value ),
-//#endif
                 
         //! The year associated with this market.
         DEFINE_VARIABLE( SIMPLE, "year", mYear, int )

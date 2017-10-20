@@ -89,12 +89,7 @@ void PriceMarket::initPrice() {
 * \sa setPriceToLast
 */
 void PriceMarket::setPrice( const double priceIn ) {
-/*#if GCAM_PARALLEL_ENABLED
-    mDemand.clear();
-    mDemand.local() = priceIn;
-#else*/
     mDemand = priceIn;
-//#endif
 }
 
 void PriceMarket::set_price_to_last_if_default( const double lastPrice ) {

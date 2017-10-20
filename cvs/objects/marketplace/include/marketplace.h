@@ -54,11 +54,6 @@
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/data_definition_util.h"
 
-/*#if GCAM_PARALLEL_ENABLED
-#include "tbb/parallel_for.h"
-#include "tbb/blocked_range.h"
-#endif*/
-
 class Tabs;
 class Market;
 class MarketContainer;

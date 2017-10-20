@@ -79,13 +79,8 @@ mMarketInfo( InfoFactory::constructInfo( 0, aContainer->getName() ) )
 {
     mSolveMarket = false;
     mPrice = 0.0;
-//#if !GCAM_PARALLEL_ENABLED
     mSupply = 0.0;
     mDemand = 0.0;
-/*#else
-    mSupply.local() = 0.0;
-    mDemand.local() = 0.0;
-#endif*/
     mForecastPrice = 0.0;
     mForecastDemand = 0.0;
     mOriginal_price = 0.0;
@@ -321,11 +316,7 @@ double Market::getRawPrice() const {
 * This function stores the demand and resets demand to zero. 
 */
 void Market::nullDemand() {
-/*#if GCAM_PARALLEL_ENABLED
-    mDemand.clear();
-#else*/
     mDemand = 0;
-//#endif
 }
 
 /*! \brief Add to the the Market an amount of demand in a method based on the
@@ -412,11 +403,7 @@ double Market::getDemand() const {
 * \details This function stores the supply and resets supply to zero. 
 */
 void Market::nullSupply() {
-/*#if GCAM_PARALLEL_ENABLED
-    mSupply.clear();
-#else*/
     mSupply = 0;
-//#endif
 }
 
 /*! \brief Get the raw supply.

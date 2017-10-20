@@ -48,12 +48,6 @@
 #include "containers/include/world.h"
 #include "solution/util/include/solution_info_set.h"
 #include "solution/util/include/functor.hpp"
-#include "util/base/include/atom.h"
-
-#if GCAM_PARALLEL_ENABLED
-#include "tbb/parallel_for.h"
-#include "tbb/blocked_range.h"
-#endif 
 
 #define UBVECTOR boost::numeric::ublas::vector
 
