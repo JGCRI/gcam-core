@@ -65,7 +65,6 @@
 #include "solution/solvers/include/bisection_nr_solver.h"
 #include "solution/util/include/solution_info_param_parser.h" 
 #include "containers/include/imodel_feedback_calc.h"
-#include "containers/include/degree_days_feedback.h"
 #include "util/base/include/manage_state_variables.hpp"
 
 #if GCAM_PARALLEL_ENABLED && PARALLEL_DEBUG
@@ -216,9 +215,6 @@ bool Scenario::XMLParse( const DOMNode* node ){
                     mSolvers[ fillOutPeriod ] = retSolver;
                 }
             }
-        }
-        else if( nodeName == DegreeDaysFeedback::getXMLNameStatic() ) {
-            parseContainerNode( curr, mModelFeedbacks, new DegreeDaysFeedback() );
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );

@@ -18,7 +18,6 @@
 		0E4247D2143D0DCC00A8BBD3 /* sector_activity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E4247D1143D0DCC00A8BBD3 /* sector_activity.cpp */; };
 		0E440957183C7EDF000DA5FF /* node_carbon_calc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E440956183C7EDF000DA5FF /* node_carbon_calc.cpp */; };
 		0E44096E183D501B000DA5FF /* no_emiss_carbon_calc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E44096D183D501B000DA5FF /* no_emiss_carbon_calc.cpp */; };
-		0E898FFD1CB57FC400D1383C /* degree_days_feedback.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E898FFC1CB57FC400D1383C /* degree_days_feedback.cpp */; };
 		0EB5CE791C063E4B008CEF7D /* fractional_secondary_output.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0EB5CE781C063E4B008CEF7D /* fractional_secondary_output.cpp */; };
 		0EF7AF5813E1EFDA0034AA71 /* market_dependency_finder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0EF7AF5113E1EFDA0034AA71 /* market_dependency_finder.cpp */; };
 		0EF7AF5D13E1EFF80034AA71 /* lognrbt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0EF7AF5C13E1EFF80034AA71 /* lognrbt.cpp */; };
@@ -393,8 +392,6 @@
 		0E7338671CB4361700B1CD82 /* factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = factory.h; sourceTree = "<group>"; };
 		0E7338681CB4361700B1CD82 /* gcam_fusion.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = gcam_fusion.hpp; sourceTree = "<group>"; };
 		0E7338691CB5726200B1CD82 /* imodel_feedback_calc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = imodel_feedback_calc.h; sourceTree = "<group>"; };
-		0E898FFB1CB57C9800D1383C /* degree_days_feedback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = degree_days_feedback.h; sourceTree = "<group>"; };
-		0E898FFC1CB57FC400D1383C /* degree_days_feedback.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = degree_days_feedback.cpp; sourceTree = "<group>"; };
 		0EB5CE771C063E3E008CEF7D /* fractional_secondary_output.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fractional_secondary_output.h; sourceTree = "<group>"; };
 		0EB5CE781C063E4B008CEF7D /* fractional_secondary_output.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fractional_secondary_output.cpp; sourceTree = "<group>"; };
 		0EF7AF4A13E1EFCF0034AA71 /* market_dependency_finder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = market_dependency_finder.h; sourceTree = "<group>"; };
@@ -1278,7 +1275,6 @@
 		CD488450122873C000F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
-				0E898FFB1CB57C9800D1383C /* degree_days_feedback.h */,
 				0E4247B5143D009700A8BBD3 /* resource_activity.h */,
 				0EF7AF4A13E1EFCF0034AA71 /* market_dependency_finder.h */,
 				CD488451122873C000F5A88A /* batch_runner.h */,
@@ -1316,7 +1312,6 @@
 		CD488467122873C000F5A88A /* source */ = {
 			isa = PBXGroup;
 			children = (
-				0E898FFC1CB57FC400D1383C /* degree_days_feedback.cpp */,
 				0EF7AF5113E1EFDA0034AA71 /* market_dependency_finder.cpp */,
 				CD488468122873C000F5A88A /* batch_runner.cpp */,
 				CD488469122873C000F5A88A /* dependency_finder.cpp */,
@@ -2636,7 +2631,6 @@
 				CD48877E122873C200F5A88A /* renewable_input.cpp in Sources */,
 				CD48877F122873C200F5A88A /* sgm_input.cpp in Sources */,
 				CD488780122873C200F5A88A /* trade_demand_function.cpp in Sources */,
-				0E898FFD1CB57FC400D1383C /* degree_days_feedback.cpp in Sources */,
 				CD488781122873C200F5A88A /* trade_input.cpp in Sources */,
 				CD488782122873C200F5A88A /* utility_demand_function.cpp in Sources */,
 				CD488783122873C200F5A88A /* accelerator.cpp in Sources */,
