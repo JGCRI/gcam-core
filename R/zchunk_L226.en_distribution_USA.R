@@ -320,7 +320,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
       add_legacy_name("L226.DeleteSupplysector_USAelec") ->
       L226.DeleteSupplysector_USAelec
 
-    if(exists(L226.StubTechCoef_electd_USA)) {
+    if(exists("L226.StubTechCoef_electd_USA")){
       L226.StubTechCoef_electd_USA %>%
         add_title("Stub technology coefficients elec T&D when using national elec markets") %>%
         add_units("NA") %>%
@@ -329,10 +329,21 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
         add_legacy_name("L226.StubTechCoef_electd_USA") %>%
         add_precursors("L226.StubTechCoef_electd") ->
         L226.StubTechCoef_electd_USA
+    }else{
+      # If gcamusa.USE_REGIONAL_ELEC_MARKETS is TRUE,
+      # indicating to resolve electricity demands at the level of the grid regions,
+      # then blank tibbles of the national level data are produced.
+      tibble(x = NA) %>%
+        add_title("Data not created") %>%
+        add_units("Unitless") %>%
+        add_comments("Data not created") %>%
+        add_legacy_name("L226.StubTechCoef_electd_USA") %>%
+        add_precursors("L226.StubTechCoef_electd") ->
+        L226.StubTechCoef_electd_USA
     }
 
 
-    if(exists(L226.TechShrwt_electd_USA)){
+    if(exists("L226.TechShrwt_electd_USA")){
       L226.TechShrwt_electd_USA %>%
         add_title("Tech share weights for elec T&D when using regional electricity markets") %>%
         add_units("NA") %>%
@@ -341,10 +352,21 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
         add_legacy_name("L226.TechShrwt_electd_USA") %>%
         add_precursors("L226.GlobalTechShrwt_en") ->
         L226.TechShrwt_electd_USA
+    }else{
+      # If gcamusa.USE_REGIONAL_ELEC_MARKETS is FALSE,
+      # indicating to resolve electricity demands at the national level,
+      # then blank tibbles of the grid region level data are produced.
+      tibble(x = NA) %>%
+        add_title("Data not created") %>%
+        add_units("Unitless") %>%
+        add_comments("Data not created") %>%
+        add_legacy_name("L226.TechShrwt_electd_USA") %>%
+        add_precursors("L226.GlobalTechShrwt_en") ->
+        L226.TechShrwt_electd_USA
     }
 
 
-    if(exists(L226.TechCost_electd_USA)){
+    if(exists("L226.TechCost_electd_USA")){
       L226.TechCost_electd_USA %>%
         add_title("Tech costs for elec T&D when using regional electricity markets") %>%
         add_units("1975$") %>%
@@ -353,15 +375,38 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
         add_legacy_name("L226.TechCost_electd_USA") %>%
         add_precursors("L226.GlobalTechCost_en") ->
         L226.TechCost_electd_USA
+    }else{
+      # If gcamusa.USE_REGIONAL_ELEC_MARKETS is FALSE,
+      # indicating to resolve electricity demands at the national level,
+      # then blank tibbles of the grid region level data are produced.
+      tibble(x = NA) %>%
+        add_title("Data not created") %>%
+        add_units("Unitless") %>%
+        add_comments("Data not created") %>%
+        add_legacy_name("L226.TechCost_electd_USA") %>%
+        add_precursors("L226.GlobalTechCost_en") ->
+        L226.TechCost_electd_USA
     }
 
 
-    if(exists(L226.TechCoef_electd_USA)){
+    if(exists("L226.TechCoef_electd_USA")){
       L226.TechCoef_electd_USA %>%
         add_title("Tech coefficients for elec T&D when using regional electricity markets") %>%
         add_units("NA") %>%
         add_comments("Tech coeff for elec T&D when using regional electricity markets.") %>%
         add_comments("The elect_td sectors can not use the global tech database as their input is different.") %>%
+        add_legacy_name("L226.TechCoef_electd_USA") %>%
+        add_precursors("gcam-usa/states_subregions",
+                       "L226.StubTechCoef_electd") ->
+        L226.TechCoef_electd_USA
+    }else{
+      # If gcamusa.USE_REGIONAL_ELEC_MARKETS is FALSE,
+      # indicating to resolve electricity demands at the national level,
+      # then blank tibbles of the grid region level data are produced.
+      tibble(x = NA) %>%
+        add_title("Data not created") %>%
+        add_units("Unitless") %>%
+        add_comments("Data not created") %>%
         add_legacy_name("L226.TechCoef_electd_USA") %>%
         add_precursors("gcam-usa/states_subregions",
                        "L226.StubTechCoef_electd") ->
