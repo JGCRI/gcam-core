@@ -1015,73 +1015,59 @@ module_energy_L223.electricity <- function(command, ...) {
       L223.GlobalIntTechOMfixed_elec
 
     L223.GlobalTechOMvar_elec %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Variable operation and maintenance costs of non-intermittent electricity sector technologies") %>%
+      add_units("1975$US/MWh") %>%
+      add_comments("values interpolated from assumptions in A23.globaltech_OMvar") %>%
       add_legacy_name("L223.GlobalTechOMvar_elec") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.globaltech_OMvar", "energy/A23.globalinttech") ->
       L223.GlobalTechOMvar_elec
 
     L223.GlobalIntTechOMvar_elec %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Variable operation and maintenance costs of intermittent electricity sector technologies") %>%
+      add_units("1975$US/MWh") %>%
+      add_comments("values interpolated from assumptions in A23.globaltech_OMvar") %>%
       add_legacy_name("L223.GlobalIntTechOMvar_elec") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.globaltech_OMvar", "energy/A23.globalinttech") ->
       L223.GlobalIntTechOMvar_elec
 
     L223.GlobalTechShrwt_elec %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Global shareweights for non-intermittent technologies for the electricity sector") %>%
+      add_units("unitless") %>%
+      add_comments("interpolated from model assumptions in A23.globaltech_shrwt") %>%
       add_legacy_name("L223.GlobalTechShrwt_elec") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.globaltech_shrwt", "energy/A23.globalinttech") ->
       L223.GlobalTechShrwt_elec
 
     L223.GlobalTechInterp_elec %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Interpolation rules for electricity technologies") %>%
+      add_units("unitless") %>%
+      add_comments("model years applied to assumptions in A23.globaltech_interp") %>%
       add_legacy_name("L223.GlobalTechInterp_elec") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.globaltech_interp") ->
       L223.GlobalTechInterp_elec
 
     L223.GlobalIntTechShrwt_elec %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Global shareweights for intermittent technologies for the electricity sector") %>%
+      add_units("unitless") %>%
+      add_comments("interpolated from model assumptions in A23.globaltech_shrwt") %>%
       add_legacy_name("L223.GlobalIntTechShrwt_elec") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.globaltech_shrwt", "energy/A23.globalinttech") ->
       L223.GlobalIntTechShrwt_elec
 
     L223.PrimaryRenewKeyword_elec %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("keywords for non-intermittent renewable technologies for the electricity sector") %>%
+      add_units("unitless") %>%
+      add_comments("subset from A23.globaltech_keyword") %>%
       add_legacy_name("L223.PrimaryRenewKeyword_elec") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.globaltech_keyword") ->
       L223.PrimaryRenewKeyword_elec
 
     L223.PrimaryRenewKeywordInt_elec %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("keywords for intermittent renewable technologies") %>%
+      add_units("unitless") %>%
+      add_comments("Subset from A23.globaltech_keyword") %>%
       add_legacy_name("L223.PrimaryRenewKeywordInt_elec") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.globaltech_keyword") ->
       L223.PrimaryRenewKeywordInt_elec
 
     L223.AvgFossilEffKeyword_elec %>%
