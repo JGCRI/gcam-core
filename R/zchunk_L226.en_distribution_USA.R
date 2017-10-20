@@ -272,6 +272,8 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
         rename(supplysector = sector.name,
                subsector = subsector.name) ->
         L226.TechShrwt_electd_USA
+
+
     }
 
 
