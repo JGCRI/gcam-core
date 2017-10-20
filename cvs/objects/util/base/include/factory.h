@@ -57,7 +57,7 @@
 #include <boost/fusion/include/any.hpp>
 #include <boost/fusion/include/accumulate.hpp>
 
-//#include "util/logger/include/ilogger.h"
+#include "util/logger/include/ilogger.h"
 
 /*!
  * \brief A generic factory that can create any member of a SubClassFamilyVector
@@ -121,11 +121,9 @@ struct Factory {
 
         // If we still have a null pointer then no names matched.
         if( !ret ) {
-            /*
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::SEVERE );
             mainLog << "Could not create unknown type " << aXMLName << std::endl;
-            */
         }
         return ret;
     }

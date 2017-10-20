@@ -95,7 +95,7 @@ protected:
     //! A CDD feedback coefficient of sorts
     double mCDDCoef;
     
-    //! The base year uhh.. value to calculate feedback from
+    //! The base year emissions value to calculate feedback from
     double mBaseYearValue;
     
     //! Store the degree day scaler for use in the call back from GCAMFusion to

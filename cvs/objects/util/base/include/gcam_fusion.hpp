@@ -763,7 +763,11 @@ struct FilterStep {
     void>::type applyFilter( DataType& aData, DataVectorHandler& aHandler, const bool aIsLastStep ) {
         assert( matchesDataName( aData ) );
         if( !aIsLastStep ) {
-            // TODO: error?
+            if( !isDescendantStep() ) {
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::WARNING );
+                mainLog << "Attempting to take a step into " << aData.mDataName << " but Data is of type ARRAY" << std::endl;
+            }
             return;
         }
         if( mNoFilters ) {
@@ -808,13 +812,18 @@ struct FilterStep {
         if( !mNoFilters ) {
             // There was a filter set however a simple DataType can not be filtered
             // so this data will not be processed.
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Attempting to filter " << aData.mDataName << " but Data is of type SIMPLE" << std::endl;
             return;
         }
         else if( aIsLastStep ) {
             aHandler.processData( aData.mData );
         }
-        else {
-            // TODO: error?
+        else if( !isDescendantStep() ){
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Attempting to take a step into " << aData.mDataName << " but Data is of type SIMPLE" << std::endl;
         }
     }
 };
@@ -832,12 +841,12 @@ std::vector<FilterStep*> parseFilterString( const std::string& aFilterStr );
  *          CONTAINER object to start the search from.
  *          The GCAMFusion object takes four template parameters:
  *            - The type of the object that can handle the results of the search.
- *            - A boolean flag to indicate if said object will process the data being
- *              found (default is false).
  *            - A boolean flag to indicate if said object will process the start of
  *              each step taken into a CONTAINER object (default is false).
  *            - A boolean flag to indicate if said object will process stepping out
  *              of a CONTAINER object (default is false).
+ *            - A boolean flag to indicate if said object will process the data being
+ *              found (default is true).
  *
  *          GCAMFusion will then perform the search by essentially performing a depth
  *          first search on the DataVectors of the GCAM CONTAINER objects.  At each
@@ -856,7 +865,7 @@ std::vector<FilterStep*> parseFilterString( const std::string& aFilterStr );
  *          as taking no steps into the list of FilterSteps AND taking the typical one
  *          step into the list of FilterSteps.
  */
-template<typename DataProcessor, bool ProcessData=false, bool ProcessPushStep=false, bool ProcessPopStep=false>
+template<typename DataProcessor, bool ProcessPushStep=false, bool ProcessPopStep=false, bool ProcessData=true>
 class GCAMFusion {
     public:
     /*
@@ -879,6 +888,7 @@ class GCAMFusion {
                 mainLog << "Back to back descendant steps will cause infinite recursion." << std::endl;
                 abort();
             }
+            wasLastDescendant = isCurrDescendant;
         }
     }
     
