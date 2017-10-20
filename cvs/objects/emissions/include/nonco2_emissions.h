@@ -45,10 +45,13 @@
  */
 
 #include "emissions/include/aghg.h"
+#include "util/base/include/time_vector.h"
 #include "util/base/include/value.h"
 
+// Forward declaration
 class AEmissionsDriver;
 class AEmissionsControl;
+class IInfo;
 
 /*! 
  * \ingroup Objects
@@ -56,6 +59,7 @@ class AEmissionsControl;
  * \author Kate Calvin
  */
 class NonCO2Emissions: public AGHG {
+
 public:
     NonCO2Emissions();
     
@@ -72,7 +76,7 @@ public:
                                const IInfo* aTechIInfo );
 
     virtual void initCalc( const std::string& aRegionName,
-                           const IInfo* aLocalInfo,
+                           const IInfo* aTechIInfo,
                            const int aPeriod );
 
     virtual double getGHGValue( const std::string& aRegionName,
@@ -91,7 +95,10 @@ public:
     virtual void doInterpolations( const int aYear, const int aPreviousYear,
                                    const int aNextYear, const AGHG* aPreviousGHG,
                                    const AGHG* aNextGHG );
-protected: 
+
+    double getAdjustedEmissCoef( const int aPeriod ) const;
+    
+protected:
     NonCO2Emissions( const NonCO2Emissions& aOther );
     NonCO2Emissions& operator=( const NonCO2Emissions& aOther );
     
@@ -112,7 +119,11 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "input-emissions", mInputEmissions, Value ),
                                 
         //! Set of emissions controls
-        DEFINE_VARIABLE( CONTAINER, "emissions-control", mEmissionsControls, std::vector<AEmissionsControl*> )
+        DEFINE_VARIABLE( CONTAINER, "emissions-control", mEmissionsControls, std::vector<AEmissionsControl*> ),
+                                
+        //! Stored Emissions Coefficient (needed for some control technologies)
+        //! The emissions coefficient is the current ratio of emissions to driver, accounting for any controls   
+        DEFINE_VARIABLE( ARRAY | STATE, "control-adjusted-emiss-coef", mAdjustedEmissCoef, objects::PeriodVector<Value> )
     )
 
     //! A flag to indicate if mInputEmissions should be used recalibrate mEmissionsCoef

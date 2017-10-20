@@ -55,10 +55,12 @@
 // Forward declarations
 class GDP;
 class IInfo;
+class NonCO2Emissions;
 
 // Need to forward declare the subclasses as well.
 class GDPControl;
 class MACControl;
+class LinearControl;
 
 /*! 
  * \ingroup Objects
@@ -98,11 +100,13 @@ public:
     /*!
      * \brief Perform initializations that only need to be done once per period.
      * \param aRegionName Region name.
-     * \param aLocalInfo The local information object.
+     * \param aTechInfo The local information object.
+     * \param aParentGHG The NonCO2Emissions that contains this object.
      * \param aPeriod Model period.
      */
     virtual void initCalc( const std::string& aRegionName,
-                           const IInfo* aLocalInfo,
+                           const IInfo* aTechInfo,
+                           const NonCO2Emissions* aParentGHG,
                            const int aPeriod ) = 0;
 
 protected:
@@ -164,7 +168,7 @@ protected:
         /* Declare all subclasses of AEmissionsControl to allow automatic traversal of the
          * hierarchy under introspection.
          */
-        DEFINE_SUBCLASS_FAMILY( AEmissionsControl, GDPControl, MACControl ),
+        DEFINE_SUBCLASS_FAMILY( AEmissionsControl, GDPControl, MACControl, LinearControl ),
         
         //! Name of the reduction so that users can have multiple emissions reductions
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),

@@ -522,7 +522,7 @@ double IntermittentTechnology::getMarginalBackupCapacity( const string& aRegionN
         const string& resourceName = ( *mResourceInput )->getName();
         backupCapacity = mBackupCalculator->getMarginalBackupCapacity( aSectorName,
                          mElectricSectorName, resourceName, aRegionName,
-                         mElecReserveMargin, mAveGridCapacityFactor, aPeriod );
+                         mCapacityFactor, mElecReserveMargin, mAveGridCapacityFactor, aPeriod );
     }
 
     /*! \post Backup capacity is a valid number and positive. */
@@ -549,7 +549,7 @@ double IntermittentTechnology::getAverageBackupCapacity( const string& aRegionNa
         const string& resourceName = ( *mResourceInput )->getName();
         backupCapacity = mBackupCalculator->getAverageBackupCapacity( aSectorName,
                          mElectricSectorName, resourceName, aRegionName,
-                         mElecReserveMargin, mAveGridCapacityFactor, aPeriod );
+                         mCapacityFactor, mElecReserveMargin, mAveGridCapacityFactor, aPeriod );
     }
 
     /*! \post Backup capacity is a valid number and positive. */

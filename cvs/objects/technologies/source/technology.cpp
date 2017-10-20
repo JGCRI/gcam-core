@@ -138,6 +138,7 @@ void Technology::copy( const Technology& techIn ) {
     mCosts = techIn.mCosts;
     mFixedOutput = techIn.mFixedOutput;
     mAlphaZero = techIn.mAlphaZero;
+    mCapacityFactor = techIn.mCapacityFactor;
 
     // Copy the input vector.
     for( vector<IInput*>::const_iterator iter = techIn.mInputs.begin(); iter != techIn.mInputs.end(); ++iter ) {
@@ -213,6 +214,7 @@ void Technology::init()
     mPMultiplier = 1;
     mFixedOutput = -1;
     mAlphaZero = 1;
+    mCapacityFactor = 1;
 }
 
 bool Technology::isSameType( const string& aType ) const {
@@ -250,6 +252,9 @@ bool Technology::XMLParse( const DOMNode* node )
         }
         else if( nodeName == "fixedOutput" ) {
             mFixedOutput = XMLHelper<double>::getValue( curr );
+        }
+        else if( nodeName == "capacity-factor" ) {
+            mCapacityFactor = XMLHelper<double>::getValue( curr );
         }
         else if( InputFactory::isOfType( nodeName ) ) {
             parseContainerNode( curr, mInputs, InputFactory::create( nodeName ).release() );
@@ -312,6 +317,9 @@ void Technology::completeInit( const string& aRegionName,
     // Inititalize the technology info object
     mTechnologyInfo.reset( InfoFactory::constructInfo( aSubsectorInfo, mName ) );
 
+    // include technology capacity factor in info object for available use by inputs, outputs and other components
+    mTechnologyInfo->setDouble( "tech-capacity-factor", mCapacityFactor );
+
     /*! \pre There must be at least one input. */
    // assert( !mInputs.empty() ); //sjs remove this for now since ag techs don't have any inputs at present
     // Check for an unset or invalid year.
@@ -358,7 +366,7 @@ void Technology::completeInit( const string& aRegionName,
     
     // Complete the initialization of the inputs. Pass the inputs and outputs
     // the most local info object available.
-    const IInfo* localInfo = getTechInfo() != 0 ? getTechInfo() : aSubsectorInfo;
+    const IInfo* localInfo = getTechInfo() != 0 ? getTechInfo() : mTechnologyInfo.get();
     for( unsigned int i = 0; i < mInputs.size(); ++i ) {
         mInputs[ i ]->completeInit( aRegionName, aSectorName, aSubsectorName, mName, localInfo );
     }
@@ -476,6 +484,7 @@ void Technology::toInputXML( ostream& out,
     XMLWriteElementCheckDefault( mLifetimeYears, "lifetime", out, tabs, defualtLifetimeYears );
     XMLWriteElementCheckDefault( mFixedOutput, "fixedOutput", out, tabs, getFixedOutputDefault() );
     XMLWriteElementCheckDefault( mPMultiplier, "pMultiplier", out, tabs, 1.0 );
+    XMLWriteElementCheckDefault( mCapacityFactor, "capacity-factor", out, tabs, 1.0 );
     if( !mKeywordMap.empty() ) {
         XMLWriteElementWithAttributes( "", "keyword", out, tabs, mKeywordMap );
     }
@@ -540,6 +549,7 @@ void Technology::toDebugXML( const int period,
     XMLWriteElement( mAlphaZero, "alpha-zero", out, tabs );
     XMLWriteElement( mCosts[ period ], "cost", out, tabs );
     XMLWriteElement( mPMultiplier, "pMultiplier", out, tabs );
+    XMLWriteElementCheckDefault( mCapacityFactor, "capacity-factor", out, tabs, 1.0 );
     if( mCalValue ) {
         mCalValue->toDebugXML( out, tabs );
     }
@@ -635,6 +645,7 @@ void Technology::initCalc( const string& aRegionName,
     }
     
     mTechnologyInfo->setBoolean( "new-vintage-tech", mProductionState[ aPeriod ]->isNewInvestment() );
+    mTechnologyInfo->setBoolean( "is-tech-operating", mProductionState[ aPeriod ]->isOperating() );
 
     for( unsigned int i = 0; i < mGHG.size(); i++ ) {
         mGHG[ i ]->initCalc( aRegionName, mTechnologyInfo.get(), aPeriod );

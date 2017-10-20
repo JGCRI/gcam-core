@@ -304,8 +304,12 @@ void Resource::initCalc( const string& aRegionName, const int aPeriod ) {
         mSubResource[i]->initCalc( aRegionName, mName, aPeriod );
     }
 
+    // The GHG objects will need to check the following flags to properly
+    // initialize and do error checking.
+    mResourceInfo->setBoolean( "new-vintage-tech", true );
+    mResourceInfo->setBoolean( "is-tech-operating", true );
     for( unsigned int i = 0; i < mGHG.size(); i++ ) {
-        mGHG[ i ]->initCalc( aRegionName, 0, aPeriod );
+        mGHG[ i ]->initCalc( aRegionName, mResourceInfo.get(), aPeriod );
     }
     
     for( unsigned int i = 0; i < mOutputs.size(); i++ ) {

@@ -330,6 +330,9 @@ protected:
 
         //! The Logit share weight that was parsed by the user
         DEFINE_VARIABLE( SIMPLE, "parsed-share-weight", mParsedShareWeight, Value ),
+
+        //! The annual capacity factor
+        DEFINE_VARIABLE( SIMPLE, "capacity-factor", mCapacityFactor, double ),
         
         //! Price multiplier (multiplies costs but not secondary revenue)
         DEFINE_VARIABLE( SIMPLE, "pMultiplier", mPMultiplier, double ),
