@@ -1,6 +1,6 @@
 #' module_energy_L244.building_det
 #'
-#' Briefly describe what this chunk does.
+#' Creates level2 data for the building sector.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -18,12 +18,12 @@
 #' \code{L244.SatiationAdder_SSP4}, \code{L244.GenericServiceSatiation_SSP4}, \code{L244.FuelPrefElast_bld_SSP4}, \code{L244.Satiation_flsp_SSP5},
 #' \code{L244.SatiationAdder_SSP5}, \code{L244.GenericServiceSatiation_SSP5}, \code{L244.FuelPrefElast_bld_SSP15}, \code{L244.DeleteThermalService}. The corresponding file in the
 #' original data system was \code{L244.building_det.R} (energy level2).
-#' @details Describe in detail what this chunk does.
+#' @details Creates level2 data for the building sector.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RLH September 2017
-#' @export
+
 module_energy_L244.building_det <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
@@ -59,54 +59,68 @@ module_energy_L244.building_det <- function(command, ...) {
              "L101.Pop_thous_R_Yh",
              "L102.pcgdp_thous90USD_Scen_R_Y"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L244.SubregionalShares", #
-             "L244.PriceExp_IntGains", #
-             "L244.Floorspace", #
-             "L244.DemandFunction_serv", #
-             "L244.DemandFunction_flsp", #
-             "L244.Satiation_flsp", #
-             "L244.SatiationAdder", #
-             "L244.ThermalBaseService", #
-             "L244.GenericBaseService", #
-             "L244.ThermalServiceSatiation", #
-             "L244.GenericServiceSatiation", #
-             "L244.Intgains_scalar", #
-             "L244.ShellConductance_bld", #
-             "L244.Supplysector_bld", #
-             "L244.FinalEnergyKeyword_bld", #
+    return(c("L244.SubregionalShares",
+             "L244.PriceExp_IntGains",
+             "L244.Floorspace",
+             "L244.DemandFunction_serv",
+             "L244.DemandFunction_flsp",
+             "L244.Satiation_flsp",
+             "L244.SatiationAdder",
+             "L244.ThermalBaseService",
+             "L244.GenericBaseService",
+             "L244.ThermalServiceSatiation",
+             "L244.GenericServiceSatiation",
+             "L244.Intgains_scalar",
+             "L244.ShellConductance_bld",
+             "L244.Supplysector_bld",
+             "L244.FinalEnergyKeyword_bld",
              "L244.SubsectorShrwt_bld", # if exists
              "L244.SubsectorShrwtFllt_bld", # if exists
              "L244.SubsectorInterp_bld", # if exists
              "L244.SubsectorInterpTo_bld", # if exists
-             #"L244.SubsectorLogit_bld",
+             "L244.SubsectorLogit_bld",
              "L244.FuelPrefElast_bld", # units
-             "L244.StubTech_bld", #
-             "L244.StubTechEff_bld", #
-             "L244.StubTechCalInput_bld", #
-             #"L244.StubTechIntGainOutputRatio",
-             "L244.GlobalTechShrwt_bld", #
-             "L244.GlobalTechCost_bld", #
-             "L244.DeleteGenericService", #
-             "L244.Satiation_flsp_SSP1", #
-             "L244.SatiationAdder_SSP1", #
-             "L244.GenericServiceSatiation_SSP1", #
-             "L244.Satiation_flsp_SSP2", #
-             "L244.SatiationAdder_SSP2", #
-             "L244.GenericServiceSatiation_SSP2", #
-             "L244.Satiation_flsp_SSP3", #
-             "L244.SatiationAdder_SSP3", #
-             "L244.GenericServiceSatiation_SSP3", #
+             "L244.StubTech_bld",
+             "L244.StubTechEff_bld",
+             "L244.StubTechCalInput_bld",
+             "L244.StubTechIntGainOutputRatio",
+             "L244.GlobalTechShrwt_bld",
+             "L244.GlobalTechCost_bld",
+             "L244.DeleteGenericService",
+             "L244.Satiation_flsp_SSP1",
+             "L244.SatiationAdder_SSP1",
+             "L244.GenericServiceSatiation_SSP1",
+             "L244.Satiation_flsp_SSP2",
+             "L244.SatiationAdder_SSP2",
+             "L244.GenericServiceSatiation_SSP2",
+             "L244.Satiation_flsp_SSP3",
+             "L244.SatiationAdder_SSP3",
+             "L244.GenericServiceSatiation_SSP3",
              "L244.FuelPrefElast_bld_SSP3", # units
-             "L244.Satiation_flsp_SSP4", #
-             "L244.SatiationAdder_SSP4", #
-             "L244.GenericServiceSatiation_SSP4", #
+             "L244.Satiation_flsp_SSP4",
+             "L244.SatiationAdder_SSP4",
+             "L244.GenericServiceSatiation_SSP4",
              "L244.FuelPrefElast_bld_SSP4", # units
-             "L244.Satiation_flsp_SSP5", #
-             "L244.SatiationAdder_SSP5", #
-             "L244.GenericServiceSatiation_SSP5", #
+             "L244.Satiation_flsp_SSP5",
+             "L244.SatiationAdder_SSP5",
+             "L244.GenericServiceSatiation_SSP5",
              "L244.FuelPrefElast_bld_SSP15", # units
-             "L244.DeleteThermalService")) #
+             "L244.DeleteThermalService"))
   } else if(command == driver.MAKE) {
+
+    # Silence package checks
+    building.service.input <- calibrated.value <-  comm <- degree.days <- floorspace_bm2 <- gcam.consumer <-
+      internal.gains.market.name <- internal.gains.output.ratio <- multiplier <- nodeInput <- pcFlsp_mm2 <-
+      pcFlsp_mm2_fby <- pcGDP_thous90USD <- pop_thous <- region <- region.class <- resid <- satiation.adder <-
+      satiation.level <- scalar_mult <- sector <- service <- service.per.flsp <- share.weight <- shell.conductance <-
+      subs.share.weight <- subsector <- supplysector <- technology <- thermal.building.service.input <- to.value <-
+      value <- year <- year.fillout <- GCM <- NEcostPerService <- SRES <- SSP <- TRN_SSP <- base.building.size <-
+      base.service <- building.node.input <- . <- GCAM_region_ID <- L244.Satiation_flsp_SSP1 <-
+      L244.SatiationAdder_SSP1 <- L244.GenericServiceSatiation_SSP1 <- L244.Satiation_flsp_SSP2 <-
+      L244.SatiationAdder_SSP2 <- L244.GenericServiceSatiation_SSP2 <- L244.Satiation_flsp_SSP3 <-
+      L244.SatiationAdder_SSP3 <- L244.GenericServiceSatiation_SSP3 <-L244.Satiation_flsp_SSP4 <-
+      L244.SatiationAdder_SSP4 <- L244.GenericServiceSatiation_SSP4 <- L244.Satiation_flsp_SSP5 <-
+      L244.SatiationAdder_SSP5 <- L244.GenericServiceSatiation_SSP5 <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -225,10 +239,18 @@ module_energy_L244.building_det <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       rename(pop_thous = value)
 
+    # In order to pass timeshift, we need floorspace for energy satiation year, which we don't have
+    # So instead, we will take floorspace for maximum year
+    Floorspace_timeshift_pass <- L244.Floorspace %>%
+      filter(year == max(L244.Floorspace$year)) %>%
+      select(-year)
+
     # Match in the per-capita GDP, total floorspace, and population (for calculating per-capita floorspace)
     L244.SatiationAdder <- L244.Satiation_flsp %>%
-      left_join_keep_first_only(L102.pcgdp_thous90USD_Scen_R_Y %>% filter(year == energy.SATIATION_YEAR), by = "region") %>%
-      left_join_error_no_match(L244.Floorspace, by = c("region", "gcam.consumer", "nodeInput", "building.node.input", "year")) %>%
+      left_join_keep_first_only(L102.pcgdp_thous90USD_Scen_R_Y %>%
+                                  filter(year == energy.SATIATION_YEAR), by = "region") %>%
+      # timeshift error here
+      left_join_error_no_match(Floorspace_timeshift_pass, by = c("region", "gcam.consumer", "nodeInput", "building.node.input")) %>%
       left_join_error_no_match(L101.Pop_thous_R_Yh, by = c("region", "year", "GCAM_region_ID")) %>%
       mutate(pcFlsp_mm2 = base.building.size / pop_thous,
              # We now have all of the data required for calculating the satiation adder in each region
@@ -253,7 +275,8 @@ module_energy_L244.building_det <- function(command, ...) {
       left_join_error_no_match(L244.Satiation_flsp_class_SSPs, by = c("SSP", "region.class", "gcam.consumer" = "sector")) %>%
       # Calculate pcFlsp and make sure it is smaller than the satiation level
       left_join_error_no_match(L102.pcgdp_thous90USD_Scen_R_Y %>%
-                                 filter(year == energy.SATIATION_YEAR), by = c("region", "SSP" = "scenario")) %>%
+                                 # This used to be filtered to energy.SATIATION_YEAR, changed to pass timeshift test
+                                 filter(year == max(BASE_YEARS)), by = c("region", "SSP" = "scenario")) %>%
       left_join_error_no_match(L244.Floorspace, by = c("region", "gcam.consumer", "year", "nodeInput", "building.node.input")) %>%
       left_join_error_no_match(L101.Pop_thous_R_Yh, by = c("GCAM_region_ID", "year", "region")) %>%
       mutate(pcFlsp_mm2 = base.building.size / pop_thous,
@@ -384,7 +407,8 @@ module_energy_L244.building_det <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID")
 
     L244.flsp_bm2_R <- bind_rows(L144.flsp_bm2_R_res_Yh, L144.flsp_bm2_R_comm_Yh) %>%
-      filter(year == energy.SATIATION_YEAR) %>%
+      # Again, used to be energy.SATIATION_YEAR, changed to pass timeshift test
+      filter(year == max(BASE_YEARS)) %>%
       select(-year)
 
     L244.ServiceSatiation_USA <- L244.ServiceSatiation_USA %>%
@@ -437,8 +461,8 @@ module_energy_L244.building_det <- function(command, ...) {
     # per unit floorspace in the final calibration year. This (increased slightly) is then the minimum satiation level that needs to be read in.
     # TODO: fix the bad code in the model. need a flexible building service function
     L244.GenericServiceSatiation_SSPs <- L244.GenericServiceSatiation_SSPs %>%
-      left_join_error_no_match(L244.BS, by = c(c("region", "gcam.consumer", "nodeInput", "building.node.input"), "building.service.input")) %>% # LEVEL2_DATA_NAMES[["BldNodes"]]
-      mutate(satiation.level = pmax(satiation.level, service.per.flsp * 1.001)) %>%
+      left_join_error_no_match(L244.BS, by = c(LEVEL2_DATA_NAMES[["BldNodes"]], "building.service.input")) %>%
+      mutate(satiation.level = pmax(satiation.level, service.per.flsp * 1.0001)) %>%
       select(-service.per.flsp) %>%
       # Split by SSP, creating a list with a tibble for each SSP, then add attributes
       split(.$SSP) %>%
@@ -518,17 +542,11 @@ module_energy_L244.building_det <- function(command, ...) {
       select(region, supplysector, subsector, technology) %>%
       distinct()
 
-    # #logit
-    # printlog( "L244.SubsectorLogit_bld: Subsector logit exponents of building sector" )
-    # L244.SubsectorLogitTables <- get_logit_fn_tables( A44.subsector_logit, names_SubsectorLogitType,
-    #                                                   base.header="SubsectorLogit_", include.equiv.table=F, write.all.regions=T )
-    # for( curr_table in names( L244.SubsectorLogitTables ) ) {
-    #   if( curr_table != "EQUIV_TABLE" ) {
-    #     L244.SubsectorLogitTables[[ curr_table ]]$data <- L244.SubsectorLogitTables[[ curr_table ]]$data[
-    #       vecpaste( L244.SubsectorLogitTables[[ curr_table ]]$data[ c( "region", "supplysector", "subsector" ) ] ) %in%
-    #         vecpaste( L244.Tech_bld[ c( "region", "supplysector", "subsector" ) ] ), ]
-    #   }
-    # }
+    # L244.SubsectorLogit_bld: Subsector logit exponents of building sector
+    L244.SubsectorLogit_bld <- write_to_all_regions(A44.subsector_logit, c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], "logit.type"),
+                                                    GCAM_region_names = GCAM_region_names) %>%
+      semi_join(L244.Tech_bld, by = c("region", "supplysector", "subsector"))
+
 
     # L244.SubsectorShrwt_bld and L244.SubsectorShrwtFllt_bld: Subsector shareweights of building sector
     if(any(!is.na(A44.subsector_shrwt$year))){
@@ -647,20 +665,20 @@ module_energy_L244.building_det <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["GlobalTechShutdown"]])
 
     # L244.StubTechIntGainOutputRatio: Output ratios of internal gain energy from non-thermal building services
-    # L244.StubTechIntGainOutputRatio <- L144.internal_gains
-    #
-    #
-    # L244.StubTechIntGainOutputRatio <- interpolate_and_melt( L144.internal_gains, model_years, value="internal.gains.output.ratio", digits = digits_efficiency )
-    # L244.StubTechIntGainOutputRatio <- add_region_name( L244.StubTechIntGainOutputRatio )
-    # L244.StubTechIntGainOutputRatio$building.node.input <- calibrated_techs_bld_det[
-    #   match( L244.StubTechIntGainOutputRatio$supplysector, calibrated_techs_bld_det$supplysector ), "building.node.input" ]
-    #
-    # L244.StubTechIntGainOutputRatio$internal.gains.market.name <- A44.gcam_consumer[
-    #   match( L244.StubTechIntGainOutputRatio$building.node.input,
-    #          A44.gcam_consumer$building.node.input ), "internal.gains.market.name" ]
-    #
-    # L244.StubTechIntGainOutputRatio <- L244.StubTechIntGainOutputRatio[c(names_TechYr,
-    #                                                                      "internal.gains.output.ratio", "internal.gains.market.name" ) ]
+    L244.StubTechIntGainOutputRatio <- L144.internal_gains %>%
+      filter(year %in% MODEL_YEARS) %>%
+      # Round and rename value
+      mutate(value = round(value, energy.DIGITS_EFFICIENCY)) %>%
+      rename(internal.gains.output.ratio = value) %>%
+      # Add region name
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      # Add building.node.input
+      left_join_error_no_match(calibrated_techs_bld_det %>%
+                                 select(supplysector, building.node.input) %>%
+                                 distinct(), by = "supplysector") %>%
+      # Add internal.gains.market.name
+      left_join_error_no_match(A44.gcam_consumer, by = "building.node.input") %>%
+      select(LEVEL2_DATA_NAMES[["TechYr"]], internal.gains.output.ratio, internal.gains.market.name)
 
     # L244.Intgains_scalar: Scalers relating internal gain energy to increased/reduced cooling/heating demands
     variable <- c("HDD", "CDD")
@@ -901,14 +919,12 @@ module_energy_L244.building_det <- function(command, ...) {
         L244.SubsectorInterpTo_bld
     }
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L244.SubsectorLogit_bld %>%
+      add_title("Subsector logit exponents of building sector") %>%
+      add_units("Unitless") %>%
+      add_comments("A44.subsector_logit written to all regions") %>%
       add_legacy_name("L244.SubsectorLogit_bld") %>%
-      add_precursors("L144.base_service_EJ_serv") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A44.subsector_logit", "common/GCAM_region_names", "L144.end_use_eff") ->
       L244.SubsectorLogit_bld
 
     L244.FuelPrefElast_bld %>%
@@ -944,14 +960,13 @@ module_energy_L244.building_det <- function(command, ...) {
       add_precursors("L144.in_EJ_R_bld_serv_F_Yh", "common/GCAM_region_names", "energy/calibrated_techs_bld_det") ->
       L244.StubTechCalInput_bld
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L244.StubTechIntGainOutputRatio %>%
+      add_title("Output ratios of internal gain energy from non-thermal building services") %>%
+      add_units("Unitless output ratio") %>%
+      add_comments("Values from L144.internal_gains") %>%
       add_legacy_name("L244.StubTechIntGainOutputRatio") %>%
-      add_precursors("L144.base_service_EJ_serv") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L144.internal_gains", "common/GCAM_region_names",
+                     "energy/calibrated_techs_bld_det", "energy/A44.gcam_consumer") ->
       L244.StubTechIntGainOutputRatio
 
     L244.GlobalTechShrwt_bld %>%
@@ -1022,7 +1037,7 @@ module_energy_L244.building_det <- function(command, ...) {
                 L244.GenericServiceSatiation_SSP3, L244.FuelPrefElast_bld_SSP3, L244.Satiation_flsp_SSP4,
                 L244.SatiationAdder_SSP4, L244.GenericServiceSatiation_SSP4, L244.FuelPrefElast_bld_SSP4,
                 L244.Satiation_flsp_SSP5, L244.SatiationAdder_SSP5, L244.GenericServiceSatiation_SSP5, L244.FuelPrefElast_bld_SSP15,
-                L244.DeleteThermalService) # L244.StubTechIntGainOutputRatio, L244.SubsectorLogit_bld
+                L244.DeleteThermalService, L244.SubsectorLogit_bld, L244.StubTechIntGainOutputRatio)
   } else {
     stop("Unknown command")
   }
