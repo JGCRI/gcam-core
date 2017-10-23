@@ -48,7 +48,7 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
     GWP <- get_data(all_data, "emissions/A41.GWP")
 
     L144.in_EJ_R_bld_serv_F_Yh <- get_data(all_data, "L144.in_EJ_R_bld_serv_F_Yh")
-    get_data(all_data, "emissions/EDGAR/EDGAR_SF6")  %>%
+    get_data(all_data, "emissions/EDGAR/EDGAR_SF6") %>%
       gather(year, value, matches(YEAR_PATTERN)) %>%
       mutate(year = as.integer(year)) ->
       EDGAR_SF6

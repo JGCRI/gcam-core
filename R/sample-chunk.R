@@ -22,7 +22,7 @@ module_sample_sample <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    # printlog( "Historical GDP and per-capita GDP by state" )
+    # printlog("Historical GDP and per-capita GDP by state")
 
     # Load data
     input1 <- get_data(all_data, "common/iso_GCAM_regID")

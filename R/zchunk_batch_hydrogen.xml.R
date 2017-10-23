@@ -10,7 +10,7 @@
 #' original data system was \code{batch_hydrogen.xml.R} (energy XML).
 module_energy_batch_hydrogen.xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L225.SubsectorLogit_h2",
+    return(c("L225.SubsectorLogit_h2",
               "L225.SubsectorShrwt_h2",
               "L225.SubsectorInterp_h2",
               "L225.SubsectorInterpTo_h2",

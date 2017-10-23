@@ -10,7 +10,7 @@
 #' original data system was \code{batch_en_transformation.xml.R} (energy XML).
 module_energy_batch_en_transformation.xml_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L222.SubsectorLogit_en",
+    return(c("L222.SubsectorLogit_en",
               "L222.SubsectorShrwt_en",
               "L222.SubsectorInterp_en",
               "L222.SubsectorInterpTo_en",

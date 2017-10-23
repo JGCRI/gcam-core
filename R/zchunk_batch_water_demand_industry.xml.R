@@ -10,7 +10,7 @@
 #' original data system was \code{batch_water_demand_industry.xml.R} (water XML).
 module_water_batch_water_demand_industry.xml_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L232.TechCoef"))
+    return(c("L232.TechCoef"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "water_demand_industry.xml"))
   } else if(command == driver.MAKE) {

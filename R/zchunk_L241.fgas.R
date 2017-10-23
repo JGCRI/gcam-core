@@ -138,7 +138,7 @@ module_emissions_L241.fgas <- function(command, ...) {
     # Estimate future emission for non-cooling emissions.
     #
     # First, subset the hfc emissions for non-cooling emissions.
-    L141.hfc_R_S_T_Yh  %>%
+    L141.hfc_R_S_T_Yh %>%
       filter(!supplysector %in% c("resid cooling", "comm cooling")) %>%
       # EF is 1000 x emissions for non-cooling sectors
       mutate(value = value * 1000) %>%

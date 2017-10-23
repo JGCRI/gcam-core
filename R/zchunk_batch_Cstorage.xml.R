@@ -10,7 +10,7 @@
 #' original data system was \code{batch_Cstorage.xml.R} (energy XML).
 module_energy_batch_Cstorage.xml_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L261.DepRsrc",
+    return(c("L261.DepRsrc",
               "L261.UnlimitRsrc",
               "L261.DepRsrcCurves_C",
               "L261.Supplysector_C",
