@@ -428,7 +428,6 @@ module_energy_L244.building_det <- function(command, ...) {
 
     # This is bad. Need to match in the floorspace into the base service table, divide to calculate the service demand
     # per unit floorspace in the final calibration year. This (increased slightly) is then the minimum satiation level that needs to be read in.
-    # TODO: fix the bad code in the model. need a flexible building service function
     L244.BS <- L244.GenericBaseService %>%
       left_join_error_no_match(L244.Floorspace, by = c(LEVEL2_DATA_NAMES[["BldNodes"]]), "year") %>%
       mutate(service.per.flsp = base.service / base.building.size) %>%
@@ -458,7 +457,6 @@ module_energy_L244.building_det <- function(command, ...) {
 
     # This is bad. Need to match in the floorspace into the base service table, divide to calculate the service demand
     # per unit floorspace in the final calibration year. This (increased slightly) is then the minimum satiation level that needs to be read in.
-    # TODO: fix the bad code in the model. need a flexible building service function
     L244.GenericServiceSatiation_SSPs <- L244.GenericServiceSatiation_SSPs %>%
       left_join_error_no_match(L244.BS, by = c(LEVEL2_DATA_NAMES[["BldNodes"]], "building.service.input")) %>%
       mutate(satiation.level = pmax(satiation.level, service.per.flsp * 1.0001)) %>%
@@ -497,7 +495,6 @@ module_energy_L244.building_det <- function(command, ...) {
       ungroup()
 
     # This part here is bad. The service satiation in the final cal year can not be lower than the observed demand, so need to use pmax to set a floor on the quantity
-    # TODO: fix model code.
     # First need to calculate the maximum quantities of demand over the historical time period, expressed per unit floorspace
     L244.tmp <- L244.ThermalBaseService %>%
       left_join_error_no_match(L244.Floorspace, by = c(LEVEL2_DATA_NAMES[["BldNodes"]], "year")) %>%
