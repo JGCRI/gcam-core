@@ -1,6 +1,6 @@
 # File: A44.fuelprefElasticity_SSP4.csv
 # Title: Fuel preference elasticities for building energy use
-# Units: Look up
+# Units: Unitless
 supplysector,subsector,fuelprefElasticity
 resid heating,traditional biomass,-0.75
 resid others,traditional biomass,-0.75

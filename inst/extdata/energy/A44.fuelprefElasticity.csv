@@ -1,3 +1,34 @@
 # File: A44.fuelprefElasticity.csv
 # Title: Fuel preference elasticities for building energy use
-# Units: Need to look upsupplysector,subsector,fuelprefElasticityresid heating,biomass,-1resid heating,coal,-0.7resid heating,electricity,0resid heating,gas,0resid heating,refined liquids,0resid heating,traditional biomass,-2resid heating,district heat,-0.5resid cooling,electricity,0resid cooling,gas,-1resid others,biomass,-1resid others,coal,-0.7resid others,electricity,0resid others,gas,0resid others,refined liquids,0resid others,traditional biomass,-2resid others,district heat,-0.5comm heating,biomass,-1comm heating,coal,-0.7comm heating,electricity,0comm heating,gas,0comm heating,refined liquids,0comm heating,district heat,-0.5comm cooling,electricity,0comm cooling,gas,-1comm others,biomass,-1comm others,coal,-0.7comm others,electricity,0comm others,gas,0comm others,refined liquids,0comm others,district heat,-0.5
+# Units: Unitless
+supplysector,subsector,fuelprefElasticity
+resid heating,biomass,-1
+resid heating,coal,-0.7
+resid heating,electricity,0
+resid heating,gas,0
+resid heating,refined liquids,0
+resid heating,traditional biomass,-2
+resid heating,district heat,-0.5
+resid cooling,electricity,0
+resid cooling,gas,-1
+resid others,biomass,-1
+resid others,coal,-0.7
+resid others,electricity,0
+resid others,gas,0
+resid others,refined liquids,0
+resid others,traditional biomass,-2
+resid others,district heat,-0.5
+comm heating,biomass,-1
+comm heating,coal,-0.7
+comm heating,electricity,0
+comm heating,gas,0
+comm heating,refined liquids,0
+comm heating,district heat,-0.5
+comm cooling,electricity,0
+comm cooling,gas,-1
+comm others,biomass,-1
+comm others,coal,-0.7
+comm others,electricity,0
+comm others,gas,0
+comm others,refined liquids,0
+comm others,district heat,-0.5

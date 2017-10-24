@@ -33,10 +33,10 @@ module_energy_L244.building_det <- function(command, ...) {
              FILE = "energy/A44.subsector_interp",
              FILE = "energy/A44.subsector_logit",
              FILE = "energy/A44.subsector_shrwt",
-             FILE = "energy/A44.fuelprefElasticity", # units
-             FILE = "energy/A44.fuelprefElasticity_SSP3", # units
-             FILE = "energy/A44.fuelprefElasticity_SSP4", # units
-             FILE = "energy/A44.fuelprefElasticity_SSP15", # units
+             FILE = "energy/A44.fuelprefElasticity",
+             FILE = "energy/A44.fuelprefElasticity_SSP3",
+             FILE = "energy/A44.fuelprefElasticity_SSP4",
+             FILE = "energy/A44.fuelprefElasticity_SSP15",
              FILE = "energy/A44.globaltech_shrwt",
              FILE = "energy/A44.gcam_consumer",
              FILE = "energy/A44.demandFn_serv",
@@ -74,12 +74,12 @@ module_energy_L244.building_det <- function(command, ...) {
              "L244.ShellConductance_bld",
              "L244.Supplysector_bld",
              "L244.FinalEnergyKeyword_bld",
-             "L244.SubsectorShrwt_bld", # if exists
-             "L244.SubsectorShrwtFllt_bld", # if exists
-             "L244.SubsectorInterp_bld", # if exists
-             "L244.SubsectorInterpTo_bld", # if exists
+             "L244.SubsectorShrwt_bld",
+             "L244.SubsectorShrwtFllt_bld",
+             "L244.SubsectorInterp_bld",
+             "L244.SubsectorInterpTo_bld",
              "L244.SubsectorLogit_bld",
-             "L244.FuelPrefElast_bld", # units
+             "L244.FuelPrefElast_bld",
              "L244.StubTech_bld",
              "L244.StubTechEff_bld",
              "L244.StubTechCalInput_bld",
@@ -96,15 +96,15 @@ module_energy_L244.building_det <- function(command, ...) {
              "L244.Satiation_flsp_SSP3",
              "L244.SatiationAdder_SSP3",
              "L244.GenericServiceSatiation_SSP3",
-             "L244.FuelPrefElast_bld_SSP3", # units
+             "L244.FuelPrefElast_bld_SSP3",
              "L244.Satiation_flsp_SSP4",
              "L244.SatiationAdder_SSP4",
              "L244.GenericServiceSatiation_SSP4",
-             "L244.FuelPrefElast_bld_SSP4", # units
+             "L244.FuelPrefElast_bld_SSP4",
              "L244.Satiation_flsp_SSP5",
              "L244.SatiationAdder_SSP5",
              "L244.GenericServiceSatiation_SSP5",
-             "L244.FuelPrefElast_bld_SSP15", # units
+             "L244.FuelPrefElast_bld_SSP15",
              "L244.DeleteThermalService"))
   } else if(command == driver.MAKE) {
 
@@ -249,7 +249,6 @@ module_energy_L244.building_det <- function(command, ...) {
     L244.SatiationAdder <- L244.Satiation_flsp %>%
       left_join_keep_first_only(L102.pcgdp_thous90USD_Scen_R_Y %>%
                                   filter(year == energy.SATIATION_YEAR), by = "region") %>%
-      # timeshift error here
       left_join_error_no_match(Floorspace_timeshift_pass, by = c("region", "gcam.consumer", "nodeInput", "building.node.input")) %>%
       left_join_error_no_match(L101.Pop_thous_R_Yh, by = c("region", "year", "GCAM_region_ID")) %>%
       mutate(pcFlsp_mm2 = base.building.size / pop_thous,
@@ -431,13 +430,13 @@ module_energy_L244.building_det <- function(command, ...) {
     # per unit floorspace in the final calibration year. This (increased slightly) is then the minimum satiation level that needs to be read in.
     # TODO: fix the bad code in the model. need a flexible building service function
     L244.BS <- L244.GenericBaseService %>%
-      left_join_error_no_match(L244.Floorspace, by = c(c("region", "gcam.consumer", "nodeInput", "building.node.input"), "year")) %>% # LEVEL2_DATA_NAMES[["BldNodes"]]
+      left_join_error_no_match(L244.Floorspace, by = c(LEVEL2_DATA_NAMES[["BldNodes"]]), "year") %>%
       mutate(service.per.flsp = base.service / base.building.size) %>%
       filter(year == max(BASE_YEARS)) %>%
-      select(c("region", "gcam.consumer", "nodeInput", "building.node.input"), building.service.input, service.per.flsp) # LEVEL2_DATA_NAMES[["BldNodes"]]
+      select(LEVEL2_DATA_NAMES[["BldNodes"]], building.service.input, service.per.flsp)
 
     L244.GenericServiceSatiation <- L244.GenericServiceSatiation %>%
-      left_join_error_no_match(L244.BS, by = c(c("region", "gcam.consumer", "nodeInput", "building.node.input"), "building.service.input")) %>% # LEVEL2_DATA_NAMES[["BldNodes"]]
+      left_join_error_no_match(L244.BS, by = c(LEVEL2_DATA_NAMES[["BldNodes"]], "building.service.input")) %>%
       mutate(satiation.level = pmax(satiation.level, service.per.flsp * 1.0001)) %>%
       select(-service.per.flsp)
 
@@ -501,14 +500,14 @@ module_energy_L244.building_det <- function(command, ...) {
     # TODO: fix model code.
     # First need to calculate the maximum quantities of demand over the historical time period, expressed per unit floorspace
     L244.tmp <- L244.ThermalBaseService %>%
-      left_join_error_no_match(L244.Floorspace, by = c(c("region", "gcam.consumer", "nodeInput", "building.node.input"), "year")) %>% # LEVEL2_DATA_NAMES[["BldNodes"]]
+      left_join_error_no_match(L244.Floorspace, by = c(LEVEL2_DATA_NAMES[["BldNodes"]], "year")) %>%
       mutate(service.per.flsp = base.service / base.building.size) %>%
       filter(year == max(BASE_YEARS)) %>%
       select(-base.service, - base.building.size, -year)
 
     # Then, match in this quantity into the thermal service satiation and take the max
     L244.ThermalServiceSatiation <- L244.ThermalServiceSatiation %>%
-      left_join_error_no_match(L244.tmp, by = c(c("region", "gcam.consumer", "nodeInput", "building.node.input"), "thermal.building.service.input")) %>% # LEVEL2_DATA_NAMES[["BldNodes"]]
+      left_join_error_no_match(L244.tmp, by = c(LEVEL2_DATA_NAMES[["BldNodes"]], "thermal.building.service.input")) %>%
       mutate(satiation.level = round(pmax(satiation.level, service.per.flsp * 1.0001),
                                        digits = energy.DIGITS_CALOUTPUT)) %>%
       select(LEVEL2_DATA_NAMES[["ThermalServiceSatiation"]])
@@ -859,7 +858,7 @@ module_energy_L244.building_det <- function(command, ...) {
         add_legacy_name("L244.SubsectorShrwt_bld") %>%
         add_precursors("energy/A44.subsector_shrwt", "common/GCAM_region_names", "L144.end_use_eff")  ->
         L244.SubsectorShrwt_bld
-    }else{
+    } else {
       tibble(x = NA) %>%
         add_title("Data not created") %>%
         add_units("Unitless") %>%
@@ -876,7 +875,7 @@ module_energy_L244.building_det <- function(command, ...) {
         add_legacy_name("L244.SubsectorShrwtFllt_bld") %>%
         add_precursors("energy/A44.subsector_shrwt", "common/GCAM_region_names", "L144.end_use_eff")  ->
         L244.SubsectorShrwtFllt_bld
-    }else{
+    } else {
       tibble(x = NA) %>%
         add_title("Data not created") %>%
         add_units("Unitless") %>%
@@ -893,7 +892,7 @@ module_energy_L244.building_det <- function(command, ...) {
         add_legacy_name("L244.SubsectorInterp_bld") %>%
         add_precursors("energy/A44.subsector_interp", "common/GCAM_region_names", "L144.end_use_eff")  ->
         L244.SubsectorInterp_bld
-    }else{
+    } else {
       tibble(x = NA) %>%
         add_title("Data not created") %>%
         add_units("Unitless") %>%
@@ -910,7 +909,7 @@ module_energy_L244.building_det <- function(command, ...) {
         add_legacy_name("L244.SubsectorInterpTo_bld") %>%
         add_precursors("energy/A44.subsector_interp", "common/GCAM_region_names", "L144.end_use_eff")  ->
         L244.SubsectorInterpTo_bld
-    }else{
+    } else {
       tibble(x = NA) %>%
         add_title("Data not created") %>%
         add_units("Unitless") %>%
@@ -929,7 +928,7 @@ module_energy_L244.building_det <- function(command, ...) {
 
     L244.FuelPrefElast_bld %>%
       add_title("Fuel preference elasticities for buildings") %>%
-      add_units("Look up") %>%
+      add_units("Unitless") %>%
       add_comments("A44.fuelprefElasticity written to all regions") %>%
       add_legacy_name("L244.FuelPrefElast_bld") %>%
       add_precursors("energy/A44.fuelprefElasticity", "common/GCAM_region_names", "L144.end_use_eff") ->
@@ -995,7 +994,7 @@ module_energy_L244.building_det <- function(command, ...) {
 
     L244.FuelPrefElast_bld_SSP3 %>%
       add_title("Fuel preference elasticities for buildings: SSP3") %>%
-      add_units("Look up") %>%
+      add_units("Unitless") %>%
       add_comments("A44.fuelprefElasticity_SSP3 written to all regions") %>%
       add_legacy_name("L244.FuelPrefElast_bld_SSP3") %>%
       add_precursors("energy/A44.fuelprefElasticity_SSP3", "common/GCAM_region_names", "L144.end_use_eff") ->
@@ -1003,7 +1002,7 @@ module_energy_L244.building_det <- function(command, ...) {
 
     L244.FuelPrefElast_bld_SSP4 %>%
       add_title("Fuel preference elasticities for buildings: SSP4") %>%
-      add_units("Look up") %>%
+      add_units("Unitless") %>%
       add_comments("A44.fuelprefElasticity_SSP4 written to all regions") %>%
       add_legacy_name("L244.FuelPrefElast_bld_SSP4") %>%
       add_precursors("energy/A44.fuelprefElasticity_SSP4", "common/GCAM_region_names", "L144.end_use_eff") ->
@@ -1011,7 +1010,7 @@ module_energy_L244.building_det <- function(command, ...) {
 
     L244.FuelPrefElast_bld_SSP15 %>%
       add_title("Fuel preference elasticities for buildings: SSP 1 & 5") %>%
-      add_units("Look up") %>%
+      add_units("Unitless") %>%
       add_comments("A44.fuelprefElasticity_SSP15 written to all regions") %>%
       add_legacy_name("L244.FuelPrefElast_bld_SSP15") %>%
       add_precursors("energy/A44.fuelprefElasticity_SSP15", "common/GCAM_region_names", "L144.end_use_eff") ->
