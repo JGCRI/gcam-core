@@ -2,8 +2,36 @@ Package: gcamdata
 Type: Package
 Title: Build the GCAM Input Datasets
 Version: 0.8
-Author: PNNL/JGCRI
-Maintainer: Ben Bond-Lamberty <bondlamberty@pnnl.gov>
+Date: 2017-10-9
+Authors@R: c(person("Ben", "Bond-Lamberty", 
+                email = "bondlamberty@pnnl.gov", 
+                role = c("cre", "aut"), 
+                comment = c(ORCID = "0000-0001-9525-4633")),
+  person("Katherine", "Calvin",   role = "aut", comment = c(ORCID = "0000-0003-2191-4189")),
+  person("Ryna", "Cui",           role = "aut", comment = c(ORCID = "0000-0002-8531-4126")),
+  person("Kalyn", "Dorheim",      role = "aut", comment = c(ORCID = "0000-0001-8093-8397")),
+  person("Leyang", "Feng",        role = "aut"),
+  person("Jill", "Horing",        role = "aut", comment = c(ORCID = "0000-0003-2516-5533")),
+  person("Russell", "Horowitz",   role = "aut"),
+  person("Page", "Kyle",          role = "aut", comment = c(ORCID = "0000-0002-1257-8358")),
+  person("Robert", "Link",        role = "aut"),
+  person("Pralit", "Patel",       role = "aut", comment = c(ORCID = "0000-0003-3992-1061")),
+  person("Christopher", "Roney",  role = "aut", comment = c(ORCID = "0000-0003-0509-5259")),
+  person("Abigail", "Snyder",     role = "aut", comment = c(ORCID = "0000-0002-9034-9948")),
+  person("Aaron", "Staniszweski", role = "aut"),
+  person("Sean", "Turner",        role = "aut", comment = c(ORCID = "0000-0003-4400-9800")),
+  person("Corinne", "Hartin",     role = "ctb", comment = c(ORCID = "0000-0003-1834-6539")),
+  person("Rachel", "Hoesly",      role = "ctb"),
+  person("Mohamad", "Hejazi",     role = "ctb"),
+  person("Gokul", "Iyer",         role = "ctb"),
+  person("Sonny", "Kim",          role = "ctb"),
+  person("Yaling", "Liu",         role = "ctb"),
+  person("Haewon", "McJeon",      role = "ctb"),
+  person("Steve", "Smith",        role = "ctb"),
+  person("Stephanie", "Waldhoff", role = "ctb", comment = c(ORCID = "0000-0002-8073-0868")),
+  person("Marshall", "Wise",      role = "ctb"),
+  person("Leon", "Clarke",        role = c("rth", "ctb")),
+  person("Pacific Northwest National Laboratory", role = "cph"))
 Description: Build the GCAM XML input files.
 License: MIT + file LICENSE
 Depends: R (>= 3.1.2)
@@ -12,7 +40,7 @@ Imports:
     dplyr (>= 0.5.0),
     magrittr (>= 1.5),
     tibble (>= 1.1),
-    tidyr (>= 0.6.0),
+    tidyr (>= 0.7.1),
     readr (>= 1.0.0),
     data.table (>= 1.10.4)
 Suggests:
@@ -22,3 +50,4 @@ Suggests:
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
+BugReports: https://github.com/JGCRI/gcamdata/issues
