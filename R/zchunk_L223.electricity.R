@@ -171,8 +171,10 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.SubsectorLogit_elec <- write_to_all_regions(A23.subsector_logit, LEVEL2_DATA_NAMES[["SubsectorLogit"]], GCAM_region_names)
 
     # L223.SubsectorShrwt_elec and L223.SubsectorShrwtFllt_elec: Subsector shareweights of electricity sector (76-82)
-    #L223.SubsectorShrwt_elec <- write_to_all_regions(filter(A23.subsector_shrwt, !is.na(year)), names_SubsectorShrwt, GCAM_region_names)
-    L223.SubsectorShrwtFllt_elec <- write_to_all_regions(filter(A23.subsector_shrwt, !is.na(year.fillout)), LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]], GCAM_region_names)
+    A23.subsector_shrwt %>%
+      filter(!is.na(year.fillout)) %>%
+      write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]], GCAM_region_names) ->
+      L223.SubsectorShrwtFllt_elec
 
     # L223.SubsectorShrwt_nuc: Subsector shareweights of nuclear electricity (84-117)
     # Start out with the list of ISO matched to region_GCAM3
@@ -181,6 +183,13 @@ module_energy_L223.electricity <- function(command, ...) {
       left_join_error_no_match(select(A23.subsector_shrwt_nuc_R, region_GCAM3, matches(YEAR_PATTERN)),
                                by = "region_GCAM3") ->
       L223.SubsectorShrwt_nuc_ctry
+
+    #Filter to final year GDPs to prepare for weighting country-level shareweights
+    L102.gdp_mil90usd_GCAM3_ctry_Y %>%
+      filter(year == max(HISTORICAL_YEARS)) %>%
+      select(iso, value) %>%
+      rename(weight = value) ->
+      L202.gdp_mil90usd_GCAM3_ctry_Y
 
     # Where country-level shareweights are provided, use those
     L223.SubsectorShrwt_nuc_ctry %>%
@@ -191,21 +200,25 @@ module_energy_L223.electricity <- function(command, ...) {
       bind_rows(filter(L223.SubsectorShrwt_nuc_ctry, !iso %in% A23.subsector_shrwt_nuc_R$iso)) %>%
 
       # Use GDP by country as a weighting factor in going from country-level shareweights to region-level shareweights
-      left_join(L102.gdp_mil90usd_GCAM3_ctry_Y, by = "iso") %>%
       gather(year, value, matches(YEAR_PATTERN)) %>%
+      left_join(L202.gdp_mil90usd_GCAM3_ctry_Y, by = "iso") %>%
       mutate(year = as.integer(year)) %>%
       na.omit %>%
       group_by(GCAM_region_ID, year) %>%
       summarise(value = weighted.mean(value, weight)) %>%
+
       # Interpolate to model time periods, and add columns specifying the final format
       complete(GCAM_region_ID, year = FUTURE_YEARS[FUTURE_YEARS >= min(year) & FUTURE_YEARS <= max(year)]) %>%
       arrange(GCAM_region_ID, year) %>%
-      mutate(value = approx_fun(year, value, rule = 1)) %>%
+      mutate(share.weight = approx_fun(year, value, rule = 1)) %>%
       mutate(supplysector = A23.subsector_shrwt_nuc_R$supplysector[1],
              subsector = A23.subsector_shrwt_nuc_R$subsector[1]) %>%
       # L223.SubsectorShrwt_nuc[ c( supp, subs ) ] <- A23.subsector_shrwt_nuc_R[ 1, c( supp, subs ) ]
-      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->   # TODO not sure this is right
+      ungroup() %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      select(-GCAM_region_ID) ->
       L223.SubsectorShrwt_nuc_R
+      L223.SubsectorShrwt_nuc_R <- L223.SubsectorShrwt_nuc_R[LEVEL2_DATA_NAMES[["SubsectorShrwt"]]]
 
     # L223.SubsectorShrwt_renew: Near term subsector shareweights of renewable technologies (119-138)
     # First, melt the table with near-term shareweights from GCAM 3.0 regions
@@ -857,10 +870,10 @@ module_energy_L223.electricity <- function(command, ...) {
       L223.Supplysector_elec
 
     L223.ElecReserve %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Electricity reserve margins and grid capacity factors by region") %>%
+      add_units("unitless") %>%
+      add_comments("Reserve margin: Average fraction of capacity reserved for backup") %>%
+      add_comments("Grid Capacity: Conversion factor of grid capacity to output for entire grid") %>%
       add_legacy_name("L223.ElecReserve") %>%
       add_precursors("common/GCAM_region_names", "energy/A23.sector") ->
       L223.ElecReserve
@@ -955,63 +968,53 @@ module_energy_L223.electricity <- function(command, ...) {
       L223.StubTech_elec
 
     L223.GlobalIntTechEff_elec %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Conversion efficiency by intermittent technology of energy into electricity") %>%
+      add_units("unitless") %>%
+      add_comments("Filtered for intermittent technologies and extrapolated using an exponential function") %>%
       add_legacy_name("L223.GlobalIntTechEff_elec") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.globaltech_eff", "energy/A23.globalinttech") ->
       L223.GlobalIntTechEff_elec
 
     L223.GlobalTechEff_elec %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Conversion efficiency by non-intermittent technology of energy into electricity") %>%
+      add_units("unitless") %>%
+      add_comments("Filtered for technologies not requiring intermittent backup and extrapolated using an exponential function") %>%
       add_legacy_name("L223.GlobalTechEff_elec") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.globaltech_eff", "energy/A23.globalinttech") ->
       L223.GlobalTechEff_elec
 
     L223.GlobalTechCapital_elec %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Overnight capital costs for non-intermittent electricity sector technologies") %>%
+      add_units("1975$US/kw") %>%
+      add_comments("Non-intermittent technologies from A23.globaltech_capital and values interpolated from assumptions") %>%
+      add_comments("Values determined by an exponential function with terms for minimum achievable cost and pace of reduction") %>%
       add_legacy_name("L223.GlobalTechCapital_elec") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.globaltech_capital", "energy/A23.globalinttech") ->
       L223.GlobalTechCapital_elec
 
     L223.GlobalIntTechCapital_elec %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Overnight capital costs for intermittent electricity sector technologies") %>%
+      add_units("1975$US/kW") %>%
+      add_comments("Intermittent technologies from A23.globaltech_capital and values interpolated from assumptions") %>%
+      add_comments("Values determined by an exponential function with terms for minimum achievable cost and pace of reduction") %>%
       add_legacy_name("L223.GlobalIntTechCapital_elec") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.globaltech_capital", "energy/A23.globalinttech") ->
       L223.GlobalIntTechCapital_elec
 
     L223.GlobalTechOMfixed_elec %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Fixed operation and maintenance costs of non-intermittent electricity sector technologies") %>%
+      add_units("1975$US/kW/year") %>%
+      add_comments("Values extrapolated from assumptions in A23.globaltech_OMfixed, filtering out any technologies requiring intermittent backup") %>%
       add_legacy_name("L223.GlobalTechOMfixed_elec") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.globaltech_OMfixed", "energy/A23.globalinttech") ->
       L223.GlobalTechOMfixed_elec
 
     L223.GlobalIntTechOMfixed_elec %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Fixed operation and maintenance costs of intermittent electricity sector technologies") %>%
+      add_units("1975$US/kW/yr") %>%
+      add_comments("Values interpolated from assumptions in A23.globaltech_OMfixed for technologies requiring intermittent backup") %>%
       add_legacy_name("L223.GlobalIntTechOMfixed_elec") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.globaltech_OMfixed", "energy/A23.globalinttech") ->
       L223.GlobalIntTechOMfixed_elec
 
     L223.GlobalTechOMvar_elec %>%
