@@ -56,7 +56,7 @@ module_gcam.usa_LA161.Cstorage <- function(command, ...) {
       # From the cumulative totals, return to the marginal quantities associated with each grade
       mutate(MtC = Cumul_MtC - lag(Cumul_MtC),
              # this will create grade equal to grade 1 for 25%, grade 2 for 50%, etc.
-             grade = paste("grade",1:n(), sep = " ")) %>%
+             grade = paste("grade",seq_len(n()), sep = " ")) %>%
       ungroup() %>%
       # For the first grade, set the marginal quantity with the cumulative total
       mutate(MtC = replace(MtC, is.na(MtC), Cumul_MtC[is.na(MtC)]))
