@@ -690,6 +690,7 @@ void Technology::initCalc( const string& aRegionName,
     }
 
     if( mCaptureComponent.get() ) {
+        mCaptureComponent->initCalc( aRegionName, aSectorName, "", aPeriod );
         mCaptureComponent->adjustInputs( aRegionName, mInputs, aPeriod );
     }
 

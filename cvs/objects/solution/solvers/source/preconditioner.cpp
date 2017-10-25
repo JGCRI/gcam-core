@@ -231,7 +231,6 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
             else {
                 switch(solvable[i].getType()) {
                 case IMarketType::NORMAL:
-                case IMarketType::TRIAL_VALUE:
                     // select a lower bound just a bit above the bottom of the supply curve.
                     lb = solvable[i].getLowerBoundSupplyPrice();
                     lb += 1.0e-5 * std::max(1.0, fabs(lb));
@@ -284,6 +283,22 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                         ++nchg;
                     }
                     break; 
+                case IMarketType::TRIAL_VALUE:
+                    lb = solvable[i].getLowerBoundSupplyPrice();
+                    ub = solvable[i].getUpperBoundSupplyPrice();
+                    if(oldprice < lb) {
+                        newprice = 0.001;
+                        solvable[i].setPrice(newprice);
+                        chg = true;
+                        ++nchg;
+                    }
+                    else if(oldprice > ub) {
+                        newprice = ub;
+                        solvable[i].setPrice(newprice);
+                        chg = true;
+                        ++nchg;
+                    }
+                    break; 
                 case IMarketType::PRICE:
                     // price markets are solving a consistency
                     // condition, but we want to be a bit more
@@ -321,7 +336,9 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                     // to something less than zero.  If a trial demand
                     // is less than zero, set it to a small positive
                     // number.
-                    if(pass>0) {
+                    if(pass>=0) {
+                        double normoldprice = oldprice / solvable[i].getForecastDemand();
+                        double normolddemand = olddmnd / solvable[i].getForecastDemand();
                         if(olddmnd <= 0.0) {
                             newprice = util::getSmallNumber();
                             solvable[i].setPrice(newprice);
@@ -333,19 +350,24 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                             chg = true;
                             ++nchg;
                         }
-                        
+                        else if(normoldprice < 0.1 && fabs(1.0 - normolddemand) < 0.2) {
+                            newprice = olddmnd;
+                            solvable[i].setPrice(newprice);
+                            chg = true;
+                            ++nchg;
+                        }
                     } 
                     break; 
                 case IMarketType::TAX:
                     lb = solvable[i].getLowerBoundSupplyPrice();
                     ub = solvable[i].getUpperBoundSupplyPrice();
-                    if(olddmnd <= 0.0 && olddmnd < oldsply && oldprice > ub ) {
+                    if( olddmnd <= 0.0 && olddmnd < oldsply && oldprice > ub ) {
                         newprice = lb - 0.1;
                         solvable[i].setPrice(newprice);
                         chg = true;
                         ++nchg;
-                    } else if(olddmnd > 0 && oldprice < lb ) {
-                        newprice = lb + 0.1;
+                    } else if(olddmnd > 0.0 && oldprice < lb ) {
+                        newprice = lb + 0.01;
                         solvable[i].setPrice(newprice);
                         chg = true;
                         ++nchg;
@@ -369,6 +391,8 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                       << marker << std::setw(8) << newprice << "\t"
                       << std::setw(8) << oldsply << "\t"
                       << std::setw(8) << olddmnd << "\t"
+                      << std::setw(8) << solvable[i].getForecastPrice() << "\t"
+                      << std::setw(8) << solvable[i].getForecastDemand() << "\t"
                       << solvable[i].getName() << "\n";
             if(nchg==0 && pass > 2)
                 // no additional effect from further passes.

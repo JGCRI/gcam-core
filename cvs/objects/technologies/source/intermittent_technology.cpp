@@ -389,7 +389,7 @@ void IntermittentTechnology::production( const string& aRegionName,
 
     double currentTechRatio = 0;
     if ( dependentSectorOutput > 0 ){
-        currentTechRatio = getOutput( aPeriod ) / dependentSectorOutput;
+        currentTechRatio = std::min( getOutput( aPeriod ) / dependentSectorOutput, 1.0 );
     }
 
     // Multiple vintaged intermittent technology ratios are additive. This gives one 

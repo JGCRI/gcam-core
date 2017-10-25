@@ -1183,9 +1183,6 @@ double Marketplace::forecastPrice( const std::vector<Market*>& aMarketHistory, c
 {
 
     double forecastedPrice = extrapolate( aMarketHistory, aPeriod, &Market::getRawPrice );
-    if( aMarketHistory[ aPeriod ]->getType() == IMarketType::TAX && aMarketHistory[ aPeriod ]->isSolvable() ) {
-        forecastedPrice = 1.0;
-    }
     aMarketHistory[ aPeriod ]->setForecastPrice( forecastedPrice );
 
     return forecastedPrice;
