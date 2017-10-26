@@ -39,6 +39,8 @@ module_gcam.usa_L201.socioeconomics_USA <- function(command, ...) {
     L102.pcgdp_thous90USD_GCAM3_ctry_Y <- get_data(all_data, "L102.pcgdp_thous90USD_GCAM3_ctry_Y")
 
     # ===================================================
+    # NOTE: Socioeconomics for grid regions are dealt with in module_gcam.usa_L223.electricity_USA
+
     # L201.InterestRate: Interest rates by region
     L201.InterestRate <- tibble(region = states_subregions$state, interest.rate = socioeconomics.DEFAULT_INTEREST_RATE)
 
@@ -67,7 +69,7 @@ module_gcam.usa_L201.socioeconomics_USA <- function(command, ...) {
     # Labor productivity growth is calculated from the change in per-capita GDP ratio in each time period
     # Calculate the growth rate in per-capita GDP
     L201.LaborProductivity_GCAMUSA <- L102.pcgdp_thous90USD_GCAM3_ctry_Y %>%
-      filter(iso == "usa",
+      filter(tolower(iso) == "usa",
              year %in% MODEL_YEARS) %>%
       # In order to calculate growth rate we need to know how much GDP grew and number of years between periods
       mutate(growth = value / lag(value),
