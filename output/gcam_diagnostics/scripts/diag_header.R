@@ -41,9 +41,8 @@
 # -----------------------------------------------------------------------------
 # Load required libraries
 if( !require( "rgcam", character.only=T ) ) {
-    stop( "Couldn't load rgcam, please checkout it out from GitHub or use devtools::install_github('JGCRI/rgcam')")
+    stop( "Couldn't load rgcam, please install it with devtools::install_github('JGCRI/rgcam')")
 }
-library(rgcam)
 # NB this diag has been tested with the following libraries:
 #   ggplot2     0.9.2-0.9.3
 #   reshape2    1.4.2
