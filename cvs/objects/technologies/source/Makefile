@@ -51,7 +51,6 @@ OBJS       = base_technology.o \
              empty_technology.o \
              generic_output.o \
              pass_through_technology.o \
-             good_value_output.o \
              input_factory.o
 
 technologies_dir: ${OBJS}

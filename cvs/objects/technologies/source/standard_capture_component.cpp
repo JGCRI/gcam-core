@@ -61,8 +61,7 @@ mSequesteredAmount( scenario->getModeltime()->getmaxper() ),
 mRemoveFraction( 0 ),
 mStorageCost( 0 ),
 mIntensityPenalty( 0 ),
-mNonEnergyCostPenalty( 0 ),
-mApplyNegPenalty( false )
+mNonEnergyCostPenalty( 0 )
 {
 }
 
@@ -126,9 +125,6 @@ bool StandardCaptureComponent::XMLParse( const xercesc::DOMNode* node ){
         else if( nodeName == "target-gas" ){
             mTargetGas = XMLHelper<string>::getValue( curr );
         }
-        else if( nodeName == "apply-neg-penalty" ){
-            mApplyNegPenalty = XMLHelper<bool>::getValue( curr );
-        }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::ERROR );
@@ -171,12 +167,6 @@ void StandardCaptureComponent::completeInit( const string& aRegionName,
                                                                       aRegionName,
                                                                       mStorageMarket,
                                                                       aRegionName );
-    if( mApplyNegPenalty ) {
-        scenario->getMarketplace()->getDependencyFinder()->addDependency( aSectorName,
-                                                                          aRegionName,
-                                                                          "CO2_negative_emiss",
-                                                                          aRegionName );
-    }
 
     // Default the target gas to CO2.
     if( mTargetGas.empty() ){
@@ -208,10 +198,6 @@ double StandardCaptureComponent::getStorageCost( const string& aRegionName,
         return 0;
     }
 
-    double negEmissPenalty = mApplyNegPenalty ? scenario->getMarketplace()->getPrice( "CO2_negative_emiss",
-            aRegionName,
-            aPeriod ) : 0.0;
-
     // Check if there is a market for storage.
     double storageMarketPrice = scenario->getMarketplace()->getPrice( mStorageMarket,
                                                                       aRegionName,
@@ -225,12 +211,8 @@ double StandardCaptureComponent::getStorageCost( const string& aRegionName,
     // If there is no carbon market, return a large number to disable the
     // capture technology.
     if( carbonMarketPrice == Marketplace::NO_MARKET_PRICE || carbonMarketPrice == 0.0 ){
-        const_cast<StandardCaptureComponent*>(this)->mTargetGasValue = 0;
         return util::getLargeNumber();
-    } else {
-        const_cast<StandardCaptureComponent*>(this)->mTargetGasValue = carbonMarketPrice;
     }
-
 
     double storageCost;
     if( storageMarketPrice == Marketplace::NO_MARKET_PRICE ){
@@ -241,7 +223,7 @@ double StandardCaptureComponent::getStorageCost( const string& aRegionName,
         // Use the market cost.
         storageCost = storageMarketPrice;
     }
-    return storageCost + negEmissPenalty * carbonMarketPrice;
+    return storageCost;
 }
 
 /**

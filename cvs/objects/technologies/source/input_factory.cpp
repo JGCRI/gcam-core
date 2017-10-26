@@ -53,7 +53,6 @@
 #include "functions/include/renewable_input.h"
 #include "functions/include/input_subsidy.h"
 #include "functions/include/input_tax.h"
-#include "functions/include/good_value_input.h"
 #include "functions/include/ctax_input.h"
 
 using namespace std;
@@ -87,9 +86,6 @@ bool InputFactory::isOfType( const std::string& aType ) {
         return true;
     }
     if( aType == InputTax::getXMLNameStatic() ) {
-        return true;
-    }
-    if( aType == GoodValueInput::getXMLNameStatic() ) {
         return true;
     }
     if( aType == CTaxInput::getXMLNameStatic() ) {
@@ -128,9 +124,6 @@ auto_ptr<IInput> InputFactory::create( const std::string& aType ) {
     }
     if( aType == InputTax::getXMLNameStatic() ){
         return auto_ptr<IInput>( new InputTax );
-    }
-    if( aType == GoodValueInput::getXMLNameStatic() ){
-        return auto_ptr<IInput>( new GoodValueInput );
     }
     if( aType == CTaxInput::getXMLNameStatic() ){
         return auto_ptr<IInput>( new CTaxInput );

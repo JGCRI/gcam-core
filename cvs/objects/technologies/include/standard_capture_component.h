@@ -175,10 +175,6 @@ protected:
     
     //! State value necessary to use Marketplace::addToDemand
     double mLastCalcValue;
-
-    bool mApplyNegPenalty;
-    double mLastCalcValueNeg;
-    double mTargetGasValue;
 };
 
 #endif // _STANDARD_CAPTURE_COMPONENT_H_

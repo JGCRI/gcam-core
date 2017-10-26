@@ -27,13 +27,13 @@ HAVE_JAVA = 1
 
 ## set this to a nonzero value to enable parallel execution (TBB required)
 ifndef USE_GCAM_PARALLEL
-  USE_GCAM_PARALLEL = 1
+  USE_GCAM_PARALLEL = 0
 endif
 ## set this to a nonzero value to enable lapack, which switches to an SVD
 ## solver for the N-R and Broyden solvers.  Defaults to off, but can be 
 ## overridden in the environment.
 ifndef USE_LAPACK
-USE_LAPACK = 1
+USE_LAPACK = 0
 endif
 
 ## Check to see if MKL is in use.  We infer this from the existence of
