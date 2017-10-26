@@ -393,6 +393,7 @@ void MarketDependencyFinder::createOrdering() {
     // been created so now we may create an ordering.
     
     // First associate markets to their corresponding dependency items
+    map<int, DependencyItemSet> marketDepGrouping;
     for( CItemIterator it = mDependencyItems.begin(); it != mDependencyItems.end(); ++it ) {
         // locate the market by name
         int marketNumber = mMarketplace->mMarketLocator->getMarketNumber( (*it)->mLocatedInRegion, (*it)->mName );
@@ -433,6 +434,29 @@ void MarketDependencyFinder::createOrdering() {
                 isSolved = mMarketplace->markets[ marketNumber ][ period ]->isSolvable();
             }
             (*it)->mIsSolved = isSolved;
+            // we don't need to wory about grouping solved markets since they will just
+            // get disconnected anyways
+            if( !isSolved ) {
+                marketDepGrouping[ marketNumber ].insert( *it );
+            }
+        }
+    }
+    
+    // Ajust dependencies for multi-region dependencies (such as global markets ) since a dependency
+    // on an activity in just one region should actually apply to all regions in the market.  Note
+    // we have excluded solved markets from this list for simplicitly since they will just drop the
+    // dependencies anyways.
+    for( auto depGrouping : marketDepGrouping ) {
+        // skip groupings that are not multi-region
+        if( depGrouping.second.size() > 1 ) {
+            // add dependencies from any one of the regions to all of the others
+            for( auto currDep : depGrouping.second ) {
+                for( auto otherDep : depGrouping.second ) {
+                    // note mDependentList is a set so we don't need to worry about
+                    // duplicates which will happen a bunch but oh well..
+                    currDep->mDependentList.insert( otherDep->mDependentList.begin(), otherDep->mDependentList.end() );
+                }
+            }
         }
     }
     
