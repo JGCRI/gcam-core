@@ -44,10 +44,10 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
              "L202.CarbonCoef",
              "L226.Supplysector_en",
              "L226.SubsectorLogit_en",
-             "L226.SubsectorShrwt_en",
+             #"L226.SubsectorShrwt_en",
              "L226.SubsectorShrwtFllt_en",
              "L226.SubsectorInterp_en",
-             "L226.SubsectorInterpTo_en",
+             #"L226.SubsectorInterpTo_en",
              "L226.GlobalTechCost_en",
              "L226.GlobalTechShrwt_en",
              "L226.StubTechCoef_electd"))
@@ -80,10 +80,10 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
     L202.CarbonCoef <- get_data(all_data, "L202.CarbonCoef")
     L226.Supplysector_en <- get_data(all_data, "L226.Supplysector_en")
     L226.SubsectorLogit_en <- get_data(all_data, "L226.SubsectorLogit_en")
-    L226.SubsectorShrwt_en <- get_data(all_data, "L226.SubsectorShrwt_en")
+   # L226.SubsectorShrwt_en <- get_data(all_data, "L226.SubsectorShrwt_en")
     L226.SubsectorShrwtFllt_en <- get_data(all_data, "L226.SubsectorShrwtFllt_en")
     L226.SubsectorInterp_en <- get_data(all_data, "L226.SubsectorInterp_en")
-    L226.SubsectorInterpTo_en <- get_data(all_data, "L226.SubsectorInterpTo_en")
+    #L226.SubsectorInterpTo_en <- get_data(all_data, "L226.SubsectorInterpTo_en")
     L226.GlobalTechCost_en <- get_data(all_data, "L226.GlobalTechCost_en")
     L226.GlobalTechShrwt_en <- get_data(all_data, "L226.GlobalTechShrwt_en")
     L226.StubTechCoef_electd <- get_data(all_data, "L226.StubTechCoef_electd")
