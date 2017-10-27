@@ -14,27 +14,33 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_gcam.usa_L2321.cement_USA_DISABLED <- function(command, ...) {
+module_gcam.usa_L2321.cement_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "energy/calibrated_techs",
              FILE = "energy/A321.demand",
              FILE = "energy/A321.globaltech_coef",
-             "L2321.Supplysector_cement",
-             "L2321.Supplysector_cement",
-             "L2321.FinalEnergyKeyword_cement",
-             "L2321.SubsectorLogit_cement",
-             "L2321.SubsectorShrwt_cement",
-             "L2321.SubsectorShrwtFllt_cement",
-             "L2321.SubsectorInterp_cement",
-             "L2321.SubsectorInterpTo_cement",
-             "L2321.StubTech_cement",
-             "L2321.PerCapitaBased_cement",
-             "L2321.PriceElasticity_cement",
-             "L2321.IncomeElasticity_cement_gcam3",
-             "L1321.in_EJ_state_cement_F_Y",
-             "L1321.IO_GJkg_state_cement_F_Yh",
-             "L1321.out_Mt_state_cement_Yh"))
+           #"L2321.Supplysector_cement",
+           #"L2321.FinalEnergyKeyword_cement",
+           #"L2321.SubsectorLogit_cement",
+           #"L2321.SubsectorShrwtFllt_cement",
+           #"L2321.SubsectorInterp_cement",
+           #"L2321.StubTech_cement",
+           #"L2321.PerCapitaBased_cement",
+           #"L2321.IncomeElasticity_cement_gcam3",
+           #"L1321.in_EJ_state_cement_F_Y",
+           FILE =  "temp-data-inject/L2321.Supplysector_cement",
+           FILE = "temp-data-inject/L2321.FinalEnergyKeyword_cement",
+           FILE = "temp-data-inject/L2321.SubsectorLogit_cement",
+           FILE = "temp-data-inject/L2321.SubsectorShrwtFllt_cement",
+           FILE = "temp-data-inject/L2321.SubsectorInterp_cement",
+           FILE = "temp-data-inject/L2321.StubTech_cement",
+           FILE = "temp-data-inject/L2321.PerCapitaBased_cement",
+           FILE = "temp-data-inject/L2321.IncomeElasticity_cement_gcam3",
+           FILE = "temp-data-inject/L2321.PriceElasticity_cement",
+           "L1321.in_EJ_state_cement_F_Y",
+           "L1321.IO_GJkg_state_cement_F_Yh",
+           "L1321.out_Mt_state_cement_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2321.DeleteSupplysector_USAcement",
              "L2321.DeleteFinalDemand_USAcement",
@@ -52,36 +58,33 @@ module_gcam.usa_L2321.cement_USA_DISABLED <- function(command, ...) {
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
     A321.demand <- get_data(all_data, "energy/A321.demand")
     A321.globaltech_coef <- get_data(all_data, "energy/A321.globaltech_coef")
-    L2321.Supplysector_cement <- get_data(all_data, "L2321.Supplysector_cement")
-    L2321.Supplysector_cement <- get_data(all_data, "L2321.Supplysector_cement")
-    L2321.FinalEnergyKeyword_cement <- get_data(all_data, "L2321.FinalEnergyKeyword_cement")
-    L2321.SubsectorLogit_cement <- get_data(all_data, "L2321.SubsectorLogit_cement")
-    L2321.SubsectorShrwt_cement <- get_data(all_data, "L2321.SubsectorShrwt_cement")
-    L2321.SubsectorShrwtFllt_cement <- get_data(all_data, "L2321.SubsectorShrwtFllt_cement")
-    L2321.SubsectorInterp_cement <- get_data(all_data, "L2321.SubsectorInterp_cement")
-    L2321.SubsectorInterpTo_cement <- get_data(all_data, "L2321.SubsectorInterpTo_cement")
-    L2321.StubTech_cement <- get_data(all_data, "L2321.StubTech_cement")
-    L2321.PerCapitaBased_cement <- get_data(all_data, "L2321.PerCapitaBased_cement")
-    L2321.PriceElasticity_cement <- get_data(all_data, "L2321.PriceElasticity_cement")
-    L2321.IncomeElasticity_cement_gcam3 <- get_data(all_data, "L2321.IncomeElasticity_cement_gcam3")
+
+    L2321.Supplysector_cement <- get_data(all_data, "temp-data-inject/L2321.Supplysector_cement")
+    L2321.FinalEnergyKeyword_cement <- get_data(all_data, "temp-data-inject/L2321.FinalEnergyKeyword_cement")
+    L2321.SubsectorLogit_cement <- get_data(all_data, "temp-data-inject/L2321.SubsectorLogit_cement")
+    L2321.SubsectorShrwtFllt_cement <- get_data(all_data, "temp-data-inject/L2321.SubsectorShrwtFllt_cement")
+    L2321.SubsectorInterp_cement <- get_data(all_data, "temp-data-inject/L2321.SubsectorInterp_cement")
+    L2321.StubTech_cement <- get_data(all_data, "temp-data-inject/L2321.StubTech_cement")
+    L2321.PerCapitaBased_cement <- get_data(all_data, "temp-data-inject/L2321.PerCapitaBased_cement")
+    L2321.PriceElasticity_cement <- get_data(all_data, "temp-data-inject/L2321.PriceElasticity_cement")
+    L2321.IncomeElasticity_cement_gcam3 <- get_data(all_data, "temp-data-inject/L2321.IncomeElasticity_cement_gcam3")
+
+
+    # L2321.Supplysector_cement <- get_data(all_data, "L2321.Supplysector_cement")
+    # L2321.FinalEnergyKeyword_cement <- get_data(all_data, "L2321.FinalEnergyKeyword_cement")
+    # L2321.SubsectorLogit_cement <- get_data(all_data, "L2321.SubsectorLogit_cement")
+    # L2321.SubsectorShrwtFllt_cement <- get_data(all_data, "L2321.SubsectorShrwtFllt_cement")
+    # L2321.SubsectorInterp_cement <- get_data(all_data, "L2321.SubsectorInterp_cement")
+    # L2321.StubTech_cement <- get_data(all_data, "L2321.StubTech_cement")
+    # L2321.PerCapitaBased_cement <- get_data(all_data, "L2321.PerCapitaBased_cement")
+    # L2321.PriceElasticity_cement <- get_data(all_data, "L2321.PriceElasticity_cement")
+    # L2321.IncomeElasticity_cement_gcam3 <- get_data(all_data, "L2321.IncomeElasticity_cement_gcam3")
     L1321.in_EJ_state_cement_F_Y <- get_data(all_data, "L1321.in_EJ_state_cement_F_Y")
     L1321.IO_GJkg_state_cement_F_Yh <- get_data(all_data, "L1321.IO_GJkg_state_cement_F_Yh")
     L1321.out_Mt_state_cement_Yh <- get_data(all_data, "L1321.out_Mt_state_cement_Yh")
 
     # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
+    stop()
     #
     # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
     # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
