@@ -11,11 +11,11 @@
 #' \code{L254.tranSubsectorShrwtFllt_USA}, \code{L254.tranSubsectorInterp_USA}, \code{L254.tranSubsectorSpeed_USA},
 #' \code{L254.tranSubsectorSpeed_passthru_USA}, \code{L254.tranSubsectorSpeed_noVOTT_USA},
 #' \code{L254.tranSubsectorSpeed_nonmotor_USA}, \code{L254.tranSubsectorVOTT_USA}, \code{L254.tranSubsectorFuelPref_USA},
-#' \code{L254.StubTranTech_USA}, \code{L254.tranSubsectorFuelPref_USA}, \code{L254.StubTranTech_USA},
-#' \code{L254.StubTranTech_passthru_USA}, \code{L254.StubTranTech_nonmotor_USA}, \code{L254.StubTranTechLoadFactor_USA},
-#' \code{L254.StubTranTechCost_USA}, \code{L254.StubTranTechCoef_USA}, \code{L254.PerCapitaBased_trn_USA},
-#' \code{L254.PriceElasticity_trn_USA}, \code{L254.IncomeElasticity_trn_USA}, \code{L254.StubTranTechCalInput_USA},
-#' \code{L254.StubTranTechProd_nonmotor_USA}, \code{L254.StubTranTechCalInput_passthru_USA}, \code{L254.BaseService_trn_USA}. The corresponding file in the
+#' \code{L254.StubTranTech_USA}, \code{L254.StubTranTech_passthru_USA}, \code{L254.StubTranTech_nonmotor_USA},
+#' \code{L254.StubTranTechLoadFactor_USA}, \code{L254.StubTranTechCost_USA}, \code{L254.StubTranTechCoef_USA},
+#' \code{L254.PerCapitaBased_trn_USA}, \code{L254.PriceElasticity_trn_USA}, \code{L254.IncomeElasticity_trn_USA},
+#' \code{L254.StubTranTechCalInput_USA}, \code{L254.StubTranTechProd_nonmotor_USA}, \code{L254.StubTranTechCalInput_passthru_USA},
+#' \code{L254.BaseService_trn_USA}. The corresponding file in the
 #' original data system was \code{L254.transportation_USA.R} (gcam-usa level2).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
@@ -65,8 +65,6 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
              "L254.tranSubsectorSpeed_noVOTT_USA",
              "L254.tranSubsectorSpeed_nonmotor_USA",
              "L254.tranSubsectorVOTT_USA",
-             "L254.tranSubsectorFuelPref_USA",
-             "L254.StubTranTech_USA",
              "L254.tranSubsectorFuelPref_USA",
              "L254.StubTranTech_USA",
              "L254.StubTranTech_passthru_USA",
@@ -167,8 +165,6 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
     process_USA_to_states(L254.tranSubsectorSpeed_noVOTT) -> L254.tranSubsectorSpeed_noVOTT_USA
     process_USA_to_states(L254.tranSubsectorSpeed_nonmotor) -> L254.tranSubsectorSpeed_nonmotor_USA
     process_USA_to_states(L254.tranSubsectorVOTT) -> L254.tranSubsectorVOTT_USA
-    process_USA_to_states(L254.tranSubsectorFuelPref) -> L254.tranSubsectorFuelPref_USA
-    process_USA_to_states(L254.StubTranTech) -> L254.StubTranTech_USA
     process_USA_to_states(L254.tranSubsectorFuelPref) -> L254.tranSubsectorFuelPref_USA
     process_USA_to_states(L254.StubTranTech) -> L254.StubTranTech_USA
     process_USA_to_states(L254.StubTech_passthru) -> L254.StubTranTech_passthru_USA
@@ -309,7 +305,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L254.DeleteFinalDemand_USAtrn") %>%
+      add_legacy_name("L254.Supplysector_trn_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.Supplysector_trn") ->
       L254.Supplysector_trn_USA
@@ -319,7 +315,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L254.DeleteFinalDemand_USAtrn") %>%
+      add_legacy_name("L254.FinalEnergyKeyword_trn_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.FinalEnergyKeyword_trn") ->
       L254.FinalEnergyKeyword_trn_USA
@@ -329,7 +325,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L254.DeleteFinalDemand_USAtrn") %>%
+      add_legacy_name("L254.tranSubsectorLogit_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.tranSubsectorLogit") ->
       L254.tranSubsectorLogit_USA
@@ -339,7 +335,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L254.DeleteFinalDemand_USAtrn") %>%
+      add_legacy_name("L254.tranSubsectorShrwtFllt_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.tranSubsectorShrwtFllt") ->
       L254.tranSubsectorShrwtFllt_USA
@@ -349,7 +345,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L254.DeleteFinalDemand_USAtrn") %>%
+      add_legacy_name("L254.tranSubsectorInterp_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.tranSubsectorInterp") ->
       L254.tranSubsectorInterp_USA
@@ -359,7 +355,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L254.DeleteFinalDemand_USAtrn") %>%
+      add_legacy_name("L254.tranSubsectorSpeed_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.tranSubsectorSpeed") ->
       L254.tranSubsectorSpeed_USA
@@ -369,7 +365,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L254.DeleteFinalDemand_USAtrn") %>%
+      add_legacy_name("L254.tranSubsectorSpeed_passthru_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.tranSubsectorSpeed_passthru") ->
       L254.tranSubsectorSpeed_passthru_USA
@@ -379,7 +375,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L254.DeleteFinalDemand_USAtrn") %>%
+      add_legacy_name("L254.tranSubsectorSpeed_noVOTT_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.tranSubsectorSpeed_noVOTT") ->
       L254.tranSubsectorSpeed_noVOTT_USA
@@ -389,7 +385,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L254.DeleteFinalDemand_USAtrn") %>%
+      add_legacy_name("L254.tranSubsectorSpeed_nonmotor_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.tranSubsectorSpeed_nonmotor") ->
       L254.tranSubsectorSpeed_nonmotor_USA
@@ -399,7 +395,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L254.DeleteFinalDemand_USAtrn") %>%
+      add_legacy_name("L254.tranSubsectorVOTT_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.tranSubsectorVOTT") ->
       L254.tranSubsectorVOTT_USA
@@ -409,7 +405,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L254.DeleteFinalDemand_USAtrn") %>%
+      add_legacy_name("L254.tranSubsectorFuelPref_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.tranSubsectorFuelPref") ->
       L254.tranSubsectorFuelPref_USA
@@ -419,27 +415,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L254.DeleteFinalDemand_USAtrn") %>%
-      add_precursors("gcam-usa/states_subregions",
-                     "L254.StubTranTech") ->
-      L254.StubTranTech_USA
-
-    L254.tranSubsectorFuelPref_USA %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L254.DeleteFinalDemand_USAtrn") %>%
-      add_precursors("gcam-usa/states_subregions",
-                     "L254.tranSubsectorFuelPref") ->
-      L254.tranSubsectorFuelPref_USA
-
-    L254.StubTranTech_USA %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L254.DeleteFinalDemand_USAtrn") %>%
+      add_legacy_name("L254.StubTranTech_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.StubTranTech") ->
       L254.StubTranTech_USA
@@ -449,9 +425,9 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L254.DeleteFinalDemand_USAtrn") %>%
+      add_legacy_name(" L254.StubTranTech_passthru_USA") %>%
       add_precursors("gcam-usa/states_subregions",
-                     "L254.StubTranTech_passthru") ->
+                     "L254.StubTech_passthru") ->
       L254.StubTranTech_passthru_USA
 
     L254.StubTranTech_nonmotor_USA %>%
@@ -459,9 +435,9 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L254.DeleteFinalDemand_USAtrn") %>%
+      add_legacy_name("L254.StubTranTech_nonmotor_USA") %>%
       add_precursors("gcam-usa/states_subregions",
-                     "L254.StubTranTech_nonmotor") ->
+                     "L254.StubTech_nonmotor") ->
       L254.StubTranTech_nonmotor_USA
 
     L254.StubTranTechLoadFactor_USA %>%
@@ -469,7 +445,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L254.DeleteFinalDemand_USAtrn") %>%
+      add_legacy_name("L254.StubTranTechLoadFactor_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.StubTranTechLoadFactor") ->
       L254.StubTranTechLoadFactor_USA
@@ -479,7 +455,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L254.DeleteFinalDemand_USAtrn") %>%
+      add_legacy_name("L254.StubTranTechCost_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.StubTranTechCost") ->
       L254.StubTranTechCost_USA
@@ -489,7 +465,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L254.DeleteFinalDemand_USAtrn") %>%
+      add_legacy_name("L254.StubTranTechCoef_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.StubTranTechCoef") ->
       L254.StubTranTechCoef_USA
@@ -499,7 +475,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L254.DeleteFinalDemand_USAtrn") %>%
+      add_legacy_name("L254.PerCapitaBased_trn_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.PerCapitaBased_trn") ->
       L254.PerCapitaBased_trn_USA
@@ -509,7 +485,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L254.DeleteFinalDemand_USAtrn") %>%
+      add_legacy_name("L254.PriceElasticity_trn_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.PriceElasticity_trn") ->
       L254.PriceElasticity_trn_USA
@@ -519,7 +495,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L254.DeleteFinalDemand_USAtrn") %>%
+      add_legacy_name("L254.IncomeElasticity_trn_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.IncomeElasticity_trn") ->
       L254.IncomeElasticity_trn_USA
@@ -582,8 +558,6 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
                 L254.tranSubsectorSpeed_noVOTT_USA,
                 L254.tranSubsectorSpeed_nonmotor_USA,
                 L254.tranSubsectorVOTT_USA,
-                L254.tranSubsectorFuelPref_USA,
-                L254.StubTranTech_USA,
                 L254.tranSubsectorFuelPref_USA,
                 L254.StubTranTech_USA,
                 L254.StubTranTech_passthru_USA,

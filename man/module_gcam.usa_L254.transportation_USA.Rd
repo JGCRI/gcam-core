@@ -19,11 +19,11 @@ the generated outputs: \code{L254.DeleteSupplysector_USAtrn}, \code{L254.DeleteF
 \code{L254.tranSubsectorShrwtFllt_USA}, \code{L254.tranSubsectorInterp_USA}, \code{L254.tranSubsectorSpeed_USA},
 \code{L254.tranSubsectorSpeed_passthru_USA}, \code{L254.tranSubsectorSpeed_noVOTT_USA},
 \code{L254.tranSubsectorSpeed_nonmotor_USA}, \code{L254.tranSubsectorVOTT_USA}, \code{L254.tranSubsectorFuelPref_USA},
-\code{L254.StubTranTech_USA}, \code{L254.tranSubsectorFuelPref_USA}, \code{L254.StubTranTech_USA},
-\code{L254.StubTranTech_passthru_USA}, \code{L254.StubTranTech_nonmotor_USA}, \code{L254.StubTranTechLoadFactor_USA},
-\code{L254.StubTranTechCost_USA}, \code{L254.StubTranTechCoef_USA}, \code{L254.PerCapitaBased_trn_USA},
-\code{L254.PriceElasticity_trn_USA}, \code{L254.IncomeElasticity_trn_USA}, \code{L254.StubTranTechCalInput_USA},
-\code{L254.StubTranTechProd_nonmotor_USA}, \code{L254.StubTranTechCalInput_passthru_USA}, \code{L254.BaseService_trn_USA}. The corresponding file in the
+\code{L254.StubTranTech_USA}, \code{L254.StubTranTech_passthru_USA}, \code{L254.StubTranTech_nonmotor_USA},
+\code{L254.StubTranTechLoadFactor_USA}, \code{L254.StubTranTechCost_USA}, \code{L254.StubTranTechCoef_USA},
+\code{L254.PerCapitaBased_trn_USA}, \code{L254.PriceElasticity_trn_USA}, \code{L254.IncomeElasticity_trn_USA},
+\code{L254.StubTranTechCalInput_USA}, \code{L254.StubTranTechProd_nonmotor_USA}, \code{L254.StubTranTechCalInput_passthru_USA},
+\code{L254.BaseService_trn_USA}. The corresponding file in the
 original data system was \code{L254.transportation_USA.R} (gcam-usa level2).
 }
 \description{
