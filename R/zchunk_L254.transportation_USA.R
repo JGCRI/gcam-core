@@ -148,10 +148,8 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       # NOTE: electricity is always consumed from state markets
       if("market.name" %in% names(data_new)) {
         data_new <- data_new %>%
-          left_join_error_no_match(select(states_subregions, state, grid_region), by = c("region" = "state")) %>%
           mutate(market.name = replace(market.name, minicam.energy.input %in% gcamusa.ELECT_TD_SECTORS,
-                                       grid_region[minicam.energy.input %in% gcamusa.ELECT_TD_SECTORS])) %>%
-          select(-grid_region)
+                                       region[minicam.energy.input %in% gcamusa.ELECT_TD_SECTORS]))
       }
 
       data_new
@@ -359,7 +357,8 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L254.tranSubsectorSpeed_USA") %>%
       add_precursors("gcam-usa/states_subregions",
-                     "L254.tranSubsectorSpeed") ->
+                     "L254.tranSubsectorSpeed") %>%
+      add_flags(FLAG_PROTECT_FLOAT) ->
       L254.tranSubsectorSpeed_USA
 
     L254.tranSubsectorSpeed_passthru_USA %>%
@@ -510,7 +509,8 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       add_legacy_name("L254.StubTranTechCalInput_USA") %>%
       same_precursors_as("L254.StubTranTechCoef_USA") %>%
       add_precursors("L154.in_EJ_state_trn_m_sz_tech_F",
-                     "energy/mappings/UCD_techs") ->
+                     "energy/mappings/UCD_techs") %>%
+      add_flags(FLAG_PROTECT_FLOAT) ->
       L254.StubTranTechCalInput_USA
 
     L254.StubTranTechProd_nonmotor_USA %>%
