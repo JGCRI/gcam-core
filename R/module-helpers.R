@@ -219,9 +219,10 @@ write_to_all_states <- function(data, names) {
     data$price.exp.year.fillout <- "start-year"
   }
 
+
   data %>%
+    mutate(region = NULL) %>%
     set_years %>%
-    select(-one_of("region")) %>% # remove region column if it exists
     repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
     select(one_of(names))
 }
