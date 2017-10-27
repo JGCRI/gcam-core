@@ -15,9 +15,9 @@
 #' @author YourInitials CurrentMonthName 2017
 #' @export
 
-module_emissions_L152.MACC <- function(command, ...) {
+module_gcam.usa_L244.building_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("energy/A44.gcam_consumer",
+    return(c(FILE = "energy/A44.gcam_consumer",
              FILE = "energy/A44.sector",
              FILE = "gcam-usa/calibrated_techs_bld_usa",
              FILE = "gcam-usa/states_subregions",
