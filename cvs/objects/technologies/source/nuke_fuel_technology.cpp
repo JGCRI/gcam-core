@@ -81,7 +81,29 @@ NukeFuelTechnology::NukeFuelTechnology( const string& aName, const int aYear ): 
 }
 
 NukeFuelTechnology* NukeFuelTechnology::clone() const {
-    return new NukeFuelTechnology( *this );
+    NukeFuelTechnology* clone = new NukeFuelTechnology( mName, mYear );
+    clone->copy( *this );
+    return clone;
+}
+
+void NukeFuelTechnology::copy( const NukeFuelTechnology& aOther ) {
+    Technology::copy( aOther );
+    
+    fertileFuelName = aOther.fertileFuelName;
+    blanketFuelName = aOther.blanketFuelName;
+    blanketFuelRatio = aOther.blanketFuelRatio;
+    burnup = aOther.burnup;
+    conversionCost = aOther.conversionCost;
+    enrichmentProd = aOther.enrichmentProd;
+    enrichmentFeed = aOther.enrichmentFeed;
+    enrichmentTail = aOther.enrichmentTail;
+    enrichmentCost = aOther.enrichmentCost;
+    fabricationCost = aOther.fabricationCost;
+    blanketFabCost = aOther.blanketFabCost;
+    interimStorageCost = aOther.interimStorageCost;
+    geologicWasteDisposalCost = aOther.geologicWasteDisposalCost;
+    reprocessingCost = aOther.reprocessingCost;
+    mConversionFactor = aOther.mConversionFactor;
 }
 
 const string& NukeFuelTechnology::getXMLName() const {
@@ -324,15 +346,15 @@ void NukeFuelTechnology::production( const string& aRegionName,
     // add demand for fertile material
     Marketplace* marketplace = scenario->getMarketplace();
     if( fertileFuelName != "none" ) {
-        double inputFertile = primaryOutput / getFertileEfficiency( aPeriod );
-        mLastFertileValue = marketplace->addToDemand( fertileFuelName, aRegionName,
-                                                      inputFertile, mLastFertileValue, aPeriod );
+        mLastFertileValue = primaryOutput / getFertileEfficiency( aPeriod );
+        marketplace->addToDemand( fertileFuelName, aRegionName,
+                                  mLastFertileValue, aPeriod );
     }
     // add demand for blanket material
     if( blanketFuelName != "none" ) {
-        double inputBlanket = primaryOutput / getBlanketEfficiency( aPeriod );
-        mLastBlanketValue = marketplace->addToDemand( blanketFuelName, aRegionName,
-                                                      inputBlanket, mLastBlanketValue, aPeriod );
+        mLastBlanketValue = primaryOutput / getBlanketEfficiency( aPeriod );
+        marketplace->addToDemand( blanketFuelName, aRegionName,
+                                  mLastBlanketValue, aPeriod );
     }
 
     // calculate by-products from technology (shk 10/11/04) mass of initial

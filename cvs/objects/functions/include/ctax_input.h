@@ -150,13 +150,19 @@ public:
 protected:
     CTaxInput( const CTaxInput& aOther );
 
-    //! The name of the fuel to use to look up the C coef
-    //! typically the name of the primary input into the
-    //! containing technology
-    std::string mFuelName;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        MiniCAMInput,
 
-    //! The C coef associated with mFuelName
-    double mCachedCCoef;
+        //! The name of the fuel to use to look up the C coef
+        //! typically the name of the primary input into the
+        //! containing technology
+        DEFINE_VARIABLE( SIMPLE, "fuel-name", mFuelName, std::string ),
+
+        //! The C coef associated with mFuelName
+        DEFINE_VARIABLE( SIMPLE, "fuel-C-coef", mCachedCCoef, double )
+    )
 };
 
 #endif // _CTAX_INPUT_H_

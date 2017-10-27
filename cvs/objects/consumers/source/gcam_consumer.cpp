@@ -73,7 +73,17 @@ void GCAMConsumer::copyParam( const BaseTechnology* aBaseTech, const int aPeriod
 }
 
 GCAMConsumer* GCAMConsumer::clone() const {
-    return new GCAMConsumer( *this );
+    GCAMConsumer* clone = new GCAMConsumer();
+    clone->copy( *this );
+    return clone;
+}
+
+void GCAMConsumer::copy( const GCAMConsumer& aOther ) {
+    Consumer::copy( aOther );
+    mSubregionalPopulation = aOther.mSubregionalPopulation;
+    mSubregionalIncome = aOther.mSubregionalIncome;
+    mSubregionalPopulationShare = aOther.mSubregionalPopulationShare;
+    mSubregionalIncomeShare = aOther.mSubregionalIncomeShare;
 }
 
 /*! \brief Get the XML node name for output to XML.

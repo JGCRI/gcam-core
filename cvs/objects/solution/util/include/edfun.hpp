@@ -48,12 +48,6 @@
 #include "containers/include/world.h"
 #include "solution/util/include/solution_info_set.h"
 #include "solution/util/include/functor.hpp"
-#include "util/base/include/atom.h"
-
-#if GCAM_PARALLEL_ENABLED
-#include "tbb/parallel_for.h"
-#include "tbb/blocked_range.h"
-#endif 
 
 #define UBVECTOR boost::numeric::ublas::vector
 
@@ -99,8 +93,6 @@ class LogEDFun : public VecFVec<double,double>
                        //!this to reset their supply and demand as
                        //!required.
   int period;
-  int partj; //!< flag indicating which variable in the input vector
-             //!has changed in a partial derivative calculation
   bool mLogPricep;               //!< Flag indicating whether inputs are prices or log-prices
 
   // diagnostic variables
@@ -109,7 +101,7 @@ public:
   LogEDFun(SolutionInfoSet &sisin, World *w, Marketplace *m, int per, bool aLogPricep=true);
   
   // basic vector function interface
-  virtual void operator()(const UBVECTOR<double> &x, UBVECTOR<double> &fx);
+  virtual void operator()(const UBVECTOR<double> &x, UBVECTOR<double> &fx, const int partj=-1);
   virtual void partial(int ip);
   virtual double partialSize(int ip) const;
   void scaleInitInputs(UBVECTOR<double> &ax);

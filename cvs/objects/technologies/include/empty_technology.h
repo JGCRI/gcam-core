@@ -71,6 +71,7 @@ public:
     virtual ITechnology* clone() const;
     
     virtual void setYear( const int aNewYear );
+    virtual int getYear() const;
     
     virtual bool XMLParse( const xercesc::DOMNode* tempnode );
     virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
@@ -143,7 +144,7 @@ public:
     virtual double getTotalGHGCost( const std::string& aRegionName, const std::string& aSectorName, 
                                    const int aPeriod ) const;
     
-    virtual Value getShareWeight() const;
+    virtual double getShareWeight() const;
     virtual Value getParsedShareWeight() const;
     virtual int getNumbGHGs()  const;
     virtual void copyGHGParameters( const AGHG* prevGHG );
@@ -182,6 +183,12 @@ public:
     virtual void doInterpolations( const Technology* aPrevTech, const Technology* aNextTech );
     
 protected:
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        ITechnology
+    )
     
     virtual double getTotalInputCost( const std::string& aRegionName,
                                      const std::string& aSectorName,

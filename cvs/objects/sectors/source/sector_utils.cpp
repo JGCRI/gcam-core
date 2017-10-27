@@ -113,13 +113,11 @@ bool SectorUtils::createTrialSupplyMarket( const string& aRegionName,
  * \param aRegion Region of the market.
  * \param aSector Name of the sector.
  * \param aSupply Known value of supply for the iteration.
- * \param aLastValue A state variable used by Marketplace::addToDemand.
  * \param aPeriod Model period.
  */
 void SectorUtils::addToTrialDemand( const string& aRegionName,
                                     const string& aSectorName,
-                                    const double aSupply,
-                                    double& aLastValue,
+                                    const Value& aSupply,
                                     const int aPeriod )
 {
     // Market is not created until period 1.
@@ -135,8 +133,8 @@ void SectorUtils::addToTrialDemand( const string& aRegionName,
 
     // Demand is the known value of the trial market. Trial markets do not solve
     // well when the value of one side is zero.
-    aLastValue = scenario->getMarketplace()->addToDemand( trialName->second, aRegionName, aSupply,
-                                             aLastValue, aPeriod, true );
+    scenario->getMarketplace()->addToDemand( trialName->second, aRegionName, aSupply,
+                                             aPeriod, true );
 }
 
 /*!

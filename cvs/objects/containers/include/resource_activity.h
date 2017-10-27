@@ -64,8 +64,6 @@ public:
     // IActivity methods
     virtual void calc( const int aPeriod );
     
-    virtual void setStale();
-    
     virtual std::string getDescription() const;
 private:
     //! The wrapped resource.

@@ -84,13 +84,26 @@ const string& InputCapital::getXMLReportingName() const{
 
 //! Constructor
 InputCapital::InputCapital()
-: mAdjustedCosts( scenario->getModeltime()->getmaxper() ),
-  mAdjustedCoefficients( scenario->getModeltime()->getmaxper() ){
+{
 }
 
 //! Clone the input.
 InputCapital* InputCapital::clone() const {
-    return new InputCapital( *this );
+    InputCapital* clone = new InputCapital();
+    clone->copy( *this );
+    return clone;
+}
+
+void InputCapital::copy( const InputCapital& aOther ) {
+    MiniCAMInput::copy( aOther );
+    
+    mTechChange = aOther.mTechChange;
+    mCapitalOvernight = aOther.mCapitalOvernight;
+    mFixedChargeRate = aOther.mFixedChargeRate;
+    mLifetimeCapital = aOther.mLifetimeCapital;
+    mCapacityFactor = aOther.mCapacityFactor;
+    
+    // calculated parameters are not copied.
 }
 
 bool InputCapital::isSameType( const string& aType ) const {
@@ -132,17 +145,17 @@ void InputCapital::XMLParse( const xercesc::DOMNode* node ) {
 
         const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
         if ( nodeName == "capital-overnight" ) {
-            mCapitalOvernight = XMLHelper<double>::getValue( curr );
+            mCapitalOvernight = XMLHelper<Value>::getValue( curr );
         }
         // Capital lifetime may be different from technology lifetime.
         else if( nodeName == "lifetime-capital" ){
-            mLifetimeCapital = XMLHelper<double>::getValue( curr );
+            mLifetimeCapital = XMLHelper<Value>::getValue( curr );
         }
         else if( nodeName == "fixed-charge-rate" ){
             mFixedChargeRate = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "tech-change" ){
-            mTechChange = XMLHelper<double>::getValue( curr );
+            mTechChange = XMLHelper<Value>::getValue( curr );
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -332,8 +345,6 @@ void InputCapital::doInterpolations( const int aYear, const int aPreviousYear,
     mTechChange = nextCapInput->mTechChange;
     
     // interpolate the costs
-    mCost = util::linearInterpolateY( aYear, aPreviousYear, aNextYear,
-                                      prevCapInput->mCost, nextCapInput->mCost );
     mCapitalOvernight = util::linearInterpolateY( aYear, aPreviousYear, aNextYear,
                                                   prevCapInput->mCapitalOvernight,
                                                   nextCapInput->mCapitalOvernight );

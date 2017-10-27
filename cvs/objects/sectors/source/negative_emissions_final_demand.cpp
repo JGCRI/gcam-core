@@ -195,8 +195,8 @@ void NegativeEmissionsFinalDemand::setFinalDemand( const string& aRegionName,
         double policyAdj = ( 1.0 - policyPrice );
         regionalCO2Emiss *= policyAdj;
     }
-    double negativeEmissValue = regionalCO2Emiss * co2Price;
-    mLastCalcValue = marketplace->addToDemand( mPolicyName, aRegionName, negativeEmissValue, mLastCalcValue, aPeriod );
+    mCurrNegEmissValue = regionalCO2Emiss * co2Price;
+    marketplace->addToDemand( mPolicyName, aRegionName, mCurrNegEmissValue, aPeriod );
 }
 
 double NegativeEmissionsFinalDemand::getWeightedEnergyPrice( const string& aRegionName,

@@ -46,7 +46,6 @@
 #include "solution/util/include/solution_info_set.h"
 #include "solution/util/include/solver_library.h"
 #include "marketplace/include/market.h"
-#include "util/base/include/supply_demand_curve.h"
 #include "util/logger/include/ilogger.h"
 #include "containers/include/info.h"
 
@@ -73,7 +72,9 @@ mFlowGraph( aFlowGraph ),
 mSolutionTolerance( 0 ),
 mSolutionFloor( 0 ),
 mBracketInterval( 0 ),
-mMaxNRPriceJump( 0 )
+mMaxNRPriceJump( 0 ),
+mLowerBoundSupplyPrice( getLowerBoundSupplyPriceInternal() ),
+mUpperBoundSupplyPrice( getUpperBoundSupplyPriceInternal() )
 {
     assert( aLinkedMarket );
 }
@@ -226,16 +227,6 @@ double SolutionInfo::getEDRight() const {
     return EDR;
 }
 
-//! Store X, demand and supply so that they can later be used to calculate derivatives.
-void SolutionInfo::storeValues() {
-    linkedMarket->storeInfo();
-}
-
-//! Restore X, demand and supply.
-void SolutionInfo::restoreValues() {
-    linkedMarket->restoreInfo();
-}
-
 /*! \brief Return the name of the SolutionInfo object.
 * \author Josh Lurz
 * \return The name of the market the SolutionInfo is connected to.
@@ -300,7 +291,7 @@ bool SolutionInfo::shouldSolve( const bool isNR ) const {
 */
 double SolutionInfo::getLogChangeInRawPrice() const {
    double change = 0;
-    double storedX = linkedMarket->getStoredRawPrice();
+    double storedX = 0.0; // TODO: could fix but why? linkedMarket->getStoredRawPrice();
     double X = getPrice();
    // Case 1: price or Previous price is zero.
    if( storedX == 0 || X == 0 ) {
@@ -329,7 +320,7 @@ double SolutionInfo::getLogChangeInRawPrice() const {
 */
 double SolutionInfo::getLogChangeInRawDemand() const {
    double change = 0;
-    double storedDemand = linkedMarket->getStoredRawDemand();
+    double storedDemand = 0.0; // TODO: could fix but why? linkedMarket->getStoredRawDemand();
     double demand = getDemand();
 
    // Case 1: Demand or Previous Demand is zero.
@@ -355,7 +346,7 @@ double SolutionInfo::getLogChangeInRawDemand() const {
 */
 double SolutionInfo::getLogChangeInRawSupply() const {
    double change = 0;
-    double storedSupply = linkedMarket->getStoredRawSupply();
+    double storedSupply = 0.0; // TODO: could fix but why? linkedMarket->getStoredRawSupply();
     double supply = getSupply();
 
    // Case 1: supply or Previous supply is zero.
@@ -555,10 +546,6 @@ void SolutionInfo::print( ostream& aOut ) const {
     aOut.setf(ios_base::fmtflags( 0 ),ios_base::floatfield); //reset to default
 }
 
-SupplyDemandCurve SolutionInfo::createSDCurve(){
-    return SupplyDemandCurve( linkedMarket );
-}
-
 void SolutionInfo::printDerivatives( ostream& aOut ) const {
     aOut << getName() << " SupplyDer: ";
     for( unsigned int i = 0; i < supplyElasticities.size(); ++i ){
@@ -603,13 +590,23 @@ GcamFlowGraph* SolutionInfo::getFlowGraph() const {
 
 double SolutionInfo::getLowerBoundSupplyPrice() const
 {
+    return mLowerBoundSupplyPrice;
+}
+
+double SolutionInfo::getUpperBoundSupplyPrice() const
+{
+    return mUpperBoundSupplyPrice;
+}
+
+double SolutionInfo::getLowerBoundSupplyPriceInternal() const
+{
     const string LOWER_BOUND_KEY = "lower-bound-supply-price";
     return linkedMarket->getMarketInfo()->hasValue( LOWER_BOUND_KEY ) ?
         linkedMarket->getMarketInfo()->getDouble( LOWER_BOUND_KEY, true ) :
         -util::getLargeNumber();
 }
 
-double SolutionInfo::getUpperBoundSupplyPrice() const
+double SolutionInfo::getUpperBoundSupplyPriceInternal() const
 {
     const string UPPER_BOUND_KEY = "upper-bound-supply-price";
     return linkedMarket->getMarketInfo()->hasValue( UPPER_BOUND_KEY ) ?

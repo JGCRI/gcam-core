@@ -45,13 +45,14 @@
  */
 #include <xercesc/dom/DOMNode.hpp>
 #include <string>
-#include <boost/shared_ptr.hpp>
+#include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/iparsable.h"
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
 #include "util/base/include/iinterpolation_function.h"
+#include "util/base/include/data_definition_util.h"
 
 /*!
  * \ingroup Objects
@@ -115,7 +116,7 @@
  * \author Pralit Patel
  * \author Sonny Kim
  */
-class InterpolationRule : public IParsable, public IRoundTrippable {
+class InterpolationRule : public IParsable, public IRoundTrippable, private boost::noncopyable {
 public:
 
     /*!
@@ -137,6 +138,8 @@ public:
     InterpolationRule();
     ~InterpolationRule();
     
+    InterpolationRule* clone() const;
+    
     static const std::string& getXMLNameStatic();
     
     void applyInterpolations( objects::PeriodVector<Value>& aValuesToInterpolate,
@@ -148,34 +151,40 @@ public:
     // IRoundTrippable methods
     virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
 
-private:
-    //! The from-year that this rule applies.
-    int mFromYear;
+protected:
+    
+    DEFINE_DATA(
+        // InterpolationRule is the only member of this container hierarchy.
+        DEFINE_SUBCLASS_FAMILY( InterpolationRule ),
 
-    //! The optional from-value to use during interpolations
-    Value mFromValue;
+        //! The from-year that this rule applies.
+        DEFINE_VARIABLE( SIMPLE, "from-year", mFromYear, int ),
 
-    //! The to-year that this rule applies.
-    int mToYear;
+        //! The optional from-value to use during interpolations
+        DEFINE_VARIABLE( SIMPLE, "from-value", mFromValue, Value ),
 
-    //! The optional to-value to use during interpolations
-    Value mToValue;
+        //! The to-year that this rule applies.
+        DEFINE_VARIABLE( SIMPLE, "to-year", mToYear, int ),
 
-    //! The interpolation function that will be used to perform the
-    //! interpolations
-    boost::shared_ptr<IInterpolationFunction> mInterpolationFunction;
+        //! The optional to-value to use during interpolations
+        DEFINE_VARIABLE( SIMPLE, "to-value", mToValue, Value ),
 
-    //! The policy this rule will use in the event that an existing
-    //! value may get overwritten.
-    OverwritePolicy mOverwritePolicy;
+        //! The interpolation function that will be used to perform the
+        //! interpolations
+        DEFINE_VARIABLE( CONTAINER, IInterpolationFunction::getXMLNameStatic(), mInterpolationFunction, IInterpolationFunction* ),
 
-    //! A flag to indicate a warning should be produced when an
-    //! existing value gets overwritten.
-    bool mWarnWhenOverwritting;
+        //! The policy this rule will use in the event that an existing
+        //! value may get overwritten.
+        DEFINE_VARIABLE( SIMPLE, "overwrite-policy", mOverwritePolicy, OverwritePolicy ),
 
-    //! The XML name for what this rule applies to.  Currently
-    //! this is only here for toInputXML.
-    std::string mApplyTo;
+        //! A flag to indicate a warning should be produced when an
+        //! existing value gets overwritten.
+        DEFINE_VARIABLE( SIMPLE, "overwrite-warn", mWarnWhenOverwritting, bool ),
+
+        //! The XML name for what this rule applies to.  Currently
+        //! this is only here for toInputXML.
+        DEFINE_VARIABLE( SIMPLE, "apply-to", mApplyTo, std::string )
+    )
 
     //! Flag to check if the interpolation function is fixed in which
     //! case we enable the hack to set the value in the from-year as well
@@ -184,6 +193,8 @@ private:
     //! Flag to keep track of if we should write the to-year attribute
     //! as the getLastModelYearConstant() in toInputXML
     bool mUseLastModelYearConstant;
+    
+    void copy( const InterpolationRule& aOther );
 
     std::string overwritePolicyEnumToStr( const OverwritePolicy aPolicy ) const;
     

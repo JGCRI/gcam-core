@@ -109,14 +109,23 @@ public:
                                                const int aPeriod ) const;
 
 protected:
-    //! Annual Hicks-Neutral technical change.
-    Value mHicksNeutralTechChange;
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        ITechnicalChangeCalc,
+                            
+        //! Annual Hicks-Neutral technical change.
+        DEFINE_VARIABLE( SIMPLE, "hicks-neutral", mHicksNeutralTechChange, Value ),
 
-    //! Annual energy only technical change.
-    Value mEnergyTechChange;
+        //! Annual energy only technical change.
+        DEFINE_VARIABLE( SIMPLE, "energy-only", mEnergyTechChange, Value ),
 
-    //! Annual material only technical change.
-    Value mMaterialTechChange;
+        //! Annual material only technical change.
+        DEFINE_VARIABLE( SIMPLE, "material-only", mMaterialTechChange, Value )
+    )
+    
+    void copy( const StandardTechnicalChangeCalc& aOther );
 };
 
 #endif // _STANDARD_TECHNICAL_CHANGE_CALC_H_

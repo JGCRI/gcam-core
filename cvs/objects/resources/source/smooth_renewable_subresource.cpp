@@ -55,19 +55,14 @@
 #include <cassert>
 #include <cmath>
 
-// SmoothRenewableSubresource::sXMLName ************************************
-
-const std::string SmoothRenewableSubresource::sXMLName
-   = "smooth-renewable-subresource";
-
 // Constructor: SmoothRenewableSubresource: ********************************
 
 SmoothRenewableSubresource::SmoothRenewableSubresource(void)
    : parent(),
-     mCostCurve(),
-     mPriceExponent( 0.01 ),
-     mMidPrice( 0 )
+     mCostCurve()
 {
+    mPriceExponent = 0.01;
+    mMidPrice = 0;
 }
 
 // Destructor: SmoothRenewableSubresource **********************************
@@ -109,11 +104,11 @@ void SmoothRenewableSubresource::annualsupply(
    // Calculate expansion in supply due to GDP increase
    double gpdSupplyExpansion = std::pow(
       aGDP->getApproxGDP( aPeriod ) / aGDP->getApproxGDP( 0 ),
-      gdpSupplyElasticity );
+      mGdpSupplyElasticity );
 
    // now convert to absolute value of production
    mAnnualProd[ aPeriod ] =
-      fractionAvailable * maxSubResource * gpdSupplyExpansion;
+      fractionAvailable * mMaxSubResource * gpdSupplyExpansion;
 }
 
 // SmoothRenewableSubresource::completeInit ********************************
@@ -183,7 +178,8 @@ const std::string& SmoothRenewableSubresource::getXMLNameStatic( void )
 // Modifies:
 // Post: Return the XML tag name
 {
-   return sXMLName;
+    static const std::string XML_NAME = "smooth-renewable-subresource";
+   return XML_NAME;
 }
 
 // SmoothRenewableSubresource::toXMLforDerivedClass ************************

@@ -46,8 +46,8 @@
 using namespace std;
 
 //! Constructor
-CalibrationMarket::CalibrationMarket( const string& goodNameIn, const string& regionNameIn, int periodIn ) :
-  Market( goodNameIn, regionNameIn, periodIn ) {
+CalibrationMarket::CalibrationMarket( const MarketContainer* aContainer ) :
+  Market( aContainer ) {
 }
 
 //! Destructor

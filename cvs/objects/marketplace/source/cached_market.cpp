@@ -134,7 +134,7 @@ void CachedMarket::setPrice( const string& aGoodName, const string& aRegionName,
  * \param aMustExist Whether it is an error for the market not to exist.
  * \see Marketplace::addToSupply
  */
-void CachedMarket::addToSupply( const string& aGoodName, const string& aRegionName, const double aValue,
+void CachedMarket::addToSupply( const string& aGoodName, const string& aRegionName, const Value& aValue,
                                 const int aPeriod, bool aMustExist )
 {
     /*!
@@ -161,14 +161,8 @@ void CachedMarket::addToSupply( const string& aGoodName, const string& aRegionNa
     }
     
     if ( mCachedMarket ) {
-        double valueToAdd;
-        if( scenario->getMarketplace()->mIsDerivativeCalc ) {
-            valueToAdd = aValue - mLastSupply;
-        }
-        else {
-            mLastSupply = valueToAdd = aValue;
-        }
-        mCachedMarket->addToSupply( valueToAdd );
+        mCachedMarket->addToSupply( scenario->getMarketplace()->mIsDerivativeCalc ?
+                                    aValue.getDiff() : aValue.get() );
     }
     else if( aMustExist ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -188,7 +182,7 @@ void CachedMarket::addToSupply( const string& aGoodName, const string& aRegionNa
  * \param aMustExist Whether it is an error for the market not to exist.
  * \see Marketplace::addToDemand
  */
-void CachedMarket::addToDemand( const string& aGoodName, const string& aRegionName, const double aValue,
+void CachedMarket::addToDemand( const string& aGoodName, const string& aRegionName, const Value& aValue,
                                 const int aPeriod, bool aMustExist )
 {
     /*!
@@ -215,14 +209,8 @@ void CachedMarket::addToDemand( const string& aGoodName, const string& aRegionNa
     }
     
     if ( mCachedMarket ) {
-        double valueToAdd;
-        if( scenario->getMarketplace()->mIsDerivativeCalc ) {
-            valueToAdd = aValue - mLastDemand;
-        }
-        else {
-            mLastDemand = valueToAdd = aValue;
-        }
-        mCachedMarket->addToDemand( valueToAdd );
+        mCachedMarket->addToDemand( scenario->getMarketplace()->mIsDerivativeCalc ?
+                                    aValue.getDiff() : aValue.get() );
     }
     else if( aMustExist ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );

@@ -48,16 +48,19 @@
 
 #include <vector>
 #include <map>
+#include <boost/core/noncopyable.hpp>
+
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iround_trippable.h"
 #include "demographics/include/population.h"
+#include "util/base/include/data_definition_util.h"
 
 /*! 
 * \ingroup Objects
 * \brief Demographics model that calculates population by gender and age cohort.
 */
 
-class Demographic: public IVisitable, public IRoundTrippable {
+class Demographic: public IVisitable, public IRoundTrippable, private boost::noncopyable {
     friend class XMLDBOutputter; // For getXMLName()
 public:
     Demographic();
@@ -83,14 +86,20 @@ public:
     void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     void dbOutput( const std::string& regionName ) const; 
     void accept( IVisitor* aVisitor, const int aPeriod ) const;
-
+    
+protected:
+    
+    DEFINE_DATA(
+        /*! \brief Demographic is the only member of this container hierarchy. */
+        DEFINE_SUBCLASS_FAMILY( Demographic ),
+        
+        //! Vector of Population objects by period.
+        DEFINE_VARIABLE( CONTAINER, "population", population, std::vector<Population*> )
+    )
 private:
     void clear();
     int convertPeriodToPopulationIndex( int aPeriod ) const;
     const std::string& getXMLName() const;
-    
-    //! Vector of Population objects by period.
-    std::vector<Population*> population;
     
     //! Mapping of year to index in the population vector. The years are stored
     //! as strings to work around a limitation in the XML parsing helper

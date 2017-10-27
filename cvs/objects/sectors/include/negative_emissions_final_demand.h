@@ -105,14 +105,20 @@ public:
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
     
-    //! Name of the gas to track
-    std::string mName;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        AFinalDemand,
+    
+        //! Name of the gas to track
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
-    //! Name of the policy market to add negative emissions value to.
-    std::string mPolicyName;
+        //! Name of the policy market to add negative emissions value to.
+        DEFINE_VARIABLE( SIMPLE, "policy-name", mPolicyName, std::string ),
 
-    //! State value necessary to use Marketplace::addToDemand
-    double mLastCalcValue;
+        //! State value necessary to use Marketplace::addToDemand
+        DEFINE_VARIABLE( SIMPLE | STATE, "curr-negative-emiss-value", mCurrNegEmissValue, Value )
+    )
     
     virtual const std::string& getXMLName() const;
 };

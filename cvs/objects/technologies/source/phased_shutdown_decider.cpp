@@ -58,11 +58,22 @@ extern Scenario* scenario;
  * \brief Constructor
  */
 PhasedShutdownDecider::PhasedShutdownDecider()
-: mShutdownRate( 0 )
-{}
+{
+    mShutdownRate = 0;
+}
+
+PhasedShutdownDecider::~PhasedShutdownDecider() {
+}
 
 PhasedShutdownDecider* PhasedShutdownDecider::clone() const {
-    return new PhasedShutdownDecider( *this );
+    PhasedShutdownDecider* clone = new PhasedShutdownDecider();
+    clone->copy( *this );
+    return clone;
+}
+
+void PhasedShutdownDecider::copy( const PhasedShutdownDecider& aOther ) {
+    mName = aOther.mName;
+    mShutdownRate = aOther.mShutdownRate;
 }
 
 bool PhasedShutdownDecider::isSameType( const string& aType ) const {

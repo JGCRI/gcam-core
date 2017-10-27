@@ -48,6 +48,7 @@
 
 #include "sectors/include/final_demand_sector.h"
 #include "sectors/include/subsector.h"
+#include "sectors/include/more_sector_info.h"
 
 using namespace std;
 
@@ -64,16 +65,25 @@ void FinalDemandSector::setMarket(){
 
 //! Parse xml file for data
 bool FinalDemandSector::XMLDerivedClassParse( const string& nodeName, const xercesc::DOMNode* curr ) {
+    if( nodeName == MoreSectorInfo::getXMLNameStatic() ) {
+        parseSingleNode( curr, moreSectorInfo, new MoreSectorInfo );
+        return true;
+    }
     return false;
 }
 
 //! For derived classes to output XML data
 void FinalDemandSector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-	//do something maybe
+    if( moreSectorInfo.get() ){
+        moreSectorInfo->toInputXML( out, tabs );
+    }
 }
 
 //! Output debug info for derived class
 void FinalDemandSector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
+    if( moreSectorInfo.get() ){
+        moreSectorInfo->toDebugXML( period, out, tabs );
+    }
 }
 
 const string& FinalDemandSector::getXMLName() const {
@@ -100,7 +110,7 @@ double FinalDemandSector::getPrice( const GDP* aGDP,
 void FinalDemandSector::operate( NationalAccount& aNationalAccount, const Demographic* aDemographic,
                                  const int aPeriod )
 {
-    for( SubsectorIterator currSub = subsec.begin(); currSub != subsec.end(); ++currSub ){
+    for( SubsectorIterator currSub = mSubsectors.begin(); currSub != mSubsectors.end(); ++currSub ){
         // flag tells the subsector to operate all capital, old and new.
         (*currSub)->operate( aNationalAccount, aDemographic, moreSectorInfo.get(), true, aPeriod );
     }
@@ -120,7 +130,7 @@ void FinalDemandSector::initCalc( NationalAccount* aNationalAccount,
                                   const int aPeriod )
 {
     // do any sub-Sector initializations
-    for( SubsectorIterator currSub = subsec.begin(); currSub != subsec.end(); ++currSub ){
+    for( SubsectorIterator currSub = mSubsectors.begin(); currSub != mSubsectors.end(); ++currSub ){
         (*currSub)->initCalc( aNationalAccount, aDemographics,
                               moreSectorInfo.get(), aPeriod );
     }

@@ -13,7 +13,7 @@ CC		= gcc
 endif
 CFLAGS		= -O2
 CXXOPTIM        = -O2
-CXXDEBUG        = -ggdb -DNDEBUG
+CXXDEBUG        = -ggdb -DNDEBUG -DFUSION_MAX_VECTOR_SIZE=30
 CXXBASEOPTS     = $(CXXDEBUG)
 
 ARCH_FLAGS      = 
@@ -49,10 +49,6 @@ ifndef USE_MKL
     USE_MKL=0
   endif
 endif
-
-## some optimization testing options
-NOCLEARNULL = 0
-NOCLEARRESTORE = 0
 
 #### flag indicating whether or not to use hector
 #### If we are using hector, there are some other variables to set.
@@ -158,8 +154,8 @@ LIBDIR		= -L/usr/local/lib -L$(XERCES_LIB) -L$(BUILDPATH) $(JAVALIB) $(TBB_LIBRA
 
 ### The rest should be mostly compiler independent
 ## Note $(PROF) will be set as needed if we are building the gcam-prof target
-CPPFLAGS	= $(INCLUDE) $(ARCH_FLAGS) $(JARSLIB) -DGCAM_PARALLEL_ENABLED=$(USE_GCAM_PARALLEL) -DUSE_LAPACK=$(USE_LAPACK) -DNOCLEARNULL=$(NOCLEARNULL) -DNOCLEARRESTORE=$(NOCLEARRESTORE) -DUSE_HECTOR=$(USE_HECTOR) $(MKL_CFLAGS)
-CXXFLAGS        = $(CXXOPTIM) $(CXXBASEOPTS) $(PROF) -MMD -std=c++11 -Wno-deprecated
+CPPFLAGS	= $(INCLUDE) $(ARCH_FLAGS) $(JARSLIB) -DGCAM_PARALLEL_ENABLED=$(USE_GCAM_PARALLEL) -DUSE_LAPACK=$(USE_LAPACK) -DUSE_HECTOR=$(USE_HECTOR) $(MKL_CFLAGS)
+CXXFLAGS        = $(CXXOPTIM) $(CXXBASEOPTS) $(PROF) -MMD -std=c++14 -Wno-deprecated
 FCFLAGS         = $(FCOPTIM) $(FCBASEOPTS) $(PROF)
 LD              = $(CXX) $(PROF)
 LDFLAGS         = $(CXXFLAGS) -Wl,-rpath,$(XERCES_LIB) $(JAVA_RPATH) $(TBB_RPATH) $(LAPACK_RPATH) $(MKL_LDFLAGS)

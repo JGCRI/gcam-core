@@ -172,7 +172,7 @@ void LinearControl::initCalc( const string& aRegionName,
                            const int aPeriod )
 {
     int finalCalibPer = scenario->getModeltime()->getFinalCalibrationPeriod();
-    double finalCalibYr = scenario->getModeltime()->getper_to_yr( finalCalibPer );
+    int finalCalibYr = scenario->getModeltime()->getper_to_yr( finalCalibPer );
 
     if ( mTargetYear <= finalCalibYr) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );

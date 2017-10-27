@@ -60,66 +60,18 @@ using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
-// static initialize.
-const string PolicyPortfolioStandard::XML_NAME = "policy-portfolio-standard";
 
 /*! \brief Default constructor. */
 PolicyPortfolioStandard::PolicyPortfolioStandard():
-    isFixedTax( false ),
-    mIsShareBased( false ),
-    mConstraint( scenario->getModeltime()->getmaxper(), -1.0 ),
-    mFixedTax( scenario->getModeltime()->getmaxper(), -1 ),
-    mShareOfSectorOutput( scenario->getModeltime()->getmaxper(), -1.0 ),
-    mMinPrice( scenario->getModeltime()->getmaxper(), 0.0 ),
-    mMaxPrice( scenario->getModeltime()->getmaxper(), util::getLargeNumber() ),
-    mPriceUnits( "1975$/GJ"),
-    mOutputUnits( "EJ_or_Share" )
+mConstraint( -1.0 ),
+mFixedTax( -1.0 ),
+mShareOfSectorOutput( -1.0 ),
+mMinPrice( 0.0 ),
+mMaxPrice( util::getLargeNumber() ),
+mPriceUnits( "1975$/GJ" ),
+mOutputUnits( "EJ_or_Share" )
 {
-}
-
-/*!
-* \brief Constructor which initializes a portfolio standard policy without setting 
-*  an output share or constraint.
-*/
-PolicyPortfolioStandard::PolicyPortfolioStandard( const string aName, const string aMarket ):
-    mName( aName ), 
-    mMarket( aMarket ),
-    isFixedTax( false ),
-    mIsShareBased( false ),
-    mConstraint( scenario->getModeltime()->getmaxper(), -1.0 ),
-    mFixedTax( scenario->getModeltime()->getmaxper(), -1 ),
-    mShareOfSectorOutput( scenario->getModeltime()->getmaxper(), -1.0 ),
-    mMinPrice( scenario->getModeltime()->getmaxper(), 0.0 ),
-    mMaxPrice( scenario->getModeltime()->getmaxper(), util::getLargeNumber() ),
-    mPriceUnits( "1975$/GJ"),
-    mOutputUnits( "EJ_or_Share" )
-{
-}
-
-/*! \brief Constructor used when constructing an output share .
-*/
-PolicyPortfolioStandard::PolicyPortfolioStandard( const string aName, const string aMarket,
-                      const vector<double>& aShareOfTotal ):
-    mName( aName ), 
-    mMarket( aMarket ),
-    isFixedTax( false ),
-    mIsShareBased( true ),
-    mConstraint( scenario->getModeltime()->getmaxper(), -1.0 ),
-    mShareOfSectorOutput( aShareOfTotal ),
-    mMinPrice( scenario->getModeltime()->getmaxper(), 0.0 ),
-    mMaxPrice( scenario->getModeltime()->getmaxper(), util::getLargeNumber() ),
-    mPriceUnits( "1975$/GJ"),
-    mOutputUnits( "EJ_or_Share" )
-{
-    // Ensure that the share vector passed in is the right size.
-    assert( aShareOfTotal.size() == mConstraint.size() );
-}
-
-/*! \brief Create a copy of the portfolio standard policy.
-* \return An exact copy of the policy.
-*/
-PolicyPortfolioStandard* PolicyPortfolioStandard::clone() const {
-    return new PolicyPortfolioStandard( *this );
+    mIsShareBased = false;
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -131,7 +83,7 @@ PolicyPortfolioStandard* PolicyPortfolioStandard::clone() const {
 * \return The constant XML_NAME.
 */
 const string& PolicyPortfolioStandard::getXMLName() const {
-    return XML_NAME;
+    return getXMLNameStatic();
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -144,6 +96,7 @@ const string& PolicyPortfolioStandard::getXMLName() const {
 * \return The constant XML_NAME as a static.
 */
 const string& PolicyPortfolioStandard::getXMLNameStatic() {
+    const static string XML_NAME = "policy-portfolio-standard";
     return XML_NAME;
 }
 
@@ -180,9 +133,6 @@ void PolicyPortfolioStandard::XMLParse( const DOMNode* node ){
         }
         else if( nodeName == "isShareBased" ) {
             mIsShareBased = XMLHelper<bool>::getValue( curr );
-        }
-        else if( nodeName == "isFixedTax" ) {
-            isFixedTax = XMLHelper<bool>::getValue( curr );
         }
         else if( nodeName == "constraint" ){
             XMLHelper<double>::insertValueIntoVector( curr, mConstraint, modeltime );
@@ -229,7 +179,6 @@ void PolicyPortfolioStandard::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteElement( mMarket, "market", out, tabs );
     XMLWriteElement( mPolicyType, "policyType", out, tabs );
     XMLWriteElement( mIsShareBased, "isShareBased", out, tabs );
-    XMLWriteElement( isFixedTax, "isFixedTax", out, tabs );
     
     const Modeltime* modeltime = scenario->getModeltime();    
     for( int per = 0; per < modeltime->getmaxper(); ++per ){
@@ -263,9 +212,6 @@ void PolicyPortfolioStandard::toDebugXML( const int period, ostream& out, Tabs* 
     
     // Write whether we are a fixed tax policy.
     XMLWriteElement( mIsShareBased, "isShareBased", out, tabs );
-    
-    // Write whether we are a fixed tax policy.
-    XMLWriteElement( isFixedTax, "isFixedTax", out, tabs );
     
     // Write the constraint for the current year
     XMLWriteElement( mConstraint[ period ], "constraint", out, tabs );
@@ -319,85 +265,61 @@ void PolicyPortfolioStandard::completeInit( const string& aRegionName ) {
     marketInfo->setString( "price-unit", mPriceUnits );
     marketInfo->setString( "output-unit", mOutputUnits );
 
-        // Put the taxes in the market as the market prices if it is a fixed tax policy.
-    if( isFixedTax ){
-        // Set any taxes that are not unset.
-        for( unsigned int i = 0; i < mFixedTax.size(); ++i ){
-            // Make sure that the market is not solved. It could have been set
-            // to solve by an earlier run.
-            marketplace->unsetMarketToSolve( mName, aRegionName, i );
-            if( mFixedTax[ i ] != -1 ){
-                marketplace->setPrice( mName, aRegionName, mFixedTax[ i ], i );
-            }
-        }
-    }       
-    // Otherwise solve the market, given the read-in constraint.
-    else {
-        // Initialize temporary vector of contraints to constraint
-        vector<double> tempConstraint( mConstraint );
-
-        // Override tempConstraint with shares if shared based.
-        // Note: the share is based on the total output of the sector that the
-        // technology is in.
-        if( mIsShareBased ){
-            tempConstraint = mShareOfSectorOutput;
-            marketInfo->setBoolean( "isShareBased", true );
-        }
-        // Set either of the constraints, quantity or share, into the
-        // DEMAND side of the market for a subsidy, so that increasing subsidy 
-        // (market price) increases supply, and into the SUPPLY side of the 
-        // market for a tax, so increasing tax decreases demand.
-        // USING SUPPLY SIDE AS THE DEMAND FOR SUBSIDY AND DEMAND SIDE AS THE
-        // CONSTRAINT. TAXES USE DEMAND SIDE FOR DEMAND AND SUPPLY SIDE FOR 
-        // CONSTRAINT. DEFAULT IS SUBSIDY
-        for( int per = 1; per < modeltime->getmaxper(); ++per ){
-            // Subtracting the current demand for this period to set the constraint
-            // because addToDemand adds to any existing demand in the market.
-            // Passing false to suppress a warning the first time through.
-            if( tempConstraint[ per ] != -1 ){
-                if ( mPolicyType == "tax" ){
-                    marketplace->setMarketToSolve( mName, aRegionName, per );
-					marketplace->addToSupply( mName, aRegionName, tempConstraint[ per ] - 
-                        marketplace->getSupply( mName, aRegionName, per ), 0, per, false );
-                }
-				else if ( mPolicyType == "RES" ){  // maw doesn't understand this
-                    marketplace->setMarketToSolve( mName, aRegionName, per );
-				//	maw doesn't understand this.  But it doesn;t work otherwise
-					marketplace->addToSupply( mName, aRegionName, tempConstraint[ per ] - 
-                        marketplace->getSupply( mName, aRegionName, per ), 0, per, false );
-                }
-                else {
-                    marketplace->setMarketToSolve( mName, aRegionName, per );
-                    marketplace->addToDemand( mName, aRegionName, tempConstraint[ per ] - 
-                        marketplace->getDemand( mName, aRegionName, per ), 0, per, false );
-                }
-
-                // Constraint policies must have a price >= mMinPrice.  It may be the case that the constraint is
-                // non-binding at the minimum price in which case the solver can use this information to
-                // make a supply currection to still ensure equality.
-                // Also set a maximum price in which case this value is only used as a hint to the solver to keep
-                // the solver on track.
-                SectorUtils::setSupplyBehaviorBounds( mName, aRegionName, mMinPrice[ per ], mMaxPrice[ per ], per );
-            }
+    // Put the taxes in the market as the market prices if it is a fixed tax policy.
+    for( unsigned int i = 0; i < mFixedTax.size(); ++i ){
+        // Make sure that the market is not solved. It could have been set
+        // to solve by an earlier run.
+        marketplace->unsetMarketToSolve( mName, aRegionName, i );
+        if( mFixedTax[ i ] != -1 ){
+            marketplace->setPrice( mName, aRegionName, mFixedTax[ i ], i );
         }
     }
-}
 
-/*!
-* \brief Set the constraint to the vector passed in.
-* \param aConstraint new constraint vector
-*/
-void PolicyPortfolioStandard::setShareConstraint( const vector<double>& aConstraint ){
-    mIsShareBased = true;
-    mShareOfSectorOutput = aConstraint;
-}
+    // solve the market when given the read-in constraint.
+    // Initialize temporary vector of contraints to constraint
+    vector<double> tempConstraint( convertToVector( mConstraint ) );
 
-/*!
-* \brief Set the constraint to the vector passed in.
-* \param aConstraint new constraint vector
-*/
-void PolicyPortfolioStandard::setQuantityConstraint( const vector<double>& aConstraint ){
-    mIsShareBased = false;
-    isFixedTax = false;
-    mConstraint = aConstraint;
+    // Override tempConstraint with shares if shared based.
+    // Note: the share is based on the total output of the sector that the
+    // technology is in.
+    if( mIsShareBased ){
+        tempConstraint = convertToVector( mShareOfSectorOutput );
+        marketInfo->setBoolean( "isShareBased", true );
+    }
+    // Set either of the constraints, quantity or share, into the
+    // DEMAND side of the market for a subsidy, so that increasing subsidy 
+    // (market price) increases supply, and into the SUPPLY side of the 
+    // market for a tax, so increasing tax decreases demand.
+    // USING SUPPLY SIDE AS THE DEMAND FOR SUBSIDY AND DEMAND SIDE AS THE
+    // CONSTRAINT. TAXES USE DEMAND SIDE FOR DEMAND AND SUPPLY SIDE FOR 
+    // CONSTRAINT. DEFAULT IS SUBSIDY
+    for( int per = 1; per < modeltime->getmaxper(); ++per ){
+        // Subtracting the current demand for this period to set the constraint
+        // because addToDemand adds to any existing demand in the market.
+        // Passing false to suppress a warning the first time through.
+        if( tempConstraint[ per ] != -1 ){
+            if ( mPolicyType == "tax" ){
+                marketplace->setMarketToSolve( mName, aRegionName, per );
+                marketplace->addToSupply( mName, aRegionName, Value( tempConstraint[ per ] -
+                    marketplace->getSupply( mName, aRegionName, per ) ), per, false );
+            }
+            else if ( mPolicyType == "RES" ){  // maw doesn't understand this
+                marketplace->setMarketToSolve( mName, aRegionName, per );
+            //	maw doesn't understand this.  But it doesn;t work otherwise
+                marketplace->addToSupply( mName, aRegionName, Value( tempConstraint[ per ] -
+                    marketplace->getSupply( mName, aRegionName, per ) ), per, false );
+            }
+            else {
+                marketplace->setMarketToSolve( mName, aRegionName, per );
+                marketplace->addToDemand( mName, aRegionName, Value( tempConstraint[ per ] -
+                    marketplace->getDemand( mName, aRegionName, per ) ), per, false );
+            }
+            // Constraint policies must have a price >= mMinPrice.  It may be the case that the constraint is
+            // non-binding at the minimum price in which case the solver can use this information to
+            // make a supply currection to still ensure equality.
+            // Also set a maximum price in which case this value is only used as a hint to the solver to keep
+            // the solver on track.
+            SectorUtils::setSupplyBehaviorBounds( mName, aRegionName, mMinPrice[ per ], mMaxPrice[ per ], per );
+        }
+    }
 }

@@ -106,18 +106,26 @@ protected:
     virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aCurrNode );
     virtual void toInputXMLDerived( std::ostream& aOut, Tabs* aTabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& aOut, Tabs* aTabs ) const;
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        AGHG,
 
-private:    
-    //! The emissions coefficient.
-    Value mEmissionsCoef;
-    
-    //! Emissions to calibrate to if provided.
-    Value mInputEmissions;
-    
-    //! Stored Emissions Coefficient (needed for some control technologies)
-    //! The emissions coefficient is the current ratio of emissions to driver, accounting for any controls   
-    objects::PeriodVector<Value> mAdjustedEmissCoef; 
-    
+        //! The emissions coefficient.
+        DEFINE_VARIABLE( SIMPLE | STATE, "emiss-coef", mEmissionsCoef, Value ),
+
+        //! Emissions to calibrate to if provided.
+        DEFINE_VARIABLE( SIMPLE, "input-emissions", mInputEmissions, Value ),
+                                
+        //! Set of emissions controls
+        DEFINE_VARIABLE( CONTAINER, "emissions-control", mEmissionsControls, std::vector<AEmissionsControl*> ),
+                                
+        //! Stored Emissions Coefficient (needed for some control technologies)
+        //! The emissions coefficient is the current ratio of emissions to driver, accounting for any controls   
+        DEFINE_VARIABLE( ARRAY | STATE, "control-adjusted-emiss-coef", mAdjustedEmissCoef, objects::PeriodVector<Value> )
+    )
+
     //! A flag to indicate if mInputEmissions should be used recalibrate mEmissionsCoef
     //! in the current model period.
     bool mShouldCalibrateEmissCoef;
@@ -127,10 +135,8 @@ private:
     const GDP* mGDP;
 
     //! Emissions driver delegate
+    //! Include this in DEFINE_DATA?  These currently have no data at all and are simply "tags".
     std::auto_ptr<AEmissionsDriver> mEmissionsDriver;
-
-    //! Set of emissions controls
-    std::vector<AEmissionsControl*> mEmissionsControls;
 
     // typdef to help simplify code
     typedef std::vector<AEmissionsControl*>::const_iterator CControlIterator;

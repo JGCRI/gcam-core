@@ -96,8 +96,13 @@ public:
     
     virtual std::string getOutputUnits( const std::string& aRegionName ) const;
 
-private:
-    const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 
+protected:
+
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        PrimaryOutput
+    )
 };
 
 #endif // _GENERIC_OUTPUT_H_

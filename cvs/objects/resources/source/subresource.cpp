@@ -61,20 +61,15 @@ using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
-// static initialize.
-const string SubResource::XML_NAME = "subresource";
-const double GDP_EXPANS_DEFAULT = 1;
-const Value VALUE_DEFAULT = 0.0;
 
 //! Default constructor.
 SubResource::SubResource():
-//mPriceAdder( scenario->getModeltime()->getmaxper() , 0.0 ),
-mAvailable( scenario->getModeltime()->getmaxper() , 0.0 ),
-mAnnualProd( scenario->getModeltime()->getmaxper() , 0.0 ),
-mCumulProd( scenario->getModeltime()->getmaxper() , 0.0 ),
-mCumulativeTechChange( scenario->getModeltime()->getmaxper() , 1.0 ),
-mEffectivePrice( scenario->getModeltime()->getmaxper() , -1.0 ),
-mCalProduction( scenario->getModeltime()->getmaxper() , -1.0 )
+mAvailable( Value( 0.0 ) ),
+mAnnualProd( Value( 0.0 ) ),
+mCumulProd( Value( 0.0 ) ),
+mCumulativeTechChange( 1.0 ),
+mEffectivePrice( Value( -1.0 ) ),
+mCalProduction( -1.0 )
 {
 }
 
@@ -106,10 +101,10 @@ void SubResource::XMLParse( const DOMNode* node ){
             continue;
         }
         else if( nodeName == Grade::getXMLNameStatic() ){
-            parseContainerNode( curr, mGrade, mGradeNameMap, new Grade );
+            parseContainerNode( curr, mGrade, new Grade );
         }
         else if( nodeName == "annualprod" ){
-            XMLHelper<double>::insertValueIntoVector( curr, mAnnualProd, modeltime );
+            XMLHelper<Value>::insertValueIntoVector( curr, mAnnualProd, modeltime );
         }
         else if( nodeName == "techChange" ){
             XMLHelper<Value>::insertValueIntoVector( curr, mTechChange, modeltime );
@@ -160,13 +155,13 @@ void SubResource::completeInit( const IInfo* aResourceInfo ) {
     // If unitialize, initialize following variables to null for final calibration period.
     const int FinalCalPer = modeltime->getFinalCalibrationPeriod();
     if( !mTechChange[ FinalCalPer ].isInited() ) {
-        mTechChange[ FinalCalPer ] = VALUE_DEFAULT;
+        mTechChange[ FinalCalPer ] = 0;
     }
     if( !mEnvironCost[ FinalCalPer ].isInited() ) {
-        mEnvironCost[ FinalCalPer ] = VALUE_DEFAULT;
+        mEnvironCost[ FinalCalPer ] = 0;
     }
     if( !mSeveranceTax[ FinalCalPer ].isInited() ) {
-        mSeveranceTax[ FinalCalPer ] = VALUE_DEFAULT;
+        mSeveranceTax[ FinalCalPer ] = 0;
     }
 
     // decrement from terminal period to copy backward the technical change for missing periods
@@ -180,7 +175,7 @@ void SubResource::completeInit( const IInfo* aResourceInfo ) {
             // This may occur if running GCAM time periods beyond read-in dataset and
             // fillout is not used.
             else{
-                mTechChange[ per ] = VALUE_DEFAULT;
+                mTechChange[ per ] = 0;
             }
         }
     }
@@ -250,7 +245,7 @@ void SubResource::postCalc( const string& aRegionName, const string& aResourceNa
     updateAvailable( aPeriod ); // reinitialize available amount
     if( aPeriod > 0 ) {
         mAvailable[ aPeriod ] -= mCumulProd[ aPeriod - 1 ];
-        mAvailable[ aPeriod ] = max( mAvailable[ aPeriod ], 0.0 );
+        mAvailable[ aPeriod ] = max( mAvailable[ aPeriod ].get(), 0.0 );
     }
 
     // call grade post calculations.
@@ -271,13 +266,13 @@ void SubResource::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag( getXMLName(), out, tabs, mName );
 
     // write the xml for the class members.
-    const Value VALUE_DEFAULT = 0.0; // enables template function to recognize Value Class
+    const Value VALUE_DEFAULT( 0.0 ); // enables template function to recognize Value Class
     XMLWriteVector( mEnvironCost, "environCost", out, tabs, modeltime, VALUE_DEFAULT );
     XMLWriteVector( mSeveranceTax, "severanceTax", out, tabs, modeltime, VALUE_DEFAULT );
     XMLWriteVector( mTechChange, "techChange", out, tabs, modeltime, VALUE_DEFAULT );
     
     // for base year only
-    XMLWriteElementCheckDefault(mAnnualProd[0],"annualprod",out, tabs, 0.0 , modeltime->getper_to_yr(0)); 
+    XMLWriteElementCheckDefault(mAnnualProd[0],"annualprod",out, tabs, VALUE_DEFAULT , modeltime->getper_to_yr(0));
 
     XMLWriteVector( mCalProduction, "cal-production", out, tabs, modeltime, -1.0 );
     XMLWriteVector( mPriceAdder, "price-adder", out, tabs, modeltime, VALUE_DEFAULT  );
@@ -331,7 +326,7 @@ void SubResource::toDebugXML( const int period, ostream& out, Tabs* tabs ) const
 * \return The constant XML_NAME.
 */
 const std::string& SubResource::getXMLName() const {
-    return XML_NAME;
+    return getXMLNameStatic();
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -344,11 +339,12 @@ const std::string& SubResource::getXMLName() const {
 * \return The constant XML_NAME as a static.
 */
 const std::string& SubResource::getXMLNameStatic() {
+    static const string XML_NAME = "subresource";
     return XML_NAME;
 }
 
 //! return SubResource name
-string SubResource::getName() const {
+const std::string& SubResource::getName() const {
     return mName;
 }
 
@@ -384,12 +380,12 @@ void SubResource::cumulsupply( double aPrice, int aPeriod )
             }
             // add subrsrcs up to the lower grade
             for ( i = 0; i <= iL; i++ ) {
-                mCumulProd[ aPeriod ] += mGrade[i]->getAvail();
+                mCumulProd[ aPeriod ] += Value( mGrade[i]->getAvail() );
             }
             // price must reach upper grade cost to produce all of lower grade
             double slope = mGrade[iL]->getAvail()
                 / ( mGrade[iU]->getCost( aPeriod ) - mGrade[iL]->getCost( aPeriod ) );
-            mCumulProd[ aPeriod ] -= slope * ( mGrade[iU]->getCost( aPeriod ) - mEffectivePrice[ aPeriod ] );
+            mCumulProd[ aPeriod ] -= Value( slope * ( mGrade[iU]->getCost( aPeriod ) - mEffectivePrice[ aPeriod ] ) );
         }
         
         // Case 3
@@ -398,7 +394,7 @@ void SubResource::cumulsupply( double aPrice, int aPeriod )
         if ( mEffectivePrice[ aPeriod ] > mGrade[ mGrade.size() - 1 ]->getCost( aPeriod ) ) {
             mCumulProd[ aPeriod ] = 0;
             for ( unsigned int i = 0; i < mGrade.size(); i++ ) {
-                mCumulProd[ aPeriod ] += mGrade[i]->getAvail();
+                mCumulProd[ aPeriod ] += Value( mGrade[i]->getAvail() );
             }
         }
     }
@@ -417,7 +413,7 @@ double SubResource::getCumulProd( const int aPeriod ) const {
 void SubResource::updateAvailable( const int aPeriod ){
     mAvailable[ aPeriod ] = 0;
     for ( unsigned int i = 0; i < mGrade.size(); ++i ) {
-        mAvailable[ aPeriod ] += mGrade[ i ]->getAvail();
+        mAvailable[ aPeriod ] += Value( mGrade[ i ]->getAvail() );
     }
 }
 
@@ -445,7 +441,7 @@ void SubResource::annualsupply( int aPeriod, const GDP* aGdp, double aPrice, dou
 
         // mAvailable is the total resource (stock) remaining
         mAvailable[ aPeriod ] = mAvailable[ aPeriod - 1 ] - ( mAnnualProd[ aPeriod ] * modeltime->gettimestep( aPeriod ) );
-        mAvailable[ aPeriod ] = max( mAvailable[ aPeriod ], 0.0 );
+        mAvailable[ aPeriod ] = max( mAvailable[ aPeriod ].get(), 0.0 );
     }
 }
 
@@ -492,8 +488,8 @@ void SubResource::dbOutput( const string &regname, const string& secname ){
     // total subsector output
     //dboutput4(regname,"Primary Energy", "Production for " + secname,name,outputUnit,annualprod);
     //    dboutput4(regname,"Resource",secname,str,"EJ",available);
-    dboutput4(regname,"Resource","Available "+secname,mName,outputUnit,mAvailable);
-    dboutput4(regname,"Resource","CummProd "+secname,mName,outputUnit,mCumulProd);
+    dboutput4(regname,"Resource","Available "+secname,mName,outputUnit,convertToVector(mAvailable));
+    dboutput4(regname,"Resource","CummProd "+secname,mName,outputUnit,convertToVector(mCumulProd));
 
     // do for all grades in the sector
     for ( unsigned int i=0;i< mGrade.size();i++) {
@@ -530,8 +526,8 @@ void SubResource::csvOutputFile( const string &regname, const string& sname) {
     // function arguments are variable name, double array, db name, table name
     // the function writes all years
     // total subsector output
-    fileoutput3( regname,sname,mName," ","production",outputUnit,mAnnualProd);
-    fileoutput3( regname,sname,mName," ","resource",outputUnit,mAvailable);
+    fileoutput3( regname,sname,mName," ","production",outputUnit,convertToVector(mAnnualProd));
+    fileoutput3( regname,sname,mName," ","resource",outputUnit,convertToVector(mAvailable));
 
 }
 

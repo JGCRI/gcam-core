@@ -59,6 +59,11 @@ LinearInterpolationFunction::LinearInterpolationFunction() {
 LinearInterpolationFunction::~LinearInterpolationFunction() {
 }
 
+IInterpolationFunction* LinearInterpolationFunction::clone() const {
+    // no parameters to copy
+    return new LinearInterpolationFunction();
+}
+
 /*!
  * \brief The value for the xml name attribute which identifies this
  *        interpolation function.

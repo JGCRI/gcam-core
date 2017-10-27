@@ -223,7 +223,7 @@ void SGMOutput::setPhysicalOutput( const double aSGMOutput,
     // note that this does not make sense for consumers
     // and so we say that the market does not need to exist
     if( aSGMOutput > util::getSmallNumber() ) {
-        mCachedMarket->addToSupply( mName, aRegionName, aSGMOutput, aPeriod, false );
+        mCachedMarket->addToSupply( mName, aRegionName, mPhysicalOutputs[ aPeriod ], aPeriod, false );
     }
 }
 

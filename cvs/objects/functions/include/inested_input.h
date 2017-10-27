@@ -50,9 +50,16 @@
 #include <memory>
 
 #include "functions/include/iinput.h"
+#include "util/base/include/data_definition_util.h"
 
 class IFunction;
 struct TechChange;
+
+// Need to forward declare the subclasses as well.
+class NodeInput;
+class BuildingNodeInput;
+class BuildingServiceInput;
+class ThermalBuildingServiceInput;
 
 /*! 
 * \ingroup Objects
@@ -206,6 +213,16 @@ public:
      *          levelized cost calculations.
      */
     virtual void resetCalcLevelizedCostFlag() = 0;
+    
+protected:
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of INestedInput to allow automatic traversal of the
+         * hierarchy under introspection.  Note we are going to keep seperate the
+         * subclass hierarchy of IInput and INestedInput for simplicity.
+         */
+        DEFINE_SUBCLASS_FAMILY( INestedInput, NodeInput, BuildingNodeInput, BuildingServiceInput, ThermalBuildingServiceInput )
+    )
 };
 
 // Inline function definitions.

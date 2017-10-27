@@ -311,20 +311,24 @@ public:
 
 
 protected:
-    //! The name of this input.
-    std::string mName;
-
-    //! Building service demand by period.
-    objects::PeriodVector<Value> mServiceDemand;
-
-    //! Energy service density for reporting.
-    objects::PeriodVector<Value> mServiceDensity;
-
-    //! Satiation demand function.
-    std::auto_ptr<SatiationDemandFunction> mSatiationDemandFunction;
     
-    //! State value necessary to use Marketplace::addToDemand
-    double mLastCalcValue;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        INestedInput,
+
+        //! The name of this input.
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+
+        //! Building service demand by period.
+        DEFINE_VARIABLE( ARRAY | STATE, "base-service", mServiceDemand, objects::PeriodVector<Value> ),
+
+        //! Energy service density for reporting.
+        DEFINE_VARIABLE( ARRAY | STATE, "service-density", mServiceDensity, objects::PeriodVector<Value> ),
+
+        //! Satiation demand function.
+        DEFINE_VARIABLE( CONTAINER, "satiation-demand-function", mSatiationDemandFunction, SatiationDemandFunction* )
+    )
     
     void copy( const BuildingServiceInput& aInput );
 };

@@ -52,6 +52,7 @@
 
 class Tabs;
 class IInfo;
+class MoreSectorInfo;
 
 /*!
  * \brief A sector which calculates the final demands for a region using a
@@ -79,6 +80,8 @@ public:
     virtual void dbOutput( const GDP* aGDP,
                            const IndirectEmissionsCalculator* aIndEmissCalc ) const {}
 protected:
+    std::auto_ptr<MoreSectorInfo> moreSectorInfo; //! Additional sector information needed below sector
+    
     virtual double getOutput( const int aPeriod ) const { return 0; }
 	
     virtual double getPrice( const GDP* aGDP,

@@ -10,6 +10,7 @@ include ${PATHOFFSET}/build/linux/configure.gcam
 OBJS       = calibration_market.o \
              demand_market.o \
              inverse_calibration_market.o \
+             market_container.o \
              market.o \
              market_locator.o \
              market_subsidy.o \

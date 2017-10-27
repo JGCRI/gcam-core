@@ -347,9 +347,6 @@
     <ClCompile Include="..\..\sectors\source\supply_sector.cpp">
       <Filter>Source Files\sectors</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\sectors\source\tran_sector.cpp">
-      <Filter>Source Files\sectors</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\sectors\source\tran_subsector.cpp">
       <Filter>Source Files\sectors</Filter>
     </ClCompile>
@@ -935,9 +932,6 @@
     <ClCompile Include="..\..\sectors\source\ag_supply_subsector.cpp">
       <Filter>Source Files\sectors</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\sectors\source\non_energy_final_demand.cpp">
-      <Filter>Source Files\sectors</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\technologies\source\ag_production_technology.cpp">
       <Filter>Source Files\technology</Filter>
     </ClCompile>
@@ -1082,8 +1076,17 @@
     <ClCompile Include="..\..\technologies\source\pass_through_technology.cpp">
       <Filter>Source Files\technology</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\util\base\source\gcam_fusion.cpp">
+      <Filter>Source Files\util\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\marketplace\source\market_container.cpp">
+      <Filter>Source Files\marketplace</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\emissions\source\linear_control.cpp">
       <Filter>Source Files\emissions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\util\base\source\manage_state_variables.cpp">
+      <Filter>Source Files\util\base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1295,9 +1298,6 @@
       <Filter>Header Files\sectors</Filter>
     </ClInclude>
     <ClInclude Include="..\..\sectors\include\supply_sector.h">
-      <Filter>Header Files\sectors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sectors\include\tran_sector.h">
       <Filter>Header Files\sectors</Filter>
     </ClInclude>
     <ClInclude Include="..\..\sectors\include\tran_subsector.h">
@@ -1523,9 +1523,6 @@
       <Filter>Header Files\technologies</Filter>
     </ClInclude>
     <ClInclude Include="..\..\technologies\include\unmanaged_land_technology.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\variable_cost_shutdown_decider.h">
       <Filter>Header Files\technologies</Filter>
     </ClInclude>
     <ClInclude Include="..\..\technologies\include\variable_production_state.h">
@@ -2005,9 +2002,6 @@
     <ClInclude Include="..\..\sectors\include\ag_supply_subsector.h">
       <Filter>Header Files\sectors</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\sectors\include\non_energy_final_demand.h">
-      <Filter>Header Files\sectors</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\sectors\include\subsector_add_techcosts.h">
       <Filter>Header Files\sectors</Filter>
     </ClInclude>
@@ -2209,8 +2203,35 @@
     <ClInclude Include="..\..\technologies\include\pass_through_technology.h">
       <Filter>Header Files\technologies</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\containers\include\imodel_feedback_calc.h">
+      <Filter>Header Files\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\util\base\include\data_definition_util.h">
+      <Filter>Header Files\util\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\util\base\include\expand_data_vector.h">
+      <Filter>Header Files\util\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\util\base\include\factory.h">
+      <Filter>Header Files\util\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\util\base\include\gcam_data_containers.h">
+      <Filter>Header Files\util\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\util\base\include\gcam_fusion.hpp">
+      <Filter>Header Files\util\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\util\base\include\iyeared.h">
+      <Filter>Header Files\util\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\marketplace\include\market_container.h">
+      <Filter>Header Files\marketplace</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\emissions\include\linear_control.h">
       <Filter>Header Files\emissions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\util\base\include\manage_state_variables.hpp">
+      <Filter>Header Files\util\base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

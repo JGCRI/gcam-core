@@ -63,8 +63,17 @@ PassThroughTechnology::~PassThroughTechnology() {
 }
 
 PassThroughTechnology* PassThroughTechnology::clone() const {
+    PassThroughTechnology* clone = new PassThroughTechnology( mName, mYear );
+    clone->copy( *this );
+    return clone;
+}
 
-    return new PassThroughTechnology( *this );
+void PassThroughTechnology::copy( const PassThroughTechnology& aOther ) {
+    Technology::copy( aOther );
+    
+    mPassThroughSectorName = aOther.mPassThroughSectorName;
+    mPassThroughMarketName = aOther.mPassThroughMarketName;
+    mPassThroughFixedOutput = aOther.mPassThroughFixedOutput;
 }
 
 const string& PassThroughTechnology::getXMLNameStatic() {
@@ -89,7 +98,7 @@ void PassThroughTechnology::completeInit( const string& aRegionName,
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
         mainLog << "Reseting lifetime " << mLifetimeYears << " to a single timestep for "
-                << getXMLNameStatic() << " " << mName << " in year " << year << "." << endl;
+                << getXMLNameStatic() << " " << mName << " in year " << mYear << "." << endl;
         mLifetimeYears = -1;
     }
 

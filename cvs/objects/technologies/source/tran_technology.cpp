@@ -44,10 +44,7 @@
 #include <cmath>
 #include "technologies/include/tran_technology.h"
 #include "emissions/include/aghg.h"
-#include "containers/include/scenario.h"
 #include "util/base/include/xml_helper.h"
-#include "util/base/include/model_time.h"
-#include "marketplace/include/marketplace.h"
 #include "util/logger/include/ilogger.h"
 #include "functions/include/ifunction.h"
 #include "containers/include/iinfo.h"
@@ -60,22 +57,25 @@
 using namespace std;
 using namespace xercesc;
 
-extern Scenario* scenario;
-
-const string TranTechnology::XML_NAME = "tranTechnology";
-
 //! Constructor.
 TranTechnology::TranTechnology( const string& aName, const int aYear ): Technology( aName, aYear ) {
     mLoadFactor = 1;
-	mServiceOutput = 0;
 }
 
 TranTechnology* TranTechnology::clone() const {
-    return new TranTechnology( *this );
+    TranTechnology* clone = new TranTechnology( mName, mYear );
+    clone->copy( *this );
+    return clone;
+}
+
+void TranTechnology::copy( const TranTechnology& aOther ) {
+    Technology::copy( aOther );
+    
+    mLoadFactor = aOther.mLoadFactor;
 }
 
 const std::string& TranTechnology::getXMLName() const {
-    return XML_NAME;
+    return getXMLNameStatic();
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -88,15 +88,13 @@ const std::string& TranTechnology::getXMLName() const {
 * \return The constant XML_NAME as a static.
 */
 const std::string& TranTechnology::getXMLNameStatic() {
+    static const string XML_NAME = "tranTechnology";
     return XML_NAME;
 }
 
 bool TranTechnology::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
     if( nodeName == "loadFactor" ){
         mLoadFactor = XMLHelper<double>::getValue( curr );
-    }
-    else if( nodeName == "serviceOutput" ){
-        mServiceOutput = XMLHelper<double>::getValue( curr );
     }
     else {
         return false;
@@ -106,12 +104,10 @@ bool TranTechnology::XMLDerivedClassParse( const string& nodeName, const DOMNode
 
 void TranTechnology::toInputXMLDerived( ostream& out, Tabs* tabs ) const {  
     XMLWriteElementCheckDefault( mLoadFactor, "loadFactor", out, tabs, 1.0 );
-    XMLWriteElementCheckDefault( mServiceOutput, "serviceOutput", out, tabs, 0.0 );
 }
 
 void TranTechnology::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const { 
     XMLWriteElement( mLoadFactor, "loadFactor", out, tabs );
-    XMLWriteElement( mServiceOutput, "serviceOutput", out, tabs );
     XMLWriteElement( getOutput( period ) / mLoadFactor, "vehicleOutput", out, tabs );
     XMLWriteElement( getOutput( period ), "serviceOutput", out, tabs );
 }   
@@ -129,17 +125,6 @@ void TranTechnology::initCalc( const string& aRegionName,
     Technology::initCalc( aRegionName, aSectorName, aSubsectorInfo,
                           aDemographics, aPrevPeriodInfo, aPeriod );
 
-    // initialize mOutput to read-in service output
-    // TODO: This is not correct because this will add to the market. This will
-    //       only happen in the first iteration however, so should be okay most
-    //       of the time.
-    if( aPeriod <= 1 ) {
-      // Primary output is at location 0.
-      mOutputs[ 0 ]->setPhysicalOutput( mServiceOutput,
-                                        aRegionName,
-                                        mCaptureComponent.get(),
-                                        aPeriod );
-    }
     // Check if illegal values have been read in
     if ( mLoadFactor == 0 ) {
         mLoadFactor = 1;
@@ -181,8 +166,8 @@ double TranTechnology::getTotalGHGCost( const string& aRegionName,
 	const double GIGA = 1.0E9; // for getting price per GJ
     double totalGHGCost = 0;
     // totalGHGCost and carbontax must be in same unit as fuel price
-    for( unsigned int i = 0; i < ghg.size(); i++ ) {
-        totalGHGCost += ghg[ i ]->getGHGValue( aRegionName, mInputs, mOutputs, mCaptureComponent.get(), aPeriod );
+    for( unsigned int i = 0; i < mGHG.size(); i++ ) {
+        totalGHGCost += mGHG[ i ]->getGHGValue( aRegionName, mInputs, mOutputs, mCaptureComponent, aPeriod );
     }
     // totalGHGCost is in 1975$/GJ(Btu/veh-mi) due to the vehicle intensity.
     return totalGHGCost * JPERBTU / GIGA * CVRT90;
@@ -199,16 +184,16 @@ double TranTechnology::calcSecondaryValue( const string& aRegionName,
     double totalValue = 0;
     // Add all costs from the GHGs.
     // NOTE: Negative value for GHG.
-    for( unsigned int i = 0; i < ghg.size(); ++i ) {
-        totalValue -= ghg[ i ]->getGHGValue( aRegionName, mInputs, mOutputs,
-                                             mCaptureComponent.get(), aPeriod );
+    for( unsigned int i = 0; i < mGHG.size(); ++i ) {
+        totalValue -= mGHG[ i ]->getGHGValue( aRegionName, mInputs, mOutputs,
+                                             mCaptureComponent, aPeriod );
     }
 
     // Add all values from the outputs. The primary output is included in this
     // loop but will have a value of zero.
     for( unsigned int i = 0; i < mOutputs.size(); ++i ) {
         totalValue += mOutputs[ i ]->getValue( aRegionName,
-                      mCaptureComponent.get(), aPeriod );
+                      mCaptureComponent, aPeriod );
     }
 
     // TODO: Remove this function once units framework code is added.
@@ -357,7 +342,7 @@ double TranTechnology::getCalibrationOutput( const bool aHasRequiredInput,
     }
 
     // Check if the technology has a calibrated output value.
-    if( mCalValue.get() ) {
+    if( mCalValue ) {
         return mCalValue->getCalOutput() * mLoadFactor;
     }
 
@@ -405,6 +390,6 @@ void TranTechnology::doInterpolations( const Technology* aPrevTech, const Techno
     assert( nextTranTech );
     
     // Interpolate load factors
-    mLoadFactor = util::linearInterpolateY( year, prevTranTech->year, nextTranTech->year,
+    mLoadFactor = util::linearInterpolateY( mYear, prevTranTech->mYear, nextTranTech->mYear,
                                             prevTranTech->mLoadFactor, nextTranTech->mLoadFactor );
 }

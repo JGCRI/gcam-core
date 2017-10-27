@@ -114,6 +114,12 @@ pair<double, bool> Secanter::getNextValue() {
         // This is just the first arbitrary guess which has not yet been run
         mainLog << "Returning initial guess." << endl;
     }
+    else if( std::isnan( targetValue ) ) {
+        // the climate model failed, likely due to failure to solve
+        // the best we can do here is just backtrack and hope we can solve it
+        mCurrentTrial.first = ( mCurrentTrial.first - mPrevTrial.first ) / 2.0 +
+            mPrevTrial.first;
+    }
     else if( fabs( targetValue ) < mTolerance ) {
         //case ITarget::SOLVED:
         state = eSolved;

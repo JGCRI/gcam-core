@@ -50,8 +50,11 @@
 #include <list>
 #include <memory>
 #include <xercesc/dom/DOMNode.hpp>
+#include <boost/core/noncopyable.hpp>
+
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iround_trippable.h"
+#include "util/base/include/data_definition_util.h"
 
 // Forward declarations
 class Region;
@@ -81,7 +84,7 @@ class GcamFlowGraph;
 * \author Sonny Kim
 */
 
-class World: public IVisitable, public IRoundTrippable
+class World: public IVisitable, public IRoundTrippable, private boost::noncopyable
 {
 public:
     World();
@@ -110,6 +113,8 @@ public:
     std::map<std::string, const Curve*> getEmissionsQuantityCurves( const std::string& ghgName ) const;
     std::map<std::string, const Curve*> getEmissionsPriceCurves( const std::string& ghgName ) const;
     CalcCounter* getCalcCounter() const;
+    int getGlobalOrderingSize() const {return mGlobalOrdering.size();}
+    
     const GlobalTechnologyDatabase* getGlobalTechnologyDatabase() const;
 
 	void accept( IVisitor* aVisitor, const int aPeriod ) const;
@@ -117,7 +122,7 @@ public:
     void csvSGMGenFile( std::ostream& aFile ) const;
 
 #if GCAM_PARALLEL_ENABLED
-  private:
+  protected:
     //! TBB flow graph for a complete model evaluation
     GcamFlowGraph* mTBBGraphGlobal;
   public:
@@ -132,33 +137,38 @@ public:
      */
     GcamFlowGraph *getGlobalFlowGraph() {return mTBBGraphGlobal;}
 #endif
-private:
+protected:
     //! The type of an iterator over the Region vector.
     typedef std::vector<Region*>::iterator RegionIterator;
 
     //! The type of a constant iterator over the Region vector.
     typedef std::vector<Region*>::const_iterator CRegionIterator;
     
-    std::map<std::string, int> regionNamesToNumbers; //!< Map of region name to indice used for XML parsing.
-    std::vector<Region*> regions; //!< array of pointers to Region objects
-    std::auto_ptr<IClimateModel> mClimateModel; //!< The climate model.
-
-    //! An object which maintains a count of the number of times
-    //! calc() has been called.
-    std::auto_ptr<CalcCounter> mCalcCounter;
+    DEFINE_DATA(
+        /*! \brief World is the only member of this container hierarchy. */
+        DEFINE_SUBCLASS_FAMILY( World ),
+        
+        /*! \brief Array of pointers to Region objects. */
+        DEFINE_VARIABLE( CONTAINER, "region", mRegions, std::vector<Region*> ),
+        
+        /*! \brief The climate model. */
+        DEFINE_VARIABLE( SIMPLE, "climate-model", mClimateModel, IClimateModel* ),
+        
+        /*! \brief The global technology database. */
+        DEFINE_VARIABLE( SIMPLE, "global-technology-database", mGlobalTechDB, GlobalTechnologyDatabase* ),
+        
+        /*! \brief An object which maintains a count of the number of times
+         *         calc() has been called.
+         */
+        DEFINE_VARIABLE( SIMPLE, "calc-counter", mCalcCounter, CalcCounter* )
+    )
     
     //! The global ordering of activities which can be used to calculate the model.
     std::vector<IActivity*> mGlobalOrdering;
 
-    //! The global technology database.
-    std::auto_ptr<GlobalTechnologyDatabase> mGlobalTechDB;
-
     void clear();
 
     void csvGlobalDataFile() const;
- public:
-    //! Number of activities in the global activity list
-    int global_size(void) {return mGlobalOrdering.size();}
 };
 
 #endif // _WORLD_H_

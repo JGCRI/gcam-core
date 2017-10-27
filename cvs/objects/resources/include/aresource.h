@@ -44,7 +44,11 @@
  * \author Josh Lurz, Sonny Kim
  */
 #include <xercesc/dom/DOMNode.hpp>
+#include <boost/core/noncopyable.hpp>
+
+#include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
+#include "util/base/include/data_definition_util.h"
 
 class Tabs;
 class GDP;
@@ -52,13 +56,21 @@ class IInfo;
 class IOutput;
 class AGHG;
 
+// Need to forward declare the subclasses as well.
+class Resource;
+class DepletableResource;
+class FixedResource;
+class RenewableResource;
+class UnlimitedResource;
+class DepletingFixedResource;
+
 /*! 
 * \ingroup Objects
 * \brief An abstract class which defines a single resource.
 * \todo This class needs much more documentation.
 * \author Josh Lurz
 */
-class AResource: public IVisitable {
+class AResource: public INamed, public IVisitable, private boost::noncopyable {
     friend class XMLDBOutputter;
 public:
     virtual ~AResource();
@@ -99,19 +111,35 @@ public:
 protected:
     // For the database output
     virtual const std::string& getXMLName() const = 0;
-    //! Resource name.
-    std::string mName;
-    //! Unit of resource output
-    std::string mOutputUnit; 
-    //! Unit of resource price
-    std::string mPriceUnit; 
-    //! Market name.
-    std::string mMarket;
-    //! A map of a keyword to its keyword group
-    std::map<std::string, std::string> mKeywordMap;
-    //! Vector of output objects representing the outputs of the technology.
-    std::vector<IOutput*> mOutputs;
-    std::vector<AGHG*> ghg;//! Suite of greenhouse gases
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of AResource to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( AResource, Resource, DepletableResource, FixedResource,
+                                RenewableResource, UnlimitedResource, DepletingFixedResource ),
+
+        //! Resource name.
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+
+        //! Unit of resource output
+        DEFINE_VARIABLE( SIMPLE, "output-unit", mOutputUnit, std::string ),
+
+        //! Unit of resource price
+        DEFINE_VARIABLE( SIMPLE, "price-unit", mPriceUnit, std::string ),
+
+        //! Market name.
+        DEFINE_VARIABLE( SIMPLE, "market", mMarket, std::string ),
+
+        //! A map of a keyword to its keyword group
+        DEFINE_VARIABLE( SIMPLE, "keyword", mKeywordMap, std::map<std::string, std::string> ),
+
+        //! Vector of output objects representing the outputs of the technology.
+        DEFINE_VARIABLE( CONTAINER, "output", mOutputs, std::vector<IOutput*> ),
+
+        //! Suite of greenhouse gases
+        DEFINE_VARIABLE( CONTAINER, "ghg", mGHG, std::vector<AGHG*> )
+    )
 };
 
 // Inline function definitions

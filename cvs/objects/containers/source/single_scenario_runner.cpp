@@ -91,6 +91,15 @@ bool SingleScenarioRunner::setupScenarios( Timer& timer,
                                            const string aName,
                                            const list<string> aScenComponents )
 {
+    const Configuration* conf = Configuration::getInstance();
+    // before we do anything make sure we will be able to write
+    // database results if we need to do so
+    if( conf->shouldWriteFile( "xmldb-location") && !XMLDBOutputter::checkJavaWorking() ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::SEVERE );
+        mainLog << "Early warning Java checks failed and database output was requested" << endl;
+        abort();
+    }
     // Ensure that a new scenario is created for each run.
     mScenario.reset( new Scenario );
 
@@ -99,7 +108,6 @@ bool SingleScenarioRunner::setupScenarios( Timer& timer,
     scenario = mScenario.get();
 
     // Parse the input file.
-    const Configuration* conf = Configuration::getInstance();
     bool success =
         XMLHelper<void>::parseXML( conf->getFile( "xmlInputFileName" ),
                                    mScenario.get() );
