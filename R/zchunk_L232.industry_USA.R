@@ -57,17 +57,17 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
     L132.in_EJ_state_indfeed_F <- get_data(all_data, "L132.in_EJ_state_indfeed_F")
     L132.in_EJ_state_indchp_F <- get_data(all_data, "L132.in_EJ_state_indchp_F")
 
-    # temporary data gathering for temp-data-inject files
+    # ===================================================
+
+    # convert to long form
     A32.globaltech_eff %>% gather(year, value, matches(YEAR_PATTERN)) %>%
       mutate(year = as.integer(year)) -> A32.globaltech_eff
-
-    # ===================================================
 
     # delete industry sectors in the USA region (energy-final-demands and supplysectors)
     L232.Supplysector_ind %>%
       filter(region == "USA") %>%
       select(one_of(LEVEL2_DATA_NAMES[["DeleteSupplysector"]])) %>%
-      mutate(x = NA) %>% select(-x) ->
+      mutate(region = region) ->
       # ^^ mutate line removes attributes from temp-inject input (can remove later)
       L232.DeleteSupplysector_USAind  ## OUTPUT
 
@@ -75,7 +75,7 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
     L232.PerCapitaBased_ind %>%
       filter(region == "USA") %>%
       select(one_of(LEVEL2_DATA_NAMES[["DeleteFinalDemand"]])) %>%
-      mutate(x = NA) %>% select(-x) ->
+      mutate(region = region) ->
       # ^^ mutate line removes attributes from temp-inject input (can remove later)
       L232.DeleteFinalDemand_USAind  ## OUTPUT
 
@@ -95,9 +95,10 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
       mutate(calibrated.value = round(value, energy.DIGITS_CALOUTPUT),
              share.weight.year = year,
              tech.share.weight = if_else(calibrated.value > 0, 1, 0)) %>%
-      group_by(region, supplysector, subsector, year) %>% mutate(x = sum(calibrated.value)) %>%
+      group_by(region, supplysector, subsector, year) %>%
+      mutate(x = sum(calibrated.value),
+             subs.share.weight = if_else(x > 0, 1, 0)) %>% ungroup %>%
       # ^^ sets up variable (x) for defining subsector shareweight
-      mutate(subs.share.weight = if_else(x > 0, 1, 0)) %>% ungroup %>%
       select(one_of(LEVEL2_DATA_NAMES[["StubTechCalInput"]])) ->
       L232.StubTechCalInput_indenergy_USA  ## OUTPUT
 
@@ -108,7 +109,7 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
       ungroup %>% filter(year %in% BASE_YEARS) %>%
       rename(region = state) %>%
       left_join_keep_first_only(calibrated_techs, by = c("sector", "fuel")) %>%
-      select(-calibration, - secondary.output) %>%
+      select(-calibration, -secondary.output) %>%
       rename(stub.technology = technology) ->
       L232.in_EJ_state_indfeed_F_Yh
     L232.in_EJ_state_indfeed_F_Yh %>% select(one_of(LEVEL2_DATA_NAMES[["StubTechYr"]], "value")) %>%
@@ -128,8 +129,10 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
       complete(nesting(supplysector, subsector, technology, minicam.energy.input, secondary.output),
                year = c(year, BASE_YEARS)) %>%
       group_by(supplysector, subsector, technology, minicam.energy.input, secondary.output) %>%
-      mutate(value = approx_fun(year, value)) %>% ungroup %>%  filter(year %in% BASE_YEARS) %>%
-      rename(efficiency = value) %>% mutate(efficiency = round(efficiency, energy.DIGITS_EFFICIENCY)) ->
+      mutate(value = approx_fun(year, value)) %>% ungroup %>%
+      filter(year %in% BASE_YEARS) %>%
+      rename(efficiency = value) %>%
+      mutate(efficiency = round(efficiency, energy.DIGITS_EFFICIENCY)) ->
       A32.globaltech_eff_interp
 
     L232.in_EJ_state_indenergy_F_Yh %>%
@@ -195,15 +198,15 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
       mutate(market.name = "USA") %>%
       select(one_of(LEVEL2_DATA_NAMES[["StubTechMarket"]])) %>%
       left_join_error_no_match(states_subregions %>% select(state, grid_region), by = c("region" = "state")) %>%
-      mutate(market.name = if_else(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS & gcamusa.USE_REGIONAL_FUEL_MARKETS == T,
+      mutate(market.name = if_else(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS & gcamusa.USE_REGIONAL_FUEL_MARKETS == TRUE,
                                    grid_region, market.name)) %>% select(-grid_region) %>%
       mutate(market.name = if_else(grepl("elect_td", minicam.energy.input), region, market.name)) ->
       L232.StubTechMarket_ind_USA  ## OUTPUT
 
     # markets for the cogenerated electricity (secondary output)
     A32.globaltech_eff %>%
-      filter(is.na(secondary.output) == F) %>%
-      select("supplysector", "subsector", "technology") ->
+      filter(is.na(secondary.output) == FALSE) %>%
+      select(supplysector, subsector, technology) ->
       L232.chp_techs
     L232.StubTechMarket_ind_USA %>%
       # ^^ electricity is consumed from state markets
@@ -297,7 +300,7 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
     L232.StubTechSecMarket_ind_USA %>%
       add_title("markets for the cogenerated electricity (secondary output)") %>%
       add_units("NA") %>%
-      add_comments("") %>%
+      add_comments("derived from L232.StubTechMarket_ind_USA") %>%
       add_legacy_name("L232.StubTechSecMarket_ind_USA") %>%
       add_precursors("temp-data-inject/L232.StubTech_ind",
                      "energy/A32.globaltech_eff") ->
@@ -306,7 +309,7 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
     L232.BaseService_ind_USA %>%
       add_title("base-year service output of industry final demand") %>%
       add_units("NA") %>%
-      add_comments("") %>%
+      add_comments("base service is equal to the output of the industry supplysector") %>%
       add_legacy_name("L232.BaseService_ind_USA") %>%
       add_precursors("energy/A32.globaltech_eff",
                      "L132.in_EJ_state_indnochp_F",
