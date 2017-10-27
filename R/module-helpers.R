@@ -219,6 +219,7 @@ write_to_all_states <- function(data, names) {
     data$price.exp.year.fillout <- "start-year"
   }
 
+
   data %>%
     set_years %>%
     mutate(region = NULL) %>% # remove region column if it exists
