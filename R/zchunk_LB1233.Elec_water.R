@@ -75,20 +75,21 @@ module_gcam.usa_LB1233.Elec_water <- function(command, ...) {
       mutate(share = out_MWh / out_MWh_) %>% select(-out_MWh_) ->
       L1233.out_MWh_state_elec_F_tech_cool
 
-    # aggregate and compute shares for FERC subregions, filtering for power plants built in the 2000s only
+    # aggregate and compute shares for Federeal Energy Regulatory Commission (FERC) subregions; ...
+    # ... filtering for power plants built this century for contempory output estimates
     USC_db_adj %>% filter(`First Year of Operation` >= 2000) %>%
       left_join_error_no_match(select(states_subregions, state, grid_region), by = "state") ->
       USC_db_adj_2000s
 
     USC_db_adj_2000s %>% group_by(grid_region, sector, fuel, technology) %>%
       summarise(out_MWh_ = sum(out_MWh)) %>% ungroup ->
-      L1233.out_MWh_sR_elec_F_tech
+      L1233.out_MWh_sR_elec_F_tech  # all technologies
     USC_db_adj_2000s %>% group_by(grid_region, sector, fuel, technology, cooling_system, water_type) %>%
       summarise(out_MWh = sum(out_MWh)) %>% ungroup %>%
       left_join_error_no_match(L1233.out_MWh_sR_elec_F_tech,
                                by = c("grid_region", "sector", "fuel", "technology")) %>%
       mutate(share = out_MWh / out_MWh_) %>% select(-out_MWh_) ->
-      L1233.out_MWh_sR_elec_F_tech_cool
+      L1233.out_MWh_sR_elec_F_tech_cool  # cooling technologies
 
     # calculate national averages, to be used as default values where data are missing
     L1233.out_MWh_state_elec_F_tech %>% group_by(sector, fuel, technology) %>%
