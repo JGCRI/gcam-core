@@ -82,13 +82,19 @@ protected:
 
     virtual void calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP );
 
-private:
-    //! Steepness -- this parameter dictates how quickly you approach the minimum factor
-    Value mSteepness;
-    
-    //! Maximum reduction
-    Value mMaxReduction;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        AEmissionsControl,
 
+        //! Steepness -- this parameter dictates how quickly you approach the minimum factor
+        DEFINE_VARIABLE( SIMPLE, "steepness", mSteepness, Value ),
+        
+        //! Maximum reduction
+        DEFINE_VARIABLE( SIMPLE, "max-reduction", mMaxReduction, Value )
+    )
+
+private:
     void copy( const GDPControl& aOther );
 };
 

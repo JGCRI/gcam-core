@@ -59,10 +59,6 @@ void LandAllocatorActivity::calc( const int aPeriod ) {
     mLandAllocator->calcFinalLandAllocation( mRegionName, aPeriod );
 }
 
-void LandAllocatorActivity::setStale() {
-    // nothing to do
-}
-
 string LandAllocatorActivity::getDescription() const {
     return mRegionName + " land-allocator";
 }

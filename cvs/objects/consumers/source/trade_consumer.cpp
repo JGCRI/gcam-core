@@ -70,7 +70,9 @@ void TradeConsumer::copyParamsInto( TradeConsumer& aTradeConsumer,
 }
 
 TradeConsumer* TradeConsumer::clone() const {
-	return new TradeConsumer( *this );
+    TradeConsumer* clone = new TradeConsumer();
+    clone->copy( *this );
+    return clone;
 }
 
 //! Parse xml file for data

@@ -82,10 +82,10 @@ void CalibrateShareWeightVisitor::endVisitSector( const Sector* aSector, const i
     double maxCalValue = 0;
     int numCalSubsectors = 0;
     double totalCalValue = 0;
-    for( int subsectorIndex = 0; subsectorIndex < aSector->subsec.size(); ++subsectorIndex ) {
-        double currCalValue = aSector->subsec[ subsectorIndex ]->getTotalCalOutputs( aPeriod );
-        bool isAllFixed = aSector->subsec[ subsectorIndex ]->containsOnlyFixedOutputTechnologies( aPeriod )
-            || aSector->subsec[ subsectorIndex ]->mShareWeights[ aPeriod ] == 0;
+    for( int subsectorIndex = 0; subsectorIndex < aSector->mSubsectors.size(); ++subsectorIndex ) {
+        double currCalValue = aSector->mSubsectors[ subsectorIndex ]->getTotalCalOutputs( aPeriod );
+        bool isAllFixed = aSector->mSubsectors[ subsectorIndex ]->containsOnlyFixedOutputTechnologies( aPeriod )
+            || aSector->mSubsectors[ subsectorIndex ]->mShareWeights[ aPeriod ] == 0;
 
         // check if the subsector is calibrated
         if( hasCalValues && currCalValue == 0 && !isAllFixed ) {
@@ -96,10 +96,10 @@ void CalibrateShareWeightVisitor::endVisitSector( const Sector* aSector, const i
             calibrationLog.setLevel( ILogger::WARNING );
             mainLog << "Mixed calibrated and variable subsectors or read a zero calibration value in Region: "
                 << mCurrentRegionName << " in sector: " << mCurrentSectorName
-                << " for Subsector: " << aSector->subsec[ subsectorIndex ]->getName() << endl;
+                << " for Subsector: " << aSector->mSubsectors[ subsectorIndex ]->getName() << endl;
             calibrationLog << "Mixed calibrated and variable subsectors or read a zero calibration value in Region: "
                 << mCurrentRegionName << " in sector: " << mCurrentSectorName
-                << " for Subsector: " << aSector->subsec[ subsectorIndex ]->getName() << endl;
+                << " for Subsector: " << aSector->mSubsectors[ subsectorIndex ]->getName() << endl;
         }
         else if( currCalValue > 0 ) {
             hasCalValues = true;
@@ -128,17 +128,17 @@ void CalibrateShareWeightVisitor::endVisitSector( const Sector* aSector, const i
     // that has a valid cost; otherwise, we may be in trouble if a user did not
     // parse a value.
     double baseCost = 0;
-    for( int subsectorIndex = 0; subsectorIndex < aSector->subsec.size(); ++subsectorIndex ) {
-        double currCost = aSector->subsec[ subsectorIndex ]->getPrice( mGDP, aPeriod );
+    for( int subsectorIndex = 0; subsectorIndex < aSector->mSubsectors.size(); ++subsectorIndex ) {
+        double currCost = aSector->mSubsectors[ subsectorIndex ]->getPrice( mGDP, aPeriod );
         if( !boost::math::isnan( currCost )  && currCost > baseCost &&
-            ( ( hasCalValues && aSector->subsec[ subsectorIndex ]->getTotalCalOutputs( aPeriod ) > 0 ) || !hasCalValues ) )
+            ( ( hasCalValues && aSector->mSubsectors[ subsectorIndex ]->getTotalCalOutputs( aPeriod ) > 0 ) || !hasCalValues ) )
         {
             baseCost = currCost;
         }
     }
     // In the case where there is only one subsector we will reset the base-price
     // to one as the sharing should not matter.
-    if( baseCost == 0 && aSector->subsec.size() == 1 ) {
+    if( baseCost == 0 && aSector->mSubsectors.size() == 1 ) {
         baseCost = 1;
     }
     // baseCost may still be zero and if a user did not parse a base cost an error
@@ -150,15 +150,15 @@ void CalibrateShareWeightVisitor::endVisitSector( const Sector* aSector, const i
         // we should have found a subsector to have share weights anchored
         assert( anchorIndex != -1 );
         const double scaledGdpPerCapita = mGDP->getBestScaledGDPperCap( aPeriod );
-        const double anchorPrice = aSector->subsec[ anchorIndex ]->getPrice( mGDP, aPeriod );
-        const double anchorShare = ( aSector->subsec[ anchorIndex ]->getTotalCalOutputs( aPeriod )
-            / totalCalValue ) / pow( scaledGdpPerCapita, aSector->subsec[ anchorIndex ]->fuelPrefElasticity[ aPeriod ] );
+        const double anchorPrice = aSector->mSubsectors[ anchorIndex ]->getPrice( mGDP, aPeriod );
+        const double anchorShare = ( aSector->mSubsectors[ anchorIndex ]->getTotalCalOutputs( aPeriod )
+            / totalCalValue ) / pow( scaledGdpPerCapita, aSector->mSubsectors[ anchorIndex ]->mFuelPrefElasticity[ aPeriod ] );
         assert( anchorShare > 0 );
         
-        for( int subsectorIndex = 0; subsectorIndex < aSector->subsec.size(); ++subsectorIndex ) {
-            Subsector* currSubsector = aSector->subsec[ subsectorIndex ];
+        for( int subsectorIndex = 0; subsectorIndex < aSector->mSubsectors.size(); ++subsectorIndex ) {
+            Subsector* currSubsector = aSector->mSubsectors[ subsectorIndex ];
             double currShare = ( currSubsector->getTotalCalOutputs( aPeriod ) / totalCalValue )
-                / pow( scaledGdpPerCapita, currSubsector->fuelPrefElasticity[ aPeriod ] );
+                / pow( scaledGdpPerCapita, currSubsector->mFuelPrefElasticity[ aPeriod ] );
 
             // only set the share weight for valid subsectors
             if( currShare > 0 ) {

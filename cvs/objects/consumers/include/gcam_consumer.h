@@ -122,18 +122,26 @@ public:
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     
 protected:
-    //! Subregional population for reporting
-    objects::PeriodVector<Value> mSubregionalPopulation;
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        Consumer,
 
-    //! Subregional income for reporting
-    objects::PeriodVector<Value> mSubregionalIncome;
+        //! Subregional population for reporting
+        DEFINE_VARIABLE( ARRAY, "subregional-population", mSubregionalPopulation, objects::PeriodVector<Value> ),
 
-    //! Subregional Population Share
-    objects::PeriodVector<Value> mSubregionalPopulationShare;
+        //! Subregional income for reporting
+        DEFINE_VARIABLE( ARRAY, "subregional-income", mSubregionalIncome, objects::PeriodVector<Value> ),
 
-    //! Subregional Income Share
-    objects::PeriodVector<Value> mSubregionalIncomeShare;
+        //! Subregional Population Share
+        DEFINE_VARIABLE( ARRAY, "subregional-population-share", mSubregionalPopulationShare, objects::PeriodVector<Value> ),
 
+        //! Subregional Income Share
+        DEFINE_VARIABLE( ARRAY, "subregional-income-share", mSubregionalIncomeShare, objects::PeriodVector<Value> )
+    )
+
+    void copy( const GCAMConsumer& aOther );
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;

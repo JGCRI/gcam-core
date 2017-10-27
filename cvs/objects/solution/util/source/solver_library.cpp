@@ -129,7 +129,8 @@ bool SolverLibrary::isWithinTolerance( const double excessDemand, const double d
 void SolverLibrary::derivatives( Marketplace* marketplace, World* world, SolutionInfoSet& aSolutionSet,
                                  const double aDeltaPrice, const int per ) {
 
-    ILogger& solverLog = ILogger::getLogger( "solver_log" );
+    // TODO: could fix but why?
+    /*ILogger& solverLog = ILogger::getLogger( "solver_log" );
     solverLog.setLevel( ILogger::NOTICE );
     solverLog << "Starting derivative calculation" << endl;
 
@@ -158,7 +159,7 @@ void SolverLibrary::derivatives( Marketplace* marketplace, World* world, Solutio
         // Determine which calculations are affected.
         const vector<IActivity*>& affectedItems = aSolutionSet.getSolvable( j ).getDependencies();
 
-        /*! \invariant There is at least one item to calculate. */
+        /*! \invariant There is at least one item to calculate. * /
         assert( !affectedItems.empty() );
 
         world->calc( per, affectedItems );
@@ -179,6 +180,7 @@ void SolverLibrary::derivatives( Marketplace* marketplace, World* world, Solutio
     // Reset the derivative flag.
     marketplace->mIsDerivativeCalc = false;
 #endif
+*/
 }
 
 /* \brief Calculate the JFDM, JFSM, and JF matrices from the derivatives stored in the SolutionInfo. */

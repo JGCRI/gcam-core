@@ -50,11 +50,13 @@
 #include <boost/noncopyable.hpp>
 
 #include "containers/include/tree_item.h"
+#include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iparsable.h"
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/time_vector.h"
 #include "util/base/include/value.h"
+#include "util/base/include/data_definition_util.h"
 
 // For LandUsageType enum.
 #include "land_allocator/include/iland_allocator.h"
@@ -63,7 +65,13 @@
 class IInfo;
 class Tabs;
 class LandUseHistory;
+
+// Need to forward declare the subclasses as well.
+class LandAllocator;
 class LandNode;
+class LandLeaf;
+class CarbonLandLeaf;
+class UnmanagedLandLeaf;
 
 
 /*!
@@ -103,6 +111,7 @@ enum LandAllocatorItemType {
  *          - Elements: None
  */
 class ALandAllocatorItem : public TreeItem<ALandAllocatorItem>,
+                           public INamed,
                            public IVisitable,
                            public IParsable,
                            public IRoundTrippable,
@@ -305,7 +314,8 @@ public:
      *        land-use change emissions.
      */
     virtual void calcLUCEmissions( const std::string& aRegionName,
-                                   const int aPeriod, const int aEndYear ) {}
+                                   const int aPeriod, const int aEndYear,
+                                   const bool aStoreFullEmiss ) {}
 
      /*!
      * \brief Set the profit rate of unmanaged land leafs
@@ -400,45 +410,54 @@ protected:
     //! Parent of this node
     const ALandAllocatorItem* mParent;
 
-    /*!
-     * \brief Share of parent's total land.
-     * \details This is equal to the land allocated to this node divided by land
-     *          allocated to node above. This is always the normalized share and
-     *          so is always between zero and one inclusive.
-     */
-    objects::PeriodVector<double> mShare;
-    
-    //! Profit scaler 
-    objects::PeriodVector<double> mProfitScaler;  
+    DEFINE_DATA(
+        /* Declare all subclasses of ALandAllocatorItem to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( ALandAllocatorItem, LandAllocator, LandNode, LandLeaf,
+                                CarbonLandLeaf, UnmanagedLandLeaf ),
 
-    //! Boolean indicating a node or leaf is new 
-    objects::PeriodVector<bool> mIsNewTech;  
+        /*!
+         * \brief Share of parent's total land.
+         * \details This is equal to the land allocated to this node divided by land
+         *          allocated to node above. This is always the normalized share and
+         *          so is always between zero and one inclusive.
+         */
+        DEFINE_VARIABLE( ARRAY | STATE, "share", mShare, objects::PeriodVector<Value> ),
+        
+        //! Profit scaler 
+        DEFINE_VARIABLE( ARRAY, "profit-scaler", mProfitScaler, objects::PeriodVector<double> ),
 
-    //! Double that adjusts a profit scaler to account for the availability of new technologies
-    objects::PeriodVector<double> mAdjustForNewTech;
+        //! Boolean indicating a node or leaf is new
+        // TODO: should this be in the leaf?
+        DEFINE_VARIABLE( ARRAY, "isNewTechnology", mIsNewTech, objects::PeriodVector<bool> ),
 
-    //! Calibration Profit or Calibration Land Rental Rate in dollars
-    // This is the profit rate implied by the shares in the calibration data
-    //It is not read in but computed as part of the calibration
-    objects::PeriodVector<double> mCalibrationProfitRate;
+        //! Double that adjusts a profit scaler to account for the availability of new technologies
+        DEFINE_VARIABLE( ARRAY, "adjustment", mAdjustForNewTech, objects::PeriodVector<double> ),
 
-    //! Land observed profit rate
-    objects::PeriodVector<double> mProfitRate;
-    
-    //! Name of the land allocator item. This is the name of the product for
-    //! leafs and name of the type of land for nodes.
-    std::string mName;
+        //! Calibration Profit or Calibration Land Rental Rate in dollars
+        // This is the profit rate implied by the shares in the calibration data
+        //It is not read in but computed as part of the calibration
+        DEFINE_VARIABLE( ARRAY, "CalProfitRate", mCalibrationProfitRate, objects::PeriodVector<double> ),
 
-    /*!
-     * \brief Enum that stores the item's type.
-     * \note This is stored to avoid a virtual function call.
-     */
-    LandAllocatorItemType mType;
+        //! Land observed profit rate
+        DEFINE_VARIABLE( ARRAY | STATE, "ProfitRate", mProfitRate, objects::PeriodVector<Value> ),
+        
+        //! Name of the land allocator item. This is the name of the product for
+        //! leafs and name of the type of land for nodes.
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
-    //! name of land expansion constraint cost curve
-    std::string mLandExpansionCostName;
-    bool mIsLandExpansionCost;
-    
+        /*!
+         * \brief Enum that stores the item's type.
+         * \note This is stored to avoid a virtual function call.
+         */
+        DEFINE_VARIABLE( SIMPLE, "land-type", mType, LandAllocatorItemType ),
+
+        //! name of land expansion constraint cost curve
+        // TODO: should these be in the leaf?
+        DEFINE_VARIABLE( SIMPLE, "landConstraintCurve", mLandExpansionCostName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "is-land-expansion-cost", mIsLandExpansionCost, bool )
+    )
 };
 
 typedef std::unary_function<const ALandAllocatorItem*, bool> SearchPredicate;

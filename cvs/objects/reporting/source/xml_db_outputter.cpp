@@ -57,6 +57,7 @@
 #include "sectors/include/subsector.h"
 #include "technologies/include/technology.h"
 #include "emissions/include/aghg.h"
+#include "technologies/include/icapture_component.h"
 #include "util/base/include/model_time.h"
 #include "containers/include/output_meta_data.h"
 #include "marketplace/include/marketplace.h"
@@ -308,7 +309,7 @@ auto_ptr<XMLDBOutputter::JNIContainer> XMLDBOutputter::createContainer() {
     else {
         jniContainer->mJavaVM->AttachCurrentThread( (void**)&jniContainer->mJavaEnv, &vmArgs );
     }
-    delete options;
+    delete[] options;
 
     // Ensure that the Java VM opened successfully.
     if( !jniContainer->mJavaVM || !jniContainer->mJavaEnv ) {
@@ -511,7 +512,7 @@ void XMLDBOutputter::endVisitRegion( const Region* aRegion,
 void XMLDBOutputter::startVisitRegionMiniCAM( const RegionMiniCAM* aRegionMiniCAM, const int aPeriod ) {
     // Store the region's GDP object.
     assert( !mGDP );
-    mGDP = aRegionMiniCAM->gdp.get();
+    mGDP = aRegionMiniCAM->mGDP;
 
     // Write the opening region tag and the type of the base class.
     XMLWriteOpeningTag( aRegionMiniCAM->getXMLName(), mBuffer, mTabs.get(),
@@ -716,7 +717,7 @@ void XMLDBOutputter::endVisitSubsector( const Subsector* aSubsector,
 void XMLDBOutputter::startVisitTranSubsector( const TranSubsector* aTranSubsector, const int aPeriod ) {
     const Modeltime* modeltime = scenario->getModeltime();
     for( int i = 0; i < modeltime->getmaxper(); ++i ){
-        double currValue = aTranSubsector->speed[ i ];
+        double currValue = aTranSubsector->mSpeed[ i ];
         if( !objects::isEqual<double>( currValue, 0.0 ) ) {
             writeItem( "speed", "km/hr", currValue, i );
         }
@@ -786,7 +787,7 @@ void XMLDBOutputter::startVisitTechnology( const Technology* aTechnology, const 
     // TODO: Inconsistent use of year attribute.  Technology vintage written out
     // with "year" attribute.
     XMLWriteOpeningTag( aTechnology->getXMLName(), *parentBuffer, mTabs.get(),
-        aTechnology->getName(), aTechnology->year,
+        aTechnology->getName(), aTechnology->mYear,
         DefaultTechnology::getXMLNameStatic() );
         
     // put the buffers on a stack so that we have the correct ordering
@@ -850,9 +851,7 @@ void XMLDBOutputter::startVisitTranTechnology( const TranTechnology* aTranTechno
     // tran startVisitTranTechnology gets visited after startVisitTechnology which implies
     // mBufferStack.top() is the child buffer for technology
     writeItemToBuffer( aTranTechnology->mLoadFactor, "load-factor", 
-        *mBufferStack.top(), mTabs.get(), -1, "load/veh" );
-    writeItemToBuffer( aTranTechnology->mServiceOutput, "service-output",
-        *mBufferStack.top(), mTabs.get(), -1, mCurrentOutputUnit );    
+        *mBufferStack.top(), mTabs.get(), -1, "load/veh" ); 
 }
 
 void XMLDBOutputter::endVisitTranTechnology( const TranTechnology* aTranTechnology, const int aPeriod ) {
@@ -1117,8 +1116,12 @@ void XMLDBOutputter::startVisitGHG( const AGHG* aGHG, const int aPeriod ){
                 *childBuffer, mTabs.get(), attrs );
         }
 
-        // Write sequestered amount of GHG emissions .
-        currEmission = aGHG->getEmissionsSequestered( i );
+        // Write sequestered amount of GHG emissions.
+        // TODO: Note replicating old behavior of including geologic and feedstock
+        // sequestration but is that what we really wanted in the first place?
+        currEmission = mCurrentTechnology && mCurrentTechnology->mCaptureComponent ?
+            mCurrentTechnology->mCaptureComponent->getSequesteredAmount( aGHG->getName(), true, i ) +
+            mCurrentTechnology->mCaptureComponent->getSequesteredAmount( aGHG->getName(), false, i ) : 0.0;
         if( !objects::isEqual<double>( currEmission, 0.0 ) ) {
             XMLWriteElementWithAttributes( currEmission, "emissions-sequestered",
                 *childBuffer, mTabs.get(), attrs );
@@ -1174,14 +1177,12 @@ void XMLDBOutputter::endVisitMarketplace( const Marketplace* aMarketplace,
 void XMLDBOutputter::startVisitMarket( const Market* aMarket,
                                        const int aPeriod )
 {
-    // TODO: What should happen if period != -1 or the period of the market?
     // Write the opening market tag.
-    const int year = scenario->getModeltime()->getper_to_yr( aMarket->period );
     XMLWriteOpeningTag( Market::getXMLNameStatic(), mBuffer, mTabs.get(),
-                        aMarket->getName(), year );
+                        aMarket->getName(), aMarket->getYear() );
 
-    XMLWriteElement( aMarket->good, "MarketGoodOrFuel",mBuffer, mTabs.get() );
-    XMLWriteElement( aMarket->region, "MarketRegion", mBuffer, mTabs.get() );
+    XMLWriteElement( aMarket->getGoodName(), "MarketGoodOrFuel",mBuffer, mTabs.get() );
+    XMLWriteElement( aMarket->getRegionName(), "MarketRegion", mBuffer, mTabs.get() );
 
     // if next market clear out units to be updated
     if( mCurrentMarket != aMarket->getName() ){
@@ -1191,7 +1192,7 @@ void XMLDBOutputter::startVisitMarket( const Market* aMarket,
         mCurrentOutputUnit.clear();
     }
     // Store unit information from base period
-    if( aMarket->period == 0 ) {
+    if( aMarket->getYear() == scenario->getModeltime()->getStartYear() ) {
         if( mCurrentPriceUnit.empty() ){
             mCurrentPriceUnit = aMarket->getMarketInfo()->getString( "price-unit", false );
         }

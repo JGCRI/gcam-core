@@ -44,8 +44,8 @@
  * \author Josh Lurz
  */
 
-#include <vector>
 #include <xercesc/dom/DOMNode.hpp>
+
 #include "sectors/include/afinal_demand.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
@@ -150,6 +150,7 @@ protected:
                                    const int aPeriod ) const;
     };
 
+    // TODO: get rid of this?  Would have to move AEEI out into EnergyFinalDemand.
     class FinalEnergyConsumer {
     public:
         static const std::string& getXMLNameStatic();
@@ -187,23 +188,29 @@ protected:
         objects::PeriodVector<Value> mCalFinalEnergy;
     };
     
-    //! Name of the final demand and the good it consumes.
-    std::string mName;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        AFinalDemand,
     
-    //! Total end-use sector service after technical change is applied.
-    std::vector<double> mServiceDemands;
+        //! Name of the final demand and the good it consumes.
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        
+        //! Total end-use sector service after technical change is applied.
+        DEFINE_VARIABLE( ARRAY | STATE, "service", mServiceDemands, objects::PeriodVector<Value> ),
 
-    //! Income elasticity 
-    std::vector<Value> mIncomeElasticity;
+        //! Income elasticity 
+        DEFINE_VARIABLE( ARRAY, "income-elasticity", mIncomeElasticity, objects::PeriodVector<Value> ),
 
-    //! Price elasticity.
-    std::vector<Value> mPriceElasticity;
+        //! Price elasticity.
+        DEFINE_VARIABLE( ARRAY, "price-elasticity", mPriceElasticity, objects::PeriodVector<Value> ),
 
-    //! Service demand without technical change applied.
-    std::vector<double> mPreTechChangeServiceDemand;
+        //! Service demand without technical change applied.
+        DEFINE_VARIABLE( ARRAY, "service-pre-tech-change", mPreTechChangeServiceDemand, objects::PeriodVector<double> ),
 
-    //! Per capita service for each period to which to calibrate.
-    std::vector<Value> mBaseService;
+        //! Per capita service for each period to which to calibrate.
+        DEFINE_VARIABLE( ARRAY, "base-service", mBaseService, objects::PeriodVector<Value> )
+    )
 
     //! Demand function used to calculate unscaled demand.
     std::auto_ptr<IDemandFunction> mDemandFunction;
@@ -228,9 +235,6 @@ protected:
     virtual const std::string& getXMLName() const;
 private:    
     void acceptDerived( IVisitor* aVisitor, const int aPeriod ) const;
-    
-    //! State value necessary to use Marketplace::addToDemand
-    double mLastCalcValue;
 };
 
 #endif // _ENERGY_FINAL_DEMAND_H_

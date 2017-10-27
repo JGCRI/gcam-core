@@ -50,7 +50,6 @@
 #include <vector>
 #include "climate/include/iclimate_model.h"
 
-class Modeltime;
 class IVisitor;
 
 /*! 
@@ -75,7 +74,7 @@ class IVisitor;
 
 class MagiccModel: public IClimateModel {
 public:
-    MagiccModel( const Modeltime* aModeltime );
+    MagiccModel();
 
     virtual void completeInit( const std::string& aScenarioName );
     
@@ -121,6 +120,77 @@ public:
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     
     static const std::string& getnetDefor80sName();
+    
+protected:
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        IClimateModel,
+
+        //! A map of the gases Magicc can report out.
+        DEFINE_VARIABLE( SIMPLE, "output-gas-name-map", mOutputGasNameMap, std::map<std::string,int> ),
+        
+        //! Emissions levels by gas and period from model
+        DEFINE_VARIABLE( ARRAY, "model-emission-by-gas", mModelEmissionsByGas, std::vector<std::vector<double> > ),
+        
+        //! Default emissions levels by gas and year from exogenous input file
+        DEFINE_VARIABLE( ARRAY, "default-emissions-by-gas", mDefaultEmissionsByGas, std::vector<std::vector<double> > ),
+        
+        //! A vector of years for the default emissions
+        DEFINE_VARIABLE( ARRAY, "default-emission-years", mDefaultEmissionsYears, std::vector<int> ),
+        
+        //! LUC CO2 Emissions by year.
+        DEFINE_VARIABLE( ARRAY, "land-use-change-emissions", mLUCEmissionsByYear, std::vector<double> ),
+        
+        //! Name of the scenario.
+        DEFINE_VARIABLE( SIMPLE, "scenario-name", mScenarioName, std::string ),
+        
+        //! Whether the climate model output is updated.
+        DEFINE_VARIABLE( SIMPLE, "is-valid", mIsValid, bool ),
+        
+        //! Name of a GHG input file to use.
+        DEFINE_VARIABLE( SIMPLE, "ghgInputFileName", mGHGInputFileName, std::string ),
+        
+        //! Climate Sensitivity.
+        DEFINE_VARIABLE( SIMPLE, "climateSensitivity", mClimateSensitivity, double ),
+        
+        //! Soil Feedback Factor (MAGICC Parameter btSoil)
+        DEFINE_VARIABLE( SIMPLE, "soilTempFeedback", mSoilTempFeedback, double ),
+        
+        //! Humus Feedback Factor (MAGICC Parameter btHumus)
+        DEFINE_VARIABLE( SIMPLE, "humusTempFeedback", mHumusTempFeedback, double ),
+        
+        //! GPP Feedback Factor (MAGICC Parameter btGPP)
+        DEFINE_VARIABLE( SIMPLE, "GPPTempFeedback", mGPPTempFeedback, double ),
+        
+        //! 1980s Ocean Uptake (MAGICC Parameter FUSER)
+        DEFINE_VARIABLE( SIMPLE, "oceanFlux80s", mOceanCarbFlux80s, double ),
+        
+        //! 1980s net terrestrial Deforestation (MAGICC Parameter DUSER)
+        DEFINE_VARIABLE( SIMPLE, "deforestFlux80s", mNetDeforestCarbFlux80s, double ),
+        
+        //! 1990 Direct Sulfate Forcing (MAGICC Parameter S90Duser)
+        DEFINE_VARIABLE( SIMPLE, "base-so2dir-forcing", mSO2Dir1990, double ),
+        
+        //! 1990 Indirect Sulfate Forcing (MAGICC Parameter S90Iuser)
+        DEFINE_VARIABLE( SIMPLE, "base-so2ind-forcing", mSO2Ind1990, double ),
+        
+        //! Forcing per Tg BC Emissions
+        DEFINE_VARIABLE( SIMPLE, "bc-unit-forcing", mBCUnitForcing, double ),
+        
+        //! Forcing per Tg OC Emissions
+        DEFINE_VARIABLE( SIMPLE, "oc-unit-forcing", mOCUnitForcing, double ),
+        
+        //! Use read-in default emissions up until this year
+        DEFINE_VARIABLE( SIMPLE, "last-historical-year", mLastHistoricalYear, int ),
+        
+        //! The year the carbon model should start running.
+        DEFINE_VARIABLE( SIMPLE, "carbon-model-start-year", mCarbonModelStartYear, int )
+    )
+    
+    //! Number of historical data points read in.
+    //CREATE_SIMPLE_VARIABLE( mNumberHistoricalDataPoints, int, "num-historical-data-points" ),
+    int mNumberHistoricalDataPoints;
 
 private:
 
@@ -141,77 +211,11 @@ private:
     //! A fixed list of the units for gases Magicc reads in.
     static const std::string sInputGasUnits[];
 
-    //! A map of the gases Magicc can report out.
-    std::map<std::string,int> mOutputGasNameMap; 
-
     //! Return value of getGasIndex if it cannot find the gas.
     static const int INVALID_GAS_NAME = -1;
     
     //! MAGICC critcal start year in gas.emk that must be present
     static const int GAS_EMK_CRIT_YEAR;
-
-    //! Emissions levels by gas and period from model
-    std::vector<std::vector<double> > mModelEmissionsByGas;
-	
-    //! Default emissions levels by gas and year from exogenous input file
-    std::vector<std::vector<double> > mDefaultEmissionsByGas;
-    
-    //! A vector of years for the default emissions
-    std::vector<int> mDefaultEmissionsYears;
-    
-	//! LUC CO2 Emissions by year.
-	std::vector<double> mLUCEmissionsByYear;
-
-    //! Name of the scenario.
-    std::string mScenarioName;
-
-    //! Name of a GHG input file to use.
-    std::string mGHGInputFileName;
-
-    //! A reference to the scenario's modeltime object.
-    const Modeltime* mModeltime;
-
-    //! Whether the climate model output is updated.
-    bool mIsValid;
-
-    //! Climate Sensitivity.
-    double mClimateSensitivity;
-
-    //! Soil Feedback Factor (MAGICC Parameter btSoil)
-    double mSoilTempFeedback;
-
-    //! Humus Feedback Factor (MAGICC Parameter btHumus)
-    double mHumusTempFeedback;
-
-    //! GPP Feedback Factor (MAGICC Parameter btGPP)
-    double mGPPTempFeedback;
-
-    //! 1980s Ocean Uptake (MAGICC Parameter FUSER)
-    double mOceanCarbFlux80s;
-
-    //! 1980s net terrestrial Deforestation (MAGICC Parameter DUSER)
-    double mNetDeforestCarbFlux80s;
-
-    //! 1990 Direct Sulfate Forcing (MAGICC Parameter S90Duser)
-    double mSO2Dir1990;
-
-    //! 1990 Indirect Sulfate Forcing (MAGICC Parameter S90Iuser)
-    double mSO2Ind1990;
-
-    //! Forcing per Tg BC Emissions
-    double mBCUnitForcing;
-
-    //! Forcing per Tg OC Emissions
-    double mOCUnitForcing;
-
-    //! Use read-in default emissions up until this year
-    int mLastHistoricalYear;
-    
-    //! The year the carbon model should start running.
-    int mCarbonModelStartYear;
-
-    //! Number of historical data points read in.
-    int mNumberHistoricalDataPoints;
 };
 
 #endif // _MAGICC_MODEL_H_

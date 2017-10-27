@@ -93,9 +93,8 @@ const string& InputTax::getXMLReportingName() const{
 }
 
 //! Constructor
-InputTax::InputTax()
-: mPhysicalDemand( scenario->getModeltime()->getmaxper() ),
-  mAdjustedCoefficients( scenario->getModeltime()->getmaxper(), 1.0 )
+InputTax::InputTax():
+mAdjustedCoefficients( Value( 1.0 ) )
 {
 }
 
@@ -121,10 +120,6 @@ InputTax::InputTax( const InputTax& aOther ){
     // Do not copy calibration values into the future
     // as they are only valid for one period.
     mName = aOther.mName;
-    
-    // Resize vectors to the correct size.
-    mPhysicalDemand.resize( scenario->getModeltime()->getmaxper() );
-    mAdjustedCoefficients.resize( scenario->getModeltime()->getmaxper() );
     
     // copy keywords
     mKeywordMap = aOther.mKeywordMap;
@@ -270,8 +265,8 @@ void InputTax::setPhysicalDemand( double aPhysicalDemand,
     // mPhysicalDemand can be a share if tax is share based.
     mPhysicalDemand[ aPeriod ].set( aPhysicalDemand );
     // Each technology share is additive.
-    mLastCalcValue = marketplace->addToDemand( mName, aRegionName, mPhysicalDemand[ aPeriod ],
-                              mLastCalcValue, aPeriod, true );
+    marketplace->addToDemand( mName, aRegionName, mPhysicalDemand[ aPeriod ],
+                              aPeriod, true );
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::NOTICE );
 }

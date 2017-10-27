@@ -49,8 +49,14 @@
 #include <string>
 #include <xercesc/dom/DOMNode.hpp>
 #include <functional>
+#include <boost/core/noncopyable.hpp>
+
+#include "util/base/include/data_definition_util.h"
 
 class Tabs;
+
+// Need to forward declare the subclasses as well.
+class XYDataPoint;
 
 /*!
 * \ingroup Util
@@ -58,7 +64,7 @@ class Tabs;
 * \author Josh Lurz
 */
 
-class DataPoint {
+class DataPoint : private boost::noncopyable {
         friend std::ostream& operator<<( std::ostream& os, const DataPoint& dataPoint ){
             dataPoint.print( os );
             return os;
@@ -122,7 +128,14 @@ class DataPoint {
         };
 
     protected:
-        static const std::string XML_NAME; //!< The name of the XML tag associated with this object.
+    
+        DEFINE_DATA(
+            /* Declare all subclasses of DataPoint to allow automatic traversal of the
+             * hierarchy under introspection.
+             */
+            DEFINE_SUBCLASS_FAMILY( DataPoint, XYDataPoint )
+        )
+    
         virtual void print( std::ostream& out ) const = 0;
     };
 #endif // _DATA_POINT_H_

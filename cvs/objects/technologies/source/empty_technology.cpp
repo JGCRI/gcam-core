@@ -153,11 +153,9 @@ const string& EmptyTechnology::getName() const
     return name;
 }
 
-Value EmptyTechnology::getShareWeight() const
+double EmptyTechnology::getShareWeight() const
 {
-    const Value zeroShareWeight( 0 );
-    
-    return zeroShareWeight;
+    return 0.0;
 }
 
 Value EmptyTechnology::getParsedShareWeight() const {
@@ -288,6 +286,10 @@ bool EmptyTechnology::isAllCalibrated( const int aPeriod,
 
 void EmptyTechnology::setYear( const int aYear )
 {
+}
+
+int EmptyTechnology::getYear() const {
+    return 0;
 }
 
 void EmptyTechnology::doInterpolations( const Technology* aPrevTech,

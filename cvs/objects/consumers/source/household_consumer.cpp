@@ -163,6 +163,43 @@ void HouseholdConsumer::copyParamsInto( HouseholdConsumer& householdConsumerIn,
     householdConsumerIn.mUtilityParameterA = mUtilityParameterA;
 }
 
+void HouseholdConsumer::copy( const HouseholdConsumer& aOther ) {
+    Consumer::copy( aOther );
+    
+    baseLandDemandPerHH = aOther.baseLandDemandPerHH;
+    baseLaborDemandPerHH = aOther.baseLaborDemandPerHH;
+    maxSavingsSupplyFrac = aOther.maxSavingsSupplyFrac;
+    maxLandSupplyFrac = aOther.maxLandSupplyFrac;
+    socialSecurityTaxRate = aOther.socialSecurityTaxRate;
+    landIncomeTaxRate = aOther.landIncomeTaxRate;
+    laborIncomeTaxRate = aOther.laborIncomeTaxRate;
+    dividendsIncomeTaxRate = aOther.dividendsIncomeTaxRate;
+    
+    numberOfHouseholds = aOther.numberOfHouseholds;
+    personsPerHousehold = aOther.personsPerHousehold;
+    totalLandArea = aOther.totalLandArea;
+    landDemand = aOther.landDemand;
+    laborDemand = aOther.laborDemand;
+    householdLandDemand = aOther.householdLandDemand;
+    householdLaborDemand = aOther.householdLaborDemand;
+    baseScalerSavings = aOther.baseScalerSavings;
+    baseScalerLand = aOther.baseScalerLand;
+    baseScalerLaborMale = aOther.baseScalerLaborMale;
+    baseScalerLaborFemale = aOther.baseScalerLaborFemale;
+    transfer = aOther.transfer;
+    baseLandSupply = aOther.baseLandSupply;
+    landSupply = aOther.landSupply;
+    laborSupplyMaleUnSkLab = aOther.laborSupplyMaleUnSkLab;
+    laborSupplyFemaleUnSkLab = aOther.laborSupplyFemaleUnSkLab;
+    laborSupplyUnSkLab = aOther.laborSupplyUnSkLab;
+    laborSupplyMaleSkLab = aOther.laborSupplyMaleSkLab;
+    laborSupplyFemaleSkLab = aOther.laborSupplyFemaleSkLab;
+    laborSupplySkLab = aOther.laborSupplySkLab;
+    workingAgePopMale = aOther.workingAgePopMale;
+    workingAgePopFemale = aOther.workingAgePopFemale;
+    mUtilityParameterA = aOther.mUtilityParameterA;
+}
+
 /*! \brief Creates a clone of this class
  *
  * \author Pralit Patel
@@ -170,7 +207,9 @@ void HouseholdConsumer::copyParamsInto( HouseholdConsumer& householdConsumerIn,
  * \return Pointer to the new class created
  */
 HouseholdConsumer* HouseholdConsumer::clone() const {
-    return new HouseholdConsumer( *this );
+    HouseholdConsumer* clone = new HouseholdConsumer();
+    clone->copy( *this );
+    return clone;
 }
 
 //! Parse xml file for data
@@ -185,13 +224,13 @@ bool HouseholdConsumer::XMLDerivedClassParse( const string &nodeName, const DOMN
         socialSecurityTaxRate = XMLHelper<double>::getValue( curr );
     }
     else if (nodeName == "land-income-tax-rate" ) {
-        landIncomeTaxRate = XMLHelper<double>::getValue( curr );
+        landIncomeTaxRate = XMLHelper<Value>::getValue( curr );
     }
     else if (nodeName == "labor-income-tax-rate" ) {
-        laborIncomeTaxRate = XMLHelper<double>::getValue( curr );
+        laborIncomeTaxRate = XMLHelper<Value>::getValue( curr );
     }
     else if (nodeName == "dividends-income-tax-rate" ) {
-        dividendsIncomeTaxRate = XMLHelper<double>::getValue( curr );
+        dividendsIncomeTaxRate = XMLHelper<Value>::getValue( curr );
     }
     else if (nodeName == "personsPerHousehold" ) {
         personsPerHousehold = XMLHelper<double>::getValue( curr );

@@ -1,5 +1,5 @@
-#ifndef _VARIABLE_COST_SHUTDOWN_DECIDER_H_
-#define _VARIABLE_COST_SHUTDOWN_DECIDER_H_
+#ifndef _IYEARED_H_
+#define _IYEARED_H_
 #if defined(_MSC_VER)
 #pragma once
 #endif
@@ -37,42 +37,34 @@
 */
 
 
-/*! 
-* \file variable_cost_shutdown_decider.h
-* \ingroup Objects
-* \brief The VariableCostShutdownDecider header file.
-* \author Josh Lurz
-* \date $Date: 2005/06/03 22:11:39 $
-* \version $Revision: 1.2 $
-*/
-#include "technologies/include/ishutdown_decider.h"
 
-#include <string>
-struct ProductionFunctionInfo;
 /*! 
-* \ingroup Objects
-* \brief This object makes the shutdown decision for a vintage based on its
-*        variable cost exceeding its price received.
-* \details This object makes the shutdown decision for a vintage by determining
-*          the point at which its variable costs, defined as the costs per unit
-*          of all inputs other than capital, are equal to the price received for
-*          the product. This is the classic short-term shutdown decision. This
-*          calculation is done as a ratio with the denominator as the capital
-*          for the vintage, and when the vintages reaches a minimum level the
-*          vintage is smoothly shutdown.
-* \author Josh Lurz
-*/
-class VariableCostShutdownDecider: public IShutdownDecider
-{
+ * \file iyeared.h
+ * \ingroup Objects
+ * \brief The IYeared interface header file.
+ * \author Pralit Patel
+ */
+
+/*! 
+ * \ingroup Objects
+ * \brief An interface that specifies a function to return the year of the
+ *        object.
+ */
+
+class IYeared {
 public:
-    VariableCostShutdownDecider();
-	VariableCostShutdownDecider* clone() const;
-    double calcShutdownCoef( const ProductionFunctionInfo* aFuncInfo,
-							 const double aCalculatedProfits,
-                             const std::string& aRegionName,
-                             const std::string& aSectorName,
-                             const int aPeriod ) const;
+    //! Destructor.
+    virtual inline ~IYeared();
+
+    /*!
+     * \brief Get the year from this object.
+     * \return The year.
+     */
+    virtual int getYear() const = 0;
 };
 
+// Inline definitions.
+IYeared::~IYeared(){
+}
 
-#endif // _VARIABLE_COST_SHUTDOWN_DECIDER_H_
+#endif // _IYEARED_H_

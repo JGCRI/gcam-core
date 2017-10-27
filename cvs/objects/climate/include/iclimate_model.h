@@ -47,12 +47,19 @@
 
 #include <string>
 #include <xercesc/dom/DOMNode.hpp>
+#include <boost/core/noncopyable.hpp>
+
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/iparsable.h"
+#include "util/base/include/data_definition_util.h"
 
 class Tabs;
 class IVisitor;
+
+// Need to forward declare the subclasses as well.
+class MagiccModel;
+class HectorModel;
 
 /*! 
 * \ingroup Objects
@@ -66,7 +73,7 @@ class IVisitor;
 * \author Josh Lurz
 */
 
-class IClimateModel: public IVisitable, public IRoundTrippable {
+class IClimateModel: public IVisitable, public IRoundTrippable, private boost::noncopyable {
 public:
 	//! Constructor.
     inline IClimateModel();
@@ -281,6 +288,21 @@ public:
     */
 	virtual void accept( IVisitor* aVisitor,
                          const int aPeriod ) const = 0;
+    
+protected:
+    
+    /* We must declare all subclasses of IClimateModel in this interface to allow
+     * automatic traversal of the hierarchy under introspection.
+     */
+#if USE_HECTOR
+    DEFINE_DATA(
+        DEFINE_SUBCLASS_FAMILY( IClimateModel, MagiccModel, HectorModel )
+    )
+#else
+    DEFINE_DATA(
+        DEFINE_SUBCLASS_FAMILY(IClimateModel, MagiccModel)
+    )
+#endif // USE_HECTOR
 };
 
 // Inline definitions to avoid compiler warnings and errors.

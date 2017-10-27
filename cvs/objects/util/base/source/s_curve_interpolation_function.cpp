@@ -52,10 +52,10 @@ using namespace std;
 using namespace xercesc;
 
 //! Default Constructor
-SCurveInterpolationFunction::SCurveInterpolationFunction():
-mSteepness( 10 ),
-mMedianXValue( 0 )
+SCurveInterpolationFunction::SCurveInterpolationFunction()
 {
+    mSteepness = 10;
+    mMedianXValue = 0;
 }
 
 /*!
@@ -65,14 +65,18 @@ mMedianXValue( 0 )
  * \param aMedianXValue The median x-value to use.
  */
 SCurveInterpolationFunction::SCurveInterpolationFunction( const double aSteepness,
-                                                          const double aMedianXValue ):
-mSteepness( aSteepness ),
-mMedianXValue( aMedianXValue )
+                                                          const double aMedianXValue )
 {
+    mSteepness = aSteepness;
+    mMedianXValue = aMedianXValue;
 }
 
 //! Destructor
 SCurveInterpolationFunction::~SCurveInterpolationFunction() {
+}
+
+IInterpolationFunction* SCurveInterpolationFunction::clone() const {
+    return new SCurveInterpolationFunction( mSteepness, mMedianXValue );
 }
 
 /*!

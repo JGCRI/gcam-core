@@ -93,9 +93,8 @@ const string& InputSubsidy::getXMLReportingName() const{
 }
 
 //! Constructor
-InputSubsidy::InputSubsidy()
-: mPhysicalDemand( scenario->getModeltime()->getmaxper() ),
-  mAdjustedCoefficients( scenario->getModeltime()->getmaxper(), 1.0 )
+InputSubsidy::InputSubsidy():
+mAdjustedCoefficients( Value( 1.0 ) )
 {
 }
 
@@ -121,10 +120,6 @@ InputSubsidy::InputSubsidy( const InputSubsidy& aOther ){
     // Do not copy calibration values into the future
     // as they are only valid for one period.
     mName = aOther.mName;
-    
-    // Resize vectors to the correct size.
-    mPhysicalDemand.resize( scenario->getModeltime()->getmaxper() );
-    mAdjustedCoefficients.resize( scenario->getModeltime()->getmaxper() );
     
     // copy keywords
     mKeywordMap = aOther.mKeywordMap;
@@ -273,8 +268,8 @@ void InputSubsidy::setPhysicalDemand( double aPhysicalDemand,
     // This is so solver can use the excess demand to determine
     // whether to increase or decrease a subsidy. 
     // Each technology share is additive.
-    mLastCalcValue = marketplace->addToSupply( mName, aRegionName, mPhysicalDemand[ aPeriod ],
-                              mLastCalcValue, aPeriod, true );
+    marketplace->addToSupply( mName, aRegionName, mPhysicalDemand[ aPeriod ],
+                              aPeriod, true );
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::NOTICE );
 }

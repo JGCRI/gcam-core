@@ -92,6 +92,7 @@
 
 using namespace std;
 using namespace xercesc;
+using namespace objects;
 
 extern Scenario* scenario;
 
@@ -100,8 +101,8 @@ typedef vector<IOutput*>::const_iterator COutputIterator;
 typedef vector<AGHG*>::iterator GHGIterator;
 typedef vector<AGHG*>::const_iterator CGHGIterator;
 
-typedef vector<IProductionState*>::iterator ProductionStateIterator;
-typedef vector<IProductionState*>::const_iterator CProductionStateIterator;
+typedef PeriodVector<IProductionState*>::iterator ProductionStateIterator;
+typedef PeriodVector<IProductionState*>::const_iterator CProductionStateIterator;
 
 typedef vector<IShutdownDecider*>::iterator ShutdownDeciderIterator;
 typedef vector<IShutdownDecider*>::const_iterator CShutdownDeciderIterator;
@@ -113,7 +114,9 @@ typedef vector<IInput*>::const_iterator CInputIterator;
  * \param aName Technology name.
  * \param aYear Technology year.
  */
-Technology::Technology( const string& aName, const int aYear ): mName( aName ), year ( aYear ){
+Technology::Technology( const string& aName, const int aYear ) {
+    mName = aName;
+    mYear = aYear;
     init();
 }
 
@@ -121,26 +124,6 @@ Technology::Technology( const string& aName, const int aYear ): mName( aName ), 
 Technology::~Technology()
 {
     clear();
-}
-
-//! Copy constructor
-Technology::Technology( const Technology& aTech )
-    : mName( aTech.mName ), year( aTech.year )
-{
-    init();
-    copy( aTech );
-}
-
-//! Assignment operator.
-Technology& Technology::operator =( const Technology& techIn )
-{
-    if( this != &techIn ) {
-        // check for self assignment 
-        clear();
-        init();
-        copy( techIn );
-    }
-    return *this;
 }
 
 //! Helper copy function to avoid replicating code.
@@ -151,31 +134,29 @@ void Technology::copy( const Technology& techIn ) {
     mParsedShareWeight = techIn.mParsedShareWeight;
     mPMultiplier = techIn.mPMultiplier;
 
-    year = techIn.year;
+    mYear = techIn.mYear;
     mCosts = techIn.mCosts;
     mFixedOutput = techIn.mFixedOutput;
     mAlphaZero = techIn.mAlphaZero;
     mCapacityFactor = techIn.mCapacityFactor;
-
-    if( mCaptureComponent.get() ){
-        mCaptureComponent.reset( techIn.mCaptureComponent->clone() );
-    }
 
     // Copy the input vector.
     for( vector<IInput*>::const_iterator iter = techIn.mInputs.begin(); iter != techIn.mInputs.end(); ++iter ) {
         mInputs.push_back( ( *iter )->clone() );
     }
 
-    if( techIn.mCaptureComponent.get() ) {
-        mCaptureComponent.reset( techIn.mCaptureComponent->clone() );
+    if( techIn.mCaptureComponent ) {
+        delete mCaptureComponent;
+        mCaptureComponent = techIn.mCaptureComponent->clone();
     }
 
-    if( techIn.mTechChangeCalc.get() ){
-        mTechChangeCalc.reset( techIn.mTechChangeCalc->clone() );
+    if( techIn.mTechChangeCalc ){
+        delete mTechChangeCalc;
+        mTechChangeCalc = techIn.mTechChangeCalc->clone();
     }
     
-    for (CGHGIterator iter = techIn.ghg.begin(); iter != techIn.ghg.end(); ++iter) {
-        ghg.push_back( (*iter)->clone() );
+    for (CGHGIterator iter = techIn.mGHG.begin(); iter != techIn.mGHG.end(); ++iter) {
+        mGHG.push_back( (*iter)->clone() );
     }
 
     for ( CShutdownDeciderIterator iter = techIn.mShutdownDeciders.begin();
@@ -199,7 +180,7 @@ void Technology::clear()
     for( vector<IInput*>::const_iterator iter = mInputs.begin(); iter != mInputs.end(); ++iter ) {
         delete *iter;
     }
-    for( GHGIterator iter = ghg.begin(); iter != ghg.end(); ++iter ) {
+    for( GHGIterator iter = mGHG.begin(); iter != mGHG.end(); ++iter ) {
         delete *iter;
     }
     for( ShutdownDeciderIterator iter = mShutdownDeciders.begin(); iter != mShutdownDeciders.end(); ++iter ) {
@@ -211,18 +192,24 @@ void Technology::clear()
     for( OutputIterator iter = mOutputs.begin(); iter != mOutputs.end(); ++iter ) {
         delete *iter;
     }
+    delete mCaptureComponent;
+    delete mCalValue;
+    delete mTechChangeCalc;
 }
 
 //! Initialize elemental data members.
 void Technology::init()
 {
+    mCaptureComponent = 0;
+    mCalValue = 0;
+    mTechChangeCalc = 0;
+    
     // This will be reinitialized in completeInit once the technologies start
     // year is known.
     mLifetimeYears = -1;
 
-    const Modeltime* modeltime = scenario->getModeltime();
-    mCosts.resize( modeltime->getmaxper(), -1.0 );
-    mProductionState.resize( modeltime->getmaxper(), 0 );
+    mCosts.assign( mCosts.size(), Value( -1.0 ) );
+    mProductionState.assign( mProductionState.size(), 0 );
     mProductionFunction = 0;
     mPMultiplier = 1;
     mFixedOutput = -1;
@@ -273,25 +260,16 @@ bool Technology::XMLParse( const DOMNode* node )
             parseContainerNode( curr, mInputs, InputFactory::create( nodeName ).release() );
         }
         else if( CaptureComponentFactory::isOfType( nodeName ) ) {
-            // Check if a new capture component needs to be created because
-            // there is not currently one or the current type does not match the
-            // new type.
-            if( !mCaptureComponent.get() || !mCaptureComponent->isSameType( nodeName ) ) {
-                mCaptureComponent = CaptureComponentFactory::create( nodeName );
-            }
-            mCaptureComponent->XMLParse( curr );
+            parseSingleNode( curr, mCaptureComponent, CaptureComponentFactory::create( nodeName ).release() );
         }
         else if( nodeName == StandardTechnicalChangeCalc::getXMLNameStatic() ){
-            if( !mTechChangeCalc.get() || !mTechChangeCalc->isSameType( nodeName ) ) {
-                mTechChangeCalc.reset( new StandardTechnicalChangeCalc );
-            }
-            mTechChangeCalc->XMLParse( curr );
+            parseSingleNode( curr, mTechChangeCalc, new StandardTechnicalChangeCalc );
         }
         else if( ShutdownDeciderFactory::isOfType( nodeName ) ) {
             parseContainerNode( curr, mShutdownDeciders, ShutdownDeciderFactory::create( nodeName ).release() );
         }
         else if( GHGFactory::isGHGNode( nodeName ) ) {
-            parseContainerNode( curr, ghg, GHGFactory::create( nodeName ).release() );
+            parseContainerNode( curr, mGHG, GHGFactory::create( nodeName ).release() );
         }
         else if( nodeName == CalDataOutput::getXMLNameStatic() ) {
             parseSingleNode( curr, mCalValue, new CalDataOutput );
@@ -345,7 +323,7 @@ void Technology::completeInit( const string& aRegionName,
     /*! \pre There must be at least one input. */
    // assert( !mInputs.empty() ); //sjs remove this for now since ag techs don't have any inputs at present
     // Check for an unset or invalid year.
-    if( year == 0 ) {
+    if( mYear == 0 ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "Technology " << mName << " in sector " << aSectorName
@@ -407,18 +385,19 @@ void Technology::completeInit( const string& aRegionName,
     mOutputs.insert( mOutputs.begin(), new PrimaryOutput( aSectorName ) );
 
     // Check for attempts to calibrate fixed output.
-    if( mFixedOutput != getFixedOutputDefault() && mCalValue.get() ) {
+    if( mFixedOutput != getFixedOutputDefault() && mCalValue ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "Cannot calibrate a fixed output Technology. Turning off calibration." << endl;
-        mCalValue.reset( 0 );
+        delete mCalValue;
+        mCalValue = 0;
     }
     for( unsigned int i = 0; i < mOutputs.size(); ++i ) {
         // TODO: Change this when dependencies are determined by period.
         mOutputs[ i ]->completeInit( aSectorName, aRegionName, localInfo, !hasNoInputOrOutput( 0 ) );
     }
-
-    for( CGHGIterator it = ghg.begin(); it != ghg.end(); ++it ) {
+    
+    for( CGHGIterator it = mGHG.begin(); it != mGHG.end(); ++it ) {
         (*it)->completeInit( aRegionName, aSectorName, localInfo );
     }
 
@@ -435,7 +414,7 @@ void Technology::completeInit( const string& aRegionName,
 
     // TODO: Calibrating to zero does not work correctly so reset the shareweights
     // to zero and remove the calibration input. This could be improved.
-    if( mCalValue.get() && mCalValue->getCalOutput() <= 0.0 ){
+    if( mCalValue && mCalValue->getCalOutput() <= 0.0 ){
         mShareWeight = 0;
     }
 
@@ -448,44 +427,44 @@ void Technology::completeInit( const string& aRegionName,
     // problems. Add it automatically if it does not exist. Warn the user so
     // they remember to add it.
     const string CO2 = "CO2";
-    if( util::searchForValue( ghg, CO2 ) == ghg.end() ){
+    if( util::searchForValue( mGHG, CO2 ) == mGHG.end() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::DEBUG );
         mainLog << "Adding CO2 to Technology " << mName << " in region " << aRegionName << " in sector " << aSectorName << "." << endl;
         AGHG* CO2Ghg = new CO2Emissions;
-        ghg.push_back( CO2Ghg );
+        mGHG.push_back( CO2Ghg );
     }
 
     // Initialize the capture component.
-    if( mCaptureComponent.get() ) {
+    if( mCaptureComponent ) {
         mCaptureComponent->completeInit( aRegionName, aSectorName );
     }
 
     // Initialize the technical change calculator.
-    if( mTechChangeCalc.get() ){
+    if( mTechChangeCalc ){
         mTechChangeCalc->completeInit();
     }
 
     // Initialize the cal data object.
-    if( mCalValue.get() ) {
+    if( mCalValue ) {
         mCalValue->completeInit();
     }
 
     if( Configuration::getInstance()->getBool( "CalibrationActive" ) ){
         const Modeltime* modeltime = scenario->getModeltime();
         bool hasCalInput = false;
-        const int periodForYear = modeltime->getyr_to_per( year );
+        const int periodForYear = modeltime->getyr_to_per( mYear );
         for( CInputIterator it = mInputs.begin(); it != mInputs.end() && !hasCalInput; ++it ) {
             hasCalInput = (*it)->getCalibrationQuantity( periodForYear ) >= 0;
         }
-        if( mCalValue.get() && hasCalInput ) {
+        if( mCalValue && hasCalInput ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
             ILogger& calLog = ILogger::getLogger( "calibration_log" );
             calLog.setLevel( ILogger::WARNING );
-            mainLog << "Technology " << getName() << " year " << year << "has both calibrated inputs and outputs.";
+            mainLog << "Technology " << getName() << " year " << mYear << "has both calibrated inputs and outputs.";
             mainLog << "Note that we are assuming the coefficient is consistent and the calibrated output takes precedence.";
-            calLog << "Technology " << getName() << " year " << year << "has both calibrated inputs and outputs.";
+            calLog << "Technology " << getName() << " year " << mYear << "has both calibrated inputs and outputs.";
             calLog << "Note that we are assuming the coefficient is consistent and the calibrated output takes precedence.";
         }
     }
@@ -495,7 +474,7 @@ void Technology::completeInit( const string& aRegionName,
 void Technology::toInputXML( ostream& out,
                              Tabs* tabs ) const
 {
-    XMLWriteOpeningTag( getXMLVintageNameStatic(), out, tabs, "", year );
+    XMLWriteOpeningTag( getXMLVintageNameStatic(), out, tabs, "", mYear );
 
     // write the xml for the class members.
     if( mParsedShareWeight.isInited() ) {
@@ -510,15 +489,15 @@ void Technology::toInputXML( ostream& out,
         XMLWriteElementWithAttributes( "", "keyword", out, tabs, mKeywordMap );
     }
 
-    if( mCalValue.get() ) {
+    if( mCalValue ) {
         mCalValue->toInputXML( out, tabs );
     }
 
-    if( mCaptureComponent.get() ) {
+    if( mCaptureComponent ) {
         mCaptureComponent->toInputXML( out, tabs );
     }
 
-    if( mTechChangeCalc.get() ) {
+    if( mTechChangeCalc ) {
         mTechChangeCalc->toInputXML( out, tabs );
     }
 
@@ -529,7 +508,7 @@ void Technology::toInputXML( ostream& out,
     for( COutputIterator iter = mOutputs.begin(); iter != mOutputs.end(); ++iter ) {
         ( *iter )->toInputXML( out, tabs );
     }
-    for( CGHGIterator iter = ghg.begin(); iter != ghg.end(); ++iter ) {
+    for( CGHGIterator iter = mGHG.begin(); iter != mGHG.end(); ++iter ) {
         ( *iter )->toInputXML( out, tabs );
     }
     for( unsigned int i = 0; i < mInputs.size(); ++i ) {
@@ -544,8 +523,8 @@ void Technology::toInputXML( ostream& out,
 void Technology::toInputXMLForRestart( ostream& out, Tabs* tabs ) const {
     // make sure calibrated share weights get written out
     const Modeltime* modeltime = scenario->getModeltime();
-    if( year <= modeltime->getper_to_yr( modeltime->getFinalCalibrationPeriod() ) ) {
-        XMLWriteOpeningTag( getXMLVintageNameStatic(), out, tabs, "", year );
+    if( mYear <= modeltime->getper_to_yr( modeltime->getFinalCalibrationPeriod() ) ) {
+        XMLWriteOpeningTag( getXMLVintageNameStatic(), out, tabs, "", mYear );
         XMLWriteElement( mShareWeight, "share-weight", out, tabs );
         XMLWriteClosingTag( getXMLVintageNameStatic(), out, tabs );
     }
@@ -561,7 +540,7 @@ void Technology::toDebugXML( const int period,
         return;
     }
 
-    XMLWriteOpeningTag( getXMLName(), out, tabs, mName, year );
+    XMLWriteOpeningTag( getXMLName(), out, tabs, mName, mYear );
     // write the xml for the class members.
 
     XMLWriteElement( mShareWeight, "share-weight", out, tabs );
@@ -571,7 +550,7 @@ void Technology::toDebugXML( const int period,
     XMLWriteElement( mCosts[ period ], "cost", out, tabs );
     XMLWriteElement( mPMultiplier, "pMultiplier", out, tabs );
     XMLWriteElementCheckDefault( mCapacityFactor, "capacity-factor", out, tabs, 1.0 );
-    if( mCalValue.get() ) {
+    if( mCalValue ) {
         mCalValue->toDebugXML( out, tabs );
     }
 
@@ -580,11 +559,11 @@ void Technology::toDebugXML( const int period,
     }
 
 
-    if( mCaptureComponent.get() ) {
+    if( mCaptureComponent ) {
         mCaptureComponent->toDebugXML( period, out, tabs );
     }
 
-    if( mTechChangeCalc.get() ) {
+    if( mTechChangeCalc ) {
         mTechChangeCalc->toDebugXML( period, out, tabs );
     }
 
@@ -598,7 +577,7 @@ void Technology::toDebugXML( const int period,
     }
 
     // write our ghg object, vector is of number of gases
-    for( CGHGIterator i = ghg.begin(); i != ghg.end(); i++ ) {
+    for( CGHGIterator i = mGHG.begin(); i != mGHG.end(); i++ ) {
         ( *i )->toDebugXML( period, out, tabs );
     }
 
@@ -641,34 +620,43 @@ void Technology::initCalc( const string& aRegionName,
                            PreviousPeriodInfo& aPrevPeriodInfo,
                            const int aPeriod )
 {
-    if( mCalValue.get() ) {
+    if( mCalValue ) {
         mCalValue->initCalc( aDemographics, aPeriod );
     }
 
-    if( mCalValue.get() && ( mCalValue->getCalOutput() < 0 ) ) {
+    if( mCalValue && ( mCalValue->getCalOutput() < 0 ) ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::DEBUG );
         mainLog << "Negative calibration value for technology " << mName << ". Calibration removed." << endl;
-        mCalValue.reset( 0 );
+        delete mCalValue;
+        mCalValue = 0;
     }
 
     // Setup the technology production state which represents how the technology
     // decides to produce output.
     setProductionState( aPeriod );
     
+    // If technology is not operating the cost is NaN.  The value
+    // should never be used; therefore, if the NaNs escape into the
+    // rest of the code, you know instantly that you have a problem.
+    if( !mProductionState[ aPeriod ]->isOperating() )
+    {
+        mCosts[ aPeriod ] = numeric_limits<double>::signaling_NaN();
+    }
+    
     mTechnologyInfo->setBoolean( "new-vintage-tech", mProductionState[ aPeriod ]->isNewInvestment() );
     mTechnologyInfo->setBoolean( "is-tech-operating", mProductionState[ aPeriod ]->isOperating() );
-   
-    for( unsigned int i = 0; i < ghg.size(); i++ ) {
-        ghg[ i ]->initCalc( aRegionName, mTechnologyInfo.get(), aPeriod );
+
+    for( unsigned int i = 0; i < mGHG.size(); i++ ) {
+        mGHG[ i ]->initCalc( aRegionName, mTechnologyInfo.get(), aPeriod );
     }
 
     if( !aPrevPeriodInfo.mIsFirstTech && !aPrevPeriodInfo.mInputs ){
         // The first period technology, which is not necessarily in the base year should
         // not have any previous technology information so do not print the warning.
-        if( year != scenario->getModeltime()->getper_to_yr( 0 ) ){
+        if( mYear != scenario->getModeltime()->getper_to_yr( 0 ) ){
             ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog << "Previous period technology from technology " << mName << " in year " << year
+            mainLog << "Previous period technology from technology " << mName << " in year " << mYear
                     << " did not pass forward the required information." << endl;
         }
     }
@@ -689,7 +677,7 @@ void Technology::initCalc( const string& aRegionName,
 			mTechnologyInfo.get(), aPeriod );
     }
 
-    if( mCaptureComponent.get() ) {
+    if( mCaptureComponent ) {
         mCaptureComponent->adjustInputs( aRegionName, mInputs, aPeriod );
     }
 
@@ -698,7 +686,7 @@ void Technology::initCalc( const string& aRegionName,
     }
 
     // Determine cumulative technical change. Alpha zero defaults to 1.
-    if( mTechChangeCalc.get() ){
+    if( mTechChangeCalc ){
         mAlphaZero = mTechChangeCalc->calcAndAdjustForTechChange( mInputs,
                      aPrevPeriodInfo, mProductionFunction, aRegionName,
                      aSectorName, aPeriod );
@@ -753,10 +741,10 @@ void Technology::setProductionState( const int aPeriod ){
     
     double initialOutput = 0;
     const Modeltime* modeltime = scenario->getModeltime();
-    initialOutput = mOutputs[ 0 ]->getPhysicalOutput( modeltime->getyr_to_per( year ) );
+    initialOutput = mOutputs[ 0 ]->getPhysicalOutput( modeltime->getyr_to_per( mYear ) );
     
     mProductionState[ aPeriod ] =
-        ProductionStateFactory::create( year, mLifetimeYears, mFixedOutput,
+        ProductionStateFactory::create( mYear, mLifetimeYears, mFixedOutput,
                                         initialOutput, aPeriod ).release();
 }
 
@@ -778,14 +766,14 @@ double Technology::calcSecondaryValue( const string& aRegionName,
 {
     double totalValue = 0;
     // Add all costs from the GHGs.
-    for( unsigned int i = 0; i < ghg.size(); ++i ) {
-        totalValue -= ghg[ i ]->getGHGValue( aRegionName, mInputs, mOutputs, mCaptureComponent.get(), aPeriod );
+    for( unsigned int i = 0; i < mGHG.size(); ++i ) {
+        totalValue -= mGHG[ i ]->getGHGValue( aRegionName, mInputs, mOutputs, mCaptureComponent, aPeriod );
     }
 
     // Add all values from the outputs. The primary output is included in this
     // loop but will have a value of zero.
     for( unsigned int i = 0; i < mOutputs.size(); ++i ) {
-        totalValue += mOutputs[ i ]->getValue( aRegionName, mCaptureComponent.get(), aPeriod );
+        totalValue += mOutputs[ i ]->getValue( aRegionName, mCaptureComponent, aPeriod );
     }
     return totalValue;
 }
@@ -826,8 +814,8 @@ double Technology::getTotalGHGCost( const string& aRegionName,
 {
     double totalGHGCost = 0;
     // totalGHGCost and carbontax must be in same unit as fuel price
-    for( unsigned int i = 0; i < ghg.size(); i++ ) {
-        totalGHGCost += ghg[ i ]->getGHGValue( aRegionName, mInputs, mOutputs, mCaptureComponent.get(), aPeriod );
+    for( unsigned int i = 0; i < mGHG.size(); i++ ) {
+        totalGHGCost += mGHG[ i ]->getGHGValue( aRegionName, mInputs, mOutputs, mCaptureComponent, aPeriod );
     }
     return totalGHGCost;
 }
@@ -1027,12 +1015,12 @@ void Technology::calcEmissionsAndOutputs( const string& aRegionName,
                                           const int aPeriod )
 {
     for( unsigned int i = 0; i < mOutputs.size(); ++i ) {
-        mOutputs[ i ]->setPhysicalOutput( aPrimaryOutput, aRegionName, mCaptureComponent.get(), aPeriod );
+        mOutputs[ i ]->setPhysicalOutput( aPrimaryOutput, aRegionName, mCaptureComponent, aPeriod );
     }
 
     // calculate emissions for each gas after setting input and output amounts
-    for( unsigned int i = 0; i < ghg.size(); ++i ) {
-        ghg[ i ]->calcEmission( aRegionName, mInputs, mOutputs, aGDP, mCaptureComponent.get(), aPeriod );
+    for( unsigned int i = 0; i < mGHG.size(); ++i ) {
+        mGHG[ i ]->calcEmission( aRegionName, mInputs, mOutputs, aGDP, mCaptureComponent, aPeriod );
     }
 }
 
@@ -1046,24 +1034,24 @@ const map<string, double> Technology::getEmissions( const string& aGoodName,
                                                     const int aPeriod ) const
 {
     map<string, double> emissions;
-    for( unsigned int i = 0; i < ghg.size(); ++i ) {
+    for( unsigned int i = 0; i < mGHG.size(); ++i ) {
         // emissions by gas name only
-        emissions[ ghg[ i ]->getName() ] = ghg[ i ]->getEmission( aPeriod );
+        emissions[ mGHG[ i ]->getName() ] = mGHG[ i ]->getEmission( aPeriod );
         // emissions by gas and fuel names combined
         // used to calculate emissions by fuel
         for( unsigned int j = 0; j < mInputs.size(); ++j ) {
             // Calculate the per fuel emissions. TODO: This is very difficult to
             // do as different fuels may have different input coefficients and
-            // different emissions coefficients. emissions[ghg[i]->getName() +
-            // mInputs[ j ]->getName() ] = ghg[i]->getEmission( aPeriod );
+            // different emissions coefficients. emissions[mGHG[i]->getName() +
+            // mInputs[ j ]->getName() ] = mGHG[i]->getEmission( aPeriod );
         }
         // add sequestered amount to emissions map used to calculate emissions
         // by fuel if there are sequestered emissions.
-        if( mCaptureComponent.get() ) {
-            emissions[ ghg[ i ]->getName() + "sequestGeologic" ] = mCaptureComponent->
-            getSequesteredAmount( ghg[ i ]->getName(), true, aPeriod );
-            emissions[ ghg[ i ]->getName() + "sequestNonEngy" ] = mCaptureComponent->
-            getSequesteredAmount( ghg[ i ]->getName(), false, aPeriod );
+        if( mCaptureComponent ) {
+            emissions[ mGHG[ i ]->getName() + "sequestGeologic" ] = mCaptureComponent->
+            getSequesteredAmount( mGHG[ i ]->getName(), true, aPeriod );
+            emissions[ mGHG[ i ]->getName() + "sequestNonEngy" ] = mCaptureComponent->
+            getSequesteredAmount( mGHG[ i ]->getName(), false, aPeriod );
         }
     }
 
@@ -1085,7 +1073,7 @@ const string& Technology::getName() const
 * \author Steve Smith
 * \return share weight
 */
-Value Technology::getShareWeight() const
+double Technology::getShareWeight() const
 {
     /*! \post Share weight is a valid number and greater than or equal to zero. */
     assert( util::isValidNumber( mShareWeight ) && mShareWeight >= 0 );
@@ -1147,7 +1135,7 @@ bool Technology::isOutputFixed( const bool aHasRequiredInput,
     }
 
     // If the technology has a calibrated output value than the output is fixed.
-    if( mCalValue.get() ) {
+    if( mCalValue ) {
         return true;
     }
 
@@ -1203,7 +1191,7 @@ bool Technology::isAvailable( const int aPeriod ) const
         return false;
     }
 
-    if( mCalValue.get() && mCalValue->getCalOutput() > 0 ) {
+    if( mCalValue && mCalValue->getCalOutput() > 0 ) {
         return true;
     }
 
@@ -1353,7 +1341,7 @@ double Technology::getCalibrationOutput( const bool aHasRequiredInput,
     }
 
     // Check if the technology has a calibrated output value.
-    if( mCalValue.get() ) {
+    if( mCalValue ) {
         return mCalValue->getCalOutput();
     }
 
@@ -1403,12 +1391,12 @@ void Technology::calcCost( const string& aRegionName,
                            const string& aSectorName,
                            const int aPeriod )
 {
-    // If technology is not operating set cost to NaN.  The value
+    // If technology is not operating the cost is NaN.  The value
     // should never be used; therefore, if the NaNs escape into the
     // rest of the code, you know instantly that you have a problem.
     if( !mProductionState[ aPeriod ]->isOperating() )
     {
-        mCosts[ aPeriod ] = numeric_limits<double>::signaling_NaN();
+        assert( !util::isValidNumber( mCosts[ aPeriod ] ) );
     }
     else {
         // Note we now allow costs in any sector to be <= 0.  If,
@@ -1479,7 +1467,7 @@ double Technology::calcFuelPrefElasticity( const int aPeriod ) const
 const vector<string> Technology::getGHGNames() const
 {
     vector<string> names;
-    for( CGHGIterator i = ghg.begin(); i != ghg.end(); ++i ){
+    for( CGHGIterator i = mGHG.begin(); i != mGHG.end(); ++i ){
         names.push_back( ( *i )->getName() );
     }
     return names;
@@ -1505,14 +1493,14 @@ int Technology::getNumbGHGs()  const {
 */
 void Technology::copyGHGParameters( const AGHG* prevGHG ) {
     bool found = false;
-    for( GHGIterator i = ghg.begin(); i != ghg.end() && !found; ++i ){
+    for( GHGIterator i = mGHG.begin(); i != mGHG.end() && !found; ++i ){
         if( (*i)->getName() == prevGHG->getName() ){
             ( *i )->copyGHGParameters( prevGHG );
             found = true;
         }
     }
     if( !found ) {
-        ghg.push_back( prevGHG->clone() );
+        mGHG.push_back( prevGHG->clone() );
     }
 }
 
@@ -1520,7 +1508,7 @@ void Technology::copyGHGParameters( const AGHG* prevGHG ) {
 * \param aGHGName Name of GHG 
 */
 const AGHG* Technology::getGHGPointer( const string& aGHGName ) const {
-    for( CGHGIterator i = ghg.begin(); i != ghg.end(); ++i ){
+    for( CGHGIterator i = mGHG.begin(); i != mGHG.end(); ++i ){
         if( (*i)->getName() == aGHGName ){
             return *i;
         }
@@ -1532,9 +1520,9 @@ const AGHG* Technology::getGHGPointer( const string& aGHGName ) const {
 double Technology::getEmissionsByGas( const string& aGasName,
                                       const int aPeriod ) const
 {
-    for( unsigned int i = 0; i < ghg.size(); ++i ) {
-        if( ghg[ i ]->getName() == aGasName ) {
-            return ghg[ i ]->getEmission( aPeriod );
+    for( unsigned int i = 0; i < mGHG.size(); ++i ) {
+        if( mGHG[ i ]->getName() == aGasName ) {
+            return mGHG[ i ]->getEmission( aPeriod );
         }
     }
     return 0;
@@ -1654,8 +1642,13 @@ void Technology::setYear( const int aYear )
         mainLog << "Invalid year passed to set year for technology " << mName << "." << endl;
     }
     else {
-        year = aYear;
+        mYear = aYear;
     }
+}
+
+//! Get the technology year.
+int Technology::getYear() const {
+    return mYear;
 }
 
 /*! \brief Return the marginal revenue for this Technology's output.
@@ -1711,8 +1704,8 @@ void Technology::accept( IVisitor* aVisitor, const int aPeriod ) const {
         mOutputs[ i ]->accept( aVisitor, aPeriod );
     }
 
-    for( unsigned int i = 0; i < ghg.size(); ++i ) {
-        ghg[ i ]->accept( aVisitor, aPeriod );
+    for( unsigned int i = 0; i < mGHG.size(); ++i ) {
+        mGHG[ i ]->accept( aVisitor, aPeriod );
     }
 
     for( unsigned int i = 0; i < mInputs.size(); ++i ) {
@@ -1824,13 +1817,13 @@ void Technology::doInterpolations( const Technology* aPrevTech, const Technology
     // Do not interpolate from a share-weight in a calibration period as that is
     // likely to be replaced during calibration.
     const Modeltime* modeltime  = scenario->getModeltime();
-    if( modeltime->getyr_to_per( aPrevTech->year ) > modeltime->getFinalCalibrationPeriod() 
+    if( modeltime->getyr_to_per( aPrevTech->mYear ) > modeltime->getFinalCalibrationPeriod() 
         && aPrevTech->mParsedShareWeight.isInited() && aNextTech->mParsedShareWeight.isInited() )
     {
-        mParsedShareWeight = util::linearInterpolateY( year, aPrevTech->year, aNextTech->year,
+        mParsedShareWeight = util::linearInterpolateY( mYear, aPrevTech->mYear, aNextTech->mYear,
             aPrevTech->mParsedShareWeight, aNextTech->mParsedShareWeight );
     }
-    else if( modeltime->getyr_to_per( aPrevTech->year ) == modeltime->getFinalCalibrationPeriod() )
+    else if( modeltime->getyr_to_per( aPrevTech->mYear ) == modeltime->getFinalCalibrationPeriod() )
     {
         // Make sure the share weight gets interpolated from the calibrated value.
         mParsedShareWeight = Value();
@@ -1838,22 +1831,22 @@ void Technology::doInterpolations( const Technology* aPrevTech, const Technology
     
     // have inputs do any interpolations
     interpolateChildVector( mInputs, aPrevTech->mInputs, aNextTech->mInputs,
-                            year, aPrevTech->year, aNextTech->year );
+                            mYear, aPrevTech->mYear, aNextTech->mYear );
     
     // have outputs do any interpolations
     interpolateChildVector( mOutputs, aPrevTech->mOutputs, aNextTech->mOutputs,
-                            year, aPrevTech->year, aNextTech->year );
+                            mYear, aPrevTech->mYear, aNextTech->mYear );
     
     // have ghgs do any interpolations
-    interpolateChildVector( ghg, aPrevTech->ghg, aNextTech->ghg,
-                            year, aPrevTech->year, aNextTech->year );
+    interpolateChildVector( mGHG, aPrevTech->mGHG, aNextTech->mGHG,
+                            mYear, aPrevTech->mYear, aNextTech->mYear );
 
     // only copy fixed output if the technology did not explicitly set a lifetime
     // which indicates that the user intended to exogenously set a output path as
     // apposed to just a single chunk
     if( mFixedOutput != -1 ) {
         mFixedOutput = mLifetimeYears == -1 ?
-            util::linearInterpolateY( year, aPrevTech->year, aNextTech->year,
+            util::linearInterpolateY( mYear, aPrevTech->mYear, aNextTech->mYear,
                                       aPrevTech->mFixedOutput, aNextTech->mFixedOutput ) : 0;
     }
     if( aPrevTech->mLifetimeYears != aNextTech->mLifetimeYears ) {
@@ -1870,8 +1863,8 @@ void Technology::doInterpolations( const Technology* aPrevTech, const Technology
 int Technology::calcDefaultLifetime() const {
     const Modeltime* modeltime = scenario->getModeltime();
     // TODO: worry about non-aligned technologies?
-    const int nextTechPeriod = modeltime->getyr_to_per( year ) + 1;
+    const int nextTechPeriod = modeltime->getyr_to_per( mYear ) + 1;
     return nextTechPeriod < modeltime->getmaxper()
-        ? modeltime->getper_to_yr( nextTechPeriod ) - year
+        ? modeltime->getper_to_yr( nextTechPeriod ) - mYear
         : modeltime->gettimestep( modeltime->getmaxper() - 1 );
 }

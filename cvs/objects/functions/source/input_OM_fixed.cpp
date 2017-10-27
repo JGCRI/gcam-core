@@ -84,13 +84,24 @@ const string& InputOMFixed::getXMLReportingName() const{
 
 //! Constructor
 InputOMFixed::InputOMFixed()
-: mAdjustedCosts( scenario->getModeltime()->getmaxper() ),
-  mAdjustedCoefficients( scenario->getModeltime()->getmaxper() ){
+{
 }
 
 //! Clone the input.
 InputOMFixed* InputOMFixed::clone() const {
-    return new InputOMFixed( *this );
+    InputOMFixed* clone = new InputOMFixed();
+    clone->copy( *this );
+    return clone;
+}
+
+void InputOMFixed::copy( const InputOMFixed& aOther ) {
+    MiniCAMInput::copy( aOther );
+    
+    mTechChange = aOther.mTechChange;
+    mOMFixed = aOther.mOMFixed;
+    mCapacityFactor = aOther.mCapacityFactor;
+    
+    // calculated parameters are not copied.
 }
 
 bool InputOMFixed::isSameType( const string& aType ) const {
@@ -132,10 +143,10 @@ void InputOMFixed::XMLParse( const xercesc::DOMNode* node ) {
 
         const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
         if ( nodeName == "OM-fixed" ) {
-            mOMFixed = XMLHelper<double>::getValue( curr );
+            mOMFixed = XMLHelper<Value>::getValue( curr );
         }
         else if( nodeName == "tech-change" ){
-            mTechChange = XMLHelper<double>::getValue( curr );
+            mTechChange = XMLHelper<Value>::getValue( curr );
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );

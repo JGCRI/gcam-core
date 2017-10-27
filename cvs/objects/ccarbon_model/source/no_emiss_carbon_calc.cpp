@@ -64,10 +64,13 @@ const string& NoEmissCarbonCalc::getXMLName() const {
     return getXMLNameStatic();
 }
 
-void NoEmissCarbonCalc::calc(const int aPeriod, const int aEndYear) {
+double NoEmissCarbonCalc::calc(const int aPeriod, const int aEndYear, const bool aStoreFullEmiss ) {
     // Emissions are not directly calculated here.  Instead this class will be
     // composed within the NodeCarbonCalc class which will drive the emissions
     // calculation and set them into this object.
+    
+    return aStoreFullEmiss || aPeriod == 0 ? mTotalEmissions[ aEndYear ] : mTotalEmissions[ aEndYear ] +
+        (*mStoredEmissionsAbove[ aPeriod ])[ aEndYear ] + (*mStoredEmissionsBelow[ aPeriod ])[ aEndYear ];
 }
 
 void NoEmissCarbonCalc::acceptDerived( IVisitor* aVisitor, const int aPeriod ) const {

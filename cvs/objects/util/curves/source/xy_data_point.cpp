@@ -48,15 +48,15 @@
 
 using namespace std;
 
-const string XYDataPoint::XML_NAME = "XYDataPoint";
-
 /*! \brief Constructor
 * \details This is the default constructor for the XYDataPoint. The parameters are used
 * to specify the initial x and y values. They default to 0.
 * \param xIn The initial x value. Defaults to 0.
 * \param yIn The initial y value. Defaults to 0.
 */
-XYDataPoint::XYDataPoint( const double xIn, const double yIn ): x( xIn ), y( yIn ){
+XYDataPoint::XYDataPoint( const double xIn, const double yIn ) {
+    x = xIn;
+    y = yIn;
 }
 
 //! Destructor
@@ -70,12 +70,13 @@ DataPoint* XYDataPoint::clone() const {
 
 //! Static function to return the name of the XML element associated with this object.
 const string& XYDataPoint::getXMLNameStatic() {
+    static const string XML_NAME = "XYDataPoint";
     return XML_NAME;
 }
 
 //! Return the name of the XML element associated with this object.
 const string& XYDataPoint::getXMLName() const {
-    return XML_NAME;
+    return getXMLNameStatic();
 }
 
 //! Equality

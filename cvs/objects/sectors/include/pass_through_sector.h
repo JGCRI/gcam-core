@@ -75,16 +75,22 @@ protected:
     virtual void toInputXMLDerived( std::ostream& aOut, Tabs* aTabs ) const;
 
     virtual void toDebugXMLDerived( const int period, std::ostream& aOut, Tabs* aTabs ) const;
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        SupplySector,
+        
+        //! The appropriate sector name for which's marginal revenue should be used
+        //! when calculating fixed output.
+        DEFINE_VARIABLE( SIMPLE, "marginal-revenue-sector", mMarginalRevenueSector, std::string ),
+        
+        //! The market in which to find the marginal revenue sector.
+        DEFINE_VARIABLE( SIMPLE, "marginal-revenue-market", mMarginalRevenueMarket, std::string )
+    )
 
 private:
     void setFixedDemandsToMarket( const int aPeriod ) const;
-
-    //! The appropriate sector name for which's marginal revenue should be used
-    //! when calculating fixed output.
-    std::string mMarginalRevenueSector;
-
-    //! The market in which to find the marginal revenue sector.
-    std::string mMarginalRevenueMarket;
 };
 
 /*!
@@ -101,8 +107,6 @@ public:
 
     // IActivity methods
     virtual void calc( const int aPeriod );
-
-    virtual void setStale();
 
     virtual std::string getDescription() const;
 

@@ -89,8 +89,11 @@ typedef std::vector<PolicyPortfolioStandard*>::iterator PolicyIterator;
 typedef std::vector<PolicyPortfolioStandard*>::const_iterator CPolicyIterator;
 typedef std::vector<AResource*>::iterator ResourceIterator;
 typedef std::vector<AResource*>::const_iterator CResourceIterator;
+
 //! Default constructor
 Region::Region() {
+    mDemographic = 0;
+    mRegionInfo = 0;
 }
 
 //! Default destructor destroys sector, demsector, Resource, and
@@ -101,7 +104,7 @@ Region::~Region() {
 
 //! Clear member variables and initialize elemental members.
 void Region::clear(){
-    for ( SectorIterator secIter = supplySector.begin(); secIter != supplySector.end(); secIter++ ) {
+    for ( SectorIterator secIter = mSupplySector.begin(); secIter != mSupplySector.end(); secIter++ ) {
         delete *secIter;
     }
 
@@ -116,13 +119,15 @@ void Region::clear(){
     for ( ResourceIterator rescIter = mResources.begin(); rescIter != mResources.end(); ++rescIter ) {
         delete *rescIter;
     }
+    delete mDemographic;
+    delete mRegionInfo;
 }
 
 /*! Return the region name.
 * \return The string name of the region is returned.
 */
 const string& Region::getName() const {
-    return name;
+    return mName;
 }
 
 /*! 
@@ -139,7 +144,7 @@ void Region::XMLParse( const DOMNode* node ){
     assert( node );
 
     // get the name attribute.
-    name = XMLHelper<string>::getAttr( node, "name" );
+    mName = XMLHelper<string>::getAttr( node, "name" );
 
     // get all child nodes.
     DOMNodeList* nodeList = node->getChildNodes();
@@ -154,7 +159,7 @@ void Region::XMLParse( const DOMNode* node ){
         }
 
         else if( nodeName == Demographic::getXMLNameStatic() ){
-            parseSingleNode( curr, demographic, new Demographic );
+            parseSingleNode( curr, mDemographic, new Demographic );
         }
         else if( nodeName == GHGPolicy::getXMLNameStatic() ){
             parseContainerNode( curr, mGhgPolicies, new GHGPolicy() );
@@ -200,16 +205,16 @@ void Region::XMLParse( const DOMNode* node ){
 * \ref faqitem1 
 */
 void Region::toInputXML( ostream& out, Tabs* tabs ) const {
-    XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
+    XMLWriteOpeningTag ( getXMLName(), out, tabs, mName );
 
     // write the xml for the class members.
     // write out the single population object.
-    if( demographic.get() ){
-        demographic->toInputXML( out, tabs);
+    if( mDemographic ){
+        mDemographic->toInputXML( out, tabs);
     }
 
     // write out supply sector objects.
-    for( CSectorIterator j = supplySector.begin(); j != supplySector.end(); j++ ){
+    for( CSectorIterator j = mSupplySector.begin(); j != mSupplySector.end(); j++ ){
         ( *j )->toInputXML( out, tabs );
     }
 
@@ -244,19 +249,19 @@ void Region::toInputXML( ostream& out, Tabs* tabs ) const {
 */
 void Region::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
-    XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
+    XMLWriteOpeningTag ( getXMLName(), out, tabs, mName );
 
     // write out mGhgPolicies objects.
     for( CGHGPolicyIterator currPolicy = mGhgPolicies.begin(); currPolicy != mGhgPolicies.end(); ++currPolicy ){
         (*currPolicy)->toDebugXML( period, out, tabs );
     }
 
-    if( demographic.get() ){
-        demographic->toDebugXML( period, out, tabs );
+    if( mDemographic ){
+        mDemographic->toDebugXML( period, out, tabs );
     }
 
     // write out supply sector objects.
-    for( CSectorIterator j = supplySector.begin(); j != supplySector.end(); j++ ){
+    for( CSectorIterator j = mSupplySector.begin(); j != mSupplySector.end(); j++ ){
         ( *j )->toDebugXML( period, out, tabs );
     }
 
@@ -305,13 +310,13 @@ const std::string& Region::getXMLNameStatic() {
  */
 void Region::completeInit() {    
     for( GHGPolicyIterator ghgPolicy = mGhgPolicies.begin(); ghgPolicy != mGhgPolicies.end(); ++ghgPolicy ){
-        (*ghgPolicy)->completeInit( name );
+        (*ghgPolicy)->completeInit( mName );
     }
     for( PolicyIterator policy = mPolicies.begin(); policy != mPolicies.end(); ++policy ){
-        (*policy)->completeInit( name );
+        (*policy)->completeInit( mName );
     }
     for( ResourceIterator resourceIter = mResources.begin(); resourceIter != mResources.end(); ++resourceIter ) {
-        (*resourceIter)->completeInit( name, mRegionInfo.get() );
+        (*resourceIter)->completeInit( mName, mRegionInfo );
     }
 }
 
@@ -324,12 +329,12 @@ void Region::completeInit() {
 */
 void Region::postCalc( const int aPeriod ){
     // Finalize sectors.
-    for( SectorIterator sector = supplySector.begin(); sector != supplySector.end(); ++sector ){
+    for( SectorIterator sector = mSupplySector.begin(); sector != mSupplySector.end(); ++sector ){
         (*sector)->postCalc( aPeriod );
     }
     // Post calculation for resource sectors
     for( ResourceIterator currResource = mResources.begin(); currResource != mResources.end(); ++currResource ){
-        (*currResource)->postCalc( name, aPeriod );
+        (*currResource)->postCalc( mName, aPeriod );
     }
 }
 
@@ -341,12 +346,12 @@ void Region::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->startVisitRegion( this, aPeriod );
 
     // Visit demographics object.
-    if( demographic.get() ){
-        demographic->accept( aVisitor, aPeriod );
+    if( mDemographic ){
+        mDemographic->accept( aVisitor, aPeriod );
     }
 
     // loop for supply sectors
-    for( CSectorIterator currSec = supplySector.begin(); currSec != supplySector.end(); ++currSec ){
+    for( CSectorIterator currSec = mSupplySector.begin(); currSec != mSupplySector.end(); ++currSec ){
         (*currSec)->accept( aVisitor, aPeriod );
     }
     
@@ -369,7 +374,7 @@ void Region::setTax( const GHGPolicy* aTax ){
     assert( aTax );
 
     // Check if the tax is applicable.
-    if( !aTax->isApplicable( name ) ){
+    if( !aTax->isApplicable( mName ) ){
         return;
     }
 
@@ -390,7 +395,7 @@ void Region::setTax( const GHGPolicy* aTax ){
     }
 
     // Initialize the tax.
-    insertedTax->completeInit( name );
+    insertedTax->completeInit( mName );
 }
 
 /*! \brief A function to generate a ghg emissions quantity curve based on an
@@ -445,7 +450,7 @@ const Curve* Region::getEmissionsPriceCurve( const string& ghgName ) const {
     auto_ptr<ExplicitPointSet> emissionsPoints( new ExplicitPointSet() );
 
     for( int i = 0; i < modeltime->getmaxper(); i++ ) {
-        XYDataPoint* currPoint = new XYDataPoint( modeltime->getper_to_yr( i ), marketplace->getPrice( ghgName, name, i ) );
+        XYDataPoint* currPoint = new XYDataPoint( modeltime->getper_to_yr( i ), marketplace->getPrice( ghgName, mName, i ) );
         emissionsPoints->addPoint( currPoint );
     }
 

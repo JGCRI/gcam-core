@@ -65,38 +65,39 @@ extern Scenario* scenario;
  * \param aYear Technology year.
  */
 AgProductionTechnology::AgProductionTechnology( const string& aName, const int aYear ):
-    Technology( aName, aYear ),
-    mNonLandVariableCost( 0 ), 
-    mNonLandCostTechChange( 0),
-    mYield ( 0 ), 
-    mAgProdChange ( 0 ),
-    mHarvestsPerYear( 1 ),
-    mLandAllocator( 0 ),
-    mProductLeaf( 0 )
+    Technology( aName, aYear )
 {
-}
-
-/*!
- * \brief Copy constructor.
- * \details Does not copy variables which should get initialized through normal
- *          model operations.
- * \param aAgTech Tech AgProductionTechnology to copy.
- */
-AgProductionTechnology::AgProductionTechnology( const AgProductionTechnology& aAgTech ) :
-    Technology( aAgTech ),
-    mNonLandVariableCost( aAgTech.mNonLandVariableCost ),
-    mNonLandCostTechChange( aAgTech.mNonLandCostTechChange ),
-    mYield( 0 ),
-    mAgProdChange( aAgTech.mAgProdChange ),
-    mHarvestsPerYear( aAgTech.mHarvestsPerYear ),
-// The following do not get copied as they are initialized through other means
-    mLandAllocator( 0 ),
-    mProductLeaf( 0 )
-{
+    mNonLandVariableCost = 0;
+    mNonLandCostTechChange = 0;
+    mYield  = 0;
+    mAgProdChange  = 0;
+    mHarvestsPerYear = 1;
+    mLandAllocator = 0;
+    mProductLeaf = 0;
 }
 
 // ! Destructor
 AgProductionTechnology::~AgProductionTechnology() {
+}
+
+//! Clone Function. Returns a deep copy of the current technology.
+AgProductionTechnology* AgProductionTechnology::clone() const {
+    AgProductionTechnology* clone = new AgProductionTechnology( mName, mYear );
+    clone->copy( *this );
+    return clone;
+}
+
+void AgProductionTechnology::copy( const AgProductionTechnology& aOther ) {
+    Technology::copy( aOther );
+    
+    mNonLandVariableCost = aOther.mNonLandVariableCost;
+    mNonLandCostTechChange = aOther.mNonLandCostTechChange;
+    mYield = 0;
+    mAgProdChange = aOther.mAgProdChange;
+    mHarvestsPerYear = aOther.mHarvestsPerYear;
+    // The following do not get copied as they are initialized through other means
+    mLandAllocator = 0;
+    mProductLeaf = 0;
 }
 
 //! Parses any input variables specific to derived classes
@@ -176,10 +177,7 @@ const string& AgProductionTechnology::getXMLNameStatic() {
     return XML_NAME;
 }
 
-//! Clone Function. Returns a deep copy of the current technology.
-AgProductionTechnology* AgProductionTechnology::clone() const {
-    return new AgProductionTechnology( *this );
-}
+
 
 void AgProductionTechnology::initCalc( const string& aRegionName,
                                          const string& aSectorName,
@@ -230,7 +228,7 @@ void AgProductionTechnology::initCalc( const string& aRegionName,
     }
 
     // Only do the ag productivity change calc if a calibration value is not read in that period
-    if( !mCalValue.get() ){       
+    if( !mCalValue ){
         // Unless a yield is read in for this period, get the previous period yield from the market info.
         // Note: you can never overwrite a positive yield with a zero yield. If the model sees a
         // zero yield, it will copy from the previous period.
@@ -292,7 +290,7 @@ void AgProductionTechnology::completeInit( const std::string& aRegionName,
     // Make some tests for bad inputs
 
     // Technical change may only be applied after the base period.
-    if( mAgProdChange > 0.0 && mCalValue.get() )
+    if( mAgProdChange > 0.0 && mCalValue )
     {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
@@ -329,9 +327,9 @@ void AgProductionTechnology::completeInit( const std::string& aRegionName,
 */
 void AgProductionTechnology::setCalYields(const std::string& aRegionName) {
     // if a calibrated output is read in for this period, use it to compute yield	
-    if ( mCalValue.get() ) {
+    if ( mCalValue ) {
         // technology knows the year it started in member variable "year"
-        int techPeriod = scenario->getModeltime()->getyr_to_per( year );
+        int techPeriod = scenario->getModeltime()->getyr_to_per( mYear );
         double calLandUsed = mLandAllocator->getLandAllocation( mName, techPeriod );
         // if land is also read in, compute yield, else write a warning and set
         // yield to 0
@@ -423,7 +421,7 @@ void AgProductionTechnology::production( const string& aRegionName,
     if( !mProductionState[ aPeriod ]->isOperating() ){
         // Set physical output to zero.
         mOutputs[ 0 ]->setPhysicalOutput( 0, aRegionName,
-                                          mCaptureComponent.get(),
+                                          mCaptureComponent,
                                           aPeriod );
         return;
     }
@@ -526,7 +524,7 @@ void AgProductionTechnology::doInterpolations( const Technology* aPrevTech, cons
     mNonLandCostTechChange = nextAgTech->mNonLandCostTechChange;
     
     // Non land variable costs will be interpoalted.
-    mNonLandVariableCost = util::linearInterpolateY( year, prevAgTech->year, nextAgTech->year,
+    mNonLandVariableCost = util::linearInterpolateY( mYear, prevAgTech->mYear, nextAgTech->mYear,
                                                      prevAgTech->mNonLandVariableCost,
                                                      nextAgTech->mNonLandVariableCost );
 }

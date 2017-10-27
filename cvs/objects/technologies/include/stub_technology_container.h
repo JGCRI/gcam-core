@@ -124,6 +124,14 @@ public:
     // IVisitable methods
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     
+    // StubTechnologyContainer is a special case with respect to automated data
+    // processing and traversal.  We want to appear that this class really holds
+    // the data in mTechnology by forwarding calls to exapnd the data vector to
+    // the contained technology container.  To do that we will not be able to use
+    // the macro DEFINE_DATA utilities and instead set it up ourselves.
+    typedef ITechnologyContainer ParentClass;
+    virtual void doDataExpansion( ExpandDataVector<ParentClass::SubClassFamilyVector>& aVisitor );
+    
 protected:
     virtual ITechnologyContainer* clone() const;
     

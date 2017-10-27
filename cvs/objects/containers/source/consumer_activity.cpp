@@ -66,10 +66,6 @@ void ConsumerActivity::calc( const int aPeriod ) {
     }
 }
 
-void ConsumerActivity::setStale() {
-    // nothing to do
-}
-
 string ConsumerActivity::getDescription() const {
     return mRegionName + " " + mConsumer->getName();
 }

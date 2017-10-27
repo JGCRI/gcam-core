@@ -68,6 +68,7 @@ extern Scenario* scenario;
 BuildingNodeInput::BuildingNodeInput():
 mInternalGainsTrialSupply( 0.001 )
 {
+    mSatiationDemandFunction = 0;
 }
 
 //! Destructor
@@ -75,6 +76,7 @@ BuildingNodeInput::~BuildingNodeInput() {
     for( CNestedInputIterator it = mNestedInputs.begin(); it != mNestedInputs.end(); ++it ) {
         delete *it;
     }
+    delete mSatiationDemandFunction;
 }
 
 void BuildingNodeInput::XMLParse( const xercesc::DOMNode* node ) {
@@ -238,7 +240,8 @@ void BuildingNodeInput::copy( const BuildingNodeInput& aNodeInput ) {
     mInternalGainsMarketname = aNodeInput.mInternalGainsMarketname;
     mInternalGainsUnit = aNodeInput.mInternalGainsUnit;
 
-    mSatiationDemandFunction.reset( new SatiationDemandFunction( *aNodeInput.mSatiationDemandFunction.get() ) );
+    delete mSatiationDemandFunction;
+    mSatiationDemandFunction = aNodeInput.mSatiationDemandFunction->clone();
 
     // copy children
     for( CNestedInputIterator it = aNodeInput.mNestedInputs.begin(); it != aNodeInput.mNestedInputs.end(); ++it ) {
@@ -395,7 +398,7 @@ double BuildingNodeInput::getInternalGains( const int aPeriod ) const {
  * \return The satiation demand function.
  */
 SatiationDemandFunction* BuildingNodeInput::getSatiationDemandFunction() const {
-    return mSatiationDemandFunction.get();
+    return mSatiationDemandFunction;
 }
 
 void BuildingNodeInput::removeEmptyInputs() {

@@ -45,25 +45,24 @@
 * \author Sonny Kim
 */
 
-#include <vector>
 #include <xercesc/dom/DOMNode.hpp>
 #include <string>
+#include <boost/core/noncopyable.hpp>
+
+#include "util/base/include/inamed.h"
 #include "util/base/include/iround_trippable.h"
+#include "util/base/include/time_vector.h"
+#include "util/base/include/data_definition_util.h"
 
 /*! 
 * \ingroup Objects
 * \brief Class which defines a portfolio standard policy. 
 * \author Sonny Kim
 */
-class PolicyPortfolioStandard: public IRoundTrippable {
+class PolicyPortfolioStandard: public INamed, public IRoundTrippable, private boost::noncopyable {
 public:
     PolicyPortfolioStandard();
-    PolicyPortfolioStandard( const std::string aName,
-               const std::string aMarket );
-    PolicyPortfolioStandard( const std::string aName,
-               const std::string aMarket,
-               const std::vector<double>& aFixedTaxes );
-    PolicyPortfolioStandard* clone() const;
+
     const std::string& getName() const;
     const std::string& getXMLName() const;
     static const std::string& getXMLNameStatic();
@@ -71,20 +70,36 @@ public:
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     void completeInit( const std::string& aRegionName );
-    void setQuantityConstraint( const std::vector<double>& aConstraint );
-    void setShareConstraint( const std::vector<double>& aConstraint );
-private:
-    static const std::string XML_NAME; //!< node name for toXML methods
-    std::string mName; //!< Policy name
-    std::string mMarket; //!< Name of the market
-    bool isFixedTax; //!< Boolean to use fixed tax or constraint
-    std::string mPolicyType; //!< Type of policy (tax or subsidy)
-    bool mIsShareBased; //!< Boolean to use share of total or quantity constraint
-    std::vector<double> mConstraint; //!< Quantity constraint by year
-    std::vector<double> mFixedTax; //!< Fixed tax on Fuel by year($/GJ)
-    std::vector<double> mShareOfSectorOutput; //!< Share of total or sectoral output
-    //!< The minimum price below which the constraint is considered non-binding.
-    std::vector<double> mMinPrice; 
+protected:
+
+    DEFINE_DATA(
+        // PolicyPortfolioStandard is the only member of this container hierarchy.
+        DEFINE_SUBCLASS_FAMILY( PolicyPortfolioStandard ),
+        
+        //! Policy name
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        
+        //! Name of the market
+        DEFINE_VARIABLE( SIMPLE, "market", mMarket, std::string ),
+        
+        //! Type of policy (tax or subsidy)
+        DEFINE_VARIABLE( SIMPLE, "policyType", mPolicyType, std::string ),
+        
+        //! Boolean to use share of total or quantity constraint
+        DEFINE_VARIABLE( SIMPLE, "isShareBased", mIsShareBased, bool ),
+        
+        //! Quantity constraint by year
+        DEFINE_VARIABLE( ARRAY, "constraint", mConstraint, objects::PeriodVector<double> ),
+        
+        //! Fixed tax on Fuel by year($/GJ)
+        DEFINE_VARIABLE( ARRAY, "fixedTax", mFixedTax, objects::PeriodVector<double> ),
+        
+        //! Share of total or sectoral output
+        DEFINE_VARIABLE( ARRAY, "share-of-sector-output", mShareOfSectorOutput, objects::PeriodVector<double> ),
+        
+        //! The minimum price below which the constraint is considered non-binding.
+        DEFINE_VARIABLE( ARRAY, "min-price", mMinPrice, objects::PeriodVector<double> )
+    )
 };
 
 #endif // _POLICY_PORTFOLIO_STANDARD_H_

@@ -49,7 +49,7 @@ RetiredProductionState::RetiredProductionState(){
 }
 
 RetiredProductionState* RetiredProductionState::clone() const {
-	return new RetiredProductionState( *this );
+	return new RetiredProductionState();
 }
 
 bool RetiredProductionState::isSameType( const string& aType ) const {

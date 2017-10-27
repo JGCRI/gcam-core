@@ -104,4 +104,5 @@ clean :
 	-$(MAKE) -C ../../ccarbon_model/source  clean 
 	-$(MAKE) -C ../../policy/source  clean 
 	-$(MAKE) -C ../../parallel/source  clean 
+	-$(MAKE) -C ../../testing/source clean
 	-$(MAKE) -C ../../main/source  clean 

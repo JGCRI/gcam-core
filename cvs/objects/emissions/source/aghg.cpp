@@ -63,12 +63,7 @@ using namespace xercesc;
 extern Scenario* scenario;
 
 //! Default constructor.
-AGHG::AGHG():
-// this is inefficient as it is greater than the lifetime
-// but much simpler than converting period to lifetime period 
-// TODO: Fix this so it has one spot per active period.
-mEmissions( scenario->getModeltime()->getmaxper() ),
-mEmissionsSequestered( scenario->getModeltime()->getmaxper() )
+AGHG::AGHG()
 {
 }
 
@@ -76,28 +71,12 @@ mEmissionsSequestered( scenario->getModeltime()->getmaxper() )
 AGHG::~AGHG(){
 }
 
-//! Copy constructor.
-AGHG::AGHG( const AGHG& aOther ){
-    copy( aOther );
-}
-
-//! Assignment operator.
-AGHG& AGHG::operator=( const AGHG& aOther ){
-    if( this != &aOther ){
-        // If there was a destructor it would need to be called here.
-        copy( aOther );
-    }
-    return *this;
-}
-
 //! Copy helper function.
 void AGHG::copy( const AGHG& aOther ){
     mName = aOther.mName;
     mEmissionsUnit = aOther.mEmissionsUnit;
 
-    // Note results are never copied.
-    mEmissions.resize( scenario->getModeltime()->getmaxper() );
-    mEmissionsSequestered.resize( scenario->getModeltime()->getmaxper() );
+    // Note results (such as emissions) are never copied.
 }
 
 //! \brief initialize Ghg object with xml data
@@ -152,7 +131,6 @@ void AGHG::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
 
     // write xml for data members
     XMLWriteElement( mEmissions[ aPeriod ], "emission", aOut, aTabs );
-    XMLWriteElement( mEmissionsSequestered[ aPeriod ], "emissions-sequestered", aOut, aTabs );
 
     toDebugXMLDerived( aPeriod, aOut, aTabs );
     // done writing xml for data members.
@@ -292,17 +270,6 @@ double AGHG::getGHGValue( const IOutput* aOutput, const string& aRegionName,
 double AGHG::getEmission( const int aPeriod ) const {
     assert( aPeriod < static_cast<int>( mEmissions.size() ) );
     return mEmissions[ aPeriod ];
-}
-
-/*!
- * \brief Returns the sequestered amount of GHG gas.
- * \param aPeriod Period for sequestered amount.
- * \return Sequestered amount of GHG gas.
- * \author Sonny Kim
- */
-double AGHG::getEmissionsSequestered( const int aPeriod ) const {
-    assert( aPeriod < static_cast<int>( mEmissionsSequestered.size() ) );
-    return mEmissionsSequestered[ aPeriod ];
 }
 
 /*!
