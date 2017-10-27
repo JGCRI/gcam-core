@@ -1,6 +1,6 @@
 #' module_gcam.usa_L254.transportation_USA
 #'
-#' Briefly describe what this chunk does.
+#' Generates GCAM-USA model inputs for transportation sector by states.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -17,12 +17,12 @@
 #' \code{L254.StubTranTechCalInput_USA}, \code{L254.StubTranTechProd_nonmotor_USA}, \code{L254.StubTranTechCalInput_passthru_USA},
 #' \code{L254.BaseService_trn_USA}. The corresponding file in the
 #' original data system was \code{L254.transportation_USA.R} (gcam-usa level2).
-#' @details Describe in detail what this chunk does.
+#' @details This chunk generates input files for transportation sector with generic information for supplysector,
+#' subsector and technologies, as well as calibrated inputs and outputs by the US states.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
-#' @export
+#' @author RC Oct 2017
 module_gcam.usa_L254.transportation_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "energy/mappings/UCD_techs",
@@ -83,6 +83,13 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    # Silence package notes
+    region <- supplysector <- technology <- minicam.energy.input <- year <- value <- coefficient <-
+      UCD_fuel <- UCD_sector <- UCD_technology <- calibrated.value <- coefficient <- loadFactor <-
+      size.class <- state <- tranSubsector <- tranTechnology <- calibrated.value <- stub.technology <-
+      output <- output_agg <- output_cum <- share.weight <- subs.share.weight <- share.weight.year <-
+      tech.share.weight <- calOutputValue <- energy.final.demand <- base.service <- NULL
+
     # Load required inputs
     UCD_techs <- get_data(all_data, "energy/mappings/UCD_techs")
     A54.globaltech_nonmotor <- get_data(all_data, "energy/A54.globaltech_nonmotor")
@@ -112,21 +119,23 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
     L154.in_EJ_state_trn_m_sz_tech_F <- get_data(all_data, "L154.in_EJ_state_trn_m_sz_tech_F")
     L154.out_mpkm_state_trn_nonmotor_Yh <- get_data(all_data, "L154.out_mpkm_state_trn_nonmotor_Yh")
 
-    # ===================================================
-    # Delete transportation sectors in the full USA region
+    # Need to delete the transportation sector in the USA region (energy-final-demands and supplysectors)
+    # L254.DeleteSupplysector_USAtrn: Delete transportation supplysectors of the full USA region
     L254.Supplysector_trn %>%
       mutate(region = region) %>% # strip off attributes like title, etc.
       filter(region == "USA") %>%
       select(region, supplysector) ->
       L254.DeleteSupplysector_USAtrn
 
-    # Delete energy final demand sectors in the full USA region
+    # L254.DeleteFinalDemand_USAtrn: Delete energy final demand sectors of the full USA region
     L254.PerCapitaBased_trn %>%
       mutate(region = region) %>% # strip off attributes like title, etc.
       filter(region == "USA") %>%
       select(one_of(c(LEVEL2_DATA_NAMES[["EnergyFinalDemand"]]))) ->
       L254.DeleteFinalDemand_USAtrn
 
+    # Process tables at the USA region level to the states level.
+    # All tables for which processing is identical are done by a function.
     # This applies to the supplysectors, subsectors, and stub tech characteristics of the states.
     process_USA_to_states <- function(data) {
       state <- region <- grid_region <- subsector <- market.name <-
@@ -145,7 +154,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
           select(-grid_region)
       }
 
-      # NOTE: electricity is always consumed from state markets
+      # Electricity is always consumed from state markets
       if("market.name" %in% names(data_new)) {
         data_new <- data_new %>%
           mutate(market.name = replace(market.name, minicam.energy.input %in% gcamusa.ELECT_TD_SECTORS,
@@ -181,8 +190,6 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
 
     # Calibration
     # L254.StubTranTechCalInput_USA: calibrated energy consumption by all technologies
-    # NOTE: NEED TO WRITE THIS OUT FOR ALL TECHNOLOGIES, NOT JUST THOSE THAT EXIST IN SOME BASE YEARS.
-    # Model may make up calibration values otherwise.
     L154.in_EJ_state_trn_m_sz_tech_F %>%
       filter(year %in% BASE_YEARS) %>%
       mutate(calibrated.value = round(value, digits = energy.DIGITS_CALOUTPUT),
@@ -193,11 +200,14 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       select(one_of(c(LEVEL2_DATA_NAMES[["StubTranTech"]])), year, minicam.energy.input, calibrated.value) ->
       L254.StubTranTechCalInput_USA
 
+    # NOTE: NEED TO WRITE THIS OUT FOR ALL TECHNOLOGIES, NOT JUST THOSE THAT EXIST IN SOME BASE YEARS.
+    # Model may make up calibration values otherwise.
     L254.StubTranTechCoef_USA %>%
       filter(year %in% BASE_YEARS) %>%
       select_if(names(L254.StubTranTechCoef_USA) %in% LEVEL2_DATA_NAMES[["StubTranTechCalInput"]]) %>%
       left_join(L254.StubTranTechCalInput_USA,
                 by = c("region", "supplysector", "tranSubsector", "stub.technology", "year", "minicam.energy.input")) %>%
+      # Set calibration values as zero for technolgies that do not exist in some base years
       replace_na(list(calibrated.value = 0)) %>%
       mutate(share.weight.year = year,
              # Create the needed variables to use the function set_subsector_shrwt
@@ -221,7 +231,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
 
     # L254.StubTranTechCalInput_passthru_USA: calibrated input of passthrough technologies
     # First, need to calculate the service output for all tranTechnologies
-    # calInput * loadFactor * unit_conversion / (coef * unit conversion )
+    # calInput * loadFactor * unit_conversion / (coef * unit conversion)
     L254.StubTranTechCalInput_USA %>%
       left_join_error_no_match(L254.StubTranTechLoadFactor_USA,
                                by = c("region", "supplysector", "tranSubsector", "stub.technology", "year")) %>%
@@ -231,16 +241,15 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
                             digits = gcamusa.DIGITS_TRNUSA_DEFAULT))  ->
       L254.StubTranTechOutput_USA
 
-    # The next step is to bind rows with all pass-through technologies on to this table
-    # Write all possible pass-through technologies to all regions
-
-    # Start with the table of output by tranTechnology
+    # The next step is to calculate the aggregated outputs by supplysector
+    # Outputs of certain supplysectors are inputs for the passthrough technologies
     L254.StubTranTechOutput_USA %>%
       group_by(region, year, supplysector) %>%
       summarise(output_agg = sum(output)) %>%
       ungroup() ->
-      L254.StubTranTechCalInput_passthru_USA_agg
+      L254.StubTranTechOutput_USA_agg
 
+    # Write all possible pass-through technologies to all regions
     A54.globaltech_passthru %>%
       repeat_add_columns(tibble(year = BASE_YEARS)) %>%
       repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
@@ -248,18 +257,24 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       # Subset only the passthrough technologies that are applicable in each region
       semi_join(L254.StubTranTech_passthru_USA,
                 by = c("region", "supplysector", "tranSubsector", "stub.technology")) %>%
-      left_join(L254.StubTranTechCalInput_passthru_USA_agg,
+      # Match in outputs of supplysectors that are inputs for the passthrough technologies
+      left_join(L254.StubTranTechOutput_USA_agg,
                 by = c("region", "year", "minicam.energy.input" = "supplysector")) %>%
+      # Some of the technologies are sub-totals, assign zero value now, will be calculated below
       replace_na(list(output_agg = 0)) %>%
+      # Arrange input sectors so that sub-total sector is behind the subsectors
       arrange(desc(minicam.energy.input)) %>%
       group_by(region, year) %>%
+      # Calculate the cumulative for sub-total sector
       mutate(output_cum = cumsum(output_agg)) %>%
       ungroup() ->
       L254.StubTranTechCalInput_passthru_USA_cum
 
+    # Prepare a list of the supplysector in the passthrough input table to filter the sub-total sectors
     LIST_supplysector <- unique(L254.StubTranTechCalInput_passthru_USA_cum$supplysector)
 
     L254.StubTranTechCalInput_passthru_USA_cum %>%
+      # Use the cumulative value for sub-total sectors
       mutate(calibrated.value = if_else(minicam.energy.input %in% LIST_supplysector,
                                         output_cum, output_agg)) %>%
       mutate(share.weight.year = year,
@@ -279,82 +294,72 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       ungroup ->
       L254.BaseService_trn_USA
 
-    # ===================================================
-
     # Produce outputs
     L254.DeleteSupplysector_USAtrn %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Delect transportation supply sectors of the full USA region") %>%
+      add_units("NA") %>%
+      add_comments("Delect transportation supply sectors of the full USA region") %>%
       add_legacy_name("L254.DeleteSupplysector_USAtrn") %>%
       add_precursors("L254.Supplysector_trn") ->
       L254.DeleteSupplysector_USAtrn
 
     L254.DeleteFinalDemand_USAtrn %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Delete energy final demand sectors of the full USA region") %>%
+      add_units("NA") %>%
+      add_comments("Delete energy final demand sectors of the full USA region") %>%
       add_legacy_name("L254.DeleteFinalDemand_USAtrn") %>%
       add_precursors("L254.PerCapitaBased_trn") ->
       L254.DeleteFinalDemand_USAtrn
 
     L254.Supplysector_trn_USA %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Supply sector information for transportation sector in the US states") %>%
+      add_units("Unitless") %>%
+      add_comments("The same USA region values are repeated for each state") %>%
       add_legacy_name("L254.Supplysector_trn_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.Supplysector_trn") ->
       L254.Supplysector_trn_USA
 
     L254.FinalEnergyKeyword_trn_USA %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Supply sector final energy keywords for transportation sector in the US states") %>%
+      add_units("NA") %>%
+      add_comments("The same USA region values are repeated for each state") %>%
       add_legacy_name("L254.FinalEnergyKeyword_trn_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.FinalEnergyKeyword_trn") ->
       L254.FinalEnergyKeyword_trn_USA
 
     L254.tranSubsectorLogit_USA %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Subsector logit exponents of transportation sector in the US states") %>%
+      add_units("Unitless") %>%
+      add_comments("The same USA region values are repeated for each state") %>%
       add_legacy_name("L254.tranSubsectorLogit_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.tranSubsectorLogit") ->
       L254.tranSubsectorLogit_USA
 
     L254.tranSubsectorShrwtFllt_USA %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Subsector shareweights of transportation sector in the US states") %>%
+      add_units("Unitless") %>%
+      add_comments("The same USA region values are repeated for each state") %>%
       add_legacy_name("L254.tranSubsectorShrwtFllt_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.tranSubsectorShrwtFllt") ->
       L254.tranSubsectorShrwtFllt_USA
 
     L254.tranSubsectorInterp_USA %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Temporal subsector shareweight interpolation of transportation sector in the US states") %>%
+      add_units("Unitless") %>%
+      add_comments("The same USA region values are repeated for each state") %>%
       add_legacy_name("L254.tranSubsectorInterp_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.tranSubsectorInterp") ->
       L254.tranSubsectorInterp_USA
 
     L254.tranSubsectorSpeed_USA %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Speeds of transportation modes (not including pass-through sectors) in the US states") %>%
+      add_units("km / hr") %>%
+      add_comments("The same USA region values are repeated for each state") %>%
       add_legacy_name("L254.tranSubsectorSpeed_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.tranSubsectorSpeed") %>%
@@ -362,30 +367,27 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       L254.tranSubsectorSpeed_USA
 
     L254.tranSubsectorSpeed_passthru_USA %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Speeds of pass-through transportation subsectors in the US states") %>%
+      add_units("km / hr") %>%
+      add_comments("The same USA region values are repeated for each state") %>%
       add_legacy_name("L254.tranSubsectorSpeed_passthru_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.tranSubsectorSpeed_passthru") ->
       L254.tranSubsectorSpeed_passthru_USA
 
     L254.tranSubsectorSpeed_noVOTT_USA %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Speeds of transportation subsectors whose time value is not considered in the US states") %>%
+      add_units("km / hr") %>%
+      add_comments("The same USA region values are repeated for each state") %>%
       add_legacy_name("L254.tranSubsectorSpeed_noVOTT_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.tranSubsectorSpeed_noVOTT") ->
       L254.tranSubsectorSpeed_noVOTT_USA
 
     L254.tranSubsectorSpeed_nonmotor_USA %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Speeds of non-motorized transportation subsectors in the US states") %>%
+      add_units("km / hr") %>%
+      add_comments("The same USA region values are repeated for each state") %>%
       add_legacy_name("L254.tranSubsectorSpeed_nonmotor_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.tranSubsectorSpeed_nonmotor") ->
@@ -394,118 +396,108 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
     L254.tranSubsectorVOTT_USA %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("The same USA region values are repeated for each state") %>%
       add_legacy_name("L254.tranSubsectorVOTT_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.tranSubsectorVOTT") ->
       L254.tranSubsectorVOTT_USA
 
     L254.tranSubsectorFuelPref_USA %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Subsector (fuel) preferences elasticity that are tied to GDP in the US states") %>%
+      add_units("Unitless") %>%
+      add_comments("The same USA region values are repeated for each state") %>%
+      add_comments("Fuel preferences are unrelated to time value") %>%
       add_legacy_name("L254.tranSubsectorFuelPref_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.tranSubsectorFuelPref") ->
       L254.tranSubsectorFuelPref_USA
 
     L254.StubTranTech_USA %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Transportation stub technologies in the US states") %>%
+      add_units("NA") %>%
+      add_comments("The same USA region values are repeated for each state") %>%
       add_legacy_name("L254.StubTranTech_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.StubTranTech") ->
       L254.StubTranTech_USA
 
     L254.StubTranTech_passthru_USA %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Transportation stub technologies for passthrough sectors in the US states") %>%
+      add_units("NA") %>%
+      add_comments("The same USA region values are repeated for each state") %>%
       add_legacy_name(" L254.StubTranTech_passthru_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.StubTech_passthru") ->
       L254.StubTranTech_passthru_USA
 
     L254.StubTranTech_nonmotor_USA %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Transportation stub technologies for non-motorized subsectors in the US states") %>%
+      add_units("NA") %>%
+      add_comments("The same USA region values are repeated for each state") %>%
       add_legacy_name("L254.StubTranTech_nonmotor_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.StubTech_nonmotor") ->
       L254.StubTranTech_nonmotor_USA
 
     L254.StubTranTechLoadFactor_USA %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Load factors of transportation stub technologies in the US states (all periods)") %>%
+      add_units("person/vehicle and tonnes/vehicle") %>%
+      add_comments("The same USA region values are repeated for each state") %>%
       add_legacy_name("L254.StubTranTechLoadFactor_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.StubTranTechLoadFactor") ->
       L254.StubTranTechLoadFactor_USA
 
     L254.StubTranTechCost_USA %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Costs of transportation stub technologies in the US states (all periods)") %>%
+      add_units("$1990USD / vkm") %>%
+      add_comments("The same USA region values are repeated for each state") %>%
       add_legacy_name("L254.StubTranTechCost_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.StubTranTechCost") ->
       L254.StubTranTechCost_USA
 
     L254.StubTranTechCoef_USA %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Coefficients of transportation stub technologies in the US states (all periods)") %>%
+      add_units("BTU / vkm") %>%
+      add_comments("The same USA region values are repeated for each state") %>%
+      add_comments("Re-set electricity consumed at the state markets") %>%
       add_legacy_name("L254.StubTranTechCoef_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.StubTranTechCoef") ->
       L254.StubTranTechCoef_USA
 
     L254.PerCapitaBased_trn_USA %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Per-capita based flag for transportation final demand in the US states") %>%
+      add_units("NA") %>%
+      add_comments("The same USA region values are repeated for each state") %>%
       add_legacy_name("L254.PerCapitaBased_trn_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.PerCapitaBased_trn") ->
       L254.PerCapitaBased_trn_USA
 
     L254.PriceElasticity_trn_USA %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Price elasticity of transportation final demand in the US states") %>%
+      add_units("Unitless") %>%
+      add_comments("The same USA region values are repeated for each state") %>%
       add_legacy_name("L254.PriceElasticity_trn_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.PriceElasticity_trn") ->
       L254.PriceElasticity_trn_USA
 
     L254.IncomeElasticity_trn_USA %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Income elasticity of transportation final demand in the US states") %>%
+      add_units("Unitless") %>%
+      add_comments("The same USA region values are repeated for each state") %>%
       add_legacy_name("L254.IncomeElasticity_trn_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L254.IncomeElasticity_trn") ->
       L254.IncomeElasticity_trn_USA
 
     L254.StubTranTechCalInput_USA %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Calibrated energy consumption by all transportation stub technologies in the US states") %>%
+      add_units("EJ") %>%
+      add_comments("Set calibration values for those technologies that do not exist in some base years as zero") %>%
       add_legacy_name("L254.StubTranTechCalInput_USA") %>%
       same_precursors_as("L254.StubTranTechCoef_USA") %>%
       add_precursors("L154.in_EJ_state_trn_m_sz_tech_F",
@@ -514,20 +506,19 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       L254.StubTranTechCalInput_USA
 
     L254.StubTranTechProd_nonmotor_USA %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Calibrated service output of non-motorized transportation technologies in the US states") %>%
+      add_units("Million pass-km") %>%
+      add_comments("Not match shareweights to the calOutputValue because no region should ever have a zero here") %>%
       add_legacy_name("L254.StubTranTechProd_nonmotor_USA") %>%
       add_precursors("L154.out_mpkm_state_trn_nonmotor_Yh",
                      "energy/A54.globaltech_nonmotor") ->
       L254.StubTranTechProd_nonmotor_USA
 
     L254.StubTranTechCalInput_passthru_USA %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Calibrated energy consumption of transportation passthrough technologies in the US states") %>%
+      add_units("EJ") %>%
+      add_comments("Use outputs of the supplysectors that are inputs for passthrough technologies") %>%
+      add_comments("Outputs of all motorized technologies are calculated as calInput * loadFactor / coefficient") %>%
       add_legacy_name("L254.StubTranTechCalInput_passthru_USA") %>%
       same_precursors_as("L254.StubTranTechCalInput_USA") %>%
       same_precursors_as("L254.StubTranTechLoadFactor_USA") %>%
@@ -537,10 +528,10 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       L254.StubTranTechCalInput_passthru_USA
 
     L254.BaseService_trn_USA %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Base-year service output of transportation final demand") %>%
+      add_units("Million pass-km and million ton-km") %>%
+      add_comments("Service outputs of all motorized technologies are calculated as calInput * loadFactor / coefficient") %>%
+      add_comments("Combine with service output of non-motorized transportation technologies") %>%
       add_legacy_name("L254.BaseService_trn_USA") %>%
       same_precursors_as("L254.StubTranTechCalInput_USA") %>%
       same_precursors_as("L254.StubTranTechLoadFactor_USA") %>%

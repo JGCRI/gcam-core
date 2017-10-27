@@ -27,11 +27,12 @@ the generated outputs: \code{L254.DeleteSupplysector_USAtrn}, \code{L254.DeleteF
 original data system was \code{L254.transportation_USA.R} (gcam-usa level2).
 }
 \description{
-Briefly describe what this chunk does.
+Generates GCAM-USA model inputs for transportation sector by states.
 }
 \details{
-Describe in detail what this chunk does.
+This chunk generates input files for transportation sector with generic information for supplysector,
+subsector and technologies, as well as calibrated inputs and outputs by the US states.
 }
 \author{
-YourInitials CurrentMonthName 2017
+RC Oct 2017
 }
