@@ -103,8 +103,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
       data %>%
         filter(region == "USA",
                supplysector %in% gcamusa.ELECT_TD_SECTORS) %>%
-        write_to_all_states(names(data)) ->
-        datanew
+        write_to_all_states(names(data))
     } # end global_energy_to_USA_electd
 
 
@@ -125,13 +124,13 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
     # NOTE: Currently using FERC regions as a proxy for regional energy markets
     A21.sector %>%
       select(supplysector, output.unit, input.unit, price.unit, logit.exponent, logit.type) %>%
-      filter(supplysector %in%gcamusa.REGIONAL_FUEL_MARKETS) ->
+      filter(supplysector %in% gcamusa.REGIONAL_FUEL_MARKETS) ->
       A21.tmp
 
     A26.sector  %>%
       select(supplysector, output.unit, input.unit, price.unit, logit.exponent, logit.type) %>%
-      filter(supplysector %in%gcamusa.REGIONAL_FUEL_MARKETS) %>%
-      bind_rows(A21.tmp, .) %>%
+      filter(supplysector %in% gcamusa.REGIONAL_FUEL_MARKETS) %>%
+      bind_rows(A21.tmp) %>%
       repeat_add_columns(tibble(region = unique(states_subregions$grid_region))) %>%
       mutate(logit.year.fillout = min(BASE_YEARS)) ->
       L226.Supplysector_en_USA
