@@ -18,7 +18,8 @@ the generated outputs: \code{L226.DeleteSupplysector_USAelec}, \code{object}, \c
 original data system was \code{L226.en_distribution_USA.R} (gcam-usa level2).
 }
 \description{
-This chunk creates L226.DeleteSupplysector_USAelec, L226.StubTechCoef_electd_USA, L226.TechShrwt_electd_USA, L226.TechCost_electd_USA,
+This chunk creates a variety of energy and electricity outputs for USA at the state and/or grid_region level:
+L226.DeleteSupplysector_USAelec, L226.StubTechCoef_electd_USA, L226.TechShrwt_electd_USA, L226.TechCost_electd_USA,
 L226.TechCoef_electd_USA, L226.Supplysector_en_USA, L226.SubsectorShrwtFllt_en_USA, L226.SubsectorLogit_en_USA,
 L226.TechShrwt_en_USA, L226.TechCoef_en_USA, L226.TechCost_en_USA, and L226.Ccoef
 }
