@@ -3,7 +3,8 @@
 #' This chunk creates a variety of energy and electricity outputs for USA at the state and/or grid_region level:
 #' L226.DeleteSupplysector_USAelec, L226.StubTechCoef_electd_USA, L226.TechShrwt_electd_USA, L226.TechCost_electd_USA,
 #' L226.TechCoef_electd_USA, L226.Supplysector_en_USA, L226.SubsectorShrwtFllt_en_USA, L226.SubsectorLogit_en_USA,
-#' L226.TechShrwt_en_USA, L226.TechCoef_en_USA, L226.TechCost_en_USA, and L226.Ccoef
+#' L226.TechShrwt_en_USA, L226.TechCoef_en_USA, L226.TechCost_en_USA, and L226.Ccoef, L226.Supplysector_electd_USA,
+#' L226.SubsectorLogit_electd_USA, L226.SubsectorShrwtFllt_electd_USA, L226.SubsectorInterp_electd_USA
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -22,9 +23,13 @@
 #' \item{"L226.SubsectorShrwtFllt_en_USA: Subsector shareweights of energy handling and delivery." }
 #' \item{"L226.SubsectorLogit_en_USA: Logit info for energy subsectors. There is only one tech per subsector so the logit choice does not matter."}
 #' \item{"L226.TechShrwt_en_USA: Technology shareweights of energy handling and delivery. Can't use stub technologies because these would inherit the wrong energy-inputs."}
-#' \item{"L226.TechCoef_en_USA: Technology coefficients and market names of energy handling and delivery"}
+#' \item{"L226.TechCoef_en_USA: Technology coefficients and market names of energy handling and delivery."}
 #' \item{"L226.TechCost_en_USA: Regional price adjustments/cost adders for USA energy." }
-#' \item{"L226.Ccoef: Carbon coef for USA cost adder sectors"}
+#' \item{"L226.Ccoef: Carbon coef for USA cost adder sectors."}
+#' \item{"L226.Supplysector_electd_USA: USA supply sector input, output, and logit info for elec T&D by state."}
+#' \item{"L226.SubsectorLogit_electd_USA: USA subsector logit info for elec T&D by grid_region."}
+#' \item{"L226.SubsectorShrwtFllt_electd_USA: USA subsector shareweight fillout for elec T&D by state."}
+#' \item{"L226.SubsectorInterp_electd_USA: USA interpolation info for elec T&D by state."}
 #' }
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
@@ -52,6 +57,10 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
              "L226.TechShrwt_electd_USA",
              "L226.TechCost_electd_USA",
              "L226.TechCoef_electd_USA",
+             "L226.Supplysector_electd_USA",
+             "L226.SubsectorLogit_electd_USA",
+             "L226.SubsectorShrwtFllt_electd_USA",
+             "L226.SubsectorInterp_electd_USA",
              "L226.Supplysector_en_USA",
              "L226.SubsectorShrwtFllt_en_USA",
              "L226.SubsectorLogit_en_USA",
@@ -255,9 +264,8 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
     L226.DeleteSupplysector_USAelec <- tibble(region = "USA", supplysector = gcamusa.ELECT_TD_SECTORS)
 
 
-    ### Replacing for loop starting on line 152 in old DS. I /think/ these tibbles should be output in place of the "object" that currently is;
-    ### Otherwise just delete all of the below to line 250
-    ### There's also a couple inputs to this chunk that are NULL, and nothing gets done to: L226.SubsectorShrwt_en, L226.SubsectorInterpTo_en
+    # Replacing for loop starting on line 152 in old DS.
+    # There's also two inputs to this chunk that are NULL, and nothing gets done to: L226.SubsectorShrwt_en, L226.SubsectorInterpTo_en
     L226.Supplysector_en %>%
       global_energy_to_USA_electd() ->
       L226.Supplysector_electd_USA
@@ -484,12 +492,64 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("Carbon coef for cost adder sectors") %>%
       add_legacy_name("L226.Ccoef") %>%
-      same_precursors_as(L226.TechCost_en_USA) ->
+      add_precursors("gcam-usa/states_subregions",
+                     "energy/A21.sector",
+                     "energy/A26.sector",
+                     "gcam-usa/EIA_state_energy_prices",
+                     "L202.CarbonCoef") ->
       L226.Ccoef
 
-    return_data(L226.DeleteSupplysector_USAelec, L226.StubTechCoef_electd_USA, L226.TechShrwt_electd_USA, L226.TechCost_electd_USA,
-                L226.TechCoef_electd_USA, L226.Supplysector_en_USA, L226.SubsectorShrwtFllt_en_USA, L226.SubsectorLogit_en_USA,
-                L226.TechShrwt_en_USA, L226.TechCoef_en_USA, L226.TechCost_en_USA, L226.Ccoef)
+    L226.Supplysector_electd_USA %>%
+      add_title("USA supply sector input, output, and logit info for elec T&D") %>%
+      add_units("varies") %>%
+      add_comments("USA supply sector input, output, and logit info for elec T&D by state") %>%
+      add_legacy_name("L226.Supplysector_electd_USA") %>%
+      add_precursors("L226.Supplysector_en") ->
+      L226.Supplysector_electd_USA
+
+    L226.SubsectorLogit_electd_USA %>%
+      add_title("USA subsector logit info for elec T&D") %>%
+      add_units("varies") %>%
+      add_comments("USA subsector logit info for elec T&D by grid_region") %>%
+      add_legacy_name("L226.SubsectorLogit_electd_USA") %>%
+      add_precursors("L226.SubsectorLogit_en") ->
+      L226.SubsectorLogit_electd_USA
+
+    L226.SubsectorShrwtFllt_electd_USA %>%
+      add_title("USA subsector shareweight fillout for elec T&D") %>%
+      add_units("varies") %>%
+      add_comments("USA subsector shareweight fillout for elec T&D by state") %>%
+      add_legacy_name("L226.SubsectorShrwtFllt_electd_USA") %>%
+      add_precursors("L226.SubsectorShrwtFllt_en") ->
+      L226.SubsectorShrwtFllt_electd_USA
+
+    L226.SubsectorInterp_electd_USA %>%
+      add_title("USA interpolation info for elec T&D") %>%
+      add_units("varies") %>%
+      add_comments("USA interpolation info for elec T&D by state") %>%
+      add_legacy_name("L226.SubsectorInterp_electd_USA") %>%
+      add_precursors("L226.SubsectorInterp_en") ->
+      L226.SubsectorInterp_electd_USA
+
+
+
+
+    return_data(L226.DeleteSupplysector_USAelec,
+                L226.StubTechCoef_electd_USA,
+                L226.TechShrwt_electd_USA,
+                L226.TechCost_electd_USA,
+                L226.TechCoef_electd_USA,
+                L226.Supplysector_en_USA,
+                L226.SubsectorShrwtFllt_en_USA,
+                L226.SubsectorLogit_en_USA,
+                L226.TechShrwt_en_USA,
+                L226.TechCoef_en_USA,
+                L226.TechCost_en_USA,
+                L226.Ccoef,
+                L226.Supplysector_electd_USA,
+                L226.SubsectorLogit_electd_USA,
+                L226.SubsectorShrwtFllt_electd_USA,
+                L226.SubsectorInterp_electd_USA)
   } else {
     stop("Unknown command")
   }

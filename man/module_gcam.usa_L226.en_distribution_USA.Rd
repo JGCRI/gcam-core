@@ -21,7 +21,8 @@ original data system was \code{L226.en_distribution_USA.R} (gcam-usa level2).
 This chunk creates a variety of energy and electricity outputs for USA at the state and/or grid_region level:
 L226.DeleteSupplysector_USAelec, L226.StubTechCoef_electd_USA, L226.TechShrwt_electd_USA, L226.TechCost_electd_USA,
 L226.TechCoef_electd_USA, L226.Supplysector_en_USA, L226.SubsectorShrwtFllt_en_USA, L226.SubsectorLogit_en_USA,
-L226.TechShrwt_en_USA, L226.TechCoef_en_USA, L226.TechCost_en_USA, and L226.Ccoef
+L226.TechShrwt_en_USA, L226.TechCoef_en_USA, L226.TechCost_en_USA, and L226.Ccoef, L226.Supplysector_electd_USA,
+L226.SubsectorLogit_electd_USA, L226.SubsectorShrwtFllt_electd_USA, L226.SubsectorInterp_electd_USA
 }
 \details{
 \itemize{
@@ -34,9 +35,13 @@ L226.TechShrwt_en_USA, L226.TechCoef_en_USA, L226.TechCost_en_USA, and L226.Ccoe
 \item{"L226.SubsectorShrwtFllt_en_USA: Subsector shareweights of energy handling and delivery." }
 \item{"L226.SubsectorLogit_en_USA: Logit info for energy subsectors. There is only one tech per subsector so the logit choice does not matter."}
 \item{"L226.TechShrwt_en_USA: Technology shareweights of energy handling and delivery. Can't use stub technologies because these would inherit the wrong energy-inputs."}
-\item{"L226.TechCoef_en_USA: Technology coefficients and market names of energy handling and delivery"}
+\item{"L226.TechCoef_en_USA: Technology coefficients and market names of energy handling and delivery."}
 \item{"L226.TechCost_en_USA: Regional price adjustments/cost adders for USA energy." }
-\item{"L226.Ccoef: Carbon coef for USA cost adder sectors"}
+\item{"L226.Ccoef: Carbon coef for USA cost adder sectors."}
+\item{"L226.Supplysector_electd_USA: USA supply sector input, output, and logit info for elec T&D by state."}
+\item{"L226.SubsectorLogit_electd_USA: USA subsector logit info for elec T&D by grid_region."}
+\item{"L226.SubsectorShrwtFllt_electd_USA: USA subsector shareweight fillout for elec T&D by state."}
+\item{"L226.SubsectorInterp_electd_USA: USA interpolation info for elec T&D by state."}
 }
 }
 \author{
