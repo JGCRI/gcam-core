@@ -18,10 +18,10 @@ the generated outputs: \code{L232.DeleteSupplysector_USAind}, \code{L232.DeleteF
 original data system was \code{L232.industry_USA.R} (gcam-usa level2).
 }
 \description{
-Briefly describe what this chunk does.
+Prepare level 2 industry sector files for USA.
 }
 \details{
-Describe in detail what this chunk does.
+Prepare level 2 industry sector files for USA.
 }
 \author{
 ST October 2017
