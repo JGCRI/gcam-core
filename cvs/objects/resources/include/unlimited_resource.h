@@ -65,7 +65,6 @@
  *          - Attributes: name UnlimitedResource::mName
  *          - Elements:
  *              - \c market UnlimitedResource::mMarket
- *              - \c capacity-factor UnlimitedResource::mCapacityFactor
  *              - \c variance UnlimitedResource::mVariance
  *              - \c price UnlimitedResource::mFixedPrices
  *                  - Attributes: year Year
@@ -119,9 +118,6 @@ public:
 protected:
     //! Read in prices.
     objects::PeriodVector<Value> mFixedPrices;
-
-    //! Capacity factor.
-    Value mCapacityFactor;
 
     //! Variance.
     Value mVariance;

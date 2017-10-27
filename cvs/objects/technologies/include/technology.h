@@ -229,6 +229,9 @@ public:
                             const int aPeriod ) const;
 
     Value getShareWeight() const;
+
+    double getCapacityFactor() const;
+
     virtual Value getParsedShareWeight() const;
 
     virtual int getNumbGHGs() const;

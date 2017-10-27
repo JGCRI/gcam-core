@@ -4,7 +4,7 @@
 #Resources
 names_DepRsrc <- c( "region", "depresource", "output.unit", "price.unit", "market" )
 names_RenewRsrc <- c( "region", "renewresource", "output.unit", "price.unit", "market" )
-names_UnlimitRsrc <- c( "region", "unlimited.resource", "output.unit", "price.unit", "market", "capacity.factor" )
+names_UnlimitRsrc <- c( "region", "unlimited.resource", "output.unit", "price.unit", "market" )
 names_DepRsrcPrice <- c( "region", "depresource", "year", "price" )
 names_RenewRsrcPrice <- c( "region", "renewresource", "year", "price" )
 names_UnlimitRsrcPrice <- c( "region", "unlimited.resource", "year", "price" )
@@ -56,8 +56,8 @@ names_TechCost <- c( names_TechYr, "minicam.non.energy.input", "input.cost" )
 names_CarbonCapture <- c( names_TechYr, "storage.market", "remove.fraction" )
 names_ImportTech <- c( names_TechYr ) #indicates a renewable input; nothing is specified in the table however
 names_FixedOutput <- c( names_TechYr, "fixedOutput" )
-names_TechCapital <- c( names_TechYr, "input.capital", "capital.overnight", "fixed.charge.rate", "capacity.factor" )
-names_TechOMfixed <- c( names_TechYr, "input.OM.fixed", "OM.fixed", "capacity.factor" )
+names_TechCapital <- c( names_TechYr, "input.capital", "capital.overnight", "fixed.charge.rate" )
+names_TechOMfixed <- c( names_TechYr, "input.OM.fixed", "OM.fixed" )
 names_TechOMvar <- c( names_TechYr, "input.OM.var", "OM.var" )
 names_TechSCurve <- c( names_TechYr, "lifetime", "steepness", "half.life" )
 

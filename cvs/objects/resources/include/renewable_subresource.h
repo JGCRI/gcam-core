@@ -67,8 +67,6 @@ protected:
     double gdpSupplyElasticity;
     //! subresource variance now read in rather than computed
     double subResourceVariance;
-    //! read in average capacity factor for each subresource
-    double subResourceCapacityFactor;  
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node );
     virtual void toXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
@@ -79,7 +77,6 @@ public:
     virtual void annualsupply( int per, const GDP* gdp, double price1, double price2 );
     virtual double getVariance() const;
     virtual double getMaxSubResource() const;
-    virtual double getAverageCapacityFactor() const;
     //! Return the XML tag name
     static const std::string& getXMLNameStatic( void );
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;

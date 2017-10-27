@@ -402,6 +402,14 @@ void Technology::completeInit( const string& aRegionName,
         mPMultiplier = 1;
     }
 
+    // Capacity factor must be valid
+    if( (mCapacityFactor <= 0) && (mCapacityFactor > 1) ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Capacity factor is not valid. CF = " << mCapacityFactor
+        << "  region: " << aRegionName << "  sector: " << aSectorName << "  technology: " << mName << endl;
+    }
+
     // Create the primary output for this technology. All technologies will have
     // a primary output. Always insert the primary output at position 0.
     mOutputs.insert( mOutputs.begin(), new PrimaryOutput( aSectorName ) );
@@ -1091,6 +1099,19 @@ Value Technology::getShareWeight() const
     assert( util::isValidNumber( mShareWeight ) && mShareWeight >= 0 );
 
     return mShareWeight;
+}
+
+/*! \brief returns the capacity factor for this Technology
+ *
+ * \author Sonny Kim
+ * \return capacity factor
+ */
+double Technology::getCapacityFactor() const
+{
+    /*! \post Capacity factor is a valid number and 0 < CF <= 1. */
+    assert( util::isValidNumber( mCapacityFactor ) && ( (mCapacityFactor > 0) && (mCapacityFactor <= 0) ) );
+    
+    return mCapacityFactor;
 }
 
 /*!

@@ -130,6 +130,7 @@ protected:
                                   const std::string& aElectricSector,
                                   const std::string& aResource,
                                   const std::string& aRegion,
+                                  const double aTechCapacityFactor,
                                   const double aReserveMargin,
                                   const double aAverageGridCapacityFactor,
                                   const int aPeriod ) const;
