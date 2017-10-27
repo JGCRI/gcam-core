@@ -115,12 +115,14 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
     # ===================================================
     # Delete transportation sectors in the full USA region
     L254.Supplysector_trn %>%
+      mutate(region = region) %>% # strip off attributes like title, etc.
       filter(region == "USA") %>%
       select(region, supplysector) ->
       L254.DeleteSupplysector_USAtrn
 
     # Delete energy final demand sectors in the full USA region
     L254.PerCapitaBased_trn %>%
+      mutate(region = region) %>% # strip off attributes like title, etc.
       filter(region == "USA") %>%
       select(one_of(c(LEVEL2_DATA_NAMES[["EnergyFinalDemand"]]))) ->
       L254.DeleteFinalDemand_USAtrn
