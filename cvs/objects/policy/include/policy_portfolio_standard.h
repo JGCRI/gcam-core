@@ -88,6 +88,12 @@ private:
     //! A price if known above which this policy will have effectively to behavior
     //! note this value will only be used as a hint to the solver.
     std::vector<double> mMaxPrice; 
+
+    //! A label for the price units of this market
+    std::string mPriceUnits;
+
+    //! A label for the units of this market
+    std::string mOutputUnits;
 };
 
 #endif // _POLICY_PORTFOLIO_STANDARD_H_

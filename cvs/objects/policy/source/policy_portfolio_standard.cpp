@@ -71,7 +71,9 @@ PolicyPortfolioStandard::PolicyPortfolioStandard():
     mFixedTax( scenario->getModeltime()->getmaxper(), -1 ),
     mShareOfSectorOutput( scenario->getModeltime()->getmaxper(), -1.0 ),
     mMinPrice( scenario->getModeltime()->getmaxper(), 0.0 ),
-    mMaxPrice( scenario->getModeltime()->getmaxper(), util::getLargeNumber() )
+    mMaxPrice( scenario->getModeltime()->getmaxper(), util::getLargeNumber() ),
+    mPriceUnits( "1975$/GJ"),
+    mOutputUnits( "EJ_or_Share" )
 {
 }
 
@@ -88,7 +90,9 @@ PolicyPortfolioStandard::PolicyPortfolioStandard( const string aName, const stri
     mFixedTax( scenario->getModeltime()->getmaxper(), -1 ),
     mShareOfSectorOutput( scenario->getModeltime()->getmaxper(), -1.0 ),
     mMinPrice( scenario->getModeltime()->getmaxper(), 0.0 ),
-    mMaxPrice( scenario->getModeltime()->getmaxper(), util::getLargeNumber() )
+    mMaxPrice( scenario->getModeltime()->getmaxper(), util::getLargeNumber() ),
+    mPriceUnits( "1975$/GJ"),
+    mOutputUnits( "EJ_or_Share" )
 {
 }
 
@@ -103,7 +107,9 @@ PolicyPortfolioStandard::PolicyPortfolioStandard( const string aName, const stri
     mConstraint( scenario->getModeltime()->getmaxper(), -1.0 ),
     mShareOfSectorOutput( aShareOfTotal ),
     mMinPrice( scenario->getModeltime()->getmaxper(), 0.0 ),
-    mMaxPrice( scenario->getModeltime()->getmaxper(), util::getLargeNumber() )
+    mMaxPrice( scenario->getModeltime()->getmaxper(), util::getLargeNumber() ),
+    mPriceUnits( "1975$/GJ"),
+    mOutputUnits( "EJ_or_Share" )
 {
     // Ensure that the share vector passed in is the right size.
     assert( aShareOfTotal.size() == mConstraint.size() );
@@ -201,6 +207,12 @@ void PolicyPortfolioStandard::XMLParse( const DOMNode* node ){
         else if( nodeName == "max-price" ){
             XMLHelper<double>::insertValueIntoVector( curr, mMaxPrice, modeltime );
         }
+        else if( nodeName == "price-unit" ){
+            mPriceUnits = XMLHelper<string>::getValue( curr );
+        }
+        else if( nodeName == "output-unit" ){
+            mOutputUnits = XMLHelper<string>::getValue( curr );
+        }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
@@ -227,6 +239,8 @@ void PolicyPortfolioStandard::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteVector( mFixedTax, "fixedTax", out, tabs, modeltime, 0.0 );
     XMLWriteVector( mMinPrice, "min-price", out, tabs, modeltime, 0.0 );
     XMLWriteVector( mMaxPrice, "max-price", out, tabs, modeltime, 0.0 );
+    XMLWriteElement( mPriceUnits, "price-unit", out, tabs );
+    XMLWriteElement( mOutputUnits, "output-unit", out, tabs );
     for( int per = 0; per < modeltime->getmaxper(); ++per ){
         XMLWriteElementCheckDefault( mShareOfSectorOutput[ per ],
             "share-of-sector-output", out, tabs, -1.0 );
@@ -302,8 +316,8 @@ void PolicyPortfolioStandard::completeInit( const string& aRegionName ) {
 
     // Set price and output units for period 0 market info.
     IInfo* marketInfo = marketplace->getMarketInfo( mName, aRegionName, 0, true );
-    marketInfo->setString( "price-unit", "1975$/GJ" );
-    marketInfo->setString( "output-unit", "EJ_or_Share" );
+    marketInfo->setString( "price-unit", mPriceUnits );
+    marketInfo->setString( "output-unit", mOutputUnits );
 
         // Put the taxes in the market as the market prices if it is a fixed tax policy.
     if( isFixedTax ){

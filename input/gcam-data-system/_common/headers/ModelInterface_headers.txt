@@ -261,6 +261,8 @@ GlobalTechCapture, global-technology-database/+{sector-name}location-info, globa
 
 GlobalTechCSeq, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, non-energy-use-capture-component/+remove-fraction, non-energy-use-capture-component/+target-gas, scenario, scenario/world, world/global-technology-database, period/non-energy-use-capture-component
 
+GlobalTechCTaxInput,global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{name}ctax-input, ctax-input/+fuel-name, scenario, scenario/world, world/global-technology-database
+
 
 #####, GLOBAL INTERMITTENT TECHNOLOGY
 
@@ -380,6 +382,8 @@ aeei, world/+{name}region, region/+{name}energy-final-demand, final-energy-consu
 
 DeleteFinalDemand, world/+{name}region, region/+{name; delete=1}energy-final-demand, scenario, scenario/world
 
+NegEmissFinalDemand, world/+{name}region, region/+{name}negative-emissions-final-demand, negative-emissions-final-demand/+policy-name, scenario, scenario/world
+
 #####, BUILDING FINAL DEMAND
 
 DeleteConsumer, world/+{name}region, region/+{name; delete=1}gcam-consumer, scenario, scenario/world
@@ -469,8 +473,11 @@ AgCost, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name
 
 #####, POLICY
 
-PortfolioStd,world/+{name}region,region/+{name}policy-portfolio-standard, policy-portfolio-standard/+market, policy-portfolio-standard/+policyType, policy-portfolio-standard/+{year}constraint, scenario,scenario/world
+PortfolioStd,world/+{name}region,region/+{name}policy-portfolio-standard, policy-portfolio-standard/+market, policy-portfolio-standard/+policyType, policy-portfolio-standard/+{year}constraint, policy-portfolio-standard/+constraint, policy-portfolio-standard/+price-unit, policy-portfolio-standard/+output-unit, scenario,scenario/world 
 
+PortfolioStdMinPrice,world/+{name}region,region/+{name}policy-portfolio-standard, policy-portfolio-standard/+{year=1975;fillout=1}min-price, scenario,scenario/world 
+
+PortfolioStdMaxPrice,world/+{name}region,region/+{name}policy-portfolio-standard, policy-portfolio-standard/+{year=1975;fillout=1}max-price, scenario,scenario/world 
 
 #####, LAND ALLOCATOR
 

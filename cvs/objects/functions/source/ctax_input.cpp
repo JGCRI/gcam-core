@@ -244,7 +244,7 @@ double CTaxInput::getPrice( const string& aRegionName,
     // A high tax decreases demand.
     const Marketplace* marketplace = scenario->getMarketplace();
     double tax = marketplace->getPrice( mName, aRegionName, aPeriod, true );
-    double ctax = marketplace->getPrice( "CO2", aRegionName, aPeriod, true );
+    double ctax = marketplace->getPrice( "CO2", aRegionName, aPeriod, false );
     
     // note we need to perform some unit conversions since C prices and technology
     // costs in different units
