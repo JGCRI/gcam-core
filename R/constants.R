@@ -275,8 +275,12 @@ energy.DIGITS_COEFFICIENT <- 7
 energy.DIGITS_COST <- 4
 energy.DIGITS_EFFICIENCY <- 3
 energy.DIGITS_SHRWT <- 4
+energy.DIGITS_FLOORSPACE <- 3
+energy.DIGITS_SATIATION_ADDER <- 9
 energy.DIGITS_CAPACITY_FACTOR <- 2
 
+energy.SATIATION_YEAR <- 2010
+energy.GDP_MID_SATIATION <- 10.5
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
 
