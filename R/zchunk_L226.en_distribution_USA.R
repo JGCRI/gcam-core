@@ -172,6 +172,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
     # NOTE: the average national costs are already accounted in the corresponding sectors of the USA;
     # this table implements a price adjustment factor.
     #
+    # Step 1 to calculate the cost adders:
     # Get US prices for coal, natural gas, distillate fuel oil for use in calculating the adjustments:
     EIA_state_energy_prices %>%
       filter(State == "United States") %>%
@@ -179,6 +180,8 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
       EIA_US_C_NG_DFO_prices
 
     # Calculate the adjustment factor:
+    # Step 2: Use the US prices calculated in step 1 to compute the
+    # adjustment factors = (state price - US price) * some unit conversions.
     # Distillate fuel oil is used as proxy for liquid fuels to avoid composition bias in the petroleum total.
     # In other words, states with a lot of residual fuel would end up having lower apparent liquid fuel prices.
     # In states with missing values for coal, assign the maximum price.
@@ -192,7 +195,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
              liq_adj = (Distillate.fuel.oil - EIA_US_C_NG_DFO_prices$Distillate.fuel.oil)* CONV_BTU_KJ  * gdp_deflator(1975, 2009)) ->
       EIA_tmp
 
-    # get maximum coal adjustment for replacing NA's:
+    # Step 3: get maximum coal adjustment for replacing NA's:
     EIA_tmp %>%
       select(coal_adj) %>%
       na.omit %>%
@@ -200,7 +203,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
       as.double ->
       maxCoalAdj
 
-    # use to replace NAs and finish adjustment calculations:
+    # Step 4 use to replace NAs from step 2 and finish adjustment calculations by taking the median of each grid_region:
     EIA_tmp%>%
       replace_na(list(coal_adj = maxCoalAdj)) %>%
       group_by(grid_region) %>%
