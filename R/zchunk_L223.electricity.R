@@ -35,7 +35,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author CWR October 2017/BBL July 2017
-
 module_energy_L223.electricity <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
@@ -127,13 +126,13 @@ module_energy_L223.electricity <- function(command, ...) {
 
     # Silence global package checks
     GCAM_region_ID <- OM.fixed <- OM.var <- average.fossil.efficiency <- base.price <-
-    calOutputValue <- calibration <- capacity.factor <- capacity.factor.OM <-
-    capacity.factor.capital <- capital.overnight <- dni_avg_rel <- efficiency <-
-    fixed.charge.rate <- fuel <- input-capital <- input.OM.var <-
-    intermittent.technology <- irradiance_avg_rel <- iso <-
-    primary.renewable <- region <- region_GCAM3 <- remove.fraction <- sector <-
-    sector.name <- share.weight <- stub.technology <- subsector <- subsector.name <-
-    supplysector <- technology <- value <- weight <- year <- year.fillout <- year.x <- year.y <- NULL
+      calOutputValue <- calibration <- capacity.factor <- capacity.factor.OM <-
+      capacity.factor.capital <- capital.overnight <- dni_avg_rel <- efficiency <-
+      fixed.charge.rate <- fuel <- input-capital <- input.OM.var <-
+      intermittent.technology <- irradiance_avg_rel <- iso <-
+      primary.renewable <- region <- region_GCAM3 <- remove.fraction <- sector <-
+      sector.name <- share.weight <- stub.technology <- subsector <- subsector.name <-
+      supplysector <- technology <- value <- weight <- year <- year.fillout <- year.x <- year.y <- NULL
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
@@ -181,18 +180,18 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.SubsectorLogit_elec <- write_to_all_regions(A23.subsector_logit, LEVEL2_DATA_NAMES[["SubsectorLogit"]], GCAM_region_names)
 
     # L223.SubsectorShrwt_elec and L223.SubsectorShrwtFllt_elec: Subsector shareweights of electricity sector (76-82)
-    if (any(!is.na(A23.subsector_shrwt$year))) {
+    if(any(!is.na(A23.subsector_shrwt$year))) {
       A23.subsector_shrwt %>%
         filter(!is.na(year)) %>%
         write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwt"]], GCAM_region_names) ->
         L223.SubsectorShrwt_elec
     }
 
-    if (any(!is.na(A23.subsector_shrwt$year.fillout))) {
-    A23.subsector_shrwt %>%
-      filter(!is.na(year.fillout)) %>%
-      write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]], GCAM_region_names) ->
-      L223.SubsectorShrwtFllt_elec
+    if(any(!is.na(A23.subsector_shrwt$year.fillout))) {
+      A23.subsector_shrwt %>%
+        filter(!is.na(year.fillout)) %>%
+        write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]], GCAM_region_names) ->
+        L223.SubsectorShrwtFllt_elec
     }
 
     # L223.SubsectorShrwt_nuc: Subsector shareweights of nuclear electricity (84-117)
@@ -237,7 +236,7 @@ module_energy_L223.electricity <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       select(-GCAM_region_ID) ->
       L223.SubsectorShrwt_nuc
-      L223.SubsectorShrwt_nuc <- L223.SubsectorShrwt_nuc[LEVEL2_DATA_NAMES[["SubsectorShrwt"]]]
+    L223.SubsectorShrwt_nuc <- L223.SubsectorShrwt_nuc[LEVEL2_DATA_NAMES[["SubsectorShrwt"]]]
 
     # L223.SubsectorShrwt_renew: Near term subsector shareweights of renewable technologies (119-138)
     # First, melt the table with near-term shareweights from GCAM 3.0 regions
@@ -276,7 +275,7 @@ module_energy_L223.electricity <- function(command, ...) {
     }
 
     # Same process for interpolation rules using a to.value
-    if( any( !is.na( A23.subsector_interp$to.value ) ) ){
+    if( any( !is.na( A23.subsector_interp$to.value ) ) ) {
       L223.SubsectorInterpTo_elec <- write_to_all_regions(A23.subsector_interp[!is.na(A23.subsector_interp$to.value),], LEVEL2_DATA_NAMES[["SubsectorInterpTo"]], GCAM_region_names)
 
       L223.SubsectorInterpTo_elec %>%
@@ -540,7 +539,7 @@ module_energy_L223.electricity <- function(command, ...) {
       ungroup() %>%
       filter(year %in% FUTURE_YEARS) %>%
       rename(sector.name = supplysector, subsector.name = subsector) %>%
-    # Rounds the fraction to two digits and adds the name of the carbon storage market
+      # Rounds the fraction to two digits and adds the name of the carbon storage market
       mutate(remove.fraction = round(remove.fraction, energy.DIGITS_REMOVE.FRACTION), storage.market = energy.CO2.STORAGE.MARKET) ->
       L223.GlobalTechCapture_elec
     # reorders columns to match expected model interface input
@@ -590,10 +589,10 @@ module_energy_L223.electricity <- function(command, ...) {
       L223.GlobalTechShutdown_elec
 
     # Removes any empty data frames
-    if (nrow(L223.GlobalIntTechShutdown_elec) == 0){
+    if(nrow(L223.GlobalIntTechShutdown_elec) == 0) {
       rm(L223.GlobalIntTechShutdown_elec)
     }
-    if (nrow(L223.GlobalTechShutdown_elec) == 0){
+    if(nrow(L223.GlobalTechShutdown_elec) == 0) {
       rm(L223.GlobalTechShutdown_elec)
     }
 
@@ -615,10 +614,10 @@ module_energy_L223.electricity <- function(command, ...) {
       L223.GlobalTechSCurve_elec
 
     # Removes any empty data frames
-    if (nrow(L223.GlobalIntTechSCurve_elec) == 0){
+    if(nrow(L223.GlobalIntTechSCurve_elec) == 0) {
       rm(L223.GlobalIntTechSCurve_elec)
     }
-    if (nrow(L223.GlobalTechSCurve_elec) == 0){
+    if(nrow(L223.GlobalTechSCurve_elec) == 0) {
       rm(L223.GlobalTechSCurve_elec)
     }
 
@@ -641,10 +640,10 @@ module_energy_L223.electricity <- function(command, ...) {
       L223.GlobalTechLifetime_elec
 
     # Removes any empty data frames
-    if (nrow(L223.GlobalIntTechLifetime_elec) == 0){
+    if(nrow(L223.GlobalIntTechLifetime_elec) == 0) {
       rm(L223.GlobalIntTechLifetime_elec)
     }
-    if (nrow(L223.GlobalTechLifetime_elec) == 0){
+    if(nrow(L223.GlobalTechLifetime_elec) == 0) {
       rm(L223.GlobalTechLifetime_elec)
     }
 
@@ -667,10 +666,10 @@ module_energy_L223.electricity <- function(command, ...) {
       L223.GlobalTechProfitShutdown_elec
 
     # Removes any empty data frames
-    if (nrow(L223.GlobalIntTechProfitShutdown_elec) == 0){
+    if(nrow(L223.GlobalIntTechProfitShutdown_elec) == 0) {
       rm(L223.GlobalIntTechProfitShutdown_elec)
     }
-    if (nrow(L223.GlobalTechProfitShutdown_elec) == 0){
+    if(nrow(L223.GlobalTechProfitShutdown_elec) == 0) {
       rm(L223.GlobalTechProfitShutdown_elec)
     }
 
@@ -818,18 +817,18 @@ module_energy_L223.electricity <- function(command, ...) {
       left_join(L223.GlobalIntTechOMvar_elec, by = c("year", "sector.name", "subsector.name", "intermittent.technology")) %>%
       left_join(L223.GlobalIntTechOMfixed_elec, by = c("year", "sector.name", "subsector.name", "intermittent.technology")) %>%
       select(-input.OM.var, -capacity.factor, -year) %>%
-    # Calculate a new capacity factor to match the regional base.price, append region names and duplicate over all model years.
-    # Note that there is only one capacity factor but the same value needs to be read in for capital
-    # and fixed O&M so the column is duplicated.
+      # Calculate a new capacity factor to match the regional base.price, append region names and duplicate over all model years.
+      # Note that there is only one capacity factor but the same value needs to be read in for capital
+      # and fixed O&M so the column is duplicated.
       mutate(capacity.factor.OM = round((capital.overnight * fixed.charge.rate +
-                                OM.fixed) / (CONV_KWH_GJ * CONV_YEAR_HOURS) / (base.price - (OM.var / (1000 * CONV_KWH_GJ))), energy.DIGITS_CAPACITY_FACTOR)) %>%
+                                           OM.fixed) / (CONV_KWH_GJ * CONV_YEAR_HOURS) / (base.price - (OM.var / (1000 * CONV_KWH_GJ))), energy.DIGITS_CAPACITY_FACTOR)) %>%
       mutate(capacity.factor.capital = capacity.factor.OM) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       rename(supplysector = sector.name, subsector = subsector.name, stub.technology = intermittent.technology) ->
       L223.StubTechCapFactor_elec_nostor
 
-     # duplicates rows and appends wind.storage as a stub technology to itself, so capacity factors apply also to wind technology with storage
+    # duplicates rows and appends wind.storage as a stub technology to itself, so capacity factors apply also to wind technology with storage
     L223.StubTechCapFactor_elec_nostor %>%
       mutate(stub.technology = "wind_storage") %>%
       bind_rows(L223.StubTechCapFactor_elec_nostor) ->
@@ -912,40 +911,40 @@ module_energy_L223.electricity <- function(command, ...) {
       add_precursors("energy/A23.subsector_logit", "common/GCAM_region_names") ->
       L223.SubsectorLogit_elec
 
-      if (exists("L223.SubsectorShrwt_elec")) {
-        L223.SubsectorShrwt_elec %>%
-          add_title("Subsector shareweights of energy transformation sectors") %>%
-          add_units("Unitless") %>%
-          add_comments("Conditionally created from the subset of A23.subsector_shrwt with values in column 'year'.") %>%
-          add_comments("Does not exist by default") %>%
-          add_legacy_name("L223.SubsectorShrwt_elec") %>%
-          add_precursors("energy/A23.subsector_shrwt", "common/GCAM_region_names") ->
-          L223.SubsectorShrwt_elec
-      } else {
-        tibble(x = NA) %>%
-          add_title("Data not created") %>%
-          add_units("Unitless") %>%
-          add_comments("Data not created") %>%
-          add_legacy_name("L223.SubsectorShrwt_elec") ->
-          L223.SubsectorShrwt_elec
-      }
+    if(exists("L223.SubsectorShrwt_elec")) {
+      L223.SubsectorShrwt_elec %>%
+        add_title("Subsector shareweights of energy transformation sectors") %>%
+        add_units("Unitless") %>%
+        add_comments("Conditionally created from the subset of A23.subsector_shrwt with values in column 'year'.") %>%
+        add_comments("Does not exist by default") %>%
+        add_legacy_name("L223.SubsectorShrwt_elec") %>%
+        add_precursors("energy/A23.subsector_shrwt", "common/GCAM_region_names") ->
+        L223.SubsectorShrwt_elec
+    } else {
+      tibble(x = NA) %>%
+        add_title("Data not created") %>%
+        add_units("Unitless") %>%
+        add_comments("Data not created") %>%
+        add_legacy_name("L223.SubsectorShrwt_elec") ->
+        L223.SubsectorShrwt_elec
+    }
 
-      if (exists("L223.SubsectorShrwtFllt_elec")) {
-        L223.SubsectorShrwtFllt_elec %>%
-          add_title("Subsector shareweights of energy transformation sectors") %>%
-          add_units("Unitless") %>%
-          add_comments("Conditionally created from the subset of A23.subsector_shrwt with values in column 'year.fillout'.") %>%
-          add_legacy_name("L223.SubsectorShrwtFllt_elec") %>%
-          add_precursors("energy/A23.subsector_shrwt", "common/GCAM_region_names") ->
-          L223.SubsectorShrwtFllt_elec
-      } else {
-        tibble(x = NA) %>%
-          add_title("Data not created") %>%
-          add_units("Unitless") %>%
-          add_comments("Data not created") %>%
-          add_legacy_name("L223.SubsectorShrwtFllt_elec") ->
-          L223.SubsectorShrwtFllt_elec
-      }
+    if(exists("L223.SubsectorShrwtFllt_elec")) {
+      L223.SubsectorShrwtFllt_elec %>%
+        add_title("Subsector shareweights of energy transformation sectors") %>%
+        add_units("Unitless") %>%
+        add_comments("Conditionally created from the subset of A23.subsector_shrwt with values in column 'year.fillout'.") %>%
+        add_legacy_name("L223.SubsectorShrwtFllt_elec") %>%
+        add_precursors("energy/A23.subsector_shrwt", "common/GCAM_region_names") ->
+        L223.SubsectorShrwtFllt_elec
+    } else {
+      tibble(x = NA) %>%
+        add_title("Data not created") %>%
+        add_units("Unitless") %>%
+        add_comments("Data not created") %>%
+        add_legacy_name("L223.SubsectorShrwtFllt_elec") ->
+        L223.SubsectorShrwtFllt_elec
+    }
 
     L223.SubsectorShrwt_nuc %>%
       add_title("Subsector Shareweights for all regions for nuclear electricity technologies") %>%
@@ -1128,7 +1127,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_precursors("common/GCAM_region_names", "L114.RsrcCurves_EJ_R_wind", "temp-data-inject/L119.Irradiance_rel_R", "energy/A23.globaltech_capital", "energy/A23.globaltech_OMfixed", "energy/A23.globaltech_OMvar", "energy/A23.globalinttech") ->
       L223.StubTechCapFactor_elec
 
-    if (exists("L223.GlobalTechShutdown_elec")) {
+    if(exists("L223.GlobalTechShutdown_elec")) {
       L223.GlobalTechShutdown_elec %>%
         add_title("Global tech lifetime for techs with shutdown rate") %>%
         add_units("Lifetime in years") %>%
@@ -1145,24 +1144,24 @@ module_energy_L223.electricity <- function(command, ...) {
         L223.GlobalTechShutdown_elec
     }
 
-      if (exists("L223.GlobalIntTechShutdown_elec")) {
-        L223.GlobalIntTechShutdown_elec %>%
-          add_title("Global tech lifetime for intermittent techs with shutdown rate") %>%
-          add_units("Lifetime in years") %>%
-          add_comments("Filters for any technology that uses a phased retirement function") %>%
-          add_legacy_name("L223.GlobalIntTechShutdown_elec") %>%
-          add_precursors("energy/A23.globaltech_retirement") ->
-          L223.GlobalIntTechShutdown_elec
-      } else {
-        tibble(x = NA) %>%
-          add_title("Data not created") %>%
-          add_units("Unitless") %>%
-          add_comments("Data not created") %>%
-          add_legacy_name("L223.GlobalIntTechShutdown_elec") ->
-          L223.GlobalIntTechShutdown_elec
-      }
+    if(exists("L223.GlobalIntTechShutdown_elec")) {
+      L223.GlobalIntTechShutdown_elec %>%
+        add_title("Global tech lifetime for intermittent techs with shutdown rate") %>%
+        add_units("Lifetime in years") %>%
+        add_comments("Filters for any technology that uses a phased retirement function") %>%
+        add_legacy_name("L223.GlobalIntTechShutdown_elec") %>%
+        add_precursors("energy/A23.globaltech_retirement") ->
+        L223.GlobalIntTechShutdown_elec
+    } else {
+      tibble(x = NA) %>%
+        add_title("Data not created") %>%
+        add_units("Unitless") %>%
+        add_comments("Data not created") %>%
+        add_legacy_name("L223.GlobalIntTechShutdown_elec") ->
+        L223.GlobalIntTechShutdown_elec
+    }
 
-    if (exists("L223.GlobalTechSCurve_elec")) {
+    if(exists("L223.GlobalTechSCurve_elec")) {
       L223.GlobalTechSCurve_elec %>%
         add_title("Global tech lifetime for techs with s-curve retirement function") %>%
         add_units("Lifetime in years, half-life in years") %>%
@@ -1179,65 +1178,65 @@ module_energy_L223.electricity <- function(command, ...) {
         L223.GlobalTechSCurve_elec
     }
 
-      if (exists("L223.GlobalIntTechSCurve_elec")) {
-        L223.GlobalIntTechSCurve_elec %>%
-          add_title("Global tech lifetime for intermittent techs with s-curve retirement function") %>%
-          add_units("Lifetime in years, half-life in years") %>%
-          add_comments("Filters for any technology that uses an S-curve retirement function") %>%
-          add_legacy_name("L223.GlobalIntTechSCurve_elec") %>%
-          add_precursors("energy/A23.globaltech_retirement") ->
-          L223.GlobalIntTechSCurve_elec
-      } else {
-        tibble(x = NA) %>%
-          add_title("Data not created") %>%
-          add_units("Unitless") %>%
-          add_comments("Data not created") %>%
-          add_legacy_name("L223.GlobalIntTechSCurve_elec") ->
-          L223.GlobalIntTechSCurve_elec
-      }
+    if(exists("L223.GlobalIntTechSCurve_elec")) {
+      L223.GlobalIntTechSCurve_elec %>%
+        add_title("Global tech lifetime for intermittent techs with s-curve retirement function") %>%
+        add_units("Lifetime in years, half-life in years") %>%
+        add_comments("Filters for any technology that uses an S-curve retirement function") %>%
+        add_legacy_name("L223.GlobalIntTechSCurve_elec") %>%
+        add_precursors("energy/A23.globaltech_retirement") ->
+        L223.GlobalIntTechSCurve_elec
+    } else {
+      tibble(x = NA) %>%
+        add_title("Data not created") %>%
+        add_units("Unitless") %>%
+        add_comments("Data not created") %>%
+        add_legacy_name("L223.GlobalIntTechSCurve_elec") ->
+        L223.GlobalIntTechSCurve_elec
+    }
 
-    if (exists("L223.GlobalTechLifetime_elec")) {
-    L223.GlobalTechLifetime_elec %>%
-      add_title("Global tech lifetime for any technology with no retirement function") %>%
-      add_units("Lifetime in years") %>%
-      add_comments("Filters for any technology that has no phased or S-curve retirement function.") %>%
-      add_legacy_name("L222.GlobalTechLifetime_elec") %>%
-      add_precursors("energy/A23.globaltech_retirement") ->
-      L223.GlobalTechLifetime_elec
-  } else {
-    tibble(x = NA) %>%
-      add_title("Data not created") %>%
-      add_units("Unitless") %>%
-      add_comments("Data not created.") %>%
-      add_legacy_name("L223.GlobalTechLifetime_elec") ->
-      L223.GlobalTechLifetime_elec
-  }
+    if(exists("L223.GlobalTechLifetime_elec")) {
+      L223.GlobalTechLifetime_elec %>%
+        add_title("Global tech lifetime for any technology with no retirement function") %>%
+        add_units("Lifetime in years") %>%
+        add_comments("Filters for any technology that has no phased or S-curve retirement function.") %>%
+        add_legacy_name("L222.GlobalTechLifetime_elec") %>%
+        add_precursors("energy/A23.globaltech_retirement") ->
+        L223.GlobalTechLifetime_elec
+    } else {
+      tibble(x = NA) %>%
+        add_title("Data not created") %>%
+        add_units("Unitless") %>%
+        add_comments("Data not created.") %>%
+        add_legacy_name("L223.GlobalTechLifetime_elec") ->
+        L223.GlobalTechLifetime_elec
+    }
 
-    if (exists("L223.GlobalTechLifetime_elec")) {
-    L223.GlobalIntTechLifetime_elec %>%
-      add_title("Global tech lifetime for any intermittent technology with no retirement function") %>%
-      add_units("Lifetime in years") %>%
-      add_comments("Filters for any technology that has no phased or S-curve retirement function.") %>%
-      add_legacy_name("L223.GlobalIntTechLifetime_elec") %>%
-      add_precursors("energy/A23.globaltech_retirement") ->
-      L223.GlobalIntTechLifetime_elec
-  } else {
-    tibble(x = NA) %>%
-      add_title("Data not created") %>%
-      add_units("Unitless") %>%
-      add_comments("Data not created.") %>%
-      add_legacy_name("L223.GlobalIntTechLifetime_elec") ->
-      L223.GlobalIntTechLifetime_elec
-  }
+    if(exists("L223.GlobalTechLifetime_elec")) {
+      L223.GlobalIntTechLifetime_elec %>%
+        add_title("Global tech lifetime for any intermittent technology with no retirement function") %>%
+        add_units("Lifetime in years") %>%
+        add_comments("Filters for any technology that has no phased or S-curve retirement function.") %>%
+        add_legacy_name("L223.GlobalIntTechLifetime_elec") %>%
+        add_precursors("energy/A23.globaltech_retirement") ->
+        L223.GlobalIntTechLifetime_elec
+    } else {
+      tibble(x = NA) %>%
+        add_title("Data not created") %>%
+        add_units("Unitless") %>%
+        add_comments("Data not created.") %>%
+        add_legacy_name("L223.GlobalIntTechLifetime_elec") ->
+        L223.GlobalIntTechLifetime_elec
+    }
 
-    if (exists("L223.GlobalTechProfitShutdown_elec")) {
-    L223.GlobalTechProfitShutdown_elec %>%
-      add_title("Global tech profit shutdown decider and parameters") %>%
-      add_units("Unitless, used to determine shape of the function defining the relationship between shutdown rate and profitability") %>%
-      add_comments("Filters for any technologies that use a profit-based shutdown parameter") %>%
-      add_legacy_name("L223.GlobalTechProfitShutdown_elec") %>%
-      add_precursors("energy/A23.globaltech_retirement") ->
-      L223.GlobalTechProfitShutdown_elec
+    if(exists("L223.GlobalTechProfitShutdown_elec")) {
+      L223.GlobalTechProfitShutdown_elec %>%
+        add_title("Global tech profit shutdown decider and parameters") %>%
+        add_units("Unitless, used to determine shape of the function defining the relationship between shutdown rate and profitability") %>%
+        add_comments("Filters for any technologies that use a profit-based shutdown parameter") %>%
+        add_legacy_name("L223.GlobalTechProfitShutdown_elec") %>%
+        add_precursors("energy/A23.globaltech_retirement") ->
+        L223.GlobalTechProfitShutdown_elec
     } else {
       tibble(x = NA) %>%
         add_title("Data not created") %>%
@@ -1247,14 +1246,14 @@ module_energy_L223.electricity <- function(command, ...) {
         L223.GlobalTechProfitShutdown_elec
     }
 
-    if (exists("L223.GlobalIntTechProfitShutdown_elec")) {
-    L223.GlobalIntTechProfitShutdown_elec %>%
-      add_title("Global tech profit shutdown decider and parameters for intermittent technologies") %>%
-      add_units("Unitless, used to determine shape of the function defining the relationship between shutdown rate and profitability") %>%
-      add_comments("Filters for any technologies that use a profit-based shutdown parameter") %>%
-      add_legacy_name("L223.GlobalIntTechProfitShutdown_elec") %>%
-      add_precursors("energy/A23.globaltech_retirement") ->
-      L223.GlobalIntTechProfitShutdown_elec
+    if(exists("L223.GlobalIntTechProfitShutdown_elec")) {
+      L223.GlobalIntTechProfitShutdown_elec %>%
+        add_title("Global tech profit shutdown decider and parameters for intermittent technologies") %>%
+        add_units("Unitless, used to determine shape of the function defining the relationship between shutdown rate and profitability") %>%
+        add_comments("Filters for any technologies that use a profit-based shutdown parameter") %>%
+        add_legacy_name("L223.GlobalIntTechProfitShutdown_elec") %>%
+        add_precursors("energy/A23.globaltech_retirement") ->
+        L223.GlobalIntTechProfitShutdown_elec
     } else {
       tibble(x = NA) %>%
         add_title("Data not created") %>%
