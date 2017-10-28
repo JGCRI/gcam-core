@@ -128,7 +128,7 @@ module_energy_L223.electricity <- function(command, ...) {
     GCAM_region_ID <- OM.fixed <- OM.var <- average.fossil.efficiency <- base.price <-
       calOutputValue <- calibration <- capacity.factor <- capacity.factor.OM <-
       capacity.factor.capital <- capital.overnight <- dni_avg_rel <- efficiency <-
-      fixed.charge.rate <- fuel <- input-capital <- input.OM.var <-
+      fixed.charge.rate <- fuel <- `input-capital` <- input.OM.var <-
       intermittent.technology <- irradiance_avg_rel <- iso <-
       primary.renewable <- region <- region_GCAM3 <- remove.fraction <- sector <-
       sector.name <- share.weight <- stub.technology <- subsector <- subsector.name <-
