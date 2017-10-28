@@ -1042,7 +1042,7 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.GlobalTechOMvar_elec %>%
       add_title("Variable operation and maintenance costs of non-intermittent electricity sector technologies") %>%
       add_units("1975$US/MWh") %>%
-      add_comments("values interpolated from assumptions in A23.globaltech_OMvar") %>%
+      add_comments("Values interpolated from assumptions in A23.globaltech_OMvar") %>%
       add_legacy_name("L223.GlobalTechOMvar_elec") %>%
       add_precursors("energy/A23.globaltech_OMvar", "energy/A23.globalinttech") ->
       L223.GlobalTechOMvar_elec
@@ -1050,7 +1050,7 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.GlobalIntTechOMvar_elec %>%
       add_title("Variable operation and maintenance costs of intermittent electricity sector technologies") %>%
       add_units("1975$US/MWh") %>%
-      add_comments("values interpolated from assumptions in A23.globaltech_OMvar") %>%
+      add_comments("Values interpolated from assumptions in A23.globaltech_OMvar") %>%
       add_legacy_name("L223.GlobalIntTechOMvar_elec") %>%
       add_precursors("energy/A23.globaltech_OMvar", "energy/A23.globalinttech") ->
       L223.GlobalIntTechOMvar_elec
@@ -1058,7 +1058,7 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.GlobalTechShrwt_elec %>%
       add_title("Global shareweights for non-intermittent technologies for the electricity sector") %>%
       add_units("unitless") %>%
-      add_comments("interpolated from model assumptions in A23.globaltech_shrwt") %>%
+      add_comments("Interpolated from model assumptions in A23.globaltech_shrwt") %>%
       add_legacy_name("L223.GlobalTechShrwt_elec") %>%
       add_precursors("energy/A23.globaltech_shrwt", "energy/A23.globalinttech") ->
       L223.GlobalTechShrwt_elec
@@ -1066,7 +1066,7 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.GlobalTechInterp_elec %>%
       add_title("Interpolation rules for electricity technologies") %>%
       add_units("unitless") %>%
-      add_comments("model years applied to assumptions in A23.globaltech_interp") %>%
+      add_comments("Model years applied to assumptions in A23.globaltech_interp") %>%
       add_legacy_name("L223.GlobalTechInterp_elec") %>%
       add_precursors("energy/A23.globaltech_interp") ->
       L223.GlobalTechInterp_elec
@@ -1074,7 +1074,7 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.GlobalIntTechShrwt_elec %>%
       add_title("Global shareweights for intermittent technologies for the electricity sector") %>%
       add_units("unitless") %>%
-      add_comments("interpolated from model assumptions in A23.globaltech_shrwt") %>%
+      add_comments("Interpolated from model assumptions in A23.globaltech_shrwt") %>%
       add_legacy_name("L223.GlobalIntTechShrwt_elec") %>%
       add_precursors("energy/A23.globaltech_shrwt", "energy/A23.globalinttech") ->
       L223.GlobalIntTechShrwt_elec
@@ -1082,7 +1082,7 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.PrimaryRenewKeyword_elec %>%
       add_title("keywords for non-intermittent renewable technologies for the electricity sector") %>%
       add_units("unitless") %>%
-      add_comments("subset from A23.globaltech_keyword") %>%
+      add_comments("Subset from A23.globaltech_keyword") %>%
       add_legacy_name("L223.PrimaryRenewKeyword_elec") %>%
       add_precursors("energy/A23.globaltech_keyword") ->
       L223.PrimaryRenewKeyword_elec
@@ -1122,7 +1122,7 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.StubTechCapFactor_elec %>%
       add_title("Capacity factors of stub technologies including wind and solar") %>%
       add_units("unitless fraction") %>%
-      add_comments("average annual utilization of renewable technologies, calculated using regional solar irradiance data and wind resource curves to adjust default assumptions") %>%
+      add_comments("Average annual utilization of renewable technologies, calculated using regional solar irradiance data and wind resource curves to adjust default assumptions") %>%
       add_legacy_name("L223.StubTechCapFactor_elec") %>%
       add_precursors("common/GCAM_region_names", "L114.RsrcCurves_EJ_R_wind", "temp-data-inject/L119.Irradiance_rel_R", "energy/A23.globaltech_capital", "energy/A23.globaltech_OMfixed", "energy/A23.globaltech_OMvar", "energy/A23.globalinttech") ->
       L223.StubTechCapFactor_elec
@@ -1298,8 +1298,6 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.StubTechEff_elec %>%
       add_title("conversion efficiency of fuel to energy in electricity sector") %>%
       add_units("unitless") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
       add_legacy_name("L223.StubTechEff_elec") %>%
       add_precursors("energy/calibrated_techs", "common/GCAM_region_names", "L1231.eff_R_elec_F_tech_Yh", "energy/A23.globaltech_eff") ->
       L223.StubTechEff_elec
@@ -1307,8 +1305,8 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.GlobalTechCapital_sol_adv %>%
       add_title("high tech/low cost solar capital costs for the electricity sector") %>%
       add_units("capital overnight - 1975USD/GJ, capacity factor - unitless, fixed.charge.rate - unitless") %>%
-      add_comments("capacity factor - average percent use of maximum rated output") %>%
-      add_comments("fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
+      add_comments("Capacity factor - average percent use of maximum rated output") %>%
+      add_comments("Fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalTechCapital_sol_adv") %>%
       add_precursors("energy/A23.globaltech_capital_adv") ->
       L223.GlobalTechCapital_sol_adv
@@ -1316,8 +1314,8 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.GlobalIntTechCapital_sol_adv %>%
       add_title("high tech/low cost intermittent solar capital costs for the electricity sector") %>%
       add_units("capital overnight - 1975USD/GJ, capacity factor - unitless, fixed.charge.rate - unitless") %>%
-      add_comments("capacity factor - average percent use of maximum rated output") %>%
-      add_comments("fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
+      add_comments("Capacity factor - average percent use of maximum rated output") %>%
+      add_comments("Fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalIntTechCapital_sol_adv") %>%
       add_precursors("energy/A23.globaltech_capital_adv") ->
       L223.GlobalIntTechCapital_sol_adv
@@ -1325,8 +1323,8 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.GlobalTechCapital_wind_adv %>%
       add_title("high tech/low cost wind capital costs for the electricity sector") %>%
       add_units("capital overnight - 1975USD/GJ, capacity factor - unitless, fixed.charge.rate - unitless") %>%
-      add_comments("capacity factor - average percent use of maximum rated output") %>%
-      add_comments("fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
+      add_comments("Capacity factor - average percent use of maximum rated output") %>%
+      add_comments("Fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalTechCapital_wind_adv") %>%
       add_precursors("energy/A23.globaltech_capital_adv") ->
       L223.GlobalTechCapital_wind_adv
@@ -1334,8 +1332,8 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.GlobalIntTechCapital_wind_adv %>%
       add_title("high tech/low cost intermittent wind capital costs for the electricity sector") %>%
       add_units("capital overnight - 1975USD/GJ, capacity factor - unitless, fixed.charge.rate - unitless") %>%
-      add_comments("capacity factor - average percent use of maximum rated output") %>%
-      add_comments("fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
+      add_comments("Capacity factor - average percent use of maximum rated output") %>%
+      add_comments("Fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalIntTechCapital_wind_adv") %>%
       add_precursors("energy/A23.globaltech_capital_adv") ->
       L223.GlobalIntTechCapital_wind_adv
@@ -1343,8 +1341,8 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.GlobalTechCapital_geo_adv %>%
       add_title("high tech/low cost geothermal capital costs for the electricity sector") %>%
       add_units("capital overnight - 1975USD/GJ, capacity factor - unitless, fixed.charge.rate - unitless") %>%
-      add_comments("capacity factor - average percent use of maximum rated output") %>%
-      add_comments("fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
+      add_comments("Capacity factor - average percent use of maximum rated output") %>%
+      add_comments("Fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalTechCapital_geo_adv") %>%
       add_precursors("energy/A23.globaltech_capital_adv") ->
       L223.GlobalTechCapital_geo_adv
@@ -1352,8 +1350,8 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.GlobalTechCapital_nuc_adv %>%
       add_title("high tech/low cost nuclear capital costs for the electricity sector") %>%
       add_units("capital overnight - 1975USD/GJ, capacity factor - unitless, fixed.charge.rate - unitless") %>%
-      add_comments("capacity factor - average percent use of maximum rated output") %>%
-      add_comments("fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
+      add_comments("Capacity factor - average percent use of maximum rated output") %>%
+      add_comments("Fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalTechCapital_nuc_adv") %>%
       add_precursors("energy/A23.globaltech_capital_adv") ->
       L223.GlobalTechCapital_nuc_adv
@@ -1361,8 +1359,8 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.GlobalTechCapital_sol_low %>%
       add_title("Low tech/high cost solar capital costs for the electricity sector") %>%
       add_units("capital overnight - 1975USD/GJ, capacity factor - unitless, fixed.charge.rate - unitless") %>%
-      add_comments("capacity factor - average percent use of maximum rated output") %>%
-      add_comments("fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
+      add_comments("Capacity factor - average percent use of maximum rated output") %>%
+      add_comments("Fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalTechCapital_sol_low") %>%
       add_precursors("energy/A23.globaltech_capital_low") ->
       L223.GlobalTechCapital_sol_low
@@ -1370,8 +1368,8 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.GlobalIntTechCapital_sol_low %>%
       add_title("Low tech/high cost intermittent solar capital costs for the electricity sector") %>%
       add_units("capital overnight - 1975USD/GJ, capacity factor - unitless, fixed.charge.rate - unitless") %>%
-      add_comments("capacity factor - average percent use of maximum rated output") %>%
-      add_comments("fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
+      add_comments("Capacity factor - average percent use of maximum rated output") %>%
+      add_comments("Fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalIntTechCapital_sol_low") %>%
       add_precursors("energy/A23.globaltech_capital_low") ->
       L223.GlobalIntTechCapital_sol_low
@@ -1379,8 +1377,8 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.GlobalTechCapital_wind_low %>%
       add_title("Low tech/high cost wind capital costs for the electricity sector") %>%
       add_units("capital overnight - 1975USD/GJ, capacity factor - unitless, fixed.charge.rate - unitless") %>%
-      add_comments("capacity factor - average percent use of maximum rated output") %>%
-      add_comments("fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
+      add_comments("Capacity factor - average percent use of maximum rated output") %>%
+      add_comments("Fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalTechCapital_wind_low") %>%
       add_precursors("energy/A23.globaltech_capital_low") ->
       L223.GlobalTechCapital_wind_low
@@ -1388,8 +1386,8 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.GlobalIntTechCapital_wind_low %>%
       add_title("Low tech/high cost intermittent wind capital costs for the electricity sector") %>%
       add_units("capital overnight - 1975USD/GJ, capacity factor - unitless, fixed.charge.rate - unitless") %>%
-      add_comments("capacity factor - average percent use of maximum rated output") %>%
-      add_comments("fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
+      add_comments("Capacity factor - average percent use of maximum rated output") %>%
+      add_comments("Fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalIntTechCapital_wind_low") %>%
       add_precursors("energy/A23.globaltech_capital_low") ->
       L223.GlobalIntTechCapital_wind_low
@@ -1397,8 +1395,8 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.GlobalTechCapital_geo_low %>%
       add_title("Low tech/high cost geothermal capital costs for the electricity sector") %>%
       add_units("capital overnight - 1975USD/GJ, capacity factor - unitless, fixed.charge.rate - unitless") %>%
-      add_comments("capacity factor - average percent use of maximum rated output") %>%
-      add_comments("fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
+      add_comments("Capacity factor - average percent use of maximum rated output") %>%
+      add_comments("Fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalTechCapital_geo_low") %>%
       add_precursors("energy/A23.globaltech_capital_low") ->
       L223.GlobalTechCapital_geo_low
@@ -1406,8 +1404,8 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.GlobalTechCapital_nuc_low %>%
       add_title("Low tech/high cost nuclear capital costs for the electricity sector") %>%
       add_units("capital overnight - 1975USD/GJ, capacity factor - unitless, fixed.charge.rate - unitless") %>%
-      add_comments("capacity factor - average percent use of maximum rated output") %>%
-      add_comments("fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
+      add_comments("Capacity factor - average percent use of maximum rated output") %>%
+      add_comments("Fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalTechCapital_nuc_low") %>%
       add_precursors("energy/A23.globaltech_capital_low") ->
       L223.GlobalTechCapital_nuc_low
@@ -1415,8 +1413,8 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.GlobalTechCapital_bio_low %>%
       add_title("Low tech/high cost bioenergy capital costs for the electricity sector") %>%
       add_units("capital overnight - 1975USD/GJ, capacity factor - unitless, fixed.charge.rate - unitless") %>%
-      add_comments("capacity factor - average percent use of maximum rated output") %>%
-      add_comments("fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
+      add_comments("Capacity factor - average percent use of maximum rated output") %>%
+      add_comments("Fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.GlobalTechCapital_bio_low") %>%
       add_precursors("energy/A23.globaltech_capital_low") ->
