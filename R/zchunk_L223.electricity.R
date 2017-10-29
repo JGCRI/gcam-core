@@ -469,10 +469,11 @@ module_energy_L223.electricity <- function(command, ...) {
     # L223.GlobalTechShrwt_elec: Shareweights of global electricity generation technologies
     A23.globaltech_shrwt %>%
       gather(year, share.weight, matches(YEAR_PATTERN)) %>%
+      mutate(year = as.integer(year)) %>%
       complete(nesting(supplysector, subsector, technology), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
       arrange(supplysector, year) %>%
       group_by(supplysector, subsector, technology) %>%
-      mutate(share.weight = approx_fun(as.numeric(year), share.weight, rule = 1)) %>%
+      mutate(share.weight = approx_fun(year, share.weight, rule = 1)) %>%
       ungroup() %>%
       filter(year %in% MODEL_YEARS) %>%
       rename(sector.name = supplysector, subsector.name = subsector) ->
@@ -532,10 +533,11 @@ module_energy_L223.electricity <- function(command, ...) {
     # L223.GlobalTechCapture_elec: CO2 capture fractions from global electricity generation technologies
     A23.globaltech_co2capture %>%
       gather(year, remove.fraction, matches(YEAR_PATTERN)) %>%
+      mutate(year = as.integer(year)) %>%
       complete(nesting(supplysector, subsector, technology), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
       arrange(supplysector, year) %>%
       group_by(supplysector, subsector, technology) %>%
-      mutate(remove.fraction = approx_fun(as.numeric(year), remove.fraction, rule = 1)) %>%
+      mutate(remove.fraction = approx_fun(year, remove.fraction, rule = 1)) %>%
       ungroup() %>%
       filter(year %in% FUTURE_YEARS) %>%
       rename(sector.name = supplysector, subsector.name = subsector) %>%
@@ -555,15 +557,15 @@ module_energy_L223.electricity <- function(command, ...) {
 
     A23.globaltech_retirement %>%
       set_years() %>%
+      mutate(year = as.integer(year)) %>%
       rename(sector.name = supplysector, subsector.name = subsector) ->
       L223.globaltech_retirement_base
 
     # Copies base year retirment information into all future years and appends back onto itself
     L223.globaltech_retirement_base %>%
       filter(year == min(FUTURE_YEARS)) %>%
-      repeat_add_columns(tibble("year" = as.character(FUTURE_YEARS))) %>%
-      select(-year.x) %>%
-      rename(year = year.y) %>%
+      select(-year) %>%
+      repeat_add_columns(tibble(year = FUTURE_YEARS)) %>%
       bind_rows(filter(L223.globaltech_retirement_base, year == max(BASE_YEARS))) ->
       L223.globaltech_retirement
 
@@ -679,7 +681,7 @@ module_energy_L223.electricity <- function(command, ...) {
       complete(nesting(GCAM_region_ID, sector, fuel, technology), year = c(year, BASE_YEARS)) %>%
       arrange(GCAM_region_ID, year) %>%
       group_by(GCAM_region_ID, sector, fuel, technology) %>%
-      mutate(value = approx_fun(as.numeric(year), value, rule = 1)) %>%
+      mutate(value = approx_fun(year, value, rule = 1)) %>%
       ungroup() %>%
       filter(year %in% BASE_YEARS) %>%
       # append region names
@@ -716,7 +718,7 @@ module_energy_L223.electricity <- function(command, ...) {
       complete(nesting(GCAM_region_ID, sector, fuel, technology), year = c(year, MODEL_YEARS[MODEL_YEARS %in% HISTORICAL_YEARS])) %>%
       arrange(GCAM_region_ID, year) %>%
       group_by(GCAM_region_ID, sector, fuel, technology) %>%
-      mutate(value = approx_fun(as.numeric(year), value, rule = 1)) %>%
+      mutate(value = approx_fun(year, value, rule = 1)) %>%
       ungroup() %>%
       filter(year %in% MODEL_YEARS[MODEL_YEARS %in% HISTORICAL_YEARS]) %>%
       # append region names
@@ -753,7 +755,7 @@ module_energy_L223.electricity <- function(command, ...) {
       complete(nesting(GCAM_region_ID, sector, fuel), year = c(year, FUTURE_YEARS)) %>%
       arrange(GCAM_region_ID, year) %>%
       group_by(GCAM_region_ID, sector, fuel) %>%
-      mutate(value = approx_fun(as.numeric(year), value, rule = 1)) %>%
+      mutate(value = approx_fun(year, value, rule = 1)) %>%
       ungroup() %>%
       filter(year %in% FUTURE_YEARS[!FUTURE_YEARS %in% HISTORICAL_YEARS]) %>%
       # append region names
@@ -783,7 +785,7 @@ module_energy_L223.electricity <- function(command, ...) {
       complete(nesting(GCAM_region_ID, sector, fuel, technology), year = c(year, MODEL_YEARS[MODEL_YEARS %in% HISTORICAL_YEARS])) %>%
       arrange(GCAM_region_ID, year) %>%
       group_by(GCAM_region_ID, sector, fuel, technology) %>%
-      mutate(value = approx_fun(as.numeric(year), value, rule = 1)) %>%
+      mutate(value = approx_fun(year, value, rule = 1)) %>%
       ungroup() %>%
       filter(year %in% MODEL_YEARS[MODEL_YEARS %in% HISTORICAL_YEARS]) %>%
       # append region names

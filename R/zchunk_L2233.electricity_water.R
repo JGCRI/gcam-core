@@ -37,7 +37,6 @@ module_water_L2233.electricity_water <- function(command, ...) {
                       "GlobalTechProfitShutdown_elec", "GlobalTechSCurve_elec", "GlobalTechShrwt_elec",
                       "PrimaryRenewKeyword_elec", "PrimaryRenewKeywordInt_elec", "StubTech_elec",
                       "StubTechEff_elec", "StubTechFixOut_hydro", "Supplysector_elec")
-  L223_fileNames <- paste0("L223.", L223_fileNames)
 
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
@@ -55,7 +54,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
              "L223.StubTechEff_elec",
              "L201.en_bcoc_emissions",
              "L241.nonco2_tech_coeff",
-             L223_fileNames
+             paste0("L223.", L223_fileNames)
     ))
 
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -134,7 +133,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
 
     # Use get_data function with sapply to read in all "L223." inputs at once
     get_data_rev <- function(name, all_data) get_data(all_data, name)
-    L223_data <- sapply(L223_fileNames, get_data_rev, all_data = all_data)
+    L223_data <- sapply(paste0("L223.", L223_fileNames), get_data_rev, all_data = all_data)
     names(L223_data) <- L223_fileNames
 
     # ===================================================
@@ -157,7 +156,6 @@ module_water_L2233.electricity_water <- function(command, ...) {
     # Note: The technologies in the electricity sector all keep their own name;
     # the only parameters read here are shareweights and minicam-energy-inputs,
     # which are equal to the "to.supplysector" of the new generation technology.
-
     L2233.TechMapYr %>%
       filter(from.supplysector != to.supplysector) %>%
       # ^^ filter only technologies that are moving to a different sector
@@ -313,7 +311,6 @@ module_water_L2233.electricity_water <- function(command, ...) {
     # ... sector, the new passtru tech in the electricity sector is no longer an ...
     # ... intermittent technology (this would double count). Thus, for all L2233.Elec_tables_globaltech_cost, ...
     # ... we change "intermittent.technology" to "technology".
-
     elec_tech_water_map %>%
       select(-plant_type, - cooling_system, - water_type,
              -sector, -fuel, -technology, -minicam.energy.input) %>%
@@ -407,10 +404,10 @@ module_water_L2233.electricity_water <- function(command, ...) {
       tableName <- paste0("L2233.", elecTableName, "_cool")
       elecTable <- L2233.Elec_tables_globaltech_nocost[[which(names(L2233.Elec_tables_globaltech_nocost) == elecTableName)]]
       names(elecTable)[names(elecTable) == "intermittent.technology"] <- "technology"
-      defCols <- names(elecTable) %in% c("sector.name","subsector.name", "technology", "year")
+      defCols <- names(elecTable) %in% c("sector.name", "subsector.name", "technology", "year")
       nondataCols <- names(elecTable)[defCols]
       dataCols <- names(elecTable)[!defCols]
-      if (!("year" %in% nondataCols)) {
+      if(!("year" %in% nondataCols)) {
         elecTable$year <- NA
       }
       L2233.TechMapYr %>%
@@ -428,7 +425,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
         select(one_of(c(nondataCols, dataCols))) %>%
         unique %>%
         na.omit -> newTable
-      if ("efficiency" %in% names(newTable)) {
+      if("efficiency" %in% names(newTable)) {
         mutate(newTable,
                efficiency = if_else(grepl("dry", technology),
                                     efficiency * DRY_COOLING_EFF_ADJ, as.double(efficiency))) ->
