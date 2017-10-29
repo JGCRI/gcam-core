@@ -1300,6 +1300,7 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.StubTechEff_elec %>%
       add_title("conversion efficiency of fuel to energy in electricity sector") %>%
       add_units("unitless") %>%
+      add_comments("") %>%
       add_legacy_name("L223.StubTechEff_elec") %>%
       add_precursors("energy/calibrated_techs", "common/GCAM_region_names", "L1231.eff_R_elec_F_tech_Yh", "energy/A23.globaltech_eff") ->
       L223.StubTechEff_elec
