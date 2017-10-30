@@ -60,16 +60,9 @@ extern Scenario* scenario;
 
 //! Constructor
 SubRenewableResource::SubRenewableResource(){
-<<<<<<< HEAD
-	maxSubResource = 0;
-	gdpSupplyElasticity = GDP_SUPPLY_ELASTICITY_DEFAULT;
-	subResourceVariance = 0;
-=======
 	mMaxSubResource = 0;
 	mGdpSupplyElasticity = 0;
 	mSubResourceVariance = 0;
-	mSubResourceCapacityFactor = 1;
->>>>>>> master
 }
 
 //! Performs XML read-in that is specific to this derived class
@@ -83,13 +76,6 @@ bool SubRenewableResource::XMLDerivedClassParse( const string& nodeName, const D
 		mSubResourceVariance = XMLHelper<double>::getValue( node );
 		didParse = true;
 	}
-<<<<<<< HEAD
-=======
-	else if( nodeName == "subResourceCapacityFactor" ){
-		mSubResourceCapacityFactor = XMLHelper<double>::getValue( node );
-		didParse = true;
-	}
->>>>>>> master
 	else if( nodeName == "gdpSupplyElast" ){
 		mGdpSupplyElasticity = XMLHelper<double>::getValue( node );
 		didParse = true;
@@ -127,16 +113,9 @@ void SubRenewableResource::completeInit( const IInfo* aSectorInfo ) {
 
 //! Write out to XML variables specific to this derived class
 void SubRenewableResource::toXMLforDerivedClass( ostream& out, Tabs* tabs ) const {
-<<<<<<< HEAD
-	XMLWriteElementCheckDefault( maxSubResource, "maxSubResource", out, tabs, 0.0 );
-	XMLWriteElementCheckDefault( gdpSupplyElasticity, "gdpSupplyElast", out, tabs, GDP_SUPPLY_ELASTICITY_DEFAULT );
-	XMLWriteElementCheckDefault( subResourceVariance, "subResourceVariance", out, tabs, 0.0 );
-=======
 	XMLWriteElementCheckDefault( mMaxSubResource, "maxSubResource", out, tabs, 0.0 );
-	XMLWriteElementCheckDefault( mGdpSupplyElasticity, "gdpSupplyElast", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( mGdpSupplyElasticity, "gdpSupplyElast", out, tabs, 0.0 );
 	XMLWriteElementCheckDefault( mSubResourceVariance, "subResourceVariance", out, tabs, 0.0 );
-	XMLWriteElementCheckDefault( mSubResourceCapacityFactor, "subResourceCapacityFactor", out, tabs, 1.0 );
->>>>>>> master
 }
 
 //! Cumulative Production
@@ -213,17 +192,6 @@ double SubRenewableResource::getVariance() const {
 	return mSubResourceVariance;
 }
 
-<<<<<<< HEAD
-=======
-/*! \brief Get the average capacity factor.
-* \details Return the capacity factor for this subresource.
-* \return The average capacity factor.
-*/
-double SubRenewableResource::getAverageCapacityFactor() const {
-	return mSubResourceCapacityFactor;
-}
-
->>>>>>> master
 double SubRenewableResource::getMaxSubResource() const {
     return mMaxSubResource;
 }

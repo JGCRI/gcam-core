@@ -137,14 +137,7 @@ void UnlimitedResource::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
     XMLWriteElement( mMarket, "market", aOut, aTabs );
     
-<<<<<<< HEAD
-    const Value VALUE_DEFAULT = 0.0;
-=======
     const Value VALUE_DEFAULT( 0.0 );
-    XMLWriteElementCheckDefault( mCapacityFactor, "capacity-factor", aOut,
-                                 aTabs, VALUE_DEFAULT );
-
->>>>>>> master
     XMLWriteElementCheckDefault( mVariance, "variance", aOut,
                                  aTabs, VALUE_DEFAULT );
     

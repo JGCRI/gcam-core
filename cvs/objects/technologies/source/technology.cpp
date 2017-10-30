@@ -384,7 +384,7 @@ void Technology::completeInit( const string& aRegionName,
     if( (mCapacityFactor <= 0) && (mCapacityFactor > 1) ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Capacity factor is not valid. CF = " << mCapacityFactor
+        mainLog << "Capacity factor is not within valid range (0 < CF <= 1). CF = " << mCapacityFactor
         << "  region: " << aRegionName << "  sector: " << aSectorName << "  technology: " << mName << endl;
     }
 
