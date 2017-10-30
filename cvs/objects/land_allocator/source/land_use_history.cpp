@@ -58,16 +58,11 @@ const string& LandUseHistory::getXMLNameStatic(){
 /*!
  * \brief Constructor.
  */
-LandUseHistory::LandUseHistory():
-mHistoricAboveGroundCarbonDensity( 0.0 ),
-mHistoricBelowGroundCarbonDensity( 0.0 )
+LandUseHistory::LandUseHistory()
 {
+    mHistoricAboveGroundCarbonDensity = 0.0;
+    mHistoricBelowGroundCarbonDensity = 0.0;
 }
-
-LandUseHistory::LandUseHistory(const LandUseHistory &aLandUseHistory){
-	this->mHistoricalLand = aLandUseHistory.mHistoricalLand;
-}
-
 
 bool LandUseHistory::XMLParse( const xercesc::DOMNode* aNode ){
 

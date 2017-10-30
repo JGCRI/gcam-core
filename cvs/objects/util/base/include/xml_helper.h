@@ -1306,6 +1306,74 @@ void parseSingleNode( const xercesc::DOMNode* aNode, std::auto_ptr<U>& aContaine
         }
     }
 }
+template<class T, class U>
+void parseSingleNode( const xercesc::DOMNode* aNode, U*& aContainer,
+                     T* aNewNode, const std::string& aAttrName = "name" )
+{
+    assert( aNode );
+    assert( aNewNode );
+    
+    // Have an auto_ptr keep the new memory.
+    std::auto_ptr<T> newNodePtr( aNewNode );
+    
+    // Determine if we should be deleting a node.
+    bool shouldDelete = XMLHelper<bool>::getAttr( aNode, "delete" );
+    
+    // Check if the container has already been created.
+    if( aContainer ){
+        // Modify or delete the node based on the contents of the delete attribute.
+        
+        // get the type names of the old and new versions of the node.
+        const char *oldname = typeid(*aContainer).name();
+        const char *newname = typeid(*newNodePtr).name();
+        if( shouldDelete ) {
+            // Perform deletion.  Note that this will delete any
+            // object that happens to be here, even if it is of a
+            // different type than the one being parsed (e.g., a
+            // different subclass of the same base class).  This is
+            // actually what we want in a case like this.
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::DEBUG );
+            mainLog << "Deleting node: " << oldname << std::endl;
+            delete aContainer;
+            aContainer = 0;
+        }
+        // Otherwise modify node.
+        else {
+            // Check to see if the nodes are of a compatible type.  If
+            // not, it is a fatal error.
+            if( typeid( *aContainer ) != typeid( *aNewNode ) ) {
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::SEVERE );
+                mainLog << "Incompatible node types:  Parsing node of type " << newname << " where node of type "
+                        << oldname << " already exists.\nError found here:" << std::endl;
+                XMLHelper<void>::printXMLTrace( aNode, mainLog );
+                abort();
+            }
+            aContainer->XMLParse( aNode );
+        }
+    }
+    // The node does not already exist.
+    else {
+        if( shouldDelete ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::NOTICE );
+            mainLog << "Could not delete node " << XMLHelper<std::string>::getAttr( aNode, aAttrName )
+                    << " as it does not exist." << std::endl;
+        }
+        else if( XMLHelper<bool>::getAttr( aNode, "nocreate" ) ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::NOTICE );
+            mainLog << "Did not create node " << XMLHelper<std::string>::getAttr( aNode, aAttrName )
+                    << " as the nocreate input flag was set." << std::endl;
+            XMLHelper<void>::printXMLTrace( aNode, mainLog );
+        }
+        else {
+            aContainer = newNodePtr.release();
+            aContainer->XMLParse( aNode );
+        }
+    }
+}
 
 template<class T>
 xercesc::XercesDOMParser** XMLHelper<T>::getParserPointerInternal(){

@@ -71,23 +71,25 @@ extern Scenario* scenario;
 */
 LandLeaf::LandLeaf( const ALandAllocatorItem* aParent, const std::string &aName ):
     ALandAllocatorItem( aParent, eLeaf ),
-    mLandAllocation( 0.0 ),
-    mCarbonContentCalc(0),
-    mMinAboveGroundCDensity( 0.0 ),
-    mMinBelowGroundCDensity( 0.0 ),
-    mCarbonPriceIncreaseRate( 0.0 ),
-    mLandUseHistory(0),
-    mReadinLandAllocation(0.0),
-    mLastCalcCO2Value(0.0),
-    mLastCalcExpansionValue(0.0)
+    mLandAllocation( Value( 0.0 ) ),
+    mCarbonPriceIncreaseRate( Value( 0.0 ) ),
+    mReadinLandAllocation( Value( 0.0 ) )
 {
     // Can't use initializer because mName is a member of ALandAllocatorItem,
     // not LandLeaf.
     mName = aName;
+    
+    mCarbonContentCalc = 0;
+    mMinAboveGroundCDensity = 0.0;
+    mMinBelowGroundCDensity = 0.0;
+    mLandUseHistory = 0;
+    mLastCalcCO2Value = 0.0;
 }
 
 //! Destructor
 LandLeaf::~LandLeaf() {
+    delete mLandUseHistory;
+    delete mCarbonContentCalc;
 }
 
 const string& LandLeaf::getXMLName() const {
@@ -195,8 +197,8 @@ void LandLeaf::completeInit( const string& aRegionName,
 
     // Set the carbon cycle object if it has not already been initialized. Use a
     // virtual function so that derived leaves may use a different default type.
-    if( !mCarbonContentCalc.get() ){
-        mCarbonContentCalc.reset( new LandCarbonDensities );
+    if( !mCarbonContentCalc ){
+        mCarbonContentCalc = new LandCarbonDensities;
     }
 
     // Initialize the carbon-cycle object
@@ -261,6 +263,8 @@ void LandLeaf::initCalc( const string& aRegionName, const int aPeriod )
                 << " for region " << aRegionName << endl;
         exit( -1 );
     }
+    
+    mCarbonContentCalc->initCalc( aPeriod );
 }
 
 /*!
@@ -291,14 +295,14 @@ void LandLeaf::setInitShares( const string& aRegionName,
  */
 void LandLeaf::initLandUseHistory( const string& aRegionName )
 {
-    if( !mLandUseHistory.get() ){
+    if( !mLandUseHistory ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "No land use history read in for leaf "
                 << getName() << " in region " << aRegionName << endl;
-        exit( -1 );
+        abort();
     }
-    mCarbonContentCalc->initLandUseHistory( mLandUseHistory.get() );
+    mCarbonContentCalc->setLandUseObjects( mLandUseHistory, this );
 }
 
 void LandLeaf::toInputXML( ostream& aOut, Tabs* aTabs ) const {
@@ -311,7 +315,7 @@ void LandLeaf::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElementCheckDefault( mLandExpansionCostName, "landConstraintCurve", aOut, aTabs, string() );
     
 
-    if( mLandUseHistory.get() ){
+    if( mLandUseHistory ){
         mLandUseHistory->toInputXML( aOut, aTabs );
     }
 
@@ -328,7 +332,7 @@ void LandLeaf::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) c
     XMLWriteElement( mInterestRate, "interest-rate", out, tabs );
     XMLWriteVector( mCarbonPriceIncreaseRate, "carbon-price-increase-rate", out, tabs, scenario->getModeltime() );
     XMLWriteElementCheckDefault( mLandExpansionCostName, "landConstraintCurve", out, tabs, string() );
-    if( mLandUseHistory.get() ){
+    if( mLandUseHistory ){
         mLandUseHistory->toDebugXML( period, out, tabs );
     }
     
@@ -561,14 +565,11 @@ void LandLeaf::calcLandAllocation( const string& aRegionName,
         mLandAllocation[ aPeriod ] = 0.0;
     }
 
-    // Set the land use in the carbon content calculator.
-    mCarbonContentCalc->setTotalLandUse( mLandAllocation[ aPeriod ], aPeriod );
-
     // compute any demands for land use constraint resources
     if ( mIsLandExpansionCost ) {
         Marketplace* marketplace = scenario->getMarketplace();
-        mLastCalcExpansionValue = marketplace->addToDemand( mLandExpansionCostName, aRegionName, 
-            mLandAllocation[ aPeriod ], mLastCalcExpansionValue, aPeriod, true );      
+        marketplace->addToDemand( mLandExpansionCostName, aRegionName,
+            mLandAllocation[ aPeriod ], aPeriod, true );
     }
 
 }
@@ -578,21 +579,21 @@ void LandLeaf::calcLandAllocation( const string& aRegionName,
 * \param aRegionName Region.
 * \param aPeriod Current model period.
 * \param aEndYear The year to calculate LUC emissions to.
+* \param aStoreFullEmiss Flag to pass on to the carbon calc used as an optimization
+*                        to avoid store full LUC emissins during World.calc.
 */
 void LandLeaf::calcLUCEmissions( const string& aRegionName,
-                                 const int aPeriod, const int aEndYear )
+                                 const int aPeriod, const int aEndYear,
+                                 const bool aStoreFullEmiss )
 {
     // Calculate the amount of emissions attributed to land use change in the current period
-    mCarbonContentCalc->calc( aPeriod, aEndYear );
+    mLastCalcCO2Value = mCarbonContentCalc->calc( aPeriod, aEndYear, aStoreFullEmiss );
 
-    // Add emissions to the carbon market. 
-    const Modeltime* modeltime = scenario->getModeltime();
-    if ( ( aEndYear != CarbonModelUtils::getEndYear() || aPeriod == modeltime->getmaxper() - 1 ) ) {
-        double LUCEmissions = mCarbonContentCalc
-            ->getNetLandUseChangeEmission( modeltime->getper_to_yr( aPeriod ) );
+    // Add emissions to the carbon market.
+    if ( !aStoreFullEmiss ) {
         Marketplace* marketplace = scenario->getMarketplace();
-        mLastCalcCO2Value = marketplace->addToDemand( "CO2_LUC", aRegionName, LUCEmissions,
-                                                      mLastCalcCO2Value, aPeriod, false );
+        marketplace->addToDemand( "CO2_LUC", aRegionName,
+                                  mLastCalcCO2Value, aPeriod, false );
     }  
 }
 
@@ -645,7 +646,7 @@ void LandLeaf::accept( IVisitor* aVisitor, const int aPeriod ) const {
 
     acceptDerived( aVisitor, aPeriod );
 
-    if( mCarbonContentCalc.get() ){
+    if( mCarbonContentCalc ){
         mCarbonContentCalc->accept( aVisitor, aPeriod );
     }
 
@@ -657,7 +658,7 @@ void LandLeaf::acceptDerived( IVisitor* aVisitor, const int aPeriod ) const {
 }
 
 ICarbonCalc* LandLeaf::getCarbonContentCalc() const{
-    return ( mCarbonContentCalc.get() );
+    return mCarbonContentCalc;
 }
 
 bool LandLeaf::isManagedLandLeaf( )  const 

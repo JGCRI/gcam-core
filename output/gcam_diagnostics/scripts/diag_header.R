@@ -40,15 +40,15 @@
 
 # -----------------------------------------------------------------------------
 # Load required libraries
+if( !require( "rgcam", character.only=T ) ) {
+    stop( "Couldn't load rgcam, please install it with devtools::install_github('JGCRI/rgcam')")
+}
 # NB this diag has been tested with the following libraries:
 #   ggplot2     0.9.2-0.9.3
-#   reshape2    1.2.1
-#   stringr     0.6.1
+#   reshape2    1.4.2
 #   scales      0.2.3
-#   rgdal       0.7-24
 #   plyr        1.8
-#   maptools    0.8-22
-libs <- c( "ggplot2", "reshape2", "stringr", "scales", "rgdal", "plyr", "maptools", "grid" )
+libs <- c( "ggplot2", "reshape2", "scales", "plyr" )
 for( i in libs ) {
     if( !require( i, character.only=T ) ) {
         cat( "Couldn't load", i, "\n" )

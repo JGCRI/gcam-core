@@ -57,16 +57,22 @@ using namespace xercesc;
 /*!
  * \brief Constructor.
  */
-CSPBackupCalculator::CSPBackupCalculator():
-  mMaxBackupFraction (  0.40 ), 
-  mMaxSectorLoadServed( 0.15 ),
-  mBackupExponent ( 4.0 ) 
+CSPBackupCalculator::CSPBackupCalculator()
 {
+    mMaxBackupFraction = 0.40;
+    mMaxSectorLoadServed = 0.15;
+    mBackupExponent = 4.0;
 }
 
 // Documentation is inherited.
 CSPBackupCalculator* CSPBackupCalculator::clone() const {
-    return new CSPBackupCalculator( *this );
+    CSPBackupCalculator* clone = new CSPBackupCalculator();
+    clone->mMaxBackupFraction = mMaxBackupFraction;
+    clone->mMaxSectorLoadServed = mMaxSectorLoadServed;
+    clone->mBackupExponent = mBackupExponent;
+    clone->mNoSunDayBackup = mNoSunDayBackup;
+    
+    return clone;
 }
 
 // Documentation is inherited.

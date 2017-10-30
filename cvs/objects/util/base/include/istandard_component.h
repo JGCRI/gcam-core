@@ -61,7 +61,7 @@ class Tabs;
  *          the exact same way.
  * \author Josh Lurz
  */
-class ISimpleComponent { 
+class ISimpleComponent {
 public:
 	/*!
      * \brief Constructor.
@@ -91,12 +91,6 @@ public:
 	 * \return Whether the type of the object is the same as the passed in type.
      */
 	virtual bool isSameType( const std::string& aType ) const = 0;
-    
-	/*!
-     * \brief Get the name of the component.
-	 * \return The name of the component.
-	 */
-	virtual const std::string& getName() const = 0;
 
 	/*!
      * \brief Write data from this object in an XML format for debugging.

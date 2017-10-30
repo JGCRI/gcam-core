@@ -84,23 +84,29 @@ protected:
     virtual void toDebugXMLDerived( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
 
     virtual void calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP );
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        AEmissionsControl,
+        
+        //! Boolean indicating whether reductions should occur at a zero carbon price
+        DEFINE_VARIABLE( SIMPLE, "no-zero-cost-reductions", mNoZeroCostReductions, bool ),
+        
+        //! The underlying Curve (as read in)
+        DEFINE_VARIABLE( CONTAINER, "mac-reduction", mMacCurve, PointSetCurve* ),
+        
+        //! Length of time in years to phase in no-cost MAC reductions
+        DEFINE_VARIABLE( SIMPLE, "zero-cost-phase-in-time", mZeroCostPhaseInTime, int ),
+        
+        //! Conversion factor if getting price from its own market.
+        DEFINE_VARIABLE( SIMPLE, "mac-price-conversion", mCovertPriceValue, Value ),
+        
+        //! Name of market who's price is used to look up the curve.
+        DEFINE_VARIABLE( SIMPLE, "market-name", mPriceMarketName, std::string )
+    )
 
 private:
-    //! Boolean indicating whether reductions should occur at a zero carbon price
-    bool mNoZeroCostReductions;
-    
-    //! The underlying Curve (as read in)
-    std::auto_ptr<PointSetCurve> mMacCurve;
-    
-    //! Length of time in years to phase in no-cost MAC reductions
-    int mZeroCostPhaseInTime;
-    
-     //! Conversion factor if getting price from its own market.
-    double mCovertPriceValue;
-    
-    //! Name of market who's price is used to look up the curve.
-    std::string mPriceMarketName;
-    
     void copy( const MACControl& other );
     double getMACValue( const double aCarbonPrice ) const;
 };

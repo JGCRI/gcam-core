@@ -194,6 +194,7 @@ namespace objects {
         iterator begin();
         iterator end();
         iterator last();
+        typedef T value_type;
     protected:
         //! Dynamic array containing the data.
         T* mData;
@@ -761,6 +762,9 @@ namespace objects {
         typename TimeVectorBase<T>::const_iterator find( const unsigned int aIndex ) const;
         typename TimeVectorBase<T>::iterator find( const unsigned int aIndex );
 
+        const unsigned int getStartYear() const;
+        const unsigned int getEndYear() const;
+
    protected:
         //! First year of the array. This year is included in the array.
         unsigned int mStartYear;
@@ -871,6 +875,24 @@ namespace objects {
             }
             // Return an iterator to the year.
             return typename TimeVectorBase<T>::iterator( aYear - mStartYear, this );
+        }
+
+    /*!
+     * \brief Get the start year of the YearVector.
+     * \return The start year.
+     */
+    template<class T>
+        const unsigned int YearVector<T>::getStartYear() const {
+            return mStartYear;
+        }
+
+    /*!
+     * \brief Get the end year of the YearVector.
+     * \return The end year.
+     */
+    template<class T>
+        const unsigned int YearVector<T>::getEndYear() const {
+            return mEndYear;
         }
 
     /*!

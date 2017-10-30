@@ -131,7 +131,8 @@ public:
                                      const int aPeriod );
     
     virtual void calcLUCEmissions( const std::string& aRegionName,
-                                   const int aYear, const int aEndYear );
+                                   const int aYear, const int aEndYear,
+                                   const bool aStoreFullEmiss );
     
     virtual double getLandAllocation( const std::string& aProductName,
                                       const int aPeriod ) const;
@@ -182,39 +183,45 @@ protected:
     
     const ALandAllocatorItem* findChild( const std::string& aName,
                                          const LandAllocatorItemType aType ) const;
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        ALandAllocatorItem,
 
-    //! Land allocated -- used for conceptual roots
-    objects::PeriodVector<double> mLandAllocation;
+        //! Land allocated -- used for conceptual roots
+        DEFINE_VARIABLE( ARRAY | STATE, "landAllocation", mLandAllocation, objects::PeriodVector<Value> ),
+            
+        //! Logit exponent -- should be positive since we are sharing on profit
+        DEFINE_VARIABLE( ARRAY, "logit-exponent", mLogitExponent, objects::PeriodVector<double> ),
+
+        //! Share Profit scaler for new technologies in this node
+        DEFINE_VARIABLE( ARRAY, "new-tech-profit-scaler", mNewTechProfitScaler, objects::PeriodVector<double> ),
         
-    //! Logit exponent -- should be positive since we are sharing on profit
-    objects::PeriodVector<double> mLogitExponent;
+        //! Numerator that determines share for new technologies IF the right profit conditions hold
+        //! Share will equal ( mGhostShareNumerator / ( 1 + mGhostShareNumerator ) ) if and only if
+        //! the profit of the new technology is equal to the profit of the dominant technology in 
+        //! the base year, and all other profits stay the same.
+        DEFINE_VARIABLE( ARRAY, "default-share", mGhostShareNumerator, objects::PeriodVector<double> ),
+        
+        //! Double storing the average price of land in a region or subregion
+        DEFINE_VARIABLE( SIMPLE, "unManagedLandValue", mUnManagedLandValue, double ),
 
-    //! Share Profit scaler for new technologies in this node
-    objects::PeriodVector<double> mNewTechProfitScaler;
-    
-    //! Numerator that determines share for new technologies IF the right profit conditions hold
-	//! Share will equal ( mGhostShareNumerator / ( 1 + mGhostShareNumerator ) ) if and only if
-	//! the profit of the new technology is equal to the profit of the dominant technology in 
-	//! the base year, and all other profits stay the same.
-    objects::PeriodVector<double> mGhostShareNumerator;
-    
-    //! Double storing the average price of land in a region or subregion
-    double mUnManagedLandValue;
+        //! Boolean indicating that scalers in this node should be adjusted for new technologies
+        // TODO: we may want this boolean at the LandLeaf level, but it will need to be used in LandNode
+        DEFINE_VARIABLE( SIMPLE, "adjustForNewTech", mAdjustScalersForNewTech, bool ),
 
-    //! Boolean indicating that scalers in this node should be adjusted for new technologies
-    // TODO: we may want this boolean at the LandLeaf level, but it will need to be used in LandNode
-    bool mAdjustScalersForNewTech;
+        //! List of the children of this land node located below it in the land
+        //! allocation tree.
+        DEFINE_VARIABLE( CONTAINER, "child-nodes", mChildren, std::vector<ALandAllocatorItem*> ),
 
-    //! List of the children of this land node located below it in the land
-    //! allocation tree.
-    std::vector<ALandAllocatorItem*> mChildren;
+        //! Container of historical land use.
+        DEFINE_VARIABLE( CONTAINER, "land-use-history", mLandUseHistory, LandUseHistory* ),
 
-    //! Container of historical land use.
-    std::auto_ptr<LandUseHistory> mLandUseHistory;
-
-    //! (optional) A carbon calculation which can used when children maybe similar
-    //! in terms of switching between them does not mean carbon is emitted per se.
-    std::auto_ptr<NodeCarbonCalc> mCarbonCalc;
+        //! (optional) A carbon calculation which can used when children maybe similar
+        //! in terms of switching between them does not mean carbon is emitted per se.
+        DEFINE_VARIABLE( CONTAINER, "node-carbon-calc", mCarbonCalc, NodeCarbonCalc* )
+    )
 };
 
 #endif // _LAND_NODE_H_

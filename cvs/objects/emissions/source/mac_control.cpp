@@ -74,11 +74,13 @@ mMacCurve( new PointSetCurve( new ExplicitPointSet() ) )
 
 //! Default destructor.
 MACControl::~MACControl(){
+    delete mMacCurve;
 }
 
 //! Copy constructor.
 MACControl::MACControl( const MACControl& aOther )
 : AEmissionsControl( aOther ) {
+    mMacCurve = 0;
     copy( aOther );
 }
 
@@ -90,7 +92,10 @@ MACControl* MACControl::clone() const {
 //! Assignment operator.
 MACControl& MACControl::operator=( const MACControl& aOther ){
     if( this != &aOther ){
-        // If there was a destructor it would need to be called here.
+        // Free memory before copying.  Since this is just a single
+        // variable I am just deleting it directly here.
+        delete mMacCurve;
+        mMacCurve = 0;
         AEmissionsControl::operator=( aOther );
         copy( aOther );
     }
@@ -99,7 +104,11 @@ MACControl& MACControl::operator=( const MACControl& aOther ){
 
 //! Copy helper function.
 void MACControl::copy( const MACControl& aOther ){
-    mMacCurve.reset( aOther.mMacCurve->clone() );
+    /*!
+     * \pre mMacCurve should be null otherwise we have a memory leak.
+     */
+    assert( !mMacCurve );
+    mMacCurve = aOther.mMacCurve->clone();
     mNoZeroCostReductions = aOther.mNoZeroCostReductions;
     mZeroCostPhaseInTime = aOther.mZeroCostPhaseInTime;
     mCovertPriceValue = aOther.mCovertPriceValue;
@@ -138,7 +147,7 @@ bool MACControl::XMLDerivedClassParse( const string& aNodeName, const DOMNode* a
         mZeroCostPhaseInTime = XMLHelper<int>::getValue( aCurrNode );
     }
     else if ( aNodeName == "mac-price-conversion" ){
-        mCovertPriceValue = XMLHelper<double>::getValue( aCurrNode );
+        mCovertPriceValue = XMLHelper<Value>::getValue( aCurrNode );
     }
     else if ( aNodeName == "market-name" ){
         mPriceMarketName = XMLHelper<string>::getValue( aCurrNode );
@@ -161,7 +170,7 @@ void MACControl::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
     }
     XMLWriteElementCheckDefault( mZeroCostPhaseInTime, "zero-cost-phase-in-time", aOut, aTabs, 25 );
     XMLWriteElementCheckDefault( mNoZeroCostReductions, "no-zero-cost-reductions", aOut, aTabs, false );    
-    XMLWriteElementCheckDefault( mCovertPriceValue, "mac-price-conversion", aOut, aTabs, 1.0 );
+    XMLWriteElementCheckDefault( mCovertPriceValue, "mac-price-conversion", aOut, aTabs, Value( 1.0 ) );
     XMLWriteElement( mPriceMarketName, "market-name", aOut, aTabs );
 }
 

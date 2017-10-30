@@ -61,10 +61,13 @@ extern Scenario* scenario;
 //! Default Constructor
 BuildingServiceInput::BuildingServiceInput()
 {
+    mSatiationDemandFunction = 0;
 }
 
 //! Destructor
-BuildingServiceInput::~BuildingServiceInput() {}
+BuildingServiceInput::~BuildingServiceInput() {
+    delete mSatiationDemandFunction;
+}
 
 /*! \brief Get the XML name for reporting to XML file.
 *
@@ -160,7 +163,8 @@ void BuildingServiceInput::copy( const BuildingServiceInput& aInput ) {
     mName = aInput.mName;
     mServiceDemand = aInput.mServiceDemand;
 
-    mSatiationDemandFunction.reset( new SatiationDemandFunction( *aInput.mSatiationDemandFunction.get() ) );
+    delete mSatiationDemandFunction;
+    mSatiationDemandFunction = aInput.mSatiationDemandFunction->clone();
 }
 
 bool BuildingServiceInput::isSameType( const string& aType ) const {
@@ -218,7 +222,7 @@ void BuildingServiceInput::setServiceDensity( const double aServiceDensity, cons
  * \return The satiation demand function.
  */
 SatiationDemandFunction* BuildingServiceInput::getSatiationDemandFunction() const {
-    return mSatiationDemandFunction.get();
+    return mSatiationDemandFunction;
 }
 
 //! Get the name of the input
@@ -253,8 +257,8 @@ void BuildingServiceInput::setPhysicalDemand( double aPhysicalDemand, const stri
         mServiceDemand[ aPeriod ].set( aPhysicalDemand );
     }
     
-    mLastCalcValue = scenario->getMarketplace()->addToDemand( mName, aRegionName,
-        aPhysicalDemand, mLastCalcValue, aPeriod );
+    scenario->getMarketplace()->addToDemand( mName, aRegionName,
+        mServiceDemand[ aPeriod ], aPeriod );
 }
 
 /*!

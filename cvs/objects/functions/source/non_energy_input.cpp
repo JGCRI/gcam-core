@@ -83,8 +83,7 @@ const string& NonEnergyInput::getXMLReportingName() const{
 
 //! Constructor
 NonEnergyInput::NonEnergyInput()
-: mAdjustedCosts( scenario->getModeltime()->getmaxper() ),
-  mAdjustedCoefficients( scenario->getModeltime()->getmaxper() ){
+{
 }
 
 /*! \brief Constructor that sets name attribute.
@@ -93,20 +92,29 @@ NonEnergyInput::NonEnergyInput()
 * objects.
 * \author Steve Smith
 */
-NonEnergyInput::NonEnergyInput( const std::string& aName ) 
-: mAdjustedCosts( scenario->getModeltime()->getmaxper() ),
-  mAdjustedCoefficients( scenario->getModeltime()->getmaxper() )
+NonEnergyInput::NonEnergyInput( const std::string& aName )
 {
     mName = aName;
 }
 
 //! Clone the input.
 NonEnergyInput* NonEnergyInput::clone() const {
-    return new NonEnergyInput( *this );
+    NonEnergyInput* clone = new NonEnergyInput();
+    clone->copy( *this );
+    return clone;
 }
 
 bool NonEnergyInput::isSameType( const string& aType ) const {
     return aType == getXMLNameStatic();
+}
+
+void NonEnergyInput::copy( const NonEnergyInput& aOther ) {
+    MiniCAMInput::copy( aOther );
+    
+    mCost = aOther.mCost;
+    mTechChange = aOther.mTechChange;
+    
+    // calculated parameters are not copied.
 }
 
 void NonEnergyInput::copyParam( const IInput* aInput,

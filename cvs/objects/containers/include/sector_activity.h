@@ -71,8 +71,6 @@ public:
     
     void setDemands( const int aPeriod );
     
-    void setStale();
-    
     std::string getDescription() const;
     
     IActivity* getSectorPriceActivity() const;
@@ -87,10 +85,6 @@ private:
     
     //! The name of the region this sector is contained in.
     const std::string& mRegionName;
-    
-    //! If setting supplies and demands require setting prices first to avoid
-    //! stale shares.
-    bool mIsStale;
     
     //! A pointer to the activity used to call setPrices.  Note this memory is
     //! managed by the market dependency finder.
@@ -116,8 +110,6 @@ public:
     // IActivity methods
     virtual void calc( const int aPeriod );
     
-    virtual void setStale();
-    
     virtual std::string getDescription() const;
 private:
     SectorPriceActivity( boost::shared_ptr<SectorActivity> aSectorActivity );
@@ -140,8 +132,6 @@ public:
     
     // IActivity methods
     virtual void calc( const int aPeriod );
-    
-    virtual void setStale();
     
     virtual std::string getDescription() const;
 private:

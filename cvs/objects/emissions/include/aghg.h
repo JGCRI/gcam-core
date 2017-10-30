@@ -50,9 +50,14 @@
 #include <vector>
 #include <memory>
 #include <string>
+#include <boost/core/noncopyable.hpp>
 
+#include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iround_trippable.h"
+#include "util/base/include/value.h"
+#include "util/base/include/time_vector.h"
+#include "util/base/include/data_definition_util.h"
 
 // Forward declarations
 class GDP;
@@ -63,6 +68,10 @@ class AEmissionsControl;
 class ICaptureComponent;
 class IInput;
 class CachedMarket;
+
+// Need to forward declare the subclasses as well.
+class CO2Emissions;
+class NonCO2Emissions;
 
 /*! 
  * \ingroup Objects
@@ -76,7 +85,7 @@ class CachedMarket;
  *          The last one of these read in determines the method used.
  * \author Sonny Kim, Marshall Wise, Steve Smith, Nick Fernandez, Jim Naslund
  */
-class AGHG: public IVisitable, public IRoundTrippable
+class AGHG: public INamed, public IVisitable, public IRoundTrippable, private boost::noncopyable
 { 
     friend class XMLDBOutputter;
 
@@ -163,8 +172,6 @@ public:
                                const int aPeriod ) = 0;
     
     double getEmission( const int aPeriod ) const;
-    
-    double getEmissionsSequestered( const int aPeriod ) const;
 
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     
@@ -175,8 +182,6 @@ public:
 protected:
 
     AGHG();
-    AGHG( const AGHG& aOther );
-    AGHG& operator=( const AGHG& aOther );
 
     /*!
      * \brief Get the XML node name for output to XML.
@@ -188,18 +193,25 @@ protected:
      * \return The constant XML_NAME.
      */
     virtual const std::string& getXMLName() const = 0;
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of AGHG to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( AGHG, CO2Emissions, NonCO2Emissions ),
+        
+        //! GHG name
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
-    //! GHG name
-    std::string mName;
+        //! Unit of emissions
+        DEFINE_VARIABLE( SIMPLE, "emissions-unit", mEmissionsUnit, std::string ),
 
-    //! Unit of emissions
-    std::string mEmissionsUnit;
-
-    //! Emissions (calculated)
-    std::vector<double> mEmissions;
-
-    //! Emissions sequestered by a ICaptureComponent
-    std::vector<double> mEmissionsSequestered;
+        //! Emissions (calculated)
+        //! TODO: These are sized to store emissions for all periods however only
+        //!       a fraction of that will actually be used (depending on the technology
+        //!       vintage and lifetime.
+        DEFINE_VARIABLE( ARRAY | STATE, "emissions", mEmissions, objects::PeriodVector<Value> )
+    )
     
     //! Pre-located market which has been cached from the marketplace to get the price
     //! of this ghg and add demands to the market.
@@ -241,7 +253,6 @@ protected:
 
     void addEmissionsToMarket( const std::string& aRegionName, const int aPeriod );
     
-private:
     void copy( const AGHG& other );
 };
 

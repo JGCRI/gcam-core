@@ -54,6 +54,7 @@
     <ProjectName>objects-main</ProjectName>
     <ProjectGuid>{C6E84727-E04B-48EC-B119-EE4A2C0DB34B}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -71,7 +72,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>Windows7.1SDK</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release - LAPACK|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -365,12 +366,12 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalOptions>/WL /MP %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/WL /MP /bigobj %(AdditionalOptions)</AdditionalOptions>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <OmitFramePointers>true</OmitFramePointers>
       <AdditionalIncludeDirectories>..\..\..\..\libs\xercesc\include;..\..\..\..\libs\boost-lib;..\..\..\..\libs\java\include;..\..;..\..\climate\source\hector\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;BOOST_MATH_TR1_NO_LIB;NDEBUG;_WINDOWS;_AFXDLL;JARS_LIB#"../libs/basex/BaseX.jar\x3B../libs/jars/*";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;FUSION_MAX_VECTOR_SIZE=30;BOOST_MATH_TR1_NO_LIB;NDEBUG;_WINDOWS;_AFXDLL;JARS_LIB#"../libs/basex/BaseX.jar\x3B../libs/jars/*";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -603,6 +604,7 @@
     <ClCompile Include="..\..\marketplace\source\inverse_calibration_market.cpp" />
     <ClCompile Include="..\..\marketplace\source\linked_market.cpp" />
     <ClCompile Include="..\..\marketplace\source\market.cpp" />
+    <ClCompile Include="..\..\marketplace\source\market_container.cpp" />
     <ClCompile Include="..\..\marketplace\source\market_locator.cpp" />
     <ClCompile Include="..\..\marketplace\source\market_RES.cpp" />
     <ClCompile Include="..\..\marketplace\source\market_subsidy.cpp" />
@@ -632,7 +634,6 @@
     <ClCompile Include="..\..\sectors\source\factor_supply.cpp" />
     <ClCompile Include="..\..\sectors\source\final_demand_sector.cpp" />
     <ClCompile Include="..\..\sectors\source\more_sector_info.cpp" />
-    <ClCompile Include="..\..\sectors\source\non_energy_final_demand.cpp" />
     <ClCompile Include="..\..\sectors\source\pass_through_sector.cpp" />
     <ClCompile Include="..\..\sectors\source\production_sector.cpp" />
     <ClCompile Include="..\..\sectors\source\sector.cpp" />
@@ -640,7 +641,6 @@
     <ClCompile Include="..\..\sectors\source\subsector.cpp" />
     <ClCompile Include="..\..\sectors\source\subsector_add_techcosts.cpp" />
     <ClCompile Include="..\..\sectors\source\supply_sector.cpp" />
-    <ClCompile Include="..\..\sectors\source\tran_sector.cpp" />
     <ClCompile Include="..\..\sectors\source\tran_subsector.cpp" />
     <ClCompile Include="..\..\sectors\source\wind_backup_calculator.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\bisect_all.cpp" />
@@ -732,10 +732,12 @@
     <ClCompile Include="..\..\util\base\source\calibrate_share_weight_visitor.cpp" />
     <ClCompile Include="..\..\util\base\source\configuration.cpp" />
     <ClCompile Include="..\..\util\base\source\fixed_interpolation_function.cpp" />
+    <ClCompile Include="..\..\util\base\source\gcam_fusion.cpp" />
     <ClCompile Include="..\..\util\base\source\input_finder.cpp" />
     <ClCompile Include="..\..\util\base\source\interpolation_function_factory.cpp" />
     <ClCompile Include="..\..\util\base\source\interpolation_rule.cpp" />
     <ClCompile Include="..\..\util\base\source\linear_interpolation_function.cpp" />
+    <ClCompile Include="..\..\util\base\source\manage_state_variables.cpp" />
     <ClCompile Include="..\..\util\base\source\model_time.cpp" />
     <ClCompile Include="..\..\util\base\source\s_curve_interpolation_function.cpp" />
     <ClCompile Include="..\..\util\base\source\summary.cpp" />
@@ -855,6 +857,7 @@
     <ClInclude Include="..\..\containers\include\iactivity.h" />
     <ClInclude Include="..\..\containers\include\icycle_breaker.h" />
     <ClInclude Include="..\..\containers\include\iinfo.h" />
+    <ClInclude Include="..\..\containers\include\imodel_feedback_calc.h" />
     <ClInclude Include="..\..\containers\include\info.h" />
     <ClInclude Include="..\..\containers\include\info_factory.h" />
     <ClInclude Include="..\..\containers\include\iscenario_runner.h" />
@@ -922,6 +925,7 @@
     <ClInclude Include="..\..\marketplace\include\inverse_calibration_market.h" />
     <ClInclude Include="..\..\marketplace\include\linked_market.h" />
     <ClInclude Include="..\..\marketplace\include\market.h" />
+    <ClInclude Include="..\..\marketplace\include\market_container.h" />
     <ClInclude Include="..\..\marketplace\include\market_locator.h" />
     <ClInclude Include="..\..\marketplace\include\market_RES.h" />
     <ClInclude Include="..\..\marketplace\include\market_subsidy.h" />
@@ -961,7 +965,6 @@
     <ClInclude Include="..\..\sectors\include\final_demand_sector.h" />
     <ClInclude Include="..\..\sectors\include\ibackup_calculator.h" />
     <ClInclude Include="..\..\sectors\include\more_sector_info.h" />
-    <ClInclude Include="..\..\sectors\include\non_energy_final_demand.h" />
     <ClInclude Include="..\..\sectors\include\pass_through_sector.h" />
     <ClInclude Include="..\..\sectors\include\production_sector.h" />
     <ClInclude Include="..\..\sectors\include\sector.h" />
@@ -969,7 +972,6 @@
     <ClInclude Include="..\..\sectors\include\subsector.h" />
     <ClInclude Include="..\..\sectors\include\subsector_add_techcosts.h" />
     <ClInclude Include="..\..\sectors\include\supply_sector.h" />
-    <ClInclude Include="..\..\sectors\include\tran_sector.h" />
     <ClInclude Include="..\..\sectors\include\tran_subsector.h" />
     <ClInclude Include="..\..\sectors\include\wind_backup_calculator.h" />
     <ClInclude Include="..\..\solution\solvers\include\bisect_all.h" />
@@ -1072,7 +1074,6 @@
     <ClInclude Include="..\..\technologies\include\technology_type.h" />
     <ClInclude Include="..\..\technologies\include\tran_technology.h" />
     <ClInclude Include="..\..\technologies\include\unmanaged_land_technology.h" />
-    <ClInclude Include="..\..\technologies\include\variable_cost_shutdown_decider.h" />
     <ClInclude Include="..\..\technologies\include\variable_production_state.h" />
     <ClInclude Include="..\..\technologies\include\vintage_production_state.h" />
     <ClInclude Include="..\..\technologies\include\wind_technology.h" />
@@ -1082,10 +1083,15 @@
     <ClInclude Include="..\..\util\base\include\calibrate_resource_visitor.h" />
     <ClInclude Include="..\..\util\base\include\calibrate_share_weight_visitor.h" />
     <ClInclude Include="..\..\util\base\include\configuration.h" />
+    <ClInclude Include="..\..\util\base\include\data_definition_util.h" />
     <ClInclude Include="..\..\util\base\include\default_visitor.h" />
     <ClInclude Include="..\..\util\base\include\definitions.h" />
+    <ClInclude Include="..\..\util\base\include\expand_data_vector.h" />
+    <ClInclude Include="..\..\util\base\include\factory.h" />
     <ClInclude Include="..\..\util\base\include\fixed_interpolation_function.h" />
     <ClInclude Include="..\..\util\base\include\fltcmp.hpp" />
+    <ClInclude Include="..\..\util\base\include\gcam_data_containers.h" />
+    <ClInclude Include="..\..\util\base\include\gcam_fusion.hpp" />
     <ClInclude Include="..\..\util\base\include\hash_map.h" />
     <ClInclude Include="..\..\util\base\include\iinterpolation_function.h" />
     <ClInclude Include="..\..\util\base\include\inamed.h" />
@@ -1097,7 +1103,9 @@
     <ClInclude Include="..\..\util\base\include\istandard_component.h" />
     <ClInclude Include="..\..\util\base\include\ivisitable.h" />
     <ClInclude Include="..\..\util\base\include\ivisitor.h" />
+    <ClInclude Include="..\..\util\base\include\iyeared.h" />
     <ClInclude Include="..\..\util\base\include\linear_interpolation_function.h" />
+    <ClInclude Include="..\..\util\base\include\manage_state_variables.hpp" />
     <ClInclude Include="..\..\util\base\include\model_time.h" />
     <ClInclude Include="..\..\util\base\include\object_meta_info.h" />
     <ClInclude Include="..\..\util\base\include\s_curve_interpolation_function.h" />

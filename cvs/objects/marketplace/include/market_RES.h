@@ -58,7 +58,7 @@
 
 class MarketRES: public Market {
 public:
-    MarketRES( const std::string& goodNameIn, const std::string& regionNameIn, int periodIn );
+    MarketRES( const MarketContainer* aContainer );
     virtual IMarketType::Type getType() const;
 
     virtual void initPrice();
@@ -79,6 +79,13 @@ public:
     virtual bool shouldSolve() const;
     virtual bool shouldSolveNR() const;
 protected:
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        Market
+    )
+    
     virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual double getDefaultPrice() const;
 

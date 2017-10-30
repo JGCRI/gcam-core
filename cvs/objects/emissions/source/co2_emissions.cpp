@@ -64,7 +64,9 @@ CO2Emissions::~CO2Emissions()
 
 //! Clone operator.
 CO2Emissions* CO2Emissions::clone() const {
-    return new CO2Emissions( *this );
+    CO2Emissions* clone = new CO2Emissions();
+    clone->copy( *this );
+    return clone;
 }
 
 void CO2Emissions::copyGHGParameters( const AGHG* aPrevGHG ){
@@ -247,10 +249,10 @@ void CO2Emissions::calcEmission( const std::string& aRegionName,
     // Calculate sequestered emissions if there is a sequestration device
     // and subtract from total emissions.
     if( aSequestrationDevice ){
-        mEmissionsSequestered[ aPeriod ] = aSequestrationDevice->calcSequesteredAmount( 
+        double emissionSequestered = aSequestrationDevice->calcSequesteredAmount(
                                                aRegionName, getName(), totalEmissions, aPeriod );
 
-        totalEmissions -= mEmissionsSequestered[ aPeriod ];
+        totalEmissions -= emissionSequestered;
     }
 
 

@@ -55,7 +55,7 @@
 
 class CalibrationMarket: public Market {
 public:
-    CalibrationMarket( const std::string& goodNameIn, const std::string& regionNameIn, int periodIn );
+    CalibrationMarket( const MarketContainer* aContainer );
     ~CalibrationMarket();
     virtual IMarketType::Type getType() const;
 
@@ -67,6 +67,13 @@ public:
     virtual bool meetsSpecialSolutionCriteria() const;
 
 protected:
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        Market
+    )
+    
     virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const;
 };
 

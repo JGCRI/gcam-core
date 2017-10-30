@@ -83,13 +83,23 @@ const string& InputOMVar::getXMLReportingName() const{
 
 //! Constructor
 InputOMVar::InputOMVar()
-: mAdjustedCosts( scenario->getModeltime()->getmaxper() ),
-  mAdjustedCoefficients( scenario->getModeltime()->getmaxper() ){
+{
 }
 
 //! Clone the input.
 InputOMVar* InputOMVar::clone() const {
-    return new InputOMVar( *this );
+    InputOMVar* clone = new InputOMVar();
+    clone->copy( *this );
+    return clone;
+}
+
+void InputOMVar::copy( const InputOMVar& aOther ) {
+    MiniCAMInput::copy( aOther );
+    
+    mTechChange = aOther.mTechChange;
+    mOMVar = aOther.mOMVar;
+    
+    // calculated parameters are not copied.
 }
 
 bool InputOMVar::isSameType( const string& aType ) const {
@@ -177,7 +187,7 @@ void InputOMVar::completeInit( const string& aRegionName,
     // levelized OM-var cost.
     // These costs may be adjusted by the Technology, for instance for capture
     // penalties.
-    mAdjustedCosts.assign( mAdjustedCosts.size(), calcOMVarCost() );
+    mAdjustedCosts.assign( mAdjustedCosts.size(), Value( calcOMVarCost() ) );
 }
 
 /** Calculate the levelizd OM_fixed cost.

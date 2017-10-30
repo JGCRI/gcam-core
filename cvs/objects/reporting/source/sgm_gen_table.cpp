@@ -140,7 +140,7 @@ void SGMGenTable::startVisitRegionCGE( const RegionCGE* regionCGE, const int aPe
     mCurrentRegionName = regionCGE->getName();
     // if table output is by sector, then add sector names to map
     if( mName == "PECbySector" ) {
-        for( std::vector<Sector*>::const_iterator secNameIter = regionCGE->supplySector.begin(); secNameIter != regionCGE->supplySector.end(); ++secNameIter ) {
+        for( std::vector<Sector*>::const_iterator secNameIter = regionCGE->mSupplySector.begin(); secNameIter != regionCGE->mSupplySector.end(); ++secNameIter ) {
             for ( int per = 0; per < mModeltime->getmaxper(); per++ ) {
                 int year = mModeltime->getper_to_yr( per );
                 addToType( year, (*secNameIter)->getName(), 0 );
@@ -168,7 +168,7 @@ void SGMGenTable::endVisitSector( const Sector* aSector, const int aPeriod ){
 void SGMGenTable::startVisitProductionSector( const ProductionSector* aProductionSector, const int aPeriod ) {
     if( mName == "PRICE" ) {
         addToType( mModeltime->getper_to_yr( aPeriod ), aProductionSector->getName(),
-            scenario->getMarketplace()->getPrice( aProductionSector->getName(), aProductionSector->regionName, aPeriod ) );
+            scenario->getMarketplace()->getPrice( aProductionSector->getName(), aProductionSector->mRegionName, aPeriod ) );
     }
 }
 

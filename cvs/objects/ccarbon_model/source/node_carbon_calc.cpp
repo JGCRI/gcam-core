@@ -47,6 +47,7 @@
 #include "util/base/include/util.h"
 #include "util/base/include/xml_helper.h"
 #include "land_allocator/include/land_use_history.h"
+#include "land_allocator/include/land_leaf.h"
 #include "util/logger/include/ilogger.h"
 
 using namespace std;
@@ -271,17 +272,15 @@ void NodeCarbonCalc::calcLandUseHistory()
         prevLandTotal = currLandTotal;
     }
 
-    // Make sure future year calculations start from the correct historical land
-    // areas.
+    // Make sure future year calculations start from the correct historical carbon stock.
     for( size_t i = 0; i < mCarbonCalcs.size(); ++i ) {
-        mCarbonCalcs[ i ]->setTotalLandUse( prevLand[ i ], 0 );
         mCarbonCalcs[ i ]->mCarbonStock[ mCarbonCalcs[ i ]->mLandUseHistory->getMaxYear() ] = carbonStock[ i ];
     }
 
     mHasCalculatedHistoricEmiss = true;
 }
 
-void NodeCarbonCalc::calc( const int aPeriod, const int aEndYear ) {
+void NodeCarbonCalc::calc( const int aPeriod, const int aEndYear, const bool aStoreFullEmiss ) {
     const Modeltime* modeltime = scenario->getModeltime();
 
     // If this is a land-use history year...
@@ -297,14 +296,12 @@ void NodeCarbonCalc::calc( const int aPeriod, const int aEndYear ) {
         int year = prevModelYear + 1;
 
         // clear the previously calculated emissions first
-        vector<YearVector<double>*> currEmissionsAbove( mCarbonCalcs.size() );
-        vector<YearVector<double>*> currEmissionsBelow( mCarbonCalcs.size() );
+        vector<YearVector<Value>*> currEmissionsAbove( mCarbonCalcs.size() );
+        vector<YearVector<Value>*> currEmissionsBelow( mCarbonCalcs.size() );
         for( size_t i = 0; i < mCarbonCalcs.size(); ++i ) {
             currEmissionsAbove[ i ] = mCarbonCalcs[ i ]->mStoredEmissionsAbove[ aPeriod ];
             currEmissionsBelow[ i ] = mCarbonCalcs[ i ]->mStoredEmissionsBelow[ aPeriod ];
             for( year = prevModelYear + 1; year <= aEndYear; ++year ) {
-                mCarbonCalcs[ i ]->mTotalEmissionsAbove[ year ] -= (*currEmissionsAbove[ i ])[ year ];
-                mCarbonCalcs[ i ]->mTotalEmissionsBelow[ year ] -= (*currEmissionsBelow[ i ])[ year ];
                 (*currEmissionsAbove[ i ])[ year ] = 0.0;
                 (*currEmissionsBelow[ i ])[ year ] = 0.0;
             }
@@ -325,13 +322,14 @@ void NodeCarbonCalc::calc( const int aPeriod, const int aEndYear ) {
         vector<double> diffLandByTimestep( mCarbonCalcs.size() );
         double prevLandTotal = 0;
         for( size_t i = 0; i < mCarbonCalcs.size(); ++i ) {
-            double land = mCarbonCalcs[ i ]->mLandUse[ aPeriod - 1 ];
+            double land = aPeriod == 1 ? mCarbonCalcs[ i ]->mLandUseHistory->getAllocation( prevModelYear ) :
+                mCarbonCalcs[ i ]->mLandLeaf->getLandAllocation( mCarbonCalcs[ i ]->mLandLeaf->getName(), aPeriod - 1 );
             prevLandByTimestep[ i ] = land;
             prevLandTotal += land;
         }
         double currLandTotal = 0;
         for( size_t i = 0; i < mCarbonCalcs.size(); ++i ) {
-            double land = mCarbonCalcs[ i ]->mLandUse[ aPeriod ];
+            double land = mCarbonCalcs[ i ]->mLandLeaf->getLandAllocation( mCarbonCalcs[ i ]->mLandLeaf->getName(), aPeriod );
             currLandByTimestep[ i ] = land;
             currLandTotal += land;
             diffLandByTimestep[ i ] = land - prevLandByTimestep[ i ];
@@ -444,11 +442,13 @@ void NodeCarbonCalc::calc( const int aPeriod, const int aEndYear ) {
 
         // add current emissions to the total
         for( size_t i = 0; i < mCarbonCalcs.size(); ++i ) {
-            for( year = prevModelYear + 1; year <= aEndYear; ++year ) {
-                mCarbonCalcs[ i ]->mTotalEmissionsAbove[ year ] += (*currEmissionsAbove[ i ])[ year ];
-                mCarbonCalcs[ i ]->mTotalEmissionsBelow[ year ] += (*currEmissionsBelow[ i ])[ year ];
-                mCarbonCalcs[ i ]->mTotalEmissions[ year ] = mCarbonCalcs[ i ]->mTotalEmissionsAbove[ year ] +
-                    mCarbonCalcs[ i ]->mTotalEmissionsBelow[ year ];
+            if( aStoreFullEmiss ) {
+                for( year = prevModelYear + 1; year <= aEndYear; ++year ) {
+                    mCarbonCalcs[ i ]->mTotalEmissionsAbove[ year ] += (*currEmissionsAbove[ i ])[ year ];
+                    mCarbonCalcs[ i ]->mTotalEmissionsBelow[ year ] += (*currEmissionsBelow[ i ])[ year ];
+                    mCarbonCalcs[ i ]->mTotalEmissions[ year ] = mCarbonCalcs[ i ]->mTotalEmissionsAbove[ year ] +
+                        mCarbonCalcs[ i ]->mTotalEmissionsBelow[ year ];
+                }
             }
         }
     }

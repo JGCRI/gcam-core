@@ -65,12 +65,13 @@ const string& Efficiency::getXMLNameStatic() {
  * \param aEfficiency An efficiency.
  */
 Efficiency::Efficiency( const double aEfficiency )
-: mReadInEfficiency( aEfficiency )
 {
+    mReadInEfficiency = aEfficiency;
 }
 
 Efficiency* Efficiency::clone() const {
-    return new Efficiency( *this );
+    Efficiency* clone = new Efficiency( mReadInEfficiency );
+    return clone;
 }
 
 bool Efficiency::isSameType( const string& aType ) const {

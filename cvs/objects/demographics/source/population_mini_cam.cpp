@@ -62,8 +62,9 @@ extern Scenario* scenario;
 const string PopulationMiniCAM::XML_NAME = "populationMiniCAM";
 
 //! Default constructor.
-PopulationMiniCAM::PopulationMiniCAM():
-mFractionWorking( 1.0 ) {
+PopulationMiniCAM::PopulationMiniCAM()
+{
+    mFractionWorking = 1.0;
 }
 
 Population* PopulationMiniCAM::cloneAndInterpolate( const int aNewYear, const Population* aNextPopulation ) const {

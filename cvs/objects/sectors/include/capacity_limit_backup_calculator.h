@@ -134,21 +134,26 @@ protected:
                                   const double aReserveMargin,
                                   const double aAverageGridCapacityFactor,
                                   const int aPeriod ) const;
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        IBackupCalculator,
 
-    //! Capacity limit which sets the fraction of total output at which the backup curve
-    //! returns a value of 50% of the upper limit for backup (i.e.,50 of mFmax)
-    double mCapacityLimit;
+        //! Capacity limit which sets the fraction of total output at which the backup curve
+        //! returns a value of 50% of the upper limit for backup (i.e.,50 of mFmax)
+        DEFINE_VARIABLE( SIMPLE, "capacity-limit", mCapacityLimit, double ),
 
-    //! Parameter for max rate of back up (e.g. specify 1 for 1-to-1 backup as max)
-    double mFmax;
+        //! Parameter for max rate of back up (e.g. specify 1 for 1-to-1 backup as max)
+        DEFINE_VARIABLE( SIMPLE, "fmax", mFmax, double ),
 
-    //! Parameter for steepness of backup curve. Higher number means steeper ascent.
-    double mC;
-   
-    //! Parameter for steepness of backup curve. Lower means steeper ascent. Ascent depends
-    //! on the ratio of c/tau
-    double mTau;
-  
+        //! Parameter for steepness of backup curve. Higher number means steeper ascent.
+        DEFINE_VARIABLE( SIMPLE, "c", mC, double ),
+       
+        //! Parameter for steepness of backup curve. Lower means steeper ascent. Ascent depends
+        //! on the ratio of c/tau
+        DEFINE_VARIABLE( SIMPLE, "tau", mTau, double )
+    )
 };
 
 #endif // _CAPACITY_LIMIT_BACKUP_CALCULATOR_H_

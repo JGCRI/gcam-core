@@ -45,11 +45,14 @@
  * \author Pralit Patel
  */
 
+#include <boost/core/noncopyable.hpp>
+
 #include "util/base/include/iparsable.h"
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/time_vector.h"
 #include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
+#include "util/base/include/data_definition_util.h"
 
 // Forward declarations
 class ITechnology;
@@ -57,6 +60,10 @@ class IInfo;
 class ILandAllocator;
 class Demographic;
 class InterpolationRule;
+
+// Need to forward declare the subclasses as well.
+class TechnologyContainer;
+class StubTechnologyContainer;
 
 /*! 
  * \ingroup Objects
@@ -68,7 +75,9 @@ class InterpolationRule;
  *          
  * \author Pralit Patel
  */
-class ITechnologyContainer : public INamed, public IParsable, public IRoundTrippable, public IVisitable {
+class ITechnologyContainer : public INamed, public IParsable, public IRoundTrippable,
+                             public IVisitable, private boost::noncopyable
+{
     friend class StubTechnologyContainer; // to be able to call clone()
 public:
     /*! 
@@ -209,6 +218,13 @@ protected:
      * \ param aNode The XML to parse.
      */
     virtual void interpolateAndParse( const xercesc::DOMNode* aNode ) = 0;
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of ITechnologyContainer to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( ITechnologyContainer, TechnologyContainer, StubTechnologyContainer )
+    )
 };
 
 // Inline function definitions.
