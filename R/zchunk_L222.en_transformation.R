@@ -246,7 +246,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
     # Copies first future year retirment information into all future years and appends back onto base year
     L222.globaltech_retirement_base %>%
       filter(year == min(FUTURE_YEARS)) %>%
-      repeat_add_columns(tibble("year" = as.character(c(FUTURE_YEARS)))) %>%
+      repeat_add_columns(tibble("year" = as.character(FUTURE_YEARS))) %>%
       select(-year.x) %>%
       rename(year = year.y) ->
       L222.globaltech_retirement_future
