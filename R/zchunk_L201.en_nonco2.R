@@ -26,7 +26,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
              "L114.bcoc_tgej_R_en_S_F_2000",
              "L151.nonghg_ctrl_R_en_S_T",
              FILE = "emissions/A51.steepness",
-             FILE = "temp-data-inject/L244.DeleteThermalService"))
+             "L244.DeleteThermalService"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L201.en_pol_emissions",
              "L201.en_ghg_emissions",
@@ -58,7 +58,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     L114.bcoc_tgej_R_en_S_F_2000 <- get_data(all_data, "L114.bcoc_tgej_R_en_S_F_2000")
     L151.nonghg_ctrl_R_en_S_T <- get_data(all_data, "L151.nonghg_ctrl_R_en_S_T")
     A51.steepness <- get_data(all_data, "emissions/A51.steepness")
-    L244.DeleteThermalService <- get_data(all_data, "temp-data-inject/L244.DeleteThermalService")
+    L244.DeleteThermalService <- get_data(all_data, "L244.DeleteThermalService")
 
     # L201.en_pol_emissions: Pollutant emissions for energy technologies in all regions
     L111.nonghg_tg_R_en_S_F_Yh %>%
@@ -245,7 +245,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       add_precursors("common/GCAM_region_names",
                      "emissions/A_regions", "energy/A_regions",
                      "L111.nonghg_tg_R_en_S_F_Yh",
-                     "temp-data-inject/L244.DeleteThermalService") ->
+                     "L244.DeleteThermalService") ->
       L201.en_pol_emissions
 
     L201.en_ghg_emissions %>%
@@ -258,7 +258,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       add_precursors("common/GCAM_region_names",
                      "energy/A_regions",
                      "L112.ghg_tg_R_en_S_F_Yh",
-                     "temp-data-inject/L244.DeleteThermalService") ->
+                     "L244.DeleteThermalService") ->
       L201.en_ghg_emissions
 
     L201.en_bcoc_emissions %>%
@@ -271,7 +271,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       add_precursors("common/GCAM_region_names",
                      "energy/A_regions",
                      "L114.bcoc_tgej_R_en_S_F_2000",
-                     "temp-data-inject/L244.DeleteThermalService") ->
+                     "L244.DeleteThermalService") ->
       L201.en_bcoc_emissions
 
     L201.nonghg_max_reduction %>%
@@ -284,7 +284,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       add_precursors("common/GCAM_region_names",
                      "emissions/A_regions", "energy/A_regions",
                      "L151.nonghg_ctrl_R_en_S_T",
-                     "temp-data-inject/L244.DeleteThermalService") %>%
+                     "L244.DeleteThermalService") %>%
       # Because of upstream numerical instability/rounding issues (see https://github.com/JGCRI/gcamdata/pull/613) need sum test here
       add_flags(FLAG_SUM_TEST) ->
       L201.nonghg_max_reduction
@@ -299,7 +299,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
                      "emissions/A_regions", "energy/A_regions",
                      "L151.nonghg_ctrl_R_en_S_T",
                      "emissions/A51.steepness",
-                     "temp-data-inject/L244.DeleteThermalService") ->
+                     "L244.DeleteThermalService") ->
       L201.nonghg_steepness
 
     L201.nonghg_max_reduction_res %>%

@@ -1,4 +1,4 @@
-#' module_energy_batch_building_SSP.xml
+#' module_energy_batch_building_SSP_xml
 #'
 #' Construct XML data structure for all the \code{building_SSP.xml} files.
 #'
@@ -8,7 +8,10 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{building_SSP1.xml}, \code{building_SSP2.xml}, \code{building_SSP3.xml},
 #' \code{building_SSP4.xml},and \code{building_SSP5.xml}.
-module_energy_batch_building_SSP.xml <- function(command, ...) {
+module_energy_batch_building_SSP_xml <- function(command, ...) {
+  SSP_NUMS <- seq(1,5)
+  fuelpref_NUMS <- c("1" = "15", "3" = "3", "4" = "4", "5" = "15")
+
   if(command == driver.DECLARE_INPUTS) {
     return(c(paste0("L244.Satiation_flsp_SSP", SSP_NUMS),
              paste0("L244.SatiationAdder_SSP", SSP_NUMS),
@@ -27,9 +30,6 @@ module_energy_batch_building_SSP.xml <- function(command, ...) {
     building_SSP1.xml <- building_SSP2.xml <- building_SSP3.xml <- building_SSP4.xml <-
       building_SSP5.xml <- NULL
 
-    SSP_NUMS <- seq(1,5)
-    fuelpref_NUMS <- c("1" = "15", "3" = "3", "4" = "4", "5" = "15")
-
     all_data <- list(...)[[1]]
 
     for (i in SSP_NUMS){
@@ -37,9 +37,9 @@ module_energy_batch_building_SSP.xml <- function(command, ...) {
       Satiation_flsp <- paste0("L244.Satiation_flsp_SSP", i)
       SatiationAdder <- paste0("L244.SatiationAdder_SSP", i)
       GenericServiceSatiation <- paste0("L244.GenericServiceSatiation_SSP", i)
-      # SSP2 is unique, doesn't have fuelprefelast or deletethermalservice
+      # SSP2 is unique, uses less files
       if (i != 2){
-      FuelPrefElast <- paste0("L244.FuelPrefElast_bld_SSP", fuelpref_NUMS[i])
+      FuelPrefElast <- paste0("L244.FuelPrefElast_bld_SSP", fuelpref_NUMS[toString(i)])
       }
       xmlfn <- paste0("building_SSP", i, ".xml")
 

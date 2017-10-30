@@ -16,8 +16,9 @@
 #' \code{L244.Satiation_flsp_SSP2}, \code{L244.SatiationAdder_SSP2}, \code{L244.GenericServiceSatiation_SSP2}, \code{L244.Satiation_flsp_SSP3},
 #' \code{L244.SatiationAdder_SSP3}, \code{L244.GenericServiceSatiation_SSP3}, \code{L244.FuelPrefElast_bld_SSP3}, \code{L244.Satiation_flsp_SSP4},
 #' \code{L244.SatiationAdder_SSP4}, \code{L244.GenericServiceSatiation_SSP4}, \code{L244.FuelPrefElast_bld_SSP4}, \code{L244.Satiation_flsp_SSP5},
-#' \code{L244.SatiationAdder_SSP5}, \code{L244.GenericServiceSatiation_SSP5}, \code{L244.FuelPrefElast_bld_SSP15}, \code{L244.DeleteThermalService}. The corresponding file in the
-#' original data system was \code{L244.building_det.R} (energy level2).
+#' \code{L244.SatiationAdder_SSP5}, \code{L244.GenericServiceSatiation_SSP5}, \code{L244.FuelPrefElast_bld_SSP15}, \code{L244.DeleteThermalService},
+#' \code{L244.HDDCDD_A2_CCSM3x}, \code{L244.HDDCDD_A2_HadCM3}, \code{L244.HDDCDD_B1_CCSM3x}, \code{L244.HDDCDD_B1_HadCM3} and \code{L244.HDDCDD_constdd_no_GCM}.
+#' The corresponding file in the original data system was \code{L244.building_det.R} (energy level2).
 #' @details Creates level2 data for the building sector.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
@@ -44,7 +45,6 @@ module_energy_L244.building_det <- function(command, ...) {
              FILE = "energy/A44.internal_gains",
              FILE = "energy/A44.satiation_flsp",
              FILE = "energy/A44.satiation_flsp_SSPs",
-             FILE = "energy/A44.cost_efficiency",
              FILE = "energy/A44.demand_satiation_mult",
              FILE = "energy/A44.demand_satiation_mult_SSPs",
              "L144.flsp_bm2_R_res_Yh",
@@ -105,7 +105,12 @@ module_energy_L244.building_det <- function(command, ...) {
              "L244.SatiationAdder_SSP5",
              "L244.GenericServiceSatiation_SSP5",
              "L244.FuelPrefElast_bld_SSP15",
-             "L244.DeleteThermalService"))
+             "L244.DeleteThermalService",
+             "L244.HDDCDD_A2_CCSM3x",
+             "L244.HDDCDD_A2_HadCM3",
+             "L244.HDDCDD_B1_CCSM3x",
+             "L244.HDDCDD_B1_HadCM3",
+             "L244.HDDCDD_constdd_no_GCM"))
   } else if(command == driver.MAKE) {
 
     # Silence package checks
@@ -120,7 +125,8 @@ module_energy_L244.building_det <- function(command, ...) {
       L244.SatiationAdder_SSP2 <- L244.GenericServiceSatiation_SSP2 <- L244.Satiation_flsp_SSP3 <-
       L244.SatiationAdder_SSP3 <- L244.GenericServiceSatiation_SSP3 <-L244.Satiation_flsp_SSP4 <-
       L244.SatiationAdder_SSP4 <- L244.GenericServiceSatiation_SSP4 <- L244.Satiation_flsp_SSP5 <-
-      L244.SatiationAdder_SSP5 <- L244.GenericServiceSatiation_SSP5 <- NULL
+      L244.SatiationAdder_SSP5 <- L244.GenericServiceSatiation_SSP5 <- scenario <- L244.HDDCDD_A2_CCSM3x <-
+      L244.HDDCDD_A2_HadCM3 <- L244.HDDCDD_B1_CCSM3x <- L244.HDDCDD_B1_HadCM3 <- L244.HDDCDD_constdd_no_GCM <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -145,7 +151,6 @@ module_energy_L244.building_det <- function(command, ...) {
     A44.internal_gains <- get_data(all_data, "energy/A44.internal_gains")
     A44.satiation_flsp <- get_data(all_data, "energy/A44.satiation_flsp")
     A44.satiation_flsp_SSPs <- get_data(all_data, "energy/A44.satiation_flsp_SSPs")
-    A44.cost_efficiency <- get_data(all_data, "energy/A44.cost_efficiency")
     A44.demand_satiation_mult <- get_data(all_data, "energy/A44.demand_satiation_mult")
     A44.demand_satiation_mult_SSPs <- get_data(all_data, "energy/A44.demand_satiation_mult_SSPs")
     L144.flsp_bm2_R_res_Yh <- get_data(all_data, "L144.flsp_bm2_R_res_Yh")
@@ -218,6 +223,7 @@ module_energy_L244.building_det <- function(command, ...) {
     # L244.Satiation_flsp: Satiation levels assumed for floorspace
     L244.Satiation_flsp_class <- A44.satiation_flsp %>%
       gather(sector, value, resid, comm) %>%
+      # Converting from square meters per capita to million square meters per capita
       mutate(satiation.level = value * CONV_THOUS_BIL) %>%
       select(-value)
 
@@ -230,6 +236,7 @@ module_energy_L244.building_det <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["Satiation_flsp"]])
 
     # Satiation adder - Required for shaping the future floorspace growth trajectories in each region
+    # The satiation adder allows the starting (final calibration year) position of any region and sector to be set along the satiation demand function
     # L244.SatiationAdder: Satiation adders in floorspace demand function
     # First, prepare socioeconomics tables by adding region names
     L102.pcgdp_thous90USD_Scen_R_Y <- L102.pcgdp_thous90USD_Scen_R_Y %>%
@@ -239,8 +246,8 @@ module_energy_L244.building_det <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       rename(pop_thous = value)
 
-    # In order to pass timeshift, we need floorspace for energy satiation year, which we don't have
-    # So instead, we will take floorspace for maximum year
+    # In order to pass timeshift, we need floorspace for energy satiation year, which we don't have under timeshift conditions
+    # So instead, we will take floorspace for maximum year (this ONLY affects the data in the timeshift right now)
     Floorspace_timeshift_pass <- L244.Floorspace %>%
       filter(year == max(L244.Floorspace$year)) %>%
       select(-year)
@@ -359,9 +366,8 @@ module_energy_L244.building_det <- function(command, ...) {
     L244.HDDCDD_scen_R_Y <- L143.HDDCDD_scen_R_Y %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID")
 
-    # Let's make a climate normal for each region, using a selected interval of years
+    # Let's make a climate normal (average climate conditions) for each region, using a selected interval of years
     # Don't want to just set one year, because we want average values for all regions
-    # Probably want this to be up to 2000, since in SRES 2001 is a future year
     L244.HDDCDD_normal_R_Y <- L244.HDDCDD_scen_R_Y %>%
       filter(year %in% energy.CLIMATE_NORMAL_YEARS,
              SRES == L244.all_sres_gcm$SRES[1],
@@ -385,7 +391,26 @@ module_energy_L244.building_det <- function(command, ...) {
       mutate(variable = if_else(thermal.building.service.input %in% heating_services, "HDD", "CDD")) %>%
       # Add HDD and CDD
       left_join_error_no_match(L244.HDDCDD_scen_R_Y, by = c("region", "SRES", "GCM", "variable", "year")) %>%
-      mutate(degree.days = round(value, energy.DIGITS_HDDCDD))
+      mutate(degree.days = round(value, energy.DIGITS_HDDCDD)) %>%
+      select(-variable, -value, -GCAM_region_ID) %>%
+      # Join SRES and GCM so that we can split by unique ESM scenario
+      unite(scenario, SRES, GCM) %>%
+      split(.$scenario) %>%
+      lapply(function(df){
+        select(df, -scenario) %>%
+          add_units("Fahrenheit Degree Days") %>%
+          add_comments("Degree days are from L143.HDDCDD_scen_R_Y") %>%
+          add_precursors("L143.HDDCDD_scen_R_Y", "common/GCAM_region_names",
+                         "energy/A44.internal_gains", "energy/A44.sector", "L144.base_service_EJ_serv",
+                         "energy/calibrated_techs_bld_det")
+      })
+
+    # Assign each tibble in list
+    for(i in names(L244.HDDCDD)) {
+      assign(paste0("L244.HDDCDD_", i), L244.HDDCDD[[i]] %>%
+               add_title(paste0("Heating and cooling degree days: ", i)) %>%
+               add_legacy_name(paste0("L244.HDDCDD_", i)))
+    }
 
     # L244.GenericServiceSatiation: Satiation levels assumed for non-thermal building services
     # First, calculate the service output per unit floorspace in the USA region
@@ -426,10 +451,10 @@ module_energy_L244.building_det <- function(command, ...) {
       distinct() %>%
       write_to_all_regions(LEVEL2_DATA_NAMES[["GenericServiceSatiation"]], GCAM_region_names = GCAM_region_names)
 
-    # This is bad. Need to match in the floorspace into the base service table, divide to calculate the service demand
+    # Need to match in the floorspace into the base service table, divide to calculate the service demand
     # per unit floorspace in the final calibration year. This (increased slightly) is then the minimum satiation level that needs to be read in.
     L244.BS <- L244.GenericBaseService %>%
-      left_join_error_no_match(L244.Floorspace, by = c(LEVEL2_DATA_NAMES[["BldNodes"]]), "year") %>%
+      left_join_error_no_match(L244.Floorspace, by = c(LEVEL2_DATA_NAMES[["BldNodes"]], "year")) %>%
       mutate(service.per.flsp = base.service / base.building.size) %>%
       filter(year == max(BASE_YEARS)) %>%
       select(LEVEL2_DATA_NAMES[["BldNodes"]], building.service.input, service.per.flsp)
@@ -455,7 +480,7 @@ module_energy_L244.building_det <- function(command, ...) {
       distinct() %>%
       write_to_all_regions(c(LEVEL2_DATA_NAMES[["GenericServiceSatiation"]], "SSP"), GCAM_region_names = GCAM_region_names)
 
-    # This is bad. Need to match in the floorspace into the base service table, divide to calculate the service demand
+    # Need to match in the floorspace into the base service table, divide to calculate the service demand
     # per unit floorspace in the final calibration year. This (increased slightly) is then the minimum satiation level that needs to be read in.
     L244.GenericServiceSatiation_SSPs <- L244.GenericServiceSatiation_SSPs %>%
       left_join_error_no_match(L244.BS, by = c(LEVEL2_DATA_NAMES[["BldNodes"]], "building.service.input")) %>%
@@ -469,7 +494,7 @@ module_energy_L244.building_det <- function(command, ...) {
           add_comments("For USA, calculate satiation level as base year service / base year floorspace times multiplier") %>%
           add_comments("USA values written to all regions, then we make sure that no satiation level is below base year service per floorspace") %>%
           add_precursors("L144.base_service_EJ_serv", "energy/calibrated_techs_bld_det", "common/GCAM_region_names",
-                         "L144.flsp_bm2_R_res_Yh", "L144.flsp_bm2_R_comm_Yh", "energy/A44.demand_satiation_mult")
+                         "L144.flsp_bm2_R_res_Yh", "L144.flsp_bm2_R_comm_Yh", "energy/A44.demand_satiation_mult_SSPs")
       })
 
     # Assign each tibble in list
@@ -494,7 +519,7 @@ module_energy_L244.building_det <- function(command, ...) {
       mutate(satiation.level = round(satiation.level * degree.days / degree.days[region == "USA"], digits = energy.DIGITS_CALOUTPUT)) %>%
       ungroup()
 
-    # This part here is bad. The service satiation in the final cal year can not be lower than the observed demand, so need to use pmax to set a floor on the quantity
+    # The service satiation in the final cal year can not be lower than the observed demand, so need to use pmax to set a floor on the quantity
     # First need to calculate the maximum quantities of demand over the historical time period, expressed per unit floorspace
     L244.tmp <- L244.ThermalBaseService %>%
       left_join_error_no_match(L244.Floorspace, by = c(LEVEL2_DATA_NAMES[["BldNodes"]], "year")) %>%
@@ -652,14 +677,6 @@ module_energy_L244.building_det <- function(command, ...) {
       mutate(minicam.non.energy.input = "non-energy") %>%
       select(LEVEL2_DATA_NAMES[["GlobalTechCost"]])
 
-    # L244.GlobalTechShutdown_bld: Retirement rates for building technologies
-    # NOTE: Retirement and shutdown rates only applied for existing (final cal year) stock
-    L244.GlobalTechShutdown_bld <- A44.cost_efficiency %>%
-      mutate(year = as.integer(max(BASE_YEARS))) %>%
-      rename(sector.name = supplysector,
-             subsector.name = subsector) %>%
-      select(LEVEL2_DATA_NAMES[["GlobalTechShutdown"]])
-
     # L244.StubTechIntGainOutputRatio: Output ratios of internal gain energy from non-thermal building services
     L244.StubTechIntGainOutputRatio <- L144.internal_gains %>%
       filter(year %in% MODEL_YEARS) %>%
@@ -678,7 +695,7 @@ module_energy_L244.building_det <- function(command, ...) {
 
     # L244.Intgains_scalar: Scalers relating internal gain energy to increased/reduced cooling/heating demands
     variable <- c("HDD", "CDD")
-    InternalGainsScalar_USA <- c(energy.INTERNALGAINSSCALAR_USA_H, energy.INTERNALGAINSSCALAR_USA_C)
+    InternalGainsScalar_USA <- c(energy.INTERNAL_GAINS_SCALAR_USA_H, energy.INTERNAL_GAINS_SCALAR_USA_C)
     US.base.scalar <- tibble(variable, InternalGainsScalar_USA)
 
     L244.Intgains_scalar <- L244.ThermalServiceSatiation %>%
@@ -704,10 +721,17 @@ module_energy_L244.building_det <- function(command, ...) {
     L244.DeleteGenericService <- L244.GenericBaseService %>%
       group_by(region, gcam.consumer, nodeInput, building.node.input, building.service.input) %>%
       summarise(base.service = max(base.service)) %>%
-      ungroup() %>%
-      filter(base.service == 0) %>%
-      select(-base.service) %>%
-      mutate(supplysector = building.service.input)
+      ungroup()
+
+    # This tibble is empty because no base.service = 0, so we will make an if statement to produce correct empty tibble
+    if (any(L244.DeleteGenericService$base.service == 0)){
+      L244.DeleteGenericService <- L244.DeleteGenericService%>%
+        filter(base.service == 0) %>%
+        select(-base.service) %>%
+        mutate(supplysector = building.service.input)
+    } else {
+      L244.DeleteGenericService <- tibble(x = NA)
+    }
 
 
 
@@ -1033,7 +1057,8 @@ module_energy_L244.building_det <- function(command, ...) {
                 L244.GenericServiceSatiation_SSP3, L244.FuelPrefElast_bld_SSP3, L244.Satiation_flsp_SSP4,
                 L244.SatiationAdder_SSP4, L244.GenericServiceSatiation_SSP4, L244.FuelPrefElast_bld_SSP4,
                 L244.Satiation_flsp_SSP5, L244.SatiationAdder_SSP5, L244.GenericServiceSatiation_SSP5, L244.FuelPrefElast_bld_SSP15,
-                L244.DeleteThermalService, L244.SubsectorLogit_bld, L244.StubTechIntGainOutputRatio)
+                L244.DeleteThermalService, L244.SubsectorLogit_bld, L244.StubTechIntGainOutputRatio,
+                L244.HDDCDD_A2_CCSM3x, L244.HDDCDD_A2_HadCM3, L244.HDDCDD_B1_CCSM3x, L244.HDDCDD_B1_HadCM3, L244.HDDCDD_constdd_no_GCM)
   } else {
     stop("Unknown command")
   }

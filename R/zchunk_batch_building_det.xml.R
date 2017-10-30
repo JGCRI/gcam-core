@@ -97,7 +97,7 @@ module_energy_batch_building_det.xml <- function(command, ...) {
       add_logit_tables_xml(L244.SubsectorLogit_bld,"SubsectorLogit") %>%
       add_xml_data(L244.FuelPrefElast_bld,"FuelPrefElast") %>%
       add_xml_data(L244.StubTech_bld, "StubTech") %>%
-      add_xml_data(L244.StubTechEff_bld, "StubTStubTechCalInputechEff") %>%
+      add_xml_data(L244.StubTechEff_bld, "StubTechEff") %>%
       add_xml_data(L244.StubTechCalInput_bld, "StubTechCalInput") %>%
       add_xml_data(L244.StubTechIntGainOutputRatio, "StubTechIntGainOutputRatio") %>%
       add_xml_data(L244.GlobalTechShrwt_bld, "GlobalTechShrwt") %>%
@@ -110,7 +110,7 @@ module_energy_batch_building_det.xml <- function(command, ...) {
                      "L244.Floorspace", "L244.SubregionalShares", "L244.SubsectorLogit_bld",
                      "L244.FuelPrefElast_bld", "L244.StubTech_bld", "L244.StubTechEff_bld",
                      "L244.StubTechCalInput_bld", "L244.StubTechIntGainOutputRatio", "L244.GlobalTechShrwt_bld",
-                     "L244.GlobalTechCost_bld", "L244.DeleteThermalService", "L244.DeleteGenericService") ->
+                     "L244.GlobalTechCost_bld", "L244.DeleteThermalService", "L244.DeleteGenericService", "L244.PriceExp_IntGains") ->
       building_det.xml
 
     # Some data inputs may not actually contain data. If so, do not add_xml_data.
@@ -120,7 +120,7 @@ module_energy_batch_building_det.xml <- function(command, ...) {
         building_det.xml
     }
 
-    if(nrow(L244.DeleteGenericService) > 0){
+    if(!is.null(L244.DeleteGenericService)){
       building_det.xml %>%
         add_xml_data(L244.DeleteGenericService, "DeleteGenericService") ->
         building_det.xml

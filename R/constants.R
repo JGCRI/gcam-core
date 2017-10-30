@@ -284,8 +284,8 @@ energy.SATIATION_YEAR <- 2010
 energy.GDP_MID_SATIATION <- 10.5
 energy.FLOOR_TO_SURFACE_RATIO <- 5.5
 
-energy.INTERNALGAINSSCALAR_USA_H <- -930
-energy.INTERNALGAINSSCALAR_USA_C <- 350
+energy.INTERNAL_GAINS_SCALAR_USA_H <- -930
+energy.INTERNAL_GAINS_SCALAR_USA_C <- 350
 
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
