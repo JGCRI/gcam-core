@@ -209,7 +209,8 @@ module_energy_L222.en_transformation <- function(command, ...) {
       complete(nesting(supplysector, subsector, technology), year = c(year, MODEL_YEARS)) %>%
       arrange(supplysector, year) %>%
       group_by(supplysector, subsector, technology) %>%
-      mutate(share.weight = approx_fun(as.numeric(year), share.weight, rule = 1)) %>%
+      mutate(year = as.integer(year)) %>%
+      mutate(share.weight = approx_fun(year, share.weight, rule = 1)) %>%
       ungroup() %>%
       filter(year %in% MODEL_YEARS) %>%
       # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
@@ -242,12 +243,18 @@ module_energy_L222.en_transformation <- function(command, ...) {
       rename(sector.name = supplysector, subsector.name = subsector) ->
       L222.globaltech_retirement_base
 
-    # Copies base year retirment information into all future years and appends back onto itself
+    # Copies first future year retirment information into all future years and appends back onto base year
     L222.globaltech_retirement_base %>%
-      filter(year == max(BASE_YEARS)) %>%
-      repeat_add_columns(tibble("year" = as.character(c(max(BASE_YEARS), FUTURE_YEARS)))) %>%
+      filter(year == min(FUTURE_YEARS)) %>%
+      repeat_add_columns(tibble("year" = as.character(c(FUTURE_YEARS)))) %>%
       select(-year.x) %>%
       rename(year = year.y) ->
+      L222.globaltech_retirement_future
+
+    # filters base years from original and then appends future years
+    L222.globaltech_retirement_base %>%
+      filter(year == max(BASE_YEARS)) %>%
+      bind_rows(L222.globaltech_retirement_future) ->
       L222.globaltech_retirement
 
     # Retirement may consist of any of three types of retirement function (phased, s-curve, or none)
@@ -376,7 +383,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
       L222.StubTechCoef_refining
     # reorders columns to match expected model interface input
     L222.StubTechCoef_refining <- L222.StubTechCoef_refining[c(LEVEL2_DATA_NAMES[["StubTechYr"]], "minicam.energy.input", "coefficient", "market.name")]
-
+browser()
     # ===================================================
 
     # Produce outputs
@@ -463,7 +470,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
     tibble(x = NA) %>%
       add_title("Data not created") %>%
       add_units("Unitless") %>%
-      add_comments("By default, data not created. Contained in ") %>%
+      add_comments("Data not created.") %>%
       add_legacy_name("energy/L222.SubsectorInterpTo_en") ->
       L222.SubsectorInterpTo_en
   }
