@@ -383,7 +383,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
       L222.StubTechCoef_refining
     # reorders columns to match expected model interface input
     L222.StubTechCoef_refining <- L222.StubTechCoef_refining[c(LEVEL2_DATA_NAMES[["StubTechYr"]], "minicam.energy.input", "coefficient", "market.name")]
-browser()
+
     # ===================================================
 
     # Produce outputs
@@ -513,7 +513,8 @@ browser()
       add_units("Unitless") %>%
       add_comments("Shareweights interpolated to model years from assumptions in A22.globaltech_shrwt") %>%
       add_legacy_name("L222.GlobalTechShrwt_en") %>%
-      add_precursors("energy/A22.globaltech_shrwt") ->
+      add_precursors("energy/A22.globaltech_shrwt") %>%
+      add_flags(FLAG_SUM_TEST) ->
       L222.GlobalTechShrwt_en
 
     L222.GlobalTechCapture_en %>%
