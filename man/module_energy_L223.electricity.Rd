@@ -43,7 +43,7 @@ Prepares assumptions and calibrated inputs and outputs for the electricity secto
 Includes all information for the global technology database, including capital and O&M costs, efficiencies, retirement rates, shareweights and interpolation rules.
 Often uses interpolation functions to apply assumptions to all model periods.
 Solar and wind capacity factor assumptions are scaled using data on irradiance and available wind resource. It also determines future fixed outputs of hydropower.
-This also prepares alternate low- and high-tech capital costs, which are then saved to their own xmls and overwrite default capital costs.
+This also prepares alternate low- and high-tech capital costs, which are then saved to their own xmls and can be used to overwrite default capital costs.
 }
 \author{
 CWR October 2017/BBL July 2017
