@@ -18,12 +18,7 @@ the generated outputs: \code{L232.SectorLogitTables[[ curr_table ]]$data}, \code
 original data system was \code{L232.industry.R} (energy level2).
 }
 \description{
-The chunk provides final energy keyword, supplysector/subsector information,
-supplysector/subsector interpolation information, supplysector/subsector share weights,
-global technology share weight, global technology efficiency,
-global technology coefficients, global technology cost, price elasticity,
-stub technology information, stub technology interpolation information,
-stub technology calibrated inputs, and etc.
+Compute a variety of final energy keyword, sector, share weight, and technology information for industry-related GCAM inputs.
 }
 \details{
 The chunk provides final energy keyword, supplysector/subsector information, supplysector/subsector interpolation information, supplysector/subsector share weights, global technology share weight, global technology efficiency, global technology coefficients, global technology cost, price elasticity, stub technology information, stub technology interpolation information, stub technology calibrated inputs, and etc.
