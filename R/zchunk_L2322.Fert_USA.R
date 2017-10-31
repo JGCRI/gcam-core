@@ -310,11 +310,11 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
       # coefficients of fertilizer production technologies market.name with the grid region
       # name for each fertilizer producing state.
       L2322.StubTechCoef_Fert_USA %>%
-        filter(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS) %>%
         left_join_error_no_match(states_subregions %>% select(state, grid_region),
                                  by = c("region" = "state")) %>%
-        select(-market.name) %>%
-        rename(market.name = grid_region) ->
+        mutate(replace = if_else(any(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS), 1, 0)) %>%
+        mutate(market.name = if_else(replace == 1, grid_region, market.name)) %>%
+        select(-replace, -grid_region) ->
         L2322.StubTechCoef_Fert_USA
 
     }
@@ -345,11 +345,11 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
       # Use the state codes-names-groupings mappings data frame to replace the  fuel inputs into the state fertilizer sectors
       # market.name with the grid region name for each fertilizer producing state.
       L2322.StubTechMarket_Fert_USA %>%
-        filter(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS) %>%
         left_join_error_no_match(states_subregions %>% select(state, grid_region),
                                  by = c("region" = "state")) %>%
-        select(-market.name) %>%
-        rename(market.name = grid_region) ->
+        mutate(replace = if_else(any(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS), 1, 0)) %>%
+        mutate(market.name = if_else(replace == 1, grid_region, market.name)) %>%
+        select(-replace, -grid_region) ->
         L2322.StubTechMarket_Fert_USA
 
     }
