@@ -473,6 +473,10 @@ gcamusa.STATE_UNLIMITED_RESOURCES <- c("global solar resource", "limestone")
 
 gcamusa.WIND_BASE_COST_YEAR <- 2005
 
+# Digits for rounding into XMLs
+gcamusa.DIGITS_CALOUTPUT <- 7
+
+
 # Uncomment these lines to run under 'timeshift' conditions
 # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
 # FUTURE_YEARS <- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)
