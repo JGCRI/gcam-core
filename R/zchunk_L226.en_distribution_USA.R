@@ -292,7 +292,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
 
       # The elect_td sectors can not use the global tech database as their input is different.
 
-      # L226.TechShrwt_electd_USA: Tech share weights for elctricity T&D
+      # L226.TechShrwt_electd_USA: Tech share weights for electricity T&D
       L226.GlobalTechShrwt_en %>%
         filter(sector.name %in% gcamusa.ELECT_TD_SECTORS) %>%
         write_to_all_states(c("region", names(L226.GlobalTechShrwt_en))) %>%
@@ -300,8 +300,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
                subsector = subsector.name) ->
         L226.TechShrwt_electd_USA
 
-
-      # L226.TechCost_electd_USA: Tech costs for elctricity T&D
+      # L226.TechCost_electd_USA: Tech costs for electricity T&D
       L226.GlobalTechCost_en %>%
         filter(sector.name %in% gcamusa.ELECT_TD_SECTORS) %>%
         write_to_all_states(c("region", names(L226.GlobalTechCost_en))) %>%
@@ -309,7 +308,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
                subsector = subsector.name) ->
         L226.TechCost_electd_USA
 
-      # L226.TechCoef_electd_USA: Tech coefficients for elctricity T&D
+      # L226.TechCoef_electd_USA: Tech coefficients for electricity T&D
       L226.StubTechCoef_electd %>%
         global_energy_to_USA_electd() %>%
         rename(technology = stub.technology) %>%
@@ -318,7 +317,6 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
         left_join_error_no_match(select(states_subregions, grid_region, state), by = c("region" = "state")) %>%
         rename(market.name = grid_region) ->
         L226.TechCoef_electd_USA
-
     }
 
 
