@@ -215,7 +215,7 @@ double CapacityLimitBackupCalculator::getAverageBackupCapacity( const string& aS
     assert( aReserveMargin >= 0 );
     assert( aAverageGridCapacityFactor > 0 );
 
-    double renewElecShare = SectorUtils::getTrialSupply( aRegion, aSector, aPeriod );
+    double renewElecShare = std::min( SectorUtils::getTrialSupply( aRegion, aSector, aPeriod ), 1.0 );
 
     // No backup required for zero share.
     if( renewElecShare < util::getVerySmallNumber() ){
@@ -284,7 +284,7 @@ double CapacityLimitBackupCalculator::getMarginalBackupCapacityFraction( const s
     assert( !aResource.empty() );
     assert( !aRegion.empty() );
 
-    double renewElecShare = SectorUtils::getTrialSupply( aRegion, aSector, aPeriod );
+    double renewElecShare = std::min( SectorUtils::getTrialSupply( aRegion, aSector, aPeriod ), 1.0 );
     
     // No backup required for zero share.
     if( renewElecShare < util::getVerySmallNumber() ){
@@ -337,7 +337,7 @@ double CapacityLimitBackupCalculator::calcIntermittentShare( const string& aSect
                                                              const int aPeriod ) const
 {
 
-    double capacityShare = SectorUtils::getTrialSupply( aRegion, aSector, aPeriod ) * 
+    double capacityShare = std::min( std::max( SectorUtils::getTrialSupply( aRegion, aSector, aPeriod ), 0.0 ), 1.0 ) * 
                            aAverageGridCapacityFactor / 
                            SectorUtils::getCapacityFactor( aResource, aRegion, aPeriod );
     return capacityShare;

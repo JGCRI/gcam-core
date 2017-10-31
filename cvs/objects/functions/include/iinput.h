@@ -76,6 +76,7 @@ class InputTax;
 class InputOMVar;
 class InputOMFixed;
 class InputCapital;
+class CTaxInput;
 
 /*! 
  * \ingroup Objects
@@ -513,7 +514,7 @@ protected:
          */
         DEFINE_SUBCLASS_FAMILY( IInput, MiniCAMInput, EnergyInput, NonEnergyInput,
                                 RenewableInput, InputSubsidy, InputTax, InputOMVar,
-                                InputOMFixed, InputCapital )
+                                InputOMFixed, InputCapital, CTaxInput )
     )
 };
 

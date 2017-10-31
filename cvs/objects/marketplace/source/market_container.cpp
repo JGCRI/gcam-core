@@ -317,8 +317,6 @@ int MarketContainer::size() const {
  *          as future forecasting methods might try to estimate
  *          forecast bias or otherwise use the forecast history in
  *          addition to the price history.
- * \param aMarketHistory vector containing pointers to this market for
- *                       all periods.
  * \param aPeriod period for which to forecast
  */
 double MarketContainer::forecastPrice( const int aPeriod )
@@ -335,19 +333,23 @@ double MarketContainer::forecastPrice( const int aPeriod )
  * \details An estimate for a reasonable range of demand values is necessary so
  *          that newton raphson algorithms can rescale supply/demand values from
  *          all markets to be in a similar range.
- * \param aMarketHistory vector containing pointers to this market for
- *                       all periods.
  * \param aPeriod period for which to forecast
  */
 double MarketContainer::forecastDemand( const int aPeriod )
 {
-    double forecastedDemand = extrapolate( aPeriod, &Market::getSolverDemand );
-    // set some reasonable limits on what kinds of forecast you get
-    // this is going to use as a scale factor, so lose the sign
-    forecastedDemand = abs( forecastedDemand );
-    if( forecastedDemand < 1.0 ) {
-        // don't scale up small values
-        forecastedDemand = 1.0;
+    double forecastedDemand = 0.0;
+    if( mMarkets[ aPeriod ]->getType() == IMarketType::TAX && mMarkets[ aPeriod ]->isSolvable() ) {
+        forecastedDemand = abs( mMarkets[ aPeriod ]->getSupply() );
+    }
+    else {
+        forecastedDemand = extrapolate( aPeriod, &Market::getSolverDemand );
+        // set some reasonable limits on what kinds of forecast you get
+        // this is going to use as a scale factor, so lose the sign
+        forecastedDemand = abs( forecastedDemand );
+        if( forecastedDemand < 1.0 ) {
+            // don't scale up small values
+            forecastedDemand = 1.0;
+        }
     }
     
     mMarkets[ aPeriod ]->setForecastDemand( forecastedDemand );
@@ -357,7 +359,6 @@ double MarketContainer::forecastDemand( const int aPeriod )
 /*!
  * \brief extrapolate some arbitrary value  using the last three values from the
  *        previous model periods.
- * \param aMarketHistory A vector of a single market by period.
  * \param aPeriod The current model period to extrapolate to.
  * \param aDataFn A function pointer which will be used to look up the actual data
  *                value that we are extrapolating.

@@ -98,7 +98,16 @@ protected:
         DEFINE_VARIABLE( ARRAY, "share-of-sector-output", mShareOfSectorOutput, objects::PeriodVector<double> ),
         
         //! The minimum price below which the constraint is considered non-binding.
-        DEFINE_VARIABLE( ARRAY, "min-price", mMinPrice, objects::PeriodVector<double> )
+        DEFINE_VARIABLE( ARRAY, "min-price", mMinPrice, objects::PeriodVector<double> ),
+        
+        //! The maximum price below which the constraint is considered non-binding.
+        DEFINE_VARIABLE( ARRAY, "max-price", mMaxPrice, objects::PeriodVector<double> ),
+        
+        //! A label for the price units of this market
+        DEFINE_VARIABLE( SIMPLE, "price-unit", mPriceUnits, std::string ),
+        
+        //! A label for the units of this market
+        DEFINE_VARIABLE( SIMPLE, "output-unit", mOutputUnits, std::string )
     )
 };
 

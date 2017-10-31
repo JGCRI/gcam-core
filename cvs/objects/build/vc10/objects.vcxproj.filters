@@ -1088,6 +1088,12 @@
     <ClCompile Include="..\..\util\base\source\manage_state_variables.cpp">
       <Filter>Source Files\util\base</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\functions\source\ctax_input.cpp">
+      <Filter>Source Files\functions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sectors\source\negative_emissions_final_demand.cpp">
+      <Filter>Source Files\sectors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\containers\include\batch_runner.h">
@@ -2232,6 +2238,12 @@
     </ClInclude>
     <ClInclude Include="..\..\util\base\include\manage_state_variables.hpp">
       <Filter>Header Files\util\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\functions\include\ctax_input.h">
+      <Filter>Header Files\functions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sectors\include\negative_emissions_final_demand.h">
+      <Filter>Header Files\sectors</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

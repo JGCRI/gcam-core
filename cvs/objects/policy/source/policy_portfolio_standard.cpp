@@ -66,7 +66,10 @@ PolicyPortfolioStandard::PolicyPortfolioStandard():
 mConstraint( -1.0 ),
 mFixedTax( -1.0 ),
 mShareOfSectorOutput( -1.0 ),
-mMinPrice( 0.0 )
+mMinPrice( 0.0 ),
+mMaxPrice( util::getLargeNumber() ),
+mPriceUnits( "1975$/GJ" ),
+mOutputUnits( "EJ_or_Share" )
 {
     mIsShareBased = false;
 }
@@ -151,6 +154,15 @@ void PolicyPortfolioStandard::XMLParse( const DOMNode* node ){
         else if( nodeName == "min-price" ){
             XMLHelper<double>::insertValueIntoVector( curr, mMinPrice, modeltime );
         }
+        else if( nodeName == "max-price" ){
+            XMLHelper<double>::insertValueIntoVector( curr, mMaxPrice, modeltime );
+        }
+        else if( nodeName == "price-unit" ){
+            mPriceUnits = XMLHelper<string>::getValue( curr );
+        }
+        else if( nodeName == "output-unit" ){
+            mOutputUnits = XMLHelper<string>::getValue( curr );
+        }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
@@ -175,6 +187,9 @@ void PolicyPortfolioStandard::toInputXML( ostream& out, Tabs* tabs ) const {
     }
     XMLWriteVector( mFixedTax, "fixedTax", out, tabs, modeltime, 0.0 );
     XMLWriteVector( mMinPrice, "min-price", out, tabs, modeltime, 0.0 );
+    XMLWriteVector( mMaxPrice, "max-price", out, tabs, modeltime, 0.0 );
+    XMLWriteElement( mPriceUnits, "price-unit", out, tabs );
+    XMLWriteElement( mOutputUnits, "output-unit", out, tabs );
     for( int per = 0; per < modeltime->getmaxper(); ++per ){
         XMLWriteElementCheckDefault( mShareOfSectorOutput[ per ],
             "share-of-sector-output", out, tabs, -1.0 );
@@ -208,6 +223,7 @@ void PolicyPortfolioStandard::toDebugXML( const int period, ostream& out, Tabs* 
     XMLWriteElement( mShareOfSectorOutput[ period ], "share-of-sector-output", out, tabs );
 
     XMLWriteElement( mMinPrice[ period ], "min-price", out, tabs );
+    XMLWriteElement( mMaxPrice[ period ], "max-price", out, tabs );
     
     // finished writing xml for the class members.
     XMLWriteClosingTag( getXMLName(), out, tabs );
@@ -246,8 +262,8 @@ void PolicyPortfolioStandard::completeInit( const string& aRegionName ) {
 
     // Set price and output units for period 0 market info.
     IInfo* marketInfo = marketplace->getMarketInfo( mName, aRegionName, 0, true );
-    marketInfo->setString( "price-unit", "1975$/GJ" );
-    marketInfo->setString( "output-unit", "EJ_or_Share" );
+    marketInfo->setString( "price-unit", mPriceUnits );
+    marketInfo->setString( "output-unit", mOutputUnits );
 
     // Put the taxes in the market as the market prices if it is a fixed tax policy.
     for( unsigned int i = 0; i < mFixedTax.size(); ++i ){
@@ -301,7 +317,9 @@ void PolicyPortfolioStandard::completeInit( const string& aRegionName ) {
             // Constraint policies must have a price >= mMinPrice.  It may be the case that the constraint is
             // non-binding at the minimum price in which case the solver can use this information to
             // make a supply currection to still ensure equality.
-            SectorUtils::setSupplyBehaviorBounds( mName, aRegionName, mMinPrice[ per ], util::getLargeNumber(), per );
+            // Also set a maximum price in which case this value is only used as a hint to the solver to keep
+            // the solver on track.
+            SectorUtils::setSupplyBehaviorBounds( mName, aRegionName, mMinPrice[ per ], mMaxPrice[ per ], per );
         }
     }
 }
