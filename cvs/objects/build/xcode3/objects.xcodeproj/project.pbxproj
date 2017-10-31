@@ -283,6 +283,8 @@
 		CD6B455519B1388F0020AC72 /* has_market_flag_solution_info_filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD6B455419B1388F0020AC72 /* has_market_flag_solution_info_filter.cpp */; };
 		CD83E61614F4584900A1D301 /* linked_market.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD83E61514F4584900A1D301 /* linked_market.cpp */; };
 		CD83E63A14F54B1000A1D301 /* linked_ghg_policy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD83E63914F54B1000A1D301 /* linked_ghg_policy.cpp */; };
+		CD8DFFD91FA8D1F000CB3719 /* ctax_input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD8DFFD81FA8D1F000CB3719 /* ctax_input.cpp */; };
+		CD8DFFDC1FA8D21700CB3719 /* negative_emissions_final_demand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD8DFFDB1FA8D21700CB3719 /* negative_emissions_final_demand.cpp */; };
 		CD8FDEC91C0647140099C752 /* pass_through_sector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD8FDEC81C0647140099C752 /* pass_through_sector.cpp */; };
 		CD8FDECC1C0647A20099C752 /* pass_through_technology.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD8FDECB1C0647A20099C752 /* pass_through_technology.cpp */; };
 		CD966E751D92F1CD00A93938 /* libhector-lib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD966E721D92F1BB00A93938 /* libhector-lib.a */; };
@@ -1012,6 +1014,10 @@
 		CD83E61514F4584900A1D301 /* linked_market.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = linked_market.cpp; sourceTree = "<group>"; };
 		CD83E63814F548E000A1D301 /* linked_ghg_policy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = linked_ghg_policy.h; sourceTree = "<group>"; };
 		CD83E63914F54B1000A1D301 /* linked_ghg_policy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = linked_ghg_policy.cpp; sourceTree = "<group>"; };
+		CD8DFFD51FA8D1D900CB3719 /* ctax_input.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ctax_input.h; sourceTree = "<group>"; };
+		CD8DFFD81FA8D1F000CB3719 /* ctax_input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ctax_input.cpp; sourceTree = "<group>"; };
+		CD8DFFDA1FA8D20600CB3719 /* negative_emissions_final_demand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = negative_emissions_final_demand.h; sourceTree = "<group>"; };
+		CD8DFFDB1FA8D21700CB3719 /* negative_emissions_final_demand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = negative_emissions_final_demand.cpp; sourceTree = "<group>"; };
 		CD8FDEC71C0647050099C752 /* pass_through_sector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pass_through_sector.h; sourceTree = "<group>"; };
 		CD8FDEC81C0647140099C752 /* pass_through_sector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pass_through_sector.cpp; sourceTree = "<group>"; };
 		CD8FDECA1C0647640099C752 /* pass_through_technology.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pass_through_technology.h; sourceTree = "<group>"; };
@@ -1500,6 +1506,7 @@
 		CD4884CE122873C100F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
+				CD8DFFD51FA8D1D900CB3719 /* ctax_input.h */,
 				CD693FA41AF02DC200805384 /* discrete_choice_factory.hpp */,
 				CD693FA11AEFF09200805384 /* absolute_cost_logit.hpp */,
 				CD693F9E1AEFE09200805384 /* relative_cost_logit.hpp */,
@@ -1553,6 +1560,7 @@
 		CD4884F4122873C100F5A88A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				CD8DFFD81FA8D1F000CB3719 /* ctax_input.cpp */,
 				CD693FA51AF0315E00805384 /* discrete_choice_factory.cpp */,
 				CD693FA21AEFF0A100805384 /* absolute_cost_logit.cpp */,
 				CD693F9F1AEFE0CE00805384 /* relative_cost_logit.cpp */,
@@ -1892,6 +1900,7 @@
 		CD4885E4122873C200F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
+				CD8DFFDA1FA8D20600CB3719 /* negative_emissions_final_demand.h */,
 				CD8FDEC71C0647050099C752 /* pass_through_sector.h */,
 				CD4885E5122873C200F5A88A /* afinal_demand.h */,
 				CD4885E6122873C200F5A88A /* ag_supply_sector.h */,
@@ -1920,6 +1929,7 @@
 		CD488600122873C200F5A88A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				CD8DFFDB1FA8D21700CB3719 /* negative_emissions_final_demand.cpp */,
 				CD8FDEC81C0647140099C752 /* pass_through_sector.cpp */,
 				CD488601122873C200F5A88A /* ag_supply_sector.cpp */,
 				CD488602122873C200F5A88A /* ag_supply_subsector.cpp */,
@@ -2602,6 +2612,7 @@
 				CD48875D122873C200F5A88A /* input_output_driver.cpp in Sources */,
 				CD48875E122873C200F5A88A /* output_driver.cpp in Sources */,
 				CD488762122873C200F5A88A /* ademand_function.cpp in Sources */,
+				CD8DFFDC1FA8D21700CB3719 /* negative_emissions_final_demand.cpp in Sources */,
 				CD488763122873C200F5A88A /* aproduction_function.cpp in Sources */,
 				CD488765122873C200F5A88A /* ces_production_function.cpp in Sources */,
 				CD488766122873C200F5A88A /* demand_input.cpp in Sources */,
@@ -2698,6 +2709,7 @@
 				CD4887C4122873C200F5A88A /* capacity_limit_backup_calculator.cpp in Sources */,
 				CD3B52C61BFE0E2800179FDD /* hector_model.cpp in Sources */,
 				CD4887C5122873C200F5A88A /* CSP_backup_calculator.cpp in Sources */,
+				CD8DFFD91FA8D1F000CB3719 /* ctax_input.cpp in Sources */,
 				CD4887C6122873C200F5A88A /* energy_final_demand.cpp in Sources */,
 				CD4887C7122873C200F5A88A /* export_sector.cpp in Sources */,
 				CD4887C8122873C200F5A88A /* factor_supply.cpp in Sources */,
