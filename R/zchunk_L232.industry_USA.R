@@ -38,7 +38,7 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     year <- value <- output_tot <- grid_region <- market.name <-
-      calOutputValue <- calibrated.value <- calibration <-
+      calOutputValue <- calibrated.value <- calibration <- technology <-
       efficiency <- fuel <- minicam.energy.input <- object <-
       output_tot <- region <- secondary.output <- sector <- state <-
       subs.share.weight <- subsector <- supplysector <- value <- x <- NULL
