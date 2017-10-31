@@ -80,7 +80,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     # subsector logit exponents of fertilizer sector for the fuel subsectors to be removed in
     # GCAM-USA.
     L2322.SubsectorLogit_Fert %>%
-      filter(region == "USA", supplysector == aglu.FERT_NAME, subsector != "Imports") %>%
+      filter(region == "USA", supplysector == gcamusa.FERT_NAME, subsector != "Imports") %>%
       mutate(region = region) %>%
       select(region, supplysector, subsector) ->
       L2322.DeleteSubsector_USAFert
@@ -103,10 +103,10 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     # Select the supply sector information for fertilizer sector within the US and expand to all of the
     # sates that are fertilizer producers, then create subsector from state and fertilizer name.
     L2322.Supplysector_Fert %>%
-      filter(region == "USA", supplysector == aglu.FERT_NAME) %>%
+      filter(region == "USA", supplysector == gcamusa.FERT_NAME) %>%
       select(region, supplysector) %>%
       repeat_add_columns(Fert_states) %>%
-      mutate(subsector = paste(state, aglu.FERT_NAME)) ->
+      mutate(subsector = paste(state, gcamusa.FERT_NAME)) ->
       L2322.Supplysector_Fert_states
 
     # Now add the logit table information to the state fertilizer supply sector data frame.
@@ -153,7 +153,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
       filter(year %in% BASE_YEARS) %>%
       mutate(calOutputValue = signif(value, DIGITS_LAND_USE)) %>%
       select(-value) %>%
-      mutate(region = "USA", supplysector = aglu.FERT_NAME) %>%
+      mutate(region = "USA", supplysector = gcamusa.FERT_NAME) %>%
       unite(subsector, state, supplysector, sep = " ", remove = FALSE) ->
       L2322.Production_USAFert
 
@@ -162,7 +162,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     # USA region fertilizer sector.
     L2322.Production_USAFert %>%
       mutate(technology = subsector) %>%
-      mutate(input = aglu.FERT_NAME) %>%
+      mutate(input = gcamusa.FERT_NAME) %>%
       mutate(share.weight.year = year) %>%
       mutate(subs.share.weight = if_else(calOutputValue == 0, 0, 1)) %>%
       mutate(tech.share.weight = subs.share.weight) %>%
@@ -175,7 +175,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     # Add minicam energy input information and coefficient to the
     # to the technology share weight data frame.
     L2322.TechShrwt_USAFert %>%
-      mutate(minicam.energy.input = aglu.FERT_NAME) %>%
+      mutate(minicam.energy.input = gcamusa.FERT_NAME) %>%
       mutate(coefficient = 1) %>%
       # Parse out state market name from the fertilizer subsector.
       mutate(market.name = substr(start = 1, stop = 2, subsector)) %>%
@@ -195,7 +195,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
       # If the subsetted data frame does not contain any fertilizer supplysector information
       # for the USA region then it is assumed that the data frame has already been
       # processed, and the input data frame is returned as is.
-      check_df <- dplyr::filter(data, region == "USA" & supplysector == aglu.FERT_NAME)
+      check_df <- dplyr::filter(data, region == "USA" & supplysector == gcamusa.FERT_NAME)
 
       if(nrow(check_df) == 0){
         # This does not change the entries of the data frame but will strip the attributes
@@ -214,7 +214,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
         # input data frame columns to all USA states and then subset by the
         # fertilizer producing states.
         data %>%
-          filter(region == "USA", supplysector == aglu.FERT_NAME) %>%
+          filter(region == "USA", supplysector == gcamusa.FERT_NAME) %>%
           write_to_all_states(names = df_names) %>%
           filter(region %in% Fert_states[["state"]]) ->
           new_df
@@ -250,7 +250,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     # rounding to the appropriate digits, and adding region information.
     L1322.out_Mt_state_Fert_Yh %>%
       filter(year %in% BASE_YEARS) %>%
-      mutate(calOutputValue = signif(value, digits = aglu.DIGITS_CALOUTPUT)) %>%
+      mutate(calOutputValue = signif(value, digits = gcamusa.DIGITS_CALOUTPUT)) %>%
       mutate(region = state) ->
       L2322.StubTechProd_Fert_USA
 
@@ -346,9 +346,10 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
       # market.name with the grid region name for each fertilizer producing state.
       L2322.StubTechMarket_Fert_USA %>%
         filter(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS) %>%
+        left_join_error_no_match(states_subregions %>% select(state, grid_region),
+                                 by = c("region" = "state")) %>%
         select(-market.name) %>%
-        left_join_error_no_match(states_subregions %>% select(region = state, market.name = grid_region),
-                                 by = "region") ->
+        rename(market.name = grid_region) ->
         L2322.StubTechMarket_Fert_USA
 
     }
