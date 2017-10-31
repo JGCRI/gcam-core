@@ -243,12 +243,13 @@ double CTaxInput::getPrice( const string& aRegionName,
     const double CVRT_TG_MT = 1e-3;
     // A high tax decreases demand.
     const Marketplace* marketplace = scenario->getMarketplace();
-    double tax = marketplace->getPrice( mName, aRegionName, aPeriod, true );
+    double taxFraction = marketplace->getPrice( mName, aRegionName, aPeriod, true );
     double ctax = marketplace->getPrice( "CO2", aRegionName, aPeriod, false );
     
     // note we need to perform some unit conversions since C prices and technology
     // costs in different units
-    return tax == Marketplace::NO_MARKET_PRICE ? 0.0 : tax * ctax * mCachedCCoef / CVRT90 * CVRT_TG_MT;
+    return taxFraction == Marketplace::NO_MARKET_PRICE || ctax == Marketplace::NO_MARKET_PRICE ?
+        0.0 : taxFraction * ctax * mCachedCCoef / CVRT90 * CVRT_TG_MT;
 }
 
 void CTaxInput::setPrice( const string& aRegionName,
