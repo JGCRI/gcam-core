@@ -6,7 +6,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L2321.SectorLogitTables[[ curr_table ]]$data}, \code{L2321.Supplysector_cement}, \code{L2321.FinalEnergyKeyword_cement}, \code{L2321.SubsectorLogitTables[[ curr_table ]]$data}, \code{L2321.SubsectorLogit_cement}, \code{L2321.SubsectorShrwtFllt_cement}, \code{L2321.SubsectorInterp_cement}, \code{L2321.StubTech_cement}, \code{L2321.GlobalTechShrwt_cement}, \code{L2321.GlobalTechCoef_cement}, \code{L2321.GlobalTechCost_cement}, \code{L2321.GlobalTechCapture_cement}, \code{L2321.StubTechProd_cement}, \code{L2321.StubTechCalInput_cement_heat}, \code{L2321.StubTechCoef_cement}, \code{L2321.PerCapitaBased_cement}, \code{L2321.BaseService_cement}, \code{L2321.PriceElasticity_cement}, \code{object}. The corresponding file in the
+#' the generated outputs: \code{L2321.SectorLogitTables[[ curr_table ]]$data}, \code{L2321.Supplysector_cement}, \code{L2321.FinalEnergyKeyword_cement}, \code{L2321.SubsectorLogitTables[[ curr_table ]]$data}, \code{L2321.SubsectorLogit_cement}, \code{L2321.SubsectorShrwtFllt_cement}, \code{L2321.SubsectorInterp_cement}, \code{L2321.StubTech_cement}, \code{L2321.GlobalTechShrwt_cement}, \code{L2321.GlobalTechCoef_cement}, \code{L2321.GlobalTechCost_cement}, \code{L2321.GlobalTechCapture_cement}, \code{L2321.StubTechProd_cement}, \code{L2321.StubTechCalInput_cement_heat}, \code{L2321.StubTechCoef_cement}, \code{L2321.PerCapitaBased_cement}, \code{L2321.BaseService_cement}, \code{L2321.PriceElasticity_cement}, \code{L2321.IncomeElasticity_cement_gcam3}, \code{L2321.IncomeElasticity_cement_gssp1}, \code{L2321.IncomeElasticity_cement_gssp2}, \code{L2321.IncomeElasticity_cement_gssp3}, \code{L2321.IncomeElasticity_cement_gssp4}, \code{L2321.IncomeElasticity_cement_gssp5}, \code{L2321.IncomeElasticity_cement_ssp1}, \code{L2321.IncomeElasticity_cement_ssp2}, \code{L2321.IncomeElasticity_cement_ssp3}, \code{L2321.IncomeElasticity_cement_ssp4}, \code{L2321.IncomeElasticity_cement_ssp5}, \code{object}. The corresponding file in the
 #' original data system was \code{L2321.cement.R} (energy level2).
 #' @details The chunk provides final energy keyword, supplysector/subsector information, supplysector/subsector interpolation information, global technology share weight, global technology efficiency, global technology coefficients, global technology cost, price elasticity, stub technology information, stub technology interpolation information, stub technology calibrated inputs, and etc for cement sector.
 #' @importFrom assertthat assert_that
@@ -30,7 +30,11 @@ module_energy_L2321.cement <- function(command, ...) {
              FILE = "energy/A321.demand",
              FILE = "temp-data-inject/L1321.out_Mt_R_cement_Yh",
              FILE = "temp-data-inject/L1321.IO_GJkg_R_cement_F_Yh",
-             FILE = "temp-data-inject/L1321.in_EJ_R_cement_F_Y"))
+             FILE = "temp-data-inject/L1321.in_EJ_R_cement_F_Y",
+             FILE = "socioeconomics/A321.inc_elas_output",
+             "L101.Pop_thous_GCAM3_R_Y",
+             "L102.pcgdp_thous90USD_GCAM3_R_Y",
+             "L102.pcgdp_thous90USD_Scen_R_Y"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2321.Supplysector_cement",
              "L2321.FinalEnergyKeyword_cement",
@@ -47,7 +51,18 @@ module_energy_L2321.cement <- function(command, ...) {
              "L2321.StubTechCoef_cement",
              "L2321.PerCapitaBased_cement",
              "L2321.BaseService_cement",
-             "L2321.PriceElasticity_cement"))
+             "L2321.PriceElasticity_cement",
+             "L2321.IncomeElasticity_cement_gcam3",
+             "L2321.IncomeElasticity_cement_gssp1",
+             "L2321.IncomeElasticity_cement_gssp2",
+             "L2321.IncomeElasticity_cement_gssp3",
+             "L2321.IncomeElasticity_cement_gssp4",
+             "L2321.IncomeElasticity_cement_gssp5",
+             "L2321.IncomeElasticity_cement_ssp1",
+             "L2321.IncomeElasticity_cement_ssp2",
+             "L2321.IncomeElasticity_cement_ssp3",
+             "L2321.IncomeElasticity_cement_ssp4",
+             "L2321.IncomeElasticity_cement_ssp5"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -69,6 +84,10 @@ module_energy_L2321.cement <- function(command, ...) {
     L1321.out_Mt_R_cement_Yh <- get_data(all_data, "temp-data-inject/L1321.out_Mt_R_cement_Yh") %>% gather(year, value, -GCAM_region_ID, -sector) %>%mutate(year = as.integer(substr(year, 2, 5)))
     L1321.IO_GJkg_R_cement_F_Yh <- get_data(all_data, "temp-data-inject/L1321.IO_GJkg_R_cement_F_Yh") %>% gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%mutate(year = as.integer(substr(year, 2, 5)))
     L1321.in_EJ_R_cement_F_Y <- get_data(all_data, "temp-data-inject/L1321.in_EJ_R_cement_F_Y") %>% gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%mutate(year = as.integer(substr(year, 2, 5)))
+    A321.inc_elas_output <- get_data(all_data, "socioeconomics/A321.inc_elas_output")
+    L101.Pop_thous_GCAM3_R_Y <- get_data(all_data, "L101.Pop_thous_GCAM3_R_Y")
+    L102.pcgdp_thous90USD_GCAM3_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_GCAM3_R_Y")
+    L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y")
 
     # ===================================================
     # 0. Give binding for variable names used in pipeline
@@ -303,6 +322,121 @@ module_energy_L2321.cement <- function(command, ...) {
       select(one_of(LEVEL2_DATA_NAMES[["PriceElasticity"]])) ->
       L2321.PriceElasticity_cement
 
+    # L2321.IncomeElasticity_cement_scen: income elasticity of cement (scenario-specific)
+    # First, calculate the per-capita GDP pathways of every GDP scenario and combine
+    L102.pcgdp_thous90USD_GCAM3_R_Y %>%
+      # Combine GCAM 3.0 with the SSPs, and subset only the relevant years
+      mutate(scenario = "GCAM3") %>%
+      bind_rows(L102.pcgdp_thous90USD_Scen_R_Y) %>%
+      filter(year %in% c(max(BASE_YEARS), FUTURE_YEARS)) %>%
+      # Per-capita GDP ratios, which are used in the equation for demand growth
+      group_by(GCAM_region_ID, scenario) %>%
+      mutate(temp_lag = lag(value, 1)) %>%
+      mutate(value = value / temp_lag) %>%
+      ungroup %>%
+      select(-temp_lag) %>%
+      filter(year %in% FUTURE_YEARS) ->
+      L2321.pcgdpRatio_ALL_R_Y # intermediate tibble
+
+    # Calculate the cement output as the base-year cement output times the GDP ratio raised to the income elasticity
+    # The income elasticity is looked up based on the prior year's output
+    L2321.pcgdpRatio_ALL_R_Y %>%
+      select(GCAM_region_ID, scenario) %>%
+      distinct %>%
+      left_join_error_no_match(GCAM_region_names, by = 'GCAM_region_ID') %>%
+      mutate(year = max(BASE_YEARS)) %>%
+      left_join_error_no_match(L2321.BaseService_cement, by = c("year", "region")) %>%
+      left_join_error_no_match(L101.Pop_thous_GCAM3_R_Y, by = c("year", "GCAM_region_ID")) %>%
+      mutate(value = base.service * CONV_MIL_THOUS / value) %>%
+      select(-base.service, -energy.final.demand) ->
+      L2321.Output_cement # intermediate tibble
+
+    # At each time, the output is equal to the prior period's output times the GDP ratio, raised to the elasticity
+    # that corresponds to the output that was observed in the prior time period. This method prevents (ideally) runaway
+    # production/consumption.
+    elast_years <- c(max(BASE_YEARS), FUTURE_YEARS)
+    for( i in 2 : length(elast_years)) {
+      L2321.Output_cement %>%
+        filter(year == elast_years[i-1]) %>%
+        left_join_error_no_match(filter(L2321.pcgdpRatio_ALL_R_Y, year == elast_years[i]), by = c("GCAM_region_ID", "scenario")) %>%
+        mutate(parameter = approx(x = A321.inc_elas_output[["pc.output_t"]],
+                                  y = A321.inc_elas_output[["inc_elas"]],
+                                  xout = .[['value.x']],
+                                  rule = 2)[['y']]) %>%
+        mutate(value = value.x * value.y ^ parameter) %>%
+        mutate(year = elast_years[i]) %>%
+        select(GCAM_region_ID, scenario, region, year, value) %>%
+        bind_rows(L2321.Output_cement) ->
+        L2321.Output_cement
+    }
+
+    # Now that we have cement output, we can back out the appropriate income elasticities
+    L2321.Output_cement %>%
+      filter(year %in% FUTURE_YEARS) %>%
+      mutate(value = approx( x = A321.inc_elas_output[["pc.output_t"]],
+                             y = A321.inc_elas_output[["inc_elas"]],
+                             xout = .[[ "value" ]], rule = 2)[["y"]]) %>%
+      mutate(value = round(value, energy.DIGITS_INCELAS_IND)) %>%
+      rename(income.elasticity = value) %>%
+      mutate(energy.final.demand = A321.demand[["energy.final.demand"]]) ->
+      L2321.IncomeElasticity_cement # intermediate tibble
+
+    # These will be written out as separate tables
+    L2321.IncomeElasticity_cement %>%
+      filter(scenario == "GCAM3") %>%
+      select(one_of(LEVEL2_DATA_NAMES[["IncomeElasticity"]])) ->
+      L2321.IncomeElasticity_cement_gcam3
+
+    L2321.IncomeElasticity_cement %>%
+      filter(scenario == "gSSP1") %>%
+      select(one_of(LEVEL2_DATA_NAMES[["IncomeElasticity"]])) ->
+      L2321.IncomeElasticity_cement_gssp1
+
+    L2321.IncomeElasticity_cement %>%
+      filter(scenario == "gSSP2") %>%
+      select(one_of(LEVEL2_DATA_NAMES[["IncomeElasticity"]])) ->
+      L2321.IncomeElasticity_cement_gssp2
+
+    L2321.IncomeElasticity_cement %>%
+      filter(scenario == "gSSP3") %>%
+      select(one_of(LEVEL2_DATA_NAMES[["IncomeElasticity"]])) ->
+      L2321.IncomeElasticity_cement_gssp3
+
+    L2321.IncomeElasticity_cement %>%
+      filter(scenario == "gSSP4") %>%
+      select(one_of(LEVEL2_DATA_NAMES[["IncomeElasticity"]])) ->
+      L2321.IncomeElasticity_cement_gssp4
+
+    L2321.IncomeElasticity_cement %>%
+      filter(scenario == "gSSP5") %>%
+      select(one_of(LEVEL2_DATA_NAMES[["IncomeElasticity"]])) ->
+      L2321.IncomeElasticity_cement_gssp5
+
+    L2321.IncomeElasticity_cement %>%
+      filter(scenario == "SSP1") %>%
+      select(one_of(LEVEL2_DATA_NAMES[["IncomeElasticity"]])) ->
+      L2321.IncomeElasticity_cement_ssp1
+
+    L2321.IncomeElasticity_cement %>%
+      filter(scenario == "SSP2") %>%
+      select(one_of(LEVEL2_DATA_NAMES[["IncomeElasticity"]])) ->
+      L2321.IncomeElasticity_cement_ssp2
+
+    L2321.IncomeElasticity_cement %>%
+      filter(scenario == "SSP3") %>%
+      select(one_of(LEVEL2_DATA_NAMES[["IncomeElasticity"]])) ->
+      L2321.IncomeElasticity_cement_ssp3
+
+    L2321.IncomeElasticity_cement %>%
+      filter(scenario == "SSP4") %>%
+      select(one_of(LEVEL2_DATA_NAMES[["IncomeElasticity"]])) ->
+      L2321.IncomeElasticity_cement_ssp4
+
+    L2321.IncomeElasticity_cement %>%
+      filter(scenario == "SSP5") %>%
+      select(one_of(LEVEL2_DATA_NAMES[["IncomeElasticity"]])) ->
+      L2321.IncomeElasticity_cement_ssp5
+
     # ===================================================
     # Produce outputs
 
@@ -434,12 +568,117 @@ module_energy_L2321.cement <- function(command, ...) {
       add_precursors("energy/A321.demand", "common/GCAM_region_names") ->
       L2321.PriceElasticity_cement
 
+    L2321.IncomeElasticity_cement_gcam3 %>%
+      add_title("income elasticity of cement - GCAM3") %>%
+      add_units("Unitless") %>%
+      add_comments("First calculate cement output as the base-year cement output times the GDP ratio raised to the income elasticity") %>%
+      add_comments("Then back out the appropriate income elasticities from cement output") %>%
+      add_legacy_name("L2321.IncomeElasticity_cement_gcam3") %>%
+      add_precursors("L102.pcgdp_thous90USD_GCAM3_R_Y", "L102.pcgdp_thous90USD_Scen_R_Y", "common/GCAM_region_names", "energy/A321.demand", "energy/calibrated_techs", "temp-data-inject/L1321.out_Mt_R_cement_Yh", "L101.Pop_thous_GCAM3_R_Y", "socioeconomics/A321.inc_elas_output") ->
+      L2321.IncomeElasticity_cement_gcam3
+
+    L2321.IncomeElasticity_cement_gssp1 %>%
+      add_title("income elasticity of cement - gSSP1") %>%
+      add_units("Unitless") %>%
+      add_comments("First calculate cement output as the base-year cement output times the GDP ratio raised to the income elasticity") %>%
+      add_comments("Then back out the appropriate income elasticities from cement output") %>%
+      add_legacy_name("L2321.IncomeElasticity_cement_gssp1") %>%
+      add_precursors("L102.pcgdp_thous90USD_GCAM3_R_Y", "L102.pcgdp_thous90USD_Scen_R_Y", "common/GCAM_region_names", "energy/A321.demand", "energy/calibrated_techs", "temp-data-inject/L1321.out_Mt_R_cement_Yh", "L101.Pop_thous_GCAM3_R_Y", "socioeconomics/A321.inc_elas_output") ->
+      L2321.IncomeElasticity_cement_gssp1
+
+    L2321.IncomeElasticity_cement_gssp2 %>%
+      add_title("income elasticity of cement - gSSP2") %>%
+      add_units("Unitless") %>%
+      add_comments("First calculate cement output as the base-year cement output times the GDP ratio raised to the income elasticity") %>%
+      add_comments("Then back out the appropriate income elasticities from cement output") %>%
+      add_legacy_name("L2321.IncomeElasticity_cement_gssp2") %>%
+      add_precursors("L102.pcgdp_thous90USD_GCAM3_R_Y", "L102.pcgdp_thous90USD_Scen_R_Y", "common/GCAM_region_names", "energy/A321.demand", "energy/calibrated_techs", "temp-data-inject/L1321.out_Mt_R_cement_Yh", "L101.Pop_thous_GCAM3_R_Y", "socioeconomics/A321.inc_elas_output") ->
+      L2321.IncomeElasticity_cement_gssp2
+
+    L2321.IncomeElasticity_cement_gssp3 %>%
+      add_title("income elasticity of cement - gSSP3") %>%
+      add_units("Unitless") %>%
+      add_comments("First calculate cement output as the base-year cement output times the GDP ratio raised to the income elasticity") %>%
+      add_comments("Then back out the appropriate income elasticities from cement output") %>%
+      add_legacy_name("L2321.IncomeElasticity_cement_gssp3") %>%
+      add_precursors("L102.pcgdp_thous90USD_GCAM3_R_Y", "L102.pcgdp_thous90USD_Scen_R_Y", "common/GCAM_region_names", "energy/A321.demand", "energy/calibrated_techs", "temp-data-inject/L1321.out_Mt_R_cement_Yh", "L101.Pop_thous_GCAM3_R_Y", "socioeconomics/A321.inc_elas_output") ->
+      L2321.IncomeElasticity_cement_gssp3
+
+    L2321.IncomeElasticity_cement_gssp4 %>%
+      add_title("income elasticity of cement - gSSP4") %>%
+      add_units("Unitless") %>%
+      add_comments("First calculate cement output as the base-year cement output times the GDP ratio raised to the income elasticity") %>%
+      add_comments("Then back out the appropriate income elasticities from cement output") %>%
+      add_legacy_name("L2321.IncomeElasticity_cement_gssp4") %>%
+      add_precursors("L102.pcgdp_thous90USD_GCAM3_R_Y", "L102.pcgdp_thous90USD_Scen_R_Y", "common/GCAM_region_names", "energy/A321.demand", "energy/calibrated_techs", "temp-data-inject/L1321.out_Mt_R_cement_Yh", "L101.Pop_thous_GCAM3_R_Y", "socioeconomics/A321.inc_elas_output") ->
+      L2321.IncomeElasticity_cement_gssp4
+
+    L2321.IncomeElasticity_cement_gssp5 %>%
+      add_title("income elasticity of cement - gSSP5") %>%
+      add_units("Unitless") %>%
+      add_comments("First calculate cement output as the base-year cement output times the GDP ratio raised to the income elasticity") %>%
+      add_comments("Then back out the appropriate income elasticities from cement output") %>%
+      add_legacy_name("L2321.IncomeElasticity_cement_gssp5") %>%
+      add_precursors("L102.pcgdp_thous90USD_GCAM3_R_Y", "L102.pcgdp_thous90USD_Scen_R_Y", "common/GCAM_region_names", "energy/A321.demand", "energy/calibrated_techs", "temp-data-inject/L1321.out_Mt_R_cement_Yh", "L101.Pop_thous_GCAM3_R_Y", "socioeconomics/A321.inc_elas_output") ->
+      L2321.IncomeElasticity_cement_gssp5
+
+    L2321.IncomeElasticity_cement_ssp1 %>%
+      add_title("income elasticity of cement - SSP1") %>%
+      add_units("Unitless") %>%
+      add_comments("First calculate cement output as the base-year cement output times the GDP ratio raised to the income elasticity") %>%
+      add_comments("Then back out the appropriate income elasticities from cement output") %>%
+      add_legacy_name("L2321.IncomeElasticity_cement_ssp1") %>%
+      add_precursors("L102.pcgdp_thous90USD_GCAM3_R_Y", "L102.pcgdp_thous90USD_Scen_R_Y", "common/GCAM_region_names", "energy/A321.demand", "energy/calibrated_techs", "temp-data-inject/L1321.out_Mt_R_cement_Yh", "L101.Pop_thous_GCAM3_R_Y", "socioeconomics/A321.inc_elas_output") ->
+      L2321.IncomeElasticity_cement_ssp1
+
+    L2321.IncomeElasticity_cement_ssp2 %>%
+      add_title("income elasticity of cement - SSP2") %>%
+      add_units("Unitless") %>%
+      add_comments("First calculate cement output as the base-year cement output times the GDP ratio raised to the income elasticity") %>%
+      add_comments("Then back out the appropriate income elasticities from cement output") %>%
+      add_legacy_name("L2321.IncomeElasticity_cement_ssp2") %>%
+      add_precursors("L102.pcgdp_thous90USD_GCAM3_R_Y", "L102.pcgdp_thous90USD_Scen_R_Y", "common/GCAM_region_names", "energy/A321.demand", "energy/calibrated_techs", "temp-data-inject/L1321.out_Mt_R_cement_Yh", "L101.Pop_thous_GCAM3_R_Y", "socioeconomics/A321.inc_elas_output") ->
+      L2321.IncomeElasticity_cement_ssp2
+
+    L2321.IncomeElasticity_cement_ssp3 %>%
+      add_title("income elasticity of cement - SSP3") %>%
+      add_units("Unitless") %>%
+      add_comments("First calculate cement output as the base-year cement output times the GDP ratio raised to the income elasticity") %>%
+      add_comments("Then back out the appropriate income elasticities from cement output") %>%
+      add_legacy_name("L2321.IncomeElasticity_cement_ssp3") %>%
+      add_precursors("L102.pcgdp_thous90USD_GCAM3_R_Y", "L102.pcgdp_thous90USD_Scen_R_Y", "common/GCAM_region_names", "energy/A321.demand", "energy/calibrated_techs", "temp-data-inject/L1321.out_Mt_R_cement_Yh", "L101.Pop_thous_GCAM3_R_Y", "socioeconomics/A321.inc_elas_output") ->
+      L2321.IncomeElasticity_cement_ssp3
+
+    L2321.IncomeElasticity_cement_ssp4 %>%
+      add_title("income elasticity of cement - SSP4") %>%
+      add_units("Unitless") %>%
+      add_comments("First calculate cement output as the base-year cement output times the GDP ratio raised to the income elasticity") %>%
+      add_comments("Then back out the appropriate income elasticities from cement output") %>%
+      add_legacy_name("L2321.IncomeElasticity_cement_ssp4") %>%
+      add_precursors("L102.pcgdp_thous90USD_GCAM3_R_Y", "L102.pcgdp_thous90USD_Scen_R_Y", "common/GCAM_region_names", "energy/A321.demand", "energy/calibrated_techs", "temp-data-inject/L1321.out_Mt_R_cement_Yh", "L101.Pop_thous_GCAM3_R_Y", "socioeconomics/A321.inc_elas_output") ->
+      L2321.IncomeElasticity_cement_ssp4
+
+    L2321.IncomeElasticity_cement_ssp5 %>%
+      add_title("income elasticity of cement - SSP5") %>%
+      add_units("Unitless") %>%
+      add_comments("First calculate cement output as the base-year cement output times the GDP ratio raised to the income elasticity") %>%
+      add_comments("Then back out the appropriate income elasticities from cement output") %>%
+      add_legacy_name("L2321.IncomeElasticity_cement_ssp5") %>%
+      add_precursors("L102.pcgdp_thous90USD_GCAM3_R_Y", "L102.pcgdp_thous90USD_Scen_R_Y", "common/GCAM_region_names", "energy/A321.demand", "energy/calibrated_techs", "temp-data-inject/L1321.out_Mt_R_cement_Yh", "L101.Pop_thous_GCAM3_R_Y", "socioeconomics/A321.inc_elas_output") ->
+      L2321.IncomeElasticity_cement_ssp5
+
     return_data(L2321.Supplysector_cement, L2321.FinalEnergyKeyword_cement, L2321.SubsectorLogit_cement,
                 L2321.SubsectorShrwtFllt_cement, L2321.SubsectorInterp_cement,
                 L2321.StubTech_cement, L2321.GlobalTechShrwt_cement,
                 L2321.GlobalTechCoef_cement, L2321.GlobalTechCost_cement, L2321.GlobalTechCapture_cement,
                 L2321.StubTechProd_cement, L2321.StubTechCalInput_cement_heat, L2321.StubTechCoef_cement,
-                L2321.PerCapitaBased_cement, L2321.BaseService_cement, L2321.PriceElasticity_cement)
+                L2321.PerCapitaBased_cement, L2321.BaseService_cement,
+                L2321.PriceElasticity_cement, L2321.IncomeElasticity_cement_gcam3,
+                L2321.IncomeElasticity_cement_gssp1, L2321.IncomeElasticity_cement_gssp2,
+                L2321.IncomeElasticity_cement_gssp3, L2321.IncomeElasticity_cement_gssp4,
+                L2321.IncomeElasticity_cement_gssp5, L2321.IncomeElasticity_cement_ssp1,
+                L2321.IncomeElasticity_cement_ssp2, L2321.IncomeElasticity_cement_ssp3,
+                L2321.IncomeElasticity_cement_ssp4, L2321.IncomeElasticity_cement_ssp5)
   } else {
     stop("Unknown command")
   }
