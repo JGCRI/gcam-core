@@ -90,7 +90,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
 
 
     # silence check package notes
-    region <- supplysector <- from.year <- to.year <- output.unit <- input.unit <- price.unit <-
+    region <- supplysector <- from.year <- to.year <- output.unit <- input.unit <- price.unit <- liq_adj <-
       logit.exponent <- logit.type <- . <- subsector <- State <- Coal <- Natural.gas <- Distillate.fuel.oil <-
       grid_region <- state_name <- coal_adj <- gas_adj <- liq_adju <- sector1 <- adjustment <- technology <-
       year <- minicam.non.energy.input <- tmp <- sector2 <- trash1 <- trash2 <- input.cost <- sector.name <-
