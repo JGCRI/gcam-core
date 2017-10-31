@@ -397,7 +397,7 @@ void IntermittentTechnology::production( const string& aRegionName,
     double dependentSectorOutput = scenario->getMarketplace()->getDemand( mElectricSectorName, mElectricSectorMarket, aPeriod );
 
     if ( dependentSectorOutput > 0 ){
-        mIntermitOutTechRatio = getOutput( aPeriod ) / dependentSectorOutput;
+        mIntermitOutTechRatio = std::min( getOutput( aPeriod ) / dependentSectorOutput, 1.0 );
     }
     else {
         mIntermitOutTechRatio = 0.0;

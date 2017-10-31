@@ -75,7 +75,17 @@ LogEDFun::LogEDFun(SolutionInfoSet &sisin,
             // doesn't give nonsensical results here, but forecast
             // price is used for other things and so hasn't been
             // so-modified.
-            mxscl[i] = std::max(fabs(mkts[i].getForecastPrice()), 1.0);
+            if( mkts[i].getType() == IMarketType::TAX && ( mkts[i].getForecastPrice() < mkts[i].getLowerBoundSupplyPrice() ||
+                mkts[i].getForecastPrice() > mkts[i].getUpperBoundSupplyPrice() ) )
+            {
+                mxscl[i] = mkts[i].getUpperBoundSupplyPrice();
+            }
+            else if( mkts[i].getType() == IMarketType::RES && ( mkts[i].getForecastPrice() < mkts[i].getLowerBoundSupplyPrice() ) )
+            {
+                mxscl[i] = 1.0;
+            } else {
+                mxscl[i] = std::max(fabs(mkts[i].getForecastPrice()), 1.0);
+            }
             mfxscl[i] = 1.0/mkts[i].getForecastDemand();
         }
     } else {
@@ -346,7 +356,7 @@ void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx, cons
           ILogger &solverlog = ILogger::getLogger("solver_log");
           solverlog.setLevel(ILogger::DEBUG);
           solverlog << "\t\tAdding supply correction: i= " << i << "  p= " << x[i]
-                    << "  p0= " << p0 << "  c= " << c << "  modified supply= " << s-c
+                    << "  p0= " << p0 << "  c= " << c << "  s= " << s << " d= " << d << " modified F(x)= " << fx[i]
                     << "\n";
         }
     }
