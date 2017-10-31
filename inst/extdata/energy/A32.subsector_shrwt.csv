@@ -1,6 +1,6 @@
-# File: A32.subsector_shrwt.csv,,,,
-# Title: Industry default subsector shareweights,,,,
-# Units: Unitless,,,,
+# File: A32.subsector_shrwt.csv
+# Title: Industry default subsector shareweights
+# Units: Unitless
 supplysector,subsector,year.fillout,year,share.weight
 industrial energy use,biomass,start-year,,1
 industrial energy use,coal,start-year,,1

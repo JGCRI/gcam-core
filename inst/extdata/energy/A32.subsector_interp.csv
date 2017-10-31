@@ -1,6 +1,6 @@
-# File: A32.subsector_interp.csv,,,,,,
-# Title: Industry default subsector shareweight interpolation,,,,,,
-# Units: NA,,,,,,
+# File: A32.subsector_interp.csv
+# Title: Industry default subsector shareweight interpolation
+# Units: NA
 supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
 industrial energy use,biomass,share-weight,final-calibration-year,end-year,,fixed
 industrial energy use,coal,share-weight,final-calibration-year,end-year,,fixed

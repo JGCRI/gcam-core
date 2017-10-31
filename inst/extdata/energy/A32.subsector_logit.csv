@@ -1,6 +1,6 @@
-# File: A32.subsector_logit.csv,,,
-# Title: Industry default subsector logit exponents,,,
-# Units: Unitless,,,
+# File: A32.subsector_logit.csv
+# Title: Industry default subsector logit exponents
+# Units: Unitless
 supplysector,subsector,logit.exponent,logit.type
 industrial energy use,biomass,-6,
 industrial energy use,coal,-6,
