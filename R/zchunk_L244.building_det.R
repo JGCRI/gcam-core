@@ -402,7 +402,8 @@ module_energy_L244.building_det <- function(command, ...) {
           add_comments("Degree days are from L143.HDDCDD_scen_R_Y") %>%
           add_precursors("L143.HDDCDD_scen_R_Y", "common/GCAM_region_names",
                          "energy/A44.internal_gains", "energy/A44.sector", "L144.base_service_EJ_serv",
-                         "energy/calibrated_techs_bld_det")
+                         "energy/calibrated_techs_bld_det") %>%
+          add_flags(FLAG_PROTECT_FLOAT)
       })
 
     # Assign each tibble in list
