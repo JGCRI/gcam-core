@@ -271,7 +271,7 @@ energy.DIGITS_LOADFACTOR <- 2
 
 energy.CEMENT_CCS_COST_2000USDTCO2 <- 50 # Starting point of supply curve in Mahasenan et al 2003; come from ENERGY_ASSUMPTIONS/A_ccs_data.R
 energy.CO2_STORAGE_COST_1990_USDTC <- 42 # From GCAM 1.0 inputs; come from ENERGY_ASSUMPTIONS/A_ccs_data.R
-energy.INCELAS_IND <- 3
+energy.DIGITS_INCELAS_IND <- 3
 
 # Digits for rounding into XMLs
 energy.DIGITS_CALOUTPUT <- 7
