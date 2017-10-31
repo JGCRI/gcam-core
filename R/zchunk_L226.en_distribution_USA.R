@@ -1,36 +1,30 @@
 #' module_gcam.usa_L226.en_distribution_USA
 #'
-#' This chunk creates a variety of energy and electricity outputs for USA at the state and/or grid_region level:
-#' L226.DeleteSupplysector_USAelec, L226.StubTechCoef_electd_USA, L226.TechShrwt_electd_USA, L226.TechCost_electd_USA,
-#' L226.TechCoef_electd_USA, L226.Supplysector_en_USA, L226.SubsectorShrwtFllt_en_USA, L226.SubsectorLogit_en_USA,
-#' L226.TechShrwt_en_USA, L226.TechCoef_en_USA, L226.TechCost_en_USA, and L226.Ccoef, L226.Supplysector_electd_USA,
-#' L226.SubsectorLogit_electd_USA, L226.SubsectorShrwtFllt_electd_USA, L226.SubsectorInterp_electd_USA
+#' Create a variety of energy and electricity outputs for USA at the state and/or grid_region level.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
-#' @return Depends on \code{command}: either a vector of required inputs,
-#' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L226.DeleteSupplysector_USAelec}, \code{object}, \code{L226.StubTechCoef_electd_USA}, \code{L226.TechShrwt_electd_USA}, \code{L226.TechCost_electd_USA}, \code{L226.TechCoef_electd_USA}, \code{L226.SectorLogitTables_en_USA[[ curr_table ]]$data}, \code{L226.Supplysector_en_USA}, \code{L226.SubsectorShrwtFllt_en_USA}, \code{L226.SubsectorLogitTables_en_USA[[ curr_table ]]$data}, \code{L226.SubsectorLogit_en_USA}, \code{L226.TechShrwt_en_USA}, \code{L226.TechCoef_en_USA}, \code{L226.TechCost_en_USA}, \code{L226.Ccoef}. The corresponding file in the
-#' original data system was \code{L226.en_distribution_USA.R} (gcam-usa level2).
-#' @details
+#' @return Depends on \code{command}: either a vector of required inputs, a vector of output names, or (if \code{command} is "MAKE") all
+#' the generated outputs:
 #' \itemize{
-#' \item{"L226.DeleteSupplysector_USAelec: Removing the electricity T&D sectors of the USA region." }
-#' \item{"L226.StubTechCoef_electd_USA: Stub technology coefficients elec T&D when using national elec markets. State elect_td sectors are treated as stub technologies."}
-#' \item{"L226.TechShrwt_electd_USA: tech share weights for elec T&D when using regional electricity markets. The elect_td sectors can not use the global tech database as their input is different."}
-#' \item{"L226.TechCost_electd_USA: Tech costs for elec T&D when using regional electricity markets."}
-#' \item{"L226.TechCoef_electd_USA: Tech coeff for elec T&D when using regional electricity markets."}
-#' \item{"L226.Supplysector_en_USA: Supply sector information for energy handling and delivery sectors for USA grid regions. Currently using FERC regions as a proxy for regional energy markets."}
-#' \item{"L226.SubsectorShrwtFllt_en_USA: Subsector shareweights of energy handling and delivery." }
-#' \item{"L226.SubsectorLogit_en_USA: Logit info for energy subsectors. There is only one tech per subsector so the logit choice does not matter."}
-#' \item{"L226.TechShrwt_en_USA: Technology shareweights of energy handling and delivery. Can't use stub technologies because these would inherit the wrong energy-inputs."}
-#' \item{"L226.TechCoef_en_USA: Technology coefficients and market names of energy handling and delivery."}
-#' \item{"L226.TechCost_en_USA: Regional price adjustments/cost adders for USA energy." }
-#' \item{"L226.Ccoef: Carbon coef for USA cost adder sectors."}
-#' \item{"L226.Supplysector_electd_USA: USA supply sector input, output, and logit info for elec T&D by state."}
-#' \item{"L226.SubsectorLogit_electd_USA: USA subsector logit info for elec T&D by grid_region."}
-#' \item{"L226.SubsectorShrwtFllt_electd_USA: USA subsector shareweight fillout for elec T&D by state."}
-#' \item{"L226.SubsectorInterp_electd_USA: USA interpolation info for elec T&D by state."}
+#' \item{\code{L226.DeleteSupplysector_USAelec}: Removing the electricity T&D sectors of the USA region.}
+#' \item{\code{L226.StubTechCoef_electd_USA}: Stub technology coefficients elec T&D when using national elec markets. State elect_td sectors are treated as stub technologies.}
+#' \item{\code{L226.TechShrwt_electd_USA}: tech share weights for elec T&D when using regional electricity markets. The elect_td sectors can not use the global tech database as their input is different.}
+#' \item{\code{L226.TechCost_electd_USA}: Tech costs for elec T&D when using regional electricity markets.}
+#' \item{\code{L226.TechCoef_electd_USA}: Tech coeff for elec T&D when using regional electricity markets.}
+#' \item{\code{L226.Supplysector_en_USA}: Supply sector information for energy handling and delivery sectors for USA grid regions. Currently using FERC regions as a proxy for regional energy markets.}
+#' \item{\code{L226.SubsectorShrwtFllt_en_USA}: Subsector shareweights of energy handling and delivery.}
+#' \item{\code{L226.SubsectorLogit_en_USA}: Logit info for energy subsectors. There is only one tech per subsector so the logit choice does not matter.}
+#' \item{\code{L226.TechShrwt_en_USA}: Technology shareweights of energy handling and delivery. Can't use stub technologies because these would inherit the wrong energy-inputs.}
+#' \item{\code{L226.TechCoef_en_USA}: Technology coefficients and market names of energy handling and delivery.}
+#' \item{\code{L226.TechCost_en_USA}: Regional price adjustments/cost adders for USA energy.}
+#' \item{\code{L226.Ccoef}: Carbon coef for USA cost adder sectors.}
+#' \item{\code{L226.Supplysector_electd_USA}: USA supply sector input, output, and logit info for elec T&D by state.}
+#' \item{\code{L226.SubsectorLogit_electd_USA}: USA subsector logit info for elec T&D by grid_region.}
+#' \item{\code{L226.SubsectorShrwtFllt_electd_USA}: USA subsector shareweight fillout for elec T&D by state.}
+#' \item{\code{L226.SubsectorInterp_electd_USA}: USA interpolation info for elec T&D by state.}
 #' }
+#' The corresponding file in the original data system was \code{L226.en_distribution_USA.R} (gcam-usa level2).
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -315,7 +309,6 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
                subsector = subsector.name) ->
         L226.TechCost_electd_USA
 
-
       # L226.TechCoef_electd_USA: Tech coefficients for elctricity T&D
       L226.StubTechCoef_electd %>%
         global_energy_to_USA_electd() %>%
@@ -529,9 +522,6 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
       add_legacy_name("L226.SubsectorInterp_electd_USA") %>%
       add_precursors("L226.SubsectorInterp_en") ->
       L226.SubsectorInterp_electd_USA
-
-
-
 
     return_data(L226.DeleteSupplysector_USAelec,
                 L226.StubTechCoef_electd_USA,
