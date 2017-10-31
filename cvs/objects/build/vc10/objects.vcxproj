@@ -592,6 +592,7 @@
     <ClCompile Include="..\..\functions\source\building_node_input.cpp" />
     <ClCompile Include="..\..\functions\source\building_service_function.cpp" />
     <ClCompile Include="..\..\functions\source\building_service_input.cpp" />
+    <ClCompile Include="..\..\functions\source\ctax_input.cpp" />
     <ClCompile Include="..\..\functions\source\discrete_choice_factory.cpp" />
     <ClCompile Include="..\..\functions\source\relative_cost_logit.cpp" />
     <ClCompile Include="..\..\functions\source\satiation_demand_function.cpp" />
@@ -634,6 +635,7 @@
     <ClCompile Include="..\..\sectors\source\factor_supply.cpp" />
     <ClCompile Include="..\..\sectors\source\final_demand_sector.cpp" />
     <ClCompile Include="..\..\sectors\source\more_sector_info.cpp" />
+    <ClCompile Include="..\..\sectors\source\negative_emissions_final_demand.cpp" />
     <ClCompile Include="..\..\sectors\source\pass_through_sector.cpp" />
     <ClCompile Include="..\..\sectors\source\production_sector.cpp" />
     <ClCompile Include="..\..\sectors\source\sector.cpp" />
@@ -910,6 +912,7 @@
     <ClInclude Include="..\..\functions\include\building_node_input.h" />
     <ClInclude Include="..\..\functions\include\building_service_function.h" />
     <ClInclude Include="..\..\functions\include\building_service_input.h" />
+    <ClInclude Include="..\..\functions\include\ctax_input.h" />
     <ClInclude Include="..\..\functions\include\discrete_choice_factory.hpp" />
     <ClInclude Include="..\..\functions\include\idiscrete_choice.hpp" />
     <ClInclude Include="..\..\functions\include\relative_cost_logit.hpp" />
@@ -965,6 +968,7 @@
     <ClInclude Include="..\..\sectors\include\final_demand_sector.h" />
     <ClInclude Include="..\..\sectors\include\ibackup_calculator.h" />
     <ClInclude Include="..\..\sectors\include\more_sector_info.h" />
+    <ClInclude Include="..\..\sectors\include\negative_emissions_final_demand.h" />
     <ClInclude Include="..\..\sectors\include\pass_through_sector.h" />
     <ClInclude Include="..\..\sectors\include\production_sector.h" />
     <ClInclude Include="..\..\sectors\include\sector.h" />
