@@ -301,8 +301,8 @@ module_water_L2233.electricity_water <- function(command, ...) {
     # ... would be made on < 1% cost differences, which would require very high logit...
     # ... to get any behavior at all.
     costFltr <- sapply(L2233.Elec_tables_globaltech, function(x)
-      grepl("Capital", get_title(x)) |
-        grepl("OM", get_title(x)))
+      grepl("Capital", get_legacy_name(x)) |
+        grepl("OM", get_legacy_name(x)))
     L2233.Elec_tables_globaltech_cost <- L2233.Elec_tables_globaltech[costFltr]
     # ^^ filters for tables with capital, fixed O&M and variable O&M
 
@@ -409,6 +409,10 @@ module_water_L2233.electricity_water <- function(command, ...) {
       dataCols <- names(elecTable)[!defCols]
       if(!("year" %in% nondataCols)) {
         elecTable$year <- NA
+      }
+      if(tableName == "L2233.GlobalIntTechEff_elec_cool") {
+        elecTable <- filter(elecTable, minicam.energy.input != "backup_electricity")
+        # ^^ want the following left_join to catch distributed_solar, not backup_electricity
       }
       L2233.TechMapYr %>%
         filter(from.supplysector %in% elecTable$sector.name,
@@ -636,8 +640,8 @@ module_water_L2233.electricity_water <- function(command, ...) {
       add_units("unitless") ->
       L2233.AvgFossilEffKeyword_elec_cool
     L2233.Elec_tables_globaltech_nocost_$GlobalIntTechBackup_elec %>%
-      add_title("TBC") %>%
-      add_units("TBC") ->
+      add_title("Capital costs of backup technologies for intermittent techs") %>%
+      add_units("1975 USD/kW/yr") ->
       L2233.GlobalIntTechBackup_elec_cool
     L2233.Elec_tables_globaltech_nocost_$GlobalIntTechEff_elec %>%
       add_title("Cooling efficiencies of intermittent electricity generating technologies") %>%
@@ -651,10 +655,6 @@ module_water_L2233.electricity_water <- function(command, ...) {
       add_title("Shareweights of intermittent electricity generating technologies") %>%
       add_units("Unitless") ->
       L2233.GlobalIntTechShrwt_elec_cool
-    L2233.Elec_tables_globaltech_nocost_$GlobalTechCapture_elec %>%
-      add_title("Storage markets and remove fractions for standard electricity generating technolgies") %>%
-      add_units("Unitless") ->
-      L2233.GlobalTechCapture_elec_cool
     L2233.Elec_tables_globaltech_nocost_$GlobalTechCapture_elec %>%
       add_title("Storage markets and remove fractions for CCS tech by cooling type") %>%
       add_units("Unitless") ->
@@ -678,19 +678,19 @@ module_water_L2233.electricity_water <- function(command, ...) {
       add_units("Unitless") ->
       L2233.GlobalTechProfitShutdown_elec_cool
     L2233.Elec_tables_globaltech_nocost_$GlobalTechSCurve_elec %>%
-      add_title("TBC") %>%
-      add_units("Unitless") ->
+      add_title("Global tech lifetime for techs with s-curve retirement function") %>%
+      add_units("Lifetime in years, half-life in years") ->
       L2233.GlobalTechSCurve_elec_cool
     L2233.Elec_tables_globaltech_nocost_$GlobalTechShrwt_elec %>%
-      add_title("TBC") %>%
+      add_title("Global shareweights for non-intermittent technologies for the electricity sector") %>%
       add_units("Unitless") ->
       L2233.GlobalTechShrwt_elec_cool
     L2233.Elec_tables_globaltech_nocost_$PrimaryRenewKeyword_elec %>%
-      add_title("TBC") %>%
+      add_title("keywords for non-intermittent renewable technologies for the electricity sector") %>%
       add_units("NA") ->
       L2233.PrimaryRenewKeyword_elec_cool
     L2233.Elec_tables_globaltech_nocost_$PrimaryRenewKeywordInt_elec %>%
-      add_title("TBC") %>%
+      add_title("keywords for intermittent renewable technologies") %>%
       add_units("NA") ->
       L2233.PrimaryRenewKeywordInt_elec_cool
 
@@ -708,6 +708,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
     L2233.GlobalTechEff_elecPassthru %>%
       add_title("Input name and efficiency of pass-through technologies in the electricity sector") %>%
       add_units("Unitless") %>%
+      add_comments("Composed directly from input data") %>%
       add_legacy_name("L2233.GlobalTechEff_elecPassthru") %>%
       add_precursors("energy/A23.globaltech_shrwt", "water/elec_tech_water_map") ->
       L2233.GlobalTechEff_elecPassthru
@@ -715,6 +716,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
     L2233.GlobalTechShrwt_elecPassthru %>%
       add_title("Share-weights of pass-through technologies in the electricity sector") %>%
       add_units("units") %>%
+      add_comments("Composed directly from input data") %>%
       add_legacy_name("L2233.GlobalTechShrwt_elecPassthru") %>%
       add_precursors("energy/A23.globaltech_shrwt", "water/elec_tech_water_map") ->
       L2233.GlobalTechShrwt_elecPassthru
@@ -722,6 +724,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
     L2233.StubTechProd_elecPassthru %>%
       add_title("Calibrated electricity flow through the pass-through technologies") %>%
       add_units("EJ") %>%
+      add_comments("Composed directly from input data") %>%
       add_legacy_name("L2233.StubTechProd_elecPassthru") %>%
       add_precursors("energy/calibrated_techs",
                      "L1231.out_EJ_R_elec_F_tech_Yh",
@@ -741,6 +744,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
     L2233.Supplysector_elec_cool %>%
       add_title("Supplysector information for elec cooling") %>%
       add_units("NA") %>%
+      add_comments("Composed directly from input data") %>%
       add_legacy_name("L2233.Supplysector_elec_cool") %>%
       add_precursors("L223.Supplysector_elec",
                      "water/elec_tech_water_map",
@@ -781,7 +785,8 @@ module_water_L2233.electricity_water <- function(command, ...) {
 
     L2233.GlobalIntTechCapital_elec %>%
       add_title("Capital costs for intermittent electricity generating tech") %>%
-      add_units("TBC") %>% ## think this is $1975/GJ for capital.overnight... not sure about fixed.charge.rate
+      add_units("1975$US/kW") %>%
+      add_comments("Composed directly from input data") %>%
       add_legacy_name("L2233.GlobalIntTechCapital_elec") %>%
       add_precursors("water/elec_tech_water_map",
                      "energy/A23.globalinttech",
@@ -790,7 +795,8 @@ module_water_L2233.electricity_water <- function(command, ...) {
 
     L2233.GlobalTechCapital_elecPassthru %>%
       add_title("Capital costs for standard electricity generating tech") %>%
-      add_units("TBC") %>%
+      add_units("1975$US/kW") %>%
+      add_comments("Composed directly from input data") %>%
       add_legacy_name("L2233.GlobalTechCapital_elecPassthru") %>%
       add_precursors("water/elec_tech_water_map",
                      "energy/A23.globalinttech",
@@ -799,7 +805,8 @@ module_water_L2233.electricity_water <- function(command, ...) {
 
     L2233.GlobalIntTechOMfixed_elec %>%
       add_title("Operation and maintainance costs (fixed) for intermittent electricity generating tech") %>%
-      add_units("TBC") %>%
+      add_units("1975$US/kW/yr") %>%
+      add_comments("Composed directly from input data") %>%
       add_legacy_name("L2233.GlobalIntTechOMfixed_elec") %>%
       add_precursors("water/elec_tech_water_map",
                      "energy/A23.globalinttech",
@@ -808,7 +815,8 @@ module_water_L2233.electricity_water <- function(command, ...) {
 
     L2233.GlobalTechOMfixed_elecPassthru %>%
       add_title("Operation and maintainance costs (fixed) for standard electricity generating tech") %>%
-      add_units("TBC") %>%
+      add_units("1975$US/kW/year") %>%
+      add_comments("Composed directly from input data") %>%
       add_legacy_name("L2233.GlobalTechOMfixed_elecPassthru") %>%
       add_precursors("water/elec_tech_water_map",
                      "energy/A23.globalinttech",
@@ -817,7 +825,8 @@ module_water_L2233.electricity_water <- function(command, ...) {
 
     L2233.GlobalIntTechOMvar_elec %>%
       add_title("Operation and maintainance costs (variable) for intermittent electricity generating tech") %>%
-      add_units("TBC") %>%
+      add_units("1975$US/MWh") %>%
+      add_comments("Composed directly from input data") %>%
       add_legacy_name("L2233.GlobalIntTechOMvar_elec") %>%
       add_precursors("water/elec_tech_water_map",
                      "energy/A23.globalinttech",
@@ -826,7 +835,8 @@ module_water_L2233.electricity_water <- function(command, ...) {
 
     L2233.GlobalTechOMvar_elecPassthru %>%
       add_title("Operation and maintainance costs (variable) for standard electricity generating tech") %>%
-      add_units("TBC") %>%
+      add_units("1975$US/MWh") %>%
+      add_comments("Composed directly from input data") %>%
       add_legacy_name("L2233.GlobalTechOMvar_elecPassthru") %>%
       add_precursors("water/elec_tech_water_map",
                      "energy/A23.globalinttech",
@@ -926,7 +936,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
 
     L2233.InputEmissCoeff_hist_elecPassthru %>%
       add_title("BC and OC emissions coefficients from electric power plants (historical)") %>%
-      add_units("TBC") %>%
+      add_units("Tg/EJ") %>%
       add_comments("Emissions coefficients corrected by dividing by elec tech efficiencies") %>%
       add_legacy_name("L2233.InputEmissCoeff_hist_elecPassthru") %>%
       add_precursors("L201.en_bcoc_emissions",
@@ -936,7 +946,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
 
     L2233.InputEmissCoeff_fut_elecPassthru %>%
       add_title("BC and OC emissions coefficients from electric power plants (future)") %>%
-      add_units("TBC") %>%
+      add_units("Tg/EJ") %>%
       add_comments("Emissions coefficients corrected by dividing by elec tech efficiencies") %>%
       add_legacy_name("L2233.InputEmissCoeff_fut_elecPassthru") %>%
       add_precursors("L223.GlobalTechEff_elec",
