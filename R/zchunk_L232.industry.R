@@ -405,30 +405,34 @@ module_energy_L232.industry <- function(command, ...) {
       L232.indenergy_fuel_shares
 
     # Set fuel preference elasticities as indicated by exogenous rules
-    for( j in 1:nrow( L232.indenergy_fuel_shares ) ){
-      for( i in 1:nrow( A32.fuelprefElasticity ) ){
+    # For each row of L232.indenergy_fuel_shares, we check for any entries in A32.fuelprefElasticity
+    # that have the same `subsector` entry, and apply the rule specified (the share in a 'greater than'
+    # entry is only used if the share value is larger; similar logic applies to 'lesser than' entries).
+    # This is an inefficient way to do this, but the datasets involved are small
+    A32.fuelprefElasticity.gt <- filter(A32.fuelprefElasticity, criteria == "greater than")
+    for(j in seq_len(nrow(L232.indenergy_fuel_shares))) {
+      for(i in seq_len(nrow(A32.fuelprefElasticity.gt))) {
         L232.indenergy_fuel_shares$fuelprefElasticity[j][
-          L232.indenergy_fuel_shares$subsector[j] == A32.fuelprefElasticity$subsector[i] &
-            A32.fuelprefElasticity$criteria[i] == "greater than" &
-            L232.indenergy_fuel_shares$share[j] > A32.fuelprefElasticity$share[i] ] <-
-          A32.fuelprefElasticity$fuelprefElasticity[i]
+          L232.indenergy_fuel_shares$subsector[j] == A32.fuelprefElasticity.gt$subsector[i] &
+            L232.indenergy_fuel_shares$share[j] > A32.fuelprefElasticity.gt$share[i] ] <-
+          A32.fuelprefElasticity.gt$fuelprefElasticity[i]
       }
     }
 
-    for( j in 1:nrow( L232.indenergy_fuel_shares ) ){
-      for( i in 1:nrow( A32.fuelprefElasticity ) ){
+    A32.fuelprefElasticity.lt <- filter(A32.fuelprefElasticity, criteria == "lesser than")
+    for(j in seq_len(nrow(L232.indenergy_fuel_shares))) {
+      for(i in seq_len(nrow(A32.fuelprefElasticity.lt))) {
         L232.indenergy_fuel_shares$fuelprefElasticity[j][
-          L232.indenergy_fuel_shares$subsector[j] == A32.fuelprefElasticity$subsector[i] &
-            A32.fuelprefElasticity$criteria[i] == "lesser than" &
-            L232.indenergy_fuel_shares$share[j] < A32.fuelprefElasticity$share[i] ] <-
-          A32.fuelprefElasticity$fuelprefElasticity[i]
+          L232.indenergy_fuel_shares$subsector[j] == A32.fuelprefElasticity.lt$subsector[i] &
+            L232.indenergy_fuel_shares$share[j] < A32.fuelprefElasticity.lt$share[i] ] <-
+          A32.fuelprefElasticity.lt$fuelprefElasticity[i]
       }
     }
 
     # The fuel preference elasticities only matter in future periods. Fill out from the first future model time period
     L232.indenergy_fuel_shares %>%
       mutate(year.fillout = min(FUTURE_YEARS)) %>%
-      filter(fuelprefElasticity !=0) %>%
+      filter(fuelprefElasticity != 0) %>%
       select(one_of(LEVEL2_DATA_NAMES[["FuelPrefElast"]])) ->
       L232.FuelPrefElast_indenergy
 
