@@ -279,7 +279,17 @@ energy.DIGITS_COEFFICIENT <- 7
 energy.DIGITS_COST <- 4
 energy.DIGITS_EFFICIENCY <- 3
 energy.DIGITS_SHRWT <- 4
+energy.DIGITS_FLOORSPACE <- 3
+energy.DIGITS_SATIATION_ADDER <- 9
+energy.DIGITS_HDDCDD <- 0
 energy.DIGITS_CAPACITY_FACTOR <- 2
+
+energy.SATIATION_YEAR <- 2010
+energy.GDP_MID_SATIATION <- 10.5
+energy.FLOOR_TO_SURFACE_RATIO <- 5.5
+
+energy.INTERNAL_GAINS_SCALAR_USA_H <- -930
+energy.INTERNAL_GAINS_SCALAR_USA_C <- 350
 
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
@@ -474,6 +484,14 @@ gcamusa.STATE_RENEWABLE_RESOURCES <- c("distributed_solar", "geothermal", "onsho
 gcamusa.STATE_UNLIMITED_RESOURCES <- c("global solar resource", "limestone")
 
 gcamusa.WIND_BASE_COST_YEAR <- 2005
+
+gcamusa.DEFAULT_SHAREWEIGHT <- 1
+gcamusa.DEFAULT_LOGITEXP <- -3
+gcamusa.DEFAULT_COEFFICIENT <- 1
+gcamusa.DEFAULT_MARKET <- "USA"
+gcamusa.GAS_ADJ_THRESH <- 5
+gcamusa.DIGITS_COST <- 4
+
 
 # Uncomment these lines to run under 'timeshift' conditions
 # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
