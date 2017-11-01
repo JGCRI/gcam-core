@@ -278,6 +278,7 @@ energy.DIGITS_SHRWT <- 4
 energy.DIGITS_FLOORSPACE <- 3
 energy.DIGITS_SATIATION_ADDER <- 9
 energy.DIGITS_CAPACITY_FACTOR <- 2
+energy.DIGITS_HDDCDD <- 0
 
 energy.SATIATION_YEAR <- 2010
 energy.GDP_MID_SATIATION <- 10.5
@@ -476,7 +477,6 @@ gcamusa.STATE_RENEWABLE_RESOURCES <- c("distributed_solar", "geothermal", "onsho
 gcamusa.STATE_UNLIMITED_RESOURCES <- c("global solar resource", "limestone")
 
 gcamusa.WIND_BASE_COST_YEAR <- 2005
-
 # Uncomment these lines to run under 'timeshift' conditions
 # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
 # FUTURE_YEARS <- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)

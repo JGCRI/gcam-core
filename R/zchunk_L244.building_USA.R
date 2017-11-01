@@ -109,7 +109,9 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
     L144.flsp_bm2_state_comm <- get_data(all_data, "L144.flsp_bm2_state_comm")
     L144.in_EJ_state_comm_F_U_Y <- get_data(all_data, "L144.in_EJ_state_comm_F_U_Y")
     L144.in_EJ_state_res_F_U_Y <- get_data(all_data, "L144.in_EJ_state_res_F_U_Y")
-    L143.HDDCDD_scen_state <- get_data(all_data, "temp-data-inject/L143.HDDCDD_scen_state")
+    L143.HDDCDD_scen_state <- get_data(all_data, "temp-data-inject/L143.HDDCDD_scen_state") %>%
+      gather(year, value, starts_with("X")) %>%
+      mutate(year = as.integer(substr(year, 2, 5)))
     L100.Pop_thous_state <- get_data(all_data, "L100.Pop_thous_state")
     L100.pcGDP_thous90usd_state <- get_data(all_data, "L100.pcGDP_thous90usd_state")
     # ===================================================
@@ -135,7 +137,7 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
       rename(base.building.size = value,
              region = state,
              gcam.consumer = sector) %>%
-      mutate(base.building.size = round(base.building.size, gcamusa.DIGITS_FLOORSPACE)) %>%
+      mutate(base.building.size = round(base.building.size, energy.DIGITS_FLOORSPACE)) %>%
       left_join_error_no_match(A44.gcam_consumer, by = "gcam.consumer") %>%
       select(LEVEL2_DATA_NAMES[["Floorspace"]])
 
@@ -202,48 +204,36 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
     thermal_services <- setdiff(unique(A44.sector$supplysector), generic_services)
 
     # L244.HDDCDD: Heating and cooling degree days by scenario
-    L244.all_scen_gcm <- L143.HDDCDD_scen_state %>%
-      select
+    L244.HDDCDD_scen_state <- L143.HDDCDD_scen_state %>%
+      rename(region = state)
 
-
-    L244.all_scen_gcm <- unique( L143.HDDCDD_scen_state [c ("Scen", "GCM") ] )
-    L244.all_scen_gcm$scenID <- 1:nrow( L244.all_scen_gcm )
-    L244.HDDCDD_scen_state <- L143.HDDCDD_scen_state
-    L244.HDDCDD_scen_state$scenID <- L244.all_scen_gcm$scenID[
-      match( vecpaste( L244.HDDCDD_scen_state[ c( "Scen", "GCM" ) ] ),
-             vecpaste( L244.all_scen_gcm[ c( "Scen", "GCM" ) ] ) ) ]
-
-    L244.HDDCDD_scen_state.melt <- melt( L244.HDDCDD_scen_state, id.vars = c( "state","scenID", "Scen", "GCM", "variable" ), variable.name = "Xyear")
-    L244.HDDCDD_scen_state.melt$year <- sub( "X", "", L244.HDDCDD_scen_state.melt$Xyear )
-    L244.HDDCDD_scen_state.melt$region <- L244.HDDCDD_scen_state.melt$state
-
-    #Let's make a climate normal for each region, using a selected interval of years
+    # Let's make a climate normal (historical average) for each region, using a selected interval of years
     # Don't want to just set one year, because we want average values for all regions
-    # Probably want this to be up to 2000, since in SRES scenarios 2001 is a future year
-    L244.HDDCDD_normal_state <- subset( L244.HDDCDD_scen_state.melt, scenID == 1 & year %in% climate_normal_years )
-    L244.HDDCDD_normal_state <- aggregate( L244.HDDCDD_normal_state[ "value" ],
-                                           by = as.list( L244.HDDCDD_normal_state[ c( "region", "variable" ) ] ), mean )
+    L244.HDDCDD_normal_state <- L244.HDDCDD_scen_state %>%
+      filter(year %in% seq(1981, 2000)) %>%
+      group_by(region, variable) %>%
+      summarise(value = mean(value)) %>%
+      ungroup()
 
-    #Subset the heating and cooling services, separately
-    heating_services <- thermal_services[ grepl( "heating", thermal_services ) ]
-    cooling_services <- thermal_services[ grepl( "cooling", thermal_services ) ]
-    L244.HDDCDD <- data.frame(
-      region = rep( states_subregions$state, times = length( thermal_services ) ),
-      thermal.building.service.input = sort( rep( thermal_services, times = nrow( states_subregions ) ) ) )
-    L244.HDDCDD$gcam.consumer <- calibrated_techs_bld_usa$sector[
-      match( L244.HDDCDD$thermal.building.service.input, calibrated_techs_bld_usa$service ) ]
-    L244.HDDCDD[ bld_nodes_noregion ] <- A44.gcam_consumer[
-      match( L244.HDDCDD$gcam.consumer, A44.gcam_consumer$gcam.consumer ),
-      bld_nodes_noregion ]
-    L244.HDDCDD <- L244.HDDCDD[ c( names_BldNodes, "thermal.building.service.input" ) ]
-    L244.HDDCDD <- repeat_and_add_vector( L244.HDDCDD, Y, model_years )
-    L244.HDDCDD <- repeat_and_add_vector( L244.HDDCDD, "scenID", unique( L244.HDDCDD_scen_state$scenID ) )
-    L244.HDDCDD$variable[ L244.HDDCDD$thermal.building.service.input %in% heating_services ] <- "HDD"
-    L244.HDDCDD$variable[ L244.HDDCDD$thermal.building.service.input %in% cooling_services ] <- "CDD"
-    L244.HDDCDD$degree.days <- round( L244.HDDCDD_scen_state.melt$value[
-      match( vecpaste( L244.HDDCDD[ c( "scenID", "region", "variable", "year" ) ] ),
-             vecpaste( L244.HDDCDD_scen_state.melt[ c( "scenID", "region", "variable", "year" ) ] ) ) ],
-      digits_hddcdd )
+    # Subset the heating and cooling services, separately
+    heating_services <- thermal_services[grepl("heating", thermal_services)]
+    cooling_services <- thermal_services[grepl("cooling", thermal_services)]
+
+    L244.HDDCDD <- tidyr::crossing(region = gcamusa.STATES, thermal.building.service.input = thermal_services) %>%
+      # Add in gcam.consumer
+      left_join_error_no_match(calibrated_techs_bld_usa %>%
+                                 select(service, gcam.consumer = sector) %>%
+                                 distinct(), by = c("thermal.building.service.input" = "service")) %>%
+      # Add in nodeInput and building.node.input
+      left_join_error_no_match(A44.gcam_consumer, by = "gcam.consumer") %>%
+      select(LEVEL2_DATA_NAMES[["BldNodes"]], thermal.building.service.input) %>%
+      # Add in model years
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      mutate(variable = if_else(thermal.building.service.input %in% heating_services, "HDD", "CDD")) %>%
+      # Add in degree days
+      left_join_error_no_match(L244.HDDCDD_scen_state, by = c("region", "variable", "year")) %>%
+      mutate(value = round(value, energy.DIGITS_HDDCDD))
+
     # ===================================================
     # Produce outputs
     L244.DeleteConsumer_USAbld %>%
