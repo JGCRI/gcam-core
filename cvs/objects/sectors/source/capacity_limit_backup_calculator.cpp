@@ -332,13 +332,13 @@ double CapacityLimitBackupCalculator::calcIntermittentShare( const string& aSect
                                                              const string& aElectricSector,
                                                              const string& aResource,
                                                              const string& aRegion,
+                                                             const double aTechCapacityFactor,
                                                              const double aReserveMargin,
                                                              const double aAverageGridCapacityFactor,
                                                              const int aPeriod ) const
 {
 
-    double capacityShare = std::min( std::max( SectorUtils::getTrialSupply( aRegion, aSector, aPeriod ), 0.0 ), 1.0 ) * 
-                           aAverageGridCapacityFactor / 
-                           SectorUtils::getCapacityFactor( aResource, aRegion, aPeriod );
+    double capacityShare = std::min( std::max( SectorUtils::getTrialSupply( aRegion, aSector, aPeriod ), 0.0 ), 1.0 ) *
+                           aAverageGridCapacityFactor / aTechCapacityFactor;
     return capacityShare;
 }

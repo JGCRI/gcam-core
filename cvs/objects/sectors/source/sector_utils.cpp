@@ -363,34 +363,6 @@ double SectorUtils::getVariance( const string& aResourceName,
 }
 
 /*!
- * \brief Get the capacity factor of the resource.
- * \details Queries the market-info of the good for the capacity factor.
- *          Returns zero if the market does not exist or does not have a
- *          capacity factor set.
- * \param aResource Resource for which to get the capacity factor.
- * \param aRegion Region for which to get the capacity factor.
- * \param aPeriod Model period.
- * \return The resource capacity factor.
- */
-double SectorUtils::getCapacityFactor( const string& aResourceName,
-                                       const string& aRegionName,
-                                       const int aPeriod )
-{
-    // Get resource capacity factor from market info for the sector.
-    const Marketplace* marketplace = scenario->getMarketplace();
-    const IInfo* resourceInfo =
-        marketplace->getMarketInfo( aResourceName, aRegionName, aPeriod, true );
-
-    double resourceCapacityFactor = resourceInfo ?
-        resourceInfo->getDouble( "resourceCapacityFactor", true ) :
-        util::getLargeNumber();
-    
-    // Resource capacity factor must be between 0 and 1 inclusive.
-    assert( resourceCapacityFactor >= 0 && resourceCapacityFactor <= 1 );
-    return resourceCapacityFactor;
-}
-
-/*!
  * \brief Converts energy to capacity using a given capacity factor.
  * \param aCapacityFactor Capacity factor to use in the conversion.
  * \param aEnergy The energy quantity to convert.

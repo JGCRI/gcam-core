@@ -43,8 +43,11 @@ L119.CapFacScaler_CSP_state <- data.frame(
       sector = "electricity generation",
       fuel = "solar CSP",
       scaler = NREL_us_re_capacity_factors$CSP_scaler[ match( states, NREL_us_re_capacity_factors$state ) ] )
+# Null CSP capacity factor implies that CSP is not suitable in the state.
+# Set capacity factor to small number (0.001) to prevent divide by 0 error in GCAM.
+L119.CapFacScaler_CSP_state$scaler <- ifelse( L119.CapFacScaler_CSP_state$scaler > 0, L119.CapFacScaler_CSP_state$scaler,  0.001 )
 
-# -----------------------------------------------------------------------------
+  # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments for each table
 comments.L119.CapFacScaler_PV_state <- c( "Solar PV capacity factor adjustment by state","Unitless" )

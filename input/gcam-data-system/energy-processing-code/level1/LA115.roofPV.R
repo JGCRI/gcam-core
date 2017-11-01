@@ -59,7 +59,6 @@ L115.RsrcCurves_EJ_R_roofPV$maxSubResource <- L115.roofPV_maxSubResource_R$maxSu
 L115.RsrcCurves_EJ_R_roofPV$mid.price <- L115.roofPV_midprice_R$mid.price[ match( L115.RsrcCurves_EJ_R_roofPV[[R]], L115.roofPV_midprice_R[[R]] ) ]
 L115.RsrcCurves_EJ_R_roofPV$curve.exponent <- A15.roofPV_curves$curve.exponent[1]     #assuming that all regions have the same curve exponent
 L115.RsrcCurves_EJ_R_roofPV$gdpSupplyElast <- A15.roofPV_curves$gdpSupplyElast[1]     #assuming that all regions have the same GDP supply elasticity
-L115.RsrcCurves_EJ_R_roofPV$subResourceCapacityFactor <- A15.roofPV_curves$subResourceCapacityFactor[1]     #assuming that all regions have the same capacity factor
 
 # 2b. Prices (assumed, no processing necessary)
 

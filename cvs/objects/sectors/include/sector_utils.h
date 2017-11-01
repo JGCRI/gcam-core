@@ -107,10 +107,6 @@ public:
 
     static int getDemandNormPeriod( const int aPeriod );
 
-    static double getCapacityFactor( const std::string& aResourceName,
-                                     const std::string& aRegionName,
-                                     const int aPeriod );
-    
     static double convertEnergyToCapacity( const double aCapacityFactor,
                                            const double aEnergy );
 

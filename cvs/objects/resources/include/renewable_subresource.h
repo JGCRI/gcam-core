@@ -62,14 +62,14 @@ class IInfo;
 */
 class SubRenewableResource: public SubResource {
     friend class CalibrateResourceVisitor;
-public: 
+
+public:
     SubRenewableResource();
     virtual void completeInit( const IInfo* aSectorInfo );
     virtual void cumulsupply(double prc,int per);
     virtual void annualsupply( int per, const GDP* gdp, double price1, double price2 );
     virtual double getVariance() const;
     virtual double getMaxSubResource() const;
-    virtual double getAverageCapacityFactor() const;
     //! Return the XML tag name
     static const std::string& getXMLNameStatic( void );
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;

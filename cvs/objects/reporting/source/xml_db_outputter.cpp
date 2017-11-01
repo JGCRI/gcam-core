@@ -831,6 +831,9 @@ void XMLDBOutputter::startVisitTechnology( const Technology* aTechnology, const 
         XMLWriteElement( aTechnology->getShareWeight(), "share-weight", *childBuffer, mTabs.get() );
     }
 
+    // Do not write out default capacity factor of 1
+    XMLWriteElementCheckDefault( aTechnology->getCapacityFactor(), "capacity-factor", *childBuffer, mTabs.get() , 1.0 );
+
     // children of technology go in the child buffer
     for( int curr = 0; curr <= aPeriod; ++curr ){
         // Write out total cost which includes fuel and non-energy costs
