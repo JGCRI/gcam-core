@@ -1,6 +1,6 @@
 #' module_gcam.usa_L2322.Fert_USA
 #'
-#' This chunk produces the logit tables for the fertilizer sector in GCAM-USA
+#' Produce the logit tables for the fertilizer sector in GCAM-USA.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -197,7 +197,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
       # processed, and the input data frame is returned as is.
       check_df <- dplyr::filter(data, region == "USA" & supplysector == gcamusa.FERT_NAME)
 
-      if(nrow(check_df) == 0){
+      if(nrow(check_df) == 0) {
         # This does not change the entries of the data frame but will strip the attributes
         # from the input data frame.
         new_data <- mutate(data, region = region)

@@ -18,7 +18,7 @@ the generated outputs: \code{L2322.DeleteSubsector_USAFert}, \code{L2322.FinalEn
  The corresponding file in the original data system was \code{L2322.Fert_USA.R} (gcam-usa level2).
 }
 \description{
-This chunk produces the logit tables for the fertilizer sector in GCAM-USA
+Produce the logit tables for the fertilizer sector in GCAM-USA.
 }
 \details{
 This chunk produces the logit tables for the fertilizer sector in GCAM-USA
