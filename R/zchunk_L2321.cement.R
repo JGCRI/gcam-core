@@ -95,7 +95,8 @@ module_energy_L2321.cement <- function(command, ...) {
       technology <- supplysector <- subsector <- minicam.energy.input <- coefficient <-
       remove.fraction <- minicam.non.energy.input <- input.cost <- PrimaryFuelCO2Coef.name <-
       PrimaryFuelCO2Coef <- calibration <- calOutputValue <- subs.share.weight <- region <-
-      calibrated.value <- NULL
+      calibrated.value <- . <- scenario <- temp_lag <- base.service <- energy.final.demand <-
+      value.x <- value.y <- parameter <- NULL
 
     # ===================================================
     # 1. Perform computations
@@ -358,7 +359,7 @@ module_energy_L2321.cement <- function(command, ...) {
     for( i in 2 : length(elast_years)) {
       L2321.Output_cement %>%
         filter(year == elast_years[i-1]) %>%
-        left_join_error_no_match(filter(L2321.pcgdpRatio_ALL_R_Y, year == elast_years[i]), by = c("GCAM_region_ID", "scenario")) %>%
+        left_join(filter(L2321.pcgdpRatio_ALL_R_Y, year == elast_years[i]), by = c("GCAM_region_ID", "scenario")) %>% # strick left join fails timeshift test due to NAs in L102.pcgdp_thous90USD_Scen_R_Y under timeshift mode
         mutate(parameter = approx(x = A321.inc_elas_output[["pc.output_t"]],
                                   y = A321.inc_elas_output[["inc_elas"]],
                                   xout = .[['value.x']],
