@@ -489,7 +489,7 @@ gcamusa.DEFAULT_COEFFICIENT <- 1
 gcamusa.DEFAULT_MARKET <- "USA"
 gcamusa.GAS_ADJ_THRESH <- 5
 gcamusa.DIGITS_COST <- 4
-
+gcamusa.EFFICIENCY_PARTITION_YEAR <- 2005
 
 # Uncomment these lines to run under 'timeshift' conditions
 # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
