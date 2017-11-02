@@ -563,7 +563,7 @@ module_energy_L232.industry <- function(command, ...) {
       L232.IncomeElasticity_ind %>%
         filter(scenario == ieo) %>%
         select(one_of(LEVEL2_DATA_NAMES[["IncomeElasticity"]])) %>%
-        add_title(paste("income elasticity of industry -", ieo)) %>%
+        add_title(paste("Income elasticity of industry -", ieo)) %>%
         add_units("Unitless") %>%
         add_comments("First calculate industrial output as the base-year industrial output times the GDP ratio raised to the income elasticity") %>%
         add_comments("Then back out the appropriate income elasticities from industrial output") %>%
