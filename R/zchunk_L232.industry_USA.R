@@ -292,7 +292,8 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
       add_comments("") %>%
       add_legacy_name("L232.StubTechMarket_ind_USA") %>%
       add_precursors("L232.StubTech_ind",
-                     "energy/A32.globaltech_eff") ->
+                     "energy/A32.globaltech_eff",
+                     "gcam-usa/states_subregions") ->
       L232.StubTechMarket_ind_USA
 
     L232.StubTechSecMarket_ind_USA %>%
@@ -301,7 +302,8 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
       add_comments("derived from L232.StubTechMarket_ind_USA") %>%
       add_legacy_name("L232.StubTechSecMarket_ind_USA") %>%
       add_precursors("L232.StubTech_ind",
-                     "energy/A32.globaltech_eff") ->
+                     "energy/A32.globaltech_eff",
+                     "gcam-usa/states_subregions") ->
       L232.StubTechSecMarket_ind_USA
 
     L232.BaseService_ind_USA %>%
@@ -311,7 +313,8 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
       add_legacy_name("L232.BaseService_ind_USA") %>%
       add_precursors("energy/A32.globaltech_eff",
                      "L132.in_EJ_state_indnochp_F",
-                     "L132.in_EJ_state_indfeed_F") ->
+                     "L132.in_EJ_state_indfeed_F",
+                     "energy/A32.demand") ->
       L232.BaseService_ind_USA
 
     return_data(L232.DeleteSupplysector_USAind, L232.DeleteFinalDemand_USAind, L232.StubTechCalInput_indenergy_USA,

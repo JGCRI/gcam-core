@@ -18,7 +18,17 @@ module_energy_batch_industry_incelas_SSP_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(paste("L232.IncomeElasticity_ind", tolower(INCOME_ELASTICITY_INPUTS), sep = "_")))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c(paste0(paste("industry_incelas", tolower(INCOME_ELASTICITY_INPUTS), sep = "_"), '.xml')))
+    return(c(XML = "industry_incelas_gcam3.xml",
+             XML = "industry_incelas_gssp1.xml",
+             XML = "industry_incelas_gssp2.xml",
+             XML = "industry_incelas_gssp3.xml",
+             XML = "industry_incelas_gssp4.xml",
+             XML = "industry_incelas_gssp5.xml",
+             XML = "industry_incelas_ssp1.xml",
+             XML = "industry_incelas_ssp2.xml",
+             XML = "industry_incelas_ssp3.xml",
+             XML = "industry_incelas_ssp4.xml",
+             XML = "industry_incelas_ssp5.xml"))
   } else if(command == driver.MAKE) {
 
     # Silence package checks
