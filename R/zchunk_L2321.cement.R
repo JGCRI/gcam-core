@@ -99,7 +99,12 @@ module_energy_L2321.cement <- function(command, ...) {
       remove.fraction <- minicam.non.energy.input <- input.cost <- PrimaryFuelCO2Coef.name <-
       PrimaryFuelCO2Coef <- calibration <- calOutputValue <- subs.share.weight <- region <-
       calibrated.value <- . <- scenario <- temp_lag <- base.service <- energy.final.demand <-
-      value.x <- value.y <- parameter <- NULL
+      value.x <- value.y <- parameter <- L2321.IncomeElasticity_cement_gcam3 <-
+      L2321.IncomeElasticity_cement_gssp1 <- L2321.IncomeElasticity_cement_gssp2 <-
+      L2321.IncomeElasticity_cement_gssp3 <- L2321.IncomeElasticity_cement_gssp4 <-
+      L2321.IncomeElasticity_cement_gssp5 <- L2321.IncomeElasticity_cement_ssp1 <-
+      L2321.IncomeElasticity_cement_ssp2 <- L2321.IncomeElasticity_cement_ssp3 <-
+      L2321.IncomeElasticity_cement_ssp4 <- L2321.IncomeElasticity_cement_ssp5 <- NULL
 
     # ===================================================
     # 1. Perform computations
