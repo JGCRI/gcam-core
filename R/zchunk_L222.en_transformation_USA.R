@@ -43,7 +43,6 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
              "L222.Tech_USAen",
              "L222.TechShrwt_USAen",
              "L222.TechInterp_USAen",
-             "L222.TechShrwt_USAen",
              "L222.TechCoef_USAen",
              "L222.Production_USArefining",
              "L222.Supplysector_en_USA",
@@ -76,32 +75,15 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
     L122.out_EJ_state_refining_F <- get_data(all_data, "L122.out_EJ_state_refining_F")
     L202.CarbonCoef <- get_data(all_data, "L202.CarbonCoef")
 
-    # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses repeat_and_add_vector
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # ===================================================
+
+    # silence check package notes
+
+
+
+    # build tables
+
 
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -179,16 +161,16 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L222.TechInterp_USAen
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L222.TechShrwt_USAen") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L222.TechShrwt_USAen
+    # tibble() %>%
+    #   add_title("descriptive title of data") %>%
+    #   add_units("units") %>%
+    #   add_comments("comments describing how data generated") %>%
+    #   add_comments("can be multiple lines") %>%
+    #   add_legacy_name("L222.TechShrwt_USAen") %>%
+    #   add_precursors("precursor1", "precursor2", "etc") %>%
+    #   # typical flags, but there are others--see `constants.R`
+    #   add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    #   L222.TechShrwt_USAen
 
     tibble() %>%
       add_title("descriptive title of data") %>%
@@ -268,7 +250,7 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
       L222.CarbonCoef_en_USA
 
     return_data(L222.DeleteStubTech_USAen, L222.SectorEQUIV, L222.PassThroughSector_USAen, object, L222.TechEQUIV, L222.Tech_USAen,
-                L222.TechShrwt_USAen, L222.TechInterp_USAen, L222.TechShrwt_USAen, L222.TechCoef_USAen, L222.Production_USArefining,
+                L222.TechShrwt_USAen, L222.TechInterp_USAen, L222.TechCoef_USAen, L222.Production_USArefining,
                 L222.Supplysector_en_USA, L222.SubsectorShrwtFllt_en_USA, L222.StubTechProd_refining_USA, L222.StubTechMarket_en_USA,
                 L222.CarbonCoef_en_USA)
   } else {
