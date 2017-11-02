@@ -519,7 +519,7 @@ module_energy_L232.industry <- function(command, ...) {
       mutate(year = max(BASE_YEARS)) %>%
       left_join_error_no_match(L232.BaseService_ind, by = c("year", "region")) %>%
       left_join_error_no_match(L101.Pop_thous_GCAM3_R_Y, by = c("year", "GCAM_region_ID")) %>%
-      mutate(value = base.service * CONV_MIL_THOUS / value) %>%
+      mutate(value = base.service * CONV_BIL_THOUS / value) %>%
       select(-base.service, -energy.final.demand) ->
       L232.Output_ind
 
