@@ -81,6 +81,32 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
 
 
     # build tables
+    # Oil refining sectors are only created in states where the production is > 0 in the historical period.
+    # Collect these states. Other techs are available everywhere
+    L122.out_EJ_state_refining_F %>%
+      filter(sector == "oil refining",
+             year %in% HISTORICAL_YEARS) %>%
+      group_by(state, sector, fuel) %>%
+      summarise(value = sum(value)) %>%
+      ungroup %>%
+      filter(value > 0) %>%
+      pull(state) ->
+      oil_refining_states
+
+
+    # L222.DeleteStubTech_USAen: remove existing stub technologies in the USA region.
+    # The supplysector and subsector structure in the sectors defined in gcamusa.SECTOR_EN_NAMES are retained
+    L222.StubTech_en %>%
+      filter(region == "USA", supplysector %in% gcamusa.SECTOR_EN_NAMES) ->
+      L222.DeleteStubTech_USAen
+
+
+    # L222.Tech_USAen: Just the technology pass-throughs used to set the proper node name, USA region
+
+
+    # L222.TechEQUIV: not used in this code, would probably be best defined externally as a constant or assumption
+    L222.TechEQUIV <- tibble( group.name=c("technology"), tag1=c("technology"),
+                                  tag2=c("pass-through-technology"), stringsAsFactors=FALSE )
 
 
     # Produce outputs
