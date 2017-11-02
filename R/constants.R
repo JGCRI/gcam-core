@@ -269,6 +269,10 @@ energy.DIGITS_MPKM <- 0
 energy.DIGITS_SPEED <- 1
 energy.DIGITS_LOADFACTOR <- 2
 
+energy.CEMENT_CCS_COST_2000USDTCO2 <- 50 # Starting point of supply curve in Mahasenan et al 2003; come from ENERGY_ASSUMPTIONS/A_ccs_data.R
+energy.CO2_STORAGE_COST_1990_USDTC <- 42 # From GCAM 1.0 inputs; come from ENERGY_ASSUMPTIONS/A_ccs_data.R
+energy.DIGITS_INCELAS_IND <- 3
+
 # Digits for rounding into XMLs
 energy.DIGITS_CALOUTPUT <- 7
 energy.DIGITS_COEFFICIENT <- 7
@@ -347,7 +351,6 @@ CONV_HA_M2 <- 1e4 # ha to m2
 CONV_BM2_M2 <- 1e9
 CONV_MILFT2_M2 <- 92900 # Million square feet to square meters
 CONV_FT2_M2 <- 0.0929 # Square feet to square meters
-
 
 # Driver constants ======================================================================
 
@@ -444,7 +447,6 @@ emissions.COAL_SO2_THRESHOLD <- 0.1 # Tg/EJ (here referring to Tg SO2 per EJ of 
 
 emissions.EPA_MACC_YEAR        <- 2030  # Must be either 2020 or 2030
 emissions.MAC_TAXES            <- c(0, 5, 10, 15, 32, 66, 129, 243, 486, 1093) # Range of costs in 1990 USD
-emissions.CONV_C_CO2           <- 44 / 12 # Convert Carbon to CO2
 emissions.DEFOREST_COEF_YEARS  <- c(2000, 2005)
 emissions.AGR_SECTORS          <- c("rice", "fertilizer", "soil")
 emissions.AGR_GASES            <- c("CH4_AGR", "N2O_AGR", "NH3_AGR", "NOx_AGR")
