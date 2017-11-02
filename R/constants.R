@@ -491,6 +491,10 @@ gcamusa.GAS_ADJ_THRESH <- 5
 gcamusa.DIGITS_COST <- 4
 gcamusa.EFFICIENCY_PARTITION_YEAR <- 2005
 
+# Degree day norms (no idea where these came from)
+gcamusa.BASE_HDD_USA <- 4524
+gcamusa.BASE_CDD_USA <- 1215
+
 # Uncomment these lines to run under 'timeshift' conditions
 # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
 # FUTURE_YEARS <- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)
