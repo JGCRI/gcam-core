@@ -9,7 +9,7 @@
 #' the generated outputs: \code{building_SSP1.xml}, \code{building_SSP2.xml}, \code{building_SSP3.xml},
 #' \code{building_SSP4.xml},and \code{building_SSP5.xml}.
 module_energy_batch_building_SSP_xml <- function(command, ...) {
-  SSP_NUMS <- seq(1,5)
+  SSP_NUMS <- seq(1, 5)
   fuelpref_NUMS <- c("1" = "15", "3" = "3", "4" = "4", "5" = "15")
 
   if(command == driver.DECLARE_INPUTS) {
