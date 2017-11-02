@@ -320,6 +320,16 @@ void Region::completeInit() {
     }
 }
 
+/*!
+ * \brief Function to initialize objects prior to starting a model period.
+ * \param aPeriod The model period about to begin.
+ */
+void Region::initCalc( const int aPeriod ) {
+    for( auto currPolicy : mPolicies ) {
+        currPolicy->initCalc( mName, aPeriod );
+    }
+}
+
 /*! \brief Function to finalize objects after a period is solved.
 * \details This function is used to calculate and store variables which are only
 *          needed after the current period is complete. 
@@ -335,6 +345,9 @@ void Region::postCalc( const int aPeriod ){
     // Post calculation for resource sectors
     for( ResourceIterator currResource = mResources.begin(); currResource != mResources.end(); ++currResource ){
         (*currResource)->postCalc( mName, aPeriod );
+    }
+    for( auto currPolicy : mPolicies ) {
+        currPolicy->postCalc( mName, aPeriod );
     }
 }
 

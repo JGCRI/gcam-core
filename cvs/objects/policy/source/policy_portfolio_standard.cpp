@@ -63,9 +63,6 @@ extern Scenario* scenario;
 
 /*! \brief Default constructor. */
 PolicyPortfolioStandard::PolicyPortfolioStandard():
-mConstraint( -1.0 ),
-mFixedTax( -1.0 ),
-mShareOfSectorOutput( -1.0 ),
 mMinPrice( 0.0 ),
 mMaxPrice( util::getLargeNumber() ),
 mPriceUnits( "1975$/GJ" ),
@@ -135,13 +132,13 @@ void PolicyPortfolioStandard::XMLParse( const DOMNode* node ){
             mIsShareBased = XMLHelper<bool>::getValue( curr );
         }
         else if( nodeName == "constraint" ){
-            XMLHelper<double>::insertValueIntoVector( curr, mConstraint, modeltime );
+            XMLHelper<Value>::insertValueIntoVector( curr, mConstraint, modeltime );
         }
         else if( nodeName == "fixedTax" ){
-            XMLHelper<double>::insertValueIntoVector( curr, mFixedTax, modeltime );
+            XMLHelper<Value>::insertValueIntoVector( curr, mFixedTax, modeltime );
         }
         else if( nodeName == "share-of-sector-output" ){
-            XMLHelper<double>::insertValueIntoVector( curr, mShareOfSectorOutput, modeltime );
+            XMLHelper<Value>::insertValueIntoVector( curr, mShareOfSectorOutput, modeltime );
             // Check to see if the output share is within valid range (between 0 and 1).
             double tempShare = XMLHelper<double>::getValue( curr );
             if ( tempShare <= 0 || tempShare > 1 ){
@@ -181,19 +178,22 @@ void PolicyPortfolioStandard::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteElement( mIsShareBased, "isShareBased", out, tabs );
     
     const Modeltime* modeltime = scenario->getModeltime();    
-    for( int per = 0; per < modeltime->getmaxper(); ++per ){
-        XMLWriteElementCheckDefault( mConstraint[ per ],
-            "constraint", out, tabs, -1.0 );
+    for( int per = 0; per < modeltime->getmaxper(); ++per ) {
+        int year = modeltime->getper_to_yr( per );
+        if( mFixedTax[ per ].isInited() ) {
+            XMLWriteElement( mFixedTax[ per ], "fixedTax", out, tabs, year );
+        }
+        if( mConstraint[ per ].isInited() ) {
+            XMLWriteElement( mConstraint[ per ], "constraint", out, tabs, year );
+        }
+        if( mShareOfSectorOutput[ per ].isInited() ) {
+            XMLWriteElement( mShareOfSectorOutput[ per ], "share-of-sector-output", out, tabs, year );
+        }
     }
-    XMLWriteVector( mFixedTax, "fixedTax", out, tabs, modeltime, 0.0 );
     XMLWriteVector( mMinPrice, "min-price", out, tabs, modeltime, 0.0 );
-    XMLWriteVector( mMaxPrice, "max-price", out, tabs, modeltime, 0.0 );
+    XMLWriteVector( mMaxPrice, "max-price", out, tabs, modeltime, util::getLargeNumber() );
     XMLWriteElement( mPriceUnits, "price-unit", out, tabs );
     XMLWriteElement( mOutputUnits, "output-unit", out, tabs );
-    for( int per = 0; per < modeltime->getmaxper(); ++per ){
-        XMLWriteElementCheckDefault( mShareOfSectorOutput[ per ],
-            "share-of-sector-output", out, tabs, -1.0 );
-    }
 
     // finished writing xml for the class members.
     XMLWriteClosingTag( getXMLName(), out, tabs );
@@ -270,20 +270,18 @@ void PolicyPortfolioStandard::completeInit( const string& aRegionName ) {
         // Make sure that the market is not solved. It could have been set
         // to solve by an earlier run.
         marketplace->unsetMarketToSolve( mName, aRegionName, i );
-        if( mFixedTax[ i ] != -1 ){
+        if( mFixedTax[ i ].isInited() ){
             marketplace->setPrice( mName, aRegionName, mFixedTax[ i ], i );
         }
     }
 
-    // solve the market when given the read-in constraint.
-    // Initialize temporary vector of contraints to constraint
-    vector<double> tempConstraint( convertToVector( mConstraint ) );
+    objects::PeriodVector<Value> tempConstraint = mConstraint;
 
     // Override tempConstraint with shares if shared based.
     // Note: the share is based on the total output of the sector that the
     // technology is in.
     if( mIsShareBased ){
-        tempConstraint = convertToVector( mShareOfSectorOutput );
+        tempConstraint = mShareOfSectorOutput;
         marketInfo->setBoolean( "isShareBased", true );
     }
     // Set either of the constraints, quantity or share, into the
@@ -297,7 +295,7 @@ void PolicyPortfolioStandard::completeInit( const string& aRegionName ) {
         // Subtracting the current demand for this period to set the constraint
         // because addToDemand adds to any existing demand in the market.
         // Passing false to suppress a warning the first time through.
-        if( tempConstraint[ per ] != -1 ){
+        if( tempConstraint[ per ].isInited() ){
             if ( mPolicyType == "tax" ){
                 marketplace->setMarketToSolve( mName, aRegionName, per );
                 marketplace->addToSupply( mName, aRegionName, Value( tempConstraint[ per ] -
@@ -323,3 +321,26 @@ void PolicyPortfolioStandard::completeInit( const string& aRegionName ) {
         }
     }
 }
+
+/*!
+ * \brief Perform any initializations that need to occur prior to attempting to solve
+ *        aPeriod.
+ * \param aRegionName The name of the containing region.
+ * \param aPeriod The current model period about to begin.
+ */
+void PolicyPortfolioStandard::initCalc( const string& aRegionName, const int aPeriod ) {
+}
+
+/*!
+ * \brief Perform any computations after a model period has found a solution.
+ * \param aRegionName The name of the containing region.
+ * \param aPeriod The current model period which just finished.
+ */
+void PolicyPortfolioStandard::postCalc( const string& aRegionName, const int aPeriod ) {
+    // if we are solving for a price because we have a constraint then we should
+    // save the solved price so we can write it back out in toInputXML for restart
+    if( mConstraint[ aPeriod ].isInited() ) {
+        mFixedTax[ aPeriod ] = scenario->getMarketplace()->getPrice( mName, aRegionName, aPeriod );
+    }
+}
+

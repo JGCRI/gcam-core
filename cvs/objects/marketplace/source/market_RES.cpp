@@ -74,7 +74,7 @@ double MarketRES::getDefaultPrice() const {
 */
 void MarketRES::initPrice() {
     // If price is near zero it needs to be initialized.
-    if( mPrice < util::getSmallNumber() ){
+    if( !mPrice.isInited() ){
         if( mSolveMarket ){
             mPrice = getDefaultPrice();
         }

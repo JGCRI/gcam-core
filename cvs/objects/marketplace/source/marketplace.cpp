@@ -655,9 +655,9 @@ void Marketplace::init_to_last( const int period ) {
     }
     else if ( period > 0 && period < restartPeriod ) {
         for ( unsigned int i = 0; i < mMarkets.size(); i++ ) {
-            mMarkets[ i ]->getMarket( period )->set_price_to_last_if_default( mMarkets[ i ]->getMarket( period - 1 )->getPrice() );
-            mMarkets[ i ]->getMarket( period )->setForecastPrice( mMarkets[ i ]->getMarket( period - 1 )->getRawPrice() );
-            mMarkets[ i ]->getMarket( period )->setForecastDemand( 1.0 );
+            double forecastedPrice = mMarkets[ i ]->forecastPrice( period );
+            mMarkets[ i ]->getMarket( period )->set_price_to_last_if_default( forecastedPrice );
+            mMarkets[ i ]->forecastDemand( period );
         }
     }
     else if( period >= restartPeriod ){

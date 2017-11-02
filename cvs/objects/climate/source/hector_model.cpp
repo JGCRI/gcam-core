@@ -544,7 +544,7 @@ IClimateModel::runModelStatus HectorModel::runModel( const int aYear ) {
     // outputs), we can bypass this and the local storage for the
     // yearly results.
     bool hadError = false;
-    int lastSuccessYear;
+    int lastSuccessYear = mLastYear;
     for( int year = mLastYear + 1; year <= aYear; ++year ) {
         if( !hadError ) {
             try {
