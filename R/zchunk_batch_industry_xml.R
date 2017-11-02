@@ -12,9 +12,9 @@ module_energy_batch_industry_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L232.SubsectorLogit_ind",
              "L232.FinalEnergyKeyword_ind",
-             "L232.SubsectorShrwt_ind",
+             # "L232.SubsectorShrwt_ind",
              "L232.SubsectorInterp_ind",
-             "L232.SubsectorInterpTo_ind",
+             # "L232.SubsectorInterpTo_ind",
              "L232.StubTech_ind",
              "L232.GlobalTechShrwt_ind",
              "L232.StubTechInterp_ind",
@@ -40,9 +40,9 @@ module_energy_batch_industry_xml <- function(command, ...) {
     # Load required inputs
     L232.SubsectorLogit_ind <- get_data(all_data, "L232.SubsectorLogit_ind")
     L232.FinalEnergyKeyword_ind <- get_data(all_data, "L232.FinalEnergyKeyword_ind")
-    L232.SubsectorShrwt_ind <- get_data(all_data, "L232.SubsectorShrwt_ind")
+    # L232.SubsectorShrwt_ind <- get_data(all_data, "L232.SubsectorShrwt_ind")
     L232.SubsectorInterp_ind <- get_data(all_data, "L232.SubsectorInterp_ind")
-    L232.SubsectorInterpTo_ind <- get_data(all_data, "L232.SubsectorInterpTo_ind")
+    # L232.SubsectorInterpTo_ind <- get_data(all_data, "L232.SubsectorInterpTo_ind")
     L232.StubTech_ind <- get_data(all_data, "L232.StubTech_ind")
     L232.GlobalTechShrwt_ind <- get_data(all_data, "L232.GlobalTechShrwt_ind")
     L232.StubTechInterp_ind <- get_data(all_data, "L232.StubTechInterp_ind")
@@ -66,9 +66,9 @@ module_energy_batch_industry_xml <- function(command, ...) {
     create_xml("industry.xml") %>%
       add_xml_data(L232.SubsectorLogit_ind,"SubsectorLogit") %>%
       add_xml_data(L232.FinalEnergyKeyword_ind,"FinalEnergyKeyword") %>%
-      add_xml_data(L232.SubsectorShrwt_ind,"SubsectorShrwt") %>%
+      # add_xml_data(L232.SubsectorShrwt_ind,"SubsectorShrwt") %>%
       add_xml_data(L232.SubsectorInterp_ind,"SubsectorInterp") %>%
-      add_xml_data(L232.SubsectorInterpTo_ind,"SubsectorInterpTo") %>%
+      # add_xml_data(L232.SubsectorInterpTo_ind,"SubsectorInterpTo") %>%
       add_xml_data(L232.StubTech_ind,"StubTech") %>%
       add_xml_data(L232.GlobalTechShrwt_ind,"GlobalTechShrwt") %>%
       add_xml_data(L232.StubTechInterp_ind,"StubTechInterp") %>%
