@@ -85,8 +85,9 @@ module_energy_batch_industry_xml <- function(command, ...) {
       add_xml_data(L232.PerCapitaBased_ind,"PerCapitaBased") %>%
       add_xml_data(L232.PriceElasticity_ind,"PriceElasticity") %>%
       add_xml_data(L232.BaseService_ind,"BaseService") %>%
-      add_precursors("L232.SubsectorLogit_ind", "L232.FinalEnergyKeyword_ind", "L232.SubsectorShrwt_ind",
-                     "L232.SubsectorInterp_ind", "L232.SubsectorInterpTo_ind", "L232.StubTech_ind",
+      add_precursors("L232.SubsectorLogit_ind", "L232.FinalEnergyKeyword_ind", #"L232.SubsectorShrwt_ind",
+                     "L232.SubsectorInterp_ind", #"L232.SubsectorInterpTo_ind",
+                     "L232.StubTech_ind",
                      "L232.GlobalTechShrwt_ind", "L232.StubTechInterp_ind", "L232.GlobalTechEff_ind",
                      "L232.GlobalTechCoef_ind", "L232.GlobalTechCost_ind", "L232.GlobalTechSecOut_ind",
                      "L232.GlobalTechCSeq_ind", "L232.StubTechCalInput_indenergy", "L232.StubTechCalInput_indfeed",
