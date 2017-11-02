@@ -190,7 +190,7 @@ void NegativeEmissionsFinalDemand::setFinalDemand( const string& aRegionName,
     }
     double regionalCO2Emiss = marketplace->getDemand( mName, aRegionName, aPeriod );
     double regionalCO2EmissValue = -1.0 * regionalCO2Emiss * co2Price;
-    if(regionalCO2Emiss > 0.0) {
+    if(regionalCO2EmissValue > 0.0) {
         double policyPrice = std::min( marketplace->getPrice( mPolicyName, aRegionName, aPeriod ), 1.0 );
         double policyAdj = ( 1.0 - policyPrice );
         regionalCO2EmissValue *= policyAdj;
