@@ -483,6 +483,10 @@ gcamusa.USE_REGIONAL_FUEL_MARKETS  <- TRUE
 gcamusa.STATE_RENEWABLE_RESOURCES <- c("distributed_solar", "geothermal", "onshore wind resource")
 gcamusa.STATE_UNLIMITED_RESOURCES <- c("global solar resource", "limestone")
 
+# define sector(s) used in L222.en_transformation_USA
+# The supplysector and subsector structure in these sectors are retained
+gcamusa.SECTOR_EN_NAMES <- "refining"
+
 gcamusa.WIND_BASE_COST_YEAR <- 2005
 
 gcamusa.DEFAULT_SHAREWEIGHT <- 1
