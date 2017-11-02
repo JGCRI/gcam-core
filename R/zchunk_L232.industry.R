@@ -81,7 +81,7 @@ module_energy_L232.industry <- function(command, ...) {
              "L232.PerCapitaBased_ind",
              "L232.PriceElasticity_ind",
              "L232.BaseService_ind",
-             paste("L232.IncomeElasticity_ind_", tolower(INCOME_ELASTICITY_OUTPUTS), sep = "_"))))
+             paste("L232.IncomeElasticity_ind_", tolower(INCOME_ELASTICITY_OUTPUTS), sep = "_")))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
