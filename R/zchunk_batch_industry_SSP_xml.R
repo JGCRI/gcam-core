@@ -18,7 +18,7 @@ module_energy_batch_industry_incelas_SSP_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(paste("L232.IncomeElasticity_ind", tolower(INCOME_ELASTICITY_INPUTS), sep = "_")))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c(paste("industry", toupper(INCOME_ELASTICITY_INPUTS), sep = "_")))
+    return(c(paste0(paste("industry_incelas", toupper(INCOME_ELASTICITY_INPUTS), sep = "_"), '.xml')))
   } else if(command == driver.MAKE) {
 
     # Silence package checks
