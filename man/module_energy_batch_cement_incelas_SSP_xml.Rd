@@ -14,9 +14,9 @@ module_energy_batch_cement_incelas_SSP_xml(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{cement_incelas_GCAM3.xml}, \code{cement_incelas_SSP1.xml}, \code{cement_incelas_SSP2.xml}, \code{cement_incelas_SSP3.xml},
-\code{cement_incelas_SSP4.xml}, \code{cement_incelas_SSP5.xml}, \code{cement_incelas_gSSP1.xml}, \code{cement_incelas_gSSP2.xml},
-\code{cement_incelas_gSSP3.xml}, \code{cement_incelas_gSSP4.xml}, and \code{cement_incelas_gSSP5.xml}.
+the generated outputs: \code{cement_incelas_gcam3.xml}, \code{cement_incelas_ssp1.xml}, \code{cement_incelas_ssp2.xml}, \code{cement_incelas_ssp3.xml},
+\code{cement_incelas_ssp4.xml}, \code{cement_incelas_ssp5.xml}, \code{cement_incelas_gssp1.xml}, \code{cement_incelas_gssp2.xml},
+\code{cement_incelas_gssp3.xml}, \code{cement_incelas_gssp4.xml}, and \code{cement_incelas_gssp5.xml}.
 }
 \description{
 Construct XML data structures for all the \code{cement_incelas_SSP.xml} files.
