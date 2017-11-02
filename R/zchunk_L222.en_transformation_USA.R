@@ -103,11 +103,34 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
     # L222.DeleteStubTech_USAen: remove existing stub technologies in the USA region.
     # The supplysector and subsector structure in the sectors defined in gcamusa.SECTOR_EN_NAMES are retained
     L222.StubTech_en %>%
-      filter(region == "USA", supplysector %in% gcamusa.SECTOR_EN_NAMES) ->
+      filter(region == "USA",
+             supplysector %in% gcamusa.SECTOR_EN_NAMES) ->
       L222.DeleteStubTech_USAen
 
 
     # L222.Tech_USAen: Just the technology pass-throughs used to set the proper node name, USA region
+    L222.SubsectorLogit_en %>%
+      select(region, supplysector, subsector) %>%
+      filter(region == "USA",
+             supplysector %in% gcamusa.SECTOR_EN_NAMES) %>%
+      repeat_add_columns(tibble(state = gcamusa.STATES)) %>%
+      filter((subsector == "oil refining" & state %in% oil_refining_states) |
+               subsector != "oil refining") %>%
+      mutate(technology = paste(state, subsector, sep = gcamusa.STATE_SUBSECTOR_DELIMITER)) ->
+      L222.Tech_USAen
+
+
+    # save some of this information for the PassThroughSector information
+    L222.Tech_USAen %>%
+      select(state, subsector, supplysector, region) ->
+      L222.PassThroughSector_USAen
+
+
+    # select only relevant columns for L222.Tech_USAen, particularly dropping state
+    L222.Tech_USAen %>%
+      select(one_of(LEVEL2_DATA_NAMES[["Tech"]])) ->
+      L222.Tech_USAen
+
 
 
 
