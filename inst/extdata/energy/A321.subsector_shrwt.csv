@@ -1,0 +1,9 @@
+# File: A321.subsector_shrwt.csv
+# Title: Cement default subsector shareweights
+# Units: Unitless
+supplysector,subsector,year.fillout,year,share.weight
+cement,cement,start-year,,1
+process heat cement,biomass,start-year,,1
+process heat cement,coal,start-year,,1
+process heat cement,gas,start-year,,1
+process heat cement,refined liquids,start-year,,1
