@@ -81,7 +81,7 @@ module_energy_L232.industry <- function(command, ...) {
              "L232.PerCapitaBased_ind",
              "L232.PriceElasticity_ind",
              "L232.BaseService_ind",
-             paste("L232.IncomeElasticity_ind_", tolower(INCOME_ELASTICITY_OUTPUTS), sep = "_")))
+             paste("L232.IncomeElasticity_ind", tolower(INCOME_ELASTICITY_OUTPUTS), sep = "_")))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -120,7 +120,14 @@ module_energy_L232.industry <- function(command, ...) {
       input.cost <- minicam.non.energy.input <- GCAM_region_ID <- value <-
       calibrated.value <- sector.name <- subsector.name <- region <-
       calOutputValue <- subs.share.weight <- calOutputValue.x <- calOutputValue.y <-
-      output_tot <- value.x <- value.y <- total <- fuelprefElasticity <- NULL
+      output_tot <- value.x <- value.y <- total <- fuelprefElasticity <-
+      `2100` <- criteria <- scenario <- temp_lag <- base.service <- energy.final.demand <-
+      parameter <- income.elasticity <- L232.IncomeElasticity_ind_gcam3 <-
+      L232.IncomeElasticity_ind_gssp1 <- L232.IncomeElasticity_ind_gssp2 <-
+      L232.IncomeElasticity_ind_gssp3 <- L232.IncomeElasticity_ind_gssp4 <-
+      L232.IncomeElasticity_ind_gssp5 <- L232.IncomeElasticity_ind_ssp1 <-
+      L232.IncomeElasticity_ind_ssp2 <- L232.IncomeElasticity_ind_ssp3 <-
+      L232.IncomeElasticity_ind_ssp4 <- L232.IncomeElasticity_ind_ssp5 <- NULL
 
     # ===================================================
     # 1. Perform computations
@@ -679,7 +686,7 @@ module_energy_L232.industry <- function(command, ...) {
       L232.GlobalTechCSeq_ind
 
     L232.StubTechCalInput_indenergy %>%
-      add_title("calibrated input of industrial energy use technologies (including cogen)") %>%
+      add_title("Calibrated input of industrial energy use technologies (including cogen)") %>%
       add_units("EJ") %>%
       add_comments("Calibrated input of industrial energy use values are calculated using L1322.in_EJ_R_indenergy_F_Yh then added information such as subsector, technology, minicam.energy.input, calibration, tech.share.weight, and etc.") %>%
       add_legacy_name("L232.StubTechCalInput_indenergy") %>%
@@ -687,7 +694,7 @@ module_energy_L232.industry <- function(command, ...) {
       L232.StubTechCalInput_indenergy
 
     L232.StubTechCalInput_indfeed %>%
-      add_title("calibrated input of industrial feedstock technologies") %>%
+      add_title("Calibrated input of industrial feedstock technologies") %>%
       add_units("EJ") %>%
       add_comments("calibrated input of industrial feedstock technologies values are calculated using L1322.in_EJ_R_indfeed_F_Yh then added information such as subsector, technology, minicam.energy.input, calibration, tech.share.weight, and etc.") %>%
       add_legacy_name("L232.StubTechCalInput_indfeed") %>%
@@ -695,7 +702,7 @@ module_energy_L232.industry <- function(command, ...) {
       L232.StubTechCalInput_indfeed
 
     L232.StubTechProd_industry %>%
-      add_title("calibrated output of industrial sector") %>%
+      add_title("Calibrated output of industrial sector") %>%
       add_units("EJ") %>%
       add_comments("Service output values are calculated by technology, for energy-use and feedstocks then aggregated by region") %>%
       add_legacy_name("L232.StubTechProd_industry") %>%
@@ -703,7 +710,7 @@ module_energy_L232.industry <- function(command, ...) {
       L232.StubTechProd_industry
 
     L232.StubTechCoef_industry %>%
-      add_title("calibrated output of industrial sector") %>%
+      add_title("Calibrated output of industrial sector") %>%
       add_units("Unitless") %>%
       add_comments("Service output values were first aggregated by sector to calculate the portion of each input as coefficients, then the coefficients were interpolated to cover last base year, future years and industry coefficient convergence year") %>%
       add_legacy_name("L232.StubTechCoef_industry") %>%
@@ -711,7 +718,7 @@ module_energy_L232.industry <- function(command, ...) {
       L232.StubTechCoef_industry
 
     L232.FuelPrefElast_indenergy %>%
-      add_title("fuel preference elasticities of industrial energy use") %>%
+      add_title("Fuel preference elasticities of industrial energy use") %>%
       add_units("Unitless") %>%
       add_comments("First, calculate the fuel shares allocated to each fuel, then set fuel preference elasticities as indicated by exogenous rules(A32.fuelprefElasticity), lastly  fill out elasticities from the first future model time period") %>%
       add_legacy_name("L232.FuelPrefElast_indenergy") %>%
@@ -719,7 +726,7 @@ module_energy_L232.industry <- function(command, ...) {
       L232.FuelPrefElast_indenergy
 
     L232.PerCapitaBased_ind %>%
-      add_title("per-capita based flag for industry final demand") %>%
+      add_title("Per-capita based flag for industry final demand") %>%
       add_units("NA") %>%
       add_comments("Extracted per-capita based flag for industry final demand from A32.demand") %>%
       add_legacy_name("L232.PerCapitaBased_ind") %>%
@@ -727,7 +734,7 @@ module_energy_L232.industry <- function(command, ...) {
       L232.PerCapitaBased_ind
 
     L232.PriceElasticity_ind %>%
-      add_title("price elasticity of industry final demand") %>%
+      add_title("Price elasticity of industry final demand") %>%
       add_units("Unitless") %>%
       add_comments("Extracted price elasticity of industry final demand from A32.demand") %>%
       add_comments("Price elasticities are only applied to future periods. Application in base years will cause solution failure") %>%
@@ -736,7 +743,7 @@ module_energy_L232.industry <- function(command, ...) {
       L232.PriceElasticity_ind
 
     L232.BaseService_ind %>%
-      add_title("base-year service output of industry final demand") %>%
+      add_title("Base-year service output of industry final demand") %>%
       add_units("EJ") %>%
       add_comments("Extracted base-year service output of industry final demand from L232.StubTechProd_industry") %>%
       add_legacy_name("L232.BaseService_ind") %>%
