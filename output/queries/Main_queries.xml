@@ -9,7 +9,7 @@
 			 	 		   unordered {
 			 			     for $year in distinct-values($outputs/physical-output/@vintage)
 			 		             let $eff_unweight := sum(for $res in $outputs/physical-output[@vintage = $year]
-			 		                               let $eff_curr := $res/parent::*/following-sibling::input-energy/IO-coefficient[@vintage = $year]
+			 		                               let $eff_curr := $res/parent::*/following-sibling::input-energy[1]/IO-coefficient[@vintage = $year]
 			 		                               (: where $res/physical-output/@vintage = $year :)
 			 		                               return $res div $eff_curr),
 			 			             $weight := sum(for $res in $outputs/physical-output[@vintage = $year]
@@ -508,7 +508,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
       <supplyDemandQuery title="Electricity Fuel Consumption">
          <axis1 name="fuel">input</axis1>
          <axis2 name="Year">demand-physical[@vintage]</axis2>
-         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (: collapse :) and @name='electricity']//*[@type = 'technology']/*[@type='input']/demand-physical/node()</xPath>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (: collapse :) and @name='electricity']//*[@type = 'technology']/*[@type='input' and @name != 'oil-credits']/demand-physical/node()</xPath>
          <comments/>
       </supplyDemandQuery>
       <supplyDemandQuery title="Central electricity demand by demand sector">
@@ -577,7 +577,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
       <supplyDemandQuery title="Refined liquids production by region">
          <axis1 name="region">region</axis1>
          <axis2 name="Year">physical-output[@vintage]</axis2>
-         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (:collapse:) and @name='refining']//*[@type='output' (:collapse:)]/physical-output/node()</xPath>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (:collapse:) and @name='refining']//output-primary[@type='output' (:collapse:)]/physical-output/node()</xPath>
          <comments/>
       </supplyDemandQuery>
       <supplyDemandQuery title="Refined liquids use by aggregate end-use">
@@ -589,7 +589,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
       <supplyDemandQuery title="Refined liquids production by technology">
          <axis1 name="technology">technology</axis1>
          <axis2 name="Year">physical-output[@vintage]</axis2>
-         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (:collapse:) and @name='refining']//*[@type = 'technology']/*[@type='output' (:collapse:)]/physical-output/node()</xPath>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (:collapse:) and @name='refining']//*[@type = 'technology']/output-primary[@type='output' (:collapse:)]/physical-output/node()</xPath>
          <comments/>
       </supplyDemandQuery>
       <supplyDemandQuery title="Refinery inputs by technology">
@@ -601,7 +601,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
       <supplyDemandQuery title="Refined liquids production by technology and vintage">
          <axis1 name="technology">technology</axis1>
          <axis2 name="Year">physical-output[@vintage]</axis2>
-         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (:collapse:) and @name='refining']/*[@type = 'subsector']/*[@type = 'technology']/*[@type='output'(:collapse:)]/physical-output/node()</xPath>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (:collapse:) and @name='refining']/*[@type = 'subsector']/*[@type = 'technology']/output-primary[@type='output'(:collapse:)]/physical-output/node()</xPath>
          <comments/>
          <showAttribute attribute-name="year" level="technology"/>
       </supplyDemandQuery>
@@ -707,13 +707,13 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
       <supplyDemandQuery title="Total final energy by region">
          <axis1 name="region">region</axis1>
          <axis2 name="Year">demand-physical[@vintage]</axis2>
-         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector'  (: collapse :) and ((@name='building' or @name='industry' or @name='transportation') or (exists(child::keyword/@final-energy)))]//*[@type='input' (: collapse :) and not(@name='trn_pass_road' or @name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks' or @name='renewable')]/demand-physical[@unit='EJ']/node()</xPath>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector'  (: collapse :) and ((@name='building' or @name='industry' or @name='transportation') or (exists(child::keyword/@final-energy)))]//*[@type='input' (: collapse :) and not(@name='trn_pass_road' or @name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks' or @name='renewable' or @name='oil-credits')]/demand-physical[@unit='EJ']/node()</xPath>
          <comments/>
       </supplyDemandQuery>
       <supplyDemandQuery title="Total final energy by aggregate end-use sector">
          <axis1 name="sector">sector</axis1>
          <axis2 name="Year">demand-physical[@vintage]</axis2>
-         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and ((@name='building' or @name='industry' or @name='transportation') or (exists(child::keyword/@final-energy)))]//*[@type='input' (: collapse :) and not(@name='trn_pass_road' or @name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks' or @name='renewable')]/demand-physical[@unit='EJ']/node()</xPath>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and ((@name='building' or @name='industry' or @name='transportation') or (exists(child::keyword/@final-energy)))]//*[@type='input' (: collapse :) and not(@name='trn_pass_road' or @name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks' or @name='renewable' or @name='oil-credits')]/demand-physical[@unit='EJ']/node()</xPath>
          <comments/>
          <labelRewriteList append-values="false">
             <level name="sector">
@@ -769,13 +769,13 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
       <supplyDemandQuery title="Total final energy by detailed end-use sector">
          <axis1 name="sector">sector</axis1>
          <axis2 name="Year">demand-physical[@vintage]</axis2>
-         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and ((@name='building' or @name='industry' or @name='transportation') or (exists(child::keyword/@final-energy)))]//*[@type='input' (: collapse :) and not(@name='trn_pass_road' or @name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks' or @name='renewable')]/demand-physical[@unit='EJ']/node()</xPath>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and ((@name='building' or @name='industry' or @name='transportation') or (exists(child::keyword/@final-energy)))]//*[@type='input' (: collapse :) and not(@name='trn_pass_road' or @name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks' or @name='renewable' or @name='oil-credits')]/demand-physical[@unit='EJ']/node()</xPath>
          <comments/>
       </supplyDemandQuery>
       <supplyDemandQuery title="Final energy by fuel">
          <axis1 name="input">input</axis1>
          <axis2 name="Year">demand-physical[@vintage]</axis2>
-         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector'  (: collapse :) and ((@name='building' or @name='industry' or @name='transportation') or (exists(child::keyword/@final-energy)))]//*[@type='input' and not(@name='trn_pass_road' or @name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks' or @name='renewable')]/demand-physical[@unit='EJ']/node()</xPath>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector'  (: collapse :) and ((@name='building' or @name='industry' or @name='transportation') or (exists(child::keyword/@final-energy)))]//*[@type='input' and not(@name='trn_pass_road' or @name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks' or @name='renewable' or @name='oil-credits')]/demand-physical[@unit='EJ']/node()</xPath>
          <comments/>
          <labelRewriteList append-values="false">
             <level name="input">
@@ -796,7 +796,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
       <supplyDemandQuery title="Final energy by aggregate end-use sector and fuel">
          <axis1 name="sector">sector</axis1>
          <axis2 name="Year">demand-physical[@vintage]</axis2>
-         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and ((@name='building' or @name='industry' or @name='transportation') or (exists(child::keyword/@final-energy)))]//*[@type='input' and not(@name='trn_pass_road' or @name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks' or @name='renewable')]/demand-physical[@unit='EJ']/node()</xPath>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and ((@name='building' or @name='industry' or @name='transportation') or (exists(child::keyword/@final-energy)))]//*[@type='input' and not(@name='trn_pass_road' or @name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks' or @name='renewable' or @name='oil-credits')]/demand-physical[@unit='EJ']/node()</xPath>
          <comments/>
          <labelRewriteList append-values="false">
             <level name="sector">
@@ -865,7 +865,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
       <supplyDemandQuery title="Final energy by detailed end-use sector and fuel">
          <axis1 name="sector">sector</axis1>
          <axis2 name="Year">demand-physical[@vintage]</axis2>
-         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and ((@name='building' or @name='industry' or @name='transportation') or (exists(child::keyword/@final-energy)))]//*[@type='input' and not(@name='trn_pass_road' or @name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks' or @name='renewable')]/demand-physical[@unit='EJ']/node()</xPath>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and ((@name='building' or @name='industry' or @name='transportation') or (exists(child::keyword/@final-energy)))]//*[@type='input' and not(@name='trn_pass_road' or @name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks' or @name='renewable' or @name='oil-credits')]/demand-physical[@unit='EJ']/node()</xPath>
          <comments/>
       </supplyDemandQuery>
       <supplyDemandQuery title="Service output by detailed end-use sector">
@@ -915,25 +915,25 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
       <supplyDemandQuery title="Building service output by service">
          <axis1 name="sector">sector</axis1>
          <axis2 name="Year">physical-output[@vintage]</axis2>
-         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='building' or (exists(child::keyword[@final-energy='building'])))]//*[@type='output' (:collapse:) and not(@name= 'internal-gains')]/physical-output/node()</xPath>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='building' or (exists(child::keyword[@final-energy='building'])))]//output-primary[@type='output' (:collapse:)]/physical-output/node()</xPath>
          <comments/>
       </supplyDemandQuery>
       <supplyDemandQuery title="Building service output by subsector (fuel)">
          <axis1 name="sector">sector</axis1>
          <axis2 name="Year">physical-output[@vintage]</axis2>
-         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='building' or (exists(child::keyword[@final-energy='building'])))]/*[@type = 'subsector']//*[@type='output' (:collapse:) and not(@name= 'internal-gains')]/physical-output/node()</xPath>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='building' or (exists(child::keyword[@final-energy='building'])))]/*[@type = 'subsector']//output-primary[@type='output' (:collapse:)]/physical-output/node()</xPath>
          <comments/>
       </supplyDemandQuery>
       <supplyDemandQuery title="Building service output by technology">
          <axis1 name="technology">technology</axis1>
          <axis2 name="Year">physical-output[@vintage]</axis2>
-         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='building' or (exists(child::keyword[@final-energy='building'])))]//*[@type = 'technology']/*[@type='output' (:collapse:) and not(@name= 'internal-gains')]/physical-output/node()</xPath>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='building' or (exists(child::keyword[@final-energy='building'])))]//*[@type = 'technology']/output-primary[@type='output' (:collapse:)]/physical-output/node()</xPath>
          <comments/>
       </supplyDemandQuery>
       <supplyDemandQuery title="Building internal gain energy by service">
          <axis1 name="sector">sector</axis1>
          <axis2 name="Year">physical-output[@vintage]</axis2>
-         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector']//*[@type='output' (:collapse:) and (@name= 'internal-gains')]/physical-output/node()</xPath>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector']//output-internal-gains[@type='output' (:collapse:)]/physical-output/node()</xPath>
          <comments/>
       </supplyDemandQuery>
       <supplyDemandQuery title="Building floorspace">
@@ -1038,43 +1038,43 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
       <supplyDemandQuery title="Industry total final energy by region">
          <axis1 name="region">region</axis1>
          <axis2 name="Year">demand-physical[@vintage]</axis2>
-         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' (:collapse:) and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]//*[@type='input' (:collapse:) and not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks' or @name='industrial processes')]/demand-physical/node()</xPath>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' (:collapse:) and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]//*[@type='input' (:collapse:) and not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks' or @name='industrial processes' or @name='oil-credits')]/demand-physical/node()</xPath>
          <comments/>
       </supplyDemandQuery>
       <supplyDemandQuery title="Industry total final energy by service">
          <axis1 name="sector">sector</axis1>
          <axis2 name="Year">demand-physical[@vintage]</axis2>
-         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]//*[@type='input' (:collapse:) and not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks' or @name='industrial processes')]/demand-physical/node()</xPath>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]//*[@type='input' (:collapse:) and not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks' or @name='industrial processes' or @name='oil-credits')]/demand-physical/node()</xPath>
          <comments/>
       </supplyDemandQuery>
       <supplyDemandQuery title="Industry final energy by fuel">
          <axis1 name="input">input</axis1>
          <axis2 name="Year">demand-physical[@vintage]</axis2>
-         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' (: collapse :) and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]//*[@type='input' and not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks' or @name='industrial processes')]/demand-physical/node()</xPath>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' (: collapse :) and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]//*[@type='input' and not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks' or @name='industrial processes' or @name='oil-credits')]/demand-physical/node()</xPath>
          <comments/>
       </supplyDemandQuery>
       <supplyDemandQuery title="Industry final energy by service and fuel">
          <axis1 name="input">input</axis1>
          <axis2 name="Year">demand-physical[@vintage]</axis2>
-         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]//*[@type='input' and not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks' or @name='industrial processes')]/demand-physical/node()</xPath>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]//*[@type='input' and not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks' or @name='industrial processes' or @name='oil-credits')]/demand-physical/node()</xPath>
          <comments/>
       </supplyDemandQuery>
       <supplyDemandQuery title="Industry final energy by collapsed technology and fuel">
          <axis1 name="technology">technology</axis1>
          <axis2 name="Year">demand-physical[@vintage]</axis2>
-         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' (: collapse :) and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]//*[@type = 'technology']/*[@type='input' (: collapse :) and not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks' or @name='industrial processes')]/demand-physical/node()</xPath>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' (: collapse :) and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]//*[@type = 'technology']/*[@type='input' (: collapse :) and not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks' or @name='industrial processes' or @name='oil-credits')]/demand-physical/node()</xPath>
          <comments>all techs of the same name aggregated</comments>
       </supplyDemandQuery>
       <supplyDemandQuery title="Industry final energy by technology and fuel">
          <axis1 name="technology">technology</axis1>
          <axis2 name="Year">demand-physical[@vintage]</axis2>
-         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]/*[@type = 'subsector']/*[@type = 'technology']/*[@type='input' and not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks' or @name='industrial processes')]/demand-physical/node()</xPath>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]/*[@type = 'subsector']/*[@type = 'technology']/*[@type='input' and not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks' or @name='industrial processes' or @name='oil-credits')]/demand-physical/node()</xPath>
          <comments/>
       </supplyDemandQuery>
       <supplyDemandQuery title="Industry feedstocks by type">
          <axis1 name="input">input</axis1>
          <axis2 name="Year">demand-physical[@vintage]</axis2>
-         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' (:collapse:) and (@name='industrial feedstocks' or @name='feedstocks construction' or @name='feedstocks chemicals' or @name='feedstocks primary metals')]//*[@type='input']/demand-physical/node()</xPath>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' (:collapse:) and (@name='industrial feedstocks' or @name='feedstocks construction' or @name='feedstocks chemicals' or @name='feedstocks primary metals')]//*[@type='input' and not(@name='oil-credits')]/demand-physical/node()</xPath>
          <comments/>
       </supplyDemandQuery>
       <supplyDemandQuery title="Industry primary output by service">
@@ -3115,7 +3115,7 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
       <supplyDemandQuery title="Prices: technology non-energy cost">
          <axis1 name="technology">technology</axis1>
          <axis2 name="Year">price-paid[@vintage]</axis2>
-         <xPath buildList="true" dataName="non energy cost" group="false" sumAll="false">*[@type = 'sector']/*[@type = 'subsector']/*[@type = 'technology']/*[@type='input' (: collapse :) and @name='non-energy']/price-paid/text()</xPath>
+         <xPath buildList="true" dataName="non energy cost" group="false" sumAll="false">*[@type = 'sector']/*[@type = 'subsector']/*[@type = 'technology']/*[@type='input' (: collapse :) and @name='non-energy']/price-paid[@vintage = parent::*/parent::*/@year]/text()</xPath>
          <comments/>
       </supplyDemandQuery>
       <supplyDemandQuery title="Prices: technology levelized capital cost by vintage">
