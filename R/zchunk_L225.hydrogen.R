@@ -42,7 +42,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    year.fillout <- technology <- year <- efficiency <- supplysector <-
+    year.fillout <- technology <- year <- efficiency <- supplysector <- value <-
       subsector <- minicam.energy.input <- input.cost <- minicam.non.energy.input <-
       share.weight <- primary.renewable <- average.fossil.efficiency <-
       remove.fraction <- NULL  # silence package check notes
