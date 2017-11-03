@@ -132,6 +132,71 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
       L222.Tech_USAen
 
 
+    # L222.TechInterp_USAen: technology shareweights, USA region
+    # Technology interpolation only applies to calibrated technologies.
+    # For biomass liquids, allow state shares to shift over time
+    # (future techs are different than present techs).
+    L222.Tech_USAen %>%
+      filter(subsector %in% c("oil refining", "biomass liquids")) %>%
+      mutate(apply.to = "share-weight",
+             from.year = max(BASE_YEARS),
+             to.year = max(MODEL_YEARS),
+             interpolation.function = if_else(subsector == "biomass liquids", "s-curve","fixed")) ->
+      L222.TechInterp_USAen
+
+
+    # L222.TechShrwt_USAen: technology shareweights in each year, USA region
+    # Default the base year shareweights to 0. This will be over-ridden in calibration
+    # Default the future year shareweights to 1.
+    L222.Tech_USAen %>%
+      repeat_add_columns(tibble(year = BASE_YEARS)) %>%
+      mutate(share.weight = 0) ->
+      tmp
+
+    L222.Tech_USAen %>%
+      repeat_add_columns(tibble(year = FUTURE_YEARS)) %>%
+      mutate(share.weight = 1) %>%
+      bind_rows(tmp) ->
+      L222.TechShrwt_USAen
+
+
+    # L222.TechCoef_USAen: technology coefficients and market names, USA region
+    L222.TechShrwt_USAen %>%
+      select(one_of(LEVEL2_DATA_NAMES[["TechYr"]])) %>%
+      mutate(minicam.energy.input = subsector,
+             coefficient = 1,
+             market.name = technology) %>%
+      separate(market.name, c("market.name", "trash"), extra = "merge", sep = gcamusa.STATE_SUBSECTOR_DELIMITER) %>%
+      select(-trash) ->
+      L222.TechCoef_USAen
+
+
+    # L222.Production_USArefining: calibrated refinery production in USA (consuming output of states)
+    # Aggregated to the supplysector/subsector/technology level
+    ### I'm pretty sure all this aggregation does is remove the state column, since the state information is
+    ### implicit in the technology column. THat is, the aggregation doesn't actually change any values - is
+    ### this intended?
+      L122.out_EJ_state_refining_F %>%
+        filter(year %in% BASE_YEARS) %>%
+        mutate(region = "USA") %>%
+        rename(calOutputValue = value) %>%
+        left_join_error_no_match(distinct(select(calibrated_techs, sector, supplysector, subsector)), by = "sector") %>%
+        mutate(technology = paste(state, subsector, sep = gcamusa.STATE_SUBSECTOR_DELIMITER),
+               minicam.energy.input = subsector) %>%
+        filter((subsector == "oil refining" & state %in% oil_refining_states) |
+                 subsector != "oil refining") %>%
+        # Aggregate
+        group_by(region, supplysector, subsector, technology, minicam.energy.input, year) %>%
+        summarise(calOutputValue = sum(calOutputValue)) %>%
+        ungroup %>%
+        mutate(share.weight.year = year) %>%
+        set_subsector_shrwt ->
+        L222.Production_USArefining
+
+
+
+
+
 
 
 
