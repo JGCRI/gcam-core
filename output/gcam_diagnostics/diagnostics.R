@@ -56,8 +56,8 @@ BATCH_QUERY_RESULTS <- c( "gcam_data/Core/reference.csv", "gcam_data/Core/tax_25
 # or NULL to perform no queries
 db_conn <- localDBConn("../", "database_basexdb")
 QUERY_BATCH_FILE <- "batch_queries/Model_verification_queries.xml"
-#QUERY_SCENARIOS <- NULL
-QUERY_SCENARIOS <- c("Reference", "2p6")
+QUERY_SCENARIOS <- NULL
+#QUERY_SCENARIOS <- c("Reference", "Tax_25_5")
 
 # The default scenario to create difference plots from
 BASE_SCENARIO_NAME <- "Core_Ref"
