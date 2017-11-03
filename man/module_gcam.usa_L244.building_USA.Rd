@@ -14,15 +14,23 @@ module_gcam.usa_L244.building_USA(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L244.DeleteConsumer_USAbld}, \code{L244.DeleteSupplysector_USAbld}, \code{L244.SubregionalShares}, \code{L244.PriceExp_IntGains}, \code{L244.Floorspace}, \code{L244.DemandFunction_serv}, \code{L244.DemandFunction_flsp}, \code{L244.Satiation_flsp}, \code{L244.SatiationAdder}, \code{L244.ThermalBaseService}, \code{L244.GenericBaseService}, \code{object}, \code{L244.ThermalServiceSatiation}, \code{L244.GenericServiceSatiation}, \code{L244.Intgains_scalar}, \code{L244.ShellConductance_bld}, \code{L244.SectorLogitTables_bld[[ curr_table ]]$data}, \code{L244.Supplysector_bld}, \code{L244.FinalEnergyKeyword_bld}, \code{L244.SubsectorShrwt_bld}, \code{L244.SubsectorShrwtFllt_bld}, \code{L244.SubsectorInterp_bld}, \code{L244.SubsectorInterpTo_bld}, \code{L244.SubsectorLogitTables_bld[[ curr_table ]]$data}, \code{L244.SubsectorLogit_bld}, \code{L244.StubTech_bld}, \code{L244.StubTechCalInput_bld}, \code{L244.StubTechMarket_bld}, \code{L244.GlobalTechIntGainOutputRatio}, \code{L244.GlobalTechInterpTo_bld}, \code{L244.GlobalTechEff_bld}, \code{L244.GlobalTechShrwt_bld}, \code{L244.GlobalTechCost_bld}, \code{L244.GlobalTechSCurve_bld}. The corresponding file in the
-original data system was \code{L244.building_USA.R} (gcam-usa level2).
+the generated outputs: \code{L244.DeleteConsumer_USAbld}, \code{L244.DeleteSupplysector_USAbld}, \code{L244.SubregionalShares_gcamusa},
+\code{L244.PriceExp_IntGains_gcamusa}, \code{L244.Floorspace_gcamusa}, \code{L244.DemandFunction_serv_gcamusa}, \code{L244.DemandFunction_flsp_gcamusa},
+\code{L244.Satiation_flsp_gcamusa}, \code{L244.SatiationAdder_gcamusa}, \code{L244.ThermalBaseService_gcamusa}, \code{L244.GenericBaseService_gcamusa},
+\code{L244.ThermalServiceSatiation_gcamusa}, \code{L244.GenericServiceSatiation_gcamusa}, \code{L244.Intgains_scalar_gcamusa},
+\code{L244.ShellConductance_bld_gcamusa}, \code{L244.Supplysector_bld_gcamusa}, \code{L244.FinalEnergyKeyword_bld_gcamusa}, \code{L244.SubsectorShrwt_bld_gcamusa},
+\code{L244.SubsectorShrwtFllt_bld_gcamusa}, \code{L244.SubsectorInterp_bld_gcamusa}, \code{L244.SubsectorInterpTo_bld_gcamusa},
+\code{L244.SubsectorLogit_bld_gcamusa}, \code{L244.StubTech_bld_gcamusa}, \code{L244.StubTechCalInput_bld_gcamusa}, \code{L244.StubTechMarket_bld},
+\code{L244.GlobalTechIntGainOutputRatio}, \code{L244.GlobalTechInterpTo_bld}, \code{L244.GlobalTechEff_bld},
+\code{L244.GlobalTechShrwt_bld_gcamusa}, \code{L244.GlobalTechCost_bld_gcamusa}, \code{L244.GlobalTechSCurve_bld}, \code{L244.HDDCDD_A2_GFDL}.
+The corresponding file in the original data system was \code{L244.building_USA.R} (gcam-usa level2).
 }
 \description{
-Briefly describe what this chunk does.
+Creates GCAM-USA building output files for writing to xml.
 }
 \details{
-Describe in detail what this chunk does.
+Creates GCAM-USA building output files for writing to xml.
 }
 \author{
-YourInitials CurrentMonthName 2017
+RLH November 2017
 }

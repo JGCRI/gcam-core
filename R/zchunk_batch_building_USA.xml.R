@@ -1,4 +1,4 @@
-#' module_energy_batch_building_USA.xml
+#' module_gcamusa_batch_building_USA.xml
 #'
 #' Construct XML data structure for \code{building_USA.xml}.
 #'
@@ -7,11 +7,11 @@
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{building_USA.xml}. The corresponding file in the
-#' original data system was \code{batch_building_USA.xml} (energy XML).
-module_energy_batch_building_USA.xml <- function(command, ...) {
+#' original data system was \code{batch_building_USA.xml} (gcamusa XML).
+module_gcamusa_batch_building_USA.xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L244.DeleteThermalService",
-             "L244.DeleteGenericService",
+    return(c("L244.DeleteConsumer_USAbld",
+             "L244.DeleteSupplysector_USAbld",
              "L244.SubregionalShares_gcamusa",
              "L244.PriceExp_IntGains_gcamusa",
              "L244.Floorspace_gcamusa",
@@ -37,16 +37,10 @@ module_energy_batch_building_USA.xml <- function(command, ...) {
              "L244.GlobalTechInterpTo_bld",
              "L244.GlobalTechEff_bld",
              "L244.GlobalTechSCurve_bld",
-
-
-
-             "L244.SubsectorInterpTo_bld",
-             "L244.SubsectorInterp_bld",
-             "L244.SubsectorShrwtFllt_bld",
-             "L244.SubsectorShrwt_bld",
-             "L244.FuelPrefElast_bld",
-             "L244.StubTechEff_bld",
-             "L244.StubTechIntGainOutputRatio"))
+             "L244.SubsectorShrwt_bld_gcamusa",
+             "L244.SubsectorShrwtFllt_bld_gcamusa",
+             "L244.SubsectorInterp_bld_gcamusa",
+             "L244.SubsectorInterpTo_bld_gcamusa"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "building_USA.xml"))
   } else if(command == driver.MAKE) {
@@ -81,14 +75,10 @@ module_energy_batch_building_USA.xml <- function(command, ...) {
     L244.GlobalTechInterpTo_bld <- get_data(all_data, "L244.GlobalTechInterpTo_bld")
     L244.GlobalTechEff_bld <- get_data(all_data, "L244.GlobalTechEff_bld")
     L244.GlobalTechSCurve_bld <- get_data(all_data, "L244.GlobalTechSCurve_bld")
-
-    L244.SubsectorInterpTo_bld <- get_data(all_data, "L244.SubsectorInterpTo_bld")
-    L244.SubsectorInterp_bld <- get_data(all_data, "L244.SubsectorInterp_bld")
-    L244.SubsectorShrwtFllt_bld <- get_data(all_data, "L244.SubsectorShrwtFllt_bld")
-    L244.SubsectorShrwt_bld <- get_data(all_data, "L244.SubsectorShrwt_bld")
-    L244.FuelPrefElast_bld <- get_data(all_data, "L244.FuelPrefElast_bld")
-    L244.StubTechEff_bld <- get_data(all_data, "L244.StubTechEff_bld")
-    L244.StubTechIntGainOutputRatio <- get_data(all_data, "L244.StubTechIntGainOutputRatio")
+    L244.SubsectorShrwt_bld_gcamusa <- get_data(all_data, "L244.SubsectorShrwt_bld_gcamusa")
+    L244.SubsectorShrwtFllt_bld_gcamusa <- get_data(all_data, "L244.SubsectorShrwtFllt_bld_gcamusa")
+    L244.SubsectorInterp_bld_gcamusa <- get_data(all_data, "L244.SubsectorInterp_bld_gcamusa")
+    L244.SubsectorInterpTo_bld_gcamusa <- get_data(all_data, "L244.SubsectorInterpTo_bld_gcamusa")
 
     # ===================================================
 
@@ -109,7 +99,7 @@ module_energy_batch_building_USA.xml <- function(command, ...) {
       add_xml_data(L244.GenericServiceSatiation_gcamusa, "GenericServiceSatiation") %>%
       add_xml_data(L244.Intgains_scalar_gcamusa, "Intgains_scalar") %>%
       add_xml_data(L244.ShellConductance_bld_gcamusa, "ShellConductance") %>%
-      add_xml_data(L244.Supplysector_bld_gcamusa, "Supplysector") %>%
+      add_logit_tables_xml(L244.Supplysector_bld_gcamusa, "Supplysector") %>%
       add_xml_data(L244.FinalEnergyKeyword_bld_gcamusa, "FinalEnergyKeyword") %>%
       add_logit_tables_xml(L244.SubsectorLogit_bld_gcamusa,"SubsectorLogit") %>%
       add_xml_data(L244.StubTech_bld_gcamusa, "StubTech") %>%
@@ -121,55 +111,38 @@ module_energy_batch_building_USA.xml <- function(command, ...) {
       add_xml_data(L244.GlobalTechInterpTo_bld, "GlobalTechInterpTo") %>%
       add_xml_data(L244.GlobalTechEff_bld, "GlobalTechEff") %>%
       add_xml_data(L244.GlobalTechSCurve_bld, "GlobalTechSCurve") %>%
-
-
-
-      add_xml_data(L244.FuelPrefElast_bld,"FuelPrefElast") %>%
-      add_xml_data(L244.StubTechEff_bld, "StubTechEff") %>%
-      add_xml_data(L244.StubTechIntGainOutputRatio, "StubTechIntGainOutputRatio") %>%
-
-      add_precursors("L244.SubsectorInterpTo_bld", "L244.SubsectorInterp_bld" ,"L244.SubsectorShrwtFllt_bld",
-                     "L244.SubsectorShrwt_bld", "L244.FinalEnergyKeyword_bld", "L244.Supplysector_bld",
-                     "L244.ShellConductance_bld", "L244.Intgains_scalar", "L244.GenericServiceSatiation",
-                     "L244.ThermalServiceSatiation", "L244.GenericBaseService", "L244.ThermalBaseService", "L244.SatiationAdder",
-                     "L244.Satiation_flsp", "L244.DemandFunction_flsp", "L244.DemandFunction_serv",
-                     "L244.Floorspace", "L244.SubregionalShares", "L244.SubsectorLogit_bld",
-                     "L244.FuelPrefElast_bld", "L244.StubTech_bld_gcamusa", "L244.StubTechEff_bld",
-                     "L244.StubTechCalInput_bld", "L244.StubTechIntGainOutputRatio", "L244.GlobalTechShrwt_bld",
-                     "L244.GlobalTechCost_bld", "L244.DeleteThermalService", "L244.DeleteGenericService", "L244.PriceExp_IntGains") ->
+      add_precursors("L244.DeleteConsumer_USAbld", "L244.DeleteSupplysector_USAbld", "L244.SubregionalShares_gcamusa",
+                     "L244.PriceExp_IntGains_gcamusa", "L244.Floorspace_gcamusa", "L244.DemandFunction_flsp_gcamusa",
+                     "L244.DemandFunction_serv_gcamusa", "L244.Satiation_flsp_gcamusa", "L244.SatiationAdder_gcamusa",
+                     "L244.ThermalBaseService_gcamusa", "L244.GenericBaseService_gcamusa", "L244.ThermalServiceSatiation_gcamusa",
+                     "L244.GenericServiceSatiation_gcamusa", "L244.Intgains_scalar_gcamusa", "L244.ShellConductance_bld_gcamusa",
+                     "L244.Supplysector_bld_gcamusa", "L244.FinalEnergyKeyword_bld_gcamusa", "L244.SubsectorLogit_bld_gcamusa",
+                     "L244.StubTech_bld_gcamusa", "L244.StubTechCalInput_bld_gcamusa", "L244.StubTechMarket_bld",
+                     "L244.GlobalTechShrwt_bld_gcamusa", "L244.GlobalTechCost_bld_gcamusa", "L244.GlobalTechIntGainOutputRatio",
+                     "L244.GlobalTechInterpTo_bld", "L244.GlobalTechEff_bld", "L244.GlobalTechSCurve_bld", "L244.SubsectorShrwt_bld_gcamusa",
+                     "L244.SubsectorShrwtFllt_bld_gcamusa", "L244.SubsectorInterp_bld_gcamusa", "L244.SubsectorInterpTo_bld_gcamusa") ->
       building_USA.xml
 
     # Some data inputs may not actually contain data. If so, do not add_xml_data.
-    if(nrow(L244.DeleteThermalService) > 0){
-      building_det.xml %>%
-        add_xml_data(L244.DeleteThermalService, "DeleteThermalService") ->
-        building_det.xml
+    if (!is.null(L244.SubsectorShrwt_bld_gcamusa)){
+      building_USA.xml %>%
+        add_xml_data(L244.SubsectorShrwt_bld_gcamusa, "SubsectorShrwt") ->
+        building_USA.xml
     }
-
-    if(!is.null(L244.DeleteGenericService)){
-      building_det.xml %>%
-        add_xml_data(L244.DeleteGenericService, "DeleteGenericService") ->
-        building_det.xml
+    if (!is.null(L244.SubsectorShrwtFllt_bld_gcamusa)){
+      building_USA.xml %>%
+        add_xml_data(L244.SubsectorShrwtFllt_bld_gcamusa, "SubsectorShrwtFllt") ->
+        building_USA.xml
     }
-    if (!is.null(L244.SubsectorShrwt_bld)){
-      building_det.xml %>%
-        add_xml_data(L244.SubsectorShrwt_bld, "SubsectorShrwt") ->
-        building_det.xml
+    if (!is.null(L244.SubsectorInterp_bld_gcamusa)){
+      building_USA.xml %>%
+        add_xml_data(L244.SubsectorInterp_bld_gcamusa, "SubsectorInterp") ->
+        building_USA.xml
     }
-    if (!is.null(L244.SubsectorShrwtFllt_bld)){
-      building_det.xml %>%
-        add_xml_data(L244.SubsectorShrwtFllt_bld, "SubsectorShrwtFllt") ->
-        building_det.xml
-    }
-    if (!is.null(L244.SubsectorInterp_bld)){
-      building_det.xml %>%
-        add_xml_data(L244.SubsectorInterp_bld, "SubsectorInterp") ->
-        building_det.xml
-    }
-    if (!is.null(L244.SubsectorInterpTo_bld)){
-      building_det.xml %>%
-        add_xml_data(L244.SubsectorInterpTo_bld, "SubsectorInterp") ->
-        building_det.xml
+    if (!is.null(L244.SubsectorInterpTo_bld_gcamusa)){
+      building_USA.xml %>%
+        add_xml_data(L244.SubsectorInterpTo_bld_gcamusa, "SubsectorInterp") ->
+        building_USA.xml
     }
 
     return_data(building_USA.xml)

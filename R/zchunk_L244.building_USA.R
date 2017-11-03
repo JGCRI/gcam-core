@@ -21,7 +21,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RLH November 2017
-#' @export
 
 module_gcam.usa_L244.building_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -38,9 +37,9 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
              FILE = "gcam-usa/A44.subsector_interp",
              FILE = "gcam-usa/A44.subsector_logit",
              FILE = "gcam-usa/A44.subsector_shrwt",
-             FILE = "gcam-usa/A44.globaltech_cost", # Units
-             FILE = "gcam-usa/A44.globaltech_eff", # Units
-             FILE = "gcam-usa/A44.globaltech_eff_avg", # Units
+             FILE = "gcam-usa/A44.globaltech_cost",
+             FILE = "gcam-usa/A44.globaltech_eff",
+             FILE = "gcam-usa/A44.globaltech_eff_avg",
              FILE = "gcam-usa/A44.globaltech_shares",
              FILE = "gcam-usa/A44.globaltech_intgains",
              FILE = "gcam-usa/A44.globaltech_retirement",
@@ -82,12 +81,25 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
              "L244.StubTechMarket_bld",
              "L244.GlobalTechIntGainOutputRatio",
              "L244.GlobalTechInterpTo_bld",
-             "L244.GlobalTechEff_bld", # units
+             "L244.GlobalTechEff_bld",
              "L244.GlobalTechShrwt_bld_gcamusa",
-             "L244.GlobalTechCost_bld_gcamusa", # units
-             "L244.GlobalTechSCurve_bld", # units (steepness)
+             "L244.GlobalTechCost_bld_gcamusa",
+             "L244.GlobalTechSCurve_bld",
              "L244.HDDCDD_A2_GFDL"))
   } else if(command == driver.MAKE) {
+
+    # Silence package checks
+    GCM <- Scen <- base.building.size <- base.service <- calibrated.value <- comm <-
+    degree.days <- efficiency <- efficiency_tech1 <- efficiency_tech2 <- fuel <-
+    gcam.consumer <- grid_region <- half_life_new <- half_life_stock <- input.cost <-
+    input.ratio <- internal.gains.market.name <- internal.gains.output.ratio <-
+    internal.gains.scalar <- market.name <- minicam.energy.input <- multiplier <-
+    object <- pcFlsp_mm2 <- pcGDP <- pcflsp_mm2cap <- pop <- region <- resid <-
+    satiation.adder <- satiation.level <- sector <- sector.name <- service <- share <-
+    share.weight <- share_tech1 <- share_tech2 <- share_type <- state <- steepness_new <-
+    steepness_stock <- stockavg <- subsector <- subsector.name <- supplysector <-
+    tech_type <- technology <- technology1 <- technology2 <-
+    thermal.building.service.input <- to.value <- value <- year <- year.fillout <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -186,8 +198,16 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
       left_join_error_no_match(A44.gcam_consumer, by = c("gcam.consumer", "nodeInput", "building.node.input")) %>%
       select(LEVEL2_DATA_NAMES[["BldNodes"]], "satiation.level")
 
-    # L244.SatiationAdder_gcamusa: Satiation adders in floorspace demand function - Required for shaping the future floorspace growth trajectories in each region
+    # L244.SatiationAdder_gcamusa: Satiation adders in floorspace demand function
+    # Required for shaping the future floorspace growth trajectories in each region
     # Match in the per-capita GDP, total floorspace, and population (for calculating per-capita floorspace)
+
+    # We will filter GDP to energy.SATIATION_YEAR, but this may be greater than the historical years present
+    # under timeshift conditions. So we adjust energy.SATIATION_YEAR
+    if (energy.SATIATION_YEAR > max(BASE_YEARS)){
+      energy.SATIATION_YEAR <- max(BASE_YEARS)
+    }
+
     L244.SatiationAdder_gcamusa <- L244.Satiation_flsp_gcamusa %>%
       # Add per capita GDP
       left_join_error_no_match(L100.pcGDP_thous90usd_state %>%
@@ -253,8 +273,13 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
     L244.ShellConductance_bld_gcamusa <- A44.bld_shell_conductance %>%
       # Convert to long form
       gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year),
-             value = round(value, energy.DIGITS_EFFICIENCY)) %>%
+      mutate(year = as.integer(year)) %>%
+      # Interpolate to model years
+      complete(gcam.consumer, year = c(year, MODEL_YEARS)) %>%
+      group_by(gcam.consumer) %>%
+      mutate(value = round(approx_fun(year, value), energy.DIGITS_EFFICIENCY)) %>%
+      ungroup() %>%
+      filter(year %in% MODEL_YEARS) %>%
       # Repeat for all states
       repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
       # Add nodeInput and building.node.input
@@ -388,7 +413,8 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
       left_join_error_no_match(L244.in_EJ_R_bld_serv_F_Yh, by = c("region", "supplysector", "subsector", "minicam.energy.input", "year")) %>%
       # calibrated.value = energy * share
       mutate(calibrated.value = round(share * calibrated.value, energy.DIGITS_CALOUTPUT),
-             share.weight.year = year) %>%
+             share.weight.year = year,
+             calOutputValue = calibrated.value) %>%
       # Set subsector and technology shareweights
       set_subsector_shrwt() %>%
       mutate(tech.share.weight =  if_else(calibrated.value > 0, 1, 0)) %>%
@@ -409,7 +435,7 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
 
     # L244.GlobalTechInterpTo_bld: Technology shareweight interpolation (selected techs only)
     L244.GlobalTechInterpTo_bld <- A44.globaltech_interp %>%
-      rename(sector.name = supplysector,
+      mutate(sector.name = supplysector,
              subsector.name = subsector) %>%
       select(LEVEL2_DATA_NAMES[["GlobalTechInterpTo"]])
 
@@ -488,20 +514,44 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
     # L244.GenericServiceSatiation_gcamusa: Satiation levels assumed for non-thermal building services
     # Just multiply the base-service by an exogenous multiplier
     L244.GenericServiceSatiation_gcamusa <- L244.GenericBaseService_gcamusa %>%
-      filter(year == max(BASE_YEARS)) %>%
+      filter(year == max(BASE_YEARS))
+
+    # When adding floorspace, we should take floorspace from max(BASE_YEARS) as well
+    # Instead we take the first value, which ends up being floorspace from min(BASE_YEARS)
+    if(OLD_DATA_SYSTEM_BEHAVIOR){
+      L244.GenericServiceSatiation_gcamusa <- L244.GenericServiceSatiation_gcamusa %>%
+        # Add floorspace
+        left_join_keep_first_only(L244.Floorspace_gcamusa, by = c(LEVEL2_DATA_NAMES[["BldNodes"]]))
+    } else {
+      L244.GenericServiceSatiation_gcamusa <- L244.GenericServiceSatiation_gcamusa %>%
       # Add floorspace
-      left_join_error_no_match(L244.Floorspace_gcamusa, by = c(LEVEL2_DATA_NAMES[["BldNodes"]], "year")) %>%
+      left_join_error_no_match(L244.Floorspace_gcamusa, by = c(LEVEL2_DATA_NAMES[["BldNodes"]], "year"))
+    }
+    L244.GenericServiceSatiation_gcamusa <- L244.GenericServiceSatiation_gcamusa %>%
       # Add multiplier
       left_join_error_no_match(A44.demand_satiation_mult, by = c("building.service.input" = "supplysector")) %>%
       # Satiation level = service per floorspace * multiplier
       mutate(satiation.level = round(base.service / base.building.size * multiplier, energy.DIGITS_COEFFICIENT)) %>%
       select(LEVEL2_DATA_NAMES[["GenericServiceSatiation"]])
 
+
     # L244.ThermalServiceSatiation: Satiation levels assumed for thermal building services
     L244.ThermalServiceSatiation_gcamusa <- L244.ThermalBaseService_gcamusa %>%
-      filter(year == max(BASE_YEARS)) %>%
-      # Add floorspace
-      left_join_error_no_match(L244.Floorspace_gcamusa, by = c(LEVEL2_DATA_NAMES[["BldNodes"]], "year")) %>%
+      filter(year == max(BASE_YEARS))
+
+    # When adding floorspace, we should take floorspace from max(BASE_YEARS) as well
+    # Instead we take the first value, which ends up being floorspace from min(BASE_YEARS)
+    if(OLD_DATA_SYSTEM_BEHAVIOR){
+      L244.ThermalServiceSatiation_gcamusa <- L244.ThermalServiceSatiation_gcamusa %>%
+        # Add floorspace
+        left_join_keep_first_only(L244.Floorspace_gcamusa, by = c(LEVEL2_DATA_NAMES[["BldNodes"]]))
+    } else {
+      L244.ThermalServiceSatiation_gcamusa <- L244.ThermalServiceSatiation_gcamusa %>%
+        # Add floorspace
+        left_join_error_no_match(L244.Floorspace_gcamusa, by = c(LEVEL2_DATA_NAMES[["BldNodes"]], "year"))
+    }
+
+    L244.ThermalServiceSatiation_gcamusa <- L244.ThermalServiceSatiation_gcamusa %>%
       # Add multiplier
       left_join_error_no_match(A44.demand_satiation_mult, by = c("thermal.building.service.input" = "supplysector")) %>%
       # Satiation level = service per floorspace * multiplier
@@ -612,7 +662,8 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
       add_comments("L143.HDDCDD_scen_state assigned to GCAM subsectors") %>%
       add_legacy_name("L244.HDDCDD_A2_GFDL") %>%
       add_precursors("temp-data-inject/L143.HDDCDD_scen_state", "gcam-usa/A44.sector",
-                     "gcam-usa/calibrated_techs_bld_usa", "gcam-usa/A44.gcam_consumer") ->
+                     "gcam-usa/calibrated_techs_bld_usa", "gcam-usa/A44.gcam_consumer") %>%
+      add_flags(FLAG_PROTECT_FLOAT)->
       L244.HDDCDD_A2_GFDL
 
     L244.ThermalBaseService_gcamusa %>%
@@ -665,7 +716,7 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
       add_precursors("L144.in_EJ_state_res_F_U_Y", "L144.in_EJ_state_comm_F_U_Y", "gcam-usa/calibrated_techs_bld_usa",
                      "gcam-usa/A44.globaltech_eff", "gcam-usa/A44.globaltech_eff_avg", "gcam-usa/A44.globaltech_shares",
                      "gcam-usa/A44.gcam_consumer", "L144.flsp_bm2_state_res", "L144.flsp_bm2_state_comm",
-                     "gcam-usa/A44.demand_satiation_mult", "L143.HDDCDD_scen_state") ->
+                     "gcam-usa/A44.demand_satiation_mult", "temp-data-inject/L143.HDDCDD_scen_state") ->
       L244.Intgains_scalar_gcamusa
 
     L244.ShellConductance_bld_gcamusa %>%
@@ -806,7 +857,7 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
       L244.GlobalTechIntGainOutputRatio
 
     L244.GlobalTechInterpTo_bld %>%
-      add_title("Technology shareweight interpolation ") %>%
+      add_title("Technology shareweight interpolation") %>%
       add_units("NA") %>%
       add_comments("Directly from A44.globaltech_interp") %>%
       add_legacy_name("L244.GlobalTechInterpTo_bld") %>%
@@ -815,7 +866,7 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
 
     L244.GlobalTechEff_bld %>%
       add_title("Assumed efficiencies (all years) of buildings technologies") %>%
-      add_units("Look up") %>%
+      add_units("Unitless") %>%
       add_comments("Values from A44.globaltech_eff") %>%
       add_legacy_name("L244.GlobalTechEff_bld") %>%
       add_precursors("gcam-usa/A44.globaltech_eff") ->
@@ -831,7 +882,7 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
 
     L244.GlobalTechCost_bld_gcamusa %>%
       add_title("Non-fuel costs of global building technologies") %>%
-      add_units("Look up") %>%
+      add_units("1975$/GJ") %>%
       add_comments("Values from A44.globaltech_cost") %>%
       add_legacy_name("L244.GlobalTechCost_bld") %>%
       add_precursors("gcam-usa/A44.globaltech_cost") ->
