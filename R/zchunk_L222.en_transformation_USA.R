@@ -83,8 +83,12 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
     # build tables
 
     # L222.TechEQUIV: not used in this code, would probably be best defined externally as a constant or assumption
-    L222.TechEQUIV <- tibble( group.name=c("technology"), tag1=c("technology"),
-                              tag2=c("pass-through-technology"), stringsAsFactors=FALSE )
+    L222.TechEQUIV <- tibble(group.name=c("technology"), tag1=c("technology"),
+                              tag2=c("pass-through-technology"), stringsAsFactors=FALSE)
+
+    # L222.SectorEQUIV: not used in this code, would probably be best defined externally as a constant or assumption
+    L222.SectorEQUIV <- tibble(group.name=c("sector"), tag1=c("supplysector"),
+                               tag2=c("pass-through-sector"), stringsAsFactors=FALSE)
 
 
     # Oil refining sectors are only created in states where the production is > 0 in the historical period.
@@ -121,8 +125,10 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
 
 
     # save some of this information for the PassThroughSector information
+    # L222.PassThroughSector_USAen: PassThroughSector information to send vintaging info from states to USA.
     L222.Tech_USAen %>%
-      select(state, subsector, supplysector, region) ->
+      select(state, subsector, supplysector, region) %>%
+      select(one_of(LEVEL2_DATA_NAMES[["PassThroughSector"]])) ->
       L222.PassThroughSector_USAen
 
 
@@ -190,7 +196,9 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
         summarise(calOutputValue = sum(calOutputValue)) %>%
         ungroup %>%
         mutate(share.weight.year = year) %>%
-        set_subsector_shrwt ->
+        set_subsector_shrwt %>%
+        mutate(tech.share.weight = if_else(calOutputValue == 0, 0, 1)) %>%
+        select(one_of(LEVEL2_DATA_NAMES[["Production"]])) ->
         L222.Production_USArefining
 
 
