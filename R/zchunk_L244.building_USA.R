@@ -164,7 +164,7 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
       left_join_error_no_match(A44.gcam_consumer, by = "gcam.consumer") %>%
       select(LEVEL2_DATA_NAMES[["Floorspace"]])
 
-    #Commercial floorspace
+    # Commercial floorspace
     L244.Floorspace_comm <- L144.flsp_bm2_state_comm %>%
       rename(base.building.size = value,
              region = state,
@@ -193,7 +193,8 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
       mutate(year = as.integer(year),
              # value.y = population
              pcflsp_mm2cap = base.building.size / pop,
-             # Satiation level = maximum of exogenous assumption and the observed value in the final calibration year
+             # Satiation level = must be greater than the observed value in the final calibration year, so if observed value is
+             # greater than calculated, multiply observed by 1.001
              satiation.level = round(pmax(value * CONV_THOUS_BIL, pcflsp_mm2cap * 1.001), energy.DIGITS_SATIATION_ADDER)) %>%
       left_join_error_no_match(A44.gcam_consumer, by = c("gcam.consumer", "nodeInput", "building.node.input")) %>%
       select(LEVEL2_DATA_NAMES[["BldNodes"]], "satiation.level")
@@ -204,9 +205,7 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
 
     # We will filter GDP to energy.SATIATION_YEAR, but this may be greater than the historical years present
     # under timeshift conditions. So we adjust energy.SATIATION_YEAR
-    if (energy.SATIATION_YEAR > max(BASE_YEARS)){
-      energy.SATIATION_YEAR <- max(BASE_YEARS)
-    }
+    energy.SATIATION_YEAR <- max(BASE_YEARS, energy.SATIATION_YEAR)
 
     L244.SatiationAdder_gcamusa <- L244.Satiation_flsp_gcamusa %>%
       # Add per capita GDP
