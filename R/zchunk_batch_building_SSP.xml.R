@@ -9,7 +9,7 @@
 #' the generated outputs: \code{building_SSP1.xml}, \code{building_SSP2.xml}, \code{building_SSP3.xml},
 #' \code{building_SSP4.xml},and \code{building_SSP5.xml}.
 module_energy_batch_building_SSP_xml <- function(command, ...) {
-  SSP_NUMS <- seq(1,5)
+  SSP_NUMS <- seq(1, 5)
   fuelpref_NUMS <- c("1" = "15", "3" = "3", "4" = "4", "5" = "15")
 
   if(command == driver.DECLARE_INPUTS) {
@@ -32,14 +32,14 @@ module_energy_batch_building_SSP_xml <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    for (i in SSP_NUMS){
+    for (i in SSP_NUMS) {
       # Names of inputs and outputs
       Satiation_flsp <- paste0("L244.Satiation_flsp_SSP", i)
       SatiationAdder <- paste0("L244.SatiationAdder_SSP", i)
       GenericServiceSatiation <- paste0("L244.GenericServiceSatiation_SSP", i)
-      # SSP2 is unique, uses less files
-      if (i != 2){
-      FuelPrefElast <- paste0("L244.FuelPrefElast_bld_SSP", fuelpref_NUMS[toString(i)])
+      # SSP2 is unique, uses fewer files
+      if(i != 2) {
+        FuelPrefElast <- paste0("L244.FuelPrefElast_bld_SSP", fuelpref_NUMS[toString(i)])
       }
       xmlfn <- paste0("building_SSP", i, ".xml")
 
@@ -52,16 +52,15 @@ module_energy_batch_building_SSP_xml <- function(command, ...) {
         L244.DeleteThermalService <- get_data(all_data, "L244.DeleteThermalService")
       }
 
-
       # Produce outputs
-      if (i == 2){
-      create_xml(xmlfn) %>%
-        add_xml_data(L244.Satiation_flsp_SSP, "Satiation_flsp") %>%
-        add_xml_data(L244.SatiationAdder_SSP, "SatiationAdder") %>%
-        add_xml_data(L244.GenericServiceSatiation_SSP, "GenericServiceSatiation") %>%
-        add_precursors(Satiation_flsp, SatiationAdder, GenericServiceSatiation) ->
-        xml_obj
-      }else{
+      if(i == 2) {
+        create_xml(xmlfn) %>%
+          add_xml_data(L244.Satiation_flsp_SSP, "Satiation_flsp") %>%
+          add_xml_data(L244.SatiationAdder_SSP, "SatiationAdder") %>%
+          add_xml_data(L244.GenericServiceSatiation_SSP, "GenericServiceSatiation") %>%
+          add_precursors(Satiation_flsp, SatiationAdder, GenericServiceSatiation) ->
+          xml_obj
+      } else {
         create_xml(xmlfn) %>%
           add_xml_data(L244.Satiation_flsp_SSP, "Satiation_flsp") %>%
           add_xml_data(L244.SatiationAdder_SSP, "SatiationAdder") %>%
