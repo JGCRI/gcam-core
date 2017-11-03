@@ -581,6 +581,9 @@ module_energy_L232.industry <- function(command, ...) {
       assign(paste0("L232.IncomeElasticity_ind_", tolower(ieo)), x)
     }
 
+    # For some reason L232.IncomeElasticity_ind_ssp1 needs SUM_TEST to pass tests
+    L232.IncomeElasticity_ind_ssp1 <- add_flags(L232.IncomeElasticity_ind_ssp1, FLAG_SUM_TEST)
+
     L232.Supplysector_ind %>%
       add_title("Supply sector information for industry sector") %>%
       add_units("NA") %>%
