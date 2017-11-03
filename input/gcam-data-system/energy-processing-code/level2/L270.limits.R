@@ -32,7 +32,7 @@ L102.gdp_mil90usd_Scen_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.gdp_mil90usd_
 L221.GlobalTechCoef_en <- readdata( "ENERGY_LEVEL2_DATA", "L221.GlobalTechCoef_en", skip=4 )
 
 # Policy assumptions: TODO where to put these
-NEG_EMISS_POLICY_NAME <- "CO2_negative_emiss"
+NEG_EMISS_POLICY_NAME <- "negative_emiss_budget"
 NEG_EMISS_GDP_BUDGET_PCT <- 0.01
 NEG_EMISS_MARKT_GLOBAL <- TRUE
 
