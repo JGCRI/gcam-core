@@ -1,6 +1,6 @@
-# File: EIA_AEO_services.csv
-# Title: Mapping EIA Services to GCAM services
-# Units: NA
+# File: EIA_AEO_services.csv,,
+# Title: Mapping EIA Services to GCAM services,,
+# Units: NA,,
 EIA_sector,EIA_service,service
 Residential,Space Heating,resid heating
 Residential,Space Cooling,resid cooling

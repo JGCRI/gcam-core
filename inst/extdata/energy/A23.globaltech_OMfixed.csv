@@ -1,9 +1,9 @@
-# File: A23.globaltech_OMfixed.csv
-# Title: Electricity technology fixed operations and maintenance costs
-# Units: 1975$/kW/yr
-# Source: GCAM assumptions; developed from assumptions to NEMS model in support of the Annual Energy Outlook (https://www.eia.gov/outlooks/aeo/assumptions/pdf/electricity.pdf).
-# Future improvement is based on the maximum % reduction that the literature deems likely and a rate corresponding to the maturity level of the technology
-# Note that some technologies are the same as another with additional equipment (i.e. CCS) for those technologies the improvement is on the additional equipment
+# File: A23.globaltech_OMfixed.csv,,,,,,,,,,,,
+# Title: Electricity technology fixed operations and maintenance costs,,,,,,,,,,,,
+# Units: 1975$/kW/yr,,,,,,,,,,,,
+# Source: GCAM assumptions; developed from assumptions to NEMS model in support of the Annual Energy Outlook (https://www.eia.gov/outlooks/aeo/assumptions/pdf/electricity.pdf).,,,,,,,,,,,,
+# Future improvement is based on the maximum % reduction that the literature deems likely and a rate corresponding to the maturity level of the technology,,,,,,,,,,,,
+# Note that some technologies are the same as another with additional equipment (i.e. CCS) for those technologies the improvement is on the additional equipment,,,,,,,,,,,,
 supplysector,subsector,technology,input.OM.fixed,capacity.factor,1971,1990,2005,2010,2015,improvement.max,improvement.rate,improvement.shadow.technology
 electricity,coal,coal (conv pul),OM-fixed,0.85,8.83,8.83,8.83,7.745675305,7.745675305,0.75,0.01,
 electricity,coal,coal (conv pul CCS),OM-fixed,0.8,15.49135061,15.49135061,15.49135061,15.49135061,15.49135061,0.6,0.05,coal (conv pul)

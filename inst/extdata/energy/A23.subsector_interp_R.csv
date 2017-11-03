@@ -1,0 +1,38 @@
+# File: A23.subsector_interp_R.csv,
+# Title: Region-specific electric subsector shareweights interpolation rules by GCAM4 region,
+# WARNING: These are hard coding GCAM 4 region names (i.e. 32 regions).  If the region definitions change this file may not match.,
+# Units: Unitless share-weights,
+# Source: GCAM assumptions; documented in proposal 210_GCAM4p1_Electricity Generation Assumptions.pdf (page 23),
+region,supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
+USA,electricity,refined liquids,share-weight,final-calibration-year,2100,,fixed
+Africa_Eastern,electricity,refined liquids,share-weight,final-calibration-year,2100,,fixed
+Africa_Northern,electricity,refined liquids,share-weight,final-calibration-year,2100,1,linear
+Africa_Southern,electricity,refined liquids,share-weight,final-calibration-year,2100,1,linear
+Africa_Western,electricity,refined liquids,share-weight,final-calibration-year,2100,1,linear
+Australia_NZ,electricity,refined liquids,share-weight,final-calibration-year,2100,,fixed
+Brazil,electricity,refined liquids,share-weight,final-calibration-year,2100,1,linear
+Canada,electricity,refined liquids,share-weight,final-calibration-year,2100,,fixed
+Central America and Caribbean,electricity,refined liquids,share-weight,final-calibration-year,2100,,fixed
+Central Asia,electricity,refined liquids,share-weight,final-calibration-year,2100,,fixed
+China,electricity,refined liquids,share-weight,final-calibration-year,2100,,fixed
+EU-12,electricity,refined liquids,share-weight,final-calibration-year,2100,0.309,linear
+EU-15,electricity,refined liquids,share-weight,final-calibration-year,2100,,fixed
+Europe_Eastern,electricity,refined liquids,share-weight,final-calibration-year,2100,,fixed
+Europe_Non_EU,electricity,refined liquids,share-weight,final-calibration-year,2100,,fixed
+European Free Trade Association,electricity,refined liquids,share-weight,final-calibration-year,2100,,fixed
+India,electricity,refined liquids,share-weight,final-calibration-year,2100,0.2,linear
+Indonesia,electricity,refined liquids,share-weight,final-calibration-year,2100,0.2,linear
+Japan,electricity,refined liquids,share-weight,final-calibration-year,2100,1,linear
+Mexico,electricity,refined liquids,share-weight,final-calibration-year,2100,1,linear
+Middle East,electricity,refined liquids,share-weight,final-calibration-year,2100,1,linear
+Pakistan,electricity,refined liquids,share-weight,final-calibration-year,2100,0.2,linear
+Russia,electricity,refined liquids,share-weight,final-calibration-year,2100,,fixed
+South Africa,electricity,refined liquids,share-weight,final-calibration-year,2100,,fixed
+South America_Northern,electricity,refined liquids,share-weight,final-calibration-year,2100,1,linear
+South America_Southern,electricity,refined liquids,share-weight,final-calibration-year,2100,1,linear
+South Asia,electricity,refined liquids,share-weight,final-calibration-year,2100,0.2,linear
+South Korea,electricity,refined liquids,share-weight,final-calibration-year,2100,,fixed
+Southeast Asia,electricity,refined liquids,share-weight,final-calibration-year,2100,0.2,linear
+Taiwan,electricity,refined liquids,share-weight,final-calibration-year,2100,1,linear
+Argentina,electricity,refined liquids,share-weight,final-calibration-year,2100,1,linear
+Colombia,electricity,refined liquids,share-weight,final-calibration-year,2100,1,linear

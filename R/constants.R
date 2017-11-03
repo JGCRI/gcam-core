@@ -283,8 +283,12 @@ energy.DIGITS_FLOORSPACE <- 3
 energy.DIGITS_SATIATION_ADDER <- 9
 energy.DIGITS_HDDCDD <- 0
 energy.DIGITS_CAPACITY_FACTOR <- 2
-energy.DIGITS_INCELAS_IND <- 3
+energy.DIGITS_OM <- 2
+energy.DIGITS_CAPITAL <- 0
 
+#base cost year for wind, used in capacity factor calculations
+energy.WIND.BASE.COST.YEAR <- 2005
+energy.DIGITS_INCELAS_IND <- 3
 
 energy.SATIATION_YEAR <- 2010
 energy.GDP_MID_SATIATION <- 10.5
@@ -292,6 +296,7 @@ energy.FLOOR_TO_SURFACE_RATIO <- 5.5
 
 energy.INTERNAL_GAINS_SCALAR_USA_H <- -930
 energy.INTERNAL_GAINS_SCALAR_USA_C <- 350
+
 
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
