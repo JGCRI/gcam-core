@@ -91,7 +91,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       tech.share.weight <- calOutputValue <- energy.final.demand <- base.service <- NULL
 
     # Load required inputs
-    UCD_techs <- get_data(all_data, "energy/mappings/UCD_techs")
+    UCD_techs <- get_data(all_data, "energy/mappings/UCD_techs") # Mapping file of transportation technology from the UC Davis report (Mishra et al. 2013)
     A54.globaltech_nonmotor <- get_data(all_data, "energy/A54.globaltech_nonmotor")
     A54.globaltech_passthru <- get_data(all_data, "energy/A54.globaltech_passthru")
     A54.sector <- get_data(all_data, "energy/A54.sector")
@@ -120,14 +120,14 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
     L154.out_mpkm_state_trn_nonmotor_Yh <- get_data(all_data, "L154.out_mpkm_state_trn_nonmotor_Yh")
 
     # Need to delete the transportation sector in the USA region (energy-final-demands and supplysectors)
-    # L254.DeleteSupplysector_USAtrn: Delete transportation supplysectors of the full USA region
+    # L254.DeleteSupplysector_USAtrn: Delete transportation supplysectors of the USA region
     L254.Supplysector_trn %>%
       mutate(region = region) %>% # strip off attributes like title, etc.
       filter(region == "USA") %>%
       select(region, supplysector) ->
       L254.DeleteSupplysector_USAtrn
 
-    # L254.DeleteFinalDemand_USAtrn: Delete energy final demand sectors of the full USA region
+    # L254.DeleteFinalDemand_USAtrn: Delete energy final demand sectors of the USA region
     L254.PerCapitaBased_trn %>%
       mutate(region = region) %>% # strip off attributes like title, etc.
       filter(region == "USA") %>%
@@ -230,6 +230,8 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       L254.StubTranTechProd_nonmotor_USA
 
     # L254.StubTranTechCalInput_passthru_USA: calibrated input of passthrough technologies
+    # trn_pass, trn_pass_road, trn_pass_road_LDV, trn_freight
+
     # First, need to calculate the service output for all tranTechnologies
     # calInput * loadFactor * unit_conversion / (coef * unit conversion)
     L254.StubTranTechCalInput_USA %>%
@@ -440,7 +442,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       L254.StubTranTech_nonmotor_USA
 
     L254.StubTranTechLoadFactor_USA %>%
-      add_title("Load factors of transportation stub technologies in the US states (all periods)") %>%
+      add_title("Load factors of transportation stub technologies in the US states") %>%
       add_units("person/vehicle and tonnes/vehicle") %>%
       add_comments("The same USA region values are repeated for each state") %>%
       add_legacy_name("L254.StubTranTechLoadFactor_USA") %>%
@@ -449,7 +451,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       L254.StubTranTechLoadFactor_USA
 
     L254.StubTranTechCost_USA %>%
-      add_title("Costs of transportation stub technologies in the US states (all periods)") %>%
+      add_title("Costs of transportation stub technologies in the US states") %>%
       add_units("$1990USD / vkm") %>%
       add_comments("The same USA region values are repeated for each state") %>%
       add_legacy_name("L254.StubTranTechCost_USA") %>%
@@ -458,7 +460,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       L254.StubTranTechCost_USA
 
     L254.StubTranTechCoef_USA %>%
-      add_title("Coefficients of transportation stub technologies in the US states (all periods)") %>%
+      add_title("Coefficients of transportation stub technologies in the US states") %>%
       add_units("BTU / vkm") %>%
       add_comments("The same USA region values are repeated for each state") %>%
       add_comments("Re-set electricity consumed at the state markets") %>%
