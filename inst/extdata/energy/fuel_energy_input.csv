@@ -19,4 +19,8 @@ regional oil,oil
 regional sugar for ethanol,sugar
 regional sugarbeet for ethanol,sugarbeet
 refined liquids enduse,refined liquids
+<<<<<<< HEAD
 refined liquids industrial,refined liquids
+=======
+refined liquids industrial,refined liquids
+>>>>>>> master

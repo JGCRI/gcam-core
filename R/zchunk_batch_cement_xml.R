@@ -8,13 +8,13 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{cement.xml}. The corresponding file in the
 #' original data system was \code{batch_cement_xml.R} (energy XML).
-module_energy_batch_cement_xml_DISABLED <- function(command, ...) {
+module_energy_batch_cement_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L2321.FinalEnergyKeyword_cement",
              "L2321.SubsectorLogit_cement",
-             "L2321.SubsectorShrwt_cement",
+             # "L2321.SubsectorShrwt_cement",
              "L2321.SubsectorInterp_cement",
-             "L2321.SubsectorInterpTo_cement",
+             # "L2321.SubsectorInterpTo_cement",
              "L2321.StubTech_cement",
              "L2321.GlobalTechShrwt_cement",
              "L2321.GlobalTechCoef_cement",
@@ -35,9 +35,9 @@ module_energy_batch_cement_xml_DISABLED <- function(command, ...) {
     # Load required inputs
     L2321.FinalEnergyKeyword_cement <- get_data(all_data, "L2321.FinalEnergyKeyword_cement")
     L2321.SubsectorLogit_cement <- get_data(all_data, "L2321.SubsectorLogit_cement")
-    L2321.SubsectorShrwt_cement <- get_data(all_data, "L2321.SubsectorShrwt_cement")
+    #    L2321.SubsectorShrwt_cement <- get_data(all_data, "L2321.SubsectorShrwt_cement")
     L2321.SubsectorInterp_cement <- get_data(all_data, "L2321.SubsectorInterp_cement")
-    L2321.SubsectorInterpTo_cement <- get_data(all_data, "L2321.SubsectorInterpTo_cement")
+    #    L2321.SubsectorInterpTo_cement <- get_data(all_data, "L2321.SubsectorInterpTo_cement")
     L2321.StubTech_cement <- get_data(all_data, "L2321.StubTech_cement")
     L2321.GlobalTechShrwt_cement <- get_data(all_data, "L2321.GlobalTechShrwt_cement")
     L2321.GlobalTechCoef_cement <- get_data(all_data, "L2321.GlobalTechCoef_cement")
@@ -56,9 +56,9 @@ module_energy_batch_cement_xml_DISABLED <- function(command, ...) {
     create_xml("cement.xml") %>%
       add_xml_data(L2321.FinalEnergyKeyword_cement,"FinalEnergyKeyword") %>%
       add_xml_data(L2321.SubsectorLogit_cement,"SubsectorLogit") %>%
-      add_xml_data(L2321.SubsectorShrwt_cement,"SubsectorShrwt") %>%
+      #      add_xml_data(L2321.SubsectorShrwt_cement,"SubsectorShrwt") %>%
       add_xml_data(L2321.SubsectorInterp_cement,"SubsectorInterp") %>%
-      add_xml_data(L2321.SubsectorInterpTo_cement,"SubsectorInterpTo") %>%
+      #      add_xml_data(L2321.SubsectorInterpTo_cement,"SubsectorInterpTo") %>%
       add_xml_data(L2321.StubTech_cement,"StubTech") %>%
       add_xml_data(L2321.GlobalTechShrwt_cement,"GlobalTechShrwt") %>%
       add_xml_data(L2321.GlobalTechCoef_cement,"GlobalTechCoef") %>%
@@ -70,8 +70,11 @@ module_energy_batch_cement_xml_DISABLED <- function(command, ...) {
       add_xml_data(L2321.PerCapitaBased_cement,"PerCapitaBased") %>%
       add_xml_data(L2321.BaseService_cement,"BaseService") %>%
       add_xml_data(L2321.PriceElasticity_cement,"PriceElasticity") %>%
-      add_precursors("L2321.FinalEnergyKeyword_cement", "L2321.SubsectorLogit_cement", "L2321.SubsectorShrwt_cement",
-                     "L2321.SubsectorInterp_cement", "L2321.SubsectorInterpTo_cement", "L2321.StubTech_cement",
+      add_precursors("L2321.FinalEnergyKeyword_cement", "L2321.SubsectorLogit_cement",
+                     # "L2321.SubsectorShrwt_cement",
+                     "L2321.SubsectorInterp_cement",
+                     # "L2321.SubsectorInterpTo_cement",
+                     "L2321.StubTech_cement",
                      "L2321.GlobalTechShrwt_cement", "L2321.GlobalTechCoef_cement", "L2321.GlobalTechCost_cement",
                      "L2321.GlobalTechCapture_cement", "L2321.StubTechProd_cement", "L2321.StubTechCalInput_cement_heat",
                      "L2321.StubTechCoef_cement", "L2321.PerCapitaBased_cement", "L2321.BaseService_cement",
