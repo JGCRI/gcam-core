@@ -475,6 +475,12 @@ gcamusa.GRID_REGION_LOGIT_TYPE <- "relative-cost-logit"
 gcamusa.ELECT_TD_SECTORS <- c("elect_td_bld", "elect_td_ind", "elect_td_trn")
 gcamusa.USE_REGIONAL_ELEC_MARKETS <- TRUE
 
+gcamusa.FERT_LOGIT_EXP  <- -3 # define default logit expoent used in the fertlizer subsector
+gcamusa.FERT_LOGIT_TYPE <- NA
+
+# Define GCAM-USA category name of fertilizer
+gcamusa.FERT_NAME <- "N fertilizer"
+
 # fuels whose markets will be modeled at the level of the FERC regions, with prices calibrated
 gcamusa.REGIONAL_FUEL_MARKETS <- c("regional coal", "delivered coal", "wholesale gas", "delivered gas",
                                    "refined liquids industrial", "refined liquids enduse")
@@ -487,6 +493,8 @@ gcamusa.STATE_UNLIMITED_RESOURCES <- c("global solar resource", "limestone")
 
 gcamusa.WIND_BASE_COST_YEAR <- 2005
 
+# NUMBERS OF DIGITS FOR MODEL INPUT DATA
+gcamusa.DIGITS_CALOUTPUT <- 7 # production
 gcamusa.DEFAULT_SHAREWEIGHT <- 1
 gcamusa.DEFAULT_LOGITEXP <- -3
 gcamusa.DEFAULT_COEFFICIENT <- 1
