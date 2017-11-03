@@ -3,13 +3,7 @@
         <region name="USA">
             <ghgpolicy name="CO2">
                 <market>global</market>
-                <fixedTax year="2020">10</fixedTax>
-                <fixedTax year="2035">20.8</fixedTax>
-                <fixedTax year="2050">43.2</fixedTax>
-                <fixedTax year="2065">89.9</fixedTax>
-                <fixedTax year="2080">186.8</fixedTax>
-                <fixedTax year="2095">388.3</fixedTax>
-                <fixedTax year="2100">495.6</fixedTax>
+                <fixedTax year="2020" fillout="1">0</fixedTax>
             </ghgpolicy>
         </region>
         <region name="Canada">

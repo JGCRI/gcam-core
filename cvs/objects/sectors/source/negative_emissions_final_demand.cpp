@@ -152,6 +152,17 @@ void NegativeEmissionsFinalDemand::completeInit( const string& aRegionName,
                 << " in region " << aRegionName << endl;
         abort();
     }
+    const static bool isTargetFinding = Configuration::getInstance()->getBool(
+        "find-path", false, false );
+    const bool hasTaxMarket = scenario->getMarketplace()->getPrice( mName, aRegionName, 0, false ) !=
+        Marketplace::NO_MARKET_PRICE;
+    if( isTargetFinding && !hasTaxMarket ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Using " << getXMLNameStatic() << " wth target-finder without explicitly creating a market for "
+                << mName << " may hinder solution performance." << endl;
+        mainLog << "Please read in a policy file with a zero tax." << endl;
+    }
 
     MarketDependencyFinder* depFinder = scenario->getMarketplace()->getDependencyFinder();
     depFinder->addDependency( mPolicyName, aRegionName, mName, aRegionName );
