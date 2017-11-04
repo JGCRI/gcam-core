@@ -498,6 +498,9 @@ gcamusa.STATE_UNLIMITED_RESOURCES <- c("global solar resource", "limestone")
 
 gcamusa.WIND_BASE_COST_YEAR <- 2005
 
+# Reduce rounding in detailed USA transport for compatability with model
+gcamusa.DIGITS_TRNUSA_DEFAULT <- 1
+
 # NUMBERS OF DIGITS FOR MODEL INPUT DATA
 gcamusa.DIGITS_CALOUTPUT <- 7 # production
 gcamusa.DEFAULT_SHAREWEIGHT <- 1
@@ -506,7 +509,6 @@ gcamusa.DEFAULT_COEFFICIENT <- 1
 gcamusa.DEFAULT_MARKET <- "USA"
 gcamusa.GAS_ADJ_THRESH <- 5
 gcamusa.DIGITS_COST <- 4
-
 
 # Uncomment these lines to run under 'timeshift' conditions
 # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
