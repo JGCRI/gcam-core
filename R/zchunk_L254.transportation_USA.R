@@ -19,6 +19,17 @@
 #' original data system was \code{L254.transportation_USA.R} (gcam-usa level2).
 #' @details This chunk generates input files for transportation sector with generic information for supplysector,
 #' subsector and technologies, as well as calibrated inputs and outputs by the US states.
+#' @note The transportation structure is heavily nested. The GCAM structure of sector/subsector/technology only
+#' allows two levels of nesting within any sector, but a technology of one sector (e.g., trn_pass) can consume the
+#' output of another "sector" (e.g., trn_pass_road) that is really just used to represent lower nesting levels of
+#' that first, or parent, sector. In the transportation sector, each lower-level nesting "sector" is named by
+#' appending a string to the parent sector. So, \code{trn_pass} contains \code{trn_pass_road} which has
+#' \code{trn_pass_road_LDV} which has \code{trn_pass_road_LDV_4W}. Each of the links between any two of those sectors
+#' is done with a pass-through technology within the parent sector that consumes the output of the child sector.
+#' The technology is called a "pass-through" because it (generally) only consumes the output of the child "sector"
+#' without making any changes to it. There's an additional complication in the transportation sector, that the
+#' pass-through technologies are normal, standard GCAM technologies, not "tranTechnologies" which have different
+#' parameters read in, and perform a bunch of hard-wired unit conversions between inputs and outputs.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -231,6 +242,18 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
 
     # L254.StubTranTechCalInput_passthru_USA: calibrated input of passthrough technologies
     # trn_pass, trn_pass_road, trn_pass_road_LDV, trn_freight
+
+    # The transportation structure is heavily nested.
+    # The GCAM structure of sector/subsector/technology only allows two levels of nesting within any sector,
+    # but a technology of one sector (e.g., trn_pass) can consume the output of another "sector" (e.g., trn_pass_road)
+    # that is really just used to represent lower nesting levels of that first, or parent, sector. In the
+    # transportation sector, each lower-level nesting "sector" is named by appending a string to the parent sector.
+    # So, trn_pass contains trn_pass_road which has trn_pass_road_LDV which has trn_pass_road_LDV_4W. Each of the links
+    # between any two of those sectors is done with a pass-through technology within the parent sector that consumes
+    # the output of the child sector. The technology is called a "pass-through" because it (generally) only consumes
+    # the output of the child "sector" without making any changes to it. There's an additional complication in the
+    # transportation sector: the pass-through technologies are normal, standard GCAM technologies, not "tranTechnologies"
+    # which have different parameters read in, and perform a bunch of hard-wired unit conversions between inputs and outputs.
 
     # First, need to calculate the service output for all tranTechnologies
     # calInput * loadFactor * unit_conversion / (coef * unit conversion)
