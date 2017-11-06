@@ -70,6 +70,8 @@ public:
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     void completeInit( const std::string& aRegionName );
+    void initCalc( const std::string& aRegionName, const int aPeriod );
+    void postCalc( const std::string& aRegionName, const int aPeriod );
 protected:
 
     DEFINE_DATA(
@@ -89,13 +91,13 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "isShareBased", mIsShareBased, bool ),
         
         //! Quantity constraint by year
-        DEFINE_VARIABLE( ARRAY, "constraint", mConstraint, objects::PeriodVector<double> ),
+        DEFINE_VARIABLE( ARRAY, "constraint", mConstraint, objects::PeriodVector<Value> ),
         
         //! Fixed tax on Fuel by year($/GJ)
-        DEFINE_VARIABLE( ARRAY, "fixedTax", mFixedTax, objects::PeriodVector<double> ),
+        DEFINE_VARIABLE( ARRAY, "fixedTax", mFixedTax, objects::PeriodVector<Value> ),
         
         //! Share of total or sectoral output
-        DEFINE_VARIABLE( ARRAY, "share-of-sector-output", mShareOfSectorOutput, objects::PeriodVector<double> ),
+        DEFINE_VARIABLE( ARRAY, "share-of-sector-output", mShareOfSectorOutput, objects::PeriodVector<Value> ),
         
         //! The minimum price below which the constraint is considered non-binding.
         DEFINE_VARIABLE( ARRAY, "min-price", mMinPrice, objects::PeriodVector<double> ),

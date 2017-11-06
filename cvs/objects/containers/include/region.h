@@ -92,9 +92,9 @@ public:
     virtual void completeInit();
     const std::string& getName() const;
     
-    virtual void initCalc( const int period ) = 0;
+    virtual void initCalc( const int period );
     
-    virtual void postCalc( const int aPeriod ) = 0;
+    virtual void postCalc( const int aPeriod );
 
     virtual void csvOutputFile() const {};
     virtual void dbOutput( const std::list<std::string>& aPrimaryFuelList ) const {};

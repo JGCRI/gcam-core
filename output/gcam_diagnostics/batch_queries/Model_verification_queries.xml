@@ -41,54 +41,72 @@
        <region name="South Korea" />
        <region name="Taiwan" />
       <supplyDemandQuery title="Final energy by aggregate end-use sector and fuel">
-         <axis1 name="fuel">input</axis1>
+         <axis1 name="fuel">input[@name]</axis1>
          <axis2 name="Year">demand-physical[@vintage]</axis2>
-         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and ((@name='building' or @name='industry' or @name='transportation') or (exists(child::keyword/@final-energy)))]//*[@type='input' and not (@name='renewable')]/demand-physical[@unit='EJ']/node()</xPath>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and ((@name='building' or @name='industry' or @name='transportation') or (exists(child::keyword/@final-energy)))]//*[@type='input' and not(@name='trn_pass_road' or @name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks' or @name='renewable' or @name='oil-credits')]/demand-physical[@unit='EJ']/node()</xPath>
          <comments/>
-         <labelRewriteList append-values="true">
+         <labelRewriteList append-values="false">
             <level name="sector">
-               <rewrite to="building" from="comm cooling"/>
-               <rewrite to="building" from="comm heating"/>
-               <rewrite to="building" from="comm others"/>
-               <rewrite to="building" from="resid cooling"/>
-               <rewrite to="building" from="resid heating"/>
-               <rewrite to="building" from="resid others"/>
-               <rewrite to="industry" from="industrial energy use"/>
-               <rewrite to="industry" from="industrial feedstocks"/>
-               <rewrite to="industry" from="N fertilizer"/>
-               <rewrite to="industry" from="process heat cement"/>
-               <rewrite to="industry" from="cement"/>
-               <rewrite to="transportation" from="trn_aviation_intl"/>
-               <rewrite to="transportation" from="trn_freight"/>
-               <rewrite to="transportation" from="trn_freight_road"/>
-               <rewrite to="transportation" from="trn_pass_road"/>
-               <rewrite to="transportation" from="trn_pass_road_bus"/>
-               <rewrite to="transportation" from="trn_pass_road_LDV"/>
-               <rewrite to="transportation" from="trn_pass_road_LDV_4W"/>
-               <rewrite to="transportation" from="trn_pass_road_LDV_2W"/>
-               <rewrite to="transportation" from="trn_passenger"/>
-               <rewrite to="transportation" from="trn_pass"/>
-               <rewrite to="transportation" from="trn_shipping_intl"/>
+               <rewrite from="N fertilizer" to="industry"/>
+               <rewrite from="agriculture energy use" to="industry"/>
+               <rewrite from="boilers general" to="industry"/>
+               <rewrite from="machine drive" to="industry"/>
+               <rewrite from="process heat primary metals" to="industry"/>
+               <rewrite from="industrial energy use" to="industry"/>
+               <rewrite from="comm cooling" to="building"/>
+               <rewrite from="feedstocks construction" to="industry"/>
+               <rewrite from="comm other" to="building"/>
+               <rewrite from="resid other appliances" to="building"/>
+               <rewrite from="feedstocks chemicals" to="industry"/>
+               <rewrite from="process heat cement" to="industry"/>
+               <rewrite from="cement" to="industry"/>
+               <rewrite from="electrochemical" to="industry"/>
+               <rewrite from="feedstocks primary metals" to="industry"/>
+               <rewrite from="comm lighting" to="building"/>
+               <rewrite from="comm office" to="building"/>
+               <rewrite from="other end uses" to="industry"/>
+               <rewrite from="construction energy use" to="industry"/>
+               <rewrite from="comm cooking" to="building"/>
+               <rewrite from="resid appliances" to="building"/>
+               <rewrite from="resid hot water" to="building"/>
+               <rewrite from="resid heating" to="building"/>
+               <rewrite from="industrial feedstocks" to="industry"/>
+               <rewrite from="comm heating" to="building"/>
+               <rewrite from="boilers pulp paper and wood" to="industry"/>
+               <rewrite from="comm ventilation" to="building"/>
+               <rewrite from="process heat general" to="industry"/>
+               <rewrite from="comm hot water" to="building"/>
+               <rewrite from="mining energy use" to="industry"/>
+               <rewrite from="limestone feedstocks" to=""/>
+               <rewrite from="comm others" to="building"/>
+               <rewrite from="resid lighting" to="building"/>
+               <rewrite from="resid cooling" to="building"/>
+               <rewrite from="resid others" to="building"/>
+               <rewrite from="resid other" to="building"/>
+               <rewrite from="comm refrigeration" to="building"/>
+               <rewrite from="trn_aviation_intl" to="transportation"/>
+               <rewrite from="trn_freight" to="transportation"/>
+               <rewrite from="trn_freight_road" to="transportation"/>
+               <rewrite from="trn_pass" to="transportation"/>
+               <rewrite from="trn_pass_road" to="transportation"/>
+               <rewrite from="trn_pass_road_LDV" to="transportation"/>
+               <rewrite from="trn_pass_road_LDV_2W" to="transportation"/>
+               <rewrite from="trn_pass_road_LDV_4W" to="transportation"/>
+               <rewrite from="trn_shipping_intl" to="transportation"/>
             </level>
             <level name="input">
-               <rewrite to="1 liquids" from="refined liquids enduse"/>
-               <rewrite to="1 liquids" from="refined liquids industrial"/>
-               <rewrite to="2 gas" from="delivered gas"/>
-               <rewrite to="2 gas" from="wholesale gas"/>
-               <rewrite to="3 coal" from="delivered coal"/>
-               <rewrite to="4 biomass" from="delivered biomass"/>
-               <rewrite to="5 electricity" from="elect_td_bld"/>
-               <rewrite to="5 electricity" from="elect_td_ind"/>
-               <rewrite to="5 electricity" from="elect_td_trn"/>
-               <rewrite to="6 hydrogen" from="H2 Enduse"/>
-               <rewrite to="6 hydrogen" from="H2 enduse"/>
-               <rewrite to="7 trad biomass" from="traditional biomass"/>
-               <rewrite to="8 district heat" from="district heat"/>
-               <rewrite to="" from="process heat cement"/>
-               <rewrite to="" from="limestone"/>
-               <rewrite to="" from="industrial energy use"/>
-               <rewrite to="" from="industrial feedstocks"/>
-               <rewrite to="" from="industrial processes"/>
+               <rewrite from="traditional biomass" to="7 trad biomass"/>
+               <rewrite from="H2 enduse" to="6 hydrogen"/>
+               <rewrite from="delivered biomass" to="4 biomass"/>
+               <rewrite from="refined liquids enduse" to="1 liquids"/>
+               <rewrite from="elect_td_bld" to="5 electricity"/>
+               <rewrite from="elect_td_trn" to="5 electricity"/>
+               <rewrite from="delivered coal" to="3 coal"/>
+               <rewrite from="elect_td_ind" to="5 electricity"/>
+               <rewrite from="wholesale gas" to="2 gas"/>
+               <rewrite from="refined liquids industrial" to="1 liquids"/>
+               <rewrite from="delivered gas" to="2 gas"/>
+               <rewrite from="district heat" to="8 district heat"/>
             </level>
          </labelRewriteList>
       </supplyDemandQuery>
@@ -183,7 +201,7 @@
          <supplyDemandQuery title="Refined liquid fuel production by technology">
             <axis1 name="technology">technology</axis1>
             <axis2 name="Year">physical-output[@vintage]</axis2>
-            <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and ((@name='refined liquids enduse' or @name='refined liquids industrial' or @name='refining'))]/*[@type = 'subsector']/*[@type = 'technology' and not (@name='refined liquids enduse' or @name = 'refined liquids industrial')]//*[@type='output' (:collapse:)]/physical-output/node()</xPath>
+            <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and ((@name='refined liquids enduse' or @name='refined liquids industrial' or @name='refining'))]/*[@type = 'subsector']/*[@type = 'technology' and not (@name='refined liquids enduse' or @name = 'refined liquids industrial')]//output-primary[@type='output' (:collapse:)]/physical-output/node()</xPath>
             <comments/>
          </supplyDemandQuery>
       </aQuery>
@@ -353,7 +371,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                         $newOutputNameQueue := remove($outputNameQueue, 1),
                         $useOutputs := $currTree//output-primary[@type='output' and @name=$outputName],
                         $useInputs := for $out in $useOutputs[not(following-sibling::keyword[exists(@primary-renewable)])]
-                                      return $out/following-sibling::*[@type='input'],
+                                      return $out/following-sibling::*[@type='input' and not(@name='oil-credits')],
                         $renewOutputs := for $out in $useOutputs[following-sibling::keyword[exists(@primary-renewable)]]
                                          return element output {
                                              attribute name { $out/following-sibling::keyword/@primary-renewable },
@@ -398,8 +416,8 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
         declare function local:generate-ccs-coefs($currTree as node(), $coefs as node()*) as node()* {
             for $sector in $coefs/@name
             let $currSector := $currTree/*[@type='sector' and @name=$sector],
-                $useInputs := $currSector//*[@type='technology' and not(contains(@name, 'CCS')) and not(child::keyword/@primary-renewable)]/*[@type='input'],
-                $useInputsCCS := $currSector//*[@type='technology' and contains(@name, 'CCS')]/*[@type='input'],
+                $useInputs := $currSector//*[@type='technology' and not(contains(@name, 'CCS')) and not(child::keyword/@primary-renewable)]/*[@type='input' and not(@name = 'oil-credits')],
+                $useInputsCCS := $currSector//*[@type='technology' and contains(@name, 'CCS')]/*[@type='input' and not(@name = 'oil-credits')],
                 $totalOutputSum := for $vintage in distinct-values($useInputs/demand-physical/@vintage | $useInputsCCS/demand-physical/@vintage)
                                           return element output {
                                                      attribute vintage { $vintage },
@@ -482,7 +500,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
 			 	 $region in $regionsG 	
 			 	 let $scenario_split := tokenize($scenario, ' '), 	    
 				 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type='region' and @name=$region],
-                 $currInputs := $currTree/*[@type='sector' and (@name='unconventional oil production' or exists(child::keyword/@final-energy))]//*[@type='input' and empty(index-of(('trn_pass_road', 'limestone', 'process heat cement', 'industrial energy use', 'industrial feedstocks', 'renewable', 'trn_freight_road', 'trn_pass_road_LDV', 'trn_pass_road_LDV_2W', 'trn_pass_road_LDV_4W', 'unconventional oil'), @name))],
+                 $currInputs := $currTree/*[@type='sector' and (@name='unconventional oil production' or exists(child::keyword/@final-energy))]//*[@type='input' and empty(index-of(('trn_pass_road', 'limestone', 'process heat cement', 'industrial energy use', 'industrial feedstocks', 'renewable', 'trn_freight_road', 'trn_pass_road_LDV', 'trn_pass_road_LDV_2W', 'trn_pass_road_LDV_4W', 'unconventional oil', 'oil-credits'), @name))],
                  $coefs := local:generate-sector-input-coefs(distinct-values($currInputs/@name), $currTree, (), false()),
                  $ccs_coefs := local:generate-ccs-coefs($currTree, $coefs)
 				 return 
@@ -503,6 +521,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                <rewrite from="biomass CCS" to="d biomass CCS"/>
                <rewrite from="regional biomassOil" to="d biomass"/>
                <rewrite from="regional corn for ethanol" to="d biomass"/>
+               <rewrite from="regional corn for ethanol CCS" to="d biomass CCS"/>
                <rewrite from="regional sugar for ethanol" to="d biomass"/>
                <rewrite from="regional sugarbeet for ethanol" to="d biomass"/>
                <rewrite from="nuclear-H2 renewable" to="e nuclear"/>

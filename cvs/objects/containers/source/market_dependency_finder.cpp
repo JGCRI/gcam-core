@@ -437,7 +437,7 @@ void MarketDependencyFinder::createOrdering() {
             (*it)->mIsSolved = isSolved;
             // we don't need to wory about grouping solved markets since they will just
             // get disconnected anyways
-            if( !isSolved ) {
+            if( !isSolved || !(*it)->mCanBreakCycle ) {
                 marketDepGrouping[ marketNumber ].insert( *it );
             }
         }
@@ -533,7 +533,11 @@ void MarketDependencyFinder::createOrdering() {
                     }
                 }
             }
-            continue;
+            // if this depenency can not have it's dependency broken then we can't skip adding
+            // it's dependents even if it is solved
+            if( (*it)->mCanBreakCycle ) {
+                continue;
+            }
         }
         
         if( (*it)->mDemandVertices.empty() ) {

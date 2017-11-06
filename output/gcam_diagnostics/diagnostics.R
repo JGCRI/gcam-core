@@ -109,7 +109,7 @@ p <- ggplot(fe.bld.d) + geom_bar(aes(x=year, y=value, fill=fuel), stat="identity
 p$save_args <- FIGURE_DIMS
 do_graph(split_neg_geom_bar(p), page_variables=c("region", "scenario"))
 #do_graph_yearSubset(p, page_variables=c("region", "scenario"))
-#do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
+do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
 
 printlog( "Final Energy Consumption: Industry" )
 fe.ind.d <- getQuery(tables, "Final energy by aggregate end-use sector and fuel")
@@ -127,7 +127,7 @@ p <- ggplot(fe.ind.d) + geom_bar(aes(x=year, y=value, fill=fuel), stat="identity
 p$save_args <- FIGURE_DIMS
 do_graph(split_neg_geom_bar(p), page_variables=c("region", "scenario"))
 #do_graph_yearSubset(p, page_variables=c("region", "scenario"))
-#do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
+do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
 
 printlog( "Final Energy Consumption: Transportation" )
 fe.trn.d <- getQuery(tables, "Final energy by aggregate end-use sector and fuel")
@@ -140,7 +140,7 @@ p <- ggplot(fe.trn.d) + geom_bar(aes(x=year, y=value, fill=fuel), stat="identity
 p$save_args <- FIGURE_DIMS
 do_graph(split_neg_geom_bar(p), page_variables=c("region", "scenario"))
 #do_graph_yearSubset(p, page_variables=c("region", "scenario"))
-#do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
+do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
 
 printlog( "Final Energy Consumption by Sector" )
 fe.d <- getQuery(tables, "Final energy by aggregate end-use sector and fuel")
@@ -156,7 +156,7 @@ p <- ggplot(fe.d) + geom_bar(aes(x=year, y=value, fill=sector), stat="identity",
 p$save_args <- FIGURE_DIMS
 do_graph(split_neg_geom_bar(p), page_variables=c("region", "scenario"))
 #do_graph_yearSubset(p, page_variables=c("region", "scenario"))
-#do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
+do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
 
 printlog("Primary Energy Consumption")
 pri.d <- getQuery(tables, "Primary energy with CCS (Direct Equivalent)")
@@ -170,7 +170,7 @@ p <- ggplot(pri.d) + geom_bar(aes(x=year, y=value, fill=fuel), stat="identity", 
 p$save_args <- FIGURE_DIMS
 do_graph(split_neg_geom_bar(p), page_variables=c("region", "scenario"))
 #do_graph_yearSubset(p, page_variables=c("region", "scenario"))
-#do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
+do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
 
 printlog("Electricity Production by Fuel: CCS Focus")
 elec.ccs.d <- getQuery(tables, "Electricity generation by aggregate technology")
@@ -186,7 +186,7 @@ p <- ggplot(elec.ccs.d) + geom_bar(aes(x=year, y=value, fill=technology), stat="
 p$save_args <- FIGURE_DIMS
 do_graph(split_neg_geom_bar(p), page_variables=c("region", "scenario"))
 #do_graph_yearSubset(p, page_variables=c("region", "scenario"))
-#do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
+do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
 
 printlog("Hydrogen Production by Fuel")
 h2.d <- getQuery(tables, "Hydrogen production by technology")
@@ -211,7 +211,7 @@ p <- ggplot(h2.d) + geom_bar(aes(x=year, y=value, fill=fuel), stat="identity", p
 p$save_args <- FIGURE_DIMS
 do_graph(split_neg_geom_bar(p), page_variables=c("region", "scenario"))
 #do_graph_yearSubset(p, page_variables=c("region", "scenario"))
-#do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
+do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
 
 printlog("Electricity Production by Fuel: Renewables Focus")
 elec.renew.d <- getQuery(tables, "Electricity generation by technology (inc solar roofs)")
@@ -242,7 +242,7 @@ p <- ggplot(elec.renew.d) + geom_bar(aes(x=year, y=value, fill=technology), stat
 p$save_args <- FIGURE_DIMS
 do_graph(split_neg_geom_bar(p), page_variables=c("region", "scenario"))
 #do_graph_yearSubset(p, page_variables=c("region", "scenario"))
-#do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
+do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
 
 printlog("Total Refined Liquid Fuel Production")
 refliq.d <- getQuery(tables, "Refined liquid fuel production by technology")
@@ -259,7 +259,10 @@ refliq.d[ grepl("gas", refliq.d$technology), "fuel" ] <- "gas"
 stopifnot(sum(is.na(refliq.d$fuel)) == 0)
 regoil.d <- getQuery(tables, "Regional oil production by fuel")
 regoil.d <- dcast( regoil.d, scenario + region + year ~ fuel)
+regoil.d[is.na(regoil.d$"crude oil"), "crude oil"] <- 0
+regoil.d[is.na(regoil.d$"unconventional oil"), "unconventional oil"] <- 0
 regoil.d$total <- regoil.d$"crude oil" + regoil.d$"unconventional oil"
+regoil.d[regoil.d$total == 0.0, "total"] <- 1.0 # avoid NA, zero production will get 0 fract anyway
 regoil.d$fract_crude <- regoil.d$"crude oil" / regoil.d$total
 regoil.d$fract_unconv <- regoil.d$"unconventional oil" / regoil.d$total
 refliq.d.temp <- subset(refliq.d, fuel == "oil")
@@ -283,7 +286,7 @@ p <- ggplot(refliq.d) + geom_bar(aes(x=year, y=value, fill=fuel), stat="identity
 p$save_args <- FIGURE_DIMS
 do_graph(split_neg_geom_bar(p), page_variables=c("region", "scenario"))
 #do_graph_yearSubset(p, page_variables=c("region", "scenario"))
-#do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
+do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
 
 printlog("CO2 emissions by sector")
 emiss.d <- getQuery(tables, "CO2 Emissions by enduse")
@@ -303,7 +306,7 @@ p <- ggplot(emiss.d) + geom_bar(aes(x=year, y=value, fill=sector), stat="identit
 p$save_args <- FIGURE_DIMS
 do_graph(split_neg_geom_bar(p), page_variables=c("region", "scenario"))
 #do_graph_yearSubset(p, page_variables=c("region", "scenario"))
-#do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
+do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
 
 printlog("Biomass Consumption by use")
 biouse.d <- getQuery(tables, "Biomass Consumption by use")
@@ -323,7 +326,7 @@ p <- ggplot(biouse.d) + geom_bar(aes(x=year, y=value, fill=sector), stat="identi
 p$save_args <- FIGURE_DIMS
 do_graph(p, page_variables=c("region", "scenario"))
 #do_graph_yearSubset(p, page_variables=c("region", "scenario"))
-#do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
+do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
 
 printlog("Land Use by Type")
 landuse.d <- getQuery(tables, "Aggregated Land Allocation")
@@ -342,7 +345,7 @@ p <- ggplot(landuse.d) + geom_bar(aes(x=year, y=value, fill=agg.land), stat="ide
 p$save_args <- FIGURE_DIMS
 do_graph(p, page_variables=c("region", "scenario"))
 #do_graph_yearSubset(p, page_variables=c("region", "scenario"))
-#do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
+do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
 
 printlog("Regional Fuel Prices")
 prices.d <- getQuery(tables, "Regional energy costs")
@@ -353,7 +356,7 @@ p <- ggplot(prices.d) + geom_line(aes(x=year, y=value, color=sector), size=1.5) 
 p$save_args <- FIGURE_DIMS
 do_graph(p, page_variables=c("region", "scenario"))
 #do_graph_yearSubset(p, page_variables=c("region", "scenario"))
-#do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
+do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
 
 printlog("GDP")
 gdp.d <- getQuery(tables, "GDP by region")

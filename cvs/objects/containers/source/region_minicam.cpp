@@ -528,6 +528,7 @@ bool RegionMiniCAM::isAllCalibrated( const int period, double calAccuracy, const
 */
 void RegionMiniCAM::initCalc( const int period )
 {
+    Region::initCalc( period );
     for( SectorIterator currSector = mSupplySector.begin(); currSector != mSupplySector.end(); ++currSector ){
         (*currSector)->initCalc( 0, mDemographic, period );
     }
