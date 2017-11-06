@@ -27,14 +27,14 @@ module_gcam.usa_L210.resources_USA <- function(command, ...) {
              "L115.rsrc_state_rooftopPV",
              "L1231.out_EJ_state_elec_F_tech",
              "L1321.out_Mt_state_cement_Yh",
-             "L210.RenewRsrc",
-             "L210.UnlimitRsrc",
-             "L210.UnlimitRsrcPrice",
-             "L210.SmthRenewRsrcTechChange",
-             "L210.SmthRenewRsrcCurves_wind",
-             "L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV",
-             "L210.GrdRenewRsrcCurves_geo",
-             "L210.GrdRenewRsrcMax_geo"))
+             FILE = "temp-data-inject/L210.RenewRsrc",
+             FILE = "temp-data-inject/L210.UnlimitRsrc",
+             FILE = "temp-data-inject/L210.UnlimitRsrcPrice",
+             FILE = "temp-data-inject/L210.SmthRenewRsrcTechChange",
+             FILE = "temp-data-inject/L210.SmthRenewRsrcCurves_wind",
+             FILE = "temp-data-inject/L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV",
+             FILE = "temp-data-inject/L210.GrdRenewRsrcCurves_geo",
+             FILE = "temp-data-inject/L210.GrdRenewRsrcMax_geo"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L210.DeleteRenewRsrc_USArsrc",
              "L210.DeleteUnlimitRsrc_USArsrc",
@@ -61,14 +61,14 @@ module_gcam.usa_L210.resources_USA <- function(command, ...) {
     L115.rsrc_state_rooftopPV <- get_data(all_data, "L115.rsrc_state_rooftopPV")
     L1231.out_EJ_state_elec_F_tech <- get_data(all_data, "L1231.out_EJ_state_elec_F_tech")
     L1321.out_Mt_state_cement_Yh <- get_data(all_data, "L1321.out_Mt_state_cement_Yh")
-    L210.RenewRsrc <- get_data(all_data, "L210.RenewRsrc")
-    L210.UnlimitRsrc <- get_data(all_data, "L210.UnlimitRsrc")
-    L210.UnlimitRsrcPrice <- get_data(all_data, "L210.UnlimitRsrcPrice")
-    L210.SmthRenewRsrcTechChange <- get_data(all_data, "L210.SmthRenewRsrcTechChange")
-    L210.SmthRenewRsrcCurves_wind <- get_data(all_data, "L210.SmthRenewRsrcCurves_wind")
-    L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV <- get_data(all_data, "L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV")
-    L210.GrdRenewRsrcCurves_geo <- get_data(all_data, "L210.GrdRenewRsrcCurves_geo")
-    L210.GrdRenewRsrcMax_geo <- get_data(all_data, "L210.GrdRenewRsrcMax_geo")
+    L210.RenewRsrc <- get_data(all_data, "temp-data-inject/L210.RenewRsrc")
+    L210.UnlimitRsrc <- get_data(all_data, "temp-data-inject/L210.UnlimitRsrc")
+    L210.UnlimitRsrcPrice <- get_data(all_data, "temp-data-inject/L210.UnlimitRsrcPrice")
+    L210.SmthRenewRsrcTechChange <- get_data(all_data, "temp-data-inject/L210.SmthRenewRsrcTechChange")
+    L210.SmthRenewRsrcCurves_wind <- get_data(all_data, "temp-data-inject/L210.SmthRenewRsrcCurves_wind")
+    L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV <- get_data(all_data, "temp-data-inject/L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV")
+    L210.GrdRenewRsrcCurves_geo <- get_data(all_data, "temp-data-inject/L210.GrdRenewRsrcCurves_geo")
+    L210.GrdRenewRsrcMax_geo <- get_data(all_data, "temp-data-inject/L210.GrdRenewRsrcMax_geo")
 
     # ===================================================
 
