@@ -66,7 +66,7 @@ module_gcam.usa_L261.carbon_storage_USA <- function(command, ...) {
 
     # L261.DeleteDepRsrc_USAC: delete onshore carbon storage in the USA
     L261.DepRsrc %>%
-      mutate(region = region) %>%
+      mutate(region = region) %>% # strip off attributes like title, etc.
       filter(region == "USA") %>%
       select(region, depresource) ->
       L261.DeleteDepRsrc_USAC
@@ -74,6 +74,7 @@ module_gcam.usa_L261.carbon_storage_USA <- function(command, ...) {
     # L261.DeleteSubsector_USAC: delete onshore carbon storage subsector of carbon storage sector in the USA
     # NOTE: leaving the offshore here so that the USA hydrogen sector has a carbon storage market
     L261.SubsectorShrwtFllt_C %>%
+      mutate(region = region) %>% # strip off attributes like title, etc.
       filter(region == "USA") %>%
       semi_join(L261.DepRsrc, by = c("subsector" = "depresource")) %>%
       select(one_of(c(LEVEL2_DATA_NAMES[["Subsector"]]))) ->
@@ -96,7 +97,7 @@ module_gcam.usa_L261.carbon_storage_USA <- function(command, ...) {
              subresource = L261.DepRsrc_FERC$depresource[1],
              available = round(MtC, digits = gcamuse.DIGITS_DEPRESOURCE),
              extractioncost = round(Cost_1990USDtC, digits = gcamusa.DIGITS_COST)) %>%
-      select(region, depresource, subresource, available, extractioncost) ->
+      select(region, depresource, subresource, grade, available, extractioncost) ->
       L261.DepRsrcCurves_FERC
 
     # L261.Supplysector_C_USA: supplysector info in the states
@@ -105,7 +106,7 @@ module_gcam.usa_L261.carbon_storage_USA <- function(command, ...) {
       write_to_all_states(c(LEVEL2_DATA_NAMES[["Supplysector"]])) ->
       L261.Supplysector_C_USA
 
-    # L261.SubsectorLogit_C: subsector logit info in the states
+    # L261.SubsectorLogit_C_USA: subsector logit info in the states
     L261.SubsectorLogit_C %>%
       filter(region == "USA") %>%
       write_to_all_states(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]])) %>%
@@ -200,7 +201,7 @@ module_gcam.usa_L261.carbon_storage_USA <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L261.SubsectorLogit_C_USA") %>%
       add_precursors("L161.Cstorage_FERC",
-                     "states_subregions",
+                     "gcam-usa/states_subregions",
                      "L261.SubsectorLogit_C") ->
       L261.SubsectorLogit_C_USA
 
@@ -211,7 +212,7 @@ module_gcam.usa_L261.carbon_storage_USA <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L261.SubsectorShrwtFllt_C_USA") %>%
       add_precursors("L161.Cstorage_FERC",
-                     "states_subregions",
+                     "gcam-usa/states_subregions",
                      "L261.SubsectorShrwtFllt_C") ->
       L261.SubsectorShrwtFllt_C_USA
 
@@ -222,7 +223,7 @@ module_gcam.usa_L261.carbon_storage_USA <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L261.StubTech_C_USA") %>%
       add_precursors("L161.Cstorage_FERC",
-                     "states_subregions",
+                     "gcam-usa/states_subregions",
                      "L261.StubTech_C") ->
       L261.StubTech_C_USA
 
