@@ -138,6 +138,12 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
     L100.Pop_thous_state <- get_data(all_data, "L100.Pop_thous_state")
     L100.pcGDP_thous90usd_state <- get_data(all_data, "L100.pcGDP_thous90usd_state")
     # ===================================================
+    # Note: Building energy demands and floorspace are calculated endogenously - these are undergoing review
+    # per-capita demand = (satiation.level - satiation.adder) * (1 - exp( -log2 / satiation.impedance * Demand.Driver)) + satiation.adder)
+    # satiation.level: maximum per-capita demand that can be achieved
+    # satiation.adder: value that allow the starting position of any region to be set along the demand function
+    # satiation.impedance: shape parameter
+
     # Need to delete the buildings sector in the USA region (gcam.consumers and supplysectors)
     L244.DeleteConsumer_USAbld <- tibble(region = "USA", gcam.consumer = A44.gcam_consumer_en$gcam.consumer)
     L244.DeleteSupplysector_USAbld <- tibble(region = "USA", supplysector = A44.sector_en$supplysector)
@@ -538,8 +544,9 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
     L244.ThermalServiceSatiation_gcamusa <- L244.ThermalBaseService_gcamusa %>%
       filter(year == max(BASE_YEARS))
 
-    # When adding floorspace, we should take floorspace from max(BASE_YEARS) as well
-    # Instead we take the first value, which ends up being floorspace from min(BASE_YEARS)
+    # Since we filter L244.ThermalBaseService_gcamusa  to max(BASE_YEARS), we should take floorspace from max(BASE_YEARS) as well
+    # Instead we take the first floorspace value, which ends up being the floorspace from min(BASE_YEARS)
+    # By adding in "year" to join by, we ensure that the same year is used for floorspace and base service
     if(OLD_DATA_SYSTEM_BEHAVIOR){
       L244.ThermalServiceSatiation_gcamusa <- L244.ThermalServiceSatiation_gcamusa %>%
         # Add floorspace
