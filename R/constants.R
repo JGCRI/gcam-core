@@ -290,6 +290,12 @@ energy.DIGITS_MAX_SUB_RESOURCE <- 5
 energy.DIGITS_MID_PRICE <- 3
 energy.DIGITS_CURVE_EXPONENT <- 3
 energy.DIGITS_GDP_SUPPLY_ELAST <- 3
+energy.DIGITS_OM <- 2
+energy.DIGITS_CAPITAL <- 0
+
+#base cost year for wind, used in capacity factor calculations
+energy.WIND.BASE.COST.YEAR <- 2005
+energy.DIGITS_INCELAS_IND <- 3
 
 energy.SATIATION_YEAR <- 2010
 energy.GDP_MID_SATIATION <- 10.5
@@ -297,6 +303,7 @@ energy.FLOOR_TO_SURFACE_RATIO <- 5.5
 
 energy.INTERNAL_GAINS_SCALAR_USA_H <- -930
 energy.INTERNAL_GAINS_SCALAR_USA_C <- 350
+
 
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
@@ -480,6 +487,12 @@ gcamusa.GRID_REGION_LOGIT_TYPE <- "relative-cost-logit"
 gcamusa.ELECT_TD_SECTORS <- c("elect_td_bld", "elect_td_ind", "elect_td_trn")
 gcamusa.USE_REGIONAL_ELEC_MARKETS <- TRUE
 
+gcamusa.FERT_LOGIT_EXP  <- -3 # define default logit expoent used in the fertlizer subsector
+gcamusa.FERT_LOGIT_TYPE <- NA
+
+# Define GCAM-USA category name of fertilizer
+gcamusa.FERT_NAME <- "N fertilizer"
+
 # fuels whose markets will be modeled at the level of the FERC regions, with prices calibrated
 gcamusa.REGIONAL_FUEL_MARKETS <- c("regional coal", "delivered coal", "wholesale gas", "delivered gas",
                                    "refined liquids industrial", "refined liquids enduse")
@@ -492,13 +505,17 @@ gcamusa.STATE_UNLIMITED_RESOURCES <- c("global solar resource", "limestone")
 
 gcamusa.WIND_BASE_COST_YEAR <- 2005
 
+# Reduce rounding in detailed USA transport for compatability with model
+gcamusa.DIGITS_TRNUSA_DEFAULT <- 1
+
+# NUMBERS OF DIGITS FOR MODEL INPUT DATA
+gcamusa.DIGITS_CALOUTPUT <- 7 # production
 gcamusa.DEFAULT_SHAREWEIGHT <- 1
 gcamusa.DEFAULT_LOGITEXP <- -3
 gcamusa.DEFAULT_COEFFICIENT <- 1
 gcamusa.DEFAULT_MARKET <- "USA"
 gcamusa.GAS_ADJ_THRESH <- 5
 gcamusa.DIGITS_COST <- 4
-
 
 # Uncomment these lines to run under 'timeshift' conditions
 # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
