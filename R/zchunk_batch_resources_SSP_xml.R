@@ -9,7 +9,7 @@
 #' the generated outputs: \code{resources_SSP1.xml}, \code{resources_SSP2.xml}, \code{resources_SSP3.xml}, \code{resources_SSP4.xml}, \code{resources_SSP5.xml}.
 module_energy_batch_resources_SSP_xml <- function(command, ...) {
 
-  SSP_nums <- seq(1,5)
+  SSP_nums <- 1:5
 
   if(command == driver.DECLARE_INPUTS) {
     return(c(paste0("L210.DepRsrcTechChange_SSP", SSP_nums),

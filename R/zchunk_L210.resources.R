@@ -116,7 +116,7 @@ module_energy_L210.resources <- function(command, ...) {
     L210.rsrc_info <- A10.rsrc_info %>%
       # Repeat and add region to resource assumptions table
       repeat_add_columns(select(GCAM_region_names, region)) %>%
-      # Remove traditional biomass from regions where it does not apply
+      # Remove traditional biomass from regions where it is not currently used
       filter(!(region %in% A_regions$region[A_regions$tradbio_region == 0] & resource == "traditional biomass")) %>%
       # Reset regional markets to the names of the specific regions
       mutate(market = if_else(market == "regional", region, market))
