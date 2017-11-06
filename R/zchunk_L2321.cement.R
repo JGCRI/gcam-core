@@ -255,7 +255,7 @@ module_energy_L2321.cement <- function(command, ...) {
     # Calibration and region-specific data
     # L2321.StubTechProd_cement: calibrated cement production
     calibrated_techs %>%
-      filter(calibration == "output") %>% #O nly take the tech IDs where the calibration is identified as output
+      filter(calibration == "output") %>% # Only take the tech IDs where the calibration is identified as output
       select(sector, supplysector, subsector, technology) %>%
       distinct ->
       calibrated_techs_export # temporary tibble

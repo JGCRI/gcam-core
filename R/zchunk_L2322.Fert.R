@@ -156,7 +156,7 @@ module_energy_L2322.Fert <- function(command, ...) {
       left_join(L1322.Fert_NEcost_75USDkgN_F, by = c('technology' = 'fuel') ) %>% # expecting NAs in the joined tibble
       rename(input.cost = NEcost_75USDkgN) %>%
       mutate(input.cost = round(input.cost, energy.DIGITS_COST)) %>%
-      na.omit -> #Export technologies have no cost assigned. Just drop the object
+      na.omit -> # Export technologies have no cost assigned. Just drop the object
       L2322.GlobalTechCost_Fert
 
     # Carbon capture rates from technologies with CCS

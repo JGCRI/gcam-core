@@ -18,7 +18,7 @@ the generated outputs: \code{L2042.AgResBio_For}, \code{L2042.AgResBioCurve_For}
 original data system was \code{L2042.resbio_input_irr_mgmt.R} (aglu level2).
 }
 \description{
-This chunk produces a table of global Mill Residue Biomass Paramters by year, a table of regional Forest Residue Biomass Paramters by year, and a table of
+Produce a table of global Mill Residue Biomass Paramters by year, a table of regional Forest Residue Biomass Paramters by year, and a table of
 Agricultural Residue Biomass Paramters by irrigation-management level-year. This chunk also produces tables by region and year of residue biomass supply
 curves for Mill, Forest, and Agriculture.
 }

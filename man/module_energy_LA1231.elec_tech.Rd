@@ -18,7 +18,7 @@ the generated outputs: \code{L1231.in_EJ_R_elec_F_tech_Yh}, \code{L1231.out_EJ_R
 original data system was \code{LA1231.elec_tech.R} (energy level1).
 }
 \description{
-This chunk obtaines inputs, outputs and efficiencies in the electricity sector for all technologies by region, sector, and year.
+Obtain inputs, outputs and efficiencies in the electricity sector for all technologies by region, sector, and year.
 }
 \details{
 This chunk obtaines inputs, outputs and efficiencies in the electricity sector for all technologies by region, sector, and year.
