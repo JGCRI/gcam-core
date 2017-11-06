@@ -1,6 +1,6 @@
 #' module_gcam.usa_LA1321.Cement
 #'
-#' This chunk allocates across the states national cement production, input-output cofficients, and energy inputs to cement production
+#' Allocate across the states national cement production, input-output cofficients, and energy inputs to cement production
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command

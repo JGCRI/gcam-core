@@ -1,6 +1,6 @@
 #' module_gcam.usa_LA101.EIA_SEDS
 #'
-#' This chunk produces two ouput tables from the EIA state energy database:
+#' Produce two ouput tables from the EIA state energy database:
 #' \itemize{
 #'  \item{L101.inEIA_EJ_state_S_F: Energy data by GCAM sector and fuel, state, and year; energy units in EJ, years from 1971-2010, includes only rows that have a defined sector and fuel}
 #'  \item{L101.EIA_use_all_Bbtu: Energy data by EIA sector and fuel code, GCAM sector and fuel, MSN, state, and year; energy units in Billion BTU, years from 1960-2011, includes all original data}

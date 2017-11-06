@@ -18,7 +18,7 @@ the generated outputs: \code{L1322.Fert_Prod_MtN_R_F_Y}, \code{L1322.IO_R_Fert_F
 original data system was \code{LB1322.Fert.R} (energy level1).
 }
 \description{
-This chunk computes fertilizer production and energy inputs by technology.
+Compute fertilizer production and energy inputs by technology.
 }
 \details{
 Fertilizer production and energy information was calculated using country-level fuel share and energy intensity data

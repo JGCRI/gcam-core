@@ -87,7 +87,7 @@ module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
     format_F_Gas <- function(x) {
       x %>%
         left_join_error_no_match(EDGAR_sector %>% select(-IPCC_description), by = "IPCC") %>% # Add Edgar agg_sector
-        rename(EDGAR_agg_sector = agg_sector) %>% #rename agg_sector to EDGAR_agg_sector
+        rename(EDGAR_agg_sector = agg_sector) %>% # rename agg_sector to EDGAR_agg_sector
         mutate(iso = tolower(ISO_A3), ISO_A3 = NULL) %>% # convert to Edgar ISO
         change_iso_code('rou', 'rom') %>% # Convert Romania iso code to pre-2002 value
         left_join_error_no_match(iso_GCAM_regID, by = "iso") %>% # Map iso to GCAM region
@@ -189,7 +189,7 @@ module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
       group_by(GCAM_region_ID, supplysector, subsector, stub.technology, Non.CO2, year) %>%
       summarise(adj_emissions = sum(adj_emissions, na.rm = TRUE)) %>%
       ungroup() %>%
-      replace_na(list(adj_emissions = 0)) %>%  #replace NAs with zero. Some sectors have zero emissions.
+      replace_na(list(adj_emissions = 0)) %>%  # replace NAs with zero. Some sectors have zero emissions.
       rename(value = adj_emissions)
 
     # Compute final cooling HFC emissions factors

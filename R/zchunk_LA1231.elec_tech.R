@@ -1,6 +1,6 @@
 #' module_energy_LA1231.elec_tech
 #'
-#' This chunk obtaines inputs, outputs and efficiencies in the electricity sector for all technologies by region, sector, and year.
+#' Obtain inputs, outputs and efficiencies in the electricity sector for all technologies by region, sector, and year.
 #'
 #'
 #' @param command API command to execute
@@ -105,7 +105,7 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
     ELEC_ADJ <- 0.03
 
     L1231.eff_R_elec_gas_Yh_gathered %>%
-      full_join(select(filter(L1231.eff_R_elec_gas_tech, technology == GAS_TECH1), year,efficiency_tech, supplysector, subsector, technology),by="year") %>%
+      full_join(select(filter(L1231.eff_R_elec_gas_tech, technology == GAS_TECH1), year,efficiency_tech, supplysector, subsector, technology), by = "year") %>%
       select(-supplysector, -subsector, -technology) %>%
       left_join(select(filter(L1231.eff_R_elec_gas_tech, technology == GAS_TECH2), year, efficiency_tech, supplysector, subsector, technology), by = "year") %>%
       select(-supplysector, -subsector, -technology) %>%
@@ -172,8 +172,8 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
       bind_rows(L1231.in_EJ_R_elec_gas_tech_Yh) %>%
       select(GCAM_region_ID, sector, fuel, technology, year, value) -> L1231.in_EJ_R_elec_F_tech_Yh
 
-    #Calculate output as input * efficiency
-    #This tibble only includes technologies with modeled efficiencies
+    # Calculate output as input * efficiency
+    # This tibble only includes technologies with modeled efficiencies
     L1231.eff_R_elec_F_tech_Yh %>%
       left_join(L1231.in_EJ_R_elec_F_tech_Yh, by = c("GCAM_region_ID", "sector", "fuel", "technology", "year")) %>%
       mutate(output = efficiency*value) %>%

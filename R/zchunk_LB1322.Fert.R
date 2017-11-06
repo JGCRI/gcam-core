@@ -1,6 +1,6 @@
 #' module_energy_LB1322.Fert
 #'
-#' This chunk computes fertilizer production and energy inputs by technology.
+#' Compute fertilizer production and energy inputs by technology.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
