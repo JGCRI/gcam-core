@@ -14,11 +14,11 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_energy_LA1321.cement_DISABLED <- function(command, ...) {
+module_energy_LA1321.cement <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "emissions/A_PrimaryFuelCCoef",
-             FILE = "energy/cement_regions",
+             FILE = "energy/mappings/cement_regions",
              FILE = "energy/Worrell_1994_cement",
              FILE = "energy/IEA_cement_elec_kwht",
              FILE = "energy/IEA_cement_TPE_GJt",
@@ -40,7 +40,7 @@ module_energy_LA1321.cement_DISABLED <- function(command, ...) {
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     A_PrimaryFuelCCoef <- get_data(all_data, "emissions/A_PrimaryFuelCCoef")
-    cement_regions <- get_data(all_data, "energy/cement_regions")
+    cement_regions <- get_data(all_data, "energy/mappings/cement_regions")
     Worrell_1994_cement <- get_data(all_data, "energy/Worrell_1994_cement")
     IEA_cement_elec_kwht <- get_data(all_data, "energy/IEA_cement_elec_kwht")
     IEA_cement_TPE_GJt <- get_data(all_data, "energy/IEA_cement_TPE_GJt")
@@ -50,21 +50,96 @@ module_energy_LA1321.cement_DISABLED <- function(command, ...) {
     L123.in_EJ_R_elec_F_Yh <- get_data(all_data, "L123.in_EJ_R_elec_F_Yh")
     L123.out_EJ_R_elec_F_Yh <- get_data(all_data, "L123.out_EJ_R_elec_F_Yh")
     L132.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L132.in_EJ_R_indenergy_F_Yh")
-
+browser()
     # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
+
+    limestone_Ccoef <- A_PrimaryFuelCCoef$PrimaryFuelCO2Coef[A_PrimaryFuelCCoef$PrimaryFuelCO2Coef.name == "limestone"]
+
+    # If the CO2 emissions inventories do not go to the latest historical time period, copy the last available year
+    additional_years <- HISTORICAL_YEARS[!HISTORICAL_YEARS %in% CO2_historical_years]
+    final_CO2_year <- CO2_historical_years[length(CO2_historical_years)]
+
+
+    # Downscale Worrell dataset to country level using CDIAC emissions inventory
+    # Part 1: Derivation of cement production and limestone consumption by region and historical year
+    # Downscale Worrell's process CO2 emissions and cement production in 1994 to all countries
+    cement_regions %>%
+      left_join(L100.CDIAC_CO2_ctry_hist, by = "iso") %>%
+      filter(year == 1994) %>%
+      select(iso, Worrell_region, year, cement) %>%
+      na.omit() %>%
+      rename(process_emissions_ktC = cement) ->
+      L1321.Cement_Worrell_ctry
+
+    L1321.Cement_Worrell_ctry %>%
+      group_by(Worrell_region) %>%
+      summarise(reg_process_emissions = sum(process_emissions_ktC)) %>%
+      ungroup() ->
+      L1321.Cement_Worrell_reg
+
+    # Select country-level emissions to prepare for scaling
+    Worrell_1994_cement %>%
+      select(Country, cement_prod_Mt, process_emissions_MtC) ->
+      Worrell_1994_cement_slim
+
+    # Compute country-level shares of regional emissions and multiply the region-level process emissions
+    # and cement production by these shares to get the country-level estimates
+    L1321.Cement_Worrell_ctry %>%
+      left_join(L1321.Cement_Worrell_reg, by = "Worrell_region") %>%
+      mutate(share = process_emissions_ktC / reg_process_emissions) %>%
+      left_join_error_no_match(Worrell_1994_cement_slim, by = c("Worrell_region" = "Country")) %>%
+      mutate(cement_prod_Mt = cement_prod_Mt * share, process_emissions_MtC = process_emissions_MtC * share) %>%
+
+      # Now match and aggregate Worrell's process CO2 emissions and cement production in 1994 by GCAM region and compute the emissions ratio
+      left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%
+      select(-country_name, -region_GCAM3) %>%
+      group_by(GCAM_region_ID) %>%
+      summarise(cement_prod_Mt = sum(cement_prod_Mt), process_emissions_MtC = sum(process_emissions_MtC)) %>%
+      mutate(prod_emiss_ratio = cement_prod_Mt / process_emissions_MtC) ->
+      L1321.Cement_Worrell_R
+
+    # Calculate cement production over time, assuming that this ratio is constant over time for each region
+
+
     #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
+    L102.CO2_Mt_R_F_Yh %>%
+      filter(fuel == "limestone") ->
+      L1321.CO2_Mt_R_F_Yh_base
+    # NOTE: this is slightly less robust, it works for a single missing historical year as opposed to a set of them
+    L1321.CO2_Mt_R_F_Yh_base %>%
+      filter(year == final_CO2_year) %>%
+      mutate(year = additional_years)  %>%
+      bind_rows(L1321.CO2_Mt_R_F_Yh_base) ->
+      L1321.CO2_Mt_R_F_Yh
+
+    # Calculate cement production over time by multiplying production emissions ratio by emissions
+    # assuming that this ratio is constant over time for each region
+    L1321.Cement_Worrell_R %>%
+      mutate(sector = "cement") %>%
+      left_join(L1321.CO2_Mt_R_F_Yh, by = "GCAM_region_ID") %>%
+      mutate(value = prod_emiss_ratio * value) ->
+      L1321.out_Mt_R_cement_Yh
+
+    # Use the assumed limestone fuel carbon content (same in all regions) to calculate the limestone consumption
+    # and limestone IO coefficients in each region
+    L1321.out_Mt_R_cement_Yh %>%
+      select(GCAM_region_ID, sector, fuel) %>%
+      left_join_error_no_match()->
+      L1321.in_Cement_Mt_R_limestone_Yh
+
+# ===================================================OLD
+# 2. Perform computations
+
+    #Use the assumed limestone fuel carbon content (same in all regions) to calculate the limestone consumption and limestone IO coefficients in each region
+    printlog( "Using assumed limestone carbon content to calculate limestone consumption and IO coefficients" )
+    L1321.in_Cement_Mt_R_limestone_Yh <- data.frame( L1321.out_Mt_R_cement_Yh[ c( "GCAM_region_ID", "sector" ) ], fuel = "limestone" )
+    L1321.in_Cement_Mt_R_limestone_Yh[ X_historical_years ] <- L1321.CO2_Mt_R_F_Yh[
+      match( vecpaste( L1321.in_Cement_Mt_R_limestone_Yh[ R_F ] ), vecpaste( L1321.CO2_Mt_R_F_Yh[ R_F ] ) ), X_historical_years ] /
+      limestone_Ccoef
+
+    L1321.IO_Cement_R_limestone_Yh <- data.frame( L1321.in_Cement_Mt_R_limestone_Yh[ R_S_F ],
+                                                  L1321.in_Cement_Mt_R_limestone_Yh[ X_historical_years ] / L1321.out_Mt_R_cement_Yh[ X_historical_years ] )
+
     #
     # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
     # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
