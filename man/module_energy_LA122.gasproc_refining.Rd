@@ -18,7 +18,7 @@ the generated outputs: \code{L122.out_EJ_R_gasproc_F_Yh}, \code{L122.in_EJ_R_gas
 original data system was \code{LA122.gasproc_refining.R} (energy level1).
 }
 \description{
-This chunk creates gasproc, oil refining and crops inputs, outputs and IO "input-output" coefficients for refining.
+Create gasproc, oil refining and crops inputs, outputs and IO "input-output" coefficients for refining.
 }
 \details{
 This chunk creates gasproc, oil refining and crops inputs, outputs and IO "input-output" coefficients for refining.

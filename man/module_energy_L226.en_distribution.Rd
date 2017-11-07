@@ -18,7 +18,7 @@ the generated outputs: \code{L226.SectorLogitTables[[ curr_table ]]$data}, \code
 original data system was \code{L226.en_distribution.R} (energy level2).
 }
 \description{
-This chunk generates the level 2 data tables for the energy distribution sector,
+Generate the level 2 data tables for the energy distribution sector,
 including capital costs, shareweights, logits, and interpolations as well as energy use coefficients for electricity and gas pipeline
 }
 \details{

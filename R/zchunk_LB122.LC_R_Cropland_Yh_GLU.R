@@ -1,6 +1,6 @@
 #' module_aglu_LB122.LC_R_Cropland_Yh_GLU
 #'
-#' This chunk integrates disparate data sources for land cover and harvested area from FAO, Monfreda, and Hyde in
+#' Integrate disparate data sources for land cover and harvested area from FAO, Monfreda, and Hyde in
 #' order to calculate cropland cover by specific crop type, other arable land, harvested:cropped ratio, economic
 #' yield (i.e., production per unit cropland area per year, rather than production per unit area per harvest), and
 #' "extra" cropland that needs to be taken from other land use types. All data tables are written out

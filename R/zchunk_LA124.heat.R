@@ -1,6 +1,6 @@
 #' module_energy_LA124.heat
 #'
-#' This chunk processes historical heat data into input, output from district heat, output from CHP, CHP ratio
+#' Process historical heat data into input, output from district heat, output from CHP, CHP ratio
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command

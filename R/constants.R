@@ -286,7 +286,7 @@ energy.DIGITS_CAPACITY_FACTOR <- 2
 energy.DIGITS_OM <- 2
 energy.DIGITS_CAPITAL <- 0
 
-#base cost year for wind, used in capacity factor calculations
+# Base cost year for wind, used in capacity factor calculations
 energy.WIND.BASE.COST.YEAR <- 2005
 energy.DIGITS_INCELAS_IND <- 3
 
@@ -498,6 +498,9 @@ gcamusa.STATE_UNLIMITED_RESOURCES <- c("global solar resource", "limestone")
 
 gcamusa.WIND_BASE_COST_YEAR <- 2005
 
+# Reduce rounding in detailed USA transport for compatability with model
+gcamusa.DIGITS_TRNUSA_DEFAULT <- 1
+
 # NUMBERS OF DIGITS FOR MODEL INPUT DATA
 gcamusa.DIGITS_CALOUTPUT <- 7 # production
 gcamusa.DEFAULT_SHAREWEIGHT <- 1
@@ -507,7 +510,6 @@ gcamusa.DEFAULT_MARKET <- "USA"
 gcamusa.GAS_ADJ_THRESH <- 5
 gcamusa.DIGITS_COST <- 4
 gcamuse.DIGITS_DEPRESOURCE <- 1
-
 
 # Uncomment these lines to run under 'timeshift' conditions
 # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010

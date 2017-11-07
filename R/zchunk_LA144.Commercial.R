@@ -50,7 +50,7 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
       distinct()
     # Because there was a mistake in previous states_subregions file, there are some values that will require
     # a data frame identical to the mistaken one
-    if (OLD_DATA_SYSTEM_BEHAVIOR) {
+    if(OLD_DATA_SYSTEM_BEHAVIOR) {
       states_subregions_region4calc <- states_subregions %>%
         mutate(subregion4 = if_else(state == "WV", "Midwest", subregion4))
     } else {
@@ -261,7 +261,7 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
       lapply(function(df) {
         # We are only keeping certain energy-related columns
         cols_to_keep <- which(names(df) %in% CBECS_variables$variable)
-        if (length(cols_to_keep) > 0) {
+        if(length(cols_to_keep) > 0) {
           df %>%
             select(cols_to_keep, ADJWT, subregion9, year) %>%
             # All cols_to_keep have BTU in name
