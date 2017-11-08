@@ -140,6 +140,7 @@ module_energy_L226.en_distribution <- function(command, ...) {
     # Generates L226.GlobalTechEff_en: Energy inputs and efficiencies of global technologies for energy distribution by interpolating values for all model years
     A26.globaltech_eff %>%
       gather(year, efficiency, -supplysector, -subsector, -technology, -minicam.energy.input) %>%
+      mutate(year = as.integer(year)) %>%
       complete(nesting(supplysector, subsector, technology, minicam.energy.input), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
       arrange(supplysector, year) %>%
       group_by(supplysector) %>%
@@ -154,6 +155,7 @@ module_energy_L226.en_distribution <- function(command, ...) {
     # Generates L226.GlobalTechCost_en by interpolating values of cost adders for final energy delivery for all model years
     A26.globaltech_cost %>%
       gather(year, input.cost, -supplysector, -subsector, -technology, -minicam.non.energy.input) %>%
+      mutate(year = as.integer(year)) %>%
       complete(nesting(supplysector, subsector, technology, minicam.non.energy.input), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
       arrange(supplysector, year) %>%
       group_by(supplysector) %>%
@@ -168,6 +170,7 @@ module_energy_L226.en_distribution <- function(command, ...) {
     # Generates L226.GlobalTechShrwt_en: Shareweights of global technologies for energy distribution by interpolating values for all model years
     A26.globaltech_shrwt %>%
       gather(year, share.weight, -supplysector, -subsector, -technology) %>%
+      mutate(year = as.integer(year)) %>%
       complete(nesting(supplysector, subsector, technology), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
       arrange(supplysector, year) %>%
       group_by(supplysector) %>%
