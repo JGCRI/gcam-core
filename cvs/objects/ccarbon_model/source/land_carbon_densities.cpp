@@ -56,11 +56,11 @@ extern Scenario* scenario;
 */
 LandCarbonDensities::LandCarbonDensities():
 mAboveGroundCarbon( scenario->getModeltime()->getStartYear(), CarbonModelUtils::getEndYear(), 0.0 ),
-mBelowGroundCarbon( scenario->getModeltime()->getStartYear(), CarbonModelUtils::getEndYear(), 0.0 ),
-mAvgAboveGroundCarbon( 0.0 ),
-mAvgBelowGroundCarbon( 0.0 ),
-mMatureAge( 1 )
+mBelowGroundCarbon( scenario->getModeltime()->getStartYear(), CarbonModelUtils::getEndYear(), 0.0 )
 {
+    mAvgAboveGroundCarbon = 0.0;
+    mAvgBelowGroundCarbon = 0.0;
+    mMatureAge = 1;
 }
 
 //! Default destructor
@@ -117,7 +117,6 @@ void LandCarbonDensities::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aT
     const int year = modeltime->getper_to_yr( aPeriod );
     XMLWriteElement( mAvgAboveGroundCarbon, "above-ground-carbon-density", aOut, aTabs );
     XMLWriteElement( mAvgBelowGroundCarbon, "below-ground-carbon-density", aOut, aTabs );
-    XMLWriteElement( mLandUse[ aPeriod ], "land-use", aOut, aTabs );
     XMLWriteElement( mTotalEmissions[ year ], "total-emissions", aOut, aTabs );
     XMLWriteElement( mMatureAge, "mature-age", aOut, aTabs );
     XMLWriteClosingTag( getXMLName(), aOut, aTabs );

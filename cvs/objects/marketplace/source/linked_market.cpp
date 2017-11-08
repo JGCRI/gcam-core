@@ -47,12 +47,12 @@
 using namespace std;
 
 ///! Constructor
-LinkedMarket::LinkedMarket( Market* aLinkedMarket, const string& aGoodName, const string& aRegionName, const int aPeriod ):
-Market( aGoodName, aRegionName, aPeriod ),
-mLinkedMarket( aLinkedMarket ),
-mPriceMult( 1.0 ),
-mQuantityMult( 1.0 )
+LinkedMarket::LinkedMarket( Market* aLinkedMarket, const MarketContainer* aContainer ):
+Market( aContainer ),
+mLinkedMarket( aLinkedMarket )
 {
+    mPriceMult = 1.0;
+    mQuantityMult = 1.0;
 }
 
 void LinkedMarket::toDebugXMLDerived( ostream& out, Tabs* tabs ) const {

@@ -44,7 +44,7 @@ L114.OMFixedCost <- A23.globaltech_OMfixed[[ X_wind_base_cost_year ]][ A23.globa
 L114.OMVarCost <- A23.globaltech_OMvar[[ X_wind_base_cost_year ]][ A23.globaltech_OMvar$technology == "wind" ]
 
 #Convert the 2007$/kwh to 1975$/GJ
-us_state_wind$base_cost_75USDGJ <- us_state_wind$base_cost * conv_2007_1975_USD / conv_kwh_GJ
+us_state_wind$base_cost_75USDGJ <- us_state_wind$base_cost_2007USDkwh * conv_2007_1975_USD / conv_kwh_GJ
 
 #Calculate the capacity factor for the base wind turbine in each state
 us_state_wind$capacity_factor <- ( L114.CapCost * L114.FixedChargeRate + L114.OMFixedCost ) /

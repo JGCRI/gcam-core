@@ -59,9 +59,9 @@ extern Scenario* scenario;
 ALandAllocatorItem::ALandAllocatorItem( const ALandAllocatorItem* aParent,
                                         const LandAllocatorItemType aType )
     : mParent( aParent ), 
-      mLandAllocation( 0.0 ),
-      mShare( -1.0 ), // this is so initialization can be checked.
-      mProfitRate( 0.0 ),
+      mLandAllocation( Value( 0.0 ) ),
+      mShare( Value( -1.0 ) ), // this is so initialization can be checked.
+      mProfitRate( Value( 0.0 ) ),
       mIsGhostShareRelativeToDominantCrop( false ),
       mType( aType ),
       mIsLandExpansionCost( false )

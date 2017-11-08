@@ -61,7 +61,7 @@ extern Scenario* scenario;
 //! Default constructor.
 ReadInControl::ReadInControl():
 AEmissionsControl(),
-mFutureEmissionsFactors( scenario->getModeltime()->getmaxper(), 0 ),
+mFutureEmissionsFactors( 0 ),
 mTechBuildPeriod( scenario->getModeltime()->getFinalCalibrationPeriod() )
 {
 }
@@ -144,11 +144,12 @@ void ReadInControl::completeInit( const string& aRegionName, const string& aSect
 }
 
 void ReadInControl::initCalc( const string& aRegionName,
-                           const IInfo* aLocalInfo,
-                           const int aPeriod )
+                              const IInfo* aTechInfo,
+                              const NonCO2Emissions* aParentGHG,
+                              const int aPeriod )
 {
 
-    if ( aLocalInfo->getBoolean( "new-vintage-tech", true ) ) {
+    if ( aTechInfo->getBoolean( "new-vintage-tech", true ) ) {
         mTechBuildPeriod = aPeriod;
     }
 }

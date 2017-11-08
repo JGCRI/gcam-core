@@ -133,7 +133,8 @@ public:
                                      const int aPeriod );
     
     virtual void calcLUCEmissions( const std::string& aRegionName,
-                                   const int aYear, const int aEndYear );
+                                   const int aYear, const int aEndYear,
+                                   const bool aStoreFullEmiss );
     
     virtual double getLandAllocation( const std::string& aProductName,
                                       const int aPeriod ) const;
@@ -179,23 +180,29 @@ protected:
     
     const ALandAllocatorItem* findChild( const std::string& aName,
                                          const LandAllocatorItemType aType ) const;
-
-    //! Logit exponent -- should be positive since we are sharing on profit
-    std::auto_ptr<IDiscreteChoice> mChoiceFn;
-
-    //! Double storing the average price of land in a region or subregion
-    double mUnManagedLandValue;
-
-    //! List of the children of this land node located below it in the land
-    //! allocation tree.
-    std::vector<ALandAllocatorItem*> mChildren;
-
-    //! Container of historical land use.
-    std::auto_ptr<LandUseHistory> mLandUseHistory;
     
-    //! (optional) A carbon calculation which can used when children maybe similar
-    //! in terms of switching between them does not mean carbon is emitted per se.
-    std::auto_ptr<NodeCarbonCalc> mCarbonCalc;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        ALandAllocatorItem,
+
+        //! Logit exponent -- should be positive since we are sharing on profit
+        DEFINE_VARIABLE( CONTAINER, "discrete-choice-function", mChoiceFn, IDiscreteChoice* ),
+
+        //! Double storing the average price of land in a region or subregion
+        DEFINE_VARIABLE( SIMPLE, "unManagedLandValue", mUnManagedLandValue, double ),
+
+        //! List of the children of this land node located below it in the land
+        //! allocation tree.
+        DEFINE_VARIABLE( CONTAINER, "child-nodes", mChildren, std::vector<ALandAllocatorItem*> ),
+
+        //! Container of historical land use.
+        DEFINE_VARIABLE( CONTAINER, "land-use-history", mLandUseHistory, LandUseHistory* ),
+
+        //! (optional) A carbon calculation which can used when children maybe similar
+        //! in terms of switching between them does not mean carbon is emitted per se.
+        DEFINE_VARIABLE( CONTAINER, "node-carbon-calc", mCarbonCalc, NodeCarbonCalc* )
+    )
 };
 
 #endif // _LAND_NODE_H_

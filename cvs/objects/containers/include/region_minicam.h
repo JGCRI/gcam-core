@@ -56,13 +56,14 @@
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/value.h"
+#include "util/base/include/time_vector.h"
 
 // Forward declarations.
 class Population;
 class Demographic;
 class Sector;
 class SupplySector;
-class ILandAllocator;
+class LandAllocator;
 class GHGPolicy;
 class Summary;
 class ILogger;
@@ -117,31 +118,44 @@ public:
     virtual void updateAllOutputContainers( const int period );
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
-    std::auto_ptr<GDP> gdp; //!< GDP object.
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        Region,
 
-    //! Regional land allocator.
-    std::auto_ptr<ILandAllocator> mLandAllocator;
-
-    std::vector<AFinalDemand*> mFinalDemands; //!< vector of pointers to demand sector objects
-
-    std::vector<double> calibrationGDPs; //!< GDPs to calibrate to
-    std::vector<double> GDPcalPerCapita; //!< GDP per capita to calibrate to
-
-    //! GCAM consumers
-    std::vector<Consumer*> mConsumers;
-
+        /*! \brief GDP object. */
+        DEFINE_VARIABLE( CONTAINER, "GDP", mGDP, GDP* ),
+        
+        /*! \brief Regional land allocator. */
+        DEFINE_VARIABLE( CONTAINER, "land-allocator", mLandAllocator, LandAllocator* ),
+        
+        /*! \brief vector of pointers to demand sector objects */
+        DEFINE_VARIABLE( CONTAINER, "final-demand", mFinalDemands, std::vector<AFinalDemand*> ),
+        
+        /*! \brief GCAM consumers */
+        DEFINE_VARIABLE( CONTAINER, "consumer", mConsumers, std::vector<Consumer*> ),
+        
+        /*! \brief GDPs to calibrate to */
+        DEFINE_VARIABLE( ARRAY, "calibrationGDPs", mCalibrationGDPs, objects::PeriodVector<double> ),
+        
+        /*! \brief GDP per capita to calibrate to */
+        DEFINE_VARIABLE( ARRAY, "GDPcalPerCapita", mGDPcalPerCapita, objects::PeriodVector<double> ),
+        
+        /*! \brief map of CO2 emissions coefficient for primary fuels only */
+        DEFINE_VARIABLE( SIMPLE, "PrimaryFuelCO2Coef", mPrimaryFuelCO2Coef, std::map<std::string, double> ),
+        
+        /*! \brief Interest rate for the region. */
+        DEFINE_VARIABLE( SIMPLE, "interest-rate", mInterestRate, double ),
+        
+        //! Social discount rate for the region.
+        DEFINE_VARIABLE( SIMPLE, "social-discount-rate", mSocialDiscountRate, double ),
+        
+        //! Private discount rate used for land decisions in the region.
+        DEFINE_VARIABLE( SIMPLE, "private-discount-rate-land", mPrivateDiscountRateLand, double )
+    )
+    
     std::vector<Summary> summary; //!< summary values and totals for reporting
-    std::map<std::string,int> supplySectorNameMap; //!< Map of supplysector name to integer position in vector.
-    std::map<std::string, double> primaryFuelCO2Coef; //!< map of CO2 emissions coefficient for primary fuels only
-
-    //! Interest rate for the region.
-    double mInterestRate;
-    
-    //! Social discount rate for the region.
-    double mSocialDiscountRate;
-    
-    //! Private discount rate used for land decisions in the region.
-    double mPrivateDiscountRateLand;
 
     virtual const std::string& getXMLName() const;
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;

@@ -113,13 +113,11 @@ bool SectorUtils::createTrialSupplyMarket( const string& aRegionName,
  * \param aRegion Region of the market.
  * \param aSector Name of the sector.
  * \param aSupply Known value of supply for the iteration.
- * \param aLastValue A state variable used by Marketplace::addToDemand.
  * \param aPeriod Model period.
  */
 void SectorUtils::addToTrialDemand( const string& aRegionName,
                                     const string& aSectorName,
-                                    const double aSupply,
-                                    double& aLastValue,
+                                    const Value& aSupply,
                                     const int aPeriod )
 {
     // Market is not created until period 1.
@@ -135,8 +133,8 @@ void SectorUtils::addToTrialDemand( const string& aRegionName,
 
     // Demand is the known value of the trial market. Trial markets do not solve
     // well when the value of one side is zero.
-    aLastValue = scenario->getMarketplace()->addToDemand( trialName->second, aRegionName, aSupply,
-                                             aLastValue, aPeriod, true );
+    scenario->getMarketplace()->addToDemand( trialName->second, aRegionName, aSupply,
+                                             aPeriod, true );
 }
 
 /*!
@@ -338,34 +336,6 @@ double SectorUtils::getVariance( const string& aResourceName,
 
     assert( variance >= 0 );
     return variance;
-}
-
-/*!
- * \brief Get the capacity factor of the resource.
- * \details Queries the market-info of the good for the capacity factor.
- *          Returns zero if the market does not exist or does not have a
- *          capacity factor set.
- * \param aResource Resource for which to get the capacity factor.
- * \param aRegion Region for which to get the capacity factor.
- * \param aPeriod Model period.
- * \return The resource capacity factor.
- */
-double SectorUtils::getCapacityFactor( const string& aResourceName,
-                                       const string& aRegionName,
-                                       const int aPeriod )
-{
-    // Get resource capacity factor from market info for the sector.
-    const Marketplace* marketplace = scenario->getMarketplace();
-    const IInfo* resourceInfo =
-        marketplace->getMarketInfo( aResourceName, aRegionName, aPeriod, true );
-
-    double resourceCapacityFactor = resourceInfo ?
-        resourceInfo->getDouble( "resourceCapacityFactor", true ) :
-        util::getLargeNumber();
-    
-    // Resource capacity factor must be between 0 and 1 inclusive.
-    assert( resourceCapacityFactor >= 0 && resourceCapacityFactor <= 1 );
-    return resourceCapacityFactor;
 }
 
 /*!

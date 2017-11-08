@@ -47,15 +47,13 @@
 
 using namespace std;
 
-const string Curve::XML_NAME = "Curve";
-
 //! Constructor
 Curve::Curve(){
     numericalLabel = 0;
 }
 
-//! Copy Constructor
-Curve::Curve( const Curve& curveIn ){
+void Curve::copy( const Curve& aOther ) {
+    // nothing is copied?
 }
 
 //! Destructor.
@@ -74,12 +72,13 @@ bool Curve::operator!=( const Curve& rhs ) const {
 
 //! Static function to return the name of the XML element associated with this object.
 const string& Curve::getXMLNameStatic() {
+    static const string XML_NAME = "Curve";
     return XML_NAME;
 }
 
 //! Return the name of the XML element associated with this object.
 const string& Curve::getXMLName() const {
-    return XML_NAME;
+    return getXMLNameStatic();
 }
 
 //! Static factory method which returns the correct type of Curve based on the type string.

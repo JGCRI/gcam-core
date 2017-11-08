@@ -78,6 +78,7 @@ public:
                                               const std::string& aElectricSector,
                                               const std::string& aResource,
                                               const std::string& aRegion,
+                                              const double aTechCapacityFactor,
                                               const double aReserveMargin,
                                               const double aAverageGridCapacityFactor,
                                               const int aPeriod ) const;
@@ -86,6 +87,7 @@ public:
                                              const std::string& aElectricSector,
                                              const std::string& aResource,
                                              const std::string& aRegion,
+                                             const double aTechCapacityFactor,
                                              const double aReserveMargin,
                                              const double aAverageGridCapacityFactor,
                                              const int aPeriod ) const;
@@ -97,23 +99,32 @@ protected:
                                   const std::string& aElectricSector,
                                   const std::string& aResource,
                                   const std::string& aRegion,
+                                  const double aTechCapacityFactor,
                                   const double aReserveMargin,
                                   const double aAverageGridCapacityFactor,
                                   const int aPeriod ) const;
 
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        IBackupCalculator,
+
+        // Parameters hard-coded in constructor for first step
+        //! Maximum Backup Fraction is the maximum backup fraction required.
+        DEFINE_VARIABLE( SIMPLE, "max-backup-fraction", mMaxBackupFraction, double ),
+
+         //! Fraction of electric sector that is intermediate and peak
+        DEFINE_VARIABLE( SIMPLE, "max-sector-load-served", mMaxSectorLoadServed, double ),
+
+        //! Backup function exponent parameter
+        DEFINE_VARIABLE( SIMPLE, "backup-exponent", mBackupExponent, double ),
+
+        //! Fraction of year backup mode operates (during no-sun days)
+        DEFINE_VARIABLE( SIMPLE, "no-sun-days", mNoSunDayBackup, double )
+    )
     
-    // Parameters hard-coded in constructor for first step
-    //! Maximum Backup Fraction is the maximum backup fraction required.
-    double mMaxBackupFraction;
-     //! Fraction of electric sector that is intermediate and peak
-    double mMaxSectorLoadServed;
-    //! Backup function exponent parameter
-    double mBackupExponent;
-    //! Fraction of year backup mode operates (during no-sun days)
-    double mNoSunDayBackup;
     //! Backup fraction -- cached for reporting
     mutable double mBackupFraction;
-
 };
 
 #endif // _CSP_BACKUP_CALCULATOR_H_

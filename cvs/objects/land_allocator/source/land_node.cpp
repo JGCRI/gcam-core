@@ -71,15 +71,17 @@ mChoiceFn( 0 ),
 mUnManagedLandValue( 0.0 ),
 mLandUseHistory( 0 ),
 mCarbonCalc( 0 )
- {
-    mType = eNode;
- }
+{
+}
 
 //! Destructor
 LandNode::~LandNode() {
     for( unsigned int i = 0; i < mChildren.size(); i++ ) {
         delete mChildren[ i ];
     }
+    delete mLandUseHistory;
+    delete mCarbonCalc;
+    delete mChoiceFn;
 }
 
 size_t LandNode::getNumChildren() const {
@@ -177,15 +179,15 @@ void LandNode::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteElementCheckDefault( mIsGhostShareRelativeToDominantCrop, "is-ghost-share-relative", out, tabs, false );
     XMLWriteElement( mUnManagedLandValue, "unManagedLandValue", out, tabs );  
 
-    if( mLandUseHistory.get() ){
+    if( mLandUseHistory ){
         mLandUseHistory->toInputXML( out, tabs );
     }
     
-    if( mCarbonCalc.get() ) {
+    if( mCarbonCalc ) {
         mCarbonCalc->toInputXML( out, tabs );
     }
 
-    if( mChoiceFn.get() ) {
+    if( mChoiceFn ) {
         mChoiceFn->toInputXML( out, tabs );
     }
     
@@ -205,13 +207,13 @@ void LandNode::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
 void LandNode::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {
     XMLWriteElement( mUnManagedLandValue, "unManagedLandValue", out, tabs );
 
-    if( mLandUseHistory.get() ){
+    if( mLandUseHistory ){
         mLandUseHistory->toDebugXML( period, out, tabs );
     }
-    if( mCarbonCalc.get() ) {
+    if( mCarbonCalc ) {
         mCarbonCalc->toDebugXML( period, out, tabs );
     }
-    if( mChoiceFn.get() ) {
+    if( mChoiceFn ) {
         mChoiceFn->toDebugXML( period, out, tabs );
     }
     // write out for mChildren
@@ -241,7 +243,7 @@ const string& LandNode::getXMLNameStatic() {
 void LandNode::completeInit( const string& aRegionName,
                              const IInfo* aRegionInfo )
 {
-    if( !mChoiceFn.get() ) {
+    if( !mChoiceFn ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "No Discrete Choice function set in " << getXMLName() << " for "
@@ -253,8 +255,8 @@ void LandNode::completeInit( const string& aRegionName,
     }
 
     const double privateDiscountRateLand = aRegionInfo->getDouble( "private-discount-rate-land", true );
-    if( mCarbonCalc.get() ) {
-        accept( mCarbonCalc.get(), -1 );
+    if( mCarbonCalc ) {
+        accept( mCarbonCalc, -1 );
         mCarbonCalc->completeInit( privateDiscountRateLand );
     }
 }
@@ -381,7 +383,7 @@ double LandNode::calcLandShares( const string& aRegionName,
     // Note these are the log( unnormalized shares )
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
         unnormalizedShares[ i ] = mChildren[ i ]->calcLandShares( aRegionName,
-                                                                  mChoiceFn.get(),
+                                                                  mChoiceFn,
                                                                   aPeriod );
     }
 
@@ -416,7 +418,7 @@ void LandNode::calculateShareWeights( const string& aRegionName,
     
     // Call share weight calculation for each child
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        mChildren[ i ]->calculateShareWeights( aRegionName, mChoiceFn.get(), aPeriod );
+        mChildren[ i ]->calculateShareWeights( aRegionName, mChoiceFn, aPeriod );
     }
 
 }
@@ -490,7 +492,7 @@ void LandNode::calculateNodeProfitRates( const string& aRegionName,
     // and pass down the logit exponent of this node
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
         mChildren[ i ]->calculateNodeProfitRates( aRegionName, avgProfitRate, 
-                                                  mChoiceFn.get(), aPeriod );
+                                                  mChoiceFn, aPeriod );
     }
 
     // Calculate a reasonable "base" profit rate to use set the scale for when
@@ -536,16 +538,19 @@ void LandNode::calcLandAllocation( const string& aRegionName,
  * \param aRegionName Region name.
  * \param aPeriod The current model period.
  * \param aEndYear The year to calculate LUC emissions to.
+ * \param aStoreFullEmiss Flag to pass on to the carbon calc used as an optimization
+ *                        to avoid store full LUC emissins during World.calc.
  */
 void LandNode::calcLUCEmissions( const string& aRegionName,
-                                 const int aPeriod, const int aEndYear )
+                                 const int aPeriod, const int aEndYear,
+                                 const bool aStoreFullEmiss )
 {
-    if( mCarbonCalc.get() ) {
-        mCarbonCalc->calc( aPeriod, aEndYear );
+    if( mCarbonCalc ) {
+        mCarbonCalc->calc( aPeriod, aEndYear, aStoreFullEmiss );
     }
     
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        mChildren[ i ]->calcLUCEmissions( aRegionName, aPeriod, aEndYear );
+        mChildren[ i ]->calcLUCEmissions( aRegionName, aPeriod, aEndYear, aStoreFullEmiss );
     }
 }
 
@@ -664,7 +669,7 @@ void LandNode::accept( IVisitor* aVisitor, const int aPeriod ) const {
 }
 
 LandUseHistory* LandNode::getLandUseHistory(){
-    return( this->mLandUseHistory.get() );
+    return( this->mLandUseHistory );
 }
 
 bool LandNode::isUnmanagedLandLeaf( )  const 

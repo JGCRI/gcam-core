@@ -68,8 +68,7 @@ public:
 
     static void addToTrialDemand( const std::string& aRegionName,
                                   const std::string& aSectorName,
-                                  const double aSupply,
-                                  double& aLastValue,
+                                  const Value& aSupply,
                                   const int aPeriod );
 
     static double getTrialSupply( const std::string& aRegionName,
@@ -106,10 +105,6 @@ public:
 
     static int getDemandNormPeriod( const int aPeriod );
 
-    static double getCapacityFactor( const std::string& aResourceName,
-                                     const std::string& aRegionName,
-                                     const int aPeriod );
-    
     static double convertEnergyToCapacity( const double aCapacityFactor,
                                            const double aEnergy );
 

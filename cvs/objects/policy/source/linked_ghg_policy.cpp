@@ -68,7 +68,18 @@ mStartYear( -1 )
  * \return An exact copy of the policy.
  */
 GHGPolicy* LinkedGHGPolicy::clone() const {
-    return new LinkedGHGPolicy( *this );
+    LinkedGHGPolicy* clone = new LinkedGHGPolicy();
+    clone->copy( *this );
+    return clone;
+}
+
+void LinkedGHGPolicy::copy( const LinkedGHGPolicy& aOther ) {
+    GHGPolicy::copy( aOther );
+    mLinkedPolicyName = aOther.mLinkedPolicyName;
+    mPriceUnits = aOther.mPriceUnits;
+    mOutputUnits = aOther.mOutputUnits;
+    std::copy( aOther.mPriceAdjust.begin(), aOther.mPriceAdjust.end(), mPriceAdjust.begin() );
+    std::copy( aOther.mDemandAdjust.begin(), aOther.mDemandAdjust.end(), mDemandAdjust.begin() );
 }
 
 /*! \brief Get the XML node name for output to XML.

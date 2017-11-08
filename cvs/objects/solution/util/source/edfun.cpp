@@ -40,10 +40,14 @@
 #include "containers/include/iactivity.h"
 #include "util/base/include/util.h"
 #include "util/logger/include/ilogger.h"
+#include "containers/include/scenario.h"
+#include "util/base/include/manage_state_variables.hpp"
 
 #include "util/base/include/timer.h"
 
 #define UBVECTOR boost::numeric::ublas::vector 
+
+extern Scenario* scenario;
 
 const double LogEDFun::PMAX = 1.0e24;
 const double LogEDFun::ARGMAX = 55.262042; // log(PMAX)
@@ -54,7 +58,7 @@ LogEDFun::LogEDFun(SolutionInfoSet &sisin,
                    World *w, Marketplace *m, int per, bool aLogPricep) :
     mkts(sisin.getSolvableSet()),
     solnset(sisin),
-    world(w), mktplc(m), period(per), partj(-1),
+    world(w), mktplc(m), period(per),
     mLogPricep(aLogPricep)
 {
     na=nr=mkts.size();
@@ -72,7 +76,17 @@ LogEDFun::LogEDFun(SolutionInfoSet &sisin,
             // doesn't give nonsensical results here, but forecast
             // price is used for other things and so hasn't been
             // so-modified.
-            mxscl[i] = std::max(fabs(mkts[i].getForecastPrice()), MINXSCL);
+            if( mkts[i].getType() == IMarketType::TAX && ( mkts[i].getForecastPrice() < mkts[i].getLowerBoundSupplyPrice() ||
+                mkts[i].getForecastPrice() > mkts[i].getUpperBoundSupplyPrice() ) )
+            {
+                mxscl[i] = mkts[i].getUpperBoundSupplyPrice();
+            }
+            else if( mkts[i].getType() == IMarketType::RES && ( mkts[i].getForecastPrice() < mkts[i].getLowerBoundSupplyPrice() ) )
+            {
+                mxscl[i] = 1.0;
+            } else {
+                mxscl[i] = std::max(fabs(mkts[i].getForecastPrice()), MINXSCL);
+            }
             mfxscl[i] = 1.0/mkts[i].getForecastDemand();
         }
     } else {
@@ -108,16 +122,30 @@ void LogEDFun::scaleInitInputs(UBVECTOR<double> &ax)
 
 void LogEDFun::partial(int ip)
 {
-    partj = ip;
+    Timer& edfunAnResetTimer = TimerRegistry::getInstance().getTimer( TimerRegistry::EDFUN_AN_RESET );
+    edfunAnResetTimer.start();
+    if(ip >= 0) {
+        // We are about to perform partial derviatives so snap back *all* state
+        // including prices/supplies/demands to a "base" state before we perform
+        // this partial derivative
+        scenario->mManageStateVars->copyState();
+    }
+    else if(ip == -1 ) {
+        // We are calculating a full model run so ensure the partial derivative
+        // flags are turned off and the "base" state is being updated.
+        mktplc->mIsDerivativeCalc = false;
+        scenario->mManageStateVars->setPartialDeriv(false);
+    }
+    edfunAnResetTimer.stop();
 }
 
 
 double LogEDFun::partialSize(int ip) const
 {
-  return double(mkts[ip].getDependencies().size()) / double(world->global_size());
+  return double(mkts[ip].getDependencies().size()) / double(world->getGlobalOrderingSize());
 }
 
-void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx)
+void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx, const int partj)
 {
   assert(ax.size() == mkts.size());
   assert(fx.size() == mkts.size());
@@ -191,12 +219,7 @@ void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx)
      * 1B Set the model inputs using the solutionInfo objects (partial derivative version)
      ****/ 
     mktplc->mIsDerivativeCalc = true;
-    if(partj == 0) {
-        // We are about to perform partial derviatives so store all market
-        // prices/supplies/demands so that we can snap back to them between
-        // each partial derivative calculation.
-        solnset.storeValues();
-    }
+
 
     if(mdiagnostic) {
       ILogger &solverlog = ILogger::getLogger("solver_log");
@@ -241,11 +264,10 @@ void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx)
     edfunPreTimer.stop();
     Timer& evalPartTimer = TimerRegistry::getInstance().getTimer( TimerRegistry::EVAL_PART );
     evalPartTimer.start();
-#if GCAM_PARALLEL_ENABLED
-    world->calc(period, mkts[partj].getFlowGraph(), &affectedNodes);
-#else
+    // Note even when running with GCAM_PARALLEL_ENABLED we still run in serial
+    // mode for partial derivatives.  This is because the loop over each partial
+    // derivative to run is a parallel_for.
     world->calc(period, affectedNodes);
-#endif
     evalPartTimer.stop();
 
     if(mdiagnostic) {
@@ -335,7 +357,7 @@ void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx)
           ILogger &solverlog = ILogger::getLogger("solver_log");
           solverlog.setLevel(ILogger::DEBUG);
           solverlog << "\t\tAdding supply correction: i= " << i << "  p= " << x[i]
-                    << "  p0= " << p0 << "  c= " << c << "  modified supply= " << s-c
+                    << "  p0= " << p0 << "  c= " << c << "  s= " << s << " d= " << d << " modified F(x)= " << fx[i]
                     << "\n";
         }
     }
@@ -352,20 +374,6 @@ void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx)
   
   edfunPostTimer.stop();
 
-  Timer& edfunAnResetTimer = TimerRegistry::getInstance().getTimer( TimerRegistry::EDFUN_AN_RESET );
-  edfunAnResetTimer.start();
-  
-  if(partj >= 0) {
-    // reset flags
-      const std::vector<IActivity*>& affectedNodes = mkts[partj].getDependencies();
-      for( size_t nodeIndex = 0 ; nodeIndex < affectedNodes.size(); ++nodeIndex ) {
-          affectedNodes[ nodeIndex ]->setStale();
-      }
-    partj = -1;
-    mktplc->mIsDerivativeCalc = false;
-    solnset.restoreValues();    // reset all markets to values stored above
-  }
-  edfunAnResetTimer.stop();
   edfunMiscTimer.stop();
 }
 

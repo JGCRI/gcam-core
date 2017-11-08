@@ -65,11 +65,13 @@ const string& Intensity::getXMLNameStatic() {
  * \param aIntensity An intensity.
  */
 Intensity::Intensity( const double aIntensity )
-: mReadInIntensity( aIntensity ) {
+{
+    mReadInIntensity = aIntensity;
 }
 
 Intensity* Intensity::clone() const {
-    return new Intensity( *this );
+    Intensity* clone = new Intensity( mReadInIntensity );
+    return clone;
 }
 
 bool Intensity::isSameType( const string& aType ) const {

@@ -46,6 +46,7 @@
 
 #include "emissions/include/aemissions_control.h"
 #include "util/base/include/value.h"
+#include "util/base/include/time_vector.h"
 
 /*! 
  * \ingroup Objects
@@ -68,7 +69,8 @@ public:
                                const IInfo* aTechIInfo );
 
     virtual void initCalc( const std::string& aRegionName,
-                           const IInfo* aLocalInfo,
+                           const IInfo* aTechInfo,
+                           const NonCO2Emissions* aParentGHG,
                            const int aPeriod );
 
 protected: 
@@ -82,12 +84,17 @@ protected:
 
     virtual void calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP );
 
-private:
-    //! Future emissions factors -- this vector sets future emissions factors for vintaged technologies
-    std::vector<double> mFutureEmissionsFactors;
-    
-    //! Technology build period -- this is the period that the vintage was constructed
-    int mTechBuildPeriod;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        AEmissionsControl,
+
+        //! Future emissions factors -- this vector sets future emissions factors for vintaged technologies
+        DEFINE_VARIABLE( ARRAY, "future-emiss-factor", mFutureEmissionsFactors, objects::PeriodVector<double> ),
+        
+        //! Technology build period -- this is the period that the vintage was constructed
+        DEFINE_VARIABLE( SIMPLE, "tech-build-period", mTechBuildPeriod, int )
+    )
 
     void copy( const ReadInControl& aOther );
 };

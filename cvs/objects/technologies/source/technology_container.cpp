@@ -69,10 +69,10 @@ using namespace xercesc;
 
 //! Constructor
 TechnologyContainer::TechnologyContainer()
-:mInitialAvailableYear( -1 ),
-mFinalAvailableYear( -1 ),
-mCachedVintageRangePeriod( -1 )
 {
+    mInitialAvailableYear = -1;
+    mFinalAvailableYear = -1;
+    mCachedVintageRangePeriod = -1;
 }
 
 //! Destructor
@@ -105,7 +105,7 @@ ITechnologyContainer* TechnologyContainer::clone() const {
     clonedTechContainer->mFinalAvailableYear = mFinalAvailableYear;
     
     for( CInterpRuleIterator ruleIter = mShareWeightInterpRules.begin(); ruleIter != mShareWeightInterpRules.end(); ++ruleIter ) {
-        clonedTechContainer->mShareWeightInterpRules.push_back( new InterpolationRule( *( *ruleIter ) ) );
+        clonedTechContainer->mShareWeightInterpRules.push_back( ( *ruleIter )->clone() );
     }
     
     for( CVintageIterator vintageIter = mVintages.begin(); vintageIter != mVintages.end(); ++vintageIter ) {
@@ -392,7 +392,7 @@ void TechnologyContainer::completeInit( const string& aRegionName,
                 mainLog << "Region: " << aRegionName << ", Sector: " << aSectorName
                         << ", Subsector: " << aSubsectorName << ", Technology: "
                         << mName << endl;
-                exit( 1 );
+                abort();
             }
             
             // We can interpolate a technology to fill this year.  Note that this
@@ -625,7 +625,7 @@ void TechnologyContainer::interpolateShareWeights( const int aPeriod ) {
             mainLog.setLevel( ILogger::ERROR );
             mainLog << "Found uninitialized share weight in tech: " << mName
                 << " in period " << aPeriod << endl;
-            exit( 1 );
+            abort();
         }
         mVintagesByPeriod[ period ]->setShareWeight( techShareWeights[ period ] );
     }

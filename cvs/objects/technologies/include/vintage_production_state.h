@@ -87,11 +87,18 @@ public:
     virtual bool isOperating() const;
 
 protected:
-    //! The output level of the vintage in its initial period.
-    Value mBaseOutput;
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        IProductionState,
 
-    //! The initial year of the vintage.
-    int mInitialYear;
+        //! The output level of the vintage in its initial period.
+        DEFINE_VARIABLE( SIMPLE, "base-output", mBaseOutput, Value ),
+
+        //! The initial year of the vintage.
+        DEFINE_VARIABLE( SIMPLE, "initial-year", mInitialYear, int )
+    )
 
     /*
      * \brief Get the static name of this object.

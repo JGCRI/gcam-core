@@ -49,6 +49,7 @@
 #if USE_HECTOR 
 
 #include "util/base/include/model_time.h"
+#include "containers/include/scenario.h"
 #include "util/base/include/configuration.h"
 #include "util/logger/include/ilogger.h"
 #include "util/base/include/xml_helper.h"
@@ -64,6 +65,8 @@
 
 using namespace std;
 using namespace xercesc;
+
+extern Scenario* scenario;
 
 namespace {
     // These are multiplicative conversion factors.  I.e., if you have
@@ -84,7 +87,7 @@ namespace {
     bool hector_log_is_init = false;
 } 
 
-HectorModel::HectorModel( const Modeltime* aModeltime ) : mModeltime( aModeltime )
+HectorModel::HectorModel()
 {
     // Set default values for config variables.  All of these can be
     // overridden in XML input.
@@ -284,7 +287,7 @@ void HectorModel::completeInit( const string& aScenarioName ) {
     int nrslt = yearlyDataIndex( mHectorEndYear ) + 1;
     map<std::string, std::string>::const_iterator it;
     for( it = mHectorEmissionsMsg.begin(); it != mHectorEmissionsMsg.end(); ++it ) {
-        mEmissionsTable[ it->first ].resize (mModeltime->getmaxper() );
+        mEmissionsTable[ it->first ].resize (scenario->getModeltime()->getmaxper() );
         mUnitConvFac[ it->first ] = 1.0; // default value; will set exceptions below
         mHectorUnits[ it->first ] = Hector::U_GG; // This is the default; exceptions below
 
@@ -377,46 +380,40 @@ void HectorModel::reset( const int aPeriod ) {
     mHcore->addVisitor( mHosv.get() ); 
     mHcore->prepareToRun();
 
+    const Modeltime* modeltime = scenario->getModeltime();
+
     // loop over all gasses
     map<std::string, std::vector<double> >::iterator it;
     for( it = mEmissionsTable.begin(); it != mEmissionsTable.end(); ++it ) {
         const string& gas = it->first;
         vector<double>& emissions = it->second;
         if( gas != "CO2NetLandUse" ) {
-            // Replay emissions up to, but not including, the aperiod
-            // argument.  We also skip period 0, since it's not a "real"
-            // period.
-            for( int i = 1; i < aPeriod; ++i ) {
+            // Replay emissions up to, and including, the aPeriod argument.
+            // Note: We also skip period 0, since it's not a "real" period.
+            for( int i = 1; i <= aPeriod; ++i ) {
                 if( util::isValidNumber( emissions[ i ] ) ) {
                     setEmissions( gas, i, emissions[ i ] );
                 }
             }
-            // set subsequent period emissions to NaN to indicate that
-            // they are not valid.
-            // for(int i=aperiod; i<mModeltime->getmaxper(); ++i)
-            //     emissions[i] = numeric_limits<double>::quiet_NaN();
         }
         else {
             // LUC emissions are stored yearly, not just by period.
             // Otherwise, as above.
-            int ymin = mModeltime->getper_to_yr( 1 );
-            int ymax = yearlyDataIndex( mModeltime->getper_to_yr( aPeriod ) );
-            for( int yr = ymin; yr < ymax; ++yr ) {
+            int ymin = modeltime->getper_to_yr( 1 );
+            int ymax = modeltime->getper_to_yr( aPeriod );
+            for( int yr = ymin; yr <= ymax; ++yr ) {
                 int i = yearlyDataIndex( yr );
                 if( util::isValidNumber( emissions[ i ] ) ) {
                     setLUCEmissions( gas, yr, emissions[ i ] );
                 }
             }
-            // set subsequent to NaN
-            // for(int yr=ymax; yr < mHectorEndYear; ++yr) {
-            //     int i = yearlyDataIndex(yr);
-            //     emissions[i] = numeric_limits<double>::quiet_NaN();
-            // }
         }
     } 
-    // Hector is now ready to run up to the period immediately prior to aperiod.
-    // catch us up to the GCAM start year
-    mLastYear = mModeltime->getStartYear();
+    // Hector is now ready to run up to the year associated with aPeriod.
+    // For now catch us up to the GCAM start year and let runModel catch
+    // us up the rest of the way since it will ensure that it gets any
+    // updated output we would like to report from hector along the way.
+    mLastYear = modeltime->getStartYear();
     mHcore->run( static_cast<double>( mLastYear ) );
 }
 
@@ -443,7 +440,8 @@ bool HectorModel::setEmissionsByYear( const string& aGasName,
                    << endl;
         return false;
     }
-    if( aYear < mModeltime->getStartYear() || aYear > mModeltime->getEndYear() ) {
+    const Modeltime* modeltime = scenario->getModeltime();
+    if( aYear < modeltime->getStartYear() || aYear > modeltime->getEndYear() ) {
         // trying to store these emissions will cause a segfault.
         climatelog.setLevel( ILogger::ERROR );
         climatelog << "HectorModel::setEmissions():  Year out of range.  year= "
@@ -478,7 +476,7 @@ bool HectorModel::setEmissionsByYear( const string& aGasName,
 bool HectorModel::setEmissions( const string& aGasName, const int aPeriod,
                                 double aEmissions )
 {
-    int year = mModeltime->getper_to_yr( aPeriod ); 
+    int year = scenario->getModeltime()->getper_to_yr( aPeriod ); 
     bool valid = setEmissionsByYear( aGasName, year, aEmissions );
     if( valid ) {
         mEmissionsTable[ aGasName ][ aPeriod ] = aEmissions;
@@ -515,45 +513,58 @@ bool HectorModel::setLUCEmissions( const string& aGasName,
 /* \brief run the climate model through a specified period
  */
 IClimateModel::runModelStatus HectorModel::runModel( const int aYear ) {
+    const Modeltime* modeltime = scenario->getModeltime();
     if( aYear <= mLastYear ) {
-        int period = mModeltime->getyr_to_per( aYear );
-        if( period == 0 ) {
-            // invalid year.  Decide what to do
-            if( aYear <= mModeltime->getper_to_yr( 1 )) {
-                // before the first valid period.
-                period = 1;
-            }
-            else if( aYear >= mModeltime->getEndYear() ) {
-                // after the last valid period
-                period = mModeltime->getmaxper();
-            }
-            else {
-                // in the middle somewhere
-                for( int i = 2; i<=mModeltime->getmaxper(); ++i ) {
-                    if( mModeltime->getper_to_yr( i ) > aYear ) {
-                        period = i;
-                        break;
-                    }
-                }
-            }
+        int period;
+        if( aYear <= modeltime->getper_to_yr( 1 )) {
+            // before the first valid period.
+            period = 1;
         }
+        else if( aYear > modeltime->getEndYear() ) {
+            // after the last valid period
+            period = modeltime->getmaxper();
+        }
+        else {
+            // in the middle somewhere
+            // note that model time will convert years that are
+            // inbetween timesteps to the next model period
+            // this is exactly the behavior we want here since
+            // GCAM emissions need to be reset up to the next
+            // time period so hector can have an endpoint to
+            // interpolate from
+            period = modeltime->getyr_to_per( aYear );
+        }
+
         reset( period );
     }
 
-    // TODO: handle Hector exceptions 
     // TODO: We have to run in one-year steps so that we can record
     // Hector's current values every year.  If we update hector to
     // store its outputs in time series (as it already does for some
     // outputs), we can bypass this and the local storage for the
     // yearly results.
+    bool hadError = false;
+    int lastSuccessYear = mLastYear;
     for( int year = mLastYear + 1; year <= aYear; ++year ) {
-        mHcore->run( static_cast<double>( year ) );
-        storeConc( year );
-        storeRF( year );
-        storeGlobals( year );
+        if( !hadError ) {
+            try {
+                mHcore->run( static_cast<double>( year ) );
+                lastSuccessYear = year;
+            } catch (h_exception& e) {
+                ILogger& climatelog = ILogger::getLogger( "climate-log" );
+                climatelog.setLevel (ILogger::ERROR );
+                climatelog << "Receieve hector exception while running year " << year << ":" << endl;
+                climatelog << "* Program exception: " << e.msg << "\n* Function " << e.func << ", file "
+                    << e.file << ", line " << e.linenum << endl;
+                hadError = true;
+            }
+        }
+        storeConc( year, hadError );
+        storeRF( year, hadError );
+        storeGlobals( year, hadError );
     }
-    mLastYear = aYear;
-    return SUCCESS;
+    mLastYear = lastSuccessYear;
+    return hadError ? EXCEPTION : SUCCESS;
 }
 
 /* \brief run the climate model through its configured end date 
@@ -682,10 +693,10 @@ double HectorModel::getForcing( const string& aGas, int aYear ) const {
 
 
 int HectorModel::yearlyDataIndex( const int year ) const {
-    return year - mModeltime->getStartYear();
+    return year - scenario->getModeltime()->getStartYear();
 }
 
-void HectorModel::storeConc( const int aYear ) {
+void HectorModel::storeConc( const int aYear, const bool aHadError ) {
     ILogger& climatelog = ILogger::getLogger( "climate-log" );
 
     // No need to check the index because we checked it in runModel
@@ -694,10 +705,10 @@ void HectorModel::storeConc( const int aYear ) {
     // These are all of the atmospheric concentrations that Hector is
     // set up to provide.
     Hector::message_data date( aYear );
-    mConcTable["CH4"][i]   = mHcore->sendMessage( M_GETDATA, D_ATMOSPHERIC_CH4,date ); 
-    mConcTable["N2O"][i]   = mHcore->sendMessage( M_GETDATA, D_ATMOSPHERIC_N2O,date );
-    mConcTable["O3"][i]    = mHcore->sendMessage( M_GETDATA, D_ATMOSPHERIC_O3, date );
-    mConcTable["CO2"][i]   = mHcore->sendMessage( M_GETDATA, D_ATMOSPHERIC_CO2 );
+    mConcTable["CH4"][i]   = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_ATMOSPHERIC_CH4,date );
+    mConcTable["N2O"][i]   = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_ATMOSPHERIC_N2O,date );
+    mConcTable["O3"][i]    = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_ATMOSPHERIC_O3, date );
+    mConcTable["CO2"][i]   = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_ATMOSPHERIC_CO2 );
 
     // Hector doesn't actually compute concentrations for these
     // gasses. (we use their emissions to compute O3 concentration,
@@ -730,19 +741,19 @@ void HectorModel::setupConcTbl() {
 
 // Be sure to keep this in sync with setupRFTbl.  If you add a gas
 // here, you need to add it there too!
-void HectorModel::storeRF(const int aYear ) {
+void HectorModel::storeRF(const int aYear, const bool aHadError ) {
     ILogger& climatelog = ILogger::getLogger( "climate-log" );
     int i = yearlyDataIndex( aYear );
     
     // total
-    mTotRFTable[i]             = mHcore->sendMessage( M_GETDATA, D_RF_TOTAL );
+    mTotRFTable[i]             = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_RF_TOTAL );
 
     // misc gases requested by GCAM
-    mGasRFTable["CO2"][i]      = mHcore->sendMessage( M_GETDATA, D_RF_CO2 );
-    mGasRFTable["CH4"][i]      = mHcore->sendMessage( M_GETDATA, D_RF_CH4 );
-    mGasRFTable["N2O"][i]      = mHcore->sendMessage( M_GETDATA, D_RF_N2O );
-    mGasRFTable["BC"][i]       = mHcore->sendMessage( M_GETDATA, D_RF_BC );
-    mGasRFTable["OC"][i]       = mHcore->sendMessage( M_GETDATA, D_RF_OC );
+    mGasRFTable["CO2"][i]      = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_RF_CO2 );
+    mGasRFTable["CH4"][i]      = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_RF_CH4 );
+    mGasRFTable["N2O"][i]      = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_RF_N2O );
+    mGasRFTable["BC"][i]       = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_RF_BC );
+    mGasRFTable["OC"][i]       = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_RF_OC );
 
 #if 0
     // Forcings that hector can provide, but which are not currently
@@ -787,23 +798,12 @@ void HectorModel::setupRFTbl() {
 
 //! Store the global quantities retrieved from Hector, except total
 //! forcing, which gets stored in storeRF()
-void HectorModel::storeGlobals( const int aYear ) {
+void HectorModel::storeGlobals( const int aYear, const bool aHadError ) {
     int idx = yearlyDataIndex( aYear );
 
-        // // XXX DEBUG
-        // ILogger &climatelog = ILogger::getLogger("climate-log");
-        // climatelog.setLevel(ILogger::DEBUG);
-        // climatelog << "Store globals: " << "  year: " << aYear
-        //            << "  index: " << idx
-        //            << "  table sizes: temp=" << mTemperatureTable.size()
-        //            << "  landflux= " << mLandFlux.size()
-        //            << "  oceanflux= " << mOceanFlux.size()
-        //            << "\n";
-        // // XXX end debug
-    
-    mTemperatureTable[idx] = mHcore->sendMessage( M_GETDATA, D_GLOBAL_TEMP );
-    mLandFlux[idx]         = mHcore->sendMessage( M_GETDATA, D_LAND_CFLUX );
-    mOceanFlux[idx]        = mHcore->sendMessage( M_GETDATA, D_OCEAN_CFLUX );
+    mTemperatureTable[idx] = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_GLOBAL_TEMP );
+    mLandFlux[idx]         = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_LAND_CFLUX );
+    mOceanFlux[idx]        = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_OCEAN_CFLUX );
 } 
     
 
@@ -826,56 +826,57 @@ void HectorModel::printDBOutput() const {
     void dboutput4(string var1name,string var2name,string var3name,
                    string var4name, string uname,vector<double> dout);
 
+    const Modeltime* modeltime = scenario->getModeltime();
     // CO2 concentration
-    vector<double> data( mModeltime->getmaxper() );
-    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
-        data[ period ] = getConcentration( "CO2", mModeltime->getper_to_yr( period ) );
+    vector<double> data( modeltime->getmaxper() );
+    for( int period = 0; period < modeltime->getmaxper(); ++period ){
+        data[ period ] = getConcentration( "CO2", modeltime->getper_to_yr( period ) );
     }
     dboutput4( "global", "General", "Concentrations", "Period", "PPM", data );
  
     // CO2 emissions (ex. land use change)
     const vector<double> &co2emiss = mEmissionsTable.find("CO2")->second;
-    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
+    for( int period = 0; period < modeltime->getmaxper(); ++period ){
         data[ period ] =
-            co2emiss[yearlyDataIndex(mModeltime->getper_to_yr(period))]; 
+            co2emiss[yearlyDataIndex(modeltime->getper_to_yr(period))]; 
     }
     dboutput4( "global", "General", "CO2 Emissions", "Period", "TgC", data );
 
     // Total Forcing
-    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
-        data[ period ] = getTotalForcing( mModeltime->getper_to_yr( period ) );
+    for( int period = 0; period < modeltime->getmaxper(); ++period ){
+        data[ period ] = getTotalForcing( modeltime->getper_to_yr( period ) );
     }
     dboutput4( "global", "General", "Forcing", "Period","W/m^2", data );
 
     // CO2 forcing.
-    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
-        data[ period ] = getForcing( "CO2", mModeltime->getper_to_yr( period ) );
+    for( int period = 0; period < modeltime->getmaxper(); ++period ){
+        data[ period ] = getForcing( "CO2", modeltime->getper_to_yr( period ) );
     }
     dboutput4( "global", "General", "CO2-Forcing", "Period","W/m^2", data );
 
     // Fill up a vector of Global Mean Temperature.
-    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
-        data[ period ] = getTemperature( mModeltime->getper_to_yr( period ) );
+    for( int period = 0; period < modeltime->getmaxper(); ++period ){
+        data[ period ] = getTemperature( modeltime->getper_to_yr( period ) );
     }
     dboutput4( "global", "General", "Temperature", "Period", "degC", data );
 
     // Net Terrestrial Uptake.
-    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
-        data[ period ] = getNetTerrestrialUptake( mModeltime->getper_to_yr( period ) );
+    for( int period = 0; period < modeltime->getmaxper(); ++period ){
+        data[ period ] = getNetTerrestrialUptake( modeltime->getper_to_yr( period ) );
     }
     dboutput4( "global", "General", "NetTerUptake", "Period", "GtC", data );
 
     // Ocean Uptake.
-    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
-        data[ period ] = getNetOceanUptake( mModeltime->getper_to_yr( period ) );
+    for( int period = 0; period < modeltime->getmaxper(); ++period ){
+        data[ period ] = getNetOceanUptake( modeltime->getper_to_yr( period ) );
     }
     dboutput4( "global", "General", "OceanUptake", "Period", "GtC", data );
 
     // Fill up a vector of Net Land-Use Emissions.
     const vector<double> &lucemiss = mEmissionsTable.find("CO2NetLandUse")->second;
-    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
+    for( int period = 0; period < modeltime->getmaxper(); ++period ){
         data[ period ] =
-            lucemiss[yearlyDataIndex(mModeltime->getper_to_yr(period))];
+            lucemiss[yearlyDataIndex(modeltime->getper_to_yr(period))];
     }
     dboutput4( "global", "General", "netLUEm", "Period", "GtC", data );
 }
@@ -888,7 +889,8 @@ void HectorModel::accept( IVisitor* aVisitor, const int aPeriod ) const {
 double HectorModel::getEmissions( const string& aGasName, const int aYear ) const {
     ILogger& climatelog = ILogger::getLogger( "climate-log" );
 
-    if( aYear <= mModeltime->getEndYear() && aYear >= mModeltime->getStartYear() ) {
+    const Modeltime* modeltime = scenario->getModeltime();
+    if( aYear <= modeltime->getEndYear() && aYear >= modeltime->getStartYear() ) {
         if( aGasName == "CO2NetLandUse" ) {
             return (mEmissionsTable.find( aGasName )->second)[ yearlyDataIndex( aYear ) ]; 
         }
@@ -896,7 +898,7 @@ double HectorModel::getEmissions( const string& aGasName, const int aYear ) cons
             map<std::string, std::vector<double> >::const_iterator it =
                 mEmissionsTable.find( aGasName );
             if( it != mEmissionsTable.end() ) {
-                return (it->second)[ mModeltime->getyr_to_per( aYear ) ];
+                return (it->second)[ modeltime->getyr_to_per( aYear ) ];
             }
             else {
                 climatelog.setLevel( ILogger::DEBUG );

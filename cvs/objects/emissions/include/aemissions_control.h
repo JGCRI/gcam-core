@@ -47,11 +47,21 @@
 
 #include <xercesc/dom/DOMNode.hpp>
 #include <string>
+#include "util/base/include/inamed.h"
 #include "util/base/include/iround_trippable.h"
+#include "util/base/include/value.h"
+#include "util/base/include/data_definition_util.h"
 
 // Forward declarations
 class GDP;
 class IInfo;
+class NonCO2Emissions;
+
+// Need to forward declare the subclasses as well.
+class GDPControl;
+class MACControl;
+class LinearControl;
+class ReadInControl;
 
 /*! 
  * \ingroup Objects
@@ -59,7 +69,7 @@ class IInfo;
  * \details The AEmissionsControl class describes a means of reducing emissions.
  * \author Kate Calvin
  */
-class AEmissionsControl: public IRoundTrippable {
+class AEmissionsControl: public INamed, public IRoundTrippable {
 public:
     //! Virtual Destructor.
     virtual ~AEmissionsControl();
@@ -91,11 +101,13 @@ public:
     /*!
      * \brief Perform initializations that only need to be done once per period.
      * \param aRegionName Region name.
-     * \param aLocalInfo The local information object.
+     * \param aTechInfo The local information object.
+     * \param aParentGHG The NonCO2Emissions that contains this object.
      * \param aPeriod Model period.
      */
     virtual void initCalc( const std::string& aRegionName,
-                           const IInfo* aLocalInfo,
+                           const IInfo* aTechInfo,
+                           const NonCO2Emissions* aParentGHG,
                            const int aPeriod ) = 0;
 
 protected:
@@ -153,13 +165,20 @@ protected:
 
     void setEmissionsReduction( double aReduction );
     
-private:
-    //! Name of the reduction so that users can have multiple emissions reductions
-    std::string mName;
-    
-    //! Reduction (usually calculated)
-    double mReduction;
+    DEFINE_DATA(
+        /* Declare all subclasses of AEmissionsControl to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( AEmissionsControl, GDPControl, MACControl, LinearControl, ReadInControl ),
+        
+        //! Name of the reduction so that users can have multiple emissions reductions
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        
+        //! Reduction (usually calculated)
+        DEFINE_VARIABLE( SIMPLE | STATE, "reduction", mReduction, Value )
+    )
 
+private:
     void copy( const AEmissionsControl& aOther );
 
 };

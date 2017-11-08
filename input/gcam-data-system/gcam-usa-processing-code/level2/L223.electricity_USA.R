@@ -418,12 +418,11 @@ L223.StubTechCapFactor_elec_wind_USA <- repeat_and_add_vector(
       subset( L223.StubTechCapFactor_elec, region == "USA" &
               paste( supplysector, subsector ) %in% vecpaste( L114.CapacityFactor_wind_state[ c( supp, subs ) ] ) ),
       reg, states )
-L223.StubTechCapFactor_elec_wind_USA$capacity.factor.capital <- round(
-      L114.CapacityFactor_wind_state$capacity.factor[
+L223.StubTechCapFactor_elec_wind_USA$capacity.factor <- round(
+    L114.CapacityFactor_wind_state$capacity.factor[
          match( vecpaste( L223.StubTechCapFactor_elec_wind_USA[ c( reg, supp, subs ) ] ),
                 vecpaste( L114.CapacityFactor_wind_state[ c( state, supp, subs ) ] ) ) ],
       digits_capacity_factor )
-L223.StubTechCapFactor_elec_wind_USA$capacity.factor.OM <- L223.StubTechCapFactor_elec_wind_USA$capacity.factor.capital
 L223.StubTechCapFactor_elec_wind_USA <- L223.StubTechCapFactor_elec_wind_USA[ names_StubTechCapFactor ]
 
 printlog( "L223.StubTechCapFactor_elec_solar_USA: capacity factors by state and solar electric technology" )
@@ -439,12 +438,11 @@ L223.StubTechCapFactor_elec_solar_USA <- repeat_and_add_vector(
       reg, states )
 #For matching capacity factors to technologies, need to have a name that matches what's in the capacity factor table (which doesn't include storage techs)
 L223.StubTechCapFactor_elec_solar_USA$match_tech <- sub( "_storage", "", L223.StubTechCapFactor_elec_solar_USA$stub.technology )
-L223.StubTechCapFactor_elec_solar_USA$capacity.factor.capital <- round(
-      L223.StubTechCapFactor_elec_solar_USA$capacity.factor.capital * L223.CapFacScaler_solar_state$scaler[
+L223.StubTechCapFactor_elec_solar_USA$capacity.factor <- round(
+      L223.StubTechCapFactor_elec_solar_USA$capacity.factor * L223.CapFacScaler_solar_state$scaler[
          match( vecpaste( L223.StubTechCapFactor_elec_solar_USA[ c( reg, supp, subs, "match_tech" ) ] ),
                 vecpaste( L223.CapFacScaler_solar_state[ c( state, s_s_t ) ] ) ) ],
       digits_cost )
-L223.StubTechCapFactor_elec_solar_USA$capacity.factor.OM <- L223.StubTechCapFactor_elec_solar_USA$capacity.factor.capital
 L223.StubTechCapFactor_elec_solar_USA <- L223.StubTechCapFactor_elec_solar_USA[ names_StubTechCapFactor ]
 
 # -----------------------------------------------------------------------------

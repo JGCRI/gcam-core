@@ -58,15 +58,40 @@ using namespace objects;
 
 extern Scenario* scenario;
 
-InterpolationRule::InterpolationRule():
-mOverwritePolicy( ALWAYS ),
-mWarnWhenOverwritting( false ),
-mIsFixedFunction( false ),
-mUseLastModelYearConstant( false )
+InterpolationRule::InterpolationRule()
 {
+    mFromYear = -1;
+    mToYear = -1;
+    mOverwritePolicy = ALWAYS;
+    mWarnWhenOverwritting = false;
+    mIsFixedFunction = false;
+    mUseLastModelYearConstant = false;
+    mInterpolationFunction = 0;
 }
 
 InterpolationRule::~InterpolationRule() {
+    delete mInterpolationFunction;
+}
+
+InterpolationRule* InterpolationRule::clone() const {
+    InterpolationRule* clone = new InterpolationRule();
+    clone->copy( *this );
+    return clone;
+}
+
+void InterpolationRule::copy( const InterpolationRule& aOther ) {
+    mFromYear = aOther.mFromYear;
+    mFromValue = aOther.mFromValue;
+    mToYear = aOther.mToYear;
+    mToValue = aOther.mToValue;
+    mOverwritePolicy = aOther.mOverwritePolicy;
+    mWarnWhenOverwritting = aOther.mWarnWhenOverwritting;
+    mApplyTo = aOther.mApplyTo;
+    mIsFixedFunction = aOther.mIsFixedFunction;
+    mUseLastModelYearConstant = aOther.mUseLastModelYearConstant;
+    
+    delete mInterpolationFunction;
+    mInterpolationFunction = aOther.mInterpolationFunction ? aOther.mInterpolationFunction->clone() : 0;
 }
 
 const string& InterpolationRule::getXMLNameStatic() {
@@ -137,7 +162,8 @@ bool InterpolationRule::XMLParse( const DOMNode* aNode ) {
             // only set valid functions
             if( tempFn ) {
                 mIsFixedFunction = functionName == FixedInterpolationFunction::getXMLAttrNameStatic();
-                mInterpolationFunction.reset( tempFn );
+                delete mInterpolationFunction;
+                mInterpolationFunction = tempFn;
             }
         }
         else if( nodeName == "overwrite-policy" ) {
@@ -216,7 +242,7 @@ void InterpolationRule::applyInterpolations( PeriodVector<Value>& aValuesToInter
                                              const PeriodVector<Value>& aParsedValues ) const
 {
     // perform error checking before attempting interpolations
-    if( !mInterpolationFunction.get() ) {
+    if( !mInterpolationFunction ) {
         // abort no interpolation function set
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );

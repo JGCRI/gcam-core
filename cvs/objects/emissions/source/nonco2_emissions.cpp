@@ -1,37 +1,37 @@
 /*
-* LEGAL NOTICE
-* This computer software was prepared by Battelle Memorial Institute,
-* hereinafter the Contractor, under Contract No. DE-AC05-76RL0 1830
-* with the Department of Energy (DOE). NEITHER THE GOVERNMENT NOR THE
-* CONTRACTOR MAKES ANY WARRANTY, EXPRESS OR IMPLIED, OR ASSUMES ANY
-* LIABILITY FOR THE USE OF THIS SOFTWARE. This notice including this
-* sentence must appear on any copies of this computer software.
-* 
-* EXPORT CONTROL
-* User agrees that the Software will not be shipped, transferred or
-* exported into any country or used in any manner prohibited by the
-* United States Export Administration Act or any other applicable
-* export laws, restrictions or regulations (collectively the "Export Laws").
-* Export of the Software may require some form of license or other
-* authority from the U.S. Government, and failure to obtain such
-* export control license may result in criminal liability under
-* U.S. laws. In addition, if the Software is identified as export controlled
-* items under the Export Laws, User represents and warrants that User
-* is not a citizen, or otherwise located within, an embargoed nation
-* (including without limitation Iran, Syria, Sudan, Cuba, and North Korea)
-*     and that User is not otherwise prohibited
-* under the Export Laws from receiving the Software.
-* 
-* Copyright 2011 Battelle Memorial Institute.  All Rights Reserved.
-* Distributed as open-source under the terms of the Educational Community 
-* License version 2.0 (ECL 2.0). http://www.opensource.org/licenses/ecl2.php
-* 
-* For further details, see: http://www.globalchange.umd.edu/models/gcam/
-*
-*/
+ * LEGAL NOTICE
+ * This computer software was prepared by Battelle Memorial Institute,
+ * hereinafter the Contractor, under Contract No. DE-AC05-76RL0 1830
+ * with the Department of Energy (DOE). NEITHER THE GOVERNMENT NOR THE
+ * CONTRACTOR MAKES ANY WARRANTY, EXPRESS OR IMPLIED, OR ASSUMES ANY
+ * LIABILITY FOR THE USE OF THIS SOFTWARE. This notice including this
+ * sentence must appear on any copies of this computer software.
+ *
+ * EXPORT CONTROL
+ * User agrees that the Software will not be shipped, transferred or
+ * exported into any country or used in any manner prohibited by the
+ * United States Export Administration Act or any other applicable
+ * export laws, restrictions or regulations (collectively the "Export Laws").
+ * Export of the Software may require some form of license or other
+ * authority from the U.S. Government, and failure to obtain such
+ * export control license may result in criminal liability under
+ * U.S. laws. In addition, if the Software is identified as export controlled
+ * items under the Export Laws, User represents and warrants that User
+ * is not a citizen, or otherwise located within, an embargoed nation
+ * (including without limitation Iran, Syria, Sudan, Cuba, and North Korea)
+ *     and that User is not otherwise prohibited
+ * under the Export Laws from receiving the Software.
+ *
+ * Copyright 2011 Battelle Memorial Institute.  All Rights Reserved.
+ * Distributed as open-source under the terms of the Educational Community
+ * License version 2.0 (ECL 2.0). http://www.opensource.org/licenses/ecl2.php
+ *
+ * For further details, see: http://www.globalchange.umd.edu/models/gcam/
+ *
+ */
 
 
-/*! 
+/*!
  * \file nonco2_emissions.cpp
  * \ingroup Objects
  * \brief NonCO2Emissions class source file.
@@ -78,25 +78,11 @@ NonCO2Emissions::~NonCO2Emissions(){
     clear();
 }
 
-//! Copy constructor.
-NonCO2Emissions::NonCO2Emissions( const NonCO2Emissions& aOther )
-: AGHG( aOther ){
-    copy( aOther );
-}
-
 //! Clone operator.
 NonCO2Emissions* NonCO2Emissions::clone() const {
-    return new NonCO2Emissions( *this );
-}
-
-//! Assignment operator.
-NonCO2Emissions& NonCO2Emissions::operator=( const NonCO2Emissions& aOther ){
-    if( this != &aOther ){
-        AGHG::operator=( aOther );
-        clear();
-        copy( aOther );
-    }
-    return *this;
+    NonCO2Emissions* clone = new NonCO2Emissions();
+    clone->copy( *this );
+    return clone;
 }
 
 //! Clear any dynamically allocated memory
@@ -109,7 +95,10 @@ void NonCO2Emissions::clear() {
 
 //! Copy helper function.
 void NonCO2Emissions::copy( const NonCO2Emissions& aOther ) {
+    AGHG::copy( aOther );
+    
     mEmissionsCoef = aOther.mEmissionsCoef;
+    mAdjustedEmissCoef = aOther.mAdjustedEmissCoef;
     mGDP = aOther.mGDP;
     
     // Deep copy the auto_ptr
@@ -127,7 +116,7 @@ void NonCO2Emissions::copy( const NonCO2Emissions& aOther ) {
 
 void NonCO2Emissions::copyGHGParameters( const AGHG* aPrevGHG ){
     assert( aPrevGHG ); // Make sure valid pointer was passed
-
+    
     // Ensure that prevGHG can be cast to NonCO2Emissions* otherwise return early
     // TODO: Fix this, could use a double dispatch approach to avoid the cast. See
     // the copyParam/copyParamsInto solution in IInput.
@@ -136,9 +125,9 @@ void NonCO2Emissions::copyGHGParameters( const AGHG* aPrevGHG ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
         mainLog << "Bad dynamic cast occurred in copyGHGParameters." << endl;
-        return;
+        abort();
     }
-
+    
     if( !mEmissionsDriver.get() ) {
         mEmissionsDriver.reset( prevComplexGHG->mEmissionsDriver->clone() );
     }
@@ -149,24 +138,38 @@ void NonCO2Emissions::copyGHGParameters( const AGHG* aPrevGHG ){
         mainLog << "Warning, the driver has been changed from "<< prevComplexGHG->mEmissionsDriver->getXMLName() << " to "
                 << mEmissionsDriver->getXMLName() << "." << endl;
     }
-
+    
     if( !mEmissionsCoef.isInited() ) {
         mEmissionsCoef = prevComplexGHG->mEmissionsCoef;
     }
-
+    mAdjustedEmissCoef = prevComplexGHG->mAdjustedEmissCoef;
+    
     mGDP = prevComplexGHG->mGDP;
-
-    /*!
-     * \warning This will always copy previous. You can't overwrite it with new MAC curve.
-     */
-    clear();
-    for ( CControlIterator controlIt = prevComplexGHG->mEmissionsControls.begin();
-          controlIt != prevComplexGHG->mEmissionsControls.end(); ++controlIt )
+    
+    // Always copy control objects from previous period except for those read in for this period that
+    // have the same name and type as an object from the previous period. In that latter case, use
+    // the newer one instead of copying the older one.
+    // Loop through all prev control objects.
+    // TODO: Also check for match of type of object once this is supported (GCAM Fusion may facilitate this)
+    for( CControlIterator prevControlIt = prevComplexGHG->mEmissionsControls.begin();
+         prevControlIt != prevComplexGHG->mEmissionsControls.end(); ++prevControlIt )
     {
-        mEmissionsControls.push_back( (*controlIt)->clone() );
+        // Default to no match, which means will copy forward
+        // If there is nothing read in this is what we want to happen
+        bool isAMatch = false;
+        // Check if any of the new objects match the previous objects
+        for( CControlIterator newControlIt = mEmissionsControls.begin();
+             !isAMatch && newControlIt != mEmissionsControls.end(); ++newControlIt )
+        {
+            isAMatch = (*newControlIt)->getName() == (*prevControlIt)->getName();
+        }
+        // If there was no match, then copy old object forward
+        if( !isAMatch ) {
+            mEmissionsControls.push_back( (*prevControlIt)->clone() );
+        }
     }
 }
-
+                            
 /*!
  * \brief Get the XML node name for output to XML.
  * \details This public function accesses the private constant string, XML_NAME.
@@ -207,9 +210,9 @@ bool NonCO2Emissions::XMLDerivedClassParse( const string& aNodeName, const DOMNo
 void NonCO2Emissions::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mEmissionsCoef, "emiss-coef", aOut, aTabs );
     XMLWriteElementCheckDefault( mInputEmissions, "input-emissions", aOut, aTabs, Value() );
-
+    
     XMLWriteElement( "", mEmissionsDriver->getXMLName(), aOut, aTabs );
-
+    
     for ( CControlIterator controlIt = mEmissionsControls.begin(); controlIt != mEmissionsControls.end(); ++controlIt ) {
         (*controlIt)->toInputXML( aOut, aTabs );
     }
@@ -218,9 +221,10 @@ void NonCO2Emissions::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
 void NonCO2Emissions::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mEmissionsCoef, "emiss-coef", aOut, aTabs );
     XMLWriteElement( mInputEmissions, "input-emissions", aOut, aTabs );
-
+    XMLWriteElement( mAdjustedEmissCoef[ aPeriod ], "control-adjusted-emiss-coef", aOut, aTabs );
+    
     XMLWriteElement( "", mEmissionsDriver->getXMLName(), aOut, aTabs );
-
+    
     for ( CControlIterator controlIt = mEmissionsControls.begin(); controlIt != mEmissionsControls.end(); ++controlIt ) {
         (*controlIt)->toDebugXML( aPeriod, aOut, aTabs );
     }
@@ -251,15 +255,34 @@ void NonCO2Emissions::completeInit( const string& aRegionName, const string& aSe
  * \param aLocalInfo The local information object.
  * \param aPeriod Model period.
  */
-void NonCO2Emissions::initCalc( const string& aRegionName, const IInfo* aLocalInfo, const int aPeriod ) {
-    AGHG::initCalc( aRegionName, aLocalInfo, aPeriod );
-
+void NonCO2Emissions::initCalc( const string& aRegionName, const IInfo* aTechInfo, const int aPeriod ) {
+    AGHG::initCalc( aRegionName, aTechInfo, aPeriod );
+    
     // Recalibrate the emissions coefficient if we have input emissions and this is
     // the initial vintage year of the technology.
-    mShouldCalibrateEmissCoef = mInputEmissions.isInited() && aLocalInfo->getBoolean( "new-vintage-tech", true );
-
+    mShouldCalibrateEmissCoef = mInputEmissions.isInited() && aTechInfo->getBoolean( "new-vintage-tech", true );
+    
     for ( CControlIterator controlIt = mEmissionsControls.begin(); controlIt != mEmissionsControls.end(); ++controlIt ) {
-        (*controlIt)->initCalc( aRegionName, aLocalInfo, aPeriod );
+        (*controlIt)->initCalc( aRegionName, aTechInfo, this, aPeriod );
+    }
+
+    const bool isTechOperating = aTechInfo->getBoolean( "is-tech-operating", true );
+    // Ensure the user set an emissions coefficient in the input, either by reading it in, copying it from the previous period
+    // or reading in the emissions
+    if( !mEmissionsCoef.isInited() && !mShouldCalibrateEmissCoef && isTechOperating ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "No emissions coefficient set for " << getName() << " in " << aRegionName << " in period " << aPeriod << endl;
+        abort();
+    }
+    
+    
+    if ( isTechOperating && !mEmissionsDriver.get() ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "No emissions driver set for " << getName()
+                << " in " << aRegionName << endl;
+        abort();
     }
 }
 
@@ -267,8 +290,8 @@ double NonCO2Emissions::getGHGValue( const string& aRegionName,
                                      const vector<IInput*>& aInputs,
                                      const vector<IOutput*>& aOutputs,
                                      const ICaptureComponent* aSequestrationDevice,
-                                     const int aPeriod ) const 
-{   
+                                     const int aPeriod ) const
+{
     // Constants
     const double CVRT90 = 2.212; // 1975 $ to 1990 $
     // Conversion from teragrams (Tg=MT) of X per EJ to metric tons of X per GJ
@@ -278,15 +301,15 @@ double NonCO2Emissions::getGHGValue( const string& aRegionName,
     if( GHGTax == Marketplace::NO_MARKET_PRICE ){
         return 0;
     }
-
+    
     // Get carbon storage cost from the sequestrion device if there is one.
     double storageCost = aSequestrationDevice ?
         aSequestrationDevice->getStorageCost( aRegionName, getName(), aPeriod ) : 0;
-
+    
     // Get the remove fraction from the sequestration device. The remove
     // fraction is zero if there is no sequestration device.
     double removeFraction = aSequestrationDevice ? aSequestrationDevice->getRemoveFraction( getName() ) : 0;
-
+    
     // Compute emissions reductions. These are only applied in future years
     double emissMult = 1.0;
     if ( aPeriod > scenario->getModeltime()->getFinalCalibrationPeriod() ) {
@@ -294,25 +317,25 @@ double NonCO2Emissions::getGHGValue( const string& aRegionName,
             emissMult *= 1.0 - (*controlIt)->getEmissionsReduction( aRegionName, aPeriod, mGDP );
         }
     }
-
+    
     /*!
      * \pre Attampting to recalibrate the emissions coefficient while trying to price the emissions
      *      will lead to inconsistent GHG value calculations because the value must be calculated
      *      before the new coefficient can be recalibrated.
      */
     assert( !mShouldCalibrateEmissCoef );
-
+    
     // Adjust the GHG tax by taking into account the fraction sequestered, storage costs and adjusting
     // for the emissions intensity as well as reductions.
     double generalizedCost = ( ( 1.0 - removeFraction ) * GHGTax + removeFraction * storageCost ) *
-        mEmissionsCoef * emissMult / CVRT90 * CVRT_Tg_per_EJ_to_Tonne_per_GJ;
-
+    mEmissionsCoef * emissMult / CVRT90 * CVRT_Tg_per_EJ_to_Tonne_per_GJ;
+    
     // The generalized cost returned by the GHG may be negative if
     // emissions crediting is occurring.
     return generalizedCost;
 }
 
-void NonCO2Emissions::calcEmission( const string& aRegionName, 
+void NonCO2Emissions::calcEmission( const string& aRegionName,
                                     const vector<IInput*>& aInputs,
                                     const vector<IOutput*>& aOutputs,
                                     const GDP* aGDP,
@@ -323,20 +346,12 @@ void NonCO2Emissions::calcEmission( const string& aRegionName,
     if( !mGDP ) {
         mGDP = aGDP;
     }
-
-    // Ensure the user set an emissions coefficient in the input, either by reading it in, copying it from the previous period
-    // or reading in the emissions
-    if( !mEmissionsCoef.isInited() && !mShouldCalibrateEmissCoef ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "No emissions coefficient set for " << getName() << " in " << aRegionName << " in period " << aPeriod << endl;
-    }
     
     // Primary output is always stored at position zero and used to drive
     // emissions.
     assert( aOutputs.size() > 0 && aOutputs[ 0 ] );
     double primaryOutput = aOutputs[ 0 ]->getPhysicalOutput( aPeriod );
-
+    
     /*!
      * \warning This is a crude way to determine the input driver. This is problematic
      *          since different input units are not accounted for (although as a driver,
@@ -360,20 +375,23 @@ void NonCO2Emissions::calcEmission( const string& aRegionName,
             emissMult *= 1.0 - (*controlIt)->getEmissionsReduction( aRegionName, aPeriod, mGDP );
         }
     }
-
+    
     // Compute emissions, including any reductions.
     double totalEmissions = mEmissionsCoef * emissDriver * emissMult;
-
+    
     // Compute emissions sequestration and adjust total emissions accordingly.
     if( aSequestrationDevice ) {
         double emissionsSequestered = aSequestrationDevice->calcSequesteredAmount(
            aRegionName, getName(), totalEmissions, aPeriod );
-        mEmissionsSequestered[ aPeriod ] = emissionsSequestered;
         totalEmissions -= emissionsSequestered;
     }
-
+    
     mEmissions[ aPeriod ] = totalEmissions;
-
+    
+    // Stash actual emissions coefficient including impact of any controls. Needed by control
+    // objects that apply reductions relative to this emission coefficient value
+    mAdjustedEmissCoef[ aPeriod ] = emissDriver > 0 ? totalEmissions / emissDriver : 0;
+    
     addEmissionsToMarket( aRegionName, aPeriod );
 }
 
@@ -394,3 +412,26 @@ void NonCO2Emissions::doInterpolations( const int aYear, const int aPreviousYear
      */
     assert( nextComplexEmiss );
 }
+
+/*!
+ * \brief Get the emissions control adjusted emissions coefficient.
+ * \details This method gives access to the actual emissions coefficient used
+ *          in a given period that includes any adjustments made by all the
+ *          emissions controls.  This value is saved during calcEmission so it
+ *          may be used by some future emissions control object.
+ * \param aPeriod The model period to get the coefficient.
+ * \return The emissions coefficient adjusted by emissions controls.
+ * \warning This value is a by product of calcEmission and therefore may change
+ *          within each model iterations.  It is therefore only safe to retrieve
+ *          the value for periods before the current model period.
+ */
+double NonCO2Emissions::getAdjustedEmissCoef( const int aPeriod ) const
+{
+    /*!
+     * \pre The adjusted emissions coefficient has been calculated for this period.
+     */
+    assert( mAdjustedEmissCoef[ aPeriod ].isInited() );
+
+    return mAdjustedEmissCoef[ aPeriod ];
+}
+

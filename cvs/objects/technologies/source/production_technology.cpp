@@ -116,7 +116,9 @@ void ProductionTechnology::copyParamsInto( ProductionTechnology& prodTechIn,
 }
 
 ProductionTechnology* ProductionTechnology::clone() const {
-    return new ProductionTechnology( *this );
+    ProductionTechnology* clone = new ProductionTechnology();
+    clone->copy( *this );
+    return clone;
 }
 
 const string& ProductionTechnology::getXMLName() const {

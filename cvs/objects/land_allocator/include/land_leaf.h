@@ -117,7 +117,8 @@ public:
                                      const int aPeriod );
 
     virtual void calcLUCEmissions( const std::string& aRegionName,
-                                   const int aPeriod, const int aEndYear );
+                                   const int aPeriod, const int aEndYear,
+                                   const bool aStoreFullEmiss );
 
     virtual double getLandAllocation( const std::string& aProductName,
                                       const int aPeriod ) const;
@@ -153,25 +154,35 @@ public:
 	virtual bool isUnmanagedLandLeaf( )  const;
 
 protected:
-    //! Carbon content and emissions calculator for the leaf.
-    std::auto_ptr<ICarbonCalc> mCarbonContentCalc;
-
-    //! Social discount rate stored from the region info.
-    Value mSocialDiscountRate;
-
-    //! Minimum above ground carbon density (used for carbon subsidy and not emissions calculations)
-    Value mMinAboveGroundCDensity;
-
-    //! Minimum below ground carbon density (used for carbon subsidy and not emissions calculations)
-    Value mMinBelowGroundCDensity;
-
-    //! Expected rate of increase of the carbon price from the region info.
-    objects::PeriodVector<Value> mCarbonPriceIncreaseRate;
-
-    //! Container of historical land use.
-    std::auto_ptr<LandUseHistory> mLandUseHistory;
     
-    objects::PeriodVector<Value> mReadinLandAllocation;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        ALandAllocatorItem,
+
+        //! Carbon content and emissions calculator for the leaf.
+        DEFINE_VARIABLE( CONTAINER, "carbon-calc", mCarbonContentCalc, ICarbonCalc* ),
+
+        //! Social discount rate stored from the region info.
+        DEFINE_VARIABLE( SIMPLE, "social-discount-rate", mSocialDiscountRate, Value ),
+
+        //! Minimum above ground carbon density (used for carbon subsidy and not emissions calculations)
+        DEFINE_VARIABLE( SIMPLE, "minAboveGroundCDensity", mMinAboveGroundCDensity, Value ),
+
+        //! Minimum below ground carbon density (used for carbon subsidy and not emissions calculations)
+        DEFINE_VARIABLE( SIMPLE, "minBelowGroundCDensity", mMinBelowGroundCDensity, Value ),
+
+        //! Expected rate of increase of the carbon price from the region info.
+        DEFINE_VARIABLE( ARRAY, "carbon-price-increase-rate", mCarbonPriceIncreaseRate, objects::PeriodVector<Value> ),
+
+        //! Container of historical land use.
+        DEFINE_VARIABLE( CONTAINER, "land-use-history", mLandUseHistory, LandUseHistory* ),
+        
+        DEFINE_VARIABLE( ARRAY, "parsed-landAllocation", mReadinLandAllocation, objects::PeriodVector<Value> ),
+                            
+        //! State value necessary to use Marketplace::addToDemand for CO2 emissions
+        DEFINE_VARIABLE( SIMPLE | STATE, "luc-state", mLastCalcCO2Value, Value )
+    )
 
     double getCarbonSubsidy( const std::string& aRegionName,
                            const int aPeriod ) const;
@@ -186,13 +197,6 @@ protected:
     virtual const std::string& getXMLName() const;
 
     virtual void initLandUseHistory( const std::string& aRegionName );
-    
-    //! State value necessary to use Marketplace::addToDemand for CO2 emissions
-    double mLastCalcCO2Value;
-    
-    //! State value necessary to use Marketplace::addToDemand for expansion constraint
-    double mLastCalcExpansionValue;
-	
 };
 
 #endif // _LAND_LEAF_H_

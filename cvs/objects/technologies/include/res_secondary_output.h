@@ -81,6 +81,8 @@ public:
      * \return The XML name for the class.
      */
     static const std::string& getXMLNameStatic();
+    
+    virtual ~RESSecondaryOutput();
 
     virtual RESSecondaryOutput* clone() const;
 
@@ -94,6 +96,8 @@ public:
                                    const std::string& aRegionName,
                                    ICaptureComponent* aCaptureComponent,
                                    const int aPeriod );
+    
+    virtual double getPhysicalOutput( const int aPeriod ) const;
 
 protected:
     /*!
@@ -102,9 +106,11 @@ protected:
      */
     RESSecondaryOutput();
     
-
-private:
-    const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        SecondaryOutput
+    )
 };
 
 #endif // _RES_SECONDARY_OUTPUT_H_

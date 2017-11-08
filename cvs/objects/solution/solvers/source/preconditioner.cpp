@@ -231,7 +231,6 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
             else {
                 switch(solvable[i].getType()) {
                 case IMarketType::NORMAL:
-                case IMarketType::TRIAL_VALUE:
                     lb = solvable[i].getLowerBoundSupplyPrice();
                     ub = solvable[i].getUpperBoundSupplyPrice();
                     if(oldprice < lb &&
@@ -291,6 +290,22 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                       ++nchg;
                     }
                     break; 
+                case IMarketType::TRIAL_VALUE:
+                    lb = solvable[i].getLowerBoundSupplyPrice();
+                    ub = solvable[i].getUpperBoundSupplyPrice();
+                    if(oldprice < lb) {
+                        newprice = 0.001;
+                        solvable[i].setPrice(newprice);
+                        chg = true;
+                        ++nchg;
+                    }
+                    else if(oldprice > ub) {
+                        newprice = ub;
+                        solvable[i].setPrice(newprice);
+                        chg = true;
+                        ++nchg;
+                    }
+                    break; 
                 case IMarketType::PRICE:
                     // price markets are solving a consistency
                     // condition, but we want to be a bit more
@@ -325,16 +340,52 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                     // greatly affect the trial values.
 
                     // Never intentionally set a trial demand or trial value
-                    // to something less than zero.
-                    if(pass>0) {
-                        if(oldprice <= 0.0) {
+                    // to something less than zero.  If a trial demand
+                    // is less than zero, set it to a small positive
+                    // number.
+                    if(pass>=0) {
+                        double normoldprice = oldprice / solvable[i].getForecastDemand();
+                        double normolddemand = olddmnd / solvable[i].getForecastDemand();
+                        if(olddmnd <= 0.0) {
                             newprice = util::getSmallNumber();
                             solvable[i].setPrice(newprice);
                             chg = true;
                             ++nchg;
-                        }                        
+                        } else if(oldprice <= 0.0 && olddmnd > 0.0) {
+                            newprice = olddmnd;
+                            solvable[i].setPrice(newprice);
+                            chg = true;
+                            ++nchg;
+                        }
+                        else if(normoldprice < 0.1 && fabs(1.0 - normolddemand) < 0.2) {
+                            newprice = olddmnd;
+                            solvable[i].setPrice(newprice);
+                            chg = true;
+                            ++nchg;
+                        }
                     } 
                     break; 
+                case IMarketType::TAX:
+                    lb = solvable[i].getLowerBoundSupplyPrice();
+                    ub = solvable[i].getUpperBoundSupplyPrice();
+                    if( olddmnd <= 0.0 && olddmnd < oldsply && oldprice > ub ) {
+                        newprice = lb - 0.1;
+                        solvable[i].setPrice(newprice);
+                        chg = true;
+                        ++nchg;
+                    } else if(olddmnd > 0.0 && oldprice < lb ) {
+                        newprice = lb + 0.01;
+                        solvable[i].setPrice(newprice);
+                        chg = true;
+                        ++nchg;
+                    } else if(oldprice > ub && olddmnd < oldsply) {
+                        newprice = ub - 0.1;
+                        solvable[i].setPrice(newprice);
+                        chg = true;
+                        ++nchg;
+                    }
+                    break;
+
                 default:
                     // no action for tax markets, etc.
                     chg = false;
@@ -347,6 +398,8 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                       << marker << std::setw(8) << newprice << "\t"
                       << std::setw(8) << oldsply << "\t"
                       << std::setw(8) << olddmnd << "\t"
+                      << std::setw(8) << solvable[i].getForecastPrice() << "\t"
+                      << std::setw(8) << solvable[i].getForecastDemand() << "\t"
                       << solvable[i].getName() << "\n";
             if(nchg==0 && pass > 2)
                 // no additional effect from further passes.

@@ -44,10 +44,11 @@
  */
 
 #include <string>
-#include <vector>
 #include <xercesc/dom/DOMNode.hpp>
+
 #include "functions/include/minicam_input.h"
 #include "util/base/include/value.h"
+#include "util/base/include/time_vector.h"
 
 class Tabs;
 
@@ -161,29 +162,37 @@ protected:
 
     InputOMFixed();
 
-    //! Cost of the capital input adjusted for the additional costs of the
-    //! capture component.
-    std::vector<Value> mAdjustedCosts;
-
-    //! Coefficient for production or demand function. Coefficients are not
-    // read in and are initialized to 1, but can increase over time with
-    // technical change.
-    std::vector<Value> mAdjustedCoefficients;
-
-    //! Input specific technical change.
-    Value mTechChange;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        MiniCAMInput,
+        
+        //! Cost of the non-energy input adjusted for the additional costs of the
+        //! capture component.
+        DEFINE_VARIABLE( ARRAY, "adjusted-cost", mAdjustedCosts, objects::PeriodVector<Value> ),
+        
+        //! Coefficient for production or demand function. Coefficients are not
+        // read in and are initialized to 1, but can increase over time with
+        // technical change.
+        DEFINE_VARIABLE( ARRAY, "adjusted-coef", mAdjustedCoefficients, objects::PeriodVector<Value> ),
+        
+        //! Input specific technical change.
+        DEFINE_VARIABLE( SIMPLE, "tech-change", mTechChange, Value ),
+        
+        //! Variable O&M cost.
+        DEFINE_VARIABLE( SIMPLE, "OM-fixed", mOMFixed, Value ),
+        
+        //! Calculated value for the levelized cost of capital.
+        DEFINE_VARIABLE( SIMPLE, "levelized-OM-fixed", mLevelizedOMFixedCost, Value ),
+        
+        //! Technology capacity factor.
+        // TODO: create one in technology and use that instead.
+        DEFINE_VARIABLE( SIMPLE, "capacity-factor", mCapacityFactor, double )
+    )
+    
+    void copy( const InputOMFixed& aOther );
 
 private:
-    //! Fixed O&M cost.
-    Value mOMFixed;
-
-    //! Calculated value for the levelized cost of capital.
-    Value mLevelizedOMFixedCost;
-
-    //! Technology capacity factor.
-    // TODO: create one in technology and use that instead.
-    double mCapacityFactor;
-
     const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 
 
     // Function to calculate the levelized fixed O&M cost.

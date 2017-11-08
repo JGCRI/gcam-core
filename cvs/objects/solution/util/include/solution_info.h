@@ -56,7 +56,6 @@
 class Market;
 class IInfo;
 class SolutionInfoSet;
-class SupplyDemandCurve;
 class IActivity;
 namespace objects {
     class Atom;
@@ -105,8 +104,6 @@ public:
     double getED() const;
     double getEDLeft() const;
     double getEDRight() const;
-    void storeValues();
-    void restoreValues();
     void expandBracket( const double aAdjFactor );
     double getRelativeED() const;
     bool isWithinTolerance() const;
@@ -141,7 +138,6 @@ public:
 #if GCAM_PARALLEL_ENABLED
     GcamFlowGraph* getFlowGraph() const;
 #endif
-    SupplyDemandCurve createSDCurve();
     void printDerivatives( std::ostream& aOut ) const;
     /*!
     * \brief Binary function used to order SolutionInfo* pointers by decreasing relative excess demand. 
@@ -193,10 +189,18 @@ private:
     //! Market specific delta price for derivative calcs
     double mDeltaPrice;
     
+    //! Market specific lower bound price for expected supply/demand behavior.
+    double mLowerBoundSupplyPrice;
+    
+    //! Market specific upper bound price for expected supply/demand behavior.
+    double mUpperBoundSupplyPrice;
+    
     void print( std::ostream& out ) const;
     double getLogChangeInRawPrice() const;
     double getLogChangeInRawDemand() const;
     double getLogChangeInRawSupply() const;
+    double getLowerBoundSupplyPriceInternal() const;
+    double getUpperBoundSupplyPriceInternal() const;
 };
 
 #endif // _SOLUTION_INFO_H_

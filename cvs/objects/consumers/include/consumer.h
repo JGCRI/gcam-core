@@ -151,7 +151,14 @@ public:
     void setTypeHelper( TechnologyType* aTechType ){}
 
 protected:
-    void calcInputDemand( double aConsumption, const std::string& aRegionName, 
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        BaseTechnology
+    )
+    
+    void copy( const Consumer& aOther );
+    void calcInputDemand( double aConsumption, const std::string& aRegionName,
         const std::string& aSectorName, int aPeriod );
 
     double calcRealGNP( NationalAccount& aNationalAccount, const std::string& aRegionName,

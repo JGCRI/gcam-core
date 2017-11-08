@@ -40,22 +40,6 @@
 # aggregate regions, compute differences, etc.
 
 # -----------------------------------------------------------------------------
-# Get a table of GCAM output by title (or table number).
-extract_data <- function( t, fnum=-1 ) {
-    if(fnum != -1) {
-        d <- tables[[ FILES[ fnum ] ]][[ t ]]
-    } else {
-        d <- tables[[ FILES[ 1 ] ]][[ t ]]
-        i <- 2
-        while(i <= length(FILES)) {
-            d <- rbind(d, tables[[ FILES[ i ] ]][[ t ]])
-            i <- i + 1
-        }
-    }
-    return(d)
-}	# convenience function
-
-# -----------------------------------------------------------------------------
 # Adds a Global region which is the sum of all the regions in d
 add_global_sum <- function(d) {
     names_keep <- names(d)[ !(names(d) %in% c("region", "value")) ]
@@ -88,11 +72,11 @@ aggregate_regions <- function(d, mapping, colname="agg_region") {
 # of some variable of interest named by var_name between scenarios from the base
 # scenario named by base_scn_name
 compute_energy_reduction <- function(d, var_name, base_scn_name=BASE_SCENARIO_NAME) {
-    d.reduction <- aggregate(value ~ scenario + region + Year, d, FUN=sum)
-    d.reduction <- dcast(d.reduction, region + Year ~ scenario)
-    d.reduction[, !(names(d.reduction) %in% c("region", "Year"))] <- 
-         d.reduction[,base_scn_name] - d.reduction[, !(names(d.reduction) %in% c("region", "Year"))]
-    d.reduction <- melt(d.reduction, id.vars=c("region", "Year"), variable.name="scenario")
+    d.reduction <- aggregate(value ~ scenario + region + year, d, FUN=sum)
+    d.reduction <- dcast(d.reduction, region + year ~ scenario)
+    d.reduction[, !(names(d.reduction) %in% c("region", "year"))] <- 
+         d.reduction[,base_scn_name] - d.reduction[, !(names(d.reduction) %in% c("region", "year"))]
+    d.reduction <- melt(d.reduction, id.vars=c("region", "year"), variable.name="scenario")
     d.reduction[, var_name] <- "energy reduction"
     d.reduction$Units <- d$Units[1]
     #for(scn in unique(d.reduction$scenario)) {
@@ -118,8 +102,8 @@ split_neg_geom_bar <- function(p) {
 # -----------------------------------------------------------------------------
 # A helper function to subset the years to plot before continuing with the
 # do_graph.
-do_graph_YearSubset <- function(p, year_subset=2035, ...) {
-    p$data <- subset(p$data, Year <= year_subset)
+do_graph_yearSubset <- function(p, year_subset=2035, ...) {
+    p$data <- subset(p$data, year <= year_subset)
     p$data[TITLE_FIELD_NAME] <- paste(year_subset, p$data[1,TITLE_FIELD_NAME], sep=OUTPUT_FILENAME_SEP)
     p[[ "filter_data" ]][[ "year_subset" ]] <- year_subset
     # TODO: adjust plot dimensions?

@@ -50,11 +50,13 @@
 #include <boost/noncopyable.hpp>
 
 #include "containers/include/tree_item.h"
+#include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iparsable.h"
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/time_vector.h"
 #include "util/base/include/value.h"
+#include "util/base/include/data_definition_util.h"
 
 // For LandUsageType enum.
 #include "land_allocator/include/iland_allocator.h"
@@ -63,8 +65,14 @@
 class IInfo;
 class Tabs;
 class LandUseHistory;
+
+// Need to forward declare the subclasses as well.
+class LandAllocator;
 class LandNode;
 class IDiscreteChoice;
+class LandLeaf;
+class CarbonLandLeaf;
+class UnmanagedLandLeaf;
 
 
 /*!
@@ -104,6 +112,7 @@ enum LandAllocatorItemType {
  *          - Elements: None
  */
 class ALandAllocatorItem : public TreeItem<ALandAllocatorItem>,
+                           public INamed,
                            public IVisitable,
                            public IParsable,
                            public IRoundTrippable,
@@ -348,7 +357,8 @@ public:
      *        land-use change emissions.
      */
     virtual void calcLUCEmissions( const std::string& aRegionName,
-                                   const int aPeriod, const int aEndYear ) {}
+                                   const int aPeriod, const int aEndYear,
+                                   const bool aStoreFullEmiss ) {}
 
      /*!
      * \brief Set the profit rate of unmanaged land leafs
@@ -425,49 +435,56 @@ protected:
     //! Parent of this node
     const ALandAllocatorItem* mParent;
 
-    //! Land allocated typically in thous km2.
-    objects::PeriodVector<double> mLandAllocation;
+    DEFINE_DATA(
+        /* Declare all subclasses of ALandAllocatorItem to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( ALandAllocatorItem, LandAllocator, LandNode, LandLeaf,
+                                CarbonLandLeaf, UnmanagedLandLeaf ),
 
-    /*!
-     * \brief Share of parent's total land.
-     * \details This is equal to the land allocated to this node divided by land
-     *          allocated to node above. This is always the normalized share and
-     *          so is always between zero and one inclusive.
-     */
-    objects::PeriodVector<double> mShare;
-    
-    //! Share weights for calibrating historical shares, or turning how future
-    //! crops/technologies will compete.
-    objects::PeriodVector<Value> mShareWeight;  
+        //! Land allocated typically in thous km2.
+        DEFINE_VARIABLE( ARRAY | STATE, "land-allocation", mLandAllocation, objects::PeriodVector<Value> ),
+        /*!
+         * \brief Share of parent's total land.
+         * \details This is equal to the land allocated to this node divided by land
+         *          allocated to node above. This is always the normalized share and
+         *          so is always between zero and one inclusive.
+         */
+        DEFINE_VARIABLE( ARRAY | STATE, "share", mShare, objects::PeriodVector<Value> ),
+        
+        //! Share weights for calibrating historical shares, or turning how future
+        //! crops/technologies will compete.
+        DEFINE_VARIABLE( ARRAY | STATE, "share-weight", mShareWeight, objects::PeriodVector<Value> ),
 
-    //! Land observed profit rate
-    objects::PeriodVector<double> mProfitRate;
+        //! Land observed profit rate
+        DEFINE_VARIABLE( ARRAY | STATE, "profit-rate", mProfitRate, objects::PeriodVector<Value> ),
 
-    //! The ghost unnormalized share, or the share a future crop/technology would
-    //! get if it was available in the final calibration period at the profit rate
-    //! calculated in the final calibration period.
-    objects::PeriodVector<Value> mGhostUnormalizedShare;
-    
-    //! A flag to indicate that this land item intends to use it's ghost share in
-    //! in terms of the share it would recieve if it's average profitability were
-    //! the same as.. TODO!!! finish off this comment when we figure out exactly
-    //! what we want out of it.
-    bool mIsGhostShareRelativeToDominantCrop;
-    
-    //! Name of the land allocator item. This is the name of the product for
-    //! leafs and name of the type of land for nodes.
-    std::string mName;
+        //! The ghost unnormalized share, or the share a future crop/technology would
+        //! get if it was available in the final calibration period at the profit rate
+        //! calculated in the final calibration period.
+        DEFINE_VARIABLE( ARRAY, "ghost-unnormalized-share", mGhostUnormalizedShare, objects::PeriodVector<Value> ),
+        
+        //! A flag to indicate that this land item intends to use it's ghost share in
+        //! in terms of the share it would recieve if it's average profitability were
+        //! the same as.. TODO!!! finish off this comment when we figure out exactly
+        //! what we want out of it.
+        DEFINE_VARIABLE( SIMPLE, "is-ghost-share-relative", mIsGhostShareRelativeToDominantCrop, bool ),
 
-    /*!
-     * \brief Enum that stores the item's type.
-     * \note This is stored to avoid a virtual function call.
-     */
-    LandAllocatorItemType mType;
+        //! Name of the land allocator item. This is the name of the product for
+        //! leafs and name of the type of land for nodes.
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
-    //! name of land expansion constraint cost curve
-    std::string mLandExpansionCostName;
-    bool mIsLandExpansionCost;
-    
+        /*!
+         * \brief Enum that stores the item's type.
+         * \note This is stored to avoid a virtual function call.
+         */
+        DEFINE_VARIABLE( SIMPLE, "land-type", mType, LandAllocatorItemType ),
+
+        //! name of land expansion constraint cost curve
+        // TODO: should these be in the leaf?
+        DEFINE_VARIABLE( SIMPLE, "landConstraintCurve", mLandExpansionCostName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "is-land-expansion-cost", mIsLandExpansionCost, bool )
+    )
 };
 
 typedef std::unary_function<const ALandAllocatorItem*, bool> SearchPredicate;

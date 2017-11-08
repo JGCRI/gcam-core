@@ -56,6 +56,11 @@ MiniCAMInput::MiniCAMInput(): mTypeFlags( 0 )
 MiniCAMInput::~MiniCAMInput() {
 }
 
+void MiniCAMInput::copy( const MiniCAMInput& aOther ) {
+    mName = aOther.mName;
+    mKeywordMap = aOther.mKeywordMap;
+}
+
 const string& MiniCAMInput::getName() const {
     return mName;
 }

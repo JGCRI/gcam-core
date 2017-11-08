@@ -51,9 +51,6 @@ using namespace xercesc;
 
 extern Scenario* scenario;
 
-// static initialize.
-const string RESSecondaryOutput::XML_REPORTING_NAME = "res-output-secondary";
-
 /*! \brief Get the XML name for reporting to XML file.
 *
 * This public function accesses the private constant string, XML_NAME. This way
@@ -63,7 +60,7 @@ const string RESSecondaryOutput::XML_REPORTING_NAME = "res-output-secondary";
 * \return The constant XML_NAME.
 */
 const string& RESSecondaryOutput::getXMLReportingName() const{
-    return XML_REPORTING_NAME;
+    return getXMLNameStatic();
 }
 
 const string& RESSecondaryOutput::getXMLNameStatic()
@@ -77,9 +74,14 @@ RESSecondaryOutput::RESSecondaryOutput()
 {
 }
 
+RESSecondaryOutput::~RESSecondaryOutput() {
+}
+
 RESSecondaryOutput* RESSecondaryOutput::clone() const
 {
-    return new RESSecondaryOutput( *this );
+    RESSecondaryOutput* clone = new RESSecondaryOutput();
+    clone->copy( *this );
+    return clone;
 }
 
 bool RESSecondaryOutput::isSameType( const string& aType ) const
@@ -100,7 +102,13 @@ void RESSecondaryOutput::setPhysicalOutput( const double aPrimaryOutput,
     // fill all of demand. If this technology also added to supply, supply would
     // not equal demand.
     Marketplace* marketplace = scenario->getMarketplace();
-    mLastCalcValue = marketplace->addToSupply( mName, mMarketName.empty() ? aRegionName : mMarketName,
-                              mPhysicalOutputs[ aPeriod ], mLastCalcValue, aPeriod, true );
+    marketplace->addToSupply( mName, mMarketName.empty() ? aRegionName : mMarketName,
+                              mPhysicalOutputs[ aPeriod ], aPeriod, true );
 
+}
+
+double RESSecondaryOutput::getPhysicalOutput( const int aPeriod ) const
+{
+    assert( mPhysicalOutputs[ aPeriod ].isInited() );
+    return mPhysicalOutputs[ aPeriod ];
 }

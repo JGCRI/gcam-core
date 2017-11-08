@@ -105,9 +105,16 @@ public:
 
     virtual void setBaseCost( const double aBaseCost, const std::string &aFailMsg );
 
-private:
-    //! The logit exponents by period.
-    objects::PeriodVector<double> mLogitExponent;
+protected:
+
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        IDiscreteChoice,
+        
+        //! The logit exponents by period.
+        DEFINE_VARIABLE( ARRAY, "logit-exponent", mLogitExponent, objects::PeriodVector<double> )
+    )
 
     double mOutputCost;
 

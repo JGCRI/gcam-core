@@ -148,7 +148,7 @@ public class WriteLocalBaseXDB implements Runnable {
         // BaseX is particular about valid container names and will change them without warning
         // so we check explicitly.
         String containerNameUnmodified = dbLocationFile.getName();
-        String containerName = IO.get( containerNameUnmodified ).dbname();
+        String containerName = IO.get( containerNameUnmodified ).dbName();
         if( !containerNameUnmodified.equals( containerName ) ) {
             System.out.println( "WARNING: container name '"+containerNameUnmodified+
                     "' contains invalid characters, it has been changed to: '"+containerName+"'" );
@@ -323,7 +323,7 @@ public class WriteLocalBaseXDB implements Runnable {
         QueryProcessor queryProc = new QueryProcessor( insertStatement, mContext );
         try {
             // not expecting anything to be in the results
-            queryProc.execute();
+            queryProc.value();
         }
         catch( Exception queryError ) {
             queryError.printStackTrace();

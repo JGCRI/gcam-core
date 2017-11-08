@@ -50,13 +50,14 @@
 #include <map>
 #include <memory>
 #include <xercesc/dom/DOMNode.hpp>
+
 #include "util/base/include/istandard_component.h"
-#include <boost/shared_ptr.hpp>
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/value.h"
 #include "functions/include/ifunction.h" // For TechChange struct.
 #include "util/base/include/iround_trippable.h"
 #include "technologies/include/itechnology.h"
+#include "util/base/include/time_vector.h"
 
 // Forward declaration
 class AGHG;
@@ -156,12 +157,11 @@ class Technology: public ITechnology
     friend class EnergyBalanceTable;
 public:
     Technology( const std::string& aName, const int aYear );
-    Technology( const Technology& aTech );
-    Technology& operator=( const Technology& techIn );
     virtual Technology* clone() const = 0;
     virtual ~Technology();
 
     virtual void setYear( const int aNewYear );
+    virtual int getYear() const;
     
     virtual bool isSameType( const std::string& aType ) const;
 
@@ -228,7 +228,10 @@ public:
     virtual double getTotalGHGCost( const std::string& aRegionName, const std::string& aSectorName, 
                             const int aPeriod ) const;
 
-    Value getShareWeight() const;
+    double getShareWeight() const;
+
+    double getCapacityFactor() const;
+
     virtual Value getParsedShareWeight() const;
 
     virtual int getNumbGHGs() const;
@@ -278,81 +281,91 @@ public:
     
     virtual void doInterpolations( const Technology* aPrevTech, const Technology* aNextTech );
 protected:
-    //! Vector of output objects representing the outputs of the technology.
-    std::vector<IOutput*> mOutputs;
-
-    std::auto_ptr<IInfo> mTechnologyInfo; //!< The technology's information store.
-
-    // These member variables are ordered by decreasing size to optimize memory
-    // usage. When adding a new variable add it to the section with the
-    // variables type.
     
-    //! Technology output unit
-    const std::string mOutputUnit;
-    
-    std::string mName; //!< Name of this technology.
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        ITechnology,
 
-    /*!
-     * \brief The calculated cost of the Technology period.
-     * \note calcCost must be called in an iteration before this value is valid.
-     * \sa Technology::calcCost
-     */
-    std::vector<double> mCosts;
+        // These member variables are ordered by decreasing size to optimize memory
+        // usage. When adding a new variable add it to the section with the
+        // variables type.
 
-    //! Vector of inputs to the Technology.
-    std::vector<IInput*> mInputs;
+        //! Suite of greenhouse gases
+        DEFINE_VARIABLE( CONTAINER, "ghg", mGHG, std::vector<AGHG*> ),
 
-    //! Calibration value
-    std::auto_ptr<ICalData> mCalValue;
+        //! Vector of output objects representing the outputs of the technology.
+        DEFINE_VARIABLE( CONTAINER, "output", mOutputs, std::vector<IOutput*> ),
 
-    //! Suite of greenhouse gases
-    std::vector<AGHG*> ghg;
-    
-    //! The objects which combine to calculate the shutdown coefficient.
-    std::vector<IShutdownDecider*> mShutdownDeciders;
-    
-    //! The current production state for each period.
-    std::vector<IProductionState*> mProductionState;
-    
-    //! An add-on which sequesters emissions.
-    std::auto_ptr<ICaptureComponent> mCaptureComponent;
-    
-    //! An add-on which calculates technical change for the Technology.
-    std::auto_ptr<ITechnicalChangeCalc> mTechChangeCalc;
+        //! Vector of inputs to the Technology.
+        DEFINE_VARIABLE( CONTAINER, "input", mInputs, std::vector<IInput*> ),
+                                
+        //! The current production state for each period.
+        DEFINE_VARIABLE( CONTAINER, "production-state", mProductionState, objects::PeriodVector<IProductionState*> ),
 
+        //! The objects which combine to calculate the shutdown coefficient.
+        DEFINE_VARIABLE( CONTAINER, "shutdown-decider", mShutdownDeciders, std::vector<IShutdownDecider*> ),
+                                
+        //! An add-on which sequesters emissions.
+        DEFINE_VARIABLE( CONTAINER, "capture-component", mCaptureComponent, ICaptureComponent* ),
+                                
+        //! Calibration value
+        DEFINE_VARIABLE( CONTAINER, "calibration-value", mCalValue, ICalData* ),
+
+        //! An add-on which calculates technical change for the Technology.
+        DEFINE_VARIABLE( CONTAINER, "tech-change-calc", mTechChangeCalc, ITechnicalChangeCalc* ),
+
+        /*!
+         * \brief The calculated cost of the Technology period.
+         * \note calcCost must be called in an iteration before this value is valid.
+         * \sa Technology::calcCost
+         */
+        DEFINE_VARIABLE( ARRAY | STATE, "cost", mCosts, objects::PeriodVector<Value> ),
+
+        //! A map of a keyword to its keyword group
+        DEFINE_VARIABLE( SIMPLE, "keyword", mKeywordMap, std::map<std::string, std::string> ),
+
+        //! Name of this technology.
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+
+        //! Logit share weight
+        DEFINE_VARIABLE( SIMPLE | STATE, "share-weight", mShareWeight, Value ),
+
+        //! The Logit share weight that was parsed by the user
+        DEFINE_VARIABLE( SIMPLE, "parsed-share-weight", mParsedShareWeight, Value ),
+
+        //! The annual capacity factor
+        DEFINE_VARIABLE( SIMPLE, "capacity-factor", mCapacityFactor, double ),
+        
+        //! Price multiplier (multiplies costs but not secondary revenue)
+        DEFINE_VARIABLE( SIMPLE, "pMultiplier", mPMultiplier, double ),
+
+        //! Amount of fixed supply for this tech, exclusive of constraints
+        DEFINE_VARIABLE( SIMPLE, "fixedOutput", mFixedOutput, double ),
+
+        //! Alpha-zero coefficient for the current period. This is calculated by the
+        //! mTechChangeCalc if one exists, otherwise it is set to 1. It is constant
+        //! throughout a period.
+        DEFINE_VARIABLE( SIMPLE, "alpha-zero", mAlphaZero, double ),
+
+        //! period year or vintage
+        DEFINE_VARIABLE( SIMPLE, "year", mYear, int ),
+
+        //! Number of years for which the vintage exists.
+        DEFINE_VARIABLE( SIMPLE, "lifetime", mLifetimeYears, int )
+    )
+
+    //! The technology's information store.
+    std::auto_ptr<IInfo> mTechnologyInfo;
+    
     //! Production function for the technology.
     const IFunction* mProductionFunction;
-
-    //! Logit share weight
-    Value mShareWeight;
-
-    //! The Logit share weight that was parsed by the user
-    Value mParsedShareWeight;
-    
-    //! Price multiplier (multiplies costs but not secondary revenue)
-    double mPMultiplier;
-
-    //! Amount of fixed supply for this tech, exclusive of constraints
-    double mFixedOutput;
-
-    //! Alpha-zero coefficient for the current period. This is calculated by the
-    //! mTechChangeCalc if one exists, otherwise it is set to 1. It is constant
-    //! throughout a period.
-    double mAlphaZero;
-
-    int year; //!< period year or vintage
-
-    //! Number of years for which the vintage exists.
-    int mLifetimeYears;
 
     //! The current marginal revenue.  TODO: cleaner solution for getting
     //! this information to the profit shutdown decider.
     mutable double mMarginalRevenue;
 
     static double getFixedOutputDefault();
-
-    //! A map of a keyword to its keyword group
-    std::map<std::string, std::string> mKeywordMap;
 
     void setProductionState( const int aPeriod );
 
@@ -390,9 +403,9 @@ protected:
 
     virtual const IInfo* getTechInfo() const;
     int calcDefaultLifetime() const;
+    void copy( const Technology& techIn );
 private:
     void init();
-    void copy( const Technology& techIn );
     void clear();
 };
 

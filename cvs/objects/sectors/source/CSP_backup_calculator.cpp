@@ -57,16 +57,22 @@ using namespace xercesc;
 /*!
  * \brief Constructor.
  */
-CSPBackupCalculator::CSPBackupCalculator():
-  mMaxBackupFraction (  0.40 ), 
-  mMaxSectorLoadServed( 0.15 ),
-  mBackupExponent ( 4.0 ) 
+CSPBackupCalculator::CSPBackupCalculator()
 {
+    mMaxBackupFraction = 0.40;
+    mMaxSectorLoadServed = 0.15;
+    mBackupExponent = 4.0;
 }
 
 // Documentation is inherited.
 CSPBackupCalculator* CSPBackupCalculator::clone() const {
-    return new CSPBackupCalculator( *this );
+    CSPBackupCalculator* clone = new CSPBackupCalculator();
+    clone->mMaxBackupFraction = mMaxBackupFraction;
+    clone->mMaxSectorLoadServed = mMaxSectorLoadServed;
+    clone->mBackupExponent = mBackupExponent;
+    clone->mNoSunDayBackup = mNoSunDayBackup;
+    
+    return clone;
 }
 
 // Documentation is inherited.
@@ -161,6 +167,7 @@ double CSPBackupCalculator::getMarginalBackupCapacity( const string& aSector,
                                                        const string& aElectricSector,
                                                        const string& aResource,
                                                        const string& aRegion,
+                                                       const double aTechCapacityFactor,
                                                        const double aReserveMargin,
                                                        const double aAverageGridCapacityFactor,
                                                        const int aPeriod ) const
@@ -176,6 +183,7 @@ double CSPBackupCalculator::getAverageBackupCapacity( const string& aSector,
                                                       const string& aElectricSector,
                                                       const string& aResource,
                                                       const string& aRegion,
+                                                      const double aTechCapacityFactor,
                                                       const double aReserveMargin,
                                                       const double aAverageGridCapacityFactor,
                                                       const int aPeriod ) const
@@ -194,7 +202,7 @@ double CSPBackupCalculator::getAverageBackupCapacity( const string& aSector,
     // Determine the intermittent share of output.
     // Note that this method in CSP differs as it is based on energy share not capacity
     double elecShare = calcIntermittentShare( aSector, aElectricSector, aResource,
-                                              aRegion, aReserveMargin, aAverageGridCapacityFactor,
+                                              aRegion, aTechCapacityFactor, aReserveMargin, aAverageGridCapacityFactor,
                                               aPeriod );
 
     // No backup required for zero share.
@@ -243,6 +251,7 @@ double CSPBackupCalculator::calcIntermittentShare( const string& aSector,
                                                    const string& aElectricSector,
                                                    const string& aResource,
                                                    const string& aRegion,
+                                                   const double aTechCapacityFactor,
                                                    const double aReserveMargin,
                                                    const double aAverageGridCapacityFactor,
                                                    const int aPeriod ) const

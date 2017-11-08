@@ -188,30 +188,6 @@ void SolutionInfoSet::updateElasticities() {
     }
 }
 
-//! Have all contained SolutionInfo's store their current values.
-void SolutionInfoSet::storeValues(){
-    // Store values for solvable.
-    for( SetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
-        iter->storeValues();
-    }
-    // Store values for unsolvable.
-    for( SetIterator iter = unsolvable.begin(); iter != unsolvable.end(); ++iter ){
-        iter->storeValues();
-    }
-}
-
-//! Have all contained SolutionInfo's restore their previous values.
-void SolutionInfoSet::restoreValues(){
-    // Retore values for solvable.
-    for( SetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
-        iter->restoreValues();
-    }
-    // Store values for unsolvable. 
-    for( SetIterator iter = unsolvable.begin(); iter != unsolvable.end(); ++iter ){
-        iter->restoreValues();
-    }
-}
-
 /*! \brief Check if the bracket is empty and reset it if neccessary.
 * \return Whether any brackets were reset. 
 */
@@ -664,8 +640,8 @@ void SolutionInfoSet::findAndPrintSD( World* aWorld, Marketplace* aMarketplace, 
         if( solvable[ i ].isSolved() ){
             continue;
         }
-        SupplyDemandCurve sdCurve = solvable[ i ].createSDCurve();
-        sdCurve.calculatePoints( numPointsForSD, aWorld, aMarketplace, aPeriod );
+        SupplyDemandCurve sdCurve( i, solvable[ i ].getName() );
+        sdCurve.calculatePoints( numPointsForSD, *this, aWorld, aMarketplace, aPeriod );
         sdCurve.print( aLogger );
     }
 }

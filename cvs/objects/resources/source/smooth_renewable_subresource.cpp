@@ -57,15 +57,13 @@
 
 extern Scenario* scenario;
 
-// SmoothRenewableSubresource::sXMLName
-const std::string SmoothRenewableSubresource::sXMLName = "smooth-renewable-subresource";
+// Constructor: SmoothRenewableSubresource: ********************************
 
-// Constructor: SmoothRenewableSubresource
-SmoothRenewableSubresource::SmoothRenewableSubresource():
-mCostCurve(),
-mPriceExponent( 0.01 ),
-mMidPrice( 0 )
+SmoothRenewableSubresource::SmoothRenewableSubresource(void)
+   : mCostCurve()
 {
+    mPriceExponent = 0.01;
+    mMidPrice = 0;
 }
 
 // Destructor: SmoothRenewableSubresource
@@ -85,7 +83,8 @@ const std::string& SmoothRenewableSubresource::getXMLName( void ) const{
 // Modifies:
 // Post: Return the XML tag name
 const std::string& SmoothRenewableSubresource::getXMLNameStatic( void ){
-    return sXMLName;
+    static const std::string XML_NAME = "smooth-renewable-subresource";
+    return XML_NAME;
 }
 
 // SmoothRenewableSubresource::XMLDerivedClassParse
@@ -189,7 +188,7 @@ void SmoothRenewableSubresource::annualsupply( int aPeriod, const GDP* aGDP, dou
     
     // Calculate expansion in supply due to GDP increase
     double gpdSupplyExpansion = std::pow( aGDP->getApproxGDP( aPeriod ) / aGDP->getApproxGDP( 0 ),
-                                         gdpSupplyElasticity );
+                                         mGdpSupplyElasticity );
     
     // now convert to absolute value of production
     mAnnualProd[ aPeriod ] = fractionAvailable * mMaxAnnualSubResource[aPeriod] * gpdSupplyExpansion;

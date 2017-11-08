@@ -128,7 +128,8 @@ public:
                                      const int aYear );
 
     virtual void calcLUCEmissions( const std::string& aRegionName,
-                                   const int aPeriod, const int aEndYear );
+                                   const int aPeriod, const int aEndYear,
+                                   const bool aStoreFullEmiss );
                               
     virtual ALandAllocatorItem* findProductLeaf( const std::string& aProductName );
 protected:
@@ -139,13 +140,24 @@ protected:
 
     virtual void toInputXMLDerived( std::ostream& aOutput,
                                     Tabs* aTabs ) const;
+
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        /*!
+         * \note Defining LandNode as the parent type of LandAllocator since that is
+         *       the parent type which contains shared data members.
+         */
+        LandNode,
+
+        //! Rate at which carbon price is expected to increase
+        DEFINE_VARIABLE( ARRAY, "carbonPriceIncreaseRate", mCarbonPriceIncreaseRate, objects::PeriodVector<double> ),
+
+        //! Integer storing the soil time scale for a region
+        DEFINE_VARIABLE( SIMPLE, "soilTimeScale", mSoilTimeScale, int )
+    )
+
 private:
-    //! Rate at which carbon price is expected to increase
-    objects::PeriodVector<double> mCarbonPriceIncreaseRate;
-
-    //! Integer storing the soil time scale for a region
-    int mSoilTimeScale;                              
-
     void calibrateLandAllocator( const std::string& aRegionName, const int aPeriod );
 
     void checkLandArea( const std::string& aRegionName, const int aPeriod );

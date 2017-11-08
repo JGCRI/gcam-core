@@ -43,10 +43,15 @@
  * \brief IDiscreteChoice class declaration file
  * \author Robert Link
  */
+#include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/iparsable.h"
 #include "util/base/include/iround_trippable.h"
+#include "util/base/include/data_definition_util.h"
 
+// Need to forward declare the subclasses as well.
+class RelativeCostLogit;
+class AbsoluteCostLogit;
 
 /*!
  * \ingroup Objects
@@ -60,7 +65,7 @@
  *       The sectors and and subsectors are currently not using this and instead
  *       are calculating a straight average cost.
  */
-class IDiscreteChoice : public IParsable, public IRoundTrippable {
+class IDiscreteChoice : public IParsable, public IRoundTrippable, private boost::noncopyable {
 public:
     /*!
      * \brief Constructor.
@@ -148,6 +153,15 @@ public:
      * \param aFailMsg String to prepend to log message, if an illegal value is passed for aBaseCost.
      */
     virtual void setBaseCost( const double aBaseCost, const std::string &aFailMsg ) = 0;
+    
+protected:
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of IDiscreteChoice to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( IDiscreteChoice, RelativeCostLogit, AbsoluteCostLogit )
+    )
 };
 
 // Inline function definitions.

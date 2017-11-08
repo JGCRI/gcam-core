@@ -45,6 +45,7 @@
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
+#include "containers/include/iinfo.h"
 
 using namespace std;
 using namespace xercesc;
@@ -83,13 +84,26 @@ const string& InputCapital::getXMLReportingName() const{
 
 //! Constructor
 InputCapital::InputCapital()
-: mAdjustedCosts( scenario->getModeltime()->getmaxper() ),
-  mAdjustedCoefficients( scenario->getModeltime()->getmaxper() ){
+{
 }
 
 //! Clone the input.
 InputCapital* InputCapital::clone() const {
-    return new InputCapital( *this );
+    InputCapital* clone = new InputCapital();
+    clone->copy( *this );
+    return clone;
+}
+
+void InputCapital::copy( const InputCapital& aOther ) {
+    MiniCAMInput::copy( aOther );
+    
+    mTechChange = aOther.mTechChange;
+    mCapitalOvernight = aOther.mCapitalOvernight;
+    mFixedChargeRate = aOther.mFixedChargeRate;
+    mLifetimeCapital = aOther.mLifetimeCapital;
+    mCapacityFactor = aOther.mCapacityFactor;
+    
+    // calculated parameters are not copied.
 }
 
 bool InputCapital::isSameType( const string& aType ) const {
@@ -131,21 +145,17 @@ void InputCapital::XMLParse( const xercesc::DOMNode* node ) {
 
         const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
         if ( nodeName == "capital-overnight" ) {
-            mCapitalOvernight = XMLHelper<double>::getValue( curr );
+            mCapitalOvernight = XMLHelper<Value>::getValue( curr );
         }
         // Capital lifetime may be different from technology lifetime.
         else if( nodeName == "lifetime-capital" ){
-            mLifetimeCapital = XMLHelper<double>::getValue( curr );
+            mLifetimeCapital = XMLHelper<Value>::getValue( curr );
         }
         else if( nodeName == "fixed-charge-rate" ){
             mFixedChargeRate = XMLHelper<double>::getValue( curr );
         }
-        // TODO: Create capacity factor for technology and use that instead.
-        else if( nodeName == "capacity-factor" ){
-            mCapacityFactor = XMLHelper<double>::getValue( curr );
-        }
         else if( nodeName == "tech-change" ){
-            mTechChange = XMLHelper<double>::getValue( curr );
+            mTechChange = XMLHelper<Value>::getValue( curr );
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -163,7 +173,6 @@ void InputCapital::toInputXML( ostream& aOut,
     XMLWriteElement( mCapitalOvernight, "capital-overnight", aOut, aTabs );
     XMLWriteElement( mLifetimeCapital, "lifetime-capital", aOut, aTabs );
     XMLWriteElement( mFixedChargeRate, "fixed-charge-rate", aOut, aTabs );
-    XMLWriteElement( mCapacityFactor, "capacity-factor", aOut, aTabs );
     XMLWriteElementCheckDefault( mTechChange, "tech-change", aOut, aTabs, Value( 0 ) );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
@@ -190,11 +199,16 @@ void InputCapital::completeInit( const string& aRegionName,
                                  const string& aTechName,
                                  const IInfo* aTechInfo )
 {   
+    
+    // technology capacity factor
+    // capacity factor needed before levelized cost calculation
+    mCapacityFactor = aTechInfo->getDouble("tech-capacity-factor", true);
+                                           
     // completeInit() is called for each technology for each period
     // so levelized capital cost calculation is done here.
 
     mLevelizedCapitalCost = calcLevelizedCapitalCost();
-
+    
     // Initialize the adjusted costs in all periods to the base calculate
     // levelized capital cost.
     // These costs may be adjusted by the Technology, for instance for capture
@@ -213,7 +227,6 @@ double InputCapital::calcLevelizedCapitalCost( void ) const
     // TODO: Use more detailed approach for calculating levelized
     // capital cost that includes number of years for construction.
     // TODO: Get interest/discount rate from capital market.
-    // TODO: Use technology's capacity factor.
     // TODO: Use Value class for units conversion.
     double levelizedCapitalCost = 
 	mFixedChargeRate * mCapitalOvernight / ( FunctionUtils::HOURS_PER_YEAR() * mCapacityFactor * FunctionUtils::GJ_PER_KWH() );
@@ -332,8 +345,6 @@ void InputCapital::doInterpolations( const int aYear, const int aPreviousYear,
     mTechChange = nextCapInput->mTechChange;
     
     // interpolate the costs
-    mCost = util::linearInterpolateY( aYear, aPreviousYear, aNextYear,
-                                      prevCapInput->mCost, nextCapInput->mCost );
     mCapitalOvernight = util::linearInterpolateY( aYear, aPreviousYear, aNextYear,
                                                   prevCapInput->mCapitalOvernight,
                                                   nextCapInput->mCapitalOvernight );
