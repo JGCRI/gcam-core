@@ -86,7 +86,7 @@ test_that("info works", {
   expect_error(info("L100.FAO_ag_Exp_t", downstream = 1))
 
   # opens help page
-  expect_is(info("module_aglu_batch_an_input.xml"), "help_files_with_topic")
+  expect_is(info("module_aglu_batch_an_input_xml"), "help_files_with_topic")
 
   # Most of this functionality is tested through the dstrace tests above
 })
