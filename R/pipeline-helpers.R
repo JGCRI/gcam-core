@@ -63,13 +63,13 @@ left_join_error_no_match <- function(d, ..., ignore_columns = NULL) {
 #' @return Joined table.  In case of multiple matches, only the first will be
 #' included.
 left_join_keep_first_only <- function(x, y, by) {
-    ## Our strategy is to use "distinct" to filter y to a single element for
-    ## each match category, then join that to x.
-    . <- NULL                           # silence notes on package check
-    ll <- as.list(by)
-    names(ll) <- NULL
-    do.call(distinct_, c(list(y), ll, list(.keep_all = TRUE))) %>%
-      left_join(x, ., by = by)
+  ## Our strategy is to use "distinct" to filter y to a single element for
+  ## each match category, then join that to x.
+  . <- NULL                           # silence notes on package check
+  ll <- as.list(by)
+  names(ll) <- NULL
+  do.call(distinct_, c(list(y), ll, list(.keep_all = TRUE))) %>%
+    left_join(x, ., by = by)
 }
 
 
@@ -121,20 +121,20 @@ left_join_keep_first_only <- function(x, y, by) {
 #' @importFrom assertthat assert_that
 #' @importFrom tibble as_tibble
 fast_left_join <- function(left, right, by) {
-    assert_that(is.data.frame(left))
-    assert_that(is.data.frame(right))
+  assert_that(is.data.frame(left))
+  assert_that(is.data.frame(right))
 
-    ## To key or not to key?  A key is required for the right table, but it is
-    ## optional for the left, *provided* that the join columns are in order and
-    ## come before the non-join columns.  Keying takes time, but it makes the
-    ## join eventually go a little faster.  In the one example we have, it
-    ## keying the left table doesn't seem to pay for itself in the join, but
-    ## it's possible that depends on the specifics of the input.  For now we
-    ## *won't* key, instead opting to reorder the columns of the left table.
-    dtl <- data.table(left[ , union(by, names(left))])
-    dtr <- data.table(right, key=by)
+  ## To key or not to key?  A key is required for the right table, but it is
+  ## optional for the left, *provided* that the join columns are in order and
+  ## come before the non-join columns.  Keying takes time, but it makes the
+  ## join eventually go a little faster.  In the one example we have, it
+  ## keying the left table doesn't seem to pay for itself in the join, but
+  ## it's possible that depends on the specifics of the input.  For now we
+  ## *won't* key, instead opting to reorder the columns of the left table.
+  dtl <- data.table(left[ , union(by, names(left))])
+  dtr <- data.table(right, key=by)
 
-    as_tibble(dtr[dtl, allow.cartesian=TRUE])
+  as_tibble(dtr[dtl, allow.cartesian=TRUE])
 }
 
 
@@ -318,7 +318,7 @@ gdp_deflator <- function(year, base_year) {
     if(year == 1975 && base_year == 2008) return(0.3104)  # conv_2008_1975_USD
     if(year == 1975 && base_year == 2009) return(0.3104)  # conv_2009_1975_USD
     if(year == 1990 && base_year == 2010) return(1.0/gdp_deflator(2010, 1990))
-                                        # conv_2010_1990_USD
+    # conv_2010_1990_USD
   }
 
   # This time series is the BEA "A191RD3A086NBEA" product
@@ -341,4 +341,22 @@ gdp_deflator <- function(year, base_year) {
   assert_that(base_year %in% gdp_years)
 
   gdp[as.character(year)] / gdp[as.character(base_year)]
+}
+
+
+#' Helper function: call \code{tidyr::gather} for year-like columns and convert them to integers
+#'
+#' @param d Data frame to operate on (a tibble)
+#' @param value_col Name of the resulting (gathered) value column, string or unquoted column name
+#' @param year_pattern Year pattern to match against
+#' @return The gathered (reshaped) data frame.
+#' @export
+gather_years <- function(d, value_col = "value", year_pattern = YEAR_PATTERN) {
+  assert_that(is_tibble(d))
+  assert_that(is.character(value_col))
+  assert_that(is.character(year_pattern))
+  d %>%
+    gather(year, value, matches(year_pattern)) %>%
+    mutate(year = as.integer(year)) %>%
+    setNames(sub("value", value_col, names(.)))
 }
