@@ -79,6 +79,32 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
     # silence check package notes
 
 
+    # Some helpful functions:
+    #
+    # global_energy_to_USA_nonGlobalTech - takes global energy inputs for non global tech
+    # from L222.en_transformation.R and processes for use in USA
+    global_energy_to_USA_nonGlobalTech <- function(data){
+
+      data %>%
+        filter(region == "USA",
+               supplysector %in% gcamusa.SECTOR_EN_NAMES) %>%
+        write_to_all_states(names(data)) %>%
+        filter((subsector == "oil refining" & region %in% oil_refining_states) |
+                 subsector != "oil refining") %>%
+        mutate(supplysector = subsector)
+
+    } # global_energy_to_USA_nonGlobalTech
+
+    # global_energy_to_USA_GlobalTech - takes global energy inputs for global tech
+    # from L222.en_transformation.R and processes for use in USA
+    global_energy_to_USA_GlobalTech <- function(data){
+
+      data %>%
+        filter(sector.name %in% gcamusa.SECTOR_EN_NAMES) %>%
+        mutate(sector.name = subsector.name)
+
+    } # global_energy_to_USA_GlobalTech
+
 
     # build tables
 
@@ -183,7 +209,7 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
     # L222.Production_USArefining: calibrated refinery production in USA (consuming output of states)
     # Aggregated to the supplysector/subsector/technology level
     ### I'm pretty sure all this aggregation does is remove the state column, since the state information is
-    ### implicit in the technology column. THat is, the aggregation doesn't actually change any values - is
+    ### implicit in the technology column. That is, the aggregation doesn't actually change any values - is
     ### this intended?
       L122.out_EJ_state_refining_F %>%
         filter(year %in% BASE_YEARS) %>%
@@ -205,10 +231,74 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
         L222.Production_USArefining
 
 
+      # Process energy files from L222.en_transformation.R for use in the USA,
+      # slightly differently processing for global tech vs not inputs
+      L222.SubsectorLogit_en %>%
+        global_energy_to_USA_nonGlobalTech() ->
+        L222.SubsectorLogit_en_USA
 
 
+      L222.StubTech_en %>%
+        global_energy_to_USA_nonGlobalTech() ->
+        L222.StubTech_en_USA
 
 
+      L222.StubTechCoef_refining %>%
+        global_energy_to_USA_nonGlobalTech() ->
+        L222.StubTechCoef_refining_USA
+
+
+      L222.GlobalTechInterp_en %>%
+        global_energy_to_USA_GlobalTech() ->
+        L222.GlobalTechInterp_en_USA
+
+
+      L222.GlobalTechCoef_en %>%
+        global_energy_to_USA_GlobalTech() ->
+        L222.GlobalTechCoef_en_USA
+
+
+      L222.GlobalTechCost_en %>%
+        global_energy_to_USA_GlobalTech() ->
+        L222.GlobalTechCost_en_USA
+
+
+      L222.GlobalTechShrwt_en %>%
+        global_energy_to_USA_GlobalTech() ->
+        L222.GlobalTechShrwt_en_USA
+
+
+      L222.GlobalTechCapture_en %>%
+        global_energy_to_USA_GlobalTech() ->
+        L222.GlobalTechCapture_en_USA
+
+
+      L222.GlobalTechSCurve_en %>%
+        global_energy_to_USA_GlobalTech() ->
+        L222.GlobalTechSCurve_en_USA
+
+
+      ### The same processing for Optional/currently NULL inputs
+
+      # L222.GlobalTechShutdownProfit_en  %>%
+      #   global_energy_to_USA_GlobalTech()->
+      #   L222.GlobalTechShutdownProfit_en_USA
+
+      # L222.GlobalTechShutdown_en %>%
+      #   global_energy_to_USA_GlobalTech() ->
+      #   L222.GlobalTechShutdown_en_USA
+
+      # L222.GlobalTechSCurveProfit_en %>%
+      #   global_energy_to_USA_GlobalTech() ->
+      #   L222.GlobalTechSCurveProfit_en_USA
+
+      # L222.GlobalTechLifetimeProfit_en %>%
+      #   global_energy_to_USA_GlobalTech ->
+      #   L222.GlobalTechLifetimeProfit_en_USA
+
+      # L222.GlobalTechLifetime_en %>%
+      #   global_energy_to_USA_GlobalTech ->
+      #   L222.GlobalTechLifetime_en_USA
 
 
 
