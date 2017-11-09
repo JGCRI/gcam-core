@@ -5,7 +5,7 @@ context("pipeline-helpers")
 
 
 test_that("missing_data works", {
-  expect_is(missing_data(), "tibble")   # not sure what else to test
+  expect_true(is_tibble(missing_data()))   # not sure what else to test
 })
 
 
