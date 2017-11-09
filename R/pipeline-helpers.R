@@ -361,5 +361,5 @@ gather_years <- function(d, value_col = "value", year_pattern = YEAR_PATTERN) {
   d %>%
     gather(year, value, matches(year_pattern)) %>%
     mutate(year = as.integer(year)) %>%
-    setNames(sub("value", value_col, names(.)))
+    stats::setNames(sub("value", value_col, names(.)))
 }
