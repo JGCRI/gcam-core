@@ -988,10 +988,7 @@ module_energy_L223.electricity <- function(command, ...) {
         add_precursors("energy/A23.subsector_shrwt", "common/GCAM_region_names") ->
         L223.SubsectorShrwt_elec
     } else {
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Unitless") %>%
-        add_comments("Data not created") %>%
+      missing_data() %>%
         add_legacy_name("L223.SubsectorShrwt_elec") ->
         L223.SubsectorShrwt_elec
     }
@@ -1005,10 +1002,7 @@ module_energy_L223.electricity <- function(command, ...) {
         add_precursors("energy/A23.subsector_shrwt", "common/GCAM_region_names") ->
         L223.SubsectorShrwtFllt_elec
     } else {
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Unitless") %>%
-        add_comments("Data not created") %>%
+      missing_data() %>%
         add_legacy_name("L223.SubsectorShrwtFllt_elec") ->
         L223.SubsectorShrwtFllt_elec
     }
@@ -1203,10 +1197,7 @@ module_energy_L223.electricity <- function(command, ...) {
         add_precursors("energy/A23.globaltech_retirement") ->
         L223.GlobalTechShutdown_elec
     } else {
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Unitless") %>%
-        add_comments("Data not created") %>%
+      missing_data() %>%
         add_legacy_name("L223.GlobalTechShutdown_elec") ->
         L223.GlobalTechShutdown_elec
     }
@@ -1220,10 +1211,7 @@ module_energy_L223.electricity <- function(command, ...) {
         add_precursors("energy/A23.globaltech_retirement") ->
         L223.GlobalIntTechShutdown_elec
     } else {
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Unitless") %>%
-        add_comments("Data not created") %>%
+      missing_data() %>%
         add_legacy_name("L223.GlobalIntTechShutdown_elec") ->
         L223.GlobalIntTechShutdown_elec
     }
@@ -1237,10 +1225,7 @@ module_energy_L223.electricity <- function(command, ...) {
         add_precursors("energy/A23.globaltech_retirement") ->
         L223.GlobalTechSCurve_elec
     } else {
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Unitless") %>%
-        add_comments("Data not created") %>%
+      missing_data() %>%
         add_legacy_name("L223.GlobalTechSCurve_elec") ->
         L223.GlobalTechSCurve_elec
     }
@@ -1254,10 +1239,7 @@ module_energy_L223.electricity <- function(command, ...) {
         add_precursors("energy/A23.globaltech_retirement") ->
         L223.GlobalIntTechSCurve_elec
     } else {
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Unitless") %>%
-        add_comments("Data not created") %>%
+      missing_data() %>%
         add_legacy_name("L223.GlobalIntTechSCurve_elec") ->
         L223.GlobalIntTechSCurve_elec
     }
@@ -1271,10 +1253,7 @@ module_energy_L223.electricity <- function(command, ...) {
         add_precursors("energy/A23.globaltech_retirement") ->
         L223.GlobalTechLifetime_elec
     } else {
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Unitless") %>%
-        add_comments("Data not created.") %>%
+      missing_data() %>%
         add_legacy_name("L223.GlobalTechLifetime_elec") ->
         L223.GlobalTechLifetime_elec
     }
@@ -1288,10 +1267,7 @@ module_energy_L223.electricity <- function(command, ...) {
         add_precursors("energy/A23.globaltech_retirement") ->
         L223.GlobalIntTechLifetime_elec
     } else {
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Unitless") %>%
-        add_comments("Data not created.") %>%
+      missing_data() %>%
         add_legacy_name("L223.GlobalIntTechLifetime_elec") ->
         L223.GlobalIntTechLifetime_elec
     }
@@ -1305,10 +1281,7 @@ module_energy_L223.electricity <- function(command, ...) {
         add_precursors("energy/A23.globaltech_retirement") ->
         L223.GlobalTechProfitShutdown_elec
     } else {
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Unitless") %>%
-        add_comments("Data not created.") %>%
+      missing_data() %>%
         add_legacy_name("L223.GlobalTechProfitShutdown_elec") ->
         L223.GlobalTechProfitShutdown_elec
     }
@@ -1322,10 +1295,7 @@ module_energy_L223.electricity <- function(command, ...) {
         add_precursors("energy/A23.globaltech_retirement") ->
         L223.GlobalIntTechProfitShutdown_elec
     } else {
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Unitless") %>%
-        add_comments("By default, data not created. Contained in ") %>%
+      missing_data() %>%
         add_legacy_name("L223.GlobalIntTechProfitShutdown_elec") ->
         L223.GlobalIntTechProfitShutdown_elec
     }

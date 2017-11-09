@@ -283,12 +283,8 @@ module_energy_L252.transportation <- function(command, ...) {
         add_precursors("common/GCAM_region_names", "energy/A52.subsector_shrwt") ->
         L252.SubsectorShrwt_trn
      } else {
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Data not created") %>%
-        add_comments("Data not created") %>%
-        add_legacy_name("L252.SubsectorShrwt_trn") %>%
-        add_flags(FLAG_NO_TEST) ->
+       missing_data() %>%
+        add_legacy_name("L252.SubsectorShrwt_trn") ->
         L252.SubsectorShrwt_trn
      }
 
@@ -302,12 +298,8 @@ module_energy_L252.transportation <- function(command, ...) {
         add_precursors("common/GCAM_region_names", "energy/A52.subsector_shrwt") ->
         L252.SubsectorShrwtFllt_trn
     } else {
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Data not created") %>%
-        add_comments("Data not created") %>%
-        add_legacy_name("L252.SubsectorShrwtFllt_trn") %>%
-        add_flags(FLAG_NO_TEST) ->
+      missing_data() %>%
+        add_legacy_name("L252.SubsectorShrwtFllt_trn") ->
         L252.SubsectorShrwtFllt_trn
     }
 
@@ -321,12 +313,8 @@ module_energy_L252.transportation <- function(command, ...) {
         add_precursors("common/GCAM_region_names", "energy/A52.subsector_interp") ->
         L252.SubsectorInterp_trn
     } else {
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Data not created") %>%
-        add_comments("Data not created") %>%
-        add_legacy_name("L252.SubsectorInterp_trn") %>%
-        add_flags(FLAG_NO_TEST) ->
+      missing_data() %>%
+        add_legacy_name("L252.SubsectorInterp_trn") ->
         L252.SubsectorInterp_trn
     }
 
@@ -340,12 +328,8 @@ module_energy_L252.transportation <- function(command, ...) {
         add_precursors("common/GCAM_region_names", "energy/A52.subsector_interp") ->
         L252.SubsectorInterpTo_trn
     } else {
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Data not created") %>%
-        add_comments("Data not created") %>%
-        add_legacy_name("L252.SubsectorInterpTo_trn") %>%
-        add_flags(FLAG_NO_TEST) ->
+      missing_data() %>%
+        add_legacy_name("L252.SubsectorInterpTo_trn") ->
         L252.SubsectorInterpTo_trn
     }
 

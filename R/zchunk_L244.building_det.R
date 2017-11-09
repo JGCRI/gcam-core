@@ -731,7 +731,7 @@ module_energy_L244.building_det <- function(command, ...) {
         select(-base.service) %>%
         mutate(supplysector = building.service.input)
     } else {
-      L244.DeleteGenericService <- tibble(x = NA)
+      rm("L244.DeleteGenericService")
     }
 
 
@@ -881,10 +881,7 @@ module_energy_L244.building_det <- function(command, ...) {
         add_precursors("energy/A44.subsector_shrwt", "common/GCAM_region_names", "L144.end_use_eff")  ->
         L244.SubsectorShrwt_bld
     } else {
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Unitless") %>%
-        add_comments("Data not created") %>%
+      missing_data() %>%
         add_legacy_name("L244.SubsectorShrwt_bld") ->
         L244.SubsectorShrwt_bld
     }
@@ -898,10 +895,7 @@ module_energy_L244.building_det <- function(command, ...) {
         add_precursors("energy/A44.subsector_shrwt", "common/GCAM_region_names", "L144.end_use_eff")  ->
         L244.SubsectorShrwtFllt_bld
     } else {
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Unitless") %>%
-        add_comments("Data not created") %>%
+      missing_data() %>%
         add_legacy_name("L244.SubsectorShrwtFllt_bld") ->
         L244.SubsectorShrwtFllt_bld
     }
@@ -915,10 +909,7 @@ module_energy_L244.building_det <- function(command, ...) {
         add_precursors("energy/A44.subsector_interp", "common/GCAM_region_names", "L144.end_use_eff")  ->
         L244.SubsectorInterp_bld
     } else {
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Unitless") %>%
-        add_comments("Data not created") %>%
+      missing_data() %>%
         add_legacy_name("L244.SubsectorInterp_bld") ->
         L244.SubsectorInterp_bld
     }
@@ -932,10 +923,7 @@ module_energy_L244.building_det <- function(command, ...) {
         add_precursors("energy/A44.subsector_interp", "common/GCAM_region_names", "L144.end_use_eff")  ->
         L244.SubsectorInterpTo_bld
     } else {
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Unitless") %>%
-        add_comments("Data not created") %>%
+      missing_data() %>%
         add_legacy_name("L244.SubsectorInterpTo_bld") ->
         L244.SubsectorInterpTo_bld
     }
@@ -1006,13 +994,19 @@ module_energy_L244.building_det <- function(command, ...) {
       add_precursors("L144.NEcost_75USDGJ") ->
       L244.GlobalTechCost_bld
 
-    L244.DeleteGenericService %>%
-      add_title("Removing non-existent services") %>%
-      add_units("NA") %>%
-      add_comments("Categories from L244.GenericBaseService with no base.service") %>%
-      add_legacy_name("L244.DeleteGenericService") %>%
-      same_precursors_as(L244.GenericBaseService) ->
-      L244.DeleteGenericService
+    if(exists("L244.DeleteGenericService")) {
+      L244.DeleteGenericService %>%
+        add_title("Removing non-existent services") %>%
+        add_units("NA") %>%
+        add_comments("Categories from L244.GenericBaseService with no base.service") %>%
+        add_legacy_name("L244.DeleteGenericService") %>%
+        same_precursors_as(L244.GenericBaseService) ->
+        L244.DeleteGenericService
+    } else {
+      missing_data() %>%
+        add_legacy_name("L244.DeleteGenericService") ->
+        L244.DeleteGenericService
+    }
 
     L244.FuelPrefElast_bld_SSP3 %>%
       add_title("Fuel preference elasticities for buildings: SSP3") %>%
