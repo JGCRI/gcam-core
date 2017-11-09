@@ -277,11 +277,11 @@ unprotect_integer_cols <- function(d) {
 #'
 #' @return A tibble used to signal missing (not created) data
 missing_data <- function() {
-  tibble(x = NA) %>%
+  tibble(x = NA_real_) %>%
     add_title("Data not created") %>%
     add_units("Data not created") %>%
     add_comments("Data not created") %>%
-    add_flags(FLAG_NO_TEST)
+    add_flags(FLAG_NO_TEST, FLAG_NO_OUTPUT)
 }
 
 #' Calculate a gross domestic product (GDP) implicit price deflator between two years.
