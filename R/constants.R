@@ -498,8 +498,6 @@ gcamusa.DEFAULT_MARKET <- "USA"
 gcamusa.GAS_ADJ_THRESH <- 5
 gcamusa.DIGITS_COST <- 4
 
-# some delimiters
-gcamusa.STATE_SUBSECTOR_DELIMITER <- " "
 
 # Uncomment these lines to run under 'timeshift' conditions
 # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
