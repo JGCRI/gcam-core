@@ -499,192 +499,59 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("state, subsector, supplysector, and region fromj L222.Tech_USAen is renamed.") %>%
       add_legacy_name("L222.PassThroughSector_USAen") %>%
-      same_precursors_as(L222.Tech_USAen)->
+      same_precursors_as(L222.Tech_USAen) ->
       L222.PassThroughSector_USAen
 
     L222.TechEQUIV %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L222.TechEQUIV") %>%
-      add_precursors("gcam-usa/states_subregions",
-                     "energy/calibrated_techs",
-                     "L222.Supplysector_en",
-                     "L222.SubsectorLogit_en",
-                     "L222.StubTech_en",
-                     "L222.StubTechCoef_refining",
-                     "L222.GlobalTechInterp_en",
-                     "L222.GlobalTechCoef_en",
-                     "L222.GlobalTechCost_en",
-                     "L222.GlobalTechShrwt_en",
-                     "L222.GlobalTechCapture_en",
-                     #"L222.GlobalTechShutdownProfit_en",
-                     "L222.GlobalTechShutdown_en",
-                     #"L222.GlobalTechSCurveProfit_en",
-                     "L222.GlobalTechSCurve_en",
-                     #"L222.GlobalTechLifetimeProfit_en",
-                     "L222.GlobalTechLifetime_en",
-                     "L122.out_EJ_state_refining_F",
-                     "L202.CarbonCoef") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_title("table of technology equivalencies for pass-through-technology") %>%
+      add_units("NA") %>%
+      add_comments("user defined.") ->
       L222.TechEQUIV
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
+    L222.Tech_USAen %>%
+      add_title("The technology pass-throughs used to set the proper node name, USA region.") %>%
       add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("USA supplysector and subsector information from L222.SubsectorLogit_en is") %>%
+      add_comments("repeated for all US states and updated.") %>%
       add_legacy_name("L222.Tech_USAen") %>%
-      add_precursors("gcam-usa/states_subregions",
-                     "energy/calibrated_techs",
-                     "L222.Supplysector_en",
-                     "L222.SubsectorLogit_en",
-                     "L222.StubTech_en",
-                     "L222.StubTechCoef_refining",
-                     "L222.GlobalTechInterp_en",
-                     "L222.GlobalTechCoef_en",
-                     "L222.GlobalTechCost_en",
-                     "L222.GlobalTechShrwt_en",
-                     "L222.GlobalTechCapture_en",
-                     #"L222.GlobalTechShutdownProfit_en",
-                     "L222.GlobalTechShutdown_en",
-                     #"L222.GlobalTechSCurveProfit_en",
-                     "L222.GlobalTechSCurve_en",
-                     #"L222.GlobalTechLifetimeProfit_en",
-                     "L222.GlobalTechLifetime_en",
-                     "L122.out_EJ_state_refining_F",
-                     "L202.CarbonCoef") %>%
+      add_precursors("L222.SubsectorLogit_en") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L222.Tech_USAen
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L222.TechShrwt_USAen %>%
+      add_title("technology shareweights in each year, USA region") %>%
+      add_units("NA") %>%
+      add_comments("L222.Tech_USAen is repeated for model base year and future years and shareweights of 0 and") %>%
+      add_comments("1 are added for each, respectively. Overwritten in calibration.") %>%
       add_legacy_name("L222.TechShrwt_USAen") %>%
-      add_precursors("gcam-usa/states_subregions",
-                     "energy/calibrated_techs",
-                     "L222.Supplysector_en",
-                     "L222.SubsectorLogit_en",
-                     "L222.StubTech_en",
-                     "L222.StubTechCoef_refining",
-                     "L222.GlobalTechInterp_en",
-                     "L222.GlobalTechCoef_en",
-                     "L222.GlobalTechCost_en",
-                     "L222.GlobalTechShrwt_en",
-                     "L222.GlobalTechCapture_en",
-                     #"L222.GlobalTechShutdownProfit_en",
-                     "L222.GlobalTechShutdown_en",
-                     #"L222.GlobalTechSCurveProfit_en",
-                     "L222.GlobalTechSCurve_en",
-                     #"L222.GlobalTechLifetimeProfit_en",
-                     "L222.GlobalTechLifetime_en",
-                     "L122.out_EJ_state_refining_F",
-                     "L202.CarbonCoef") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      same_precursors_as(L222.Tech_USAen) ->
       L222.TechShrwt_USAen
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L222.TechInterp_USAen") %>%
-      add_precursors("gcam-usa/states_subregions",
-                     "energy/calibrated_techs",
-                     "L222.Supplysector_en",
-                     "L222.SubsectorLogit_en",
-                     "L222.StubTech_en",
-                     "L222.StubTechCoef_refining",
-                     "L222.GlobalTechInterp_en",
-                     "L222.GlobalTechCoef_en",
-                     "L222.GlobalTechCost_en",
-                     "L222.GlobalTechShrwt_en",
-                     "L222.GlobalTechCapture_en",
-                     #"L222.GlobalTechShutdownProfit_en",
-                     "L222.GlobalTechShutdown_en",
-                     #"L222.GlobalTechSCurveProfit_en",
-                     "L222.GlobalTechSCurve_en",
-                     #"L222.GlobalTechLifetimeProfit_en",
-                     "L222.GlobalTechLifetime_en",
-                     "L122.out_EJ_state_refining_F",
-                     "L202.CarbonCoef") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    L222.TechInterp_USAen %>%
+      add_title("Technology shareweights, USA region") %>%
+      add_units("NA") %>%
+      add_comments("Technology interpolation only applies to calibrated technologies.For biomass liquids,") %>%
+      add_comments("allow state shares to shift over time since future techs are different than present techs.") %>%
+      add_legacy_name("L222.TechInterp_USAen")  %>%
+      same_precursors_as(L222.Tech_USAen) ->
       L222.TechInterp_USAen
 
-    # tibble() %>%
-    #   add_title("descriptive title of data") %>%
-    #   add_units("units") %>%
-    #   add_comments("comments describing how data generated") %>%
-    #   add_comments("can be multiple lines") %>%
-    #   add_legacy_name("L222.TechShrwt_USAen") %>%
-    #   add_precursors("precursor1", "precursor2", "etc") %>%
-    #   # typical flags, but there are others--see `constants.R`
-    #   add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-    #   L222.TechShrwt_USAen
-
-    tibble() %>%
-      add_title("descriptive title of data") %>%
+    L222.TechCoef_USAen %>%
+      add_title("technology coefficients and market names, USA region") %>%
       add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("Data from L222.TechShrwt_USAen is renamed and filled out.") %>%
       add_legacy_name("L222.TechCoef_USAen") %>%
-      add_precursors("gcam-usa/states_subregions",
-                     "energy/calibrated_techs",
-                     "L222.Supplysector_en",
-                     "L222.SubsectorLogit_en",
-                     "L222.StubTech_en",
-                     "L222.StubTechCoef_refining",
-                     "L222.GlobalTechInterp_en",
-                     "L222.GlobalTechCoef_en",
-                     "L222.GlobalTechCost_en",
-                     "L222.GlobalTechShrwt_en",
-                     "L222.GlobalTechCapture_en",
-                     #"L222.GlobalTechShutdownProfit_en",
-                     "L222.GlobalTechShutdown_en",
-                     #"L222.GlobalTechSCurveProfit_en",
-                     "L222.GlobalTechSCurve_en",
-                     #"L222.GlobalTechLifetimeProfit_en",
-                     "L222.GlobalTechLifetime_en",
-                     "L122.out_EJ_state_refining_F",
-                     "L202.CarbonCoef") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      same_precursors_as(L222.TechShrwt_USAen) ->
       L222.TechCoef_USAen
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L222.Production_USArefining %>%
+      add_title("Calibrated refinery production in USA (consuming output of states)") %>%
+      add_units("NA") %>%
+      add_comments("L122.out_EJ_state_refining_F is aggregated to the supplysector/subsector/technology level.") %>%
       add_legacy_name("L222.Production_USArefining") %>%
-      add_precursors("gcam-usa/states_subregions",
-                     "energy/calibrated_techs",
-                     "L222.Supplysector_en",
-                     "L222.SubsectorLogit_en",
-                     "L222.StubTech_en",
-                     "L222.StubTechCoef_refining",
-                     "L222.GlobalTechInterp_en",
-                     "L222.GlobalTechCoef_en",
-                     "L222.GlobalTechCost_en",
-                     "L222.GlobalTechShrwt_en",
-                     "L222.GlobalTechCapture_en",
-                     #"L222.GlobalTechShutdownProfit_en",
-                     "L222.GlobalTechShutdown_en",
-                     #"L222.GlobalTechSCurveProfit_en",
-                     "L222.GlobalTechSCurve_en",
-                     #"L222.GlobalTechLifetimeProfit_en",
-                     "L222.GlobalTechLifetime_en",
-                     "L122.out_EJ_state_refining_F",
-                     "L202.CarbonCoef") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors( "energy/calibrated_techs",
+                      "L122.out_EJ_state_refining_F") ->
       L222.Production_USArefining
 
     tibble() %>%
