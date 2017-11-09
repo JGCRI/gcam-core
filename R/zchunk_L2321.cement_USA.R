@@ -6,7 +6,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L2321.DeleteSupplysector_USAcement}, \code{L2321.DeleteFinalDemand_USAcement}, \code{object}, \code{L2321.StubTechProd_cement_USA}, \code{L2321.StubTechCoef_cement_USA}, \code{L2321.StubTechCalInput_cement_heat_USA}, \code{L2321.StubTechMarket_cement_USA}, \code{L2321.BaseService_cement_USA}. The corresponding file in the
+#' the generated outputs: \code{L2321.DeleteSupplysector_USAcement}, \code{L2321.DeleteFinalDemand_USAcement}, \code{L2321.StubTechProd_cement_USA}, \code{L2321.StubTechCoef_cement_USA}, \code{L2321.StubTechCalInput_cement_heat_USA}, \code{L2321.StubTechMarket_cement_USA}, \code{L2321.BaseService_cement_USA}. The corresponding file in the
 #' original data system was \code{L2321.cement_USA.R} (gcam-usa level2).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
@@ -20,7 +20,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
              FILE = "energy/calibrated_techs",
              FILE = "energy/A321.demand",
              FILE = "energy/A321.globaltech_coef",
-             # The following lines will be uncommented when #789 is merged.
+           # The following lines will be uncommented when #789 is merged.
            #"L2321.Supplysector_cement",
            #"L2321.FinalEnergyKeyword_cement",
            #"L2321.SubsectorLogit_cement",
@@ -53,6 +53,8 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
              "L2321.StubTechCalInput_cement_heat_USA",
              "L2321.StubTechMarket_cement_USA",
              "L2321.BaseService_cement_USA",
+             "L2321.Supplysector_cement_USA",
+             "L2321.FinalEnergyKeyword_cement_USA",
              "L2321.SubsectorLogit_cement_USA",
              "L2321.SubsectorShrwtFllt_cement_USA",
              "L2321.SubsectorInterp_cement_USA",
@@ -97,7 +99,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
 
 
     # ===================================================
-
+    break()
     # Not all states produce cement, save a vector of cement producing states bases on census data.
     # This vector will be used to create cement sectors in only the cement producing states.
     L1321.out_Mt_state_cement_Yh %>%
@@ -316,7 +318,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
       mutate(market.name = if_else(grepl("elec", minicam.energy.input), "USA", market.name)) ->
       L2321.StubTechCoef_cement_USA
 
-    if(gcamusa.REGIONAL_FUEL_MARKETS){
+    if(gcamusa.USE_REGIONAL_FUEL_MARKETS){
 
       # If using regional fuel markets configuration replace market name with the grid region name if
       # the minicam.energy.input is considered a regional fuel market.
@@ -459,8 +461,8 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
       add_comments("Matched input-output coefficients with stub technologies of cement by region / supplysector / minicam.energy.input") %>%
       add_comments("Rename markets with regional gird name if using regional regional fuel markets") %>%
       add_legacy_name("L2321.StubTechCoef_cement_USA") %>%
-      add_precursors("temp-data-inject/L2321.StubTech_cement_USA", "temp-data-inject/L2321.IO_GJkg_state_cement_F_Yh",
-                     "gcam-usa/states_subregions") ->
+      add_precursors("temp-data-inject/L2321.StubTech_cement", "L1321.IO_GJkg_state_cement_F_Yh",
+                     "gcam-usa/states_subregions", "energy/A321.globaltech_coef") ->
       L2321.StubTechCoef_cement_USA
 
     L2321.StubTechCalInput_cement_heat_USA %>%
@@ -470,7 +472,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
       add_comments("Added sector information from calibrated technology mapping file") %>%
       add_comments("Added share weight information") %>%
       add_legacy_name("L2321.StubTechCalInput_cement_heat_USA") %>%
-      add_precursors("temp-data-inject/L2321.StubTech_cement_USA", "temp-data-inject/L2321.IO_GJkg_state_cement_F_Yh",
+      add_precursors("temp-data-inject/L2321.StubTech_cement", "L1321.IO_GJkg_state_cement_F_Yh",
                      "gcam-usa/states_subregions", "L1321.in_EJ_state_cement_F_Y", "energy/calibrated_techs") ->
       L2321.StubTechCalInput_cement_heat_USA
 
@@ -481,7 +483,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
       add_comments("Add sector information from calibrated technology mapping file") %>%
       add_comments("Add market name based on region or regional grid if using regional regional fuel markets") %>%
       add_legacy_name("L2321.StubTechMarket_cement_USA") %>%
-      add_precursors("temp-data-inject/L2321.StubTech_cement_USA", "temp-data-inject/L2321.IO_GJkg_state_cement_F_Yh",
+      add_precursors("temp-data-inject/L2321.StubTech_cement", "L1321.IO_GJkg_state_cement_F_Yh",
                      "gcam-usa/states_subregions", "energy/calibrated_techs", "L2321.StubTech_cement_USA") ->
       L2321.StubTechMarket_cement_USA
 
@@ -576,3 +578,44 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
     stop("Unknown command")
   }
 }
+
+
+
+
+# Failed -------------------------------------------------------------------------
+#   1. Failure: matches old data system output (@test_oldnew.R#145) ----------------
+#                                               round_df(olddata) not equivalent to round_df(newdata).
+#                                               Rows in x but not y: 1507, 1386, 872, 1646, 1026, 727, 1628, 243, 1536, 689, 1068[...]. Rows in y but not x: 2050, 2317, 1792, 1534, 4432, 1324, 4087, 3283, 2794, 1168, 1645[...].
+#                                               L2321.StubTechCoef_cement_USA.csv doesn't match
+#
+#                                               2. Failure: matches old data system output (@test_oldnew.R#132) ----------------
+#                                               dim(olddata) not identical to dim(newdata).
+#                                               1/2 mismatches
+#                                               [2] 7 - 8 == -1
+#                                               Dimensions are not the same for L2321.StubTechMarket_cement_USA.csv
+#
+#                                               3. Failure: matches old data system output (@test_oldnew.R#145) ----------------
+#                                               round_df(olddata) not equivalent to round_df(newdata).
+#                                               Cols in y but not x: `grid_region`.
+#                                               L2321.StubTechMarket_cement_USA.csv doesn't match
+#
+#                                               4. Failure: chunks handle timeshift (@test_timeshift.R#34) ---------------------
+#                                                                                    exists("x") isn't true.
+#                                                                                    Timeshift error invoking module_gcam.usa_L2321.cement_USA
+#
+#                                                                                    5. Error: chunks handle timeshift (@test_timeshift.R#34) -----------------------
+#                                                                                    object 'x' not found
+#                                                                                    1: with_mock(run_chunk = function(chunk, all_data) {
+#                                                                                    try({
+#                                                                                    x <- do.call(chunk, list(driver.MAKE, all_data))
+#                                                                                    })
+#                                                                                    expect_true(exists("x"), info = paste("Timeshift error invoking", chunk))
+#                                                                                    x
+#                                                                                    }, driver(quiet = TRUE, write_outputs = FALSE)) at C:\Users\dorh012\Documents\GitHub\gcamdata/tests/testthat/test_timeshift.R:34
+#                                                                                    2: with_mock_(.dots = .dots, .parent = .parent, .env = .env)
+#                                                                                    3: evaluate_with_mock_env(get_code_dots(dots), mock_env, .parent)
+#                                                                                    4: lazyeval::lazy_eval(code[[length(code)]])
+#                                                                                    5: eval(x$expr, x$env, emptyenv())
+#                                                                                    6: eval(x$expr, x$env, emptyenv())
+#                                                                                    7: driver(quiet = TRUE, write_outputs = FALSE)
+#                                                                                    8: run_chunk(chunk, all_data[input_names]) at C:\Users\dorh012\Documents\GitHub\gcamdata/R/driver.R:252
