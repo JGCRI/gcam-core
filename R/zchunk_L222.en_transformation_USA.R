@@ -554,33 +554,14 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
                       "L122.out_EJ_state_refining_F") ->
       L222.Production_USArefining
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
+    L222.Supplysector_en_USA %>%
+      add_title("Supplysector information, replace name of supplysector with the subsector names") %>%
+      add_units("Varies") %>%
+      add_comments("L222.Supplysector_en and L222.SubsectorLogit_en is repeated and filtered for use in USA states.") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L222.Supplysector_en_USA") %>%
-      add_precursors("gcam-usa/states_subregions",
-                     "energy/calibrated_techs",
-                     "L222.Supplysector_en",
-                     "L222.SubsectorLogit_en",
-                     "L222.StubTech_en",
-                     "L222.StubTechCoef_refining",
-                     "L222.GlobalTechInterp_en",
-                     "L222.GlobalTechCoef_en",
-                     "L222.GlobalTechCost_en",
-                     "L222.GlobalTechShrwt_en",
-                     "L222.GlobalTechCapture_en",
-                     #"L222.GlobalTechShutdownProfit_en",
-                     "L222.GlobalTechShutdown_en",
-                     #"L222.GlobalTechSCurveProfit_en",
-                     "L222.GlobalTechSCurve_en",
-                     #"L222.GlobalTechLifetimeProfit_en",
-                     "L222.GlobalTechLifetime_en",
-                     "L122.out_EJ_state_refining_F",
-                     "L202.CarbonCoef") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L222.Supplysector_en",
+                     "L222.SubsectorLogit_en") ->
       L222.Supplysector_en_USA
 
     tibble() %>%
