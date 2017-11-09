@@ -18,7 +18,7 @@ the generated outputs: \code{L2012.AgSupplySector}, \code{L2012.AgSupplySubsecto
 original data system was \code{L2012.ag_For_Past_bio_input_irr_mgmt.R} (aglu level2).
 }
 \description{
-Builds agriculture, forest, pasture and biomass production inputs for all technologies.
+Build agriculture, forest, pasture and biomass production inputs for all technologies.
 }
 \details{
 This chunk specifies the input tables for agriculture, forest, pasture and biomass supply sectors and subsectors,

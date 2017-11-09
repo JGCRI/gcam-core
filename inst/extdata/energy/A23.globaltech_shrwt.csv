@@ -1,6 +1,7 @@
-# File: A23.globaltech_shrwt.csv
-# Title: Electricity technology shareweights
-# Units: Unitless
+# File: A23.globaltech_shrwt.csv,,,,,,,,,,
+# Title: Electricity technology shareweights,,,,,,,,,,
+# Units: Unitless share-weights,,,,,,,,,,
+# Source: None (GCAM assumptions),,,,,,,,,,
 supplysector,subsector,technology,1971,2010,2015,2024,2025,2035,2050,2100
 electricity,coal,coal (conv pul),1,1,1,1,1,1,1,1
 electricity,coal,coal (conv pul CCS),0,0,0,0,1,1,1,1

@@ -1,0 +1,15 @@
+# File: A23.subsector_logit.csv
+# Title: Electric sector subsector logit exponents
+# Units: Unitless logit-exponent
+# Source: None (GCAM assumptions)
+supplysector,subsector,logit.exponent,logit.type
+electricity,coal,-10,
+electricity,gas,-10,
+electricity,refined liquids,-10,
+electricity,biomass,-10,
+electricity,nuclear,-6,
+electricity,hydro,-6,
+electricity,wind,-6,
+electricity,solar,-6,
+electricity,geothermal,-6,
+elect_td_bld,rooftop_pv,-6,

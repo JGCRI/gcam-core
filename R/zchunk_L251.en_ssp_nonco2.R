@@ -1,6 +1,6 @@
 #' module_emissions_L251.en_ssp_nonco2
 #'
-#' This chunk produces regional non-CO2 emissions coefficient data for SSPs 1/5, 2, and 3/4 as well as a GDP control.
+#' Produce regional non-CO2 emissions coefficient data for SSPs 1/5, 2, and 3/4 as well as a GDP control.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command

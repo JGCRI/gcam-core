@@ -1,6 +1,6 @@
 #' module_energy_L202.Ccoef
 #'
-#' This chunk creates the file of CO2 coefficients (carbon emissions/GJ energy consumed) for primary energy sources.
+#' Create the file of CO2 coefficients (carbon emissions/GJ energy consumed) for primary energy sources.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command

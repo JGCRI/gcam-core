@@ -18,7 +18,7 @@ the generated outputs: \code{L2231.LN3_LogitTables[[ curr_table_name ]]}, \code{
 original data system was \code{L2231.land_input_3_irr.R} (aglu level2).
 }
 \description{
-This chunk produces L2231.LN3_Logit, L2231.LN3_HistUnmgdAllocation, L2231.LN3_UnmgdAllocation,
+Produce L2231.LN3_Logit, L2231.LN3_HistUnmgdAllocation, L2231.LN3_UnmgdAllocation,
 L2231.LN3_HistMgdAllocation_noncrop, L2231.LN3_MgdAllocation_noncrop, L2231.LN3_UnmgdCarbon,
  L2231.LN3_MgdCarbon_noncrop, L2231.NodeEquiv, L2231.LN3_NoEmissCarbon, L2231.LN3_NodeCarbon.
 }
