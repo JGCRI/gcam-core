@@ -455,111 +455,54 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
 
 
       # L222.CarbonCoef_en_USA: energy carbon coefficients in USA
+      #
+      # Step 1, process L202.CarbonCoef for joining
+      L202.CarbonCoef %>%
+        filter(region == "USA") %>%
+        select(-region) %>%
+        distinct ->
+        L202.CarbonCoef_tmp
+
+      # Step 2, create L222.CarbonCoef_en_USA by joining the table from step 1.
       L222.Supplysector_en_USA %>%
         select(region, supplysector) %>%
         distinct %>%
-        mutate(PrimaryFuelCO2Coef.name = supplysector) %>%
         left_join_error_no_match(distinct(select(L222.TechShrwt_USAen, subsector, supplysector)),
                                  by = c("supplysector" = "subsector")) %>%
-        rename(match_name = supplysector.y)
-
-
-
-
-
+        rename(PrimaryFuelCO2Coef.name = supplysector.y) %>%
+        left_join_error_no_match(L202.CarbonCoef_tmp, by =  "PrimaryFuelCO2Coef.name") %>%
+        select(-supplysector) ->
+        L222.CarbonCoef_en_USA
 
 
 
 
     # Produce outputs
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L222.DeleteStubTech_USAen %>%
+      add_title("Removes existing stub technologies in the USA region") %>%
+      add_units("NA") %>%
+      add_comments("Removes existing stub technologies in the USA region from L222.StubTech_en.") %>%
+      add_comments("The supplysector and subsector structure in the sectors defined in gcamusa.SECTOR_EN_NAMES are retained") %>%
       add_legacy_name("L222.DeleteStubTech_USAen") %>%
-      add_precursors("gcam-usa/states_subregions",
-                     "energy/calibrated_techs",
-                     "L222.Supplysector_en",
-                     "L222.SubsectorLogit_en",
-                     "L222.StubTech_en",
-                     "L222.StubTechCoef_refining",
-                     "L222.GlobalTechInterp_en",
-                     "L222.GlobalTechCoef_en",
-                     "L222.GlobalTechCost_en",
-                     "L222.GlobalTechShrwt_en",
-                     "L222.GlobalTechCapture_en",
-                     #"L222.GlobalTechShutdownProfit_en",
-                     "L222.GlobalTechShutdown_en",
-                     #"L222.GlobalTechSCurveProfit_en",
-                     "L222.GlobalTechSCurve_en",
-                     #"L222.GlobalTechLifetimeProfit_en",
-                     "L222.GlobalTechLifetime_en",
-                     "L122.out_EJ_state_refining_F",
-                     "L202.CarbonCoef") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L222.StubTech_en")  ->
       L222.DeleteStubTech_USAen
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L222.SectorEQUIV") %>%
-      add_precursors("gcam-usa/states_subregions",
-                     "energy/calibrated_techs",
-                     "L222.Supplysector_en",
-                     "L222.SubsectorLogit_en",
-                     "L222.StubTech_en",
-                     "L222.StubTechCoef_refining",
-                     "L222.GlobalTechInterp_en",
-                     "L222.GlobalTechCoef_en",
-                     "L222.GlobalTechCost_en",
-                     "L222.GlobalTechShrwt_en",
-                     "L222.GlobalTechCapture_en",
-                     #"L222.GlobalTechShutdownProfit_en",
-                     "L222.GlobalTechShutdown_en",
-                     #"L222.GlobalTechSCurveProfit_en",
-                     "L222.GlobalTechSCurve_en",
-                     #"L222.GlobalTechLifetimeProfit_en",
-                     "L222.GlobalTechLifetime_en",
-                     "L122.out_EJ_state_refining_F",
-                     "L202.CarbonCoef") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+    L222.SectorEQUIV %>%
+      add_title("table of sector equivalencies for pass-through-sector") %>%
+      add_units("NA") %>%
+      add_comments("user defined.") %>%
+      add_legacy_name("L222.SectorEQUIV") ->
       L222.SectorEQUIV
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L222.PassThroughSector_USAen %>%
+      add_title("PassThroughSector information to send vintaging info from states to USA") %>%
+      add_units("NA") %>%
+      add_comments("state, subsector, supplysector, and region fromj L222.Tech_USAen is renamed.") %>%
       add_legacy_name("L222.PassThroughSector_USAen") %>%
-      add_precursors("gcam-usa/states_subregions",
-                     "energy/calibrated_techs",
-                     "L222.Supplysector_en",
-                     "L222.SubsectorLogit_en",
-                     "L222.StubTech_en",
-                     "L222.StubTechCoef_refining",
-                     "L222.GlobalTechInterp_en",
-                     "L222.GlobalTechCoef_en",
-                     "L222.GlobalTechCost_en",
-                     "L222.GlobalTechShrwt_en",
-                     "L222.GlobalTechCapture_en",
-                     #"L222.GlobalTechShutdownProfit_en",
-                     "L222.GlobalTechShutdown_en",
-                     #"L222.GlobalTechSCurveProfit_en",
-                     "L222.GlobalTechSCurve_en",
-                     #"L222.GlobalTechLifetimeProfit_en",
-                     "L222.GlobalTechLifetime_en",
-                     "L122.out_EJ_state_refining_F",
-                     "L202.CarbonCoef") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      same_precursors_as(L222.Tech_USAen)->
       L222.PassThroughSector_USAen
 
-    tibble() %>%
+    L222.TechEQUIV %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
