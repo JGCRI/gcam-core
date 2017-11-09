@@ -79,6 +79,49 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
     # silence check package notes
 
 
+
+    # Correct some of the inputs
+    L222.Supplysector_en %>%
+      mutate(logit.year.fillout = as.integer(logit.year.fillout)) -> # was character
+      L222.Supplysector_en
+
+
+    L222.SubsectorLogit_en  %>%
+      mutate(logit.year.fillout = as.integer(logit.year.fillout)) -> # was character
+      L222.SubsectorLogit_en
+
+
+    L222.StubTechCoef_refining %>%
+      mutate(year = as.integer(year)) -> # was double
+      L222.StubTechCoef_refining
+
+
+    L222.GlobalTechInterp_en %>%
+      mutate(from.year = as.integer(from.year), # was character
+             to.year = as.integer(to.year)) ->
+      L222.GlobalTechInterp_en
+
+
+    L222.GlobalTechCoef_en %>%
+      mutate(year  = as.integer(year)) -> # was character
+      L222.GlobalTechCoef_en
+
+
+    L222.GlobalTechCost_en %>%
+      mutate(year = as.integer(year)) -> # was double
+      L222.GlobalTechCost_en
+
+
+    L222.GlobalTechCapture_en %>%
+      mutate(year = as.integer(year)) -> # was character
+      L222.GlobalTechCapture_en
+
+
+    L222.GlobalTechSCurve_en %>%
+      mutate(year = as.integer(year)) -> # was character
+      L222.GlobalTechSCurve_en
+
+
     # Some helpful functions:
     #
     # global_energy_to_USA_nonGlobalTech - takes global energy inputs for non global tech
@@ -299,6 +342,11 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
       # L222.GlobalTechLifetime_en %>%
       #   global_energy_to_USA_GlobalTech ->
       #   L222.GlobalTechLifetime_en_USA
+
+
+      # L222.Supplysector_en_USA: Supplysector information, replace name of supplysector with the subsector names
+      L222.SubsectorLogit_en_USA %>%
+        select(one_of(LEVEL2_DATA_NAMES[["Subsector"]]))
 
 
 
