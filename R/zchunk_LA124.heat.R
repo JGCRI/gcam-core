@@ -66,8 +66,7 @@ module_energy_LA124.heat <- function(command, ...) {
 
     # Heat production from district heat sector
     A24.globaltech_coef %>%
-      gather(year, value, -supplysector, -subsector, -technology, -minicam.energy.input) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years %>%
       # Adding empty historical years to fill in with interpolation
       complete(year = unique(c(HISTORICAL_YEARS, year)),
                nesting(supplysector, subsector, technology, minicam.energy.input)) %>%

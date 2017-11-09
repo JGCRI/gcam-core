@@ -317,8 +317,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
     #
     # Step 1: make a table of default improvement rates by interpolating available rates to relevant years.
     A_defaultYieldRate %>%
-      gather(year, value, -GCAM_commodity) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years %>%
       tidyr::complete(year = unique(c(year, max(HISTORICAL_YEARS), FUTURE_YEARS)),
                       GCAM_commodity) %>%
       arrange(year) %>%

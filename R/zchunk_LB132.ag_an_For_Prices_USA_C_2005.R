@@ -48,7 +48,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
     # Seed cotton has no price in PRICESTAT. Need to derive its price from cotton lint and cottonseed
     FAO_USA_ag_an_P_USDt_PRICESTAT %>%
       select(-country.codes, -item.codes, -element, -element.codes) %>%
-      gather(year, price, -countries, -item) %>%
+      gather_years(value_col = "price") %>%
       filter(item == "Seed cotton" | item == "Cotton lint" | item == "Cottonseed" | item == "Game meat" | item == "Cattle meat") %>%
       # Modify item names to one word so that they can be used as column names when spreading item and doing calculations
       mutate(item = sub(" ", "_", item)) %>%
@@ -63,7 +63,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
     # Put these calculated prices back to the dataset
     FAO_USA_ag_an_P_USDt_PRICESTAT %>%
       select(-country.codes, -item.codes, -element, -element.codes) %>%
-      gather(year, price, -countries, -item) %>%
+      gather_years(value_col = "price") %>%
       filter(!(item == "Seed cotton" | item == "Cotton lint" | item == "Cottonseed" | item == "Game meat" | item == "Cattle meat")) %>%
       bind_rows(extra_price) %>%
       # Calculate a single unweighted average price over price years for each FAO agricultural item
@@ -113,7 +113,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
     # Animal products
     FAO_USA_an_Prod_t_PRODSTAT %>%
       select(-country.codes, -item.codes, -element, -element.codes) %>%
-      gather(year, prod, -countries, -item) %>%
+      gather_years(value_col = "prod") %>%
       # Calculate a single unweighted average production value over price years for each FAO animal product
       filter(year %in% MODEL_PRICE_YEARS) %>%
       group_by(countries, item) %>%
@@ -177,7 +177,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
     # Because roundwood producer prices are not reported in FAOSTAT, we use FAO forest export value and export quantities to estimate price
     FAO_USA_For_Exp_t_USD_FORESTAT %>%
       select(-countries, -country.codes, -item, -item.codes, -element.codes) %>%
-      gather(year, value, -element) %>%
+      gather_years %>%
       # Calculate a single unweighted average export value and a single unweighted average export quantity over price years
       filter(year %in% MODEL_PRICE_YEARS) %>%
       group_by(element) %>%

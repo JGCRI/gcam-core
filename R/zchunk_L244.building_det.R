@@ -143,8 +143,7 @@ module_energy_L244.building_det <- function(command, ...) {
     A44.fuelprefElasticity_SSP4 <- get_data(all_data, "energy/A44.fuelprefElasticity_SSP4")
     A44.fuelprefElasticity_SSP15 <- get_data(all_data, "energy/A44.fuelprefElasticity_SSP15")
     A44.globaltech_shrwt <- get_data(all_data, "energy/A44.globaltech_shrwt") %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year))
+      gather_years
     A44.gcam_consumer <- get_data(all_data, "energy/A44.gcam_consumer")
     A44.demandFn_serv <- get_data(all_data, "energy/A44.demandFn_serv")
     A44.demandFn_flsp <- get_data(all_data, "energy/A44.demandFn_flsp")
