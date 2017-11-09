@@ -256,8 +256,9 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
     ### this intended?
       L122.out_EJ_state_refining_F %>%
         filter(year %in% BASE_YEARS) %>%
-        mutate(region = "USA") %>%
         rename(calOutputValue = value) %>%
+        mutate(calOutputvalue = round(calOutputValue, gcamusa.DIGITS_CALOUTPUT),
+               region = "USA") %>%
         left_join_error_no_match(distinct(select(calibrated_techs, sector, supplysector, subsector)), by = "sector") %>%
         mutate(technology = paste(state, subsector, sep = gcamusa.STATE_SUBSECTOR_DELIMITER),
                minicam.energy.input = subsector) %>%
@@ -346,7 +347,127 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
 
       # L222.Supplysector_en_USA: Supplysector information, replace name of supplysector with the subsector names
       L222.SubsectorLogit_en_USA %>%
-        select(one_of(LEVEL2_DATA_NAMES[["Subsector"]]))
+        select(one_of(LEVEL2_DATA_NAMES[["Subsector"]])) %>%
+        left_join_error_no_match(distinct(select(L222.SubsectorLogit_en, supplysector, subsector)),
+                                 by = "subsector") %>%
+        rename(supplysector = supplysector.x,
+               old_supplysector = supplysector.y) %>%
+        left_join_error_no_match(distinct(select(L222.Supplysector_en, -region)),
+                                 by = c("old_supplysector" = "supplysector")) %>%
+        select(one_of(LEVEL2_DATA_NAMES[["Supplysector"]])) ->
+        L222.Supplysector_en_USA
+
+
+      # L222.Supplysector_en_USA_logit.type - Note there is no competition here so just use the default logit type
+      L222.Supplysector_en_USA %>%
+        mutate(logit.type = gcamusa.DEFAULT_LOGIT_TYPE) ->
+        L222.Supplysector_en_USA_logit.type
+
+
+      # L222.SubsectorShrwtFllt_en_USA: Subsector shareweights, there is no competition here, so just fill out with 1s
+      # (will be over-ridden by base year calibration where necessary)
+      L222.SubsectorLogit_en_USA %>%
+        select(one_of(LEVEL2_DATA_NAMES[["Subsector"]])) %>%
+        mutate(year = min(MODEL_YEARS),
+               share.weight = gcamusa.DEFAULT_SHAREWEIGHT) ->
+        L222.SubsectorShrwtFllt_en_USA
+
+
+      # L222.StubTechProd_refining_USA: calibrated fuel production by state.
+      # Only take the tech IDs where the calibration is identified as output.
+      #
+      # Step 1, process the table of calibrated_techs to only include calibration=output and relevant columns
+      calibrated_techs %>%
+        filter(calibration == "output") %>%
+        select(sector, supplysector, subsector, technology) %>%
+        distinct ->
+        calibrated_techs_tmp
+
+      # Step 2, process L122.out_EJ_state_refining_F, joining the processed table of calibrated_techs from step 1,
+      # to create L222.StubTechProd_refining_USA. Note the supplysector is the same as the subsector within the states.
+      L122.out_EJ_state_refining_F %>%
+        filter(year %in% BASE_YEARS) %>%
+        rename(region = state,
+               calOutputValue = value) %>%
+        mutate(calOutputValue = round(calOutputValue, gcamusa.DIGITS_CALOUTPUT)) %>%
+        left_join_error_no_match(calibrated_techs_tmp, by = "sector") %>%
+        mutate(supplysector = subsector,
+               stub.technology = technology,
+               share.weight.year = year) %>%
+        set_subsector_shrwt() %>%
+        mutate(tech.share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
+        select(one_of(LEVEL2_DATA_NAMES[["StubTechProd"]])) %>%
+        filter((subsector == "oil refining" & region %in% oil_refining_states) |
+                 subsector != "oil refining") ->
+        L222.StubTechProd_refining_USA
+
+
+      # L222.StubTechMarket_en_USA: market names of inputs to state refining sectors
+      L222.GlobalTechCoef_en_USA %>%
+        select(one_of(LEVEL2_DATA_NAMES[["GlobalTechInput"]])) %>%
+        repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
+        rename(supplysector = sector.name,
+               subsector = subsector.name,
+               stub.technology = technology) %>%
+        mutate(market.name = "USA") ->
+        L222.StubTechMarket_en_USA
+
+
+      # If designated, switch fuel market names to the regional markets
+      if(gcamusa.USE_REGIONAL_FUEL_MARKETS){
+        L222.StubTechMarket_en_USA %>%
+          select(-market.name) %>%
+          filter(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS) %>%
+          left_join_error_no_match(distinct(select(states_subregions, state, grid_region)), by = c("region" = "state")) %>%
+          rename(market.name = grid_region) ->
+          tmp
+
+        L222.StubTechMarket_en_USA %>%
+          filter(!(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS)) %>%
+          bind_rows(tmp) ->
+          L222.StubTechMarket_en_USA
+      }
+
+
+      # Finish L222.StubTechMarket_en_USA by Setting electricity to the state markets
+      L222.StubTechMarket_en_USA %>%
+        filter(minicam.energy.input %in% gcamusa.ELECT_TD_SECTORS) %>%
+        mutate(market.name = region) ->
+        tmp
+
+      # create a key for filtering
+      L222.StubTech_en_USA %>%
+        select(supplysector, subsector, stub.technology) %>%
+        unite(key, supplysector, subsector, stub.technology, sep = "~") %>%
+        distinct ->
+        L222.StubTech_en_USA_key
+
+      L222.StubTechMarket_en_USA %>%
+        filter(!(minicam.energy.input %in% gcamusa.ELECT_TD_SECTORS)) %>%
+        bind_rows(tmp) %>%
+        select(one_of(LEVEL2_DATA_NAMES[["StubTechMarket"]])) %>%
+        unite(key, supplysector, subsector, stub.technology, sep = "~") %>%
+        filter(key %in% L222.StubTech_en_USA_key$key) %>%
+        separate(key, c("supplysector", "subsector", "stub.technology"), sep = "~") %>%
+        filter((subsector == "oil refining" & region %in% oil_refining_states) |
+                 subsector != "oil refining") ->
+        L222.StubTechMarket_en_USA
+
+
+      # L222.CarbonCoef_en_USA: energy carbon coefficients in USA
+      L222.Supplysector_en_USA %>%
+        select(region, supplysector) %>%
+        distinct %>%
+        mutate(PrimaryFuelCO2Coef.name = supplysector) %>%
+        left_join_error_no_match(distinct(select(L222.TechShrwt_USAen, subsector, supplysector)),
+                                 by = c("supplysector" = "subsector")) %>%
+        rename(match_name = supplysector.y)
+
+
+
+
+
+
 
 
 

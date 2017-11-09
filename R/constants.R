@@ -514,6 +514,9 @@ gcamusa.DEFAULT_MARKET <- "USA"
 gcamusa.GAS_ADJ_THRESH <- 5
 gcamusa.DIGITS_COST <- 4
 
+# default logit type
+gcamusa.DEFAULT_LOGIT_TYPE <- NA
+
 
 # some delimiters
 gcamusa.STATE_SUBSECTOR_DELIMITER <- " "
