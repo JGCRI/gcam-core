@@ -30,8 +30,8 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
              "L2321.SubsectorInterp_cement",
              "L2321.StubTech_cement",
              "L2321.PerCapitaBased_cement",
+             "L2321.PriceElasticity_cement",
              "L2321.IncomeElasticity_cement_gcam3",
-             "L1321.in_EJ_state_cement_F_Y",
              "L1321.in_EJ_state_cement_F_Y",
              "L1321.IO_GJkg_state_cement_F_Yh",
              "L1321.out_Mt_state_cement_Yh"))
