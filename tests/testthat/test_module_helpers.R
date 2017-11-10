@@ -339,13 +339,16 @@ test_that("write_to_all_states", {
   # catches bad input
   expect_error(write_to_all_states(1, "1"))
   expect_error(write_to_all_states(tibble(x = 1), 1))
-  expect_error(write_to_all_states(tibble(x = 1), "x"))  # no "region" column
 
   # check that write_to_all_states works as it should
   d <- tibble(region = 1, y = 2)
   dout <- write_to_all_states(d, names = c("region", "y"))
   expect_equal(dim(dout), c(length(gcamusa.STATES), ncol(d)))
   expect_identical(names(dout), names(d))
+  # region column is now not required
+  d <- tibble(y = 2)
+  dout1 <- write_to_all_states(d, names = c("region", "y"))
+  expect_identical(dout, dout1)
 
   # overwrites logit.year.fillout and price.exp.year.fillout with start-year
   d <- tibble(region = 1, logit.year.fillout = "logit.year.fillout",

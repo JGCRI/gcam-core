@@ -36,7 +36,7 @@ module_water_L233.water.demand.livestock <- function(command, ...) {
     A_an_technology <- get_data(all_data, "aglu/A_an_technology")
     L133.water_demand_livestock_R_C_W_km3_Mt <- get_data(all_data, "temp-data-inject/L133.water_demand_livestock_R_C_W_km3_Mt")
 
-    #Just read in water coefficients for all years
+    # Just read in water coefficients for all years
     L133.water_demand_livestock_R_C_W_km3_Mt %>%
       rename(supplysector = GCAM_commodity) %>%
       inner_join(select(A_an_technology, supplysector, subsector, technology), by = "supplysector") %>%

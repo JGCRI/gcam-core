@@ -1,6 +1,6 @@
 #' module_gcam.usa_LA119.Solar
 #'
-#' This chunk computes scalars by state to vary capacity factors by state.
+#' Compute scalars by state to vary capacity factors by state.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command

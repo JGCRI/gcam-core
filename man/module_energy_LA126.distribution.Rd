@@ -18,7 +18,7 @@ the generated outputs: \code{L126.in_EJ_R_elecownuse_F_Yh}, \code{L126.out_EJ_R_
 original data system was \code{LA126.distribution.R} (energy level1).
 }
 \description{
-This chunk adjusts for onsite, transmission, and distribution losses for electricity and gas. Energy input, output, and input/output ratio are calculated for the following three processes:
+Adjust for onsite, transmission, and distribution losses for electricity and gas. Energy input, output, and input/output ratio are calculated for the following three processes:
 \itemize{
  \item{Electricity net ownuse, i.e., electricity consumed onsite prior to any transmission and distribution losses}
  \item{Electricity transmission and distribution}

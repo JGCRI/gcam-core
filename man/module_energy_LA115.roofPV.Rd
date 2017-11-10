@@ -18,7 +18,7 @@ the generated outputs: \code{L115.RsrcCurves_EJ_R_roofPV}. The corresponding fil
 original data system was \code{LA115.roofPV.R} (energy level1).
 }
 \description{
-This chunk converts rooftop PV resources from the 14 GCAM regions, i.e., "region_GCAM3", to the 32 GCAM region IDs.
+Convert rooftop PV resources from the 14 GCAM regions, i.e., "region_GCAM3", to the 32 GCAM region IDs.
 }
 \details{
 Rooftop PV resources are given in the input file according to the 14 GCAM regions, i.e., "region_GCAM3." Because some regions span mutliple GCAM region IDs, population in 2010 was used to allocate proportionally.

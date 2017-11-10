@@ -18,7 +18,7 @@ the generated outputs: \code{L118.out_EJ_R_elec_hydro_Yfut}. The corresponding f
 original data system was \code{LA118.hydro.R} (energy level1).
 }
 \description{
-This chunk calculates hydro potential in EJ from 2010 to 2100 by GCAM region ID
+Calculate hydro potential in EJ from 2010 to 2100 by GCAM region ID
 }
 \details{
 Different proxies are used to calculate hydro potential.

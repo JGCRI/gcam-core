@@ -36,18 +36,18 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
              "L114.CapacityFactor_wind_state",
              "L119.CapFacScaler_PV_state",
              "L119.CapFacScaler_CSP_state",
-             FILE = "temp-data-inject/L223.Supplysector_elec",
-             FILE = "temp-data-inject/L223.ElecReserve",
-             FILE = "temp-data-inject/L223.SubsectorLogit_elec",
-             FILE = "temp-data-inject/L223.SubsectorShrwtFllt_elec",
-             FILE = "temp-data-inject/L223.SubsectorShrwt_nuc",
-             FILE = "temp-data-inject/L223.SubsectorShrwt_renew",
-             FILE = "temp-data-inject/L223.SubsectorInterp_elec",
-             FILE = "temp-data-inject/L223.SubsectorInterpTo_elec",
-             FILE = "temp-data-inject/L223.StubTech_elec",
-             FILE = "temp-data-inject/L223.StubTechEff_elec",
-             FILE = "temp-data-inject/L223.StubTechCapFactor_elec",
-             FILE = "temp-data-inject/L223.GlobalIntTechBackup_elec",
+             "L223.Supplysector_elec",
+             "L223.ElecReserve",
+             "L223.SubsectorLogit_elec",
+             "L223.SubsectorShrwtFllt_elec",
+             "L223.SubsectorShrwt_nuc",
+             "L223.SubsectorShrwt_renew",
+             "L223.SubsectorInterp_elec",
+             "L223.SubsectorInterpTo_elec",
+             "L223.StubTech_elec",
+             "L223.StubTechEff_elec",
+             "L223.StubTechCapFactor_elec",
+             "L223.GlobalIntTechBackup_elec",
              "L1231.in_EJ_state_elec_F_tech",
              "L1231.out_EJ_state_elec_F_tech",
              "L1232.out_EJ_sR_elec"))
@@ -113,18 +113,18 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
     L114.CapacityFactor_wind_state <- get_data(all_data, "L114.CapacityFactor_wind_state")
     L119.CapFacScaler_PV_state <- get_data(all_data, "L119.CapFacScaler_PV_state")
     L119.CapFacScaler_CSP_state <- get_data(all_data, "L119.CapFacScaler_CSP_state")
-    L223.Supplysector_elec <- get_data(all_data, "temp-data-inject/L223.Supplysector_elec")
-    L223.ElecReserve <- get_data(all_data, "temp-data-inject/L223.ElecReserve")
-    L223.SubsectorLogit_elec <- get_data(all_data, "temp-data-inject/L223.SubsectorLogit_elec")
-    L223.SubsectorShrwtFllt_elec <- get_data(all_data, "temp-data-inject/L223.SubsectorShrwtFllt_elec")
-    L223.SubsectorShrwt_nuc <- get_data(all_data, "temp-data-inject/L223.SubsectorShrwt_nuc")
-    L223.SubsectorShrwt_renew <- get_data(all_data, "temp-data-inject/L223.SubsectorShrwt_renew")
-    L223.SubsectorInterp_elec <- get_data(all_data, "temp-data-inject/L223.SubsectorInterp_elec")
-    L223.SubsectorInterpTo_elec <- get_data(all_data, "temp-data-inject/L223.SubsectorInterpTo_elec")
-    L223.StubTech_elec <- get_data(all_data, "temp-data-inject/L223.StubTech_elec")
-    L223.StubTechEff_elec <- get_data(all_data, "temp-data-inject/L223.StubTechEff_elec")
-    L223.StubTechCapFactor_elec <- get_data(all_data, "temp-data-inject/L223.StubTechCapFactor_elec")
-    L223.GlobalIntTechBackup_elec <- get_data(all_data, "temp-data-inject/L223.GlobalIntTechBackup_elec")
+    L223.Supplysector_elec <- get_data(all_data, "L223.Supplysector_elec")
+    L223.ElecReserve <- get_data(all_data, "L223.ElecReserve")
+    L223.SubsectorLogit_elec <- get_data(all_data, "L223.SubsectorLogit_elec")
+    L223.SubsectorShrwtFllt_elec <- get_data(all_data, "L223.SubsectorShrwtFllt_elec")
+    L223.SubsectorShrwt_nuc <- get_data(all_data, "L223.SubsectorShrwt_nuc")
+    L223.SubsectorShrwt_renew <- get_data(all_data, "L223.SubsectorShrwt_renew")
+    L223.SubsectorInterp_elec <- get_data(all_data, "L223.SubsectorInterp_elec")
+    L223.SubsectorInterpTo_elec <- get_data(all_data, "L223.SubsectorInterpTo_elec")
+    L223.StubTech_elec <- get_data(all_data, "L223.StubTech_elec")
+    L223.StubTechEff_elec <- get_data(all_data, "L223.StubTechEff_elec")
+    L223.StubTechCapFactor_elec <- get_data(all_data, "L223.StubTechCapFactor_elec")
+    L223.GlobalIntTechBackup_elec <- get_data(all_data, "L223.GlobalIntTechBackup_elec")
     L1231.in_EJ_state_elec_F_tech <- get_data(all_data, "L1231.in_EJ_state_elec_F_tech")
     L1231.out_EJ_state_elec_F_tech <- get_data(all_data, "L1231.out_EJ_state_elec_F_tech")
     L1232.out_EJ_sR_elec <- get_data(all_data, "L1232.out_EJ_sR_elec")
@@ -617,7 +617,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
         add_comments("The file is generated if to resolve electricity demands at the US national level") %>%
         add_comments("The subsectors of the existing USA electricity sector are deleted") %>%
         add_legacy_name("L223.DeleteSubsector_USAelec") %>%
-        add_precursors("temp-data-inject/L223.SubsectorLogit_elec") ->
+        add_precursors("L223.SubsectorLogit_elec") ->
         L223.DeleteSubsector_USAelec
     } else {
       # If gcamusa.USE_REGIONAL_ELEC_MARKETS is TURE,
@@ -890,7 +890,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("The same USA region values are repeated for each state") %>%
       add_legacy_name("L223.Supplysector_elec_USA") %>%
-      add_precursors("temp-data-inject/L223.Supplysector_elec",
+      add_precursors("L223.Supplysector_elec",
                      "gcam-usa/NREL_us_re_technical_potential") ->
       L223.Supplysector_elec_USA
 
@@ -899,7 +899,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("The same USA region values are repeated for each state") %>%
       add_legacy_name("L223.ElecReserve_USA") %>%
-      add_precursors("temp-data-inject/L223.ElecReserve",
+      add_precursors("L223.ElecReserve",
                      "gcam-usa/NREL_us_re_technical_potential") ->
       L223.ElecReserve_USA
 
@@ -909,7 +909,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_comments("The same USA region values are repeated for each state") %>%
       add_comments("States with no geothermal resource are deleted for the subsector") %>%
       add_legacy_name("L223.SubsectorLogit_elec_USA") %>%
-      add_precursors("temp-data-inject/L223.SubsectorLogit_elec",
+      add_precursors("L223.SubsectorLogit_elec",
                      "gcam-usa/NREL_us_re_technical_potential") ->
       L223.SubsectorLogit_elec_USA
 
@@ -919,7 +919,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_comments("The same USA region values are repeated for each state") %>%
       add_comments("States with no geothermal resource are deleted for the subsector") %>%
       add_legacy_name("L223.SubsectorShrwtFllt_elec_USA") %>%
-      add_precursors("temp-data-inject/L223.SubsectorShrwtFllt_elec") ->
+      add_precursors("L223.SubsectorShrwtFllt_elec") ->
       L223.SubsectorShrwtFllt_elec_USA
 
     L223.SubsectorShrwt_nuc_USA %>%
@@ -928,7 +928,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_comments("The same USA region values are repeated for each state") %>%
       add_comments("Modify the share-weight path for nuclear to include state preferences") %>%
       add_legacy_name("L223.SubsectorShrwt_nuc_USA") %>%
-      add_precursors("temp-data-inject/L223.SubsectorShrwt_nuc",
+      add_precursors("L223.SubsectorShrwt_nuc",
                      "L1231.out_EJ_state_elec_F_tech",
                      "gcam-usa/NREL_us_re_technical_potential") ->
       L223.SubsectorShrwt_nuc_USA
@@ -939,7 +939,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_comments("The same USA region values are repeated for each state") %>%
       add_comments("States with no geothermal resource are deleted for the subsector") %>%
       add_legacy_name("L223.SubsectorShrwt_renew_USA") %>%
-      add_precursors("temp-data-inject/L223.SubsectorShrwt_renew",
+      add_precursors("L223.SubsectorShrwt_renew",
                      "gcam-usa/NREL_us_re_technical_potential") ->
       L223.SubsectorShrwt_renew_USA
 
@@ -949,7 +949,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_comments("The same USA region values are repeated for each state") %>%
       add_comments("States with no geothermal resource are deleted for the subsector") %>%
       add_legacy_name("L223.SubsectorInterp_elec_USA") %>%
-      add_precursors("temp-data-inject/L223.SubsectorInterp_elec",
+      add_precursors("L223.SubsectorInterp_elec",
                      "gcam-usa/NREL_us_re_technical_potential") ->
       L223.SubsectorInterp_elec_USA
 
@@ -959,7 +959,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_comments("The same USA region values are repeated for each state") %>%
       add_comments("States with no geothermal resource are deleted for the subsector") %>%
       add_legacy_name("L223.SubsectorInterpTo_elec_USA") %>%
-      add_precursors("temp-data-inject/L223.SubsectorInterpTo_elec",
+      add_precursors("L223.SubsectorInterpTo_elec",
                      "gcam-usa/NREL_us_re_technical_potential") ->
       L223.SubsectorInterpTo_elec_USA
 
@@ -969,7 +969,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_comments("The same USA region values are repeated for each state") %>%
       add_comments("States with no geothermal resource are deleted for the subsector") %>%
       add_legacy_name("L223.StubTech_elec_USA") %>%
-      add_precursors("temp-data-inject/L223.StubTech_elec",
+      add_precursors("L223.StubTech_elec",
                      "gcam-usa/NREL_us_re_technical_potential") ->
       L223.StubTech_elec_USA
 
@@ -979,7 +979,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_comments("The same USA region values are repeated for each state") %>%
       add_comments("Re-set markets from USA to regional grid markets for selected fuels") %>%
       add_legacy_name("L223.StubTechEff_elec_USA") %>%
-      add_precursors("temp-data-inject/L223.StubTechEff_elec",
+      add_precursors("L223.StubTechEff_elec",
                      "gcam-usa/NREL_us_re_technical_potential") ->
       L223.StubTechEff_elec_USA
 
@@ -988,7 +988,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("The same USA region values are repeated for each state") %>%
       add_legacy_name("L223.StubTechCapFactor_elec_USA") %>%
-      add_precursors("temp-data-inject/L223.StubTechCapFactor_elec",
+      add_precursors("L223.StubTechCapFactor_elec",
                      "gcam-usa/NREL_us_re_technical_potential") ->
       L223.StubTechCapFactor_elec_USA
 
@@ -1035,7 +1035,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Set market as USA") %>%
       add_legacy_name("L223.StubTechMarket_backup_USA") %>%
-      add_precursors("temp-data-inject/L223.GlobalIntTechBackup_elec",
+      add_precursors("L223.GlobalIntTechBackup_elec",
                      "gcam-usa/states_subregions") ->
       L223.StubTechMarket_backup_USA
 

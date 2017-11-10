@@ -269,13 +269,34 @@ energy.DIGITS_MPKM <- 0
 energy.DIGITS_SPEED <- 1
 energy.DIGITS_LOADFACTOR <- 2
 
+energy.CEMENT_CCS_COST_2000USDTCO2 <- 50 # Starting point of supply curve in Mahasenan et al 2003; come from ENERGY_ASSUMPTIONS/A_ccs_data.R
+energy.CO2_STORAGE_COST_1990_USDTC <- 42 # From GCAM 1.0 inputs; come from ENERGY_ASSUMPTIONS/A_ccs_data.R
+energy.DIGITS_INCELAS_IND <- 3
+
 # Digits for rounding into XMLs
 energy.DIGITS_CALOUTPUT <- 7
 energy.DIGITS_COEFFICIENT <- 7
 energy.DIGITS_COST <- 4
 energy.DIGITS_EFFICIENCY <- 3
 energy.DIGITS_SHRWT <- 4
+energy.DIGITS_FLOORSPACE <- 3
+energy.DIGITS_SATIATION_ADDER <- 9
+energy.DIGITS_HDDCDD <- 0
 energy.DIGITS_CAPACITY_FACTOR <- 2
+energy.DIGITS_OM <- 2
+energy.DIGITS_CAPITAL <- 0
+
+# Base cost year for wind, used in capacity factor calculations
+energy.WIND.BASE.COST.YEAR <- 2005
+energy.DIGITS_INCELAS_IND <- 3
+
+energy.SATIATION_YEAR <- 2010
+energy.GDP_MID_SATIATION <- 10.5
+energy.FLOOR_TO_SURFACE_RATIO <- 5.5
+
+energy.INTERNAL_GAINS_SCALAR_USA_H <- -930
+energy.INTERNAL_GAINS_SCALAR_USA_C <- 350
+
 
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
@@ -335,7 +356,6 @@ CONV_HA_M2 <- 1e4 # ha to m2
 CONV_BM2_M2 <- 1e9
 CONV_MILFT2_M2 <- 92900 # Million square feet to square meters
 CONV_FT2_M2 <- 0.0929 # Square feet to square meters
-
 
 # Driver constants ======================================================================
 
@@ -432,7 +452,6 @@ emissions.COAL_SO2_THRESHOLD <- 0.1 # Tg/EJ (here referring to Tg SO2 per EJ of 
 
 emissions.EPA_MACC_YEAR        <- 2030  # Must be either 2020 or 2030
 emissions.MAC_TAXES            <- c(0, 5, 10, 15, 32, 66, 129, 243, 486, 1093) # Range of costs in 1990 USD
-emissions.CONV_C_CO2           <- 44 / 12 # Convert Carbon to CO2
 emissions.DEFOREST_COEF_YEARS  <- c(2000, 2005)
 emissions.AGR_SECTORS          <- c("rice", "fertilizer", "soil")
 emissions.AGR_GASES            <- c("CH4_AGR", "N2O_AGR", "NH3_AGR", "NOx_AGR")
@@ -461,6 +480,12 @@ gcamusa.GRID_REGION_LOGIT_TYPE <- "relative-cost-logit"
 gcamusa.ELECT_TD_SECTORS <- c("elect_td_bld", "elect_td_ind", "elect_td_trn")
 gcamusa.USE_REGIONAL_ELEC_MARKETS <- TRUE
 
+gcamusa.FERT_LOGIT_EXP  <- -3 # define default logit expoent used in the fertlizer subsector
+gcamusa.FERT_LOGIT_TYPE <- NA
+
+# Define GCAM-USA category name of fertilizer
+gcamusa.FERT_NAME <- "N fertilizer"
+
 # fuels whose markets will be modeled at the level of the FERC regions, with prices calibrated
 gcamusa.REGIONAL_FUEL_MARKETS <- c("regional coal", "delivered coal", "wholesale gas", "delivered gas",
                                    "refined liquids industrial", "refined liquids enduse")
@@ -472,6 +497,18 @@ gcamusa.STATE_RENEWABLE_RESOURCES <- c("distributed_solar", "geothermal", "onsho
 gcamusa.STATE_UNLIMITED_RESOURCES <- c("global solar resource", "limestone")
 
 gcamusa.WIND_BASE_COST_YEAR <- 2005
+
+# Reduce rounding in detailed USA transport for compatability with model
+gcamusa.DIGITS_TRNUSA_DEFAULT <- 1
+
+# NUMBERS OF DIGITS FOR MODEL INPUT DATA
+gcamusa.DIGITS_CALOUTPUT <- 7 # production
+gcamusa.DEFAULT_SHAREWEIGHT <- 1
+gcamusa.DEFAULT_LOGITEXP <- -3
+gcamusa.DEFAULT_COEFFICIENT <- 1
+gcamusa.DEFAULT_MARKET <- "USA"
+gcamusa.GAS_ADJ_THRESH <- 5
+gcamusa.DIGITS_COST <- 4
 
 # Uncomment these lines to run under 'timeshift' conditions
 # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
