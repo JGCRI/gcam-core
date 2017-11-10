@@ -23,31 +23,18 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
              FILE = "energy/calibrated_techs",
              FILE = "energy/A321.demand",
              FILE = "energy/A321.globaltech_coef",
-           # The following lines will be uncommented when #789 is merged.
-           #"L2321.Supplysector_cement",
-           #"L2321.FinalEnergyKeyword_cement",
-           #"L2321.SubsectorLogit_cement",
-           #"L2321.SubsectorShrwtFllt_cement",
-           #"L2321.SubsectorInterp_cement",
-           #"L2321.StubTech_cement",
-           #"L2321.PerCapitaBased_cement",
-           #"L2321.IncomeElasticity_cement_gcam3",
-           #"L1321.in_EJ_state_cement_F_Y",
-
-           "L1321.in_EJ_state_cement_F_Y",
-           "L1321.IO_GJkg_state_cement_F_Yh",
-           "L1321.out_Mt_state_cement_Yh",
-
-           # The following lines will be deleted when #789 is merged.
-           FILE =  "temp-data-inject/L2321.Supplysector_cement",
-           FILE = "temp-data-inject/L2321.FinalEnergyKeyword_cement",
-           FILE = "temp-data-inject/L2321.SubsectorLogit_cement",
-           FILE = "temp-data-inject/L2321.SubsectorShrwtFllt_cement",
-           FILE = "temp-data-inject/L2321.SubsectorInterp_cement",
-           FILE = "temp-data-inject/L2321.StubTech_cement",
-           FILE = "temp-data-inject/L2321.PerCapitaBased_cement",
-           FILE = "temp-data-inject/L2321.IncomeElasticity_cement_gcam3",
-           FILE = "temp-data-inject/L2321.PriceElasticity_cement"))
+             "L2321.Supplysector_cement",
+             "L2321.FinalEnergyKeyword_cement",
+             "L2321.SubsectorLogit_cement",
+             "L2321.SubsectorShrwtFllt_cement",
+             "L2321.SubsectorInterp_cement",
+             "L2321.StubTech_cement",
+             "L2321.PerCapitaBased_cement",
+             "L2321.IncomeElasticity_cement_gcam3",
+             "L1321.in_EJ_state_cement_F_Y",
+             "L1321.in_EJ_state_cement_F_Y",
+             "L1321.IO_GJkg_state_cement_F_Yh",
+             "L1321.out_Mt_state_cement_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2321.DeleteSupplysector_USAcement",
              "L2321.DeleteFinalDemand_USAcement",
@@ -76,30 +63,18 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
     A321.globaltech_coef <- get_data(all_data, "energy/A321.globaltech_coef")
 
     # The following lines will be un commented when #789 is merged.
-    # L2321.Supplysector_cement <- get_data(all_data, "L2321.Supplysector_cement")
-    # L2321.FinalEnergyKeyword_cement <- get_data(all_data, "L2321.FinalEnergyKeyword_cement")
-    # L2321.SubsectorLogit_cement <- get_data(all_data, "L2321.SubsectorLogit_cement")
-    # L2321.SubsectorShrwtFllt_cement <- get_data(all_data, "L2321.SubsectorShrwtFllt_cement")
-    # L2321.SubsectorInterp_cement <- get_data(all_data, "L2321.SubsectorInterp_cement")
-    # L2321.StubTech_cement <- get_data(all_data, "L2321.StubTech_cement")
-    # L2321.PerCapitaBased_cement <- get_data(all_data, "L2321.PerCapitaBased_cement")
-    # L2321.PriceElasticity_cement <- get_data(all_data, "L2321.PriceElasticity_cement")
-    # L2321.IncomeElasticity_cement_gcam3 <- get_data(all_data, "L2321.IncomeElasticity_cement_gcam3")
+    L2321.Supplysector_cement <- get_data(all_data, "L2321.Supplysector_cement")
+    L2321.FinalEnergyKeyword_cement <- get_data(all_data, "L2321.FinalEnergyKeyword_cement")
+    L2321.SubsectorLogit_cement <- get_data(all_data, "L2321.SubsectorLogit_cement")
+    L2321.SubsectorShrwtFllt_cement <- get_data(all_data, "L2321.SubsectorShrwtFllt_cement")
+    L2321.SubsectorInterp_cement <- get_data(all_data, "L2321.SubsectorInterp_cement")
+    L2321.StubTech_cement <- get_data(all_data, "L2321.StubTech_cement")
+    L2321.PerCapitaBased_cement <- get_data(all_data, "L2321.PerCapitaBased_cement")
+    L2321.PriceElasticity_cement <- get_data(all_data, "L2321.PriceElasticity_cement")
+    L2321.IncomeElasticity_cement_gcam3 <- get_data(all_data, "L2321.IncomeElasticity_cement_gcam3")
     L1321.in_EJ_state_cement_F_Y <- get_data(all_data, "L1321.in_EJ_state_cement_F_Y")
     L1321.IO_GJkg_state_cement_F_Yh <- get_data(all_data, "L1321.IO_GJkg_state_cement_F_Yh")
     L1321.out_Mt_state_cement_Yh <- get_data(all_data, "L1321.out_Mt_state_cement_Yh")
-
-    # The following lines will be deleted when #789 is merged.
-    L2321.Supplysector_cement <- get_data(all_data, "temp-data-inject/L2321.Supplysector_cement")
-    L2321.FinalEnergyKeyword_cement <- get_data(all_data, "temp-data-inject/L2321.FinalEnergyKeyword_cement")
-    L2321.SubsectorLogit_cement <- get_data(all_data, "temp-data-inject/L2321.SubsectorLogit_cement")
-    L2321.SubsectorShrwtFllt_cement <- get_data(all_data, "temp-data-inject/L2321.SubsectorShrwtFllt_cement")
-    L2321.SubsectorInterp_cement <- get_data(all_data, "temp-data-inject/L2321.SubsectorInterp_cement")
-    L2321.StubTech_cement <- get_data(all_data, "temp-data-inject/L2321.StubTech_cement")
-    L2321.PerCapitaBased_cement <- get_data(all_data, "temp-data-inject/L2321.PerCapitaBased_cement")
-    L2321.PriceElasticity_cement <- get_data(all_data, "temp-data-inject/L2321.PriceElasticity_cement")
-    L2321.IncomeElasticity_cement_gcam3 <- get_data(all_data, "temp-data-inject/L2321.IncomeElasticity_cement_gcam3")
-
 
     # Silence package checks
     state <- region <- supplysector <- energy.final.demand <- region <- year <-
@@ -252,7 +227,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
     # Add cement sector information to the data frame of input-output coefficients of
     # cement production by state.
     L1321.IO_GJkg_state_cement_F_Yh %>%
-     left_join_error_no_match(cement_production_technologies, by = c("sector", "fuel")) %>%
+      left_join_error_no_match(cement_production_technologies, by = c("sector", "fuel")) %>%
       select(state,fuel, sector, year, value, supplysector, subsector, technology, minicam.energy.input) ->
       L2321.IO_GJkg_state_cement_F_Yh
 
@@ -320,8 +295,8 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
     # region / supplysector/ minicam.energy.input/ year.
     L2321.StubTechCoef_cement_USA %>%
       left_join(L2321.IO_GJkg_state_cement_F_Yh_complete %>%
-                                 select(coefficient, region = state, supplysector, minicam.energy.input, year),
-                               by =c("region", "supplysector", "minicam.energy.input", "year")) ->
+                  select(coefficient, region = state, supplysector, minicam.energy.input, year),
+                by =c("region", "supplysector", "minicam.energy.input", "year")) ->
       L2321.StubTechCoef_cement_USA
 
     # Add market information, limestone and process heat are state level markets where as electricity
@@ -368,7 +343,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
     L2321.StubTechCalInput_cement_heat_USA %>%
       left_join_error_no_match(calibrated_techs %>%
                                  select(sector, fuel, supplysector, subsector, technology, minicam.energy.input),
-                                by = c("sector", "fuel")) ->
+                               by = c("sector", "fuel")) ->
       L2321.StubTechCalInput_cement_heat_USA
 
     # Since this table should only contain the technologies for producing heat, remove
@@ -388,7 +363,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
       mutate(tech.share.weight = subs.share.weight) %>%
       select(region, supplysector, subsector, stub.technology, year, minicam.energy.input,
              calibrated.value, share.weight.year, subs.share.weight, tech.share.weight) ->
-    L2321.StubTechCalInput_cement_heat_USA
+      L2321.StubTechCalInput_cement_heat_USA
 
 
     # Create the input table with the market names  for the fuels consumed for heat by the state cement sectors
@@ -405,8 +380,8 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
     L2321.StubTechMarket_cement_USA %>%
       # Use left join here to pass time shift test.
       left_join(calibrated_techs %>%
-                                 select(supplysector, subsector, stub.technology = technology,
-                                        minicam.energy.input),
+                  select(supplysector, subsector, stub.technology = technology,
+                         minicam.energy.input),
                 by = c("supplysector", "subsector", "stub.technology")) ->
       L2321.StubTechMarket_cement_USA
 
@@ -449,7 +424,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("Cement supply sector information for region USA") %>%
       add_legacy_name("L2321.DeleteSupplysector_USAcement") %>%
-      add_precursors("temp-data-inject/L2321.Supplysector_cement") ->
+      add_precursors("L2321.Supplysector_cement") ->
       L2321.DeleteSupplysector_USAcement
 
     L2321.DeleteFinalDemand_USAcement %>%
@@ -457,7 +432,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("Cement sector information from the energy.final.demand for region USA ") %>%
       add_legacy_name("L2321.DeleteFinalDemand_USAcement") %>%
-      add_precursors("temp-data-inject/L2321.PerCapitaBased_cement") ->
+      add_precursors("L2321.PerCapitaBased_cement") ->
       L2321.DeleteFinalDemand_USAcement
 
     L2321.StubTechProd_cement_USA %>%
@@ -475,7 +450,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
       add_comments("Matched input-output coefficients with stub technologies of cement by region / supplysector / minicam.energy.input") %>%
       add_comments("Rename markets with regional gird name if using regional regional fuel markets") %>%
       add_legacy_name("L2321.StubTechCoef_cement_USA") %>%
-      add_precursors("temp-data-inject/L2321.StubTech_cement", "L1321.IO_GJkg_state_cement_F_Yh",
+      add_precursors("L2321.StubTech_cement", "L1321.IO_GJkg_state_cement_F_Yh",
                      "gcam-usa/states_subregions", "energy/A321.globaltech_coef") %>%
       add_flags(FLAG_SUM_TEST) ->
       L2321.StubTechCoef_cement_USA
@@ -487,7 +462,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
       add_comments("Added sector information from calibrated technology mapping file") %>%
       add_comments("Added share weight information") %>%
       add_legacy_name("L2321.StubTechCalInput_cement_heat_USA") %>%
-      add_precursors("temp-data-inject/L2321.StubTech_cement", "L1321.IO_GJkg_state_cement_F_Yh",
+      add_precursors("L2321.StubTech_cement", "L1321.IO_GJkg_state_cement_F_Yh",
                      "gcam-usa/states_subregions", "L1321.in_EJ_state_cement_F_Y", "energy/calibrated_techs") ->
       L2321.StubTechCalInput_cement_heat_USA
 
@@ -498,7 +473,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
       add_comments("Add sector information from calibrated technology mapping file") %>%
       add_comments("Add market name based on region or regional grid if using regional regional fuel markets") %>%
       add_legacy_name("L2321.StubTechMarket_cement_USA") %>%
-      add_precursors("temp-data-inject/L2321.StubTech_cement", "L1321.IO_GJkg_state_cement_F_Yh",
+      add_precursors("L2321.StubTech_cement", "L1321.IO_GJkg_state_cement_F_Yh",
                      "gcam-usa/states_subregions", "energy/calibrated_techs", "L2321.StubTech_cement_USA") %>%
       add_flags(FLAG_SUM_TEST) ->
       L2321.StubTechMarket_cement_USA
@@ -516,7 +491,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("Expanded supply sector information to cement producing states in region USA") %>%
       add_legacy_name("L2321.Supplysector_cement_USA") %>%
-      add_precursors("temp-data-inject/L2321.Supplysector_cement", "L1321.out_Mt_state_cement_Yh") ->
+      add_precursors("L2321.Supplysector_cement", "L1321.out_Mt_state_cement_Yh") ->
       L2321.Supplysector_cement_USA
 
     L2321.FinalEnergyKeyword_cement_USA %>%
@@ -524,7 +499,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Expanded supply sector keywords information cement producing states in region USA") %>%
       add_legacy_name("L2321.FinalEnergyKeyword_cement_USA") %>%
-      add_precursors("temp-data-inject/L2321.FinalEnergyKeyword_cement", "L1321.out_Mt_state_cement_Yh") ->
+      add_precursors("L2321.FinalEnergyKeyword_cement", "L1321.out_Mt_state_cement_Yh") ->
       L2321.FinalEnergyKeyword_cement_USA
 
     L2321.SubsectorLogit_cement_USA %>%
@@ -532,7 +507,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Expanded subsector logit exponents to to cement producing states in region USA") %>%
       add_legacy_name("L2321.SubsectorLogit_cement_USA") %>%
-      add_precursors("temp-data-inject/L2321.SubsectorLogit_cement", "L1321.out_Mt_state_cement_Yh") ->
+      add_precursors("L2321.SubsectorLogit_cement", "L1321.out_Mt_state_cement_Yh") ->
       L2321.SubsectorLogit_cement_USA
 
     L2321.SubsectorShrwtFllt_cement_USA %>%
@@ -540,7 +515,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Expanded subsector shareweights to to cement producing states in region USA") %>%
       add_legacy_name("L2321.SubsectorShrwtFllt_cement_USA") %>%
-      add_precursors("temp-data-inject/L2321.SubsectorShrwtFllt_cement", "L1321.out_Mt_state_cement_Yh") ->
+      add_precursors("L2321.SubsectorShrwtFllt_cement", "L1321.out_Mt_state_cement_Yh") ->
       L2321.SubsectorShrwtFllt_cement_USA
 
     L2321.SubsectorInterp_cement_USA %>%
@@ -548,7 +523,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("Expanded subsector shareweight interpolation to cement producing states in region USA") %>%
       add_legacy_name("L2321.SubsectorInterp_cement_USA") %>%
-      add_precursors("temp-data-inject/L2321.SubsectorInterp_cement", "L1321.out_Mt_state_cement_Yh") ->
+      add_precursors("L2321.SubsectorInterp_cement", "L1321.out_Mt_state_cement_Yh") ->
       L2321.SubsectorInterp_cement_USA
 
     L2321.StubTech_cement_USA %>%
@@ -556,7 +531,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("Expanded identification of stub technologies of cement to cement producing states in region USA") %>%
       add_legacy_name("L2321.StubTech_cement_USA") %>%
-      add_precursors("temp-data-inject/L2321.StubTech_cement", "L1321.out_Mt_state_cement_Yh") ->
+      add_precursors("L2321.StubTech_cement", "L1321.out_Mt_state_cement_Yh") ->
       L2321.StubTech_cement_USA
 
     L2321.PerCapitaBased_cement_USA %>%
@@ -564,7 +539,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("Expanded Per-capita based flag for cement exports final demand to cement producing states in region USA") %>%
       add_legacy_name("L2321.PerCapitaBased_cement_USA") %>%
-      add_precursors("temp-data-inject/L2321.PerCapitaBased_cement", "L1321.out_Mt_state_cement_Yh") ->
+      add_precursors("L2321.PerCapitaBased_cement", "L1321.out_Mt_state_cement_Yh") ->
       L2321.PerCapitaBased_cement_USA
 
     L2321.PriceElasticity_cement_USA %>%
@@ -572,7 +547,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Expanded price elasticity for cement to cement producing states in region USA") %>%
       add_legacy_name("L2321.PriceElasticity_cement_USA") %>%
-      add_precursors("temp-data-inject/L2321.PriceElasticity_cement", "L1321.out_Mt_state_cement_Yh") ->
+      add_precursors("L2321.PriceElasticity_cement", "L1321.out_Mt_state_cement_Yh") ->
       L2321.PriceElasticity_cement_USA
 
     L2321.IncomeElasticity_cement_gcam3_USA %>%
@@ -580,7 +555,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Expanded price elasticity for cement to cement producing states in region USA") %>%
       add_legacy_name("L2321.IncomeElasticity_cement_gcam3_USA") %>%
-      add_precursors("temp-data-inject/L2321.IncomeElasticity_cement_gcam3", "L1321.out_Mt_state_cement_Yh") ->
+      add_precursors("L2321.IncomeElasticity_cement_gcam3", "L1321.out_Mt_state_cement_Yh") ->
       L2321.IncomeElasticity_cement_gcam3_USA
 
     return_data(L2321.DeleteSupplysector_USAcement, L2321.DeleteFinalDemand_USAcement,
