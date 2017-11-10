@@ -120,7 +120,7 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
     L2052.AgCost_bio_irr_mgmt %>%
       # Note: using left_join because there are instances with cost but no fertilizer use
       left_join(L2062.AgCoef_Fert_bio_irr_mgmt,
-                by=c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year")) %>%
+                by = c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year")) %>%
 
       # Set fertilizer coefficient to zero when missing. This will lead to zero fertilizer cost.
       replace_na(list(coefficient = 0)) %>%

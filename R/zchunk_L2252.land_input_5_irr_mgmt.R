@@ -1,6 +1,6 @@
 #' module_aglu_L2252.land_input_5_irr_mgmt
 #'
-#' This chunk producesthe inputs for the lowest level of the land nest, including disaggregated crop technologies:
+#' Produce the inputs for the lowest level of the land nest, including disaggregated crop technologies:
 #' L2252.LN5_Logit, L2252.LN5_HistMgdAllocation_crop, L2252.LN5_MgdAllocation_crop,
 #' L2252.LN5_HistMgdAllocation_bio, L2252.LN5_MgdAllocation_bio, L2252.LN5_MgdCarbon_crop,
 #' L2252.LN5_MgdCarbon_bio, L2252.LN5_LeafGhostShare, L2252.LN5_NodeGhostShare
@@ -378,7 +378,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       L2252.LN5_LeafGhostShare
 
     L2252.LN5_NodeGhostShare %>%
-      #add_title("Ghost share of the nest 4 nodes (irrigated versus rainfed)") %>%
+      # add_title("Ghost share of the nest 4 nodes (irrigated versus rainfed)") %>%
       add_units("NA") %>%
       add_comments("Ghost share of the nest 4 nodes (irrigated versus rainfed).") %>%
       add_legacy_name("L2252.LN5_NodeGhostShare") %>%

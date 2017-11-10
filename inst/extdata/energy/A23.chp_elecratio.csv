@@ -1,6 +1,7 @@
-# File: A23.chp_elecratio.csv,
-# Title: Assumed CHP electricity output per unit fuel input,
-# Units: Unitless (EJ/EJ),
+# File: A23.chp_elecratio.csv
+# Title: Assumed CHP electricity output per unit fuel input
+# Units: Unitless (EJ/EJ)
+# Source: None (GCAM assumptions)
 fuel,elec_ratio
 biomass,0.2
 coal,0.25

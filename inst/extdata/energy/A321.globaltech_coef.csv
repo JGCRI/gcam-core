@@ -1,1 +1,14 @@
-# File: A321.globaltech_coef.csv# Title: Cement production default coefficients# Units: coeff idk checksupplysector,subsector,technology,minicam.energy.input,1971,2010,2100cement,cement,cement,process heat cement,0.004,0.004,0.003cement,cement,cement,elect_td_ind,0.0005,0.0005,0.0005cement,cement,cement,limestone,1.5,1.5,1.5cement,cement,cement CCS,process heat cement,0.004,0.004,0.003cement,cement,cement CCS,elect_td_ind,0.0005,0.0005,0.0005cement,cement,cement CCS,limestone,1.5,1.5,1.5process heat cement,biomass,biomass,delivered biomass,1,1,1process heat cement,coal,coal,delivered coal,1,1,1process heat cement,gas,gas,wholesale gas,1,1,1process heat cement,refined liquids,refined liquids,refined liquids industrial,1,1,1
+# File: A321.globaltech_coef.csv
+# Title: Cement production default coefficients
+# Units: limestone input is unitless (Mt limestone per Mt cement); all others are GJ per kg (EJ of energy per Mt of cement)
+supplysector,subsector,technology,minicam.energy.input,1971,2010,2100
+cement,cement,cement,process heat cement,0.004,0.004,0.003
+cement,cement,cement,elect_td_ind,0.0005,0.0005,0.0005
+cement,cement,cement,limestone,1.5,1.5,1.5
+cement,cement,cement CCS,process heat cement,0.004,0.004,0.003
+cement,cement,cement CCS,elect_td_ind,0.0005,0.0005,0.0005
+cement,cement,cement CCS,limestone,1.5,1.5,1.5
+process heat cement,biomass,biomass,delivered biomass,1,1,1
+process heat cement,coal,coal,delivered coal,1,1,1
+process heat cement,gas,gas,wholesale gas,1,1,1
+process heat cement,refined liquids,refined liquids,refined liquids industrial,1,1,1

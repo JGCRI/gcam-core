@@ -18,7 +18,7 @@ the generated outputs: \code{L119.CapFacScaler_PV_state}, \code{L119.CapFacScale
 original data system was \code{LA119.Solar.R} (gcam-usa level1).
 }
 \description{
-This chunk computes scalars by state to vary capacity factors by state.
+Compute scalars by state to vary capacity factors by state.
 }
 \details{
 This chunk computes scalars by state to vary capacity factors for central station PV and CSP technologies by state.

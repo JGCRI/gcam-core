@@ -167,6 +167,3 @@ module_gcam.usa_LA100.Socioeconomics <- function(command, ...) {
     stop("Unknown command")
   }
 }
-
-
-
