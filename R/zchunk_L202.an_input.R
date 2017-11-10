@@ -186,7 +186,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       rename(stub.technology = technology) ->
       L202.StubTechInterp_in
 
-    #L202.GlobalTechCoef_in: coefficients for inputs to animal production
+    # L202.GlobalTechCoef_in: coefficients for inputs to animal production
     A_an_input_technology %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       mutate(sector.name = supplysector, subsector.name = subsector) %>%

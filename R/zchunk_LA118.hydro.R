@@ -1,6 +1,6 @@
 #' module_energy_LA118.hydro
 #'
-#' This chunk calculates hydro potential in EJ from 2010 to 2100 by GCAM region ID
+#' Calculate hydro potential in EJ from 2010 to 2100 by GCAM region ID
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command

@@ -114,33 +114,33 @@ module_energy_batch_building_det.xml <- function(command, ...) {
       building_det.xml
 
     # Some data inputs may not actually contain data. If so, do not add_xml_data.
-    if(nrow(L244.DeleteThermalService) > 0){
+    if(nrow(L244.DeleteThermalService) > 0) {
       building_det.xml %>%
         add_xml_data(L244.DeleteThermalService, "DeleteThermalService") ->
         building_det.xml
     }
 
-    if(!is.null(L244.DeleteGenericService)){
+    if(!is.null(L244.DeleteGenericService)) {
       building_det.xml %>%
         add_xml_data(L244.DeleteGenericService, "DeleteGenericService") ->
         building_det.xml
     }
-    if (!is.null(L244.SubsectorShrwt_bld)){
+    if(!is.null(L244.SubsectorShrwt_bld)) {
       building_det.xml %>%
         add_xml_data(L244.SubsectorShrwt_bld, "SubsectorShrwt") ->
         building_det.xml
     }
-    if (!is.null(L244.SubsectorShrwtFllt_bld)){
+    if(!is.null(L244.SubsectorShrwtFllt_bld)) {
       building_det.xml %>%
         add_xml_data(L244.SubsectorShrwtFllt_bld, "SubsectorShrwtFllt") ->
         building_det.xml
     }
-    if (!is.null(L244.SubsectorInterp_bld)){
+    if(!is.null(L244.SubsectorInterp_bld)) {
       building_det.xml %>%
         add_xml_data(L244.SubsectorInterp_bld, "SubsectorInterp") ->
         building_det.xml
     }
-    if (!is.null(L244.SubsectorInterpTo_bld)){
+    if(!is.null(L244.SubsectorInterpTo_bld)) {
       building_det.xml %>%
         add_xml_data(L244.SubsectorInterpTo_bld, "SubsectorInterp") ->
         building_det.xml

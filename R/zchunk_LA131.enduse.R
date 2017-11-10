@@ -1,6 +1,6 @@
 #' module_energy_LA131.enduse
 #'
-#' This chunk generates the following two tables:
+#' Generate the following two tables:
 #' \itemize{
 #'  \item{Final scaled energy input by GCAM region / end-use sector, incl CHP / fuel / historical year; and}
 #'  \item{Share of heat consumption by end-use sector within GCAM region / historical year}
