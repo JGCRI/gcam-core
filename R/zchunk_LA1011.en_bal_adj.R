@@ -9,7 +9,7 @@
 #' the generated outputs: \code{L1011.en_bal_EJ_R_Si_Fi_Yh}, \code{L1011.in_EJ_ctry_intlship_TOT_Yh}. The corresponding file in the
 #' original data system was \code{LA1011.en_bal_adj.R} (energy level1).
 #' @details This chunk replaces IEA international shipping fuel consumption estimates with EIA estimates, remaps USSR data to Russia,
-#' #and removes coal-to-gas from natural gas TPES
+#' and removes coal-to-gas from natural gas TPES
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread

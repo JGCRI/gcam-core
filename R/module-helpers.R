@@ -211,11 +211,11 @@ write_to_all_states <- function(data, names) {
 
   region <- NULL  # silence package check notes
 
-  if ("logit.year.fillout" %in% names) {
+  if("logit.year.fillout" %in% names) {
     data$logit.year.fillout <- "start-year"
   }
 
-  if ("price.exp.year.fillout" %in% names) {
+  if("price.exp.year.fillout" %in% names) {
     data$price.exp.year.fillout <- "start-year"
   }
 
@@ -351,7 +351,7 @@ add_carbon_info <- function( data, carbon_info_table, matchvars = c("region", "G
   GCAM_region_names <- veg_c <- soil_c <- hist.veg.carbon.density <- hist.soil.carbon.density <-
     mature.age <- GCAM_region_ID <- NULL  # silence package check notes
 
-  if (!("region" %in% names(carbon_info_table))) {
+  if(!("region" %in% names(carbon_info_table))) {
     carbon_info_table %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
       carbon_info_table

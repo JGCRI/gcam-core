@@ -1,6 +1,6 @@
 #' module_aglu_LB141.ag_Fert_IFA_ctry_crop
 #'
-#' This chunk reconciles disparate IFA fertilizer consumption data to calculate fertilizer consumption (demand) for each GTAP country/crop.
+#' Reconcile disparate IFA fertilizer consumption data to calculate fertilizer consumption (demand) for each GTAP country/crop.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command

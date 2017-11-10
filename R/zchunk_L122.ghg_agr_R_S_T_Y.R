@@ -144,7 +144,7 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
     L122.EDGAR_fert <- L122.EDGAR_agr %>%
       filter(sector == "fertilizer")
 
-    #Compute fertilizer by crop
+    # Compute fertilizer by crop
     L122.fert_Mt_R_C_Y_GLU <- L103.ag_Prod_Mt_R_C_Y_GLU %>%
       filter(year %in% emissions.EDGAR_YEARS) %>%
       rename(ag_production = value) %>%

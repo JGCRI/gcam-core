@@ -97,7 +97,7 @@ module_emissions_L252.MACC <- function(command, ...) {
                                    select(region, EPA_region = MAC_region),
                                  by = "region")
       # Next, add in mac.reduction values
-      if (error_no_match) {
+      if(error_no_match) {
         # Usually we use left_join_error_no_match
         df <- df %>%
           left_join_error_no_match(L252.MAC_pct_R_S_Proc_EPA, by = c("EPA_region", "mac.control", "tax")) %>%
@@ -190,7 +190,7 @@ module_emissions_L252.MACC <- function(command, ...) {
 
 
     # These steps will be completed if we choose to replace our HiGWP data with data from Guus Velders
-    if (emissions.USE_GV_MAC) {
+    if(emissions.USE_GV_MAC) {
       # L252.MAC_higwp_GV: Abatement from HFCs, PFCs, and SF6 using Guus Velders data for HFCs
       # Filter our PFCs
       L252.MAC_pfc <- L252.MAC_higwp %>%

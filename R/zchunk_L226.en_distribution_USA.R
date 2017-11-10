@@ -77,7 +77,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
    # L226.SubsectorShrwt_en <- get_data(all_data, "L226.SubsectorShrwt_en")
     L226.SubsectorShrwtFllt_en <- get_data(all_data, "L226.SubsectorShrwtFllt_en")
     L226.SubsectorInterp_en <- get_data(all_data, "L226.SubsectorInterp_en")
-    #L226.SubsectorInterpTo_en <- get_data(all_data, "L226.SubsectorInterpTo_en")
+    # L226.SubsectorInterpTo_en <- get_data(all_data, "L226.SubsectorInterpTo_en")
     L226.GlobalTechCost_en <- get_data(all_data, "L226.GlobalTechCost_en")
     L226.GlobalTechShrwt_en <- get_data(all_data, "L226.GlobalTechShrwt_en")
     L226.StubTechCoef_electd <- get_data(all_data, "L226.StubTechCoef_electd")
@@ -93,7 +93,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
 
     # global_energy_to_USA_electd - takes global energy inputs from L226.en_distribution.R
     # and processes for use in USA electricity T&D
-    global_energy_to_USA_electd <- function(data){
+    global_energy_to_USA_electd <- function(data) {
       data %>%
         filter(region == "USA",
                supplysector %in% gcamusa.ELECT_TD_SECTORS) %>%
@@ -277,7 +277,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
 
 
     # Using national electric markets
-    if(!gcamusa.USE_REGIONAL_ELEC_MARKETS){
+    if(!gcamusa.USE_REGIONAL_ELEC_MARKETS) {
 
       # L226.StubTechCoef_electd_USA: Using national elec markets. State elect_td sectors are treated as stub technologies
       L226.StubTechCoef_electd %>%
@@ -288,7 +288,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
 
 
     # Using regional electric markets
-    if(gcamusa.USE_REGIONAL_ELEC_MARKETS){
+    if(gcamusa.USE_REGIONAL_ELEC_MARKETS) {
 
       # The elect_td sectors can not use the global tech database as their input is different.
 
@@ -328,7 +328,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
       add_legacy_name("L226.DeleteSupplysector_USAelec") ->
       L226.DeleteSupplysector_USAelec
 
-    if(exists("L226.StubTechCoef_electd_USA")){
+    if(exists("L226.StubTechCoef_electd_USA")) {
       L226.StubTechCoef_electd_USA %>%
         add_title("Stub technology coefficients elec T&D when using national elec markets") %>%
         add_units("NA") %>%
@@ -337,7 +337,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
         add_legacy_name("L226.StubTechCoef_electd_USA") %>%
         add_precursors("L226.StubTechCoef_electd") ->
         L226.StubTechCoef_electd_USA
-    }else{
+    } else {
       # If gcamusa.USE_REGIONAL_ELEC_MARKETS is TRUE,
       # indicating to resolve electricity demands at the level of the grid regions,
       # then blank tibbles of the national level data are produced.
@@ -351,7 +351,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
     }
 
 
-    if(exists("L226.TechShrwt_electd_USA")){
+    if(exists("L226.TechShrwt_electd_USA")) {
       L226.TechShrwt_electd_USA %>%
         add_title("Tech share weights for elec T&D when using regional electricity markets") %>%
         add_units("NA") %>%
@@ -360,7 +360,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
         add_legacy_name("L226.TechShrwt_electd_USA") %>%
         add_precursors("L226.GlobalTechShrwt_en") ->
         L226.TechShrwt_electd_USA
-    }else{
+    } else {
       # If gcamusa.USE_REGIONAL_ELEC_MARKETS is FALSE,
       # indicating to resolve electricity demands at the national level,
       # then blank tibbles of the grid region level data are produced.
@@ -374,7 +374,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
     }
 
 
-    if(exists("L226.TechCost_electd_USA")){
+    if(exists("L226.TechCost_electd_USA")) {
       L226.TechCost_electd_USA %>%
         add_title("Tech costs for elec T&D when using regional electricity markets") %>%
         add_units("1975$") %>%
@@ -383,7 +383,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
         add_legacy_name("L226.TechCost_electd_USA") %>%
         add_precursors("L226.GlobalTechCost_en") ->
         L226.TechCost_electd_USA
-    }else{
+    } else {
       # If gcamusa.USE_REGIONAL_ELEC_MARKETS is FALSE,
       # indicating to resolve electricity demands at the national level,
       # then blank tibbles of the grid region level data are produced.
@@ -397,7 +397,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
     }
 
 
-    if(exists("L226.TechCoef_electd_USA")){
+    if(exists("L226.TechCoef_electd_USA")) {
       L226.TechCoef_electd_USA %>%
         add_title("Tech coefficients for elec T&D when using regional electricity markets") %>%
         add_units("NA") %>%
@@ -407,7 +407,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
         add_precursors("gcam-usa/states_subregions",
                        "L226.StubTechCoef_electd") ->
         L226.TechCoef_electd_USA
-    }else{
+    } else {
       # If gcamusa.USE_REGIONAL_ELEC_MARKETS is FALSE,
       # indicating to resolve electricity demands at the national level,
       # then blank tibbles of the grid region level data are produced.

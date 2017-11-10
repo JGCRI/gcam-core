@@ -75,19 +75,19 @@ module_emissions_batch_ind_urb_processing_sectors.xml_DISABLED <- function(comma
       ind_urb_processing_sectors.xml
 
     # Some data inputs may not actually contain data. If so, do not add_xml_data
-    if (!is.null(L231.SubsectorShrwt_urb_ind)) {
+    if(!is.null(L231.SubsectorShrwt_urb_ind)) {
       ind_urb_processing_sectors.xml <- ind_urb_processing_sectors.xml %>%
         add_xml_data(L231.SubsectorShrwt_urb_ind, "SubsectorShrwt")
     }
-    if (!is.null(L231.SubsectorShrwtFllt_urb_ind)) {
+    if(!is.null(L231.SubsectorShrwtFllt_urb_ind)) {
       ind_urb_processing_sectors.xml <- ind_urb_processing_sectors.xml %>%
         add_xml_data(L231.SubsectorShrwtFllt_urb_ind, "SubsectorShrwtFllt")
     }
-    if (!is.null(L231.SubsectorInterp_urb_ind)) {
+    if(!is.null(L231.SubsectorInterp_urb_ind)) {
       ind_urb_processing_sectors.xml <- ind_urb_processing_sectors.xml %>%
         add_xml_data(L231.SubsectorInterp_urb_ind, "SubsectorInterp")
     }
-    if (!is.null(L231.SubsectorInterpTo_urb_ind)) {
+    if(!is.null(L231.SubsectorInterpTo_urb_ind)) {
       ind_urb_processing_sectors.xml <- ind_urb_processing_sectors.xml %>%
         add_xml_data(L231.SubsectorInterpTo_urb_ind, "SubsectorInterpTo")
     }

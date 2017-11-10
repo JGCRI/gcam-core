@@ -80,7 +80,7 @@ module_emissions_L112.ghg_en_R_S_T_Y <- function(command, ...) {
         # Use left_join because some "cement" only in EPA sector
         left_join(L102.ghg_tgej_USA_en_Sepa_F_2005,
                   by = c("Non.CO2" = "variable", "EPA_agg_sector" = "sector", "EPA_agg_fuel" = "fuel")) %>%
-        #Compute unscaled emissions
+        # Compute unscaled emissions
         mutate(epa_emissions = energy * emiss_factor) %>%
         na.omit()
     }

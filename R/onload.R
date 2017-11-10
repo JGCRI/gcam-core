@@ -6,7 +6,7 @@
     gcamdata.use_java = isTRUE(as.logical(Sys.getenv("GCAMDATA_USE_JAVA")))
   )
   toset <- !(names(op.gcamdata) %in% names(op))
-  if (any(toset)) {
+  if(any(toset)) {
     options(op.gcamdata[toset])
   }
   invisible()
