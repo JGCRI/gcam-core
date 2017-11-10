@@ -25,7 +25,7 @@ sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_data", extension = ".R" )
 iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID" )
 USDA_crops <- readdata( "AGLU_MAPPINGS", "USDA_crops" )
 USDA_item_cost <- readdata( "AGLU_MAPPINGS", "USDA_item_cost" )
-USDA_cost_data <- readdata( "AGLU_LEVEL0_DATA", "USDA_cost_data" )
+L133.USDA_cost_data <- readdata( "AGLU_LEVEL1_DATA", "L133.USDA_cost_data", na.strings = "NA" )
 L100.LDS_ag_HA_ha <- readdata( "AGLU_LEVEL1_DATA", "L100.LDS_ag_HA_ha" )
 L133.ag_Cost_75USDkg_C <- readdata( "AGLU_LEVEL1_DATA", "L133.ag_Cost_75USDkg_C" )
 L161.ag_irrHA_frac_R_C_GLU <- readdata( "AGLU_LEVEL1_DATA", "L161.ag_irrHA_frac_R_C_GLU" )
@@ -36,10 +36,10 @@ L161.ag_irrHA_frac_R_C_GLU <- readdata( "AGLU_LEVEL1_DATA", "L161.ag_irrHA_frac_
 # from each cost estimate. This is less repetitive than following all of the same steps in that prior file, but with irrigation
 # water mapped elsewhere.
 printlog( "Computing the share of total variable costs that are from purchased irrigation water" )
-L164.waterCostFrac_Cusda <- USDA_cost_data[ USDA_cost_data$Item == "Purchased irrigation water", c( "Crop", X_model_cost_years ) ]
+L164.waterCostFrac_Cusda <- L133.USDA_cost_data[ L133.USDA_cost_data$Item == "Purchased irrigation water", c( "Crop", X_model_cost_years ) ]
 L164.waterCostFrac_Cusda[ X_model_price_years ] <- L164.waterCostFrac_Cusda[ X_model_cost_years ] /
-  USDA_cost_data[ match( paste( L164.waterCostFrac_Cusda$Crop, "Total operating costs" ),
-                         vecpaste(USDA_cost_data[ c( "Crop", "Item" ) ] ) ),
+  L133.USDA_cost_data[ match( paste( L164.waterCostFrac_Cusda$Crop, "Total operating costs" ),
+                         vecpaste(L133.USDA_cost_data[ c( "Crop", "Item" ) ] ) ),
                   X_model_cost_years ]
 L164.waterCostFrac_Cusda$waterCostFrac <- rowMeans( L164.waterCostFrac_Cusda[ X_model_cost_years ], na.rm = T )
 L164.waterCostFrac_Cusda[ c( "GTAP_crop", C ) ] <- USDA_crops[

@@ -32,11 +32,11 @@ bio_yield_year <- max( AGLU_historical_years )
 X_bio_yield_year <- paste( "X", bio_yield_year, sep = "" )
 
 # Years used for calculating base year prices
-model_price_years <- 2001:2005
+model_price_years <- 2008:2011
 X_model_price_years <- paste( "X", model_price_years, sep="" )
 
 # Years used for calculating base year costs
-model_cost_years <- 2001:2005
+model_cost_years <- 2008:2011
 X_model_cost_years <- paste( "X", model_cost_years, sep="" )
 X_final_cost_year <- X_model_cost_years[ length( X_model_cost_years ) ]
 
