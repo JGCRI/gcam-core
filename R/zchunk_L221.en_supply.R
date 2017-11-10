@@ -1,4 +1,4 @@
-debug(gcamdata:::module_aglu_LA100.FAO_downscale_ctry)#' module_energy_L221.en_supply
+#' module_energy_L221.en_supply
 #'
 #' Briefly describe what this chunk does.
 #'
