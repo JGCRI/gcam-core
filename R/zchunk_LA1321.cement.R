@@ -12,7 +12,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
+#' @author CWR Nov 2017
 #' @export
 module_energy_LA1321.cement <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
