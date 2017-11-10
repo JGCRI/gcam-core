@@ -53,7 +53,7 @@ module_energy_LA1321.cement <- function(command, ...) {
 browser()
     # ===================================================
 
-    limestone_Ccoef <- A_PrimaryFuelCCoef$PrimaryFuelCO2Coef[A_PrimaryFuelCCoef$PrimaryFuelCO2Coef.name == "limestone"]
+    LIMESTONE_CCOEF <- A_PrimaryFuelCCoef$PrimaryFuelCO2Coef[A_PrimaryFuelCCoef$PrimaryFuelCO2Coef.name == "limestone"]
 
     # If the CO2 emissions inventories do not go to the latest historical time period, copy the last available year
     additional_years <- HISTORICAL_YEARS[!HISTORICAL_YEARS %in% CO2_historical_years]
@@ -122,23 +122,66 @@ browser()
 
     # Use the assumed limestone fuel carbon content (same in all regions) to calculate the limestone consumption
     # and limestone IO coefficients in each region
-    L1321.out_Mt_R_cement_Yh %>%
-      select(GCAM_region_ID, sector, fuel) %>%
-      left_join_error_no_match()->
+    L1321.CO2_Mt_R_F_Yh %>%
+      mutate(sector = "cement", in.value = value / LIMESTONE_CCOEF) %>%
+      select(-value) ->
       L1321.in_Cement_Mt_R_limestone_Yh
 
+    # Calculate input-output coefficients
+    L1321.in_Cement_Mt_R_limestone_Yh %>%
+      left_join_error_no_match(L1321.out_Mt_R_cement_Yh, by = c("GCAM_region_ID", "sector", "fuel", "year")) %>%
+      mutate(value = in.value / value) ->
+      L1321.IO_Cement_R_limestone_Yh
+
+    # Derivation of energy inputs to cement production by region and historical year
+    # Interpolate available data on electricity intensity to all historical years
+    IEA_cement_elec_kwht %>%
+      gather(year, value, matches(YEAR_PATTERN)) %>%
+      mutate(year = as.integer(year)) %>%
+      complete(nesting(Country), year = c(year, HISTORICAL_YEARS)) %>%
+      arrange(Country, year) %>%
+      group_by(Country) %>%
+      mutate(value = approx_fun(year, value, rule = 1) * CONV_KWH_GJ / CONV_T_KG) %>%
+      ungroup() ->
+      L1321.IEA_cement_elec_intensity
+
+    # Interpolate available data on total primary energy intensity to all historical years by region
+    IEA_cement_TPE_GJt %>%
+      gather(year, value, matches(YEAR_PATTERN)) %>%
+      mutate(year = as.integer(year)) %>%
+      complete(nesting(Country), year = c(year, HISTORICAL_YEARS)) %>%
+      arrange(Country, year) %>%
+      group_by(Country) %>%
+      mutate(value = approx_fun(year, value, rule = 1) / CONV_T_KG) %>%
+      ungroup() ->
+      L1321.IEA_cement_TPE_intensity
+
+    # Calculate average electric and TPE intensity for each GCAM region (use process emissions as a weighting factor)
+    L100.CDIAC_CO2_ctry_hist %>%
+      filter(year %in% HISTORICAL_YEARS) %>%
+      select(iso, year, cement) %>%
+      rename(emiss_ktC = cement) %>%
+      # Match in region IDs by iso code and drop extra columns
+      left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%
+      select(-country_name, -region_GCAM3) %>%
+      # Replace process emissions with actual cement production
+      left_join_error_no_match(L1321.Cement_Worrell_R)
+      mutate(prod_Mt = emiss_ktC * prod_emiss_ratio ->
+      L1321.Cement_ALL_ctry_Yh
 # ===================================================OLD
 # 2. Perform computations
 
-    #Use the assumed limestone fuel carbon content (same in all regions) to calculate the limestone consumption and limestone IO coefficients in each region
-    printlog( "Using assumed limestone carbon content to calculate limestone consumption and IO coefficients" )
-    L1321.in_Cement_Mt_R_limestone_Yh <- data.frame( L1321.out_Mt_R_cement_Yh[ c( "GCAM_region_ID", "sector" ) ], fuel = "limestone" )
-    L1321.in_Cement_Mt_R_limestone_Yh[ X_historical_years ] <- L1321.CO2_Mt_R_F_Yh[
-      match( vecpaste( L1321.in_Cement_Mt_R_limestone_Yh[ R_F ] ), vecpaste( L1321.CO2_Mt_R_F_Yh[ R_F ] ) ), X_historical_years ] /
-      limestone_Ccoef
 
-    L1321.IO_Cement_R_limestone_Yh <- data.frame( L1321.in_Cement_Mt_R_limestone_Yh[ R_S_F ],
-                                                  L1321.in_Cement_Mt_R_limestone_Yh[ X_historical_years ] / L1321.out_Mt_R_cement_Yh[ X_historical_years ] )
+     L1321.Cement_ALL_ctry_Yh$prod_Mt <- L1321.Cement_ALL_ctry_Yh$emiss_ktC * L1321.Cement_Worrell_R$prod_emiss_ratio[
+      match( L1321.Cement_ALL_ctry_Yh$GCAM_region_ID, L1321.Cement_Worrell_R$GCAM_region_ID ) ] *
+      conv_kt_Mt
+    L1321.Cement_ALL_ctry_Yh$IEA_intensity_region <- cement_regions$IEA_intensity_region[ match( L1321.Cement_ALL_ctry_Yh$iso, cement_regions$iso ) ]
+    L1321.Cement_ALL_ctry_Yh$elec_GJkg <- L1321.IEA_cement_elec_intensity$elec_GJkg[
+      match( vecpaste( L1321.Cement_ALL_ctry_Yh[ c( "IEA_intensity_region", "year" ) ] ),
+             vecpaste( L1321.IEA_cement_elec_intensity[ c( "Country", "year" ) ] ) ) ]
+    L1321.Cement_ALL_ctry_Yh$TPE_GJkg <- L1321.IEA_cement_TPE_intensity$TPE_GJkg[
+      match( vecpaste( L1321.Cement_ALL_ctry_Yh[ c( "IEA_intensity_region", "year" ) ] ),
+             vecpaste( L1321.IEA_cement_TPE_intensity[ c( "Country", "year" ) ] ) ) ]
 
     #
     # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
