@@ -14,15 +14,19 @@ module_gcam.usa_L2321.cement_USA(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L2321.DeleteSupplysector_USAcement}, \code{L2321.DeleteFinalDemand_USAcement}, \code{object}, \code{L2321.StubTechProd_cement_USA}, \code{L2321.StubTechCoef_cement_USA}, \code{L2321.StubTechCalInput_cement_heat_USA}, \code{L2321.StubTechMarket_cement_USA}, \code{L2321.BaseService_cement_USA}. The corresponding file in the
-original data system was \code{L2321.cement_USA.R} (gcam-usa level2).
+the generated outputs: \code{L2321.DeleteSupplysector_USAcement}, \code{L2321.DeleteFinalDemand_USAcement}, \code{L2321.StubTechProd_cement_USA},
+\code{L2321.StubTechCoef_cement_USA}, \code{L2321.StubTechCalInput_cement_heat_USA}, \code{L2321.StubTechMarket_cement_USA}, \code{L2321.BaseService_cement_USA},
+\code{L2321.Supplysector_cement_USA}, \code{L2321.FinalEnergyKeyword_cement_USA}, \code{L2321.SubsectorLogit_cement_USA},
+\code{L2321.SubsectorShrwtFllt_cement_USA}, \code{L2321.StubTech_cement_USA}, \code{L2321.PerCapitaBased_cement_USA},
+ \code{L2321.PriceElasticity_cement_USA}, \code{L2321.IncomeElasticity_cement_gcam3_USA} .
+ The corresponding file in the original data system was \code{L2321.cement_USA.R} (gcam-usa level2).
 }
 \description{
-Briefly describe what this chunk does.
+Make the logit and input tables for the cement sector in gcam-usa
 }
 \details{
-Describe in detail what this chunk does.
+Make the logit and input tables for the cement sector in gcam-usa
 }
 \author{
-YourInitials CurrentMonthName 2017
+KD  November 2017
 }
