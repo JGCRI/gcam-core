@@ -86,6 +86,10 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
 
 
     # silence check package notes
+    logit.year.fillout <- year <- from.year <- to.year <- region <- supplysector <- subsector <-
+      technology <- sector.name <- subsector.name <- sector <- state <- fuel <- value <- market.name <-
+      trash <- calOutputValue <- minicam.energy.input <- supplysector.x <- supplysector.y <-
+      calibration <- grid_region <- stub.technology <- key <- NULL
 
 
 
