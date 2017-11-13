@@ -1,10 +1,7 @@
-<<<<<<< HEAD
-# File: A321.demand.csv# Title: Cement final demand perCapitaBased and price elasticity# Units: Unitlessenergy.final.demand,perCapitaBased,price.elasticitycement,1,-0.4
-=======
+
 # File: A321.demand.csv
 # Title: Cement final demand perCapitaBased and price elasticity
 # Units: NA for perCapitaBased; Unitless for price.elasticity
 # Comments: perCapitaBased is a logical (Boolean) indicating whether to use a per-capita or per-GDP based demand function 
 energy.final.demand,perCapitaBased,price.elasticity
 cement,1,-0.4
->>>>>>> master
