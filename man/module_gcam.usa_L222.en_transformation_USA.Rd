@@ -18,11 +18,12 @@ the generated outputs: \code{L222.DeleteStubTech_USAen}, \code{L222.SectorEQUIV}
 original data system was \code{L222.en_transformation_USA.R} (gcam-usa level2).
 }
 \description{
-Briefly describe what this chunk does.
+Prepare the assumptions and calibrated outputs for energy transformation supplysectors, subsectors, and technologies specific to USA sectors and/or states.
 }
 \details{
-Describe in detail what this chunk does.
+This chunk sets up the USA energy transformation technology databases as well as writing out assumptions to all states/sectors/markets for shareweights and logits.
+Calibrated outputs and I:O coefficients are updated from global values produced by L222.en_transformation.R
 }
 \author{
-YourInitials CurrentMonthName 2017
+ACS Nov 2017
 }

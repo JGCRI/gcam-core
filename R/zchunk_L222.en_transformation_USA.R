@@ -1,6 +1,6 @@
 #' module_gcam.usa_L222.en_transformation_USA
 #'
-#' Briefly describe what this chunk does.
+#' Prepare the assumptions and calibrated outputs for energy transformation supplysectors, subsectors, and technologies specific to USA sectors and/or states.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,12 +8,12 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L222.DeleteStubTech_USAen}, \code{L222.SectorEQUIV}, \code{L222.PassThroughSector_USAen}, \code{object}, \code{L222.TechEQUIV}, \code{L222.Tech_USAen}, \code{L222.TechShrwt_USAen}, \code{L222.TechInterp_USAen}, \code{L222.TechShrwt_USAen}, \code{L222.TechCoef_USAen}, \code{L222.Production_USArefining}, \code{L222.SectorLogitTables_USA[[ curr_table ]]$data}, \code{L222.Supplysector_en_USA}, \code{L222.SubsectorShrwtFllt_en_USA}, \code{L222.StubTechProd_refining_USA}, \code{L222.StubTechMarket_en_USA}, \code{L222.CarbonCoef_en_USA}. The corresponding file in the
 #' original data system was \code{L222.en_transformation_USA.R} (gcam-usa level2).
-#' @details Describe in detail what this chunk does.
+#' @details This chunk sets up the USA energy transformation technology databases as well as writing out assumptions to all states/sectors/markets for shareweights and logits.
+#' Calibrated outputs and I:O coefficients are updated from global values produced by L222.en_transformation.R
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
-#' @export
+#' @author ACS Nov 2017
 module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
@@ -614,45 +614,80 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L222.CarbonCoef_en_USA
 
+    L222.SubsectorLogit_en_USA %>%
+      add_title("Subsector logit competition info for USA energy states and sectors") %>%
+      add_units("NA") %>%
+      add_comments("Subsector logit data from L222.SubsectorLogit_en are filtered and repeated") %>%
+      add_comments("for USA sectors in each state.") %>%
+      add_legacy_name("L222.SubsectorLogit_en_USA") %>%
+      add_precursors("L222.SubsectorLogit_en") ->
+      L222.SubsectorLogit_en_USA
 
-    L222.GlobalTechSCurve_en_USA,
-    L222.GlobalTechCost_en_USA,
-    L222.SubsectorLogit_en_USA,
-    L222.StubTech_en_USA,
-    L222.StubTechCoef_refining_USA,
-    L222.GlobalTechInterp_en_USA,
-    L222.GlobalTechCoef_en_USA,
-    L222.GlobalTechShrwt_en_USA,
-    L222.GlobalTechCapture_en_USA
+    L222.StubTech_en_USA %>%
+      add_title("Stub technology map for USA energy states and sectors.") %>%
+      add_units("NA") %>%
+      add_comments("The stub technology table from L222.StubTech_en is filtered and repeated") %>%
+      add_comments("for USA energy sectors in each state.") %>%
+      add_legacy_name("L222.StubTech_en_USA") %>%
+      add_precursors("L222.StubTech_en") ->
+      L222.StubTech_en_USA
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
+    L222.StubTechCoef_refining_USA %>%
+      add_title("Refining stub tech coefficients for USA energy states and sectors") %>%
+      add_units("NA") %>%
+      add_comments("Coefficients for refining stub technologies in L222.StubTechCoef_refining are filtered and repeated") %>%
+      add_comments("for USA energy sectors in each state.") %>%
+      add_legacy_name("L222.StubTechCoef_refining_USA") %>%
+      add_precursors("L222.StubTechCoef_refining") ->
+      L222.StubTechCoef_refining_USA
+
+    L222.GlobalTechSCurve_en_USA %>%
+      add_title("Tech S curve parameters for USA energy sectors.") %>%
+      add_units("varies") %>%
+      add_comments("S curve parameters from L222.GlobalTechScurve_en are filtered for USA sectors.") %>%
+      add_legacy_name("L222.GlobalTechSCurve_en_USA") %>%
+      add_precursors("L222.GlobalTechSCurve_en") ->
+      L222.GlobalTechSCurve_en_USA
+
+    L222.GlobalTechCost_en_USA %>%
+      add_title("Tech costs for USA energy sectors.") %>%
+      add_units("varies") %>%
+      add_comments("Tech cost data from L222.GlobalTechCost_en are filtered for USA sectors.") %>%
+      add_legacy_name("L222.GlobalTechCost_en_USA") %>%
+      add_precursors("L222.GlobalTechCost_en") ->
+      L222.GlobalTechCost_en_USA
+
+    L222.GlobalTechInterp_en_USA %>%
+      add_title("Interpolation function key for USA energy sectors.") %>%
       add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L222.CarbonCoef_en_USA") %>%
-      add_precursors("gcam-usa/states_subregions",
-                     "energy/calibrated_techs",
-                     "L222.Supplysector_en",
-                     "L222.SubsectorLogit_en",
-                     "L222.StubTech_en",
-                     "L222.StubTechCoef_refining",
-                     "L222.GlobalTechInterp_en",
-                     "L222.GlobalTechCoef_en",
-                     "L222.GlobalTechCost_en",
-                     "L222.GlobalTechShrwt_en",
-                     "L222.GlobalTechCapture_en",
-                     #"L222.GlobalTechShutdownProfit_en",
-                     "L222.GlobalTechShutdown_en",
-                     #"L222.GlobalTechSCurveProfit_en",
-                     "L222.GlobalTechSCurve_en",
-                     #"L222.GlobalTechLifetimeProfit_en",
-                     "L222.GlobalTechLifetime_en",
-                     "L122.out_EJ_state_refining_F",
-                     "L202.CarbonCoef") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L222.CarbonCoef_en_USA
+      add_comments("Interpolation function key from L222.GlobalTechInterp_en are filtered for USA sectors.") %>%
+      add_legacy_name("L222.GlobalTechInterp_en_USA") %>%
+      add_precursors("L222.GlobalTechInterp_en") ->
+      L222.GlobalTechInterp_en_USA
+
+    L222.GlobalTechCoef_en_USA %>%
+      add_title("Technology coefficients for USA energy sectors.") %>%
+      add_units("NA") %>%
+      add_comments("Global technology coefficients from L222.GlobalTechCoef_en are filtered for USA sectors.") %>%
+      add_legacy_name("L222.GlobalTechCoef_en_USA") %>%
+      add_precursors("L222.GlobalTechCoef_en") ->
+      L222.GlobalTechCoef_en_USA
+
+    L222.GlobalTechShrwt_en_USA %>%
+      add_title("Technology shareweights for USA energy sectors") %>%
+      add_units("NA") %>%
+      add_comments("Shareweights from L222.GlobalTechShrwt_en are filtered for USA energy sectors.") %>%
+      add_legacy_name("L222.GlobalTechShrwt_en_USA") %>%
+      add_precursors("L222.GlobalTechShrwt_en") ->
+      L222.GlobalTechShrwt_en_USA
+
+    L222.GlobalTechCapture_en_USA %>%
+      add_title("Carbon capture data for USA energy sectors") %>%
+      add_units("NA") %>%
+      add_comments("Carbon capture data  from L222.GlobalTechCapture_en are filtered for USA energy sectors.") %>%
+      add_legacy_name("L222.GlobalTechCapture_en_USA") %>%
+      add_precursors("L222.GlobalTechCapture_en") ->
+      L222.GlobalTechCapture_en_USA
 
     return_data(L222.DeleteStubTech_USAen, L222.SectorEQUIV, L222.PassThroughSector_USAen, L222.TechEQUIV, L222.Tech_USAen,
                 L222.TechShrwt_USAen, L222.TechInterp_USAen, L222.TechCoef_USAen, L222.Production_USArefining,
