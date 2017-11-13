@@ -27,12 +27,12 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
              "L222.GlobalTechCost_en",
              "L222.GlobalTechShrwt_en",
              "L222.GlobalTechCapture_en",
-             #"L222.GlobalTechShutdownProfit_en",
-             "L222.GlobalTechShutdown_en",
-             #"L222.GlobalTechSCurveProfit_en",
+             # "L222.GlobalTechShutdownProfit_en",
+             # "L222.GlobalTechShutdown_en",
+             # "L222.GlobalTechSCurveProfit_en",
              "L222.GlobalTechSCurve_en",
-             #"L222.GlobalTechLifetimeProfit_en",
-             "L222.GlobalTechLifetime_en",
+             # "L222.GlobalTechLifetimeProfit_en",
+             # "L222.GlobalTechLifetime_en",
              "L122.out_EJ_state_refining_F",
              "L202.CarbonCoef"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -76,11 +76,11 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
     L222.GlobalTechShrwt_en <- get_data(all_data, "L222.GlobalTechShrwt_en")
     L222.GlobalTechCapture_en <- get_data(all_data, "L222.GlobalTechCapture_en")
     # L222.GlobalTechShutdownProfit_en <- get_data(all_data, "L222.GlobalTechShutdownProfit_en")
-    L222.GlobalTechShutdown_en <- get_data(all_data, "L222.GlobalTechShutdown_en")
+    # L222.GlobalTechShutdown_en <- get_data(all_data, "L222.GlobalTechShutdown_en")
     # L222.GlobalTechSCurveProfit_en <- get_data(all_data, "L222.GlobalTechSCurveProfit_en")
     L222.GlobalTechSCurve_en <- get_data(all_data, "L222.GlobalTechSCurve_en")
     # L222.GlobalTechLifetimeProfit_en <- get_data(all_data, "L222.GlobalTechLifetimeProfit_en")
-    L222.GlobalTechLifetime_en <- get_data(all_data, "L222.GlobalTechLifetime_en")
+    # L222.GlobalTechLifetime_en <- get_data(all_data, "L222.GlobalTechLifetime_en")
     L122.out_EJ_state_refining_F <- get_data(all_data, "L122.out_EJ_state_refining_F")
     L202.CarbonCoef <- get_data(all_data, "L202.CarbonCoef")
 
@@ -487,13 +487,14 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
 
 
     # Produce outputs
-    L222.DeleteStubTech_USAen %>%
+    # L222.DeleteStubTech_USAen %>%
+      tibble() %>%
       add_title("Removes existing stub technologies in the USA region") %>%
       add_units("NA") %>%
       add_comments("Removes existing stub technologies in the USA region from L222.StubTech_en.") %>%
-      add_comments("The supplysector and subsector structure in the sectors defined in gcamusa.SECTOR_EN_NAMES are retained") %>%
+      add_comments("The supplysector and subsector structure in the sectors defined in gcamusa.SECTOR_EN_NAMES are retained")  %>%
       add_legacy_name("L222.DeleteStubTech_USAen") %>%
-      add_precursors("L222.StubTech_en")  ->
+      add_precursors("L222.StubTech_en") ->
       L222.DeleteStubTech_USAen
 
     L222.SectorEQUIV %>%
@@ -514,7 +515,8 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
     L222.TechEQUIV %>%
       add_title("table of technology equivalencies for pass-through-technology") %>%
       add_units("NA") %>%
-      add_comments("user defined.") ->
+      add_comments("user defined.") %>%
+      add_legacy_name("L222.TechEQUIV")->
       L222.TechEQUIV
 
     L222.Tech_USAen %>%
