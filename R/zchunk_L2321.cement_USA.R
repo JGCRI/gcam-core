@@ -88,7 +88,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
     # Make the logit and input tables for with creating cement sectors in cement
     # producing states.
 
-    # Not all states produce cement, save a vector of cement producing states bases on census data.
+    # Not all states produce cement so save a vector of cement producing states bases on census data.
     # This vector will be used to create cement sectors in only the cement producing states.
     L1321.out_Mt_state_cement_Yh %>%
       select(state) %>%
@@ -181,8 +181,8 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
     # for model base years and rounding to the appropriate number of digits.
     L1321.out_Mt_state_cement_Yh %>%
       filter(year %in% BASE_YEARS) %>%
-      mutate(calOutputValue = signif(value, energy.DIGITS_CALOUTPUT)) %>%
-      mutate(region = state) ->
+      mutate(calOutputValue = signif(value, energy.DIGITS_CALOUTPUT),
+             region = state ) ->
       L2321.StubTechProd_cement_USA
 
     # Subset the calibrated intermediate sectors and fuels to supplysector / subsector / technology
@@ -205,10 +205,10 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
 
     # Add share weight information to the state cement production data frame and format.
     L2321.StubTechProd_cement_USA %>%
-      mutate(stub.technology = technology) %>%
-      mutate(share.weight.year = year) %>%
-      mutate(subs.share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
-      mutate(tech.share.weight = subs.share.weight) %>%
+      mutate(stub.technology = technology,
+             share.weight.year = year,
+             subs.share.weight = if_else(calOutputValue > 0, 1, 0),
+             tech.share.weight = subs.share.weight) %>%
       select(region, supplysector, subsector, stub.technology, year, calOutputValue,
              share.weight.year, subs.share.weight, tech.share.weight) ->
       L2321.StubTechProd_cement_USA
@@ -245,8 +245,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
       complete(nesting(supplysector, subsector, minicam.energy.input, technology), year = c(year, FUTURE_YEARS)) %>%
       arrange(supplysector, subsector, minicam.energy.input, technology, year) %>%
       group_by(supplysector, subsector, minicam.energy.input, technology) %>%
-      mutate(value = approx_fun(year, value)) %>%
-      mutate(value = signif(value, energy.DIGITS_COEFFICIENT)) %>%
+      mutate(value = approx_fun(year, value), value = signif(value, energy.DIGITS_COEFFICIENT)) %>%
       ungroup ->
       L2321.globaltech_coef
 
@@ -269,8 +268,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
     IO_and_globaltech %>%
       gather(year, value, matches(YEAR_PATTERN)) %>%
       filter(year %in% MODEL_YEARS) %>%
-      mutate(coefficient = signif(value, energy.DIGITS_COEFFICIENT)) %>%
-      mutate(year = as.integer(year)) %>%
+      mutate(coefficient = signif(value, energy.DIGITS_COEFFICIENT), year = as.integer(year)) %>%
       select(-value) ->
       L2321.IO_GJkg_state_cement_F_Yh_complete
 
@@ -302,8 +300,8 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
     # Add market information, limestone and process heat are state level markets where as electricity
     # comes from the USA level.
     L2321.StubTechCoef_cement_USA %>%
-      mutate(market.name = region) %>%
-      mutate(market.name = if_else(grepl("elec", minicam.energy.input), "USA", market.name)) ->
+      mutate(market.name = region,
+             market.name = if_else(grepl("elec", minicam.energy.input), "USA", market.name)) ->
       L2321.StubTechCoef_cement_USA
 
     if(gcamusa.USE_REGIONAL_FUEL_MARKETS){
@@ -312,16 +310,16 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
       # the minicam.energy.input is considered a regional fuel market.
       L2321.StubTechCoef_cement_USA %>%
         left_join(states_subregions %>% select(region = state, grid_region), by = "region") %>%
-        mutate(replace = if_else(any(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS), 1, 0)) %>%
-        mutate(market.name = if_else(replace == 1, grid_region, market.name)) %>%
+        mutate(replace = if_else(any(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS), 1, 0),
+               market.name = if_else(replace == 1, grid_region, market.name)) %>%
         select(-replace, -grid_region) ->
         L2321.StubTechCoef_cement_USA
     }
 
     # Change market name to reflect the fact that electricity is consumed from state markets.
     L2321.StubTechCoef_cement_USA %>%
-      mutate(replace = if_else( any(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS), 1, 0)) %>%
-      mutate(market.name = if_else(replace == 1, region, market.name)) %>%
+      mutate(replace = if_else( any(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS), 1, 0),
+             market.name = if_else(replace == 1, region, market.name)) %>%
       select(-replace) ->
       L2321.StubTechCoef_cement_USA
 
@@ -332,9 +330,8 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
     # rounding to the correct xml digit and adding a region column.
     L1321.in_EJ_state_cement_F_Y %>%
       filter(year %in% BASE_YEARS) %>%
-      mutate(calibrated.value = signif(value, gcamusa.DIGITS_CALOUTPUT)) %>%
-      select(-value) %>%
-      mutate(region = state) ->
+      mutate(calibrated.value = signif(value, gcamusa.DIGITS_CALOUTPUT), region = state) %>%
+      select(-value)  ->
       L2321.StubTechCalInput_cement_heat_USA
 
     # Add supplysector / subsector / technology / minicam.energy.input information
@@ -356,11 +353,11 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
 
     # Add region and share weight information, format.
     L2321.StubTechCalInput_cement_heat_USA_NOelectricity %>%
-      mutate(region = state) %>%
-      mutate(stub.technology = technology) %>%
-      mutate(share.weight.year = year) %>%
-      mutate(subs.share.weight = if_else(calibrated.value > 0, 1, 0)) %>%
-      mutate(tech.share.weight = subs.share.weight) %>%
+      mutate(region = state,
+             stub.technology = technology,
+             share.weight.year = year,
+             subs.share.weight = if_else(calibrated.value > 0, 1, 0),
+             tech.share.weight = subs.share.weight) %>%
       select(region, supplysector, subsector, stub.technology, year, minicam.energy.input,
              calibrated.value, share.weight.year, subs.share.weight, tech.share.weight) ->
       L2321.StubTechCalInput_cement_heat_USA
