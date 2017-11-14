@@ -498,10 +498,6 @@ gcamusa.STATE_UNLIMITED_RESOURCES <- c("global solar resource", "limestone")
 
 gcamusa.WIND_BASE_COST_YEAR <- 2005
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 8c6a52005f98a1a31fb85a5d52a84e3ed4d5e884
 # Reduce rounding in detailed USA transport for compatability with model
 gcamusa.DIGITS_TRNUSA_DEFAULT <- 1
 
