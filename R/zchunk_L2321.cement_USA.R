@@ -234,10 +234,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
     # Interpolate cement production default coefficients to future years.
     #
     # First change format of the the production default coefficients data frame from wide to long.
-    A321.globaltech_coef %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) ->
-      A321.globaltech_coef_long
+    A321.globaltech_coef_long <- gather_years(A321.globaltech_coef)
 
     # Then linearly interpolate the default coefficients for future years. In the next step these
     # values will be added to the state input-output coefficients data frame.
@@ -266,9 +263,9 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
 
     # Format the the data frame and round the number of digits.
     IO_and_globaltech %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
+      gather_years %>%
       filter(year %in% MODEL_YEARS) %>%
-      mutate(coefficient = signif(value, energy.DIGITS_COEFFICIENT), year = as.integer(year)) %>%
+      mutate(coefficient = signif(value, energy.DIGITS_COEFFICIENT)) %>%
       select(-value) ->
       L2321.IO_GJkg_state_cement_F_Yh_complete
 
