@@ -427,9 +427,8 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
         distinct %>%
         left_join_error_no_match(distinct(select(L222.TechShrwt_USAen, subsector, supplysector)),
                                  by = c("supplysector" = "subsector")) %>%
-        rename(match_name = supplysector.y) %>%
-        left_join_error_no_match(L202.CarbonCoef_tmp, by =  c("match_name" = "PrimaryFuelCO2Coef.name")) %>%
-        select(-match_name) %>%
+        left_join_error_no_match(L202.CarbonCoef_tmp, by =  c("supplysector.y" = "PrimaryFuelCO2Coef.name")) %>%
+        select(-supplysector.y) %>%
         rename(PrimaryFuelCO2Coef.name = supplysector) ->
         L222.CarbonCoef_en_USA
 
