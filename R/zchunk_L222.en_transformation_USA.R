@@ -294,7 +294,7 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
       L222.GlobalTechCapture_en_USA   <- global_energy_to_USA_nonGlobalTech(L222.GlobalTechCapture_en)
       L222.GlobalTechSCurve_en_USA    <- global_energy_to_USA_nonGlobalTech(L222.GlobalTechSCurve_en)
 
-      ### The same processing for Optional/currently NULL inputs
+      ### The same processing for optional/currently NULL inputs
       # L222.GlobalTechShutdownProfit_en_USA  <- global_energy_to_USA_nonGlobalTech(L222.GlobalTechShutdownProfit_en)
       # L222.GlobalTechShutdown_en_USA        <- global_energy_to_USA_nonGlobalTech(L222.GlobalTechShutdown_en)
       # L222.GlobalTechSCurveProfit_en_USA    <- global_energy_to_USA_nonGlobalTech(L222.GlobalTechSCurveProfit_en)
@@ -433,8 +433,8 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
 
 
     # Produce outputs
-    # L222.DeleteStubTech_USAen %>%
-      tibble() %>%
+    L222.DeleteStubTech_USAen %>%
+      mutate(region = region) %>%  # strip off attributes so we can re-write title, etc.
       add_title("Removes existing stub technologies in the USA region") %>%
       add_units("NA") %>%
       add_comments("Removes existing stub technologies in the USA region from L222.StubTech_en.") %>%
@@ -444,7 +444,7 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
       L222.DeleteStubTech_USAen
 
     L222.SectorEQUIV %>%
-      add_title("table of sector equivalencies for pass-through-sector") %>%
+      add_title("Table of sector equivalencies for pass-through-sector") %>%
       add_units("NA") %>%
       add_comments("user defined.") %>%
       add_legacy_name("L222.SectorEQUIV") ->
@@ -472,12 +472,11 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
       add_comments("repeated for all US states and updated.") %>%
       add_legacy_name("L222.Tech_USAen") %>%
       add_precursors("L222.SubsectorLogit_en") %>%
-      # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L222.Tech_USAen
 
     L222.TechShrwt_USAen %>%
-      add_title("technology shareweights in each year, USA region") %>%
+      add_title("Technology shareweights in each year, USA region") %>%
       add_units("NA") %>%
       add_comments("L222.Tech_USAen is repeated for model base year and future years and shareweights of 0 and") %>%
       add_comments("1 are added for each, respectively. Overwritten in calibration.") %>%
@@ -495,7 +494,7 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
       L222.TechInterp_USAen
 
     L222.TechCoef_USAen %>%
-      add_title("technology coefficients and market names, USA region") %>%
+      add_title("Technology coefficients and market names, USA region") %>%
       add_units("units") %>%
       add_comments("Data from L222.TechShrwt_USAen is renamed and filled out.") %>%
       add_legacy_name("L222.TechCoef_USAen") %>%
