@@ -623,7 +623,8 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("Shareweights from L222.GlobalTechShrwt_en are filtered for USA energy sectors.") %>%
       add_legacy_name("L222.GlobalTechShrwt_en_USA") %>%
-      add_precursors("L222.GlobalTechShrwt_en") ->
+      add_precursors("L222.GlobalTechShrwt_en") %>%
+      add_flags(FLAG_SUM_TEST) ->
       L222.GlobalTechShrwt_en_USA
 
     L222.GlobalTechCapture_en_USA %>%
