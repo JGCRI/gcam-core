@@ -80,8 +80,7 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
 
     # Determine unconventional oil production (58-67)
     rsrc_unconv_oil_prod_bbld %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years %>%
       # interpolate production to all historical years
       complete(iso, year = HISTORICAL_YEARS) %>%
       arrange(iso, year) %>%
@@ -134,8 +133,7 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
 
       L100.IEA_en_bal_ctry_hist %>%
         filter(FLOW == "INDPROD", PRODUCT %in% IEA_product_rsrc$PRODUCT) %>%
-        gather(year, value, matches(YEAR_PATTERN)) %>%
-        mutate(year = as.integer(year)) %>%
+        gather_years %>%
         # bring in resource information and summarise
         left_join_error_no_match(IEA_product_rsrc, by = "PRODUCT") %>%
         group_by(iso, resource) %>%
