@@ -41,7 +41,7 @@ module_emissions_L112.ghg_en_R_S_T_Y <- function(command, ...) {
     EPA_ghg_tech <- get_data(all_data, "emissions/mappings/EPA_ghg_tech")
     GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
     L101.in_EJ_R_en_Si_F_Yh <- get_data(all_data, "L101.in_EJ_R_en_Si_F_Yh") %>%
-      gather(year, energy, matches(YEAR_PATTERN))
+      gather_years(value_col = "energy")
     L102.ghg_tgej_USA_en_Sepa_F_2005 <- get_data(all_data, "L102.ghg_tgej_USA_en_Sepa_F_2005") %>%
       rename(CH4 = ch4_em_factor, N2O = n2o_em_factor) %>%
       gather(variable, emiss_factor, CH4, N2O)
@@ -99,7 +99,7 @@ module_emissions_L112.ghg_en_R_S_T_Y <- function(command, ...) {
       change_iso_code('rou', 'rom') %>%
       left_join(iso_GCAM_regID, by = "iso") %>%
       na.omit() %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
+      gather_years %>%
       filter(year %in% emissions.EDGAR_YEARS) %>%
       # Aggregate by region, GHG, and EDGAR sector
       group_by(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year) %>%

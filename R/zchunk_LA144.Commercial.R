@@ -58,12 +58,10 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
     }
 
     Census_pop_hist <- get_data(all_data, "gcam-usa/Census_pop_hist") %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year))
+      gather_years
     CBECS_variables <- get_data(all_data, "gcam-usa/CBECS_variables")
     EIA_AEO_Tab5 <- get_data(all_data, "gcam-usa/EIA_AEO_Tab5") %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year))
+      gather_years
     EIA_distheat <- get_data(all_data, "gcam-usa/EIA_distheat")
     PNNL_Commext_elec <- get_data(all_data, "gcam-usa/PNNL_Commext_elec")
     CBECS_1979_1983 <- get_data(all_data, "gcam-usa/CBECS_1979_1983")

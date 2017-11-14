@@ -161,5 +161,31 @@ test_that("fast_left_join produces results equivalent to left_join", {
   expect_equal(ABdp, ABdt)
 })
 
+test_that("gather_years does its job", {
+  # Bad input
+  expect_error(gather_years(1))
+  d <- tibble(x = letters[1:3],
+              `1970` = 1:3, `1971` = 4:6,
+              `197` = c(0.1, 0.2, 0.3))
+  expect_error(gather_years(d, value_col = 1))
+  expect_error(gather_years(d, year_pattern = 1))
 
+  # Output has correct columns and classes
+  d1 <- gather_years(d)
+  expect_identical(names(d1), c("x", "197", "year", "value"))
+  expect_is(d1$x, "character")
+  expect_is(d1$`197`, "numeric")
+  expect_is(d1$year, "integer")
+  expect_is(d1$value, "integer")
 
+  # A gather was done
+  expect_identical(d1, gather(d, year, value, `1970`, `1971`) %>% mutate(year = as.integer(year)))
+
+  # value column rename works
+  d1 <- gather_years(d, value_col = "test")
+  expect_identical(names(d1), c("x", "197", "year", "test"))
+
+  # change the year pattern and gather different columns
+  d1 <- gather_years(d, year_pattern = "[0-9]{3}")
+  expect_identical(d1, gather(d, year, value, matches("[0-9]{3}")) %>% mutate(year = as.integer(year)))
+})
