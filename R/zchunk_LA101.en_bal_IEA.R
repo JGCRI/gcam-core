@@ -133,8 +133,7 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
         summarise_all(funs(sum(. * conversion))) %>%
         select(-conversion) %>%
         # at this point dataset is much smaller; go to long form
-        gather(year, value, matches(YEAR_PATTERN)) %>%
-        mutate(year = as.integer(year)) ->
+        gather_years ->
         L101.en_bal_EJ_R_Si_Fi_Yh
 
       # Setting to zero net fuel production from energy transformation sectors modeled under the industrial sector
@@ -187,8 +186,7 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
         ungroup %>%
         select(-conversion) %>%
         # at this point dataset is much smaller; go to long form
-        gather(year, value, matches(YEAR_PATTERN)) %>%
-        mutate(year = as.integer(year)) %>%
+        gather_years %>%
         add_title("Transportation sector energy consumption by country / IEA mode / fuel / historical year") ->
         L101.in_EJ_ctry_trn_Fi_Yh
 
@@ -207,8 +205,7 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
         ungroup %>%
         select(-conversion) %>%
         # at this point dataset is much smaller; go to long form
-        gather(year, value, matches(YEAR_PATTERN)) %>%
-        mutate(year = as.integer(year)) %>%
+        gather_years %>%
         add_title("Building energy consumption by country / IEA sector / fuel / historical year") ->
         L101.in_EJ_ctry_bld_Fi_Yh
 
@@ -222,8 +219,7 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
         ungroup %>%
         select(-conversion) %>%
         # at this point dataset is much smaller; go to long form
-        gather(year, value, matches(YEAR_PATTERN)) %>%
-        mutate(year = as.integer(year)) ->
+        gather_years ->
         L101.en_bal_EJ_ctry_Si_Fi_Yh
 
       L101.en_bal_EJ_ctry_Si_Fi_Yh %>%

@@ -73,8 +73,7 @@ module_water_L1233.Elec_water <- function(command, ...) {
 
     # INTERPOLATE A23.CoolingSystemShares_RG3 FOR HISTORICAL YEARS AND HISTORICAL + FUTURE YEARS
     A23.CoolingSystemShares_RG3 %>%
-      gather(year, value, -region_GCAM3, -plant_type, -cooling_system, -water_type) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years %>%
       complete(nesting(region_GCAM3, plant_type, cooling_system, water_type),
                year = c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%
       group_by(region_GCAM3, plant_type, cooling_system, water_type) %>%

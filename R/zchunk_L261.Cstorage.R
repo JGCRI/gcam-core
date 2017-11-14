@@ -185,8 +185,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
     # Energy inputs and coefficients of global technologies for carbon storage
     # A61.globaltech_coef reports carbon storage global technology coefficients
     A61.globaltech_coef %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>% # Convert to long form
-      mutate(year = as.integer(year)) %>% # Year needs to be integer or numeric to interpolate
+      gather_years %>%
       # Expand table to include all model base and future years
       complete(year = c(year, MODEL_YEARS), nesting(supplysector, subsector, technology, minicam.energy.input)) %>%
       # Extrapolate to fill out values for all years
@@ -200,8 +199,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
     # Costs of global technologies
     # A61.globaltech_cost reports carbon storage offshore storage cost (1975$/tCO2)
     A61.globaltech_cost %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>% # Convert to long form
-      mutate(year = as.integer(year)) %>% # Year needs to be integer or numeric to interpolate
+      gather_years %>%
       # Expand table to include all model base and future years
       complete(year = c(year, MODEL_YEARS), nesting(supplysector, subsector, technology, minicam.non.energy.input)) %>%
       # Extrapolate to fill out values for all years
@@ -223,8 +221,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
 
     # Shareweights of global technologies for energy transformation
     A61.globaltech_shrwt %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>% # Convert to long form
-      mutate(year = as.integer(year)) %>% # Year needs to be integer or numeric to interpolate
+      gather_years %>%
       # Expand table to include all model base and future years
       complete(year = c(year, MODEL_YEARS), nesting(supplysector, subsector, technology)) %>%
       # Extrapolate to fill out values for all years

@@ -36,8 +36,7 @@ module_socioeconomics_L101.Population <- function(command, ...) {
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     get_data(all_data, "socioeconomics/GCAM3_population") %>%
-      gather(year, value, -region_GCAM3) %>%
-      mutate(year = as.integer(year)) ->
+      gather_years ->
       GCAM3_population
     L100.Pop_thous_ctry_Yh <- get_data(all_data, "L100.Pop_thous_ctry_Yh")
     L100.Pop_thous_SSP_ctry_Yfut <- get_data(all_data, "L100.Pop_thous_SSP_ctry_Yfut")
@@ -85,8 +84,7 @@ module_socioeconomics_L101.Population <- function(command, ...) {
       left_join_error_no_match(spread(L100.Pop_thous_ctry_Yh, year, value), ., by = c("iso")) %>%
       select(-country_name, -scenario, -region_GCAM3) %>%
       left_join_error_no_match(select(iso_GCAM_regID, iso, region_GCAM3), by = "iso") %>%
-      gather(year, value, -iso, -GCAM_region_ID, -region_GCAM3) %>%
-      mutate(year = as.integer(year)) ->
+      gather_years ->
       L101.Pop_thous_ctry_Y
 
     L101.Pop_thous_ctry_Y %>%

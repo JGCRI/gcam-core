@@ -107,8 +107,7 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
     L115.EDGAR_GCAM %>%
       select(-c(IPCC_Annex, World_Region, iso, Name, IPCC, IPCC_description.x, IPCC_description.y, country_name, region_GCAM3)) %>%
       na.omit() %>%
-      gather(year, value, -c(Non.CO2, EDGAR_agg_sector, GCAM_region_ID)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years %>%
       group_by(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year) %>%
       summarise(value = sum(value)) ->
       L115.EDGAR_R_G_sec_yr_v

@@ -164,8 +164,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
     # L222.GlobalTechCoef_en: Energy inputs and coefficients of global technologies for energy transformation
 
     A22.globaltech_coef %>%
-      gather(year, coefficient, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years(value_col = "coefficient") %>%
       complete(nesting(supplysector, subsector, technology, minicam.energy.input), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
       arrange(supplysector, year) %>%
       group_by(supplysector, subsector, technology, minicam.energy.input) %>%
@@ -190,8 +189,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
 
     # L222.GlobalTechCost_low_en: Costs of global technologies for energy transformation -- low tech/high cost option
     A22.globaltech_cost_low %>%
-      gather(year, input.cost, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years(value_col = "input.cost") %>%
       complete(nesting(supplysector, subsector, technology, minicam.non.energy.input), year = c(year, MODEL_YEARS)) %>%
       arrange(supplysector, year) %>%
       group_by(supplysector, subsector, technology, minicam.non.energy.input) %>%
@@ -207,8 +205,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
 
     # L222.GlobalTechShrwt_en: Shareweights of global technologies for energy transformation
     A22.globaltech_shrwt %>%
-      gather(year, share.weight, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years(value_col = "share.weight") %>%
       complete(nesting(supplysector, subsector, technology), year = c(year, MODEL_YEARS)) %>%
       arrange(supplysector, year) %>%
       group_by(supplysector, subsector, technology) %>%
@@ -224,8 +221,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
     # L222.GlobalTechCapture_en: CO2 capture fractions from global technologies for energy transformation
     # No need to consider historical periods here
     A22.globaltech_co2capture %>%
-      gather(year, remove.fraction, -supplysector, -subsector, -technology) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years(value_col = "remove.fraction") %>%
       complete(nesting(supplysector, subsector, technology), year = c(year, FUTURE_YEARS)) %>%
       arrange(supplysector, year) %>%
       group_by(supplysector, subsector, technology) %>%

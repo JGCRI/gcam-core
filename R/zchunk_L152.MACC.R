@@ -80,8 +80,7 @@ module_emissions_L152.MACC <- function(command, ...) {
     # Also filter for only EPA MACC year
     L152.EPA_MACC_baselines_MtCO2e <- EPA_MACC_baselines_MtCO2e %>%
       combine_Al_Mg %>%
-      gather(year, baseline_MtCO2e, -Sector, -Process, -EPA_region) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years(value_col = "baseline_MtCO2e") %>%
       filter(year == emissions.EPA_MACC_YEAR) %>%
       group_by(Sector, Process, EPA_region) %>%
       summarize_at(vars(baseline_MtCO2e), sum)

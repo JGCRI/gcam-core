@@ -79,8 +79,7 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
         filter(year <= 2008) %>%                                                         # Old data didn't care if post-2008 data was missing so remove it here
         spread(year, value) %>%                                                          # Convert to wide format
         na.omit() %>%                                                                    # Remove any row with an NA (i.e., incomplete time series)
-        gather(year, value, -GCAM_region_ID, -iso, -sector, -Non.CO2, -IPCC) %>%         # Convert back to long format
-        mutate(year = as.integer(year)) ->                                             # Convert year back to integer form (not sure why this changes type)
+        gather_years ->                                             # Convert year back to integer form (not sure why this changes type)
         EDGAR_history
 
     } else {
@@ -132,8 +131,7 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
                 mutate(GFED_Deforest_CO, Non.CO2 = "CH4", type = "Deforest"),
                 mutate(GFED_ForestFire_CO, Non.CO2 = "N2O", type = "ForestFire"),
                 mutate(GFED_Deforest_CO, Non.CO2 = "N2O", type = "Deforest")) %>%
-      gather(year, value, -Country, -Non.CO2, -type) %>%                                             # Convert from wide to long
-      mutate(year = as.integer(year)) %>%
+      gather_years %>%
       spread(type, value) %>%                                                                        # Spread data so deforestation and forest fires are in columns
       standardize_iso(col = "Country") %>%
       change_iso_code('rou', 'rom') %>%                                                              # Convert Romania iso code to pre-2002 value

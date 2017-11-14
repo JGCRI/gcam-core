@@ -41,8 +41,7 @@ module_emissions_L112.ghg_en_R_S_T_Y <- function(command, ...) {
     EPA_ghg_tech <- get_data(all_data, "emissions/mappings/EPA_ghg_tech")
     GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
     L101.in_EJ_R_en_Si_F_Yh <- get_data(all_data, "L101.in_EJ_R_en_Si_F_Yh") %>%
-      gather(year, energy, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year))
+      gather_years(value_col = "energy")
     L102.ghg_tgej_USA_en_Sepa_F_2005 <- get_data(all_data, "L102.ghg_tgej_USA_en_Sepa_F_2005") %>%
       rename(CH4 = ch4_em_factor, N2O = n2o_em_factor) %>%
       gather(variable, emiss_factor, CH4, N2O)
@@ -56,19 +55,19 @@ module_emissions_L112.ghg_en_R_S_T_Y <- function(command, ...) {
     # natural gas emissions factors to all passenger transport, even refined liquid passenger transport
     if(OLD_DATA_SYSTEM_BEHAVIOR) {
       L112.ghg_tg_R_en_Si_F_Yh <- L101.in_EJ_R_en_Si_F_Yh %>%
-      left_join_keep_first_only(GCAM_sector_tech %>%
-                                  select(EPA_agg_sector, EPA_agg_fuel, EDGAR_agg_sector, fuel, sector),
-                                by = c("fuel", "sector")) %>%
-      # Remove years where we don't have emissions data and add Non.CO2 column
-      filter(year %in% emissions.EDGAR_YEARS) %>%
-      repeat_add_columns(tibble(Non.CO2 = c("CH4","N2O"))) %>%
-      # Match in emissions factors
-      # Use left_join because some "cement" only in EPA sector
-      left_join(L102.ghg_tgej_USA_en_Sepa_F_2005,
-                by = c("Non.CO2" = "variable", "EPA_agg_sector" = "sector", "EPA_agg_fuel" = "fuel")) %>%
-      # Compute unscaled emissions
-      mutate(epa_emissions = energy * emiss_factor) %>%
-      na.omit()
+        left_join_keep_first_only(GCAM_sector_tech %>%
+                                    select(EPA_agg_sector, EPA_agg_fuel, EDGAR_agg_sector, fuel, sector),
+                                  by = c("fuel", "sector")) %>%
+        # Remove years where we don't have emissions data and add Non.CO2 column
+        filter(year %in% emissions.EDGAR_YEARS) %>%
+        repeat_add_columns(tibble(Non.CO2 = c("CH4","N2O"))) %>%
+        # Match in emissions factors
+        # Use left_join because some "cement" only in EPA sector
+        left_join(L102.ghg_tgej_USA_en_Sepa_F_2005,
+                  by = c("Non.CO2" = "variable", "EPA_agg_sector" = "sector", "EPA_agg_fuel" = "fuel")) %>%
+        # Compute unscaled emissions
+        mutate(epa_emissions = energy * emiss_factor) %>%
+        na.omit()
     } else {
       L112.ghg_tg_R_en_Si_F_Yh <- L101.in_EJ_R_en_Si_F_Yh %>%
         left_join_keep_first_only(GCAM_sector_tech %>%
@@ -100,8 +99,7 @@ module_emissions_L112.ghg_en_R_S_T_Y <- function(command, ...) {
       change_iso_code('rou', 'rom') %>%
       left_join(iso_GCAM_regID, by = "iso") %>%
       na.omit() %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years %>%
       filter(year %in% emissions.EDGAR_YEARS) %>%
       # Aggregate by region, GHG, and EDGAR sector
       group_by(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year) %>%
@@ -135,7 +133,7 @@ module_emissions_L112.ghg_en_R_S_T_Y <- function(command, ...) {
     # First compute energy by sector
     L112.in_EJ_R_en_S_F_Yh <- L101.in_EJ_R_en_Si_F_Yh %>%
       left_join_keep_first_only(GCAM_sector_tech %>% select(sector, fuel, technology, supplysector, subsector, stub.technology),
-                by = c("sector", "fuel", "technology")) %>%
+                                by = c("sector", "fuel", "technology")) %>%
       group_by(GCAM_region_ID, supplysector, subsector, stub.technology, year) %>%
       summarise(energy = sum(energy))
 

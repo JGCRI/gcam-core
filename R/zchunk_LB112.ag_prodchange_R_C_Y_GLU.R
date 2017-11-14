@@ -254,9 +254,7 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
 
     # Make a table of default yield improvement rates
     A_defaultYieldRate %>%
-      gather(year, value, -GCAM_commodity) %>%
-      # Convert year from numeric to integer
-      mutate(year = as.integer(year)) %>%
+      gather_years %>%
       # Join the table with future years.
       full_join(interp.future, by = c("GCAM_commodity", "year")) %>%
       # Interpolate for each GCAM commodity

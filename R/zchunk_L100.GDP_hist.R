@@ -35,8 +35,7 @@ module_socioeconomics_L100.GDP_hist <- function(command, ...) {
     # Convert to long form, filter to historical years, convert units
     usda_gdp_mer %>%
       select(-Country) %>%
-      gather(year, value, -iso) %>%
-      mutate(year = as.numeric(year)) %>%
+      gather_years %>%
       filter(!is.na(value), !is.na(iso)) %>%
       mutate(value = value * CONV_BIL_MIL * gdp_deflator(1990, base_year = 2010),
              year = as.integer(year)) %>%
