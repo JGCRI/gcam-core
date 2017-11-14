@@ -55,8 +55,7 @@ module_data_EDGAR_gases <- function(command, ...) {
       EDGAR_CO
 
     bind_rows(EDGAR_NH3, EDGAR_CH4, EDGAR_N2O, EDGAR_VOC, EDGAR_NOx, EDGAR_SO2, EDGAR_CO) %>%
-      gather(year, value, -Non.CO2, -`IPCC-Annex`, -`World Region`, -ISO_A3, -Name, -IPCC, -IPCC_description) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years %>%
       add_title("EDGAR greenhouse gas emissions by country and main source") %>%
       add_units("Gg") %>%
       add_comments("Read from EDGAR csv files EDGAR_NH3, EDGAR_CH4, EDGAR_N2O, EDGAR_NMVOC, EDGAR_NOx, EDGAR_SO2, EDGAR_CO") %>%

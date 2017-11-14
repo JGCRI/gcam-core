@@ -52,9 +52,7 @@ module_aglu_LB133.ag_Costs_USA_C_2005 <- function(command, ...) {
 
     # convert USDA_cost_data to long form:
     USDA_cost_data %>%
-      gather(year, value, -Crop, -Item, -Unit) %>%
-      # force year to integer
-      mutate(year = as.integer(year)) ->
+      gather_years ->
       USDA_cost_data
 
     # 2. Perform computations

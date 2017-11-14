@@ -464,10 +464,8 @@ fill_exp_decay_extrapolate <- function(d, out_years) {
 
   # The first step is to linearly interpolate missing values that are in between
   # values which are specified (approx_fun rule=1)
-  d %>%
-    gather(year, value, matches(YEAR_PATTERN)) %>%
-    mutate(year = as.integer(year)) ->
-    d
+  d <- gather_years(d)
+
   # We would like to replicate values for all years including those found in the
   # data as well as requested in out_years with the exception of the year (which
   # which is the column we are replicating on) and value which we would like to

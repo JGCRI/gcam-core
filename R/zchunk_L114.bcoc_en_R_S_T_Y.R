@@ -47,8 +47,7 @@ module_emissions_L114.bcoc_en_R_S_T_Y <- function(command, ...) {
 
     # Compile the driver data (energy consumption by sector and fuel, around the year 2000)
     BCOC_drivers <- L101.in_EJ_R_en_Si_F_Yh %>%
-      gather(year, energy, -GCAM_region_ID, -sector, -fuel, -technology) %>%
-      mutate(year = as.numeric(year)) %>%
+      gather_years(value_col = "energy") %>%
       filter(year == 2000) %>%
       # Repeat by the names of the gases whose default coefficients will be joined in
       repeat_add_columns(tibble(Non.CO2 = c("BC", "OC"))) %>%

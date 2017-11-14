@@ -138,8 +138,7 @@ module_energy_L252.transportation <- function(command, ...) {
 
     # Interpolate shareweights of the global transportation sector technologies across model years
     A52.globaltech_shrwt %>%
-      gather(year, share.weight, matches(YEAR_PATTERN)) %>% # Convert to long form
-      mutate(year = as.integer(year)) %>% # Year needs to be integer or numeric to interpolate
+      gather_years(value_col = "share.weight") %>%
       # Expand table to include all model base and future years
       complete(year = c(year, MODEL_YEARS), nesting(supplysector, subsector, technology)) %>%
       # Extrapolate to fill out values for all years
@@ -157,8 +156,7 @@ module_energy_L252.transportation <- function(command, ...) {
     DIGITS_EFFICIENCY <- 3
 
     A52.globaltech_eff %>%
-      gather(year, efficiency, matches(YEAR_PATTERN)) %>% # Convert to long form
-      mutate(year = as.integer(year)) %>% # Year needs to be integer or numeric to interpolate
+      gather_years(value_col = "efficiency") %>%
       # Expand table to include all model years
       complete(year = c(year, MODEL_YEARS), nesting(supplysector, subsector, technology, minicam.energy.input)) %>%
       # Extrapolate to fill out values for all years
@@ -175,8 +173,7 @@ module_energy_L252.transportation <- function(command, ...) {
     # Costs of global technologies
     # Capital costs of global transportation technologies were interpolated across model years
     A52.globaltech_cost %>%
-      gather(year, input.cost, matches(YEAR_PATTERN)) %>% # Convert to long form
-      mutate(year = as.integer(year)) %>% # Year needs to be integer or numeric to interpolate
+      gather_years(value_col = "input.cost") %>%
       # Expand table to include all model base and future years
       complete(year = c(year, MODEL_YEARS), nesting(supplysector, subsector, technology, minicam.non.energy.input)) %>%
       # Extrapolate to fill out values for all years
