@@ -18,11 +18,14 @@ the generated outputs: \code{L221.SectorLogitTables[[ curr_table ]]$data}, \code
 original data system was \code{L221.en_supply.R} (energy level2).
 }
 \description{
-Briefly describe what this chunk does.
+Writes all energy supply sector outputs.
 }
 \details{
-Describe in detail what this chunk does.
+This chunk creates level 2 output files for energy supply. It creates supply sector information,
+subsector logit exponents, subsector shareweight and interpolation, and stubtech info by writing assumption file
+information to all model periods and regions. It creates global tech coef, costs, and shareweights
+by interpolating assumptions.
 }
 \author{
-YourInitials CurrentMonthName 2017
+JDH Nov 2017
 }

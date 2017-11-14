@@ -67,6 +67,17 @@ module_energy_L221.en_supply <- function(command, ...) {
              "L221.StubTechShrwt_bio"))
   } else if(command == driver.MAKE) {
 
+    # Silence global variable package check
+    P1 <- biodiesel <- biomassOil_tech <- calOutputValue <- calPrice <- coef <- coefficient <-
+    depresource <- ethanol <- feed_price <- fractional.secondary.output <- fuel <-
+    input.cost <- market <- minicam.energy.input <- minicam.non.energy.input <-
+    object <- output.ratio <- output.unit <- price <- price.unit <- primary.consumption <-
+    region <- sector <- sector.name <- share.weight <- stub.technology <- subsector <-
+    subsector.name <- subsector.share.weight <- supplysector <- technology <-
+    to.value <- tradbio_region <- traded <- unit <- value <- value_2010 <- variable <- year <-
+    year.fillout <- year.share.weight <- GCAM_commodity <- GCAM_region_ID <-
+    GCAM_region_ID.x <- GCAM_region_ID.y <- P0 <- NULL
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
