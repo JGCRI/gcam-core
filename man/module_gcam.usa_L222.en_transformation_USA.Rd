@@ -22,7 +22,7 @@ Prepare the assumptions and calibrated outputs for energy transformation supplys
 }
 \details{
 This chunk sets up the USA energy transformation technology databases as well as writing out assumptions to all states/sectors/markets for shareweights and logits.
-Calibrated outputs and I:O coefficients are updated from global values produced by \code{\link{L222.en_transformation.R}}.
+Calibrated outputs and I:O coefficients are updated from global values produced by \code{\link{module_energy_L222.en_transformation}}.
 }
 \author{
 ACS Nov 2017
