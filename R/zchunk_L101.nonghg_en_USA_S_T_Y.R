@@ -101,8 +101,7 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
       L101.in_EJ_R_en_Si_F_Yh
 
     L101.in_EJ_R_en_Si_F_Yh %>%
-      gather(year, value, -GCAM_region_ID, -sector, -fuel, -technology) %>%
-      mutate(year = as.integer(year)) ->
+      gather_years ->
       L101.in_EJ_USA_en_Sepa_F_Yh.mlt
 
     # Subset for USA only and aggregate to EPA categories
@@ -124,8 +123,7 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
     # We do this for each gas, so define a function with all the steps
     EPA_convert_and_aggregate <- function(x, EPA_tech) {
       x %>%
-        gather(year, value, -Source_Category_Raw, -Source_Category) %>%
-        mutate(year = as.integer(year)) %>%
+        gather_years %>%
         left_join(distinct(EPA_tech), by = c("Source_Category" = "EPA_Category")) %>%
         filter(year %in% emissions.EPA_HISTORICAL_YEARS, !is.na(fuel)) %>%
         group_by(sector, fuel, year) %>%

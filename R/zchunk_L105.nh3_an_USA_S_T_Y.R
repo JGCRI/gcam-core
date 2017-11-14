@@ -47,8 +47,7 @@ module_emissions_L105.nh3_an_USA_S_T_Y <- function(command, ...) {
       left_join(EPA_tech, by = c("Source_Category" = "EPA_Category")) %>% # map EPA NH3 emissions to GCAM sector/technology
       filter(sector == 'Animals',!is.na(fuel)) %>% # select only Animals to produce animal emission factors with FAO data
       select(-Source_Category_Raw, -Source_Category) %>%
-      gather(year, value, -sector, -fuel) %>%
-      mutate(year = as.numeric(year)) %>%
+      gather_years %>%
       filter(year %in% emissions.NH3_HISTORICAL_YEARS) %>%
       mutate(value = value * CONV_TST_TG) %>%  # convert from thousand short tons to Tg
       rename(emissions = value)

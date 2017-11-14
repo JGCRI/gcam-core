@@ -83,8 +83,7 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
     A23.globaltech_eff %>%
       filter(subsector == "gas") %>%
       semi_join(calibrated_techs, by = c("supplysector", "subsector", "technology")) %>%
-      gather(year, efficiency_tech, -supplysector, -subsector, -technology, -minicam.energy.input, -improvement.max, -improvement.rate, -improvement.shadow.technology) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years(value_col = "efficiency_tech") %>%
       mutate(efficiency_tech = as.numeric(efficiency_tech)) %>%
       semi_join(Aux_gas_tech_elec, by = "year") %>%
       full_join(Aux_gas_tech_elec, by = c("supplysector", "subsector", "technology", "minicam.energy.input", "year")) %>%

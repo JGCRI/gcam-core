@@ -80,8 +80,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
     # Write out the tech change table to all desired years, and convert to ratios from a base year
     # A44.USA_TechChange reports improvement rates of technology (annual rate)
     A44.USA_TechChange %>%
-      gather(year, value, -supplysector, -technology) %>% # Convert to long form
-      mutate(year = as.integer(year)) %>% # Year needs to be integer (or numeric) for the interpolation step below
+      gather_years %>% # Year needs to be integer (or numeric) for the interpolation step below
       # Expand table to include all historical and future years
       group_by(supplysector, technology) %>%
       complete(year = HIST_FUT_YEARS) %>%
@@ -152,8 +151,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
     # A44.shell_eff_mult_RG3 reports GCAM 3.0 multipliers from USA to other regions for shell efficiency
     # Calculated based on per-capita GDP and heating degree days
     A44.shell_eff_mult_RG3 %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>% # Convert to long form
-      mutate(year = as.integer(year)) %>% # Convert to integer (or numeric) to extrapolate
+      gather_years %>%
       # Expand table to include all historical and future years
       group_by(region_GCAM3) %>%
       complete(year = HIST_FUT_YEARS) %>%
@@ -186,8 +184,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
     # These efficiency multipliers will be used for non-shell technologies, as multipliers for shell technologies
     # were calculated above.
     A44.tech_eff_mult_RG3 %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>% # Convert to long form
-      mutate(year = as.integer(year)) %>% # Convert to integer (or numeric) to extrapolate
+      gather_years %>%
       # Expand table to include all historical and future years
       group_by(region_GCAM3) %>%
       complete(year = HIST_FUT_YEARS) %>%

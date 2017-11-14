@@ -45,6 +45,11 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
           warning("No '", at, "' attached to ", obj, " - chunk ", chunk)
         }
       }
+
+      # Any 'year' column should be numeric - this is a frequent source of join problems
+      if("year" %in% names(chunk_data[[obj]]) && !is.numeric(chunk_data[[obj]]$year)) {
+        warning("'year' column not numeric in ", obj)
+      }
     } else {
       assert_that(FLAG_XML %in% obj_flags)
     }

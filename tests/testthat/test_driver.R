@@ -75,10 +75,14 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
     po <- "o1"  # promised outputs
 
     # Nothing missing
-    tibble() %>% add_title("o1") %>% add_units("units") %>%
+    tibble(year = 1L) %>% add_title("o1") %>% add_units("units") %>%
       add_comments("comments") %>% add_legacy_name("legacy") %>%
       add_precursors("i1") -> o1
     expect_silent(check_chunk_outputs("c1", return_data(o1), "i1", po, FALSE))
+
+    # Non-numeric year field
+    o1$year <- "1"
+    expect_warning(check_chunk_outputs("c1", return_data(o1), "i1", po, FALSE))
 
     # Missing title
     tibble() %>% add_units("units") %>%

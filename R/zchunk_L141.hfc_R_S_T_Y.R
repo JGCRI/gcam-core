@@ -91,9 +91,8 @@ module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
         mutate(iso = tolower(ISO_A3), ISO_A3 = NULL) %>% # convert to Edgar ISO
         change_iso_code('rou', 'rom') %>% # Convert Romania iso code to pre-2002 value
         left_join_error_no_match(iso_GCAM_regID, by = "iso") %>% # Map iso to GCAM region
-        select(GCAM_region_ID, iso, EDGAR_agg_sector, Non.CO2,matches(YEAR_PATTERN)) %>%
-        gather(year, emissions, -GCAM_region_ID, -iso, -EDGAR_agg_sector, -Non.CO2) %>%
-        mutate(year = as.numeric(year)) %>%
+        select(GCAM_region_ID, iso, EDGAR_agg_sector, Non.CO2, matches(YEAR_PATTERN)) %>%
+        gather_years(value_col = "emissions") %>%
         mutate(emissions = as.numeric(emissions))
     }
     # combine all F gasses files into list
