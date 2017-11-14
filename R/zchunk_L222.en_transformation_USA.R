@@ -427,9 +427,10 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
         distinct %>%
         left_join_error_no_match(distinct(select(L222.TechShrwt_USAen, subsector, supplysector)),
                                  by = c("supplysector" = "subsector")) %>%
-        rename(PrimaryFuelCO2Coef.name = supplysector.y) %>%
-        left_join_error_no_match(L202.CarbonCoef_tmp, by =  "PrimaryFuelCO2Coef.name") %>%
-        select(-supplysector) ->
+        rename(match_name = supplysector.y) %>%
+        left_join_error_no_match(L202.CarbonCoef_tmp, by =  c("match_name" = "PrimaryFuelCO2Coef.name")) %>%
+        select(-match_name) %>%
+        rename(PrimaryFuelCO2Coef.name = supplysector) ->
         L222.CarbonCoef_en_USA
 
 
@@ -472,8 +473,7 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
       add_comments("USA supplysector and subsector information from L222.SubsectorLogit_en is") %>%
       add_comments("repeated for all US states and updated.") %>%
       add_legacy_name("L222.Tech_USAen") %>%
-      add_precursors("L222.SubsectorLogit_en") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L222.SubsectorLogit_en") ->
       L222.Tech_USAen
 
     L222.TechShrwt_USAen %>%
@@ -557,9 +557,7 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
       add_comments("produce energy carbon coefficients in USA.") %>%
       add_legacy_name("L222.CarbonCoef_en_USA") %>%
       add_precursors("L222.SubsectorLogit_en",
-                     "L202.CarbonCoef") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L202.CarbonCoef")  ->
       L222.CarbonCoef_en_USA
 
     L222.SubsectorLogit_en_USA %>%
