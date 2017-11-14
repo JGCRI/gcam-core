@@ -14,6 +14,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author ACS Nov 2017
+#' @export
 module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
@@ -287,19 +288,19 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
       L222.SubsectorLogit_en_USA      <- global_energy_to_USA_nonGlobalTech(L222.SubsectorLogit_en)
       L222.StubTech_en_USA            <- global_energy_to_USA_nonGlobalTech(L222.StubTech_en)
       L222.StubTechCoef_refining_USA  <- global_energy_to_USA_nonGlobalTech(L222.StubTechCoef_refining)
-      L222.GlobalTechInterp_en_USA    <- global_energy_to_USA_nonGlobalTech(L222.GlobalTechInterp_en)
-      L222.GlobalTechCoef_en_USA      <- global_energy_to_USA_nonGlobalTech(L222.GlobalTechCoef_en)
-      L222.GlobalTechCost_en_USA      <- global_energy_to_USA_nonGlobalTech(L222.GlobalTechCost_en)
-      L222.GlobalTechShrwt_en_USA     <- global_energy_to_USA_nonGlobalTech(L222.GlobalTechShrwt_en)
-      L222.GlobalTechCapture_en_USA   <- global_energy_to_USA_nonGlobalTech(L222.GlobalTechCapture_en)
-      L222.GlobalTechSCurve_en_USA    <- global_energy_to_USA_nonGlobalTech(L222.GlobalTechSCurve_en)
+      L222.GlobalTechInterp_en_USA    <- global_energy_to_USA_GlobalTech(L222.GlobalTechInterp_en)
+      L222.GlobalTechCoef_en_USA      <- global_energy_to_USA_GlobalTech(L222.GlobalTechCoef_en)
+      L222.GlobalTechCost_en_USA      <- global_energy_to_USA_GlobalTech(L222.GlobalTechCost_en)
+      L222.GlobalTechShrwt_en_USA     <- global_energy_to_USA_GlobalTech(L222.GlobalTechShrwt_en)
+      L222.GlobalTechCapture_en_USA   <- global_energy_to_USA_GlobalTech(L222.GlobalTechCapture_en)
+      L222.GlobalTechSCurve_en_USA    <- global_energy_to_USA_GlobalTech(L222.GlobalTechSCurve_en)
 
       ### The same processing for optional/currently NULL inputs
-      # L222.GlobalTechShutdownProfit_en_USA  <- global_energy_to_USA_nonGlobalTech(L222.GlobalTechShutdownProfit_en)
-      # L222.GlobalTechShutdown_en_USA        <- global_energy_to_USA_nonGlobalTech(L222.GlobalTechShutdown_en)
-      # L222.GlobalTechSCurveProfit_en_USA    <- global_energy_to_USA_nonGlobalTech(L222.GlobalTechSCurveProfit_en)
-      # L222.GlobalTechLifetimeProfit_en_USA  <- global_energy_to_USA_nonGlobalTech(L222.GlobalTechLifetimeProfit_en)
-      # L222.GlobalTechLifetime_en_USA        <- global_energy_to_USA_nonGlobalTech(L222.GlobalTechLifetime_en)
+      # L222.GlobalTechShutdownProfit_en_USA  <- global_energy_to_USA_GlobalTech(L222.GlobalTechShutdownProfit_en)
+      # L222.GlobalTechShutdown_en_USA        <- global_energy_to_USA_GlobalTech(L222.GlobalTechShutdown_en)
+      # L222.GlobalTechSCurveProfit_en_USA    <- global_energy_to_USA_GlobalTech(L222.GlobalTechSCurveProfit_en)
+      # L222.GlobalTechLifetimeProfit_en_USA  <- global_energy_to_USA_GlobalTech(L222.GlobalTechLifetimeProfit_en)
+      # L222.GlobalTechLifetime_en_USA        <- global_energy_to_USA_GlobalTech(L222.GlobalTechLifetime_en)
 
 
       # L222.Supplysector_en_USA: Supplysector information, replace name of supplysector with the subsector names
