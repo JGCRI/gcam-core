@@ -1,6 +1,6 @@
 #' module_energy_L221.en_supply
 #'
-#' Briefly describe what this chunk does.
+#' Writes all energy supply sector outputs.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,11 +8,14 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L221.SectorLogitTables[[ curr_table ]]$data}, \code{L221.Supplysector_en}, \code{L221.SectorUseTrialMarket_en}, \code{L221.SubsectorLogitTables[[ curr_table ]]$data}, \code{L221.SubsectorLogit_en}, \code{L221.SubsectorShrwt_en}, \code{L221.SubsectorShrwtFllt_en}, \code{L221.SubsectorInterp_en}, \code{L221.SubsectorInterpTo_en}, \code{L221.StubTech_en}, \code{L221.GlobalTechCoef_en}, \code{L221.GlobalTechCost_en}, \code{L221.GlobalTechShrwt_en}, \code{L221.PrimaryConsKeyword_en}, \code{L221.StubTechFractSecOut_en}, \code{L221.StubTechFractProd_en}, \code{L221.DepRsrc_en}, \code{L221.DepRsrcPrice_en}, \code{L221.TechCoef_en_Traded}, \code{L221.TechCost_en_Traded}, \code{L221.TechShrwt_en_Traded}, \code{L221.StubTechCoef_unoil}, \code{L221.Production_unoil}, \code{L221.StubTechProd_oil_unoil}, \code{L221.StubTechProd_oil_crude}, \code{L221.StubTechShrwt_bio}. The corresponding file in the
 #' original data system was \code{L221.en_supply.R} (energy level2).
-#' @details Describe in detail what this chunk does.
+#' @details This chunk creates level 2 output files for energy supply. It creates supply sector information,
+#' subsector logit exponents, subsector shareweight and interpolation, and stubtech info by writing assumption file
+#' information to all model periods and regions. It creates global tech coef, costs, and shareweights
+#' by interpolating assumptions.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
+#' @author JDH Nov 2017
 module_energy_L221.en_supply <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
@@ -98,7 +101,7 @@ module_energy_L221.en_supply <- function(command, ...) {
                            GCAM_region_names = GCAM_region_names) -> L221.Supplysector_en
 
     # Supplysector table that indicates to the model to create solved markets for them
-    # The traded markets tend to be a good canidate to solve explicitly since they tie together
+    # The traded markets tend to be a good candidate to solve explicitly since they tie together
     # many solved markets
     A21.sector %>%
       write_to_all_regions(c("region", "supplysector", "traded"), has_traded=TRUE,
@@ -130,9 +133,10 @@ module_energy_L221.en_supply <- function(command, ...) {
     # Subsector shareweight interpolation of upstream energy handling sectors
     if(any(is.na(A21.subsector_interp$to.value))){
       A21.subsector_interp %>%
-        write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorInterp"]]), has_traded = TRUE,
+        write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorInterp"]], "to.value"), has_traded = TRUE,
                              GCAM_region_names = GCAM_region_names) %>%
-        filter(is.na(to.value)) -> L221.SubsectorInterp_en
+        filter(is.na(to.value)) %>%
+        select(-to.value) -> L221.SubsectorInterp_en
     }
 
     if(any(!is.na(A21.subsector_interp$to.value))){
@@ -218,7 +222,8 @@ module_energy_L221.en_supply <- function(command, ...) {
     # Keywords of global technologies
     A21.globaltech_keyword %>%
       repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, FUTURE_YEARS))) %>%
-      select(sector.name = supplysector, subsector.name = subsector, technology, primary.consumption, year) -> L221.PrimaryConsKeyword_en
+      select(sector.name = supplysector, subsector.name = subsector, technology, primary.consumption, year) %>%
+      filter(year %in% MODEL_YEARS) -> L221.PrimaryConsKeyword_en
 
     # Secondary feed outputs of biofuel production technologies
     # NOTE: secondary outputs are only considered in future time periods
@@ -297,14 +302,14 @@ module_energy_L221.en_supply <- function(command, ...) {
     # Indicate the price points for the DDG/feedcake commodity
     # This is important for ensuring that the secondary output of feedcrops from the bio-refinery feedstock pass-through sectors
     # does not exceed the indigenous market demand for feed in the animal-based commodity production sector
-    L221.StubTechFractProd_en %>%
+    L221.StubTechFractSecOut_en %>%
       select(-output.ratio) %>%
       mutate(P0 = 0) %>%
       left_join(L221.ag_FeedPrice_R_Yf, by = "region") %>%
       mutate(P1 = round(feed_price, digits = energy.DIGITS_COST)) %>%
       gather(key = "variable", value = "price", P0, P1) %>%
       mutate(fraction.produced = as.numeric( sub( "P", "", variable ) )) %>%
-      select(-variable, GCAM_region_ID) -> L221.StubTechFractProd_en
+      select(-variable, -feed_price, -GCAM_region_ID) -> L221.StubTechFractProd_en
 
     # Final tables for feedcrop secondary output: the resource
     A21.rsrc_info %>%
@@ -344,7 +349,7 @@ module_energy_L221.en_supply <- function(command, ...) {
       mutate(coefficient = approx_fun(year, value, rule = 1)) %>%
       ungroup() %>%
       select(-value) %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["TechCoef"]]), has_traded = TRUE, set_market = TRUE,
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["TechCoef"]]), set_market = TRUE, has_traded = TRUE, apply_selected_only = FALSE,
                            GCAM_region_names = GCAM_region_names) %>%
       filter(year %in% MODEL_YEARS) -> L221.TechCoef_en_Traded
 
@@ -360,7 +365,7 @@ module_energy_L221.en_supply <- function(command, ...) {
       mutate(input.cost = approx_fun(year, value, rule = 1)) %>%
       ungroup() %>%
       select(-value) %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["TechCost"]]), has_traded = TRUE, set_market = FALSE,
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["TechCost"]]), set_market = FALSE, has_traded = TRUE, apply_selected_only = FALSE,
                            GCAM_region_names = GCAM_region_names) %>%
       filter(year %in% MODEL_YEARS) -> L221.TechCost_en_Traded
 
@@ -376,7 +381,7 @@ module_energy_L221.en_supply <- function(command, ...) {
       mutate(share.weight = approx_fun(year, value, rule = 1)) %>%
       ungroup() %>%
       select(-value) %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["TechYr"]], "share.weight"), has_traded = TRUE, set_market = FALSE,
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["TechYr"]], "share.weight"), set_market = FALSE, has_traded = TRUE, apply_selected_only = FALSE,
                            GCAM_region_names = GCAM_region_names) %>%
       filter(year %in% MODEL_YEARS) -> L221.TechShrwt_en_Traded
 
@@ -388,19 +393,19 @@ module_energy_L221.en_supply <- function(command, ...) {
       rename(stub.technology = technology) %>%
       write_to_all_regions(c(LEVEL2_DATA_NAMES[["StubTechCoef"]]),
                            GCAM_region_names = GCAM_region_names) %>%
-      mutate(market.name == "USA") -> L221.StubTechCoef_unoil
+      mutate(market.name = "USA") -> L221.StubTechCoef_unoil
 
     L111.Prod_EJ_R_F_Yh %>%
       filter(grepl("unconventional", fuel)) %>%
       filter(year %in% MODEL_YEARS) %>%
       left_join(A_regions %>%
                   select(GCAM_region_ID, region), by = c("GCAM_region_ID")) %>%
-      select(GCAM_region_ID, value, year, region) -> L221.Prod_EJ_R_unoil_Yh.melt
+      select(GCAM_region_ID, value, year, region) -> L221.Prod_EJ_R_unoil_Yh
 
     # Calibrated production of unconventional oil
     L221.TechCoef_en_Traded %>%
       filter(supplysector == "traded unconventional oil" & year %in% HISTORICAL_YEARS) %>%
-      left_join(L221.Prod_EJ_R_unoil_Yh.melt %>%
+      left_join(L221.Prod_EJ_R_unoil_Yh %>%
                   rename(market.name = region), by = c("market.name", "year")) %>%
       mutate(calOutputValue = round(value, energy.DIGITS_CALOUTPUT)) %>%
       select(LEVEL2_DATA_NAMES[["TechYr"]], calOutputValue) %>%
@@ -414,7 +419,7 @@ module_energy_L221.en_supply <- function(command, ...) {
       left_join(A_regions %>%
                   select(GCAM_region_ID, region), by = "GCAM_region_ID") -> L121.in_EJ_R_TPES_unoil_Yh
 
-    # Calibrated demand of unconventional oil" )
+    # Calibrated demand of unconventional oil
     L221.StubTech_en %>%
       filter(supplysector == "regional oil" & subsector == "unconventional oil") %>%
       repeat_add_columns(tibble(year = HISTORICAL_YEARS)) %>%
@@ -477,6 +482,9 @@ module_energy_L221.en_supply <- function(command, ...) {
     L221.SubsectorLogit_en %>%
       filter(!(region %in% aglu.NO_AGLU_REGIONS & supplysector %in% ag_en)) -> L221.SubsectorLogit_en
 
+    L221.Supplysector_en %>%
+      filter(!(region %in% aglu.NO_AGLU_REGIONS & supplysector %in% ag_en)) -> L221.Supplysector_en
+
     if(exists("L221.SubsectorShrwt_en")){
       L221.SubsectorShrwt_en %>%
         filter(!(region %in% aglu.NO_AGLU_REGIONS & supplysector %in% ag_en)) -> L221.SubsectorShrwt_en
@@ -505,267 +513,242 @@ module_energy_L221.en_supply <- function(command, ...) {
     # Produce outputs
 
     L221.Supplysector_en %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Regional supplysector information") %>%
+      add_units("NA") %>%
+      add_comments("A21.sector written to all regions") %>%
+      add_comments("removed regions with no agricultural and land use sector") %>%
       add_legacy_name("L221.Supplysector_en") %>%
-      add_precursors("energy/A21.sector", "common/GCAM_region_names") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A21.sector", "common/GCAM_region_names")  ->
       L221.Supplysector_en
 
     L221.SectorUseTrialMarket_en %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Supplysector table that indicates to the model to create solved markets") %>%
+      add_units("NA") %>%
+      add_comments("A21.sector written to all regions, filtered to traded") %>%
       add_legacy_name("L221.SectorUseTrialMarket_en") %>%
-      add_precursors("energy/A21.sector", "common/GCAM_region_names") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A21.sector", "common/GCAM_region_names")  ->
       L221.SectorUseTrialMarket_en
 
     L221.SubsectorLogit_en %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Subsector logit information") %>%
+      add_units("NA") %>%
+      add_comments("A21.subsector_logit written to all regions") %>%
+      add_comments("removed regions with no agricultural and land use sector") %>%
       add_legacy_name("L221.SubsectorLogit_en") %>%
-      add_precursors("energy/A21.subsector_logit", "common/GCAM_region_names") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A21.subsector_logit", "common/GCAM_region_names") ->
       L221.SubsectorLogit_en
 
+    if(exists("L221.SubsectorShrwt_en")) {
     L221.SubsectorShrwt_en %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Subsector shareweight information") %>%
+      add_units("unitless") %>%
+      add_comments("A21.subsector_shrwt written to all regions") %>%
+      add_comments("removed regions with no agricultural and land use sector") %>%
       add_legacy_name("L221.SubsectorShrwt_en") %>%
-      add_precursors("energy/A21.subsector_shrwt", "common/GCAM_region_names") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A21.subsector_shrwt", "common/GCAM_region_names")  ->
       L221.SubsectorShrwt_en
+    } else {
+      # If all values for year are NA, then a blank tibble is produced
+      tibble(x = NA) %>%
+        add_title("Data not created") %>%
+        add_units("Unitless") %>%
+        add_comments("Data not created") %>%
+        add_legacy_name("L221.SubsectorShrwt_en") ->
+        L221.SubsectorShrwt_en
+    }
 
+    if(exists("L221.SubsectorShrwtFllt_en")) {
     L221.SubsectorShrwtFllt_en %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Subsector shareweight information using year.fillout") %>%
+      add_units("unitless") %>%
+        add_comments("A21.subsector_shrwt written to all regions") %>%
+        add_comments("removed regions with no agricultural and land use sector") %>%
       add_legacy_name("L221.SubsectorShrwtFllt_en") %>%
-      add_precursors("energy/A21.subsector_shrwt", "common/GCAM_region_names") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A21.subsector_shrwt", "common/GCAM_region_names") ->
       L221.SubsectorShrwtFllt_en
+    } else {
+      # If all values for year.fillout are NA, then blank tibble is produced
+      tibble(x = NA) %>%
+        add_title("Data not created") %>%
+        add_units("Unitless") %>%
+        add_comments("Data not created") %>%
+        add_legacy_name("L221.SubsectorShrwtFllt_en") ->
+        L221.SubsectorShrwtFllt_en
+    }
 
+    if(exists("L221.SubsectorInterp_en")) {
     L221.SubsectorInterp_en %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Subsector interpolation information") %>%
+      add_units("unitless") %>%
+      add_comments("A21.subsector_interp written to all regions") %>%
+      add_comments("removed regions with no agricultural and land use sector") %>%
       add_legacy_name("L221.SubsectorInterp_en") %>%
-      add_precursors("energy/A21.subsector_interp", "common/GCAM_region_names") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A21.subsector_interp", "common/GCAM_region_names") ->
       L221.SubsectorInterp_en
+    } else {
+      # If to.value is not NA anywhere, a blank tibble is produced
+      tibble(x = NA) %>%
+        add_title("Data not created") %>%
+        add_units("Unitless") %>%
+        add_comments("Data not created") %>%
+        add_legacy_name("L221.SubsectorInterp_en") ->
+        L221.SubsectorInterp_en
+    }
 
+    if(exists("L221.SubsectorInterpTo_en")) {
     L221.SubsectorInterpTo_en %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+        add_title("Subsector interpolation information using to.value") %>%
+        add_units("unitless") %>%
+        add_comments("A21.subsector_interp written to all regions") %>%
+        add_comments("removed regions with no agricultural and land use sector") %>%
       add_legacy_name("L221.SubsectorInterpTo_en") %>%
-      add_precursors("energy/A21.subsector_interp", "common/GCAM_region_names") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A21.subsector_interp", "common/GCAM_region_names") ->
       L221.SubsectorInterpTo_en
+    } else {
+      # If to.value is NA, a blank tibble is produced
+      tibble(x = NA) %>%
+        add_title("Data not created") %>%
+        add_units("Unitless") %>%
+        add_comments("Data not created") %>%
+        add_legacy_name("L221.SubsectorInterpTo_en") ->
+        L221.SubsectorInterpTo_en
+    }
 
     L221.StubTech_en %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Identification of stub technologies") %>%
+      add_units("NA") %>%
+      add_comments("A21.globaltech_shrwt written to all regions") %>%
+      add_comments("removing technologies for biomassOil that don't exist, and regions with no agricultural and land use sector") %>%
       add_legacy_name("L221.StubTech_en") %>%
-      add_precursors("energy/A21.globaltech_shrwt", "common/GCAM_region_names", "energy/A_regions") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A21.globaltech_shrwt", "common/GCAM_region_names", "energy/A_regions") ->
       L221.StubTech_en
 
     L221.GlobalTechCoef_en %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Coefficients of global technologies") %>%
+      add_units("unitless") %>%
+      add_comments("A21.globaltech_coef interpolated to all model years") %>%
       add_legacy_name("L221.GlobalTechCoef_en") %>%
-      add_precursors("energy/A21.globaltech_coef") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A21.globaltech_coef") ->
       L221.GlobalTechCoef_en
 
     L221.GlobalTechCost_en %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Costs of global technologies") %>%
+      add_units("1975$/GJ") %>%
+      add_comments("A21.globaltech_cost interpolated to all model years") %>%
       add_legacy_name("L221.GlobalTechCost_en") %>%
-      add_precursors("energy/A21.globaltech_cost") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A21.globaltech_cost") ->
       L221.GlobalTechCost_en
 
     L221.GlobalTechShrwt_en %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Shareweights of global technologies") %>%
+      add_units("unitless") %>%
+      add_comments("A21.globaltech_shrwt interpolated to all model years") %>%
       add_legacy_name("L221.GlobalTechShrwt_en") %>%
-      add_precursors("energy/A21.globaltech_shrwt") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A21.globaltech_shrwt") ->
       L221.GlobalTechShrwt_en
 
     L221.PrimaryConsKeyword_en %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Keywords of global technologies") %>%
+      add_units("unitless") %>%
+      add_comments("A21.globaltech_keyword written to all model periods") %>%
       add_legacy_name("L221.PrimaryConsKeyword_en") %>%
-      add_precursors("energy/A21.globaltech_keyword") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A21.globaltech_keyword") ->
       L221.PrimaryConsKeyword_en
 
     L221.StubTechFractSecOut_en %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Secondary feed outputs of biofuel production technologies") %>%
+      add_units("fractions") %>%
+      add_comments("A21.globaltech_secout is written out to all regions, then subsetted to relevant region/technologies") %>%
       add_legacy_name("L221.StubTechFractSecOut_en") %>%
-      add_precursors("energy/A21.globaltech_secout", "common/GCAM_region_names", "energy/calibrated_techs") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A21.globaltech_secout", "common/GCAM_region_names", "energy/calibrated_techs") ->
       L221.StubTechFractSecOut_en
 
     L221.StubTechFractProd_en %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Price and production fraction for secondary feed outputs") %>%
+      add_units("1975$, fraction") %>%
+      add_comments("Prices, production of feed output from L108.ag_Feed_Mt_R_C_Y and L132.ag_an_For_Prices") %>%
       add_legacy_name("L221.StubTechFractProd_en") %>%
-      add_precursors("L108.ag_Feed_Mt_R_C_Y", "aglu/A_an_input_subsector") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L108.ag_Feed_Mt_R_C_Y", "L132.ag_an_For_Prices", "aglu/A_an_input_subsector") ->
       L221.StubTechFractProd_en
 
     L221.DepRsrc_en %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Resource table for feedcrop secondary output") %>%
+      add_units("unitless") %>%
+      add_comments("A21.rsrc_info written out to regions with secondary feed output") %>%
       add_legacy_name("L221.DepRsrc_en") %>%
-      add_precursors("energy/A21.rsrc_info") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A21.rsrc_info") ->
       L221.DepRsrc_en
 
     L221.DepRsrcPrice_en %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Resource price for feedcrop secondary output") %>%
+      add_units("1975$") %>%
+      add_comments("A21.rsrc_info interpolated to all historical model time periods") %>%
       add_legacy_name("L221.DepRsrcPrice_en") %>%
-      add_precursors("energy/A21.rsrc_info") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A21.rsrc_info") ->
       L221.DepRsrcPrice_en
 
     L221.TechCoef_en_Traded %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Coefficients of traded technologies") %>%
+      add_units("unitless") %>%
+      add_comments("A21.tradedtech_coef interpolated to all model periods and written out to all regions") %>%
       add_legacy_name("L221.TechCoef_en_Traded") %>%
-      add_precursors("energy/A21.tradedtech_coef", "common/GCAM_region_names") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A21.tradedtech_coef", "common/GCAM_region_names") ->
       L221.TechCoef_en_Traded
 
     L221.TechCost_en_Traded %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Costs of traded technologies") %>%
+      add_units("1975$") %>%
+      add_comments("A21.tradedtech_cost interpolated to all model periods and written out to all regions") %>%
       add_legacy_name("L221.TechCost_en_Traded") %>%
-      add_precursors("energy/A21.tradedtech_cost", "common/GCAM_region_names") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A21.tradedtech_cost", "common/GCAM_region_names") ->
       L221.TechCost_en_Traded
 
     L221.TechShrwt_en_Traded %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Shareweights of traded technologies") %>%
+      add_units("unitless") %>%
+      add_comments("A21.tradedtech_shrwt interpolated to all model periods and written out to all regions") %>%
       add_legacy_name("L221.TechShrwt_en_Traded") %>%
-      add_precursors("energy/A21.tradedtech_shrwt", "common/GCAM_region_names") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A21.tradedtech_shrwt", "common/GCAM_region_names") ->
       L221.TechShrwt_en_Traded
 
     L221.StubTechCoef_unoil %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Coefficient and market name of stub technologies for importing traded unconventional oil") %>%
+      add_units("unitless") %>%
+      add_comments("L221.GlobalTechCoef_en written to all regions for traded technologies") %>%
       add_legacy_name("L221.StubTechCoef_unoil") %>%
-      add_precursors("energy/A21.globaltech_coef", "common/GCAM_region_names", "energy/A21.tradedtech_shrwt") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A21.globaltech_coef", "common/GCAM_region_names", "energy/A21.tradedtech_shrwt") ->
       L221.StubTechCoef_unoil
 
     L221.Production_unoil %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Calibrated production of unconventional oil") %>%
+      add_units("unitless") %>%
+      add_comments("L111.Prod_EJ_R_F_Yh used to determine unconventional oil coefficients") %>%
       add_legacy_name("L221.Production_unoil") %>%
-      add_precursors("energy/A21.tradedtech_coef", "L111.Prod_EJ_R_F_Yh", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A21.tradedtech_coef", "L111.Prod_EJ_R_F_Yh") ->
       L221.Production_unoil
 
     L221.StubTechProd_oil_unoil %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Calibrated demand of unconventional oil") %>%
+      add_units("unitless") %>%
+      add_comments("Demand for unoil from L121.in_EJ_R_TPES_unoil_Yh used to determine calibrated output value and shareweights") %>%
       add_legacy_name("L221.StubTechProd_oil_unoil") %>%
-      add_precursors("L121.in_EJ_R_TPES_unoil_Yh", "energy/A21.globaltech_shrwt", "common/GCAM_region_names", "energy/A_regions") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L121.in_EJ_R_TPES_unoil_Yh", "energy/A21.globaltech_shrwt", "common/GCAM_region_names", "energy/A_regions") ->
       L221.StubTechProd_oil_unoil
 
     L221.StubTechProd_oil_crude %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Calibrated demand of crude oil") %>%
+      add_units("unitless") %>%
+      add_comments("Demand for crude from L121.in_EJ_R_TPES_unoil_Yh used to determine calibrated output value and shareweights") %>%
       add_legacy_name("L221.StubTechProd_oil_crude") %>%
-      add_precursors("L121.in_EJ_R_TPES_crude_Yh", "energy/A21.globaltech_shrwt", "common/GCAM_region_names", "energy/A_regions") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L121.in_EJ_R_TPES_crude_Yh", "energy/A21.globaltech_shrwt", "common/GCAM_region_names", "energy/A_regions") ->
       L221.StubTechProd_oil_crude
 
     L221.StubTechShrwt_bio %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Region-specific technology shareweights for biomassOil passthrough sector") %>%
+      add_units("unitless") %>%
+      add_comments("A21.globaltech_shrwt interpolated to all years and written to all regions for biomassOil tech") %>%
       add_legacy_name("L221.StubTechShrwt_bio") %>%
-      add_precursors("energy/A21.globaltech_shrwt", "common/GCAM_region_names") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A21.globaltech_shrwt", "common/GCAM_region_names") ->
       L221.StubTechShrwt_bio
 
     return_data(L221.Supplysector_en, L221.SectorUseTrialMarket_en, L221.SubsectorLogit_en,
