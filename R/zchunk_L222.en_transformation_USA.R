@@ -258,9 +258,6 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
 
     # L222.Production_USArefining: calibrated refinery production in USA (consuming output of states)
     # Aggregated to the supplysector/subsector/technology level
-    ### I'm pretty sure all this aggregation does is remove the state column, since the state information is
-    ### implicit in the technology column. That is, the aggregation doesn't actually change any values - is
-    ### this intended?
       L122.out_EJ_state_refining_F %>%
         filter(year %in% BASE_YEARS) %>%
         rename(calOutputValue = value) %>%
@@ -277,7 +274,8 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
         ungroup %>%
         mutate(share.weight.year = year) %>%
         set_subsector_shrwt %>%
-        mutate(tech.share.weight = if_else(calOutputValue == 0, 0, 1)) %>%
+        # The following line is equivalent to (but slightly faster than): mutate(tech.share.weight = if_else(calOutputValue == 0, 0, 1)) %>%
+        mutate(tech.share.weight = abs(sign(calOutputValue))) %>%
         select(one_of(LEVEL2_DATA_NAMES[["Production"]])) ->
         L222.Production_USArefining
 
