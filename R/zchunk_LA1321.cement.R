@@ -43,7 +43,7 @@ module_energy_LA1321.cement <- function(command, ...) {
     Worrell_region <- cement_prod_Mt <- country_name <- elec_EJ <- elec_GJkg <-
     emiss_ktC <- fuel <- heat_EJ <- heat_GJkg <- in.value <- ind.value <- iso <-
     old.year <- out.value <- process_emissions_MtC <- process_emissions_ktC <-
-    prod_Mt <- prod_emiss_ratio <- reg_process_emissions <- region_GCAM3 <- sector
+    prod_Mt <- prod_emiss_ratio <- reg_process_emissions <- region_GCAM3 <- sector <-
     share <- value <- cement <- year <- value.y <- value.x <- NULL
 
     all_data <- list(...)[[1]]
