@@ -1,6 +1,6 @@
 #' module_energy_LA1321.cement
 #'
-#' Briefly describe what this chunk does.
+#' Sets up input, output, and IO coefficients for cement and subtracts input energy from industry energy use
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,12 +8,14 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L1321.out_Mt_R_cement_Yh}, \code{L1321.IO_GJkg_R_cement_F_Yh}, \code{L1321.in_EJ_R_cement_F_Y}, \code{L1321.in_EJ_R_indenergy_F_Yh}. The corresponding file in the
 #' original data system was \code{LA1321.cement.R} (energy level1).
-#' @details Describe in detail what this chunk does.
+#' @details This chunk generates input, output, and IO coefficients for the cement sector. It begins by downscaling Worrell regional data from 1994
+#' to set up process emissions factors that are multiplied by country emissions from CDIAC to determine production. Limestone consumption is calculated from the same downscaling.
+#' IEA fuelshares and heat and electricity are used to determine energy use by fuel. Energy inputs are then subtracted from industrial energy use and any resulting negative values
+#' are dealt with by moving their accounting to the cement sector.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author CWR Nov 2017
-#' @export
 module_energy_LA1321.cement <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
@@ -34,6 +36,15 @@ module_energy_LA1321.cement <- function(command, ...) {
              "L1321.in_EJ_R_cement_F_Y",
              "L1321.in_EJ_R_indenergy_F_Yh"))
   } else if(command == driver.MAKE) {
+
+    # Silence global variable package check
+    Biomass <- Biomass_EJ <- Coal <- Coal_EJ <- Country <- GCAM_region_ID <- Gas <- Gas_EJ <-
+    IEA_fuelshare_region <- IEA_intensity_region <- IOelec <- Oil <- Oil_EJ <- TPE_GJkg <-
+    Worrell_region <- cement_prod_Mt <- country_name <- elec_EJ <- elec_GJkg <-
+    emiss_ktC <- fuel <- heat_EJ <- heat_GJkg <- in.value <- ind.value <- iso <-
+    old.year <- out.value <- process_emissions_MtC <- process_emissions_ktC <-
+    prod_Mt <- prod_emiss_ratio <- reg_process_emissions <- region_GCAM3 <- sector
+    share <- value <- cement <- year <- value.y <- value.x <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -130,7 +141,7 @@ module_energy_LA1321.cement <- function(command, ...) {
       mutate(sector = "cement") %>%
       left_join(L1321.CO2_Mt_R_F_Yh, by = "GCAM_region_ID") %>%
       mutate(value = prod_emiss_ratio * value) %>%
-      select(GCAM_region_ID, sector, fuel, year, value) ->
+      select(GCAM_region_ID, sector, year, value) ->
       L1321.out_Mt_R_cement_Yh
 
     # Calculate limestone consumption by region and fuel
@@ -145,7 +156,7 @@ module_energy_LA1321.cement <- function(command, ...) {
 
     # Calculate input-output coefficients
     L1321.in_Cement_Mt_R_limestone_Yh %>%
-      left_join_error_no_match(L1321.out_Mt_R_cement_Yh, by = c("GCAM_region_ID", "sector", "fuel", "year")) %>%
+      left_join_error_no_match(L1321.out_Mt_R_cement_Yh, by = c("GCAM_region_ID", "sector", "year")) %>%
       mutate(value = in.value / value) %>%
       select(-in.value) ->
       L1321.IO_Cement_R_limestone_Yh
@@ -205,7 +216,7 @@ module_energy_LA1321.cement <- function(command, ...) {
       L1321.IO_R_elec_Yh
 
     # Set cap on IO coefficients for regions and years exceeding maximum value - NOTE: Not sure why we have this cap? Worth revisiting.
-    L1321.IO_R_elec_Yh$value[L1321.IO_R_elec_Yh$value > Max_IOelec] <- Max_IOelec
+    L1321.IO_R_elec_Yh$value[L1321.IO_R_elec_Yh$value > MAX_IOELEC] <- MAX_IOELEC
 
     # Build data frame including all above calculated values for cement production - intensity, fuel shares, energy for heat and electricity
     # --------------------------------------------------------------------------------------------------------------------------------------
@@ -311,7 +322,7 @@ module_energy_LA1321.cement <- function(command, ...) {
       L1321.in_EJ_R_cement_F_Y
 
     # Calculate remaining industrial energy use (input), subtracting cement production energy from energy balances
-    # ----------------------------------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------------------------------------
 
     # Subtract input energy to cement sector from industrial energy
     L132.in_EJ_R_indenergy_F_Yh %>%
@@ -382,7 +393,7 @@ module_energy_LA1321.cement <- function(command, ...) {
       add_comments("final outputs are a product of regional emissions times the production emissions ratio") %>%
       add_legacy_name("L1321.out_Mt_R_cement_Yh") %>%
       add_precursors("emissions/A_PrimaryFuelCCoef", "energy/Worrell_1994_cement", "energy/mappings/cement_regions", "L100.CDIAC_CO2_ctry_hist", "L102.CO2_Mt_R_F_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L1321.out_Mt_R_cement_Yh
 
     L1321.IO_GJkg_R_cement_F_Yh %>%

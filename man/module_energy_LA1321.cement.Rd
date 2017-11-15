@@ -18,10 +18,13 @@ the generated outputs: \code{L1321.out_Mt_R_cement_Yh}, \code{L1321.IO_GJkg_R_ce
 original data system was \code{LA1321.cement.R} (energy level1).
 }
 \description{
-Briefly describe what this chunk does.
+Sets up input, output, and IO coefficients for cement and subtracts input energy from industry energy use
 }
 \details{
-Describe in detail what this chunk does.
+This chunk generates input, output, and IO coefficients for the cement sector. It begins by downscaling Worrell regional data from 1994
+to set up process emissions factors that are multiplied by country emissions from CDIAC to determine production. Limestone consumption is calculated from the same downscaling.
+IEA fuelshares and heat and electricity are used to determine energy use by fuel. Energy inputs are then subtracted from industrial energy use and any resulting negative values
+are dealt with by moving their accounting to the cement sector.
 }
 \author{
 CWR Nov 2017
