@@ -65,11 +65,12 @@ module_energy_LA1321.cement <- function(command, ...) {
     # Sets maximum for IO coefficient calculated below
     MAX_IOELEC <- 4
 
-    # Downscale Worrell dataset to country level using CDIAC emissions inventory
-    # Part 1: Derivation of cement production and limestone consumption by region and historical year
-    # -----------------------------------------------------------------------------------------------
+    # =======================================================================================
+    # Derivation of cement production and limestone consumption by region and historical year
+    # =======================================================================================
 
-    # Downscale Worrell's process CO2 emissions and cement production in 1994 to all countries
+    # Downscale Worrell's process CO2 emissions and cement production in 1994 to country level using CDIAC emissions inventory
+    # ------------------------------------------------------------------------------------------------------------------------
     cement_regions %>%
       left_join(L100.CDIAC_CO2_ctry_hist, by = "iso") %>%
       filter(year == 1994) %>%
@@ -78,6 +79,7 @@ module_energy_LA1321.cement <- function(command, ...) {
       rename(process_emissions_ktC = cement) ->
       L1321.Cement_Worrell_ctry
 
+    # Aggregate downscaled process emissions to regional level
     L1321.Cement_Worrell_ctry %>%
       group_by(Worrell_region) %>%
       summarise(reg_process_emissions = sum(process_emissions_ktC)) %>%
@@ -105,15 +107,15 @@ module_energy_LA1321.cement <- function(command, ...) {
       mutate(prod_emiss_ratio = cement_prod_Mt / process_emissions_MtC) ->
       L1321.Cement_Worrell_R
 
-    # Calculate cement production over time, assuming that this ratio is constant over time for each region
-    # -----------------------------------------------------------------------------------------------------
+    # Calculate cement production over time using ratio of production to emissions for L1321.out_Mt_R_cement_Yh
+    # assuming that this ratio is constant over time for each region
+    # ---------------------------------------------------------------------------------------------------------
 
     # If the CO2 emissions inventories do not go to the latest historical time period, copy the last available year
     L102.CO2_Mt_R_F_Yh %>%
       filter(fuel == "limestone") ->
       L1321.CO2_Mt_R_F_Yh_base
 
-    # NOTE: this is slightly less robust, it works for a single missing historical year as opposed to a set of them
     L1321.CO2_Mt_R_F_Yh_base %>%
       filter(year == FINAL_CO2_YEAR) %>%
       rename(old.year = year) %>%
@@ -123,7 +125,6 @@ module_energy_LA1321.cement <- function(command, ...) {
       L1321.CO2_Mt_R_F_Yh
 
     # Calculate cement production over time by multiplying production emissions ratio by emissions
-    # assuming that this ratio is constant over time for each region
     L1321.Cement_Worrell_R %>%
       mutate(sector = "cement") %>%
       left_join(L1321.CO2_Mt_R_F_Yh, by = "GCAM_region_ID") %>%
@@ -131,8 +132,11 @@ module_energy_LA1321.cement <- function(command, ...) {
       select(GCAM_region_ID, sector, fuel, year, value) ->
       L1321.out_Mt_R_cement_Yh
 
+    # Calculate limestone consumption by region and fuel
+    # --------------------------------------------------
+
     # Use the assumed limestone fuel carbon content (same in all regions) to calculate the limestone consumption
-    # and limestone IO coefficients in each region
+    # and limestone to cement IO coefficients in each region
     L1321.CO2_Mt_R_F_Yh %>%
       mutate(sector = "cement", in.value = value / LIMESTONE_CCOEF) %>%
       select(-value) ->
@@ -145,7 +149,7 @@ module_energy_LA1321.cement <- function(command, ...) {
       select(-in.value) ->
       L1321.IO_Cement_R_limestone_Yh
 
-    # Derivation of energy inputs to cement production by region and historical year -
+    # Derive energy inputs to cement production by region and historical year -
     # Calculate average electric and TPE intensity for each GCAM region (use process emissions as a weighting factor)
     # ---------------------------------------------------------------------------------------------------------------
 
@@ -233,6 +237,10 @@ module_energy_LA1321.cement <- function(command, ...) {
       # Calculate total heat by fuel using fuelshares
       mutate(Coal_EJ = Coal * heat_EJ, Oil_EJ = Oil * heat_EJ, Gas_EJ = Gas * heat_EJ, Biomass_EJ = Biomass * heat_EJ) ->
       L1321.Cement_ALL_ctry_Yh
+
+    # ===============================================================================================================================================
+    # Now that country level data has been built and downscaled into L1321.Cement_ALL_ctry_Yh, calculate needed GCAM input energy and IO coefficients
+    # ===============================================================================================================================================
 
     # Calculate aggregated regional data on IO coefficients for cement production by fuel for heat and electricity
     # ------------------------------------------------------------------------------------------------------------
@@ -326,8 +334,13 @@ module_energy_LA1321.cement <- function(command, ...) {
       bind_rows(filter(L1321.in_EJ_R_indenergy_F_Yh_negbio, value >= 0 | fuel != "biomass")) ->
       L1321.in_EJ_R_indenergy_F_Yh
 
-    # Negative values in other fuels are problematic. This seems to be mostly developing regions with (probably incorrectly) low bio shares
-    # This method assigns negative industrial energy consumption to biomass.
+    # Negative values in non-bio industrial energy use are problematic and have to be zeroed out
+    # In the below method, these negative values are zeroed in industrial energy and subtracted from positive values in fossil fuel use for cement
+    # and then offset with a positive adjustment to cement biomass fuel use. This preserves the total energy balances while removing negative values
+    # ----------------------------------------------------------------------------------------------------------------------------------------------
+
+    # Currently offending negative values are mostly developing regions with (probably incorrectly) low bio shares
+    # Check if any of these values exist and then conditionally perform the adjustments
     if( any( L1321.in_EJ_R_indenergy_F_Yh[,"value"] < 0 ) ){
 
       # Subset regions and years where any fuels are negative
@@ -355,54 +368,51 @@ module_energy_LA1321.cement <- function(command, ...) {
         summarise(value = sum(value)) %>%
         ungroup() ->
         L1321.in_EJ_R_cement_F_Y
-      # Now non-bio industrial energy negative values have been zeroed out and subtracted from fossil fuel use for cement and then offset
-      # with a positive adjustment to biomass fuel use in cement. This preserves the total energy balances while removing negative values.
     }
 
     # ===================================================
     # Produce outputs
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L1321.out_Mt_R_cement_Yh %>%
+      add_title("Historical cement outputs by region, fuel, and year") %>%
+      add_units("Mt cement") %>%
+      add_comments("outputs are calculated by by downscaling Worrell regions using CDIAC country emissions and then aggregating to GCAM regions") %>%
+      add_comments("final outputs are a product of regional emissions times the production emissions ratio") %>%
       add_legacy_name("L1321.out_Mt_R_cement_Yh") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
+      add_precursors("emissions/A_PrimaryFuelCCoef", "energy/Worrell_1994_cement", "energy/mappings/cement_regions", "L100.CDIAC_CO2_ctry_hist", "L102.CO2_Mt_R_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1321.out_Mt_R_cement_Yh
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+    L1321.IO_GJkg_R_cement_F_Yh %>%
+      add_title("Input-output coefficients for cement production") %>%
+      add_units("GJ/kg cement") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L1321.IO_GJkg_R_cement_F_Yh") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
+      add_precursors("L100.CDIAC_CO2_ctry_hist", "L102.CO2_Mt_R_F_Yh", "L123.in_EJ_R_elec_F_Yh", "L123.out_EJ_R_elec_F_Yh", "energy/IEA_cement_elec_kwht",
+                     "energy/IEA_cement_TPE_GJt", "energy/IEA_cement_fuelshares") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1321.IO_GJkg_R_cement_F_Yh
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L1321.in_EJ_R_cement_F_Y %>%
+      add_title("Historical input energy use for the cement sector") %>%
+      add_units("Exajoules") %>%
+      add_comments("Input energy by fuel calculated from weighted fuel shares using energy intensity values for heat and electricity") %>%
+      add_comments("multiplied by raw fuel shares, all from IEA") %>%
       add_legacy_name("L1321.in_EJ_R_cement_F_Y") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
+      add_precursors("L100.CDIAC_CO2_ctry_hist", "L102.CO2_Mt_R_F_Yh", "L123.in_EJ_R_elec_F_Yh", "L123.out_EJ_R_elec_F_Yh", "energy/IEA_cement_elec_kwht",
+                     "energy/IEA_cement_TPE_GJt", "energy/IEA_cement_fuelshares") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1321.in_EJ_R_cement_F_Y
 
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L1321.in_EJ_R_indenergy_F_Yh %>%
+      add_title("Adjusted historical input energy balances for industrial energy use") %>%
+      add_units("Exajoules") %>%
+      add_comments("Subtracted cement energy use from industrial energy use values in L132.in_EJ_R_indenergy_F_Yh") %>%
+      add_comments("to determine adjusted input energy for industrial energy use") %>%
       add_legacy_name("L1321.in_EJ_R_indenergy_F_Yh") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
+      add_precursors("L100.CDIAC_CO2_ctry_hist", "L102.CO2_Mt_R_F_Yh", "L123.in_EJ_R_elec_F_Yh", "L123.out_EJ_R_elec_F_Yh", "energy/IEA_cement_elec_kwht",
+                     "energy/IEA_cement_TPE_GJt", "energy/IEA_cement_fuelshares", "L132.in_EJ_R_indenergy_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1321.in_EJ_R_indenergy_F_Yh
 
