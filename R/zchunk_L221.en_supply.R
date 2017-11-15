@@ -115,7 +115,7 @@ module_energy_L221.en_supply <- function(command, ...) {
     # The traded markets tend to be a good candidate to solve explicitly since they tie together
     # many solved markets
     A21.sector %>%
-      write_to_all_regions(c("region", "supplysector", "traded"), has_traded=TRUE,
+      write_to_all_regions(c("region", "supplysector", "traded"), has_traded = TRUE,
                           GCAM_region_names = GCAM_region_names) %>%
       filter(traded == TRUE) %>%
       rename(use.trial.market = traded) -> L221.SectorUseTrialMarket_en
@@ -163,7 +163,7 @@ module_energy_L221.en_supply <- function(command, ...) {
       write_to_all_regions(c(LEVEL2_DATA_NAMES[["Tech"]]), has_traded = FALSE,
                            GCAM_region_names = GCAM_region_names) -> L221.StubTech_en
 
-    #Drop stub technologies for biomassOil techs that do not exist
+    # Drop stub technologies for biomassOil techs that do not exist
     A21.globaltech_shrwt %>%
       filter(supplysector == "regional biomassOil") %>%
       select(supplysector, subsector, technology) %>%
@@ -173,6 +173,7 @@ module_energy_L221.en_supply <- function(command, ...) {
       filter(is.na(tradbio_region)) %>%
       select(supplysector, subsector, technology, region, GCAM_region_ID) -> L221.rm_biomassOil_techs_R
 
+    # Removing some region/technology pairs that don't have traditional biomass
     L221.StubTech_en %>%
       anti_join(L221.rm_biomassOil_techs_R, by = c("region", "technology")) %>%
       rename(stub.technology = technology) -> L221.StubTech_en
@@ -181,8 +182,7 @@ module_energy_L221.en_supply <- function(command, ...) {
     # Energy inputs and coefficients of global technologies for upstream energy handling
 
     A21.globaltech_coef %>%
-      gather(year, coef, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) -> A21.globaltech_coef
+      gather_years("coef") -> A21.globaltech_coef
 
     A21.globaltech_coef %>%
       select(supplysector, subsector, technology, minicam.energy.input) %>%
@@ -198,8 +198,7 @@ module_energy_L221.en_supply <- function(command, ...) {
 
     # Costs of global technologies
     A21.globaltech_cost %>%
-      gather(year, input.cost, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) -> A21.globaltech_cost
+      gather_years("input.cost") -> A21.globaltech_cost
 
     A21.globaltech_cost %>%
       select(supplysector, subsector, technology, minicam.non.energy.input) %>%
@@ -215,8 +214,7 @@ module_energy_L221.en_supply <- function(command, ...) {
 
     # Shareweights of global technologies
     A21.globaltech_shrwt %>%
-      gather(year, share.weight, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) -> A21.globaltech_shrwt
+      gather_years("share.weight") -> A21.globaltech_shrwt
 
     A21.globaltech_shrwt %>%
       select(supplysector, subsector, technology) %>%
@@ -247,12 +245,15 @@ module_energy_L221.en_supply <- function(command, ...) {
 
     # For corn ethanol, region + sector is checked. For biodiesel, need to also include the region-specific feedstocks (to exclude palm oil biodiesel producing regions)
     L221.globaltech_secout_R %>%
+      # comparison of region + sector for corn ethanol
       left_join(A_regions %>%
                   select(region, ethanol, GCAM_region_ID) %>%
                   rename(sector = ethanol), by = c("region", "sector")) %>%
+      # comparison of region + technology for biodeisel
       left_join(A_regions %>%
                   select(region, biodiesel, biomassOil_tech, GCAM_region_ID) %>%
                   rename(sector = biodiesel, technology = biomassOil_tech), by = c("region", "sector", "technology")) %>%
+      # filtering for regions with corn ethanol, biodiesel feedstocks
       filter(!is.na(GCAM_region_ID.x) | !is.na(GCAM_region_ID.y)) %>%
       mutate(GCAM_region_ID = if_else(!is.na(GCAM_region_ID.x), GCAM_region_ID.x, GCAM_region_ID.y)) %>%
       select(-GCAM_region_ID.x, -GCAM_region_ID.y) -> L221.globaltech_secout_R
@@ -267,8 +268,7 @@ module_energy_L221.en_supply <- function(command, ...) {
       # Interpolate to all years
       repeat_add_columns(tibble(year = c(FUTURE_YEARS))) %>%
       left_join(L221.globaltech_secout_R %>%
-                  gather(year, value, -supplysector, -subsector, -technology, -fractional.secondary.output, -region, -sector, -GCAM_region_ID) %>%
-                  mutate(year = as.numeric(year)),
+                  gather_years("value"),
                 by = c("supplysector", "subsector", "technology", "fractional.secondary.output", "region", "sector", "GCAM_region_ID", "year")) %>%
       group_by(supplysector, subsector, technology, fractional.secondary.output, region, sector, GCAM_region_ID) %>%
       mutate(output.ratio = round(approx_fun(year, value, rule = 2))) %>%
@@ -306,7 +306,7 @@ module_energy_L221.en_supply <- function(command, ...) {
       select(GCAM_region_ID, feed_price) %>%
       group_by(GCAM_region_ID) %>%
       summarise(feed_price = sum(feed_price)) %>%
-      left_join(A_regions %>%
+      left_join_error_no_match(A_regions %>%
                   select(region, GCAM_region_ID), by = "GCAM_region_ID") -> L221.ag_FeedPrice_R_Yf
 
 
@@ -326,7 +326,7 @@ module_energy_L221.en_supply <- function(command, ...) {
     A21.rsrc_info %>%
       repeat_add_columns(tibble(region = c(L221.ddgs_regions$GCAM_region_ID))) %>%
       rename(GCAM_region_ID = region) %>%
-      left_join(A_regions %>%
+      left_join_error_no_match(A_regions %>%
                   select(region, GCAM_region_ID), by = "GCAM_region_ID") %>%
       select(region, depresource, output.unit = "output-unit", price.unit = "price-unit", market) %>%
       mutate(market = region) -> L221.DepRsrc_en
@@ -348,7 +348,7 @@ module_energy_L221.en_supply <- function(command, ...) {
                   select(region, GCAM_region_ID), by = c("GCAM_region_ID")) %>%
       select(region, depresource, year, price) -> L221.DepRsrcPrice_en
 
-    #Coefficients of traded technologies
+    # Coefficients of traded technologies
     A21.tradedtech_coef %>%
       select(supplysector, subsector, technology, minicam.energy.input) %>%
       repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, FUTURE_YEARS))) %>%
@@ -364,7 +364,7 @@ module_energy_L221.en_supply <- function(command, ...) {
                            GCAM_region_names = GCAM_region_names) %>%
       filter(year %in% MODEL_YEARS) -> L221.TechCoef_en_Traded
 
-    #Costs of traded technologies
+    # Costs of traded technologies
     A21.tradedtech_cost %>%
       select(supplysector, subsector, technology, minicam.non.energy.input) %>%
       repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, FUTURE_YEARS))) %>%
@@ -380,7 +380,7 @@ module_energy_L221.en_supply <- function(command, ...) {
                            GCAM_region_names = GCAM_region_names) %>%
       filter(year %in% MODEL_YEARS) -> L221.TechCost_en_Traded
 
-    #Shareweights of traded technologies
+    # Shareweights of traded technologies
     A21.tradedtech_shrwt %>%
       select(supplysector, subsector, technology, minicam.energy.input) %>%
       repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, FUTURE_YEARS))) %>%
@@ -407,9 +407,8 @@ module_energy_L221.en_supply <- function(command, ...) {
       mutate(market.name = "USA") -> L221.StubTechCoef_unoil
 
     L111.Prod_EJ_R_F_Yh %>%
-      filter(grepl("unconventional", fuel)) %>%
-      filter(year %in% MODEL_YEARS) %>%
-      left_join(A_regions %>%
+      filter(grepl("unconventional", fuel), year %in% MODEL_YEARS) %>%
+      left_join_error_no_match(A_regions %>%
                   select(GCAM_region_ID, region), by = c("GCAM_region_ID")) %>%
       select(GCAM_region_ID, value, year, region) -> L221.Prod_EJ_R_unoil_Yh
 
@@ -420,10 +419,11 @@ module_energy_L221.en_supply <- function(command, ...) {
                   rename(market.name = region), by = c("market.name", "year")) %>%
       mutate(calOutputValue = round(value, energy.DIGITS_CALOUTPUT)) %>%
       select(LEVEL2_DATA_NAMES[["TechYr"]], calOutputValue) %>%
-      mutate(calOutputValue = if_else(is.na(calOutputValue), 0, calOutputValue)) %>%
-      mutate(year.share.weight = year) %>%
-      mutate(subsector.share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
-      mutate(share.weight = if_else(calOutputValue > 0, 1, 0)) -> L221.Production_unoil
+      mutate(calOutputValue = if_else(is.na(calOutputValue), 0, calOutputValue),
+             year.share.weight = year,
+             subsector.share.weight = if_else(calOutputValue > 0, 1, 0),
+             share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
+      mutate(year.share.weight = year) -> L221.Production_unoil
 
     # Unconventional oil demand
     L121.in_EJ_R_TPES_unoil_Yh %>%
@@ -435,11 +435,11 @@ module_energy_L221.en_supply <- function(command, ...) {
       filter(supplysector == "regional oil" & subsector == "unconventional oil") %>%
       repeat_add_columns(tibble(year = HISTORICAL_YEARS)) %>%
       left_join(L121.in_EJ_R_TPES_unoil_Yh, by = c("region", "year")) %>%
-      mutate(calOutputValue = round(value, energy.DIGITS_CALOUTPUT)) %>%
-      mutate(calOutputValue = if_else(is.na(calOutputValue), 0, calOutputValue)) %>%
-      mutate(year.share.weight = year) %>%
-      mutate(subsector.share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
-      mutate(share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
+      mutate(calOutputValue = round(value, energy.DIGITS_CALOUTPUT),
+             calOutputValue = if_else(is.na(calOutputValue), 0, calOutputValue),
+             year.share.weight = year,
+             subsector.share.weight = if_else(calOutputValue > 0, 1, 0),
+             share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
       filter(year %in% MODEL_YEARS) %>%
       select(region, supplysector, subsector, stub.technology, year, calOutputValue, year.share.weight, subsector.share.weight, share.weight) -> L221.StubTechProd_oil_unoil
 
@@ -453,11 +453,11 @@ module_energy_L221.en_supply <- function(command, ...) {
       filter(supplysector == "regional oil" & subsector == "crude oil") %>%
       repeat_add_columns(tibble(year = HISTORICAL_YEARS)) %>%
       left_join(L121.in_EJ_R_TPES_crude_Yh, by = c("region", "year")) %>%
-      mutate(calOutputValue = round(value, energy.DIGITS_CALOUTPUT)) %>%
-      mutate(calOutputValue = if_else(is.na(calOutputValue), 0, calOutputValue)) %>%
-      mutate(year.share.weight = year) %>%
-      mutate(subsector.share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
-      mutate(share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
+      mutate(calOutputValue = round(value, energy.DIGITS_CALOUTPUT),
+             calOutputValue = if_else(is.na(calOutputValue), 0, calOutputValue),
+             year.share.weight = year,
+             subsector.share.weight = if_else(calOutputValue > 0, 1, 0),
+             share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
       filter(year %in% MODEL_YEARS) %>%
       select(region, supplysector, subsector, stub.technology, year, calOutputValue, year.share.weight, subsector.share.weight, share.weight) -> L221.StubTechProd_oil_crude
 
