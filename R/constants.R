@@ -476,6 +476,8 @@ gcamusa.STATES <- c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", 
 gcamusa.GRID_REGION_LOGIT <- -6
 gcamusa.GRID_REGION_LOGIT_TYPE <- "relative-cost-logit"
 
+gcamusa.GEOTHERMAL_DEFAULT_EFFICIENCY <- 0.1
+
 # indicate whether to resolve electricity demands at the level of the nation or the grid regions
 gcamusa.ELECT_TD_SECTORS <- c("elect_td_bld", "elect_td_ind", "elect_td_trn")
 gcamusa.USE_REGIONAL_ELEC_MARKETS <- TRUE
