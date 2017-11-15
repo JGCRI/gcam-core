@@ -50,7 +50,7 @@ module_energy_LA1321.cement <- function(command, ...) {
     L123.in_EJ_R_elec_F_Yh <- get_data(all_data, "L123.in_EJ_R_elec_F_Yh")
     L123.out_EJ_R_elec_F_Yh <- get_data(all_data, "L123.out_EJ_R_elec_F_Yh")
     L132.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L132.in_EJ_R_indenergy_F_Yh")
-browser()
+
     # ===================================================
     # 2. Perform computations
 
@@ -234,10 +234,10 @@ browser()
       mutate(Coal_EJ = Coal * heat_EJ, Oil_EJ = Oil * heat_EJ, Gas_EJ = Gas * heat_EJ, Biomass_EJ = Biomass * heat_EJ) ->
       L1321.Cement_ALL_ctry_Yh
 
-    # Calculate aggregated regional data on cement production by fuel for heat and electricity
-    # ----------------------------------------------------------------------------------------
+    # Calculate aggregated regional data on IO coefficients for cement production by fuel for heat and electricity
+    # ------------------------------------------------------------------------------------------------------------
 
-    # Aggregate country data to the regional level for L1321.Cement_ALL_R_Yh
+    # Aggregate country data to the regional level
     L1321.Cement_ALL_ctry_Yh %>%
       select(GCAM_region_ID, year, prod_Mt, heat_EJ, elec_EJ, Coal_EJ, Oil_EJ, Gas_EJ, Biomass_EJ) %>%
       group_by(GCAM_region_ID, year) %>%
@@ -278,7 +278,10 @@ browser()
       bind_rows(L1321.IO_Cement_R_limestone_Yh) ->
       L1321.IO_GJkg_R_cement_F_Yh
 
-    # Compile regional data on energy by fuel
+    # Calculate input energy for cement production by region, fuel, and year for L1321.in_EJ_R_cement_F_Y
+    # ---------------------------------------------------------------------------------------------------
+
+    # Compile regional historical data on energy use for cement by fuel
     L1321.Cement_ALL_R_Yh %>%
       select(GCAM_region_ID, year, elec_EJ, Coal_EJ, Oil_EJ, Gas_EJ, Biomass_EJ) %>%
       gather(fuel, value, c(elec_EJ, Coal_EJ, Oil_EJ, Gas_EJ, Biomass_EJ)) %>%
@@ -297,7 +300,10 @@ browser()
       bind_rows(L1321.in_EJ_R_cement_F_Y_base) ->
       L1321.in_EJ_R_cement_F_Y
 
-    # Calculate the remaining industrial energy use
+    # Calculate remaining industrial energy use (input), subtracting cement production energy from energy balances
+    # ----------------------------------------------------------------------------------------------------
+
+    # Subtract input energy to cement sector from industrial energy
     L132.in_EJ_R_indenergy_F_Yh %>%
       rename(ind.value = value) %>%
       left_join(select(L1321.in_EJ_R_cement_F_Y, -sector), by = c("GCAM_region_ID", "fuel", "year")) %>%
@@ -313,7 +319,7 @@ browser()
       bind_rows(filter(L1321.in_EJ_R_indenergy_F_Yh_NAs, !is.na(value))) ->
       L1321.in_EJ_R_indenergy_F_Yh_negbio
 
-    # This dataset may have negative values. If it's biomass, doesn't matter; just set the rest-of-industry to exogenous minimum value
+    # This dataset may now have negative values. If it's biomass, doesn't matter for energy balances; set the rest-of-industry to exogenous minimum value
     L1321.in_EJ_R_indenergy_F_Yh_negbio %>%
       filter(value < 0, fuel == "biomass") %>%
       mutate(value = energy.MIN_IN_EJ_IND) %>%
@@ -352,9 +358,6 @@ browser()
       # Now non-bio industrial energy negative values have been zeroed out and subtracted from fossil fuel use for cement and then offset
       # with a positive adjustment to biomass fuel use in cement. This preserves the total energy balances while removing negative values.
     }
-
-# ===================================================OLD
-# 2. Perform computations
 
     # ===================================================
     # Produce outputs
