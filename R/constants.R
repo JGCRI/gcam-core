@@ -297,6 +297,8 @@ energy.FLOOR_TO_SURFACE_RATIO <- 5.5
 energy.INTERNAL_GAINS_SCALAR_USA_H <- -930
 energy.INTERNAL_GAINS_SCALAR_USA_C <- 350
 
+# used to avoid negative/zero energy when disaggregating detailed industries (cement, fertilizer)
+energy.MIN_IN_EJ_IND <- 1e-3
 
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
