@@ -93,8 +93,7 @@ module_water_L145.water.demand.municipal <- function(command, ...) {
 
     # Map municipal water use efficiencies to GCAM regions
     municipal_water_use_efficiency %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) ->
+      gather_years ->
       municipal_water_use_efficiency_tmp
 
     municipal_water_use_efficiency_tmp %>%

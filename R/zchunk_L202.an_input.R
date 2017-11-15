@@ -157,8 +157,7 @@ module_aglu_L202.an_input <- function(command, ...) {
 
     # L202.UnlimitedRenewRsrcPrice (105-112)
     A_agUnlimitedRsrcCurves %>%
-      gather(year, price, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years(value_col = "price") %>%
       select(unlimited.resource, year, price) %>%
       filter(year %in% BASE_YEARS) %>%
       write_to_all_regions(LEVEL2_DATA_NAMES[["UnlimitRsrcPrice"]], GCAM_region_names) ->
@@ -195,8 +194,7 @@ module_aglu_L202.an_input <- function(command, ...) {
 
     # L202.GlobalTechShrwt_in: Default shareweights for inputs to animal production
     A_an_input_globaltech_shrwt %>%
-      gather(year, share.weight, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years(value_col = "share.weight") %>%
       filter(year %in% MODEL_YEARS) %>%
       complete(year = MODEL_YEARS, fill = list(supplysector = A_an_input_globaltech_shrwt$supplysector),
                subsector = A_an_input_globaltech_shrwt$subsector, technology = A_an_input_globaltech_shrwt$technology) %>%

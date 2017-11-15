@@ -39,8 +39,7 @@ module_emissions_L102.ghg_en_USA_S_T_Y <- function(command, ...) {
     EPA_ghg_tech <- get_data(all_data, "emissions/mappings/EPA_ghg_tech")
     GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
     get_data(all_data, "L101.in_EJ_R_en_Si_F_Yh") %>%
-      gather(year, energy, -sector, -fuel, -technology, -GCAM_region_ID) %>%
-      mutate(year = as.integer(year)) ->
+      gather_years(value_col = "energy") ->
       L101.in_EJ_R_en_Si_F_Yh
     EPA_FCCC_GHG_2005 <- get_data(all_data, "emissions/EPA_FCCC_GHG_2005")
 

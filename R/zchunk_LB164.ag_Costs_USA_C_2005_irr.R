@@ -60,8 +60,7 @@ module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
     # Step 1: Compute the share of total variable costs from purchased irrigation water.
     # CostFrac = IrrCost / TotCost
     USDA_cost_data %>%
-      gather(year, cost, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years(value_col = "cost") %>%
       filter(Item == "Purchased irrigation water" | Item == "Total operating costs",
              year %in% MODEL_COST_YEARS) %>%
       spread(Item, cost) %>%

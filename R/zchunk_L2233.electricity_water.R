@@ -171,8 +171,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
 
     # Match in the global tech shareweights from the assumptions to the electric sector
     A23.globaltech_shrwt %>%
-      gather(year, share.weight, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years(value_col = "share.weight") %>%
       complete(nesting(supplysector, subsector, technology),
                year = c(year, MODEL_YEARS)) %>%
       # ^^ fill out with all model years...
@@ -447,8 +446,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
 
     # Capital costs of cooling systems only
     A23.CoolingSystemCosts %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years %>%
       complete(nesting(cooling_system, input.capital),
                year = c(year, MODEL_YEARS)) %>%
       group_by(cooling_system, input.capital) %>%

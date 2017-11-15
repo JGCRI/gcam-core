@@ -179,9 +179,8 @@ module_gcam.usa_LA154.Transport <- function(command, ...) {
           mutate(mode = "Walk") %>%
           mutate(state = old_df_order) %>%
           bind_rows(State_cycle) %>%
-          gather(year, value, -state, -mode) %>%
-          select(state, mode, year, value) %>%
-          mutate(year = as.integer(year)) ->
+          gather_years %>%
+          select(state, mode, year, value) ->
           L154.out_mpkm_state_trn_nonmotor_Yh
 
         } else {

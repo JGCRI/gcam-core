@@ -113,8 +113,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
     # L225.GlobalTechEff_h2: Energy inputs and efficiencies of global technologies for hydrogen
     # Efficiencies of global technologies
     A25.globaltech_eff %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.numeric(year)) %>%
+      gather_years %>%
       complete(nesting(supplysector, subsector, technology, minicam.energy.input), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
       arrange(supplysector, subsector, technology, minicam.energy.input, year) %>%
       group_by(supplysector, subsector, technology, minicam.energy.input) %>%
@@ -131,8 +130,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
     # L225.GlobalTechCost_h2: Costs of global technologies for hydrogen
     # Costs of global technologies
     A25.globaltech_cost %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years %>%
       complete(nesting(supplysector, subsector, technology, minicam.non.energy.input), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
       arrange(supplysector, subsector, technology, minicam.non.energy.input, year) %>%
       group_by(supplysector, subsector, technology, minicam.non.energy.input) %>%
@@ -149,8 +147,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
     # L225.GlobalTechShrwt_h2: Shareweights of global technologies for hydrogen
     # Shareweights of global technologies
     A25.globaltech_shrwt %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years %>%
       complete(nesting(supplysector, subsector, technology), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
       arrange(supplysector, subsector, technology, year) %>%
       group_by(supplysector, subsector, technology) %>%
@@ -183,8 +180,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
     # L225.GlobalTechCapture_h2: CO2 capture fractions from global fertilizer production technologies with CCS
     # Note: No need to consider historical periods or intermittent technologies here
     A25.globaltech_co2capture %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years %>%
       complete(nesting(supplysector, subsector, technology), year = c(year, FUTURE_YEARS)) %>%
       arrange(supplysector, subsector, technology, year) %>%
       group_by(supplysector, subsector, technology) %>%
