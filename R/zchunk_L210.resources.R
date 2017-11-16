@@ -19,17 +19,16 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RLH November 2017
-
 module_energy_L210.resources <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "energy/A_regions",
              FILE = "energy/A10.rsrc_info",
              FILE = "energy/A10.subrsrc_info",
-             FILE = "energy/A10.TechChange", # units
-             FILE = "energy/A10.TechChange_SSPs", # units
-             FILE = "energy/A10.EnvironCost_SSPs", # units
-             FILE = "energy/A15.roofPV_TechChange", # units
+             FILE = "energy/A10.TechChange",
+             FILE = "energy/A10.TechChange_SSPs",
+             FILE = "energy/A10.EnvironCost_SSPs",
+             FILE = "energy/A15.roofPV_TechChange",
              "L111.RsrcCurves_EJ_R_Ffos",
              "L111.Prod_EJ_R_F_Yh",
              "L112.RsrcCurves_Mt_R_U",
@@ -85,21 +84,16 @@ module_energy_L210.resources <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A_regions <- get_data(all_data, "energy/A_regions")
     A10.rsrc_info <- get_data(all_data, "energy/A10.rsrc_info") %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year))
+      gather_years
     A10.subrsrc_info <- get_data(all_data, "energy/A10.subrsrc_info")
     A10.TechChange <- get_data(all_data, "energy/A10.TechChange") %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year))
+      gather_years
     A10.TechChange_SSPs <- get_data(all_data, "energy/A10.TechChange_SSPs") %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year))
+      gather_years
     A10.EnvironCost_SSPs <- get_data(all_data, "energy/A10.EnvironCost_SSPs") %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year))
+      gather_years
     A15.roofPV_TechChange <- get_data(all_data, "energy/A15.roofPV_TechChange") %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year))
+      gather_years
     L111.RsrcCurves_EJ_R_Ffos <- get_data(all_data, "L111.RsrcCurves_EJ_R_Ffos")
     L111.Prod_EJ_R_F_Yh <- get_data(all_data, "L111.Prod_EJ_R_F_Yh")
     L112.RsrcCurves_Mt_R_U <- get_data(all_data, "L112.RsrcCurves_Mt_R_U")
