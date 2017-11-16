@@ -73,10 +73,13 @@ module_energy_L210.resources <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     # Silence package checks
-    SSP <- available <- cal.production <- capacity.factor <- curve.exponent <- depresource <- environCost <-
-      extractioncost <- fuel <- gdpSupplyElast <- grade <- market <- maxSubResource <- mid.price <- object <-
-      `output-unit` <- `price-unit` <- region <- resource <- resource_type <- scenario <-
-      subResourceCapacityFactor <- subresource <- subresource_type <- value <- year <- NULL
+    . <- SSP <- year.fillout <- L210.DepRsrcTechChange_SSP1 <- L210.DepRsrcEnvironCost_SSP1 <- year <-
+      L210.DepRsrcTechChange_SSP2 <- L210.DepRsrcEnvironCost_SSP2 <- L210.DepRsrcTechChange_SSP3 <-
+      L210.DepRsrcEnvironCost_SSP3 <- L210.DepRsrcTechChange_SSP4 <- L210.DepRsrcTechChange_SSP5 <-
+      L210.DepRsrcEnvironCost_SSP5 <- available <- cal.production <- capacity.factor <- curve.exponent <-
+      depresource <- environCost <- extractioncost <- fuel <- gdpSupplyElast <- grade <- market <- value <-
+      maxSubResource <- mid.price <- object <- `output-unit` <- `price-unit` <- region <- resource <-
+      resource_type <- scenario <-subResourceCapacityFactor <- subresource <- subresource_type <- NULL
 
     all_data <- list(...)[[1]]
 
