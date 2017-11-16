@@ -66,10 +66,8 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
       L115.nh3_tg_R_C_yr_Sys_Fd_pro_G_fu_emf_hyb
 
     # Match hybrid emissions with GCAM technology by region, system, and fuel. There should be a 1:1 match.
-    left_join(unite(L115.nh3_tg_R_C_yr_Sys_Fd_pro_G_fu_emf_hyb, col = "commodity_system_feed", c(GCAM_commodity, system, feed), sep = "~"),
-              unite(GCAM_sector_tech, col = "commodity_system_feed", c(sector, fuel, technology), sep = "~"),
-              by = c("commodity_system_feed")) %>%
-      separate(commodity_system_feed, c("GCAM_commodity", "system", "feed"), sep = "~") %>%
+    L115.nh3_tg_R_C_yr_Sys_Fd_pro_G_fu_emf_hyb %>%
+      left_join(GCAM_sector_tech, by = c("GCAM_commodity" = "sector", "system" = "fuel", "feed" = "technology")) %>%
       select(GCAM_region_ID, GCAM_commodity, system, feed, year, production, Non.CO2, emfact, hybrid_emissions, EDGAR_agg_sector) ->
       L115.nh3_tg_R_C_Sys_Fd_yr_pro_G_emf_hyb_sec
 
@@ -77,6 +75,7 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
     L115.nh3_tg_R_C_Sys_Fd_yr_pro_G_emf_hyb_sec %>%
       group_by(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year) %>%
       summarize(total_hybrid_emissions = sum(hybrid_emissions)) %>%
+      ungroup %>%
       arrange(year) ->
       L115.nh3_tg_R_G_sec_yr_tHyb
 
@@ -109,17 +108,16 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
       na.omit() %>%
       gather_years %>%
       group_by(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year) %>%
-      summarise(value = sum(value)) ->
+      summarise(value = sum(value)) %>%
+      ungroup ->
       L115.EDGAR_R_G_sec_yr_v
 
 
     # Match total hybrid emissions data with EDGAR emissions data by technology
     # Create the from the scaler ratio of EDGAR total emissions to aggregated total hybrid emissions and multiplying by 1000
     L115.nh3_tg_R_G_sec_yr_tHyb %>%
-      unite(col = "Region_GHG_Sector_Yr", c(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year), sep = "~") %>%
-      left_join_error_no_match(unite(L115.EDGAR_R_G_sec_yr_v, col = "Region_GHG_Sector_Yr", c(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year), sep = "~"), by = "Region_GHG_Sector_Yr") %>%
+      left_join_error_no_match(L115.EDGAR_R_G_sec_yr_v, by = c("GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector", "year")) %>%
       rename(EDGAR_emissions = value) %>%
-      separate(Region_GHG_Sector_Yr, c("GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector", "year"), sep = "~") %>%
       mutate(year = as.integer(year),
              scaler = EDGAR_emissions / total_hybrid_emissions / 1000.0,
              GCAM_region_ID = as.integer(GCAM_region_ID)) ->
@@ -131,9 +129,8 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
 
     # Match calculated hybrid emissions with the emission scaler ratio
     # Multiply the hybrid emissions by the scaler ratio to match the EDGAR totals
-    unite(L115.nh3_tg_R_C_Sys_Fd_yr_pro_G_emf_hyb_sec, col = "Region_GHG_Sector_Yr", c(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year), sep = "~") %>%
-      left_join_error_no_match(unite(L115.emiss_scaler, col = "Region_GHG_Sector_Yr", c(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year), sep = "~"), by = "Region_GHG_Sector_Yr") %>%
-      separate(Region_GHG_Sector_Yr, c("GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector", "year"), sep = "~") %>%
+    L115.nh3_tg_R_C_Sys_Fd_yr_pro_G_emf_hyb_sec %>%
+      left_join_error_no_match(L115.emiss_scaler, by = c("GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector", "year")) %>%
       mutate(year = as.integer(year),
              emissions = hybrid_emissions * scaler,
              GCAM_region_ID = as.integer(GCAM_region_ID)) %>%
