@@ -84,9 +84,7 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
 
 
     # Rename EDGAR variable names
-    EDGAR_NH3 %>%
-      rename(IPCC_Annex = `IPCC-Annex`, World_Region = `World Region`) ->
-      L115.EDGAR
+    L115.EDGAR <- rename(EDGAR_NH3, IPCC_Annex = `IPCC-Annex`, World_Region = `World Region`)
 
     # Add gas name and match with agg sector by IPCC, there should be gas data for every IPCC agg sector.
     L115.EDGAR %>%
@@ -118,9 +116,7 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
     L115.nh3_tg_R_G_sec_yr_tHyb %>%
       left_join_error_no_match(L115.EDGAR_R_G_sec_yr_v, by = c("GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector", "year")) %>%
       rename(EDGAR_emissions = value) %>%
-      mutate(year = as.integer(year),
-             scaler = EDGAR_emissions / total_hybrid_emissions / 1000.0,
-             GCAM_region_ID = as.integer(GCAM_region_ID)) ->
+      mutate(scaler = EDGAR_emissions / total_hybrid_emissions / 1000.0) ->
       L115.emiss_scaler
 
 
@@ -131,9 +127,7 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
     # Multiply the hybrid emissions by the scaler ratio to match the EDGAR totals
     L115.nh3_tg_R_C_Sys_Fd_yr_pro_G_emf_hyb_sec %>%
       left_join_error_no_match(L115.emiss_scaler, by = c("GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector", "year")) %>%
-      mutate(year = as.integer(year),
-             emissions = hybrid_emissions * scaler,
-             GCAM_region_ID = as.integer(GCAM_region_ID)) %>%
+      mutate(emissions = hybrid_emissions * scaler) %>%
       replace_na(list(emissions = 0)) ->
       L115.nh3_tg_R_G_sec_yr_C_Sys_Fd_pro_emf_hy_tHy_ED_sc_em
 
