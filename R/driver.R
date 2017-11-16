@@ -121,12 +121,12 @@ tibbelize_outputs <- function(chunk_data, chunk_name) {
 #' @param stop_before Stop immediately before this chunk (character)
 #' @param stop_after Stop immediately after this chunk  (character)
 #' @param return_inputs_of Return the data objects that are inputs for these chunks (character).
-#' If \code{stop_before} is specified, by default that chunk's inputs are returned.
+#' If \code{stop_before} is specified, by default that chunk's inputs are returned
 #' @param return_outputs_of Return the data objects that are output from these chunks (character)
-#' If \code{stop_after} is specified, by default that chunk's outputs are returned.
-#' @param return_data_names Return these data objects (character). By default this is the union of \code{return_inputs_of} and \code{return_inputs_of}
+#' If \code{stop_after} is specified, by default that chunk's outputs are returned
+#' @param return_data_names Return these data objects (character). By default this is the union of \code{return_inputs_of} and \code{return_outputs_of}
 #' @param return_data_map_only Return only the precursor information? (logical) This overrides
-#' the other \code{return_*} parameters above.
+#' the other \code{return_*} parameters above
 #' @param write_outputs Write all chunk outputs to disk?
 #' @param outdir Location to write output data (ignored if \code{write_outputs} is \code{FALSE})
 #' @param xmldir Location to write output XML (ignored if \code{write_outputs} is \code{FALSE})
