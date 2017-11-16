@@ -119,8 +119,7 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
     A44.subsector_shrwt <- get_data(all_data, "gcam-usa/A44.subsector_shrwt")
     A44.globaltech_cost <- get_data(all_data, "gcam-usa/A44.globaltech_cost")
     A44.globaltech_eff <- get_data(all_data, "gcam-usa/A44.globaltech_eff") %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year))
+      gather_years()
     A44.globaltech_eff_avg <- get_data(all_data, "gcam-usa/A44.globaltech_eff_avg")
     A44.globaltech_shares <- get_data(all_data, "gcam-usa/A44.globaltech_shares")
     A44.globaltech_intgains <- get_data(all_data, "gcam-usa/A44.globaltech_intgains")
@@ -133,16 +132,20 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
     L144.in_EJ_state_comm_F_U_Y <- get_data(all_data, "L144.in_EJ_state_comm_F_U_Y")
     L144.in_EJ_state_res_F_U_Y <- get_data(all_data, "L144.in_EJ_state_res_F_U_Y")
     L143.HDDCDD_scen_state <- get_data(all_data, "temp-data-inject/L143.HDDCDD_scen_state") %>%
-      gather(year, value, starts_with("X")) %>%
-      mutate(year = as.integer(substr(year, 2, 5)))
+      gather_years()
     L100.Pop_thous_state <- get_data(all_data, "L100.Pop_thous_state")
     L100.pcGDP_thous90usd_state <- get_data(all_data, "L100.pcGDP_thous90usd_state")
     # ===================================================
     # Note: Building energy demands and floorspace are calculated endogenously - these are undergoing review
     # per-capita demand = (satiation.level - satiation.adder) * (1 - exp( -log2 / satiation.impedance * Demand.Driver)) + satiation.adder)
+    #
+    # floorspace = (satiation.level - satiation.adder) *
+    # [1 - exp{(-ln(2) * per-capita-GDP/satiation.impedance) * (energy_cost/base_energy_cost)^price_effect_exponent}] + satiation.adder
+    #
     # satiation.level: maximum per-capita demand that can be achieved
     # satiation.adder: value that allow the starting position of any region to be set along the demand function
     # satiation.impedance: shape parameter
+
 
     # Need to delete the buildings sector in the USA region (gcam.consumers and supplysectors)
     L244.DeleteConsumer_USAbld <- tibble(region = "USA", gcam.consumer = A44.gcam_consumer_en$gcam.consumer)
@@ -277,8 +280,7 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
     # L244.ShellConductance_bld_gcamusa: Shell conductance (inverse of shell efficiency)
     L244.ShellConductance_bld_gcamusa <- A44.bld_shell_conductance %>%
       # Convert to long form
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years() %>%
       # Interpolate to model years
       complete(gcam.consumer, year = c(year, MODEL_YEARS)) %>%
       group_by(gcam.consumer) %>%
@@ -427,8 +429,7 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
 
     # L244.GlobalTechShrwt_bld_gcamusa: Default shareweights for global building technologies
     L244.GlobalTechShrwt_bld_gcamusa <- A44.globaltech_shrwt %>%
-      gather(year, share.weight, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years(value_col = "share.weight") %>%
       complete(nesting(supplysector, subsector, technology), year = c(year, MODEL_YEARS)) %>%
       group_by(supplysector, subsector, technology) %>%
       mutate(share.weight = approx_fun(year, share.weight)) %>%
@@ -446,8 +447,7 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
 
     # L244.GlobalTechCost_bld: Non-fuel costs of global building technologies
     L244.GlobalTechCost_bld_gcamusa <- A44.globaltech_cost %>%
-      gather(year, input.cost, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years(value_col = "input.cost") %>%
       complete(nesting(supplysector, subsector, technology), year = c(year, MODEL_YEARS)) %>%
       group_by(supplysector, subsector, technology) %>%
       mutate(input.cost = approx_fun(year, input.cost)) %>%
