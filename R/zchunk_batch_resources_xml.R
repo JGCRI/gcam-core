@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{resources.xml}. The corresponding file in the
 #' original data system was \code{batch_resources_xml.R} (energy XML).
-module_energy_batch_resources_xml_DISABLED <- function(command, ...) {
+module_energy_batch_resources_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L210.DepRsrc",
              "L210.RenewRsrc",
@@ -21,7 +21,7 @@ module_energy_batch_resources_xml_DISABLED <- function(command, ...) {
              "L210.DepRsrcCalProd",
              "L210.DepRsrcCurves_fos",
              "L210.DepRsrcCurves_U",
-             "L210.SmthRenewRsrcCurvesGdpElast_MSW",
+             "L210.SmthRenewRsrcCurves_MSW",
              "L210.SmthRenewRsrcCurves_wind",
              "L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV",
              "L210.GrdRenewRsrcCurves_geo",
@@ -46,7 +46,7 @@ module_energy_batch_resources_xml_DISABLED <- function(command, ...) {
     L210.DepRsrcCalProd <- get_data(all_data, "L210.DepRsrcCalProd")
     L210.DepRsrcCurves_fos <- get_data(all_data, "L210.DepRsrcCurves_fos")
     L210.DepRsrcCurves_U <- get_data(all_data, "L210.DepRsrcCurves_U")
-    L210.SmthRenewRsrcCurvesGdpElast_MSW <- get_data(all_data, "L210.SmthRenewRsrcCurvesGdpElast_MSW")
+    L210.SmthRenewRsrcCurves_MSW <- get_data(all_data, "L210.SmthRenewRsrcCurves_MSW")
     L210.SmthRenewRsrcCurves_wind <- get_data(all_data, "L210.SmthRenewRsrcCurves_wind")
     L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV <- get_data(all_data, "L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV")
     L210.GrdRenewRsrcCurves_geo <- get_data(all_data, "L210.GrdRenewRsrcCurves_geo")
@@ -69,14 +69,18 @@ module_energy_batch_resources_xml_DISABLED <- function(command, ...) {
       add_xml_data(L210.DepRsrcCalProd,"DepRsrcCalProd") %>%
       add_xml_data(L210.DepRsrcCurves_fos,"DepRsrcCurves") %>%
       add_xml_data(L210.DepRsrcCurves_U,"DepRsrcCurves") %>%
-      add_xml_data(L210.SmthRenewRsrcCurvesGdpElast_MSW,"SmthRenewRsrcCurvesGdpElast") %>%
+      add_xml_data(L210.SmthRenewRsrcCurves_MSW,"SmthRenewRsrcCurvesGdpElast") %>%
       add_xml_data(L210.SmthRenewRsrcCurves_wind,"SmthRenewRsrcCurves") %>%
       add_xml_data(L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV,"SmthRenewRsrcCurvesGdpElast") %>%
       add_xml_data(L210.GrdRenewRsrcCurves_geo,"GrdRenewRsrcCurves") %>%
       add_xml_data(L210.GrdRenewRsrcMax_geo,"GrdRenewRsrcMax") %>%
       add_xml_data(L210.GrdRenewRsrcCurves_tradbio,"GrdRenewRsrcCurves") %>%
       add_xml_data(L210.GrdRenewRsrcMax_tradbio,"GrdRenewRsrcMax") %>%
-      add_precursors("L210.DepRsrc", "L210.RenewRsrc", "L210.UnlimitRsrc", "L210.DepRsrcPrice", "L210.RenewRsrcPrice", "L210.UnlimitRsrcPrice", "L210.DepRsrcTechChange", "L210.SmthRenewRsrcTechChange", "L210.DepRsrcCalProd", "L210.DepRsrcCurves_fos", "L210.DepRsrcCurves_U", "L210.SmthRenewRsrcCurvesGdpElast_MSW", "L210.SmthRenewRsrcCurves_wind", "L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV", "L210.GrdRenewRsrcCurves_geo", "L210.GrdRenewRsrcMax_geo", "L210.GrdRenewRsrcCurves_tradbio", "L210.GrdRenewRsrcMax_tradbio") ->
+      add_precursors("L210.DepRsrc", "L210.RenewRsrc", "L210.UnlimitRsrc", "L210.DepRsrcPrice", "L210.RenewRsrcPrice",
+                     "L210.UnlimitRsrcPrice", "L210.DepRsrcTechChange", "L210.SmthRenewRsrcTechChange", "L210.DepRsrcCalProd",
+                     "L210.DepRsrcCurves_fos", "L210.DepRsrcCurves_U", "L210.SmthRenewRsrcCurves_MSW", "L210.SmthRenewRsrcCurves_wind",
+                     "L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV", "L210.GrdRenewRsrcCurves_geo", "L210.GrdRenewRsrcMax_geo",
+                     "L210.GrdRenewRsrcCurves_tradbio", "L210.GrdRenewRsrcMax_tradbio") ->
       resources.xml
 
     return_data(resources.xml)
