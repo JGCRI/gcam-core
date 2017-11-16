@@ -213,8 +213,7 @@ module_energy_L242.building_agg <- function(command, ...) {
 
     # Shareweights of global building sector technologies
     A42.globaltech_shrwt %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>% # Convert to long form
-      mutate(year = as.integer(year)) %>% # Year needs to be integer or numeric to interpolate
+      gather_years %>%
       # Expand table to include all model base and future years
       complete(year = c(year, MODEL_YEARS), nesting(supplysector, subsector, technology)) %>%
       # Extrapolate to fill out values for all years
@@ -238,8 +237,7 @@ module_energy_L242.building_agg <- function(command, ...) {
     DIGITS_EFFICIENCY = 3
 
     A42.globaltech_eff %>%
-      gather(year, efficiency, matches(YEAR_PATTERN)) %>% # Convert to long form
-      mutate(year = as.integer(year)) %>% # Year needs to be integer or numeric to interpolate
+      gather_years(value_col = "efficiency") %>%
       # Expand table to include all model base and future years
       complete(year = c(year, MODEL_YEARS), nesting(supplysector, subsector, technology, minicam.energy.input)) %>%
       # Extrapolate to fill out values for all years
@@ -258,8 +256,7 @@ module_energy_L242.building_agg <- function(command, ...) {
     DIGITS_COST <- 4
 
     A42.globaltech_cost %>%
-      gather(year, input.cost, matches(YEAR_PATTERN)) %>% # Convert to long form
-      mutate(year = as.integer(year)) %>% # Year needs to be integer or numeric to interpolate
+      gather_years(value_col = "input.cost") %>%
       # Expand table to include all model base and future years
       complete(year = c(year, MODEL_YEARS), nesting(supplysector, subsector, technology, minicam.non.energy.input)) %>%
       # Extrapolate to fill out values for all years

@@ -1,6 +1,6 @@
 #' module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt
 #'
-#' Builds agriculture, forest, pasture and biomass production inputs for all technologies.
+#' Build agriculture, forest, pasture and biomass production inputs for all technologies.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command

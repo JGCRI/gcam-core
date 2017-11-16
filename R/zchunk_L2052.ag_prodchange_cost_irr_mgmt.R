@@ -1,6 +1,6 @@
 #' module_aglu_L2052.ag_prodchange_cost_irr_mgmt
 #'
-#' Specifies production costs and future agricultural productivity changes for all technologies.
+#' Specify production costs and future agricultural productivity changes for all technologies.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command

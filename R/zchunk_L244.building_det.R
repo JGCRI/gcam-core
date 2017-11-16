@@ -143,8 +143,7 @@ module_energy_L244.building_det <- function(command, ...) {
     A44.fuelprefElasticity_SSP4 <- get_data(all_data, "energy/A44.fuelprefElasticity_SSP4")
     A44.fuelprefElasticity_SSP15 <- get_data(all_data, "energy/A44.fuelprefElasticity_SSP15")
     A44.globaltech_shrwt <- get_data(all_data, "energy/A44.globaltech_shrwt") %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year))
+      gather_years
     A44.gcam_consumer <- get_data(all_data, "energy/A44.gcam_consumer")
     A44.demandFn_serv <- get_data(all_data, "energy/A44.demandFn_serv")
     A44.demandFn_flsp <- get_data(all_data, "energy/A44.demandFn_flsp")
@@ -292,7 +291,7 @@ module_energy_L244.building_det <- function(command, ...) {
       select(region, gcam.consumer, nodeInput, building.node.input, satiation.level, SSP) %>%
       # Split by SSP, creating a list with a tibble for each SSP, then add attributes
       split(.$SSP) %>%
-      lapply(function(df){
+      lapply(function(df) {
         select(df, -SSP) %>%
           add_units("Million squared meters per capita") %>%
           add_comments("Values from A44.satiation_flsp_SSPs added to A44.gcam_consumer written to all regions") %>%
@@ -319,7 +318,7 @@ module_energy_L244.building_det <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["SatiationAdder"]], SSP) %>%
       # Split by SSP, creating a list with a tibble for each SSP, then add attributes
       split(.$SSP) %>%
-      lapply(function(df){
+      lapply(function(df) {
         select(df, -SSP) %>%
           add_units("Unitless") %>%
           add_comments("Satiation adder compute using satiation level, per-capita GDP and per-capita floorsapce") %>%
@@ -396,7 +395,7 @@ module_energy_L244.building_det <- function(command, ...) {
       # Join SRES and GCM so that we can split by unique ESM scenario
       unite(scenario, SRES, GCM) %>%
       split(.$scenario) %>%
-      lapply(function(df){
+      lapply(function(df) {
         select(df, -scenario) %>%
           add_units("Fahrenheit Degree Days") %>%
           add_comments("Degree days are from L143.HDDCDD_scen_R_Y") %>%
@@ -489,7 +488,7 @@ module_energy_L244.building_det <- function(command, ...) {
       select(-service.per.flsp) %>%
       # Split by SSP, creating a list with a tibble for each SSP, then add attributes
       split(.$SSP) %>%
-      lapply(function(df){
+      lapply(function(df) {
         select(df, -SSP) %>%
           add_units("EJ/billion m2 floorspace") %>%
           add_comments("For USA, calculate satiation level as base year service / base year floorspace times multiplier") %>%
@@ -499,7 +498,7 @@ module_energy_L244.building_det <- function(command, ...) {
       })
 
     # Assign each tibble in list
-    for(i in names(L244.GenericServiceSatiation_SSPs)){
+    for(i in names(L244.GenericServiceSatiation_SSPs)) {
       assign(paste0("L244.GenericServiceSatiation_", i), L244.GenericServiceSatiation_SSPs[[i]] %>%
                add_title(paste0("Satiation levels for non-thermal building services: ", i)) %>%
                add_legacy_name(paste0("L244.GenericServiceSatiation_", i)))
@@ -571,13 +570,13 @@ module_energy_L244.building_det <- function(command, ...) {
 
 
     # L244.SubsectorShrwt_bld and L244.SubsectorShrwtFllt_bld: Subsector shareweights of building sector
-    if(any(!is.na(A44.subsector_shrwt$year))){
+    if(any(!is.na(A44.subsector_shrwt$year))) {
       L244.SubsectorShrwt_bld <- A44.subsector_shrwt %>%
         filter(!is.na(year)) %>%
         write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwt"]], GCAM_region_names = GCAM_region_names) %>%
         semi_join(L244.Tech_bld, by = c("region", "supplysector", "subsector"))
       }
-    if(any(!is.na(A44.subsector_shrwt$year.fillout))){
+    if(any(!is.na(A44.subsector_shrwt$year.fillout))) {
       L244.SubsectorShrwtFllt_bld <- A44.subsector_shrwt %>%
         filter(!is.na(year.fillout)) %>%
         write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]], GCAM_region_names = GCAM_region_names) %>%
@@ -585,13 +584,13 @@ module_energy_L244.building_det <- function(command, ...) {
       }
 
     # L244.SubsectorInterp_bld and L244.SubsectorInterpTo_bld: Subsector shareweight interpolation of building sector
-    if(any(is.na(A44.subsector_interp$to.value))){
+    if(any(is.na(A44.subsector_interp$to.value))) {
       L244.SubsectorInterp_bld <- A44.subsector_interp %>%
         filter(is.na(to.value)) %>%
         write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorInterp"]], GCAM_region_names = GCAM_region_names) %>%
         semi_join(L244.Tech_bld, by = c("region", "supplysector", "subsector"))
       }
-    if(any(!is.na(A44.subsector_interp$to.value))){
+    if(any(!is.na(A44.subsector_interp$to.value))) {
       L244.SubsectorInterpTo_bld <- A44.subsector_interp %>%
         filter(!is.na(to.value)) %>%
         write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorInterpTo"]], GCAM_region_names = GCAM_region_names) %>%
@@ -725,7 +724,7 @@ module_energy_L244.building_det <- function(command, ...) {
       ungroup()
 
     # This tibble is empty because no base.service = 0, so we will make an if statement to produce correct empty tibble
-    if (any(L244.DeleteGenericService$base.service == 0)){
+    if(any(L244.DeleteGenericService$base.service == 0)) {
       L244.DeleteGenericService <- L244.DeleteGenericService%>%
         filter(base.service == 0) %>%
         select(-base.service) %>%

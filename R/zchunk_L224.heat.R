@@ -74,16 +74,13 @@ module_energy_L224.heat <- function(command, ...) {
 
     # Changing input data into long format
     A24.globaltech_coef %>%
-      gather(year, coef, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) -> A24.globaltech_coef
+      gather_years(value_col = "coef") -> A24.globaltech_coef
 
     A24.globaltech_cost %>%
-      gather(year, input.cost, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) -> A24.globaltech_cost
+      gather_years(value_col = "input.cost") -> A24.globaltech_cost
 
     A24.globaltech_shrwt %>%
-      gather(year, share.weight, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) -> A24.globaltech_shrwt
+      gather_years(value_col = "share.weight") -> A24.globaltech_shrwt
 
     # ===================================================
     # Create list of regions with district heat modeled
@@ -277,15 +274,15 @@ module_energy_L224.heat <- function(command, ...) {
       add_precursors("energy/A24.subsector_logit", "energy/A_regions", "common/GCAM_region_names") ->
       L224.SubsectorLogit_heat
 
-    if (exists("L224.SubsectorShrwt_heat")) {
-    L224.SubsectorShrwt_heat %>%
-      add_title("Subsector shareweights of district heat sectors") %>%
-      add_units("N/A") %>%
-      add_comments("If year is not NA: Subsector shareweights for district heat written to all regions,") %>%
-      add_comments("filtered by which regions have district heat") %>%
-      add_legacy_name("L224.SubsectorShrwt_heat") %>%
-      add_precursors("energy/A24.subsector_shrwt", "energy/A_regions", "common/GCAM_region_names") ->
-      L224.SubsectorShrwt_heat
+    if(exists("L224.SubsectorShrwt_heat")) {
+      L224.SubsectorShrwt_heat %>%
+        add_title("Subsector shareweights of district heat sectors") %>%
+        add_units("N/A") %>%
+        add_comments("If year is not NA: Subsector shareweights for district heat written to all regions,") %>%
+        add_comments("filtered by which regions have district heat") %>%
+        add_legacy_name("L224.SubsectorShrwt_heat") %>%
+        add_precursors("energy/A24.subsector_shrwt", "energy/A_regions", "common/GCAM_region_names") ->
+        L224.SubsectorShrwt_heat
     } else {
       # If year column of A24.subsector_shrwt is all N/A, then a blank tibble is produced (and presumably the following tibble, using year.fillout is made)
       tibble(x = NA) %>%
@@ -296,15 +293,15 @@ module_energy_L224.heat <- function(command, ...) {
         L224.SubsectorShrwt_heat
     }
 
-    if (exists("L224.SubsectorShrwtFllt_heat")) {
-    L224.SubsectorShrwtFllt_heat %>%
-      add_title("Subsector shareweights of district heat sectors with fillout year") %>%
-      add_units("N/A") %>%
-      add_comments("If year.fillout is not NA: Subsector shareweights for district heat written to all regions,") %>%
-      add_comments("filtered by which regions have district heat, uses year.fillout") %>%
-      add_legacy_name("L224.SubsectorShrwtFllt_heat") %>%
-      add_precursors("energy/A24.subsector_shrwt", "energy/A_regions", "common/GCAM_region_names") ->
-      L224.SubsectorShrwtFllt_heat
+    if(exists("L224.SubsectorShrwtFllt_heat")) {
+      L224.SubsectorShrwtFllt_heat %>%
+        add_title("Subsector shareweights of district heat sectors with fillout year") %>%
+        add_units("N/A") %>%
+        add_comments("If year.fillout is not NA: Subsector shareweights for district heat written to all regions,") %>%
+        add_comments("filtered by which regions have district heat, uses year.fillout") %>%
+        add_legacy_name("L224.SubsectorShrwtFllt_heat") %>%
+        add_precursors("energy/A24.subsector_shrwt", "energy/A_regions", "common/GCAM_region_names") ->
+        L224.SubsectorShrwtFllt_heat
     } else {
       # If year.fillout column of A24.subsector_shrwt is all N/A, then a blank tibble is produced
       tibble(x = NA) %>%
@@ -315,15 +312,15 @@ module_energy_L224.heat <- function(command, ...) {
         L224.SubsectorShrwtFllt_heat
     }
 
-    if (exists("L224.SubsectorInterp_heat")) {
-    L224.SubsectorInterp_heat %>%
-      add_title("Subsector shareweight interpolation of district heat sectors") %>%
-      add_units("units") %>%
-      add_comments("Interpolated data from A24.subsector_interp,") %>%
-      add_comments("filtered by which regions have district heat") %>%
-      add_legacy_name("L224.SubsectorInterp_heat") %>%
-      add_precursors("energy/A24.subsector_interp", "energy/A_regions", "common/GCAM_region_names") ->
-      L224.SubsectorInterp_heat
+    if(exists("L224.SubsectorInterp_heat")) {
+      L224.SubsectorInterp_heat %>%
+        add_title("Subsector shareweight interpolation of district heat sectors") %>%
+        add_units("units") %>%
+        add_comments("Interpolated data from A24.subsector_interp,") %>%
+        add_comments("filtered by which regions have district heat") %>%
+        add_legacy_name("L224.SubsectorInterp_heat") %>%
+        add_precursors("energy/A24.subsector_interp", "energy/A_regions", "common/GCAM_region_names") ->
+        L224.SubsectorInterp_heat
     } else {
       # If interp.to column of A24.subsector_interp contains no N/A values, then a blank tibble is produced
       tibble(x = NA) %>%
@@ -334,15 +331,15 @@ module_energy_L224.heat <- function(command, ...) {
         L224.SubsectorInterp_heat
     }
 
-    if (exists("L224.SubsectorInterpTo_heat")) {
-    L224.SubsectorInterpTo_heat %>%
-      add_title("Subsector shareweight interpolation of district heat sectors using to.year") %>%
-      add_units("units") %>%
-      add_comments("Interpolated data from A24.subsector_interp,") %>%
-      add_comments("filtered by which regions have district heat") %>%
-      add_legacy_name("L224.SubsectorInterpTo_heat") %>%
-      add_precursors("energy/A24.subsector_interp", "energy/A_regions", "common/GCAM_region_names") ->
-      L224.SubsectorInterpTo_heat
+    if(exists("L224.SubsectorInterpTo_heat")) {
+      L224.SubsectorInterpTo_heat %>%
+        add_title("Subsector shareweight interpolation of district heat sectors using to.year") %>%
+        add_units("units") %>%
+        add_comments("Interpolated data from A24.subsector_interp,") %>%
+        add_comments("filtered by which regions have district heat") %>%
+        add_legacy_name("L224.SubsectorInterpTo_heat") %>%
+        add_precursors("energy/A24.subsector_interp", "energy/A_regions", "common/GCAM_region_names") ->
+        L224.SubsectorInterpTo_heat
     } else {
       # If interp.to column of A24.subsector_interp contains N/A values, then a blank tibble is produced
       tibble(x = NA) %>%

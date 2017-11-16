@@ -1,6 +1,6 @@
 #' module_energy_LA124.heat
 #'
-#' This chunk processes historical heat data into input, output from district heat, output from CHP, CHP ratio
+#' Process historical heat data into input, output from district heat, output from CHP, CHP ratio
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -66,8 +66,7 @@ module_energy_LA124.heat <- function(command, ...) {
 
     # Heat production from district heat sector
     A24.globaltech_coef %>%
-      gather(year, value, -supplysector, -subsector, -technology, -minicam.energy.input) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years %>%
       # Adding empty historical years to fill in with interpolation
       complete(year = unique(c(HISTORICAL_YEARS, year)),
                nesting(supplysector, subsector, technology, minicam.energy.input)) %>%

@@ -21,7 +21,7 @@ original data system was \code{L145.water.demand.municipal.R} (water level1).
 Generate municipal water withdrawals, municipal water base delivery cost, and municipal water use efficiency.
 }
 \details{
-Describe in detail what this chunk does.
+Generate municipal water withdrawals, municipal water base delivery cost, and municipal water use efficiency.
 }
 \author{
 YL May 2017

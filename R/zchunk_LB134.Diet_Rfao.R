@@ -55,8 +55,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
     AGLU_ctry <- get_data(all_data, "aglu/AGLU_ctry")
     FAO2050_items_cal <- get_data(all_data, "aglu/FAO/FAO2050_items_cal")
     get_data(all_data, "aglu/FAO/FAO2050_Diet") %>%
-      gather(year, value, -FAO2050_reg, -FAO2050_item) %>%
-      mutate(year = as.integer(year)) ->
+      gather_years ->
       FAO2050_Diet
     L100.FAO_ag_Food_t <- get_data(all_data, "L100.FAO_ag_Food_t")
     L100.FAO_an_Food_t <- get_data(all_data, "L100.FAO_an_Food_t")

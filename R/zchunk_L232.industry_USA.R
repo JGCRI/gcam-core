@@ -60,8 +60,8 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
     # ===================================================
 
     # convert to long form
-    A32.globaltech_eff %>% gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) -> A32.globaltech_eff
+    A32.globaltech_eff %>%
+      gather_years -> A32.globaltech_eff
 
     # delete industry sectors in the USA region (energy-final-demands and supplysectors)
     L232.Supplysector_ind %>%

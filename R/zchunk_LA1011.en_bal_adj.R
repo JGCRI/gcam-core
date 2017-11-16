@@ -9,7 +9,7 @@
 #' the generated outputs: \code{L1011.en_bal_EJ_R_Si_Fi_Yh}, \code{L1011.in_EJ_ctry_intlship_TOT_Yh}. The corresponding file in the
 #' original data system was \code{LA1011.en_bal_adj.R} (energy level1).
 #' @details This chunk replaces IEA international shipping fuel consumption estimates with EIA estimates, remaps USSR data to Russia,
-#' #and removes coal-to-gas from natural gas TPES
+#' and removes coal-to-gas from natural gas TPES
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -46,12 +46,10 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
     L101.en_bal_EJ_R_Si_Fi_Yh_full <- get_data(all_data, "L101.en_bal_EJ_R_Si_Fi_Yh_full")
 
     EIA_RFO_intlship_kbbld %>%
-      gather(year, value, -Country) %>%
-      mutate(year = as.integer(year)) -> EIA_RFO_intlship_kbbld
+      gather_years -> EIA_RFO_intlship_kbbld
 
     EIA_TOT_intlship_kbbld %>%
-      gather(year, value, -Country) %>%
-      mutate(year = as.integer(year)) -> EIA_TOT_intlship_kbbld
+      gather_years -> EIA_TOT_intlship_kbbld
 
     # ===================================================
 
@@ -153,8 +151,7 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
     # TPES at this point for natural gas include both natural gas and gasified coal. This subtraction generally follows the method used in code file L122.
     # Heat production from district heat sector
     A22.globaltech_coef %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years %>%
       # Adding empty historical years to fill in with interpolation
       complete(year = unique(c(HISTORICAL_YEARS, year)),
                nesting(supplysector, subsector, technology, minicam.energy.input)) %>%

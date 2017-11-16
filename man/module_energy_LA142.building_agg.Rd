@@ -18,7 +18,7 @@ the generated outputs: \code{L142.in_EJ_R_bld_F_Yh}. The corresponding file in t
 original data system was \code{LA142.building_agg.R} (energy level1).
 }
 \description{
-This chunk calculates building sector energy consumption, producing the following output table: Building energy consumption by GCAM region / fuel / historical year
+Calculate building sector energy consumption, producing the following output table: Building energy consumption by GCAM region / fuel / historical year
 }
 \details{
 Building sector energy consumption was obtained from end use energy consumption data

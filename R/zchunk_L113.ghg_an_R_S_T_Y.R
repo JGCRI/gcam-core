@@ -1,8 +1,8 @@
 #' module_emissions_L113.ghg_an_R_S_T_Y
 #'
-#'  This chunk calculates the animal GHG emissions (CH4 and N2O)
+#'  Calculate the animal GHG emissions (CH4 and N2O)
 #'  by GCAM region / sector / technology / historical year, by scaling EPA
-#'  emissions by tech to match EDGAR
+#'  emissions by tech to match EDGAR.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -78,10 +78,10 @@ module_emissions_L113.ghg_an_R_S_T_Y <- function(command, ...) {
     # Compute EDGAR emissions by region and sector
     EDGAR_CH4$Non.CO2 <- "CH4_AGR"
     EDGAR_N2O$Non.CO2 <- "N2O_AGR"
-    L113.EDGAR <- bind_rows(EDGAR_CH4, EDGAR_N2O) #combine CH4 and N2O
+    L113.EDGAR <- bind_rows(EDGAR_CH4, EDGAR_N2O) # combine CH4 and N2O
 
     L113.EDGAR %>%  # convert to long format
-      gather(year, value, -`IPCC-Annex`, -`World Region`, -ISO_A3, -Name, -IPCC, -IPCC_description, -Non.CO2) %>%
+      gather_years %>%
       # Not all IPCC codes in L113.EDGAR (5F2 and 5d) are in EDGAR_sector, so we can't use left_join_error_no_match
       left_join(EDGAR_sector, by = "IPCC") %>%
       select(-IPCC_description.y) %>%
@@ -89,7 +89,7 @@ module_emissions_L113.ghg_an_R_S_T_Y <- function(command, ...) {
       standardize_iso(col = "ISO_A3") %>%
       change_iso_code('rou', 'rom') %>% # update Romania ISO code
       left_join(iso_GCAM_regID, by = "iso") %>%
-      #Drop unnecessary columns, aggregate by region, and melt
+      # Drop unnecessary columns, aggregate by region, and melt
       select(year, value, Non.CO2, EDGAR_agg_sector, GCAM_region_ID) %>%
       na.omit() %>%
       filter(year %in% emissions.EDGAR_YEARS) %>%
