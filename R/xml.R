@@ -40,7 +40,7 @@ create_xml <- function(xml_file, mi_header = NULL) {
 #' @param header The header tag to can be looked up in the header file to
 #' convert \code{data}
 #' @param column_order_lookup A tag that can be used to look up \code{LEVEL2_DATA_NAMES}
-#' to reorder the columns of data before XML conversion to ensure the correspond
+#' to reorder the columns of data before XML conversion to ensure they correspond
 #' with the ModelInterface header.  Note by default the \code{header} is used and if
 #' given \code{NULL} no column reordering will be done.
 #' @return A "data structure" to hold the various parts needed to run the model
