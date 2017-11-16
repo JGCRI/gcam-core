@@ -133,7 +133,7 @@ module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr <- function(command, ...) {
       left_join(select(Yieldratio_ctry_crop, iso, GLU, GTAP_crop, yieldratio), by = c("iso", "GLU", "GTAP_crop")) %>%          # Map in the yield ratio
       mutate(irrshareHA = irrHA / (irrHA + rfdHA)) %>%                                                                          # Compute the share of irrigated harvested area
       mutate(irrshareProd = (irrshareHA * yieldratio)/((irrshareHA * yieldratio) + (1 - irrshareHA))) %>%                       # Compute the share of irrigated production
-      right_join(L100.LDS_ag_prod_t, by=c("iso", "GLU", "GTAP_crop")) %>%                                                       # Map in the total production
+      right_join(L100.LDS_ag_prod_t, by = c("iso", "GLU", "GTAP_crop")) %>%                                                       # Map in the total production
       mutate(irrProd=value*irrshareProd, rfdProd=value*(1-irrshareProd)) ->                                                     # Compute irrigated and rainfed production
       ag_Prod_t_ctry_crop
 

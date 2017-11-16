@@ -22,7 +22,7 @@ Adjustments to the IEA energy balance for shipping fuel consumption, Russia, and
 }
 \details{
 This chunk replaces IEA international shipping fuel consumption estimates with EIA estimates, remaps USSR data to Russia,
-#and removes coal-to-gas from natural gas TPES
+and removes coal-to-gas from natural gas TPES
 }
 \author{
 JDH July 2017

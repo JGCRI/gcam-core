@@ -51,11 +51,9 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
     EIA_AEO_fuels <- get_data(all_data, "gcam-usa/EIA_AEO_fuels")
     EIA_AEO_services <- get_data(all_data, "gcam-usa/EIA_AEO_services")
     Census_pop_hist <- get_data(all_data, "gcam-usa/Census_pop_hist") %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year))
+      gather_years
     EIA_AEO_Tab4 <- get_data(all_data, "gcam-usa/EIA_AEO_Tab4") %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year))
+      gather_years
     RECS_1979 <- get_data(all_data, "gcam-usa/RECS_1979")
     RECS_1984 <- get_data(all_data, "gcam-usa/RECS_1984")
     RECS_1990 <- get_data(all_data, "gcam-usa/RECS_1990")
@@ -89,7 +87,7 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
     L144.RECS_all <- L144.RECS_all %>%
       lapply(function(df) {
         # 2009 had different census division numbers
-        if (unique(df$year) == 2009) {
+        if(unique(df$year) == 2009) {
           left_join_error_no_match(df,
                                    states_subregions %>% select(subregion9, DIVISION2009) %>% distinct,
                                    by = c("DIVISION" = "DIVISION2009"))
@@ -103,7 +101,7 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
     # Add a vector specifying the census division plus four large states (subregion13)
     L144.RECS_all <- L144.RECS_all %>%
       lapply(function(df) {
-        if ("LRGSTATE" %in% names(df)) {
+        if("LRGSTATE" %in% names(df)) {
           left_join_error_no_match(df,
                                    states_subregions %>% select(subregion13, LRGSTATE, subregion9) %>% distinct,
                                    by = c("LRGSTATE", "subregion9"))

@@ -1,6 +1,6 @@
 #' module_energy_LA142.building_agg
 #'
-#' This chunk calculates building sector energy consumption, producing the following output table: Building energy consumption by GCAM region / fuel / historical year
+#' Calculate building sector energy consumption, producing the following output table: Building energy consumption by GCAM region / fuel / historical year
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command

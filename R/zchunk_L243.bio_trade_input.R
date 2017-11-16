@@ -112,7 +112,7 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
     # Add share-weights to the global technologies
     L243.GlobalTechCoef_TotBio %>%
       select(sector.name, subsector.name, technology, year) %>%
-      left_join_error_no_match(select(A_bio_subsector, subsector, share.weight), by=c("subsector.name" = "subsector")) ->
+      left_join_error_no_match(select(A_bio_subsector, subsector, share.weight), by = c("subsector.name" = "subsector")) ->
       L243.GlobalTechShrwt_TotBio
 
     # Set up stub-technologies

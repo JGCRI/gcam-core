@@ -1,6 +1,6 @@
 #' module_aglu_LB124.LC_R_UnMgd_Yh_GLU
 #'
-#' This chunk adjusts land cover data for unmanaged land types (shrub, grass, unmgd pasture, unmgd forest) in L120.LC_bm2_R_LT_Yh_GLU to deduct
+#' Adjust land cover data for unmanaged land types (shrub, grass, unmgd pasture, unmgd forest) in L120.LC_bm2_R_LT_Yh_GLU to deduct
 #' the extra cropland needs described in L122.LC_bm2_R_ExtraCropLand_Yh_GLU proportionally according to the relative share of each unmanaged
 #' land type.
 #'

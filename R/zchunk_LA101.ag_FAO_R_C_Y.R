@@ -1,6 +1,6 @@
 #' module_aglu_LA101.ag_FAO_R_C_Y
 #'
-#' This chunk aggregates FAO food consumption, ag production, and harvested area
+#' Aggregate FAO food consumption, ag production, and harvested area
 #' data to GCAM regions and GCAM commodities.
 #'
 #' @param command API command to execute

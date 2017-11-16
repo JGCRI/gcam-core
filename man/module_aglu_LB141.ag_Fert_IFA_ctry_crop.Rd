@@ -18,7 +18,7 @@ the generated outputs: \code{L141.ag_Fert_Cons_MtN_ctry_crop}. The corresponding
 original data system was \code{LB141.ag_Fert_IFA_ctry_crop.R} (aglu level1).
 }
 \description{
-This chunk reconciles disparate IFA fertilizer consumption data to calculate fertilizer consumption (demand) for each GTAP country/crop.
+Reconcile disparate IFA fertilizer consumption data to calculate fertilizer consumption (demand) for each GTAP country/crop.
 }
 \details{
 Multiple harvested area data sources (LDS, FAO) are reconciled and used with bottom-up fertilizer consumption data from

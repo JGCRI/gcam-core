@@ -1,6 +1,6 @@
 #' module_energy_LB1322.Fert
 #'
-#' This chunk computes fertilizer production and energy inputs by technology.
+#' Compute fertilizer production and energy inputs by technology.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -277,7 +277,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
     base_fert_year <- 2005
 
     A10.rsrc_info %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
+      gather_years %>%
       filter(resource == "natural gas",
              year == base_fert_year) %>%
       summarise(value = sum(value)) %>% # Ensuring no duplicates
@@ -295,8 +295,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
 
     # Interpolate to get cost of primary energy handling for natural gas in base_fert_year
     A21.globaltech_cost %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>% # Convert to long form.
-      mutate(year = as.numeric(year)) %>% # Convert year to numeric as needed by the interpolation function.
+      gather_years %>%
       group_by(supplysector, subsector, technology, minicam.non.energy.input) %>%
       mutate(value = approx_fun(year, value)) %>% # Interpolation step
       ungroup() %>%
@@ -306,8 +305,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
 
     # Interpolate to get cost of primary energy transformation for natural gas in base_fert_year
     A22.globaltech_cost %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%  # Convert to long form.
-      mutate(year = as.numeric(year)) %>% # Convert year to numeric as needed by the interpolation function.
+      gather_years %>%
       group_by(supplysector, subsector, technology, minicam.non.energy.input, improvement.max,
                improvement.rate, improvement.shadow.technology) %>%
       mutate(value = approx_fun(year, value)) %>% # Interpolation step

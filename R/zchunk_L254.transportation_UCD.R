@@ -356,8 +356,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
 
     # L254.GlobalTranTechShrwt: Shareweights of global tranTechnologies
     A54.globaltranTech_shrwt %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years %>%
       # Expand table to include all model years
       complete(year = c(year, MODEL_YEARS), nesting(supplysector, tranSubsector, tranTechnology)) %>%
       # Extrapolate to fill out values for all years

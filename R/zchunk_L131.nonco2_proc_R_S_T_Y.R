@@ -136,8 +136,7 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
       # in order to match old data we have to turn the data in wide format
       # which introduces NA's that are then converted to 0. Convert back to long format for new data system.
       spread(year, value) %>%
-      gather(year, value, -GCAM_region_ID, -supplysector, -subsector, -stub.technology, -Non.CO2) %>%
-      mutate(year = as.integer(year)) %>% # convert years back to integer
+      gather_years %>% # convert years back to integer
       replace_na(list(value = 0)) %>%
 
       # Produce outputs

@@ -49,19 +49,19 @@ module_gcam.usa_LA100.Socioeconomics <- function(command, ...) {
     states_subregions <- select(states_subregions, state, state_name)
 
     BEA_pcGDP_97USD_state %>%
-      gather(year, value, -Fips, -Area) %>%
+      gather_years %>%
       PH_year_value_historical %>%
       group_by(Area) %>%
       mutate(value = approx_fun(year, value, rule = 2)) ->
       BEA_pcGDP_97USD_state
 
     BEA_pcGDP_09USD_state %>%
-      gather(year, value, -Fips, -Area) %>%
+      gather_years %>%
       PH_year_value_historical ->
       BEA_pcGDP_09USD_state
 
     Census_pop_hist %>%
-      gather(year, value, -state) %>%
+      gather_years %>%
       PH_year_value_historical %>%
       rename(population = value) ->
       Census_pop_hist
@@ -120,9 +120,8 @@ module_gcam.usa_LA100.Socioeconomics <- function(command, ...) {
     # Future population by scenario. Right now just one scenario.
     PRIMA_pop %>%
       # reshape
-      gather(year, population, -state) %>%
-      mutate(year = as.numeric(year),
-             population = as.numeric(population)) %>%
+      gather_years(value_col = "population") %>%
+      mutate(population = as.numeric(population)) %>%
       # interpolate any missing data from end of history into future
       filter(year %in% c(max(HISTORICAL_YEARS), FUTURE_YEARS)) %>%
       group_by(state) %>%
@@ -167,6 +166,3 @@ module_gcam.usa_LA100.Socioeconomics <- function(command, ...) {
     stop("Unknown command")
   }
 }
-
-
-

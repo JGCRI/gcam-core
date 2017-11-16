@@ -60,8 +60,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
     UCD_ctry <- get_data(all_data, "energy/mappings/UCD_ctry")
     UCD_techs <- get_data(all_data, "energy/mappings/UCD_techs")
     UCD_trn_data <- get_data(all_data, UCD_trn_data_name) %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year))
+      gather_years
     L101.in_EJ_ctry_trn_Fi_Yh <- get_data(all_data, "L101.in_EJ_ctry_trn_Fi_Yh")
     L1011.in_EJ_ctry_intlship_TOT_Yh <- get_data(all_data, "L1011.in_EJ_ctry_intlship_TOT_Yh")
     L131.in_EJ_R_Senduse_F_Yh <- get_data(all_data, "L131.in_EJ_R_Senduse_F_Yh")

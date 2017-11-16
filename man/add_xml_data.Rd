@@ -15,7 +15,7 @@ add_xml_data(dot, data, header, column_order_lookup = header)
 convert \code{data}}
 
 \item{column_order_lookup}{A tag that can be used to look up \code{LEVEL2_DATA_NAMES}
-to reorder the columns of data before XML conversion to ensure the correspond
+to reorder the columns of data before XML conversion to ensure they correspond
 with the ModelInterface header.  Note by default the \code{header} is used and if
 given \code{NULL} no column reordering will be done.}
 }

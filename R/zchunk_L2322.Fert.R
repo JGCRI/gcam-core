@@ -123,8 +123,7 @@ module_energy_L2322.Fert <- function(command, ...) {
 
     # L2322.GlobalTechShrwt_Fert: Shareweights of global fertilizer sector technologies
     A322.globaltech_shrwt %>%
-      gather(year, share.weight, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years(value_col = "share.weight") %>%
       complete(nesting(supplysector, subsector, technology), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
       arrange(supplysector, subsector, technology, year) %>%
       group_by(supplysector, subsector, technology) %>%
@@ -136,8 +135,7 @@ module_energy_L2322.Fert <- function(command, ...) {
 
     # L2322.GlobalTechCoef_Fert: Energy inputs and coefficients of global fertilizer energy use and feedstocks technologies
     A322.globaltech_coef %>%
-      gather(year, coefficient, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years(value_col = "coefficient") %>%
       complete(nesting(supplysector, subsector, technology, minicam.energy.input), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
       arrange(supplysector, subsector, technology, minicam.energy.input, year) %>%
       group_by(supplysector, subsector, technology, minicam.energy.input) %>%
@@ -156,15 +154,14 @@ module_energy_L2322.Fert <- function(command, ...) {
       left_join(L1322.Fert_NEcost_75USDkgN_F, by = c('technology' = 'fuel') ) %>% # expecting NAs in the joined tibble
       rename(input.cost = NEcost_75USDkgN) %>%
       mutate(input.cost = round(input.cost, energy.DIGITS_COST)) %>%
-      na.omit -> #Export technologies have no cost assigned. Just drop the object
+      na.omit -> # Export technologies have no cost assigned. Just drop the object
       L2322.GlobalTechCost_Fert
 
     # Carbon capture rates from technologies with CCS
     # L2322.GlobalTechCapture_Fert: CO2 capture fractions from global fertilizer production technologies with CCS
     ## No need to consider historical periods or intermittent technologies here
     A322.globaltech_co2capture %>%
-      gather(year, remove.fraction, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.numeric(year)) %>%
+      gather_years(value_col = "remove.fraction") %>%
       complete(nesting(supplysector, subsector, technology), year = c(year, FUTURE_YEARS)) %>%
       arrange(supplysector, subsector, technology, year) %>%
       group_by(supplysector, subsector, technology) %>%

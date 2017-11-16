@@ -49,16 +49,13 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
 
     L144.in_EJ_R_bld_serv_F_Yh <- get_data(all_data, "L144.in_EJ_R_bld_serv_F_Yh")
     get_data(all_data, "emissions/EDGAR/EDGAR_SF6") %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) ->
+      gather_years ->
       EDGAR_SF6
     get_data(all_data, "emissions/EDGAR/EDGAR_C2F6") %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) ->
+      gather_years ->
       EDGAR_C2F6
     get_data(all_data, "emissions/EDGAR/EDGAR_CF4") %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) ->
+      gather_years ->
       EDGAR_CF4
 
     # This chunk maps EDGAR HFC emissions to GCAM technologies

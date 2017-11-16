@@ -18,7 +18,7 @@ the generated outputs: \code{curr_table$data}, \code{L221.LN0_Logit}, \code{L221
 original data system was \code{L221.land_input_1.R} (aglu level2).
 }
 \description{
-This chunk produces L221.LN0_Logit, L221.LN0_Land, L221.LN0_SoilTimeScale, L221.LN1_ValueLogit,
+Produce L221.LN0_Logit, L221.LN0_Land, L221.LN0_SoilTimeScale, L221.LN1_ValueLogit,
 L221.LN1_HistUnmgdAllocation, L221.LN1_UnmgdAllocation, and L221.LN1_UnmgdCarbon.
 }
 \details{
