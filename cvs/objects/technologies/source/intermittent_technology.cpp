@@ -622,6 +622,7 @@ void IntermittentTechnology::initializeInputLocations( const string& aRegionName
         mainLog << "Intermittent technology " << mName << " in sector " << aSectorName
                 << " in region " << aRegionName << " does not have the required resource and backup inputs."
                 << endl;
+        abort();
     }
 }
 

@@ -45,6 +45,7 @@
 
 #include "functions/include/idiscrete_choice.hpp"
 #include "util/base/include/time_vector.h"
+#include "util/base/include/value.h"
 
 
 /*!
@@ -113,10 +114,11 @@ protected:
         IDiscreteChoice,
         
         //! The logit exponents by period.
-        DEFINE_VARIABLE( ARRAY, "logit-exponent", mLogitExponent, objects::PeriodVector<double> )
-    )
+        DEFINE_VARIABLE( ARRAY, "logit-exponent", mLogitExponent, objects::PeriodVector<double> ),
 
-    double mOutputCost;
+        //! TODO: comments
+        DEFINE_VARIABLE( SIMPLE | STATE, "output-cost", mOutputCost, Value )
+    )
 
     static double getMinCostThreshold();
 };

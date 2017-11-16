@@ -40,6 +40,7 @@ L1233.out_EJ_R_elec_F_tech_Yh_cool <- readdata( "WATER_LEVEL1_DATA", "L1233.out_
 L1233.in_EJ_R_elec_F_tech_Yh_cool <- readdata( "WATER_LEVEL1_DATA", "L1233.in_EJ_R_elec_F_tech_Yh_cool" )
 L1233.shrwt_R_elec_cool_Yf <- readdata( "WATER_LEVEL1_DATA", "L1233.shrwt_R_elec_cool_Yf" )
 L223.StubTechEff_elec <- readdata( "ENERGY_LEVEL2_DATA", "L223.StubTechEff_elec", skip = 4 )
+L270.CreditInput_elec <- readdata( "ENERGY_LEVEL2_DATA", "L270.CreditInput_elec", skip = 4 )
 
 # Read in the existing electric sector files in a for loop, so that we can efficiently make changes to all files
 Elec_files <- list.files( readdomainpathmap()["ENERGY_LEVEL2_DATA"][[1]] )[
@@ -479,6 +480,15 @@ L2233.InputEmissCoeff_fut_elecPassthru$efficiency <- L223.GlobalTechEff_elec$eff
 L2233.InputEmissCoeff_fut_elecPassthru$emiss.coef <- round(
       L2233.InputEmissCoeff_fut_elecPassthru$emiss.coef / L2233.InputEmissCoeff_fut_elecPassthru$efficiency,
       digits_coefficient )
+
+# Recreate liquids limit electricity inputs by cooling techs
+L2233.DeleteCreditInput_elec <- L270.CreditInput_elec
+L2233.DeleteCreditInput_elec$coefficient <- NULL
+L2233.CreditInput_elec <- merge( L270.CreditInput_elec, L2233.TechMap,
+                                by.x=names_GlobalTech,
+                                by.y=c("from.supplysector", "from.subsector", "from.technology") )
+L2233.CreditInput_elec[, names_GlobalTech] <- L2233.CreditInput_elec[, c("to.supplysector", "to.subsector", "to.technology")]
+L2233.CreditInput_elec <- L2233.CreditInput_elec[, names_GlobalTechCoef]
       
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
@@ -535,5 +545,9 @@ write_mi_data( L2233.InputEmissCoeff_fut_elecPassthru, "InputEmissCoeff", "WATER
 insert_file_into_batchxml( "WATER_XML_BATCH", "batch_electricity_water.xml", "WATER_XML_FINAL", "electricity_water.xml", "", "outFile" )
 insert_file_into_batchxml( "WATER_XML_BATCH", "batch_electricity_water_coefs.xml", "WATER_XML_FINAL", "electricity_water_coefs.xml", "", "outFile" )
 insert_file_into_batchxml( "WATER_XML_BATCH", "batch_water_elec_emissions.xml", "WATER_XML_FINAL", "water_elec_emissions.xml", "", "outFile" )
+
+write_mi_data( L2233.DeleteCreditInput_elec, "DeleteGlobalTechInput", "WATER_LEVEL2_DATA", "L2233.DeleteCreditInput_elec", "WATER_XML_BATCH", "batch_water_elec_liquids_limits.xml" )
+write_mi_data( L2233.CreditInput_elec, "GlobalTechCoef", "WATER_LEVEL2_DATA", "L2233.CreditInput_elec", "WATER_XML_BATCH", "batch_water_elec_liquids_limits.xml" )
+insert_file_into_batchxml( "WATER_XML_BATCH", "batch_water_elec_liquids_limits.xml", "WATER_XML_FINAL", "water_elec_liquids_limits.xml", "", "outFile" )
 
 logstop()

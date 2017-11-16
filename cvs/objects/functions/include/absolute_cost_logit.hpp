@@ -45,6 +45,7 @@
 
 #include "functions/include/idiscrete_choice.hpp"
 #include "util/base/include/time_vector.h"
+#include "util/base/include/value.h"
 
 /*!
  * \ingroup Objects
@@ -115,13 +116,13 @@ protected:
         DEFINE_VARIABLE( ARRAY, "logit-exponent", mLogitExponent, objects::PeriodVector<double> ),
 
         //! scale factor for cost -- may be parsed or set in calibration
-        DEFINE_VARIABLE( SIMPLE, "base-cost", mBaseCost, double ),
+        DEFINE_VARIABLE( SIMPLE | STATE, "base-cost", mBaseCost, Value ),
 
         //! flag indicating whether a base cost was set in the XML input
         DEFINE_VARIABLE( SIMPLE, "is-base-cost-parsed", mParsedBaseCost, bool ),
 
         //! TODO: comments
-        DEFINE_VARIABLE( SIMPLE, "output-cost", mOutputCost, double )
+        DEFINE_VARIABLE( SIMPLE | STATE, "output-cost", mOutputCost, Value )
     )
 };
 
