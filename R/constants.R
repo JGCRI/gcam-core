@@ -520,6 +520,11 @@ gcamusa.DEFAULT_COEFFICIENT <- 1
 gcamusa.DEFAULT_MARKET <- "USA"
 gcamusa.GAS_ADJ_THRESH <- 5
 gcamusa.DIGITS_COST <- 4
+gcamusa.EFFICIENCY_PARTITION_YEAR <- 2005
+
+# Degree day norms
+gcamusa.BASE_HDD_USA <- 4524 # https://www.eia.gov/totalenergy/data/annual/showtext.php?t=ptb0107
+gcamusa.BASE_CDD_USA <- 1215 # https://www.eia.gov/totalenergy/data/annual/showtext.php?t=ptb0108
 
 # default logit type
 gcamusa.DEFAULT_LOGIT_TYPE <- NA

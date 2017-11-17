@@ -1,5 +1,7 @@
-# Mapping between the sectors / services / fuels in Level1 processing to the technology names in GCAM,,,,,,
-# Source: Tables_Bld_Data.xlsx,,,,,,
+# File: calibrated_techs_bld_usa.csv
+# Title: Mapping between the sectors / services / fuels in Level1 processing to the technology names in GCAM
+# Source: Tables_Bld_Data.xlsx
+# Units: NA
 supplysector,subsector,technology,minicam.energy.input,sector,fuel,service
 resid heating,biomass,wood furnace,delivered biomass,resid,biomass,resid heating
 resid heating,coal,coal furnace,delivered coal,resid,coal,resid heating
