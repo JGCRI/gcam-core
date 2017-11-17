@@ -123,7 +123,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       year <- year.fillout <- to.value <- value <- speed.source <- tranSubsector.x <- addTimeValue <- time.value.multiplier <-
       fuelprefElasticity <- tranSubsector <- share.weight <- calibrated.value <- subs.share.weight <- loadFactor <-
       coefficient <- stub.technology <- output <- output_agg <- output_cum <- share.weight.year <- tech.share.weight <-
-      calOutputValue <- energy.final.demand <- base.service <- NULL
+      calOutputValue <- energy.final.demand <- base.service <- object <- r_ss <- NULL
 
     # PART A: BUILDING TRANSPORTATION SECTORS FROM THE TECHNOLOGY LEVEL UP
     # L254.StubTranTech: Transportation stub technologies (built from technologies with coefficients in the UCD database)
