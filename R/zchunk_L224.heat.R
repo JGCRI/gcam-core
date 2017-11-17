@@ -187,7 +187,7 @@ module_energy_L224.heat <- function(command, ...) {
       rename(stub.technology = technology) %>%
       filter(year %in% MODEL_YEARS) %>%
       filter(region %in% heat_region$region) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["StubTechYr"]], "minicam.energy.input", "value")) %>%
+      select(LEVEL2_DATA_NAMES[["StubTechYr"]], "minicam.energy.input", "value") %>%
       mutate(calibrated.value = round(value, energy.DIGITS_CALOUTPUT)) %>%
       mutate(year.share.weight = year) %>%
       mutate(subs.share.weight = if_else(calibrated.value == 0, 0, 1)) %>%
@@ -208,13 +208,13 @@ module_energy_L224.heat <- function(command, ...) {
                   distinct, by = c("sector", "fuel", "technology")) %>%
       mutate(stub.technology = technology) %>%
       mutate(secondary.output.name = A24.sector[["supplysector"]]) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["StubTechYr"]], "secondary.output.name", "value")) %>%
+      select(LEVEL2_DATA_NAMES[["StubTechYr"]], "secondary.output.name", "value") %>%
       mutate(secondary.output = round(value, energy.DIGITS_CALOUTPUT)) %>%
       select(-value) -> L224.StubTechSecOut_elec
 
     # Calculate cost adjustment, equal to the output of heat multiplied by the heat price (to minimize the distortion of including the secondary output)
     L224.StubTechSecOut_elec %>%
-      select(one_of(LEVEL2_DATA_NAMES[["StubTechYr"]], "secondary.output")) %>%
+      select(LEVEL2_DATA_NAMES[["StubTechYr"]], "secondary.output") %>%
       mutate(minicam.non.energy.input = "heat plant") %>%
       mutate(input.cost = round(secondary.output*energy.HEAT_PRICE, energy.DIGITS_COST))-> L224.StubTechCost_elec
 

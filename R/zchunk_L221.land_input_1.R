@@ -211,7 +211,7 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
       left_join_error_no_match(GCAMLandLeaf_CdensityLT, by = c("Land_Type" = "LandLeaf")) %>%
       rename(Cdensity_LT = Land_Type.y) %>%
       add_carbon_info(., carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["LN1_UnmgdCarbon"]])) ->
+      select(LEVEL2_DATA_NAMES[["LN1_UnmgdCarbon"]]) ->
       L221.LN1_UnmgdCarbon
 
     LEVEL2_DATA_NAMES$LN1_Delete

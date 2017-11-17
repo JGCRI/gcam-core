@@ -224,7 +224,7 @@ write_to_all_states <- function(data, names) {
     set_years %>%
     mutate(region = NULL) %>% # remove region column if it exists
     repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
-    select(one_of(names))
+    select(names)
 }
 
 
@@ -583,7 +583,7 @@ downscale_FAO_country <- function(data, country_name, dissolution_year, years = 
   ctry_years <- years[years < dissolution_year]
   yrs <- as.character(c(ctry_years, dissolution_year))
   data %>%
-    select(one_of(c("item", "element", yrs))) %>%
+    select("item", "element", yrs) %>%
     group_by(item, element) %>%
     summarise_all(sum) %>%
     ungroup ->

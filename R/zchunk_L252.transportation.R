@@ -203,14 +203,14 @@ module_energy_L252.transportation <- function(command, ...) {
     DIGITS_CALOUTPUT <- 7
 
     L252.in_EJ_R_trn_F_Yh %>%
-      select(one_of(c(LEVEL2_DATA_NAMES[["StubTechYr"]], "value"))) %>%
+      select(LEVEL2_DATA_NAMES[["StubTechYr"]], "value") %>%
       # Match in minicam.energy.input
       left_join_error_no_match(A52.globaltech_eff, by = c("supplysector", "subsector", "stub.technology" = "technology")) %>%
       mutate(calibrated.value = round(value, digits = DIGITS_CALOUTPUT),
              share.weight.year = year,
              subs.share.weight = if_else(calibrated.value > 0, 1, 0),
              tech.share.weight = if_else(calibrated.value > 0, 1, 0)) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["StubTechCalInput"]])) ->
+      select(LEVEL2_DATA_NAMES[["StubTechCalInput"]]) ->
       L252.StubTechCalInput_trn # OUTPUT
 
     # Write per-capita based flag for transportation final demand for all regions

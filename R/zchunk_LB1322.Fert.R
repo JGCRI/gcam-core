@@ -281,7 +281,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       filter(resource == "natural gas",
              year == base_fert_year) %>%
       summarise(value = sum(value)) %>% # Ensuring no duplicates
-      .[["value"]] -> # Save cost as single number. Units are 1975 USD per GJ.
+      pull(value) -> # Save cost as single number. Units are 1975 USD per GJ.
       A10.rsrc_info_base_fert_year
 
     # A21.globaltech_cost and A22.globaltech_cost report costs on primary energy handling (A21) and transformation technologies (A22)
@@ -300,7 +300,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       mutate(value = approx_fun(year, value)) %>% # Interpolation step
       ungroup() %>%
       filter(technology == "regional natural gas", year == base_fert_year) %>% # Filter only for natural gas and base_fert_year
-      .[["value"]] -> # Save cost as single number. Units are 1975 USD per GJ.
+      pull(value) -> # Save cost as single number. Units are 1975 USD per GJ.
       A21.globaltech_cost_base_fert_year
 
     # Interpolate to get cost of primary energy transformation for natural gas in base_fert_year
@@ -311,7 +311,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       mutate(value = approx_fun(year, value)) %>% # Interpolation step
       ungroup() %>%
       filter(technology == "natural gas", year == base_fert_year) %>% # Filter only for natural gas and base_fert_year
-      .[["value"]] -> # Save cost as single number. Units are 1975 USD per GJ.
+      pull(value) -> # Save cost as single number. Units are 1975 USD per GJ.
       A22.globaltech_cost_base_fert_year
 
     # Sum up costs. Units are 1975 USD per GJ.
@@ -322,7 +322,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       filter(year == base_fert_year,
              GCAM_region_ID == gcam.USA_CODE,
              fuel == "gas") %>%
-      .[["value"]] -> # Save coefficient as single number
+      pull(value) -> # Save coefficient as single number
       L1322.IO_GJkgN_Fert_gas
 
     # Multiply cost by input-output cofficient. Units are 1975 USD per GJ.

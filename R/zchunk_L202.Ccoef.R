@@ -67,7 +67,7 @@ module_energy_L202.Ccoef <- function(command, ...) {
         L202.CarbonCoef %>%
           left_join(L202.Ccoef_kgCGJ_F_fby, by = "fuel") %>%
           mutate(PrimaryFuelCO2Coef = if_else(!is.na(fuel), round(value, emissions.DIGITS_CO2COEF), PrimaryFuelCO2Coef)) %>%
-          select(one_of(LEVEL2_DATA_NAMES[["CarbonCoef"]])) -> L202.CarbonCoef
+          select(LEVEL2_DATA_NAMES[["CarbonCoef"]]) -> L202.CarbonCoef
       }
       else if(emissions.USE_GLOBAL_CCOEFS == 0) {
         # Using region-specific average emissions coefficients based on CDIAC inventory and IEA energy balances
@@ -78,7 +78,7 @@ module_energy_L202.Ccoef <- function(command, ...) {
         L202.CarbonCoef %>%
           left_join(L202.Ccoef_kgCGJ_R_F_fby, by = c("fuel", "region")) %>%
           mutate(PrimaryFuelCO2Coef = if_else(!is.na(fuel), round(value, emissions.DIGITS_CO2COEF), PrimaryFuelCO2Coef)) %>%
-          select(one_of(LEVEL2_DATA_NAMES[["CarbonCoef"]])) -> L202.CarbonCoef
+          select(LEVEL2_DATA_NAMES[["CarbonCoef"]]) -> L202.CarbonCoef
       }
       else stop("Unknown emissions.USE_GLOBAL_CCOEFS value ", emissions.USE_GLOBAL_CCOEFS)
     }

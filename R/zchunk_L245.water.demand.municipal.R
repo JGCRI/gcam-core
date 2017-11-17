@@ -64,25 +64,25 @@ module_water_L245.water.demand.municipal <- function(command, ...) {
       L245.assumptions_all
 
     L245.assumptions_all %>%
-      select(one_of(LEVEL2_DATA_NAMES$Supplysector), logit.type) ->
+      select(LEVEL2_DATA_NAMES$Supplysector, logit.type) ->
       L245.Supplysector  # Supply sector information
 
     L245.assumptions_all %>%
-      select(one_of(LEVEL2_DATA_NAMES$SubsectorLogit), logit.type) ->
+      select(LEVEL2_DATA_NAMES$SubsectorLogit, logit.type) ->
       L245.SubsectorLogit  # Subsector logit detail
 
     L245.assumptions_all %>%
       mutate(year.fillout = MODEL_YEARS[1]) %>%
       mutate(share.weight = 1) %>%
       # ^^ share weights are 1 due to no competition
-      select(one_of(LEVEL2_DATA_NAMES$SubsectorShrwtFllt)) ->
+      select(LEVEL2_DATA_NAMES$SubsectorShrwtFllt) ->
       L245.SubsectorShrwtFllt  # Subsector shareweights
 
     L245.assumptions_all %>%
       mutate(share.weight = 1) %>%
       # ^^ share weights are 1 due to no competition
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
-      select(one_of(LEVEL2_DATA_NAMES$TechShrwt)) ->
+      select(LEVEL2_DATA_NAMES$TechShrwt) ->
       L245.TechShrwt
 
     L245.assumptions_all %>%
@@ -96,39 +96,39 @@ module_water_L245.water.demand.municipal <- function(command, ...) {
       # ^^ withdrawal coefficient is 1; consumption coefficient is fraction of withdrawal
       mutate(water_sector = "Municipal") %>%
       mutate(minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector)) %>%
-      select(one_of(LEVEL2_DATA_NAMES$TechCoef)) ->
+      select(LEVEL2_DATA_NAMES$TechCoef) ->
       L245.TechCoef  # municipal water technology withdrawals and consumption efficiencies
 
     L245.assumptions_all %>%
       left_join_error_no_match(L145.municipal_water_cost_R_75USD_m3, by = "GCAM_region_ID") %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
-      select(one_of(LEVEL2_DATA_NAMES$TechCost)) ->
+      select(LEVEL2_DATA_NAMES$TechCost) ->
       L245.TechCost  # Municipal water non-energy cost
 
     L245.assumptions_all %>%
-      select(one_of(LEVEL2_DATA_NAMES$PerCapitaBased)) ->
+      select(LEVEL2_DATA_NAMES$PerCapitaBased) ->
       L245.PerCapitaBased  # used to set final demand as per-capita based
 
     L245.assumptions_all %>%
       left_join(L145.municipal_water_R_W_Yh_km3, by = "GCAM_region_ID") %>%
       # ^^ non-restrictive join used to allow expansion across multiple years
       filter(year %in% BASE_YEARS) %>% rename(base.service = value) %>%
-      select(one_of(LEVEL2_DATA_NAMES$BaseService)) ->
+      select(LEVEL2_DATA_NAMES$BaseService) ->
       L245.BaseService  # municipal water withdrawals for base years
 
     L245.assumptions_all %>%
       repeat_add_columns(tibble(year = FUTURE_YEARS)) %>%
-      select(one_of(LEVEL2_DATA_NAMES$IncomeElasticity)) ->
+      select(LEVEL2_DATA_NAMES$IncomeElasticity) ->
       L245.IncomeElasticity  # income elasticity projections
 
     L245.assumptions_all %>%
       repeat_add_columns(tibble(year = FUTURE_YEARS)) %>%
-      select(one_of(LEVEL2_DATA_NAMES$PriceElasticity)) ->
+      select(LEVEL2_DATA_NAMES$PriceElasticity) ->
       L245.PriceElasticity  # price elasticity projections
 
     L245.assumptions_all %>%
       repeat_add_columns(tibble(year = FUTURE_YEARS)) %>%
-      select(one_of(LEVEL2_DATA_NAMES$aeei)) ->
+      select(LEVEL2_DATA_NAMES$aeei) ->
       L245.aeei  # demand efficiency projections
 
 
