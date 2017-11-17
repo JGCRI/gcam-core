@@ -20,7 +20,10 @@ original data system was \code{L2231.land_input_3_irr.R} (aglu level2).
 \description{
 Produce L2231.LN3_Logit, L2231.LN3_HistUnmgdAllocation, L2231.LN3_UnmgdAllocation,
 L2231.LN3_HistMgdAllocation_noncrop, L2231.LN3_MgdAllocation_noncrop, L2231.LN3_UnmgdCarbon,
- L2231.LN3_MgdCarbon_noncrop, L2231.NodeEquiv, L2231.LN3_NoEmissCarbon, L2231.LN3_NodeCarbon.
+L2231.LN3_MgdCarbon_noncrop, L2231.NodeEquiv, L2231.LN3_NoEmissCarbon, L2231.LN3_NodeCarbo, and
+protected lands related outputs: L2231.LN3_HistUnmgdAllocation_noprot, L2231.LN3_UnmgdAllocation_noprot,
+L2231.LN1_HistUnmgdAllocation_prot, L2231.LN1_UnmgdAllocation_prot, L2231.LN1_UnmgdCarbon_prot,
+L2231.LN1_Logit_prot.
 }
 \details{
 \itemize{
@@ -45,6 +48,17 @@ manually formed with no inputs."}
 \item{"L2231.LN3_NoEmissCarbon: Sets the no-emiss-carbon-calc as the type of carbon to use in forest leaves by region."}
 \item{"L2231.LN3_NodeCarbon: Sets the node-carbon-calc to drive the carbon calc between forest leaves, by region, and
 places the node carbon calc in the node just above the leaves."}
+\item{"L2231.LN3_HistUnmgdAllocation_noprot: Historical unmanaged land data from L223.LN3_HistUnmgdAllocation is multiplied
+by specified fraction to give unprotected land allocation in the third nest. OtherArableLands omitted."}
+\item{"L2231.LN3_UnmgdAllocation_noprot: Unmanaged land data from L223.LN3_UnmgdAllocation is multiplied by specified
+fraction to give "unprotected land allocation in the third nest. OtherArableLands omitted."}
+\item{"L2231.LN1_HistUnmgdAllocation_prot: Historical unmanaged land data from L223.LN3_HistUnmgdAllocation is multiplied by
+specified fraction to give protected land allocation in the first nest. OtherArableLands omitted."}
+\item{"L2231.LN1_UnmgdAllocation_prot: Unmanaged land data from L223.LN3_UnmgdAllocation is multiplied by specified fraction
+to give protected land allocation in the first nest. OtherArableLands omitted."}
+\item{" L2231.LN1_UnmgdCarbon_prot: Carbon content info for protected unmanaged land (LT_GLU) in the first nest including
+soil and vegetative carbon."}
+\item{"L2231.LN1_Logit_prot: Logit info for protected lands in the first land nest by region"}
 }
 }
 \author{

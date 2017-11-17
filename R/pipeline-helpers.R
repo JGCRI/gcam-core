@@ -356,7 +356,7 @@ gather_years <- function(d, value_col = "value", year_pattern = YEAR_PATTERN) {
   assert_that(is.character(value_col))
   assert_that(is.character(year_pattern))
 
-  year <- value <- NULL  # silence package check notes
+  . <- year <- value <- NULL  # silence package check notes
 
   d %>%
     gather(year, value, matches(year_pattern)) %>%
