@@ -1,6 +1,6 @@
 #' module_aglu_L2042.resbio_input_irr_mgmt
 #'
-#' This chunk produces a table of global Mill Residue Biomass Paramters by year, a table of regional Forest Residue Biomass Paramters by year, and a table of
+#' Produce a table of global Mill Residue Biomass Paramters by year, a table of regional Forest Residue Biomass Paramters by year, and a table of
 #' Agricultural Residue Biomass Paramters by irrigation-management level-year. This chunk also produces tables by region and year of residue biomass supply
 #' curves for Mill, Forest, and Agriculture.
 #'

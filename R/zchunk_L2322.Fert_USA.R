@@ -304,7 +304,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     # If using GCAM-USA regional fuel markets then replace the market name from
     # the input-ouput coefficients of fertilizer production technologies data frame from above
     # with regional grid names.
-    if(gcamusa.USE_REGIONAL_FUEL_MARKETS){
+    if(gcamusa.USE_REGIONAL_FUEL_MARKETS) {
 
       # Use the state codes-names-groupings mappings data frame to replace the input-ouput
       # coefficients of fertilizer production technologies market.name with the grid region
@@ -340,7 +340,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     # If using GCAM-USA regional fuel markets then replace the market name from
     # the fuel inputs into the state fertilizer sectors data frame from above
     # with regional grid names.
-    if(gcamusa.USE_REGIONAL_FUEL_MARKETS){
+    if(gcamusa.USE_REGIONAL_FUEL_MARKETS) {
 
       # Use the state codes-names-groupings mappings data frame to replace the  fuel inputs into the state fertilizer sectors
       # market.name with the grid region name for each fertilizer producing state.

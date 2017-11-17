@@ -1,6 +1,6 @@
 #' module_gcam.usa_LA101.EIA_SEDS
 #'
-#' This chunk produces two ouput tables from the EIA state energy database:
+#' Produce two ouput tables from the EIA state energy database:
 #' \itemize{
 #'  \item{L101.inEIA_EJ_state_S_F: Energy data by GCAM sector and fuel, state, and year; energy units in EJ, years from 1971-2010, includes only rows that have a defined sector and fuel}
 #'  \item{L101.EIA_use_all_Bbtu: Energy data by EIA sector and fuel code, GCAM sector and fuel, MSN, state, and year; energy units in Billion BTU, years from 1960-2011, includes all original data}
@@ -44,8 +44,7 @@ module_gcam.usa_LA101.EIA_SEDS <- function(command, ...) {
 
     # Prep for output tables - add columns for GCAM sector and fuel names, using the substrings of the Mnemonic Series Name (MSN) code, and filter out U.S.
     EIA_use_all_Bbtu %>%
-      gather(year, value, -Data_Status, -State, -MSN) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years %>%
       mutate(EIA_fuel = substr(MSN, 1, 2)) %>% # First and second digits of MSN is energy code
       mutate(EIA_sector = substr(MSN, 3, 4)) %>% # Third and fourth digits of MSN is sector code
       left_join(EIA_SEDS_fuels, by = "EIA_fuel") %>%

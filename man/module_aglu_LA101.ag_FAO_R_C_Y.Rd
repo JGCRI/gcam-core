@@ -18,7 +18,7 @@ the generated outputs: \code{L101.ag_Food_Mt_R_C_Y}, \code{L101.ag_Food_Pcal_R_C
 original data system was \code{LA101.ag_FAO_R_C_Y.R} (aglu level1).
 }
 \description{
-This chunk aggregates FAO food consumption, ag production, and harvested area
+Aggregate FAO food consumption, ag production, and harvested area
 data to GCAM regions and GCAM commodities.
 }
 \details{

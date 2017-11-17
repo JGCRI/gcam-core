@@ -18,7 +18,7 @@ the generated outputs: \code{L124.LC_bm2_R_Shrub_Yh_GLU_adj}, \code{L124.LC_bm2_
 original data system was \code{LB124.LC_R_UnMgd_Yh_GLU.R} (aglu level1).
 }
 \description{
-This chunk adjusts land cover data for unmanaged land types (shrub, grass, unmgd pasture, unmgd forest) in L120.LC_bm2_R_LT_Yh_GLU to deduct
+Adjust land cover data for unmanaged land types (shrub, grass, unmgd pasture, unmgd forest) in L120.LC_bm2_R_LT_Yh_GLU to deduct
 the extra cropland needs described in L122.LC_bm2_R_ExtraCropLand_Yh_GLU proportionally according to the relative share of each unmanaged
 land type.
 }

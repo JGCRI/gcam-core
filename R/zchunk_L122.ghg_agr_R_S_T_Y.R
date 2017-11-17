@@ -94,8 +94,7 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
       # Use left_join because umi, bvt, sgs, iot, atf, hmd, ata, sea and air not in iso_GCAM_regID
       left_join(iso_GCAM_regID, by = "iso") %>%
       na.omit() %>%
-      gather(year, value , matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years %>%
       select(GCAM_region_ID, sector, Non.CO2, year, value) %>%
       filter(year %in% emissions.EDGAR_YEARS) %>%
       # Aggregate and convert to Tg
@@ -144,7 +143,7 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
     L122.EDGAR_fert <- L122.EDGAR_agr %>%
       filter(sector == "fertilizer")
 
-    #Compute fertilizer by crop
+    # Compute fertilizer by crop
     L122.fert_Mt_R_C_Y_GLU <- L103.ag_Prod_Mt_R_C_Y_GLU %>%
       filter(year %in% emissions.EDGAR_YEARS) %>%
       rename(ag_production = value) %>%

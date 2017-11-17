@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L145.municipal_water_R_W_Yh_km3}, \code{L145.municipal_water_cost_R_75USD_m3}, \code{L145.municipal_water_eff_R_Y}. The corresponding file in the
 #' original data system was \code{L145.water.demand.municipal.R} (water level1).
-#' @details Describe in detail what this chunk does.
+#' @details Generate municipal water withdrawals, municipal water base delivery cost, and municipal water use efficiency.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -93,8 +93,7 @@ module_water_L145.water.demand.municipal <- function(command, ...) {
 
     # Map municipal water use efficiencies to GCAM regions
     municipal_water_use_efficiency %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) ->
+      gather_years ->
       municipal_water_use_efficiency_tmp
 
     municipal_water_use_efficiency_tmp %>%

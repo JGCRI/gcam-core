@@ -18,7 +18,7 @@ the generated outputs: \code{L154.in_EJ_state_trn_m_sz_tech_F}, \code{L154.out_m
 original data system was \code{LA154.Transport.R} (gcam-usa level1).
 }
 \description{
-This chunk downscales transportation energy consumption and nonmotor data to the state level, generating three ouput tables
+Downscale transportation energy consumption and nonmotor data to the state level, generating three ouput tables.
 }
 \details{
 Transportation energy data was downscaled in proportion to EIA state-level transportation energy data

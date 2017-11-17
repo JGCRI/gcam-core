@@ -275,6 +275,7 @@ energy.DIGITS_INCELAS_IND <- 3
 
 # Digits for rounding into XMLs
 energy.DIGITS_CALOUTPUT <- 7
+energy.DIGITS_CALPRODUCTION <- 7
 energy.DIGITS_COEFFICIENT <- 7
 energy.DIGITS_COST <- 4
 energy.DIGITS_EFFICIENCY <- 3
@@ -283,10 +284,16 @@ energy.DIGITS_FLOORSPACE <- 3
 energy.DIGITS_SATIATION_ADDER <- 9
 energy.DIGITS_HDDCDD <- 0
 energy.DIGITS_CAPACITY_FACTOR <- 2
+energy.DIGITS_INCELAS_IND <- 3
+energy.DIGITS_DEPRESOURCE <- 1
+energy.DIGITS_MAX_SUB_RESOURCE <- 5
+energy.DIGITS_MID_PRICE <- 3
+energy.DIGITS_CURVE_EXPONENT <- 3
+energy.DIGITS_GDP_SUPPLY_ELAST <- 3
 energy.DIGITS_OM <- 2
 energy.DIGITS_CAPITAL <- 0
 
-#base cost year for wind, used in capacity factor calculations
+# Base cost year for wind, used in capacity factor calculations
 energy.WIND.BASE.COST.YEAR <- 2005
 energy.DIGITS_INCELAS_IND <- 3
 

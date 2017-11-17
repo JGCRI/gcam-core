@@ -1,6 +1,6 @@
 #' module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR
 #'
-#' This chunk produces irrigated and rainfed production shares, and agricultural waste burning emissions by irrigated & rainfed production shares.
+#' Produce irrigated and rainfed production shares, and agricultural waste burning emissions by irrigated & rainfed production shares.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command

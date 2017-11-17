@@ -185,8 +185,7 @@ module_energy_L232.industry <- function(command, ...) {
 
     # L232.GlobalTechShrwt_ind: Shareweights of global industrial sector technologies
     A32.globaltech_shrwt %>%
-      gather(year, share.weight, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years(value_col = "share.weight") %>%
       complete(nesting(supplysector, subsector, technology), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
       arrange(supplysector, subsector, technology, year) %>%
       group_by(supplysector, subsector, technology) %>%
@@ -206,8 +205,7 @@ module_energy_L232.industry <- function(command, ...) {
 
     # L232.GlobalTechEff_ind: Energy inputs and efficiency of global industrial energy use and feedstocks technologies
     A32.globaltech_eff %>%
-      gather(year, efficiency, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years(value_col = "efficiency") %>%
       complete(nesting(supplysector, subsector, technology, minicam.energy.input, secondary.output),
                year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
       arrange(supplysector, subsector, technology, minicam.energy.input, secondary.output, year) %>%
@@ -228,8 +226,7 @@ module_energy_L232.industry <- function(command, ...) {
     # Coefficients on global industry sector technologies (not energy-use or feedstocks)
     # L232.GlobalTechCoef_ind: Energy inputs and coefficients of global industry technologies
     A32.globaltech_coef %>%
-      gather(year, coefficient, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years(value_col = "coefficient") %>%
       complete(nesting(supplysector, subsector, technology, minicam.energy.input),
                year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
       arrange(supplysector, subsector, technology, minicam.energy.input, year) %>%
@@ -245,8 +242,7 @@ module_energy_L232.industry <- function(command, ...) {
     # Secondary outputs of cogen technologies: these are input as a ratio
     # L232.GlobalTechSecOut_ind: Secondary output ratios of industrial cogeneration technologies
     A32.globaltech_eff %>%
-      gather(year, efficiency, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years(value_col = "efficiency") %>%
       complete(nesting(supplysector, subsector, technology, minicam.energy.input, secondary.output),
                year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
       arrange(supplysector, subsector, technology, minicam.energy.input, secondary.output, year) %>%
@@ -272,8 +268,7 @@ module_energy_L232.industry <- function(command, ...) {
     # Costs of global technologies
     # L232.GlobalTechCost_ind: Capital costs of global industrial technologies
     A32.globaltech_cost %>%
-      gather(year, input.cost, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years(value_col = "input.cost") %>%
       complete(nesting(supplysector, subsector, technology, minicam.non.energy.input),
                year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
       arrange(supplysector, subsector, technology, minicam.non.energy.input, year) %>%
@@ -403,8 +398,7 @@ module_energy_L232.industry <- function(command, ...) {
                                by = c("region", "minicam.energy.input")) %>%
       rename(`2010` = coefficient) %>%
       mutate(`2150` = `2100`) %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years %>%
       complete(nesting(supplysector, subsector, technology, minicam.energy.input, GCAM_region_ID, region),
                year = c(max(BASE_YEARS), FUTURE_YEARS, 2150)) %>%
       arrange(supplysector, subsector, technology, minicam.energy.input, GCAM_region_ID, region, year) %>%
