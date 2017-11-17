@@ -132,7 +132,8 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
     L144.in_EJ_state_comm_F_U_Y <- get_data(all_data, "L144.in_EJ_state_comm_F_U_Y")
     L144.in_EJ_state_res_F_U_Y <- get_data(all_data, "L144.in_EJ_state_res_F_U_Y")
     L143.HDDCDD_scen_state <- get_data(all_data, "temp-data-inject/L143.HDDCDD_scen_state") %>%
-      gather_years()
+      gather(year, value, starts_with("X")) %>%
+      mutate(year = as.integer(substr(year, 2, 5)))
     L100.Pop_thous_state <- get_data(all_data, "L100.Pop_thous_state")
     L100.pcGDP_thous90usd_state <- get_data(all_data, "L100.pcGDP_thous90usd_state")
     # ===================================================
@@ -214,7 +215,7 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
 
     # We will filter GDP to energy.SATIATION_YEAR, but this may be greater than the historical years present
     # under timeshift conditions. So we adjust energy.SATIATION_YEAR
-    energy.SATIATION_YEAR <- max(BASE_YEARS, energy.SATIATION_YEAR)
+    energy.SATIATION_YEAR <- min(max(BASE_YEARS), energy.SATIATION_YEAR)
 
     L244.SatiationAdder_gcamusa <- L244.Satiation_flsp_gcamusa %>%
       # Add per capita GDP
