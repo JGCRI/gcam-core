@@ -187,7 +187,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
 
     # Subset the calibrated intermediate sectors and fuels to supplysector / subsector / technology
     # mapping file for unique sector / calibration / supplysector/ subsector / technology combinations.
-    # This data frame will be used to add cement sector information add to the state cement production
+    # This tibble will be used to add cement sector information add to the state cement production
     # input table.
     calibrated_techs %>%
       # We are only interested in the technology IDs where calibration = output.
