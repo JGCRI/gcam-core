@@ -53,6 +53,7 @@ module_gcam.usa_L261.carbon_storage_USA <- function(command, ...) {
     L261.GlobalTechCoef_C <- get_data(all_data, "L261.GlobalTechCoef_C")
 
     # Create a vector of FERC grid regions with non-zero storage curves
+    # Will use this list to filter out FERC grid regions with zero storage below
     L161.Cstorage_FERC %>%
       select(grid_region) %>%
       unique %>%
@@ -61,6 +62,7 @@ module_gcam.usa_L261.carbon_storage_USA <- function(command, ...) {
       C_grid_regions
 
     # Create a vector of FERC grid regions with zero storage curve
+    # States in these grid regions will be excluded from the onshare carbon storage subsector in the relevant input files below
     states_subregions %>%
       select(grid_region) %>%
       filter(!grid_region %in% C_grid_regions) %>%
@@ -86,6 +88,7 @@ module_gcam.usa_L261.carbon_storage_USA <- function(command, ...) {
       L261.DeleteSubsector_USAC
 
     # Create a vector of grid level onshare carbon storage subsector with zero storage curve
+    # States in these grid regions will be excluded from the onshare carbon storage subsector in the relevant input files below
     grid_Cstorage_nonexist <- paste(noC_grid_regions, L261.DeleteDepRsrc_USAC$depresource[1])
 
     # L261.DepRsrc_FERC: onshore storage in the FERC regions
