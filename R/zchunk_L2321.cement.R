@@ -258,8 +258,7 @@ module_energy_L2321.cement <- function(command, ...) {
 
     L1321.out_Mt_R_cement_Yh %>%
       filter(year %in% BASE_YEARS) %>%
-      rename(calOutputValue = value) %>%
-      mutate(calOutputValue = round(calOutputValue, energy.DIGITS_CALOUTPUT)) %>%
+      mutate(calOutputValue = round(value, energy.DIGITS_CALOUTPUT)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(calibrated_techs_export, by = "sector") %>%
       mutate(stub.technology = technology,
@@ -278,8 +277,7 @@ module_energy_L2321.cement <- function(command, ...) {
 
     L1321.IO_GJkg_R_cement_F_Yh %>%
       filter(year %in% HISTORICAL_YEARS[HISTORICAL_YEARS %in% c(BASE_YEARS, FUTURE_YEARS)]) %>%
-      rename(coefficient = value) %>%
-      mutate(coefficient = round(coefficient,energy.DIGITS_COEFFICIENT)) %>%
+      mutate(coefficient = round(value, energy.DIGITS_COEFFICIENT)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(calibrated_techs_export, by = c("sector", "fuel")) %>%
       mutate(stub.technology = technology,
@@ -295,8 +293,7 @@ module_energy_L2321.cement <- function(command, ...) {
 
     L1321.in_EJ_R_cement_F_Y %>%
       filter(year %in% BASE_YEARS) %>%
-      rename(calibrated.value = value) %>%
-      mutate(calibrated.value = round(calibrated.value, energy.DIGITS_CALOUTPUT)) %>%
+      mutate(calibrated.value = round(value, energy.DIGITS_CALOUTPUT)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(calibrated_techs_export, by = c("sector", "fuel")) %>%
       # This table should only be the technologies for producing heat - drop the electricity inputs to the cement production technology
@@ -315,8 +312,7 @@ module_energy_L2321.cement <- function(command, ...) {
 
     # L2321.BaseService_cement: base-year service output of cement
     L2321.StubTechProd_cement %>%
-      select(region, year, calOutputValue) %>%
-      rename(base.service = calOutputValue) %>%
+      select(region, year, base.service = calOutputValue) %>%
       mutate(energy.final.demand = A321.demand[["energy.final.demand"]]) ->
       L2321.BaseService_cement
 
@@ -336,8 +332,8 @@ module_energy_L2321.cement <- function(command, ...) {
       filter(year %in% c(max(BASE_YEARS), FUTURE_YEARS)) %>%
       # Per-capita GDP ratios, which are used in the equation for demand growth
       group_by(GCAM_region_ID, scenario) %>%
-      mutate(temp_lag = lag(value, 1)) %>%
-      mutate(value = value / temp_lag) %>%
+      mutate(temp_lag = lag(value, 1),
+             value = value / temp_lag) %>%
       ungroup %>%
       select(-temp_lag) %>%
       filter(year %in% FUTURE_YEARS) ->
