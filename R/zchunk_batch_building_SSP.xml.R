@@ -47,7 +47,7 @@ module_energy_batch_building_SSP_xml <- function(command, ...) {
       L244.Satiation_flsp_SSP <- get_data(all_data, Satiation_flsp)
       L244.SatiationAdder_SSP <- get_data(all_data, SatiationAdder)
       L244.GenericServiceSatiation_SSP <- get_data(all_data, GenericServiceSatiation)
-      if (i != 2){
+      if(i != 2) {
         L244.FuelPrefElast_SSP <- get_data(all_data, FuelPrefElast)
         L244.DeleteThermalService <- get_data(all_data, "L244.DeleteThermalService")
       }
