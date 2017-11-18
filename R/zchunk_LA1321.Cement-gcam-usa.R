@@ -18,9 +18,9 @@
 module_gcam.usa_LA1321.Cement <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/Census_ind_VoS_state",
-             FILE = "temp-data-inject/L1321.out_Mt_R_cement_Yh",
-             FILE = "temp-data-inject/L1321.IO_GJkg_R_cement_F_Yh",
-             FILE = "temp-data-inject/L1321.in_EJ_R_cement_F_Y"))
+             "L1321.out_Mt_R_cement_Yh",
+             "L1321.IO_GJkg_R_cement_F_Yh",
+             "L1321.in_EJ_R_cement_F_Y"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L1321.out_Mt_state_cement_Yh",
              "L1321.IO_GJkg_state_cement_F_Yh",
@@ -33,21 +33,9 @@ module_gcam.usa_LA1321.Cement <- function(command, ...) {
 
     # Load required inputs
     Census_ind_VoS_state <- get_data(all_data, "gcam-usa/Census_ind_VoS_state")
-
-    get_data(all_data, "temp-data-inject/L1321.out_Mt_R_cement_Yh") %>%
-      gather(year, value, -GCAM_region_ID, -sector) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) ->
-      L1321.out_Mt_R_cement_Yh
-
-    get_data(all_data, "temp-data-inject/L1321.IO_GJkg_R_cement_F_Yh") %>%
-      gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) ->
-      L1321.IO_GJkg_R_cement_F_Yh
-
-    get_data(all_data, "temp-data-inject/L1321.in_EJ_R_cement_F_Y") %>%
-      gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) ->
-      L1321.in_EJ_R_cement_F_Y
+    L1321.out_Mt_R_cement_Yh <- get_data(all_data, "L1321.out_Mt_R_cement_Yh")
+    L1321.IO_GJkg_R_cement_F_Yh <- get_data(all_data, "L1321.IO_GJkg_R_cement_F_Yh")
+    L1321.in_EJ_R_cement_F_Y <- get_data(all_data, "L1321.in_EJ_R_cement_F_Y")
 
     # ===================================================
 
@@ -125,7 +113,7 @@ module_gcam.usa_LA1321.Cement <- function(command, ...) {
       add_comments("downscaling national data using state shares") %>%
       add_comments("these state shares were calculated to be proportional to the their values of cement shipments") %>%
       add_legacy_name("L1321.out_Mt_state_cement_Yh") %>%
-      add_precursors("gcam-usa/Census_ind_VoS_state", "temp-data-inject/L1321.out_Mt_R_cement_Yh") %>%
+      add_precursors("gcam-usa/Census_ind_VoS_state", "L1321.out_Mt_R_cement_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1321.out_Mt_state_cement_Yh
 
@@ -134,7 +122,7 @@ module_gcam.usa_LA1321.Cement <- function(command, ...) {
       add_units("GJ/kg and kg/kg") %>%
       add_comments("downscaling national data assuming the same IO coefficients for each respective fuel") %>%
       add_legacy_name("L1321.IO_GJkg_state_cement_F_Yh") %>%
-      add_precursors("temp-data-inject/L1321.IO_GJkg_R_cement_F_Yh") %>%
+      add_precursors("L1321.IO_GJkg_R_cement_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1321.IO_GJkg_state_cement_F_Yh
 
@@ -144,7 +132,7 @@ module_gcam.usa_LA1321.Cement <- function(command, ...) {
       add_comments("downscaling national data using state shares") %>%
       add_comments("these state shares were calculated to be proportional to the their values of cement shipments") %>%
       add_legacy_name("L1321.in_EJ_state_cement_F_Y") %>%
-      add_precursors("gcam-usa/Census_ind_VoS_state", "temp-data-inject/L1321.in_EJ_R_cement_F_Y") %>%
+      add_precursors("gcam-usa/Census_ind_VoS_state", "L1321.in_EJ_R_cement_F_Y") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1321.in_EJ_state_cement_F_Y
 
