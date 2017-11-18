@@ -22,10 +22,10 @@ the generated outputs: \code{L210.DeleteRenewRsrc_USArsrc}, \code{L210.DeleteUnl
 original data system was \code{L210.resources_USA.R} (gcam-usa level2).
 }
 \description{
-Briefly describe what this chunk does.
+GCAM-USA resource market information, prices, TechChange parameters, and supply curves.
 }
 \details{
-Describe in detail what this chunk does.
+GCAM-USA resource market information, prices, TechChange parameters, and supply curves.
 }
 \author{
 RLH November 2017
