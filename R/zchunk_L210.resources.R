@@ -348,7 +348,7 @@ module_energy_L210.resources <- function(command, ...) {
       split(.$SSP) %>%
       lapply(function(df) {
         select(df, -SSP) %>%
-          add_units("Look Up") %>%
+          add_units("$/GJ") %>%
           add_comments("A10.EnvironCost_SSPs written to all regions") %>%
           add_precursors("energy/A10.EnvironCost_SSPs", "common/GCAM_region_names", "energy/A10.subrsrc_info")
       })
@@ -377,7 +377,7 @@ module_energy_L210.resources <- function(command, ...) {
       mutate(environCost = if_else(depresource == "coal" & region %in% L210.low_reg, 0, environCost),
              environCost = if_else(depresource == "coal" & region %in% L210.high_reg, 10 * environCost, environCost)) %>%
       add_title("Environmental Costs for Depletable Resources: SSP4") %>%
-      add_units("Look Up") %>%
+      add_units("$/GJ") %>%
       add_comments("A10.EnvironCost_SSPs written to all regions") %>%
       add_comments("EnvironCost adjusted for high growth and low growth regions ") %>%
       add_legacy_name("L210.DepRsrcEnvironCost_SSP4") %>%
