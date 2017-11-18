@@ -1,4 +1,4 @@
-#' module_socio_batch_SSP.xml
+#' module_socio_batch_SSP_xml
 #'
 #' Construct XML data structure for all the \code{socioeconomics_[g]SSP[1-5].xml} files.
 #'
@@ -10,7 +10,7 @@
 #' \code{socioeconomics_gSSP4.xml}, \code{socioeconomics_gSSP5.xml}, \code{socioeconomics_SSP1.xml},
 #' \code{socioeconomics_SSP2.xml}, \code{socioeconomics_SSP3.xml},
 #' \code{socioeconomics_SSP4.xml}, and \code{socioeconomics_SSP5.xml}.
-module_socio_batch_SSP.xml <- function(command, ...) {
+module_socio_batch_SSP_xml <- function(command, ...) {
 
   SSP_NUMS <- 1:5
 

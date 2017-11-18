@@ -275,6 +275,7 @@ energy.DIGITS_INCELAS_IND <- 3
 
 # Digits for rounding into XMLs
 energy.DIGITS_CALOUTPUT <- 7
+energy.DIGITS_CALPRODUCTION <- 7
 energy.DIGITS_COEFFICIENT <- 7
 energy.DIGITS_COST <- 4
 energy.DIGITS_EFFICIENCY <- 3
@@ -283,6 +284,12 @@ energy.DIGITS_FLOORSPACE <- 3
 energy.DIGITS_SATIATION_ADDER <- 9
 energy.DIGITS_HDDCDD <- 0
 energy.DIGITS_CAPACITY_FACTOR <- 2
+energy.DIGITS_INCELAS_IND <- 3
+energy.DIGITS_DEPRESOURCE <- 1
+energy.DIGITS_MAX_SUB_RESOURCE <- 5
+energy.DIGITS_MID_PRICE <- 3
+energy.DIGITS_CURVE_EXPONENT <- 3
+energy.DIGITS_GDP_SUPPLY_ELAST <- 3
 energy.DIGITS_OM <- 2
 energy.DIGITS_CAPITAL <- 0
 
@@ -496,6 +503,10 @@ gcamusa.USE_REGIONAL_FUEL_MARKETS  <- TRUE
 gcamusa.STATE_RENEWABLE_RESOURCES <- c("distributed_solar", "geothermal", "onshore wind resource")
 gcamusa.STATE_UNLIMITED_RESOURCES <- c("global solar resource", "limestone")
 
+# define sector(s) used in L222.en_transformation_USA
+# The supplysector and subsector structure in these sectors are retained
+gcamusa.SECTOR_EN_NAMES <- "refining"
+
 gcamusa.WIND_BASE_COST_YEAR <- 2005
 
 # Reduce rounding in detailed USA transport for compatability with model
@@ -509,6 +520,18 @@ gcamusa.DEFAULT_COEFFICIENT <- 1
 gcamusa.DEFAULT_MARKET <- "USA"
 gcamusa.GAS_ADJ_THRESH <- 5
 gcamusa.DIGITS_COST <- 4
+gcamusa.EFFICIENCY_PARTITION_YEAR <- 2005
+
+# Degree day norms
+gcamusa.BASE_HDD_USA <- 4524 # https://www.eia.gov/totalenergy/data/annual/showtext.php?t=ptb0107
+gcamusa.BASE_CDD_USA <- 1215 # https://www.eia.gov/totalenergy/data/annual/showtext.php?t=ptb0108
+
+# default logit type
+gcamusa.DEFAULT_LOGIT_TYPE <- NA
+
+
+# some delimiters
+gcamusa.STATE_SUBSECTOR_DELIMITER <- " "
 
 # Uncomment these lines to run under 'timeshift' conditions
 # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
