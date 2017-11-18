@@ -67,14 +67,14 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
     L232.Supplysector_ind %>%
       mutate(region = region) %>% # strip attributes from object
       filter(region == "USA") %>%
-      select(one_of(LEVEL2_DATA_NAMES[["DeleteSupplysector"]])) ->
+      select(LEVEL2_DATA_NAMES[["DeleteSupplysector"]]) ->
       L232.DeleteSupplysector_USAind  ## OUTPUT
 
     # deleting energy final demand sectors in the full USA region" )
     L232.PerCapitaBased_ind %>%
       mutate(region = region) %>% # strip attributes from object
       filter(region == "USA") %>%
-      select(one_of(LEVEL2_DATA_NAMES[["DeleteFinalDemand"]])) ->
+      select(LEVEL2_DATA_NAMES[["DeleteFinalDemand"]]) ->
       L232.DeleteFinalDemand_USAind  ## OUTPUT
 
     # get calibrated input of industrial energy use technologies, including cogen
@@ -87,7 +87,7 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
       left_join_keep_first_only(calibrated_techs, by = c("sector", "fuel")) %>%
       rename(stub.technology = technology) ->
       L232.in_EJ_state_indenergy_F_Yh
-    L232.in_EJ_state_indenergy_F_Yh %>% select(one_of(LEVEL2_DATA_NAMES[["StubTechYr"]], "value")) %>%
+    L232.in_EJ_state_indenergy_F_Yh %>% select(LEVEL2_DATA_NAMES[["StubTechYr"]], "value") %>%
       left_join_keep_first_only(select(A32.globaltech_eff, subsector, technology, minicam.energy.input),
                                 by = c("subsector", "stub.technology" = "technology")) %>%
       mutate(calibrated.value = round(value, energy.DIGITS_CALOUTPUT),
@@ -97,7 +97,7 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
       mutate(x = sum(calibrated.value),
              subs.share.weight = if_else(x > 0, 1, 0)) %>% ungroup %>%
       # ^^ sets up variable (x) for defining subsector shareweight
-      select(one_of(LEVEL2_DATA_NAMES[["StubTechCalInput"]])) ->
+      select(LEVEL2_DATA_NAMES[["StubTechCalInput"]]) ->
       L232.StubTechCalInput_indenergy_USA  ## OUTPUT
 
     # get calibrated input of industrial feedstock technologies
@@ -110,7 +110,7 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
       select(-calibration, -secondary.output) %>%
       rename(stub.technology = technology) ->
       L232.in_EJ_state_indfeed_F_Yh
-    L232.in_EJ_state_indfeed_F_Yh %>% select(one_of(LEVEL2_DATA_NAMES[["StubTechYr"]], "value")) %>%
+    L232.in_EJ_state_indfeed_F_Yh %>% select(LEVEL2_DATA_NAMES[["StubTechYr"]], "value") %>%
       left_join_keep_first_only(select(A32.globaltech_eff, subsector, technology, minicam.energy.input),
                                 by = c("subsector", "stub.technology" = "technology")) %>%
       mutate(calibrated.value = round(value, energy.DIGITS_CALOUTPUT),
@@ -119,7 +119,7 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
       group_by(region, supplysector, subsector, year) %>% mutate(x = sum(calibrated.value)) %>%
       # ^^ sets up variable (x) for defining subsector shareweight
       mutate(subs.share.weight = if_else(x > 0, 1, 0)) %>% ungroup %>%
-      select(one_of(LEVEL2_DATA_NAMES[["StubTechCalInput"]])) ->
+      select(LEVEL2_DATA_NAMES[["StubTechCalInput"]]) ->
       L232.StubTechCalInput_indfeed_USA  ## OUTPUT
 
     # get industrial sector calibrated output
@@ -151,7 +151,7 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
              share.weight.year = year,
              subs.share.weight = if_else(calOutputValue > 0, 1, 0),
              tech.share.weight = subs.share.weight) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["StubTechProd"]])) ->
+      select(LEVEL2_DATA_NAMES[["StubTechProd"]]) ->
       L232.StubTechProd_industry_USA  ## OUTPUT
 
     # get calibrated output of industrial sector
@@ -181,7 +181,7 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
     # ... sector is expected for USA
 
     bind_rows(L232.StubTechCoef_industry_USA_base, L232.StubTechCoef_industry_USA_fut) %>%
-      select(one_of(LEVEL2_DATA_NAMES$StubTechCoef)) ->
+      select(LEVEL2_DATA_NAMES$StubTechCoef) ->
       L232.StubTechCoef_industry_USA  ## OUTPUT
 
     # Get markets for fuels consumed by the state industrial sectors
@@ -194,7 +194,7 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
       filter(is.na(minicam.energy.input) == FALSE) %>%
       # ^^ includes generic industrial technology that is not required here...
       mutate(market.name = "USA") %>%
-      select(one_of(LEVEL2_DATA_NAMES[["StubTechMarket"]])) %>%
+      select(LEVEL2_DATA_NAMES[["StubTechMarket"]]) %>%
       left_join_error_no_match(states_subregions %>% select(state, grid_region), by = c("region" = "state")) %>%
       mutate(market.name = if_else(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS & gcamusa.USE_REGIONAL_FUEL_MARKETS == TRUE,
                                    grid_region, market.name)) %>% select(-grid_region) %>%
@@ -211,7 +211,7 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
       semi_join(L232.chp_techs, by = c("supplysector", "subsector", "stub.technology" = "technology")) %>%
       # ^^ filters for rows contained in L232.chp_techs
       mutate(secondary.output = "electricity") %>%
-      select(one_of(c(LEVEL2_DATA_NAMES[["StubTechYr"]], "secondary.output", "market.name"))) %>%
+      select(LEVEL2_DATA_NAMES[["StubTechYr"]], "secondary.output", "market.name") %>%
       mutate(market.name = "USA") %>%
       # ^^ over-ride regional market names
       left_join_error_no_match(states_subregions %>% select(state, grid_region), by = c("region" = "state")) %>%

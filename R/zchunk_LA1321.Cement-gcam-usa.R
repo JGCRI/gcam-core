@@ -58,7 +58,7 @@ module_gcam.usa_LA1321.Cement <- function(command, ...) {
     Cement_VoS_state %>%
       select(-state) %>%
       summarise(value_national = sum(value_state)) %>%
-      .[["value_national"]] ->
+      pull(value_national) ->
       Cement_VoS_national
 
     # The national total will be added as a separate column, so that the state share can be calculated

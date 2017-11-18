@@ -60,7 +60,7 @@ module_energy_LA118.hydro <- function(command, ...) {
         select(Installed_GWh, Installed_MW) %>%
         summarise(Installed_GWh = sum(Installed_GWh), Installed_MW = sum(Installed_MW)) %>%
         mutate(value = Installed_GWh / (Installed_MW * CONV_YEAR_HOURS * CONV_MIL_BIL)) %>%
-        .[["value"]] -> # Convert table to single number
+        pull(value) -> # Convert table to single number
         Hydro_capfac
 
       # Economic potential is what we are interested in from this database; however it is often not reported. Many countries without reported
@@ -77,7 +77,7 @@ module_energy_LA118.hydro <- function(command, ...) {
       Hydropower_potential %>%
         filter(!is.na(Technical_GWh), !is.na(Economic_GWh)) %>%
         summarise(value = sum(Economic_GWh) / sum(Technical_GWh)) %>%
-        .[["value"]] -> # Convert table to single number
+        pull(value) -> # Convert table to single number
         Hydro_tech_econ
 
       # For countries with technical potential reported but no economic potential, estimate the economic potential

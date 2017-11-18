@@ -74,7 +74,7 @@ module_energy_LA142.building_agg <- function(command, ...) {
     # We will create a list for these regions.
     A_regions %>%
       filter(has_district_heat == 0) %>% # Note, "0" indicates that heat is not modeled as a final fuel. "1" indicates that it is.
-      .[["GCAM_region_ID"]] ->
+      pull(GCAM_region_ID) ->
       list_no_heat
 
     # We also want to create a list for relevant building heat sectors
@@ -104,13 +104,13 @@ module_energy_LA142.building_agg <- function(command, ...) {
     A_regions %>%
       filter(has_district_heat == 0) %>%
       mutate(concatenate_list_no_heat = paste(GCAM_region_ID, "heat")) %>%
-      .[["concatenate_list_no_heat"]] ->
+      pull(concatenate_list_no_heat) ->
       concatenate_list_no_heat
 
     A_regions %>%
       filter(tradbio_region == 0) %>%
       mutate(concatenate_list_no_tradbio = paste(GCAM_region_ID, "traditional biomass")) %>%
-      .[["concatenate_list_no_tradbio"]] ->
+      pull(concatenate_list_no_tradbio) ->
       concatenate_list_no_tradbio
 
     # Now those region ID/fuel input pairs will be removed

@@ -103,7 +103,7 @@ module_aglu_L242.ssp34_pasture <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       mutate(value = value * gdp_deflator(2010, 1990)) %>%
       filter(value < aglu.LOW_GROWTH_PCGDP) %>%
-      .[["region"]] ->
+      pull(region) ->
       low_gdp_regions
 
     # Produce outputs

@@ -140,7 +140,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       # logit.type is NA by default, so left_join
       left_join(select(A_LandNode_logit, logit.exponent, logit.type, LandNode), by = c("LandNode3" = "LandNode")) %>%
       append_GLU(var1 = "LandNode1", var2 = "LandNode2", var3 = "LandNode3") %>%
-      select(one_of(c(LEVEL2_DATA_NAMES[["LN3_Logit"]], "logit.type"))) ->
+      select(LEVEL2_DATA_NAMES[["LN3_Logit"]], "logit.type") ->
       L223.LN3_Logit
 
 
@@ -163,12 +163,12 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     # Formed from filtering the master table by different years.
     L223.LC_bm2_R_Unmgd3_Yh_GLU %>%
       filter(year %in% LAND_HISTORY_YEARS) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["LN3_HistUnmgdAllocation"]])) ->
+      select(LEVEL2_DATA_NAMES[["LN3_HistUnmgdAllocation"]]) ->
       L223.LN3_HistUnmgdAllocation
 
     L223.LC_bm2_R_Unmgd3_Yh_GLU %>%
       filter(year %in% BASE_YEARS) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["LN3_UnmgdAllocation"]])) ->
+      select(LEVEL2_DATA_NAMES[["LN3_UnmgdAllocation"]]) ->
       L223.LN3_UnmgdAllocation
 
 
@@ -190,12 +190,12 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     # Formed from filtering the master table by different years.
     L223.LC_bm2_R_Mgd3_Yh_GLU %>%
       filter(year %in% LAND_HISTORY_YEARS) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["LN3_HistMgdAllocation"]])) ->
+      select(LEVEL2_DATA_NAMES[["LN3_HistMgdAllocation"]]) ->
       L223.LN3_HistMgdAllocation_noncrop
 
     L223.LC_bm2_R_Mgd3_Yh_GLU %>%
       filter(year %in% BASE_YEARS) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["LN3_MgdAllocation"]])) ->
+      select(LEVEL2_DATA_NAMES[["LN3_MgdAllocation"]]) ->
       L223.LN3_MgdAllocation_noncrop
 
 
@@ -205,7 +205,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       left_join_error_no_match(select(GCAMLandLeaf_CdensityLT, Land_Type, LandLeaf), by = c("Land_Type" = "LandLeaf")) %>%
       rename(Cdensity_LT = Land_Type.y) %>%
       add_carbon_info(carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["LN3_UnmgdCarbon"]])) ->
+      select(LEVEL2_DATA_NAMES[["LN3_UnmgdCarbon"]]) ->
       L223.LN3_UnmgdCarbon
 
     # If any regions are zero in all periods, they will return missing values here. The specific value doesn't matter because
@@ -218,7 +218,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       left_join_error_no_match(select(GCAMLandLeaf_CdensityLT, Land_Type, LandLeaf), by = c("Land_Type" = "LandLeaf")) %>%
       rename(Cdensity_LT = Land_Type.y) %>%
       add_carbon_info(carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["LN3_MgdCarbon"]])) ->
+      select(LEVEL2_DATA_NAMES[["LN3_MgdCarbon"]]) ->
       L223.LN3_MgdCarbon_noncrop
 
     # L223.LN3_NoEmissCarbon: Set the no-emiss-carbon-calc as the type of carbon to use in forest leaves.

@@ -203,13 +203,9 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
       distinct() %>%
       bind_rows(distinct(select(FAO_an_items_PRODSTAT, GCAM_commodity))) %>%
       na.omit() %>%
-      # Convert tibble to vector
-      collect() %>%
-      .[['GCAM_commodity']] -> commodities
+      pull(GCAM_commodity) -> commodities
     Price_ag_an_For %>%
-      collect() %>%
-      # Convert tibble to vector
-      .[['GCAM_commodity']] -> prices
+      pull(GCAM_commodity) -> prices
 
     # Check missing commodities
     if(any(!(commodities %in% prices))) {

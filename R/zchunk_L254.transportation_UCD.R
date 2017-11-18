@@ -123,7 +123,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       year <- year.fillout <- to.value <- value <- speed.source <- tranSubsector.x <- addTimeValue <- time.value.multiplier <-
       fuelprefElasticity <- tranSubsector <- share.weight <- calibrated.value <- subs.share.weight <- loadFactor <-
       coefficient <- stub.technology <- output <- output_agg <- output_cum <- share.weight.year <- tech.share.weight <-
-      calOutputValue <- energy.final.demand <- base.service <- NULL
+      calOutputValue <- energy.final.demand <- base.service <- object <- r_ss <- NULL
 
     # PART A: BUILDING TRANSPORTATION SECTORS FROM THE TECHNOLOGY LEVEL UP
     # L254.StubTranTech: Transportation stub technologies (built from technologies with coefficients in the UCD database)
@@ -134,14 +134,14 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       left_join_error_no_match(UCD_techs, by = c("UCD_sector", "mode", "size.class", "UCD_technology", "UCD_fuel")) %>%
       unique() %>%
       rename(stub.technology = tranTechnology) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["StubTranTech"]])) ->
+      select(LEVEL2_DATA_NAMES[["StubTranTech"]]) ->
       L254.StubTranTech # OUTPUT
 
     # Write the pass-through technologies to all regions
     # First, create two lists to filter technologies later
     L254.StubTranTech %>%
       mutate(r_ss = paste(region, supplysector)) %>%
-      .[["r_ss"]] %>%
+      pull(r_ss) %>%
       unique() ->
       LIST_r_ss
 
@@ -155,7 +155,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       mutate(r_mei = paste(region, minicam.energy.input)) %>%
       filter((r_mei %in% LIST_r_ss) |
                (minicam.energy.input %in% A54.globaltech_passthru$supplysector)) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["StubTranTech"]])) ->
+      select(LEVEL2_DATA_NAMES[["StubTranTech"]]) ->
       L254.StubTech_passthru # OUTPUT
 
     # Write the non-motorized technologies to all regions
@@ -174,13 +174,13 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       write_to_all_regions(LEVEL2_DATA_NAMES[["Supplysector"]], GCAM_region_names = GCAM_region_names) %>%
       # Subset only the combinations of region and supplysector that are available in the stub technology table
       semi_join(r_ss_all, by = c("region", "supplysector")) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["Supplysector"]])) ->
+      select(LEVEL2_DATA_NAMES[["Supplysector"]]) ->
       L254.Supplysector_trn # OUTPUT
 
     # L254.FinalEnergyKeyword_trn: Supply sector keywords for transportation sector
     L254.Supplysector_trn %>%
       left_join_keep_first_only(A54.sector, by = "supplysector") %>%
-      select(one_of(LEVEL2_DATA_NAMES[["FinalEnergyKeyword"]])) ->
+      select(LEVEL2_DATA_NAMES[["FinalEnergyKeyword"]]) ->
       L254.FinalEnergyKeyword_trn # OUTPUT
 
 
@@ -196,7 +196,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       write_to_all_regions(LEVEL2_DATA_NAMES[["tranSubsectorLogit"]], GCAM_region_names = GCAM_region_names) %>%
       # Subset only the combinations of region, supplysector, and tranSubsector that are available
       semi_join(r_ss_ts_all, by = c("region", "supplysector", "tranSubsector")) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["tranSubsectorLogit"]])) ->
+      select(LEVEL2_DATA_NAMES[["tranSubsectorLogit"]]) ->
       L254.tranSubsectorLogit # OUTPUT
 
     # L254.tranSubsectorShrwt and L254.tranSubsectorShrwtFllt: Subsector shareweights of transportation sector
@@ -206,7 +206,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
         write_to_all_regions(LEVEL2_DATA_NAMES[["tranSubsectorShrwt"]], GCAM_region_names = GCAM_region_names) %>%
         # Subset only the combinations of region, supplysector, and tranSubsector that are available
         semi_join(r_ss_ts_all, by = c("region", "supplysector", "tranSubsector")) %>%
-        select(one_of(LEVEL2_DATA_NAMES[["tranSubsectorShrwt"]])) ->
+        select(LEVEL2_DATA_NAMES[["tranSubsectorShrwt"]]) ->
         L254.tranSubsectorShrwt # OUTPUT
     }
 
@@ -216,7 +216,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
         write_to_all_regions(LEVEL2_DATA_NAMES[["tranSubsectorShrwtFllt"]], GCAM_region_names = GCAM_region_names) %>%
         # Subset only the combinations of region, supplysector, and tranSubsector that are available
         semi_join(r_ss_ts_all, by = c("region", "supplysector", "tranSubsector")) %>%
-        select(one_of(LEVEL2_DATA_NAMES[["tranSubsectorShrwtFllt"]])) ->
+        select(LEVEL2_DATA_NAMES[["tranSubsectorShrwtFllt"]]) ->
         L254.tranSubsectorShrwtFllt # OUTPUT
     }
 
@@ -227,7 +227,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
         write_to_all_regions(LEVEL2_DATA_NAMES[["tranSubsectorInterp"]], GCAM_region_names = GCAM_region_names) %>%
         # Subset only the combinations of region, supplysector, and tranSubsector that are available
         semi_join(r_ss_ts_all, by = c("region", "supplysector", "tranSubsector")) %>%
-        select(one_of(LEVEL2_DATA_NAMES[["tranSubsectorInterp"]])) ->
+        select(LEVEL2_DATA_NAMES[["tranSubsectorInterp"]]) ->
         L254.tranSubsectorInterp # OUTPUT
     }
 
@@ -237,7 +237,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
         write_to_all_regions(LEVEL2_DATA_NAMES[["tranSubsectorInterpTo"]], GCAM_region_names = GCAM_region_names) %>%
         # Subset only the combinations of region, supplysector, and tranSubsector that are available
         semi_join(r_ss_ts_all, by = c("region", "supplysector", "tranSubsector")) %>%
-        select(one_of(LEVEL2_DATA_NAMES[["tranSubsectorInterpTo"]])) ->
+        select(LEVEL2_DATA_NAMES[["tranSubsectorInterpTo"]]) ->
         L254.tranSubsectorInterp # OUTPUT
     }
 
@@ -248,7 +248,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(UCD_techs, by = c("UCD_sector", "mode", "size.class", "UCD_technology", "UCD_fuel")) %>%
       mutate(speed = round(value, energy.DIGITS_SPEED)) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["tranSubsectorSpeed"]])) ->
+      select(LEVEL2_DATA_NAMES[["tranSubsectorSpeed"]]) ->
       L254.tranSubsectorSpeed # OUTPUT
 
     # This does not include the pass-through tranSectors
@@ -262,7 +262,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       # Match in speed
       left_join_keep_first_only(L254.tranSubsectorSpeed, by = c("region", "speed.source" = "supplysector", "year")) %>%
       rename(tranSubsector = tranSubsector.x) %>%
-      select(one_of(c(LEVEL2_DATA_NAMES[["tranSubsector"]], "year", "speed"))) ->
+      select(LEVEL2_DATA_NAMES[["tranSubsector"]], "year", "speed") ->
       L254.tranSubsectorSpeed_passthru
 
     # L254.tranSubsectorSpeed_noVOTT: Speeds of transportation subsectors whose time value is not considered
@@ -273,7 +273,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
     r_ss_ts_speed_all <- bind_rows(L254.tranSubsectorSpeed, L254.tranSubsectorSpeed_passthru)
 
     L254.StubTranTech %>%
-      select(one_of(LEVEL2_DATA_NAMES[["tranSubsector"]])) %>%
+      select(LEVEL2_DATA_NAMES[["tranSubsector"]]) %>%
       # First subset table
       bind_rows(select(L254.StubTech_passthru, one_of(LEVEL2_DATA_NAMES[["tranSubsector"]]))) %>%
       unique() %>%
@@ -300,7 +300,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       mutate(year.fillout = min(MODEL_YEARS)) %>%
       # Subset only the combinations of region, supplysector, and tranSubsector
       semi_join(r_ss_ts_all, by = c("region", "supplysector", "tranSubsector")) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["tranSubsector"]]), year.fillout, addTimeValue, time.value.multiplier) ->
+      select(LEVEL2_DATA_NAMES[["tranSubsector"]], year.fillout, addTimeValue, time.value.multiplier) ->
       L254.tranSubsectorVOTT
 
     # L254.tranSubsectorFuelPref: Subsector preferences that are tied to GDP (unrelated to time value)
@@ -311,7 +311,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       mutate(year.fillout = min(MODEL_YEARS)) %>%
       # Subset only the combinations of region, supplysector, and tranSubsector that are available
       semi_join(r_ss_ts_all, by = c("region", "supplysector", "tranSubsector")) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["tranSubsector"]]), year.fillout, fuelprefElasticity) ->
+      select(LEVEL2_DATA_NAMES[["tranSubsector"]], year.fillout, fuelprefElasticity) ->
       L254.tranSubsectorFuelPref # OUTPUT
 
 
@@ -320,28 +320,28 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
     A54.globaltech_passthru %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       rename(sector.name = supplysector, subsector.name = tranSubsector) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["GlobalTechYr"]]), share.weight) ->
+      select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], share.weight) ->
       L254.GlobalTechShrwt_passthru
 
     # L254.GlobalTechShrwt_nonmotor: Shareweights of non-motorized global transportation sector technologies (not tranTechnologies)
     A54.globaltech_nonmotor %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       rename(sector.name = supplysector, subsector.name = tranSubsector) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["GlobalTechYr"]]), share.weight) ->
+      select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], share.weight) ->
       L254.GlobalTechShrwt_nonmotor
 
     # L254.GlobalTechCoef_passthru: Coefficients of global transportation sector technologies (not tranTechnologies)
     A54.globaltech_passthru %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       rename(sector.name = supplysector, subsector.name = tranSubsector) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["GlobalTechCoef"]])) ->
+      select(LEVEL2_DATA_NAMES[["GlobalTechCoef"]]) ->
       L254.GlobalTechCoef_passthru
 
     # L254.GlobalRenewTech_nonmotor: Renewable inputs to non-motorized transportation technologies
     A54.globaltech_nonmotor %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       rename(sector.name = supplysector, subsector.name = tranSubsector) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["GlobalRenewTech"]])) ->
+      select(LEVEL2_DATA_NAMES[["GlobalRenewTech"]]) ->
       L254.GlobalRenewTech_nonmotor
 
 
@@ -351,7 +351,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       mutate(supplysector = supplysector) %>%  # create new tibble, stripping attributes
       set_years() %>%
       rename(sector.name = supplysector, subsector.name = tranSubsector) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["GlobalTranTechInterp"]])) ->
+      select(LEVEL2_DATA_NAMES[["GlobalTranTechInterp"]]) ->
       L254.GlobalTranTechInterp
 
     # L254.GlobalTranTechShrwt: Shareweights of global tranTechnologies
@@ -367,7 +367,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       ungroup() %>%
       filter(year %in% MODEL_YEARS) %>%
       rename(sector.name = supplysector, subsector.name = tranSubsector) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["GlobalTranTechShrwt"]])) ->
+      select(LEVEL2_DATA_NAMES[["GlobalTranTechShrwt"]]) ->
       L254.GlobalTranTechShrwt # OUTPUT
 
     # L254.GlobalTranTechSCurve: Retirement of global tranTechnologies
@@ -389,7 +389,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       filter(year > L254.GlobalTranTechSCurve_MAX_YEAR) %>%
       bind_rows(L254.GlobalTranTechSCurve_1) %>%
       rename(sector.name = supplysector, subsector.name = tranSubsector) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["GlobalTranTechSCurve"]])) ->
+      select(LEVEL2_DATA_NAMES[["GlobalTranTechSCurve"]]) ->
       L254.GlobalTranTechSCurve # OUTPUT
 
 
@@ -420,7 +420,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
                                                                              "tranSubsector", "year")) %>%
       mutate(share.weight.year = year,
              tech.share.weight = if_else(calibrated.value > 0, 1, 0)) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["StubTranTechCalInput"]])) ->
+      select(LEVEL2_DATA_NAMES[["StubTranTechCalInput"]]) ->
       L254.StubTranTechCalInput # OUTPUT
 
     # L254.StubTranTechLoadFactor: tranTechnology load factors (all periods)
@@ -431,7 +431,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(UCD_techs, by = c("UCD_sector", "mode", "size.class", "UCD_technology", "UCD_fuel")) %>%
       rename(stub.technology = tranTechnology) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["StubTranTechLoadFactor"]])) ->
+      select(LEVEL2_DATA_NAMES[["StubTranTechLoadFactor"]]) ->
       L254.StubTranTechLoadFactor # OUTPUT
 
     # L254.StubTranTechCost: tranTechnology costs (all periods)
@@ -443,7 +443,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       left_join_error_no_match(UCD_techs, by = c("UCD_sector", "mode", "size.class", "UCD_technology", "UCD_fuel")) %>%
       rename(stub.technology = tranTechnology) %>%
       mutate(minicam.non.energy.input = "non-energy") %>%
-      select(one_of(LEVEL2_DATA_NAMES[["StubTranTechCost"]])) ->
+      select(LEVEL2_DATA_NAMES[["StubTranTechCost"]]) ->
       L254.StubTranTechCost # OUTPUT
 
     # L254.StubTranTechCoef: tranTechnology coefficients (intensities; all periods)
@@ -456,7 +456,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       rename(stub.technology = tranTechnology) %>%
       # Currently, the market names for the fuels will be the same as the region
       mutate(market.name = region) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["StubTranTechCoef"]])) ->
+      select(LEVEL2_DATA_NAMES[["StubTranTechCoef"]]) ->
       L254.StubTranTechCoef # OUTPUT
 
     # L254.StubTechCalInput_passthru: calibrated input of passthrough technologies
@@ -549,7 +549,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       left_join_error_no_match(A54.globaltech_nonmotor, by = c("mode" = "tranSubsector")) %>%
       rename(stub.technology = technology, tranSubsector = mode) %>%
       # There is no need to match shareweights to the calOutputValue because no region should ever have a 0 here
-      select(one_of(LEVEL2_DATA_NAMES[["StubTranTech"]]), year, calOutputValue) ->
+      select(LEVEL2_DATA_NAMES[["StubTranTech"]], year, calOutputValue) ->
       L254.StubTechProd_nonmotor
 
     # L254.PerCapitaBased_trn: per-capita based flag for transportation final demand
@@ -573,7 +573,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
 
     # L254.BaseService_trn: Base-year service output of transportation final demand
     L254.StubTranTechOutput %>%
-      select(one_of(LEVEL2_DATA_NAMES[["StubTranTech"]]), year, output) %>%
+      select(LEVEL2_DATA_NAMES[["StubTranTech"]], year, output) %>%
       bind_rows(
         select(L254.StubTechProd_nonmotor, one_of(LEVEL2_DATA_NAMES[["StubTranTech"]]), year, calOutputValue)) %>%
       mutate(base.service = if_else(!is.na(output), output, calOutputValue)) %>%

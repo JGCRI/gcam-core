@@ -212,7 +212,7 @@ info <- function(object_name, gcam_data_map = GCAM_DATA_MAP, previous_tracelist 
   lo_down <- lo_up <- NULL
   if(downstream) {
     # Get the dependents list
-    lo_down <- gcam_data_map %>% filter(grepl(object_name, precursors)) %>% .[["output"]]
+    lo_down <- gcam_data_map %>% filter(grepl(object_name, precursors)) %>% pull(output)
     names(lo_down) <- rep("Dependent", length(lo_down))
     if(is.null(lo_down) | length(lo_down) == 0) {
       cat("\tNo dependents\n")

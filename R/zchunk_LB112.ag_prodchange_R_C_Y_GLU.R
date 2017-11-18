@@ -141,7 +141,7 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
     # List of all crop x commodity combinations in the CROSIT yield multiplier data
     L112.ag_Yieldmult %>%
       mutate(CROSIT_id = paste(CROSIT_ctry, CROSIT_crop, sep = "_")) %>%
-      .[["CROSIT_id"]] %>%
+      pull(CROSIT_id) %>%
       unique() -> CROSIT_id
 
     # Aggregate LDS harvested area by CROSIT country and crop, and match in the productivity multipliers

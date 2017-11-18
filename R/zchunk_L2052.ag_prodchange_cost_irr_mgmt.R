@@ -85,13 +85,13 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
              AgProductionTechnology = paste(GCAM_commodity, GLU_name, IRR_RFD, MGMT, sep = "_")) %>%
       # Copy costs to all model years
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
-      select(one_of(names_AgCost)) ->
+      select(names_AgCost) ->
       L2052.AgCost_ag_irr_mgmt
 
     # Assign nonLandVariableCost of bioenergy production, assuming the same level to all four technologies
     # Start with the yield table to determine where bioenergy crops are being read in, get both grass and tree crops
     L201.AgYield_bio_grass %>%
-      select(one_of(names_AgTech)) %>%
+      select(names_AgTech) %>%
       unique() %>%
       bind_rows(unique(select(L201.AgYield_bio_tree, one_of(names_AgTech)))) %>%
       mutate(nonLandVariableCost = aglu.BIO_GRASS_COST_75USD_GJ,
@@ -104,7 +104,7 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       mutate(AgProductionTechnology = paste(AgProductionTechnology, IRR_RFD, MGMT, sep = "_")) %>%
       # Copy costs to all model years
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
-      select(one_of(names_AgCost)) ->
+      select(names_AgCost) ->
       L2052.AgCost_bio_irr_mgmt
 
     # Assign nonLandVariableCost of forest production
@@ -121,7 +121,7 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       mutate(AgSupplySector = GCAM_commodity,
              AgSupplySubsector = paste(GCAM_commodity, GLU_name, sep = "_"),
              AgProductionTechnology = paste(GCAM_commodity, GLU_name, sep = "_")) %>%
-      select(one_of(names_AgCost)) ->
+      select(names_AgCost) ->
       L2052.AgCost_For
 
     # Future agricultural productivity changes
@@ -142,7 +142,7 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       mutate(AgSupplySector = GCAM_commodity,
              AgSupplySubsector = paste(GCAM_commodity, GLU_name, sep = "_"),
              AgProductionTechnology = paste(GCAM_commodity, GLU_name, Irr_Rfd, MGMT, sep = "_")) %>%
-      select(one_of(names_AgProdChange)) ->
+      select(names_AgProdChange) ->
       L2052.AgProdChange_ag_irr_ref
 
     # Specify reference scenario agricultural productivity change for biomass
@@ -155,7 +155,7 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
 
     # Use the yield table to determine where bioenergy crops are being read in, get both grass and tree crops
     L201.AgYield_bio_grass %>%
-      select(one_of(names_AgTech)) %>%
+      select(names_AgTech) %>%
       unique() %>%
       bind_rows(unique(select(L201.AgYield_bio_tree, one_of(names_AgTech)))) %>%
       # Copy to all future years
@@ -175,7 +175,7 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       repeat_add_columns(tibble(MGMT = c("hi", "lo"))) %>%
       # Revise technology names to add all technologies
       mutate(AgProductionTechnology = paste(AgSupplySubsector, IRR_RFD, MGMT, sep = "_")) %>%
-      select(one_of(names_AgProdChange)) ->
+      select(names_AgProdChange) ->
       L2052.AgProdChange_bio_irr_ref
 
     # Specify the scenario with high agricultural productivity change (not incl biomass)
@@ -205,14 +205,14 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       filter(value > aglu.HIGH_GROWTH_PCGDP) %>%
       select(region) %>%
       # Convert tibble to vector
-      .[["region"]] ->
+      pull(region) ->
       high_reg
     # Get the region list of low income countries
     L225.pcgdp_2010 %>%
       filter(value < aglu.LOW_GROWTH_PCGDP) %>%
       select(region) %>%
       # Convert tibble to vector
-      .[["region"]] ->
+      pull(region) ->
       low_reg
 
     # Assign the reference agricultural productivity change to median income countries,

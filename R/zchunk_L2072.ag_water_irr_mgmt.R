@@ -108,7 +108,7 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
       # Standardize irrigation water input names
       mutate(water_sector = "Irrigation",
              minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector, GLU = GLU_name)) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["AgCoef"]])) ->
+      select(LEVEL2_DATA_NAMES[["AgCoef"]]) ->
       L2072.AgCoef_IrrWaterCons_ag_mgmt
 
     # Separate biophysical water consumption IO coefficients
@@ -117,7 +117,7 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
       # Standardize irrigation water input names
       mutate(water_sector = "Irrigation",
              minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector, GLU = GLU_name)) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["AgCoef"]])) ->
+      select(LEVEL2_DATA_NAMES[["AgCoef"]]) ->
       L2072.AgCoef_IrrBphysWater_ag_mgmt
 
     # Separate biophysical water consumption IO coefficients
@@ -126,13 +126,13 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
       # Standardize irrigation water input names
       mutate(water_sector = "Irrigation",
              minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector, GLU = GLU_name)) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["AgCoef"]])) ->
+      select(LEVEL2_DATA_NAMES[["AgCoef"]]) ->
       L2072.AgCoef_RfdBphysWater_ag_mgmt
 
     # Dedicated bioenergy crops
     # Compute biophysical water IO coefficients (km3/EJ biomass) by region / dedicated bioenergy crop / year / GLU / management level
     L2052.AgCost_bio_irr_mgmt %>%
-      select(one_of(LEVEL2_DATA_NAMES[["AgTechYr"]])) %>%
+      select(LEVEL2_DATA_NAMES[["AgTechYr"]]) %>%
       mutate(minicam.energy.input = "biophysical water consumption",
              coefficient = aglu.BIO_GRASS_WATER_IO_KM3EJ,
              coefficient = replace(coefficient, grepl("biomass_tree", AgProductionTechnology), aglu.BIO_TREE_WATER_IO_KM3EJ)) ->
@@ -179,7 +179,7 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
       mutate(water_sector = "Irrigation",
              minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector, GLU = GLU_name)) %>%
       # Remove extra columns
-      select(one_of(LEVEL2_DATA_NAMES[["AgCoef"]])) ->
+      select(LEVEL2_DATA_NAMES[["AgCoef"]]) ->
       L2072.AgCoef_IrrWaterCons_bio_mgmt
 
     # Create tables for water withdrawals IO coefs (consumption divided by irrigation efficiency)
@@ -191,7 +191,7 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
              # Replace the last character "C" with "W" for input name
              minicam.energy.input = gsub(".{1}$", "W", minicam.energy.input)) %>%
       # Remove extra columns
-      select(one_of(LEVEL2_DATA_NAMES[["AgCoef"]])) ->
+      select(LEVEL2_DATA_NAMES[["AgCoef"]]) ->
       L2072.AgCoef_IrrWaterWdraw_mgmt
 
     # Separate table of water withdrawals IO coefs for dedicated bioenergy crops
@@ -226,7 +226,7 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
       # Adjust profit floor
       mutate(coefficient = round(pmin(coefficient, (calPrice - nonLandVariableCost - minProfit) / WaterPrice), aglu.DIGITS_CALOUTPUT)) %>%
       # Remove the unnecessary columns
-      select(one_of(LEVEL2_DATA_NAMES[["AgCoef"]])) ->
+      select(LEVEL2_DATA_NAMES[["AgCoef"]]) ->
       L2072.AgCoef_IrrWaterWdraw_ag_mgmt
 
     # Produce outputs

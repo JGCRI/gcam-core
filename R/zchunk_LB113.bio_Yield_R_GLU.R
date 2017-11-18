@@ -78,7 +78,7 @@ module_aglu_LB113.bio_Yield_R_GLU <- function(command, ...) {
     # from which the yield estimate was derived was for the USA.
     iso_GCAM_regID %>%
       filter(iso == "usa") %>%
-      .[["GCAM_region_ID"]] ->
+      pull(GCAM_region_ID) ->
       USAreg
     L113.base_bio_yield_tha <- aglu.MAX_BIO_YIELD_THA / max(L113.YieldIndex_R_GLU$YieldIndex[L113.YieldIndex_R_GLU$GCAM_region_ID == USAreg])
     L113.base_bio_yield_GJm2 <- L113.base_bio_yield_tha * aglu.BIO_ENERGY_CONTENT_GJT / CONV_HA_M2

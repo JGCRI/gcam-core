@@ -214,13 +214,13 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       # 0 indicates district heat is not modeled
       filter(has_district_heat == 0) %>%
       mutate(regions_NoDistHeat = paste(GCAM_region_ID, "district heat")) %>%
-      .[["regions_NoDistHeat"]]
+      pull(regions_NoDistHeat)
 
     regions_NoTradBio <- A_regions %>%
       # 0 indicates traditional biomass is not modeled
       filter(tradbio_region == 0) %>%
       mutate(regions_NoTradBio = paste(GCAM_region_ID, "traditional biomass")) %>%
-      .[["regions_NoTradBio"]]
+      pull(regions_NoTradBio)
 
     # Note that this produces a final output table.
     L144.end_use_eff_Index %>%
@@ -296,7 +296,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
 
     thermal_services <- calibrated_techs_bld_det %>%
       filter(!supplysector %in% list_supplysector) %>%
-      .[["service"]] %>%
+      pull(service) %>%
       unique()
 
     # Split thermal_services into heating and cooling
@@ -445,7 +445,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
     regions_noheat <- A_regions %>%
       filter(has_district_heat == 0) %>%
       mutate(regions_noheat = paste(GCAM_region_ID, "heat")) %>%
-      .[["regions_noheat"]]
+      pull(regions_noheat)
 
     # L142.in_EJ_R_bld_F_Yh reports energy by region, sector, and fuel, but not service. Since we now have
     # the service share, we can calculate for service
@@ -509,7 +509,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
     # First, create list pairing supplysector with technology, for which to filter by
     A44.internal_gains %>%
       mutate(supp_tech = paste(supplysector, technology)) %>%
-      .[["supp_tech"]] ->
+      pull(supp_tech) ->
       supp_tech
 
     L144.end_use_eff %>%
