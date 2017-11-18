@@ -505,6 +505,10 @@ gcamusa.USE_REGIONAL_FUEL_MARKETS  <- TRUE
 gcamusa.STATE_RENEWABLE_RESOURCES <- c("distributed_solar", "geothermal", "onshore wind resource")
 gcamusa.STATE_UNLIMITED_RESOURCES <- c("global solar resource", "limestone")
 
+# define sector(s) used in L222.en_transformation_USA
+# The supplysector and subsector structure in these sectors are retained
+gcamusa.SECTOR_EN_NAMES <- "refining"
+
 gcamusa.WIND_BASE_COST_YEAR <- 2005
 
 # Reduce rounding in detailed USA transport for compatability with model
@@ -518,6 +522,18 @@ gcamusa.DEFAULT_COEFFICIENT <- 1
 gcamusa.DEFAULT_MARKET <- "USA"
 gcamusa.GAS_ADJ_THRESH <- 5
 gcamusa.DIGITS_COST <- 4
+gcamusa.EFFICIENCY_PARTITION_YEAR <- 2005
+
+# Degree day norms
+gcamusa.BASE_HDD_USA <- 4524 # https://www.eia.gov/totalenergy/data/annual/showtext.php?t=ptb0107
+gcamusa.BASE_CDD_USA <- 1215 # https://www.eia.gov/totalenergy/data/annual/showtext.php?t=ptb0108
+
+# default logit type
+gcamusa.DEFAULT_LOGIT_TYPE <- NA
+
+
+# some delimiters
+gcamusa.STATE_SUBSECTOR_DELIMITER <- " "
 
 # Uncomment these lines to run under 'timeshift' conditions
 # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
