@@ -136,7 +136,7 @@ module_aglu_LB163.bio_Yield_R_GLU_irr <- function(command, ...) {
     # USA region ID:
     iso_GCAM_regID %>%
       filter(iso == "usa") %>%
-      .[["GCAM_region_ID"]] ->
+      pull(GCAM_region_ID) ->
       USAreg
 
     # Calculate the base yield, a scaler value:

@@ -41,10 +41,10 @@ module_energy_L2321.cement <- function(command, ...) {
              FILE = "energy/A321.globaltech_shrwt",
              FILE = "energy/A321.globaltech_co2capture",
              FILE = "energy/A321.demand",
-             FILE = "temp-data-inject/L1321.out_Mt_R_cement_Yh",
-             FILE = "temp-data-inject/L1321.IO_GJkg_R_cement_F_Yh",
-             FILE = "temp-data-inject/L1321.in_EJ_R_cement_F_Y",
              FILE = "socioeconomics/A321.inc_elas_output",
+             "L1321.out_Mt_R_cement_Yh",
+             "L1321.IO_GJkg_R_cement_F_Yh",
+             "L1321.in_EJ_R_cement_F_Y",
              "L101.Pop_thous_GCAM3_R_Y",
              "L102.pcgdp_thous90USD_GCAM3_R_Y",
              "L102.pcgdp_thous90USD_Scen_R_Y"))
@@ -84,9 +84,9 @@ module_energy_L2321.cement <- function(command, ...) {
     A321.globaltech_shrwt <- get_data(all_data, "energy/A321.globaltech_shrwt")
     A321.globaltech_co2capture <- get_data(all_data, "energy/A321.globaltech_co2capture")
     A321.demand <- get_data(all_data, "energy/A321.demand")
-    L1321.out_Mt_R_cement_Yh <- get_data(all_data, "temp-data-inject/L1321.out_Mt_R_cement_Yh") %>% gather(year, value, -GCAM_region_ID, -sector) %>% mutate(year = as.integer(substr(year, 2, 5)))
-    L1321.IO_GJkg_R_cement_F_Yh <- get_data(all_data, "temp-data-inject/L1321.IO_GJkg_R_cement_F_Yh") %>% gather(year, value, -GCAM_region_ID, -sector, -fuel) %>% mutate(year = as.integer(substr(year, 2, 5)))
-    L1321.in_EJ_R_cement_F_Y <- get_data(all_data, "temp-data-inject/L1321.in_EJ_R_cement_F_Y") %>% gather(year, value, -GCAM_region_ID, -sector, -fuel) %>% mutate(year = as.integer(substr(year, 2, 5)))
+    L1321.out_Mt_R_cement_Yh <- get_data(all_data, "L1321.out_Mt_R_cement_Yh")
+    L1321.IO_GJkg_R_cement_F_Yh <- get_data(all_data, "L1321.IO_GJkg_R_cement_F_Yh")
+    L1321.in_EJ_R_cement_F_Y <- get_data(all_data, "L1321.in_EJ_R_cement_F_Y")
     A321.inc_elas_output <- get_data(all_data, "socioeconomics/A321.inc_elas_output")
     L101.Pop_thous_GCAM3_R_Y <- get_data(all_data, "L101.Pop_thous_GCAM3_R_Y")
     L102.pcgdp_thous90USD_GCAM3_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_GCAM3_R_Y")
@@ -158,7 +158,7 @@ module_energy_L2321.cement <- function(command, ...) {
       filter(year %in% c(BASE_YEARS, FUTURE_YEARS)) %>%
       rename(sector.name = supplysector,
              subsector.name = subsector) %>%
-      select(one_of(c(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "share.weight"))) ->
+      select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "share.weight") ->
       L2321.GlobalTechShrwt_cement
 
     # L2321.GlobalTechCoef_cement: Energy inputs and coefficients of cement technologies
@@ -173,7 +173,7 @@ module_energy_L2321.cement <- function(command, ...) {
       filter(year %in% c(BASE_YEARS, FUTURE_YEARS)) %>%
       rename(sector.name = supplysector,
              subsector.name = subsector) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["GlobalTechCoef"]])) ->
+      select(LEVEL2_DATA_NAMES[["GlobalTechCoef"]]) ->
       L2321.GlobalTechCoef_cement
 
     # Carbon capture rates from technologies with CCS
@@ -190,7 +190,7 @@ module_energy_L2321.cement <- function(command, ...) {
       filter(year %in% FUTURE_YEARS) %>%
       rename(sector.name = supplysector,
              subsector.name = subsector) %>%
-      select(one_of(c(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "remove.fraction"))) %>%
+      select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "remove.fraction") %>%
       mutate(storage.market = energy.CO2.STORAGE.MARKET) ->
       L2321.GlobalTechCapture_cement
 
@@ -206,7 +206,7 @@ module_energy_L2321.cement <- function(command, ...) {
       filter(year %in% c(BASE_YEARS, FUTURE_YEARS)) %>%
       rename(sector.name = supplysector,
              subsector.name = subsector) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["GlobalTechCost"]])) ->
+      select(LEVEL2_DATA_NAMES[["GlobalTechCost"]]) ->
       L2321.GlobalTechCost_cement # intermediate tibble
 
     # Note: adjusting non-energy costs of technologies with CCS to include CO2 capture costs
@@ -219,20 +219,18 @@ module_energy_L2321.cement <- function(command, ...) {
     cement_CCS_cost_1975USDtC <- cement_CCS_cost_total_1975USDtC - CO2_storage_cost_1975USDtC
 
     L2321.GlobalTechCapture_cement %>%
-      .[["remove.fraction"]] %>%
+      pull(remove.fraction) %>%
       mean -> cement_CO2_capture_frac
 
     L2321.GlobalTechCoef_cement %>%
       filter(minicam.energy.input == "limestone") %>%
-      select(coefficient) %>%
-      .[["coefficient"]] %>%
+      pull(coefficient) %>%
       mean ->
       coef_mean # temporary value
 
     A_PrimaryFuelCCoef %>%
       filter(PrimaryFuelCO2Coef.name == "limestone") %>%
-      select(PrimaryFuelCO2Coef) %>%
-      .[["PrimaryFuelCO2Coef"]] %>%
+      pull(PrimaryFuelCO2Coef) %>%
       mean ->
       PrimaryFuelCO2Coef_mean # temporary value
 
@@ -258,15 +256,14 @@ module_energy_L2321.cement <- function(command, ...) {
 
     L1321.out_Mt_R_cement_Yh %>%
       filter(year %in% BASE_YEARS) %>%
-      rename(calOutputValue = value) %>%
-      mutate(calOutputValue = round(calOutputValue, energy.DIGITS_CALOUTPUT)) %>%
+      mutate(calOutputValue = round(value, energy.DIGITS_CALOUTPUT)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(calibrated_techs_export, by = "sector") %>%
       mutate(stub.technology = technology,
              share.weight.year = year,
              subs.share.weight = if_else(calOutputValue > 0, 1, 0),
              tech.share.weight = subs.share.weight) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["StubTechProd"]])) ->
+      select(LEVEL2_DATA_NAMES[["StubTechProd"]]) ->
       L2321.StubTechProd_cement
 
     # L2321.StubTechCoef_cement: region-specific coefficients of cement production technologies
@@ -278,13 +275,12 @@ module_energy_L2321.cement <- function(command, ...) {
 
     L1321.IO_GJkg_R_cement_F_Yh %>%
       filter(year %in% HISTORICAL_YEARS[HISTORICAL_YEARS %in% c(BASE_YEARS, FUTURE_YEARS)]) %>%
-      rename(coefficient = value) %>%
-      mutate(coefficient = round(coefficient,energy.DIGITS_COEFFICIENT)) %>%
+      mutate(coefficient = round(value, energy.DIGITS_COEFFICIENT)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(calibrated_techs_export, by = c("sector", "fuel")) %>%
       mutate(stub.technology = technology,
              market.name = region) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["StubTechCoef"]])) ->
+      select(LEVEL2_DATA_NAMES[["StubTechCoef"]]) ->
       L2321.StubTechCoef_cement
 
     # L2321.StubTechCalInput_cement_heat: calibrated cement production
@@ -295,8 +291,7 @@ module_energy_L2321.cement <- function(command, ...) {
 
     L1321.in_EJ_R_cement_F_Y %>%
       filter(year %in% BASE_YEARS) %>%
-      rename(calibrated.value = value) %>%
-      mutate(calibrated.value = round(calibrated.value, energy.DIGITS_CALOUTPUT)) %>%
+      mutate(calibrated.value = round(value, energy.DIGITS_CALOUTPUT)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(calibrated_techs_export, by = c("sector", "fuel")) %>%
       # This table should only be the technologies for producing heat - drop the electricity inputs to the cement production technology
@@ -305,7 +300,7 @@ module_energy_L2321.cement <- function(command, ...) {
              share.weight.year = year,
              subs.share.weight = if_else(calibrated.value > 0, 1, 0),
              tech.share.weight = subs.share.weight) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["StubTechCalInput"]])) ->
+      select(LEVEL2_DATA_NAMES[["StubTechCalInput"]]) ->
       L2321.StubTechCalInput_cement_heat
 
     # L2321.PerCapitaBased_cement: per-capita based flag for cement exports final demand
@@ -315,8 +310,7 @@ module_energy_L2321.cement <- function(command, ...) {
 
     # L2321.BaseService_cement: base-year service output of cement
     L2321.StubTechProd_cement %>%
-      select(region, year, calOutputValue) %>%
-      rename(base.service = calOutputValue) %>%
+      select(region, year, base.service = calOutputValue) %>%
       mutate(energy.final.demand = A321.demand[["energy.final.demand"]]) ->
       L2321.BaseService_cement
 
@@ -324,7 +318,7 @@ module_energy_L2321.cement <- function(command, ...) {
     A321.demand %>%
       write_to_all_regions(LEVEL2_DATA_NAMES[["PriceElasticity"]][LEVEL2_DATA_NAMES[["PriceElasticity"]] != "year"], GCAM_region_names) %>%
       repeat_add_columns(tibble(year = FUTURE_YEARS)) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["PriceElasticity"]])) ->
+      select(LEVEL2_DATA_NAMES[["PriceElasticity"]]) ->
       L2321.PriceElasticity_cement
 
     # L2321.IncomeElasticity_cement_scen: income elasticity of cement (scenario-specific)
@@ -336,8 +330,8 @@ module_energy_L2321.cement <- function(command, ...) {
       filter(year %in% c(max(BASE_YEARS), FUTURE_YEARS)) %>%
       # Per-capita GDP ratios, which are used in the equation for demand growth
       group_by(GCAM_region_ID, scenario) %>%
-      mutate(temp_lag = lag(value, 1)) %>%
-      mutate(value = value / temp_lag) %>%
+      mutate(temp_lag = lag(value, 1),
+             value = value / temp_lag) %>%
       ungroup %>%
       select(-temp_lag) %>%
       filter(year %in% FUTURE_YEARS) ->
@@ -363,10 +357,14 @@ module_energy_L2321.cement <- function(command, ...) {
     for(i in seq_along(elast_years)[-1]) {
       L2321.Output_cement %>%
         filter(year == elast_years[i - 1]) %>%
-        left_join(filter(L2321.pcgdpRatio_ALL_R_Y, year == elast_years[i]), by = c("GCAM_region_ID", "scenario")) %>% # strick left join fails timeshift test due to NAs in L102.pcgdp_thous90USD_Scen_R_Y under timeshift mode
+        # strick left join fails timeshift test due to NAs in L102.pcgdp_thous90USD_Scen_R_Y under timeshift mode
+        left_join(filter(L2321.pcgdpRatio_ALL_R_Y, year == elast_years[i]), by = c("GCAM_region_ID", "scenario")) ->
+        intermediate
+
+      intermediate %>%
         mutate(parameter = approx(x = A321.inc_elas_output[["pc.output_t"]],
                                   y = A321.inc_elas_output[["inc_elas"]],
-                                  xout = .[['value.x']],
+                                  xout = intermediate[["value.x"]],
                                   rule = 2)[['y']]) %>%
         mutate(value = value.x * value.y ^ parameter) %>%
         mutate(year = elast_years[i]) %>%
@@ -380,7 +378,7 @@ module_energy_L2321.cement <- function(command, ...) {
       filter(year %in% FUTURE_YEARS) %>%
       mutate(value = approx( x = A321.inc_elas_output[["pc.output_t"]],
                              y = A321.inc_elas_output[["inc_elas"]],
-                             xout = .[[ "value" ]], rule = 2)[["y"]]) %>%
+                             xout = value, rule = 2)[["y"]]) %>%
       mutate(value = round(value, energy.DIGITS_INCELAS_IND)) %>%
       rename(income.elasticity = value) %>%
       mutate(energy.final.demand = A321.demand[["energy.final.demand"]]) ->
@@ -393,14 +391,14 @@ module_energy_L2321.cement <- function(command, ...) {
     for(ieo in INCOME_ELASTICITY_OUTPUTS) {
       L2321.IncomeElasticity_cement %>%
         filter(scenario == ieo) %>%
-        select(one_of(LEVEL2_DATA_NAMES[["IncomeElasticity"]])) %>%
+        select(LEVEL2_DATA_NAMES[["IncomeElasticity"]]) %>%
         add_title(paste("Income elasticity of cement -", ieo)) %>%
         add_units("Unitless") %>%
         add_comments("First calculate cement output as the base-year cement output times the GDP ratio raised to the income elasticity") %>%
         add_comments("Then back out the appropriate income elasticities from cement output") %>%
         add_legacy_name(paste0("L2321.IncomeElasticity_cement_", tolower(ieo))) %>%
         add_precursors("L102.pcgdp_thous90USD_GCAM3_R_Y", "L102.pcgdp_thous90USD_Scen_R_Y", "common/GCAM_region_names", "energy/A321.demand", "energy/calibrated_techs",
-                       "temp-data-inject/L1321.out_Mt_R_cement_Yh", "L101.Pop_thous_GCAM3_R_Y", "socioeconomics/A321.inc_elas_output") ->
+                       "L1321.out_Mt_R_cement_Yh", "L101.Pop_thous_GCAM3_R_Y", "socioeconomics/A321.inc_elas_output") ->
         x
       assign(paste0("L2321.IncomeElasticity_cement_", tolower(ieo)), x)
     }
@@ -490,7 +488,7 @@ module_energy_L2321.cement <- function(command, ...) {
       add_units("Mt") %>%
       add_comments("Values are calculated using L1321.out_Mt_R_cement_Yh then added GCAM region information and supplysector, subsector, and technology information") %>%
       add_legacy_name("L2321.StubTechProd_cement") %>%
-      add_precursors("energy/calibrated_techs", "temp-data-inject/L1321.out_Mt_R_cement_Yh", "common/GCAM_region_names") ->
+      add_precursors("energy/calibrated_techs", "L1321.out_Mt_R_cement_Yh", "common/GCAM_region_names") ->
       L2321.StubTechProd_cement
 
     L2321.StubTechCalInput_cement_heat %>%
@@ -498,7 +496,7 @@ module_energy_L2321.cement <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Values are calculated using L1321.in_EJ_R_cement_F_Y then added GCAM region information and supplysector, subsector, technology, and input information") %>%
       add_legacy_name("L2321.StubTechCalInput_cement_heat") %>%
-      add_precursors("energy/calibrated_techs", "temp-data-inject/L1321.in_EJ_R_cement_F_Y", "common/GCAM_region_names") ->
+      add_precursors("energy/calibrated_techs", "L1321.in_EJ_R_cement_F_Y", "common/GCAM_region_names") ->
       L2321.StubTechCalInput_cement_heat
 
     L2321.StubTechCoef_cement %>%
@@ -506,7 +504,7 @@ module_energy_L2321.cement <- function(command, ...) {
       add_units("limestone input is unitless (Mt limestone per Mt cement); all others are GJ per kg (EJ of energy per Mt of cement)") %>%
       add_comments("Coefficients are calculated using L1321.IO_GJkg_R_cement_F_Yh") %>%
       add_legacy_name("L2321.StubTechCoef_cement") %>%
-      add_precursors("energy/calibrated_techs", "temp-data-inject/L1321.IO_GJkg_R_cement_F_Yh", "common/GCAM_region_names") ->
+      add_precursors("energy/calibrated_techs", "L1321.IO_GJkg_R_cement_F_Yh", "common/GCAM_region_names") ->
       L2321.StubTechCoef_cement
 
     L2321.PerCapitaBased_cement %>%
@@ -522,7 +520,7 @@ module_energy_L2321.cement <- function(command, ...) {
       add_units("Mt") %>%
       add_comments("Transformed from L2321.StubTechProd_cement by adding energy.final.demand from A321.demand") %>%
       add_legacy_name("L2321.BaseService_cement") %>%
-      add_precursors("energy/A321.demand", "energy/calibrated_techs", "temp-data-inject/L1321.out_Mt_R_cement_Yh", "common/GCAM_region_names") ->
+      add_precursors("energy/A321.demand", "energy/calibrated_techs", "L1321.out_Mt_R_cement_Yh", "common/GCAM_region_names") ->
       L2321.BaseService_cement
 
     L2321.PriceElasticity_cement %>%

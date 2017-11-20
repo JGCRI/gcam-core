@@ -48,7 +48,7 @@ module_gcam.usa_LA114.Wind <- function(command, ...) {
         complete(year = c(year, gcamusa.WIND_BASE_COST_YEAR)) %>%
         mutate(value = approx_fun(year, value, rule = 2)) %>%
         filter(year == gcamusa.WIND_BASE_COST_YEAR) %>%
-        .[["value"]]
+        pull(value)
     }
 
     A23.globaltech_capital %>% filter_gather_interp_get_cost -> L114.CapCost

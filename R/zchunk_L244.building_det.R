@@ -348,8 +348,7 @@ module_energy_L244.building_det <- function(command, ...) {
       filter(year %in% BASE_YEARS) %>%
       left_join_keep_first_only(calibrated_techs_bld_det, by = c("sector", "service")) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      select(c("region", "gcam.consumer", "nodeInput", "building.node.input"),
-             building.service.input = supplysector, year, base.service) # replace with LEVEL2_DATA_NAMES[["BldNodes]])
+      select(LEVEL2_DATA_NAMES[["BldNodes"]], building.service.input = supplysector, year, base.service)
 
     # Separate thermal and generic services into separate tibbles
     L244.GenericBaseService <- L244.base_service %>%

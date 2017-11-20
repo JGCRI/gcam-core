@@ -27,7 +27,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
              FILE = "energy/A10.rsrc_info",
              FILE = "energy/A21.globaltech_cost",
              FILE = "energy/A22.globaltech_cost",
-             FILE = "temp-data-inject/L1321.in_EJ_R_indenergy_F_Yh",
+             "L1321.in_EJ_R_indenergy_F_Yh",
              "L132.in_EJ_R_indfeed_F_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L1322.Fert_Prod_MtN_R_F_Y",
@@ -58,12 +58,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
     A10.rsrc_info <- get_data(all_data, "energy/A10.rsrc_info")
     A21.globaltech_cost <- get_data(all_data, "energy/A21.globaltech_cost")
     A22.globaltech_cost <- get_data(all_data, "energy/A22.globaltech_cost")
-
-    get_data(all_data, "temp-data-inject/L1321.in_EJ_R_indenergy_F_Yh") %>%
-      gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
-      mutate(year = as.integer(substr(year, 2, 5))) ->
-      L1321.in_EJ_R_indenergy_F_Yh
-
+    L1321.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L1321.in_EJ_R_indenergy_F_Yh")
     L132.in_EJ_R_indfeed_F_Yh <- get_data(all_data, "L132.in_EJ_R_indfeed_F_Yh")
 
 
@@ -281,7 +276,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       filter(resource == "natural gas",
              year == base_fert_year) %>%
       summarise(value = sum(value)) %>% # Ensuring no duplicates
-      .[["value"]] -> # Save cost as single number. Units are 1975 USD per GJ.
+      pull(value) -> # Save cost as single number. Units are 1975 USD per GJ.
       A10.rsrc_info_base_fert_year
 
     # A21.globaltech_cost and A22.globaltech_cost report costs on primary energy handling (A21) and transformation technologies (A22)
@@ -300,7 +295,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       mutate(value = approx_fun(year, value)) %>% # Interpolation step
       ungroup() %>%
       filter(technology == "regional natural gas", year == base_fert_year) %>% # Filter only for natural gas and base_fert_year
-      .[["value"]] -> # Save cost as single number. Units are 1975 USD per GJ.
+      pull(value) -> # Save cost as single number. Units are 1975 USD per GJ.
       A21.globaltech_cost_base_fert_year
 
     # Interpolate to get cost of primary energy transformation for natural gas in base_fert_year
@@ -311,7 +306,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       mutate(value = approx_fun(year, value)) %>% # Interpolation step
       ungroup() %>%
       filter(technology == "natural gas", year == base_fert_year) %>% # Filter only for natural gas and base_fert_year
-      .[["value"]] -> # Save cost as single number. Units are 1975 USD per GJ.
+      pull(value) -> # Save cost as single number. Units are 1975 USD per GJ.
       A22.globaltech_cost_base_fert_year
 
     # Sum up costs. Units are 1975 USD per GJ.
@@ -322,7 +317,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       filter(year == base_fert_year,
              GCAM_region_ID == gcam.USA_CODE,
              fuel == "gas") %>%
-      .[["value"]] -> # Save coefficient as single number
+      pull(value) -> # Save coefficient as single number
       L1322.IO_GJkgN_Fert_gas
 
     # Multiply cost by input-output cofficient. Units are 1975 USD per GJ.
@@ -400,7 +395,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       add_comments("Re-allocation of energy use between energy and feedstock quantities for the industrial sector was done to avoid negative values at the country level, before aggregating to the regional level.") %>%
       add_legacy_name("L1322.IO_R_Fert_F_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "energy/IEA_ctry", "energy/IEA_Fert_fuel_data",
-                     "L142.ag_Fert_Prod_MtN_ctry_Y", "temp-data-inject/L1321.in_EJ_R_indenergy_F_Yh",
+                     "L142.ag_Fert_Prod_MtN_ctry_Y", "L1321.in_EJ_R_indenergy_F_Yh",
                      "L132.in_EJ_R_indfeed_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L1322.IO_R_Fert_F_Yh
@@ -412,7 +407,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       add_comments("Re-allocation of energy use between energy and feedstock quantities for the industrial sector was done to avoid negative values at the country level, before aggregating to the regional level.") %>%
       add_legacy_name("L1322.in_EJ_R_indenergy_F_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "energy/IEA_ctry", "energy/IEA_Fert_fuel_data",
-                     "L142.ag_Fert_Prod_MtN_ctry_Y", "temp-data-inject/L1321.in_EJ_R_indenergy_F_Yh",
+                     "L142.ag_Fert_Prod_MtN_ctry_Y", "L1321.in_EJ_R_indenergy_F_Yh",
                      "L132.in_EJ_R_indfeed_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1322.in_EJ_R_indenergy_F_Yh
@@ -424,7 +419,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       add_comments("Re-allocation of energy use between energy and feedstock quantities for the industrial sector was done to avoid negative values at the country level, before aggregating to the regional level.") %>%
       add_legacy_name("L1322.in_EJ_R_indfeed_F_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "energy/IEA_ctry", "energy/IEA_Fert_fuel_data",
-                     "L142.ag_Fert_Prod_MtN_ctry_Y", "temp-data-inject/L1321.in_EJ_R_indenergy_F_Yh",
+                     "L142.ag_Fert_Prod_MtN_ctry_Y", "L1321.in_EJ_R_indenergy_F_Yh",
                      "L132.in_EJ_R_indfeed_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1322.in_EJ_R_indfeed_F_Yh

@@ -168,13 +168,13 @@ module_energy_L225.hydrogen <- function(command, ...) {
 
     L225.AllKeyword_h2 %>%
       filter(!is.na(primary.renewable)) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "primary.renewable")) ->
+      select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "primary.renewable") ->
       L225.PrimaryRenewKeyword_h2
 
     # L225.AvgFossilEffKeyword_h2: Keywords of fossil/bio electric generation technologies
     L225.AllKeyword_h2 %>%
       filter(!is.na(average.fossil.efficiency)) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "average.fossil.efficiency")) ->
+      select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "average.fossil.efficiency") ->
       L225.AvgFossilEffKeyword_h2
 
     # L225.GlobalTechCapture_h2: CO2 capture fractions from global fertilizer production technologies with CCS
@@ -190,7 +190,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
       filter(year %in% FUTURE_YEARS) %>%
       # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
       rename(sector.name = supplysector, subsector.name = subsector) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "remove.fraction")) %>%
+      select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "remove.fraction") %>%
       mutate(storage.market = energy.CO2.STORAGE.MARKET) ->
       L225.GlobalTechCapture_h2
 

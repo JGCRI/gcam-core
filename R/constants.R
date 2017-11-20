@@ -304,6 +304,10 @@ energy.FLOOR_TO_SURFACE_RATIO <- 5.5
 energy.INTERNAL_GAINS_SCALAR_USA_H <- -930
 energy.INTERNAL_GAINS_SCALAR_USA_C <- 350
 
+# used to avoid negative/zero energy when disaggregating detailed industries (cement, fertilizer)
+energy.MIN_IN_EJ_IND <- 1e-3
+# Sets maximum for electricity IO coefficient used in cement sector
+energy.MAX_IOELEC <- 4
 
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
@@ -522,6 +526,7 @@ gcamusa.DEFAULT_COEFFICIENT <- 1
 gcamusa.DEFAULT_MARKET <- "USA"
 gcamusa.GAS_ADJ_THRESH <- 5
 gcamusa.DIGITS_COST <- 4
+gcamuse.DIGITS_DEPRESOURCE <- 1
 gcamusa.EFFICIENCY_PARTITION_YEAR <- 2005
 
 # Degree day norms
@@ -530,7 +535,6 @@ gcamusa.BASE_CDD_USA <- 1215 # https://www.eia.gov/totalenergy/data/annual/showt
 
 # default logit type
 gcamusa.DEFAULT_LOGIT_TYPE <- NA
-
 
 # some delimiters
 gcamusa.STATE_SUBSECTOR_DELIMITER <- " "

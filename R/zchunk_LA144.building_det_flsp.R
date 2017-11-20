@@ -156,7 +156,7 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
       summarise(`1980` = sum(`1980`),
                 `1990` = sum(`1990`)) %>%
       mutate(growthrate_1980_1990 = `1990` / `1980`) %>%
-      .[["growthrate_1980_1990"]] -> # Save as single value
+      pull(growthrate_1980_1990) -> # Save as single value
       growthrate_1980_1990
 
     # Calculate 1980 data from 1990 using calculated growth rate
@@ -169,13 +169,13 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
     L144.OECD_pcflsp_Yh_wide_2 %>%
       filter(iso == "usa") %>%
       mutate(value_usa_ratio = `2004` / `1998`) %>%
-      .[["value_usa_ratio"]] ->
+      pull(value_usa_ratio) ->
       value_usa_ratio
 
     L144.OECD_pcflsp_Yh_wide_2 %>%
       filter(iso == "fra") %>%
       mutate(value_fra_ratio = `2004` / `2001`) %>%
-      .[["value_fra_ratio"]] ->
+      pull(value_fra_ratio) ->
       value_fra_ratio
 
     L144.OECD_pcflsp_Yh_wide_2 %>%

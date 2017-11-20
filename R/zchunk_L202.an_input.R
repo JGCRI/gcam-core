@@ -142,7 +142,7 @@ module_aglu_L202.an_input <- function(command, ...) {
              maxSubResource = round(maxSubResource, aglu.DIGITS_CALOUTPUT),
              year.fillout = min(BASE_YEARS)) %>%
       left_join_keep_first_only(select(A_agRsrcCurves, sub.renewable.resource, renewresource), by = "sub.renewable.resource") %>%
-      select(one_of(LEVEL2_DATA_NAMES[["maxSubResource"]])) ->
+      select(LEVEL2_DATA_NAMES[["maxSubResource"]]) ->
       L202.maxSubResource
 
     # L202.RenewRsrcCurves
@@ -189,7 +189,7 @@ module_aglu_L202.an_input <- function(command, ...) {
     A_an_input_technology %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       mutate(sector.name = supplysector, subsector.name = subsector) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["GlobalTechCoef"]])) ->
+      select(LEVEL2_DATA_NAMES[["GlobalTechCoef"]]) ->
       L202.GlobalTechCoef_in
 
     # L202.GlobalTechShrwt_in: Default shareweights for inputs to animal production
@@ -200,7 +200,7 @@ module_aglu_L202.an_input <- function(command, ...) {
                subsector = A_an_input_globaltech_shrwt$subsector, technology = A_an_input_globaltech_shrwt$technology) %>%
       mutate(share.weight = approx_fun(year, share.weight, rule = 2),
              sector.name = supplysector, subsector.name = subsector) %>%
-      select(one_of(c(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "share.weight"))) ->
+      select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "share.weight") ->
       L202.GlobalTechShrwt_in
 
     # L202.StubTechProd_in: base year output of the inputs (feed types) to animal production (142-149)
@@ -218,7 +218,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       mutate(share.weight.year = year,
              subs.share.weight = if_else(calOutputValue > 0, 1, 0),
              tech.share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["StubTechProd"]])) ->
+      select(LEVEL2_DATA_NAMES[["StubTechProd"]]) ->
       L202.StubTechProd_in
 
     # L202.Supplysector_an: generic animal production supplysector info (159-162)
@@ -257,7 +257,7 @@ module_aglu_L202.an_input <- function(command, ...) {
              share.weight.year = year,
              subs.share.weight = if_else(calOutputValue > 0, 1, 0),
              tech.share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["StubTechProd"]])) ->
+      select(LEVEL2_DATA_NAMES[["StubTechProd"]]) ->
       L202.StubTechProd_an
 
     # In general, technologies need to be aggregated to compute subsector share-weights. If any technology
@@ -298,7 +298,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       select(-coefficient) %>%
       left_join(final_coef_year_data, by = c("region", "supplysector", "subsector", "stub.technology", "minicam.energy.input", "market.name", "stub.technology")) %>%
       bind_rows(filter(L202.StubTechCoef_an, ! year > final_coef_year)) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["StubTechCoef"]])) ->
+      select(LEVEL2_DATA_NAMES[["StubTechCoef"]]) ->
       L202.StubTechCoef_an
 
     # Supplemental calculation of non-input cost of animal production (216-261)
@@ -364,7 +364,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       mutate(minicam.non.energy.input = "non-energy") %>%
       left_join_error_no_match(select(L202.an_FeedCost_R_C, GCAM_commodity, nonFeedCost), by = c("supplysector" = "GCAM_commodity")) %>%
       mutate(input.cost = round(nonFeedCost, aglu.DIGITS_CALPRICE)) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["GlobalTechCost"]])) ->
+      select(LEVEL2_DATA_NAMES[["GlobalTechCost"]]) ->
       L202.GlobalTechCost_an
 
     # L202.GlobalRenewTech_imp_an: generic technology info for animal imports (272-277)
@@ -388,7 +388,7 @@ module_aglu_L202.an_input <- function(command, ...) {
                 by = c("region", "supplysector" = "GCAM_commodity", "year")) %>%
       mutate(fixedOutput = pmax(0, round(-1 * NetExp_Mt, aglu.DIGITS_CALOUTPUT))) %>%
       mutate(share.weight.year = year, subs.share.weight = 0, tech.share.weight = 0) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["StubTechFixOut"]])) ->
+      select(LEVEL2_DATA_NAMES[["StubTechFixOut"]]) ->
       L202.StubTechFixOut_imp_an
 
     # For values beyond the final base year, copy the final base year forward (293-306)
@@ -406,7 +406,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       select(-fixedOutput) %>%
       left_join_error_no_match(final_an_exp_year_data, by = c("region", "supplysector", "subsector", "stub.technology", "subs.share.weight", "tech.share.weight")) %>%
       bind_rows(filter(L202.StubTechFixOut_imp_an, ! year > final_an_exp_year)) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["StubTechFixOut"]])) ->
+      select(LEVEL2_DATA_NAMES[["StubTechFixOut"]]) ->
       L202.StubTechFixOut_imp_an
 
     # Remove any regions for which agriculture and land use are not modeled (308-320)

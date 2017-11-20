@@ -80,7 +80,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       mutate(calPrice = replace(calPrice, AgSupplySector == "biomass", 1), # value irrelevant
              # For regional commodities, specify market names with region names
              market = replace(market, market == "regional", region[market == "regional"])) %>%
-      select(one_of(c(LEVEL2_DATA_NAMES[["AgSupplySector"]], "logit.type"))) %>%
+      select(LEVEL2_DATA_NAMES[["AgSupplySector"]], "logit.type") %>%
       # Remove any regions for which agriculture and land use are not modeled
       filter(!region %in% aglu.NO_AGLU_REGIONS) ->
       L2012.AgSupplySector
@@ -116,7 +116,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
              logit.year.fillout = min(BASE_YEARS),
              logit.exponent = -3,
              logit.type = NA) %>%
-      select(one_of(c(LEVEL2_DATA_NAMES[["AgSupplySubsector"]], "logit.type"))) ->
+      select(LEVEL2_DATA_NAMES[["AgSupplySubsector"]], "logit.type") ->
       L2012.AgSupplySubsector
 
     # L2012.AgProduction_ag_irr_mgm: Agricultural commodities production by all technoligies
@@ -150,7 +150,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       mutate(AgSupplySector = GCAM_commodity,
              AgSupplySubsector = paste(GCAM_commodity, GLU_name, sep = "_"),
              AgProductionTechnology = paste(GCAM_commodity, GLU_name, IRR_RFD, MGMT, sep = "_")) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["AgProduction"]])) ->
+      select(LEVEL2_DATA_NAMES[["AgProduction"]]) ->
       L2011.AgProduction_ag_irr
 
     # For agricultural product calibrated output, use the specific management-partitioned data
@@ -169,12 +169,12 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
     if(OLD_DATA_SYSTEM_BEHAVIOR) {
       # Three unused columns (level, Irr_Rfd, GLU_name) are not dropped in ODS
       L2012.AgProduction_ag_irr_mgmt %>%
-        select(one_of(LEVEL2_DATA_NAMES[["AgProduction"]]), level, Irr_Rfd, GLU = GLU_name) ->
+        select(LEVEL2_DATA_NAMES[["AgProduction"]], level, Irr_Rfd, GLU = GLU_name) ->
         L2012.AgProduction_ag_irr_mgmt
     } else {
       # Drop those columns
       L2012.AgProduction_ag_irr_mgmt %>%
-        select(one_of(LEVEL2_DATA_NAMES[["AgProduction"]])) ->
+        select(LEVEL2_DATA_NAMES[["AgProduction"]]) ->
         L2012.AgProduction_ag_irr_mgmt
     }
 
@@ -204,7 +204,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
              subs.share.weight = replace(subs.share.weight, calOutputValue > 0, 1),
              tech.share.weight = 0,
              tech.share.weight = replace(tech.share.weight, calOutputValue > 0, 1)) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["AgProduction"]])) ->
+      select(LEVEL2_DATA_NAMES[["AgProduction"]]) ->
       L2012.AgProduction_For_Past
 
     # L2012.AgHAtoCL_irr_mgmt: Harvests area to cropland ratio per year, by technologies
@@ -246,7 +246,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       mutate(GCAM_commodity = sub("RootTuber", "Root_Tuber", GCAM_commodity),
              AgSupplySubsector = paste(GCAM_commodity, GLU_name, sep = "_"),
              AgProductionTechnology = paste(GCAM_commodity, GLU_name, IRR_RFD, MGMT, sep = "_")) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["AgHAtoCL"]])) ->
+      select(LEVEL2_DATA_NAMES[["AgHAtoCL"]]) ->
       L2012.AgHAtoCL_irr_mgmt
 
     # L2012.AgYield_bio_ref: bioenergy yields.
@@ -295,7 +295,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       # in the future periods (most are tropical areas with no need for irrigation).
       replace_na(list(yield = 0)) %>%
       mutate(AgProductionTechnology = paste(AgSupplySubsector, IRR_RFD, sep = "_")) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["AgYield"]])) ->
+      select(LEVEL2_DATA_NAMES[["AgYield"]]) ->
       L2011.AgYield_bio_grass_irr
 
     # L201.AgYield_bio_tree: base year biomass yields, tree bioenergy crops
@@ -314,7 +314,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       mutate(AgProductionTechnology = AgSupplySubsector) %>%
       # Copy to all base years
       repeat_add_columns(tibble(year = BASE_YEARS)) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["AgTechYr"]])) %>%
+      select(LEVEL2_DATA_NAMES[["AgTechYr"]]) %>%
       mutate(GLU_name = AgSupplySubsector,
              GLU_name = sub("biomass_tree_", "", GLU_name)) %>%
       # Match in grass crop yields where available, use left_join instead because of NAs
@@ -322,7 +322,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       # Where not available (i.e., where there is forest but not cropped land),
       # use a default minimum as these are likely remote / unpopulated lands
       replace_na(list(yield = min(L201.AgYield_bio_grass$yield))) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["AgYield"]])) ->
+      select(LEVEL2_DATA_NAMES[["AgYield"]]) ->
       L201.AgYield_bio_tree
 
     # L2011.AgYield_bio_tree_irr: yield of bioenergy tree crops (use the irr:rfd yield ratios from grass crops)
@@ -361,7 +361,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
              # When grass crops are not available, use the generic yields
              yield = replace(yield, !is.na(yield_irr), yield_irr[!is.na(yield_irr)]),
              yield = round(yield, digits = aglu.DIGITS_CALOUTPUT)) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["AgYield"]])) ->
+      select(LEVEL2_DATA_NAMES[["AgYield"]]) ->
       L2011.AgYield_bio_tree_irr
 
     # Last step, apply different yield multipliers for high and low mgmt techs
@@ -388,7 +388,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       mutate(yield = yield * yieldmult,
              # Add technology back
              AgProductionTechnology = paste(AgSupplySubsector, IRR_RFD, MGMT, sep = "_")) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["AgYield"]])) ->
+      select(LEVEL2_DATA_NAMES[["AgYield"]]) ->
       L2012.AgYield_bio_ref
 
     # Produce outputs

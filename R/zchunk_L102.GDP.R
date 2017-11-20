@@ -64,7 +64,7 @@ join.gdp.ts <- function(past, future, grouping) {
   gdp.future.ratio <- filter(future, year > base.year) %>%
     left_join_error_no_match(baseyear.future.gdp, by = c('scenario', grouping)) %>%
     mutate(gdp.ratio = gdp / base.gdp) %>%
-    select(one_of(c('scenario', grouping, 'year', 'gdp.ratio')))
+    select('scenario', grouping, 'year', 'gdp.ratio')
 
   ## add the scenario column to the past
   gdp.past <- tidyr::crossing(past, scenario = unique(gdp.future.ratio[['scenario']]))
@@ -75,7 +75,7 @@ join.gdp.ts <- function(past, future, grouping) {
   rslt <- left_join(baseyear.past.gdp, gdp.future.ratio,
                     by = c('scenario', grouping)) %>%
     mutate(gdp = base.gdp * gdp.ratio) %>%
-    select(one_of(c('scenario', grouping, 'year', 'gdp'))) %>%
+    select('scenario', grouping, 'year', 'gdp') %>%
     bind_rows(gdp.past, .)
 
   if(drop.scenario) {
