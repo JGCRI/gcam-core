@@ -1,6 +1,6 @@
 #' module_water_L133.water.demand.livestock
 #'
-#' Briefly describe what this chunk does.
+#' Calculate livestock water coefficients by region ID / GCAM_commodity/ water type
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -12,9 +12,8 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
-#' @export
-module_water_L133.water.demand.livestock_DISABLED <- function(command, ...) {
+#' @author KRD November 2017
+module_water_L133.water.demand.livestock <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              "L105.an_Prod_Mt_R_C_Y",
@@ -37,40 +36,120 @@ module_water_L133.water.demand.livestock_DISABLED <- function(command, ...) {
     L100.FAO_an_Dairy_Stocks <- get_data(all_data, "L100.FAO_an_Dairy_Stocks")
 
     # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
+    # Calculate livestock water coefficients by region ID / GCAM_commodity/ water type.
+
+    # Start by finding  the number of non-dairy producing livestock.
+
+    # Create a tibble of dairy producing stocks by country and FAO animal
+    # product name. Only use stock information from the year 2000 since that is the
+    # year the water use coefficients are from. This tibble will be used in the next step to adjust
+    # the total livestock for the
+    L100.FAO_an_Dairy_Stocks %>%
+      filter(year == 2000) %>%
+      select(iso, item, value, year) %>%
+      left_join_error_no_match(FAO_an_items_Stocks %>% select(item, dairy.to.total),
+                               by = "item") %>%
+      select(iso, item = dairy.to.total, dairy.adj = value, year) ->
+      L133.dairy_an_adj
+
+    # Adjust the total FAO animal stocks by removing the FAO dairy producing animals.
+    # Assume the dairy stock has a value of zero if no data is available. The end
+    # result is a count of non-dairy producing livestock.
+    L100.FAO_an_Stocks %>%
+      # Use left_join here because we do not expect a 1:1 match.
+      left_join(L133.dairy_an_adj, by = c("item", "iso", "year")) %>%
+      replace_na(list(dairy.adj = 0)) %>%
+      mutate(value = value - dairy.adj) ->
+      L133.FAO_an_heads
+
+    # It seems the PDR stoped reporting data after 1994 for total livestock, this causes the
+    # count of non-dairy producing livestock to be negative. For now set any negative
+    # count of non-dairy producing livestock to zero.
+    L133.FAO_an_heads <- mutate(L133.FAO_an_heads, value = if_else(value < 0, 0, value))
+
+    # Now combine the nondairy producing livestock and dairy producing livestock information
+    # into a single tibble. Subsest for the year 2000 since that is the year the water use
+    # coefficients are from.
+    L133.FAO_an_heads %>%
+      select(iso, item, year, value) %>%
+      bind_rows(L100.FAO_an_Dairy_Stocks %>%
+                  select(iso, item, year, value)) %>%
+      filter(year == 2000) ->
+      L133.FAO_an_heads
+
+
+    # Now calculate the water demand by FAO item.
     #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
+    # Add FAO stock information, livestock water use coefficient, and GCAM information to the dairy and non-dairy
+    # livestock count form mapping files.
+    L133.FAO_an_heads %>%
+      # A 1:1 match is not expected and we do not want NAs introduced to the data frame so
+      # use inner join here.
+      inner_join(FAO_an_items_Stocks, by = "item") %>%
+      # A 1:1 match is not expected and we do not want NAs introduced to the data frame so
+      # use inner join here.
+      inner_join(LivestockWaterFootprint_MH2010, by = "Animal") %>%
+      left_join_error_no_match(iso_GCAM_regID, by = "iso") ->
+      L133.FAO_an_heads
+
+    # Multiply the livestock count by the livestock water use coefficient from Mekonnen and Hoekstra 2010.
     #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
+    # Since the Mekonnen and Hoekstra 2010 coefficient is in liters/head per day convert from L to m^3 per
+    # 1000 heads by dividing by 1000 and then convert from daily consumption to per year.
+    L133.FAO_an_heads <- mutate(L133.FAO_an_heads, water.consumption = value * Coefficient / 1000 / CONV_DAYS_YEAR) ->
+
+
+    # Calculate water demand by GCAM_commodity
     #
-    #
-    # NOTE: there are `merge` calls in this code. Be careful!
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
+    # Aggregate the livestock water consumption by GCAM region and commodity.
+    L133.FAO_an_heads %>%
+      group_by(GCAM_region_ID, GCAM_commodity) %>%
+      summarise(water.consumption = sum(water.consumption)) %>%
+      ungroup ->
+      L133.water_demand_livestock_R_C_W_km3_Mt
+
+    # Add FAO production information to the tibble of aggregated livestock water consumption.
+    L133.water_demand_livestock_R_C_W_km3_Mt %>%
+      left_join_error_no_match(L105.an_Prod_Mt_R_C_Y %>%
+                                 filter(year == 2000) %>%
+                                 select(GCAM_region_ID, GCAM_commodity, year, value),
+        by = c("GCAM_region_ID", "GCAM_commodity")) ->
+      L133.water_demand_livestock_R_C_W_km3_Mt
+
+    # Average the aggregated livestock water consumption by the total production. Since water
+    # consumption is in m^3 and production is in Mt to km^3/Mt we must divide by 1e9.
+    L133.water_demand_livestock_R_C_W_km3_Mt %>%
+      mutate(coefficient = water.consumption / value / 1e9) ->
+      L133.water_demand_livestock_R_C_W_km3_Mt
+
+    # Add the water type information to the livestock water demand tibble. Add water type information
+    # to the tibble, since the water withdrawals are the same as consumption for livestock use the same
+    # coefficients for the water withdrawals and water consumption.
+    L133.water_demand_livestock_R_C_W_km3_Mt %>%
+      repeat_add_columns(tibble(water_type = MAPPED_WATER_TYPES)) ->
+      L133.water_demand_livestock_R_C_W_km3_Mt
+
+    # Select the columns to output.
+    L133.water_demand_livestock_R_C_W_km3_Mt %>%
+      select(GCAM_region_ID, GCAM_commodity, water_type, coefficient) ->
+      L133.water_demand_livestock_R_C_W_km3_Mt
+
+
     # ===================================================
 
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L133.water_demand_livestock_R_C_W_km3_Mt %>%
+      add_title("Livestock water coefficients by region ID / GCAM_commodity/ water type") %>%
+      add_units("coefficient = m^3 / Mt") %>%
+      add_comments("Separate non-dairy and dairy producing livestock and multiply by the Mekonnen and Hoekstra 2010 livestock water use coefficient.") %>%
+      add_comments("Aggregate the life stock water consumption by GCAM region livestock production.") %>%
       add_legacy_name("L133.water_demand_livestock_R_C_W_km3_Mt") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/iso_GCAM_regID",
+                     "L105.an_Prod_Mt_R_C_Y",
+                     "water/LivestockWaterFootprint_MH2010",
+                     "water/FAO_an_items_Stocks",
+                     "L100.FAO_an_Stocks",
+                     "L100.FAO_an_Dairy_Stocks") ->
       L133.water_demand_livestock_R_C_W_km3_Mt
 
     return_data(L133.water_demand_livestock_R_C_W_km3_Mt)
