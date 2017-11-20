@@ -81,7 +81,7 @@ module_emissions_L113.ghg_an_R_S_T_Y <- function(command, ...) {
     L113.EDGAR <- bind_rows(EDGAR_CH4, EDGAR_N2O) # combine CH4 and N2O
 
     L113.EDGAR %>%  # convert to long format
-      gather(year, value, -`IPCC-Annex`, -`World Region`, -ISO_A3, -Name, -IPCC, -IPCC_description, -Non.CO2) %>%
+      gather_years %>%
       # Not all IPCC codes in L113.EDGAR (5F2 and 5d) are in EDGAR_sector, so we can't use left_join_error_no_match
       left_join(EDGAR_sector, by = "IPCC") %>%
       select(-IPCC_description.y) %>%

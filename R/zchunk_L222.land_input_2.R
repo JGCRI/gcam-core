@@ -127,7 +127,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
       # logit.type is NA by default, so left_join
       left_join(select(A_LandNode_logit, logit.exponent, logit.type, LandNode), by = c("LandNode2" = "LandNode")) %>%
       append_GLU("LandNode1", "LandNode2") %>%
-      select(one_of(c(LEVEL2_DATA_NAMES[["LN2_Logit"]], "logit.type"))) ->
+      select(LEVEL2_DATA_NAMES[["LN2_Logit"]], "logit.type") ->
       L222.LN2_Logit
 
 
@@ -149,12 +149,12 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
     # Formed from filtering the master table by different years.
     L222.LC_bm2_R_Unmgd2_Yh_GLU %>%
       filter(year %in% LAND_HISTORY_YEARS) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["LN2_HistUnmgdAllocation"]])) ->
+      select(LEVEL2_DATA_NAMES[["LN2_HistUnmgdAllocation"]]) ->
       L222.LN2_HistUnmgdAllocation
 
     L222.LC_bm2_R_Unmgd2_Yh_GLU %>%
       filter(year %in% BASE_YEARS) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["LN2_UnmgdAllocation"]])) ->
+      select(LEVEL2_DATA_NAMES[["LN2_UnmgdAllocation"]]) ->
       L222.LN2_UnmgdAllocation
 
 
@@ -208,7 +208,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
       left_join_error_no_match(GCAMLandLeaf_CdensityLT, by = c("Land_Type" = "LandLeaf")) %>%
       rename(Cdensity_LT = Land_Type.y) %>%
       add_carbon_info(carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["LN2_UnmgdCarbon"]])) ->
+      select(LEVEL2_DATA_NAMES[["LN2_UnmgdCarbon"]]) ->
       L222.LN2_UnmgdCarbon
 
     # L222.LN1_UnmgdCarbon_prot: unmanaged carbon info, protected land in the first nest.
@@ -238,12 +238,12 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
     # Formed from filtering the master table by different years.
     L222.LC_bm2_R_Mgd2_Yh_GLU %>%
       filter(year %in% LAND_HISTORY_YEARS) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["LN2_HistMgdAllocation"]])) ->
+      select(LEVEL2_DATA_NAMES[["LN2_HistMgdAllocation"]]) ->
       L222.LN2_HistMgdAllocation
 
     L222.LC_bm2_R_Mgd2_Yh_GLU %>%
       filter(year %in% BASE_YEARS) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["LN2_MgdAllocation"]])) ->
+      select(LEVEL2_DATA_NAMES[["LN2_MgdAllocation"]]) ->
       L222.LN2_MgdAllocation
 
 
@@ -256,7 +256,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
       left_join_error_no_match(GCAMLandLeaf_CdensityLT, by = c("Land_Type" = "LandLeaf")) %>%
       rename(Cdensity_LT = Land_Type.y) %>%
       add_carbon_info(carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["LN2_MgdCarbon"]])) ->
+      select(LEVEL2_DATA_NAMES[["LN2_MgdCarbon"]]) ->
       L222.LN2_MgdCarbon
 
 

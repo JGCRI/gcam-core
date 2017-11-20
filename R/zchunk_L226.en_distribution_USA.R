@@ -135,35 +135,35 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
       mutate(subsector = supplysector,
              year.fillout = min(BASE_YEARS),
              share.weight = gcamusa.DEFAULT_SHAREWEIGHT) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]])) ->
+      select(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]]) ->
       L226.SubsectorShrwtFllt_en_USA
 
 
     # L226.SubsectorLogit_en_USA
     # NOTE: There is only one tech per subsector so the logit choice does not matter
     L226.SubsectorShrwtFllt_en_USA %>%
-      select(one_of(LEVEL2_DATA_NAMES[["Subsector"]])) %>%
+      select(LEVEL2_DATA_NAMES[["Subsector"]]) %>%
       mutate(logit.year.fillout = min(BASE_YEARS),
              logit.exponent = gcamusa.DEFAULT_LOGITEXP,
              logit.type = NA) %>%
-      select(one_of(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], "logit.type"))) ->
+      select(LEVEL2_DATA_NAMES[["SubsectorLogit"]], "logit.type") ->
       L226.SubsectorLogit_en_USA
 
 
     # L226.TechShrwt_en_USA: technology shareweights of energy handling and delivery
     # NOTE: can't use stub technologies because these would inherit the wrong energy-inputs
     L226.SubsectorShrwtFllt_en_USA %>%
-      select(one_of(LEVEL2_DATA_NAMES[["Subsector"]])) %>%
+      select(LEVEL2_DATA_NAMES[["Subsector"]]) %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       mutate(technology = subsector,
              share.weight = gcamusa.DEFAULT_SHAREWEIGHT) %>%
-      select(one_of(c(LEVEL2_DATA_NAMES[["TechYr"]], "share.weight"))) ->
+      select(LEVEL2_DATA_NAMES[["TechYr"]], "share.weight") ->
       L226.TechShrwt_en_USA
 
 
     # L226.TechCoef_en_USA: technology coefficients and market names of energy handling and delivery
     L226.TechShrwt_en_USA %>%
-      select(one_of(LEVEL2_DATA_NAMES[["TechYr"]])) %>%
+      select(LEVEL2_DATA_NAMES[["TechYr"]]) %>%
       mutate(minicam.energy.input = supplysector,
              coefficient = gcamusa.DEFAULT_COEFFICIENT,
              market.name = gcamusa.DEFAULT_MARKET) ->
@@ -219,7 +219,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
 
     # L226.TechCost_en_USA: cost adders
     L226.TechShrwt_en_USA %>%
-      select(one_of(LEVEL2_DATA_NAMES[["TechYr"]])) %>%
+      select(LEVEL2_DATA_NAMES[["TechYr"]]) %>%
       mutate(minicam.non.energy.input = "regional price adjustment") %>%
       left_join_error_no_match(L226.CostAdj_75USDGJ_FERC_F, by = c("region" = "grid_region")) %>%
       rename(coal = coal_adj,

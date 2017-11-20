@@ -143,8 +143,7 @@ module_energy_L244.building_det <- function(command, ...) {
     A44.fuelprefElasticity_SSP4 <- get_data(all_data, "energy/A44.fuelprefElasticity_SSP4")
     A44.fuelprefElasticity_SSP15 <- get_data(all_data, "energy/A44.fuelprefElasticity_SSP15")
     A44.globaltech_shrwt <- get_data(all_data, "energy/A44.globaltech_shrwt") %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year))
+      gather_years
     A44.gcam_consumer <- get_data(all_data, "energy/A44.gcam_consumer")
     A44.demandFn_serv <- get_data(all_data, "energy/A44.demandFn_serv")
     A44.demandFn_flsp <- get_data(all_data, "energy/A44.demandFn_flsp")
@@ -349,8 +348,7 @@ module_energy_L244.building_det <- function(command, ...) {
       filter(year %in% BASE_YEARS) %>%
       left_join_keep_first_only(calibrated_techs_bld_det, by = c("sector", "service")) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      select(c("region", "gcam.consumer", "nodeInput", "building.node.input"),
-             building.service.input = supplysector, year, base.service) # replace with LEVEL2_DATA_NAMES[["BldNodes]])
+      select(LEVEL2_DATA_NAMES[["BldNodes"]], building.service.input = supplysector, year, base.service)
 
     # Separate thermal and generic services into separate tibbles
     L244.GenericBaseService <- L244.base_service %>%

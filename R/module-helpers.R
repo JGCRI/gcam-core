@@ -219,12 +219,11 @@ write_to_all_states <- function(data, names) {
     data$price.exp.year.fillout <- "start-year"
   }
 
-
   data %>%
     set_years %>%
     mutate(region = NULL) %>% # remove region column if it exists
     repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
-    select(one_of(names))
+    select(names)
 }
 
 
@@ -464,10 +463,8 @@ fill_exp_decay_extrapolate <- function(d, out_years) {
 
   # The first step is to linearly interpolate missing values that are in between
   # values which are specified (approx_fun rule=1)
-  d %>%
-    gather(year, value, matches(YEAR_PATTERN)) %>%
-    mutate(year = as.integer(year)) ->
-    d
+  d <- gather_years(d)
+
   # We would like to replicate values for all years including those found in the
   # data as well as requested in out_years with the exception of the year (which
   # which is the column we are replicating on) and value which we would like to
@@ -585,7 +582,7 @@ downscale_FAO_country <- function(data, country_name, dissolution_year, years = 
   ctry_years <- years[years < dissolution_year]
   yrs <- as.character(c(ctry_years, dissolution_year))
   data %>%
-    select(one_of(c("item", "element", yrs))) %>%
+    select("item", "element", yrs) %>%
     group_by(item, element) %>%
     summarise_all(sum) %>%
     ungroup ->

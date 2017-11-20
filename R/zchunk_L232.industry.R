@@ -185,8 +185,7 @@ module_energy_L232.industry <- function(command, ...) {
 
     # L232.GlobalTechShrwt_ind: Shareweights of global industrial sector technologies
     A32.globaltech_shrwt %>%
-      gather(year, share.weight, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years(value_col = "share.weight") %>%
       complete(nesting(supplysector, subsector, technology), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
       arrange(supplysector, subsector, technology, year) %>%
       group_by(supplysector, subsector, technology) %>%
@@ -195,7 +194,7 @@ module_energy_L232.industry <- function(command, ...) {
       filter(year %in% c(BASE_YEARS, FUTURE_YEARS)) %>%
       rename(sector.name = supplysector,
              subsector.name = subsector) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "share.weight")) ->
+      select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "share.weight") ->
       L232.GlobalTechShrwt_ind
 
     # L232.StubTechInterp_ind: Shareweight interpolation of global industrial sector technologies
@@ -206,8 +205,7 @@ module_energy_L232.industry <- function(command, ...) {
 
     # L232.GlobalTechEff_ind: Energy inputs and efficiency of global industrial energy use and feedstocks technologies
     A32.globaltech_eff %>%
-      gather(year, efficiency, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years(value_col = "efficiency") %>%
       complete(nesting(supplysector, subsector, technology, minicam.energy.input, secondary.output),
                year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
       arrange(supplysector, subsector, technology, minicam.energy.input, secondary.output, year) %>%
@@ -222,14 +220,13 @@ module_energy_L232.industry <- function(command, ...) {
       L232.globaltech_eff.long # intermediate tibble
 
     L232.globaltech_eff.long %>%
-      select(one_of(LEVEL2_DATA_NAMES[["GlobalTechEff"]])) ->
+      select(LEVEL2_DATA_NAMES[["GlobalTechEff"]]) ->
       L232.GlobalTechEff_ind
 
     # Coefficients on global industry sector technologies (not energy-use or feedstocks)
     # L232.GlobalTechCoef_ind: Energy inputs and coefficients of global industry technologies
     A32.globaltech_coef %>%
-      gather(year, coefficient, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years(value_col = "coefficient") %>%
       complete(nesting(supplysector, subsector, technology, minicam.energy.input),
                year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
       arrange(supplysector, subsector, technology, minicam.energy.input, year) %>%
@@ -239,14 +236,13 @@ module_energy_L232.industry <- function(command, ...) {
       filter(year %in% c(BASE_YEARS, FUTURE_YEARS)) %>%
       rename(sector.name = supplysector,
              subsector.name = subsector) %>% # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
-      select(one_of(LEVEL2_DATA_NAMES[["GlobalTechCoef"]])) ->
+      select(LEVEL2_DATA_NAMES[["GlobalTechCoef"]]) ->
       L232.GlobalTechCoef_ind
 
     # Secondary outputs of cogen technologies: these are input as a ratio
     # L232.GlobalTechSecOut_ind: Secondary output ratios of industrial cogeneration technologies
     A32.globaltech_eff %>%
-      gather(year, efficiency, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years(value_col = "efficiency") %>%
       complete(nesting(supplysector, subsector, technology, minicam.energy.input, secondary.output),
                year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
       arrange(supplysector, subsector, technology, minicam.energy.input, secondary.output, year) %>%
@@ -266,14 +262,13 @@ module_energy_L232.industry <- function(command, ...) {
       rename(year = year.x,
              sector.name = supplysector,
              subsector.name = subsector) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["GlobalTechSecOut"]])) ->
+      select(LEVEL2_DATA_NAMES[["GlobalTechSecOut"]]) ->
       L232.GlobalTechSecOut_ind
 
     # Costs of global technologies
     # L232.GlobalTechCost_ind: Capital costs of global industrial technologies
     A32.globaltech_cost %>%
-      gather(year, input.cost, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years(value_col = "input.cost") %>%
       complete(nesting(supplysector, subsector, technology, minicam.non.energy.input),
                year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
       arrange(supplysector, subsector, technology, minicam.non.energy.input, year) %>%
@@ -283,7 +278,7 @@ module_energy_L232.industry <- function(command, ...) {
       filter(year %in% c(BASE_YEARS, FUTURE_YEARS)) %>%
       rename(sector.name = supplysector,
              subsector.name = subsector) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["GlobalTechCost"]])) ->
+      select(LEVEL2_DATA_NAMES[["GlobalTechCost"]]) ->
       L232.GlobalTechCost_ind
 
     # Carbon capture from feedstock carbon sequestration
@@ -293,7 +288,7 @@ module_energy_L232.industry <- function(command, ...) {
       repeat_add_columns(tibble(year = c(BASE_YEARS, FUTURE_YEARS))) %>%
       rename(sector.name = supplysector,
              subsector.name = subsector) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["GlobalTechCSeq"]])) ->
+      select(LEVEL2_DATA_NAMES[["GlobalTechCSeq"]]) ->
       L232.GlobalTechCSeq_ind
 
     # Calibration and region-specific data
@@ -320,7 +315,7 @@ module_energy_L232.industry <- function(command, ...) {
       set_subsector_shrwt %>%
       rename(calibrated.value = calOutputValue) %>% # temporary column name change to accommodate function set_subsector_shrwt
       mutate(tech.share.weight = if_else(calibrated.value > 0, 1, 0)) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["StubTechCalInput"]])) ->
+      select(LEVEL2_DATA_NAMES[["StubTechCalInput"]]) ->
       L232.StubTechCalInput_indenergy
 
     # L232.StubTechCalInput_indfeed: calibrated input of industrial feedstock technologies
@@ -333,7 +328,7 @@ module_energy_L232.industry <- function(command, ...) {
       L232.in_EJ_R_indfeed_F_Yh # intermediate tibble
 
     L232.in_EJ_R_indfeed_F_Yh %>%
-      select(one_of(c(LEVEL2_DATA_NAMES[["StubTechYr"]], "value"))) %>%
+      select(LEVEL2_DATA_NAMES[["StubTechYr"]], "value") %>%
       left_join(distinct(select(A32.globaltech_eff, subsector, technology, minicam.energy.input)),
                 by = c("subsector", "stub.technology" = "technology")) %>%
       mutate(calibrated.value = round(value, energy.DIGITS_CALOUTPUT)) %>%
@@ -372,7 +367,7 @@ module_energy_L232.industry <- function(command, ...) {
              share.weight.year = year,
              subs.share.weight = if_else(calOutputValue > 0, 1, 0),
              tech.share.weight = subs.share.weight) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["StubTechProd"]])) ->
+      select(LEVEL2_DATA_NAMES[["StubTechProd"]]) ->
       L232.StubTechProd_industry
 
     # L232.StubTechCoef_industry: calibrated output of industrial sector
@@ -403,8 +398,7 @@ module_energy_L232.industry <- function(command, ...) {
                                by = c("region", "minicam.energy.input")) %>%
       rename(`2010` = coefficient) %>%
       mutate(`2150` = `2100`) %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years %>%
       complete(nesting(supplysector, subsector, technology, minicam.energy.input, GCAM_region_ID, region),
                year = c(max(BASE_YEARS), FUTURE_YEARS, 2150)) %>%
       arrange(supplysector, subsector, technology, minicam.energy.input, GCAM_region_ID, region, year) %>%
@@ -416,7 +410,7 @@ module_energy_L232.industry <- function(command, ...) {
       mutate(stub.technology = technology,
              market.name = region) %>%
       # Combine the base year and future year coefficients
-      select(one_of(LEVEL2_DATA_NAMES[["StubTechCoef"]])) %>%
+      select(LEVEL2_DATA_NAMES[["StubTechCoef"]]) %>%
       bind_rows(select(L232.StubTechCoef_industry_base, one_of(LEVEL2_DATA_NAMES[["StubTechCoef"]]))) %>%
       mutate(coefficient = round(coefficient, energy.DIGITS_COEFFICIENT)) ->
       L232.StubTechCoef_industry
@@ -470,7 +464,7 @@ module_energy_L232.industry <- function(command, ...) {
     L232.indenergy_fuel_shares %>%
       mutate(year.fillout = min(FUTURE_YEARS)) %>%
       filter(fuelprefElasticity != 0) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["FuelPrefElast"]])) ->
+      select(LEVEL2_DATA_NAMES[["FuelPrefElast"]]) ->
       L232.FuelPrefElast_indenergy
 
     # L232.PerCapitaBased_ind: per-capita based flag for industry final demand
@@ -533,7 +527,7 @@ module_energy_L232.industry <- function(command, ...) {
         left_join(filter(L232.pcgdpRatio_ALL_R_Y, year == elast_years[i]), by = c("GCAM_region_ID", "scenario")) %>% # strick left join fails timeshift test due to NAs in L102.pcgdp_thous90USD_Scen_R_Y under timeshift mode
         mutate(parameter = approx(x = A32.inc_elas_output[["pc.output_GJ"]],
                                   y = A32.inc_elas_output[["inc_elas"]],
-                                  xout = .[['value.x']],
+                                  xout = value.x,
                                   rule = 2)[['y']]) %>%
         mutate(value = value.x * value.y ^ parameter) %>%
         mutate(year = elast_years[i]) %>%
@@ -547,7 +541,7 @@ module_energy_L232.industry <- function(command, ...) {
       filter(year %in% FUTURE_YEARS) %>%
       mutate(value = approx( x = A32.inc_elas_output[["pc.output_GJ"]],
                              y = A32.inc_elas_output[["inc_elas"]],
-                             xout = .[["value"]],
+                             xout = value,
                              rule = 2)[["y"]]) %>%
       mutate(value = round(value, energy.DIGITS_INCELAS_IND)) %>%
       rename(income.elasticity = value) %>%
@@ -569,7 +563,7 @@ module_energy_L232.industry <- function(command, ...) {
     for(ieo in INCOME_ELASTICITY_OUTPUTS) {
       L232.IncomeElasticity_ind %>%
         filter(scenario == ieo) %>%
-        select(one_of(LEVEL2_DATA_NAMES[["IncomeElasticity"]])) %>%
+        select(LEVEL2_DATA_NAMES[["IncomeElasticity"]]) %>%
         add_title(paste("Income elasticity of industry -", ieo)) %>%
         add_units("Unitless") %>%
         add_comments("First calculate industrial output as the base-year industrial output times the GDP ratio raised to the income elasticity") %>%

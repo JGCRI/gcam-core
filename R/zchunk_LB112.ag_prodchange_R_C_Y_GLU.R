@@ -141,7 +141,7 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
     # List of all crop x commodity combinations in the CROSIT yield multiplier data
     L112.ag_Yieldmult %>%
       mutate(CROSIT_id = paste(CROSIT_ctry, CROSIT_crop, sep = "_")) %>%
-      .[["CROSIT_id"]] %>%
+      pull(CROSIT_id) %>%
       unique() -> CROSIT_id
 
     # Aggregate LDS harvested area by CROSIT country and crop, and match in the productivity multipliers
@@ -254,9 +254,7 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
 
     # Make a table of default yield improvement rates
     A_defaultYieldRate %>%
-      gather(year, value, -GCAM_commodity) %>%
-      # Convert year from numeric to integer
-      mutate(year = as.integer(year)) %>%
+      gather_years %>%
       # Join the table with future years.
       full_join(interp.future, by = c("GCAM_commodity", "year")) %>%
       # Interpolate for each GCAM commodity

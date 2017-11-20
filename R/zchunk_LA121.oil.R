@@ -71,8 +71,7 @@ module_energy_LA121.oil <- function(command, ...) {
     } else {
 
       L100.IEA_en_bal_ctry_hist %>%
-        gather(year, value, -iso, -FLOW, -PRODUCT) %>%
-        mutate(year = as.integer(year)) -> L100.IEA_en_bal_ctry_hist
+        gather_years -> L100.IEA_en_bal_ctry_hist
 
       L111.Prod_EJ_R_F_Yh <- L111.Prod_EJ_R_F_Yh <- get_data(all_data, "L111.Prod_EJ_R_F_Yh")
 
@@ -86,8 +85,7 @@ module_energy_LA121.oil <- function(command, ...) {
         L121.globaltech_coef
 
       L121.globaltech_coef %>%
-        gather(year, value, -supplysector, -subsector, -technology, -minicam.energy.input) %>%
-        mutate(year = as.integer(year)) %>%
+        gather_years %>%
         # Adding empty historical years to fill in with interpolation
         complete(year = unique(c(HISTORICAL_YEARS, year)),
                  nesting(supplysector, subsector, technology, minicam.energy.input)) %>%

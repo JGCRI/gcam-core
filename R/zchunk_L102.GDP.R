@@ -64,7 +64,7 @@ join.gdp.ts <- function(past, future, grouping) {
   gdp.future.ratio <- filter(future, year > base.year) %>%
     left_join_error_no_match(baseyear.future.gdp, by = c('scenario', grouping)) %>%
     mutate(gdp.ratio = gdp / base.gdp) %>%
-    select(one_of(c('scenario', grouping, 'year', 'gdp.ratio')))
+    select('scenario', grouping, 'year', 'gdp.ratio')
 
   ## add the scenario column to the past
   gdp.past <- tidyr::crossing(past, scenario = unique(gdp.future.ratio[['scenario']]))
@@ -75,7 +75,7 @@ join.gdp.ts <- function(past, future, grouping) {
   rslt <- left_join(baseyear.past.gdp, gdp.future.ratio,
                     by = c('scenario', grouping)) %>%
     mutate(gdp = base.gdp * gdp.ratio) %>%
-    select(one_of(c('scenario', grouping, 'year', 'gdp'))) %>%
+    select('scenario', grouping, 'year', 'gdp') %>%
     bind_rows(gdp.past, .)
 
   if(drop.scenario) {
@@ -142,9 +142,8 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
     SSP_database_v9 <- get_data(all_data, "socioeconomics/SSP_database_v9")
     IMF_GDP_growth <- get_data(all_data, "socioeconomics/IMF_GDP_growth")
     GCAM3_GDP <- get_data(all_data, "socioeconomics/GCAM3_GDP") %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year),
-             value = as.numeric(value))
+      gather_years %>%
+      mutate(value = as.numeric(value))
     L100.gdp_mil90usd_ctry_Yh <- get_data(all_data, "L100.gdp_mil90usd_ctry_Yh")
     L101.Pop_thous_GCAM3_R_Y <- get_data(all_data, "L101.Pop_thous_GCAM3_R_Y")
     L101.Pop_thous_GCAM3_ctry_Y <- get_data(all_data, "L101.Pop_thous_GCAM3_ctry_Y")
@@ -177,9 +176,8 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
       select_if(function(x) {!any(is.na(x))}) %>% # apparently the SSP database has some missing in it; filter these out.
       unprotect_integer_cols %>%
       select(-MODEL, -iso, -VARIABLE, -UNIT) %>%
-      gather(year, gdp, -SCENARIO, -GCAM_region_ID) %>%
-      mutate(year = as.integer(year),
-             gdp = as.numeric(gdp),
+      gather_years(value_col = "gdp") %>%
+      mutate(gdp = as.numeric(gdp),
              scenario = substr(SCENARIO, 1, 4)) %>% # Trim the junk off the end of
       # the scenario names, leaving us with
       # just SSP1, SSP2, etc.
@@ -311,9 +309,8 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
       mutate(scenario = substr(SCENARIO, 1, 4)) %>%
       # Only Base SSP
       filter(scenario == socioeconomics.BASE_POP_SCEN) %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year),
-             value = as.numeric(value)) %>%
+      gather_years %>%
+      mutate(value = as.numeric(value)) %>%
       filter(year %in% FUTURE_YEARS) %>%
       select(iso, year, value)
 

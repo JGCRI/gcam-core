@@ -224,7 +224,7 @@ module_energy_L223.electricity <- function(command, ...) {
       bind_rows(filter(L223.SubsectorShrwt_nuc_ctry, !iso %in% A23.subsector_shrwt_nuc_R$iso)) %>%
 
       # Use GDP by country as a weighting factor in going from country-level shareweights to region-level shareweights
-      gather(year, value, matches(YEAR_PATTERN)) %>%
+      gather_years %>%
       left_join(L202.gdp_mil90usd_GCAM3_ctry_Y, by = "iso") %>%
       mutate(year = as.integer(year)) %>%
       na.omit %>%
@@ -249,8 +249,7 @@ module_energy_L223.electricity <- function(command, ...) {
 
     # First, melt the table with near-term shareweights from GCAM 3.0 regions
     A23.subsector_shrwt_renew_R %>%
-      gather(year, share.weight, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) ->
+      gather_years(value_col = "share.weight") ->
       L223.SubsectorShrwt_renew_GCAM3
 
     # Build a table with all combinations of GCAM regions, electricity technologies, and years
@@ -501,8 +500,7 @@ module_energy_L223.electricity <- function(command, ...) {
 
     # Interpolate shareweight assumptions to all base and future years.
     A23.globaltech_shrwt %>%
-      gather(year, share.weight, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years(value_col = "share.weight") %>%
       complete(nesting(supplysector, subsector, technology), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
       arrange(supplysector, year) %>%
       group_by(supplysector, subsector, technology) %>%
@@ -549,7 +547,7 @@ module_energy_L223.electricity <- function(command, ...) {
     # select only sector technology combinations with a value in primary renewable and match columns to expected model interface input
     L223.AllKeyword_elec %>%
       filter(!is.na(primary.renewable)) %>%
-      select(c(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "primary.renewable")) ->
+      select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "primary.renewable") ->
       L223.PrimaryRenewKeyword_elec_all
 
     # Subsets the intermittent technologies by checking it against the list in A23.globalinttech
@@ -566,7 +564,7 @@ module_energy_L223.electricity <- function(command, ...) {
     # L223.AvgFossilEffKeyword_elec: Keywords of fossil/bio electric generation technologies
     L223.AllKeyword_elec %>%
       filter(!is.na(average.fossil.efficiency)) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "average.fossil.efficiency")) ->
+      select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "average.fossil.efficiency") ->
       L223.AvgFossilEffKeyword_elec
 
     # Write CO2 capture fractions from global electricity generation technologies for L223.GlobalTechCapture_elec
@@ -574,8 +572,7 @@ module_energy_L223.electricity <- function(command, ...) {
 
     # Interpolate fractions of CO2 captured to all future years
     A23.globaltech_co2capture %>%
-      gather(year, remove.fraction, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years(value_col = "remove.fraction") %>%
       complete(nesting(supplysector, subsector, technology), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
       arrange(supplysector, year) %>%
       group_by(supplysector, subsector, technology) %>%
@@ -627,7 +624,7 @@ module_energy_L223.electricity <- function(command, ...) {
       # Subsets the phased retirement function
       L223.globaltech_retirement %>%
         filter(!is.na(L223.globaltech_retirement$shutdown.rate)) %>%
-        select(one_of(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "lifetime", "shutdown.rate")) ->
+        select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "lifetime", "shutdown.rate") ->
         L223.GlobalTechShutdown_elec_all
 
       # Subsets the intermittent technologies by checking it against the list in A23.globalinttech
@@ -645,7 +642,7 @@ module_energy_L223.electricity <- function(command, ...) {
       # Subsets the S-Curve retirement function
       L223.globaltech_retirement %>%
         filter(!is.na(L223.globaltech_retirement$half.life)) %>%
-        select(one_of(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "lifetime", "steepness", "half.life")) ->
+        select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "lifetime", "steepness", "half.life") ->
         L223.GlobalTechSCurve_elec_all
 
       # Subsets the intermittent technologies by checking it against the list in A23.globalinttech
@@ -663,7 +660,7 @@ module_energy_L223.electricity <- function(command, ...) {
       # Subsets the remaining with no retirement function
       L223.globaltech_retirement %>%
         filter(is.na(L223.globaltech_retirement$shutdown.rate) & is.na(L223.globaltech_retirement$half.life)) %>%
-        select(one_of(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "lifetime")) ->
+        select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "lifetime") ->
         L223.GlobalTechLifetime_elec_all
 
       # Subsets the intermittent technologies by checking it against the list in A23.globalinttech
@@ -682,7 +679,7 @@ module_energy_L223.electricity <- function(command, ...) {
       # Subsets any technologies with a shutdown parameter based on profitability
       L223.globaltech_retirement %>%
         filter(!is.na(L223.globaltech_retirement$median.shutdown.point)) %>%
-        select(one_of(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "median.shutdown.point", "profit.shutdown.steepness")) ->
+        select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "median.shutdown.point", "profit.shutdown.steepness") ->
         L223.GlobalTechProfitShutdown_elec_all
 
       # Subsets the intermittent technologies by checking it against the list in A23.globalinttech

@@ -142,7 +142,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
     L254.PerCapitaBased_trn %>%
       mutate(region = region) %>% # strip off attributes like title, etc.
       filter(region == "USA") %>%
-      select(one_of(c(LEVEL2_DATA_NAMES[["EnergyFinalDemand"]]))) ->
+      select(LEVEL2_DATA_NAMES[["EnergyFinalDemand"]]) ->
       L254.DeleteFinalDemand_USAtrn
 
     # Process tables at the USA region level to the states level.
@@ -208,7 +208,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       left_join_error_no_match(select(UCD_techs, UCD_sector, mode, size.class, UCD_technology, UCD_fuel,
                                       supplysector, tranSubsector, stub.technology = tranTechnology, minicam.energy.input),
                                by = c("UCD_sector", "mode", "size.class", "UCD_technology", "UCD_fuel")) %>%
-      select(one_of(c(LEVEL2_DATA_NAMES[["StubTranTech"]])), year, minicam.energy.input, calibrated.value) ->
+      select(LEVEL2_DATA_NAMES[["StubTranTech"]], year, minicam.energy.input, calibrated.value) ->
       L254.StubTranTechCalInput_USA
 
     # NOTE: NEED TO WRITE THIS OUT FOR ALL TECHNOLOGIES, NOT JUST THOSE THAT EXIST IN SOME BASE YEARS.
@@ -225,7 +225,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
              subsector = tranSubsector, calOutputValue = calibrated.value) %>%
       set_subsector_shrwt() %>%
       mutate(tech.share.weight = if_else(calibrated.value > 0, 1, 0)) %>%
-      select(one_of(c(LEVEL2_DATA_NAMES[["StubTranTechCalInput"]]))) ->
+      select(LEVEL2_DATA_NAMES[["StubTranTechCalInput"]]) ->
       L254.StubTranTechCalInput_USA
 
     # Non-motorized technologies
@@ -237,7 +237,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       left_join_error_no_match(A54.globaltech_nonmotor, by = "tranSubsector") %>%
       mutate(stub.technology = technology) %>%
       # There is no need to match shareweights to the calOutputValue because no region should ever have a 0 here
-      select(one_of(c(LEVEL2_DATA_NAMES[["StubTranTech"]])), year, calOutputValue) ->
+      select(LEVEL2_DATA_NAMES[["StubTranTech"]], year, calOutputValue) ->
       L254.StubTranTechProd_nonmotor_USA
 
     # L254.StubTranTechCalInput_passthru_USA: calibrated input of passthrough technologies
@@ -305,14 +305,14 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       mutate(share.weight.year = year,
              subs.share.weight = if_else(calibrated.value > 0, 1, 0),
              tech.share.weight = if_else(calibrated.value > 0, 1, 0)) %>%
-      select(one_of(c(LEVEL2_DATA_NAMES[["StubTranTechCalInput"]]))) ->
+      select(LEVEL2_DATA_NAMES[["StubTranTechCalInput"]]) ->
       L254.StubTranTechCalInput_passthru_USA
 
     # L254.BaseService_trn_USA: base-year service output of transportation final demand
     L254.StubTranTechOutput_USA %>%
-      select(one_of(c(LEVEL2_DATA_NAMES[["StubTranTech"]])), year, base.service = output) %>%
+      select(LEVEL2_DATA_NAMES[["StubTranTech"]], year, base.service = output) %>%
       bind_rows(L254.StubTranTechProd_nonmotor_USA %>%
-                  select(one_of(c(LEVEL2_DATA_NAMES[["StubTranTech"]])), year, base.service = calOutputValue)) %>%
+                  select(LEVEL2_DATA_NAMES[["StubTranTech"]], year, base.service = calOutputValue)) %>%
       left_join_error_no_match(select(A54.sector, supplysector, energy.final.demand), by = "supplysector") %>%
       group_by(region, energy.final.demand, year) %>%
       summarise(base.service = sum(base.service)) %>%
