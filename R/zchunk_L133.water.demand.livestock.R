@@ -35,6 +35,11 @@ module_water_L133.water.demand.livestock <- function(command, ...) {
     L100.FAO_an_Stocks <- get_data(all_data, "L100.FAO_an_Stocks")
     L100.FAO_an_Dairy_Stocks <- get_data(all_data, "L100.FAO_an_Dairy_Stocks")
 
+    # Silence package checks
+    year <- iso <- item <- value <- dairy.to.total <- dairy.adj <-
+      coefficient <- GCAM_region_ID <- GCAM_commodity <- water.consumption <-
+      water_type <- coefficient <- NULL
+
     # ===================================================
     # Calculate livestock water coefficients by region ID / GCAM_commodity/ water type.
 
@@ -96,7 +101,9 @@ module_water_L133.water.demand.livestock <- function(command, ...) {
     #
     # Since the Mekonnen and Hoekstra 2010 coefficient is in liters/head per day convert from L to m^3 per
     # 1000 heads by dividing by 1000 and then convert from daily consumption to per year.
-    L133.FAO_an_heads <- mutate(L133.FAO_an_heads, water.consumption = value * Coefficient / 1000 / CONV_DAYS_YEAR) ->
+    L133.FAO_an_heads %>%
+      mutate(water.consumption = value * Coefficient / 1000 / CONV_DAYS_YEAR) ->
+      L133.FAO_an_heads
 
 
     # Calculate water demand by GCAM_commodity
