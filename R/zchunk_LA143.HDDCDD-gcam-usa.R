@@ -17,26 +17,24 @@
 module_gcam.usa_LA143.HDDCDD_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
-FILE = "gcam-usa/Census_pop_hist",
- "CDD_His",
- "HDD_His",
- "i"))
+             FILE = "gcam-usa/Census_pop_hist",
+             "CDD_His",
+             "HDD_His"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L143.share_state_Pop_CDD_sR9",
-"L143.share_state_Pop_CDD_sR13",
-"L143.share_state_Pop_HDD_sR9",
-"L143.share_state_Pop_HDD_sR13",
-"L143.HDDCDD_scen_state"))
+             "L143.share_state_Pop_CDD_sR13",
+             "L143.share_state_Pop_HDD_sR9",
+             "L143.share_state_Pop_HDD_sR13",
+             "L143.HDDCDD_scen_state"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
-      states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
-  Census_pop_hist <- get_data(all_data, "gcam-usa/Census_pop_hist")
-  CDD_His <- get_data(all_data, "CDD_His")
-  HDD_His <- get_data(all_data, "HDD_His")
-  i <- get_data(all_data, "i")
+    states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
+    Census_pop_hist <- get_data(all_data, "gcam-usa/Census_pop_hist")
+    CDD_His <- get_data(all_data, "CDD_His")
+    HDD_His <- get_data(all_data, "HDD_His")
 
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
@@ -52,11 +50,11 @@ FILE = "gcam-usa/Census_pop_hist",
     #   ... new code with a fix
     # }
     #
-   #
-# NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-# For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-# NOTE: This code uses vecpaste
-# This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
+    #
+    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
+    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
+    # NOTE: This code uses vecpaste
+    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # ===================================================
 
     # Produce outputs
@@ -65,61 +63,62 @@ FILE = "gcam-usa/Census_pop_hist",
     # There's also a `same_precursors_as(x)` you can use
     # If no precursors (very rare) don't call `add_precursor` at all
     tibble() %>%
-   add_title("descriptive title of data") %>%
- add_units("units") %>%
- add_comments("comments describing how data generated") %>%
- add_comments("can be multiple lines") %>%
- add_legacy_name("L143.share_state_Pop_CDD_sR9") %>%
- add_precursors("precursor1", "precursor2", "etc") %>%
- # typical flags, but there are others--see `constants.R` 
- add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-   L143.share_state_Pop_CDD_sR9
-tibble() %>%
-   add_title("descriptive title of data") %>%
- add_units("units") %>%
- add_comments("comments describing how data generated") %>%
- add_comments("can be multiple lines") %>%
- add_legacy_name("L143.share_state_Pop_CDD_sR13") %>%
- add_precursors("precursor1", "precursor2", "etc") %>%
- # typical flags, but there are others--see `constants.R` 
- add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-   L143.share_state_Pop_CDD_sR13
-tibble() %>%
-   add_title("descriptive title of data") %>%
- add_units("units") %>%
- add_comments("comments describing how data generated") %>%
- add_comments("can be multiple lines") %>%
- add_legacy_name("L143.share_state_Pop_HDD_sR9") %>%
- add_precursors("precursor1", "precursor2", "etc") %>%
- # typical flags, but there are others--see `constants.R` 
- add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-   L143.share_state_Pop_HDD_sR9
-tibble() %>%
-   add_title("descriptive title of data") %>%
- add_units("units") %>%
- add_comments("comments describing how data generated") %>%
- add_comments("can be multiple lines") %>%
- add_legacy_name("L143.share_state_Pop_HDD_sR13") %>%
- add_precursors("precursor1", "precursor2", "etc") %>%
- # typical flags, but there are others--see `constants.R` 
- add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-   L143.share_state_Pop_HDD_sR13
-tibble() %>%
-   add_title("descriptive title of data") %>%
- add_units("units") %>%
- add_comments("comments describing how data generated") %>%
- add_comments("can be multiple lines") %>%
- add_legacy_name("L143.HDDCDD_scen_state") %>%
- add_precursors("precursor1", "precursor2", "etc") %>%
- # typical flags, but there are others--see `constants.R` 
- add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-   L143.HDDCDD_scen_state
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L143.share_state_Pop_CDD_sR9") %>%
+      add_precursors("precursor1", "precursor2", "etc") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L143.share_state_Pop_CDD_sR9
+
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L143.share_state_Pop_CDD_sR13") %>%
+      add_precursors("precursor1", "precursor2", "etc") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L143.share_state_Pop_CDD_sR13
+
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L143.share_state_Pop_HDD_sR9") %>%
+      add_precursors("precursor1", "precursor2", "etc") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L143.share_state_Pop_HDD_sR9
+
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L143.share_state_Pop_HDD_sR13") %>%
+      add_precursors("precursor1", "precursor2", "etc") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L143.share_state_Pop_HDD_sR13
+
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L143.HDDCDD_scen_state") %>%
+      add_precursors("precursor1", "precursor2", "etc") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L143.HDDCDD_scen_state
 
     return_data(L143.share_state_Pop_CDD_sR9, L143.share_state_Pop_CDD_sR13, L143.share_state_Pop_HDD_sR9, L143.share_state_Pop_HDD_sR13, L143.HDDCDD_scen_state)
   } else {
     stop("Unknown command")
   }
 }
-
-
-
