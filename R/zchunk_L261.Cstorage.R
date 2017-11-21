@@ -40,7 +40,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
              FILE = "energy/A61.globaltech_coef",
              FILE = "energy/A61.globaltech_cost",
              FILE = "energy/A61.globaltech_shrwt",
-             FILE = "temp-data-inject/L161.RsrcCurves_MtC_R"))
+             "L161.RsrcCurves_MtC_R"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L261.DepRsrc",
              "L261.UnlimitRsrc",
@@ -70,7 +70,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
     A61.globaltech_coef <- get_data(all_data, "energy/A61.globaltech_coef")
     A61.globaltech_cost <- get_data(all_data, "energy/A61.globaltech_cost")
     A61.globaltech_shrwt <- get_data(all_data, "energy/A61.globaltech_shrwt")
-    L161.RsrcCurves_MtC_R <- get_data(all_data, "temp-data-inject/L161.RsrcCurves_MtC_R")
+    L161.RsrcCurves_MtC_R <- get_data(all_data, "L161.RsrcCurves_MtC_R")
 
     # ===================================================
 
@@ -264,7 +264,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
       add_units("Available in MtCO2, Extraction Cost in 1990$/tCO2") %>%
       add_comments("GCAM region names were added to the resource supply curves generated in level 1") %>%
       add_legacy_name("L261.DepRsrcCurves_C") %>%
-      add_precursors("common/GCAM_region_names", "temp-data-inject/L161.RsrcCurves_MtC_R") %>%
+      add_precursors("common/GCAM_region_names", "L161.RsrcCurves_MtC_R") %>%
       add_flags(FLAG_SUM_TEST) ->
       L261.DepRsrcCurves_C
 
@@ -273,7 +273,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
       add_units("Available in MtCO2, Extraction Cost in 1990$/tCO2") %>%
       add_comments("A multiplier (based on high level of CCS use) was applied to the extraction cost to generate a high supply curve") %>%
       add_legacy_name("L261.DepRsrcCurves_C_high") %>%
-      add_precursors("common/GCAM_region_names", "temp-data-inject/L161.RsrcCurves_MtC_R") %>%
+      add_precursors("common/GCAM_region_names", "L161.RsrcCurves_MtC_R") %>%
       add_flags(FLAG_SUM_TEST) ->
       L261.DepRsrcCurves_C_high
 
@@ -282,7 +282,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
       add_units("Available in MtCO2, Extraction Cost in 1990$/tCO2") %>%
       add_comments("A multiplier (based on low level of CCS use) was applied to the extraction cost to generate a low supply curve") %>%
       add_legacy_name("L261.DepRsrcCurves_C_low") %>%
-      add_precursors("common/GCAM_region_names", "temp-data-inject/L161.RsrcCurves_MtC_R") %>%
+      add_precursors("common/GCAM_region_names", "L161.RsrcCurves_MtC_R") %>%
       add_flags(FLAG_SUM_TEST) ->
       L261.DepRsrcCurves_C_low
 
@@ -291,7 +291,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
       add_units("Available in MtCO2, Extraction Cost in 1990$/tCO2") %>%
       add_comments("A multiplier (based on lowest level of CCS use) was applied to the extraction cost to generate a lowest supply curve") %>%
       add_legacy_name("L261.DepRsrcCurves_C_lowest") %>%
-      add_precursors("common/GCAM_region_names", "temp-data-inject/L161.RsrcCurves_MtC_R") %>%
+      add_precursors("common/GCAM_region_names", "L161.RsrcCurves_MtC_R") %>%
       add_flags(FLAG_SUM_TEST) ->
       L261.DepRsrcCurves_C_lowest
 
