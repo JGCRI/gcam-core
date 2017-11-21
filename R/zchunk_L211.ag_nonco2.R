@@ -24,7 +24,7 @@ module_emissions_L211.ag_nonco2 <- function(command, ...) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "water/basin_to_country_mapping",
              FILE = "emissions/A_regions",
-             FILE = "temp-data-inject/L205.AgCost_bio",
+             "L2052.AgCost_bio_irr_mgmt",
              "L113.ghg_tg_R_an_C_Sys_Fd_Yh",
              "L115.nh3_tg_R_an_C_Sys_Fd_Yh",
              "L121.nonco2_tg_R_awb_C_Y_GLU",
@@ -55,7 +55,7 @@ module_emissions_L211.ag_nonco2 <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
     A_regions <- get_data(all_data, "emissions/A_regions")
-    L205.AgCost_bio <- get_data(all_data, "temp-data-inject/L205.AgCost_bio")
+    L2052.AgCost_bio_irr_mgmt <- get_data(all_data, "L2052.AgCost_bio_irr_mgmt")
     L113.ghg_tg_R_an_C_Sys_Fd_Yh <- get_data(all_data, "L113.ghg_tg_R_an_C_Sys_Fd_Yh")
     L115.nh3_tg_R_an_C_Sys_Fd_Yh <- get_data(all_data, "L115.nh3_tg_R_an_C_Sys_Fd_Yh")
     L121.nonco2_tg_R_awb_C_Y_GLU <- get_data(all_data, "L121.nonco2_tg_R_awb_C_Y_GLU") %>%
@@ -96,9 +96,11 @@ module_emissions_L211.ag_nonco2 <- function(command, ...) {
 
     # L211.AGR: N2O emissions coefficients for biomass in all regions
     # Map in coefficients from assumption file
-    L211.AGRBio <- L205.AgCost_bio %>%
+    L211.AGRBio <- L2052.AgCost_bio_irr_mgmt %>%
       filter(year == emissions.CTRL_BASE_YEAR) %>%
       select(-nonLandVariableCost) %>%
+      mutate(AgProductionTechnology = AgSupplySubsector) %>%
+      distinct %>%
       mutate(Non.CO2 = "N2O_AGR") %>%
       left_join_error_no_match(A_regions %>% select(region, bio_N2O_coef),
                                by = "region")
@@ -189,7 +191,8 @@ module_emissions_L211.ag_nonco2 <- function(command, ...) {
       add_units("kg N2O per GJ bioenergy") %>%
       add_comments("Assumption emissions coefficients applied by region") %>%
       add_legacy_name("L211.AGRBio") %>%
-      add_precursors("emissions/A_regions", "temp-data-inject/L205.AgCost_bio") ->
+      add_precursors("emissions/A_regions",
+                     "L2052.AgCost_bio_irr_mgmt") ->
       L211.AGRBio
     L211.AWB_BCOC_EmissCoeff %>%
       add_title("Emission factors for BC and OC emissions by region and agricultural technology") %>%
