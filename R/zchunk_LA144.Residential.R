@@ -30,8 +30,8 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
              FILE = "gcam-usa/RECS_2005",
              FILE = "gcam-usa/RECS_2009",
              "L142.in_EJ_state_bld_F",
-             FILE = "temp-data-inject/L143.share_state_Pop_CDD_sR13",
-             FILE = "temp-data-inject/L143.share_state_Pop_HDD_sR13"))
+             "L143.share_state_Pop_CDD_sR13",
+             "L143.share_state_Pop_HDD_sR13"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L144.flsp_bm2_state_res",
              "L144.in_EJ_state_res_F_U_Y"))
@@ -63,14 +63,8 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
     RECS_2005 <- get_data(all_data, "gcam-usa/RECS_2005")
     RECS_2009 <- get_data(all_data, "gcam-usa/RECS_2009")
     L142.in_EJ_state_bld_F <- get_data(all_data, "L142.in_EJ_state_bld_F")
-    L143.share_state_Pop_CDD_sR13 <- get_data(all_data, "temp-data-inject/L143.share_state_Pop_CDD_sR13") %>%
-      # temp-data-inject code
-      gather(year, value, starts_with("X")) %>%
-      mutate(year = as.integer(substr(year, 2, 5)))
-    L143.share_state_Pop_HDD_sR13 <- get_data(all_data, "temp-data-inject/L143.share_state_Pop_HDD_sR13") %>%
-      # temp-data-inject code
-      gather(year, value, starts_with("X")) %>%
-      mutate(year = as.integer(substr(year, 2, 5)))
+    L143.share_state_Pop_CDD_sR13 <- get_data(all_data, "L143.share_state_Pop_CDD_sR13")
+    L143.share_state_Pop_HDD_sR13 <- get_data(all_data, "L143.share_state_Pop_HDD_sR13")
 
     # ===================================================
     # a) PREPARATION AND CLEANING OF RECS DATABASES
@@ -590,8 +584,8 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
                      "gcam-usa/RECS_2005",
                      "gcam-usa/RECS_2009",
                      "L142.in_EJ_state_bld_F",
-                     "temp-data-inject/L143.share_state_Pop_CDD_sR13",
-                     "temp-data-inject/L143.share_state_Pop_HDD_sR13") %>%
+                     "L143.share_state_Pop_CDD_sR13",
+                     "L143.share_state_Pop_HDD_sR13") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L144.in_EJ_state_res_F_U_Y
 

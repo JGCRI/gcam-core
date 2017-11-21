@@ -29,8 +29,8 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
              FILE = "gcam-usa/CBECS_1999",
              FILE = "gcam-usa/CBECS_2003",
              "L142.in_EJ_state_bld_F",
-             FILE = "temp-data-inject/L143.share_state_Pop_CDD_sR9",
-             FILE = "temp-data-inject/L143.share_state_Pop_HDD_sR9"))
+             "L143.share_state_Pop_CDD_sR9",
+             "L143.share_state_Pop_HDD_sR9"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L144.flsp_bm2_state_comm",
              "L144.in_EJ_state_comm_F_U_Y"))
@@ -72,14 +72,8 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
     CBECS_1999 <- get_data(all_data, "gcam-usa/CBECS_1999")
     CBECS_2003 <- get_data(all_data, "gcam-usa/CBECS_2003")
     L142.in_EJ_state_bld_F <- get_data(all_data, "L142.in_EJ_state_bld_F")
-    L143.share_state_Pop_CDD_sR9 <- get_data(all_data, "temp-data-inject/L143.share_state_Pop_CDD_sR9") %>%
-      # temp-data-inject
-      gather(year, value, starts_with("X")) %>%
-      mutate(year = as.integer(substr(year, 2, 5)))
-    L143.share_state_Pop_HDD_sR9 <- get_data(all_data, "temp-data-inject/L143.share_state_Pop_HDD_sR9") %>%
-      # temp-data-inject
-      gather(year, value, starts_with("X")) %>%
-      mutate(year = as.integer(substr(year, 2, 5)))
+    L143.share_state_Pop_CDD_sR9 <- get_data(all_data, "L143.share_state_Pop_CDD_sR9")
+    L143.share_state_Pop_HDD_sR9 <- get_data(all_data, "L143.share_state_Pop_HDD_sR9")
 
     # ===================================================
     # a) PREPARATION AND CLEANING OF CBECS DATA (Commercial Buildings Energy Consumption Survey)
@@ -517,8 +511,8 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
                      "gcam-usa/CBECS_1999",
                      "gcam-usa/CBECS_2003",
                      "L142.in_EJ_state_bld_F",
-                     "temp-data-inject/L143.share_state_Pop_CDD_sR9",
-                     "temp-data-inject/L143.share_state_Pop_HDD_sR9") %>%
+                     "L143.share_state_Pop_CDD_sR9",
+                     "L143.share_state_Pop_HDD_sR9") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L144.in_EJ_state_comm_F_U_Y
 
