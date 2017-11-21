@@ -1,6 +1,6 @@
 #' module_gcam.usa_LA143.HDDCDD
 #'
-#' Estimate heating and cooling degree days for gcam-usa
+#' Estimate heating and cooling degree days for gcam-usa.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L143.share_state_Pop_CDD_sR9}, \code{L143.share_state_Pop_CDD_sR13}, \code{L143.share_state_Pop_HDD_sR9}, \code{L143.share_state_Pop_HDD_sR13}, \code{L143.HDDCDD_scen_state}. The corresponding file in the
 #' original data system was \code{LA143.HDDCDD.R} (gcam-usa level1).
-#' @details Estimate heating and cooling degree days for gcam-usa
+#' @details Estimate heating and cooling degree days for gcam-usa.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -33,316 +33,316 @@ module_gcam.usa_LA143.HDDCDD <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-      states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
-      Census_pop_hist <- get_data(all_data, "gcam-usa/Census_pop_hist")
-      CDD_His <- get_data(all_data, "gcam-usa/CDD_His")
-      CDD_GFDL_A2 <- get_data(all_data, "gcam-usa/CDD_GFDL_A2")
-      HDD_His <- get_data(all_data, "gcam-usa/HDD_His")
-      HDD_GFDL_A2 <- get_data(all_data, "gcam-usa/HDD_GFDL_A2")
+    states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
+    Census_pop_hist <- get_data(all_data, "gcam-usa/Census_pop_hist")
+    CDD_His <- get_data(all_data, "gcam-usa/CDD_His")
+    CDD_GFDL_A2 <- get_data(all_data, "gcam-usa/CDD_GFDL_A2")
+    HDD_His <- get_data(all_data, "gcam-usa/HDD_His")
+    HDD_GFDL_A2 <- get_data(all_data, "gcam-usa/HDD_GFDL_A2")
 
-      # Silence package
-      state <- subregion9 <- subregion13 <- year <- value <- degree_day <- population <-
-        value_sR9 <- variable <- value_sR13 <- GCM <- Scen <- historical_value <-
-        hist_value <- base_year <- scn_final_historical_year <- NULL
+    # Silence package
+    state <- subregion9 <- subregion13 <- year <- value <- degree_day <- population <-
+      value_sR9 <- variable <- value_sR13 <- GCM <- Scen <- historical_value <-
+      hist_value <- base_year <- scn_final_historical_year <- NULL
 
 
     # ===================================================
 
-      # Part 1: Create tibbles of state share of subregion population's degree days.
+    # Part 1: Create tibbles of state share of subregion population's degree days.
 
-      # Add subregion13 (for RECS) and subregion9 (for CBECS) columns to the population by state tibble
-      # and transform to long format. This tibble will be used to calculate the share of person heating
-      # degree days within census division (subregion) and state.
-      Census_pop_hist %>%
-        left_join_error_no_match(states_subregions %>%
-                                   select(state, subregion9, subregion13),
-                                 by = "state") %>%
-        gather_years ->
-        Census_pop_hist_subregion
+    # Add subregion13 (for RECS) and subregion9 (for CBECS) columns to the population by state tibble
+    # and transform to long format. This tibble will be used to calculate the share of person heating
+    # degree days within census division (subregion) and state.
+    Census_pop_hist %>%
+      left_join_error_no_match(states_subregions %>%
+                                 select(state, subregion9, subregion13),
+                               by = "state") %>%
+      gather_years ->
+      Census_pop_hist_subregion
 
-      # Add subregion13 (for RECS) and subregion9 (for CBECS) columns to the historic cooling degree days
-      # latter and heating degree days. Latter on this will be used to  to calculate the share of person heating
-      # degree days within census division (subregion).
-      #
-      # Historic cooling degree days.
-      CDD_His %>%
-        left_join_error_no_match(states_subregions %>%
-                                   select(state, subregion9, subregion13),
-                                 by = "state") %>%
-        gather_years ->
-        CDD_His_subregion
+    # Add subregion13 (for RECS) and subregion9 (for CBECS) columns to the historic cooling degree days
+    # latter and heating degree days. Latter on this will be used to  to calculate the share of person heating
+    # degree days within census division (subregion).
+    #
+    # Historic cooling degree days.
+    CDD_His %>%
+      left_join_error_no_match(states_subregions %>%
+                                 select(state, subregion9, subregion13),
+                               by = "state") %>%
+      gather_years ->
+      CDD_His_subregion
 
-      # Historic heating degree days.
-      HDD_His %>%
-        left_join_error_no_match(states_subregions %>%
-                                   select(state, subregion9, subregion13),
-                                 by = "state") %>%
-        gather_years ->
-        HDD_His_subregion
-
-
-      # Interpolate to fill out any missing historical years cooling degree days.
-      CDD_His_subregion %>%
-        complete(nesting(state, subregion9, subregion13), year = c(year, HISTORICAL_YEARS)) %>%
-        arrange(state, subregion9, subregion13, year) %>%
-        group_by(state, subregion9, subregion13) %>%
-        mutate(value = approx_fun(year, value, rule = 2)) %>%
-        ungroup ->
-        L143.CDD_state
-
-      # Interpolate to fill out any missing historical years heating degree days.
-      HDD_His_subregion %>%
-        complete(nesting(state, subregion9, subregion13), year = c(year, HISTORICAL_YEARS)) %>%
-        arrange(state, subregion9, subregion13, year) %>%
-        group_by(state, subregion9, subregion13) %>%
-        mutate(value = approx_fun(year, value, rule = 2)) %>%
-        ungroup ->
-        L143.HDD_state
+    # Historic heating degree days.
+    HDD_His %>%
+      left_join_error_no_match(states_subregions %>%
+                                 select(state, subregion9, subregion13),
+                               by = "state") %>%
+      gather_years ->
+      HDD_His_subregion
 
 
-      # Multiply the historic cooling degree days tibble by the census population to calculate
-      # the population cooling degree days.
-      L143.CDD_state %>%
-        rename(degree_day = value) %>%
-        left_join_error_no_match(Census_pop_hist_subregion %>% rename(population = value),
-                                 by = c("year", "state", "subregion9", "subregion13")) %>%
-        mutate(value = degree_day * population) %>%
-        select(state, subregion9, subregion13, year, value) ->
-        L143.Pop_CDD_state
+    # Interpolate to fill out any missing historical years cooling degree days.
+    CDD_His_subregion %>%
+      complete(nesting(state, subregion9, subregion13), year = c(year, HISTORICAL_YEARS)) %>%
+      arrange(state, subregion9, subregion13, year) %>%
+      group_by(state, subregion9, subregion13) %>%
+      mutate(value = approx_fun(year, value, rule = 2)) %>%
+      ungroup ->
+      L143.CDD_state
 
-      # Multiply the historic heating degree days tibble by the census population to calculate
-      # the population heating degree days.
-      L143.HDD_state %>%
-        rename(degree_day = value) %>%
-        left_join_error_no_match(Census_pop_hist_subregion %>% rename(population = value),
-                                 by = c("year", "state", "subregion9", "subregion13")) %>%
-        mutate(value = degree_day * population) %>%
-        select(state, subregion9, subregion13, year, value) ->
-        L143.Pop_HDD_state
-
-      # Aggregate the population cooling and heating degree days by census subregions.
-      #
-      # Population cooling degree days in subregion 9.
-      L143.Pop_CDD_state %>%
-        group_by(year, subregion9) %>%
-        summarise(value_sR9 = sum(value)) %>%
-        ungroup ->
-        L143.Pop_CDD_sR9
-
-      # Population cooling degree days in subregion 13.
-      L143.Pop_CDD_state %>%
-        group_by(year, subregion13) %>%
-        summarise(value_sR13 = sum(value)) %>%
-        ungroup ->
-        L143.Pop_CDD_sR13
-
-      # Population heating degree days in subregion 9.
-      L143.Pop_HDD_state %>%
-        group_by(year, subregion9) %>%
-        summarise(value_sR9 = sum(value)) %>%
-        ungroup ->
-        L143.Pop_HDD_sR9
-
-      # Population heating degree days in subregion 13.
-      L143.Pop_HDD_state %>%
-        group_by(year, subregion13) %>%
-        summarise(value_sR13 = sum(value)) %>%
-        ungroup ->
-        L143.Pop_HDD_sR13
+    # Interpolate to fill out any missing historical years heating degree days.
+    HDD_His_subregion %>%
+      complete(nesting(state, subregion9, subregion13), year = c(year, HISTORICAL_YEARS)) %>%
+      arrange(state, subregion9, subregion13, year) %>%
+      group_by(state, subregion9, subregion13) %>%
+      mutate(value = approx_fun(year, value, rule = 2)) %>%
+      ungroup ->
+      L143.HDD_state
 
 
-      # Divide state degree days by the subregions' population degree days to calculate the
-      # state's share of its subregions' population degree days.
-      #
-      # State share of subregion 9 population cooling degree days.
-      L143.Pop_CDD_state %>%
-        left_join_error_no_match(L143.Pop_CDD_sR9, by = c("year", "subregion9")) %>%
-        mutate(value = value / value_sR9, variable = "CDD") %>%
-        select(state, subregion9, variable, year, value) %>%
-        filter(year %in% HISTORICAL_YEARS) ->
-        L143.share_state_Pop_CDD_sR9
+    # Multiply the historic cooling degree days tibble by the census population to calculate
+    # the population cooling degree days.
+    L143.CDD_state %>%
+      rename(degree_day = value) %>%
+      left_join_error_no_match(Census_pop_hist_subregion %>% rename(population = value),
+                               by = c("year", "state", "subregion9", "subregion13")) %>%
+      mutate(value = degree_day * population) %>%
+      select(state, subregion9, subregion13, year, value) ->
+      L143.Pop_CDD_state
 
-      # State share of subregion 13 population cooling degree days.
-      L143.Pop_CDD_state %>%
-        left_join_error_no_match(L143.Pop_CDD_sR13, by = c("year", "subregion13")) %>%
-        mutate(value = value / value_sR13, variable = "CDD") %>%
-        select(state, subregion9, variable, year, value) %>%
-        filter(year %in% HISTORICAL_YEARS) ->
-        L143.share_state_Pop_CDD_sR13
+    # Multiply the historic heating degree days tibble by the census population to calculate
+    # the population heating degree days.
+    L143.HDD_state %>%
+      rename(degree_day = value) %>%
+      left_join_error_no_match(Census_pop_hist_subregion %>% rename(population = value),
+                               by = c("year", "state", "subregion9", "subregion13")) %>%
+      mutate(value = degree_day * population) %>%
+      select(state, subregion9, subregion13, year, value) ->
+      L143.Pop_HDD_state
 
-      # State share of subregion 9 population heating degree days.
-      L143.Pop_HDD_state %>%
-        left_join_error_no_match(L143.Pop_HDD_sR9, by = c("year", "subregion9")) %>%
-        mutate(value = value / value_sR9, variable = "CDD") %>%
-        select(state, subregion9, variable, year, value) %>%
-        filter(year %in% HISTORICAL_YEARS) ->
-        L143.share_state_Pop_HDD_sR9
+    # Aggregate the population cooling and heating degree days by census subregions.
+    #
+    # Population cooling degree days in subregion 9.
+    L143.Pop_CDD_state %>%
+      group_by(year, subregion9) %>%
+      summarise(value_sR9 = sum(value)) %>%
+      ungroup ->
+      L143.Pop_CDD_sR9
 
-      # State share of subregion 13 population heating degree days.
-      L143.Pop_HDD_state %>%
-        left_join_error_no_match(L143.Pop_CDD_sR13, by = c("year", "subregion13")) %>%
-        mutate(value = value / value_sR13, variable = "CDD") %>%
-        select(state, subregion9, variable, year, value)  %>%
-        filter(year %in% HISTORICAL_YEARS) ->
-        L143.share_state_Pop_HDD_sR13
+    # Population cooling degree days in subregion 13.
+    L143.Pop_CDD_state %>%
+      group_by(year, subregion13) %>%
+      summarise(value_sR13 = sum(value)) %>%
+      ungroup ->
+      L143.Pop_CDD_sR13
+
+    # Population heating degree days in subregion 9.
+    L143.Pop_HDD_state %>%
+      group_by(year, subregion9) %>%
+      summarise(value_sR9 = sum(value)) %>%
+      ungroup ->
+      L143.Pop_HDD_sR9
+
+    # Population heating degree days in subregion 13.
+    L143.Pop_HDD_state %>%
+      group_by(year, subregion13) %>%
+      summarise(value_sR13 = sum(value)) %>%
+      ungroup ->
+      L143.Pop_HDD_sR13
 
 
+    # Divide state degree days by the subregions' population degree days to calculate the
+    # state's share of its subregions' population degree days.
+    #
+    # State share of subregion 9 population cooling degree days.
+    L143.Pop_CDD_state %>%
+      left_join_error_no_match(L143.Pop_CDD_sR9, by = c("year", "subregion9")) %>%
+      mutate(value = value / value_sR9, variable = "CDD") %>%
+      select(state, subregion9, variable, year, value) %>%
+      filter(year %in% HISTORICAL_YEARS) ->
+      L143.share_state_Pop_CDD_sR9
 
-      # Part 2: Process degree days in future scenarios
+    # State share of subregion 13 population cooling degree days.
+    L143.Pop_CDD_state %>%
+      left_join_error_no_match(L143.Pop_CDD_sR13, by = c("year", "subregion13")) %>%
+      mutate(value = value / value_sR13, variable = "CDD") %>%
+      select(state, subregion9, variable, year, value) %>%
+      filter(year %in% HISTORICAL_YEARS) ->
+      L143.share_state_Pop_CDD_sR13
 
-      # Create a list of the future scenarios data frames to process. This method preserves the
-      # file name as name of the data frames in the list.
-      HDDCDD_list <- list(CDD_GFDL_A2 = CDD_GFDL_A2, HDD_GFDL_A2 = HDD_GFDL_A2)
+    # State share of subregion 9 population heating degree days.
+    L143.Pop_HDD_state %>%
+      left_join_error_no_match(L143.Pop_HDD_sR9, by = c("year", "subregion9")) %>%
+      mutate(value = value / value_sR9, variable = "CDD") %>%
+      select(state, subregion9, variable, year, value) %>%
+      filter(year %in% HISTORICAL_YEARS) ->
+      L143.share_state_Pop_HDD_sR9
 
-      # Add the file name to each data frame and concatenate future scenario data frames together
-      # to form a single tibble.
-      HDDCDD_data <- bind_rows(HDDCDD_list, .id = 'file')
-
-      # Parse out variable, GCM, and scenario information from the the file name in to individual columns.
-      HDDCDD_data %>%
-        separate(col = file, into = c("variable", "GCM", "Scen"), sep = "_") ->
-        HDDCDD_data
-
-      # Interpolate heating and cooling degree days for final historical model year and any any missing future years.
-      HDDCDD_data %>%
-        gather_years %>%
-        complete(nesting(variable, GCM, Scen, state), year = c(max(HISTORICAL_YEARS), year, FUTURE_YEARS)) %>%
-        arrange(variable, GCM, Scen, state, year) %>%
-        group_by(variable, GCM, Scen, state) %>%
-        mutate(value = approx_fun(year, value, rule = 2)) %>%
-        ungroup ->
-        L143.HDDCDD_scen_state
-
-      # Set aside the scenario's final historical year because this will be used to normalize the degree days
-      # latter on.
-      Scen_final_historical_year <- filter(L143.HDDCDD_scen_state, year == max(HISTORICAL_YEARS))
+    # State share of subregion 13 population heating degree days.
+    L143.Pop_HDD_state %>%
+      left_join_error_no_match(L143.Pop_CDD_sR13, by = c("year", "subregion13")) %>%
+      mutate(value = value / value_sR13, variable = "CDD") %>%
+      select(state, subregion9, variable, year, value)  %>%
+      filter(year %in% HISTORICAL_YEARS) ->
+      L143.share_state_Pop_HDD_sR13
 
 
 
-      # Part 3: Combine historic and future scenario degree days
+    # Part 2: Process degree days in future scenarios
 
-      # Fill in any missing historical cooling degree days through interpolation.
-      CDD_His_subregion %>%
-        complete(nesting(state, subregion9, subregion13), year = c(HISTORICAL_YEARS, year)) %>%
-        arrange(state, subregion9, subregion13, year) %>%
-        group_by(state, subregion9, subregion13) %>%
-        mutate(value = approx_fun(year, value, rule = 2), variable = "CDD") %>%
-        ungroup ->
-        CDD_His_complete
+    # Create a list of the future scenarios data frames to process. This method preserves the
+    # file name as name of the data frames in the list.
+    HDDCDD_list <- list(CDD_GFDL_A2 = CDD_GFDL_A2, HDD_GFDL_A2 = HDD_GFDL_A2)
 
-      # Fill in any missing historical heating degree days through interpolation.
-      HDD_His_subregion %>%
-        complete(nesting(state, subregion9, subregion13), year = c(HISTORICAL_YEARS, year)) %>%
-        arrange(state, subregion9, subregion13, year) %>%
-        group_by(state, subregion9, subregion13) %>%
-        mutate(value = approx_fun(year, value, rule = 2), variable = "HDD") %>%
-        ungroup ->
-        HDD_His_complete
+    # Add the file name to each data frame and concatenate future scenario data frames together
+    # to form a single tibble.
+    HDDCDD_data <- bind_rows(HDDCDD_list, .id = 'file')
 
-      # Combine the interpolated cooling and heating historic degree days into a single tibble and
-      # add a column called historical value. The historical_value column will be using in the next
-      # step to replace degree days for model historical years in the future scenario with historical
-      # observations.
-      CDD_His_complete %>%
-        bind_rows(HDD_His_complete) %>%
-        mutate(historical_value = TRUE) ->
-        DD_His
+    # Parse out variable, GCM, and scenario information from the the file name in to individual columns.
+    HDDCDD_data %>%
+      separate(col = file, into = c("variable", "GCM", "Scen"), sep = "_") ->
+      HDDCDD_data
 
+    # Interpolate heating and cooling degree days for final historical model year and any any missing future years.
+    HDDCDD_data %>%
+      gather_years %>%
+      complete(nesting(variable, GCM, Scen, state), year = c(max(HISTORICAL_YEARS), year, FUTURE_YEARS)) %>%
+      arrange(variable, GCM, Scen, state, year) %>%
+      group_by(variable, GCM, Scen, state) %>%
+      mutate(value = approx_fun(year, value, rule = 2)) %>%
+      ungroup ->
+      L143.HDDCDD_scen_state
 
-      # Replace the heating and cooling degree days values in model historic years in the future scenario
-      # tibble with historic data.
-      L143.HDDCDD_scen_state %>%
-        # Use left_join we do not expect a 1:1 match
-        full_join(DD_His %>%
-                    select(hist_value = value, year, variable, state, historical_value),
-                  by = c("state", "variable", "year")) %>%
-        # If historical_value = NA then it is a future value. For the the historical years replace the
-        # degree value day with historical data.
-        mutate(value = if_else(!is.na(historical_value), hist_value, value)) %>%
-        select(variable, GCM, Scen, state, year, value, historical_value) ->
-        L143.HDDCDD_scen_state_w_historical_observations
+    # Set aside the scenario's final historical year because this will be used to normalize the degree days
+    # latter on.
+    Scen_final_historical_year <- filter(L143.HDDCDD_scen_state, year == max(HISTORICAL_YEARS))
 
 
-      # Normalize the future degree days by the base year value. This is necessary because sometimes there are large
-      # large discrepancies between the GCM model output and the observed historical degree.
 
-      # Start by combining the the GCM, scenario, and state degree days from the  scenario final model historical
-      # year, with the scenario tibble that has the historical observation replaced values.
-      Scen_final_historical_year %>%
-        select(scn_final_historical_year = value, variable, GCM, Scen, state) %>%
-        # Use full join here because we do not expect a 1:1, the GCM scenario final historical year degree day
-        # will be used to normalize the future degree days in the following step.
-        full_join(L143.HDDCDD_scen_state_w_historical_observations,
-                                 by = c("variable", "GCM", "Scen", "state")) %>%
-        # Use full join (we do no expect a 1:1 match) to add a column of the GCM degree days in the final historical
-        # year of the historical observations to the tibble.
-        full_join(L143.HDDCDD_scen_state_w_historical_observations %>%
-                     filter(year == max(HISTORICAL_YEARS)) %>%
-                     select(variable, GCM, Scen, state, base_year = value),
-                   by = c("variable", "GCM", "Scen", "state")) %>%
-        # If the historical_value is na (aka it is a future year) then multiply by the fraction of the observation
-        # degree day base year over the scenario degree day base year.
-        mutate(value = if_else(is.na(historical_value), value * base_year / scn_final_historical_year, value)) ->
-        L143.HDDCDD_scen_state
+    # Part 3: Combine historic and future scenario degree days
 
-      # Format for output.
-      L143.HDDCDD_scen_state %>%
-        select(state, Scen, GCM, variable, year, value) ->
-        L143.HDDCDD_scen_state
+    # Fill in any missing historical cooling degree days through interpolation.
+    CDD_His_subregion %>%
+      complete(nesting(state, subregion9, subregion13), year = c(HISTORICAL_YEARS, year)) %>%
+      arrange(state, subregion9, subregion13, year) %>%
+      group_by(state, subregion9, subregion13) %>%
+      mutate(value = approx_fun(year, value, rule = 2), variable = "CDD") %>%
+      ungroup ->
+      CDD_His_complete
+
+    # Fill in any missing historical heating degree days through interpolation.
+    HDD_His_subregion %>%
+      complete(nesting(state, subregion9, subregion13), year = c(HISTORICAL_YEARS, year)) %>%
+      arrange(state, subregion9, subregion13, year) %>%
+      group_by(state, subregion9, subregion13) %>%
+      mutate(value = approx_fun(year, value, rule = 2), variable = "HDD") %>%
+      ungroup ->
+      HDD_His_complete
+
+    # Combine the interpolated cooling and heating historic degree days into a single tibble and
+    # add a column called historical value. The historical_value column will be using in the next
+    # step to replace degree days for model historical years in the future scenario with historical
+    # observations.
+    CDD_His_complete %>%
+      bind_rows(HDD_His_complete) %>%
+      mutate(historical_value = TRUE) ->
+      DD_His
+
+
+    # Replace the heating and cooling degree days values in model historic years in the future scenario
+    # tibble with historic data.
+    L143.HDDCDD_scen_state %>%
+      # Use left_join because we do not expect a 1:1 match
+      full_join(DD_His %>%
+                  select(hist_value = value, year, variable, state, historical_value),
+                by = c("state", "variable", "year")) %>%
+      # If historical_value = NA then it is a future value. For the the historical years replace the
+      # degree value day with historical data.
+      mutate(value = if_else(!is.na(historical_value), hist_value, value)) %>%
+      select(variable, GCM, Scen, state, year, value, historical_value) ->
+      L143.HDDCDD_scen_state_w_historical_observations
+
+
+    # Normalize the future degree days by the base year value. This is necessary because sometimes there are large
+    # large discrepancies between the GCM model output and the observed historical degree.
+
+    # Start by combining the the GCM, scenario, and state degree days from the  scenario final model historical
+    # year, with the scenario tibble that has the historical observation replaced values.
+    Scen_final_historical_year %>%
+      select(scn_final_historical_year = value, variable, GCM, Scen, state) %>%
+      # Use full join here because we do not expect a 1:1, the GCM scenario final historical year degree day
+      # will be used to normalize the future degree days in the following step.
+      full_join(L143.HDDCDD_scen_state_w_historical_observations,
+                by = c("variable", "GCM", "Scen", "state")) %>%
+      # Use full join (as we do not expect a 1:1 match) to add a column of the GCM degree days in the final historical
+      # year of the historical observations to the tibble.
+      full_join(L143.HDDCDD_scen_state_w_historical_observations %>%
+                  filter(year == max(HISTORICAL_YEARS)) %>%
+                  select(variable, GCM, Scen, state, base_year = value),
+                by = c("variable", "GCM", "Scen", "state")) %>%
+      # If the historical_value is NA (aka it is a future year) then multiply by the fraction of the observation
+      # degree day base year over the scenario degree day base year.
+      mutate(value = if_else(is.na(historical_value), value * base_year / scn_final_historical_year, value)) ->
+      L143.HDDCDD_scen_state
+
+    # Format for output.
+    L143.HDDCDD_scen_state %>%
+      select(state, Scen, GCM, variable, year, value) ->
+      L143.HDDCDD_scen_state
 
 
     # ===================================================
     # Produce outputs
-      L143.share_state_Pop_CDD_sR9 %>%
-        add_title("State-level share of person cooling degree days within census division (subregion9)") %>%
-        add_units("Unitless") %>%
-        add_comments("Interpolate historic cooling degree data to fill in missing model historical years.") %>%
-        add_comments("Divide state cooling degree days by the census subregion 9 total population") %>%
-        add_legacy_name("L143.share_state_Pop_CDD_sR9") %>%
-        add_precursors("gcam-usa/states_subregions", "gcam-usa/Census_pop_hist", "gcam-usa/CDD_His") %>%
-        add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-        L143.share_state_Pop_CDD_sR9
+    L143.share_state_Pop_CDD_sR9 %>%
+      add_title("State-level share of person cooling degree days within census division (subregion9)") %>%
+      add_units("Unitless") %>%
+      add_comments("Interpolate historic cooling degree data to fill in missing model historical years.") %>%
+      add_comments("Divide state cooling degree days by the census subregion 9 total population") %>%
+      add_legacy_name("L143.share_state_Pop_CDD_sR9") %>%
+      add_precursors("gcam-usa/states_subregions", "gcam-usa/Census_pop_hist", "gcam-usa/CDD_His") %>%
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L143.share_state_Pop_CDD_sR9
 
-      L143.share_state_Pop_CDD_sR13 %>%
-        add_title("State-level share of person cooling degree days within subregion13") %>%
-        add_units("Unitless") %>%
-        add_comments("Interpolate historic cooling degree data to fill in missing model historical years.") %>%
-        add_comments("Divide state cooling degree days by the census subregion 13 total population.") %>%
-        add_legacy_name("L143.share_state_Pop_CDD_sR13") %>%
-        add_precursors("gcam-usa/states_subregions", "gcam-usa/Census_pop_hist", "gcam-usa/CDD_His") %>%
-        add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-        L143.share_state_Pop_CDD_sR13
+    L143.share_state_Pop_CDD_sR13 %>%
+      add_title("State-level share of person cooling degree days within subregion13") %>%
+      add_units("Unitless") %>%
+      add_comments("Interpolate historic cooling degree data to fill in missing model historical years.") %>%
+      add_comments("Divide state cooling degree days by the census subregion 13 total population.") %>%
+      add_legacy_name("L143.share_state_Pop_CDD_sR13") %>%
+      add_precursors("gcam-usa/states_subregions", "gcam-usa/Census_pop_hist", "gcam-usa/CDD_His") %>%
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L143.share_state_Pop_CDD_sR13
 
-      L143.share_state_Pop_HDD_sR9 %>%
-        add_title("State-level share of person heating degree days within census division (subregion9)") %>%
-        add_units("Unitless") %>%
-        add_comments("Interpolate historic heating degree data to fill in missing model historical years.") %>%
-        add_comments("Divide state heating degree days by the census subregion 9 total population.") %>%
-        add_legacy_name("L143.share_state_Pop_HDD_sR9") %>%
-        add_precursors("gcam-usa/states_subregions", "gcam-usa/Census_pop_hist", "gcam-usa/HDD_His") %>%
-        add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-        L143.share_state_Pop_HDD_sR9
+    L143.share_state_Pop_HDD_sR9 %>%
+      add_title("State-level share of person heating degree days within census division (subregion9)") %>%
+      add_units("Unitless") %>%
+      add_comments("Interpolate historic heating degree data to fill in missing model historical years.") %>%
+      add_comments("Divide state heating degree days by the census subregion 9 total population.") %>%
+      add_legacy_name("L143.share_state_Pop_HDD_sR9") %>%
+      add_precursors("gcam-usa/states_subregions", "gcam-usa/Census_pop_hist", "gcam-usa/HDD_His") %>%
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L143.share_state_Pop_HDD_sR9
 
-      L143.share_state_Pop_HDD_sR13 %>%
-        add_title("State-level share of person heating degree days within census division (subregion13)") %>%
-        add_units("Unitless") %>%
-        add_comments("Interpolate historic heating degree data to fill in missing model historical years.") %>%
-        add_comments("Divide state heating degree days by the census subregion 13 total population.") %>%
-        add_legacy_name("L143.share_state_Pop_HDD_sR13") %>%
-        add_precursors("gcam-usa/states_subregions", "gcam-usa/Census_pop_hist", "gcam-usa/HDD_His") %>%
-        add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-        L143.share_state_Pop_HDD_sR13
+    L143.share_state_Pop_HDD_sR13 %>%
+      add_title("State-level share of person heating degree days within census division (subregion13)") %>%
+      add_units("Unitless") %>%
+      add_comments("Interpolate historic heating degree data to fill in missing model historical years.") %>%
+      add_comments("Divide state heating degree days by the census subregion 13 total population.") %>%
+      add_legacy_name("L143.share_state_Pop_HDD_sR13") %>%
+      add_precursors("gcam-usa/states_subregions", "gcam-usa/Census_pop_hist", "gcam-usa/HDD_His") %>%
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L143.share_state_Pop_HDD_sR13
 
-      L143.HDDCDD_scen_state %>%
-        add_title("Heating and cooling degree days by state and scenario") %>%
-        add_units("Degree F days") %>%
-        add_comments("Replace GCM degree days with historical observations.") %>%
-        add_comments("Normalize future GCM degree days by the fraction of observed degree days to GCM degree days in the base year.") %>%
-        add_legacy_name("L143.HDDCDD_scen_state") %>%
-        add_precursors("gcam-usa/states_subregions", "gcam-usa/Census_pop_hist", "gcam-usa/CDD_His",
-                       "gcam-usa/HDD_His", "gcam-usa/HDD_GFDL_A2", "gcam-usa/CDD_GFDL_A2") %>%
-        add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-        L143.HDDCDD_scen_state
+    L143.HDDCDD_scen_state %>%
+      add_title("Heating and cooling degree days by state and scenario") %>%
+      add_units("Degree F days") %>%
+      add_comments("Replace GCM degree days with historical observations.") %>%
+      add_comments("Normalize future GCM degree days by the fraction of observed degree days to GCM degree days in the base year.") %>%
+      add_legacy_name("L143.HDDCDD_scen_state") %>%
+      add_precursors("gcam-usa/states_subregions", "gcam-usa/Census_pop_hist", "gcam-usa/CDD_His",
+                     "gcam-usa/HDD_His", "gcam-usa/HDD_GFDL_A2", "gcam-usa/CDD_GFDL_A2") %>%
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L143.HDDCDD_scen_state
 
     return_data(L143.share_state_Pop_CDD_sR9,
                 L143.share_state_Pop_CDD_sR13,
@@ -353,6 +353,3 @@ module_gcam.usa_LA143.HDDCDD <- function(command, ...) {
     stop("Unknown command")
   }
 }
-
-
-
