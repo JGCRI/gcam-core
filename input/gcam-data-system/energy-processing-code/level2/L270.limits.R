@@ -117,6 +117,16 @@ L270.NegEmissBudgetMaxPrice <- data.frame(region=GCAM_region_names$region,
                                           policy.portfolio.standard=NEG_EMISS_POLICY_NAME,
                                           max.price= 1.0)
 
+# split out SSPs so that we can generate SPA policies
+# NOTE: SPA policies *must* be regional no matter the value of NEG_EMISS_MARKT_GLOBAL
+L270.NegEmissBudget_SPA <- subset( L270.NegEmissBudget, grepl('^SSP\\d', scenario) )
+# SSP 2 and 3 share SPA
+L270.NegEmissBudget_SPA <- subset( L270.NegEmissBudget_SPA, scenario != "SSP3" )
+L270.NegEmissBudget_SPA[ L270.NegEmissBudget_SPA$scenario == "SSP2", "scenario" ] <- "SSP23"
+L270.NegEmissBudget_SPA$scenario <- sub( 'SSP', 'spa', L270.NegEmissBudget_SPA$scenario )
+# Copy Final Demand data.frame as well to ensure it is regional
+L270.NegEmissFinalDemand_SPA <- L270.NegEmissFinalDemand
+
 if( NEG_EMISS_MARKT_GLOBAL ) {
     printlog( "Adjust inputs for global market" )
     # when the negative emissions budget is global we need to aggregate
@@ -149,6 +159,19 @@ for( scn in unique(L270.NegEmissBudget[[Scen]] ) ) {
     write_mi_data( L270.NegEmissFinalDemand, "NegEmissFinalDemand", "ENERGY_LEVEL2_DATA", "L270.NegEmissFinalDemand", "ENERGY_XML_BATCH", curr_batch )
     write_mi_data( L270.NegEmissBudgetMaxPrice, "PortfolioStdMaxPrice", "ENERGY_LEVEL2_DATA", "L270.NegEmissBudgetMaxPrice", "ENERGY_XML_BATCH", curr_batch )
     curr_budget <- subset(L270.NegEmissBudget, scenario == scn)
+    curr_budget <- curr_budget[, c("region", "policy.portfolio.standard", "market", "policyType", "year", "constraint", "price.unit", "output.unit" ) ]
+    curr_fn <- paste0( "L270.NegEmissBudget_", scn )
+    write_mi_data( curr_budget, "PortfolioStd", "ENERGY_LEVEL2_DATA", curr_fn, "ENERGY_XML_BATCH", curr_batch )
+    curr_xml <- paste0( "negative_emissions_budget_", scn, ".xml" )
+    insert_file_into_batchxml( "ENERGY_XML_BATCH", curr_batch, "ENERGY_XML_FINAL", curr_xml, "", xml_tag="outFile" )
+}
+
+for( scn in unique(L270.NegEmissBudget_SPA[[Scen]] ) ) {
+    curr_batch <- paste0( "batch_negative_emissions_budget_", scn, ".xml" )
+    write_mi_data( L270.CTaxInput, "GlobalTechCTaxInput", "ENERGY_LEVEL2_DATA", "L270.CTaxInput", "ENERGY_XML_BATCH", curr_batch )
+    write_mi_data( L270.NegEmissFinalDemand_SPA, "NegEmissFinalDemand", "ENERGY_LEVEL2_DATA", "L270.NegEmissFinalDemand_SPA", "ENERGY_XML_BATCH", curr_batch )
+    write_mi_data( L270.NegEmissBudgetMaxPrice, "PortfolioStdMaxPrice", "ENERGY_LEVEL2_DATA", "L270.NegEmissBudgetMaxPrice", "ENERGY_XML_BATCH", curr_batch )
+    curr_budget <- subset(L270.NegEmissBudget_SPA, scenario == scn)
     curr_budget <- curr_budget[, c("region", "policy.portfolio.standard", "market", "policyType", "year", "constraint", "price.unit", "output.unit" ) ]
     curr_fn <- paste0( "L270.NegEmissBudget_", scn )
     write_mi_data( curr_budget, "PortfolioStd", "ENERGY_LEVEL2_DATA", curr_fn, "ENERGY_XML_BATCH", curr_batch )

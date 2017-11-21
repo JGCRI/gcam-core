@@ -540,9 +540,16 @@ void MarketDependencyFinder::createOrdering() {
                 // dependent's item links to the first demand vertex of this item.
                 if( !(*it)->mPriceVertices.empty() ) {
                     if( (*dependIt)->mPriceVertices.empty() ) {
+                        if( !(*dependIt)->mDemandVertices.empty() ) {
                         // Could get here for instance if a resource has dependencies
                         (*it)->getLastPriceVertex()->mOutEdges.push_back( (*dependIt)->getFirstDemandVertex() );
                         ++numDependencies[ (*dependIt)->getFirstDemandVertex() ];
+                        }
+                        else {
+                            // how?
+                            cout << "Got here" << (*it)->mName << " | " << (*it)->mLocatedInRegion
+                                << " -> " << (*dependIt)->mName << " | " << (*dependIt)->mLocatedInRegion << endl;
+                        }
                     }
                     else {
                         (*it)->getLastPriceVertex()->mOutEdges.push_back( (*dependIt)->getFirstPriceVertex() );

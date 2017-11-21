@@ -20,7 +20,7 @@
 			<Value name = "fertilizer_energy">../input/gcam-data-system/xml/energy-xml/en_Fert.xml</Value>
 			<Value name = "hddcdd">../input/gcam-data-system/xml/energy-xml/HDDCDD_constdd_no_GCM.xml</Value>
 			<Value name = "building">../input/gcam-data-system/xml/energy-xml/building_det.xml</Value>
-			<Value name = "transportation">../input/gcam-data-system/xml/energy-xml/transportation_UCD_CORE.xml</Value>
+            <Value name = "transportation">../input/gcam-data-system/xml/energy-xml/transportation_UCD_CORE.xml</Value>
 			<Value name = "carbon_content">../input/gcam-data-system/xml/energy-xml/Ccoef.xml</Value>
 			<Value name = "carbon_storage">../input/gcam-data-system/xml/energy-xml/Cstorage.xml</Value>
 			
@@ -55,6 +55,8 @@
 			<Value name = "municipal_water">../input/gcam-data-system/xml/water-xml/water_demand_municipal.xml</Value>
 			<Value name = "primary_ene_water">../input/gcam-data-system/xml/water-xml/water_demand_primary.xml</Value>
 			
+            <Value name = "bio_feedstock_limit">../input/gcam-data-system/xml/energy-xml/liquids_limits.xml</Value>
+            <Value name = "bio_elec_w_feed_limit">../input/gcam-data-system/xml/water-xml/water_elec_liquids_limits.xml</Value>
 			<Value name = "solver">../input/solution/cal_broyden_config.xml</Value>
 		</FileSet>
 	</ComponentSet>
@@ -104,6 +106,9 @@
 			<!-- NON-CO2 -->
 			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/delete_gdp_control.xml</Value>
 			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/ssp34_emissions_factors.xml</Value>
+
+            <!-- NEG EMISS BUDGET -->
+            <Value name = "bio_neg_emiss_budget">../input/gcam-data-system/xml/energy-xml/negative_emissions_budget_SSP4.xml</Value>
 		</FileSet>
 		
 		<FileSet name="SSP5">
@@ -134,6 +139,9 @@
 			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/delete_gdp_control.xml</Value>
 			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/ssp15_emissions_factors.xml</Value>
 			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/MACC_TC_SSP5_IRR_MGMT.xml</Value>
+
+            <!-- NEG EMISS BUDGET -->
+            <Value name = "bio_neg_emiss_budget">../input/gcam-data-system/xml/energy-xml/negative_emissions_budget_SSP5.xml</Value>
 		</FileSet>
 		
 		<FileSet name="SSP1">
@@ -181,6 +189,9 @@
 			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/delete_gdp_control.xml</Value>
 			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/ssp15_emissions_factors.xml</Value>
 			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/MACC_TC_SSP1_IRR_MGMT.xml</Value>
+
+            <!-- NEG EMISS BUDGET -->
+            <Value name = "bio_neg_emiss_budget">../input/gcam-data-system/xml/energy-xml/negative_emissions_budget_SSP1.xml</Value>
 		</FileSet>
 		
 		<FileSet name="SSP2">
@@ -210,6 +221,8 @@
 			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/ssp2_emissions_factors.xml</Value>
 			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/MACC_TC_SSP2_IRR_MGMT.xml</Value>
 			
+            <!-- NEG EMISS BUDGET -->
+            <Value name = "bio_neg_emiss_budget">../input/gcam-data-system/xml/energy-xml/negative_emissions_budget_SSP2.xml</Value>
 		</FileSet>
 		
 		<FileSet name="SSP3">
@@ -260,6 +273,9 @@
 			<!-- NON-CO2 -->
 			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/delete_gdp_control.xml</Value>
 			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/ssp34_emissions_factors.xml</Value>
+
+            <!-- NEG EMISS BUDGET -->
+            <Value name = "bio_neg_emiss_budget">../input/gcam-data-system/xml/energy-xml/negative_emissions_budget_SSP3.xml</Value>
 		</FileSet>		
 	</ComponentSet>
 	
