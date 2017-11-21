@@ -45,7 +45,6 @@ module_gcam.usa_LA143.HDDCDD <- function(command, ...) {
       value_sR9 <- variable <- value_sR13 <- GCM <- Scen <- historical_value <-
       hist_value <- base_year <- scn_final_historical_year <- NULL
 
-
     # ===================================================
 
     # Part 1: Create tibbles of state share of subregion population's degree days.
