@@ -43,7 +43,7 @@ module_energy_LA119.solar <- function(command, ...) {
     # Seperate the other * region from the ones with valid country codes that do not need additonal
     # downscaling
     Smith_irradiance_ctry_kwh %>%
-      filter(iso %in% grep("OTHER", iso, value = T)) %>%
+      filter(iso %in% grep("OTHER", iso, value = TRUE)) %>%
       # Rename columns to indicate these are the regional values which will be used later
       # to downscale to the country
       mutate(region_GCAM3 = sub("OTHER_", "", iso)) %>%
@@ -56,7 +56,7 @@ module_energy_LA119.solar <- function(command, ...) {
       L119.Irradiance_kwh_otherR # intermediate tibble
 
     Smith_irradiance_ctry_kwh %>%
-      filter( iso %in% grep("OTHER", iso, value = T, invert = T)) %>%
+      filter( iso %in% grep("OTHER", iso, value = TRUE, invert = T)) %>%
       inner_join(iso_GCAM_regID, "iso")->
       L119.Irradiance_kwh_ctry # intermediate tibble
 
@@ -79,9 +79,8 @@ module_energy_LA119.solar <- function(command, ...) {
 
     L119.LC_bm2_other_ctry %>%
       group_by(region_GCAM3) %>%
-      summarise(value = sum(value)) %>%
+      summarise(Area.bm2.R = sum(value)) %>%
       ungroup %>%
-      rename(Area.bm2.R = value) %>%
       right_join(L119.LC_bm2_other_ctry, "region_GCAM3") %>%
       mutate(Area.share = value / Area.bm2.R) %>%
       # Now include the irradiance data at the regional level and multiply the share to downscale to the
@@ -92,7 +91,7 @@ module_energy_LA119.solar <- function(command, ...) {
               dni = dni.R * Area.share,
               dni.area = dni.area.R * Area.share) %>%
       # Add the downscaled coutries in with the rest of the country irradiance data
-      select(one_of(names(L119.Irradiance_kwh_ctry))) %>%
+      select(names(L119.Irradiance_kwh_ctry)) %>%
       bind_rows(L119.Irradiance_kwh_ctry) ->
       L119.Irradiance_kwh_ctry # intermediate tibble
 
@@ -118,8 +117,8 @@ module_energy_LA119.solar <- function(command, ...) {
 
     L119.Irradiance_kwh_R %>%
       mutate(irradiance_avg_rel = irradiance_avg / L119.Irradiance_kwh_usa[["irradiance_avg"]],
-             dni_avg_rel = dni_avg / L119.Irradiance_kwh_usa[["dni_avg"]]) %>%
-      mutate( irradiance_avg_rel = if_else(is.na(irradiance_avg_rel), 0.001, irradiance_avg_rel),
+             dni_avg_rel = dni_avg / L119.Irradiance_kwh_usa[["dni_avg"]],
+             irradiance_avg_rel = if_else(is.na(irradiance_avg_rel), 0.001, irradiance_avg_rel),
               dni_avg_rel = if_else(is.na(dni_avg_rel), 0.001, dni_avg_rel)) %>%
       # The only thing we need for later processing is relative irradiance
       select(GCAM_region_ID, irradiance_avg_rel, dni_avg_rel) ->
