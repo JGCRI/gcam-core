@@ -56,7 +56,7 @@ module_energy_LA119.solar <- function(command, ...) {
       L119.Irradiance_kwh_otherR # intermediate tibble
 
     Smith_irradiance_ctry_kwh %>%
-      filter( iso %in% grep("OTHER", iso, value = TRUE, invert = T)) %>%
+      filter(iso %in% grep("OTHER", iso, value = TRUE, invert = TRUE)) %>%
       inner_join(iso_GCAM_regID, "iso")->
       L119.Irradiance_kwh_ctry # intermediate tibble
 
@@ -85,11 +85,11 @@ module_energy_LA119.solar <- function(command, ...) {
       mutate(Area.share = value / Area.bm2.R) %>%
       # Now include the irradiance data at the regional level and multiply the share to downscale to the
       # country
-      inner_join(L119.Irradiance_kwh_otherR, by = c( "region_GCAM3", "iso", "country_name", "GCAM_region_ID")) %>%
-      mutate( irradiance = irradiance.R * Area.share,
-              irradiance.area = irradiance.area.R * Area.share,
-              dni = dni.R * Area.share,
-              dni.area = dni.area.R * Area.share) %>%
+      inner_join(L119.Irradiance_kwh_otherR, by = c("region_GCAM3", "iso", "country_name", "GCAM_region_ID")) %>%
+      mutate(irradiance = irradiance.R * Area.share,
+             irradiance.area = irradiance.area.R * Area.share,
+             dni = dni.R * Area.share,
+             dni.area = dni.area.R * Area.share) %>%
       # Add the downscaled coutries in with the rest of the country irradiance data
       select(names(L119.Irradiance_kwh_ctry)) %>%
       bind_rows(L119.Irradiance_kwh_ctry) ->
@@ -119,7 +119,7 @@ module_energy_LA119.solar <- function(command, ...) {
       mutate(irradiance_avg_rel = irradiance_avg / L119.Irradiance_kwh_usa[["irradiance_avg"]],
              dni_avg_rel = dni_avg / L119.Irradiance_kwh_usa[["dni_avg"]],
              irradiance_avg_rel = if_else(is.na(irradiance_avg_rel), 0.001, irradiance_avg_rel),
-              dni_avg_rel = if_else(is.na(dni_avg_rel), 0.001, dni_avg_rel)) %>%
+             dni_avg_rel = if_else(is.na(dni_avg_rel), 0.001, dni_avg_rel)) %>%
       # The only thing we need for later processing is relative irradiance
       select(GCAM_region_ID, irradiance_avg_rel, dni_avg_rel) ->
       L119.Irradiance_rel_R
