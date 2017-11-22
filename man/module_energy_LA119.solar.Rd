@@ -18,11 +18,12 @@ the generated outputs: \code{L119.Irradiance_rel_R}. The corresponding file in t
 original data system was \code{LA119.solar.R} (energy level1).
 }
 \description{
-Briefly describe what this chunk does.
+Computes relative average irradiance and direct normal irradiance by GCAM region for solar sector.
 }
 \details{
-Describe in detail what this chunk does.
+The chunk computes relative average irradiance and direct normal irradiance from Smith_irradiance_ctry_kwh.csv
+by GCAM region for solar sector. The average irradiance and direct normal irradiance is relative to USA values.
 }
 \author{
-YourInitials CurrentMonthName 2017
+LF November 2017
 }
