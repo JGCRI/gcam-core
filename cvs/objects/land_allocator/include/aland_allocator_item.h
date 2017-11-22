@@ -263,13 +263,18 @@ public:
      * \param aChoiceFnAbove The discrete choice function from the level above
      *                       used to calculate share-weights at this node.
      * \param aPeriod Period.
+     * \param aCalcFutureSW A flag to indicate if this call should calculate
+     *                      future share-weights using the ghost-unnormalized-share
+     *                      values.  Typically this is done in the final calibration
+     *                      period only.
      * \author Kate Calvin
      * \warning This method is only used during calibration and should be called
      *          after node profit rates are set in calculateNodeProfitRates.
      */
     virtual void calculateShareWeights( const std::string& aRegionName,
                                         IDiscreteChoice* aChoiceFnAbove,
-                                        const int aPeriod );
+                                        const int aPeriod,
+                                        const bool aCalcFutureSW = false );
 
     /*!
      * \brief Sets the profit rate for a given product.

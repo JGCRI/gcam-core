@@ -105,7 +105,8 @@ public:
 
     virtual void calculateShareWeights( const std::string& aRegionName, 
                                         IDiscreteChoice* aChoiceFnAbove,
-                                        const int aPeriod );
+                                        const int aPeriod,
+                                        const bool aCalcFutureSW );
 
     virtual void setProfitRate( const std::string& aRegionName,
                                    const std::string& aProductName,

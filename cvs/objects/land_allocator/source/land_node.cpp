@@ -410,15 +410,16 @@ double LandNode::calcLandShares( const string& aRegionName,
 
 void LandNode::calculateShareWeights( const string& aRegionName, 
                                       IDiscreteChoice* aChoiceFnAbove,
-                                      const int aPeriod )
+                                      const int aPeriod,
+                                      const bool aCalcFutureSW )
 {
 
     // we can use the base class implementation to calculate the share weight at this node.
-    ALandAllocatorItem::calculateShareWeights( aRegionName, aChoiceFnAbove, aPeriod );
+    ALandAllocatorItem::calculateShareWeights( aRegionName, aChoiceFnAbove, aPeriod, aCalcFutureSW );
     
     // Call share weight calculation for each child
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        mChildren[ i ]->calculateShareWeights( aRegionName, mChoiceFn, aPeriod );
+        mChildren[ i ]->calculateShareWeights( aRegionName, mChoiceFn, aPeriod, aCalcFutureSW );
     }
 
 }

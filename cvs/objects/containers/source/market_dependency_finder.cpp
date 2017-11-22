@@ -543,13 +543,10 @@ void MarketDependencyFinder::createOrdering() {
                         if( !(*dependIt)->mDemandVertices.empty() ) {
                         // Could get here for instance if a resource has dependencies
                         (*it)->getLastPriceVertex()->mOutEdges.push_back( (*dependIt)->getFirstDemandVertex() );
-                        ++numDependencies[ (*dependIt)->getFirstDemandVertex() ];
+                            ++numDependencies[ (*dependIt)->getFirstDemandVertex() ];
                         }
-                        else {
-                            // how?
-                            cout << "Got here" << (*it)->mName << " | " << (*it)->mLocatedInRegion
-                                << " -> " << (*dependIt)->mName << " | " << (*dependIt)->mLocatedInRegion << endl;
-                        }
+                        // else would get here if we had dependencies between two items which do
+                        // not have anything to calculate yet are unsolved such as linked markets.
                     }
                     else {
                         (*it)->getLastPriceVertex()->mOutEdges.push_back( (*dependIt)->getFirstPriceVertex() );

@@ -262,7 +262,7 @@ void LandAllocator::calibrateLandAllocator( const string& aRegionName, const int
    All of the calibration is captured in the leaves, so the share profit scalers for nodes are
    set equal to 1.  */
 
-    calculateShareWeights( aRegionName, mChoiceFn, aPeriod );
+    calculateShareWeights( aRegionName, mChoiceFn, aPeriod, false );
 }
 
 double LandAllocator::getLandAllocation( const string& aProductName,
@@ -384,6 +384,15 @@ void LandAllocator::calcFinalLandAllocation( const string& aRegionName,
 }
 
 void LandAllocator::postCalc( const string& aRegionName, const int aPeriod ) {
+    // In the final calibration year re-calculate the share-weights this time
+    // calculating the future share-weights as well.
+    if( scenario->getModeltime()->getFinalCalibrationPeriod() == aPeriod ) {
+        calculateNodeProfitRates( aRegionName, mUnManagedLandValue,
+                                  mChoiceFn,
+                                  aPeriod );
+        calculateShareWeights( aRegionName, mChoiceFn, aPeriod, true );
+    }
+    
     // Calculate land-use change emissions for the entire model time horizon.
     calcLUCEmissions( aRegionName, aPeriod, CarbonModelUtils::getEndYear(), true );
 }

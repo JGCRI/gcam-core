@@ -120,15 +120,16 @@ LandAllocatorItemType ALandAllocatorItem::getType() const {
 
 void ALandAllocatorItem::calculateShareWeights( const string& aRegionName, 
                                                 IDiscreteChoice* aChoiceFnAbove,
-                                                const int aPeriod )
+                                                const int aPeriod,
+                                                const bool aCalcFutureSW )
 {
 
     mShareWeight[ aPeriod ] = aChoiceFnAbove->calcShareWeight( mShare[ aPeriod ], mProfitRate[ aPeriod ], aPeriod );
 
-    // if we are in the final calibration year and we have "ghost" share-weights to calculate
-    // we do that now with the current profit rate in the final calibration period.
-    const Modeltime* modeltime = scenario->getModeltime();
-    if( aPeriod == modeltime->getFinalCalibrationPeriod() ) {
+    // if the aCalcFutureSW flag is set and we have "ghost" share-weights to calculate
+    // we do that now with the current profit rate in this period.
+    if( aCalcFutureSW ) {
+        const Modeltime* modeltime = scenario->getModeltime();
         double shareAdj = 1.0;
         double profitRateForCal = mProfitRate[ aPeriod ];
         if( mIsGhostShareRelativeToDominantCrop ) {
