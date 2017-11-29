@@ -1,6 +1,6 @@
 #' module_energy_LA119.solar
 #'
-#' Computes relative average irradiance and direct normal irradiance by GCAM region for solar sector.
+#' Computes relative average irradiance and dni (direct normal irradiance) by GCAM region for solar sector.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,8 +8,8 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L119.Irradiance_rel_R}. The corresponding file in the
 #' original data system was \code{LA119.solar.R} (energy level1).
-#' @details The chunk computes relative average irradiance and direct normal irradiance from Smith_irradiance_ctry_kwh.csv
-#' by GCAM region for solar sector. The average irradiance and direct normal irradiance is relative to USA values.
+#' @details The chunk computes relative average irradiance and dni (direct normal irradiance) from Smith_irradiance_ctry_kwh.csv
+#' by GCAM region for solar sector. The average irradiance and dni is relative to USA values.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -32,9 +32,9 @@ module_energy_LA119.solar <- function(command, ...) {
 
     # ===================================================
     # 0. Give binding for variable names used in pipeline
-    Area.bm2.R <- Area.share <- GCAM_region_ID <- dni <- dni.R <- dni.area <- dni.area.R <-
-      dni_avg <- dni_avg_rel <- irradiance <- irradiance.R <- irradiance.area <-
-      irradiance.area.R <- irradiance_avg <- irradiance_avg_rel <- iso <-
+    Area.bm2.reg <- Area.share <- GCAM_region_ID <- dni <- dni.reg <- dni.area <- dni.area.reg <-
+      dni_avg <- dni_avg_rel <- irradiance <- irradiance.reg <- irradiance.area <-
+      irradiance.area.reg <- irradiance_avg <- irradiance_avg_rel <- iso <-
       region_GCAM3 <- value <- year <- NULL
 
     # ===================================================
@@ -48,10 +48,10 @@ module_energy_LA119.solar <- function(command, ...) {
       # to downscale to the country
       mutate(region_GCAM3 = sub("OTHER_", "", iso)) %>%
       select(-iso) %>%
-      rename(irradiance.R = irradiance,
-             irradiance.area.R = irradiance.area,
-             dni.R = dni,
-             dni.area.R = dni.area) %>%
+      rename(irradiance.reg = irradiance,
+             irradiance.area.reg = irradiance.area,
+             dni.reg = dni,
+             dni.area.reg = dni.area) %>%
       left_join(iso_GCAM_regID, "region_GCAM3") -> # change of number of rows in data expected
       L119.Irradiance_kwh_otherR # intermediate tibble
 
@@ -79,17 +79,17 @@ module_energy_LA119.solar <- function(command, ...) {
 
     L119.LC_bm2_other_ctry %>%
       group_by(region_GCAM3) %>%
-      summarise(Area.bm2.R = sum(value)) %>%
+      summarise(Area.bm2.reg = sum(value)) %>%
       ungroup %>%
       right_join(L119.LC_bm2_other_ctry, "region_GCAM3") %>%
-      mutate(Area.share = value / Area.bm2.R) %>%
+      mutate(Area.share = value / Area.bm2.reg) %>%
       # Now include the irradiance data at the regional level and multiply the share to downscale to the
       # country
       inner_join(L119.Irradiance_kwh_otherR, by = c("region_GCAM3", "iso", "country_name", "GCAM_region_ID")) %>%
-      mutate(irradiance = irradiance.R * Area.share,
-             irradiance.area = irradiance.area.R * Area.share,
-             dni = dni.R * Area.share,
-             dni.area = dni.area.R * Area.share) %>%
+      mutate(irradiance = irradiance.reg * Area.share,
+             irradiance.area = irradiance.area.reg * Area.share,
+             dni = dni.reg * Area.share,
+             dni.area = dni.area.reg * Area.share) %>%
       # Add the downscaled coutries in with the rest of the country irradiance data
       select(names(L119.Irradiance_kwh_ctry)) %>%
       bind_rows(L119.Irradiance_kwh_ctry) ->
