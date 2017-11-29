@@ -61,7 +61,7 @@ module_energy_L223.electricity <- function(command, ...) {
              FILE = "energy/A23.globaltech_co2capture",
              "L114.RsrcCurves_EJ_R_wind",
              "L118.out_EJ_R_elec_hydro_Yfut",
-             FILE = "temp-data-inject/L119.Irradiance_rel_R",
+             "L119.Irradiance_rel_R",
              "L1231.in_EJ_R_elec_F_tech_Yh",
              "L1231.out_EJ_R_elec_F_tech_Yh",
              "L1231.eff_R_elec_F_tech_Yh",
@@ -159,7 +159,7 @@ module_energy_L223.electricity <- function(command, ...) {
     A23.globaltech_co2capture <- get_data(all_data, "energy/A23.globaltech_co2capture")
     L114.RsrcCurves_EJ_R_wind <- get_data(all_data, "L114.RsrcCurves_EJ_R_wind")
     L118.out_EJ_R_elec_hydro_Yfut <- get_data(all_data, "L118.out_EJ_R_elec_hydro_Yfut")
-    L119.Irradiance_rel_R <- get_data(all_data, "temp-data-inject/L119.Irradiance_rel_R")
+    L119.Irradiance_rel_R <- get_data(all_data, "L119.Irradiance_rel_R")
     L1231.in_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.in_EJ_R_elec_F_tech_Yh")
     L1231.out_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.out_EJ_R_elec_F_tech_Yh")
     L1231.eff_R_elec_F_tech_Yh <- get_data(all_data, "L1231.eff_R_elec_F_tech_Yh")
@@ -1188,7 +1188,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_units("unitless fraction") %>%
       add_comments("Average annual utilization of renewable technologies, calculated using regional solar irradiance data and wind resource curves to adjust default assumptions") %>%
       add_legacy_name("L223.StubTechCapFactor_elec") %>%
-      add_precursors("common/GCAM_region_names", "L114.RsrcCurves_EJ_R_wind", "temp-data-inject/L119.Irradiance_rel_R", "energy/A23.globaltech_capital", "energy/A23.globaltech_OMfixed", "energy/A23.globaltech_OMvar", "energy/A23.globalinttech") ->
+      add_precursors("common/GCAM_region_names", "L114.RsrcCurves_EJ_R_wind", "L119.Irradiance_rel_R", "energy/A23.globaltech_capital", "energy/A23.globaltech_OMfixed", "energy/A23.globaltech_OMvar", "energy/A23.globalinttech") ->
       L223.StubTechCapFactor_elec
 
     if(exists("L223.GlobalTechShutdown_elec")) {
