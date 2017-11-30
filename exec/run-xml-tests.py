@@ -86,7 +86,13 @@ if __name__ == "__main__":
     sys.stdout.write('{} missing output {}.\n'.format(misscount, fs))
     sys.stdout.write('{} file {}.\n'.format(statcount, ds))
 
-            
-    
-    
-    
+    if nold == 0:
+        sys.exit(1)             # failing to find any files to test is an error
+    elif misscount > 0:
+        sys.exit(2)
+    elif statcount > 0:
+        sys.exit(3)
+    else:
+        sys.exit(0)             # success!
+
+        
