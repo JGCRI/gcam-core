@@ -47,8 +47,8 @@ module_water_L133.water.demand.livestock <- function(command, ...) {
 
     # Create a tibble of dairy producing stocks by country and FAO animal
     # product name. Only use stock information from the year 2000 since that is the
-    # year the water use coefficients are from. This tibble will be used in the next step to adjust
-    # the total livestock for the
+    # year the water use coefficients are from. This tibble will be used in the next step to
+    # remove dairy animals.
     L100.FAO_an_Dairy_Stocks %>%
       filter(year == 2000) %>%
       select(iso, item, value, year) %>%
@@ -129,6 +129,9 @@ module_water_L133.water.demand.livestock <- function(command, ...) {
       mutate(coefficient = water.consumption / value / 1e9) ->
       L133.water_demand_livestock_R_C_W_km3_Mt
 
+
+    # Water withdrawals are assumed to be the same as consumption.
+    #
     # Add the water type information to the livestock water demand tibble. Add water type information
     # to the tibble, since the water withdrawals are the same as consumption for livestock use the same
     # coefficients for the water withdrawals and water consumption.
