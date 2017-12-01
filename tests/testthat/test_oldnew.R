@@ -106,7 +106,8 @@ test_that("matches old data system output", {
       names(newdata)[yearcols] <- paste0("X", names(newdata)[yearcols])
     }
 
-    oldf <- list.files("comparison_data", pattern = basename(newf), recursive = TRUE, full.names = TRUE)
+    # Look for matching file(s) in the comparison data folder
+    oldf <- list.files("compdata", pattern = basename(newf), recursive = TRUE, full.names = TRUE)
     expect_true(length(oldf) == 1, info = paste("Either zero, or multiple, comparison datasets found for", basename(newf)))
 
     if(length(oldf) == 1) {
