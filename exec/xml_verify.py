@@ -12,11 +12,52 @@ import xml.etree.ElementTree as ET
 from sys import stdout
 from sys import stderr
 
-## We will compare GCAM numeric values to 5 significant digits.  This
-## should be sufficient accuracy for just about any quantities we use
-## in GCAM.  Notably, it ensures that years (4 significant figures)
-## will not get rounded.
+## Number of digits to round to in comparing values string-wise.
 comparison_digits = 2
+
+## Floating point tolerance: if the string representation doesn't
+## match we still treat the values as equal if they differ by no more
+## than this amount (fractionally).  This value is chosen to allow us
+## some discrepancy in the next digit after the one we rounded to, as
+## this can cause two numbers that are very close to round to
+## different values.
+ftol = 3*10**(-(comparison_digits+1))
+
+## floor below which we switch to an absolute, rather than relative
+## tolerance
+ffloor = 1.0e-4
+
+
+def num_equiv(left, right):
+    """
+    Determine whether two text elements are numerically equivalent.
+
+    If both left and right are string represenations of numbers, they are
+    compared using the fractional tolerance defined above.  If either or 
+    both are not numbers, then the test returns False, even if they are the
+    same string.
+
+    :return: True if the values are numerically equivalent, False if not
+    """
+    from math import floor
+
+    try:
+        lx = float(left)
+        ly = float(right)
+
+        if lx == floor(lx) and ly == floor(ly):
+            ## These numbers appear to be integers, so they're not
+            ## allowed to differ.
+            tol = 0
+        else: 
+            tol = ftol*(ffloor + abs(lx))
+            
+        xdiff = abs(lx-ly)
+        return xdiff <= tol
+    except ValueError:
+        ## one or both of the strings was not a number; therefore,
+        ## they aren't numerically equal.
+        return False
 
 def signif(x, digits=6):
     """Round a numeric to the specified number of significant digits.
@@ -118,11 +159,44 @@ def eltsortkey(elt):
 
     return sortkey
 
+def elements_equal(left, right):
+    """
+    Compare two individual elements.
+
+    Two elements are equal if their sort keys are equal, or if the 
+    differences in their keys are caused by acceptable numerical 
+    differences in the body of the elements
+    """
+
+    lkey = eltsortkey(left)
+    rkey = eltsortkey(right)
+
+    ## The first four parts of the key (tag, name, attributes, and
+    ## attribute values) must match exactly.
+    if lkey[0:4] != rkey[0:4]:
+        return False
+
+    ## Check the text element separately. If it doesn't match, then
+    ## check to see if the difference is due to acceptable numerical
+    ## differences
+    if lkey[4] != rkey[4] and not num_equiv(left.text, right.text):
+        return False
+
+    ## As far as I know, we never use the tail of the element.  We'll
+    ## just require it to be equal.
+    if lkey[5] != rkey[5]:
+        return False
+
+    return True
+    
+
 def eltdiff(left, right, path=None, outstream=stdout):
     """Diff two XML Etree elements recursively.
        
     Two elements differ if:
       * the elements have different sort keys
+        * EXCEPTION: If the sort keys differ, we check to see if that 
+          is a result of acceptable differences in numerical quantities.
       * the elements have a different number of children
       * any of the children differ, after being ordered canonically
 
@@ -149,10 +223,7 @@ def eltdiff(left, right, path=None, outstream=stdout):
         path = []
 
         
-    lkey = eltsortkey(left)
-    rkey = eltsortkey(right)
-
-    if lkey != rkey:
+    if not elements_equal(left, right):
         report_difference(left, right, path, outstream)
         return 1
 
