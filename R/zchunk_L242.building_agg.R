@@ -114,7 +114,7 @@ module_energy_L242.building_agg <- function(command, ...) {
       # Combine with heat table
       bind_rows(L242.rm_heat_techs_R) %>%
       mutate(region_subsector = paste(region, subsector)) %>%
-      .[["region_subsector"]] %>%
+      pull(region_subsector) %>%
       unique() ->
       L242.rm_techs_R
       # Above list to be used to drop subsectors and technologies in regions where heat and traditional biomass are not
@@ -155,7 +155,7 @@ module_energy_L242.building_agg <- function(command, ...) {
         # Remove non-existent heat subsectors from each region
         mutate(region_subsector = paste(region, subsector)) %>%
         filter(!region_subsector %in% L242.rm_techs_R) %>%
-        select(one_of(LEVEL2_DATA_NAMES[["SubsectorShrwt"]])) ->
+        select(LEVEL2_DATA_NAMES[["SubsectorShrwt"]]) ->
         L242.SubsectorShrwt_bld # OUTPUT (not generated at this time)
     }
 
@@ -167,7 +167,7 @@ module_energy_L242.building_agg <- function(command, ...) {
         # Remove non-existent heat subsectors from each region
         mutate(region_subsector = paste(region, subsector)) %>%
         filter(!region_subsector %in% L242.rm_techs_R) %>%
-        select(one_of(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]])) ->
+        select(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]]) ->
         L242.SubsectorShrwtFllt_bld # OUTPUT
     }
 
@@ -181,7 +181,7 @@ module_energy_L242.building_agg <- function(command, ...) {
         # Remove non-existent heat subsectors from each region
         mutate(region_subsector = paste(region, subsector)) %>%
         filter(!region_subsector %in% L242.rm_techs_R) %>%
-        select(one_of(LEVEL2_DATA_NAMES[["SubsectorInterp"]])) ->
+        select(LEVEL2_DATA_NAMES[["SubsectorInterp"]]) ->
         L242.SubsectorInterp_bld # OUTPUT
     }
 
@@ -193,7 +193,7 @@ module_energy_L242.building_agg <- function(command, ...) {
         # Remove non-existent heat subsectors from each region
         mutate(region_subsector = paste(region, subsector)) %>%
         filter(!region_subsector %in% L242.rm_techs_R) %>%
-        select(one_of(LEVEL2_DATA_NAMES[["SubsectorInterpTo"]])) ->
+        select(LEVEL2_DATA_NAMES[["SubsectorInterpTo"]]) ->
         L242.SubsectorInterpTo_bld # OUTPUT (not generated at this time)
     }
 
@@ -213,8 +213,7 @@ module_energy_L242.building_agg <- function(command, ...) {
 
     # Shareweights of global building sector technologies
     A42.globaltech_shrwt %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>% # Convert to long form
-      mutate(year = as.integer(year)) %>% # Year needs to be integer or numeric to interpolate
+      gather_years %>%
       # Expand table to include all model base and future years
       complete(year = c(year, MODEL_YEARS), nesting(supplysector, subsector, technology)) %>%
       # Extrapolate to fill out values for all years
@@ -231,15 +230,14 @@ module_energy_L242.building_agg <- function(command, ...) {
       mutate(from.year = max(BASE_YEARS),
              to.year = max(FUTURE_YEARS)) %>%
       rename(sector.name = supplysector, subsector.name = subsector) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["GlobalTechInterp"]])) -> # Drops to.value
+      select(LEVEL2_DATA_NAMES[["GlobalTechInterp"]]) -> # Drops to.value
       L242.GlobalTechInterp_bld # OUTPUT
 
     # Energy inputs and coefficients of global building energy use and feedstocks technologies
     DIGITS_EFFICIENCY = 3
 
     A42.globaltech_eff %>%
-      gather(year, efficiency, matches(YEAR_PATTERN)) %>% # Convert to long form
-      mutate(year = as.integer(year)) %>% # Year needs to be integer or numeric to interpolate
+      gather_years(value_col = "efficiency") %>%
       # Expand table to include all model base and future years
       complete(year = c(year, MODEL_YEARS), nesting(supplysector, subsector, technology, minicam.energy.input)) %>%
       # Extrapolate to fill out values for all years
@@ -258,8 +256,7 @@ module_energy_L242.building_agg <- function(command, ...) {
     DIGITS_COST <- 4
 
     A42.globaltech_cost %>%
-      gather(year, input.cost, matches(YEAR_PATTERN)) %>% # Convert to long form
-      mutate(year = as.integer(year)) %>% # Year needs to be integer or numeric to interpolate
+      gather_years(value_col = "input.cost") %>%
       # Expand table to include all model base and future years
       complete(year = c(year, MODEL_YEARS), nesting(supplysector, subsector, technology, minicam.non.energy.input)) %>%
       # Extrapolate to fill out values for all years
@@ -289,7 +286,7 @@ module_energy_L242.building_agg <- function(command, ...) {
     DIGITS_CALOUTPUT <- 7
 
     L242.in_EJ_R_bld_F_Yh %>%
-      select(one_of(c(LEVEL2_DATA_NAMES[["StubTechYr"]], "value"))) %>%
+      select(LEVEL2_DATA_NAMES[["StubTechYr"]], "value") %>%
       left_join_error_no_match(A42.globaltech_eff, by = c("supplysector", "subsector", "stub.technology" = "technology")) %>%
       mutate(value = round(value, digits = DIGITS_CALOUTPUT),
              share.weight.year = year) %>%
@@ -298,7 +295,7 @@ module_energy_L242.building_agg <- function(command, ...) {
       ungroup() %>%
       mutate(subs.share.weight = if_else(calibrated.value > 0, 1, 0),
              tech.share.weight = if_else(calibrated.value > 0, 1, 0)) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["StubTechCalInput"]])) ->
+      select(LEVEL2_DATA_NAMES[["StubTechCalInput"]]) ->
       L242.StubTechCalInput_bld # OUTPUT
 
     # Fuel preference elasticities of building energy use
@@ -310,7 +307,7 @@ module_energy_L242.building_agg <- function(command, ...) {
                            GCAM_region_names = GCAM_region_names) %>%
       mutate(region_subsector = paste(region, subsector)) %>%
       filter(!region_subsector %in% L242.rm_techs_R) %>%
-      select(one_of(FuelPrefElasticity)) ->
+      select(FuelPrefElasticity) ->
       L242.FuelPrefElast_bld # OUTPUT
 
     # Expand per-capita based flag for building final demand across all regions

@@ -77,8 +77,7 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
     # China Energy Databook, CEDB_ResFloorspace_chn, provides residential floorspace (billions m2) from 1985 to 2006 for China.
     # Divide floorspace by population to get per capita floorspace, and extrapolate to all historical years
     CEDB_ResFloorspace_chn %>%
-      gather(year, value_flsp, -country, -iso) %>% # Convert to long form
-      mutate(year = as.integer(year)) %>% # Needs to be integer to combine with L100.Pop_thous_ctry_Yh
+      gather_years(value_col = "value_flsp") %>% # Needs to be integer to combine with L100.Pop_thous_ctry_Yh
       filter(year %in% HISTORICAL_YEARS) %>% # Ensure within historical time period
       left_join_error_no_match(L100.Pop_thous_ctry_Yh, by = c("iso", "year")) %>%
       # Divide floorspace by population to get per capita floorspace
@@ -100,17 +99,15 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
     # First, convert household data to long form so it can be joined at a later step
     A44.HouseholdSize_long <- A44.HouseholdSize %>%
       select(-Variable, -Unit) %>%
-      gather(year, value_pcdwelling) %>%
-      mutate(year = as.integer(year))
+      gather_years(value_col = "value_pcdwelling")
 
     # IEA_PCResFloorspace provides residential floorspace (m2) per person for 16 selected countries for 1980 to 2004
     # Note that IEA data will be chosen over Odyssee for duplicate countries b/c it reports per capita instead of per house
 
     # Reshape IEA data to long form
     IEA_PCResFloorspace %>%
-      gather(year, value_pcflsp, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year),
-             value_pcflsp = as.numeric(value_pcflsp)) ->
+      gather_years(value_col = "value_pcflsp") %>%
+      mutate(value_pcflsp = as.numeric(value_pcflsp)) ->
       IEA_PCResFloorspace_long
 
     # Create list of IEA iso's. It will be used to remove these iso's from Odyssee data.
@@ -159,7 +156,7 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
       summarise(`1980` = sum(`1980`),
                 `1990` = sum(`1990`)) %>%
       mutate(growthrate_1980_1990 = `1990` / `1980`) %>%
-      .[["growthrate_1980_1990"]] -> # Save as single value
+      pull(growthrate_1980_1990) -> # Save as single value
       growthrate_1980_1990
 
     # Calculate 1980 data from 1990 using calculated growth rate
@@ -172,21 +169,20 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
     L144.OECD_pcflsp_Yh_wide_2 %>%
       filter(iso == "usa") %>%
       mutate(value_usa_ratio = `2004` / `1998`) %>%
-      .[["value_usa_ratio"]] ->
+      pull(value_usa_ratio) ->
       value_usa_ratio
 
     L144.OECD_pcflsp_Yh_wide_2 %>%
       filter(iso == "fra") %>%
       mutate(value_fra_ratio = `2004` / `2001`) %>%
-      .[["value_fra_ratio"]] ->
+      pull(value_fra_ratio) ->
       value_fra_ratio
 
     L144.OECD_pcflsp_Yh_wide_2 %>%
       mutate(`2004` = replace(`2004`, iso == "aus", (`1998` * value_usa_ratio)[iso == "aus"]),
              `2004` = replace(`2004`, iso == "bel", (`2001` * value_fra_ratio)[iso == "bel"])) %>%
       # Extrapolate the time series to all historical years
-      gather(year, value_pcflsp, -iso) %>% # Convert to long form
-      mutate(year = as.integer(year)) %>% # Convert to integer (or numeric) to extrapolate
+      gather_years(value_col = "value_pcflsp") %>%
       group_by(iso) %>%
       # Rule 2 is used so years outside of min-max range are assigned values from closest data, as opposed to NAs
       mutate(value_pcflsp = approx_fun(year, value_pcflsp, rule = 2)) %>% # Interpolation step
@@ -199,9 +195,8 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
     # Time series doesn't span entire "historical" range; need to extrapolate
     # For now, use constant floorspace outside of available time series
     Other_pcflsp_m2_ctry_Yh %>%
-      gather(year, value_pcflsp, matches(YEAR_PATTERN)) %>% # Convert to long form
+      gather_years(value_col = "value_pcflsp") %>%
       filter(gcam.consumer == "resid") %>%
-      mutate(year = as.integer(year)) %>% # Convert year to integer (or numeric) as needed by the interpolation function.
       # Extrapolate to all historical years
       select(iso, year, value_pcflsp) %>%
       complete(year = HISTORICAL_YEARS,
@@ -246,8 +241,7 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
     list_iso_calc <- unique(L144.ALL_pcflsp_Yh_2$iso)
 
     A44.pcflsp_default %>%
-      gather(year, value_pcflsp, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years(value_col = "value_pcflsp") %>%
       filter(gcam.consumer == "resid") %>%
       # Left_join_error_no_match cannot be used because the number of rows will change. Each region will be expanded
       # into their individual countries
@@ -312,8 +306,7 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
     # Other country - South Africa
     # Other_pcflsp_m2_ctry_Yh provides residential and commercial floorspace (m2) per person for 2004 and 2005
     Other_pcflsp_m2_ctry_Yh %>%
-      gather(year, value_pcflsp, matches(YEAR_PATTERN)) %>% # Convert to long form
-      mutate(year = as.integer(year)) %>% # Convert year to integer
+      gather_years(value_col = "value_pcflsp") %>%
       filter(year %in% HISTORICAL_YEARS) %>% # Ensure within historical years
       filter(gcam.consumer == "comm") %>% # Filter only for commercial
       # Extrapolate to all historical years
@@ -335,8 +328,7 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
     # Regions will be downscaled to the country level.
     # USA and South Africa will be joined.
     A44.pcflsp_default %>%
-      gather(year, value_pcflsp, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year)) %>%
+      gather_years(value_col = "value_pcflsp") %>%
       filter(gcam.consumer == "comm") %>%
       group_by(region_GCAM3) %>%
       complete(year = HISTORICAL_YEARS) %>%

@@ -29,7 +29,7 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
              "L144.in_EJ_R_bld_serv_F_Yh",
              "L154.in_EJ_R_trn_m_sz_tech_F_Yh",
              "L1322.Fert_Prod_MtN_R_F_Y",
-             FILE = "temp-data-inject/L1321.in_EJ_R_cement_F_Y",
+             "L1321.in_EJ_R_cement_F_Y",
              "L124.in_EJ_R_heat_F_Yh",
              "L111.Prod_EJ_R_F_Yh",
              FILE = "emissions/EPA_SO2",
@@ -69,11 +69,8 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
     L144.in_EJ_R_bld_serv_F_Yh <- get_data(all_data, "L144.in_EJ_R_bld_serv_F_Yh")
     L154.in_EJ_R_trn_m_sz_tech_F_Yh <- get_data(all_data, "L154.in_EJ_R_trn_m_sz_tech_F_Yh") %>%
       spread(year, value)
-
     L1322.Fert_Prod_MtN_R_F_Y <- get_data(all_data, "L1322.Fert_Prod_MtN_R_F_Y")
-    L1321.in_EJ_R_cement_F_Y <- get_data(all_data, "temp-data-inject/L1321.in_EJ_R_cement_F_Y") %>%
-      gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
-      mutate(year = as.integer(substr(year, 2, 5)))
+    L1321.in_EJ_R_cement_F_Y <- get_data(all_data, "L1321.in_EJ_R_cement_F_Y")
     L124.in_EJ_R_heat_F_Yh <- get_data(all_data, "L124.in_EJ_R_heat_F_Yh")
     L111.Prod_EJ_R_F_Yh <- get_data(all_data, "L111.Prod_EJ_R_F_Yh")
 
@@ -101,8 +98,7 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
       L101.in_EJ_R_en_Si_F_Yh
 
     L101.in_EJ_R_en_Si_F_Yh %>%
-      gather(year, value, -GCAM_region_ID, -sector, -fuel, -technology) %>%
-      mutate(year = as.integer(year)) ->
+      gather_years ->
       L101.in_EJ_USA_en_Sepa_F_Yh.mlt
 
     # Subset for USA only and aggregate to EPA categories
@@ -124,8 +120,7 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
     # We do this for each gas, so define a function with all the steps
     EPA_convert_and_aggregate <- function(x, EPA_tech) {
       x %>%
-        gather(year, value, -Source_Category_Raw, -Source_Category) %>%
-        mutate(year = as.integer(year)) %>%
+        gather_years %>%
         left_join(distinct(EPA_tech), by = c("Source_Category" = "EPA_Category")) %>%
         filter(year %in% emissions.EPA_HISTORICAL_YEARS, !is.na(fuel)) %>%
         group_by(sector, fuel, year) %>%
@@ -202,7 +197,7 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
                      "L144.in_EJ_R_bld_serv_F_Yh",
                      "L154.in_EJ_R_trn_m_sz_tech_F_Yh",
                      "L1322.Fert_Prod_MtN_R_F_Y",
-                     "temp-data-inject/L1321.in_EJ_R_cement_F_Y",
+                     "L1321.in_EJ_R_cement_F_Y",
                      "L124.in_EJ_R_heat_F_Yh",
                      "L111.Prod_EJ_R_F_Yh") %>%
       add_flags(FLAG_NO_XYEAR) ->

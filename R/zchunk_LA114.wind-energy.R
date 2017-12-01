@@ -199,7 +199,7 @@ module_energy_LA114.wind <- function(command, ...) {
       # The first price point most closely corresponds to the mid.price, which is the price at which
            # supply is half of the maximum resource. Select the first row to get the mid.price.
       filter(row_number() == 1) %>%
-      .[["price"]] ->
+      pull(price) ->
       mid.price
 
     # Add mid-price to table

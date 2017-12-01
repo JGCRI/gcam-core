@@ -66,27 +66,21 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A_regions <- get_data(all_data, "emissions/A_regions")
     A31.rsrc_info <- get_data(all_data, "emissions/A31.rsrc_info") %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year))
+      gather_years
     A31.sector <- get_data(all_data, "emissions/A31.sector")
     A31.subsector_logit <- get_data(all_data, "emissions/A31.subsector_logit")
     A31.subsector_shrwt <- get_data(all_data, "emissions/A31.subsector_shrwt")
     A31.subsector_interp <- get_data(all_data, "emissions/A31.subsector_interp")
     A31.globaltech_shrwt <- get_data(all_data, "emissions/A31.globaltech_shrwt") %>%
-      gather(year, share.weight, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year))
+      gather_years(value_col = "share.weight")
     A31.globaltech_eff <- get_data(all_data, "emissions/A31.globaltech_eff") %>%
-      gather(year, efficiency, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year))
+      gather_years(value_col = "efficiency")
     A31.globaltech_cost <- get_data(all_data, "emissions/A31.globaltech_cost") %>%
-      gather(year, input.cost, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year))
+      gather_years(value_col = "input.cost")
     A31.globaltech_coef <- get_data(all_data, "emissions/A31.globaltech_coef") %>%
-      gather(year, coefficient, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year))
+      gather_years(value_col = "coefficient")
     A32.globaltech_eff <- get_data(all_data, "energy/A32.globaltech_eff") %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>%
-      mutate(year = as.integer(year))
+      gather_years
     L1322.in_EJ_R_indfeed_F_Yh <- get_data(all_data, "L1322.in_EJ_R_indfeed_F_Yh")
     L1322.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L1322.in_EJ_R_indenergy_F_Yh")
 

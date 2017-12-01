@@ -85,26 +85,26 @@ module_water_L203.water.mapping <- function(command, ...) {
 
     # Sector information
     L203.mapping_all %>%
-      select(one_of(c(LEVEL2_DATA_NAMES[["Supplysector"]], "logit.type"))) ->
+      select(LEVEL2_DATA_NAMES[["Supplysector"]], "logit.type") ->
       L203.Supplysector
 
     # Subsector logit exponents for mapping sector
     L203.mapping_all %>%
-      select(one_of(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], "logit.type"))) ->
+      select(LEVEL2_DATA_NAMES[["SubsectorLogit"]], "logit.type") ->
       L203.SubsectorLogit
 
     # Subsector share weights to 1 (no competition)
     L203.mapping_all %>%
       mutate(share.weight = 1,
              year.fillout = first(MODEL_YEARS)) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]])) ->
+      select(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]]) ->
       L203.SubsectorShrwtFllt
 
     # Pass-through technology to the water resource (no competition)
     L203.mapping_all %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       mutate(share.weight = 1) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["TechShrwt"]])) ->
+      select(LEVEL2_DATA_NAMES[["TechShrwt"]]) ->
       L203.TechShrwt
 
     # Pass-through technology to the water resource
@@ -112,7 +112,7 @@ module_water_L203.water.mapping <- function(command, ...) {
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       mutate(minicam.energy.input = water_type,
              market.name = region) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["TechCoef"]])) ->
+      select(LEVEL2_DATA_NAMES[["TechCoef"]]) ->
       L203.TechCoef
 
 

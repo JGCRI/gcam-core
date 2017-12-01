@@ -19,15 +19,15 @@ driver(all_data = empty_data(), stop_before = NULL, stop_after = NULL,
 \item{stop_after}{Stop immediately after this chunk  (character)}
 
 \item{return_inputs_of}{Return the data objects that are inputs for these chunks (character).
-If \code{stop_before} is specified, by default that chunk's inputs are returned.}
+If \code{stop_before} is specified, by default that chunk's inputs are returned}
 
 \item{return_outputs_of}{Return the data objects that are output from these chunks (character)
-If \code{stop_after} is specified, by default that chunk's outputs are returned.}
+If \code{stop_after} is specified, by default that chunk's outputs are returned}
 
-\item{return_data_names}{Return these data objects (character). By default this is the union of \code{return_inputs_of} and \code{return_inputs_of}}
+\item{return_data_names}{Return these data objects (character). By default this is the union of \code{return_inputs_of} and \code{return_outputs_of}}
 
 \item{return_data_map_only}{Return only the precursor information? (logical) This overrides
-the other \code{return_*} parameters above.}
+the other \code{return_*} parameters above}
 
 \item{write_outputs}{Write all chunk outputs to disk?}
 

@@ -212,7 +212,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     # Remove district heat from regions that do have have it
     A_regions.en %>%
       filter(has_district_heat == 1) %>%
-      .[["region"]] ->
+      pull(region) ->
       distheat.regions
     L201.en_pol_emissions <- filter(L201.en_pol_emissions, supplysector != "district heat" | region %in% distheat.regions)
     L201.en_ghg_emissions <- filter(L201.en_ghg_emissions, supplysector != "district heat" | region %in% distheat.regions)

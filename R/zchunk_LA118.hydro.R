@@ -42,8 +42,7 @@ module_energy_LA118.hydro <- function(command, ...) {
         L118.out_EJ_R_elec_hydro_Yfut
     } else {
       L100.IEA_en_bal_ctry_hist %>%
-        gather(year, value, -iso, -FLOW, -PRODUCT) %>%
-        mutate(year = as.integer(year)) ->
+        gather_years ->
         L100.IEA_en_bal_ctry_hist
 
       # ===================================================
@@ -61,7 +60,7 @@ module_energy_LA118.hydro <- function(command, ...) {
         select(Installed_GWh, Installed_MW) %>%
         summarise(Installed_GWh = sum(Installed_GWh), Installed_MW = sum(Installed_MW)) %>%
         mutate(value = Installed_GWh / (Installed_MW * CONV_YEAR_HOURS * CONV_MIL_BIL)) %>%
-        .[["value"]] -> # Convert table to single number
+        pull(value) -> # Convert table to single number
         Hydro_capfac
 
       # Economic potential is what we are interested in from this database; however it is often not reported. Many countries without reported
@@ -78,7 +77,7 @@ module_energy_LA118.hydro <- function(command, ...) {
       Hydropower_potential %>%
         filter(!is.na(Technical_GWh), !is.na(Economic_GWh)) %>%
         summarise(value = sum(Economic_GWh) / sum(Technical_GWh)) %>%
-        .[["value"]] -> # Convert table to single number
+        pull(value) -> # Convert table to single number
         Hydro_tech_econ
 
       # For countries with technical potential reported but no economic potential, estimate the economic potential
@@ -122,8 +121,7 @@ module_energy_LA118.hydro <- function(command, ...) {
 
       # First, convert A18.hydro_output to long form
       A18.hydro_output %>%
-        gather(year, value, -region_GCAM3) %>%
-        mutate(year = as.integer(year)) ->
+        gather_years ->
         A18.hydro_output_long
 
       # Now combine with L118.out_EJ_RG3_elec_hydro_fby
@@ -187,8 +185,7 @@ module_energy_LA118.hydro <- function(command, ...) {
         rename(year_base = year.x, year_future = year.y) %>%
         spread(year_base, value_base) %>%
         spread(year_future, value_future) %>%
-        gather(year, value, -iso, -region_GCAM3) %>%
-        mutate(year = as.integer(year)) ->
+        gather_years ->
         L118.out_EJ_ctry_elec_hydro_Y
 
       # For countries not in the world dams database (all are very small), copy final historical year forward

@@ -2,7 +2,11 @@
 #'
 #' Produce L2231.LN3_Logit, L2231.LN3_HistUnmgdAllocation, L2231.LN3_UnmgdAllocation,
 #' L2231.LN3_HistMgdAllocation_noncrop, L2231.LN3_MgdAllocation_noncrop, L2231.LN3_UnmgdCarbon,
-#'  L2231.LN3_MgdCarbon_noncrop, L2231.NodeEquiv, L2231.LN3_NoEmissCarbon, L2231.LN3_NodeCarbon.
+#' L2231.LN3_MgdCarbon_noncrop, L2231.NodeEquiv, L2231.LN3_NoEmissCarbon, L2231.LN3_NodeCarbon, and
+#' protected lands related outputs: L2231.LN3_HistUnmgdAllocation_noprot, L2231.LN3_UnmgdAllocation_noprot,
+#' L2231.LN1_HistUnmgdAllocation_prot, L2231.LN1_UnmgdAllocation_prot, L2231.LN1_UnmgdCarbon_prot,
+#' L2231.LN1_Logit_prot.
+#'
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -33,6 +37,17 @@
 #' \item{"L2231.LN3_NoEmissCarbon: Sets the no-emiss-carbon-calc as the type of carbon to use in forest leaves by region."}
 #' \item{"L2231.LN3_NodeCarbon: Sets the node-carbon-calc to drive the carbon calc between forest leaves, by region, and
 #' places the node carbon calc in the node just above the leaves."}
+#' \item{"L2231.LN3_HistUnmgdAllocation_noprot: Historical unmanaged land data from L223.LN3_HistUnmgdAllocation is multiplied
+#' by specified fraction to give unprotected land allocation in the third nest. OtherArableLands omitted."}
+#' \item{"L2231.LN3_UnmgdAllocation_noprot: Unmanaged land data from L223.LN3_UnmgdAllocation is multiplied by specified
+#' fraction to give "unprotected land allocation in the third nest. OtherArableLands omitted."}
+#' \item{"L2231.LN1_HistUnmgdAllocation_prot: Historical unmanaged land data from L223.LN3_HistUnmgdAllocation is multiplied by
+#' specified fraction to give protected land allocation in the first nest. OtherArableLands omitted."}
+#' \item{"L2231.LN1_UnmgdAllocation_prot: Unmanaged land data from L223.LN3_UnmgdAllocation is multiplied by specified fraction
+#' to give protected land allocation in the first nest. OtherArableLands omitted."}
+#' \item{" L2231.LN1_UnmgdCarbon_prot: Carbon content info for protected unmanaged land (LT_GLU) in the first nest including
+#' soil and vegetative carbon."}
+#' \item{"L2231.LN1_Logit_prot: Logit info for protected lands in the first land nest by region"}
 #' }
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
@@ -59,7 +74,14 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
              "L2231.LN3_HistMgdAllocation_noncrop",
              "L2231.LN3_MgdAllocation_noncrop",
              "L2231.LN3_UnmgdCarbon",
-             "L2231.LN3_MgdCarbon_noncrop"))
+             "L2231.LN3_MgdCarbon_noncrop",
+             # Protected land related outputs:
+             "L2231.LN3_HistUnmgdAllocation_noprot",
+             "L2231.LN3_UnmgdAllocation_noprot",
+             "L2231.LN1_HistUnmgdAllocation_prot",
+             "L2231.LN1_UnmgdAllocation_prot",
+             "L2231.LN1_UnmgdCarbon_prot",
+             "L2231.LN1_Logit_prot"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -118,7 +140,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       # logit.type is NA by default, so left_join
       left_join(select(A_LandNode_logit, logit.exponent, logit.type, LandNode), by = c("LandNode3" = "LandNode")) %>%
       append_GLU(var1 = "LandNode1", var2 = "LandNode2", var3 = "LandNode3") %>%
-      select(one_of(c(LEVEL2_DATA_NAMES[["LN3_Logit"]], "logit.type"))) ->
+      select(LEVEL2_DATA_NAMES[["LN3_Logit"]], "logit.type") ->
       L223.LN3_Logit
 
 
@@ -141,12 +163,12 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     # Formed from filtering the master table by different years.
     L223.LC_bm2_R_Unmgd3_Yh_GLU %>%
       filter(year %in% LAND_HISTORY_YEARS) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["LN3_HistUnmgdAllocation"]])) ->
+      select(LEVEL2_DATA_NAMES[["LN3_HistUnmgdAllocation"]]) ->
       L223.LN3_HistUnmgdAllocation
 
     L223.LC_bm2_R_Unmgd3_Yh_GLU %>%
       filter(year %in% BASE_YEARS) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["LN3_UnmgdAllocation"]])) ->
+      select(LEVEL2_DATA_NAMES[["LN3_UnmgdAllocation"]]) ->
       L223.LN3_UnmgdAllocation
 
 
@@ -168,12 +190,12 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     # Formed from filtering the master table by different years.
     L223.LC_bm2_R_Mgd3_Yh_GLU %>%
       filter(year %in% LAND_HISTORY_YEARS) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["LN3_HistMgdAllocation"]])) ->
+      select(LEVEL2_DATA_NAMES[["LN3_HistMgdAllocation"]]) ->
       L223.LN3_HistMgdAllocation_noncrop
 
     L223.LC_bm2_R_Mgd3_Yh_GLU %>%
       filter(year %in% BASE_YEARS) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["LN3_MgdAllocation"]])) ->
+      select(LEVEL2_DATA_NAMES[["LN3_MgdAllocation"]]) ->
       L223.LN3_MgdAllocation_noncrop
 
 
@@ -183,7 +205,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       left_join_error_no_match(select(GCAMLandLeaf_CdensityLT, Land_Type, LandLeaf), by = c("Land_Type" = "LandLeaf")) %>%
       rename(Cdensity_LT = Land_Type.y) %>%
       add_carbon_info(carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["LN3_UnmgdCarbon"]])) ->
+      select(LEVEL2_DATA_NAMES[["LN3_UnmgdCarbon"]]) ->
       L223.LN3_UnmgdCarbon
 
     # If any regions are zero in all periods, they will return missing values here. The specific value doesn't matter because
@@ -196,7 +218,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       left_join_error_no_match(select(GCAMLandLeaf_CdensityLT, Land_Type, LandLeaf), by = c("Land_Type" = "LandLeaf")) %>%
       rename(Cdensity_LT = Land_Type.y) %>%
       add_carbon_info(carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["LN3_MgdCarbon"]])) ->
+      select(LEVEL2_DATA_NAMES[["LN3_MgdCarbon"]]) ->
       L223.LN3_MgdCarbon_noncrop
 
     # L223.LN3_NoEmissCarbon: Set the no-emiss-carbon-calc as the type of carbon to use in forest leaves.
@@ -230,6 +252,72 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
            tag1 = c("LandLeaf", "land-carbon-densities"),
            tag2 = c("UnmanagedLandLeaf", "no-emiss-carbon-calc")) ->
       L223.NodeEquiv
+
+
+    # UNPROTECTED LANDS in the third nest
+    # Note that OtherArableLand is specifically NOT adjusted.
+
+    # function to process unprotected lands
+    # remove OtherArableLand types from UnmanageLandLeaf and adjust allocation
+    # grepl is used in filtering out OtherArableLand from UnmanagedLandLeaf
+    # because entries in UnmanagedLandLeaf are formatted as landtype_basin.
+    create_noprot_unmgd <- function(data){
+      data %>%
+        filter(!grepl("OtherArable", UnmanagedLandLeaf)) %>%
+        mutate(allocation = (1 - aglu.PROTECT_LAND_FRACT) * allocation)
+    } # end create_noprot
+
+
+    # L223.LN3_HistUnmgdAllocation_noprot: historical unmanaged land cover, no protect
+    L223.LN3_HistUnmgdAllocation_noprot <- create_noprot_unmgd(L223.LN3_HistUnmgdAllocation)
+
+
+    # L223.LN3_UnmgdAllocation_noprot: unmanaged land cover, no protect
+    L223.LN3_UnmgdAllocation_noprot <- create_noprot_unmgd(L223.LN3_UnmgdAllocation)
+
+
+    # PROTECTED LANDS in the first nest
+    # modified land allocations, different names, different nesting structure
+
+    # function to process protected lands
+    create_prot_unmgd <- function(data){
+      data %>%
+        filter(!grepl("OtherArable", UnmanagedLandLeaf)) %>%
+        mutate(UnmanagedLandLeaf = paste0("Protected", UnmanagedLandLeaf),
+               LandNode1 = UnmanagedLandLeaf,
+               LandNode2 = NULL,
+               LandNode3 = NULL,
+               allocation = aglu.PROTECT_LAND_FRACT * allocation)
+    }
+
+
+    # L223.LN1_HistUnmgdAllocation_prot: historical unmanaged land cover, protected
+    L223.LN1_HistUnmgdAllocation_prot <- create_prot_unmgd(L223.LN3_HistUnmgdAllocation)
+
+
+    # L223.LN1_UnmgdAllocation_prot: unmanaged land cover, protected
+    L223.LN1_UnmgdAllocation_prot <- create_prot_unmgd(L223.LN3_UnmgdAllocation)
+
+
+    # L223.LN1_UnmgdCarbon_prot: unmanaged carbon info, protected
+    L223.LN3_UnmgdCarbon %>%
+      filter(!grepl("OtherArable", UnmanagedLandLeaf)) %>%
+      mutate(UnmanagedLandLeaf = paste0("Protected", UnmanagedLandLeaf),
+             LandNode1 = UnmanagedLandLeaf,
+             LandNode2 = NULL,
+             LandNode3 = NULL) ->
+      L223.LN1_UnmgdCarbon_prot
+
+
+    # L223.LN1_Logit_prot: Logit for protected land in the first nest.
+    L223.LN1_UnmgdAllocation_prot %>%
+      mutate(unManagedLandValue = aglu.UNMANAGED_LAND_VALUE,
+             logit.year.fillout = min(BASE_YEARS),
+             logit.exponent = aglu.LN1_PROTUNMGD_LOGIT_EXP,
+             logit.type = aglu.LN1_PROTUNMGD_LOGIT_TYPE) %>%
+      select(one_of(c(LEVEL2_DATA_NAMES[["LN1_ValueLogit"]], "logit.type"))) ->
+      L223.LN1_Logit_prot
+
 
     # Produce outputs
     L223.LN3_Logit %>%
@@ -335,7 +423,69 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
                      "L125.LC_bm2_R_LT_Yh_GLU") ->
       L2231.LN3_MgdCarbon_noncrop
 
-    return_data(L2231.LN3_Logit, L2231.LN3_HistUnmgdAllocation, L2231.LN3_UnmgdAllocation, L2231.NodeEquiv, L2231.LN3_NoEmissCarbon, L2231.LN3_NodeCarbon, L2231.LN3_HistMgdAllocation_noncrop, L2231.LN3_MgdAllocation_noncrop, L2231.LN3_UnmgdCarbon, L2231.LN3_MgdCarbon_noncrop)
+
+    # Protected lands related outputs:
+    L223.LN3_HistUnmgdAllocation_noprot %>%
+      add_title("Unprotected historical unmanged lands in the third nest by basin.") %>%
+      add_units("thou km2") %>%
+      add_comments("Historical unmanaged land data from L223.LN3_HistUnmgdAllocation is multiplied by ") %>%
+      add_comments("specified fraction to give unprotected land allocation in the third nest. OtherArableLands omitted.") %>%
+      add_legacy_name("L223.LN3_HistUnmgdAllocation_noprot") %>%
+      same_precursors_as(L223.LN3_HistUnmgdAllocation) %>%
+      add_flags(FLAG_PROTECT_FLOAT) ->
+      L2231.LN3_HistUnmgdAllocation_noprot
+
+    L223.LN3_UnmgdAllocation_noprot %>%
+      add_title("Unprotected unmanged lands in the third nest by basin.") %>%
+      add_units("thou km2") %>%
+      add_comments("Unmanaged land data from L223.LN3_UnmgdAllocation is multiplied by specified fraction to give ") %>%
+      add_comments("unprotected land allocation in the third nest. OtherArableLands omitted.") %>%
+      add_legacy_name("L223.LN3_UnmgdAllocation_noprot") %>%
+      same_precursors_as(L223.LN3_UnmgdAllocation) %>%
+      add_flags(FLAG_PROTECT_FLOAT) ->
+      L2231.LN3_UnmgdAllocation_noprot
+
+    L223.LN1_HistUnmgdAllocation_prot %>%
+      add_title("Protected historical unmanged lands in the first nest by basin.") %>%
+      add_units("thou km2") %>%
+      add_comments("Historical unmanaged land data from L223.LN3_HistUnmgdAllocation is multiplied by ") %>%
+      add_comments("specified fraction to give protected land allocation in the first nest. OtherArableLands omitted.") %>%
+      add_legacy_name("L223.LN1_HistUnmgdAllocation_prot") %>%
+      same_precursors_as(L223.LN3_HistUnmgdAllocation) %>%
+      add_flags(FLAG_PROTECT_FLOAT) ->
+      L2231.LN1_HistUnmgdAllocation_prot
+
+    L223.LN1_UnmgdAllocation_prot %>%
+      add_title("Protected unmanged lands in the first nest by basin.") %>%
+      add_units("thou km2") %>%
+      add_comments("Unmanaged land data from L223.LN3_UnmgdAllocation is multiplied by specified fraction to give ") %>%
+      add_comments("protected land allocation in the first nest. OtherArableLands omitted.") %>%
+      add_legacy_name("L223.LN1_UnmgdAllocation_prot") %>%
+      same_precursors_as(L223.LN3_UnmgdAllocation) %>%
+      add_flags(FLAG_PROTECT_FLOAT) ->
+      L2231.LN1_UnmgdAllocation_prot
+
+    L223.LN1_UnmgdCarbon_prot %>%
+      add_title("Carbon content for protected unmanaged land (LT_GLU) in first nest by region.") %>%
+      add_units("Varies") %>%
+      add_comments("Carbon content info for protected unmanaged land (LT_GLU) in the first nest including soil and vegetative carbon.") %>%
+      add_legacy_name("L223.LN1_UnmgdCarbon_prot") %>%
+      same_precursors_as(L223.LN3_UnmgdCarbon) ->
+      L2231.LN1_UnmgdCarbon_prot
+
+    L223.LN1_Logit_prot %>%
+      add_title("Logit info for protected lands in the first land nest by region") %>%
+      add_units("NA") %>%
+      add_comments("Logit exponent of the first land nest by region. AgLU regions") %>%
+      add_comments("are given externally defined constant logit information.") %>%
+      add_legacy_name("L223.LN1_Logit_prot") %>%
+      same_precursors_as(L2231.LN1_UnmgdAllocation_prot) ->
+      L2231.LN1_Logit_prot
+
+
+    return_data(L2231.LN3_Logit, L2231.LN3_HistUnmgdAllocation, L2231.LN3_UnmgdAllocation, L2231.NodeEquiv, L2231.LN3_NoEmissCarbon, L2231.LN3_NodeCarbon, L2231.LN3_HistMgdAllocation_noncrop, L2231.LN3_MgdAllocation_noncrop, L2231.LN3_UnmgdCarbon, L2231.LN3_MgdCarbon_noncrop,
+                # protected land outputs:
+                L2231.LN3_HistUnmgdAllocation_noprot, L2231.LN3_UnmgdAllocation_noprot, L2231.LN1_HistUnmgdAllocation_prot, L2231.LN1_UnmgdAllocation_prot, L2231.LN1_UnmgdCarbon_prot, L2231.LN1_Logit_prot)
   } else {
     stop("Unknown command")
   }

@@ -81,3 +81,42 @@ test_that('standard output mode is equivalent to raw mode', {
   expect_false(cmp_xml_files(basefile, 'test-data/modeltime-chval.xml'))
   expect_error(cmp_xml_files(basefile, 'no-such-file.xml'), "Can't find file")
 })
+
+test_that('bulk testing works', {
+    skip_on_os('windows')
+    olddir <- tempfile()
+    newdir <- tempfile()
+    dir.create(olddir)
+    dir.create(newdir)
+
+    testfiles <- list.files('test-data','\\.xml$', full.names=TRUE)
+    expect_gte(length(testfiles), 1)
+
+    for (file in testfiles) {
+        fn <- basename(file)
+        file.copy(file, file.path(olddir, fn))
+        file.copy(file, file.path(newdir, fn))
+    }
+
+    expect_equal(run_xml_tests(olddir, newdir), 0)
+
+    ## make one of the files disagree
+    file.copy(file.path(newdir, 'modeltime-chval.xml'),
+              file.path(newdir, 'modeltime.xml'), overwrite=TRUE)
+
+    expect_warning({nd <- run_xml_tests(olddir, newdir)},
+                   'files had discrepancies')
+    expect_equal(nd, 1)
+
+    ## no old files to test is a warning
+    emptydir <- tempfile()
+    dir.create(emptydir)
+    expect_warning(run_xml_tests(emptydir, newdir),
+                   'No XML files')
+
+    unlink(olddir, recursive=TRUE)
+    unlink(newdir, recursive=TRUE)
+    unlink(emptydir, recursive=TRUE)
+})
+
+

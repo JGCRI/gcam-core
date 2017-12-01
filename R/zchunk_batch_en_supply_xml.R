@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{en_supply.xml}. The corresponding file in the
 #' original data system was \code{batch_en_supply_xml.R} (energy XML).
-module_energy_batch_en_supply_xml_DISABLED <- function(command, ...) {
+module_energy_batch_en_supply_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L221.SectorUseTrialMarket_en",
              "L221.SubsectorLogit_en",
@@ -87,9 +87,9 @@ module_energy_batch_en_supply_xml_DISABLED <- function(command, ...) {
       add_xml_data(L221.TechCost_en_Traded,"TechCost") %>%
       add_xml_data(L221.TechShrwt_en_Traded,"TechShrwt") %>%
       add_xml_data(L221.StubTechCoef_unoil,"StubTechCoef") %>%
-      add_xml_data(L221.Production_unoil,"Production") %>%
-      add_xml_data(L221.StubTechProd_oil_unoil,"StubTechProd") %>%
-      add_xml_data(L221.StubTechProd_oil_crude,"StubTechProd") %>%
+      add_xml_data(L221.Production_unoil,"Production", column_order_lookup = NULL) %>%
+      add_xml_data(L221.StubTechProd_oil_unoil,"StubTechProd", column_order_lookup = NULL) %>%
+      add_xml_data(L221.StubTechProd_oil_crude,"StubTechProd", column_order_lookup = NULL) %>%
       add_xml_data(L221.StubTechShrwt_bio,"StubTechShrwt") %>%
       add_precursors("L221.SectorUseTrialMarket_en", "L221.SubsectorLogit_en", "L221.SubsectorShrwt_en", "L221.SubsectorShrwtFllt_en", "L221.SubsectorInterp_en", "L221.SubsectorInterpTo_en", "L221.StubTech_en", "L221.GlobalTechCoef_en", "L221.GlobalTechCost_en", "L221.GlobalTechShrwt_en", "L221.PrimaryConsKeyword_en", "L221.StubTechFractSecOut_en", "L221.StubTechFractProd_en", "L221.DepRsrc_en", "L221.DepRsrcPrice_en", "L221.TechCoef_en_Traded", "L221.TechCost_en_Traded", "L221.TechShrwt_en_Traded", "L221.StubTechCoef_unoil", "L221.Production_unoil", "L221.StubTechProd_oil_unoil", "L221.StubTechProd_oil_crude", "L221.StubTechShrwt_bio") ->
       en_supply.xml

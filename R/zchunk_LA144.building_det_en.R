@@ -80,8 +80,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
     # Write out the tech change table to all desired years, and convert to ratios from a base year
     # A44.USA_TechChange reports improvement rates of technology (annual rate)
     A44.USA_TechChange %>%
-      gather(year, value, -supplysector, -technology) %>% # Convert to long form
-      mutate(year = as.integer(year)) %>% # Year needs to be integer (or numeric) for the interpolation step below
+      gather_years %>% # Year needs to be integer (or numeric) for the interpolation step below
       # Expand table to include all historical and future years
       group_by(supplysector, technology) %>%
       complete(year = HIST_FUT_YEARS) %>%
@@ -152,8 +151,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
     # A44.shell_eff_mult_RG3 reports GCAM 3.0 multipliers from USA to other regions for shell efficiency
     # Calculated based on per-capita GDP and heating degree days
     A44.shell_eff_mult_RG3 %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>% # Convert to long form
-      mutate(year = as.integer(year)) %>% # Convert to integer (or numeric) to extrapolate
+      gather_years %>%
       # Expand table to include all historical and future years
       group_by(region_GCAM3) %>%
       complete(year = HIST_FUT_YEARS) %>%
@@ -186,8 +184,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
     # These efficiency multipliers will be used for non-shell technologies, as multipliers for shell technologies
     # were calculated above.
     A44.tech_eff_mult_RG3 %>%
-      gather(year, value, matches(YEAR_PATTERN)) %>% # Convert to long form
-      mutate(year = as.integer(year)) %>% # Convert to integer (or numeric) to extrapolate
+      gather_years %>%
       # Expand table to include all historical and future years
       group_by(region_GCAM3) %>%
       complete(year = HIST_FUT_YEARS) %>%
@@ -217,13 +214,13 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       # 0 indicates district heat is not modeled
       filter(has_district_heat == 0) %>%
       mutate(regions_NoDistHeat = paste(GCAM_region_ID, "district heat")) %>%
-      .[["regions_NoDistHeat"]]
+      pull(regions_NoDistHeat)
 
     regions_NoTradBio <- A_regions %>%
       # 0 indicates traditional biomass is not modeled
       filter(tradbio_region == 0) %>%
       mutate(regions_NoTradBio = paste(GCAM_region_ID, "traditional biomass")) %>%
-      .[["regions_NoTradBio"]]
+      pull(regions_NoTradBio)
 
     # Note that this produces a final output table.
     L144.end_use_eff_Index %>%
@@ -299,7 +296,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
 
     thermal_services <- calibrated_techs_bld_det %>%
       filter(!supplysector %in% list_supplysector) %>%
-      .[["service"]] %>%
+      pull(service) %>%
       unique()
 
     # Split thermal_services into heating and cooling
@@ -448,7 +445,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
     regions_noheat <- A_regions %>%
       filter(has_district_heat == 0) %>%
       mutate(regions_noheat = paste(GCAM_region_ID, "heat")) %>%
-      .[["regions_noheat"]]
+      pull(regions_noheat)
 
     # L142.in_EJ_R_bld_F_Yh reports energy by region, sector, and fuel, but not service. Since we now have
     # the service share, we can calculate for service
@@ -512,7 +509,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
     # First, create list pairing supplysector with technology, for which to filter by
     A44.internal_gains %>%
       mutate(supp_tech = paste(supplysector, technology)) %>%
-      .[["supp_tech"]] ->
+      pull(supp_tech) ->
       supp_tech
 
     L144.end_use_eff %>%

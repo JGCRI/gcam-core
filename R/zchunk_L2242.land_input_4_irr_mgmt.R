@@ -45,7 +45,7 @@ module_aglu_L2242.land_input_4_irr_mgmt <- function(command, ...) {
     # so here we only write out the logit exponent for the irrigated/rainfed node competition.
     # Use the cropland and bioenergy allocation tables to establish which region/GLU/node combinations are available
     L223.LN3_MgdAllocation_crop %>%
-      select(one_of(LEVEL2_DATA_NAMES[["LN3_Leaf"]])) %>%
+      select(LEVEL2_DATA_NAMES[["LN3_Leaf"]]) %>%
       unique %>%
       bind_rows(unique(select(L223.LN3_MgdAllocation_bio, one_of(LEVEL2_DATA_NAMES[["LN3_Leaf"]])))) %>%
       # What was a leaf for level3 is now a node, as it will have the 4th level nested under it
@@ -63,7 +63,7 @@ module_aglu_L2242.land_input_4_irr_mgmt <- function(command, ...) {
       # Match in logit exponent values, use left_join instead because the logit.type variable are NAs, drop later
       left_join(A_LandNode_logit_irr, by = c("LandNode4" = "LandNode")) %>%
       mutate(LandNode4 = paste(LandNode4, GLU_name, sep = "_")) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["LN4_Logit"]],"logit.type")) ->
+      select(LEVEL2_DATA_NAMES[["LN4_Logit"]],"logit.type") ->
       L2242.LN4_Logit
 
     # L2242.LN4_NodeGhostShare:

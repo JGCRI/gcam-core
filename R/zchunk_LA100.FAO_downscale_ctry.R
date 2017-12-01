@@ -64,8 +64,8 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     iso <- FAO_country <- `country codes` <- `element codes` <- `item codes` <-
-        year <- value <- countries <- country.codes <- item <- item.codes <-
-            element <- element.codes <- NULL # silence package chck.
+      year <- value <- countries <- country.codes <- item <- item.codes <-
+      element <- element.codes <- NULL # silence package chck.
 
     all_data <- list(...)[[1]]
 
@@ -117,9 +117,9 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
     # So most of this function, the slowest in the entire data system, retains the original
     # code (though cleaned up considerably) and logic
     cons <- full_join(FAO_Fert_Cons_tN_RESOURCESTAT_archv,
-                  FAO_Fert_Cons_tN_RESOURCESTAT, by = c("countries", "country codes", "item", "item codes", "element", "element codes"))
+                      FAO_Fert_Cons_tN_RESOURCESTAT, by = c("countries", "country codes", "item", "item codes", "element", "element codes"))
     prod <- full_join(FAO_Fert_Prod_tN_RESOURCESTAT_archv,
-                  FAO_Fert_Prod_tN_RESOURCESTAT, by = c("countries", "country codes", "item", "item codes", "element", "element codes"))
+                      FAO_Fert_Prod_tN_RESOURCESTAT, by = c("countries", "country codes", "item", "item codes", "element", "element codes"))
 
     # Aggregate to complete the merge of the two datasets
     FAO_Fert_Cons_tN_RESOURCESTAT <- aggregate(cons[names(cons) %in% FAO_histyear_cols],
@@ -245,24 +245,21 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
       FAO_data_ALL_5yr
 
     # Change `element` columns to match old data and reshape
-#    FAO_data_ALL_5yr <- FAO_data_ALL_5yr[c(1:6,8:47,7)]
+    #    FAO_data_ALL_5yr <- FAO_data_ALL_5yr[c(1:6,8:47,7)]
     FAO_data_ALL_5yr$element <- gsub(pattern = "_[A-Z]*$", "", FAO_data_ALL_5yr$element)
     FAO_data_ALL_5yr$element <- gsub(pattern = "^FAO_", "", FAO_data_ALL_5yr$element)
-    FAO_data_ALL_5yr %>%
-      gather(year, value, -countries, -country.codes, -item, -item.codes, -element, -element.codes, -iso) %>%
-      mutate(year = as.integer(year)) ->
-      FAO_data_ALL_5yr
+    FAO_data_ALL_5yr <- gather_years(FAO_data_ALL_5yr)
 
     # Re-split into separate tables for each element
     L100.FAOlist <- split(seq(1, nrow(FAO_data_ALL_5yr)), FAO_data_ALL_5yr$element)
     names(L100.FAOlist) <- lapply(names(L100.FAOlist), function(x) { paste0("L100.FAO_", x) })
-                                        # change list names to match the legacy
-                                        # names
+    # change list names to match the legacy
+    # names
     fixup <- function(irows, legacy.name) {
-        FAO_data_ALL_5yr[irows,] %>%
-          add_comments("Downscale countries; calculate 5-yr averages") %>%
-          add_legacy_name(legacy.name) %>%
-          add_flags(FLAG_NO_XYEAR, FLAG_LONG_YEAR_FORM)
+      FAO_data_ALL_5yr[irows,] %>%
+        add_comments("Downscale countries; calculate 5-yr averages") %>%
+        add_legacy_name(legacy.name) %>%
+        add_flags(FLAG_NO_XYEAR, FLAG_LONG_YEAR_FORM)
     }
     L100.FAOlist <- Map(fixup, L100.FAOlist, names(L100.FAOlist))
 

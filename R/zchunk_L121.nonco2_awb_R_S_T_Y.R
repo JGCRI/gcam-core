@@ -124,9 +124,8 @@ module_emissions_L121.nonco2_awb_R_S_T_Y <- function(command, ...) {
       # Aggregate EDGAR emissions by GCAM region and sector, converting to Tg
       select(-c(`IPCC-Annex`, `World Region`, iso, Name, IPCC, IPCC_description, region_GCAM3, country_name)) %>%
       na.omit %>%
-      gather(year, value, -c(GCAM_region_ID, `Non.CO2`, sector)) %>%
-      mutate(year = as.integer(year)) %>%
-      group_by(GCAM_region_ID, `Non.CO2`, sector, year) %>%
+      gather_years %>%
+      group_by(GCAM_region_ID, Non.CO2, sector, year) %>%
       summarise(value = sum(as.numeric(value) * CONV_GG_TG)) ->
       L121.EDGAR_TG_R_G_s_y_v
 

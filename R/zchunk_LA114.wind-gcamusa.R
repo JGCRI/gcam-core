@@ -43,12 +43,12 @@ module_gcam.usa_LA114.Wind <- function(command, ...) {
     filter_gather_interp_get_cost <- function(x) {
       . <- NULL  # silence package check notes
       x %>% filter(technology == "wind") %>%
-        gather(year, value, matches(YEAR_PATTERN)) %>%
-        select(year, value) %>% mutate(year = as.integer(year)) %>%
+        gather_years %>%
+        select(year, value) %>%
         complete(year = c(year, gcamusa.WIND_BASE_COST_YEAR)) %>%
         mutate(value = approx_fun(year, value, rule = 2)) %>%
         filter(year == gcamusa.WIND_BASE_COST_YEAR) %>%
-        .[["value"]]
+        pull(value)
     }
 
     A23.globaltech_capital %>% filter_gather_interp_get_cost -> L114.CapCost
