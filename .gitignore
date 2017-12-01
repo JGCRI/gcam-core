@@ -27,3 +27,5 @@ en_OECD.*
 # emacs backup files
 *~
 
+# junk produced when developing the python scripts
+*pycache*
