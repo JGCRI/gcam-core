@@ -252,7 +252,8 @@ cmp_xml_files <- function(fleft, fright, raw = FALSE)
   ## catch that as an error below.
   suppressWarnings({args <- normalizePath(c(py, fleft, fright))})
   if(raw) {
-    rslt <- system2(cmd, args, stdout = TRUE)
+    rslt <- system2(cmd, args, stdout = TRUE, stderr=FALSE) # stderr output is
+                                        # not needed.
     if(is.null(attr(rslt, 'status'))) {
       ## For some reason, system2 doesn't set the status attribute isn't set when the call
       ## is successful
@@ -264,7 +265,7 @@ cmp_xml_files <- function(fleft, fright, raw = FALSE)
     for(file in args)
       if(!file.exists(file))
         stop("Can't find file: ", file)
-    rslt <- system2(cmd, args, stdout = FALSE)
+    rslt <- system2(cmd, args, stdout = FALSE, stderr = FALSE)
     if(rslt == 0) {
       return(TRUE)
     }
@@ -278,6 +279,37 @@ cmp_xml_files <- function(fleft, fright, raw = FALSE)
   }
 }
 
+
+#' Compare all XML files in a directory to their counterparts in the output
+#'
+#' The 'old' directory should contain reference versions of the files.  The
+#' 'new' directory should be the directory where the output xml files are
+#' stored.  The old directory is searched recursively; the new directory is not
+#' (because the new system currently dumps all of its outputs into a single
+#' output directory).
+#'
+#' @param olddir Directory containing the old (reference) output xml files
+#' @param newdir Directory containing the new output xml files
+#' @return Number of discrepancies found.
+#' @export
+run_xml_tests <- function(olddir, newdir = XML_DIR)
+{
+    oldfiles <- list.files(olddir, '\\.xml$', recursive=TRUE, full.names=TRUE)
+    newfiles <- file.path(newdir, sapply(oldfiles, basename))
+
+    if (length(oldfiles) == 0) {
+        warning('No XML files found in ', olddir)
+        return(0)
+    }
+
+    isgood <- Map(cmp_xml_files, oldfiles, newfiles) %>% simplify2array
+    if (!all(isgood)) {
+        badfiles <- paste(sapply(newfiles[!isgood], basename), collapse = ' ')
+        warning('The following files had discrepancies: ', badfiles)
+    }
+
+    sum(!isgood)
+}
 
 #' A list of XML tag equivalence classes so that the ModelInterface when converting
 #' data to XML can treat tags in the same class as the same when enabled, thus not
