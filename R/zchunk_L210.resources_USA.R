@@ -270,7 +270,7 @@ module_gcam.usa_L210.resources_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("L210.UnlimitRsrc filtered and written to all states") %>%
       add_legacy_name("L210.UnlimitRsrc_limestone_USA") %>%
-      add_precursors("L210.UnlimitRsrc") ->
+      add_precursors("L210.UnlimitRsrc", "L1321.out_Mt_state_cement_Yh") ->
       L210.UnlimitRsrc_limestone_USA
 
     L210.UnlimitRsrcPrice_USA %>%
@@ -286,7 +286,7 @@ module_gcam.usa_L210.resources_USA <- function(command, ...) {
       add_units("1975$/kg") %>%
       add_comments("L210.UnlimitRsrcPrice filtered and written to all states") %>%
       add_legacy_name("L210.UnlimitRsrcPrice_limestone_USA") %>%
-      add_precursors("L210.UnlimitRsrcPrice") ->
+      add_precursors("L210.UnlimitRsrcPrice", "L1321.out_Mt_state_cement_Yh") ->
       L210.UnlimitRsrcPrice_limestone_USA
 
     L210.SmthRenewRsrcTechChange_USA %>%
