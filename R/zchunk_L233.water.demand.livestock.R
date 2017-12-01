@@ -20,7 +20,7 @@ module_water_L233.water.demand.livestock <- function(command, ...) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "water/A03.sector",
              FILE = "aglu/A_an_technology",
-             FILE = "temp-data-inject/L133.water_demand_livestock_R_C_W_km3_Mt"))
+             "L133.water_demand_livestock_R_C_W_km3_Mt"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L233.TechCoef"))
   } else if(command == driver.MAKE) {
@@ -34,7 +34,7 @@ module_water_L233.water.demand.livestock <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A03.sector <- get_data(all_data, "water/A03.sector")
     A_an_technology <- get_data(all_data, "aglu/A_an_technology")
-    L133.water_demand_livestock_R_C_W_km3_Mt <- get_data(all_data, "temp-data-inject/L133.water_demand_livestock_R_C_W_km3_Mt")
+    L133.water_demand_livestock_R_C_W_km3_Mt <- get_data(all_data, "L133.water_demand_livestock_R_C_W_km3_Mt")
 
     # Just read in water coefficients for all years
     L133.water_demand_livestock_R_C_W_km3_Mt %>%
@@ -60,7 +60,7 @@ module_water_L233.water.demand.livestock <- function(command, ...) {
                    4) replicate the water coefficients for all MODEL_YEARS") %>%
       add_legacy_name("L233.TechCoef") %>%
       add_precursors("common/GCAM_region_names", "water/A03.sector", "aglu/A_an_technology",
-                     "temp-data-inject/L133.water_demand_livestock_R_C_W_km3_Mt") ->
+                     "L133.water_demand_livestock_R_C_W_km3_Mt") ->
       L233.TechCoef
 
     return_data(L233.TechCoef)
