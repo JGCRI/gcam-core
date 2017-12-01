@@ -311,7 +311,7 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
 
     # Produce final output
     L100.IEA_en_bal_ctry_hist %>%
-      add_title("IEA energy balances downscaled to 201 countries by iso code, FLOW, PRODUCT, and historical year") %>%
+      add_title("IEA energy balances downscaled to 201 countries by iso code, FLOW, PRODUCT, and historical year", overwrite = TRUE) %>%
       add_units("ktoe and GWh") %>%
       add_legacy_name("L100.IEA_en_bal_ctry_hist") %>%
       add_precursors("L100.Pop_thous_ctry_Yh", "energy/en_OECD", "energy/en_nonOECD",
