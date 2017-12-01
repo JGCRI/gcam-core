@@ -10,6 +10,7 @@ the order of elements will not be flagged as differences.
 
 import xml.etree.ElementTree as ET
 from sys import stdout
+from sys import stderr
 
 ## We will compare GCAM numeric values to 5 significant digits.  This
 ## should be sufficient accuracy for just about any quantities we use
@@ -195,19 +196,26 @@ def report_child_mismatch(left, right, path, outstream):
     outstream.write('\tRight: {} child nodes\n'.format(len(right)))
     outstream.write('\n')
 
-        
+
+def compare_files(fleft, fright, verbose=True, vstream=stderr):
+
+    if verbose:
+        vstream.write('### oldfile: {}    newfile: {}\n'.format(fleft, fright))
+    
+    left = ET.parse(fleft).getroot()
+    right = ET.parse(fright).getroot()
+
+    return eltdiff(left, right)
+
 if __name__ == "__main__":
-    from sys import argv, stderr, exit
+    from sys import argv, exit
 
     if len(argv) != 3:
         stderr.write('Usage: {} file1 file2'.format(argv[0]))
         exit(2)
 
     ## Parse and compare the files.
-    left = ET.parse(argv[1]).getroot()
-    right = ET.parse(argv[2]).getroot()
-
-    stat = eltdiff(left, right)
+    stat = compare_files(argv[1], argv[2])
 
     if stat==0:
         exit(0)
