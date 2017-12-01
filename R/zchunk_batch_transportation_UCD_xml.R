@@ -96,18 +96,18 @@ module_energy_batch_transportation_UCD_xml <- function(command, ...) {
       add_xml_data(L254.FinalEnergyKeyword_trn, "FinalEnergyKeyword") %>%
       add_xml_data(L254.tranSubsectorLogit, "tranSubsectorLogit") %>%
       add_xml_data(L254.tranSubsectorSpeed, "tranSubsectorSpeed") %>%
-      add_xml_data(L254.tranSubsectorSpeed_passthru, "tranSubsectorSpeed_passthru", column_order_lookup = "tranSubsectorSpeed") %>%
-      add_xml_data(L254.tranSubsectorSpeed_noVOTT, "tranSubsectorSpeed_noVOTT", column_order_lookup = "tranSubsectorSpeed") %>%
-      add_xml_data(L254.tranSubsectorSpeed_nonmotor, "tranSubsectorSpeed_nonmotor", column_order_lookup = "tranSubsectorSpeed") %>%
+      add_xml_data(L254.tranSubsectorSpeed_passthru, "tranSubsectorSpeed") %>%
+      add_xml_data(L254.tranSubsectorSpeed_noVOTT, "tranSubsectorSpeed") %>%
+      add_xml_data(L254.tranSubsectorSpeed_nonmotor, "tranSubsectorSpeed") %>%
       add_xml_data(L254.tranSubsectorVOTT, "tranSubsectorVOTT") %>%
       add_xml_data(L254.tranSubsectorFuelPref, "tranSubsectorFuelPref") %>%
       add_xml_data(L254.StubTranTech, "StubTranTech") %>%
-      add_xml_data(L254.StubTech_passthru, "StubTech_passthru", column_order_lookup = "StubTranTech") %>%
-      add_xml_data(L254.StubTech_nonmotor, "StubTech_nonmotor", column_order_lookup = "StubTranTech") %>%
-      add_xml_data(L254.GlobalTechShrwt_passthru, "GlobalTechShrwt_passthru", column_order_lookup = "GlobalTechShrwt") %>%
-      add_xml_data(L254.GlobalTechShrwt_nonmotor, "GlobalTechShrwt_nonmotor", column_order_lookup = "GlobalTechShrwt") %>%
-      add_xml_data(L254.GlobalTechCoef_passthru, "GlobalTechCoef_passthru", column_order_lookup = "GlobalTechCoef") %>%
-      add_xml_data(L254.GlobalRenewTech_nonmotor, "GlobalRenewTech_nonmotor", column_order_lookup = "GlobalRenewTech") %>%
+      add_xml_data(L254.StubTech_passthru, "StubTranTech") %>%
+      add_xml_data(L254.StubTech_nonmotor, "StubTranTech") %>%
+      add_xml_data(L254.GlobalTechShrwt_passthru, "GlobalTechShrwt") %>%
+      add_xml_data(L254.GlobalTechShrwt_nonmotor, "GlobalTechShrwt") %>%
+      add_xml_data(L254.GlobalTechCoef_passthru, "GlobalTechCoef") %>%
+      add_xml_data(L254.GlobalRenewTech_nonmotor, "GlobalRenewTech") %>%
       add_xml_data(L254.GlobalTranTechInterp, "GlobalTranTechInterp") %>%
       add_xml_data(L254.GlobalTranTechShrwt, "GlobalTranTechShrwt") %>%
       add_xml_data(L254.GlobalTranTechSCurve, "GlobalTranTechSCurve") %>%
@@ -115,8 +115,8 @@ module_energy_batch_transportation_UCD_xml <- function(command, ...) {
       add_xml_data(L254.StubTranTechLoadFactor, "StubTranTechLoadFactor") %>%
       add_xml_data(L254.StubTranTechCost, "StubTranTechCost") %>%
       add_xml_data(L254.StubTranTechCoef, "StubTranTechCoef") %>%
-      add_xml_data(L254.StubTechCalInput_passthru, "StubTechCalInput_passthru", column_order_lookup = "StubTranTechCalInput") %>%
-      add_xml_data(L254.StubTechProd_nonmotor, "StubTechProd_nonmotor", column_order_lookup = "StubTranTechProd") %>%
+      add_xml_data(L254.StubTechCalInput_passthru, "StubTranTechCalInput") %>%
+      add_xml_data(L254.StubTechProd_nonmotor, "StubTranTechProd") %>%
       add_xml_data(L254.PerCapitaBased_trn, "PerCapitaBased") %>%
       add_xml_data(L254.PriceElasticity_trn, "PriceElasticity") %>%
       add_xml_data(L254.IncomeElasticity_trn, "IncomeElasticity") %>%
