@@ -17,11 +17,10 @@ module_gcam.usa_LA143.HDDCDD <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "gcam-usa/Census_pop_hist",
-             FILE = "gcam-usa/CDD_His",
-             FILE = "gcam-usa/HDD_His",
-             FILE = "gcam-usa/HDD_GFDL_A2",
-             FILE = "gcam-usa/CDD_His",
-             FILE = "gcam-usa/CDD_GFDL_A2"))
+             FILE = "gcam-usa/GIS/HDD_His",
+             FILE = "gcam-usa/GIS/HDD_GFDL_A2",
+             FILE = "gcam-usa/GIS/CDD_His",
+             FILE = "gcam-usa/GIS/CDD_GFDL_A2"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L143.share_state_Pop_CDD_sR9",
              "L143.share_state_Pop_CDD_sR13",
@@ -35,10 +34,10 @@ module_gcam.usa_LA143.HDDCDD <- function(command, ...) {
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
     Census_pop_hist <- get_data(all_data, "gcam-usa/Census_pop_hist")
-    CDD_His <- get_data(all_data, "gcam-usa/CDD_His")
-    CDD_GFDL_A2 <- get_data(all_data, "gcam-usa/CDD_GFDL_A2")
-    HDD_His <- get_data(all_data, "gcam-usa/HDD_His")
-    HDD_GFDL_A2 <- get_data(all_data, "gcam-usa/HDD_GFDL_A2")
+    CDD_His <- get_data(all_data, "gcam-usa/GIS/CDD_His")
+    CDD_GFDL_A2 <- get_data(all_data, "gcam-usa/GIS/CDD_GFDL_A2")
+    HDD_His <- get_data(all_data, "gcam-usa/GIS/HDD_His")
+    HDD_GFDL_A2 <- get_data(all_data, "gcam-usa/GIS/HDD_GFDL_A2")
 
     # Silence package
     state <- subregion9 <- subregion13 <- year <- value <- degree_day <- population <-
@@ -119,7 +118,8 @@ module_gcam.usa_LA143.HDDCDD <- function(command, ...) {
       select(state, subregion9, subregion13, year, value) ->
       L143.Pop_HDD_state
 
-    # Aggregate the population cooling and heating degree days by census subregions.
+    # Aggregate the total population for each census subregion. The total populatin will be used
+    # to calcualte the state's share of the subregion's population heating and cooling degree days.
     #
     # Population cooling degree days in subregion 9.
     L143.Pop_CDD_state %>%
@@ -165,23 +165,23 @@ module_gcam.usa_LA143.HDDCDD <- function(command, ...) {
     L143.Pop_CDD_state %>%
       left_join_error_no_match(L143.Pop_CDD_sR13, by = c("year", "subregion13")) %>%
       mutate(value = value / value_sR13, variable = "CDD") %>%
-      select(state, subregion9, variable, year, value) %>%
+      select(state, subregion13, variable, year, value) %>%
       filter(year %in% HISTORICAL_YEARS) ->
       L143.share_state_Pop_CDD_sR13
 
     # State share of subregion 9 population heating degree days.
     L143.Pop_HDD_state %>%
       left_join_error_no_match(L143.Pop_HDD_sR9, by = c("year", "subregion9")) %>%
-      mutate(value = value / value_sR9, variable = "CDD") %>%
+      mutate(value = value / value_sR9, variable = "HDD") %>%
       select(state, subregion9, variable, year, value) %>%
       filter(year %in% HISTORICAL_YEARS) ->
       L143.share_state_Pop_HDD_sR9
 
     # State share of subregion 13 population heating degree days.
     L143.Pop_HDD_state %>%
-      left_join_error_no_match(L143.Pop_CDD_sR13, by = c("year", "subregion13")) %>%
-      mutate(value = value / value_sR13, variable = "CDD") %>%
-      select(state, subregion9, variable, year, value)  %>%
+      left_join_error_no_match(L143.Pop_HDD_sR13, by = c("year", "subregion13")) %>%
+      mutate(value = value / value_sR13, variable = "HDD") %>%
+      select(state, subregion13, variable, year, value)  %>%
       filter(year %in% HISTORICAL_YEARS) ->
       L143.share_state_Pop_HDD_sR13
 
@@ -202,10 +202,10 @@ module_gcam.usa_LA143.HDDCDD <- function(command, ...) {
       separate(col = file, into = c("variable", "GCM", "Scen"), sep = "_") ->
       HDDCDD_data
 
-    # Interpolate heating and cooling degree days for final historical model year and any any missing future years.
+    # Interpolate heating and cooling degree days for historical model years and any any missing future years.
     HDDCDD_data %>%
       gather_years %>%
-      complete(nesting(variable, GCM, Scen, state), year = c(max(HISTORICAL_YEARS), year, FUTURE_YEARS)) %>%
+      complete(nesting(variable, GCM, Scen, state), year = c(HISTORICAL_YEARS, year, FUTURE_YEARS)) %>%
       arrange(variable, GCM, Scen, state, year) %>%
       group_by(variable, GCM, Scen, state) %>%
       mutate(value = approx_fun(year, value, rule = 2)) %>%
@@ -244,20 +244,19 @@ module_gcam.usa_LA143.HDDCDD <- function(command, ...) {
     # observations.
     CDD_His_complete %>%
       bind_rows(HDD_His_complete) %>%
-      mutate(historical_value = TRUE) ->
+      mutate(historical_value = TRUE)->
       DD_His
 
 
     # Replace the heating and cooling degree days values in model historic years in the future scenario
     # tibble with historic data.
     L143.HDDCDD_scen_state %>%
-      # Use left_join because we do not expect a 1:1 match
-      full_join(DD_His %>%
+      # Use left_join because we expect NAs to occur in the hist_value column when in future years.
+      left_join(DD_His %>%
                   select(hist_value = value, year, variable, state, historical_value),
                 by = c("state", "variable", "year")) %>%
-      # If historical_value = NA then it is a future value. For the the historical years replace the
-      # degree value day with historical data.
-      mutate(value = if_else(!is.na(historical_value), hist_value, value)) %>%
+      # When applicatble replace the GCM degree days with the histroic observations.
+      mutate(value = if_else(!is.na(hist_value), hist_value, value)) %>%
       select(variable, GCM, Scen, state, year, value, historical_value) ->
       L143.HDDCDD_scen_state_w_historical_observations
 
@@ -267,15 +266,15 @@ module_gcam.usa_LA143.HDDCDD <- function(command, ...) {
 
     # Start by combining the the GCM, scenario, and state degree days from the  scenario final model historical
     # year, with the scenario tibble that has the historical observation replaced values.
-    Scen_final_historical_year %>%
-      select(scn_final_historical_year = value, variable, GCM, Scen, state) %>%
-      # Use full join here because we do not expect a 1:1, the GCM scenario final historical year degree day
+    L143.HDDCDD_scen_state_w_historical_observations %>%
+      # Use left_join here because we do not expect a 1:1, the GCM scenario final historical year degree day
       # will be used to normalize the future degree days in the following step.
-      full_join(L143.HDDCDD_scen_state_w_historical_observations,
+      left_join(Scen_final_historical_year %>%
+                                 select(scn_final_historical_year = value, variable, GCM, Scen, state),
                 by = c("variable", "GCM", "Scen", "state")) %>%
-      # Use full join (as we do not expect a 1:1 match) to add a column of the GCM degree days in the final historical
+      # Use inner join (as we do not expect a 1:1 match) to add a column of the GCM degree days in the final historical
       # year of the historical observations to the tibble.
-      full_join(L143.HDDCDD_scen_state_w_historical_observations %>%
+      inner_join(L143.HDDCDD_scen_state_w_historical_observations %>%
                   filter(year == max(HISTORICAL_YEARS)) %>%
                   select(variable, GCM, Scen, state, base_year = value),
                 by = c("variable", "GCM", "Scen", "state")) %>%
@@ -298,7 +297,8 @@ module_gcam.usa_LA143.HDDCDD <- function(command, ...) {
       add_comments("Interpolate historic cooling degree data to fill in missing model historical years.") %>%
       add_comments("Divide state cooling degree days by the census subregion 9 total population") %>%
       add_legacy_name("L143.share_state_Pop_CDD_sR9") %>%
-      add_precursors("gcam-usa/states_subregions", "gcam-usa/Census_pop_hist", "gcam-usa/CDD_His") %>%
+      add_precursors("gcam-usa/states_subregions", "gcam-usa/Census_pop_hist",
+                     "gcam-usa/GIS/CDD_His") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L143.share_state_Pop_CDD_sR9
 
@@ -308,7 +308,8 @@ module_gcam.usa_LA143.HDDCDD <- function(command, ...) {
       add_comments("Interpolate historic cooling degree data to fill in missing model historical years.") %>%
       add_comments("Divide state cooling degree days by the census subregion 13 total population.") %>%
       add_legacy_name("L143.share_state_Pop_CDD_sR13") %>%
-      add_precursors("gcam-usa/states_subregions", "gcam-usa/Census_pop_hist", "gcam-usa/CDD_His") %>%
+      add_precursors("gcam-usa/states_subregions", "gcam-usa/Census_pop_hist",
+                     "gcam-usa/GIS/CDD_His") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L143.share_state_Pop_CDD_sR13
 
@@ -318,7 +319,8 @@ module_gcam.usa_LA143.HDDCDD <- function(command, ...) {
       add_comments("Interpolate historic heating degree data to fill in missing model historical years.") %>%
       add_comments("Divide state heating degree days by the census subregion 9 total population.") %>%
       add_legacy_name("L143.share_state_Pop_HDD_sR9") %>%
-      add_precursors("gcam-usa/states_subregions", "gcam-usa/Census_pop_hist", "gcam-usa/HDD_His") %>%
+      add_precursors("gcam-usa/states_subregions", "gcam-usa/Census_pop_hist",
+                     "gcam-usa/GIS/HDD_His") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L143.share_state_Pop_HDD_sR9
 
@@ -328,7 +330,8 @@ module_gcam.usa_LA143.HDDCDD <- function(command, ...) {
       add_comments("Interpolate historic heating degree data to fill in missing model historical years.") %>%
       add_comments("Divide state heating degree days by the census subregion 13 total population.") %>%
       add_legacy_name("L143.share_state_Pop_HDD_sR13") %>%
-      add_precursors("gcam-usa/states_subregions", "gcam-usa/Census_pop_hist", "gcam-usa/HDD_His") %>%
+      add_precursors("gcam-usa/states_subregions", "gcam-usa/Census_pop_hist",
+                     "gcam-usa/GIS/HDD_His") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L143.share_state_Pop_HDD_sR13
 
@@ -338,8 +341,8 @@ module_gcam.usa_LA143.HDDCDD <- function(command, ...) {
       add_comments("Replace GCM degree days with historical observations.") %>%
       add_comments("Normalize future GCM degree days by the fraction of observed degree days to GCM degree days in the base year.") %>%
       add_legacy_name("L143.HDDCDD_scen_state") %>%
-      add_precursors("gcam-usa/states_subregions", "gcam-usa/Census_pop_hist", "gcam-usa/CDD_His",
-                     "gcam-usa/HDD_His", "gcam-usa/HDD_GFDL_A2", "gcam-usa/CDD_GFDL_A2") %>%
+      add_precursors("gcam-usa/states_subregions", "gcam-usa/Census_pop_hist", "gcam-usa/GIS/CDD_His",
+                     "gcam-usa/GIS/HDD_His", "gcam-usa/GIS/HDD_GFDL_A2", "gcam-usa/GIS/CDD_GFDL_A2") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L143.HDDCDD_scen_state
 
