@@ -59,6 +59,7 @@ module_socioeconomics_L252.Trn_Inc_Elas_scenarios <- function(command, ...) {
                                         # data will be assigned the closest data extreme
                                         xout = pcgdp_90thousUSD, rule = 2)[['y']],
              energy.final.demand = "transportation") %>%
+      mutate(income.elasticity = round(income.elasticity, energy.DIGITS_INCELAS_TRN)) %>%
       # Add in region names
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       ungroup(GCAM_region_ID) %>%

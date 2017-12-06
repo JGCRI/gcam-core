@@ -166,7 +166,7 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
     L201.LaborProductivity_GCAM3 <- L102.gdp_mil90usd_GCAM3_R_Y %>%
       filter(year %in% MODEL_YEARS) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      left_join_error_no_match(L201.Pop_GCAM3, by = c("region", "year")) %>%
+      left_join_error_no_match(L101.Pop_thous_GCAM3_R_Y %>% rename(totalPop = value), by = c("GCAM_region_ID", "year")) %>%
       transmute(region, year, value = value / totalPop) %>%
       group_by(region) %>%
       # Calculate the growth rate in per-capita GDP
