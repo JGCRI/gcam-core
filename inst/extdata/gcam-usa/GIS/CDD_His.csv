@@ -2,7 +2,7 @@
 # Title: Historic Cooling Degree Days
 # Units: Fahrenheit Degree Days
 # Description: Cooling Degree Days by state
-# Reference: Unknown
+# Reference: See inst/extdata/gcam-usa/GIS/README
 state,1975,1980,1985,1990,1995,2000,2005,2008
 AK,36.378777,10.907798,17.455997,42.136757,16.195,104.247116,127.591614,141.598312
 AL,1908.2771,2248.55835,2138.184814,2178.671631,2160.163818,2635.313965,2654.343994,2665.761963
