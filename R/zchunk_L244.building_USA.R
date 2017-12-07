@@ -50,7 +50,7 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
              "L144.flsp_bm2_state_comm",
              "L144.in_EJ_state_comm_F_U_Y",
              "L144.in_EJ_state_res_F_U_Y",
-             FILE = "temp-data-inject/L143.HDDCDD_scen_state",
+             "L143.HDDCDD_scen_state",
              "L100.Pop_thous_state",
              "L100.pcGDP_thous90usd_state"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -131,9 +131,7 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
     L144.flsp_bm2_state_comm <- get_data(all_data, "L144.flsp_bm2_state_comm")
     L144.in_EJ_state_comm_F_U_Y <- get_data(all_data, "L144.in_EJ_state_comm_F_U_Y")
     L144.in_EJ_state_res_F_U_Y <- get_data(all_data, "L144.in_EJ_state_res_F_U_Y")
-    L143.HDDCDD_scen_state <- get_data(all_data, "temp-data-inject/L143.HDDCDD_scen_state") %>%
-      gather(year, value, starts_with("X")) %>%
-      mutate(year = as.integer(substr(year, 2, 5)))
+    L143.HDDCDD_scen_state <- get_data(all_data, "L143.HDDCDD_scen_state")
     L100.Pop_thous_state <- get_data(all_data, "L100.Pop_thous_state")
     L100.pcGDP_thous90usd_state <- get_data(all_data, "L100.pcGDP_thous90usd_state")
     # ===================================================
@@ -668,7 +666,7 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
       add_units("Fahrenheit Degree Days") %>%
       add_comments("L143.HDDCDD_scen_state assigned to GCAM subsectors") %>%
       add_legacy_name("L244.HDDCDD_A2_GFDL") %>%
-      add_precursors("temp-data-inject/L143.HDDCDD_scen_state", "gcam-usa/A44.sector",
+      add_precursors("L143.HDDCDD_scen_state", "gcam-usa/A44.sector",
                      "gcam-usa/calibrated_techs_bld_usa", "gcam-usa/A44.gcam_consumer") %>%
       add_flags(FLAG_PROTECT_FLOAT)->
       L244.HDDCDD_A2_GFDL
@@ -723,7 +721,7 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
       add_precursors("L144.in_EJ_state_res_F_U_Y", "L144.in_EJ_state_comm_F_U_Y", "gcam-usa/calibrated_techs_bld_usa",
                      "gcam-usa/A44.globaltech_eff", "gcam-usa/A44.globaltech_eff_avg", "gcam-usa/A44.globaltech_shares",
                      "gcam-usa/A44.gcam_consumer", "L144.flsp_bm2_state_res", "L144.flsp_bm2_state_comm",
-                     "gcam-usa/A44.demand_satiation_mult", "temp-data-inject/L143.HDDCDD_scen_state") ->
+                     "gcam-usa/A44.demand_satiation_mult", "L143.HDDCDD_scen_state") ->
       L244.Intgains_scalar_gcamusa
 
     L244.ShellConductance_bld_gcamusa %>%
