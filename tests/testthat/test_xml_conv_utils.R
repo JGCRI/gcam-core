@@ -12,31 +12,27 @@ test_that("bogus MI header causes error", {
   if(!isTRUE(getOption("gcamdata.use_java"))) {
     skip("Skipping test as global option gcamdata.use_java is not TRUE")
   }
-  # TODO: need to find a way to get messages from Java (issue )
-  # conv_test <- create_xml("test.xml", "bogus.txt")
-  #
-  # expect_message(run_xml_conversion(conv_test), regex = "java.io.FileNotFoundException: bogus.txt", all = FALSE)
+  conv_test <- create_xml("test.xml", "bogus.txt")
+
+  expect_warning(run_xml_conversion(conv_test), regex = "java.io.FileNotFoundException: bogus.txt", all = FALSE)
 })
 
 test_that("converting without adding data causes error", {
   if(!isTRUE(getOption("gcamdata.use_java"))) {
     skip("Skipping test as global option gcamdata.use_java is not TRUE")
   }
-  # TODO: need to find a way to get messages from Java (See issue #102)
-  # conv_test <- create_xml("test.xml")
-  #
-  # expect_message(run_xml_conversion(conv_test), regex = "java.lang.NullPointerException", all = FALSE)
+  conv_test <- create_xml("test.xml")
+
+  expect_warning(run_xml_conversion(conv_test), regex = "java.lang.NullPointerException", all = FALSE)
 })
 
 test_that("converting bogus data causes error", {
   if(!isTRUE(getOption("gcamdata.use_java"))) {
     skip("Skipping test as global option gcamdata.use_java is not TRUE")
   }
-  # TODO: need to find a way to get messages from Java (See issue #102)
-  # create_xml("test.xml") %>%
-  #   add_xml_data("bogus", "InterestRate") -> conv_test
-  #
-  # expect_error(run_xml_conversion(conv_test))
+  expect_error(create_xml("test.xml") %>%
+    add_xml_data("bogus", "InterestRate") %>%
+    run_xml_conversion())
 })
 
 test_that("can convert single table", {
@@ -94,9 +90,7 @@ test_that("get warning for missing header", {
     # column reordering won't work with unknown headers
     add_xml_data(data2, "Will_Not_Find", column_order_lookup = NULL) ->
     conv_test
-  # TODO: need to find a way to get messages from Java (See issue #102)
-  #expect_message(run_xml_conversion(conv_test), regex = "Warning: skipping table: Will_Not_Find!", all = FALSE)
-  run_xml_conversion(conv_test)
+  expect_warning(run_xml_conversion(conv_test), regex = "Warning: skipping table: Will_Not_Find!", all = FALSE)
 
   expect_true(file.exists(test_fn))
   test_xml <- readLines(test_fn)
