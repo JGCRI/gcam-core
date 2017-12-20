@@ -75,26 +75,44 @@ make_run_xml_conversion <- function() {
     } else if(isTRUE(use_java)) {
       java_cp <- system.file("extdata/ModelInterface", "CSVToXML.jar",
                              package = "gcamdata")
-      cmd <- c(
-        "java",
+      # Note ideally we would use the `pipe` method to run the CSVToXML conversion
+      # as this would allow us to avoid writing large CSV files to disk only to
+      # convert to XML. However it appears on Windows there is no way to "close"
+      # the pipe for STDIN without terminating the entire process.
+      # Instead we will fall back to `system2` and since (from the documentation):
+      # input    if a character vector is supplied, this is copied one string per
+      #          line to a temporary file, and the standard input of command is
+      #          redirected to the file.
+      # We will just write to a temporary file ourselves and avoid incurring _that_
+      # performance penalty as well.
+      tmpfn <- tempfile()
+      tmp_conn <- file(tmpfn, open="w")
+      for(i in seq_along(dot$data_tables)) {
+        table <- dot$data_tables[[i]]
+        cat("INPUT_TABLE", file = tmp_conn, sep = "\n")
+        cat("Variable ID", file = tmp_conn, sep = "\n")
+        cat(table$header, file = tmp_conn, sep = "\n")
+        cat("", file = tmp_conn, sep = "\n")
+        utils::write.table(table$data, file = tmp_conn, sep=",", row.names = FALSE, col.names = TRUE, quote = FALSE)
+        cat("", file = tmp_conn, sep = "\n")
+      }
+      close(tmp_conn)
+      args <- c(
         "-cp", java_cp,
         "-Xmx1g", # TODO: memory limits?
         "ModelInterface.ModelGUI2.csvconv.CSVToXMLMain",
-        "-", # Read from STDIN
+        tmpfn, # Read from the temporary file
         dot$mi_header,
         dot$xml_file
       )
-      conv_pipe <- pipe(paste(cmd, collapse=" "), open = "w")
-      on.exit(close(conv_pipe))
+      warning_msgs <- system2("java", args, stdout = TRUE, stderr = TRUE)
+      unlink(tmpfn)
 
-      for(i in seq_along(dot$data_tables)) {
-        table <- dot$data_tables[[i]]
-        cat("INPUT_TABLE", file = conv_pipe, sep = "\n")
-        cat("Variable ID", file = conv_pipe, sep = "\n")
-        cat(table$header, file = conv_pipe, sep = "\n")
-        cat("", file = conv_pipe, sep = "\n")
-        utils::write.table(table$data, file = conv_pipe, sep=",", row.names = FALSE, col.names = TRUE, quote = FALSE)
-        cat("", file = conv_pipe, sep = "\n")
+      # Note warnings and errors will have been combined together which ideally
+      # would be separate so we can forward them to the appropriate message stream
+      # in R but for simplicity we will put them all on warning.
+      if(!is.null(warning_msgs) && length(warning_msgs) > 0) {
+        warning(warning_msgs)
       }
     }
 
