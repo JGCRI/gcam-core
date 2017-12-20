@@ -105,7 +105,7 @@ make_run_xml_conversion <- function() {
         dot$mi_header,
         dot$xml_file
       )
-      warning_msgs <- system2("java", args, stdout = T, stderr = T)
+      warning_msgs <- system2("java", args, stdout = TRUE, stderr = TRUE)
       unlink(tmpfn)
 
       # Note warnings and errors will have been combined together which ideally
