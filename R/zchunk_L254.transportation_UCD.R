@@ -655,12 +655,8 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
                          "energy/A54.tranSubsector_shrwt", "energy/A54.globaltech_nonmotor") ->
           L254.tranSubsectorShrwt
       } else {
-        tibble(x = NA) %>%
-          add_title("Data not created") %>%
-          add_units("Data not created") %>%
-          add_comments("Data not created") %>%
-          add_legacy_name("L254.tranSubsectorShrwt") %>%
-          add_flags(FLAG_NO_TEST) ->
+        missing_data() %>%
+          add_legacy_name("L254.tranSubsectorShrwt") ->
           L254.tranSubsectorShrwt
       }
 
@@ -677,12 +673,8 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
                          "energy/A54.tranSubsector_shrwt", "energy/A54.globaltech_nonmotor") ->
           L254.tranSubsectorShrwt
       } else {
-        tibble(x = NA) %>%
-          add_title("Data not created") %>%
-          add_units("Data not created") %>%
-          add_comments("Data not created") %>%
-          add_legacy_name("L254.tranSubsectorShrwt") %>%
-          add_flags(FLAG_NO_TEST) ->
+        missing_data() %>%
+          add_legacy_name("L254.tranSubsectorShrwt") ->
           L254.tranSubsectorShrwt
       }
     }
@@ -698,12 +690,8 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
                        "energy/A54.tranSubsector_shrwt", "energy/A54.globaltech_nonmotor") ->
         L254.tranSubsectorShrwtFllt
     } else {
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Data not created") %>%
-        add_comments("Data not created") %>%
-        add_legacy_name("L254.tranSubsectorShrwtFllt") %>%
-        add_flags(FLAG_NO_TEST) ->
+      missing_data() %>%
+        add_legacy_name("L254.tranSubsectorShrwtFllt") ->
         L254.tranSubsectorShrwtFllt
     }
 
@@ -718,12 +706,8 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
                        "energy/A54.tranSubsector_interp", "energy/A54.globaltech_nonmotor") ->
         L254.tranSubsectorInterp
     } else {
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Data not created") %>%
-        add_comments("Data not created") %>%
-        add_legacy_name("L254.tranSubsectorInterp") %>%
-        add_flags(FLAG_NO_TEST) ->
+      missing_data() %>%
+        add_legacy_name("L254.tranSubsectorInterp") ->
         L254.tranSubsectorInterp
     }
 
@@ -738,12 +722,8 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
                        "energy/A54.tranSubsector_interp", "energy/A54.globaltech_nonmotor") ->
         L254.tranSubsectorInterpTo
     } else {
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Data not created") %>%
-        add_comments("Data not created") %>%
-        add_legacy_name("L254.tranSubsectorInterpTo") %>%
-        add_flags(FLAG_NO_TEST) ->
+      missing_data() %>%
+        add_legacy_name("L254.tranSubsectorInterpTo") ->
         L254.tranSubsectorInterpTo
     }
 

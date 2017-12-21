@@ -285,10 +285,7 @@ module_energy_L224.heat <- function(command, ...) {
         L224.SubsectorShrwt_heat
     } else {
       # If year column of A24.subsector_shrwt is all N/A, then a blank tibble is produced (and presumably the following tibble, using year.fillout is made)
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Unitless") %>%
-        add_comments("Data not created") %>%
+      missing_data() %>%
         add_legacy_name("L224.SubsectorShrwt_heat") ->
         L224.SubsectorShrwt_heat
     }
@@ -304,10 +301,7 @@ module_energy_L224.heat <- function(command, ...) {
         L224.SubsectorShrwtFllt_heat
     } else {
       # If year.fillout column of A24.subsector_shrwt is all N/A, then a blank tibble is produced
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Unitless") %>%
-        add_comments("Data not created") %>%
+      missing_data() %>%
         add_legacy_name("L224.SubsectorShrwtFllt_heat") ->
         L224.SubsectorShrwtFllt_heat
     }
@@ -323,10 +317,7 @@ module_energy_L224.heat <- function(command, ...) {
         L224.SubsectorInterp_heat
     } else {
       # If interp.to column of A24.subsector_interp contains no N/A values, then a blank tibble is produced
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Unitless") %>%
-        add_comments("Data not created") %>%
+      missing_data() %>%
         add_legacy_name("L224.SubsectorInterp_heat") ->
         L224.SubsectorInterp_heat
     }
@@ -342,10 +333,7 @@ module_energy_L224.heat <- function(command, ...) {
         L224.SubsectorInterpTo_heat
     } else {
       # If interp.to column of A24.subsector_interp contains N/A values, then a blank tibble is produced
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Unitless") %>%
-        add_comments("Data not created") %>%
+      missing_data() %>%
         add_legacy_name("L224.SubsectorInterpTo_heat") ->
         L224.SubsectorInterpTo_heat
     }

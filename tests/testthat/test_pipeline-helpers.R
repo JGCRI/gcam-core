@@ -4,6 +4,11 @@
 context("pipeline-helpers")
 
 
+test_that("missing_data works", {
+  expect_true(is_tibble(missing_data()))   # not sure what else to test
+})
+
+
 test_that("approx_fun works", {
   expect_error(approx_fun("a", 1))
   expect_error(approx_fun(1, "a"))

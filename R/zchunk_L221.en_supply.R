@@ -560,10 +560,7 @@ module_energy_L221.en_supply <- function(command, ...) {
       L221.SubsectorShrwt_en
     } else {
       # If all values for year are NA, then a blank tibble is produced
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Unitless") %>%
-        add_comments("Data not created") %>%
+      missing_data() %>%
         add_legacy_name("L221.SubsectorShrwt_en") ->
         L221.SubsectorShrwt_en
     }
@@ -579,10 +576,7 @@ module_energy_L221.en_supply <- function(command, ...) {
       L221.SubsectorShrwtFllt_en
     } else {
       # If all values for year.fillout are NA, then blank tibble is produced
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Unitless") %>%
-        add_comments("Data not created") %>%
+      missing_data() %>%
         add_legacy_name("L221.SubsectorShrwtFllt_en") ->
         L221.SubsectorShrwtFllt_en
     }
@@ -598,10 +592,7 @@ module_energy_L221.en_supply <- function(command, ...) {
       L221.SubsectorInterp_en
     } else {
       # If to.value is not NA anywhere, a blank tibble is produced
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Unitless") %>%
-        add_comments("Data not created") %>%
+      missing_data() %>%
         add_legacy_name("L221.SubsectorInterp_en") ->
         L221.SubsectorInterp_en
     }
@@ -617,10 +608,7 @@ module_energy_L221.en_supply <- function(command, ...) {
       L221.SubsectorInterpTo_en
     } else {
       # If to.value is NA, a blank tibble is produced
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Unitless") %>%
-        add_comments("Data not created") %>%
+      missing_data() %>%
         add_legacy_name("L221.SubsectorInterpTo_en") ->
         L221.SubsectorInterpTo_en
     }

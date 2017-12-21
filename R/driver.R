@@ -36,8 +36,8 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
     obj_flags <- get_flags(chunk_data[[obj]])
     # Chunks have to returns tibbles, unless they're tagged as being XML
     if(!outputs_xml[which(obj == promised_outputs)]) {
-      assert_that(tibble::is.tibble(chunk_data[[obj]]))
-      assert_that(! FLAG_XML %in% obj_flags)
+      assert_that(tibble::is.tibble(chunk_data[[obj]]), msg = paste(obj, "is", class(obj)))
+      assert_that(! FLAG_XML %in% obj_flags, msg = obj)
 
       # Make sure objects have required attributes
       for(at in c(ATTR_TITLE, ATTR_UNITS, ATTR_COMMENTS, ATTR_LEGACY_NAME)) {

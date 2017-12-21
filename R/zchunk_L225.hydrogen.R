@@ -76,30 +76,18 @@ module_energy_L225.hydrogen <- function(command, ...) {
       L225.SubsectorLogit_h2
 
     # L225.SubsectorShrwt_h2 and L225.SubsectorShrwtFllt_h2: Subsector shareweights of hydrogen sectors
-    tibble(x = NA) %>%
-      add_units("None") %>%
-      add_comments("Not generated") %>%
-      add_flags(FLAG_NO_TEST) ->
-      L225.SubsectorShrwt_h2
 
-    L225.SubsectorShrwtFllt_h2 <- tibble(x = NA)
+    # L225.SubsectorShrwt_h2 is not created
+    # L225.SubsectorShrwtFllt_h2 is not created
+
     A25.subsector_shrwt %>%
       filter(!is.na(year.fillout)) %>%
       write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]], GCAM_region_names) ->
       L225.SubsectorShrwtFllt_h2
 
     # L225.SubsectorInterp_h2 and L225.SubsectorInterpTo_h2: Subsector shareweight interpolation of hydrogen sectors
-    tibble(x = NA) %>%
-      add_units("None") %>%
-      add_comments("Not generated") %>%
-      add_flags(FLAG_NO_TEST) ->
-      L225.SubsectorInterp_h2
+    # These are not created currently
 
-    tibble(x = NA) %>%
-      add_units("None") %>%
-      add_comments("Not generated") %>%
-      add_flags(FLAG_NO_TEST) ->
-      L225.SubsectorInterpTo_h2
 
     # 1c. Technology information
 
@@ -213,37 +201,61 @@ module_energy_L225.hydrogen <- function(command, ...) {
       add_precursors("common/GCAM_region_names", "energy/A25.subsector_logit") ->
       L225.SubsectorLogit_h2
 
-    L225.SubsectorShrwt_h2 %>%
-      add_title("Subsector shareweights of hydrogen sectors") %>%
-      add_units("Unitless") %>%
-      add_comments("Expand Subsector shareweights for all GCAM regions") %>%
-      add_legacy_name("L225.SubsectorShrwt_h2") %>%
-      add_precursors("common/GCAM_region_names", "energy/A25.subsector_shrwt") ->
-      L225.SubsectorShrwt_h2
+    if(exists("L225.SubsectorShrwt_h2")) {
+      L225.SubsectorShrwt_h2 %>%
+        add_title("Subsector shareweights of hydrogen sectors") %>%
+        add_units("Unitless") %>%
+        add_comments("Expand Subsector shareweights for all GCAM regions") %>%
+        add_legacy_name("L225.SubsectorShrwt_h2") %>%
+        add_precursors("common/GCAM_region_names", "energy/A25.subsector_shrwt") ->
+        L225.SubsectorShrwt_h2
+    } else {
+      missing_data() %>%
+        add_legacy_name("L225.SubsectorShrwt_h2") ->
+        L225.SubsectorShrwt_h2
+    }
 
-    L225.SubsectorShrwtFllt_h2 %>%
-      add_title("Subsector shareweights of hydrogen sectors") %>%
-      add_units("Unitless") %>%
-      add_comments("Expand Subsector shareweights for all GCAM regions") %>%
-      add_legacy_name("L225.SubsectorShrwtFllt_h2") %>%
-      add_precursors("common/GCAM_region_names", "energy/A25.subsector_shrwt") ->
-      L225.SubsectorShrwtFllt_h2
+    if(exists("L225.SubsectorShrwtFllt_h2")) {
+      L225.SubsectorShrwtFllt_h2 %>%
+        add_title("Subsector shareweights of hydrogen sectors") %>%
+        add_units("Unitless") %>%
+        add_comments("Expand Subsector shareweights for all GCAM regions") %>%
+        add_legacy_name("L225.SubsectorShrwtFllt_h2") %>%
+        add_precursors("common/GCAM_region_names", "energy/A25.subsector_shrwt") ->
+        L225.SubsectorShrwtFllt_h2
+    } else {
+      missing_data() %>%
+        add_legacy_name("L225.SubsectorShrwtFllt_h2") ->
+        L225.SubsectorShrwtFllt_h2
+    }
 
-    L225.SubsectorInterp_h2 %>%
-      add_title("Subsector shareweight interpolation of hydrogen sectors") %>%
-      add_units("unitless") %>%
-      add_comments("Expand Subsector shareweight interpolation for all GCAM regions") %>%
-      add_legacy_name("L225.SubsectorInterp_h2") %>%
-      add_precursors("common/GCAM_region_names") ->
-      L225.SubsectorInterp_h2
+    if(exists("L225.SubsectorInterpTo_h2")) {
+      L225.SubsectorInterp_h2 %>%
+        add_title("Subsector shareweight interpolation of hydrogen sectors") %>%
+        add_units("unitless") %>%
+        add_comments("Expand Subsector shareweight interpolation for all GCAM regions") %>%
+        add_legacy_name("L225.SubsectorInterp_h2") %>%
+        add_precursors("common/GCAM_region_names") ->
+        L225.SubsectorInterp_h2
+    } else {
+      missing_data() %>%
+        add_legacy_name("L225.SubsectorInterp_h2") ->
+        L225.SubsectorInterp_h2
+    }
 
-    L225.SubsectorInterpTo_h2 %>%
-      add_title("Subsector shareweight interpolation of hydrogen sectors") %>%
-      add_units("unitless") %>%
-      add_comments("Expand Subsector shareweight interpolation for all GCAM regions") %>%
-      add_legacy_name("L225.SubsectorInterpTo_h2") %>%
-      add_precursors("common/GCAM_region_names") ->
-      L225.SubsectorInterpTo_h2
+    if(exists("L225.SubsectorInterpTo_h2")) {
+      L225.SubsectorInterpTo_h2 %>%
+        add_title("Subsector shareweight interpolation of hydrogen sectors") %>%
+        add_units("unitless") %>%
+        add_comments("Expand Subsector shareweight interpolation for all GCAM regions") %>%
+        add_legacy_name("L225.SubsectorInterpTo_h2") %>%
+        add_precursors("common/GCAM_region_names") ->
+        L225.SubsectorInterpTo_h2
+    } else {
+      missing_data() %>%
+        add_legacy_name("L225.SubsectorInterpTo_h2") ->
+        L225.SubsectorInterpTo_h2
+    }
 
     L225.StubTech_h2 %>%
       add_title("Identification of stub technologies of hydrogen") %>%

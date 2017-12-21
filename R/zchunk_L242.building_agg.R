@@ -380,12 +380,8 @@ module_energy_L242.building_agg <- function(command, ...) {
                        "energy/A_regions", "energy/A42.subsector_shrwt") ->
         L242.SubsectorShrwt_bld
       } else {
-        tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Data not created") %>%
-        add_comments("Data not created") %>%
-        add_legacy_name("L242.SubsectorShrwt_bld") %>%
-        add_flags(FLAG_NO_TEST) ->
+        missing_data() %>%
+          add_legacy_name("L242.SubsectorShrwt_bld") ->
         L242.SubsectorShrwt_bld
     }
 
@@ -400,12 +396,8 @@ module_energy_L242.building_agg <- function(command, ...) {
                        "energy/A_regions", "energy/A42.subsector_shrwt") ->
         L242.SubsectorShrwtFllt_bld
     } else {
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Data not created") %>%
-        add_comments("Data not created") %>%
-        add_legacy_name("L242.SubsectorShrwtFllt_bld") %>%
-        add_flags(FLAG_NO_TEST) ->
+      missing_data() %>%
+        add_legacy_name("L242.SubsectorShrwtFllt_bld") ->
         L242.SubsectorShrwtFllt_bld
     }
 
@@ -420,10 +412,7 @@ module_energy_L242.building_agg <- function(command, ...) {
                        "energy/A_regions", "energy/A42.subsector_interp") ->
         L242.SubsectorInterp_bld
     } else {
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Data not created") %>%
-        add_comments("Data not created") %>%
+      missing_data() %>%
         add_legacy_name("L242.SubsectorInterp_bld") %>%
         add_flags(FLAG_NO_TEST) ->
         L242.SubsectorInterp_bld
@@ -440,12 +429,8 @@ module_energy_L242.building_agg <- function(command, ...) {
                        "energy/A_regions", "energy/A42.subsector_interp") ->
         L242.SubsectorInterpTo_bld
     } else {
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Data not created") %>%
-        add_comments("Data not created") %>%
-        add_legacy_name("L242.SubsectorInterpTo_bld") %>%
-        add_flags(FLAG_NO_TEST) ->
+      missing_data() %>%
+        add_legacy_name("L242.SubsectorInterpTo_bld") ->
         L242.SubsectorInterpTo_bld
     }
 

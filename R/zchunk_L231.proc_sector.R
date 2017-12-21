@@ -320,10 +320,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
         add_precursors("emissions/A31.subsector_shrwt", "common/GCAM_region_names") ->
         L231.SubsectorShrwt_urb_ind
     } else {
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Unitless") %>%
-        add_comments("Data not created") %>%
+      missing_data() %>%
         add_legacy_name("L231.SubsectorShrwt_ind") ->
         L231.SubsectorShrwt_urb_ind
     }
@@ -337,10 +334,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
         add_precursors("emissions/A31.subsector_shrwt", "common/GCAM_region_names") ->
         L231.SubsectorShrwtFllt_urb_ind
     } else {
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Unitless") %>%
-        add_comments("Data not created") %>%
+      missing_data() %>%
         add_legacy_name("L231.SubsectorShrwtFllt_urb_ind")->
         L231.SubsectorShrwtFllt_urb_ind
     }
@@ -354,10 +348,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
         add_precursors("emissions/A31.subsector_interp", "common/GCAM_region_names")  ->
         L231.SubsectorInterp_urb_ind
     } else {
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Unitless") %>%
-        add_comments("Data not created") %>%
+      missing_data() %>%
         add_legacy_name("L231.SubsectorInterp_urb_ind") ->
         L231.SubsectorInterp_urb_ind
     }
@@ -371,10 +362,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
         add_precursors("emissions/A31.subsector_interp", "common/GCAM_region_names") ->
         L231.SubsectorInterpTo_urb_ind
     } else {
-      tibble(x = NA) %>%
-        add_title("Data not created") %>%
-        add_units("Unitless") %>%
-        add_comments("Data not created") %>%
+      missing_data() %>%
         add_legacy_name("L231.SubsectorInterpTo_urb_ind") ->
         L231.SubsectorInterpTo_urb_ind
     }
