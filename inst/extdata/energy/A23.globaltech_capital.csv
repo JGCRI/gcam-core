@@ -1,7 +1,7 @@
 # File: A23.globaltech_capital.csv,,,,,,,,,,,,,
 # Title: Electricity technology capital costs,,,,,,,,,,,,,
 # Units: 1975$/kW,,,,,,,,,,,,,
-# Source: GCAM assumptions; developed from assumptions to NEMS model in support of the Annual Energy Outlook (https://www.eia.gov/outlooks/aeo/assumptions/pdf/electricity.pdf).,,,,,,,,,,,,,
+# Source: Muratori et al. (2017)
 # Future improvement is based on the maximum % reduction that the literature deems likely and a rate corresponding to the maturity level of the technology,,,,,,,,,,,,,
 # Note that some technologies are the same as another with additional equipment (i.e. CCS) for those technologies the improvement is on the additional equipment,,,,,,,,,,,,,
 supplysector,subsector,technology,input-capital,fixed.charge.rate,capacity.factor,1971,1990,2005,2010,2015,improvement.max,improvement.rate,improvement.shadow.technology
