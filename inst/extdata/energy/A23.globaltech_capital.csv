@@ -1,7 +1,7 @@
 # File: A23.globaltech_capital.csv,,,,,,,,,,,,,
 # Title: Electricity technology capital costs,,,,,,,,,,,,,
 # Units: 1975$/kW,,,,,,,,,,,,,
-# Source: Muratori et al. (2017)
+# Source: Muratori et al. (2017), Renewable and Sustainable Energy Reviews v 77, pp 861–874
 # Future improvement is based on the maximum % reduction that the literature deems likely and a rate corresponding to the maturity level of the technology,,,,,,,,,,,,,
 # Note that some technologies are the same as another with additional equipment (i.e. CCS) for those technologies the improvement is on the additional equipment,,,,,,,,,,,,,
 supplysector,subsector,technology,input-capital,fixed.charge.rate,capacity.factor,1971,1990,2005,2010,2015,improvement.max,improvement.rate,improvement.shadow.technology
