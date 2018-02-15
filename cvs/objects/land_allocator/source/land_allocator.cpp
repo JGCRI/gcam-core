@@ -130,16 +130,6 @@ void LandAllocator::initCalc( const string& aRegionName, const int aPeriod )
     if ( aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() ) {
         checkLandArea( aRegionName, aPeriod);
         calibrateLandAllocator( aRegionName, aPeriod );
-    } 
-    else {
-        /* In non-calibration periods, adjust the profit scalers to account for new technologies. 
-           If a new technology is added to a node, it will increase the node's land share because 
-           it represents another "throw of the dice".  The adjustment procedure modifies the 
-           profit scalers to correct for this problem.  The adjustment ensures that if a new 
-           technology that is identical to an existing technology is added to a node, then the node
-           will be allocated the same amount of land as when the new technology didn't exist.
-        */
-        //adjustProfitScalers( aRegionName, aPeriod );
     }
 
     // Call land node's initCalc
@@ -242,25 +232,22 @@ void LandAllocator::calibrateLandAllocator( const string& aRegionName, const int
    part of the calibration.  All the info needed is in the leaves. */
 
 
-/* Step 3. Calculate the profit rate implied by the shares in the calibration data. These rates 
-   are what the profit rates would have to be based on the actual shares, the logit exponent, and
-   the average profit of the containing node. These are equivalent to what was called "intrinsic
-   rates" in the 2008 version of the code based on Sands and Leimbech. */
+/* Step 3. Set the profit rates to use at each node in the land allocation tree.  Note the choice
+   of profit rate used here is arbitrary.  Thus we can choose values which we find convenient:
+   the profit rate of the dominant child in each nest.  Choosing node profit rates in this way also
+   gives us an appropriate value to use if we are making sharing decisions using absolute profit
+   rate differences then we can use the node profit rate as it will already be in the appropriate
+   range of values. */
 	
-    mChoiceFn->setOutputCost( mUnManagedLandValue );
-    calculateNodeProfitRates( aRegionName, mUnManagedLandValue, 
-                              mChoiceFn,
-                              aPeriod );
+    calculateNodeProfitRates( aRegionName, aPeriod );
 
-/* Step 4. Calculate profit scalers. Because the calibration profit rate computed in Step 4
-   will most likely differ from the profit rate computed using the yield times price - cost, a
-   scaler or multiplier is solved for which makes the profit equal to the calibration profit. In
-   future periods, this scaler is then applied to the computed profit for use in the sharing
-   and node profit equations.  It is analagous to the share weight calibration approach. Also, it
-   will work the same for unmanaged land leafs with the land price being used as the profit.
-   
-   All of the calibration is captured in the leaves, so the share profit scalers for nodes are
-   set equal to 1.  */
+/* Step 4. Calculate share-weights with in each sub nest of the land allocation tree.  The scale
+   of these share-weights matter since we will use IDiscreteChoice::calcAverageValue method for
+   calculating.  Thus it is important that this method is called after calculateNodeProfitRates
+   so that the node profit rate can be used to set that scale.  Exactly how it will affect the
+   calculated share-weights depends on the discrete choice function configured in each nest but
+   generally it is related to it's share and the ratio of the node profit rate and it's
+   profit rate. */
 
     calculateShareWeights( aRegionName, mChoiceFn, aPeriod, false );
 }
@@ -387,9 +374,10 @@ void LandAllocator::postCalc( const string& aRegionName, const int aPeriod ) {
     // In the final calibration year re-calculate the share-weights this time
     // calculating the future share-weights as well.
     if( scenario->getModeltime()->getFinalCalibrationPeriod() == aPeriod ) {
-        calculateNodeProfitRates( aRegionName, mUnManagedLandValue,
-                                  mChoiceFn,
-                                  aPeriod );
+        setInitShares( aRegionName,
+                      0, // No land allocation above this node.
+                      aPeriod );
+        calculateNodeProfitRates( aRegionName, aPeriod );
         calculateShareWeights( aRegionName, mChoiceFn, aPeriod, true );
     }
     

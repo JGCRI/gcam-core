@@ -231,22 +231,17 @@ public:
     /*!
      * \brief Sets intermediate profit rates at each node.
      * \details The profit rate to be set will be calculated as the profit rate
-     *          that would be required to attain the observed share if no share
-     *          weighting is in place.  In addition we calculate the "base"
-     *          profit as the highest profit rate in the nest which may be used
-     *          for instance by the absolute-cost-logit to set a scale in which
-     *          we scale changes to absolute changes in profit rate.
+     *          as the dominant child in the nest.  Choosing the profit rate this
+     *          way allows us to also use it as the "base-value" by the
+     *          absolute-cost-logit to set a scale in which we scale changes to
+     *          absolute changes in profit rate.
+     * \sa getChildWithHighestShare
      * \param aRegionName Region name.
-     * \param aAverageProfitRate Region's average profit rate.
-     * \param aChoiceFnAbove The discrete choice function from the level above
-     *                       used to calculate the "implied" profit at this node.
      * \param aPeriod Period.
      * \warning This method is only used during calibration and should be called
      *          before calculateShareWeights.
      */
     virtual void calculateNodeProfitRates( const std::string& aRegionName,
-                                           double aAverageProfitRate,
-                                           IDiscreteChoice* aChoiceFnAbove,
                                            const int aPeriod ) = 0;
 
     /*!
@@ -411,13 +406,18 @@ public:
     
     /*!
      * \brief Get the child that has the highest share.
-     * \note Unmanaged land leaves are not considered.
+     * \details When two children have the same share the child with the highest
+     *          profit rate will be chosen.  Users have the choice if they want
+     *          unmanaged land leaves and zero share children to be considered.
+     * \param aIncludeAllChildren A flag if an unmanged land leaf should be included
+     *                             for consideration when searching for the highest share.
      * \param aPeriod Model period.
      * \return The child land item that has the highest share.  Note that it may
      *         be null if for instance only unmanged land leaves are available or
-     *         all shares are zero.
+     *         all shares are zero and aIncludeAllChildren is false.
      */
-    virtual const ALandAllocatorItem* getChildWithHighestShare( const int aPeriod ) const = 0;
+    virtual const ALandAllocatorItem* getChildWithHighestShare( const bool aIncludeAllChildren,
+                                                                const int aPeriod ) const = 0;
 
     void setShare( const double aShare,
                    const int aPeriod );

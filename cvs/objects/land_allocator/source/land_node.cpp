@@ -263,7 +263,8 @@ void LandNode::completeInit( const string& aRegionName,
 
 void LandNode::initCalc( const string& aRegionName, const int aPeriod )
 {
-    // TODO: all kinds of things including error checking
+    mChoiceFn->initCalc( aRegionName, mName, true, aPeriod );
+    
     if ( aPeriod > 1 ) {
         // Copy share weights forward if new ones haven't been read in or computed
         if ( !mShareWeight[ aPeriod ].isInited() ) {
@@ -398,7 +399,7 @@ double LandNode::calcLandShares( const string& aRegionName,
     }
 
     // Step 3 Option (a) . compute node profit based on share denominator
-    mProfitRate[ aPeriod ] = mChoiceFn->calcAverageCost( unnormalizedSum.first, unnormalizedSum.second, aPeriod );
+    mProfitRate[ aPeriod ] = mChoiceFn->calcAverageValue( unnormalizedSum.first, unnormalizedSum.second, aPeriod );
 
     // Step 4. Calculate the unnormalized share for this node, but here using the discrete choice of the 
     // containing or parant node.  This will be used to determine this nodes share within its 
@@ -455,56 +456,29 @@ void LandNode::setUnmanagedLandProfitRate( const string& aRegionName,
 
 
 void LandNode::calculateNodeProfitRates( const string& aRegionName,
-                                         double aAverageProfitRateAbove,
-                                         IDiscreteChoice* aChoiceFnAbove,
                                          const int aPeriod )
 {
-    const Modeltime* modeltime = scenario->getModeltime();
-    // store this value in this node 
-    double avgProfitRate = -util::getSmallNumber();
-    // If we have a valid profit rate above then we can calculate the implied profit rate this node
-    // would have to recieve the share it did.  If not (such as at the root) we just use the
-    // unmanaged land value.
-    if( aAverageProfitRateAbove > 0.0 ) {
-        if( mShare[ aPeriod ] > 0.0 ) {
-            avgProfitRate = aChoiceFnAbove->calcImpliedCost( mShare[ aPeriod ], aAverageProfitRateAbove, aPeriod );
-        }
-        else if( aPeriod == modeltime->getFinalCalibrationPeriod() ) {
-            // It may be the case that this node contains only "future" crop/technologies.  In this case
-            // we use the ghost share in it's first available year to calculate the implied profit rate.
-            for( int futurePer = aPeriod + 1; futurePer < modeltime->getmaxper() && avgProfitRate < 0.0; ++futurePer ) {
-                if( mGhostUnormalizedShare[ futurePer ].isInited() ) {
-                    avgProfitRate = aChoiceFnAbove->calcImpliedCost( mGhostUnormalizedShare[ futurePer ],
-                                                                     aAverageProfitRateAbove,
-                                                                     aPeriod );
-                }
-            }
-        }
-    }
-    else {
-        avgProfitRate = mUnManagedLandValue;
-    }
-
-    // Store the profit rate which will be used during calibration when calculating share-weights, etc.
-    mProfitRate[ aPeriod ] = avgProfitRate;
-    mChoiceFn->setOutputCost( avgProfitRate );
-
-    // pass the node profit rate down to children and trigger their calculation
-    // and pass down the logit exponent of this node
+    // trigger the calculation for the children
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        mChildren[ i ]->calculateNodeProfitRates( aRegionName, avgProfitRate, 
-                                                  mChoiceFn, aPeriod );
+        mChildren[ i ]->calculateNodeProfitRates( aRegionName, aPeriod );
     }
 
-    // Calculate a reasonable "base" profit rate to use set the scale for when
+    // Calculate a reasonable "base" profit rate to use to set the scale for when
     // changes in absolute profit rates would be made relative.  We do this by
     // taking the higest profit rate from any of the direct child items.
-    double maxChildProfitRate = -std::numeric_limits<double>::infinity();
-    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        maxChildProfitRate = std::max( maxChildProfitRate,
-                mChildren[i]->getProfitRate( aPeriod ) );
+    const ALandAllocatorItem* maxShareChild = getChildWithHighestShare( true, aPeriod );
+    double maxChildProfitRate = maxShareChild->getProfitRate( aPeriod );
+    // there is a chance we get back a negative or zero profit rate
+    // if this node has zero share we will just reset it to avoid error
+    // (if this node will phase in the future via ghost share an error
+    // will be produced at that point).
+    // if the node has a share we will allow it for now but trap it later
+    // if it doesn't correct itself through the solution processes
+    if( maxChildProfitRate <= 0.0 && mShare[ aPeriod ] == 0.0 ) {
+        maxChildProfitRate = 1.0;
     }
-    mChoiceFn->setBaseCost( maxChildProfitRate, mName );
+    mProfitRate[ aPeriod ] = maxChildProfitRate;
+    mChoiceFn->setBaseValue( maxChildProfitRate );
 }
 
 /*!
@@ -649,13 +623,26 @@ void LandNode::getObservedAverageProfitRate( double& aProfitRate, double& aShare
     }
 }
 
-const ALandAllocatorItem* LandNode::getChildWithHighestShare( const int aPeriod ) const {
+const ALandAllocatorItem* LandNode::getChildWithHighestShare( const bool aIncludeAllChildren,
+                                                              const int aPeriod ) const {
     double maxShare = 0.0;
+    double maxProfitRate = -numeric_limits<double>::infinity();
     const ALandAllocatorItem* maxChild = 0;
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        if( !mChildren[ i ]->isUnmanagedLandLeaf() && mChildren[ i ]->getShare( aPeriod ) > maxShare ) {
-            maxShare = mChildren[ i ]->getShare( aPeriod );
+        double currShare = mChildren[ i ]->getShare( aPeriod );
+        double currProfitRate = mChildren[ i ]->getProfitRate( aPeriod );
+        // check if the current child has a greater share than the current max
+        // if the current child has the same share as the max then we will pick
+        // the one with a higher profit rate
+        // note children which are unmanaged land leaves or have zero share are only
+        // considered if aIncludeAllChildren is true
+        if( ( aIncludeAllChildren || ( currShare > 0.0 && !mChildren[ i ]->isUnmanagedLandLeaf() ) ) && (
+            ( currShare > maxShare ) ||
+            ( currShare == maxShare && currProfitRate > maxProfitRate ) ) )
+        {
             maxChild = mChildren[ i ];
+            maxShare = currShare;
+            maxProfitRate = currProfitRate;
         }
     }
     return maxChild;

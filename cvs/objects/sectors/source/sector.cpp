@@ -364,6 +364,8 @@ void Sector::initCalc( NationalAccount* aNationalAccount,
                       const Demographic* aDemographics,
                       const int aPeriod )
 {
+    mDiscreteChoiceModel->initCalc( mRegionName, mName, false, aPeriod );
+    
     // do any sub-Sector initializations
     for ( unsigned int i = 0; i < mSubsectors.size(); ++i ){
         mSubsectors[ i ]->initCalc( aNationalAccount, aDemographics, 0, aPeriod );

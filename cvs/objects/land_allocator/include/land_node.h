@@ -99,8 +99,6 @@ public:
                                 const int aPeriod );
 
     virtual void calculateNodeProfitRates( const std::string& aRegionName,
-                                           double aAverageProfitRate,
-                                           IDiscreteChoice* aChoiceFnAbove,
                                            const int aPeriod );
 
     virtual void calculateShareWeights( const std::string& aRegionName, 
@@ -151,7 +149,8 @@ public:
     
     virtual void getObservedAverageProfitRate( double& aProfitRate, double& aShare, const int aPeriod ) const;
     
-    virtual const ALandAllocatorItem* getChildWithHighestShare( const int aPeriod ) const;
+    virtual const ALandAllocatorItem* getChildWithHighestShare( const bool aIncludeAllChildren,
+                                                                const int aPeriod ) const;
     
 	virtual bool isUnmanagedLandLeaf( )  const;
 

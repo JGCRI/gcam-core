@@ -143,7 +143,7 @@ void CalibrateShareWeightVisitor::endVisitSector( const Sector* aSector, const i
     }
     // baseCost may still be zero and if a user did not parse a base cost an error
     // will be generated.
-    aSector->mDiscreteChoiceModel->setBaseCost( baseCost, aSector->getName() );
+    aSector->mDiscreteChoiceModel->setBaseValue( baseCost );
 
     // do calibration if we have cal values and there are more than one subsector in this nest
     if( hasCalValues && numCalSubsectors > 1 ) {	
@@ -249,7 +249,7 @@ void CalibrateShareWeightVisitor::startVisitSubsector( const Subsector* aSubsect
     }
     // baseCost may still be zero and if a user did not parse a base cost an error
     // will be generated.  
-    aSubsector->mDiscreteChoiceModel->setBaseCost( baseCost, aSubsector->getName() );
+    aSubsector->mDiscreteChoiceModel->setBaseValue( baseCost );
 
     // do calibration if we have cal values and there are more than one technologies in this nest
     if( hasCalValues && numlCalTechs > 1 ) {

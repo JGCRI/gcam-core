@@ -134,10 +134,16 @@ void ALandAllocatorItem::calculateShareWeights( const string& aRegionName,
         double profitRateForCal = mProfitRate[ aPeriod ];
         if( mIsGhostShareRelativeToDominantCrop ) {
             double newCropAvgProfitRate;
+            // note newCropAvgProfitRate, and shareAdj are "out" arguments in getObservedAverageProfitRate
+            // i.e. they will get set by this method call
+            // here we don't really care to get the shareAdj and it will get reset below
             getObservedAverageProfitRate( newCropAvgProfitRate, shareAdj, aPeriod );
             double dominantCropAvgProfitRate;
-            const ALandAllocatorItem* maxChild = getParent()->getChildWithHighestShare( aPeriod );
+            // do not consider unmanged land leaves when looking for the dominant crop
+            const ALandAllocatorItem* maxChild = getParent()->getChildWithHighestShare( false, aPeriod );
             if( maxChild ) {
+                // note dominantCropAvgProfitRate, and shareAdj are "out" arguments in getObservedAverageProfitRate
+                // i.e. they will get set by this method call
                 maxChild->getObservedAverageProfitRate( dominantCropAvgProfitRate, shareAdj, aPeriod );
                 profitRateForCal *= dominantCropAvgProfitRate / newCropAvgProfitRate;
             }
@@ -152,7 +158,10 @@ void ALandAllocatorItem::calculateShareWeights( const string& aRegionName,
         }
         for( int futurePer = aPeriod + 1; futurePer < modeltime->getmaxper(); ++futurePer ) {
             if( mGhostUnormalizedShare[ futurePer ].isInited() ) {
-                
+                // note when mIsGhostShareRelativeToDominantCrop is true we made an adjustment to the cal profit rate
+                // by that of the dominant crop however the mGhostUnormalizedShare is still taken as an absolute
+                // share.  if instead we think it makes better sense to read it in as relative to the dominant crop's
+                // share we could do so by multiplying mGhostUnormalizedShare by shareAdj below:
                 mShareWeight[ futurePer ] = aChoiceFnAbove->calcShareWeight( mGhostUnormalizedShare[ futurePer ] /* * shareAdj */,
                                                                              profitRateForCal,
                                                                              futurePer );

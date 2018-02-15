@@ -463,6 +463,8 @@ void Subsector::initCalc( NationalAccount* aNationalAccount,
                           const MoreSectorInfo* aMoreSectorInfo,
                           const int aPeriod )
 {
+    mDiscreteChoiceModel->initCalc( mRegionName, mName, false, aPeriod );
+    
     // Initialize all technologies.
     for( TechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
         (*techIter)->initCalc( mRegionName, mSectorName, mSubsectorInfo.get(), aDemographics, aPeriod );

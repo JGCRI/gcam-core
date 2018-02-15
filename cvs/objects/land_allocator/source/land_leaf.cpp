@@ -419,9 +419,7 @@ void LandLeaf::resetCalLandAllocation( const string& aRegionName,
 
 
 
-void LandLeaf::calculateNodeProfitRates( const string& aRegionName, 
-                                         double aAverageProfitRateAbove, 
-                                         IDiscreteChoice* aChoiceFnAbove,
+void LandLeaf::calculateNodeProfitRates( const string& aRegionName,
                                          const int aPeriod ) {
     // This value is not used by the leaf, although we could calculate it for
     // comparison..
@@ -582,8 +580,9 @@ void LandLeaf::getObservedAverageProfitRate( double& aProfitRate, double& aShare
     }
 }
 
-const ALandAllocatorItem* LandLeaf::getChildWithHighestShare( const int aPeriod ) const {
-    return isUnmanagedLandLeaf() ? 0 : this;
+const ALandAllocatorItem* LandLeaf::getChildWithHighestShare( const bool aIncludeAllChildren,
+                                                              const int aPeriod ) const {
+    return !aIncludeAllChildren && isUnmanagedLandLeaf() ? 0 : this;
 }
 
 void LandLeaf::accept( IVisitor* aVisitor, const int aPeriod ) const {
