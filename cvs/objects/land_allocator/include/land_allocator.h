@@ -149,6 +149,9 @@ protected:
          *       the parent type which contains shared data members.
          */
         LandNode,
+                            
+        //! Land allocated typically in thous km2.
+        DEFINE_VARIABLE( ARRAY, "land-allocation", mLandAllocation, objects::PeriodVector<Value> ),
 
         //! Rate at which carbon price is expected to increase
         DEFINE_VARIABLE( ARRAY, "carbonPriceIncreaseRate", mCarbonPriceIncreaseRate, objects::PeriodVector<double> ),

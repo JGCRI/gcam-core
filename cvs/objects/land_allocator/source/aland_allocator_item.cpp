@@ -58,8 +58,7 @@ extern Scenario* scenario;
  */
 ALandAllocatorItem::ALandAllocatorItem( const ALandAllocatorItem* aParent,
                                         const LandAllocatorItemType aType )
-    : mParent( aParent ), 
-      mLandAllocation( Value( 0.0 ) ),
+    : mParent( aParent ),
       mShare( Value( -1.0 ) ), // this is so initialization can be checked.
       mProfitRate( Value( 0.0 ) ),
       mIsGhostShareRelativeToDominantCrop( false ),
@@ -174,7 +173,7 @@ void ALandAllocatorItem::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTa
     XMLWriteOpeningTag ( getXMLName(), aOut, aTabs, mName );
 
     // write out basic data members
-    XMLWriteElement( mLandAllocation[ aPeriod ], "land-allocation", aOut, aTabs );
+    XMLWriteElement( getLandAllocation( getName(), aPeriod ), "land-allocation", aOut, aTabs );
     XMLWriteElement( mProfitRate[ aPeriod ], "profit-rate", aOut, aTabs );
     XMLWriteElement( mShare[ aPeriod ], "share", aOut, aTabs );
     XMLWriteElement( mShareWeight[ aPeriod ], "share-weight", aOut, aTabs );

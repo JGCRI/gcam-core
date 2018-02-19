@@ -157,6 +157,9 @@ protected:
     // subclass together with the data members of the parent classes.
     DEFINE_DATA_WITH_PARENT(
         ALandAllocatorItem,
+                            
+        //! Land allocated typically in thous km2.
+        DEFINE_VARIABLE( ARRAY | STATE, "land-allocation", mLandAllocation, objects::PeriodVector<Value> ),
 
         //! Carbon content and emissions calculator for the leaf.
         DEFINE_VARIABLE( CONTAINER, "carbon-calc", mCarbonContentCalc, ICarbonCalc* ),

@@ -447,8 +447,6 @@ protected:
         DEFINE_SUBCLASS_FAMILY( ALandAllocatorItem, LandAllocator, LandNode, LandLeaf,
                                 CarbonLandLeaf, UnmanagedLandLeaf ),
 
-        //! Land allocated typically in thous km2.
-        DEFINE_VARIABLE( ARRAY | STATE, "land-allocation", mLandAllocation, objects::PeriodVector<Value> ),
         /*!
          * \brief Share of parent's total land.
          * \details This is equal to the land allocated to this node divided by land
