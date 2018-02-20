@@ -51,7 +51,8 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
     L100.FAO_ag_Feed_t %>%
       select(iso, item, year, value) %>%
       left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%                                     # Map in GCAM region ID
-      left_join(select(FAO_ag_items_cal_SUA, item, GCAM_commodity), by = "item") %>%               # Map in GCAM commodity
+      left_join(select(FAO_ag_items_cal_SUA, item, GCAM_commodity) %>%
+                  na.omit, by = "item") %>%                                                        # Map in GCAM commodity
       group_by(GCAM_region_ID, GCAM_commodity, year) %>%
       summarize(value = sum(value)) %>%                                                            # Aggregate by crop, region, year
       mutate(value = value * CONV_TON_MEGATON) %>%                                                 # Convert from tons to Mt
