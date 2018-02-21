@@ -125,6 +125,12 @@ MarketContainer::MarketContainer( MarketContainer* aMarketToLink,
     
     // create the linked market object for each period.
     const Modeltime* modeltime = scenario->getModeltime();
+    // ensure model periods prior to aStartPeriod atleast get a market not linked to anything
+    // instead of a crash
+    for( int period = 0; period < max( aStartPeriod, 0 ); ++period ) {
+        mMarkets[ period ] = new LinkedMarket( 0, this );
+        mMarkets[ period ]->setYear( modeltime->getper_to_yr( period ) );
+    }
     for( int period = max( aStartPeriod, 0 ); period < size(); ++period ) {
         mMarkets[ period ] = new LinkedMarket( aMarketToLink ? aMarketToLink->mMarkets[ period ] : 0, this );
         mMarkets[ period ]->setYear( modeltime->getper_to_yr( period ) );

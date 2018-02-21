@@ -149,15 +149,15 @@ bool PolicyTargetRunner::XMLParse( const xercesc::DOMNode* aRoot ){
             mInitialTargetYear = XMLHelper<int>::getAttr( curr, "year" );
         }
         else if( nodeName == "forward-look" ) {
-            const Modeltime* modeltime = mSingleScenario->getInternalScenario()->getModeltime();
-            const int year = XMLHelper<int>::getAttr( curr, "year" );
-            if( year == 0 ) {
+            //const Modeltime* modeltime = mSingleScenario->getInternalScenario()->getModeltime();
+            const int year = 0;//XMLHelper<int>::getAttr( curr, "year" );
+            //if( year == 0 ) {
                 int value = XMLHelper<int>::getValue( curr );
                 fill( mNumForwardLooking.begin(), mNumForwardLooking.end(), value );
-            }
+            /*}
             else {
                 XMLHelper<int>::insertValueIntoVector( curr, mNumForwardLooking, modeltime );
-            }
+            }*/
         }
         else if( nodeName == "max-tax" ) {
             mMaxTax = XMLHelper<double>::getValue( curr );

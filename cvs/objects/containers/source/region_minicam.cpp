@@ -112,6 +112,9 @@ typedef std::vector<Sector*>::const_iterator CSectorIterator;
 typedef std::vector<Consumer*>::iterator ConsumerIterator;
 typedef std::vector<Consumer*>::const_iterator CConsumerIterator;
 
+const double DEFAULT_SOCIAL_DISCOUNT_RATE = 0.02;
+const double DEFAULT_PRIVATE_DISCOUNT_RATE = 0.1;
+
 
 extern Scenario* scenario;
 
@@ -130,8 +133,8 @@ RegionMiniCAM::RegionMiniCAM() {
     mLandAllocator = 0;
 
     mInterestRate = 0;
-    mSocialDiscountRate = 0.02;
-    mPrivateDiscountRateLand = 0.1;
+    mSocialDiscountRate = DEFAULT_SOCIAL_DISCOUNT_RATE;
+    mPrivateDiscountRateLand = DEFAULT_PRIVATE_DISCOUNT_RATE;
 }
 
 //! Default destructor destroys sector, demsector, Resource, and
@@ -334,8 +337,8 @@ void RegionMiniCAM::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     }
 
     XMLWriteElementCheckDefault( mInterestRate, "interest-rate", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( mSocialDiscountRate, "social-discount-rate", out, tabs, 0.02 );
-    XMLWriteElementCheckDefault( mPrivateDiscountRateLand, "private-discount-rate-land", out, tabs, 0.1 );
+    XMLWriteElementCheckDefault( mSocialDiscountRate, "social-discount-rate", out, tabs, DEFAULT_SOCIAL_DISCOUNT_RATE );
+    XMLWriteElementCheckDefault( mPrivateDiscountRateLand, "private-discount-rate-land", out, tabs, DEFAULT_PRIVATE_DISCOUNT_RATE );
 
     // write the xml for the class members.
 

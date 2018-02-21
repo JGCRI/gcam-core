@@ -83,6 +83,8 @@ protected:
         SubResource,
 
         //! The maximum achievable resource production at a price of infinity.
+        //! This value may change by model period and is the max prior to any GDP
+        //! based supply expansion.
         DEFINE_VARIABLE( ARRAY, "maxSubResource", mMaxAnnualSubResource, objects::PeriodVector<double> ),
 
         //! elasticity on GDP growth that controls expansion of the max subresource.

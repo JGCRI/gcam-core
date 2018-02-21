@@ -94,7 +94,7 @@ protected:
         //! Boolean indicating whether reductions should occur at a zero carbon price
         DEFINE_VARIABLE( SIMPLE, "no-zero-cost-reductions", mNoZeroCostReductions, bool ),
         
-        //! Technology change
+        //! Technology change, % improvement rate per year
         DEFINE_VARIABLE( ARRAY, "tech-change", mTechChange, objects::PeriodVector<double> ),
         
         //! The underlying Curve (as read in)

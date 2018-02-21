@@ -185,7 +185,6 @@ void MACControl::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
 void MACControl::toDebugXMLDerived( const int period, ostream& aOut, Tabs* aTabs ) const {
     toInputXMLDerived( aOut, aTabs );
     XMLWriteElement( mNoZeroCostReductions, "no-zero-cost-reductions", aOut, aTabs);
-    const Modeltime* modeltime = scenario->getModeltime();
 	XMLWriteElement( mTechChange[ period ], "tech-change", aOut, aTabs );
 }
 
@@ -302,6 +301,8 @@ double MACControl::getMACValue( const double aCarbonPrice ) const {
  */
 double MACControl::adjustForTechChange( const int aPeriod, double reduction ) {
 
+    // note technical change is a rate of change per year, therefore we must
+    // be sure to apply it for as many years as are in a model time step
     double techChange = 1;
     int timestep = scenario->getModeltime()->gettimestep( 0 );
     for ( int i=0; i <= aPeriod; i++ ) {

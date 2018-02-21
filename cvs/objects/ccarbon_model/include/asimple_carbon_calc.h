@@ -133,7 +133,7 @@ protected:
         //! Time scale for soil carbon emissions
         DEFINE_VARIABLE( SIMPLE, "soil-time-scale", mSoilTimeScale, int ),
         
-        //! Dicsount rate for land related decisions
+        //! Discount rate for land related decisions
         DEFINE_VARIABLE( SIMPLE, "private-discount-rate", mPrivateDiscountRate, double )
     )
 

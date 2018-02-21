@@ -188,6 +188,8 @@ bool Marketplace::createMarket( const string& regionName, const string& marketNa
  *          - We allow these types of markets to change over time.  That is if the aStartPeriod
  *            parameter is set (non negative value) then this call may potentially override a
  *            previously set market with one that links elsewhere.
+ *          Please see LinkedMarket for details on what it means for a market to link to
+ *          another market.
  * \param regionName The region of the policy for which to create a market.
  * \param marketName The market region for which to create a market. This varies from the
  *                   regionName, it can be global, a multi-region market, or the same as
@@ -198,6 +200,10 @@ bool Marketplace::createMarket( const string& regionName, const string& marketNa
  * \param aStartPeriod If a non-negative value is the period in which a linked market may
  *                     override a previously set market to effectively switch markets over time.
  * \return If a new market was created.
+ * \sa LinkedMarket
+ * \note If user calls to this method with aStartPeriod such that the LINKED market is left
+ *       with gaps, then by default those periods will link to no market.  Such that calls
+ *       getPrice will return NO_MARKET_PRICE and calls to addToDemand will do nothing.
  */
 bool Marketplace::createLinkedMarket( const string& regionName, const string& marketName,
                                       const string& goodName, const string& linkedGoodName,

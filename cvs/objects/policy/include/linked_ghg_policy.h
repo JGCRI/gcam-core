@@ -63,7 +63,11 @@
  *          Note that these multipliers can change over time to simulate a "phase in"
  *          of the gas into the policy at a later time.
  *          In addition this type of policy has the ability to switch from linking
- *          from one policy to another at a specified start-year.
+ *          from one policy to another at a specified start-year.  Such a use case
+ *          would be to specify region specific constraints in the near term and switch
+ *          to a global market for target finding in later model periods. Please see
+ *          Marketplace::createLinkedMarket for additional details about how changing
+ *          market links over time works as well as some caveats about it's use.
  *
  *          <b>XML specification for LinkedGHGPolicy</b>
  *          - XML name: \c LinkedGHGPolicy::getXMLNameStatic()

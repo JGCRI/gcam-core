@@ -254,10 +254,9 @@ void LandNode::completeInit( const string& aRegionName,
         mChildren[ i ]->completeInit( aRegionName, aRegionInfo );
     }
 
-    const double privateDiscountRateLand = aRegionInfo->getDouble( "private-discount-rate-land", true );
     if( mCarbonCalc ) {
         accept( mCarbonCalc, -1 );
-        mCarbonCalc->completeInit( privateDiscountRateLand );
+        mCarbonCalc->completeInit();
     }
 }
 

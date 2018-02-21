@@ -618,7 +618,7 @@ void IntermittentTechnology::initializeInputLocations( const string& aRegionName
     if( mResourceInput == mInputs.end() || mBackupInput == mInputs.end() ){
         // There already was a resource input.
         ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::NOTICE );
+        mainLog.setLevel( ILogger::SEVERE );
         mainLog << "Intermittent technology " << mName << " in sector " << aSectorName
                 << " in region " << aRegionName << " does not have the required resource and backup inputs."
                 << endl;

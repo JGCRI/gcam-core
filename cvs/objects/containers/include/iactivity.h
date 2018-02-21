@@ -76,6 +76,9 @@ public:
 /*!
  * \ingroup Objects
  * \brief A dummy implementation of IActivity that does not do anything.
+ * \details Such a activity could be useful if we would like to insert some additional
+ *          dependency for the prurposes of tacking dependencies but do not have any
+ *          actual GCAM code which needs to be executed for that additional dependency.
  * \author Pralit Patel
  */
 class DummyActivity : public IActivity {
