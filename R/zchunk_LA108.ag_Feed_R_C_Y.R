@@ -48,10 +48,13 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
     # Use crop-specific information from FAO, in combination with feed totals from IMAGE,
     # to calculate region/crop specific information. This ensures totals match IMAGE and shares match FAO.
     # First, calculate FAO totals by crop, region, and year. Then, use this compute % of feed from each crop in each region/year.
+
+
     L100.FAO_ag_Feed_t %>%
       select(iso, item, year, value) %>%
       left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%                                     # Map in GCAM region ID
       left_join(select(FAO_ag_items_cal_SUA, item, GCAM_commodity), by = "item") %>%               # Map in GCAM commodity
+      filter(!is.na(GCAM_commodity)) %>%                                                           # Remove entries that are not GCAM comodities
       group_by(GCAM_region_ID, GCAM_commodity, year) %>%
       summarize(value = sum(value)) %>%                                                            # Aggregate by crop, region, year
       mutate(value = value * CONV_TON_MEGATON) %>%                                                 # Convert from tons to Mt
