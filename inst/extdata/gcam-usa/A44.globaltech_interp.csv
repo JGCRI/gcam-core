@@ -1,3 +1,16 @@
 # File: A44.globaltech_interp.csv
-# Title: Interpolation rule over-writes for selected technologies# Source: Tables_Bld_Data.xlsx
-# Units: NAsupplysector,subsector,technology,apply.to,from.year,to.year,interpolation.function,to.valueresid hot water,electricity,electric heat pump water heater,share-weight,2005,2050,s-curve,1resid lighting,electricity,incandescent,share-weight,2005,2050,s-curve,1resid lighting,electricity,fluorescent,share-weight,2005,2050,s-curve,1resid lighting,electricity,solid state,share-weight,2005,2050,s-curve,1resid appliances,electricity,electric appliances hi-eff,share-weight,2005,2020,s-curve,1comm hot water,electricity,electric heat pump water heater,share-weight,2005,2050,s-curve,1comm ventilation,electricity,ventilation hi-eff,share-weight,2005,2020,s-curve,1comm lighting,electricity,incandescent,share-weight,2005,2050,s-curve,1comm lighting,electricity,fluorescent,share-weight,2005,2050,s-curve,1comm lighting,electricity,solid state,share-weight,2005,2050,s-curve,1comm refrigeration,electricity,refrigeration hi-eff,share-weight,2005,2020,s-curve,1
+# Title: Interpolation rule over-writes for selected technologies
+# Source: Tables_Bld_Data.xlsx
+# Units: NA
+supplysector,subsector,technology,apply.to,from.year,to.year,interpolation.function,to.value
+resid hot water,electricity,electric heat pump water heater,share-weight,2005,2050,s-curve,1
+resid lighting,electricity,incandescent,share-weight,2005,2050,s-curve,1
+resid lighting,electricity,fluorescent,share-weight,2005,2050,s-curve,1
+resid lighting,electricity,solid state,share-weight,2005,2050,s-curve,1
+resid appliances,electricity,electric appliances hi-eff,share-weight,2005,2020,s-curve,1
+comm hot water,electricity,electric heat pump water heater,share-weight,2005,2050,s-curve,1
+comm ventilation,electricity,ventilation hi-eff,share-weight,2005,2020,s-curve,1
+comm lighting,electricity,incandescent,share-weight,2005,2050,s-curve,1
+comm lighting,electricity,fluorescent,share-weight,2005,2050,s-curve,1
+comm lighting,electricity,solid state,share-weight,2005,2050,s-curve,1
+comm refrigeration,electricity,refrigeration hi-eff,share-weight,2005,2020,s-curve,1

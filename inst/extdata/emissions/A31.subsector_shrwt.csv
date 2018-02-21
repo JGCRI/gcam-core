@@ -1,3 +1,16 @@
 # File: A31.subsector_shrwt.csv
 # Title: Industry default subsector shareweights
-# Units: Unitlesssupplysector,subsector,year.fillout,year,share.weighturban processes,landfills,start-year,,1urban processes,wastewater treatment,start-year,,1urban processes,aerosols,start-year,,1urban processes,fire_exting,start-year,,1industrial processes,nitric acid,start-year,,1industrial processes,foams,start-year,,1industrial processes,solvents,start-year,,1industrial processes,HCFC_22_Prod,start-year,,1industrial processes,semiconductors,start-year,,1industrial processes,Al_Mg,start-year,,1industrial processes,other industrial processes,start-year,,1industrial processes,adipic acid,start-year,,1
+# Units: Unitless
+supplysector,subsector,year.fillout,year,share.weight
+urban processes,landfills,start-year,,1
+urban processes,wastewater treatment,start-year,,1
+urban processes,aerosols,start-year,,1
+urban processes,fire_exting,start-year,,1
+industrial processes,nitric acid,start-year,,1
+industrial processes,foams,start-year,,1
+industrial processes,solvents,start-year,,1
+industrial processes,HCFC_22_Prod,start-year,,1
+industrial processes,semiconductors,start-year,,1
+industrial processes,Al_Mg,start-year,,1
+industrial processes,other industrial processes,start-year,,1
+industrial processes,adipic acid,start-year,,1

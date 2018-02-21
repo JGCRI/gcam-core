@@ -1,3 +1,9 @@
 # File: A10.TechChange.csv
 # Title: techChange only for resources whose techchange not specified elsewhere
-# Units: Unitlessresource,subresource,1975,2005coal,coal,0.005,0.0075crude oil,crude oil,0.005,0.0075natural gas,natural gas,0.005,0.0075unconventional oil,unconventional oil,0,0biomass,generic waste biomass,0,0
+# Units: Unitless
+resource,subresource,1975,2005
+coal,coal,0.005,0.0075
+crude oil,crude oil,0.005,0.0075
+natural gas,natural gas,0.005,0.0075
+unconventional oil,unconventional oil,0,0
+biomass,generic waste biomass,0,0
