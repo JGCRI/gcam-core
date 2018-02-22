@@ -7,7 +7,7 @@ test_that("input file normalizer works", {
   if(!dir.exists(td)) {
     dir.create(td)
   }
-  oldfiles <- list.files("line_ending_files/", full.names = TRUE)
+  oldfiles <- list.files("line_ending_files/", pattern = "\\.csv", full.names = TRUE)
   for(f in oldfiles) {
     file.copy(f, file.path(td, basename(f)))
   }
