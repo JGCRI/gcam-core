@@ -230,45 +230,54 @@ aglu.DIGITS_MATUREAGE     <- 0
 
 # Energy constants ======================================================================
 
-# At present the CO2 emissions inventory from CDIAC stops at 2009
-energy.CDIAC_CO2_HISTORICAL_YEARS <- HISTORICAL_YEARS[HISTORICAL_YEARS < 2010]
+# Time constants
+energy.CDIAC_CO2_HISTORICAL_YEARS <- HISTORICAL_YEARS[HISTORICAL_YEARS < 2010] # At present the CO2 emissions inventory from CDIAC stops at 2009
+energy.UCD_EN_YEAR          <- 2005        # UCD transporctation year to use to compute shares for allocation of energy to mode/technology/fuel within category/fuel
+energy.CLIMATE_NORMAL_YEARS <- 1981:2000
+energy.WIND.BASE.COST.YEAR  <- 2005        # Base cost year for wind, used in capacity factor calculations
+energy.SATIATION_YEAR       <- 2010
 
 # Constant to select SSP database to use for transportation UCD
 energy.TRN_SSP <- "CORE"
 
-# UCD transporctation year to use to compute shares for allocation of energy to mode/technology/fuel within category/fuel
-energy.UCD_EN_YEAR   <- 2005
 energy.MIN_WEIGHT_EJ <- 1e-08
 
 # Transportation fixed charge rate information
 energy.DISCOUNT_RATE_VEH <- 0.1   # Consumer discount rate for vehicle purchases
 energy.NPER_AMORT_VEH    <- 10    # Number of periods (years) over which vehicle capital payments are amortized
 
-DEFAULT_ELECTRIC_EFFICIENCY <- 0.33
+energy.DEFAULT_ELECTRIC_EFFICIENCY <- 0.33
 
-ELECTRICITY_INPUT_FUELS <- c("biomass", "coal", "gas", "refined liquids")
 
-energy.CLIMATE_NORMAL_YEARS <- 1981:2000
-energy.RSRC_FUELS           <- c("coal", "gas", "refined liquids")
+energy.ELECTRICITY_INPUT_FUELS <- c("biomass", "coal", "gas", "refined liquids")
+energy.RSRC_FUELS              <- c("coal", "gas", "refined liquids")
 
 # Assumed base year heat price, used for calculating adjustment to non-energy costs of electricity
 # technologies with secondary output of heat in units of 1975$/EJ
 energy.HEAT_PRICE <- 3.2
 energy.GAS_PRICE  <- 2
 
-# used in level 2 energy sector files (e.g. 222, 223, 226) to round interpolated values, some below come from ENERGY_ASSUMPTIONS/A_ccs_data.R
 
 energy.CO2.STORAGE.MARKET <- "carbon-storage"
 
-energy.DIGITS_REMOVE.FRACTION <- 2
-
-energy.DIGITS_MPKM       <- 0
-energy.DIGITS_SPEED      <- 1
-energy.DIGITS_LOADFACTOR <- 2
 
 energy.CEMENT_CCS_COST_2000USDTCO2 <- 50 # Starting point of supply curve in Mahasenan et al 2003; come from ENERGY_ASSUMPTIONS/A_ccs_data.R
 energy.CO2_STORAGE_COST_1990_USDTC <- 42 # From GCAM 1.0 inputs; come from ENERGY_ASSUMPTIONS/A_ccs_data.R
-energy.DIGITS_INCELAS_IND <- 3
+
+
+energy.GDP_MID_SATIATION      <- 10.5
+energy.FLOOR_TO_SURFACE_RATIO <- 5.5
+
+
+energy.INTERNAL_GAINS_SCALAR_USA_H <- -930
+energy.INTERNAL_GAINS_SCALAR_USA_C <- 350
+
+# Used to avoid negative/zero energy when disaggregating detailed industries (cement, fertilizer)
+energy.MIN_IN_EJ_IND <- 1e-3
+
+# Sets maximum for electricity IO coefficient used in cement sector
+energy.MAX_IOELEC <- 4
+
 
 # Digits for rounding into XMLs
 energy.DIGITS_CALOUTPUT        <- 7
@@ -290,22 +299,11 @@ energy.DIGITS_CURVE_EXPONENT   <- 3
 energy.DIGITS_GDP_SUPPLY_ELAST <- 3
 energy.DIGITS_OM               <- 2
 energy.DIGITS_CAPITAL          <- 0
+energy.DIGITS_REMOVE.FRACTION  <- 2
+energy.DIGITS_MPKM             <- 0
+energy.DIGITS_SPEED            <- 1
+energy.DIGITS_LOADFACTOR       <- 2
 
-# Base cost year for wind, used in capacity factor calculations
-energy.WIND.BASE.COST.YEAR <- 2005
-energy.DIGITS_INCELAS_IND   <- 3
-
-energy.SATIATION_YEAR         <- 2010
-energy.GDP_MID_SATIATION      <- 10.5
-energy.FLOOR_TO_SURFACE_RATIO <- 5.5
-
-energy.INTERNAL_GAINS_SCALAR_USA_H <- -930
-energy.INTERNAL_GAINS_SCALAR_USA_C <- 350
-
-# used to avoid negative/zero energy when disaggregating detailed industries (cement, fertilizer)
-energy.MIN_IN_EJ_IND <- 1e-3
-# Sets maximum for electricity IO coefficient used in cement sector
-energy.MAX_IOELEC <- 4
 
 # Conversion constants ======================================================================
 # The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
