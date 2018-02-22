@@ -469,8 +469,10 @@ protected:
         
         //! A flag to indicate that this land item intends to use it's ghost share in
         //! in terms of the share it would recieve if it's average profitability were
-        //! the same as.. TODO!!! finish off this comment when we figure out exactly
-        //! what we want out of it.
+        //! the same as the average observed profit rate of the dominant sibling in this
+        //! land nest.
+        //! \sa ALandAllocatorItem::getObservedAverageProfitRate
+        //! \sa ALandAllocatorItem::getChildWithHighestShare
         DEFINE_VARIABLE( SIMPLE, "is-ghost-share-relative", mIsGhostShareRelativeToDominantCrop, bool ),
 
         //! Name of the land allocator item. This is the name of the product for
