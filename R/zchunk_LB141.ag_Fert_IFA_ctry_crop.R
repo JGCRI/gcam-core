@@ -81,9 +81,9 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
       # Then Take the LDS harvested area data, L102.ag_HA_bm2_R_C_GLU, sum to the region-commodity level,
       # join it to the averaged FAO data and compute an FAO_LDS scaler as FAO/LDS:
       #
-      # Take FAO HA data and calulate the average value over FAO_LDS_years for each region-commodity combo:
+      # Take FAO HA data and calulate the average value over aglu.FAO_LDS_YEARS for each region-commodity combo:
       L101.ag_HA_bm2_R_C_Y %>%
-        filter(year %in% FAO_LDS_YEARS) %>%
+        filter(year %in% aglu.FAO_LDS_YEARS) %>%
         group_by(GCAM_region_ID, GCAM_commodity) %>%
         summarise(FAO = mean(value)) ->
         L141.FAO

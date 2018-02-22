@@ -100,7 +100,7 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
 
     itel_colnames <- c("item", "item codes", "element", "element codes")
     coitel_colnames <- c("countries", "country codes", itel_colnames)
-    FAO_histyear_cols <- as.character(FAO_HISTORICAL_YEARS)
+    FAO_histyear_cols <- as.character(aglu.FAO_HISTORICAL_YEARS)
 
     # Replace the item and element code names with what is used in the more recent datasets
     FAO_Fert_Cons_tN_RESOURCESTAT_archv[itel_colnames] <- FAO_Fert_Cons_tN_RESOURCESTAT[1, itel_colnames]
@@ -131,7 +131,7 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
 
     # Some data in an_Stocks are in 1000s of heads instead of just heads; convert them
     # Also remove the units column to be consistent with the other FAO tables.
-    fhyc <- names(FAO_an_Stocks) %in% FAO_HISTORICAL_YEARS
+    fhyc <- names(FAO_an_Stocks) %in% aglu.FAO_HISTORICAL_YEARS
     thr <- FAO_an_Stocks$units == "1000 Head"
     FAO_an_Stocks[thr, fhyc] <- FAO_an_Stocks[thr, fhyc] * 1000
     FAO_an_Stocks$units <- FAO_an_Dairy_Stocks$units <- NULL
@@ -186,19 +186,19 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
     # Czechoslovakia
     FAO_data_ALL %>%
       filter(iso %in% AGLU_ctry$iso[AGLU_ctry$FAO_country == "Czechoslovakia"]) %>%
-      downscale_FAO_country("Czechoslovakia", 1993L, years = FAO_HISTORICAL_YEARS) ->
+      downscale_FAO_country("Czechoslovakia", 1993L, years = aglu.FAO_HISTORICAL_YEARS) ->
       FAO_data_ALL_cze
 
     # USSR
     FAO_data_ALL %>%
       filter(iso %in% AGLU_ctry$iso[AGLU_ctry$FAO_country == "USSR"]) %>%
-      downscale_FAO_country("USSR", 1992L, years = FAO_HISTORICAL_YEARS) ->
+      downscale_FAO_country("USSR", 1992L, years = aglu.FAO_HISTORICAL_YEARS) ->
       FAO_data_ALL_ussr
 
     # Yugoslavia
     FAO_data_ALL %>%
       filter(iso %in% AGLU_ctry$iso[AGLU_ctry$FAO_country == "Yugoslav SFR"]) %>%
-      downscale_FAO_country("Yugoslav SFR", 1992L, years = FAO_HISTORICAL_YEARS) ->
+      downscale_FAO_country("Yugoslav SFR", 1992L, years = aglu.FAO_HISTORICAL_YEARS) ->
       FAO_data_ALL_yug
 
     # Drop these countries from the full database and combine
@@ -235,7 +235,7 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
       rowMeans(FAO_data_ALL[FAO_histyear_cols][(lenXFAO - 2):lenXFAO])
 
     # From here on, only use the specified AGLU historical years
-    FAO_data_ALL_5yr <- FAO_data_ALL_5yr[c(coitel_colnames, "iso", as.character(AGLU_HISTORICAL_YEARS))]
+    FAO_data_ALL_5yr <- FAO_data_ALL_5yr[c(coitel_colnames, "iso", as.character(aglu.AGLU_HISTORICAL_YEARS))]
 
     # Rename columns to old names
     FAO_data_ALL_5yr %>%

@@ -137,7 +137,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
     # node_leaf_names in L125.LC.
     L125.LC_bm2_R_LT_Yh_GLU %>%
       filter(Land_Type %in% A_LandLeaf_Unmgd2$UnmanagedLandLeaf,
-             year %in% c(LAND_HISTORY_YEARS, BASE_YEARS)) %>%
+             year %in% c(aglu.LAND_HISTORY_YEARS, BASE_YEARS)) %>%
       mutate(allocation = round(value, aglu.DIGITS_LAND_USE)) %>%
       add_node_leaf_names(nesting_table = A_LandLeaf_Unmgd2, leaf_name = "UnmanagedLandLeaf",
                           LN1 = "LandNode1", LN2 = "LandNode2") ->
@@ -148,7 +148,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
     # L222.LN2_UnmgdAllocation: Model base period land cover, unmanaged land in the second nest
     # Formed from filtering the master table by different years.
     L222.LC_bm2_R_Unmgd2_Yh_GLU %>%
-      filter(year %in% LAND_HISTORY_YEARS) %>%
+      filter(year %in% aglu.LAND_HISTORY_YEARS) %>%
       select(LEVEL2_DATA_NAMES[["LN2_HistUnmgdAllocation"]]) ->
       L222.LN2_HistUnmgdAllocation
 
@@ -226,7 +226,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
     # node_leaf_names in L125.LC.
     L125.LC_bm2_R_LT_Yh_GLU %>%
       filter(Land_Type %in% A_LandLeaf2$LandLeaf,
-             year %in% c(LAND_HISTORY_YEARS, BASE_YEARS)) %>%
+             year %in% c(aglu.LAND_HISTORY_YEARS, BASE_YEARS)) %>%
       mutate(allocation = round(value, aglu.DIGITS_LAND_USE)) %>%
       add_node_leaf_names(nesting_table = A_LandLeaf2, leaf_name = "LandLeaf",
                           LN1 = "LandNode1", LN2 = "LandNode2") ->
@@ -237,7 +237,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
     # L222.LN2_MgdAllocation: Model base period land cover, managed land in the second nest
     # Formed from filtering the master table by different years.
     L222.LC_bm2_R_Mgd2_Yh_GLU %>%
-      filter(year %in% LAND_HISTORY_YEARS) %>%
+      filter(year %in% aglu.LAND_HISTORY_YEARS) %>%
       select(LEVEL2_DATA_NAMES[["LN2_HistMgdAllocation"]]) ->
       L222.LN2_HistMgdAllocation
 

@@ -70,14 +70,14 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
     # Original lines 41-49
     # Start by summing food and animal (below) demand for each year and GCAM region
     L101.ag_Food_Pcal_R_C_Y %>%
-      filter(year %in% AGLU_HISTORICAL_YEARS) %>%
+      filter(year %in% aglu.AGLU_HISTORICAL_YEARS) %>%
       group_by(GCAM_region_ID, year) %>%
       summarise(consumption = sum(value)) %>%
       mutate(GCAM_demand = "crops") ->
       L134.ag_Food_Pcal_R_Y
 
     L105.an_Food_Pcal_R_C_Y %>%
-      filter(year %in% AGLU_HISTORICAL_YEARS) %>%
+      filter(year %in% aglu.AGLU_HISTORICAL_YEARS) %>%
       group_by(GCAM_region_ID, year) %>%
       summarise(consumption = sum(value)) %>%
       mutate(GCAM_demand = "meat") %>%

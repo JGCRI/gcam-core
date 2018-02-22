@@ -5,8 +5,8 @@ XML_DIR      <- "xml/"
 COMMENT_CHAR <- "#"
 OLD_DATA_SYSTEM_BEHAVIOR <- TRUE
 UNDER_TIMESHIFT <- FALSE
-YEAR_PATTERN <- "^(1|2)[0-9]{3}$"   # a 1 or 2 followed by three digits, and nothing else
-LOGIT_COLUMN_NAME <- "logit.type"   # will be removed by test code before old-new comparison
+YEAR_PATTERN    <- "^(1|2)[0-9]{3}$"   # a 1 or 2 followed by three digits, and nothing else
+LOGIT_COLUMN_NAME <- "logit.type"      # will be removed by test code before old-new comparison
 
 
 # Flags ======================================================================
@@ -22,48 +22,50 @@ FLAG_XML             <- "FLAG_XML"              # xml data
 FLAG_YEAR_COL_XYEARS <- "FLAG_YEAR_COL_XYEARS"  # 'year' column without X's in front
 
 
-# Time constants======================================================================
+# Time constants ======================================================================
 
-HISTORICAL_YEARS <- 1971:2010
-IMF_GDP_YEARS <- 2010:2020
-FUTURE_YEARS <- seq(2015, 2100, 5)
-BASE_YEARS <- c(1975, 1990, 2005, 2010)
-MODEL_YEARS <- c(BASE_YEARS, FUTURE_YEARS)
-SSP_FUTURE_YEARS <- c(2010, FUTURE_YEARS)
+HISTORICAL_YEARS        <- 1971:2010
+IMF_GDP_YEARS           <- 2010:2020  # Sets the years during which the IMF projections are used over-riding the default (generally SSP) assumptions.
+FUTURE_YEARS            <- seq(2015, 2100, 5)
+BASE_YEARS              <- c(1975, 1990, 2005, 2010)
+MODEL_YEARS             <- c(BASE_YEARS, FUTURE_YEARS)
+SSP_FUTURE_YEARS        <- c(2010, FUTURE_YEARS)
 GHG_CONTROL_READIN_YEAR <- 1975
-BASE_YEAR_IFA <- 2006
 
 
 # GCAM constants ======================================================================
 
-gcam.USA_CODE <- 1
+gcam.USA_CODE            <- 1
 gcam.WESTERN_EUROPE_CODE <- 13
-gcam.LOGIT_TYPES <- c("relative-cost-logit", "absolute-cost-logit")
-gcam.EQUIV_TABLE <- "EQUIV_TABLE"
-gcam.IND_ENERGY_USE <- c("biomass", "coal", "gas", "refined liquids")  # GCAM industrial energy use fuels
-
+gcam.LOGIT_TYPES         <- c("relative-cost-logit", "absolute-cost-logit")
+gcam.EQUIV_TABLE         <- "EQUIV_TABLE"
+gcam.IND_ENERGY_USE      <- c("biomass", "coal", "gas", "refined liquids")  # GCAM industrial energy use fuels
 GCAM_REGION_ID <- "GCAM_region_ID"
 
 
 # AgLU constants ======================================================================
 
-AGLU_HISTORICAL_YEARS <- 1971:2010
-FAO_HISTORICAL_YEARS <- 1961:2011
-FAO_LDS_YEARS <- 1998:2002
-MODEL_PRICE_YEARS <- 2001:2005
-MODEL_COST_YEARS <- 2001:2005
-LAND_HISTORY_YEARS <- c(1700, 1750, 1800, 1850, 1900, 1950, 1975)
-PREAGLU_YEARS <- c(1700, 1750,1800, 1850, 1900, 1950)
-aglu.LAND_COVER_YEARS <- sort(unique(c(LAND_HISTORY_YEARS, AGLU_HISTORICAL_YEARS)))
-GTAP_HISTORICAL_YEAR <- 2000
-CROSIT_HISTORICAL_YEAR <- 2005
-aglu.BIO_START_YEAR <- 2020
-SPEC_AG_PROD_YEARS <- seq(max(AGLU_HISTORICAL_YEARS), 2050, by = 5) # Specified ag productivity years
-aglu.DIET_YEARS <- seq(max(AGLU_HISTORICAL_YEARS), 2050, by = 5)
-MIN_PROFIT_MARGIN <- 0.15
-LAND_TOLERANCE <- 0.005
-DIGITS_LAND_TOTAL <- 2
-DIGITS_LAND_USE <- 7
+# Time constants
+aglu.AGLU_HISTORICAL_YEARS  <- 1971:2010
+aglu.FAO_HISTORICAL_YEARS   <- 1961:2011
+aglu.FAO_LDS_YEARS          <- 1998:2002  # Years for which FAO harvested area data is averaged over for use in the land data system (LDS)
+aglu.MODEL_PRICE_YEARS      <- 2001:2005
+aglu.MODEL_COST_YEARS       <- 2001:2005
+aglu.LAND_HISTORY_YEARS     <- c(1700, 1750, 1800, 1850, 1900, 1950, 1975)
+aglu.PREAGLU_YEARS          <- c(1700, 1750,1800, 1850, 1900, 1950)          # Cropland cover years prior to first aglu historical year to use in climate model component
+aglu.LAND_COVER_YEARS       <- sort(unique(c(aglu.LAND_HISTORY_YEARS, aglu.AGLU_HISTORICAL_YEARS)))
+aglu.GTAP_HISTORICAL_YEAR   <- 2000      # Is the year that the GTAP data is based on.
+aglu.CROSIT_HISTORICAL_YEAR <- 2005      # Historical year from the CROSIT data
+aglu.BIO_START_YEAR         <- 2020
+aglu.SPEC_AG_PROD_YEARS     <- seq(max(aglu.AGLU_HISTORICAL_YEARS), 2050, by = 5) # Specified ag productivity years, KD i think this might need a better comment
+aglu.DIET_YEARS             <- seq(max(aglu.AGLU_HISTORICAL_YEARS), 2050, by = 5)
+aglu.BASE_YEAR_IFA          <- 2006      # Base year of International Fertilizer Industry Association (IFA) fertilizer application data KD does this belong here???
+
+
+
+# Other AgLu constants
+aglu.MIN_PROFIT_MARGIN <- 0.15  # Unitless and is used to ensure that Agricultural Costs (units 1975USD/kg) don't lead to profits below a minimum profit margin.
+aglu.LAND_TOLERANCE    <- 0.005
 
 # GLU (Geographic Land Unit) settings - see module_aglu_LA100.0_LDS_preprocessing
 aglu.GLU <- "GLU"
@@ -73,50 +75,47 @@ aglu.GLU_NAME_DELIMITER <- ""  # delimiter between the GLU name and number
 # This is the weight used to calculate the weighted average producer price for "seed cotton",
 # based on that FAO total production volume of "seed cotton" is about 40% cotton lint and 60% cotton seeds.
 # Source: http://www.fao.org/es/faodef/fdef06e.htm
-WEIGHT_COTTON_LINT <- 0.4
+aglu.WEIGHT_COTTON_LINT <- 0.4
 
-# Price conversion from alfalfa to grass hay
-# Sources:
-# Alfalfa price: USDA. 2011. Prices Received for Alfalfa Hay, Baled, Washington. National Agricultural Statistics Service, U.S. Department of Agriculture.
-# Grass price: Baker, A., and H. Lutman. 2008. Feed Year in Review (Domestic): Record Demand Drives U.S. Feed Grain Prices Higher in 2007/2008.
+# Ratio of alfalfa price to grass hay used in the price conversion from alfalfa to grass hay.
+# Alfalfa price source: USDA. 2011. Prices Received for Alfalfa Hay, Baled, Washington. National Agricultural Statistics Service, U.S. Department of Agriculture.
+# Grass price source: Baker, A., and H. Lutman. 2008. Feed Year in Review (Domestic): Record Demand Drives U.S. Feed Grain Prices Higher in 2007/2008.
 # FDS-2008-01, Economic Research Service, United States Department of Agriculture. Available at http://usda.mannlib.cornell.edu/usda/ers/FDS-yearbook/2000s/2008/FDS-yearbook-05-23-2008_Special_Report.pdf
-PRICERATIO_GRASS_ALFALFA <- 0.7
-
-# NUMBERS OF DIGITS FOR MODEL INPUT DATA
-aglu.DIGITS_CALPRICE <- 4 # prices and costs
-aglu.DIGITS_CALOUTPUT <- 7 # production
-aglu.DIGITS_INCELAS <- 4 # food demand income elasticity
-aglu.DIGITS_AGPRODCHANGE <- 4 # rate of change in yield
+aglu.PRICERATIO_GRASS_ALFALFA <- 0.7
 
 # Carbon content of all cellulose
-aglu.CCONTENT_CELLULOSE <- 0.45
-
-# Minimum and maximum harvested:cropped ratios
-MIN_HA_TO_CROPLAND <- 1
-# Source: Dalrymple, D.G. 1971, Survey of Multiple Cropping in Less Developed Nations, Foreign Econ. Dev. Serv., U.S. Dep. of Agricul., Washington, D.C.
-# Cited in: Monfreda et al. 2008, Farming the Planet: 2., Global Biogeochemical Cycles 22, GB1022, http://dx.doi.org/10.1029/2007GB002947
-MAX_HA_TO_CROPLAND <- 3
-
-# Maximum portion of any land use region's pastures that can be in production
-MAX_MGDPAST_FRAC <- 0.95
-MAX_MGDFOR_FRAC <- 1
-
-# Yield multiplier that goes from the observed yield to the "high" and "low" yields: observed plus or minus observed times this number
-MGMT_YIELD_ADJ <- 0.1
+aglu.CCONTENT_CELLULOSE    <- 0.45
 
 # Meat price elasticity in the USA
 aglu.FOOD_MEAT_P_ELAS_USA <- -0.09
 
-# Multipliers for high & low ag prod growth scenarios
-aglu.HI_PROD_GROWTH_MULT <- 1.5
-aglu.LOW_PROD_GROWTH_MULT <- 0.5
+# Constraints for the minimum and maximum harvested:cropped ratios
+# Source: Dalrymple, D.G. 1971, Survey of Multiple Cropping in Less Developed Nations, Foreign Econ. Dev. Serv., U.S. Dep. of Agricul., Washington, D.C.
+# Cited in: Monfreda et al. 2008, Farming the Planet: 2., Global Biogeochemical Cycles 22, GB1022, http://dx.doi.org/10.1029/2007GB002947
+aglu.MIN_HA_TO_CROPLAND <- 1  # minimum harvested:cropped ratios
+aglu.MAX_HA_TO_CROPLAND <- 3  # maximum harvested:cropped ratios
 
-# Forestry cost (1975$/GJ)
-aglu.FOR_COST_75USDM3 <- 29.59
+# Minimum non-input costs of animal production technologies, in $/kg
+aglu.MIN_AN_NONINPUT_COST <- 0.05
 
-# Production costs of biomass (from Patrick Luckow's work)
-aglu.BIO_GRASS_COST_75USD_GJ <- 0.75
-aglu.BIO_TREE_COST_75USD_GJ <- 0.67
+# Production constraints
+aglu.MAX_MGDPAST_FRAC <- 0.95 # Maximum percentage of any region/GLUs pasture that is allowed to be in managed production.
+aglu.MAX_MGDFOR_FRAC  <- 1    # Maximum percentage of any region/GLUs forest that is allowed to be in managed production.
+
+# GDP constraints
+aglu.HIGH_GROWTH_PCGDP <- 12.275   # GDP per capita high threshold for SSP4 region groupings, thousand 2010$ per person
+aglu.LOW_GROWTH_PCGDP  <- 2.75     # GDP per capita low threshold for SSP4 region groupings, thousand 2010$ per person
+
+# AgLu mulitpliers
+aglu.MGMT_YIELD_ADJ <- 0.1       # Yield multiplier that goes from the observed yield to the "high" and "low" yields: observed plus or minus observed times this number.
+aglu.HI_PROD_GROWTH_MULT <- 1.5  # Multipliers for high ag prod growth scenarios
+aglu.LOW_PROD_GROWTH_MULT <- 0.5 # Multipliers for low ag prod growth scenarios
+
+# AgLU cost constants
+aglu.FOR_COST_75USDM3        <- 29.59  # Forestry cost (1975$/GJ)
+aglu.BIO_GRASS_COST_75USD_GJ <- 0.75   # Production costs of biomass (from Patrick Luckow's work)
+aglu.BIO_TREE_COST_75USD_GJ  <- 0.67   # Production costs of biomass (from Patrick Luckow's work)
+aglu.FERT_COST               <- 363    # Cost of fertlizer, 2007$ per ton NH3
 
 # Price at which base year bio frac produced is used.
 # The share of residue biomass production in each region,
@@ -129,30 +128,20 @@ aglu.PRICE_BIO_FRAC <- 1.2
 
 # Fertilizer application rate for biomass, and carbon yields. Values from Adler et al. 2007 (doi:10.1890/05-2018)
 aglu.BIO_GRASS_FERT_IO_GNM2 <- 5.6
-aglu.BIO_GRASS_YIELD_KGCM2 <- 0.34
-aglu.BIO_TREE_FERT_IO_GNM2 <- 3.36
-aglu.BIO_TREE_YIELD_KGCM2 <- 0.345
+aglu.BIO_GRASS_YIELD_KGCM2  <- 0.34
+aglu.BIO_TREE_FERT_IO_GNM2  <- 3.36
+aglu.BIO_TREE_YIELD_KGCM2   <- 0.345
 
 # Water characteristics for biomass
 # Reference: Chaturvedi et al. 2015, Climate mitigation policy implications for global irrigation water demand, Mitig Adapt Strateg Glob Change (2015) 20:389-407. DOI 10.1007/s11027-013-9497-4
 aglu.BIO_GRASS_WATER_IO_KM3EJ <- 25
-aglu.BIO_TREE_WATER_IO_KM3EJ <- 25
+aglu.BIO_TREE_WATER_IO_KM3EJ  <- 25
 
-# Cost of Fertilizer
-aglu.FERT_COST <- 363 # 2007$ per ton NH3
-
-# Minimum non-input costs of animal production technologies, in $/kg
-aglu.MIN_AN_NONINPUT_COST <- 0.05
-
-# Maximum bioenergy (switchgrass) yield allowable, in tons per hectare
-# Source: Wullschleger doi:10.2134/agronj2010.0087
+# Maximum bioenergy (switchgrass) yield allowable, in tons per hectare from Wullschleger doi:10.2134/agronj2010.0087
 aglu.MAX_BIO_YIELD_THA <- 20
 
-aglu.BIO_ENERGY_CONTENT_GJT <- 17.5  # Energy content of biomass, GJ/ton
-
-# GDP per capita thresholds for SSP4 region groupings
-aglu.HIGH_GROWTH_PCGDP <- 12.275   # thousand 2010$ per person
-aglu.LOW_GROWTH_PCGDP  <- 2.75     # thousand 2010$ per person
+# Energy content of biomass, GJ/ton
+aglu.BIO_ENERGY_CONTENT_GJT <- 17.5
 
 # Regions in which agriculture and land use are not modeled
 aglu.NO_AGLU_REGIONS <- "Taiwan"
@@ -194,11 +183,11 @@ aglu.WOOD_WATER_CONTENT <- 0.065
 aglu.MIN_VEG_CARBON_DENSITY  <- 0
 aglu.MIN_SOIL_CARBON_DENSITY <- 0
 
-# define top-level (zero) land nest logit exponent and logit type
-aglu.N0_LOGIT_EXP <- 0
+# Define top-level (zero) land nest logit exponent and logit type
+aglu.N0_LOGIT_EXP  <- 0
 aglu.N0_LOGIT_TYPE <- NA
 
-# fraction of land that is protected
+# Fraction of land that is protected
 aglu.PROTECT_LAND_FRACT <- 0.9
 
 # unManaged Land Value
@@ -206,11 +195,11 @@ aglu.PROTECT_LAND_FRACT <- 0.9
 aglu.UNMANAGED_LAND_VALUE <- 1
 
 # default protected, unmanaged land LN1 logit info
-aglu.LN1_PROTUNMGD_LOGIT_EXP <- 0
+aglu.LN1_PROTUNMGD_LOGIT_EXP  <- 0
 aglu.LN1_PROTUNMGD_LOGIT_TYPE <- NA
 
 # default logit exponent and type for LN5, the competition betweein high and lo management
-aglu.MGMT_LOGIT_EXP <- 0.5
+aglu.MGMT_LOGIT_EXP  <- 0.5
 aglu.MGMT_LOGIT_TYPE <- "absolute-cost-logit"
 
 # XML-related constants
@@ -221,15 +210,23 @@ aglu.IRR_DELIMITER        <- "_"  # delimiter between the appended crop x GLU an
 aglu.MGMT_DELIMITER       <- "_"  # delimiter between appended tech name and management level
 aglu.CROP_DELIMITER       <- "_"  # delimiter between (some) crop names such as Root_Tuber, biomass_grass, biomass_tree
 
-# some more digits for rounding going into XMLs
+# AgLU digits constants
+aglu.DIGITS_CALPRICE      <- 4 # prices and costs values
+aglu.DIGITS_CALOUTPUT     <- 7 # for production values
+aglu.DIGITS_INCELAS       <- 4 # food demand income elasticity values
+aglu.DIGITS_AGPRODCHANGE  <- 4 # rate of change in yield values
+aglu.DIGITS_LAND_TOTAL    <- 2
+aglu.DIGITS_LAND_USE      <- 7
+
+# More digits to control the number of digits for rounding going into XMLs.
 aglu.DIGITS_HARVEST_INDEX <- 2
 aglu.DIGITS_EROS_CTRL     <- 2
 aglu.DIGITS_RES_ENERGY    <- 4
 aglu.DIGITS_WATER_CONTENT <- 2
 aglu.DIGITS_LAND_VALUE    <- 0
-aglu.DIGITS_LAND_USE      <- 7
 aglu.DIGITS_C_DENSITY     <- 1
 aglu.DIGITS_MATUREAGE     <- 0
+
 
 # Energy constants ======================================================================
 
@@ -239,25 +236,25 @@ energy.CDIAC_CO2_HISTORICAL_YEARS <- HISTORICAL_YEARS[HISTORICAL_YEARS < 2010]
 # Constant to select SSP database to use for transportation UCD
 energy.TRN_SSP <- "CORE"
 
-# UCD transportation year to use to compute shares for allocation of energy to mode/technology/fuel within category/fuel
-energy.UCD_EN_YEAR <- 2005
+# UCD transporctation year to use to compute shares for allocation of energy to mode/technology/fuel within category/fuel
+energy.UCD_EN_YEAR   <- 2005
 energy.MIN_WEIGHT_EJ <- 1e-08
 
 # Transportation fixed charge rate information
 energy.DISCOUNT_RATE_VEH <- 0.1   # Consumer discount rate for vehicle purchases
-energy.NPER_AMORT_VEH <- 10    # Number of periods (years) over which vehicle capital payments are amortized
+energy.NPER_AMORT_VEH    <- 10    # Number of periods (years) over which vehicle capital payments are amortized
 
 DEFAULT_ELECTRIC_EFFICIENCY <- 0.33
 
-ELECTRICITY_INPUT_FUELS<- c("biomass", "coal", "gas", "refined liquids")
+ELECTRICITY_INPUT_FUELS <- c("biomass", "coal", "gas", "refined liquids")
 
 energy.CLIMATE_NORMAL_YEARS <- 1981:2000
-energy.RSRC_FUELS <- c("coal", "gas", "refined liquids")
+energy.RSRC_FUELS           <- c("coal", "gas", "refined liquids")
 
-# Assumed base year heat price, used for calculating adjustment to non-energy costs of electricity technologies with secondary output of heat
-# in units of 1975$/EJ
+# Assumed base year heat price, used for calculating adjustment to non-energy costs of electricity
+# technologies with secondary output of heat in units of 1975$/EJ
 energy.HEAT_PRICE <- 3.2
-energy.GAS_PRICE <- 2
+energy.GAS_PRICE  <- 2
 
 # used in level 2 energy sector files (e.g. 222, 223, 226) to round interpolated values, some below come from ENERGY_ASSUMPTIONS/A_ccs_data.R
 
@@ -265,8 +262,8 @@ energy.CO2.STORAGE.MARKET <- "carbon-storage"
 
 energy.DIGITS_REMOVE.FRACTION <- 2
 
-energy.DIGITS_MPKM <- 0
-energy.DIGITS_SPEED <- 1
+energy.DIGITS_MPKM       <- 0
+energy.DIGITS_SPEED      <- 1
 energy.DIGITS_LOADFACTOR <- 2
 
 energy.CEMENT_CCS_COST_2000USDTCO2 <- 50 # Starting point of supply curve in Mahasenan et al 2003; come from ENERGY_ASSUMPTIONS/A_ccs_data.R
@@ -274,32 +271,32 @@ energy.CO2_STORAGE_COST_1990_USDTC <- 42 # From GCAM 1.0 inputs; come from ENERG
 energy.DIGITS_INCELAS_IND <- 3
 
 # Digits for rounding into XMLs
-energy.DIGITS_CALOUTPUT <- 7
-energy.DIGITS_CALPRODUCTION <- 7
-energy.DIGITS_COEFFICIENT <- 7
-energy.DIGITS_COST <- 4
-energy.DIGITS_EFFICIENCY <- 3
-energy.DIGITS_SHRWT <- 4
-energy.DIGITS_FLOORSPACE <- 3
-energy.DIGITS_SATIATION_ADDER <- 9
-energy.DIGITS_HDDCDD <- 0
-energy.DIGITS_CAPACITY_FACTOR <- 2
-energy.DIGITS_INCELAS_IND <- 3
-energy.DIGITS_INCELAS_TRN <- 3
-energy.DIGITS_DEPRESOURCE <- 1
+energy.DIGITS_CALOUTPUT        <- 7
+energy.DIGITS_CALPRODUCTION    <- 7
+energy.DIGITS_COEFFICIENT      <- 7
+energy.DIGITS_COST             <- 4
+energy.DIGITS_EFFICIENCY       <- 3
+energy.DIGITS_SHRWT            <- 4
+energy.DIGITS_FLOORSPACE       <- 3
+energy.DIGITS_SATIATION_ADDER  <- 9
+energy.DIGITS_HDDCDD           <- 0
+energy.DIGITS_CAPACITY_FACTOR  <- 2
+energy.DIGITS_INCELAS_IND      <- 3
+energy.DIGITS_INCELAS_TRN      <- 3
+energy.DIGITS_DEPRESOURCE      <- 1
 energy.DIGITS_MAX_SUB_RESOURCE <- 5
-energy.DIGITS_MID_PRICE <- 3
-energy.DIGITS_CURVE_EXPONENT <- 3
+energy.DIGITS_MID_PRICE        <- 3
+energy.DIGITS_CURVE_EXPONENT   <- 3
 energy.DIGITS_GDP_SUPPLY_ELAST <- 3
-energy.DIGITS_OM <- 2
-energy.DIGITS_CAPITAL <- 0
+energy.DIGITS_OM               <- 2
+energy.DIGITS_CAPITAL          <- 0
 
 # Base cost year for wind, used in capacity factor calculations
 energy.WIND.BASE.COST.YEAR <- 2005
-energy.DIGITS_INCELAS_IND <- 3
+energy.DIGITS_INCELAS_IND   <- 3
 
-energy.SATIATION_YEAR <- 2010
-energy.GDP_MID_SATIATION <- 10.5
+energy.SATIATION_YEAR         <- 2010
+energy.GDP_MID_SATIATION      <- 10.5
 energy.FLOOR_TO_SURFACE_RATIO <- 5.5
 
 energy.INTERNAL_GAINS_SCALAR_USA_H <- -930

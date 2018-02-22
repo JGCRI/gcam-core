@@ -52,7 +52,7 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
     # Calculate bottom-up estimates of total pasture grass production by region and GLU.
     # Start with total pasture land data
     L120.LC_bm2_R_LT_Yh_GLU %>%
-      filter(Land_Type == "Pasture", year %in% AGLU_HISTORICAL_YEARS) ->
+      filter(Land_Type == "Pasture", year %in% aglu.AGLU_HISTORICAL_YEARS) ->
       L123.LC_bm2_R_Past_Y_GLU
 
     # Match total pasture land area and yield data to calculate potential production
@@ -102,7 +102,7 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
       mutate(frac = MgdPast / value) %>%
       replace_na(list(frac = 0)) %>%
       # Apply maximum percentage of any region/GLUs pasture that is allowed to be in production (managed)
-      mutate(frac = replace(frac, frac > MAX_MGDPAST_FRAC, MAX_MGDPAST_FRAC),
+      mutate(frac = replace(frac, frac > aglu.MAX_MGDPAST_FRAC, aglu.MAX_MGDPAST_FRAC),
              # Recalculate the adjusted managed pasture land
              MgdPast_adj = value * frac) %>%
       select(-MgdPast, -value) ->
@@ -125,10 +125,10 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
     # Assume the same managed:unmanaged pasture ratio from the earliest available aglu year
     L123.LC_bm2_R_MgdPast_Y_GLU_adj %>%
       # Filter managed paster land in the earliest available aglu year
-      filter(year == min(AGLU_HISTORICAL_YEARS)) %>%
+      filter(year == min(aglu.AGLU_HISTORICAL_YEARS)) %>%
       select(-year) %>%
       # Match in pre-aglu historical total pasture land data
-      right_join(filter(L120.LC_bm2_R_LT_Yh_GLU, Land_Type == "Pasture", year %in% PREAGLU_YEARS),
+      right_join(filter(L120.LC_bm2_R_LT_Yh_GLU, Land_Type == "Pasture", year %in% aglu.PREAGLU_YEARS),
                  by = c("GCAM_region_ID", "Land_Type", "GLU")) %>%
       # Multiply the same "managed" shares by prior total pasture land to get pre-aglu historical managed pasture
       mutate(value = value * frac) %>%
@@ -159,7 +159,7 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
     L120.LC_bm2_R_LT_Yh_GLU %>%
       rename(GCAM_commodity = Land_Type) %>%
       # Filter total forest land
-      filter(GCAM_commodity == "Forest", year %in% AGLU_HISTORICAL_YEARS) %>%
+      filter(GCAM_commodity == "Forest", year %in% aglu.AGLU_HISTORICAL_YEARS) %>%
       # Match in forest primary yields
       left_join_error_no_match(select(L123.For_Yield_m3m2_R_GLU, GCAM_region_ID, GLU, Yield_m3m2),
                                by = c("GCAM_region_ID", "GLU")) %>%
@@ -199,10 +199,10 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
     L101.Pop_thous_R_Yh %>%
       group_by(GCAM_region_ID) %>%
       # Calculate the population ratio of pre-aglu historical years to the earliest aglu year for each region
-      mutate(PopRatio = value / value[year == min(AGLU_HISTORICAL_YEARS)]) %>%
+      mutate(PopRatio = value / value[year == min(aglu.AGLU_HISTORICAL_YEARS)]) %>%
       ungroup %>%
       select(-value) %>%
-      filter(year %in% PREAGLU_YEARS) ->
+      filter(year %in% aglu.PREAGLU_YEARS) ->
       L123.PopRatio_R_Yhh
 
     # Scale managed forest land to pre-aglu historical years by population
@@ -211,12 +211,12 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
       select(GCAM_region_ID, Land_Type = GCAM_commodity, GLU) %>%
       unique %>%
       # Copy to pre-aglu years
-      repeat_add_columns(tibble(year = as.integer(PREAGLU_YEARS))) %>%
+      repeat_add_columns(tibble(year = as.integer(aglu.PREAGLU_YEARS))) %>%
       # Bind with managed forest land data in aglu years
       bind_rows(L123.LC_bm2_R_MgdFor_Y_GLU) %>%
       group_by(GCAM_region_ID, GLU) %>%
       # Copy the managed forest land in earliest aglu year to all pre-aglu years for each region x GLU
-      mutate(MgdFor = replace(MgdFor, year %in% PREAGLU_YEARS, MgdFor[year == min(AGLU_HISTORICAL_YEARS)])) %>%
+      mutate(MgdFor = replace(MgdFor, year %in% aglu.PREAGLU_YEARS, MgdFor[year == min(aglu.AGLU_HISTORICAL_YEARS)])) %>%
       ungroup %>%
       # Match in the population ratio by region
       left_join(L123.PopRatio_R_Yhh, by = c("GCAM_region_ID", "year")) %>%
@@ -240,7 +240,7 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
       # Re-set missing values to zeroes
       replace_na(list(frac = 0)) %>%
       # Apply maximum percentage of any region/GLUs forest that is allowed to be in production (managed)
-      mutate(frac = replace(frac, frac > MAX_MGDFOR_FRAC, MAX_MGDFOR_FRAC)) %>%
+      mutate(frac = replace(frac, frac > aglu.MAX_MGDFOR_FRAC, aglu.MAX_MGDFOR_FRAC)) %>%
       # Match in total forest land again to calculate the adjusted managed forest land
       left_join_error_no_match(filter(L120.LC_bm2_R_LT_Yh_GLU, Land_Type == "Forest", year %in% aglu.LAND_COVER_YEARS),
                                by = c("GCAM_region_ID", "Land_Type", "GLU", "year")) %>%

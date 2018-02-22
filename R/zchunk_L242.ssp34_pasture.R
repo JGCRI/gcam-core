@@ -64,7 +64,7 @@ module_aglu_L242.ssp34_pasture <- function(command, ...) {
 
     # Historical land cover, unmanaged land in the second nest
     L242.LC_bm2_R_Unmgd2_Yh_GLU.mlt %>%
-      filter(year %in% LAND_HISTORY_YEARS) %>%
+      filter(year %in% aglu.LAND_HISTORY_YEARS) %>%
       select(region, LandAllocatorRoot, LandNode1, LandNode2, UnmanagedLandLeaf, year, allocation) ->
       L242.LN2_HistUnmgdAllocation_ALL
 
@@ -86,7 +86,7 @@ module_aglu_L242.ssp34_pasture <- function(command, ...) {
 
     # Historical land cover, managed land in the second nest
     L242.LC_bm2_R_Mgd2_Yh_GLU.mlt %>%
-      filter(year %in% LAND_HISTORY_YEARS) %>%
+      filter(year %in% aglu.LAND_HISTORY_YEARS) %>%
       select(region, LandAllocatorRoot, LandNode1, LandNode2, LandLeaf, year, allocation) ->
       L242.LN2_HistMgdAllocation_ALL
 

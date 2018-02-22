@@ -119,7 +119,7 @@ module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr <- function(command, ...) {
 
       # CROSIT data includes historic and future years, we only want the historic year. Additionally, CROSIT data is missing some crops
       # we don't want to remove those. We'll set their yield ratio to 1 later.
-      filter(year == CROSIT_HISTORICAL_YEAR | is.na(year)) %>%
+      filter(year == aglu.CROSIT_HISTORICAL_YEAR | is.na(year)) %>%
       mutate(yieldratio = Yield_kgHa_irrigated / Yield_kgHa_rainfed) %>%                                               # Compute yield ratio
       select(-Yield_kgHa_irrigated, -Yield_kgHa_rainfed) %>%
       mutate(yieldratio=if_else( is.na(yieldratio), 1, yieldratio)) %>%                                                # Replace NAs with 1

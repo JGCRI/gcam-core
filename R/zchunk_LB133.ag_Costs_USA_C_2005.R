@@ -62,8 +62,8 @@ module_aglu_LB133.ag_Costs_USA_C_2005 <- function(command, ...) {
     # First, Take USDA item cost data from input table USDA_cost_data, and add GCAM commodity and GTAP crop mapping info
     # from the USDA crop mapping input table, USDA_crops.
     # Then add cost type (variable or na) from the USDA_item_cost input table.
-    # Next, select only variable price data, only in MODEL_COST_YEARS = 2001:2005 by default.
-    # Finally, convert each cost from the given nominal year dollars to 1975 dollars, average across MODEL_COST_YEARS,
+    # Next, select only variable price data, only in aglu.MODEL_COST_YEARS  = 2001:2005 by default.
+    # Finally, convert each cost from the given nominal year dollars to 1975 dollars, average across aglu.MODEL_COST_YEARS ,
     # and convert from dollars/acre to dollars/m2.
     #
     # Take USDA item cost data:
@@ -72,8 +72,8 @@ module_aglu_LB133.ag_Costs_USA_C_2005 <- function(command, ...) {
       left_join_error_no_match(USDA_crops, by = c("Crop" = "USDA_crop")) %>%
       # then join cost_type information:
       left_join_error_no_match(USDA_item_cost, by = c("Item")) %>%
-      # select only variable cost data and only MODEL_COST_YEARS
-      filter(cost_type == "variable", year %in% MODEL_COST_YEARS) %>%
+      # select only variable cost data and only aglu.MODEL_COST_YEARS
+      filter(cost_type == "variable", year %in% aglu.MODEL_COST_YEARS ) %>%
       # select just identifying information of interest:
       select(GCAM_commodity, GTAP_crop, Item, year, value) %>%
       # Convert costs from the given nominal dollars to 1975 dollars:
@@ -87,7 +87,7 @@ module_aglu_LB133.ag_Costs_USA_C_2005 <- function(command, ...) {
       #   the average is over those 3 numbers, not over 5 with 0's filled in for the NA's.)
       group_by(GCAM_commodity, GTAP_crop, Item) %>%
       mutate(cost_75USDm2 = mean(value, na.rm = TRUE) * CONV_M2_ACR) %>%
-      # if all years in MODEL_COST_YEARS have NA values, the above calculation will give NaN for the
+      # if all years in aglu.MODEL_COST_YEARS  have NA values, the above calculation will give NaN for the
       # mean value. Overwrite this to 0:
       # old comment: (indicates a variable cost not disaggregated in the target years)
       replace_na(list(cost_75USDm2 = 0)) ->
@@ -209,15 +209,15 @@ module_aglu_LB133.ag_Costs_USA_C_2005 <- function(command, ...) {
 
     # Lines 98-106 in original file
     # Agricultural Prices in table L132.ag_an_For_Prices are joined to the Commodity Cost table, L133.ag_Cost_75USDm2_C,
-    # and used to ensure that Costs in 1975USD/kg don't lead to profits below a minimum profit margin, MIN_PROFIT_MARGIN.
+    # and used to ensure that Costs in 1975USD/kg don't lead to profits below a minimum profit margin, aglu.MIN_PROFIT_MARGIN
     # Finally, revenue in Billion 1975 USD is calculated as Production * Price.
     L133.ag_Cost_75USDm2_C %>%
       # Join Agricultural Prices table to get a calPrice column:
       left_join_error_no_match(select(L132.ag_an_For_Prices, -unit), by = c("GCAM_commodity")) %>%
-      # Keep the minimum of Cost_75USDkg and calPrice*(1-MIN_PROFIT_MARGIN) to insure that the minimum profit margin is met:
-      mutate(Cost_75USDkg = if_else(Cost_75USDkg < calPrice * (1 - MIN_PROFIT_MARGIN),
+      # Keep the minimum of Cost_75USDkg and calPrice*(1-aglu.MIN_PROFIT_MARGIN) to insure that the minimum profit margin is met:
+      mutate(Cost_75USDkg = if_else(Cost_75USDkg < calPrice * (1 - aglu.MIN_PROFIT_MARGIN),
                                     Cost_75USDkg,
-                                    calPrice * (1 - MIN_PROFIT_MARGIN))) %>%
+                                    calPrice * (1 - aglu.MIN_PROFIT_MARGIN))) %>%
       # Calculate Revenue = Prod_Mt * calPrice:
       mutate(Revenue_bil75USD = Prod_Mt * calPrice) ->
       # store:

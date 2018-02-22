@@ -56,9 +56,9 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
       mutate(Irr_Rfd = "rfd") %>%
       # Combine rainfed and irrigated data
       bind_rows(mutate(L171.ag_irrEcYield_kgm2_R_C_Y_GLU, Irr_Rfd = "irr")) %>%
-      filter(year %in% AGLU_HISTORICAL_YEARS) %>%
+      filter(year %in% aglu.AGLU_HISTORICAL_YEARS) %>%
       # SET THE SAME YIELD MULTIPLIERS EVERYWHERE, 1 plus or minus an adj fraction.
-      mutate(yieldmult_hi = 1 + MGMT_YIELD_ADJ, yieldmult_lo = 1 - MGMT_YIELD_ADJ,
+      mutate(yieldmult_hi = 1 + aglu.MGMT_YIELD_ADJ, yieldmult_lo = 1 - aglu.MGMT_YIELD_ADJ,
              # high and low yields are now calculated as the observed yield times the multipliers
              EcYield_kgm2_lo = value * yieldmult_lo, EcYield_kgm2_hi = value * yieldmult_hi) %>%
       select(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd, year, EcYield_kgm2_hi, EcYield_kgm2_lo) %>%
@@ -73,7 +73,7 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
       bind_rows(mutate(L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU, Irr_Rfd = "irr")) %>%
       filter(year %in% aglu.LAND_COVER_YEARS) %>%
       # SET THE SAME YIELD MULTIPLIERS EVERYWHERE, 1 plus or minus an adj fraction.
-      mutate(yieldmult_hi = 1 + MGMT_YIELD_ADJ, yieldmult_lo = 1 - MGMT_YIELD_ADJ,
+      mutate(yieldmult_hi = 1 + aglu.MGMT_YIELD_ADJ, yieldmult_lo = 1 - aglu.MGMT_YIELD_ADJ,
              # Calculate the land shares to allocate to low, and high is the rest (currently the shares are set at 0.5/0.5 to all)
              landshare_lo = (1 - yieldmult_hi) / (yieldmult_lo - yieldmult_hi), landshare_hi = 1 - landshare_lo,
              # low- and high-input land are calculated as the total times the shares
@@ -99,7 +99,7 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
       select(GCAM_region_ID, GLU, Irr_Rfd) %>%
       unique() %>%
       # SET THE SAME YIELD MULTIPLIERS EVERYWHERE
-      mutate(yieldmult_hi = 1 + MGMT_YIELD_ADJ, yieldmult_lo = 1 - MGMT_YIELD_ADJ) ->
+      mutate(yieldmult_hi = 1 + aglu.MGMT_YIELD_ADJ, yieldmult_lo = 1 - aglu.MGMT_YIELD_ADJ) ->
       L181.YieldMult_R_bio_GLU_irr
 
     # Calculate bioenergy land shares

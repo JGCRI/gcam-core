@@ -567,7 +567,7 @@ fill_exp_decay_extrapolate <- function(d, out_years) {
 #' @param years Years to operate on, integer vector
 #' @importFrom stats aggregate
 #' @return Downscaled data.
-downscale_FAO_country <- function(data, country_name, dissolution_year, years = AGLU_HISTORICAL_YEARS) {
+downscale_FAO_country <- function(data, country_name, dissolution_year, years = aglu.AGLU_HISTORICAL_YEARS) {
 
   assert_that(is_tibble(data))
   assert_that(is.character(country_name))

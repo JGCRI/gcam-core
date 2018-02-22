@@ -88,8 +88,8 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
 
 
     # Use the CROSIT database to prepare a table of yields by country, crop, irrigation, and year,
-    # and interpolate to fill in all of the specified agricultural production years, SPEC_AG_PROD_YEARS.
-    # Finally, Calculate yield multipliers from the base year <=> first year of SPEC_AG_PROD_YEARS.
+    # and interpolate to fill in all of the specified agricultural production years, aglu.SPEC_AG_PROD_YEARS
+    # Finally, Calculate yield multipliers from the base year <=> first year of aglu.SPEC_AG_PROD_YEARS
     # For each country, crop, irrigation, the multiplier for each year is
     # yield in that year / yield in base year.
 
@@ -101,22 +101,22 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
       L162.ag_irrYield_kgHa_Rcrs_Ccrs_Y
 
     # Do same for rainfed and bind the irrigated table.
-    # Then complete missing agricultural years from SPEC_AG_PROD_YEARS and interpolate
-    # to fill in yields. Keep only the years in SPEC_AG_PROD_YEARS.
+    # Then complete missing agricultural years from aglu.SPEC_AG_PROD_YEARS and interpolate
+    # to fill in yields. Keep only the years in aglu.SPEC_AG_PROD_YEARS
     # Finally, Calculate yield multipliers.
     FAO_ag_CROSIT %>%
       select(CROSIT_ctry, CROSIT_crop, year, Yield_kgHa_rainfed) %>%
       mutate(Irr_Rfd = "RFD") %>%
       rename(yield_kgHa = Yield_kgHa_rainfed) %>%
       bind_rows(L162.ag_irrYield_kgHa_Rcrs_Ccrs_Y) %>%
-      # add the missing SPEC_AG_PROD_YEARS and interpolate the yields
-      tidyr::complete(year = c(year, SPEC_AG_PROD_YEARS) ,
+      # add the missing aglu.SPEC_AG_PROD_YEARS and interpolate the yields
+      tidyr::complete(year = c(year, aglu.SPEC_AG_PROD_YEARS) ,
                       CROSIT_ctry, CROSIT_crop, Irr_Rfd) %>%
       select(CROSIT_ctry, CROSIT_crop, Irr_Rfd, year, yield_kgHa) %>%
       arrange(year) %>%
       group_by(CROSIT_ctry, CROSIT_crop, Irr_Rfd) %>%
       mutate(yield_kgHa = approx_fun(year, yield_kgHa)) %>%
-      ungroup() %>% filter(year %in% SPEC_AG_PROD_YEARS) %>%
+      ungroup() %>% filter(year %in% aglu.SPEC_AG_PROD_YEARS) %>%
       # calculate yield multipliers
       group_by(CROSIT_ctry, CROSIT_crop, Irr_Rfd) %>%
       mutate(Mult = yield_kgHa / first(yield_kgHa)) %>%
@@ -166,9 +166,9 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
     # Aggregate the above table of LDS area to CROSIT country and crop levels.
     # Then, filter to only the country-crop-irrigation combinations present in the CROSIT multiplier
     # table, L162.ag_Yieldmult_Rcrs_Ccrs_Y_irr.
-    # Repeat the resulting tibble for all SPEC_AG_PROD_YEARS, and join in the yield multipliers.
+    # Repeat the resulting tibble for all aglu.SPEC_AG_PROD_YEARS, and join in the yield multipliers.
     # This results in a table of harvested area and yield multipliers by CROSIT country and crop, glu,
-    # and irrigation for each SPEC_AG_PROD_YEARS year, based on LDS harvested area tables L151....
+    # and irrigation for each aglu.SPEC_AG_PROD_YEARS year, based on LDS harvested area tables L151....
     #
     # Compositional shifts of CROSIT commodities within GCAM commodities do not translate to modified yields.
     # This is because Harvested area multipliers are 1 in all periods, meaning the yield multipliers are
@@ -182,8 +182,8 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
       # Filter to country-crop-irrigation combos in yield multiplier table
       semi_join(select(L162.ag_Yieldmult_Rcrs_Ccrs_Y_irr, CROSIT_ctry, CROSIT_crop, Irr_Rfd),
                 by = c("CROSIT_ctry", "CROSIT_crop", "Irr_Rfd")) %>%
-      # repeat for all years in SPEC_AG_PROD_YEARS and join Yield multipliers for each year
-      repeat_add_columns(tibble::tibble(year = SPEC_AG_PROD_YEARS)) %>%
+      # repeat for all years in aglu.SPEC_AG_PROD_YEARS and join Yield multipliers for each year
+      repeat_add_columns(tibble::tibble(year = aglu.SPEC_AG_PROD_YEARS)) %>%
       left_join_error_no_match(L162.ag_Yieldmult_Rcrs_Ccrs_Y_irr,
                                by = c("CROSIT_ctry", "CROSIT_crop", "Irr_Rfd", "year")) ->
       L162.ag_HA_ha_Rcrs_Ccrs_Ysy_GLU_irr
@@ -192,7 +192,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
 
     # Calculating the adjusted production / harvested area in each time period, for each GCAM region / commodity / GLU.
     # Starting from full GTAP table for composite regions and commodities in the CROSIT database, L162.ag_HA_ha_ctry_crop_irr,
-    # repeating for all years in SPEC_AG_PROD_YEARS.
+    # repeating for all years in aglu.SPEC_AG_PROD_YEARS.
     # Then join in yield multipliers from CROSIT L162.ag_HA_ha_Rcrs_Ccrs_Ysy_GLU_irr, GCAM region and GCAM commodity information.
     # Calculate modified production, Prod_mod = base year harvested area HA * yearly yield multipliers Mult. Production and
     # Harvested area are then aggregated to the GCAM region - commodity level so that Aggregated Yield can be correctly calculated.
@@ -217,7 +217,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
 
       L162.ag_HA_ha_ctry_crop_irr %>%
         na.omit() %>%
-        repeat_add_columns(tibble::tibble(year = SPEC_AG_PROD_YEARS)) %>%
+        repeat_add_columns(tibble::tibble(year = aglu.SPEC_AG_PROD_YEARS)) %>%
         left_join_keep_first_only(CROSIT_mult, by = c("CROSIT_ctry", "CROSIT_crop", "year")) %>%
         na.omit() %>%
         left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
@@ -243,7 +243,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
 
       L162.ag_HA_ha_ctry_crop_irr %>%
         na.omit() %>%
-        repeat_add_columns(tibble::tibble(year = SPEC_AG_PROD_YEARS)) %>% # agree fine to here; it's the next join
+        repeat_add_columns(tibble::tibble(year = aglu.SPEC_AG_PROD_YEARS)) %>% # agree fine to here; it's the next join
         left_join(CROSIT_mult, by = c("CROSIT_ctry", "CROSIT_crop", "Irr_Rfd", "year")) %>%
         na.omit() %>%
         left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
@@ -277,30 +277,30 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
     # [(ratio_i / ratio_{i-1}) ^ (1/(year_i - year_{i-1}) ] - 1.
     #
     # To perform this calculation in a pipeline, we form two intermediate tables.
-    # First, of SPEC_AG_PROD_YEARS and the corresponding timestep for each.
+    # First, of aglu.SPEC_AG_PROD_YEARS and the corresponding timestep for each.
     # Second, of lagged YieldRatios and corresponding time steps,
     # Where lagyear represents the year a ratio is subtracted from (ie lagyear = 2010 indicates this ratio
     # is subtracted from the 2010 ratio.)
-    # This allows the same calculation to be performed even if SPEC_AG_PROD_YEARS changes.
-    tibble::tibble(year = SPEC_AG_PROD_YEARS, timestep = c(diff(SPEC_AG_PROD_YEARS), max(SPEC_AG_PROD_YEARS) + 1)) ->
+    # This allows the same calculation to be performed even if aglu.SPEC_AG_PROD_YEARS changes.
+    tibble::tibble(year = aglu.SPEC_AG_PROD_YEARS, timestep = c(diff(aglu.SPEC_AG_PROD_YEARS), max(aglu.SPEC_AG_PROD_YEARS) + 1)) ->
       timesteps
 
     L162.agBio_YieldRatio_R_C_Ysy_GLU_irr %>%
       left_join_error_no_match(timesteps, by = "year") %>%
       mutate(lagyear = year + timestep) %>%
-      # There is no lag for SPEC_AG_PROD_YEARS[1] but there is for a year not in SPEC_AG_PROD_YEARS
-      # SPEC_AG_PROD_YEARS[1] gets left alone, so for lagyear = not in SPEC_AG_PROD_YEAR, overwrite
+      # There is no lag for aglu.SPEC_AG_PROD_YEARS[1] but there is for a year not in SPEC_AG_PROD_YEARS
+      # aglu.SPEC_AG_PROD_YEARS[1] gets left alone, so for lagyear = not in aglu.SPEC_AG_PROD_YEAR, overwrite
       # the ratio to be 0.5, the timestep to be 1, and lagyear = SPEC_AG_PROD_YEAR[1]. This allows
-      # the same pipeline to be used for all SPEC_AG_PROD_YEARS
+      # the same pipeline to be used for all aglu.SPEC_AG_PROD_YEARS
       mutate(YieldRatio = replace(YieldRatio,
-                                  ! lagyear %in% SPEC_AG_PROD_YEARS,
+                                  ! lagyear %in% aglu.SPEC_AG_PROD_YEARS,
                                   0.5),
              timestep = replace(timestep,
-                                ! lagyear %in% SPEC_AG_PROD_YEARS,
+                                ! lagyear %in% aglu.SPEC_AG_PROD_YEARS,
                                 1),
              lagyear = replace(lagyear,
-                               ! lagyear %in% SPEC_AG_PROD_YEARS,
-                               first(SPEC_AG_PROD_YEARS))) %>%
+                               ! lagyear %in% aglu.SPEC_AG_PROD_YEARS,
+                               first(aglu.SPEC_AG_PROD_YEARS))) %>%
       select(-year) %>%
       rename(YieldRatio_lag = YieldRatio) ->
       L162.agBio_YieldRatio_lag
@@ -351,7 +351,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
       # Join the agBio Yield Rates
       left_join(L162.agBio_YieldRate_R_C_Ysy_GLU_irr, by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "Irr_Rfd")) %>%
       # NA's include NA years, address
-      tidyr::complete(year = SPEC_AG_PROD_YEARS, nesting(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd)) ->
+      tidyr::complete(year = aglu.SPEC_AG_PROD_YEARS, nesting(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd)) ->
       # store in a table for further processing
       L162.agbio_YieldRate_R_C_Y_GLU_irr
 
