@@ -484,6 +484,9 @@ screen_forbidden <- function(fn) {
 #' It also automatically compresses files above a certain size.
 #' @author BBL
 normalize_files <- function(root = system.file("extdata", package = "gcamdata"), min_compress_size = 1) {
+  if(.Platform$OS.type == "windows") {
+   stop("This should not be run on Windows")
+  }
   assert_that(is.character(root))
   assert_that(is.numeric(min_compress_size))
   message("Root: ", root)
