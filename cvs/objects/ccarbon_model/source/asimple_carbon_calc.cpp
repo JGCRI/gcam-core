@@ -251,7 +251,10 @@ double ASimpleCarbonCalc::getAboveGroundCarbonSubsidyDiscountFactor( ){
     // mature age of 250 the multiplier is zero
     // quadCoef is chosen by minimizing least squared error
     // between actual carbon subsidy discount and functional estimate
-    // Note: these parameters assume a discount rate of 0.1
+    // Note: This function was estimated offline assuming a discount rate of 0.1.
+    // This discount rate is a private investors discount rate since it
+    // applies to future profit streams of a land owner. This may differ from
+    // the read in social discount rate used elsewhere in the land model.
     const double COEF = -8.57e-13;
     const int MAXMATUREAGE = 250; // Mature age where carbon subsidy is zero
     return COEF * pow( double( getMatureAge() - MAXMATUREAGE ), 5);
