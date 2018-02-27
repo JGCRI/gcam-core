@@ -320,49 +320,49 @@ CONV_ONES_THOUS <- 0.001
 CONV_TON_MEGATON    <- 1e-6
 CONV_T_KG           <- 1e3
 CONV_KG_T           <- 1 / CONV_T_KG
-CONV_T_METRIC_SHORT <- 1000 / 908  # Ratio between metric ton and short ton
+CONV_T_METRIC_SHORT <- 1000 / 908     # Ratio between metric ton and short ton
 CONV_HA_BM2         <- 1e-5
 CONV_HA_M2          <- 10000
-CONV_THA_KGM2       <- 0.1         # tons C/ha -> kg C/m2
-CONV_GG_TG          <- 0.001       # gigagrams to tegagrams
-CONV_TST_TG         <- 0.000907    # thousand short tons to Tg
+CONV_THA_KGM2       <- 0.1            # tons C/ha -> kg C/m2
+CONV_GG_TG          <- 0.001          # gigagrams to tegagrams
+CONV_TST_TG         <- 0.000907       # thousand short tons to Tg
 CONV_KG_TO_TG       <- 1e-9
-CONV_KT_MT          <- 0.001       # kt to Mt
-CONV_T_MT           <- 1e-6        # t to Mt
-CONV_G_KG           <- 1e-3        # kilograms to grams
-CONV_NH3_N          <- 14/17       # Nitrogen to Ammonia
-CONV_KBBL_BBL       <- 1000        # thousand barrels to barrels
-CONV_BBL_TONNE_RFO  <- 1 / 6.66    # barrels to tons residual fuel oil
-CONV_TONNE_GJ_RFO   <- 40.87       # tons to GJ residual fuel oil
+CONV_KT_MT          <- 0.001          # kt to Mt
+CONV_T_MT           <- 1e-6           # t to Mt
+CONV_G_KG           <- 1e-3           # kilograms to grams
+CONV_NH3_N          <- 14/17          # Nitrogen to Ammonia
+CONV_KBBL_BBL       <- 1000           # thousand barrels to barrels
+CONV_BBL_TONNE_RFO  <- 1 / 6.66       # barrels to tons residual fuel oil
+CONV_TONNE_GJ_RFO   <- 40.87          # tons to GJ residual fuel oil
 CONV_BBL_TONNE_DISTILLATE <- 1 / 7.46 # barrels to tons distillate
 CONV_TONNE_GJ_DISTILLATE  <- 42.91    # tons to GJ distillate
 
 # Time
 CONV_YEAR_HOURS <- 24 * 365.25
-CONV_DAYS_YEAR <- 1 / 365.25
+CONV_DAYS_YEAR  <- 1 / 365.25
 
 # Energy
-CONV_MWH_GJ <- 3.6 # Megawatt hours to Gigajoules
+CONV_MWH_GJ <- 3.6                      # Megawatt hours to Gigajoules
 CONV_GWH_EJ <- 3.6e-6
 CONV_TWH_EJ <- 3.6e-3
 CONV_KWH_GJ <- 3.6e-3
-CONV_GJ_EJ <- 1e-9
-CONV_EJ_GJ <- 1 / CONV_GJ_EJ
+CONV_GJ_EJ  <- 1e-9
+CONV_EJ_GJ  <- 1 / CONV_GJ_EJ
 CONV_BBLD_EJYR <- 6.119 * 365.25 * 1e-3 # billion barrels a day to EJ per year
-CONV_KBTU_EJ <- 1.0551e-12 # KiloBTU to EJ
-CONV_TBTU_EJ <- 0.0010551 # TeraBTU to EJ
-CONV_MJ_BTU <- 947.777
-CONV_BTU_KJ <- 1.0551
+CONV_KBTU_EJ   <- 1.0551e-12            # KiloBTU to EJ
+CONV_TBTU_EJ   <- 0.0010551             # TeraBTU to EJ
+CONV_MJ_BTU    <- 947.777
+CONV_BTU_KJ    <- 1.0551
 
 # Other
-CONV_MCAL_PCAL <- 1e-9
-CONV_M3_BM3 <- 1e-09 # Cubic meters (m3) to billion cubic meters (bm3)
+CONV_MCAL_PCAL      <- 1e-9
+CONV_M3_BM3         <- 1e-09         # Cubic meters (m3) to billion cubic meters (bm3)
 CONV_MILLION_M3_KM3 <- 1e-03
-CONV_M2_ACR <- 0.0002471058
-CONV_HA_M2 <- 1e4 # ha to m2
-CONV_BM2_M2 <- 1e9
-CONV_MILFT2_M2 <- 92900 # Million square feet to square meters
-CONV_FT2_M2 <- 0.0929 # Square feet to square meters
+CONV_M2_ACR         <- 0.0002471058
+CONV_HA_M2          <- 1e4           # ha to m2
+CONV_BM2_M2         <- 1e9
+CONV_MILFT2_M2      <- 92900         # Million square feet to square meters
+CONV_FT2_M2         <- 0.0929        # Square feet to square meters
 
 # Driver constants ======================================================================
 
@@ -382,14 +382,14 @@ data.DEPENDENT <- "Dependent"
 
 # MAGICC model assumptions
 modeltime.MAGICC_LAST_HISTORICAL_YEAR <- 2005
-modeltime.MAGICC_BC_UNIT_FORCING <- 0
-modeltime.MAGICC_DEFAULT_EMISS_FILE <- "../input/magicc/Historical Emissions/Default Emissions Module/Hist_to_2008_Annual.csv"
-modeltime.MAGICC_C_START_YEAR <- 1705
+modeltime.MAGICC_BC_UNIT_FORCING      <- 0
+modeltime.MAGICC_DEFAULT_EMISS_FILE   <- "../input/magicc/Historical Emissions/Default Emissions Module/Hist_to_2008_Annual.csv"
+modeltime.MAGICC_C_START_YEAR         <- 1705
 
 # Hector model assumptions
-modeltime.HECTOR_END_YEAR <- 2100
-modeltime.HECTOR_EMISSIONS_YEAR <- 2005
-modeltime.HECTOR_INI_FILE <- "../input/climate/hector-gcam.ini"
+modeltime.HECTOR_END_YEAR        <- 2100
+modeltime.HECTOR_EMISSIONS_YEAR  <- 2005
+modeltime.HECTOR_INI_FILE        <- "../input/climate/hector-gcam.ini"
 
 
 # Socioeconomics constants ======================================================================
@@ -397,20 +397,23 @@ modeltime.HECTOR_INI_FILE <- "../input/climate/hector-gcam.ini"
 # Population years - note that these sequences shouldn't have any overlap,
 # and should contain all historical years used by other modules
 socioeconomics.MADDISON_HISTORICAL_YEARS <- seq(1700, 1900, 50) # Years for which to use Maddison data
-socioeconomics.UN_HISTORICAL_YEARS <- c(1950, 1971:2010) # Years for which to use UN data
-socioeconomics.FINAL_HIST_YEAR <- 2010 # Final historical year,
-# NOTE that we use this because it's also the first year of the SSP database.
+socioeconomics.UN_HISTORICAL_YEARS       <- c(1950, 1971:2010)  # Years for which to use UN data
+
+# Final historical year, we use this because it's also the first year of the SSP database.
 # Using a different year if the final historical year in the UN historical years changes, this would result in
 # different SSP projections. (Because the SSP scenarios begin to diverge in 2015, so we'd have to reconsider how
 # we do the SSP scenarios if we update to UN 2015 population.)
-socioeconomics.BASE_POP_SCEN <- "SSP2" # These are both being used in the data system by different files.
-BASE_POP_SCENARIO <- "SSP2" # These are both being used in the data system by different files.
-BASE_GDP_SCENARIO <- "SSP2"
+socioeconomics.FINAL_HIST_YEAR <- 2010
 
+
+socioeconomics.BASE_POP_SCEN         <- "SSP2"
+socioeconomics.BASE_GDP_SCENARIO     <- "SSP2"
 socioeconomics.DEFAULT_INTEREST_RATE <- 0.05
-socioeconomics.GDP_DIGITS <- 0
-socioeconomics.POP_DIGITS <- 0
-socioeconomics.DEFAULT_LABORFORCE <- 0.5
+
+# Digits for rounding into XMLs
+socioeconomics.GDP_DIGITS                <- 0
+socioeconomics.POP_DIGITS                <- 0
+socioeconomics.DEFAULT_LABORFORCE        <- 0.5
 socioeconomics.LABOR_PRODUCTIVITY_DIGITS <- 5
 
 
