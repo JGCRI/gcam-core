@@ -252,9 +252,9 @@ double ASimpleCarbonCalc::getAboveGroundCarbonSubsidyDiscountFactor( ){
     // quadCoef is chosen by minimizing least squared error
     // between actual carbon subsidy discount and functional estimate
     // Note: these parameters assume a discount rate of 0.1
-    const double QUADCOEF = -8.57e-13;
+    const double COEF = -8.57e-13;
     const int MAXMATUREAGE = 250; // Mature age where carbon subsidy is zero
-    return QUADCOEF * pow( double( getMatureAge() - MAXMATUREAGE ), 5);
+    return COEF * pow( double( getMatureAge() - MAXMATUREAGE ), 5);
 }
 
 void ASimpleCarbonCalc::setSoilTimeScale( const int aTimeScale ) {
