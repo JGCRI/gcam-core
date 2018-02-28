@@ -353,7 +353,7 @@ CONV_TWH_EJ <- 3.6e-3
 CONV_KWH_GJ <- 3.6e-3
 CONV_GJ_EJ <- 1e-9
 CONV_EJ_GJ <- 1 / CONV_GJ_EJ
-CONV_BBLD_EJYR <- 6.119 * 365.25 * 1e-3 # billion barrels a day to EJ per year
+CONV_MBLD_EJYR <- 6.119 * 365.25 * 1e-3 # million barrels a day to EJ per year
 CONV_KBTU_EJ <- 1.0551e-12 # KiloBTU to EJ
 CONV_TBTU_EJ <- 0.0010551 # TeraBTU to EJ
 CONV_MJ_BTU <- 947.777

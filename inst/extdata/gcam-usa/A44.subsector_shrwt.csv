@@ -1,3 +1,41 @@
 # File: A44.subsector_shrwt.csv
 # Title: Building default subsector shareweights
-# Units: Unitlesssupplysector,subsector,year.fillout,year,share.weightresid heating,biomass,start-year,,1resid heating,coal,2020,,0resid heating,gas,start-year,,1resid heating,electricity,start-year,,1resid heating,refined liquids,start-year,,1resid cooling,electricity,start-year,,1resid hot water,gas,start-year,,1resid hot water,electricity,start-year,,1resid hot water,refined liquids,start-year,,1resid lighting,electricity,start-year,,1resid appliances,gas,start-year,,1resid appliances,electricity,start-year,,1resid appliances,refined liquids,start-year,,1resid other appliances,electricity,start-year,,1resid other,gas,start-year,,1resid other,electricity,start-year,,1resid other,refined liquids,start-year,,1comm heating,biomass,start-year,,1comm heating,coal,2020,,0comm heating,gas,start-year,,1comm heating,electricity,start-year,,1comm heating,refined liquids,start-year,,1comm cooling,gas,start-year,,1comm cooling,electricity,start-year,,1comm hot water,gas,start-year,,1comm hot water,electricity,start-year,,1comm hot water,refined liquids,start-year,,1comm ventilation,electricity,start-year,,1comm cooking,gas,start-year,,1comm cooking,electricity,start-year,,1comm lighting,electricity,start-year,,1comm refrigeration,electricity,start-year,,1comm office,electricity,start-year,,1comm other,gas,start-year,,1comm other,electricity,start-year,,1comm other,refined liquids,start-year,,1comm non-building,electricity,start-year,,1
+# Units: Unitless
+supplysector,subsector,year.fillout,year,share.weight
+resid heating,biomass,start-year,,1
+resid heating,coal,2020,,0
+resid heating,gas,start-year,,1
+resid heating,electricity,start-year,,1
+resid heating,refined liquids,start-year,,1
+resid cooling,electricity,start-year,,1
+resid hot water,gas,start-year,,1
+resid hot water,electricity,start-year,,1
+resid hot water,refined liquids,start-year,,1
+resid lighting,electricity,start-year,,1
+resid appliances,gas,start-year,,1
+resid appliances,electricity,start-year,,1
+resid appliances,refined liquids,start-year,,1
+resid other appliances,electricity,start-year,,1
+resid other,gas,start-year,,1
+resid other,electricity,start-year,,1
+resid other,refined liquids,start-year,,1
+comm heating,biomass,start-year,,1
+comm heating,coal,2020,,0
+comm heating,gas,start-year,,1
+comm heating,electricity,start-year,,1
+comm heating,refined liquids,start-year,,1
+comm cooling,gas,start-year,,1
+comm cooling,electricity,start-year,,1
+comm hot water,gas,start-year,,1
+comm hot water,electricity,start-year,,1
+comm hot water,refined liquids,start-year,,1
+comm ventilation,electricity,start-year,,1
+comm cooking,gas,start-year,,1
+comm cooking,electricity,start-year,,1
+comm lighting,electricity,start-year,,1
+comm refrigeration,electricity,start-year,,1
+comm office,electricity,start-year,,1
+comm other,gas,start-year,,1
+comm other,electricity,start-year,,1
+comm other,refined liquids,start-year,,1
+comm non-building,electricity,start-year,,1

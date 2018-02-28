@@ -1,3 +1,14 @@
 # File: A10.subrsrc_info.csv
 # Title: Information about resources types in each region
-# Units: NAresource,resource_type,subresource,subresource_typecoal,depresource,coal,subresourcecrude oil,depresource,crude oil,subresourcenatural gas,depresource,natural gas,subresourceunconventional oil,depresource,unconventional oil,subresourceuranium,depresource,uranium,subresourcebiomass,renewresource,generic waste biomass,smooth-renewable-subresourcedistributed_solar,renewresource,distributed_solar,smooth-renewable-subresourcegeothermal,renewresource,hydrothermal,sub-renewable-resourceonshore wind resource,renewresource,onshore wind resource,smooth-renewable-subresourcetraditional biomass,renewresource,traditional biomass,sub-renewable-resource
+# Units: NA
+resource,resource_type,subresource,subresource_type
+coal,depresource,coal,subresource
+crude oil,depresource,crude oil,subresource
+natural gas,depresource,natural gas,subresource
+unconventional oil,depresource,unconventional oil,subresource
+uranium,depresource,uranium,subresource
+biomass,renewresource,generic waste biomass,smooth-renewable-subresource
+distributed_solar,renewresource,distributed_solar,smooth-renewable-subresource
+geothermal,renewresource,hydrothermal,sub-renewable-resource
+onshore wind resource,renewresource,onshore wind resource,smooth-renewable-subresource
+traditional biomass,renewresource,traditional biomass,sub-renewable-resource

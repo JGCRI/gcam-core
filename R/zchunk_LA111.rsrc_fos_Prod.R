@@ -89,7 +89,7 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
       left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
       # summarise by GCAM region and convert to EJ/yr
       group_by(GCAM_region_ID, year) %>%
-      summarise(value = sum(value) * CONV_BBLD_EJYR) %>%
+      summarise(value = sum(value) * CONV_MBLD_EJYR) %>%
       mutate(sector = "unconventional oil production",
              fuel = "unconventional oil") ->
       L111.Prod_EJ_ctry_unconvOil_Yh
