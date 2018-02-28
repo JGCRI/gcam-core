@@ -62,8 +62,8 @@ printlog( "Computing unscaled emissions by country and technology" )
 L111.nonghg_tg_R_en_Si_F_Yh.melt <- melt( L101.in_EJ_R_en_Si_F_Yh, id.vars=c( "GCAM_region_ID", "sector", "fuel", "technology" ) ) 
 names( L111.nonghg_tg_R_en_Si_F_Yh.melt )[ names( L111.nonghg_tg_R_en_Si_F_Yh.melt ) == "variable" ] <- "xyear"
 names( L111.nonghg_tg_R_en_Si_F_Yh.melt )[ names( L111.nonghg_tg_R_en_Si_F_Yh.melt ) == "value" ] <- "energy"
-L111.nonghg_tg_R_en_Si_F_Yh.melt$EPA_agg_sector <- GCAM_sector_tech$EPA_agg_sector[ match( vecpaste( L111.nonghg_tg_R_en_Si_F_Yh.melt[ c( "sector", "fuel" )]), vecpaste( GCAM_sector_tech[ c( "sector", "fuel" )]) )]
-L111.nonghg_tg_R_en_Si_F_Yh.melt$EPA_agg_fuel <- GCAM_sector_tech$EPA_agg_fuel[ match( vecpaste( L111.nonghg_tg_R_en_Si_F_Yh.melt[ c( "sector", "fuel" )]), vecpaste( GCAM_sector_tech[ c( "sector", "fuel" )]) )]
+L111.nonghg_tg_R_en_Si_F_Yh.melt$EPA_agg_sector <- GCAM_sector_tech$EPA_agg_sector[ match( vecpaste( L111.nonghg_tg_R_en_Si_F_Yh.melt[ c( "sector", "fuel", "technology" )]), vecpaste( GCAM_sector_tech[ c( "sector", "fuel", "technology" )]) )]
+L111.nonghg_tg_R_en_Si_F_Yh.melt$EPA_agg_fuel <- GCAM_sector_tech$EPA_agg_fuel[ match( vecpaste( L111.nonghg_tg_R_en_Si_F_Yh.melt[ c( "sector", "fuel", "technology" )]), vecpaste( GCAM_sector_tech[ c( "sector", "fuel", "technology" )]) )]
 
 #Duplicate for all gases
 L111.nonghg_tg_R_en_Si_F_Yh.melt <- repeat_and_add_vector( L111.nonghg_tg_R_en_Si_F_Yh.melt, "Non.CO2", nonghg_gases )

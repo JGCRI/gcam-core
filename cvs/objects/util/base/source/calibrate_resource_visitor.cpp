@@ -162,7 +162,7 @@ void CalibrateResourceVisitor::startVisitSubRenewableResource( const SubRenewabl
             // For renewable resources, getAvail() returns the fraction of the maxSubResource
             // that can be produced.  So, total production is getAvail() * maxSubResource
             ++gradeIndex;
-            currGradeAvail = aSubResource->mGrade[ gradeIndex ]->getAvail() * aSubResource->getMaxSubResource();
+            currGradeAvail = aSubResource->mGrade[ gradeIndex ]->getAvail() * aSubResource->getMaxAnnualSubResource( aPeriod );
         }
 
         if( gradeIndex == aSubResource->mGrade.size() ) {

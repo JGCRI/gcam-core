@@ -40,7 +40,6 @@ A21.rsrc_info <- readdata( "ENERGY_ASSUMPTIONS", "A21.rsrc_info" )
 A21.tradedtech_coef <- readdata( "ENERGY_ASSUMPTIONS", "A21.tradedtech_coef" )
 A21.tradedtech_cost <- readdata( "ENERGY_ASSUMPTIONS", "A21.tradedtech_cost" )
 A21.tradedtech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A21.tradedtech_shrwt" )
-A21.globaltech_secout <- readdata( "ENERGY_ASSUMPTIONS", "A21.globaltech_secout" )
 L111.Prod_EJ_R_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L111.Prod_EJ_R_F_Yh" )
 L121.in_EJ_R_TPES_unoil_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L121.in_EJ_R_TPES_unoil_Yh" )
 L121.in_EJ_R_TPES_crude_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L121.in_EJ_R_TPES_crude_Yh" )
@@ -141,7 +140,7 @@ L221.globaltech_secout_R <- subset( L221.globaltech_secout_R,
 #Store these regions in a separate object
 L221.ddgs_regions <- unique( L221.globaltech_secout_R[[R]] )
 L221.globaltech_secout_R <- add_region_name( L221.globaltech_secout_R )
-L221.StubTechFractSecOut_en <- interpolate_and_melt( L221.globaltech_secout_R, model_future_years, value.name="output.ratio" )
+L221.StubTechFractSecOut_en <- interpolate_and_melt( L221.globaltech_secout_R, model_future_years, value.name="output.ratio", rule = 2 )
 names( L221.StubTechFractSecOut_en )[ names( L221.StubTechFractSecOut_en ) == tech ] <- "stub.technology"
 L221.StubTechFractSecOut_en <- L221.StubTechFractSecOut_en[ names_StubTechFractSecOut ]
 

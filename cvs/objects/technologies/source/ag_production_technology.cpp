@@ -310,6 +310,30 @@ void AgProductionTechnology::completeInit( const std::string& aRegionName,
     }
 
     setCalYields( aRegionName );
+
+    // We want to guard against cases where land is read in but no output.
+    // (setCalYields deals with the converse). These cases cause numerical instabilities
+    // and solver problems in UCT cases, where the land leaf will have a profit but no yield.
+    int techPeriod = scenario->getModeltime()->getyr_to_per( mYear );
+    double calLandUsed = mProductLeaf->getCalLandAllocation( ALandAllocatorItem::LandAllocationType::eManaged, techPeriod );
+    if ( mCalValue ) {
+        if ( calLandUsed > 0 && mCalValue->getCalOutput() == 0 ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Land read in, but no CalOutput for technology"
+            << aRegionName << " " << mName << ". Resetting land to zero." << endl;
+            mProductLeaf->resetCalLandAllocation( aRegionName, 0.0, techPeriod );
+            
+        }
+    }
+    else if ( calLandUsed > 0 ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Land read in, but no CalOutput for technology"
+            << aRegionName << " " << mName << ". Resetting land to zero." << endl;
+        mProductLeaf->resetCalLandAllocation( aRegionName, 0.0, techPeriod );
+    }
+
     
     // Indicate that this ag supply sector is dependent on the land allocator.
     scenario->getMarketplace()->getDependencyFinder()->addDependency( "land-allocator",
@@ -330,7 +354,7 @@ void AgProductionTechnology::setCalYields(const std::string& aRegionName) {
     if ( mCalValue ) {
         // technology knows the year it started in member variable "year"
         int techPeriod = scenario->getModeltime()->getyr_to_per( mYear );
-        double calLandUsed = mLandAllocator->getLandAllocation( mName, techPeriod );
+        double calLandUsed = mProductLeaf->getCalLandAllocation( ALandAllocatorItem::LandAllocationType::eManaged, techPeriod );
         // if land is also read in, compute yield, else write a warning and set
         // yield to 0
         if ( calLandUsed > 0 ) {
@@ -380,6 +404,7 @@ void AgProductionTechnology::calcCost( const string& aRegionName,
                                          const string& aSectorName,
                                          const int aPeriod )
 {
+
     if( !mProductionState[ aPeriod ]->isOperating() ){
         return;
     }
@@ -458,7 +483,6 @@ double AgProductionTechnology::calcProfitRate( const string& aRegionName,
                                                const string& aProductName,
                                                const int aPeriod ) const
 {
-    
     // Calculate profit rate.
     const Marketplace* marketplace = scenario->getMarketplace();
 
@@ -470,12 +494,15 @@ double AgProductionTechnology::calcProfitRate( const string& aRegionName,
     // nonlandvariable cost units are now assumed to be in $/kg
     double price = marketplace->getPrice( aProductName, aRegionName, aPeriod );
 
+	// subsidy in $/kg
+    double subsidy = marketplace->getMarketInfo( aProductName, aRegionName, aPeriod, true )->getDouble( aRegionName+"subsidy", true );
+
     // Compute cost of variable inputs (such as water and fertilizer)
     double inputCosts = getTotalInputCost( aRegionName, aProductName, aPeriod );
 
     // Price in model is 1975$/kg.  land and ag costs are now assumed to be in 1975$ also
     // We are assuming that secondary values will be in 1975$/kg
-    double profitRate = ( price - mNonLandVariableCost - inputCosts + secondaryValue ) * mYield; 
+    double profitRate = ( price + subsidy - mNonLandVariableCost - inputCosts + secondaryValue ) * mYield;
 
     // We multiply by 1e9 since profitRate above is in $/m2
     // and the land allocator needs it in $/billion m2. This assumes yield is in kg/m2

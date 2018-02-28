@@ -26,8 +26,7 @@ sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )
 sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
 sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )
 iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID" )
-GIS_ctry_AEZ <- readdata( "AGLU_MAPPINGS", "GIS_ctry_AEZ" )
-Sage_Hyde15_Area <- readdata( "AGLU_GIS_DATA", "Sage_Hyde15_Area" )
+Land_type_area_ha <- readdata( "AGLU_LDS_DATA", "Land_type_area_ha" )
 A16.geo_curves <- readdata( "ENERGY_ASSUMPTIONS", "A16.geo_curves" )
 A16.EGS_curves <- readdata( "ENERGY_ASSUMPTIONS", "A16.EGS_curves" )
 
@@ -36,41 +35,41 @@ A16.EGS_curves <- readdata( "ENERGY_ASSUMPTIONS", "A16.EGS_curves" )
 # 2a. Geothermal resource supply curves
 printlog( "Downscaling GCAM 3.0 geothermal supply curves to countries on the basis of land area" )
 #Calculate land cover shares of GCAM regions within region_GCAM3
-L116.LC_km2_ctry_LT_AEZ <- subset( Sage_Hyde15_Area, Year == max( Year ) )
-L116.LC_km2_ctry_LT_AEZ$iso <- GIS_ctry_AEZ$iso[ match( L116.LC_km2_ctry_LT_AEZ$AEZ_ID, GIS_ctry_AEZ$AEZ_ID ) ]
-L116.LC_km2_ctry <- aggregate( L116.LC_km2_ctry_LT_AEZ[ "Area.km2." ],
-      by=as.list( L116.LC_km2_ctry_LT_AEZ[ "iso" ] ), sum )
-
-###ADD IN TAIWAN TO THE LAND AREA
-L116.LC_km2_ctry <- rbind( L116.LC_km2_ctry, data.frame( iso = "twn", Area.km2. = 36000))
+L116.LC_bm2_ctry_LT_GLU <- subset( Land_type_area_ha, year == max( year ) )
+L116.LC_bm2_ctry <- aggregate( L116.LC_bm2_ctry_LT_GLU[ "value" ] * conv_Ha_bm2,
+      by = L116.LC_bm2_ctry_LT_GLU[ "iso" ], sum )
 
 #Match in the GCAM 3.0 region and aggregate to compute shares of countries within GCAM 3.0 region
-L116.LC_km2_ctry$region_GCAM3 <- iso_GCAM_regID$region_GCAM3[ match( L116.LC_km2_ctry$iso, iso_GCAM_regID$iso ) ]
-L116.LC_km2_RG3 <- aggregate( L116.LC_km2_ctry[ "Area.km2." ], by=as.list( L116.LC_km2_ctry[ "region_GCAM3" ] ), sum )
-L116.LC_km2_ctry$area_RG3 <- L116.LC_km2_RG3$Area.km2.[ match( L116.LC_km2_ctry$region_GCAM3, L116.LC_km2_RG3$region_GCAM3 ) ]
-L116.LC_km2_ctry$share <- L116.LC_km2_ctry$Area.km2. / L116.LC_km2_ctry$area_RG3
+L116.LC_bm2_ctry$region_GCAM3 <- iso_GCAM_regID$region_GCAM3[ match( L116.LC_bm2_ctry$iso, iso_GCAM_regID$iso ) ]
+L116.LC_bm2_RG3 <- aggregate( L116.LC_bm2_ctry[ "value" ], by = L116.LC_bm2_ctry[ "region_GCAM3" ], sum )
+L116.LC_bm2_ctry$area_RG3 <- L116.LC_bm2_RG3$value[ match( L116.LC_bm2_ctry$region_GCAM3, L116.LC_bm2_RG3$region_GCAM3 ) ]
+L116.LC_bm2_ctry$share <- L116.LC_bm2_ctry$value / L116.LC_bm2_ctry$area_RG3
 
 #Repeat by number of grades, and match in the available quantities
 #Hydrothermal
-L116.Available_EJ_ctry_geo <- repeat_and_add_vector( L116.LC_km2_ctry, "grade", unique( A16.geo_curves$grade ) )
+L116.Available_EJ_ctry_geo <- repeat_and_add_vector( L116.LC_bm2_ctry, "grade", unique( A16.geo_curves$grade ) )
 L116.Available_EJ_ctry_geo$available_RG3 <- A16.geo_curves$available[
-      match( vecpaste( L116.Available_EJ_ctry_geo[ c( "region_GCAM3", "grade" ) ] ), vecpaste( A16.geo_curves[ c( "region_GCAM3", "grade" ) ] ) ) ]
+      match( vecpaste( L116.Available_EJ_ctry_geo[ c( "region_GCAM3", "grade" ) ] ),
+             vecpaste( A16.geo_curves[ c( "region_GCAM3", "grade" ) ] ) ) ]
 L116.Available_EJ_ctry_geo$available <- L116.Available_EJ_ctry_geo$share * L116.Available_EJ_ctry_geo$available_RG3
 
 #EGS
-L116.Available_EJ_ctry_EGS <- repeat_and_add_vector( L116.LC_km2_ctry, "grade", unique( A16.EGS_curves$grade ) )
+L116.Available_EJ_ctry_EGS <- repeat_and_add_vector( L116.LC_bm2_ctry, "grade", unique( A16.EGS_curves$grade ) )
 L116.Available_EJ_ctry_EGS$available_RG3 <- A16.EGS_curves$available[
-      match( vecpaste( L116.Available_EJ_ctry_EGS[ c( "region_GCAM3", "grade" ) ] ), vecpaste( A16.EGS_curves[ c( "region_GCAM3", "grade" ) ] ) ) ]
+      match( vecpaste( L116.Available_EJ_ctry_EGS[ c( "region_GCAM3", "grade" ) ] ),
+             vecpaste( A16.EGS_curves[ c( "region_GCAM3", "grade" ) ] ) ) ]
 L116.Available_EJ_ctry_EGS$available <- L116.Available_EJ_ctry_EGS$share * L116.Available_EJ_ctry_EGS$available_RG3
 
 printlog( "Aggregating country-level supplies by GCAM regions")
 #Hydrothermal
 L116.Available_EJ_ctry_geo[[R]]<- iso_GCAM_regID[[R]][ match( L116.Available_EJ_ctry_geo$iso, iso_GCAM_regID$iso ) ]
-L116.Available_EJ_R_geo <- aggregate( L116.Available_EJ_ctry_geo[ "available" ], by=as.list( L116.Available_EJ_ctry_geo[ c( R, "grade" ) ] ), sum )
+L116.Available_EJ_R_geo <- aggregate( L116.Available_EJ_ctry_geo[ "available" ],
+                                      by = L116.Available_EJ_ctry_geo[ c( R, "grade" ) ], sum )
 
 #EGS
 L116.Available_EJ_ctry_EGS[[R]]<- iso_GCAM_regID[[R]][ match( L116.Available_EJ_ctry_EGS$iso, iso_GCAM_regID$iso ) ]
-L116.Available_EJ_R_EGS <- aggregate( L116.Available_EJ_ctry_EGS[ "available" ], by=as.list( L116.Available_EJ_ctry_EGS[ c( R, "grade" ) ] ), sum )
+L116.Available_EJ_R_EGS <- aggregate( L116.Available_EJ_ctry_EGS[ "available" ],
+                                      by = L116.Available_EJ_ctry_EGS[ c( R, "grade" ) ], sum )
 
 printlog( "Building hydrothermal supply curves")
 L116.RsrcCurves_EJ_R_geo <- data.frame(

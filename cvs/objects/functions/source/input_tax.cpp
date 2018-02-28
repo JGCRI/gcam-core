@@ -113,7 +113,9 @@ InputTax::~InputTax() {
  *          allocated memory.
  * \param aOther tax input from which to copy.
  */
-InputTax::InputTax( const InputTax& aOther ){
+InputTax::InputTax( const InputTax& aOther )
+{
+    MiniCAMInput::copy( aOther );
     // Do not clone the input coefficient as the calculated
     // coeffient will be filled out later.
 

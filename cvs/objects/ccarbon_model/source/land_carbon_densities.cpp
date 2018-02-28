@@ -152,7 +152,7 @@ const string& LandCarbonDensities::getXMLName() const {
 * \brief Perform initializations that only need to be done once.
 * \author Kate Calvin
 */
-void LandCarbonDensities::completeInit() {
+void LandCarbonDensities::completeInit( const double aPrivateDiscountRateLand  ) {
     for ( int i = scenario->getModeltime()->getStartYear(); i <= CarbonModelUtils::getEndYear(); ++i ){
         mAboveGroundCarbon[ i ] = mAvgAboveGroundCarbon;
         mBelowGroundCarbon[ i ] = mAvgBelowGroundCarbon;
@@ -160,6 +160,8 @@ void LandCarbonDensities::completeInit() {
     
     // force the sigmoid to get precalculated.
     setMatureAge( mMatureAge );
+    
+    mPrivateDiscountRate = aPrivateDiscountRateLand; 
 }
 
 void LandCarbonDensities::setActualAboveGroundCarbonDensity( const double aAboveGroundCarbonDensity,

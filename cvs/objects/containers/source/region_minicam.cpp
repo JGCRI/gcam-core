@@ -112,6 +112,9 @@ typedef std::vector<Sector*>::const_iterator CSectorIterator;
 typedef std::vector<Consumer*>::iterator ConsumerIterator;
 typedef std::vector<Consumer*>::const_iterator CConsumerIterator;
 
+const double DEFAULT_SOCIAL_DISCOUNT_RATE = 0.02;
+const double DEFAULT_PRIVATE_DISCOUNT_RATE = 0.1;
+
 
 extern Scenario* scenario;
 
@@ -130,6 +133,8 @@ RegionMiniCAM::RegionMiniCAM() {
     mLandAllocator = 0;
 
     mInterestRate = 0;
+    mSocialDiscountRate = DEFAULT_SOCIAL_DISCOUNT_RATE;
+    mPrivateDiscountRateLand = DEFAULT_PRIVATE_DISCOUNT_RATE;
 }
 
 //! Default destructor destroys sector, demsector, Resource, and
@@ -164,6 +169,12 @@ bool RegionMiniCAM::XMLDerivedClassParse( const std::string& nodeName, const xer
     }
     else if( nodeName == "interest-rate" ){
         mInterestRate = XMLHelper<double>::getValue( curr );
+    }
+    else if( nodeName == "social-discount-rate" ){
+        mSocialDiscountRate = XMLHelper<double>::getValue( curr );
+    }
+    else if( nodeName == "private-discount-rate-land" ){
+        mPrivateDiscountRateLand = XMLHelper<double>::getValue( curr );
     }
     else if( nodeName == SupplySector::getXMLNameStatic() ){
         parseContainerNode( curr, mSupplySector, new SupplySector( mName ) );
@@ -244,6 +255,12 @@ void RegionMiniCAM::completeInit() {
 
     // Add the interest rate to the region info.
     mRegionInfo->setDouble( "interest-rate", mInterestRate );
+    
+    // Add the social discount rate to the region info.
+    mRegionInfo->setDouble( "social-discount-rate", mSocialDiscountRate );
+    
+    // Add the land private discount rate to the region info.
+    mRegionInfo->setDouble( "private-discount-rate-land", mPrivateDiscountRateLand );
 
     // initialize demographic
     if( mDemographic ){
@@ -320,6 +337,8 @@ void RegionMiniCAM::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     }
 
     XMLWriteElementCheckDefault( mInterestRate, "interest-rate", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( mSocialDiscountRate, "social-discount-rate", out, tabs, DEFAULT_SOCIAL_DISCOUNT_RATE );
+    XMLWriteElementCheckDefault( mPrivateDiscountRateLand, "private-discount-rate-land", out, tabs, DEFAULT_PRIVATE_DISCOUNT_RATE );
 
     // write the xml for the class members.
 
@@ -364,6 +383,8 @@ void RegionMiniCAM::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
 void RegionMiniCAM::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {
     // write out basic datamembers
     XMLWriteElement( mInterestRate, "interest-rate", out, tabs );
+    XMLWriteElement( mSocialDiscountRate, "social-discount-rate", out, tabs );
+    XMLWriteElement( mPrivateDiscountRateLand, "private-discount-rate-land", out, tabs );
 
     XMLWriteElement( mCalibrationGDPs[ period ], "calibrationGDPs", out, tabs );
     XMLWriteElement( getEndUseServicePrice( period ), "priceSer", out, tabs );
@@ -578,7 +599,8 @@ void RegionMiniCAM::setCO2CoefsIntoMarketplace( const int aPeriod ){
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::DEBUG );
             mainLog << "Cannot set emissions factor of zero for fuel " << coef->first
-                    << " because the name does not match the name of a market." << endl;
+                    << " for region " << mName
+                    << " because the name does not match the market name or market does not exist." << endl;
         }
     }
 }

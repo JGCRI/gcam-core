@@ -65,6 +65,7 @@ extern Scenario* scenario;
 MACControl::MACControl():
 AEmissionsControl(),
 mNoZeroCostReductions( false ),
+mTechChange( 0.0 ),
 mZeroCostPhaseInTime( 25 ),
 mCovertPriceValue( 1 ),
 mPriceMarketName( "CO2" ),
@@ -110,6 +111,7 @@ void MACControl::copy( const MACControl& aOther ){
     assert( !mMacCurve );
     mMacCurve = aOther.mMacCurve->clone();
     mNoZeroCostReductions = aOther.mNoZeroCostReductions;
+    mTechChange = aOther.mTechChange;
     mZeroCostPhaseInTime = aOther.mZeroCostPhaseInTime;
     mCovertPriceValue = aOther.mCovertPriceValue;
     mPriceMarketName = aOther.mPriceMarketName;
@@ -133,7 +135,7 @@ const string& MACControl::getXMLNameStatic(){
 }
 
 bool MACControl::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aCurrNode ){
- 
+    const Modeltime* modeltime = scenario->getModeltime();
     if ( aNodeName == "mac-reduction" ){
         double taxVal = XMLHelper<double>::getAttr( aCurrNode, "tax" );
         double reductionVal = XMLHelper<double>::getValue( aCurrNode );
@@ -142,6 +144,9 @@ bool MACControl::XMLDerivedClassParse( const string& aNodeName, const DOMNode* a
     }
     else if ( aNodeName == "no-zero-cost-reductions" ){
         mNoZeroCostReductions = true;
+    }
+    else if ( aNodeName == "tech-change" ){
+        XMLHelper<double>::insertValueIntoVector( aCurrNode, mTechChange, modeltime );
     }
     else if ( aNodeName == "zero-cost-phase-in-time" ){
         mZeroCostPhaseInTime = XMLHelper<int>::getValue( aCurrNode );
@@ -168,6 +173,9 @@ void MACControl::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
         attrs[ "tax" ] = currPair->first;
         XMLWriteElementWithAttributes( currPair->second, "mac-reduction", aOut, aTabs, attrs );
     }
+    const Modeltime* modeltime = scenario->getModeltime();
+	XMLWriteVector( mTechChange, "tech-change", aOut, aTabs, modeltime, 0.0 );
+
     XMLWriteElementCheckDefault( mZeroCostPhaseInTime, "zero-cost-phase-in-time", aOut, aTabs, 25 );
     XMLWriteElementCheckDefault( mNoZeroCostReductions, "no-zero-cost-reductions", aOut, aTabs, false );    
     XMLWriteElementCheckDefault( mCovertPriceValue, "mac-price-conversion", aOut, aTabs, Value( 1.0 ) );
@@ -176,6 +184,8 @@ void MACControl::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
 
 void MACControl::toDebugXMLDerived( const int period, ostream& aOut, Tabs* aTabs ) const {
     toInputXMLDerived( aOut, aTabs );
+    XMLWriteElement( mNoZeroCostReductions, "no-zero-cost-reductions", aOut, aTabs);
+	XMLWriteElement( mTechChange[ period ], "tech-change", aOut, aTabs );
 }
 
 void MACControl::completeInit( const string& aRegionName, const string& aSectorName,
@@ -213,6 +223,7 @@ void MACControl::calcEmissionsReduction( const std::string& aRegionName, const i
     emissionsPrice *= mCovertPriceValue;
 
     double reduction = getMACValue( emissionsPrice );
+    reduction = adjustForTechChange( aPeriod, reduction );
     
     if( mNoZeroCostReductions && emissionsPrice <= 0.0 ) {
         reduction = 0.0;
@@ -282,3 +293,29 @@ double MACControl::getMACValue( const double aCarbonPrice ) const {
     
     return reduction;
 }
+
+/*! \brief Adjust for Tech Change
+ *  Function that applies tech change to MAC curves, shifting them upwards
+ * \param aPeriod period for reduction
+ * \param reduction pre-tech change reduction
+ */
+double MACControl::adjustForTechChange( const int aPeriod, double reduction ) {
+
+    // note technical change is a rate of change per year, therefore we must
+    // be sure to apply it for as many years as are in a model time step
+    double techChange = 1;
+    int timestep = scenario->getModeltime()->gettimestep( 0 );
+    for ( int i=0; i <= aPeriod; i++ ) {
+        timestep = scenario->getModeltime()->gettimestep( i );
+        techChange *= pow( 1 + mTechChange[ i ], timestep );
+    }
+    reduction *= techChange;
+    
+    // TODO: Include read-in max reduction -- some sectors really shouldn't be able to reduce 100%. We could allow a read-in maximum
+    if ( reduction > 1 ) {
+        reduction = 1;
+    }
+    
+    return reduction;
+}
+

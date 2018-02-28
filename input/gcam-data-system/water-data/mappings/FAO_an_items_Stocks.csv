@@ -1,0 +1,24 @@
+"item","GCAM_commodity","Animal",dairy.to.total
+"Milk, whole fresh cow","Dairy","Dairy cattle",Cattle
+"Milk, whole fresh sheep","Dairy","Dairy cattle",Sheep
+"Milk, whole fresh goat","Dairy","Dairy cattle",Goats
+"Milk, whole fresh camel","Dairy","Dairy cattle",Camels
+"Milk, whole fresh buffalo","Dairy","Dairy cattle",Buffaloes
+"Cattle","Beef","Beef cattle",
+"Buffaloes","Beef","Beef cattle",
+"Sheep","SheepGoat","Sheep",
+"Goats","SheepGoat","Goat",
+"Pigs","Pork","Pig",
+"Horses","OtherMeat_Fish","Horse",
+"Asses","OtherMeat_Fish","Horse",
+"Mules","OtherMeat_Fish","Horse",
+"Chickens","Poultry","Broiler chicken",
+"Turkeys","Poultry","Broiler chicken",
+"Rabbits and hares","OtherMeat_Fish",,
+"Beehives",,,
+"Camels","OtherMeat_Fish","Horse",
+"Ducks","Poultry","Broiler chicken",
+"Geese and guinea fowls","Poultry","Broiler chicken",
+"Camelids, other","OtherMeat_Fish",,
+"Rodents, other","OtherMeat_Fish",,
+"Animals live nes",,,

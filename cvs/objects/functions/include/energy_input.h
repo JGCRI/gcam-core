@@ -124,6 +124,8 @@ public:
                            const IInfo* aTechInfo,
                            const int aPeriod );
 
+    virtual void initializeTypeFlags();
+
     virtual const std::string& getMarketName( const std::string& aRegionName ) const;
 
     virtual  double getCO2EmissionsCoefficient( const std::string& aGHGName,
@@ -150,8 +152,6 @@ public:
                                  const int aPeriod );
 
     virtual double getCalibrationQuantity( const int aPeriod ) const;
-
-    virtual bool hasTypeFlag( const int aTypeFlag ) const;
     
     virtual double getIncomeElasticity( const int aPeriod ) const;
 

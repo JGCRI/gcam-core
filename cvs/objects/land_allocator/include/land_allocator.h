@@ -120,7 +120,7 @@ public:
                                 const int aPeriod );
 
     virtual double calcLandShares( const std::string& aRegionName,
-                                   const double aLogitExpAbove,
+                                   IDiscreteChoice* aChoiceFnAbove,
                                    const int aPeriod );
 
      virtual void calcLandAllocation( const std::string& aRegionName,
@@ -149,6 +149,9 @@ protected:
          *       the parent type which contains shared data members.
          */
         LandNode,
+                            
+        //! Land allocated typically in thous km2.
+        DEFINE_VARIABLE( ARRAY, "land-allocation", mLandAllocation, objects::PeriodVector<Value> ),
 
         //! Rate at which carbon price is expected to increase
         DEFINE_VARIABLE( ARRAY, "carbonPriceIncreaseRate", mCarbonPriceIncreaseRate, objects::PeriodVector<double> ),
@@ -159,12 +162,6 @@ protected:
 
 private:
     void calibrateLandAllocator( const std::string& aRegionName, const int aPeriod );
-
-    void calculateProfitScalers( const std::string& aRegionName, 
-                                const int aPeriod );
-
-    void adjustProfitScalers( const std::string& aRegionName, 
-                                const int aPeriod );
 
     void checkLandArea( const std::string& aRegionName, const int aPeriod );
 };

@@ -67,7 +67,8 @@ printlog( "Writing out only the specified tax levels" )
 L152.MAC_pct_R_S_Proc_EPA.melt <- repeat_and_add_vector(
       unique( L152.EPA_MACC_MtCO2e[ EPA_MACC_names ] ),
       "tax_1990USD_tCe", MAC_taxes )
-L152.MAC_pct_R_S_Proc_EPA.melt <- L152.MAC_pct_R_S_Proc_EPA.melt[ order( L152.MAC_pct_R_S_Proc_EPA.melt[[ "Process" ]], L152.MAC_pct_R_S_Proc_EPA.melt[[ "EPA_region" ]] ), ]
+L152.MAC_pct_R_S_Proc_EPA.melt <- L152.MAC_pct_R_S_Proc_EPA.melt[
+  order( L152.MAC_pct_R_S_Proc_EPA.melt[[ "Process" ]], L152.MAC_pct_R_S_Proc_EPA.melt[[ "EPA_region" ]] ), ]
 
 # Match in the reduction for the given tax levels
 L152.MAC_pct_R_S_Proc_EPA.melt$reduction <- L152.EPA_MACC_MtCO2e$reduction_pct[

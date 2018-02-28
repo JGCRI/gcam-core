@@ -2,27 +2,6 @@
 MODULE_PROC_ROOT		<- AGLUPROC_DIR
 
 # -----------------------------------------------------------------------------
-# rename_biocrops: a function for changing the names of "biomass" in selected region/AEZs
-rename_biocrops <- function( data, lookup, data_matchvar, lookup_matchvar, data_var1, data_var2=NA, data_var3 = NA ){
-     data_new <- data
-     data_new$ID <- paste( data_new$region, data_new[[data_matchvar]] )
-     lookup$ID <- paste( lookup$region, lookup[[lookup_matchvar]] )
-     data_new[ data_new$ID %in% lookup$ID, data_var1 ] <- lookup[
-      match( data_new$ID[ data_new$ID %in% lookup$ID ], lookup$ID ),
-      data_var1 ]
-     if( !is.na( data_var2 ) ) {
-        data_new[ data_new$ID %in% lookup$ID, data_var2 ] <- lookup[
-      match( data_new$ID[ data_new$ID %in% lookup$ID ], lookup$ID ),
-      data_var2 ] }
-     if( !is.na( data_var3 ) ) {
-        data_new[ data_new$ID %in% lookup$ID, data_var3 ] <- lookup[
-      match( data_new$ID[ data_new$ID %in% lookup$ID ], lookup$ID ),
-      data_var3 ] }
-     data_new <- data_new[ names( data_new ) != "ID" ]   
-     return (data_new )
-     }            
-
-# -----------------------------------------------------------------------------
 #downscale_FAO_country: function to downscale the countries that separated into multiple modern countries (e.g. USSR).
 downscale_FAO_country <- function( data, country_name, dissolution_year, item_name = "item",
                                    element_name = "element", years = AGLU_historical_years ){
@@ -63,88 +42,89 @@ downscale_IMAGE_regions <- function( data, idvars, years = X_AGLU_historical_yea
 	data_new <- data_new[ c("iso", idvars, years ) ]
 }
 
-# TODO: figure out why there are two, can we move these to GCAM_header.R?  I just need the basic functionality to use in get_logit_fn_tables
-write_to_all_regions <- function( data, names, has.traded=F, apply.to = "selected", set.market = F ){
-	if ( "logit.year.fillout" %in% names ) data$logit.year.fillout <- "start-year"
-	if ( "price.exp.year.fillout" %in% names ) data$price.exp.year.fillout <- "start-year"
-	data_new <- set_years( data )
-	data_new <- repeat_and_add_vector( data_new, "GCAM_region_ID", GCAM_region_names$GCAM_region_ID )
-	data_new <- add_region_name( data_new )
-	if( has.traded==T){
-		if( set.market==T){
-			data_new$market.name <- data_new$region
-		}
-		data_new <- set_traded_names( data_new, apply.to )
-		}
-	return( data_new[ names ] ) 
-}
-
 # -----------------------------------------------------------------------------
-# write_to_all_regions_ag: write out ag table to all regions
-write_to_all_regions_ag <- function( data, names ){
-	if ( "logit.year.fillout" %in% names ) data$logit.year.fillout <- "start-year"
-	data_new <- set_years( data )
-	data_new <- repeat_and_add_vector( data_new, "GCAM_region_ID", GCAM_region_names$GCAM_region_ID )
-	data_new <- add_region_name( data_new )
-	if ("market.name" %in% names ) data_new$market.name <- data_new$region
-	return( data_new[ names ] ) 
-}
-
-#remove non-existent AEZs
-remove_AEZ_nonexist <- function( data, AEZcol = "AgSupplySubsector", AEZnonexist = L125.R_AEZ_nonexist ){
-	AEZnonexist <- add_region_name( AEZnonexist )
-	data[[AEZ]] <- substr( as.character( data[[AEZcol]] ), nchar( as.character( data[[AEZcol]] ) ) - 4, nchar( as.character( data[[AEZcol]] ) ) )
-	data <- data[ !vecpaste( data[ c( reg, AEZ ) ] ) %in% vecpaste( AEZnonexist[ c( reg, AEZ ) ] ), ]
-	data <- data[ names( data ) != AEZ ]
-}
-
-#add_agtech_names: function to use the commodity and AEZ names to create agsupplysectors, subsectors, technologies
-add_agtech_names <- function( data ){
-	data[[agsupp]] <- data[[C]]
-	data[[agsubs]] <- paste( data[[C]], data[[AEZ]], sep = AEZ_delimiter )
-	data[[agtech]] <- paste( data[[C]], data[[AEZ]], sep = AEZ_delimiter )
+#append_GLU: function to append GLU to all specified variables
+append_GLU <- function( data, var1 = "LandNode1", var2 = NA, var3 = NA, var4 = NA, var5 = NA ){
+	data[[var1]] <- paste( data[[var1]], data[[GLU]], sep = LT_GLU_delimiter )
+	if( !is.na( var2 ) ){ data[[var2]] <- paste( data[[var2]], data[[GLU]], sep = LT_GLU_delimiter ) }
+	if( !is.na( var3 ) ){ data[[var3]] <- paste( data[[var3]], data[[GLU]], sep = LT_GLU_delimiter ) }
+	if( !is.na( var4 ) ){ data[[var4]] <- paste( data[[var4]], data[[GLU]], sep = LT_GLU_delimiter ) }
+	if( !is.na( var5 ) ){ data[[var5]] <- paste( data[[var5]], data[[GLU]], sep = LT_GLU_delimiter ) }
 	return( data )
 }
 
-#append_AEZ: function to append AEZ to all specified variables
-append_AEZ <- function( data, var1 = "LandNode1", var2 = NA, var3 = NA, var4 = NA, var5 = NA ){
-	data[[var1]] <- paste( data[[var1]], data[[AEZ]], sep = AEZ_delimiter )
-	if( !is.na( var2 ) ){ data[[var2]] <- paste( data[[var2]], data[[AEZ]], sep = AEZ_delimiter ) }
-	if( !is.na( var3 ) ){ data[[var3]] <- paste( data[[var3]], data[[AEZ]], sep = AEZ_delimiter ) }
-	if( !is.na( var4 ) ){ data[[var4]] <- paste( data[[var4]], data[[AEZ]], sep = AEZ_delimiter ) }
-	if( !is.na( var5 ) ){ data[[var5]] <- paste( data[[var5]], data[[AEZ]], sep = AEZ_delimiter ) }
-	return( data )
+#substring_GLU: get the GLU from a column where the GLU code is appended to the land use type
+# This function assumes that the GLU name starts at the first underscore and goes until the end of the name
+# So it should only be used on columns where the GLU is at the end of the strings
+substring_GLU <- function( data, from.var ){
+  data[[GLU]] <- substr( data[[from.var]],
+                         regexpr( crop_GLU_delimiter, data[[from.var]], fixed = T ) + 1,
+                         nchar( data[[from.var]] ) )
+  #Run this another time in case there are underscores in the element names (e.g., Root_Tuber)
+  data[[GLU]] <- substr( data[[GLU]],
+                         regexpr( crop_GLU_delimiter, data[[GLU]], fixed = T ) + 1,
+                         nchar( data[[GLU]] ) )
+  return( data )
+}
+
+#remove_GLU: function to remove the GLU from the ends of all specified variables
+remove_GLU <- function( data, var1 = "LandNode1", var2 = NA, var3 = NA, var4 = NA, var5 = NA ){
+  data <- substring_GLU( data, from.var = var1 )
+  data$GLU_nchar <- nchar( data[[GLU]] ) + 1
+  data[[var1]] <- substr( data[[var1]], 1, nchar( data[[var1]] ) - data$GLU_nchar )
+  if( !is.na( var2 ) ) data[[var2]] <- substr( data[[var2]], 1, nchar( data[[var2]] ) - data$GLU_nchar )
+  if( !is.na( var3 ) ) data[[var3]] <- substr( data[[var3]], 1, nchar( data[[var3]] ) - data$GLU_nchar )
+  if( !is.na( var4 ) ) data[[var4]] <- substr( data[[var4]], 1, nchar( data[[var4]] ) - data$GLU_nchar )
+  if( !is.na( var5 ) ) data[[var5]] <- substr( data[[var5]], 1, nchar( data[[var5]] ) - data$GLU_nchar )
+  data$GLU_nchar <- NULL
+  return( data )
+}
+
+substring_irr <- function( data, from.var, to.lower = F ){
+  data[[irr]] <- substr( data[[from.var]], nchar( data[[from.var]] ) - 2, nchar( data[[from.var]] ) )
+  if( to.lower ) data[[irr]] <- tolower( data[[irr]] )
+  return( data )
 }
 
 #add_node_leaf_names: function to match in the node and leaf names from a land nesting table
-add_node_leaf_names <- function( data, nesting_table, leaf_name, LT_name = LT, LN1 = "LandNode1", LN2 = NA, LN3 = NA, LN4 = NA, append_AEZ = T ){
+add_node_leaf_names <- function( data, nesting_table, leaf_name, LT_name = LT, LN1 = "LandNode1", LN2 = NA, LN3 = NA, LN4 = NA, append_GLU = T ){
 	data$LandAllocatorRoot <- "root"
 	data[[LN1]] <- nesting_table[[LN1]][ match( data[[LT_name]], nesting_table[[leaf_name]] ) ]
 	if( !is.na( LN2 ) ){ data[[LN2]] <- nesting_table[[LN2]][ match( data[[LT_name]], nesting_table[[leaf_name]] ) ] }
 	if( !is.na( LN3 ) ){ data[[LN3]] <- nesting_table[[LN3]][ match( data[[LT_name]], nesting_table[[leaf_name]] ) ] }
 	if( !is.na( LN4 ) ){ data[[LN4]] <- nesting_table[[LN4]][ match( data[[LT_name]], nesting_table[[leaf_name]] ) ] }
 	data[[leaf_name]] <- data[[LT_name]]
-	if( append_AEZ == T ){ data <- append_AEZ( data, var1 = leaf_name, var2 = LN1, var3 = LN2, var4 = LN3, var5 = LN4 ) }
+	if( append_GLU == T ){ data <- append_GLU( data, var1 = leaf_name, var2 = LN1, var3 = LN2, var4 = LN3, var5 = LN4 ) }
+	if( irr %in% names( data ) ) { data[[leaf_name]] <- paste( data[[leaf_name]], data[[irr]], sep = irr_delimiter ) }
 	return( data )
 }
 
-#add_carbon_info: function to add in the carbon densities and mature ages from specified tables, matching on specified parameters
-add_carbon_info <- function( data, veg_data, soil_data, age_data, LT_name = "Cdensity_LT" ){
-	data$hist.veg.carbon.density <- veg_data$value[
-      match( vecpaste( data[ c( "region", LT_name, AEZ ) ] ),
-             vecpaste( veg_data[ c( "region", LT, AEZ ) ] ) ) ]
-	data$hist.soil.carbon.density <- soil_data$value[
-      match( vecpaste( data[ c( "region", LT_name, AEZ ) ] ),
-             vecpaste( soil_data[ c( "region", LT, AEZ ) ] ) ) ]
+#add_carbon_info: function to translate from soil, veg, and mature age data (already in a table) to the required read-in model parameters
+add_carbon_info <- function( data, carbon_info_table, carbon_info_table_names = c( "veg_c", "soil_c", "mature.age" ),
+                             data_matchvars = c( R_GLU, "Cdensity_LT" ), carbon_info_matchvars = c( R_GLU, LT ) ){
+	data[ c( "hist.veg.carbon.density", "hist.soil.carbon.density", "mature.age" ) ] <-
+	  carbon_info_table[ match( vecpaste( data[ data_matchvars ] ),
+	                            vecpaste( carbon_info_table[ carbon_info_matchvars ] ) ),
+	                     carbon_info_table_names ]
+	data[ c( "hist.veg.carbon.density", "hist.soil.carbon.density" ) ] <- round(
+	  data[ c( "hist.veg.carbon.density", "hist.soil.carbon.density" ) ], digits_C_density )
+	data$mature.age <- round( data$mature.age, digits_MatureAge )
 	data$mature.age.year.fillout <- min( model_base_years )
-	data$mature.age <- age_data$value[
-      match( vecpaste( data[ c( "region", LT_name, AEZ ) ] ),
-             vecpaste( age_data[ c( "region", LT, AEZ ) ] ) ) ]
 	data$veg.carbon.density <- data$hist.veg.carbon.density
 	data$soil.carbon.density <- data$hist.soil.carbon.density
 	data$min.veg.carbon.density <- min.veg.carbon.density
 	data$min.soil.carbon.density <- min.soil.carbon.density
 	return( data )
+}
+
+remove_zero_output_land_leafs <- function( land, prod ) {
+  prod <- subset( prod, calOutputValue > 0 )
+  land$id <- paste( land$region, land$LandLeaf, land$year )
+  prod$id <- paste( prod$region, prod$AgProductionTechnology, prod$year )
+  land <- subset( land, id %in% unique( prod$id ) )
+  land$id <- NULL
+  
+  return( land )
 }
 
 reduce_mgd_carbon <- function( data, LTfor = "Forest", LTpast = "Pasture" ){
@@ -158,6 +138,5 @@ reduce_mgd_carbon <- function( data, LTfor = "Forest", LTpast = "Pasture" ){
     data[ data[[LT]] == LTfor, c( "hist.soil.carbon.density", "soil.carbon.density" ) ] * Csoil_Mult_UnmgdFor_MgdFor
   return( data )
 }
-
 
 

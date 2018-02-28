@@ -10,6 +10,7 @@ export AGLUPROC = ../aglu-processing-code
 export AGLUDAT	= .
 export AGLUXML = ../xml/aglu-xml
 export COMMON = ../_common
+export WATERPROC = ../water-processing-code
 
 L1ASCRIPTS = $(sort $(wildcard $(AGLUPROC)/level1/LA*.R))
 L1ALOGS	  = $(patsubst %.R,%.R.log,$(subst /level1/,/logs/,$(L1ASCRIPTS)))

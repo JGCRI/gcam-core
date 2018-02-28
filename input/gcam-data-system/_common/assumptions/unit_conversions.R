@@ -10,6 +10,7 @@ conv_bil_thous <- 1e6
 conv_thous_bil <- 1e-6
 conv_C_CO2 <- 44/12
 conv_CO2_C <- 12/44
+conv_Gg_Tg <- 1e-3
 
 #Dollar conversion factors
 conv_1990_2005_USD <- 1.383
@@ -29,7 +30,9 @@ conv_2005_1975_USD <- 0.3362
 conv_2006_1975_USD <- 0.3257
 conv_2007_1975_USD <- 0.317
 conv_2008_1975_USD <- 0.3104
-conv_2009_1975_USD <- 0.3104
+conv_2009_1975_USD <- 0.3067
+conv_2010_1975_USD <- 0.3032
+conv_2011_1975_USD <- 0.2968
 
 #mass conversions
 conv_kg_Mt <- 1e-9

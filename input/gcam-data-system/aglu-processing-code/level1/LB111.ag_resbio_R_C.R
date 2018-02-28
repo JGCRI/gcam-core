@@ -33,33 +33,29 @@ Various_ag_resbio_data <- readdata( "AGLU_LEVEL0_DATA", "Various_ag_resbio_data"
 #Compute weighted averages of each parameter ( HarvestIndex, ErosionControl, and ResidueEnergyContent ) for each crop type in each GCAM region
 printlog( "Calculating production-weighted averages of residue biomass parameters" )
 printlog( "NOTE: Using 2005 production data as weighting factor" )
-L111.ag_resbio_Prod <- L100.FAO_ag_Prod_t[ c( "iso", "item", "X2005" ) ]
+L111.ag_resbio_Prod <- L100.FAO_ag_Prod_t[ c( "iso", "item", X_final_historical_year ) ]
 resbio_params <- names( Various_ag_resbio_data )[ !names( Various_ag_resbio_data ) %in% names( L100.FAO_ag_Prod_t ) ]
 L111.ag_resbio_Prod[ resbio_params ] <- Various_ag_resbio_data[ match( L111.ag_resbio_Prod$item, Various_ag_resbio_data$item ), resbio_params ]
 
 #Drop rows with NA values ( dropping commodities that are not in the resbio dataset )
 L111.ag_resbio_Prod <- na.omit( L111.ag_resbio_Prod )
 
+# also drop rows where production weights are zero, as these would return missing values later on
+L111.ag_resbio_Prod <- L111.ag_resbio_Prod[ L111.ag_resbio_Prod[[X_final_historical_year]] != 0, ]
+
 #Multiply by production to get weights
 printlog( "Multiplying residue biomass parameters by production" )
-L111.ag_resbio_Prod[ resbio_params ] <- L111.ag_resbio_Prod$X2005 * L111.ag_resbio_Prod[ resbio_params ]
+L111.ag_resbio_Prod[ resbio_params ] <- L111.ag_resbio_Prod[[X_final_historical_year]] * L111.ag_resbio_Prod[ resbio_params ]
 
 #Add vectors for GCAM regions and commodities, collapse, and divide by production to get residue biomass values
 printlog( "Aggregating by GCAM region and commodity" )
 L111.ag_resbio_Prod$GCAM_region_ID <- iso_GCAM_regID$GCAM_region_ID[ match( L111.ag_resbio_Prod$iso, iso_GCAM_regID$iso ) ]
 L111.ag_resbio_Prod$GCAM_commodity <- FAO_ag_items_PRODSTAT$GCAM_commodity[ match( L111.ag_resbio_Prod$item, FAO_ag_items_PRODSTAT$item ) ]
-L111.ag_resbio_Prod_R_C <- aggregate( L111.ag_resbio_Prod[ c( "X2005", resbio_params ) ], by=as.list( L111.ag_resbio_Prod[ R_C ] ), sum )
+L111.ag_resbio_Prod_R_C <- aggregate( L111.ag_resbio_Prod[ c( X_final_historical_year, resbio_params ) ], by=as.list( L111.ag_resbio_Prod[ R_C ] ), sum )
 
 printlog( "Dividing by production to get weighted average residue biomass parameters by region and crop" )
 L111.ag_resbio_R_C <- L111.ag_resbio_Prod_R_C[ R_C ]
-L111.ag_resbio_R_C[ resbio_params ] <- L111.ag_resbio_Prod_R_C[ resbio_params ] / L111.ag_resbio_Prod_R_C$X2005
-L111.ag_resbio_R_C[ is.na( L111.ag_resbio_R_C ) ] <- 0
-
-#Translate to full table with all region x crop commodity combinations
-L111.ag_resbio_R_C <- translate_to_full_table( L111.ag_resbio_R_C,
-      R, unique( iso_GCAM_regID[[R]]),
-      C, unique( L111.ag_resbio_R_C[[C]] ),
-      datacols = resbio_params )
+L111.ag_resbio_R_C[ resbio_params ] <- L111.ag_resbio_Prod_R_C[ resbio_params ] / L111.ag_resbio_Prod_R_C[[X_final_historical_year]]
 
 # -----------------------------------------------------------------------------
 # 3. Output

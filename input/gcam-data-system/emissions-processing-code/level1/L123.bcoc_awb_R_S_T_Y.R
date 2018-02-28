@@ -24,17 +24,15 @@ sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )
 sourcedata( "EMISSIONS_ASSUMPTIONS", "A_emissions_data", extension = ".R" )
 sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_data", extension = ".R" )
 iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID")
-L104.ag_Prod_Mt_R_C_Y_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L104.ag_Prod_Mt_R_C_Y_AEZ" )
+L103.ag_Prod_Mt_R_C_Y_GLU <- readdata( "AGLU_LEVEL1_DATA", "L103.ag_Prod_Mt_R_C_Y_GLU" )
+L121.AWBshare_R_C_Y_GLU <- readdata( "EMISSIONS_LEVEL1_DATA", "L121.AWBshare_R_C_Y_GLU" )
 RCP_BC_2000 <- readdata( "EMISSIONS_LEVEL0_DATA", "RCP_BC_2000" )
 RCP_OC_2000 <- readdata( "EMISSIONS_LEVEL0_DATA", "RCP_OC_2000" )
 
 # -----------------------------------------------------------------------------
 # 2. Perform computations
 printlog( "Compute total regional production" )
-L104.ag_Prod_Mt_R_C_Y_AEZ <- subset( L104.ag_Prod_Mt_R_C_Y_AEZ, L104.ag_Prod_Mt_R_C_Y_AEZ$GCAM_commodity %!in% c( "Pasture", "Forest" ))
-L123.ag_Prod_Mt_R_Y <- aggregate( L104.ag_Prod_Mt_R_C_Y_AEZ[ X_historical_years ], by=as.list( L104.ag_Prod_Mt_R_C_Y_AEZ[ c( "GCAM_region_ID" ) ] ), sum )
-L123.ag_Prod_Mt_R_Y.melt <- melt( L123.ag_Prod_Mt_R_Y, id.vars=c( "GCAM_region_ID" ) )
-L123.ag_Prod_Mt_R_2000.melt <- subset( L123.ag_Prod_Mt_R_Y.melt, L123.ag_Prod_Mt_R_Y.melt$variable == "X2000" )
+L123.AWBshare_R_C_2000_GLU <- subset( L121.AWBshare_R_C_Y_GLU, year == "X2000")
 
 printlog( "Compute RCP emissions by region" )
 RCP_BC_2000$Non.CO2 <- "BC_AWB"
@@ -43,19 +41,30 @@ L123.RCP <- rbind( RCP_BC_2000, RCP_OC_2000 )
 L123.RCP$GCAM_region_ID <- iso_GCAM_regID$GCAM_region_ID[ match( L123.RCP$iso, iso_GCAM_regID$iso )]   
 
 #Drop unnecessary columns, aggregate by region, and melt
-L123.RCP <- L123.RCP[ names( L123.RCP ) %in% c( "GCAM_region_ID", "Non.CO2", "awb" ) ]
+L123.RCP <- L123.RCP[ c( "GCAM_region_ID", "Non.CO2", "awb" ) ]
 
 #Convert to Tg
 L123.RCP$awb <- L123.RCP$awb * kg_to_tg 
 
 printlog( "Compute emissions factors by GCAM region" )
-L123.bcoc_tgmt_R_awb_2000.melt <- L123.ag_Prod_Mt_R_2000.melt
-L123.bcoc_tgmt_R_awb_2000.melt <- repeat_and_add_vector( L123.bcoc_tgmt_R_awb_2000.melt, "Non.CO2", c( "BC_AWB", "OC_AWB" ) )
-L123.bcoc_tgmt_R_awb_2000.melt$total_emiss <- L123.RCP$awb[ match( vecpaste( L123.bcoc_tgmt_R_awb_2000.melt[ c( "GCAM_region_ID", "Non.CO2" )]), vecpaste( L123.RCP[ c( "GCAM_region_ID", "Non.CO2" )] ) )]
-L123.bcoc_tgmt_R_awb_2000.melt$emfact <- L123.bcoc_tgmt_R_awb_2000.melt$total_emiss / L123.bcoc_tgmt_R_awb_2000.melt$value
+L123.bcoc_tgmt_R_awb_2000.melt <- repeat_and_add_vector( L123.AWBshare_R_C_2000_GLU, "Non.CO2", c( "BC_AWB", "OC_AWB" ) )
+L123.bcoc_tgmt_R_awb_2000.melt$total_emiss <- L123.RCP$awb[
+  match( vecpaste( L123.bcoc_tgmt_R_awb_2000.melt[ c( "GCAM_region_ID", "Non.CO2" )]),
+         vecpaste( L123.RCP[ c( "GCAM_region_ID", "Non.CO2" )] ) )]
+L123.bcoc_tgmt_R_awb_2000.melt$emissions <- with( L123.bcoc_tgmt_R_awb_2000.melt, total_emiss * AWB_emiss_share )
 
-#Reshape
-L123.bcoc_tgmt_R_awb_2000 <- L123.bcoc_tgmt_R_awb_2000.melt[ names( L123.bcoc_tgmt_R_awb_2000.melt ) %!in% c( "total_emiss", "value" )]
+printlog( "BC and OC are represented by emissions coefficients rather than emissions, as only one base year is available" )
+printlog( "Matching production to emissions in the given year" )
+L123.bcoc_tgmt_R_awb_2000.melt$prod <- L103.ag_Prod_Mt_R_C_Y_GLU$X2000[
+  match( vecpaste( L123.bcoc_tgmt_R_awb_2000.melt[ R_C_GLU ] ),
+         vecpaste( L103.ag_Prod_Mt_R_C_Y_GLU[ R_C_GLU ] ) ) ]
+L123.bcoc_tgmt_R_awb_2000.melt$emfact <- with( L123.bcoc_tgmt_R_awb_2000.melt, emissions / prod )
+
+#Where production and emissions are zero, re-set NaN coefficients to 0
+L123.bcoc_tgmt_R_awb_2000.melt$emfact[ is.na( L123.bcoc_tgmt_R_awb_2000.melt$emfact ) ] <- 0
+
+#Only write out the ID columns and the emissions factor
+L123.bcoc_tgmt_R_awb_2000 <- L123.bcoc_tgmt_R_awb_2000.melt[ c( R_C_GLU, "Non.CO2", "emfact" ) ]
 
 # -----------------------------------------------------------------------------
 # 3. Output

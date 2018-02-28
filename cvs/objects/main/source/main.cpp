@@ -157,6 +157,7 @@ int main( int argc, char *argv[] ) {
 
     // Parse configuration file.
     mainLog.setLevel( ILogger::NOTICE );
+    mainLog << "Configuration file:  " << configurationFileName << endl;
     mainLog << "Parsing input files..." << endl;
     Configuration* conf = Configuration::getInstance();
     success = XMLHelper<void>::parseXML( configurationFileName, conf );

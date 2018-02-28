@@ -174,6 +174,8 @@ L223.GlobalTechEff_elec <- L223.globaltech_eff.melt[ names_GlobalTechEff ]
 
 L223.GlobalIntTechEff_elec <- subset_inttechs( L223.GlobalTechEff_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
 L223.GlobalTechEff_elec <- subset_techs( L223.GlobalTechEff_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
+#Hard code in type "Resource" for intermittent technology resource input only
+L223.GlobalIntTechEff_elec["type"] <- "Resource" 
 
 #Capacity factor of global technologies
 printlog( "L223.GlobalTechCapFac_elec: Capacity factor of global electricity generation technologies" )
@@ -226,6 +228,8 @@ L223.GlobalTechCapital_wind_low <- subset( L223.GlobalTechCapital_elec_low, L223
 L223.GlobalTechCapital_geo_low <- subset( L223.GlobalTechCapital_elec_low, L223.GlobalTechCapital_elec_low$subsector.name == "geothermal") 
 
 L223.GlobalTechCapital_nuc_low <- subset( L223.GlobalTechCapital_elec_low, L223.GlobalTechCapital_elec_low$subsector.name == "nuclear") 
+
+L223.GlobalTechCapital_bio_low <- subset( L223.GlobalTechCapital_elec_low, L223.GlobalTechCapital_elec_low$subsector.name == "biomass")
 
 printlog( "L223.GlobalTechOMfixed_elec: Fixed O&M costs of global electricity generation technologies" )
 L223.globaltech_OMfixed.melt <- interpolate_and_melt( A23.globaltech_OMfixed, c( model_base_years, model_future_years ), value.name="OM.fixed", digits = digits_OM, rule=3 )
@@ -584,6 +588,9 @@ insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_geo_low.xml", "ENERGY_XML_
 
 write_mi_data( L223.GlobalTechCapital_nuc_low, "GlobalTechCapital", "ENERGY_LEVEL2_DATA", "L223.GlobalTechCapital_nuc_low", "ENERGY_XML_BATCH", "batch_nuclear_low.xml" )
 insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_nuclear_low.xml", "ENERGY_XML_FINAL", "nuclear_low.xml", "", xml_tag="outFile" )
+
+write_mi_data( L223.GlobalTechCapital_bio_low, "GlobalTechCapital", "ENERGY_LEVEL2_DATA", "L223.GlobalTechCapital_bio_low", "ENERGY_XML_BATCH", "batch_elec_bio_low.xml" )
+insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_elec_bio_low.xml", "ENERGY_XML_FINAL", "elec_bio_low.xml", "", xml_tag="outFile" )
 
 logstop()
 

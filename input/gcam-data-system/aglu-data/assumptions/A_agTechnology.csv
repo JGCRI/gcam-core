@@ -1,1 +1,21 @@
-# File: A_agSupplySector.csv,,,,,,,# Description: agTechnology - shareweight interpolation and other accessory information,,,,,,,# Original source: NA,,,,,,,# ----------,,,,,,,AgSupplySector,AgSupplySubsector,AgProductionTechnology,apply.to,from.year,to.year,interpolation.function,share.weightCorn,,,share-weight,final-calibration-year,end-year,fixed,1FiberCrop,,,share-weight,final-calibration-year,end-year,fixed,1FodderGrass,,,share-weight,final-calibration-year,end-year,fixed,1FodderHerb,,,share-weight,final-calibration-year,end-year,fixed,1MiscCrop,,,share-weight,final-calibration-year,end-year,fixed,1OilCrop,,,share-weight,final-calibration-year,end-year,fixed,1OtherGrain,,,share-weight,final-calibration-year,end-year,fixed,1PalmFruit,,,share-weight,final-calibration-year,end-year,fixed,1Rice,,,share-weight,final-calibration-year,end-year,fixed,1Root_Tuber,,,share-weight,final-calibration-year,end-year,fixed,1SugarCrop,,,share-weight,final-calibration-year,end-year,fixed,1Wheat,,,share-weight,final-calibration-year,end-year,fixed,1Forest,,,share-weight,final-calibration-year,end-year,fixed,1biomass,,,share-weight,final-calibration-year,end-year,fixed,1Pasture,,,share-weight,final-calibration-year,end-year,fixed,1
+# File: A_agSupplySector.csv,,,,,,,
+# Description: agTechnology - shareweight interpolation and other accessory information,,,,,,,
+# Original source: NA,,,,,,,
+# ----------,,,,,,,
+AgSupplySector,AgSupplySubsector,AgProductionTechnology,apply.to,from.year,to.year,interpolation.function,share.weight
+Corn,Corn,Corn,share-weight,final-calibration-year,end-year,fixed,1
+FiberCrop,FiberCrop,FiberCrop,share-weight,final-calibration-year,end-year,fixed,1
+FodderGrass,FodderGrass,FodderGrass,share-weight,final-calibration-year,end-year,fixed,1
+FodderHerb,FodderHerb,FodderHerb,share-weight,final-calibration-year,end-year,fixed,1
+MiscCrop,MiscCrop,MiscCrop,share-weight,final-calibration-year,end-year,fixed,1
+OilCrop,OilCrop,OilCrop,share-weight,final-calibration-year,end-year,fixed,1
+OtherGrain,OtherGrain,OtherGrain,share-weight,final-calibration-year,end-year,fixed,1
+PalmFruit,PalmFruit,PalmFruit,share-weight,final-calibration-year,end-year,fixed,1
+Rice,Rice,Rice,share-weight,final-calibration-year,end-year,fixed,1
+Root_Tuber,Root_Tuber,Root_Tuber,share-weight,final-calibration-year,end-year,fixed,1
+SugarCrop,SugarCrop,SugarCrop,share-weight,final-calibration-year,end-year,fixed,1
+Wheat,Wheat,Wheat,share-weight,final-calibration-year,end-year,fixed,1
+Forest,Forest,Forest,share-weight,final-calibration-year,end-year,fixed,1
+biomass,biomass_grass,biomass_grass,share-weight,final-calibration-year,end-year,fixed,1
+biomass,biomass_tree,biomass_tree,share-weight,final-calibration-year,end-year,fixed,1
+Pasture,Pasture,Pasture,share-weight,final-calibration-year,end-year,fixed,1

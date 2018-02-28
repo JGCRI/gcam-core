@@ -67,7 +67,7 @@ public:
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const = 0;
     virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const = 0;
 
-    virtual void completeInit() = 0;
+    virtual void completeInit( const double aPrivateDiscountRateLand  ) = 0;
     
     virtual void initCalc( const int aPeriod );
 
@@ -131,7 +131,10 @@ protected:
         DEFINE_VARIABLE( ARRAY | STATE, "above-ground-carbon-stock", mCarbonStock, objects::YearVector<Value> ),
         
         //! Time scale for soil carbon emissions
-        DEFINE_VARIABLE( SIMPLE, "soil-time-scale", mSoilTimeScale, int )
+        DEFINE_VARIABLE( SIMPLE, "soil-time-scale", mSoilTimeScale, int ),
+        
+        //! Discount rate for land related decisions
+        DEFINE_VARIABLE( SIMPLE, "private-discount-rate", mPrivateDiscountRate, double )
     )
 
     /*!

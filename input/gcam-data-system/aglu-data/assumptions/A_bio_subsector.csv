@@ -1,0 +1,7 @@
+# File: A_bio_subsector.csv,,,,,,,
+# Description: Subsectors of bio trade,,,,,,,
+# Original source: NA,,,,,,,
+# ----------,,,,,,,
+supplysector,subsector,year.fillout,share.weight,apply.to,from.year,to.year,interpolation.function
+total biomass,domestic biomass,start-year,1,share-weight,final-calibration-year,end-year,fixed
+total biomass,imported biomass,start-year,1,share-weight,final-calibration-year,end-year,fixed

@@ -355,6 +355,14 @@ L232.IncomeElasticity_ind <- add_region_name( L232.IncomeElasticity_ind )
 L232.IncomeElasticity_ind$energy.final.demand <- A32.demand$energy.final.demand
 #These will be written out as separate tables using a for loop
 
+#KVC: SSP1 needs lower income elasticities. Storyline has limited growth in energy-related industries 
+#because of warm fuzzy feelings about environment. We are hard-coding this for a while.
+L232.IncomeElasticity_ind_SSP1 <- subset( L232.IncomeElasticity_ind, L232.IncomeElasticity_ind$scenario == "SSP1" )
+L232.IncomeElasticity_ind_SSPother <- subset( L232.IncomeElasticity_ind, L232.IncomeElasticity_ind$scenario != "SSP1" )
+L232.IncomeElasticity_ind_SSP1$income.elasticity <- L232.IncomeElasticity_ind_SSP1$income.elasticity * 0.75
+
+L232.IncomeElasticity_ind <- rbind( L232.IncomeElasticity_ind_SSP1, L232.IncomeElasticity_ind_SSPother )
+
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 for( curr_table in names ( L232.SectorLogitTables) ) {

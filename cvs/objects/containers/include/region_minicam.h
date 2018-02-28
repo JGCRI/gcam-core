@@ -146,7 +146,13 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "PrimaryFuelCO2Coef", mPrimaryFuelCO2Coef, std::map<std::string, double> ),
         
         /*! \brief Interest rate for the region. */
-        DEFINE_VARIABLE( SIMPLE, "interest-rate", mInterestRate, double )
+        DEFINE_VARIABLE( SIMPLE, "interest-rate", mInterestRate, double ),
+        
+        //! Social discount rate for the region.
+        DEFINE_VARIABLE( SIMPLE, "social-discount-rate", mSocialDiscountRate, double ),
+        
+        //! Private discount rate used for land decisions in the region.
+        DEFINE_VARIABLE( SIMPLE, "private-discount-rate-land", mPrivateDiscountRateLand, double )
     )
     
     std::vector<Summary> summary; //!< summary values and totals for reporting

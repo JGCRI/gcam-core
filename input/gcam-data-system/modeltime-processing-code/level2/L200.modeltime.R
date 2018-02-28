@@ -54,6 +54,7 @@ printlog( "L200.MAGICC: Input parameters from GCAM to MAGICC" )
 L200.MAGICC <- data.frame( 
       last.historical.year = Magicc_last_historical_year,
       bc.unit.forcing = Magicc_bc_unit_forcing,
+      default.emiss.file = Magicc_default_emiss_file,
       carbon.model.start.year = Magicc_C_start_year )
 
 L200.hector <- data.frame(

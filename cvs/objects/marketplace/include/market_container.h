@@ -69,9 +69,10 @@ namespace objects {
 class MarketContainer : public INamed, private boost::noncopyable {
 public:
     MarketContainer( const IMarketType::Type aMarketType, const std::string& aGoodName, const std::string& aRegionName );
-    MarketContainer( MarketContainer* aMarketToLink, const std::string& aGoodName, const std::string& aRegionName );
+    MarketContainer( MarketContainer* aMarketToLink, const std::string& aGoodName, const std::string& aRegionName, const int aStartPeriod );
     virtual ~MarketContainer();
     
+    void changeLinkedMarket( MarketContainer* aMarketToLink, const int aStartPeriod );
     void resetToPriceMarket( MarketContainer* aDemandMarkets );
     
     Market* getMarket( const int aPeriod ) const;

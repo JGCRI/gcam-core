@@ -69,6 +69,7 @@ class LandUseHistory;
 // Need to forward declare the subclasses as well.
 class LandAllocator;
 class LandNode;
+class IDiscreteChoice;
 class LandLeaf;
 class CarbonLandLeaf;
 class UnmanagedLandLeaf;
@@ -228,13 +229,47 @@ public:
                                 const int aPeriod ) = 0;
 
     /*!
-     * \brief Calculates profit scalers
+     * \brief Sets intermediate profit rates at each node.
+     * \details The profit rate to be set will be calculated as the profit rate
+     *          as the dominant child in the nest.  Choosing the profit rate this
+     *          way allows us to also use it as the "base-value" by the
+     *          absolute-cost-logit to set a scale in which we scale changes to
+     *          absolute changes in profit rate.
+     * \sa getChildWithHighestShare
      * \param aRegionName Region name.
      * \param aPeriod Period.
-     * \author Kate Calvin
+     * \warning This method is only used during calibration and should be called
+     *          before calculateShareWeights.
      */
-    virtual void calculateProfitScalers( const std::string& aRegionName,
-                                const int aPeriod ) = 0;
+    virtual void calculateNodeProfitRates( const std::string& aRegionName,
+                                           const int aPeriod ) = 0;
+
+    /*!
+     * \brief Calculates share-weights that returns the observed shares given
+     *        the discreate choice function of the nest and current profit rate
+     *        of this land item.
+     * \details Note that during the final calibration period this method may also
+     *          calculate share-weights for future model periods using the user
+     *          supplied "ghost unnormalized share" instead of the historical share.
+     *          In this case the profit rate in the final calibration is still used.
+     *          This could be used to introduce a new crop/technology or adjust
+     *          future share-weights in a consistent manner.
+     * \param aRegionName Region name.
+     * \param aChoiceFnAbove The discrete choice function from the level above
+     *                       used to calculate share-weights at this node.
+     * \param aPeriod Period.
+     * \param aCalcFutureSW A flag to indicate if this call should calculate
+     *                      future share-weights using the ghost-unnormalized-share
+     *                      values.  Typically this is done in the final calibration
+     *                      period only.
+     * \author Kate Calvin
+     * \warning This method is only used during calibration and should be called
+     *          after node profit rates are set in calculateNodeProfitRates.
+     */
+    virtual void calculateShareWeights( const std::string& aRegionName,
+                                        IDiscreteChoice* aChoiceFnAbove,
+                                        const int aPeriod,
+                                        const bool aCalcFutureSW = false );
 
     /*!
      * \brief Sets the profit rate for a given product.
@@ -249,6 +284,13 @@ public:
                                    const std::string& aProductName,
                                    const double aProfitRate,
                                    const int aPeriod ) = 0;
+
+    /*!
+     * \brief Get the profit rate for this land item.
+     * \param aPeriod Model period.
+     * \return The currently calculated profit rate in the given model period.
+     */
+    double getProfitRate( const int aPeriod ) const;
 
     /*!
      * \brief Set the rate at which the carbon price is expected to increase
@@ -286,13 +328,14 @@ public:
      *          and the logit exponent from one level up. This method uses the
      *          modified logit from the energy system.
      * \param aRegionName Name of the containing region.
-     * \param aLogitExpAbove the logit exponent value from the node above this level.
+     * \param aChoiceFnAbove The discrete choice function from the level above
+     *                       to calculate shares at this node.
      * \param aPeriod Model period.
      * \return The unnormalized share.
      * \author Kate Calvin
      */
     virtual double calcLandShares( const std::string& aRegionName,
-                                   const double aLogitExpAbove,
+                                   IDiscreteChoice* aChoiceFnAbove,
                                    const int aPeriod ) = 0;
 
     /*!
@@ -331,74 +374,61 @@ public:
     virtual void setUnmanagedLandProfitRate( const std::string& aRegionName, 
                                              double aAverageProfitRate,
                                              const int aPeriod ) = 0;
-
+    
     /*!
-     * \brief calculate the calibration profit rate
-     * \details The calibration profit rate is
-     *          determined by the shares and the avergae price of land 
-     *          a region/subregion.  
+     * \brief Reset the read in land allocation
+     * \details Reset land allocation for calibration purposes. We'll
+     *          want to do this when there is a land allocation but no
+     *          calOutput.
      * \param aRegionName Region name.
-     * \param aAverageProfitRate Region's average profit rate.
-     * \param aPeriod Model period
-     * \author Marshall Wise
-     */
-    virtual void calculateCalibrationProfitRate( const std::string& aRegionName, 
-                                             double aAverageProfitRate,
-                                             double aLogitExponentAbove,
-                                             const int aPeriod ) = 0;
-
-    /*!
-     * \brief calculate the profit scaler adjustment factor
-     * \details Profit scalers need to be adjusted when new technologies
-     *          are added to a node.  This method calculates that adjustment
-     * \param aRegionName Region name.
+     * \param aNewLandAllocation New land allocation.
      * \param aPeriod Model period
      * \author Kate Calvin
      */
-    virtual void adjustProfitScalers( const std::string& aRegionName, 
-                                const int aPeriod ) = 0;
-
+    virtual void resetCalLandAllocation( const std::string& aRegionName,
+                                            double aNewLandAllocation,
+                                        const int aPeriod ) {}
+    
     /*!
-     * \brief Set the share of this land item.
-     * \param aShare Share of the land allocated to the parent.
-     * \param aPeriod Period.
-     * \author James Blackwood
+     * \brief Get the actual average profit rate in a calibration year at this
+     *        land item.
+     * \details This will use the actual profit rate and the calibration shares
+     *          to come up with the average.  Note if this item does not exist in
+     *          the calibration but has a "ghost" share that will be used instead
+     *          to calculate the average profite rate.
+     * \param aProfitRate [out] Return the average profit rate at this item.
+     * \param aShare [out] Return the appropriate share to use if further weighting
+     *               is necessary.
+     * \param aPeriod Model Period.
+     * \return The observed average profite rate at this land item.
      */
+    virtual void getObservedAverageProfitRate( double& aProfitRate, double& aShare, const int aPeriod ) const = 0;
+    
+    /*!
+     * \brief Get the child that has the highest share.
+     * \details When two children have the same share the child with the highest
+     *          profit rate will be chosen.  Users have the choice if they want
+     *          unmanaged land leaves and zero share children to be considered.
+     * \param aIncludeAllChildren A flag if an unmanged land leaf should be included
+     *                             for consideration when searching for the highest share.
+     * \param aPeriod Model period.
+     * \return The child land item that has the highest share.  Note that it may
+     *         be null if for instance only unmanged land leaves are available or
+     *         all shares are zero and aIncludeAllChildren is false.
+     */
+    virtual const ALandAllocatorItem* getChildWithHighestShare( const bool aIncludeAllChildren,
+                                                                const int aPeriod ) const = 0;
+
     void setShare( const double aShare,
                    const int aPeriod );
     
-    /*!
-     * \brief Set the profit scaler of this land item.
-     * \param aProfitScaler Profit scaler of the item
-     * \param aPeriod Period.
-     * \author Kate Calvin
-     */
-    void setProfitScaler( const double aProfitScaler,
-                         const int aPeriod );
-
     double getShare( const int aPeriod ) const;
         
-    virtual double getLogitExponent( const int aPeriod ) const = 0;
- 
     const ALandAllocatorItem* getParent() const;
 
-    double getProfitRate( const int aPeriod ) const;
-
-    double getScaledProfitRate( const int aPeriod ) const;
-
-    double getProfitScaler( const int aPeriod ) const;
-
-    virtual double getNewTechProfitScaler( const int aPeriod ) const = 0;
-
-    double getShare( const double aPeriod ) const;
-
-    bool isNewTech( const double aPeriod ) const;
-
-    void setNewTechAdjustment( const double aAdjustment, const double aPeriod );
-
     LandAllocatorItemType getType() const;
-            
-    virtual bool isManagedLandLeaf( )  const = 0;
+	
+	virtual bool isUnmanagedLandLeaf( )  const = 0;
 
 protected:
     virtual void toDebugXMLDerived( const int aPeriod,
@@ -425,24 +455,26 @@ protected:
          */
         DEFINE_VARIABLE( ARRAY | STATE, "share", mShare, objects::PeriodVector<Value> ),
         
-        //! Profit scaler 
-        DEFINE_VARIABLE( ARRAY, "profit-scaler", mProfitScaler, objects::PeriodVector<double> ),
-
-        //! Boolean indicating a node or leaf is new
-        // TODO: should this be in the leaf?
-        DEFINE_VARIABLE( ARRAY, "isNewTechnology", mIsNewTech, objects::PeriodVector<bool> ),
-
-        //! Double that adjusts a profit scaler to account for the availability of new technologies
-        DEFINE_VARIABLE( ARRAY, "adjustment", mAdjustForNewTech, objects::PeriodVector<double> ),
-
-        //! Calibration Profit or Calibration Land Rental Rate in dollars
-        // This is the profit rate implied by the shares in the calibration data
-        //It is not read in but computed as part of the calibration
-        DEFINE_VARIABLE( ARRAY, "CalProfitRate", mCalibrationProfitRate, objects::PeriodVector<double> ),
+        //! Share weights for calibrating historical shares, or turning how future
+        //! crops/technologies will compete.
+        DEFINE_VARIABLE( ARRAY | STATE, "share-weight", mShareWeight, objects::PeriodVector<Value> ),
 
         //! Land observed profit rate
-        DEFINE_VARIABLE( ARRAY | STATE, "ProfitRate", mProfitRate, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE, "profit-rate", mProfitRate, objects::PeriodVector<Value> ),
+
+        //! The ghost unnormalized share, or the share a future crop/technology would
+        //! get if it was available in the final calibration period at the profit rate
+        //! calculated in the final calibration period.
+        DEFINE_VARIABLE( ARRAY, "ghost-unnormalized-share", mGhostUnormalizedShare, objects::PeriodVector<Value> ),
         
+        //! A flag to indicate that this land item intends to use it's ghost share in
+        //! in terms of the share it would recieve if it's average profitability were
+        //! the same as the average observed profit rate of the dominant sibling in this
+        //! land nest.
+        //! \sa ALandAllocatorItem::getObservedAverageProfitRate
+        //! \sa ALandAllocatorItem::getChildWithHighestShare
+        DEFINE_VARIABLE( SIMPLE, "is-ghost-share-relative", mIsGhostShareRelativeToDominantCrop, bool ),
+
         //! Name of the land allocator item. This is the name of the product for
         //! leafs and name of the type of land for nodes.
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),

@@ -587,6 +587,7 @@
     <ClCompile Include="..\..\emissions\source\mac_control.cpp" />
     <ClCompile Include="..\..\emissions\source\nonco2_emissions.cpp" />
     <ClCompile Include="..\..\emissions\source\output_driver.cpp" />
+    <ClCompile Include="..\..\emissions\source\readin_control.cpp" />
     <ClCompile Include="..\..\functions\source\absolute_cost_logit.cpp" />
     <ClCompile Include="..\..\functions\source\building_function.cpp" />
     <ClCompile Include="..\..\functions\source\building_node_input.cpp" />
@@ -907,6 +908,7 @@
     <ClInclude Include="..\..\emissions\include\mac_control.h" />
     <ClInclude Include="..\..\emissions\include\nonco2_emissions.h" />
     <ClInclude Include="..\..\emissions\include\output_driver.h" />
+    <ClInclude Include="..\..\emissions\include\readin_control.h" />
     <ClInclude Include="..\..\functions\include\absolute_cost_logit.hpp" />
     <ClInclude Include="..\..\functions\include\building_function.h" />
     <ClInclude Include="..\..\functions\include\building_node_input.h" />

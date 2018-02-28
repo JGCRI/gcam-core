@@ -58,8 +58,8 @@ using namespace xercesc;
 AbsoluteCostLogit::AbsoluteCostLogit():
 mLogitExponent( 1.0 )
 {
-    mBaseCost = 0;
-    mParsedBaseCost = false;
+    mBaseValue = 0.001;
+    mParsedBaseValue = false;
 }
 
 //! destructor: nothing to clean up
@@ -91,40 +91,29 @@ bool AbsoluteCostLogit::XMLParse( const DOMNode *aNode ) {
             continue;
         }
         else if( nodeName == "logit-exponent" ) {
-            double value = XMLHelper<double>::getValue( curr );
-            if( value > 0 ) {
-                ILogger& mainlog = ILogger::getLogger( "main_log" );
-                mainlog.setLevel( ILogger::WARNING );
-                mainlog << "Skipping invalid value for logit exponent: " << value
-                        << " while parsing " << getXMLNameStatic() << "."
-                        << endl;
-                parsingSuccessful = false;
-            }
-            else {
-                XMLHelper<double>::insertValueIntoVector( curr, mLogitExponent, modeltime );
-            }
+            XMLHelper<double>::insertValueIntoVector( curr, mLogitExponent, modeltime );
         }
-        else if( nodeName == "base-cost" ) {
+        else if( nodeName == "base-value" ) {
             double value = XMLHelper<double>::getValue( curr );
             if( value <= 0 ) {
                 ILogger& mainlog = ILogger::getLogger( "main_log" );
                 mainlog.setLevel( ILogger::WARNING );
-                mainlog << "Ignoring invalid value for base cost: " << value
+                mainlog << "Ignoring invalid value for base value: " << value
                         << " while parsing " << getXMLNameStatic() << "." << endl;
                 parsingSuccessful = false;
-                // skip the rest of the loop.  Don't set base cost.
+                // skip the rest of the loop.  Don't set base value.
                 continue;
             }
             else if( value < 1.0e-2 ) {
                 ILogger& mainlog = ILogger::getLogger( "main_log" );
                 mainlog.setLevel( ILogger::WARNING );
-                mainlog << "Parsed value for base cost:  " << value
+                mainlog << "Parsed value for base value:  " << value
                         << " is very low.  This may produce questionable results."
                         << endl;
-                // fall through to set base cost to the input value.
+                // fall through to set base value to the input value.
             }
-            mBaseCost = value;
-            mParsedBaseCost = true;
+            mBaseValue = value;
+            mParsedBaseValue = true;
         }
         else {
             ILogger& mainlog = ILogger::getLogger( "main_log" );
@@ -144,8 +133,8 @@ void AbsoluteCostLogit::toInputXML( ostream& aOut, Tabs* aTabs ) const {
 
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
     XMLWriteVector( mLogitExponent, "logit-exponent", aOut, aTabs, modeltime );
-    if( mParsedBaseCost ) {
-        XMLWriteElement( mBaseCost, "base-cost", aOut, aTabs );
+    if( mParsedBaseValue ) {
+        XMLWriteElement( mBaseValue, "base-value", aOut, aTabs );
     }
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
@@ -154,9 +143,36 @@ void AbsoluteCostLogit::toInputXML( ostream& aOut, Tabs* aTabs ) const {
 void AbsoluteCostLogit::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
     XMLWriteElement( mLogitExponent[ aPeriod ], "logit-exponent", aOut, aTabs );
-    XMLWriteElement( mBaseCost, "base-cost", aOut, aTabs );
-    XMLWriteElement( mParsedBaseCost, "parsed-base-cost", aOut, aTabs );
+    XMLWriteElement( mBaseValue, "base-value", aOut, aTabs );
+    XMLWriteElement( mParsedBaseValue, "parsed-base-value", aOut, aTabs );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
+}
+
+void AbsoluteCostLogit::initCalc( const string& aRegionName, const string& aContainerName,
+                                  const bool aShouldShareIncreaseWithValue, const int aPeriod)
+{
+    if( mLogitExponent[ aPeriod ] != 0.0 && aShouldShareIncreaseWithValue ^ ( mLogitExponent[ aPeriod ] > 0.0 ) ) {
+        ILogger& mainlog = ILogger::getLogger( "main_log" );
+        mainlog.setLevel( ILogger::WARNING );
+        mainlog << "Inversed sign on logit exponent: " << mLogitExponent[ aPeriod ]
+                << " when we expect the unormalized share to increase with an increase in value is " << aShouldShareIncreaseWithValue
+                << endl;
+    }
+    
+    if( !mParsedBaseValue && mBaseValue <= 0.0 ) {
+        bool isFuturePer = aPeriod > scenario->getModeltime()->getFinalCalibrationPeriod();
+        // Illegal value.  Since this will affect sharing in the model we will
+        // not be able to proceed and will abort.
+        ILogger &calibrationLog = ILogger::getLogger("calibration_log");
+        calibrationLog.setLevel(isFuturePer ? ILogger::SEVERE : ILogger::WARNING);
+        calibrationLog << "In " << aRegionName << ", " << aContainerName << ":  invalid or uninitialized base value parameter  "
+                       << mBaseValue << endl;
+        if( isFuturePer ) {
+            calibrationLog << "This value will generate invalid sharing with " << getXMLName()
+                           << ", please parse a reasonable value instead." << endl;
+            abort();
+        }
+    }
 }
 
 /*!
@@ -165,81 +181,98 @@ void AbsoluteCostLogit::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTab
  *          function being used to calculate subsector shares in this sector.  The normalization 
  *          factor will be calculated later.
  * \param aShareWeight share weight for the choice for which the share is being calculated.
- * \param aCost cost for the choice for which the share is being calculated.
+ * \param aValue value for the choice for which the share is being calculated.
  * \param aPeriod model time period for the calculation.
  * \return log of the unnormalized share.
  */
-double AbsoluteCostLogit::calcUnnormalizedShare( const double aShareWeight, const double aCost,
+double AbsoluteCostLogit::calcUnnormalizedShare( const double aShareWeight, const double aValue,
                                                  const int aPeriod ) const
 {
     /*!
-     * \pre A valid logit exponent has been set.
-     */
-    assert( mLogitExponent[ aPeriod ] <= 0 );
-
-    /*!
      * \pre A valid base cost has been set.
      */
-    assert( mBaseCost != 0 );
+    assert( mBaseValue > 0 );
 
     // Zero share weight implies no share which is signaled by negative infinity.
     const double minInf = -std::numeric_limits<double>::infinity();
     double logShareWeight = aShareWeight > 0.0 ? log( aShareWeight ) : minInf; // log(alpha)
     //           v--- log(alpha * exp(beta*p/p0))  ---v
-    return logShareWeight + mLogitExponent[ aPeriod ] * aCost / mBaseCost;
+    return logShareWeight + mLogitExponent[ aPeriod ] * aValue / mBaseValue;
+}
+
+double AbsoluteCostLogit::calcAverageValue( const double aUnnormalizedShareSum,
+                                           const double aLogShareFac,
+                                           const int aPeriod ) const
+{
+    double ret;
+    if( mLogitExponent[ aPeriod ] == 0.0 ) {
+        // TODO: what to do with zero logit?
+        ret = mBaseValue * aUnnormalizedShareSum * exp( aLogShareFac );
+    }
+    else if( aUnnormalizedShareSum == 0 && mLogitExponent[ aPeriod ] < 0 ) {
+        // No Valid options and negative logit so return a large value so a nested
+        // logit would not want to choose this nest.
+        ret = util::getLargeNumber();
+    }
+    else if( aUnnormalizedShareSum == 0 && mLogitExponent[ aPeriod ] > 0 ) {
+        // No Valid options and positive logit so return a large negative value
+        // so a nested logit would not want to choose this nest.
+        ret = -util::getLargeNumber();
+    }
+    else {
+        ret = ( aLogShareFac + log( aUnnormalizedShareSum ) )
+              * ( mBaseValue / mLogitExponent[ aPeriod ] ) + mBaseValue;
+    }
+
+    return ret;
 }
 
 /*!
  * \brief Share weight calculation for the absolute cost logit.
- * \details Given an an "anchor" subsector with observed share and cost and another choice
- *          also with observed share and cost, compute the inverse of the discrete choice function
+ * \details Given an an "anchor" subsector with observed share and value and another choice
+ *          also with observed share and value, compute the inverse of the discrete choice function
  *          to produce a share weight.
  * \param aShare observed share for the current choice.
- * \param aCost observed cost for the current choice.
+ * \param aValue observed value for the current choice.
  * \param aAnchorShare observed share for the anchor choice.
- * \param aAnchorCost observed cost for the anchor choice.
+ * \param aAnchorValue observed value for the anchor choice.
  * \param aPeriod model time period for the calculation.
  * \return share weight for the current choice.
  */
-double AbsoluteCostLogit::calcShareWeight( const double aShare, const double aCost, const double aAnchorShare,
-                                           const double aAnchorCost, const int aPeriod ) const
+double AbsoluteCostLogit::calcShareWeight( const double aShare, const double aValue, const double aAnchorShare,
+                                           const double aAnchorValue, const int aPeriod ) const
 {
-    double coef = mLogitExponent[ aPeriod ] / mBaseCost;
-    return ( aShare / aAnchorShare ) * exp( coef * ( aAnchorCost - aCost ) );
+    double coef = mLogitExponent[ aPeriod ] / mBaseValue;
+    return ( aShare / aAnchorShare ) * exp( coef * ( aAnchorValue - aValue ) );
 }
 
-
 /*!
- * \brief Set the cost scale for the logit choice function
- * \details This parameter determines the cost range in which the
+ * \brief Set the value scale for the logit choice function
+ * \details This parameter determines the value range in which the
  *          logit parameter will have the same behavior as a logit
  *          exponent with the same numerical value in the
  *          relative-cost variant.  The purpose of this parameter is
  *          to allow us to easily work out the numerical values of the
  *          choice function parameters that will give behavior similar
  *          to a relative-cost-logit with known parameters (at least,
- *          over a limited range of cost values).  This function is
+ *          over a limited range of value values).  This function is
  *          called by the calibration subroutines, which use a set of
- *          heuristics to set the cost scale automatically.  If a
- *          value for the cost scale parameter was specified
+ *          heuristics to set the value scale automatically.  If a
+ *          value for the value scale parameter was specified
  *          explicitly in the input, then the value suggested by the
  *          calibration subroutine is ignored, and the parsed value is
  *          used instead.
- * \param aBaseCost Value to set as the cost scale parameter.
+ * \param aBaseValue Value to set as the value scale parameter.
  */
-void AbsoluteCostLogit::setBaseCost( const double aBaseCost, const std::string &aFailMsg ) {
-  if( !mParsedBaseCost ) {
-      if(aBaseCost <= 0.0) {
-          // Illegal value.  Log an error and set to a default value
-          ILogger &calibrationLog = ILogger::getLogger("calibration_log");
-          ILogger::WarningLevel oldlvl = calibrationLog.setLevel(ILogger::WARNING);
-          calibrationLog << aFailMsg << ":  invalid or uninitialized base cost parameter. "
-                         << "Setting baseCost = 1.0\n";
-          calibrationLog.setLevel(oldlvl);
-          mBaseCost = 1.0;
-      }
-      else {
-          mBaseCost = aBaseCost;
-      }
-  } // This function is a no-op if mParsedBaseCost is set.
+void AbsoluteCostLogit::setBaseValue( const double aBaseValue ) {
+  if( !mParsedBaseValue ) {
+      // both zero and negative base values are problematic
+      // however a zero value will generate NaNs while a negative
+      // value will still calibrate just fine however it will cause
+      // inversed sharing behavior once we move beyond calibration
+      // thus we will replace explicitly zero values with a negative
+      // and in initCalc check for negative base values (only generate
+      // warnings if we solve at a negative value).
+      mBaseValue = aBaseValue == 0.0 ? -1.0 : aBaseValue;
+  } // This function is a no-op if mParsedBaseValue is set.
 }

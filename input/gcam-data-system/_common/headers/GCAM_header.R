@@ -150,7 +150,7 @@ file_fqn <- function( domain, fn, extension=".csv" ) {
 # readdata: read an arbitrary data file
 # params: fn (filename )
 # TODO: error handling (probably using try/catch)
-readdata <- function( domain="none", fn="none", extension=".csv", na.strings="", must.exist=TRUE, ... ) {
+readdata <- function( domain="none", fn="none", extension=".csv", na.strings="", must.exist=TRUE, replace_GLU = FALSE, ... ) {
 
 	if( domain=="none" | fn=="none" ) {
 		printlog( "ERROR: no domain/file specified", fn )
@@ -167,6 +167,11 @@ readdata <- function( domain="none", fn="none", extension=".csv", na.strings="",
 							comment.char=GCAM_DATA_COMMENT,	# Our comment signal
 							... ) )	
 		printlog( "...OK.", nrow( x ), "rows,", ncol( x ), "cols", ts=F )
+		
+		# If indicated, switch the GLU column from codes to names, or vice versa
+		if( replace_GLU ){
+		  x <- replace_GLU( x )
+		}
 
 		# Update dependency list, if necessary
 		deps <- DEPENDENCIES[[ GCAM_SOURCE_FN[ GCAM_SOURCE_RD ] ]]
@@ -454,6 +459,8 @@ write_mi_data <- function( x, IDstring, domain="none", fn=GCAM_SOURCE_FN[ GCAM_S
 		write( "LandNode1,LandNode", myfn, append=T )
 		write( "LandNode2,LandNode", myfn, append=T )
 		write( "LandNode3,LandNode", myfn, append=T )	
+		write( "LandNode4,LandNode", myfn, append=T )		
+		write( "LandNode5,LandNode", myfn, append=T )		
 	}
 }
 
@@ -535,6 +542,21 @@ translate_to_full_table <- function( data, var1, var1_values, var2, var2_values,
 	return( data_new )
 }
 
+# -----------------------------------------------------------------------------
+# set_subsector_shrwt: calculate subsector shareweights in calibration periods, where subsectors may have multiple technologies
+set_subsector_shrwt <- function( data,
+  value.name="calOutputValue", region.name="region", sector.name="supplysector", subsector.name="subsector", year.name="year",
+  result.column.name="subs.share.weight" ){
+	data_aggregated <- aggregate( data[value.name],
+	      by=list( region = data[[region.name]], sector = data[[sector.name]], subsector = data[[subsector.name]], year = data[[year.name]] ),
+	      FUN=sum )
+	data_new <- data
+	data_new[[result.column.name]] <- ifelse( data_aggregated[[value.name]][
+	      match( paste( data_new[[region.name]], data_new[[sector.name]], data_new[[subsector.name]], data_new[[year.name]] ),
+	             paste( data_aggregated$region, data_aggregated$sector, data_aggregated$subsector, data_aggregated$year ) ) ] > 0, 1, 0 )
+	return( data_new ) 	
+}
+
 # Gets a list of all valid logit types.
 # WARNING: this needs to be kept in sync with the model and headers
 get_logit_types <- function() {
@@ -614,4 +636,80 @@ read_logit_fn_tables <- function( domain, table.name, skip=0, include.equiv.tabl
     }
     return( ret_tables )
 }
+
+#add_agtech_names: function to use the commodity and GLU names to create agsupplysectors, subsectors, technologies
+add_agtech_names <- function( data ){
+  data[[agsupp]] <- data[[C]]
+  data[[agsubs]] <- paste( data[[C]], data[[GLU]], sep = crop_GLU_delimiter )
+  data[[agtech]] <- data[[agsubs]]
+  if( irr %in% names( data ) ){
+    data[[agtech]] <- paste( data[[agsubs]], data[[irr]], sep = irr_delimiter )
+  }	
+  return( data )
+}
+
+write_to_all_regions <- function( data, names, has.traded=F, apply.to = "selected", set.market = F ){
+  if ( "logit.year.fillout" %in% names ) data$logit.year.fillout <- "start-year"
+  if ( "price.exp.year.fillout" %in% names ) data$price.exp.year.fillout <- "start-year"
+  data_new <- set_years( data )
+  data_new <- repeat_and_add_vector( data_new, "GCAM_region_ID", GCAM_region_names$GCAM_region_ID )
+  data_new <- add_region_name( data_new )
+  if ("market.name" %in% names ) data_new$market.name <- data_new$region
+  if( has.traded==T){
+    if( set.market==T){
+      data_new$market.name <- data_new$region
+    }
+    data_new <- set_traded_names( data_new, apply.to )
+  }
+  return( data_new[ names ] ) 
+}
+
+# -----------------------------------------------------------------------------
+# set_traded_names: convert names of traded secondary goods to be contained within region 1, with region appended to subsector and tech names
+set_traded_names <- function( data, apply.to="selected" ) {
+  data_new <- data
+  if( apply.to=="selected" ){
+    if( "subsector" %in% names( data ) ){
+      data_new$subsector[data$traded == 1] <- paste( data$region[data$traded == 1], data$subsector[data$traded == 1], sep = " " )
+    } 
+    if( "technology" %in% names( data ) ){
+      data_new$technology[data$traded == 1] <- paste( data$region[data$traded == 1], data$technology[data$traded == 1], sep = " " )
+    } 
+    data_new$region[data$traded == 1] <- GCAM_region_names$region[1]
+    return( data_new )
+  }
+  if(apply.to=="all" ){
+    if( "subsector" %in% names( data ) ){
+      data_new$subsector <- paste( data$region, data$subsector, sep = " " )
+    } 
+    if( "technology" %in% names( data ) ){
+      data_new$technology <- paste( data$region, data$technology, sep = " " )
+    } 
+    data_new$region <- GCAM_region_names$region[1]
+    return( data_new )
+  }
+}
+
+# replace_GLU: a function for replacing GLU numerical codes with names, and vice versa
+replace_GLU <- function( d, map = basin_to_country_mapping, GLUpat = "GLU[0-9]{3}" ){
+  # First figure out whether there is a GLU column
+  if( GLU %in% names( d ) ){
+    # Then determine the direction of the change based on character string matching in the first element
+    if( grepl( GLUpat, d[[GLU]][1] ) ){
+      printlog( "switching from GLU numerical codes to names")
+      d[[GLU]] <- map$GLU_name[ match( d[[GLU]], map$GLU_code ) ]
+    } else {
+      printlog( "switching from GLU names to numerical codes")
+      d[[GLU]] <- map$GLU_code[ match( d[[GLU]], map[["GLU_name"]] ) ]
+    }
+  } else {
+    # do nothing if there is no GLU column. just print a warning message
+    printlog( "WARNING: no GLU column in data frame" )
+  }
+  # no matter what, return the data frame
+  return( d )
+}
+
+
+
 

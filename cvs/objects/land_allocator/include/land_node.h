@@ -49,7 +49,6 @@
 #include <memory>
 #include <xercesc/dom/DOMNode.hpp>
 #include "land_allocator/include/aland_allocator_item.h"
-#include "util/base/include/value.h"
 
 // Forward declarations
 class LandUseHistory;
@@ -99,17 +98,19 @@ public:
                                 const double aLandAllocationAbove,
                                 const int aPeriod );
 
-    virtual void calculateProfitScalers( const std::string& aRegionName, 
-                                const int aPeriod );
+    virtual void calculateNodeProfitRates( const std::string& aRegionName,
+                                           const int aPeriod );
 
-    virtual void adjustProfitScalers( const std::string& aRegionName, 
-                                const int aPeriod );
+    virtual void calculateShareWeights( const std::string& aRegionName, 
+                                        IDiscreteChoice* aChoiceFnAbove,
+                                        const int aPeriod,
+                                        const bool aCalcFutureSW );
 
     virtual void setProfitRate( const std::string& aRegionName,
                                    const std::string& aProductName,
                                    const double aProfitRate,
                                    const int aPeriod );
- 
+
     virtual void setCarbonPriceIncreaseRate( const double aCarbonPriceIncreaseRate, 
                                       const int aPeriod );
 
@@ -123,7 +124,7 @@ public:
     virtual void setSoilTimeScale( const int aTimeScale );
 
     virtual double calcLandShares( const std::string& aRegionName,
-                                   const double aLogitExpAbove,
+                                   IDiscreteChoice* aChoiceFnAbove,
                                    const int aPeriod );
 
     virtual void calcLandAllocation( const std::string& aRegionName,
@@ -142,20 +143,16 @@ public:
 
     virtual LandUseHistory* getLandUseHistory();
         
-    virtual double getLogitExponent( const int aPeriod ) const;
-
-    virtual double getNewTechProfitScaler( const int aPeriod ) const;
-    
     virtual void setUnmanagedLandProfitRate( const std::string& aRegionName, 
                                              double aAverageProfitRate,
                                              const int aPeriod );
-           
-    virtual bool isManagedLandLeaf( )  const;
-
-    virtual void calculateCalibrationProfitRate( const std::string& aRegionName,
-                                             double aAverageProfitRate,
-                                             double aLogitExponentAbove,
-                                             const int aPeriod );
+    
+    virtual void getObservedAverageProfitRate( double& aProfitRate, double& aShare, const int aPeriod ) const;
+    
+    virtual const ALandAllocatorItem* getChildWithHighestShare( const bool aIncludeAllChildren,
+                                                                const int aPeriod ) const;
+    
+	virtual bool isUnmanagedLandLeaf( )  const;
 
     virtual void accept( IVisitor* aVisitor, 
                          const int aPeriod ) const;
@@ -189,27 +186,11 @@ protected:
     DEFINE_DATA_WITH_PARENT(
         ALandAllocatorItem,
 
-        //! Land allocated -- used for conceptual roots
-        DEFINE_VARIABLE( ARRAY | STATE, "landAllocation", mLandAllocation, objects::PeriodVector<Value> ),
-            
         //! Logit exponent -- should be positive since we are sharing on profit
-        DEFINE_VARIABLE( ARRAY, "logit-exponent", mLogitExponent, objects::PeriodVector<double> ),
+        DEFINE_VARIABLE( CONTAINER, "discrete-choice-function", mChoiceFn, IDiscreteChoice* ),
 
-        //! Share Profit scaler for new technologies in this node
-        DEFINE_VARIABLE( ARRAY, "new-tech-profit-scaler", mNewTechProfitScaler, objects::PeriodVector<double> ),
-        
-        //! Numerator that determines share for new technologies IF the right profit conditions hold
-        //! Share will equal ( mGhostShareNumerator / ( 1 + mGhostShareNumerator ) ) if and only if
-        //! the profit of the new technology is equal to the profit of the dominant technology in 
-        //! the base year, and all other profits stay the same.
-        DEFINE_VARIABLE( ARRAY, "default-share", mGhostShareNumerator, objects::PeriodVector<double> ),
-        
         //! Double storing the average price of land in a region or subregion
         DEFINE_VARIABLE( SIMPLE, "unManagedLandValue", mUnManagedLandValue, double ),
-
-        //! Boolean indicating that scalers in this node should be adjusted for new technologies
-        // TODO: we may want this boolean at the LandLeaf level, but it will need to be used in LandNode
-        DEFINE_VARIABLE( SIMPLE, "adjustForNewTech", mAdjustScalersForNewTech, bool ),
 
         //! List of the children of this land node located below it in the land
         //! allocation tree.

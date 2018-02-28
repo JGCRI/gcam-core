@@ -106,10 +106,13 @@ MarketContainer::MarketContainer( const IMarketType::Type aMarketType,
  * \param aGoodName The good or fuel name for the item in the market.
  * \param aRegionName The region which this market covers. It may include
  *        several model regions.
+ * \param aStartPeriod If a non-negative value is the period in which a linked market may
+ *                     override a previously set market to effectively switch markets over time.
  */
 MarketContainer::MarketContainer( MarketContainer* aMarketToLink,
                                   const string& aGoodName,
-                                  const string& aRegionName )
+                                  const string& aRegionName,
+                                  const int aStartPeriod )
 {
     // Store the market name so that it can be returned without any allocations.
     mName = aRegionName + aGoodName;
@@ -122,8 +125,14 @@ MarketContainer::MarketContainer( MarketContainer* aMarketToLink,
     
     // create the linked market object for each period.
     const Modeltime* modeltime = scenario->getModeltime();
-    for( int period = 0; period < size(); ++period ) {
-        mMarkets[ period ] = new LinkedMarket( aMarketToLink->mMarkets[ period ], this );
+    // ensure model periods prior to aStartPeriod atleast get a market not linked to anything
+    // instead of a crash
+    for( int period = 0; period < max( aStartPeriod, 0 ); ++period ) {
+        mMarkets[ period ] = new LinkedMarket( 0, this );
+        mMarkets[ period ]->setYear( modeltime->getper_to_yr( period ) );
+    }
+    for( int period = max( aStartPeriod, 0 ); period < size(); ++period ) {
+        mMarkets[ period ] = new LinkedMarket( aMarketToLink ? aMarketToLink->mMarkets[ period ] : 0, this );
         mMarkets[ period ]->setYear( modeltime->getper_to_yr( period ) );
     }
 }
@@ -185,6 +194,24 @@ Market* MarketContainer::createMarket( const IMarketType::Type aType )
         mainLog << "Invalid market type: " << aType << endl;
     }
     return rNewMarket;
+}
+
+/*!
+ * \brief Change the market which is linked to starting at the given period.
+ * \details If the aStartPeriod parameter is set (non negative value) then
+ *          this call may potentially override a previously set market with
+ *          one that links elsewhere.
+ * \param aMarketToLink The market that LinkedMarket should link to.
+ * \param aStartPeriod If a non-negative value is the period in which a linked market may
+ *                     ioverride a previously set market to effectively switch markets over time.
+ */
+void MarketContainer::changeLinkedMarket( MarketContainer* aMarketToLink, const int aStartPeriod ) {
+    if( aStartPeriod > 0 ) {
+        for( unsigned int period = aStartPeriod; period < size(); period++ ){
+            delete mMarkets[ period ];
+            mMarkets[ period ] = new LinkedMarket( aMarketToLink ? aMarketToLink->mMarkets[ period ] : 0, this );
+        }
+    }
 }
 
 /*!

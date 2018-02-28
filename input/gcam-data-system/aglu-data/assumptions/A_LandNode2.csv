@@ -1,7 +1,0 @@
-# File: A_LandNode2.csv,
-# Description: Second level land nodes,
-# Original source: Land_nesting_structure.xls,
-# ----------,
-LandNode1,LandNode2
-AgroForestLand,AllPastureLand
-AgroForestLand,AgroForest_NonPasture

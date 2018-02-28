@@ -2,7 +2,7 @@
 GCAM_region_ID,region,tradbio_region,ethanol,biodiesel,biomassOil_tech,elect_td_techchange,heat,region.class
 1,USA,0,corn ethanol,biodiesel,OilCrop,0.0001,0,A
 2,Africa_Eastern,1,cellulosic ethanol,FT biofuels,OilCrop,0.00025,0,E
-3,Africa_Northern,1,cellulosic ethanol,FT biofuels,biomassOil,0.00025,0,E
+3,Africa_Northern,1,cellulosic ethanol,FT biofuels,OilCrop,0.00025,0,E
 4,Africa_Southern,1,cellulosic ethanol,FT biofuels,OilCrop,0.00025,0,E
 5,Africa_Western,1,cellulosic ethanol,FT biofuels,OilCrop,0.00025,0,E
 6,Australia_NZ,0,cellulosic ethanol,biodiesel,OilCrop,0.0001,0,B
@@ -16,7 +16,7 @@ GCAM_region_ID,region,tradbio_region,ethanol,biodiesel,biomassOil_tech,elect_td_
 14,Europe_Eastern,0,corn ethanol,biodiesel,OilCrop,0.0002,1,D
 15,Europe_Non_EU,0,corn ethanol,biodiesel,OilCrop,0.0002,1,C
 16,European Free Trade Association,0,corn ethanol,biodiesel,OilCrop,0.0001,0,C
-17,India,1,cellulosic ethanol,FT biofuels,biomassOil,0.002,0,E
+17,India,1,cellulosic ethanol,FT biofuels,OilCrop,0.002,0,E
 18,Indonesia,1,sugar cane ethanol,biodiesel,PalmFruit,0.00025,0,E
 19,Japan,0,cellulosic ethanol,FT biofuels,OilCrop,0.0001,0,D
 20,Mexico,1,cellulosic ethanol,biodiesel,OilCrop,0.00075,0,D

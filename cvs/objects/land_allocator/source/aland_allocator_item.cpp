@@ -43,6 +43,7 @@
 #include "util/base/include/xml_helper.h"
 #include "land_allocator/include/aland_allocator_item.h"
 #include "containers/include/scenario.h"
+#include "functions/include/idiscrete_choice.hpp"
 
 using namespace std;
 using namespace xercesc;
@@ -59,12 +60,11 @@ ALandAllocatorItem::ALandAllocatorItem( const ALandAllocatorItem* aParent,
                                         const LandAllocatorItemType aType )
     : mParent( aParent ),
       mShare( Value( -1.0 ) ), // this is so initialization can be checked.
-      mProfitScaler( -1.0 ), // this is so initialization can be checked.
-      mIsNewTech( false ),
-      mAdjustForNewTech( 1.0 )
+      mProfitRate( Value( 0.0 ) ),
+      mIsGhostShareRelativeToDominantCrop( false ),
+      mType( aType ),
+      mIsLandExpansionCost( false )
 {
-    mType = aType;
-    mIsLandExpansionCost = false;
 }
 
 //! Destructor
@@ -76,13 +76,6 @@ void ALandAllocatorItem::setShare( const double aShare,
 {
     assert( aShare >= 0 && aShare <= 1 );
     mShare[ aPeriod ] = aShare;
-}
-
-void ALandAllocatorItem::setProfitScaler( const double aProfitScaler,
-                                         const int aPeriod )
-{
-    assert( aProfitScaler >= 0 );
-    mProfitScaler[ aPeriod ] = aProfitScaler;
 }
 
 const string& ALandAllocatorItem::getName() const {
@@ -104,28 +97,9 @@ const ALandAllocatorItem* ALandAllocatorItem::getParent() const {
  *         period.
  */
 double ALandAllocatorItem::getProfitRate( const int aPeriod ) const {
-    // Ensure that profit is positive
-    if ( mProfitRate[ aPeriod ] < 0.0 ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Profit is negative for leaf " << getName()
-                << " in period " << aPeriod << endl;
-        exit( -1 );
-    }
     return mProfitRate[ aPeriod ];
 }
 
-/*!
- * \brief Returns the scaled profit rate for the specified period.
- * \param aPeriod The period to get the rate for.
- * \return double representing the profit rate of this item for the specified
- *         period.
- */
-double ALandAllocatorItem::getScaledProfitRate( const int aPeriod ) const {
-    // call to getprofitrate ensures that profit is positive
-    double unScaledProfitRate = getProfitRate( aPeriod );
-    return mProfitScaler[ aPeriod ] * unScaledProfitRate;
-}
 /*!
  * \brief Returns the share for the specified period.
  * \param aPeriod The period to get the rate for.
@@ -133,10 +107,6 @@ double ALandAllocatorItem::getScaledProfitRate( const int aPeriod ) const {
  */
 double ALandAllocatorItem::getShare( const int aPeriod ) const {
     return mShare[ aPeriod ];
-}
-
-double ALandAllocatorItem::getProfitScaler( const int aPeriod ) const {
-    return mProfitScaler[ aPeriod ];
 }
 
 /*!
@@ -147,26 +117,81 @@ LandAllocatorItemType ALandAllocatorItem::getType() const {
     return mType;
 }
 
-/*!
- * \brief Returns an boolean indicating whether this is a new technology.
- */
-bool ALandAllocatorItem::isNewTech( const double aPeriod ) const {
-    return mIsNewTech[ aPeriod ];
-}
+void ALandAllocatorItem::calculateShareWeights( const string& aRegionName, 
+                                                IDiscreteChoice* aChoiceFnAbove,
+                                                const int aPeriod,
+                                                const bool aCalcFutureSW )
+{
 
+    mShareWeight[ aPeriod ] = aChoiceFnAbove->calcShareWeight( mShare[ aPeriod ], mProfitRate[ aPeriod ], aPeriod );
 
-void ALandAllocatorItem::setNewTechAdjustment( const double aAdjustment, const double aPeriod ) {
-    mAdjustForNewTech[ aPeriod ] = aAdjustment;
+    // if the aCalcFutureSW flag is set and we have "ghost" share-weights to calculate
+    // we do that now with the current profit rate in this period.
+    if( aCalcFutureSW ) {
+        const Modeltime* modeltime = scenario->getModeltime();
+        double shareAdj = 1.0;
+        double profitRateForCal = mProfitRate[ aPeriod ];
+        if( mIsGhostShareRelativeToDominantCrop ) {
+            double newCropAvgProfitRate;
+            // note newCropAvgProfitRate, and shareAdj are "out" arguments in getObservedAverageProfitRate
+            // i.e. they will get set by this method call
+            // here we don't really care to get the shareAdj and it will get reset below
+            getObservedAverageProfitRate( newCropAvgProfitRate, shareAdj, aPeriod );
+            double dominantCropAvgProfitRate;
+            // do not consider unmanged land leaves when looking for the dominant crop
+            const ALandAllocatorItem* maxChild = getParent()->getChildWithHighestShare( false, aPeriod );
+            if( maxChild ) {
+                // note dominantCropAvgProfitRate, and shareAdj are "out" arguments in getObservedAverageProfitRate
+                // i.e. they will get set by this method call
+                maxChild->getObservedAverageProfitRate( dominantCropAvgProfitRate, shareAdj, aPeriod );
+                profitRateForCal *= dominantCropAvgProfitRate / newCropAvgProfitRate;
+            }
+            else {
+                // there are no valid crops in this nest and we were instructed to make the ghost share
+                // profit rate relative to them so we will zero out this land item.
+                for( int futurePer = aPeriod + 1; futurePer < modeltime->getmaxper(); ++futurePer ) {
+                    mShareWeight[ futurePer ] = 0.0;
+                }
+                return;
+            }
+        }
+        for( int futurePer = aPeriod + 1; futurePer < modeltime->getmaxper(); ++futurePer ) {
+            if( mGhostUnormalizedShare[ futurePer ].isInited() ) {
+                // note when mIsGhostShareRelativeToDominantCrop is true we made an adjustment to the cal profit rate
+                // by that of the dominant crop however the mGhostUnormalizedShare is still taken as an absolute
+                // share.  if instead we think it makes better sense to read it in as relative to the dominant crop's
+                // share we could do so by multiplying mGhostUnormalizedShare by shareAdj below:
+                mShareWeight[ futurePer ] = aChoiceFnAbove->calcShareWeight( mGhostUnormalizedShare[ futurePer ] /* * shareAdj */,
+                                                                             profitRateForCal,
+                                                                             futurePer );
+            }
+        }
+    }
 }
 
 void ALandAllocatorItem::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteOpeningTag ( getXMLName(), aOut, aTabs, mName );
 
     // write out basic data members
-    XMLWriteElement( mProfitRate[ aPeriod ], "ProfitRate", aOut, aTabs );
+    XMLWriteElement( getLandAllocation( getName(), aPeriod ), "land-allocation", aOut, aTabs );
+    XMLWriteElement( mProfitRate[ aPeriod ], "profit-rate", aOut, aTabs );
     XMLWriteElement( mShare[ aPeriod ], "share", aOut, aTabs );
-    XMLWriteElement( mProfitScaler[ aPeriod ], "profit-scaler", aOut, aTabs );
-    XMLWriteElement( mAdjustForNewTech[ aPeriod ], "adjustment", aOut, aTabs );
+    XMLWriteElement( mShareWeight[ aPeriod ], "share-weight", aOut, aTabs );
+    XMLWriteElement( mGhostUnormalizedShare[ aPeriod ], "ghost-unnormalized-share", aOut, aTabs );
+    XMLWriteElement( mIsGhostShareRelativeToDominantCrop, "is-ghost-share-relative", aOut, aTabs );
+
+    // if we are in the final calibration year and we have "ghost" share-weights to calculate it
+    // would be useful to see what was calculated.
+    const Modeltime* modeltime = scenario->getModeltime();
+    if( aPeriod == modeltime->getFinalCalibrationPeriod() ) {
+        for( int futurePer = aPeriod + 1; futurePer < modeltime->getmaxper(); ++futurePer ) {
+            if( mGhostUnormalizedShare[ futurePer ].isInited() ) {
+                const int futureYear = modeltime->getper_to_yr( futurePer );
+                XMLWriteElement( mShareWeight[ futurePer ], "share-weight", aOut, aTabs, futureYear );
+                XMLWriteElement( mGhostUnormalizedShare[ futurePer ], "ghost-unnormalized-share", aOut, aTabs, futureYear );
+            }
+        }
+    }
 
     // Call derived class method
     toDebugXMLDerived( aPeriod, aOut, aTabs );

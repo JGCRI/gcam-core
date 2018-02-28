@@ -61,6 +61,7 @@ class NonCO2Emissions;
 class GDPControl;
 class MACControl;
 class LinearControl;
+class ReadInControl;
 
 /*! 
  * \ingroup Objects
@@ -168,7 +169,7 @@ protected:
         /* Declare all subclasses of AEmissionsControl to allow automatic traversal of the
          * hierarchy under introspection.
          */
-        DEFINE_SUBCLASS_FAMILY( AEmissionsControl, GDPControl, MACControl, LinearControl ),
+        DEFINE_SUBCLASS_FAMILY( AEmissionsControl, GDPControl, MACControl, LinearControl, ReadInControl ),
         
         //! Name of the reduction so that users can have multiple emissions reductions
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),

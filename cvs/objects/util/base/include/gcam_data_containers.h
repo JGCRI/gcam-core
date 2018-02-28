@@ -72,6 +72,7 @@
 #include "emissions/include/gdp_control.h"
 #include "emissions/include/mac_control.h"
 #include "emissions/include/linear_control.h"
+#include "emissions/include/readin_control.h"
 #include "emissions/include/nonco2_emissions.h"
 #include "functions/include/idiscrete_choice.hpp"
 #include "functions/include/relative_cost_logit.hpp"

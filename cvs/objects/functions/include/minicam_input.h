@@ -109,6 +109,8 @@ public:
 
     virtual const std::string& getMarketName( const std::string& aRegionName ) const;
 
+    virtual void initializeTypeFlags();
+    
     virtual double getConversionFactor( const int aPeriod ) const;
 
     virtual double getCO2EmissionsCoefficient( const std::string& aGHGName,
@@ -149,7 +151,9 @@ public:
 
     virtual double getPriceAdjustment() const;
     
-    virtual bool hasTypeFlag( const int aTypeFlag ) const = 0;
+    virtual bool hasTypeFlag( const int aTypeFlag ) const;
+
+    virtual std::string getFlagName( const int aTypeFlag ) const;
     
     virtual double getPriceElasticity( const int aPeriod ) const = 0;
     
@@ -225,10 +229,14 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
         
         //! A map of a keyword to its keyword group
-        DEFINE_VARIABLE( SIMPLE, "keyword", mKeywordMap, std::map<std::string, std::string> )
+        DEFINE_VARIABLE( SIMPLE, "keyword", mKeywordMap, std::map<std::string, std::string> ),
+        
+        //! Type flags.
+        DEFINE_VARIABLE( SIMPLE, "type-flags", mTypeFlags, int )
     )
     
     void copy( const MiniCAMInput& aOther );
+    void setFlagsByName( const std::string& aTypeName );
 };
 
 #endif // _MINICAM_INPUT_H_

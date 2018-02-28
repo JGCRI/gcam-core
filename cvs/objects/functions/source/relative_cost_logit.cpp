@@ -54,7 +54,9 @@ using namespace xercesc;
 
 //! default constructor:  arg value <= 0 will get filled in with the default
 RelativeCostLogit::RelativeCostLogit():
-mLogitExponent( 1.0 )
+mLogitExponent( 1.0 ),
+mBaseValue( 0.0 ),
+mParsedBaseValue( false )
 {
 }
 
@@ -87,18 +89,29 @@ bool RelativeCostLogit::XMLParse( const DOMNode *aNode ) {
             continue;
         }
         else if( nodeName == "logit-exponent" ) {
+            XMLHelper<double>::insertValueIntoVector( curr, mLogitExponent, modeltime );
+        }
+        else if( nodeName == "base-value" ) {
             double value = XMLHelper<double>::getValue( curr );
-            if( value > 0 ) {
+            if( value <= 0 ) {
                 ILogger& mainlog = ILogger::getLogger( "main_log" );
                 mainlog.setLevel( ILogger::WARNING );
-                mainlog << "Skipping invalid value for logit exponent: " << value
-                        << " while parsing " << getXMLNameStatic() << "."
-                        << endl;
+                mainlog << "Ignoring invalid value for base value: " << value
+                << " while parsing " << getXMLNameStatic() << "." << endl;
                 parsingSuccessful = false;
+                // skip the rest of the loop.  Don't set base value.
+                continue;
             }
-            else {
-                XMLHelper<double>::insertValueIntoVector( curr, mLogitExponent, modeltime );
+            else if( value < 1.0e-2 ) {
+                ILogger& mainlog = ILogger::getLogger( "main_log" );
+                mainlog.setLevel( ILogger::WARNING );
+                mainlog << "Parsed value for base value:  " << value
+                << " is very low.  This may produce questionable results."
+                << endl;
+                // fall through to set base value to the input value.
             }
+            mBaseValue = value;
+            mParsedBaseValue = true;
         }
         else {
             ILogger& mainlog = ILogger::getLogger( "main_log" );
@@ -118,6 +131,9 @@ void RelativeCostLogit::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
     XMLWriteVector( mLogitExponent, "logit-exponent", aOut, aTabs, modeltime );
+    if( mParsedBaseValue ) {
+        XMLWriteElement( mBaseValue, "base-value", aOut, aTabs );
+    }
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
@@ -125,75 +141,132 @@ void RelativeCostLogit::toInputXML( ostream& aOut, Tabs* aTabs ) const {
 void RelativeCostLogit::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
     XMLWriteElement( mLogitExponent[ aPeriod ], "logit-exponent", aOut, aTabs );
+    XMLWriteElement( mBaseValue, "base-value", aOut, aTabs );
+    XMLWriteElement( mParsedBaseValue, "parsed-base-value", aOut, aTabs );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
+}
+
+void RelativeCostLogit::initCalc( const string& aRegionName, const string& aContainerName,
+                                  const bool aShouldShareIncreaseWithValue, const int aPeriod)
+{
+    if( mLogitExponent[ aPeriod ] != 0.0 && aShouldShareIncreaseWithValue ^ ( mLogitExponent[ aPeriod ] > 0.0 ) ) {
+        ILogger& mainlog = ILogger::getLogger( "main_log" );
+        mainlog.setLevel( ILogger::WARNING );
+        mainlog << "Inversed sign on logit exponent: " << mLogitExponent[ aPeriod ]
+                << " when we expect the unormalized share to increase with an increase in value is " << aShouldShareIncreaseWithValue
+                << endl;
+    }
+    
+    if( !mParsedBaseValue && mBaseValue == getMinValueThreshold() ) {
+        // Illegal value.  For relative cost logit it will not affect sharing and
+        // we can continue operating the model normally so just generate a warning
+        ILogger &calibrationLog = ILogger::getLogger("calibration_log");
+        ILogger::WarningLevel oldlvl = calibrationLog.setLevel(ILogger::WARNING);
+        calibrationLog << "In " << aRegionName << ", " << aContainerName<< ":  invalid or uninitialized base value parameter  "
+                       << mBaseValue << endl;
+        calibrationLog.setLevel(oldlvl);
+    }
 }
 
 
 /*!
- * \brief Relative cost logit discrete choice function.
+ * \brief Relative value logit discrete choice function.
  * \details Calculate the log of the numerator of the discrete choice (i.e., the unnormalized version) 
  *          function being used to calculate subsector shares in this sector.  The normalization 
  *          factor will be calculated later.
  * \param aShareWeight share weight for the choice for which the share is being calculated.
- * \param aCost cost for the choice for which the share is being calculated.
+ * \param aValue value for the choice for which the share is being calculated.
  * \param aPeriod model time period for the calculation.
  * \return log of the unnormalized share.
- * \warning Negative costs can not be used in this logit formulation.  Instead the cost
- *          the cost is capped at RelativeCostLogit::getMinCostThreshold.  This implies
- *          no behavior once costs have crossed this threshold.
+ * \warning Negative values can not be used in this logit formulation.  Instead the value
+ *          the value is capped at RelativeCostLogit::getMinValueThreshold.  This implies
+ *          no behavior once values have crossed this threshold.
  */
-double RelativeCostLogit::calcUnnormalizedShare( const double aShareWeight, const double aCost,
+double RelativeCostLogit::calcUnnormalizedShare( const double aShareWeight, const double aValue,
                                                  const int aPeriod ) const
 {
-    /*!
-     * \pre A valid logit exponent has been set.
-     */
-    assert( mLogitExponent[ aPeriod ] <= 0 );
-    
     // Zero share weight implies no share which is signaled by negative infinity.
     const double minInf = -std::numeric_limits<double>::infinity();
     double logShareWeight = aShareWeight > 0.0 ? log( aShareWeight ) : minInf;
 
-    // Negative costs are not allowed so they are instead capped at getMinCostThreshold()
-    double cappedCost = std::max( aCost, getMinCostThreshold() );
+    // Negative values are not allowed so they are instead capped at getMinValueThreshold()
+    double cappedValue = std::max( aValue, getMinValueThreshold() );
     
-    return logShareWeight + mLogitExponent[ aPeriod ] * log( cappedCost );
-    // This log is the difference between the relative cost    --^
-    // logit and the absolute cost logit.
+    return logShareWeight + mLogitExponent[ aPeriod ] * log( cappedValue );
+    // This log is the difference between the relative value    --^
+    // logit and the absolute value logit.
+}
+
+double RelativeCostLogit::calcAverageValue( const double aUnnormalizedShareSum,
+                                           const double aLogShareFac,
+                                           const int aPeriod ) const
+{
+    double ret;
+    if( mLogitExponent[ aPeriod ] == 0.0 ) {
+        // TODO: what to do with zero logit?
+        ret = aUnnormalizedShareSum * exp( aLogShareFac ) * mBaseValue;
+    }
+    else if( aUnnormalizedShareSum == 0 && mLogitExponent[ aPeriod ] < 0 ) {
+        // No Valid options and negative logit so return a large value so a nested
+        // logit would not want to choose this nest.
+        ret = util::getLargeNumber();
+    }
+    else if( aUnnormalizedShareSum == 0 && mLogitExponent[ aPeriod ] > 0 ) {
+        // No Valid options and positive logit so return a large negative value
+        // so a nested logit would not want to choose this nest.
+        ret = -util::getLargeNumber();
+    }
+    else {
+        ret = exp( aLogShareFac / mLogitExponent[ aPeriod ] )
+              * pow( aUnnormalizedShareSum, 1.0 / mLogitExponent[ aPeriod ] );
+    }
+
+    return ret;
 }
 
 /*!
- * \brief Share weight calculation for the relative cost logit.
- * \details  Given an an "anchor" choice with observed share and price and another choice
+ * \brief Share weight calculation for the relative value logit.
+ * \details  Given an "anchor" choice with observed share and price and another choice
  *           also with observed share and price, compute the inverse of the discrete choice function
  *           to produce a share weight.
  * \param aShare observed share for the current choice.
- * \param aCost observed cost for the current choice.
+ * \param aValue observed value for the current choice.
  * \param aAnchorShare observed share for the anchor choice.
- * \param aAnchorCost observed cost for the anchor choice.
+ * \param aAnchorValue observed value for the anchor choice.
  * \param aPeriod model time period for the calculation.
  * \return share weight for the current choice.
  */
-double RelativeCostLogit::calcShareWeight( const double aShare, const double aCost, const double aAnchorShare,
-                                           const double aAnchorCost, const int aPeriod ) const
+double RelativeCostLogit::calcShareWeight( const double aShare, const double aValue, const double aAnchorShare,
+                                           const double aAnchorValue, const int aPeriod ) const
 {
-    // Negative costs are not allowed so they are instead capped at getMinCostThreshold()
-    double cappedCost = std::max( aCost, getMinCostThreshold() );
-    double cappedAnchorCost = std::max( aAnchorCost, getMinCostThreshold() );
+    // Negative values are not allowed so they are instead capped at getMinValueThreshold()
+    double cappedValue = std::max( aValue, getMinValueThreshold() );
+    double cappedAnchorValue = std::max( aAnchorValue, getMinValueThreshold() );
     
-    return ( aShare / aAnchorShare ) * pow( cappedAnchorCost/ cappedCost, mLogitExponent[ aPeriod ] );
-}
-
-void RelativeCostLogit::setBaseCost( const double aBaseCost, const std::string &aFailMsg ) {
-    // the relative cost logit does not utilize this parameter, so this function is a no-op
+    // guard against numerical instability in the pow when the share was zero anyway
+    return aShare == 0.0 ? 0.0 : ( aShare / aAnchorShare ) * pow( cappedAnchorValue / cappedValue, mLogitExponent[ aPeriod ] );
 }
 
 /*!
- * \brief Get the minimum cost threshold value that may be used in this logit share
+ * \brief A base cost is not used in the relative value formulation.  However we may use it
+ *        out of convenience to set the scale of share weights which is particularly important
+ *        if users will call the calcAverageValue method.
+ * \details Note the value will not be set if a user has explicitly set via XMLParse the value
+ *          they would like to use explicitly.
+ * \param aBaseValue The value to set.
+ */
+void RelativeCostLogit::setBaseValue( const double aBaseValue ) {
+    if( !mParsedBaseValue ) {
+        mBaseValue = std::max( aBaseValue, getMinValueThreshold() );
+    } // This function is a no-op if mParsedBaseValue is set.
+}
+
+/*!
+ * \brief Get the minimum value threshold value that may be used in this logit share
  *        equation.
  * \return The threshold value.
  */
-double RelativeCostLogit::getMinCostThreshold() {
-    const double MIN_COST = 0.001;
-    return MIN_COST;
+double RelativeCostLogit::getMinValueThreshold() {
+    const double MIN_VALUE = 0.001;
+    return MIN_VALUE;
 }

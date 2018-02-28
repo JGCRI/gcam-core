@@ -50,6 +50,8 @@
 #include "containers/include/iinfo.h"
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
+#include "containers/include/market_dependency_finder.h"
+#include "containers/include/iactivity.h"
 
 using namespace std;
 using namespace xercesc;
@@ -57,7 +59,8 @@ using namespace xercesc;
 extern Scenario* scenario;
 
 /*! \brief Default constructor. */
-LinkedGHGPolicy::LinkedGHGPolicy()
+LinkedGHGPolicy::LinkedGHGPolicy():
+mStartYear( -1 )
 {
 }
 
@@ -128,6 +131,9 @@ void LinkedGHGPolicy::XMLParse( const DOMNode* node ){
         if( nodeName == "#text" ) {
             continue;
         }
+        else if( nodeName == "policy-name" ) {
+            mPolicyName = XMLHelper<string>::getValue( curr );
+        }
         else if( nodeName == "market" ){
             mMarket = XMLHelper<string>::getValue( curr );
         }
@@ -146,6 +152,9 @@ void LinkedGHGPolicy::XMLParse( const DOMNode* node ){
         else if( nodeName == "demand-adjust" ){
             XMLHelper<Value>::insertValueIntoVector( curr, mDemandAdjust, modeltime );
         }
+        else if( nodeName == "start-year" ){
+            mStartYear = XMLHelper<int>::getValue( curr );
+        }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
@@ -158,8 +167,10 @@ void LinkedGHGPolicy::XMLParse( const DOMNode* node ){
 void LinkedGHGPolicy::toInputXML( ostream& out, Tabs* tabs ) const {
     
     XMLWriteOpeningTag( getXMLName(), out, tabs, mName );
+    XMLWriteElementCheckDefault( mPolicyName, "policy-name", out, tabs, mName );
     XMLWriteElement( mMarket, "market", out, tabs );
     XMLWriteElement( mLinkedPolicyName, "linked-policy", out, tabs );
+    XMLWriteElementCheckDefault( mStartYear, "start-year", out, tabs, -1 );
     XMLWriteElementCheckDefault( mPriceUnits, "price-unit", out, tabs );
     XMLWriteElementCheckDefault( mOutputUnits, "output-unit", out, tabs );
     
@@ -189,12 +200,18 @@ void LinkedGHGPolicy::toDebugXML( const int period, ostream& out, Tabs* tabs ) c
  * \param aRegionName The name of the region the policy controls. 
  */
 void LinkedGHGPolicy::completeInit( const string& aRegionName ) {
+    if( mPolicyName.empty() ) {
+        mPolicyName = mName;
+    }
     const Modeltime* modeltime = scenario->getModeltime();
     Marketplace* marketplace = scenario->getMarketplace();
-    marketplace->createLinkedMarket( aRegionName, mMarket, mName, mLinkedPolicyName );
+    // Forward the -1 flag to indicate we do not intend to change market links over time.
+    int startPeriodForCreate = mStartYear == -1 ? -1 : modeltime->getyr_to_per( mStartYear );
+    int startPeriod = max( startPeriodForCreate, 0 );
+    marketplace->createLinkedMarket( aRegionName, mMarket, mPolicyName, mLinkedPolicyName, startPeriodForCreate );
     
     // Set price and output units for period 0 market info
-    IInfo* marketInfo = marketplace->getMarketInfo( mName, aRegionName, 0, true );
+    IInfo* marketInfo = marketplace->getMarketInfo( mPolicyName, aRegionName, startPeriod, true );
 
     // Set the units of tax and emissions for reporting.
     if( !mPriceUnits.empty() ) {
@@ -203,6 +220,13 @@ void LinkedGHGPolicy::completeInit( const string& aRegionName ) {
     if( !mOutputUnits.empty() ) {
         marketInfo->setString( "output-unit", mOutputUnits );
     }
+
+    // Add a dependency between this mand the linked market and include a dummy
+    // activity to ensure the dependecy finder has an activity to traverse
+    MarketDependencyFinder* depFinder = marketplace->getDependencyFinder();
+    depFinder->addDependency( mPolicyName, aRegionName, mLinkedPolicyName, aRegionName );
+    depFinder->resolveActivityToDependency( aRegionName, mPolicyName,
+            new DummyActivity(), new DummyActivity() );
     
     // Interpolations for price and demand adjustments.  Note that we do not use
     // the utilty method for interpolating here to avoid extrapolating the policy.
@@ -235,9 +259,8 @@ void LinkedGHGPolicy::completeInit( const string& aRegionName ) {
 
     // Set the price/demand adjustments into the linked market info object for
     // retrieval by that market object.
-    for( int per = 0; per < modeltime->getmaxper(); ++per ){
-        marketplace->unsetMarketToSolve( mName, aRegionName, per );
-        IInfo* currMarketInfo = marketplace->getMarketInfo( mName, aRegionName, per, true );
+    for( int per = startPeriod; per < modeltime->getmaxper(); ++per ){
+        IInfo* currMarketInfo = marketplace->getMarketInfo( mPolicyName, aRegionName, per, true );
         if( mPriceAdjust[ per ].isInited() ) {
             currMarketInfo->setDouble( "price-adjust", mPriceAdjust[ per ] );
         }

@@ -24,13 +24,41 @@ sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )
 sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
 sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_data", extension = ".R" )
 FAO_ag_items_PRODSTAT <- readdata( "AGLU_MAPPINGS", "FAO_ag_items_PRODSTAT" )
+iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID" )
 AGLU_ctry <- readdata( "AGLU_MAPPINGS", "AGLU_ctry" )
-GTAP_ag_HA_ha <- readdata( "AGLU_LEVEL0_DATA", "GTAP_ag_HA_ha" )
+L100.LDS_ag_HA_ha <- readdata( "AGLU_LEVEL1_DATA", "L100.LDS_ag_HA_ha" )
+L101.ag_HA_bm2_R_C_Y <- readdata( "AGLU_LEVEL1_DATA", "L101.ag_HA_bm2_R_C_Y" )
+L102.ag_HA_bm2_R_C_GLU <- readdata( "AGLU_LEVEL1_DATA", "L102.ag_HA_bm2_R_C_GLU" )
 IFA2002_Fert_ktN <- readdata( "AGLU_LEVEL0_DATA", "IFA2002_Fert_ktN" )
 IFA_Fert_ktN <- readdata( "AGLU_LEVEL0_DATA", "IFA_Fert_ktN" )
 
 # -----------------------------------------------------------------------------
 # 2. Perform calculations
+printlog( "Briefly reconciling Monfreda/LDS and FAO datasets for the 1998-2002 time period" )
+# This part of the methods is sensitive to any discrepancies between the two data sources, as the Monfreda/LDS
+# based data are used to estimate fertilizer by crop and country, and then the actual fertilizer IO coefs are derived
+# using FAO Prodstat data. For most crops this is OK, but some differ by 10-50 and can cause fertilizer costs well
+# in excess of crop production revenues.
+printlog( "Using harvested area totals by GCAM region and commodity as the basis for scaling back LDS harvested area by country, GLU, and GTAP crop" )
+X_FAO_LDS_years <- c( "X1998", "X1999", "X2000", "X2001", "X2002")
+L141.FAO <- L101.ag_HA_bm2_R_C_Y[ R_C ]
+L141.FAO$FAO <- rowMeans( L101.ag_HA_bm2_R_C_Y[ X_FAO_LDS_years ] )
+L141.LDS <- aggregate( L102.ag_HA_bm2_R_C_GLU[ "value" ],
+                       by = L102.ag_HA_bm2_R_C_GLU[ R_C ], sum )
+names( L141.LDS )[ names( L141.LDS ) == "value" ] <- "LDS"
+L141.FAO_LDS <- merge( L141.FAO, L141.LDS, all.y = T )
+L141.FAO_LDS$scaler <- L141.FAO_LDS$FAO / L141.FAO_LDS$LDS
+
+#Match the GCAM region and commodity class into the LDS dataset, and multiply by the scaler above
+L100.LDS_ag_HA_ha[[R]] <- iso_GCAM_regID[[R]][ match( L100.LDS_ag_HA_ha$iso, iso_GCAM_regID$iso ) ]
+L100.LDS_ag_HA_ha[[C]] <- FAO_ag_items_PRODSTAT[[C]][ match( L100.LDS_ag_HA_ha$GTAP_crop, FAO_ag_items_PRODSTAT$GTAP_crop ) ]
+L100.LDS_ag_HA_ha <- na.omit( L100.LDS_ag_HA_ha )
+L100.LDS_ag_HA_ha$scaler <- L141.FAO_LDS$scaler[
+  match( vecpaste( L100.LDS_ag_HA_ha[ R_C ] ),
+         vecpaste( L141.FAO_LDS[R_C ] ) ) ]
+L141.LDS_ag_HA_ha <- L100.LDS_ag_HA_ha[ c( "iso", "GLU", "GTAP_crop" ) ]
+L141.LDS_ag_HA_ha$value <- with( L100.LDS_ag_HA_ha, value * scaler )
+
 Rifa_Cifa <- c( "IFA_region", "IFA_commodity" )
 
 printlog( "Step 1: Modify IFA global fertilizer consumption by commodity and region to more detailed inventory with partial coverage" )
@@ -51,14 +79,15 @@ L141.IFA2002_Fert_ktN <- aggregate( L141.IFA2002_Fert_ktN[ c( "AREA_thousHa", "N
 
 #Multiply harvested area by application rates to get a bottom-up estimate of fertilizer demands
 printlog( "Compiling specific fertilizer demand coefficients for the 87 countries / 106 crops where available" )
-L141.IFA_Fert_Cons_MtN_ctry_crop <- data.frame( GTAP_ag_HA_ha[ c( "ctry", "GTAP_crop" ) ],
-      HA_ha = apply( GTAP_ag_HA_ha[ AEZs ], 1, sum ) )
-#Drop rows with 0 harvested area (these wouldn't have any fertilizer consumption anyway)
-L141.IFA_Fert_Cons_MtN_ctry_crop <- subset( L141.IFA_Fert_Cons_MtN_ctry_crop, HA_ha !=0 )
-L141.IFA_Fert_Cons_MtN_ctry_crop$IFA2002_crop <- FAO_ag_items_PRODSTAT$IFA2002_crop[ match( L141.IFA_Fert_Cons_MtN_ctry_crop$GTAP_crop, FAO_ag_items_PRODSTAT$GTAP_crop ) ]
+L141.IFA_Fert_Cons_MtN_ctry_crop <- aggregate( L141.LDS_ag_HA_ha[ "value" ],
+                                               by = L141.LDS_ag_HA_ha[ c( "iso", "GTAP_crop" ) ], sum )
+names( L141.IFA_Fert_Cons_MtN_ctry_crop )[ names( L141.IFA_Fert_Cons_MtN_ctry_crop ) == "value" ] <- "HA_ha"
+L141.IFA_Fert_Cons_MtN_ctry_crop$IFA2002_crop <- FAO_ag_items_PRODSTAT$IFA2002_crop[
+      match( L141.IFA_Fert_Cons_MtN_ctry_crop$GTAP_crop, FAO_ag_items_PRODSTAT$GTAP_crop ) ]
 #In Ethiopia, replace unspecified cereals with teff
-L141.IFA_Fert_Cons_MtN_ctry_crop$IFA2002_crop[ L141.IFA_Fert_Cons_MtN_ctry_crop$ctry == "eth" & L141.IFA_Fert_Cons_MtN_ctry_crop$GTAP_crop == "cerealsnes" ] <- "Teff"
-L141.IFA_Fert_Cons_MtN_ctry_crop$IFA2002_country <- AGLU_ctry$IFA2002_country[ match( L141.IFA_Fert_Cons_MtN_ctry_crop$ctry, AGLU_ctry$iso ) ]
+L141.IFA_Fert_Cons_MtN_ctry_crop$IFA2002_crop[ L141.IFA_Fert_Cons_MtN_ctry_crop$iso == "eth" & L141.IFA_Fert_Cons_MtN_ctry_crop$GTAP_crop == "cerealsnes" ] <- "Teff"
+L141.IFA_Fert_Cons_MtN_ctry_crop$IFA2002_country <- AGLU_ctry$IFA2002_country[
+      match( L141.IFA_Fert_Cons_MtN_ctry_crop$iso, AGLU_ctry$iso ) ]
 
 #Match in the application rate
 L141.IFA_Fert_Cons_MtN_ctry_crop$IFA2002_N_tha <- L141.IFA2002_Fert_ktN$N_tha[
@@ -71,9 +100,9 @@ L141.IFA_Fert_Cons_MtN_ctry_crop$IFA_commodity <- FAO_ag_items_PRODSTAT$IFA_comm
       match( L141.IFA_Fert_Cons_MtN_ctry_crop$GTAP_crop, FAO_ag_items_PRODSTAT$GTAP_crop ) ]
 L141.IFA_Fert_Cons_MtN_ctry_crop <- L141.IFA_Fert_Cons_MtN_ctry_crop[ !is.na( L141.IFA_Fert_Cons_MtN_ctry_crop$IFA_commodity ), ]
 L141.IFA_Fert_Cons_MtN_ctry_crop$IFA_region <- AGLU_ctry$IFA_region[
-      match( L141.IFA_Fert_Cons_MtN_ctry_crop$ctry, AGLU_ctry$iso ) ]
+      match( L141.IFA_Fert_Cons_MtN_ctry_crop$iso, AGLU_ctry$iso ) ]
 L141.HA_ha_Rifa_Cifa <- aggregate( L141.IFA_Fert_Cons_MtN_ctry_crop[ c( "HA_ha" ) ],
-      by=as.list( L141.IFA_Fert_Cons_MtN_ctry_crop[ Rifa_Cifa ] ), sum, na.rm = T )
+                                   by = L141.IFA_Fert_Cons_MtN_ctry_crop[ Rifa_Cifa ], sum, na.rm = T )
 
 #Match in the fertilizer demands by these regions and commodities
 L141.HA_ha_Rifa_Cifa$IFA_N_Mt <- L141.IFA_Fert_ktN.melt$Fert_MtN[
@@ -105,7 +134,7 @@ L141.IFA_Fert_Cons_MtN_ctry_crop$scaler <- L141.IFA_Fert_Cons_Rifa_Cifa$scaler[
 L141.IFA_Fert_Cons_MtN_ctry_crop$Fert_Cons_MtN <- L141.IFA_Fert_Cons_MtN_ctry_crop$IFA_N_Mt_unscaled * L141.IFA_Fert_Cons_MtN_ctry_crop$scaler
 
 #Build final table for write-out
-L141.ag_Fert_Cons_MtN_ctry_crop <- L141.IFA_Fert_Cons_MtN_ctry_crop[ c( "ctry", "GTAP_crop", "Fert_Cons_MtN" ) ]
+L141.ag_Fert_Cons_MtN_ctry_crop <- L141.IFA_Fert_Cons_MtN_ctry_crop[ c( "iso", "GTAP_crop", "Fert_Cons_MtN" ) ]
 
 # -----------------------------------------------------------------------------
 # 3. Output

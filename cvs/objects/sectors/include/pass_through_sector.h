@@ -70,6 +70,8 @@ public:
 protected:
     virtual double getFixedOutput( const int aPeriod ) const;
 
+    virtual const std::string& getXMLName() const;
+
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
 
     virtual void toInputXMLDerived( std::ostream& aOut, Tabs* aTabs ) const;
@@ -86,7 +88,10 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "marginal-revenue-sector", mMarginalRevenueSector, std::string ),
         
         //! The market in which to find the marginal revenue sector.
-        DEFINE_VARIABLE( SIMPLE, "marginal-revenue-market", mMarginalRevenueMarket, std::string )
+        DEFINE_VARIABLE( SIMPLE, "marginal-revenue-market", mMarginalRevenueMarket, std::string ),
+
+        //! State value used to set the fixed output to market.
+        DEFINE_VARIABLE( SIMPLE | STATE, "last-calac-fixed-output", mLastCalcFixedOutput, Value )
     )
 
 private:

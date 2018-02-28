@@ -137,7 +137,7 @@ void UnlimitedResource::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
     XMLWriteElement( mMarket, "market", aOut, aTabs );
     
-    const Value VALUE_DEFAULT( 0.0 );
+    const Value VALUE_DEFAULT;
     XMLWriteElementCheckDefault( mVariance, "variance", aOut,
                                  aTabs, VALUE_DEFAULT );
     
@@ -205,7 +205,7 @@ void UnlimitedResource::initCalc( const string& aRegionName,
     }
     
     // Set the fixed price if a valid one was read in.
-    if( mFixedPrices[ aPeriod ] > 0 ) {
+    if( mFixedPrices[ aPeriod ].isInited() ) {
         marketplace->setPrice( mName, aRegionName, mFixedPrices[ aPeriod ], aPeriod );
     }
 }
@@ -239,6 +239,11 @@ double UnlimitedResource::getAnnualProd( const string& aRegionName,
 {
     // Return the market supply.
     return scenario->getMarketplace()->getSupply( mName, aRegionName, aPeriod );
+}
+
+//! Return price of resources.
+double UnlimitedResource::getPrice( const int aPeriod ) const {
+    return mFixedPrices[ aPeriod ];
 }
 
 void UnlimitedResource::csvOutputFile( const string& aRegionName )

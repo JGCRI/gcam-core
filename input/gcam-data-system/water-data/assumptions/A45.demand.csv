@@ -1,0 +1,3 @@
+# Municipal water final demand sector assumptions
+energy.final.demand,perCapitaBased,income.elasticity,price.elasticity,aeei
+municipal water,1,0.366163898,-0.326188149,0.005

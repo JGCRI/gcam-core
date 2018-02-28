@@ -1094,6 +1094,9 @@
     <ClCompile Include="..\..\sectors\source\negative_emissions_final_demand.cpp">
       <Filter>Source Files\sectors</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\emissions\source\readin_control.cpp">
+      <Filter>Source Files\emissions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\containers\include\batch_runner.h">
@@ -2244,6 +2247,9 @@
     </ClInclude>
     <ClInclude Include="..\..\sectors\include\negative_emissions_final_demand.h">
       <Filter>Header Files\sectors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\emissions\include\readin_control.h">
+      <Filter>Header Files\emissions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

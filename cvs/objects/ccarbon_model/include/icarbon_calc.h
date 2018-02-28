@@ -106,7 +106,7 @@ public:
     /*!
      * \brief Complete the initialization of the carbon calculator.
      */
-    virtual void completeInit() = 0;
+    virtual void completeInit( const double aPrivateDiscountRateLand ) = 0;
     
     /*!
      * \brief Period specific initiliazations before calculations begin.

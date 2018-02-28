@@ -47,6 +47,7 @@
 #include <memory>
 
 #include "emissions/include/aemissions_control.h"
+#include "util/base/include/time_vector.h"
 
 class PointSetCurve;
 
@@ -93,6 +94,9 @@ protected:
         //! Boolean indicating whether reductions should occur at a zero carbon price
         DEFINE_VARIABLE( SIMPLE, "no-zero-cost-reductions", mNoZeroCostReductions, bool ),
         
+        //! Technology change, % improvement rate per year
+        DEFINE_VARIABLE( ARRAY, "tech-change", mTechChange, objects::PeriodVector<double> ),
+        
         //! The underlying Curve (as read in)
         DEFINE_VARIABLE( CONTAINER, "mac-reduction", mMacCurve, PointSetCurve* ),
         
@@ -109,6 +113,7 @@ protected:
 private:
     void copy( const MACControl& other );
     double getMACValue( const double aCarbonPrice ) const;
+    double adjustForTechChange( const int aPeriod, double reduction );
 };
 
 #endif // _MAC_CONTROL_H_

@@ -149,14 +149,13 @@ bool PolicyTargetRunner::XMLParse( const xercesc::DOMNode* aRoot ){
             mInitialTargetYear = XMLHelper<int>::getAttr( curr, "year" );
         }
         else if( nodeName == "forward-look" ) {
-            const Modeltime* modeltime = mSingleScenario->getInternalScenario()->getModeltime();
             const int year = XMLHelper<int>::getAttr( curr, "year" );
             if( year == 0 ) {
                 int value = XMLHelper<int>::getValue( curr );
                 fill( mNumForwardLooking.begin(), mNumForwardLooking.end(), value );
             }
             else {
-                XMLHelper<int>::insertValueIntoVector( curr, mNumForwardLooking, modeltime );
+                XMLHelper<int>::insertValueIntoVector( curr, mNumForwardLooking, mSingleScenario->getInternalScenario()->getModeltime() );
             }
         }
         else if( nodeName == "max-tax" ) {
@@ -432,15 +431,6 @@ bool PolicyTargetRunner::solveInitialTarget( vector<double>& aTaxes,
     // Increment is 1+ this number, which is used to increase the initial trial price
     const double INCREASE_INCREMENT = mInitialTaxGuess - 1;
     auto_ptr<ITargetSolver> solver;
-    /* Note that the following code is left commented out incase a user wanted
-       to use the bisection routine rather then the secant.
-    solver.reset( new Bisecter( aPolicyTarget,
-                       aTolerance,
-                       0,
-                       Bisecter::undefined(),
-                       Bisecter::undefined(),
-                       INCREASE_INCREMENT,
-                       mInitialTargetYear ) );*/
     
     solver.reset( new Secanter( aPolicyTarget,
                        aTolerance,

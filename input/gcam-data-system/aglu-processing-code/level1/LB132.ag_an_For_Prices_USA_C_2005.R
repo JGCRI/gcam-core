@@ -36,20 +36,19 @@ FAO_USA_an_Prod_t_PRODSTAT <- readdata( "AGLU_LEVEL0_DATA", "FAO_USA_an_Prod_t_P
 # -----------------------------------------------------------------------------
 # 2. Perform computations
 printlog( "Converting cotton back to primary equivalent (seed cotton)" )
-X2008_X2011 <- c( "X2008", "X2009", "X2010", "X2011")
 #Seed cotton has no price in PRICESTAT. Need to derive its price from cotton lint and cottonseed
 FAO_USA_ag_an_P_USDt_PRICESTAT[
-      FAO_USA_ag_an_P_USDt_PRICESTAT$item == "Seed cotton", names( FAO_USA_ag_an_P_USDt_PRICESTAT ) %in% X2008_X2011 ] <-
+      FAO_USA_ag_an_P_USDt_PRICESTAT$item == "Seed cotton", names( FAO_USA_ag_an_P_USDt_PRICESTAT ) %in% X_model_price_years ] <-
    FAO_USA_ag_an_P_USDt_PRICESTAT[
-      FAO_USA_ag_an_P_USDt_PRICESTAT$item == "Cotton lint", names( FAO_USA_ag_an_P_USDt_PRICESTAT ) %in% X2008_X2011 ] * conv_cotton_lint + 
+      FAO_USA_ag_an_P_USDt_PRICESTAT$item == "Cotton lint", names( FAO_USA_ag_an_P_USDt_PRICESTAT ) %in% X_model_price_years ] * conv_cotton_lint + 
    FAO_USA_ag_an_P_USDt_PRICESTAT[
-      FAO_USA_ag_an_P_USDt_PRICESTAT$item == "Cottonseed", names( FAO_USA_ag_an_P_USDt_PRICESTAT ) %in% X2008_X2011 ] * (1 - conv_cotton_lint )
+      FAO_USA_ag_an_P_USDt_PRICESTAT$item == "Cottonseed", names( FAO_USA_ag_an_P_USDt_PRICESTAT ) %in% X_model_price_years ] * (1 - conv_cotton_lint )
 
 printlog( "Assigning a price for game meat so that OtherMeat is assigned a price" )
 FAO_USA_ag_an_P_USDt_PRICESTAT[
-      FAO_USA_ag_an_P_USDt_PRICESTAT$item == "Game meat", names( FAO_USA_ag_an_P_USDt_PRICESTAT ) %in% X2008_X2011 ] <-
+      FAO_USA_ag_an_P_USDt_PRICESTAT$item == "Game meat", names( FAO_USA_ag_an_P_USDt_PRICESTAT ) %in% X_model_price_years ] <-
    FAO_USA_ag_an_P_USDt_PRICESTAT[
-      FAO_USA_ag_an_P_USDt_PRICESTAT$item == "Cattle meat", names( FAO_USA_ag_an_P_USDt_PRICESTAT ) %in% X2008_X2011 ]
+      FAO_USA_ag_an_P_USDt_PRICESTAT$item == "Cattle meat", names( FAO_USA_ag_an_P_USDt_PRICESTAT ) %in% X_model_price_years ]
 
 
 #Calculate unweighted averages for each FAO commodity over price years
@@ -61,13 +60,13 @@ L132.FAO_ag_Prod_t <- FAO_ag_Prod_t_PRODSTAT[
       vecpaste( FAO_USA_ag_an_P_USDt_PRICESTAT[ c( "countries", "item" ) ] ), ]
 
 printlog( "Using 2008-2011 prices and production quantities of all commodities" )
-FAO_USA_ag_an_P_USDt_PRICESTAT.melt <- FAO_USA_ag_an_P_USDt_PRICESTAT[ c( "countries", "item", X2008_X2011 )]
+FAO_USA_ag_an_P_USDt_PRICESTAT.melt <- FAO_USA_ag_an_P_USDt_PRICESTAT[ c( "countries", "item", X_model_price_years )]
 FAO_USA_ag_an_P_USDt_PRICESTAT.melt <- melt( FAO_USA_ag_an_P_USDt_PRICESTAT.melt, id = 1:2, value.name = "Price_USDt", variable.name = "year" )
-L132.FAO_ag_Prod_t.melt <- L132.FAO_ag_Prod_t[ c( "countries", "item", X2008_X2011 )]
+L132.FAO_ag_Prod_t.melt <- L132.FAO_ag_Prod_t[ c( "countries", "item", X_model_price_years )]
 L132.FAO_ag_Prod_t.melt <- melt( L132.FAO_ag_Prod_t.melt, id = 1:2, value.name = "Prod_t", variable.name = "year" )
-FAO_USA_an_Prod_t_PRODSTAT.melt <- FAO_USA_an_Prod_t_PRODSTAT[ c( "countries", "item", X2008_X2011 )]
+FAO_USA_an_Prod_t_PRODSTAT.melt <- FAO_USA_an_Prod_t_PRODSTAT[ c( "countries", "item", X_model_price_years )]
 FAO_USA_an_Prod_t_PRODSTAT.melt <- melt( FAO_USA_an_Prod_t_PRODSTAT.melt, id = 1:2, value.name = "Prod_t", variable.name = "year" )
-FAO_USA_For_Exp_t_USD_FORESTAT.melt <- FAO_USA_For_Exp_t_USD_FORESTAT[ c( "countries", "item", "element", X2008_X2011 )]
+FAO_USA_For_Exp_t_USD_FORESTAT.melt <- FAO_USA_For_Exp_t_USD_FORESTAT[ c( "countries", "item", "element", X_model_price_years )]
 FAO_USA_For_Exp_t_USD_FORESTAT.melt <- melt( FAO_USA_For_Exp_t_USD_FORESTAT.melt, id = 1:3, variable.name = "year" )
 
 #Build tables with production and price, and calculate revenue, matching each year of 2008-2011
@@ -95,6 +94,11 @@ L132.an_V_USA_Cfao_fby[[C]] <- FAO_an_items_PRODSTAT[[C]][ match( L132.an_V_USA_
 
 #Remove any fodder crops
 L132.ag_V_USA_Cfao_fby <- L132.ag_V_USA_Cfao_fby[ !L132.ag_V_USA_Cfao_fby[[C]] %in% c( "FodderHerb", "FodderGrass" ), ]
+
+# 9/21/2016 GPK - removing Sorghum because it is used as a fodder crop in the USA, and its prices are relatively low.
+# The net effect of excluding it here is to raise the price of the OtherGrain commodity, and therefore the profit rate,
+# which otherwise is the lowest of all crops. Any land use regions where this is dominant become bioenergy.
+L132.ag_V_USA_Cfao_fby <- subset( L132.ag_V_USA_Cfao_fby, item != "Sorghum" )
 
 #Aggregate by GCAM crop names and compute average prices, convert to 1975USD
 conv_2010_1975_USD <- round( conv_1990_1975_USD / conv_1990_2010_USD, digits = 4 )

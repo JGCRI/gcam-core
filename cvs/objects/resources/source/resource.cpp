@@ -57,7 +57,6 @@
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
 #include "marketplace/include/imarket_type.h"
-#include "resources/include/resource.h"
 #include "resources/include/renewable_subresource.h"
 #include "resources/include/smooth_renewable_subresource.h"
 #include "util/base/include/ivisitor.h"
@@ -99,6 +98,32 @@ Resource::~Resource() {
     for( vector<IOutput*>::const_iterator iter = mOutputs.begin(); iter != mOutputs.end(); ++iter ) {
         delete *iter;
     }
+}
+
+/*! \brief Get the XML node name for output to XML.
+ *
+ * This public function accesses the private constant string, XML_NAME.
+ * This way the tag is always consistent for both read-in and output and can be easily changed.
+ * This function may be virtual to be overridden by derived class pointers.
+ * \author Josh Lurz, James Blackwood
+ * \return The constant XML_NAME.
+ */
+const std::string& Resource::getXMLName() const {
+    return getXMLNameStatic();
+}
+
+/*! \brief Get the XML node name in static form for comparison when parsing XML.
+ *
+ * This public function accesses the private constant string, XML_NAME.
+ * This way the tag is always consistent for both read-in and output and can be easily changed.
+ * The "==" operator that is used when parsing, required this second function to return static.
+ * \note A function cannot be static and virtual.
+ * \author Josh Lurz, James Blackwood
+ * \return The constant XML_NAME as a static.
+ */
+const std::string& Resource::getXMLNameStatic() {
+    const static string XML_NAME = "resource";
+    return XML_NAME;
 }
 
 //! Set data members from XML input.
@@ -154,6 +179,12 @@ void Resource::XMLParse( const DOMNode* node ){
         }
         else if( GHGFactory::isGHGNode( nodeName ) ) {
             parseContainerNode( curr, mGHG, GHGFactory::create( nodeName ).release() );
+        }
+        else if( nodeName == SubDepletableResource::getXMLNameStatic() ){
+            parseContainerNode( curr, mSubResource, new SubDepletableResource() );
+        }
+        else if( nodeName == SubRenewableResource::getXMLNameStatic() ) {
+            parseContainerNode( curr, mSubResource, new SubRenewableResource() );
         }
         else if( XMLDerivedClassParse( nodeName, curr ) ){
             // no-op
@@ -242,6 +273,11 @@ void Resource::toDebugXML( const int period, ostream& aOut, Tabs* aTabs ) const 
 
     // finished writing xml for the class members.
     XMLWriteClosingTag( getXMLName(), aOut, aTabs );
+}
+
+bool Resource::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aNode ) {
+    // do nothing
+    return false;
 }
 
 /*! \brief Complete the initialization
@@ -471,6 +507,11 @@ double Resource::getAnnualProd( const string& aRegionName, const int aPeriod ) c
     return mAnnualProd[ aPeriod ];
 }
 
+//! Return price of resources.
+double Resource::getPrice( const int aPeriod ) const {
+    return mResourcePrice[ aPeriod ];
+}
+
 //! Write resource output to file.
 void Resource::csvOutputFile( const string& regname )
 {
@@ -654,9 +695,9 @@ const std::string& FixedResource::getXMLNameStatic() {
 * \param nodeName name of the current node 
 * \return Whether an element was parsed.
 */
-bool FixedResource::XMLDerivedClassParse( const string& nodeName, const DOMNode* node ) {
-    if( nodeName == SubResource::getXMLNameStatic() || nodeName == SubFixedResource::getXMLNameStatic() ){
-        parseContainerNode( node, mSubResource, new SubFixedResource() );
+bool FixedResource::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aNode ) {
+    if( aNodeName == SubResource::getXMLNameStatic() || aNodeName == SubFixedResource::getXMLNameStatic() ){
+        parseContainerNode( aNode, mSubResource, new SubFixedResource() );
         return true;
     }
     return false;
@@ -748,6 +789,7 @@ void RenewableResource::completeInit( const string& aRegionName, const IInfo* aR
      */
     double resourceVariance = mSubResource[ 0 ]->getVariance();
     double resourceCapacityFactor = mSubResource[ 0 ]->getAverageCapacityFactor();
+    
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::WARNING );
     for( int subResource = 1; subResource < mSubResource.size(); ++subResource ) {
@@ -760,6 +802,7 @@ void RenewableResource::completeInit( const string& aRegionName, const IInfo* aR
                 << aRegionName << " may cause trouble finding a solution." << endl;
         }
     }
+    
     for( int period = 0; period < pModeltime->getmaxper(); ++period ){
         IInfo* marketInfo = pMarketplace->getMarketInfo( mName, aRegionName, period, true );
         marketInfo->setDouble( "resourceVariance", resourceVariance );

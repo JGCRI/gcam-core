@@ -79,6 +79,7 @@ public:
     virtual double getSupply() const;
     virtual void addToSupply( const double aSupply );
     
+    virtual void setSolveMarket( const bool aShouldSolve );
     virtual bool meetsSpecialSolutionCriteria() const;
     virtual bool shouldSolve() const;
     virtual bool shouldSolveNR() const;

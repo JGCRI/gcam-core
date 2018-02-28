@@ -26,6 +26,7 @@
 		CD165BC81A2513F7005F3A8B /* spline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD165BC71A2513F7005F3A8B /* spline.cpp */; };
 		CD177C3B159A0C5B000A996F /* cumulative_emissions_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD177C3A159A0C5B000A996F /* cumulative_emissions_target.cpp */; };
 		CD3B52C61BFE0E2800179FDD /* hector_model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3B52C51BFE0E2800179FDD /* hector_model.cpp */; };
+		CD4283A2203F157C00A75025 /* readin_control.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4283A1203F157C00A75025 /* readin_control.cpp */; };
 		CD48872A122873C200F5A88A /* asimple_carbon_calc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488431122873C000F5A88A /* asimple_carbon_calc.cpp */; };
 		CD48872B122873C200F5A88A /* carbon_model_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488432122873C000F5A88A /* carbon_model_utils.cpp */; };
 		CD48872C122873C200F5A88A /* land_carbon_densities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488433122873C000F5A88A /* land_carbon_densities.cpp */; };
@@ -411,6 +412,8 @@
 		CD299E9611B9C11800E6D196 /* objects */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = objects; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD3B52C41BFE0E1F00179FDD /* hector_model.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = hector_model.hpp; sourceTree = "<group>"; };
 		CD3B52C51BFE0E2800179FDD /* hector_model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hector_model.cpp; sourceTree = "<group>"; };
+		CD42839E203F157000A75025 /* readin_control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = readin_control.h; sourceTree = "<group>"; };
+		CD4283A1203F157C00A75025 /* readin_control.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = readin_control.cpp; sourceTree = "<group>"; };
 		CD48842C122873C000F5A88A /* asimple_carbon_calc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asimple_carbon_calc.h; sourceTree = "<group>"; };
 		CD48842D122873C000F5A88A /* carbon_model_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = carbon_model_utils.h; sourceTree = "<group>"; };
 		CD48842E122873C000F5A88A /* icarbon_calc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = icarbon_calc.h; sourceTree = "<group>"; };
@@ -1452,6 +1455,7 @@
 		CD4884A4122873C000F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
+				CD42839E203F157000A75025 /* readin_control.h */,
 				CDE659AC1E940B8E00C562D8 /* linear_control.h */,
 				CDE29987198C831400556032 /* emissions_control_factory.h */,
 				CDE2997B198C82A200556032 /* aemissions_control.h */,
@@ -1475,6 +1479,7 @@
 		CD4884B9122873C100F5A88A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				CD4283A1203F157C00A75025 /* readin_control.cpp */,
 				CDE659AD1E940BA600C562D8 /* linear_control.cpp */,
 				CDE29988198C831E00556032 /* emissions_control_factory.cpp */,
 				CDE2997F198C82C400556032 /* aemissions_control.cpp */,
@@ -2622,6 +2627,7 @@
 				CD48876A122873C200F5A88A /* function_utils.cpp in Sources */,
 				CD48876B122873C200F5A88A /* government_demand_function.cpp in Sources */,
 				CD48876C122873C200F5A88A /* household_demand_function.cpp in Sources */,
+				CD4283A2203F157C00A75025 /* readin_control.cpp in Sources */,
 				CD48876D122873C200F5A88A /* input_capital.cpp in Sources */,
 				CD48876E122873C200F5A88A /* input_OM_fixed.cpp in Sources */,
 				CD48876F122873C200F5A88A /* input_OM_var.cpp in Sources */,

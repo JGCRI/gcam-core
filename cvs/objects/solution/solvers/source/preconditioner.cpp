@@ -231,19 +231,16 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
             else {
                 switch(solvable[i].getType()) {
                 case IMarketType::NORMAL:
-                    // select a lower bound just a bit above the bottom of the supply curve.
                     lb = solvable[i].getLowerBoundSupplyPrice();
-                    lb += 1.0e-5 * std::max(1.0, fabs(lb));
-                    // select an upper bound just a bit below the top of the supply curve.
                     ub = solvable[i].getUpperBoundSupplyPrice();
-                    ub -= 1.0e-5 * std::max(1.0, fabs(ub));
                     if(oldprice < lb &&
                        oldsply < olddmnd && olddmnd > mFTOL
                         ) {
                         // price is below the bottom of the supply curve,
                         // and there is excess demand: set new price a bit
                         // above the bottom of the curve.
-                        newprice = lb + 0.01*std::max(1.0, fabs(lb)); 
+                        // 1% above lower bound
+                        newprice = lb + 0.01 * fabs(lb);
                         // sometimes the range of valid prices is really
                         // narrow and the above can actually overshoot.
                         if(newprice >= solvable[i].getUpperBoundSupplyPrice())
@@ -269,18 +266,28 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                     } 
                     else if (oldprice > ub &&
                              oldsply > olddmnd) {
-                        // price is above the top of the supply curve,
-                        // and there little demand.  Set new price at
-                        // the top of the supply curve.  We are
-                        // conservative about this adjustment because
-                        // it frequently happens that the supply of
-                        // certain resources runs out, and the
-                        // clearing price will be above the top of the
-                        // supply curve.
+                      // price is above the top of the supply curve,
+                      // and there little demand.  This is not
+                      // necessarily wrong.  When a resource runs out,
+                      // the clearing price *should* be above the top
+                      // of the supply curve, so this is not
+                      // necessarily an error.  Therefore, we will be
+                      // a little conservative in this adjustment.
+                      // When demand is less than 1% of supply, we set
+                      // the price to the upper bound.  When demand is
+                      // greater than or equal to supply, we leave the
+                      // price alone.  In between we interpolate.
+                      double sthresh = 100.0; // the 1% threshold described above.
+                      if(oldsply >= sthresh*olddmnd) {
                         newprice = ub;
-                        solvable[i].setPrice(newprice);
-                        chg = true;
-                        ++nchg;
+                      }
+                      else {
+                        double k = (sthresh - (oldsply-olddmnd)) / sthresh;
+                        newprice = ub + k * (oldprice-ub);
+                      }
+                      solvable[i].setPrice(newprice);
+                      chg = true;
+                      ++nchg;
                     }
                     break; 
                 case IMarketType::TRIAL_VALUE:

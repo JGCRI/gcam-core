@@ -96,6 +96,8 @@ protected:
         // TODO: Should this be a vector?
         DEFINE_VARIABLE( SIMPLE, "calPrice", mCalPrice, double ),
 
+        DEFINE_VARIABLE( ARRAY, "subsidy", mSubsidy, objects::PeriodVector<double> ),
+
         //! Name of the market for this good.
         DEFINE_VARIABLE( SIMPLE, "market", mMarketName, std::string )
     )

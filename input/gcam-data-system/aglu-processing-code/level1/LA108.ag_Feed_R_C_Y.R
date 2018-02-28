@@ -25,7 +25,7 @@ sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_data", extension = ".R" )
 iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID" )
 FAO_ag_items_cal_SUA <- readdata( "AGLU_MAPPINGS", "FAO_ag_items_cal_SUA" )
 L100.FAO_ag_Feed_t <- readdata( "AGLU_LEVEL1_DATA", "L100.FAO_ag_Feed_t" )
-L104.ag_Prod_Mt_R_C_Y <- readdata( "AGLU_LEVEL1_DATA", "L104.ag_Prod_Mt_R_C_Y" )
+L103.ag_Prod_Mt_R_C_Y <- readdata( "AGLU_LEVEL1_DATA", "L103.ag_Prod_Mt_R_C_Y" )
 L107.an_Feed_Mt_R_C_Sys_Fd_Y <- readdata( "AGLU_LEVEL1_DATA", "L107.an_Feed_Mt_R_C_Sys_Fd_Y" )
 
 # -----------------------------------------------------------------------------
@@ -68,13 +68,16 @@ L108.ag_Feed_Mt_R_Cnf_Y_adj[ X_AGLU_historical_years ] <- L108.ag_Feedfrac_R_Cnf
 #FODDERHERB/RESIDUE
 printlog( "Part 2: Calculating FodderHerb and Residue balances by region and year" )
 #Calculate FodderHerb production by region, and fodderherb_residue demands by region
-L108.ag_Prod_Mt_R_FodderHerb_Y <- subset( L104.ag_Prod_Mt_R_C_Y, GCAM_commodity=="FodderHerb" )
+L108.ag_Prod_Mt_R_FodderHerb_Y <- subset( L103.ag_Prod_Mt_R_C_Y, GCAM_commodity=="FodderHerb" )
 L108.ag_Feed_Mt_R_FodderHerbResidue_Y <- subset( L108.ag_Feed_Mt_R_F_Y, feed=="FodderHerb_Residue" )
 
 #Calculate the residual in each region (production minus demand). Split positive and negative into separate tables for computation of each country's share of each
 L108.ag_Residual_Mt_R_FodderHerbResidue_Y <- L108.ag_Feed_Mt_R_FodderHerbResidue_Y
-L108.ag_Residual_Mt_R_FodderHerbResidue_Y[ X_AGLU_historical_years ] <- L108.ag_Prod_Mt_R_FodderHerb_Y[ X_AGLU_historical_years ] -
-      L108.ag_Feed_Mt_R_FodderHerbResidue_Y[ X_AGLU_historical_years ]
+L108.ag_Residual_Mt_R_FodderHerbResidue_Y[ X_AGLU_historical_years ] <-
+  L108.ag_Prod_Mt_R_FodderHerb_Y[
+      match( L108.ag_Feed_Mt_R_FodderHerbResidue_Y[[R]], L108.ag_Prod_Mt_R_FodderHerb_Y[[R]] ),
+      X_AGLU_historical_years ] -
+  L108.ag_Feed_Mt_R_FodderHerbResidue_Y[ X_AGLU_historical_years ]
 #Positive residuals = regions whose fodderherb production exceeds the demands for fodderherb/residue
 L108.ag_PosResidual_Mt_R_FodderHerbResidue_Y <- L108.ag_Residual_Mt_R_FodderHerbResidue_Y
 L108.ag_PosResidual_Mt_R_FodderHerbResidue_Y[ X_AGLU_historical_years ][ L108.ag_PosResidual_Mt_R_FodderHerbResidue_Y[ X_AGLU_historical_years ]  < 0 ] <- 0
@@ -126,7 +129,7 @@ L108.ag_Feed_Mt_R_FodderHerb_Y <- data.frame(
 #PASTURE & FODDERGRASS
 printlog( "Part 3: Calculating Pasture and FodderGrass inputs by region and year" )
 #Calculate regional FodderGrass production
-L108.ag_Prod_Mt_R_FodderGrass_Y <- subset( L104.ag_Prod_Mt_R_C_Y, GCAM_commodity=="FodderGrass" )
+L108.ag_Prod_Mt_R_FodderGrass_Y <- subset( L103.ag_Prod_Mt_R_C_Y, GCAM_commodity=="FodderGrass" )
 
 #Calculate regional demands of grass (Pasture_FodderGrass)
 L108.ag_Feed_Mt_R_PastFodderGrass_Y <- subset( L108.ag_Feed_Mt_R_F_Y, feed == "Pasture_FodderGrass" )

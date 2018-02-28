@@ -70,6 +70,10 @@ const string& PassThroughSector::getXMLNameStatic() {
     return XML_NAME;
 }
 
+const string& PassThroughSector::getXMLName() const {
+    return getXMLNameStatic();
+}
+
 bool PassThroughSector::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aNode ) {
     bool didParse = true;
     if( aNodeName == "marginal-revenue-sector" ) {
@@ -126,6 +130,26 @@ void PassThroughSector::completeInit( const IInfo* aRegionInfo,
     // Note the market dependency finder will manage the newly allocated memory.
     depFinder->resolveActivityToDependency( mRegionName, fixedDemandActivityName,
                                             new CalcFixedOutputActivity( this ) );
+    
+    // Create an unsolved trial value market for passing the fixed output which is
+    // the safest way to do so to ensure proper behavior when calculating partial
+    // derivatives.
+    Marketplace* marketplace = scenario->getMarketplace();
+    marketplace->createMarket( mRegionName,
+                               mRegionName,
+                               fixedDemandActivityName,
+                               IMarketType::TRIAL_VALUE );
+    
+    // Set price and output units for period 0 market info
+    IInfo* marketInfoTrialSupplySector = marketplace->getMarketInfo( fixedDemandActivityName, mRegionName, 0, true );
+    marketInfoTrialSupplySector->setString( "price-unit", mOutputUnit );
+    marketInfoTrialSupplySector->setString( "output-unit", mOutputUnit );
+    
+    // This trial market is used purely to pass data between sectors and should
+    // never be solved.
+    for( int per = 0; per < scenario->getModeltime()->getmaxper(); ++per ){
+        marketplace->unsetMarketToSolve( fixedDemandActivityName, mRegionName, per );
+    }
 }
 
 void PassThroughSector::initCalc( NationalAccount* aNationalAccount,
@@ -147,15 +171,19 @@ double PassThroughSector::getFixedOutput( const int aPeriod ) const {
 
 /*!
  * \brief Calculate the total fixed output in this sector (including vintaged output)
- *        and add it to the market info where it can be retrieved downstream.
+ *        and add it to the market where it can be retrieved downstream.
  * \param aPeriod The current model period.
  */
 void PassThroughSector::setFixedDemandsToMarket( const int aPeriod ) const {
-    double fixedOutput = getFixedOutput( aPeriod );
+    const_cast<PassThroughSector*>( this )->mLastCalcFixedOutput = getFixedOutput( aPeriod );
 
+    const string fixedDemandActivityName = mName + "-fixed-output";
     Marketplace* marketplace = scenario->getMarketplace();
-    IInfo* marketInfo = marketplace->getMarketInfo( mName, mRegionName, aPeriod, true );
-    marketInfo->setDouble( "fixed-output", fixedOutput );
+    // set the fixed out to both sides of the equation (supply=price for trial markets)
+    // so the solver doesn't complain it is "unsolved"
+    marketplace->addToDemand( fixedDemandActivityName, mRegionName,
+                              const_cast<PassThroughSector*>( this )->mLastCalcFixedOutput, aPeriod );
+    marketplace->setPrice( fixedDemandActivityName, mRegionName, mLastCalcFixedOutput, aPeriod );
 }
 
 CalcFixedOutputActivity::CalcFixedOutputActivity( const PassThroughSector* aSector ):

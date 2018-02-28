@@ -58,9 +58,10 @@ extern Scenario* scenario;
 /*! \brief Default constructor.
 * \author James Blackwood
 */
-AgSupplySector::AgSupplySector( std::string& regionName ): SupplySector( regionName )
+AgSupplySector::AgSupplySector( std::string& regionName ): SupplySector( regionName ),
+   mCalPrice( -1.0 ),
+   mSubsidy( 0.0 )   
 {
-    mCalPrice = -1.0;
 }
 
 //! Default destructor
@@ -78,6 +79,9 @@ bool AgSupplySector::XMLDerivedClassParse( const string& nodeName, const DOMNode
     }
     else if ( nodeName == "calPrice" ) {
         mCalPrice = XMLHelper<double>::getValue( curr );
+    }
+	else if ( nodeName == "subsidy" ) {
+        XMLHelper<double>::insertValueIntoVector( curr, mSubsidy, scenario->getModeltime() );
     }
     else if( nodeName == "market" ){
         mMarketName = XMLHelper<string>::getValue( curr );
@@ -126,7 +130,15 @@ void AgSupplySector::completeInit( const IInfo* aRegionInfo,
         mainLog << "Market name for sector " << mName << " was not set. Defaulting to regional market." << endl;
         mMarketName = mRegionName;
     }
+	
     SupplySector::completeInit( aRegionInfo, aLandAllocator );
+	
+	// Store subsidies in the marketplace so technology has access to them.
+	Marketplace* marketplace = scenario->getMarketplace();
+	const Modeltime* modeltime = scenario->getModeltime();
+	for( int per = 0; per < modeltime->getmaxper(); ++per ){
+		marketplace->getMarketInfo( mName, mRegionName, per, true )->setDouble( mRegionName + "subsidy", mSubsidy[ per ] );
+	}
 }
 
 /*! \brief Calculate the sector price.
@@ -207,3 +219,5 @@ void AgSupplySector::setMarket() {
         }
     }
 }
+
+
