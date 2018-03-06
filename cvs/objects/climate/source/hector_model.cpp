@@ -219,7 +219,7 @@ void HectorModel::completeInit( const string& aScenarioName ) {
 
     // Set up the name tables for each of the gases that GCAM and
     // hector both know about.  
-    mHectorEmissionsMsg["CO2"]           = D_ANTHRO_EMISSIONS; 
+    mHectorEmissionsMsg["CO2"]           = D_FFI_EMISSIONS; 
     mHectorEmissionsMsg["CO2NetLandUse"] = D_LUC_EMISSIONS;
     mHectorEmissionsMsg["SO2tot"]        = D_EMISSIONS_SO2;
     mHectorEmissionsMsg["CF4"]           = D_EMISSIONS_CF4;
@@ -314,7 +314,7 @@ void HectorModel::completeInit( const string& aScenarioName ) {
     mUnitConvFac["SO2tot"] = TG_TO_GG / S_TO_SO2; // GCAM in Tg-SO2; Hector in Tg-S
     mUnitConvFac["BC"]  = GG_TO_TG;            // GCAM produces BC/OC in Tg but converts
     mUnitConvFac["OC"]  = GG_TO_TG;            // to Gg for MAGICC. Hector wants Tg.
-    mUnitConvFac["NOX"] = NOX_TO_N;            // GCAM in TG-NOX; Hector in TG-N
+    mUnitConvFac["NOx"] = NOX_TO_N;            // GCAM in TG-NOX; Hector in TG-N
     mUnitConvFac["N2O"] = 1.0 / N_TO_N2O; // GCAM in Tg-N2O; Hector in Tg-N 
     // Already in correct units:
     // CO2 - produced in Mt C, but converted to Gt C before passing in,
@@ -326,7 +326,7 @@ void HectorModel::completeInit( const string& aScenarioName ) {
     // defined in the Hector header files.
     mHectorUnits["CO2"] = mHectorUnits["CO2NetLandUse"] = Hector::U_PGC_YR;
     mHectorUnits["BC"]  = mHectorUnits["OC"]            = Hector::U_TG;
-    mHectorUnits["NOX"]                                 = Hector::U_TG_N;
+    mHectorUnits["NOx"]                                 = Hector::U_TG_N;
     mHectorUnits["CO"]                                  = Hector::U_TG_CO;
     mHectorUnits["NMVOCs"]                              = Hector::U_TG_NMVOC;
     mHectorUnits["CH4"]                                 = Hector::U_TG_CH4;
@@ -554,8 +554,7 @@ IClimateModel::runModelStatus HectorModel::runModel( const int aYear ) {
                 ILogger& climatelog = ILogger::getLogger( "climate-log" );
                 climatelog.setLevel (ILogger::ERROR );
                 climatelog << "Receieve hector exception while running year " << year << ":" << endl;
-                climatelog << "* Program exception: " << e.msg << "\n* Function " << e.func << ", file "
-                    << e.file << ", line " << e.linenum << endl;
+                climatelog << "* Program exception: " << e << endl;
                 hadError = true;
             }
         }
