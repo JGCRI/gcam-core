@@ -31,7 +31,7 @@ test_that("set_water_input_name", {
 
   # No GLU - error
   water_sector <- c(water.IRRIGATION, water.IRRIGATION, not_irr, not_irr)
-  water_type = c(MAPPED_WATER_TYPES[1], "y", water.MAPPED_WATER_TYPES[1], water.MAPPED_WATER_TYPES[2])
+  water_type = c(water.MAPPED_WATER_TYPES[1], "y", water.MAPPED_WATER_TYPES[1], water.MAPPED_WATER_TYPES[2])
   expect_error(set_water_input_name(water_sector, water_type, water_mapping))
 })
 
