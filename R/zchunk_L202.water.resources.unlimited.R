@@ -42,10 +42,10 @@ module_water_L202.water.resources.unlimited <- function(command, ...) {
       mutate(market = region) %>%
       rename(unlimited.resource = water_type) %>%
       # Capacity factor is not used for water resources
-      mutate(output.unit = WATER_UNITS_QUANTITY, price.unit = WATER_UNITS_PRICE, capacity.factor = 1) %>%
+      mutate(output.unit = water.WATER_UNITS_QUANTITY, price.unit = water.WATER_UNITS_PRICE, capacity.factor = 1) %>%
       select(-GCAM_region_ID) %>%
       # Remove water goods that are only used by ag technologies, in regions with no aglu module
-      filter(!region %in% aglu.NO_AGLU_REGIONS | !unlimited.resource %in% AG_ONLY_WATER_TYPES) %>%
+      filter(!region %in% aglu.NO_AGLU_REGIONS | !unlimited.resource %in% water.AG_ONLY_WATER_TYPES) %>%
       arrange(region, unlimited.resource, output.unit, price.unit, market, capacity.factor) ->
       UnlimitRsrc
 
@@ -54,7 +54,7 @@ module_water_L202.water.resources.unlimited <- function(command, ...) {
       filter(year %in% MODEL_YEARS) %>%
       left_join_keep_first_only(GCAM_region_names, by = "GCAM_region_ID") %>%
       rename(unlimited.resource = water_type, price = value) %>%
-      filter(!region %in% aglu.NO_AGLU_REGIONS | !unlimited.resource %in% AG_ONLY_WATER_TYPES) %>%
+      filter(!region %in% aglu.NO_AGLU_REGIONS | !unlimited.resource %in% water.AG_ONLY_WATER_TYPES) %>%
       select(-GCAM_region_ID) %>%
       arrange(region, unlimited.resource, year, price) ->
       UnlimitRsrcPrice

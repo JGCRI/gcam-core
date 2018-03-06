@@ -43,7 +43,9 @@ module_water_L102.water.supply.unlimited <- function(command, ...) {
       repeat_add_columns(tibble(water_type)) %>%
       select(-region) %>%
       repeat_add_columns(tibble(year)) %>%
-      mutate(value = if_else(water_type != "water withdrawals", DEFAULT_UNLIMITED_WATER_PRICE, DEFAULT_UNLIMITED_WITHD_WATER_PRICE),
+      mutate(value = if_else(water_type != "water withdrawals",
+                             water.DEFAULT_UNLIMITED_WATER_PRICE,
+                             water.DEFAULT_UNLIMITED_WITHD_WATER_PRICE),
              year = as.integer(year)) ->
       L102.all_region_water_type
 

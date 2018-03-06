@@ -210,7 +210,7 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
       # Separate table of water withdrawals IO coefs for primary crops
       right_join(filter(L2072.AgCoef_IrrWaterWdraw_mgmt, AgSupplySector != "biomass"), by = "region") %>%
       # Calculate water price and water cost
-      mutate(WaterPrice = DEFAULT_UNLIMITED_IRR_WATER_PRICE / conveyance.eff,
+      mutate(WaterPrice = water.DEFAULT_UNLIMITED_IRR_WATER_PRICE / conveyance.eff,
              WaterCost = coefficient * WaterPrice) %>%
       # Match in non-land variable costs
       left_join_error_no_match(L2052.AgCost_ag_irr_mgmt, by = c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year")) %>%

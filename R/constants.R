@@ -418,20 +418,20 @@ socioeconomics.POP_DIGITS                <- 0
 
 # Water constants ======================================================================
 
-AG_ONLY_WATER_TYPES                 <- "biophysical water consumption"
-COOLING_SYSTEM_CAPACITY_FACTOR      <- 0.6   # Cooling system capacity factor (Unitless)
-COOLING_SYSTEM_FCR                  <- 0.15  # Cooling system fixed charge rate (Unitless)
-COOLING_SYSTEM_LOGIT 				        <- -5    # Cooling system logit (Unitless)
-DEFAULT_UNLIMITED_IRR_WATER_PRICE   <- 0.001 # (Units: 1975$/m3)
-DEFAULT_UNLIMITED_WATER_PRICE       <- 0
-DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.001
-DRY_COOLING_EFF_ADJ 				        <- 0.95  # Dry cooling efficiency adjustment (Unitless)
-IRRIGATION                          <- "Irrigation"
-MAPPED_WATER_TYPES                  <- c("water consumption", "water withdrawals")
-MAPPED_WATER_TYPES_SHORT            <- c("C", "W")
-names(MAPPED_WATER_TYPES_SHORT)     <- MAPPED_WATER_TYPES
-WATER_UNITS_PRICE                   <- "1975$/m^3"
-WATER_UNITS_QUANTITY                <- "km^3"
+water.AG_ONLY_WATER_TYPES                 <- "biophysical water consumption"
+water.COOLING_SYSTEM_CAPACITY_FACTOR      <- 0.6   # Cooling system capacity factor (Unitless)
+water.COOLING_SYSTEM_FCR                  <- 0.15  # Cooling system fixed charge rate (Unitless)
+water.COOLING_SYSTEM_LOGIT 				        <- -5    # Cooling system logit (Unitless)
+water.DEFAULT_UNLIMITED_IRR_WATER_PRICE   <- 0.001 # (Units: 1975$/m3)
+water.DEFAULT_UNLIMITED_WATER_PRICE       <- 0
+water.DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.001
+water.DRY_COOLING_EFF_ADJ 				        <- 0.95  # Dry cooling efficiency adjustment (Unitless)
+water.IRRIGATION                          <- "Irrigation"
+water.MAPPED_WATER_TYPES                  <- c("water consumption", "water withdrawals")
+water.MAPPED_WATER_TYPES_SHORT            <- c("C", "W")
+names(water.MAPPED_WATER_TYPES_SHORT)     <- water.MAPPED_WATER_TYPES
+water.WATER_UNITS_PRICE                   <- "1975$/m^3"
+water.WATER_UNITS_QUANTITY                <- "km^3"
 
 
 # Emissions constants ======================================================================
