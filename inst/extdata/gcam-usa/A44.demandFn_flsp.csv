@@ -1,3 +1,6 @@
 # File: A44.demandFn_flsp.csv
 # Title: Floorspace demand function type
-# Units: NAgcam.consumer,nodeInput,prodDmdFnTyperesid,resid,building-functioncomm,comm,building-function
+# Units: NA
+gcam.consumer,nodeInput,prodDmdFnType
+resid,resid,building-function
+comm,comm,building-function

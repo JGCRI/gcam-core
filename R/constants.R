@@ -389,6 +389,66 @@ energy.DIGITS_SHRWT            <- 4
 energy.DIGITS_SPEED            <- 1
 
 
+# Conversion constants ======================================================================
+# The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
+
+# Numeric (unitless)
+CONV_BIL_MIL <- 1000
+CONV_MIL_BIL <- 1 / CONV_BIL_MIL
+CONV_BIL_THOUS <- 1e6
+CONV_THOUS_BIL <- 1 / CONV_BIL_THOUS
+CONV_MIL_THOUS <- 1000
+CONV_ONES_THOUS <- 0.001
+
+# Mass
+CONV_TON_MEGATON <- 1e-6
+CONV_T_KG <- 1e3
+CONV_KG_T <- 1 / CONV_T_KG
+CONV_T_METRIC_SHORT <- 1000 / 908  # Ratio between metric ton and short ton
+CONV_HA_BM2 <- 1e-5
+CONV_HA_M2 <- 10000
+CONV_THA_KGM2 <- 0.1   # tons C/ha -> kg C/m2
+CONV_GG_TG <- 0.001 # gigagrams to tegagrams
+CONV_TST_TG <- 0.000907 # thousand short tons to Tg
+CONV_KG_TO_TG <- 1e-9
+CONV_KT_MT <- 0.001 # kt to Mt
+CONV_T_MT <- 1e-6 # t to Mt
+CONV_G_KG <- 1e-3 # kilograms to grams
+CONV_NH3_N <- 14/17 # Nitrogen to Ammonia
+CONV_KBBL_BBL <- 1000 # thousand barrels to barrels
+CONV_BBL_TONNE_RFO <- 1 / 6.66 # barrels to tons residual fuel oil
+CONV_TONNE_GJ_RFO <- 40.87 # tons to GJ residual fuel oil
+CONV_BBL_TONNE_DISTILLATE <- 1 / 7.46 # barrels to tons distillate
+CONV_TONNE_GJ_DISTILLATE <- 42.91 # tons to GJ distillate
+
+# Time
+CONV_YEAR_HOURS <- 24 * 365.25
+CONV_DAYS_YEAR <- 1 / 365.25
+
+# Energy
+CONV_MWH_GJ <- 3.6 # Megawatt hours to Gigajoules
+CONV_GWH_EJ <- 3.6e-6
+CONV_TWH_EJ <- 3.6e-3
+CONV_KWH_GJ <- 3.6e-3
+CONV_GJ_EJ <- 1e-9
+CONV_EJ_GJ <- 1 / CONV_GJ_EJ
+CONV_MBLD_EJYR <- 6.119 * 365.25 * 1e-3 # million barrels a day to EJ per year
+CONV_KBTU_EJ <- 1.0551e-12 # KiloBTU to EJ
+CONV_TBTU_EJ <- 0.0010551 # TeraBTU to EJ
+CONV_MJ_BTU <- 947.777
+CONV_BTU_KJ <- 1.0551
+
+# Other
+CONV_MCAL_PCAL <- 1e-9
+CONV_M3_BM3 <- 1e-09 # Cubic meters (m3) to billion cubic meters (bm3)
+CONV_MILLION_M3_KM3 <- 1e-03
+CONV_M2_ACR <- 0.0002471058
+CONV_HA_M2 <- 1e4 # ha to m2
+CONV_BM2_M2 <- 1e9
+CONV_MILFT2_M2 <- 92900 # Million square feet to square meters
+CONV_FT2_M2 <- 0.0929 # Square feet to square meters
+
+
 # Socioeconomics constants ======================================================================
 
 # Population years - note that these sequences shouldn't have any overlap,
