@@ -152,7 +152,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     # node_leaf_names in L125.LC.
     L125.LC_bm2_R_LT_Yh_GLU %>%
       filter(Land_Type %in% A_LandLeaf_Unmgd3$UnmanagedLandLeaf,
-             year %in% c(LAND_HISTORY_YEARS, BASE_YEARS)) %>%
+             year %in% c(aglu.LAND_HISTORY_YEARS, BASE_YEARS)) %>%
       mutate(allocation = round(value, aglu.DIGITS_LAND_USE)) %>%
       add_node_leaf_names(nesting_table = A_LandLeaf_Unmgd3, leaf_name = "UnmanagedLandLeaf",
                           LN1 = "LandNode1", LN2 = "LandNode2", LN3 = "LandNode3") ->
@@ -162,7 +162,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     # L223.LN3_UnmgdAllocation: Model base period land cover, unmanaged land in the third nest
     # Formed from filtering the master table by different years.
     L223.LC_bm2_R_Unmgd3_Yh_GLU %>%
-      filter(year %in% LAND_HISTORY_YEARS) %>%
+      filter(year %in% aglu.LAND_HISTORY_YEARS) %>%
       select(LEVEL2_DATA_NAMES[["LN3_HistUnmgdAllocation"]]) ->
       L223.LN3_HistUnmgdAllocation
 
@@ -179,7 +179,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     # node_leaf_names in L125.LC.
     L125.LC_bm2_R_LT_Yh_GLU %>%
       filter(Land_Type %in% A_LandLeaf3$LandLeaf,
-             year %in% c(LAND_HISTORY_YEARS, BASE_YEARS)) %>%
+             year %in% c(aglu.LAND_HISTORY_YEARS, BASE_YEARS)) %>%
       mutate(allocation = round(value, aglu.DIGITS_LAND_USE)) %>%
       add_node_leaf_names(nesting_table = A_LandLeaf3, leaf_name = "LandLeaf",
                           LN1 = "LandNode1", LN2 = "LandNode2", LN3 = "LandNode3") ->
@@ -189,7 +189,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     # L223.LN3_MgdAllocation_noncrop: Model base period land cover, managed land in the third nest (noncrop)
     # Formed from filtering the master table by different years.
     L223.LC_bm2_R_Mgd3_Yh_GLU %>%
-      filter(year %in% LAND_HISTORY_YEARS) %>%
+      filter(year %in% aglu.LAND_HISTORY_YEARS) %>%
       select(LEVEL2_DATA_NAMES[["LN3_HistMgdAllocation"]]) ->
       L223.LN3_HistMgdAllocation_noncrop
 

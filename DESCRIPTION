@@ -46,7 +46,8 @@ Imports:
 Suggests:
     igraph (>= 1.0.1),
     mockr (>= 0.1),
-    testthat (>= 1.0.2)
+    testthat (>= 1.0.2),
+    R.utils (>= 2.6.0)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1

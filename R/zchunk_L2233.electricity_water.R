@@ -278,7 +278,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
 
     L2233.SubsectorShrwtFllt_elec_cool %>%
       mutate(logit.year.fillout = first(BASE_YEARS),
-             logit.exponent = COOLING_SYSTEM_LOGIT) %>%
+             logit.exponent = water.COOLING_SYSTEM_LOGIT) %>%
       select(LEVEL2_DATA_NAMES[["SubsectorLogit"]]) %>%
       mutate(logit.type = NA) -> L2233.SubsectorLogit_elec_cool # --OUTPUT--
 
@@ -431,7 +431,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
       if("efficiency" %in% names(newTable)) {
         mutate(newTable,
                efficiency = if_else(grepl("dry", technology),
-                                    efficiency * DRY_COOLING_EFF_ADJ, as.double(efficiency))) ->
+                                    efficiency * water.DRY_COOLING_EFF_ADJ, as.double(efficiency))) ->
           newTable
       }
       newTable %>%
@@ -458,7 +458,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
     elec_tech_water_map %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       left_join_error_no_match(L2233.CoolingSystemCosts, by = c("cooling_system", "year")) %>%
-      mutate(fixed.charge.rate = COOLING_SYSTEM_FCR, capacity.factor = COOLING_SYSTEM_CAPACITY_FACTOR) %>%
+      mutate(fixed.charge.rate = water.COOLING_SYSTEM_FCR, capacity.factor = water.COOLING_SYSTEM_CAPACITY_FACTOR) %>%
       select(-technology) %>%
       rename(sector.name = to.supplysector,
              subsector.name = to.subsector,

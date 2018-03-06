@@ -129,7 +129,7 @@ module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
       summarise(Fert_Cons_MtN = sum(Fert_Cons_MtN)) %>%
       ungroup() %>%
       # Match in agricultural production by GCAM region / commodity / GLU in the base year; this creates NAs
-      left_join(filter(L103.ag_Prod_Mt_R_C_Y_GLU, year %in% BASE_YEAR_IFA), by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
+      left_join(filter(L103.ag_Prod_Mt_R_C_Y_GLU, year %in% aglu.BASE_YEAR_IFA), by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
       # Calculate unscaled input-output coefficients as unscaled fertilizer demands divided by agricultural production
       mutate(Fert_IO_unscaled = Fert_Cons_MtN / value,
              Fert_IO_unscaled = replace(Fert_IO_unscaled, Fert_IO_unscaled == Inf, 0)) %>%

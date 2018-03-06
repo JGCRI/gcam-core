@@ -37,30 +37,30 @@ module_gcam.usa_LA115.RooftopPV <- function(command, ...) {
     # COMPUTE CONSTANTS
 
     # Compute PV fixed charge rate (a constant)
-    PV_FCR <- (PV_DISCOUNT_RATE * (1 + PV_DISCOUNT_RATE) ^ PV_LIFETIME) /
-      ((PV_DISCOUNT_RATE + 1) ^ PV_LIFETIME - 1)
+    PV_FCR <- (energy.PV_DISCOUNT_RATE * (1 + energy.PV_DISCOUNT_RATE) ^ energy.PV_LIFETIME) /
+      ((energy.PV_DISCOUNT_RATE + 1) ^ energy.PV_LIFETIME - 1)
 
     # Get maximum residential capacity factor (a constant)
     filter(NREL_Res_PV_supply_curve, Relative_Cost == min(Relative_Cost))$MWh /
       filter(NREL_Res_PV_supply_curve, Relative_Cost == min(Relative_Cost))$MW /
-      HOURS_PER_YEAR -> max_resid_capacity_factor
+      energy.HOURS_PER_YEAR -> max_resid_capacity_factor
 
     # Get maximum commerical capacity factor (a constant)
     filter(NREL_Com_PV_supply_curve, Rel_Cost == min(Rel_Cost))$GWH * CONV_BIL_MIL /
       filter(NREL_Com_PV_supply_curve, Rel_Cost == min(Rel_Cost))$MW /
-      HOURS_PER_YEAR -> max_comm_capacity_factor
+      energy.HOURS_PER_YEAR -> max_comm_capacity_factor
 
     # Get minimum levelized electricity cost (LEC) for residential PV in 2005USD / KW (a constant)
-    PV_resid_min_LEC_2005 <- (PV_RESID_INSTALLED_COST / PV_DERATING_FACTOR) * PV_FCR /
-      (max_resid_capacity_factor * HOURS_PER_YEAR) +
-      PV_RESID_OM / (max_resid_capacity_factor * HOURS_PER_YEAR)
+    PV_resid_min_LEC_2005 <- (energy.PV_RESID_INSTALLED_COST / energy.PV_DERATING_FACTOR) * PV_FCR /
+      (max_resid_capacity_factor * energy.HOURS_PER_YEAR) +
+      energy.PV_RESID_OM / (max_resid_capacity_factor * energy.HOURS_PER_YEAR)
     # ... and in 1975USD / GJ (a constant)
     PV_resid_min_LEC_1975 <- PV_resid_min_LEC_2005 * gdp_deflator(1975, 2005) / CONV_KWH_GJ
 
     # Get minimum levelized electricity cost (LEC) for commercial PV in 2005USD / KW (a constant)
-    PV_comm_min_LEC_2005 <- (PV_COMM_INSTALLED_COST / PV_DERATING_FACTOR ) * PV_FCR /
-      (max_comm_capacity_factor * HOURS_PER_YEAR) +
-      PV_COMM_OM / (max_comm_capacity_factor * HOURS_PER_YEAR)
+    PV_comm_min_LEC_2005 <- (energy.PV_COMM_INSTALLED_COST / energy.PV_DERATING_FACTOR ) * PV_FCR /
+      (max_comm_capacity_factor * energy.HOURS_PER_YEAR) +
+      energy.PV_COMM_OM / (max_comm_capacity_factor * energy.HOURS_PER_YEAR)
     # ... and in 1975USD / GJ (a constant)
     PV_comm_min_LEC_1975 <- PV_comm_min_LEC_2005 * gdp_deflator(1975, 2005) / CONV_KWH_GJ
 

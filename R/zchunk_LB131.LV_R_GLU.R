@@ -45,7 +45,7 @@ module_aglu_LB131.LV_R_GLU <- function(command, ...) {
 
     # Prepare land area for use in compuating land value
     L122.LC_bm2_R_HarvCropLand_Yh_GLU %>%
-      filter(year == GTAP_HISTORICAL_YEAR) %>%                                                      # Only use cropland area from the GTAP historical year
+      filter(year == aglu.GTAP_HISTORICAL_YEAR) %>%                                                      # Only use cropland area from the GTAP historical year
       rename(HarvCropLand_bm2 = value) ->                                                             # Rename column to what is used in old data system
       LC_R_GLU
 

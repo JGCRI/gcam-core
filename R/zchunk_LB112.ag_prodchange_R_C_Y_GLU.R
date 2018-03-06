@@ -69,7 +69,7 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
       left_join_error_no_match(crop_id, by = c("crop_ID" = "CROSIT_cropID")) %>%
       select(CROSIT_ctry, CROSIT_crop) %>%
       unique() %>%
-      repeat_add_columns(tibble(SPEC_AG_PROD_YEARS)) -> interp.tbl
+      repeat_add_columns(tibble(aglu.SPEC_AG_PROD_YEARS)) -> interp.tbl
 
     # Intial CROSIT data clean-up and interpolation of yields
     FAO_ag_CROSIT %>%
@@ -95,21 +95,21 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
              Prod_kt = if_else((CROSIT_ctry == "ERIT" & CROSIT_crop == "WHEA" & year == 2005), 16 * 1.4, Prod_kt)) %>%
       # CROSIT yield data are available in 2005, 2030, and 2050. The followings are to fill the years in between by five-year step.
       # Join the table with all specified ag productivity years.
-      full_join(interp.tbl, by = c("CROSIT_ctry", "CROSIT_crop", "year" = "SPEC_AG_PROD_YEARS")) %>%
+      full_join(interp.tbl, by = c("CROSIT_ctry", "CROSIT_crop", "year" = "aglu.SPEC_AG_PROD_YEARS")) %>%
       # Interpolate for each country and crop combination
       group_by(CROSIT_ctry, CROSIT_crop) %>%
       # Interpolate to all specified agricultural productivity years from 2010 to 2050 by five-year step.
       mutate(Yield_kgHa = approx_fun(year, Yield_kgHa)) %>%
       ungroup() %>%
       # Drop any years not included (i.e.2005)
-      filter(year %in% SPEC_AG_PROD_YEARS) %>%
+      filter(year %in% aglu.SPEC_AG_PROD_YEARS) %>%
       # Drop the unneeded production and harvest area varaibles
       select(-HA_kha, -Prod_kt) -> Yield
 
     # Calculate CROSIT multipliers (yield ratios) from the base year to all specified years, by country and crop
     Yield %>%
       # Select the base year (2010)
-      filter(year == min(SPEC_AG_PROD_YEARS)) %>%
+      filter(year == min(aglu.SPEC_AG_PROD_YEARS)) %>%
       select(-year) %>%
       # Change the yield column name for next-step calculations
       rename(Yield_base = Yield_kgHa) %>%
@@ -161,9 +161,9 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
       # Drop all crop x commodity combinations not present in the CROSIT yield multiplier data
       filter(CROSIT %in% CROSIT_id) %>%
       # Repeat GTAP GLU production / harvested area data by the number of years in the specified agricultural productivity set
-      repeat_add_columns(tibble(SPEC_AG_PROD_YEARS)) %>%
+      repeat_add_columns(tibble(aglu.SPEC_AG_PROD_YEARS)) %>%
       # Rename the year vector
-      rename(year = SPEC_AG_PROD_YEARS) %>%
+      rename(year = aglu.SPEC_AG_PROD_YEARS) %>%
       # Match CROSIT yield multipliers into GTAP/LDS harvested area database
       left_join_error_no_match(L112.ag_Yieldmult, by = c("CROSIT_ctry", "CROSIT_crop", "year")) ->
       L112.ag_HA
@@ -179,9 +179,9 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
       # Drop the NAs.
       na.omit() %>%
       # Repeat GTAP GLU production / harvested area data by the number of years in the specified agricultural productivity set
-      repeat_add_columns(tibble(SPEC_AG_PROD_YEARS)) %>%
+      repeat_add_columns(tibble(aglu.SPEC_AG_PROD_YEARS)) %>%
       # Rename the year vector
-      rename(year = SPEC_AG_PROD_YEARS) %>%
+      rename(year = aglu.SPEC_AG_PROD_YEARS) %>%
       # Match in the CROSIT-GTAP/LDS matched multipliers (this creates NAs, and use left_join instead of left_join_error_no_match).
       left_join(unique(select(L112.ag_HA, CROSIT_ctry, CROSIT_crop, year, Mult)), by = c("CROSIT_ctry", "CROSIT_crop", "year")) %>%
       # Drop the NAs.
@@ -221,20 +221,20 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
       rename(value = YieldRatio) -> L112.agBio_YieldRate
 
     # For each model timestep between 2010 to 2050, calculate the annual yield change rate based on the yield ratios
-    assert_that(length(SPEC_AG_PROD_YEARS) > 1)
-    for(i in 2:length(SPEC_AG_PROD_YEARS)) {
-      timestep <- SPEC_AG_PROD_YEARS[i] - SPEC_AG_PROD_YEARS[i-1]
+    assert_that(length(aglu.SPEC_AG_PROD_YEARS) > 1)
+    for(i in 2:length(aglu.SPEC_AG_PROD_YEARS)) {
+      timestep <- aglu.SPEC_AG_PROD_YEARS[i] - aglu.SPEC_AG_PROD_YEARS[i-1]
 
       # Yield ratios in the last model time period
       L112.agBio_YieldRatio %>%
-        filter(year == SPEC_AG_PROD_YEARS[i-1]) %>%
+        filter(year == aglu.SPEC_AG_PROD_YEARS[i-1]) %>%
         select(-year) %>%
         # Change the yield ratio column name for next-step calculations
         rename(YieldRatio.last = YieldRatio) -> YieldRatio.last
 
       L112.agBio_YieldRatio %>%
         # Yield ratios in this model time period
-        filter(year == SPEC_AG_PROD_YEARS[i]) %>%
+        filter(year == aglu.SPEC_AG_PROD_YEARS[i]) %>%
         # Join the last period ratios
         full_join(YieldRatio.last, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
         # Translate from yield ratios to annual improvement rates for this period
@@ -284,7 +284,7 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
       # Join the default ag producivity improvement assumptions
       left_join(L112.defaultYieldRate, by = c("GCAM_commodity")) %>%
       # Keep future years (2015-2100) and 2010
-      filter(year %in% FUTURE_YEARS | year %in% SPEC_AG_PROD_YEARS) %>%
+      filter(year %in% FUTURE_YEARS | year %in% aglu.SPEC_AG_PROD_YEARS) %>%
       mutate(year = as.integer(year)) ->
       ag_YieldRate_incomplete.cases
 
@@ -306,7 +306,7 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
       # Join the default ag producivity improvement assumptions for 2050 beyond
       left_join(L112.defaultYieldRate, by = c("GCAM_commodity")) %>%
       # Keep future years (2055-2100)
-      filter(year %in% FUTURE_YEARS & (!(year %in% SPEC_AG_PROD_YEARS))) %>%
+      filter(year %in% FUTURE_YEARS & (!(year %in% aglu.SPEC_AG_PROD_YEARS))) %>%
       # Combine complete cases 2010-2050, and imcomplete cases of ag commodities
       bind_rows(ag_YieldRate_complete.cases, ag_YieldRate_incomplete.cases) %>%
       mutate(year = as.integer(year)) %>%
@@ -330,7 +330,7 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
       # Join the default ag producivity improvement assumptions
       left_join(L112.defaultYieldRate, by = c("GCAM_commodity")) %>%
       # Keep future years (2015-2100) and 2010
-      filter(year %in% FUTURE_YEARS | year %in% SPEC_AG_PROD_YEARS) %>%
+      filter(year %in% FUTURE_YEARS | year %in% aglu.SPEC_AG_PROD_YEARS) %>%
       mutate(year = as.integer(year)) ->
       bio_YieldRate_incomplete.cases
 
@@ -353,7 +353,7 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
       # Join the default ag producivity improvement assumptions for 2050 beyond
       left_join(L112.defaultYieldRate, by = c("GCAM_commodity")) %>%
       # Keep future years (2055-2100)
-      filter(year %in% FUTURE_YEARS & (!(year %in% SPEC_AG_PROD_YEARS))) %>%
+      filter(year %in% FUTURE_YEARS & (!(year %in% aglu.SPEC_AG_PROD_YEARS))) %>%
       # Combine complete cases 2010-2050, and imcomplete cases of ag commodities
       bind_rows(bio_YieldRate_complete.cases, bio_YieldRate_incomplete.cases) %>%
       mutate(year = as.integer(year)) %>%

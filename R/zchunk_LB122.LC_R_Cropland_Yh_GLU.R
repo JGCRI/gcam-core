@@ -64,7 +64,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
     # Line 36 in original file
     # take a subset of the land cover table L120.LC_bm2_R_LT_YH_GLU: cropland, and only in aglu historical years
     L120.LC_bm2_R_LT_Yh_GLU %>%
-      filter(Land_Type == "Cropland", year %in% AGLU_HISTORICAL_YEARS) ->
+      filter(Land_Type == "Cropland", year %in% aglu.AGLU_HISTORICAL_YEARS) ->
       # store in table Land Cover in bm2 by Region, Year and GLU for Cropland.
       L122.LC_bm2_R_CropLand_Y_GLU
 
@@ -109,7 +109,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
     # using the average cropland, fallow land, and land in temporary crops from FAO RESOURCESTAT
     # The time series is unreliable, so only using the last available year (and applying to all historical years)
     # based on above old comment, get the last available year and set as fallowland_year:
-    fallowland_year <- max(AGLU_HISTORICAL_YEARS)
+    fallowland_year <- max(aglu.AGLU_HISTORICAL_YEARS)
     # And continue with calculating average crop land, fallow land, land in temporary crops:
     # compile the ratio of "temporary crops" to total arable land in each region
     # make table with fallow land compared to total arable land
@@ -288,11 +288,11 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       # remove unneeded columns:
       select(-value.x, -value.y, -Land_Type) %>%
       # if the harvested to cropland ratio, value, is less than the min acceptable harvested area to cropland,
-      # MIN_HA_TO_CROPLAND, replace with MIN_HA_TO_CROPLAND
-      mutate(value = if_else(value < MIN_HA_TO_CROPLAND, MIN_HA_TO_CROPLAND, value)) %>%
+      # aglu.MIN_HA_TO_CROPLAND, replace with aglu.MIN_HA_TO_CROPLAND
+      mutate(value = if_else(value < aglu.MIN_HA_TO_CROPLAND, aglu.MIN_HA_TO_CROPLAND, value)) %>%
       # if the harvested to cropland ratio is greater than the max acceptable harvested area to cropland,
-      # MAX_HA_TO_CROPLAND, replace with MAX_HA_TO_CROPLAND
-      mutate(value = if_else(value > MAX_HA_TO_CROPLAND, MAX_HA_TO_CROPLAND, value)) ->
+      # aglu.MAX_HA_TO_CROPLAND, replace with aglu.MAX_HA_TO_CROPLAND
+      mutate(value = if_else(value > aglu.MAX_HA_TO_CROPLAND, aglu.MAX_HA_TO_CROPLAND, value)) ->
       # store in a table of HA to cropland ratios by region-glu-year
       L122.ag_HA_to_CropLand_R_Y_GLU
 
@@ -448,7 +448,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
     L120.LC_bm2_R_LT_Yh_GLU %>%
       ungroup %>%
       # only save the years in pre-AGLU years:
-      filter(year %in% PREAGLU_YEARS) %>% ungroup() %>%
+      filter(year %in% aglu.PREAGLU_YEARS) %>% ungroup() %>%
       # insure that there is cropland for each GCAM region-glu that appear L122.LC_bm2_R_CropLand_Y_GLU:
       tidyr::complete(Land_Type = unique(L122.LC_bm2_R_CropLand_Y_GLU[['Land_Type']]),
                       tidyr::nesting(GCAM_region_ID, GLU, year), fill = list(value = NA)) %>%
@@ -476,7 +476,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
     # Take ExtraCropLand by region-glu-year:
     L122.LC_bm2_R_ExtraCropLand_Y_GLU %>%
       # expand to include history years and fill in those values to be 0:
-      tidyr::complete(year = c(PREAGLU_YEARS, AGLU_HISTORICAL_YEARS),
+      tidyr::complete(year = c(aglu.PREAGLU_YEARS, aglu.AGLU_HISTORICAL_YEARS),
                       nesting(GCAM_region_ID, GLU, Land_Type),
                       fill = list(value = 0)) ->
       # store in a table of ExtraCropland by region-glu-year, including historical years:
@@ -490,7 +490,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
     L122.LC_bm2_R_HarvCropLand_C_Y_GLU %>%
       ungroup %>%
       # expand to include history years and fill in those values to be 0:
-      tidyr::complete(year = c(PREAGLU_YEARS, AGLU_HISTORICAL_YEARS),
+      tidyr::complete(year = c(aglu.PREAGLU_YEARS, aglu.AGLU_HISTORICAL_YEARS),
                       nesting(GCAM_region_ID, GCAM_commodity, GLU, Land_Type),
                       fill = list(value = 0)) ->
       # store in a table of HarvCropland by region-commodity-glu-year, including historical years:

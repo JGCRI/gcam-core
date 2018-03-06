@@ -516,7 +516,7 @@ normalize_files <- function(root = system.file("extdata", package = "gcamdata"),
     open(con)
     txt <- readLines(con, warn = FALSE)
     close(con)
-    uc_size <- format(object.size(txt), units = "Mb")
+    uc_size <- format(utils::object.size(txt), units = "Mb")
     message("OK. ", uc_size, " uncompressed")
 
     message("\tWriting...", appendLF = FALSE)

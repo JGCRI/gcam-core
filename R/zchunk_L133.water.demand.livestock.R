@@ -136,7 +136,7 @@ module_water_L133.water.demand.livestock <- function(command, ...) {
     # to the tibble, since the water withdrawals are the same as consumption for livestock use the same
     # coefficients for the water withdrawals and water consumption.
     L133.water_demand_livestock_R_C_W_km3_Mt %>%
-      repeat_add_columns(tibble(water_type = MAPPED_WATER_TYPES)) ->
+      repeat_add_columns(tibble(water_type = water.MAPPED_WATER_TYPES)) ->
       L133.water_demand_livestock_R_C_W_km3_Mt
 
     # Select the columns to output.

@@ -151,7 +151,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     # the data frame to add logit table information.
     L1322.out_Mt_state_Fert_Yh %>%
       filter(year %in% BASE_YEARS) %>%
-      mutate(calOutputValue = signif(value, DIGITS_LAND_USE)) %>%
+      mutate(calOutputValue = signif(value, aglu.DIGITS_LAND_USE)) %>%
       select(-value) %>%
       mutate(region = "USA", supplysector = gcamusa.FERT_NAME) %>%
       unite(subsector, state, supplysector, sep = " ", remove = FALSE) ->
@@ -279,7 +279,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     # and rounding the input-output coefficient value to the appropriate digits.
     L1322.IO_GJkg_state_Fert_F_Yh %>%
       filter(year %in% BASE_YEARS) %>%
-      mutate(coefficient = signif(value, DIGITS_LAND_USE)) %>%
+      mutate(coefficient = signif(value, aglu.DIGITS_LAND_USE)) %>%
       select(-value) %>%
       mutate(region = state) ->
       L2322.StubTechCoef_Fert_USA

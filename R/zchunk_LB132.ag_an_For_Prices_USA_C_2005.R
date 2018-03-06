@@ -53,7 +53,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
       # Modify item names to one word so that they can be used as column names when spreading item and doing calculations
       mutate(item = sub(" ", "_", item)) %>%
       spread(item, price) %>%
-      mutate(Seed_cotton = Cotton_lint * WEIGHT_COTTON_LINT + Cottonseed * (1 - WEIGHT_COTTON_LINT)) %>%
+      mutate(Seed_cotton = Cotton_lint * aglu.WEIGHT_COTTON_LINT + Cottonseed * (1 - aglu.WEIGHT_COTTON_LINT)) %>%
       # Assigning a price for game meat so that OtherMeat is assigned a price
       mutate(Game_meat = Cattle_meat) %>%
       gather(item, price, -countries, -year) %>%
@@ -67,7 +67,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
       filter(!(item == "Seed cotton" | item == "Cotton lint" | item == "Cottonseed" | item == "Game meat" | item == "Cattle meat")) %>%
       bind_rows(extra_price) %>%
       # Calculate a single unweighted average price over price years for each FAO agricultural item
-      filter(year %in% MODEL_PRICE_YEARS) %>%
+      filter(year %in% aglu.MODEL_PRICE_YEARS) %>%
       group_by(countries, item) %>%
       summarise_at(vars(price), mean, na.rm = TRUE) %>%
       ungroup() %>%
@@ -85,7 +85,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
     L100.FAO_ag_Prod_t %>%
       rename(prod = value) %>%
       # Calculate a single unweighted average production value over price years for each FAO primary agricultural good
-      filter(year %in% MODEL_PRICE_YEARS) %>%
+      filter(year %in% aglu.MODEL_PRICE_YEARS) %>%
       group_by(countries, item) %>%
       summarise_at(vars(prod), mean, na.rm = TRUE) %>%
       ungroup() %>%
@@ -115,7 +115,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
       select(-country.codes, -item.codes, -element, -element.codes) %>%
       gather_years(value_col = "prod") %>%
       # Calculate a single unweighted average production value over price years for each FAO animal product
-      filter(year %in% MODEL_PRICE_YEARS) %>%
+      filter(year %in% aglu.MODEL_PRICE_YEARS) %>%
       group_by(countries, item) %>%
       summarise_at(vars(prod), mean, na.rm = TRUE) %>%
       ungroup() %>%
@@ -155,11 +155,11 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
     USDA_Alfalfa_prices_USDt %>%
       select(year, avg) %>%
       # Calculate a single unweighted average price of Alfalfa over the price years
-      filter(year %in% MODEL_PRICE_YEARS) %>%
+      filter(year %in% aglu.MODEL_PRICE_YEARS) %>%
       summarise_at(vars(avg), mean, na.rm = TRUE) %>%
       rename(FodderHerb = avg) %>%
       # Note: Setting FodderGrass price as a ratio to FodderHerb
-      mutate(FodderGrass = FodderHerb * PRICERATIO_GRASS_ALFALFA) %>%
+      mutate(FodderGrass = FodderHerb * aglu.PRICERATIO_GRASS_ALFALFA) %>%
       # NOTE: Setting Pasture price equal to FodderGrass price
       mutate(Pasture = FodderGrass) %>%
       gather(GCAM_commodity, Price_USDt) %>%
@@ -179,7 +179,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
       select(-countries, -country.codes, -item, -item.codes, -element.codes) %>%
       gather_years %>%
       # Calculate a single unweighted average export value and a single unweighted average export quantity over price years
-      filter(year %in% MODEL_PRICE_YEARS) %>%
+      filter(year %in% aglu.MODEL_PRICE_YEARS) %>%
       group_by(element) %>%
       summarise_at(vars(value), mean, na.rm = TRUE) %>%
       ungroup() %>%

@@ -80,17 +80,17 @@ module_aglu_LB125.LC_tot <- function(command, ...) {
     # We don't do this under timeshift because the tolerance check fails...and it's not clear if that means anything or not
     if(!UNDER_TIMESHIFT) {
       L125.LC_bm2_R_Yh_GLU %>%
-        filter(year %in% AGLU_HISTORICAL_YEARS) %>%
+        filter(year %in% aglu.AGLU_HISTORICAL_YEARS) %>%
         arrange(GCAM_region_ID, GLU, year) %>%
         mutate(change_rate = value / lag(value),
                change = value - lag(value)) ->          # calculate the rate of change
         LC_check
 
       # Stop if the rate is outside of the tolerance boundaries
-      out <- abs(LC_check$change_rate - 1) > LAND_TOLERANCE
+      out <- abs(LC_check$change_rate - 1) > aglu.LAND_TOLERANCE
       if(any(out, na.rm = TRUE)) {
         print(na.omit(LC_check[out,]))
-        stop("ERROR: Interannual fluctuation in global land cover exceeds tolerance threshold of ", LAND_TOLERANCE)
+        stop("ERROR: Interannual fluctuation in global land cover exceeds tolerance threshold of ", aglu.LAND_TOLERANCE)
       }
     }
 
@@ -108,11 +108,11 @@ module_aglu_LB125.LC_tot <- function(command, ...) {
       group_by(GCAM_region_ID) %>%                         # group by GCAM_region_ID
       summarise(value = sum(value)) %>%                    # calculate the total area for each region
       rename(LC_bm2 = value) %>%                           # rename the column
-      mutate(LC_bm2 = round(LC_bm2, DIGITS_LAND_TOTAL)) -> # keep the data with digit precision defined by DIGITS_LAND_TOTAL
+      mutate(LC_bm2 = round(LC_bm2, aglu.DIGITS_LAND_TOTAL)) -> # keep the data with digit precision defined by aglu.DIGITS_LAND_TOTAL
       L125.LC_bm2_R                                        # Total land cover by GCAM region (unit billion m2)
 
     L125.LC_bm2_R_LT_Yh_GLU %>%                           # Land cover totals differentiated by land use types
-      mutate(value = round(value, DIGITS_LAND_USE)) ->    # round totals to specified number of digits defined by DIGITS_LAND_USE
+      mutate(value = round(value, aglu.DIGITS_LAND_USE)) ->    # round totals to specified number of digits defined by aglu.DIGITS_LAND_USE
       L125.LC_bm2_R_LT_Yh_GLU                             # Total land cover by GCAM region / land type / historical year / GLU (unit billion m2)
 
     # Produce outputs

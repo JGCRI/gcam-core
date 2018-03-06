@@ -192,7 +192,7 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
     ## Get the IMF GDP growth rates.  Some countries are missing, so we have to
     ## add them in with an assumed zero growth rate.
     imfgdp.growth <-
-      select(IMF_GDP_growth, one_of(c('ISO', IMF_GDP_YEARS))) %>%
+      select(IMF_GDP_growth, one_of(c('ISO', socioeconomics.IMF_GDP_YEARS))) %>%
       standardize_iso('ISO') %>%
       change_iso_code('rou', 'rom') %>%
       gather(year, gdp.rate, -iso) %>%

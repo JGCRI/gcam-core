@@ -229,8 +229,8 @@ module_energy_L224.heat <- function(command, ...) {
       left_join(GCAM_region_names, by = "GCAM_region_ID") %>%
       filter(region %in% heat_region$region) %>%
       filter(fuel == "gas") %>%
-      filter(efficiency < DEFAULT_ELECTRIC_EFFICIENCY) %>%
-      mutate(cost_modifier = energy.GAS_PRICE * (1 / DEFAULT_ELECTRIC_EFFICIENCY - 1 / efficiency)) -> L224.eff_cost_adj_Rh_elec_gas_sc_Y
+      filter(efficiency < energy.DEFAULT_ELECTRIC_EFFICIENCY) %>%
+      mutate(cost_modifier = energy.GAS_PRICE * (1 / energy.DEFAULT_ELECTRIC_EFFICIENCY - 1 / efficiency)) -> L224.eff_cost_adj_Rh_elec_gas_sc_Y
 
     # Modify the costs
     L224.StubTechCost_elec %>%

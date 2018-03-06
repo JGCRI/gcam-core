@@ -51,7 +51,7 @@ module_aglu_LA100.IMAGE_downscale_ctry_yr <- function(command, ...) {
     IMAGE_an_Feedfrac_Rimg_C_Sys_Fd_Y %>%
       create_new_yeardata(1970, 1960) %>%
       gather(IMAGE_region_ID, value, -commodity, -system, -input, -year) %>%
-      complete(year = union(AGLU_HISTORICAL_YEARS, year), nesting(commodity, system, input, IMAGE_region_ID)) %>%
+      complete(year = union(aglu.AGLU_HISTORICAL_YEARS, year), nesting(commodity, system, input, IMAGE_region_ID)) %>%
       arrange(year) %>%
       group_by(commodity, system, input, IMAGE_region_ID) %>%
       mutate(value = approx_fun(year, value, rule = 2)) %>%
@@ -61,7 +61,7 @@ module_aglu_LA100.IMAGE_downscale_ctry_yr <- function(command, ...) {
     IMAGE_an_FeedIO_Rimg_C_Sys_Y %>%
       create_new_yeardata(1970, 1960) %>%
       gather(IMAGE_region_ID, value, -commodity, -system, -year) %>%
-      complete(year = union(AGLU_HISTORICAL_YEARS, year), nesting(commodity, system, IMAGE_region_ID)) %>%
+      complete(year = union(aglu.AGLU_HISTORICAL_YEARS, year), nesting(commodity, system, IMAGE_region_ID)) %>%
       arrange(year) %>%
       group_by(commodity, system, IMAGE_region_ID) %>%
       mutate(value = approx_fun(year, value, rule = 2)) %>%
@@ -74,7 +74,7 @@ module_aglu_LA100.IMAGE_downscale_ctry_yr <- function(command, ...) {
     IMAGE_an_Prodmixfrac_Rimg_C_Y %>%
       create_new_yeardata(1970, 1960) %>%
       gather(IMAGE_region_ID, value, -commodity, -year) %>%
-      complete(year = union(AGLU_HISTORICAL_YEARS, year), nesting(commodity, IMAGE_region_ID)) %>%
+      complete(year = union(aglu.AGLU_HISTORICAL_YEARS, year), nesting(commodity, IMAGE_region_ID)) %>%
       arrange(year) %>%
       group_by(commodity, IMAGE_region_ID) %>%
       mutate(value = approx_fun(year, value, rule = 2)) %>%
@@ -89,12 +89,12 @@ module_aglu_LA100.IMAGE_downscale_ctry_yr <- function(command, ...) {
 
     # Helper function: filter, repeat and add columns, join with iso data
     downscale_IMAGE_regions <- function(x, AGLU_ctry, by) {
-      historical_data <- filter(x, year %in% AGLU_HISTORICAL_YEARS) %>% spread(year, value)
+      historical_data <- filter(x, year %in% aglu.AGLU_HISTORICAL_YEARS) %>% spread(year, value)
 
       x %>%
         ungroup %>%
         # pick out region 1 (Canada in IMAGE 2.4) but there's no significance to this choice; could be any
-        filter(IMAGE_region_ID == 1, ! year %in% AGLU_HISTORICAL_YEARS) %>%
+        filter(IMAGE_region_ID == 1, ! year %in% aglu.AGLU_HISTORICAL_YEARS) %>%
         repeat_add_columns(tibble::tibble(iso = sort(unique(AGLU_ctry$iso)))) %>%
         select(-IMAGE_region_ID) %>%
         left_join_keep_first_only(select(AGLU_ctry, iso, IMAGE_region_ID), by = "iso") %>%
@@ -103,7 +103,7 @@ module_aglu_LA100.IMAGE_downscale_ctry_yr <- function(command, ...) {
         na.omit %>%
         gather_years %>%
         mutate(IMAGE_region_ID = as.integer(IMAGE_region_ID)) %>%
-        filter(year %in% AGLU_HISTORICAL_YEARS)
+        filter(year %in% aglu.AGLU_HISTORICAL_YEARS)
     }
 
     L100.IMAGE_an_Feedfrac_Rimg_C_Sys_Fd_Y %>%

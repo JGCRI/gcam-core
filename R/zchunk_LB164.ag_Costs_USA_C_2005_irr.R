@@ -62,7 +62,7 @@ module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
     USDA_cost_data %>%
       gather_years(value_col = "cost") %>%
       filter(Item == "Purchased irrigation water" | Item == "Total operating costs",
-             year %in% MODEL_COST_YEARS) %>%
+             year %in% aglu.MODEL_COST_YEARS ) %>%
       spread(Item, cost) %>%
       rename(IrrCost = `Purchased irrigation water`,
              TotCost = `Total operating costs`) %>%
@@ -72,7 +72,7 @@ module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
       group_by(Crop) %>%
       filter(!all(is.na(IrrCost))) %>%
       select(-Unit, -IrrCost, -TotCost) %>%
-      # calculate average Cost fraction for each crop, over MODEL_COST_YEARS
+      # calculate average Cost fraction for each crop, over aglu.MODEL_COST_YEARS
       mutate(waterCostFrac = mean(CostFrac, na.rm = TRUE)) %>%
       ungroup %>%
       left_join_error_no_match(USDA_crops, by = c("Crop" = "USDA_crop")) ->
