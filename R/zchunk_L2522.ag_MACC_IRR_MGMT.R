@@ -77,7 +77,7 @@ module_emissions_L2522.ag_MACC_IRR_MGMT <- function(command, ...) {
       left_join_error_no_match(A_MACC_TechChange %>% select(scenario, MAC, tech_change),
                                by = c("scenario", "mac.control" = "MAC")) %>%
       select(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology, year, Non.CO2, mac.control,
-             tax, mac.reduction, tech.change = tech_change, scenario) ->
+             tax, mac.reduction, tech.change = tech_change, scenario, market.name) ->
       L2522.AgMAC_all_SSP_tech.change
 
     # Animal MAC curve
@@ -85,7 +85,7 @@ module_emissions_L2522.ag_MACC_IRR_MGMT <- function(command, ...) {
       left_join_error_no_match(A_MACC_TechChange %>% select(scenario, MAC, tech_change),
                                by = c("scenario", "mac.control" = "MAC")) %>%
       select(region, supplysector, subsector, stub.technology, year, Non.CO2, mac.control,
-             tax, mac.reduction, tech.change = tech_change, scenario) ->
+             tax, mac.reduction, tech.change = tech_change, scenario, market.name) ->
       L2522.MAC_an_all_SSP_tech.change
 
     # Separate the MAC curves by SPP scenario.

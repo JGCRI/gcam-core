@@ -370,6 +370,28 @@ add_carbon_info <- function( data, carbon_info_table, matchvars = c("region", "G
            min.soil.carbon.density = aglu.MIN_SOIL_CARBON_DENSITY)
 }
 
+#' reduce_mgd_carbon
+#'
+#' function to reduce the carbon density of a managed land type from it's unmanaged land
+#' type's carbon density using constant multipliers
+#'
+#' @param data = input data tibble to adjust carbon densities for
+#' @param LTfor = Land_Type name to use for Forest land types
+#' @param LTpast =  Land_Type name to use for Pasture land types
+#' @return the original table with carbon density adjusted for the managed land types
+reduce_mgd_carbon <- function( data, LTfor = "Forest", LTpast = "Pasture") {
+
+  data %>%
+    mutate(hist.veg.carbon.density = if_else("Land_Type" == LTpast, hist.veg.carbon.density * Cveg_Mult_UnmgdPast_MgdPast, hist.veg.carbon.density)) %>%
+    mutate(veg.carbon.density = if_else("Land_Type" == LTpast, veg.carbon.density * Cveg_Mult_UnmgdPast_MgdPast, veg.carbon.density)) %>%
+    mutate(hist.soil.carbon.density = if_else("Land_Type" == LTpast, hist.soil.carbon.density * Csoil_Mult_UnmgdPast_MgdPast, hist.soil.carbon.density)) %>%
+    mutate(soil.carbon.density = if_else("Land_Type" == LTpast, soil.carbon.density * Csoil_Mult_UnmgdPast_MgdPast, soil.carbon.density)) %>%
+    mutate(hist.veg.carbon.density = if_else("Land_Type" == LTfor, hist.veg.carbon.density * Cveg_Mult_UnmgdFor_MgdFor, hist.veg.carbon.density)) %>%
+    mutate(veg.carbon.density = if_else("Land_Type" == LTfor, veg.carbon.density * Cveg_Mult_UnmgdFor_MgdFor, veg.carbon.density)) %>%
+    mutate(hist.soil.carbon.density = if_else("Land_Type" == LTfor, hist.soil.carbon.density * Csoil_Mult_UnmgdFor_MgdFor, hist.soil.carbon.density)) %>%
+    mutate(soil.carbon.density = if_else("Land_Type" == LTfor, soil.carbon.density * Csoil_Mult_UnmgdFor_MgdFor, soil.carbon.density))
+}
+
 
 #' get_ssp_regions
 #'

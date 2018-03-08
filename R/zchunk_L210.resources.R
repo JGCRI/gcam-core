@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L210.DepRsrc}, \code{L210.RenewRsrc}, \code{L210.UnlimitRsrc}, \code{L210.DepRsrcPrice}, \code{L210.RenewRsrcPrice},
 #' \code{L210.UnlimitRsrcPrice}, \code{L210.DepRsrcTechChange}, \code{L210.SmthRenewRsrcTechChange}, \code{L210.DepRsrcCalProd}, \code{L210.DepRsrcCurves_fos},
-#' \code{L210.DepRsrcCurves_U}, \code{L210.SmthRenewRsrcCurves_MSW}, \code{L210.SmthRenewRsrcCurves_wind}, \code{L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV},
+#' \code{L210.DepRsrcCurves_U}, \code{L210.SmthRenewRsrcCurves_MSW}, \code{L210.SmthRenewRsrcCurves_wind}, \code{L210.SmthRenewRsrcCurvesGdpElast_roofPV},
 #' \code{L210.GrdRenewRsrcCurves_geo}, \code{L210.GrdRenewRsrcMax_geo}, \code{L210.GrdRenewRsrcCurves_EGS}, \code{L210.GrdRenewRsrcMax_EGS},
 #' \code{L210.GrdRenewRsrcCurves_tradbio}, \code{L210.GrdRenewRsrcMax_tradbio}, \code{L210.DepRsrcTechChange_SSP1}, \code{L210.DepRsrcEnvironCost_SSP1},
 #' \code{L210.DepRsrcTechChange_SSP2}, \code{L210.DepRsrcEnvironCost_SSP2}, \code{L210.DepRsrcTechChange_SSP3}, \code{L210.DepRsrcEnvironCost_SSP3},
@@ -53,7 +53,7 @@ module_energy_L210.resources <- function(command, ...) {
              "L210.DepRsrcCurves_U",
              "L210.SmthRenewRsrcCurves_MSW",
              "L210.SmthRenewRsrcCurves_wind",
-             "L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV",
+             "L210.SmthRenewRsrcCurvesGdpElast_roofPV",
              "L210.GrdRenewRsrcCurves_geo",
              "L210.GrdRenewRsrcMax_geo",
              "L210.GrdRenewRsrcCurves_EGS",
@@ -133,7 +133,7 @@ module_energy_L210.resources <- function(command, ...) {
     # L210.UnlimitRsrc: output unit, price unit, and market for unlimited resources
     L210.UnlimitRsrc <- L210.rsrc_info %>%
       filter(resource_type == "unlimited-resource") %>%
-      select(region, unlimited.resource = resource, output.unit = `output-unit`, price.unit = `price-unit`, market, capacity.factor) %>%
+      select(region, unlimited.resource = resource, output.unit = `output-unit`, price.unit = `price-unit`, market) %>%
       distinct()
 
     # L210.DepRsrcPrice: historical prices for depletable resources
@@ -265,16 +265,15 @@ module_energy_L210.resources <- function(command, ...) {
       select(region, renewresource = resource, smooth.renewable.subresource = subresource, year.fillout, maxSubResource, mid.price, curve.exponent)
 
     # L210.SmthRenewRsrcCurves_roofPV: supply curves of rooftop PV resources
-    L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV <- L115.RsrcCurves_EJ_R_roofPV %>%
+    L210.SmthRenewRsrcCurvesGdpElast_roofPV <- L115.RsrcCurves_EJ_R_roofPV %>%
       # Add region name
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       mutate(maxSubResource = round(maxSubResource, energy.DIGITS_MAX_SUB_RESOURCE),
              mid.price = round(mid.price, energy.DIGITS_MID_PRICE),
              curve.exponent = round(curve.exponent, energy.DIGITS_CURVE_EXPONENT),
              gdpSupplyElast = round(gdpSupplyElast, energy.DIGITS_GDP_SUPPLY_ELAST),
-             subResourceCapacityFactor = round(subResourceCapacityFactor, energy.DIGITS_CAPACITY_FACTOR),
              year.fillout = min(BASE_YEARS)) %>%
-      select(region, renewresource = resource, smooth.renewable.subresource = subresource, year.fillout, maxSubResource, mid.price, curve.exponent, gdpSupplyElast, subResourceCapacityFactor)
+      select(region, renewresource = resource, smooth.renewable.subresource = subresource, year.fillout, maxSubResource, mid.price, curve.exponent, gdpSupplyElast)
 
     # L210.GrdRenewRsrcCurves_geo: graded supply curves of geothermal (hydrothermal) resources
     L210.GrdRenewRsrcCurves_geo <- L116.RsrcCurves_EJ_R_geo %>%
@@ -492,13 +491,13 @@ module_energy_L210.resources <- function(command, ...) {
       add_precursors("L114.RsrcCurves_EJ_R_wind", "common/GCAM_region_names") ->
       L210.SmthRenewRsrcCurves_wind
 
-    L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV %>%
+    L210.SmthRenewRsrcCurvesGdpElast_roofPV %>%
       add_title("Supply curves of rooftop PV resources") %>%
       add_units("maxSubResource: EJ; mid.price = $1975/GJ") %>%
       add_comments("Data from L115.RsrcCurves_EJ_R_roofPV") %>%
-      add_legacy_name("L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV") %>%
+      add_legacy_name("L210.SmthRenewRsrcCurvesGdpElast_roofPV") %>%
       add_precursors("L115.RsrcCurves_EJ_R_roofPV", "common/GCAM_region_names") ->
-      L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV
+      L210.SmthRenewRsrcCurvesGdpElast_roofPV
 
     L210.GrdRenewRsrcCurves_geo %>%
       add_title("Graded supply curves of geothermal (hydrothermal) resources") %>%
@@ -550,7 +549,7 @@ module_energy_L210.resources <- function(command, ...) {
 
     return_data(L210.DepRsrc, L210.RenewRsrc, L210.UnlimitRsrc, L210.DepRsrcPrice, L210.RenewRsrcPrice, L210.UnlimitRsrcPrice, L210.DepRsrcTechChange,
                 L210.SmthRenewRsrcTechChange, L210.DepRsrcCalProd, L210.DepRsrcCurves_fos, L210.DepRsrcCurves_U, L210.SmthRenewRsrcCurves_MSW,
-                L210.SmthRenewRsrcCurves_wind, L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV, L210.GrdRenewRsrcCurves_geo, L210.GrdRenewRsrcMax_geo,
+                L210.SmthRenewRsrcCurves_wind, L210.SmthRenewRsrcCurvesGdpElast_roofPV, L210.GrdRenewRsrcCurves_geo, L210.GrdRenewRsrcMax_geo,
                 L210.GrdRenewRsrcCurves_EGS, L210.GrdRenewRsrcMax_EGS, L210.GrdRenewRsrcCurves_tradbio, L210.GrdRenewRsrcMax_tradbio, L210.DepRsrcTechChange_SSP1,
                 L210.DepRsrcEnvironCost_SSP1, L210.DepRsrcTechChange_SSP2, L210.DepRsrcEnvironCost_SSP2, L210.DepRsrcTechChange_SSP3, L210.DepRsrcEnvironCost_SSP3,
                 L210.DepRsrcTechChange_SSP4, L210.DepRsrcEnvironCost_SSP4, L210.DepRsrcTechChange_SSP5, L210.DepRsrcEnvironCost_SSP5)

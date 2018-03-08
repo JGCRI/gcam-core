@@ -564,12 +564,11 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
     L223.StubTechCapFactor_elec %>%
       filter(region == "USA") %>%
       semi_join(L223.CapacityFactor_wind_state, by = c("supplysector", "subsector")) %>%
-      select(-region) %>%
+      select(-region, -capacity.factor) %>%
       repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
       left_join_error_no_match(L223.CapacityFactor_wind_state,
                                by = c("region" = "state", "supplysector", "subsector")) %>%
-      mutate(capacity.factor.capital = round(capacity.factor, digits = energy.DIGITS_CAPACITY_FACTOR),
-             capacity.factor.OM = capacity.factor.capital) %>%
+      mutate(capacity.factor = round(capacity.factor, digits = energy.DIGITS_CAPACITY_FACTOR)) %>%
       select(LEVEL2_DATA_NAMES[["StubTechCapFactor"]]) ->
       L223.StubTechCapFactor_elec_wind_USA
 
@@ -590,8 +589,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       mutate(tech = sub("_storage", "", stub.technology)) %>%
       left_join_error_no_match(L223.CapFacScaler_solar_state,
                                by = c("region" = "state", "supplysector", "subsector", "tech" = "technology")) %>%
-      mutate(capacity.factor.capital = round(capacity.factor.capital * scaler, digits = energy.DIGITS_COST),
-             capacity.factor.OM = capacity.factor.capital) %>%
+      mutate(capacity.factor = round(capacity.factor * scaler, digits = energy.DIGITS_COST)) %>%
       select(LEVEL2_DATA_NAMES[["StubTechCapFactor"]]) ->
       L223.StubTechCapFactor_elec_solar_USA
 

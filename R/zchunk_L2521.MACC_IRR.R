@@ -48,7 +48,6 @@ module_emissions_L2521.MACC_IRR <- function(command, ...) {
 
     # Tech Change on Ag MACCs for all available SSPs
     L2521.MAC_Ag_TC <- L2521.AgMAC %>%
-      select(-EPA_region) %>%
       # Using left_join because the number of rows change - there is a value for each SSP
       left_join(A_MACC_TechChange, by = c("mac.control" = "MAC")) %>%
       # Split by scenario and add attributes since these are the same except for SSP name
@@ -65,7 +64,6 @@ module_emissions_L2521.MACC_IRR <- function(command, ...) {
 
     # Tech Change on animal MACCs for all available SSPs
     L2521.MAC_An_TC <- L252.MAC_an %>%
-      select(-EPA_region) %>%
       # Using left_join because the number of rows change - there is a value for each SSP
       left_join(A_MACC_TechChange, by = c("mac.control" = "MAC")) %>%
       # Split by scenario and add attributes since these are the same except for SSP name

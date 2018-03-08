@@ -63,7 +63,7 @@ modeltime.MAGICC_DEFAULT_EMISS_FILE   <- "../input/magicc/Historical Emissions/D
 modeltime.MAGICC_C_START_YEAR         <- 1705
 
 # Hector model assumptions
-modeltime.HECTOR_END_YEAR        <- 2100
+modeltime.HECTOR_END_YEAR        <- 2300
 modeltime.HECTOR_EMISSIONS_YEAR  <- 2005
 modeltime.HECTOR_INI_FILE        <- "../input/climate/hector-gcam.ini"
 
@@ -141,8 +141,8 @@ aglu.FAO_LDS_YEARS          <- 1998:2002  # Years for which FAO harvested area d
 aglu.GTAP_HISTORICAL_YEAR   <- 2000      # Is the year that the GTAP data is based on.
 aglu.LAND_HISTORY_YEARS     <- c(1700, 1750, 1800, 1850, 1900, 1950, 1975)
 aglu.LAND_COVER_YEARS       <- sort(unique(c(aglu.LAND_HISTORY_YEARS, aglu.AGLU_HISTORICAL_YEARS)))
-aglu.MODEL_COST_YEARS       <- 2001:2005
-aglu.MODEL_PRICE_YEARS      <- 2001:2005
+aglu.MODEL_COST_YEARS       <- 2008:2011
+aglu.MODEL_PRICE_YEARS      <- 2008:2011
 aglu.PREAGLU_YEARS          <- c(1700, 1750,1800, 1850, 1900, 1950)          # Cropland cover years prior to first aglu historical year to use in climate model component
 aglu.SPEC_AG_PROD_YEARS     <- seq(max(aglu.AGLU_HISTORICAL_YEARS), 2050, by = 5) # Specified ag productivity years, KD i think this might need a better comment
 
@@ -523,7 +523,8 @@ emissions.TST_TO_TG     <- 0.000907 # Thousand short tons to Tg
 
 emissions.COAL_SO2_THRESHOLD <- 0.1   # Tg/EJ (here referring to Tg SO2 per EJ of coal electricity)
 emissions.LOW_PCGDP          <- 2.75  # thousand 1990 USD
-emissions.MAC_TAXES          <- c(0, 5, 10, 15, 32, 66, 129, 243, 486, 1093) # Range of costs in 1990 USD
+emissions.MAC_TAXES          <- c(0, 5, 10, 15, 32, 66, 129, 243, 486, 1093, 2064, 4857, 7285, 12141) # Range of costs in 1990 USD
+emissions.MAC_MARKET <- "CO2" # Default market that MAC curves will look for
 
 emissions.AGR_SECTORS        <- c("rice", "fertilizer", "soil")
 emissions.AGR_GASES          <- c("CH4_AGR", "N2O_AGR", "NH3_AGR", "NOx_AGR")

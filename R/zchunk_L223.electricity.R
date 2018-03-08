@@ -10,6 +10,7 @@
 #' \code{L223.SubsectorShrwt_elec}, \code{L223.SubsectorShrwtFllt_elec}, \code{L223.SubsectorShrwt_nuc},
 #' \code{L223.SubsectorShrwt_renew}, \code{L223.SubsectorInterp_elec}, \code{L223.SubsectorInterpTo_elec},
 #' \code{L223.StubTech_elec}, \code{L223.GlobalIntTechEff_elec}, \code{L223.GlobalTechEff_elec},
+#' \code{L223.GlobalTechCapFac_elec}, \code{L223.GlobalIntTechCapFac_elec},
 #' \code{L223.GlobalTechCapital_elec}, \code{L223.GlobalIntTechCapital_elec}, \code{L223.GlobalTechOMfixed_elec},
 #' \code{L223.GlobalIntTechOMfixed_elec}, \code{L223.GlobalTechOMvar_elec}, \code{L223.GlobalIntTechOMvar_elec},
 #' \code{L223.GlobalTechShrwt_elec}, \code{L223.GlobalTechInterp_elec}, \code{L223.GlobalIntTechShrwt_elec},
@@ -53,6 +54,7 @@ module_energy_L223.electricity <- function(command, ...) {
              FILE = "energy/A23.globaltech_keyword",
              FILE = "energy/A23.globaltech_eff",
              FILE = "energy/A23.globaltech_capital",
+             FILE = "energy/A23.globaltech_capacity_factor",
              FILE = "energy/A23.globaltech_capital_adv",
              FILE = "energy/A23.globaltech_capital_low",
              FILE = "energy/A23.globaltech_OMfixed",
@@ -79,6 +81,8 @@ module_energy_L223.electricity <- function(command, ...) {
              "L223.StubTech_elec",
              "L223.GlobalIntTechEff_elec",
              "L223.GlobalTechEff_elec",
+             "L223.GlobalTechCapFac_elec",
+             "L223.GlobalIntTechCapFac_elec",
              "L223.GlobalTechCapital_elec",
              "L223.GlobalIntTechCapital_elec",
              "L223.GlobalTechOMfixed_elec",
@@ -150,6 +154,7 @@ module_energy_L223.electricity <- function(command, ...) {
     A23.globaltech_interp <- get_data(all_data, "energy/A23.globaltech_interp")
     A23.globaltech_keyword <- get_data(all_data, "energy/A23.globaltech_keyword")
     A23.globaltech_eff <- get_data(all_data, "energy/A23.globaltech_eff")
+    A23.globaltech_capacity_factor <- get_data(all_data, "energy/A23.globaltech_capacity_factor")
     A23.globaltech_capital <- get_data(all_data, "energy/A23.globaltech_capital")
     A23.globaltech_capital_adv <- get_data(all_data, "energy/A23.globaltech_capital_adv")
     A23.globaltech_capital_low <- get_data(all_data, "energy/A23.globaltech_capital_low")
@@ -330,6 +335,29 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.GlobalTechEff_elec_all %>%
       anti_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) ->
       L223.GlobalTechEff_elec
+
+    # Capacity factor of global technologies
+    A23.globaltech_capacity_factor %>%
+      gather_years(value_col = "capacity.factor") %>%
+      complete(nesting(supplysector, subsector, technology), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
+      arrange(supplysector, year) %>%
+      group_by(supplysector, subsector, technology) %>%
+      mutate(capacity.factor = approx_fun(year, capacity.factor, rule = 1)) %>%
+      ungroup() %>%
+      filter(year %in% MODEL_YEARS) %>%
+      rename(sector.name = supplysector, subsector.name = subsector) ->
+      L223.GlobalTechCapFac_elec_all
+
+    # Subsets the intermittent technologies by checking it against the list in A23.globalinttech
+    L223.GlobalTechCapFac_elec_all %>%
+      semi_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) %>%
+      rename(intermittent.technology = technology) ->
+      L223.GlobalIntTechCapFac_elec
+
+    # Subsets the non-intermittent technologies by checking against any not listed in A23.globalinttech
+    L223.GlobalTechCapFac_elec_all %>%
+      anti_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) ->
+      L223.GlobalTechCapFac_elec
 
     # Calculate base case capital costs of global electricity generation technologies in L223.GlobalTechCapital_elec
     # --------------------------------------------------------------------------------------------------------------
@@ -874,17 +902,15 @@ module_energy_L223.electricity <- function(command, ...) {
     # filter to the base cost year and match the base capital, fixed OM, and variable OM costs to the base price that year for wind technology.
     L223.GlobalIntTechCapital_elec %>%
       filter(intermittent.technology == "wind" & year == energy.WIND.BASE.COST.YEAR) %>%
-      select(LEVEL2_DATA_NAMES[["GlobalIntTechCapital"]], -capacity.factor) %>%
+      select(LEVEL2_DATA_NAMES[["GlobalIntTechCapital"]]) %>%
       left_join(L223.StubTechCapFactor_elec_base, by = "year") %>%
       left_join(L223.GlobalIntTechOMvar_elec, by = c("year", "sector.name", "subsector.name", "intermittent.technology")) %>%
       left_join(L223.GlobalIntTechOMfixed_elec, by = c("year", "sector.name", "subsector.name", "intermittent.technology")) %>%
-      select(-input.OM.var, -capacity.factor, -year) %>%
+      select(-input.OM.var, -year) %>%
       # Calculate a new capacity factor to match the regional base.price, append region names and duplicate over all model years.
-      # Note that there is only one capacity factor but the same value needs to be read in for capital
-      # and fixed O&M so the column is duplicated.
-      mutate(capacity.factor.OM = round((capital.overnight * fixed.charge.rate +
+      # This fixes the capacity factor for all future years and is inconsistent if future capacity factors are assumed to change.
+      mutate(capacity.factor = round((capital.overnight * fixed.charge.rate +
                                            OM.fixed) / (CONV_KWH_GJ * CONV_YEAR_HOURS) / (base.price - (OM.var / (1000 * CONV_KWH_GJ))), energy.DIGITS_CAPACITY_FACTOR)) %>%
-      mutate(capacity.factor.capital = capacity.factor.OM) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       rename(supplysector = sector.name, subsector = subsector.name, stub.technology = intermittent.technology) ->
@@ -898,47 +924,28 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.StubTechCapFactor_elec <- L223.StubTechCapFactor_elec[LEVEL2_DATA_NAMES[["StubTechCapFactor"]]]
 
     # Regional capacity factor adjustment for solar technologies. We will use relative total and direct irradiance
-    # to scale the capacity factors for central PV and CSP respectively.
+    # to scale the capacity factors for PV and CSP respectively.
     # ------------------------------------------------------------------------------------------------------------
 
-    # Clean up capital assumptions for solar technologies
-    A23.globaltech_capital %>%
-      filter(subsector %in% c("solar", "rooftop_pv")) %>%
-      select(supplysector, subsector, technology, `input-capital`, capacity.factor) %>%
-      rename(capacity.factor.capital = capacity.factor, input.capital = `input-capital`) ->
-      L223.StubTechCapFactor_solar_cap
-
-    # Filter electricity fixed OM cost assumptions for solar and rooftop PV and remove year columns
-    A23.globaltech_OMfixed %>%
-      filter(subsector %in% c("solar", "rooftop_pv")) %>%
-      select(-matches(YEAR_PATTERN)) %>%
-      rename(capacity.factor.OM = capacity.factor) %>%
-      left_join_error_no_match(L223.StubTechCapFactor_solar_cap, by = c("supplysector", "subsector", "technology")) ->
-      L223.StubTechCapFactor_solar_base
-
-    # Add data on solar irradiance to base assumptions about solar electricity capacity factors.
-    L119.Irradiance_rel_R %>%
-      mutate(input.OM.fixed = "OM-fixed") %>%
-      left_join(L223.StubTechCapFactor_solar_base, by = "input.OM.fixed") %>%
-      rename(stub.technology = technology) ->
-      L223.StubTechCapFactor_solar_full
-
     # Multiply capacity factor for CSP technologies by average direct normal irradiance
-    L223.StubTechCapFactor_solar_full %>%
-      filter(grepl("CSP", stub.technology)) %>%
-      mutate(capacity.factor.capital = capacity.factor.capital * dni_avg_rel, capacity.factor.OM = capacity.factor.OM * dni_avg_rel) ->
-      L223.StubTechCapFactor_solar_base3
+    L223.GlobalTechCapFac_elec_all %>%
+      filter(grepl("CSP", technology)) %>%
+      repeat_add_columns(L119.Irradiance_rel_R) %>%
+      mutate(capacity.factor = capacity.factor * dni_avg_rel) ->
+      L223.StubTechCapFactor_solar_csp
 
     # Multiply capacity factor for PV technologies by average relative irradiance, re-bind solar and CSP into the same data frame, and change any capacity factors that exceed the maximum possible.
-    L223.StubTechCapFactor_solar_full %>%
-      filter(grepl("PV", stub.technology, ignore.case = TRUE)) %>%
-      mutate(capacity.factor.capital = capacity.factor.capital * irradiance_avg_rel, capacity.factor.OM = capacity.factor.OM * irradiance_avg_rel) %>%
-      bind_rows(L223.StubTechCapFactor_solar_base3) %>%
-      mutate(capacity.factor.capital = if_else(capacity.factor.capital > 0.85, 0.85, capacity.factor.capital),
-             capacity.factor.OM = if_else(capacity.factor.OM > 0.85, 0.85, capacity.factor.OM)) %>%
+    L223.GlobalTechCapFac_elec_all %>%
+      filter(grepl("PV", technology, ignore.case = TRUE)) %>%
+      repeat_add_columns(L119.Irradiance_rel_R) %>%
+      mutate(capacity.factor = capacity.factor * irradiance_avg_rel) %>%
+      bind_rows(L223.StubTechCapFactor_solar_csp) %>%
+      mutate(capacity.factor = if_else(capacity.factor > 0.85, 0.85, capacity.factor)) %>%
       # Replace region IDs with region names and propagate rows across each model year.
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      repeat_add_columns(tibble(year = MODEL_YEARS)) ->
+      rename(supplysector = sector.name,
+             subsector = subsector.name,
+             stub.technology = technology) ->
       L223.StubTechCapFactor_solar
     # Match expected model interface names in L223.StubTechCapFactor_elec and then combine solar and wind capacity factors.
     L223.StubTechCapFactor_solar <- L223.StubTechCapFactor_solar[LEVEL2_DATA_NAMES[["StubTechCapFactor"]]]
@@ -1062,6 +1069,22 @@ module_energy_L223.electricity <- function(command, ...) {
       add_legacy_name("L223.GlobalTechEff_elec") %>%
       add_precursors("energy/A23.globaltech_eff", "energy/A23.globalinttech") ->
       L223.GlobalTechEff_elec
+
+    L223.GlobalTechCapFac_elec %>%
+      add_title("Capacity factor for non-intermittent electricity sector technologies") %>%
+      add_units("unitless") %>%
+      add_comments("Non-intermittent technologies from A23.globaltech_capacity_factor and values interpolated from assumptions") %>%
+      add_legacy_name("L223.GlobalTechCapFac_elec") %>%
+      add_precursors("energy/A23.globaltech_capacity_factor", "energy/A23.globalinttech") ->
+      L223.GlobalTechCapFac_elec
+
+    L223.GlobalIntTechCapFac_elec %>%
+      add_title("Capacity factor for intermittent electricity sector technologies") %>%
+      add_units("unitless") %>%
+      add_comments("Intermittent technologies from A23.globaltech_capacity_factor and values interpolated from assumptions") %>%
+      add_legacy_name("L223.GlobalIntTechCapFac_elec") %>%
+      add_precursors("energy/A23.globaltech_capacity_factor", "energy/A23.globalinttech") ->
+      L223.GlobalIntTechCapFac_elec
 
     L223.GlobalTechCapital_elec %>%
       add_title("Overnight capital costs for non-intermittent electricity sector technologies") %>%
@@ -1455,7 +1478,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_precursors("energy/A23.globaltech_capital_low") ->
       L223.GlobalTechCapital_bio_low
 
-    return_data(L223.Supplysector_elec, L223.ElecReserve, L223.SubsectorLogit_elec, L223.SubsectorShrwt_elec, L223.SubsectorShrwtFllt_elec, L223.SubsectorShrwt_nuc, L223.SubsectorShrwt_renew, L223.SubsectorInterp_elec, L223.SubsectorInterpTo_elec, L223.StubTech_elec, L223.GlobalIntTechEff_elec, L223.GlobalTechEff_elec, L223.GlobalTechCapital_elec, L223.GlobalIntTechCapital_elec, L223.GlobalTechOMfixed_elec, L223.GlobalIntTechOMfixed_elec, L223.GlobalTechOMvar_elec, L223.GlobalIntTechOMvar_elec, L223.GlobalTechShrwt_elec, L223.GlobalTechInterp_elec, L223.GlobalIntTechShrwt_elec, L223.PrimaryRenewKeyword_elec, L223.PrimaryRenewKeywordInt_elec, L223.AvgFossilEffKeyword_elec, L223.GlobalTechCapture_elec, L223.GlobalIntTechBackup_elec, L223.StubTechCapFactor_elec, L223.GlobalTechShutdown_elec, L223.GlobalIntTechShutdown_elec, L223.GlobalTechSCurve_elec, L223.GlobalIntTechSCurve_elec, L223.GlobalTechLifetime_elec, L223.GlobalIntTechLifetime_elec, L223.GlobalTechProfitShutdown_elec, L223.GlobalIntTechProfitShutdown_elec, L223.StubTechCalInput_elec, L223.StubTechFixOut_elec, L223.StubTechFixOut_hydro, L223.StubTechProd_elec, L223.StubTechEff_elec, L223.GlobalTechCapital_sol_adv, L223.GlobalIntTechCapital_sol_adv, L223.GlobalTechCapital_wind_adv, L223.GlobalIntTechCapital_wind_adv, L223.GlobalTechCapital_geo_adv, L223.GlobalTechCapital_nuc_adv, L223.GlobalTechCapital_sol_low, L223.GlobalIntTechCapital_sol_low, L223.GlobalTechCapital_wind_low, L223.GlobalIntTechCapital_wind_low, L223.GlobalTechCapital_geo_low, L223.GlobalTechCapital_nuc_low, L223.GlobalTechCapital_bio_low)
+    return_data(L223.Supplysector_elec, L223.ElecReserve, L223.SubsectorLogit_elec, L223.SubsectorShrwt_elec, L223.SubsectorShrwtFllt_elec, L223.SubsectorShrwt_nuc, L223.SubsectorShrwt_renew, L223.SubsectorInterp_elec, L223.SubsectorInterpTo_elec, L223.StubTech_elec, L223.GlobalIntTechEff_elec, L223.GlobalTechEff_elec, L223.GlobalTechCapFac_elec, L223.GlobalIntTechCapFac_elec, L223.GlobalTechCapital_elec, L223.GlobalIntTechCapital_elec, L223.GlobalTechOMfixed_elec, L223.GlobalIntTechOMfixed_elec, L223.GlobalTechOMvar_elec, L223.GlobalIntTechOMvar_elec, L223.GlobalTechShrwt_elec, L223.GlobalTechInterp_elec, L223.GlobalIntTechShrwt_elec, L223.PrimaryRenewKeyword_elec, L223.PrimaryRenewKeywordInt_elec, L223.AvgFossilEffKeyword_elec, L223.GlobalTechCapture_elec, L223.GlobalIntTechBackup_elec, L223.StubTechCapFactor_elec, L223.GlobalTechShutdown_elec, L223.GlobalIntTechShutdown_elec, L223.GlobalTechSCurve_elec, L223.GlobalIntTechSCurve_elec, L223.GlobalTechLifetime_elec, L223.GlobalIntTechLifetime_elec, L223.GlobalTechProfitShutdown_elec, L223.GlobalIntTechProfitShutdown_elec, L223.StubTechCalInput_elec, L223.StubTechFixOut_elec, L223.StubTechFixOut_hydro, L223.StubTechProd_elec, L223.StubTechEff_elec, L223.GlobalTechCapital_sol_adv, L223.GlobalIntTechCapital_sol_adv, L223.GlobalTechCapital_wind_adv, L223.GlobalIntTechCapital_wind_adv, L223.GlobalTechCapital_geo_adv, L223.GlobalTechCapital_nuc_adv, L223.GlobalTechCapital_sol_low, L223.GlobalIntTechCapital_sol_low, L223.GlobalTechCapital_wind_low, L223.GlobalIntTechCapital_wind_low, L223.GlobalTechCapital_geo_low, L223.GlobalTechCapital_nuc_low, L223.GlobalTechCapital_bio_low)
   } else {
     stop("Unknown command")
   }

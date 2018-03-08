@@ -19,7 +19,8 @@
 #' \code{L2233.GlobalTechCapital_elec_cool}, \code{L2233.GlobalIntTechCapital_elec_cool},
 #' \code{L2233.GlobalTechCoef_elec_cool}, \code{L2233.GlobalIntTechCoef_elec_cool},
 #' \code{L2233.InputEmissCoeff_hist_elecPassthru}, \code{L2233.InputEmissCoeff_fut_elecPassthru},
-#' \code{L2233.AvgFossilEffKeyword_elec_cool}. The corresponding file in the
+#' \code{L2233.AvgFossilEffKeyword_elec_cool}, \code{L2233.DeleteCreditInput_elec},
+#' \code{L2233.CreditInput_elec}. The corresponding file in the
 #' original data system was \code{L2233.electricity_water.R} (water level2).
 #' @details Disaggregates electricity sector for all cooling system types.
 #' @importFrom assertthat assert_that
@@ -54,6 +55,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
              "L223.StubTechEff_elec",
              "L201.en_bcoc_emissions",
              "L241.nonco2_tech_coeff",
+             "L270.CreditInput_elec",
              paste0("L223.", L223_fileNames)
     ))
 
@@ -99,7 +101,9 @@ module_water_L2233.electricity_water <- function(command, ...) {
              "L2233.GlobalTechSCurve_elec_cool",
              "L2233.GlobalTechShrwt_elec_cool",
              "L2233.PrimaryRenewKeyword_elec_cool",
-             "L2233.PrimaryRenewKeywordInt_elec_cool"))
+             "L2233.PrimaryRenewKeywordInt_elec_cool",
+             "L2233.DeleteCreditInput_elec",
+             "L2233.CreditInput_elec"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -130,6 +134,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
     L223.StubTechEff_elec <- get_data(all_data, "L223.StubTechEff_elec")
     L201.en_bcoc_emissions <- get_data(all_data, "L201.en_bcoc_emissions")
     L241.nonco2_tech_coeff <- get_data(all_data, "L241.nonco2_tech_coeff")
+    L270.CreditInput_elec <- get_data(all_data, "L270.CreditInput_elec")
 
     # Use get_data function with sapply to read in all "L223." inputs at once
     get_data_rev <- function(name, all_data) get_data(all_data, name)
@@ -629,6 +634,24 @@ module_water_L2233.electricity_water <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["InputEmissCoeff"]], "efficiency") ->
       L2233.InputEmissCoeff_fut_elecPassthru
 
+    # Recreate liquids limit electricity inputs by cooling techs
+    L270.CreditInput_elec %>%
+      # a mutate will force a copy and drop meta data from L270.CreditInput_elec
+      # which we do not care to bring along
+      mutate(sector.name = sector.name) %>%
+      select(-coefficient) ->
+      L2233.DeleteCreditInput_elec
+
+    L270.CreditInput_elec %>%
+      left_join(L2233.TechMap, by = c("sector.name" = "from.supplysector",
+                                      "subsector.name" = "from.subsector",
+                                      "technology" = "from.technology")) %>%
+      mutate(sector.name = to.supplysector,
+             subsector.name = to.subsector,
+             technology = to.technology) ->
+      L2233.CreditInput_elec
+    L2233.CreditInput_elec <- L2233.CreditInput_elec[,LEVEL2_DATA_NAMES[["GlobalTechCoef"]]]
+
 
     ## L2233.Elec_tables_globaltech_nocost_ outputs...
     ## Note: comments, precursors and legacy_name auto-generated in prepGlobalTechNoCostOutputs function
@@ -966,6 +989,22 @@ module_water_L2233.electricity_water <- function(command, ...) {
       add_legacy_name("L2233.TechNodeEquiv") ->
       L2233.TechNodeEquiv
 
+    L2233.DeleteCreditInput_elec %>%
+      add_title("Remove the oil-credits inputs from the old elec tech") %>%
+      add_units("NA") %>%
+      add_comments("Remove the old oil-credits inputs so we can re-create them in the cooling tech") %>%
+      add_legacy_name("L2233.DeleteCreditInput_elec") %>%
+      add_precursors("L270.CreditInput_elec") ->
+      L2233.DeleteCreditInput_elec
+
+    L2233.CreditInput_elec %>%
+      add_title("Re-create the old oil-credits inputs in the cooling tech") %>%
+      add_units("Elec coef * constraint") %>%
+      add_comments("Unmodified oil-credits inputs moved from the old elec tech into the cooling tech") %>%
+      add_legacy_name("L2233.CreditInput_elec") %>%
+      add_precursors("L270.CreditInput_elec", "water/elec_tech_water_map") ->
+      L2233.CreditInput_elec
+
     return_data(L2233.SectorNodeEquiv,
                 L2233.TechNodeEquiv,
                 L2233.StubTechProd_elecPassthru,
@@ -1007,7 +1046,9 @@ module_water_L2233.electricity_water <- function(command, ...) {
                 L2233.GlobalTechSCurve_elec_cool,
                 L2233.GlobalTechShrwt_elec_cool,
                 L2233.PrimaryRenewKeyword_elec_cool,
-                L2233.PrimaryRenewKeywordInt_elec_cool)
+                L2233.PrimaryRenewKeywordInt_elec_cool,
+                L2233.DeleteCreditInput_elec,
+                L2233.CreditInput_elec)
   } else {
     stop("Unknown command")
   }

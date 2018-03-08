@@ -26,7 +26,7 @@ module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "aglu/USDA_crops",
              FILE = "aglu/USDA_item_cost",
-             FILE = "aglu/USDA_cost_data",
+             "L133.USDA_cost_data",
              "L100.LDS_ag_HA_ha",
              "L133.ag_Cost_75USDkg_C",
              "L161.ag_irrHA_frac_R_C_GLU"))
@@ -40,14 +40,14 @@ module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
       GCAM_region_ID <- GTAP_crop <- IrrCost <- Item <- LEVEL2_DATA_NAMES <-
       Purchased <- irrigation <- water <- TotCost <- Total <- operating <- costs <-
       Unit <- cost <- curr_table <- glm <- irrHA <- irrHA_frac <- iso <- missingWaterCost <-
-      predict <- rfdHA <- value <- waterCostFrac <- weight <- year <-
+      predict <- rfdHA <- value <- waterCostFrac <- weight <- year <- cost_type <-
       `Purchased irrigation water` <- `Total operating costs` <- NULL  # silence package check notes
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     USDA_crops <- get_data(all_data, "aglu/USDA_crops")
     USDA_item_cost <- get_data(all_data, "aglu/USDA_item_cost")
-    USDA_cost_data <- get_data(all_data, "aglu/USDA_cost_data")
+    L133.USDA_cost_data <- get_data(all_data, "L133.USDA_cost_data")
     L100.LDS_ag_HA_ha <- get_data(all_data, "L100.LDS_ag_HA_ha")
     L133.ag_Cost_75USDkg_C <- get_data(all_data, "L133.ag_Cost_75USDkg_C")
     L161.ag_irrHA_frac_R_C_GLU <- get_data(all_data, "L161.ag_irrHA_frac_R_C_GLU")
@@ -59,8 +59,10 @@ module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
 
     # Step 1: Compute the share of total variable costs from purchased irrigation water.
     # CostFrac = IrrCost / TotCost
-    USDA_cost_data %>%
-      gather_years(value_col = "cost") %>%
+    L133.USDA_cost_data %>%
+      rename(cost = value) %>%
+      # not exactly sure why but we need to drop the cost_type before the spread
+      select(-cost_type) %>%
       filter(Item == "Purchased irrigation water" | Item == "Total operating costs",
              year %in% aglu.MODEL_COST_YEARS ) %>%
       spread(Item, cost) %>%
@@ -74,8 +76,8 @@ module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
       select(-Unit, -IrrCost, -TotCost) %>%
       # calculate average Cost fraction for each crop, over aglu.MODEL_COST_YEARS
       mutate(waterCostFrac = mean(CostFrac, na.rm = TRUE)) %>%
-      ungroup %>%
-      left_join_error_no_match(USDA_crops, by = c("Crop" = "USDA_crop")) ->
+      ungroup ->
+      #left_join_error_no_match(USDA_crops, by = c("Crop" = "USDA_crop")) ->
       L164.waterCostFrac_Cusda
 
     # Step 2: Use L100 LDS harvested area data to weight the waterCostFrac for each USDA
@@ -164,7 +166,7 @@ module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID",
                      "aglu/USDA_crops",
                      "aglu/USDA_item_cost",
-                     "aglu/USDA_cost_data",
+                     "L133.USDA_cost_data",
                      "L100.LDS_ag_HA_ha",
                      "L133.ag_Cost_75USDkg_C",
                      "L161.ag_irrHA_frac_R_C_GLU") ->

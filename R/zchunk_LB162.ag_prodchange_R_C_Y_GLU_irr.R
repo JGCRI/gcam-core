@@ -198,67 +198,36 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
     # Harvested area are then aggregated to the GCAM region - commodity level so that Aggregated Yield can be correctly calculated.
     # The YieldRatio = Prod_mod/HA is then calculated and output for each GCAM region-commodity-glu-irrigation-year.
     #
-    # There is a small error in the old data system. The intention is to match in multipliers by CROSIT_ctry, CROSIT_crop, irrigation,
-    # and year. The old DS only does so by CROSIT_ctry, CROSIT_crop, and year.
-    #
     # The YieldRatio calculated in the following pipeline is so named to reflect that "the value was the yield the given year divided
     # by the yield in the base year"; in other words, YieldRatio = Prod_mod / HA rather than Yield = Prod / HA.
     # And modified Production, Prod_mod = Harvested Area * Yield Multiplier -> Prod_mod is productivity growth weighted by
     # harvested area, and so the YieldRatio is distinct from Yield.
 
-    if(OLD_DATA_SYSTEM_BEHAVIOR) {
-      # preprocess table of multipliers before joining, restricting to the CROSIT country-crop-glu-irrigation present in
-      # the full GTAP table,  L162.ag_HA_ha_ctry_crop_irr
-      L162.ag_HA_ha_Rcrs_Ccrs_Ysy_GLU_irr %>%
-        select(CROSIT_ctry, CROSIT_crop, year, Mult) %>%
-        semi_join(L162.ag_HA_ha_ctry_crop_irr, by = c("CROSIT_ctry", "CROSIT_crop")) %>%
-        dplyr::distinct() ->
-        CROSIT_mult
+    # preprocess table of multipliers before joining, restricting to the CROSIT country-crop-glu-irrigation present in
+    # the full GTAP table,  L162.ag_HA_ha_ctry_crop_irr
+    L162.ag_HA_ha_Rcrs_Ccrs_Ysy_GLU_irr %>%
+      select(CROSIT_ctry, CROSIT_crop, Irr_Rfd, year, Mult) %>%
+      semi_join(L162.ag_HA_ha_ctry_crop_irr, by = c("CROSIT_ctry", "CROSIT_crop", "Irr_Rfd")) %>%
+      dplyr::distinct() ->
+      CROSIT_mult
 
-      L162.ag_HA_ha_ctry_crop_irr %>%
-        na.omit() %>%
-        repeat_add_columns(tibble::tibble(year = aglu.SPEC_AG_PROD_YEARS)) %>%
-        left_join_keep_first_only(CROSIT_mult, by = c("CROSIT_ctry", "CROSIT_crop", "year")) %>%
-        na.omit() %>%
-        left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
-        left_join_error_no_match(select(FAO_ag_items_PRODSTAT, GTAP_crop, GCAM_commodity), by = "GTAP_crop") %>%
-        # Multiply base-year harvested area by the future productivity multipliers to calculate prod_mod and aggregate
-        mutate(Prod_mod = HA * Mult) %>%
-        group_by(GCAM_region_ID, GCAM_commodity, year, GLU, Irr_Rfd) %>%
-        summarise(HA = sum(HA), Prod_mod = sum(Prod_mod)) %>%
-        ungroup() %>%
-        # Calculate YieldRatio = Prod_mod/HA by region-commodity-glu-irrigation-year; subset and output the YieldRatios
-        mutate(YieldRatio = Prod_mod / HA) %>%
-        na.omit() %>%
-        select(GCAM_region_ID, GCAM_commodity, year, GLU, Irr_Rfd, YieldRatio) ->
-        L162.ag_YieldRatio_R_C_Ysy_GLU_irr
-    } else {
-      # preprocess table of multipliers before joining, restricting to the CROSIT country-crop-glu-irrigation present in
-      # the full GTAP table,  L162.ag_HA_ha_ctry_crop_irr
-      L162.ag_HA_ha_Rcrs_Ccrs_Ysy_GLU_irr %>%
-        select(CROSIT_ctry, CROSIT_crop, Irr_Rfd, year, Mult) %>%
-        semi_join(L162.ag_HA_ha_ctry_crop_irr, by = c("CROSIT_ctry", "CROSIT_crop", "Irr_Rfd")) %>%
-        dplyr::distinct() ->
-        CROSIT_mult
-
-      L162.ag_HA_ha_ctry_crop_irr %>%
-        na.omit() %>%
-        repeat_add_columns(tibble::tibble(year = aglu.SPEC_AG_PROD_YEARS)) %>% # agree fine to here; it's the next join
-        left_join(CROSIT_mult, by = c("CROSIT_ctry", "CROSIT_crop", "Irr_Rfd", "year")) %>%
-        na.omit() %>%
-        left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
-        left_join_error_no_match(select(FAO_ag_items_PRODSTAT, GTAP_crop, GCAM_commodity), by = "GTAP_crop") %>%
-        # Multiply base-year harvested area by the future productivity multipliers to calculate prod_mod and aggregate
-        mutate(Prod_mod = HA * Mult) %>%
-        group_by(GCAM_region_ID, GCAM_commodity, year, GLU, Irr_Rfd) %>%
-        summarise(HA = sum(HA), Prod_mod = sum(Prod_mod)) %>%
-        ungroup() %>%
-        # Calculate YieldRatio = Prod_mod/HA by region-commodity-glu-irrigation-year; subset and output the YieldRatios
-        mutate(YieldRatio = Prod_mod / HA) %>%
-        na.omit() %>%
-        select(GCAM_region_ID, GCAM_commodity, year, GLU, Irr_Rfd, YieldRatio) ->
-        L162.ag_YieldRatio_R_C_Ysy_GLU_irr
-    }
+    L162.ag_HA_ha_ctry_crop_irr %>%
+      na.omit() %>%
+      repeat_add_columns(tibble::tibble(year = aglu.SPEC_AG_PROD_YEARS)) %>%
+      left_join(CROSIT_mult, by = c("CROSIT_ctry", "CROSIT_crop", "Irr_Rfd", "year")) %>%
+      na.omit() %>%
+      left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
+      left_join_error_no_match(select(FAO_ag_items_PRODSTAT, GTAP_crop, GCAM_commodity), by = "GTAP_crop") %>%
+      # Multiply base-year harvested area by the future productivity multipliers to calculate prod_mod and aggregate
+      mutate(Prod_mod = HA * Mult) %>%
+      group_by(GCAM_region_ID, GCAM_commodity, year, GLU, Irr_Rfd) %>%
+      summarise(HA = sum(HA), Prod_mod = sum(Prod_mod)) %>%
+      ungroup() %>%
+      # Calculate YieldRatio = Prod_mod/HA by region-commodity-glu-irrigation-year; subset and output the YieldRatios
+      mutate(YieldRatio = Prod_mod / HA) %>%
+      na.omit() %>%
+      select(GCAM_region_ID, GCAM_commodity, year, GLU, Irr_Rfd, YieldRatio) ->
+      L162.ag_YieldRatio_R_C_Ysy_GLU_irr
 
     # Create a comparable table of YieldRatio for each year by GCAM region / commodity / GLU for biomass.
     # The biomass YieldRatio in each year is taken to be the median of YieldRatios for all commodities that year.

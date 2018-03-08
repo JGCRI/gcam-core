@@ -86,7 +86,10 @@ module_gcam.usa_LA119.Solar <- function(command, ...) {
     # Creating solar CSP table by using CSP fuel values
     Capacityfactors_scaled %>%
       filter(fuel == "CSP") %>%
-      mutate(fuel = "solar CSP") ->
+      mutate(fuel = "solar CSP") %>%
+      # Null CSP capacity factor implies that CSP is not suitable in the state.
+      # Set capacity factor to small number (0.001) to prevent divide by 0 error in GCAM.
+      mutate(scaler = if_else(scaler > 0, scaler, 0.001)) ->
       L119.CapFacScaler_CSP_state
 
     # ===================================================

@@ -104,23 +104,10 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       replace_GLU(map = basin_to_country_mapping) ->
       L181.LC_bm2_R_C_Yh_GLU_irr_level
 
-    # The old data system does not correct the GLU names for this input.
-    # Consequently, in the original L2252, the match on line 119 introduces
-    # hist.veg.carbon.density = NA for all region-glu-irr-mgmt because it
-    # is being told to match GLU008 style names with ArkWhtRedR style names
-    # so there are no matches.
-    # As a result, there is no difference in hist.veg.carbon.density for
-    # hi vs lo nests.
-    if(OLD_DATA_SYSTEM_BEHAVIOR) {
-      L181.YieldMult_R_bio_GLU_irr %>%
-        left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
-        L181.YieldMult_R_bio_GLU_irr
-    } else {
-      L181.YieldMult_R_bio_GLU_irr %>%
-        left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-        replace_GLU(map = basin_to_country_mapping) ->
-        L181.YieldMult_R_bio_GLU_irr
-    }
+    L181.YieldMult_R_bio_GLU_irr %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      replace_GLU(map = basin_to_country_mapping) ->
+      L181.YieldMult_R_bio_GLU_irr
 
     # convert_LN4_to_LN5
     # A function to carry LN4 information down to LN5

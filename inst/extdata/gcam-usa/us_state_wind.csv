@@ -1,7 +1,7 @@
 # File: us_state_wind.csv
 # Title: US wind resources by state
 # Units: maxResource in EJ; Prices in 2007USD/kWh
-# Source: ???
+# Source: Using the methodology so the following with region boundries by US state. http://pubs.acs.org/doi/pdf/10.1021/es204706m; Zhou et al. Evaluation of Global Onshore Wind Energy Potential and Generation Costs
 region,maxResource,mid_price,curve_exponent,base_cost
 AL,2.133142,0.039745,4.569628,0.084
 AK,18.338829,0.069636,3.536482,0.0577

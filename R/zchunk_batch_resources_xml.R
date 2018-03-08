@@ -23,7 +23,7 @@ module_energy_batch_resources_xml <- function(command, ...) {
              "L210.DepRsrcCurves_U",
              "L210.SmthRenewRsrcCurves_MSW",
              "L210.SmthRenewRsrcCurves_wind",
-             "L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV",
+             "L210.SmthRenewRsrcCurvesGdpElast_roofPV",
              "L210.GrdRenewRsrcCurves_geo",
              "L210.GrdRenewRsrcMax_geo",
              "L210.GrdRenewRsrcCurves_tradbio",
@@ -48,7 +48,7 @@ module_energy_batch_resources_xml <- function(command, ...) {
     L210.DepRsrcCurves_U <- get_data(all_data, "L210.DepRsrcCurves_U")
     L210.SmthRenewRsrcCurves_MSW <- get_data(all_data, "L210.SmthRenewRsrcCurves_MSW")
     L210.SmthRenewRsrcCurves_wind <- get_data(all_data, "L210.SmthRenewRsrcCurves_wind")
-    L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV <- get_data(all_data, "L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV")
+    L210.SmthRenewRsrcCurvesGdpElast_roofPV <- get_data(all_data, "L210.SmthRenewRsrcCurvesGdpElast_roofPV")
     L210.GrdRenewRsrcCurves_geo <- get_data(all_data, "L210.GrdRenewRsrcCurves_geo")
     L210.GrdRenewRsrcMax_geo <- get_data(all_data, "L210.GrdRenewRsrcMax_geo")
     L210.GrdRenewRsrcCurves_tradbio <- get_data(all_data, "L210.GrdRenewRsrcCurves_tradbio")
@@ -71,7 +71,7 @@ module_energy_batch_resources_xml <- function(command, ...) {
       add_xml_data(L210.DepRsrcCurves_U,"DepRsrcCurves") %>%
       add_xml_data(L210.SmthRenewRsrcCurves_MSW,"SmthRenewRsrcCurvesGdpElast") %>%
       add_xml_data(L210.SmthRenewRsrcCurves_wind,"SmthRenewRsrcCurves") %>%
-      add_xml_data(L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV,"SmthRenewRsrcCurvesGdpElast") %>%
+      add_xml_data(L210.SmthRenewRsrcCurvesGdpElast_roofPV,"SmthRenewRsrcCurvesGdpElast") %>%
       add_xml_data(L210.GrdRenewRsrcCurves_geo,"GrdRenewRsrcCurves") %>%
       add_xml_data(L210.GrdRenewRsrcMax_geo,"GrdRenewRsrcMax") %>%
       add_xml_data(L210.GrdRenewRsrcCurves_tradbio,"GrdRenewRsrcCurves") %>%
@@ -79,7 +79,7 @@ module_energy_batch_resources_xml <- function(command, ...) {
       add_precursors("L210.DepRsrc", "L210.RenewRsrc", "L210.UnlimitRsrc", "L210.DepRsrcPrice", "L210.RenewRsrcPrice",
                      "L210.UnlimitRsrcPrice", "L210.DepRsrcTechChange", "L210.SmthRenewRsrcTechChange", "L210.DepRsrcCalProd",
                      "L210.DepRsrcCurves_fos", "L210.DepRsrcCurves_U", "L210.SmthRenewRsrcCurves_MSW", "L210.SmthRenewRsrcCurves_wind",
-                     "L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV", "L210.GrdRenewRsrcCurves_geo", "L210.GrdRenewRsrcMax_geo",
+                     "L210.SmthRenewRsrcCurvesGdpElast_roofPV", "L210.GrdRenewRsrcCurves_geo", "L210.GrdRenewRsrcMax_geo",
                      "L210.GrdRenewRsrcCurves_tradbio", "L210.GrdRenewRsrcMax_tradbio") ->
       resources.xml
 

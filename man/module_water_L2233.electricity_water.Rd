@@ -27,7 +27,8 @@ the generated outputs: \code{L2233.EQUIV_TABLE}, \code{L2233.SectorNodeEquiv},
 \code{L2233.GlobalTechCapital_elec_cool}, \code{L2233.GlobalIntTechCapital_elec_cool},
 \code{L2233.GlobalTechCoef_elec_cool}, \code{L2233.GlobalIntTechCoef_elec_cool},
 \code{L2233.InputEmissCoeff_hist_elecPassthru}, \code{L2233.InputEmissCoeff_fut_elecPassthru},
-\code{L2233.AvgFossilEffKeyword_elec_cool}. The corresponding file in the
+\code{L2233.AvgFossilEffKeyword_elec_cool}, \code{L2233.DeleteCreditInput_elec},
+\code{L2233.CreditInput_elec}. The corresponding file in the
 original data system was \code{L2233.electricity_water.R} (water level2).
 }
 \description{
