@@ -388,7 +388,7 @@ energy.DIGITS_SATIATION_ADDER  <- 9
 energy.DIGITS_SHRWT            <- 4
 energy.DIGITS_SPEED            <- 1
 
-# Policy assunptions for module_energy_L270.limits
+# Policy assumptions for module_energy_L270.limits
 energy.NEG_EMISS_POLICY_NAME    <- "negative_emiss_budget"
 energy.NEG_EMISS_GDP_BUDGET_PCT <- 0.01 # Max fraction of GDP which may be given to subsidize net negative emissions
 energy.NEG_EMISS_MARKT_GLOBAL   <- TRUE # If the negative emissions budget is global (TRUE) or regional (FALSE)

@@ -20,7 +20,7 @@ original data system was \code{L270.limits.R} (energy level2).
 \description{
 Generate GCAM policy constraints which limit model behavior in some way.  In
 particular limit the fraction of liquid feedstocks and inputs to electricity
-generation which can come from sources other than crude oil.  Constraint the
+generation which can come from sources other than crude oil.  Constrain the
 total amount of subsidy as a fraction of GDP which an economy is will to give
 to have net negative emissions.
 }
