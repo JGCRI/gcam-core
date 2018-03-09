@@ -41,6 +41,9 @@ module_energy_L270.limits <- function(command, ...) {
              paste0( "L270.NegEmissBudget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), c("spa1", "spa23", "spa4", "spa5")) )))
   } else if(command == driver.MAKE) {
 
+    value <- subsector <- supplysector <- year <- GCAM_region_ID <- sector.name <-
+      region <- scenario <- constraint <- . <- NULL # silence package check notes
+
     # Chunk specific constants
     # Sets policy assunptions
     NEG_EMISS_POLICY_NAME <- "negative_emiss_budget"

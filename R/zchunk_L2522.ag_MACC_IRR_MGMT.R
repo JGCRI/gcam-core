@@ -39,7 +39,7 @@ module_emissions_L2522.ag_MACC_IRR_MGMT <- function(command, ...) {
     AgProductionTechnology <- AgSupplySector <- AgSupplySubsector <-
       MAC <- Non.CO2 <- lvl <- mac.control <- mac.reduction <- region <-
       scenario <- stub.technology <- subsector <- supplysector <- tax <-
-      tech_change <- year <- NULL
+      tech_change <- year <- market.name <- NULL
 
     # ===================================================
 

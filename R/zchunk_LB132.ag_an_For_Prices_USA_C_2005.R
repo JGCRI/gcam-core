@@ -29,10 +29,10 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     country.codes <- item.codes <- element <- element.codes <- year <- price <-
-        countries <- item <- Cotton_lint <- Cottonseed <- Cattle_meat <-
-        value <- GCAM_commodity <- V_USD <- Price_USDt <- calPrice <- avg <-
-        FodderHerb <- FodderGrass <- ExpV_USD <- Exp_m3 <- Price_USDm3 <-
-        . <- NULL                       # silence package check.
+      countries <- item <- Cotton_lint <- Cottonseed <- Cattle_meat <-
+      value <- GCAM_commodity <- V_USD <- Price_USDt <- calPrice <- avg <-
+      FodderHerb <- FodderGrass <- ExpV_USD <- Exp_m3 <- Price_USDm3 <-
+      `country codes` <- `item codes` <- `element codes` <- deflator <- . <- NULL    # silence package check.
 
     all_data <- list(...)[[1]]
 

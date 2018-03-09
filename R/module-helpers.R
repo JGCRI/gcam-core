@@ -372,14 +372,18 @@ add_carbon_info <- function( data, carbon_info_table, matchvars = c("region", "G
 
 #' reduce_mgd_carbon
 #'
-#' function to reduce the carbon density of a managed land type from it's unmanaged land
+#' Reduce the carbon density of a managed land type from its unmanaged land
 #' type's carbon density using constant multipliers
 #'
-#' @param data = input data tibble to adjust carbon densities for
-#' @param LTfor = Land_Type name to use for Forest land types
-#' @param LTpast =  Land_Type name to use for Pasture land types
-#' @return the original table with carbon density adjusted for the managed land types
+#' @param data Unput data tibble to adjust carbon densities for
+#' @param LTfor Land_Type name to use for Forest land types
+#' @param LTpast Land_Type name to use for Pasture land types
+#' @return The original table with carbon density adjusted for the managed land types
 reduce_mgd_carbon <- function( data, LTfor = "Forest", LTpast = "Pasture") {
+
+  hist.veg.carbon.density <- Cveg_Mult_UnmgdPast_MgdPast <- veg.carbon.density <-
+    hist.soil.carbon.density <- Csoil_Mult_UnmgdPast_MgdPast <- soil.carbon.density <-
+    Cveg_Mult_UnmgdFor_MgdFor <- Csoil_Mult_UnmgdFor_MgdFor <- NULL # silence package check notes
 
   data %>%
     mutate(hist.veg.carbon.density = if_else("Land_Type" == LTpast, hist.veg.carbon.density * Cveg_Mult_UnmgdPast_MgdPast, hist.veg.carbon.density)) %>%

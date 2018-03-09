@@ -21,6 +21,8 @@ module_energy_batch_negative_emissions_budget_xml <- function(command, ...) {
     return(xml_files)
   } else if(command == driver.MAKE) {
 
+    . <- NULL # silence package check note
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

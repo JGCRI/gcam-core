@@ -7,16 +7,16 @@
 reduce_mgd_carbon(data, LTfor = "Forest", LTpast = "Pasture")
 }
 \arguments{
-\item{data}{= input data tibble to adjust carbon densities for}
+\item{data}{Unput data tibble to adjust carbon densities for}
 
-\item{LTfor}{= Land_Type name to use for Forest land types}
+\item{LTfor}{Land_Type name to use for Forest land types}
 
-\item{LTpast}{=  Land_Type name to use for Pasture land types}
+\item{LTpast}{Land_Type name to use for Pasture land types}
 }
 \value{
-the original table with carbon density adjusted for the managed land types
+The original table with carbon density adjusted for the managed land types
 }
 \description{
-function to reduce the carbon density of a managed land type from it's unmanaged land
+Reduce the carbon density of a managed land type from its unmanaged land
 type's carbon density using constant multipliers
 }
