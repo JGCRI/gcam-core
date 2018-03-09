@@ -524,7 +524,7 @@ emissions.TST_TO_TG     <- 0.000907 # Thousand short tons to Tg
 emissions.COAL_SO2_THRESHOLD <- 0.1   # Tg/EJ (here referring to Tg SO2 per EJ of coal electricity)
 emissions.LOW_PCGDP          <- 2.75  # thousand 1990 USD
 emissions.MAC_TAXES          <- c(0, 5, 10, 15, 32, 66, 129, 243, 486, 1093, 2064, 4857, 7285, 12141) # Range of costs in 1990 USD
-emissions.MAC_MARKET <- "CO2" # Default market that MAC curves will look for
+emissions.MAC_MARKET         <- "CO2" # Default market that MAC curves will look for
 
 emissions.AGR_SECTORS        <- c("rice", "fertilizer", "soil")
 emissions.AGR_GASES          <- c("CH4_AGR", "N2O_AGR", "NH3_AGR", "NOx_AGR")
