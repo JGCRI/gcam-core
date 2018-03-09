@@ -4,6 +4,7 @@
 # Author: lds
 # Description: Initialization of land value (million USD) by country87/use/GLU
 # Original source: many, including HYDE and SAGE
+# Source: https://github.com/JGCRI/lds
 # ----------
 reglr_iso,glu_code,use_sector,value
 alb,54,ctl,0.035725527

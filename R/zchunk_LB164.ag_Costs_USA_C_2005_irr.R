@@ -77,7 +77,6 @@ module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {
       # calculate average Cost fraction for each crop, over aglu.MODEL_COST_YEARS
       mutate(waterCostFrac = mean(CostFrac, na.rm = TRUE)) %>%
       ungroup ->
-      #left_join_error_no_match(USDA_crops, by = c("Crop" = "USDA_crop")) ->
       L164.waterCostFrac_Cusda
 
     # Step 2: Use L100 LDS harvested area data to weight the waterCostFrac for each USDA

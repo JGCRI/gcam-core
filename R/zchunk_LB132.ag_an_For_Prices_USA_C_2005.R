@@ -46,7 +46,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
     FAO_USA_an_Prod_t_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_USA_an_Prod_t_PRODSTAT")
 
     # Since FAO_USA_ag_an_P_USDt_PRICESTAT is in nominal years we will need a table of deflators
-    # to nomalize each to constant 1975$
+    # to normalize each to constant 1975$
     tibble(year = aglu.MODEL_PRICE_YEARS) %>%
       group_by(year) %>%
       summarize(deflator = gdp_deflator(1975, year)) ->
@@ -200,7 +200,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
       select(-deflator) %>%
       # Calculate a single unweighted average export value and a single unweighted average export quantity over price years
       group_by(GCAM_commodity) %>%
-      summarize(Price_USDm3=mean(Price_USDm3)) %>%
+      summarize(Price_USDm3 = mean(Price_USDm3)) %>%
       ungroup() %>%
       # Convert to model units
       mutate(calPrice = round(Price_USDm3, digits = aglu.DIGITS_CALPRICE)) %>%
