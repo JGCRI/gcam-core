@@ -56,7 +56,8 @@ module_emissions_L252.MACC <- function(command, ...) {
     . <- AgProductionTechnology <- AgSupplySector <- AgSupplySubsector <- EPA_MACC_Sector <- EPA_region <-
       GV_year <- MAC_region <- Non.CO2 <- PCT_ABATE <- Process <- Species <- Year <- bio_N2O_coef <-
       depresource <- emiss.coef <- input.emissions <- mac.control <- mac.reduction <- region <-
-      scenario <- sector <- stub.technology <- subsector <- supplysector <- tax <- tech_change <- year <- NULL
+      scenario <- sector <- stub.technology <- subsector <- supplysector <- tax <- tech_change <-
+      market.name <- year <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -122,7 +123,10 @@ module_emissions_L252.MACC <- function(command, ...) {
                                  select(mac.control = EPA_MACC_Sector, subsector),
                                by = c("depresource" = "subsector")) %>%
       mac_reduction_adder(order = "depresource") %>%
-      select(region, depresource, Non.CO2, mac.control, tax, mac.reduction, EPA_region)
+      # Add column for market variable
+      mutate(market.name = emissions.MAC_MARKET) %>%
+      # Remove EPA_Region - useful up to now for diagnostic, but not needed for csv->xml conversion
+      select(region, depresource, Non.CO2, mac.control, tax, mac.reduction, market.name)
 
     # L252.AgMAC: Agricultural abatement (including bioenergy)
     L252.AgMAC <- L211.AGREmissions %>%
@@ -137,8 +141,11 @@ module_emissions_L252.MACC <- function(command, ...) {
                                  distinct, # taking distinct values because there were repeats for AEZs
                                by = c("AgSupplySector" = "supplysector")) %>%
       mac_reduction_adder(order = "AgProductionTechnology") %>%
+      # Add column for market variable
+      mutate(market.name = emissions.MAC_MARKET) %>%
+      # Remove EPA_Region - useful up to now for diagnostic, but not needed for csv->xml conversion
       select(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology, year, Non.CO2,
-             mac.control, tax, mac.reduction, EPA_region)
+             mac.control, tax, mac.reduction, market.name)
 
     # L252.MAC_an: Abatement from animal production
     L252.MAC_an <- L211.AnEmissions %>%
@@ -151,8 +158,11 @@ module_emissions_L252.MACC <- function(command, ...) {
                                  distinct, # taking distinct values because there are repeats for different technologies
                                by = "supplysector") %>%
       mac_reduction_adder(order = c("supplysector", "subsector", "stub.technology", "Non.CO2")) %>%
+      # Add column for market variable
+      mutate(market.name = emissions.MAC_MARKET) %>%
+      # Remove EPA_Region - useful up to now for diagnostic, but not needed for csv->xml conversion
       select(region, supplysector, subsector, stub.technology, year, Non.CO2, mac.control,
-             tax, mac.reduction, EPA_region)
+             tax, mac.reduction, market.name)
 
     # L252.MAC_prc: Abatement from industrial and urban processes
     L252.MAC_prc <- L232.nonco2_prc %>%
@@ -170,7 +180,10 @@ module_emissions_L252.MACC <- function(command, ...) {
                           # because not all mac.controls and regions in L252.MAC_pct_R_S_Proc_EPA
                           error_no_match = FALSE) %>%
       na.omit() %>%
-      select(region, supplysector, subsector, stub.technology, year, Non.CO2, mac.control, tax, mac.reduction, EPA_region)
+      # Add column for market variable
+      mutate(market.name = emissions.MAC_MARKET) %>%
+      # Remove EPA_Region - useful up to now for diagnostic, but not needed for csv->xml conversion
+      select(region, supplysector, subsector, stub.technology, year, Non.CO2, mac.control, tax, mac.reduction, market.name)
 
     # L252.MAC_higwp: Abatement from HFCs, PFCs, and SF6
     L252.MAC_higwp <- bind_rows(L241.hfc_all, L241.pfc_all) %>%
@@ -186,7 +199,10 @@ module_emissions_L252.MACC <- function(command, ...) {
                           # because not all mac.controls and regions in L252.MAC_pct_R_S_Proc_EPA
                           error_no_match = FALSE) %>%
       na.omit() %>%
-      select(region, supplysector, subsector, stub.technology, year, Non.CO2, mac.control, tax, mac.reduction, EPA_region)
+      # Add column for market variable
+      mutate(market.name = emissions.MAC_MARKET) %>%
+      # Remove EPA_Region - useful up to now for diagnostic, but not needed for csv->xml conversion
+      select(region, supplysector, subsector, stub.technology, year, Non.CO2, mac.control, tax, mac.reduction, market.name)
 
 
     # These steps will be completed if we choose to replace our HiGWP data with data from Guus Velders
@@ -222,7 +238,6 @@ module_emissions_L252.MACC <- function(command, ...) {
     # L252.MAC_TC: Tech Change on MACCs
     # For all tibbles, add in scenarios and tech change, then split by scenario and add in documentation
     L252.MAC_Ag_TC <- L252.AgMAC %>%
-      select(-EPA_region) %>%
       repeat_add_columns(tibble(scenario = unique(A_MACC_TechChange$scenario))) %>%
       left_join_error_no_match(A_MACC_TechChange %>% rename(tech.change = tech_change),
                                by = c("scenario", "mac.control" = "MAC")) %>%
@@ -240,7 +255,6 @@ module_emissions_L252.MACC <- function(command, ...) {
 
 
     L252.MAC_An_TC <- L252.MAC_an %>%
-      select(-EPA_region) %>%
       repeat_add_columns(tibble(scenario = unique(A_MACC_TechChange$scenario))) %>%
       left_join_error_no_match(A_MACC_TechChange %>% rename(tech.change = tech_change),
                                by = c("scenario", "mac.control" = "MAC")) %>%
@@ -257,7 +271,6 @@ module_emissions_L252.MACC <- function(command, ...) {
       })
 
     L252.MAC_prc_TC <- L252.MAC_prc %>%
-      select(-EPA_region) %>%
       repeat_add_columns(tibble(scenario = unique(A_MACC_TechChange$scenario))) %>%
       left_join(A_MACC_TechChange %>% rename(tech.change = tech_change),
                 by = c("scenario", "mac.control" = "MAC")) %>%
@@ -275,7 +288,6 @@ module_emissions_L252.MACC <- function(command, ...) {
       })
 
     L252.MAC_res_TC <- L252.ResMAC_fos %>%
-      select(-EPA_region) %>%
       repeat_add_columns(tibble(scenario = unique(A_MACC_TechChange$scenario))) %>%
       left_join_error_no_match(A_MACC_TechChange %>% rename(tech.change = tech_change),
                                by = c("scenario", "mac.control" = "MAC")) %>%

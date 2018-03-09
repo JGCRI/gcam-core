@@ -18,6 +18,7 @@ the generated outputs: \code{L223.Supplysector_elec}, \code{L223.ElecReserve}, \
 \code{L223.SubsectorShrwt_elec}, \code{L223.SubsectorShrwtFllt_elec}, \code{L223.SubsectorShrwt_nuc},
 \code{L223.SubsectorShrwt_renew}, \code{L223.SubsectorInterp_elec}, \code{L223.SubsectorInterpTo_elec},
 \code{L223.StubTech_elec}, \code{L223.GlobalIntTechEff_elec}, \code{L223.GlobalTechEff_elec},
+\code{L223.GlobalTechCapFac_elec}, \code{L223.GlobalIntTechCapFac_elec},
 \code{L223.GlobalTechCapital_elec}, \code{L223.GlobalIntTechCapital_elec}, \code{L223.GlobalTechOMfixed_elec},
 \code{L223.GlobalIntTechOMfixed_elec}, \code{L223.GlobalTechOMvar_elec}, \code{L223.GlobalIntTechOMvar_elec},
 \code{L223.GlobalTechShrwt_elec}, \code{L223.GlobalTechInterp_elec}, \code{L223.GlobalIntTechShrwt_elec},

@@ -1,11 +1,11 @@
-# File: A22.globaltech_co2capture.csv
-# Title: Primary energy transformation technology capture fractions
-# Units: fractions
-# Description: Fraction of CO2 captured by transformation technologies
+# File: A22.globaltech_co2capture.csv,,,,
+# Title: Primary energy transformation technology capture fractions,,,,
+# Units: fractions,,,,
+# Description: Fraction of CO2 captured by transformation technologies,,,,
 supplysector,subsector,technology,1971,2100
 refining,coal to liquids,coal to liquids CCS level 1,0.818,0.818
-refining,coal to liquids,coal to liquids CCS level 2,0.981,0.981
+refining,coal to liquids,coal to liquids CCS level 2,0.9,0.9
 refining,biomass liquids,cellulosic ethanol CCS level 1,0.26,0.26
-refining,biomass liquids,cellulosic ethanol CCS level 2,0.992,0.992
+refining,biomass liquids,cellulosic ethanol CCS level 2,0.9,0.9
 refining,biomass liquids,FT biofuels CCS level 1,0.818,0.818
-refining,biomass liquids,FT biofuels CCS level 2,0.98,0.98
+refining,biomass liquids,FT biofuels CCS level 2,0.9,0.9

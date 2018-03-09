@@ -127,13 +127,21 @@ get_precursors <- function(x) { attr(x, ATTR_PRECURSORS) }
 #'
 #' @param x An object (that should get same data system attributes as \code{y})
 #' @param y Another object (source of attributes)
+#' @param copy_strict_flags A flag if \code{FALSE} indicates to not copy the "strict"
+#' flags which may not be manipulated later.  Namely this avoids copying the title
+#' and legacy name.  Note the default is copy everything, i.e. \code{TRUE}.
 #' @return \code{x} with attributes set to those of \code{y}.
-same_attributes_as <- function(x, y) {
-  attr(x, ATTR_TITLE) <- attr(y, ATTR_TITLE)
+same_attributes_as <- function(x, y, copy_strict_flags = TRUE) {
+  assertthat::assert_that(is.logical(copy_strict_flags))
+  if(copy_strict_flags) {
+    attr(x, ATTR_TITLE) <- attr(y, ATTR_TITLE)
+  }
   attr(x, ATTR_UNITS) <- attr(y, ATTR_UNITS)
   attr(x, ATTR_COMMENTS) <- attr(y, ATTR_COMMENTS)
   attr(x, ATTR_PRECURSORS) <- attr(y, ATTR_PRECURSORS)
-  attr(x, ATTR_LEGACY_NAME) <- attr(y, ATTR_LEGACY_NAME)
+  if(copy_strict_flags) {
+    attr(x, ATTR_LEGACY_NAME) <- attr(y, ATTR_LEGACY_NAME)
+  }
   attr(x, ATTR_REFERENCE) <- attr(y, ATTR_REFERENCE)
   x
 }

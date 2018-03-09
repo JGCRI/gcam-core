@@ -4,12 +4,16 @@
 \alias{same_attributes_as}
 \title{same_attributes_as}
 \usage{
-same_attributes_as(x, y)
+same_attributes_as(x, y, copy_strict_flags = TRUE)
 }
 \arguments{
 \item{x}{An object (that should get same data system attributes as \code{y})}
 
 \item{y}{Another object (source of attributes)}
+
+\item{copy_strict_flags}{A flag if \code{FALSE} indicates to not copy the "strict"
+flags which may not be manipulated later.  Namely this avoids copying the title
+and legacy name.  Note the default is copy everything, i.e. \code{TRUE}.}
 }
 \value{
 \code{x} with attributes set to those of \code{y}.

@@ -327,7 +327,9 @@ gdp_deflator <- function(year, base_year) {
     if(year == 1975 && base_year == 2006) return(0.3257)  # conv_2006_1975_USD
     if(year == 1975 && base_year == 2007) return(0.317)   # conv_2007_1975_USD
     if(year == 1975 && base_year == 2008) return(0.3104)  # conv_2008_1975_USD
-    if(year == 1975 && base_year == 2009) return(0.3104)  # conv_2009_1975_USD
+    if(year == 1975 && base_year == 2009) return(0.3067)  # conv_2009_1975_USD
+    if(year == 1975 && base_year == 2010) return(0.3032)  # conv_2010_1975_USD
+    if(year == 1975 && base_year == 2011) return(0.2968)  # conv_2011_1975_USD
     if(year == 1990 && base_year == 2010) return(1.0/gdp_deflator(2010, 1990))
     # conv_2010_1990_USD
   }

@@ -9,7 +9,7 @@
 #' the generated outputs: \code{L210.DeleteRenewRsrc_USArsrc}, \code{L210.DeleteUnlimitRsrc_USArsrc}, \code{L210.RenewRsrc_USA},
 #' \code{L210.UnlimitRsrc_USA}, \code{L210.UnlimitRsrcPrice_USA}, \code{L210.SmthRenewRsrcTechChange_USA},
 #' \code{L210.SmthRenewRsrcCurves_wind_USA}, \code{L210.GrdRenewRsrcCurves_geo_USA}, \code{L210.GrdRenewRsrcMax_geo_USA},
-#' \code{L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV_USA}, \code{L210.DeleteUnlimitRsrc_USAlimestone},
+#' \code{L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA}, \code{L210.DeleteUnlimitRsrc_USAlimestone},
 #' \code{L210.UnlimitRsrc_limestone_USA}, \code{L210.UnlimitRsrcPrice_limestone_USA}. The corresponding file in the
 #' original data system was \code{L210.resources_USA.R} (gcam-usa level2).
 #' @details GCAM-USA resource market information, prices, TechChange parameters, and supply curves.
@@ -32,7 +32,7 @@ module_gcam.usa_L210.resources_USA <- function(command, ...) {
              "L210.UnlimitRsrcPrice",
              "L210.SmthRenewRsrcTechChange",
              "L210.SmthRenewRsrcCurves_wind",
-             "L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV",
+             "L210.SmthRenewRsrcCurvesGdpElast_roofPV",
              "L210.GrdRenewRsrcCurves_geo",
              "L210.GrdRenewRsrcMax_geo"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -45,7 +45,7 @@ module_gcam.usa_L210.resources_USA <- function(command, ...) {
              "L210.SmthRenewRsrcCurves_wind_USA", #
              "L210.GrdRenewRsrcCurves_geo_USA", #
              "L210.GrdRenewRsrcMax_geo_USA", #
-             "L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV_USA", #
+             "L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA", #
              "L210.DeleteUnlimitRsrc_USAlimestone", #
              "L210.UnlimitRsrc_limestone_USA", #
              "L210.UnlimitRsrcPrice_limestone_USA")) #
@@ -72,7 +72,7 @@ module_gcam.usa_L210.resources_USA <- function(command, ...) {
     L210.UnlimitRsrcPrice <- get_data(all_data, "L210.UnlimitRsrcPrice")
     L210.SmthRenewRsrcTechChange <- get_data(all_data, "L210.SmthRenewRsrcTechChange")
     L210.SmthRenewRsrcCurves_wind <- get_data(all_data, "L210.SmthRenewRsrcCurves_wind")
-    L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV <- get_data(all_data, "L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV")
+    L210.SmthRenewRsrcCurvesGdpElast_roofPV <- get_data(all_data, "L210.SmthRenewRsrcCurvesGdpElast_roofPV")
     L210.GrdRenewRsrcCurves_geo <- get_data(all_data, "L210.GrdRenewRsrcCurves_geo")
     L210.GrdRenewRsrcMax_geo <- get_data(all_data, "L210.GrdRenewRsrcMax_geo")
     # ===================================================
@@ -171,6 +171,8 @@ module_gcam.usa_L210.resources_USA <- function(command, ...) {
       repeat_add_columns(tibble(state = gcamusa.STATES)) %>%
       # Add in new maxSubResource, mid.price, and curve.exponent from us_state_wind
       left_join_error_no_match(us_state_wind, by = c("state" = "region")) %>%
+      # Convert us_state_wind units from 2007$/kWh to 1975$/GJ
+      mutate(mid_price = mid_price * gdp_deflator(1975, 2007) / CONV_KWH_GJ) %>%
       select(region = state, renewresource, smooth.renewable.subresource, year.fillout,
              maxSubResource = maxResource, mid.price = mid_price, curve.exponent = curve_exponent)
 
@@ -215,8 +217,8 @@ module_gcam.usa_L210.resources_USA <- function(command, ...) {
       select(-region) %>%
       repeat_add_columns(tibble(region = geo_states))
 
-    # L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV_USA: rooftop PV resource curves in the states
-    L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV_USA <- L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV %>%
+    # L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA: rooftop PV resource curves in the states
+    L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA <- L210.SmthRenewRsrcCurvesGdpElast_roofPV %>%
       filter(region == "USA") %>%
       select(-region, -maxSubResource, -mid.price, -curve.exponent) %>%
       repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
@@ -321,17 +323,17 @@ module_gcam.usa_L210.resources_USA <- function(command, ...) {
       add_precursors("L210.GrdRenewRsrcMax_geo") ->
       L210.GrdRenewRsrcMax_geo_USA
 
-    L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV_USA %>%
+    L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA %>%
       add_title("Rooftop PV resource curves by state") %>%
       add_units("maxSubResource: EJ; mid.price = 1975$/GJ") %>%
-      add_comments("Values from L115.rsrc_state_rooftopPV added to categories from L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV") %>%
-      add_legacy_name("L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV_USA") %>%
-      add_precursors("L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV", "L115.rsrc_state_rooftopPV") ->
-      L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV_USA
+      add_comments("Values from L115.rsrc_state_rooftopPV added to categories from L210.SmthRenewRsrcCurvesGdpElast_roofPV") %>%
+      add_legacy_name("L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA") %>%
+      add_precursors("L210.SmthRenewRsrcCurvesGdpElast_roofPV", "L115.rsrc_state_rooftopPV") ->
+      L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA
 
     return_data(L210.DeleteRenewRsrc_USArsrc, L210.DeleteUnlimitRsrc_USArsrc, L210.RenewRsrc_USA, L210.UnlimitRsrc_USA,
                 L210.UnlimitRsrcPrice_USA, L210.SmthRenewRsrcTechChange_USA, L210.SmthRenewRsrcCurves_wind_USA,
-                L210.GrdRenewRsrcCurves_geo_USA, L210.GrdRenewRsrcMax_geo_USA, L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV_USA,
+                L210.GrdRenewRsrcCurves_geo_USA, L210.GrdRenewRsrcMax_geo_USA, L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA,
                 L210.DeleteUnlimitRsrc_USAlimestone, L210.UnlimitRsrc_limestone_USA, L210.UnlimitRsrcPrice_limestone_USA)
   } else {
     stop("Unknown command")

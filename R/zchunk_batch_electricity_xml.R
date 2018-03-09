@@ -20,6 +20,8 @@ module_energy_batch_electricity_xml_DISABLED <- function(command, ...) {
               "L223.StubTech_elec",
               "L223.GlobalIntTechEff_elec",
               "L223.GlobalTechEff_elec",
+              "L223.GlobalTechCapFac_elec",
+              "L223.GlobalIntTechCapFac_elec",
               "L223.GlobalTechCapital_elec",
               "L223.GlobalIntTechCapital_elec",
               "L223.GlobalTechOMfixed_elec",
@@ -57,6 +59,8 @@ module_energy_batch_electricity_xml_DISABLED <- function(command, ...) {
     L223.StubTech_elec <- get_data(all_data, "L223.StubTech_elec")
     L223.GlobalIntTechEff_elec <- get_data(all_data, "L223.GlobalIntTechEff_elec")
     L223.GlobalTechEff_elec <- get_data(all_data, "L223.GlobalTechEff_elec")
+    L223.GlobalTechCapFac_elec <- get_data(all_data, "L223.GlobalTechCapFac_elec")
+    L223.GlobalIntTechCapFac_elec <- get_data(all_data, "L223.GlobalIntTechCapFac_elec")
     L223.GlobalTechCapital_elec <- get_data(all_data, "L223.GlobalTechCapital_elec")
     L223.GlobalIntTechCapital_elec <- get_data(all_data, "L223.GlobalIntTechCapital_elec")
     L223.GlobalTechOMfixed_elec <- get_data(all_data, "L223.GlobalTechOMfixed_elec")
