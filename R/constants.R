@@ -168,6 +168,9 @@ aglu.PRICERATIO_GRASS_ALFALFA <- 0.7
 # Carbon content of all cellulose
 aglu.CCONTENT_CELLULOSE    <- 0.45
 
+# Conversion from peak biomass to average biomass integrated over the course of the year
+aglu.CCONV_PEAK_AVG <- 0.5
+
 # Meat price elasticity in the USA
 aglu.FOOD_MEAT_P_ELAS_USA <- -0.09
 
@@ -272,6 +275,9 @@ aglu.N0_LOGIT_TYPE <- NA
 # Fraction of land that is protected
 aglu.PROTECT_LAND_FRACT <- 0.9
 
+# Multiplier on the ghost share for irrigated land
+aglu.IRR_GHOST_SHARE_MULT <- 0.25
+
 # unManaged Land Value
 # 1975$/thou km2 ??
 aglu.UNMANAGED_LAND_VALUE <- 1
@@ -295,9 +301,11 @@ aglu.LT_GLU_DELIMITER     <-      # delimiter between the land use type name and
 # AgLU digits constants to control the number of digits for rounding going into XMLs.
 aglu.DIGITS_AGPRODCHANGE  <- 4 # rate of change in yield values
 aglu.DIGITS_C_DENSITY     <- 1
+aglu.DIGITS_C_DENSITY_CROP <- 3 # cropland vegetative soil carbon content
 aglu.DIGITS_CALOUTPUT     <- 7 # for production values
 aglu.DIGITS_CALPRICE      <- 4 # prices and costs values
 aglu.DIGITS_EROS_CTRL     <- 2
+aglu.DIGITS_GHOSTSHARE    <- 3
 aglu.DIGITS_HARVEST_INDEX <- 2
 aglu.DIGITS_INCELAS       <- 4 # food demand income elasticity values
 aglu.DIGITS_LAND_TOTAL    <- 2
