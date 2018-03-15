@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{electricity_water_coefs.xml}. The corresponding file in the
 #' original data system was \code{batch_electricity_water_coefs.xml.R} (water XML).
-module_water_batch_electricity_water_coefs_xml_DISABLED <- function(command, ...) {
+module_water_batch_electricity_water_coefs_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L2233.GlobalTechCoef_elec_cool",
               "L2233.GlobalIntTechCoef_elec_cool"))
