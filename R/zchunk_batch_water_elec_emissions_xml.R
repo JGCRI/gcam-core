@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{water_elec_emissions.xml}. The corresponding file in the
 #' original data system was \code{batch_water_elec_emissions.xml.R} (water XML).
-module_water_batch_water_elec_emissions_xml_DISABLED <- function(command, ...) {
+module_water_batch_water_elec_emissions_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L2233.InputEmissCoeff_hist_elecPassthru",
               "L2233.InputEmissCoeff_fut_elecPassthru"))

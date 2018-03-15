@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{water_demand_industry.xml}. The corresponding file in the
 #' original data system was \code{batch_water_demand_industry.xml.R} (water XML).
-module_water_batch_water_demand_industry_xml_DISABLED <- function(command, ...) {
+module_water_batch_water_demand_industry_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L232.TechCoef"))
   } else if(command == driver.DECLARE_OUTPUTS) {
