@@ -43,7 +43,6 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
              "L171.ag_rfdEcYield_kgm2_R_C_Y_GLU",
              "L181.LandShare_R_bio_GLU_irr",
              "L181.LC_bm2_R_C_Yh_GLU_irr_level",
-             "L181.YieldMult_R_bio_GLU_irr",
              "L2242.LN4_Logit",
              "L111.ag_resbio_R_C",
              "L121.CarbonContent_kgm2_R_LT_GLU",
@@ -71,7 +70,6 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
     A_LandLeaf3 <- get_data(all_data, "aglu/A_LandLeaf3")
     L181.LandShare_R_bio_GLU_irr <- get_data(all_data, "L181.LandShare_R_bio_GLU_irr")
     L181.LC_bm2_R_C_Yh_GLU_irr_level <- get_data(all_data, "L181.LC_bm2_R_C_Yh_GLU_irr_level")
-    L181.YieldMult_R_bio_GLU_irr <- get_data(all_data, "L181.YieldMult_R_bio_GLU_irr")
     L2242.LN4_Logit <- get_data(all_data, "L2242.LN4_Logit")
     L111.ag_resbio_R_C <- get_data(all_data, "L111.ag_resbio_R_C")
     L121.CarbonContent_kgm2_R_LT_GLU <- get_data(all_data, "L121.CarbonContent_kgm2_R_LT_GLU")
@@ -437,9 +435,15 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       add_comments("Carbon content info for managed crop land (LT_GLU) in the fifth nest including soil and vegetative carbon,") %>%
       add_comments("calculated from yield and other biomass characteristics (e.g., root-shoot, harvest index, water content).") %>%
       add_legacy_name("L2252.LN5_MgdCarbon_crop") %>%
-      add_precursors("common/GCAM_region_names", "water/basin_to_country_mapping", "aglu/GCAMLandLeaf_CdensityLT",
-                     "aglu/A_Fodderbio_chars", "L171.ag_irrEcYield_kgm2_R_C_Y_GLU", "L171.ag_rfdEcYield_kgm2_R_C_Y_GLU",
-                     "L111.ag_resbio_R_C", "L121.CarbonContent_kgm2_R_LT_GLU") ->
+      add_precursors("common/GCAM_region_names",
+                     "water/basin_to_country_mapping",
+                     "aglu/GCAMLandLeaf_CdensityLT",
+                     "aglu/A_Fodderbio_chars",
+                     "aglu/A_LandLeaf3",
+                     "L171.ag_irrEcYield_kgm2_R_C_Y_GLU",
+                     "L171.ag_rfdEcYield_kgm2_R_C_Y_GLU",
+                     "L111.ag_resbio_R_C",
+                     "L121.CarbonContent_kgm2_R_LT_GLU") ->
       L2252.LN5_MgdCarbon_crop
 
     L2252.LN5_MgdCarbon_bio %>%
@@ -453,6 +457,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
                      "water/basin_to_country_mapping",
                      "aglu/GCAMLandLeaf_CdensityLT",
                      "aglu/A_Fodderbio_chars",
+                     "aglu/A_LandLeaf3",
                      "L2012.AgYield_bio_ref") %>%
       add_flags(FLAG_NO_TEST) ->
       L2252.LN5_MgdCarbon_bio
