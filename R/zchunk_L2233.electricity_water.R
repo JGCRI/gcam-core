@@ -264,9 +264,6 @@ module_water_L2233.electricity_water <- function(command, ...) {
       mutate(electricity.reserve.margin = unique(A23.sector$electricity.reserve.margin),
              average.grid.capacity.factor = unique(A23.sector$average.grid.capacity.factor)) %>%
       # ^^ Margin and capacity factor assumed to be same as for electricity and elect_td_bld
-      #select(LEVEL2_DATA_NAMES[["ElecReserve"]]) %>%
-      #rename(average_grid.capacity.factor = average.grid.capacity.factor) ->
-      #L2233.ElecReserve_elec_cool # --OUTPUT--
       select(LEVEL2_DATA_NAMES[["ElecReserve"]]) ->
       L2233.ElecReserve_elec_cool # --OUTPUT--
     
