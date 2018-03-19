@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{all_fgas_emissions.xml}. The corresponding file in the
 #' original data system was \code{batch_fgas_energy_emissions.xml.R} (emissions XML).
-module_emissions_batch_all_fgas_emissions_xml_DISABLED <- function(command, ...) {
+module_emissions_batch_all_fgas_emissions_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L252.MAC_higwp"))
   } else if(command == driver.DECLARE_OUTPUTS) {
