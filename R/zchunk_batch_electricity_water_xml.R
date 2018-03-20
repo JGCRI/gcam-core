@@ -83,10 +83,10 @@ module_water_batch_electricity_water.xml <- function(command, ...) {
       add_xml_data(L2233.GlobalIntTechOMvar_elec,"GlobalIntTechOMvar","GlobalTechOMvar") %>%
       add_xml_data(L2233.GlobalTechOMvar_elecPassthru,"GlobalTechOMvar") %>%
       add_xml_data(L2233.PassThroughSector_elec_cool,"PassThroughSector") %>%
-      add_xml_data(L2233.Supplysector_elec_cool,"Supplysector") %>%
+      add_logit_tables_xml(L2233.Supplysector_elec_cool,"Supplysector") %>%
       add_xml_data(L2233.ElecReserve_elec_cool,"ElecReserve") %>%
       add_xml_data(L2233.SubsectorShrwtFllt_elec_cool,"SubsectorShrwtFllt") %>%
-      add_xml_data(L2233.SubsectorLogit_elec_cool,"SubsectorLogit") %>%
+      add_logit_tables_xml(L2233.SubsectorLogit_elec_cool,"SubsectorLogit") %>%
       add_xml_data(L2233.StubTech_elec_cool,"StubTech") %>%
       add_xml_data(L2233.StubTechEff_elec_cool,"StubTechEff") %>%
       add_xml_data(L2233.StubTechProd_elec_cool,"StubTechProd") %>%
