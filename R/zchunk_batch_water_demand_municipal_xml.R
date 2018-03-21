@@ -44,8 +44,8 @@ module_water_batch_water_demand_municipal_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("water_demand_municipal.xml") %>%
-      add_xml_data(L245.Supplysector,"Supplysector") %>%
-      add_xml_data(L245.SubsectorLogit,"SubsectorLogit") %>%
+      add_logit_tables_xml(L245.Supplysector,"Supplysector") %>%
+      add_logit_tables_xml(L245.SubsectorLogit,"SubsectorLogit") %>%
       add_xml_data(L245.SubsectorShrwtFllt,"SubsectorShrwtFllt") %>%
       add_xml_data(L245.TechShrwt,"TechShrwt") %>%
       add_xml_data(L245.TechCoef,"TechCoef") %>%
