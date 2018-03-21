@@ -53,6 +53,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
              "L1233.out_EJ_R_elec_F_tech_Yh_cool",
              "L1233.shrwt_R_elec_cool_Yf",
              "L223.StubTechEff_elec",
+             "L223.StubTech_elec",
              "L201.en_bcoc_emissions",
              "L241.nonco2_tech_coeff",
              "L270.CreditInput_elec",
@@ -60,8 +61,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
     ))
 
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L2233.SectorNodeEquiv",
-             "L2233.TechNodeEquiv",
+    return(c("L2233.StubTech_elecPassthru",
              "L2233.StubTechProd_elecPassthru",
              "L2233.GlobalPassThroughTech",
              "L2233.GlobalTechEff_elecPassthru",
@@ -131,6 +131,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
     L1231.out_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.out_EJ_R_elec_F_tech_Yh")
     L1233.out_EJ_R_elec_F_tech_Yh_cool <- get_data(all_data, "L1233.out_EJ_R_elec_F_tech_Yh_cool")
     L1233.shrwt_R_elec_cool_Yf <- get_data(all_data, "L1233.shrwt_R_elec_cool_Yf")
+    L223.StubTech_elec <- get_data(all_data, "L223.StubTech_elec")
     L223.StubTechEff_elec <- get_data(all_data, "L223.StubTechEff_elec")
     L201.en_bcoc_emissions <- get_data(all_data, "L201.en_bcoc_emissions")
     L241.nonco2_tech_coeff <- get_data(all_data, "L241.nonco2_tech_coeff")
@@ -263,10 +264,9 @@ module_water_L2233.electricity_water <- function(command, ...) {
       mutate(electricity.reserve.margin = unique(A23.sector$electricity.reserve.margin),
              average.grid.capacity.factor = unique(A23.sector$average.grid.capacity.factor)) %>%
       # ^^ Margin and capacity factor assumed to be same as for electricity and elect_td_bld
-      select(LEVEL2_DATA_NAMES[["ElecReserve"]]) %>%
-      rename(average_grid.capacity.factor = average.grid.capacity.factor) ->
+      select(LEVEL2_DATA_NAMES[["ElecReserve"]]) ->
       L2233.ElecReserve_elec_cool # --OUTPUT--
-
+    
     elec_tech_water_map %>%
       select(to.supplysector, to.subsector) %>%
       unique %>%
@@ -526,7 +526,9 @@ module_water_L2233.electricity_water <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["GlobalTechCoef"]]) ->
       L2233.GlobalIntTechCoef_elec_cool # --OUTPUT--
 
-
+    # Upstream electricity sector that includes pass-thru technologies for calling pass-thru sectors
+    L223.StubTech_elec %>% mutate(region = region) -> L2233.StubTech_elecPassthru
+    
     # PART 4: STUB TECHNOLOGY INFORMATION IN THE NEW SECTOR STRUCTURE
 
     # Stub technologies of cooling system options
@@ -866,6 +868,14 @@ module_water_L2233.electricity_water <- function(command, ...) {
                      "L223.GlobalTechOMvar_elec") ->
       L2233.GlobalTechOMvar_elecPassthru
 
+    L2233.StubTech_elecPassthru %>%
+      add_title("Stub technologies for electricity sector") %>%
+      add_units("NA") %>%
+      add_comments("Technologies repeated across regions") %>%
+      add_legacy_name("L2233.StubTech_elecPassthru") %>%
+      add_precursors("L223.StubTech_elec") ->
+      L2233.StubTech_elecPassthru
+
     L2233.StubTech_elec_cool %>%
       add_title("Stub technologies for cooling system options") %>%
       add_units("NA") %>%
@@ -976,21 +986,6 @@ module_water_L2233.electricity_water <- function(command, ...) {
                      "L241.nonco2_tech_coeff") ->
       L2233.InputEmissCoeff_fut_elecPassthru
 
-    ## LAST TWO OUTPUTS ARE SIMPLY TAG NAMES (USED TO AVOID HAVING TO PARTITION INPUT TABLES)
-    tibble(X1 = "SectorXMLTags", X2 = "supplysector", X3 = "pass-through-sector") %>%
-      add_title("Equivalent sector tag names") %>%
-      add_units("NA") %>%
-      add_comments("Not generated") %>%
-      add_legacy_name("L2233.SectorNodeEquiv")  ->
-      L2233.SectorNodeEquiv
-
-    tibble(X1 = "TechnologyXMLTags", X2 = "technology", X3 = "intermittent-technology", X4 = "pass-through-technology") %>%
-      add_title("Equivalent technology tag names") %>%
-      add_units("NA") %>%
-      add_comments("Not generated") %>%
-      add_legacy_name("L2233.TechNodeEquiv") ->
-      L2233.TechNodeEquiv
-
     L2233.DeleteCreditInput_elec %>%
       add_title("Remove the oil-credits inputs from the old elec tech") %>%
       add_units("NA") %>%
@@ -1007,8 +1002,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
       add_precursors("L270.CreditInput_elec", "water/elec_tech_water_map") ->
       L2233.CreditInput_elec
 
-    return_data(L2233.SectorNodeEquiv,
-                L2233.TechNodeEquiv,
+    return_data(L2233.StubTech_elecPassthru,
                 L2233.StubTechProd_elecPassthru,
                 L2233.GlobalPassThroughTech,
                 L2233.GlobalTechEff_elecPassthru,
