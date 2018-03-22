@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{en_transformation_low.xml}. The corresponding file in the
 #' original data system was \code{batch_en_transformation_low.xml.R} (energy XML).
-module_energy_batch_en_transformation_low_xml_DISABLED <- function(command, ...) {
+module_energy_batch_en_transformation_low_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L222.GlobalTechCost_low_en"))
   } else if(command == driver.DECLARE_OUTPUTS) {

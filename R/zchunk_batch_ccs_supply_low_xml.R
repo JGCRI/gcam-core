@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{ccs_supply_low.xml}. The corresponding file in the
 #' original data system was \code{batch_ccs_supply_low.xml.R} (energy XML).
-module_energy_batch_ccs_supply_low_xml_DISABLED <- function(command, ...) {
+module_energy_batch_ccs_supply_low_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L261.DepRsrcCurves_C_low"))
   } else if(command == driver.DECLARE_OUTPUTS) {

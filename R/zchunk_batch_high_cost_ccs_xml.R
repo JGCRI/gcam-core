@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{high_cost_ccs.xml}. The corresponding file in the
 #' original data system was \code{batch_high_cost_ccs.xml.R} (energy XML).
-module_energy_batch_high_cost_ccs_xml_DISABLED <- function(command, ...) {
+module_energy_batch_high_cost_ccs_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L261.GlobalTechCost_C_High"))
   } else if(command == driver.DECLARE_OUTPUTS) {

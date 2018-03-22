@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{no_offshore_ccs.xml}. The corresponding file in the
 #' original data system was \code{batch_no_offshore_ccs.xml.R} (energy XML).
-module_energy_batch_no_offshore_ccs_xml_DISABLED <- function(command, ...) {
+module_energy_batch_no_offshore_ccs_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L261.GlobalTechShrwt_C_nooffshore"))
   } else if(command == driver.DECLARE_OUTPUTS) {
