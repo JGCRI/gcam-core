@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{Ccoef.xml}. The corresponding file in the
 #' original data system was \code{batch_Ccoef_xml.R} (energy XML).
-module_energy_batch_Ccoef_xml_DISABLED <- function(command, ...) {
+module_energy_batch_Ccoef_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L202.CarbonCoef"))
   } else if(command == driver.DECLARE_OUTPUTS) {

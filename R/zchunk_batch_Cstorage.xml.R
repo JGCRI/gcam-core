@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{Cstorage.xml}. The corresponding file in the
 #' original data system was \code{batch_Cstorage.xml.R} (energy XML).
-module_energy_batch_Cstorage.xml_DISABLED <- function(command, ...) {
+module_energy_batch_Cstorage.xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L261.DepRsrc",
               "L261.UnlimitRsrc",
