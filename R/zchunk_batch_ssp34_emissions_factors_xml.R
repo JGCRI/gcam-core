@@ -24,6 +24,11 @@ module_emissions_batch_ssp34_emissions_factors_xml <- function(command, ...) {
 
     # ===================================================
 
+    # Rename L251.ssp34_ef column to match the header names
+    # used in add_xml_data
+    L251.ssp34_ef <- rename(L251.ssp34_ef, `emiss.coef` = `emiss.coeff`)
+
+
     # Produce outputs
     create_xml("ssp34_emissions_factors.xml") %>%
       add_xml_data(L251.ssp34_ef,"InputEmissCoeff") %>%

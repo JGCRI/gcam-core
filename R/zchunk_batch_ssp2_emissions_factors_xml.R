@@ -24,6 +24,10 @@ module_emissions_batch_ssp2_emissions_factors_xml <- function(command, ...) {
 
     # ===================================================
 
+    # Rename L251.ssp2_ef column to match the expected column
+    # names in the add_xml_data header.
+    L251.ssp2_ef <- rename(L251.ssp2_ef, `emiss.coef` = `emiss.coeff`)
+
     # Produce outputs
     create_xml("ssp2_emissions_factors.xml") %>%
       add_xml_data(L251.ssp2_ef,"InputEmissCoeff") %>%
