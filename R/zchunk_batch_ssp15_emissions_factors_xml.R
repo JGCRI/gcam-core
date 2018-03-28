@@ -22,6 +22,9 @@ module_emissions_batch_ssp15_emissions_factors_xml <- function(command, ...) {
     L251.ssp15_ef <- get_data(all_data, "L251.ssp15_ef")
     L251.ssp15_ef_vin <- get_data(all_data, "L251.ssp15_ef_vin")
 
+    # Silence pacakge checks
+    emiss.coeff <- NULL
+
     # ===================================================
 
     # Rename L251.ssp15_ef column to match the L2 data names
