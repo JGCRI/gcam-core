@@ -65,7 +65,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     regions <- supplysector <- subsector <- state <- value <- year <- subs.share.weights <-
       technology <- share.weight.year <- minicam.energy.input <- coefficient <- market.name <-
       sector <- fuel <- stub.technology <- grid_region <- region <- calOutputValue <-
-      subs.share.weight <- tech.share.weight <- NULL
+      subs.share.weight <- tech.share.weight <- logit.year.fillout <- logit.exponent <- logit.type <- NULL
 
 
     # ===================================================
