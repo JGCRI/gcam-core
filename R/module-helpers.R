@@ -608,7 +608,7 @@ downscale_FAO_country <- function(data, country_name, dissolution_year, years = 
   ctry_years <- years[years < dissolution_year]
   yrs <- as.character(c(ctry_years, dissolution_year))
   data %>%
-    select("item", "element", yrs) %>%
+    select(item, element, yrs) %>%
     group_by(item, element) %>%
     summarise_all(sum) %>%
     ungroup ->
