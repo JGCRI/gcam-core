@@ -507,7 +507,7 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
                       "L122.out_EJ_state_refining_F") ->
       L222.Production_USArefining
 
-    L222.Supplysector_en_USA %>%
+    L222.Supplysector_en_USA_logit.type %>%
       add_title("Supplysector information, replace name of supplysector with the subsector names") %>%
       add_units("Varies") %>%
       add_comments("L222.Supplysector_en and L222.SubsectorLogit_en is repeated and filtered for use in USA states.") %>%

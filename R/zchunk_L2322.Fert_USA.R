@@ -113,14 +113,14 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     L2322.Supplysector_Fert_states %>%
       mutate(logit.year.fillout = min(MODEL_YEARS)) %>%
       mutate(logit.exponent = gcamusa.FERT_LOGIT_EXP) %>%
-      mutate("logit.type" = NA) %>%
-      select("region", "supplysector", "subsector", "logit.year.fillout", "logit.exponent") ->
+      mutate(logit.type = NA) %>%
+      select(region, supplysector, subsector, logit.year.fillout, logit.exponent, logit.type) ->
       L2322.SubsectorLogit_USAFert
 
     # Create the subsector default share-weights for the using the min base years
     # for the fill out year.
     L2322.SubsectorLogit_USAFert %>%
-      select("region", "supplysector", "subsector") %>%
+      select(region, supplysector, subsector) %>%
       mutate(year.fillout = min(BASE_YEARS)) %>%
       mutate(share.weight = 1) ->
       L2322.SubsectorShrwtFllt_USAFert
@@ -139,7 +139,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
 
     # Expand the supply sector and subsector share weights to all model years.
     L2322.SubsectorLogit_USAFert %>%
-      select("region", "supplysector", "subsector") %>%
+      select(region, supplysector, subsector) %>%
       mutate(technology = subsector) %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       mutate(share.weight = 1) ->
