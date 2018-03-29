@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{land_input_5_IRR_MGMT.xml}. The corresponding file in the
 #' original data system was \code{batch_land_input_5_IRR_MGMT_xml.R} (aglu XML).
-module_aglu_batch_land_input_5_IRR_MGMT_xml_DISABLED <- function(command, ...) {
+module_aglu_batch_land_input_5_IRR_MGMT_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L2252.LN5_HistMgdAllocation_crop",
               "L2252.LN5_MgdAllocation_crop",
