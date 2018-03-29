@@ -22,6 +22,9 @@ module_emissions_batch_ssp34_emissions_factors_xml <- function(command, ...) {
     L251.ssp34_ef <- get_data(all_data, "L251.ssp34_ef")
     L251.ssp34_ef_vin <- get_data(all_data, "L251.ssp34_ef_vin")
 
+    # Silence package checks
+    emiss.coeff <- NULL
+
     # ===================================================
 
     # Rename L251.ssp34_ef column to match the header names

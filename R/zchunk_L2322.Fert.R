@@ -86,7 +86,7 @@ module_energy_L2322.Fert <- function(command, ...) {
     # 1a. Supplysector information
     # L2322.Supplysector_Fert: Supply sector information for fertilizer sector
     A322.sector %>%
-      write_to_all_regions(LEVEL2_DATA_NAMES[["Supplysector"]], GCAM_region_names) ->
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], "logit.type"), GCAM_region_names) ->
       L2322.Supplysector_Fert
 
     # L2322.FinalEnergyKeyword_Fert: Supply sector keywords for fertilizer sector
@@ -98,7 +98,7 @@ module_energy_L2322.Fert <- function(command, ...) {
     # 2b. Subsector information
     # L2322.SubsectorLogit_Fert: Subsector logit exponents of fertilizer sector
     A322.subsector_logit %>%
-      write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorLogit"]], GCAM_region_names) ->
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], "logit.type"), GCAM_region_names) ->
       L2322.SubsectorLogit_Fert
 
     # L2322.SubsectorShrwtFllt_Fert: Subsector shareweights of fertilizer sector
