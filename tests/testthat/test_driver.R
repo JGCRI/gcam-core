@@ -84,6 +84,12 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
     o1$year <- "1"
     expect_warning(check_chunk_outputs("c1", return_data(o1), "i1", po, FALSE))
 
+    # Check for missing 'logit.type'
+    o1$logit.test <- "1"
+    expect_warning(check_chunk_outputs("c1", return_data(o1), "i1", po, FALSE))
+    o1[[LOGIT_COLUMN_NAME]] <- "1"
+    expect_warning(check_chunk_outputs("c1", return_data(o1), "i1", po, FALSE))
+
     # Missing title
     tibble() %>% add_units("units") %>%
       add_comments("comments") %>% add_legacy_name("legacy") %>%
