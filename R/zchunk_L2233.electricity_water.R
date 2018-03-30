@@ -6,21 +6,24 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L2233.EQUIV_TABLE}, \code{L2233.SectorNodeEquiv},
-#' \code{L2233.TechNodeEquiv}, \code{L2233.StubTechProd_elecPassthru}, \code{L2233.GlobalPassThroughTech},
-#' \code{L2233.GlobalTechEff_elecPassthru}, \code{L2233.GlobalTechShrwt_elecPassthru},
-#' \code{L2233.GlobalIntTechCapital_elec}, \code{L2233.GlobalTechCapital_elecPassthru},
-#' \code{L2233.GlobalIntTechOMfixed_elec}, \code{L2233.GlobalTechOMfixed_elecPassthru},
-#' \code{L2233.GlobalIntTechOMvar_elec}, \code{L2233.GlobalTechOMvar_elecPassthru},
-#' \code{L2233.PassThroughSector_elec_cool}, \code{L2233.Supplysector_elec_cool},
-#' \code{L2233.ElecReserve_elec_cool}, \code{L2233.SubsectorShrwtFllt_elec_cool},
-#' \code{L2233.SubsectorLogit_elec_cool}, \code{L2233.StubTech_elec_cool}, \code{L2233.StubTechEff_elec_cool},
-#' \code{L2233.StubTechProd_elec_cool}, \code{L2233.StubTechFixOut_hydro}, \code{L2233.StubTechShrwt_elec_cool},
-#' \code{L2233.GlobalTechCapital_elec_cool}, \code{L2233.GlobalIntTechCapital_elec_cool},
-#' \code{L2233.GlobalTechCoef_elec_cool}, \code{L2233.GlobalIntTechCoef_elec_cool},
-#' \code{L2233.InputEmissCoeff_hist_elecPassthru}, \code{L2233.InputEmissCoeff_fut_elecPassthru},
-#' \code{L2233.AvgFossilEffKeyword_elec_cool}, \code{L2233.DeleteCreditInput_elec},
-#' \code{L2233.CreditInput_elec}. The corresponding file in the
+#' the generated outputs: \code{L2233.StubTech_elecPassthru}, \code{L2233.StubTechProd_elecPassthru},
+#' \code{L2233.GlobalPassThroughTech}, \code{L2233.GlobalTechEff_elecPassthru},
+#'  \code{L2233.GlobalTechShrwt_elecPassthru}, \code{L2233.GlobalIntTechCapital_elec},
+#'  \code{L2233.GlobalTechCapital_elecPassthru}, \code{L2233.GlobalIntTechOMfixed_elec},
+#' \code{L2233.GlobalTechOMfixed_elecPassthru}, \code{L2233.GlobalIntTechOMvar_elec},
+#'  \code{L2233.GlobalTechOMvar_elecPassthru}, \code{L2233.PassThroughSector_elec_cool},
+#' \code{L2233.Supplysector_elec_cool}, \code{L2233.ElecReserve_elec_cool},
+#' \code{L2233.SubsectorShrwtFllt_elec_cool}, \code{L2233.SubsectorLogit_elec_cool},
+#'  \code{L2233.StubTech_elec_cool}, \code{L2233.StubTechEff_elec_cool},
+#' \code{L2233.StubTechProd_elec_cool}, \code{L2233.StubTechFixOut_hydro},
+#'   \code{L2233.StubTechShrwt_elec_cool}, \code{L2233.GlobalTechCapital_elec_cool},
+#'  \code{L2233.GlobalIntTechCapital_elec_cool}, \code{L2233.GlobalTechCoef_elec_cool},
+#' \code{L2233.GlobalIntTechCoef_elec_cool}, \code{L2233.InputEmissCoeff_hist_elecPassthru},
+#'  \code{L2233.InputEmissCoeff_fut_elecPassthru}, \code{L2233.AvgFossilEffKeyword_elec_cool},
+#'  \code{L2233.DeleteCreditInput_elec}, \code{L2233.CreditInput_elec}.
+#'
+#'
+#' The corresponding file in the
 #' original data system was \code{L2233.electricity_water.R} (water level2).
 #' @details Disaggregates electricity sector for all cooling system types.
 #' @importFrom assertthat assert_that
@@ -36,6 +39,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
                       "GlobalTechCapital_elec", "GlobalTechEff_elec", "GlobalTechInterp_elec",
                       "GlobalTechLifetime_elec", "GlobalTechOMfixed_elec", "GlobalTechOMvar_elec",
                       "GlobalTechProfitShutdown_elec", "GlobalTechSCurve_elec", "GlobalTechShrwt_elec",
+                      "GlobalIntTechCapFac_elec", "GlobalTechCapFac_elec",
                       "PrimaryRenewKeyword_elec", "PrimaryRenewKeywordInt_elec", "StubTech_elec",
                       "StubTechEff_elec", "StubTechFixOut_hydro", "Supplysector_elec")
 
@@ -93,6 +97,8 @@ module_water_L2233.electricity_water <- function(command, ...) {
              "L2233.GlobalIntTechEff_elec_cool",
              "L2233.GlobalIntTechLifetime_elec_cool",
              "L2233.GlobalIntTechShrwt_elec_cool",
+             "L2233.GlobalIntTechCapFac_elec_cool",
+             "L2233.GlobalTechCapFac_elec_cool",
              "L2233.GlobalTechCapture_elec_cool",
              "L2233.GlobalTechEff_elec_cool",
              "L2233.GlobalTechInterp_elec_cool",
@@ -143,7 +149,6 @@ module_water_L2233.electricity_water <- function(command, ...) {
     names(L223_data) <- L223_fileNames
 
     # ===================================================
-
 
     ## BUILD TWO TABLES WITH ALL POSSIBLE TECHNOLOGIES FROM THE OLD AND NEW STRUCTURES
 
@@ -266,7 +271,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
       # ^^ Margin and capacity factor assumed to be same as for electricity and elect_td_bld
       select(LEVEL2_DATA_NAMES[["ElecReserve"]]) ->
       L2233.ElecReserve_elec_cool # --OUTPUT--
-    
+
     elec_tech_water_map %>%
       select(to.supplysector, to.subsector) %>%
       unique %>%
@@ -328,6 +333,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
       x %>% left_join_keep_first_only(elec_tech_water_map_, by = c("sector.name", "subsector.name", "technology"))
       # ^^ left_join_keep_first_only applied for to.technology column (maintaining arbitrary column from legacy code)
     }
+
     L2233.Elec_tables_glbTechCost_expanded <- sapply(L2233.Elec_tables_globaltech_cost, resetTech)
     # ^^ resetTech used to join tables in L2233.Elec_tables_globaltech_cost to elec_tech_water_map
 
@@ -528,7 +534,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
 
     # Upstream electricity sector that includes pass-thru technologies for calling pass-thru sectors
     L223.StubTech_elec %>% mutate(region = region) -> L2233.StubTech_elecPassthru
-    
+
     # PART 4: STUB TECHNOLOGY INFORMATION IN THE NEW SECTOR STRUCTURE
 
     # Stub technologies of cooling system options
@@ -664,61 +670,85 @@ module_water_L2233.electricity_water <- function(command, ...) {
       add_title("Average efficiencies of fossil fuels") %>%
       add_units("unitless") ->
       L2233.AvgFossilEffKeyword_elec_cool
+
     L2233.Elec_tables_globaltech_nocost_$GlobalIntTechBackup_elec %>%
       add_title("Capital costs of backup technologies for intermittent techs") %>%
       add_units("1975 USD/kW/yr") ->
       L2233.GlobalIntTechBackup_elec_cool
+
     L2233.Elec_tables_globaltech_nocost_$GlobalIntTechEff_elec %>%
       add_title("Cooling efficiencies of intermittent electricity generating technologies") %>%
       add_units("Unitless") ->
       L2233.GlobalIntTechEff_elec_cool
+
     L2233.Elec_tables_globaltech_nocost_$GlobalIntTechLifetime_elec %>%
       add_title("Lifetimes of intermittent electricity generating technologies") %>%
       add_units("Years") ->
       L2233.GlobalIntTechLifetime_elec_cool
+
     L2233.Elec_tables_globaltech_nocost_$GlobalIntTechShrwt_elec %>%
       add_title("Shareweights of intermittent electricity generating technologies") %>%
       add_units("Unitless") ->
       L2233.GlobalIntTechShrwt_elec_cool
+
     L2233.Elec_tables_globaltech_nocost_$GlobalTechCapture_elec %>%
       add_title("Storage markets and remove fractions for CCS tech by cooling type") %>%
       add_units("Unitless") ->
       L2233.GlobalTechCapture_elec_cool
+
     L2233.Elec_tables_globaltech_nocost_$GlobalTechEff_elec %>%
       add_title("Cooling efficiencies for electricity generating technologies") %>%
       add_units("Unitless") %>%
       add_flags(FLAG_SUM_TEST) ->
       # ^^ used for less strict test (to surmount rounding problem)
       L2233.GlobalTechEff_elec_cool
+
     L2233.Elec_tables_globaltech_nocost_$GlobalTechInterp_elec %>%
       add_title("Table headers for temporal interpolation of shareweights") %>%
       add_units("NA") ->
       L2233.GlobalTechInterp_elec_cool
+
     L2233.Elec_tables_globaltech_nocost_$GlobalTechLifetime_elec %>%
       add_title("Lifetimes for standard electricity generating technologies") %>%
       add_units("Years") ->
       L2233.GlobalTechLifetime_elec_cool
+
     L2233.Elec_tables_globaltech_nocost_$GlobalTechProfitShutdown_elec %>%
       add_title("Shutdown points and profit shutdown steepness for standard electricity generating technologies") %>%
       add_units("Unitless") ->
       L2233.GlobalTechProfitShutdown_elec_cool
+
     L2233.Elec_tables_globaltech_nocost_$GlobalTechSCurve_elec %>%
       add_title("Global tech lifetime for techs with s-curve retirement function") %>%
       add_units("Lifetime in years, half-life in years") ->
       L2233.GlobalTechSCurve_elec_cool
+
     L2233.Elec_tables_globaltech_nocost_$GlobalTechShrwt_elec %>%
       add_title("Global shareweights for non-intermittent technologies for the electricity sector") %>%
       add_units("Unitless") ->
       L2233.GlobalTechShrwt_elec_cool
+
     L2233.Elec_tables_globaltech_nocost_$PrimaryRenewKeyword_elec %>%
       add_title("keywords for non-intermittent renewable technologies for the electricity sector") %>%
       add_units("NA") ->
       L2233.PrimaryRenewKeyword_elec_cool
+
     L2233.Elec_tables_globaltech_nocost_$PrimaryRenewKeywordInt_elec %>%
       add_title("keywords for intermittent renewable technologies") %>%
       add_units("NA") ->
       L2233.PrimaryRenewKeywordInt_elec_cool
 
+    L2233.Elec_tables_globaltech_nocost_$GlobalIntTechCapFac_elec %>%
+      add_title("Interpolated intermittent technologies") %>%
+      add_units("NA") %>%
+      add_precursors("L223.GlobalIntTechCapFac_elec") ->
+      L2233.GlobalIntTechCapFac_elec_cool
+
+    L2233.Elec_tables_globaltech_nocost_$GlobalTechCapFac_elec %>%
+      add_title("Interpolated non-intermittent technologies") %>%
+      add_units("NA") %>%
+      add_precursors("L223.GlobalTechCapFac_elec") ->
+      L2233.GlobalTechCapFac_elec_cool
 
     # ===================================================
 
@@ -1035,6 +1065,8 @@ module_water_L2233.electricity_water <- function(command, ...) {
                 L2233.GlobalIntTechEff_elec_cool,
                 L2233.GlobalIntTechLifetime_elec_cool,
                 L2233.GlobalIntTechShrwt_elec_cool,
+                L2233.GlobalIntTechCapFac_elec_cool,
+                L2233.GlobalTechCapFac_elec_cool,
                 L2233.GlobalTechCapture_elec_cool,
                 L2233.GlobalTechEff_elec_cool,
                 L2233.GlobalTechInterp_elec_cool,

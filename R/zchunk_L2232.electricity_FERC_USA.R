@@ -100,7 +100,7 @@ module_gcam.usa_L2232.electricity_FERC_USA <- function(command, ...) {
         mutate(logit.year.fillout = min(BASE_YEARS),
                logit.exponent = subsector.logit,
                logit.type = subsector.logit.type) %>%
-        select(LEVEL2_DATA_NAMES[["Supplysector"]]) ->
+        select(c(LEVEL2_DATA_NAMES[["Supplysector"]], "logit.type")) ->
         L2232.Supplysector_USAelec
 
       # L2232.SubsectorShrwtFllt_USAelec: subsector (grid region) share-weights in USA electricity trade
@@ -135,7 +135,7 @@ module_gcam.usa_L2232.electricity_FERC_USA <- function(command, ...) {
                          logit.exponent = technology.logit,
                          logit.type = technology.logit.type),
                   by = "region") %>%
-        select(LEVEL2_DATA_NAMES[["SubsectorLogit"]]) ->
+        select(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], "logit.type")) ->
         L2232.SubsectorLogit_USAelec
 
       # L2232.TechShrwt_USAelec: technology share-weights in USA electricity trade
@@ -245,7 +245,7 @@ module_gcam.usa_L2232.electricity_FERC_USA <- function(command, ...) {
         mutate(logit.year.fillout = min(BASE_YEARS),
                logit.exponent = subsector.logit,
                logit.type = subsector.logit.type) %>%
-        select(LEVEL2_DATA_NAMES[["Supplysector"]]) ->
+        select(c(LEVEL2_DATA_NAMES[["Supplysector"]], "logit.type")) ->
         L2232.Supplysector_elec_FERC
 
       # L2232.ElecReserve_FERC: electricity reserve margin and avg grid capacity factor in the grid regions
@@ -281,7 +281,7 @@ module_gcam.usa_L2232.electricity_FERC_USA <- function(command, ...) {
         mutate(logit.year.fillout = min(BASE_YEARS),
                logit.exponent = technology.logit,
                logit.type = technology.logit.type) %>%
-        select(LEVEL2_DATA_NAMES[["SubsectorLogit"]]) ->
+        select(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], "logit.type")) ->
         L2232.SubsectorLogit_elec_FERC
 
       # L2232.TechShrwt_elec_FERC: technology share-weights in grid regions
