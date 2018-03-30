@@ -50,6 +50,13 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
       if("year" %in% names(chunk_data[[obj]]) && !is.numeric(chunk_data[[obj]]$year)) {
         warning("'year' column not numeric in ", obj)
       }
+
+      # If there's any 'logit.*' column then there HAS to be a 'logit.type' column (see #899)
+      if(any(grepl("^logit\\.", names(chunk_data[[obj]]))) &&
+         !(LOGIT_COLUMN_NAME %in% names(chunk_data[[obj]]))) {
+        warning("No ", LOGIT_COLUMN_NAME, " column in ", obj)
+      }
+
     } else {
       assert_that(FLAG_XML %in% obj_flags)
     }

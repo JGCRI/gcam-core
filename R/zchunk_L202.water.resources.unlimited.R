@@ -46,7 +46,8 @@ module_water_L202.water.resources.unlimited <- function(command, ...) {
       select(-GCAM_region_ID) %>%
       # Remove water goods that are only used by ag technologies, in regions with no aglu module
       filter(!region %in% aglu.NO_AGLU_REGIONS | !unlimited.resource %in% water.AG_ONLY_WATER_TYPES) %>%
-      arrange(region, unlimited.resource, output.unit, price.unit, market, capacity.factor) ->
+      select(region, unlimited.resource,	output.unit,	price.unit,	market) %>%
+      arrange(region, unlimited.resource, output.unit, price.unit, market) ->
       UnlimitRsrc
 
     # Read in fixed prices for water types
