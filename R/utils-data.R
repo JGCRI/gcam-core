@@ -208,7 +208,7 @@ get_data <- function(all_data, name) {
   # If a chunk's output is missing, it returns a tibble with all NA values
   # In this case we don't want to copy it to main data list, so that subsequent
   # chunks an easily check for its status via is.null()
-  if(all(is.na(all_data[[name]]))) {
+  if(nrow(all_data[[name]]) > 0 && all(is.na(all_data[[name]]))) {
     return(NULL)
   }
   all_data[[name]]

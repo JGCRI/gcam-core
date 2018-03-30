@@ -28,7 +28,7 @@ test_that("handle empty input", {
 test_that("nonexistent file", {
   expect_error(load_csv_files("SDFKJFDJKSHGF", optionals = FALSE, quiet = TRUE))
   expect_silent(x <- load_csv_files("SDFKJFDJKSHGF", optionals = TRUE, quiet = TRUE))
-  expect_true(is.na(x))
+  expect_equal(x[[1]], missing_data())
   expect_error(find_csv_file("SDFKJFDJKSHGF", optional = FALSE, quiet = TRUE))
   expect_silent(x <- find_csv_file("SDFKJFDJKSHGF", optional = TRUE, quiet = TRUE))
   expect_null(x)
@@ -60,10 +60,12 @@ test_that("save_chunkdata saves", {
   df2 <- readr::read_csv(out)
   expect_equal(df, df2)
 
-  # Handles NAs in data list?
-  NAdf <- NA
+  # Handles missing_data in data list
+  NAdf <- missing_data()
   all_data <- add_data(return_data(NAdf), all_data)
   expect_silent(save_chunkdata(all_data, outputs_dir = td))
+  out <- file.path(td, "NAdf.csv")
+  expect_false(file.exists(out))
 })
 
 test_that("save_chunkdata does comments and flags", {
