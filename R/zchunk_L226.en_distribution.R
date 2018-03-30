@@ -76,13 +76,13 @@ module_energy_L226.en_distribution <- function(command, ...) {
     # 2a. Supplysector information
     # "L226.Supplysector_en: Supply sector information for energy distribution sectors"
     A26.sector %>%
-      write_to_all_regions(c("region", "supplysector", "output.unit", "input.unit", "price.unit", "logit.year.fillout", "logit.exponent", "logit.type"), GCAM_region_names) ->
+      write_to_all_regions(c("region", "supplysector", "output.unit", "input.unit", "price.unit", "logit.year.fillout", "logit.exponent", LOGIT_COLUMN_NAME), GCAM_region_names) ->
       L226.Supplysector_en
 
     # 2b. Subsector information
     # "L226.SubsectorLogit_en: Subsector logit exponents of energy distribution sectors"
     A26.subsector_logit %>%
-      write_to_all_regions(c("region", "supplysector", "subsector", "logit.year.fillout", "logit.exponent", "logit.type"), GCAM_region_names) ->
+      write_to_all_regions(c("region", "supplysector", "subsector", "logit.year.fillout", "logit.exponent", LOGIT_COLUMN_NAME), GCAM_region_names) ->
       L226.SubsectorLogit_en
 
     # set names for subsector shareweight and interpolation in energy distribution sectors

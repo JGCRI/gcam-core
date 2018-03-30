@@ -68,7 +68,7 @@ module_aglu_L2242.land_input_4_irr_mgmt <- function(command, ...) {
              LandNode2 = paste(LandNode2, GLU_name, sep = "_"),
              LandNode3 = paste(LandNode3, GLU_name, sep = "_"),
              LandNode4 = paste(LandNode4, GLU_name, sep = "_")) %>%
-      select(one_of(LEVEL2_DATA_NAMES[["LN4_Logit"]],"logit.type")) ->
+      select(LEVEL2_DATA_NAMES[["LN4_Logit"]], LOGIT_COLUMN_NAME) ->
       L2242.LN4_Logit
 
     # L2242.LN4_NodeGhostShare:

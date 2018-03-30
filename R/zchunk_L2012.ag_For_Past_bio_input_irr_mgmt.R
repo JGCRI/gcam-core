@@ -72,7 +72,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
     # L2012.AgSupplySector: Generic AgSupplySector characteristics (units, calprice, market, logit)
     A_AgSupplySector %>%
       # At the supplysector (market) level, all regions get all supplysectors
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["AgSupplySector"]], "logit.type"),
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["AgSupplySector"]], LOGIT_COLUMN_NAME),
                            GCAM_region_names = GCAM_region_names) %>%
       select(-calPrice) %>%
       # Join calibration price data, there are missing value for biomass, use left_join instead
@@ -80,7 +80,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       mutate(calPrice = replace(calPrice, AgSupplySector == "biomass", 1), # value irrelevant
              # For regional commodities, specify market names with region names
              market = replace(market, market == "regional", region[market == "regional"])) %>%
-      select(LEVEL2_DATA_NAMES[["AgSupplySector"]], "logit.type") %>%
+      select(LEVEL2_DATA_NAMES[["AgSupplySector"]], LOGIT_COLUMN_NAME) %>%
       # Remove any regions for which agriculture and land use are not modeled
       filter(!region %in% aglu.NO_AGLU_REGIONS) ->
       L2012.AgSupplySector
@@ -116,7 +116,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
              logit.year.fillout = min(BASE_YEARS),
              logit.exponent = -3,
              logit.type = NA) %>%
-      select(LEVEL2_DATA_NAMES[["AgSupplySubsector"]], "logit.type") ->
+      select(LEVEL2_DATA_NAMES[["AgSupplySubsector"]], LOGIT_COLUMN_NAME) ->
       L2012.AgSupplySubsector
 
     # L2012.AgProduction_ag_irr_mgm: Agricultural commodities production by all technoligies

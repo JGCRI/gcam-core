@@ -112,7 +112,7 @@ module_energy_L2321.cement <- function(command, ...) {
     # 1a. Supplysector information
     # L2321.Supplysector_cement: Supply sector information for cement sector
     A321.sector %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], "logit.type"), GCAM_region_names) ->
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], LOGIT_COLUMN_NAME), GCAM_region_names) ->
       L2321.Supplysector_cement
 
     # L2321.FinalEnergyKeyword_cement: Supply sector keywords for cement sector
@@ -124,7 +124,7 @@ module_energy_L2321.cement <- function(command, ...) {
     # 1b. Subsector information
     # L2321.SubsectorLogit_cement: Subsector logit exponents of cement sector
     A321.subsector_logit %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], "logit.type"), GCAM_region_names) ->
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], LOGIT_COLUMN_NAME), GCAM_region_names) ->
       L2321.SubsectorLogit_cement
 
     # and L2321.SubsectorShrwtFllt_cement: Subsector shareweights of cement sector

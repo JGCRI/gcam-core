@@ -268,7 +268,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
            logit.year.fillout = min(BASE_YEARS),
            logit.exponent = gcamusa.GRID_REGION_LOGIT,
            logit.type = gcamusa.GRID_REGION_LOGIT_TYPE) %>%
-      select(c(LEVEL2_DATA_NAMES[["Supplysector"]], "logit.type")) ->
+      select(c(LEVEL2_DATA_NAMES[["Supplysector"]], LOGIT_COLUMN_NAME)) ->
       L223.Supplysector_elec_FERC
 
     # L223.SubsectorShrwtFllt_elec_FERC: subsector (state) share-weights in grid regions
@@ -298,7 +298,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       mutate(logit.year.fillout = min(BASE_YEARS),
              logit.exponent = gcamusa.GRID_REGION_LOGIT,
              logit.type = gcamusa.GRID_REGION_LOGIT_TYPE) %>%
-      select(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], "logit.type")) ->
+      select(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], LOGIT_COLUMN_NAME)) ->
       L223.SubsectorLogit_elec_FERC
 
     # L223.TechShrwt_elec_FERC: technology share-weights in grid regions

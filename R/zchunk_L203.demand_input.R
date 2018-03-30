@@ -102,13 +102,13 @@ module_aglu_L203.demand_input <- function(command, ...) {
 
     # Build L203.Supplysector_demand: generic info for demand sectors by region
     A_demand_supplysector %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], "logit.type"), GCAM_region_names = GCAM_region_names) %>%
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], LOGIT_COLUMN_NAME), GCAM_region_names = GCAM_region_names) %>%
       filter(!region %in% aglu.NO_AGLU_REGIONS) -> # Remove any regions for which agriculture and land use are not modeled
     L203.Supplysector_demand
 
     # Build L203.SubsectorAll_demand: generic info for demand subsectors by region
     A_demand_subsector %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorAll"]], "logit.type"), GCAM_region_names = GCAM_region_names) %>%
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorAll"]], LOGIT_COLUMN_NAME), GCAM_region_names = GCAM_region_names) %>%
       filter(!region %in% aglu.NO_AGLU_REGIONS) -> # Remove any regions for which agriculture and land use are not modeled
       L203.SubsectorAll_demand
 

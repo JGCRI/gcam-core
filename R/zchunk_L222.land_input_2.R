@@ -127,7 +127,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
       # logit.type is NA by default, so left_join
       left_join(select(A_LandNode_logit, logit.exponent, logit.type, LandNode), by = c("LandNode2" = "LandNode")) %>%
       append_GLU("LandNode1", "LandNode2") %>%
-      select(LEVEL2_DATA_NAMES[["LN2_Logit"]], "logit.type") ->
+      select(LEVEL2_DATA_NAMES[["LN2_Logit"]], LOGIT_COLUMN_NAME) ->
       L222.LN2_Logit
 
 

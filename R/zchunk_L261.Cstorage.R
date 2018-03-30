@@ -147,7 +147,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
     # Carbon storage sector information
     A61.sector %>%
       mutate(logit.exponent = as.numeric(logit.exponent)) %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], "logit.type"),
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], LOGIT_COLUMN_NAME),
                            GCAM_region_names = GCAM_region_names) ->
       L261.Supplysector_C # This is a final output table.
 
@@ -158,7 +158,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
     # Subsector logit exponents of carbon storage sector
     A61.subsector_logit %>%
       mutate(logit.exponent = as.numeric(logit.exponent)) %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], "logit.type"),
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], LOGIT_COLUMN_NAME),
                            GCAM_region_names = GCAM_region_names) ->
       L261.SubsectorLogit_C # This is a final output table.
 
@@ -166,7 +166,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
     # Subsector shareweights of carbon storage sectors
     A61.subsector_shrwt %>%
       mutate(share.weight = as.numeric(share.weight)) %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]], "logit.type"),
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]], LOGIT_COLUMN_NAME),
                            GCAM_region_names = GCAM_region_names) ->
       L261.SubsectorShrwtFllt_C # This is a final output table.
 

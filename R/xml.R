@@ -161,7 +161,7 @@ run_xml_conversion <- make_run_xml_conversion()
 #' @export
 add_logit_tables_xml <- function(dot, data, header, base_logit_header=header) {
   # pre: the data must contain a column called "logit.type"
-  assert_that("logit.type" %in% names(data))
+  assert_that(LOGIT_COLUMN_NAME %in% names(data))
 
   # We need to split data into at least three tables based upon the logit.type
   # column:

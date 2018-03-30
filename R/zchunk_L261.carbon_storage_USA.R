@@ -113,13 +113,13 @@ module_gcam.usa_L261.carbon_storage_USA <- function(command, ...) {
     # L261.Supplysector_C_USA: supplysector information in the states
     L261.Supplysector_C %>%
       filter(region == "USA") %>%
-      write_to_all_states(c(LEVEL2_DATA_NAMES[["Supplysector"]], "logit.type")) ->
+      write_to_all_states(c(LEVEL2_DATA_NAMES[["Supplysector"]], LOGIT_COLUMN_NAME)) ->
       L261.Supplysector_C_USA
 
     # L261.SubsectorLogit_C_USA: subsector logit information in the states
     L261.SubsectorLogit_C %>%
       filter(region == "USA") %>%
-      write_to_all_states(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], "logit.type")) %>%
+      write_to_all_states(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], LOGIT_COLUMN_NAME)) %>%
       left_join_error_no_match(select(states_subregions, state, grid_region), by = c("region" = "state")) %>%
       # Drop the states where no carbon storage resources may exist at the grid level
       filter(!paste(grid_region, subsector) %in% grid_Cstorage_nonexist) ->

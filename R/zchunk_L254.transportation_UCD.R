@@ -171,10 +171,10 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
     r_ss_all <- bind_rows(L254.StubTranTech, L254.StubTech_passthru, L254.StubTech_nonmotor)
 
     A54.sector %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], "logit.type"), GCAM_region_names = GCAM_region_names) %>%
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], LOGIT_COLUMN_NAME), GCAM_region_names = GCAM_region_names) %>%
       # Subset only the combinations of region and supplysector that are available in the stub technology table
       semi_join(r_ss_all, by = c("region", "supplysector")) %>%
-      select(c(LEVEL2_DATA_NAMES[["Supplysector"]], "logit.type")) ->
+      select(c(LEVEL2_DATA_NAMES[["Supplysector"]], LOGIT_COLUMN_NAME)) ->
       L254.Supplysector_trn # OUTPUT
 
     # L254.FinalEnergyKeyword_trn: Supply sector keywords for transportation sector
@@ -193,10 +193,10 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
 
     # A54.tranSubsector_logit reports transportation default subsector logit exponents
     A54.tranSubsector_logit %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["tranSubsectorLogit"]], "logit.type"), GCAM_region_names = GCAM_region_names) %>%
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["tranSubsectorLogit"]], LOGIT_COLUMN_NAME), GCAM_region_names = GCAM_region_names) %>%
       # Subset only the combinations of region, supplysector, and tranSubsector that are available
       semi_join(r_ss_ts_all, by = c("region", "supplysector", "tranSubsector")) %>%
-      select(c(LEVEL2_DATA_NAMES[["tranSubsectorLogit"]], "logit.type")) ->
+      select(c(LEVEL2_DATA_NAMES[["tranSubsectorLogit"]], LOGIT_COLUMN_NAME)) ->
       L254.tranSubsectorLogit # OUTPUT
 
     # L254.tranSubsectorShrwt and L254.tranSubsectorShrwtFllt: Subsector shareweights of transportation sector

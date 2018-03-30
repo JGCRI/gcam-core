@@ -108,7 +108,7 @@ module_energy_L221.en_supply <- function(command, ...) {
 
     # Supplysector information for upstream energy handling sectors
     A21.sector %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], "logit.type"), has_traded = TRUE,
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], LOGIT_COLUMN_NAME), has_traded = TRUE,
                            GCAM_region_names = GCAM_region_names) -> L221.Supplysector_en
 
     # Supplysector table that indicates to the model to create solved markets for them
@@ -123,7 +123,7 @@ module_energy_L221.en_supply <- function(command, ...) {
     # Subsector information
     # Subsector logit exponents of upstream energy handling sectors
     A21.subsector_logit %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], "logit.type"), has_traded = TRUE,
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], LOGIT_COLUMN_NAME), has_traded = TRUE,
                            GCAM_region_names = GCAM_region_names) -> L221.SubsectorLogit_en
 
     # Subsector shareweights of upstream energy handling sectors

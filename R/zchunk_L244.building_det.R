@@ -546,7 +546,7 @@ module_energy_L244.building_det <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["ShellConductance"]])
 
     # L244.Supplysector_bld: Supplysector info for buildings
-    L244.Supplysector_bld <- write_to_all_regions(A44.sector, c(LEVEL2_DATA_NAMES[["Supplysector"]], "logit.type"),
+    L244.Supplysector_bld <- write_to_all_regions(A44.sector, c(LEVEL2_DATA_NAMES[["Supplysector"]], LOGIT_COLUMN_NAME),
                                                   GCAM_region_names = GCAM_region_names)
 
     # L244.FinalEnergyKeyword_bld: Supply sector keywords for detailed building sector
@@ -563,7 +563,7 @@ module_energy_L244.building_det <- function(command, ...) {
       distinct()
 
     # L244.SubsectorLogit_bld: Subsector logit exponents of building sector
-    L244.SubsectorLogit_bld <- write_to_all_regions(A44.subsector_logit, c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], "logit.type"),
+    L244.SubsectorLogit_bld <- write_to_all_regions(A44.subsector_logit, c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], LOGIT_COLUMN_NAME),
                                                     GCAM_region_names = GCAM_region_names) %>%
       semi_join(L244.Tech_bld, by = c("region", "supplysector", "subsector"))
 

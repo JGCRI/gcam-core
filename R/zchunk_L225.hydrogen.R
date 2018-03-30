@@ -65,14 +65,14 @@ module_energy_L225.hydrogen <- function(command, ...) {
 
     # L225.Supplysector_h2: Supply sector information for hydrogen sectors
     A25.sector %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], "logit.type"), GCAM_region_names) ->
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], LOGIT_COLUMN_NAME), GCAM_region_names) ->
       L225.Supplysector_h2
 
     # 1b. Subsector information
 
     # L225.SubsectorLogit_h2: Subsector logit exponents of hydrogen sectors
     A25.subsector_logit %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], "logit.type"), GCAM_region_names) ->
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], LOGIT_COLUMN_NAME), GCAM_region_names) ->
       L225.SubsectorLogit_h2
 
     # L225.SubsectorShrwt_h2 and L225.SubsectorShrwtFllt_h2: Subsector shareweights of hydrogen sectors
