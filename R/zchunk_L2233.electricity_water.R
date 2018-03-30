@@ -1013,7 +1013,8 @@ module_water_L2233.electricity_water <- function(command, ...) {
       add_comments("Emissions coefficients corrected by dividing by elec tech efficiencies") %>%
       add_legacy_name("L2233.InputEmissCoeff_fut_elecPassthru") %>%
       add_precursors("L223.GlobalTechEff_elec",
-                     "L241.nonco2_tech_coeff") ->
+                     "L241.nonco2_tech_coeff") %>%
+      add_flags(FLAG_SUM_TEST)->
       L2233.InputEmissCoeff_fut_elecPassthru
 
     L2233.DeleteCreditInput_elec %>%
