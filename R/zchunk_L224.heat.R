@@ -90,12 +90,12 @@ module_energy_L224.heat <- function(command, ...) {
 
     # Supply sector information for district heat sectors
     A24.sector %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], LOGIT_COLUMN_NAME), GCAM_region_names = GCAM_region_names) %>%
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], LOGIT_TYPE_COLNAME), GCAM_region_names = GCAM_region_names) %>%
       filter(region %in% heat_region$region) -> L224.Supplysector_heat
 
     # Subsector logit exponents of district heat sectors
     A24.subsector_logit %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], LOGIT_COLUMN_NAME), GCAM_region_names = GCAM_region_names) %>%
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], LOGIT_TYPE_COLNAME), GCAM_region_names = GCAM_region_names) %>%
       filter(region %in% heat_region$region) -> L224.SubsectorLogit_heat
 
     # L224.SubsectorShrwt_heat and L224.SubsectorShrwtFllt_heat: Subsector shareweights of district heat sectors

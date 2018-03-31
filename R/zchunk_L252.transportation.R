@@ -74,7 +74,7 @@ module_energy_L252.transportation <- function(command, ...) {
     # PART A: SUPPLYSECTOR INFORMATION
     # Write supply sector information for transportation sector for all regions
     A52.sector %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], LOGIT_COLUMN_NAME),
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], LOGIT_TYPE_COLNAME),
                            GCAM_region_names = GCAM_region_names) ->
       L252.Supplysector_trn # OUTPUT
 
@@ -88,7 +88,7 @@ module_energy_L252.transportation <- function(command, ...) {
     # PART B: SUBSECTOR INFORMATION
     # Write subsector logit exponents of transportation sector for all regions
     A52.subsector_logit %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], LOGIT_COLUMN_NAME),
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], LOGIT_TYPE_COLNAME),
                            GCAM_region_names = GCAM_region_names) ->
       L252.SubsectorLogit_trn # OUTPUT
 

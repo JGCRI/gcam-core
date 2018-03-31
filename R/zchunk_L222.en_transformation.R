@@ -99,13 +99,13 @@ module_energy_L222.en_transformation <- function(command, ...) {
     # L222.Supplysector_en: Supply sector information for energy transformation sectors
 
     A22.sector %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], LOGIT_COLUMN_NAME), GCAM_region_names) ->
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], LOGIT_TYPE_COLNAME), GCAM_region_names) ->
       L222.Supplysector_en
     # 2b. Subsector information
     # L222.SubsectorLogit_en: Subsector logit exponents of energy transformation sectors
 
     A22.subsector_logit %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], LOGIT_COLUMN_NAME), GCAM_region_names) ->
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], LOGIT_TYPE_COLNAME), GCAM_region_names) ->
       L222.SubsectorLogit_en
 
     if(any(!is.na(A22.subsector_shrwt$year))) {

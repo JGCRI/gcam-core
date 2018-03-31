@@ -175,7 +175,7 @@ module_energy_L223.electricity <- function(command, ...) {
     # ============================
 
     # Write supply sector information for electricity sector to all regions in L223.Supplysector_elec
-    L223.Supplysector_elec <- write_to_all_regions(A23.sector, c(LEVEL2_DATA_NAMES[["Supplysector"]], LOGIT_COLUMN_NAME), GCAM_region_names)
+    L223.Supplysector_elec <- write_to_all_regions(A23.sector, c(LEVEL2_DATA_NAMES[["Supplysector"]], LOGIT_TYPE_COLNAME), GCAM_region_names)
 
     # Write electricity reserve margin and average grid capacity factor assumptions to all regions in L223.ElecReserve
     L223.ElecReserve <- write_to_all_regions(A23.sector, LEVEL2_DATA_NAMES[["ElecReserve"]], GCAM_region_names)
@@ -185,7 +185,7 @@ module_energy_L223.electricity <- function(command, ...) {
     # =========================
 
     # Write subsector logit exponents of electricity sector to all regions in L223.SubsectorLogit_elec
-    L223.SubsectorLogit_elec <- write_to_all_regions(A23.subsector_logit, c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], LOGIT_COLUMN_NAME), GCAM_region_names)
+    L223.SubsectorLogit_elec <- write_to_all_regions(A23.subsector_logit, c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], LOGIT_TYPE_COLNAME), GCAM_region_names)
 
     # Write subsector shareweights of electricity sector to all regions, separating those interpolating to a year in L223.SubsectorShrwt_elec:
     if(any(!is.na(A23.subsector_shrwt$year))) {
