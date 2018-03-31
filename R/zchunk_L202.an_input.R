@@ -165,12 +165,12 @@ module_aglu_L202.an_input <- function(command, ...) {
 
     # L202.Supplysector_in: generic supplysector info for inputs to animal production (114-122)
     A_an_input_supplysector %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], "logit.type"), GCAM_region_names) ->
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], LOGIT_TYPE_COLNAME), GCAM_region_names) ->
       L202.Supplysector_in
 
     # L202.SubsectorAll_in: generic subsector info for inputs to animal production technologies
     A_an_input_subsector %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorAll"]], "logit.type"), GCAM_region_names) ->
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorAll"]], LOGIT_TYPE_COLNAME), GCAM_region_names) ->
       L202.SubsectorAll_in
 
     # L202.StubTech_in: identification of stub technologies for inputs to animal production (124-140)
@@ -223,12 +223,12 @@ module_aglu_L202.an_input <- function(command, ...) {
 
     # L202.Supplysector_an: generic animal production supplysector info (159-162)
     A_an_supplysector %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], "logit.type"), GCAM_region_names) ->
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], LOGIT_TYPE_COLNAME), GCAM_region_names) ->
       L202.Supplysector_an
 
     # L202.SubsectorAll_an: generic animal production subsector info (164-167)
     A_an_subsector %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorAll"]], "logit.type"), GCAM_region_names) ->
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorAll"]], LOGIT_TYPE_COLNAME), GCAM_region_names) ->
       L202.SubsectorAll_an
 
     # L202.StubTech_an: identification of stub technologies for animal production (169-171)

@@ -83,7 +83,7 @@ test_that("matches old data system output", {
     }
 
     # If there's a logit column, delete that sucker immediately
-    newdata[[LOGIT_COLUMN_NAME]] <- NULL
+    newdata[[LOGIT_TYPE_COLNAME]] <- NULL
 
     # Reshape new data if necessary--see comment above
     if(flag_long_year_form) {

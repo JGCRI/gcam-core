@@ -146,7 +146,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
       mutate(logit.year.fillout = min(BASE_YEARS),
              logit.exponent = gcamusa.DEFAULT_LOGITEXP,
              logit.type = NA) %>%
-      select(LEVEL2_DATA_NAMES[["SubsectorLogit"]], "logit.type") ->
+      select(LEVEL2_DATA_NAMES[["SubsectorLogit"]], LOGIT_TYPE_COLNAME) ->
       L226.SubsectorLogit_en_USA
 
 

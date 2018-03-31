@@ -299,13 +299,13 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
     # The remainder of the building-level parameters require information about the output of each service, which we do not have yet
 
     # L244.Supplysector_bld: Supplysector info for buildings
-    L244.Supplysector_bld_gcamusa <- write_to_all_states(A44.sector, c(LEVEL2_DATA_NAMES[["Supplysector"]], "logit.type"))
+    L244.Supplysector_bld_gcamusa <- write_to_all_states(A44.sector, c(LEVEL2_DATA_NAMES[["Supplysector"]], LOGIT_TYPE_COLNAME))
 
     # L244.FinalEnergyKeyword_bld: Supply sector keywords for detailed building sector
     L244.FinalEnergyKeyword_bld_gcamusa <- write_to_all_states(A44.sector, LEVEL2_DATA_NAMES[["FinalEnergyKeyword"]])
 
     # L244.SubsectorLogit_bld: Subsector logit exponents of building sector
-    L244.SubsectorLogit_bld_gcamusa <- write_to_all_states(A44.subsector_logit, c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], "logit.type"))
+    L244.SubsectorLogit_bld_gcamusa <- write_to_all_states(A44.subsector_logit, c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], LOGIT_TYPE_COLNAME))
 
     # L244.SubsectorShrwt_bld and L244.SubsectorShrwtFllt_bld: Subsector shareweights of building sector
     if(any(!is.na(A44.subsector_shrwt$year))){

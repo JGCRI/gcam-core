@@ -92,7 +92,7 @@ test_that("left_join_error_no_match works", {
   # ignore_columns works
   y <- tibble(year = 2000:2002, value = 1:3, logit.type = NA)
   expect_error(left_join_error_no_match(x, y, by = "year"))
-  expect_silent(left_join_error_no_match(x, y, by = "year", ignore_columns = "logit.type"))
+  expect_silent(left_join_error_no_match(x, y, by = "year", ignore_columns = LOGIT_TYPE_COLNAME))
 })
 
 test_that("left_join_keep_first_only works", {
