@@ -97,12 +97,12 @@ module_emissions_L231.proc_sector <- function(command, ...) {
 
     # L231.Supplysector_ind: Supply sector information for urban & industrial processes sectors
     L231.Supplysector_urb_ind <- A31.sector %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], "logit.type"), GCAM_region_names = GCAM_region_names )
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], LOGIT_TYPE_COLNAME), GCAM_region_names = GCAM_region_names )
 
     # 2b. Subsector information
     # L231.SubsectorLogit_urb_ind: Subsector logit exponents of urban & industrial processes sectors
     L231.SubsectorLogit_urb_ind <- A31.subsector_logit %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], "logit.type"), GCAM_region_names = GCAM_region_names)
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], LOGIT_TYPE_COLNAME), GCAM_region_names = GCAM_region_names)
 
     # L231.SubsectorShrwt_urb_ind and L231.SubsectorShrwtFllt_urb_ind: Subsector shareweights of urban & industrial processes sectors
     if(any(!is.na(A31.subsector_shrwt$year))) {

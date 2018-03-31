@@ -85,12 +85,12 @@ module_water_L203.water.mapping <- function(command, ...) {
 
     # Sector information
     L203.mapping_all %>%
-      select(LEVEL2_DATA_NAMES[["Supplysector"]], "logit.type") ->
+      select(LEVEL2_DATA_NAMES[["Supplysector"]], LOGIT_TYPE_COLNAME) ->
       L203.Supplysector
 
     # Subsector logit exponents for mapping sector
     L203.mapping_all %>%
-      select(LEVEL2_DATA_NAMES[["SubsectorLogit"]], "logit.type") ->
+      select(LEVEL2_DATA_NAMES[["SubsectorLogit"]], LOGIT_TYPE_COLNAME) ->
       L203.SubsectorLogit
 
     # Subsector share weights to 1 (no competition)

@@ -124,7 +124,7 @@ module_energy_L242.building_agg <- function(command, ...) {
     # PART B: SUPPLYSECTOR INFORMATION
     # Expand supply sector information for building sector across all regions
     A42.sector %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], "logit.type"),
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], LOGIT_TYPE_COLNAME),
                            GCAM_region_names = GCAM_region_names) ->
       L242.Supplysector_bld # OUTPUT
 
@@ -138,7 +138,7 @@ module_energy_L242.building_agg <- function(command, ...) {
     # Expand subsector logit exponents of building sector across all regions and remove
     # region/fuel combinations where heat and traditional biomass are not modeled as separate fuels.
     A42.subsector_logit %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], "logit.type"),
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], LOGIT_TYPE_COLNAME),
                            GCAM_region_names = GCAM_region_names) %>%
       mutate(region_subsector = paste(region, subsector)) %>%
       filter(!region_subsector %in% L242.rm_techs_R) %>%

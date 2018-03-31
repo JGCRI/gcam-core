@@ -175,7 +175,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       mutate(LandNode5 = paste(LandNode4, Irr_Rfd, sep = aglu.IRR_DELIMITER),
              logit.exponent = aglu.MGMT_LOGIT_EXP,
              logit.type = aglu.MGMT_LOGIT_TYPE) %>%
-      select(one_of(c(LEVEL2_DATA_NAMES[["LN5_Logit"]], "logit.type"))) ->
+      select(LEVEL2_DATA_NAMES[["LN5_Logit"]], LOGIT_TYPE_COLNAME) ->
       L2252.LN5_Logit
 
     # Create an intermediary table of land allocation for each landleaf (= crop-glu-irr-mgmt)

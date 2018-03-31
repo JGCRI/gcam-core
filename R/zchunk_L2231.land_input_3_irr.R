@@ -140,7 +140,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       # logit.type is NA by default, so left_join
       left_join(select(A_LandNode_logit, logit.exponent, logit.type, LandNode), by = c("LandNode3" = "LandNode")) %>%
       append_GLU(var1 = "LandNode1", var2 = "LandNode2", var3 = "LandNode3") %>%
-      select(LEVEL2_DATA_NAMES[["LN3_Logit"]], "logit.type") ->
+      select(LEVEL2_DATA_NAMES[["LN3_Logit"]], LOGIT_TYPE_COLNAME) ->
       L223.LN3_Logit
 
 
@@ -315,7 +315,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
              logit.year.fillout = min(BASE_YEARS),
              logit.exponent = aglu.LN1_PROTUNMGD_LOGIT_EXP,
              logit.type = aglu.LN1_PROTUNMGD_LOGIT_TYPE) %>%
-      select(one_of(c(LEVEL2_DATA_NAMES[["LN1_ValueLogit"]], "logit.type"))) ->
+      select(LEVEL2_DATA_NAMES[["LN1_ValueLogit"]], LOGIT_TYPE_COLNAME) ->
       L223.LN1_Logit_prot
 
 
