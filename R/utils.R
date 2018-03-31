@@ -31,7 +31,7 @@ load_csv_files <- function(filenames, optionals, quiet = FALSE, ...) {
 
     if(is.null(fqfn)) {
       assert_that(optionals[fnum]) # if we get back a NULL, file has to be optional
-      filedata[[f]] <- NA
+      filedata[[f]] <- missing_data()
       if(!quiet) message("Note: optional input ", f, "not found")
       next
     }

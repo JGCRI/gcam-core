@@ -40,7 +40,7 @@ test_that("add/get/remove data work", {
   expect_equal(length(all_data), 0)
 
   d1 <- tibble(x = 1:3)
-  d2 <- NA   # optional input, not found
+  d2 <- missing_data()   # optional input, not found
 
   expect_error(add_data(list(d1, cars, iris))) # no names
   all_data <- add_data(return_data(d1, cars, iris, d2), all_data)
