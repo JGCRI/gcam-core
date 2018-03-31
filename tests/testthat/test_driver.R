@@ -88,7 +88,7 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
     o1$year <- 1
     o1$logit.test <- "1"
     expect_warning(check_chunk_outputs("c1", return_data(o1), "i1", po, FALSE))
-    o1[[LOGIT_COLUMN_NAME]] <- "1"
+    o1[[LOGIT_TYPE_COLNAME]] <- "1"
     expect_silent(check_chunk_outputs("c1", return_data(o1), "i1", po, FALSE))
 
     # Missing title
