@@ -83,7 +83,7 @@ module_water_batch_electricity_water.xml <- function(command, ...) {
     L2233.GlobalTechCapFac_elec_cool <- get_data(all_data, "L2233.GlobalTechCapFac_elec_cool")
     L2233.GlobalTechCapture_elec_cool <- get_data(all_data, "L2233.GlobalTechCapture_elec_cool")
     L2233.GlobalTechEff_elec_cool <- get_data(all_data, "L2233.GlobalTechEff_elec_cool")
-    L2233.GlobalTechInterp_elec_cool <- get_data(all_data, "L2233.GlobalTechInterp_elec_cool") # this is the problem one... worried that it is not being mmade properly gah why!
+    L2233.GlobalTechInterp_elec_cool <- get_data(all_data, "L2233.GlobalTechInterp_elec_cool")
     L2233.GlobalTechLifetime_elec_cool <- get_data(all_data, "L2233.GlobalTechLifetime_elec_cool")
     L2233.GlobalTechProfitShutdown_elec_cool <- get_data(all_data, "L2233.GlobalTechProfitShutdown_elec_cool")
     L2233.GlobalTechSCurve_elec_cool <- get_data(all_data, "L2233.GlobalTechSCurve_elec_cool")
@@ -115,7 +115,7 @@ module_water_batch_electricity_water.xml <- function(command, ...) {
     L2233.GlobalIntTechCapital_elec_cool <- get_data(all_data, "L2233.GlobalIntTechCapital_elec_cool")
 
 
-    # Silence Package Checks
+    # Silence package checks
     technology <- NULL
 
 
