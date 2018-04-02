@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{electricity_water.xml}. The corresponding file in the
 #' original data system was \code{batch_electricity_water.xml.R} (water XML).
-module_water_batch_electricity_water.xml <- function(command, ...) {
+module_water_batch_electricity_water_xml <- function(command, ...) {
     if(command == driver.DECLARE_INPUTS) {
     return(c( "L223.Supplysector_elec",
               "L223.SubsectorShrwtFllt_elec",
@@ -235,6 +235,3 @@ module_water_batch_electricity_water.xml <- function(command, ...) {
     stop("Unknown command")
   }
 }
-
-
-
