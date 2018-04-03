@@ -418,7 +418,11 @@ module_water_L2233.electricity_water <- function(command, ...) {
       nondataCols <- names(elecTable)[defCols]
       dataCols <- names(elecTable)[!defCols]
       if(!("year" %in% nondataCols)) {
-        elecTable$year <- NA
+        if(OLD_DATA_SYSTEM_BEHAVIOR){
+          elecTable$year <- NA
+        } else {
+          elecTable$year <- MODEL_YEARS[1]
+        }
       }
       if(tableName == "L2233.GlobalIntTechEff_elec_cool") {
         elecTable <- filter(elecTable, minicam.energy.input != "backup_electricity")
