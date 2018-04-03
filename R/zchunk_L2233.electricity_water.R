@@ -418,10 +418,10 @@ module_water_L2233.electricity_water <- function(command, ...) {
       nondataCols <- names(elecTable)[defCols]
       dataCols <- names(elecTable)[!defCols]
       if(!("year" %in% nondataCols)) {
-        if(OLD_DATA_SYSTEM_BEHAVIOR){ # old data system set year to NA, which caused all rows of 1 table to be dropped
+        if(OLD_DATA_SYSTEM_BEHAVIOR) { # old data system set year to NA, which caused all rows of 1 table to be dropped
           elecTable$year <- NA
         } else { # setting year to any model year allows the join from L2233.TechMapYr.
-          # Note that the year column is not in the nondataCols, and as scuh will be dropped in select().
+          # Note that the year column is not in the nondataCols, and as such will be dropped in select().
           elecTable$year <- MODEL_YEARS[1]
         }
       }
