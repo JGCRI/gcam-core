@@ -1,3 +1,6 @@
+# File: L111.RsrcCurves_EJ_R_Ffos.csv
+# Title: Fossil resource supply curves
+# Units: available: EJ; extractioncost: 1975$/GJ
 # Downscale GCAM3.0 supply curves to the country level (on the basis of resource
 # production) and aggregate by the new GCAM regions.
 # Use crude oil production shares as a proxy for unconventional oil resources.
