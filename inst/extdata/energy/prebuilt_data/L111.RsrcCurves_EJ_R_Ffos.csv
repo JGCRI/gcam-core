@@ -1,6 +1,3 @@
-# File: L111.RsrcCurves_EJ_R_Ffos.csv
-# Title: Fossil resource supply curves
-# Units: available: EJ; extractioncost: 1975$/GJ
 # Downscale GCAM3.0 supply curves to the country level (on the basis of resource
 # production) and aggregate by the new GCAM regions.
 # Use crude oil production shares as a proxy for unconventional oil resources.
@@ -28,9 +25,9 @@ GCAM_region_ID,resource,subresource,grade,available,extractioncost
 1,natural gas,natural gas,grade 7,48254,6.5
 1,natural gas,natural gas,grade 8,0,6.6
 1,unconventional oil,unconventional oil,grade 1,4397,1.8
-1,unconventional oil,unconventional oil,grade 2,8594,2.1
-1,unconventional oil,unconventional oil,grade 3,2338.38,3.6
-1,unconventional oil,unconventional oil,grade 4,0,4.7
+1,unconventional oil,unconventional oil,grade 2,8594,3.3
+1,unconventional oil,unconventional oil,grade 3,2338.38,10.8
+1,unconventional oil,unconventional oil,grade 4,0,16.3
 2,coal,coal,grade 1,0.06240703288875288,0.34
 2,coal,coal,grade 2,1.1801615683783804,0.37
 2,coal,coal,grade 3,0.805719371045863,1.2
@@ -54,9 +51,9 @@ GCAM_region_ID,resource,subresource,grade,available,extractioncost
 2,natural gas,natural gas,grade 7,14.610252930656983,6.5
 2,natural gas,natural gas,grade 8,0,6.6
 2,unconventional oil,unconventional oil,grade 1,10.670682966589757,1.8
-2,unconventional oil,unconventional oil,grade 2,20.853442059955725,2.1
-2,unconventional oil,unconventional oil,grade 3,5.6743425047781875,3.6
-2,unconventional oil,unconventional oil,grade 4,0,4.7
+2,unconventional oil,unconventional oil,grade 2,20.853442059955725,3.3
+2,unconventional oil,unconventional oil,grade 3,5.6743425047781875,10.8
+2,unconventional oil,unconventional oil,grade 4,0,16.3
 3,coal,coal,grade 1,0.15959967960515917,0.34
 3,coal,coal,grade 2,3.0181439411047064,0.37
 3,coal,coal,grade 3,2.0605458634737515,1.2
@@ -80,9 +77,9 @@ GCAM_region_ID,resource,subresource,grade,available,extractioncost
 3,natural gas,natural gas,grade 7,3687.064664069504,6.5
 3,natural gas,natural gas,grade 8,0,6.6
 3,unconventional oil,unconventional oil,grade 1,259.81595768723423,1.8
-3,unconventional oil,unconventional oil,grade 2,507.7516628360859,2.1
-3,unconventional oil,unconventional oil,grade 3,138.16217169419764,3.6
-3,unconventional oil,unconventional oil,grade 4,0,4.7
+3,unconventional oil,unconventional oil,grade 2,507.7516628360859,3.3
+3,unconventional oil,unconventional oil,grade 3,138.16217169419764,10.8
+3,unconventional oil,unconventional oil,grade 4,0,16.3
 4,coal,coal,grade 1,1.6852142623122452,0.34
 4,coal,coal,grade 2,31.86860542479764,0.37
 4,coal,coal,grade 3,21.757319850924166,1.2
@@ -106,9 +103,9 @@ GCAM_region_ID,resource,subresource,grade,available,extractioncost
 4,natural gas,natural gas,grade 7,49.72031530815764,6.5
 4,natural gas,natural gas,grade 8,0,6.6
 4,unconventional oil,unconventional oil,grade 1,44.880451791293474,1.8
-4,unconventional oil,unconventional oil,grade 2,87.70871592612622,2.1
-4,unconventional oil,unconventional oil,grade 3,23.866050189135542,3.6
-4,unconventional oil,unconventional oil,grade 4,0,4.7
+4,unconventional oil,unconventional oil,grade 2,87.70871592612622,3.3
+4,unconventional oil,unconventional oil,grade 3,23.866050189135542,10.8
+4,unconventional oil,unconventional oil,grade 4,0,16.3
 5,coal,coal,grade 1,0.13643852071327287,0.34
 5,coal,coal,grade 2,2.5801498827742138,0.37
 5,coal,coal,grade 3,1.7615187584945764,1.2
@@ -132,9 +129,9 @@ GCAM_region_ID,resource,subresource,grade,available,extractioncost
 5,natural gas,natural gas,grade 7,488.6245890505553,6.5
 5,natural gas,natural gas,grade 8,0,6.6
 5,unconventional oil,unconventional oil,grade 1,187.21810514748938,1.8
-5,unconventional oil,unconventional oil,grade 2,365.87554147113724,2.1
-5,unconventional oil,unconventional oil,grade 3,99.5568563913528,3.6
-5,unconventional oil,unconventional oil,grade 4,0,4.7
+5,unconventional oil,unconventional oil,grade 2,365.87554147113724,3.3
+5,unconventional oil,unconventional oil,grade 3,99.5568563913528,10.8
+5,unconventional oil,unconventional oil,grade 4,0,16.3
 6,coal,coal,grade 1,57,0.34
 6,coal,coal,grade 2,1186,0.37
 6,coal,coal,grade 3,1753,1.2
@@ -158,9 +155,9 @@ GCAM_region_ID,resource,subresource,grade,available,extractioncost
 6,natural gas,natural gas,grade 7,11508,6.5
 6,natural gas,natural gas,grade 8,0,6.6
 6,unconventional oil,unconventional oil,grade 1,1320,1.8
-6,unconventional oil,unconventional oil,grade 2,2578,2.1
-6,unconventional oil,unconventional oil,grade 3,701.64,3.6
-6,unconventional oil,unconventional oil,grade 4,0,4.7
+6,unconventional oil,unconventional oil,grade 2,2578,3.3
+6,unconventional oil,unconventional oil,grade 3,701.64,10.8
+6,unconventional oil,unconventional oil,grade 4,0,16.3
 7,coal,coal,grade 1,0.949946864724359,0.34
 7,coal,coal,grade 2,10.017621482547785,0.37
 7,coal,coal,grade 3,12.4356680473007,1.2
@@ -184,9 +181,9 @@ GCAM_region_ID,resource,subresource,grade,available,extractioncost
 7,natural gas,natural gas,grade 7,2413.1033238778314,6.5
 7,natural gas,natural gas,grade 8,0,6.6
 7,unconventional oil,unconventional oil,grade 1,298.7894401275901,1.8
-7,unconventional oil,unconventional oil,grade 2,584.1512589445196,2.1
-7,unconventional oil,unconventional oil,grade 3,158.9293258329797,3.6
-7,unconventional oil,unconventional oil,grade 4,0,4.7
+7,unconventional oil,unconventional oil,grade 2,584.1512589445196,3.3
+7,unconventional oil,unconventional oil,grade 3,158.9293258329797,10.8
+7,unconventional oil,unconventional oil,grade 4,0,16.3
 8,coal,coal,grade 1,20,0.34
 8,coal,coal,grade 2,293,0.37
 8,coal,coal,grade 3,293,1.2
@@ -210,9 +207,9 @@ GCAM_region_ID,resource,subresource,grade,available,extractioncost
 8,natural gas,natural gas,grade 7,20005,6.5
 8,natural gas,natural gas,grade 8,0,6.6
 8,unconventional oil,unconventional oil,grade 1,803,1.8
-8,unconventional oil,unconventional oil,grade 2,1570,2.1
-8,unconventional oil,unconventional oil,grade 3,427.14,3.6
-8,unconventional oil,unconventional oil,grade 4,0,4.7
+8,unconventional oil,unconventional oil,grade 2,1570,3.3
+8,unconventional oil,unconventional oil,grade 3,427.14,10.8
+8,unconventional oil,unconventional oil,grade 4,0,16.3
 9,coal,coal,grade 1,0,0.34
 9,coal,coal,grade 2,0,0.37
 9,coal,coal,grade 3,0,1.2
@@ -236,9 +233,9 @@ GCAM_region_ID,resource,subresource,grade,available,extractioncost
 9,natural gas,natural gas,grade 7,6037.245615709497,6.5
 9,natural gas,natural gas,grade 8,0,6.6
 9,unconventional oil,unconventional oil,grade 1,75.94955297382455,1.8
-9,unconventional oil,unconventional oil,grade 2,148.4859632860509,2.1
-9,unconventional oil,unconventional oil,grade 3,40.398392926777575,3.6
-9,unconventional oil,unconventional oil,grade 4,0,4.7
+9,unconventional oil,unconventional oil,grade 2,148.4859632860509,3.3
+9,unconventional oil,unconventional oil,grade 3,40.398392926777575,10.8
+9,unconventional oil,unconventional oil,grade 4,0,16.3
 10,coal,coal,grade 1,27.24689065923865,0.34
 10,coal,coal,grade 2,1475.7045584236487,0.37
 10,coal,coal,grade 3,2580.3505686457665,1.2
@@ -262,9 +259,9 @@ GCAM_region_ID,resource,subresource,grade,available,extractioncost
 10,natural gas,natural gas,grade 7,7458.718692498688,6.5
 10,natural gas,natural gas,grade 8,0,6.6
 10,unconventional oil,unconventional oil,grade 1,519.4847235998236,1.8
-10,unconventional oil,unconventional oil,grade 2,1015.7707736815366,2.1
-10,unconventional oil,unconventional oil,grade 3,276.34598951064487,3.6
-10,unconventional oil,unconventional oil,grade 4,0,4.7
+10,unconventional oil,unconventional oil,grade 2,1015.7707736815366,3.3
+10,unconventional oil,unconventional oil,grade 3,276.34598951064487,10.8
+10,unconventional oil,unconventional oil,grade 4,0,16.3
 11,coal,coal,grade 1,281.4115232666506,0.34
 11,coal,coal,grade 2,6708.23243589016,0.37
 11,coal,coal,grade 3,4598.033735368058,1.2
@@ -288,9 +285,9 @@ GCAM_region_ID,resource,subresource,grade,available,extractioncost
 11,natural gas,natural gas,grade 7,3178.670165342862,6.5
 11,natural gas,natural gas,grade 8,0,6.6
 11,unconventional oil,unconventional oil,grade 1,1913.3988267954028,1.8
-11,unconventional oil,unconventional oil,grade 2,3740.2573111750085,2.1
-11,unconventional oil,unconventional oil,grade 3,1017.658104834674,3.6
-11,unconventional oil,unconventional oil,grade 4,0,4.7
+11,unconventional oil,unconventional oil,grade 2,3740.2573111750085,3.3
+11,unconventional oil,unconventional oil,grade 3,1017.658104834674,10.8
+11,unconventional oil,unconventional oil,grade 4,0,16.3
 12,coal,coal,grade 1,84.1476893439796,0.34
 12,coal,coal,grade 2,535.3443050810222,0.37
 12,coal,coal,grade 3,945.4781261976207,1.2
@@ -314,9 +311,9 @@ GCAM_region_ID,resource,subresource,grade,available,extractioncost
 12,natural gas,natural gas,grade 7,256.95154248036823,6.5
 12,natural gas,natural gas,grade 8,0,6.6
 12,unconventional oil,unconventional oil,grade 1,156.59058420697096,1.8
-12,unconventional oil,unconventional oil,grade 2,305.9898657412801,2.1
-12,unconventional oil,unconventional oil,grade 3,83.26448099068519,3.6
-12,unconventional oil,unconventional oil,grade 4,0,4.7
+12,unconventional oil,unconventional oil,grade 2,305.9898657412801,3.3
+12,unconventional oil,unconventional oil,grade 3,83.26448099068519,10.8
+12,unconventional oil,unconventional oil,grade 4,0,16.3
 13,coal,coal,grade 1,109.97930653493279,0.34
 13,coal,coal,grade 2,2475.0043940724618,0.37
 13,coal,coal,grade 3,2474.0643999995136,1.2
@@ -340,9 +337,9 @@ GCAM_region_ID,resource,subresource,grade,available,extractioncost
 13,natural gas,natural gas,grade 7,6928.494311886575,6.5
 13,natural gas,natural gas,grade 8,0,6.6
 13,unconventional oil,unconventional oil,grade 1,689.5750288998539,1.8
-13,unconventional oil,unconventional oil,grade 2,1348.7949807297807,2.1
-13,unconventional oil,unconventional oil,grade 3,366.90660173333424,3.6
-13,unconventional oil,unconventional oil,grade 4,0,4.7
+13,unconventional oil,unconventional oil,grade 2,1348.7949807297807,3.3
+13,unconventional oil,unconventional oil,grade 3,366.90660173333424,10.8
+13,unconventional oil,unconventional oil,grade 4,0,16.3
 14,coal,coal,grade 1,30.42132814759263,0.34
 14,coal,coal,grade 2,1680.4895700771422,0.37
 14,coal,coal,grade 3,2965.886954338714,1.2
@@ -366,9 +363,9 @@ GCAM_region_ID,resource,subresource,grade,available,extractioncost
 14,natural gas,natural gas,grade 7,4025.002864288038,6.5
 14,natural gas,natural gas,grade 8,0,6.6
 14,unconventional oil,unconventional oil,grade 1,426.395451284079,1.8
-14,unconventional oil,unconventional oil,grade 2,833.7494949604798,2.1
-14,unconventional oil,unconventional oil,grade 3,226.82609032402058,3.6
-14,unconventional oil,unconventional oil,grade 4,0,4.7
+14,unconventional oil,unconventional oil,grade 2,833.7494949604798,3.3
+14,unconventional oil,unconventional oil,grade 3,226.82609032402058,10.8
+14,unconventional oil,unconventional oil,grade 4,0,16.3
 15,coal,coal,grade 1,11.505148235165372,0.34
 15,coal,coal,grade 2,171.14519445401243,0.37
 15,coal,coal,grade 3,188.0704395712522,1.2
@@ -392,9 +389,9 @@ GCAM_region_ID,resource,subresource,grade,available,extractioncost
 15,natural gas,natural gas,grade 7,11.985055954893584,6.5
 15,natural gas,natural gas,grade 8,0,6.6
 15,unconventional oil,unconventional oil,grade 1,51.41304006625039,1.8
-15,unconventional oil,unconventional oil,grade 2,100.48268200706696,2.1
-15,unconventional oil,unconventional oil,grade 3,27.341229973197123,3.6
-15,unconventional oil,unconventional oil,grade 4,0,4.7
+15,unconventional oil,unconventional oil,grade 2,100.48268200706696,3.3
+15,unconventional oil,unconventional oil,grade 3,27.341229973197123,10.8
+15,unconventional oil,unconventional oil,grade 4,0,16.3
 16,coal,coal,grade 1,0.39995194574463755,0.34
 16,coal,coal,grade 2,9.000627975603681,0.37
 16,coal,coal,grade 3,8.99720958290501,1.2
@@ -418,9 +415,9 @@ GCAM_region_ID,resource,subresource,grade,available,extractioncost
 16,natural gas,natural gas,grade 7,1620.2085617547425,6.5
 16,natural gas,natural gas,grade 8,0,6.6
 16,unconventional oil,unconventional oil,grade 1,497.3124707219908,1.8
-16,unconventional oil,unconventional oil,grade 2,972.7332795268176,2.1
-16,unconventional oil,unconventional oil,grade 3,264.6082350447855,3.6
-16,unconventional oil,unconventional oil,grade 4,0,4.7
+16,unconventional oil,unconventional oil,grade 2,972.7332795268176,3.3
+16,unconventional oil,unconventional oil,grade 3,264.6082350447855,10.8
+16,unconventional oil,unconventional oil,grade 4,0,16.3
 17,coal,coal,grade 1,55,0.34
 17,coal,coal,grade 2,1018,0.37
 17,coal,coal,grade 3,434,1.2
@@ -444,9 +441,9 @@ GCAM_region_ID,resource,subresource,grade,available,extractioncost
 17,natural gas,natural gas,grade 7,4263,6.5
 17,natural gas,natural gas,grade 8,0,6.6
 17,unconventional oil,unconventional oil,grade 1,1509,1.8
-17,unconventional oil,unconventional oil,grade 2,2950,2.1
-17,unconventional oil,unconventional oil,grade 3,802.62,3.6
-17,unconventional oil,unconventional oil,grade 4,0,4.7
+17,unconventional oil,unconventional oil,grade 2,2950,3.3
+17,unconventional oil,unconventional oil,grade 3,802.62,10.8
+17,unconventional oil,unconventional oil,grade 4,0,16.3
 18,coal,coal,grade 1,5.044655257560657,0.34
 18,coal,coal,grade 2,855.9098420327915,0.37
 18,coal,coal,grade 3,364.89673029688754,1.2
@@ -470,9 +467,9 @@ GCAM_region_ID,resource,subresource,grade,available,extractioncost
 18,natural gas,natural gas,grade 7,844.4989493458387,6.5
 18,natural gas,natural gas,grade 8,0,6.6
 18,unconventional oil,unconventional oil,grade 1,906.1941136390665,1.8
-18,unconventional oil,unconventional oil,grade 2,1771.5524421704745,2.1
-18,unconventional oil,unconventional oil,grade 3,481.9943800457174,3.6
-18,unconventional oil,unconventional oil,grade 4,0,4.7
+18,unconventional oil,unconventional oil,grade 2,1771.5524421704745,3.3
+18,unconventional oil,unconventional oil,grade 3,481.9943800457174,10.8
+18,unconventional oil,unconventional oil,grade 4,0,16.3
 19,coal,coal,grade 1,2,0.34
 19,coal,coal,grade 2,336,0.37
 19,coal,coal,grade 3,496,1.2
@@ -496,9 +493,9 @@ GCAM_region_ID,resource,subresource,grade,available,extractioncost
 19,natural gas,natural gas,grade 7,5534,6.5
 19,natural gas,natural gas,grade 8,0,6.6
 19,unconventional oil,unconventional oil,grade 1,146,1.8
-19,unconventional oil,unconventional oil,grade 2,287,2.1
-19,unconventional oil,unconventional oil,grade 3,77.94,3.6
-19,unconventional oil,unconventional oil,grade 4,0,4.7
+19,unconventional oil,unconventional oil,grade 2,287,3.3
+19,unconventional oil,unconventional oil,grade 3,77.94,10.8
+19,unconventional oil,unconventional oil,grade 4,0,16.3
 20,coal,coal,grade 1,1.5109582306689158,0.34
 20,coal,coal,grade 2,15.933741341599475,0.37
 20,coal,coal,grade 3,19.779816837847626,1.2
@@ -522,9 +519,9 @@ GCAM_region_ID,resource,subresource,grade,available,extractioncost
 20,natural gas,natural gas,grade 7,13670.340936676828,6.5
 20,natural gas,natural gas,grade 8,0,6.6
 20,unconventional oil,unconventional oil,grade 1,987.2132276427967,1.8
-20,unconventional oil,unconventional oil,grade 2,1930.0610139634302,2.1
-20,unconventional oil,unconventional oil,grade 3,525.1093634891208,3.6
-20,unconventional oil,unconventional oil,grade 4,0,4.7
+20,unconventional oil,unconventional oil,grade 2,1930.0610139634302,3.3
+20,unconventional oil,unconventional oil,grade 3,525.1093634891208,10.8
+20,unconventional oil,unconventional oil,grade 4,0,16.3
 21,coal,coal,grade 1,0,0.34
 21,coal,coal,grade 2,2,0.37
 21,coal,coal,grade 3,2,1.2
@@ -548,9 +545,9 @@ GCAM_region_ID,resource,subresource,grade,available,extractioncost
 21,natural gas,natural gas,grade 7,2272,6.5
 21,natural gas,natural gas,grade 8,0,6.6
 21,unconventional oil,unconventional oil,grade 1,6009,1.8
-21,unconventional oil,unconventional oil,grade 2,11745,2.1
-21,unconventional oil,unconventional oil,grade 3,3195.72,3.6
-21,unconventional oil,unconventional oil,grade 4,0,4.7
+21,unconventional oil,unconventional oil,grade 2,11745,3.3
+21,unconventional oil,unconventional oil,grade 3,3195.72,10.8
+21,unconventional oil,unconventional oil,grade 4,0,16.3
 22,coal,coal,grade 1,0.15045186549402118,0.34
 22,coal,coal,grade 2,25.52666651215226,0.37
 22,coal,coal,grade 3,10.882684937400866,1.2
@@ -574,9 +571,9 @@ GCAM_region_ID,resource,subresource,grade,available,extractioncost
 22,natural gas,natural gas,grade 7,265.9768863739533,6.5
 22,natural gas,natural gas,grade 8,0,6.6
 22,unconventional oil,unconventional oil,grade 1,27.837933216335,1.8
-22,unconventional oil,unconventional oil,grade 2,54.42140688415391,2.1
-22,unconventional oil,unconventional oil,grade 3,14.806681218088004,3.6
-22,unconventional oil,unconventional oil,grade 4,0,4.7
+22,unconventional oil,unconventional oil,grade 2,54.42140688415391,3.3
+22,unconventional oil,unconventional oil,grade 3,14.806681218088004,10.8
+22,unconventional oil,unconventional oil,grade 4,0,16.3
 23,coal,coal,grade 1,98.23676990298218,0.34
 23,coal,coal,grade 2,5426.648909577395,0.37
 23,coal,coal,grade 3,9577.463313832515,1.2
@@ -600,9 +597,9 @@ GCAM_region_ID,resource,subresource,grade,available,extractioncost
 23,natural gas,natural gas,grade 7,35357.73765386376,6.5
 23,natural gas,natural gas,grade 8,0,6.6
 23,unconventional oil,unconventional oil,grade 1,2888.584838893785,1.8
-23,unconventional oil,unconventional oil,grade 2,5648.175052818901,2.1
-23,unconventional oil,unconventional oil,grade 3,1536.6167805082837,3.6
-23,unconventional oil,unconventional oil,grade 4,0,4.7
+23,unconventional oil,unconventional oil,grade 2,5648.175052818901,3.3
+23,unconventional oil,unconventional oil,grade 3,1536.6167805082837,10.8
+23,unconventional oil,unconventional oil,grade 4,0,16.3
 24,coal,coal,grade 1,53.95625835244073,0.34
 24,coal,coal,grade 2,1020.3513856291916,0.37
 24,coal,coal,grade 3,696.6138355145472,1.2
@@ -626,9 +623,9 @@ GCAM_region_ID,resource,subresource,grade,available,extractioncost
 24,natural gas,natural gas,grade 7,45.9648476267184,6.5
 24,natural gas,natural gas,grade 8,0,6.6
 24,unconventional oil,unconventional oil,grade 1,0.4107234860675834,1.8
-24,unconventional oil,unconventional oil,grade 2,0.8026663753567286,2.1
-24,unconventional oil,unconventional oil,grade 3,0.21841017505637617,3.6
-24,unconventional oil,unconventional oil,grade 4,0,4.7
+24,unconventional oil,unconventional oil,grade 2,0.8026663753567286,3.3
+24,unconventional oil,unconventional oil,grade 3,0.21841017505637617,10.8
+24,unconventional oil,unconventional oil,grade 4,0,16.3
 25,coal,coal,grade 1,0.9052386573603888,0.34
 25,coal,coal,grade 2,9.546153113982282,0.37
 25,coal,coal,grade 3,11.850396969081451,1.2
@@ -652,9 +649,9 @@ GCAM_region_ID,resource,subresource,grade,available,extractioncost
 25,natural gas,natural gas,grade 7,11316.182860511017,6.5
 25,natural gas,natural gas,grade 8,0,6.6
 25,unconventional oil,unconventional oil,grade 1,1080.6701489321488,1.8
-25,unconventional oil,unconventional oil,grade 2,2112.7748950327928,2.1
-25,unconventional oil,unconventional oil,grade 3,574.8201079136894,3.6
-25,unconventional oil,unconventional oil,grade 4,0,4.7
+25,unconventional oil,unconventional oil,grade 2,2112.7748950327928,3.3
+25,unconventional oil,unconventional oil,grade 3,574.8201079136894,10.8
+25,unconventional oil,unconventional oil,grade 4,0,16.3
 26,coal,coal,grade 1,0.3362614157435455,0.34
 26,coal,coal,grade 2,3.5460294751137527,0.37
 26,coal,coal,grade 3,4.401967624279141,1.2
@@ -678,9 +675,9 @@ GCAM_region_ID,resource,subresource,grade,available,extractioncost
 26,natural gas,natural gas,grade 7,3639.8743969434818,6.5
 26,natural gas,natural gas,grade 8,0,6.6
 26,unconventional oil,unconventional oil,grade 1,186.1373085319952,1.8
-26,unconventional oil,unconventional oil,grade 2,363.909591547406,2.1
-26,unconventional oil,unconventional oil,grade 3,99.00844201429221,3.6
-26,unconventional oil,unconventional oil,grade 4,0,4.7
+26,unconventional oil,unconventional oil,grade 2,363.909591547406,3.3
+26,unconventional oil,unconventional oil,grade 3,99.00844201429221,10.8
+26,unconventional oil,unconventional oil,grade 4,0,16.3
 27,coal,coal,grade 1,0.06136983178419354,0.34
 27,coal,coal,grade 2,10.41241479271817,0.37
 27,coal,coal,grade 3,4.4390844990566665,1.2
@@ -704,9 +701,9 @@ GCAM_region_ID,resource,subresource,grade,available,extractioncost
 27,natural gas,natural gas,grade 7,133.588804949652,6.5
 27,natural gas,natural gas,grade 8,0,6.6
 27,unconventional oil,unconventional oil,grade 1,20.339053057219523,1.8
-27,unconventional oil,unconventional oil,grade 2,39.761568269580906,2.1
-27,unconventional oil,unconventional oil,grade 3,10.818111838824077,3.6
-27,unconventional oil,unconventional oil,grade 4,0,4.7
+27,unconventional oil,unconventional oil,grade 2,39.761568269580906,3.3
+27,unconventional oil,unconventional oil,grade 3,10.818111838824077,10.8
+27,unconventional oil,unconventional oil,grade 4,0,16.3
 28,coal,coal,grade 1,4,0.34
 28,coal,coal,grade 2,17,0.37
 28,coal,coal,grade 3,0,1.2
@@ -730,9 +727,9 @@ GCAM_region_ID,resource,subresource,grade,available,extractioncost
 28,natural gas,natural gas,grade 7,1448,6.5
 28,natural gas,natural gas,grade 8,0,6.6
 28,unconventional oil,unconventional oil,grade 1,0,1.8
-28,unconventional oil,unconventional oil,grade 2,0,2.1
-28,unconventional oil,unconventional oil,grade 3,0,3.6
-28,unconventional oil,unconventional oil,grade 4,0,4.7
+28,unconventional oil,unconventional oil,grade 2,0,3.3
+28,unconventional oil,unconventional oil,grade 3,0,10.8
+28,unconventional oil,unconventional oil,grade 4,0,16.3
 29,coal,coal,grade 1,13.282299107617758,0.34
 29,coal,coal,grade 2,408.46153162195986,0.37
 29,coal,coal,grade 3,252.2859875166903,1.2
@@ -756,9 +753,9 @@ GCAM_region_ID,resource,subresource,grade,available,extractioncost
 29,natural gas,natural gas,grade 7,1091.336232255022,6.5
 29,natural gas,natural gas,grade 8,0,6.6
 29,unconventional oil,unconventional oil,grade 1,651.5202122471018,1.8
-29,unconventional oil,unconventional oil,grade 2,1273.6646582189358,2.1
-29,unconventional oil,unconventional oil,grade 3,346.53327668388675,3.6
-29,unconventional oil,unconventional oil,grade 4,0,4.7
+29,unconventional oil,unconventional oil,grade 2,1273.6646582189358,3.3
+29,unconventional oil,unconventional oil,grade 3,346.53327668388675,10.8
+29,unconventional oil,unconventional oil,grade 4,0,16.3
 30,coal,coal,grade 1,0.11269805329677285,0.34
 30,coal,coal,grade 2,19.121103042685796,0.37
 30,coal,coal,grade 3,8.151825855133236,1.2
@@ -782,9 +779,9 @@ GCAM_region_ID,resource,subresource,grade,available,extractioncost
 30,natural gas,natural gas,grade 7,19.944292747079793,6.5
 30,natural gas,natural gas,grade 8,0,6.6
 30,unconventional oil,unconventional oil,grade 1,1.351063990554279,1.8
-30,unconventional oil,unconventional oil,grade 2,2.64124504448981,2.1
-30,unconventional oil,unconventional oil,grade 3,0.718615626307936,3.6
-30,unconventional oil,unconventional oil,grade 4,0,4.7
+30,unconventional oil,unconventional oil,grade 2,2.64124504448981,3.3
+30,unconventional oil,unconventional oil,grade 3,0.718615626307936,10.8
+30,unconventional oil,unconventional oil,grade 4,0,16.3
 31,coal,coal,grade 1,0.08723605309406268,0.34
 31,coal,coal,grade 2,0.9199438326282974,0.37
 31,coal,coal,grade 3,1.1419992405040933,1.2
@@ -808,9 +805,9 @@ GCAM_region_ID,resource,subresource,grade,available,extractioncost
 31,natural gas,natural gas,grade 7,11803.746934961122,6.5
 31,natural gas,natural gas,grade 8,0,6.6
 31,unconventional oil,unconventional oil,grade 1,223.88848810729903,1.8
-31,unconventional oil,unconventional oil,grade 2,437.71540967182665,2.1
-31,unconventional oil,unconventional oil,grade 3,119.08870160024262,3.6
-31,unconventional oil,unconventional oil,grade 4,0,4.7
+31,unconventional oil,unconventional oil,grade 2,437.71540967182665,3.3
+31,unconventional oil,unconventional oil,grade 3,119.08870160024262,10.8
+31,unconventional oil,unconventional oil,grade 4,0,16.3
 32,coal,coal,grade 1,7.210358778408728,0.34
 32,coal,coal,grade 2,76.0365107541284,0.37
 32,coal,coal,grade 3,94.39015128098698,1.2
@@ -834,6 +831,6 @@ GCAM_region_ID,resource,subresource,grade,available,extractioncost
 32,natural gas,natural gas,grade 7,2268.4072485931647,6.5
 32,natural gas,natural gas,grade 8,0,6.6
 32,unconventional oil,unconventional oil,grade 1,151.35857198723747,1.8
-32,unconventional oil,unconventional oil,grade 2,295.91507765680615,2.1
-32,unconventional oil,unconventional oil,grade 3,80.50925693592785,3.6
-32,unconventional oil,unconventional oil,grade 4,0,4.7
+32,unconventional oil,unconventional oil,grade 2,295.91507765680615,3.3
+32,unconventional oil,unconventional oil,grade 3,80.50925693592785,10.8
+32,unconventional oil,unconventional oil,grade 4,0,16.3
