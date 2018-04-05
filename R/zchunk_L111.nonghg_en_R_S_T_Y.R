@@ -237,7 +237,7 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
       left_join(L101.in_EJ_R_en_S_F_Yh.mlt, by = c("GCAM_region_ID", "supplysector", "subsector", "stub.technology", "year")) %>%
       # the old data system was doing a straight division of some _tiny_ numbers here, which made it impossible to replicate
       # we now round; see
-      mutate(value = round(value, 8) / round(energy, 8)) %>%
+      mutate(value = signif(value, 10) / signif(energy, 10)) %>%
       ungroup %>%
       select(-energy) %>%
       replace_na(list(value = 0)) ->
