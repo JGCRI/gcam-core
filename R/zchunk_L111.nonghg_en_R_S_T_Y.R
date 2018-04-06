@@ -16,7 +16,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author CDL September 2017
-module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
+module_emissions_L111.nonghg_en_R_S_T_Y_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "emissions/EDGAR/EDGAR_sector",
@@ -237,7 +237,7 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
       left_join(L101.in_EJ_R_en_S_F_Yh.mlt, by = c("GCAM_region_ID", "supplysector", "subsector", "stub.technology", "year")) %>%
       # the old data system was doing a straight division of some _tiny_ numbers here, which made it impossible to replicate
       # we now round; see
-      mutate(value = signif(value, 10) / signif(energy, 10)) %>%
+      mutate(value = signif(value, 12) / signif(energy, 12)) %>%
       ungroup %>%
       select(-energy) %>%
       replace_na(list(value = 0)) ->
@@ -276,7 +276,7 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
       add_comments("Use non-ghg emission totals by GCAM sector, fuel, technology, and driver type for EDGAR historical years to derive emission shares.") %>%
       add_legacy_name("L111.nonghg_tgej_R_en_S_F_Yh") %>%
       same_precursors_as(L111.nonghg_tg_R_en_S_F_Yh) %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L111.nonghg_tgej_R_en_S_F_Yh
 
     return_data(L111.nonghg_tg_R_en_S_F_Yh, L111.nonghg_tgej_R_en_S_F_Yh)
