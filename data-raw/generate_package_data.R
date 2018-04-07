@@ -1,5 +1,6 @@
 library(devtools)
 library(gcamdata)
+LOGIT_TYPE_COLNAME <- gcamdata:::LOGIT_TYPE_COLNAME
 
 # Note: the methods below explicitly name XML tags as expected by GCAM and/or
 # the model interface headers thus will need to be maintained to be consistent.
