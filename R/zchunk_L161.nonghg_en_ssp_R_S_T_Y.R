@@ -22,7 +22,7 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
              FILE = "emissions/GAINS_activities",
              FILE = "emissions/GAINS_emissions",
              "L102.pcgdp_thous90USD_Scen_R_Y",
-             "L111.nonghg_tgej_R_en_S_F_Yh",
+             FILE = "temp-data-inject/L111.nonghg_tgej_R_en_S_F_Yh",
              "L114.bcoc_tgej_R_en_S_F_2000",
              FILE = "emissions/A61_emfact_rules"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -54,7 +54,9 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
       # CLE = current legislation, SLE = stringent legislation, MFR = maximum feasible reductions
       gather(scenario, value, CLE, MFR, SLE)
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y")
-    L111.nonghg_tgej_R_en_S_F_Yh <- get_data(all_data, "L111.nonghg_tgej_R_en_S_F_Yh")
+    L111.nonghg_tgej_R_en_S_F_Yh <- get_data(all_data, "temp-data-inject/L111.nonghg_tgej_R_en_S_F_Yh") %>%
+      gather(year, value, matches( "^X(1|2)[0-9]{3}$")) %>%
+      mutate(year = as.numeric(gsub("X","", year)))
     L114.bcoc_tgej_R_en_S_F_2000 <- get_data(all_data, "L114.bcoc_tgej_R_en_S_F_2000") %>%
       gather(year, value, `2000`) %>%
       mutate(year = as.integer(year))
@@ -259,7 +261,7 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
                      "emissions/GAINS_activities",
                      "emissions/GAINS_emissions",
                      "L102.pcgdp_thous90USD_Scen_R_Y",
-                     "L111.nonghg_tgej_R_en_S_F_Yh",
+                     "temp-data-inject/L111.nonghg_tgej_R_en_S_F_Yh",
                      "L114.bcoc_tgej_R_en_S_F_2000",
                      "emissions/A61_emfact_rules") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
@@ -276,7 +278,7 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
                      "emissions/GAINS_activities",
                      "emissions/GAINS_emissions",
                      "L102.pcgdp_thous90USD_Scen_R_Y",
-                     "L111.nonghg_tgej_R_en_S_F_Yh",
+                     "temp-data-inject/L111.nonghg_tgej_R_en_S_F_Yh",
                      "L114.bcoc_tgej_R_en_S_F_2000",
                      "emissions/A61_emfact_rules") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
@@ -293,7 +295,7 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
                      "emissions/GAINS_activities",
                      "emissions/GAINS_emissions",
                      "L102.pcgdp_thous90USD_Scen_R_Y",
-                     "L111.nonghg_tgej_R_en_S_F_Yh",
+                     "temp-data-inject/L111.nonghg_tgej_R_en_S_F_Yh",
                      "L114.bcoc_tgej_R_en_S_F_2000",
                      "emissions/A61_emfact_rules") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->

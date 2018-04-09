@@ -19,8 +19,8 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "emissions/A_regions",
              FILE = "energy/A_regions",
-             "L111.nonghg_tg_R_en_S_F_Yh",
-             "L111.nonghg_tgej_R_en_S_F_Yh",
+             FILE = "temp-data-inject/L111.nonghg_tg_R_en_S_F_Yh",
+             FILE = "temp-data-inject/L111.nonghg_tgej_R_en_S_F_Yh",
              "L112.ghg_tg_R_en_S_F_Yh",
              "L112.ghg_tgej_R_en_S_F_Yh",
              "L114.bcoc_tgej_R_en_S_F_2000",
@@ -51,8 +51,12 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     A_regions <- get_data(all_data, "emissions/A_regions")
     A_regions.en <- get_data(all_data, "energy/A_regions")
 
-    L111.nonghg_tg_R_en_S_F_Yh <- get_data(all_data, "L111.nonghg_tg_R_en_S_F_Yh")
-    L111.nonghg_tgej_R_en_S_F_Yh <- get_data(all_data, "L111.nonghg_tgej_R_en_S_F_Yh")
+    L111.nonghg_tg_R_en_S_F_Yh <- get_data(all_data, "temp-data-inject/L111.nonghg_tg_R_en_S_F_Yh") %>%
+      gather(year, value, matches( "^X(1|2)[0-9]{3}$")) %>%
+      mutate(year = as.numeric(gsub("X","", year)))
+    L111.nonghg_tgej_R_en_S_F_Yh <- get_data(all_data, "temp-data-inject/L111.nonghg_tgej_R_en_S_F_Yh") %>%
+      gather(year, value, matches( "^X(1|2)[0-9]{3}$")) %>%
+      mutate(year = as.numeric(gsub("X","", year)))
     L112.ghg_tg_R_en_S_F_Yh <- get_data(all_data, "L112.ghg_tg_R_en_S_F_Yh")
     L112.ghg_tgej_R_en_S_F_Yh <- get_data(all_data, "L112.ghg_tgej_R_en_S_F_Yh")
     L114.bcoc_tgej_R_en_S_F_2000 <- get_data(all_data, "L114.bcoc_tgej_R_en_S_F_2000")
@@ -67,7 +71,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       # add region name and round output
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       select(region, supplysector, subsector, stub.technology, year, input.emissions = value, Non.CO2) %>%
-      mutate(input.emissions = round(input.emissions, emissions.DIGITS_EMISSIONS)) ->
+      mutate(input.emissions = signif(input.emissions, emissions.DIGITS_EMISSIONS)) ->
       L201.en_pol_emissions
 
     # L201.en_ghg_emissions: GHG emissions for energy technologies in all regions
@@ -77,7 +81,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       # add region name and round output
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       select(region, supplysector, subsector, stub.technology, year, input.emissions = value, Non.CO2) %>%
-      mutate(input.emissions = round(input.emissions, emissions.DIGITS_EMISSIONS)) ->
+      mutate(input.emissions = signif(input.emissions, emissions.DIGITS_EMISSIONS)) ->
       L201.en_ghg_emissions
 
     # L201.en_bcoc_emissions: BC/OC emissions factors for energy technologies in all regions
@@ -87,7 +91,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       repeat_add_columns(tibble(year = BASE_YEARS)) %>%
       select(region, supplysector, subsector, stub.technology, year, emiss.coef = `2000`, Non.CO2) %>%
-      mutate(emiss.coef = round(emiss.coef, emissions.DIGITS_EMISSIONS)) ->
+      mutate(emiss.coef = signif(emiss.coef, emissions.DIGITS_EMISSIONS)) ->
       L201.en_bcoc_emissions
 
     # L201.nonghg_max_reduction: maximum reduction for energy technologies in all regions
@@ -144,7 +148,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       rename(depresource = subsector) %>%
       select(region, depresource, Non.CO2, emiss.coef = value) %>%
-      mutate(emiss.coef = round(emiss.coef, emissions.DIGITS_EMISSIONS)) ->
+      mutate(emiss.coef = signif(emiss.coef, emissions.DIGITS_EMISSIONS)) ->
       L201.nonghg_res
 
     # L201.ghg_res: GHG emissions from resource production in all regions
@@ -154,7 +158,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       rename(depresource = subsector) %>%
       select(region, depresource, Non.CO2, emiss.coef = value) %>%
-      mutate(emiss.coef = round(emiss.coef, emissions.DIGITS_EMISSIONS)) ->
+      mutate(emiss.coef = signif(emiss.coef, emissions.DIGITS_EMISSIONS)) ->
       L201.ghg_res
 
     # L201.nonghg_max_reduction_res: maximum reduction for resources in all regions
@@ -244,7 +248,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       add_legacy_name("L201.en_pol_emissions") %>%
       add_precursors("common/GCAM_region_names",
                      "emissions/A_regions", "energy/A_regions",
-                     "L111.nonghg_tg_R_en_S_F_Yh",
+                     "temp-data-inject/L111.nonghg_tg_R_en_S_F_Yh",
                      "L244.DeleteThermalService") ->
       L201.en_pol_emissions
 
@@ -329,7 +333,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       add_legacy_name("L201.nonghg_res") %>%
       add_precursors("common/GCAM_region_names",
                      "emissions/A_regions",
-                     "L111.nonghg_tgej_R_en_S_F_Yh") ->
+                     "temp-data-inject/L111.nonghg_tgej_R_en_S_F_Yh") ->
       L201.nonghg_res
 
     L201.ghg_res %>%

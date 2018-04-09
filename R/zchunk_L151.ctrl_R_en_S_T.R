@@ -21,7 +21,7 @@
 module_emissions_L151.ctrl_R_en_S_T <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "emissions/A51.min_coeff",
-             "L111.nonghg_tgej_R_en_S_F_Yh",
+             FILE = "temp-data-inject/L111.nonghg_tgej_R_en_S_F_Yh",
              "L114.bcoc_tgej_R_en_S_F_2000"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L151.nonghg_ctrl_R_en_S_T"))
@@ -34,7 +34,9 @@ module_emissions_L151.ctrl_R_en_S_T <- function(command, ...) {
 
     # Load required inputs
     A51.min_coeff <- get_data(all_data, "emissions/A51.min_coeff")
-    L111.nonghg_tgej_R_en_S_F_Yh <- get_data(all_data, "L111.nonghg_tgej_R_en_S_F_Yh")
+    L111.nonghg_tgej_R_en_S_F_Yh <- get_data(all_data, "temp-data-inject/L111.nonghg_tgej_R_en_S_F_Yh") %>%
+      gather(year, value, matches( "^X(1|2)[0-9]{3}$")) %>%
+      mutate(year = as.numeric(gsub("X","", year)))
     get_data(all_data, "L114.bcoc_tgej_R_en_S_F_2000") %>%
       gather(year, value, -GCAM_region_ID, -Non.CO2, -supplysector, -subsector, -stub.technology) %>%
       mutate(year = as.numeric(substr(year, 2, 5))) ->
@@ -77,21 +79,6 @@ module_emissions_L151.ctrl_R_en_S_T <- function(command, ...) {
       select(-curr_coeff, -min_coeff, -year) ->
       L151.nonghg_ctrl_R_en_S_T  # OUTPUT
 
-    # Because of upstream numerical instability/rounding issues (see https://github.com/JGCRI/gcamdata/pull/613)
-    # we hand-adjust a few values to pass tests
-    if(OLD_DATA_SYSTEM_BEHAVIOR) {
-      L151.nonghg_ctrl_R_en_S_T %>%
-        mutate(max_reduction = if_else(GCAM_region_ID == 14 & supplysector == "out_resources" & subsector == "coal" & stub.technology == "coal" & Non.CO2 == "NOx",
-                                       50.578667, max_reduction),  # versus 50.593346
-               max_reduction = if_else(GCAM_region_ID == 15 & supplysector == "out_resources" & subsector == "coal" & stub.technology == "coal" & Non.CO2 == "NOx",
-                                       60.969958, max_reduction),  # versus 60.983388
-               max_reduction = if_else(GCAM_region_ID == 32 & supplysector == "industrial energy use" & subsector == "gas" & stub.technology == "gas" & Non.CO2 == "NOx",
-                                       12.531070, max_reduction),  # versus 12.531079
-               max_reduction = if_else(GCAM_region_ID == 32 & supplysector == "industrial energy use" & subsector == "gas" & stub.technology == "gas" & Non.CO2 == "CO",
-                                       85.121976, max_reduction)) %>%  # versus 85.121977
-        add_flags(FLAG_SUM_TEST) ->
-        L151.nonghg_ctrl_R_en_S_T
-    }
 
     L151.nonghg_ctrl_R_en_S_T %>%
       add_title("Maximum reduction by region / sector / gas") %>%
@@ -99,7 +86,7 @@ module_emissions_L151.ctrl_R_en_S_T <- function(command, ...) {
       add_comments("Compute maximum reduction by region and sector for SO2, CO, NOx, NMVOC (all 2005 reference), BC, and OC (2005)") %>%
       add_legacy_name("L151.nonghg_ctrl_R_en_S_T") %>%
       add_precursors("emissions/A51.min_coeff",
-                     "L111.nonghg_tgej_R_en_S_F_Yh",
+                     "temp-data-inject/L111.nonghg_tgej_R_en_S_F_Yh",
                      "L114.bcoc_tgej_R_en_S_F_2000") ->
       L151.nonghg_ctrl_R_en_S_T
 
