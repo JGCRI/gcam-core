@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{electricity_water.xml}. The corresponding file in the
 #' original data system was \code{batch_electricity_water.xml.R} (water XML).
-module_water_batch_electricity_water.xml_DISABLED <- function(command, ...) {
+module_water_batch_electricity_water_xml <- function(command, ...) {
     if(command == driver.DECLARE_INPUTS) {
     return(c( "L223.Supplysector_elec",
               "L223.SubsectorShrwtFllt_elec",
@@ -21,11 +21,11 @@ module_water_batch_electricity_water.xml_DISABLED <- function(command, ...) {
               "L223.SubsectorShrwt_renew",
               "L2233.AvgFossilEffKeyword_elec_cool",
               "L2233.GlobalIntTechBackup_elec_cool",
-              ## L2233.GlobalIntTechCapFac_elec_cool ?? -- this one is still missing
+              "L2233.GlobalIntTechCapFac_elec_cool",
               "L2233.GlobalIntTechEff_elec_cool",
               "L2233.GlobalIntTechLifetime_elec_cool",
               "L2233.GlobalIntTechShrwt_elec_cool",
-              ## L2233.GlobalTechCapFac_elec_cool ?? -- this one is still missing
+              "L2233.GlobalTechCapFac_elec_cool",
               "L2233.GlobalTechCapture_elec_cool",
               "L2233.GlobalTechEff_elec_cool",
               "L2233.GlobalTechInterp_elec_cool",
@@ -34,7 +34,7 @@ module_water_batch_electricity_water.xml_DISABLED <- function(command, ...) {
               "L2233.GlobalTechSCurve_elec_cool",
               "L2233.GlobalTechShrwt_elec_cool",
               "L2233.PrimaryRenewKeyword_elec_cool",
-              "L2233.PrimaryRenewKeywordInt_elec_cool", # hey kalyn you added all of the csv before here
+              "L2233.PrimaryRenewKeywordInt_elec_cool",
               "L2233.StubTech_elecPassthru",
               "L2233.StubTechProd_elecPassthru",
               "L2233.GlobalPassThroughTech",
@@ -76,21 +76,20 @@ module_water_batch_electricity_water.xml_DISABLED <- function(command, ...) {
     L223.SubsectorShrwt_renew <- get_data(all_data, "L223.SubsectorShrwt_renew")
     L2233.AvgFossilEffKeyword_elec_cool <- get_data(all_data, "L2233.AvgFossilEffKeyword_elec_cool")
     L2233.GlobalIntTechBackup_elec_cool <- get_data(all_data, "L2233.GlobalIntTechBackup_elec_cool")
-    ## L2233.GlobalIntTechCapFac_elec_cool<- get_data(all_data, "L2233.GlobalIntTechCapFac_elec_cool") ??
+    L2233.GlobalIntTechCapFac_elec_cool <- get_data(all_data, "L2233.GlobalIntTechCapFac_elec_cool")
     L2233.GlobalIntTechEff_elec_cool <- get_data(all_data, "L2233.GlobalIntTechEff_elec_cool")
     L2233.GlobalIntTechLifetime_elec_cool <- get_data(all_data, "L2233.GlobalIntTechLifetime_elec_cool")
     L2233.GlobalIntTechShrwt_elec_cool <- get_data(all_data, "L2233.GlobalIntTechShrwt_elec_cool")
-    ## L2233.GlobalTechCapFac_elec_cool <- get_data(all_data, "L2233.GlobalTechCapFac_elec_cool") ??
+    L2233.GlobalTechCapFac_elec_cool <- get_data(all_data, "L2233.GlobalTechCapFac_elec_cool")
     L2233.GlobalTechCapture_elec_cool <- get_data(all_data, "L2233.GlobalTechCapture_elec_cool")
     L2233.GlobalTechEff_elec_cool <- get_data(all_data, "L2233.GlobalTechEff_elec_cool")
-   ## L2233.GlobalTechInterp_elec_cool <- get_data(all_data, "L2233.GlobalTechInterp_elec_cool") this is null why?
+    L2233.GlobalTechInterp_elec_cool <- get_data(all_data, "L2233.GlobalTechInterp_elec_cool")
     L2233.GlobalTechLifetime_elec_cool <- get_data(all_data, "L2233.GlobalTechLifetime_elec_cool")
     L2233.GlobalTechProfitShutdown_elec_cool <- get_data(all_data, "L2233.GlobalTechProfitShutdown_elec_cool")
     L2233.GlobalTechSCurve_elec_cool <- get_data(all_data, "L2233.GlobalTechSCurve_elec_cool")
     L2233.GlobalTechShrwt_elec_cool <- get_data(all_data, "L2233.GlobalTechShrwt_elec_cool")
     L2233.PrimaryRenewKeyword_elec_cool <- get_data(all_data, "L2233.PrimaryRenewKeyword_elec_cool")
     L2233.PrimaryRenewKeywordInt_elec_cool <- get_data(all_data, "L2233.PrimaryRenewKeywordInt_elec_cool")
-    # Kalyn you added up to here!
     L2233.StubTech_elecPassthru <- get_data(all_data, "L2233.StubTech_elecPassthru")
     L2233.StubTechProd_elecPassthru <- get_data(all_data, "L2233.StubTechProd_elecPassthru")
     L2233.GlobalPassThroughTech <- get_data(all_data, "L2233.GlobalPassThroughTech")
@@ -116,24 +115,24 @@ module_water_batch_electricity_water.xml_DISABLED <- function(command, ...) {
     L2233.GlobalIntTechCapital_elec_cool <- get_data(all_data, "L2233.GlobalIntTechCapital_elec_cool")
 
 
-    # Silence Package Checks
+    # Silence package checks
     technology <- NULL
 
 
     # ===================================================
-    # Need to check with Pralit!
 
     # Rename columns to match add_xml_data header expeectations.
-    L2233.GlobalIntTechEff_elec_cool <- rename(L2233.GlobalIntTechEff_elec_cool, `intermittent.technology` = technology)
+    L2233.GlobalIntTechEff_elec_cool      <- rename(L2233.GlobalIntTechEff_elec_cool, `intermittent.technology` = technology)
     L2233.GlobalIntTechLifetime_elec_cool <- rename(L2233.GlobalIntTechLifetime_elec_cool, `intermittent.technology` = technology )
-    L2233.GlobalIntTechShrwt_elec_cool <- rename(L2233.GlobalIntTechShrwt_elec_cool,  `intermittent.technology` = technology )
+    L2233.GlobalIntTechShrwt_elec_cool    <- rename(L2233.GlobalIntTechShrwt_elec_cool,  `intermittent.technology` = technology )
+    L2233.GlobalIntTechCapFac_elec_cool   <- rename(L2233.GlobalIntTechCapFac_elec_cool,  `intermittent.technology` = technology )
 
 
     # Produce outputs
     create_xml("electricity_water.xml") %>%
       add_node_equiv_xml("sector") %>%
       add_node_equiv_xml("technology") %>%
-      add_logit_tables_xml(L223.Supplysector_elec, "Supplysector") %>% # this data frame has logit info but no logit.type column
+      add_logit_tables_xml(L223.Supplysector_elec, "Supplysector") %>%
       add_xml_data(L223.SubsectorShrwtFllt_elec, "SubsectorShrwtFllt") %>%
       add_xml_data(L223.ElecReserve, "ElecReserve") %>%
       add_xml_data(L223.StubTechCapFactor_elec, "StubTechCapFactor") %>%
@@ -143,14 +142,15 @@ module_water_batch_electricity_water.xml_DISABLED <- function(command, ...) {
       add_xml_data(L223.SubsectorShrwt_nuc, "SubsectorShrwt") %>%
       add_xml_data(L223.SubsectorShrwt_renew, "SubsectorShrwt") %>%
       add_xml_data(L2233.AvgFossilEffKeyword_elec_cool, "AvgFossilEffKeyword") %>%
-    ##  add_xml_data(L2233.GlobalIntTechCapFac_elec_cool, "GlobalIntTechCapFac") %>%  this one is still missing from the data system
+      add_xml_data(L2233.GlobalIntTechBackup_elec_cool, "GlobalIntTechBackup") %>%
+      add_xml_data(L2233.GlobalIntTechCapFac_elec_cool, "GlobalIntTechCapFac") %>%
       add_xml_data(L2233.GlobalIntTechEff_elec_cool, "GlobalIntTechEff") %>%
       add_xml_data(L2233.GlobalIntTechLifetime_elec_cool, "GlobalIntTechLifetime") %>%
       add_xml_data(L2233.GlobalIntTechShrwt_elec_cool, "GlobalIntTechShrwt") %>%
-    ##  add_xml_data(L2233.GlobalTechCapFac_elec_cool, "GlobalTechCapFac") %>% still missing from the new data system
+      add_xml_data(L2233.GlobalTechCapFac_elec_cool, "GlobalTechCapFac") %>%
       add_xml_data(L2233.GlobalTechCapture_elec_cool, "GlobalTechCapture") %>%
       add_xml_data(L2233.GlobalTechEff_elec_cool, "GlobalTechEff") %>%
-     ## add_xml_data(L2233.GlobalTechInterp_elec_cool, "GlobalTechInterp") %>% this is null why?
+      add_xml_data(L2233.GlobalTechInterp_elec_cool, "GlobalTechInterp") %>%
       add_xml_data(L2233.GlobalTechLifetime_elec_cool, "GlobalTechLifetime") %>%
       add_xml_data(L2233.GlobalTechProfitShutdown_elec_cool, "GlobalTechProfitShutdown") %>%
       add_xml_data(L2233.GlobalTechSCurve_elec_cool, "GlobalTechSCurve") %>%
@@ -180,56 +180,54 @@ module_water_batch_electricity_water.xml_DISABLED <- function(command, ...) {
       add_xml_data(L2233.StubTechShrwt_elec_cool,"StubTechShrwt") %>%
       add_xml_data(L2233.GlobalTechCapital_elec_cool,"GlobalTechCapital") %>%
       add_xml_data(L2233.GlobalIntTechCapital_elec_cool,"GlobalIntTechCapital","GlobalTechCapital") %>%
-      add_precursors("L223.Supplysector_elec",
-                     "L223.SubsectorShrwtFllt_elec",
-                     "L223.ElecReserve",
-                     "L223.StubTechCapFactor_elec",
-                     "L223.SubsectorInterp_elec",
-                     "L223.SubsectorInterpTo_elec",
-                     "L223.SubsectorLogit_elec",
-                     "L223.SubsectorShrwt_nuc",
-                     "L223.SubsectorShrwt_renew",
-                     "L2233.AvgFossilEffKeyword_elec_cool",
-                     "L2233.GlobalIntTechBackup_elec_cool",
-                     ## L2233.GlobalIntTechCapFac_elec_cool ??
-                     "L2233.GlobalIntTechEff_elec_cool",
-                     "L2233.GlobalIntTechLifetime_elec_cool",
-                     "L2233.GlobalIntTechShrwt_elec_cool",
-                     ## L2233.GlobalTechCapFac_elec_cool ??
-                     "L2233.GlobalTechCapture_elec_cool",
-                     "L2233.GlobalTechEff_elec_cool",
-                     "L2233.GlobalTechInterp_elec_cool",
-                     "L2233.GlobalTechLifetime_elec_cool",
-                     "L2233.GlobalTechProfitShutdown_elec_cool",
-                     "L2233.GlobalTechSCurve_elec_cool",
-                     "L2233.GlobalTechShrwt_elec_cool",
-                     "L2233.PrimaryRenewKeyword_elec_cool",
-                     "L2233.PrimaryRenewKeywordInt_elec_cool",
-                     # end of Kalyn's precourssorts
-
-                     "L2233.StubTech_elecPassthru",
-                     "L2233.StubTechProd_elecPassthru",
-                     "L2233.GlobalPassThroughTech",
-                     "L2233.GlobalTechEff_elecPassthru",
-                     "L2233.GlobalTechShrwt_elecPassthru",
-                     "L2233.GlobalIntTechCapital_elec",
-                     "L2233.GlobalTechCapital_elecPassthru",
-                     "L2233.GlobalIntTechOMfixed_elec",
-                     "L2233.GlobalTechOMfixed_elecPassthru",
-                     "L2233.GlobalIntTechOMvar_elec",
-                     "L2233.GlobalTechOMvar_elecPassthru",
-                     "L2233.PassThroughSector_elec_cool",
-                     "L2233.Supplysector_elec_cool",
-                     "L2233.ElecReserve_elec_cool",
-                     "L2233.SubsectorShrwtFllt_elec_cool",
-                     "L2233.SubsectorLogit_elec_cool",
-                     "L2233.StubTech_elec_cool",
-                     "L2233.StubTechEff_elec_cool",
-                     "L2233.StubTechProd_elec_cool",
-                     "L2233.StubTechFixOut_hydro",
-                     "L2233.StubTechShrwt_elec_cool",
-                     "L2233.GlobalTechCapital_elec_cool",
-                     "L2233.GlobalIntTechCapital_elec_cool") ->
+      add_precursors( "L223.Supplysector_elec",
+                      "L223.SubsectorShrwtFllt_elec",
+                      "L223.ElecReserve",
+                      "L223.StubTechCapFactor_elec",
+                      "L223.SubsectorInterp_elec",
+                      "L223.SubsectorInterpTo_elec",
+                      "L223.SubsectorLogit_elec",
+                      "L223.SubsectorShrwt_nuc",
+                      "L223.SubsectorShrwt_renew",
+                      "L2233.AvgFossilEffKeyword_elec_cool",
+                      "L2233.GlobalIntTechBackup_elec_cool",
+                      "L2233.GlobalIntTechCapFac_elec_cool",
+                      "L2233.GlobalIntTechEff_elec_cool",
+                      "L2233.GlobalIntTechLifetime_elec_cool",
+                      "L2233.GlobalIntTechShrwt_elec_cool",
+                      "L2233.GlobalTechCapFac_elec_cool",
+                      "L2233.GlobalTechCapture_elec_cool",
+                      "L2233.GlobalTechEff_elec_cool",
+                      "L2233.GlobalTechInterp_elec_cool",
+                      "L2233.GlobalTechLifetime_elec_cool",
+                      "L2233.GlobalTechProfitShutdown_elec_cool",
+                      "L2233.GlobalTechSCurve_elec_cool",
+                      "L2233.GlobalTechShrwt_elec_cool",
+                      "L2233.PrimaryRenewKeyword_elec_cool",
+                      "L2233.PrimaryRenewKeywordInt_elec_cool",
+                      "L2233.StubTech_elecPassthru",
+                      "L2233.StubTechProd_elecPassthru",
+                      "L2233.GlobalPassThroughTech",
+                      "L2233.GlobalTechEff_elecPassthru",
+                      "L2233.GlobalTechShrwt_elecPassthru",
+                      "L2233.GlobalIntTechCapital_elec",
+                      "L2233.GlobalTechCapital_elecPassthru",
+                      "L2233.GlobalIntTechOMfixed_elec",
+                      "L2233.GlobalTechOMfixed_elecPassthru",
+                      "L2233.GlobalIntTechOMvar_elec",
+                      "L2233.GlobalTechOMvar_elecPassthru",
+                      "L2233.PassThroughSector_elec_cool",
+                      "L2233.Supplysector_elec_cool",
+                      "L2233.ElecReserve_elec_cool",
+                      "L2233.SubsectorShrwtFllt_elec_cool",
+                      "L2233.SubsectorLogit_elec_cool",
+                      "L2233.StubTech_elec_cool",
+                      "L2233.StubTechEff_elec_cool",
+                      "L2233.StubTechProd_elec_cool",
+                      "L2233.StubTechFixOut_hydro",
+                      "L2233.StubTechShrwt_elec_cool",
+                      "L2233.GlobalTechCapital_elec_cool",
+                      "L2233.GlobalIntTechCapital_elec_cool") ->
       electricity_water.xml
 
     return_data(electricity_water.xml)
@@ -237,8 +235,3 @@ module_water_batch_electricity_water.xml_DISABLED <- function(command, ...) {
     stop("Unknown command")
   }
 }
-
-
-# Kalyn you are still missing the two of teh csv files but there is just so many i want to see if this
-# actually works first and then I will worry about thhose
-
