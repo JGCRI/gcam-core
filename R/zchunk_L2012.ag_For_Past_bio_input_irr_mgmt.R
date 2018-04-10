@@ -40,7 +40,9 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
              "L2012.AgProduction_For",
              "L2012.AgProduction_Past",
              "L2012.AgHAtoCL_irr_mgmt",
-             "L2012.AgYield_bio_ref"))
+             "L2012.AgYield_bio_ref",
+             "L201.AgYield_bio_grass",
+             "L201.AgYield_bio_tree"))
   } else if(command == driver.MAKE) {
 
     GCAM_commodity <- GCAM_region_ID <- region <- value <- year <- GLU <- GLU_name <- GLU_code <-
@@ -391,6 +393,15 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["AgYield"]]) ->
       L2012.AgYield_bio_ref
 
+    # Add sector, subsector, and technology information to L201.AgYield_bio_grass
+    L201.AgYield_bio_grass %>%
+      mutate(AgSupplySector = "biomass",
+             AgSupplySubsector = paste0("biomass_grass_", GLU_name),
+             AgProductionTechnology = AgSupplySubsector) %>%
+      repeat_add_columns((tibble(year = BASE_YEARS))) %>%
+      select(-GLU_name) ->
+      L201.AgYield_bio_grass
+
     # Produce outputs
     L2012.AgSupplySector %>%
       add_title("Generic information for agriculture supply sectors") %>%
@@ -480,7 +491,29 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       add_flags(FLAG_PROTECT_FLOAT) ->
       L2012.AgYield_bio_ref
 
-    return_data(L2012.AgSupplySector, L2012.AgSupplySubsector, L2012.AgProduction_ag_irr_mgmt, L2012.AgProduction_For, L2012.AgProduction_Past, L2012.AgHAtoCL_irr_mgmt, L2012.AgYield_bio_ref)
+    L201.AgYield_bio_grass %>%
+      add_title("Bioenergy grass crops yields for aggregate tech") %>%
+      add_units("GJ/m2") %>%
+      add_comments("Append region and basin names to L113.ag_bioYield_GJm2_R_GLU") %>%
+      add_legacy_name("L201.AgYield_bio_grass") %>%
+      add_precursors("common/GCAM_region_names",
+                     "water/basin_to_country_mapping",
+                     "L113.ag_bioYield_GJm2_R_GLU") %>%
+      add_flags(FLAG_PROTECT_FLOAT) ->
+      L201.AgYield_bio_grass
+
+    L201.AgYield_bio_tree %>%
+      add_title("Bioenergy tree crops yields for aggregate tech") %>%
+      add_units("GJ/m2") %>%
+      add_comments("Set bioenergy tree crop yield to the same as the bioenergy grass yield") %>%
+      add_comments("If data is missing for a region/basin, use the minimum yield") %>%
+      add_legacy_name("L201.AgYield_bio_tree") %>%
+      same_precursors_as("L201.AgYield_bio_grass") %>%
+      same_precursors_as("L2012.AgSupplySubsector") %>%
+      add_flags(FLAG_PROTECT_FLOAT) ->
+      L201.AgYield_bio_tree
+
+    return_data(L2012.AgSupplySector, L2012.AgSupplySubsector, L2012.AgProduction_ag_irr_mgmt, L2012.AgProduction_For, L2012.AgProduction_Past, L2012.AgHAtoCL_irr_mgmt, L2012.AgYield_bio_ref, L201.AgYield_bio_grass, L201.AgYield_bio_tree)
   } else {
     stop("Unknown command")
   }

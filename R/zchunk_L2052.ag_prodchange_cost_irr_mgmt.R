@@ -24,8 +24,8 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
              "L162.ag_YieldRate_R_C_Y_GLU_irr",
              "L162.bio_YieldRate_R_Y_GLU_irr",
              "L164.ag_Cost_75USDkg_C",
-             FILE = "temp-data-inject/L201.AgYield_bio_grass",
-             FILE = "temp-data-inject/L201.AgYield_bio_tree",
+             "L201.AgYield_bio_grass",
+             "L201.AgYield_bio_tree",
              "L102.pcgdp_thous90USD_Scen_R_Y"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2052.AgCost_ag_irr_mgmt",
@@ -55,8 +55,8 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
     L162.ag_YieldRate_R_C_Y_GLU_irr <- get_data(all_data, "L162.ag_YieldRate_R_C_Y_GLU_irr")
     L162.bio_YieldRate_R_Y_GLU_irr <- get_data(all_data, "L162.bio_YieldRate_R_Y_GLU_irr")
     L164.ag_Cost_75USDkg_C <- get_data(all_data, "L164.ag_Cost_75USDkg_C")
-    L201.AgYield_bio_grass <- get_data(all_data, "temp-data-inject/L201.AgYield_bio_grass")
-    L201.AgYield_bio_tree <- get_data(all_data, "temp-data-inject/L201.AgYield_bio_tree")
+    L201.AgYield_bio_grass <- get_data(all_data, "L201.AgYield_bio_grass")
+    L201.AgYield_bio_tree <- get_data(all_data, "L201.AgYield_bio_tree")
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y")
 
     # Define column names
@@ -241,8 +241,8 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       add_units("1975$ per kg") %>%
       add_comments("The same costs are assigned to all four technologies") %>%
       add_legacy_name("L2052.AgCost_bio_irr_mgmt") %>%
-      add_precursors("temp-data-inject/L201.AgYield_bio_grass",
-                     "temp-data-inject/L201.AgYield_bio_tree") ->
+      add_precursors("L201.AgYield_bio_grass",
+                     "L201.AgYield_bio_tree") ->
       L2052.AgCost_bio_irr_mgmt
 
     L2052.AgCost_For %>%
@@ -270,8 +270,8 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       add_comments("The same productivity change are assigned to both high and low management") %>%
       add_legacy_name("L2052.AgProdChange_bio_irr_ref") %>%
       add_precursors("L162.bio_YieldRate_R_Y_GLU_irr",
-                     "temp-data-inject/L201.AgYield_bio_grass",
-                     "temp-data-inject/L201.AgYield_bio_tree") ->
+                     "L201.AgYield_bio_grass",
+                     "L201.AgYield_bio_tree") ->
       L2052.AgProdChange_bio_irr_ref
 
     L2052.AgProdChange_irr_high %>%
