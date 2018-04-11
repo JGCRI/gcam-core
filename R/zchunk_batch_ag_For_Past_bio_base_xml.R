@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{ag_For_Past_bio_base.xml}. The corresponding file in the
 #' original data system was \code{batch_ag_For_Past_bio_base_xml.R} (aglu XML).
-module_aglu_batch_ag_For_Past_bio_base_xml <- function(command, ...) {
+module_aglu_batch_ag_For_Past_bio_base_xml_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c( "L201.AgSupplySubsector",
               "L201.AgProduction_ag",

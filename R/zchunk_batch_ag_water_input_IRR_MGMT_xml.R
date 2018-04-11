@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{ag_water_input_IRR_MGMT.xml}. The corresponding file in the
 #' original data system was \code{batch_ag_water_input_IRR_MGMT_xml.R} (aglu XML).
-module_aglu_batch_ag_water_input_IRR_MGMT_xml <- function(command, ...) {
+module_aglu_batch_ag_water_input_IRR_MGMT_xml_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c( "object"))
   } else if(command == driver.DECLARE_OUTPUTS) {
