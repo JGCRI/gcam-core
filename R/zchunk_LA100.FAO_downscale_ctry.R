@@ -1,6 +1,6 @@
 #' module_aglu_LA100.FAO_downscale_ctry
 #'
-#' Briefly describe what this chunk does.
+#' Downscale FAO production and consumption agricultural data to AGLU countries.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,7 +8,9 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L100.FAO_ag_HA_ha}, \code{L100.FAO_ag_Prod_t}, \code{L100.FAO_ag_Exp_t}, \code{L100.FAO_ag_Feed_t}, \code{L100.FAO_ag_Food_t}, \code{L100.FAO_ag_Imp_t}, \code{L100.FAO_an_Exp_t}, \code{L100.FAO_an_Food_t}, \code{L100.FAO_an_Imp_t}, \code{L100.FAO_an_Prod_t}, \code{L100.FAO_CL_kha}, \code{L100.FAO_fallowland_kha}, \code{L100.FAO_harv_CL_kha}, \code{L100.FAO_Fert_Cons_tN}, \code{L100.FAO_Fert_Prod_tN}, \code{L100.FAO_For_Exp_m3}, \code{L100.FAO_For_Imp_m3}, \code{L100.FAO_For_Prod_m3}. The corresponding file in the
 #' original data system was \code{LA100.FAO_downscale_ctry.R} (aglu level1).
-#' @details Describe in detail what this chunk does.
+#' @details Extrapolate each FAO dataset to 2011; match with country names; extrapolate to countries that
+#' split or combined at some point (e.g. Czechoslovakia needs to be split into Czech Republic and
+#' Slovakia); and calculate rolling five-year averages.
 #' @importFrom assertthat assert_that
 #' @importFrom tibble tibble
 #' @importFrom stats aggregate

@@ -18,10 +18,12 @@ the generated outputs: \code{L100.FAO_ag_HA_ha}, \code{L100.FAO_ag_Prod_t}, \cod
 original data system was \code{LA100.FAO_downscale_ctry.R} (aglu level1).
 }
 \description{
-Briefly describe what this chunk does.
+Downscale FAO production and consumption agricultural data to AGLU countries.
 }
 \details{
-Describe in detail what this chunk does.
+Extrapolate each FAO dataset to 2011; match with country names; extrapolate to countries that
+split or combined at some point (e.g. Czechoslovakia needs to be split into Czech Republic and
+Slovakia); and calculate rolling five-year averages.
 }
 \author{
 BBL
