@@ -17,3 +17,4 @@ industrial energy use,refined liquids,refined liquids cogen,non-energy,4.5,4.5
 industrial feedstocks,coal,coal,non-energy,0,0
 industrial feedstocks,gas,gas,non-energy,0,0
 industrial feedstocks,refined liquids,refined liquids,non-energy,0,0
+industry,industry,industry,non-energy,25,25

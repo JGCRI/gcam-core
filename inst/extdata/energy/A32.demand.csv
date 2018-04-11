@@ -2,4 +2,4 @@
 # Title: Industry demand perCapitaBased and price elasticity
 # Units: Unitless
 energy.final.demand,perCapitaBased,price.elasticity
-industry,1,-0.1
+industry,1,-1
