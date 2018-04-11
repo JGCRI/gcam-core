@@ -256,10 +256,25 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
     # change list names to match the legacy
     # names
     fixup <- function(irows, legacy.name) {
-      FAO_data_ALL_5yr[irows,] %>%
-        add_comments("Downscale countries; calculate 5-yr averages") %>%
-        add_legacy_name(legacy.name) %>%
-        add_flags(FLAG_NO_XYEAR, FLAG_LONG_YEAR_FORM)
+
+      # If the name of the table being added is L100.FAO_ag_Food_t or L100.FAO_CL_kha it is
+      # self tested and does not need the test flags, see https://github.com/JGCRI/gcamdata/issues/918 for more
+      # details.
+      if(legacy.name %in% c("L100.FAO_ag_Food_t", "L100.FAO_CL_kha")) {
+
+        FAO_data_ALL_5yr[irows,] %>%
+          add_comments("Downscale countries; calculate 5-yr averages") %>%
+          add_legacy_name(legacy.name)
+
+      } else {
+
+        FAO_data_ALL_5yr[irows,] %>%
+          add_comments("Downscale countries; calculate 5-yr averages") %>%
+          add_legacy_name(legacy.name) %>%
+          add_flags(FLAG_NO_XYEAR, FLAG_LONG_YEAR_FORM)
+
+      }
+
     }
     L100.FAOlist <- Map(fixup, L100.FAOlist, names(L100.FAOlist))
 
