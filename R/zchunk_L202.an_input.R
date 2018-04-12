@@ -100,9 +100,14 @@ module_aglu_L202.an_input <- function(command, ...) {
         filter(year %in% BASE_YEARS)
     }
     L202.an_Prod_Mt_R_C_Sys_Fd_Y.mlt <- get_join_filter("L107.an_Prod_Mt_R_C_Sys_Fd_Y")
-    L202.an_FeedIO_R_C_Sys_Fd_Y.mlt <- get_join_filter("temp-data-inject/L107.an_FeedIO_R_C_Sys_Fd_Y") %>%
+
+
+
+    L202.an_FeedIO_R_C_Sys_Fd_Y.mlt <- get_data(all_data, "temp-data-inject/L107.an_FeedIO_R_C_Sys_Fd_Y") %>%
       gather(year, value, -GCAM_region_ID, -GCAM_commodity, -system, -feed) %>%
-      mutate(year = as.integer(gsub("X", "", year)))
+      mutate(year = as.integer(gsub("X", "", year))) %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      filter(year %in% BASE_YEARS)
 
     L202.an_Feed_Mt_R_C_Sys_Fd_Y.mlt <- get_join_filter("L107.an_Feed_Mt_R_C_Sys_Fd_Y")
     L202.ag_Feed_Mt_R_C_Y.mlt <- get_join_filter("L108.ag_Feed_Mt_R_C_Y")
@@ -565,7 +570,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       add_units("Mt/yr") %>%
       add_comments("Calibrated primary sources of animal feed commodities, specific to each region and time period.") %>%
       add_legacy_name("L202.StubTechProd_in") %>%
-      add_precursors("aglu/A_an_input_technology", "L107.an_FeedIO_R_C_Sys_Fd_Y",
+      add_precursors("aglu/A_an_input_technology", "temp-data-inject/L107.an_FeedIO_R_C_Sys_Fd_Y",
                      "energy/A_regions", "common/GCAM_region_names") ->
       L202.StubTechProd_in
 
