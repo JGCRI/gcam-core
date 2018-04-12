@@ -176,14 +176,15 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
         rename(prodVal = value) %>%
         # calculate the region, commodity, system, feed type, year IO coefficient as feed consumption/animal production
         # note we're dividing by *tiny* numbers, not robust, so round everything to allow old-new comparison
-        mutate(value = signif(signif(feedVal, 10) / signif(prodVal, 10), 6)) %>%
+        mutate(value = signif(feedVal, digits = 2) / signif(prodVal, digits = 1)  ) %>%
         select(-feedVal, -prodVal) %>%
         # Replace NAs with a default value. This is a conservative default IO coefficient
         # for regions without the necessary production data from which to compute one.
         # Tends to be pastoral production in regions with zero pastoral production. If we
         # were to allow this tech in the future (currently it is zero-shareweighted out),
         # we'd need to have something plausible.
-        replace_na(list(value = 100)) -> A
+        replace_na(list(value = 100))  %>%
+        filter(value == 100) #-> A
         # store in a table specifying IO coefficients by region, commodity, system, feed type, and year:
         L107.an_FeedIO_R_C_Sys_Fd_Y
     }
