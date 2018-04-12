@@ -23,7 +23,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
              "L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y",
              "L100.IMAGE_an_FeedIO_ctry_C_Sys_Y",
              "L105.an_Prod_Mt_ctry_C_Y",
-             FILE = "temp-data-inject/L107.an_FeedIO_R_C_Sys_Fd_Y"))
+             FILE = "temp-data-inject/L107.an_FeedIO_R_C_Sys_Fd_Y_gcd5"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L107.an_Prod_Mt_R_C_Sys_Fd_Y",
              "L107.an_Feed_Mt_R_C_Sys_Fd_Y",
@@ -42,7 +42,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
     L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y <- get_data(all_data, "L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y")
     L100.IMAGE_an_FeedIO_ctry_C_Sys_Y <- get_data(all_data, "L100.IMAGE_an_FeedIO_ctry_C_Sys_Y")
     L105.an_Prod_Mt_ctry_C_Y <- get_data(all_data, "L105.an_Prod_Mt_ctry_C_Y")
-    L107.an_FeedIO_comp <- get_data(all_data, "temp-data-inject/L107.an_FeedIO_R_C_Sys_Fd_Y") %>%
+    L107.an_FeedIO_comp <- get_data(all_data, "temp-data-inject/L107.an_FeedIO_R_C_Sys_Fd_Y_gcd5") %>%
                              gather(year, value, -GCAM_region_ID, -GCAM_commodity, -system, -feed) %>%
                              mutate(year = as.integer(substr(year, 2, 5)))
 
@@ -242,7 +242,8 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
                      "L100.IMAGE_an_Prodmixfrac_ctry_C_Y",
                      "L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y",
                      "L100.IMAGE_an_FeedIO_ctry_C_Sys_Y",
-                     "L105.an_Prod_Mt_ctry_C_Y") %>%
+                     "L105.an_Prod_Mt_ctry_C_Y",
+                     "temp-data-inject/L107.an_FeedIO_R_C_Sys_Fd_Y_gcd5") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L107.an_FeedIO_R_C_Sys_Fd_Y
 
