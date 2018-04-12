@@ -34,7 +34,7 @@ module_aglu_L202.an_input <- function(command, ...) {
              FILE = "aglu/A_an_subsector",
              FILE = "aglu/A_an_technology",
              "L107.an_Prod_Mt_R_C_Sys_Fd_Y",
-             "L107.an_FeedIO_R_C_Sys_Fd_Y",
+             FILE = "temp-data-inject/L107.an_FeedIO_R_C_Sys_Fd_Y",
              "L107.an_Feed_Mt_R_C_Sys_Fd_Y",
              "L108.ag_Feed_Mt_R_C_Y",
              "L109.an_ALL_Mt_R_C_Y",
@@ -100,7 +100,10 @@ module_aglu_L202.an_input <- function(command, ...) {
         filter(year %in% BASE_YEARS)
     }
     L202.an_Prod_Mt_R_C_Sys_Fd_Y.mlt <- get_join_filter("L107.an_Prod_Mt_R_C_Sys_Fd_Y")
-    L202.an_FeedIO_R_C_Sys_Fd_Y.mlt <- get_join_filter("L107.an_FeedIO_R_C_Sys_Fd_Y")
+    L202.an_FeedIO_R_C_Sys_Fd_Y.mlt <- get_join_filter("temp-data-inject/L107.an_FeedIO_R_C_Sys_Fd_Y") %>%
+      gather(year, value, -GCAM_region_ID, -GCAM_commodity, -system, -feed) %>%
+      mutate(year = as.integer(gsub("X", "", year)))
+
     L202.an_Feed_Mt_R_C_Sys_Fd_Y.mlt <- get_join_filter("L107.an_Feed_Mt_R_C_Sys_Fd_Y")
     L202.ag_Feed_Mt_R_C_Y.mlt <- get_join_filter("L108.ag_Feed_Mt_R_C_Y")
     L202.an_ALL_Mt_R_C_Y <- get_join_filter("L109.an_ALL_Mt_R_C_Y")
