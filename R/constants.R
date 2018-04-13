@@ -547,6 +547,7 @@ emissions.AG_MACC_GHG_NAMES  <- c("CH4_AGR", "N2O_AGR")
 emissions.GHG_NAMES          <- c("CH4", "N2O")
 emissions.NONGHG_GASES       <- c("SO2", "NOx", "CO", "NMVOC", "NH3")
 emissions.PFCS               <- c("CF4", "C2F6", "SF6")
+emissions.TRN_INTL_SECTORS   <- c("trn_intl_ship", "trn_intl_air")
 
 emissions.USE_GV_MAC           <- 1
 emissions.USE_GCAM3_CCOEFS     <- 1 # Select whether to use GCAM3 fuel carbon coefficients
