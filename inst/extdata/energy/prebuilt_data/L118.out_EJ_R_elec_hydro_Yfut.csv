@@ -1,7 +1,6 @@
 # File: L118.out_EJ_R_elec_hydro_Yfut.csv
 # Title: Pre-built L118.out_EJ_R_elec_hydro_Yfut.csv
 # Units: NA
-# FLAG_LONG_YEAR_FORM FLAG_NO_XYEAR
 # Hydro potential was determined using various proxies
 # In most cases, a growth potential for each country was calculated,                    multiplied by its share in the region, and added to the base-year ouput
 GCAM_region_ID,sector,fuel,year,value
