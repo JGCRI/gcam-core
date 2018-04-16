@@ -27,5 +27,5 @@ shipping & aviation emission data calculated based on total emission and total e
 totals and shares are calculated by GCAM sector, fuel, technology, and driver type for EDGAR historical years.
 }
 \author{
-CDL September 2017
+RC April 2018
 }

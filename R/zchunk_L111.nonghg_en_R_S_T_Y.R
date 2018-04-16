@@ -43,7 +43,7 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
     Non.CO2 <- sector <- fuel <- year <- technology <- sector <- stub.technology <- energy <-
       fuel <- supplysector <- subsector <- GCAM_region_ID <- iso <- value <- epa_emissions <-
       tot_energy <- tot_emiss <- energy_share <- emissions <- `IPCC-Annex` <- `World Region` <-
-      Name <- IPCC <- IPCC_description <- agg_sector <- emfact <- scaler <- ISO_A3 <-
+      Name <- IPCC <- IPCC_description <- agg_sector <- emfact <- scaler <- ISO_A3 <- `2009` <- `2010` <-
       EPA_agg_sector <- EPA_agg_fuel <- EDGAR_agg_sector <- EPA_emissions <- EDGAR_emissions <- NULL
 
     all_data <- list(...)[[1]]
@@ -80,7 +80,7 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
       # For each gas, sector and fuel, replace 2003-2008 data with 2002 values
       group_by(Non.CO2, sector, fuel) %>%
       mutate(value = replace(value, year >= 2003 & year <= 2008, value[year == 2002])) %>%
-      rename(emfact = value)
+      rename(emfact = value) %>%
       ungroup
 
     # Compute unscaled emissions by country and technology
@@ -144,6 +144,7 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
     L111.emiss_scaler <- L111.nonghg_tg_R_en_Sedgar_Yh %>%
       # Match EAP and EDGAR emissions, use left_join due to NAs
       left_join(L111.EDGAR.agg, by = c("GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector", "year")) %>%
+      # Convert units, EPA emissions are in Tg, and EDGAR emissions are in Gg, 1 Tg = 1000 Gg
       mutate(scaler = EDGAR_emissions / EPA_emissions / 1000.0)
 
     # Scale EPA emissions
@@ -176,6 +177,7 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
       right_join(L111.nonghg_tg_R_en_Si_F_Yh_intl, by = c("EDGAR_agg_sector", "Non.CO2", "year")) %>%
       # Match in EDGAR international shipping and international aviation emissions
       left_join(L111.EDGAR_intl, by = c("EDGAR_agg_sector", "Non.CO2", "year")) %>%
+      # Convert EDGAR emissions in Gg to Tg
       mutate(tot_emiss = tot_emiss / 1000.0,
              energy_share = energy / tot_energy,
              # Downscale global emissions based on energy use
