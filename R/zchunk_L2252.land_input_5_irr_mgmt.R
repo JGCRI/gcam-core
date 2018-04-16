@@ -372,13 +372,6 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       select(c(LEVEL2_DATA_NAMES[["LN5_NodeGhostShare"]])) ->
       L2252.LN5_NodeGhostShare
 
-    if( OLD_DATA_SYSTEM_BEHAVIOR ) {
-      # For some reason, the Node Ghost Share for SinaiP in Africa_Northern in the old data system is missing.
-      L2252.LN5_NodeGhostShare %>%
-        filter(!(region == "Africa_Northern" & LandNode4 == "biomass_grass_SinaiP")) ->
-        L2252.LN5_NodeGhostShare
-    }
-
     # Produce outputs
     L2252.LN5_Logit %>%
       add_title("Logit exponent of the fifth land nest by region") %>%
