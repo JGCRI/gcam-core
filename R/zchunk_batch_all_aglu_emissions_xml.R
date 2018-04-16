@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{all_aglu_emissions.xml}. The corresponding file in the
 #' original data system was \code{batch_all_aglu_emissions.xml} (emissions XML).
-module_emissions_batch_all_aglu_emissions_xml_DISABLED <- function(command, ...) {
+module_emissions_batch_all_aglu_emissions_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L211.AWBEmissions",
               "L211.AGREmissions",
@@ -31,7 +31,7 @@ module_emissions_batch_all_aglu_emissions_xml_DISABLED <- function(command, ...)
     L211.AGREmissions <- get_data(all_data, "L211.AGREmissions")
     L211.AnEmissions <- get_data(all_data, "L211.AnEmissions")
     L211.AnNH3Emissions <- get_data(all_data, "L211.AnNH3Emissions")
-    L211.AGRBio <- get_data(all_data, "L211.AGRBio")
+    L211.AGRBio <- get_data(all_data, "L211.AGRBio") %>% rename (emiss.coef = bio_N2O_coef)
     L211.AWB_BCOC_EmissCoeff <- get_data(all_data, "L211.AWB_BCOC_EmissCoeff")
     L211.nonghg_max_reduction <- get_data(all_data, "L211.nonghg_max_reduction")
     L211.nonghg_steepness <- get_data(all_data, "L211.nonghg_steepness")
