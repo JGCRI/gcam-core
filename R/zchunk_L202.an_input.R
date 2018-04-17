@@ -99,6 +99,7 @@ module_aglu_L202.an_input <- function(command, ...) {
         left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
         filter(year %in% BASE_YEARS)
     }
+
     L202.an_Prod_Mt_R_C_Sys_Fd_Y.mlt <- get_join_filter("L107.an_Prod_Mt_R_C_Sys_Fd_Y")
     L202.an_FeedIO_R_C_Sys_Fd_Y.mlt <- get_join_filter("L107.an_FeedIO_R_C_Sys_Fd_Y")
     L202.an_Feed_Mt_R_C_Sys_Fd_Y.mlt <- get_join_filter("L107.an_Feed_Mt_R_C_Sys_Fd_Y")
