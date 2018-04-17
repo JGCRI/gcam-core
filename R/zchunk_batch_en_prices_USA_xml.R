@@ -22,6 +22,9 @@ module_gcamusa_batch_en_prices_USA_xml <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    compVal <- passthrough.sector <- share.weight <-
+      supplysector <- technology <- NULL # silence package check notes
+
     # Load required inputs
     L226.SubsectorShrwtFllt_en_USA <- get_data(all_data, "L226.SubsectorShrwtFllt_en_USA")
     L226.SubsectorLogit_en_USA <- get_data(all_data, "L226.SubsectorLogit_en_USA")
