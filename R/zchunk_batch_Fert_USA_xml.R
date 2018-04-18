@@ -46,7 +46,7 @@ module_gcamusa_batch_Fert_USA_xml <- function(command, ...) {
     create_xml("Fert_USA.xml") %>%
       add_xml_data(L2322.DeleteSubsector_USAFert,"DeleteSubsector") %>%
       add_xml_data(L2322.FinalEnergyKeyword_USAFert,"FinalEnergyKeyword") %>%
-      add_xml_data(L2322.SubsectorLogit_USAFert,"SubsectorLogit") %>%
+      add_logit_tables_xml(L2322.SubsectorLogit_USAFert,"SubsectorLogit") %>%
       add_xml_data(L2322.SubsectorShrwtFllt_USAFert,"SubsectorShrwtFllt") %>%
       add_xml_data(L2322.SubsectorInterp_USAFert,"SubsectorInterp") %>%
       add_xml_data(L2322.TechShrwt_USAFert,"TechShrwt") %>%
