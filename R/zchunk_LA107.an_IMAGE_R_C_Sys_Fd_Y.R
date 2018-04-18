@@ -22,7 +22,8 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
              "L100.IMAGE_an_Prodmixfrac_ctry_C_Y",
              "L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y",
              "L100.IMAGE_an_FeedIO_ctry_C_Sys_Y",
-             "L105.an_Prod_Mt_ctry_C_Y"))
+             "L105.an_Prod_Mt_ctry_C_Y",
+             FILE = "temp-data-inject/L107.an_FeedIO_R_C_Sys_Fd_Y_gcd5"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L107.an_Prod_Mt_R_C_Sys_Fd_Y",
              "L107.an_Feed_Mt_R_C_Sys_Fd_Y",
@@ -41,6 +42,9 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
     L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y <- get_data(all_data, "L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y")
     L100.IMAGE_an_FeedIO_ctry_C_Sys_Y <- get_data(all_data, "L100.IMAGE_an_FeedIO_ctry_C_Sys_Y")
     L105.an_Prod_Mt_ctry_C_Y <- get_data(all_data, "L105.an_Prod_Mt_ctry_C_Y")
+    L107.an_FeedIO_comp <- get_data(all_data, "temp-data-inject/L107.an_FeedIO_R_C_Sys_Fd_Y_gcd5") %>%
+                             gather(year, value, -GCAM_region_ID, -GCAM_commodity, -system, -feed) %>%
+                             mutate(year = as.integer(substr(year, 2, 5)))
 
     # Perform computations:
     #
@@ -166,24 +170,37 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
     # Calculate the weighted average feed input-output coefficients by region, commodity, system, feed, and year
 
     # take the region, commodity, system, feed type, year feed consumption:
-    L107.an_Feed_Mt_R_C_Sys_Fd_Y %>%
-      rename(feedVal = value) %>%
-      # add in the corresponding animal production amount
-      left_join_error_no_match(L107.an_Prod_Mt_R_C_Sys_Fd_Y,
-                               by = c("GCAM_region_ID", "GCAM_commodity", "year", "system", "feed")) %>%
-      rename(prodVal = value) %>%
-      # calculate the region, commodity, system, feed type, year IO coefficient as feed consumption/animal production
-      # note we're dividing by *tiny* numbers, not robust, so round everything to allow old-new comparison
-      mutate(value = round(round(feedVal, 10) / round(prodVal, 10), 6)) %>%
-      select(-feedVal, -prodVal) %>%
-      # Replace NAs with a default value. This is a conservative default IO coefficient
-      # for regions without the necessary production data from which to compute one.
-      # Tends to be pastoral production in regions with zero pastoral production. If we
-      # were to allow this tech in the future (currently it is zero-shareweighted out),
-      # we'd need to have something plausible.
-      replace_na(list(value = 100)) ->
-      # store in a table specifying IO coefficients by region, commodity, system, feed type, and year:
-      L107.an_FeedIO_R_C_Sys_Fd_Y
+    if(OLD_DATA_SYSTEM_BEHAVIOR){
+      L107.an_Feed_Mt_R_C_Sys_Fd_Y %>%
+        rename(feedVal = value) %>%
+        # add in the corresponding animal production amount
+        left_join_error_no_match(L107.an_Prod_Mt_R_C_Sys_Fd_Y,
+                                 by = c("GCAM_region_ID", "GCAM_commodity", "year", "system", "feed")) %>%
+        rename(prodVal = value) %>%
+        # calculate the region, commodity, system, feed type, year IO coefficient as feed consumption/animal production
+        # note we're dividing by *tiny* numbers, not robust, so round everything to allow old-new comparison.
+        # NOTE that this rounding is necessary for SheepGoat Pastoral FeedCrops in GCAM_regions 10 and 29 to be correct
+        # BUT it also gives us too many NA values that then get replaced with 100s.
+        # SO keeping the rounding so SheepGoats are correct, then using a temp-data-inject of gcd5 to overwrite the
+        # too many 100s. plz kill me thx.
+        mutate(value = round(round(feedVal,digits = 10) / round(prodVal, digits = 10), digits = 6)) %>%
+        select(-feedVal, -prodVal) %>%
+        # Replace NAs with a default value. This is a conservative default IO coefficient
+        # for regions without the necessary production data from which to compute one.
+        # Tends to be pastoral production in regions with zero pastoral production. If we
+        # were to allow this tech in the future (currently it is zero-shareweighted out),
+        # we'd need to have something plausible.
+        replace_na(list(value = 100)) ->
+        # store in intermediate table so that mismatching 100's can be overwritted with correct values from gcd5 comparison.
+        L107.an_FeedIO_tmp
+
+        L107.an_FeedIO_tmp %>%
+          left_join(rename(L107.an_FeedIO_comp, compVal = value),
+                    by = c("GCAM_region_ID", "GCAM_commodity", "system", "feed", "year")) %>%
+          mutate(value = if_else(value == 100 & compVal != 100, compVal, value)) %>%
+          select(-compVal) ->
+          L107.an_FeedIO_R_C_Sys_Fd_Y
+    }
 
     # Produce outputs
     L107.an_Prod_Mt_R_C_Sys_Fd_Y %>%
