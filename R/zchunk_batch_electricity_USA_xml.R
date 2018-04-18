@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{electricity_USA.xml}. The corresponding file in the
 #' original data system was \code{batch_electricity_USA_xml.R} (gcamusa XML).
-module_gcamusa_batch_electricity_USA_xml_DISABLED <- function(command, ...) {
+module_gcamusa_batch_electricity_USA_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L223.SectorNodeEquiv",
              "L223.TechNodeEquiv",
@@ -125,13 +125,15 @@ module_gcamusa_batch_electricity_USA_xml_DISABLED <- function(command, ...) {
     L2232.StubTechElecMarket_backup_USA <- get_data(all_data, "L2232.StubTechElecMarket_backup_USA")
 
     # ===================================================
+    # Rename tibble columns to match the L2 data names.
+    L223.PassthroughSector_elec_USA <- rename(L223.PassthroughSector_elec_USA, pass.through.sector = passthrough.sector)
+    L223.PassthroughTech_elec_FERC  <- rename(L223.PassthroughTech_elec_FERC, pass.through.technology = technology)
+    L223.StubTechProd_elec_USA      <- rename(L223.StubTechProd_elec_USA, tech.share.weight = share.weight)
 
     # Produce outputs
     create_xml("electricity_USA.xml") %>%
-      add_xml_data(L223.SectorNodeEquiv,"EQUIV_TABLE", column_order_lookup = NULL) %>%
-      add_xml_data(L223.TechNodeEquiv,"EQUIV_TABLE", column_order_lookup = NULL) %>%
-      add_xml_data(L223.PassthroughSector_elec_USA,"PassthroughSector") %>%
-      add_xml_data(L223.PassthroughTech_elec_FERC,"PassthroughTech") %>%
+      add_xml_data(L223.PassthroughSector_elec_USA,"PassThroughSector") %>%
+      add_xml_data(L223.PassthroughTech_elec_FERC,"PassThroughTech") %>%
       add_logit_tables_xml(L223.Supplysector_elec_FERC,"Supplysector") %>%
       add_xml_data(L223.SubsectorShrwtFllt_elec_FERC,"SubsectorShrwtFllt") %>%
       add_xml_data(L223.SubsectorInterp_elec_FERC,"SubsectorInterp") %>%
