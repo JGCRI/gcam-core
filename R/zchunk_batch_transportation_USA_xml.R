@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{transportation_USA.xml}. The corresponding file in the
 #' original data system was \code{batch_transportation_USA_xml.R} (gcamusa XML).
-module_gcamusa_batch_transportation_USA_xml_DISABLED <- function(command, ...) {
+module_gcamusa_batch_transportation_USA_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L254.DeleteSupplysector_USAtrn",
              "L254.DeleteFinalDemand_USAtrn",
@@ -40,7 +40,7 @@ module_gcamusa_batch_transportation_USA_xml_DISABLED <- function(command, ...) {
       add_xml_data(L254.StubTranTechProd_nonmotor_USA,"StubTranTechProd") %>%
       add_xml_data(L254.StubTranTechCalInput_passthru_USA,"StubTranTechCalInput") %>%
       add_xml_data(L254.BaseService_trn_USA,"BaseService") %>%
-      add_precursors("L254.DeleteSupplysector_USAtrn", "L254.DeleteFinalDemand_USAtrn", "object", "L254.StubTranTechCalInput_USA", "L254.StubTranTechProd_nonmotor_USA", "L254.StubTranTechCalInput_passthru_USA", "L254.BaseService_trn_USA") ->
+      add_precursors("L254.DeleteSupplysector_USAtrn", "L254.DeleteFinalDemand_USAtrn", "L254.StubTranTechCalInput_USA", "L254.StubTranTechProd_nonmotor_USA", "L254.StubTranTechCalInput_passthru_USA", "L254.BaseService_trn_USA") ->
       transportation_USA.xml
 
     return_data(transportation_USA.xml)

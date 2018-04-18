@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{industry_USA.xml}. The corresponding file in the
 #' original data system was \code{batch_industry_USA_xml.R} (gcamusa XML).
-module_gcamusa_batch_industry_USA_xml_DISABLED <- function(command, ...) {
+module_gcamusa_batch_industry_USA_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L232.DeleteSupplysector_USAind",
              "L232.DeleteFinalDemand_USAind",
@@ -28,7 +28,6 @@ module_gcamusa_batch_industry_USA_xml_DISABLED <- function(command, ...) {
     # Load required inputs
     L232.DeleteSupplysector_USAind <- get_data(all_data, "L232.DeleteSupplysector_USAind")
     L232.DeleteFinalDemand_USAind <- get_data(all_data, "L232.DeleteFinalDemand_USAind")
-    object <- get_data(all_data, "object")
     L232.StubTechCalInput_indenergy_USA <- get_data(all_data, "L232.StubTechCalInput_indenergy_USA")
     L232.StubTechCalInput_indfeed_USA <- get_data(all_data, "L232.StubTechCalInput_indfeed_USA")
     L232.StubTechProd_industry_USA <- get_data(all_data, "L232.StubTechProd_industry_USA")
@@ -43,7 +42,6 @@ module_gcamusa_batch_industry_USA_xml_DISABLED <- function(command, ...) {
     create_xml("industry_USA.xml") %>%
       add_xml_data(L232.DeleteSupplysector_USAind,"DeleteSupplysector") %>%
       add_xml_data(L232.DeleteFinalDemand_USAind,"DeleteFinalDemand") %>%
-      add_xml_data(object,"IDstring") %>%
       add_xml_data(L232.StubTechCalInput_indenergy_USA,"StubTechCalInput") %>%
       add_xml_data(L232.StubTechCalInput_indfeed_USA,"StubTechCalInput") %>%
       add_xml_data(L232.StubTechProd_industry_USA,"StubTechProd") %>%
@@ -51,7 +49,15 @@ module_gcamusa_batch_industry_USA_xml_DISABLED <- function(command, ...) {
       add_xml_data(L232.StubTechMarket_ind_USA,"StubTechMarket") %>%
       add_xml_data(L232.StubTechSecMarket_ind_USA,"StubTechSecMarket") %>%
       add_xml_data(L232.BaseService_ind_USA,"BaseService") %>%
-      add_precursors("L232.DeleteSupplysector_USAind", "L232.DeleteFinalDemand_USAind", "object", "L232.StubTechCalInput_indenergy_USA", "L232.StubTechCalInput_indfeed_USA", "L232.StubTechProd_industry_USA", "L232.StubTechCoef_industry_USA", "L232.StubTechMarket_ind_USA", "L232.StubTechSecMarket_ind_USA", "L232.BaseService_ind_USA") ->
+      add_precursors("L232.DeleteSupplysector_USAind",
+                     "L232.DeleteFinalDemand_USAind",
+                     "L232.StubTechCalInput_indenergy_USA",
+                     "L232.StubTechCalInput_indfeed_USA",
+                     "L232.StubTechProd_industry_USA",
+                     "L232.StubTechCoef_industry_USA",
+                     "L232.StubTechMarket_ind_USA",
+                     "L232.StubTechSecMarket_ind_USA",
+                     "L232.BaseService_ind_USA") ->
       industry_USA.xml
 
     return_data(industry_USA.xml)

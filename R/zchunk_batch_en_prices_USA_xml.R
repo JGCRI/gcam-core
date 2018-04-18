@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{en_prices_USA.xml}. The corresponding file in the
 #' original data system was \code{batch_en_prices_USA_xml.R} (gcamusa XML).
-module_gcamusa_batch_en_prices_USA_xml_DISABLED <- function(command, ...) {
+module_gcamusa_batch_en_prices_USA_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L226.SubsectorShrwtFllt_en_USA",
              "L226.SubsectorLogit_en_USA",
@@ -22,6 +22,9 @@ module_gcamusa_batch_en_prices_USA_xml_DISABLED <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    compVal <- passthrough.sector <- share.weight <-
+      supplysector <- technology <- NULL # silence package check notes
+
     # Load required inputs
     L226.SubsectorShrwtFllt_en_USA <- get_data(all_data, "L226.SubsectorShrwtFllt_en_USA")
     L226.SubsectorLogit_en_USA <- get_data(all_data, "L226.SubsectorLogit_en_USA")
@@ -31,6 +34,8 @@ module_gcamusa_batch_en_prices_USA_xml_DISABLED <- function(command, ...) {
     L226.Ccoef <- get_data(all_data, "L226.Ccoef")
 
     # ===================================================
+    # Rename tibble columns to match the L2 data header information.
+    L226.Ccoef <- rename(L226.Ccoef, PrimaryFuelCO2Coef.name = supplysector)
 
     # Produce outputs
     create_xml("en_prices_USA.xml") %>%
@@ -40,7 +45,12 @@ module_gcamusa_batch_en_prices_USA_xml_DISABLED <- function(command, ...) {
       add_xml_data(L226.TechCoef_en_USA,"TechCoef") %>%
       add_xml_data(L226.TechCost_en_USA,"TechCost") %>%
       add_xml_data(L226.Ccoef,"CarbonCoef") %>%
-      add_precursors("L226.SubsectorShrwtFllt_en_USA", "L226.SubsectorLogit_en_USA", "L226.TechShrwt_en_USA", "L226.TechCoef_en_USA", "L226.TechCost_en_USA", "L226.Ccoef") ->
+      add_precursors("L226.SubsectorShrwtFllt_en_USA",
+                     "L226.SubsectorLogit_en_USA",
+                     "L226.TechShrwt_en_USA",
+                     "L226.TechCoef_en_USA",
+                     "L226.TechCost_en_USA",
+                     "L226.Ccoef") ->
       en_prices_USA.xml
 
     return_data(en_prices_USA.xml)
