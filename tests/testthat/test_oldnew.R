@@ -22,8 +22,7 @@ test_that("matches old data system output", {
   xml_dir <- normalizePath(file.path("../..", XML_DIR))
 
   if(identical(Sys.getenv("TRAVIS"), "true")) {
-    gcam_data_map <- driver(write_outputs = TRUE, quiet = TRUE, outdir = outputs_dir, xmldir = xml_dir, return_data_map_only = TRUE)
-    # The following two tests are only run on Travis because they will fail
+     # The following two tests are only run on Travis because they will fail
     # during the R CMD CHECK process locally (as the R build process removes outputs/)
     expect_equivalent(file.access(outputs_dir, mode = 4), 0,  # outputs_dir exists and is readable
                       info = paste("Directory", outputs_dir, "unreadable or does not exist from", getwd()))
@@ -31,16 +30,21 @@ test_that("matches old data system output", {
 
     # Now, and also run only on Travis, we compare the data map returned above with the pre-packaged version
     # They should match! See https://github.com/JGCRI/gcamdata/pull/751#issuecomment-331578990
-    expect_true(tibble::is_tibble(gcamdata:::GCAM_DATA_MAP))
+    gcam_data_map <- driver(write_outputs = TRUE, quiet = TRUE, outdir = outputs_dir, xmldir = xml_dir, return_data_map_only = TRUE)
+
+        # Put what the driver returns and the internal GCAM_DATA_MAP into the same order (can vary if run on PIC for example)
+    gcam_data_map <- arrange(gcam_data_map, name, output)
+    gdm_internal <- arrange(gcamdata:::GCAM_DATA_MAP, name, output)
+
+    expect_true(tibble::is_tibble(gdm_internal))
     expect_true(tibble::is_tibble(gcam_data_map))
-    expect_identical(dim(gcamdata:::GCAM_DATA_MAP), dim(gcam_data_map), info =
+    expect_identical(gdm_internal, gcam_data_map)
+    expect_identical(dim(gdm_internal), dim(gcam_data_map), info =
                        "GCAM_DATA_MAP size doesn't match.  Rerun generate_package_data to update.")
-    expect_identical(gcamdata:::GCAM_DATA_MAP$name, gcam_data_map$name, info =
+    expect_identical(gdm_internal$name, gcam_data_map$name, info =
                        "GCAM_DATA_MAP name doesn't match.  Rerun generate_package_data to update.")
-    expect_identical(gcamdata:::GCAM_DATA_MAP$output, gcam_data_map$output,
-                     info = "GCAM_DATA_MAP output doesn't match")
-    expect_identical(gcamdata:::GCAM_DATA_MAP$precursors,
-                     gcam_data_map$precursors, info =
+    expect_identical(gdm_internal$output, gcam_data_map$output, info = "GCAM_DATA_MAP output doesn't match")
+    expect_identical(gdm_internal$precursors, gcam_data_map$precursors, info =
                        "GCAM_DATA_MAP precursors doesn't match.  Rerun generate_package_data to update.")
     # The following lines fail on Travis. Not sure why. But above we guarantee that the
     # pre-packaged GCAM_DATA_MAP has the same dimensions, object names, output names,
