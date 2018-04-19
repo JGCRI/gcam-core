@@ -1,4 +1,4 @@
-#' module_gcamusa_batch_building_USA.xml
+#' module_gcamusa_batch_building_USA_xml
 #'
 #' Construct XML data structure for \code{building_USA.xml}.
 #'
@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{building_USA.xml}. The corresponding file in the
 #' original data system was \code{batch_building_USA.xml} (gcamusa XML).
-module_gcamusa_batch_building_USA.xml <- function(command, ...) {
+module_gcamusa_batch_building_USA_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L244.DeleteConsumer_USAbld",
              "L244.DeleteSupplysector_USAbld",
