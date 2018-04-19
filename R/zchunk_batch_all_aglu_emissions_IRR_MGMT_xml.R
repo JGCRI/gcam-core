@@ -47,11 +47,12 @@ module_emissions_batch_all_aglu_emissions_IRR_MGMT_xml <- function(command, ...)
       add_xml_data(L2112.AGRBio, "OutputEmissCoeffAg") %>%
       add_xml_data(L2112.AWB_BCOC_EmissCoeff, "OutputEmissCoeffAg") %>%
       add_xml_data(L2112.nonghg_max_reduction, "AgGDPCtrlMax") %>%
-      add_xml_data(L211.AnEmissions, "StbTechOutputEmissions") %>%
-      add_xml_data(L211.AnNH3Emissions, "StbTechOutputEmissions") %>%
-      add_xml_data(L252.MAC_an, "MAC") %>%
+      add_xml_data(L2112.nonghg_steepness, "AgGDPCtrlSteep") %>%
+      add_xml_data(L211.AnEmissions, "OutputEmissions") %>%
+      add_xml_data(L211.AnNH3Emissions, "OutputEmissions") %>%
       add_xml_data(L2112.AWBEmissions, "OutputEmissionsAg") %>%
       add_xml_data(L2112.AGREmissions, "OutputEmissionsAg") %>%
+      add_xml_data(L252.MAC_an, "MAC") %>%
       add_xml_data(L2522.AgMAC, "AgMAC") %>%
       add_precursors("L2112.AWBEmissions",
                      "L2112.AGREmissions",
@@ -70,3 +71,4 @@ module_emissions_batch_all_aglu_emissions_IRR_MGMT_xml <- function(command, ...)
     stop("Unknown command")
   }
 }
+
