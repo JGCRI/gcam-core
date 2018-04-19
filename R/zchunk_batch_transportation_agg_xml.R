@@ -80,7 +80,7 @@ module_energy_batch_transportation_agg_xml <- function(command, ...) {
         add_xml_data(L252.SubsectorInterpTo_trn, "SubsectorInterpTo") ->
         transportation_agg.xml
     }
-    transportation_agg.xml <- transportation_agg.xml %>%
+    transportation_agg.xml %>%
       add_xml_data(L252.StubTech_trn,"StubTech") %>%
       add_xml_data(L252.GlobalTechShrwt_trn,"GlobalTechShrwt") %>%
       add_xml_data(L252.GlobalTechEff_trn,"GlobalTechEff") %>%
