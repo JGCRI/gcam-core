@@ -302,6 +302,7 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
 
       old_ds_values$supplysector <- "industrial energy use"
       old_ds_values$subsector <- old_ds_values$stub.technology <-  "gas"
+      old.value <- NULL  # silence package check note
 
       L111.nonghg_tgej_R_en_S_F_Yh %>%
         left_join(old_ds_values, by = c("GCAM_region_ID", "Non.CO2", "supplysector", "subsector", "stub.technology", "year")) %>%
