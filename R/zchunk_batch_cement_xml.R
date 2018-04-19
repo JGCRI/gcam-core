@@ -10,9 +10,11 @@
 #' original data system was \code{batch_cement_xml.R} (energy XML).
 module_energy_batch_cement_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L2321.FinalEnergyKeyword_cement",
+    return(c("L2321.Supplysector_cement",
+             "L2321.FinalEnergyKeyword_cement",
              "L2321.SubsectorLogit_cement",
              # "L2321.SubsectorShrwt_cement",
+             "L2321.SubsectorShrwtFllt_cement",
              "L2321.SubsectorInterp_cement",
              # "L2321.SubsectorInterpTo_cement",
              "L2321.StubTech_cement",
@@ -33,9 +35,11 @@ module_energy_batch_cement_xml <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
+    L2321.Supplysector_cement <- get_data(all_data, "L2321.Supplysector_cement")
     L2321.FinalEnergyKeyword_cement <- get_data(all_data, "L2321.FinalEnergyKeyword_cement")
     L2321.SubsectorLogit_cement <- get_data(all_data, "L2321.SubsectorLogit_cement")
     #    L2321.SubsectorShrwt_cement <- get_data(all_data, "L2321.SubsectorShrwt_cement")
+    L2321.SubsectorShrwtFllt_cement <- get_data(all_data, "L2321.SubsectorShrwtFllt_cement")
     L2321.SubsectorInterp_cement <- get_data(all_data, "L2321.SubsectorInterp_cement")
     #    L2321.SubsectorInterpTo_cement <- get_data(all_data, "L2321.SubsectorInterpTo_cement")
     L2321.StubTech_cement <- get_data(all_data, "L2321.StubTech_cement")
@@ -54,9 +58,11 @@ module_energy_batch_cement_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("cement.xml") %>%
+      add_logit_tables_xml(L2321.Supplysector_cement, "Supplysector") %>%
       add_xml_data(L2321.FinalEnergyKeyword_cement,"FinalEnergyKeyword") %>%
-      add_xml_data(L2321.SubsectorLogit_cement,"SubsectorLogit") %>%
+      add_logit_tables_xml(L2321.SubsectorLogit_cement,"SubsectorLogit") %>%
       #      add_xml_data(L2321.SubsectorShrwt_cement,"SubsectorShrwt") %>%
+      add_xml_data(L2321.SubsectorShrwtFllt_cement,"SubsectorShrwtFllt") %>%
       add_xml_data(L2321.SubsectorInterp_cement,"SubsectorInterp") %>%
       #      add_xml_data(L2321.SubsectorInterpTo_cement,"SubsectorInterpTo") %>%
       add_xml_data(L2321.StubTech_cement,"StubTech") %>%
@@ -70,8 +76,9 @@ module_energy_batch_cement_xml <- function(command, ...) {
       add_xml_data(L2321.PerCapitaBased_cement,"PerCapitaBased") %>%
       add_xml_data(L2321.BaseService_cement,"BaseService") %>%
       add_xml_data(L2321.PriceElasticity_cement,"PriceElasticity") %>%
-      add_precursors("L2321.FinalEnergyKeyword_cement", "L2321.SubsectorLogit_cement",
+      add_precursors("L2321.Supplysector_cement", "L2321.FinalEnergyKeyword_cement", "L2321.SubsectorLogit_cement",
                      # "L2321.SubsectorShrwt_cement",
+                     "L2321.SubsectorShrwtFllt_cement",
                      "L2321.SubsectorInterp_cement",
                      # "L2321.SubsectorInterpTo_cement",
                      "L2321.StubTech_cement",
