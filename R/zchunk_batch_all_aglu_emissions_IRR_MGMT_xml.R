@@ -38,6 +38,8 @@ module_emissions_batch_all_aglu_emissions_IRR_MGMT_xml <- function(command, ...)
     L2112.nonghg_steepness <- get_data(all_data, "L2112.nonghg_steepness")
     L2522.AgMAC <- get_data(all_data, "L2522.AgMAC")
 
+    bio_N20_coef <- compVal <- NULL # Silence package checks
+
     # ===================================================
     # Rename the tibble column names to match the header names.
     L2112.AGRBio <- rename(L2112.AGRBio, emiss.coef = bio_N2O_coef)
