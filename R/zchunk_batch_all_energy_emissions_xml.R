@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{all_energy_emissions.xml}. The corresponding file in the
 #' original data system was \code{batch_all_energy_emissions.xml.R} (emissions XML).
-module_emissions_batch_all_energy_emissions_xml_DISABLED <- function(command, ...) {
+module_emissions_batch_all_energy_emissions_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L201.en_pol_emissions",
               "L201.en_ghg_emissions",
@@ -45,13 +45,12 @@ module_emissions_batch_all_energy_emissions_xml_DISABLED <- function(command, ..
     L232.nonco2_prc <- get_data(all_data, "L232.nonco2_prc")
     L232.nonco2_max_reduction <- get_data(all_data, "L232.nonco2_max_reduction")
     L232.nonco2_steepness <- get_data(all_data, "L232.nonco2_steepness")
-    L241.nonco2_tech_coeff <- get_data(all_data, "L241.nonco2_tech_coeff")
+    L241.nonco2_tech_coeff <- get_data(all_data, "L241.nonco2_tech_coeff") %>% rename(emiss.coef = emiss.coeff)
     L241.nonco2_max_reduction <- get_data(all_data, "L241.nonco2_max_reduction")
     L241.nonco2_steepness <- get_data(all_data, "L241.nonco2_steepness")
     L252.ResMAC_fos <- get_data(all_data, "L252.ResMAC_fos")
 
     # ===================================================
-
     # Produce outputs
     create_xml("all_energy_emissions.xml") %>%
       add_xml_data(L201.en_pol_emissions, "InputEmissions") %>%
