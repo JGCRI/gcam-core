@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{all_aglu_emissions_IRR.xml}. The corresponding file in the
 #' original data system was \code{batch_all_aglu_emissions_IRR.xml} (emissions XML).
-module_emissions_batch_all_aglu_emissions_IRR_xml_DISABLED <- function(command, ...) {
+module_emissions_batch_all_aglu_emissions_IRR_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L2521.AgMAC",
               "L252.MAC_an",
@@ -26,6 +26,8 @@ module_emissions_batch_all_aglu_emissions_IRR_xml_DISABLED <- function(command, 
 
     all_data <- list(...)[[1]]
 
+    bio_N2O_coef <- NULL  # silence package check notes
+
     # Load required inputs
     L2521.AgMAC <- get_data(all_data, "L2521.AgMAC")
     L252.MAC_an <- get_data(all_data, "L252.MAC_an")
@@ -33,7 +35,7 @@ module_emissions_batch_all_aglu_emissions_IRR_xml_DISABLED <- function(command, 
     L2111.AGREmissions <- get_data(all_data, "L2111.AGREmissions")
     L211.AnEmissions <- get_data(all_data, "L211.AnEmissions")
     L211.AnNH3Emissions <- get_data(all_data, "L211.AnNH3Emissions")
-    L2111.AGRBio <- get_data(all_data, "L2111.AGRBio")
+    L2111.AGRBio <- get_data(all_data, "L2111.AGRBio") %>% rename (emiss.coef = bio_N2O_coef)
     L2111.AWB_BCOC_EmissCoeff <- get_data(all_data, "L2111.AWB_BCOC_EmissCoeff")
     L2111.nonghg_max_reduction <- get_data(all_data, "L2111.nonghg_max_reduction")
     L2111.nonghg_steepness <- get_data(all_data, "L2111.nonghg_steepness")

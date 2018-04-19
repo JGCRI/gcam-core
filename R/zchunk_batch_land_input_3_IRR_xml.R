@@ -8,11 +8,10 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{land_input_3_IRR.xml}. The corresponding file in the
 #' original data system was \code{batch_land_input_3_IRR.xml.R} (aglu XML).
-module_aglu_batch_land_input_3_IRR_xml_DISABLED <- function(command, ...) {
+module_aglu_batch_land_input_3_IRR_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L2231.LN3_HistUnmgdAllocation",
               "L2231.LN3_UnmgdAllocation",
-              "L2231.NodeEquiv",
               "L2231.LN3_NoEmissCarbon",
               "L2231.LN3_NodeCarbon",
               "L2231.LN3_HistMgdAllocation_noncrop",
@@ -28,7 +27,6 @@ module_aglu_batch_land_input_3_IRR_xml_DISABLED <- function(command, ...) {
     # Load required inputs
     L2231.LN3_HistUnmgdAllocation <- get_data(all_data, "L2231.LN3_HistUnmgdAllocation")
     L2231.LN3_UnmgdAllocation <- get_data(all_data, "L2231.LN3_UnmgdAllocation")
-    L2231.NodeEquiv <- get_data(all_data, "L2231.NodeEquiv")
     L2231.LN3_NoEmissCarbon <- get_data(all_data, "L2231.LN3_NoEmissCarbon")
     L2231.LN3_NodeCarbon <- get_data(all_data, "L2231.LN3_NodeCarbon")
     L2231.LN3_HistMgdAllocation_noncrop <- get_data(all_data, "L2231.LN3_HistMgdAllocation_noncrop")
@@ -42,14 +40,20 @@ module_aglu_batch_land_input_3_IRR_xml_DISABLED <- function(command, ...) {
     create_xml("land_input_3_IRR.xml") %>%
       add_xml_data(L2231.LN3_HistUnmgdAllocation,"LN3_HistUnmgdAllocation") %>%
       add_xml_data(L2231.LN3_UnmgdAllocation,"LN3_UnmgdAllocation") %>%
-      add_xml_data(L2231.NodeEquiv,"EQUIV_TABLE") %>%
       add_xml_data(L2231.LN3_NoEmissCarbon,"LN3_NoEmissCarbon") %>%
       add_xml_data(L2231.LN3_NodeCarbon,"LN3_NodeCarbon") %>%
       add_xml_data(L2231.LN3_HistMgdAllocation_noncrop,"LN3_HistMgdAllocation") %>%
       add_xml_data(L2231.LN3_MgdAllocation_noncrop,"LN3_MgdAllocation") %>%
       add_xml_data(L2231.LN3_UnmgdCarbon,"LN3_UnmgdCarbon") %>%
       add_xml_data(L2231.LN3_MgdCarbon_noncrop,"LN3_MgdCarbon") %>%
-      add_precursors("L2231.LN3_HistUnmgdAllocation", "L2231.LN3_UnmgdAllocation", "L2231.NodeEquiv", "L2231.LN3_NoEmissCarbon", "L2231.LN3_NodeCarbon", "L2231.LN3_HistMgdAllocation_noncrop", "L2231.LN3_MgdAllocation_noncrop", "L2231.LN3_UnmgdCarbon", "L2231.LN3_MgdCarbon_noncrop") ->
+      add_precursors("L2231.LN3_HistUnmgdAllocation",
+                     "L2231.LN3_UnmgdAllocation",
+                     "L2231.LN3_NoEmissCarbon",
+                     "L2231.LN3_NodeCarbon",
+                     "L2231.LN3_HistMgdAllocation_noncrop",
+                     "L2231.LN3_MgdAllocation_noncrop",
+                     "L2231.LN3_UnmgdCarbon",
+                     "L2231.LN3_MgdCarbon_noncrop") ->
       land_input_3_IRR.xml
 
     return_data(land_input_3_IRR.xml)
