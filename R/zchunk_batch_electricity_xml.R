@@ -68,7 +68,7 @@ module_energy_batch_electricity_xml <- function(command, ...) {
     L223.GlobalIntTechEff_elec <- get_data(all_data, "L223.GlobalIntTechEff_elec")
     L223.GlobalTechEff_elec <- get_data(all_data, "L223.GlobalTechEff_elec")
     L223.GlobalTechCapFac_elec <- get_data(all_data, "L223.GlobalTechCapFac_elec")
-    L223.GlobalIntTechCapFac_elec <- get_data(all_data, "L223.GlobalIntTechCapFac_elec") # this one is missing
+    L223.GlobalIntTechCapFac_elec <- get_data(all_data, "L223.GlobalIntTechCapFac_elec")
     L223.GlobalTechCapital_elec <- get_data(all_data, "L223.GlobalTechCapital_elec")
     L223.GlobalIntTechCapital_elec <- get_data(all_data, "L223.GlobalIntTechCapital_elec")
     L223.GlobalTechOMfixed_elec <- get_data(all_data, "L223.GlobalTechOMfixed_elec")
@@ -102,11 +102,11 @@ module_energy_batch_electricity_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("electricity.xml") %>%
-      add_logit_tables_xml(L223.Supplysector_elec, "Supplysector") %>% # kalyn added this one
+      add_logit_tables_xml(L223.Supplysector_elec, "Supplysector") %>%
       add_xml_data(L223.ElecReserve, "ElecReserve") %>%
       add_logit_tables_xml(L223.SubsectorLogit_elec, "SubsectorLogit") %>%
-      add_xml_data(L223.SubsectorShrwtFllt_elec, "SubsectorShrwtFllt") %>% # kalyn you added this one
-      add_xml_data(L223.SubsectorShrwt_elec, "SubsectorShrwt") %>% # this table is empty...
+      add_xml_data(L223.SubsectorShrwtFllt_elec, "SubsectorShrwtFllt") %>%
+      add_xml_data(L223.SubsectorShrwt_elec, "SubsectorShrwt") %>%
       add_xml_data(L223.SubsectorShrwt_nuc, "SubsectorShrwt") %>%
       add_xml_data(L223.SubsectorShrwt_renew, "SubsectorShrwt") %>%
       add_xml_data(L223.SubsectorInterp_elec, "SubsectorInterp") %>%
@@ -114,8 +114,8 @@ module_energy_batch_electricity_xml <- function(command, ...) {
       add_xml_data(L223.StubTech_elec, "StubTech") %>%
       add_xml_data(L223.GlobalIntTechEff_elec, "GlobalIntTechEff") %>%
       add_xml_data(L223.GlobalTechEff_elec, "GlobalTechEff") %>%
-      add_xml_data(L223.GlobalTechCapFac_elec, "GlobalTechCapFac") %>% # kalyn you added this one
-      add_xml_data(L223.GlobalIntTechCapFac_elec, "GlobalIntTechCapFac") %>% # kalyn you added this one
+      add_xml_data(L223.GlobalTechCapFac_elec, "GlobalTechCapFac") %>%
+      add_xml_data(L223.GlobalIntTechCapFac_elec, "GlobalIntTechCapFac") %>%
       add_xml_data(L223.GlobalTechCapital_elec, "GlobalTechCapital") %>%
       add_xml_data(L223.GlobalIntTechCapital_elec, "GlobalIntTechCapital") %>%
       add_xml_data(L223.GlobalTechOMfixed_elec, "GlobalTechOMfixed") %>%
@@ -131,10 +131,10 @@ module_energy_batch_electricity_xml <- function(command, ...) {
       add_xml_data(L223.GlobalTechCapture_elec, "GlobalTechCapture") %>%
       add_xml_data(L223.GlobalIntTechBackup_elec, "GlobalIntTechBackup") %>%
       add_xml_data(L223.StubTechCapFactor_elec, "StubTechCapFactor") %>%
-      add_xml_data(L223.GlobalTechSCurve_elec, "GlobalTechSCurve") %>%  #klayn you added this on
-      add_xml_data(L223.GlobalTechLifetime_elec, "GlobalTechLifetime") %>%  # klayn you added this on
-      add_xml_data(L223.GlobalIntTechLifetime_elec, "GlobalIntTechLifetime") %>%  # kalyn you added this one
-      add_xml_data(L223.GlobalTechProfitShutdown_elec, "GlobalTechProfitShutdown") %>% # kalyn you added this one
+      add_xml_data(L223.GlobalTechSCurve_elec, "GlobalTechSCurve") %>%
+      add_xml_data(L223.GlobalTechLifetime_elec, "GlobalTechLifetime") %>%
+      add_xml_data(L223.GlobalIntTechLifetime_elec, "GlobalIntTechLifetime") %>%
+      add_xml_data(L223.GlobalTechProfitShutdown_elec, "GlobalTechProfitShutdown") %>%
       add_xml_data(L223.StubTechCalInput_elec, "StubTechCalInput") %>%
       add_xml_data(L223.StubTechFixOut_elec, "StubTechFixOut") %>%
       add_xml_data(L223.StubTechFixOut_hydro, "StubTechFixOut") %>%
