@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{electricity.xml}. The corresponding file in the
 #' original data system was \code{batch_electricity.xml.R} (energy XML).
-module_energy_batch_electricity_xml_DISABLED <- function(command, ...) {
+module_energy_batch_electricity_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c( "L223.ElecReserve",
               "L223.SubsectorLogit_elec",
@@ -83,30 +83,50 @@ module_energy_batch_electricity_xml_DISABLED <- function(command, ...) {
     L223.StubTechEff_elec <- get_data(all_data, "L223.StubTechEff_elec")
 
     # ===================================================
+    # Rename columns to match header information. 
+    L223.PrimaryRenewKeywordInt_elec <- rename(L223.PrimaryRenewKeywordInt_elec, technology = intermittent.technology)
 
     # Produce outputs
     create_xml("electricity.xml") %>%
       add_xml_data(L223.ElecReserve, "ElecReserve") %>%
-      add_xml_data(L223.SubsectorLogit_elec, "SubsectorLogit") %>%
-      add_xml_data(L223.SubsectorShrwt_elec, "SubsectorShrwt") %>%
+      add_logit_tables_xml(L223.SubsectorLogit_elec, "SubsectorLogit") %>%
+      add_xml_data(L223.SubsectorShrwt_elec, "SubsectorShrwt") %>% # this table is empty... 
       add_xml_data(L223.SubsectorShrwt_nuc, "SubsectorShrwt") %>%
+
       add_xml_data(L223.SubsectorShrwt_renew, "SubsectorShrwt") %>%
+
       add_xml_data(L223.SubsectorInterp_elec, "SubsectorInterp") %>%
+
       add_xml_data(L223.SubsectorInterpTo_elec, "SubsectorInterpTo") %>%
+
       add_xml_data(L223.StubTech_elec, "StubTech") %>%
+
       add_xml_data(L223.GlobalIntTechEff_elec, "GlobalIntTechEff") %>%
+
       add_xml_data(L223.GlobalTechEff_elec, "GlobalTechEff") %>%
+
       add_xml_data(L223.GlobalTechCapital_elec, "GlobalTechCapital") %>%
+
       add_xml_data(L223.GlobalIntTechCapital_elec, "GlobalIntTechCapital") %>%
+
       add_xml_data(L223.GlobalTechOMfixed_elec, "GlobalTechOMfixed") %>%
+
       add_xml_data(L223.GlobalIntTechOMfixed_elec, "GlobalIntTechOMfixed") %>%
+
       add_xml_data(L223.GlobalTechOMvar_elec, "GlobalTechOMvar") %>%
+
       add_xml_data(L223.GlobalIntTechOMvar_elec, "GlobalIntTechOMvar") %>%
+
       add_xml_data(L223.GlobalTechShrwt_elec, "GlobalTechShrwt") %>%
+
       add_xml_data(L223.GlobalTechInterp_elec, "GlobalTechInterp") %>%
+
       add_xml_data(L223.GlobalIntTechShrwt_elec, "GlobalIntTechShrwt") %>%
+
       add_xml_data(L223.PrimaryRenewKeyword_elec, "PrimaryRenewKeyword") %>%
-      add_xml_data(L223.PrimaryRenewKeywordInt_elec, "PrimaryRenewKeywordInt") %>%
+
+      add_xml_data(L223.PrimaryRenewKeywordInt_elec, "PrimaryRenewKeywordInt") %>% # this one had a problem  stopper here
+
       add_xml_data(L223.AvgFossilEffKeyword_elec, "AvgFossilEffKeyword") %>%
       add_xml_data(L223.GlobalTechCapture_elec, "GlobalTechCapture") %>%
       add_xml_data(L223.GlobalIntTechBackup_elec, "GlobalIntTechBackup") %>%

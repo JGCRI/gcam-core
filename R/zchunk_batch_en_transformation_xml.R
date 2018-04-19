@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{en_transformation.xml}. The corresponding file in the
 #' original data system was \code{batch_en_transformation.xml.R} (energy XML).
-module_energy_batch_en_transformation_xml_DISABLED <- function(command, ...) {
+module_energy_batch_en_transformation_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L222.SubsectorLogit_en",
               "L222.SubsectorShrwt_en",
@@ -45,6 +45,9 @@ module_energy_batch_en_transformation_xml_DISABLED <- function(command, ...) {
     L222.StubTechCoef_refining <- get_data(all_data, "L222.StubTechCoef_refining")
 
     # ===================================================
+    # Rename the tibble columns to match the header information.
+    L222.StubTechProd_gasproc <- rename(L222.StubTechProd_gasproc, share.weight.year = year.share.weight, tech.share.weight = share.weight)
+    L222.StubTechProd_refining <- rename(L222.StubTechProd_refining, share.weight.year = year.share.weight, tech.share.weight = share.weight)
 
     # Produce outputs
     create_xml("en_transformation.xml") %>%
