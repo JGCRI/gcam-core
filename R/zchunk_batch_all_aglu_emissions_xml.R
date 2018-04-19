@@ -26,6 +26,8 @@ module_emissions_batch_all_aglu_emissions_xml <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    bio_N2O_coef <- NULL  # silence package check note
+
     # Load required inputs
     L211.AWBEmissions <- get_data(all_data, "L211.AWBEmissions")
     L211.AGREmissions <- get_data(all_data, "L211.AGREmissions")

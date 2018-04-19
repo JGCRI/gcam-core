@@ -26,6 +26,8 @@ module_emissions_batch_all_aglu_emissions_IRR_xml <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    bio_N2O_coef <- NULL  # silence package check note
+
     # Load required inputs
     L2521.AgMAC <- get_data(all_data, "L2521.AgMAC")
     L252.MAC_an <- get_data(all_data, "L252.MAC_an")
