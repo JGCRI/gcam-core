@@ -10,7 +10,8 @@
 #' original data system was \code{batch_en_supply_xml.R} (energy XML).
 module_energy_batch_en_supply_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L221.SectorUseTrialMarket_en",
+    return(c("L221.Supplysector_en",
+             "L221.SectorUseTrialMarket_en",
              "L221.SubsectorLogit_en",
              "L221.SubsectorShrwt_en",
              "L221.SubsectorShrwtFllt_en",
@@ -40,6 +41,7 @@ module_energy_batch_en_supply_xml <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
+    L221.Supplysector_en <- get_data(all_data, "L221.Supplysector_en")
     L221.SectorUseTrialMarket_en <- get_data(all_data, "L221.SectorUseTrialMarket_en")
     L221.SubsectorLogit_en <- get_data(all_data, "L221.SubsectorLogit_en")
     L221.SubsectorShrwt_en <- get_data(all_data, "L221.SubsectorShrwt_en")
@@ -68,12 +70,37 @@ module_energy_batch_en_supply_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("en_supply.xml") %>%
+      add_logit_tables_xml(L221.Supplysector_en, "Supplysector") %>%
       add_xml_data(L221.SectorUseTrialMarket_en,"SectorUseTrialMarket") %>%
-      add_xml_data(L221.SubsectorLogit_en,"SubsectorLogit") %>%
-      add_xml_data(L221.SubsectorShrwt_en,"SubsectorShrwt") %>%
-      add_xml_data(L221.SubsectorShrwtFllt_en,"SubsectorShrwtFllt") %>%
-      add_xml_data(L221.SubsectorInterp_en,"SubsectorInterp") %>%
-      add_xml_data(L221.SubsectorInterpTo_en,"SubsectorInterpTo") %>%
+      add_logit_tables_xml(L221.SubsectorLogit_en,"SubsectorLogit") ->
+        en_supply.xml
+
+      # Some data inputs may not actually contain data. If so, do not add_xml_data.
+      if(!is.null(L221.SubsectorShrwt_en)) {
+        en_supply.xml %>%
+          add_xml_data(L221.SubsectorShrwt_en, "SubsectorShrwt") ->
+          en_supply.xml
+      }
+
+      if(!is.null(L221.SubsectorShrwtFllt_en)) {
+        en_supply.xml %>%
+          add_xml_data(L221.SubsectorShrwtFllt_en, "SubsectorShrwtFllt") ->
+          en_supply.xml
+      }
+
+      if(!is.null(L221.SubsectorInterp_en)) {
+        en_supply.xml %>%
+          add_xml_data(L221.SubsectorInterp_en, "SubsectorInterp") ->
+          en_supply.xml
+      }
+
+      if(!is.null(L221.SubsectorInterpTo_en)) {
+        en_supply.xml %>%
+          add_xml_data(L221.SubsectorInterpTo_en, "SubsectorInterpTo") ->
+          en_supply.xml
+      }
+
+    en_supply.xml %>%
       add_xml_data(L221.StubTech_en,"StubTech") %>%
       add_xml_data(L221.GlobalTechCoef_en,"GlobalTechCoef") %>%
       add_xml_data(L221.GlobalTechCost_en,"GlobalTechCost") %>%
@@ -91,7 +118,7 @@ module_energy_batch_en_supply_xml <- function(command, ...) {
       add_xml_data(L221.StubTechProd_oil_unoil,"StubTechProd", column_order_lookup = NULL) %>%
       add_xml_data(L221.StubTechProd_oil_crude,"StubTechProd", column_order_lookup = NULL) %>%
       add_xml_data(L221.StubTechShrwt_bio,"StubTechShrwt") %>%
-      add_precursors("L221.SectorUseTrialMarket_en", "L221.SubsectorLogit_en", "L221.SubsectorShrwt_en", "L221.SubsectorShrwtFllt_en", "L221.SubsectorInterp_en", "L221.SubsectorInterpTo_en", "L221.StubTech_en", "L221.GlobalTechCoef_en", "L221.GlobalTechCost_en", "L221.GlobalTechShrwt_en", "L221.PrimaryConsKeyword_en", "L221.StubTechFractSecOut_en", "L221.StubTechFractProd_en", "L221.DepRsrc_en", "L221.DepRsrcPrice_en", "L221.TechCoef_en_Traded", "L221.TechCost_en_Traded", "L221.TechShrwt_en_Traded", "L221.StubTechCoef_unoil", "L221.Production_unoil", "L221.StubTechProd_oil_unoil", "L221.StubTechProd_oil_crude", "L221.StubTechShrwt_bio") ->
+      add_precursors("L221.Supplysector_en", "L221.SectorUseTrialMarket_en", "L221.SubsectorLogit_en", "L221.SubsectorShrwt_en", "L221.SubsectorShrwtFllt_en", "L221.SubsectorInterp_en", "L221.SubsectorInterpTo_en", "L221.StubTech_en", "L221.GlobalTechCoef_en", "L221.GlobalTechCost_en", "L221.GlobalTechShrwt_en", "L221.PrimaryConsKeyword_en", "L221.StubTechFractSecOut_en", "L221.StubTechFractProd_en", "L221.DepRsrc_en", "L221.DepRsrcPrice_en", "L221.TechCoef_en_Traded", "L221.TechCost_en_Traded", "L221.TechShrwt_en_Traded", "L221.StubTechCoef_unoil", "L221.Production_unoil", "L221.StubTechProd_oil_unoil", "L221.StubTechProd_oil_crude", "L221.StubTechShrwt_bio") ->
       en_supply.xml
 
     return_data(en_supply.xml)

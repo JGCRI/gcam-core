@@ -80,7 +80,7 @@ module_energy_batch_building_det_xml <- function(command, ...) {
     # Produce outputs
     create_xml("building_det.xml") %>%
       add_xml_data(L244.FinalEnergyKeyword_bld, "FinalEnergyKeyword") %>%
-      add_xml_data(L244.Supplysector_bld, "Supplysector") %>%
+      add_logit_tables_xml(L244.Supplysector_bld, "Supplysector") %>%
       add_xml_data(L244.ShellConductance_bld, "ShellConductance") %>%
       add_xml_data(L244.Intgains_scalar, "Intgains_scalar") %>%
       add_xml_data(L244.GenericServiceSatiation, "GenericServiceSatiation") %>%

@@ -19,8 +19,8 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "emissions/A_regions",
              FILE = "energy/A_regions",
-             FILE = "temp-data-inject/L111.nonghg_tg_R_en_S_F_Yh",
-             FILE = "temp-data-inject/L111.nonghg_tgej_R_en_S_F_Yh",
+             "L111.nonghg_tg_R_en_S_F_Yh",
+             "L111.nonghg_tgej_R_en_S_F_Yh",
              "L112.ghg_tg_R_en_S_F_Yh",
              "L112.ghg_tgej_R_en_S_F_Yh",
              "L114.bcoc_tgej_R_en_S_F_2000",
@@ -51,12 +51,8 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     A_regions <- get_data(all_data, "emissions/A_regions")
     A_regions.en <- get_data(all_data, "energy/A_regions")
 
-    L111.nonghg_tg_R_en_S_F_Yh <- get_data(all_data, "temp-data-inject/L111.nonghg_tg_R_en_S_F_Yh") %>%
-      gather(year, value, matches( "^X(1|2)[0-9]{3}$")) %>%
-      mutate(year = as.numeric(gsub("X","", year)))
-    L111.nonghg_tgej_R_en_S_F_Yh <- get_data(all_data, "temp-data-inject/L111.nonghg_tgej_R_en_S_F_Yh") %>%
-      gather(year, value, matches( "^X(1|2)[0-9]{3}$")) %>%
-      mutate(year = as.numeric(gsub("X","", year)))
+    L111.nonghg_tg_R_en_S_F_Yh <- get_data(all_data, "L111.nonghg_tg_R_en_S_F_Yh")
+    L111.nonghg_tgej_R_en_S_F_Yh <- get_data(all_data, "L111.nonghg_tgej_R_en_S_F_Yh")
     L112.ghg_tg_R_en_S_F_Yh <- get_data(all_data, "L112.ghg_tg_R_en_S_F_Yh")
     L112.ghg_tgej_R_en_S_F_Yh <- get_data(all_data, "L112.ghg_tgej_R_en_S_F_Yh")
     L114.bcoc_tgej_R_en_S_F_2000 <- get_data(all_data, "L114.bcoc_tgej_R_en_S_F_2000")
@@ -248,7 +244,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       add_legacy_name("L201.en_pol_emissions") %>%
       add_precursors("common/GCAM_region_names",
                      "emissions/A_regions", "energy/A_regions",
-                     "temp-data-inject/L111.nonghg_tg_R_en_S_F_Yh",
+                     "L111.nonghg_tg_R_en_S_F_Yh",
                      "L244.DeleteThermalService") ->
       L201.en_pol_emissions
 
@@ -333,7 +329,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       add_legacy_name("L201.nonghg_res") %>%
       add_precursors("common/GCAM_region_names",
                      "emissions/A_regions",
-                     "temp-data-inject/L111.nonghg_tgej_R_en_S_F_Yh") ->
+                     "L111.nonghg_tgej_R_en_S_F_Yh") ->
       L201.nonghg_res
 
     L201.ghg_res %>%

@@ -69,6 +69,8 @@ module_gcamusa_batch_electricity_USA_xml <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    passthrough.sector <- technology <- share.weight <- NULL # silence package check notes
+
     # Load required inputs
     L223.SectorNodeEquiv <- get_data(all_data, "L223.SectorNodeEquiv")
     L223.TechNodeEquiv <- get_data(all_data, "L223.TechNodeEquiv")
