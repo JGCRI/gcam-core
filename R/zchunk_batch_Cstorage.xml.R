@@ -45,8 +45,8 @@ module_energy_batch_Cstorage.xml <- function(command, ...) {
       add_xml_data(L261.DepRsrc,"DepRsrc") %>%
       add_xml_data(L261.UnlimitRsrc,"UnlimitRsrc") %>%
       add_xml_data(L261.DepRsrcCurves_C,"DepRsrcCurves") %>%
-      add_xml_data(L261.Supplysector_C,"Supplysector") %>%
-      add_xml_data(L261.SubsectorLogit_C,"SubsectorLogit") %>%
+      add_logit_tables_xml(L261.Supplysector_C,"Supplysector") %>%
+      add_logit_tables_xml(L261.SubsectorLogit_C,"SubsectorLogit") %>%
       add_xml_data(L261.SubsectorShrwtFllt_C,"SubsectorShrwtFllt") %>%
       add_xml_data(L261.StubTech_C,"StubTech") %>%
       add_xml_data(L261.GlobalTechCoef_C,"GlobalTechCoef") %>%

@@ -30,7 +30,9 @@ module_energy_batch_industry_xml <- function(command, ...) {
              "L232.FuelPrefElast_indenergy",
              "L232.PerCapitaBased_ind",
              "L232.PriceElasticity_ind",
-             "L232.BaseService_ind"))
+             "L232.BaseService_ind",
+             "L232.SubsectorShrwtFllt_ind",
+             "L232.Supplysector_ind"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "industry.xml"))
   } else if(command == driver.MAKE) {
@@ -59,12 +61,16 @@ module_energy_batch_industry_xml <- function(command, ...) {
     L232.PerCapitaBased_ind <- get_data(all_data, "L232.PerCapitaBased_ind")
     L232.PriceElasticity_ind <- get_data(all_data, "L232.PriceElasticity_ind")
     L232.BaseService_ind <- get_data(all_data, "L232.BaseService_ind")
+    L232.SubsectorShrwtFllt_ind <- get_data(all_data, "L232.SubsectorShrwtFllt_ind")
+    L232.Supplysector_ind <- get_data(all_data, "L232.Supplysector_ind")
 
     # ===================================================
 
     # Produce outputs
     create_xml("industry.xml") %>%
-      add_xml_data(L232.SubsectorLogit_ind,"SubsectorLogit") %>%
+      add_logit_tables_xml(L232.Supplysector_ind,"Supplysector") %>%
+      add_logit_tables_xml(L232.SubsectorLogit_ind,"SubsectorLogit") %>%
+      add_xml_data(L232.SubsectorShrwtFllt_ind,"SubsectorShrwtFllt") %>%
       add_xml_data(L232.FinalEnergyKeyword_ind,"FinalEnergyKeyword") %>%
       # add_xml_data(L232.SubsectorShrwt_ind,"SubsectorShrwt") %>%
       add_xml_data(L232.SubsectorInterp_ind,"SubsectorInterp") %>%
@@ -92,7 +98,8 @@ module_energy_batch_industry_xml <- function(command, ...) {
                      "L232.GlobalTechCoef_ind", "L232.GlobalTechCost_ind", "L232.GlobalTechSecOut_ind",
                      "L232.GlobalTechCSeq_ind", "L232.StubTechCalInput_indenergy", "L232.StubTechCalInput_indfeed",
                      "L232.StubTechProd_industry", "L232.StubTechCoef_industry", "L232.FuelPrefElast_indenergy",
-                     "L232.PerCapitaBased_ind", "L232.PriceElasticity_ind", "L232.BaseService_ind") ->
+                     "L232.PerCapitaBased_ind", "L232.PriceElasticity_ind", "L232.BaseService_ind",
+                     "L232.SubsectorShrwtFllt_ind", "L232.Supplysector_ind") ->
       industry.xml
 
     return_data(industry.xml)
