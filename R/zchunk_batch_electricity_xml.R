@@ -95,10 +95,12 @@ module_energy_batch_electricity_xml <- function(command, ...) {
     L223.StubTechEff_elec <- get_data(all_data, "L223.StubTechEff_elec")
 
     # ===================================================
+
     # Rename columns to match header information.
     L223.PrimaryRenewKeywordInt_elec <- rename(L223.PrimaryRenewKeywordInt_elec, technology = intermittent.technology)
     L223.StubTechFixOut_elec <- rename(L223.StubTechFixOut_elec, subs.share.weight = subsector.share.weight, tech.share.weight = share.weight)
     L223.StubTechProd_elec   <- rename(L223.StubTechProd_elec, tech.share.weight = share.weight)
+
 
     # Produce outputs
     create_xml("electricity.xml") %>%
