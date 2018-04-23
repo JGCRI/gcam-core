@@ -10,5 +10,5 @@ trn_pass_road,million pass-km,EJ,1990$/pass-km,-4,transportation,light bus / hea
 trn_pass_road_bus,million pass-km,EJ,1990$/pass-km,-4,transportation,2W / 3W / 4W,trn_pass,
 trn_pass_road_LDV,million pass-km,EJ,1990$/pass-km,-4,transportation,moped / motorcycle size classes,trn_pass,
 trn_pass_road_LDV_2W,million pass-km,EJ,1990$/pass-km,-6,transportation,car / light truck size classes,trn_pass,
-trn_pass_road_LDV_4W,million pass-km,EJ,1990$/pass-km,-6,transportation,rail / air / road / hsr,trn_pass,
+trn_pass_road_LDV_4W,million pass-km,EJ,1990$/pass-km,-6,transportation,rail / air / road / hsr,trn_pass,absolute-cost-logit
 trn_shipping_intl,million ton-km,EJ,1990$/ton-km,-3,transportation,,trn_shipping_intl,
