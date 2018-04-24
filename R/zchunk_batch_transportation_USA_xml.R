@@ -44,11 +44,7 @@ module_gcamusa_batch_transportation_USA_xml <- function(command, ...) {
 
     # Load required inputs
     L254.DeleteSupplysector_USAtrn <- get_data(all_data, "L254.DeleteSupplysector_USAtrn")
-<<<<<<< HEAD
     L254.DeleteFinalDemand_USAtrn <- get_data(all_data, "L254.DeleteFinalDemand_USAtrn")
-=======
-    L254.DeleteSupplysector_USAtrn <- get_data(all_data, "L254.DeleteFinalDemand_USAtrn")
->>>>>>> e92389213d55e48742ddd5d002e7b5a18983f91a
     L254.Supplysector_trn_USA <- get_data(all_data, "L254.Supplysector_trn_USA")
     L254.FinalEnergyKeyword_trn_USA <- get_data(all_data, "L254.FinalEnergyKeyword_trn_USA")
     L254.tranSubsectorLogit_USA <- get_data(all_data, "L254.tranSubsectorLogit_USA")
@@ -81,11 +77,7 @@ module_gcamusa_batch_transportation_USA_xml <- function(command, ...) {
       add_xml_data(L254.DeleteFinalDemand_USAtrn, "DeleteFinalDemand") %>%
       add_logit_tables_xml(L254.Supplysector_trn_USA, "Supplysector") %>%
       add_xml_data(L254.FinalEnergyKeyword_trn_USA, "FinalEnergyKeyword") %>%
-<<<<<<< HEAD
       add_logit_tables_xml(L254.tranSubsectorLogit_USA, "tranSubsectorLogit", "tranSubsector") %>%
-=======
-      add_logit_tables_xml(L254.tranSubsectorLogit_USA, "tranSubsectorLogit") %>%
->>>>>>> e92389213d55e48742ddd5d002e7b5a18983f91a
       add_xml_data(L254.tranSubsectorShrwtFllt_USA, "tranSubsectorShrwtFllt") %>%
       add_xml_data(L254.tranSubsectorInterp_USA, "tranSubsectorInterp") %>%
       add_xml_data(L254.tranSubsectorSpeed_USA, "tranSubsectorSpeed") %>%
