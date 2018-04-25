@@ -24,7 +24,17 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
              "L232.PerCapitaBased_ind",
              "L132.in_EJ_state_indnochp_F",
              "L132.in_EJ_state_indfeed_F",
-             "L132.in_EJ_state_indchp_F"))
+             "L132.in_EJ_state_indchp_F",
+             "L232.Supplysector_ind",
+             "L232.FinalEnergyKeyword_ind",
+             "L232.SubsectorLogit_ind",
+             "L232.SubsectorShrwtFllt_ind",
+             "L232.SubsectorInterp_ind",
+             "L232.StubTech_ind",
+             "L232.StubTechInterp_ind",
+             "L232.PerCapitaBased_ind",
+             "L232.PriceElasticity_ind",
+             "L232.IncomeElasticity_ind_gcam3"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L232.DeleteSupplysector_USAind",
              "L232.DeleteFinalDemand_USAind",
@@ -34,7 +44,17 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
              "L232.StubTechCoef_industry_USA",
              "L232.StubTechMarket_ind_USA",
              "L232.StubTechSecMarket_ind_USA",
-             "L232.BaseService_ind_USA"))
+             "L232.BaseService_ind_USA",
+             "L232.Supplysector_ind_USA",
+             "L232.FinalEnergyKeyword_ind_USA",
+             "L232.SubsectorLogit_ind_USA",
+             "L232.SubsectorShrwtFllt_ind_USA",
+             "L232.SubsectorInterp_ind_USA",
+             "L232.StubTech_ind_USA",
+             "L232.StubTechInterp_ind_USA",
+             "L232.PerCapitaBased_ind_USA",
+             "L232.PriceElasticity_ind_USA",
+             "L232.IncomeElasticity_ind_gcam3_USA"))
   } else if(command == driver.MAKE) {
 
     year <- value <- output_tot <- grid_region <- market.name <-
@@ -56,6 +76,16 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
     L132.in_EJ_state_indnochp_F <- get_data(all_data, "L132.in_EJ_state_indnochp_F")
     L132.in_EJ_state_indfeed_F <- get_data(all_data, "L132.in_EJ_state_indfeed_F")
     L132.in_EJ_state_indchp_F <- get_data(all_data, "L132.in_EJ_state_indchp_F")
+    L232.Supplysector_ind <- get_data(all_data, "L232.Supplysector_ind")
+    L232.FinalEnergyKeyword_ind <- get_data(all_data, "L232.FinalEnergyKeyword_ind")
+    L232.SubsectorLogit_ind <- get_data(all_data, "L232.SubsectorLogit_ind")
+    L232.SubsectorShrwtFllt_ind <- get_data(all_data, "L232.SubsectorShrwtFllt_ind")
+    L232.SubsectorInterp_ind <- get_data(all_data, "L232.SubsectorInterp_ind")
+    L232.StubTech_ind <- get_data(all_data, "L232.StubTech_ind")
+    L232.StubTechInterp_ind <- get_data(all_data, "L232.StubTechInterp_ind")
+    L232.PerCapitaBased_ind <- get_data(all_data, "L232.PerCapitaBased_ind")
+    L232.PriceElasticity_ind <- get_data(all_data, "L232.PriceElasticity_ind")
+    L232.IncomeElasticity_ind_gcam3 <- get_data(all_data,"L232.IncomeElasticity_ind_gcam3")
 
     # ===================================================
 
@@ -76,6 +106,58 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
       filter(region == "USA") %>%
       select(LEVEL2_DATA_NAMES[["DeleteFinalDemand"]]) ->
       L232.DeleteFinalDemand_USAind  ## OUTPUT
+
+    # The industry_USA_processing function is used in place of a for loop in the old data sytem.
+    # This function checks to see if the input data needs to be expanded to all states or used as
+    # is.
+
+    # industry_USA_processing: is a function that
+    industry_USA_processing <- function(data){
+
+      # Subset the input data frame for the USA region. The subsetted data will be used
+      # to check to see if the data frame needs to be processed, it's assumed that if the USA
+      # is not found in the region column that regions have already been processed.
+
+      check_USA <- filter(data, region == "USA")
+
+      if(nrow(check_USA) == 0){
+
+        # This does not change the entries of the data frame but will strip the attributes
+        # from the input data frame.
+        new_data <- mutate(data, region = region)
+
+      } else {
+
+        # If the input data frame contains USA region information
+        # then expand the input data to all states.
+
+        # Save the column names for the input data frame.
+        df_names <- names(data)
+
+        # Subset for observations in the USA region, expand all input data frame
+        # columns to all USA states.
+
+        data %>%
+          filter(region == "USA") %>%
+          write_to_all_states(names = df_names) ->
+          new_data
+
+      }
+
+      return(new_data)
+    } # end of function
+
+    L232.Supplysector_ind_USA <- industry_USA_processing(L232.Supplysector_ind)
+    L232.FinalEnergyKeyword_ind_USA <- industry_USA_processing(L232.FinalEnergyKeyword_ind)
+    L232.SubsectorLogit_ind_USA <- industry_USA_processing(L232.SubsectorLogit_ind)
+    L232.SubsectorShrwtFllt_ind_USA <- industry_USA_processing(L232.SubsectorShrwtFllt_ind)
+    L232.SubsectorInterp_ind_USA <- industry_USA_processing(L232.SubsectorInterp_ind)
+    L232.StubTech_ind_USA <- industry_USA_processing(L232.StubTech_ind)
+    L232.StubTechInterp_ind_USA <- industry_USA_processing(L232.StubTechInterp_ind)
+    L232.PerCapitaBased_ind_USA <- industry_USA_processing(L232.PerCapitaBased_ind)
+    L232.PriceElasticity_ind_USA <- industry_USA_processing(L232.PriceElasticity_ind)
+    L232.IncomeElasticity_ind_gcam3_USA <- industry_USA_processing(L232.IncomeElasticity_ind_gcam3)
+
 
     # get calibrated input of industrial energy use technologies, including cogen
     L132.in_EJ_state_indnochp_F %>%
@@ -317,9 +399,110 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
                      "energy/A32.demand") ->
       L232.BaseService_ind_USA
 
-    return_data(L232.DeleteSupplysector_USAind, L232.DeleteFinalDemand_USAind, L232.StubTechCalInput_indenergy_USA,
-                L232.StubTechCalInput_indfeed_USA, L232.StubTechProd_industry_USA, L232.StubTechCoef_industry_USA,
-                L232.StubTechMarket_ind_USA, L232.StubTechSecMarket_ind_USA, L232.BaseService_ind_USA)
+
+    L232.Supplysector_ind_USA %>%
+      add_title("Supply sector information for industry sector") %>%
+      add_units("NA") %>%
+      add_comments("For industry sector, the supply sector information (output.unit, input.unit, price.unit, logit.year.fillout, logit.exponent) from A32.sector is expanded for GCAM-USA") %>%
+      add_legacy_name("L232.Supplysector_ind_USA") %>%
+      add_precursors("L232.Supplysector_ind") ->
+      L232.Supplysector_ind_USA
+
+    L232.FinalEnergyKeyword_ind_USA %>%
+      add_title("Supply sector keywords for industry sector") %>%
+      add_units("NA") %>%
+      add_comments("Set supply sector keywords for industry sector for all GCAM-USA regions") %>%
+      add_legacy_name("L232.FinalEnergyKeyword_ind_USA") %>%
+      add_precursors("L232.FinalEnergyKeyword_ind") ->
+      L232.FinalEnergyKeyword_ind_USA
+
+    L232.SubsectorLogit_ind_USA %>%
+      add_title("Subsector logit exponents of industry sector") %>%
+      add_units("Unitless") %>%
+      add_comments("For industry sector, the subsector logit exponents from A32.subsector_logit are expanded into all GCAM-USA regions with non-existent heat subsectors removed") %>%
+      add_legacy_name("L232.SubsectorLogit_ind_USA") %>%
+      add_precursors("L232.SubsectorLogit_ind") ->
+      L232.SubsectorLogit_ind_USA
+
+    L232.SubsectorShrwtFllt_ind_USA %>%
+      add_title("Subsector shareweights of industry sector") %>%
+      add_units("Unitless") %>%
+      add_comments("For industry sector, the subsector shareweights from A32.subsector_shrwt are expanded into all GCAM-USA regions with non-existent heat technologies") %>%
+      add_legacy_name("L232.SubsectorShrwtFllt_ind_USA") %>%
+      add_precursors("L232.SubsectorShrwtFllt_ind") ->
+      L232.SubsectorShrwtFllt_ind_USA
+
+    L232.SubsectorInterp_ind_USA %>%
+      add_title("Subsector shareweight interpolation of industry sector") %>%
+      add_units("NA") %>%
+      add_comments("For industry sector, the subsector shareweight interpolation function infromation from A32.subsector_interp is expanded into all GCAM-USA regions with non-existent heat technologies removed") %>%
+      add_legacy_name("L232.SubsectorInterp_ind_USA") %>%
+      add_precursors("L232.SubsectorInterp_ind") ->
+      L232.SubsectorInterp_ind_USA
+
+    L232.StubTech_ind_USA %>%
+      add_title("Identification of stub technologies of industrial sector") %>%
+      add_units("NA") %>%
+      add_comments("For industry sector, the stub technologies from A32.globaltech_shrwt are expanded into all GCAM-USA regions with non-existent heat technologies removed") %>%
+      add_legacy_name("L232.StubTech_ind_USA") %>%
+      add_precursors("L232.StubTech_ind") ->
+      L232.StubTech_ind_USA
+
+    L232.StubTechInterp_ind_USA %>%
+      add_title("Shareweight interpolation of global industrial sector technologies") %>%
+      add_units("NA") %>%
+      add_comments("For industry sector, the interpolation function from A32.globaltech_interp are expanded into all GCAM regions") %>%
+      add_legacy_name("L232.StubTechInterp_ind_USA") %>%
+      add_precursors("L232.StubTechInterp_ind") ->
+      L232.StubTechInterp_ind_USA
+
+    L232.PerCapitaBased_ind_USA %>%
+      add_title("Per-capita based flag for industry final demand") %>%
+      add_units("NA") %>%
+      add_comments("Extracted per-capita based flag for industry final demand from A32.demand") %>%
+      add_legacy_name("L232.PerCapitaBased_ind_USA") %>%
+      add_precursors("L232.PerCapitaBased_ind") ->
+      L232.PerCapitaBased_ind_USA
+
+    L232.PriceElasticity_ind_USA %>%
+      add_title("Price elasticity of industry final demand") %>%
+      add_units("Unitless") %>%
+      add_comments("Extracted price elasticity of industry final demand from A32.demand") %>%
+      add_comments("Price elasticities are only applied to future periods. Application in base years will cause solution failure") %>%
+      add_legacy_name("L232.PriceElasticity_ind_USA") %>%
+      add_precursors("L232.PriceElasticity_ind") ->
+      L232.PriceElasticity_ind_USA
+
+    L232.IncomeElasticity_ind_gcam3_USA %>%
+      add_title("Income elasticity of industry - GCAM3") %>%
+      add_units("Unitless") %>%
+      add_comments("First calculate industrial output as the base-year industrial output times the GDP ratio raised to the income elasticity") %>%
+      add_comments("Then back out the appropriate income elasticities from industrial output") %>%
+      add_comments("Note lower income elasticities for SSP1 are hard-coded.") %>%
+      add_legacy_name("L232.IncomeElasticity_ind_gcam3_USA") %>%
+      add_precursors("L232.IncomeElasticity_ind_gcam3") ->
+      L232.IncomeElasticity_ind_gcam3_USA
+
+
+    return_data(L232.DeleteSupplysector_USAind,
+                L232.DeleteFinalDemand_USAind,
+                L232.StubTechCalInput_indenergy_USA,
+                L232.StubTechCalInput_indfeed_USA,
+                L232.StubTechProd_industry_USA,
+                L232.StubTechCoef_industry_USA,
+                L232.StubTechMarket_ind_USA,
+                L232.StubTechSecMarket_ind_USA,
+                L232.BaseService_ind_USA,
+                L232.Supplysector_ind_USA,
+                L232.FinalEnergyKeyword_ind_USA,
+                L232.SubsectorLogit_ind_USA,
+                L232.SubsectorShrwtFllt_ind_USA,
+                L232.SubsectorInterp_ind_USA,
+                L232.StubTech_ind_USA,
+                L232.StubTechInterp_ind_USA,
+                L232.PerCapitaBased_ind_USA,
+                L232.PriceElasticity_ind_USA,
+                L232.IncomeElasticity_ind_gcam3_USA)
   } else {
     stop("Unknown command")
   }
