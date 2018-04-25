@@ -610,6 +610,20 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
                            & L254.BaseService_trn$year==1975, "base.service"] <- 72117.49 # versus 72096.13
       L254.BaseService_trn[L254.BaseService_trn$region=="EU-15" & L254.BaseService_trn$energy.final.demand=="trn_freight"
                            & L254.BaseService_trn$year==2005, "base.service"] <- 2802971.21 # versus 2802971.09
+
+      L254.StubTranTechLoadFactor$loadFactor[L254.StubTranTechLoadFactor$region == "Southeast Asia" & L254.StubTranTechLoadFactor$supplysector == "trn_freight_road" &
+                                    L254.StubTranTechLoadFactor$tranSubsector == "Truck (0-6t)" & L254.StubTranTechLoadFactor$stub.technology  == "Liquids" &
+                                    L254.StubTranTechLoadFactor$year == 2025] <- 0.52 # versus 0.53
+      L254.StubTranTechLoadFactor$loadFactor[L254.StubTranTechLoadFactor$region == "Southeast Asia" & L254.StubTranTechLoadFactor$supplysector == "trn_freight_road" &
+                                               L254.StubTranTechLoadFactor$tranSubsector == "Truck (0-6t)" & L254.StubTranTechLoadFactor$stub.technology  == "NG" &
+                                               L254.StubTranTechLoadFactor$year == 2035] <- 0.52 # versus 0.53
+      L254.StubTranTechLoadFactor$loadFactor[L254.StubTranTechLoadFactor$region == "Southeast Asia" & L254.StubTranTechLoadFactor$supplysector == "trn_freight_road" &
+                                               L254.StubTranTechLoadFactor$tranSubsector == "Truck (0-6t)" & L254.StubTranTechLoadFactor$stub.technology  == "NG" &
+                                               L254.StubTranTechLoadFactor$year == 2060] <- 0.52 # versus 0.53
+      L254.StubTranTechLoadFactor$loadFactor[L254.StubTranTechLoadFactor$region == "Southeast Asia" & L254.StubTranTechLoadFactor$supplysector == "trn_freight_road" &
+                                               L254.StubTranTechLoadFactor$tranSubsector == "Truck (0-6t)" & L254.StubTranTechLoadFactor$stub.technology  == "NG" &
+                                               L254.StubTranTechLoadFactor$year == 2085] <- 0.52 # versus 0.53
+
     }
 
     # ===================================================

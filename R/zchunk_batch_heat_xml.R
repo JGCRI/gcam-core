@@ -8,19 +8,19 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{heat.xml}. The corresponding file in the
 #' original data system was \code{batch_heat.xml.R} (energy XML).
-module_energy_batch_heat_xml_DISABLED <- function(command, ...) {
+module_energy_batch_heat_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L224.SubsectorLogit_heat",
-              "L224.SubsectorShrwt_heat",
-              "L224.SubsectorInterp_heat",
-              "L224.SubsectorInterpTo_heat",
-              "L224.StubTech_heat",
-              "L224.GlobalTechCoef_heat",
-              "L224.GlobalTechCost_heat",
-              "L224.GlobalTechShrwt_heat",
-              "L224.StubTechCalInput_heat",
-              "L224.StubTechSecOut_elec",
-              "L224.StubTechCost_elec"))
+    return(c("L224.Supplysector_heat",
+             "L224.SubsectorLogit_heat",
+             "L224.SubsectorShrwtFllt_heat",
+             "L224.SubsectorInterp_heat",
+             "L224.StubTech_heat",
+             "L224.GlobalTechCoef_heat",
+             "L224.GlobalTechCost_heat",
+             "L224.GlobalTechShrwt_heat",
+             "L224.StubTechCalInput_heat",
+             "L224.StubTechSecOut_elec",
+             "L224.StubTechCost_elec"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "heat.xml"))
   } else if(command == driver.MAKE) {
@@ -28,10 +28,10 @@ module_energy_batch_heat_xml_DISABLED <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
+    L224.Supplysector_heat <- get_data(all_data, "L224.Supplysector_heat")
     L224.SubsectorLogit_heat <- get_data(all_data, "L224.SubsectorLogit_heat")
-    L224.SubsectorShrwt_heat <- get_data(all_data, "L224.SubsectorShrwt_heat")
+    L224.SubsectorShrwtFllt_heat <- get_data(all_data, "L224.SubsectorShrwtFllt_heat")
     L224.SubsectorInterp_heat <- get_data(all_data, "L224.SubsectorInterp_heat")
-    L224.SubsectorInterpTo_heat <- get_data(all_data, "L224.SubsectorInterpTo_heat")
     L224.StubTech_heat <- get_data(all_data, "L224.StubTech_heat")
     L224.GlobalTechCoef_heat <- get_data(all_data, "L224.GlobalTechCoef_heat")
     L224.GlobalTechCost_heat <- get_data(all_data, "L224.GlobalTechCost_heat")
@@ -41,13 +41,16 @@ module_energy_batch_heat_xml_DISABLED <- function(command, ...) {
     L224.StubTechCost_elec <- get_data(all_data, "L224.StubTechCost_elec")
 
     # ===================================================
+    # Rename the tibble columns to match the header info.
+    L224.StubTechCalInput_heat <- rename(L224.StubTechCalInput_heat, tech.share.weight = share.weight, share.weight.year = year.share.weight)
+
 
     # Produce outputs
     create_xml("heat.xml") %>%
-      add_xml_data(L224.SubsectorLogit_heat,"SubsectorLogit") %>%
-      add_xml_data(L224.SubsectorShrwt_heat,"SubsectorShrwt") %>%
+      add_logit_tables_xml(L224.Supplysector_heat, "Supplysector") %>%
+      add_logit_tables_xml(L224.SubsectorLogit_heat,"SubsectorLogit") %>%
+      add_xml_data(L224.SubsectorShrwtFllt_heat, "SubsectorShrwtFllt") %>%
       add_xml_data(L224.SubsectorInterp_heat,"SubsectorInterp") %>%
-      add_xml_data(L224.SubsectorInterpTo_heat,"SubsectorInterpTo") %>%
       add_xml_data(L224.StubTech_heat,"StubTech") %>%
       add_xml_data(L224.GlobalTechCoef_heat,"GlobalTechCoef") %>%
       add_xml_data(L224.GlobalTechCost_heat,"GlobalTechCost") %>%
@@ -55,7 +58,17 @@ module_energy_batch_heat_xml_DISABLED <- function(command, ...) {
       add_xml_data(L224.StubTechCalInput_heat,"StubTechCalInput") %>%
       add_xml_data(L224.StubTechSecOut_elec,"StubTechSecOut") %>%
       add_xml_data(L224.StubTechCost_elec,"StubTechCost") %>%
-      add_precursors("L224.SubsectorLogit_heat", "L224.SubsectorShrwt_heat", "L224.SubsectorInterp_heat", "L224.SubsectorInterpTo_heat", "L224.StubTech_heat", "L224.GlobalTechCoef_heat", "L224.GlobalTechCost_heat", "L224.GlobalTechShrwt_heat", "L224.StubTechCalInput_heat", "L224.StubTechSecOut_elec", "L224.StubTechCost_elec") ->
+      add_precursors("L224.Supplysector_heat",
+                     "L224.SubsectorLogit_heat",
+                     "L224.SubsectorShrwtFllt_heat",
+                     "L224.SubsectorInterp_heat",
+                     "L224.StubTech_heat",
+                     "L224.GlobalTechCoef_heat",
+                     "L224.GlobalTechCost_heat",
+                     "L224.GlobalTechShrwt_heat",
+                     "L224.StubTechCalInput_heat",
+                     "L224.StubTechSecOut_elec",
+                     "L224.StubTechCost_elec") ->
       heat.xml
 
     return_data(heat.xml)
