@@ -10,9 +10,7 @@
 #' original data system was \code{batch_electricity_USA_xml.R} (gcamusa XML).
 module_gcamusa_batch_electricity_USA_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L223.SectorNodeEquiv",
-             "L223.TechNodeEquiv",
-             "L223.PassthroughSector_elec_USA",
+    return(c("L223.PassthroughSector_elec_USA",
              "L223.PassthroughTech_elec_FERC",
              "L223.Supplysector_elec_FERC",
              "L223.SubsectorShrwtFllt_elec_FERC",
@@ -72,8 +70,7 @@ module_gcamusa_batch_electricity_USA_xml <- function(command, ...) {
     passthrough.sector <- technology <- share.weight <- NULL # silence package check notes
 
     # Load required inputs
-    L223.SectorNodeEquiv <- get_data(all_data, "L223.SectorNodeEquiv")
-    L223.TechNodeEquiv <- get_data(all_data, "L223.TechNodeEquiv")
+
     L223.PassthroughSector_elec_USA <- get_data(all_data, "L223.PassthroughSector_elec_USA")
     L223.PassthroughTech_elec_FERC <- get_data(all_data, "L223.PassthroughTech_elec_FERC")
     L223.Supplysector_elec_FERC <- get_data(all_data, "L223.Supplysector_elec_FERC")
@@ -134,6 +131,8 @@ module_gcamusa_batch_electricity_USA_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("electricity_USA.xml") %>%
+      add_node_equiv_xml("sector") %>%
+      add_node_equiv_xml("technology") %>%
       add_xml_data(L223.PassthroughSector_elec_USA,"PassThroughSector") %>%
       add_xml_data(L223.PassthroughTech_elec_FERC,"PassThroughTech") %>%
       add_logit_tables_xml(L223.Supplysector_elec_FERC,"Supplysector") %>%
@@ -147,9 +146,9 @@ module_gcamusa_batch_electricity_USA_xml <- function(command, ...) {
       add_xml_data(L223.Pop_FERC,"Pop") %>%
       add_xml_data(L223.BaseGDP_FERC,"BaseGDP") %>%
       add_xml_data(L223.LaborForceFillout_FERC,"LaborForceFillout") %>%
-      add_xml_data(L223.Supplysector_elec_USA,"Supplysector") %>%
+      add_logit_tables_xml(L223.Supplysector_elec_USA,"Supplysector") %>%
       add_xml_data(L223.ElecReserve_USA,"ElecReserve") %>%
-      add_xml_data(L223.SubsectorLogit_elec_USA,"SubsectorLogit") %>%
+      add_logit_tables_xml(L223.SubsectorLogit_elec_USA,"SubsectorLogit") %>%
       add_xml_data(L223.SubsectorShrwtFllt_elec_USA,"SubsectorShrwtFllt") %>%
       add_xml_data(L223.SubsectorShrwt_nuc_USA,"SubsectorShrwt") %>%
       add_xml_data(L223.SubsectorShrwt_renew_USA,"SubsectorShrwt") %>%
@@ -157,6 +156,7 @@ module_gcamusa_batch_electricity_USA_xml <- function(command, ...) {
       add_xml_data(L223.SubsectorInterpTo_elec_USA,"SubsectorInterpTo") %>%
       add_xml_data(L223.StubTech_elec_USA,"StubTech") %>%
       add_xml_data(L223.StubTechEff_elec_USA,"StubTechEff") %>%
+      add_xml_data(L223.StubTechCapFactor_elec_USA, "StubTechCapFactor") %>%
       add_xml_data(L223.StubTechFixOut_elec_USA,"StubTechFixOut") %>%
       add_xml_data(L223.StubTechFixOut_hydro_USA,"StubTechFixOut") %>%
       add_xml_data(L223.StubTechProd_elec_USA,"StubTechProd") %>%
@@ -184,9 +184,7 @@ module_gcamusa_batch_electricity_USA_xml <- function(command, ...) {
       add_xml_data(L2232.Production_imports_FERC,"Production") %>%
       add_xml_data(L2232.Production_elec_gen_FERC,"Production") %>%
       add_xml_data(L2232.StubTechElecMarket_backup_USA,"StubTechElecMarket") %>%
-      add_precursors("L223.SectorNodeEquiv",
-                     "L223.TechNodeEquiv",
-                     "L223.PassthroughSector_elec_USA",
+      add_precursors("L223.PassthroughSector_elec_USA",
                      "L223.PassthroughTech_elec_FERC",
                      "L223.Supplysector_elec_FERC",
                      "L223.SubsectorShrwtFllt_elec_FERC",

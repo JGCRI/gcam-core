@@ -89,7 +89,7 @@ module_gcam.usa_L201.socioeconomics_USA <- function(command, ...) {
       add_title("Interest rates by state") %>%
       add_units("Unitless") %>%
       add_comments("Constant assumed for all states") %>%
-      add_legacy_name("L201.InterestRate") %>%
+      add_legacy_name("L201.InterestRate_GCAMUSA") %>%
       add_precursors("gcam-usa/states_subregions") ->
       L201.InterestRate_GCAMUSA
 

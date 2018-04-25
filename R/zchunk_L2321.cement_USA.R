@@ -83,7 +83,6 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
       coefficient <- market.name <- grid_region <- stub.technology <- calibrated.value <-
       tech.share.weight <- object <- NULL
 
-
     # ===================================================
     # Make the logit and input tables for with creating cement sectors in cement
     # producing states.
@@ -142,16 +141,9 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
         # If the input data frame contains USA region information
         # then expand the input data to all cement producing states.
 
-        # Save the column names for the input data frame.
-        df_names <- names(data)
-
-        # Subset for observations in the USA region, expand all input data frame
-        # columns to all USA states, and then subset by the
-        # cement producing states.
-
         data %>%
           filter(region == "USA") %>%
-          write_to_all_states(names = df_names) %>%
+          write_to_all_states(names = names(data)) %>%
           filter(region %in% cement_states[["state"]]) ->
           new_data
 
@@ -315,7 +307,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
 
     # Change market name to reflect the fact that electricity is consumed from state markets.
     L2321.StubTechCoef_cement_USA %>%
-      mutate(replace = if_else( any(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS), 1, 0),
+      mutate(replace = if_else(minicam.energy.input %in% gcamusa.ELECT_TD_SECTORS, 1, 0),
              market.name = if_else(replace == 1, region, market.name)) %>%
       select(-replace) ->
       L2321.StubTechCoef_cement_USA
@@ -390,7 +382,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
       # IF using regional fuel markets replace the market name with the grid region from the states subregions
       # assumption file.
       L2321.StubTechMarket_cement_USA %>%
-        mutate(replace = if_else(any(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS), 1, 0)) %>%
+        mutate(replace = if_else(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS, 1, 0)) %>%
         left_join_error_no_match(states_subregions %>% select(region = state, grid_region),
                                  by = "region") %>%
         mutate(market.name = if_else(replace == 1, grid_region, market.name)) %>%
