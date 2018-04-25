@@ -131,15 +131,9 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
         # If the input data frame contains USA region information
         # then expand the input data to all states.
 
-        # Save the column names for the input data frame.
-        df_names <- names(data)
-
-        # Subset for observations in the USA region, expand all input data frame
-        # columns to all USA states.
-
         data %>%
           filter(region == "USA") %>%
-          write_to_all_states(names = df_names) ->
+          write_to_all_states(names = names(data)) ->
           new_data
 
       }
