@@ -29,10 +29,13 @@ module_aglu_batch_land_input_4_IRR_MGMT_xml <- function(command, ...) {
     # Produce outputs
     create_xml("land_input_4_IRR_MGMT.xml") %>%
       add_logit_tables_xml(L2242.LN4_Logit,"LN4_Logit") %>%
+      add_rename_landnode_xml() %>%
       add_xml_data(L2242.LN4_NodeGhostShare,"LN4_NodeGhostShare") %>%
       add_xml_data(L2242.LN4_NodeIsGhostShareRel,"LN4_NodeIsGhostShareRel") %>%
       add_rename_landnode_xml() %>%
-      add_precursors("L2242.LN4_Logit", "L2242.LN4_NodeGhostShare", "L2242.LN4_NodeIsGhostShareRel") ->
+      add_precursors("L2242.LN4_Logit",
+                     "L2242.LN4_NodeGhostShare",
+                     "L2242.LN4_NodeIsGhostShareRel") ->
       land_input_4_IRR_MGMT.xml
 
     return_data(land_input_4_IRR_MGMT.xml)
