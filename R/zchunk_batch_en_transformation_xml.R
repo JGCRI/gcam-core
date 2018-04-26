@@ -48,6 +48,7 @@ module_energy_batch_en_transformation_xml <- function(command, ...) {
     L222.StubTechProd_refining <- get_data(all_data, "L222.StubTechProd_refining")
     L222.StubTechCoef_refining <- get_data(all_data, "L222.StubTechCoef_refining")
 
+    year.share.weight <- share.weight <- NULL # silence package checks
     # ===================================================
     # Rename the tibble columns to match the header information.
     L222.StubTechProd_gasproc <- rename(L222.StubTechProd_gasproc, share.weight.year = year.share.weight, tech.share.weight = share.weight)

@@ -40,6 +40,8 @@ module_energy_batch_heat_xml <- function(command, ...) {
     L224.StubTechSecOut_elec <- get_data(all_data, "L224.StubTechSecOut_elec")
     L224.StubTechCost_elec <- get_data(all_data, "L224.StubTechCost_elec")
 
+    share.weight <- year.share.weight <- NULL # Silence package checks 
+
     # ===================================================
     # Rename the tibble columns to match the header info.
     L224.StubTechCalInput_heat <- rename(L224.StubTechCalInput_heat, tech.share.weight = share.weight, share.weight.year = year.share.weight)
