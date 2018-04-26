@@ -62,6 +62,7 @@ module_gcamusa_batch_en_transformation_USA_xml <- function(command, ...) {
     L222.StubTechMarket_en_USA <- get_data(all_data, "L222.StubTechMarket_en_USA")
     L222.CarbonCoef_en_USA <- get_data(all_data, "L222.CarbonCoef_en_USA")
 
+    technology <- year <- NULL # Silence package checks
     # ===================================================
     # Rename tibble columns to match the header information.
     L222.Tech_USAen <- rename(L222.Tech_USAen, pass.through.technology = technology)
