@@ -70,7 +70,6 @@ module_aglu_batch_bio_trade_xml <- function(command, ...) {
       add_xml_data(L243.StubTechCoef_DomesticBio, "StubTechCoef") %>%
       add_xml_data(L243.TechCoef_TradedBio, "TechCoef") %>%
       add_xml_data(L243.TechShrwt_TradedBio, "TechShrwt") %>%
-    #  add_rename_landnode_xml() %>%
       add_precursors("L243.DeleteInput_RegBio",
                      "L243.TechCoef_RegBio",
                      "L243.Supplysector_Bio",
