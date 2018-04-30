@@ -10,14 +10,15 @@
 #' original data system was \code{batch_land_input_5_IRR_MGMT_xml.R} (aglu XML).
 module_aglu_batch_land_input_5_IRR_MGMT_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L2252.LN5_HistMgdAllocation_crop",
-              "L2252.LN5_MgdAllocation_crop",
-              "L2252.LN5_HistMgdAllocation_bio",
-              "L2252.LN5_MgdAllocation_bio",
-              "L2252.LN5_MgdCarbon_crop",
-              "L2252.LN5_MgdCarbon_bio",
-              "L2252.LN5_LeafGhostShare",
-              "L2252.LN5_NodeGhostShare"))
+    return(c("L2252.LN5_Logit",
+             "L2252.LN5_HistMgdAllocation_crop",
+             "L2252.LN5_MgdAllocation_crop",
+             "L2252.LN5_HistMgdAllocation_bio",
+             "L2252.LN5_MgdAllocation_bio",
+             "L2252.LN5_MgdCarbon_crop",
+             "L2252.LN5_MgdCarbon_bio",
+             "L2252.LN5_LeafGhostShare",
+             "L2252.LN5_NodeGhostShare"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "land_input_5_IRR_MGMT.xml"))
   } else if(command == driver.MAKE) {
@@ -25,6 +26,7 @@ module_aglu_batch_land_input_5_IRR_MGMT_xml <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
+    L2252.LN5_Logit <- get_data(all_data, "L2252.LN5_Logit")
     L2252.LN5_HistMgdAllocation_crop <- get_data(all_data, "L2252.LN5_HistMgdAllocation_crop")
     L2252.LN5_MgdAllocation_crop <- get_data(all_data, "L2252.LN5_MgdAllocation_crop")
     L2252.LN5_HistMgdAllocation_bio <- get_data(all_data, "L2252.LN5_HistMgdAllocation_bio")
@@ -38,6 +40,7 @@ module_aglu_batch_land_input_5_IRR_MGMT_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("land_input_5_IRR_MGMT.xml") %>%
+      add_logit_tables_xml(L2252.LN5_Logit, "LN5_Logit") %>%
       add_xml_data(L2252.LN5_HistMgdAllocation_crop,"LN5_HistMgdAllocation") %>%
       add_xml_data(L2252.LN5_MgdAllocation_crop,"LN5_MgdAllocation") %>%
       add_xml_data(L2252.LN5_HistMgdAllocation_bio,"LN5_HistMgdAllocation") %>%
@@ -47,7 +50,15 @@ module_aglu_batch_land_input_5_IRR_MGMT_xml <- function(command, ...) {
       add_xml_data(L2252.LN5_LeafGhostShare,"LN5_LeafGhostShare") %>%
       add_xml_data(L2252.LN5_NodeGhostShare,"LN5_NodeGhostShare") %>%
       add_rename_landnode_xml() %>%
-      add_precursors("L2252.LN5_HistMgdAllocation_crop", "L2252.LN5_MgdAllocation_crop", "L2252.LN5_HistMgdAllocation_bio", "L2252.LN5_MgdAllocation_bio", "L2252.LN5_MgdCarbon_crop", "L2252.LN5_MgdCarbon_bio", "L2252.LN5_LeafGhostShare", "L2252.LN5_NodeGhostShare") ->
+      add_precursors("L2252.LN5_Logit",
+                     "L2252.LN5_HistMgdAllocation_crop",
+                     "L2252.LN5_MgdAllocation_crop",
+                     "L2252.LN5_HistMgdAllocation_bio",
+                     "L2252.LN5_MgdAllocation_bio",
+                     "L2252.LN5_MgdCarbon_crop",
+                     "L2252.LN5_MgdCarbon_bio",
+                     "L2252.LN5_LeafGhostShare",
+                     "L2252.LN5_NodeGhostShare") ->
       land_input_5_IRR_MGMT.xml
 
     return_data(land_input_5_IRR_MGMT.xml)

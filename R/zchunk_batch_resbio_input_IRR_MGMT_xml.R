@@ -10,7 +10,8 @@
 #' original data system was \code{batch_resbio_input_IRR_MGMT_xml.R} (aglu XML).
 module_aglu_batch_resbio_input_IRR_MGMT_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L2042.AgResBioCurve_For",
+    return(c( "L2042.AgResBio_For",
+              "L2042.AgResBioCurve_For",
               "L2042.GlobalResBio_Mill",
               "L2042.StubResBioCurve_Mill",
               "L2042.AgResBio_ag_irr_mgmt",
@@ -22,6 +23,7 @@ module_aglu_batch_resbio_input_IRR_MGMT_xml <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
+    L2042.AgResBio_For <- get_data(all_data, "L2042.AgResBio_For")
     L2042.AgResBioCurve_For <- get_data(all_data, "L2042.AgResBioCurve_For")
     L2042.GlobalResBio_Mill <- get_data(all_data, "L2042.GlobalResBio_Mill")
     L2042.StubResBioCurve_Mill <- get_data(all_data, "L2042.StubResBioCurve_Mill")
@@ -32,12 +34,18 @@ module_aglu_batch_resbio_input_IRR_MGMT_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("resbio_input_IRR_MGMT.xml") %>%
+      add_xml_data(L2042.AgResBio_For, "AgResBio") %>%
       add_xml_data(L2042.AgResBioCurve_For,"AgResBioCurve") %>%
       add_xml_data(L2042.GlobalResBio_Mill,"GlobalResBio") %>%
       add_xml_data(L2042.StubResBioCurve_Mill,"StubResBioCurve") %>%
       add_xml_data(L2042.AgResBio_ag_irr_mgmt,"AgResBio") %>%
       add_xml_data(L2042.AgResBioCurve_ag_irr_mgmt,"AgResBioCurve") %>%
-      add_precursors("L2042.AgResBioCurve_For", "L2042.GlobalResBio_Mill", "L2042.StubResBioCurve_Mill", "L2042.AgResBio_ag_irr_mgmt", "L2042.AgResBioCurve_ag_irr_mgmt") ->
+      add_precursors("L2042.AgResBio_For",
+                     "L2042.AgResBioCurve_For",
+                     "L2042.GlobalResBio_Mill",
+                     "L2042.StubResBioCurve_Mill",
+                     "L2042.AgResBio_ag_irr_mgmt",
+                     "L2042.AgResBioCurve_ag_irr_mgmt") ->
       resbio_input_IRR_MGMT.xml
 
     return_data(resbio_input_IRR_MGMT.xml)
