@@ -23,7 +23,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
              "L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y",
              "L100.IMAGE_an_FeedIO_ctry_C_Sys_Y",
              "L105.an_Prod_Mt_ctry_C_Y",
-             FILE = "temp-data-inject/L107.an_FeedIO_R_C_Sys_Fd_Y_gcd5"))
+             FILE = "temp-data-inject/L107.an_FeedIO_R_C_Sys_Fd_Y_gcd5")) # This file is used in an OLD_DATA_SYSTEM_BEHAVIOR block
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L107.an_Prod_Mt_R_C_Sys_Fd_Y",
              "L107.an_Feed_Mt_R_C_Sys_Fd_Y",
@@ -232,19 +232,40 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L107.an_Feed_Mt_R_C_Sys_Fd_Y
 
-    L107.an_FeedIO_R_C_Sys_Fd_Y %>%
-      add_title("Animal production input-output coefficients by GCAM region / commodity / system / feed type / year") %>%
-      add_units("Unitless") %>%
-      add_comments("GCAM-region-level feed consumption is divided by GCAM-region-level production to give") %>%
-      add_comments("GCAM-region-level IO coefficients. NA values are rewritten to 100.") %>%
-      add_legacy_name("L107.an_FeedIO_R_C_Sys_Fd_Y") %>%
-      add_precursors("common/iso_GCAM_regID",
-                     "L100.IMAGE_an_Prodmixfrac_ctry_C_Y",
-                     "L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y",
-                     "L100.IMAGE_an_FeedIO_ctry_C_Sys_Y",
-                     "L105.an_Prod_Mt_ctry_C_Y") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
-      L107.an_FeedIO_R_C_Sys_Fd_Y
+    if(OLD_DATA_SYSTEM_BEHAVIOR) {
+
+      L107.an_FeedIO_R_C_Sys_Fd_Y %>%
+        add_title("Animal production input-output coefficients by GCAM region / commodity / system / feed type / year") %>%
+        add_units("Unitless") %>%
+        add_comments("GCAM-region-level feed consumption is divided by GCAM-region-level production to give") %>%
+        add_comments("GCAM-region-level IO coefficients. NA values are rewritten to 100.") %>%
+        add_legacy_name("L107.an_FeedIO_R_C_Sys_Fd_Y") %>%
+        add_precursors("common/iso_GCAM_regID",
+                       "L100.IMAGE_an_Prodmixfrac_ctry_C_Y",
+                       "L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y",
+                       "L100.IMAGE_an_FeedIO_ctry_C_Sys_Y",
+                       "L105.an_Prod_Mt_ctry_C_Y",
+                       "temp-data-inject/L107.an_FeedIO_R_C_Sys_Fd_Y_gcd5") %>%  # only a precursor in an OLD_DATA_SYSTEM_BEHAVIOR block
+        add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+        L107.an_FeedIO_R_C_Sys_Fd_Y
+
+    } else {
+
+      L107.an_FeedIO_R_C_Sys_Fd_Y %>%
+        add_title("Animal production input-output coefficients by GCAM region / commodity / system / feed type / year") %>%
+        add_units("Unitless") %>%
+        add_comments("GCAM-region-level feed consumption is divided by GCAM-region-level production to give") %>%
+        add_comments("GCAM-region-level IO coefficients. NA values are rewritten to 100.") %>%
+        add_legacy_name("L107.an_FeedIO_R_C_Sys_Fd_Y") %>%
+        add_precursors("common/iso_GCAM_regID",
+                       "L100.IMAGE_an_Prodmixfrac_ctry_C_Y",
+                       "L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y",
+                       "L100.IMAGE_an_FeedIO_ctry_C_Sys_Y",
+                       "L105.an_Prod_Mt_ctry_C_Y") %>%
+        add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+        L107.an_FeedIO_R_C_Sys_Fd_Y
+    }
+
 
     return_data(L107.an_Prod_Mt_R_C_Sys_Fd_Y, L107.an_Feed_Mt_R_C_Sys_Fd_Y, L107.an_FeedIO_R_C_Sys_Fd_Y)
   } else {
