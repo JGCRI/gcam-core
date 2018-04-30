@@ -94,6 +94,8 @@ module_energy_batch_electricity_xml <- function(command, ...) {
     L223.StubTechProd_elec <- get_data(all_data, "L223.StubTechProd_elec")
     L223.StubTechEff_elec <- get_data(all_data, "L223.StubTechEff_elec")
 
+    share.weight <- subsector.share.weight <- intermittent.technology <- NULL # silence package checks
+
     # ===================================================
 
     # Rename columns to match header information.

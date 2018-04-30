@@ -10,7 +10,7 @@
 #' original data system was \code{batch_interest_rate_USA.xml} (gcamusa XML).
 module_gcamusa_batch_interest_rate_USA_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L201.InterestRate"))
+    return(c("L201.InterestRate_GCAMUSA"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "interest_rate_USA.xml"))
   } else if(command == driver.MAKE) {
@@ -18,14 +18,14 @@ module_gcamusa_batch_interest_rate_USA_xml <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    L201.InterestRate <- get_data(all_data, "L201.InterestRate")
+    L201.InterestRate_GCAMUSA <- get_data(all_data, "L201.InterestRate_GCAMUSA")
 
     # ===================================================
 
     # Produce outputs
     create_xml("interest_rate_USA.xml") %>%
-      add_xml_data(L201.InterestRate,"InterestRate") %>%
-      add_precursors("L201.InterestRate") ->
+      add_xml_data(L201.InterestRate_GCAMUSA,"InterestRate") %>%
+      add_precursors("L201.InterestRate_GCAMUSA") ->
       interest_rate_USA.xml
 
     return_data(interest_rate_USA.xml)
