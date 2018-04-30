@@ -14,7 +14,7 @@ module_gcam.usa_L223.electricity_USA(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L223.SectorNodeEquiv}, \code{L223.TechNodeEquiv}, \code{L223.DeleteSubsector_USAelec},
+the generated outputs: \code{L223.DeleteSubsector_USAelec},
 \code{L223.Supplysector_USAelec}, \code{L223.SubsectorShrwtFllt_USAelec}, \code{L223.SubsectorInterp_USAelec},
 \code{L223.SubsectorLogit_USAelec}, \code{L223.TechShrwt_USAelec}, \code{L223.TechCoef_USAelec},
 \code{L223.Production_USAelec},\code{L223.PassthroughSector_elec_USA}, \code{L223.PassthroughTech_elec_FERC},
