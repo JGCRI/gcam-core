@@ -262,8 +262,7 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
 
     # Get markets for fuels consumed by the state industrial sectors
     L232.StubTech_ind %>% filter(region == "USA") %>% select(-region) %>%
-      repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
-      # ^^ replaces the write_to_all_states function in the legacy code
+      write_to_all_states(names = c(names(L232.StubTech_ind), "region")) %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       left_join_keep_first_only(A32.globaltech_eff %>% select(supplysector, subsector, technology, minicam.energy.input),
                                 by = c("supplysector", "subsector", "stub.technology" = "technology")) %>%

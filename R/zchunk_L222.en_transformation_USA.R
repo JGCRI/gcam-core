@@ -143,7 +143,7 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
       data %>%
         filter(region == "USA",
                supplysector %in% gcamusa.SECTOR_EN_NAMES) %>%
-        write_to_all_states(names(data)) %>%
+        write_to_all_states(names = c(names(data), "region")) %>%
         filter((subsector == "oil refining" & region %in% oil_refining_states) |
                  subsector != "oil refining") %>%
         mutate(supplysector = subsector)
@@ -360,7 +360,7 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
       # L222.StubTechMarket_en_USA: market names of inputs to state refining sectors
       L222.GlobalTechCoef_en_USA %>%
         select(one_of(LEVEL2_DATA_NAMES[["GlobalTechInput"]])) %>%
-        repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
+        write_to_all_states(names = c(LEVEL2_DATA_NAMES[["GlobalTechInput"]], "region")) %>%
         rename(supplysector = sector.name,
                subsector = subsector.name,
                stub.technology = technology) %>%
