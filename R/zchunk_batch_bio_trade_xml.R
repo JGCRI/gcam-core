@@ -48,6 +48,8 @@ module_aglu_batch_bio_trade_xml <- function(command, ...) {
     L243.TechCoef_TradedBio <- get_data(all_data, "L243.TechCoef_TradedBio")
     L243.TechShrwt_TradedBio <- get_data(all_data, "L243.TechShrwt_TradedBio")
 
+    market <- NULL # Silence package check
+
     # ===================================================
     # Rename tibble columns to match header info.
     L243.StubTechCoef_ImportedBio <- rename(L243.StubTechCoef_ImportedBio, market.name = market)
