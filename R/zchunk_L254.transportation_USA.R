@@ -154,7 +154,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
 
       data_new <- data %>%
         filter(region == "USA") %>%
-        write_to_all_states(names(data))
+        write_to_all_states(names = c(names(data), "region"))
 
       # Re-set markets from USA to regional markets, if called for in the GCAM-USA assumptions for selected fuels
       if(gcamusa.USE_REGIONAL_FUEL_MARKETS & "market.name" %in% names(data_new)) {
@@ -277,7 +277,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
     # Write all possible pass-through technologies to all regions
     A54.globaltech_passthru %>%
       repeat_add_columns(tibble(year = BASE_YEARS)) %>%
-      repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
+      write_to_all_states(names = c(names(.), "region")) %>%
       select(region, supplysector, tranSubsector, stub.technology = technology, year, minicam.energy.input) %>%
       # Subset only the passthrough technologies that are applicable in each region
       semi_join(L254.StubTranTech_passthru_USA,

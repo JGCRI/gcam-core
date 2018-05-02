@@ -221,7 +221,7 @@ module_gcam.usa_L210.resources_USA <- function(command, ...) {
     L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA <- L210.SmthRenewRsrcCurvesGdpElast_roofPV %>%
       filter(region == "USA") %>%
       select(-region, -maxSubResource, -mid.price, -curve.exponent) %>%
-      repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
+      write_to_all_states(names = c(names(.), "region")) %>%
       left_join_error_no_match(L115.rsrc_state_rooftopPV, by = c("region" = "state")) %>%
       rename(maxSubResource = generation, mid.price = mid_p, curve.exponent = b_exp)
     # ===================================================
