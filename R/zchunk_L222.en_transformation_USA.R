@@ -6,7 +6,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L222.DeleteStubTech_USAen}, \code{L222.SectorEQUIV}, \code{L222.PassThroughSector_USAen}, \code{object}, \code{L222.TechEQUIV}, \code{L222.Tech_USAen}, \code{L222.TechShrwt_USAen}, \code{L222.TechInterp_USAen}, \code{L222.TechShrwt_USAen}, \code{L222.TechCoef_USAen}, \code{L222.Production_USArefining}, \code{L222.SectorLogitTables_USA[[ curr_table ]]$data}, \code{L222.Supplysector_en_USA}, \code{L222.SubsectorShrwtFllt_en_USA}, \code{L222.StubTechProd_refining_USA}, \code{L222.StubTechMarket_en_USA}, \code{L222.CarbonCoef_en_USA}. The corresponding file in the
+#' the generated outputs: \code{L222.DeleteStubTech_USAen}, \code{L222.PassThroughSector_USAen}, \code{L222.Tech_USAen}, \code{L222.TechShrwt_USAen}, \code{L222.TechInterp_USAen}, \code{L222.TechShrwt_USAen}, \code{L222.TechCoef_USAen}, \code{L222.Production_USArefining}, \code{L222.SectorLogitTables_USA[[ curr_table ]]$data}, \code{L222.Supplysector_en_USA}, \code{L222.SubsectorShrwtFllt_en_USA}, \code{L222.StubTechProd_refining_USA}, \code{L222.StubTechMarket_en_USA}, \code{L222.CarbonCoef_en_USA}. The corresponding file in the
 #' original data system was \code{L222.en_transformation_USA.R} (gcam-usa level2).
 #' @details This chunk sets up the USA energy transformation technology databases as well as writing out assumptions to all states/sectors/markets for shareweights and logits.
 #' Calibrated outputs and I:O coefficients are updated from global values produced by \code{\link{module_energy_L222.en_transformation}}.
@@ -37,9 +37,7 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
              "L202.CarbonCoef"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L222.DeleteStubTech_USAen",
-             "L222.SectorEQUIV",
              "L222.PassThroughSector_USAen",
-             "L222.TechEQUIV",
              "L222.Tech_USAen",
              "L222.TechShrwt_USAen",
              "L222.TechInterp_USAen",
@@ -156,16 +154,6 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
         filter(sector.name %in% gcamusa.SECTOR_EN_NAMES) %>%
         mutate(sector.name = subsector.name)
     } # global_energy_to_USA_GlobalTech
-
-
-    # build tables
-
-    # L222.TechEQUIV: not used in this code, would probably be best defined externally as a constant or assumption
-    L222.TechEQUIV <- tibble(group.name = "technology", tag1 = "technology", tag2 = "pass-through-technology")
-
-    # L222.SectorEQUIV: not used in this code, would probably be best defined externally as a constant or assumption
-    L222.SectorEQUIV <- tibble(group.name = "sector", tag1 = "supplysector", tag2 = "pass-through-sector")
-
 
     # Oil refining sectors are only created in states where the production is > 0 in the historical period.
     # Collect these states. Other techs are available everywhere
@@ -441,13 +429,6 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
       add_precursors("L222.StubTech_en") ->
       L222.DeleteStubTech_USAen
 
-    L222.SectorEQUIV %>%
-      add_title("Table of sector equivalencies for pass-through-sector") %>%
-      add_units("NA") %>%
-      add_comments("user defined.") %>%
-      add_legacy_name("L222.SectorEQUIV") ->
-      L222.SectorEQUIV
-
     L222.PassThroughSector_USAen %>%
       add_title("PassThroughSector information to send vintaging info from states to USA") %>%
       add_units("NA") %>%
@@ -455,13 +436,6 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
       add_legacy_name("L222.PassThroughSector_USAen") %>%
       same_precursors_as(L222.Tech_USAen) ->
       L222.PassThroughSector_USAen
-
-    L222.TechEQUIV %>%
-      add_title("table of technology equivalencies for pass-through-technology") %>%
-      add_units("NA") %>%
-      add_comments("user defined.") %>%
-      add_legacy_name("L222.TechEQUIV")->
-      L222.TechEQUIV
 
     L222.Tech_USAen %>%
       add_title("The technology pass-throughs used to set the proper node name, USA region.") %>%
@@ -632,7 +606,7 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
       add_precursors("L222.GlobalTechCapture_en") ->
       L222.GlobalTechCapture_en_USA
 
-    return_data(L222.DeleteStubTech_USAen, L222.SectorEQUIV, L222.PassThroughSector_USAen, L222.TechEQUIV, L222.Tech_USAen,
+    return_data(L222.DeleteStubTech_USAen, L222.PassThroughSector_USAen, L222.Tech_USAen,
                 L222.TechShrwt_USAen, L222.TechInterp_USAen, L222.TechCoef_USAen, L222.Production_USArefining,
                 L222.Supplysector_en_USA, L222.SubsectorShrwtFllt_en_USA, L222.StubTechProd_refining_USA, L222.StubTechMarket_en_USA,
                 L222.CarbonCoef_en_USA, L222.GlobalTechSCurve_en_USA,

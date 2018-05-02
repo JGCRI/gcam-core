@@ -6,7 +6,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L223.SectorNodeEquiv}, \code{L223.TechNodeEquiv}, \code{L223.DeleteSubsector_USAelec},
+#' the generated outputs: \code{L223.DeleteSubsector_USAelec},
 #' \code{L223.Supplysector_USAelec}, \code{L223.SubsectorShrwtFllt_USAelec}, \code{L223.SubsectorInterp_USAelec},
 #' \code{L223.SubsectorLogit_USAelec}, \code{L223.TechShrwt_USAelec}, \code{L223.TechCoef_USAelec},
 #' \code{L223.Production_USAelec},\code{L223.PassthroughSector_elec_USA}, \code{L223.PassthroughTech_elec_FERC},
@@ -52,9 +52,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
              "L1231.out_EJ_state_elec_F_tech",
              "L1232.out_EJ_sR_elec"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L223.SectorNodeEquiv",
-             "L223.TechNodeEquiv",
-             "L223.DeleteSubsector_USAelec",
+    return(c("L223.DeleteSubsector_USAelec",
              "L223.Supplysector_USAelec",
              "L223.SubsectorShrwtFllt_USAelec",
              "L223.SubsectorInterp_USAelec",
@@ -129,19 +127,6 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
     L1231.out_EJ_state_elec_F_tech <- get_data(all_data, "L1231.out_EJ_state_elec_F_tech")
     L1232.out_EJ_sR_elec <- get_data(all_data, "L1232.out_EJ_sR_elec")
 
-    # Set up equivalent sector and technology tag names.
-
-    # L223.SectorNodeEquiv: Sets up equivalent sector tag names to avoid
-    # having to partition input tables
-    tibble(X1 = "SectorXMLTags", X2 = "supplysector",
-           X3 = "pass-through-sector") ->
-      L223.SectorNodeEquiv
-
-    # L223.TechNodeEquiv: Sets up equivalent technology tag names to avoid
-    # having to partition input tables")
-    tibble(X1 = "TechnologyXMLTags", X2 = "technology",
-           X3 = "intermittent-technology", X4 = "pass-through-technology") ->
-      L223.TechNodeEquiv
 
     # A vector of USA grid region names
     states_subregions %>%
@@ -594,19 +579,6 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       L223.StubTechCapFactor_elec_solar_USA
 
     # Produce outputs
-    L223.SectorNodeEquiv %>%
-      add_title("Equivalent sector tag names") %>%
-      add_units("NA") %>%
-      add_comments("Generated to avoid having to partition input tables") %>%
-      add_legacy_name("L223.SectorNodeEquiv") ->
-      L223.SectorNodeEquiv
-
-    L223.TechNodeEquiv %>%
-      add_title("Equivalent technology tag names") %>%
-      add_units("NA") %>%
-      add_comments("Generated to avoid having to partition input tables") %>%
-      add_legacy_name("L223.TechNodeEquiv") ->
-      L223.TechNodeEquiv
 
     if(exists("L223.DeleteSubsector_USAelec")) {
       L223.DeleteSubsector_USAelec %>%
@@ -1050,9 +1022,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
                      "gcam-usa/states_subregions") ->
       L223.StubTechCapFactor_elec_solar_USA
 
-    return_data(L223.SectorNodeEquiv,
-                L223.TechNodeEquiv,
-                L223.DeleteSubsector_USAelec,
+    return_data(L223.DeleteSubsector_USAelec,
                 L223.Supplysector_USAelec,
                 L223.SubsectorShrwtFllt_USAelec,
                 L223.SubsectorInterp_USAelec,

@@ -2,7 +2,7 @@
 #'
 #' Produce L2231.LN3_Logit, L2231.LN3_HistUnmgdAllocation, L2231.LN3_UnmgdAllocation,
 #' L2231.LN3_HistMgdAllocation_noncrop, L2231.LN3_MgdAllocation_noncrop, L2231.LN3_UnmgdCarbon,
-#' L2231.LN3_MgdCarbon_noncrop, L2231.NodeEquiv, L2231.LN3_NoEmissCarbon, L2231.LN3_NodeCarbon, and
+#' L2231.LN3_MgdCarbon_noncrop, L2231.LN3_NoEmissCarbon, L2231.LN3_NodeCarbon, and
 #' protected lands related outputs: L2231.LN3_HistUnmgdAllocation_noprot, L2231.LN3_UnmgdAllocation_noprot,
 #' L2231.LN1_HistUnmgdAllocation_prot, L2231.LN1_UnmgdAllocation_prot, L2231.LN1_UnmgdCarbon_prot,
 #' L2231.LN1_Logit_prot.
@@ -12,7 +12,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L2231.LN3_LogitTables[[ curr_table_name ]]}, \code{L2231.LN3_Logit}, \code{L2231.LN3_HistUnmgdAllocation}, \code{L2231.LN3_UnmgdAllocation}, \code{L2231.NodeEquiv}, \code{L2231.LN3_NoEmissCarbon}, \code{L2231.LN3_NodeCarbon}, \code{L2231.LN3_HistMgdAllocation_noncrop}, \code{L2231.LN3_MgdAllocation_noncrop}, \code{L2231.LN3_UnmgdCarbon}, \code{L2231.LN3_MgdCarbon_noncrop}. The corresponding file in the
+#' the generated outputs: \code{L2231.LN3_Logit}, \code{L2231.LN3_HistUnmgdAllocation}, \code{L2231.LN3_UnmgdAllocation}, \code{L2231.LN3_NoEmissCarbon}, \code{L2231.LN3_NodeCarbon}, \code{L2231.LN3_HistMgdAllocation_noncrop}, \code{L2231.LN3_MgdAllocation_noncrop}, \code{L2231.LN3_UnmgdCarbon}, \code{L2231.LN3_MgdCarbon_noncrop}. The corresponding file in the
 #' original data system was \code{L2231.land_input_3_irr.R} (aglu level2).
 #' @details
 #' \itemize{
@@ -32,8 +32,6 @@
 #' \item{"L2231.LN3_MgdCarbon_noncrop: Carbon content for non-crop managed land (LT_GLU) in third nest by region.
 #' Carbon content info for non-crop managed land in the third nest including soil and vegetative carbon,
 #' from L125 land cover data, L121 carbon content data, and GCAMLandLeaf_CdensityLT assumptions."}
-#' \item{"L2231.NodeEquiv: Node tag equivalence list to minimize extra tables to read in same parameters;
-#' manually formed with no inputs."}
 #' \item{"L2231.LN3_NoEmissCarbon: Sets the no-emiss-carbon-calc as the type of carbon to use in forest leaves by region."}
 #' \item{"L2231.LN3_NodeCarbon: Sets the node-carbon-calc to drive the carbon calc between forest leaves, by region, and
 #' places the node carbon calc in the node just above the leaves."}
@@ -68,7 +66,6 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     return(c("L2231.LN3_Logit",
              "L2231.LN3_HistUnmgdAllocation",
              "L2231.LN3_UnmgdAllocation",
-             "L2231.NodeEquiv",
              "L2231.LN3_NoEmissCarbon",
              "L2231.LN3_NodeCarbon",
              "L2231.LN3_HistMgdAllocation_noncrop",
@@ -246,14 +243,6 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       rename(node.carbon.calc = no.emiss.carbon.calc) ->
       L223.LN3_NodeCarbon
 
-    # L223.NodeEquiv: Node tag equivalence list to minimize extra tables to read in same params
-    # TODO: better place for these?  they are related to headers since they list tag names
-    tibble(group.name = c("Leaf", "CarbonCalc"),
-           tag1 = c("LandLeaf", "land-carbon-densities"),
-           tag2 = c("UnmanagedLandLeaf", "no-emiss-carbon-calc")) ->
-      L223.NodeEquiv
-
-
     # UNPROTECTED LANDS in the third nest
     # Note that OtherArableLand is specifically NOT adjusted.
 
@@ -351,13 +340,6 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       add_legacy_name("L2231.LN3_UnmgdAllocation") %>%
       same_precursors_as("L2231.LN3_HistUnmgdAllocation") ->
       L2231.LN3_UnmgdAllocation
-
-    L223.NodeEquiv %>%
-      add_title("Node tag equivalence list to minimize extra tables to read in same params") %>%
-      add_units("NA") %>%
-      add_comments("Manually formed with no inputs") %>%
-      add_legacy_name("L2231.NodeEquiv") ->
-      L2231.NodeEquiv
 
     L223.LN3_NoEmissCarbon %>%
       add_title("Sets the no-emiss-carbon-calc as the type of carbon to use in forest leaves") %>%
@@ -483,7 +465,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       L2231.LN1_Logit_prot
 
 
-    return_data(L2231.LN3_Logit, L2231.LN3_HistUnmgdAllocation, L2231.LN3_UnmgdAllocation, L2231.NodeEquiv, L2231.LN3_NoEmissCarbon, L2231.LN3_NodeCarbon, L2231.LN3_HistMgdAllocation_noncrop, L2231.LN3_MgdAllocation_noncrop, L2231.LN3_UnmgdCarbon, L2231.LN3_MgdCarbon_noncrop,
+    return_data(L2231.LN3_Logit, L2231.LN3_HistUnmgdAllocation, L2231.LN3_UnmgdAllocation, L2231.LN3_NoEmissCarbon, L2231.LN3_NodeCarbon, L2231.LN3_HistMgdAllocation_noncrop, L2231.LN3_MgdAllocation_noncrop, L2231.LN3_UnmgdCarbon, L2231.LN3_MgdCarbon_noncrop,
                 # protected land outputs:
                 L2231.LN3_HistUnmgdAllocation_noprot, L2231.LN3_UnmgdAllocation_noprot, L2231.LN1_HistUnmgdAllocation_prot, L2231.LN1_UnmgdAllocation_prot, L2231.LN1_UnmgdCarbon_prot, L2231.LN1_Logit_prot)
   } else {

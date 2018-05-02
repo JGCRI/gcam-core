@@ -91,7 +91,8 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       calOutputValue <- AgProductionTechnology <- Irr_Rfd <- variable <- yieldmult <- tmp <- crop1 <-
       crop2 <- landshare <- lev <- . <- ghost.unnormalized.share <- HarvestIndex.x <- HarvestIndex.y <-
       Root_Shoot.x <- Root_Shoot.y <- WaterContent.x <- WaterContent.y <- yield <- HarvestIndex <-
-      WaterContent <- Root_Shoot <- total_land <- NULL
+      WaterContent <- Root_Shoot <- total_land <- gcam5_hist.veg.carbon.density <- new_hist.veg.carbon.density <-
+      gcam5_veg.carbon.density <- new_veg.carbon.density <- dif_hist.veg <- dif_veg<- NULL
 
     # 1. Process inputs
 
