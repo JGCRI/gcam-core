@@ -287,7 +287,7 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
       ungroup() %>%
       filter(year %in% MODEL_YEARS) %>%
       # Repeat for all states
-      repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
+      write_to_all_states(names = c(names(.), "region")) %>%
       # Add nodeInput and building.node.input
       left_join_error_no_match(A44.gcam_consumer, by = "gcam.consumer") %>%
       mutate(floor.to.surface.ratio = energy.FLOOR_TO_SURFACE_RATIO,
@@ -410,7 +410,7 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
     # For calibration table, start with global tech efficiency table, repeat by states, and match in tech shares.
     L244.StubTechCalInput_bld_gcamusa <- L244.GlobalTechEff_bld %>%
       filter(year %in% BASE_YEARS) %>%
-      repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
+      write_to_all_states(names = c(names(.), "region")) %>%
       rename(supplysector = sector.name, subsector = subsector.name, stub.technology = technology) %>%
       # Using left_join because we don't have shares for all technologies, NAs will be set to 1
       left_join(L244.globaltech_shares, by = c("supplysector", "subsector", "stub.technology" = "technology")) %>%

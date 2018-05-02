@@ -525,7 +525,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
     # L223.StubTechMarket_backup_USA: market names of backup inputs to state electricity sectors
     L223.GlobalIntTechBackup_elec %>%
       mutate(supplysector = sector.name, subsector = subsector.name) %>%
-      repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
+      write_to_all_states(names = c(names(.), 'region')) %>%
       mutate(market.name = "USA", stub.technology = technology) %>%
       select(LEVEL2_DATA_NAMES[["StubTechMarket"]]) ->
       L223.StubTechMarket_backup_USA
@@ -550,7 +550,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       filter(region == "USA") %>%
       semi_join(L223.CapacityFactor_wind_state, by = c("supplysector", "subsector")) %>%
       select(-region, -capacity.factor) %>%
-      repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
+      write_to_all_states(names = c(names(.), "region")) %>%
       left_join_error_no_match(L223.CapacityFactor_wind_state,
                                by = c("region" = "state", "supplysector", "subsector")) %>%
       mutate(capacity.factor = round(capacity.factor, digits = energy.DIGITS_CAPACITY_FACTOR)) %>%
@@ -569,7 +569,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       filter(region == "USA") %>%
       semi_join(L223.CapFacScaler_solar_state, by = c("supplysector", "subsector")) %>%
       select(-region) %>%
-      repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
+      write_to_all_states(., c(names(.), "region")) %>%
       # For matching capacity factors to technologies, create a variable (tech) that matches what's in the capacity factor table
       mutate(tech = sub("_storage", "", stub.technology)) %>%
       left_join_error_no_match(L223.CapFacScaler_solar_state,
