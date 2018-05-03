@@ -37,25 +37,17 @@ test_that("matches old data system output", {
     gcam_data_map <- arrange(gcam_data_map, name, output)
     gdm_internal <- arrange(gcamdata:::GCAM_DATA_MAP, name, output)
 
+    # The gcam_data_map that's generated on Travis won't have the proprietary IEA data, so its comments
+    # and units may differ
     expect_true(tibble::is_tibble(gdm_internal))
     expect_true(tibble::is_tibble(gcam_data_map))
-    expect_identical(gdm_internal, gcam_data_map)
     expect_identical(dim(gdm_internal), dim(gcam_data_map), info =
-                       "GCAM_DATA_MAP size doesn't match.  Rerun generate_package_data to update.")
+                       "GCAM_DATA_MAP dimensions don't match. Rerun generate_package_data to update.")
     expect_identical(gdm_internal$name, gcam_data_map$name, info =
-                       "GCAM_DATA_MAP name doesn't match.  Rerun generate_package_data to update.")
+                       "GCAM_DATA_MAP name doesn't match. Rerun generate_package_data to update.")
     expect_identical(gdm_internal$output, gcam_data_map$output, info = "GCAM_DATA_MAP output doesn't match")
     expect_identical(gdm_internal$precursors, gcam_data_map$precursors, info =
-                       "GCAM_DATA_MAP precursors doesn't match.  Rerun generate_package_data to update.")
-    # The following lines fail on Travis. Not sure why. But above we guarantee that the
-    # pre-packaged GCAM_DATA_MAP has the same dimensions, object names, output names,
-    # and precursors; that's probably good enough.
-    # expect_identical(gcamdata:::GCAM_DATA_MAP$title, gcam_data_map$title)
-    # expect_identical(gcamdata:::GCAM_DATA_MAP$units, gcam_data_map$units)
-    # expect_identical(gcamdata:::GCAM_DATA_MAP$comments, gcam_data_map$comments)
-    # expect_identical(gcamdata:::GCAM_DATA_MAP$flags, gcam_data_map$flags)
-    # expect_equivalent(gcam_data_map, gcamdata:::GCAM_DATA_MAP,
-    #                   info = "GCAM_DATA_MAP is out of date; rerun data-raw/generate-package-data.R")
+                       "GCAM_DATA_MAP precursors doesn't match. Rerun generate_package_data to update.")
   }
 
   # For each file in OUTPUTS_DIR, look for corresponding file in our

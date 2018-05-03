@@ -1,6 +1,6 @@
 # File: L121.in_EJ_R_TPES_crude_Yh.csv
 # Title: Pre-built L121.in_EJ_R_TPES_crude_Yh.csv
-# Units: NA
+# Units: EJ
 # Unconventional oil subtracted from total primary energy supply of liquids
 # to determine crude oil supply
 GCAM_region_ID,sector,fuel,year,value
