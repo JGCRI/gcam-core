@@ -91,8 +91,7 @@ module_gcam.usa_LA142.Building <- function(command, ...) {
       add_units("value = EJ") %>%
       add_comments("Scaled national-level building energy consumption by portion of total US building energy use by fuel for each state and sector from the SEDS table.") %>%
       add_legacy_name("L142.in_EJ_state_bld_F") %>%
-      add_precursors("L142.in_EJ_R_bld_F_Yh", "L101.inEIA_EJ_state_S_F") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L142.in_EJ_R_bld_F_Yh", "L101.inEIA_EJ_state_S_F") ->
       L142.in_EJ_state_bld_F
 
     return_data(L142.in_EJ_state_bld_F)

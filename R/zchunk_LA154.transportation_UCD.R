@@ -355,8 +355,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
                      "L1011.in_EJ_ctry_intlship_TOT_Yh", "L131.in_EJ_R_Senduse_F_Yh",
                      "energy/mappings/calibrated_techs_trn_agg", "energy/enduse_fuel_aggregation",
                      "energy/mappings/UCD_ctry", "energy/mappings/UCD_techs",
-                     UCD_trn_data_name) %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     UCD_trn_data_name) ->
       L154.in_EJ_R_trn_m_sz_tech_F_Yh
 
     IEA_hist_data_times_UCD_shares %>%
@@ -367,8 +366,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID", "L101.in_EJ_ctry_trn_Fi_Yh",
                      UCD_trn_data_name, "energy/mappings/calibrated_techs_trn_agg",
                      "energy/mappings/UCD_ctry", "energy/mappings/UCD_techs",
-                     "L1011.in_EJ_ctry_intlship_TOT_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L1011.in_EJ_ctry_intlship_TOT_Yh") ->
       L154.in_EJ_ctry_trn_m_sz_tech_F
 
     out_var_df[["intensity_MJvkm"]] %>%
@@ -382,8 +380,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
                      "L131.in_EJ_R_Senduse_F_Yh", "common/iso_GCAM_regID", "energy/mappings/calibrated_techs_trn_agg",
                      "energy/enduse_fuel_aggregation", "energy/mappings/UCD_techs",
                      "L101.in_EJ_ctry_trn_Fi_Yh", "L1011.in_EJ_ctry_intlship_TOT_Yh",
-                     "L131.in_EJ_R_Senduse_F_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+                     "L131.in_EJ_R_Senduse_F_Yh") ->
       L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y
 
     out_var_df[["loadfactor"]] %>%
@@ -397,8 +394,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
                      "L131.in_EJ_R_Senduse_F_Yh", "common/iso_GCAM_regID", "energy/mappings/calibrated_techs_trn_agg",
                      "energy/enduse_fuel_aggregation", "energy/mappings/UCD_techs",
                      "L101.in_EJ_ctry_trn_Fi_Yh", "L1011.in_EJ_ctry_intlship_TOT_Yh",
-                     "L131.in_EJ_R_Senduse_F_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+                     "L131.in_EJ_R_Senduse_F_Yh") ->
       L154.loadfactor_R_trn_m_sz_tech_F_Y
 
     out_var_df[["cost_usdvkm"]] %>%
@@ -412,8 +408,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
                      "L131.in_EJ_R_Senduse_F_Yh", "common/iso_GCAM_regID", "energy/mappings/calibrated_techs_trn_agg",
                      "energy/enduse_fuel_aggregation", "energy/mappings/UCD_techs",
                      "L101.in_EJ_ctry_trn_Fi_Yh", "L1011.in_EJ_ctry_intlship_TOT_Yh",
-                     "L131.in_EJ_R_Senduse_F_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+                     "L131.in_EJ_R_Senduse_F_Yh") ->
       L154.cost_usdvkm_R_trn_m_sz_tech_F_Y
 
     out_var_df[["speed_kmhr"]] %>%
@@ -427,8 +422,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
                      "L131.in_EJ_R_Senduse_F_Yh", "common/iso_GCAM_regID", "energy/mappings/calibrated_techs_trn_agg",
                      "energy/enduse_fuel_aggregation", "energy/mappings/UCD_techs",
                      "L101.in_EJ_ctry_trn_Fi_Yh", "L1011.in_EJ_ctry_intlship_TOT_Yh",
-                     "L131.in_EJ_R_Senduse_F_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L131.in_EJ_R_Senduse_F_Yh") ->
       L154.speed_kmhr_R_trn_m_sz_tech_F_Y
 
     PKM_nonmotor_GCAM_R %>%
@@ -438,8 +432,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       add_legacy_name("L154.out_mpkm_R_trn_nonmotor_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "energy/mappings/UCD_ctry",
                      UCD_trn_data_name,
-                     "L100.Pop_thous_ctry_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L100.Pop_thous_ctry_Yh") ->
       L154.out_mpkm_R_trn_nonmotor_Yh
 
     return_data(L154.in_EJ_R_trn_m_sz_tech_F_Yh, L154.in_EJ_ctry_trn_m_sz_tech_F,

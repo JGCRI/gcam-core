@@ -490,8 +490,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
                        "aglu/A_Fodderbio_chars",
                        "aglu/A_LandLeaf3",
                        "L2012.AgYield_bio_ref",
-                       "temp-data-inject/L2252.LN5_MgdCarbon_bio_gcd5") %>%
-        add_flags(FLAG_SUM_TEST) ->
+                       "temp-data-inject/L2252.LN5_MgdCarbon_bio_gcd5") ->
         L2252.LN5_MgdCarbon_bio
 
     } else {
@@ -532,8 +531,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       add_comments("Ghost share of the nest 4 nodes (irrigated versus rainfed).") %>%
       add_legacy_name("L2252.LN5_NodeGhostShare") %>%
       same_precursors_as("L2252.LN5_LeafGhostShare") %>%
-      add_precursors("L181.LC_bm2_R_C_Yh_GLU_irr_level") %>%
-      add_flags(FLAG_SUM_TEST) ->
+      add_precursors("L181.LC_bm2_R_C_Yh_GLU_irr_level") ->
       L2252.LN5_NodeGhostShare
 
     return_data(L2252.LN5_Logit, L2252.LN5_HistMgdAllocation_crop, L2252.LN5_MgdAllocation_crop, L2252.LN5_HistMgdAllocation_bio, L2252.LN5_MgdAllocation_bio, L2252.LN5_MgdCarbon_crop, L2252.LN5_MgdCarbon_bio, L2252.LN5_LeafGhostShare, L2252.LN5_NodeGhostShare)

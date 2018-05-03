@@ -128,8 +128,7 @@ module_emissions_L113.ghg_an_R_S_T_Y <- function(command, ...) {
       add_legacy_name("L113.ghg_tg_R_an_C_Sys_Fd_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_sector", "emissions/mappings/EPA_ghg_tech",
                      "emissions/mappings/GCAM_sector_tech", "L107.an_Prod_Mt_R_C_Sys_Fd_Y",
-                     "L103.ghg_tgmt_USA_an_Sepa_F_2005", "emissions/EDGAR/EDGAR_CH4", "emissions/EDGAR/EDGAR_N2O") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L103.ghg_tgmt_USA_an_Sepa_F_2005", "emissions/EDGAR/EDGAR_CH4", "emissions/EDGAR/EDGAR_N2O") ->
       L113.ghg_tg_R_an_C_Sys_Fd_Yh
 
     return_data(L113.ghg_tg_R_an_C_Sys_Fd_Yh)

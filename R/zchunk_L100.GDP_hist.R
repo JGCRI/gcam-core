@@ -43,8 +43,7 @@ module_socioeconomics_L100.GDP_hist <- function(command, ...) {
       add_comments("Units converted to constant 1990 USD") %>%
       add_precursors("socioeconomics/USDA_GDP_MER") %>%
       add_units("Million 1990 USD") %>%
-      add_legacy_name("L100.gdp_mil90usd_ctry_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_legacy_name("L100.gdp_mil90usd_ctry_Yh") ->
       L100.gdp_mil90usd_ctry_Yh
 
     return_data(L100.gdp_mil90usd_ctry_Yh)

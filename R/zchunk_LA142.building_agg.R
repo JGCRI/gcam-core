@@ -131,8 +131,7 @@ module_energy_LA142.building_agg <- function(command, ...) {
       add_comments("Fuel inputs to heat were added to building energy use in regions where heat is not modeled as a final fuel") %>%
       add_legacy_name("L142.in_EJ_R_bld_F_Yh") %>%
       add_precursors("energy/A_regions", "energy/enduse_fuel_aggregation", "energy/enduse_sector_aggregation",
-                     "L124.in_EJ_R_heat_F_Yh", "L131.in_EJ_R_Senduse_F_Yh", "L131.share_R_Senduse_heat_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L124.in_EJ_R_heat_F_Yh", "L131.in_EJ_R_Senduse_F_Yh", "L131.share_R_Senduse_heat_Yh") ->
       L142.in_EJ_R_bld_F_Yh
 
     return_data(L142.in_EJ_R_bld_F_Yh)

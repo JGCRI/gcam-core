@@ -348,8 +348,7 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
       add_legacy_name("L122.out_EJ_R_gasproc_F_Yh") %>%
       add_precursors("common/GCAM_region_names", "aglu/FAO/FAO_ag_items_PRODSTAT", "energy/calibrated_techs",
                      "energy/A_regions", "energy/A21.globaltech_coef", "energy/A22.globaltech_coef", "L1011.en_bal_EJ_R_Si_Fi_Yh",
-                     "L121.in_EJ_R_unoil_F_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L121.in_EJ_R_unoil_F_Yh") ->
       L122.out_EJ_R_gasproc_F_Yh
 
     L122.in_EJ_R_gasproc_F_Yh %>%
@@ -359,8 +358,7 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
       add_legacy_name("L122.in_EJ_R_gasproc_F_Yh") %>%
       add_precursors("common/GCAM_region_names", "aglu/FAO/FAO_ag_items_PRODSTAT", "energy/calibrated_techs",
                      "energy/A_regions", "energy/A21.globaltech_coef", "energy/A22.globaltech_coef", "L1011.en_bal_EJ_R_Si_Fi_Yh",
-                     "L121.in_EJ_R_unoil_F_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L121.in_EJ_R_unoil_F_Yh") ->
       L122.in_EJ_R_gasproc_F_Yh
 
     L122.IO_R_oilrefining_F_Yh %>%
@@ -370,8 +368,7 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
       add_legacy_name("L122.IO_R_oilrefining_F_Yh") %>%
       add_precursors("common/GCAM_region_names", "aglu/FAO/FAO_ag_items_PRODSTAT", "energy/calibrated_techs",
                      "energy/A_regions", "energy/A21.globaltech_coef", "energy/A22.globaltech_coef", "L1011.en_bal_EJ_R_Si_Fi_Yh",
-                     "L121.in_EJ_R_unoil_F_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L121.in_EJ_R_unoil_F_Yh") ->
       L122.IO_R_oilrefining_F_Yh
 
     L122.out_EJ_R_refining_F_Yh %>%
@@ -381,8 +378,7 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
       add_legacy_name("L122.out_EJ_R_refining_F_Yh") %>%
       add_precursors("common/GCAM_region_names", "aglu/FAO/FAO_ag_items_PRODSTAT", "energy/calibrated_techs",
                      "energy/A_regions", "energy/A21.globaltech_coef", "energy/A22.globaltech_coef", "L1011.en_bal_EJ_R_Si_Fi_Yh",
-                     "L121.in_EJ_R_unoil_F_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L121.in_EJ_R_unoil_F_Yh")  ->
       L122.out_EJ_R_refining_F_Yh
 
     L122.in_EJ_R_refining_F_Yh %>%
@@ -392,8 +388,7 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
       add_legacy_name("L122.in_EJ_R_refining_F_Yh") %>%
       add_precursors("common/GCAM_region_names", "aglu/FAO/FAO_ag_items_PRODSTAT", "energy/calibrated_techs",
                      "energy/A_regions", "energy/A21.globaltech_coef", "energy/A22.globaltech_coef", "L1011.en_bal_EJ_R_Si_Fi_Yh",
-                     "L121.in_EJ_R_unoil_F_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L121.in_EJ_R_unoil_F_Yh") ->
       L122.in_EJ_R_refining_F_Yh
 
     L122.in_Mt_R_C_Yh %>%
@@ -403,8 +398,7 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
       add_legacy_name("L122.in_Mt_R_C_Yh") %>%
       add_precursors("common/GCAM_region_names", "aglu/FAO/FAO_ag_items_PRODSTAT", "energy/calibrated_techs",
                      "energy/A_regions", "energy/A21.globaltech_coef", "energy/A22.globaltech_coef", "L1011.en_bal_EJ_R_Si_Fi_Yh",
-                     "L121.in_EJ_R_unoil_F_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L121.in_EJ_R_unoil_F_Yh") ->
       L122.in_Mt_R_C_Yh
 
     return_data(L122.out_EJ_R_gasproc_F_Yh, L122.in_EJ_R_gasproc_F_Yh, L122.IO_R_oilrefining_F_Yh, L122.out_EJ_R_refining_F_Yh, L122.in_EJ_R_refining_F_Yh, L122.in_Mt_R_C_Yh)

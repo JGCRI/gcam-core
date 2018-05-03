@@ -119,7 +119,7 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
       add_legacy_name("L181.LC_bm2_R_C_Yh_GLU_irr_level") %>%
       add_precursors("L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU",
                      "L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT, FLAG_SUM_TEST) ->
+      add_flags(FLAG_PROTECT_FLOAT) ->
       L181.LC_bm2_R_C_Yh_GLU_irr_level
 
     L181.ag_EcYield_kgm2_R_C_Y_GLU_irr_level %>%
@@ -129,8 +129,7 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
       add_comments("Currently the same yield mutipliers are set for all region/commodity/GLU/irrigation.") %>%
       add_legacy_name("L181.ag_EcYield_kgm2_R_C_Y_GLU_irr_level") %>%
       add_precursors("L171.ag_irrEcYield_kgm2_R_C_Y_GLU",
-                     "L171.ag_rfdEcYield_kgm2_R_C_Y_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+                     "L171.ag_rfdEcYield_kgm2_R_C_Y_GLU") ->
       L181.ag_EcYield_kgm2_R_C_Y_GLU_irr_level
 
     L181.ag_Prod_Mt_R_C_Y_GLU_irr_level %>%
@@ -138,8 +137,7 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
       add_units("Mt") %>%
       add_comments("Agricultural production are calculated as the economic yield times cropland cover.") %>%
       add_legacy_name("L181.ag_Prod_Mt_R_C_Y_GLU_irr_level") %>%
-      add_precursors() %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors()  ->
       L181.ag_Prod_Mt_R_C_Y_GLU_irr_level
 
     L181.YieldMult_R_bio_GLU_irr %>%

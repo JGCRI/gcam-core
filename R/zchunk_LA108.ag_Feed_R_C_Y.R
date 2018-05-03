@@ -214,8 +214,7 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
       add_comments("Note: excess FodderGrass and FodderHerb production are mapped to OtherUses") %>%
       add_legacy_name("L108.ag_Feed_Mt_R_C_Y") %>%
       add_precursors("common/iso_GCAM_regID", "aglu/FAO/FAO_ag_items_cal_SUA", "L100.FAO_ag_Feed_t",
-                     "L103.ag_Prod_Mt_R_C_Y", "L107.an_Feed_Mt_R_C_Sys_Fd_Y") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+                     "L103.ag_Prod_Mt_R_C_Y", "L107.an_Feed_Mt_R_C_Sys_Fd_Y") ->
       L108.ag_Feed_Mt_R_C_Y
 
     ag_NetExp_Mt_R_FodderHerb_Y %>%
@@ -226,8 +225,7 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
       add_comments("Feed: based on IMAGE animal feed data") %>%
       add_comments("OtherUses: any excess production of FodderHerb from FAO (above the FodderHerb_Residue demand from IMAGE)") %>%
       add_legacy_name("L108.ag_NetExp_Mt_R_FodderHerb_Y") %>%
-      same_precursors_as("L108.ag_Feed_Mt_R_C_Y") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      same_precursors_as("L108.ag_Feed_Mt_R_C_Y") ->
       L108.ag_NetExp_Mt_R_FodderHerb_Y
 
     return_data(L108.ag_Feed_Mt_R_C_Y, L108.ag_NetExp_Mt_R_FodderHerb_Y)

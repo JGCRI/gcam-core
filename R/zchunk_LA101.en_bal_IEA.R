@@ -245,8 +245,7 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID", "energy/A_regions", "energy/IEA_flow_sector", "energy/IEA_product_fuel",
                      "energy/IEA_sector_fuel_modifications", "energy/enduse_fuel_aggregation",
                      "L100.IEA_en_bal_ctry_hist",
-                     "energy/prebuilt_data/L101.en_bal_EJ_R_Si_Fi_Yh_full") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "energy/prebuilt_data/L101.en_bal_EJ_R_Si_Fi_Yh_full") ->
       L101.en_bal_EJ_R_Si_Fi_Yh_full
 
     L101.en_bal_EJ_ctry_Si_Fi_Yh_full %>%
@@ -254,8 +253,7 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
       add_comments("For country-level comparisons, keep the iso and aggregate all sectors and fuels. It also includes TPES by country") %>%
       add_legacy_name("L101.en_bal_EJ_ctry_Si_Fi_Yh_full") %>%
       same_precursors_as(L101.en_bal_EJ_R_Si_Fi_Yh_full) %>%
-      add_precursors("energy/prebuilt_data/L101.en_bal_EJ_ctry_Si_Fi_Yh_full") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+      add_precursors("energy/prebuilt_data/L101.en_bal_EJ_ctry_Si_Fi_Yh_full") ->
       L101.en_bal_EJ_ctry_Si_Fi_Yh_full
 
     L101.in_EJ_ctry_trn_Fi_Yh %>%
@@ -263,8 +261,7 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
       add_comments("Consumption of energy by the transport sector by fuel and historical year. Aggregated by fuel and country") %>%
       add_legacy_name("L101.in_EJ_ctry_trn_Fi_Yh") %>%
       same_precursors_as(L101.en_bal_EJ_R_Si_Fi_Yh_full) %>%
-      add_precursors("energy/prebuilt_data/L101.in_EJ_ctry_trn_Fi_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/prebuilt_data/L101.in_EJ_ctry_trn_Fi_Yh") ->
       L101.in_EJ_ctry_trn_Fi_Yh
 
     L101.in_EJ_ctry_bld_Fi_Yh %>%
@@ -272,8 +269,7 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
       add_comments("Consumption of energy by the building sector by fuel and historical year. Aggregated by fuel and country") %>%
       add_legacy_name("L101.in_EJ_ctry_bld_Fi_Yh") %>%
       same_precursors_as(L101.en_bal_EJ_R_Si_Fi_Yh_full) %>%
-      add_precursors("energy/prebuilt_data/L101.in_EJ_ctry_bld_Fi_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/prebuilt_data/L101.in_EJ_ctry_bld_Fi_Yh") ->
       L101.in_EJ_ctry_bld_Fi_Yh
 
     return_data(L101.en_bal_EJ_R_Si_Fi_Yh_full, L101.en_bal_EJ_ctry_Si_Fi_Yh_full,

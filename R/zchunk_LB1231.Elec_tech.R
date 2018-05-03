@@ -78,8 +78,7 @@ module_gcam.usa_LB1231.Elec_tech<- function(command, ...) {
                      "L1231.out_EJ_R_elec_F_tech_Yh",
                      "L1231.in_EJ_R_elec_F_tech_Yh",
                      "L123.in_EJ_state_elec_F",
-                     "L123.out_EJ_state_elec_F") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L123.out_EJ_state_elec_F") ->
       L1231.in_EJ_state_elec_F_tech
 
     L1231.out_EJ_state_elec_F_tech %>%
@@ -89,8 +88,7 @@ module_gcam.usa_LB1231.Elec_tech<- function(command, ...) {
       add_legacy_name("L1231.out_EJ_state_elec_F_tech") %>%
       add_precursors("L123.out_EJ_R_elec_F_Yh",
                      "L1231.out_EJ_R_elec_F_tech_Yh",
-                     "L123.out_EJ_state_elec_F") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L123.out_EJ_state_elec_F") ->
       L1231.out_EJ_state_elec_F_tech
 
     return_data(L1231.in_EJ_state_elec_F_tech, L1231.out_EJ_state_elec_F_tech)

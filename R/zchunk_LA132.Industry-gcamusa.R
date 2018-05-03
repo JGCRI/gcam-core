@@ -170,8 +170,7 @@ module_gcam.usa_LA132.Industry <- function(command, ...) {
       add_legacy_name("L132.in_EJ_state_indnochp_F") %>%
       add_precursors("L1322.in_EJ_R_indenergy_F_Yh",
                      "L101.inEIA_EJ_state_S_F",
-                     "L122.in_EJ_state_refining_F") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L122.in_EJ_state_refining_F") ->
       L132.in_EJ_state_indnochp_F
 
     L132.in_EJ_state_indchp_F %>%
@@ -181,8 +180,7 @@ module_gcam.usa_LA132.Industry <- function(command, ...) {
       add_legacy_name("L132.in_EJ_state_indchp_F") %>%
       add_precursors("L123.out_EJ_R_indchp_F_Yh",
                      "L101.inEIA_EJ_state_S_F",
-                     "L122.in_EJ_state_refining_F") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L122.in_EJ_state_refining_F") ->
       L132.in_EJ_state_indchp_F
 
     L132.out_EJ_state_indchp_F %>%
@@ -192,8 +190,7 @@ module_gcam.usa_LA132.Industry <- function(command, ...) {
       add_legacy_name("L132.out_EJ_state_indchp_F") %>%
       add_precursors("L123.in_EJ_R_indchp_F_Yh",
                      "L101.inEIA_EJ_state_S_F",
-                     "L122.in_EJ_state_refining_F") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L122.in_EJ_state_refining_F") ->
       L132.out_EJ_state_indchp_F
 
     L132.in_EJ_state_indfeed_F %>%
@@ -201,8 +198,7 @@ module_gcam.usa_LA132.Industry <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Computed by apportioning USA-level feedstocks among states") %>%
       add_legacy_name("L132.in_EJ_state_indfeed_F") %>%
-      add_precursors("L101.inEIA_EJ_state_S_F", "L1322.in_EJ_R_indfeed_F_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L101.inEIA_EJ_state_S_F", "L1322.in_EJ_R_indfeed_F_Yh") ->
       L132.in_EJ_state_indfeed_F
 
     return_data(L132.in_EJ_state_indnochp_F, L132.in_EJ_state_indchp_F, L132.out_EJ_state_indchp_F, L132.in_EJ_state_indfeed_F)

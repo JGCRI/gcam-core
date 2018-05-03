@@ -200,8 +200,7 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
       add_comments("Replacing international shipping estimates on IEA energy balances with EIA,") %>%
       add_comments("subtract coal-to-gas from natural gas TPES") %>%
       add_legacy_name("L1011.en_bal_EJ_R_Si_Fi_Yh") %>%
-      add_precursors("L101.en_bal_EJ_R_Si_Fi_Yh_full", "energy/A22.globaltech_coef", "energy/calibrated_techs") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L101.en_bal_EJ_R_Si_Fi_Yh_full", "energy/A22.globaltech_coef", "energy/calibrated_techs") ->
       L1011.en_bal_EJ_R_Si_Fi_Yh
 
      L1011.in_EJ_ctry_intlship_TOT_Yh %>%
@@ -210,8 +209,7 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
       add_comments("EIA international shipping data converted to EJ, aggregated by country,") %>%
       add_comments("adding USSR data to Russia") %>%
       add_legacy_name("L1011.in_EJ_ctry_intlship_TOT_Yh") %>%
-      add_precursors("energy/EIA_RFO_intlship_kbbld", "energy/EIA_TOT_intlship_kbbld", "energy/mappings/EIA_ctry", "common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/EIA_RFO_intlship_kbbld", "energy/EIA_TOT_intlship_kbbld", "energy/mappings/EIA_ctry", "common/iso_GCAM_regID") ->
       L1011.in_EJ_ctry_intlship_TOT_Yh
 
     return_data(L1011.en_bal_EJ_R_Si_Fi_Yh, L1011.in_EJ_ctry_intlship_TOT_Yh)

@@ -110,8 +110,7 @@ module_aglu_LB161.ag_R_C_Y_GLU_irr <- function(command, ...) {
       add_comments("Multiply annual total production and a constant irrigated fraction across all histrical years") %>%
       add_legacy_name("L161.ag_irrProd_Mt_R_C_Y_GLU") %>%
       add_precursors("L103.ag_Prod_Mt_R_C_Y_GLU",
-                     "L152.ag_irrProd_Mt_R_C_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L152.ag_irrProd_Mt_R_C_GLU") ->
       L161.ag_irrProd_Mt_R_C_Y_GLU
 
     L161.ag_Prod_Mt_R_C_Y_GLU %>%
@@ -122,8 +121,7 @@ module_aglu_LB161.ag_R_C_Y_GLU_irr <- function(command, ...) {
       add_comments("Multiply annual total production and a constant rainfed fraction across all histrical years") %>%
       add_legacy_name("L161.ag_rfdProd_Mt_R_C_Y_GLU") %>%
       add_precursors("L103.ag_Prod_Mt_R_C_Y_GLU",
-                     "L152.ag_rfdProd_Mt_R_C_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L152.ag_rfdProd_Mt_R_C_GLU") ->
       L161.ag_rfdProd_Mt_R_C_Y_GLU
 
     L161.ag_HA_bm2_R_C_Y_GLU %>%
@@ -134,8 +132,7 @@ module_aglu_LB161.ag_R_C_Y_GLU_irr <- function(command, ...) {
       add_comments("Multiply annual total harvested area and a constant irrigated fraction across all histrical years") %>%
       add_legacy_name("L161.ag_irrHA_bm2_R_C_Y_GLU") %>%
       add_precursors("L103.ag_HA_bm2_R_C_Y_GLU",
-                     "L152.ag_irrHA_bm2_R_C_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L152.ag_irrHA_bm2_R_C_GLU") ->
       L161.ag_irrHA_bm2_R_C_Y_GLU
 
     L161.ag_HA_bm2_R_C_Y_GLU %>%
@@ -146,8 +143,7 @@ module_aglu_LB161.ag_R_C_Y_GLU_irr <- function(command, ...) {
       add_comments("Multiply annual total harvested area and a constant rainfed fraction across all histrical years") %>%
       add_legacy_name("L161.ag_rfdHA_bm2_R_C_Y_GLU") %>%
       add_precursors("L103.ag_HA_bm2_R_C_Y_GLU",
-                     "L152.ag_rfdHA_bm2_R_C_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L152.ag_rfdHA_bm2_R_C_GLU") ->
       L161.ag_rfdHA_bm2_R_C_Y_GLU
 
     L161.ag_Yield_kgm2_R_C_Y_GLU %>%
@@ -158,8 +154,7 @@ module_aglu_LB161.ag_R_C_Y_GLU_irr <- function(command, ...) {
       add_comments("Replace missing value with zero") %>%
       add_legacy_name("L161.ag_irrYield_kgm2_R_C_Y_GLU") %>%
       same_precursors_as("L161.ag_irrProd_Mt_R_C_Y_GLU") %>%
-      same_precursors_as("L161.ag_irrHA_bm2_R_C_Y_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      same_precursors_as("L161.ag_irrHA_bm2_R_C_Y_GLU") ->
       L161.ag_irrYield_kgm2_R_C_Y_GLU
 
     L161.ag_Yield_kgm2_R_C_Y_GLU %>%
@@ -170,8 +165,7 @@ module_aglu_LB161.ag_R_C_Y_GLU_irr <- function(command, ...) {
       add_comments("Replace missing value with zero") %>%
       add_legacy_name("L161.ag_rfdYield_kgm2_R_C_Y_GLU") %>%
       same_precursors_as("L161.ag_rfdProd_Mt_R_C_Y_GLU") %>%
-      same_precursors_as("L161.ag_rfdHA_bm2_R_C_Y_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      same_precursors_as("L161.ag_rfdHA_bm2_R_C_Y_GLU")  ->
       L161.ag_rfdYield_kgm2_R_C_Y_GLU
 
     L161.ag_irrHA_frac_R_C_GLU %>%

@@ -177,8 +177,7 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
       add_units("unitless share") %>%
       add_comments("Multiply region/crop area shares by region/crop/GLU production shares") %>%
       add_legacy_name("L122.EmissShare_R_C_Y_GLU") %>%
-      add_precursors("L103.ag_Prod_Mt_R_C_Y_GLU", "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU") %>%
-      add_flags(FLAG_YEAR_COL_XYEARS) ->
+      add_precursors("L103.ag_Prod_Mt_R_C_Y_GLU", "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU") ->
       L122.EmissShare_R_C_Y_GLU
 
     L122.ghg_tg_R_agr_C_Y_GLU %>%
@@ -188,8 +187,7 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
       add_legacy_name("L122.ghg_tg_R_agr_C_Y_GLU") %>%
       add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_sector",
                      "L103.ag_Prod_Mt_R_C_Y_GLU", "L142.ag_Fert_IO_R_C_Y_GLU",
-                     "emissions/EDGAR/EDGAR_CH4", "emissions/EDGAR/EDGAR_N2O", "emissions/EDGAR/EDGAR_NH3", "emissions/EDGAR/EDGAR_NOx") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "emissions/EDGAR/EDGAR_CH4", "emissions/EDGAR/EDGAR_N2O", "emissions/EDGAR/EDGAR_NH3", "emissions/EDGAR/EDGAR_NOx") ->
       L122.ghg_tg_R_agr_C_Y_GLU
 
     return_data(L122.EmissShare_R_C_Y_GLU, L122.ghg_tg_R_agr_C_Y_GLU)

@@ -548,8 +548,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
                      "L100.FAO_CL_kha",
                      "L100.FAO_harv_CL_kha",
                      "L103.ag_HA_bm2_R_C_Y_GLU",
-                     "L120.LC_bm2_R_LT_Yh_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L120.LC_bm2_R_LT_Yh_GLU") ->
       L122.ag_HA_to_CropLand_R_Y_GLU
 
     L122.ag_EcYield_kgm2_R_C_Y_GLU %>%
@@ -564,8 +563,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
                      "L100.FAO_harv_CL_kha",
                      "L103.ag_HA_bm2_R_C_Y_GLU",
                      "L103.ag_Prod_Mt_R_C_Y_GLU",
-                     "L120.LC_bm2_R_LT_Yh_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L120.LC_bm2_R_LT_Yh_GLU") ->
       L122.ag_EcYield_kgm2_R_C_Y_GLU
 
     L122.LC_bm2_R_OtherArableLand_Yh_GLU %>%
@@ -579,8 +577,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
                      "L100.FAO_CL_kha",
                      "L100.FAO_harv_CL_kha",
                      "L103.ag_HA_bm2_R_C_Y_GLU",
-                     "L120.LC_bm2_R_LT_Yh_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+                     "L120.LC_bm2_R_LT_Yh_GLU") ->
       L122.LC_bm2_R_OtherArableLand_Yh_GLU
 
     L122.LC_bm2_R_ExtraCropLand_Yh_GLU %>%
@@ -595,7 +592,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
                      "L100.FAO_harv_CL_kha",
                      "L103.ag_HA_bm2_R_C_Y_GLU",
                      "L120.LC_bm2_R_LT_Yh_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT, FLAG_SUM_TEST) ->
+      add_flags(FLAG_PROTECT_FLOAT) ->
       L122.LC_bm2_R_ExtraCropLand_Yh_GLU
 
     L122.LC_bm2_R_HarvCropLand_C_Yh_GLU %>%
@@ -611,7 +608,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
                      "L100.FAO_harv_CL_kha",
                      "L103.ag_HA_bm2_R_C_Y_GLU",
                      "L120.LC_bm2_R_LT_Yh_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT, FLAG_SUM_TEST) ->
+      add_flags(FLAG_PROTECT_FLOAT) ->
       L122.LC_bm2_R_HarvCropLand_C_Yh_GLU
 
     L122.LC_bm2_R_HarvCropLand_Yh_GLU %>%
@@ -626,8 +623,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
                      "L100.FAO_CL_kha",
                      "L100.FAO_harv_CL_kha",
                      "L103.ag_HA_bm2_R_C_Y_GLU",
-                     "L120.LC_bm2_R_LT_Yh_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+                     "L120.LC_bm2_R_LT_Yh_GLU") ->
       L122.LC_bm2_R_HarvCropLand_Yh_GLU
 
     return_data(L122.ag_HA_to_CropLand_R_Y_GLU, L122.ag_EcYield_kgm2_R_C_Y_GLU, L122.LC_bm2_R_OtherArableLand_Yh_GLU, L122.LC_bm2_R_ExtraCropLand_Yh_GLU, L122.LC_bm2_R_HarvCropLand_C_Yh_GLU, L122.LC_bm2_R_HarvCropLand_Yh_GLU)

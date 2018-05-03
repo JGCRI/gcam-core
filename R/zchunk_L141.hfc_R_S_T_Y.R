@@ -225,8 +225,7 @@ module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
                      "emissions/EDGAR/EDGAR_HFC32",
                      "emissions/EDGAR/EDGAR_HFC365mfc",
                      "emissions/EDGAR/EDGAR_HFC43",
-                     "emissions/HFC_Inventory_GV") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "emissions/HFC_Inventory_GV") ->
       L141.hfc_R_S_T_Yh
 
     L141.hfc_ef_R_cooling_Yh %>%
@@ -251,8 +250,7 @@ module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
                      "emissions/EDGAR/EDGAR_HFC32",
                      "emissions/EDGAR/EDGAR_HFC365mfc",
                      "emissions/EDGAR/EDGAR_HFC43",
-                     "emissions/HFC_Inventory_GV") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "emissions/HFC_Inventory_GV") ->
       L141.hfc_ef_R_cooling_Yh
 
     return_data(L141.hfc_R_S_T_Yh, L141.hfc_ef_R_cooling_Yh)

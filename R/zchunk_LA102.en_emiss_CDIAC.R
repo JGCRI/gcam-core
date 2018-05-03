@@ -136,7 +136,7 @@ module_energy_LA102.en_emiss_CDIAC <- function(command, ...) {
       add_comments("Aggregated from CDIAC country emissions database") %>%
       add_legacy_name("L102.CO2_Mt_R_F_Yh") %>%
       add_precursors("L100.CDIAC_CO2_ctry_hist", "common/iso_GCAM_regID", "emissions/mappings/CDIAC_fuel") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST, FLAG_PROTECT_FLOAT) ->
+      add_flags(FLAG_PROTECT_FLOAT) ->
       L102.CO2_Mt_R_F_Yh
 
     L102.Ccoef_kgCGJ_R_F_Yh %>%
@@ -144,8 +144,7 @@ module_energy_LA102.en_emiss_CDIAC <- function(command, ...) {
       add_units("kgC/GJ") %>%
       add_comments("ratio of CDIAC carbon emissions to energy consumption") %>%
       add_legacy_name("L102.Ccoef_kgCGJ_R_F_Yh") %>%
-      add_precursors("L100.CDIAC_CO2_ctry_hist", "common/iso_GCAM_regID", "emissions/mappings/CDIAC_fuel", "L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/A32.nonenergy_Cseq") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L100.CDIAC_CO2_ctry_hist", "common/iso_GCAM_regID", "emissions/mappings/CDIAC_fuel", "L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/A32.nonenergy_Cseq")  ->
       L102.Ccoef_kgCGJ_R_F_Yh
 
     L102.Ccoef_kgCGJ_F_Yh %>%
@@ -153,8 +152,7 @@ module_energy_LA102.en_emiss_CDIAC <- function(command, ...) {
       add_units("kgC/GJ") %>%
       add_comments("aggregated regional data for CDIAC carbon emissions and energy balances to find global ratios") %>%
       add_legacy_name("L102.Ccoef_kgCGJ_F_Yh") %>%
-      add_precursors("L100.CDIAC_CO2_ctry_hist", "common/iso_GCAM_regID", "emissions/mappings/CDIAC_fuel", "L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/A32.nonenergy_Cseq") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L100.CDIAC_CO2_ctry_hist", "common/iso_GCAM_regID", "emissions/mappings/CDIAC_fuel", "L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/A32.nonenergy_Cseq") ->
       L102.Ccoef_kgCGJ_F_Yh
 
     return_data(L102.CO2_Mt_R_F_Yh, L102.Ccoef_kgCGJ_R_F_Yh, L102.Ccoef_kgCGJ_F_Yh)

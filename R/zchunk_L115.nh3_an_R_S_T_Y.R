@@ -147,8 +147,7 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
       add_legacy_name("L115.nh3_tg_R_an_C_Sys_Fd_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_sector",
                      "emissions/mappings/GCAM_sector_tech", "L107.an_Prod_Mt_R_C_Sys_Fd_Y", "L105.nh3_tgmt_USA_an_Yh",
-                     "emissions/EDGAR/EDGAR_NH3") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "emissions/EDGAR/EDGAR_NH3") ->
       L115.nh3_tg_R_an_C_Sys_Fd_Yh
 
     return_data(L115.nh3_tg_R_an_C_Sys_Fd_Yh)

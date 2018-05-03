@@ -56,8 +56,7 @@ module_energy_LA152.transportation <- function(command, ...) {
       add_legacy_name("L152.in_EJ_R_trn_F_Yh") %>%
       add_precursors("energy/enduse_fuel_aggregation",
                      "energy/enduse_sector_aggregation",
-                     "L131.in_EJ_R_Senduse_F_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L131.in_EJ_R_Senduse_F_Yh")  ->
       L152.in_EJ_R_trn_F_Yh
 
     return_data(L152.in_EJ_R_trn_F_Yh)

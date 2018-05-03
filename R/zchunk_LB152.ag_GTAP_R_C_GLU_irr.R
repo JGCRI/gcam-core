@@ -108,8 +108,7 @@ module_aglu_LB152.ag_GTAP_R_C_GLU_irr <- function(command, ...) {
       add_legacy_name("L152.ag_rfdHA_bm2_R_C_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
                      "aglu/FAO/FAO_ag_items_PRODSTAT",
-                     "L151.ag_rfdHA_ha_ctry_crop") %>%
-      add_flags(FLAG_SUM_TEST) ->
+                     "L151.ag_rfdHA_ha_ctry_crop") ->
       L152.ag_rfdHA_bm2_R_C_GLU
 
     L152.ag_irrProd_Mt_R_C_GLU %>%
@@ -129,8 +128,7 @@ module_aglu_LB152.ag_GTAP_R_C_GLU_irr <- function(command, ...) {
       add_legacy_name("L152.ag_rfdProd_Mt_R_C_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
                      "aglu/FAO/FAO_ag_items_PRODSTAT",
-                     "L151.ag_rfdProd_t_ctry_crop") %>%
-      add_flags(FLAG_SUM_TEST) ->
+                     "L151.ag_rfdProd_t_ctry_crop") ->
       L152.ag_rfdProd_Mt_R_C_GLU
 
     return_data(L152.ag_irrHA_bm2_R_C_GLU, L152.ag_rfdHA_bm2_R_C_GLU, L152.ag_irrProd_Mt_R_C_GLU, L152.ag_rfdProd_Mt_R_C_GLU)

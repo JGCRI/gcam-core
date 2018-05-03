@@ -703,9 +703,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
 
     L2233.Elec_tables_globaltech_nocost_$GlobalTechEff_elec %>%
       add_title("Cooling efficiencies for electricity generating technologies") %>%
-      add_units("Unitless") %>%
-      add_flags(FLAG_SUM_TEST) ->
-      # ^^ used for less strict test (to surmount rounding problem)
+      add_units("Unitless") ->
       L2233.GlobalTechEff_elec_cool
 
     L2233.Elec_tables_globaltech_nocost_$GlobalTechInterp_elec %>%
@@ -1018,8 +1016,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
       add_comments("Emissions coefficients corrected by dividing by elec tech efficiencies") %>%
       add_legacy_name("L2233.InputEmissCoeff_fut_elecPassthru") %>%
       add_precursors("L223.GlobalTechEff_elec",
-                     "L241.nonco2_tech_coeff") %>%
-      add_flags(FLAG_SUM_TEST)->
+                     "L241.nonco2_tech_coeff") ->
       L2233.InputEmissCoeff_fut_elecPassthru
 
     L2233.DeleteCreditInput_elec %>%

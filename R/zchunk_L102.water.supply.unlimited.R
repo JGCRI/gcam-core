@@ -58,8 +58,7 @@ module_water_L102.water.supply.unlimited <- function(command, ...) {
       add_units("$/m3") %>%
       add_comments("Nominal default water prices") %>%
       add_legacy_name("L102.unlimited_water_price_R_W_Y_75USDm3") %>%
-      add_precursors("common/GCAM_region_names", "water/A_unlimited_water_price") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/GCAM_region_names", "water/A_unlimited_water_price") ->
       L102.unlimited_water_price_R_W_Y_75USDm3
 
     return_data(L102.unlimited_water_price_R_W_Y_75USDm3)

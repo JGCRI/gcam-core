@@ -109,8 +109,7 @@ module_gcam.usa_LA1322.Fert <- function(command, ...) {
       add_units("value = Mt (megatonnes = teragrams)") %>%
       add_comments("Scaled the US national fertilizer production by the state's share of fertilizer production based on NAICS shipping information") %>%
       add_legacy_name("L1322.out_Mt_state_Fert_Yh") %>%
-      add_precursors("L1322.Fert_Prod_MtN_R_F_Y", "gcam-usa/Census_ind_VoS_state", "L1322.IO_R_Fert_F_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L1322.Fert_Prod_MtN_R_F_Y", "gcam-usa/Census_ind_VoS_state", "L1322.IO_R_Fert_F_Yh") ->
       L1322.out_Mt_state_Fert_Yh
 
     L1322.IO_GJkg_state_Fert_F_Yh %>%
@@ -118,8 +117,7 @@ module_gcam.usa_LA1322.Fert <- function(command, ...) {
       add_units("value = GJkg (gigajoules used/kg fertilizer produced)") %>%
       add_comments("All states are assumed to have the same fertilizer IO coefficient as the national value") %>%
       add_legacy_name("L1322.IO_GJkg_state_Fert_F_Yh") %>%
-      add_precursors("L1322.Fert_Prod_MtN_R_F_Y", "gcam-usa/Census_ind_VoS_state", "L1322.IO_R_Fert_F_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L1322.Fert_Prod_MtN_R_F_Y", "gcam-usa/Census_ind_VoS_state", "L1322.IO_R_Fert_F_Yh") ->
       L1322.IO_GJkg_state_Fert_F_Yh
 
     L1322.in_EJ_state_Fert_Yh %>%
@@ -127,8 +125,7 @@ module_gcam.usa_LA1322.Fert <- function(command, ...) {
       add_units("value = EJ (exajoules)") %>%
       add_comments("State fertilizer production multiplied by state fertilizer input-output coefficient") %>%
       add_legacy_name("L1322.in_EJ_state_Fert_Yh") %>%
-      add_precursors("L1322.Fert_Prod_MtN_R_F_Y", "gcam-usa/Census_ind_VoS_state", "L1322.IO_R_Fert_F_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L1322.Fert_Prod_MtN_R_F_Y", "gcam-usa/Census_ind_VoS_state", "L1322.IO_R_Fert_F_Yh") ->
       L1322.in_EJ_state_Fert_Yh
 
     return_data(L1322.out_Mt_state_Fert_Yh, L1322.IO_GJkg_state_Fert_F_Yh, L1322.in_EJ_state_Fert_Yh)

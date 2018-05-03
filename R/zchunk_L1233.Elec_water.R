@@ -228,8 +228,7 @@ module_water_L1233.Elec_water <- function(command, ...) {
                      "L1231.in_EJ_R_elec_F_tech_Yh",
                      "L1231.out_EJ_R_elec_F_tech_Yh",
                      "water/A23.CoolingSystemShares_RG3",
-                     "water/elec_tech_water_map") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "water/elec_tech_water_map") ->
       L1233.out_EJ_R_elec_F_tech_Yh_cool
 
     L1233.in_EJ_R_elec_F_tech_Yh_cool %>%
@@ -244,8 +243,7 @@ module_water_L1233.Elec_water <- function(command, ...) {
                      "L1231.in_EJ_R_elec_F_tech_Yh",
                      "L1231.out_EJ_R_elec_F_tech_Yh",
                      "water/A23.CoolingSystemShares_RG3",
-                     "water/elec_tech_water_map") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "water/elec_tech_water_map") ->
       L1233.in_EJ_R_elec_F_tech_Yh_cool
 
     L1233.wdraw_km3_R_elec %>%
@@ -260,8 +258,7 @@ module_water_L1233.Elec_water <- function(command, ...) {
                      "L1231.out_EJ_R_elec_F_tech_Yh",
                      "water/A23.CoolingSystemShares_RG3",
                      "water/elec_tech_water_map",
-                     "water/Macknick_elec_water_m3MWh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "water/Macknick_elec_water_m3MWh") ->
       L1233.wdraw_km3_R_elec
 
     L1233.wcons_km3_R_elec %>%
@@ -276,8 +273,7 @@ module_water_L1233.Elec_water <- function(command, ...) {
                      "L1231.out_EJ_R_elec_F_tech_Yh",
                      "water/A23.CoolingSystemShares_RG3",
                      "water/elec_tech_water_map",
-                     "water/Macknick_elec_water_m3MWh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "water/Macknick_elec_water_m3MWh") ->
       L1233.wcons_km3_R_elec
 
     L1233.shrwt_R_elec_cool_Yf %>%
@@ -287,8 +283,7 @@ module_water_L1233.Elec_water <- function(command, ...) {
       add_legacy_name("L1233.shrwt_R_elec_cool_Yf") %>%
       add_precursors("common/iso_GCAM_regID",
                      "water/A23.CoolingSystemShares_RG3",
-                     "water/elec_tech_water_map") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "water/elec_tech_water_map") ->
       L1233.shrwt_R_elec_cool_Yf
 
     return_data(L1233.out_EJ_R_elec_F_tech_Yh_cool, L1233.in_EJ_R_elec_F_tech_Yh_cool, L1233.wdraw_km3_R_elec, L1233.wcons_km3_R_elec, L1233.shrwt_R_elec_cool_Yf)

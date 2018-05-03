@@ -407,8 +407,7 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID",
                      "socioeconomics/SSP_database_v9",
                      "socioeconomics/IMF_GDP_growth",
-                     "L100.gdp_mil90usd_ctry_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L100.gdp_mil90usd_ctry_Yh") ->
       L102.gdp_mil90usd_Scen_R_Y
 
     pcgdp.thous90usd.scen.rgn.yr %>%
@@ -425,8 +424,7 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
                      "socioeconomics/IMF_GDP_growth",
                      "L100.gdp_mil90usd_ctry_Yh",
                      "L101.Pop_thous_R_Yh",
-                     "L101.Pop_thous_Scen_R_Yfut") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L101.Pop_thous_Scen_R_Yfut") ->
       L102.pcgdp_thous90USD_Scen_R_Y
 
     ppp.mer.rgn %>%
@@ -452,8 +450,7 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID",
                      "socioeconomics/SSP_database_v9",
                      "L100.gdp_mil90usd_ctry_Yh",
-                     "socioeconomics/GCAM3_GDP") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "socioeconomics/GCAM3_GDP") ->
       L102.gdp_mil90usd_GCAM3_R_Y
 
     gdp_mil90usd_GCAM3_ctry_Y %>%
@@ -465,8 +462,7 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID",
                      "socioeconomics/SSP_database_v9",
                      "L100.gdp_mil90usd_ctry_Yh",
-                     "socioeconomics/GCAM3_GDP") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "socioeconomics/GCAM3_GDP") ->
       L102.gdp_mil90usd_GCAM3_ctry_Y
 
     pcgdp_thous90USD_GCAM3_R_Y %>%
@@ -478,8 +474,7 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
                      "socioeconomics/SSP_database_v9",
                      "L100.gdp_mil90usd_ctry_Yh",
                      "socioeconomics/GCAM3_GDP",
-                     "L101.Pop_thous_GCAM3_R_Y") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L101.Pop_thous_GCAM3_R_Y") ->
       L102.pcgdp_thous90USD_GCAM3_R_Y
 
     pcgdp_thous90USD_GCAM3_ctry_Y %>%
@@ -491,8 +486,7 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
                      "socioeconomics/SSP_database_v9",
                      "L100.gdp_mil90usd_ctry_Yh",
                      "socioeconomics/GCAM3_GDP",
-                     "L101.Pop_thous_GCAM3_ctry_Y") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L101.Pop_thous_GCAM3_ctry_Y") ->
       L102.pcgdp_thous90USD_GCAM3_ctry_Y
 
     return_data(L102.gdp_mil90usd_Scen_R_Y, L102.pcgdp_thous90USD_Scen_R_Y, L102.PPP_MER_R, L102.gdp_mil90usd_GCAM3_R_Y, L102.gdp_mil90usd_GCAM3_ctry_Y, L102.pcgdp_thous90USD_GCAM3_R_Y, L102.pcgdp_thous90USD_GCAM3_ctry_Y)

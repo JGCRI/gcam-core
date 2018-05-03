@@ -98,9 +98,7 @@ module_gcam.usa_LA100.Socioeconomics <- function(command, ...) {
                      "gcam-usa/BEA_pcGDP_97USD_state",
                      "gcam-usa/BEA_pcGDP_09USD_state",
                      "gcam-usa/Census_pop_hist") %>%
-      add_legacy_name("L100.GDP_mil90usd_state") %>%
-      # flag that this dataset is in different form from original
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_legacy_name("L100.GDP_mil90usd_state") ->
       L100.GDP_mil90usd_state
 
     # Compute per capita GDP by state
@@ -112,9 +110,7 @@ module_gcam.usa_LA100.Socioeconomics <- function(command, ...) {
       add_units("thousand 1990 USD per capita") %>%
       add_comments("") %>%
       add_precursors("L100.GDP_mil90usd_state") %>%
-      add_legacy_name("L100.pcGDP_thous90usd_state") %>%
-      # flag that this dataset is in different form from original
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_legacy_name("L100.pcGDP_thous90usd_state") ->
       L100.pcGDP_thous90usd_state
 
     # Future population by scenario. Right now just one scenario.
@@ -156,9 +152,7 @@ module_gcam.usa_LA100.Socioeconomics <- function(command, ...) {
                      "gcam-usa/BEA_pcGDP_09USD_state",
                      "gcam-usa/PRIMA_pop",
                      "gcam-usa/states_subregions") %>%
-      add_legacy_name("L100.Pop_thous_state") %>%
-      # flag that this dataset is in different form from original
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_legacy_name("L100.Pop_thous_state") ->
       L100.Pop_thous_state
 
     return_data(L100.pcGDP_thous90usd_state, L100.GDP_mil90usd_state, L100.Pop_thous_state)

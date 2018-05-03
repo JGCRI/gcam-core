@@ -207,8 +207,7 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
       add_units("thousand") %>%
       add_comments("Maddison population data cleaned to develop complete data for all years, (dis)aggregated to modern country boundaries") %>%
       add_legacy_name("L100.Pop_thous_ctry_Yh") %>%
-      add_precursors("socioeconomics/socioeconomics_ctry", "Maddison_population") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("socioeconomics/socioeconomics_ctry", "Maddison_population") ->
       L100.Pop_thous_ctry_Yh
 
     L100.Pop_thous_SSP_ctry_Yfut %>%
@@ -217,7 +216,7 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
       add_comments("Future population calculated as final historical year (2010) population times ratio of SSP future years to SSP 2010") %>%
       add_legacy_name("L100.Pop_thous_SSP_ctry_Yfut") %>%
       add_precursors("socioeconomics/socioeconomics_ctry", "socioeconomics/SSP_database_v9", "socioeconomics/UN_popTot") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT, FLAG_SUM_TEST) ->
+      add_flags(FLAG_PROTECT_FLOAT) ->
       L100.Pop_thous_SSP_ctry_Yfut
 
     return_data(L100.Pop_thous_ctry_Yh, L100.Pop_thous_SSP_ctry_Yfut)

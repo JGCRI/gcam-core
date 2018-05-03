@@ -536,8 +536,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       add_comments("End-use tech efficiency is the product of region-specific adjustment factors, tech-specific improvement rates, and tech-specific efficiency levels") %>%
       add_legacy_name("L144.end_use_eff") %>%
       add_precursors("energy/A44.USA_TechChange", "energy/calibrated_techs_bld_det", "common/iso_GCAM_regID", "energy/A44.tech_eff_mult_RG3",
-                     "energy/A_regions", "energy/A44.cost_efficiency", "common/GCAM_region_names") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+                     "energy/A_regions", "energy/A44.cost_efficiency", "common/GCAM_region_names") ->
       L144.end_use_eff
 
     L144.shell_eff_R_Y %>%
@@ -546,8 +545,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       add_comments("Shell efficiency is the product of region-specific adjustment factors and tech-specific improvement rates") %>%
       add_legacy_name("L144.shell_eff_R_Y") %>%
       add_precursors("energy/A44.USA_TechChange", "energy/calibrated_techs_bld_det", "common/iso_GCAM_regID", "energy/A44.shell_eff_mult_RG3",
-                     "common/GCAM_region_names") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "common/GCAM_region_names") ->
       L144.shell_eff_R_Y
 
     L144.in_EJ_R_bld_serv_F_Yh %>%
@@ -556,8 +554,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       add_comments("Energy consumption by service is calculated by allocating energy consumption across services using calculated service shares") %>%
       add_legacy_name("L144.in_EJ_R_bld_serv_F_Yh") %>%
       add_precursors("energy/A_regions", "L142.in_EJ_R_bld_F_Yh", "energy/A44.share_serv_fuel", "L101.in_EJ_ctry_bld_Fi_Yh",
-                     "L143.HDDCDD_scen_RG3_Y", "L143.HDDCDD_scen_ctry_Y") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L143.HDDCDD_scen_RG3_Y", "L143.HDDCDD_scen_ctry_Y") ->
       L144.in_EJ_R_bld_serv_F_Yh
 
     L144.NEcost_75USDGJ %>%
@@ -565,8 +562,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       add_units("1975$/GJ-service") %>%
       add_comments("Non energy cost per service is calculated using lifetime, O&M cost, installed cost, discount rate, efficiency, and other underlying variables") %>%
       add_legacy_name("L144.NEcost_75USDGJ") %>%
-      add_precursors("energy/A44.cost_efficiency") %>%
-      add_flags(FLAG_SUM_TEST) ->
+      add_precursors("energy/A44.cost_efficiency") ->
       L144.NEcost_75USDGJ
 
     L144.internal_gains %>%
@@ -577,8 +573,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       add_comments("Then divide the intgains assumptions by the efficiency, matching on supplysector / subsector / technology") %>%
       add_legacy_name("L144.internal_gains") %>%
       add_precursors("energy/A44.USA_TechChange", "energy/calibrated_techs_bld_det", "common/iso_GCAM_regID", "energy/A44.tech_eff_mult_RG3",
-                     "energy/A_regions", "energy/A44.cost_efficiency", "energy/A44.internal_gains", "common/GCAM_region_names") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "energy/A_regions", "energy/A44.cost_efficiency", "energy/A44.internal_gains", "common/GCAM_region_names") ->
       L144.internal_gains
 
     L144.base_service_EJ_serv %>%
@@ -587,8 +582,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       add_comments("Product of energy consumption and efficiency aggregated by region, sector, service") %>%
       add_legacy_name("L144.base_service_EJ_serv") %>%
       add_precursors("energy/A44.USA_TechChange", "energy/calibrated_techs_bld_det", "common/iso_GCAM_regID", "energy/A44.tech_eff_mult_RG3",
-                     "energy/A_regions", "energy/A44.cost_efficiency", "common/GCAM_region_names") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "energy/A_regions", "energy/A44.cost_efficiency", "common/GCAM_region_names") ->
       L144.base_service_EJ_serv
 
     return_data(L144.end_use_eff, L144.shell_eff_R_Y, L144.in_EJ_R_bld_serv_F_Yh, L144.NEcost_75USDGJ, L144.internal_gains, L144.base_service_EJ_serv)

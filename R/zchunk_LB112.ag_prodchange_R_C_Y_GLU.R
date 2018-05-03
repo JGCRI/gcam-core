@@ -381,8 +381,7 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
       add_comments("Change rates beyond 2050 to 2100 (or when FAO estimates are missing) are based on default agriculture productivity change assumptions.") %>%
       add_legacy_name("L112.ag_YieldRate_R_C_Y_GLU") %>%
       add_precursors("aglu/A_defaultYieldRate",
-                     "L103.ag_Prod_Mt_R_C_Y_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L103.ag_Prod_Mt_R_C_Y_GLU") ->
       L112.ag_YieldRate_R_C_Y_GLU
 
     L112.bio_YieldRate_R_Y_GLU %>%
@@ -392,8 +391,7 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
       add_comments("Change rates beyond 2050 to 2100 (or when FAO estimates are missing) are based on default agriculture productivity change assumptions.") %>%
       add_legacy_name("L112.bio_YieldRate_R_Y_GLU") %>%
       add_precursors("aglu/A_defaultYieldRate",
-                     "L103.ag_Prod_Mt_R_C_Y_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L103.ag_Prod_Mt_R_C_Y_GLU") ->
       L112.bio_YieldRate_R_Y_GLU
 
     return_data(L112.ag_YieldRatio_R_C_Ysy_GLU, L112.ag_YieldRate_R_C_Y_GLU, L112.bio_YieldRate_R_Y_GLU)

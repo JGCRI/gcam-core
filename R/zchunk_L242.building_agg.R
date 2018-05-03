@@ -413,8 +413,7 @@ module_energy_L242.building_agg <- function(command, ...) {
         L242.SubsectorInterp_bld
     } else {
       missing_data() %>%
-        add_legacy_name("L242.SubsectorInterp_bld") %>%
-        add_flags(FLAG_NO_TEST) ->
+        add_legacy_name("L242.SubsectorInterp_bld") ->
         L242.SubsectorInterp_bld
     }
 

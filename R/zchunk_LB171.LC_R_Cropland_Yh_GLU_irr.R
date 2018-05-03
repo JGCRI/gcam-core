@@ -96,7 +96,7 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
       add_legacy_name("L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU") %>%
       add_precursors("L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",
                      "L161.ag_irrHA_frac_R_C_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT) ->
+      add_flags(FLAG_PROTECT_FLOAT) ->
       L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU
 
     select(IrrRfdCropland, GCAM_region_ID, GCAM_commodity, GLU, year,
@@ -108,7 +108,7 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
       add_legacy_name("L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU") %>%
       add_precursors("L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",
                      "L161.ag_irrHA_frac_R_C_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT) ->
+      add_flags(FLAG_PROTECT_FLOAT) ->
       L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU
 
     select(ecyield.both, GCAM_region_ID, GCAM_commodity, GLU, year, value =
@@ -117,8 +117,7 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
       add_units("kg/m2") %>%
       add_comments("Adjusted economic yield for irrigated crops are calculated as irrigated crop production devided by irrigated cropland cover.") %>%
       add_legacy_name("L171.ag_irrEcYield_kgm2_R_C_Y_GLU") %>%
-      add_precursors("L161.ag_irrProd_Mt_R_C_Y_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L161.ag_irrProd_Mt_R_C_Y_GLU") ->
       L171.ag_irrEcYield_kgm2_R_C_Y_GLU
 
     select(ecyield.both, GCAM_region_ID, GCAM_commodity, GLU, year, value =
@@ -127,8 +126,7 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
       add_units("kg/m2") %>%
       add_comments("Adjusted economic yield for rainfed crops are calculated as rainfed crop production devided by rainfed cropland cover.") %>%
       add_legacy_name("L171.ag_rfdEcYield_kgm2_R_C_Y_GLU") %>%
-      add_precursors("L161.ag_rfdProd_Mt_R_C_Y_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L161.ag_rfdProd_Mt_R_C_Y_GLU") ->
       L171.ag_rfdEcYield_kgm2_R_C_Y_GLU
 
     return_data(L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU, L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU, L171.ag_irrEcYield_kgm2_R_C_Y_GLU, L171.ag_rfdEcYield_kgm2_R_C_Y_GLU)

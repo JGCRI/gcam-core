@@ -142,8 +142,7 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
       add_comments("Aggregates FAO data by GCAM region, commodity, and year") %>%
       add_comments("Data is also converted from tons to Mt") %>%
       add_legacy_name("L101.ag_Food_Mt_R_C_Y") %>%
-      add_precursors("L100.FAO_ag_Food_t", "aglu/FAO/FAO_ag_items_cal_SUA", "common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L100.FAO_ag_Food_t", "aglu/FAO/FAO_ag_items_cal_SUA", "common/iso_GCAM_regID") ->
       L101.ag_Food_Mt_R_C_Y
     L101.ag_Food_Pcal_R_C_Y %>%
       add_title("FAO food consumption by GCAM region, commodity, and year") %>%
@@ -151,16 +150,14 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
       add_comments("Aggregates FAO data by GCAM region, commodity, and year") %>%
       add_comments("Data is also converted from tons to Pcal") %>%
       add_legacy_name("L101.ag_Food_Pcal_R_C_Y") %>%
-      add_precursors("L100.FAO_ag_Food_t", "aglu/FAO/FAO_ag_items_cal_SUA", "common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L100.FAO_ag_Food_t", "aglu/FAO/FAO_ag_items_cal_SUA", "common/iso_GCAM_regID") ->
       L101.ag_Food_Pcal_R_C_Y
     L101.ag_kcalg_R_C_Y %>%
       add_title("Weighted average commodity caloric content by GCAM region, commodity, and year") %>%
       add_units("kcal/g") %>%
       add_comments("Combines the L101.ag_Food_Mt_R_C_Y and L101.ag_Food_Pcal_R_C_Y data frames") %>%
       add_legacy_name("L101.ag_kcalg_R_C_Y") %>%
-      add_precursors("L100.FAO_ag_Food_t", "aglu/FAO/FAO_ag_items_cal_SUA", "common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L100.FAO_ag_Food_t", "aglu/FAO/FAO_ag_items_cal_SUA", "common/iso_GCAM_regID") ->
       L101.ag_kcalg_R_C_Y
 
     # The next two datasets have rounding issues that we couldn't resolve:
@@ -173,8 +170,7 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
       add_comments("Data was also converted from HA to billion km2") %>%
       add_comments("Country/crop combinations with zero production were assigned zero harvested area") %>%
       add_legacy_name("L101.ag_HA_bm2_R_C_Y") %>%
-      add_precursors("L100.FAO_ag_HA_ha", "aglu/FAO/FAO_ag_items_PRODSTAT", "L100.FAO_ag_Prod_t", "common/iso_GCAM_regID") %>%
-      add_flags(FLAG_NO_XYEAR, FLAG_LONG_YEAR_FORM, FLAG_SUM_TEST) ->
+      add_precursors("L100.FAO_ag_HA_ha", "aglu/FAO/FAO_ag_items_PRODSTAT", "L100.FAO_ag_Prod_t", "common/iso_GCAM_regID") ->
       L101.ag_HA_bm2_R_C_Y
     L101.ag_Prod_Mt_R_C_Y %>%
       add_title("Agricultural production by GCAM region, commodity (cotton separated), and year") %>%
@@ -184,8 +180,7 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
       add_comments("USA alfalfa production was divided by 4 for consistency with USDA") %>%
       add_comments("Country/crop combinations with zero harvested area were assigned zero production") %>%
       add_legacy_name("L101.ag_Prod_Mt_R_C_Y") %>%
-      add_precursors("L100.FAO_ag_Prod_t", "aglu/FAO/FAO_ag_items_PRODSTAT", "L100.FAO_ag_HA_ha", "common/iso_GCAM_regID") %>%
-      add_flags(FLAG_NO_XYEAR, FLAG_LONG_YEAR_FORM, FLAG_SUM_TEST) ->
+      add_precursors("L100.FAO_ag_Prod_t", "aglu/FAO/FAO_ag_items_PRODSTAT", "L100.FAO_ag_HA_ha", "common/iso_GCAM_regID") ->
       L101.ag_Prod_Mt_R_C_Y
 
     return_data(L101.ag_Food_Mt_R_C_Y, L101.ag_Food_Pcal_R_C_Y, L101.ag_kcalg_R_C_Y, L101.ag_HA_bm2_R_C_Y, L101.ag_Prod_Mt_R_C_Y)
