@@ -124,7 +124,7 @@ test_that("matches old data system output", {
         integer_columns <- sapply(x, class) == "integer"
         x[integer_columns] <- lapply(x[integer_columns], as.numeric)
 
-        numeric_columns <- sapply(x, class) == "numeric"f
+        numeric_columns <- sapply(x, class) == "numeric"
         x[numeric_columns] <- round(x[numeric_columns], digits)
         x
       }
