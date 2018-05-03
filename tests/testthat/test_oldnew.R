@@ -87,9 +87,6 @@ test_that("matches old data system output", {
       newdata$year <- paste0("X", newdata$year)
     }
 
-    # If there's a logit column, delete that sucker immediately
-    newdata[[LOGIT_TYPE_COLNAME]] <- NULL
-
     # Reshape new data if necessary--see comment above
     if(flag_long_year_form) {
       expect_true(all(c("year", "value") %in% names(newdata)),
@@ -116,10 +113,7 @@ test_that("matches old data system output", {
     expect_true(length(oldf) == 1, info = paste("Either zero, or multiple, comparison datasets found for", basename(newf)))
 
     if(length(oldf) == 1) {
-      # If the old file has an "INPUT_TABLE" header, need to skip that
-      old_firstline <- read_lines(oldf, n_max = 1)
-      oldskip <- ifelse(old_firstline == "INPUT_TABLE", 4, 0)
-      olddata <- read_csv(oldf, comment = COMMENT_CHAR, skip = oldskip)
+      olddata <- read_csv(oldf, comment = COMMENT_CHAR)
 
       # Finally, test (NB rounding numeric columns to a sensible number of
       # digits; otherwise spurious mismatches occur)
@@ -130,7 +124,7 @@ test_that("matches old data system output", {
         integer_columns <- sapply(x, class) == "integer"
         x[integer_columns] <- lapply(x[integer_columns], as.numeric)
 
-        numeric_columns <- sapply(x, class) == "numeric"
+        numeric_columns <- sapply(x, class) == "numeric"f
         x[numeric_columns] <- round(x[numeric_columns], digits)
         x
       }
