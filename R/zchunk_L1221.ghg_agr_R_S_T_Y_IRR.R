@@ -52,8 +52,7 @@ module_emissions_L1221.ghg_agr_R_S_T_Y_IRR <- function(command, ...) {
       add_comments("outputs calculated in L1211.ag_irrShare_R_C_Y_GLU_irr") %>%
       add_legacy_name("L1221.ghg_tg_R_agr_C_Y_GLU_IRR") %>%
       add_precursors("L1211.ag_irrShare_R_C_Y_GLU_irr",
-                     "L122.ghg_tg_R_agr_C_Y_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR)
+                     "L122.ghg_tg_R_agr_C_Y_GLU")
 
     return_data(L1221.ghg_tg_R_agr_C_Y_GLU_IRR)
   } else {

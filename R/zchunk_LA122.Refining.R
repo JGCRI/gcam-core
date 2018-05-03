@@ -172,8 +172,7 @@ module_gcam.usa_LA122.Refining <- function(command, ...) {
       add_legacy_name("L122.in_EJ_state_refining_F") %>%
       add_precursors("L101.inEIA_EJ_state_S_F",
                      "L122.in_EJ_R_refining_F_Yh",
-                     "gcam-usa/EIA_biodiesel_Mgal.yr") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "gcam-usa/EIA_biodiesel_Mgal.yr") ->
       L122.in_EJ_state_refining_F
 
     L122.out_EJ_state_refining_F %>%
@@ -183,8 +182,7 @@ module_gcam.usa_LA122.Refining <- function(command, ...) {
       add_legacy_name("L122.out_EJ_state_refining_F") %>%
       add_precursors("L101.inEIA_EJ_state_S_F",
                      "L122.out_EJ_R_refining_F_Yh",
-                     "gcam-usa/EIA_biodiesel_Mgal.yr") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "gcam-usa/EIA_biodiesel_Mgal.yr") ->
       L122.out_EJ_state_refining_F
 
     return_data(L122.in_EJ_state_refining_F, L122.out_EJ_state_refining_F)

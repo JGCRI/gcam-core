@@ -298,8 +298,7 @@ module_gcam.usa_LA143.HDDCDD <- function(command, ...) {
       add_comments("Divide state cooling degree days by the census subregion 9 total population") %>%
       add_legacy_name("L143.share_state_Pop_CDD_sR9") %>%
       add_precursors("gcam-usa/states_subregions", "gcam-usa/Census_pop_hist",
-                     "gcam-usa/GIS/CDD_His") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "gcam-usa/GIS/CDD_His") ->
       L143.share_state_Pop_CDD_sR9
 
     L143.share_state_Pop_CDD_sR13 %>%
@@ -309,8 +308,7 @@ module_gcam.usa_LA143.HDDCDD <- function(command, ...) {
       add_comments("Divide state cooling degree days by the census subregion 13 total population.") %>%
       add_legacy_name("L143.share_state_Pop_CDD_sR13") %>%
       add_precursors("gcam-usa/states_subregions", "gcam-usa/Census_pop_hist",
-                     "gcam-usa/GIS/CDD_His") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "gcam-usa/GIS/CDD_His") ->
       L143.share_state_Pop_CDD_sR13
 
     L143.share_state_Pop_HDD_sR9 %>%
@@ -320,8 +318,7 @@ module_gcam.usa_LA143.HDDCDD <- function(command, ...) {
       add_comments("Divide state heating degree days by the census subregion 9 total population.") %>%
       add_legacy_name("L143.share_state_Pop_HDD_sR9") %>%
       add_precursors("gcam-usa/states_subregions", "gcam-usa/Census_pop_hist",
-                     "gcam-usa/GIS/HDD_His") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "gcam-usa/GIS/HDD_His") ->
       L143.share_state_Pop_HDD_sR9
 
     L143.share_state_Pop_HDD_sR13 %>%
@@ -331,8 +328,7 @@ module_gcam.usa_LA143.HDDCDD <- function(command, ...) {
       add_comments("Divide state heating degree days by the census subregion 13 total population.") %>%
       add_legacy_name("L143.share_state_Pop_HDD_sR13") %>%
       add_precursors("gcam-usa/states_subregions", "gcam-usa/Census_pop_hist",
-                     "gcam-usa/GIS/HDD_His") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "gcam-usa/GIS/HDD_His") ->
       L143.share_state_Pop_HDD_sR13
 
     L143.HDDCDD_scen_state %>%
@@ -342,8 +338,7 @@ module_gcam.usa_LA143.HDDCDD <- function(command, ...) {
       add_comments("Normalize future GCM degree days by the fraction of observed degree days to GCM degree days in the base year.") %>%
       add_legacy_name("L143.HDDCDD_scen_state") %>%
       add_precursors("gcam-usa/states_subregions", "gcam-usa/Census_pop_hist", "gcam-usa/GIS/CDD_His",
-                     "gcam-usa/GIS/HDD_His", "gcam-usa/GIS/HDD_GFDL_A2", "gcam-usa/GIS/CDD_GFDL_A2") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "gcam-usa/GIS/HDD_His", "gcam-usa/GIS/HDD_GFDL_A2", "gcam-usa/GIS/CDD_GFDL_A2") ->
       L143.HDDCDD_scen_state
 
     return_data(L143.share_state_Pop_CDD_sR9,

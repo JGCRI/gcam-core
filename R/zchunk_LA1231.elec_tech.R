@@ -202,8 +202,7 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
       add_comments("Written by LA1231.electech.R") %>%
       add_comments("Inputs are calculated based on L123.in_EJ_R_elec_F_Yh and calibrated_techs. For gas technologies, the share of each has was estimated") %>%
       add_legacy_name("L1231.in_EJ_R_elec_F_tech_Yh") %>%
-      add_precursors("energy/A23.globaltech_eff", "energy/calibrated_techs", "L123.in_EJ_R_elec_F_Yh", "L123.out_EJ_R_elec_F_Yh", "L123.eff_R_elec_F_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.globaltech_eff", "energy/calibrated_techs", "L123.in_EJ_R_elec_F_Yh", "L123.out_EJ_R_elec_F_Yh", "L123.eff_R_elec_F_Yh") ->
       L1231.in_EJ_R_elec_F_tech_Yh
     L1231.out_EJ_R_elec_F_tech_Yh %>%
       add_title("Outputs of electricity by by Region / fuel / technology.") %>%
@@ -211,8 +210,7 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
       add_comments("Written by LA1231.electech.R") %>%
       add_comments("Outputs by fuel and coresponding technologies are adjusted based on the efficiency and input estimates")%>%
       add_legacy_name("L1231.out_EJ_R_elec_F_tech_Yh") %>%
-      add_precursors("energy/A23.globaltech_eff", "energy/calibrated_techs", "L123.in_EJ_R_elec_F_Yh", "L123.out_EJ_R_elec_F_Yh", "L123.eff_R_elec_F_Yh") %>%      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.globaltech_eff", "energy/calibrated_techs", "L123.in_EJ_R_elec_F_Yh", "L123.out_EJ_R_elec_F_Yh", "L123.eff_R_elec_F_Yh") ->
       L1231.out_EJ_R_elec_F_tech_Yh
     L1231.eff_R_elec_F_tech_Yh %>%
       add_title("Electricity efficiency by by Region / fuel / technology") %>%
@@ -220,8 +218,7 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
       add_comments("Written by LA1231.electech.R") %>%
       add_comments("Efficiencies for technologies other than gas technologies are based on L123.eff_R_elec_F_Yh. For gas technologies, their efficiences were adjusted when the average efficiency was outside of the range of the two technologies") %>%
       add_legacy_name("L1231.eff_R_elec_F_tech_Yh") %>%
-      add_precursors("energy/A23.globaltech_eff", "energy/calibrated_techs", "L123.in_EJ_R_elec_F_Yh", "L123.out_EJ_R_elec_F_Yh", "L123.eff_R_elec_F_Yh") %>%      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("energy/A23.globaltech_eff", "energy/calibrated_techs", "L123.in_EJ_R_elec_F_Yh", "L123.out_EJ_R_elec_F_Yh", "L123.eff_R_elec_F_Yh") ->
       L1231.eff_R_elec_F_tech_Yh
 
     return_data(L1231.in_EJ_R_elec_F_tech_Yh, L1231.out_EJ_R_elec_F_tech_Yh, L1231.eff_R_elec_F_tech_Yh)

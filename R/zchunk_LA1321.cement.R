@@ -385,8 +385,7 @@ module_energy_LA1321.cement <- function(command, ...) {
       add_comments("Outputs are calculated by by downscaling Worrell regions using CDIAC country emissions and then aggregating to GCAM regions") %>%
       add_comments("Final outputs are a product of regional emissions times the production emissions ratio") %>%
       add_legacy_name("L1321.out_Mt_R_cement_Yh") %>%
-      add_precursors("emissions/A_PrimaryFuelCCoef", "energy/Worrell_1994_cement", "energy/mappings/cement_regions", "L100.CDIAC_CO2_ctry_hist", "L102.CO2_Mt_R_F_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+      add_precursors("emissions/A_PrimaryFuelCCoef", "energy/Worrell_1994_cement", "energy/mappings/cement_regions", "L100.CDIAC_CO2_ctry_hist", "L102.CO2_Mt_R_F_Yh") ->
       L1321.out_Mt_R_cement_Yh
 
     L1321.IO_GJkg_R_cement_F_Yh %>%
@@ -395,8 +394,7 @@ module_energy_LA1321.cement <- function(command, ...) {
       add_comments("IO coefficients for heat energy, electricity, and limestone consumption are calculated from weighted IEA fuel shares, CDIAC emissions data, and Worrell cement production") %>%
       add_legacy_name("L1321.IO_GJkg_R_cement_F_Yh") %>%
       add_precursors("emissions/A_PrimaryFuelCCoef", "energy/Worrell_1994_cement", "energy/mappings/cement_regions", "L100.CDIAC_CO2_ctry_hist", "L102.CO2_Mt_R_F_Yh", "L123.in_EJ_R_elec_F_Yh", "L123.out_EJ_R_elec_F_Yh", "energy/IEA_cement_elec_kwht",
-                     "energy/IEA_cement_TPE_GJt", "energy/IEA_cement_fuelshares", "common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "energy/IEA_cement_TPE_GJt", "energy/IEA_cement_fuelshares", "common/iso_GCAM_regID") ->
       L1321.IO_GJkg_R_cement_F_Yh
 
     L1321.in_EJ_R_cement_F_Y %>%
@@ -406,8 +404,7 @@ module_energy_LA1321.cement <- function(command, ...) {
       add_comments("Multiplied by raw fuel shares, all from IEA") %>%
       add_legacy_name("L1321.in_EJ_R_cement_F_Y") %>%
       add_precursors("L100.CDIAC_CO2_ctry_hist", "L102.CO2_Mt_R_F_Yh", "L123.in_EJ_R_elec_F_Yh", "L123.out_EJ_R_elec_F_Yh", "energy/IEA_cement_elec_kwht",
-                     "energy/IEA_cement_TPE_GJt", "energy/IEA_cement_fuelshares", "common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "energy/IEA_cement_TPE_GJt", "energy/IEA_cement_fuelshares", "common/iso_GCAM_regID") ->
       L1321.in_EJ_R_cement_F_Y
 
     L1321.in_EJ_R_indenergy_F_Yh %>%
@@ -417,8 +414,7 @@ module_energy_LA1321.cement <- function(command, ...) {
       add_comments("To determine adjusted input energy for industrial energy use") %>%
       add_legacy_name("L1321.in_EJ_R_indenergy_F_Yh") %>%
       add_precursors("L100.CDIAC_CO2_ctry_hist", "L102.CO2_Mt_R_F_Yh", "L123.in_EJ_R_elec_F_Yh", "L123.out_EJ_R_elec_F_Yh", "energy/IEA_cement_elec_kwht",
-                     "energy/IEA_cement_TPE_GJt", "energy/IEA_cement_fuelshares", "L132.in_EJ_R_indenergy_F_Yh", "common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "energy/IEA_cement_TPE_GJt", "energy/IEA_cement_fuelshares", "L132.in_EJ_R_indenergy_F_Yh", "common/iso_GCAM_regID") ->
       L1321.in_EJ_R_indenergy_F_Yh
 
     return_data(L1321.out_Mt_R_cement_Yh, L1321.IO_GJkg_R_cement_F_Yh, L1321.in_EJ_R_cement_F_Y, L1321.in_EJ_R_indenergy_F_Yh)

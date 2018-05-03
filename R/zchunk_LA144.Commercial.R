@@ -487,8 +487,7 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
                      "gcam-usa/CBECS_1992",
                      "gcam-usa/CBECS_1995",
                      "gcam-usa/CBECS_1999",
-                     "gcam-usa/CBECS_2003") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "gcam-usa/CBECS_2003") ->
       L144.flsp_bm2_state_comm
 
     L144.in_EJ_state_comm_F_U_Y %>%
@@ -512,8 +511,7 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
                      "gcam-usa/CBECS_2003",
                      "L142.in_EJ_state_bld_F",
                      "L143.share_state_Pop_CDD_sR9",
-                     "L143.share_state_Pop_HDD_sR9") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L143.share_state_Pop_HDD_sR9") ->
       L144.in_EJ_state_comm_F_U_Y
 
     return_data(L144.flsp_bm2_state_comm, L144.in_EJ_state_comm_F_U_Y)

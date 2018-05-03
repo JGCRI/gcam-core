@@ -384,8 +384,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       add_comments("Shares of fertilizer production were modified so that industrial energy/feedstock for any fuels were not negative for any country, before aggregating to the regional level.") %>%
       add_legacy_name("L1322.Fert_Prod_MtN_R_F_Y") %>%
       add_precursors("common/iso_GCAM_regID", "energy/IEA_ctry", "energy/IEA_Fert_fuel_data",
-                     "L142.ag_Fert_Prod_MtN_ctry_Y") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L142.ag_Fert_Prod_MtN_ctry_Y") ->
       L1322.Fert_Prod_MtN_R_F_Y
 
     L1322.IO_R_Fert_F_Yh %>%
@@ -396,8 +395,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       add_legacy_name("L1322.IO_R_Fert_F_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "energy/IEA_ctry", "energy/IEA_Fert_fuel_data",
                      "L142.ag_Fert_Prod_MtN_ctry_Y", "L1321.in_EJ_R_indenergy_F_Yh",
-                     "L132.in_EJ_R_indfeed_F_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+                     "L132.in_EJ_R_indfeed_F_Yh") ->
       L1322.IO_R_Fert_F_Yh
 
     L1322.in_EJ_R_indenergy_F_Yh %>%
@@ -408,8 +406,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       add_legacy_name("L1322.in_EJ_R_indenergy_F_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "energy/IEA_ctry", "energy/IEA_Fert_fuel_data",
                      "L142.ag_Fert_Prod_MtN_ctry_Y", "L1321.in_EJ_R_indenergy_F_Yh",
-                     "L132.in_EJ_R_indfeed_F_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L132.in_EJ_R_indfeed_F_Yh") ->
       L1322.in_EJ_R_indenergy_F_Yh
 
     L1322.in_EJ_R_indfeed_F_Yh %>%
@@ -420,8 +417,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       add_legacy_name("L1322.in_EJ_R_indfeed_F_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "energy/IEA_ctry", "energy/IEA_Fert_fuel_data",
                      "L142.ag_Fert_Prod_MtN_ctry_Y", "L1321.in_EJ_R_indenergy_F_Yh",
-                     "L132.in_EJ_R_indfeed_F_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L132.in_EJ_R_indfeed_F_Yh") ->
       L1322.in_EJ_R_indfeed_F_Yh
 
     L1322.Fert_NEcost_75USDkgN_F %>%
@@ -432,8 +428,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       add_comments("Oil was set to generally balance the total net costs with natural gas steam reforming.") %>%
       add_legacy_name("L1322.Fert_NEcost_75USDkgN_F") %>%
       add_precursors("energy/H2A_Prod_Tech", "energy/A10.rsrc_info",
-                     "energy/A21.globaltech_cost", "energy/A22.globaltech_cost") %>%
-      add_flags(FLAG_SUM_TEST) ->
+                     "energy/A21.globaltech_cost", "energy/A22.globaltech_cost") ->
       L1322.Fert_NEcost_75USDkgN_F
 
     return_data(L1322.Fert_Prod_MtN_R_F_Y, L1322.IO_R_Fert_F_Yh, L1322.in_EJ_R_indenergy_F_Yh, L1322.in_EJ_R_indfeed_F_Yh, L1322.Fert_NEcost_75USDkgN_F)

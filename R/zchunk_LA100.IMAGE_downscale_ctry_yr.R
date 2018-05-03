@@ -126,8 +126,7 @@ module_aglu_LA100.IMAGE_downscale_ctry_yr <- function(command, ...) {
       add_comments("Each IMAGE table extrapolated to all AGLU historical years and downscaled from IMAGE region to all AGLU countries") %>%
       add_legacy_name("L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y") %>%
       add_precursors("aglu/AGLU_ctry",
-                     "aglu/IMAGE/IMAGE_an_Feedfrac_Rimg_C_Sys_Fd_Y") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+                     "aglu/IMAGE/IMAGE_an_Feedfrac_Rimg_C_Sys_Fd_Y") ->
       L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y
 
     L100.IMAGE_an_FeedIO_ctry_C_Sys_Y %>%
@@ -136,8 +135,7 @@ module_aglu_LA100.IMAGE_downscale_ctry_yr <- function(command, ...) {
       add_comments("Each IMAGE table extrapolated to all AGLU historical years and downscaled from IMAGE region to all AGLU countries") %>%
       add_legacy_name("L100.IMAGE_an_FeedIO_ctry_C_Sys_Y") %>%
       add_precursors("aglu/AGLU_ctry",
-                     "aglu/IMAGE/IMAGE_an_FeedIO_Rimg_C_Sys_Y") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "aglu/IMAGE/IMAGE_an_FeedIO_Rimg_C_Sys_Y") ->
       L100.IMAGE_an_FeedIO_ctry_C_Sys_Y
 
     L100.IMAGE_an_Prodmixfrac_ctry_C_Y %>%
@@ -146,8 +144,7 @@ module_aglu_LA100.IMAGE_downscale_ctry_yr <- function(command, ...) {
       add_comments("Each IMAGE table extrapolated to all AGLU historical years and downscaled from IMAGE region to all AGLU countries") %>%
       add_legacy_name("L100.IMAGE_an_Prodmixfrac_ctry_C_Y") %>%
       add_precursors("aglu/AGLU_ctry",
-                     "aglu/IMAGE/IMAGE_an_Prodmixfrac_Rimg_C_Y") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+                     "aglu/IMAGE/IMAGE_an_Prodmixfrac_Rimg_C_Y") ->
       L100.IMAGE_an_Prodmixfrac_ctry_C_Y
 
     return_data(L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y, L100.IMAGE_an_FeedIO_ctry_C_Sys_Y, L100.IMAGE_an_Prodmixfrac_ctry_C_Y)

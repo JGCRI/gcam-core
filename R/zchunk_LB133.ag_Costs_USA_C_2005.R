@@ -326,8 +326,7 @@ module_aglu_LB133.ag_Costs_USA_C_2005 <- function(command, ...) {
       add_legacy_name("L133.USDA_cost_data") %>%
       add_precursors("aglu/USDA_cost_data",
                      "aglu/USDA_crops",
-                     "aglu/USDA_item_cost") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "aglu/USDA_item_cost") ->
       L133.USDA_cost_data
 
     L133.ag_Cost_75USDkg_C %>%

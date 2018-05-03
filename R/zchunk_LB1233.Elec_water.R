@@ -173,8 +173,7 @@ module_gcam.usa_LB1233.Elec_water <- function(command, ...) {
                      "gcam-usa/UCS_tech_names",
                      "gcam-usa/UCS_water_types",
                      "gcam-usa/UCS_Database",
-                     "L1231.out_EJ_state_elec_F_tech") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L1231.out_EJ_state_elec_F_tech") ->
       L1233.out_EJ_state_elec_F_tech_cool
 
     L1233.share_sR_elec_F_tech_cool %>%
@@ -198,8 +197,7 @@ module_gcam.usa_LB1233.Elec_water <- function(command, ...) {
                      "gcam-usa/UCS_tech_names",
                      "gcam-usa/UCS_water_types",
                      "gcam-usa/UCS_Database",
-                     "gcam-usa/Macknick_elec_water_m3MWh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "gcam-usa/Macknick_elec_water_m3MWh") ->
       L1233.wdraw_km3_state_elec
 
     L1233.wcons_km3_state_elec %>%
@@ -212,8 +210,7 @@ module_gcam.usa_LB1233.Elec_water <- function(command, ...) {
                      "gcam-usa/UCS_tech_names",
                      "gcam-usa/UCS_water_types",
                      "gcam-usa/UCS_Database",
-                     "gcam-usa/Macknick_elec_water_m3MWh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "gcam-usa/Macknick_elec_water_m3MWh") ->
       L1233.wcons_km3_state_elec
 
     return_data(L1233.out_EJ_state_elec_F_tech_cool, L1233.share_sR_elec_F_tech_cool, L1233.wdraw_km3_state_elec, L1233.wcons_km3_state_elec)

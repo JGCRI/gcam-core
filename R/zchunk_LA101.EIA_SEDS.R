@@ -88,7 +88,7 @@ module_gcam.usa_LA101.EIA_SEDS <- function(command, ...) {
       add_legacy_name("L101.EIA_use_all_Bbtu") %>%
       add_precursors("gcam-usa/EIA_use_all_Bbtu", "gcam-usa/EIA_SEDS_fuels",
                      "gcam-usa/EIA_SEDS_sectors") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT) ->
+      add_flags(FLAG_PROTECT_FLOAT) ->
       L101.EIA_use_all_Bbtu
 
     L101.inEIA_EJ_state_S_F %>%
@@ -97,8 +97,7 @@ module_gcam.usa_LA101.EIA_SEDS <- function(command, ...) {
       add_comments("GCAM sector and fuel names were added, units converted to EJ, data with no GCAM fuel or sector name removed") %>%
       add_legacy_name("L101.inEIA_EJ_state_S_F") %>%
       add_precursors("gcam-usa/EIA_use_all_Bbtu", "gcam-usa/EIA_SEDS_fuels",
-                     "gcam-usa/EIA_SEDS_sectors", "gcam-usa/A_fuel_conv") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "gcam-usa/EIA_SEDS_sectors", "gcam-usa/A_fuel_conv") ->
       L101.inEIA_EJ_state_S_F
 
     return_data(L101.EIA_use_all_Bbtu, L101.inEIA_EJ_state_S_F)

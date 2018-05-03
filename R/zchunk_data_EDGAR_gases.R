@@ -64,7 +64,7 @@ module_data_EDGAR_gases <- function(command, ...) {
                      "emissions/EDGAR/EDGAR_N2O", "emissions/EDGAR/EDGAR_NMVOC",
                      "emissions/EDGAR/EDGAR_NOx", "emissions/EDGAR/EDGAR_SO2",
                      "emissions/EDGAR/EDGAR_CO") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_OUTPUT) ->
+      add_flags(FLAG_NO_OUTPUT) ->
       EDGAR_gases
 
     return_data(EDGAR_gases)

@@ -199,8 +199,7 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
                      "L1322.Fert_Prod_MtN_R_F_Y",
                      "L1321.in_EJ_R_cement_F_Y",
                      "L124.in_EJ_R_heat_F_Yh",
-                     "L111.Prod_EJ_R_F_Yh") %>%
-      add_flags(FLAG_NO_XYEAR) ->
+                     "L111.Prod_EJ_R_F_Yh") ->
       L101.in_EJ_R_en_Si_F_Yh
 
     L101.so2_tgej_USA_en_Sepa_F_Yh %>%
@@ -209,8 +208,7 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
       add_units("Tg/EJ") %>%
       add_comments("Matched to EPA categories, summed, converted to Tg") %>%
       add_legacy_name("L101.so2_tgej_USA_en_Sepa_F_Yh") %>%
-      add_precursors("emissions/EPA_SO2") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("emissions/EPA_SO2") ->
       L101.so2_tgej_USA_en_Sepa_F_Yh
 
     L101.co_tgej_USA_en_Sepa_F_Yh %>%
@@ -220,8 +218,7 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
       add_comments("Matched to EPA categories, summed, converted to Tg") %>%
       add_legacy_name("L101.co_tgej_USA_en_Sepa_F_Yh") %>%
       same_precursors_as(L101.in_EJ_R_en_Si_F_Yh) %>%
-      add_precursors("emissions/EPA_CO") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("emissions/EPA_CO") ->
       L101.co_tgej_USA_en_Sepa_F_Yh
 
     L101.nox_tgej_USA_en_Sepa_F_Yh %>%
@@ -231,8 +228,7 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
       add_comments("Matched to EPA categories, summed, converted to Tg") %>%
       add_legacy_name("L101.nox_tgej_USA_en_Sepa_F_Yh") %>%
       same_precursors_as(L101.in_EJ_R_en_Si_F_Yh) %>%
-      add_precursors("emissions/EPA_NOx") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("emissions/EPA_NOx") ->
       L101.nox_tgej_USA_en_Sepa_F_Yh
 
     L101.voc_tgej_USA_en_Sepa_F_Yh %>%
@@ -242,8 +238,7 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
       add_comments("Matched to EPA categories, summed, converted to Tg") %>%
       add_legacy_name("L101.voc_tgej_USA_en_Sepa_F_Yh") %>%
       same_precursors_as(L101.in_EJ_R_en_Si_F_Yh) %>%
-      add_precursors("emissions/EPA_VOC") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("emissions/EPA_VOC") ->
       L101.voc_tgej_USA_en_Sepa_F_Yh
 
     L101.nh3_tgej_USA_en_Sepa_F_Yh %>%
@@ -253,8 +248,7 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
       add_comments("Matched to EPA categories, summed, converted to Tg") %>%
       add_legacy_name("L101.nh3_tgej_USA_en_Sepa_F_Yh") %>%
       same_precursors_as(L101.in_EJ_R_en_Si_F_Yh) %>%
-      add_precursors("emissions/EPA_NH3") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("emissions/EPA_NH3") ->
       L101.nh3_tgej_USA_en_Sepa_F_Yh
 
     return_data(L101.so2_tgej_USA_en_Sepa_F_Yh, L101.co_tgej_USA_en_Sepa_F_Yh,

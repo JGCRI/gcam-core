@@ -134,10 +134,7 @@ module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
       add_units("bm2") %>%
       add_comments("Land types from SAGE, HYDE, WDPA merged and reconciled; missing zeroes backfilled; interpolated to AGLU land cover years") %>%
       add_legacy_name("L120.LC_bm2_R_LT_Yh_GLU") %>%
-      add_precursors("common/iso_GCAM_regID", "aglu/LDS/LDS_land_types", "aglu/SAGE_LT", "L100.Land_type_area_ha") %>%
-      # Verified that all data are same as old version, but test is still failing because of tiny
-      # rounding differences. So for this and next three data frames, use the less-strict sum test
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+      add_precursors("common/iso_GCAM_regID", "aglu/LDS/LDS_land_types", "aglu/SAGE_LT", "L100.Land_type_area_ha") ->
       L120.LC_bm2_R_LT_Yh_GLU
 
     L120.LC_bm2_R_UrbanLand_Yh_GLU %>%
@@ -145,8 +142,7 @@ module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
       add_units("bm2") %>%
       add_comments("Land types from SAGE, HYDE, WDPA merged and reconciled; missing zeroes backfilled; interpolated to AGLU land cover years") %>%
       add_legacy_name("L120.LC_bm2_R_UrbanLand_Yh_GLU") %>%
-      add_precursors("common/iso_GCAM_regID", "aglu/LDS/LDS_land_types", "aglu/SAGE_LT", "L100.Land_type_area_ha") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+      add_precursors("common/iso_GCAM_regID", "aglu/LDS/LDS_land_types", "aglu/SAGE_LT", "L100.Land_type_area_ha") ->
       L120.LC_bm2_R_UrbanLand_Yh_GLU
 
     L120.LC_bm2_R_Tundra_Yh_GLU %>%
@@ -154,8 +150,7 @@ module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
       add_units("bm2") %>%
       add_comments("Land types from SAGE, HYDE, WDPA merged and reconciled; missing zeroes backfilled; interpolated to AGLU land cover years") %>%
       add_legacy_name("L120.LC_bm2_R_Tundra_Yh_GLU") %>%
-      add_precursors("common/iso_GCAM_regID", "aglu/LDS/LDS_land_types", "aglu/SAGE_LT", "L100.Land_type_area_ha") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+      add_precursors("common/iso_GCAM_regID", "aglu/LDS/LDS_land_types", "aglu/SAGE_LT", "L100.Land_type_area_ha") ->
       L120.LC_bm2_R_Tundra_Yh_GLU
 
     L120.LC_bm2_R_RckIceDsrt_Yh_GLU %>%
@@ -163,8 +158,7 @@ module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
       add_units("bm2") %>%
       add_comments("Land types from SAGE, HYDE, WDPA merged and reconciled; missing zeroes backfilled; interpolated to AGLU land cover years") %>%
       add_legacy_name("L120.LC_bm2_R_RckIceDsrt_Yh_GLU") %>%
-      add_precursors("common/iso_GCAM_regID", "aglu/LDS/LDS_land_types", "aglu/SAGE_LT", "L100.Land_type_area_ha") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+      add_precursors("common/iso_GCAM_regID", "aglu/LDS/LDS_land_types", "aglu/SAGE_LT", "L100.Land_type_area_ha") ->
       L120.LC_bm2_R_RckIceDsrt_Yh_GLU
 
     L120.LC_bm2_ctry_LTsage_GLU %>%
@@ -182,8 +176,7 @@ module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
       add_comments("Land types from SAGE, HYDE, WDPA merged and reconciled; missing zeroes backfilled; interpolated to AGLU land cover years") %>%
       add_comments("Mean computed for HYDE 'Pasture' over available historical years") %>%
       add_legacy_name("L120.LC_bm2_ctry_LTpast_GLU") %>%
-      add_precursors("common/iso_GCAM_regID", "aglu/LDS/LDS_land_types", "aglu/SAGE_LT", "L100.Land_type_area_ha") %>%
-      add_flags(FLAG_SUM_TEST) ->
+      add_precursors("common/iso_GCAM_regID", "aglu/LDS/LDS_land_types", "aglu/SAGE_LT", "L100.Land_type_area_ha") ->
       L120.LC_bm2_ctry_LTpast_GLU
 
     return_data(L120.LC_bm2_R_LT_Yh_GLU, L120.LC_bm2_R_UrbanLand_Yh_GLU, L120.LC_bm2_R_Tundra_Yh_GLU, L120.LC_bm2_R_RckIceDsrt_Yh_GLU, L120.LC_bm2_ctry_LTsage_GLU, L120.LC_bm2_ctry_LTpast_GLU)

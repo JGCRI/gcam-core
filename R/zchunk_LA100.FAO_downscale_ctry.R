@@ -272,8 +272,7 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
 
         FAO_data_ALL_5yr[irows,] %>%
           add_comments("Downscale countries; calculate 5-yr averages") %>%
-          add_legacy_name(legacy.name) %>%
-          add_flags(FLAG_NO_XYEAR, FLAG_LONG_YEAR_FORM)
+          add_legacy_name(legacy.name)
 
       }
 

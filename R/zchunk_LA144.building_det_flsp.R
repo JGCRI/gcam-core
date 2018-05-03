@@ -391,8 +391,7 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
       add_legacy_name("L144.flsp_bm2_R_res_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "energy/A44.flsp_bm2_state_res", "energy/A44.pcflsp_default",
                      "energy/A44.HouseholdSize", "energy/CEDB_ResFloorspace_chn", "energy/Other_pcflsp_m2_ctry_Yh",
-                     "energy/IEA_PCResFloorspace", "energy/Odyssee_ResFloorspacePerHouse", "L100.Pop_thous_ctry_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "energy/IEA_PCResFloorspace", "energy/Odyssee_ResFloorspacePerHouse", "L100.Pop_thous_ctry_Yh") ->
       L144.flsp_bm2_R_res_Yh
 
     L144.flsp_bm2_R_comm_Yh %>%
@@ -403,8 +402,7 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
       add_legacy_name("L144.flsp_bm2_R_comm_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "energy/A44.flsp_bm2_state_comm", "energy/A44.pcflsp_default",
                      "energy/Other_pcflsp_m2_ctry_Yh", "L100.Pop_thous_ctry_Yh",
-                     "L102.gdp_mil90usd_GCAM3_R_Y") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L102.gdp_mil90usd_GCAM3_R_Y") ->
       L144.flsp_bm2_R_comm_Yh
 
     L144.flspPrice_90USDm2_R_bld_Yh %>%
@@ -415,8 +413,7 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID", "energy/A44.flsp_bm2_state_res", "energy/A44.pcflsp_default",
                      "energy/A44.HouseholdSize", "energy/CEDB_ResFloorspace_chn", "energy/Other_pcflsp_m2_ctry_Yh",
                      "energy/IEA_PCResFloorspace", "energy/Odyssee_ResFloorspacePerHouse", "L100.Pop_thous_ctry_Yh",
-                     "L102.gdp_mil90usd_GCAM3_R_Y") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L102.gdp_mil90usd_GCAM3_R_Y") ->
       L144.flspPrice_90USDm2_R_bld_Yh
 
     return_data(L144.flsp_bm2_R_res_Yh, L144.flsp_bm2_R_comm_Yh, L144.flspPrice_90USDm2_R_bld_Yh)

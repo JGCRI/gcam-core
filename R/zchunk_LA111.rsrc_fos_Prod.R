@@ -203,8 +203,7 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
       add_comments("deduct unconventional oil from total oil and include it in calibrated production table.") %>%
       add_legacy_name("L111.Prod_EJ_R_F_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "L1011.en_bal_EJ_R_Si_Fi_Yh",
-                     "energy/rsrc_unconv_oil_prod_bbld") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "energy/rsrc_unconv_oil_prod_bbld") ->
       L111.Prod_EJ_R_F_Yh
 
     L111.RsrcCurves_EJ_R_Ffos %>%

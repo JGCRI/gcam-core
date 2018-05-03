@@ -133,8 +133,7 @@ module_aglu_LA103.ag_R_C_Y_GLU <- function(command, ...) {
       add_comments("GLU-specific production and harvested area in all years") %>%
       add_legacy_name("L103.ag_Prod_Mt_R_C_Y_GLU") %>%
       add_precursors("L101.ag_Prod_Mt_R_C_Y",
-                     "L102.ag_Prod_Mt_R_C_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L102.ag_Prod_Mt_R_C_GLU") ->
       L103.ag_Prod_Mt_R_C_Y_GLU
 
     L103.ag_Prod_Mt_R_C_Y %>%
@@ -143,8 +142,7 @@ module_aglu_LA103.ag_R_C_Y_GLU <- function(command, ...) {
       add_comments("Crop production computed based on representative base year") %>%
       add_legacy_name("L103.ag_Prod_Mt_R_C_Y") %>%
       same_precursors_as(L103.ag_Prod_Mt_R_C_Y_GLU) %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+      add_precursors("common/iso_GCAM_regID") ->
       L103.ag_Prod_Mt_R_C_Y
 
     L103.ag_HA_bm2_R_C_Y_GLU %>%
@@ -155,8 +153,7 @@ module_aglu_LA103.ag_R_C_Y_GLU <- function(command, ...) {
       add_comments("downscaled to regional production and harvested area in all years by GLU") %>%
       add_legacy_name("L103.ag_HA_bm2_R_C_Y_GLU") %>%
       add_precursors("L101.ag_HA_bm2_R_C_Y",
-                     "L102.ag_HA_bm2_R_C_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+                     "L102.ag_HA_bm2_R_C_GLU") ->
       L103.ag_HA_bm2_R_C_Y_GLU
 
     L103.ag_Yield_kgm2_R_C_Y_GLU %>%
@@ -168,8 +165,7 @@ module_aglu_LA103.ag_R_C_Y_GLU <- function(command, ...) {
       add_legacy_name("L103.ag_Yield_kgm2_R_C_Y_GLU") %>%
       same_precursors_as(L103.ag_HA_bm2_R_C_Y_GLU) %>%
       add_precursors("L101.ag_Prod_Mt_R_C_Y",
-                     "L102.ag_Prod_Mt_R_C_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L102.ag_Prod_Mt_R_C_GLU") ->
       L103.ag_Yield_kgm2_R_C_Y_GLU
 
     return_data(L103.ag_Prod_Mt_R_C_Y_GLU, L103.ag_Prod_Mt_R_C_Y, L103.ag_HA_bm2_R_C_Y_GLU, L103.ag_Yield_kgm2_R_C_Y_GLU)

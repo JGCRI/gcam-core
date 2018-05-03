@@ -149,8 +149,7 @@ module_emissions_L114.bcoc_en_R_S_T_Y <- function(command, ...) {
                      "L101.in_EJ_R_en_Si_F_Yh",
                      "L104.bcoc_tgej_USA_en_T_1990",
                      "emissions/RCP_BC_2000",
-                     "emissions/RCP_OC_2000") %>%
-      add_flags(FLAG_NO_XYEAR) ->
+                     "emissions/RCP_OC_2000") ->
       L114.bcoc_tgej_R_en_S_F_2000
 
     return_data(L114.bcoc_tgej_R_en_S_F_2000)

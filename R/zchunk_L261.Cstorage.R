@@ -255,8 +255,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
       add_comments("Carbon storage resource information was expanded to include GCAM region names") %>%
       add_comments("and filtered for only unlimited resources (i.e., offshore)") %>%
       add_legacy_name("L261.UnlimitRsrc") %>%
-      add_precursors("common/GCAM_region_names", "energy/A61.rsrc_info") %>%
-      add_flags(FLAG_SUM_TEST) ->
+      add_precursors("common/GCAM_region_names", "energy/A61.rsrc_info") ->
       L261.UnlimitRsrc
 
     L261.DepRsrcCurves_C %>%
@@ -264,8 +263,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
       add_units("Available in MtCO2, Extraction Cost in 1990$/tCO2") %>%
       add_comments("GCAM region names were added to the resource supply curves generated in level 1") %>%
       add_legacy_name("L261.DepRsrcCurves_C") %>%
-      add_precursors("common/GCAM_region_names", "L161.RsrcCurves_MtC_R") %>%
-      add_flags(FLAG_SUM_TEST) ->
+      add_precursors("common/GCAM_region_names", "L161.RsrcCurves_MtC_R") ->
       L261.DepRsrcCurves_C
 
     L261.DepRsrcCurves_C_high %>%
@@ -273,8 +271,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
       add_units("Available in MtCO2, Extraction Cost in 1990$/tCO2") %>%
       add_comments("A multiplier (based on high level of CCS use) was applied to the extraction cost to generate a high supply curve") %>%
       add_legacy_name("L261.DepRsrcCurves_C_high") %>%
-      add_precursors("common/GCAM_region_names", "L161.RsrcCurves_MtC_R") %>%
-      add_flags(FLAG_SUM_TEST) ->
+      add_precursors("common/GCAM_region_names", "L161.RsrcCurves_MtC_R") ->
       L261.DepRsrcCurves_C_high
 
     L261.DepRsrcCurves_C_low %>%
@@ -282,8 +279,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
       add_units("Available in MtCO2, Extraction Cost in 1990$/tCO2") %>%
       add_comments("A multiplier (based on low level of CCS use) was applied to the extraction cost to generate a low supply curve") %>%
       add_legacy_name("L261.DepRsrcCurves_C_low") %>%
-      add_precursors("common/GCAM_region_names", "L161.RsrcCurves_MtC_R") %>%
-      add_flags(FLAG_SUM_TEST) ->
+      add_precursors("common/GCAM_region_names", "L161.RsrcCurves_MtC_R") ->
       L261.DepRsrcCurves_C_low
 
     L261.DepRsrcCurves_C_lowest %>%
@@ -291,8 +287,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
       add_units("Available in MtCO2, Extraction Cost in 1990$/tCO2") %>%
       add_comments("A multiplier (based on lowest level of CCS use) was applied to the extraction cost to generate a lowest supply curve") %>%
       add_legacy_name("L261.DepRsrcCurves_C_lowest") %>%
-      add_precursors("common/GCAM_region_names", "L161.RsrcCurves_MtC_R") %>%
-      add_flags(FLAG_SUM_TEST) ->
+      add_precursors("common/GCAM_region_names", "L161.RsrcCurves_MtC_R") ->
       L261.DepRsrcCurves_C_lowest
 
     L261.Supplysector_C %>%
@@ -332,8 +327,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Global technology coefficients were interpolated across all base model years") %>%
       add_legacy_name("L261.GlobalTechCoef_C") %>%
-      add_precursors("energy/A61.globaltech_coef") %>%
-      add_flags(FLAG_SUM_TEST) ->
+      add_precursors("energy/A61.globaltech_coef") ->
       L261.GlobalTechCoef_C
 
     L261.GlobalTechCost_C %>%
@@ -341,8 +335,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
       add_units("1975$/tCO2") %>%
       add_comments("Global technology coefficients were interpolated across all base model years") %>%
       add_legacy_name("L261.GlobalTechCost_C") %>%
-      add_precursors("energy/A61.globaltech_cost") %>%
-      add_flags(FLAG_SUM_TEST) ->
+      add_precursors("energy/A61.globaltech_cost") ->
       L261.GlobalTechCost_C
 
     L261.GlobalTechCost_C_High %>%
@@ -350,8 +343,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
       add_units("1975$/tCO2") %>%
       add_comments("Assigned onshore and offshore carbon storage technologies a high price to price out CCS") %>%
       add_legacy_name("L261.GlobalTechCost_C_High") %>%
-      add_precursors("energy/A61.globaltech_cost") %>%
-      add_flags(FLAG_SUM_TEST) ->
+      add_precursors("energy/A61.globaltech_cost") ->
       L261.GlobalTechCost_C_High
 
     L261.GlobalTechShrwt_C %>%
@@ -359,8 +351,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Shareweights of global technologies for energy transformation were interpolated across all base model years") %>%
       add_legacy_name("L261.GlobalTechShrwt_C") %>%
-      add_precursors("energy/A61.globaltech_shrwt") %>%
-      add_flags(FLAG_SUM_TEST) ->
+      add_precursors("energy/A61.globaltech_shrwt") ->
       L261.GlobalTechShrwt_C
 
     L261.GlobalTechShrwt_C_nooffshore %>%
@@ -368,8 +359,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Subset shareweight table for offshore only. Assigned them shareweights of zero") %>%
       add_legacy_name("L261.GlobalTechShrwt_C_nooffshore") %>%
-      add_precursors("energy/A61.globaltech_shrwt") %>%
-      add_flags(FLAG_SUM_TEST) ->
+      add_precursors("energy/A61.globaltech_shrwt") ->
       L261.GlobalTechShrwt_C_nooffshore
 
 

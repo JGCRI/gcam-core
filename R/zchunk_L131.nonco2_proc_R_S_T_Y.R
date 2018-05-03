@@ -151,8 +151,7 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
                      "emissions/mappings/EPA_ghg_tech",
                      "emissions/mappings/GCAM_sector_tech",
                      "EDGAR_gases",
-                     "emissions/EPA_FCCC_IndProc_2005") %>%
-      add_flags(FLAG_SUM_TEST,FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "emissions/EPA_FCCC_IndProc_2005") ->
       L131.nonco2_tg_R_prc_S_S_Yh
 
     return_data(L131.nonco2_tg_R_prc_S_S_Yh)

@@ -437,8 +437,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
       add_comments("Rename markets with regional gird name if using regional regional fuel markets") %>%
       add_legacy_name("L2321.StubTechCoef_cement_USA") %>%
       add_precursors("L2321.StubTech_cement", "L1321.IO_GJkg_state_cement_F_Yh",
-                     "gcam-usa/states_subregions", "energy/A321.globaltech_coef") %>%
-      add_flags(FLAG_SUM_TEST) ->
+                     "gcam-usa/states_subregions", "energy/A321.globaltech_coef") ->
       L2321.StubTechCoef_cement_USA
 
     L2321.StubTechCalInput_cement_heat_USA %>%
@@ -460,8 +459,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
       add_comments("Add market name based on region or regional grid if using regional regional fuel markets") %>%
       add_legacy_name("L2321.StubTechMarket_cement_USA") %>%
       add_precursors("L2321.StubTech_cement", "L1321.IO_GJkg_state_cement_F_Yh",
-                     "gcam-usa/states_subregions", "energy/calibrated_techs", "L2321.StubTech_cement_USA") %>%
-      add_flags(FLAG_SUM_TEST) ->
+                     "gcam-usa/states_subregions", "energy/calibrated_techs", "L2321.StubTech_cement_USA") ->
       L2321.StubTechMarket_cement_USA
 
     L2321.BaseService_cement_USA %>%

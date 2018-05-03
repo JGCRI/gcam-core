@@ -893,8 +893,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       add_units("person/vehicle and tonnes/vehicle") %>%
       add_comments("Data was subsetted to model years and mapped from UCD technology to GCAM technology") %>%
       add_legacy_name("L254.StubTranTechLoadFactor") %>%
-      add_precursors("common/GCAM_region_names", "energy/mappings/UCD_techs", "L154.loadfactor_R_trn_m_sz_tech_F_Y") %>%
-      add_flags(FLAG_SUM_TEST) ->
+      add_precursors("common/GCAM_region_names", "energy/mappings/UCD_techs", "L154.loadfactor_R_trn_m_sz_tech_F_Y") ->
       L254.StubTranTechLoadFactor
 
     L254.StubTranTechCost %>%
@@ -922,8 +921,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       add_comments("Share weights were calculated from calibrated output values") %>%
       add_legacy_name("L254.StubTechCalInput_passthru") %>%
       add_precursors("common/GCAM_region_names", "energy/mappings/UCD_techs",
-                     "L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y", "energy/A54.globaltech_passthru") %>%
-      add_flags(FLAG_SUM_TEST) ->
+                     "L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y", "energy/A54.globaltech_passthru") ->
       L254.StubTechCalInput_passthru
 
     L254.StubTechProd_nonmotor %>%
@@ -965,8 +963,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       add_legacy_name("L254.BaseService_trn") %>%
       add_precursors("common/GCAM_region_names", "energy/A54.sector", "energy/mappings/UCD_techs",
                      "L154.out_mpkm_R_trn_nonmotor_Yh", "L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y",
-                     "L154.loadfactor_R_trn_m_sz_tech_F_Y", "L154.in_EJ_R_trn_m_sz_tech_F_Yh") %>%
-      add_flags(FLAG_SUM_TEST) ->
+                     "L154.loadfactor_R_trn_m_sz_tech_F_Y", "L154.in_EJ_R_trn_m_sz_tech_F_Yh") ->
       L254.BaseService_trn
 
     return_data(L254.Supplysector_trn, L254.FinalEnergyKeyword_trn, L254.tranSubsectorLogit,

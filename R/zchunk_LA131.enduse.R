@@ -201,8 +201,7 @@ module_energy_LA131.enduse <- function(command, ...) {
       add_comments("Scalers were used to balance electricity and district heat production and consumption within each region") %>%
       add_legacy_name("L131.in_EJ_R_Senduse_F_Yh") %>%
       add_precursors("energy/enduse_sector_aggregation", "L1011.en_bal_EJ_R_Si_Fi_Yh",
-                     "L121.in_EJ_R_unoil_F_Yh", "L122.in_EJ_R_refining_F_Yh", "L126.out_EJ_R_electd_F_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L121.in_EJ_R_unoil_F_Yh", "L122.in_EJ_R_refining_F_Yh", "L126.out_EJ_R_electd_F_Yh") ->
       L131.in_EJ_R_Senduse_F_Yh
 
     L131.share_R_Senduse_heat_Yh %>%
@@ -215,8 +214,7 @@ module_energy_LA131.enduse <- function(command, ...) {
                      "L121.in_EJ_R_unoil_F_Yh",
                      "L122.in_EJ_R_refining_F_Yh",
                      "L124.out_EJ_R_heat_F_Yh", "L124.out_EJ_R_heatfromelec_F_Yh",
-                     "L126.out_EJ_R_electd_F_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L126.out_EJ_R_electd_F_Yh") ->
       L131.share_R_Senduse_heat_Yh
 
     return_data(L131.in_EJ_R_Senduse_F_Yh, L131.share_R_Senduse_heat_Yh)

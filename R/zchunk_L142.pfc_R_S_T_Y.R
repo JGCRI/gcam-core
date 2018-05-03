@@ -169,8 +169,7 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
                      "emissions/A41.GWP",
                      "emissions/EDGAR/EDGAR_SF6",
                      "emissions/EDGAR/EDGAR_C2F6",
-                     "emissions/EDGAR/EDGAR_CF4") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+                     "emissions/EDGAR/EDGAR_CF4") ->
       L142.pfc_R_S_T_Yh
 
     return_data(L142.pfc_R_S_T_Yh)

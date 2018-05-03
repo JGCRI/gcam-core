@@ -39,7 +39,7 @@ module_data_Maddison_population <- function(command, ...) {
       add_units("people") %>%
       add_comments(paste("Read from", gsub("^.*extdata", "extdata", fqfn))) %>%
       add_legacy_name("Maddison_population") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_NO_OUTPUT) ->
+      add_flags(FLAG_NO_OUTPUT) ->
       Maddison_population
 
     return_data(Maddison_population)

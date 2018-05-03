@@ -283,8 +283,7 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
       add_legacy_name("L123.ag_Prod_Mt_R_Past_Y_GLU") %>%
       add_precursors("L108.ag_Feed_Mt_R_C_Y",
                      "L120.LC_bm2_R_LT_Yh_GLU",
-                     "L121.Yield_kgm2_R_Past_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L121.Yield_kgm2_R_Past_GLU") ->
       L123.ag_Prod_Mt_R_Past_Y_GLU
 
     L123.LC_bm2_R_MgdPast_Yh_GLU %>%
@@ -294,8 +293,7 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
       add_comments("Reduce managed pasture land no greater than the assumed threshold percentage of total pasture land") %>%
       add_comments("The same managed land share in the earliest aglu year is assumed to pre-aglu historical years") %>%
       add_legacy_name("L123.LC_bm2_R_MgdPast_Yh_GLU") %>%
-      same_precursors_as("L123.ag_Prod_Mt_R_Past_Y_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      same_precursors_as("L123.ag_Prod_Mt_R_Past_Y_GLU") ->
       L123.LC_bm2_R_MgdPast_Yh_GLU
 
     L123.ag_Yield_kgm2_R_Past_Y_GLU %>%
@@ -304,8 +302,7 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
       add_comments("Calculate yields as managed pasture land production divided by adjusted managed pasture land") %>%
       add_comments("Increase yields where managed pasture land is lowered to the threshold percentage of total pasture land") %>%
       add_legacy_name("L123.ag_Yield_kgm2_R_Past_Y_GLU") %>%
-      same_precursors_as("L123.ag_Prod_Mt_R_Past_Y_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      same_precursors_as("L123.ag_Prod_Mt_R_Past_Y_GLU") ->
       L123.ag_Yield_kgm2_R_Past_Y_GLU
 
     L123.For_Prod_bm3_R_Y_GLU %>%
@@ -317,8 +314,7 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
       add_legacy_name("L123.For_Prod_bm3_R_Y_GLU") %>%
       add_precursors("L110.For_ALL_bm3_R_Y",
                      "L120.LC_bm2_R_LT_Yh_GLU",
-                     "L121.CarbonContent_kgm2_R_LT_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L121.CarbonContent_kgm2_R_LT_GLU") ->
       L123.For_Prod_bm3_R_Y_GLU
 
     L123.LC_bm2_R_MgdFor_Yh_GLU %>%
@@ -330,7 +326,7 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
       add_legacy_name("L123.LC_bm2_R_MgdFor_Yh_GLU") %>%
       same_precursors_as("L123.For_Prod_bm3_R_Y_GLU") %>%
       add_precursors("L101.Pop_thous_R_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT) ->
+      add_flags(FLAG_PROTECT_FLOAT) ->
       L123.LC_bm2_R_MgdFor_Yh_GLU
 
     L123.For_Yield_m3m2_R_GLU %>%
@@ -340,8 +336,7 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
       add_comments("Increase yields where managed forest land is lowered to the threshold percentage of total forest land") %>%
       add_comments("Missing yields are replaced with the assumed minimun yield value") %>%
       add_legacy_name("L123.For_Yield_m3m2_R_GLU") %>%
-      same_precursors_as("L123.LC_bm2_R_MgdFor_Yh_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      same_precursors_as("L123.LC_bm2_R_MgdFor_Yh_GLU") ->
       L123.For_Yield_m3m2_R_GLU
 
     return_data(L123.ag_Prod_Mt_R_Past_Y_GLU, L123.ag_Yield_kgm2_R_Past_Y_GLU, L123.LC_bm2_R_MgdPast_Yh_GLU, L123.For_Prod_bm3_R_Y_GLU, L123.For_Yield_m3m2_R_GLU, L123.LC_bm2_R_MgdFor_Yh_GLU)

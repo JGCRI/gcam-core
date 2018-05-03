@@ -152,8 +152,7 @@ module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr <- function(command, ...) {
       add_comments("Uses shares of irrigated area from MIRCA, combined with total harvested area, to calculate irrigated harvested area") %>%
       add_comments("Data is for a single year (circa 2000)") %>%
       add_legacy_name("L151.ag_irrHA_ha_ctry_crop") %>%
-      add_precursors("aglu/FAO/FAO_ag_items_PRODSTAT", "L100.LDS_ag_HA_ha", "L100.MIRCA_irrHA_ha", "L100.MIRCA_rfdHA_ha") %>%
-      add_flags(FLAG_SUM_TEST) ->
+      add_precursors("aglu/FAO/FAO_ag_items_PRODSTAT", "L100.LDS_ag_HA_ha", "L100.MIRCA_irrHA_ha", "L100.MIRCA_rfdHA_ha")  ->
       L151.ag_irrHA_ha_ctry_crop
 
     L151.ag_rfdHA_ha_ctry_crop %>%
@@ -162,8 +161,7 @@ module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr <- function(command, ...) {
       add_comments("Uses shares of rainfed area from MIRCA, combined with total harvested area, to calculate rainfed harvested area") %>%
       add_comments("Data is for a single year (circa 2000)") %>%
       add_legacy_name("L151.ag_rfdHA_ha_ctry_crop") %>%
-      add_precursors("aglu/FAO/FAO_ag_items_PRODSTAT", "L100.LDS_ag_HA_ha", "L100.MIRCA_irrHA_ha", "L100.MIRCA_rfdHA_ha") %>%
-      add_flags(FLAG_SUM_TEST) ->
+      add_precursors("aglu/FAO/FAO_ag_items_PRODSTAT", "L100.LDS_ag_HA_ha", "L100.MIRCA_irrHA_ha", "L100.MIRCA_rfdHA_ha") ->
       L151.ag_rfdHA_ha_ctry_crop
 
     L151.ag_irrProd_t_ctry_crop %>%

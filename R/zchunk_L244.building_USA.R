@@ -99,7 +99,7 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
       share.weight <- share_tech1 <- share_tech2 <- share_type <- state <- steepness_new <-
       steepness_stock <- stockavg <- subsector <- subsector.name <- supplysector <-
       tech_type <- technology <- technology1 <- technology2 <-
-      thermal.building.service.input <- to.value <- value <- year <- year.fillout <- NULL
+      thermal.building.service.input <- to.value <- value <- year <- year.fillout <- . <- NULL
 
     all_data <- list(...)[[1]]
 

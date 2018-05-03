@@ -209,8 +209,7 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
                      "energy/GIS/population_weighted_HDD_CCSM3x_B1",
                      "energy/GIS/population_weighted_HDD_HadCM3_A2",
                      "energy/GIS/population_weighted_HDD_HadCM3_B1",
-                     "energy/GIS/population_weighted_HDD_no_GCM_constdd") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "energy/GIS/population_weighted_HDD_no_GCM_constdd") ->
       L143.HDDCDD_scen_R_Y
 
     L143.HDDCDD_scen_RG3_Y %>%
@@ -218,8 +217,7 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
       add_units("Fahrenheit Degree Days") %>%
       add_comments("Population weighted country HDDCDD data from multiple ESMs and scenarios to GCAM3 region") %>%
       add_legacy_name("L143.HDDCDD_scen_RG3_Y") %>%
-      same_precursors_as(L143.HDDCDD_scen_R_Y) %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      same_precursors_as(L143.HDDCDD_scen_R_Y) ->
       L143.HDDCDD_scen_RG3_Y
 
     L143.HDDCDD_scen_ctry_Y %>%
@@ -227,8 +225,7 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
       add_units("Fahrenheit Degree Days") %>%
       add_comments("Combined data from multiple ESMs and scenarios") %>%
       add_legacy_name("L143.HDDCDD_scen_ctry_Y") %>%
-      same_precursors_as(L143.HDDCDD_scen_R_Y) %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      same_precursors_as(L143.HDDCDD_scen_R_Y) ->
       L143.HDDCDD_scen_ctry_Y
 
     return_data(L143.HDDCDD_scen_R_Y, L143.HDDCDD_scen_RG3_Y, L143.HDDCDD_scen_ctry_Y)

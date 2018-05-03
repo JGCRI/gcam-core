@@ -201,8 +201,7 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
       add_units("Tg/yr") %>%
       add_comments("EDGAR grassland emissions are downscaled to GLU using shares of grassland area.") %>%
       add_legacy_name("L124.nonco2_tg_R_grass_Y_GLU") %>%
-      add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_sector", "L124.LC_bm2_R_Grass_Yh_GLU_adj", "EDGAR_gases") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+      add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_sector", "L124.LC_bm2_R_Grass_Yh_GLU_adj", "EDGAR_gases") ->
       L124.nonco2_tg_R_grass_Y_GLU
     L124.nonco2_tg_R_forest_Y_GLU %>%
       add_title("Forest fire and deforestation emissions by GCAM region, gas, and historical year") %>%
@@ -212,8 +211,7 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
       add_legacy_name("L124.nonco2_tg_R_forest_Y_GLU") %>%
       add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_sector", "L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj", "EDGAR_gases",
                      "emissions/GFED/GFED_ForestFire_SO2", "emissions/GFED/GFED_Deforest_SO2", "emissions/GFED/GFED_ForestFire_CO",
-                     "emissions/GFED/GFED_Deforest_CO", "emissions/GFED/GFED_ForestFire_NOx", "emissions/GFED/GFED_Deforest_NOx") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "emissions/GFED/GFED_Deforest_CO", "emissions/GFED/GFED_ForestFire_NOx", "emissions/GFED/GFED_Deforest_NOx") ->
       L124.nonco2_tg_R_forest_Y_GLU
     L124.deforest_coefs %>%
       add_title("Default deforestation coefficients by Non-CO2 species") %>%

@@ -503,8 +503,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Shareweights interpolated to model years from assumptions in A22.globaltech_shrwt") %>%
       add_legacy_name("L222.GlobalTechShrwt_en") %>%
-      add_precursors("energy/A22.globaltech_shrwt") %>%
-      add_flags(FLAG_SUM_TEST) ->
+      add_precursors("energy/A22.globaltech_shrwt") ->
       L222.GlobalTechShrwt_en
 
     L222.GlobalTechCapture_en %>%

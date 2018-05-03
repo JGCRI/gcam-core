@@ -155,7 +155,7 @@ module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
                      "L122.LC_bm2_R_ExtraCropLand_Yh_GLU",
                      "L123.LC_bm2_R_MgdPast_Yh_GLU",
                      "L123.LC_bm2_R_MgdFor_Yh_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT) ->
+      add_flags(FLAG_PROTECT_FLOAT) ->
       L124.LC_bm2_R_Shrub_Yh_GLU_adj
 
     L124.LC_bm2_R_LTunmgd_Yh_GLU_adj %>%
@@ -170,7 +170,7 @@ module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
       add_comments("type according to its relative share.") %>%
       add_legacy_name("L124.LC_bm2_R_Grass_Yh_GLU_adj") %>%
       same_precursors_as(L124.LC_bm2_R_Shrub_Yh_GLU_adj) %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT) ->
+      add_flags(FLAG_PROTECT_FLOAT) ->
       L124.LC_bm2_R_Grass_Yh_GLU_adj
 
     L124.LC_bm2_R_LTunmgd_Yh_GLU_adj %>%
@@ -186,8 +186,7 @@ module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
       add_comments("type in each region-GLU-year so that the extra cropland is deducted from each unmanaged land") %>%
       add_comments("type according to its relative share.") %>%
       add_legacy_name("L124.LC_bm2_R_UnMgdPast_Yh_GLU_adj") %>%
-      same_precursors_as(L124.LC_bm2_R_Shrub_Yh_GLU_adj) %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      same_precursors_as(L124.LC_bm2_R_Shrub_Yh_GLU_adj) ->
       L124.LC_bm2_R_UnMgdPast_Yh_GLU_adj
 
     L124.LC_bm2_R_LTunmgd_Yh_GLU_adj %>%
@@ -203,8 +202,7 @@ module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
       add_comments("type in each region-GLU-year so that the extra cropland is deducted from each unmanaged land") %>%
       add_comments("type according to its relative share.") %>%
       add_legacy_name("L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj") %>%
-      same_precursors_as(L124.LC_bm2_R_Shrub_Yh_GLU_adj) %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      same_precursors_as(L124.LC_bm2_R_Shrub_Yh_GLU_adj) ->
       L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj
 
     return_data(L124.LC_bm2_R_Shrub_Yh_GLU_adj, L124.LC_bm2_R_Grass_Yh_GLU_adj, L124.LC_bm2_R_UnMgdPast_Yh_GLU_adj, L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj)

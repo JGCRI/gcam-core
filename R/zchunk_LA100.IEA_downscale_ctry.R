@@ -297,8 +297,7 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
         add_comments("Combine OECD and non-OECD data; perform upfront adjustments for other Africa, Turkey, and South Africa;") %>%
         add_comments("split out and handle the 1990 split of Yugoslavia and USSR; use population to downscale IEA composite regions") %>%
         add_comments("to individual countries; filter out countries without data in any year.") %>%
-        # Outputs match the old data system within 10^-5 but still failing, so use sum test
-        add_flags(FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT, FLAG_SUM_TEST) ->
+        add_flags(FLAG_PROTECT_FLOAT) ->
         L100.IEA_en_bal_ctry_hist
     } else {
       # raw IEA datasets not available, so return NA

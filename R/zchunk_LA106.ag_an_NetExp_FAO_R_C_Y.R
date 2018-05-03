@@ -98,8 +98,7 @@ module_aglu_LA106.ag_an_NetExp_FAO_R_C_Y <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID",
                      "aglu/FAO/FAO_ag_items_cal_SUA",
                      "L100.FAO_ag_Exp_t",
-                     "L100.FAO_ag_Imp_t") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L100.FAO_ag_Imp_t") ->
       L106.ag_NetExp_Mt_R_C_Y
 
     L106.NetExp_Mt_R_C_Y %>%
@@ -113,8 +112,7 @@ module_aglu_LA106.ag_an_NetExp_FAO_R_C_Y <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID",
                      "aglu/FAO/FAO_an_items_cal_SUA",
                      "L100.FAO_an_Exp_t",
-                     "L100.FAO_an_Imp_t") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L100.FAO_an_Imp_t") ->
       L106.an_NetExp_Mt_R_C_Y
 
     return_data(L106.ag_NetExp_Mt_R_C_Y, L106.an_NetExp_Mt_R_C_Y)

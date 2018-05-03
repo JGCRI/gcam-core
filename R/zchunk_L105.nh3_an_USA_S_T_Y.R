@@ -90,8 +90,7 @@ module_emissions_L105.nh3_an_USA_S_T_Y <- function(command, ...) {
       add_legacy_name("L105.nh3_tgmt_USA_an_Yh") %>%
       add_precursors("emissions/mappings/EPA_tech",
                      "L107.an_Prod_Mt_R_C_Sys_Fd_Y",
-                     "emissions/EPA_NH3") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "emissions/EPA_NH3") ->
       L105.nh3_tgmt_USA_an_Yh
 
     return_data(L105.nh3_tgmt_USA_an_Yh)

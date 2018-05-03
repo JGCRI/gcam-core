@@ -205,8 +205,7 @@ module_gcam.usa_LA154.Transport <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Transportation energy consumption data was downscaled to the state level using EIA state energy data") %>%
       add_legacy_name("L154.in_EJ_state_trn_m_sz_tech_F") %>%
-      add_precursors("L154.in_EJ_R_trn_m_sz_tech_F_Yh", "gcam-usa/trnUCD_EIA_mapping", "L101.EIA_use_all_Bbtu") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L154.in_EJ_R_trn_m_sz_tech_F_Yh", "gcam-usa/trnUCD_EIA_mapping", "L101.EIA_use_all_Bbtu") ->
       L154.in_EJ_state_trn_m_sz_tech_F
 
     L154.out_mpkm_state_trn_nonmotor_Yh %>%
@@ -214,8 +213,7 @@ module_gcam.usa_LA154.Transport <- function(command, ...) {
       add_units("million person-km") %>%
       add_comments("National data was allocated across the states in proportion to population") %>%
       add_legacy_name("L154.out_mpkm_state_trn_nonmotor_Yh") %>%
-      add_precursors("L154.out_mpkm_R_trn_nonmotor_Yh", "L100.Pop_thous_state") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L154.out_mpkm_R_trn_nonmotor_Yh", "L100.Pop_thous_state")  ->
       L154.out_mpkm_state_trn_nonmotor_Yh
 
     L154.in_EJ_state_trn_F %>%
@@ -223,8 +221,7 @@ module_gcam.usa_LA154.Transport <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Transportation energy consumption was aggregated by fuel, and the sector was named transportation") %>%
       add_legacy_name("L154.in_EJ_state_trn_F") %>%
-      add_precursors("L154.in_EJ_R_trn_m_sz_tech_F_Yh", "gcam-usa/trnUCD_EIA_mapping", "L101.EIA_use_all_Bbtu") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("L154.in_EJ_R_trn_m_sz_tech_F_Yh", "gcam-usa/trnUCD_EIA_mapping", "L101.EIA_use_all_Bbtu") ->
       L154.in_EJ_state_trn_F
 
     return_data(L154.in_EJ_state_trn_m_sz_tech_F, L154.out_mpkm_state_trn_nonmotor_Yh, L154.in_EJ_state_trn_F)

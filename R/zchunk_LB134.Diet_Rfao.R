@@ -316,8 +316,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
                      "aglu/FAO/FAO2050_items_cal", "aglu/FAO/FAO2050_Diet",
                      "L100.FAO_ag_Food_t", "L100.FAO_an_Food_t",
                      "L101.ag_Food_Pcal_R_C_Y", "L101.Pop_thous_R_Yh",
-                     "L105.an_Food_Pcal_R_C_Y") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L105.an_Food_Pcal_R_C_Y") ->
       L134.pcFood_kcald_R_Dmnd_Y
 
     bind_rows(L134.pcFood_est_R_Dmnd_Y_ssp1_crops,
@@ -328,8 +327,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
       add_comments("Scales using SSP1 GDP changes") %>%
       add_legacy_name("L134.pcFood_kcald_R_Dmnd_Y_ssp1") %>%
       same_precursors_as(L134.pcFood_kcald_R_Dmnd_Y) %>%
-      add_precursors("aglu/A_FoodDemand_SSPs", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("aglu/A_FoodDemand_SSPs", "L102.pcgdp_thous90USD_Scen_R_Y") ->
       L134.pcFood_kcald_R_Dmnd_Y_ssp1
 
     bind_rows(L134.pcFood_est_R_Dmnd_Y_ssp2_crops,
@@ -340,8 +338,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
       add_comments("Scales using SSP2 GDP changes") %>%
       add_legacy_name("L134.pcFood_kcald_R_Dmnd_Y_ssp2") %>%
       same_precursors_as(L134.pcFood_kcald_R_Dmnd_Y) %>%
-      add_precursors("aglu/A_FoodDemand_SSPs", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("aglu/A_FoodDemand_SSPs", "L102.pcgdp_thous90USD_Scen_R_Y") ->
       L134.pcFood_kcald_R_Dmnd_Y_ssp2
 
     bind_rows(L134.pcFood_est_R_Dmnd_Y_ssp3_crops,
@@ -352,8 +349,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
       add_comments("Scales using SSP3 GDP changes") %>%
       add_legacy_name("L134.pcFood_kcald_R_Dmnd_Y_ssp3") %>%
       same_precursors_as(L134.pcFood_kcald_R_Dmnd_Y) %>%
-      add_precursors("aglu/A_FoodDemand_SSPs", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("aglu/A_FoodDemand_SSPs", "L102.pcgdp_thous90USD_Scen_R_Y") ->
       L134.pcFood_kcald_R_Dmnd_Y_ssp3
 
     bind_rows(L134.pcFood_est_R_Dmnd_Y_ssp4_crops,
@@ -364,8 +360,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
       add_comments("Scales using SSP4 GDP changes") %>%
       add_legacy_name("L134.pcFood_kcald_R_Dmnd_Y_ssp4") %>%
       same_precursors_as(L134.pcFood_kcald_R_Dmnd_Y) %>%
-      add_precursors("aglu/A_FoodDemand_SSPs", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("aglu/A_FoodDemand_SSPs", "L102.pcgdp_thous90USD_Scen_R_Y") ->
       L134.pcFood_kcald_R_Dmnd_Y_ssp4
 
     bind_rows(L134.pcFood_est_R_Dmnd_Y_ssp5_crops,
@@ -376,8 +371,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
       add_comments("Scales using SSP5 GDP changes") %>%
       add_legacy_name("L134.pcFood_kcald_R_Dmnd_Y_ssp5") %>%
       same_precursors_as(L134.pcFood_kcald_R_Dmnd_Y) %>%
-      add_precursors("aglu/A_FoodDemand_SSPs", "L102.pcgdp_thous90USD_Scen_R_Y") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("aglu/A_FoodDemand_SSPs", "L102.pcgdp_thous90USD_Scen_R_Y") ->
       L134.pcFood_kcald_R_Dmnd_Y_ssp5
 
     return_data(L134.pcFood_kcald_R_Dmnd_Y, L134.pcFood_kcald_R_Dmnd_Y_ssp1, L134.pcFood_kcald_R_Dmnd_Y_ssp2, L134.pcFood_kcald_R_Dmnd_Y_ssp3, L134.pcFood_kcald_R_Dmnd_Y_ssp4, L134.pcFood_kcald_R_Dmnd_Y_ssp5)

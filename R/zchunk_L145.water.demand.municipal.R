@@ -121,8 +121,7 @@ module_water_L145.water.demand.municipal <- function(command, ...) {
       add_comments("Aggregate FAO_municipal_water_AQUASTAT to GCAM regions and fill out the years for missing data by rule=2") %>%
       add_legacy_name("L145.municipal_water_R_W_Yh_km3") %>%
       add_precursors("common/iso_GCAM_regID", "aglu/AGLU_ctry",
-                     "water/FAO_municipal_water_AQUASTAT") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+                     "water/FAO_municipal_water_AQUASTAT") ->
       L145.municipal_water_R_W_Yh_km3
 
     municipal_water_cost_R_75USD_m3 %>%

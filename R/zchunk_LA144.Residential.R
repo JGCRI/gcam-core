@@ -560,8 +560,7 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
                      "gcam-usa/RECS_1997",
                      "gcam-usa/RECS_2001",
                      "gcam-usa/RECS_2005",
-                     "gcam-usa/RECS_2009") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "gcam-usa/RECS_2009") ->
       L144.flsp_bm2_state_res
 
     L144.in_EJ_state_res_F_U_Y %>%
@@ -585,8 +584,7 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
                      "gcam-usa/RECS_2009",
                      "L142.in_EJ_state_bld_F",
                      "L143.share_state_Pop_CDD_sR13",
-                     "L143.share_state_Pop_HDD_sR13") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L143.share_state_Pop_HDD_sR13") ->
       L144.in_EJ_state_res_F_U_Y
 
     return_data(L144.flsp_bm2_state_res, L144.in_EJ_state_res_F_U_Y)

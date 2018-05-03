@@ -45,8 +45,7 @@ module_gcam.usa_LB1232.Elec_subregions <- function(command, ...) {
       add_comments("L1231.out_EJ_state_elec_F_tech aggregated to FERC region") %>%
       add_legacy_name("L1232.out_EJ_sR_elec") %>%
       add_precursors("gcam-usa/states_subregions",
-                     "L1231.out_EJ_state_elec_F_tech") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR)
+                     "L1231.out_EJ_state_elec_F_tech")
 
     return_data(L1232.out_EJ_sR_elec)
   } else {

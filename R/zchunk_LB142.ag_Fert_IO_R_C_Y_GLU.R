@@ -189,8 +189,7 @@ module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
       add_comments("Units are converted from tons to million tons of Nitrogen") %>%
       add_legacy_name("L142.ag_Fert_Prod_MtN_ctry_Y") %>%
       add_precursors("L100.FAO_Fert_Cons_tN",
-                     "L100.FAO_Fert_Prod_tN") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L100.FAO_Fert_Prod_tN") ->
       L142.ag_Fert_Prod_MtN_ctry_Y
 
     L142.ag_Fert_NetExp_MtN_R_Y %>%
@@ -201,8 +200,7 @@ module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
       add_legacy_name("L142.ag_Fert_NetExp_MtN_R_Y") %>%
       add_precursors("common/iso_GCAM_regID",
                      "L100.FAO_Fert_Cons_tN",
-                     "L100.FAO_Fert_Prod_tN") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L100.FAO_Fert_Prod_tN") ->
       L142.ag_Fert_NetExp_MtN_R_Y
 
     L142.ag_Fert_IO_R_C_Y_GLU %>%
@@ -216,8 +214,7 @@ module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
                      "aglu/FAO/FAO_ag_items_PRODSTAT",
                      "L100.LDS_ag_prod_t",
                      "L103.ag_Prod_Mt_R_C_Y_GLU",
-                     "L141.ag_Fert_Cons_MtN_ctry_crop") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L141.ag_Fert_Cons_MtN_ctry_crop") ->
       L142.ag_Fert_IO_R_C_Y_GLU
 
     return_data(L142.ag_Fert_Prod_MtN_ctry_Y, L142.ag_Fert_NetExp_MtN_R_Y, L142.ag_Fert_IO_R_C_Y_GLU)

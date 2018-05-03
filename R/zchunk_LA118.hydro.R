@@ -228,8 +228,7 @@ module_energy_LA118.hydro <- function(command, ...) {
       add_legacy_name("L118.out_EJ_R_elec_hydro_Yfut") %>%
       add_precursors("common/iso_GCAM_regID", "energy/Hydropower_potential",
                      "L100.IEA_en_bal_ctry_hist", "energy/A18.hydro_output",
-                     "energy/prebuilt_data/L118.out_EJ_R_elec_hydro_Yfut") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "energy/prebuilt_data/L118.out_EJ_R_elec_hydro_Yfut") ->
       L118.out_EJ_R_elec_hydro_Yfut
 
     return_data(L118.out_EJ_R_elec_hydro_Yfut)

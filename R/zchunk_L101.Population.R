@@ -154,8 +154,7 @@ module_socioeconomics_L101.Population <- function(command, ...) {
       add_comments("Population by region over the historical time period") %>%
       add_legacy_name("L101.Pop_thous_R_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "socioeconomics/GCAM3_population",
-                     "L100.Pop_thous_ctry_Yh", "L100.Pop_thous_SSP_ctry_Yfut") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L100.Pop_thous_ctry_Yh", "L100.Pop_thous_SSP_ctry_Yfut") ->
       L101.Pop_thous_R_Yh
 
     L101.Pop_thous_Scen_R_Yfut %>%
@@ -164,8 +163,7 @@ module_socioeconomics_L101.Population <- function(command, ...) {
       add_comments("Population by region and gSSP SSP in future periods") %>%
       add_legacy_name("L101.Pop_thous_Scen_R_Yfut") %>%
       add_precursors("common/iso_GCAM_regID", "socioeconomics/GCAM3_population",
-                     "L100.Pop_thous_ctry_Yh", "L100.Pop_thous_SSP_ctry_Yfut") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+                     "L100.Pop_thous_ctry_Yh", "L100.Pop_thous_SSP_ctry_Yfut") ->
       L101.Pop_thous_Scen_R_Yfut
 
     L101.Pop_thous_GCAM3_R_Y %>%
@@ -174,8 +172,7 @@ module_socioeconomics_L101.Population <- function(command, ...) {
       add_comments("GCAM population data interpolated to all historical and future years") %>%
       add_legacy_name("L101.Pop_thous_GCAM3_R_Y") %>%
       add_precursors("common/iso_GCAM_regID", "socioeconomics/GCAM3_population",
-                     "L100.Pop_thous_ctry_Yh", "L100.Pop_thous_SSP_ctry_Yfut") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L100.Pop_thous_ctry_Yh", "L100.Pop_thous_SSP_ctry_Yfut") ->
       L101.Pop_thous_GCAM3_R_Y
 
     L101.Pop_thous_GCAM3_ctry_Y %>%
@@ -186,8 +183,7 @@ module_socioeconomics_L101.Population <- function(command, ...) {
       add_comments("GCAM population data interpolated to all historical and future years") %>%
       add_legacy_name("L101.Pop_thous_GCAM3_ctry_Y") %>%
       add_precursors("common/iso_GCAM_regID", "socioeconomics/GCAM3_population",
-                     "L100.Pop_thous_ctry_Yh", "L100.Pop_thous_SSP_ctry_Yfut") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L100.Pop_thous_ctry_Yh", "L100.Pop_thous_SSP_ctry_Yfut") ->
       L101.Pop_thous_GCAM3_ctry_Y
 
     return_data(L101.Pop_thous_R_Yh, L101.Pop_thous_Scen_R_Yfut, L101.Pop_thous_GCAM3_R_Y, L101.Pop_thous_GCAM3_ctry_Y)

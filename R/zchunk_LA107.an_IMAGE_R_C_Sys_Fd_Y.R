@@ -214,8 +214,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
                      "L100.IMAGE_an_Prodmixfrac_ctry_C_Y",
                      "L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y",
                      "L100.IMAGE_an_FeedIO_ctry_C_Sys_Y",
-                     "L105.an_Prod_Mt_ctry_C_Y") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+                     "L105.an_Prod_Mt_ctry_C_Y") ->
       L107.an_Prod_Mt_R_C_Sys_Fd_Y
 
     L107.an_Feed_Mt_R_C_Sys_Fd_Y %>%
@@ -228,8 +227,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
                      "L100.IMAGE_an_Prodmixfrac_ctry_C_Y",
                      "L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y",
                      "L100.IMAGE_an_FeedIO_ctry_C_Sys_Y",
-                     "L105.an_Prod_Mt_ctry_C_Y") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L105.an_Prod_Mt_ctry_C_Y") ->
       L107.an_Feed_Mt_R_C_Sys_Fd_Y
 
     if(OLD_DATA_SYSTEM_BEHAVIOR) {
@@ -245,8 +243,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
                        "L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y",
                        "L100.IMAGE_an_FeedIO_ctry_C_Sys_Y",
                        "L105.an_Prod_Mt_ctry_C_Y",
-                       "temp-data-inject/L107.an_FeedIO_R_C_Sys_Fd_Y_gcd5") %>%  # only a precursor in an OLD_DATA_SYSTEM_BEHAVIOR block
-        add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+                       "temp-data-inject/L107.an_FeedIO_R_C_Sys_Fd_Y_gcd5") ->
         L107.an_FeedIO_R_C_Sys_Fd_Y
 
     } else {
@@ -261,8 +258,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
                        "L100.IMAGE_an_Prodmixfrac_ctry_C_Y",
                        "L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y",
                        "L100.IMAGE_an_FeedIO_ctry_C_Sys_Y",
-                       "L105.an_Prod_Mt_ctry_C_Y") %>%
-        add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+                       "L105.an_Prod_Mt_ctry_C_Y") ->
         L107.an_FeedIO_R_C_Sys_Fd_Y
     }
 

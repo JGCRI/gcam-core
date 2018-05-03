@@ -336,7 +336,7 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
                      "emissions/EDGAR/EDGAR_NOx",
                      "emissions/EDGAR/EDGAR_NMVOC",
                      "emissions/EDGAR/EDGAR_NH3") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT) ->
+      add_flags(FLAG_PROTECT_FLOAT) ->
       L111.nonghg_tg_R_en_S_F_Yh
 
     L111.nonghg_tgej_R_en_S_F_Yh %>%
@@ -345,7 +345,7 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
       add_comments("Use non-ghg emission totals by GCAM sector, fuel, technology, and driver type for EDGAR historical years to derive emission shares.") %>%
       add_legacy_name("L111.nonghg_tgej_R_en_S_F_Yh") %>%
       same_precursors_as(L111.nonghg_tg_R_en_S_F_Yh) %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT) ->
+      add_flags(FLAG_PROTECT_FLOAT) ->
       L111.nonghg_tgej_R_en_S_F_Yh
 
     return_data(L111.nonghg_tg_R_en_S_F_Yh, L111.nonghg_tgej_R_en_S_F_Yh)
