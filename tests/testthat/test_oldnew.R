@@ -42,12 +42,12 @@ test_that("matches old data system output", {
     expect_true(tibble::is_tibble(gdm_internal))
     expect_true(tibble::is_tibble(gcam_data_map))
     expect_identical(dim(gdm_internal), dim(gcam_data_map), info =
-                       "GCAM_DATA_MAP size doesn't match.  Rerun generate_package_data to update.")
+                       "GCAM_DATA_MAP dimensions don't match. Rerun generate_package_data to update.")
     expect_identical(gdm_internal$name, gcam_data_map$name, info =
-                       "GCAM_DATA_MAP name doesn't match.  Rerun generate_package_data to update.")
+                       "GCAM_DATA_MAP name doesn't match. Rerun generate_package_data to update.")
     expect_identical(gdm_internal$output, gcam_data_map$output, info = "GCAM_DATA_MAP output doesn't match")
     expect_identical(gdm_internal$precursors, gcam_data_map$precursors, info =
-                       "GCAM_DATA_MAP precursors doesn't match.  Rerun generate_package_data to update.")
+                       "GCAM_DATA_MAP precursors doesn't match. Rerun generate_package_data to update.")
   }
 
   # For each file in OUTPUTS_DIR, look for corresponding file in our
