@@ -99,7 +99,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       UCD_fuel <- UCD_sector <- UCD_technology <- calibrated.value <- coefficient <- loadFactor <-
       size.class <- state <- tranSubsector <- tranTechnology <- calibrated.value <- stub.technology <-
       output <- output_agg <- output_cum <- share.weight <- subs.share.weight <- share.weight.year <-
-      tech.share.weight <- calOutputValue <- energy.final.demand <- base.service <- NULL
+      tech.share.weight <- calOutputValue <- energy.final.demand <- base.service <- . <- NULL
 
     # Load required inputs
     UCD_techs <- get_data(all_data, "energy/mappings/UCD_techs") # Mapping file of transportation technology from the UC Davis report (Mishra et al. 2013)

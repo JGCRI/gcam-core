@@ -101,7 +101,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       sector <- calOutputValue <- fuel <- elec <- share <- avg.share <- pref <-
       share.weight.mult <- share.weight <- market.name <- sector.name <- subsector.name <-
       minicam.energy.input <- calibration <- secondary.output <- stub.technology <-
-      capacity.factor <- scaler <- capacity.factor.capital <-  NULL  # silence package check notes
+      capacity.factor <- scaler <- capacity.factor.capital <- . <- NULL  # silence package check notes
 
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
