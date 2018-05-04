@@ -13,6 +13,7 @@ outputs/
 xml/
 sample-generator/outputs/
 R/*.html
+Rplots.pdf
 
 # Vignette files
 inst/doc
