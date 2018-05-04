@@ -24,7 +24,7 @@ module_gcamusa_batch_interest_rate_USA_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("interest_rate_USA.xml") %>%
-      add_xml_data(L201.InterestRate_GCAMUSA,"InterestRate") %>%
+      add_xml_data(L201.InterestRate_GCAMUSA, "InterestRate") %>%
       add_precursors("L201.InterestRate_GCAMUSA") ->
       interest_rate_USA.xml
 

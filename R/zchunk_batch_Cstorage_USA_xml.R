@@ -40,15 +40,15 @@ module_gcamusa_batch_Cstorage_USA_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("Cstorage_USA.xml") %>%
-      add_xml_data(L261.DeleteDepRsrc_USAC,"DeleteDepRsrc") %>%
-      add_xml_data(L261.DeleteSubsector_USAC,"DeleteSubsector") %>%
-      add_xml_data(L261.DepRsrc_FERC,"DepRsrc") %>%
-      add_xml_data(L261.DepRsrcCurves_FERC,"DepRsrcCurves") %>%
-      add_logit_tables_xml(L261.Supplysector_C_USA,"Supplysector") %>%
-      add_logit_tables_xml(L261.SubsectorLogit_C_USA,"SubsectorLogit") %>%
-      add_xml_data(L261.SubsectorShrwtFllt_C_USA,"SubsectorShrwtFllt") %>%
-      add_xml_data(L261.StubTech_C_USA,"StubTech") %>%
-      add_xml_data(L261.StubTechMarket_C_USA,"StubTechMarket") %>%
+      add_xml_data(L261.DeleteDepRsrc_USAC, "DeleteDepRsrc") %>%
+      add_xml_data(L261.DeleteSubsector_USAC, "DeleteSubsector") %>%
+      add_xml_data(L261.DepRsrc_FERC, "DepRsrc") %>%
+      add_xml_data(L261.DepRsrcCurves_FERC, "DepRsrcCurves") %>%
+      add_logit_tables_xml(L261.Supplysector_C_USA, "Supplysector") %>%
+      add_logit_tables_xml(L261.SubsectorLogit_C_USA, "SubsectorLogit") %>%
+      add_xml_data(L261.SubsectorShrwtFllt_C_USA, "SubsectorShrwtFllt") %>%
+      add_xml_data(L261.StubTech_C_USA, "StubTech") %>%
+      add_xml_data(L261.StubTechMarket_C_USA, "StubTechMarket") %>%
       add_precursors("L261.DeleteDepRsrc_USAC", "L261.DeleteSubsector_USAC", "L261.DepRsrc_FERC", "L261.DepRsrcCurves_FERC", "L261.Supplysector_C_USA", "L261.SubsectorLogit_C_USA", "L261.SubsectorShrwtFllt_C_USA", "L261.StubTech_C_USA", "L261.StubTechMarket_C_USA") ->
       Cstorage_USA.xml
 

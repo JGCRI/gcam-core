@@ -24,7 +24,7 @@ module_energy_batch_nuclear_adv_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("nuclear_adv.xml") %>%
-      add_xml_data(L223.GlobalTechCapital_nuc_adv,"GlobalTechCapital") %>%
+      add_xml_data(L223.GlobalTechCapital_nuc_adv, "GlobalTechCapital") %>%
       add_precursors("L223.GlobalTechCapital_nuc_adv") ->
       nuclear_adv.xml
 

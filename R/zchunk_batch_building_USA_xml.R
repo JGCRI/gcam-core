@@ -144,7 +144,7 @@ module_gcamusa_batch_building_USA_xml <- function(command, ...) {
       building_USA.xml
 
     # # Some data inputs may not actually contain data. If so, do not add_xml_data.
-    if(!is.null(L244.SubsectorInterpTo_bld)){
+    if(!is.null(L244.SubsectorInterpTo_bld)) {
 
       building_USA.xml %>%
         add_xml_data(L244.SubsectorInterpTo_bld, "SubsectorInterpTo") ->

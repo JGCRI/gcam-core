@@ -256,7 +256,7 @@ module_energy_L232.industry <- function(command, ...) {
              output.ratio = round(output.ratio, energy.DIGITS_EFFICIENCY)) %>%
       # NOTE: holding the output ratio constant over time in future periods
       left_join_error_no_match(select(filter(., year == max(BASE_YEARS)), -efficiency, -elec_ratio),
-                               by = c("supplysector","subsector", "technology", "minicam.energy.input", "secondary.output")) %>%
+                               by = c("supplysector", "subsector", "technology", "minicam.energy.input", "secondary.output")) %>%
       mutate(output.ratio = if_else(year.x %in% BASE_YEARS, output.ratio.x, output.ratio.y)) %>%
       ungroup %>%
       rename(year = year.x,

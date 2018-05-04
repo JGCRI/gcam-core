@@ -157,29 +157,29 @@ module_water_batch_electricity_water_xml <- function(command, ...) {
       add_xml_data(L2233.GlobalTechShrwt_elec_cool, "GlobalTechShrwt") %>%
       add_xml_data(L2233.PrimaryRenewKeyword_elec_cool, "PrimaryRenewKeyword") %>%
       add_xml_data(L2233.PrimaryRenewKeywordInt_elec_cool, "PrimaryRenewKeywordInt") %>%
-      add_xml_data(L2233.StubTech_elecPassthru,"StubTech") %>%
-      add_xml_data(L2233.StubTechProd_elecPassthru,"StubTechProd") %>%
-      add_xml_data(L2233.GlobalPassThroughTech,"GlobalPassThroughTech") %>%
-      add_xml_data(L2233.GlobalTechEff_elecPassthru,"GlobalTechEff") %>%
-      add_xml_data(L2233.GlobalTechShrwt_elecPassthru,"GlobalTechShrwt") %>%
-      add_xml_data(L2233.GlobalIntTechCapital_elec,"GlobalIntTechCapital","GlobalTechCapital") %>%
-      add_xml_data(L2233.GlobalTechCapital_elecPassthru,"GlobalTechCapital") %>%
-      add_xml_data(L2233.GlobalIntTechOMfixed_elec,"GlobalIntTechOMfixed","GlobalTechOMfixed") %>%
-      add_xml_data(L2233.GlobalTechOMfixed_elecPassthru,"GlobalTechOMfixed") %>%
-      add_xml_data(L2233.GlobalIntTechOMvar_elec,"GlobalIntTechOMvar","GlobalTechOMvar") %>%
-      add_xml_data(L2233.GlobalTechOMvar_elecPassthru,"GlobalTechOMvar") %>%
-      add_xml_data(L2233.PassThroughSector_elec_cool,"PassThroughSector") %>%
-      add_logit_tables_xml(L2233.Supplysector_elec_cool,"Supplysector") %>%
-      add_xml_data(L2233.ElecReserve_elec_cool,"ElecReserve") %>%
-      add_xml_data(L2233.SubsectorShrwtFllt_elec_cool,"SubsectorShrwtFllt") %>%
-      add_logit_tables_xml(L2233.SubsectorLogit_elec_cool,"SubsectorLogit") %>%
-      add_xml_data(L2233.StubTech_elec_cool,"StubTech") %>%
-      add_xml_data(L2233.StubTechEff_elec_cool,"StubTechEff") %>%
-      add_xml_data(L2233.StubTechProd_elec_cool,"StubTechProd") %>%
-      add_xml_data(L2233.StubTechFixOut_hydro,"StubTechFixOut") %>%
-      add_xml_data(L2233.StubTechShrwt_elec_cool,"StubTechShrwt") %>%
-      add_xml_data(L2233.GlobalTechCapital_elec_cool,"GlobalTechCapital") %>%
-      add_xml_data(L2233.GlobalIntTechCapital_elec_cool,"GlobalIntTechCapital","GlobalTechCapital") %>%
+      add_xml_data(L2233.StubTech_elecPassthru, "StubTech") %>%
+      add_xml_data(L2233.StubTechProd_elecPassthru, "StubTechProd") %>%
+      add_xml_data(L2233.GlobalPassThroughTech, "GlobalPassThroughTech") %>%
+      add_xml_data(L2233.GlobalTechEff_elecPassthru, "GlobalTechEff") %>%
+      add_xml_data(L2233.GlobalTechShrwt_elecPassthru, "GlobalTechShrwt") %>%
+      add_xml_data(L2233.GlobalIntTechCapital_elec, "GlobalIntTechCapital", "GlobalTechCapital") %>%
+      add_xml_data(L2233.GlobalTechCapital_elecPassthru, "GlobalTechCapital") %>%
+      add_xml_data(L2233.GlobalIntTechOMfixed_elec, "GlobalIntTechOMfixed", "GlobalTechOMfixed") %>%
+      add_xml_data(L2233.GlobalTechOMfixed_elecPassthru, "GlobalTechOMfixed") %>%
+      add_xml_data(L2233.GlobalIntTechOMvar_elec, "GlobalIntTechOMvar", "GlobalTechOMvar") %>%
+      add_xml_data(L2233.GlobalTechOMvar_elecPassthru, "GlobalTechOMvar") %>%
+      add_xml_data(L2233.PassThroughSector_elec_cool, "PassThroughSector") %>%
+      add_logit_tables_xml(L2233.Supplysector_elec_cool, "Supplysector") %>%
+      add_xml_data(L2233.ElecReserve_elec_cool, "ElecReserve") %>%
+      add_xml_data(L2233.SubsectorShrwtFllt_elec_cool, "SubsectorShrwtFllt") %>%
+      add_logit_tables_xml(L2233.SubsectorLogit_elec_cool, "SubsectorLogit") %>%
+      add_xml_data(L2233.StubTech_elec_cool, "StubTech") %>%
+      add_xml_data(L2233.StubTechEff_elec_cool, "StubTechEff") %>%
+      add_xml_data(L2233.StubTechProd_elec_cool, "StubTechProd") %>%
+      add_xml_data(L2233.StubTechFixOut_hydro, "StubTechFixOut") %>%
+      add_xml_data(L2233.StubTechShrwt_elec_cool, "StubTechShrwt") %>%
+      add_xml_data(L2233.GlobalTechCapital_elec_cool, "GlobalTechCapital") %>%
+      add_xml_data(L2233.GlobalIntTechCapital_elec_cool, "GlobalIntTechCapital", "GlobalTechCapital") %>%
       add_precursors( "L223.Supplysector_elec",
                       "L223.SubsectorShrwtFllt_elec",
                       "L223.ElecReserve",

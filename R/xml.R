@@ -93,7 +93,7 @@ make_run_xml_conversion <- function() {
         cat("Variable ID", file = tmp_conn, sep = "\n")
         cat(table$header, file = tmp_conn, sep = "\n")
         cat("", file = tmp_conn, sep = "\n")
-        utils::write.table(table$data, file = tmp_conn, sep=",", row.names = FALSE, col.names = TRUE, quote = FALSE)
+        utils::write.table(table$data, file = tmp_conn, sep=", ", row.names = FALSE, col.names = TRUE, quote = FALSE)
         cat("", file = tmp_conn, sep = "\n")
       }
       close(tmp_conn)

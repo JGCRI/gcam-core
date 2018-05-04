@@ -169,7 +169,7 @@ module_aglu_LB163.bio_Yield_R_GLU_irr <- function(command, ...) {
       add_title("Reference base year bioenergy yields for irrigated crops by GCAM region / GLU") %>%
       add_units("Gigajoule per square meter (GJ/m2)") %>%
       add_comments("A global average yield is calculated for each GTAP_crop and is used to calculate") %>%
-      add_comments("aggregate irrigated harvested areas to the GCAM region level (summing over all GTAPcrops),") %>%
+      add_comments("aggregate irrigated harvested areas to the GCAM region level (summing over all GTAPcrops), ") %>%
       add_comments("and then to calculate a Yield Index for each irrigated region-GLU. The region-GLU ") %>%
       add_comments("specific index is then multiplied by a base yield to give irrigated bioenergy yields.") %>%
       add_legacy_name("L163.ag_irrBioYield_GJm2_R_GLU") %>%
@@ -183,7 +183,7 @@ module_aglu_LB163.bio_Yield_R_GLU_irr <- function(command, ...) {
       add_title("Reference base year bioenergy yields for rainfed crops by GCAM region / GLU") %>%
       add_units("Gigajoule per square meter (GJ/m2)") %>%
       add_comments("A global average yield is calculated for each GTAP_crop and is used to calculate") %>%
-      add_comments("aggregate rainfed harvested areas to the GCAM region level (summing over all GTAPcrops),") %>%
+      add_comments("aggregate rainfed harvested areas to the GCAM region level (summing over all GTAPcrops), ") %>%
       add_comments("and then to calculate a Yield Index for each rainfed region-GLU. The region-GLU ") %>%
       add_comments("specific index is then multiplied by a base yield to give rainfed bioenergy yields.") %>%
       add_legacy_name("L163.ag_rfdBioYield_GJm2_R_GLU") %>%

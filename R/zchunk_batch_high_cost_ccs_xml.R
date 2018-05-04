@@ -24,7 +24,7 @@ module_energy_batch_high_cost_ccs_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("high_cost_ccs.xml") %>%
-      add_xml_data(L261.GlobalTechCost_C_High,"GlobalTechCost") %>%
+      add_xml_data(L261.GlobalTechCost_C_High, "GlobalTechCost") %>%
       add_precursors("L261.GlobalTechCost_C_High") ->
       high_cost_ccs.xml
 

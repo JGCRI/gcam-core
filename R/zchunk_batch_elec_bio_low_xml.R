@@ -24,7 +24,7 @@ module_energy_batch_elec_bio_low_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("elec_bio_low.xml") %>%
-      add_xml_data(L223.GlobalTechCapital_bio_low,"GlobalTechCapital") %>%
+      add_xml_data(L223.GlobalTechCapital_bio_low, "GlobalTechCapital") %>%
       add_precursors("L223.GlobalTechCapital_bio_low") ->
       elec_bio_low.xml
 

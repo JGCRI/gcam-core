@@ -24,7 +24,7 @@ module_energy_batch_ccs_supply_lowest_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("ccs_supply_lowest.xml") %>%
-      add_xml_data(L261.DepRsrcCurves_C_lowest,"DepRsrcCurves") %>%
+      add_xml_data(L261.DepRsrcCurves_C_lowest, "DepRsrcCurves") %>%
       add_precursors("L261.DepRsrcCurves_C_lowest") ->
       ccs_supply_lowest.xml
 

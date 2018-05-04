@@ -24,7 +24,7 @@ module_energy_batch_geo_low_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("geo_low.xml") %>%
-      add_xml_data(L223.GlobalTechCapital_geo_low,"GlobalTechCapital") %>%
+      add_xml_data(L223.GlobalTechCapital_geo_low, "GlobalTechCapital") %>%
       add_precursors("L223.GlobalTechCapital_geo_low") ->
       geo_low.xml
 

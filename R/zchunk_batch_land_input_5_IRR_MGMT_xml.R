@@ -41,14 +41,14 @@ module_aglu_batch_land_input_5_IRR_MGMT_xml <- function(command, ...) {
     # Produce outputs
     create_xml("land_input_5_IRR_MGMT.xml") %>%
       add_logit_tables_xml(L2252.LN5_Logit, "LN5_Logit") %>%
-      add_xml_data(L2252.LN5_HistMgdAllocation_crop,"LN5_HistMgdAllocation") %>%
-      add_xml_data(L2252.LN5_MgdAllocation_crop,"LN5_MgdAllocation") %>%
-      add_xml_data(L2252.LN5_HistMgdAllocation_bio,"LN5_HistMgdAllocation") %>%
-      add_xml_data(L2252.LN5_MgdAllocation_bio,"LN5_MgdAllocation") %>%
-      add_xml_data(L2252.LN5_MgdCarbon_crop,"LN5_MgdCarbon") %>%
-      add_xml_data(L2252.LN5_MgdCarbon_bio,"LN5_MgdCarbon") %>%
-      add_xml_data(L2252.LN5_LeafGhostShare,"LN5_LeafGhostShare") %>%
-      add_xml_data(L2252.LN5_NodeGhostShare,"LN5_NodeGhostShare") %>%
+      add_xml_data(L2252.LN5_HistMgdAllocation_crop, "LN5_HistMgdAllocation") %>%
+      add_xml_data(L2252.LN5_MgdAllocation_crop, "LN5_MgdAllocation") %>%
+      add_xml_data(L2252.LN5_HistMgdAllocation_bio, "LN5_HistMgdAllocation") %>%
+      add_xml_data(L2252.LN5_MgdAllocation_bio, "LN5_MgdAllocation") %>%
+      add_xml_data(L2252.LN5_MgdCarbon_crop, "LN5_MgdCarbon") %>%
+      add_xml_data(L2252.LN5_MgdCarbon_bio, "LN5_MgdCarbon") %>%
+      add_xml_data(L2252.LN5_LeafGhostShare, "LN5_LeafGhostShare") %>%
+      add_xml_data(L2252.LN5_NodeGhostShare, "LN5_NodeGhostShare") %>%
       add_rename_landnode_xml() %>%
       add_precursors("L2252.LN5_Logit",
                      "L2252.LN5_HistMgdAllocation_crop",

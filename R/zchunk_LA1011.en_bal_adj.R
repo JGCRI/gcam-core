@@ -197,7 +197,7 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
     L1011.en_bal_EJ_R_Si_Fi_Yh %>%
       add_title("Energy balances by GCAM region / intermediate sector / intermediate fuel / historical year") %>%
       add_units("EJ") %>%
-      add_comments("Replacing international shipping estimates on IEA energy balances with EIA,") %>%
+      add_comments("Replacing international shipping estimates on IEA energy balances with EIA, ") %>%
       add_comments("subtract coal-to-gas from natural gas TPES") %>%
       add_legacy_name("L1011.en_bal_EJ_R_Si_Fi_Yh") %>%
       add_precursors("L101.en_bal_EJ_R_Si_Fi_Yh_full", "energy/A22.globaltech_coef", "energy/calibrated_techs") ->
@@ -206,7 +206,7 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
      L1011.in_EJ_ctry_intlship_TOT_Yh %>%
       add_title("Liquid fuel consumption by international shipping by country / historical year") %>%
       add_units("EJ") %>%
-      add_comments("EIA international shipping data converted to EJ, aggregated by country,") %>%
+      add_comments("EIA international shipping data converted to EJ, aggregated by country, ") %>%
       add_comments("adding USSR data to Russia") %>%
       add_legacy_name("L1011.in_EJ_ctry_intlship_TOT_Yh") %>%
       add_precursors("energy/EIA_RFO_intlship_kbbld", "energy/EIA_TOT_intlship_kbbld", "energy/mappings/EIA_ctry", "common/iso_GCAM_regID") ->

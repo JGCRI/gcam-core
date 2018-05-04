@@ -250,7 +250,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     # remove OtherArableLand types from UnmanageLandLeaf and adjust allocation
     # grepl is used in filtering out OtherArableLand from UnmanagedLandLeaf
     # because entries in UnmanagedLandLeaf are formatted as landtype_basin.
-    create_noprot_unmgd <- function(data){
+    create_noprot_unmgd <- function(data) {
       data %>%
         filter(!grepl("OtherArable", UnmanagedLandLeaf)) %>%
         mutate(allocation = (1 - aglu.PROTECT_LAND_FRACT) * allocation)
@@ -269,7 +269,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     # modified land allocations, different names, different nesting structure
 
     # function to process protected lands
-    create_prot_unmgd <- function(data){
+    create_prot_unmgd <- function(data) {
       data %>%
         filter(!grepl("OtherArable", UnmanagedLandLeaf)) %>%
         mutate(UnmanagedLandLeaf = paste0("Protected", UnmanagedLandLeaf),
@@ -352,7 +352,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     L223.LN3_NodeCarbon %>%
       add_title("Sets the node-carbon-calc to drive the carbon calc between forest leaves") %>%
       add_units("NA") %>%
-      add_comments("Sets the node-carbon-calc to drive the carbon calc between forest leaves, by region,") %>%
+      add_comments("Sets the node-carbon-calc to drive the carbon calc between forest leaves, by region, ") %>%
       add_comments("and places the node carbon calc in the node just above the leaves.") %>%
       add_legacy_name("L2231.LN3_NodeCarbon") %>%
       same_precursors_as("L2231.LN3_NoEmissCarbon")->
@@ -380,7 +380,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     L223.LN3_UnmgdCarbon %>%
       add_title("Carbon content for unmanaged land (LT_GLU) in third nest by region.") %>%
       add_units("Varies") %>%
-      add_comments("Carbon content info for unmanaged land (LT_GLU) in the third nest including soil and vegetative carbon,") %>%
+      add_comments("Carbon content info for unmanaged land (LT_GLU) in the third nest including soil and vegetative carbon, ") %>%
       add_comments("from L125 land cover data, L121 carbon content data, and GCAMLandLeaf_CdensityLT assumptions") %>%
       add_legacy_name("L2231.LN3_UnmgdCarbon") %>%
       add_precursors("common/GCAM_region_names",
@@ -394,7 +394,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     L223.LN3_MgdCarbon_noncrop %>%
       add_title("Carbon content for non-crop (forest) managed land (LT_GLU) in third nest by region.") %>%
       add_units("Varies") %>%
-      add_comments("Carbon content info for non-crop (forest) managed land (LT_GLU) in the third nest including soil and vegetative carbon,") %>%
+      add_comments("Carbon content info for non-crop (forest) managed land (LT_GLU) in the third nest including soil and vegetative carbon, ") %>%
       add_comments("from L125 land cover data, L121 carbon content data, and GCAMLandLeaf_CdensityLT assumptions.") %>%
       add_legacy_name("L2231.LN3_MgdCarbon_noncrop") %>%
       add_precursors("common/GCAM_region_names",

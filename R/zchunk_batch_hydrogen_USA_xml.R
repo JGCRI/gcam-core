@@ -24,7 +24,7 @@ module_gcamusa_batch_hydrogen_USA_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("hydrogen_USA.xml") %>%
-      add_xml_data(L225.DeleteSubsector_h2_USA,"DeleteSubsector") %>%
+      add_xml_data(L225.DeleteSubsector_h2_USA, "DeleteSubsector") %>%
       add_precursors("L225.DeleteSubsector_h2_USA") ->
       hydrogen_USA.xml
 

@@ -170,7 +170,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
     # Calculate the weighted average feed input-output coefficients by region, commodity, system, feed, and year
 
     # take the region, commodity, system, feed type, year feed consumption:
-    if(OLD_DATA_SYSTEM_BEHAVIOR){
+    if(OLD_DATA_SYSTEM_BEHAVIOR) {
       L107.an_Feed_Mt_R_C_Sys_Fd_Y %>%
         rename(feedVal = value) %>%
         # add in the corresponding animal production amount

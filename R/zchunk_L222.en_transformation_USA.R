@@ -357,7 +357,7 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
 
 
       # If designated, switch fuel market names to the regional markets
-      if(gcamusa.USE_REGIONAL_FUEL_MARKETS){
+      if(gcamusa.USE_REGIONAL_FUEL_MARKETS) {
         L222.StubTechMarket_en_USA %>%
           select(-market.name) %>%
           filter(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS) %>%
@@ -458,7 +458,7 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
     L222.TechInterp_USAen %>%
       add_title("Technology shareweights, USA region") %>%
       add_units("NA") %>%
-      add_comments("Technology interpolation only applies to calibrated technologies.For biomass liquids,") %>%
+      add_comments("Technology interpolation only applies to calibrated technologies.For biomass liquids, ") %>%
       add_comments("allow state shares to shift over time since future techs are different than present techs.") %>%
       add_legacy_name("L222.TechInterp_USAen")  %>%
       same_precursors_as(L222.Tech_USAen) ->

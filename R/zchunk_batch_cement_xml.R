@@ -59,23 +59,23 @@ module_energy_batch_cement_xml <- function(command, ...) {
     # Produce outputs
     create_xml("cement.xml") %>%
       add_logit_tables_xml(L2321.Supplysector_cement, "Supplysector") %>%
-      add_xml_data(L2321.FinalEnergyKeyword_cement,"FinalEnergyKeyword") %>%
-      add_logit_tables_xml(L2321.SubsectorLogit_cement,"SubsectorLogit") %>%
-      #      add_xml_data(L2321.SubsectorShrwt_cement,"SubsectorShrwt") %>%
-      add_xml_data(L2321.SubsectorShrwtFllt_cement,"SubsectorShrwtFllt") %>%
-      add_xml_data(L2321.SubsectorInterp_cement,"SubsectorInterp") %>%
-      #      add_xml_data(L2321.SubsectorInterpTo_cement,"SubsectorInterpTo") %>%
-      add_xml_data(L2321.StubTech_cement,"StubTech") %>%
-      add_xml_data(L2321.GlobalTechShrwt_cement,"GlobalTechShrwt") %>%
-      add_xml_data(L2321.GlobalTechCoef_cement,"GlobalTechCoef") %>%
-      add_xml_data(L2321.GlobalTechCost_cement,"GlobalTechCost") %>%
-      add_xml_data(L2321.GlobalTechCapture_cement,"GlobalTechCapture") %>%
-      add_xml_data(L2321.StubTechProd_cement,"StubTechProd") %>%
-      add_xml_data(L2321.StubTechCalInput_cement_heat,"StubTechCalInput") %>%
-      add_xml_data(L2321.StubTechCoef_cement,"StubTechCoef") %>%
-      add_xml_data(L2321.PerCapitaBased_cement,"PerCapitaBased") %>%
-      add_xml_data(L2321.BaseService_cement,"BaseService") %>%
-      add_xml_data(L2321.PriceElasticity_cement,"PriceElasticity") %>%
+      add_xml_data(L2321.FinalEnergyKeyword_cement, "FinalEnergyKeyword") %>%
+      add_logit_tables_xml(L2321.SubsectorLogit_cement, "SubsectorLogit") %>%
+      #      add_xml_data(L2321.SubsectorShrwt_cement, "SubsectorShrwt") %>%
+      add_xml_data(L2321.SubsectorShrwtFllt_cement, "SubsectorShrwtFllt") %>%
+      add_xml_data(L2321.SubsectorInterp_cement, "SubsectorInterp") %>%
+      #      add_xml_data(L2321.SubsectorInterpTo_cement, "SubsectorInterpTo") %>%
+      add_xml_data(L2321.StubTech_cement, "StubTech") %>%
+      add_xml_data(L2321.GlobalTechShrwt_cement, "GlobalTechShrwt") %>%
+      add_xml_data(L2321.GlobalTechCoef_cement, "GlobalTechCoef") %>%
+      add_xml_data(L2321.GlobalTechCost_cement, "GlobalTechCost") %>%
+      add_xml_data(L2321.GlobalTechCapture_cement, "GlobalTechCapture") %>%
+      add_xml_data(L2321.StubTechProd_cement, "StubTechProd") %>%
+      add_xml_data(L2321.StubTechCalInput_cement_heat, "StubTechCalInput") %>%
+      add_xml_data(L2321.StubTechCoef_cement, "StubTechCoef") %>%
+      add_xml_data(L2321.PerCapitaBased_cement, "PerCapitaBased") %>%
+      add_xml_data(L2321.BaseService_cement, "BaseService") %>%
+      add_xml_data(L2321.PriceElasticity_cement, "PriceElasticity") %>%
       add_precursors("L2321.Supplysector_cement", "L2321.FinalEnergyKeyword_cement", "L2321.SubsectorLogit_cement",
                      # "L2321.SubsectorShrwt_cement",
                      "L2321.SubsectorShrwtFllt_cement",

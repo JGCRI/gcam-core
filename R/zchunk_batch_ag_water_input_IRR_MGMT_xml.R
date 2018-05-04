@@ -25,12 +25,12 @@ module_aglu_batch_ag_water_input_IRR_MGMT_xml <- function(command, ...) {
 
     # Load required inputs
     L2072.AgCoef_IrrBphysWater_ag_mgmt <- get_data(all_data, "L2072.AgCoef_IrrBphysWater_ag_mgmt")
-    L2072.AgCoef_IrrWaterWdraw_ag_mgmt <- get_data(all_data,"L2072.AgCoef_IrrWaterWdraw_ag_mgmt")
-    L2072.AgCoef_IrrWaterCons_ag_mgmt <- get_data(all_data,"L2072.AgCoef_IrrWaterCons_ag_mgmt")
-    L2072.AgCoef_RfdBphysWater_ag_mgmt <- get_data(all_data,"L2072.AgCoef_RfdBphysWater_ag_mgmt")
-    L2072.AgCoef_BphysWater_bio_mgmt <- get_data(all_data,"L2072.AgCoef_BphysWater_bio_mgmt")
-    L2072.AgCoef_IrrWaterWdraw_bio_mgmt <- get_data(all_data,"L2072.AgCoef_IrrWaterWdraw_bio_mgmt")
-    L2072.AgCoef_IrrWaterCons_bio_mgmt<- get_data(all_data,"L2072.AgCoef_IrrWaterCons_bio_mgmt")
+    L2072.AgCoef_IrrWaterWdraw_ag_mgmt <- get_data(all_data, "L2072.AgCoef_IrrWaterWdraw_ag_mgmt")
+    L2072.AgCoef_IrrWaterCons_ag_mgmt <- get_data(all_data, "L2072.AgCoef_IrrWaterCons_ag_mgmt")
+    L2072.AgCoef_RfdBphysWater_ag_mgmt <- get_data(all_data, "L2072.AgCoef_RfdBphysWater_ag_mgmt")
+    L2072.AgCoef_BphysWater_bio_mgmt <- get_data(all_data, "L2072.AgCoef_BphysWater_bio_mgmt")
+    L2072.AgCoef_IrrWaterWdraw_bio_mgmt <- get_data(all_data, "L2072.AgCoef_IrrWaterWdraw_bio_mgmt")
+    L2072.AgCoef_IrrWaterCons_bio_mgmt<- get_data(all_data, "L2072.AgCoef_IrrWaterCons_bio_mgmt")
     # ===================================================
 
     # Produce outputs

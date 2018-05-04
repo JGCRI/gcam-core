@@ -29,7 +29,7 @@ module_emissions_batch_ssp15_emissions_factors_xml <- function(command, ...) {
 
     # Rename L251.ssp15_ef column to match the L2 data names
     # in order to meet the requirements for the xml header names.
-    L251.ssp15_ef <- rename(L251.ssp15_ef, `emiss.coef` = `emiss.coeff`)
+    L251.ssp15_ef <- rename(L251.ssp15_ef, emiss.coef = emiss.coeff)
 
     # Produce outputs
     create_xml("ssp15_emissions_factors.xml") %>%

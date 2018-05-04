@@ -48,8 +48,8 @@ module_energy_batch_hydrogen_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("hydrogen.xml") %>%
-      add_logit_tables_xml(L225.Supplysector_h2,"Supplysector") %>%
-      add_logit_tables_xml(L225.SubsectorLogit_h2,"SubsectorLogit") -> hydrogen.xml
+      add_logit_tables_xml(L225.Supplysector_h2, "Supplysector") %>%
+      add_logit_tables_xml(L225.SubsectorLogit_h2, "SubsectorLogit") -> hydrogen.xml
 
     if(!is.null(L225.SubsectorShrwt_h2)) {
       hydrogen.xml %>%
@@ -73,13 +73,13 @@ module_energy_batch_hydrogen_xml <- function(command, ...) {
     }
 
     hydrogen.xml <- hydrogen.xml %>%
-      add_xml_data(L225.StubTech_h2,"StubTech") %>%
-      add_xml_data(L225.GlobalTechEff_h2,"GlobalTechEff") %>%
-      add_xml_data(L225.GlobalTechCost_h2,"GlobalTechCost") %>%
-      add_xml_data(L225.GlobalTechShrwt_h2,"GlobalTechShrwt") %>%
-      add_xml_data(L225.PrimaryRenewKeyword_h2,"PrimaryRenewKeyword") %>%
-      add_xml_data(L225.AvgFossilEffKeyword_h2,"AvgFossilEffKeyword") %>%
-      add_xml_data(L225.GlobalTechCapture_h2,"GlobalTechCapture") %>%
+      add_xml_data(L225.StubTech_h2, "StubTech") %>%
+      add_xml_data(L225.GlobalTechEff_h2, "GlobalTechEff") %>%
+      add_xml_data(L225.GlobalTechCost_h2, "GlobalTechCost") %>%
+      add_xml_data(L225.GlobalTechShrwt_h2, "GlobalTechShrwt") %>%
+      add_xml_data(L225.PrimaryRenewKeyword_h2, "PrimaryRenewKeyword") %>%
+      add_xml_data(L225.AvgFossilEffKeyword_h2, "AvgFossilEffKeyword") %>%
+      add_xml_data(L225.GlobalTechCapture_h2, "GlobalTechCapture") %>%
       add_precursors("L225.Supplysector_h2",
                      "L225.SubsectorLogit_h2",
                      "L225.SubsectorShrwt_h2",

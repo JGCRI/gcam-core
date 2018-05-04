@@ -52,9 +52,9 @@ module_energy_batch_transportation_agg_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("transportation_agg.xml") %>%
-      add_logit_tables_xml(L252.Supplysector_trn,"Supplysector") %>%
-      add_xml_data(L252.FinalEnergyKeyword_trn,"FinalEnergyKeyword") %>%
-      add_logit_tables_xml(L252.SubsectorLogit_trn,"SubsectorLogit") -> transportation_agg.xml
+      add_logit_tables_xml(L252.Supplysector_trn, "Supplysector") %>%
+      add_xml_data(L252.FinalEnergyKeyword_trn, "FinalEnergyKeyword") %>%
+      add_logit_tables_xml(L252.SubsectorLogit_trn, "SubsectorLogit") -> transportation_agg.xml
 
     # Some data inputs may not actually contain data. If so, do not add_xml_data.
     if(!is.null(L252.SubsectorShrwt_trn)) {
@@ -81,14 +81,14 @@ module_energy_batch_transportation_agg_xml <- function(command, ...) {
         transportation_agg.xml
     }
     transportation_agg.xml %>%
-      add_xml_data(L252.StubTech_trn,"StubTech") %>%
-      add_xml_data(L252.GlobalTechShrwt_trn,"GlobalTechShrwt") %>%
-      add_xml_data(L252.GlobalTechEff_trn,"GlobalTechEff") %>%
-      add_xml_data(L252.GlobalTechCost_trn,"GlobalTechCost") %>%
-      add_xml_data(L252.StubTechCalInput_trn,"StubTechCalInput") %>%
-      add_xml_data(L252.PerCapitaBased_trn,"PerCapitaBased") %>%
-      add_xml_data(L252.PriceElasticity_trn,"PriceElasticity") %>%
-      add_xml_data(L252.BaseService_trn,"BaseService") %>%
+      add_xml_data(L252.StubTech_trn, "StubTech") %>%
+      add_xml_data(L252.GlobalTechShrwt_trn, "GlobalTechShrwt") %>%
+      add_xml_data(L252.GlobalTechEff_trn, "GlobalTechEff") %>%
+      add_xml_data(L252.GlobalTechCost_trn, "GlobalTechCost") %>%
+      add_xml_data(L252.StubTechCalInput_trn, "StubTechCalInput") %>%
+      add_xml_data(L252.PerCapitaBased_trn, "PerCapitaBased") %>%
+      add_xml_data(L252.PriceElasticity_trn, "PriceElasticity") %>%
+      add_xml_data(L252.BaseService_trn, "BaseService") %>%
       add_precursors("L252.Supplysector_trn", "L252.FinalEnergyKeyword_trn", "L252.SubsectorLogit_trn",
                      "L252.SubsectorShrwt_trn", "L252.SubsectorShrwtFllt_trn", "L252.SubsectorInterp_trn",
                      "L252.SubsectorInterpTo_trn", "L252.StubTech_trn", "L252.GlobalTechShrwt_trn",

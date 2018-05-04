@@ -26,8 +26,8 @@ module_water_batch_water_elec_emissions_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("water_elec_emissions.xml") %>%
-      add_xml_data(L2233.InputEmissCoeff_hist_elecPassthru,"InputEmissCoeff") %>%
-      add_xml_data(L2233.InputEmissCoeff_fut_elecPassthru,"InputEmissCoeff") %>%
+      add_xml_data(L2233.InputEmissCoeff_hist_elecPassthru, "InputEmissCoeff") %>%
+      add_xml_data(L2233.InputEmissCoeff_fut_elecPassthru, "InputEmissCoeff") %>%
       add_precursors("L2233.InputEmissCoeff_hist_elecPassthru", "L2233.InputEmissCoeff_fut_elecPassthru") ->
       water_elec_emissions.xml
 

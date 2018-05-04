@@ -259,7 +259,7 @@ module_energy_L224.heat <- function(command, ...) {
     L224.Supplysector_heat %>%
       add_title("Supply sector information for district heat sectors") %>%
       add_units("N/A") %>%
-      add_comments("Supply sector info for district heat is written to all regions,") %>%
+      add_comments("Supply sector info for district heat is written to all regions, ") %>%
       add_comments("filtered by which regions have district heat") %>%
       add_legacy_name("L224.Supplysector_heat") %>%
       add_precursors("energy/A24.sector", "energy/A_regions", "common/GCAM_region_names") ->
@@ -268,7 +268,7 @@ module_energy_L224.heat <- function(command, ...) {
     L224.SubsectorLogit_heat %>%
       add_title("Subsector logit exponents of district heat sectors") %>%
       add_units("N/A") %>%
-      add_comments("Subsector logit exponents for district heat is written to all regions,") %>%
+      add_comments("Subsector logit exponents for district heat is written to all regions, ") %>%
       add_comments("filtered by which regions have district heat") %>%
       add_legacy_name("L224.SubsectorLogit_heat") %>%
       add_precursors("energy/A24.subsector_logit", "energy/A_regions", "common/GCAM_region_names") ->
@@ -278,7 +278,7 @@ module_energy_L224.heat <- function(command, ...) {
       L224.SubsectorShrwt_heat %>%
         add_title("Subsector shareweights of district heat sectors") %>%
         add_units("N/A") %>%
-        add_comments("If year is not NA: Subsector shareweights for district heat written to all regions,") %>%
+        add_comments("If year is not NA: Subsector shareweights for district heat written to all regions, ") %>%
         add_comments("filtered by which regions have district heat") %>%
         add_legacy_name("L224.SubsectorShrwt_heat") %>%
         add_precursors("energy/A24.subsector_shrwt", "energy/A_regions", "common/GCAM_region_names") ->
@@ -294,7 +294,7 @@ module_energy_L224.heat <- function(command, ...) {
       L224.SubsectorShrwtFllt_heat %>%
         add_title("Subsector shareweights of district heat sectors with fillout year") %>%
         add_units("N/A") %>%
-        add_comments("If year.fillout is not NA: Subsector shareweights for district heat written to all regions,") %>%
+        add_comments("If year.fillout is not NA: Subsector shareweights for district heat written to all regions, ") %>%
         add_comments("filtered by which regions have district heat, uses year.fillout") %>%
         add_legacy_name("L224.SubsectorShrwtFllt_heat") %>%
         add_precursors("energy/A24.subsector_shrwt", "energy/A_regions", "common/GCAM_region_names") ->
@@ -310,7 +310,7 @@ module_energy_L224.heat <- function(command, ...) {
       L224.SubsectorInterp_heat %>%
         add_title("Subsector shareweight interpolation of district heat sectors") %>%
         add_units("units") %>%
-        add_comments("Interpolated data from A24.subsector_interp,") %>%
+        add_comments("Interpolated data from A24.subsector_interp, ") %>%
         add_comments("filtered by which regions have district heat") %>%
         add_legacy_name("L224.SubsectorInterp_heat") %>%
         add_precursors("energy/A24.subsector_interp", "energy/A_regions", "common/GCAM_region_names") ->
@@ -326,7 +326,7 @@ module_energy_L224.heat <- function(command, ...) {
       L224.SubsectorInterpTo_heat %>%
         add_title("Subsector shareweight interpolation of district heat sectors using to.year") %>%
         add_units("units") %>%
-        add_comments("Interpolated data from A24.subsector_interp,") %>%
+        add_comments("Interpolated data from A24.subsector_interp, ") %>%
         add_comments("filtered by which regions have district heat") %>%
         add_legacy_name("L224.SubsectorInterpTo_heat") %>%
         add_precursors("energy/A24.subsector_interp", "energy/A_regions", "common/GCAM_region_names") ->
@@ -383,7 +383,7 @@ module_energy_L224.heat <- function(command, ...) {
     L224.StubTechSecOut_elec %>%
       add_title("Secondary output of district heat from electricity technologies") %>%
       add_units("EJ") %>%
-      add_comments("L124.heatoutratio_R_elec_F_tech_Yh used to determine secondary output heat from elec,") %>%
+      add_comments("L124.heatoutratio_R_elec_F_tech_Yh used to determine secondary output heat from elec, ") %>%
       add_comments("filtering for only model base years") %>%
       add_legacy_name("L224.StubTechSecOut_elec") %>%
       add_precursors("L124.heatoutratio_R_elec_F_tech_Yh", "energy/calibrated_techs", "energy/A24.sector", "common/GCAM_region_names") ->

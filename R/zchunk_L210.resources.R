@@ -285,7 +285,7 @@ module_energy_L210.resources <- function(command, ...) {
     # L210.GrdRenewRsrcMax_geo: default max sub resource of geothermal (hydrothermal) resources
     # The old code is "subset( L210.GrdRenewRsrcCurves_geo, grade = unique( grade )[1] )"
     # It appears they meant to filter to "grade 1" only, however there is only one equals sign, so no subsetting occurs
-    if(OLD_DATA_SYSTEM_BEHAVIOR){
+    if(OLD_DATA_SYSTEM_BEHAVIOR) {
       L210.GrdRenewRsrcMax_geo <- L210.GrdRenewRsrcCurves_geo %>%
         mutate(year.fillout = min(BASE_YEARS),
                maxSubResource = 1) %>%
@@ -309,7 +309,7 @@ module_energy_L210.resources <- function(command, ...) {
     # L210.GrdRenewRsrcMax_EGS: default max sub resource of EGS resources
     # The old code is "subset( L210.GrdRenewRsrcCurves_EGS, grade = unique( grade )[1] )"
     # It appears they meant to filter to "grade 1" only, however there is only one equals sign, so no subsetting occurs
-    if(OLD_DATA_SYSTEM_BEHAVIOR){
+    if(OLD_DATA_SYSTEM_BEHAVIOR) {
       L210.GrdRenewRsrcMax_EGS <- L210.GrdRenewRsrcCurves_EGS %>%
         mutate(year.fillout = min(BASE_YEARS),
                maxSubResource = 1) %>%

@@ -133,57 +133,57 @@ module_gcamusa_batch_electricity_USA_xml <- function(command, ...) {
     create_xml("electricity_USA.xml") %>%
       add_node_equiv_xml("sector") %>%
       add_node_equiv_xml("technology") %>%
-      add_xml_data(L223.PassthroughSector_elec_USA,"PassThroughSector") %>%
-      add_xml_data(L223.PassthroughTech_elec_FERC,"PassThroughTech") %>%
-      add_logit_tables_xml(L223.Supplysector_elec_FERC,"Supplysector") %>%
-      add_xml_data(L223.SubsectorShrwtFllt_elec_FERC,"SubsectorShrwtFllt") %>%
-      add_xml_data(L223.SubsectorInterp_elec_FERC,"SubsectorInterp") %>%
-      add_logit_tables_xml(L223.SubsectorLogit_elec_FERC,"SubsectorLogit") %>%
-      add_xml_data(L223.TechShrwt_elec_FERC,"TechShrwt") %>%
-      add_xml_data(L223.TechCoef_elec_FERC,"TechCoef") %>%
-      add_xml_data(L223.Production_elec_FERC,"Production") %>%
-      add_xml_data(L223.InterestRate_FERC,"InterestRate") %>%
-      add_xml_data(L223.Pop_FERC,"Pop") %>%
-      add_xml_data(L223.BaseGDP_FERC,"BaseGDP") %>%
-      add_xml_data(L223.LaborForceFillout_FERC,"LaborForceFillout") %>%
-      add_logit_tables_xml(L223.Supplysector_elec_USA,"Supplysector") %>%
-      add_xml_data(L223.ElecReserve_USA,"ElecReserve") %>%
-      add_logit_tables_xml(L223.SubsectorLogit_elec_USA,"SubsectorLogit") %>%
-      add_xml_data(L223.SubsectorShrwtFllt_elec_USA,"SubsectorShrwtFllt") %>%
-      add_xml_data(L223.SubsectorShrwt_nuc_USA,"SubsectorShrwt") %>%
-      add_xml_data(L223.SubsectorShrwt_renew_USA,"SubsectorShrwt") %>%
-      add_xml_data(L223.SubsectorInterp_elec_USA,"SubsectorInterp") %>%
-      add_xml_data(L223.SubsectorInterpTo_elec_USA,"SubsectorInterpTo") %>%
-      add_xml_data(L223.StubTech_elec_USA,"StubTech") %>%
-      add_xml_data(L223.StubTechEff_elec_USA,"StubTechEff") %>%
+      add_xml_data(L223.PassthroughSector_elec_USA, "PassThroughSector") %>%
+      add_xml_data(L223.PassthroughTech_elec_FERC, "PassThroughTech") %>%
+      add_logit_tables_xml(L223.Supplysector_elec_FERC, "Supplysector") %>%
+      add_xml_data(L223.SubsectorShrwtFllt_elec_FERC, "SubsectorShrwtFllt") %>%
+      add_xml_data(L223.SubsectorInterp_elec_FERC, "SubsectorInterp") %>%
+      add_logit_tables_xml(L223.SubsectorLogit_elec_FERC, "SubsectorLogit") %>%
+      add_xml_data(L223.TechShrwt_elec_FERC, "TechShrwt") %>%
+      add_xml_data(L223.TechCoef_elec_FERC, "TechCoef") %>%
+      add_xml_data(L223.Production_elec_FERC, "Production") %>%
+      add_xml_data(L223.InterestRate_FERC, "InterestRate") %>%
+      add_xml_data(L223.Pop_FERC, "Pop") %>%
+      add_xml_data(L223.BaseGDP_FERC, "BaseGDP") %>%
+      add_xml_data(L223.LaborForceFillout_FERC, "LaborForceFillout") %>%
+      add_logit_tables_xml(L223.Supplysector_elec_USA, "Supplysector") %>%
+      add_xml_data(L223.ElecReserve_USA, "ElecReserve") %>%
+      add_logit_tables_xml(L223.SubsectorLogit_elec_USA, "SubsectorLogit") %>%
+      add_xml_data(L223.SubsectorShrwtFllt_elec_USA, "SubsectorShrwtFllt") %>%
+      add_xml_data(L223.SubsectorShrwt_nuc_USA, "SubsectorShrwt") %>%
+      add_xml_data(L223.SubsectorShrwt_renew_USA, "SubsectorShrwt") %>%
+      add_xml_data(L223.SubsectorInterp_elec_USA, "SubsectorInterp") %>%
+      add_xml_data(L223.SubsectorInterpTo_elec_USA, "SubsectorInterpTo") %>%
+      add_xml_data(L223.StubTech_elec_USA, "StubTech") %>%
+      add_xml_data(L223.StubTechEff_elec_USA, "StubTechEff") %>%
       add_xml_data(L223.StubTechCapFactor_elec_USA, "StubTechCapFactor") %>%
-      add_xml_data(L223.StubTechFixOut_elec_USA,"StubTechFixOut") %>%
-      add_xml_data(L223.StubTechFixOut_hydro_USA,"StubTechFixOut") %>%
-      add_xml_data(L223.StubTechProd_elec_USA,"StubTechProd") %>%
-      add_xml_data(L223.StubTechMarket_elec_USA,"StubTechMarket") %>%
-      add_xml_data(L223.StubTechMarket_backup_USA,"StubTechMarket") %>%
-      add_xml_data(L223.StubTechElecMarket_backup_USA,"StubTechElecMarket") %>%
-      add_xml_data(L223.StubTechCapFactor_elec_wind_USA,"StubTechCapFactor") %>%
-      add_xml_data(L223.StubTechCapFactor_elec_solar_USA,"StubTechCapFactor") %>%
-      add_xml_data(L2232.DeleteSupplysector_USAelec,"DeleteSupplysector") %>%
-      add_logit_tables_xml(L2232.Supplysector_USAelec,"Supplysector") %>%
-      add_xml_data(L2232.SubsectorShrwtFllt_USAelec,"SubsectorShrwtFllt") %>%
-      add_xml_data(L2232.SubsectorInterp_USAelec,"SubsectorInterp") %>%
-      add_logit_tables_xml(L2232.SubsectorLogit_USAelec,"SubsectorLogit") %>%
-      add_xml_data(L2232.TechShrwt_USAelec,"TechShrwt") %>%
-      add_xml_data(L2232.TechCoef_USAelec,"TechCoef") %>%
-      add_xml_data(L2232.Production_exports_USAelec,"Production") %>%
-      add_logit_tables_xml(L2232.Supplysector_elec_FERC,"Supplysector") %>%
-      add_xml_data(L2232.ElecReserve_FERC,"ElecReserve") %>%
-      add_xml_data(L2232.SubsectorShrwtFllt_elec_FERC,"SubsectorShrwtFllt") %>%
-      add_xml_data(L2232.SubsectorInterp_elec_FERC,"SubsectorInterp") %>%
-      add_logit_tables_xml(L2232.SubsectorLogit_elec_FERC,"SubsectorLogit") %>%
-      add_xml_data(L2232.TechShrwt_elec_FERC,"TechShrwt") %>%
-      add_xml_data(L2232.TechCoef_elec_FERC,"TechCoef") %>%
-      add_xml_data(L2232.TechCoef_elecownuse_FERC,"TechCoef") %>%
-      add_xml_data(L2232.Production_imports_FERC,"Production") %>%
-      add_xml_data(L2232.Production_elec_gen_FERC,"Production") %>%
-      add_xml_data(L2232.StubTechElecMarket_backup_USA,"StubTechElecMarket") %>%
+      add_xml_data(L223.StubTechFixOut_elec_USA, "StubTechFixOut") %>%
+      add_xml_data(L223.StubTechFixOut_hydro_USA, "StubTechFixOut") %>%
+      add_xml_data(L223.StubTechProd_elec_USA, "StubTechProd") %>%
+      add_xml_data(L223.StubTechMarket_elec_USA, "StubTechMarket") %>%
+      add_xml_data(L223.StubTechMarket_backup_USA, "StubTechMarket") %>%
+      add_xml_data(L223.StubTechElecMarket_backup_USA, "StubTechElecMarket") %>%
+      add_xml_data(L223.StubTechCapFactor_elec_wind_USA, "StubTechCapFactor") %>%
+      add_xml_data(L223.StubTechCapFactor_elec_solar_USA, "StubTechCapFactor") %>%
+      add_xml_data(L2232.DeleteSupplysector_USAelec, "DeleteSupplysector") %>%
+      add_logit_tables_xml(L2232.Supplysector_USAelec, "Supplysector") %>%
+      add_xml_data(L2232.SubsectorShrwtFllt_USAelec, "SubsectorShrwtFllt") %>%
+      add_xml_data(L2232.SubsectorInterp_USAelec, "SubsectorInterp") %>%
+      add_logit_tables_xml(L2232.SubsectorLogit_USAelec, "SubsectorLogit") %>%
+      add_xml_data(L2232.TechShrwt_USAelec, "TechShrwt") %>%
+      add_xml_data(L2232.TechCoef_USAelec, "TechCoef") %>%
+      add_xml_data(L2232.Production_exports_USAelec, "Production") %>%
+      add_logit_tables_xml(L2232.Supplysector_elec_FERC, "Supplysector") %>%
+      add_xml_data(L2232.ElecReserve_FERC, "ElecReserve") %>%
+      add_xml_data(L2232.SubsectorShrwtFllt_elec_FERC, "SubsectorShrwtFllt") %>%
+      add_xml_data(L2232.SubsectorInterp_elec_FERC, "SubsectorInterp") %>%
+      add_logit_tables_xml(L2232.SubsectorLogit_elec_FERC, "SubsectorLogit") %>%
+      add_xml_data(L2232.TechShrwt_elec_FERC, "TechShrwt") %>%
+      add_xml_data(L2232.TechCoef_elec_FERC, "TechCoef") %>%
+      add_xml_data(L2232.TechCoef_elecownuse_FERC, "TechCoef") %>%
+      add_xml_data(L2232.Production_imports_FERC, "Production") %>%
+      add_xml_data(L2232.Production_elec_gen_FERC, "Production") %>%
+      add_xml_data(L2232.StubTechElecMarket_backup_USA, "StubTechElecMarket") %>%
       add_precursors("L223.PassthroughSector_elec_USA",
                      "L223.PassthroughTech_elec_FERC",
                      "L223.Supplysector_elec_FERC",

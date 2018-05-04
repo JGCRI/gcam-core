@@ -30,10 +30,10 @@ module_gcamusa_batch_socioeconomics_USA_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("socioeconomics_USA.xml") %>%
-      add_xml_data(L201.Pop_GCAMUSA,"Pop") %>%
-      add_xml_data(L201.BaseGDP_GCAMUSA,"BaseGDP") %>%
-      add_xml_data(L201.LaborForceFillout_GCAMUSA,"LaborForceFillout") %>%
-      add_xml_data(L201.LaborProductivity_GCAMUSA,"LaborProductivity") %>%
+      add_xml_data(L201.Pop_GCAMUSA, "Pop") %>%
+      add_xml_data(L201.BaseGDP_GCAMUSA, "BaseGDP") %>%
+      add_xml_data(L201.LaborForceFillout_GCAMUSA, "LaborForceFillout") %>%
+      add_xml_data(L201.LaborProductivity_GCAMUSA, "LaborProductivity") %>%
       add_precursors("L201.Pop_GCAMUSA", "L201.BaseGDP_GCAMUSA", "L201.LaborForceFillout_GCAMUSA", "L201.LaborProductivity_GCAMUSA") ->
       socioeconomics_USA.xml
 

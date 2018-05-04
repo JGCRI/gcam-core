@@ -50,10 +50,10 @@ module_energy_batch_negative_emissions_budget_xml <- function(command, ...) {
         curr_fd_name <- "L270.NegEmissFinalDemand"
       }
       create_xml(curr_xml_name) %>%
-        add_xml_data(L270.CTaxInput,"GlobalTechCTaxInput") %>%
-        add_xml_data(get(curr_fd_name),"NegEmissFinalDemand") %>%
-        add_xml_data(L270.NegEmissBudgetMaxPrice,"PortfolioStdMaxPrice") %>%
-        add_xml_data(get_data(all_data, curr_data_name),"PortfolioStd") %>%
+        add_xml_data(L270.CTaxInput, "GlobalTechCTaxInput") %>%
+        add_xml_data(get(curr_fd_name), "NegEmissFinalDemand") %>%
+        add_xml_data(L270.NegEmissBudgetMaxPrice, "PortfolioStdMaxPrice") %>%
+        add_xml_data(get_data(all_data, curr_data_name), "PortfolioStd") %>%
         add_precursors("L270.CTaxInput", curr_fd_name, "L270.NegEmissBudgetMaxPrice", curr_data_name) %>%
         assign(curr_xml_name, ., envir = curr_env)
 

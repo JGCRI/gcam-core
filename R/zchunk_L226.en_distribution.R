@@ -398,7 +398,7 @@ module_energy_L226.en_distribution <- function(command, ...) {
     L226.StubTechCoef_electd %>%
       add_title("coefficients of electricity use for the transmission and distribution of electricity") %>%
       add_units("IO coefficient - Unitless") %>%
-      add_comments("future values generated from historical values from final base year of L126.IO_R_electd_F_Yh,") %>%
+      add_comments("future values generated from historical values from final base year of L126.IO_R_electd_F_Yh, ") %>%
       add_comments("applying an assumed tech change from A_regions (new IO = base IO * 1-techchange ^ year-baseyear)") %>%
       add_legacy_name("L226.StubTechCoef_electd") %>%
       add_precursors("L126.IO_R_electd_F_Yh", "common/GCAM_region_names", "energy/calibrated_techs", "energy/A_regions") ->

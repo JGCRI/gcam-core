@@ -122,7 +122,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
     # checked and processed if deemed necessary and a list of the cement producing
     # states.
 
-    cement_USA_processing <- function(data, cement_states){
+    cement_USA_processing <- function(data, cement_states) {
 
       # Subset the input data frame for the USA region. The subsetted data will be used
       # to check to see if the data frame needs to be processed, it's assumed that if the USA
@@ -130,7 +130,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
 
       check_df <- filter(data, region == "USA")
 
-      if(nrow(check_df) == 0){
+      if(nrow(check_df) == 0) {
 
         # This does not change the entries of the data frame but will strip the attributes
         # from the input data frame.
@@ -293,7 +293,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
              market.name = if_else(grepl("elec", minicam.energy.input), "USA", market.name)) ->
       L2321.StubTechCoef_cement_USA
 
-    if(gcamusa.USE_REGIONAL_FUEL_MARKETS){
+    if(gcamusa.USE_REGIONAL_FUEL_MARKETS) {
 
       # If using regional fuel markets configuration replace market name with the grid region name if
       # the minicam.energy.input is considered a regional fuel market.
@@ -377,7 +377,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
       select(region, supplysector, subsector, stub.technology, year, minicam.energy.input, market.name) ->
       L2321.StubTechMarket_cement_USA
 
-    if(gcamusa.USE_REGIONAL_FUEL_MARKETS){
+    if(gcamusa.USE_REGIONAL_FUEL_MARKETS) {
 
       # IF using regional fuel markets replace the market name with the grid region from the states subregions
       # assumption file.

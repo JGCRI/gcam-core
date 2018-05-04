@@ -365,7 +365,7 @@ module_energy_LA1321.cement <- function(command, ...) {
       L1321.cement_adj_pos
 
     # Reset the negative values to 0 in the industrial energy table
-    L1321.in_EJ_R_indenergy_F_Yh[,"value"][L1321.in_EJ_R_indenergy_F_Yh[,"value"] < 0] <- 0
+    L1321.in_EJ_R_indenergy_F_Yh[, "value"][L1321.in_EJ_R_indenergy_F_Yh[, "value"] < 0] <- 0
 
     # Add in the adjustments to the table of cement energy consumption.
     L1321.in_EJ_R_cement_F_Y %>%

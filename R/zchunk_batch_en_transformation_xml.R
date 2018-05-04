@@ -57,20 +57,20 @@ module_energy_batch_en_transformation_xml <- function(command, ...) {
     # Produce outputs
     create_xml("en_transformation.xml") %>%
       add_logit_tables_xml(L222.Supplysector_en, "Supplysector") %>%
-      add_logit_tables_xml(L222.SubsectorLogit_en,"SubsectorLogit") %>%
+      add_logit_tables_xml(L222.SubsectorLogit_en, "SubsectorLogit") %>%
       add_xml_data(L222.SubsectorShrwtFllt_en, "SubsectorShrwtFllt") %>%
-      add_xml_data(L222.SubsectorInterp_en,"SubsectorInterp") %>%
-      add_xml_data(L222.StubTech_en,"StubTech") %>%
-      add_xml_data(L222.GlobalTechInterp_en,"GlobalTechInterp") %>%
-      add_xml_data(L222.GlobalTechCoef_en,"GlobalTechCoef") %>%
-      add_xml_data(L222.GlobalTechCost_en,"GlobalTechCost") %>%
-      add_xml_data(L222.GlobalTechShrwt_en,"GlobalTechShrwt") %>%
-      add_xml_data(L222.GlobalTechCapture_en,"GlobalTechCapture") %>%
+      add_xml_data(L222.SubsectorInterp_en, "SubsectorInterp") %>%
+      add_xml_data(L222.StubTech_en, "StubTech") %>%
+      add_xml_data(L222.GlobalTechInterp_en, "GlobalTechInterp") %>%
+      add_xml_data(L222.GlobalTechCoef_en, "GlobalTechCoef") %>%
+      add_xml_data(L222.GlobalTechCost_en, "GlobalTechCost") %>%
+      add_xml_data(L222.GlobalTechShrwt_en, "GlobalTechShrwt") %>%
+      add_xml_data(L222.GlobalTechCapture_en, "GlobalTechCapture") %>%
       add_xml_data(L222.GlobalTechSCurve_en, "GlobalTechSCurve") %>%
       add_xml_data(L222.GlobalTechProfitShutdown_en, "GlobalTechProfitShutdown") %>%
-      add_xml_data(L222.StubTechProd_gasproc,"StubTechProd") %>%
-      add_xml_data(L222.StubTechProd_refining,"StubTechProd") %>%
-      add_xml_data(L222.StubTechCoef_refining,"StubTechCoef") %>%
+      add_xml_data(L222.StubTechProd_gasproc, "StubTechProd") %>%
+      add_xml_data(L222.StubTechProd_refining, "StubTechProd") %>%
+      add_xml_data(L222.StubTechCoef_refining, "StubTechCoef") %>%
       add_precursors("L222.Supplysector_en",
                      "L222.SubsectorLogit_en",
                      "L222.SubsectorShrwtFllt_en",

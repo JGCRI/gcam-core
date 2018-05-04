@@ -85,7 +85,7 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
     L232.StubTechInterp_ind <- get_data(all_data, "L232.StubTechInterp_ind")
     L232.PerCapitaBased_ind <- get_data(all_data, "L232.PerCapitaBased_ind")
     L232.PriceElasticity_ind <- get_data(all_data, "L232.PriceElasticity_ind")
-    L232.IncomeElasticity_ind_gcam3 <- get_data(all_data,"L232.IncomeElasticity_ind_gcam3")
+    L232.IncomeElasticity_ind_gcam3 <- get_data(all_data, "L232.IncomeElasticity_ind_gcam3")
 
     # ===================================================
 
@@ -112,7 +112,7 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
     # is.
 
     # industry_USA_processing: is a function that
-    industry_USA_processing <- function(data){
+    industry_USA_processing <- function(data) {
 
       # Subset the input data frame for the USA region. The subsetted data will be used
       # to check to see if the data frame needs to be processed, it's assumed that if the USA
@@ -120,7 +120,7 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
 
       check_USA <- filter(data, region == "USA")
 
-      if(nrow(check_USA) == 0){
+      if(nrow(check_USA) == 0) {
 
         # This does not change the entries of the data frame but will strip the attributes
         # from the input data frame.

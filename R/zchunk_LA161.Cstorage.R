@@ -89,7 +89,7 @@ module_energy_LA161.Cstorage <- function(command, ...) {
       add_comments("GCAM3 supply curves downscaled to country by land share") %>%
       add_comments("Country supply curves aggregated to GCAM4 region") %>%
       add_legacy_name("L161.RsrcCurves_MtC_R") %>%
-      add_precursors("common/iso_GCAM_regID","aglu/LDS/Land_type_area_ha",
+      add_precursors("common/iso_GCAM_regID", "aglu/LDS/Land_type_area_ha",
                      "energy/A61.Cstorage_curves", "energy/Dooley_Cstorage_RG3_MtCO2") ->
       L161.RsrcCurves_MtC_R
 

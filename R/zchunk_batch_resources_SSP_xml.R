@@ -31,7 +31,7 @@ module_energy_batch_resources_SSP_xml <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    for(i in SSP_nums){
+    for(i in SSP_nums) {
       # Load required inputs
       L210.DepRsrcTechChange_SSP <- get_data(all_data, paste0("L210.DepRsrcTechChange_SSP", i))
       L210.DepRsrcEnvironCost_SSP <- get_data(all_data, paste0("L210.DepRsrcEnvironCost_SSP", i))

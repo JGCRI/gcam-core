@@ -50,16 +50,16 @@ module_energy_batch_heat_xml <- function(command, ...) {
     # Produce outputs
     create_xml("heat.xml") %>%
       add_logit_tables_xml(L224.Supplysector_heat, "Supplysector") %>%
-      add_logit_tables_xml(L224.SubsectorLogit_heat,"SubsectorLogit") %>%
+      add_logit_tables_xml(L224.SubsectorLogit_heat, "SubsectorLogit") %>%
       add_xml_data(L224.SubsectorShrwtFllt_heat, "SubsectorShrwtFllt") %>%
-      add_xml_data(L224.SubsectorInterp_heat,"SubsectorInterp") %>%
-      add_xml_data(L224.StubTech_heat,"StubTech") %>%
-      add_xml_data(L224.GlobalTechCoef_heat,"GlobalTechCoef") %>%
-      add_xml_data(L224.GlobalTechCost_heat,"GlobalTechCost") %>%
-      add_xml_data(L224.GlobalTechShrwt_heat,"GlobalTechShrwt") %>%
-      add_xml_data(L224.StubTechCalInput_heat,"StubTechCalInput") %>%
-      add_xml_data(L224.StubTechSecOut_elec,"StubTechSecOut") %>%
-      add_xml_data(L224.StubTechCost_elec,"StubTechCost") %>%
+      add_xml_data(L224.SubsectorInterp_heat, "SubsectorInterp") %>%
+      add_xml_data(L224.StubTech_heat, "StubTech") %>%
+      add_xml_data(L224.GlobalTechCoef_heat, "GlobalTechCoef") %>%
+      add_xml_data(L224.GlobalTechCost_heat, "GlobalTechCost") %>%
+      add_xml_data(L224.GlobalTechShrwt_heat, "GlobalTechShrwt") %>%
+      add_xml_data(L224.StubTechCalInput_heat, "StubTechCalInput") %>%
+      add_xml_data(L224.StubTechSecOut_elec, "StubTechSecOut") %>%
+      add_xml_data(L224.StubTechCost_elec, "StubTechCost") %>%
       add_precursors("L224.Supplysector_heat",
                      "L224.SubsectorLogit_heat",
                      "L224.SubsectorShrwtFllt_heat",

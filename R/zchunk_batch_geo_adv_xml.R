@@ -26,8 +26,8 @@ module_energy_batch_geo_adv_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("geo_adv.xml") %>%
-      add_xml_data(L210.GrdRenewRsrcCurves_EGS,"GrdRenewRsrcCurves") %>%
-      add_xml_data(L210.GrdRenewRsrcMax_EGS,"GrdRenewRsrcMax") %>%
+      add_xml_data(L210.GrdRenewRsrcCurves_EGS, "GrdRenewRsrcCurves") %>%
+      add_xml_data(L210.GrdRenewRsrcMax_EGS, "GrdRenewRsrcMax") %>%
       add_precursors("L210.GrdRenewRsrcCurves_EGS", "L210.GrdRenewRsrcMax_EGS") ->
       geo_adv.xml
 

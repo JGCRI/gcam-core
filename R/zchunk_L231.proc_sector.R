@@ -261,7 +261,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
       select(-year, -coefficient, -ind_output, -ind_proc_input) %>%
       distinct %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
-      left_join(L231.IndCoef, by = c("GCAM_region_ID","region", "supplysector", "subsector", "technology", "minicam.energy.input", "year")) %>%
+      left_join(L231.IndCoef, by = c("GCAM_region_ID", "region", "supplysector", "subsector", "technology", "minicam.energy.input", "year")) %>%
       group_by(region, technology) %>%
       mutate(coefficient = approx_fun(year, coefficient, rule = 2)) %>%
       ungroup() %>%

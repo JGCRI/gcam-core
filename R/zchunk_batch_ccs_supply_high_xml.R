@@ -24,7 +24,7 @@ module_energy_batch_ccs_supply_high_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("ccs_supply_high.xml") %>%
-      add_xml_data(L261.DepRsrcCurves_C_high,"DepRsrcCurves") %>%
+      add_xml_data(L261.DepRsrcCurves_C_high, "DepRsrcCurves") %>%
       add_precursors("L261.DepRsrcCurves_C_high") ->
       ccs_supply_high.xml
 

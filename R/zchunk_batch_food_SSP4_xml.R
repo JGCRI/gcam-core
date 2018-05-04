@@ -24,7 +24,7 @@ module_aglu_batch_food_SSP4_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("food_SSP4.xml") %>%
-      add_xml_data(L203.IncomeElasticity_SSP4,"IncomeElasticity") %>%
+      add_xml_data(L203.IncomeElasticity_SSP4, "IncomeElasticity") %>%
       add_precursors("L203.IncomeElasticity_SSP4") ->
       food_SSP4.xml
 

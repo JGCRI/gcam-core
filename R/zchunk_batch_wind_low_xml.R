@@ -26,8 +26,8 @@ module_energy_batch_wind_low_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("wind_low.xml") %>%
-      add_xml_data(L223.GlobalTechCapital_wind_low,"GlobalTechCapital") %>%
-      add_xml_data(L223.GlobalIntTechCapital_wind_low,"GlobalIntTechCapital") %>%
+      add_xml_data(L223.GlobalTechCapital_wind_low, "GlobalTechCapital") %>%
+      add_xml_data(L223.GlobalIntTechCapital_wind_low, "GlobalIntTechCapital") %>%
       add_precursors("L223.GlobalTechCapital_wind_low", "L223.GlobalIntTechCapital_wind_low") ->
       wind_low.xml
 

@@ -60,23 +60,23 @@ module_energy_batch_en_Fert_xml <- function(command, ...) {
     # Produce outputs
     create_xml("en_Fert.xml") %>%
       add_logit_tables_xml(L2322.Supplysector_Fert, "Supplysector") %>%
-      add_xml_data(L2322.FinalEnergyKeyword_Fert,"FinalEnergyKeyword") %>%
-      add_logit_tables_xml(L2322.SubsectorLogit_Fert,"SubsectorLogit") %>%
+      add_xml_data(L2322.FinalEnergyKeyword_Fert, "FinalEnergyKeyword") %>%
+      add_logit_tables_xml(L2322.SubsectorLogit_Fert, "SubsectorLogit") %>%
       add_xml_data(L2322.SubsectorShrwtFllt_Fert, "SubsectorShrwtFllt") %>%
-      add_xml_data(L2322.SubsectorInterp_Fert,"SubsectorInterp") %>%
-      add_xml_data(L2322.StubTech_Fert,"StubTech") %>%
-      add_xml_data(L2322.GlobalTechShrwt_Fert,"GlobalTechShrwt") %>%
-      add_xml_data(L2322.GlobalTechCoef_Fert,"GlobalTechCoef") %>%
-      add_xml_data(L2322.GlobalTechCost_Fert,"GlobalTechCost") %>%
-      add_xml_data(L2322.GlobalTechCapture_Fert,"GlobalTechCapture") %>%
+      add_xml_data(L2322.SubsectorInterp_Fert, "SubsectorInterp") %>%
+      add_xml_data(L2322.StubTech_Fert, "StubTech") %>%
+      add_xml_data(L2322.GlobalTechShrwt_Fert, "GlobalTechShrwt") %>%
+      add_xml_data(L2322.GlobalTechCoef_Fert, "GlobalTechCoef") %>%
+      add_xml_data(L2322.GlobalTechCost_Fert, "GlobalTechCost") %>%
+      add_xml_data(L2322.GlobalTechCapture_Fert, "GlobalTechCapture") %>%
       add_xml_data(L2322.GlobalTechSCurve_Fert, "GlobalTechSCurve") %>%
       add_xml_data(L2322.GlobalTechProfitShutdown_Fert, "GlobalTechProfitShutdown") %>%
-      add_xml_data(L2322.StubTechProd_Fert,"StubTechProd") %>%
-      add_xml_data(L2322.StubTechCoef_Fert,"StubTechCoef") %>%
-      add_xml_data(L2322.StubTechFixOut_Fert_imp,"StubTechFixOut") %>%
-      add_xml_data(L2322.StubTechFixOut_Fert_exp,"StubTechFixOut") %>%
-      add_xml_data(L2322.PerCapitaBased_Fert,"PerCapitaBased") %>%
-      add_xml_data(L2322.BaseService_Fert,"BaseService") %>%
+      add_xml_data(L2322.StubTechProd_Fert, "StubTechProd") %>%
+      add_xml_data(L2322.StubTechCoef_Fert, "StubTechCoef") %>%
+      add_xml_data(L2322.StubTechFixOut_Fert_imp, "StubTechFixOut") %>%
+      add_xml_data(L2322.StubTechFixOut_Fert_exp, "StubTechFixOut") %>%
+      add_xml_data(L2322.PerCapitaBased_Fert, "PerCapitaBased") %>%
+      add_xml_data(L2322.BaseService_Fert, "BaseService") %>%
       add_precursors("L2322.Supplysector_Fert",
                      "L2322.FinalEnergyKeyword_Fert",
                      "L2322.SubsectorLogit_Fert",

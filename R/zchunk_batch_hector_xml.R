@@ -24,7 +24,7 @@ module_climate_xml_batch_hector_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("hector.xml") %>%
-      add_xml_data(L200.hector,"hector") %>%
+      add_xml_data(L200.hector, "hector") %>%
       add_precursors("L200.hector") ->
       hector.xml
 

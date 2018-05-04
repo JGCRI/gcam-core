@@ -94,15 +94,15 @@ module_energy_batch_building_det_xml <- function(command, ...) {
       add_xml_data(L244.Floorspace, "Floorspace") %>%
       add_xml_data(L244.PriceExp_IntGains, "PriceExp_IntGains") %>%
       add_xml_data(L244.SubregionalShares, "SubregionalShares") %>%
-      add_logit_tables_xml(L244.SubsectorLogit_bld,"SubsectorLogit") %>%
-      add_xml_data(L244.FuelPrefElast_bld,"FuelPrefElast") %>%
+      add_logit_tables_xml(L244.SubsectorLogit_bld, "SubsectorLogit") %>%
+      add_xml_data(L244.FuelPrefElast_bld, "FuelPrefElast") %>%
       add_xml_data(L244.StubTech_bld, "StubTech") %>%
       add_xml_data(L244.StubTechEff_bld, "StubTechEff") %>%
       add_xml_data(L244.StubTechCalInput_bld, "StubTechCalInput") %>%
       add_xml_data(L244.StubTechIntGainOutputRatio, "StubTechIntGainOutputRatio") %>%
       add_xml_data(L244.GlobalTechShrwt_bld, "GlobalTechShrwt") %>%
       add_xml_data(L244.GlobalTechCost_bld, "GlobalTechCost") %>%
-      add_precursors("L244.SubsectorInterpTo_bld", "L244.SubsectorInterp_bld" ,"L244.SubsectorShrwtFllt_bld",
+      add_precursors("L244.SubsectorInterpTo_bld", "L244.SubsectorInterp_bld" , "L244.SubsectorShrwtFllt_bld",
                      "L244.SubsectorShrwt_bld", "L244.FinalEnergyKeyword_bld", "L244.Supplysector_bld",
                      "L244.ShellConductance_bld", "L244.Intgains_scalar", "L244.GenericServiceSatiation",
                      "L244.ThermalServiceSatiation", "L244.GenericBaseService", "L244.ThermalBaseService", "L244.SatiationAdder",

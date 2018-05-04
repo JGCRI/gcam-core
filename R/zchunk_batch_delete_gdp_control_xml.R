@@ -24,7 +24,7 @@ module_emissions_batch_delete_gdp_control_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("delete_gdp_control.xml") %>%
-      add_xml_data(L251.ctrl.delete,"DelEmCtrl") %>%
+      add_xml_data(L251.ctrl.delete, "DelEmCtrl") %>%
       add_precursors("L251.ctrl.delete") ->
       delete_gdp_control.xml
 

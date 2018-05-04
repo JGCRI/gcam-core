@@ -195,7 +195,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
              subsector.name = subsector) %>%
       # ^^ rename for upcoming join...
       right_join(L2233.GlobalTechEffShrwt_elecPassthru,
-                 by = c("year", "sector.name","subsector.name", "technology")) ->
+                 by = c("year", "sector.name", "subsector.name", "technology")) ->
       L2233.GlobalTechEffShrwt_elecPassthru
     # ^^ this tibble is subsetted to give the following two outputs...
 

@@ -68,29 +68,29 @@ module_energy_batch_industry_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("industry.xml") %>%
-      add_logit_tables_xml(L232.Supplysector_ind,"Supplysector") %>%
-      add_logit_tables_xml(L232.SubsectorLogit_ind,"SubsectorLogit") %>%
-      add_xml_data(L232.SubsectorShrwtFllt_ind,"SubsectorShrwtFllt") %>%
-      add_xml_data(L232.FinalEnergyKeyword_ind,"FinalEnergyKeyword") %>%
-      # add_xml_data(L232.SubsectorShrwt_ind,"SubsectorShrwt") %>%
-      add_xml_data(L232.SubsectorInterp_ind,"SubsectorInterp") %>%
-      # add_xml_data(L232.SubsectorInterpTo_ind,"SubsectorInterpTo") %>%
-      add_xml_data(L232.StubTech_ind,"StubTech") %>%
-      add_xml_data(L232.GlobalTechShrwt_ind,"GlobalTechShrwt") %>%
-      add_xml_data(L232.StubTechInterp_ind,"StubTechInterp") %>%
-      add_xml_data(L232.GlobalTechEff_ind,"GlobalTechEff") %>%
-      add_xml_data(L232.GlobalTechCoef_ind,"GlobalTechCoef") %>%
-      add_xml_data(L232.GlobalTechCost_ind,"GlobalTechCost") %>%
-      add_xml_data(L232.GlobalTechSecOut_ind,"GlobalTechSecOut") %>%
-      add_xml_data(L232.GlobalTechCSeq_ind,"GlobalTechCSeq") %>%
-      add_xml_data(L232.StubTechCalInput_indenergy,"StubTechCalInput") %>%
-      add_xml_data(L232.StubTechCalInput_indfeed,"StubTechCalInput") %>%
-      add_xml_data(L232.StubTechProd_industry,"StubTechProd") %>%
-      add_xml_data(L232.StubTechCoef_industry,"StubTechCoef") %>%
-      add_xml_data(L232.FuelPrefElast_indenergy,"FuelPrefElast") %>%
-      add_xml_data(L232.PerCapitaBased_ind,"PerCapitaBased") %>%
-      add_xml_data(L232.PriceElasticity_ind,"PriceElasticity") %>%
-      add_xml_data(L232.BaseService_ind,"BaseService") %>%
+      add_logit_tables_xml(L232.Supplysector_ind, "Supplysector") %>%
+      add_logit_tables_xml(L232.SubsectorLogit_ind, "SubsectorLogit") %>%
+      add_xml_data(L232.SubsectorShrwtFllt_ind, "SubsectorShrwtFllt") %>%
+      add_xml_data(L232.FinalEnergyKeyword_ind, "FinalEnergyKeyword") %>%
+      # add_xml_data(L232.SubsectorShrwt_ind, "SubsectorShrwt") %>%
+      add_xml_data(L232.SubsectorInterp_ind, "SubsectorInterp") %>%
+      # add_xml_data(L232.SubsectorInterpTo_ind, "SubsectorInterpTo") %>%
+      add_xml_data(L232.StubTech_ind, "StubTech") %>%
+      add_xml_data(L232.GlobalTechShrwt_ind, "GlobalTechShrwt") %>%
+      add_xml_data(L232.StubTechInterp_ind, "StubTechInterp") %>%
+      add_xml_data(L232.GlobalTechEff_ind, "GlobalTechEff") %>%
+      add_xml_data(L232.GlobalTechCoef_ind, "GlobalTechCoef") %>%
+      add_xml_data(L232.GlobalTechCost_ind, "GlobalTechCost") %>%
+      add_xml_data(L232.GlobalTechSecOut_ind, "GlobalTechSecOut") %>%
+      add_xml_data(L232.GlobalTechCSeq_ind, "GlobalTechCSeq") %>%
+      add_xml_data(L232.StubTechCalInput_indenergy, "StubTechCalInput") %>%
+      add_xml_data(L232.StubTechCalInput_indfeed, "StubTechCalInput") %>%
+      add_xml_data(L232.StubTechProd_industry, "StubTechProd") %>%
+      add_xml_data(L232.StubTechCoef_industry, "StubTechCoef") %>%
+      add_xml_data(L232.FuelPrefElast_indenergy, "FuelPrefElast") %>%
+      add_xml_data(L232.PerCapitaBased_ind, "PerCapitaBased") %>%
+      add_xml_data(L232.PriceElasticity_ind, "PriceElasticity") %>%
+      add_xml_data(L232.BaseService_ind, "BaseService") %>%
       add_precursors("L232.SubsectorLogit_ind", "L232.FinalEnergyKeyword_ind", #"L232.SubsectorShrwt_ind",
                      "L232.SubsectorInterp_ind", #"L232.SubsectorInterpTo_ind",
                      "L232.StubTech_ind",

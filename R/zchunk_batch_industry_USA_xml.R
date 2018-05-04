@@ -60,8 +60,8 @@ module_gcamusa_batch_industry_USA_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("industry_USA.xml") %>%
-      add_xml_data(L232.DeleteSupplysector_USAind,"DeleteSupplysector") %>%
-      add_xml_data(L232.DeleteFinalDemand_USAind,"DeleteFinalDemand") %>%
+      add_xml_data(L232.DeleteSupplysector_USAind, "DeleteSupplysector") %>%
+      add_xml_data(L232.DeleteFinalDemand_USAind, "DeleteFinalDemand") %>%
       add_logit_tables_xml(L232.Supplysector_ind_USA, "Supplysector") %>%
       add_xml_data(L232.FinalEnergyKeyword_ind_USA, "FinalEnergyKeyword") %>%
       add_logit_tables_xml(L232.SubsectorLogit_ind_USA, "SubsectorLogit") %>%
@@ -72,13 +72,13 @@ module_gcamusa_batch_industry_USA_xml <- function(command, ...) {
       add_xml_data(L232.PerCapitaBased_ind_USA, "PerCapitaBased") %>%
       add_xml_data(L232.PriceElasticity_ind_USA, "PriceElasticity") %>%
       add_xml_data(L232.IncomeElasticity_ind_gcam3_USA, "IncomeElasticity") %>%
-      add_xml_data(L232.StubTechCalInput_indenergy_USA,"StubTechCalInput") %>%
-      add_xml_data(L232.StubTechCalInput_indfeed_USA,"StubTechCalInput") %>%
-      add_xml_data(L232.StubTechProd_industry_USA,"StubTechProd") %>%
-      add_xml_data(L232.StubTechCoef_industry_USA,"StubTechCoef") %>%
-      add_xml_data(L232.StubTechMarket_ind_USA,"StubTechMarket") %>%
-      add_xml_data(L232.StubTechSecMarket_ind_USA,"StubTechSecMarket") %>%
-      add_xml_data(L232.BaseService_ind_USA,"BaseService") %>%
+      add_xml_data(L232.StubTechCalInput_indenergy_USA, "StubTechCalInput") %>%
+      add_xml_data(L232.StubTechCalInput_indfeed_USA, "StubTechCalInput") %>%
+      add_xml_data(L232.StubTechProd_industry_USA, "StubTechProd") %>%
+      add_xml_data(L232.StubTechCoef_industry_USA, "StubTechCoef") %>%
+      add_xml_data(L232.StubTechMarket_ind_USA, "StubTechMarket") %>%
+      add_xml_data(L232.StubTechSecMarket_ind_USA, "StubTechSecMarket") %>%
+      add_xml_data(L232.BaseService_ind_USA, "BaseService") %>%
       add_precursors("L232.DeleteSupplysector_USAind",
                      "L232.DeleteFinalDemand_USAind",
                      "L232.Supplysector_ind_USA",

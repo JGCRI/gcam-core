@@ -317,7 +317,7 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
       add_title("Non-ghg emission totals by GCAM sector, fuel, technology, and driver type for EDGAR historical years.") %>%
       add_units("Tg") %>%
       add_comments("Compute unscaled non-ghg emissions by country and technology, and EDGAR emissions by region and sector.") %>%
-      add_comments("Then, scale EPA emissions by tech to match EDGAR totals, compute international shipping and international aviation emissions,") %>%
+      add_comments("Then, scale EPA emissions by tech to match EDGAR totals, compute international shipping and international aviation emissions, ") %>%
       add_comments("and finally calculate non-ghg emission totals by GCAM sector, fuel, technology, and driver type for EDGAR historical years.") %>%
       add_legacy_name("L111.nonghg_tg_R_en_S_F_Yh") %>%
       add_precursors("common/iso_GCAM_regID",

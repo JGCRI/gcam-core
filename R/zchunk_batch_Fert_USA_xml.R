@@ -56,23 +56,23 @@ module_gcamusa_batch_Fert_USA_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("Fert_USA.xml") %>%
-      add_xml_data(L2322.DeleteSubsector_USAFert,"DeleteSubsector") %>%
+      add_xml_data(L2322.DeleteSubsector_USAFert, "DeleteSubsector") %>%
       add_xml_data(L2322.FinalEnergyKeyword_Fert_USA, "FinalEnergyKeyword") %>%
       add_logit_tables_xml(L2322.Supplysector_Fert_USA, "Supplysector") %>%
       add_logit_tables_xml(L2322.SubsectorLogit_Fert_USA, "SubsectorLogit") %>%
       add_xml_data(L2322.SubsectorShrwtFllt_Fert_USA, "SubsectorShrwtFllt") %>%
       add_xml_data(L2322.SubsectorInterp_Fert_USA, "SubsectorInterp") %>%
       add_xml_data(L2322.StubTech_Fert_USA, "StubTech") %>%
-      add_xml_data(L2322.FinalEnergyKeyword_USAFert,"FinalEnergyKeyword") %>%
-      add_logit_tables_xml(L2322.SubsectorLogit_USAFert,"SubsectorLogit") %>%
-      add_xml_data(L2322.SubsectorShrwtFllt_USAFert,"SubsectorShrwtFllt") %>%
-      add_xml_data(L2322.SubsectorInterp_USAFert,"SubsectorInterp") %>%
-      add_xml_data(L2322.TechShrwt_USAFert,"TechShrwt") %>%
-      add_xml_data(L2322.Production_USAFert,"Production") %>%
-      add_xml_data(L2322.TechCoef_USAFert,"TechCoef") %>%
-      add_xml_data(L2322.StubTechProd_Fert_USA,"StubTechProd") %>%
-      add_xml_data(L2322.StubTechCoef_Fert_USA,"StubTechCoef") %>%
-      add_xml_data(L2322.StubTechMarket_Fert_USA,"StubTechMarket") %>%
+      add_xml_data(L2322.FinalEnergyKeyword_USAFert, "FinalEnergyKeyword") %>%
+      add_logit_tables_xml(L2322.SubsectorLogit_USAFert, "SubsectorLogit") %>%
+      add_xml_data(L2322.SubsectorShrwtFllt_USAFert, "SubsectorShrwtFllt") %>%
+      add_xml_data(L2322.SubsectorInterp_USAFert, "SubsectorInterp") %>%
+      add_xml_data(L2322.TechShrwt_USAFert, "TechShrwt") %>%
+      add_xml_data(L2322.Production_USAFert, "Production") %>%
+      add_xml_data(L2322.TechCoef_USAFert, "TechCoef") %>%
+      add_xml_data(L2322.StubTechProd_Fert_USA, "StubTechProd") %>%
+      add_xml_data(L2322.StubTechCoef_Fert_USA, "StubTechCoef") %>%
+      add_xml_data(L2322.StubTechMarket_Fert_USA, "StubTechMarket") %>%
       add_precursors("L2322.DeleteSubsector_USAFert",
                      "L2322.FinalEnergyKeyword_Fert_USA",
                      "L2322.Supplysector_Fert_USA",

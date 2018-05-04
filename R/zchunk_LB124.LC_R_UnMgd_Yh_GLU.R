@@ -70,7 +70,7 @@ module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
     L120.LC_bm2_R_LT_Yh_GLU %>%
       filter(Land_Type == "Pasture") %>%
       rename(TotPasture = value) %>%
-      left_join_error_no_match(L123.LC_bm2_R_MgdPast_Yh_GLU, by = c("GCAM_region_ID", "GLU","Land_Type", "year")) %>%
+      left_join_error_no_match(L123.LC_bm2_R_MgdPast_Yh_GLU, by = c("GCAM_region_ID", "GLU", "Land_Type", "year")) %>%
       rename(MgdPasture = value) %>%
       # have to use value instead of more informative name so that binding all unmanaged land later goes smoothly:
       mutate(value = TotPasture - MgdPasture,
@@ -84,7 +84,7 @@ module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
     L120.LC_bm2_R_LT_Yh_GLU %>%
       filter(Land_Type == "Forest") %>%
       rename(TotForest = value) %>%
-      left_join_error_no_match(L123.LC_bm2_R_MgdFor_Yh_GLU, by = c("GCAM_region_ID", "GLU","Land_Type", "year")) %>%
+      left_join_error_no_match(L123.LC_bm2_R_MgdFor_Yh_GLU, by = c("GCAM_region_ID", "GLU", "Land_Type", "year")) %>%
       rename(MgdForest = value) %>%
       # have to use value instead of more informative name so that binding all unmanaged land later goes smoothly:
       mutate(value = TotForest - MgdForest,

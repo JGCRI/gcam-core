@@ -26,8 +26,8 @@ module_water_batch_water_elec_liquids_limits_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("water_elec_liquids_limits.xml") %>%
-      add_xml_data(L2233.DeleteCreditInput_elec,"DeleteGlobalTechInput") %>%
-      add_xml_data(L2233.CreditInput_elec,"GlobalTechCoef") %>%
+      add_xml_data(L2233.DeleteCreditInput_elec, "DeleteGlobalTechInput") %>%
+      add_xml_data(L2233.CreditInput_elec, "GlobalTechCoef") %>%
       add_precursors("L2233.DeleteCreditInput_elec", "L2233.CreditInput_elec") ->
       water_elec_liquids_limits.xml
 

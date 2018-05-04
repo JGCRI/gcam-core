@@ -24,7 +24,7 @@ module_climate_xml_batch_magicc_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("magicc.xml") %>%
-      add_xml_data(L200.MAGICC,"MAGICC") %>%
+      add_xml_data(L200.MAGICC, "MAGICC") %>%
       add_precursors("L200.MAGICC") ->
       magicc.xml
 

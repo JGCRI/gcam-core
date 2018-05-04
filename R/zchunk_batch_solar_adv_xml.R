@@ -26,8 +26,8 @@ module_energy_batch_solar_adv_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("solar_adv.xml") %>%
-      add_xml_data(L223.GlobalTechCapital_sol_adv,"GlobalTechCapital") %>%
-      add_xml_data(L223.GlobalIntTechCapital_sol_adv,"GlobalIntTechCapital") %>%
+      add_xml_data(L223.GlobalTechCapital_sol_adv, "GlobalTechCapital") %>%
+      add_xml_data(L223.GlobalIntTechCapital_sol_adv, "GlobalIntTechCapital") %>%
       add_precursors("L223.GlobalTechCapital_sol_adv", "L223.GlobalIntTechCapital_sol_adv") ->
       solar_adv.xml
 

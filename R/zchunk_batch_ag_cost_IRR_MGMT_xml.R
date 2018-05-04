@@ -28,9 +28,9 @@ module_aglu_batch_ag_cost_IRR_MGMT_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("ag_cost_IRR_MGMT.xml") %>%
-      add_xml_data(L2052.AgCost_ag_irr_mgmt,"AgCost") %>%
-      add_xml_data(L2052.AgCost_bio_irr_mgmt,"AgCost") %>%
-      add_xml_data(L2052.AgCost_For,"AgCost") %>%
+      add_xml_data(L2052.AgCost_ag_irr_mgmt, "AgCost") %>%
+      add_xml_data(L2052.AgCost_bio_irr_mgmt, "AgCost") %>%
+      add_xml_data(L2052.AgCost_For, "AgCost") %>%
       add_precursors("L2052.AgCost_ag_irr_mgmt", "L2052.AgCost_bio_irr_mgmt", "L2052.AgCost_For") ->
       ag_cost_IRR_MGMT.xml
 

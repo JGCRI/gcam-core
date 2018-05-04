@@ -30,10 +30,10 @@ module_energy_batch_liquids_limits_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("liquids_limits.xml") %>%
-      add_xml_data(L270.CreditOutput,"GlobalTechRESSecOut") %>%
-      add_xml_data(L270.CreditInput_elec,"GlobalTechCoef") %>%
-      add_xml_data(L270.CreditInput_feedstocks,"GlobalTechCoef") %>%
-      add_xml_data(L270.CreditMkt,"PortfolioStd") %>%
+      add_xml_data(L270.CreditOutput, "GlobalTechRESSecOut") %>%
+      add_xml_data(L270.CreditInput_elec, "GlobalTechCoef") %>%
+      add_xml_data(L270.CreditInput_feedstocks, "GlobalTechCoef") %>%
+      add_xml_data(L270.CreditMkt, "PortfolioStd") %>%
       add_precursors("L270.CreditOutput", "L270.CreditInput_elec", "L270.CreditInput_feedstocks", "L270.CreditMkt") ->
       liquids_limits.xml
 

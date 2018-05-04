@@ -60,11 +60,11 @@ module_gcamusa_batch_cement_USA_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("cement_USA.xml") %>%
-      add_xml_data(L210.DeleteUnlimitRsrc_USAlimestone,"DeleteUnlimitRsrc") %>%
-      add_xml_data(L210.UnlimitRsrc_limestone_USA,"UnlimitRsrc") %>%
-      add_xml_data(L210.UnlimitRsrcPrice_limestone_USA,"UnlimitRsrcPrice") %>%
-      add_xml_data(L2321.DeleteSupplysector_USAcement,"DeleteSupplysector") %>%
-      add_xml_data(L2321.DeleteFinalDemand_USAcement,"DeleteFinalDemand") %>%
+      add_xml_data(L210.DeleteUnlimitRsrc_USAlimestone, "DeleteUnlimitRsrc") %>%
+      add_xml_data(L210.UnlimitRsrc_limestone_USA, "UnlimitRsrc") %>%
+      add_xml_data(L210.UnlimitRsrcPrice_limestone_USA, "UnlimitRsrcPrice") %>%
+      add_xml_data(L2321.DeleteSupplysector_USAcement, "DeleteSupplysector") %>%
+      add_xml_data(L2321.DeleteFinalDemand_USAcement, "DeleteFinalDemand") %>%
       add_logit_tables_xml(L2321.Supplysector_cement_USA, "Supplysector") %>%
       add_xml_data(L2321.FinalEnergyKeyword_cement_USA, "FinalEnergyKeyword") %>%
       add_logit_tables_xml(L2321.SubsectorLogit_cement_USA, "SubsectorLogit") %>%
@@ -74,11 +74,11 @@ module_gcamusa_batch_cement_USA_xml <- function(command, ...) {
       add_xml_data(L2321.PerCapitaBased_cement_USA, "PerCapitaBased") %>%
       add_xml_data(L2321.PriceElasticity_cement_USA, "PriceElasticity") %>%
       add_xml_data(L2321.IncomeElasticity_cement_gcam3_USA, "IncomeElasticity") %>%
-      add_xml_data(L2321.StubTechProd_cement_USA,"StubTechProd") %>%
-      add_xml_data(L2321.StubTechCoef_cement_USA,"StubTechCoef") %>%
-      add_xml_data(L2321.StubTechCalInput_cement_heat_USA,"StubTechCalInput") %>%
-      add_xml_data(L2321.StubTechMarket_cement_USA,"StubTechMarket") %>%
-      add_xml_data(L2321.BaseService_cement_USA,"BaseService") %>%
+      add_xml_data(L2321.StubTechProd_cement_USA, "StubTechProd") %>%
+      add_xml_data(L2321.StubTechCoef_cement_USA, "StubTechCoef") %>%
+      add_xml_data(L2321.StubTechCalInput_cement_heat_USA, "StubTechCalInput") %>%
+      add_xml_data(L2321.StubTechMarket_cement_USA, "StubTechMarket") %>%
+      add_xml_data(L2321.BaseService_cement_USA, "BaseService") %>%
       add_precursors("L210.DeleteUnlimitRsrc_USAlimestone",
                      "L210.UnlimitRsrc_limestone_USA",
                      "L210.UnlimitRsrcPrice_limestone_USA",

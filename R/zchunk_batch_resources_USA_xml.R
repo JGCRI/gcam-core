@@ -44,15 +44,15 @@ module_gcamusa_batch_resources_USA_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("resources_USA.xml") %>%
-      add_xml_data(L210.DeleteRenewRsrc_USArsrc,"DeleteRenewRsrc") %>%
-      add_xml_data(L210.DeleteUnlimitRsrc_USArsrc,"DeleteUnlimitRsrc") %>%
-      add_xml_data(L210.RenewRsrc_USA,"RenewRsrc") %>%
-      add_xml_data(L210.UnlimitRsrc_USA,"UnlimitRsrc") %>%
-      add_xml_data(L210.UnlimitRsrcPrice_USA,"UnlimitRsrcPrice") %>%
-      add_xml_data(L210.SmthRenewRsrcTechChange_USA,"SmthRenewRsrcTechChange") %>%
-      add_xml_data(L210.SmthRenewRsrcCurves_wind_USA,"SmthRenewRsrcCurves") %>%
-      add_xml_data(L210.GrdRenewRsrcCurves_geo_USA,"GrdRenewRsrcCurves") %>%
-      add_xml_data(L210.GrdRenewRsrcMax_geo_USA,"GrdRenewRsrcMax") %>%
+      add_xml_data(L210.DeleteRenewRsrc_USArsrc, "DeleteRenewRsrc") %>%
+      add_xml_data(L210.DeleteUnlimitRsrc_USArsrc, "DeleteUnlimitRsrc") %>%
+      add_xml_data(L210.RenewRsrc_USA, "RenewRsrc") %>%
+      add_xml_data(L210.UnlimitRsrc_USA, "UnlimitRsrc") %>%
+      add_xml_data(L210.UnlimitRsrcPrice_USA, "UnlimitRsrcPrice") %>%
+      add_xml_data(L210.SmthRenewRsrcTechChange_USA, "SmthRenewRsrcTechChange") %>%
+      add_xml_data(L210.SmthRenewRsrcCurves_wind_USA, "SmthRenewRsrcCurves") %>%
+      add_xml_data(L210.GrdRenewRsrcCurves_geo_USA, "GrdRenewRsrcCurves") %>%
+      add_xml_data(L210.GrdRenewRsrcMax_geo_USA, "GrdRenewRsrcMax") %>%
       add_xml_data(L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA, "SmthRenewRsrcCurvesGdpElast") %>%
       add_precursors("L210.DeleteRenewRsrc_USArsrc",
                      "L210.DeleteUnlimitRsrc_USArsrc",

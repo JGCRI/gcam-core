@@ -583,7 +583,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
     L122.LC_bm2_R_ExtraCropLand_Yh_GLU %>%
       add_title("Extra cropland cover by GCAM region / year / GLU") %>%
       add_units("billion meters squared (bm2)") %>%
-      add_comments("Any land at the region-GLU level for which Harvested Cropland - Available Cropland is positive,") %>%
+      add_comments("Any land at the region-GLU level for which Harvested Cropland - Available Cropland is positive, ") %>%
       add_comments("making it extra.") %>%
       add_legacy_name("L122.LC_bm2_R_ExtraCropLand_Yh_GLU") %>%
       add_precursors("common/iso_GCAM_regID",

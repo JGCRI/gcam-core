@@ -42,16 +42,16 @@ module_energy_batch_Cstorage.xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("Cstorage.xml") %>%
-      add_xml_data(L261.DepRsrc,"DepRsrc") %>%
-      add_xml_data(L261.UnlimitRsrc,"UnlimitRsrc") %>%
-      add_xml_data(L261.DepRsrcCurves_C,"DepRsrcCurves") %>%
-      add_logit_tables_xml(L261.Supplysector_C,"Supplysector") %>%
-      add_logit_tables_xml(L261.SubsectorLogit_C,"SubsectorLogit") %>%
-      add_xml_data(L261.SubsectorShrwtFllt_C,"SubsectorShrwtFllt") %>%
-      add_xml_data(L261.StubTech_C,"StubTech") %>%
-      add_xml_data(L261.GlobalTechCoef_C,"GlobalTechCoef") %>%
-      add_xml_data(L261.GlobalTechCost_C,"GlobalTechCost") %>%
-      add_xml_data(L261.GlobalTechShrwt_C,"GlobalTechShrwt") %>%
+      add_xml_data(L261.DepRsrc, "DepRsrc") %>%
+      add_xml_data(L261.UnlimitRsrc, "UnlimitRsrc") %>%
+      add_xml_data(L261.DepRsrcCurves_C, "DepRsrcCurves") %>%
+      add_logit_tables_xml(L261.Supplysector_C, "Supplysector") %>%
+      add_logit_tables_xml(L261.SubsectorLogit_C, "SubsectorLogit") %>%
+      add_xml_data(L261.SubsectorShrwtFllt_C, "SubsectorShrwtFllt") %>%
+      add_xml_data(L261.StubTech_C, "StubTech") %>%
+      add_xml_data(L261.GlobalTechCoef_C, "GlobalTechCoef") %>%
+      add_xml_data(L261.GlobalTechCost_C, "GlobalTechCost") %>%
+      add_xml_data(L261.GlobalTechShrwt_C, "GlobalTechShrwt") %>%
       add_precursors("L261.DepRsrc", "L261.UnlimitRsrc", "L261.DepRsrcCurves_C", "L261.Supplysector_C", "L261.SubsectorLogit_C", "L261.SubsectorShrwtFllt_C", "L261.StubTech_C", "L261.GlobalTechCoef_C", "L261.GlobalTechCost_C", "L261.GlobalTechShrwt_C") ->
       Cstorage.xml
 

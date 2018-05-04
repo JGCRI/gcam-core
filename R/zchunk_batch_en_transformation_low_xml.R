@@ -24,7 +24,7 @@ module_energy_batch_en_transformation_low_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("en_transformation_low.xml") %>%
-      add_xml_data(L222.GlobalTechCost_low_en,"GlobalTechCost") %>%
+      add_xml_data(L222.GlobalTechCost_low_en, "GlobalTechCost") %>%
       add_precursors("L222.GlobalTechCost_low_en") ->
       en_transformation_low.xml
 

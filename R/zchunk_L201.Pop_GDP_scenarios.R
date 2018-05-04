@@ -57,7 +57,7 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y")
     L102.PPP_MER_R <- get_data(all_data, "L102.PPP_MER_R")
     L101.Pop_thous_GCAM3_R_Y <- get_data(all_data, "L101.Pop_thous_GCAM3_R_Y")
-    L102.gdp_mil90usd_GCAM3_R_Y <- get_data(all_data,"L102.gdp_mil90usd_GCAM3_R_Y")
+    L102.gdp_mil90usd_GCAM3_R_Y <- get_data(all_data, "L102.gdp_mil90usd_GCAM3_R_Y")
 
     # ===================================================
     # Set default interest rate for all regions

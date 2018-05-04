@@ -56,19 +56,19 @@ module_energy_batch_building_agg_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("building_agg.xml") %>%
-      add_logit_tables_xml(L242.Supplysector_bld,"Supplysector") %>%
-      add_xml_data(L242.FinalEnergyKeyword_bld,"FinalEnergyKeyword") %>%
-      add_logit_tables_xml(L242.SubsectorLogit_bld,"SubsectorLogit") %>%
-      add_xml_data(L242.StubTech_bld,"StubTech") %>%
-      add_xml_data(L242.GlobalTechInterp_bld,"GlobalTechInterp") %>%
-      add_xml_data(L242.GlobalTechShrwt_bld,"GlobalTechShrwt") %>%
-      add_xml_data(L242.GlobalTechEff_bld,"GlobalTechEff") %>%
-      add_xml_data(L242.GlobalTechCost_bld,"GlobalTechCost") %>%
-      add_xml_data(L242.StubTechCalInput_bld,"StubTechCalInput") %>%
-      add_xml_data(L242.FuelPrefElast_bld,"FuelPrefElast") %>%
-      add_xml_data(L242.PerCapitaBased_bld,"PerCapitaBased") %>%
-      add_xml_data(L242.PriceElasticity_bld,"PriceElasticity") %>%
-      add_xml_data(L242.BaseService_bld,"BaseService") %>%
+      add_logit_tables_xml(L242.Supplysector_bld, "Supplysector") %>%
+      add_xml_data(L242.FinalEnergyKeyword_bld, "FinalEnergyKeyword") %>%
+      add_logit_tables_xml(L242.SubsectorLogit_bld, "SubsectorLogit") %>%
+      add_xml_data(L242.StubTech_bld, "StubTech") %>%
+      add_xml_data(L242.GlobalTechInterp_bld, "GlobalTechInterp") %>%
+      add_xml_data(L242.GlobalTechShrwt_bld, "GlobalTechShrwt") %>%
+      add_xml_data(L242.GlobalTechEff_bld, "GlobalTechEff") %>%
+      add_xml_data(L242.GlobalTechCost_bld, "GlobalTechCost") %>%
+      add_xml_data(L242.StubTechCalInput_bld, "StubTechCalInput") %>%
+      add_xml_data(L242.FuelPrefElast_bld, "FuelPrefElast") %>%
+      add_xml_data(L242.PerCapitaBased_bld, "PerCapitaBased") %>%
+      add_xml_data(L242.PriceElasticity_bld, "PriceElasticity") %>%
+      add_xml_data(L242.BaseService_bld, "BaseService") %>%
       add_precursors("L242.Supplysector_bld", "L242.FinalEnergyKeyword_bld", "L242.SubsectorLogit_bld",
                      "L242.SubsectorShrwtFllt_bld", "L242.SubsectorInterp_bld", "L242.StubTech_bld",
                      "L242.GlobalTechInterp_bld", "L242.GlobalTechShrwt_bld", "L242.GlobalTechEff_bld",

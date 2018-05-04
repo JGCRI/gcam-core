@@ -35,11 +35,11 @@ module_aglu_batch_resbio_input_IRR_MGMT_xml <- function(command, ...) {
     # Produce outputs
     create_xml("resbio_input_IRR_MGMT.xml") %>%
       add_xml_data(L2042.AgResBio_For, "AgResBio") %>%
-      add_xml_data(L2042.AgResBioCurve_For,"AgResBioCurve") %>%
-      add_xml_data(L2042.GlobalResBio_Mill,"GlobalResBio") %>%
-      add_xml_data(L2042.StubResBioCurve_Mill,"StubResBioCurve") %>%
-      add_xml_data(L2042.AgResBio_ag_irr_mgmt,"AgResBio") %>%
-      add_xml_data(L2042.AgResBioCurve_ag_irr_mgmt,"AgResBioCurve") %>%
+      add_xml_data(L2042.AgResBioCurve_For, "AgResBioCurve") %>%
+      add_xml_data(L2042.GlobalResBio_Mill, "GlobalResBio") %>%
+      add_xml_data(L2042.StubResBioCurve_Mill, "StubResBioCurve") %>%
+      add_xml_data(L2042.AgResBio_ag_irr_mgmt, "AgResBio") %>%
+      add_xml_data(L2042.AgResBioCurve_ag_irr_mgmt, "AgResBioCurve") %>%
       add_precursors("L2042.AgResBio_For",
                      "L2042.AgResBioCurve_For",
                      "L2042.GlobalResBio_Mill",

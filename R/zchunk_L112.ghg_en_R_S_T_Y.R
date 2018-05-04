@@ -60,7 +60,7 @@ module_emissions_L112.ghg_en_R_S_T_Y <- function(command, ...) {
                                   by = c("fuel", "sector")) %>%
         # Remove years where we don't have emissions data and add Non.CO2 column
         filter(year %in% emissions.EDGAR_YEARS) %>%
-        repeat_add_columns(tibble(Non.CO2 = c("CH4","N2O"))) %>%
+        repeat_add_columns(tibble(Non.CO2 = c("CH4", "N2O"))) %>%
         # Match in emissions factors
         # Use left_join because some "cement" only in EPA sector
         left_join(L102.ghg_tgej_USA_en_Sepa_F_2005,
@@ -75,7 +75,7 @@ module_emissions_L112.ghg_en_R_S_T_Y <- function(command, ...) {
                                   by = c("fuel", "sector", "technology")) %>%
         # Remove years where we don't have emissions data and add Non.CO2 column
         filter(year %in% emissions.EDGAR_YEARS) %>%
-        repeat_add_columns(tibble(Non.CO2 = c("CH4","N2O"))) %>%
+        repeat_add_columns(tibble(Non.CO2 = c("CH4", "N2O"))) %>%
         # Match in emissions factors
         # Use left_join because some "cement" only in EPA sector
         left_join(L102.ghg_tgej_USA_en_Sepa_F_2005,

@@ -322,7 +322,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
     L222.LN2_UnmgdCarbon %>%
       add_title("Carbon content for unmanaged land (LT_GLU) in second nest by region.") %>%
       add_units("Varies") %>%
-      add_comments("Carbon content info for unmanaged land (LT_GLU) in the second nest including soil and vegetative carbon,") %>%
+      add_comments("Carbon content info for unmanaged land (LT_GLU) in the second nest including soil and vegetative carbon, ") %>%
       add_comments("from L125 land cover data, L121 carbon content data, and GCAMLandLeaf_CdensityLT assumptions") %>%
       add_legacy_name("L222.LN2_UnmgdCarbon") %>%
       add_precursors("common/GCAM_region_names",
@@ -336,7 +336,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
     L222.LN2_MgdCarbon %>%
       add_title("Carbon content for managed land (LT_GLU) in second nest by region.") %>%
       add_units("Varies") %>%
-      add_comments("Carbon content info for managed land (LT_GLU) in the second nest including soil and vegetative carbon,") %>%
+      add_comments("Carbon content info for managed land (LT_GLU) in the second nest including soil and vegetative carbon, ") %>%
       add_comments("from L125 land cover data, L121 carbon content data, and GCAMLandLeaf_CdensityLT assumptions.") %>%
       add_legacy_name("L222.LN2_MgdCarbon") %>%
       add_precursors("common/GCAM_region_names",

@@ -102,7 +102,7 @@ module_aglu_LA102.ag_LDS_R_C_GLU <- function(command, ...) {
     L102.ag_HA_bm2_R_C_GLU %>%
       add_title("Harvested area by GCAM region / commodity / GLU") %>%
       add_units("Thousand km^2 = billion m^2 (bm2") %>%
-      add_comments("LDS harvested area data, sourced from SAGE, Hyde, and others,") %>%
+      add_comments("LDS harvested area data, sourced from SAGE, Hyde, and others, ") %>%
       add_comments("is read in at the iso-GLU-GTAP_crop level, and converted to GCAM") %>%
       add_comments("regions, commodities, and units.") %>%
       add_legacy_name("L102.ag_HA_bm2_R_C_GLU") %>%
@@ -113,7 +113,7 @@ module_aglu_LA102.ag_LDS_R_C_GLU <- function(command, ...) {
     L102.ag_Prod_Mt_R_C_GLU %>%
       add_title("Crop production by GCAM region / commodity / GLU") %>%
       add_units("Megatons (Mt)") %>%
-      add_comments("LDS production data, sourced from SAGE, Hyde, and others,") %>%
+      add_comments("LDS production data, sourced from SAGE, Hyde, and others, ") %>%
       add_comments("is read in at the iso-GLU-GTAP_crop level, and converted to GCAM") %>%
       add_comments("regions, commodities, and units.") %>%
       add_legacy_name("L102.ag_Prod_Mt_R_C_GLU") %>%

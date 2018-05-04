@@ -127,14 +127,14 @@ module_energy_L221.en_supply <- function(command, ...) {
                            GCAM_region_names = GCAM_region_names) -> L221.SubsectorLogit_en
 
     # Subsector shareweights of upstream energy handling sectors
-    if(any(!is.na(A21.subsector_shrwt$year))){
+    if(any(!is.na(A21.subsector_shrwt$year))) {
       A21.subsector_shrwt %>%
         write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorShrwt"]]), has_traded = TRUE,
                              GCAM_region_names = GCAM_region_names) %>%
         filter(!is.na(year)) -> L221.SubsectorShrwt_en
     }
 
-    if(any(!is.na(A21.subsector_shrwt$year.fillout))){
+    if(any(!is.na(A21.subsector_shrwt$year.fillout))) {
       A21.subsector_shrwt %>%
         write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]]), has_traded = TRUE,
                              GCAM_region_names = GCAM_region_names) %>%
@@ -142,7 +142,7 @@ module_energy_L221.en_supply <- function(command, ...) {
     }
 
     # Subsector shareweight interpolation of upstream energy handling sectors
-    if(any(is.na(A21.subsector_interp$to.value))){
+    if(any(is.na(A21.subsector_interp$to.value))) {
       A21.subsector_interp %>%
         write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorInterp"]], "to.value"), has_traded = TRUE,
                              GCAM_region_names = GCAM_region_names) %>%
@@ -150,7 +150,7 @@ module_energy_L221.en_supply <- function(command, ...) {
         select(-to.value) -> L221.SubsectorInterp_en
     }
 
-    if(any(!is.na(A21.subsector_interp$to.value))){
+    if(any(!is.na(A21.subsector_interp$to.value))) {
       A21.subsector_interp %>%
         write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorInterpTo"]]), has_traded = TRUE,
                              GCAM_region_names = GCAM_region_names) %>%
@@ -496,21 +496,21 @@ module_energy_L221.en_supply <- function(command, ...) {
     L221.Supplysector_en %>%
       filter(!(region %in% aglu.NO_AGLU_REGIONS & supplysector %in% ag_en)) -> L221.Supplysector_en
 
-    if(exists("L221.SubsectorShrwt_en")){
+    if(exists("L221.SubsectorShrwt_en")) {
       L221.SubsectorShrwt_en %>%
         filter(!(region %in% aglu.NO_AGLU_REGIONS & supplysector %in% ag_en)) -> L221.SubsectorShrwt_en
     }
 
-    if(exists("L221.SubsectorShrwtFllt_en")){
+    if(exists("L221.SubsectorShrwtFllt_en")) {
       L221.SubsectorShrwtFllt_en %>%
         filter(!(region %in% aglu.NO_AGLU_REGIONS & supplysector %in% ag_en)) -> L221.SubsectorShrwtFllt_en
     }
 
-    if(exists("L221.SubsectorInterp_en")){
+    if(exists("L221.SubsectorInterp_en")) {
       L221.SubsectorInterp_en %>%
         filter(!(region %in% aglu.NO_AGLU_REGIONS & supplysector %in% ag_en)) -> L221.SubsectorInterp_en
     }
-    if(exists("L221.SubsectorInterpTo_en")){
+    if(exists("L221.SubsectorInterpTo_en")) {
       L221.SubsectorInterpTo_en %>%
         filter(!(region %in% aglu.NO_AGLU_REGIONS & supplysector %in% ag_en)) -> L221.SubsectorInterpTo_en
     }

@@ -42,12 +42,12 @@ module_gcamusa_batch_en_prices_USA_xml <- function(command, ...) {
     # Produce outputs
     create_xml("en_prices_USA.xml") %>%
       add_logit_tables_xml(L226.Supplysector_en_USA, "Supplysector") %>%
-      add_xml_data(L226.SubsectorShrwtFllt_en_USA,"SubsectorShrwtFllt") %>%
-      add_logit_tables_xml(L226.SubsectorLogit_en_USA,"SubsectorLogit") %>%
-      add_xml_data(L226.TechShrwt_en_USA,"TechShrwt") %>%
-      add_xml_data(L226.TechCoef_en_USA,"TechCoef") %>%
-      add_xml_data(L226.TechCost_en_USA,"TechCost") %>%
-      add_xml_data(L226.Ccoef,"CarbonCoef") %>%
+      add_xml_data(L226.SubsectorShrwtFllt_en_USA, "SubsectorShrwtFllt") %>%
+      add_logit_tables_xml(L226.SubsectorLogit_en_USA, "SubsectorLogit") %>%
+      add_xml_data(L226.TechShrwt_en_USA, "TechShrwt") %>%
+      add_xml_data(L226.TechCoef_en_USA, "TechCoef") %>%
+      add_xml_data(L226.TechCost_en_USA, "TechCost") %>%
+      add_xml_data(L226.Ccoef, "CarbonCoef") %>%
       add_precursors("L226.Supplysector_en_USA",
                      "L226.SubsectorShrwtFllt_en_USA",
                      "L226.SubsectorLogit_en_USA",

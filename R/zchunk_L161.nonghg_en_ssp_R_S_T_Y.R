@@ -157,7 +157,7 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
       select(GCAM_region_ID, policy)
 
     # Group SSPs by whether we process them the same
-    SSP_groups <- tibble(SSP_group = c("1&5","2","3&4"))
+    SSP_groups <- tibble(SSP_group = c("1&5", "2", "3&4"))
 
     # Add the rules for each region, gas, technology
     EF_rules <- emfact_scaled %>%

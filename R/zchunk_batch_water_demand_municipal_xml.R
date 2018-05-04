@@ -44,17 +44,17 @@ module_water_batch_water_demand_municipal_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("water_demand_municipal.xml") %>%
-      add_logit_tables_xml(L245.Supplysector,"Supplysector") %>%
-      add_logit_tables_xml(L245.SubsectorLogit,"SubsectorLogit") %>%
-      add_xml_data(L245.SubsectorShrwtFllt,"SubsectorShrwtFllt") %>%
-      add_xml_data(L245.TechShrwt,"TechShrwt") %>%
-      add_xml_data(L245.TechCoef,"TechCoef") %>%
-      add_xml_data(L245.TechCost,"TechCost") %>%
-      add_xml_data(L245.PerCapitaBased,"PerCapitaBased") %>%
-      add_xml_data(L245.BaseService,"BaseService") %>%
-      add_xml_data(L245.IncomeElasticity,"IncomeElasticity") %>%
-      add_xml_data(L245.PriceElasticity,"PriceElasticity") %>%
-      add_xml_data(L245.aeei,"aeei") %>%
+      add_logit_tables_xml(L245.Supplysector, "Supplysector") %>%
+      add_logit_tables_xml(L245.SubsectorLogit, "SubsectorLogit") %>%
+      add_xml_data(L245.SubsectorShrwtFllt, "SubsectorShrwtFllt") %>%
+      add_xml_data(L245.TechShrwt, "TechShrwt") %>%
+      add_xml_data(L245.TechCoef, "TechCoef") %>%
+      add_xml_data(L245.TechCost, "TechCost") %>%
+      add_xml_data(L245.PerCapitaBased, "PerCapitaBased") %>%
+      add_xml_data(L245.BaseService, "BaseService") %>%
+      add_xml_data(L245.IncomeElasticity, "IncomeElasticity") %>%
+      add_xml_data(L245.PriceElasticity, "PriceElasticity") %>%
+      add_xml_data(L245.aeei, "aeei") %>%
       add_precursors("L245.Supplysector", "L245.SubsectorLogit", "L245.SubsectorShrwtFllt", "L245.TechShrwt", "L245.TechCoef", "L245.TechCost", "L245.PerCapitaBased", "L245.BaseService", "L245.IncomeElasticity", "L245.PriceElasticity", "L245.aeei") ->
       water_demand_municipal.xml
 

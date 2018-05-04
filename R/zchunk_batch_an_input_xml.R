@@ -67,27 +67,27 @@ module_aglu_batch_an_input_xml <- function(command, ...) {
     # Produce outputs
     create_xml("an_input.xml") %>%
       add_xml_data(L202.RenewRsrc, "RenewRsrc") %>%
-      add_xml_data(L202.RenewRsrcPrice,"RenewRsrcPrice") %>%
-      add_xml_data(L202.maxSubResource,"maxSubResource") %>%
-      add_xml_data(L202.RenewRsrcCurves,"RenewRsrcCurves") %>%
-      add_xml_data(L202.UnlimitedRenewRsrcCurves,"UnlimitRsrc") %>%
-      add_xml_data(L202.UnlimitedRenewRsrcPrice,"UnlimitRsrcPrice") %>%
-      add_logit_tables_xml(L202.Supplysector_in,"Supplysector") %>%
-      add_logit_tables_xml(L202.SubsectorAll_in,"SubsectorAll", "SubsectorLogit") %>%
-      add_xml_data(L202.StubTech_in,"StubTech") %>%
-      add_xml_data(L202.StubTechInterp_in,"StubTechInterp") %>%
-      add_xml_data(L202.GlobalTechCoef_in,"GlobalTechCoef") %>%
-      add_xml_data(L202.GlobalTechShrwt_in,"GlobalTechShrwt") %>%
-      add_xml_data(L202.StubTechProd_in,"StubTechProd") %>%
-      add_logit_tables_xml(L202.Supplysector_an,"Supplysector") %>%
-      add_logit_tables_xml(L202.SubsectorAll_an,"SubsectorAll", "SubsectorLogit") %>%
-      add_xml_data(L202.StubTech_an,"StubTech") %>%
-      add_xml_data(L202.StubTechInterp_an,"StubTechInterp") %>%
-      add_xml_data(L202.StubTechProd_an,"StubTechProd") %>%
-      add_xml_data(L202.StubTechCoef_an,"StubTechCoef") %>%
-      add_xml_data(L202.GlobalTechCost_an,"GlobalTechCost") %>%
-      add_xml_data(L202.GlobalRenewTech_imp_an,"GlobalRenewTech") %>%
-      add_xml_data(L202.StubTechFixOut_imp_an,"StubTechFixOut") %>%
+      add_xml_data(L202.RenewRsrcPrice, "RenewRsrcPrice") %>%
+      add_xml_data(L202.maxSubResource, "maxSubResource") %>%
+      add_xml_data(L202.RenewRsrcCurves, "RenewRsrcCurves") %>%
+      add_xml_data(L202.UnlimitedRenewRsrcCurves, "UnlimitRsrc") %>%
+      add_xml_data(L202.UnlimitedRenewRsrcPrice, "UnlimitRsrcPrice") %>%
+      add_logit_tables_xml(L202.Supplysector_in, "Supplysector") %>%
+      add_logit_tables_xml(L202.SubsectorAll_in, "SubsectorAll", "SubsectorLogit") %>%
+      add_xml_data(L202.StubTech_in, "StubTech") %>%
+      add_xml_data(L202.StubTechInterp_in, "StubTechInterp") %>%
+      add_xml_data(L202.GlobalTechCoef_in, "GlobalTechCoef") %>%
+      add_xml_data(L202.GlobalTechShrwt_in, "GlobalTechShrwt") %>%
+      add_xml_data(L202.StubTechProd_in, "StubTechProd") %>%
+      add_logit_tables_xml(L202.Supplysector_an, "Supplysector") %>%
+      add_logit_tables_xml(L202.SubsectorAll_an, "SubsectorAll", "SubsectorLogit") %>%
+      add_xml_data(L202.StubTech_an, "StubTech") %>%
+      add_xml_data(L202.StubTechInterp_an, "StubTechInterp") %>%
+      add_xml_data(L202.StubTechProd_an, "StubTechProd") %>%
+      add_xml_data(L202.StubTechCoef_an, "StubTechCoef") %>%
+      add_xml_data(L202.GlobalTechCost_an, "GlobalTechCost") %>%
+      add_xml_data(L202.GlobalRenewTech_imp_an, "GlobalRenewTech") %>%
+      add_xml_data(L202.StubTechFixOut_imp_an, "StubTechFixOut") %>%
       add_precursors("L202.RenewRsrc",
                      "L202.RenewRsrcPrice",
                      "L202.maxSubResource",

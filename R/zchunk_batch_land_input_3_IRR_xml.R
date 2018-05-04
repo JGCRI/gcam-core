@@ -41,16 +41,16 @@ module_aglu_batch_land_input_3_IRR_xml <- function(command, ...) {
     # Produce outputs
     create_xml("land_input_3_IRR.xml") %>%
       add_logit_tables_xml(L2231.LN3_Logit, "LN3_Logit") %>%
-      add_xml_data(L2231.LN3_HistUnmgdAllocation,"LN3_HistUnmgdAllocation") %>%
-      add_xml_data(L2231.LN3_UnmgdAllocation,"LN3_UnmgdAllocation") %>%
+      add_xml_data(L2231.LN3_HistUnmgdAllocation, "LN3_HistUnmgdAllocation") %>%
+      add_xml_data(L2231.LN3_UnmgdAllocation, "LN3_UnmgdAllocation") %>%
       add_node_equiv_xml("LandLeaf") %>%
       add_node_equiv_xml("carbon-calc") %>%
-      add_xml_data(L2231.LN3_NoEmissCarbon,"LN3_NoEmissCarbon") %>%
-      add_xml_data(L2231.LN3_NodeCarbon,"LN3_NodeCarbon") %>%
-      add_xml_data(L2231.LN3_HistMgdAllocation_noncrop,"LN3_HistMgdAllocation") %>%
-      add_xml_data(L2231.LN3_MgdAllocation_noncrop,"LN3_MgdAllocation") %>%
-      add_xml_data(L2231.LN3_UnmgdCarbon,"LN3_UnmgdCarbon") %>%
-      add_xml_data(L2231.LN3_MgdCarbon_noncrop,"LN3_MgdCarbon") %>%
+      add_xml_data(L2231.LN3_NoEmissCarbon, "LN3_NoEmissCarbon") %>%
+      add_xml_data(L2231.LN3_NodeCarbon, "LN3_NodeCarbon") %>%
+      add_xml_data(L2231.LN3_HistMgdAllocation_noncrop, "LN3_HistMgdAllocation") %>%
+      add_xml_data(L2231.LN3_MgdAllocation_noncrop, "LN3_MgdAllocation") %>%
+      add_xml_data(L2231.LN3_UnmgdCarbon, "LN3_UnmgdCarbon") %>%
+      add_xml_data(L2231.LN3_MgdCarbon_noncrop, "LN3_MgdCarbon") %>%
       add_rename_landnode_xml() %>%
       add_precursors("L2231.LN3_Logit",
                      "L2231.LN3_HistUnmgdAllocation",

@@ -72,8 +72,8 @@ module_gcamusa_batch_en_transformation_USA_xml <- function(command, ...) {
     create_xml("en_transformation_USA.xml") %>%
       add_node_equiv_xml("sector") %>%
       add_node_equiv_xml("technology") %>%
-      add_xml_data(L222.DeleteStubTech_USAen,"DeleteStubTech") %>%
-      add_xml_data(L222.PassThroughSector_USAen,"PassThroughSector") %>%
+      add_xml_data(L222.DeleteStubTech_USAen, "DeleteStubTech") %>%
+      add_xml_data(L222.PassThroughSector_USAen, "PassThroughSector") %>%
       add_logit_tables_xml(L222.SubsectorLogit_en_USA, "SubsectorLogit") %>%
       add_xml_data(L222.StubTech_en_USA, "StubTech") %>%
       add_xml_data(L222.StubTechCoef_refining_USA, "StubTechCoef") %>%
@@ -83,17 +83,17 @@ module_gcamusa_batch_en_transformation_USA_xml <- function(command, ...) {
       add_xml_data(L222.GlobalTechShrwt_en_USA, "GlobalTechShrwt") %>%
       add_xml_data(L222.GlobalTechCapture_en_USA, "GlobalTechCapture") %>%
       add_xml_data(L222.GlobalTechSCurve_en_USA, "GlobalTechSCurve") %>%
-      add_xml_data(L222.Tech_USAen,"PassThroughTech") %>%
-      add_xml_data(L222.TechInterp_USAen,"TechInterp") %>%
-      add_xml_data(L222.TechShrwt_USAen,"TechShrwt") %>%
-      add_xml_data(L222.TechShrwt_USAen,"TechShrwt") %>%
-      add_xml_data(L222.TechCoef_USAen,"TechCoef") %>%
-      add_xml_data(L222.Production_USArefining,"Production") %>%
-      add_logit_tables_xml(L222.Supplysector_en_USA,"Supplysector") %>%
-      add_xml_data(L222.SubsectorShrwtFllt_en_USA,"SubsectorShrwtFllt") %>%
-      add_xml_data(L222.StubTechProd_refining_USA,"StubTechProd") %>%
-      add_xml_data(L222.StubTechMarket_en_USA,"StubTechMarket") %>%
-      add_xml_data(L222.CarbonCoef_en_USA,"CarbonCoef") %>%
+      add_xml_data(L222.Tech_USAen, "PassThroughTech") %>%
+      add_xml_data(L222.TechInterp_USAen, "TechInterp") %>%
+      add_xml_data(L222.TechShrwt_USAen, "TechShrwt") %>%
+      add_xml_data(L222.TechShrwt_USAen, "TechShrwt") %>%
+      add_xml_data(L222.TechCoef_USAen, "TechCoef") %>%
+      add_xml_data(L222.Production_USArefining, "Production") %>%
+      add_logit_tables_xml(L222.Supplysector_en_USA, "Supplysector") %>%
+      add_xml_data(L222.SubsectorShrwtFllt_en_USA, "SubsectorShrwtFllt") %>%
+      add_xml_data(L222.StubTechProd_refining_USA, "StubTechProd") %>%
+      add_xml_data(L222.StubTechMarket_en_USA, "StubTechMarket") %>%
+      add_xml_data(L222.CarbonCoef_en_USA, "CarbonCoef") %>%
       add_precursors("L222.DeleteStubTech_USAen",
                      "L222.PassThroughSector_USAen",
                      "L222.SubsectorLogit_en_USA",

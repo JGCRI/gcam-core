@@ -26,8 +26,8 @@ module_emissions_batch_MACC_TC_SSP1_IRR_MGMT_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("MACC_TC_SSP1_IRR_MGMT.xml") %>%
-      add_xml_data(L2522.MAC_Ag_TC_SSP1,"AgMACTC") %>%
-      add_xml_data(L2522.MAC_An_TC_SSP1,"MACTC") %>%
+      add_xml_data(L2522.MAC_Ag_TC_SSP1, "AgMACTC") %>%
+      add_xml_data(L2522.MAC_An_TC_SSP1, "MACTC") %>%
       add_precursors("L2522.MAC_Ag_TC_SSP1", "L2522.MAC_An_TC_SSP1") ->
       MACC_TC_SSP1_IRR_MGMT.xml
 

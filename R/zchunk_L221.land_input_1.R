@@ -284,7 +284,7 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
     L221.LN1_UnmgdCarbon %>%
       add_title("Carbon content for unmanaged land (LT_GLU) in first nest by region") %>%
       add_units("Varies") %>%
-      add_comments("Carbon content info for unmanaged land in the first nest including soil and vegetative carbon,") %>%
+      add_comments("Carbon content info for unmanaged land in the first nest including soil and vegetative carbon, ") %>%
       add_comments("from L125 land cover data, L121 carbon content data, and GCAMLandLeaf_CdensityLT assumptions.") %>%
       add_legacy_name("L221.LN1_UnmgdCarbon") %>%
       add_precursors("common/GCAM_region_names",

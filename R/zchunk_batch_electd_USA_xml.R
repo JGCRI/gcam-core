@@ -40,14 +40,14 @@ module_gcamusa_batch_electd_USA_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("electd_USA.xml") %>%
-      add_xml_data(L226.DeleteSupplysector_USAelec,"DeleteSupplysector") %>%
+      add_xml_data(L226.DeleteSupplysector_USAelec, "DeleteSupplysector") %>%
       add_logit_tables_xml(L226.Supplysector_electd_USA, "Supplysector") %>%
       add_logit_tables_xml(L226.SubsectorLogit_electd_USA, "SubsectorLogit") %>%
       add_xml_data(L226.SubsectorShrwtFllt_electd_USA, "SubsectorShrwtFllt") %>%
       add_xml_data(L226.SubsectorInterp_electd_USA, "SubsectorInterp") %>%
-      add_xml_data(L226.TechShrwt_electd_USA,"TechShrwt") %>%
-      add_xml_data(L226.TechCost_electd_USA,"TechCost") %>%
-      add_xml_data(L226.TechCoef_electd_USA,"TechCoef") %>%
+      add_xml_data(L226.TechShrwt_electd_USA, "TechShrwt") %>%
+      add_xml_data(L226.TechCost_electd_USA, "TechCost") %>%
+      add_xml_data(L226.TechCoef_electd_USA, "TechCoef") %>%
       add_precursors("L226.DeleteSupplysector_USAelec",
                      "L226.Supplysector_electd_USA",
                      "L226.SubsectorLogit_electd_USA",

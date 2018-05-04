@@ -36,13 +36,13 @@ module_aglu_batch_protected_land_input_2_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("protected_land_input_2.xml") %>%
-      add_xml_data(L222.LN2_HistUnmgdAllocation_noprot,"LN2_HistUnmgdAllocation") %>%
-      add_xml_data(L222.LN2_UnmgdAllocation_noprot,"LN2_UnmgdAllocation") %>%
-      add_xml_data(L222.LN2_UnmgdCarbon,"LN2_UnmgdCarbon") %>%
+      add_xml_data(L222.LN2_HistUnmgdAllocation_noprot, "LN2_HistUnmgdAllocation") %>%
+      add_xml_data(L222.LN2_UnmgdAllocation_noprot, "LN2_UnmgdAllocation") %>%
+      add_xml_data(L222.LN2_UnmgdCarbon, "LN2_UnmgdCarbon") %>%
       add_logit_tables_xml(L222.LN1_Logit_prot, "LN1_ValueLogit", "LN1_Logit") %>%
-      add_xml_data(L222.LN1_HistUnmgdAllocation_prot,"LN1_HistUnmgdAllocation") %>%
-      add_xml_data(L222.LN1_UnmgdAllocation_prot,"LN1_UnmgdAllocation") %>%
-      add_xml_data(L222.LN1_UnmgdCarbon_prot,"LN1_UnmgdCarbon") %>%
+      add_xml_data(L222.LN1_HistUnmgdAllocation_prot, "LN1_HistUnmgdAllocation") %>%
+      add_xml_data(L222.LN1_UnmgdAllocation_prot, "LN1_UnmgdAllocation") %>%
+      add_xml_data(L222.LN1_UnmgdCarbon_prot, "LN1_UnmgdCarbon") %>%
       add_rename_landnode_xml() %>%
       add_precursors("L222.LN2_HistUnmgdAllocation_noprot", "L222.LN2_UnmgdAllocation_noprot", "L222.LN2_UnmgdCarbon", "L222.LN1_HistUnmgdAllocation_prot", "L222.LN1_UnmgdAllocation_prot", "L222.LN1_UnmgdCarbon_prot", "L222.LN1_Logit_prot") ->
       protected_land_input_2.xml

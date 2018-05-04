@@ -308,21 +308,21 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
     L244.SubsectorLogit_bld_gcamusa <- write_to_all_states(A44.subsector_logit, c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], LOGIT_TYPE_COLNAME))
 
     # L244.SubsectorShrwt_bld and L244.SubsectorShrwtFllt_bld: Subsector shareweights of building sector
-    if(any(!is.na(A44.subsector_shrwt$year))){
+    if(any(!is.na(A44.subsector_shrwt$year))) {
       L244.SubsectorShrwt_bld_gcamusa <- write_to_all_states(A44.subsector_shrwt %>%
                                                                filter(!is.na(year)), LEVEL2_DATA_NAMES[["SubsectorShrwt"]])
     }
-    if(any(!is.na(A44.subsector_shrwt$year.fillout))){
+    if(any(!is.na(A44.subsector_shrwt$year.fillout))) {
       L244.SubsectorShrwtFllt_bld_gcamusa <- write_to_all_states(A44.subsector_shrwt %>%
                                                                    filter(!is.na(year.fillout)), LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]])
     }
 
     # L244.SubsectorInterp_bld and L244.SubsectorInterpTo_bld: Subsector shareweight interpolation of building sector
-    if(any(is.na(A44.subsector_interp$to.value))){
+    if(any(is.na(A44.subsector_interp$to.value))) {
       L244.SubsectorInterp_bld_gcamusa <- write_to_all_states(A44.subsector_interp %>%
                                                                 filter(is.na(to.value)), LEVEL2_DATA_NAMES[["SubsectorInterp"]])
     }
-    if(any(!is.na(A44.subsector_interp$to.value))){
+    if(any(!is.na(A44.subsector_interp$to.value))) {
       L244.SubsectorInterpTo_bld_gcamusa <- write_to_all_states(A44.subsector_interp %>%
                                                                   filter(!is.na(to.value)), LEVEL2_DATA_NAMES[["SubsectorInterpTo"]])
     }
@@ -358,7 +358,7 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
       mutate(market.name = if_else(minicam.energy.input %in% gcamusa.ELECT_TD_SECTORS, region, market.name))
 
     # If true, then we change market.name for selected fuels to state markets, rather than USA
-    if(gcamusa.USE_REGIONAL_FUEL_MARKETS){
+    if(gcamusa.USE_REGIONAL_FUEL_MARKETS) {
       L244.StubTechMarket_bld <- L244.StubTechMarket_bld %>%
         left_join_error_no_match(states_subregions, by = c("region" = "state")) %>%
         mutate(market.name = if_else(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS,
@@ -522,7 +522,7 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
 
     # When adding floorspace, we should take floorspace from max(BASE_YEARS) as well
     # Instead we take the first value, which ends up being floorspace from min(BASE_YEARS)
-    if(OLD_DATA_SYSTEM_BEHAVIOR){
+    if(OLD_DATA_SYSTEM_BEHAVIOR) {
       L244.GenericServiceSatiation_gcamusa <- L244.GenericServiceSatiation_gcamusa %>%
         # Add floorspace
         left_join_keep_first_only(L244.Floorspace_gcamusa, by = c(LEVEL2_DATA_NAMES[["BldNodes"]]))
@@ -546,7 +546,7 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
     # Since we filter L244.ThermalBaseService_gcamusa  to max(BASE_YEARS), we should take floorspace from max(BASE_YEARS) as well
     # Instead we take the first floorspace value, which ends up being the floorspace from min(BASE_YEARS)
     # By adding in "year" to join by, we ensure that the same year is used for floorspace and base service
-    if(OLD_DATA_SYSTEM_BEHAVIOR){
+    if(OLD_DATA_SYSTEM_BEHAVIOR) {
       L244.ThermalServiceSatiation_gcamusa <- L244.ThermalServiceSatiation_gcamusa %>%
         # Add floorspace
         left_join_keep_first_only(L244.Floorspace_gcamusa, by = c(LEVEL2_DATA_NAMES[["BldNodes"]]))
@@ -748,7 +748,7 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
       add_precursors("gcam-usa/A44.sector") ->
       L244.FinalEnergyKeyword_bld_gcamusa
 
-    if(exists("L244.SubsectorShrwt_bld")){
+    if(exists("L244.SubsectorShrwt_bld")) {
       L244.SubsectorShrwt_bld_gcamusa %>%
         add_title("Subsector shareweights of building sector") %>%
         add_units("Unitless") %>%
@@ -762,7 +762,7 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
         L244.SubsectorShrwt_bld_gcamusa
     }
 
-    if(exists("L244.SubsectorShrwtFllt_bld_gcamusa")){
+    if(exists("L244.SubsectorShrwtFllt_bld_gcamusa")) {
       L244.SubsectorShrwtFllt_bld_gcamusa %>%
         add_title("Subsector shareweights of building sector") %>%
         add_units("Unitless") %>%
@@ -777,7 +777,7 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
     }
 
 
-    if(exists("L244.SubsectorInterp_bld_gcamusa")){
+    if(exists("L244.SubsectorInterp_bld_gcamusa")) {
       L244.SubsectorInterp_bld_gcamusa %>%
         add_title("Subsector shareweight interpolation of building sector") %>%
         add_units("NA") %>%
@@ -791,7 +791,7 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
         L244.SubsectorInterp_bld_gcamusa
     }
 
-    if(exists("L244.SubsectorInterpTo_bld_gcamusa")){
+    if(exists("L244.SubsectorInterpTo_bld_gcamusa")) {
       L244.SubsectorInterpTo_bld_gcamusa %>%
         add_title("Subsector shareweight interpolation of building sector") %>%
         add_units("NA") %>%

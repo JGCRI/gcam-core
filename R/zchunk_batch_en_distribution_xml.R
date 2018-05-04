@@ -49,7 +49,7 @@ module_energy_batch_en_distribution_xml <- function(command, ...) {
     # Produce outputs
     create_xml("en_distribution.xml") %>%
       add_logit_tables_xml(L226.Supplysector_en, "Supplysector") %>%
-      add_logit_tables_xml(L226.SubsectorLogit_en,"SubsectorLogit") ->
+      add_logit_tables_xml(L226.SubsectorLogit_en, "SubsectorLogit") ->
       en_distribution.xml
 
     # Some data inputs may not actually contain data. If so, do not add_xml_data.
@@ -78,13 +78,13 @@ module_energy_batch_en_distribution_xml <- function(command, ...) {
     }
 
     en_distribution.xml %>%
-      add_xml_data(L226.StubTech_en,"StubTech") %>%
-      add_xml_data(L226.GlobalTechEff_en,"GlobalTechEff") %>%
-      add_xml_data(L226.GlobalTechCost_en,"GlobalTechCost") %>%
-      add_xml_data(L226.GlobalTechShrwt_en,"GlobalTechShrwt") %>%
-      add_xml_data(L226.StubTechCoef_elecownuse,"StubTechCoef") %>%
-      add_xml_data(L226.StubTechCoef_electd,"StubTechCoef") %>%
-      add_xml_data(L226.StubTechCoef_gaspipe,"StubTechCoef") %>%
+      add_xml_data(L226.StubTech_en, "StubTech") %>%
+      add_xml_data(L226.GlobalTechEff_en, "GlobalTechEff") %>%
+      add_xml_data(L226.GlobalTechCost_en, "GlobalTechCost") %>%
+      add_xml_data(L226.GlobalTechShrwt_en, "GlobalTechShrwt") %>%
+      add_xml_data(L226.StubTechCoef_elecownuse, "StubTechCoef") %>%
+      add_xml_data(L226.StubTechCoef_electd, "StubTechCoef") %>%
+      add_xml_data(L226.StubTechCoef_gaspipe, "StubTechCoef") %>%
       add_precursors("L226.Supplysector_en",
                      "L226.SubsectorLogit_en",
                      "L226.SubsectorShrwt_en",

@@ -24,7 +24,7 @@ module_energy_batch_no_offshore_ccs_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("no_offshore_ccs.xml") %>%
-      add_xml_data(L261.GlobalTechShrwt_C_nooffshore,"GlobalTechShrwt") %>%
+      add_xml_data(L261.GlobalTechShrwt_C_nooffshore, "GlobalTechShrwt") %>%
       add_precursors("L261.GlobalTechShrwt_C_nooffshore") ->
       no_offshore_ccs.xml
 

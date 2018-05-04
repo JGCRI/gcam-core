@@ -198,8 +198,8 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
     L111.Prod_EJ_R_F_Yh %>%
       add_title("Historical fossil energy production") %>%
       add_units("EJ") %>%
-      add_comments("Determine regional shares of production for each primary fuel,") %>%
-      add_comments("interpolate unconventional oil production to all historical years,") %>%
+      add_comments("Determine regional shares of production for each primary fuel, ") %>%
+      add_comments("interpolate unconventional oil production to all historical years, ") %>%
       add_comments("deduct unconventional oil from total oil and include it in calibrated production table.") %>%
       add_legacy_name("L111.Prod_EJ_R_F_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "L1011.en_bal_EJ_R_Si_Fi_Yh",

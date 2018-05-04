@@ -267,7 +267,7 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
         add_title("Fertilizer consumption by GTAP country / crop") %>%
         add_units("Megatons of Nitrogen (MtN)") %>%
         add_comments("Bottom-up estimates of fertilizer consumption are calulated using IFA2002 fertilizer data and ") %>%
-        add_comments("multiple harvested area data sources. Top down estimates are calculated using IFA fertilizer data,") %>%
+        add_comments("multiple harvested area data sources. Top down estimates are calculated using IFA fertilizer data, ") %>%
         add_comments("and the top down estimates are used to scale the bottom-up estimates, making the final output.") %>%
         add_legacy_name("L141.ag_Fert_Cons_MtN_ctry_crop") %>%
         add_precursors("aglu/FAO/FAO_ag_items_PRODSTAT",

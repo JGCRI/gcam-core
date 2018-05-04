@@ -275,7 +275,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
       add_title("Forest residue biomass supply curves") %>%
       add_units("Fraction Harvested") %>%
       add_comments("For each region-supplySector-supplySubsector-ProductionTech combination in L2042.AgResBio_For, ") %>%
-      add_comments("base supply curves are read in from A_resbio_curves and then in specified calibration years BASE_YEARS,") %>%
+      add_comments("base supply curves are read in from A_resbio_curves and then in specified calibration years BASE_YEARS, ") %>%
       add_comments("replaced by fractions in  A_bio_frac_prod_R to form the table of Forest resbio supply curves for each region and year.") %>%
       add_legacy_name("L2042.AgResBioCurve_For") %>%
       add_precursors("common/GCAM_region_names",
@@ -288,7 +288,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
     L204.GlobalResBio_Mill %>%
       add_title("Global mill residue biomass parameters") %>%
       add_units("Varies") %>%
-      add_comments("Sector, subsector, and technology combinations for NonFoodDeman_Forest are pulled from A_demand_technology,") %>%
+      add_comments("Sector, subsector, and technology combinations for NonFoodDeman_Forest are pulled from A_demand_technology, ") %>%
       add_comments("and externally set parameters are added to form the table of global Mill residue biomass parameters in each year") %>%
       add_legacy_name("L2042.GlobalResBio_Mill") %>%
       add_precursors("water/basin_to_country_mapping",
@@ -297,8 +297,8 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
     L204.StubResBioCurve_Mill %>%
       add_title("Mill residue biomass supply curves") %>%
       add_units("Fraction harvested") %>%
-      add_comments("Sector, subsector, and technology combinations from L2042.GlobalResBio_Mill are repeated for each GCAM region and year,") %>%
-      add_comments("base supply curves are read in from A_resbio_curves and then in specified calibration years BASE_YEARS,") %>%
+      add_comments("Sector, subsector, and technology combinations from L2042.GlobalResBio_Mill are repeated for each GCAM region and year, ") %>%
+      add_comments("base supply curves are read in from A_resbio_curves and then in specified calibration years BASE_YEARS, ") %>%
       add_comments("replaced by fractions in  A_bio_frac_prod_R to form the table of Mill resbio supply curves for each region and year.") %>%
       add_legacy_name("L2042.StubResBioCurve_Mill") %>%
       add_precursors("common/GCAM_region_names",
@@ -326,7 +326,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
     L2042.AgResBioCurve_ag_irr_mgmt %>%
       add_title("Agriculture residue biomass supply curves") %>%
       add_units("Fraction harvested") %>%
-      add_comments("For each region-supplySector-supplySubsector-ProductionTech-irrigation-tech combination in L2042.AgResBio_ag_irr_mgmt,") %>%
+      add_comments("For each region-supplySector-supplySubsector-ProductionTech-irrigation-tech combination in L2042.AgResBio_ag_irr_mgmt, ") %>%
       add_comments("base supply curves are read in from A_resbio_curves to form the table of Agriculture resbio supply curves for each region and year.") %>%
       add_legacy_name("L2042.AgResBioCurve_ag_irr_mgmt") %>%
       add_precursors("common/GCAM_region_names",

@@ -834,7 +834,7 @@ module_energy_L223.electricity <- function(command, ...) {
       mutate(calOutputValue = round(value, energy.DIGITS_CALOUTPUT), share.weight.year = year, share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
       set_subsector_shrwt() ->
       L223.StubTechProd_elec
-    L223.StubTechProd_elec <-L223.StubTechProd_elec[c(LEVEL2_DATA_NAMES[["StubTechYr"]], "calOutputValue","share.weight.year" , "subs.share.weight", "share.weight")]
+    L223.StubTechProd_elec <-L223.StubTechProd_elec[c(LEVEL2_DATA_NAMES[["StubTechYr"]], "calOutputValue", "share.weight.year" , "subs.share.weight", "share.weight")]
 
     # Calculate fixed output of future hydropower generation for L223.StubTechFixOut_hydro
     # ------------------------------------------------------------------------------------
@@ -1031,7 +1031,7 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.SubsectorInterp_elec %>%
       add_title("Regional interpolation rules using a to.year for electricity subsectors") %>%
       add_units("unitless") %>%
-      add_comments("Global interpolation rules subset to those using a to.year, applied regionally,") %>%
+      add_comments("Global interpolation rules subset to those using a to.year, applied regionally, ") %>%
       add_comments("and then replaced by regional interpolation rules where found in A23.subsector.interp_R") %>%
       add_legacy_name("L223.SubsectorInterp_elec") %>%
       add_precursors("energy/A23.subsector_interp", "energy/A23.subsector_interp_R") ->

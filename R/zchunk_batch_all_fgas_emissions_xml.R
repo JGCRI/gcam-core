@@ -38,7 +38,7 @@ module_emissions_batch_all_fgas_emissions_xml <- function(command, ...) {
       add_xml_data(L241.fgas_all_units, "StubTechEmissUnits") %>%
       add_xml_data(L252.MAC_higwp, "MAC") %>%
       add_precursors("L241.hfc_all", "L241.pfc_all",
-                     "L241.hfc_future", "L241.fgas_all_units","L252.MAC_higwp") ->
+                     "L241.hfc_future", "L241.fgas_all_units", "L252.MAC_higwp") ->
       all_fgas_emissions.xml
 
     return_data(all_fgas_emissions.xml)

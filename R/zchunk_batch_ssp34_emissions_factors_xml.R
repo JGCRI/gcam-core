@@ -34,8 +34,8 @@ module_emissions_batch_ssp34_emissions_factors_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("ssp34_emissions_factors.xml") %>%
-      add_xml_data(L251.ssp34_ef,"InputEmissCoeff") %>%
-      add_xml_data(L251.ssp34_ef_vin,"ReadInControl") %>%
+      add_xml_data(L251.ssp34_ef, "InputEmissCoeff") %>%
+      add_xml_data(L251.ssp34_ef_vin, "ReadInControl") %>%
       add_precursors("L251.ssp34_ef", "L251.ssp34_ef_vin") ->
       ssp34_emissions_factors.xml
 

@@ -239,7 +239,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       add_title("Pollutant emissions for energy technologies in all regions") %>%
       add_units("Tg") %>%
       add_comments("Take non-GHG emissions for the energy system, filter out resources") %>%
-      add_comments("in model base years, rename to regional SO2, filter to district heat,") %>%
+      add_comments("in model base years, rename to regional SO2, filter to district heat, ") %>%
       add_comments("and delete sectors with zero heating and zero cooling degree days.") %>%
       add_legacy_name("L201.en_pol_emissions") %>%
       add_precursors("common/GCAM_region_names",
@@ -252,7 +252,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       add_title("GHG emissions for energy technologies in all regions") %>%
       add_units("Tg") %>%
       add_comments("Take GHG emissions for the energy system, filter out resources") %>%
-      add_comments("in model base years, rename to regional SO2, filter to district heat,") %>%
+      add_comments("in model base years, rename to regional SO2, filter to district heat, ") %>%
       add_comments("and delete sectors with zero heating and zero cooling degree days.") %>%
       add_legacy_name("L201.en_ghg_emissions") %>%
       add_precursors("common/GCAM_region_names",
@@ -265,7 +265,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       add_title("BC/OC emissions factors for energy technologies in all regions") %>%
       add_units("Tg/EJ") %>%
       add_comments("Take BC/OC emissions factors for energy technologies, filter out resources") %>%
-      add_comments("in model base years, rename to regional SO2, filter to district heat,") %>%
+      add_comments("in model base years, rename to regional SO2, filter to district heat, ") %>%
       add_comments("and delete sectors with zero heating and zero cooling degree days.") %>%
       add_legacy_name("L201.en_bcoc_emissions") %>%
       add_precursors("common/GCAM_region_names",

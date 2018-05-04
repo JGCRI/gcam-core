@@ -26,8 +26,8 @@ module_water_batch_electricity_water_coefs_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("electricity_water_coefs.xml") %>%
-      add_xml_data(L2233.GlobalTechCoef_elec_cool,"GlobalTechCoef") %>%
-      add_xml_data(L2233.GlobalIntTechCoef_elec_cool,"GlobalIntTechCoef") %>%
+      add_xml_data(L2233.GlobalTechCoef_elec_cool, "GlobalTechCoef") %>%
+      add_xml_data(L2233.GlobalIntTechCoef_elec_cool, "GlobalIntTechCoef") %>%
       add_precursors("L2233.GlobalTechCoef_elec_cool", "L2233.GlobalIntTechCoef_elec_cool") ->
       electricity_water_coefs.xml
 
