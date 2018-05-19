@@ -140,17 +140,7 @@ parse_csv_header <- function(obj, filename, n = 20, enforce_requirements = TRUE)
     obj <- add_flags(obj, FLAG_NO_TEST)
   }
 
-  # File may be compressed; handle this via a connection
-  if(grepl("\\.gz$", filename)) {
-    con <- gzfile(filename)
-  } else if(grepl("\\.zip$", filename)) {
-    con <- unz(filename, filename = basename(gsub("\\.zip$", "", filename)))
-  } else {
-    con <- file(filename)
-  }
-
-  x <- readLines(con, n = n)
-  close(con)
+  x <- readLines(filename, n = n)
 
   # Excel tries to be 'helpful' and, when working with CSV files, quotes lines with
   # commas in them...which you CAN'T SEE when re-opening in Excel. Trap this problem.
@@ -162,9 +152,7 @@ parse_csv_header <- function(obj, filename, n = 20, enforce_requirements = TRUE)
   filecheck <- extract_header_info(x, "File:", filename, required = enforce_requirements)
   # Remove trailing commas - stupid Excel
   filecheck <- gsub(",*$", "", filecheck)
-  # Remove any compression extension
-  filename_clean <- gsub("\\.(zip|gz)$", "", filename) %>% basename
-  if(enforce_requirements & !identical(filecheck, filename_clean)) {
+  if(enforce_requirements & !identical(filecheck, basename(filename))) {
     stop("'File:' given in header (", filecheck, ") doesn't match filename in ", filename)
   }
 
@@ -191,7 +179,7 @@ find_csv_file <- function(filename, optional, quiet = FALSE) {
   assert_that(is.logical(optional))
   assert_that(is.logical(quiet))
 
-  extensions <- c("", ".csv", ".csv.gz", ".csv.zip")
+  extensions <- c("", ".csv")
   for(ex in extensions) {
     fqfn <- system.file("extdata", paste0(filename, ex), package = "gcamdata")
     if(fqfn != "") {
@@ -472,70 +460,35 @@ screen_forbidden <- function(fn) {
 
 #' normalize_files
 #'
-#' Normalize line endings for all package input data and compress files.
+#' Normalize line endings for all package input data.
 #'
 #' @param root Folder root to scan, character
-#' @param min_compress_size Files above this size (numeric, in MB) will be compressed when re-written
 #' @return Nothing - run for side effects only.
 #' @note Set \code{root} to "./extdata" in the git directory, not the package root, to make changes that 'stick'.
 #' @export
-#' @details Some GCAM input datafiles have bad line endings (like you would find in Mac OS 9 and previous), and/or
+#' @details Some GCAM input datafiles have bad line endings, and/or
 #' don't have a final newline. This utility script converts all files to have Unix line endings (\code{\\n}) and a final newline.
-#' It also automatically compresses files above a certain size.
 #' @author BBL
-normalize_files <- function(root = system.file("extdata", package = "gcamdata"), min_compress_size = 1) {
-  if(.Platform$OS.type == "windows") {
-   stop("This should not be run on Windows")
-  }
+normalize_files <- function(root = system.file("extdata", package = "gcamdata")) {
   assert_that(is.character(root))
-  assert_that(is.numeric(min_compress_size))
   message("Root: ", root)
 
-  # Get a list of all input files: CSV files that may or may not be already compressed
-  files <- list.files(root, pattern = "\\.csv(\\.gz|\\.zip)?$", full.names = TRUE, recursive = TRUE)
+  # Get a list of all CSV input files
+  files <- list.files(root, pattern = "\\.csv$", full.names = TRUE, recursive = TRUE)
 
   for(f in seq_along(files)) {
     shortfn <- gsub(root, "", files[f])
     size <- round(file.size(files[f]) / 1024 / 1024, 3)  # MB
     message(f, "/", length(files), ": ", shortfn, ", ", size, " Mb ", appendLF = FALSE)
 
-    # Open the appropriate-type connection, depending on compression
-    if(grepl("\\.gz$", files[f])) {
-      con <- gzfile(files[f])
-      message("(gz)")
-    } else if(grepl("\\.zip$", files[f])) {
-      con <- unz(files[f], filename = basename(gsub("\\.zip$", "", files[f])))
-      message("(zip)")
-    } else {
-      con <- file(files[f])
-      message()
-    }
-
     # Read file and then write it back out
     message("\tReading...", appendLF = FALSE)
-    open(con)
-    txt <- readLines(con, warn = FALSE)
-    close(con)
+    txt <- readLines(files[f], warn = FALSE)
     uc_size <- format(utils::object.size(txt), units = "Mb")
     message("OK. ", uc_size, " uncompressed")
 
     message("\tWriting...", appendLF = FALSE)
-    ofile <- gsub("(\\.zip|\\.gz)$", "", files[f])
-    writeLines(txt, ofile)
+    writeLines(txt, files[f])
     message("OK")
-
-    if(ofile != files[f]) {
-      message("\tRemoving original file...", appendLF = FALSE)
-      file.remove(files[f])
-      message("OK")
-    }
-
-    # Compress if necessary
-    # Note that Rutils::gzip will automatically remove the uncompressed file
-    if(uc_size > min_compress_size) {
-      message("\tCompressing...", appendLF = FALSE)
-      R.utils::gzip(ofile)
-      message("OK")
-    }
   }
 }

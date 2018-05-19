@@ -151,25 +151,6 @@ test_that("parse_csv_header works", {
   # Empty metadata not allowed
   expect_error(extract_header_info(x, "Blank:", "test"))
 
-  # GZ'd file
-  if(require(R.utils)) {
-    gztf <- R.utils::gzip(tf, remove = FALSE)
-    if(file.exists(gztf)) {
-      obj <- parse_csv_header(obj_original, gztf)
-      expect_equal(get_title(obj), "title")
-      file.remove(gztf)
-    }
-  }
-
-  # Zipped file
-  ztf <- paste0(tf, ".zip")
-  utils::zip(ztf, tf, extras = "-jq")   # junk paths, quiet
-  if(file.exists(ztf)) {
-    obj <- parse_csv_header(obj_original, ztf)
-    expect_equal(get_title(obj), "title")
-    file.remove(ztf)
-  }
-
   # File without required data
   writeLines(x[1], tf)
   expect_error(parse_csv_header(obj_original, tf, enforce_requirements = TRUE))
