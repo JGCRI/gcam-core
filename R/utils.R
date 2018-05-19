@@ -140,17 +140,7 @@ parse_csv_header <- function(obj, filename, n = 20, enforce_requirements = TRUE)
     obj <- add_flags(obj, FLAG_NO_TEST)
   }
 
-  # File may be compressed; handle this via a connection
-  if(grepl("\\.gz$", filename)) {
-    con <- gzfile(filename)
-  } else if(grepl("\\.zip$", filename)) {
-    con <- unz(filename, filename = basename(gsub("\\.zip$", "", filename)))
-  } else {
-    con <- file(filename)
-  }
-
-  x <- readLines(con, n = n)
-  close(con)
+  x <- readLines(filename, n = n)
 
   # Excel tries to be 'helpful' and, when working with CSV files, quotes lines with
   # commas in them...which you CAN'T SEE when re-opening in Excel. Trap this problem.
@@ -162,9 +152,7 @@ parse_csv_header <- function(obj, filename, n = 20, enforce_requirements = TRUE)
   filecheck <- extract_header_info(x, "File:", filename, required = enforce_requirements)
   # Remove trailing commas - stupid Excel
   filecheck <- gsub(",*$", "", filecheck)
-  # Remove any compression extension
-  filename_clean <- gsub("\\.(zip|gz)$", "", filename) %>% basename
-  if(enforce_requirements & !identical(filecheck, filename_clean)) {
+  if(enforce_requirements & !identical(filecheck, basename(filename))) {
     stop("'File:' given in header (", filecheck, ") doesn't match filename in ", filename)
   }
 
@@ -191,7 +179,7 @@ find_csv_file <- function(filename, optional, quiet = FALSE) {
   assert_that(is.logical(optional))
   assert_that(is.logical(quiet))
 
-  extensions <- c("", ".csv", ".csv.gz", ".csv.zip")
+  extensions <- c("", ".csv")
   for(ex in extensions) {
     fqfn <- system.file("extdata", paste0(filename, ex), package = "gcamdata")
     if(fqfn != "") {
@@ -472,7 +460,7 @@ screen_forbidden <- function(fn) {
 
 #' normalize_files
 #'
-#' Normalize line endings for all package input data and compress files.
+#' Normalize line endings for all package input data.
 #'
 #' @param root Folder root to scan, character
 #' @return Nothing - run for side effects only.

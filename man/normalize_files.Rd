@@ -13,7 +13,7 @@ normalize_files(root = system.file("extdata", package = "gcamdata"))
 Nothing - run for side effects only.
 }
 \description{
-Normalize line endings for all package input data and compress files.
+Normalize line endings for all package input data.
 }
 \details{
 Some GCAM input datafiles have bad line endings, and/or
