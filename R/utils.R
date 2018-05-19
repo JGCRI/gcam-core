@@ -473,43 +473,22 @@ normalize_files <- function(root = system.file("extdata", package = "gcamdata"))
   assert_that(is.character(root))
   message("Root: ", root)
 
-  # Get a list of all input files: CSV files that may or may not be already compressed
-  files <- list.files(root, pattern = "\\.csv(\\.gz|\\.zip)?$", full.names = TRUE, recursive = TRUE)
+  # Get a list of all CSV input files
+  files <- list.files(root, pattern = "\\.csv$", full.names = TRUE, recursive = TRUE)
 
   for(f in seq_along(files)) {
     shortfn <- gsub(root, "", files[f])
     size <- round(file.size(files[f]) / 1024 / 1024, 3)  # MB
     message(f, "/", length(files), ": ", shortfn, ", ", size, " Mb ", appendLF = FALSE)
 
-    # Open the appropriate-type connection, depending on compression
-    if(grepl("\\.gz$", files[f])) {
-      con <- gzfile(files[f])
-      message("(gz)")
-    } else if(grepl("\\.zip$", files[f])) {
-      con <- unz(files[f], filename = basename(gsub("\\.zip$", "", files[f])))
-      message("(zip)")
-    } else {
-      con <- file(files[f])
-      message()
-    }
-
     # Read file and then write it back out
     message("\tReading...", appendLF = FALSE)
-    open(con)
-    txt <- readLines(con, warn = FALSE)
-    close(con)
+    txt <- readLines(files[f], warn = FALSE)
     uc_size <- format(utils::object.size(txt), units = "Mb")
     message("OK. ", uc_size, " uncompressed")
 
     message("\tWriting...", appendLF = FALSE)
-    ofile <- gsub("(\\.zip|\\.gz)$", "", files[f])
-    writeLines(txt, ofile)
+    writeLines(txt, files[f])
     message("OK")
-
-    if(ofile != files[f]) {
-      message("\tRemoving original file...", appendLF = FALSE)
-      file.remove(files[f])
-      message("OK")
-    }
   }
 }
