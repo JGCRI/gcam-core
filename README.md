@@ -5,8 +5,6 @@
 [![codecov](https://codecov.io/gh/JGCRI/gcamdata/branch/master/graph/badge.svg)](https://codecov.io/gh/JGCRI/gcamdata)
 
 # gcamdata
-The GCAM data system rewrite.
+The new GCAM data system, rewritten as an R package.
 
 ![](https://github.com/bpbond/gcamdata/blob/master/figures/network_current.png)
-
-![](https://github.com/bpbond/gcamdata/blob/master/figures/network.png)
