@@ -475,20 +475,14 @@ screen_forbidden <- function(fn) {
 #' Normalize line endings for all package input data and compress files.
 #'
 #' @param root Folder root to scan, character
-#' @param min_compress_size Files above this size (numeric, in MB) will be compressed when re-written
 #' @return Nothing - run for side effects only.
 #' @note Set \code{root} to "./extdata" in the git directory, not the package root, to make changes that 'stick'.
 #' @export
-#' @details Some GCAM input datafiles have bad line endings (like you would find in Mac OS 9 and previous), and/or
+#' @details Some GCAM input datafiles have bad line endings, and/or
 #' don't have a final newline. This utility script converts all files to have Unix line endings (\code{\\n}) and a final newline.
-#' It also automatically compresses files above a certain size.
 #' @author BBL
-normalize_files <- function(root = system.file("extdata", package = "gcamdata"), min_compress_size = 1) {
-  if(.Platform$OS.type == "windows") {
-   stop("This should not be run on Windows")
-  }
+normalize_files <- function(root = system.file("extdata", package = "gcamdata")) {
   assert_that(is.character(root))
-  assert_that(is.numeric(min_compress_size))
   message("Root: ", root)
 
   # Get a list of all input files: CSV files that may or may not be already compressed
@@ -527,14 +521,6 @@ normalize_files <- function(root = system.file("extdata", package = "gcamdata"),
     if(ofile != files[f]) {
       message("\tRemoving original file...", appendLF = FALSE)
       file.remove(files[f])
-      message("OK")
-    }
-
-    # Compress if necessary
-    # Note that Rutils::gzip will automatically remove the uncompressed file
-    if(uc_size > min_compress_size) {
-      message("\tCompressing...", appendLF = FALSE)
-      R.utils::gzip(ofile)
       message("OK")
     }
   }

@@ -4,13 +4,10 @@
 \alias{normalize_files}
 \title{normalize_files}
 \usage{
-normalize_files(root = system.file("extdata", package = "gcamdata"),
-  min_compress_size = 1)
+normalize_files(root = system.file("extdata", package = "gcamdata"))
 }
 \arguments{
 \item{root}{Folder root to scan, character}
-
-\item{min_compress_size}{Files above this size (numeric, in MB) will be compressed when re-written}
 }
 \value{
 Nothing - run for side effects only.
@@ -19,9 +16,8 @@ Nothing - run for side effects only.
 Normalize line endings for all package input data and compress files.
 }
 \details{
-Some GCAM input datafiles have bad line endings (like you would find in Mac OS 9 and previous), and/or
+Some GCAM input datafiles have bad line endings, and/or
 don't have a final newline. This utility script converts all files to have Unix line endings (\code{\\n}) and a final newline.
-It also automatically compresses files above a certain size.
 }
 \note{
 Set \code{root} to "./extdata" in the git directory, not the package root, to make changes that 'stick'.
