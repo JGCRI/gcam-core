@@ -15,7 +15,7 @@ graph_chunks <- function(module_filter = NULL,
                          quiet = TRUE) {
 
   output <- to_xml <- module <- name.y <- name <- disabled <- input <- num <-
-      NULL                              # silence notes on package check.
+    NULL                              # silence notes on package check.
 
   assert_that(is.null(module_filter) | is.character(module_filter))
   assert_that(is.logical(plot_gcam))
@@ -24,7 +24,7 @@ graph_chunks <- function(module_filter = NULL,
 
   chunklist = find_chunks(include_disabled = include_disabled)
   chunklist$modulenum <- as.numeric(as.factor(chunklist$module))
-  vertexcolors <- rainbow(length(unique(chunklist$modulenum)))
+  vertexcolors <- palette()
 
   chunkinputs <- chunk_inputs(chunklist$name)
   chunkoutputs <- chunk_outputs(chunklist$name)
