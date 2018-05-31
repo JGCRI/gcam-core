@@ -50,6 +50,11 @@ test_that("matches old data system output", {
                        "GCAM_DATA_MAP precursors doesn't match. Rerun generate_package_data to update.")
   }
 
+  if(!requireNamespace("gcamdata.compdata", quietly = TRUE)) {
+    skip("gcamdata.compdata package not available unable to load COMPDATA")
+  } else {
+  library(gcamdata.compdata)
+  data(COMPDATA)
   # For each file in OUTPUTS_DIR, look for corresponding file in our
   # comparison data. Load them, reshape new data if necessary, compare.
   for(newf in list.files(outputs_dir, full.names = TRUE)) {
@@ -71,41 +76,41 @@ test_that("matches old data system output", {
 
     newdata <- read_csv(newf, comment = COMMENT_CHAR)
 
-    # If there's a 'year' columns with xyears, add an X
-    if(flag_year_col_xyears) {
-      expect_true("year" %in% names(newdata),
-                  info = paste("FLAG_YEAR_COL_XYEARS specified in", basename(newf),
-                               "but not 'year' column present"))
-      newdata$year <- paste0("X", newdata$year)
-    }
-
-    # Reshape new data if necessary--see comment above
-    if(flag_long_year_form) {
-      expect_true(all(c("year", "value") %in% names(newdata)),
-                  info = paste("FLAG_LONG_YEAR_FORM specified in", basename(newf),
-                               "but no 'year' and 'value' columns present"))
-      newdata <- try(spread(newdata, year, value))
-      if(isTRUE(class(newdata) == "try-error")) {
-        stop("Error reshaping ", basename(newf), "; are there `year`` and `value` columns?")
-        next
-      }
-    }
-
-    # Change year column names to "xyear" (X1970, etc) names if necessary
-    if(flag_no_xyear_form) {
-      yearcols <- grep(YEAR_PATTERN, names(newdata))
-      expect_true(length(yearcols) > 0,
-                  info = paste("FLAG_NO_XYEAR specified in", basename(newf),
-                               "but no year-type columns seem to be present"))
-      names(newdata)[yearcols] <- paste0("X", names(newdata)[yearcols])
-    }
+    # # If there's a 'year' columns with xyears, add an X
+    # if(flag_year_col_xyears) {
+    #   expect_true("year" %in% names(newdata),
+    #               info = paste("FLAG_YEAR_COL_XYEARS specified in", basename(newf),
+    #                            "but not 'year' column present"))
+    #   newdata$year <- paste0("X", newdata$year)
+    # }
+    #
+    # # Reshape new data if necessary--see comment above
+    # if(flag_long_year_form) {
+    #   expect_true(all(c("year", "value") %in% names(newdata)),
+    #               info = paste("FLAG_LONG_YEAR_FORM specified in", basename(newf),
+    #                            "but no 'year' and 'value' columns present"))
+    #   newdata <- try(spread(newdata, year, value))
+    #   if(isTRUE(class(newdata) == "try-error")) {
+    #     stop("Error reshaping ", basename(newf), "; are there `year`` and `value` columns?")
+    #     next
+    #   }
+    # }
+    #
+    # # Change year column names to "xyear" (X1970, etc) names if necessary
+    # if(flag_no_xyear_form) {
+    #   yearcols <- grep(YEAR_PATTERN, names(newdata))
+    #   expect_true(length(yearcols) > 0,
+    #               info = paste("FLAG_NO_XYEAR specified in", basename(newf),
+    #                            "but no year-type columns seem to be present"))
+    #   names(newdata)[yearcols] <- paste0("X", names(newdata)[yearcols])
+    # }
 
     # Look for matching file(s) in the comparison data folder
-    oldf <- list.files("compdata", pattern = basename(newf), recursive = TRUE, full.names = TRUE)
+    oldf <- sub('.csv$', '', basename(newf))#list.files("compdata", pattern = basename(newf), recursive = TRUE, full.names = TRUE)
     expect_true(length(oldf) == 1, info = paste("Either zero, or multiple, comparison datasets found for", basename(newf)))
 
     if(length(oldf) == 1) {
-      olddata <- read_csv(oldf, comment = COMMENT_CHAR)
+      olddata <- COMPDATA[[oldf]] #read_csv(oldf, comment = COMMENT_CHAR)
 
       # Finally, test (NB rounding numeric columns to a sensible number of
       # digits; otherwise spurious mismatches occur)
@@ -137,6 +142,7 @@ test_that("matches old data system output", {
         expect_equivalent(round_df(olddata), round_df(newdata), info = paste(basename(newf), "doesn't match"))
       }
     }
+  }
   }
 })
 
