@@ -50,99 +50,72 @@ test_that("matches old data system output", {
                        "GCAM_DATA_MAP precursors doesn't match. Rerun generate_package_data to update.")
   }
 
-  if(!requireNamespace("gcamdata.compdata", quietly = TRUE)) {
-    skip("gcamdata.compdata package not available unable to load COMPDATA")
+  if(!require("gcamdata.compdata", quietly = TRUE)) {
+    skip("gcamdata.compdata package not available")
   } else {
-  library(gcamdata.compdata)
-  data(COMPDATA)
-  # For each file in OUTPUTS_DIR, look for corresponding file in our
-  # comparison data. Load them, reshape new data if necessary, compare.
-  for(newf in list.files(outputs_dir, full.names = TRUE)) {
-    # In this rewrite, we're not putting X's in front of years,
-    # nor are we going to spend time unnecessarily reshaping datasets
-    # (i.e. wide to long and back). But we still need to be able to
-    # verify old versus new datasets! Chunks tag the data if it's
-    # reshaped, and save_chunkdata puts flag(s) at top of the file.
-    new_firstline <- readLines(newf, n = 1)
+    # load the comparison data which is coming from the gcamdata.compdata package
+    # the format is a list[[data name ]] = data tibble
+    data(COMPDATA)
 
-    if(grepl(FLAG_NO_TEST, new_firstline)) {
-      next
-    }
+    # For each file in OUTPUTS_DIR, look for corresponding file in our
+    # comparison data. Load them, reshape new data if necessary, compare.
+    for(newf in list.files(outputs_dir, full.names = TRUE)) {
+      # In this rewrite, we're not putting X's in front of years,
+      # nor are we going to spend time unnecessarily reshaping datasets
+      # (i.e. wide to long and back). But we still need to be able to
+      # verify old versus new datasets! Chunks tag the data if it's
+      # reshaped, and save_chunkdata puts flag(s) at top of the file.
+      new_firstline <- readLines(newf, n = 1)
 
-    flag_long_year_form <- grepl(FLAG_LONG_YEAR_FORM, new_firstline)
-    flag_no_xyear_form <- grepl(FLAG_NO_XYEAR, new_firstline)
-    flag_sum_test <- grepl(FLAG_SUM_TEST, new_firstline)
-    flag_year_col_xyears <- grepl(FLAG_YEAR_COL_XYEARS, new_firstline)
-
-    newdata <- read_csv(newf, comment = COMMENT_CHAR)
-
-    # # If there's a 'year' columns with xyears, add an X
-    # if(flag_year_col_xyears) {
-    #   expect_true("year" %in% names(newdata),
-    #               info = paste("FLAG_YEAR_COL_XYEARS specified in", basename(newf),
-    #                            "but not 'year' column present"))
-    #   newdata$year <- paste0("X", newdata$year)
-    # }
-    #
-    # # Reshape new data if necessary--see comment above
-    # if(flag_long_year_form) {
-    #   expect_true(all(c("year", "value") %in% names(newdata)),
-    #               info = paste("FLAG_LONG_YEAR_FORM specified in", basename(newf),
-    #                            "but no 'year' and 'value' columns present"))
-    #   newdata <- try(spread(newdata, year, value))
-    #   if(isTRUE(class(newdata) == "try-error")) {
-    #     stop("Error reshaping ", basename(newf), "; are there `year`` and `value` columns?")
-    #     next
-    #   }
-    # }
-    #
-    # # Change year column names to "xyear" (X1970, etc) names if necessary
-    # if(flag_no_xyear_form) {
-    #   yearcols <- grep(YEAR_PATTERN, names(newdata))
-    #   expect_true(length(yearcols) > 0,
-    #               info = paste("FLAG_NO_XYEAR specified in", basename(newf),
-    #                            "but no year-type columns seem to be present"))
-    #   names(newdata)[yearcols] <- paste0("X", names(newdata)[yearcols])
-    # }
-
-    # Look for matching file(s) in the comparison data folder
-    oldf <- sub('.csv$', '', basename(newf))#list.files("compdata", pattern = basename(newf), recursive = TRUE, full.names = TRUE)
-    expect_true(length(oldf) == 1, info = paste("Either zero, or multiple, comparison datasets found for", basename(newf)))
-
-    if(length(oldf) == 1) {
-      olddata <- COMPDATA[[oldf]] #read_csv(oldf, comment = COMMENT_CHAR)
-
-      # Finally, test (NB rounding numeric columns to a sensible number of
-      # digits; otherwise spurious mismatches occur)
-      # Also first converts integer columns to numeric (otherwise test will
-      # fail when comparing <int> and <dbl> columns)
-      DIGITS <- 3
-      round_df <- function(x, digits = DIGITS) {
-        integer_columns <- sapply(x, class) == "integer"
-        x[integer_columns] <- lapply(x[integer_columns], as.numeric)
-
-        numeric_columns <- sapply(x, class) == "numeric"
-        x[numeric_columns] <- round(x[numeric_columns], digits)
-        x
+      if(grepl(FLAG_NO_TEST, new_firstline)) {
+        next
       }
 
-      expect_identical(dim(olddata), dim(newdata), info = paste("Dimensions are not the same for", basename(newf)))
+      flag_long_year_form <- grepl(FLAG_LONG_YEAR_FORM, new_firstline)
+      flag_no_xyear_form <- grepl(FLAG_NO_XYEAR, new_firstline)
+      flag_sum_test <- grepl(FLAG_SUM_TEST, new_firstline)
+      flag_year_col_xyears <- grepl(FLAG_YEAR_COL_XYEARS, new_firstline)
 
-      # Some datasets throw errors when tested via `expect_equivalent` because of
-      # rounding issues, even when we verify that they're identical to three s.d.
-      # I think this is because of differences between readr::write_csv and write.csv
-      # To work around this, we allow chunks to tag datasets with FLAG_SUM_TEST,
-      # which is less strict, just comparing the sum of all numeric data
-      if(flag_sum_test) {
-        numeric_columns_old <- sapply(olddata, is.numeric)
-        numeric_columns_new <- sapply(newdata, is.numeric)
-        expect_equivalent(sum(olddata[numeric_columns_old]), sum(newdata[numeric_columns_new]),
-                          info = paste(basename(newf), "doesn't match (sum test)"))
-      } else {
-        expect_equivalent(round_df(olddata), round_df(newdata), info = paste(basename(newf), "doesn't match"))
+      newdata <- read_csv(newf, comment = COMMENT_CHAR)
+
+      # Look for matching file(s) in the comparison data folder
+      oldf <- sub('.csv$', '', basename(newf))
+      expect_true(length(oldf) == 1, info = paste("Either zero, or multiple, comparison datasets found for", basename(newf)))
+
+      if(length(oldf) == 1) {
+        olddata <- COMPDATA[[oldf]]
+
+        # Finally, test (NB rounding numeric columns to a sensible number of
+        # digits; otherwise spurious mismatches occur)
+        # Also first converts integer columns to numeric (otherwise test will
+        # fail when comparing <int> and <dbl> columns)
+        DIGITS <- 3
+        round_df <- function(x, digits = DIGITS) {
+          integer_columns <- sapply(x, class) == "integer"
+          x[integer_columns] <- lapply(x[integer_columns], as.numeric)
+
+          numeric_columns <- sapply(x, class) == "numeric"
+          x[numeric_columns] <- round(x[numeric_columns], digits)
+          x
+        }
+
+        expect_identical(dim(olddata), dim(newdata), info = paste("Dimensions are not the same for", basename(newf)))
+
+        # Some datasets throw errors when tested via `expect_equivalent` because of
+        # rounding issues, even when we verify that they're identical to three s.d.
+        # I think this is because of differences between readr::write_csv and write.csv
+        # To work around this, we allow chunks to tag datasets with FLAG_SUM_TEST,
+        # which is less strict, just comparing the sum of all numeric data
+        if(flag_sum_test) {
+          numeric_columns_old <- sapply(olddata, is.numeric)
+          numeric_columns_new <- sapply(newdata, is.numeric)
+          expect_equivalent(sum(olddata[numeric_columns_old]), sum(newdata[numeric_columns_new]),
+                            info = paste(basename(newf), "doesn't match (sum test)"))
+        } else {
+          expect_equivalent(round_df(olddata), round_df(newdata), info = paste(basename(newf), "doesn't match"))
+        }
       }
     }
-  }
   }
 })
 
