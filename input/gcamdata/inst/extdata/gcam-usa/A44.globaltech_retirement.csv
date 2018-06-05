@@ -1,0 +1,12 @@
+# File: A44.globaltech_retirement.csv
+# Title: Retirement function parameters
+# Units: lifetime/half_life: years; steepness: shape parameter used by the s-curve-shutdown-decider retirement function
+supplysector,lifetime,half_life_stock,steepness_stock,half_life_new,steepness_new
+resid heating,40,20,0.1219,20,0.1886
+resid cooling,30,15,0.162,18,0.2598
+resid hot water,30,15,0.162,17,0.2266
+resid appliances,25,13,0.1932,14,0.2752
+comm heating,40,20,0.1219,20,0.1886
+comm cooling,30,15,0.162,18,0.2598
+comm hot water,30,15,0.162,17,0.2266
+comm refrigeration,25,13,0.1932,14,0.2752

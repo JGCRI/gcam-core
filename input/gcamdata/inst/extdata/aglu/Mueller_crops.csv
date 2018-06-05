@@ -1,0 +1,22 @@
+# File: Mueller_crops.csv,
+# Title: Mueller crop and GTAP crop mapping file,
+# Units: Unitless,
+# Source: Mueller, N. D.; Gerber, J. S.; Johnston, M.; Ray, D. K.; Ramankutty, N.; Foley, J. A. Closing yield gaps through nutrient and water management. Nature 2012, 490 (7419), 254–257.,
+crop,GTAP_crop
+maize,Maize
+rice,PaddyRice
+wheat,Wheat
+barley,Barley
+cassava,Cassava
+cotton,SeedCotton
+groundnut,GrndntWShll
+millet,Millet
+oilpalm,OilPalmFruit
+potato,Potatoes
+rapeseed,Rapeseed
+rye,Rye
+sorghum,Sorghum
+soybean,Soybeans
+sugarbeet,SugarBeets
+sugarcane,SugarCane
+sunflower,SnflwrSeed

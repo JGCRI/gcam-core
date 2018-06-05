@@ -1,0 +1,22 @@
+# File: Various_VegC_tCha_LTsage_AEZ.csv,,,,,,,,,,,,,,,,,,,
+# Description: Assumed vegetationcarbon content by land use type and AEZ (MgC.ha),,,,,,,,,,,,,,,,,,,
+# Original source: listed in table,,,,,,,,,,,,,,,,,,,
+# ----------,,,,,,,,,,,,,,,,,,,
+LT_SAGE,AEZ01,AEZ02,AEZ03,AEZ04,AEZ05,AEZ06,AEZ07,AEZ08,AEZ09,AEZ10,AEZ11,AEZ12,AEZ13,AEZ14,AEZ15,AEZ16,AEZ17,AEZ18,Source
+Tropical Evergreen Forest/Woodland,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,"Houghton 1999, tropical equatorial forest"
+Tropical Deciduous Forest/Woodland,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,"Houghton 1999, tropical seasonal forest"
+Temperate Broadleaf Evergreen Forest/Woodland,154,154,154,154,154,154,154,154,154,154,154,154,154,154,154,154,154,154,"King et al 1997, Table III, Temperate evergreen seasonal broadleaved forest"
+Temperate Needleleaf Evergreen Forest/Woodland,160,160,160,160,160,160,160,160,160,160,160,160,160,160,160,160,160,160,"Houghton 1999, Table 1, temperate evergreen forest"
+Temperate Deciduous Forest/Woodland,135,135,135,135,135,135,135,135,135,135,135,135,135,135,135,135,135,135,"Houghton 1999, Table 1, temperate deciduous forest"
+Boreal Evergreen Forest/Woodland,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,"Houghton 1999, Table 1, boreal forest"
+Boreal Deciduous Forest/Woodland,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,"Houghton 1999, Table 1, boreal forest"
+Evergreen/Deciduous Mixed Forest/Woodland,103,103,103,103,103,103,103,103,103,103,103,103,50,50,50,50,50,50,"1-12: King et al 1997, Table III, Cold deciduous forest with evergreens. 13-18: Olsen et al 1983, Table 2, Northern or Maritime Taiga"
+Savanna,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,"King et al 1997, Table III, tall/medium/short grassland with 10-40% woody cover"
+Grassland/Steppe,4,7,7,7,8.5,10,6,7,7,7,8.5,10,6,7,7,7,8.5,10,"1-6: Gibbs et al, 2008, Table S1 (online annex). 7-18: Assume increase from arid to moist. Moist from Houghton Latin America grassland."
+Dense Shrubland,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,"Houghton 1999, Table 1, tropical woodland"
+Open Shrubland,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,"Houghton 1999, Table 1, woodland"
+Tundra,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,"King et al 1997, Table III, Arctic/alpine tundra, mossy bog"
+Desert,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,"King et al 1997, Table III, Desert"
+Polar Desert/Rock/Ice,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,no vegetation assumed
+Urbanland,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,"Houghton 1999, Table 1, cultivated lands"
+Cropland,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,"Houghton 1999, Table 1, cultivated lands"

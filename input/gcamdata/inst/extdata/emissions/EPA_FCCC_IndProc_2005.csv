@@ -1,0 +1,65 @@
+# File: EPA_FCCC_IndProc_2005.csv,,,,,,,,,,,
+# Title: Sectoral Report for total industrial energy emissions,,,,,,,,,,,
+# Units: Gg,,,,,,,,,,,
+# Source: GCAM3,,,,,,,,,,,
+EPA_Source_Category_Raw,Source_Category,CO2,CH4,N2O,HFCs,PFCs,SF6,NOx,CO,NMVOC,SO2
+Total Industrial Processes,,146825.25,97.32,69.91,140066.16,6107.35,0.7,534.77,1771.71,1817.65,773.85
+A.  Mineral Products,A.  Mineral Products,71195.18,,,,,,,,,
+1.  Cement Production,A.  Mineral Products_1.  Cement Production,45909.85,,,,,,,,,
+2.  Lime Production,A.  Mineral Products_2.  Lime Production,13659.68,,,,,,,,,
+3.  Limestone and Dolomite Use,A.  Mineral Products_3.  Limestone and Dolomite Use,7397.34,,,,,,,,,
+4.  Soda Ash Production and Use,A.  Mineral Products_4.  Soda Ash Production and Use,4228.31,,,,,,,,,
+5.  Asphalt Roofing,A.  Mineral Products_5.  Asphalt Roofing,,,,,,,,,,
+6.  Road Paving with Asphalt,A.  Mineral Products_6.  Road Paving with Asphalt,,,,,,,,,,
+7.  Other (as specified in table 2(I).A-G),A.  Mineral Products_7.  Other (as specified in table 2(I).A-G),,,,,,,,,,
+Glass Production,A.  Mineral Products_Glass Production,,,,,,,,,,
+B.  Chemical Industry ,B.  Chemical Industry ,24065.32,51.7,69.91,,,,63.38,266.99,227.39,240.13
+1.  Ammonia Production,B.  Chemical Industry _1.  Ammonia Production,16321.48,,,,,,,,,
+2.  Nitric Acid Production ,B.  Chemical Industry _2.  Nitric Acid Production ,,,50.62,,,,,,,
+3.  Adipic Acid Production,B.  Chemical Industry _3.  Adipic Acid Production,,,19.29,,,,,,,
+4.  Carbide Production,B.  Chemical Industry _4.  Carbide Production,91.7,0.41,,,,,,,,
+5.  Other (as specified in table 2(I).A-G),B.  Chemical Industry _5.  Other (as specified in table 2(I).A-G),7652.14,51.29,,,,,63.38,266.99,227.39,240.13
+Carbon Black,B.  Chemical Industry _Carbon Black,2896.96,18.16,,,,,,,,
+Ethylene,B.  Chemical Industry _Ethylene,,23.95,,,,,,,,
+Dichloroethylene,B.  Chemical Industry _Dichloroethylene,,4.5,,,,,,,,
+Styrene,B.  Chemical Industry _Styrene,,,,,,,,,,
+Methanol,B.  Chemical Industry _Methanol,,4.67,,,,,,,,
+Titanium Dioxide Production,B.  Chemical Industry _Titanium Dioxide Production,1921.33,,,,,,,,,
+Carbon Dioxide,B.  Chemical Industry _Carbon Dioxide,1323.82,,,,,,,,,
+Phosphoric Acid,B.  Chemical Industry _Phosphoric Acid,1382.77,,,,,,,,,
+Other non-specified,B.  Chemical Industry _Other non-specified,,,,,,,63.38,266.99,227.39,240.13
+Silicon Carbide Consumption,B.  Chemical Industry _Silicon Carbide Consumption,127.25,,,,,,,,,
+C.  Metal Production,C.  Metal Production,51564.76,45.63,,,2956.39,0.11,62.88,928.06,42.39,198.84
+1.  Iron and Steel Production,C.  Metal Production_1.  Iron and Steel Production,45235.3,45.24,,,,,,,,
+2.  Ferroalloys Production,C.  Metal Production_2.  Ferroalloys Production,1391.9,0.39,,,,,,,,
+3.  Aluminium Production,C.  Metal Production_3.  Aluminium Production,4207.96,,,,2956.39,,,,,
+4.  SF6 Used in Aluminium and Magnesium Foundries,C.  Metal Production_4.  SF6 Used in Aluminium and Magnesium Foundries,,,,,,0.11,,,,
+5.  Other (as specified in table 2(I).A-G),C.  Metal Production_5.  Other (as specified in table 2(I).A-G),729.59,,,,,,62.88,928.06,42.39,198.84
+Zinc production,C.  Metal Production_Zinc production,464.84,,,,,,,,,
+Other non-specified,C.  Metal Production_Other non-specified,,,,,,,62.88,928.06,42.39,198.84
+Lead Production,C.  Metal Production_Lead Production,264.75,,,,,,,,,
+D.  Other Production,D.  Other Production,,,,,,,,,,
+1.  Pulp and Paper,D.  Other Production_1.  Pulp and Paper,,,,,,,,,,
+2.  Food and Drink(2),D.  Other Production_2.  Food and Drink(2),,,,,,,,,,
+E.  Production of Halocarbons and SF6,E.  Production of Halocarbons and SF6,,,,16535.15,,,,,,
+1.  By-product Emissions,E.  Production of Halocarbons and SF6_1.  By-product Emissions,,,,16535.15,,,,,,
+ Production of HCFC-22,E.  Production of Halocarbons and SF6_ Production of HCFC-22,,,,16535.15,,,,,,
+Other ,E.  Production of Halocarbons and SF6_Other ,,,,,,,,,,
+2.  Fugitive Emissions,E.  Production of Halocarbons and SF6_2.  Fugitive Emissions,,,,,,,,,,
+3.  Other (as specified in table 2(II)),E.  Production of Halocarbons and SF6_3.  Other (as specified in table 2(II)),,,,,,,,,,
+F.  Consumption of Halocarbons and SF6,F.  Consumption of Halocarbons and SF6,,,,123531.01,3150.96,0.59,,,,
+1.  Refrigeration and Air Conditioning Equipment ,F.  Consumption of Halocarbons and SF6_1.  Refrigeration and Air Conditioning Equipment ,,,,107803.13,,,,,,
+2.  Foam Blowing,F.  Consumption of Halocarbons and SF6_2.  Foam Blowing,,,,,,,,,,
+3.  Fire Extinguishers,F.  Consumption of Halocarbons and SF6_3.  Fire Extinguishers,,,,213.11,11.07,,,,,
+4.  Aerosols/ Metered Dose Inhalers,F.  Consumption of Halocarbons and SF6_4.  Aerosols/ Metered Dose Inhalers,,,,9360.1,,,,,,
+5.  Solvents,F.  Consumption of Halocarbons and SF6_5.  Solvents,,,,,,,,,,
+6.  Other applications using ODS(3)  substitutes,F.  Consumption of Halocarbons and SF6_6.  Other applications using ODS(3)  substitutes,,,,,,,,,,
+7.  Semiconductor Manufacture,F.  Consumption of Halocarbons and SF6_7.  Semiconductor Manufacture,,,,205.49,3139.88,0.04,,,,
+8.  Electrical Equipment,F.  Consumption of Halocarbons and SF6_8.  Electrical Equipment,,,,,,0.55,,,,
+9.  Other (as specified in table 2(II),F.  Consumption of Halocarbons and SF6_9.  Other (as specified in table 2(II),,,,5949.18,,,,,,
+Foam manufacturing,F.  Consumption of Halocarbons and SF6_Foam manufacturing,,,,246.82,,,,,,
+Other non-specified,F.  Consumption of Halocarbons and SF6_Other non-specified,,,,5702.36,,,,,,
+G.  Other (as specified in tables 2(I).A-G and 2(II)),G.  Other (as specified in tables 2(I).A-G and 2(II)),,,,,,,408.51,576.67,1547.87,334.88
+Other non-specified,G.  Other (as specified in tables 2(I).A-G and 2(II))_Other non-specified,,,,,,,0.63,4.48,1.53,25.86
+Storage and Transport,G.  Other (as specified in tables 2(I).A-G and 2(II))_Storage and Transport,,,,,,,17.08,110.74,1144.44,4.27
+Other Industrial Processes,G.  Other (as specified in tables 2(I).A-G and 2(II))_Other Industrial Processes,,,,,,,390.8,461.46,401.89,304.75

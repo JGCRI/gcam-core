@@ -1,0 +1,5 @@
+# File: A42.globaltech_interp.csv
+# Title: Aggregate building default shareweight technology interpolation
+# Units: Unitless
+supplysector,subsector,technology,apply.to,from.year,to.year,to.value,interpolation.function
+building,traditional biomass,traditional biomass,share-weight,final-calibration-year,end-year,,fixed

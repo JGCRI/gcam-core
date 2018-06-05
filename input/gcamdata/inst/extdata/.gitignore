@@ -1,0 +1,4 @@
+# Proprietary data that should never be committed to the repository
+en_nonOECD.*
+en_OECD.*
+
