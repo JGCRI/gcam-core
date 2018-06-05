@@ -1,8 +1,0 @@
-# Electricity technology capture fractions,,,,,
-supplysector,subsector,technology,1971,2020,2100
-electricity,coal,coal (conv pul CCS),0.85,0.85,0.95
-electricity,coal,coal (IGCC CCS),0.85,0.85,0.95
-electricity,gas,gas (CC CCS),0.85,0.85,0.95
-electricity,refined liquids,refined liquids (CC CCS),0.85,0.85,0.95
-electricity,biomass,biomass (conv CCS),0.85,0.85,0.95
-electricity,biomass,biomass (IGCC CCS),0.85,0.85,0.95
