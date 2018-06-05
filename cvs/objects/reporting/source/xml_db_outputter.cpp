@@ -324,7 +324,7 @@ auto_ptr<XMLDBOutputter::JNIContainer> XMLDBOutputter::createContainer( const bo
     // will need to use a custom class loader that will do the expansion prior to
     // loading any classes.
     const string classpath = "-Djava.class.path=XMLDBDriver.jar" + string( PATH_SEPARATOR ) + string( JARS_LIB )
-        + string( PATH_SEPARATOR ) + "../input/gcam-data-system/_common/ModelInterface/src/ModelInterface.jar";
+        + string( PATH_SEPARATOR ) + "../output/modelinterface/ModelInterface.jar";
     options[ 0 ].optionString = const_cast<char*>( classpath.c_str() );
     options[ 1 ].optionString = const_cast<char*>( "-Djava.system.class.loader=WildcardExpandingClassLoader" );
     vmArgs.version = JNI_VERSION_1_6;
