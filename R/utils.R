@@ -214,10 +214,13 @@ find_csv_file <- function(filename, optional, quiet = FALSE) {
 #' @param chunkdata Named list of tibbles (data frames) to write
 #' @param write_inputs Write data that were read as inputs, not computed? Logical
 #' @param create_dirs Create directory if necessary, and delete contents? Logical
+#' @param write_outputs Write all chunk outputs to disk?
+#' @param write_xml Write XML Batch chunk outputs to disk?
 #' @param outputs_dir Directory to save data into
 #' @param xml_dir Directory to save XML results into
 #' @importFrom assertthat assert_that
 save_chunkdata <- function(chunkdata, write_inputs = FALSE, create_dirs = FALSE,
+                           write_outputs = TRUE, write_xml = write_outputs,
                            outputs_dir = OUTPUTS_DIR, xml_dir = XML_DIR) {
   assert_that(is_data_list(chunkdata))
   assert_that(is.logical(write_inputs))
@@ -237,10 +240,12 @@ save_chunkdata <- function(chunkdata, write_inputs = FALSE, create_dirs = FALSE,
     if(is.null(cd)) next   # optional file that wasn't found
 
     if(FLAG_XML %in% get_flags(cd)) {
-      # TODO: worry about absolute paths?
-      cd$xml_file <- file.path(xml_dir, cd$xml_file)
-      run_xml_conversion(cd)
-    } else {
+      if(write_xml) {
+        # TODO: worry about absolute paths?
+        cd$xml_file <- file.path(xml_dir, cd$xml_file)
+        run_xml_conversion(cd)
+      }
+    } else if(write_outputs) {
       fqfn <- file.path(outputs_dir, paste0(cn, ".csv"))
       suppressWarnings(file.remove(fqfn))
 

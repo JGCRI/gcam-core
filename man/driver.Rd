@@ -8,8 +8,8 @@ driver(all_data = empty_data(), stop_before = NULL, stop_after = NULL,
   return_inputs_of = stop_before, return_outputs_of = stop_after,
   return_data_names = union(inputs_of(return_inputs_of),
   outputs_of(return_outputs_of)), return_data_map_only = FALSE,
-  write_outputs = !return_data_map_only, outdir = OUTPUTS_DIR,
-  xmldir = XML_DIR, quiet = FALSE)
+  write_outputs = !return_data_map_only, write_xml = write_outputs,
+  outdir = OUTPUTS_DIR, xmldir = XML_DIR, quiet = FALSE)
 }
 \arguments{
 \item{all_data}{Data to be pre-loaded into data system}
@@ -30,6 +30,8 @@ If \code{stop_after} is specified, by default that chunk's outputs are returned}
 the other \code{return_*} parameters above}
 
 \item{write_outputs}{Write all chunk outputs to disk?}
+
+\item{write_xml}{Write XML Batch chunk outputs to disk?}
 
 \item{outdir}{Location to write output data (ignored if \code{write_outputs} is \code{FALSE})}
 

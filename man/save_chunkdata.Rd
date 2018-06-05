@@ -5,6 +5,7 @@
 \title{Write data produced by chunks to csv files.}
 \usage{
 save_chunkdata(chunkdata, write_inputs = FALSE, create_dirs = FALSE,
+  write_outputs = TRUE, write_xml = write_outputs,
   outputs_dir = OUTPUTS_DIR, xml_dir = XML_DIR)
 }
 \arguments{
@@ -13,6 +14,10 @@ save_chunkdata(chunkdata, write_inputs = FALSE, create_dirs = FALSE,
 \item{write_inputs}{Write data that were read as inputs, not computed? Logical}
 
 \item{create_dirs}{Create directory if necessary, and delete contents? Logical}
+
+\item{write_outputs}{Write all chunk outputs to disk?}
+
+\item{write_xml}{Write XML Batch chunk outputs to disk?}
 
 \item{outputs_dir}{Directory to save data into}
 
