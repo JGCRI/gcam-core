@@ -135,6 +135,7 @@ tibbelize_outputs <- function(chunk_data, chunk_name) {
 #' @param return_data_map_only Return only the precursor information? (logical) This overrides
 #' the other \code{return_*} parameters above
 #' @param write_outputs Write all chunk outputs to disk?
+#' @param write_xml Write XML Batch chunk outputs to disk?
 #' @param outdir Location to write output data (ignored if \code{write_outputs} is \code{FALSE})
 #' @param xmldir Location to write output XML (ignored if \code{write_outputs} is \code{FALSE})
 #' @return A list of all built data (or a data map tibble if requested).
@@ -155,6 +156,7 @@ driver <- function(all_data = empty_data(),
                                              outputs_of(return_outputs_of)),
                    return_data_map_only = FALSE,
                    write_outputs = !return_data_map_only,
+                   write_xml = write_outputs,
                    outdir = OUTPUTS_DIR, xmldir = XML_DIR,
                    quiet = FALSE) {
 
@@ -179,6 +181,7 @@ driver <- function(all_data = empty_data(),
   assert_that(is.null(return_data_names) | is.character(return_data_names))
   assert_that(is.logical(return_data_map_only))
   assert_that(is.logical(write_outputs))
+  assert_that(is.logical(write_xml))
   assert_that(is.logical(quiet))
 
   if(!quiet) cat("GCAM Data System v", as.character(utils::packageVersion("gcamdata")), "\n", sep = "")
@@ -235,9 +238,7 @@ driver <- function(all_data = empty_data(),
   # Initialize some stuff before we start to run the chunks
   chunks_to_run <- chunklist$name
   removed_count <- 0
-  if(write_outputs) {
-    save_chunkdata(empty_data(), create_dirs = TRUE, outputs_dir = outdir, xml_dir = xmldir) # clear directories
-  }
+  save_chunkdata(empty_data(), create_dirs = TRUE, write_outputs=write_outputs, write_xml = write_xml, outputs_dir = outdir, xml_dir = xmldir) # clear directories
 
   while(length(chunks_to_run)) {
     nchunks <- length(chunks_to_run)
@@ -282,7 +283,7 @@ driver <- function(all_data = empty_data(),
       # they can be immediately written out and removed
       prunelist <- !po %in% names(cic) & !po %in% return_data_names
       if(any(prunelist)) {
-        if(write_outputs) save_chunkdata(all_data[po[prunelist]], outputs_dir = outdir, xml_dir = xmldir)
+        save_chunkdata(all_data[po[prunelist]], write_outputs = write_outputs, write_xml = write_xml, outputs_dir = outdir, xml_dir = xmldir)
         all_data <- remove_data(po[prunelist], all_data)
         removed_count <- removed_count + length(po[prunelist])
       }
@@ -291,7 +292,7 @@ driver <- function(all_data = empty_data(),
       cic[input_names] <- cic[input_names] - 1
       # ...and remove if not going to be used again, and not requested for return
       which_zero <- which(cic[input_names] == 0 & !input_names %in% return_data_names)
-      if(write_outputs) save_chunkdata(all_data[names(which_zero)], outputs_dir = outdir, xml_dir = xmldir)
+      save_chunkdata(all_data[names(which_zero)], write_outputs = write_outputs, write_xml = write_xml, outputs_dir = outdir, xml_dir = xmldir)
       all_data <- remove_data(names(which_zero), all_data)
       removed_count <- removed_count + length(which_zero)
 
@@ -312,10 +313,8 @@ driver <- function(all_data = empty_data(),
 
   # Finish up: write outputs, determine return data format
 
-  if(write_outputs) {
-    if(!quiet) cat("Writing chunk data...\n")
-    save_chunkdata(all_data, outputs_dir = outdir, xml_dir = xmldir)
-  }
+  if(!quiet && (write_outputs || write_xml)) cat("Writing chunk data...\n")
+  save_chunkdata(all_data, write_outputs = write_outputs, write_xml = write_xml, outputs_dir = outdir, xml_dir = xmldir)
 
   if(return_data_map_only) {
     if(!quiet) cat("Returning data map.\n")

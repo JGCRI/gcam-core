@@ -3,8 +3,11 @@
 .onLoad <- function(libname, pkgname) {
   op <- options()
   op.gcamdata <- list(
-    gcamdata.use_java = isTRUE(as.logical(Sys.getenv("GCAMDATA_USE_JAVA")))
+    gcamdata.use_java = TRUE
   )
+  if(Sys.getenv("GCAMDATA_USE_JAVA") != "") {
+    op.gcamdata[["gcamdata.use_java"]] <- isTRUE(as.logical(Sys.getenv("GCAMDATA_USE_JAVA")))
+  }
   toset <- !(names(op.gcamdata) %in% names(op))
   if(any(toset)) {
     options(op.gcamdata[toset])
