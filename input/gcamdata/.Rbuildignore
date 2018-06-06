@@ -1,0 +1,16 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+.travis.yml
+.remake/
+outputs/
+chunk-generator/
+figures/
+network/
+tracking/
+xml/
+README.md
+R/README.md
+R/README.html
+^data-raw$
+coverage.R
+^appveyor\.yml$

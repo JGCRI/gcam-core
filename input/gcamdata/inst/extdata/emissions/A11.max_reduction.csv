@@ -1,0 +1,17 @@
+# File: A11.max_reduction.csv,
+# Title: Maximum emissions reduction for agricultural sectors in all regions,
+# Units: Percent reduction from base-year emissions coefficient,
+# Source: Internal GCAM assumptions,
+AgSupplySector,max.reduction
+Corn,60
+FiberCrop,60
+FodderGrass,60
+FodderHerb,60
+MiscCrop,60
+OilCrop,60
+OtherGrain,60
+PalmFruit,60
+Rice,60
+Root_Tuber,60
+SugarCrop,60
+Wheat,60

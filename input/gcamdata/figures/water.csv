@@ -1,0 +1,14 @@
+lines,chunk,module,disabled,n_inputs,n_avail,all_avail,n_deps,n_deps_total
+58,L102.water.supply.unlimited_DISABLED,water,TRUE,2,2,TRUE,1,1
+57,L110.water.demand.primary_DISABLED,water,TRUE,4,4,TRUE,1,1
+210,L1233.Elec_water_DISABLED,water,TRUE,9,6,FALSE,1,1
+64,L132.water.demand.manufacturing_DISABLED,water,TRUE,6,4,FALSE,1,1
+88,L133.water.demand.livestock_DISABLED,water,TRUE,6,3,FALSE,1,1
+92,L145.water.demand.municipal_DISABLED,water,TRUE,7,7,TRUE,1,1
+65,L202.water.resources.unlimited_DISABLED,water,TRUE,2,1,FALSE,0,0
+109,L203.water.mapping_DISABLED,water,TRUE,5,3,FALSE,0,0
+58,L210.water.demand.primary_DISABLED,water,TRUE,5,4,FALSE,0,0
+539,L2233.electricity_water_DISABLED,water,TRUE,17,9,FALSE,0,0
+54,L232.water.demand.manufacturing_DISABLED,water,TRUE,4,3,FALSE,0,0
+53,L233.water.demand.livestock_DISABLED,water,TRUE,4,3,FALSE,0,0
+144,L245.water.demand.municipal_DISABLED,water,TRUE,8,5,FALSE,0,0

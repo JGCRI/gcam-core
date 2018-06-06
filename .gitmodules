@@ -2,6 +2,6 @@
 	path = cvs/objects/climate/source/hector
 	url = https://github.com/JGCRI/hector.git
 	branch = gcam-integration
-[submodule "input/gcam-data-system/_common/ModelInterface/src/modelinterface"]
-	path = input/gcam-data-system/_common/ModelInterface/src/modelinterface
+[submodule "output/modelinterface/modelinterface"]
+	path = output/modelinterface/modelinterface
 	url = https://github.com/JGCRI/modelinterface.git

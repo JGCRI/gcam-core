@@ -1,0 +1,38 @@
+# File: manufacturing_water_mapping.csv
+# Title: Continental to regional mapping for incorporating water manufacturing data
+# Units: NA
+# Comments: Based on Table 3 of source document: "Summary of Industrial Water Use for Each Continent for 1995"
+# Source: Vassolo and Doll, 2005. Global-scale gridded estimates of thermoelectric power and manufacturing water use. Water Resources Research.
+continent,region
+Africa,Africa_Eastern
+Africa,Africa_Northern
+Africa,Africa_Southern
+Africa,Africa_Western
+Africa,South Africa
+Asia,Central Asia
+Asia,China
+Asia,India
+Asia,Indonesia
+Asia,Japan
+Asia,Russia
+Asia,South Asia
+Asia,South Korea
+Asia,Southeast Asia
+Asia,Taiwan
+Europe,EU-12
+Europe,EU-15
+Europe,Europe_Eastern
+Europe,Europe_Non_EU
+Europe,European Free Trade Association
+North America,USA
+North America,Canada
+Oceania,Australia_NZ
+South America and Caribbean,Brazil
+South America and Caribbean,Central America and Caribbean
+South America and Caribbean,Mexico
+South America and Caribbean,South America_Northern
+South America and Caribbean,South America_Southern
+South America and Caribbean,Argentina
+South America and Caribbean,Colombia
+West Asia,Middle East
+West Asia,Pakistan
