@@ -40,7 +40,7 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
       assert_that(! FLAG_XML %in% obj_flags, msg = obj)
 
       # Make sure objects have required attributes
-      for(at in c(ATTR_TITLE, ATTR_UNITS, ATTR_COMMENTS, ATTR_LEGACY_NAME)) {
+      for(at in c(ATTR_TITLE, ATTR_UNITS, ATTR_COMMENTS)) {
         if(is.null(attr(chunk_data[[obj]], at))) {
           warning("No '", at, "' attached to ", obj, " - chunk ", chunk)
         }
