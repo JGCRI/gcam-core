@@ -147,15 +147,6 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       # store in a table of cropland, fallow information by region:
       L122.cropland_fallow_R
 
-    if(OLD_DATA_SYSTEM_BEHAVIOR) {
-      L122.cropland_fallow_R %>%
-        # Update GCAM_region 2 (Ethiopia, Sudan) and 12 (Belgium) rows so that calculations match the old, incorrect DS:
-        mutate(fallow = if_else(GCAM_region_ID == 2, 1881.7000, if_else(GCAM_region_ID == 13, 5060.2225, fallow))) %>%
-        mutate(fallow_frac = if_else(GCAM_region_ID == 2, 0.057756913, if_else(GCAM_region_ID == 13, 0.072119754, fallow_frac)))->
-        L122.cropland_fallow_R
-    }
-
-
     # Lines 55-74 in original file
     # Calculating the average percent of cropland that is not in active crop rotations in each region
     # make table with cropped land compared to total arable land
@@ -189,14 +180,6 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       mutate(cropped_frac = cropped/cropland) ->
       # store in a table of cropland, cropped information by region:
       L122.cropland_cropped_R
-
-    if(OLD_DATA_SYSTEM_BEHAVIOR) {
-      L122.cropland_cropped_R %>%
-        # Update GCAM_region 2 (Ethiopia, Sudan) and 12 (Belgium) rows so that calculations match the old, incorrect DS:
-        mutate(cropped = if_else(GCAM_region_ID == 2, 31746.925, if_else(GCAM_region_ID == 13, 42484.390, cropped))) %>%
-        mutate(cropped_frac = if_else(GCAM_region_ID == 2, 0.8347940, if_else(GCAM_region_ID == 13, 0.6195761, cropped_frac))) ->
-        L122.cropland_cropped_R
-    }
 
     # Lines 76-89 in original file
     # calculate the average amount of cropland that is not in production as the fallow land fraction,
