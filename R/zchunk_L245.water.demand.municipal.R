@@ -85,12 +85,21 @@ module_water_L245.water.demand.municipal <- function(command, ...) {
       select(LEVEL2_DATA_NAMES$TechShrwt) ->
       L245.TechShrwt
 
+    # Expand the municipal water efficiencies to all model years
+    # Keep historical years prior to extrapolating in case there are historical years that aren't model years
+    L245.municipal_water_eff_R_Y <-
+      group_by(L145.municipal_water_eff_R_Yh, GCAM_region_ID) %>%
+      complete(year = sort(unique(c(HISTORICAL_YEARS, MODEL_YEARS)))) %>%
+      mutate(efficiency = approx_fun(year, efficiency, rule = 2)) %>%
+      ungroup() %>%
+      filter(year %in% MODEL_YEARS)
+
     # This is confusing; in GCAM consumptive uses are represented as a fractional input on the withdrawal volumes, so
     # the model parameter is an input-output coefficient rather than an efficiency
     L245.assumptions_all %>%
       select(GCAM_region_ID, one_of(LEVEL2_DATA_NAMES$Tech)) %>%
       # ^^ unrestricted left_join allows row expansion for all model years
-      left_join(L145.municipal_water_eff_R_Yh, by = "GCAM_region_ID") %>%
+      left_join(L245.municipal_water_eff_R_Y, by = "GCAM_region_ID") %>%
       mutate(market.name = region) %>%
       # ^^ repeats tibble for consumption and withdrawal coefficients
       repeat_add_columns(tibble(water_type = c("water consumption", "water withdrawals"))) %>%
