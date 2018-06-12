@@ -18,11 +18,11 @@ the generated outputs: \code{L232.TechCoef}. The corresponding file in the
 original data system was \code{L232.water.demand.manufacturing.R} (water level2).
 }
 \description{
-Maps sector names to manufacturing water withdrawal/consumption coefficients and expands to all regions and years
+Computes manufacturing water withdrawal/consumption coefficients (m3/GJ output) by region and year
 }
 \details{
 Describe in detail what this chunk does.
 }
 \author{
-ST August 2017
+GPK June 2018
 }

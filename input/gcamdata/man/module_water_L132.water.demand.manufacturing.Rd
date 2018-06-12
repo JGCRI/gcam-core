@@ -18,12 +18,12 @@ the generated outputs: \code{L132.water_coef_manufacturing_R_W_m3_GJ}. The corre
 original data system was \code{L132.water.demand.manufacturing.R} (water level1).
 }
 \description{
-Computes manufacturing energy use coefficients.
+Computes manufacturing water withdrawals and consumption by nation/region and historical year
 }
 \details{
 Computes manufacturing energy use coefficients for water withdrawal
 and consumption for all regions.
 }
 \author{
-SWDT April 2017
+GPK June 2018
 }
