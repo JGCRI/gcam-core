@@ -51,12 +51,6 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
       group_by(year) %>%
       summarize(deflator = gdp_deflator(1975, year)) ->
       conv_Price_DollarYear
-    # It seems when this code was originally written these GDP deflators were not added in the rest of the
-    # data system yet.  They are available now but the a bit different, thus OLD_DATA_SYSTEM_BEHAVIOR
-    if(OLD_DATA_SYSTEM_BEHAVIOR) {
-      conv_Price_DollarYear[conv_Price_DollarYear$year == 2010, "deflator"] <- round( gdp_deflator(1975, 1990) / gdp_deflator(2010, 1990), digits = 4 )
-      conv_Price_DollarYear[conv_Price_DollarYear$year == 2011, "deflator"] <- 0.3036 # from BEA (2015), value in other years are slightly higher than those in the data system
-    }
 
     # Converting cotton back to primary equivalent (seed cotton)
     # Seed cotton has no price in PRICESTAT. Need to derive its price from cotton lint and cottonseed
