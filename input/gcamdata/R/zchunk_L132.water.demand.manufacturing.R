@@ -31,7 +31,7 @@ module_water_L132.water.demand.manufacturing <- function(command, ...) {
     year <- value <- GCAM_region_ID <- sector <- fuel <- continent <-
       withdrawals <- consumption <- `water withdrawals` <-
       `water consumption` <- water_type <- coefficient <-
-      iso <- energy_EJ <- water_km3 <- Year <- value <-
+      iso <- energy_EJ <- water_km3 <- Year <- Value <-
       water_km3_aquastat <- scaler <- NULL    # silence package checks.
 
     all_data <- list(...)[[1]]
