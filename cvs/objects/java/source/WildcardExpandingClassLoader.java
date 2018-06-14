@@ -34,6 +34,7 @@ import java.net.URLClassLoader;
 import java.net.URL;
 import java.net.URI;
 import java.net.URLDecoder;
+import java.net.MalformedURLException;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.List;
@@ -46,7 +47,8 @@ import java.util.Iterator;
  * Such a class loader is necessary since while Java should do this automatically
  * for us it turns out that it is not done when the JVM is launched via JNI.
  * This class loader will simply do the wild card expansion and rely on the
- * URLClassLoader to do the real work.
+ * URLClassLoader to do the real work.  Note since Java 9 the URLClassLoader
+ * is no longer the default so we will also manually lookup the classpath as well.
  *
  * @author Pralit Patel
  */
@@ -73,7 +75,7 @@ public class WildcardExpandingClassLoader extends URLClassLoader {
         // cut the parent class loader out of the loop by copying it's search path
         // and expanding the wildcard definitions then pointing directly to it's
         // parent class loader
-        super( expandWildcardClasspath( ((URLClassLoader)aParentClassLoader).getURLs() ), aParentClassLoader.getParent() );
+        super( expandWildcardClasspath(), aParentClassLoader.getParent() );
     }
 
     /**
@@ -83,11 +85,21 @@ public class WildcardExpandingClassLoader extends URLClassLoader {
      * @return An array of the URLs from aOriginalURLs except the unexpaned wildcards
      *         have been expaneded.
      */
-    private static URL[] expandWildcardClasspath( URL[] aOriginalURLs ) {
+    private static URL[] expandWildcardClasspath() {
         List<URL> ret = new ArrayList<URL>();
         int numBaseXJars = 0;
-        for( URL currURL : aOriginalURLs ) {
-            if( currURL.getFile().endsWith( "*" ) ) {
+        String classpath = System.getProperty("java.class.path");
+        String[] classpathEntries = classpath.split(System.getProperty("path.separator"));
+        for( String currCP : classpathEntries ) {
+            File classpathFile = new File(currCP);
+            URI uri = classpathFile.toURI();
+            URL currURL = null;
+            try {
+                currURL = uri.toURL();
+            } catch (MalformedURLException e) {
+                System.out.println("Ignoring classpath entry: " + currCP);
+            }
+            if( currCP.endsWith( "*" ) ) {
                 // This URL needs to be expanded
                 try {
                     File currFile = new File( URLDecoder.decode( currURL.getFile(), "UTF-8" ) );
