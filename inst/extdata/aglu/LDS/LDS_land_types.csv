@@ -2,8 +2,8 @@
 # Title: Mapping from LDS land categories to specific categories in databases
 # Units: NA
 # Description: Mapping from LDS land categories to specific categories in databases
-# Original source: land type area and pot veg carbon calc in: lds
-# Source: https://github.com/JGCRI/lds
+# Original source: land type area and pot veg carbon calc in: moirai
+# Source: https://github.com/JGCRI/moirai
 # ----------
 Category,LT_SAGE,LT_HYDE,LT_WDPA
 1,Unknown,Unmanaged,Protected
