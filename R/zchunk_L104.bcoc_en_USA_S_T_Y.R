@@ -99,19 +99,6 @@ module_emissions_L104.bcoc_en_USA_S_T_Y <- function(command, ...) {
       ungroup() ->
       GCAM_energy_2000_byBCOC_agg
 
-    # The old data system energy aggregation has several errors:
-    # 1) Air and rail energy are far too high (likely included service in addition to energy)
-    # 2) Road and ship energy consumption are zero.
-    # In order to replicate old behavior, these erroneous values are inserted manually here
-    if(OLD_DATA_SYSTEM_BEHAVIOR) {
-      GCAM_energy_2000_byBCOC_agg %>%
-        mutate(Fuel_Use = if_else(BCOC_agg_sector == "trn_rail" & technology == "refined liquids", 8.74835393158511, Fuel_Use)) %>%
-        mutate(Fuel_Use = if_else(BCOC_agg_sector == "trn_air" & technology == "refined liquids", 17.3290691678305, Fuel_Use)) %>%
-        mutate(Fuel_Use = if_else(BCOC_agg_sector == "trn_road" & technology == "refined liquids", 0.0, Fuel_Use)) %>%
-        mutate(Fuel_Use = if_else(BCOC_agg_sector == "trn_ship" & technology == "refined liquids", 0.0, Fuel_Use)) ->
-        GCAM_energy_2000_byBCOC_agg
-    }
-
     # Other issues relating to energy data used here
     # A) Electricity natural gas consumption only includes steam/CT but not CC
     # consumption in both old and new versions. This is not a substantial issue here since BC/OC
