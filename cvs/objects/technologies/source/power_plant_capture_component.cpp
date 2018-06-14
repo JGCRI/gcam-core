@@ -261,10 +261,12 @@ double PowerPlantCaptureComponent::calcSequesteredAmount( const string& aRegionN
     // Calculate the amount.
     // Note the remove fraction is only greater than zero if the current GHG matches
     // the target gas of this capture component.
-    double sequestered = getRemoveFraction( aGHGName ) * aTotalEmissions;
+    double removeFrac = getRemoveFraction( aGHGName );
+    double sequestered =  0.0;
     
     // Add the demand to the marketplace.
-    if( sequestered > 0 ){
+    if( removeFrac > 0 ){
+        sequestered = removeFrac * aTotalEmissions;
         mSequesteredAmount[ aPeriod ] = sequestered;
         // set sequestered amount as demand side of carbon storage market
         Marketplace* marketplace = scenario->getMarketplace();
