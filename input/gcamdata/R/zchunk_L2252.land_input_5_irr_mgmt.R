@@ -312,38 +312,6 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       mutate(Irr_Rfd = tolower(Irr_Rfd)) ->
       L2252.LN5_MgdCarbon_bio
 
-    if(OLD_DATA_SYSTEM_BEHAVIOR) {
-
-      # The old data system contained some inconsistent rounding rules for hist.veg.carbon.density and veg.carbon.density values.
-      # In the new data system this chunk uses a more consistent rounding methodology, causing the new data system values to be
-      # different. In this old data system behavior block GCAM 5 data system output replaces the hist.veg.carbon.density
-      # and veg.carbon.density values with large discrepancies in order to pass the old new tests.
-
-      # Only the rounding rules for calculating hist.veg.carbon.density and veg.carbon.density have changed. Use the
-      # GCAM 5 output to replace the values where the old and new data system values are different from one another.
-      L2252.LN5_MgdCarbon_bio_gcd5 %>%
-        select(region, LandAllocatorRoot, LandNode1, LandNode2, LandNode3, LandNode4, LandNode5, LandLeaf, GLU, Irr_Rfd, level,
-               gcam5_hist.veg.carbon.density = hist.veg.carbon.density, gcam5_veg.carbon.density = veg.carbon.density) ->
-        replacement_carbon_density
-
-      # Replace the L2252.LN5_MgdCarbon_bio veg carbon densities that exists in the replacement_carbon_density tibble.
-      L2252.LN5_MgdCarbon_bio %>%
-        rename(new_hist.veg.carbon.density = hist.veg.carbon.density, new_veg.carbon.density = veg.carbon.density) %>%
-        left_join_error_no_match(replacement_carbon_density, by = c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3",
-                                                                    "LandNode4", "LandNode5", "LandLeaf", "GLU", "Irr_Rfd", "level")) %>%
-        # Determine the absolute difference between the gcam5 and new output. If it larger than 1e-4 then replace the
-        # veg carbon density with the gcam 5 value.
-        mutate(dif_hist.veg = abs(gcam5_hist.veg.carbon.density - new_hist.veg.carbon.density),
-               dif_veg = abs(gcam5_veg.carbon.density - new_veg.carbon.density)) %>%
-        mutate(hist.veg.carbon.density = if_else(dif_hist.veg >= 1e-4, gcam5_hist.veg.carbon.density, new_hist.veg.carbon.density),
-               veg.carbon.density = if_else(dif_veg >= 1e-4, gcam5_veg.carbon.density, new_veg.carbon.density)) %>%
-        mutate(hist.veg.carbon.density = as.numeric(hist.veg.carbon.density), veg.carbon.density = as.numeric(veg.carbon.density)) %>%
-        select(names(L2252.LN5_MgdCarbon_bio)) ->
-        L2252.LN5_MgdCarbon_bio
-
-    }
-
-
     # L2252.LN5_LeafGhostShare: Ghost share of the new landleaf (lo-input versus hi-input)
     # NOTE: The ghost shares are inferred from average land shares allocated to hi-input
     # versus lo-input, across all crops
