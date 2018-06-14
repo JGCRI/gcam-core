@@ -64,7 +64,7 @@ module_water_L132.water.demand.manufacturing <- function(command, ...) {
       group_by(iso) %>%
       summarise(energy_EJ = sum(value)) %>%
       ungroup() %>%
-      left_join(mfg_water_mapping, by = "iso") %>%
+      left_join_error_no_match(mfg_water_mapping, by = "iso") %>%
       group_by(continent) %>%
       summarise(energy_EJ = sum(energy_EJ)) %>%
       ungroup()
