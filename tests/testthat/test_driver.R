@@ -274,7 +274,7 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
     tibble(a = 1) %>%
       add_title(title) %>% add_precursors(precs) %>% add_units(unts) %>%
       add_comments(com1) %>% add_comments(com2) %>%
-      add_flags(f1, f2, f3) -> x
+      add_flags(f1, f2) -> x
 
     tb <- tibbelize_outputs(add_data(list(output = x), empty_data()), chunkname)
 
