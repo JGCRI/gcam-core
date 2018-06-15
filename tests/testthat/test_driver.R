@@ -270,7 +270,6 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
     com2 <- "c2"
     f1 <- FLAG_INPUT_DATA
     f2 <- FLAG_NO_TEST
-    f3 <- FLAG_LONG_YEAR_FORM
 
     tibble(a = 1) %>%
       add_title(title) %>% add_precursors(precs) %>% add_units(unts) %>%
