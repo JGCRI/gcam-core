@@ -155,7 +155,7 @@ double PassThroughTechnology::getFixedOutput( const string& aRegionName,
     // Retrieve the fixed output from the pass-through sector which will store this
     // information in a unsolved trial market.
     const string fixedDemandActivityName = mPassThroughSectorName + "-fixed-output";
-    const_cast<PassThroughTechnology*>( this )->mPassThroughFixedOutput = scenario->getMarketplace()->getPrice( fixedDemandActivityName, aRegionName, aPeriod );
+    const_cast<PassThroughTechnology*>( this )->mPassThroughFixedOutput = scenario->getMarketplace()->getPrice( fixedDemandActivityName, mPassThroughMarketName, aPeriod );
     return mPassThroughFixedOutput;
 }
 

@@ -287,6 +287,14 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
       # L222.GlobalTechLifetimeProfit_en_USA  <- global_energy_to_USA_GlobalTech(L222.GlobalTechLifetimeProfit_en)
       # L222.GlobalTechLifetime_en_USA        <- global_energy_to_USA_GlobalTech(L222.GlobalTechLifetime_en)
 
+      # TODO: figure out a better strategy.  We need to have at least one technology be available in the final
+      # calibration year so we can get a base cost for the absolute cost logit.  Having a share weight of zero
+      # at the subsector is sufficient then to ensure we get no production in the calibration years
+      L222.GlobalTechShrwt_en_USA %>%
+        mutate(share.weight = if_else(technology == "coal to liquids" & year == max(BASE_YEARS), 1.0, share.weight)) %>%
+        mutate(share.weight = if_else(technology == "gas to liquids" & year == max(BASE_YEARS), 1.0, share.weight)) ->
+        L222.GlobalTechShrwt_en_USA
+
 
       # L222.Supplysector_en_USA: Supplysector information, replace name of supplysector with the subsector names
       L222.SubsectorLogit_en_USA %>%
