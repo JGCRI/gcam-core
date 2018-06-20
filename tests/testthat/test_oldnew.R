@@ -71,10 +71,7 @@ test_that("matches old data system output", {
         next
       }
 
-      flag_long_year_form <- grepl(FLAG_LONG_YEAR_FORM, new_firstline)
-      flag_no_xyear_form <- grepl(FLAG_NO_XYEAR, new_firstline)
       flag_sum_test <- grepl(FLAG_SUM_TEST, new_firstline)
-      flag_year_col_xyears <- grepl(FLAG_YEAR_COL_XYEARS, new_firstline)
 
       newdata <- read_csv(newf, comment = COMMENT_CHAR)
 

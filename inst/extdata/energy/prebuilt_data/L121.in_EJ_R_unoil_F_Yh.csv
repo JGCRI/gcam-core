@@ -1,7 +1,6 @@
 # File: L121.in_EJ_R_unoil_F_Yh.csv
 # Title: Pre-built L121.in_EJ_R_unoil_F_Yh.csv
 # Units: EJ
-# FLAG_LONG_YEAR_FORM FLAG_NO_XYEAR
 # Inputs to unconventional oil production calculated by multiplying production data by IO coef
 GCAM_region_ID,sector,fuel,year,value
 8,unconventional oil production,gas,1971,0
