@@ -236,7 +236,19 @@ driver <- function(all_data = empty_data(),
   }
 
   # Initialize some stuff before we start to run the chunks
-  chunks_to_run <- chunklist$name
+  if(!missing(stop_before) || !missing(stop_after)) {
+    run_chunks <- ifelse(missing(stop_before), stop_after, stop_before)
+    # calc min list
+    verts <- inner_join(chunkoutputs,
+                        chunkinputs %>% filter(from_file == F), by=c("output" = "input")) %>%
+      select(name.x, name.y) %>%
+      unique()
+
+    chunks_to_run <- dstrace_chunks(run_chunks, verts)
+  }
+  else {
+    chunks_to_run <- chunklist$name
+  }
   removed_count <- 0
   save_chunkdata(empty_data(), create_dirs = TRUE, write_outputs=write_outputs, write_xml = write_xml, outputs_dir = outdir, xml_dir = xmldir) # clear directories
 
