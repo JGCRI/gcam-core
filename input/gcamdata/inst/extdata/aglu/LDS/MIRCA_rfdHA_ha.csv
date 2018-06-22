@@ -1,10 +1,10 @@
 # File: MIRCA_rfdHA_ha.csv
 # Title: MIRCA rainfed havested area
 # Units: ha
-# Author: lds
+# Author: moirai
 # Description: mirca rainfed havested area (ha) for sage land cells in country X glu
 # Original source: MIRCA2000; country raster; new glu raster
-# Source: https://github.com/JGCRI/lds
+# Source: https://github.com/JGCRI/moirai
 # ----------
 iso,glu_code,mirca_crop,value
 afg,52,1,353677

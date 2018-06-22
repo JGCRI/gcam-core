@@ -183,7 +183,7 @@ void LandAllocator::checkLandArea( const string& aRegionName, const int aPeriod 
     // If the difference between the total and the sum of the leafs
     // is too large, print an error message and exit. 
     double fractionDiff = excessLand / mLandAllocation[ aPeriod ];
-    if ( abs( fractionDiff ) > 0.0001 ) {
+    if ( abs( fractionDiff ) > 0.001 ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "The sum of land areas in region " << aRegionName 
