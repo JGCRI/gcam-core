@@ -6,7 +6,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L145.municipal_water_R_W_Yh_km3}, \code{L145.municipal_water_cost_R_75USD_m3}, \code{L145.municipal_water_eff_R_Y}. The corresponding file in the
+#' the generated outputs: \code{L145.municipal_water_R_W_Yh_km3}, \code{L145.municipal_water_cost_R_75USD_m3}, \code{L145.municipal_water_eff_R_Yh}. The corresponding file in the
 #' original data system was \code{L145.water.demand.municipal.R} (water level1).
 #' @details Generate municipal water withdrawals, municipal water base delivery cost, and municipal water use efficiency.
 #' @importFrom assertthat assert_that
@@ -16,115 +16,176 @@
 module_water_L145.water.demand.municipal <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "common/GCAM_region_names",
-             FILE = "aglu/AGLU_ctry",
+             FILE = "water/aquastat_ctry",
              FILE = "water/FAO_municipal_water_AQUASTAT",
              FILE = "water/IBNET_municipal_water_cost_USDm3",
              FILE = "water/municipal_water_use_efficiency",
-             FILE = "water/manufacturing_water_mapping"))
+             FILE = "water/mfg_water_mapping",
+             "L100.Pop_thous_ctry_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L145.municipal_water_R_W_Yh_km3",
+    return(c("L145.municipal_water_ctry_W_Yh_km3",
+             "L145.municipal_water_R_W_Yh_km3",
              "L145.municipal_water_cost_R_75USD_m3",
-             "L145.municipal_water_eff_R_Y"))
+             "L145.municipal_water_eff_ctry_Yh",
+             "L145.municipal_water_eff_R_Yh"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
-    iso <- FAO_country <- GCAM_region_ID <- Area <- Year <- Value <- cost <- consumption <-
-      expenditure <- input.cost <- year <- value <- NULL  # silence package check notes
+    iso <- aquastat_ctry <- GCAM_region_ID <- Area <- Year <- Value <- cost <- consumption <-
+      expenditure <- input.cost <- year <- value <- population <- value_pc <- value_pc_filled <-
+      efficiency <- withdrawals <- NULL  # silence package check notes
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    AGLU_ctry <- get_data(all_data, "aglu/AGLU_ctry")
+    aquastat_ctry <- get_data(all_data, "water/aquastat_ctry")
     FAO_municipal_water_AQUASTAT <- get_data(all_data, "water/FAO_municipal_water_AQUASTAT")
     IBNET_municipal_water_cost_USDm3 <- get_data(all_data, "water/IBNET_municipal_water_cost_USDm3")
     municipal_water_use_efficiency <- get_data(all_data, "water/municipal_water_use_efficiency")
-    manufacturing_water_mapping <- get_data(all_data, "water/manufacturing_water_mapping")
+    mfg_water_mapping <- get_data(all_data, "water/mfg_water_mapping")
 
-    # Aggregate FAO_municipal_water_AQUASTAT to GCAM regions and fill out the years for missing data.
+    L100.Pop_thous_ctry_Yh <- get_data(all_data, "L100.Pop_thous_ctry_Yh")
 
-    # Map FAO country to GCAM region ID
-    AGLU_ctry %>%
-      select(iso, FAO_country) %>%
-      left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") ->
-      FAO_ctry_GCAM_region_ID
-
-    FAO_municipal_water_AQUASTAT %>%
-      rename(FAO_country = Area) %>%
-      inner_join(select(FAO_ctry_GCAM_region_ID, GCAM_region_ID, FAO_country), by = "FAO_country") ->
-      ctry_municipal_W
-
-    # Aggregate to regions and fill out missing years using rule=2
-    ctry_municipal_W %>%
-      group_by(GCAM_region_ID, Year) %>%
+    # The first sequence just cleans and completes the data. Because the years in Aquastat may be more recent than the
+    # historical time years (e.g., our final data year is 2010 but the aquastat data goes to 2012). and because there's
+    # no way to perform population-based interpolation without the more recent population data processed, the method
+    # below instead re-sets the reporting year to the maximum historical year, where the reporting year exceeds the max
+    # historical year. Note that this does not result in double-reporting as aquastat only reports one year within each
+    # 5-year increment
+    # Note re: the Sudans: South Sudan was granted its own iso code in 2012 but most of the gcamdata input datasets
+    # precede this change, and as such the mappings do not recognize this as a separate country
+    L145.municipal_water_ctry_W_Yh_km3 <-
+      FAO_municipal_water_AQUASTAT %>%
+      left_join_error_no_match( aquastat_ctry[ c("iso", "aquastat_ctry")], by = c(Area = "aquastat_ctry")) %>%
+      mutate(Year = if_else(Year > max(HISTORICAL_YEARS), max(HISTORICAL_YEARS), Year)) %>%
+      select(iso, Year, Value) %>%
+      complete(iso = unique(iso), Year = HISTORICAL_YEARS) %>%
+      # Aggregate the Sudans
+      group_by(iso, Year) %>%
       summarise(Value = sum(Value)) %>%
       ungroup() %>%
-      complete(GCAM_region_ID = unique(iso_GCAM_regID$GCAM_region_ID),
-               Year = unique(c(ctry_municipal_W$Year, HISTORICAL_YEARS)),
-               fill = list(Value = NA)) %>%
-      arrange(GCAM_region_ID, Year) %>%
-      group_by(GCAM_region_ID) %>%
-      mutate(Value = approx_fun(Year, Value, rule = 2)) %>%
+      rename(year = Year, value = Value)
+
+    # At this point the municipal water demand data are ready to be interpolated and extrapolated
+    # The method uses linear interpolation of per-capita demands in years between known data points, and
+    # constant per-capita demands in years outside of the known data points.
+    L145.Pop_thous_ctry_Yh <- L100.Pop_thous_ctry_Yh %>%
+      rename(population = value)
+
+    L145.municipal_water_ctry_W_Yh_km3 <-
+      left_join(L145.municipal_water_ctry_W_Yh_km3, L145.Pop_thous_ctry_Yh, by = c("iso", "year")) %>%
+      mutate(value_pc = value / population) %>%
+      group_by(iso) %>%
+      # If there's only one observation (year) available for any country, approx(x, y, rule = 2) will wipe it out,
+      # putting in missing values in all years. The sequence below achieves a simple rule = 2 extrapolation, but is
+      # capable of extrapolation from a single observation
+      mutate(value_pc_filled = approx_fun(year = year, value = value_pc, rule = 2)) %>%
+      mutate(value_pc_filled = if_else(is.na(value_pc_filled), median(value_pc, na.rm = TRUE), value_pc_filled)) %>%
       ungroup() %>%
-      filter(Year %in% HISTORICAL_YEARS) %>%
-      rename(value = Value, year = Year) %>%
-      mutate(water_type = "water withdrawals") ->
-      municipal_water_R_W_Yh_km3
+      mutate(value = round(population * value_pc_filled, digits = water.DIGITS_MUNI_WATER)) %>%
+      select(iso, year, value)
 
     # Come up with GCAM regional average prices starting with the country level IBNET data.
-    # Note since the years are all over the place we will just use the average across years too.
-    # Come up with regional municipal prices from IBNET data
-    IBNET_municipal_water_cost_USDm3 %>%
-      inner_join(FAO_ctry_GCAM_region_ID, by = c("country" = "FAO_country")) %>%
+    # Note that since the years are all over the place, we will just use the average across years too.
+    L145.municipal_water_cost_R_75USD_m3 <- IBNET_municipal_water_cost_USDm3 %>%
+      left_join(aquastat_ctry[ c("aquastat_ctry", "iso")], by = c("country" = "aquastat_ctry")) %>%
+      left_join(iso_GCAM_regID[c("iso", "GCAM_region_ID")], by = "iso") %>%
       mutate(expenditure = cost * consumption) %>%
       group_by(GCAM_region_ID) %>%
       summarise(expenditure = sum(expenditure), consumption = sum(consumption)) %>%
       mutate(input.cost = expenditure / consumption) %>%
-      select(GCAM_region_ID, input.cost)->
-      municipal_water_cost_R_75USD_m3
+      select(GCAM_region_ID, input.cost)
 
-    # The IBNET data is incomplete and so it is very possible that we have entire GCAM regions in which none
-    # of the contained countries had any reported data.
-    stopifnot(nrow( municipal_water_cost_R_75USD_m3) == nrow(GCAM_region_names))
+    # The IBNET data is incomplete and so it is possible that we have entire GCAM regions in which none
+    # of the contained countries had any reported data. Just fill these out with default (median) values
+    default_muni_water_price <- median(L145.municipal_water_cost_R_75USD_m3$input.cost)
+    L145.municipal_water_cost_R_75USD_m3 <- complete(L145.municipal_water_cost_R_75USD_m3,
+                                                     GCAM_region_ID = sort(unique(iso_GCAM_regID$GCAM_region_ID))) %>%
+      mutate(input.cost = if_else(is.na(input.cost), default_muni_water_price, input.cost))
 
     # Map water use efficiencies from the continent scale to GCAM regions
-    # Note names were changed to match manufacturing continent to avoid the need for an additional mapping
-
-    # Map municipal water use efficiencies to GCAM regions
-    municipal_water_use_efficiency %>%
-      gather_years ->
-      municipal_water_use_efficiency_tmp
-
-    municipal_water_use_efficiency_tmp %>%
-      # We want all combinations of matches between these two tables so use an inner join
-      inner_join(manufacturing_water_mapping, by = "continent") %>%
-      left_join_error_no_match(GCAM_region_names, by = "region") %>%
-      select(GCAM_region_ID, year, value) %>%
+    # Note that the continent names were set to the same as Vassolo and Doll (mfg_water_mapping) to avoid the need for
+    # an additional mapping file here
+    L145.municipal_water_eff_ctry_Yh <-
+      full_join(mfg_water_mapping, municipal_water_use_efficiency, by = "continent") %>%
+      gather(year, efficiency, matches(YEAR_PATTERN)) %>%
+      mutate(year = as.integer(year)) %>%
+      select(iso, year, efficiency) %>%
+      group_by(iso) %>%
+      complete(year = sort(unique(c(year, HISTORICAL_YEARS)))) %>%
+      mutate(efficiency = approx_fun(year = year, value = efficiency)) %>%
       ungroup() %>%
-      complete(GCAM_region_ID = unique(iso_GCAM_regID$GCAM_region_ID),
-               year = c(MODEL_YEARS, municipal_water_use_efficiency_tmp$year),
-               fill = list(value = NA)) %>%
-      # Fill out the coefficients for all years using rule=2
-      arrange(GCAM_region_ID, year) %>%
-      group_by(GCAM_region_ID) %>%
-      mutate(value = approx_fun(year, value, rule = 2)) %>%
-      filter(year %in% MODEL_YEARS) %>%
+      filter(year %in% HISTORICAL_YEARS)
+
+    # Calculate nation-level consumption as withdrawals times efficiency, aggregate flow volumes by GCAM region, and
+    # calculate the average efficiency by GCAM region and year
+    L145.municipal_water_ctry_ALL_Yh_km3 <- L145.municipal_water_eff_ctry_Yh %>%
+      left_join( L145.municipal_water_ctry_W_Yh_km3, by = c("iso", "year")) %>%
+      rename(withdrawals = value) %>%
+      drop_na(withdrawals) %>%
+      mutate(consumption = efficiency * withdrawals)
+
+    L145.municipal_water_R_ALL_Yh_km3 <-
+      left_join(L145.municipal_water_ctry_ALL_Yh_km3,
+                iso_GCAM_regID[c("iso", "GCAM_region_ID")], by = "iso") %>%
+      group_by(GCAM_region_ID, year) %>%
+      summarise(withdrawals = sum(withdrawals),
+                consumption = sum(consumption)) %>%
       ungroup() %>%
-      select(GCAM_region_ID, year, coefficient = value) ->
-      municipal_water_eff_R_Y
+      mutate(efficiency = consumption / withdrawals)
+
+    #Compile data to be written out in the final format, selecting the appropriate columns
+    L145.municipal_water_ctry_W_Yh_km3 <- select(L145.municipal_water_ctry_ALL_Yh_km3, iso, year, withdrawals)
+    L145.municipal_water_R_W_Yh_km3 <- select(L145.municipal_water_R_ALL_Yh_km3, GCAM_region_ID, year, withdrawals)
+    L145.municipal_water_eff_ctry_Yh <- select(L145.municipal_water_ctry_ALL_Yh_km3, iso, year, efficiency)
+    L145.municipal_water_eff_R_Yh <- select(L145.municipal_water_R_ALL_Yh_km3, GCAM_region_ID, year, efficiency)
 
     # Produce outputs
-    municipal_water_R_W_Yh_km3 %>%
+    L145.municipal_water_ctry_W_Yh_km3 %>%
       add_title("Municipal water withdrawals by GCAM_region_ID for all historical years ") %>%
       add_units("km^3") %>%
-      add_comments("Aggregate FAO_municipal_water_AQUASTAT to GCAM regions and fill out the years for missing data by rule=2") %>%
+      add_comments("FAO_municipal_water_AQUASTAT by country interpolated linearly on a per-capita basis") %>%
+      add_legacy_name("L145.municipal_water_ctry_W_Yh_km3") %>%
+      add_precursors("water/aquastat_ctry",
+                     "water/FAO_municipal_water_AQUASTAT",
+                     "L100.Pop_thous_ctry_Yh") ->
+      L145.municipal_water_ctry_W_Yh_km3
+
+    L145.municipal_water_R_W_Yh_km3 %>%
+      add_title("Municipal water withdrawals by GCAM_region_ID for all historical years ") %>%
+      add_units("km^3") %>%
+      add_comments("FAO_municipal_water_AQUASTAT interpolated linearly on a per-capita basis aggregated by GCAM region") %>%
       add_legacy_name("L145.municipal_water_R_W_Yh_km3") %>%
-      add_precursors("common/iso_GCAM_regID", "aglu/AGLU_ctry",
-                     "water/FAO_municipal_water_AQUASTAT") ->
+      add_precursors("common/iso_GCAM_regID",
+                     "water/aquastat_ctry",
+                     "water/FAO_municipal_water_AQUASTAT",
+                     "L100.Pop_thous_ctry_Yh") ->
       L145.municipal_water_R_W_Yh_km3
 
-    municipal_water_cost_R_75USD_m3 %>%
+    L145.municipal_water_eff_ctry_Yh %>%
+      add_title("Municipal water use efficiency by country for all years") %>%
+      add_units("%") %>%
+      add_comments("Interpolate and map exogenous water use efficiencies from the continent scale to countries") %>%
+      add_legacy_name("L145.municipal_water_eff_ctry_Yh") %>%
+      add_precursors("water/municipal_water_use_efficiency",
+                     "water/mfg_water_mapping") ->
+      L145.municipal_water_eff_ctry_Yh
+
+    L145.municipal_water_eff_R_Yh %>%
+      add_title("Municipal water use efficiency by GCAM_region_ID for all years") %>%
+      add_units("%") %>%
+      add_comments("1. Interpolate and map exogenous water use efficiencies from the continent scale to countries;
+                   2. Multiply by withdrawal volumes to calculate consumption;
+                   3. Divide consumption by withdrawals to calculate efficiencies, averaged by region") %>%
+      add_legacy_name("L145.municipal_water_eff_R_Yh") %>%
+      add_precursors("common/iso_GCAM_regID",
+                     "water/aquastat_ctry",
+                     "water/FAO_municipal_water_AQUASTAT",
+                     "water/municipal_water_use_efficiency",
+                     "water/mfg_water_mapping") ->
+      L145.municipal_water_eff_R_Yh
+
+    L145.municipal_water_cost_R_75USD_m3 %>%
       add_title("Municipal water base deleivery cost by GCAM_region_ID") %>%
       add_units("1975$/m^3") %>%
       add_comments("Generate GCAM regional average prices starting with the country-level IBNET data") %>%
@@ -136,18 +197,11 @@ module_water_L145.water.demand.municipal <- function(command, ...) {
                      "water/IBNET_municipal_water_cost_USDm3") ->
       L145.municipal_water_cost_R_75USD_m3
 
-    municipal_water_eff_R_Y %>%
-      add_title("Municipal water use efficiency by GCAM_region_ID for all years") %>%
-      add_units("%") %>%
-      add_comments("1. Map water use efficiencies from the continent scale to GCAM regions;
-                   2. Fill out the coefficients for all years using rule=2") %>%
-      add_legacy_name("L145.municipal_water_eff_R_Y") %>%
-      add_precursors("common/GCAM_region_names",
-                     "water/municipal_water_use_efficiency",
-                     "water/manufacturing_water_mapping") ->
-      L145.municipal_water_eff_R_Y
-
-    return_data(L145.municipal_water_R_W_Yh_km3, L145.municipal_water_cost_R_75USD_m3, L145.municipal_water_eff_R_Y)
+    return_data(L145.municipal_water_ctry_W_Yh_km3,
+                L145.municipal_water_R_W_Yh_km3,
+                L145.municipal_water_eff_ctry_Yh,
+                L145.municipal_water_eff_R_Yh,
+                L145.municipal_water_cost_R_75USD_m3)
   } else {
     stop("Unknown command")
   }
