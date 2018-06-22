@@ -191,27 +191,13 @@ module_emissions_L241.fgas <- function(command, ...) {
       select(region, supplysector, subsector, stub.technology, year, Non.CO2, emiss.coeff) ->
       L241.hfc_future
 
-    if(OLD_DATA_SYSTEM_BEHAVIOR) {
-      # Now subset only the relevant technologies and gases (i.e., drop ones whose values are zero in all years). The old data system
-      # fails to drop technologies and gases that have zero emissions in all years. I talked to Kate and she said that this
-      # this has no implications for model performance. The if(OLD_DATA_SYSTEM_BEHVAIOR) is technically unnecessary because the 0s
-      # can be left in.
-      L241.hfc_all %>%
-        mutate(year = as.numeric(year)) ->
-        L241.hfc_all
-
-    } else {
-
-      # Now subset only the relevant technologies and gases (i.e., drop ones whose values are zero in all years).
-      L241.hfc_all %>%
-        group_by(region, supplysector, subsector, stub.technology, Non.CO2) %>%
-        filter(sum(input.emissions) != 0, year %in% BASE_YEARS) %>%
-        mutate(year = as.numeric(year)) %>%
-        ungroup ->
-        L241.hfc_all
-
-    } # end of if old data system
-
+    # Now subset only the relevant technologies and gases (i.e., drop ones whose values are zero in all years).
+    L241.hfc_all %>%
+      group_by(region, supplysector, subsector, stub.technology, Non.CO2) %>%
+      filter(sum(input.emissions) != 0, year %in% BASE_YEARS) %>%
+      mutate(year = as.numeric(year)) %>%
+      ungroup ->
+      L241.hfc_all
 
     # Set the units string for the hfc and pfc gases.
     L241.pfc_all %>%

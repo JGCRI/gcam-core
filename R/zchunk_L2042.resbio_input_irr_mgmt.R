@@ -134,61 +134,33 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
     # curves.
     # Then build in a base residue biomass supply curve table, adding in the relevant residual bio forest vs price curve for
     # each Region - agsupply-year combo, and rename to reflect the fact that For = Fraction of  forest harvested for a
-    # given price level. Both Forest and Mill get the forest vs price curve in the Old Data System. Assuming this is
-    # an error, since a mill vs price curve is in A_resbio_curves. Therefore an OLD_DATA_SYSTEM_BEHAVIOR flag is used
-    # to code the two different behaviors.
+    # given price level.
     L204.AgResBio_For %>%
       select(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology, year, residue.biomass.production) %>%
       mutate(colID = "For") ->
       For.tmp
 
-    if(OLD_DATA_SYSTEM_BEHAVIOR) {
-      # Mill outputs are getting For base resbio curves from A_resbio_curves;
-      # Likely a typo in the old DS, since there IS a Mill base curve in A_resbio_curves
-      L204.GlobalResBio_Mill %>%
-        # rename columns just for binding and working in a single pipeline
-        rename(AgSupplySector = sector.name,
-               AgSupplySubsector = subsector.name,
-               AgProductionTechnology = technology) %>%
-        select(AgSupplySector, AgSupplySubsector, AgProductionTechnology, residue.biomass.production) %>%
-        write_to_all_regions(names = c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "residue.biomass.production"),
-                             GCAM_region_names) %>%
-        filter(! region %in% aglu.NO_AGLU_REGIONS) %>%
-        distinct %>%
-        repeat_add_columns(bind_cols(tibble(year = MODEL_YEARS))) %>%
-        mutate(colID = "Mill") %>%
-        # bind to processed Forest data
-        bind_rows(For.tmp) %>%
-        # join in base resbio curves
-        repeat_add_columns(select(A_resbio_curves, price, For)) %>%
-        # assign appropriate fraction harvested based on colID
-        rename(fract.harvested = For) ->
-        # store in a temporary table for further processing
-        For.Mill.tmp
-    } else {
-      # Mill gets its OWN base resbio_curve from A_resbio_curves
-      # Correct one ; need first repeat_add_columns to just do For for both for Old DS behavior
-      L204.GlobalResBio_Mill %>%
-        # rename columns just for binding and working in a single pipeline
-        rename(AgSupplySector = sector.name,
-               AgSupplySubsector = subsector.name,
-               AgProductionTechnology = technology) %>%
-        select(AgSupplySector, AgSupplySubsector, AgProductionTechnology, residue.biomass.production) %>%
-        write_to_all_regions(names = c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "residue.biomass.production"),
-                             GCAM_region_names) %>%
-        filter(! region %in% aglu.NO_AGLU_REGIONS) %>%
-        repeat_add_columns(bind_cols(tibble(year = MODEL_YEARS))) %>%
-        mutate(colID = "Mill") %>%
-        # bind to processed Forest data
-        bind_rows(For.tmp) %>%
-        # join in base resbio curves
-        repeat_add_columns(select(A_resbio_curves, price, For, Mill)) %>%
-        # assign appropriate fraction harvested based on colID
-        mutate(fract.harvested = if_else(colID == "Mill", Mill, For)) %>%
-        select(-For, -Mill) ->
-        # store in a temporary table for further processing
-        For.Mill.tmp
-    }
+    # Mill gets its OWN base resbio_curve from A_resbio_curves
+    L204.GlobalResBio_Mill %>%
+      # rename columns just for binding and working in a single pipeline
+      rename(AgSupplySector = sector.name,
+             AgSupplySubsector = subsector.name,
+             AgProductionTechnology = technology) %>%
+      select(AgSupplySector, AgSupplySubsector, AgProductionTechnology, residue.biomass.production) %>%
+      write_to_all_regions(names = c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "residue.biomass.production"),
+                           GCAM_region_names) %>%
+      filter(! region %in% aglu.NO_AGLU_REGIONS) %>%
+      repeat_add_columns(bind_cols(tibble(year = MODEL_YEARS))) %>%
+      mutate(colID = "Mill") %>%
+      # bind to processed Forest data
+      bind_rows(For.tmp) %>%
+      # join in base resbio curves
+      repeat_add_columns(select(A_resbio_curves, price, For, Mill)) %>%
+      # assign appropriate fraction harvested based on colID
+      mutate(fract.harvested = if_else(colID == "Mill", Mill, For)) %>%
+      select(-For, -Mill) ->
+      # store in a temporary table for further processing
+      For.Mill.tmp
 
     # In base years, replace the "fraction produced" at specified price aglu.PRICE_BIO_FRAC in the model BASE_YEAR,
     # in order to calibrate resbio production. The fract.harvested for these prices-years are replaced by

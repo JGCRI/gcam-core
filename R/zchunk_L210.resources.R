@@ -283,20 +283,11 @@ module_energy_L210.resources <- function(command, ...) {
       select(region, renewresource = resource, sub.renewable.resource = subresource, grade, available, extractioncost)
 
     # L210.GrdRenewRsrcMax_geo: default max sub resource of geothermal (hydrothermal) resources
-    # The old code is "subset( L210.GrdRenewRsrcCurves_geo, grade = unique( grade )[1] )"
-    # It appears they meant to filter to "grade 1" only, however there is only one equals sign, so no subsetting occurs
-    if(OLD_DATA_SYSTEM_BEHAVIOR) {
-      L210.GrdRenewRsrcMax_geo <- L210.GrdRenewRsrcCurves_geo %>%
-        mutate(year.fillout = min(BASE_YEARS),
-               maxSubResource = 1) %>%
-        select(LEVEL2_DATA_NAMES[["maxSubResource"]])
-    } else {
-      L210.GrdRenewRsrcMax_geo <- L210.GrdRenewRsrcCurves_geo %>%
-        filter(grade == "grade 1") %>%
-        mutate(year.fillout = min(BASE_YEARS),
-               maxSubResource = 1) %>%
-        select(LEVEL2_DATA_NAMES[["maxSubResource"]])
-    }
+    L210.GrdRenewRsrcMax_geo <- L210.GrdRenewRsrcCurves_geo %>%
+      filter(grade == "grade 1") %>%
+      mutate(year.fillout = min(BASE_YEARS),
+             maxSubResource = 1) %>%
+      select(LEVEL2_DATA_NAMES[["maxSubResource"]])
 
 
     # L210.GrdRenewRsrcCurves_EGS: graded supply curves of geothermal (EGS) resources
@@ -307,20 +298,11 @@ module_energy_L210.resources <- function(command, ...) {
       select(region, renewresource = resource, sub.renewable.resource = subresource, grade, available, extractioncost)
 
     # L210.GrdRenewRsrcMax_EGS: default max sub resource of EGS resources
-    # The old code is "subset( L210.GrdRenewRsrcCurves_EGS, grade = unique( grade )[1] )"
-    # It appears they meant to filter to "grade 1" only, however there is only one equals sign, so no subsetting occurs
-    if(OLD_DATA_SYSTEM_BEHAVIOR) {
-      L210.GrdRenewRsrcMax_EGS <- L210.GrdRenewRsrcCurves_EGS %>%
-        mutate(year.fillout = min(BASE_YEARS),
-               maxSubResource = 1) %>%
-        select(LEVEL2_DATA_NAMES[["maxSubResource"]])
-    } else {
-      L210.GrdRenewRsrcMax_EGS <- L210.GrdRenewRsrcCurves_EGS %>%
-        filter(grade == "grade 1") %>%
-        mutate(year.fillout = min(BASE_YEARS),
-               maxSubResource = 1) %>%
-        select(LEVEL2_DATA_NAMES[["maxSubResource"]])
-    }
+    L210.GrdRenewRsrcMax_EGS <- L210.GrdRenewRsrcCurves_EGS %>%
+      filter(grade == "grade 1") %>%
+      mutate(year.fillout = min(BASE_YEARS),
+             maxSubResource = 1) %>%
+      select(LEVEL2_DATA_NAMES[["maxSubResource"]])
 
     # L210.GrdRenewRsrcCurves_tradbio: graded supply curves of traditional biomass resources
     L210.GrdRenewRsrcCurves_tradbio <- L117.RsrcCurves_EJ_R_tradbio %>%
