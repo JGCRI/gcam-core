@@ -2,20 +2,20 @@
 # Title: USA Demand Satiation Multipliers
 # Units: Increase in demand per unit floorspace
 supplysector,multiplier
-resid heating,1
-resid cooling,1.1
-resid hot water,1.1
+resid heating,1.05
+resid cooling,1.15
+resid hot water,1.01
 resid lighting,1.1
 resid appliances,1.2
 resid other appliances,1.3
-resid other,1.3
-comm heating,1
+resid other,1.25
+comm heating,1.05
 comm cooling,1.1
-comm hot water,1.1
-comm ventilation,1
+comm hot water,1.05
+comm ventilation,1.01
 comm cooking,1.1
 comm lighting,1.1
-comm refrigeration,1.2
-comm office,1.3
-comm other,1.3
+comm refrigeration,1.01
+comm office,1.1
+comm other,2
 comm non-building,1.3

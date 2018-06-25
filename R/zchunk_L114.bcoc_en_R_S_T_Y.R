@@ -88,13 +88,7 @@ module_emissions_L114.bcoc_en_R_S_T_Y <- function(command, ...) {
     RCP_OC_2000$Non.CO2 <- "OC"
     BCOC_emissions_RCP <- bind_rows(RCP_BC_2000, RCP_OC_2000) %>%
       gather(RCP_agg_sector, scaled_emissions, -Country, -iso, -Non.CO2) %>%
-      mutate(scaled_emissions = scaled_emissions * CONV_KG_TO_TG)
-    # We only want to drop the Bahamas so that the oldnew comparison check works. The RCP_BC_2000 and RCP_OC_2000 files
-    # have been modified from the old data system, in that the "#N/A" for the iso of The Bahamas has been replaced with "bhs".
-    if(OLD_DATA_SYSTEM_BEHAVIOR) {
-      BCOC_emissions_RCP <- subset( BCOC_emissions_RCP, iso != "bhs")
-    }
-    BCOC_emissions_RCP <- BCOC_emissions_RCP %>%
+      mutate(scaled_emissions = scaled_emissions * CONV_KG_TO_TG) %>%
       left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%
       group_by(GCAM_region_ID, Non.CO2, RCP_agg_sector) %>%
       summarise(scaled_emissions = sum(scaled_emissions)) %>%

@@ -518,20 +518,9 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
     # L244.GenericServiceSatiation_gcamusa: Satiation levels assumed for non-thermal building services
     # Just multiply the base-service by an exogenous multiplier
     L244.GenericServiceSatiation_gcamusa <- L244.GenericBaseService_gcamusa %>%
-      filter(year == max(BASE_YEARS))
-
-    # When adding floorspace, we should take floorspace from max(BASE_YEARS) as well
-    # Instead we take the first value, which ends up being floorspace from min(BASE_YEARS)
-    if(OLD_DATA_SYSTEM_BEHAVIOR) {
-      L244.GenericServiceSatiation_gcamusa <- L244.GenericServiceSatiation_gcamusa %>%
-        # Add floorspace
-        left_join_keep_first_only(L244.Floorspace_gcamusa, by = c(LEVEL2_DATA_NAMES[["BldNodes"]]))
-    } else {
-      L244.GenericServiceSatiation_gcamusa <- L244.GenericServiceSatiation_gcamusa %>%
-        # Add floorspace
-        left_join_error_no_match(L244.Floorspace_gcamusa, by = c(LEVEL2_DATA_NAMES[["BldNodes"]], "year"))
-    }
-    L244.GenericServiceSatiation_gcamusa <- L244.GenericServiceSatiation_gcamusa %>%
+      filter(year == max(BASE_YEARS)) %>%
+      # Add floorspace
+      left_join_error_no_match(L244.Floorspace_gcamusa, by = c(LEVEL2_DATA_NAMES[["BldNodes"]], "year")) %>%
       # Add multiplier
       left_join_error_no_match(A44.demand_satiation_mult, by = c("building.service.input" = "supplysector")) %>%
       # Satiation level = service per floorspace * multiplier
@@ -541,22 +530,9 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
 
     # L244.ThermalServiceSatiation: Satiation levels assumed for thermal building services
     L244.ThermalServiceSatiation_gcamusa <- L244.ThermalBaseService_gcamusa %>%
-      filter(year == max(BASE_YEARS))
-
-    # Since we filter L244.ThermalBaseService_gcamusa  to max(BASE_YEARS), we should take floorspace from max(BASE_YEARS) as well
-    # Instead we take the first floorspace value, which ends up being the floorspace from min(BASE_YEARS)
-    # By adding in "year" to join by, we ensure that the same year is used for floorspace and base service
-    if(OLD_DATA_SYSTEM_BEHAVIOR) {
-      L244.ThermalServiceSatiation_gcamusa <- L244.ThermalServiceSatiation_gcamusa %>%
-        # Add floorspace
-        left_join_keep_first_only(L244.Floorspace_gcamusa, by = c(LEVEL2_DATA_NAMES[["BldNodes"]]))
-    } else {
-      L244.ThermalServiceSatiation_gcamusa <- L244.ThermalServiceSatiation_gcamusa %>%
-        # Add floorspace
-        left_join_error_no_match(L244.Floorspace_gcamusa, by = c(LEVEL2_DATA_NAMES[["BldNodes"]], "year"))
-    }
-
-    L244.ThermalServiceSatiation_gcamusa <- L244.ThermalServiceSatiation_gcamusa %>%
+      filter(year == max(BASE_YEARS)) %>%
+      # Add floorspace
+      left_join_error_no_match(L244.Floorspace_gcamusa, by = c(LEVEL2_DATA_NAMES[["BldNodes"]], "year")) %>%
       # Add multiplier
       left_join_error_no_match(A44.demand_satiation_mult, by = c("thermal.building.service.input" = "supplysector")) %>%
       # Satiation level = service per floorspace * multiplier
