@@ -124,79 +124,17 @@ module_gcam.usa_LA154.Transport <- function(command, ...) {
         select(state, year, value_share) ->
         Pop_state_share
 
-      if(OLD_DATA_SYSTEM_BEHAVIOR) {
-        # Old code used the function, apportion_to_states, but did not match transportation mode (i.e., cycle and walk).
-        # For every year, there is a single national value for each mode. I believe the old code alternated between the cycle and walk
-        # values for each state down the list. However, the list was arranged with the first half being cycle and the last half being walk.
-        # Therefore, the wrong mode was applied for every other state.
-
-        # I will force these datasets to the same order as before and apply the same function to reproduce the data.
-
-        # This is how the old dataframe was ordered (i.e., by full state name)
-        old_df_order <- c("AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI", "ID", "IL", "IN", "IA",
-                          "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM",
-                          "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA",
-                          "WV", "WI", "WY")
-
-        L154.out_mpkm_R_trn_nonmotor_Yh %>%
-          rename(value_mode = value) %>%
-          filter(GCAM_region_ID == gcam.USA_CODE) %>%
-          spread(year, value_mode) %>%
-          select(-GCAM_region_ID, -mode) ->
-          nation_data
-
-        Pop_state_share %>%
-          filter(year %in% HISTORICAL_YEARS) %>%
-          mutate(mode = "Walk") %>%
-          spread(year, value_share) %>%
-          mutate(state = factor(state, levels = old_df_order)) %>% # Need to reorder based on old dataframe
-          arrange(state) ->
-          State_walk
-
-        Pop_state_share %>%
-          filter(year %in% HISTORICAL_YEARS) %>%
-          mutate(mode = "Cycle") %>%
-          spread(year, value_share) %>%
-          mutate(state = factor(state, levels = old_df_order)) %>% # Need to reorder based on old dataframe
-          arrange(state) %>%
-          bind_rows(State_walk) %>% # Need to reorder based on old dataframe
-          select(-state, -mode) ->
-          state_share_data
-
-        # This is the underlying code of the old data system function, apportion_to_states
-        data_final <- state_share_data *
-          nation_data[rep(seq_len(nrow(nation_data)), length.out = nrow(state_share_data)), ]
-        data_final <- as_tibble(data_final) # Need to convert the dataframe back to a tibble
-
-        data_final %>%
-          filter(row_number() <= length(old_df_order)) %>% # Labeling the top half of rows to the "cycle" mode
-          mutate(mode = "Cycle") %>%
-          mutate(state = old_df_order) ->
-          State_cycle
-
-        data_final %>%
-          filter(row_number() > length(old_df_order)) %>% # Labeling the bottom half of rows to the "walk" mode
-          mutate(mode = "Walk") %>%
-          mutate(state = old_df_order) %>%
-          bind_rows(State_cycle) %>%
-          gather_years %>%
-          select(state, mode, year, value) ->
-          L154.out_mpkm_state_trn_nonmotor_Yh
-
-        } else {
-
-        # Now we can use these shares to allocate the national data across the states
-        L154.out_mpkm_R_trn_nonmotor_Yh %>%
-          rename(value_mode = value) %>%
-          filter(GCAM_region_ID == gcam.USA_CODE) %>%
-          # Number of rows will change by adding states, so left_join_error_no_match cannot be used
-          left_join(Pop_state_share, by = "year") %>%
-          mutate(value = value_mode * value_share) %>% # Apportioning across the modes using the share data
-          filter(year %in% HISTORICAL_YEARS) %>% # Ensuring within historical period
-          select(state, mode, year, value) %>%
-          mutate(year = as.integer(year)) ->
-          L154.out_mpkm_state_trn_nonmotor_Yh
-        }
+      # Now we can use these shares to allocate the national data across the states
+      L154.out_mpkm_R_trn_nonmotor_Yh %>%
+        rename(value_mode = value) %>%
+        filter(GCAM_region_ID == gcam.USA_CODE) %>%
+        # Number of rows will change by adding states, so left_join_error_no_match cannot be used
+        left_join(Pop_state_share, by = "year") %>%
+        mutate(value = value_mode * value_share) %>% # Apportioning across the modes using the share data
+        filter(year %in% HISTORICAL_YEARS) %>% # Ensuring within historical period
+        select(state, mode, year, value) %>%
+        mutate(year = as.integer(year)) ->
+        L154.out_mpkm_state_trn_nonmotor_Yh
 
     # ===================================================
 
