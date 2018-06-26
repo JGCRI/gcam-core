@@ -46,28 +46,15 @@ module_emissions_L123.bcoc_awb_R_S_T_Y <- function(command, ...) {
       mutate(Non.CO2 = "OC_AWB") -> OC_AWB_2000
 
     # Aggregate BC and OC emissions to GCAM regions and convert to Tg
-    if(OLD_DATA_SYSTEM_BEHAVIOR) {
-      # Old system used match and ended up with just the first value instead of summing all values
-      bind_rows(OC_AWB_2000, BC_AWB_2000) %>%
+    bind_rows(OC_AWB_2000, BC_AWB_2000) %>%
       # Not all iso's will necesarilly have an input value. This is ok, but use left_join becuase of this.
       left_join(iso_GCAM_regID, by = "iso") %>%
       group_by(Non.CO2, GCAM_region_ID) %>%
-      summarise(awb = first(awb)) %>%
+      summarize_if(is.numeric , sum) %>%
       filter(!is.na(awb)) %>%
       mutate(awb = awb * CONV_KG_TO_TG) %>%
       ungroup() ->
       BCOC_AWB_2000
-    } else {
-        bind_rows(OC_AWB_2000, BC_AWB_2000) %>%
-        # Not all iso's will necesarilly have an input value. This is ok, but use left_join becuase of this.
-        left_join(iso_GCAM_regID, by = "iso") %>%
-        group_by(Non.CO2, GCAM_region_ID) %>%
-        summarize_if(is.numeric , sum) %>%
-        filter(!is.na(awb)) %>%
-        mutate(awb = awb * CONV_KG_TO_TG) %>%
-        ungroup() ->
-        BCOC_AWB_2000
-   }
 
     # Extract only 2000 data from ag production data
     filter(L103.ag_Prod_Mt_R_C_Y_GLU, year == 2000) %>%
