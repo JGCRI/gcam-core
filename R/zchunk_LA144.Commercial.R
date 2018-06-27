@@ -48,14 +48,6 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions") %>%
       select(subregion4, subregion9, REGION, DIVISION, state) %>%
       distinct()
-    # Because there was a mistake in previous states_subregions file, there are some values that will require
-    # a data frame identical to the mistaken one
-    if(OLD_DATA_SYSTEM_BEHAVIOR) {
-      states_subregions_region4calc <- states_subregions %>%
-        mutate(subregion4 = if_else(state == "WV", "Midwest", subregion4))
-    } else {
-      states_subregions_region4calc <- states_subregions_region4calc
-    }
 
     Census_pop_hist <- get_data(all_data, "gcam-usa/Census_pop_hist") %>%
       gather_years
@@ -111,7 +103,7 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
 
     # Add subregions to census population for aggregating
     L144.Census_pop_hist <- Census_pop_hist %>%
-      left_join_error_no_match(states_subregions_region4calc, by = "state") %>%
+      left_join_error_no_match(states_subregions, by = "state") %>%
       filter(year %in% HISTORICAL_YEARS)
 
     # Aggregate population to subregion4
