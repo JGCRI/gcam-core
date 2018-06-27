@@ -281,60 +281,28 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
       ungroup()
 
     # Add 1979 to the 9-region table, and use the 9-subregion data to scale the 13-subregion data back to 1990 and 1979
-    if(OLD_DATA_SYSTEM_BEHAVIOR) {
-      # There is a mistake here because of using match-there are multiple values for some services,
-      # so only the first, not the sum get used
-      # We replicate this mistake using left_join_keep_first_only
-      L144.RECS_1979 <- RECS_1979 %>%
-        left_join_error_no_match(states_subregions %>%
-                                   select(subregion9, DIVISION) %>%
-                                   distinct(), by = "DIVISION") %>%
-        gather(variable, value, -DIVISION, -subregion9) %>%
-        # Convert to EJ
-        mutate(value = value * CONV_TBTU_EJ,
-               variable = sub("TBTU", "BTU", variable),
-               year = 1979) %>%
-        # Add in GCAM fuel and service
-        left_join_error_no_match(RECS_variables, by = "variable") %>%
-        select(subregion9, fuel, service, value, year)
+    # We sum by service and fuel first
+    L144.RECS_1979 <- RECS_1979 %>%
+      left_join_error_no_match(states_subregions %>%
+                                 select(subregion9, DIVISION) %>%
+                                 distinct(), by = "DIVISION") %>%
+      gather(variable, value, -DIVISION, -subregion9) %>%
+      mutate(value = value * CONV_TBTU_EJ,
+             variable = sub("TBTU", "BTU", variable),
+             year = 1979) %>%
+      # Add in GCAM fuel and service
+      left_join_error_no_match(RECS_variables, by = "variable") %>%
+      group_by(subregion9, fuel, service, year) %>%
+      summarise(value = sum(value)) %>%
+      ungroup()
 
-      # Select only first of each fuel and service
-      L144.RECS_1979 <- L144.RECS_1979 %>%
-        select(subregion9, fuel, service, year) %>%
-        distinct() %>%
-        left_join_keep_first_only(L144.RECS_1979, by = c("subregion9", "fuel", "service", "year"))
-
-      # Calculate 1990 conversion factor using 1990/1993 ratio
-      L144.in_EJ_sR9_res_F_U_Y <- L144.in_EJ_sR9_res_F_U_Y %>%
-        bind_rows(L144.RECS_1979) %>%
-        group_by(subregion9, fuel, service) %>%
-        mutate(conv = value / lead(value, n = 1L, order_by = year)) %>%
-        ungroup() %>%
-        replace_na(list(conv = 1))
-    } else {
-      # In the corrected version, we sum by service and fuel first
-      L144.RECS_1979 <- RECS_1979 %>%
-        left_join_error_no_match(states_subregions %>%
-                                   select(subregion9, DIVISION) %>%
-                                   distinct(), by = "DIVISION") %>%
-        gather(variable, value, -DIVISION, -subregion9) %>%
-        mutate(value = value * CONV_TBTU_EJ,
-               variable = sub("TBTU", "BTU", variable),
-               year = 1979) %>%
-        # Add in GCAM fuel and service
-        left_join_error_no_match(RECS_variables, by = "variable") %>%
-        group_by(subregion9, fuel, service, year) %>%
-        summarise(value = sum(value)) %>%
-        ungroup()
-
-      # Calculate 1990 conversion factor using 1990/1993 ratio
-      L144.in_EJ_sR9_res_F_U_Y <- L144.in_EJ_sR9_res_F_U_Y %>%
-        bind_rows(L144.RECS_1979) %>%
-        group_by(subregion9, fuel, service) %>%
-        mutate(conv = value / lead(value, n = 1L, order_by = year)) %>%
-        ungroup() %>%
-        replace_na(list(conv = 1))
-    }
+    # Calculate 1990 conversion factor using 1990/1993 ratio
+    L144.in_EJ_sR9_res_F_U_Y <- L144.in_EJ_sR9_res_F_U_Y %>%
+      bind_rows(L144.RECS_1979) %>%
+      group_by(subregion9, fuel, service) %>%
+      mutate(conv = value / lead(value, n = 1L, order_by = year)) %>%
+      ungroup() %>%
+      replace_na(list(conv = 1))
 
     # Find years for converting
     conv_years <- setdiff(unique(L144.in_EJ_sR9_res_F_U_Y$year), unique(L144.in_EJ_sR13_res_F_U_Y$year))
