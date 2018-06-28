@@ -83,27 +83,15 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
              value = if_else(value < 0, 0, value)
       )
 
-    if(OLD_DATA_SYSTEM_BEHAVIOR) {
-      # Add in country iso
-      L143.HDDCDD_scen_ctry_Y <- HDDCDD_data %>%
-        # Drop file name
-        select(-file) %>%
-        # Filter only useful years
-        filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%
-        # Drop Cote d'Ivoire--this is a mistake in old data system
-        filter(country != "Cote d'Ivoire") %>%
-        left_join_error_no_match(GIS_ctry, by = "country")
-    } else {
-      # Add in country iso
-      L143.HDDCDD_scen_ctry_Y <- HDDCDD_data %>%
-        # Drop file name
-        select(-file) %>%
-        # Filter only useful years
-        filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%
-        # Remove apostrophe in Cote d'Ivoire and add in country iso by country name
-        mutate(country = if_else(country == "Cote d'Ivoire", "Cote dIvoire", country)) %>%
-        left_join_error_no_match(GIS_ctry, by = 'country')
-    }
+    # Add in country iso
+    L143.HDDCDD_scen_ctry_Y <- HDDCDD_data %>%
+      # Drop file name
+      select(-file) %>%
+      # Filter only useful years
+      filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%
+      # Remove apostrophe in Cote d'Ivoire and add in country iso by country name
+      mutate(country = if_else(country == "Cote d'Ivoire", "Cote dIvoire", country)) %>%
+      left_join_error_no_match(GIS_ctry, by = 'country')
 
     # Serbia and Montenegro are currently combined. Copy to separated countries, assigning the same HDD and CDD to each
     if("scg" %in% L143.HDDCDD_scen_ctry_Y$iso) {
