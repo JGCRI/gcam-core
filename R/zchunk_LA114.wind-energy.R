@@ -73,8 +73,6 @@ module_energy_LA114.wind <- function(command, ...) {
     # Country-level supply curves from the Zhou file are used to build up the regional supply curves
     Zhou_wind_supply_ctry_EJ %>%
       rename(mid.price = `mid-price`, curve.exponent = `curve-exponent`, base.price = `base-price`) %>% # Modifying title names
-      # Romania is listed in the Zhou file as rou and in the iso_GCAM_regID file as rom. rou will be changed to rom.
-      mutate(iso = replace(iso, iso == "rou", "rom")) %>%
       left_join_error_no_match(iso_GCAM_regID, by = "iso") %>% # Attach region IDs to the countries
       # Convert prices per unit of energy from 2007 USD/kWh to 1975 USD/GJ
       mutate(mid.price = mid.price * gdp_deflator(1975, 2007) / CONV_KWH_GJ,
