@@ -367,7 +367,7 @@ chunk_inputs <- function(chunks = find_chunks()$name) {
     }
     if(!is.null(reqdata)) {
       names <- c(names, rep(ch, times = length(reqdata)))
-      inputs <- c(inputs, reqdata)
+      inputs <- c(inputs, as.vector(unlist(reqdata)))
       from_files <- c(from_files, file_inputs)
       optionals <- c(optionals, optional_file_inputs)
     }
@@ -414,7 +414,7 @@ chunk_outputs <- function(chunks = find_chunks()$name) {
     }
     if(!is.null(reqdata)) {
       names <- c(names, rep(ch, times = length(reqdata)))
-      outputs <- c(outputs, reqdata)
+      outputs <- c(outputs, as.vector(unlist(reqdata)))
       to_xmls <- c(to_xmls, fileoutputs)
     }
   }
