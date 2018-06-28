@@ -1,12 +1,12 @@
 #' module_energy_batch_negative_emissions_budget_xml
 #'
-#' Construct XML data structure for \code{paste0( "negative_emissions_budget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5)), ".xml")}.
+#' Construct XML data structure for \code{paste0( "negative_emissions_budget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5)), paste0("spa", 1:5), ".xml")}.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{paste0( "negative_emissions_budget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), c("spa1", "spa23", "spa4", "spa5")), ".xml")}. The corresponding file in the
+#' the generated outputs: \code{paste0( "negative_emissions_budget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), paste0("spa", 1:5)), ".xml")}. The corresponding file in the
 #' original data system was \code{L270.limits.R} (energy XML).
 module_energy_batch_negative_emissions_budget_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -14,9 +14,9 @@ module_energy_batch_negative_emissions_budget_xml <- function(command, ...) {
               "L270.NegEmissFinalDemand",
               "L270.NegEmissFinalDemand_SPA",
               "L270.NegEmissBudgetMaxPrice",
-              paste0("L270.NegEmissBudget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), c("spa1", "spa23", "spa4", "spa5"))) ))
+              paste0("L270.NegEmissBudget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), paste0("spa", 1:5))) ))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    xml_files = paste0( "negative_emissions_budget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), c("spa1", "spa23", "spa4", "spa5")), ".xml")
+    xml_files = paste0( "negative_emissions_budget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), paste0("spa", 1:5)), ".xml")
     names(xml_files) <- rep("XML", length(xml_files))
     return(xml_files)
   } else if(command == driver.MAKE) {
@@ -33,8 +33,8 @@ module_energy_batch_negative_emissions_budget_xml <- function(command, ...) {
 
     # ===================================================
 
-    scenarios <- c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), c("spa1", "spa23", "spa4", "spa5"))
-    xml_files = paste0( "negative_emissions_budget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), c("spa1", "spa23", "spa4", "spa5")), ".xml")
+    scenarios <- c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), paste0("spa", 1:5))
+    xml_files = paste0( "negative_emissions_budget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), paste0("spa", 1:5)), ".xml")
 
     # Produce outputs
     ret_data <- c()
