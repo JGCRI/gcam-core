@@ -56,30 +56,15 @@ module_emissions_L102.ghg_en_USA_S_T_Y <- function(command, ...) {
       ungroup() ->
       L102.ghg_tg_USA_en_Sepa_F_2005 # GHG balance in 2005
 
-    if(OLD_DATA_SYSTEM_BEHAVIOR) {
-      # incorrect fuel name for transport from input mapping.
-      # organize energy balances in USA 2005
-      L101.in_EJ_R_en_Si_F_Yh %>% # start from energy balances
-        filter(GCAM_region_ID == gcam.USA_CODE, year == 2005) %>% # 2005 USA data only
-        select(-GCAM_region_ID, -year) %>%
-        left_join_keep_first_only(select(GCAM_sector_tech, sector, fuel, EPA_agg_sector, EPA_agg_fuel_ghg),
-                                  by = c("sector", "fuel")) %>% # assign aggregate sector and fuel names
-        group_by(EPA_agg_sector, EPA_agg_fuel_ghg) %>%
-        summarize_if(is.numeric, sum) -> # sum by aggregate sector and fuel
-        L102.in_EJ_USA_en_Sepa_F_2005 # energy balance in 2005
-
-    } else {
-      # foolproof solution is to use both fuel and technology for categorization.
-      # organize energy balances in USA 2005
-      L101.in_EJ_R_en_Si_F_Yh %>% # start from energy balances
-        filter(GCAM_region_ID == gcam.USA_CODE, year == 2005) %>% # 2005 USA data only
-        select(-GCAM_region_ID, -year) %>%
-        left_join(select(GCAM_sector_tech, sector, fuel, technology, EPA_agg_sector, EPA_agg_fuel_ghg),
-                  by = c("sector", "fuel", "technology")) %>% # assign aggregate sector and fuel names
-        group_by(EPA_agg_sector, EPA_agg_fuel_ghg) %>%
-        summarize_if(is.numeric, sum) -> # sum by aggregate sector and fuel
-        L102.in_EJ_USA_en_Sepa_F_2005 # energy balance in 2005
-    }
+    # organize energy balances in USA 2005
+    L101.in_EJ_R_en_Si_F_Yh %>% # start from energy balances
+      filter(GCAM_region_ID == gcam.USA_CODE, year == 2005) %>% # 2005 USA data only
+      select(-GCAM_region_ID, -year) %>%
+      left_join(select(GCAM_sector_tech, sector, fuel, technology, EPA_agg_sector, EPA_agg_fuel_ghg),
+                by = c("sector", "fuel", "technology")) %>% # assign aggregate sector and fuel names
+      group_by(EPA_agg_sector, EPA_agg_fuel_ghg) %>%
+      summarize_if(is.numeric, sum) -> # sum by aggregate sector and fuel
+      L102.in_EJ_USA_en_Sepa_F_2005 # energy balance in 2005
 
     # combine emissions and energy to get emission factors
     L102.ghg_tg_USA_en_Sepa_F_2005 %>%
