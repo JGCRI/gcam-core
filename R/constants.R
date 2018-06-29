@@ -240,6 +240,18 @@ aglu.AVG_WOOD_DENSITY_KGM3 <- 500 # In kg per m3
 # Carbon content of wood is about 50 percent across species
 aglu.AVG_WOOD_DENSITY_KGCM3 <- 250 # In kg carbon per m3
 
+# Carbon content adjustments from unmanaged to managed
+# conversion factor from unmanaged forest to managed forest, where the former is
+# understood to be forest not in logging rotation, and the latter is forest in
+# logging rotation. The average vegetation biomass of the logged forest is assumed
+# to be 50% of that of the unlogged forest (integrated over the rotation period).
+# Using 50% under the assumption that the veg biomass of the logged forest over the
+# rotation period can be approximated by a triangle.
+aglu.CVEG_MULT_UNMGDFOR_MGDFOR <- 0.5
+aglu.CSOIL_MULT_UNMGDFOR_MGDFOR <- 0.87      #source: Guo and Gifford 2002; https://doi.org/10.1046/j.1354-1013.2002.00486.x
+aglu.CVEG_MULT_UNMGDPAST_MGDPAST <- 0.5
+aglu.CSOIL_MULT_UNMGDPAST_MGDPAST <- 0.9     # stay conservative here b/c no data source
+
 # Average Agriculture Density kg/m^3 for mass conversion
 # Source: http://www.engineeringtoolbox.com/wood-density-d_40.html
 aglu.AVG_AG_DENSITY <- 1
