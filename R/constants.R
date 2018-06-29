@@ -240,6 +240,12 @@ aglu.AVG_WOOD_DENSITY_KGM3 <- 500 # In kg per m3
 # Carbon content of wood is about 50 percent across species
 aglu.AVG_WOOD_DENSITY_KGCM3 <- 250 # In kg carbon per m3
 
+# Carbon content adjustments from unmanaged to managed
+aglu.CVEG_MULT_UNMGDFOR_MGDFOR <- 0.5
+aglu.CSOIL_MULT_UNMGDFOR_MGDFOR <- 0.87      #source: Guo and Gifford 2002
+aglu.CVEG_MULT_UNMGDPAST_MGDPAST <- 0.5
+aglu.CSOIL_MULT_UNMGDPAST_MGDPAST <- 0.9     # stay conservative here b/c no data source
+
 # Average Agriculture Density kg/m^3 for mass conversion
 # Source: http://www.engineeringtoolbox.com/wood-density-d_40.html
 aglu.AVG_AG_DENSITY <- 1
