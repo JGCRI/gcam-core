@@ -151,9 +151,11 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
           filter(year == emissions.GAINS_YEARS[length(emissions.GAINS_YEARS)],
                  IIASA_sector == "elec_coal", Non.CO2 == "SO2", scenario == "CLE"),
         by = "GCAM_region_ID") %>%
-      mutate(policy = if_else(emfact <= emissions.COAL_SO2_THRESHOLD, "strong_reg", "weak_reg"),
-             policy = replace(policy, region_grouping == "low", "low")) %>%
-      replace_na(list(policy = "low")) %>%
+      mutate(policy = if_else(emfact <= emissions.COAL_SO2_THRESHOLD, "strong_reg", "weak_reg")) %>%
+      # If region is missing a value, assume it is a weak_reg
+      replace_na(list(policy = "weak_reg")) %>%
+      # All low region groupings should have low policy
+      mutate(policy = replace(policy, region_grouping == "low", "low")) %>%
       select(GCAM_region_ID, policy)
 
     # Group SSPs by whether we process them the same
