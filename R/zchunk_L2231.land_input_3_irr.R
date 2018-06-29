@@ -215,6 +215,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       left_join_error_no_match(select(GCAMLandLeaf_CdensityLT, Land_Type, LandLeaf), by = c("Land_Type" = "LandLeaf")) %>%
       rename(Cdensity_LT = Land_Type.y) %>%
       add_carbon_info(carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
+      reduce_mgd_carbon() %>%
       select(LEVEL2_DATA_NAMES[["LN3_MgdCarbon"]]) ->
       L223.LN3_MgdCarbon_noncrop
 
