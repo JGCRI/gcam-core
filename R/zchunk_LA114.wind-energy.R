@@ -31,6 +31,14 @@ module_energy_LA114.wind <- function(command, ...) {
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     Zhou_wind_supply_ctry_EJ <- get_data(all_data, "energy/Zhou_wind_supply_ctry_EJ")
 
+    # This routine takes country level wind resource information and aggregates that to GCAM regions.
+    # The country level information is provided as GCAM smooth renewable resource parameters
+    # (e.g. maxSubResource | mid-price | curve-exponent | base-price). Then:
+    # 1) Each country level curve is expressed numerically by evaluating each country's curve
+    # 2) The resulting numerical resource curves for each country within a GCAM region are added together
+    # 3) And a new aggregate smooth renewable resource parameters are derived for that region by re-fitting
+    #    the smooth renewable resource cuve.
+
     # ===================================================
 
     # Silence package notes
