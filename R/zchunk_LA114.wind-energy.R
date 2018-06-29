@@ -37,7 +37,7 @@ module_energy_LA114.wind <- function(command, ...) {
     # 1) Each country level curve is expressed numerically by evaluating each country's curve
     # 2) The resulting numerical resource curves for each country within a GCAM region are added together
     # 3) And a new aggregate smooth renewable resource parameters are derived for that region by re-fitting
-    #    the smooth renewable resource cuve.
+    #    the smooth renewable resource curve.
 
     # ===================================================
 
