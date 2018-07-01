@@ -307,7 +307,6 @@ missing_data <- function() {
 #' gdp_bil_1990USD <- c(4770, 4779, 4937)
 #' gdp_bil_2010USD <- gdp_bil_1990USD * gdp_deflator(2010, base_year = 1990)
 gdp_deflator <- function(year, base_year) {
-
   # This time series is the BEA "A191RD3A086NBEA" product
   # Downloaded April 13, 2017 from https://fred.stlouisfed.org/series/A191RD3A086NBEA
   gdp_years <- 1929:2016
