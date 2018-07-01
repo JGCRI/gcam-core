@@ -66,27 +66,9 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
       standardize_iso(col = "ISO_A3") %>%
       change_iso_code('rou', 'rom') %>%                                                 # Switch Romania iso code to its pre-2002 value
       left_join(iso_GCAM_regID, by = "iso") %>%                                         # Map in GCAM regions
-      select(IPCC, Non.CO2, sector, iso, GCAM_region_ID, year, value) ->
+      select(IPCC, Non.CO2, sector, iso, GCAM_region_ID, year, value) %>%
+      na.omit() ->
       EDGAR_history
-
-    if(OLD_DATA_SYSTEM_BEHAVIOR) {
-      # The old data system processed data in wide format. There was a na.omit() in the code that effectively removed
-      # any region/sector combination where the time series was incomplete. We'd like to keep this information.
-      # Additionally, the old data system never included NH3 in the processing. The emissions are small
-      # but we should keep them.
-      EDGAR_history %>%
-        filter(Non.CO2 != "NH3") %>%                                                    # Remove NH3 for consistency with old data
-        filter(year <= 2008) %>%                                                         # Old data didn't care if post-2008 data was missing so remove it here
-        spread(year, value) %>%                                                          # Convert to wide format
-        na.omit() %>%                                                                    # Remove any row with an NA (i.e., incomplete time series)
-        gather_years ->                                             # Convert year back to integer form (not sure why this changes type)
-        EDGAR_history
-
-    } else {
-      EDGAR_history %>%
-        na.omit() ->
-        EDGAR_history
-    }
 
     # Prepare EDGAR emissions for use (continued)
     EDGAR_history %>%

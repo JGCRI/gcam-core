@@ -29,9 +29,6 @@ year (the year to convert from) and a conversion year (the year to convert
 to).  To use the deflator, multiply prices in base-year dollars by the deflator; the
 result will be prices in the converted dollar year.
 }
-\note{
-This returns slightly different values if \code{OLD_DATA_SYSTEM_BEHAVIOR} is TRUE.
-}
 \examples{
 gdp_bil_1990USD <- c(4770, 4779, 4937)
 gdp_bil_2010USD <- gdp_bil_1990USD * gdp_deflator(2010, base_year = 1990)

@@ -55,6 +55,8 @@ module_aglu_LA100.IMAGE_downscale_ctry_yr <- function(command, ...) {
       arrange(year) %>%
       group_by(commodity, system, input, IMAGE_region_ID) %>%
       mutate(value = approx_fun(year, value, rule = 2)) %>%
+      # Re-set negative values in the feedfrac table to 0
+      mutate(value = if_else(value < 0, 0, value)) %>%
       ungroup ->
       L100.IMAGE_an_Feedfrac_Rimg_C_Sys_Fd_Y
 
@@ -65,9 +67,6 @@ module_aglu_LA100.IMAGE_downscale_ctry_yr <- function(command, ...) {
       arrange(year) %>%
       group_by(commodity, system, IMAGE_region_ID) %>%
       mutate(value = approx_fun(year, value, rule = 2)) %>%
-      ungroup %>%
-      # Re-set negative values in the feedfrac table to 0
-      mutate(value = if_else(value < 0, 0, value)) %>%
       ungroup ->
       L100.IMAGE_an_FeedIO_Rimg_C_Sys_Y
 
