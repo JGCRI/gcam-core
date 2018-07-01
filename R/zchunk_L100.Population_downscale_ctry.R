@@ -51,18 +51,9 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
     # Second, estimate population values prior to 1950 for countries in aggregate regions. This is what we want: pop_country_t = (pop_aggregate_t / pop_aggregate_1950) * pop_country_1950
     # Generate a scalar for population in each aggregate region in 1950 (to generate the population ratios)
     agg_ratio <- pop_thous_ctry_reg %>%
-      select(Maddison_ctry, year, pop)
-    # OLD DATA SYSTEM BEHAVIOR: There is one additional aggregate region (Eritrea & Ethiopia) that wasn't included in the downscaling. New behavior includes it.
-    if(OLD_DATA_SYSTEM_BEHAVIOR) {
-      agg_ratio <- filter(agg_ratio, year <= min(socioeconomics.UN_HISTORICAL_YEARS) &
-                            Maddison_ctry %in% c("Total Former USSR", "Czechoslovakia", "Yugoslavia"))  # Only want years prior to 1951 for the three regions
-      # Because we changed the mapping file, adding in Eritrea & Ethiopia, for old behavior we need to strip these back out from pop_thous_ctry_reg
-      pop_thous_ctry_reg <- mutate(pop_thous_ctry_reg, Downscale_from = gsub("Eritrea and Ethiopia", NA, Downscale_from))
-    } else {
-      agg_ratio <- filter(agg_ratio, year <=  min(socioeconomics.UN_HISTORICAL_YEARS) &
-                            Maddison_ctry %in% c("Czechoslovakia", "Eritrea and Ethiopia", "Total Former USSR", "Yugoslavia")) # Only want years prior to 1951 for the four aggregate regions
-    }
-    agg_ratio <- agg_ratio %>%
+      select(Maddison_ctry, year, pop) %>%
+      filter(year <=  min(socioeconomics.UN_HISTORICAL_YEARS) &
+             Maddison_ctry %in% c("Czechoslovakia", "Eritrea and Ethiopia", "Total Former USSR", "Yugoslavia")) %>% # Only want years prior to 1951 for the four aggregate regions
       group_by(Maddison_ctry) %>%  # Group to perform action on each aggregate region individually
       mutate(ratio = pop / pop[year == min(socioeconomics.UN_HISTORICAL_YEARS)]) %>%  # Create ratio of population in prior years to population in 1950
       rename(Downscale_from = Maddison_ctry) %>%  # Will match each country in the region to this ratio

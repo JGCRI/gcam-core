@@ -154,14 +154,6 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       mutate(region = BIOMASS.TRADE.REGION, use.trial.market = 1) ->
       L243.SectorUseTrialMarket_Bio
 
-    if( OLD_DATA_SYSTEM_BEHAVIOR) {
-      # The old data system repeated the USA row 32 times. The xml conversion only needs the first instance.
-      L243.SectorUseTrialMarket_Bio %>%
-        repeat_add_columns(tibble(MORE = 1:32)) %>%
-        select(-MORE) ->
-        L243.SectorUseTrialMarket_Bio
-    }
-
     # Set up all of the new subsectors.
     # Copy subsector information to each region.
     # Note that "traded biomass" only goes in the BIOMASS.TRADE.REGION, but the subsector name includes the original region name

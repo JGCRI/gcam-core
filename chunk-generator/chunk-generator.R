@@ -238,8 +238,7 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
                      ' add_legacy_name("', writedata_string[i], '") %>%\n',
                      ' add_precursors("precursor1", "precursor2", "etc") %>%\n',
                      ' # typical flags, but there are others--see `constants.R` \n')
-      txt2 <- "add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR)"
-      makeoutputs_string[i] <- paste("tibble() %>%\n  ", txt1, txt2, "->\n  ", writedata_string[i])
+      makeoutputs_string[i] <- paste("tibble() %>%\n  ", txt1, "->\n  ", writedata_string[i])
     }
     makeoutputs_string <- paste(makeoutputs_string, collapse = "\n")
   }

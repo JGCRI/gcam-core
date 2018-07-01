@@ -100,15 +100,7 @@ module_water_L110.water.demand.primary <- function(command, ...) {
                      "water/resource_water_share") ->
       L110.water_demand_primary_R_S_W_m3_GJ
 
-    # Reinistate old behavior for test (i.e., Middle East same as all other regions)
-    # See issue #179 on gcamdata repo
-     if(OLD_DATA_SYSTEM_BEHAVIOR) {
-       L110.water_demand_primary_R_S_W_m3_GJ[L110.water_demand_primary_R_S_W_m3_GJ$GCAM_region_ID == 21, "coefficient"] <-
-         L110.water_demand_primary_R_S_W_m3_GJ[L110.water_demand_primary_R_S_W_m3_GJ$GCAM_region_ID == gcam.USA_CODE, "coefficient"]
-       return_data(L110.water_demand_primary_R_S_W_m3_GJ)
-       } else {
-       return_data(L110.water_demand_primary_R_S_W_m3_GJ)
-       }
+      return_data(L110.water_demand_primary_R_S_W_m3_GJ)
 
   } else {
     stop("Unknown command")

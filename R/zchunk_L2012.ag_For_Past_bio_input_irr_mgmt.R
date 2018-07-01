@@ -165,20 +165,9 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       mutate(AgProductionTechnology = paste(GCAM_commodity, GLU_name, toupper(Irr_Rfd), level, sep = "_")) %>%
       # Combine with subsector and technology shareweights
       right_join(select(L2011.AgProduction_ag_irr, -calOutputValue),
-                 by = c("region", "AgProductionTechnology", "year")) ->
+                 by = c("region", "AgProductionTechnology", "year")) %>%
+      select(LEVEL2_DATA_NAMES[["AgProduction"]]) ->
       L2012.AgProduction_ag_irr_mgmt
-
-    if(OLD_DATA_SYSTEM_BEHAVIOR) {
-      # Three unused columns (level, Irr_Rfd, GLU_name) are not dropped in ODS
-      L2012.AgProduction_ag_irr_mgmt %>%
-        select(LEVEL2_DATA_NAMES[["AgProduction"]], level, Irr_Rfd, GLU = GLU_name) ->
-        L2012.AgProduction_ag_irr_mgmt
-    } else {
-      # Drop those columns
-      L2012.AgProduction_ag_irr_mgmt %>%
-        select(LEVEL2_DATA_NAMES[["AgProduction"]]) ->
-        L2012.AgProduction_ag_irr_mgmt
-    }
 
     # L2012.AgProduction_For and L2012.AgProduction_Past: Forest and pasture product calibration (output)
     L123.For_Prod_bm3_R_Y_GLU %>%
@@ -276,20 +265,10 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       # Copy to both irrigated and rainfed technologies
       repeat_add_columns(tibble(IRR_RFD = c("IRR", "RFD"))) %>%
       # Match in yield data, use left_join instead because of NAs
-      left_join(L2011.AgYield_bio_grass_irr, by = c("region", "AgSupplySubsector", "IRR_RFD")) ->
-      L2011.AgYield_bio_grass_irr
-
-    if(OLD_DATA_SYSTEM_BEHAVIOR) {
-      # Yield is not rounded in ODS
-      L2011.AgYield_bio_grass_irr %>%
-        mutate(yield = Yield_GJm2) ->
-        L2011.AgYield_bio_grass_irr
-    } else {
+      left_join(L2011.AgYield_bio_grass_irr, by = c("region", "AgSupplySubsector", "IRR_RFD")) %>%
       # Round yield data
-      L2011.AgYield_bio_grass_irr %>%
-        mutate(yield = round(Yield_GJm2, digits = aglu.DIGITS_CALOUTPUT)) ->
-        L2011.AgYield_bio_grass_irr
-    }
+      mutate(yield = round(Yield_GJm2, digits = aglu.DIGITS_CALOUTPUT)) ->
+      L2011.AgYield_bio_grass_irr
 
     L2011.AgYield_bio_grass_irr %>%
       # Places with no irrigated crop production will return missing values here.
