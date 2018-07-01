@@ -3,7 +3,6 @@
 OUTPUTS_DIR              <- "outputs/"
 XML_DIR                  <- "xml/"
 COMMENT_CHAR             <- "#"
-OLD_DATA_SYSTEM_BEHAVIOR <- TRUE
 UNDER_TIMESHIFT          <- FALSE
 YEAR_PATTERN             <- "^(1|2)[0-9]{3}$"   # a 1 or 2 followed by three digits, and nothing else
 LOGIT_TYPE_COLNAME        <- "logit.type"        # will be removed by test code before old-new comparison
@@ -547,7 +546,7 @@ emissions.TST_TO_TG     <- 0.000907 # Thousand short tons to Tg
 
 emissions.COAL_SO2_THRESHOLD <- 0.1   # Tg/EJ (here referring to Tg SO2 per EJ of coal electricity)
 emissions.LOW_PCGDP          <- 2.75  # thousand 1990 USD
-emissions.MAC_TAXES          <- c(0, 5, 10, 15, 32, 66, 129, 243, 486, 1093, 2064, 4857, 7285, 12141) # Range of costs in 1990 USD
+emissions.MAC_TAXES          <- c(0, 2, 4, 6, 13, 27, 53, 100, 200, 450, 850, 2000, 3000, 5000) # Range of MAC curve costs to keep to read into GCAM; they are in EPA's units (2010USD_tCO2e)
 emissions.MAC_MARKET         <- "CO2" # Default market that MAC curves will look for
 
 emissions.AGR_SECTORS        <- c("rice", "fertilizer", "soil")
