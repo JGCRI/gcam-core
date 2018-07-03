@@ -47,12 +47,11 @@ module_emissions_L102.ghg_en_USA_S_T_Y <- function(command, ...) {
     EPA_FCCC_GHG_2005 %>% # start from EPA GHG
       left_join(EPA_ghg_tech, by = "Source_Category") %>% # define category
       select(-CO2) %>% # non-CO2 only
+      replace_na(list(CH4 = 0, N2O = 0)) %>%
       group_by(sector, fuel) %>%
-      summarize_if(is.numeric, sum, na.rm = FALSE) %>% # sum by sector and fuel
+      summarize(CH4 = sum(CH4) * CONV_GG_TG,
+                N2O = sum(N2O) * CONV_GG_TG) %>% # sum by sector and fuel and change units
       filter(!is.na(sector), !is.na(fuel)) %>% # delete NA sectors and fuel
-      mutate_all(funs(replace(., is.na(.), 1))) %>% # placeholder values for existing sectors that has no value.
-      # NOTE: THIS IS A HACK. EPA DOESN'T HAVE EMISSIONS IN SOME SECTORS, WHEN EDGAR DOES. THIS WILL MAKE EMISSIONS PROPORTIONAL TO FUEL USE. NOT SURE IF THIS IS THE BEST STRATEGY.
-      mutate_if(is.numeric, funs(. * CONV_GG_TG)) %>% # Convert to Tg
       ungroup() ->
       L102.ghg_tg_USA_en_Sepa_F_2005 # GHG balance in 2005
 
