@@ -48,6 +48,11 @@ module_emissions_L102.ghg_en_USA_S_T_Y <- function(command, ...) {
       left_join(EPA_ghg_tech, by = "Source_Category") %>% # define category
       select(-CO2) %>% # non-CO2 only
       replace_na(list(CH4 = 0, N2O = 0)) %>%
+      # Primary fossil production (coal, oil, gas) emissions does not exist in the EPA
+      # inventory.  We will leave a place holder for now which will get scaled
+      # to match EDGAR downstream.
+      mutate(CH4 = if_else(sector %in% c("coal", "oil_gas"), 1, CH4),
+             N2O = if_else(sector %in% c("coal", "oil_gas"), 1, N2O)) %>%
       group_by(sector, fuel) %>%
       summarize(CH4 = sum(CH4) * CONV_GG_TG,
                 N2O = sum(N2O) * CONV_GG_TG) %>% # sum by sector and fuel and change units
