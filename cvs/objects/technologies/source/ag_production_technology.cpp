@@ -363,7 +363,7 @@ void AgProductionTechnology::setCalYields(const std::string& aRegionName) {
         else if ( mCalValue->getCalOutput() > 0 ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Caloutput read in but no land read in for technology"
+            mainLog << "Caloutput read in but no land read in for technology "
                 << aRegionName << " " << mName << endl;
             mYield=0;
         }
