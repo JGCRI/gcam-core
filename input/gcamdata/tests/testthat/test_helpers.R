@@ -43,9 +43,4 @@ test_that("gdp_deflator works", {
 
   # Computes something reasonable
   expect_is(gdp_deflator(2008, 1950), "numeric")
-
-  # Correctly returns old data system values
-  if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    expect_equal(gdp_deflator(2010, 1990), 1.510)
-  }
 })

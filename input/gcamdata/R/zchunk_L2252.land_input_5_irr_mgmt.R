@@ -441,39 +441,19 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
                      "L121.CarbonContent_kgm2_R_LT_GLU") ->
       L2252.LN5_MgdCarbon_crop
 
-    if(OLD_DATA_SYSTEM_BEHAVIOR) {
-
-      # Add the gcam5 output to the precursors.
-      L2252.LN5_MgdCarbon_bio %>%
-        add_title("Carbon content for biofuel managed land (LT_GLU) in fifth nest by region.") %>%
-        add_units("Varies") %>%
-        add_comments("Carbon content info for biofuel managed land (LT_GLU) in the fifth nest including soil and vegetative carbon, ") %>%
-        add_comments("calculated from yield and other biomass characteristics (e.g., root-shoot, harvest index, water content).") %>%
-        add_legacy_name("L2252.LN5_MgdCarbon_bio") %>%
-        add_precursors("common/GCAM_region_names",
-                       "water/basin_to_country_mapping",
-                       "aglu/GCAMLandLeaf_CdensityLT",
-                       "aglu/A_Fodderbio_chars",
-                       "aglu/A_LandLeaf3",
-                       "L2012.AgYield_bio_ref") ->
-        L2252.LN5_MgdCarbon_bio
-
-    } else {
-
-      L2252.LN5_MgdCarbon_bio %>%
-        add_title("Carbon content for biofuel managed land (LT_GLU) in fifth nest by region.") %>%
-        add_units("Varies") %>%
-        add_comments("Carbon content info for biofuel managed land (LT_GLU) in the fifth nest including soil and vegetative carbon, ") %>%
-        add_comments("calculated from yield and other biomass characteristics (e.g., root-shoot, harvest index, water content).") %>%
-        add_legacy_name("L2252.LN5_MgdCarbon_bio") %>%
-        add_precursors("common/GCAM_region_names",
-                       "water/basin_to_country_mapping",
-                       "aglu/GCAMLandLeaf_CdensityLT",
-                       "aglu/A_Fodderbio_chars",
-                       "aglu/A_LandLeaf3",
-                       "L2012.AgYield_bio_ref") ->
-        L2252.LN5_MgdCarbon_bio
-    }
+    L2252.LN5_MgdCarbon_bio %>%
+      add_title("Carbon content for biofuel managed land (LT_GLU) in fifth nest by region.") %>%
+      add_units("Varies") %>%
+      add_comments("Carbon content info for biofuel managed land (LT_GLU) in the fifth nest including soil and vegetative carbon, ") %>%
+      add_comments("calculated from yield and other biomass characteristics (e.g., root-shoot, harvest index, water content).") %>%
+      add_legacy_name("L2252.LN5_MgdCarbon_bio") %>%
+      add_precursors("common/GCAM_region_names",
+                     "water/basin_to_country_mapping",
+                     "aglu/GCAMLandLeaf_CdensityLT",
+                     "aglu/A_Fodderbio_chars",
+                     "aglu/A_LandLeaf3",
+                     "L2012.AgYield_bio_ref") ->
+      L2252.LN5_MgdCarbon_bio
 
 
 

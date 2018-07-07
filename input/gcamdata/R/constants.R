@@ -3,7 +3,6 @@
 OUTPUTS_DIR              <- "outputs/"
 XML_DIR                  <- "xml/"
 COMMENT_CHAR             <- "#"
-OLD_DATA_SYSTEM_BEHAVIOR <- TRUE
 UNDER_TIMESHIFT          <- FALSE
 YEAR_PATTERN             <- "^(1|2)[0-9]{3}$"   # a 1 or 2 followed by three digits, and nothing else
 LOGIT_TYPE_COLNAME        <- "logit.type"        # will be removed by test code before old-new comparison
@@ -12,14 +11,11 @@ LOGIT_TYPE_COLNAME        <- "logit.type"        # will be removed by test code 
 # Flags ======================================================================
 
 FLAG_INPUT_DATA      <- "FLAG_INPUT_DATA"       # input data, don't output
-FLAG_LONG_YEAR_FORM  <- "FLAG_LONG_YEAR_FORM"   # 'year' column but original data are wide
 FLAG_NO_OUTPUT       <- "FLAG_NO_OUTPUT"        # don't output
 FLAG_NO_TEST         <- "FLAG_NO_TEST"          # don't test
-FLAG_NO_XYEAR        <- "FLAG_NO_XYEAR"         # year names don't have X's in front
 FLAG_PROTECT_FLOAT   <- "FLAG_PROTECT_FLOAT"    # protect float columns from readr bug
 FLAG_SUM_TEST        <- "FLAG_SUM_TEST"         # use less-restrictive sum test
 FLAG_XML             <- "FLAG_XML"              # xml data
-FLAG_YEAR_COL_XYEARS <- "FLAG_YEAR_COL_XYEARS"  # 'year' column without X's in front
 
 
 # Time constants ======================================================================
@@ -242,6 +238,18 @@ aglu.FERT_NAME <- "N fertilizer"
 aglu.AVG_WOOD_DENSITY_KGM3 <- 500 # In kg per m3
 # Carbon content of wood is about 50 percent across species
 aglu.AVG_WOOD_DENSITY_KGCM3 <- 250 # In kg carbon per m3
+
+# Carbon content adjustments from unmanaged to managed
+# conversion factor from unmanaged forest to managed forest, where the former is
+# understood to be forest not in logging rotation, and the latter is forest in
+# logging rotation. The average vegetation biomass of the logged forest is assumed
+# to be 50% of that of the unlogged forest (integrated over the rotation period).
+# Using 50% under the assumption that the veg biomass of the logged forest over the
+# rotation period can be approximated by a triangle.
+aglu.CVEG_MULT_UNMGDFOR_MGDFOR <- 0.5
+aglu.CSOIL_MULT_UNMGDFOR_MGDFOR <- 0.87      #source: Guo and Gifford 2002; https://doi.org/10.1046/j.1354-1013.2002.00486.x
+aglu.CVEG_MULT_UNMGDPAST_MGDPAST <- 0.5
+aglu.CSOIL_MULT_UNMGDPAST_MGDPAST <- 0.9     # stay conservative here b/c no data source
 
 # Average Agriculture Density kg/m^3 for mass conversion
 # Source: http://www.engineeringtoolbox.com/wood-density-d_40.html
@@ -550,7 +558,7 @@ emissions.TST_TO_TG     <- 0.000907 # Thousand short tons to Tg
 
 emissions.COAL_SO2_THRESHOLD <- 0.1   # Tg/EJ (here referring to Tg SO2 per EJ of coal electricity)
 emissions.LOW_PCGDP          <- 2.75  # thousand 1990 USD
-emissions.MAC_TAXES          <- c(0, 5, 10, 15, 32, 66, 129, 243, 486, 1093, 2064, 4857, 7285, 12141) # Range of costs in 1990 USD
+emissions.MAC_TAXES          <- c(0, 2, 4, 6, 13, 27, 53, 100, 200, 450, 850, 2000, 3000, 5000) # Range of MAC curve costs to keep to read into GCAM; they are in EPA's units (2010USD_tCO2e)
 emissions.MAC_MARKET         <- "CO2" # Default market that MAC curves will look for
 
 emissions.AGR_SECTORS        <- c("rice", "fertilizer", "soil")
