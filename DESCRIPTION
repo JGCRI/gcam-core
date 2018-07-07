@@ -1,7 +1,7 @@
 Package: gcamdata
 Type: Package
 Title: Build the GCAM Input Datasets
-Version: 1.0
+Version: 5.1
 Date: 2018-05-19
 Authors@R: c(person("Ben", "Bond-Lamberty", 
                 email = "bondlamberty@pnnl.gov", 
