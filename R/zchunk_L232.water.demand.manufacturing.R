@@ -38,7 +38,7 @@ module_water_L232.water.demand.manufacturing <- function(command, ...) {
 
     # Extrapolate this one to all model years if necessary
     get_data(all_data, "L232.StubTechProd_industry") %>%
-      complete(nesting(region, GCAM_region_ID), year = MODEL_YEARS) %>%
+      complete(nesting(region), year = MODEL_YEARS) %>%
       arrange(region, year) %>%
       group_by(region) %>%
       mutate(calOutputValue = approx_fun(year, calOutputValue, rule = 2)) %>%
