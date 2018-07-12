@@ -268,7 +268,7 @@ module_energy_L270.limits <- function(command, ...) {
     # Call return_data but we need to jump through some hoops since we generated some of the
     # tibbles from the scenarios so we will generate the call to return_data
     ret_data %>%
-      paste(collapse=", ") %>%
+      paste(collapse = ", ") %>%
       paste0("return_data(", ., ")") %>%
       parse(text = .) %>%
       eval()
