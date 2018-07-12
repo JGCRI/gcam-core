@@ -100,7 +100,7 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["DeleteSupplysector"]]) ->
       L232.DeleteSupplysector_USAind  ## OUTPUT
 
-    # deleting energy final demand sectors in the full USA region" )
+    # deleting energy final demand sectors in the full USA region")
     L232.PerCapitaBased_ind %>%
       mutate(region = region) %>% # strip attributes from object
       filter(region == "USA") %>%

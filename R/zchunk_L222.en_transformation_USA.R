@@ -457,7 +457,7 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("L122.out_EJ_state_refining_F is aggregated to the supplysector/subsector/technology level.") %>%
       add_legacy_name("L222.Production_USArefining") %>%
-      add_precursors( "energy/calibrated_techs",
+      add_precursors("energy/calibrated_techs",
                       "L122.out_EJ_state_refining_F") ->
       L222.Production_USArefining
 
