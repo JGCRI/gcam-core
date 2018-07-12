@@ -361,13 +361,6 @@ module_energy_L232.industry <- function(command, ...) {
       group_by(region, GCAM_region_ID, year) %>%
       summarise(calOutputValue = sum(calOutputValue)) %>%
       ungroup %>%
-      # extrapolate to all model years if necessary
-      complete(nesting(region, GCAM_region_ID), year = MODEL_YEARS) %>%
-      arrange(region, GCAM_region_ID, year) %>%
-      group_by(region, GCAM_region_ID) %>%
-      mutate(calOutputValue = approx_fun(year, calOutputValue, rule = 2)) %>%
-      ungroup %>%
-      # ...and continue
       mutate(supplysector = L232.industry_names[["supplysector"]],
              subsector = L232.industry_names[["subsector"]],
              stub.technology = L232.industry_names[["technology"]],

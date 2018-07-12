@@ -35,7 +35,15 @@ module_water_L232.water.demand.manufacturing <- function(command, ...) {
     A03.sector <- get_data(all_data, "water/A03.sector")
     A32.globaltech_coef <- get_data(all_data, "energy/A32.globaltech_coef")
     L132.water_km3_R_ind_Yh <- get_data(all_data, "L132.water_km3_R_ind_Yh")
-    L232.StubTechProd_industry <- get_data(all_data, "L232.StubTechProd_industry")
+
+    # Extrapolate this one to all model years if necessary
+    get_data(all_data, "L232.StubTechProd_industry") %>%
+      complete(nesting(region, GCAM_region_ID), year = MODEL_YEARS) %>%
+      arrange(region, GCAM_region_ID, year) %>%
+      group_by(region, GCAM_region_ID) %>%
+      mutate(calOutputValue = approx_fun(year, calOutputValue, rule = 2)) %>%
+      ungroup ->
+      L232.StubTechProd_industry
 
     # First, compute historical coefficients, as total withdrawals/consumption divided by industrial sector output
     # (base-service)
