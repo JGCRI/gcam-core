@@ -123,7 +123,7 @@ module_water_L132.water.demand.manufacturing <- function(command, ...) {
     L132.water_km3_ctry_ind_Yh <-
       left_join(L132.water_km3_ctry_ind_Yh, L132.scalers_ctry_ind_Yh,
                 by = c("iso", "year")) %>%
-      mutate(scaler = if_else(is.na(scaler),1,scaler)) %>%
+      mutate(scaler = if_else(is.na(scaler), 1, scaler)) %>%
       mutate(water_km3 = water_km3 * scaler) %>%
       select(-scaler)
 
