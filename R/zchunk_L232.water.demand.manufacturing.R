@@ -38,10 +38,13 @@ module_water_L232.water.demand.manufacturing <- function(command, ...) {
 
     # Extrapolate this one to all model years if necessary
     get_data(all_data, "L232.StubTechProd_industry") %>%
-      complete(nesting(region), year = MODEL_YEARS) %>%
-      arrange(region, year) %>%
-      group_by(region) %>%
-      mutate(calOutputValue = approx_fun(year, calOutputValue, rule = 2)) %>%
+      complete(nesting(region, supplysector, subsector, stub.technology), year = MODEL_YEARS) %>%
+      group_by(region, supplysector, subsector, stub.technology) %>%
+      arrange(year) %>%
+      mutate(calOutputValue = approx_fun(year, calOutputValue, rule = 2),
+             subs.share.weight = approx_fun(year, subs.share.weight, rule = 2),
+             tech.share.weight = approx_fun(year, tech.share.weight, rule = 2),
+             share.weight.year = approx_fun(year, share.weight.year, rule = 2)) %>%
       ungroup ->
       L232.StubTechProd_industry
 
