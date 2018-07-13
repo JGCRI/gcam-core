@@ -22,7 +22,7 @@ module_water_L245.water.demand.municipal <- function(command, ...) {
              FILE = "water/A45.demand",
              "L145.municipal_water_R_W_Yh_km3",
              "L145.municipal_water_cost_R_75USD_m3",
-             "L145.municipal_water_eff_R_Y"))
+             "L145.municipal_water_eff_R_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L245.Supplysector",
              "L245.SubsectorLogit",
@@ -40,7 +40,7 @@ module_water_L245.water.demand.municipal <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     logit.type <- GCAM_region_ID <- region <- water_type <- coefficient <-
-      water_sector <- year <- value <- NULL  # silence package check notes
+      water_sector <- year <- value <- efficiency <- withdrawals <- NULL  # silence package check notes
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
@@ -50,7 +50,7 @@ module_water_L245.water.demand.municipal <- function(command, ...) {
     A45.demand <- get_data(all_data, "water/A45.demand")
     L145.municipal_water_R_W_Yh_km3 <- get_data(all_data, "L145.municipal_water_R_W_Yh_km3")
     L145.municipal_water_cost_R_75USD_m3 <- get_data(all_data, "L145.municipal_water_cost_R_75USD_m3")
-    L145.municipal_water_eff_R_Y <- get_data(all_data, "L145.municipal_water_eff_R_Y")
+    L145.municipal_water_eff_R_Yh <- get_data(all_data, "L145.municipal_water_eff_R_Yh")
 
     # ===================================================
 
@@ -85,15 +85,27 @@ module_water_L245.water.demand.municipal <- function(command, ...) {
       select(LEVEL2_DATA_NAMES$TechShrwt) ->
       L245.TechShrwt
 
+    # Expand the municipal water efficiencies to all model years
+    # Keep historical years prior to extrapolating in case there are historical years that aren't model years
+    L245.municipal_water_eff_R_Y <-
+      group_by(L145.municipal_water_eff_R_Yh, GCAM_region_ID) %>%
+      complete(year = sort(unique(c(HISTORICAL_YEARS, MODEL_YEARS)))) %>%
+      mutate(efficiency = approx_fun(year, efficiency, rule = 2)) %>%
+      ungroup() %>%
+      filter(year %in% MODEL_YEARS)
+
+    # This is confusing; in GCAM consumptive uses are represented as a fractional input on the withdrawal volumes, so
+    # the model parameter is an input-output coefficient rather than an efficiency
     L245.assumptions_all %>%
       select(GCAM_region_ID, one_of(LEVEL2_DATA_NAMES$Tech)) %>%
-      left_join(L145.municipal_water_eff_R_Y, by = "GCAM_region_ID") %>%
       # ^^ unrestricted left_join allows row expansion for all model years
+      left_join(L245.municipal_water_eff_R_Y, by = "GCAM_region_ID") %>%
       mutate(market.name = region) %>%
-      repeat_add_columns(tibble(water_type = c("water consumption", "water withdrawals"))) %>%
       # ^^ repeats tibble for consumption and withdrawal coefficients
-      mutate(coefficient = if_else(water_type == "water withdrawals", 1, coefficient)) %>%
+      repeat_add_columns(tibble(water_type = c("water consumption", "water withdrawals"))) %>%
       # ^^ withdrawal coefficient is 1; consumption coefficient is fraction of withdrawal
+      mutate(coefficient = if_else(water_type == "water withdrawals", 1,
+                                   round(efficiency, water.DIGITS_MUNI_WATER))) %>%
       mutate(water_sector = "Municipal") %>%
       mutate(minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector)) %>%
       select(LEVEL2_DATA_NAMES$TechCoef) ->
@@ -112,7 +124,8 @@ module_water_L245.water.demand.municipal <- function(command, ...) {
     L245.assumptions_all %>%
       left_join(L145.municipal_water_R_W_Yh_km3, by = "GCAM_region_ID") %>%
       # ^^ non-restrictive join used to allow expansion across multiple years
-      filter(year %in% BASE_YEARS) %>% rename(base.service = value) %>%
+      filter(year %in% BASE_YEARS) %>%
+      rename(base.service = withdrawals) %>%
       select(LEVEL2_DATA_NAMES$BaseService) ->
       L245.BaseService  # municipal water withdrawals for base years
 
@@ -184,7 +197,7 @@ module_water_L245.water.demand.municipal <- function(command, ...) {
                      "water/A03.sector",
                      "water/A45.sector",
                      "water/A45.tech_cost",
-                     "L145.municipal_water_eff_R_Y") ->
+                     "L145.municipal_water_eff_R_Yh") ->
       L245.TechCoef
 
     L245.TechCost %>%

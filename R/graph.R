@@ -54,7 +54,7 @@ graph_chunks <- function(module_filter = NULL,
     # chunks that feed chunks in the current (filtered) module
     cl_main %>%
       left_join(chunkinputs, by = "name") %>%
-      left_join(chunkoutputs, by = c("input"= "output")) %>%
+      left_join(chunkoutputs, by = c("input" = "output")) %>%
       filter(!is.na(name.y)) %>%
       select(name.y) %>%
       distinct ->

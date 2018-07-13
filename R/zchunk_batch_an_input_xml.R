@@ -10,7 +10,7 @@
 #' original data system was \code{batch_an_input.xml.R} (aglu XML).
 module_aglu_batch_an_input_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L202.RenewRsrc",
+    return(c("L202.RenewRsrc",
               "L202.RenewRsrcPrice",
               "L202.maxSubResource",
               "L202.RenewRsrcCurves",

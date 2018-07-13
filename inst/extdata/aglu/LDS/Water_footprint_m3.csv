@@ -1,10 +1,10 @@
 # File: Water_footprint_m3.csv
 # Title: Average annual water consumption
 # Units: m3
-# Author: lds
+# Author: moirai
 # Description: crop average annual water volume consumed (m^3) for sage land cells in country X glu
 # Original source: water footprint network; country raster; new glu raster
-# Source: https://github.com/JGCRI/lds
+# Source: https://github.com/JGCRI/moirai
 # ----------
 iso,glu_code,SAGE_crop,water_type,value
 afg,52,Barley,blue,53789476

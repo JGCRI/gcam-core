@@ -74,7 +74,7 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
     # Interpolation is needed since input data is only provided for some intermediate years in the range 1971-2010.
     # Therefore there is not efficiency values for every historical year. Efficiencies for all historical years are needed
     # To estimate outputs from fuel/technology by region in the electricity sector
-    tibble(supplysector = "electricity", subsector="gas", year = HISTORICAL_YEARS) %>%
+    tibble(supplysector = "electricity", subsector = "gas", year = HISTORICAL_YEARS) %>%
       mutate(year = as.integer(year)) %>%
       full_join(energy.GAS_TECH, by = "supplysector") -> Aux_gas_tech_elec
 

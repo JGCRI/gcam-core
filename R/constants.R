@@ -515,7 +515,19 @@ water.MAPPED_WATER_TYPES_SHORT            <- c("C", "W")
 names(water.MAPPED_WATER_TYPES_SHORT)     <- water.MAPPED_WATER_TYPES
 water.WATER_UNITS_PRICE                   <- "1975$/m^3"
 water.WATER_UNITS_QUANTITY                <- "km^3"
+water.DIGITS_MUNI_WATER                   <- 4
 
+# GCAM intermediate sectors for which Vassolo + Doll assessed manufacturing water demands. In the paper, they indicate
+# chemicals, pulp and paper, pig iron, sugar, beer, cloth, cement, and crude steel. some industrial mfg does take place
+# in energy transformation (charcoal, pig iron), so we'll leave that one in.
+water.GCAM_MFG_SECTORS_VASSOLO <- c("in_industry_general", "net_industry_energy transformation")
+
+# GCAM intermediate fuels used for extrapolating manufacturing water use from one base year to all base years.
+water.GCAM_MFG_FUELS_EFW <- c("electricity")
+
+# the maximum portion of aquastat industrial (mfg + elec) water withdrawals that is allowed to be assigned to
+# manufacturing. Used to set a cap on derived manufacturing water withdrawals
+water.MAX_MFG_FRAC_OF_IND <- 0.85
 
 # Emissions constants ======================================================================
 
