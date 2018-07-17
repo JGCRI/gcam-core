@@ -535,7 +535,6 @@ water.MAX_MFG_FRAC_OF_IND <- 0.85
 # Time
 emissions.CTRL_BASE_YEAR          <- 1975                # Year to read in pollution controls
 emissions.DEFOREST_COEF_YEARS     <- c(2000, 2005)
-emissions.EDGAR_F_GASSES_YEARS    <- 1970:2000
 emissions.EDGAR_HISTORICAL        <- 1971:2008
 emissions.EDGAR_YEARS             <- 1971:2008
 emissions.EDGAR_YEARS_PLUS        <- 1970:2008
@@ -545,12 +544,12 @@ emissions.FINAL_EMISS_YEAR        <- min(max(MODEL_BASE_YEARS), 2005)
 emissions.GAINS_BASE_YEAR         <- 2005
 emissions.GAINS_YEARS             <- c(2010, 2020, 2030)
 emissions.GHG_CONTROL_READIN_YEAR <- 1975
-emissions.HFC_MODEL_BASE_YEARS    <- c(1975, 1990, 2005, 2010)
+emissions.HFC_MODEL_BASE_YEARS    <- MODEL_YEARS[ MODEL_YEARS <= 2010] # We don't want this to change in timeshift
 emissions.INVENTORY_MATCH_YEAR    <- 2009                # Select year from which to calculate fuel emissions coefficients (2009 is currently the most recent)
 emissions.MODEL_BASE_YEARS        <- MODEL_BASE_YEARS[MODEL_BASE_YEARS < 2008]
 emissions.NH3_EXTRA_YEARS         <- 1971:1989
 emissions.NH3_HISTORICAL_YEARS    <- 1990:2002
-emissions.SSP_FUTURE_YEARS        <- c(2010, MODEL_FUTURE_YEARS)
+emissions.SSP_FUTURE_YEARS        <- MODEL_YEARS[MODEL_YEARS %in% 2010:2100]
 
 # Other emissions constants
 emissions.CONV_C_CO2    <- 44 / 12 # Convert Carbon to CO2
