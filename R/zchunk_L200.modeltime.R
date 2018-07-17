@@ -32,9 +32,9 @@ module_modeltime_L200.modeltime <- function(command, ...) {
     GCAM_timesteps <- diff(MODEL_YEARS)
 
     tibble(start.year.timestep    = GCAM_timesteps[1],
-           start.year             = min(BASE_YEARS),
-           final.calibration.year = max(BASE_YEARS),
-           end.year               = max(FUTURE_YEARS)) %>%
+           start.year             = min(MODEL_BASE_YEARS),
+           final.calibration.year = max(MODEL_BASE_YEARS),
+           end.year               = max(MODEL_FUTURE_YEARS)) %>%
       add_title("GCAM time information") %>%
       add_units("years") %>%
       add_legacy_name("L200.ModelTime") %>%

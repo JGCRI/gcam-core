@@ -209,7 +209,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
 
     L1231.out_EJ_R_elec_F_tech_Yh %>%
       mutate(year = as.integer(year)) %>%
-      filter(year %in% BASE_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(select(calibrated_techs,
                                       - minicam.energy.input,
@@ -281,13 +281,13 @@ module_water_L2233.electricity_water <- function(command, ...) {
 
     L2233.supplysector_info %>%
       left_join_error_no_match(supply_sub_elec_mapping, by = "supplysector") %>%
-      mutate(year.fillout = first(BASE_YEARS),
+      mutate(year.fillout = first(MODEL_BASE_YEARS),
              share.weight = 1) %>%
       select(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]]) ->
       L2233.SubsectorShrwtFllt_elec_cool # --OUTPUT--
 
     L2233.SubsectorShrwtFllt_elec_cool %>%
-      mutate(logit.year.fillout = first(BASE_YEARS),
+      mutate(logit.year.fillout = first(MODEL_BASE_YEARS),
              logit.exponent = water.COOLING_SYSTEM_LOGIT) %>%
       select(LEVEL2_DATA_NAMES[["SubsectorLogit"]]) %>%
       mutate(logit.type = NA) -> L2233.SubsectorLogit_elec_cool # --OUTPUT--
@@ -550,7 +550,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
 
     # Stub technololgy shareweights for cooling system options
     L1233.shrwt_R_elec_cool_Yf %>%
-      filter(year %in% FUTURE_YEARS) %>%
+      filter(year %in% MODEL_FUTURE_YEARS) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(elec_tech_water_map,
                                by = c("sector", "fuel", "technology", "cooling_system", "water_type")) %>%
@@ -559,7 +559,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
              subsector = to.subsector, stub.technology = to.technology) %>%
       mutate(year = as.integer(year)) ->
       L2233.shrwt_R_elec_cool_Yf
-    L2233.StubTech_elec_cool %>% repeat_add_columns(tibble(year = as.integer(FUTURE_YEARS))) %>%
+    L2233.StubTech_elec_cool %>% repeat_add_columns(tibble(year = as.integer(MODEL_FUTURE_YEARS))) %>%
       left_join(L2233.shrwt_R_elec_cool_Yf,
                 by = c("region", "supplysector", "subsector", "stub.technology", "year")) %>%
       # ^^ non-restrictive join required for NA values associated with technologies without cooling systems (e.g., wind)
@@ -582,7 +582,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
 
     # Electricity technology calibration
     L1233.out_EJ_R_elec_F_tech_Yh_cool %>%
-      filter(year %in% BASE_YEARS) %>% rename(calOutputValue = value) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>% rename(calOutputValue = value) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(select(elec_tech_water_map,
                                       -from.supplysector, -from.subsector, -from.technology, -minicam.energy.input),

@@ -102,13 +102,13 @@ module_energy_L225.hydrogen <- function(command, ...) {
     # Efficiencies of global technologies
     A25.globaltech_eff %>%
       gather_years %>%
-      complete(nesting(supplysector, subsector, technology, minicam.energy.input), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
+      complete(nesting(supplysector, subsector, technology, minicam.energy.input), year = c(year, MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
       arrange(supplysector, subsector, technology, minicam.energy.input, year) %>%
       group_by(supplysector, subsector, technology, minicam.energy.input) %>%
       mutate(efficiency = approx_fun(year, value, rule = 1),
              efficiency = round(efficiency,energy.DIGITS_EFFICIENCY)) %>%
       ungroup %>%
-      filter(year %in% c(BASE_YEARS, FUTURE_YEARS)) %>%
+      filter(year %in% c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
       # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
       rename(sector.name = supplysector,
              subsector.name = subsector) %>%
@@ -119,13 +119,13 @@ module_energy_L225.hydrogen <- function(command, ...) {
     # Costs of global technologies
     A25.globaltech_cost %>%
       gather_years %>%
-      complete(nesting(supplysector, subsector, technology, minicam.non.energy.input), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
+      complete(nesting(supplysector, subsector, technology, minicam.non.energy.input), year = c(year, MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
       arrange(supplysector, subsector, technology, minicam.non.energy.input, year) %>%
       group_by(supplysector, subsector, technology, minicam.non.energy.input) %>%
       mutate(input.cost = approx_fun(year, value, rule = 1),
              input.cost = round(input.cost,energy.DIGITS_COST)) %>%
       ungroup %>%
-      filter(year %in% c(BASE_YEARS,FUTURE_YEARS)) %>%
+      filter(year %in% c(MODEL_BASE_YEARS,MODEL_FUTURE_YEARS)) %>%
       # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
       rename(sector.name = supplysector,
              subsector.name = subsector) %>%
@@ -136,12 +136,12 @@ module_energy_L225.hydrogen <- function(command, ...) {
     # Shareweights of global technologies
     A25.globaltech_shrwt %>%
       gather_years %>%
-      complete(nesting(supplysector, subsector, technology), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
+      complete(nesting(supplysector, subsector, technology), year = c(year, MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
       arrange(supplysector, subsector, technology, year) %>%
       group_by(supplysector, subsector, technology) %>%
       mutate(share.weight = approx_fun(year, value, rule = 1)) %>%
       ungroup %>%
-      filter(year %in% c(BASE_YEARS, FUTURE_YEARS)) %>%
+      filter(year %in% c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
       # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
       rename(sector.name = supplysector,
              subsector.name = subsector) %>%
@@ -150,7 +150,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
 
     # L225.PrimaryRenewKeyword_h2: Keywords of primary renewable electric generation technologies
     A25.globaltech_keyword %>%
-      repeat_add_columns(tibble(year = c(BASE_YEARS, FUTURE_YEARS))) %>%
+      repeat_add_columns(tibble(year = c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS))) %>%
       rename(sector.name = supplysector, subsector.name = subsector) ->
       L225.AllKeyword_h2
 
@@ -169,13 +169,13 @@ module_energy_L225.hydrogen <- function(command, ...) {
     # Note: No need to consider historical periods or intermittent technologies here
     A25.globaltech_co2capture %>%
       gather_years %>%
-      complete(nesting(supplysector, subsector, technology), year = c(year, FUTURE_YEARS)) %>%
+      complete(nesting(supplysector, subsector, technology), year = c(year, MODEL_FUTURE_YEARS)) %>%
       arrange(supplysector, subsector, technology, year) %>%
       group_by(supplysector, subsector, technology) %>%
       mutate(remove.fraction = approx_fun(year, value, rule = 1),
              remove.fraction = round(remove.fraction,energy.DIGITS_REMOVE.FRACTION)) %>%
       ungroup %>%
-      filter(year %in% FUTURE_YEARS) %>%
+      filter(year %in% MODEL_FUTURE_YEARS) %>%
       # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
       rename(sector.name = supplysector, subsector.name = subsector) %>%
       select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "remove.fraction") %>%
