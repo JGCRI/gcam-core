@@ -123,7 +123,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
       na.omit %>%
       # Match in logit exponents based on the land node 2
       mutate(LandAllocatorRoot = "root",
-             logit.year.fillout = min(BASE_YEARS)) %>%
+             logit.year.fillout = min(MODEL_BASE_YEARS)) %>%
       # logit.type is NA by default, so left_join
       left_join(select(A_LandNode_logit, logit.exponent, logit.type, LandNode), by = c("LandNode2" = "LandNode")) %>%
       append_GLU("LandNode1", "LandNode2") %>%
@@ -137,7 +137,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
     # node_leaf_names in L125.LC.
     L125.LC_bm2_R_LT_Yh_GLU %>%
       filter(Land_Type %in% A_LandLeaf_Unmgd2$UnmanagedLandLeaf,
-             year %in% c(aglu.LAND_HISTORY_YEARS, BASE_YEARS)) %>%
+             year %in% c(aglu.LAND_HISTORY_YEARS, MODEL_BASE_YEARS)) %>%
       mutate(allocation = round(value, aglu.DIGITS_LAND_USE)) %>%
       add_node_leaf_names(nesting_table = A_LandLeaf_Unmgd2, leaf_name = "UnmanagedLandLeaf",
                           LN1 = "LandNode1", LN2 = "LandNode2") ->
@@ -153,7 +153,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
       L222.LN2_HistUnmgdAllocation
 
     L222.LC_bm2_R_Unmgd2_Yh_GLU %>%
-      filter(year %in% BASE_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       select(LEVEL2_DATA_NAMES[["LN2_UnmgdAllocation"]]) ->
       L222.LN2_UnmgdAllocation
 
@@ -192,7 +192,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
     # L222.LN1_Logit_prot: Logit
     L222.LN1_UnmgdAllocation_prot %>%
       mutate(unManagedLandValue = aglu.UNMANAGED_LAND_VALUE,
-             logit.year.fillout = min(BASE_YEARS),
+             logit.year.fillout = min(MODEL_BASE_YEARS),
              logit.exponent = aglu.LN1_PROTUNMGD_LOGIT_EXP,
              logit.type = aglu.LN1_PROTUNMGD_LOGIT_TYPE) %>%
       select(region, LandAllocatorRoot, LandNode1, unManagedLandValue, logit.year.fillout, logit.exponent, logit.type) ->
@@ -203,7 +203,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
     # Add carbon content info to the master  table to give the
     # carbon content infor for unmanaged land in the second nest.
     L222.LC_bm2_R_Unmgd2_Yh_GLU %>%
-      filter(year == max(BASE_YEARS)) %>%
+      filter(year == max(MODEL_BASE_YEARS)) %>%
       select(-year, -allocation) %>%
       left_join_error_no_match(GCAMLandLeaf_CdensityLT, by = c("Land_Type" = "LandLeaf")) %>%
       rename(Cdensity_LT = Land_Type.y) %>%
@@ -226,7 +226,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
     # node_leaf_names in L125.LC.
     L125.LC_bm2_R_LT_Yh_GLU %>%
       filter(Land_Type %in% A_LandLeaf2$LandLeaf,
-             year %in% c(aglu.LAND_HISTORY_YEARS, BASE_YEARS)) %>%
+             year %in% c(aglu.LAND_HISTORY_YEARS, MODEL_BASE_YEARS)) %>%
       mutate(allocation = round(value, aglu.DIGITS_LAND_USE)) %>%
       add_node_leaf_names(nesting_table = A_LandLeaf2, leaf_name = "LandLeaf",
                           LN1 = "LandNode1", LN2 = "LandNode2") ->
@@ -242,7 +242,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
       L222.LN2_HistMgdAllocation
 
     L222.LC_bm2_R_Mgd2_Yh_GLU %>%
-      filter(year %in% BASE_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       select(LEVEL2_DATA_NAMES[["LN2_MgdAllocation"]]) ->
       L222.LN2_MgdAllocation
 
@@ -251,7 +251,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
     # Add carbon content info to the master  table to give the
     # carbon content infor for managed land in the second nest.
     L222.LC_bm2_R_Mgd2_Yh_GLU %>%
-      filter(year == max(BASE_YEARS)) %>%
+      filter(year == max(MODEL_BASE_YEARS)) %>%
       select(-year, -allocation) %>%
       left_join_error_no_match(GCAMLandLeaf_CdensityLT, by = c("Land_Type" = "LandLeaf")) %>%
       rename(Cdensity_LT = Land_Type.y) %>%

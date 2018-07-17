@@ -20,10 +20,11 @@ FLAG_XML             <- "FLAG_XML"              # xml data
 
 # Time constants ======================================================================
 
-BASE_YEARS              <- c(1975, 1990, 2005, 2010)
-FUTURE_YEARS            <- seq(2015, 2100, 5)
 HISTORICAL_YEARS        <- 1971:2010
-MODEL_YEARS             <- c(BASE_YEARS, FUTURE_YEARS)
+FUTURE_YEARS            <- seq(2015, 2100, 5)
+MODEL_BASE_YEARS        <- c(1975, 1990, 2005, 2010)
+MODEL_FUTURE_YEARS      <- seq(2015, 2100, 5)
+MODEL_YEARS             <- c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)
 
 
 # GCAM constants ======================================================================
@@ -540,16 +541,16 @@ emissions.EDGAR_YEARS             <- 1971:2008
 emissions.EDGAR_YEARS_PLUS        <- 1970:2008
 emissions.EPA_HISTORICAL_YEARS    <- 1971:2002
 emissions.EPA_MACC_YEAR           <- 2030                # Must be either 2020 or 2030
-emissions.FINAL_EMISS_YEAR        <- min(max(BASE_YEARS), 2005)
+emissions.FINAL_EMISS_YEAR        <- min(max(MODEL_BASE_YEARS), 2005)
 emissions.GAINS_BASE_YEAR         <- 2005
 emissions.GAINS_YEARS             <- c(2010, 2020, 2030)
 emissions.GHG_CONTROL_READIN_YEAR <- 1975
 emissions.HFC_MODEL_BASE_YEARS    <- c(1975, 1990, 2005, 2010)
 emissions.INVENTORY_MATCH_YEAR    <- 2009                # Select year from which to calculate fuel emissions coefficients (2009 is currently the most recent)
-emissions.MODEL_BASE_YEARS        <- BASE_YEARS[BASE_YEARS < 2008]
+emissions.MODEL_BASE_YEARS        <- MODEL_BASE_YEARS[MODEL_BASE_YEARS < 2008]
 emissions.NH3_EXTRA_YEARS         <- 1971:1989
 emissions.NH3_HISTORICAL_YEARS    <- 1990:2002
-emissions.SSP_FUTURE_YEARS        <- c(2010, FUTURE_YEARS)
+emissions.SSP_FUTURE_YEARS        <- c(2010, MODEL_FUTURE_YEARS)
 
 # Other emissions constants
 emissions.CONV_C_CO2    <- 44 / 12 # Convert Carbon to CO2
@@ -650,6 +651,6 @@ gcamusa.DIGITS_TRNUSA_DEFAULT     <- 1    # Reduce rounding in detailed USA tran
 # Time shift conditions ======================================================================
 # Uncomment these lines to run under 'timeshift' conditions
 # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
-# FUTURE_YEARS <- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)
-# BASE_YEARS <- c(1975, 1990, 2005)   # normally (1975, 1990, 2005, 2010)
-# MODEL_YEARS <- c(BASE_YEARS, FUTURE_YEARS)
+# MODEL_FUTURE_YEARS <- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)
+# MODEL_BASE_YEARS <- c(1975, 1990, 2005)   # normally (1975, 1990, 2005, 2010)
+# MODEL_YEARS <- c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)

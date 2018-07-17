@@ -69,7 +69,7 @@ module_water_L203.water.mapping <- function(command, ...) {
       mutate(coefficient = 1,
              subsector = supplysector,
              technology = supplysector,
-             logit.year.fillout = first(BASE_YEARS)) %>%
+             logit.year.fillout = first(MODEL_BASE_YEARS)) %>%
       arrange(GCAM_region_ID) %>%
       left_join(select(L165.ag_IrrEff_R, -field.eff), by = "GCAM_region_ID") %>%
       # ^^ non-restrictive join required (NA values generated for region 30, Taiwan)
