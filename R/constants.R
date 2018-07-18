@@ -331,7 +331,7 @@ aglu.DIGITS_WATER_CONTENT <- 2
 # Time
 energy.CDIAC_CO2_HISTORICAL_YEARS <- HISTORICAL_YEARS[HISTORICAL_YEARS < 2010] # At present the CO2 emissions inventory from CDIAC stops at 2009
 energy.CLIMATE_NORMAL_YEARS       <- 1981:2000
-energy.SATIATION_YEAR             <- 2010
+energy.SATIATION_YEAR             <- max(MODEL_BASE_YEARS) # Needs to be the last model base year to avoid the risk of the model crashing
 energy.UCD_EN_YEAR                <- 2005        # UCD transporctation year to use to compute shares for allocation of energy to mode/technology/fuel within category/fuel
 energy.WIND.BASE.COST.YEAR        <- 2005        # Base cost year for wind, used in capacity factor calculations
 

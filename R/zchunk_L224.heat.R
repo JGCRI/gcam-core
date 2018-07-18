@@ -185,7 +185,7 @@ module_energy_L224.heat <- function(command, ...) {
                   select(sector, fuel, supplysector, subsector, technology, minicam.energy.input) %>%
                   distinct, by = c("sector", "fuel")) %>%
       rename(stub.technology = technology) %>%
-      filter(year %in% MODEL_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       filter(region %in% heat_region$region) %>%
       select(LEVEL2_DATA_NAMES[["StubTechYr"]], "minicam.energy.input", "value") %>%
       mutate(calibrated.value = round(value, energy.DIGITS_CALOUTPUT)) %>%
@@ -201,7 +201,7 @@ module_energy_L224.heat <- function(command, ...) {
     # exceed the demands from the end-use sectors, causing model solution failure. For this reason, the convention applied here is to
     # use the secondary output of heat from the power sector only in the model base years.
     L124.heatoutratio_R_elec_F_tech_Yh %>%
-      filter(year %in% MODEL_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       left_join(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join(calibrated_techs %>%
                   select(sector, fuel, supplysector, subsector, technology) %>%

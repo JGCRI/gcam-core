@@ -385,34 +385,25 @@ module_energy_L232.industry <- function(command, ...) {
       mutate(supplysector = L232.industry_names[["supplysector"]],
              subsector = L232.industry_names[["subsector"]],
              stub.technology = L232.industry_names[["technology"]]) %>%
-      mutate(market.name = region) ->
+      mutate(market.name = region) %>%
+      select(LEVEL2_DATA_NAMES[["StubTechCoef"]]) ->
       L232.StubTechCoef_industry_base # intermediate tibble?
 
     # This set of coefficients covers only the base years; the first "future" period will default to the global tech coefficient
     # Instead, interpolate the coefficients to these global default values in a specified period
     # in below pipeline, year 2150 refers to `indcoef_conv_year` in the old chunk.
-    A32.globaltech_coef %>%
-      repeat_add_columns(tibble(GCAM_region_ID = GCAM_region_names[["GCAM_region_ID"]])) %>%
-      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      left_join_error_no_match(select(filter(L232.StubTechCoef_industry_base, year == max(MODEL_BASE_YEARS)), region, minicam.energy.input, coefficient),
-                               by = c("region", "minicam.energy.input")) %>%
-      rename(`2010` = coefficient) %>%
-      mutate(`2150` = `2100`) %>%
-      gather_years %>%
-      complete(nesting(supplysector, subsector, technology, minicam.energy.input, GCAM_region_ID, region),
-               year = c(max(MODEL_BASE_YEARS), MODEL_FUTURE_YEARS, 2150)) %>%
-      arrange(supplysector, subsector, technology, minicam.energy.input, GCAM_region_ID, region, year) %>%
-      group_by(supplysector, subsector, technology, minicam.energy.input, GCAM_region_ID, region) %>%
-      mutate(coefficient = approx_fun(year, value),
-             coefficient = round(coefficient, energy.DIGITS_COEFFICIENT)) %>%
-      ungroup %>%
-      filter(year %in% MODEL_FUTURE_YEARS) %>%
-      mutate(stub.technology = technology,
-             market.name = region) %>%
-      # Combine the base year and future year coefficients
-      select(LEVEL2_DATA_NAMES[["StubTechCoef"]]) %>%
-      bind_rows(select(L232.StubTechCoef_industry_base, one_of(LEVEL2_DATA_NAMES[["StubTechCoef"]]))) %>%
-      mutate(coefficient = round(coefficient, energy.DIGITS_COEFFICIENT)) ->
+    L232.StubTechCoef_industry_base %>%
+      complete(nesting(region, supplysector, subsector, stub.technology, minicam.energy.input, market.name),
+               year = c(MODEL_YEARS, 2150)) %>%
+      left_join(select(A32.globaltech_coef, supplysector, subsector, technology, minicam.energy.input, `2100`),
+                by = c("supplysector", "subsector", stub.technology = "technology", "minicam.energy.input")) %>%
+      rename(terminal_coef = `2100`) %>%  # extract the assumption for the 2100 coef and assign it to 2150 for interpolation
+      mutate(coefficient = if_else(year == 2150, terminal_coef, coefficient)) %>%
+      select(-terminal_coef) %>%
+      group_by(region, supplysector, subsector, stub.technology, minicam.energy.input) %>%
+      mutate(coefficient = round(approx_fun(year, coefficient), energy.DIGITS_COEFFICIENT)) %>%
+      ungroup() %>%
+      filter(year %in% MODEL_YEARS) ->   #drop 2150
       L232.StubTechCoef_industry
 
     # L232.FuelPrefElast_indenergy: fuel preference elasticities of industrial energy use

@@ -407,14 +407,14 @@ module_energy_L221.en_supply <- function(command, ...) {
       mutate(market.name = "USA") -> L221.StubTechCoef_unoil
 
     L111.Prod_EJ_R_F_Yh %>%
-      filter(grepl("unconventional", fuel), year %in% MODEL_YEARS) %>%
+      filter(grepl("unconventional", fuel), year %in% MODEL_BASE_YEARS) %>%
       left_join_error_no_match(A_regions %>%
                   select(GCAM_region_ID, region), by = c("GCAM_region_ID")) %>%
       select(GCAM_region_ID, value, year, region) -> L221.Prod_EJ_R_unoil_Yh
 
     # Calibrated production of unconventional oil
     L221.TechCoef_en_Traded %>%
-      filter(supplysector == "traded unconventional oil" & year %in% HISTORICAL_YEARS) %>%
+      filter(supplysector == "traded unconventional oil" & year %in% MODEL_BASE_YEARS) %>%
       left_join(L221.Prod_EJ_R_unoil_Yh %>%
                   rename(market.name = region), by = c("market.name", "year")) %>%
       mutate(calOutputValue = round(value, energy.DIGITS_CALOUTPUT)) %>%
@@ -433,14 +433,13 @@ module_energy_L221.en_supply <- function(command, ...) {
     # Calibrated demand of unconventional oil
     L221.StubTech_en %>%
       filter(supplysector == "regional oil" & subsector == "unconventional oil") %>%
-      repeat_add_columns(tibble(year = HISTORICAL_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_BASE_YEARS)) %>%
       left_join(L121.in_EJ_R_TPES_unoil_Yh, by = c("region", "year")) %>%
       mutate(calOutputValue = round(value, energy.DIGITS_CALOUTPUT),
              calOutputValue = if_else(is.na(calOutputValue), 0, calOutputValue),
              year.share.weight = year,
              subsector.share.weight = if_else(calOutputValue > 0, 1, 0),
              share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
-      filter(year %in% MODEL_YEARS) %>%
       select(region, supplysector, subsector, stub.technology, year, calOutputValue, year.share.weight, subsector.share.weight, share.weight) -> L221.StubTechProd_oil_unoil
 
     # Crude oil demand
@@ -451,14 +450,13 @@ module_energy_L221.en_supply <- function(command, ...) {
     # Calibrated demand of crude oil
     L221.StubTech_en %>%
       filter(supplysector == "regional oil" & subsector == "crude oil") %>%
-      repeat_add_columns(tibble(year = HISTORICAL_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_BASE_YEARS)) %>%
       left_join(L121.in_EJ_R_TPES_crude_Yh, by = c("region", "year")) %>%
       mutate(calOutputValue = round(value, energy.DIGITS_CALOUTPUT),
              calOutputValue = if_else(is.na(calOutputValue), 0, calOutputValue),
              year.share.weight = year,
              subsector.share.weight = if_else(calOutputValue > 0, 1, 0),
              share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
-      filter(year %in% MODEL_YEARS) %>%
       select(region, supplysector, subsector, stub.technology, year, calOutputValue, year.share.weight, subsector.share.weight, share.weight) -> L221.StubTechProd_oil_crude
 
     # Region-specific technology shareweights for biomassOil passthrough sector
