@@ -21,7 +21,7 @@ FLAG_XML             <- "FLAG_XML"              # xml data
 # Time constants ======================================================================
 
 HISTORICAL_YEARS        <- 1971:2010
-FUTURE_YEARS            <- seq(2015, 2100, 5)
+FUTURE_YEARS            <- 2011:2100
 MODEL_BASE_YEARS        <- c(1975, 1990, 2005, 2010)
 MODEL_FUTURE_YEARS      <- seq(2015, 2100, 5)
 MODEL_YEARS             <- c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)
@@ -142,6 +142,7 @@ aglu.MODEL_COST_YEARS       <- 2008:2011
 aglu.MODEL_PRICE_YEARS      <- 2008:2011
 aglu.PREAGLU_YEARS          <- c(1700, 1750,1800, 1850, 1900, 1950)          # Cropland cover years prior to first aglu historical year to use in climate model component
 aglu.SPEC_AG_PROD_YEARS     <- seq(max(aglu.AGLU_HISTORICAL_YEARS), 2050, by = 5) # Specified ag productivity years, KD i think this might need a better comment
+aglu.SSP_DEMAND_YEARS       <- seq(2010, 2100, 5) # food demand in the SSPs is calculated at 5-yr intervals
 
 aglu.LAND_TOLERANCE    <- 0.005
 aglu.MIN_PROFIT_MARGIN <- 0.15  # Unitless and is used to ensure that Agricultural Costs (units 1975USD/kg) don't lead to profits below a minimum profit margin.
