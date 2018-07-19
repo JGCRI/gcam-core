@@ -356,6 +356,10 @@ energy.GAS_PRICE  <- 2
 
 energy.CO2.STORAGE.MARKET <- "carbon-storage"
 
+# the year for the ratio of industrial energy:feedstocks convergence in all regions
+# in the old data system this was intended to be 2150 but was actually 2100
+energy.INDCOEF_CONVERGENCE_YR <- 2100
+
 energy.CEMENT_CCS_COST_2000USDTCO2 <- 50 # Starting point of supply curve in Mahasenan et al 2003; come from ENERGY_ASSUMPTIONS/A_ccs_data.R
 energy.CO2_STORAGE_COST_1990_USDTC <- 42 # From GCAM 1.0 inputs; come from ENERGY_ASSUMPTIONS/A_ccs_data.R
 

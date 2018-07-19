@@ -121,7 +121,7 @@ module_energy_L232.industry <- function(command, ...) {
       calibrated.value <- sector.name <- subsector.name <- region <-
       calOutputValue <- subs.share.weight <- calOutputValue.x <- calOutputValue.y <-
       output_tot <- value.x <- value.y <- total <- fuelprefElasticity <-
-      `2100` <- criteria <- scenario <- temp_lag <- base.service <- energy.final.demand <-
+      `2100` <- terminal_coef <- criteria <- scenario <- temp_lag <- base.service <- energy.final.demand <-
       parameter <- income.elasticity <- L232.IncomeElasticity_ind_gcam3 <-
       L232.IncomeElasticity_ind_gssp1 <- L232.IncomeElasticity_ind_gssp2 <-
       L232.IncomeElasticity_ind_gssp3 <- L232.IncomeElasticity_ind_gssp4 <-
@@ -391,19 +391,18 @@ module_energy_L232.industry <- function(command, ...) {
 
     # This set of coefficients covers only the base years; the first "future" period will default to the global tech coefficient
     # Instead, interpolate the coefficients to these global default values in a specified period
-    # in below pipeline, year 2150 refers to `indcoef_conv_year` in the old chunk.
     L232.StubTechCoef_industry_base %>%
       complete(nesting(region, supplysector, subsector, stub.technology, minicam.energy.input, market.name),
-               year = c(MODEL_YEARS, 2150)) %>%
+               year = unique(c(MODEL_YEARS, energy.INDCOEF_CONVERGENCE_YR))) %>%
       left_join(select(A32.globaltech_coef, supplysector, subsector, technology, minicam.energy.input, `2100`),
                 by = c("supplysector", "subsector", stub.technology = "technology", "minicam.energy.input")) %>%
-      rename(terminal_coef = `2100`) %>%  # extract the assumption for the 2100 coef and assign it to 2150 for interpolation
-      mutate(coefficient = if_else(year == 2150, terminal_coef, coefficient)) %>%
+      rename(terminal_coef = `2100`) %>%  # extract the assumption for the 2100 coef and assign it to energy.INDCOEF_CONVERGENCE_YR for interpolation
+      mutate(coefficient = if_else(year == energy.INDCOEF_CONVERGENCE_YR, terminal_coef, coefficient)) %>%
       select(-terminal_coef) %>%
       group_by(region, supplysector, subsector, stub.technology, minicam.energy.input) %>%
       mutate(coefficient = round(approx_fun(year, coefficient), energy.DIGITS_COEFFICIENT)) %>%
       ungroup() %>%
-      filter(year %in% MODEL_YEARS) ->   #drop 2150
+      filter(year %in% MODEL_YEARS) ->   #drop the terminal coef year if it's outside of the model years
       L232.StubTechCoef_industry
 
     # L232.FuelPrefElast_indenergy: fuel preference elasticities of industrial energy use
