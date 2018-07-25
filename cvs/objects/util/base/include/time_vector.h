@@ -40,7 +40,7 @@
 #include <cassert>
 #include <algorithm>
 #include <vector>
-#include <iterator>
+#include <boost/iterator/iterator_adaptor.hpp>
 
 // TODO: Reduce these includes
 #include "util/base/include/model_time.h"
@@ -65,114 +65,72 @@ namespace objects {
     template<class T>
     class TimeVectorBase {
     public:
-    /*!
-    * \brief Constant input iterator.
-    */
-    class const_iterator: public std::iterator<std::random_access_iterator_tag,
-                                               T,
-                                               size_t,
-                                               const T&,
-                                               const T*>
-    {
-        public:
-
-            const_iterator();
-
-            virtual ~const_iterator();
-
-            const T& operator*() const;
-
-            const T* operator->() const;
-
-            bool operator==( const const_iterator& aOther ) const;
-
-            bool operator!=( const const_iterator& aOther ) const;
-            
-            bool operator<( const const_iterator& aOther ) const;
-
-            bool operator>( const const_iterator& aOther ) const;
-
-            const_iterator& operator++();
-
-            const_iterator operator++(int);
-
-            const_iterator& operator--();
-
-            const_iterator operator--(int);
-
-            const_iterator operator+( const size_t aIncrement ) const;
-
-            const_iterator operator-( const size_t aDecrement ) const;
-    
-            const_iterator& operator+=( const size_t aIncrement );
-            
-            const_iterator& operator-=( const size_t aDecrement );
-            
-            size_t operator-( const const_iterator& aOther ) const;
-
-            // TODO: This constructor should be protected, but that
-            // is very difficult to get right due to friend declarations
-            // with derived classes.
-            const_iterator( const unsigned int aPos, 
-                            const TimeVectorBase* aParent );
-        protected:
-
-
-            //! Current index into the array.
-            size_t mPos;
-
-            //! Parent container.
-            const TimeVectorBase* mParent;
-        };
 
         /*!
-        * \brief Mutable input iterator.
-        */
-        class iterator: public const_iterator {
-        public:
-            iterator();
+         * \brief A random access iterator so we can utilize time vectors in
+         *        STL algorithms.
+         * \details Given all we really need to do is create an iterators over
+         *          essentially a simple array we can utilize boost::iterator_adaptor
+         *          to do all the work.  In this way we do not need to worry about
+         *          the subtle requirements, and shifting requirements with subsequent
+         *          C++ standards, of what the STL requires an iterator to be.
+         *
+         *          This implementation is basically straight out of the boost documentation's
+         *          examples.  Again given our simple need we need to make no specializations
+         *          of the boost::iterator_adaptor base class.
+         *
+         *          Note we make the "value" type templated so that we can automatically
+         *          generate both the mutable (iterator) and non-mutable (const_iterator)
+         *          types.
+         */
+        template<class Value>
+        class TimeVectorBaseIter : public boost::iterator_adaptor<
+                                       TimeVectorBaseIter<Value>,
+                                       Value*,
+                                       boost::use_default,
+                                       boost::random_access_traversal_tag>
+        {
+            private:
+                // helper struct for the enable_if below
+                // a private type avoids misuse
+                struct enabler {};
 
-            T& operator*();
+            public:
+                /*!
+                 * \brief Default constructor.
+                 */
+                TimeVectorBaseIter(): TimeVectorBaseIter::iterator_adaptor_( 0 ) { }
 
-            T* operator->();
+                /*!
+                 * \brief Constructor which simply points to the memory location this
+                 *        iterator should reference.
+                 * \param aData the memory location this iterator points to.
+                 */
+                explicit TimeVectorBaseIter( Value* aData ): TimeVectorBaseIter::iterator_adaptor_( aData )
+                {
+                }
 
-            bool operator==( const iterator& aOther ) const;
-
-            bool operator!=( const iterator& aOther ) const;
-            
-            bool operator<( const iterator& aOther ) const;
-
-            bool operator>( const iterator& aOther ) const;
-
-            iterator& operator++();
-
-            iterator operator++(int);
-
-            iterator& operator--();
-
-            iterator operator--(int);
-
-            iterator operator+( const size_t aIncrement ) const;
-
-            iterator operator-( const size_t aDecrement ) const;
-            
-            iterator& operator+=( const size_t aIncrement );
-            
-            iterator& operator-=( const size_t aDecrement );
-            
-            size_t operator-( const iterator& aOther ) const;
-
-            // TODO: This constructor should be protected, but that
-            // is very difficult to get right due to friend declarations
-            // with derived classes.
-            iterator( const unsigned int aPos,
-                      TimeVectorBase* aParent );
-        protected:
-            // Need to inform the compiler that this derived class will be
-            // using base class members.
-            using const_iterator::mParent;
-            using const_iterator::mPos;
+                /*!
+                 * \brief An "interoperability" constructor, essentially to allow us to
+                 *        downgrade an iterator to const_interator.
+                 * \details The syntax is quite complicated due to the use of the enable_if
+                 *          the purpose of which is to only allow non-const to const and
+                 *          not the other way around.
+                 * \param aOther The iterator to downgrade.
+                 */
+                template <class OtherValue>
+                TimeVectorBaseIter( TimeVectorBaseIter<OtherValue> const& aOther
+                  , typename boost::enable_if<
+                    boost::is_convertible<OtherValue*,Value*>
+                  , enabler
+                >::type = enabler() ): TimeVectorBaseIter::iterator_adaptor_( aOther.base() ) {}
         };
+
+        // Generate the actual iterator types by templating just T for the mutable iterator
+        // and T const for the non-mutable iterator.
+        typedef TimeVectorBaseIter<T> iterator;
+        typedef TimeVectorBaseIter<T const> const_iterator;
+
 
         TimeVectorBase( const unsigned int aSize, const T aDefaultValue );
         virtual ~TimeVectorBase();
@@ -208,347 +166,6 @@ namespace objects {
         void clear();
     };
     
-    /*!
-     * \brief Required default constructor.
-     */
-    template<class T>
-    TimeVectorBase<T>::const_iterator::const_iterator()
-    : mPos( 0 ), mParent( 0 ) {
-    }
-
-    /*!
-     * \brief Constructor.
-     * \param aPos Position of the iterator.
-     * \param aParent TimeVectorBase parent.
-     */
-    template<class T>
-    TimeVectorBase<T>::const_iterator::const_iterator( const unsigned int aPos, 
-                                                       const TimeVectorBase<T>* aParent )
-    : mPos( aPos ), mParent( aParent ){
-    }
-    
-    /*!
-     * \brief Destructor.
-     * \note Only necessary to avoid warnings about
-     * base classes without virtual destructors.
-     */
-    template<class T>
-    TimeVectorBase<T>::const_iterator::~const_iterator(){
-    }
-    
-    //! Get the contents of the iterator.
-    template<class T>
-    const T& TimeVectorBase<T>::const_iterator::operator*() const {
-        assert( mParent );
-        assert( mPos <= mParent->size() );
-        return mParent->mData[ mPos ];
-    }
-
-    //! Get the contents of the iterator so a function can be called on it.
-    template<class T>
-    const T* TimeVectorBase<T>::const_iterator::operator->() const {
-        assert( mParent );
-        assert( mPos <= mParent->size() );
-        return &mParent->mData[ mPos ];
-    }
-
-    //! Equality operator.
-    template<class T>
-    bool TimeVectorBase<T>::const_iterator::operator==( const typename TimeVectorBase<T>::const_iterator& aOther ) const {
-        return mPos == aOther.mPos;
-    }
-
-    //! Inequality operator.
-    template<class T>
-    bool TimeVectorBase<T>::const_iterator::operator!=( const typename TimeVectorBase<T>::const_iterator& aOther ) const {
-        return !( *this == aOther );
-    }
-
-    //! Less than operator.
-    template<class T>
-    bool TimeVectorBase<T>::const_iterator::operator<( const typename TimeVectorBase<T>::const_iterator& aOther ) const {
-        return mPos < aOther.mPos;
-    }
-
-    //! Greater than operator.
-    template<class T>
-    bool TimeVectorBase<T>::const_iterator::operator>( const typename TimeVectorBase<T>::const_iterator& aOther ) const {
-        return mPos > aOther.mPos;
-    }
-
-    //! Prefix increment.
-    template<class T>
-    typename TimeVectorBase<T>::const_iterator& TimeVectorBase<T>::const_iterator::operator++(){
-        ++mPos;
-        // If the end iterator is incremented it should remain at the end.
-        mPos = std::min( mPos, mParent->size() );
-        return *this;
-    }
-
-    //! Postfix increment.
-    template<class T>
-    typename TimeVectorBase<T>::const_iterator TimeVectorBase<T>::const_iterator::operator++(int){
-        typename TimeVectorBase<T>::const_iterator prev = *this;
-        operator++();
-        return *this;
-    }
-
-    //! Prefix decrement.
-    template<class T>
-    typename TimeVectorBase<T>::const_iterator& TimeVectorBase<T>::const_iterator::operator--(){
-        // If the decrement causes the iterator to move before the first element
-        // of the array set the iterator to the end element.
-        if( --mPos < 0 ){
-            mPos = mParent->size();
-        }
-        return *this;
-    }
-
-    //! Postfix decrement.
-    template<class T>
-    typename TimeVectorBase<T>::const_iterator TimeVectorBase<T>::const_iterator::operator--(int){
-        typename TimeVectorBase<T>::const_iterator prev = *this;
-        operator--();
-        return prev;
-    }
-    
-    /*!
-     * \brief Return an iterator incremented a specific number of positions from
-     *        the current iterator.
-     * \param aIncrement Amount by which to increment the iterator.
-     */
-    template<class T>
-        typename TimeVectorBase<T>::const_iterator
-        TimeVectorBase<T>::const_iterator::operator+( const size_t aIncrement ) const {
-            // Use the increment operator to do the work.
-            typename TimeVectorBase<T>::const_iterator temp = *this;
-            return temp += aIncrement;
-        }
-
-    /*!
-     * \brief Return an iterator decremented a specific number of positions from
-     *        the current iterator.
-     * \param aDecrement Amount by which to increment the iterator.
-     */
-    template<class T>
-        typename TimeVectorBase<T>::const_iterator
-        TimeVectorBase<T>::const_iterator::operator-( const size_t aDecrement ) const {
-            // Use operator plus to do the work.
-            return operator+( -1 * aDecrement );
-        }
-
-    /*!
-     * \brief Increment the iterator by a specified number of positions.
-     * \param aIncrement Amount by which to increment the iterator.
-     * \return A reference to the iterator after incrementing.
-     */
-    template<class T>
-        typename TimeVectorBase<T>::const_iterator&
-        TimeVectorBase<T>::const_iterator::operator+=( const size_t aIncrement ) {
-            // Check that this does not exceed the bounds of the iterator.
-            mPos += aIncrement;
-            if( mPos < 0 || mPos >= mParent->mSize ){
-                mPos = mParent->mSize;
-            }
-            return *this;
-        }
-
-    /*!
-     * \brief Decrement the iterator by a specified number of positions.
-     * \param aDecrement Amount by which to decrement the iterator.
-     * \return A reference to the iterator after decrementing.
-     */
-    template<class T>
-        typename TimeVectorBase<T>::const_iterator&
-        TimeVectorBase<T>::const_iterator::operator-=( const size_t aDecrement ) {
-            // Use the increment operator to do the work.
-            return operator+=( -1 * aDecrement );
-        }
-    
-    /*! 
-     * \brief Return the difference in position between two iterators.
-     * \param aOther Iterator to return the difference between this iterator and,
-     *                  such that i = j + n where n is the difference.
-     * \return Difference in position between the two iterators.
-     */
-    template<class T>
-    size_t TimeVectorBase<T>::const_iterator::operator-(const typename TimeVectorBase<T>::const_iterator& aOther) const {
-        // Check that they have the same parent.
-        // assert( mParent == aOther.mParent ); Perhaps undefined in copy operation?
-        return mPos - aOther.mPos;
-    }
-
-    /*!
-     * \brief Required default constructor.
-     */
-    template<class T>
-    TimeVectorBase<T>::iterator::iterator(){
-    }
-
-    /*! \brief Constructor.
-     * \param aPos Position of the iterator.
-     */
-    template<class T>
-    TimeVectorBase<T>::iterator::iterator( const unsigned int aPos,
-                                           TimeVectorBase<T>* aParent )
-    :const_iterator( aPos, aParent )
-    {
-    }
-
-    //! Get the contents of the iterator.
-    template<class T>
-    T& TimeVectorBase<T>::iterator::operator*() {
-        assert( mParent );
-        assert( mPos <= mParent->size() );
-        return mParent->mData[ mPos ];
-    }
-    
-    //! Get the contents of the iterator so a function can be called on it.
-    template<class T>
-    T* TimeVectorBase<T>::iterator::operator->() {
-        assert( mParent );
-        assert( mPos <= mParent->size() );
-        return &mParent->mData[ mPos ];
-    }
-
-    //! Equality operator.
-    template<class T>
-    bool TimeVectorBase<T>::iterator::operator==( const typename TimeVectorBase<T>::iterator& aOther ) const {
-        return mPos == aOther.mPos;
-    }
-
-    //! Inequality operator.
-    template<class T>
-    bool TimeVectorBase<T>::iterator::operator!=( const typename TimeVectorBase<T>::iterator& aOther ) const {
-        return !( *this == aOther );
-    }
-
-    //! Less than operator.
-    template<class T>
-    bool TimeVectorBase<T>::iterator::operator<( const typename TimeVectorBase<T>::iterator& aOther ) const {
-        return mPos < aOther.mPos;
-    }
-
-    //! Greater than operator.
-    template<class T>
-    bool TimeVectorBase<T>::iterator::operator>( const typename TimeVectorBase<T>::iterator& aOther ) const {
-        return mPos > aOther.mPos;
-    }
-
-    //! Prefix increment.
-    template<class T>
-    typename TimeVectorBase<T>::iterator& TimeVectorBase<T>::iterator::operator++(){
-        ++mPos;
-        // If the end iterator is incremented it should remain at the end.
-        mPos = std::min( mPos, mParent->size() );
-        return *this;
-    }
-
-    //! Postfix increment.
-    template<class T>
-    typename TimeVectorBase<T>::iterator TimeVectorBase<T>::iterator::operator++(int){
-        typename TimeVectorBase<T>::iterator prev = *this;
-        ++mPos;
-        // If the end iterator is incremented it should remain at the end.
-        mPos = std::min( mPos, mParent->size() );
-        return prev;
-    }
-
-    //! Prefix decrement.
-    template<class T>
-    typename TimeVectorBase<T>::iterator& TimeVectorBase<T>::iterator::operator--(){
-        // If the decrement causes the iterator to move before the first element
-        // of the array set the iterator to the end element.
-        if( --mPos < 0 ){
-            mPos = mParent->size();
-        }
-        return *this;
-    }
-
-    //! Postfix decrement.
-    template<class T>
-    typename TimeVectorBase<T>::iterator TimeVectorBase<T>::iterator::operator--(int){
-        typename TimeVectorBase<T>::iterator prev = *this;
-        // If the decrement causes the iterator to move before the first element
-        // of the array set the iterator to the end element.
-        if( --mPos < 0 ){
-            mPos = mParent->size();
-        }
-         return prev;
-    }
-
-    /*!
-     * \brief Return an iterator incremented a specific number of positions from
-     *        the current iterator.
-     * \param aIncrement Amount by which to increment the iterator.
-     */
-    template<class T>
-        typename TimeVectorBase<T>::iterator
-        TimeVectorBase<T>::iterator::operator+( const size_t aIncrement ) const {
-            // Check that this does not exceed the bounds of the iterator.
-            if( mPos + aIncrement >= mParent->mSize ){
-                return const_cast<TimeVectorBase<T>*>( mParent )->end();
-            }
-            return typename TimeVectorBase<T>::iterator( mPos + aIncrement,
-                                                         const_cast<TimeVectorBase<T>*>( mParent ) );
-        }
-
-    /*!
-     * \brief Return an iterator decremented a specific number of positions from
-     *        the current iterator.
-     * \param aDecrement Amount by which to increment the iterator.
-     */
-    template<class T>
-        typename TimeVectorBase<T>::iterator
-        TimeVectorBase<T>::iterator::operator-( const size_t aDecrement ) const {
-            // Check that this does not exceed the bounds of the iterator.
-            if( mPos - aDecrement < 0 ){
-                return const_cast<TimeVectorBase<T>*>( mParent )->end();
-            }
-            return typename TimeVectorBase<T>::iterator( mPos - aDecrement,
-                                                         const_cast<TimeVectorBase<T>*>( mParent ) );
-        }
-
-	/*!
-     * \brief Increment the iterator by a specified number of positions.
-     * \param aIncrement Amount by which to increment the iterator.
-     * \return A reference to the iterator after incrementing.
-     */
-    template<class T>
-	typename TimeVectorBase<T>::iterator&
-	TimeVectorBase<T>::iterator::operator+=( const size_t aIncrement ) {
-		// Check that this does not exceed the bounds of the iterator.
-		mPos += aIncrement;
-		if( mPos < 0 || mPos >= mParent->mSize ){
-			mPos = mParent->mSize;
-		}
-		return *this;
-	}
-	
-    /*!
-     * \brief Decrement the iterator by a specified number of positions.
-     * \param aDecrement Amount by which to decrement the iterator.
-     * \return A reference to the iterator after decrementing.
-     */
-    template<class T>
-	typename TimeVectorBase<T>::iterator&
-	TimeVectorBase<T>::iterator::operator-=( const size_t aDecrement ) {
-		// Use the increment operator to do the work.
-		return operator+=( -1 * aDecrement );
-	}
-    
-    /*! 
-     * \brief Return the difference in position between two iterators.
-     * \param aOther Iterator to return the difference between this iterator and,
-     *                  such that i = j + n where n is the difference.
-     * \return Difference in position between the two iterators.
-     */
-    template<class T>
-    size_t TimeVectorBase<T>::iterator::operator-(const typename TimeVectorBase<T>::iterator& aOther) const {
-        // Check that they have the same parent.
-        // assert( mParent == aOther.mParent ); Perhaps undefined in copy operation?
-        return mPos - aOther.mPos;
-    }
 
     /*!
      * \brief Constructor.
@@ -603,7 +220,7 @@ namespace objects {
     template<class T>
         TimeVectorBase<T>::TimeVectorBase( const TimeVectorBase<T>& aOther ){
             init( aOther.mSize, T() );
-            copy( aOther.begin(), aOther.end(), begin() );
+            std::copy( aOther.begin(), aOther.end(), begin() );
         }
 
     /*!
@@ -618,7 +235,7 @@ namespace objects {
             if( this != &aOther ){
                 clear();
                 init( aOther.size(), T() );
-                copy( aOther.begin(), aOther.end(), begin() );
+                std::copy( aOther.begin(), aOther.end(), begin() );
             }
             return *this;
         }
@@ -676,7 +293,7 @@ namespace objects {
     */
    template<class T>
        typename TimeVectorBase<T>::const_iterator TimeVectorBase<T>::begin() const {
-           return typename TimeVectorBase<T>::const_iterator( 0, this );
+           return typename TimeVectorBase<T>::const_iterator( mData );
        }
 
    /*!
@@ -686,7 +303,7 @@ namespace objects {
     */
    template<class T>
        typename TimeVectorBase<T>::const_iterator TimeVectorBase<T>::end() const {
-           return typename TimeVectorBase<T>::const_iterator( size(), this );
+           return typename TimeVectorBase<T>::const_iterator( mData + size() );
        }
 
    /*!
@@ -697,7 +314,7 @@ namespace objects {
        typename TimeVectorBase<T>::const_iterator TimeVectorBase<T>::last() const {
            // Return the last position. If the vector is empty make sure this is
            // the zeroth position.
-           return typename TimeVectorBase<T>::const_iterator( std::max( int( size() ) - 1, 0 ), this );
+           return typename TimeVectorBase<T>::const_iterator( mData + std::max( int( size() ) - 1, 0 ) );
        }
 
   /*!
@@ -706,7 +323,7 @@ namespace objects {
    */
    template<class T>
        typename TimeVectorBase<T>::iterator TimeVectorBase<T>::begin() {
-           return typename TimeVectorBase<T>::iterator( 0, this );
+           return typename TimeVectorBase<T>::iterator( mData );
        }
 
    /*!
@@ -716,7 +333,7 @@ namespace objects {
     */
    template<class T>
        typename TimeVectorBase<T>::iterator TimeVectorBase<T>::end() {
-           return typename TimeVectorBase<T>::iterator( size(), this );
+           return typename TimeVectorBase<T>::iterator( mData + size() );
        }
     
    /*!
@@ -727,7 +344,7 @@ namespace objects {
        typename TimeVectorBase<T>::iterator TimeVectorBase<T>::last() {
            // Return the last position. If the vector is empty make sure this is
            // the zeroth position.
-           return typename TimeVectorBase<T>::iterator( std::max( static_cast<int>( size() ) - 1, 0 ), this );
+           return typename TimeVectorBase<T>::iterator( mData + std::max( static_cast<int>( size() ) - 1, 0 ) );
        }
 
    /*
@@ -969,7 +586,7 @@ namespace objects {
     template<class T>
     static std::vector<double> convertToVector( const objects::PeriodVector<T>& aTimeVector ) {
         std::vector<double> convVector( aTimeVector.size() );
-        copy( aTimeVector.begin(), aTimeVector.end(), convVector.begin() );
+        std::copy( aTimeVector.begin(), aTimeVector.end(), convVector.begin() );
         return convVector;
    }
 
