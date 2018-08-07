@@ -1,0 +1,422 @@
+#' module_gcam.usa_L2011.socioeconomics_update_USA
+#'
+#' Population and GDP updates for GCAM-USA.
+#'
+#' @param command API command to execute
+#' @param ... other optional parameters, depending on command
+#' @return Depends on \code{command}: either a vector of required inputs,
+#' a vector of output names, or (if \code{command} is "MAKE") all
+#' the generated outputs: \code{L2011.Pop_updated_USA}, \code{L2011.BaseGDP_updated_USA}, \code{L2011.LaborProductivity_updated_USA},
+#' \code{L2011.Pop_national_updated_USA}, \code{L2011.BaseGDP_national_updated_USA}, \code{L2011.LaborProductivity_national_updated_USA}.
+#' The corresponding file in the original data system was \code{L2011.socioeconomics_USA_update.R} (gcam-usa level2).
+#' @details Interest rate, population, and GDP for GCAM-USA.
+#' @importFrom assertthat assert_that
+#' @importFrom dplyr filter mutate select
+#' @importFrom tidyr gather spread
+#' @author MTB August 2018
+module_gcam.usa_L2011.socioeconomics_update_USA <- function(command, ...) {
+  if(command == driver.DECLARE_INPUTS) {
+    return(c(FILE = "gcam-usa/states_subregions",
+             FILE = "gcam-usa/state_census_region",
+             FILE = "gcam-usa/Census_pop_hist",
+             FILE = "gcam-usa/Census_pop_10_15",
+             FILE = "gcam-usa/BEA_GDP_87_96_97USD_state",
+             FILE = "gcam-usa/BEA_GDP_97_16_09USD_state",
+             FILE = "gcam-usa/PRIMA_pop",
+             FILE = "gcam-usa/AEO_2016_pop_regional",
+             FILE = "gcam-usa/AEO_2016_GDP_regional",
+             "L201.LaborProductivity_SSP2",
+             "L201.Pop_GCAMUSA"))
+  } else if(command == driver.DECLARE_OUTPUTS) {
+    return(c("L2011.Pop_updated_USA",
+             "L2011.BaseGDP_updated_USA",
+             "L2011.LaborProductivity_updated_USA",
+             "L2011.Pop_national_updated_USA",
+             "L2011.BaseGDP_national_updated_USA",
+             "L2011.LaborProductivity_national_updated_USA"))
+  } else if(command == driver.MAKE) {
+
+    # silence package checks
+    year <- region <- state <- Area <- totalPop <- pop <- pop_ratio <- GDP <- baseGDP <- pcGDP <- pcGDPratio <-
+      laborproductivity <- time <- lag_pop <- lag_GDP <- iso <- growth <- timestep <- NULL
+
+    all_data <- list(...)[[1]]
+
+    # Load required inputs
+    states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
+    state_census_region <- get_data(all_data, "gcam-usa/state_census_region")
+    Census_pop_hist <- get_data(all_data, "gcam-usa/Census_pop_hist")
+    Census_pop_10_15 <- get_data(all_data, "gcam-usa/Census_pop_10_15")
+    BEA_GDP_87_96_97USD_state <- get_data(all_data, "gcam-usa/BEA_GDP_87_96_97USD_state")
+    BEA_GDP_97_16_09USD_state <- get_data(all_data, "gcam-usa/BEA_GDP_97_16_09USD_state")
+    PRIMA_pop <- get_data(all_data, "gcam-usa/PRIMA_pop")
+    AEO_2016_pop_regional <- get_data(all_data, "gcam-usa/AEO_2016_pop_regional")
+    AEO_2016_GDP_regional <- get_data(all_data, "gcam-usa/AEO_2016_GDP_regional")
+    L201.LaborProductivity_SSP2 <- get_data(all_data, "L201.LaborProductivity_SSP2")
+    L201.Pop_GCAMUSA <- get_data(all_data, "L201.Pop_GCAMUSA")
+
+    # ===================================================
+
+    SE_HIST_YEAR <- 2015  # year to which historical socioeconomic data are used
+    AEO_SE_YEAR <- 2040   # year to which AEO socioeconomic assumptions run
+
+    # L2011.Pop_USA: Historical population by state from the U.S. Census Bureau, through 2016
+    # Merge historical population datasets
+    Census_pop_hist %>%
+      gather_years("totalPop") %>%
+      bind_rows(Census_pop_10_15 %>%
+                  gather_years("totalPop") %>%
+                  filter(year != max(BASE_YEARS))) %>%
+      mutate(totalPop = round(totalPop * CONV_ONES_THOUS, socioeconomics.POP_DIGITS)) -> L2011.Pop_USA
+
+    # L2011.Pop_updated_USA: Updated model year populations for GCAM USA from 2015 historical data and PRIMA pop
+    # Segment out 2015 population data
+    L2011.Pop_USA %>%
+      rename(region = state) %>%
+      filter(year == SE_HIST_YEAR) -> L2011.Pop_USA_2015
+
+    # Future population projection by state, applying PRIMA pop ratios from 2020-2100 to 2015 historical data
+    PRIMA_pop %>%
+      rename(state_name = state) %>%
+      left_join_error_no_match(states_subregions %>%
+                  select(state_name, region = state),
+                            by = c("state_name")) %>%
+      select(-state_name) %>%
+      gather_years("pop") %>%
+      filter(year %in% FUTURE_YEARS) %>%
+      group_by(region) %>%
+      mutate(pop_ratio = pop / pop[year == SE_HIST_YEAR]) %>%
+      ungroup() %>%
+      select(region, year, pop_ratio) %>%
+      left_join_error_no_match(L2011.Pop_USA_2015 %>%
+                                 select(-year),
+                               by = "region") %>%
+      mutate(totalPop = round(totalPop * pop_ratio, socioeconomics.POP_DIGITS)) %>%
+      select(region, year, totalPop) %>%
+      arrange(region) -> L2011.Pop_updated_USA
+
+    # L2011.BaseGDP_USA: GCAM USA base GDP by state
+    # NOTE: Bureau of Economic Analysis does not have state-level GDP data available for years prior to 1987.
+    # Hence, 1987 state-level GDP are input as GCAM USA base GDP. Labor productivity growth rate for 1990 is
+    # calculated as 15 year annualized growth rate off of the assumed 1975 GDP. This assumption implies that
+    # our 1975 GDP numbers will be incorrect. However, GDP numbers from 1990 will be correct and match history.
+
+    # Convert 1987 GDP to 1990$ to be input into the model as baseGDP.
+    BEA_GDP_87_96_97USD_state %>%
+      select(-Fips) %>%
+      gather_years("GDP") %>%
+      mutate(GDP = as.numeric(GDP),
+             GDP = GDP * gdp_deflator(1990, 1997)) %>%
+      filter(!is.na(GDP)) %>%
+      filter(year == min(year)) %>%
+      mutate(year = BASE_YEARS[1]) %>%
+      select(Area, year, GDP) -> L2011.GDP_state_1975
+
+    L2011.GDP_state_1975 %>%
+      mutate(baseGDP = round(GDP, socioeconomics.GDP_DIGITS)) %>%
+      left_join_error_no_match(states_subregions %>%
+                  select(region = state, state_name),
+                by = c("Area" = "state_name")) %>%
+      select(region, baseGDP) -> L2011.BaseGDP_updated_USA
+
+    # L2011.pcGDP_state_2015: State per-capita GDP historical data series (through 2015)
+    # Convert BEA data to 1990US$.
+    BEA_GDP_87_96_97USD_state %>%
+      select(-Fips) %>%
+      gather_years("GDP") %>%
+      mutate(GDP = as.numeric(GDP),
+             GDP = GDP * gdp_deflator(1990, 1997)) %>%
+      filter(!is.na(GDP)) -> L2011.GDP_state_1996
+
+    BEA_GDP_97_16_09USD_state %>%
+      select(-Fips) %>%
+      gather_years("GDP") %>%
+      mutate(GDP = as.numeric(GDP),
+             GDP = GDP * gdp_deflator(1990, 2009)) -> L2011.GDP_state_2016
+
+    # Bind historical datasets, join state abbreviations, join population data, convert to per-capita GDP (thousand 1990$ / person).
+    # NOTE:  1975 per-capita GDP is 1987 GDP divided by 1975 population. As explained earlier, this does not affect 1990 numbers
+    # since labor productivity growth rates are calculated off of the "wrong" 1975 GDP/capita to match true 1990 GDP.
+    # Hence only 1975 GDP would be incorect and we don't care about that anyway.
+
+    L2011.GDP_state_1975 %>%
+      bind_rows(L2011.GDP_state_1996,
+                L2011.GDP_state_2016) %>%
+      mutate(GDP = round(GDP, socioeconomics.GDP_DIGITS)) %>%
+      left_join_error_no_match(states_subregions %>%
+                  select(state, state_name),
+                by = c(Area = "state_name")) %>%
+      select(state, year, GDP) %>%
+      left_join_error_no_match(L2011.Pop_USA,
+                by = c("state", "year")) %>%
+      mutate(pcGDP = (GDP / totalPop) * CONV_MIL_THOUS) %>%
+      select(state, year, pcGDP) %>%
+      # Select model base years + 2015
+      filter(year %in% c(BASE_YEARS, SE_HIST_YEAR)) -> L2011.pcGDP_state_2015
+
+    # L2011.pcGDP_AEO_reg_2040: Future per-capita GDP (through 2040), based on AEO data (thousand 2005$ / person).
+    # AEO GDP data is past 12 months, presented quarterly. Hence we filter quarter 4 (Q4) because that represents
+    # the annual GDP for a given year.
+
+    AEO_2016_GDP_regional %>%
+      gather(region, GDP, -c(Year, Quarter)) %>%
+      filter(Quarter == 4) %>%
+      mutate(region = gsub("Mid-Atlantic", "Middle Atlantic", region)) %>%
+      select(region, GDP, year = Year) -> GDP_AEO_reg
+
+    # AEO population data is past 12 months, presented quarterly. Filter for Q4.
+    AEO_2016_pop_regional %>%
+      gather(region, pop, -c(Year, Quarter)) %>%
+      filter(Quarter == 4) %>%
+      mutate(region = gsub("Mid-Atlantic", "Middle Atlantic", region)) %>%
+      select(region, pop, year = Year) -> Pop_AEO_reg
+
+    # Calculate per-capita GDP
+    GDP_AEO_reg %>%
+      left_join_error_no_match(Pop_AEO_reg, by = c("region", "year")) %>%
+      filter(year %in% FUTURE_YEARS) %>%
+      mutate(pcGDP = (GDP / pop)) %>%
+      select(region, year, pcGDP) -> L2011.pcGDP_AEO_reg_2040
+
+    # L2011.LaborProductivity_USA_udpated: Labor productivity growth rate for GCAMUSA
+    # Labor productivity growth is calculated from the change in per-capita GDP ratio in each time period
+    # Calculate the growth rate in per-capita GDP
+
+    L2011.pcGDP_state_2015 %>%
+      group_by(state) %>%
+      mutate(pcGDPratio = pcGDP / lag(pcGDP)) %>%
+      ungroup() %>%
+      select(state, year, pcGDPratio) -> L2011.pcGDPratio_state_2015
+
+    L2011.pcGDP_AEO_reg_2040 %>%
+      group_by(region) %>%
+      mutate(pcGDPratio = pcGDP / lag(pcGDP)) %>%
+      ungroup() %>%
+      select(region, year, pcGDPratio) -> L2011.pcGDPratio_AEOreg_2040
+
+    L2011.pcGDPratio_AEOreg_2040 %>%
+      left_join(state_census_region %>%
+                                 select(state, census_region),
+                               by = c("region" = "census_region")) %>%
+      select(state, year, pcGDPratio) -> L2011.pcGDPratio_state_2040
+
+    # Annualize the ratios to return annual growth rates
+
+    L2011.pcGDPratio_state_2015 %>%
+      group_by(state) %>%
+      mutate(laborproductivity = (pcGDPratio ^ (1 / (year - lag(year)))) - 1) %>%
+      select(state, year, laborproductivity) %>%
+      filter(year != BASE_YEARS[1]) -> L2011.LaborProductivity_USA_2015
+
+    L2011.pcGDPratio_state_2040 %>%
+      group_by(state) %>%
+      mutate(laborproductivity = (pcGDPratio ^ (1 / (year - lag(year)))) - 1) %>%
+      select(state, year, laborproductivity) %>%
+      filter(year > SE_HIST_YEAR) -> L2011.LaborProductivity_USA_2040
+
+    # Labor productivity post-2040 is linearly interpolated from 2040 state-level values to the
+    # USA-region value in 2100
+
+    L201.LaborProductivity_SSP2 %>%
+      filter(region == "USA",
+             year == max(FUTURE_YEARS)) %>%
+      repeat_add_columns(tibble::tibble(state = gcamusa.STATES)) %>%
+      mutate(lp2100 = laborproductivity) %>%
+      select(state, lp2100) %>%
+      left_join_error_no_match(L2011.LaborProductivity_USA_2040 %>%
+                                 filter(year == AEO_SE_YEAR) %>%
+                                 rename(lp2040 = laborproductivity) %>%
+                                 select(state, lp2040),
+                               by = c("state")) %>%
+      repeat_add_columns(tibble::tibble(year = FUTURE_YEARS)) %>%
+      filter(year > AEO_SE_YEAR) %>%
+      mutate(laborproductivity = lp2040 + ((year - AEO_SE_YEAR) * ((lp2100 - lp2040) / (max(FUTURE_YEARS) - AEO_SE_YEAR)))) %>%
+      select(state, year, laborproductivity)-> L2011.LaborProductivity_USA_EOC
+
+    # Combine annual growth rates into a single table
+
+    states_subregions %>%
+      select(state) %>%
+      repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) %>%
+      filter(year != BASE_YEARS[1]) %>%
+      left_join_error_no_match(L2011.LaborProductivity_USA_2015 %>%
+                  bind_rows(L2011.LaborProductivity_USA_2040, L2011.LaborProductivity_USA_EOC),
+                by = c("state", "year")) %>%
+      rename(region = state) %>%
+      mutate(laborproductivity = round(laborproductivity, socioeconomics.LABOR_PRODUCTIVITY_DIGITS)) %>%
+      filter(year != BASE_YEARS[1]) -> L2011.LaborProductivity_updated_USA
+
+
+    # Add USA-region udpates
+    # Updated USA-region population
+    L201.Pop_GCAMUSA %>%
+      filter(year %in% BASE_YEARS) %>%
+      bind_rows(L2011.Pop_updated_USA) %>%
+      group_by(year) %>%
+      summarise(totalPop = sum(totalPop)) %>%
+      ungroup() %>%
+      mutate(totalPop = round(totalPop, socioeconomics.POP_DIGITS),
+             region = "USA") %>%
+      select(region, year, totalPop) -> L2011.Pop_national_updated_USA
+
+    # Updated USA-region base GDP
+    L2011.BaseGDP_updated_USA %>%
+      summarise(baseGDP = sum(baseGDP)) %>%
+      mutate(baseGDP = round(baseGDP, socioeconomics.GDP_DIGITS),
+             region = "USA") %>%
+      select(region, baseGDP) -> L2011.BaseGDP_national_updated_USA
+
+    # Updated USA-region labor productivity (GDP)
+    # First, calculate state GDP from parameters
+    # Combine parameters into single table
+    L201.Pop_GCAMUSA %>%
+      filter(year %in% BASE_YEARS) %>%
+      bind_rows(L2011.Pop_updated_USA) %>%
+      left_join(L2011.LaborProductivity_updated_USA,
+                by = c("region", "year")) %>%
+      left_join(L2011.BaseGDP_updated_USA %>%
+                  mutate(year = BASE_YEARS[1]),
+                by = c("region", "year")) %>%
+      rename(GDP = baseGDP) -> L2011.GDP_USA
+
+    L2011.GDP_USA %>%
+      distinct(year) %>%
+      filter(year != BASE_YEARS[1]) %>%
+      unique %>%
+      unlist -> years
+
+    for (y in years) {
+
+      # Calculate GDP
+      L2011.GDP_USA %>%
+        group_by(region) %>%
+        mutate(time = year - lag(year),
+               lag_pop = lag(totalPop),
+               lag_GDP = lag(GDP)) %>%
+        ungroup() %>%
+        filter(year == y) %>%
+        mutate(GDP = totalPop * ((1 + laborproductivity)^time) * (lag_GDP / lag_pop)) -> L2011.GDP_USA_temp
+
+      # Add back into table
+      L2011.GDP_USA %>%
+        filter(year != y) %>%
+        bind_rows(L2011.GDP_USA_temp %>%
+                    select(-time, -lag_pop, -lag_GDP)) %>%
+        mutate(year = as.integer(year)) %>%
+        arrange(region, year) -> L2011.GDP_USA
+
+    }
+
+    # Aggregate to USA-region, calculate labor productivity growth
+    L2011.GDP_USA %>%
+      group_by(year) %>%
+      summarise(totalPop = sum(totalPop),
+                GDP = sum(GDP)) %>%
+      ungroup() %>%
+      mutate(region = "USA") %>%
+      mutate(pcGDP = GDP / totalPop) %>%
+      group_by(region) %>%
+      mutate(laborproductivity = round(((pcGDP / lag(pcGDP)) ^ (1 / (year - lag(year)))) - 1,
+                                       socioeconomics.LABOR_PRODUCTIVITY_DIGITS)) %>%
+      ungroup() %>%
+      select(region, year, laborproductivity) %>%
+      filter(year != BASE_YEARS[1]) -> L2011.LaborProductivity_national_updated_USA
+
+    # ===================================================
+
+    # Produce outputs
+    L2011.Pop_updated_USA %>%
+      add_title("Updated population by state") %>%
+      add_units("thousand persons") %>%
+      add_comments("2015 populations from U.S. Census Bureau") %>%
+      add_comments("Post-2015 populations based on PRIMA state-level population growth ratios") %>%
+      add_legacy_name("L2011.Pop_USA_updated") %>%
+      add_precursors("gcam-usa/states_subregions",
+                     "gcam-usa/Census_pop_hist",
+                     "gcam-usa/Census_pop_10_15",
+                     "gcam-usa/PRIMA_pop") ->
+      L2011.Pop_updated_USA
+
+    L2011.BaseGDP_updated_USA %>%
+      add_title("Updated base year GDP by state") %>%
+      add_units("million 1990 USD") %>%
+      add_comments("The Bureau of Economic Analysis does not have state-level GDP data available for years prior to 1987.") %>%
+      add_comments("Therefore 1987 state-level GDPs are input as GCAM-USA base (1975) GDPs.") %>%
+      add_comments("1975 GDP is thus historically incorrect but will yield the correct GDP from 1990 onwards.") %>%
+      add_legacy_name("L2011.BaseGDP_USA") %>%
+      add_precursors("gcam-usa/states_subregions",
+                     "gcam-usa/BEA_GDP_87_96_97USD_state") ->
+      L2011.BaseGDP_updated_USA
+
+    L2011.LaborProductivity_updated_USA %>%
+      add_title("Updated labor force productivity growth rate by state") %>%
+      add_units("Unitless (annual rate of growth)") %>%
+      add_comments("Labor productivity growth rates through 2015 were calculated using historical state-level GDP and population data.") %>%
+      add_comments("Labor productivity growth rates from 2015 through 2040 were harmonized with AEO 2016 assumptions (at the US Census Division level).") %>%
+      add_comments("Labor productivity growth rates post-2040 were linearly interpolated from state-level 2040 values to the USA-region SSP2 value in 2100.") %>%
+      add_legacy_name("L2011.LaborProductivity_USA_updated") %>%
+      add_precursors("gcam-usa/states_subregions",
+                     "gcam-usa/state_census_region",
+                     "gcam-usa/Census_pop_hist",
+                     "gcam-usa/Census_pop_10_15",
+                     "gcam-usa/BEA_GDP_87_96_97USD_state",
+                     "gcam-usa/BEA_GDP_97_16_09USD_state",
+                     "gcam-usa/PRIMA_pop",
+                     "gcam-usa/AEO_2016_pop_regional",
+                     "gcam-usa/AEO_2016_GDP_regional",
+                     "L201.LaborProductivity_SSP2",
+                     "L201.Pop_GCAMUSA") ->
+      L2011.LaborProductivity_updated_USA
+
+    L2011.Pop_national_updated_USA %>%
+      add_title("Updated population for USA region, consistent with sum-of-states") %>%
+      add_units("thousand persons") %>%
+      add_comments("Updates USA region population to match the 50 state + DC total") %>%
+      add_comments("2015 populations from U.S. Census Bureau") %>%
+      add_legacy_name("L2011.Pop_updated_USA_national") %>%
+      add_precursors("gcam-usa/states_subregions",
+                     "gcam-usa/Census_pop_hist",
+                     "gcam-usa/Census_pop_10_15",
+                     "gcam-usa/PRIMA_pop") ->
+      L2011.Pop_national_updated_USA
+
+    L2011.BaseGDP_national_updated_USA %>%
+      add_title("Updated base year GDP for USA region, consistent with sum-of-states") %>%
+      add_units("million 1990 USD") %>%
+      add_comments("Updates USA region base year GDP to match the 50 state + DC total") %>%
+      add_comments("The Bureau of Economic Analysis does not have state-level GDP data available for years prior to 1987.") %>%
+      add_comments("Therefore 1987 state-level GDPs are input as GCAM-USA base (1975) GDPs.") %>%
+      add_comments("1975 GDP is thus historically incorrect but will yield the correct GDP from 1990 onwards.") %>%
+      add_legacy_name("L2011.BaseGDP_updated_USA_national") %>%
+      add_precursors("gcam-usa/states_subregions",
+                     "gcam-usa/BEA_GDP_87_96_97USD_state") ->
+      L2011.BaseGDP_national_updated_USA
+
+    L2011.LaborProductivity_national_updated_USA %>%
+      add_title("Updated labor force productivity growth rate for USA region") %>%
+      add_units("Unitless (annual rate of growth)") %>%
+      add_comments("Annual growth rate calcualted to produce USA region GDP which matches the 50 state + DC total") %>%
+      add_legacy_name("L2011.LaborProductivity_updated_USA_national") %>%
+      add_precursors("gcam-usa/states_subregions",
+                     "gcam-usa/state_census_region",
+                     "gcam-usa/Census_pop_hist",
+                     "gcam-usa/Census_pop_10_15",
+                     "gcam-usa/BEA_GDP_87_96_97USD_state",
+                     "gcam-usa/BEA_GDP_97_16_09USD_state",
+                     "gcam-usa/PRIMA_pop",
+                     "gcam-usa/AEO_2016_pop_regional",
+                     "gcam-usa/AEO_2016_GDP_regional",
+                     "L201.LaborProductivity_SSP2",
+                     "L201.Pop_GCAMUSA") ->
+      L2011.LaborProductivity_national_updated_USA
+
+    return_data(L2011.Pop_updated_USA,
+                L2011.BaseGDP_updated_USA,
+                L2011.LaborProductivity_updated_USA,
+                L2011.Pop_national_updated_USA,
+                L2011.BaseGDP_national_updated_USA,
+                L2011.LaborProductivity_national_updated_USA)
+  } else {
+    stop("Unknown command")
+  }
+}

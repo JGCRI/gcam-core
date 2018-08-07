@@ -1,0 +1,56 @@
+# File: state_census_region.csv,,
+# Title: Mapping File for States to US Census Divisions (9),,
+# Units: NA,,
+# Source: U.S. Census Bureau (https://www2.census.gov/geo/pdfs/maps-data/maps/reference/us_regdiv.pdf),,
+state,census_region,census_region_id
+AK,Pacific,9
+AL,East South Central,6
+AR,West South Central,7
+AZ,Mountain,8
+CA,Pacific,9
+CO,Mountain,8
+CT,New England,1
+DC,South Atlantic,5
+DE,South Atlantic,5
+FL,South Atlantic,5
+GA,South Atlantic,5
+HI,Pacific,9
+IA,West North Central,4
+ID,Mountain,8
+IL,East North Central,3
+IN,East North Central,3
+KS,West North Central,4
+KY,East South Central,6
+LA,West South Central,7
+MA,New England,1
+MD,South Atlantic,5
+ME,New England,1
+MI,East North Central,3
+MN,West North Central,4
+MO,West North Central,4
+MS,East South Central,6
+MT,Mountain,8
+NC,South Atlantic,5
+ND,West North Central,4
+NE,West North Central,4
+NH,New England,1
+NJ,Middle Atlantic,2
+NM,Mountain,8
+NV,Mountain,8
+NY,Middle Atlantic,2
+OH,East North Central,3
+OK,West South Central,7
+OR,Pacific,9
+PA,Middle Atlantic,2
+RI,New England,1
+SC,South Atlantic,5
+SD,West North Central,4
+TN,East South Central,6
+TX,West South Central,7
+UT,Mountain,8
+VA,South Atlantic,5
+VT,New England,1
+WA,Pacific,9
+WI,East North Central,3
+WV,South Atlantic,5
+WY,Mountain,8
