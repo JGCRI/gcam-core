@@ -45,6 +45,9 @@
  * \author James Blackwood
  */
 #include <xercesc/dom/DOMNode.hpp>
+#include <boost/flyweight.hpp>
+#include <boost/flyweight/key_value.hpp>
+#include <boost/flyweight/no_tracking.hpp>
 
 #include "util/base/include/time_vector.h"
 #include "util/base/include/value.h"
@@ -143,10 +146,24 @@ protected:
     //! land allocation.
     const LandLeaf* mLandLeaf;
     
+    // Some boiler plate to be able to take advantage of boost::flyweight to share
+    // the precalc sigmoid curve between instances that have the same mature age
+    struct precalc_sigmoid_helper {
+        precalc_sigmoid_helper( const int aMatureAge );
+        std::vector<double> mData;
+        
+        const double& operator[]( const size_t aPos ) const {
+            return mData[ aPos ];
+        }
+    };
+    using precalc_sigmoid_type = boost::flyweights::flyweight<
+        boost::flyweights::key_value<int, precalc_sigmoid_helper>,
+        boost::flyweights::no_tracking>;
+    
     //! The difference in the sigmoid curve by year offset + 1 - year offset.
     //! This value get precomputed during initcalc to avoid doing the computationally
     //! expensive operations during calc.
-    std::vector<double> precalc_sigmoid_diff;
+    precalc_sigmoid_type precalc_sigmoid_diff;
     
     //! Flag to ensure historical emissions are only calculated a single time
     //! since they can not be reset.

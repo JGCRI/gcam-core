@@ -299,7 +299,7 @@ void ASimpleCarbonCalc::calcSigmoidCurve( const double aCarbonDiff,
     for( int currYear = aYear; currYear <= aEndYear; ++currYear ){
         // To avoid expensive calculations the difference in the sigmoid curve
         // has already been precomputed.
-        aEmissVector[ currYear ] += precalc_sigmoid_diff[ currYear - aYear ] * aCarbonDiff;
+        aEmissVector[ currYear ] += precalc_sigmoid_diff.get()[ currYear - aYear ] * aCarbonDiff;
     }
 }
 

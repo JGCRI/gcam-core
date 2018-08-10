@@ -177,14 +177,23 @@ void LandCarbonDensities::setMatureAge( const int aMatureAge )
     // Precompute the sigmoid curve differnce to avoid doing it during calc.
     // Note this is only necessary when the mature age is greater than 1.
     if( mMatureAge > 1 ) {
-        precalc_sigmoid_diff.resize( CarbonModelUtils::getEndYear() - CarbonModelUtils::getStartYear() + 1 );
-        double prevSigmoid = pow( 1 - exp( ( -3.0 * 0 ) / mMatureAge ), 2.0 );
-        for ( int i = CarbonModelUtils::getStartYear(); i <= CarbonModelUtils::getEndYear(); ++i ){
-            const int offestYear = i - CarbonModelUtils::getStartYear();
-            double currSigmoid = pow( 1 - exp( ( -3.0 * ( offestYear + 1 ) ) / mMatureAge ), 2.0 );
-            precalc_sigmoid_diff[ offestYear ] = currSigmoid - prevSigmoid;
-            prevSigmoid = currSigmoid;
-        }
+        precalc_sigmoid_diff = precalc_sigmoid_type( mMatureAge );
+    }
+}
+
+/*!
+ * \brief The boost fly weight will only actually construct one helper for each unique
+ *        mature age.  Any other time will just get the shared instance.
+ */
+ASimpleCarbonCalc::precalc_sigmoid_helper::precalc_sigmoid_helper( const int aMatureAge ):
+mData( CarbonModelUtils::getEndYear() - CarbonModelUtils::getStartYear() + 1 )
+{
+    double prevSigmoid = pow( 1 - exp( ( -3.0 * 0 ) / aMatureAge ), 2.0 );
+    for ( int i = CarbonModelUtils::getStartYear(); i <= CarbonModelUtils::getEndYear(); ++i ){
+        const int offestYear = i - CarbonModelUtils::getStartYear();
+        double currSigmoid = pow( 1 - exp( ( -3.0 * ( offestYear + 1 ) ) / aMatureAge ), 2.0 );
+        mData[ offestYear ] = currSigmoid - prevSigmoid;
+        prevSigmoid = currSigmoid;
     }
 }
 
