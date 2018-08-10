@@ -85,6 +85,44 @@ class ICarbonCalc: public IVisitable,
                    private boost::noncopyable
 {
 public:
+    
+    /*!
+     * \brief An enum containing the possible "modes" in which to calculate this
+     *        carbon calc.
+     * \details Given that these calculations can be relative expensive to calculate
+     *          and results in one period directly affecting many future years we give
+     *          the users the ability to call "calc" in the following modes:
+     *
+     *            - CarbonCalcMode::eStoreResults Save all results for reporting.
+     *            - CarbonCalcMode::eReturnTotal Avoid saving any results and intead
+     *              simply return the total emissions.
+     *            - CarbonCalcMode::eReverseCalc Run the calculation just to back
+     *              out the emissions, etc from the currently saved results.
+     */
+    enum CarbonCalcMode {
+        /*!
+         * \brief Run the calculation and save all results.
+         */
+        eStoreResults,
+        
+        /*!
+         * \brief Run the calculation but do not store any results.
+         * \details Flag used as an optimization to avoid storing the
+         *          full LUC emissins during World.calc and instead only
+         *          return the total emissions in the given year.
+         */
+        eReturnTotal,
+        
+        /*!
+         * \brief Run the calculation with the intent of backing out all the
+         *        emissions, etc for the given year from all of the future saved
+         *        results.
+         * \details Such a mode is required to properly calculate emissions if we
+         *          need to re-run some model period, such as for target finder.
+         */
+        eReverseCalc
+    };
+    
     //! Constructor
     inline ICarbonCalc();
 
@@ -133,11 +171,11 @@ public:
      *          calculated to the given end year.
      * \param aPeriod The current model period that is being calculated.
      * \param aEndYear The year to calculate future emissions to.
-     * \param aStoreFullEmiss Flag used as an optimization to avoid storing the
-     *                        full LUC emissins during World.calc.
+     * \param aCalcMode The "mode" in which to run the calculation.
      * \return The total LUC emissions in aEndYear.
+     * \sa CarbonCalcMode
      */
-    virtual double calc( const int aPeriod, const int aEndYear, const bool aStoreFullEmiss ) = 0;
+    virtual double calc( const int aPeriod, const int aEndYear, const CarbonCalcMode aCalcMode ) = 0;
 
     /*!
      * \brief Get the net land use change emissions for a given year.

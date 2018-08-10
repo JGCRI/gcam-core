@@ -143,6 +143,22 @@ void NodeCarbonCalc::completeInit() {
 }
 
 /*!
+ * \brief Initializations prior to calculating the given period.
+ * \details Back out the previsouly calculated emissions from the saved future
+ *          values in case we are re-running this model period.
+ */
+void NodeCarbonCalc::initCalc( const int aPeriod ) {
+    bool shouldReverseCalc = false;
+    for( size_t i = 0; i < mCarbonCalcs.size(); ++i ) {
+        shouldReverseCalc |= mCarbonCalcs[ i ]->shouldReverseCalc( aPeriod );
+    }
+    
+    if( aPeriod > 0 && shouldReverseCalc ) {
+        calc( aPeriod, CarbonModelUtils::getEndYear(), ICarbonCalc::eReverseCalc );
+    }
+}
+
+/*!
  * \brief Do the carbon calculations for the historical period.
  * \note While these calculations are very similar to those of model year there are
  *       slight differences.  Some of this code could be pulled into a common function
@@ -280,7 +296,7 @@ void NodeCarbonCalc::calcLandUseHistory()
     mHasCalculatedHistoricEmiss = true;
 }
 
-void NodeCarbonCalc::calc( const int aPeriod, const int aEndYear, const bool aStoreFullEmiss ) {
+void NodeCarbonCalc::calc( const int aPeriod, const int aEndYear, const ICarbonCalc::CarbonCalcMode aCalcMode ) {
     const Modeltime* modeltime = scenario->getModeltime();
 
     // If this is a land-use history year...
@@ -296,15 +312,11 @@ void NodeCarbonCalc::calc( const int aPeriod, const int aEndYear, const bool aSt
         int year = prevModelYear + 1;
 
         // clear the previously calculated emissions first
-        vector<YearVector<Value>*> currEmissionsAbove( mCarbonCalcs.size() );
-        vector<YearVector<Value>*> currEmissionsBelow( mCarbonCalcs.size() );
+        vector<YearVector<double>*> currEmissionsAbove( mCarbonCalcs.size() );
+        vector<YearVector<double>*> currEmissionsBelow( mCarbonCalcs.size() );
         for( size_t i = 0; i < mCarbonCalcs.size(); ++i ) {
-            currEmissionsAbove[ i ] = mCarbonCalcs[ i ]->mStoredEmissionsAbove[ aPeriod ];
-            currEmissionsBelow[ i ] = mCarbonCalcs[ i ]->mStoredEmissionsBelow[ aPeriod ];
-            for( year = prevModelYear + 1; year <= aEndYear; ++year ) {
-                (*currEmissionsAbove[ i ])[ year ] = 0.0;
-                (*currEmissionsBelow[ i ])[ year ] = 0.0;
-            }
+            currEmissionsAbove[ i ] = new YearVector<double>( year, aEndYear, 0.0 );
+            currEmissionsBelow[ i ] = new YearVector<double>( year, aEndYear, 0.0 );
         }
         
         // stash carbon densities for quick access
@@ -442,7 +454,7 @@ void NodeCarbonCalc::calc( const int aPeriod, const int aEndYear, const bool aSt
 
         // add current emissions to the total
         for( size_t i = 0; i < mCarbonCalcs.size(); ++i ) {
-            if( aStoreFullEmiss ) {
+            if( aCalcMode == ICarbonCalc::eStoreResults ) {
                 for( year = prevModelYear + 1; year <= aEndYear; ++year ) {
                     mCarbonCalcs[ i ]->mTotalEmissionsAbove[ year ] += (*currEmissionsAbove[ i ])[ year ];
                     mCarbonCalcs[ i ]->mTotalEmissionsBelow[ year ] += (*currEmissionsBelow[ i ])[ year ];
@@ -450,6 +462,21 @@ void NodeCarbonCalc::calc( const int aPeriod, const int aEndYear, const bool aSt
                         mCarbonCalcs[ i ]->mTotalEmissionsBelow[ year ];
                 }
             }
+            else if( aCalcMode == ICarbonCalc::eReverseCalc ) {
+                for( year = prevModelYear + 1; year <= aEndYear; ++year ) {
+                    mCarbonCalcs[ i ]->mTotalEmissionsAbove[ year ] -= (*currEmissionsAbove[ i ])[ year ];
+                    mCarbonCalcs[ i ]->mTotalEmissionsBelow[ year ] -= (*currEmissionsBelow[ i ])[ year ];
+                    mCarbonCalcs[ i ]->mTotalEmissions[ year ] = mCarbonCalcs[ i ]->mTotalEmissionsAbove[ year ] +
+                        mCarbonCalcs[ i ]->mTotalEmissionsBelow[ year ];
+                }
+            }
+            else if( aCalcMode == ICarbonCalc::eReturnTotal ) {
+                mCarbonCalcs[ i ]->mStoredEmissions = mCarbonCalcs[ i ]->mTotalEmissionsAbove[ aEndYear ] +
+                    (*currEmissionsAbove[ i ])[ aEndYear ] + (*currEmissionsBelow[ i ])[ aEndYear ];
+            }
+            // clean up memory now that we are done with it
+            delete currEmissionsAbove[ i ];
+            delete currEmissionsBelow[ i ];
         }
     }
 }
