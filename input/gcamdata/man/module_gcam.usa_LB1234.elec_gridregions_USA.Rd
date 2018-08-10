@@ -18,8 +18,7 @@ the generated outputs: \code{L1234.in_EJ_grid_elec_F}, \code{L1234.out_EJ_grid_e
 The corresponding file in the original data system was \code{LB1234.elec_gridregions.R} (gcam-usa level1).
 }
 \description{
-Calculate electricity fuel consumption, electricity generation, and inputs and outputs of net ownuse
-(the electricity used by production/transformation facilities) by state.
+Calculate electricity fuel consumption and electricity generation by grid region.
 }
 \details{
 By state, calculates electricity fuel consumption, electricity generation, and inputs and outputs of net ownuse.

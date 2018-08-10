@@ -4,8 +4,8 @@
 \alias{info}
 \title{info}
 \usage{
-info(object_name, gcam_data_map = GCAM_DATA_MAP, previous_tracelist = NULL,
-  upstream = TRUE, downstream = TRUE)
+info(object_name, gcam_data_map = GCAM_DATA_MAP,
+  previous_tracelist = NULL, upstream = TRUE, downstream = TRUE)
 }
 \arguments{
 \item{object_name}{Name of object to get information about (can be either a data object or a code chunk)}
