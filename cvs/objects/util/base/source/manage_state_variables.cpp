@@ -423,6 +423,18 @@ void ManageStateVariables::DoCollect::processData<objects::PeriodVector<Value> >
 }
 
 template<>
+void ManageStateVariables::DoCollect::processData<objects::TechVintageVector<Value> >( objects::TechVintageVector<Value>& aData ) {
+    // When an ARRAY of values are tagged only the Value in [ mPeriodToCollect] is
+    // considered active.
+    
+    // TODO: error checking.  mIgnoreCurrValue should take care of out of bounds here but double check
+    if( !mIgnoreCurrValue ) {
+        mParentClass->mStateValues.push_front( &aData[ mParentClass->mPeriodToCollect ] );
+        ++mParentClass->mNumCollected;
+    }
+}
+
+template<>
 void ManageStateVariables::DoCollect::processData<objects::YearVector<Value> >( objects::YearVector<Value>& aData ) {
     // When a year vector is tagged we only need to worry about values in the current
     // timestep (already calculated the years ahead of time in the interest of speed
@@ -437,16 +449,64 @@ void ManageStateVariables::DoCollect::processData<objects::YearVector<Value> >( 
 
 template<typename DataType>
 void ManageStateVariables::DoCollect::pushFilterStep( const DataType& aData ) {
+    //cout << "In " << aData->getName() << endl;
     // ignore most steps
 }
+
+/*template<>
+void ManageStateVariables::DoCollect::pushFilterStep<Demographic*>( Demographic* const& aData ) {
+    // ignore most steps
+}
+template<>
+void ManageStateVariables::DoCollect::pushFilterStep<GDP*>( GDP* const& aData ) {
+    // ignore most steps
+}
+template<>
+void ManageStateVariables::DoCollect::pushFilterStep<ICalData*>( ICalData* const& aData ) {
+    // ignore most steps
+}
+template<>
+void ManageStateVariables::DoCollect::pushFilterStep<ICarbonCalc*>( ICarbonCalc* const& aData ) {
+    // ignore most steps
+}
+template<>
+void ManageStateVariables::DoCollect::pushFilterStep<IDiscreteChoice*>( IDiscreteChoice* const& aData ) {
+    // ignore most steps
+}
+template<>
+void ManageStateVariables::DoCollect::pushFilterStep<IInterpolationFunction*>( IInterpolationFunction* const& aData ) {
+    // ignore most steps
+}
+template<>
+void ManageStateVariables::DoCollect::pushFilterStep<InterpolationRule*>( InterpolationRule* const& aData ) {
+    // ignore most steps
+}
+template<>
+void ManageStateVariables::DoCollect::pushFilterStep<Marketplace*>( Marketplace* const& aData ) {
+    // ignore most steps
+}
+template<>
+void ManageStateVariables::DoCollect::pushFilterStep<NodeCarbonCalc*>( NodeCarbonCalc* const& aData ) {
+    // ignore most steps
+}
+template<>
+void ManageStateVariables::DoCollect::pushFilterStep<PointSet*>( PointSet* const& aData ) {
+    // ignore most steps
+}
+template<>
+void ManageStateVariables::DoCollect::pushFilterStep<SolutionInfoParamParser*>( SolutionInfoParamParser* const& aData ) {
+    // ignore most steps
+}*/
 
 template<typename DataType>
 void ManageStateVariables::DoCollect::popFilterStep( const DataType& aData ) {
     // ignore most steps
 }
 
+
 template<>
 void ManageStateVariables::DoCollect::pushFilterStep<ITechnology*>( ITechnology* const& aData ) {
+    //cout << "In " << aData->getName() << endl;
     // Ignore any data set within a Technology that is not operating in the current
     // model period.
     if( !aData->isOperating( mParentClass->mPeriodToCollect ) ) {
@@ -462,6 +522,7 @@ void ManageStateVariables::DoCollect::popFilterStep<ITechnology*>( ITechnology* 
 
 template<>
 void ManageStateVariables::DoCollect::pushFilterStep<Market*>( Market* const& aData ) {
+    //cout << "In " << aData->getName() << endl;
     // Ignore any data set within a Market which is not for the current model year.
     if( aData->getYear() != mParentClass->mYearToCollect ) {
         mIgnoreCurrValue = true;

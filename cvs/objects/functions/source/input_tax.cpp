@@ -93,9 +93,9 @@ const string& InputTax::getXMLReportingName() const{
 }
 
 //! Constructor
-InputTax::InputTax():
-mAdjustedCoefficients( Value( 1.0 ) )
+InputTax::InputTax()
 {
+    TVHHelper<Value>::setDefaultValue( Value( 1.0 ), mAdjustedCoefficients );
 }
 
 /*!

@@ -49,6 +49,9 @@
 
 extern Scenario* scenario;
 
+template<typename T>
+class TVHHelper;
+
 /*! 
 * \file time_vector.h  
 * \ingroup util
@@ -577,17 +580,369 @@ namespace objects {
             assert( isValidNumber( mData[ aIndex ] ) );
             return mData[ aIndex ];
         }
-    }
+    
     /*!
-     * \brief Convert a PeriodVector into a std::vector.
-     * \return Vector equivalent to the period vector.
-     * \todo Remove this after the database code is removed.
+     * \brief Base class of vectors indexed by year or period.
+     * \details Provides common code for year and period vectors.
      */
     template<class T>
-    static std::vector<double> convertToVector( const objects::PeriodVector<T>& aTimeVector ) {
-        std::vector<double> convVector( aTimeVector.size() );
-        std::copy( aTimeVector.begin(), aTimeVector.end(), convVector.begin() );
-        return convVector;
-   }
+    class TechVintageVector {
+        //template<class U>
+        friend class TVHHelper<T>;
+    public:
+        
+        /*!
+         * \brief A random access iterator so we can utilize time vectors in
+         *        STL algorithms.
+         * \details Given all we really need to do is create an iterators over
+         *          essentially a simple array we can utilize boost::iterator_adaptor
+         *          to do all the work.  In this way we do not need to worry about
+         *          the subtle requirements, and shifting requirements with subsequent
+         *          C++ standards, of what the STL requires an iterator to be.
+         *
+         *          This implementation is basically straight out of the boost documentation's
+         *          examples.  Again given our simple need we need to make no specializations
+         *          of the boost::iterator_adaptor base class.
+         *
+         *          Note we make the "value" type templated so that we can automatically
+         *          generate both the mutable (iterator) and non-mutable (const_iterator)
+         *          types.
+         */
+        template<class Value>
+        class TechVintageVectorIter : public boost::iterator_adaptor<
+        TechVintageVectorIter<Value>,
+        Value*,
+        boost::use_default,
+        boost::random_access_traversal_tag>
+        {
+        private:
+            // helper struct for the enable_if below
+            // a private type avoids misuse
+            struct enabler {};
+            
+        public:
+            /*!
+             * \brief Default constructor.
+             */
+            TechVintageVectorIter(): TechVintageVectorIter::iterator_adaptor_( 0 ) { }
+            
+            /*!
+             * \brief Constructor which simply points to the memory location this
+             *        iterator should reference.
+             * \param aData the memory location this iterator points to.
+             */
+            explicit TechVintageVectorIter( Value* aData ): TechVintageVectorIter::iterator_adaptor_( aData )
+            {
+            }
+            
+            /*!
+             * \brief An "interoperability" constructor, essentially to allow us to
+             *        downgrade an iterator to const_interator.
+             * \details The syntax is quite complicated due to the use of the enable_if
+             *          the purpose of which is to only allow non-const to const and
+             *          not the other way around.
+             * \param aOther The iterator to downgrade.
+             */
+            template <class OtherValue>
+            TechVintageVectorIter( TechVintageVectorIter<OtherValue> const& aOther
+                               , typename boost::enable_if<
+                               boost::is_convertible<OtherValue*,Value*>
+                               , enabler
+                               >::type = enabler() ): TechVintageVectorIter::iterator_adaptor_( aOther.base() ) {}
+        };
+        
+        // Generate the actual iterator types by templating just T for the mutable iterator
+        // and T const for the non-mutable iterator.
+        typedef TechVintageVectorIter<T> iterator;
+        typedef TechVintageVectorIter<T const> const_iterator;
+        
+        
+        TechVintageVector();
+        TechVintageVector( const unsigned int aStartPeriod, const unsigned int aSize, const T aDefaultValue );
+        virtual ~TechVintageVector();
+        TechVintageVector( const TechVintageVector& aOther );
+        TechVintageVector& operator=( const TechVintageVector& aOther );
+        
+        bool operator==( TechVintageVector& aOther ) const;
+        
+        bool operator!=( TechVintageVector& aOther ) const;
+        
+        T& operator[]( const unsigned int aIndex );
+        const T& operator[]( const unsigned int aIndex ) const;
+        
+        unsigned int getStartPeriod() const;
+        unsigned int size() const;
+        const_iterator begin() const;
+        const_iterator end() const;
+        const_iterator last() const;
+        iterator begin();
+        iterator end();
+        iterator last();
+        typedef T value_type;
+    protected:
+        //! Dynamic array containing the data.
+        T* mData;
+        
+        //! Initial period
+        int mStartPeriod;
+        
+        //! Size of the array.
+        unsigned int mSize;
+        
+        //! Flag if proper dimensions have been set and memory allocated
+        //bool mIsInitialized;
+        
+        bool isInitialized() const {
+            return mStartPeriod >= 0;
+        }
+        
+    private:
+        void init( const unsigned int aSize,
+                  const T aDefaultValue );
+        
+        void clear();
+    };
+    
+    template<class T>
+    TechVintageVector<T>::TechVintageVector():
+    mStartPeriod( -1 )
+    {
+        // WARNING: this could be very bad if someone tried to dereference this
+        // we will stash a temporary look up ID in mData
+        mData = reinterpret_cast<T*>( this );
+    }
+    
+    /*!
+     * \brief Constructor.
+     * \param aSize Size of the TimeVectorBase. The size is immutable once
+     *              constructed.
+     * \param aDefaultValue Default for all values.
+     */
+    template<class T>
+    TechVintageVector<T>::TechVintageVector( const unsigned int aStartPeriod,
+                                             const unsigned int aSize,
+                                             const T aDefaultValue ):
+    mData( new T[ aSize ] ),
+    mStartPeriod( aStartPeriod ),
+    mSize( aSize )/*,
+    mIsInitialized( true )*/
+    {
+        // Initialize the data to the default value.
+        std::uninitialized_fill( &mData[ 0 ], &mData[ 0 ] + mSize, aDefaultValue );
+    }
+    
+    /*!
+     * \brief Destructor which deallocates the array.
+     */
+    template<class T>
+    TechVintageVector<T>::~TechVintageVector(){
+        clear();
+    }
+    
+    /*!
+     * \brief Private member function to deallocate the memory.
+     */
+    template<class T>
+    void TechVintageVector<T>::clear(){
+        if( isInitialized() ) {
+            delete[] mData;
+        }
+    }
+    
+    /*!
+     * \brief Copy constructor.
+     * \param aOther TimeVectorBase to copy.
+     */
+    template<class T>
+    TechVintageVector<T>::TechVintageVector( const TechVintageVector<T>& aOther ):
+    mData( aOther.mData ),
+    mStartPeriod( aOther.mStartPeriod ),
+    mSize( aOther.mSize )/*,
+    mIsInitialized( aOther.mIsInitialized )*/
+    {
+        if( aOther.isInitialized() ) {
+            mData = new T[ mSize ];
+            std::copy( aOther.begin(), aOther.end(), &mData[ 0 ] );
+        }
+    }
+    
+    /*!
+     * \brief Assignment operator.
+     * \param aOther TimeVectorBase to copy.
+     * \return The newly constructed TimeVectorBase by reference(for chaining
+     *         assignment).
+     */
+    template<class T>
+    TechVintageVector<T>& TechVintageVector<T>::operator=( const TechVintageVector<T>& aOther ){
+        // Check for self-assignment.
+        if( this != &aOther ){
+            if( !aOther.isInitialized() ) {
+                mStartPeriod = -1;
+                mData = aOther.mData;
+            }
+            else {
+                clear();
+                mStartPeriod = aOther.mStartPeriod;
+                mSize = aOther.mSize;
+                mData = new T[ mSize ];
+                std::copy( aOther.begin(), aOther.end(), &mData[ 0 ] );
+            }
+        }
+        return *this;
+    }
+    
+    /*!
+     * \brief Equals operator.
+     * \param aOther TimeVectorBase to check for equivalence.
+     * \details TimeVectorBases are equivalent if they have the same size and
+     *          all elements at respective positions are equal.
+     * \return Whether the two vectors are equal.
+     */
+    template<class T>
+    bool  TechVintageVector<T>::operator==( TechVintageVector& aOther ) const {
+        if( !isInitialized() ) {
+            return !aOther.isInitialized() && mData == aOther.mData;
+        }
+        else {
+            return mStartPeriod == aOther.mStartPeriod && size() == aOther.size() && equal( begin(), end(), aOther.begin() );
+        }
+    }
+    
+    /*!
+     * \brief Not-equals operator.
+     * \param aOther TimeVectorBase to check for dis-equivalence.
+     * \details TimeVectorBases are not equivalent if they have the different
+     *          sizes or all elements at respective positions are not equal.
+     * \return Whether the two vectors are equal.
+     */
+    template<class T>
+    bool  TechVintageVector<T>::operator!=( TechVintageVector& aOther ) const {
+        return !( *this == aOther );
+    }
+    
+    template<class T>
+    T& TechVintageVector<T>::operator[]( const unsigned int aIndex ) {
+        static T UNDEFINED(-1.2);
+        if( !isInitialized() ) {
+            abort();
+        }
+        
+        if( aIndex < mStartPeriod ) {
+            std::cout << "Access before: " << aIndex << " < " << mStartPeriod << std::endl;
+            return UNDEFINED;
+        }
+        else if( aIndex > (mStartPeriod + mSize) ) {
+            std::cout << "Access before: " << aIndex << " > " << mStartPeriod + mSize << std::endl;
+            return UNDEFINED;
+        }
+        
+        return mData[ aIndex - mStartPeriod ];
+    }
+    
+    template<class T>
+    const T& TechVintageVector<T>::operator[]( const unsigned int aIndex ) const {
+        const static T UNDEFINED(-1.2);
+        if( !isInitialized() ) {
+            abort();
+        }
+        
+        if( aIndex < mStartPeriod ) {
+            std::cout << "Access before: " << aIndex << " < " << mStartPeriod << std::endl;
+            return UNDEFINED;
+        }
+        else if( aIndex > (mStartPeriod + mSize) ) {
+            std::cout << "Access before: " << aIndex << " > " << mStartPeriod + mSize << std::endl;
+            return UNDEFINED;
+        }
+        
+        return mData[ aIndex - mStartPeriod ];
+    }
+    
+    template<class T>
+    unsigned int TechVintageVector<T>::getStartPeriod() const {
+        return mStartPeriod;
+    }
+    
+    /*!
+     * \brief Return the size of the vector.
+     * \return Size of the vector.
+     */
+    template<class T>
+    unsigned int TechVintageVector<T>::size() const {
+        return mSize;
+    }
+    
+    /*!
+     * \brief Return the constant iterator to the first position in the vector.
+     * \return Constant iterator to the first position.
+     */
+    template<class T>
+    typename TechVintageVector<T>::const_iterator TechVintageVector<T>::begin() const {
+        return typename TechVintageVector<T>::const_iterator( mData );
+    }
+    
+    /*!
+     * \brief Return the constant iterator to the position past the last position
+     *        in the vector.
+     * \return Constant iterator to one position past the last position.
+     */
+    template<class T>
+    typename TechVintageVector<T>::const_iterator TechVintageVector<T>::end() const {
+        return typename TechVintageVector<T>::const_iterator( mData + size() );
+    }
+    
+    /*!
+     * \brief Return the constant iterator to the last position in the vector.
+     * \return Constant iterator to the last position
+     */
+    template<class T>
+    typename TechVintageVector<T>::const_iterator TechVintageVector<T>::last() const {
+        // Return the last position. If the vector is empty make sure this is
+        // the zeroth position.
+        return typename TechVintageVector<T>::const_iterator( mData + std::max( int( size() ) - 1, 0 ) );
+    }
+    
+    /*!
+     * \brief Return a mutable iterator to the first position in the vector.
+     * \return Mutable iterator to the first position.
+     */
+    template<class T>
+    typename TechVintageVector<T>::iterator TechVintageVector<T>::begin() {
+        return typename TechVintageVector<T>::iterator( mData );
+    }
+    
+    /*!
+     * \brief Return a mutable iterator to the position past the last position in
+     *        the vector.
+     * \return Mutable iterator to one position past the last position.
+     */
+    template<class T>
+    typename TechVintageVector<T>::iterator TechVintageVector<T>::end() {
+        return typename TechVintageVector<T>::iterator( mData + size() );
+    }
+    
+    /*!
+     * \brief Return a mutable iterator to the last position in the vector.
+     * \return Mutable iterator to the last position
+     */
+    template<class T>
+    typename TechVintageVector<T>::iterator TechVintageVector<T>::last() {
+        // Return the last position. If the vector is empty make sure this is
+        // the zeroth position.
+        return typename TechVintageVector<T>::iterator( mData + std::max( static_cast<int>( size() ) - 1, 0 ) );
+    }
+}
+
+/*!
+ * \brief Convert a PeriodVector into a std::vector.
+ * \return Vector equivalent to the period vector.
+ * \todo Remove this after the database code is removed.
+ */
+template<class T>
+static std::vector<double> convertToVector( const objects::PeriodVector<T>& aTimeVector ) {
+    std::vector<double> convVector( aTimeVector.size() );
+    std::copy( aTimeVector.begin(), aTimeVector.end(), convVector.begin() );
+    return convVector;
+}
 
 #endif // _TIME_VECTOR_H_

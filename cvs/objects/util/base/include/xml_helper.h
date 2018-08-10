@@ -85,6 +85,17 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string/trim.hpp>
 
+#include <boost/mpl/vector.hpp>
+#include <boost/fusion/include/map.hpp>
+#include <boost/fusion/include/at_key.hpp>
+#include <boost/fusion/include/mpl.hpp>
+#include <boost/mpl/zip_view.hpp>
+#include <boost/mpl/transform_view.hpp>
+#include <boost/mpl/transform.hpp>
+#include <boost/mpl/unpack_args.hpp>
+#include <boost/fusion/include/vector.hpp>
+#include <boost/fusion/include/for_each.hpp>
+
 #include "util/base/include/model_time.h"
 #include "util/base/include/util.h"
 #include "util/logger/include/ilogger.h"
@@ -173,6 +184,10 @@ public:
    static void insertValueIntoVector( const xercesc::DOMNode* aNode,
                                       objects::PeriodVector<T>& aPeriodVector,
                                       const Modeltime* aModeltime );
+    
+    static void insertValueIntoVector( const xercesc::DOMNode* aNode,
+                                       objects::TechVintageVector<T>& aTechVector,
+                                       const Modeltime* aModeltime );
 
    static int getNodePeriod ( const xercesc::DOMNode* node, const Modeltime* modeltime );
    static bool parseXML( const std::string& aXMLFile, IParsable* aModelElement );
@@ -189,6 +204,81 @@ private:
     static xercesc::XercesDOMParser* getParser();
 };
 
+template<typename T>
+class TVHHelper {
+public:
+    
+    std::map<size_t, objects::PeriodVector<T> > mTempStore;
+    
+    objects::PeriodVector<T>& getPeriodVector( objects::TechVintageVector<T>& aV ) {
+        size_t tempDataKey = reinterpret_cast<size_t>( aV.mData );
+        auto iter = mTempStore.find( tempDataKey );
+        if( iter == mTempStore.end() ) {
+            iter = mTempStore.insert( std::make_pair( tempDataKey, objects::PeriodVector<T>() ) ).first;
+        }
+        
+        return (*iter).second;
+    }
+    
+    static void setDefaultValue( const T& aDefaultValue, objects::TechVintageVector<T>& aTechVector );
+    
+    /*void XMLParse(objects::TechVintageVector<T>& aV, const int aPeriod, const T& aData) {
+        mTempStore[ reinterpret_cast<size_t>( aV.mData ) ][aPeriod ] = aData;
+    }
+     */
+    
+    static void initializeVector( const unsigned int aStartPeriod, const unsigned int aSize, objects::TechVintageVector<T>& aV );
+};
+
+
+using TempStoreTypes = boost::mpl::vector<double, Value>;
+using TempStorePtrTypes = typename boost::mpl::transform<TempStoreTypes, boost::add_pointer<TVHHelper<boost::mpl::_> > >::type;
+using TempStoreMapType = typename boost::fusion::result_of::as_map<
+    typename boost::fusion::result_of::as_vector<
+        typename boost::mpl::transform_view<
+            boost::mpl::zip_view<
+                boost::mpl::vector<TempStoreTypes, TempStorePtrTypes> >,
+                boost::mpl::unpack_args<boost::fusion::pair<boost::mpl::_1, boost::mpl::_2> >
+            >
+        >::type
+    >::type;
+
+extern TempStoreMapType sTVHelperMap;
+
+template<typename T>
+void TVHHelper<T>::setDefaultValue( const T& aDefaultValue, objects::TechVintageVector<T>& aTechVector ) {
+    objects::PeriodVector<T>& periodVector = boost::fusion::at_key<T>( sTVHelperMap )->getPeriodVector( aTechVector );
+    std::fill( periodVector.begin(), periodVector.end(), aDefaultValue );
+}
+
+template<typename T>
+void TVHHelper<T>::initializeVector( const unsigned int aStartPeriod, const unsigned int aSize, objects::TechVintageVector<T>& aV ) {
+    if( !aV.isInitialized() ) {
+        TVHHelper<T>* inst = boost::fusion::at_key<T>( sTVHelperMap );
+        size_t tempDataKey = reinterpret_cast<size_t>( aV.mData );
+        aV.mStartPeriod = aStartPeriod;
+        aV.mSize = aSize;
+        //aV.mIsInitialized = true;
+        aV.mData = new T[ aSize ];
+        
+        if( inst ) {
+        auto tempData = inst->mTempStore.find( tempDataKey );
+        
+        if( tempData != inst->mTempStore.end() ) {
+            const objects::PeriodVector<T>& pv = (*tempData).second;
+            for(auto per = aStartPeriod; per < (aStartPeriod + aSize); ++per ) {
+                aV[ per ] = pv[ per ];
+            }
+        }
+        else {
+            std::fill( aV.begin(), aV.end(), T() );
+        }
+    }
+    else {
+        std::fill( aV.begin(), aV.end(), T() );
+    }
+    }
+}
 
 /*! \brief Returns the data value associated with the element node.
 * \details This function first finds the child node of this element, a text node which contains the data value.
@@ -478,6 +568,14 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* aNode,
            aPeriodVector[ i ] =  aPeriodVector[ period ];
        }
    }
+}
+
+template<class T>
+void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* aNode,
+                                          objects::TechVintageVector<T>& aTechVector,
+                                          const Modeltime* aModeltime )
+{
+    insertValueIntoVector( aNode, boost::fusion::at_key<T>( sTVHelperMap )->getPeriodVector( aTechVector ), aModeltime );
 }
 
 /*!
@@ -911,6 +1009,12 @@ void XMLHelper<T>::initParser() {
 
     *getErrorHandlerPointerInternal() = ( (xercesc::ErrorHandler*)new xercesc::HandlerBase() );
     (*getParserPointerInternal())->setErrorHandler( *getErrorHandlerPointerInternal() );
+    
+    boost::fusion::for_each(sTVHelperMap, [] (auto& aPair) {
+        using TVHHelperType = typename boost::remove_pointer<decltype( aPair.second )>::type;
+        aPair.second = new TVHHelperType();
+        std::cout << "Set second: " << aPair.second << std::endl;
+    });
 }
 
 /*! \brief Return the text string.
@@ -963,6 +1067,13 @@ void XMLHelper<T>::cleanupParser(){
     delete *getErrorHandlerPointerInternal();
     delete *getParserPointerInternal();
     xercesc::XMLPlatformUtils::Terminate();
+    
+    boost::fusion::for_each(sTVHelperMap, [] (auto& aPair) {
+        std::cout << "Clean up: " << aPair.second << std::endl;
+        delete aPair.second;
+        aPair.second = 0;
+    });
+
 }
 
 /*! \brief Reset the name to number mapping for a vector to the current names and numbers of the map.

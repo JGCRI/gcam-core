@@ -65,12 +65,13 @@ extern Scenario* scenario;
 MACControl::MACControl():
 AEmissionsControl(),
 mNoZeroCostReductions( false ),
-mTechChange( 0.0 ),
+//mTechChange( 0.0 ),
 mZeroCostPhaseInTime( 25 ),
 mCovertPriceValue( 1 ),
 mPriceMarketName( "CO2" ),
 mMacCurve( new PointSetCurve( new ExplicitPointSet() ) )
 {
+    TVHHelper<double>::setDefaultValue( 0, mTechChange );
 }
 
 //! Default destructor.
@@ -111,7 +112,7 @@ void MACControl::copy( const MACControl& aOther ){
     assert( !mMacCurve );
     mMacCurve = aOther.mMacCurve->clone();
     mNoZeroCostReductions = aOther.mNoZeroCostReductions;
-    mTechChange = aOther.mTechChange;
+    //mTechChange = aOther.mTechChange;
     mZeroCostPhaseInTime = aOther.mZeroCostPhaseInTime;
     mCovertPriceValue = aOther.mCovertPriceValue;
     mPriceMarketName = aOther.mPriceMarketName;
@@ -172,8 +173,8 @@ void MACControl::toDebugXMLDerived( const int period, ostream& aOut, Tabs* aTabs
         XMLWriteElementWithAttributes( currPair->second, "mac-reduction", aOut, aTabs, attrs );
     }
     const Modeltime* modeltime = scenario->getModeltime();
-    XMLWriteVector( mTechChange, "tech-change", aOut, aTabs, modeltime, 0.0 );
-    
+	//XMLWriteVector( mTechChange, "tech-change", aOut, aTabs, modeltime, 0.0 );
+
     XMLWriteElementCheckDefault( mZeroCostPhaseInTime, "zero-cost-phase-in-time", aOut, aTabs, 25 );
     XMLWriteElementCheckDefault( mNoZeroCostReductions, "no-zero-cost-reductions", aOut, aTabs, false );
     XMLWriteElementCheckDefault( mCovertPriceValue, "mac-price-conversion", aOut, aTabs, Value( 1.0 ) );
@@ -299,10 +300,10 @@ double MACControl::adjustForTechChange( const int aPeriod, double reduction ) {
     // be sure to apply it for as many years as are in a model time step
     double techChange = 1;
     int timestep = scenario->getModeltime()->gettimestep( 0 );
-    for ( int i=0; i <= aPeriod; i++ ) {
-        timestep = scenario->getModeltime()->gettimestep( i );
-        techChange *= pow( 1 + mTechChange[ i ], timestep );
-    }
+    //for ( int i=0; i <= aPeriod; i++ ) {
+        timestep = scenario->getModeltime()->gettimestep( /*i*/aPeriod );
+        techChange *= pow( 1 + mTechChange[ /*i*/aPeriod ], timestep );
+    //}
     reduction *= techChange;
     
     // TODO: Include read-in max reduction -- some sectors really shouldn't be able to reduce 100%. We could allow a read-in maximum

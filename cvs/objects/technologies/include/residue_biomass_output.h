@@ -130,7 +130,7 @@ public :
                                    const IOutput* aNextInput );
 
 protected :
-    typedef objects::PeriodVector<Value> value_vector_type;
+    typedef objects::TechVintageVector<Value> value_vector_type;
     
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.

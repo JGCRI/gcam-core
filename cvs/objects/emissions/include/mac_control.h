@@ -94,7 +94,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "no-zero-cost-reductions", mNoZeroCostReductions, bool ),
         
         //! Technology change, % improvement rate per year
-        DEFINE_VARIABLE( ARRAY, "tech-change", mTechChange, objects::PeriodVector<double> ),
+        DEFINE_VARIABLE( ARRAY, "tech-change", mTechChange, objects::TechVintageVector<double> ),
         
         //! The underlying Curve (as read in)
         DEFINE_VARIABLE( CONTAINER, "mac-reduction", mMacCurve, PointSetCurve* ),

@@ -399,6 +399,7 @@ void TechnologyContainer::initCalc( const string& aRegionName, const string& aSe
             mVintagesByPeriod[ aPeriod ]->copyGHGParameters(
                 mVintagesByPeriod[ aPeriod - 1 ]->getGHGPointer( ghgNames[j] ) );
         }
+        mVintagesByPeriod[ aPeriod ]->initTechVintageVector();
     }
     
     // Initialize the previous period info as having no input set and

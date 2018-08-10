@@ -193,13 +193,16 @@ void UnmanagedLandTechnology::completeInit( const string& aRegionName,
     if( util::searchForValue( mInputs, getLandInputName() ) == mInputs.end() ){
         mInputs.push_back( new RenewableInput( getLandInputName() ) );
     }
+    
+    // Create the generic output for this technology. Insert the generic
+    // output at position 0, so it can be used for emissions calculation.
+    mOutputs.push_back( new GenericOutput( aSectorName ) );
 
     Technology::completeInit( aRegionName, aSectorName, aSubsectorName, aSubsectorInfo,
                               aLandAllocator );
+    
+    mOutputs.erase( mOutputs.begin() );
 	
-	// Create the generic output for this technology. Insert the generic
-	// output at position 0, so it can be used for emissions calculation.
-    mOutputs.insert( mOutputs.begin(), new GenericOutput( aSectorName ) );
 
     // Store away the land allocator.
     mLandAllocator = aLandAllocator;

@@ -98,7 +98,7 @@ void NonCO2Emissions::copy( const NonCO2Emissions& aOther ) {
     AGHG::copy( aOther );
     
     mEmissionsCoef = aOther.mEmissionsCoef;
-    mAdjustedEmissCoef = aOther.mAdjustedEmissCoef;
+    //mAdjustedEmissCoef = aOther.mAdjustedEmissCoef;
     mGDP = aOther.mGDP;
     
     // Deep copy the auto_ptr
@@ -142,7 +142,7 @@ void NonCO2Emissions::copyGHGParameters( const AGHG* aPrevGHG ){
     if( !mEmissionsCoef.isInited() ) {
         mEmissionsCoef = prevComplexGHG->mEmissionsCoef;
     }
-    mAdjustedEmissCoef = prevComplexGHG->mAdjustedEmissCoef;
+    //mAdjustedEmissCoef = prevComplexGHG->mAdjustedEmissCoef;
     
     mGDP = prevComplexGHG->mGDP;
     

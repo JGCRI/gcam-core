@@ -268,8 +268,7 @@ void EnergyInput::completeInit( const string& aRegionName,
     // TODO: This needs a default here.
 
     // Set the coeffients to the read-in value.
-    mAdjustedCoefficients.assign( mAdjustedCoefficients.size(),
-                                  currCoef );
+    fill( mAdjustedCoefficients.begin(), mAdjustedCoefficients.end(), currCoef );
     initializeTypeFlags();
 }
 

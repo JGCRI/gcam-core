@@ -90,6 +90,9 @@
 #include "functions/include/function_utils.h"
 #include "marketplace/include/marketplace.h"
 
+#include "util/base/include/gcam_fusion.hpp"
+#include "util/base/include/gcam_data_containers.h"
+
 using namespace std;
 using namespace xercesc;
 using namespace objects;
@@ -108,6 +111,8 @@ typedef vector<IShutdownDecider*>::iterator ShutdownDeciderIterator;
 typedef vector<IShutdownDecider*>::const_iterator CShutdownDeciderIterator;
 
 typedef vector<IInput*>::const_iterator CInputIterator;
+
+TempStoreMapType sTVHelperMap(boost::fusion::make_pair<double>( static_cast<TVHHelper<double>*>( 0 ) ), boost::fusion::make_pair<Value>( static_cast<TVHHelper<Value>*>( 0 ) ) );
 
 /*! 
  * \brief Constructor.
@@ -208,7 +213,7 @@ void Technology::init()
     // year is known.
     mLifetimeYears = -1;
 
-    mCosts.assign( mCosts.size(), Value( -1.0 ) );
+    TVHHelper<Value>::setDefaultValue( Value( -1 ), mCosts );
     mProductionState.assign( mProductionState.size(), 0 );
     mProductionFunction = 0;
     mPMultiplier = 1;
@@ -335,6 +340,24 @@ void Technology::completeInit( const string& aRegionName,
         mLifetimeYears = calcDefaultLifetime();
     }
     
+    // Create the primary output for this technology. All technologies will have
+    // a primary output. Always insert the primary output at position 0.
+    mOutputs.insert( mOutputs.begin(), new PrimaryOutput( aSectorName ) );
+    
+    // Accidentally missing CO2 is very easy to do, and would cause big
+    // problems. Add it automatically if it does not exist. Warn the user so
+    // they remember to add it.
+    const string CO2 = "CO2";
+    if( util::searchForValue( mGHG, CO2 ) == mGHG.end() ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::DEBUG );
+        mainLog << "Adding CO2 to Technology " << mName << " in region " << aRegionName << " in sector " << aSectorName << "." << endl;
+        AGHG* CO2Ghg = new CO2Emissions;
+        mGHG.push_back( CO2Ghg );
+    }
+    
+    initTechVintageVector();
+    
     // Check if both the original MiniCAM non-energy-input and the new input-capital
     // are in the vector.  If so, eliminate the non-energy-input and use input-capital 
     // only so that non-energy costs are not double accounted.
@@ -388,10 +411,6 @@ void Technology::completeInit( const string& aRegionName,
         << "  region: " << aRegionName << "  sector: " << aSectorName << "  technology: " << mName << endl;
     }
 
-    // Create the primary output for this technology. All technologies will have
-    // a primary output. Always insert the primary output at position 0.
-    mOutputs.insert( mOutputs.begin(), new PrimaryOutput( aSectorName ) );
-
     // Check for attempts to calibrate fixed output.
     if( mFixedOutput != getFixedOutputDefault() && mCalValue ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -429,18 +448,6 @@ void Technology::completeInit( const string& aRegionName,
     // Clear shareweights for fixed output technologies.
     if( mFixedOutput != getFixedOutputDefault() ) {
         mShareWeight = mParsedShareWeight = 0;
-    }
-
-    // Accidentally missing CO2 is very easy to do, and would cause big
-    // problems. Add it automatically if it does not exist. Warn the user so
-    // they remember to add it.
-    const string CO2 = "CO2";
-    if( util::searchForValue( mGHG, CO2 ) == mGHG.end() ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::DEBUG );
-        mainLog << "Adding CO2 to Technology " << mName << " in region " << aRegionName << " in sector " << aSectorName << "." << endl;
-        AGHG* CO2Ghg = new CO2Emissions;
-        mGHG.push_back( CO2Ghg );
     }
 
     // Initialize the capture component.
@@ -587,16 +594,18 @@ void Technology::initCalc( const string& aRegionName,
     // If technology is not operating the cost is NaN.  The value
     // should never be used; therefore, if the NaNs escape into the
     // rest of the code, you know instantly that you have a problem.
-    if( !mProductionState[ aPeriod ]->isOperating() )
+    /*if( !mProductionState[ aPeriod ]->isOperating() )
     {
         mCosts[ aPeriod ] = numeric_limits<double>::signaling_NaN();
-    }
+    }*/
     
     mTechnologyInfo->setBoolean( "new-vintage-tech", mProductionState[ aPeriod ]->isNewInvestment() );
     mTechnologyInfo->setBoolean( "is-tech-operating", mProductionState[ aPeriod ]->isOperating() );
 
+    if( mProductionState[ aPeriod ]->isOperating() ) {
     for( unsigned int i = 0; i < mGHG.size(); i++ ) {
         mGHG[ i ]->initCalc( aRegionName, mTechnologyInfo.get(), aPeriod );
+    }
     }
 
     if( !aPrevPeriodInfo.mIsFirstTech && !aPrevPeriodInfo.mInputs ){
@@ -620,18 +629,24 @@ void Technology::initCalc( const string& aRegionName,
     aPrevPeriodInfo.mInputs = &mInputs;
 
     // Initialize the inputs.
+    if( mProductionState[ aPeriod ]->isOperating() ) {
     for( unsigned int i = 0; i < mInputs.size(); ++i ) {
         mInputs[ i ]->initCalc( aRegionName, aSectorName, mProductionState[ aPeriod ]->isNewInvestment(), false,
 			mTechnologyInfo.get(), aPeriod );
     }
+    }
 
+    if( mProductionState[ aPeriod ]->isOperating() ) {
     if( mCaptureComponent ) {
         mCaptureComponent->initCalc( aRegionName, aSectorName, "", aPeriod );
         mCaptureComponent->adjustInputs( aRegionName, mInputs, aPeriod );
     }
+    }
 
+    if( mProductionState[ aPeriod ]->isOperating() ) {
     for( unsigned int i = 0; i < mOutputs.size(); ++i ) {
         mOutputs[ i ]->initCalc( aRegionName, aSectorName, aPeriod );
+    }
     }
 
     // Determine cumulative technical change. Alpha zero defaults to 1.
@@ -690,6 +705,8 @@ void Technology::setProductionState( const int aPeriod ){
     
     double initialOutput = 0;
     const Modeltime* modeltime = scenario->getModeltime();
+    //int currYear = modeltime->getper_to_yr( aPeriod );
+    //initialOutput = currYear >= mYear && currYear < (mYear + mLifetimeYears) ? mOutputs[ 0 ]->getPhysicalOutput( modeltime->getyr_to_per( mYear ) ) : 0.0;
     initialOutput = mOutputs[ 0 ]->getPhysicalOutput( modeltime->getyr_to_per( mYear ) );
     
     mProductionState[ aPeriod ] =
@@ -1324,7 +1341,7 @@ void Technology::calcCost( const string& aRegionName,
     // rest of the code, you know instantly that you have a problem.
     if( !mProductionState[ aPeriod ]->isOperating() )
     {
-        assert( !util::isValidNumber( mCosts[ aPeriod ] ) );
+        //assert( !util::isValidNumber( mCosts[ aPeriod ] ) );
     }
     else {
         // Note we now allow costs in any sector to be <= 0.  If,
@@ -1768,4 +1785,45 @@ int Technology::calcDefaultLifetime() const {
     return nextTechPeriod < modeltime->getmaxper()
         ? modeltime->getper_to_yr( nextTechPeriod ) - mYear
         : modeltime->gettimestep( modeltime->getmaxper() - 1 );
+}
+
+void Technology::initTechVintageVector() {
+    const Modeltime* modeltime = scenario->getModeltime();
+    int numPeriodsActive = 0;
+    int startPer = modeltime->getyr_to_per( getYear() );
+    int currPer = startPer;
+    for( int year = getYear(); currPer < modeltime->getmaxper() && year < (getYear() + mLifetimeYears ); ) {
+        ++numPeriodsActive;
+        ++currPer;
+        if( currPer < modeltime->getmaxper() ) {
+            year = modeltime->getper_to_yr( currPer );
+        }
+    }
+    
+    vector<FilterStep*> collectStateSteps( 2, 0 );
+    collectStateSteps[ 0 ] = new FilterStep( "" );
+    collectStateSteps[ 1 ] = new FilterStep( "", DataFlags::ARRAY );
+    InitTechVintageVectorHelper helper( startPer, numPeriodsActive );
+    GCAMFusion<InitTechVintageVectorHelper, false, false, true> findTechVec( helper, collectStateSteps );
+    findTechVec.startFilter( this );
+    
+    // clean up GCAMFusion related memory
+    for( auto filterStep : collectStateSteps ) {
+        delete filterStep;
+    }
+}
+
+template<typename T>
+void Technology::InitTechVintageVectorHelper::processData( T& aData ) {
+    // ignore
+}
+
+template<>
+void Technology::InitTechVintageVectorHelper::processData<objects::TechVintageVector<double> >( objects::TechVintageVector<double>& aData ) {
+    TVHHelper<double>::initializeVector( mStartPeriod, mNumPeriodsActive, aData );
+}
+
+template<>
+void Technology::InitTechVintageVectorHelper::processData<objects::TechVintageVector<Value> >( objects::TechVintageVector<Value>& aData ) {
+    TVHHelper<Value>::initializeVector( mStartPeriod, mNumPeriodsActive, aData );
 }

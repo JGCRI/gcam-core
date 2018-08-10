@@ -61,9 +61,9 @@ extern Scenario* scenario;
 //! Default constructor.
 ReadInControl::ReadInControl():
 AEmissionsControl(),
-mFutureEmissionsFactors( 0 ),
 mTechBuildPeriod( scenario->getModeltime()->getFinalCalibrationPeriod() )
 {
+    TVHHelper<double>::setDefaultValue( 0, mFutureEmissionsFactors );
 }
 
 //! Default destructor.
@@ -94,7 +94,7 @@ ReadInControl& ReadInControl::operator=( const ReadInControl& aOther ){
 
 //! Copy helper function.
 void ReadInControl::copy( const ReadInControl& aOther ){
-    mFutureEmissionsFactors = aOther.mFutureEmissionsFactors;
+    //mFutureEmissionsFactors = aOther.mFutureEmissionsFactors;
 }
 
 /*!
@@ -127,7 +127,7 @@ bool ReadInControl::XMLDerivedClassParse( const string& aNodeName, const DOMNode
 
 void ReadInControl::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
-	XMLWriteVector( mFutureEmissionsFactors, "future-emiss-factor", aOut, aTabs, modeltime, 0.0 );
+	//XMLWriteVector( mFutureEmissionsFactors, "future-emiss-factor", aOut, aTabs, modeltime, 0.0 );
 
 }
 

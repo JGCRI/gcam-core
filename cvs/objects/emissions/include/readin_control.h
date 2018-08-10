@@ -89,7 +89,7 @@ protected:
         AEmissionsControl,
 
         //! Future emissions factors -- this vector sets future emissions factors for vintaged technologies
-        DEFINE_VARIABLE( ARRAY, "future-emiss-factor", mFutureEmissionsFactors, objects::PeriodVector<double> ),
+        DEFINE_VARIABLE( ARRAY, "future-emiss-factor", mFutureEmissionsFactors, objects::TechVintageVector<double> ),
         
         //! Technology build period -- this is the period that the vintage was constructed
         DEFINE_VARIABLE( SIMPLE, "tech-build-period", mTechBuildPeriod, int )

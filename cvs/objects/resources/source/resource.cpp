@@ -69,6 +69,9 @@
 #include "functions/include/iinput.h"
 #include "sectors/include/sector_utils.h"
 
+#include "util/base/include/gcam_fusion.hpp"
+#include "util/base/include/gcam_data_containers.h"
+
 
 using namespace std;
 using namespace xercesc;
@@ -287,6 +290,8 @@ void Resource::completeInit( const string& aRegionName, const IInfo* aRegionInfo
 
     // Create a single primary output for the resource output.
     mOutputs.insert( mOutputs.begin(), new PrimaryOutput( mName ) );
+    
+    initTechVintageVector();
     
     for( unsigned int i = 0; i < mGHG.size(); i++ ) {
         mGHG[ i ]->completeInit( aRegionName, mName, mResourceInfo.get() );
@@ -765,4 +770,35 @@ void RenewableResource::annualsupply( const string& aRegionName, int aPeriod, co
         // add capacity factor to marketinfo
         marketInfo->setDouble( "resourceCapacityFactor", mResourceCapacityFactor[ aPeriod ] );
     }
+}
+
+void Resource::initTechVintageVector() {
+    const Modeltime* modeltime = scenario->getModeltime();
+    
+    vector<FilterStep*> collectStateSteps( 2, 0 );
+    collectStateSteps[ 0 ] = new FilterStep( "" );
+    collectStateSteps[ 1 ] = new FilterStep( "", DataFlags::ARRAY );
+    InitTechVintageVectorHelper helper( 0, modeltime->getmaxper() );
+    GCAMFusion<InitTechVintageVectorHelper, false, false, true> findTechVec( helper, collectStateSteps );
+    findTechVec.startFilter( this );
+    
+    // clean up GCAMFusion related memory
+    for( auto filterStep : collectStateSteps ) {
+        delete filterStep;
+    }
+}
+
+template<typename T>
+void Resource::InitTechVintageVectorHelper::processData( T& aData ) {
+    // ignore
+}
+
+template<>
+void Resource::InitTechVintageVectorHelper::processData<objects::TechVintageVector<double> >( objects::TechVintageVector<double>& aData ) {
+    TVHHelper<double>::initializeVector( mStartPeriod, mNumPeriodsActive, aData );
+}
+
+template<>
+void Resource::InitTechVintageVectorHelper::processData<objects::TechVintageVector<Value> >( objects::TechVintageVector<Value>& aData ) {
+    TVHHelper<Value>::initializeVector( mStartPeriod, mNumPeriodsActive, aData );
 }

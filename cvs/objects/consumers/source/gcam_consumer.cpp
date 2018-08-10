@@ -51,6 +51,9 @@
 #include "sectors/include/sector_utils.h"
 #include "technologies/include/generic_output.h"
 
+#include "util/base/include/gcam_fusion.hpp"
+#include "util/base/include/gcam_data_containers.h"
+
 using namespace std;
 using namespace xercesc;
 
@@ -143,6 +146,11 @@ void GCAMConsumer::completeInit( const string& aRegionName, const string& aSecto
     }
     mOutputs.clear();
     mOutputs.insert( mOutputs.begin(), new GenericOutput( "generic-output" ) );
+    for( unsigned int i = 0; i < mGhgs.size(); ++i ){
+        delete mGhgs[ i ];
+    }
+    mGhgs.clear();
+    initTechVintageVector();
 
     // Interpolate shares for missing periods.
     SectorUtils::fillMissingPeriodVectorInterpolated( mSubregionalPopulationShare );
@@ -211,4 +219,35 @@ void GCAMConsumer::accept( IVisitor* aVisitor, const int aPeriod ) const {
     BaseTechnology::accept( aVisitor, aPeriod );
 
     aVisitor->endVisitGCAMConsumer( this, aPeriod );
+}
+
+void GCAMConsumer::initTechVintageVector() {
+    const Modeltime* modeltime = scenario->getModeltime();
+    
+    vector<FilterStep*> collectStateSteps( 2, 0 );
+    collectStateSteps[ 0 ] = new FilterStep( "" );
+    collectStateSteps[ 1 ] = new FilterStep( "", DataFlags::ARRAY );
+    InitTechVintageVectorHelper helper( 0, modeltime->getmaxper() );
+    GCAMFusion<InitTechVintageVectorHelper, false, false, true> findTechVec( helper, collectStateSteps );
+    findTechVec.startFilter( this );
+    
+    // clean up GCAMFusion related memory
+    for( auto filterStep : collectStateSteps ) {
+        delete filterStep;
+    }
+}
+
+template<typename T>
+void GCAMConsumer::InitTechVintageVectorHelper::processData( T& aData ) {
+    // ignore
+}
+
+template<>
+void GCAMConsumer::InitTechVintageVectorHelper::processData<objects::TechVintageVector<double> >( objects::TechVintageVector<double>& aData ) {
+    TVHHelper<double>::initializeVector( mStartPeriod, mNumPeriodsActive, aData );
+}
+
+template<>
+void GCAMConsumer::InitTechVintageVectorHelper::processData<objects::TechVintageVector<Value> >( objects::TechVintageVector<Value>& aData ) {
+    TVHHelper<Value>::initializeVector( mStartPeriod, mNumPeriodsActive, aData );
 }
