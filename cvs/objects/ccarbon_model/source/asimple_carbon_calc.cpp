@@ -138,7 +138,9 @@ double ASimpleCarbonCalc::calc( const int aPeriod, const int aEndYear, const Car
             calcAboveGroundCarbonEmission( mCarbonStock[ year - 1 ], prevLand, currLand, getActualAboveGroundCarbonDensity( year ), year, aEndYear, currEmissionsAbove );
             calcBelowGroundCarbonEmission( prevCarbonBelow - currCarbonBelow, year, aEndYear, currEmissionsBelow );
 
-            mCarbonStock[ year ] = mCarbonStock[ year - 1 ] - ( mTotalEmissionsAbove[ year ] + currEmissionsAbove[ year ] );
+            if( aCalcMode != eReverseCalc ) {
+                mCarbonStock[ year ] = mCarbonStock[ year - 1 ] - ( mTotalEmissionsAbove[ year ] + currEmissionsAbove[ year ] );
+            }
             prevCarbonBelow = currCarbonBelow;
         }
         

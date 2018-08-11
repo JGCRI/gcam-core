@@ -406,9 +406,11 @@ void NodeCarbonCalc::calc( const int aPeriod, const int aEndYear, const ICarbonC
         for( year = prevModelYear + 1; year <= modelYear; ++year ) {
             // Initialize the carbon stock in this year to the carbon stock of the previous year minus
             // any emissions that have already been allocated in this year from earlier year land decisions.
-            for( size_t i = 0; i < mCarbonCalcs.size(); ++i ) {
-                mCarbonCalcs[ i ]->mCarbonStock[ year ] = mCarbonCalcs[ i ]->mCarbonStock[ year - 1 ] -
-                    ( mCarbonCalcs[ i ]->mTotalEmissionsAbove[ year ] + (*currEmissionsAbove[ i ])[ year ] );
+            if( aCalcMode != ICarbonCalc::eReverseCalc ) {
+                for( size_t i = 0; i < mCarbonCalcs.size(); ++i ) {
+                    mCarbonCalcs[ i ]->mCarbonStock[ year ] = mCarbonCalcs[ i ]->mCarbonStock[ year - 1 ] -
+                        ( mCarbonCalcs[ i ]->mTotalEmissionsAbove[ year ] + (*currEmissionsAbove[ i ])[ year ] );
+                }
             }
             // Calculate emissions from changes in land that was removed/added from outside of this node.
             for( size_t i = 0; i < mCarbonCalcs.size(); ++i ) {
@@ -419,7 +421,9 @@ void NodeCarbonCalc::calc( const int aPeriod, const int aEndYear, const ICarbonC
                                                                   currLand[ i ], aboveGroundCarbonDensity[ i ], year, aEndYear,
                                                                   *currEmissionsAbove[ i ] );
                 mCarbonCalcs[ i ]->calcBelowGroundCarbonEmission( carbonDiffBelowPerYear, year, aEndYear, *currEmissionsBelow[ i ] );
-                mCarbonCalcs[ i ]->mCarbonStock[ year ] -= (*currEmissionsAbove[ i ])[ year ] - prevEmiss;
+                if( aCalcMode != ICarbonCalc::eReverseCalc ) {
+                    mCarbonCalcs[ i ]->mCarbonStock[ year ] -= (*currEmissionsAbove[ i ])[ year ] - prevEmiss;
+                }
             }
             // Calculate emissions from changes in land internal to this node.  Carbon can move internally
             // to the node with out emissions however if there is a difference in carbon densities then
@@ -441,12 +445,16 @@ void NodeCarbonCalc::calc( const int aPeriod, const int aEndYear, const ICarbonC
                     mCarbonCalcs[ i ]->calcBelowGroundCarbonEmission( carbonDiffBelow, year, aEndYear, *currEmissionsBelow[ i ] );
                     // Adjust carbon stock to include the carbon being moved in minus any emissions because of moving
                     // the carbon.
-                    mCarbonCalcs[ i ]->mCarbonStock[ year ] += currCarbonMove - ( (*currEmissionsAbove[ i ])[ year ] - emissBeforeMove );
+                    if( aCalcMode != ICarbonCalc::eReverseCalc ) {
+                        mCarbonCalcs[ i ]->mCarbonStock[ year ] += currCarbonMove - ( (*currEmissionsAbove[ i ])[ year ] - emissBeforeMove );
+                    }
                 }
                 else {
                     // Remove the carbon that is changing land type from the carbon stock without
                     // emissions.
-                    mCarbonCalcs[ i ]->mCarbonStock[ year ] -= internalCarbonAboveMovedByYear[ i ];
+                    if( aCalcMode != ICarbonCalc::eReverseCalc ) {
+                        mCarbonCalcs[ i ]->mCarbonStock[ year ] -= internalCarbonAboveMovedByYear[ i ];
+                    }
                 }
                 prevLand[ i ] = currLand[ i ];
             }
