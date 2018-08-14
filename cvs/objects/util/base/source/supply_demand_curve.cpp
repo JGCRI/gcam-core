@@ -150,13 +150,13 @@ void SupplyDemandCurve::calculatePoints( const int aNumPoints, SolutionInfoSet& 
 *
 * This function prints the vector of SupplyDemandPoints created during the calculatePoints function.
 * It creates a copy of points and sorts them before printing them. This was done so that the printing function
-* could remain constant. The points are printed to the Logger passed as an argument.
+* could remain constant. The points are printed to the ostream passed as an argument.
 *
 * \param sdLog Logger to print the points to.
 */
-void SupplyDemandCurve::print( ILogger& aSDLog ) const {
-    aSDLog << "Supply and Demand curves for: " << mMarketName << endl;
-    aSDLog << "Price,Demand,Supply,Fx" << endl;
+void SupplyDemandCurve::print( std::ostream& aOut ) const {
+    aOut << "Supply and Demand curves for: " << mMarketName << endl;
+    aOut << "Price,Demand,Supply,Fx" << endl;
 
     // Create a copy of the points vector so that we can sort it while keeping the print function constant.
     // Since the vector contains pointers to SupplyDemandPoints, this is relatively inexpensive.
@@ -165,11 +165,31 @@ void SupplyDemandCurve::print( ILogger& aSDLog ) const {
     // Sort the SupplyDemandPoint object pointers in the pointsCopy vector by increasing price by using the LesserPrice binary operator. 
     sort( pointsCopy.begin(), pointsCopy.end(), SupplyDemandPoint::LesserPrice() );
     for ( vector<SupplyDemandPoint*>::const_iterator i = pointsCopy.begin(); i != pointsCopy.end(); i++ ) {
-        ( *i )->print( aSDLog );
+        ( *i )->print( aOut );
     }
 
-    aSDLog << endl;
+    aOut << endl;
 }
+
+// Same as above but with period and market added in csv format
+void SupplyDemandCurve::print2( std::ostream& aOut, int period, bool printHeader ) const {
+    if ( printHeader )
+        aOut << "Market,Period,Price,Demand,Supply,Fx" << endl;
+    
+    // Create a copy of the points vector so that we can sort it while keeping the print function constant.
+    // Since the vector contains pointers to SupplyDemandPoints, this is relatively inexpensive.
+    vector<SupplyDemandPoint*> pointsCopy( mPoints );
+    
+    // Sort the SupplyDemandPoint object pointers in the pointsCopy vector by increasing price by using the LesserPrice binary operator.
+    sort( pointsCopy.begin(), pointsCopy.end(), SupplyDemandPoint::LesserPrice() );
+    for ( vector<SupplyDemandPoint*>::const_iterator i = pointsCopy.begin(); i != pointsCopy.end(); i++ ) {
+        aOut << mMarketName << "," << period << ",";
+        ( *i )->print( aOut );
+    }
+    
+    //aOut << endl;
+}
+
 
 //! Constructor
 SupplyDemandCurve::SupplyDemandPoint::SupplyDemandPoint( const double aPrice, const double aDemand, const double aSupply, const double aFx )
@@ -191,9 +211,9 @@ double SupplyDemandCurve::SupplyDemandPoint::getPrice() const {
 *
 * Print the point in a csv format to the specified logger.
 *
-* \param sdLog The Logger to print to.
+* \param aOut The ostream to print to.
 */
-void SupplyDemandCurve::SupplyDemandPoint::print( ILogger& aSDLog ) const {
-    aSDLog << mPrice << "," << mDemand << "," << mSupply << "," << mFx << endl;
+void SupplyDemandCurve::SupplyDemandPoint::print( std::ostream& aOut ) const {
+    aOut << mPrice << "," << mDemand << "," << mSupply << "," << mFx << endl;
 }
 

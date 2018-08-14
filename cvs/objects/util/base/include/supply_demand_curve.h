@@ -67,8 +67,9 @@ public:
     ~SupplyDemandCurve();
     void calculatePoints( const int aNumPoints, SolutionInfoSet& aSolnSet, World* aWorld,
                           Marketplace* aMarketplace, const int aPeriod );
-   void print( ILogger& aSDLog ) const;
-
+    void print( std::ostream& aOut ) const;
+    void print2( std::ostream& aOut, int period, bool printHeader ) const;
+    
 private:
     //! Index to the market which the curve is calculating for.
     int mMarketNumber;
@@ -88,7 +89,7 @@ class SupplyDemandPoint
 public:
    SupplyDemandPoint( const double aPrice, const double aDemand, const double aSupply, const double aFx );
    double getPrice() const;
-   void print( ILogger& aSDLog ) const;
+   void print( std::ostream& aOut ) const;
    
 /*!
 * \brief Binary comparison operator used for SavePoint pointers to order by increasing price. 
