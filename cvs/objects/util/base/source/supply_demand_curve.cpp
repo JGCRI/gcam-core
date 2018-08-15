@@ -172,8 +172,8 @@ void SupplyDemandCurve::print( std::ostream& aOut ) const {
 }
 
 // Same as above but with period and market added in csv format
-void SupplyDemandCurve::print2( std::ostream& aOut, int period, bool printHeader ) const {
-    if ( printHeader )
+void SupplyDemandCurve::printCSV( std::ostream& aOut, int period, bool aPrintHeader ) const {
+    if ( aPrintHeader )
         aOut << "Market,Period,Price,Demand,Supply,Fx" << endl;
     
     // Create a copy of the points vector so that we can sort it while keeping the print function constant.

@@ -68,7 +68,7 @@ public:
     void calculatePoints( const int aNumPoints, SolutionInfoSet& aSolnSet, World* aWorld,
                           Marketplace* aMarketplace, const int aPeriod );
     void print( std::ostream& aOut ) const;
-    void print2( std::ostream& aOut, int period, bool printHeader ) const;
+    void printCSV( std::ostream& aOut, int period, bool aPrintHeader ) const;
     
 private:
     //! Index to the market which the curve is calculating for.

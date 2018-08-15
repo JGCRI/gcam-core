@@ -17,9 +17,7 @@
 #include "marketplace/include/market.h"
 #include "marketplace/include/marketplace.h"
 
-using namespace std;
 using namespace xercesc;
-
 
 #define DEFAULT_NUM_POINTS 10
 
@@ -98,15 +96,15 @@ void SupplyDemandCurveSaver::toInputXML( ostream& aOut, Tabs* aTabs ) const {
 /*! \brief Find and print supply-demand curves for designated market.
 *
 * This function creates a SupplyDemandCurve for the designated market by calculating
-* the supply and demand at a series of prices, and to print the resulting curve.
+* the supply and demand at a series of prices, and prints the resulting curve.
 *
 * \author Rich Plevin (based on SolutionInfoSet::findAndPrintSD)
-* \param aWorld The world to use to calculate new points.
-* \param aMarketplace The marketplace to use to calculate new points.
-* \param aPeriod Period for which to print supply-demand curves.
 * \param aOut Output stream to print the curves to.
+* \param aScenario the scenario to use to find the marketplace
+* \param aPeriod Period for which to print supply-demand curves.
+* \param aPrintHeader whether to print the CSV header (column names)
 */
-void SupplyDemandCurveSaver::printSD( ostream& aOut, Scenario* aScenario, const int aPeriod, bool printHeader ) {
+void SupplyDemandCurveSaver::printCSV( ostream& aOut, Scenario* aScenario, const int aPeriod, bool aPrintHeader ) {
   World* world = aScenario->getWorld();
   Marketplace* marketplace = scenario->getMarketplace();
   SolutionInfoSet solnInfoSet = SolutionInfoSet( marketplace );
@@ -126,7 +124,7 @@ void SupplyDemandCurveSaver::printSD( ostream& aOut, Scenario* aScenario, const 
     SupplyDemandCurve sdCurve( market_index, mName );
     
     sdCurve.calculatePoints( mNumPoints, solnInfoSet, world, marketplace, aPeriod );
-    sdCurve.print2( aOut, aPeriod, printHeader );
+    sdCurve.printCSV( aOut, aPeriod, aPrintHeader );
   }
 }
 
@@ -160,7 +158,7 @@ void SupplyDemandCurveSaver::calcFeedbacksAfterPeriod( Scenario* aScenario,
   AutoOutputFile outFile(fileName, mOpenMode );
     
   // First time through (before resetting open mode to append) write header, too.
-  printSD( *outFile, scenario, aPeriod, mOpenMode == std::ios_base::out);
+  printCSV( *outFile, scenario, aPeriod, mOpenMode == std::ios_base::out);
 
   mOpenMode = std::ios_base::app;   // after first call, append
 }

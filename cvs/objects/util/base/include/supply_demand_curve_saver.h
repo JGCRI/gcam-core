@@ -41,7 +41,7 @@ public:
 					   const IClimateModel* aClimateModel,
 					   const int aPeriod );
 
-    virtual void printSD( ostream& aOut, Scenario* aScenario, const int aPeriod, bool printHeader );
+    virtual void printCSV( ostream& aOut, Scenario* aScenario, const int aPeriod, bool aPrintHeader );
 
     virtual int getMarketIndex(const string& aMarketName, vector<SolutionInfo> &aSolvable );
 
