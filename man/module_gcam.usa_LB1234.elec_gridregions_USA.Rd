@@ -21,7 +21,7 @@ The corresponding file in the original data system was \code{LB1234.elec_gridreg
 Calculate electricity fuel consumption and electricity generation by grid region.
 }
 \details{
-By state, calculates electricity fuel consumption, electricity generation, and inputs and outputs of net ownuse.
+By grid region, calculates electricity fuel consumption and electricity generation.
 }
 \author{
 MTB August 2018

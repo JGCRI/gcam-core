@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L1234.in_EJ_grid_elec_F}, \code{L1234.out_EJ_grid_elec_F}.
 #' The corresponding file in the original data system was \code{LB1234.elec_gridregions.R} (gcam-usa level1).
-#' @details By state, calculates electricity fuel consumption, electricity generation, and inputs and outputs of net ownuse.
+#' @details By grid region, calculates electricity fuel consumption and electricity generation.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
