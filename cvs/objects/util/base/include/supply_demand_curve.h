@@ -65,8 +65,14 @@ class SupplyDemandCurve {
 public:
     SupplyDemandCurve( int aMarketNumber, const std::string& aMarketName );
     ~SupplyDemandCurve();
+
+    void calculatePoints( const std::vector<double>& aPrices, SolutionInfoSet& aSolnSet, World* aWorld,
+                          Marketplace* aMarketplace, const int aPeriod, bool aIsPricesRelative );
+
+    // Legacy version
     void calculatePoints( const int aNumPoints, SolutionInfoSet& aSolnSet, World* aWorld,
                           Marketplace* aMarketplace, const int aPeriod );
+    
     void print( std::ostream& aOut ) const;
     void printCSV( std::ostream& aOut, int period, bool aPrintHeader ) const;
     

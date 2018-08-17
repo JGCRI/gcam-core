@@ -21,25 +21,25 @@ public:
     SupplyDemandCurveSaver();
     virtual ~SupplyDemandCurveSaver();
     
-    static const std::string& getXMLNameStatic();
+    static const string& getXMLNameStatic();
     
     // INamed methods
-    virtual const std::string& getName() const;
+    virtual const string& getName() const;
     
     // IParsable methods
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
     
     // IRoundTrippable methods
-    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
+    virtual void toInputXML( ostream& aOut, Tabs* aTabs ) const;
     
     // IModelFeedbackCalc methods
     virtual void calcFeedbacksBeforePeriod( Scenario* aScenario,
-					    const IClimateModel* aClimateModel,
-					    const int aPeriod );
+                                            const IClimateModel* aClimateModel,
+                                            const int aPeriod );
     
     virtual void calcFeedbacksAfterPeriod( Scenario* aScenario,
-					   const IClimateModel* aClimateModel,
-					   const int aPeriod );
+    					                   const IClimateModel* aClimateModel,
+                                           const int aPeriod );
 
     virtual void printCSV( ostream& aOut, Scenario* aScenario, const int aPeriod, bool aPrintHeader );
 
@@ -49,8 +49,9 @@ protected:
     //! The name of this feedback
     std::string mName;
     
-    //! The number of points to compute
-    int mNumPoints;
+    bool mIsPricesRelative;
+    
+    std::vector<double>mPrices;
 
     static std::ios_base::openmode mOpenMode;
 };

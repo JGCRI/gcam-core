@@ -17,17 +17,14 @@
 #include "marketplace/include/market.h"
 #include "marketplace/include/marketplace.h"
 
+using namespace std;
 using namespace xercesc;
 
-#define DEFAULT_NUM_POINTS 10
-
-SupplyDemandCurveSaver::SupplyDemandCurveSaver() : mNumPoints( DEFAULT_NUM_POINTS )
-{
-  
+SupplyDemandCurveSaver::SupplyDemandCurveSaver() : mIsPricesRelative(true) {
 }
 
 // First open uses "out" mode to overwrite; subsequent calls append
-std::ios_base::openmode SupplyDemandCurveSaver::mOpenMode = std::ios_base::out;
+ios_base::openmode SupplyDemandCurveSaver::mOpenMode = ios_base::out;
 
 SupplyDemandCurveSaver::~SupplyDemandCurveSaver() {
 }
@@ -46,7 +43,9 @@ const string& SupplyDemandCurveSaver::getName() const {
 /* Example XML:
 <scenario>
    <supply-demand-curve-saver name="USAbiomass">
-      <num-points>10</num-points>
+      <price>0.995</price>
+      <price>1.000</price>
+      <price>1.005</price>
    </supply-demand-curve-saver>
 </scenario>
  */
@@ -69,8 +68,13 @@ bool SupplyDemandCurveSaver::XMLParse( const DOMNode* aNode ) {
         if ( nodeName == XMLHelper<void>::text() ) {
             continue;
         }
-        else if ( nodeName == "num-points" ) {
-            mNumPoints = XMLHelper<int>::getValue( curr );
+        else if ( nodeName == "is-price-relative" ) {
+            // defaults to true
+            mIsPricesRelative = XMLHelper<bool>::getValue( curr );
+        }
+        else if ( nodeName == "price" ) {
+          double price = XMLHelper<double>::getValue( curr );	  
+          mPrices.push_back(price);
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -87,7 +91,9 @@ void SupplyDemandCurveSaver::toInputXML( ostream& aOut, Tabs* aTabs ) const {
 
     aOut << "<" << getXMLNameStatic() << " name=\"" << mName << "\">" << endl;
 
-    XMLWriteElement( mNumPoints, "num-points", aOut, aTabs );
+    for ( int i = 0; i < mPrices.size(); i++ ) {
+          XMLWriteElement( mPrices[ i ], "price", aOut, aTabs );
+    }
     
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
@@ -104,16 +110,13 @@ void SupplyDemandCurveSaver::toInputXML( ostream& aOut, Tabs* aTabs ) const {
 * \param aPeriod Period for which to print supply-demand curves.
 * \param aPrintHeader whether to print the CSV header (column names)
 */
-void SupplyDemandCurveSaver::printCSV( ostream& aOut, Scenario* aScenario, const int aPeriod, bool aPrintHeader ) {
+void SupplyDemandCurveSaver::printCSV( ostream& aOut, Scenario* aScenario, const int aPeriod, bool aPrintHeader ) {   
   World* world = aScenario->getWorld();
   Marketplace* marketplace = scenario->getMarketplace();
   SolutionInfoSet solnInfoSet = SolutionInfoSet( marketplace );
   SolutionInfoParamParser solnParams;
   solnInfoSet.init( aPeriod, 0.001, 0.001, &solnParams );
   vector<SolutionInfo> solvable = solnInfoSet.getSolvableSet();
-  
-  if ( solvable.size() == 0 )	// occurs in year 1975
-    return;
 
   int market_index = getMarketIndex(mName, solvable);
 
@@ -123,19 +126,19 @@ void SupplyDemandCurveSaver::printCSV( ostream& aOut, Scenario* aScenario, const
   } else {
     SupplyDemandCurve sdCurve( market_index, mName );
     
-    sdCurve.calculatePoints( mNumPoints, solnInfoSet, world, marketplace, aPeriod );
+    sdCurve.calculatePoints( mPrices, solnInfoSet, world, marketplace, aPeriod, mIsPricesRelative );
     sdCurve.printCSV( aOut, aPeriod, aPrintHeader );
   }
 }
 
-/*! \brief Find the given marketName in the given vector of solvable markets and return it's index, or -1 if not found.
+/*! \brief Find the given marketName in the solvable markets and return its index, if found, else -1.
  */
 int SupplyDemandCurveSaver::getMarketIndex(const string& marketName, vector<SolutionInfo> &aSolvable ) {
-  for ( int i = 0; i < aSolvable.size(); ++i ) {
-    if ( aSolvable[ i ].getName() == marketName )
-      return i;
-  }
-  return -1;
+    for ( int i = 0; i < aSolvable.size(); ++i ) {
+        if ( aSolvable[ i ].getName() == marketName )
+            return i;
+    }
+    return -1;
 }
 
 void SupplyDemandCurveSaver::calcFeedbacksBeforePeriod( Scenario* aScenario,
@@ -149,16 +152,23 @@ void SupplyDemandCurveSaver::calcFeedbacksAfterPeriod( Scenario* aScenario,
 						       const IClimateModel* aClimateModel,
 						       const int aPeriod )
 {
-  if ( aPeriod == 0 )	// Nothing to do for initial period
-    return;
+    const Configuration* conf = Configuration::getInstance();
+    string confVarName = "supplyDemandCurves";
+
+     if ( ! conf->shouldWriteFile( confVarName ) )
+        return;
+
+  // supply and demand curves are useless for calibration periods, so skip them
+    if ( aPeriod <= aScenario->getModeltime()->getFinalCalibrationPeriod() )
+        return;
   
-  const Configuration* conf = Configuration::getInstance();
-  std::string fileName = conf->getFile( "supplyDemandCurves", "supplyDemandCurves.csv");
+  string fileName = conf->getFile( confVarName, "supplyDemandCurves.csv");
   
   AutoOutputFile outFile(fileName, mOpenMode );
     
   // First time through (before resetting open mode to append) write header, too.
-  printCSV( *outFile, scenario, aPeriod, mOpenMode == std::ios_base::out);
+  bool printHeader = (mOpenMode == ios_base::out);
+  printCSV( *outFile, scenario, aPeriod, printHeader);
 
-  mOpenMode = std::ios_base::app;   // after first call, append
+  mOpenMode = ios_base::app;   // after first call, append
 }

@@ -70,13 +70,73 @@ SupplyDemandCurve::~SupplyDemandCurve() {
     }
 }
 
-/*! \brief Calculate given number of supply and demand points.
+/*! \brief Calculate supply and demand points for the given vector of prices.
 *
 * This function first determines a series of price ratios to use to determine the prices to 
 * create SupplyDemandPoints for. It then saves the original marketplace information, and perturbs the price
 * as specified by the price ratios. Using this new perturbed price, it call World::Calc to determine supply and 
-* demand for the market. It saves that point for printing later, and continues to perform this process for each price.
-* Finally it restores the original market information.
+* demand for the given market. It saves that point for printing later, and continues to perform this process 
+* for each price. Finally it restores the original market information.
+*
+* \param aPrices The vector of prices at which to to calculate.
+* \param aSolnSet The solution set to interact with markets through.
+* \param aWorld The World object to use for World::calc
+* \param aMarketplace The marketplace to use to store and restore information.
+* \param aPeriod The period to perform the calculations on.
+* \param aIsPricesRelative If true, prices are interpreted as relative to the market clearing price.
+*/
+void SupplyDemandCurve::calculatePoints( const std::vector<double>& aPrices, SolutionInfoSet& aSolnSet, World* aWorld,
+                                         Marketplace* aMarketplace, const int aPeriod, bool aIsPricesRelative )
+{
+    size_t nsolv = aSolnSet.getNumSolvable();
+    using UBVECTOR = boost::numeric::ublas::vector<double>;
+    UBVECTOR x( nsolv );
+    UBVECTOR fx( nsolv );
+    int numPrices = aPrices.size();
+    std::vector<double> scaledPrices(numPrices, 0);
+    
+    for( size_t i = 0; i < nsolv; ++i ) {
+        x[i] = aSolnSet.getSolvable( i ).getPrice();
+    }
+
+    // Save raw price for given market.
+    double actualPrice = x[ mMarketNumber ];      // before scaling
+
+    // This is the closure that will evaluate the ED function
+    LogEDFun F(aSolnSet, aWorld, aMarketplace, aPeriod, false);
+    F.scaleInitInputs( x );
+
+    double scaledPrice = x[ mMarketNumber ];    // after scaling
+    double scalingFactor = (aIsPricesRelative ? scaledPrice : scaledPrice / actualPrice);
+
+    cout << "Market " << mMarketNumber << ": Actual price: " << actualPrice << " Scaled price: " << scaledPrice << " Scaling factor: " << scalingFactor << endl;
+    
+    // Call F( x ), store the result in fx
+    F(x, fx);
+    
+    // Have the state manage save the current state as a "clean" state.
+    scenario->getManageStateVariables()->setPartialDeriv(true);
+    
+    // iterate through the prices and determine supply and demand.
+    for ( int i = 0; i < numPrices; i++ ) {
+        F.partial(mMarketNumber);
+        
+        x[ mMarketNumber ] = aPrices[ i ] * scalingFactor;
+        
+        F(x, fx, mMarketNumber);
+        
+        SolutionInfo s = aSolnSet.getSolvable( mMarketNumber );
+        mPoints.push_back( new SupplyDemandPoint( s.getPrice(), s.getDemand(), s.getSupply(), fx[ mMarketNumber ] ) );
+    }
+    
+    // restore state information for summary.
+    F.partial(-1);
+}
+
+/*! \brief Calculate given number of supply and demand points.
+*
+* Computes supply and demand points for the given number of prices, spaced evenly in the range [0, 10].
+* Although this legacy approach is of dubious value, it's included here for backward compatibility.
 *
 * \param aNumPoints The number of points to calculate.
 * \param aSolnSet The solution set to interact with markets through.
@@ -85,65 +145,22 @@ SupplyDemandCurve::~SupplyDemandCurve() {
 * \param aPeriod The period to perform the calculations on.
 * \todo Un-hardcode the prices. 
 */
-
 void SupplyDemandCurve::calculatePoints( const int aNumPoints, SolutionInfoSet& aSolnSet, World* aWorld,
                                          Marketplace* aMarketplace, const int aPeriod )
 {
-    vector<double> priceMults;
+    vector<double>prices;
+    double minPrice = 0.0;
+    double maxPrice = 10.0;
+    double increment = maxPrice / (aNumPoints - 1);
 
-    // Determine price ratios.
-    const int middle = static_cast<int>( floor( double( aNumPoints ) / double( 2 ) ) );
+    for (double price = minPrice; price < maxPrice; price += increment)
+        prices.push_back(price);
 
-    for( int pointNumber = 0; pointNumber < aNumPoints; pointNumber++ ) {
-
-        if( pointNumber < middle ) {
-            priceMults.push_back( 1 - double( 1 ) / double( middle - abs( middle - pointNumber ) + 2 ) );
-        }
-        else if( pointNumber == middle ) {
-            priceMults.push_back( 1 );
-        }
-        else {
-            priceMults.push_back( 1 + double( 1 ) / double( middle - abs( middle - pointNumber ) + 2 ) );
-        }
-    }
+    // ensure final price is included (since summing increments may be inexact)
+    prices.push_back(maxPrice);
     
-    size_t nsolv = aSolnSet.getNumSolvable();
-    using UBVECTOR = boost::numeric::ublas::vector<double>;
-    UBVECTOR x( nsolv ), fx( nsolv );
-    
-    for( size_t i = 0; i < nsolv; ++i ) {
-        x[i] = aSolnSet.getSolvable( i ).getPrice();
-    }
-    
-    // double basePrice = x[ mMarketNumber ];
-
-    // This is the closure that will evaluate the ED function
-    LogEDFun F(aSolnSet, aWorld, aMarketplace, aPeriod, false);
-    F.scaleInitInputs( x );
-    
-    // Call F( x ), store the result in fx
-    F(x,fx);
-    // Have the state manage save the current state as a "clean" state.
-    scenario->getManageStateVariables()->setPartialDeriv(true);
-
-    // iterate through the points and determine supply and demand.
-    for ( int pointNumber2 = 0; pointNumber2 < aNumPoints; pointNumber2++ ) {
-        
-        F.partial(mMarketNumber);
-        // Note x is a scaled price
-        // x[ mMarketNumber ] = priceMults[ pointNumber2 ] * basePrice;
-        x[ mMarketNumber ] = pointNumber2 * ( double( 10 ) / double( aNumPoints - 1 ) );
-        F(x, fx, mMarketNumber);
-
-        mPoints.push_back( new SupplyDemandPoint( aSolnSet.getSolvable( mMarketNumber ).getPrice(),
-                                                  aSolnSet.getSolvable( mMarketNumber ).getDemand(),
-                                                  aSolnSet.getSolvable( mMarketNumber ).getSupply(),
-                                                  fx[ mMarketNumber ] ) );
-
-    } // Completed iterating through all price points.
-
-    // restore state information for summary.
-    F.partial(-1);
+    bool isRelative = false;
+    calculatePoints( prices, aSolnSet, aWorld, aMarketplace, aPeriod, isRelative );
 }
 
 /*! \brief Print the supply demand curve.
