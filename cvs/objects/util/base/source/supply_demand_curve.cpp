@@ -109,8 +109,6 @@ void SupplyDemandCurve::calculatePoints( const std::vector<double>& aPrices, Sol
     double scaledPrice = x[ mMarketNumber ];    // after scaling
     double scalingFactor = (aIsPricesRelative ? scaledPrice : scaledPrice / actualPrice);
 
-    cout << "Market " << mMarketNumber << ": Actual price: " << actualPrice << " Scaled price: " << scaledPrice << " Scaling factor: " << scalingFactor << endl;
-    
     // Call F( x ), store the result in fx
     F(x, fx);
     
