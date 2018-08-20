@@ -15,7 +15,7 @@
 #' \code{L254.StubTranTechLoadFactor_USA}, \code{L254.StubTranTechCost_USA}, \code{L254.StubTranTechCoef_USA},
 #' \code{L254.PerCapitaBased_trn_USA}, \code{L254.PriceElasticity_trn_USA}, \code{L254.IncomeElasticity_trn_USA},
 #' \code{L254.StubTranTechCalInput_USA}, \code{L254.StubTranTechProd_nonmotor_USA}, \code{L254.StubTranTechCalInput_passthru_USA},
-#' \code{L254.BaseService_trn_USA}. The corresponding file in the
+#' \code{L254.BaseService_trn_USA, \code{L254.tranSubsectorFuelPref_USA_frt}}. The corresponding file in the
 #' original data system was \code{L254.transportation_USA.R} (gcam-usa level2).
 #' @details This chunk generates input files for transportation sector with generic information for supplysector,
 #' subsector and technologies, as well as calibrated inputs and outputs by the US states.
@@ -89,7 +89,8 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
              "L254.StubTranTechCalInput_USA",
              "L254.StubTranTechProd_nonmotor_USA",
              "L254.StubTranTechCalInput_passthru_USA",
-             "L254.BaseService_trn_USA"))
+             "L254.BaseService_trn_USA",
+             "L254.tranSubsectorFuelPref_USA_frt"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -99,7 +100,8 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       UCD_fuel <- UCD_sector <- UCD_technology <- calibrated.value <- coefficient <- loadFactor <-
       size.class <- state <- tranSubsector <- tranTechnology <- calibrated.value <- stub.technology <-
       output <- output_agg <- output_cum <- share.weight <- subs.share.weight <- share.weight.year <-
-      tech.share.weight <- calOutputValue <- energy.final.demand <- base.service <- . <- NULL
+      tech.share.weight <- calOutputValue <- energy.final.demand <- base.service <- year.fillout <-
+      fuelprefElasticity <- income.elasticity <- . <- NULL
 
     # Load required inputs
     UCD_techs <- get_data(all_data, "energy/mappings/UCD_techs") # Mapping file of transportation technology from the UC Davis report (Mishra et al. 2013)
@@ -319,6 +321,25 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       ungroup ->
       L254.BaseService_trn_USA
 
+    #Time for some QER hacks! First, set the income elasticity on international shipping to -1 in 2015, and 0 thereafter (???!!!)
+    #Then, reduce the demand for freight as a whole for 2010
+    #Reduce the demand for international aviation for 2010
+    L254.IncomeElasticity_trn_USA%>%
+      mutate(income.elasticity = case_when ((year == 2015 & energy.final.demand == "trn_shipping_intl")~ -1,
+                                            (year > 2015 & energy.final.demand == "trn_shipping_intl")~ 0,
+                                            (year > 2010 & energy.final.demand == "trn_freight")~ 0.5,
+                                            (year > 2010 & energy.final.demand == "trn_aviation_intl")~ 0.25,
+                                            TRUE ~ income.elasticity)) ->
+    L254.IncomeElasticity_trn_USA
+
+
+    #Then, set a fuel preference elasticity that causes trains and ships to turn into trucks
+    L254.tranSubsectorShrwtFllt_USA%>%
+      filter(supplysector == "trn_freight" & tranSubsector %in% c( "Domestic Ship", "Freight Rail" ))%>%
+      select(-share.weight)%>%
+      mutate(fuelprefElasticity = -0.5) ->
+    L254.tranSubsectorFuelPref_USA_frt
+
     # Produce outputs
     L254.DeleteSupplysector_USAtrn %>%
       add_title("Delect transportation supply sectors of the full USA region") %>%
@@ -519,6 +540,15 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
                      "L254.IncomeElasticity_trn") ->
       L254.IncomeElasticity_trn_USA
 
+    L254.tranSubsectorFuelPref_USA_frt %>%
+      add_title("Fuel preference elasticity of of trains and ships in the US states") %>%
+      add_units("Unitless") %>%
+      add_comments("Preference elasticy for trains and ships modified to favor trucks") %>%
+      add_legacy_name("L254.tranSubsectorFuelPref_USA_frt") %>%
+      add_precursors("gcam-usa/states_subregions",
+                     "L254.tranSubsectorShrwtFllt") ->
+      L254.tranSubsectorFuelPref_USA_frt
+
     L254.StubTranTechCalInput_USA %>%
       add_title("Calibrated energy consumption by all transportation stub technologies in the US states") %>%
       add_units("EJ") %>%
@@ -587,7 +617,8 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
                 L254.PriceElasticity_trn_USA,
                 L254.IncomeElasticity_trn_USA,
                 L254.StubTranTechCalInput_USA, L254.StubTranTechProd_nonmotor_USA,
-                L254.StubTranTechCalInput_passthru_USA, L254.BaseService_trn_USA)
+                L254.StubTranTechCalInput_passthru_USA, L254.BaseService_trn_USA,
+                L254.tranSubsectorFuelPref_USA_frt)
   } else {
     stop("Unknown command")
   }
