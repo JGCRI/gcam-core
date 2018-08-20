@@ -37,7 +37,7 @@ module_gcam.usa_LB1236.elec_load_segments_solver_2010_USA <- function(command, .
       intermediate.electricity <- intermediate.electricity.demand <- intermediate.electricity.time <- intermediate.electricity.tot <-
       subpeak.electricity <- subpeak.electricity.demand <- subpeak.electricity.time <- subpeak.electricity.tot <-
       peak.electricity <- peak.electricity.demand <- peak.electricity.time <- peak.electricity.tot <-
-      sector <- tot.generation <- grid.total <- grid_share_fuel <- tot_demand <- check <- pct_check <-
+      sector <- tot_generation <- grid_total <- grid_share_fuel <- tot_demand <- check <- pct_check <-
       supplysector <- subsector <- technology <- minicam.energy.input <- coefficient <-
       generation.x <- generation.x.x <- generation.y <- generation.y.y <-
       base_intermediate <- base_subpeak <- base_peak <- int_peak <- int_subpeak <- subpeak_peak <-
@@ -74,7 +74,7 @@ module_gcam.usa_LB1236.elec_load_segments_solver_2010_USA <- function(command, .
       rename(tot_generation = generation) -> L1236.out_EJ_grid_elec_F
 
     L1236.grid_elec_supply %>%
-      left_join(L1236.out_EJ_grid_elec_F, by = c("grid_region", "year", "fuel")) %>%
+      left_join_error_no_match(L1236.out_EJ_grid_elec_F, by = c("grid_region", "year", "fuel")) %>%
       select(grid_region, segment, fuel, year, tot_generation, fraction, generation ) -> L1236.grid_elec_supply
 
     L1236.segment_list <- unique(elecS_horizontal_to_vertical_map$horizontal_segment)
@@ -142,13 +142,13 @@ module_gcam.usa_LB1236.elec_load_segments_solver_2010_USA <- function(command, .
         rename (tot_demand = generation) -> L1236.grid_elec_demand
 
       L1236.grid_check %>%
-        left_join(L1236.grid_elec_demand, by = c("grid_region","year")) %>%
-        left_join(elecS_horizontal_to_vertical_map, by = c("segment" = "horizontal_segment")) %>%
-        left_join (L1236.elecS_demand_fraction , by = c("grid_region", "vertical_segment")) %>%
+        left_join_error_no_match(L1236.grid_elec_demand, by = c("grid_region","year")) %>%
+        left_join_error_no_match(elecS_horizontal_to_vertical_map, by = c("segment" = "horizontal_segment")) %>%
+        left_join_error_no_match (L1236.elecS_demand_fraction , by = c("grid_region", "vertical_segment")) %>%
         mutate(vertical_segment_demand = tot_demand * demand_fraction) -> L1236.grid_elec_demand
 
       L1236.grid_check %>%
-        left_join(L1236.grid_elec_demand, by = c("grid_region", "segment", "year")) %>%
+        left_join_error_no_match(L1236.grid_elec_demand, by = c("grid_region", "segment", "year")) %>%
         select(grid_region, segment, year, generation.x, vertical_segment_demand) %>%
         rename(generation = generation.x) -> L1236.grid_check
 
@@ -165,28 +165,28 @@ module_gcam.usa_LB1236.elec_load_segments_solver_2010_USA <- function(command, .
         filter(segment == L1236.segment_list[4] ) -> L1236.grid_check_peak
 
       L1236.grid_check_base %>%
-        left_join(L1236.elecS_horizontal_vertical, by = c("grid_region", "segment" = "horizontal_segment")) %>%
+        left_join_error_no_match(L1236.elecS_horizontal_vertical, by = c("grid_region", "segment" = "horizontal_segment")) %>%
         mutate(horizontal_segment_demand = vertical_segment_demand / off.peak.electricity) %>%
         mutate(base_intermediate = horizontal_segment_demand * intermediate.electricity) %>%
         mutate(base_subpeak = horizontal_segment_demand * subpeak.electricity) %>%
         mutate(base_peak = horizontal_segment_demand * peak.electricity) -> L1236.grid_check_base
 
       L1236.grid_check_int %>%
-        left_join(L1236.elecS_horizontal_vertical, by = c("grid_region", "segment" = "horizontal_segment")) %>%
-        left_join(L1236.grid_check_base, by = c("grid_region", "year")) %>%
+        left_join_error_no_match(L1236.elecS_horizontal_vertical, by = c("grid_region", "segment" = "horizontal_segment")) %>%
+        left_join_error_no_match(L1236.grid_check_base, by = c("grid_region", "year")) %>%
         mutate(horizontal_segment_demand = (vertical_segment_demand.x - base_intermediate) / intermediate.electricity.x ) %>%
         mutate(int_subpeak = horizontal_segment_demand * subpeak.electricity.x) %>%
         mutate(int_peak = horizontal_segment_demand * peak.electricity.x) -> L1236.grid_check_int
 
       L1236.grid_check_subpeak %>%
-        left_join(L1236.elecS_horizontal_vertical, by = c("grid_region", "segment" = "horizontal_segment")) %>%
-        left_join(L1236.grid_check_int, by = c("grid_region", "year")) %>%
+        left_join_error_no_match(L1236.elecS_horizontal_vertical, by = c("grid_region", "segment" = "horizontal_segment")) %>%
+        left_join_error_no_match(L1236.grid_check_int, by = c("grid_region", "year")) %>%
         mutate(horizontal_segment_demand = (vertical_segment_demand - base_subpeak - int_subpeak) / subpeak.electricity) %>%
         mutate(subpeak_peak = horizontal_segment_demand * peak.electricity) -> L1236.grid_check_subpeak
 
       L1236.grid_check_peak %>%
-        left_join(L1236.elecS_horizontal_vertical, by = c("grid_region", "segment" = "horizontal_segment")) %>%
-        left_join(L1236.grid_check_subpeak, by = c("grid_region", "year")) %>%
+        left_join_error_no_match(L1236.elecS_horizontal_vertical, by = c("grid_region", "segment" = "horizontal_segment")) %>%
+        left_join_error_no_match(L1236.grid_check_subpeak, by = c("grid_region", "year")) %>%
         mutate(horizontal_segment_demand = (vertical_segment_demand.x.x - base_peak - int_peak - subpeak_peak) /
                  peak.electricity.x.x) ->  L1236.grid_check_peak
 
@@ -231,7 +231,7 @@ module_gcam.usa_LB1236.elec_load_segments_solver_2010_USA <- function(command, .
       rename(grid_total = tot_generation) -> L1236.grid_total
 
     L1236.out_EJ_grid_elec_F %>%
-      left_join(L1236.grid_total, by = c("grid_region", "sector", "year")) %>%
+      left_join_error_no_match(L1236.grid_total, by = c("grid_region", "sector", "year")) %>%
       mutate(grid_share_fuel = tot_generation/grid_total) -> L1236.out_EJ_grid_elec_F
 
     #Loop through each gridregion
@@ -564,7 +564,7 @@ module_gcam.usa_LB1236.elec_load_segments_solver_2010_USA <- function(command, .
       mutate(vertical_segment_demand = tot_demand * demand_fraction) -> L1236.grid_elec_demand
 
     L1236.grid_check %>%
-      left_join(L1236.grid_elec_demand, by = c("grid_region", "segment", "year")) %>%
+      left_join_error_no_match(L1236.grid_elec_demand, by = c("grid_region", "segment", "year")) %>%
       select(grid_region, segment, year, generation.x, vertical_segment_demand) %>%
       rename(generation = generation.x) -> L1236.grid_check
 
@@ -581,28 +581,28 @@ module_gcam.usa_LB1236.elec_load_segments_solver_2010_USA <- function(command, .
       filter(segment == L1236.segment_list[4] ) -> L1236.grid_check_peak
 
     L1236.grid_check_base %>%
-      left_join(L1236.elecS_horizontal_vertical, by = c("grid_region", "segment" = "horizontal_segment")) %>%
+      left_join_error_no_match(L1236.elecS_horizontal_vertical, by = c("grid_region", "segment" = "horizontal_segment")) %>%
       mutate(horizontal_segment_demand = vertical_segment_demand/off.peak.electricity) %>%
       mutate(base_intermediate = horizontal_segment_demand*intermediate.electricity) %>%
       mutate(base_subpeak = horizontal_segment_demand*subpeak.electricity) %>%
       mutate(base_peak = horizontal_segment_demand*peak.electricity) -> L1236.grid_check_base
 
     L1236.grid_check_int %>%
-      left_join(L1236.elecS_horizontal_vertical, by = c("grid_region", "segment" = "horizontal_segment")) %>%
-      left_join(L1236.grid_check_base, by = c("grid_region", "year")) %>%
+      left_join_error_no_match(L1236.elecS_horizontal_vertical, by = c("grid_region", "segment" = "horizontal_segment")) %>%
+      left_join_error_no_match(L1236.grid_check_base, by = c("grid_region", "year")) %>%
       mutate(horizontal_segment_demand = (vertical_segment_demand.x - base_intermediate)/intermediate.electricity.x ) %>%
       mutate(int_subpeak = horizontal_segment_demand*subpeak.electricity.x) %>%
       mutate(int_peak = horizontal_segment_demand*peak.electricity.x) -> L1236.grid_check_int
 
     L1236.grid_check_subpeak %>%
-      left_join(L1236.elecS_horizontal_vertical, by = c("grid_region", "segment" = "horizontal_segment")) %>%
-      left_join(L1236.grid_check_int, by = c("grid_region", "year")) %>%
+      left_join_error_no_match(L1236.elecS_horizontal_vertical, by = c("grid_region", "segment" = "horizontal_segment")) %>%
+      left_join_error_no_match(L1236.grid_check_int, by = c("grid_region", "year")) %>%
       mutate(horizontal_segment_demand = (vertical_segment_demand - base_subpeak - int_subpeak)/subpeak.electricity) %>%
       mutate(subpeak_peak = horizontal_segment_demand*peak.electricity) -> L1236.grid_check_subpeak
 
     L1236.grid_check_peak %>%
-      left_join(L1236.elecS_horizontal_vertical, by = c("grid_region", "segment" = "horizontal_segment")) %>%
-      left_join(L1236.grid_check_subpeak, by = c("grid_region", "year")) %>%
+      left_join_error_no_match(L1236.elecS_horizontal_vertical, by = c("grid_region", "segment" = "horizontal_segment")) %>%
+      left_join_error_no_match(L1236.grid_check_subpeak, by = c("grid_region", "year")) %>%
       mutate(horizontal_segment_demand = (vertical_segment_demand.x.x - base_peak - int_peak - subpeak_peak) /
                peak.electricity.x.x) ->  L1236.grid_check_peak
 
