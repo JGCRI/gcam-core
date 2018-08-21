@@ -24,7 +24,7 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
              FILE = "aglu/FAO/FAO_ag_items_PRODSTAT",
              FILE = "aglu/FAO/FAO_ag_CROSIT",
              "L100.LDS_ag_HA_ha",
-             "L103.ag_Prod_Mt_R_C_Y_GLU"))
+             "L101.ag_Prod_Mt_R_C_Y_GLU"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L112.ag_YieldRatio_R_C_Ysy_GLU",
              "L112.ag_YieldRate_R_C_Y_GLU",
@@ -48,7 +48,7 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
     FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_ag_items_PRODSTAT")
     FAO_ag_CROSIT <- get_data(all_data, "aglu/FAO/FAO_ag_CROSIT")
     L100.LDS_ag_HA_ha <- get_data(all_data, "L100.LDS_ag_HA_ha")
-    L103.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L103.ag_Prod_Mt_R_C_Y_GLU")
+    L101.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L101.ag_Prod_Mt_R_C_Y_GLU")
 
     # Initial preparation of CROSIT database
     # Mapping file for CROSIT country name and country ID
@@ -271,7 +271,7 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
 
     # First, incomplete cases of ag commodities, use default yield change rates across 2010-2100
     # Get all GCAM region x commodity x GLU combinations in the production table
-    L103.ag_Prod_Mt_R_C_Y_GLU %>%
+    L101.ag_Prod_Mt_R_C_Y_GLU %>%
       select(GCAM_region_ID, GCAM_commodity, GLU) %>%
       unique() %>%
       # Join the yield change rates of all specified ag productivity years 2010-2050 (this creates NAs, use left_join instead of left_join_error_no_match)
@@ -289,7 +289,7 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
       ag_YieldRate_incomplete.cases
 
     # Second, complete cases of ag commodities, yield change rates based on FAO estimates for 2010-2050
-    L103.ag_Prod_Mt_R_C_Y_GLU %>%
+    L101.ag_Prod_Mt_R_C_Y_GLU %>%
       select(GCAM_region_ID, GCAM_commodity, GLU) %>%
       unique() %>%
       # Join the yield change rates for all specified ag productivity years from 2010 to 2050 (this creates NAs, use left_join instead of left_join_error_no_match)
@@ -316,7 +316,7 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
     # Do the same for biomass yield change rates
     # First, incomplete cases of biomass, use default yield change rates across 2010-2100
     # Get all combinations of region-GLU in ag production table
-    L103.ag_Prod_Mt_R_C_Y_GLU %>%
+    L101.ag_Prod_Mt_R_C_Y_GLU %>%
       select(GCAM_region_ID, GLU) %>%
       unique() %>%
       mutate(GCAM_commodity = "biomass") %>%
@@ -335,7 +335,7 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
       bio_YieldRate_incomplete.cases
 
     # Second, complete cases of biomass, yield change rates based on FAO estimates for 2010-2050
-    L103.ag_Prod_Mt_R_C_Y_GLU %>%
+    L101.ag_Prod_Mt_R_C_Y_GLU %>%
       select(GCAM_region_ID, GLU) %>%
       unique() %>%
       mutate(GCAM_commodity = "biomass") %>%
@@ -381,7 +381,7 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
       add_comments("Change rates beyond 2050 to 2100 (or when FAO estimates are missing) are based on default agriculture productivity change assumptions.") %>%
       add_legacy_name("L112.ag_YieldRate_R_C_Y_GLU") %>%
       add_precursors("aglu/A_defaultYieldRate",
-                     "L103.ag_Prod_Mt_R_C_Y_GLU") ->
+                     "L101.ag_Prod_Mt_R_C_Y_GLU") ->
       L112.ag_YieldRate_R_C_Y_GLU
 
     L112.bio_YieldRate_R_Y_GLU %>%
@@ -391,7 +391,7 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
       add_comments("Change rates beyond 2050 to 2100 (or when FAO estimates are missing) are based on default agriculture productivity change assumptions.") %>%
       add_legacy_name("L112.bio_YieldRate_R_Y_GLU") %>%
       add_precursors("aglu/A_defaultYieldRate",
-                     "L103.ag_Prod_Mt_R_C_Y_GLU") ->
+                     "L101.ag_Prod_Mt_R_C_Y_GLU") ->
       L112.bio_YieldRate_R_Y_GLU
 
     return_data(L112.ag_YieldRatio_R_C_Ysy_GLU, L112.ag_YieldRate_R_C_Y_GLU, L112.bio_YieldRate_R_Y_GLU)

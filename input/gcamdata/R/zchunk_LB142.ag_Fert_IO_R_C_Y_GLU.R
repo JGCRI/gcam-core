@@ -23,7 +23,7 @@ module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
              "L100.LDS_ag_prod_t",
              "L100.FAO_Fert_Cons_tN",
              "L100.FAO_Fert_Prod_tN",
-             "L103.ag_Prod_Mt_R_C_Y_GLU",
+             "L101.ag_Prod_Mt_R_C_Y_GLU",
              "L141.ag_Fert_Cons_MtN_ctry_crop"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L142.ag_Fert_Prod_MtN_ctry_Y",
@@ -43,7 +43,7 @@ module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
     L100.LDS_ag_prod_t <- get_data(all_data, "L100.LDS_ag_prod_t")
     L100.FAO_Fert_Cons_tN <- get_data(all_data, "L100.FAO_Fert_Cons_tN")
     L100.FAO_Fert_Prod_tN <- get_data(all_data, "L100.FAO_Fert_Prod_tN")
-    L103.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L103.ag_Prod_Mt_R_C_Y_GLU")
+    L101.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L101.ag_Prod_Mt_R_C_Y_GLU")
     L141.ag_Fert_Cons_MtN_ctry_crop <- get_data(all_data, "L141.ag_Fert_Cons_MtN_ctry_crop")
 
     # Compile N fertilizer production and consumption by country, and adjust country production so that production and consumption balance globally
@@ -129,14 +129,14 @@ module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
       summarise(Fert_Cons_MtN = sum(Fert_Cons_MtN)) %>%
       ungroup() %>%
       # Match in agricultural production by GCAM region / commodity / GLU in the base year; this creates NAs
-      left_join(filter(L103.ag_Prod_Mt_R_C_Y_GLU, year %in% aglu.BASE_YEAR_IFA), by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
+      left_join(filter(L101.ag_Prod_Mt_R_C_Y_GLU, year %in% aglu.BASE_YEAR_IFA), by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
       # Calculate unscaled input-output coefficients as unscaled fertilizer demands divided by agricultural production
       mutate(Fert_IO_unscaled = Fert_Cons_MtN / value,
              Fert_IO_unscaled = replace(Fert_IO_unscaled, Fert_IO_unscaled == Inf, 0)) %>%
       replace_na(list(Fert_IO_unscaled = 0)) %>%
       select(-year, -value, -Fert_Cons_MtN) %>%
       # Match these coefficients into historical agricultural production (right_join: same coefficients for all years)
-      right_join(L103.ag_Prod_Mt_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
+      right_join(L101.ag_Prod_Mt_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
       # Calculate unscaled fertilizer consumption by year as production multiply coefficients
       mutate(Fert_Cons_MtN_unscaled = value * Fert_IO_unscaled) ->
       L142.ag_Fert_Cons_MtN_R_C_Y_GLU
@@ -213,7 +213,7 @@ module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID",
                      "aglu/FAO/FAO_ag_items_PRODSTAT",
                      "L100.LDS_ag_prod_t",
-                     "L103.ag_Prod_Mt_R_C_Y_GLU",
+                     "L101.ag_Prod_Mt_R_C_Y_GLU",
                      "L141.ag_Fert_Cons_MtN_ctry_crop") ->
       L142.ag_Fert_IO_R_C_Y_GLU
 
