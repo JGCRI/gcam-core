@@ -35,7 +35,7 @@ and technology combinations from this table are repeated for each GCAM region an
 A_resbio_curves and then, in specified calibration years BASE_YEARS, replaced by fractions in  A_bio_frac_prod_R to form the table of
 Mill resbio supply curves for each region and year.
 
-For Agriculture Residue Biomass, each GCAM region-commodity-GLU combination in L103.ag_Prod_Mt_R_C_Y_GLU is converted to a
+For Agriculture Residue Biomass, each GCAM region-commodity-GLU combination in L101.ag_Prod_Mt_R_C_Y_GLU is converted to a
 region-supplySector-supplySubsector-ProductionTech combination, and parameters from L111.ag_resbio_R_C are joined and rounded
 for each region-supplySector. These parameters are then repeated for model years, irrigation types, and management technology levels.
 Finally, for each region-supplySector-supplySubsector-ProductionTech-irrigation-tech combination in this table, base

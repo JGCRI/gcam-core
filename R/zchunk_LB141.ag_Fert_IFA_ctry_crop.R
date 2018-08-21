@@ -23,7 +23,7 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
              FILE = "aglu/AGLU_ctry",
              "L100.LDS_ag_HA_ha",
              "L101.ag_HA_bm2_R_C_Y",
-             "L102.ag_HA_bm2_R_C_GLU",
+             "L101.ag_HA_bm2_R_C_GLU",
              FILE = "aglu/IFA2002_Fert_ktN",
              FILE = "aglu/IFA_Fert_ktN"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -44,7 +44,7 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
       AGLU_ctry <- get_data(all_data, "aglu/AGLU_ctry")
       L100.LDS_ag_HA_ha <- get_data(all_data, "L100.LDS_ag_HA_ha")
       L101.ag_HA_bm2_R_C_Y <- get_data(all_data, "L101.ag_HA_bm2_R_C_Y")
-      L102.ag_HA_bm2_R_C_GLU <- get_data(all_data, "L102.ag_HA_bm2_R_C_GLU")
+      L101.ag_HA_bm2_R_C_GLU <- get_data(all_data, "L101.ag_HA_bm2_R_C_GLU")
       IFA2002_Fert_ktN <- get_data(all_data, "aglu/IFA2002_Fert_ktN")
       IFA_Fert_ktN <- get_data(all_data, "aglu/IFA_Fert_ktN")
 
@@ -78,7 +78,7 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
       # First, calculate the FAO_LDS scaler for each region-commodity combination
       # Take the FAO Harvested area data in table L101.ag_HA_bm2_R_C_Y and get the average value for each
       # region-commodity combination over the Monfreda/LDS years = 1998-2002 default.
-      # Then Take the LDS harvested area data, L102.ag_HA_bm2_R_C_GLU, sum to the region-commodity level,
+      # Then Take the LDS harvested area data, L101.ag_HA_bm2_R_C_GLU, sum to the region-commodity level,
       # join it to the averaged FAO data and compute an FAO_LDS scaler as FAO/LDS:
       #
       # Take FAO HA data and calulate the average value over aglu.FAO_LDS_YEARS for each region-commodity combo:
@@ -88,7 +88,7 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
         summarise(FAO = mean(value)) ->
         L141.FAO
       # Take LDS HA data and aggregate to the GCAM region-commodity level:
-      L102.ag_HA_bm2_R_C_GLU %>%
+      L101.ag_HA_bm2_R_C_GLU %>%
         group_by(GCAM_region_ID, GCAM_commodity) %>%
         summarise(LDS = sum(value)) %>% ungroup() %>%
         # Join in the FAO data from the previous pipeline
@@ -275,7 +275,7 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
                        "aglu/AGLU_ctry",
                        "L100.LDS_ag_HA_ha",
                        "L101.ag_HA_bm2_R_C_Y",
-                       "L102.ag_HA_bm2_R_C_GLU",
+                       "L101.ag_HA_bm2_R_C_GLU",
                        "aglu/IFA2002_Fert_ktN",
                        "aglu/IFA_Fert_ktN") ->
         L141.ag_Fert_Cons_MtN_ctry_crop
