@@ -34,7 +34,6 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
     return(c("L101.ag_Food_Mt_R_C_Y",
              "L101.ag_Food_Pcal_R_C_Y",
              "L101.ag_kcalg_R_C_Y",
-             "L101.ag_HA_bm2_R_C_GLU",
              "L101.ag_HA_bm2_R_C_Y",
              "L101.ag_HA_bm2_R_C_Y_GLU",
              "L101.ag_Prod_Mt_R_C_Y",
@@ -77,7 +76,7 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
       select(-countries, -country.codes, -item.codes, -element, -element.codes) %>%                               # Remove unnecessary columns
       left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%                                                   # Map in ISO codes
       left_join(FAO_ag_items_cal_SUA, by = "item") %>%                                                           # Map in GCAM commodities
-      filter(!is.na(GCAM_commodity)) %>%                                                                          # Remove commodities not included in GCAM      mutate(value = value * CONV_HA_BM2) %>%                                                                     # Convert from hectares to billion square kilometers
+      filter(!is.na(GCAM_commodity)) %>%                                                                          # Remove commodities not included in GCAM
       mutate(value = value * Mcal_t * CONV_MCAL_PCAL) %>%                                                        # Convert from tons to Pcal
       group_by(GCAM_region_ID, GCAM_commodity, year) %>%                                                          # Group by region, commodity, year
       summarize(value = sum(value)) %>%                                                                           # Aggregate then map to appropriate data frame
@@ -117,47 +116,47 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
       FAO_PRODSTAT_MERGED
 
     # Next we downscale the data from countries to basins, using the basin-within-country shares
-    # of each crop in the Monfreda (pre-processed by LDS) data on harvested area and production
+    # of each GCAM commodity in the Monfreda (pre-processed by LDS) data on harvested area and production
+    # Note - using GCAM commodities rather than specific crops in this task. This avoids dropping data, particularly
+    # for the grass fodder crops which are poorly matched with the FAO data.
     LDS_ag_SHARES <-
-      left_join_error_no_match(L100.LDS_ag_HA_ha, L100.LDS_ag_prod_t, by = c("iso", "GLU", "GTAP_crop")) %>%
+      left_join_error_no_match(L100.LDS_ag_HA_ha, L100.LDS_ag_prod_t, by = c("iso", "GLU", "GTAP_crop")) %>%    # Join the Monfreda/LDS datasets
       rename(harvested.area = value.x,
              production = value.y) %>%
-      left_join(FAO_ag_items_PRODSTAT[c("item", "GTAP_crop")], by = "GTAP_crop") %>%
-      drop_na() %>%   # crops in the Monfreda/GTAP dataset but not FAOSTAT are dropped (BrdBeanGreen and KapokFibre)
-      group_by(iso, GTAP_crop) %>%
-      mutate(HA_share_GLU = harvested.area / sum(harvested.area),
+      left_join(FAO_ag_items_PRODSTAT[c("GTAP_crop", "GCAM_commodity")], by = "GTAP_crop") %>%                  # Join in the GCAM commodities and aggregate.
+      drop_na() %>%   # drop any crops not considered in GCAM
+      group_by(iso, GCAM_commodity, GLU) %>%
+      summarise(harvested.area = sum(harvested.area),
+                production = sum(production)) %>%
+      ungroup() %>%
+      group_by(iso, GCAM_commodity) %>%
+      mutate(HA_share_GLU = harvested.area / sum(harvested.area),                                               # Compute the shares of country/crop/GLU within country/crop
              prod_share_GLU = production / sum(production)) %>%
       ungroup() %>%
-      select(iso, GLU, item, HA_share_GLU, prod_share_GLU)
+      select(iso, GLU, GCAM_commodity, HA_share_GLU, prod_share_GLU)
 
-    # Write out the Monfreda/LDS harvested area by GCAM region, commodity, and GLU for the ~2000 base year
-    L101.ag_HA_bm2_R_C_GLU <- L100.LDS_ag_HA_ha %>%
-      left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%                                                           # Map in ISO codes
-      left_join(unique(FAO_ag_items_PRODSTAT[ c("GTAP_crop", "GCAM_commodity")]), by = "GTAP_crop") %>%                  # Map in GCAM commodities
-      filter(!is.na(GCAM_commodity)) %>%                                                                                 # Remove commodities not included in GCAM
-      group_by(GCAM_region_ID, GCAM_commodity, GLU) %>%                                                                  # Aggregate by GCAM regions, commodities, GLU
-      summarise(value = sum(value)) %>%
-      mutate(value = value * CONV_HA_BM2) %>%                                                                            # convert from hectares to billion square meters
-      ungroup()
-
-
+    # FAO_PRODSTAT_DOWNSCALED: FAO Prodstat data aggregated by GCAM commodity and downscaled to GLU.
     FAO_PRODSTAT_DOWNSCALED <- FAO_PRODSTAT_MERGED %>%
-      full_join(LDS_ag_SHARES, by = c("iso", "item")) %>%
-      drop_na() %>%   # zeroes are not written to the LDS databases, and return missing values here
+      left_join(FAO_ag_items_PRODSTAT[c("item", "GCAM_commodity")], by = "item") %>%
+      filter(!is.na(GCAM_commodity)) %>%                                                                        # Remove commodities not included in GCAM
+      group_by(iso, GCAM_commodity, year) %>%
+      summarise(harvested.area = sum(harvested.area),
+                production = sum(production)) %>%
+      ungroup() %>%
+      full_join(LDS_ag_SHARES, by = c("iso", "GCAM_commodity")) %>%                                             # Join in the shares, and multiply to compute the downscaled production and harvested area quantities
+      drop_na() %>%                                                                                             # zeroes in Monfreda are not written to the LDS databases, so the join returns missing values for shares
       mutate(harvested.area = harvested.area * HA_share_GLU,
              production = production * prod_share_GLU)
 
     # Process FAO production data: convert units, aggregate to region, commodity, and GLU
     FAO_PRODSTAT_DOWNSCALED %>%
-      select(iso, item, GLU, year, production) %>%                                                                   # Select relevant columns (not harvested.area)
+      select(iso, GCAM_commodity, GLU, year, production) %>%                                                    # Select relevant columns (not harvested.area)
       rename(value = production) %>%                                                                            # Rename column since tests are expecting "value"
-      left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%                                                 # Map in ISO codes
-      left_join(unique(FAO_ag_items_PRODSTAT[ c("item", "GCAM_commodity")]), by = "item") %>%                  # Map in GCAM commodities
-      filter(!is.na(GCAM_commodity)) %>%                                                                        # Remove commodities not included in GCAM
-      group_by(GCAM_region_ID, GCAM_commodity, GLU, year) %>%                                                        # Group by region, commodity, GLU, year
+      left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%                                                  # Map in ISO codes
+      group_by(GCAM_region_ID, GCAM_commodity, GLU, year) %>%                                                   # Group by region, commodity, GLU, year
       summarize(value = sum(value)) %>%                                                                         # Aggregate then map to appropriate data frame
-      mutate(value = value * CONV_TON_MEGATON) %>%                                                             # Convert from tons to Mt
-      ungroup() ->                                                                                           # Ungroup before complete
+      mutate(value = value * CONV_TON_MEGATON) %>%                                                              # Convert from tons to Mt
+      ungroup() ->                                                                                              # Ungroup before complete
       L101.ag_Prod_Mt_R_C_Y_GLU
 
     # Also write out the production volumes without basin-level detail (by region, crop, year)
@@ -171,11 +170,9 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
 
     # Now, Process FAO harvested area data: convert units, aggregate to region, commodity, and GLU
     FAO_PRODSTAT_DOWNSCALED %>%
-      select(iso, item, GLU, year, harvested.area) %>%                                                             # Select relevant columns (not production)
+      select(iso, GCAM_commodity, GLU, year, harvested.area) %>%                                              # Select relevant columns (not production)
       rename(value = harvested.area) %>%                                                                      # Rename column since tests are expecting "value"
       left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%                                               # Map in ISO codes
-      left_join(unique(FAO_ag_items_PRODSTAT[ c("item", "GCAM_commodity")]), by = "item") %>%                # Map in GCAM commodities
-      filter(!is.na(GCAM_commodity)) %>%                                                                      # Remove commodities not included in GCAM
       group_by(GCAM_region_ID, GCAM_commodity, GLU, year) %>%                                                      # Group by region, commodity, GLU, year
       summarize(value = sum(value)) %>%                                                                       # Aggregate then map to appropriate data frame
       mutate(value = value * CONV_HA_BM2) %>%                                                                # Convert from hectares to billion m2
@@ -224,17 +221,6 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
       add_legacy_name("L101.ag_kcalg_R_C_Y") %>%
       add_precursors("L100.FAO_ag_Food_t", "aglu/FAO/FAO_ag_items_cal_SUA", "common/iso_GCAM_regID") ->
       L101.ag_kcalg_R_C_Y
-    L101.ag_HA_bm2_R_C_GLU %>%
-      add_title("Harvested area by GCAM region / commodity / GLU") %>%
-      add_units("Thousand km^2 = billion m^2 (bm2") %>%
-      add_comments("LDS harvested area data, sourced from Monfreda,") %>%
-      add_comments("is read in at the iso-GLU-GTAP_crop level, and converted to GCAM") %>%
-      add_comments("regions, commodities, and units.") %>%
-      add_legacy_name("L102.ag_HA_bm2_R_C_GLU") %>%
-      add_precursors("common/iso_GCAM_regID",
-                     "aglu/FAO/FAO_ag_items_PRODSTAT",
-                     "L100.LDS_ag_HA_ha") ->
-      L101.ag_HA_bm2_R_C_GLU
 
     # The next four datasets have rounding issues that we couldn't resolve:
     # they kept failing the 'oldnew' test even though data confirmed to be
@@ -284,9 +270,8 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
       same_precursors_as(L101.ag_Prod_Mt_R_C_Y_GLU) ->
       L101.ag_Yield_kgm2_R_C_Y_GLU
 
-    return_data(L101.ag_Food_Mt_R_C_Y, L101.ag_Food_Pcal_R_C_Y, L101.ag_kcalg_R_C_Y, L101.ag_HA_bm2_R_C_GLU,
-                L101.ag_HA_bm2_R_C_Y_GLU, L101.ag_HA_bm2_R_C_Y, L101.ag_Prod_Mt_R_C_Y_GLU, L101.ag_Prod_Mt_R_C_Y,
-                L101.ag_Yield_kgm2_R_C_Y_GLU)
+    return_data(L101.ag_Food_Mt_R_C_Y, L101.ag_Food_Pcal_R_C_Y, L101.ag_kcalg_R_C_Y, L101.ag_HA_bm2_R_C_Y_GLU,
+                L101.ag_HA_bm2_R_C_Y, L101.ag_Prod_Mt_R_C_Y_GLU, L101.ag_Prod_Mt_R_C_Y, L101.ag_Yield_kgm2_R_C_Y_GLU)
   } else {
     stop("Unknown command")
   }
