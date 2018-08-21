@@ -17,8 +17,8 @@
 #' @author RC August 2017
 module_aglu_LB161.ag_R_C_Y_GLU_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L103.ag_Prod_Mt_R_C_Y_GLU",
-             "L103.ag_HA_bm2_R_C_Y_GLU",
+    return(c("L101.ag_Prod_Mt_R_C_Y_GLU",
+             "L101.ag_HA_bm2_R_C_Y_GLU",
              "L152.ag_irrProd_Mt_R_C_GLU",
              "L152.ag_irrHA_bm2_R_C_GLU",
              "L152.ag_rfdProd_Mt_R_C_GLU",
@@ -39,8 +39,8 @@ module_aglu_LB161.ag_R_C_Y_GLU_irr <- function(command, ...) {
       irrHA <- rfdHA <- irrHA_frac <- irrYield <- rfdYield <- MgdFor_adj <- NULL # silence package check.
 
     # Load required inputs
-    L103.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L103.ag_Prod_Mt_R_C_Y_GLU")
-    L103.ag_HA_bm2_R_C_Y_GLU <- get_data(all_data, "L103.ag_HA_bm2_R_C_Y_GLU")
+    L101.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L101.ag_Prod_Mt_R_C_Y_GLU")
+    L101.ag_HA_bm2_R_C_Y_GLU <- get_data(all_data, "L101.ag_HA_bm2_R_C_Y_GLU")
     L152.ag_irrProd_Mt_R_C_GLU <- get_data(all_data, "L152.ag_irrProd_Mt_R_C_GLU")
     L152.ag_irrHA_bm2_R_C_GLU <- get_data(all_data, "L152.ag_irrHA_bm2_R_C_GLU")
     L152.ag_rfdProd_Mt_R_C_GLU <- get_data(all_data, "L152.ag_rfdProd_Mt_R_C_GLU")
@@ -57,7 +57,7 @@ module_aglu_LB161.ag_R_C_Y_GLU_irr <- function(command, ...) {
       # Repeat the same irrigated fraction to all historical years
       repeat_add_columns(tibble(year = HISTORICAL_YEARS)) %>%
       # Match to FAO annual total production
-      right_join(L103.ag_Prod_Mt_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year")) %>%
+      right_join(L101.ag_Prod_Mt_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year")) %>%
       # Calculate irrigated production by multiplying total by fraction irrigated
       mutate(irrProd = value * irrProd_frac,
              # Calculate rainfed production by multiplying total by fraction rainfed
@@ -80,7 +80,7 @@ module_aglu_LB161.ag_R_C_Y_GLU_irr <- function(command, ...) {
       # Repeat the same irrigated fraction to all historical years
       repeat_add_columns(tibble(year = HISTORICAL_YEARS)) %>%
       # Match to FAO annual total harvested area
-      right_join(L103.ag_HA_bm2_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year")) %>%
+      right_join(L101.ag_HA_bm2_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year")) %>%
       # Calculate irrigated production by multiplying total by fraction irrigated
       mutate(irrHA = value * irrHA_frac,
              # Calculate rainfed production by multiplying total by fraction rainfed
@@ -109,7 +109,7 @@ module_aglu_LB161.ag_R_C_Y_GLU_irr <- function(command, ...) {
       add_comments("Combine FAO annual production data and GTAP irrigated vs rainfed disaggregated data by region / commodity / GLU") %>%
       add_comments("Multiply annual total production and a constant irrigated fraction across all histrical years") %>%
       add_legacy_name("L161.ag_irrProd_Mt_R_C_Y_GLU") %>%
-      add_precursors("L103.ag_Prod_Mt_R_C_Y_GLU",
+      add_precursors("L101.ag_Prod_Mt_R_C_Y_GLU",
                      "L152.ag_irrProd_Mt_R_C_GLU") ->
       L161.ag_irrProd_Mt_R_C_Y_GLU
 
@@ -120,7 +120,7 @@ module_aglu_LB161.ag_R_C_Y_GLU_irr <- function(command, ...) {
       add_comments("Combine FAO annual production data and GTAP irrigated vs rainfed disaggregated data by region / commodity / GLU") %>%
       add_comments("Multiply annual total production and a constant rainfed fraction across all histrical years") %>%
       add_legacy_name("L161.ag_rfdProd_Mt_R_C_Y_GLU") %>%
-      add_precursors("L103.ag_Prod_Mt_R_C_Y_GLU",
+      add_precursors("L101.ag_Prod_Mt_R_C_Y_GLU",
                      "L152.ag_rfdProd_Mt_R_C_GLU") ->
       L161.ag_rfdProd_Mt_R_C_Y_GLU
 
@@ -131,7 +131,7 @@ module_aglu_LB161.ag_R_C_Y_GLU_irr <- function(command, ...) {
       add_comments("Combine FAO annual harvested area data and GTAP irrigated vs rainfed disaggregated data by region / commodity / GLU") %>%
       add_comments("Multiply annual total harvested area and a constant irrigated fraction across all histrical years") %>%
       add_legacy_name("L161.ag_irrHA_bm2_R_C_Y_GLU") %>%
-      add_precursors("L103.ag_HA_bm2_R_C_Y_GLU",
+      add_precursors("L101.ag_HA_bm2_R_C_Y_GLU",
                      "L152.ag_irrHA_bm2_R_C_GLU") ->
       L161.ag_irrHA_bm2_R_C_Y_GLU
 
@@ -142,7 +142,7 @@ module_aglu_LB161.ag_R_C_Y_GLU_irr <- function(command, ...) {
       add_comments("Combine FAO annual harvested area data and GTAP irrigated vs rainfed disaggregated data by region / commodity / GLU") %>%
       add_comments("Multiply annual total harvested area and a constant rainfed fraction across all histrical years") %>%
       add_legacy_name("L161.ag_rfdHA_bm2_R_C_Y_GLU") %>%
-      add_precursors("L103.ag_HA_bm2_R_C_Y_GLU",
+      add_precursors("L101.ag_HA_bm2_R_C_Y_GLU",
                      "L152.ag_rfdHA_bm2_R_C_GLU") ->
       L161.ag_rfdHA_bm2_R_C_Y_GLU
 
