@@ -581,7 +581,9 @@ emissions.DIGITS_EMISSIONS <- 10
 # GCAM-USA constants ======================================================================
 
 # GCAM-USA time
-gcamusa.WIND_BASE_COST_YEAR <- 2005
+gcamusa.WIND_BASE_COST_YEAR   <- 2005
+gcamusa.FINAL_HISTORICAL_YEAR <- 2010
+gcamusa.FUTURE_MODEL_YEARS <- seq(from = 2015, to = 2100, by = 5)
 
 # GCAM-USA states
 gcamusa.STATES <- c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA",
