@@ -1,0 +1,9 @@
+# File: A23.elecS_metainfo.csv,,,
+# Title: Horizontal Load Segment Supplysector Characteristics ,,,
+# Units: unitless,,,
+region,supplysector,electricity.reserve.margin,average.grid.capacity.factor
+USA,base load generation,0.15,0.6
+USA,intermediate generation,0.15,0.6
+USA,subpeak generation,0.15,0.6
+USA,peak generation,0.15,0.6
+USA,elect_td_bld,0.15,0.6

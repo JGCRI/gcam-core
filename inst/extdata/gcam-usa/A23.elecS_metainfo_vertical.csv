@@ -1,0 +1,10 @@
+# File: A23.elecS_metainfo_vertical.csv,,,
+# Title: Vertical Load Segment Supplysector Characteristics,,,
+# Units: unitless,,,
+# Vertical segment supplysector characteristics,,,
+region,supplysector,electricity.reserve.margin,average.grid.capacity.factor
+USA,off peak electricity,0.15,0.6
+USA,intermediate electricity,0.15,0.6
+USA,subpeak electricity,0.15,0.6
+USA,peak electricity,0.15,0.6
+USA,electricity,0.15,0.6

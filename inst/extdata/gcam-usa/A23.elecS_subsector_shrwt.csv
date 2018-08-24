@@ -1,0 +1,56 @@
+# File: A23.elecS_subsector_shrwt.csv,,,,
+# Title: Multiple Load Segments Subsector Shareweights,,,,
+# Units: unitless,,,,
+# Comments: Subsector shareweights at points of inflexion,,,,
+region,supplysector,subsector,year,share.weight
+USA,base load generation,gas,2015,1
+USA,intermediate generation,gas,2015,1
+USA,subpeak generation,gas,2015,1
+USA,peak generation,gas,2015,1
+USA,base load generation,gas,end-year,1
+USA,intermediate generation,gas,end-year,1
+USA,subpeak generation,gas,end-year,1
+USA,peak generation,gas,end-year,1
+USA,base load generation,biomass,end-year,1
+USA,intermediate generation,biomass,end-year,1
+USA,subpeak generation,biomass,end-year,1
+USA,peak generation,biomass,end-year,1
+USA,base load generation,geothermal,end-year,1
+USA,intermediate generation,geothermal,end-year,1
+USA,subpeak generation,geothermal,end-year,1
+USA,peak generation,geothermal,end-year,1
+USA,base load generation,nuclear,2015,0
+USA,intermediate generation,nuclear,2015,0
+USA,subpeak generation,nuclear,2015,0
+USA,peak generation,nuclear,2015,0
+USA,base load generation,nuclear,2030,0
+USA,intermediate generation,nuclear,2030,0
+USA,subpeak generation,nuclear,2030,0
+USA,peak generation,nuclear,2030,0
+USA,base load generation,nuclear,2035,1
+USA,intermediate generation,nuclear,2035,1
+USA,subpeak generation,nuclear,2035,1
+USA,peak generation,nuclear,2035,1
+USA,base load generation,nuclear,end-year,1
+USA,intermediate generation,nuclear,end-year,1
+USA,subpeak generation,nuclear,end-year,1
+USA,peak generation,nuclear,end-year,1
+USA,base load generation,wind,end-year,1
+USA,intermediate generation,wind,end-year,0
+USA,subpeak generation,wind,end-year,0
+USA,peak generation,wind,end-year,0
+USA,base load generation,wind,2030,1
+USA,intermediate generation,wind,2015,0
+USA,subpeak generation,wind,2015,0
+USA,peak generation,wind,2015,0
+USA,base load generation,solar,end-year,1
+USA,intermediate generation,solar,end-year,1
+USA,subpeak generation,solar,end-year,1
+USA,peak generation,solar,end-year,1
+USA,base load generation,solar,2030,1
+USA,intermediate generation,solar,2030,1
+USA,subpeak generation,solar,2030,1
+USA,peak generation,solar,2030,1
+USA,elect_td_bld,rooftop_pv,end-year,1
+USA,elect_td_bld,rooftop_pv,2030,1
+USA,peak generation,grid_storage,end-year,1
