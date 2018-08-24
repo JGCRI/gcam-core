@@ -38,7 +38,8 @@ module_gcam.usa_L2011.socioeconomics_update_USA <- function(command, ...) {
 
     # silence package checks
     year <- region <- state <- Area <- totalPop <- pop <- pop_ratio <- GDP <- baseGDP <- pcGDP <- pcGDPratio <-
-      laborproductivity <- time <- lag_pop <- lag_GDP <- iso <- growth <- timestep <- NULL
+      laborproductivity <- time <- lag_pop <- lag_GDP <- iso <- growth <- timestep <- state_name <- Fips <-
+      Year <- Quarter <- census_region <- lp2100 <- lp2040 <- NULL
 
     all_data <- list(...)[[1]]
 

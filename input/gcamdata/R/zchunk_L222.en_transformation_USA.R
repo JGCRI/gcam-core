@@ -91,9 +91,8 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
     logit.year.fillout <- year <- from.year <- to.year <- region <- supplysector <- subsector <-
       technology <- sector.name <- subsector.name <- sector <- state <- fuel <- value <- market.name <-
       trash <- calOutputValue <- minicam.energy.input <- supplysector.x <- supplysector.y <-
-      calibration <- grid_region <- stub.technology <- key <- NULL
-
-
+      calibration <- grid_region <- stub.technology <- key <- coal <- natural_gas <- coal_fract <-
+      share.weight <- gas_fract <- NULL
 
     # Correct some of the inputs
     L222.Supplysector_en %>%

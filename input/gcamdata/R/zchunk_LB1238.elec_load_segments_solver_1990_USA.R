@@ -31,8 +31,8 @@ module_gcam.usa_LB1238.elec_load_segments_solver_1990_USA <- function(command, .
     all_data <- list(...)[[1]]
 
     # Silence package checks
-    grid_region <- segment <- fuel <- year <- script_year <- generation <- fraction <- demand <- demand_fraction <-
-      vertical_segment <- vertical_segment_demand <- horizontal_segment <- horizontal_segment_demand <-
+    grid_region <- segment <- fuel <- year <- script_year <- next_year<- generation <- fraction <- demand <-
+      demand_fraction <- vertical_segment <- vertical_segment_demand <- horizontal_segment <- horizontal_segment_demand <-
       off.peak.electricity <- off.peak.electricity.demand <- off.peak.electricity.time <- off.peak.electricity.tot <-
       intermediate.electricity <- intermediate.electricity.demand <- intermediate.electricity.time <- intermediate.electricity.tot <-
       subpeak.electricity <- subpeak.electricity.demand <- subpeak.electricity.time <- subpeak.electricity.tot <-
@@ -46,7 +46,8 @@ module_gcam.usa_LB1238.elec_load_segments_solver_1990_USA <- function(command, .
       subpeak.electricity.x <- subpeak.electricity.x.x <- subpeak.electricity.y <- subpeak.electricity.y.y <-
       vertical_segment_demand.x <- vertical_segment_demand.x.x <- vertical_segment_demand.y <- vertical_segment_demand.y.y <-
       peak.electricity.x <- peak.electricity.x.x <- peak.electricity.y <- peak.electricity.y.y <-
-      segment.x <- segment.x.x <- segment.y <- segment.y.y <- NULL
+      segment.x <- segment.x.x <- segment.y <- segment.y.y <- fraction.x <- fraction.y <- tot_generation.x <-
+      year.x <- . <- uniroot <- NULL # silence package check notes
 
     # Load required inputs
     elecS_horizontal_to_vertical_map <- get_data(all_data, "gcam-usa/elecS_horizontal_to_vertical_map")
@@ -60,6 +61,7 @@ module_gcam.usa_LB1238.elec_load_segments_solver_1990_USA <- function(command, .
 
     #Initialize Variables
     script_year = BASE_YEARS[2]
+    next_year = BASE_YEARS[3]
     L1238.elecS_demand_fraction <- L1235.elecS_demand_fraction_USA
     L1238.elecS_horizontal_vertical <- L1235.elecS_horizontal_vertical_USA
 
@@ -69,7 +71,7 @@ module_gcam.usa_LB1238.elec_load_segments_solver_1990_USA <- function(command, .
       filter(year == script_year) -> L1238.grid_elec_supply_script_year
 
     L1238.grid_elec_supply %>%
-      filter(year == BASE_YEARS[match(script_year, BASE_YEARS) + 1 ]) -> L1238.grid_elec_supply_next_year
+      filter(year == next_year) -> L1238.grid_elec_supply_next_year
 
     L1238.grid_elec_supply %>%
       filter(year != script_year) -> L1238.grid_elec_supply_non_script_year

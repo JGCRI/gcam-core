@@ -35,13 +35,16 @@ module_gcam.usa_LB1235.elec_load_segments_USA <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Silence package checks
-    grid_region <- year  <- segment <- horizontal_segment <- vertical_segment <-
+    grid_region <- year <- sector <- segment <- horizontal_segment <- vertical_segment <-
       off.peak.electricity <- intermediate.electricity <- subpeak.electricity <- peak.electricity <-
       off.peak.electricity.time <- intermediate.electricity.time <- subpeak.electricity.time <- peak.electricity.time <-
       off.peak.electricity.demand <- intermediate.electricity.demand <- subpeak.electricity.demand <- peak.electricity.demand <-
       off.peak.electricity.tot <- intermediate.electricity.tot <- subpeak.electricity.tot <- peak.electricity.tot <-
       supplysector <- subsector <- technology <- minicam.energy.input <- coefficient <-
-      fuel <- generation <- demand <- tot_demand <- fraction <- demand_fraction <- check <- NULL
+      fuel <- generation <- demand <- tot_demand <- fraction <- demand_fraction <- check <-
+      off.peak.electricity.x <- off.peak.electricity.y <- intermediate.electricity.x <- intermediate.electricity.y <-
+      subpeak.electricity.x <- subpeak.electricity.y <- peak.electricity.x <- peak.electricity.y <-
+      intermediate.sum <- subpeak.sum <- NULL # silence package check notes
 
     # Load required inputs
     elecS_demand_fraction <- get_data(all_data, "gcam-usa/elecS_demand_fraction")
