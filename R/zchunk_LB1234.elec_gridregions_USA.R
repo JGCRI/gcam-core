@@ -26,7 +26,8 @@ module_gcam.usa_LB1234.elec_gridregions_USA <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Silence package checks
-    grid_region <- sector <- fuel <- year <- fuel.input <- generation <- NULL
+    grid_region <- sector <- fuel <- year <- fuel.input <- generation <- state <-
+      value <- NULL  # silence package check notes
 
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")

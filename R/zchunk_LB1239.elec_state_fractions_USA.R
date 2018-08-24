@@ -28,7 +28,7 @@ module_gcam.usa_LB1239.elec_state_fractions_USA <- function(command, ...) {
 
     # Silence package checks
     grid_region <- segment <- fuel <- year <- tot_generation <- fraction <- generation <-
-      state <- sector <- NULL
+      state <- sector <- value <- NULL # silence package check notes
 
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")

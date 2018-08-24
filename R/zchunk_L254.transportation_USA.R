@@ -15,8 +15,8 @@
 #' \code{L254.StubTranTechLoadFactor_USA}, \code{L254.StubTranTechCost_USA}, \code{L254.StubTranTechCoef_USA},
 #' \code{L254.PerCapitaBased_trn_USA}, \code{L254.PriceElasticity_trn_USA}, \code{L254.IncomeElasticity_trn_USA},
 #' \code{L254.StubTranTechCalInput_USA}, \code{L254.StubTranTechProd_nonmotor_USA}, \code{L254.StubTranTechCalInput_passthru_USA},
-#' \code{L254.BaseService_trn_USA, \code{L254.tranSubsectorFuelPref_USA_frt}}. The corresponding file in the
-#' original data system was \code{L254.transportation_USA.R} (gcam-usa level2).
+#' \code{L254.BaseService_trn_USA}, \code{L254.tranSubsectorFuelPref_USA_frt}.
+#' The corresponding file in the original data system was \code{L254.transportation_USA.R} (gcam-usa level2).
 #' @details This chunk generates input files for transportation sector with generic information for supplysector,
 #' subsector and technologies, as well as calibrated inputs and outputs by the US states.
 #' @note The transportation structure is heavily nested. The GCAM structure of sector/subsector/technology only
