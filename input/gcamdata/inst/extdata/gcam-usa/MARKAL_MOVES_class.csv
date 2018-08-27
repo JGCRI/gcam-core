@@ -1,0 +1,25 @@
+# File: MARKAL_MOVES_class.csv
+# Title: MARKAL car classes
+# Source:MARKAL MOVES
+# Units: NA
+MARKAL_Class,MOVES_Source_Type,MOVES_Reg_Class
+Mini car,21,
+Compact car,21,
+Full size car,21,
+Minivan,31,
+Pickup,31,
+Small SUV,31,
+Large SUV,31,
+Minivan,32,
+Pickup,32,
+Small SUV,32,
+Large SUV,32,
+Bus,41,
+Bus,42,
+Bus,43,
+Commercial truck,,40
+Commercial truck,,41
+Heavy duty long haul truck,53,
+Heavy duty long haul truck,62,
+Heavy duty short haul truck,52,
+Heavy duty short haul truck,61,
