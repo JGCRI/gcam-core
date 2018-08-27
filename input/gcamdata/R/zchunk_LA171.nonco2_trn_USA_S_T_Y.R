@@ -35,7 +35,6 @@ module_gcam.usa_LA171.nonco2_trn_USA_S_T_Y.R <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-
     GREET2014_LDV_CNG_EFs_tgEJ <- get_data(all_data, "gcam-usa/GREET2014_LDV_CNG_EFs_tgEJ")
     MARKAL_LDV_EFs_gpm <- get_data(all_data, "gcam-usa/MARKAL_LDV_EFs_gpm")
     MARKAL_HDV_EFs_gpm <- get_data(all_data, "gcam-usa/MARKAL_HDV_EFs_gpm")
@@ -48,6 +47,13 @@ module_gcam.usa_LA171.nonco2_trn_USA_S_T_Y.R <- function(command, ...) {
     MARKAL_fuel_name_code <- get_data(all_data, "gcam-usa/MARKAL_fuel_name_code")
     MARKAL_MOVES_class <- get_data(all_data, "gcam-usa/MARKAL_MOVES_class")
 
+    # Silence pacakge checks
+    `2005` <- `2010` <- `2015` <- Class <- Fuel <- Fuel_name <- MARKAL_Class <-
+      MOVES_Reg_Class <- MOVES_Source_Type <- Technology <- Unit <- Vintage <-
+      ageFraction <- ageID <- fuel <- modelYearID <- palette <- pollutant <-
+      regClassID <- region <- share <- sourceTypeID <- sourceTypePopulation <-
+      sourceTypePopulation_agg <- state <- stmyFraction <- value <- value.x <-
+      value.y <- variable <- vintage <- weight <- year <- yearID <- NULL
     # ==============================================================================
 
     MOVES_vehicle_age_fractions %>%
