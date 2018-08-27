@@ -29,6 +29,9 @@ module_gcam.usa_L2322.industry_vintage_USA <- function(command, ...) {
     A32.ind_SCurve_USA <- get_data(all_data, "gcam-usa/A32.ind_SCurve_USA")
     L232.StubTechMarket_ind_USA <- get_data(all_data, "L232.StubTechMarket_ind_USA")
 
+    # Silence package checks
+    palette <- region <- supplysector <- subsector <- stub.technology <-
+      year <- lifetime <- steepness <- half.life <- NULL
 
     # ===================================================
 
