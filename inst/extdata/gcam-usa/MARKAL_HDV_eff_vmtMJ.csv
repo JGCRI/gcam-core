@@ -1,0 +1,119 @@
+# File: MARKAL_HDV_eff_vmtMJ.csv
+# Title: MARKAL Heavy duty vehicle input/output efficiency
+# Source: MARKAL
+# Units: vmt/MJ
+Class,Technology,Fuel,Unit,2005,2010,2015,2020,2025,2030,2035,2040,2045,2050,2055
+Bus,Existing,B0,billion vmt/PJ,0.034970963,,,,,,,,,,
+Bus,Existing,Gasoline,billion vmt/PJ,0.03776864,,,,,,,,,,
+Bus,Existing,CNG,billion vmt/PJ,0.029733766,,,,,,,,,,
+Bus,Conventional,B0,billion vmt/PJ,,0.031791784,,,,,,,,,
+Bus,Conventional,B0,billion vmt/PJ,,,0.033488882,0.034986321,0.034986321,0.034986321,0.034986321,0.034986321,0.034986321,0.034986321,0.034986321
+Bus,Improved,B0,billion vmt/PJ,,0.03909468,,,,,,,,,
+Bus,Advanced,B0,billion vmt/PJ,,,0.037727787,0.037727787,0.03909468,0.03909468,0.03909468,0.039355772,0.039355772,0.039355772,0.039355772
+Bus,Advanced hybrid,B0,billion vmt/PJ,,,0.05389245,0.05389245,0.05585064,0.05585064,0.05585064,0.056557124,0.056557124,0.056557124,0.056557124
+Bus,Conventional,Biodiesel (B20),billion vmt/PJ,,0.031770687,,,,,,,,,
+Bus,Conventional,Biodiesel (B20),billion vmt/PJ,,,0.033488882,0.034963103,0.034963103,0.034963103,0.034963103,0.034963103,0.034963103,0.034963103,0.034963103
+Bus,Improved,Biodiesel (B20),billion vmt/PJ,,0.039068736,,,,,,,,,
+Bus,Advanced,Biodiesel (B20),billion vmt/PJ,,,0.037700577,0.037700577,0.039067956,0.039067956,0.039067956,0.039562487,0.039562487,0.039562487,0.039562487
+Bus,Advanced-hybrid,Biodiesel (B20),billion vmt/PJ,,,0.053857967,0.053857967,0.055811365,0.055811365,0.055811365,0.056517838,0.056517838,0.056517838,0.056517838
+Bus,Conventional,CNG,billion vmt/PJ,,0.027030696,,,,,,,,,
+Bus,Conventional,CNG,billion vmt/PJ,,,0.028412947,0.029718407,0.029718407,0.029718407,0.029718407,0.029718407,0.029718407,0.029718407,0.029718407
+Bus,Improved,CNG,billion vmt/PJ,,0.031231205,,,,,,,,,
+Bus,Advanced,CNG,billion vmt/PJ,,,0.030225233,0.030225233,0.030839567,0.030839567,0.030839567,0.031231205,0.031231205,0.031231205,0.031231205
+Bus,Advanced-hybrid,CNG,billion vmt/PJ,,,0.04030031,0.04030031,0.041121982,0.041121982,0.041121982,0.041644166,0.041644166,0.041644166,0.041644166
+Bus,Fuel cell,Hydrogen,billion vmt/PJ,,0.027477594,,,,,,,,,
+Bus,Fuel cell-hybrid,Hydrogen,billion vmt/PJ,,0.049930713,,,,,,,,,
+Commercial truck,Existing,Gasoline,billion vmt/PJ,0.0971537,,,,,,,,,,
+Commercial truck,Existing,B0,billion vmt/PJ,0.117401335,,,,,,,,,,
+Commercial truck,Conventional,Gasoline,billion vmt/PJ,,0.118930762,,,,,,,,,
+Commercial truck,Conventional,Gasoline,billion vmt/PJ,,,0.129465834,0.133607324,0.133607324,0.133607324,0.133607324,0.133607324,0.133607324,0.133607324,0.133607324
+Commercial truck,Improved,Gasoline,billion vmt/PJ,,,,,0.143729091,0.143729091,0.143729091,0.158236957,0.158236957,0.158236957,0.158236957
+Commercial truck,Advanced,Gasoline,billion vmt/PJ,,,0.188855302,0.188855302,0.235921518,0.235921518,0.235921518,0.235921518,0.235921518,0.235921518,0.235921518
+Commercial truck,Advanced-hybrid,Gasoline,billion vmt/PJ,,,0.231113679,0.231113679,0.288723403,0.288723403,0.288723403,0.291844281,0.291844281,0.291844281,0.291844281
+Commercial truck,Conventional,B0,billion vmt/PJ,,0.135844605,,,,,,,,,
+Commercial truck,Conventional,B0,billion vmt/PJ,,,0.148469169,0.155964044,0.155964044,0.155964044,0.155964044,0.155964044,0.155964044,0.155964044,0.155964044
+Commercial truck,Improved,B0,billion vmt/PJ,,0.177442696,,,,,,,,,
+Commercial truck,Advanced-hybrid,B0,billion vmt/PJ,,,0.216391472,0.216391472,0.253489566,0.253489566,0.253489566,0.253489566,0.253489566,0.253489566,0.253489566
+Commercial truck,Conventional,Biodiesel (B20),billion vmt/PJ,,0.135748701,,,,,,,,,
+Commercial truck,Conventional,Biodiesel (B20),billion vmt/PJ,,,0.148364352,0.155853936,0.155853936,0.155853936,0.155853936,0.155853936,0.155853936,0.155853936,0.155853936
+Commercial truck,Improved,Biodiesel (B20),billion vmt/PJ,,0.177448383,,,,,,,,,
+Commercial truck,Advanced-hybrid,Biodiesel (B20),billion vmt/PJ,,,0.216398407,0.216398407,0.25349769,0.25349769,0.25349769,0.25349769,0.25349769,0.25349769,0.25349769
+Commercial truck,Conventional,CNG,billion vmt/PJ,,0.128088431,,,,,,,,,
+Commercial truck,Conventional,CNG,billion vmt/PJ,,,0.139434704,0.142714131,0.142714131,0.142714131,0.142714131,0.142714131,0.142714131,0.142714131,0.142714131
+Commercial truck,Improved,CNG,billion vmt/PJ,,,,,0.187381564,0.187381564,0.187381564,0.213299032,0.213299032,0.213299032,0.213299032
+Commercial truck,Advanced,CNG,billion vmt/PJ,,,0.225017531,0.225017531,0.281100866,0.281100866,0.281100866,0.284154309,0.284154309,0.284154309,0.284154309
+Commercial truck,Advanced-hybrid,CNG,billion vmt/PJ,,,0.316149631,0.316149631,0.394946717,0.394946717,0.394946717,0.399236804,0.399236804,0.399236804,0.399236804
+Commercial truck,Flex fuel,E85 or gasoline,billion vmt/PJ,,0.10181148,,,,,,,,,
+Commercial truck,Flex fuel,E85 or gasoline,billion vmt/PJ,,,0.1108301,0.11437545,0.11437545,0.11437545,0.11437545,0.11437545,0.11437545,0.11437545,0.11437545
+Commercial truck,Flex fuel improved,E85 or gasoline,billion vmt/PJ,,,,,0.123040257,0.123040257,0.123040257,0.135459813,0.135459813,0.135459813,0.135459813
+Commercial truck,Flex fuel advanced,E85 or gasoline,billion vmt/PJ,,,0.178855871,0.178855871,0.223433881,0.223433881,0.223433881,0.22586092,0.22586092,0.22586092,0.22586092
+Commercial truck,Flex fuel advanced hybrid,E85 or gasoline,billion vmt/PJ,,,0.251292499,0.251292499,0.313924603,0.313924603,0.313924603,0.317334593,0.317334593,0.317334593,0.317334593
+Commercial truck,Conventional,LPG,billion vmt/PJ,,0.114011583,,,,,,,,,
+Commercial truck,Conventional,LPG,billion vmt/PJ,,,0.124110907,0.128081098,0.128081098,0.128081098,0.128081098,0.128081098,0.128081098,0.128081098,0.128081098
+Commercial truck,Improved,LPG,billion vmt/PJ,,,,,0.166788434,0.166788434,0.166788434,0.189857587,0.189857587,0.189857587,0.189857587
+Commercial truck,Advanced,LPG,billion vmt/PJ,,,0.200288229,0.200288229,0.250208037,0.250208037,0.250208037,0.252925908,0.252925908,0.252925908,0.252925908
+Commercial truck,Advanced-hybrid,LPG,billion vmt/PJ,,,0.281404962,0.281404962,0.351542292,0.351542292,0.351542292,0.355360901,0.355360901,0.355360901,0.355360901
+Commercial truck,Fuel cell,Hydrogen,billion vmt/PJ,,,,,0.34109858,0.34109858,0.34109858,0.34109858,0.34109858,0.34109858,0.34109858
+Medium duty truck,Existing,Gasoline,billion vmt/PJ,0.059575137,,,,,,,,,,
+Medium duty truck,Existing,B0,billion vmt/PJ,0.06089011,,,,,,,,,,
+Medium duty truck,Existing,CNG,billion vmt/PJ,0.048739794,,,,,,,,,,
+Medium duty truck,Existing,LPG,billion vmt/PJ,0.053551661,,,,,,,,,,
+Medium duty truck,Conventional,Gasoline,billion vmt/PJ,,0.062417563,,,,,,,,,
+Medium duty truck,Conventional,Gasoline,billion vmt/PJ,,,0.064948005,0.06973054,0.06973054,0.06973054,0.06973054,0.06973054,0.06973054,0.06973054,0.06973054
+Medium duty truck,Improved,Gasoline,billion vmt/PJ,,0.075246903,,,,,,,,,
+Medium duty truck,Advanced-hybrid,Gasoline,billion vmt/PJ,,,0.078865434,0.078865434,0.099615057,0.099615057,0.099615057,0.107493165,0.107493165,0.107493165,0.107493165
+Medium duty truck,Conventional,B0,billion vmt/PJ,,0.071554553,,,,,,,,,
+Medium duty truck,Conventional,B0,billion vmt/PJ,,,0.075263594,0.082850619,0.082850619,0.082850619,0.082850619,0.082850619,0.082850619,0.082850619,0.082850619
+Medium duty truck,Improved,B0,billion vmt/PJ,,0.084286625,,,,,,,,,
+Medium duty truck,Advanced,B0,billion vmt/PJ,,,0.084286625,0.084286625,0.087074165,0.087074165,0.087074165,0.087074165,0.087074165,0.087074165,0.087074165
+Medium duty truck,Advanced-hybrid,B0,billion vmt/PJ,,,0.120409464,0.120409464,0.124387276,0.124387276,0.124387276,0.124387276,0.124387276,0.124387276,0.124387276
+Medium duty truck,Conventional,Biodiesel (B20),billion vmt/PJ,,0.071504036,,,,,,,,,
+Medium duty truck,Conventional,Biodiesel (B20),billion vmt/PJ,,,0.075210459,0.077965337,0.077965337,0.077965337,0.077965337,0.077965337,0.077965337,0.077965337,0.077965337
+Medium duty truck,Improved,Biodiesel (B20),billion vmt/PJ,,0.083060709,,,,,,,,,
+Medium duty truck,Advanced,Biodiesel (B20),billion vmt/PJ,,,0.084287694,0.084287694,0.087074064,0.087074064,0.087074064,0.087074064,0.087074064,0.087074064,0.087074064
+Medium duty truck,Advanced-hybrid,Biodiesel (B20),billion vmt/PJ,,,0.120410991,0.120410991,0.12439152,0.12439152,0.12439152,0.12439152,0.12439152,0.12439152,0.12439152
+Medium duty truck,Conventional,CNG,billion vmt/PJ,,0.052445275,,,,,,,,,
+Medium duty truck,Conventional,CNG,billion vmt/PJ,,,0.055163784,0.06092162,0.06092162,0.06092162,0.06092162,0.06092162,0.06092162,0.06092162,0.06092162
+Medium duty truck,Improved,CNG,billion vmt/PJ,,0.063820237,,,,,,,,,
+Medium duty truck,Advanced-hybrid,CNG,billion vmt/PJ,,,0.066447591,0.066447591,0.083923483,0.083923483,0.083923483,0.09056101,0.09056101,0.09056101,0.09056101
+Medium duty truck,Conventional,LPG,billion vmt/PJ,,0.067978151,,,,,,,,,
+Medium duty truck,Conventional,LPG,billion vmt/PJ,,,0.071501809,0.078964961,0.078964961,0.078964961,0.078964961,0.078964961,0.078964961,0.078964961,0.078964961
+Medium duty truck,Improved,LPG,billion vmt/PJ,,0.082722071,,,,,,,,,
+Medium duty truck,Advanced-hybrid,LPG,billion vmt/PJ,,,0.086127577,0.086127577,0.108779356,0.108779356,0.108779356,0.11738274,0.11738274,0.11738274,0.11738274
+Heavy duty short haul truck,Existing,Gasoline,billion vmt/PJ,0.051210254,,,,,,,,,,
+Heavy duty short haul truck,Existing,B0,billion vmt/PJ,0.039439301,,,,,,,,,,
+Heavy duty short haul truck,Existing,CNG,billion vmt/PJ,0.039547347,,,,,,,,,,
+Heavy duty short haul truck,Existing,LPG,billion vmt/PJ,0.037268004,,,,,,,,,,
+Heavy duty short haul truck,Existing,Biodiesel (B20),billion vmt/PJ,0.039439301,,,,,,,,,,
+Heavy duty short haul truck,Conventional,Gasoline,billion vmt/PJ,,0.038084191,,,,,,,,,
+Heavy duty short haul truck,Conventional,B0,billion vmt/PJ,,0.040092266,,,,,,,,,
+Heavy duty short haul truck,Conventional,B0,billion vmt/PJ,,,0.043863448,0.043863448,0.043863448,0.043863448,0.043863448,0.043863448,0.043863448,0.043863448,0.043863448
+Heavy duty short haul truck,Improved,B0,billion vmt/PJ,,,,,0.045383924,0.045383924,0.045383924,0.046305425,0.046305425,0.046305425,0.046305425
+Heavy duty short haul truck,Advanced,B0,billion vmt/PJ,,,0.045998258,0.045998258,0.046689384,0.046689384,0.046689384,0.046689384,0.046689384,0.046689384,0.046689384
+Heavy duty short haul truck,Advanced-hybrid,B0,billion vmt/PJ,,,0.061126233,0.061126233,0.061126233,0.061126233,0.061126233,0.062047734,0.062047734,0.062047734,0.062047734
+Heavy duty short haul truck,Conventional,Biodiesel (B20),billion vmt/PJ,,0.040063962,,,,,,,,,
+Heavy duty short haul truck,Conventional,Biodiesel (B20),billion vmt/PJ,,,0.043832481,0.043832481,0.043832481,0.043832481,0.043832481,0.043832481,0.043832481,0.043832481,0.043832481
+Heavy duty short haul truck,Improved,Biodiesel (B20),billion vmt/PJ,,,,,0.045385379,0.045385379,0.045385379,0.046306909,0.046306909,0.046306909,0.046306909
+Heavy duty short haul truck,Advanced,Biodiesel (B20),billion vmt/PJ,,,0.046030528,0.046030528,0.046706369,0.046706369,0.046706369,0.046706369,0.046706369,0.046706369,0.046706369
+Heavy duty short haul truck,Advanced-hybrid,Biodiesel (B20),billion vmt/PJ,,,0.061154844,0.061154844,0.061154844,0.061154844,0.061154844,0.062052747,0.062052747,0.062052747,0.062052747
+Heavy duty short haul truck,Conventional,CNG,billion vmt/PJ,,0.039734299,,,,,,,,,
+Heavy duty short haul truck,Conventional,CNG,billion vmt/PJ,,,0.04347181,0.04347181,0.04347181,0.04347181,0.04347181,0.04347181,0.04347181,0.04347181,0.04347181
+Heavy duty short haul truck,Improved,CNG,billion vmt/PJ,,,,,0.044978711,0.044978711,0.044978711,0.045891984,0.045891984,0.045891984,0.045891984
+Heavy duty short haul truck,Advanced,CNG,billion vmt/PJ,,,0.046606163,0.046606163,0.047662102,0.047662102,0.047662102,0.047662102,0.047662102,0.047662102,0.047662102
+Heavy duty short haul truck,Advanced-hybrid,CNG,billion vmt/PJ,,,0.061919616,0.061919616,0.063322507,0.063322507,0.063322507,0.063322507,0.063322507,0.063322507,0.063322507
+Heavy duty long haul truck,Existing,B0,billion vmt/PJ,0.042022308,,,,,,,,,,
+Heavy duty long haul truck,Existing,LPG,billion vmt/PJ,0.039708828,,,,,,,,,,
+Heavy duty long haul truck,Conventional,B0,billion vmt/PJ,,0.042741356,,,,,,,,,
+Heavy duty long haul truck,Conventional,B0,billion vmt/PJ,,,0.046675189,0.050853667,0.050853667,0.050853667,0.050853667,0.050853667,0.050853667,0.050853667,0.050853667
+Heavy duty long haul truck,Improved,B0,billion vmt/PJ,,,,,0.053053883,0.053053883,0.053053883,0.053053883,0.053053883,0.053053883,0.053053883
+Heavy duty long haul truck,Advanced,B0,billion vmt/PJ,,,0.049764824,0.049764824,0.052921249,0.052921249,0.052921249,0.055937247,0.055937247,0.055937247,0.055937247
+Heavy duty long haul truck,Advanced-hybrid,B0,billion vmt/PJ,,,0.052231352,0.052231352,0.052231352,0.052231352,0.052231352,0.057801822,0.057801822,0.057801822,0.057801822
+Heavy duty long haul truck,Supertruck,B0,billion vmt/PJ,,,0.060541148,0.060541148,0.066951288,0.066951288,0.066951288,0.072955528,0.072955528,0.072955528,0.072955528
+Heavy duty long haul truck,Supertruck-hybrid,B0,billion vmt/PJ,,,0.063541791,0.063541791,0.07244293,0.07244293,0.07244293,0.075387379,0.075387379,0.075387379,0.075387379
+Heavy duty long haul truck,Conventional,Biodiesel (B20),billion vmt/PJ,,0.042712113,,,,,,,,,
+Heavy duty long haul truck,Conventional,Biodiesel (B20),billion vmt/PJ,,,0.046641074,0.050853667,0.050853667,0.050853667,0.050853667,0.050853667,0.050853667,0.050853667,0.050853667
+Heavy duty long haul truck,Improved,Biodiesel (B20),billion vmt/PJ,,,,,0.053055584,0.053055584,0.053055584,0.053055584,0.053055584,0.053055584,0.053055584
+Heavy duty long haul truck,Advanced,Biodiesel (B20),billion vmt/PJ,,,0.049683212,0.049683212,0.052834461,0.052834461,0.052834461,0.055845513,0.055845513,0.055845513,0.055845513
+Heavy duty long haul truck,Advanced-hybrid,Biodiesel (B20),billion vmt/PJ,,,0.052145696,0.052145696,0.052145696,0.052145696,0.052145696,0.05770703,0.05770703,0.05770703,0.05770703
+Heavy duty long haul truck,Supertruck,Biodiesel (B20),billion vmt/PJ,,,0.060441864,0.060441864,0.066841492,0.066841492,0.066841492,0.072835886,0.072835886,0.072835886,0.072835886
+Heavy duty long haul truck,Supertruck-hybrid,Biodiesel (B20),billion vmt/PJ,,,0.063437586,0.063437586,0.072324128,0.072324128,0.072324128,0.075263748,0.075263748,0.075263748,0.075263748
