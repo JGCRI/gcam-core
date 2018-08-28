@@ -20,6 +20,9 @@ original data system was \code{LA171.nonco2_trn_USA_S_T_Y.R} (gcam-usa level2).
 \description{
 Generates GCAM-USA model inputs for transportation sector by states.
 }
+\details{
+Generates GCAM-USA model inputs for transportation sector by states.
+}
 \author{
 KD Aug 2018
 }
