@@ -9,7 +9,7 @@
 #' the generated outputs: \code{}, \code{},
 # The corresponding file in the
 #' original data system was \code{LA171.nonco2_trn_USA_S_T_Y.R} (gcam-usa level2).
-#' @details
+#' @details Generates GCAM-USA model inputs for transportation sector by states.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -61,10 +61,10 @@ module_gcam.usa_LA171.nonco2_trn_USA_S_T_Y.R <- function(command, ...) {
       mutate(Vintage = as.integer(yearID - ageID)) %>%
       # Categorize vintages into five-year bins since emissions factor data is provided
       # in 5 year increments
-      mutate(Vintage = ifelse(yearID == 2005 & Vintage <= 1990, 1990,
-                              ifelse(Vintage <= 1995, 1995,
-                                     ifelse(Vintage <= 2000, 2000,
-                                            ifelse(Vintage <= 2005, 2005, 2010))))) %>%
+      mutate(Vintage = if_else(yearID == 2005 & Vintage <= 1990, 1990,
+                              if_else(Vintage <= 1995, 1995,
+                                     if_else(Vintage <= 2000, 2000,
+                                            if_else(Vintage <= 2005, 2005, 2010))))) %>%
       group_by(sourceTypeID,yearID,Vintage) %>%
       summarise(ageFraction = sum(ageFraction)) ->
       MOVES_trn_age_fractions_Yb
@@ -175,22 +175,22 @@ module_gcam.usa_LA171.nonco2_trn_USA_S_T_Y.R <- function(command, ...) {
       MARKAL_trn_age_fractions_Yb
 
     # 2b. Light-duty vehicle emissions factors
-    # Melt the raw data
+    # long the raw data
     MARKAL_LDV_EFs_gpm %>%
       gather(variable, value, -Class, -Fuel, -Vintage, convert=T) %>%
       separate(variable, into = c("pollutant", "year", "region"), sep="\\.", convert = T) %>%
       mutate(pollutant = gsub("PM2_5", "PM2.5", pollutant)) %>%
       ###NOTE: filtering out some fuels for now for lack of efficiency/service demand data, and also the CO2 data
       filter(!pollutant %in% "CO2" & !Fuel %in% c("B20", "PH10G", "PH10E")) ->
-      MARKAL_LDV_EFs_gpm.melt
+      MARKAL_LDV_EFs_gpm.long
 
     # Gather a table for use in calculating degradation of EFs for each vintage
-    MARKAL_LDV_EFs_gpm.melt %>%
+    MARKAL_LDV_EFs_gpm.long %>%
       filter(Vintage >= 2010 & Vintage != 2050 & !is.na(value)) ->
       L171.LDV_USA_emiss_degrates
 
     # Clean up and subset base year vintages
-    MARKAL_LDV_EFs_gpm.melt %>%
+    MARKAL_LDV_EFs_gpm.long %>%
       filter(year %in% BASE_YEARS & Vintage <= year) %>%
       filter(!(Vintage == 1990 & year ==2010)) %>%
       ### MISSING VALUES: emission factors pollutants with no data for ELC vehicles, and 2010 EFs for 1990 vintages
@@ -209,7 +209,7 @@ module_gcam.usa_LA171.nonco2_trn_USA_S_T_Y.R <- function(command, ...) {
       MARKAL_LDV_EFs_gpm_Yb.avg
 
     # Clean up and subset future vintages for emissions coefficients
-    MARKAL_LDV_EFs_gpm.melt %>%
+    MARKAL_LDV_EFs_gpm.long %>%
       filter(Vintage >= 2015 & Vintage == year & !is.na(value)) ->
       MARKAL_LDV_EFs_gpm_Yf_NAs
 
@@ -249,7 +249,7 @@ module_gcam.usa_LA171.nonco2_trn_USA_S_T_Y.R <- function(command, ...) {
       GREET_LDV_CNG_EFs_tgEJ_Y
 
     # Bind CNG data onto MARKAL table
-    # MARKAL_LDV_EFs_tgEJ_Y.melt <- bind_rows(MARKAL_LDV_EFs_tgEJ_Y.long, GREET_LDV_CNG_EFs_tgEJ_Y)
+    # MARKAL_LDV_EFs_tgEJ_Y.long <- bind_rows(MARKAL_LDV_EFs_tgEJ_Y.long, GREET_LDV_CNG_EFs_tgEJ_Y)
     # Spread to wide format
     # MISSING VALUES: ELC Minivans in 2005 and all vehicles using E85 in 2005. Fill with 2010 data for now
     # Also fill in zeroes in 2005 with 2010 data
@@ -286,22 +286,22 @@ module_gcam.usa_LA171.nonco2_trn_USA_S_T_Y.R <- function(command, ...) {
       L171.LDV_USA_emiss_degrates_tgEJ
 
     # 2c. Heavy duty vehicle emission factors
-    # Melt the raw data
+    # long the raw data
     MARKAL_HDV_EFs_gpm %>%
       gather(variable, value, -Class, -Fuel, -Vintage, convert = T) %>%
       separate(variable, into = c("pollutant", "year", "region"), sep="\\.", convert=T) %>%
       mutate(pollutant = gsub("PM2_5","PM2.5", pollutant)) %>%
       ### NOTE: filtering out fuels with no intensity data, and also the CO2 data
       filter(!pollutant %in% "CO2" & Fuel %in% c("B0","B20","CNG")) ->
-      MARKAL_HDV_EFs_gpm.melt
+      MARKAL_HDV_EFs_gpm.long
 
     # Gather a table for use in calculating degradation of EFs for each vintage
-    MARKAL_HDV_EFs_gpm.melt %>%
+    MARKAL_HDV_EFs_gpm.long %>%
       filter(Vintage >= 2010 & Vintage != 2050 & !is.na(value)) ->
       L171.HDV_USA_emiss_degrates
 
     # Clean up and subset base year vintages
-    MARKAL_HDV_EFs_gpm.melt %>%
+    MARKAL_HDV_EFs_gpm.long %>%
       filter(year %in% BASE_YEARS & Vintage <= year) %>%
       filter(!(year == 2010 & Vintage == 1990)) %>%
       na.omit ->
@@ -320,7 +320,7 @@ module_gcam.usa_LA171.nonco2_trn_USA_S_T_Y.R <- function(command, ...) {
       MARKAL_HDV_EFs_gpm_Yb.avg
 
     # Clean up and subset future vintages for emissions coefficients
-    MARKAL_HDV_EFs_gpm.melt %>%
+    MARKAL_HDV_EFs_gpm.long %>%
       filter(Vintage >= 2015 & Vintage == year & !is.na(value)) ->
       MARKAL_HDV_EFs_gpm_Yf_NAs
 
