@@ -268,8 +268,9 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       if ( "price.exp.year.fillout" %in% names ) data$price.exp.year.fillout <- "start-year"
       data_new <- data %>%
         set_years() %>%
-        repeat_add_columns(tibble::tibble(region = grid_regions))
-      return( data_new[ names ] )
+        repeat_add_columns(tibble::tibble(region = grid_regions)) %>%
+        select( names )
+      return( data_new)
     }
 
 
