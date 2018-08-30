@@ -94,7 +94,8 @@
 		<Value name = "Cstorage_usa">../input/gcamdata/xml/Cstorage_USA.xml</Value>
 		<Value name = "prices_usa">../input/gcamdata/xml/en_prices_USA.xml</Value>
 		<Value name = "en_transform_usa">../input/gcamdata/xml/en_transformation_USA.xml</Value>
-		<Value name = "elec_usa">../input/gcamdata/xml/electricity_USA.xml</Value>
+		<!--Value name = "elec_usa">../input/gcamdata/xml/electricity_USA.xml</Value-->
+		<Value name = "elec_usa">../input/gcamdata/xml/elec_segments_USA.xml</Value>
 		<Value name = "h2_usa">../input/gcamdata/xml/hydrogen_USA.xml</Value>
 		<Value name = "elect_td_usa">../input/gcamdata/xml/electd_USA.xml</Value>
 		<Value name = "trn_usa">../input/gcamdata/xml/transportation_USA.xml</Value>
@@ -105,6 +106,7 @@
 		<Value name = "fert_usa">../input/gcamdata/xml/Fert_USA.xml</Value>
 		<Value name = "liq_lim_usa">../input/gcamdata/xml/liquids_limits_USA.xml</Value>
 		<Value name = "neg_emiss_usa">../input/gcamdata/xml/negative_emissions_budget_USA_gSSP2.xml</Value>
+		<Value name = "USA_regional_bio">../input/gcamdata/xml/regional_biomass_USA.xml</Value>
 	</ScenarioComponents>
 	<Strings>
 		<Value name="scenarioName">GCAM-USA_Ref</Value>
