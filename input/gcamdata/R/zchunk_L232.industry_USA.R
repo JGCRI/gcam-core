@@ -6,19 +6,28 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L232.DeleteSupplysector_USAind}, \code{L232.DeleteFinalDemand_USAind}, \code{object}, \code{L232.StubTechCalInput_indenergy_USA}, \code{L232.StubTechCalInput_indfeed_USA}, \code{L232.StubTechProd_industry_USA}, \code{L232.StubTechCoef_industry_USA}, \code{L232.StubTechMarket_ind_USA}, \code{L232.StubTechSecMarket_ind_USA}, \code{L232.BaseService_ind_USA}. The corresponding file in the
-#' original data system was \code{L232.industry_USA.R} (gcam-usa level2).
+#' the generated outputs: \code{L232.DeleteSupplysector_USAind}, \code{L232.DeleteFinalDemand_USAind},
+#' \code{L232.StubTechCalInput_indenergy_USA}, \code{L232.StubTechCalInput_indfeed_USA}, \code{L232.StubTechProd_industry_USA},
+#' \code{L232.StubTechCoef_industry_USA}, \code{L232.StubTechMarket_ind_USA}, \code{L232.StubTechSecMarket_ind_USA},
+#' \code{L232.BaseService_ind_USA}, \code{L232.Supplysector_ind_USA}, \code{L232.FinalEnergyKeyword_ind_USA},
+#' \code{L232.SubsectorLogit_ind_USA}, \code{L232.SubsectorShrwtFllt_ind_USA}, \code{L232.SubsectorInterp_ind_USA},
+#' \code{L232.StubTech_ind_USA}, \code{L232.StubTechInterp_ind_USA}, \code{L232.PerCapitaBased_ind_USA},
+#' \code{L232.PriceElasticity_ind_USA}, \code{L232.IncomeElasticity_ind_gcam3_USA}, \code{L232.StubTechEff_ind_adv_USA.},
+#' \code{L232.FuelPrefElast_indenergy_hielec_USA},
+#' The corresponding file in the original data system was \code{L232.industry_USA.R} (gcam-usa level2).
 #' @details Prepare level 2 industry sector files for USA.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author ST October 2017
+#' @author ST October 2017 ; modified MTB Aug 2018
 module_gcam.usa_L232.industry_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "energy/A32.demand",
              FILE = "energy/A32.globaltech_eff",
              FILE = "energy/calibrated_techs",
+             FILE = "gcam-usa/A32.tech_eff_USA",
+             FILE = "gcam-usa/A32.fuelprefElasticity_USA",
              "L232.Supplysector_ind",
              "L232.StubTech_ind",
              "L232.PerCapitaBased_ind",
@@ -54,9 +63,12 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
              "L232.StubTechInterp_ind_USA",
              "L232.PerCapitaBased_ind_USA",
              "L232.PriceElasticity_ind_USA",
-             "L232.IncomeElasticity_ind_gcam3_USA"))
+             "L232.IncomeElasticity_ind_gcam3_USA",
+             "L232.StubTechEff_ind_adv_USA",
+             "L232.FuelPrefElast_indenergy_hielec_USA"))
   } else if(command == driver.MAKE) {
 
+    # silence check package notes
     year <- value <- output_tot <- grid_region <- market.name <-
       calOutputValue <- calibrated.value <- calibration <- technology <-
       efficiency <- fuel <- minicam.energy.input <- object <-
@@ -69,6 +81,8 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
     A32.demand <- get_data(all_data, "energy/A32.demand")
     A32.globaltech_eff <- get_data(all_data, "energy/A32.globaltech_eff")
+    A32.tech_eff_USA <- get_data(all_data, "gcam-usa/A32.tech_eff_USA")
+    A32.fuelprefElasticity_USA <- get_data(all_data, "gcam-usa/A32.fuelprefElasticity_USA")
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
     L232.Supplysector_ind <- get_data(all_data, "L232.Supplysector_ind")
     L232.StubTech_ind <- get_data(all_data, "L232.StubTech_ind")
@@ -87,7 +101,9 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
     L232.PriceElasticity_ind <- get_data(all_data, "L232.PriceElasticity_ind")
     L232.IncomeElasticity_ind_gcam3 <- get_data(all_data, "L232.IncomeElasticity_ind_gcam3")
 
+
     # ===================================================
+    # Data Processing
 
     # convert to long form
     A32.globaltech_eff %>%
@@ -151,7 +167,6 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
     L232.PerCapitaBased_ind_USA <- industry_USA_processing(L232.PerCapitaBased_ind)
     L232.PriceElasticity_ind_USA <- industry_USA_processing(L232.PriceElasticity_ind)
     L232.IncomeElasticity_ind_gcam3_USA <- industry_USA_processing(L232.IncomeElasticity_ind_gcam3)
-
 
     # get calibrated input of industrial energy use technologies, including cogen
     L132.in_EJ_state_indnochp_F %>%
@@ -302,7 +317,45 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
       L232.BaseService_ind_USA  # base service is equal to the output of the industry supplysector
 
 
-    # OUTPUTS...
+    # Advanced case efficiencies of the industrial sector
+    A32.tech_eff_USA %>%
+      gather_years("efficiency") %>%
+      complete(nesting(region, supplysector, subsector, technology, minicam.energy.input, secondary.output),
+               year = c(FUTURE_YEARS)) %>%
+      arrange(region, supplysector, subsector, technology, year) %>%
+      group_by(region, supplysector, subsector, technology, minicam.energy.input, secondary.output) %>%
+      mutate(efficiency = approx_fun(year, efficiency),
+             efficiency = round(efficiency, energy.DIGITS_EFFICIENCY)) %>%
+      ungroup() %>%
+      rename(stub.technology = technology,
+             # Market name is included in the stub tech efficiency header
+             market.name = region) %>%
+      write_to_all_states(LEVEL2_DATA_NAMES$StubTechEff) -> L232.StubTechEff_ind_adv_USA
+
+    # now get the markets right
+    # regional fuel markets
+    if(gcamusa.USE_REGIONAL_FUEL_MARKETS == TRUE){
+      L232.StubTechEff_ind_adv_USA %>%
+        left_join_error_no_match(states_subregions %>%
+                                   select(region = state, grid_region),
+                                 by = c("region")) %>%
+        mutate(market.name = if_else(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS,
+                                     grid_region, market.name)) %>%
+        select(-grid_region) -> L232.StubTechEff_ind_adv_USA
+    }
+
+    # electricity is consumed from state markets
+    L232.StubTechEff_ind_adv_USA %>%
+      mutate(market.name = if_else(minicam.energy.input %in% gcamusa.ELECT_TD_SECTORS,
+                                   region, market.name)) -> L232.StubTechEff_ind_adv_USA
+
+
+    # Fuel preference elasticity for hielec scenario
+    L232.FuelPrefElast_indenergy_hielec_USA <- write_to_all_states(A32.fuelprefElasticity_USA, LEVEL2_DATA_NAMES$FuelPrefElast)
+
+
+    # ===================================================
+    # Produce outputs
 
     L232.DeleteSupplysector_USAind %>%
       add_title("USA industry supply sectors") %>%
@@ -392,7 +445,6 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
                      "energy/A32.demand") ->
       L232.BaseService_ind_USA
 
-
     L232.Supplysector_ind_USA %>%
       add_title("Supply sector information for industry sector") %>%
       add_units("NA") %>%
@@ -476,6 +528,23 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
       add_precursors("L232.IncomeElasticity_ind_gcam3") ->
       L232.IncomeElasticity_ind_gcam3_USA
 
+    L232.StubTechEff_ind_adv_USA %>%
+      add_title("Industry Efficiency for Industry Advanced Technology Scenario") %>%
+      add_units("unitless") %>%
+      add_comments("Efficiencies for industrial energy use and industrial feedstocks in an industry advanced technology scenario.") %>%
+      add_legacy_name("L232.StubTechEff_ind_USA_adv") %>%
+      add_precursors("gcam-usa/states_subregions",
+                     "gcam-usa/A32.tech_eff_USA") ->
+      L232.StubTechEff_ind_adv_USA
+
+    L232.FuelPrefElast_indenergy_hielec_USA %>%
+      add_title("Industrial Energy Use Fuel Price Elasticities for High Industry Electrification Scenario") %>%
+      add_units("elasticity") %>%
+      add_comments("Fuel preference elasticities for industrial energy use in a high industry electrification scenario") %>%
+      add_legacy_name("L232.FuelPrefElast_indenergy_USA_hielec") %>%
+      add_precursors("gcam-usa/A32.fuelprefElasticity_USA") ->
+      L232.FuelPrefElast_indenergy_hielec_USA
+
 
     return_data(L232.DeleteSupplysector_USAind,
                 L232.DeleteFinalDemand_USAind,
@@ -495,7 +564,9 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
                 L232.StubTechInterp_ind_USA,
                 L232.PerCapitaBased_ind_USA,
                 L232.PriceElasticity_ind_USA,
-                L232.IncomeElasticity_ind_gcam3_USA)
+                L232.IncomeElasticity_ind_gcam3_USA,
+                L232.StubTechEff_ind_adv_USA,
+                L232.FuelPrefElast_indenergy_hielec_USA)
   } else {
     stop("Unknown command")
   }
