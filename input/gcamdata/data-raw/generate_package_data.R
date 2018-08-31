@@ -217,6 +217,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["StubTranTechLoadFactor"]] <- c("region", "supplysector", "tranSubsector", "stub.technology", "year", "loadFactor")
   level2_data_names[["StubTranTechProd"]] <- c("region", "supplysector", "tranSubsector", "stub.technology", "year", "calOutputValue")
   level2_data_names[["DeleteStubTech"]] <- level2_data_names[["StubTech"]]
+  level2_data_names[["StubTechSCurve"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "lifetime", "steepness", "half.life")
 
   # Agricultural sectors, subsectors, and technologies
   level2_data_names[["AgSupplySector"]] <- c("region", "AgSupplySector", "output.unit", "input.unit", "price.unit", "calPrice", "market", "logit.year.fillout", "logit.exponent")
