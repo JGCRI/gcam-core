@@ -1,0 +1,19 @@
+# File: A32.tech_eff_USA.csv,,,,,,,,,,,,,,,,,
+# Title: Industry Efficiency Parameters for Industry Advanced Technology Scenario,,,,,,,,,,,,,,,,,
+# Units: unitless,,,,,,,,,,,,,,,,,
+# Comments: Efficiencies for industrial energy use and industrial feedstocks in an industry advanced technology scenario.,,,,,,,,,,,,,,,,,
+# Source: https://www.pnnl.gov/main/publications/external/technical_reports/PNNL-26174.pdf,,,,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,minicam.energy.input,secondary.output,1971,2005,2010,2015,2020,2025,2030,2035,2040,2045,2050,2100
+USA,industrial energy use,biomass,biomass,delivered biomass,,0.746423292,0.799,0.798333333,0.790017361,0.800715324,0.824572149,0.83217341,0.823128047,0.814082684,0.814082684,0.814082684,0.814082684
+USA,industrial energy use,biomass,biomass cogen,delivered biomass,electricity,0.515676667,0.552,0.554666667,0.548888889,0.556321628,0.572896892,0.56673671,0.560576529,0.554416347,0.554416347,0.554416347,0.554416347
+USA,industrial energy use,coal,coal,delivered coal,,0.808080285,0.865,0.873666667,0.864565973,0.876273429,0.902381463,0.910700004,0.900801091,0.890902178,0.890902178,0.890902178,0.890902178
+USA,industrial energy use,coal,coal cogen,delivered coal,electricity,0.582004645,0.623,0.625,0.618489583,0.626864815,0.645541871,0.63860056,0.63165925,0.624717939,0.624717939,0.624717939,0.624717939
+USA,industrial energy use,electricity,electricity,elect_td_ind,,0.934196861,1,1.005,0.99453125,1.007998623,1.038031327,1.068835246,1.100540352,1.110479117,1.132957722,1.155891344,1.356886354
+USA,industrial energy use,gas,gas,wholesale gas,,0.825830025,0.884,0.888666667,0.879409723,0.891318185,0.917874467,0.92633583,0.93476474,0.943156438,0.962197066,0.981622089,1.01815358
+USA,industrial energy use,gas,gas cogen,wholesale gas,electricity,0.563320707,0.603,0.606,0.5996875,0.607808124,0.625917397,0.631687374,0.63743522,0.643157692,0.656141886,0.669388207,0.696688506
+USA,industrial energy use,hydrogen,hydrogen,H2 enduse,,1,1,1,1,1.024323783,1.066185283,1.087709641,1.087709641,1.087709641,1.087709641,1.087709641,1.087709641
+USA,industrial energy use,hydrogen,hydrogen cogen,H2 enduse,electricity,0.457,0.457,0.457,0.457,0.468115969,0.487246674,0.497083306,0.507118521,0.51735633,0.527800821,0.538456168,0.560416541
+USA,industrial energy use,refined liquids,refined liquids,refined liquids industrial,,0.917381318,0.982,0.988333333,0.978038194,0.991282228,1.020816878,1.030227208,1.039601445,1.048934299,1.07011039,1.091713989,1.182578703
+USA,industrial energy use,refined liquids,refined liquids cogen,refined liquids industrial,electricity,0.565189101,0.605,0.608,0.601666667,0.609814092,0.627983132,0.621230625,0.614478118,0.607725611,0.607725611,0.607725611,0.607725611
+USA,industrial feedstocks,gas,gas,wholesale gas,,1,1,1,1,1,1,1,1,1,1,1,1
+USA,industrial feedstocks,refined liquids,refined liquids,refined liquids industrial,,1,1,1,1,1,1,1,1,1,1,1,1
