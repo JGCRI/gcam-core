@@ -515,7 +515,7 @@ module_energy_L244.building_det <- function(command, ...) {
       mutate(variable = if_else(thermal.building.service.input %in% heating_services, "HDD", "CDD")) %>%
       left_join_error_no_match(L244.HDDCDD_normal_R_Y, by = c("region", "variable")) %>%
       group_by(gcam.consumer, variable) %>%
-      mutate(satiation.level = round(satiation.level * degree.days / degree.days[region == "USA"], digits = energy.DIGITS_CALOUTPUT)) %>%
+      mutate(satiation.level = round(satiation.level * degree.days / degree.days[region == gcam.USA_REGION], digits = energy.DIGITS_CALOUTPUT)) %>%
       ungroup()
 
     # The service satiation in the final cal year can not be lower than the observed demand, so need to use pmax to set a floor on the quantity
@@ -702,7 +702,7 @@ module_energy_L244.building_det <- function(command, ...) {
       left_join_error_no_match(US.base.scalar, by = "variable") %>%
       left_join_error_no_match(L244.HDDCDD_normal_R_Y, by = c("region", "variable")) %>%
       group_by(thermal.building.service.input) %>%
-      mutate(scalar_mult = degree.days / degree.days[region == "USA"]) %>%
+      mutate(scalar_mult = degree.days / degree.days[region == gcam.USA_REGION]) %>%
       ungroup() %>%
       mutate(internal.gains.scalar = round(InternalGainsScalar_USA * scalar_mult, energy.DIGITS_HDDCDD)) %>%
       select(LEVEL2_DATA_NAMES[["Intgains_scalar"]])

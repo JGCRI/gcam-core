@@ -38,7 +38,7 @@ module_gcam.usa_L225.hydrogen_USA <- function(command, ...) {
     L225.SubsectorLogit_h2 %>%
       # Copy the region column to remove the attributes from the data frame.
       mutate(region = region) %>%
-      filter(region == "USA", subsector %in% c("wind", "solar", "electricity")) %>%
+      filter(region == gcam.USA_REGION, subsector %in% c("wind", "solar", "electricity")) %>%
       select(region, supplysector, subsector) ->
       L225.DeleteSubsector_h2_USA
 

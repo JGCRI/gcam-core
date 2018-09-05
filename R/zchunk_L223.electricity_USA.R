@@ -158,13 +158,13 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       # NOTE: This also removes the rooftop PV subsector of the USA elect_td_bld sector
       L223.SubsectorLogit_elec %>%
         select(LEVEL2_DATA_NAMES[["Subsector"]]) %>%
-        filter(region == "USA") ->
+        filter(region == gcam.USA_REGION) ->
         L223.DeleteSubsector_USAelec
 
       # L223.Supplysector_USAelec: supplysector for electricity sector in the USA region,
       # including logit exponent between grid regions
       # All of the supplysector information is the same as before, except the logit exponent
-      tibble(region = "USA",
+      tibble(region = gcam.USA_REGION,
              supplysector = elec_gen_names,
              output.unit = "EJ",
              input.unit = "EJ",
@@ -177,7 +177,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
 
       # L223.SubsectorShrwtFllt_USAelec: subsector (grid region) share-weights in USA electricity
       # No need to read in subsector logit exponents, which are applied to the technology competition
-      tibble(region = "USA",
+      tibble(region = gcam.USA_REGION,
              supplysector = elec_gen_names,
              subsector = paste(grid_regions, elec_gen_names, sep = " "),
              year.fillout = min(BASE_YEARS),
@@ -377,7 +377,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
         minicam.energy.input <- NULL  # silence package check notes
 
       data_new <- data %>%
-        filter(region == "USA") %>%
+        filter(region == gcam.USA_REGION) %>%
         write_to_all_states(names(data))
 
       if("subsector" %in% names(data_new)) {
@@ -506,7 +506,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
                                 by = c("supplysector", "subsector", "stub.technology" = "technology")) %>%
       # Remove NA rows for hydro
       na.omit %>%
-      mutate(market.name = "USA",
+      mutate(market.name = gcam.USA_REGION,
              market.name = replace(market.name,
                                    minicam.energy.input %in% c(gcamusa.STATE_RENEWABLE_RESOURCES, gcamusa.STATE_UNLIMITED_RESOURCES),
                                    region[minicam.energy.input %in% c(gcamusa.STATE_RENEWABLE_RESOURCES, gcamusa.STATE_UNLIMITED_RESOURCES)])) %>%
@@ -526,7 +526,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
     L223.GlobalIntTechBackup_elec %>%
       mutate(supplysector = sector.name, subsector = subsector.name) %>%
       write_to_all_states(names = c(names(.), 'region')) %>%
-      mutate(market.name = "USA", stub.technology = technology) %>%
+      mutate(market.name = gcam.USA_REGION, stub.technology = technology) %>%
       select(LEVEL2_DATA_NAMES[["StubTechMarket"]]) ->
       L223.StubTechMarket_backup_USA
 
@@ -535,7 +535,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
     if(!gcamusa.USE_REGIONAL_ELEC_MARKETS) {
       L223.StubTechMarket_backup_USA %>%
         select(LEVEL2_DATA_NAMES[["StubTechYr"]]) %>%
-        mutate(electric.sector.market = "USA") ->
+        mutate(electric.sector.market = gcam.USA_REGION) ->
         L223.StubTechElecMarket_backup_USA
     }
 
@@ -547,7 +547,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       L223.CapacityFactor_wind_state
 
     L223.StubTechCapFactor_elec %>%
-      filter(region == "USA") %>%
+      filter(region == gcam.USA_REGION) %>%
       semi_join(L223.CapacityFactor_wind_state, by = c("supplysector", "subsector")) %>%
       select(-region, -capacity.factor) %>%
       write_to_all_states(names = c(names(.), "region")) %>%
@@ -566,7 +566,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
 
     # Just use the subsector for matching - technologies include storage technologies as well
     L223.StubTechCapFactor_elec %>%
-      filter(region == "USA") %>%
+      filter(region == gcam.USA_REGION) %>%
       semi_join(L223.CapFacScaler_solar_state, by = c("supplysector", "subsector")) %>%
       select(-region) %>%
       write_to_all_states(., c(names(.), "region")) %>%

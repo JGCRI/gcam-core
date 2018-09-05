@@ -134,14 +134,14 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
     # L254.DeleteSupplysector_USAtrn: Delete transportation supplysectors of the USA region
     L254.Supplysector_trn %>%
       mutate(region = region) %>% # strip off attributes like title, etc.
-      filter(region == "USA") %>%
+      filter(region == gcam.USA_REGION) %>%
       select(region, supplysector) ->
       L254.DeleteSupplysector_USAtrn
 
     # L254.DeleteFinalDemand_USAtrn: Delete energy final demand sectors of the USA region
     L254.PerCapitaBased_trn %>%
       mutate(region = region) %>% # strip off attributes like title, etc.
-      filter(region == "USA") %>%
+      filter(region == gcam.USA_REGION) %>%
       select(LEVEL2_DATA_NAMES[["EnergyFinalDemand"]]) ->
       L254.DeleteFinalDemand_USAtrn
 
@@ -153,7 +153,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
         minicam.energy.input <- NULL  # silence package check notes
 
       data_new <- data %>%
-        filter(region == "USA") %>%
+        filter(region == gcam.USA_REGION) %>%
         write_to_all_states(names = c(names(data), "region"))
 
       # Re-set markets from USA to regional markets, if called for in the GCAM-USA assumptions for selected fuels

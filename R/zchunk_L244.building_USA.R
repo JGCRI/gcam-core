@@ -147,8 +147,8 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
 
 
     # Need to delete the buildings sector in the USA region (gcam.consumers and supplysectors)
-    L244.DeleteConsumer_USAbld <- tibble(region = "USA", gcam.consumer = A44.gcam_consumer_en$gcam.consumer)
-    L244.DeleteSupplysector_USAbld <- tibble(region = "USA", supplysector = A44.sector_en$supplysector)
+    L244.DeleteConsumer_USAbld <- tibble(region = gcam.USA_REGION, gcam.consumer = A44.gcam_consumer_en$gcam.consumer)
+    L244.DeleteSupplysector_USAbld <- tibble(region = gcam.USA_REGION, supplysector = A44.sector_en$supplysector)
 
     # L244.SubregionalShares_gcamusa: subregional population and income shares (not currently used)
     L244.SubregionalShares_gcamusa <- write_to_all_states(A44.gcam_consumer, c("region", "gcam.consumer")) %>%
@@ -351,7 +351,7 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
 
     # L244.StubTechMarket_bld: Specify market names for fuel inputs to all technologies in each state
     L244.StubTechMarket_bld <- L244.end_use_eff %>%
-      mutate(market.name = "USA") %>%
+      mutate(market.name = gcam.USA_REGION) %>%
       rename(stub.technology = technology) %>%
       write_to_all_states(LEVEL2_DATA_NAMES[["StubTechMarket"]]) %>%
       # Electricity is consumed from state markets, so change market.name to states for electricity

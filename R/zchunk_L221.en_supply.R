@@ -404,7 +404,7 @@ module_energy_L221.en_supply <- function(command, ...) {
       rename(stub.technology = technology) %>%
       write_to_all_regions(c(LEVEL2_DATA_NAMES[["StubTechCoef"]]),
                            GCAM_region_names = GCAM_region_names) %>%
-      mutate(market.name = "USA") -> L221.StubTechCoef_unoil
+      mutate(market.name = gcam.USA_REGION) -> L221.StubTechCoef_unoil
 
     L111.Prod_EJ_R_F_Yh %>%
       filter(grepl("unconventional", fuel), year %in% MODEL_YEARS) %>%

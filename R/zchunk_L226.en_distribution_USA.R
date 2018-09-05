@@ -95,7 +95,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
     # and processes for use in USA electricity T&D
     global_energy_to_USA_electd <- function(data) {
       data %>%
-        filter(region == "USA",
+        filter(region == gcam.USA_REGION,
                supplysector %in% gcamusa.ELECT_TD_SECTORS) %>%
         write_to_all_states(names(data))
     } # end global_energy_to_USA_electd
@@ -238,7 +238,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
 
     # L226.Ccoef: carbon coef for cost adder sectors
     L202.CarbonCoef %>%
-      filter(region == "USA") %>%
+      filter(region == gcam.USA_REGION) %>%
       select(-region) ->
       L226.Ccoef.usa
 
@@ -254,7 +254,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
 
     # L226.DeleteSupplysector_USAelec: Removing the electricity T&D sectors of the USA region
     # This should probably be converted to an assumption and read in at some point.
-    L226.DeleteSupplysector_USAelec <- tibble(region = "USA", supplysector = gcamusa.ELECT_TD_SECTORS)
+    L226.DeleteSupplysector_USAelec <- tibble(region = gcam.USA_REGION, supplysector = gcamusa.ELECT_TD_SECTORS)
 
 
     # Replacing for loop starting on line 152 in old DS.
