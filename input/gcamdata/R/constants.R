@@ -29,6 +29,7 @@ MODEL_YEARS             <- c(BASE_YEARS, FUTURE_YEARS)
 # GCAM constants ======================================================================
 
 gcam.USA_CODE            <- 1
+gcam.USA_REGION          <- "USA"
 gcam.WESTERN_EUROPE_CODE <- 13
 gcam.LOGIT_TYPES         <- c("relative-cost-logit", "absolute-cost-logit")
 gcam.EQUIV_TABLE         <- "EQUIV_TABLE"

@@ -101,7 +101,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
     #
     # Create a table that will be used remove the cement supply sector input table.
     L2321.Supplysector_cement %>%
-      filter(region == "USA") %>%
+      filter(region == gcam.USA_REGION) %>%
       select(region, supplysector) %>%
       # Mutate to remove attributes.
       mutate(region = region) ->
@@ -110,7 +110,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
     # Create the table that will be used to remove the cement sector information from the
     # energy.final.demand input table.
     L2321.PerCapitaBased_cement %>%
-      filter(region == "USA") %>%
+      filter(region == gcam.USA_REGION) %>%
       select(region, energy.final.demand) %>%
       # Mutate to remove attributes.
       mutate(region = region) ->
@@ -128,7 +128,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
       # to check to see if the data frame needs to be processed, it's assumed that if the USA
       # is not found in the region column that regions have already been processed.
 
-      check_df <- filter(data, region == "USA")
+      check_df <- filter(data, region == gcam.USA_REGION)
 
       if(nrow(check_df) == 0) {
 
@@ -142,7 +142,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
         # then expand the input data to all cement producing states.
 
         data %>%
-          filter(region == "USA") %>%
+          filter(region == gcam.USA_REGION) %>%
           write_to_all_states(names = names(data)) %>%
           filter(region %in% cement_states[["state"]]) ->
           new_data
@@ -290,7 +290,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
     # comes from the USA level.
     L2321.StubTechCoef_cement_USA %>%
       mutate(market.name = region,
-             market.name = if_else(grepl("elec", minicam.energy.input), "USA", market.name)) ->
+             market.name = if_else(grepl("elec", minicam.energy.input), gcam.USA_REGION, market.name)) ->
       L2321.StubTechCoef_cement_USA
 
     if(gcamusa.USE_REGIONAL_FUEL_MARKETS) {
@@ -373,7 +373,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
 
     # Assume the fuels are from the USA markets unless using regional fuel markets.
     L2321.StubTechMarket_cement_USA %>%
-      mutate(market.name = "USA") %>%
+      mutate(market.name = gcam.USA_REGION) %>%
       select(region, supplysector, subsector, stub.technology, year, minicam.energy.input, market.name) ->
       L2321.StubTechMarket_cement_USA
 
