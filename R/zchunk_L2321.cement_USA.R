@@ -243,13 +243,13 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
     L2321.globaltech_coef %>%
       filter(year %in% MODEL_FUTURE_YEARS) %>%
       spread(year, value) ->
-      L2321.globaltech_coef_MODEL_FUTURE_YEARS
+      L2321.globaltech_coef_yfut
 
     # Combine the future global technology coefficients with the state energy input-output
     # coefficients by supplysector / subsector / technology / minicam.energy.input combinations.
     L2321.IO_GJkg_state_cement_F_Yh %>%
       spread(year, value) %>%
-      left_join_error_no_match(L2321.globaltech_coef_MODEL_FUTURE_YEARS,
+      left_join_error_no_match(L2321.globaltech_coef_yfut,
                                by = c("supplysector", "subsector", "technology", "minicam.energy.input")) ->
       IO_and_globaltech
 
