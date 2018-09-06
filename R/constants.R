@@ -583,6 +583,7 @@ emissions.DIGITS_EMISSIONS <- 10
 # GCAM-USA time
 gcamusa.WIND_BASE_COST_YEAR   <- 2005
 gcamusa.FINAL_HISTORICAL_YEAR <- 2010
+gcamusa.FINAL_CALIBRATION_YEAR <- 2010
 gcamusa.FUTURE_MODEL_YEARS <- seq(from = 2015, to = 2100, by = 5)
 
 # GCAM-USA states
