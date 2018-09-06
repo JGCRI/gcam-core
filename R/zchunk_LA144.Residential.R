@@ -20,6 +20,7 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
              FILE = "gcam-usa/EIA_AEO_fuels",
              FILE = "gcam-usa/EIA_AEO_services",
              FILE = "gcam-usa/Census_pop_hist",
+             FILE = "gcam-usa/AEO_2015_flsp",
              FILE = "gcam-usa/EIA_AEO_Tab4",
              FILE = "gcam-usa/RECS_1979",
              FILE = "gcam-usa/RECS_1984",
@@ -41,7 +42,7 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
     year <- value <- subregion9 <- DIVISION2009 <- DIVISION <- subregion13 <- LRGSTATE <- subregion13 <- REPORTABLE_DOMAIN <-
       state <- subregion9 <- year <- variable <- HOUSEHOLDS <- NWEIGHT <- . <- value.x <- value.y <- variable <- pcflsp_m2 <-
       pcflsp_m2.x <- pcflsp_m2.y <- conv_9_13 <- sector <- fuel <- service <- DIVISION <- val_1993 <- conv <- val_1990 <-
-      Fuel <- Service <- tv_1995 <- fuel_sum <- share <- service.x <- NULL
+      Fuel <- Service <- tv_1995 <- fuel_sum <- share <- service.x <- Sector <- RECS_flspc_2010 <- scaler <- EIA_sector <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -52,6 +53,7 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
     EIA_AEO_services <- get_data(all_data, "gcam-usa/EIA_AEO_services")
     Census_pop_hist <- get_data(all_data, "gcam-usa/Census_pop_hist") %>%
       gather_years
+    AEO_2015_flsp <- get_data(all_data, "gcam-usa/AEO_2015_flsp")
     EIA_AEO_Tab4 <- get_data(all_data, "gcam-usa/EIA_AEO_Tab4") %>%
       gather_years
     RECS_1979 <- get_data(all_data, "gcam-usa/RECS_1979")
@@ -76,6 +78,17 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
     for(i in seq_along(L144.RECS_all)) {
       L144.RECS_all[[i]]$year <- substr(names(L144.RECS_all[i]), 5, 8) %>% as.integer()
     }
+
+    # # Lines 77-80 above do not appear to be working in debug mode
+    # # Hack for now to ensure that years column gets assigned properly
+    # L144.RECS_all$RECS1979 %>% mutate(year = as.integer(1986)) -> L144.RECS_all$RECS1979
+    # L144.RECS_all$RECS1984 %>% mutate(year = as.integer(1989)) -> L144.RECS_all$RECS1984
+    # L144.RECS_all$RECS1990 %>% mutate(year = as.integer(1992)) -> L144.RECS_all$RECS1990
+    # L144.RECS_all$RECS1993 %>% mutate(year = as.integer(1995)) -> L144.RECS_all$RECS1993
+    # L144.RECS_all$RECS1997 %>% mutate(year = as.integer(1999)) -> L144.RECS_all$RECS1997
+    # L144.RECS_all$RECS2001 %>% mutate(year = as.integer(2003)) -> L144.RECS_all$RECS2001
+    # L144.RECS_all$RECS2005 %>% mutate(year = as.integer(1999)) -> L144.RECS_all$RECS2005
+    # L144.RECS_all$RECS2009 %>% mutate(year = as.integer(2003)) -> L144.RECS_all$RECS2009
 
     # Add a vector specifying the census division (subregion9)
     L144.RECS_all <- L144.RECS_all %>%
@@ -229,6 +242,25 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
       mutate(value = value * pcflsp_m2 / CONV_BM2_M2) %>%
       select(state, subregion13, sector, year, value)
 
+    #Final step - hack for AEO 2015 harmonization. NEMS resid floorspace is a lot lower than RECS
+    AEO_2015_flsp %>%
+      gather_years() %>%
+      filter(Sector == "Residential",
+             year == max(HISTORICAL_YEARS)) %>%
+      left_join_error_no_match(L144.flsp_bm2_state_res %>%
+                                 filter(year == max(HISTORICAL_YEARS)) %>%
+                                 group_by(sector, year) %>%
+                                 summarise(RECS_flspc_2010 = sum(value)) %>%
+                                 ungroup(),
+                               by = c("year")) %>%
+      mutate(scaler = value / RECS_flspc_2010) %>%
+      select(sector, scaler) -> L144.flsp_scaler
+
+    L144.flsp_bm2_state_res %>%
+      left_join_error_no_match(L144.flsp_scaler, by = c("sector")) %>%
+      mutate(value = if_else(year %in% HISTORICAL_YEARS, value * scaler, value)) %>%
+      select(-scaler) -> L144.flsp_bm2_state_res
+
     # c) ENERGY CONSUMPTION BY STATE, SERVICE, AND YEAR
     # Aggregating energy consumption by sampling weights
     # First, do 1990 and 1993 by subregion9
@@ -381,11 +413,15 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
     # Match in GCAM services and fuels
     L144.EIA_AEO_Tab4 <- L144.EIA_AEO_Tab4 %>%
       left_join_error_no_match(EIA_AEO_fuels, by = c("Fuel" = "EIA_fuel")) %>%
-      left_join_error_no_match(EIA_AEO_services, by = c("Service" = "EIA_service"))
+      left_join_error_no_match(EIA_AEO_services %>%
+                                 filter(EIA_sector == "Residential") %>%
+                                 select(-EIA_sector),
+                               by = c("Service" = "EIA_service"))
 
     # Compute shares of "appliances and other" energy
     # Select services to keep
     appl_other_services <- EIA_AEO_services %>%
+      filter(EIA_sector == "Residential") %>%
       select(service) %>%
       filter(!(service %in% unique(RECS_variables$service)))
 
@@ -521,6 +557,7 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
       add_legacy_name("L144.flsp_bm2_state_res") %>%
       add_precursors("gcam-usa/states_subregions",
                      "gcam-usa/Census_pop_hist",
+                     "gcam-usa/AEO_2015_flsp",
                      "gcam-usa/RECS_1979",
                      "gcam-usa/RECS_1984",
                      "gcam-usa/RECS_1990",

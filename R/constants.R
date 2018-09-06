@@ -645,7 +645,7 @@ gcamusa.STATE_SUBSECTOR_DELIMITER <- " "
 gcamusa.DIGITS_CALOUTPUT          <- 7    # production
 gcamusa.DIGITS_COST               <- 4
 gcamuse.DIGITS_DEPRESOURCE        <- 1
-gcamusa.EFFICIENCY_PARTITION_YEAR <- 2005
+gcamusa.EFFICIENCY_PARTITION_YEAR <- 2010
 gcamusa.DIGITS_TRNUSA_DEFAULT     <- 1    # Reduce rounding in detailed USA transport for compatability with model
 
 
