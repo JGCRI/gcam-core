@@ -25,7 +25,8 @@ create_xml <- function(xml_file, mi_header = NULL) {
   list(xml_file = xml_file,
        mi_header = mi_header,
        data_tables = list()) %>%
-    add_flags(FLAG_XML)
+    add_flags(FLAG_XML) %>%
+    invisible()
 }
 
 #' Add a table to an XML pipeline to include for conversion to XML.
@@ -56,7 +57,7 @@ add_xml_data <- function(dot, data, header, column_order_lookup = header) {
   curr_table <- list(data = data, header = header)
   dot$data_tables[[length(dot$data_tables)+1]] <- curr_table
 
-  dot
+  invisible(dot)
 }
 
 # Note: we have put the definition of run_xml_conversion inside of the "closure"
@@ -98,12 +99,12 @@ make_run_xml_conversion <- function() {
       }
       close(tmp_conn)
       args <- c(
-        "-cp", java_cp,
+        "-cp", shQuote(java_cp),
         "-Xmx1g", # TODO: memory limits?
         "ModelInterface.ModelGUI2.csvconv.CSVToXMLMain",
         tmpfn, # Read from the temporary file
-        dot$mi_header,
-        dot$xml_file
+        shQuote(dot$mi_header),
+        shQuote(dot$xml_file)
       )
       warning_msgs <- system2("java", args, stdout = TRUE, stderr = TRUE)
       unlink(tmpfn)
@@ -116,7 +117,7 @@ make_run_xml_conversion <- function() {
       }
     }
 
-    dot
+    invisible(dot)
   }
 }
 
