@@ -84,6 +84,13 @@ void ASimpleCarbonCalc::initCalc( const int aPeriod ) {
     if( aPeriod > 0 && mLandLeaf->hasLandAllocationCalculated( aPeriod ) ) {
         calc( aPeriod, CarbonModelUtils::getEndYear(), eReverseCalc );
     }
+    
+    // save some information in case we need to run the calc in reverse again
+    const Modeltime* modeltime = scenario->getModeltime();
+    if( aPeriod != ( modeltime->getmaxper() - 1 ) ) {
+        mSavedCarbonStock[ aPeriod + 1 ] = mCarbonStock[ modeltime->getper_to_yr( aPeriod ) ];
+    }
+    mSavedLandAllocation[ aPeriod ] = mLandLeaf->getLandAllocation( mLandLeaf->getName(), aPeriod );
 }
 
 double ASimpleCarbonCalc::calc( const int aPeriod, const int aEndYear, const CarbonCalcMode aCalcMode ) {
@@ -127,15 +134,25 @@ double ASimpleCarbonCalc::calc( const int aPeriod, const int aEndYear, const Car
         YearVector<double> currEmissionsBelow( year, aEndYear, 0.0 );
         
         year = prevModelYear;
-        double currLand = aPeriod == 1 ? mLandUseHistory->getAllocation( prevModelYear ) : mLandLeaf->getLandAllocation( mLandLeaf->getName(), aPeriod - 1 );
+        double currLand = aPeriod == 1 ? mLandUseHistory->getAllocation( prevModelYear ) :
+            // we need to be careful about accessing the land allocation from a previous timestep
+            // when we are intending to calculate in eReverseCalc as the previous timestep may have
+            // already calculated in eStoreResults
+            aCalcMode != eReverseCalc ? mLandLeaf->getLandAllocation( mLandLeaf->getName(), aPeriod - 1 ) : mSavedLandAllocation[ aPeriod - 1];
         const double avgAnnualChangeInLand = ( mLandLeaf->getLandAllocation( mLandLeaf->getName(), aPeriod ) - currLand )
             / modeltime->gettimestep( aPeriod );
         double prevCarbonBelow = currLand * getActualBelowGroundCarbonDensity( year );
+
         for( ++year; year <= modelYear; ++year ) {
             double prevLand = currLand;
             currLand += avgAnnualChangeInLand;
             double currCarbonBelow = currLand * getActualBelowGroundCarbonDensity( year);
-            calcAboveGroundCarbonEmission( mCarbonStock[ year - 1 ], prevLand, currLand, getActualAboveGroundCarbonDensity( year ), year, aEndYear, currEmissionsAbove );
+            // we need to be careful about accessing the carbon stock from a previous timestep
+            // when we are intending to calculate in eReverseCalc as the previous timestep may have
+            // already calculated in eStoreResults
+            calcAboveGroundCarbonEmission( aCalcMode == eReverseCalc && (year - 1) == prevModelYear ?
+                                          mSavedCarbonStock[ aPeriod ] :
+                                          mCarbonStock[ year - 1 ], prevLand, currLand, getActualAboveGroundCarbonDensity( year ), year, aEndYear, currEmissionsAbove );
             calcBelowGroundCarbonEmission( prevCarbonBelow - currCarbonBelow, year, aEndYear, currEmissionsBelow );
 
             if( aCalcMode != eReverseCalc ) {
@@ -153,7 +170,7 @@ double ASimpleCarbonCalc::calc( const int aPeriod, const int aEndYear, const Car
             }
         }
         else if( aCalcMode == eReverseCalc ) {
-            // add current emissions to the total
+            // back out the current emissions from the total
             for( year = prevModelYear + 1; year <= aEndYear; ++year ) {
                 mTotalEmissionsAbove[ year ] -= currEmissionsAbove[ year ];
                 mTotalEmissionsBelow[ year ] -= currEmissionsBelow[ year ];

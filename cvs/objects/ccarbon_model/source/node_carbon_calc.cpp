@@ -334,8 +334,13 @@ void NodeCarbonCalc::calc( const int aPeriod, const int aEndYear, const ICarbonC
         vector<double> diffLandByTimestep( mCarbonCalcs.size() );
         double prevLandTotal = 0;
         for( size_t i = 0; i < mCarbonCalcs.size(); ++i ) {
+            // we need to be careful about accessing the land allocation from a previous timestep
+            // when we are intending to calculate in eReverseCalc as the previous timestep may have
+            // already calculated in eStoreResults
             double land = aPeriod == 1 ? mCarbonCalcs[ i ]->mLandUseHistory->getAllocation( prevModelYear ) :
-                mCarbonCalcs[ i ]->mLandLeaf->getLandAllocation( mCarbonCalcs[ i ]->mLandLeaf->getName(), aPeriod - 1 );
+                aCalcMode != ICarbonCalc::eReverseCalc ?
+                    mCarbonCalcs[ i ]->mLandLeaf->getLandAllocation( mCarbonCalcs[ i ]->mLandLeaf->getName(), aPeriod - 1 ) :
+                    mCarbonCalcs[ i ]->mSavedLandAllocation[ aPeriod - 1 ];
             prevLandByTimestep[ i ] = land;
             prevLandTotal += land;
         }
@@ -388,7 +393,14 @@ void NodeCarbonCalc::calc( const int aPeriod, const int aEndYear, const ICarbonC
             else {
                 // Calculate the carbon that will be moved out of this land type by
                 // computing the average from the current carbon stock.
-                double currCarbonMovedByYear = -1 * mCarbonCalcs[ i ]->mCarbonStock[ prevModelYear ] * diffLandByTimestep[ i ] / prevLandByTimestep[ i ] / modelTimestep;
+                
+                // we need to be careful about accessing the carbon stock from a previous timestep
+                // when we are intending to calculate in eReverseCalc as the previous timestep may have
+                // already calculated in eStoreResults
+                double currCarbonMovedByYear = -1 * ( aCalcMode == ICarbonCalc::eReverseCalc ?
+                                                        mCarbonCalcs[ i ]->mSavedCarbonStock[ aPeriod ] :
+                                                        mCarbonCalcs[ i ]->mCarbonStock[ prevModelYear ] )
+                    * diffLandByTimestep[ i ] / prevLandByTimestep[ i ] / modelTimestep;
                 totalInternalCarbonAboveMovedByYear += currCarbonMovedByYear;
                 internalCarbonAboveMovedByYear[ i ] = currCarbonMovedByYear;
                 totalInternalCarbonBelowMovedByYear -= diffLandFromInternalByYear[ i ] * belowGroundCarbonDensity[ i ];
@@ -417,8 +429,13 @@ void NodeCarbonCalc::calc( const int aPeriod, const int aEndYear, const ICarbonC
                 currLand[ i ] = prevLand[ i ] + diffLandFromExternalByYear[ i ];
                 double carbonDiffBelowPerYear = -1 * diffLandFromExternalByYear[ i ] * belowGroundCarbonDensity[ i ];
                 double prevEmiss = (*currEmissionsAbove[ i ])[ year ];
-                mCarbonCalcs[ i ]->calcAboveGroundCarbonEmission( mCarbonCalcs[ i ]->mCarbonStock[ year - 1 ], prevLand[ i ],
-                                                                  currLand[ i ], aboveGroundCarbonDensity[ i ], year, aEndYear,
+                // we need to be careful about accessing the carbon stock from a previous timestep
+                // when we are intending to calculate in eReverseCalc as the previous timestep may have
+                // already calculated in eStoreResults
+                mCarbonCalcs[ i ]->calcAboveGroundCarbonEmission( aCalcMode == ICarbonCalc::eReverseCalc && (year - 1) == prevModelYear ?
+                                                                        mCarbonCalcs[ i ]->mSavedCarbonStock[ aPeriod ] :
+                                                                        mCarbonCalcs[ i ]->mCarbonStock[ year - 1 ],
+                                                                  prevLand[ i ], currLand[ i ], aboveGroundCarbonDensity[ i ], year, aEndYear,
                                                                   *currEmissionsAbove[ i ] );
                 mCarbonCalcs[ i ]->calcBelowGroundCarbonEmission( carbonDiffBelowPerYear, year, aEndYear, *currEmissionsBelow[ i ] );
                 if( aCalcMode != ICarbonCalc::eReverseCalc ) {

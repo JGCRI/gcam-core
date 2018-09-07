@@ -146,6 +146,16 @@ protected:
     //! land allocation.
     const LandLeaf* mLandLeaf;
     
+    //! A copy of the carbon stock from the final year in the previous time-step.
+    //! We have to keep a copy incase we need to run the carbon calc in reverse
+    //! and the previous timestep got re-run in forward.
+    objects::PeriodVector<double> mSavedCarbonStock;
+    
+    //! A copy of the previous land allocations
+    //! We have to keep a copy incase we need to run the carbon calc in reverse
+    //! and the previous timestep got re-run in forward.
+    objects::PeriodVector<double> mSavedLandAllocation;
+    
     // Some boiler plate to be able to take advantage of boost::flyweight to share
     // the precalc sigmoid curve between instances that have the same mature age
     struct precalc_sigmoid_helper {
