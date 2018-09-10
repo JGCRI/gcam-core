@@ -183,7 +183,13 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
       # just SSP1, SSP2, etc.
       group_by(scenario, GCAM_region_ID, year) %>%
       summarise(gdp = sum(gdp)) %>%
-      select(scenario, GCAM_region_ID, year, gdp)
+      select(scenario, GCAM_region_ID, year, gdp) %>%
+      ungroup() %>%
+      # The steps below write out the data to all future years, starting from the final socio historical year
+      complete(nesting(scenario, GCAM_region_ID), year = c(socioeconomics.FINAL_HIST_YEAR, FUTURE_YEARS)) %>%
+      group_by(scenario, GCAM_region_ID) %>%
+      mutate(gdp = approx_fun(year, gdp)) %>%
+      ungroup()
     ## Units are billions of 2005$
 
 
@@ -311,8 +317,12 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
       filter(scenario == socioeconomics.BASE_POP_SCEN) %>%
       gather_years %>%
       mutate(value = as.numeric(value)) %>%
-      filter(year %in% FUTURE_YEARS) %>%
-      select(iso, year, value)
+      select(iso, year, value) %>%
+      complete(nesting(iso), year = c(socioeconomics.FINAL_HIST_YEAR, FUTURE_YEARS)) %>%
+      group_by(iso) %>%
+      mutate(value = approx_fun(year, value)) %>%
+      ungroup() %>%
+      filter(year %in% FUTURE_YEARS)
 
     # Historical GDP
     gdp_mil90usd_ctry_Yh <- L100.gdp_mil90usd_ctry_Yh %>%

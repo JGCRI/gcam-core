@@ -190,7 +190,7 @@ module_energy_L252.transportation <- function(command, ...) {
     # L252.StubTechCalInput_trn: calibrated input of transportation energy use technologies (including cogen)
     L152.in_EJ_R_trn_F_Yh %>%
       # Expand table to include all model base years
-      filter(year %in% BASE_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       # Match in supplysector, subsector, technology
       left_join_error_no_match(calibrated_techs_trn_agg, by = c("sector", "fuel")) %>%
@@ -222,8 +222,8 @@ module_energy_L252.transportation <- function(command, ...) {
     # Expand price elasticity of transportation final demand across all regions and future years.
     # Price elasticities are only applied to future periods. Application in base years will cause solution failure
     A52.demand %>%
-      repeat_add_columns(tibble(FUTURE_YEARS)) %>%
-      rename(year = FUTURE_YEARS) %>%
+      repeat_add_columns(tibble(MODEL_FUTURE_YEARS)) %>%
+      rename(year = MODEL_FUTURE_YEARS) %>%
       write_to_all_regions(LEVEL2_DATA_NAMES[["PriceElasticity"]],
                            GCAM_region_names = GCAM_region_names) ->
       L252.PriceElasticity_trn # OUTPUT

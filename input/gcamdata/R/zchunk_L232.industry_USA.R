@@ -156,9 +156,9 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
     # get calibrated input of industrial energy use technologies, including cogen
     L132.in_EJ_state_indnochp_F %>%
       bind_rows(L132.in_EJ_state_indchp_F) %>%
-      complete(nesting(state, sector, fuel), year = c(year, BASE_YEARS)) %>%
+      complete(nesting(state, sector, fuel), year = c(year, MODEL_BASE_YEARS)) %>%
       group_by(state, sector, fuel) %>% mutate(value = approx_fun(year, value)) %>%
-      ungroup %>% filter(year %in% BASE_YEARS) %>%
+      ungroup %>% filter(year %in% MODEL_BASE_YEARS) %>%
       rename(region = state) %>%
       left_join_keep_first_only(calibrated_techs, by = c("sector", "fuel")) %>%
       rename(stub.technology = technology) ->
@@ -178,9 +178,9 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
 
     # get calibrated input of industrial feedstock technologies
     L132.in_EJ_state_indfeed_F %>%
-      complete(nesting(state, sector, fuel), year = c(year, BASE_YEARS)) %>%
+      complete(nesting(state, sector, fuel), year = c(year, MODEL_BASE_YEARS)) %>%
       group_by(state, sector, fuel) %>% mutate(value = approx_fun(year, value)) %>%
-      ungroup %>% filter(year %in% BASE_YEARS) %>%
+      ungroup %>% filter(year %in% MODEL_BASE_YEARS) %>%
       rename(region = state) %>%
       left_join_keep_first_only(calibrated_techs, by = c("sector", "fuel")) %>%
       select(-calibration, -secondary.output) %>%
@@ -201,10 +201,10 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
     # get industrial sector calibrated output
     A32.globaltech_eff %>%
       complete(nesting(supplysector, subsector, technology, minicam.energy.input, secondary.output),
-               year = c(year, BASE_YEARS)) %>%
+               year = c(year, MODEL_BASE_YEARS)) %>%
       group_by(supplysector, subsector, technology, minicam.energy.input, secondary.output) %>%
       mutate(value = approx_fun(year, value)) %>% ungroup %>%
-      filter(year %in% BASE_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       rename(efficiency = value) %>%
       mutate(efficiency = round(efficiency, energy.DIGITS_EFFICIENCY)) ->
       A32.globaltech_eff_interp
@@ -249,8 +249,8 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
     # ^^ covers only base years
 
     L232.StubTechCoef_industry_USA_base %>%
-      filter(year == max(BASE_YEARS)) %>% select(-year) %>%
-      repeat_add_columns(tibble(year = FUTURE_YEARS)) ->
+      filter(year == max(MODEL_BASE_YEARS)) %>% select(-year) %>%
+      repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) ->
       L232.StubTechCoef_industry_USA_fut
     # ^^ future years copied from final base year
     # note: this is not typical, but is suitable here as no energy:feedstock evolution in the industrial...
