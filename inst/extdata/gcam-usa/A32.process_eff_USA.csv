@@ -1,0 +1,26 @@
+# File: A32.process_eff_USA.csv,,,,,,
+# Title: Industrial Processes Coefficients for USA Industry,,,,,,
+# Units: unitless,,,,,,
+region,supplysector,subsector,technology,year,minicam.energy.input,coefficient
+USA,industry,industry,industry,1975,industrial processes,0.000462981
+USA,industry,industry,industry,1990,industrial processes,0.000483004
+USA,industry,industry,industry,2005,industrial processes,0.000446815
+USA,industry,industry,industry,2010,industrial processes,0.000490911
+USA,industry,industry,industry,2015,industrial processes,0.000490911
+USA,industry,industry,industry,2020,industrial processes,0.000490911
+USA,industry,industry,industry,2025,industrial processes,0.000490911
+USA,industry,industry,industry,2030,industrial processes,0.000490911
+USA,industry,industry,industry,2035,industrial processes,0.000490911
+USA,industry,industry,industry,2040,industrial processes,0.000490911
+USA,industry,industry,industry,2045,industrial processes,0.000490911
+USA,industry,industry,industry,2050,industrial processes,0.000490911
+USA,industry,industry,industry,2055,industrial processes,0.000490911
+USA,industry,industry,industry,2060,industrial processes,0.000490911
+USA,industry,industry,industry,2065,industrial processes,0.000490911
+USA,industry,industry,industry,2070,industrial processes,0.000490911
+USA,industry,industry,industry,2075,industrial processes,0.000490911
+USA,industry,industry,industry,2080,industrial processes,0.000490911
+USA,industry,industry,industry,2085,industrial processes,0.000490911
+USA,industry,industry,industry,2090,industrial processes,0.000490911
+USA,industry,industry,industry,2095,industrial processes,0.000490911
+USA,industry,industry,industry,2100,industrial processes,0.000490911

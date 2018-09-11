@@ -22,7 +22,8 @@ the generated outputs: \code{L244.DeleteConsumer_USAbld}, \code{L244.DeleteSuppl
 \code{L244.SubsectorShrwtFllt_bld_gcamusa}, \code{L244.SubsectorInterp_bld_gcamusa}, \code{L244.SubsectorInterpTo_bld_gcamusa},
 \code{L244.SubsectorLogit_bld_gcamusa}, \code{L244.StubTech_bld_gcamusa}, \code{L244.StubTechCalInput_bld_gcamusa}, \code{L244.StubTechMarket_bld},
 \code{L244.GlobalTechIntGainOutputRatio}, \code{L244.GlobalTechInterpTo_bld}, \code{L244.GlobalTechEff_bld},
-\code{L244.GlobalTechShrwt_bld_gcamusa}, \code{L244.GlobalTechCost_bld_gcamusa}, \code{L244.GlobalTechSCurve_bld}, \code{L244.HDDCDD_A2_GFDL}.
+\code{L244.GlobalTechShrwt_bld_gcamusa}, \code{L244.GlobalTechCost_bld_gcamusa}, \code{L244.GlobalTechSCurve_bld}, \code{L244.HDDCDD_A2_GFDL},
+\code{L244.HDDCDD_AEO_2015_USA}, \code{L244.Floorspace_AEO_2015_USA}.
 The corresponding file in the original data system was \code{L244.building_USA.R} (gcam-usa level2).
 }
 \description{

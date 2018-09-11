@@ -20,7 +20,8 @@ module_gcam.usa_LA143.HDDCDD <- function(command, ...) {
              FILE = "gcam-usa/GIS/HDD_His",
              FILE = "gcam-usa/GIS/HDD_GFDL_A2",
              FILE = "gcam-usa/GIS/CDD_His",
-             FILE = "gcam-usa/GIS/CDD_GFDL_A2"))
+             FILE = "gcam-usa/GIS/CDD_GFDL_A2",
+             FILE = "gcam-usa/AEO_2015_HDDCDD"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L143.share_state_Pop_CDD_sR9",
              "L143.share_state_Pop_CDD_sR13",
@@ -38,11 +39,13 @@ module_gcam.usa_LA143.HDDCDD <- function(command, ...) {
     CDD_GFDL_A2 <- get_data(all_data, "gcam-usa/GIS/CDD_GFDL_A2")
     HDD_His <- get_data(all_data, "gcam-usa/GIS/HDD_His")
     HDD_GFDL_A2 <- get_data(all_data, "gcam-usa/GIS/HDD_GFDL_A2")
+    AEO_2015_HDDCDD <- get_data(all_data, "gcam-usa/AEO_2015_HDDCDD")
 
     # Silence package
     state <- subregion9 <- subregion13 <- year <- value <- degree_day <- population <-
       value_sR9 <- variable <- value_sR13 <- GCM <- Scen <- historical_value <-
-      hist_value <- base_year <- scn_final_historical_year <- NULL
+      hist_value <- base_year <- scn_final_historical_year <- pop <- pop_SR9 <- DD <-
+      value_AEO <- NULL
 
     # ===================================================
 
@@ -288,6 +291,78 @@ module_gcam.usa_LA143.HDDCDD <- function(command, ...) {
       select(state, Scen, GCM, variable, year, value) ->
       L143.HDDCDD_scen_state
 
+    # AEO harmonization by census division and year, to 2040
+    AEO_DD_years <- seq(2010, 2040, 5)
+
+    Census_pop_hist %>%
+      gather_years("pop") %>%
+      filter(year == max(HISTORICAL_YEARS)) %>%
+      left_join_error_no_match(states_subregions %>%
+                                 select(state, subregion9),
+                               by = c("state")) %>%
+      group_by(subregion9, year) %>%
+      summarise(pop_SR9 = sum(pop)) %>%
+      ungroup() -> L143.Pop_SR9_USA
+
+    L143.Pop_CDD_sR9 %>%
+      filter(year == max(HISTORICAL_YEARS)) %>%
+      mutate(variable = "CDD") %>%
+      bind_rows(L143.Pop_HDD_sR9%>%
+                  filter(year == max(HISTORICAL_YEARS)) %>%
+                  mutate(variable = "HDD")) %>%
+      left_join_error_no_match(L143.Pop_SR9_USA, by = c("subregion9", "year")) %>%
+      mutate(DD = value_sR9 / pop_SR9) %>%
+      select(subregion9, variable, DD) %>%
+      repeat_add_columns(tibble::tibble(year = AEO_DD_years)) %>%
+      # apparently you can't filter within left_join_error_no_match ???
+      left_join(AEO_2015_HDDCDD %>%
+                  gather_years("value_AEO") %>%
+                  filter(year %in% AEO_DD_years,
+                         subregion9 != "USA"),
+                by = c("subregion9", "variable", "year")) %>%
+      mutate(value_AEO = value_AEO / DD) -> L143.DDmult_sR9_Y_AEO
+
+    # Apply these multipliers by subregion9 to the state-level historical HDDCDD data,
+    # to create a scenario to 2040
+    # historical years first
+    DD_His %>%
+      select(-subregion13, -historical_value) %>%
+      left_join_error_no_match(L143.DDmult_sR9_Y_AEO %>%
+                                 filter(year == max(HISTORICAL_YEARS)) %>%
+                                 distinct(subregion9, variable, value_AEO),
+                               by = c("subregion9", "variable")) %>%
+      mutate(value = value * value_AEO) -> L143.HDDCDD_AEO_hist_years
+
+    # AEO years second
+    DD_His %>%
+      select(-subregion13, -historical_value) %>%
+      filter(year == max(HISTORICAL_YEARS)) %>%
+      select(-year) %>%
+      # join is intended to duplicate rows
+      # left_join_error_no_match throws error, so left_join is used
+      left_join(L143.DDmult_sR9_Y_AEO %>%
+                  select(-DD),
+                by = c("subregion9", "variable")) %>%
+      mutate(value = value * value_AEO) -> L143.HDDCDD_AEO_AEO_years
+
+    # HDD / CDD values are held constant at 2040 values past 2040 (final AEO year)
+    L143.HDDCDD_AEO_AEO_years %>%
+      filter(year == max(AEO_DD_years)) %>%
+      distinct(state, subregion9, variable, value) %>%
+      repeat_add_columns(tibble::tibble(year = FUTURE_YEARS)) %>%
+      filter(year > max(AEO_DD_years)) -> L143.HDDCDD_AEO_postAEO_years
+
+    # bind new AEO scenario into L143.HDDCDD_scen_state
+    L143.HDDCDD_scen_state %>%
+      bind_rows(L143.HDDCDD_AEO_hist_years %>%
+                  bind_rows(L143.HDDCDD_AEO_AEO_years,
+                            L143.HDDCDD_AEO_postAEO_years) %>%
+                  mutate(Scen = "AEO_2015",
+                         GCM = "AEO_2015")  %>%
+                  # getting rid of duplicate 2010 values & extra columns
+                  distinct(state, Scen, GCM, variable, year, value)) ->
+      L143.HDDCDD_scen_state
+
 
     # ===================================================
     # Produce outputs
@@ -297,7 +372,8 @@ module_gcam.usa_LA143.HDDCDD <- function(command, ...) {
       add_comments("Interpolate historic cooling degree data to fill in missing model historical years.") %>%
       add_comments("Divide state cooling degree days by the census subregion 9 total population") %>%
       add_legacy_name("L143.share_state_Pop_CDD_sR9") %>%
-      add_precursors("gcam-usa/states_subregions", "gcam-usa/Census_pop_hist",
+      add_precursors("gcam-usa/states_subregions",
+                     "gcam-usa/Census_pop_hist",
                      "gcam-usa/GIS/CDD_His") ->
       L143.share_state_Pop_CDD_sR9
 
@@ -307,7 +383,8 @@ module_gcam.usa_LA143.HDDCDD <- function(command, ...) {
       add_comments("Interpolate historic cooling degree data to fill in missing model historical years.") %>%
       add_comments("Divide state cooling degree days by the census subregion 13 total population.") %>%
       add_legacy_name("L143.share_state_Pop_CDD_sR13") %>%
-      add_precursors("gcam-usa/states_subregions", "gcam-usa/Census_pop_hist",
+      add_precursors("gcam-usa/states_subregions",
+                     "gcam-usa/Census_pop_hist",
                      "gcam-usa/GIS/CDD_His") ->
       L143.share_state_Pop_CDD_sR13
 
@@ -317,7 +394,8 @@ module_gcam.usa_LA143.HDDCDD <- function(command, ...) {
       add_comments("Interpolate historic heating degree data to fill in missing model historical years.") %>%
       add_comments("Divide state heating degree days by the census subregion 9 total population.") %>%
       add_legacy_name("L143.share_state_Pop_HDD_sR9") %>%
-      add_precursors("gcam-usa/states_subregions", "gcam-usa/Census_pop_hist",
+      add_precursors("gcam-usa/states_subregions",
+                     "gcam-usa/Census_pop_hist",
                      "gcam-usa/GIS/HDD_His") ->
       L143.share_state_Pop_HDD_sR9
 
@@ -327,7 +405,8 @@ module_gcam.usa_LA143.HDDCDD <- function(command, ...) {
       add_comments("Interpolate historic heating degree data to fill in missing model historical years.") %>%
       add_comments("Divide state heating degree days by the census subregion 13 total population.") %>%
       add_legacy_name("L143.share_state_Pop_HDD_sR13") %>%
-      add_precursors("gcam-usa/states_subregions", "gcam-usa/Census_pop_hist",
+      add_precursors("gcam-usa/states_subregions",
+                     "gcam-usa/Census_pop_hist",
                      "gcam-usa/GIS/HDD_His") ->
       L143.share_state_Pop_HDD_sR13
 
@@ -336,9 +415,15 @@ module_gcam.usa_LA143.HDDCDD <- function(command, ...) {
       add_units("Degree F days") %>%
       add_comments("Replace GCM degree days with historical observations.") %>%
       add_comments("Normalize future GCM degree days by the fraction of observed degree days to GCM degree days in the base year.") %>%
+      add_comments("Includes a scenario with HDD / CDD harmonized to AEO 2015") %>%
       add_legacy_name("L143.HDDCDD_scen_state") %>%
-      add_precursors("gcam-usa/states_subregions", "gcam-usa/Census_pop_hist", "gcam-usa/GIS/CDD_His",
-                     "gcam-usa/GIS/HDD_His", "gcam-usa/GIS/HDD_GFDL_A2", "gcam-usa/GIS/CDD_GFDL_A2") ->
+      add_precursors("gcam-usa/states_subregions",
+                     "gcam-usa/Census_pop_hist",
+                     "gcam-usa/GIS/CDD_His",
+                     "gcam-usa/GIS/HDD_His",
+                     "gcam-usa/GIS/HDD_GFDL_A2",
+                     "gcam-usa/GIS/CDD_GFDL_A2",
+                     "gcam-usa/AEO_2015_HDDCDD") ->
       L143.HDDCDD_scen_state
 
     return_data(L143.share_state_Pop_CDD_sR9,
