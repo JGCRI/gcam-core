@@ -507,6 +507,11 @@ socioeconomics.POP_DIGITS                <- 0
 
 # Water constants ======================================================================
 
+water.ALL_WATER_TYPES                     <- c("water consumption",
+                                               "water withdrawals",
+                                               "seawater",
+                                               "biophysical water consumption",
+                                               "desalination")
 water.AG_ONLY_WATER_TYPES                 <- "biophysical water consumption"
 water.COOLING_SYSTEM_CAPACITY_FACTOR      <- 0.6   # Cooling system capacity factor (Unitless)
 water.COOLING_SYSTEM_FCR                  <- 0.15  # Cooling system fixed charge rate (Unitless)
@@ -514,6 +519,7 @@ water.COOLING_SYSTEM_LOGIT 				        <- -5    # Cooling system logit (Unitless
 water.DEFAULT_UNLIMITED_IRR_WATER_PRICE   <- 0.001 # (Units: 1975$/m3)
 water.DEFAULT_UNLIMITED_WATER_PRICE       <- 0
 water.DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.001
+water.IRR_PRICE_SUBSIDY_MULT              <- 0.01  # Multiplier for irrigation price subsidy
 water.DRY_COOLING_EFF_ADJ 				        <- 0.95  # Dry cooling efficiency adjustment (Unitless)
 water.IRRIGATION                          <- "Irrigation"
 water.MAPPED_WATER_TYPES                  <- c("water consumption", "water withdrawals")
@@ -522,6 +528,7 @@ names(water.MAPPED_WATER_TYPES_SHORT)     <- water.MAPPED_WATER_TYPES
 water.WATER_UNITS_PRICE                   <- "1975$/m^3"
 water.WATER_UNITS_QUANTITY                <- "km^3"
 water.DIGITS_MUNI_WATER                   <- 4
+water.DESALINATION_PRICE                  <- 0.214  # 1975$/m3
 
 # GCAM intermediate sectors for which Vassolo + Doll assessed manufacturing water demands. In the paper, they indicate
 # chemicals, pulp and paper, pig iron, sugar, beer, cloth, cement, and crude steel. some industrial mfg does take place
