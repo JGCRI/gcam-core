@@ -40,6 +40,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["CarbonCoef"]] <- c("region", "PrimaryFuelCO2Coef.name", "PrimaryFuelCO2Coef")
 
   # Resources
+  level2_data_names[["Rsrc"]] <- c("region", "resource", "output.unit", "price.unit", "market")
   level2_data_names[["DepRsrc"]] <- c("region", "depresource", "output.unit", "price.unit", "market")
   level2_data_names[["RenewRsrc"]] <- c("region", "renewresource", "output.unit", "price.unit", "market")
   level2_data_names[["UnlimitRsrc"]] <- c("region", "unlimited.resource", "output.unit", "price.unit", "market")
