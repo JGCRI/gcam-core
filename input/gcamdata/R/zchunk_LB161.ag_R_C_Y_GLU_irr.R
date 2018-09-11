@@ -59,7 +59,9 @@ module_aglu_LB161.ag_R_C_Y_GLU_irr <- function(command, ...) {
       # Match to FAO annual total production
       right_join(L101.ag_Prod_Mt_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year")) %>%
       # Calculate irrigated production by multiplying total by fraction irrigated
-      mutate(irrProd = value * irrProd_frac,
+      # For islands that are included in the FAO data but not the MIRCA inventory, irrProd_frac will be a missing value after the join. Re-set to 0 (assume all rainfed)
+      mutate(irrProd_frac = if_else(is.na(irrProd_frac), 0, irrProd_frac),
+             irrProd = value * irrProd_frac,
              # Calculate rainfed production by multiplying total by fraction rainfed
              rfdProd = value * (1 - irrProd_frac)) %>%
       select(-irrProd_frac, -value) ->
@@ -82,7 +84,9 @@ module_aglu_LB161.ag_R_C_Y_GLU_irr <- function(command, ...) {
       # Match to FAO annual total harvested area
       right_join(L101.ag_HA_bm2_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year")) %>%
       # Calculate irrigated production by multiplying total by fraction irrigated
-      mutate(irrHA = value * irrHA_frac,
+      # For islands that are included in the FAO data but not the MIRCA inventory, irrHA_frac will be a missing value after the join. Re-set to 0 (assume all rainfed)
+      mutate(irrHA_frac = if_else(is.na(irrHA_frac), 0, irrHA_frac),
+             irrHA = value * irrHA_frac,
              # Calculate rainfed production by multiplying total by fraction rainfed
              rfdHA = value * (1 - irrHA_frac)) %>%
       select(-irrHA_frac, -value) ->
