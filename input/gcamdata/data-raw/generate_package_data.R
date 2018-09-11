@@ -392,6 +392,8 @@ generate_level2_data_names <- function() {
   level2_data_names[["AgGDPCtrlSteep"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year", "Non.CO2", "ctrl.name", "steepness")
   level2_data_names[["AgMAC"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year", "Non.CO2", "mac.control", "tax", "mac.reduction", "market.name")
   level2_data_names[["AgMACTC"]] <- c(level2_data_names[["AgMAC"]], "tech.change")
+  level2_data_names[["TrnInputEmissCoeff"]] <- c("region", "supplysector", "tranSubsector", "stub.technology", "year", "Non.CO2", "emiss.coef")
+  level2_data_names[["LinearCtrlInc"]] <- c("region", "supplysector", "tranSubsector","stub.technology", "year", "Non.CO2", "linear.control", "start.year", "end.year", "final.emissions.coefficient")
 
   # Policy
   level2_data_names[["PortfolioStd"]] <- c("region", "policy.portfolio.standard", "market", "policyType", "year", "constraint", "price.unit", "output.unit")

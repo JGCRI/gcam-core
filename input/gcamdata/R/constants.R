@@ -659,6 +659,7 @@ gcamusa.DIGITS_COST               <- 4
 gcamuse.DIGITS_DEPRESOURCE        <- 1
 gcamusa.EFFICIENCY_PARTITION_YEAR <- 2010
 gcamusa.DIGITS_TRNUSA_DEFAULT     <- 1    # Reduce rounding in detailed USA transport for compatability with model
+gcamusa.DIGITS_EMISSIONS          <- 5
 
 
 # Time shift conditions ======================================================================
