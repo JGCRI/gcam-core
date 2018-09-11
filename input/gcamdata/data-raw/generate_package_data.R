@@ -220,6 +220,8 @@ generate_level2_data_names <- function() {
   level2_data_names[["StubTechSCurve"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "lifetime", "steepness", "half.life")
   level2_data_names[["StubTechLifetime"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "lifetime")
   level2_data_names[["StubTechProfitShutdown"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "median.shutdown.point", "profit.shutdown.steepness")
+  level2_data_names[["DeleteStubTechMinicamEnergyInput"]] <- c(level2_data_names[["StubTechYr"]], "minicam.energy.input")
+  level2_data_names[["StubTechEffFlag"]] <- c(level2_data_names[["StubTechYr"]], "minicam.energy.input", "efficiency", "market.name", "flag")
 
   # Agricultural sectors, subsectors, and technologies
   level2_data_names[["AgSupplySector"]] <- c("region", "AgSupplySector", "output.unit", "input.unit", "price.unit", "calPrice", "market", "logit.year.fillout", "logit.exponent")
