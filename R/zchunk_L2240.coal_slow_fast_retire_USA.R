@@ -298,7 +298,7 @@ module_gcam.usa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
 
     L2240.GlobalTechCapital_elec_coalret_USA %>%
       add_title("Capital costs of historic U.S. conventional coal electricity plants by load segment and model year") %>%
-      add_units("Unitless") %>%
+      add_units("1975$ per kW; unitless (fixed.charge.rate)") %>%
       add_comments("Same for fast retire and slow retire technologies") %>%
       add_legacy_name("L2240.GlobalTechCapital_elec_coalret_USA") %>%
       add_precursors("gcam-usa/A23.elec_tech_associations_coal_retire",
@@ -307,7 +307,7 @@ module_gcam.usa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
 
     L2240.GlobalTechOMfixed_elec_coalret_USA %>%
       add_title("Fixed OM costs of historic U.S. conventional coal electricity plants by load segment and model year") %>%
-      add_units("Unitless") %>%
+      add_units("1975$/kW/yr") %>%
       add_comments("Same for fast retire and slow retire technologies") %>%
       add_legacy_name("L2240.GlobalTechOMfixed_elec_coalret_USA") %>%
       add_precursors("gcam-usa/A23.elec_tech_associations_coal_retire",
@@ -316,7 +316,7 @@ module_gcam.usa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
 
     L2240.GlobalTechOMvar_elec_coalret_USA %>%
       add_title("Variable OM costs of historic U.S. conventional coal electricity plants by load segment and model year") %>%
-      add_units("Unitless") %>%
+      add_units("1975$/MWh") %>%
       add_comments("Same for fast retire and slow retire technologies") %>%
       add_legacy_name("L2240.GlobalTechOMvar_elec_coalret_USA") %>%
       add_precursors("gcam-usa/A23.elec_tech_associations_coal_retire",
