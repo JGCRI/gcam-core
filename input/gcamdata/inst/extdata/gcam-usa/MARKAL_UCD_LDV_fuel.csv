@@ -1,0 +1,10 @@
+# File: MARKAL_UCD_LDV_fuel.csv
+# Title: MARKAL and UC Davis low duty vehicle fuel class mapping file
+# Source: NA
+# Units: NA
+MARKAL_LDV_fuel,UCD_LDV_fuel
+ELC,BEV
+ELC,FCEV
+GSL,Liquids
+GSL,Hybrid Liquids
+CNG,NG
