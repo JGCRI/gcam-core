@@ -1,0 +1,14 @@
+# File: MARKAL_UCD_class.csv
+# Title: MARKAL and UC Davis vehicle class mapping file
+# Source: NA
+# Units: NA
+MARKAL_class,UCD_class
+Bus,Bus
+Commercial truck,Truck (0-2.7t)
+Compact car,Compact Car
+Full size car,Midsize Car
+Small SUV,Large Car
+Pickup,Light Truck and SUV
+Heavy duty short haul truck,Truck (2.7-4.5t)
+Heavy duty long haul truck,Truck (4.5-12t)
+Heavy duty long haul truck,Truck (>12t)
