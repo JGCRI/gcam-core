@@ -51,6 +51,7 @@ PPPConvert, world/+{name}region, GDP/+{constRatio}PPPConvert, GDP/+PPPConvert, s
 
 #####, RESOURCES
 
+Rsrc, world/+{name}region, region/+{name}resource, resource/+output-unit, resource/+price-unit, resource/+market, scenario, scenario/world
 
 DepRsrc, world/+{name}region, region/+{name}depresource, depresource/+output-unit, depresource/+price-unit, depresource/+market, scenario, scenario/world
 
@@ -484,21 +485,21 @@ AgProdChange, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/
 
 AgCost, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+nonLandVariableCost, scenario, scenario/world, period/{name=CO2}CO2
 
-AgRES, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}res-secondary-output, res-secondary-output/+output-ratio, scenario, scenario/world 
+AgRES, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}res-secondary-output, res-secondary-output/+output-ratio, scenario, scenario/world
 
-AgInputTax, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}input-tax, input-tax/+coefficient, scenario, scenario/world 
+AgInputTax, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}input-tax, input-tax/+coefficient, scenario, scenario/world
 
 AgMkt, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+market, scenario, scenario/world
 
 
 #####, POLICY
 
-PortfolioStd,world/+{name}region,region/+{name}policy-portfolio-standard, policy-portfolio-standard/+market, policy-portfolio-standard/+policyType, policy-portfolio-standard/+{year}constraint, policy-portfolio-standard/+constraint, policy-portfolio-standard/+price-unit, policy-portfolio-standard/+output-unit, scenario,scenario/world 
-PortfolioStdConstraint,world/+{name}region,region/+{name}policy-portfolio-standard, policy-portfolio-standard/+market, policy-portfolio-standard/+policyType, policy-portfolio-standard/+{year}constraint, policy-portfolio-standard/+constraint,  scenario,scenario/world 
+PortfolioStd,world/+{name}region,region/+{name}policy-portfolio-standard, policy-portfolio-standard/+market, policy-portfolio-standard/+policyType, policy-portfolio-standard/+{year}constraint, policy-portfolio-standard/+constraint, policy-portfolio-standard/+price-unit, policy-portfolio-standard/+output-unit, scenario,scenario/world
+PortfolioStdConstraint,world/+{name}region,region/+{name}policy-portfolio-standard, policy-portfolio-standard/+market, policy-portfolio-standard/+policyType, policy-portfolio-standard/+{year}constraint, policy-portfolio-standard/+constraint,  scenario,scenario/world
 
-PortfolioStdMinPrice,world/+{name}region,region/+{name}policy-portfolio-standard, policy-portfolio-standard/+{year=1975;fillout=1}min-price, scenario,scenario/world 
+PortfolioStdMinPrice,world/+{name}region,region/+{name}policy-portfolio-standard, policy-portfolio-standard/+{year=1975;fillout=1}min-price, scenario,scenario/world
 
-PortfolioStdMaxPrice,world/+{name}region,region/+{name}policy-portfolio-standard, policy-portfolio-standard/+{year=1975;fillout=1}max-price, scenario,scenario/world 
+PortfolioStdMaxPrice,world/+{name}region,region/+{name}policy-portfolio-standard, policy-portfolio-standard/+{year=1975;fillout=1}max-price, scenario,scenario/world
 
 #####, LAND ALLOCATOR
 
