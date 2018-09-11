@@ -205,6 +205,7 @@ module_gcam.usa_L271.trn_nonco2_USA <- function(command, ...) {
 
     # Add on start year and end year, census region, and id column for applying linear fits to estimate
     # final emissions coefficient
+    # TODO used left_join_keep_first_only to preserve old data system behavior.
     L254.StubTranTech_USA_trn %>%
       left_join_keep_first_only(state_census_region, by = c("region" = "state")) %>%
       mutate(start.year = year,
@@ -263,6 +264,7 @@ module_gcam.usa_L271.trn_nonco2_USA <- function(command, ...) {
     # If there are coefficents that need to be replaced with the last available coeff do so now.
     if(nrow(last_avail_coeff) > 0){
 
+      # TODO use left_join_keep_fist_only to preserve old dataystem behavior.
       L271.nonco2_trn_emiss_control_USA %>%
         left_join_keep_first_only(last_avail_coeff %>%
                                     select(id, replacement_value), by = 'id') %>%
