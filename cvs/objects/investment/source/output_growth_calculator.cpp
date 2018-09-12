@@ -115,17 +115,6 @@ void OutputGrowthCalculator::toDebugXML( const int aPeriod, ostream& aOut, Tabs*
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-//! Write out input XML information.
-void OutputGrowthCalculator::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
-    XMLWriteElementCheckDefault( mAggregateInvestmentFraction, "aggregate-investment-fraction", aOut, aTabs );
-    
-    const Modeltime* modeltime = scenario->getModeltime();
-    // 0 isn't really the default.
-    XMLWriteVector( mOutputGrowthRate, "output-growth-rate", aOut, aTabs, modeltime, 0.0 );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 /*! \brief Calculate an overall scalar used to grow investment from the previous
 *          period.
 * \details Calculates a scalar which accelerates investment from the previous
