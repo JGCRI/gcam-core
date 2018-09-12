@@ -139,7 +139,12 @@ bool LinearControl::XMLDerivedClassParse( const string& aNodeName, const DOMNode
 }
 
 void LinearControl::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
-    toInputXMLDerived( aOut, aTabs );
+    const Modeltime* modeltime = scenario->getModeltime();
+    XMLWriteElement( mFinalEmCoefficient, "final-emissions-coefficient", aOut, aTabs);
+    XMLWriteElement( mTargetYear, "end-year", aOut, aTabs);
+    XMLWriteElementCheckDefault( mStartYear, "start-year", aOut, aTabs,
+                                modeltime->getper_to_yr( modeltime->getFinalCalibrationPeriod() ) );
+    XMLWriteElementCheckDefault( mAllowIncrease, "allow-ef-increase", aOut, aTabs, false );
 }
 
 

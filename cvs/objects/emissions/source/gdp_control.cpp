@@ -129,7 +129,8 @@ bool GDPControl::XMLDerivedClassParse( const string& aNodeName, const DOMNode* a
 }
 
 void GDPControl::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
-    toInputXMLDerived( aOut, aTabs );
+    XMLWriteElement( mMaxReduction, "max-reduction", aOut, aTabs);
+    XMLWriteElement( mSteepness, "steepness", aOut, aTabs);
 }
 
 void GDPControl::completeInit( const string& aRegionName, const string& aSectorName,
