@@ -113,11 +113,6 @@ protected:
     //! Save time value for debugging purposes.
     mutable double mTimeValue;
 
-    virtual void MCoutputSupplySector( const GDP* aGDP ) const; 
-    virtual void MCoutputAllSectors( const GDP* aGDP,
-                                     const IndirectEmissionsCalculator* aIndirectEmissionsCalc,
-                                     const std::vector<double> aSectorOutput ) const;
-
     bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     const std::string& getXMLName() const;

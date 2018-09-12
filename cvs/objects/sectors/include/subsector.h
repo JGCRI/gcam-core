@@ -216,10 +216,6 @@ public:
 
     void csvOutputFile( const GDP* aGDP,
                         const IndirectEmissionsCalculator* aIndirectEmissCalc ) const; 
-    virtual void MCoutputSupplySector( const GDP* aGDP ) const; 
-    virtual void MCoutputAllSectors( const GDP* aGDP, 
-                                     const IndirectEmissionsCalculator* aIndirectEmissCalc,
-                                     const std::vector<double> aSectorOutput ) const; 
 
     void emission( const int period );
 
