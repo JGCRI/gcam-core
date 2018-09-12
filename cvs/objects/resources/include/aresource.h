@@ -100,8 +100,6 @@ public:
                                   const int aPeriod ) const = 0;
 
     virtual double getPrice( const int aPeriod ) const = 0;
-    
-    virtual void dbOutput( const std::string& aRegionName ) = 0;
 
     virtual void csvOutputFile( const std::string& aRegionName ) = 0;
 

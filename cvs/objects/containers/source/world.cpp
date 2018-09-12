@@ -705,17 +705,6 @@ void World::csvGlobalDataFile() const {
     mClimateModel->printFileOutput();
 }
 
-//! MiniCAM style output to database
-void World::dbOutput( const list<string>& aPrimaryFuelList ) const {
-    // Write out concentrations
-    mClimateModel->printDBOutput();
-
-    // call regional output
-    for( CRegionIterator i = mRegions.begin(); i != mRegions.end(); i++ ){
-        ( *i )->dbOutput( aPrimaryFuelList );
-    }
-}
-
 /*! \brief Test to see if calibration worked for all regions
 *
 * Compares the sum of calibrated + fixed values to output of each sector.

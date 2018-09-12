@@ -105,7 +105,6 @@ public:
     virtual double getNetTerrestrialUptake( const int aYear ) const;
     virtual double getNetOceanUptake( const int aYear ) const;
     virtual int getCarbonModelStartYear() const;
-    virtual void printDBOutput() const;
     virtual void accept( IVisitor *aVisitor, const int aPeriod ) const;
 
     // xml name

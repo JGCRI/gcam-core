@@ -109,7 +109,6 @@ public:
     virtual void postCalc( const int aPeriod );
 
     virtual void csvOutputFile() const;
-    virtual void dbOutput( const std::list<std::string>& aPrimaryFuelList ) const;
     virtual void updateSummary( const std::list<std::string>& aPrimaryFuelList, const int period );
     virtual const Summary& getSummary( const int period ) const;
 

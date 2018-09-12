@@ -85,7 +85,6 @@ public:
     void calcSupply( const std::string& aRegionName, const GDP* aGdp, const int aPeriod );
     virtual double getAnnualProd( const std::string& aRegionName, const int aPeriod ) const;
     virtual double getPrice( const int aPeriod ) const;
-    void dbOutput( const std::string& regname );
     void csvOutputFile( const std::string& regname ); 
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:

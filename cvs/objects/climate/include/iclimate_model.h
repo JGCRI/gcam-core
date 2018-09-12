@@ -273,12 +273,6 @@ public:
      */
     virtual int getCarbonModelStartYear() const = 0;
 
-	/*! \brief Print the output of the climate model to a database
-	* \details Writes a subset of the output of the model to a database.
-	* \pre The model must be run before output can be written.
-    */
-    virtual void printDBOutput() const = 0;
-
     /*! \brief Update a visitor with information from the climate model.
     * \param aVisitor Vistor to update.
     * \param aPeriod Period for which to perform the update, -1 means all

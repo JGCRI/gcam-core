@@ -434,49 +434,6 @@ double SubResource::getAvailable(int per) const {
     return mAvailable[per];
 }
 
-//! write SubResource output to database
-void SubResource::dbOutput( const string &regname, const string& secname ){
-    // function protocol
-    void dboutput4(string var1name,string var2name,string var3name,string var4name,
-        string uname,vector<double> dout);
-
-    int m=0;
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-    const string outputUnit = mSubresourceInfo->getString( "output-unit", true );
-    const string priceUnit = mSubresourceInfo->getString( "price-unit", true );
-    vector<double> temp(maxper);
-    string tssname = mName; // tempory subsector name
-
-    // function arguments are variable name, double array, db name, table name
-    // the function writes all years
-    // total subsector output
-    //dboutput4(regname,"Primary Energy", "Production for " + secname,name,outputUnit,annualprod);
-    //    dboutput4(regname,"Resource",secname,str,"EJ",available);
-    dboutput4(regname,"Resource","Available "+secname,mName,outputUnit,convertToVector(mAvailable));
-    dboutput4(regname,"Resource","CummProd "+secname,mName,outputUnit,convertToVector(mCumulProd));
-
-    // do for all grades in the sector
-    for ( unsigned int i=0;i< mGrade.size();i++) {
-        string str = tssname + "_" + mGrade[i]->getName();
-        // grade cost
-        for (m=0;m<maxper;m++) {
-            temp[m] = mGrade[i]->getCost(m);
-        }
-        dboutput4(regname,"Price",secname,str,priceUnit,temp);
-        // grade extraction cost
-        for (m=0;m<maxper;m++) {
-            temp[m] = mGrade[i]->getExtCost();
-        }
-        dboutput4(regname,"Price ExtCost",secname,str,priceUnit,temp);
-        // available resource for each grade
-        for (m=0;m<maxper;m++) {
-            temp[m] = mGrade[i]->getAvail();
-        }
-        dboutput4(regname,"Resource",secname,str,outputUnit,temp);
-    }
-}
-
 //! write SubResource output to file
 void SubResource::csvOutputFile( const string &regname, const string& sname) {
     const Modeltime* modeltime = scenario->getModeltime();

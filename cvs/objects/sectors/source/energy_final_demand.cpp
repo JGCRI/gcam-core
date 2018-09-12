@@ -422,39 +422,6 @@ void EnergyFinalDemand::csvOutputFile( const string& aRegionName ) const {
                  convertToVector( mServiceDemands ) );
 }
 
-//! Write MiniCAM style demand sector output to database.
-void EnergyFinalDemand::dbOutput( const string& aRegionName ) const {
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-    vector<double> temp(maxper);
-    
-    // function protocol
-    void dboutput4(string var1name,string var2name,string var3name,string var4name,
-        string uname,vector<double> dout);
-    
-    // total sector output
-    dboutput4( aRegionName,"End-Use Service","by Sector", mName, "Ser Unit",
-               convertToVector( mServiceDemands ) );
-    
-    temp.clear();
-    for( int i = 0; i < maxper; ++i ) {
-        temp.push_back( mPriceElasticity[ i ] );
-    }
-
-    // End-use service price elasticity
-    dboutput4( aRegionName,"End-Use Service","Elasticity", mName + "_price" ,
-               " ", temp );
-    
-    temp.clear();
-    for( int i = 0; i < maxper; ++i ) {
-        temp.push_back( mIncomeElasticity[ i ] );
-    }
-
-    // End-use service income elasticity
-    dboutput4( aRegionName,"End-Use Service","Elasticity", mName + "_income",
-               " ", temp );
-}
-
 EnergyFinalDemand::FinalEnergyConsumer::FinalEnergyConsumer( const string& aFinalDemandName ) {
     mTFEMarketName = SectorUtils::createTFEMarketName( aFinalDemandName );
 }

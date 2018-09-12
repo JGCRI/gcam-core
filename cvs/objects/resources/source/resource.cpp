@@ -496,57 +496,6 @@ void Resource::csvOutputFile( const string& regname )
     }
 }
 
-//! Write resource output to database.
-void Resource::dbOutput( const string& regname ) {
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-    vector<double> temp(maxper);
-    // function protocol
-    void dboutput4(string var1name,string var2name,string var3name,string var4name,
-        string uname,vector<double> dout);
-    // resource price
-    dboutput4(regname,"Price","by Sector",mName,mPriceUnit,convertToVector(mResourcePrice));
-    // do for all subsectors in the sector
-    temp.assign( temp.size(), 0.0 );
-    for (int m=0;m<maxper;m++) {
-        for (int i=0;i<mSubResource.size();i++) {
-            temp[m] += mSubResource[i]->getCumulProd(m);
-        }
-    }
-    dboutput4(regname,"Resource","CummProd "+mName,"zTotal",mOutputUnit,temp);
-
-    temp.assign( temp.size(), 0.0 );
-    for (int m=0;m<maxper;m++) {
-        for (int i=0;i<mSubResource.size();i++) {
-            temp[m] += mSubResource[i]->getAnnualProd(m);
-        }
-    }
-    dboutput4(regname,"Resource","annual-production", mName, mOutputUnit, temp);
-
-    temp.assign( temp.size(), 0.0 );
-    // do for all subsectors in the sector
-    for (int m=0;m<maxper;m++) {
-        for (int i=0;i<mSubResource.size();i++) {
-            temp[m] += mSubResource[i]->getAvailable(m);
-        }
-    }
-    dboutput4(regname,"Resource","Available "+mName,"zTotal",mOutputUnit,temp);
-    
-    for( unsigned int i = 0; i < mGHG.size(); ++i ) {
-        // no inputs and capture components
-        temp.assign( temp.size(), 0.0 );
-        for (int period = 0; period < maxper; ++period) {
-            temp[period] += mGHG[i]->getEmission( period );
-        }
-        dboutput4(regname,"Emissions","Rsc-"+mName,mGHG[i]->getName(),"Tg",temp);
-    }
-
-    // do for all subsectors in the sector
-    for (int i=0;i<mSubResource.size();i++) {
-        mSubResource[i]->dbOutput(regname,mName);
-    }
-}
-
 /*! \brief Update an output container for a Resource.
 * \param aVisitor Output container to update.
 * \param aPeriod Period to update.

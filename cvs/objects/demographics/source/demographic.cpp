@@ -304,30 +304,6 @@ const vector<double> Demographic::getTotalPopVec() const {
     return newTotalVector;
 }
 
-
-//! MiniCAM output to file
-void Demographic::dbOutput( const string& regionName ) const {
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxPeriod = modeltime->getmaxper();
-    vector<double> temp( maxPeriod );
-
-    // function protocol
-    void dboutput4(string var1name,string var2name,string var3name,string var4name,
-        string uname,vector<double> dout);
-
-    // write population to temporary array since not all will be sent to output
-    for ( int i = 0; i < maxPeriod; i++ ){
-        int index = convertPeriodToPopulationIndex( i );
-        // Check for invalid indices.
-        if( index != -1 ){
-            temp[ i ] = population[ index ]->getTotal();
-        }
-    }
-    // function arguments are variable name, double array, db name, table name
-    // the function writes all years
-    dboutput4( regionName, "General", "Population", "Total", "thous", temp );
-}
-
 //! outputing population info to file
 void Demographic::csvOutputFile( const string& regionName ) const {
     const Modeltime* modeltime = scenario->getModeltime();

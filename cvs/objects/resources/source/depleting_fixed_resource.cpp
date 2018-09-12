@@ -257,21 +257,6 @@ void DepletingFixedResource::csvOutputFile( const string& aRegionName )
     fileoutput3( aRegionName , mName," "," ","production", mOutputUnit, temp );
 }
 
-void DepletingFixedResource::dbOutput( const string& aRegionName ){
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-    vector<double> temp(maxper);
-    // function protocol
-    void dboutput4(string var1name,string var2name,string var3name,string var4name,
-        string uname,vector<double> dout);
-
-    // Subsectors do not exist for depleting fixed Resource.
-    for (int m=0;m<maxper;m++) {
-        temp[m] += getAnnualProd(aRegionName, m);
-    }
-    dboutput4( aRegionName, "Resource", "annual-production", mName, mOutputUnit, temp );
-}
-
 /*
 * \brief Create the resource market.
 * \details The resource creates a single solved market for the

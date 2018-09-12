@@ -106,7 +106,6 @@ public:
     std::map<std::string, const Curve*> getEmissionsQuantityCurves( const std::string& ghgName ) const;
     std::map<std::string, const Curve*> getEmissionsPriceCurves( const std::string& ghgName ) const;
     void writeOutputFiles() const;
-    void dbOutput() const;
     void accept( IVisitor* aVisitor, const int aPeriod ) const;
     const IClimateModel* getClimateModel() const;
     static const std::string& getXMLNameStatic();

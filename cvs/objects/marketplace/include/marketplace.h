@@ -166,7 +166,6 @@ public:
         const int period ) const;
 
     void init_to_last( const int period );
-    void dbOutput() const; 
     void csvOutputFile( std::string marketsToPrint = "" ) const; 
     int resetToPriceMarket( const int aMarketNumber );
     void setMarketToSolve( const std::string& goodName, const std::string& regionName,

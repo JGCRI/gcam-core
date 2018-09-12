@@ -224,7 +224,4 @@ void NegativeEmissionsFinalDemand::accept( IVisitor* aVisitor,
 void NegativeEmissionsFinalDemand::csvOutputFile( const string& aRegionName ) const {
 }
 
-//! Write MiniCAM style demand sector output to database.
-void NegativeEmissionsFinalDemand::dbOutput( const string& aRegionName ) const  {
-}
 

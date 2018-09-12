@@ -866,46 +866,6 @@ auto_ptr<CachedMarket> Marketplace::locateMarket( const string& aGoodName, const
     return locatedMarket;
 }
 
-/*! \brief Write out the market information to the database.
-*
-* This function is used to perform a data writeout to the database.
-*
-* \note This will be replaced by toXMLOutput
-*/
-void Marketplace::dbOutput() const {
-
-    const Modeltime* modeltime = scenario->getModeltime();
-
-    void dboutput4(string var1name,string var2name,string var3name,string var4name,
-        string uname,vector<double> dout);
-
-    const int maxPeriod = modeltime->getmaxper();
-    vector<double> temp( maxPeriod );
-    int j;
-    // write market prices, supply and demand
-    for (int i=0;i< static_cast<int>( mMarkets.size() );i++) {
-        string tempRegName = mMarkets[i]->getRegionName();
-        string tempGoodName = mMarkets[i]->getGoodName();
-        const IInfo* marketInfo = mMarkets[i]->getMarket( 0 )->getMarketInfo();
- 
-        for (j=0;j<maxPeriod;j++) {
-            temp[j] = mMarkets[i]->getMarket( j )->getPrice();
-        }
-        dboutput4(mMarkets[i]->getRegionName(),"Market",mMarkets[i]->getGoodName(),"1_price",
-            marketInfo->getString( "price-unit", true ), temp);
-        for (j=0;j<maxPeriod;j++) {
-            temp[j] = mMarkets[i]->getMarket( j )->getRawSupply();
-        }
-        dboutput4(mMarkets[i]->getRegionName(),"Market",mMarkets[i]->getGoodName(),"2_supply",
-            marketInfo->getString( "output-unit", true ), temp);
-        for (j=0;j<maxPeriod;j++) {
-            temp[j] = mMarkets[i]->getMarket( j )->getRawDemand();
-        }
-        dboutput4(mMarkets[i]->getRegionName(),"Market",mMarkets[i]->getGoodName(),"3_demand",
-            marketInfo->getString( "output-unit", true ), temp);
-    }
-}
-
 /*! \brief Write out market information to a file.
 *
 * This function is used to perform a data writeout to a plain text file.

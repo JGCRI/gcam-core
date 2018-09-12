@@ -200,9 +200,6 @@ public:
     virtual void csvOutputFile( const GDP* aGDP,
                                 const IndirectEmissionsCalculator* aIndirectEmissCalc ) const;
 
-    virtual void dbOutput( const GDP* aGDP,
-                           const IndirectEmissionsCalculator* aIndEmissCalc ) const = 0;
-
     std::map<std::string, double> getfuelcons( const int period ) const;
     double getConsByFuel( const int period, const std::string& key) const;
     std::map<std::string, double> getemission( const int period ) const;

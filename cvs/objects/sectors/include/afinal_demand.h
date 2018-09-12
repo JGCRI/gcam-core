@@ -149,12 +149,6 @@ public:
      */
     virtual void csvOutputFile( const std::string& aRegionName ) const = 0;
 
-    /*!
-     * \brief Write output to the database.
-     * \param aRegionName Region name.
-     */
-    virtual void dbOutput( const std::string& aRegionName ) const = 0;
-
     // Documentation is inherited.
     virtual void accept( IVisitor* aVisitor,
                          const int aPeriod ) const = 0;

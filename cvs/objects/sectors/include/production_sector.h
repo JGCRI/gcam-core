@@ -118,8 +118,6 @@ public:
     virtual void postCalc( const int aPeriod );
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 
-    virtual void dbOutput( const GDP* aGDP,
-                           const IndirectEmissionsCalculator* aIndEmissCalc ) const {}
 protected:
     std::map<std::string,double> ghgEmissCoefMap; //! Map of ghg name to emission coefficient
     void setMarket();

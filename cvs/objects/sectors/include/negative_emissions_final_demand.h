@@ -97,8 +97,6 @@ public:
 
     virtual void csvOutputFile( const std::string& aRegionName ) const;
 
-    virtual void dbOutput( const std::string& aRegionName ) const;
-
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
     

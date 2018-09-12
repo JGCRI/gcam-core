@@ -771,16 +771,6 @@ void Scenario::writeOutputFiles() const {
     }
 }
 
-//! Output Scenario members to the database.
-void Scenario::dbOutput() const {
-    // Output metadata is not required to exist.
-    const list<string>& primaryFuelList = mOutputMetaData.get() ? 
-                                          mOutputMetaData->getPrimaryFuelList() 
-                                          : list<string>();
-    mWorld->dbOutput( primaryFuelList );
-    mMarketplace->dbOutput();
-}
-
 /*! \brief Write SGM results to csv text file.
 * \param aSGMDebugFile SGM debugging file.
 * \param aPeriod Model period for which to print debugging information.

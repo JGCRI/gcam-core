@@ -103,7 +103,6 @@ public:
     void runClimateModel();
     void runClimateModel( int period );
     void csvOutputFile() const; 
-    void dbOutput( const std::list<std::string>& aPrimaryFuelList ) const; 
     const std::map<std::string,int> getOutputRegionMap() const;
     bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const;
     void setTax( const GHGPolicy* aTax );

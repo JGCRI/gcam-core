@@ -324,29 +324,6 @@ void fileoutput3( string var1name,string var2name,string var3name,
     fileoutput3(regionName," "," "," ","PPPperCap","thousand90US$",gdpPerCapitaAdjustedPPP);
 }
 
-//! MiniCAM output to file
-void GDP::dbOutput( const string& regionName ) const {
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxPeriod = modeltime->getmaxper();
-    vector<double> temp( maxPeriod );
-
-    // function protocol
-    void dboutput4(string var1name,string var2name,string var3name,string var4name,
-        string uname,vector<double> dout);
-
-    // labor productivity
-    for( int i = 0; i < maxPeriod; i++ ){
-        temp[ i ] = laborProdGrowthRate[ i ];
-    }
-    dboutput4( regionName, "General", "LaborProd", "GrowthRate", "perYr", temp );
-
-    // write gdp and adjusted gdp for region
-    dboutput4(regionName,"General","GDP90$","GDP(90mer)",mGDPUnit,gdpValueAdjusted);
-    dboutput4(regionName,"General","GDP90$","GDPApprox(90mer)",mGDPUnit,gdpValue);
-    dboutput4(regionName,"General","GDP","perCap","thousand90US$",gdpPerCapitaAdjusted);
-    dboutput4(regionName,"General","GDP90$","perCAP_PPP","thousand90US$",gdpPerCapitaAdjustedPPP);
-}
-
 /*! Calculate initial regional gdps.
 *
 *  Routine calculates GDPs without current period energy adjustment.

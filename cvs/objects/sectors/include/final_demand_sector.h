@@ -77,8 +77,6 @@ public:
     virtual void completeInit( const IInfo* aRegionInfo,
                                ILandAllocator* aLandAllocator );
 
-    virtual void dbOutput( const GDP* aGDP,
-                           const IndirectEmissionsCalculator* aIndEmissCalc ) const {}
 protected:
     std::auto_ptr<MoreSectorInfo> moreSectorInfo; //! Additional sector information needed below sector
     

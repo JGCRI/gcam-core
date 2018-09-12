@@ -78,8 +78,6 @@ public:
 
     virtual void postCalc( const int aPeriod );
 
-    virtual void dbOutput( const GDP* aGDP,
-                           const IndirectEmissionsCalculator* aIndEmissCalc ) const;
 protected:
     virtual double getEnergyInput( const int aPeriod ) const;
     virtual double getOutput( const int aPeriod ) const;
