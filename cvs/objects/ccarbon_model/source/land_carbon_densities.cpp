@@ -122,14 +122,6 @@ void LandCarbonDensities::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aT
     XMLWriteClosingTag( getXMLName(), aOut, aTabs );
 }
 
-void LandCarbonDensities::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( getXMLName(), aOut, aTabs );
-    XMLWriteElement( mAvgAboveGroundCarbon, "above-ground-carbon-density", aOut, aTabs, 0.0 );
-    XMLWriteElement( mAvgBelowGroundCarbon, "below-ground-carbon-density", aOut, aTabs, 0.0 );
-    XMLWriteElement( mMatureAge, "mature-age", aOut, aTabs );
-    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
-}
-
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
 *
 * This public function accesses the private constant string, XML_NAME.
