@@ -283,37 +283,6 @@ void LandLeaf::initLandUseHistory( const string& aRegionName )
     mCarbonContentCalc->setLandUseObjects( mLandUseHistory, this );
 }
 
-void LandLeaf::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag ( getXMLName(), aOut, aTabs, mName );
-    const Modeltime* modeltime = scenario->getModeltime();
-    for( int period = 0; period < modeltime->getmaxper(); ++period ) {
-        if( mReadinLandAllocation[ period ].isInited() ) {
-            const int year = modeltime->getper_to_yr( period );
-            XMLWriteElement( mReadinLandAllocation[ period ], "landAllocation", aOut, aTabs, year );
-        }
-    }
-    for( int period = 0; period < modeltime->getmaxper(); ++period ) {
-        if( mGhostUnormalizedShare[ period ].isInited() ) {
-            const int year = modeltime->getper_to_yr( period );
-            XMLWriteElement( mGhostUnormalizedShare[ period ], "ghost-unnormalized-share", aOut, aTabs, year );
-        }
-    }
-    XMLWriteElementCheckDefault( mIsGhostShareRelativeToDominantCrop, "is-ghost-share-relative", aOut, aTabs, false );
-    XMLWriteElement( mMinAboveGroundCDensity, "minAboveGroundCDensity", aOut, aTabs );
-    XMLWriteElement( mMinBelowGroundCDensity, "minBelowGroundCDensity", aOut, aTabs );
-    XMLWriteElementCheckDefault( mLandExpansionCostName, "landConstraintCurve", aOut, aTabs, string() );
-    
-
-    if( mLandUseHistory ){
-        mLandUseHistory->toInputXML( aOut, aTabs );
-    }
-
-    mCarbonContentCalc->toInputXML( aOut, aTabs );
-
-    // finished writing xml for the class members.
-    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
-}
-
 void LandLeaf::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( mReadinLandAllocation[ period ], "read-in-land-allocation", out, tabs );
     XMLWriteElement( mMinAboveGroundCDensity, "minAboveGroundCDensity", out, tabs );

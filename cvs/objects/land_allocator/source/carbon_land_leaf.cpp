@@ -73,10 +73,6 @@ bool CarbonLandLeaf::XMLDerivedClassParse( const std::string& aNodeName,
     return true;
 }
 
-void CarbonLandLeaf::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-
-}
-
 const string& CarbonLandLeaf::getXMLName() const {
     return getXMLNameStatic();
 }
