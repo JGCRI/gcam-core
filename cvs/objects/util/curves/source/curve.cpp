@@ -95,19 +95,6 @@ Curve* Curve::getCurve( const string& type ) {
     return curve;
 }
 
-//! Print out the curve to an XML File
-void Curve::toInputXML( ostream& out, Tabs* tabs ) const {
-    XMLWriteOpeningTag( Curve::getXMLNameStatic(), out, tabs, name, 0, getXMLName() );
-    XMLWriteElementCheckDefault( title, "title", out, tabs );
-    XMLWriteElementCheckDefault( numericalLabel, "numericalLabel", out, tabs );
-    XMLWriteElementCheckDefault( xAxisLabel, "xAxisLabel", out, tabs );
-    XMLWriteElementCheckDefault( yAxisLabel, "yAxisLabel", out, tabs );
-    XMLWriteElementCheckDefault( xAxisUnits, "xAxisUnit", out, tabs );
-    XMLWriteElementCheckDefault( yAxisUnits, "yAxisUnit", out, tabs );
-    toInputXMLDerived( out, tabs );
-    XMLWriteClosingTag( Curve::getXMLNameStatic(), out, tabs );
-}
-
 //! Parse a curve from a DOM tree.
 void Curve::XMLParse( const xercesc::DOMNode* node ) {
     

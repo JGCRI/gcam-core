@@ -336,11 +336,6 @@ double PointSetCurve::getDiscountedValue( const double aLowerBound,
     return sum;
 }
 
-//! Print out the curve to an XML File
-void PointSetCurve::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-    pointSet->toInputXML( out, tabs );
-}
-
 //! Parse a curve from a DOM tree.
 bool PointSetCurve::XMLParseDerived( const xercesc::DOMNode* node ) {
 

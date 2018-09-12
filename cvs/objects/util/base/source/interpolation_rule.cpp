@@ -196,35 +196,6 @@ bool InterpolationRule::XMLParse( const DOMNode* aNode ) {
     return true;
 }
 
-void InterpolationRule::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    // TODO: create a XMLWriteOpeningTagWithAttributes
-    aTabs->writeTabs( aOut );
-    aOut << "<" << getXMLNameStatic() << " apply-to=\"" << mApplyTo
-         << "\" from-year=\"" << mFromYear << "\" to-year=\""
-         << ( mUseLastModelYearConstant ? getLastModelYearConstant() : mToYear )
-         << "\">" << endl;
-    aTabs->increaseIndent();
-
-    // only write out a value to this element if one was parsed
-    if( mFromValue.isInited() ) {
-        XMLWriteElement( mFromValue, "from-value", aOut, aTabs );
-    }
-
-    // only write out a value to this element if one was parsed
-    if( mToValue.isInited() ) {
-        XMLWriteElement( mToValue, "to-value", aOut, aTabs );
-    }
-
-    mInterpolationFunction->toInputXML( aOut, aTabs );
-
-    map<string, bool> attrs;
-    attrs[ "warn" ] = mWarnWhenOverwritting;
-    XMLWriteElementWithAttributes( overwritePolicyEnumToStr( mOverwritePolicy ),
-        "overwrite-policy", aOut, aTabs, attrs );
-
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 /*!
  * \brief Perform any potential interpolations according to the parsed rules.
  * \details Apply interpolations for any years that are with in the ranged
@@ -374,7 +345,7 @@ void InterpolationRule::applyInterpolations( PeriodVector<Value>& aValuesToInter
 
 /*!
  * \brief Convert the enumerated OverwritePolicy values to a string which 
- *        is suitable for use during XMLParse and toInputXML.
+ *        is suitable for use during XMLParse.
  * \param aPolicy An enumerated value to convert.
  * \return The string which represents that value.
  */
