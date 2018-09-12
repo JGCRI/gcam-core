@@ -361,27 +361,6 @@ void ResidueBiomassOutput::toDebugXML( const int aPeriod, std::ostream& aOut, Ta
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-void ResidueBiomassOutput::toInputXML( std::ostream& aOut, Tabs* aTabs ) const
-{
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, getName() );
-    XMLWriteElementCheckDefault( mErosCtrl, "eros-ctrl", aOut, aTabs, 0.0 );
-    XMLWriteElement( mHarvestIndex, "harvest-index", aOut, aTabs );
-    XMLWriteElement( mMassConversion, "mass-conversion", aOut, aTabs );
-    XMLWriteElement( mMassToEnergy, "mass-to-energy", aOut, aTabs );
-    XMLWriteElement( mWaterContent, "water-content", aOut, aTabs );
-
-    
-    const vector<pair<double,double> > pairs = mCostCurve->getSortedPairs();
-    typedef vector<pair<double, double> >::const_iterator PairIterator;
-    map<string, double> attrs;
-    for( PairIterator currPair = pairs.begin(); currPair != pairs.end(); ++currPair ) {
-        attrs[ "price" ] = currPair->first;
-        XMLWriteElementWithAttributes( currPair->second, "fract-harvested", aOut, aTabs, attrs );
-    }
-
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 bool ResidueBiomassOutput::XMLParse( const xercesc::DOMNode* aNode )
 {
     // assume we are passed a valid node.

@@ -131,14 +131,6 @@ bool PhasedShutdownDecider::XMLParse( const xercesc::DOMNode* node ){
     return true;
 }
 
-void PhasedShutdownDecider::toInputXML( ostream& aOut,
-                                        Tabs* aTabs ) const
-{
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
-    XMLWriteElementCheckDefault( mShutdownRate, "shutdown-rate", aOut, aTabs, 0.0 );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 void PhasedShutdownDecider::toDebugXML( const int aPeriod,
                                         ostream& aOut,
                                         Tabs* aTabs ) const

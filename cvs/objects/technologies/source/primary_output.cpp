@@ -107,12 +107,6 @@ bool PrimaryOutput::XMLParse( const DOMNode* aNode )
     return false;
 }
 
-void PrimaryOutput::toInputXML( ostream& aOut,
-                                Tabs* aTabs ) const
-{
-    // Primary outputs are not parsed and so do not write themselves to XML.
-}
-
 void PrimaryOutput::toDebugXML( const int aPeriod,
                                 ostream& aOut,
                                 Tabs* aTabs ) const

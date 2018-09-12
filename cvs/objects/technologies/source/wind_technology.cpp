@@ -557,27 +557,6 @@ void WindTechnology::toDebugXMLDerived(
    XMLWriteElement( mWindPowerVariance, "wind-power-variance", out, tabs );
 }
 
-// WindTechnology::toInputXMLDerived ***************************************
-
-// Documentation is inherited
-void WindTechnology::toInputXMLDerived(
-   std::ostream& out,
-   Tabs*         tabs ) const
-{
-   IntermittentTechnology::toInputXMLDerived( out,  tabs );
-   XMLWriteElementCheckDefault( mCapitalCost, sXMLTagNames[ CAPITAL_COST_KEY ], out, tabs, double( 1000.0 ) );
-   XMLWriteElement( mCutOutSpeed, sXMLTagNames[ CUTOUT_SPEED_KEY ], out, tabs );
-   XMLWriteElementCheckDefault( mFCR, sXMLTagNames[ FCR_KEY ], out, tabs, double( 0.0856 ) );
-   XMLWriteElementCheckDefault( mGridConnectionCost, sXMLTagNames[ GRID_CONNECTION_COST_KEY ], out, tabs, double( 1500.0 ) );
-   XMLWriteElementCheckDefault( mOM, sXMLTagNames[ OM_KEY ], out, tabs, double( 10.0 ) );
-   XMLWriteElement( mRotorDiameter, sXMLTagNames[ ROTOR_DIAMETER_KEY ], out, tabs );
-   XMLWriteElement( mTurbineDensity, sXMLTagNames[ TURBINE_DENSITY_KEY ], out, tabs );
-   XMLWriteElement( mTurbineDerating, sXMLTagNames[ TURBINE_DERATING_KEY ], out, tabs );
-   XMLWriteElement( mTurbineHubHeight, sXMLTagNames[ TURBINE_HUB_HEIGHT_KEY ], out, tabs );
-   XMLWriteElement( mTurbineRating, sXMLTagNames[ TURBINE_RATING_KEY ], out, tabs );
-   XMLWriteElement( mWindFarmLoss, sXMLTagNames[ WIND_FARM_LOSS_KEY ], out, tabs );
-}
-
 // WindTechnology::XMLDerivedClassParse ************************************
 
 // Documentation is inherited

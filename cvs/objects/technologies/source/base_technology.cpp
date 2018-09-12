@@ -228,24 +228,6 @@ void BaseTechnology::XMLParse( const DOMNode* node ) {
     }
 }
 
-//! Output to XML data
-void BaseTechnology::toInputXML( ostream& out, Tabs* tabs ) const {
-
-    // write the beginning tag.
-    XMLWriteOpeningTag ( getXMLName(), out, tabs, name, year, "");
-
-    XMLWriteElement( mShareWeight, "share-weight", out, tabs );
-    mNestedInputRoot->toInputXML( out, tabs );
-    
-    for( CGHGIterator ghg = mGhgs.begin(); ghg != mGhgs.end(); ++ghg ){
-        (*ghg)->toInputXML( out, tabs );
-    }
-    toInputXMLDerived( out, tabs );
-
-    // write the closing tag.
-    XMLWriteClosingTag( getXMLName(), out, tabs );
-}
-
 //! Output debug info to XML data
 void BaseTechnology::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     // write the beginning tag.

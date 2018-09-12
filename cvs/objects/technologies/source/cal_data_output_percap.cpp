@@ -98,13 +98,6 @@ void CalDataOutputPercap::XMLParse( const DOMNode* aNode ){
 	}
 }
 
-//! write object to xml output stream
-void CalDataOutputPercap::toInputXML( std::ostream& out, Tabs* tabs ) const {
-    XMLWriteOpeningTag( getXMLNameStatic(), out, tabs );
-    XMLWriteElement( mCalOutputPercapValue, "calOutputPercapValue", out, tabs );
-    XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
-}
-
 //! Write object to debugging xml output stream.
 void CalDataOutputPercap::toDebugXML( std::ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag( getXMLNameStatic(), out, tabs );

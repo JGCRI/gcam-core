@@ -126,15 +126,6 @@ bool NonEnergyUseCaptureComponent::XMLParse( const xercesc::DOMNode* node ){
     return true;
 }
 
-void NonEnergyUseCaptureComponent::toInputXML( ostream& aOut,
-                                               Tabs* aTabs ) const 
-{
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
-    XMLWriteElementCheckDefault( mRemoveFraction, "remove-fraction", aOut, aTabs, 0.0 );
-    XMLWriteElementCheckDefault( mTargetGas, "target-gas", aOut, aTabs, string( "CO2" ) );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 void NonEnergyUseCaptureComponent::toDebugXML( const int aPeriod,
                                                ostream& aOut,
                                                Tabs* aTabs ) const
