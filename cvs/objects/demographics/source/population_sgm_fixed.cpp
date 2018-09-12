@@ -92,13 +92,6 @@ bool PopulationSGMFixed::XMLDerivedClassParse( const std::string& nodeName, cons
     return true;
 }
 
-//! Write out rest of data members to XML output stream.
-void PopulationSGMFixed::toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {
-    for( vector<AgeCohort *>::const_iterator i = ageCohort.begin(); i != ageCohort.end(); i++ ){
-        ( *i )->toInputXML( out, tabs );
-    }
-}
-
 //! Write out XML for debugging purposes.
 void PopulationSGMFixed::toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const {
     for( vector<AgeCohort *>::const_iterator i = ageCohort.begin(); i != ageCohort.end(); i++ ){

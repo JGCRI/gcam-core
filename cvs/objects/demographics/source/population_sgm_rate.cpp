@@ -135,13 +135,6 @@ double PopulationSGMRate::getWorkingAgePopFemale() const { // ages 15-65
     return workAgePop;
 }
 
-//! Write out rest of data members to XML output stream.
-void PopulationSGMRate::toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {
-    for( CAgeCohortIterator i = ageCohort.begin(); i != ageCohort.end(); ++i ){
-        ( *i )->toInputXML( out, tabs );
-    }
-}
-
 //! Write out XML for debugging purposes.
 void PopulationSGMRate::toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const {
     for( CAgeCohortIterator i = ageCohort.begin(); i != ageCohort.end(); ++i ){

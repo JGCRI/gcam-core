@@ -102,12 +102,6 @@ double PopulationMiniCAM::getWorkingAgePop() const { // ages 15-65
     return mTotalPop * mFractionWorking;
 }
 
-//! Write out data members to XML output stream.
-void PopulationMiniCAM::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-    // note that mTotalPop is actually written out by Population
-    XMLWriteElementCheckDefault( mFractionWorking, "fraction-working", out, tabs, 1.0 );
-}
-
 //! Write out XML for debugging purposes.
 void PopulationMiniCAM::toDebugXMLDerived( ostream& out, Tabs* tabs ) const {
     XMLWriteElement( mFractionWorking, "fraction-working", out, tabs );

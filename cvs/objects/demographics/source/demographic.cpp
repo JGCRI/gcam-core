@@ -112,20 +112,6 @@ void Demographic::XMLParse( const xercesc::DOMNode* node ){
     }
 }
 
-//! Write out data members to XML output stream.
-void Demographic::toInputXML( ostream& out, Tabs* tabs ) const {
-    XMLWriteOpeningTag ( getXMLName(), out, tabs );
-
-    for( CPopulationIterator i = population.begin(); i != population.end(); ++i ){
-        if( ( *i )->mIsParsed ){
-            ( *i )->toInputXML( out, tabs );
-        }
-    }
-
-    // finished writing xml for the class members.
-    XMLWriteClosingTag( getXMLName(), out, tabs );
-}
-
 //! Write out XML for debugging purposes.
 void Demographic::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag ( getXMLName(), out, tabs );
