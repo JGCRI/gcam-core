@@ -478,66 +478,6 @@ void Technology::completeInit( const string& aRegionName,
     }
 }
 
-//! write object to xml output stream
-void Technology::toInputXML( ostream& out,
-                             Tabs* tabs ) const
-{
-    XMLWriteOpeningTag( getXMLVintageNameStatic(), out, tabs, "", mYear );
-
-    // write the xml for the class members.
-    if( mParsedShareWeight.isInited() ) {
-        XMLWriteElement( mParsedShareWeight, "share-weight", out, tabs );
-    }
-    int defualtLifetimeYears = calcDefaultLifetime();
-    XMLWriteElementCheckDefault( mLifetimeYears, "lifetime", out, tabs, defualtLifetimeYears );
-    XMLWriteElementCheckDefault( mFixedOutput, "fixedOutput", out, tabs, getFixedOutputDefault() );
-    XMLWriteElementCheckDefault( mPMultiplier, "pMultiplier", out, tabs, 1.0 );
-    XMLWriteElementCheckDefault( mCapacityFactor, "capacity-factor", out, tabs, 1.0 );
-    if( !mKeywordMap.empty() ) {
-        XMLWriteElementWithAttributes( "", "keyword", out, tabs, mKeywordMap );
-    }
-
-    if( mCalValue ) {
-        mCalValue->toInputXML( out, tabs );
-    }
-
-    if( mCaptureComponent ) {
-        mCaptureComponent->toInputXML( out, tabs );
-    }
-
-    if( mTechChangeCalc ) {
-        mTechChangeCalc->toInputXML( out, tabs );
-    }
-
-    for( vector<IShutdownDecider*>::const_iterator i = mShutdownDeciders.begin(); i != mShutdownDeciders.end(); ++i ) {
-        ( *i )->toInputXML( out, tabs );
-    }
-
-    for( COutputIterator iter = mOutputs.begin(); iter != mOutputs.end(); ++iter ) {
-        ( *iter )->toInputXML( out, tabs );
-    }
-    for( CGHGIterator iter = mGHG.begin(); iter != mGHG.end(); ++iter ) {
-        ( *iter )->toInputXML( out, tabs );
-    }
-    for( unsigned int i = 0; i < mInputs.size(); ++i ) {
-        mInputs[ i ]->toInputXML( out, tabs );
-    }
-
-    // finished writing xml for the class members.
-    toInputXMLDerived( out, tabs );
-    XMLWriteClosingTag( getXMLVintageNameStatic(), out, tabs );
-}
-
-void Technology::toInputXMLForRestart( ostream& out, Tabs* tabs ) const {
-    // make sure calibrated share weights get written out
-    const Modeltime* modeltime = scenario->getModeltime();
-    if( mYear <= modeltime->getper_to_yr( modeltime->getFinalCalibrationPeriod() ) ) {
-        XMLWriteOpeningTag( getXMLVintageNameStatic(), out, tabs, "", mYear );
-        XMLWriteElement( mShareWeight, "share-weight", out, tabs );
-        XMLWriteClosingTag( getXMLVintageNameStatic(), out, tabs );
-    }
-}
-
 //! write object to xml debugging output stream
 void Technology::toDebugXML( const int period,
                              ostream& out,

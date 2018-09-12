@@ -139,15 +139,6 @@ bool SGMOutput::XMLParse( const DOMNode* aNode )
     return true;
 }
 
-void SGMOutput::toInputXML( ostream& aOut,
-                            Tabs* aTabs ) const
-{
-    const Modeltime* modeltime = scenario->getModeltime();
-    XMLWriteOpeningTag( getXMLReportingName(), aOut, aTabs, mName );
-    XMLWriteVector( mPhysicalOutputs, "physical-output", aOut, aTabs, modeltime );
-    XMLWriteClosingTag( getXMLReportingName(), aOut, aTabs );
-}
-
 void SGMOutput::toDebugXML( const int aPeriod,
                             ostream& aOut,
                             Tabs* aTabs ) const

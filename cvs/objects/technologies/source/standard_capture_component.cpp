@@ -145,17 +145,6 @@ bool StandardCaptureComponent::XMLParse( const xercesc::DOMNode* node ){
     return true;
 }
 
-void StandardCaptureComponent::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
-    XMLWriteElementCheckDefault( mStorageMarket, "storage-market", aOut, aTabs, string( "" ) );
-	XMLWriteElementCheckDefault( mTargetGas, "target-gas", aOut, aTabs, string( "CO2" ) );
-    XMLWriteElementCheckDefault( mRemoveFraction, "remove-fraction", aOut, aTabs, 0.0 );
-    XMLWriteElementCheckDefault( mStorageCost, "storage-cost", aOut, aTabs, util::getLargeNumber() );
-    XMLWriteElementCheckDefault( mIntensityPenalty, "intensity-penalty", aOut, aTabs, 0.0 );
-	XMLWriteElementCheckDefault( mNonEnergyCostPenalty, "non-energy-penalty", aOut, aTabs, 0.0 );
-	XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 void StandardCaptureComponent::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
     XMLWriteElement( mStorageMarket, "storage-market", aOut, aTabs );

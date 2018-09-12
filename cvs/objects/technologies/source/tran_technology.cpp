@@ -102,10 +102,6 @@ bool TranTechnology::XMLDerivedClassParse( const string& nodeName, const DOMNode
     return true;
 }
 
-void TranTechnology::toInputXMLDerived( ostream& out, Tabs* tabs ) const {  
-    XMLWriteElementCheckDefault( mLoadFactor, "loadFactor", out, tabs, 1.0 );
-}
-
 void TranTechnology::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const { 
     XMLWriteElement( mLoadFactor, "loadFactor", out, tabs );
     XMLWriteElement( getOutput( period ) / mLoadFactor, "vehicleOutput", out, tabs );

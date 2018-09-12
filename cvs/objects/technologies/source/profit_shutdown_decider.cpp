@@ -137,14 +137,6 @@ bool ProfitShutdownDecider::XMLParse( const xercesc::DOMNode* node ){
     return true;
 }
 
-void ProfitShutdownDecider::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
-    XMLWriteElementCheckDefault( mMaxShutdown, "max-shutdown", aOut, aTabs, 1.0 );
-    XMLWriteElementCheckDefault( mSteepness, "steepness", aOut, aTabs, 6.0 );
-    XMLWriteElementCheckDefault( mMedianShutdownPoint, "median-shutdown-point", aOut, aTabs, -0.1 );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 void ProfitShutdownDecider::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
     XMLWriteElement( mMaxShutdown, "max-shutdown", aOut, aTabs );
