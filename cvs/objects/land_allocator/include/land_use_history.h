@@ -92,10 +92,6 @@ public:
                      std::ostream& aOut,
                      Tabs* aTabs ) const;
     
-    // IRoundTrippable
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const;
-    
     // IVisitableMethod
 	virtual void accept( IVisitor* aVisitor,
                          const int aPeriod ) const;

@@ -80,7 +80,6 @@ public:
     MarketBasedInvestor(); // should be protected.
     void XMLParse( const xercesc::DOMNode* node ); 
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
     void completeInit( const std::string& aRegionName, const std::string& aGoodName );
     void initCalc( std::vector<IInvestable*>& aInvestables,

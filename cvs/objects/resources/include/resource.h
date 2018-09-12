@@ -75,7 +75,6 @@ public:
     virtual ~Resource();
     static const std::string& getXMLNameStatic();
     void XMLParse( const xercesc::DOMNode* node );
-    void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
     void toDebugXML( const int period, std::ostream& aOut, Tabs* aTabs ) const;
     const std::string& getName() const; 
     virtual void completeInit( const std::string& aRegionName, const IInfo* aRegionInfo );

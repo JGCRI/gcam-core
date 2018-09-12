@@ -75,9 +75,6 @@ public:
     virtual ~EnergyFinalDemand();
 
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
-
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const;
     
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
@@ -170,9 +167,6 @@ protected:
                          const int aPeriod );
 
         double calcTechChange( const int aPeriod ) const;
-
-        void toInputXML( std::ostream& aOut,
-                         Tabs* aTabs ) const;
     
         void toDebugXML( const int aPeriod,
                          std::ostream& aOut,
@@ -230,7 +224,6 @@ protected:
 
     // Methods for deriving from EnergyFinalDemand.
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     virtual const std::string& getXMLName() const;
 private:    

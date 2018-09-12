@@ -77,9 +77,6 @@ public:
 
     virtual void XMLParse( const xercesc::DOMNode* aNode ) = 0;
 
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const = 0;
-
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
                              Tabs* aTabs ) const = 0;

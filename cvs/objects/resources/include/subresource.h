@@ -82,7 +82,6 @@ public:
     const std::string& getName() const;
     void XMLParse( const xercesc::DOMNode* tempnode );
     virtual void completeInit( const IInfo* aResourceInfo );
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
     virtual void cumulsupply( double aPrice, int aPeriod );

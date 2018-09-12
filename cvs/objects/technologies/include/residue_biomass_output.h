@@ -123,7 +123,6 @@ public :
     
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
 
-    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
 
     virtual void doInterpolations( const int aYear, const int aPreviousYear,
