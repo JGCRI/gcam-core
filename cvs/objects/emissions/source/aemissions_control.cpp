@@ -106,18 +106,6 @@ void AEmissionsControl::XMLParse(const DOMNode* aNode) {
     }
 }
 
-//! Writes datamembers to datastream in XML format.
-void AEmissionsControl::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-
-    XMLWriteOpeningTag( getXMLName(), aOut, aTabs, getName() );
-    
-    // write xml for data members
-    toInputXMLDerived( aOut, aTabs );
-    // done writing xml for data members.
-
-    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
-
-}
 //! Writes datamembers to debugging datastream in XML format.
 void AEmissionsControl::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
 

@@ -109,21 +109,6 @@ void AGHG::XMLParse( const DOMNode* aNode ) {
     }
 }
 
-//! Writes datamembers to datastream in XML format.
-void AGHG::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-
-    XMLWriteOpeningTag( getXMLName(), aOut, aTabs, getName() );
-
-    XMLWriteElementCheckDefault( mEmissionsUnit, "emissions-unit", aOut, aTabs, string() );
-
-    // write xml for data members
-    toInputXMLDerived( aOut, aTabs );
-    // done writing xml for data members.
-
-    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
-
-}
-
 //! Writes datamembers to debugging datastream in XML format.
 void AGHG::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
 
