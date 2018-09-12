@@ -157,7 +157,8 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
 
     # FAO_PRODSTAT_DOWNSCALED: FAO Prodstat data aggregated by GCAM commodity and downscaled to GLU.
     FAO_PRODSTAT_DOWNSCALED <- FAO_PRODSTAT_MERGED %>%
-      left_join(FAO_ag_items_PRODSTAT[c("item", "GCAM_commodity")], by = "item") %>%
+      left_join_error_no_match(distinct(select(FAO_ag_items_PRODSTAT, item, GCAM_commodity)), by = "item",      # distinct() to avoid duplicating data for items with multiple rows in FAO_ag_items_PRODSTAT
+                               ignore_columns = "GCAM_commodity") %>%                                           # ignore GCAM_commodity column to avoid error in ljenm (this column has NA for FAO items not modeled in GCAM)
       filter(!is.na(GCAM_commodity)) %>%                                                                        # Remove commodities not included in GCAM
       group_by(iso, GCAM_commodity, year) %>%
       summarise(harvested.area = sum(harvested.area),
