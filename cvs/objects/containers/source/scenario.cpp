@@ -434,10 +434,10 @@ bool Scenario::calculatePeriod( const int aPeriod,
     delete mManageStateVars;
     mManageStateVars = new ManageStateVariables( aPeriod );
     
-    // SGM Period 0 needs to clear out the supplies and demands put in by initCalc.
-    if( aPeriod == 0 ){
-        mMarketplace->nullSuppliesAndDemands( aPeriod );
-    }
+    // Be sure to clear out any supplies and demands in the marketplace before making our
+    // initial call to world.calc.  There may already be values in there if for instance
+    // they got set from a restart file.
+    mMarketplace->nullSuppliesAndDemands( aPeriod );
 
 #if GCAM_PARALLEL_ENABLED && PARALLEL_DEBUG
     mWorld->calc( aPeriod );       // get rid of transient bad data
