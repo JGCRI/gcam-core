@@ -115,20 +115,6 @@ bool FactorSupply::XMLParse( const xercesc::DOMNode* node) {
     return true;
 }
 
-//! Write to XML
-void FactorSupply::toInputXML( ostream &out, Tabs* tabs ) const {
-
-    // write the beginning tag.
-    XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
-    
-    // Write the data.
-    XMLWriteElement( mBaseSupply, "supply", out, tabs );
-    XMLWriteElement( mBasePrice, "price", out, tabs );
-
-    // write the closing tag.
-    XMLWriteClosingTag( getXMLName(), out, tabs );
-}
-
 //! Debug info written to XML
 void FactorSupply::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     // write the beginning tag.

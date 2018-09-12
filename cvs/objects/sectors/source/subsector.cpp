@@ -283,47 +283,6 @@ bool Subsector::XMLDerivedClassParse( const string& nodeName, const DOMNode* cur
     return false;
 }
 
-//! Output the Subsector member variables in XML format.
-void Subsector::toInputXML( ostream& out, Tabs* tabs ) const {
-    const Modeltime* modeltime = scenario->getModeltime();
-    XMLWriteOpeningTag( getXMLName(), out, tabs, mName );
-
-    // TODO: create a XMLWriteVector that skips !Value.isInited() rather than a default value.
-    for( unsigned int period = 0; period < mParsedShareWeights.size(); period++ ){
-        // Determine the correct year.
-        unsigned int year = modeltime->getper_to_yr( period );
-
-        if( mParsedShareWeights[ period ].isInited() ) {
-            XMLWriteElement( mParsedShareWeights[ period ], "share-weight", out, tabs, year, "", false );
-        }
-    }
-
-    for( CInterpRuleIterator ruleIt = mShareWeightInterpRules.begin(); ruleIt != mShareWeightInterpRules.end(); ++ruleIt ) {
-        (*ruleIt)->toInputXML( out, tabs );
-    }
-
-    mDiscreteChoiceModel->toInputXML( out, tabs );
-    
-    XMLWriteVector( mFuelPrefElasticity, "fuelprefElasticity", out, tabs, modeltime, 0.0 );
-
-    toInputXMLDerived( out, tabs );
-
-    for ( unsigned int i = 0; i < baseTechs.size(); i++ ){
-        baseTechs[i]->toInputXML( out, tabs );
-    }
-    
-    XMLWriteVector( mFixedInvestments, "FixedInvestment", out, tabs, modeltime, -1.0 );
-
-    // write out the technology objects.
-    for( CTechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
-        (*techIter)->toInputXML( out, tabs );
-    }    
-    
-    // finished writing xml for the class members.
-    
-    XMLWriteClosingTag( getXMLName(), out, tabs );
-}
-
 /*! \brief Write information useful for debugging to XML output stream
 *
 * Function writes market and other useful info to XML. Useful for debugging.

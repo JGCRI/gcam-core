@@ -117,28 +117,10 @@ bool SupplySector::XMLDerivedClassParse( const string& nodeName, const DOMNode* 
     return true;
 }
 
-/*! \brief XML output stream for derived classes
-*
-* Function writes output due to any variables specific to derived classes to XML.
-* This function is called by toInputXML in the base Sector class.
-*
-* \author Steve Smith, Josh Lurz, Sonny Kim
-* \param out reference to the output stream
-* \param tabs A tabs object responsible for printing the correct number of tabs. 
-*/
-void SupplySector::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {  
-
-    const Modeltime* modeltime = scenario->getModeltime();
-    for( int period = 0; period < modeltime->getmaxper(); ++period ) {
-        XMLWriteElementCheckDefault( mPriceTrialSupplyMarket[ period ], "price-trial-supply",
-                                     aOut, aTabs, 0.001, modeltime->getper_to_yr( period ) );
-    }
-}
-
 /*! \brief XML debugging output stream for derived classes
 *
 * Function writes output due to any variables specific to derived classes to XML.
-* This function is called by toInputXML in the base Sector class.
+* This function is called by toDebugXML in the base Sector class.
 *
 * \author Steve Smith, Josh Lurz, Sonny Kim
 * \param out reference to the output stream

@@ -206,51 +206,6 @@ void Sector::XMLParse( const DOMNode* node ){
     }
 }
 
-/*! \brief Write object to xml output stream
-*
-* Method writes the contents of this object to the XML output stream.
-*
-* \author Josh Lurz
-* \param out reference to the output stream
-* \param tabs A tabs object responsible for printing the correct number of tabs.
-*/
-void Sector::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    const Modeltime* modeltime = scenario->getModeltime();
-
-    XMLWriteOpeningTag ( getXMLName(), aOut, aTabs, mName );
-
-    // write the xml for the class members.
-    XMLWriteElement( mOutputUnit, "output-unit", aOut, aTabs );
-    XMLWriteElement( mInputUnit, "input-unit", aOut, aTabs );
-    XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
-    mDiscreteChoiceModel->toInputXML( aOut, aTabs );
-    XMLWriteElementCheckDefault( mUseTrialMarkets, "use-trial-market", aOut, aTabs, false );
-    XMLWriteVector( mPrice, "price", aOut, aTabs, modeltime );
-
-    if( !mKeywordMap.empty() ) {
-        XMLWriteElementWithAttributes( "", "keyword", aOut, aTabs, mKeywordMap );
-    }
-
-    if ( mObjectMetaInfo.size() ) {
-        for ( object_meta_info_vector_type::const_iterator metaInfoIterItem = mObjectMetaInfo.begin();
-            metaInfoIterItem != mObjectMetaInfo.end(); 
-            ++metaInfoIterItem ) {
-                metaInfoIterItem->toInputXML( aOut, aTabs );
-            }
-    }
-
-    // write out variables for derived classes
-    toInputXMLDerived( aOut, aTabs );
-
-    // write out the subsector objects.
-    for( CSubsectorIterator k = mSubsectors.begin(); k != mSubsectors.end(); k++ ){
-        ( *k )->toInputXML( aOut, aTabs );
-    }
-
-    // finished writing xml for the class members.
-    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
-}
-
 /*! \brief Write information useful for debugging to XML output stream
 *
 * Function writes market and other useful info to XML. Useful for debugging.

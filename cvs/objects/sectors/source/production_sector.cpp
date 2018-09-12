@@ -136,27 +136,6 @@ bool ProductionSector::XMLDerivedClassParse( const string& nodeName, const DOMNo
     return true;
 }
 
-/* \brief Write out ProductionSector specific data to the input XML file.
-* \param out Stream into which to write.
-* \tabs Object responsible for tabs in the output.
-*/
-void ProductionSector::toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {
-    if( mInvestor.get() ){
-        mInvestor->toInputXML( out, tabs );
-    }
-    // write out the market string.
-    XMLWriteElement( mMarketName, "market-name", out, tabs );
-    XMLWriteElementCheckDefault( mIsFixedPrice, "FixedPricePath", out, tabs );
-    XMLWriteElementCheckDefault( mIsEnergyGood, "IsEnergyGood", out, tabs );
-    XMLWriteVector( mFixedPrices, "sectorprice", out, tabs, scenario->getModeltime(), 0.0 );
-    for( map<string, double>::const_iterator coef = ghgEmissCoefMap.begin(); coef != ghgEmissCoefMap.end(); ++coef ){
-        XMLWriteElement( coef->second, "ghgEmissCoef", out, tabs, 0, coef->first );
-    }
-    if( moreSectorInfo.get() ){
-        moreSectorInfo->toInputXML( out, tabs );
-    }
-}
-
 /* \brief Write out ProductionSector specific data to the debugging XML file.
 * \param period Period for which to write information.
 * \param out Stream into which to write.

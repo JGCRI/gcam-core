@@ -138,21 +138,6 @@ bool TranSubsector::XMLDerivedClassParse( const string& nodeName, const DOMNode*
     return true;
 }
 
-/*! \brief XML output stream for derived classes
-*
-* Function writes output due to any variables specific to derived classes to XML
-* \author Josh Lurz, Sonny Kim
-* \param out reference to the output stream
-* \param tabs A tabs object responsible for printing the correct number of tabs. 
-*/
-void TranSubsector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-    XMLWriteElementCheckDefault( mAddTimeValue, "addTimeValue", out, tabs, false );
-    const Modeltime* modeltime = scenario->getModeltime();
-    XMLWriteVector( mSpeed, "speed", out, tabs, modeltime, Value( 0.0 ) );
-    XMLWriteVector( mPopDenseElasticity, "popDenseElasticity", out, tabs, modeltime, 0.0 );
-    XMLWriteVector( mTimeValueMult, "time-value-multiplier", out, tabs, modeltime, Value( 1.0 ) );
-}
-
 /*! \brief XML output for debugging.
 * Function writes output to debugging XML
 * \author Josh Lurz, Sonny Kim
