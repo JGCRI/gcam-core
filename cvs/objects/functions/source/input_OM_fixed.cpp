@@ -157,15 +157,6 @@ void InputOMFixed::XMLParse( const xercesc::DOMNode* node ) {
     }
 }
 
-void InputOMFixed::toInputXML( ostream& aOut,
-                               Tabs* aTabs ) const
-{
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
-    XMLWriteElement( mOMFixed, "OM-fixed", aOut, aTabs );
-    XMLWriteElementCheckDefault( mTechChange, "tech-change", aOut, aTabs, Value( 0 ) );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 void InputOMFixed::toDebugXML( const int aPeriod,
                                ostream& aOut,
                                Tabs* aTabs ) const

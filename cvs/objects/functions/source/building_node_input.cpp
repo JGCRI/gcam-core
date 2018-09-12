@@ -257,43 +257,6 @@ bool BuildingNodeInput::hasTypeFlag( const int aTypeFlag ) const {
     return false;
 }
 
-//! Output to XML data
-void BuildingNodeInput::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    // write the beginning tag.
-    XMLWriteOpeningTag ( getXMLReportingName(), aOut, aTabs, mName );
-    
-    const Modeltime* modeltime = scenario->getModeltime();
-    // only write base year values
-    for( int period = 0; period <= modeltime->getFinalCalibrationPeriod(); period++ ) {
-        const int year = modeltime->getper_to_yr( period );
-        XMLWriteElement( mBuildingSize[ period ], "base-building-size", aOut, aTabs, year );
-    }
-    XMLWriteVector( mPriceExponent, "price-exponent", aOut, aTabs, modeltime );
-    XMLWriteVector( mShellConductance, "shell-conductance", aOut, aTabs, modeltime );
-    XMLWriteVector( mFloorToSurfaceRatio, "floor-to-surface-ratio", aOut, aTabs, modeltime );
-    XMLWriteElement( mInternalGainsMarketname, "internal-gains-market-name", aOut, aTabs );
-    XMLWriteElement( mInternalGainsUnit, "internal-gains-unit", aOut, aTabs );
-    mSatiationDemandFunction->toInputXML( aOut, aTabs );
-
-    /*!
-     * \todo there is no postCalc so we can not store the internal gains trial supply there and
-     *       so we must do it here.
-     */
-    for( int period = 0; period < modeltime->getmaxper(); ++period ) {
-        const int year = modeltime->getper_to_yr( period );
-        XMLWriteElement( SectorUtils::getTrialSupply( mRegionName, mInternalGainsMarketname, period ),
-            "internal-gains-trial-supply", aOut, aTabs, year );
-    }
-
-    XMLWriteElement( mFunctionType, "prodDmdFnType", aOut, aTabs );
-    for( CNestedInputIterator it = mNestedInputs.begin(); it != mNestedInputs.end(); ++it ) {
-        (*it)->toInputXML( aOut, aTabs );
-    }
-
-    // write the closing tag.
-    XMLWriteClosingTag( getXMLReportingName(), aOut, aTabs );
-}
-
 //! Output debug info to XML
 void BuildingNodeInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     // write the beginning tag.

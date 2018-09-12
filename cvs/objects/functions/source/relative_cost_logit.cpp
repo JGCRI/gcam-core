@@ -126,18 +126,6 @@ bool RelativeCostLogit::XMLParse( const DOMNode *aNode ) {
     return parsingSuccessful;
 }
 
-void RelativeCostLogit::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    const Modeltime* modeltime = scenario->getModeltime();
-    
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
-    XMLWriteVector( mLogitExponent, "logit-exponent", aOut, aTabs, modeltime );
-    if( mParsedBaseValue ) {
-        XMLWriteElement( mBaseValue, "base-value", aOut, aTabs );
-    }
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
-
 void RelativeCostLogit::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
     XMLWriteElement( mLogitExponent[ aPeriod ], "logit-exponent", aOut, aTabs );
