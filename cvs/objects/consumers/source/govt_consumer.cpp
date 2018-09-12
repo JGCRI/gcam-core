@@ -125,11 +125,6 @@ bool GovtConsumer::XMLDerivedClassParse( const string &nodeName, const DOMNode* 
     return true;
 }
 
-//! For derived classes to output XML data
-void GovtConsumer::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-    XMLWriteElement( mBaseDeficit, "deficit", out, tabs );
-}
-
 //! Output debug info for derived class
 void GovtConsumer::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( mBaseDeficit, "deficit", out, tabs );

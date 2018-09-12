@@ -125,11 +125,6 @@ bool GCAMConsumer::XMLDerivedClassParse( const string& aNodeName, const DOMNode*
     return true;
 }
 
-void GCAMConsumer::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteVector( mSubregionalIncomeShare, "subregional-income-share", aOut, aTabs, scenario->getModeltime() );
-    XMLWriteVector( mSubregionalPopulationShare, "subregional-population-share", aOut, aTabs, scenario->getModeltime() );
-}
-
 void GCAMConsumer::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mSubregionalPopulation[ aPeriod ], "subregional-population", aOut, aTabs );
     XMLWriteElement( mSubregionalIncome[ aPeriod ], "subregional-income", aOut, aTabs );

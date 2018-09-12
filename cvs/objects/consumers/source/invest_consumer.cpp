@@ -84,10 +84,6 @@ bool InvestConsumer::XMLDerivedClassParse( const string& aNodeName, const DOMNod
     return false;
 }
 
-//! Write out additional data members to XML output stream.
-void InvestConsumer::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
-}
-
 //! Output debug info for derived class
 void InvestConsumer::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
 }

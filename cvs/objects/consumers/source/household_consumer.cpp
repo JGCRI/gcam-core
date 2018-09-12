@@ -281,28 +281,6 @@ bool HouseholdConsumer::XMLDerivedClassParse( const string &nodeName, const DOMN
     return true;
 }
 
-//! For derived classes to output XML data
-void HouseholdConsumer::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-    XMLWriteElement(baseLandDemandPerHH, "baseLandDemandPerHH", out, tabs );
-    XMLWriteElement(baseLaborDemandPerHH, "baseLaborDemandPerHH", out, tabs );
-    XMLWriteElement( mInitialSavings, "savings", out, tabs );
-    XMLWriteElement(maxSavingsSupplyFrac, "maxSavingsSupplyFrac", out, tabs );
-    XMLWriteElement(maxLandSupplyFrac, "maxLandSupplyFrac", out, tabs );
-    XMLWriteElement(socialSecurityTaxRate, "socialSecurityTaxRate", out, tabs );
-    XMLWriteElement(landIncomeTaxRate, "land-income-tax-rate", out, tabs );
-    XMLWriteElement(laborIncomeTaxRate, "labor-income-tax-rate", out, tabs );
-    XMLWriteElement(dividendsIncomeTaxRate, "dividends-income-tax-rate", out, tabs );
-
-    XMLWriteElement(numberOfHouseholds, "numberOfHouseholds", out, tabs );
-    XMLWriteElement(personsPerHousehold, "personsPerHousehold", out, tabs );
-    XMLWriteElement(totalLandArea, "totalLandArea", out, tabs );
-    XMLWriteElement(baseLandSupply, "baseLandSupply", out, tabs );
-    XMLWriteElement(workingAgePopMale, "workingAgePopMale", out, tabs );
-    XMLWriteElement(workingAgePopFemale, "workingAgePopFemale", out, tabs );
-    XMLWriteElement(workingAgePop, "workingAgePop", out, tabs );
-    XMLWriteElement(mUtilityParameterA, "A-utility-parameter", out, tabs );
-}
-
 //! Output debug info for derived class
 void HouseholdConsumer::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement(baseLandDemandPerHH, "baseLandDemandPerHH", out, tabs );

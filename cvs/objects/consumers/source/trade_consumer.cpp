@@ -80,10 +80,6 @@ bool TradeConsumer::XMLDerivedClassParse( const string& aNodeName, const DOMNode
 	return false;
 }
 
-//! For derived classes to output XML data
-void TradeConsumer::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
-}
-
 //! Output debug info for derived class
 void TradeConsumer::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
 }
