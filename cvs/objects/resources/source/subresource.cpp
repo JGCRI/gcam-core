@@ -254,41 +254,6 @@ void SubResource::postCalc( const string& aRegionName, const string& aResourceNa
     }
 }
 
-//! Blank definition so that don't have to define in derived classes if there is nothing to write out
-void SubResource::toXMLforDerivedClass( ostream& out, Tabs* tabs ) const {   
-}   
-
-//! Write data members to data stream in XML format for replicating input file.
-void SubResource::toInputXML( ostream& out, Tabs* tabs ) const {
-
-    const Modeltime* modeltime = scenario->getModeltime();
-
-    XMLWriteOpeningTag( getXMLName(), out, tabs, mName );
-
-    // write the xml for the class members.
-    const Value VALUE_DEFAULT( 0.0 ); // enables template function to recognize Value Class
-    XMLWriteVector( mEnvironCost, "environCost", out, tabs, modeltime, VALUE_DEFAULT );
-    XMLWriteVector( mSeveranceTax, "severanceTax", out, tabs, modeltime, VALUE_DEFAULT );
-    XMLWriteVector( mTechChange, "techChange", out, tabs, modeltime, VALUE_DEFAULT );
-    
-    // for base year only
-    XMLWriteElementCheckDefault(mAnnualProd[0],"annualprod",out, tabs, VALUE_DEFAULT , modeltime->getper_to_yr(0));
-
-    XMLWriteVector( mCalProduction, "cal-production", out, tabs, modeltime, -1.0 );
-    XMLWriteVector( mPriceAdder, "price-adder", out, tabs, modeltime, VALUE_DEFAULT  );
-    // finished writing xml for the class members.
-
-    // write out anything specific to the derived classes
-    toXMLforDerivedClass( out, tabs );
-
-    // write out the grade objects.
-    for( vector<Grade*>::const_iterator i = mGrade.begin(); i != mGrade.end(); i++ ){ 
-        ( *i )->toInputXML( out, tabs );
-    }
-
-    XMLWriteClosingTag( getXMLName(), out, tabs );
-}
-
 void SubResource::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
     XMLWriteOpeningTag( getXMLName(), out, tabs, mName );

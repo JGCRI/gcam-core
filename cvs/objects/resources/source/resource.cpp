@@ -197,40 +197,6 @@ void Resource::XMLParse( const DOMNode* node ){
     }
 }
 
-//! Write data members to data stream in XML format for replicating input file.
-void Resource::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( getXMLName(), aOut, aTabs, mName );
-
-    // write the xml for the class members.
-    XMLWriteElement( mOutputUnit, "output-unit", aOut, aTabs );
-    XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
-    XMLWriteElement( mMarket, "market", aOut, aTabs );
-    if( !mKeywordMap.empty() ) {
-        XMLWriteElementWithAttributes( "", "keyword", aOut, aTabs, mKeywordMap );
-    }
-
-    if ( mObjectMetaInfo.size() ) {
-        for ( object_meta_info_vector_type::const_iterator metaInfoIterItem = mObjectMetaInfo.begin();
-            metaInfoIterItem != mObjectMetaInfo.end(); 
-            ++metaInfoIterItem ) {
-                metaInfoIterItem->toInputXML( aOut, aTabs );
-            }
-    }
-
-    // write out resource prices for base period only
-    XMLWriteVector( mResourcePrice, "price", aOut, aTabs, scenario->getModeltime() );
-    // write out the subresource objects.
-    for( vector<SubResource*>::const_iterator i = mSubResource.begin(); i != mSubResource.end(); i++ ){
-        ( *i )->toInputXML( aOut, aTabs );
-    }
-    for( CGHGIterator iter = mGHG.begin(); iter != mGHG.end(); ++iter ) {
-        ( *iter )->toInputXML( aOut, aTabs );
-    }
-
-    // finished writing xml for the class members.
-    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
-}
-
 //! Write data members to data stream in XML format for debugging.
 void Resource::toDebugXML( const int period, ostream& aOut, Tabs* aTabs ) const {
 

@@ -133,20 +133,6 @@ const string& DepletingFixedResource::getXMLName() const {
     return getXMLNameStatic();
 }
 
-void DepletingFixedResource::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
-
-    // write the xml for the class members.
-    XMLWriteElement( mOutputUnit, "output-unit", aOut, aTabs );
-    XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
-    XMLWriteElement( mMarket, "market", aOut, aTabs );
-    XMLWriteElement( mFixedResource, "fixed-resource", aOut, aTabs );
-    XMLWriteElement( mDepletionRate, "depletion-rate", aOut, aTabs );
-
-    // finished writing xml for the class members.
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 void DepletingFixedResource::toDebugXML( const int aPeriod,
                                     ostream& aOut,
                                     Tabs* aTabs ) const
