@@ -207,16 +207,6 @@ bool RegionCGE::XMLDerivedClassParse( const string& nodeName, const DOMNode* cur
     return true;
 }
 
-//! For derived classes to output XML data
-void RegionCGE::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-    for ( unsigned int i = 0; i < finalDemandSector.size(); i ++ ) {
-        finalDemandSector[i]->toInputXML( out, tabs );
-    }
-    for( unsigned int i = 0; i < factorSupply.size(); i++ ){
-        factorSupply[ i ]->toInputXML( out, tabs );
-    }
-}
-
 //! Output debug info for derived class
 void RegionCGE::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {
     mNationalAccounts[ period ]->toDebugXML( period, out, tabs );

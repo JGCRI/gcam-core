@@ -139,36 +139,6 @@ void GDP::XMLParse( const DOMNode* node ){
     }
 }
 
-//! Writes datamembers to datastream in XML format.
-void GDP::toInputXML( ostream& out, Tabs* tabs ) const {
-    XMLWriteOpeningTag( getXMLNameStatic(), out, tabs );
-
-    // GDP to PPP conversion factor. Why isn't constRatio just seperate?
-    map<string, double> attrs;
-    attrs[ "constRatio" ] = constRatio;
-    XMLWriteElementWithAttributes( PPPConversionFact, "PPPConvert", out, tabs, attrs );
-
-    // Write out base-year GDP
-    XMLWriteElement( baseGDP, "baseGDP", out, tabs);
-
-    // Write out gdp energy elasticity.
-    XMLWriteElementCheckDefault( mEnergyGDPElasticity, "e_GDP_elas", out, tabs, 0.0 );
-
-    // Write out gdp units.
-    XMLWriteElement( mGDPUnit, "GDP-unit", out, tabs );
-
-    const Modeltime* modeltime = scenario->getModeltime();
-    for( unsigned int iter = 0; iter < laborProdGrowthRate.size(); ++iter ){
-        XMLWriteElement( laborProdGrowthRate[ iter ], "laborproductivity", out, tabs, modeltime->getper_to_yr( iter ) );
-    }
-
-    for( unsigned int iter = 0; iter < laborForceParticipationPercent.size(); ++iter ){
-        XMLWriteElement( laborForceParticipationPercent[ iter ], "laborforce", out, tabs, modeltime->getper_to_yr( iter ) );
-    }
-
-    XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
-}
-
 //! Writes data members to debugging data stream in XML format.
 void GDP::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 

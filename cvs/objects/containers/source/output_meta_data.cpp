@@ -68,30 +68,6 @@ const std::string& OutputMetaData::getXMLNameStatic() {
     return XML_NAME;
 }
 
-/*! \brief Write out XML data for input.
-* \param aOut Output stream.
-* \param aTabs Tabs object.
-*/
-void OutputMetaData::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag ( getXMLNameStatic(), aOut, aTabs );
-    typedef list<string>::const_iterator CListIterator;
-    map<string, string> attrs;
-    for( CListIterator iter = mPrimaryFuels.begin(); iter != mPrimaryFuels.end(); ++iter ) {
-        attrs[ "var" ] = *iter;
-        XMLWriteElementWithAttributes( "", "primary-fuel", aOut, aTabs, attrs );
-    }
-    for( CListIterator iter = mSummableVariables.begin(); iter != mSummableVariables.end(); ++iter ) {
-        attrs[ "var" ] = *iter;
-        XMLWriteElementWithAttributes( "", "summable", aOut, aTabs, attrs );
-    }
-    for( CListIterator iter = mHasYearVariables.begin(); iter != mHasYearVariables.end(); ++iter ) {
-        attrs[ "var" ] = *iter;
-        XMLWriteElementWithAttributes( "", "has-year", aOut, aTabs, attrs );
-    }
-    XMLWriteElement( mScenarioSummary, "summary", aOut, aTabs );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 /*! \brief Parse the meta-data from XML.
 * \details The model does not use this meta-data internally but reads it from
 *          the input XML file here and passes that information along to both the

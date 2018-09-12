@@ -265,29 +265,6 @@ void Scenario::completeInit() {
     mIsValidPeriod.resize( mModeltime->getmaxper(), false );
 }
 
-//! Write object to xml output stream.
-void Scenario::toInputXML( ostream& out, Tabs* tabs ) const {
-    out.precision( 10 );
-    // write heading for XML input file
-    out << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" << endl;
-
-    out << "<" << getXMLNameStatic() << " name=\"" << mName << "\" date=\""
-        << util::XMLCreateDate( gGlobalTime ) << "\">" << endl;
-    
-    tabs->increaseIndent();
-
-    // write the xml for the class members.
-    mModeltime->toInputXML( out, tabs );
-    if( mOutputMetaData.get() ){
-        mOutputMetaData->toInputXML( out, tabs );
-    }
-
-    mWorld->toInputXML( out, tabs );
-    // finished writing xml for the class members.
-
-    XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
-}
-
 //! Return scenario name.
 const string& Scenario::getName() const {
     return mName;

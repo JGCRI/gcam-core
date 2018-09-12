@@ -197,29 +197,6 @@ void World::completeInit() {
 #endif
 }
 
-//! Write out datamembers to XML output stream.
-void World::toInputXML( ostream& out, Tabs* tabs ) const {
-
-    XMLWriteOpeningTag ( getXMLNameStatic(), out, tabs );
-
-    mGlobalTechDB->toInputXML( out, tabs );
-	
-    // Climate model parameters
-    // note that due to a dependency in the carbon cycle model this
-    // must be written out before any of the carbon cycle historical
-    // year data is written which is contained in the regions
-    if ( mClimateModel ) {
-        mClimateModel->toInputXML( out, tabs );
-    }
-
-    for( CRegionIterator i = mRegions.begin(); i != mRegions.end(); i++ ){
-        ( *i )->toInputXML( out, tabs );
-    }
-
-    // finished writing xml for the class members.
-    XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
-}
-
 //! Write out XML for debugging purposes.
 /*! \warning This only call Region::toInputXML for the US. */
 void World::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {

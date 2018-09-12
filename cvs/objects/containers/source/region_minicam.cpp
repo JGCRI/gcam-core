@@ -330,56 +330,6 @@ void RegionMiniCAM::completeInit() {
     }
 }
 
-void RegionMiniCAM::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-    // Write out the Co2 Coefficients.
-    for( map<string,double>::const_iterator coefAllIter = mPrimaryFuelCO2Coef.begin(); coefAllIter != mPrimaryFuelCO2Coef.end(); coefAllIter++ ) {
-        XMLWriteElement( coefAllIter->second, "PrimaryFuelCO2Coef", out, tabs, 0, coefAllIter->first );
-    }
-
-    XMLWriteElementCheckDefault( mInterestRate, "interest-rate", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( mSocialDiscountRate, "social-discount-rate", out, tabs, DEFAULT_SOCIAL_DISCOUNT_RATE );
-    XMLWriteElementCheckDefault( mPrivateDiscountRateLand, "private-discount-rate-land", out, tabs, DEFAULT_PRIVATE_DISCOUNT_RATE );
-
-    // write the xml for the class members.
-
-    // write out data for land allocator
-    if( mLandAllocator ){
-        mLandAllocator->toInputXML( out, tabs);
-    }
-
-    if( mGDP ){ // Check if gdp object exists
-        mGDP->toInputXML( out, tabs );
-    }
-
-    // write out demand sector objects.
-    for( CFinalDemandIterator k = mFinalDemands.begin(); k != mFinalDemands.end(); k++ ){
-        ( *k )->toInputXML( out, tabs );
-    }
-
-    // write out consumer objects.
-    for( CConsumerIterator consumerIter = mConsumers.begin(); consumerIter != mConsumers.end(); consumerIter++ ){
-        ( *consumerIter )->toInputXML( out, tabs );
-    }
-
-    // Note: The count function is an STL algorithm that counts the number of
-    // times a value occurs within the a range of a container. The first two
-    // arguments to the function are the range of the container to search, the
-    // third is the value to search for.
-    if( ( count( mCalibrationGDPs.begin(), mCalibrationGDPs.end(), 0 )
-        != static_cast<int>( mCalibrationGDPs.size() ) ) ){ // makes sure tags aren't printed if no real data
-
-            // Write out regional economic data
-            XMLWriteOpeningTag( "calibrationdata", out, tabs );
-
-            // write out calibration GDP
-            const Modeltime* modeltime = scenario->getModeltime();
-            XMLWriteVector( mCalibrationGDPs, "GDPcal", out, tabs, modeltime, 0.0 );
-
-            XMLWriteClosingTag( "calibrationdata", out, tabs );
-            // End write out regional economic data
-        } // close calibration IF
-}
-
 void RegionMiniCAM::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {
     // write out basic datamembers
     XMLWriteElement( mInterestRate, "interest-rate", out, tabs );
