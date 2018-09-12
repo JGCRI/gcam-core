@@ -389,44 +389,6 @@ void TotalPolicyCostCalculator::writeToCSV() const {
     }
 }
 
-/*! \brief Write total cost output to the Access database.
-*/
-void TotalPolicyCostCalculator::writeToDB() const {
-    // Database function definition. 
-    void dboutput4(string var1name,string var2name,string var3name,string var4name,
-        string uname,vector<double> dout);
-
-    const Modeltime* modeltime = mSingleScenario->getInternalScenario()->getModeltime();
-    const int maxPeriod = modeltime->getmaxper();
-
-    vector<double> tempOutVec( maxPeriod );
-    for( CRegionCurvesIterator rIter = mRegionalCostCurves.begin(); rIter != mRegionalCostCurves.end(); ++rIter ){
-        // Write out to the database.
-        for( int per = 0; per < maxPeriod; ++per ){
-            tempOutVec[ per ] = rIter->second->getY( modeltime->getper_to_yr( per ) );
-        }
-        dboutput4(rIter->first,"General","PolicyCostUndisc","Period","(millions)90US$",tempOutVec);
-    }
-
-    // Write out undiscounted costs by region.
-    tempOutVec.clear();
-    tempOutVec.resize( maxPeriod );
-    for( CRegionalCostsIterator iter = mRegionalCosts.begin(); iter != mRegionalCosts.end(); iter++ ){
-        // regional total cost of policy
-        tempOutVec[maxPeriod-1] = iter->second;
-        dboutput4(iter->first,"General","PolicyCostTotalUndisc","AllYears","(millions)90US$",tempOutVec);
-    }
-
-    // Write out discounted costs by region.
-    tempOutVec.clear();
-    tempOutVec.resize( maxPeriod );
-    for( CRegionalCostsIterator iter = mRegionalDiscountedCosts.begin(); iter != mRegionalDiscountedCosts.end(); iter++ ){
-        // regional total cost of policy
-        tempOutVec[maxPeriod-1] = iter->second;
-        dboutput4(iter->first,"General","PolicyCostTotalDisc","AllYears","(millions)90US$",tempOutVec);
-    }
-}
-
 /*! Create a string containing the XML output.
 * \return A string containing the XML output.
 */

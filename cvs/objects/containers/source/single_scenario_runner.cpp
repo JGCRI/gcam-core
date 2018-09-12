@@ -212,30 +212,6 @@ void SingleScenarioRunner::printOutput( Timer& aTimer, const bool aCloseDB ) con
     Timer &writeTimer = TimerRegistry::getInstance().getTimer(TimerRegistry::WRITE_DATA);
     writeTimer.start();
     
-    // Print output xml file.
-    AutoOutputFile xmlOut( "xmlOutputFileName", "output.xml" );
-    Tabs tabs;
-    mScenario->toInputXML( *xmlOut, &tabs );
-
-    // Write csv file output
-    mScenario->writeOutputFiles();
-
-    static const bool printDB = Configuration::getInstance()->shouldWriteFile( "dbFileName" );
-    if( printDB ){
-        // Perform the database output. 
-	    // Open MS Access database
-        openDB();
-	    // create main database output table before calling output routines
-        createDBout();
-        mScenario->dbOutput();
-
-        if( aCloseDB ){
-            createMCvarid(); // create MC variable id's     
-            // close MS Access database
-            closeDB();
-        }
-    }
-
     if( aCloseDB ){
         outFile.close();
     }
