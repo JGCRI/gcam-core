@@ -98,9 +98,6 @@ public:
                            const IInfo* aTechInfo,
                            const int aPeriod ) = 0;
 
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const = 0;
-
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
                              Tabs* aTabs ) const = 0;

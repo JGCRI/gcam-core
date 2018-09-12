@@ -137,7 +137,6 @@ public:
                            const IInfo* aTechInfo,
                            const int aPeriod );
 
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     const std::string& getName() const;
     virtual const std::string& getMarketName( const std::string& aRegionName ) const { return aRegionName; }
@@ -296,7 +295,6 @@ protected:
 
     virtual const std::string& getXMLName() const = 0;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const = 0;
 
 private:

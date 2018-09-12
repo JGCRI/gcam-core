@@ -74,9 +74,7 @@ public:
     virtual int getYear() const;
     
     virtual bool XMLParse( const xercesc::DOMNode* tempnode );
-    virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    virtual void toInputXMLForRestart( std::ostream& out, Tabs* tabs ) const;
     
     virtual const std::string& getXMLName() const;
     

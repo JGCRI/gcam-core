@@ -88,13 +88,6 @@ public:
     */
     virtual bool XMLParse( const xercesc::DOMNode* aNode ) = 0;
     
-    /*! \brief Write data from this object in an XML format so that it can be
-    *          read back in later as input.
-    * \param aOut Filestream to which to write.
-    * \param aTabs Object responsible for writing the correct number of tabs. 
-    */
-    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const = 0;
-    
     /*! \brief Write data from this object in an XML format for debugging.
     * \param aPeriod Period for which to write data.
     * \param aOut Filestream to which to write.

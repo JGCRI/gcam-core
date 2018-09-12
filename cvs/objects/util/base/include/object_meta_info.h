@@ -122,18 +122,6 @@ public :
     *  \return Whether the parse completed successfully.
     */
    virtual bool XMLParse( const xercesc::DOMNode* apNode );
-   /*! \brief Serialize the object to an output stream in an XML format.
-    *  \details Function which writes out all data members of an object which are
-    *           necessary to duplicate a model run. This should not include
-    *           internal state variables, only variables that were read-in or
-    *           changed by calibration.
-    *  \param aOut Stream into which to write.
-    *  \param aTabs Object which controls formatting of the file.
-    */
-
-   virtual void toInputXML(
-      std::ostream& aOut,
-      Tabs*         aTabs ) const;
 
    /*! \brief Serialize the object to an output stream in an XML format.
     *  \details Function which writes out all data members of an object which are

@@ -100,7 +100,6 @@ public:
     virtual double getNearestXAbove( const double x ) const = 0;
     virtual double getNearestYBelow( const double x ) const = 0;
     virtual double getNearestYAbove( const double x ) const = 0;
-    virtual void toInputXML( std::ostream& out, Tabs* tabs ) const = 0;
     virtual void invertAxises() = 0;
 protected:
     

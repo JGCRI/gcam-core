@@ -95,9 +95,6 @@ public:
 
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
 
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const;
-
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
                              Tabs* aTabs ) const;
