@@ -150,18 +150,6 @@ void HectorModel::XMLParse( const DOMNode* node ) {
     }
 }
 
-void HectorModel::toInputXML( ostream& out, Tabs* tabs) const {
-    XMLWriteOpeningTag( getXMLName(), out, tabs );
-    XMLWriteElementCheckDefault( mHectorEndYear, "hector-end-year", out, tabs,
-                                 def_end_year );
-    XMLWriteElementCheckDefault( mEmissionsSwitchYear, "emissions-switch-year",
-                                 out, tabs, def_switch_year );
-    XMLWriteElementCheckDefault( mHectorIniFile, "hector-ini-file", out, tabs,
-                                 string( def_ini_file ) );
-    XMLWriteElementCheckDefault( mCarbonModelStartYear, "carbon-model-start-year", out, tabs, 1975 );
-    XMLWriteClosingTag( getXMLName(), out, tabs );
-}
-
 void HectorModel::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag( getXMLName(), out, tabs );
     XMLWriteElement( mHectorEndYear, "hector-end-year", out, tabs );

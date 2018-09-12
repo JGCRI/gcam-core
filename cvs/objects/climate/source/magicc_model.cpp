@@ -297,45 +297,6 @@ void MagiccModel::XMLParse( const DOMNode* node ){
     }
 }
 
-//! Writes data members to data stream in XML format.
-void MagiccModel::toInputXML( ostream& out, Tabs* tabs ) const {
-    XMLWriteOpeningTag( getXMLNameStatic(), out, tabs );
-
-    XMLWriteElementCheckDefault( mGHGInputFileName, "ghgInputFileName", out, tabs, string( "" ) );
-    
-    // Write out mLastHistoricalYear
-    XMLWriteElementCheckDefault( mLastHistoricalYear, "last-historical-year", out, tabs, 0 );
-
-    // Write out mClimateSensitivity
-    XMLWriteElementCheckDefault( mClimateSensitivity, "climateSensitivity", out, tabs, -1.0 );
-
-    // Write out Soil Feedback Factor.
-    XMLWriteElementCheckDefault( mSoilTempFeedback, "soilTempFeedback", out, tabs, -1.0 );
-
-    // Write out Humus Feedback Factor.
-    XMLWriteElementCheckDefault( mHumusTempFeedback, "humusTempFeedback", out, tabs, -1.0 );
-
-    // Write out GPP Feedback Factor.
-    XMLWriteElementCheckDefault( mGPPTempFeedback, "GPPTempFeedback", out, tabs, -1.0 );
-
-    // Write out 1980s Ocean Uptake.
-    XMLWriteElementCheckDefault( mOceanCarbFlux80s, "oceanFlux80s", out, tabs, -1.0 );
-
-    // Write out 1980s net terrestrial Deforestation.
-    XMLWriteElementCheckDefault( mNetDeforestCarbFlux80s, "deforestFlux80s", out, tabs, -1.0 );
-
-    // Write out aerosol forcing parameters.
-    XMLWriteElementCheckDefault( mSO2Dir1990, "base-so2dir-forcing", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( mSO2Ind1990, "base-so2ind-forcing", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( mBCUnitForcing, "bc-unit-forcing", out, tabs, -1.0 );
-    XMLWriteElementCheckDefault( mOCUnitForcing, "oc-unit-forcing", out, tabs, 0.0 );
-
-    // Write out Carbon model start year.
-    XMLWriteElementCheckDefault( mCarbonModelStartYear, "carbon-model-start-year", out, tabs, 1975 );
-
-    XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
-}
-
 //! Writes data members to debugging data stream in XML format.
 void MagiccModel::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
