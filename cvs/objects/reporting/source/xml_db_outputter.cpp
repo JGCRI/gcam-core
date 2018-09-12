@@ -500,15 +500,15 @@ void XMLDBOutputter::endVisitScenario( const Scenario* aScenario, const int aPer
 void XMLDBOutputter::startVisitOutputMetaData( const OutputMetaData* aOutputMetaData,
                                                const int aPeriod )
 {
-    // Don't write opening and closing tags directly because toInputXML will do it.
+    // Don't write opening and closing tags directly because toDebugXML will do it.
     // Write the internal data. The input XML format will work.
-    aOutputMetaData->toInputXML( mBuffer, mTabs.get() );
+    aOutputMetaData->toDebugXML( mBuffer, mTabs.get() );
 }
 
 void XMLDBOutputter::endVisitOutputMetaData( const OutputMetaData* aOutputMetaData,
                                             const int aPeriod )
 {
-    // Don't write opening and closing tags directly because toInputXML will do it.
+    // Don't write opening and closing tags directly because toDebugXML will do it.
 }
 
 void XMLDBOutputter::startVisitWorld( const World* aWorld, const int aPeriod ){
