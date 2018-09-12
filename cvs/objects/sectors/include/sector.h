@@ -53,7 +53,6 @@
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/ivisitable.h"
-#include "util/base/include/iround_trippable.h"
 #include "util/base/include/inamed.h"
 #include "util/base/include/object_meta_info.h"
 #include "util/base/include/time_vector.h"
@@ -94,7 +93,6 @@ class PassThroughSector;
 */
 
 class Sector: public IVisitable,
-              public IRoundTrippable,
               public INamed,
               private boost::noncopyable
 {
@@ -158,7 +156,6 @@ protected:
     typedef std::vector<object_meta_info_type> object_meta_info_vector_type;
     object_meta_info_vector_type mObjectMetaInfo; //!< Vector of object meta info to pass to mSectorInfo
 
-    virtual void toInputXMLDerived( std::ostream& aOut, Tabs* aTabs ) const = 0;
     virtual void toDebugXMLDerived( const int period, std::ostream& aOut, Tabs* aTabs ) const = 0;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
     virtual const std::string& getXMLName() const = 0;
@@ -178,7 +175,6 @@ public:
     virtual const std::string& getName() const;
 
     virtual void XMLParse( const xercesc::DOMNode* node );
-    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
 
     virtual void completeInit( const IInfo* aRegionInfo,

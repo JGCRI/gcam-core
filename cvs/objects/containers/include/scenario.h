@@ -52,7 +52,6 @@
 
 #include "util/base/include/iparsable.h"
 #include "util/base/include/ivisitable.h"
-#include "util/base/include/iround_trippable.h"
 #include "util/base/include/data_definition_util.h"
 
 // Forward declarations
@@ -86,7 +85,7 @@ class ManageStateVariables;
 * \author Sonny Kim
 */
 
-class Scenario: public IParsable, public IVisitable, public IRoundTrippable
+class Scenario: public IParsable, public IVisitable
 {
     friend class LogEDFun;
 public:
@@ -100,7 +99,6 @@ public:
     bool XMLParse( const xercesc::DOMNode* node );
     void completeInit();
     void setName(std::string newName);
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
 
     const std::string& getName() const;
     bool run( const int aSinglePeriod, const bool aPrintDebugging, const std::string& aFilenameEnding = "" );

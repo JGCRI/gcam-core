@@ -54,7 +54,6 @@
 
 #include "investment/include/iinvestable.h"
 #include "util/base/include/inamed.h"
-#include "util/base/include/iround_trippable.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
 #include "util/base/include/data_definition_util.h"
@@ -94,7 +93,6 @@ class SubsectorAddTechCosts;
 
 class Subsector: public INamed,
                  public IInvestable,
-                 public IRoundTrippable,
                  private boost::noncopyable
 {
     friend class SocialAccountingMatrix;
@@ -174,7 +172,6 @@ protected:
 
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual const std::string& getXMLName() const;
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {};
     void parseBaseTechHelper( const xercesc::DOMNode* curr, BaseTechnology* aNewTech );
     
@@ -195,8 +192,6 @@ public:
                            const MoreSectorInfo* aMoreSectorInfo,
                            const int aPeriod );
 
-
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
     virtual double getPrice( const GDP* aGDP, const int aPeriod ) const;

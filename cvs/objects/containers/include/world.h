@@ -53,7 +53,6 @@
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/ivisitable.h"
-#include "util/base/include/iround_trippable.h"
 #include "util/base/include/data_definition_util.h"
 
 // Forward declarations
@@ -84,14 +83,13 @@ class GcamFlowGraph;
 * \author Sonny Kim
 */
 
-class World: public IVisitable, public IRoundTrippable, private boost::noncopyable
+class World: public IVisitable, private boost::noncopyable
 {
 public:
     World();
     ~World();
     void XMLParse( const xercesc::DOMNode* node );
     void completeInit();
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
 	static const std::string& getXMLNameStatic();
     const std::string& getName() const;

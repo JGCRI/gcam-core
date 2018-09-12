@@ -55,7 +55,6 @@
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/value.h"
 #include "functions/include/ifunction.h" // For TechChange struct.
-#include "util/base/include/iround_trippable.h"
 #include "technologies/include/itechnology.h"
 #include "util/base/include/time_vector.h"
 
@@ -166,9 +165,8 @@ public:
     virtual bool isSameType( const std::string& aType ) const;
 
     bool XMLParse( const xercesc::DOMNode* tempnode );
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    virtual void toInputXMLForRestart( std::ostream& out, Tabs* tabs ) const;
+
     static const std::string& getXMLVintageNameStatic();
     
     virtual const std::string& getXMLName() const = 0;
@@ -397,7 +395,6 @@ protected:
     virtual const IFunction* getProductionFunction() const;
 
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const = 0;
     virtual void acceptDerived( IVisitor* aVisitor, const int aPeriod ) const;
 

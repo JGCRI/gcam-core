@@ -47,7 +47,6 @@
 #include <string>
 
 #include "util/base/include/ivisitable.h"
-#include "util/base/include/iround_trippable.h"
 
 /*! 
 * \ingroup Objects
@@ -56,14 +55,13 @@
 * \author Josh Lurz
 */
 
-class OutputMetaData: public IVisitable, public IRoundTrippable
+class OutputMetaData: public IVisitable
 {
     friend class IVisitor;
 public:
     OutputMetaData();
     static const std::string& getXMLNameStatic();
     void XMLParse( const xercesc::DOMNode* aNode );
-    void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
     const std::list<std::string>& getPrimaryFuelList() const;
     void accept( IVisitor* aVisitor, const int aPeriod ) const;
 private:

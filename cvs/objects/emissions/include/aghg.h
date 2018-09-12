@@ -54,7 +54,6 @@
 
 #include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
-#include "util/base/include/iround_trippable.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
 #include "util/base/include/data_definition_util.h"
@@ -85,7 +84,7 @@ class NonCO2Emissions;
  *          The last one of these read in determines the method used.
  * \author Sonny Kim, Marshall Wise, Steve Smith, Nick Fernandez, Jim Naslund
  */
-class AGHG: public INamed, public IVisitable, public IRoundTrippable, private boost::noncopyable
+class AGHG: public INamed, public IVisitable, private boost::noncopyable
 { 
     friend class XMLDBOutputter;
 
@@ -100,8 +99,6 @@ public:
 
     // IRoundTrippable methods
     void XMLParse( const xercesc::DOMNode* aNode );
-
-    void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
 
     void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
 
@@ -227,17 +224,6 @@ protected:
      * \return Whether any node was parsed.
      */
     virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aCurrNode ) = 0;
-
-    /*!
-     * \brief XML output stream for derived classes
-     * \details Function writes output due to any variables specific to derived
-     *          classes to XML
-     * \author Jim Naslund
-     * \param aOut reference to the output stream
-     * \param aTabs A tabs object responsible for printing the correct number of
-     *        tabs. 
-     */
-    virtual void toInputXMLDerived( std::ostream& aOut, Tabs* aTabs ) const = 0;
     
     /*!
      * \brief XML debug output stream for derived classes

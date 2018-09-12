@@ -88,7 +88,6 @@ public:
     // IClimateModel interface
     virtual void XMLParse( const xercesc::DOMNode* node );
     virtual const std::string& getXMLName() const { return getXMLNameStatic(); }
-    virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXML( const int period, std::ostream& out, Tabs *tabs ) const;
     virtual void completeInit( const std::string& aScenarioName );
     virtual bool setEmissions( const std::string& aGasName,

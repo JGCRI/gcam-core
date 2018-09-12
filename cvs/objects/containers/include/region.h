@@ -55,7 +55,6 @@
 
 #include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
-#include "util/base/include/iround_trippable.h"
 #include "util/base/include/summary.h"
 #include "util/base/include/data_definition_util.h"
 
@@ -79,14 +78,13 @@ class RegionCGE;
 * \author Sonny Kim
 */
 
-class Region: public INamed, public IVisitable, public IRoundTrippable, protected boost::noncopyable
+class Region: public INamed, public IVisitable, protected boost::noncopyable
 {
     friend class XMLDBOutputter;
 public:
     Region();
     virtual ~Region();
     void XMLParse( const xercesc::DOMNode* node );
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
     virtual void completeInit();
@@ -145,7 +143,6 @@ protected:
     )
 
     virtual const std::string& getXMLName() const = 0;
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const = 0;
 private:

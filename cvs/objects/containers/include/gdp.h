@@ -47,7 +47,6 @@
 #include <vector>
 #include <boost/core/noncopyable.hpp>
 
-#include "util/base/include/iround_trippable.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/value.h"
 #include "util/base/include/data_definition_util.h"
@@ -66,13 +65,12 @@ class Demographic;
 * \author Josh Lurz, Sonny Kim, Steve Smith
 */
 
-class GDP: public IRoundTrippable, public IVisitable, private boost::noncopyable
+class GDP: public IVisitable, private boost::noncopyable
 {
     friend class XMLDBOutputter;
 public:
     GDP();
     void XMLParse( const xercesc::DOMNode* node );
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     void initData( const Demographic* regionalPop );
     void initialGDPcalc( const int period, const double population);

@@ -48,7 +48,6 @@
 
 #include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
-#include "util/base/include/iround_trippable.h"
 #include "util/base/include/iparsable.h"
 #include "util/base/include/data_definition_util.h"
 
@@ -72,7 +71,6 @@ class NegativeEmissionsFinalDemand;
 
 class AFinalDemand: public INamed,
                     public IParsable,
-                    public IRoundTrippable,
                     public IVisitable,
                     private boost::noncopyable
 {
@@ -84,9 +82,6 @@ public:
 
     // Documentation is inherited
     virtual bool XMLParse( const xercesc::DOMNode* aNode ) = 0;
-
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const = 0;
     
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,

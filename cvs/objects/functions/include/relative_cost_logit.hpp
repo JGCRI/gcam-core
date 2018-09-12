@@ -83,9 +83,6 @@ public:
     // IParsable methods
     virtual bool XMLParse( const xercesc::DOMNode *aNode );
 
-    // IRoundTrippable methods
-    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
-
     // IDiscreteChoice methods
     virtual const std::string& getXMLName() const { return getXMLNameStatic(); }
 

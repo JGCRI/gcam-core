@@ -102,7 +102,6 @@ public:
     static const std::string& getXMLNameStatic();
 protected:
     virtual bool isCoefBased() const { return true; }
-    void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     const std::string& getXMLName() const;

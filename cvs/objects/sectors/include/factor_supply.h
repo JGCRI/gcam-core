@@ -50,7 +50,6 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <memory>
 #include "util/base/include/ivisitable.h"
-#include "util/base/include/iround_trippable.h"
 
 class MoreSectorInfo;
 
@@ -66,7 +65,7 @@ class MoreSectorInfo;
 * \author Pralit Patel, Sonny Kim
 */
 
-class FactorSupply: public IVisitable, public IRoundTrippable
+class FactorSupply: public IVisitable
 {
     friend class SGMGenTable;
     friend class XMLDBOutputter;
@@ -74,7 +73,6 @@ public:
     FactorSupply();
     const std::string& getName() const;
     bool XMLParse( const xercesc::DOMNode* node );
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
 
     static const std::string& getXMLNameStatic();

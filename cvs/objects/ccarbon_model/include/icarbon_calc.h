@@ -49,7 +49,6 @@
 
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iparsable.h"
-#include "util/base/include/iround_trippable.h"
 #include "ccarbon_model/include/carbon_model_utils.h"
 #include "util/base/include/data_definition_util.h"
 
@@ -80,7 +79,6 @@ class NoEmissCarbonCalc;
  *          by the land leaf.
  */
 class ICarbonCalc: public IVisitable,
-                   public IRoundTrippable,
                    public IParsable ,
                    private boost::noncopyable
 {
@@ -96,9 +94,6 @@ public:
 
     // Documentation is inherited.
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const = 0;
-    
-    // Documentation is inherited.
-    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const = 0;
 
     //! Get element name used for XML parsing.
     virtual const std::string& getXMLName() const = 0;
