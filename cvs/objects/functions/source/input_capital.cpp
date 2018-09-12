@@ -166,17 +166,6 @@ void InputCapital::XMLParse( const xercesc::DOMNode* node ) {
     }
 }
 
-void InputCapital::toInputXML( ostream& aOut,
-                               Tabs* aTabs ) const
-{
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
-    XMLWriteElement( mCapitalOvernight, "capital-overnight", aOut, aTabs );
-    XMLWriteElement( mLifetimeCapital, "lifetime-capital", aOut, aTabs );
-    XMLWriteElement( mFixedChargeRate, "fixed-charge-rate", aOut, aTabs );
-    XMLWriteElementCheckDefault( mTechChange, "tech-change", aOut, aTabs, Value( 0 ) );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 void InputCapital::toDebugXML( const int aPeriod,
                                ostream& aOut,
                                Tabs* aTabs ) const

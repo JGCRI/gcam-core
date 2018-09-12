@@ -143,13 +143,6 @@ void RenewableInput::XMLParse( const xercesc::DOMNode* node ) {
     }
 }
 
-void RenewableInput::toInputXML( ostream& aOut,
-                               Tabs* aTabs ) const
-{
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 void RenewableInput::toDebugXML( const int aPeriod,
                                ostream& aOut,
                                Tabs* aTabs ) const
