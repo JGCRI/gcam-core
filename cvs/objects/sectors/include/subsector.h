@@ -73,7 +73,6 @@ class IDistributor;
 class Tabs;
 class ILandAllocator;
 class Demographics;
-class IndirectEmissionsCalculator;
 class InterpolationRule;
 class IDiscreteChoice;
 

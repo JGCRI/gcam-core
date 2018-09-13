@@ -55,9 +55,7 @@
 #include <boost/iostreams/concepts.hpp>
 #endif
 
-class IndirectEmissionsCalculator;
-
-/*! 
+/*!
 * \ingroup Objects
 * \brief A visitor which writes model results to an XML database.
 * \details
@@ -266,9 +264,6 @@ private:
     //! A stack used to keep track of what needs to be written to the
     //! database.
     std::stack<std::iostream*> mBufferStack;
-
-    //! Indirect emissions calculator for the current region.
-    std::auto_ptr<IndirectEmissionsCalculator> mIndirectEmissCalc;
 
 #if( __HAVE_JAVA__ )
     /*!

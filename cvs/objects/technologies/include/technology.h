@@ -152,7 +152,6 @@ class Technology: public ITechnology
     // interfaces.
     friend class XMLDBOutputter;
     friend class MarginalProfitCalculator;
-    friend class IndirectEmissionsCalculator;
     friend class EnergyBalanceTable;
 public:
     Technology( const std::string& aName, const int aYear );

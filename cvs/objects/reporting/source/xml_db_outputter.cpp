@@ -97,7 +97,6 @@
 #include "containers/include/national_account.h"
 #include "sectors/include/more_sector_info.h"
 #include "util/base/include/util.h"
-#include "reporting/include/indirect_emissions_calculator.h"
 #include "technologies/include/default_technology.h"
 #include "technologies/include/iproduction_state.h"
 #include "util/base/include/auto_file.h"
@@ -527,16 +526,6 @@ void XMLDBOutputter::startVisitRegion( const Region* aRegion,
     // Store the region name.
     assert( mCurrentRegion.empty() );
     mCurrentRegion = aRegion->getName();
-
-    // Calculate indirect emissions coefficients for all Technologies in a Region.
-    mIndirectEmissCalc.reset( new IndirectEmissionsCalculator );
-
-    // The XML db outputter is always called in all-period mode but the indirect
-    // emissions calculator only works in single period mode.
-    assert( aPeriod == -1 );
-    for( int m = 0; m < scenario->getModeltime()->getmaxper(); ++m ){
-        aRegion->accept( mIndirectEmissCalc.get(), m );
-    }
 }
 
 void XMLDBOutputter::endVisitRegion( const Region* aRegion,

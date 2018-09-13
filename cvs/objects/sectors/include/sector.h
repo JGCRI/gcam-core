@@ -70,7 +70,6 @@ class Demographic;
 class NationalAccount;
 class SocialAccountingMatrix;
 class ILandAllocator;
-class IndirectEmissionsCalculator;
 class AGHG;
 class IDiscreteChoice;
 

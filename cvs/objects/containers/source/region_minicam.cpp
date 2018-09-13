@@ -90,8 +90,6 @@
 #include "util/base/include/util.h"
 #include "util/logger/include/ilogger.h"
 
-#include "reporting/include/indirect_emissions_calculator.h"
-
 #include "containers/include/resource_activity.h"
 #include "containers/include/sector_activity.h"
 #include "containers/include/final_demand_activity.h"
