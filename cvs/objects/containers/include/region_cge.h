@@ -102,7 +102,6 @@ class Tabs;
 class RegionCGE : public Region
 {
     friend class SocialAccountingMatrix;
-    friend class SectorReport;
     friend class InputOutputTable;
     friend class XMLDBOutputter;
 public:

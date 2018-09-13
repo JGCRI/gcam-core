@@ -143,7 +143,6 @@
 		CD4887AC122873C200F5A88A /* graph_printer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4885C3122873C100F5A88A /* graph_printer.cpp */; };
 		CD4887AE122873C200F5A88A /* input_output_table.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4885C5122873C100F5A88A /* input_output_table.cpp */; };
 		CD4887AF122873C200F5A88A /* land_allocator_printer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4885C6122873C100F5A88A /* land_allocator_printer.cpp */; };
-		CD4887B0122873C200F5A88A /* sector_report.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4885C7122873C100F5A88A /* sector_report.cpp */; };
 		CD4887B1122873C200F5A88A /* sector_results.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4885C8122873C100F5A88A /* sector_results.cpp */; };
 		CD4887B3122873C200F5A88A /* social_accounting_matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4885CA122873C100F5A88A /* social_accounting_matrix.cpp */; };
 		CD4887B4122873C200F5A88A /* storage_table.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4885CB122873C100F5A88A /* storage_table.cpp */; };
@@ -673,7 +672,6 @@
 		CD4885B2122873C100F5A88A /* graph_printer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graph_printer.h; sourceTree = "<group>"; };
 		CD4885B4122873C100F5A88A /* input_output_table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = input_output_table.h; sourceTree = "<group>"; };
 		CD4885B5122873C100F5A88A /* land_allocator_printer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = land_allocator_printer.h; sourceTree = "<group>"; };
-		CD4885B6122873C100F5A88A /* sector_report.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sector_report.h; sourceTree = "<group>"; };
 		CD4885B7122873C100F5A88A /* sector_results.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sector_results.h; sourceTree = "<group>"; };
 		CD4885B9122873C100F5A88A /* social_accounting_matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = social_accounting_matrix.h; sourceTree = "<group>"; };
 		CD4885BA122873C100F5A88A /* storage_table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = storage_table.h; sourceTree = "<group>"; };
@@ -683,7 +681,6 @@
 		CD4885C3122873C100F5A88A /* graph_printer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = graph_printer.cpp; sourceTree = "<group>"; };
 		CD4885C5122873C100F5A88A /* input_output_table.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = input_output_table.cpp; sourceTree = "<group>"; };
 		CD4885C6122873C100F5A88A /* land_allocator_printer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = land_allocator_printer.cpp; sourceTree = "<group>"; };
-		CD4885C7122873C100F5A88A /* sector_report.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sector_report.cpp; sourceTree = "<group>"; };
 		CD4885C8122873C100F5A88A /* sector_results.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sector_results.cpp; sourceTree = "<group>"; };
 		CD4885CA122873C100F5A88A /* social_accounting_matrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = social_accounting_matrix.cpp; sourceTree = "<group>"; };
 		CD4885CB122873C100F5A88A /* storage_table.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = storage_table.cpp; sourceTree = "<group>"; };
@@ -1805,7 +1802,6 @@
 				CD4885B2122873C100F5A88A /* graph_printer.h */,
 				CD4885B4122873C100F5A88A /* input_output_table.h */,
 				CD4885B5122873C100F5A88A /* land_allocator_printer.h */,
-				CD4885B6122873C100F5A88A /* sector_report.h */,
 				CD4885B7122873C100F5A88A /* sector_results.h */,
 				CD4885B9122873C100F5A88A /* social_accounting_matrix.h */,
 				CD4885BA122873C100F5A88A /* storage_table.h */,
@@ -1822,7 +1818,6 @@
 				CD4885C3122873C100F5A88A /* graph_printer.cpp */,
 				CD4885C5122873C100F5A88A /* input_output_table.cpp */,
 				CD4885C6122873C100F5A88A /* land_allocator_printer.cpp */,
-				CD4885C7122873C100F5A88A /* sector_report.cpp */,
 				CD4885C8122873C100F5A88A /* sector_results.cpp */,
 				CD4885CA122873C100F5A88A /* social_accounting_matrix.cpp */,
 				CD4885CB122873C100F5A88A /* storage_table.cpp */,
@@ -2671,7 +2666,6 @@
 				CD4887AC122873C200F5A88A /* graph_printer.cpp in Sources */,
 				CD4887AE122873C200F5A88A /* input_output_table.cpp in Sources */,
 				CD4887AF122873C200F5A88A /* land_allocator_printer.cpp in Sources */,
-				CD4887B0122873C200F5A88A /* sector_report.cpp in Sources */,
 				CD4887B1122873C200F5A88A /* sector_results.cpp in Sources */,
 				CD4887B3122873C200F5A88A /* social_accounting_matrix.cpp in Sources */,
 				CD4887B4122873C200F5A88A /* storage_table.cpp in Sources */,

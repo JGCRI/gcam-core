@@ -64,7 +64,6 @@
 // classes for reporting
 #include "reporting/include/social_accounting_matrix.h"
 #include "util/base/include/ivisitor.h"
-#include "reporting/include/sector_report.h"
 #include "reporting/include/input_output_table.h"
 #include "reporting/include/sector_results.h"
 

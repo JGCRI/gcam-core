@@ -103,7 +103,6 @@ class IShutdownDecider;
 class ProductionTechnology : public BaseTechnology
 {
     friend class SocialAccountingMatrix;
-    friend class SectorReport;
     friend class SectorResults;
     friend class XMLDBOutputter;
     // either these are friends or move isAvailable and isRetired to public

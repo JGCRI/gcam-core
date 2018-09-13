@@ -66,7 +66,6 @@
 #include "util/logger/include/logger.h"
 #include "containers/include/iinfo.h"
 #include "util/base/include/ivisitor.h"
-#include "reporting/include/sector_report.h"
 #include "sectors/include/tran_subsector.h"
 #include "sectors/include/sector_utils.h"
 #include "functions/include/idiscrete_choice.hpp"
