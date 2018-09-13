@@ -67,7 +67,6 @@
 #include "reporting/include/sector_report.h"
 #include "reporting/include/input_output_table.h"
 #include "reporting/include/sector_results.h"
-#include "reporting/include/govt_results.h"
 
 using namespace std;
 using namespace xercesc;

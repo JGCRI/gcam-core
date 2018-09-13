@@ -67,7 +67,6 @@ class HouseholdConsumer : public Consumer
 {
     friend class SocialAccountingMatrix;
     friend class SectorReport;
-    friend class GovtResults;
     friend class XMLDBOutputter;
 public:
     HouseholdConsumer();

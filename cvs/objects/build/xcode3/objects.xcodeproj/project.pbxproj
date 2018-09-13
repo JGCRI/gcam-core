@@ -140,7 +140,6 @@
 		CD4887A5122873C200F5A88A /* policy_portfolio_standard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4885A9122873C100F5A88A /* policy_portfolio_standard.cpp */; };
 		CD4887A6122873C200F5A88A /* batch_csv_outputter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4885BD122873C100F5A88A /* batch_csv_outputter.cpp */; };
 		CD4887AA122873C200F5A88A /* energy_balance_table.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4885C1122873C100F5A88A /* energy_balance_table.cpp */; };
-		CD4887AB122873C200F5A88A /* govt_results.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4885C2122873C100F5A88A /* govt_results.cpp */; };
 		CD4887AC122873C200F5A88A /* graph_printer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4885C3122873C100F5A88A /* graph_printer.cpp */; };
 		CD4887AD122873C200F5A88A /* indirect_emissions_calculator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4885C4122873C100F5A88A /* indirect_emissions_calculator.cpp */; };
 		CD4887AE122873C200F5A88A /* input_output_table.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4885C5122873C100F5A88A /* input_output_table.cpp */; };
@@ -672,7 +671,6 @@
 		CD4885A9122873C100F5A88A /* policy_portfolio_standard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = policy_portfolio_standard.cpp; sourceTree = "<group>"; };
 		CD4885AC122873C100F5A88A /* batch_csv_outputter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = batch_csv_outputter.h; sourceTree = "<group>"; };
 		CD4885B0122873C100F5A88A /* energy_balance_table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = energy_balance_table.h; sourceTree = "<group>"; };
-		CD4885B1122873C100F5A88A /* govt_results.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = govt_results.h; sourceTree = "<group>"; };
 		CD4885B2122873C100F5A88A /* graph_printer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graph_printer.h; sourceTree = "<group>"; };
 		CD4885B3122873C100F5A88A /* indirect_emissions_calculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = indirect_emissions_calculator.h; sourceTree = "<group>"; };
 		CD4885B4122873C100F5A88A /* input_output_table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = input_output_table.h; sourceTree = "<group>"; };
@@ -684,7 +682,6 @@
 		CD4885BB122873C100F5A88A /* xml_db_outputter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xml_db_outputter.h; sourceTree = "<group>"; };
 		CD4885BD122873C100F5A88A /* batch_csv_outputter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = batch_csv_outputter.cpp; sourceTree = "<group>"; };
 		CD4885C1122873C100F5A88A /* energy_balance_table.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = energy_balance_table.cpp; sourceTree = "<group>"; };
-		CD4885C2122873C100F5A88A /* govt_results.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = govt_results.cpp; sourceTree = "<group>"; };
 		CD4885C3122873C100F5A88A /* graph_printer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = graph_printer.cpp; sourceTree = "<group>"; };
 		CD4885C4122873C100F5A88A /* indirect_emissions_calculator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = indirect_emissions_calculator.cpp; sourceTree = "<group>"; };
 		CD4885C5122873C100F5A88A /* input_output_table.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = input_output_table.cpp; sourceTree = "<group>"; };
@@ -1808,7 +1805,6 @@
 			children = (
 				CD4885AC122873C100F5A88A /* batch_csv_outputter.h */,
 				CD4885B0122873C100F5A88A /* energy_balance_table.h */,
-				CD4885B1122873C100F5A88A /* govt_results.h */,
 				CD4885B2122873C100F5A88A /* graph_printer.h */,
 				CD4885B3122873C100F5A88A /* indirect_emissions_calculator.h */,
 				CD4885B4122873C100F5A88A /* input_output_table.h */,
@@ -1827,7 +1823,6 @@
 			children = (
 				CD4885BD122873C100F5A88A /* batch_csv_outputter.cpp */,
 				CD4885C1122873C100F5A88A /* energy_balance_table.cpp */,
-				CD4885C2122873C100F5A88A /* govt_results.cpp */,
 				CD4885C3122873C100F5A88A /* graph_printer.cpp */,
 				CD4885C4122873C100F5A88A /* indirect_emissions_calculator.cpp */,
 				CD4885C5122873C100F5A88A /* input_output_table.cpp */,
@@ -2678,7 +2673,6 @@
 				CD4887A5122873C200F5A88A /* policy_portfolio_standard.cpp in Sources */,
 				CD4887A6122873C200F5A88A /* batch_csv_outputter.cpp in Sources */,
 				CD4887AA122873C200F5A88A /* energy_balance_table.cpp in Sources */,
-				CD4887AB122873C200F5A88A /* govt_results.cpp in Sources */,
 				CD4887AC122873C200F5A88A /* graph_printer.cpp in Sources */,
 				CD4887AD122873C200F5A88A /* indirect_emissions_calculator.cpp in Sources */,
 				CD4887AE122873C200F5A88A /* input_output_table.cpp in Sources */,
