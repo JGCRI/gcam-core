@@ -65,7 +65,6 @@
 #include "reporting/include/social_accounting_matrix.h"
 #include "util/base/include/ivisitor.h"
 #include "reporting/include/input_output_table.h"
-#include "reporting/include/sector_results.h"
 
 using namespace std;
 using namespace xercesc;
