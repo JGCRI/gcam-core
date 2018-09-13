@@ -67,7 +67,6 @@ class InvestConsumer : public Consumer
     friend class SocialAccountingMatrix;
     friend class DemandComponentsTable;
     friend class SectorReport;
-    friend class SGMGenTable;
     friend class XMLDBOutputter;
     friend class CalcCapitalGoodPriceVisitor;
 public:

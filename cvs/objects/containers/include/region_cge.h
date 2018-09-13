@@ -58,7 +58,6 @@ class FactorSupply;
 class IVisitor;
 class NationalAccount;
 // TEMP
-class SGMGenTable;
 class Tabs;
 
 /*!
@@ -105,7 +104,6 @@ class RegionCGE : public Region
     friend class SocialAccountingMatrix;
     friend class DemandComponentsTable;
     friend class SectorReport;
-    friend class SGMGenTable;
     friend class InputOutputTable;
     friend class XMLDBOutputter;
 public:
@@ -131,7 +129,6 @@ protected:
     const static std::string XML_NAME; //!< node name for toXML method.
     std::vector<FinalDemandSector*> finalDemandSector; //!< vector of pointers to final demand sector objects
     std::vector<FactorSupply*> factorSupply; //!< vector of pointers to factor supply objects
-    std::vector<SGMGenTable*> mOutputContainers; //!< vector of output containers
     std::vector<NationalAccount*> mNationalAccounts; //!< vector of NationalAccounts, one for each period.
     IVisitor* mCalcCapitalGoodPriceVisitor; //!< vistor to calculate the price of the capital good
 
@@ -140,7 +137,6 @@ protected:
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     void operate( const int period );
 private:
-    void createSGMGenTables();
     void clear();
 };
 

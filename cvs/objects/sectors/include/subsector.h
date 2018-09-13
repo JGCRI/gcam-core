@@ -98,7 +98,6 @@ class Subsector: public INamed,
     friend class SocialAccountingMatrix;
     friend class DemandComponentsTable;
     friend class SectorReport;
-    friend class SGMGenTable;
     friend class XMLDBOutputter;
     // needs to be friend so that it can set the doCalibration flag
     friend class InvestableCounterVisitor;

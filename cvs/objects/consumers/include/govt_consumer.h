@@ -68,7 +68,6 @@ class GovtConsumer : public Consumer
     friend class SocialAccountingMatrix;
     friend class DemandComponentsTable;
     friend class SectorReport;
-    friend class SGMGenTable;
     friend class GovtResults;
     friend class XMLDBOutputter;
 public:

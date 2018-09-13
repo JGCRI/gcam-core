@@ -70,7 +70,6 @@ class TradeConsumer : public Consumer
     friend class SocialAccountingMatrix;
     friend class DemandComponentsTable;
     friend class SectorReport;
-    friend class SGMGenTable;
     friend class XMLDBOutputter;
 public:
     TradeConsumer();

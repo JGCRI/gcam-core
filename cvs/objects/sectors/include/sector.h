@@ -100,7 +100,6 @@ class Sector: public IVisitable,
     friend class SocialAccountingMatrix;
     friend class DemandComponentsTable;
     friend class SectorReport;
-    friend class SGMGenTable;
     friend class XMLDBOutputter;
     friend class CalibrateShareWeightVisitor;
 protected:

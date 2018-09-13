@@ -105,7 +105,6 @@ class ProductionTechnology : public BaseTechnology
     friend class SocialAccountingMatrix;
     friend class DemandComponentsTable;
     friend class SectorReport;
-    friend class SGMGenTable;
     friend class SectorResults;
     friend class GovtResults;
     friend class XMLDBOutputter;

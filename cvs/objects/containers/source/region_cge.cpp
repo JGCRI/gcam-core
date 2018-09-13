@@ -66,7 +66,6 @@
 #include "util/base/include/ivisitor.h"
 #include "reporting/include/demand_components_table.h"
 #include "reporting/include/sector_report.h"
-#include "reporting/include/sgm_gen_table.h"
 #include "reporting/include/input_output_table.h"
 #include "reporting/include/sector_results.h"
 #include "reporting/include/govt_results.h"
@@ -92,40 +91,6 @@ RegionCGE::RegionCGE() {
     // Resize all vectors to maximum period
     const int maxper = scenario->getModeltime()->getmaxper();
     mNationalAccounts.resize( maxper );
-
-    // create empty tables for reporting
-    createSGMGenTables();
-}
-
-//! Empty tables for reporting available for writing in each period
-void RegionCGE::createSGMGenTables() {
-    // output container for reporting
-    // create empty tables for SGM general output
-    const Modeltime* modeltime = scenario->getModeltime();
-    mOutputContainers.push_back( new SGMGenTable( "CO2", "CO2 Emissions Total (MTC)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "EmissBySource", "Emissions by Primary Fuel(MTC)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "CO2bySec", "CO2 Emissions by Sector (MTC)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "CO2byTech", "CO2 Emissions by Technology (MTC)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "GNPREAL", "GNP REAL (1990 Million Dollar)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "GNPNOM", "GNP NOMINAL (1990 Million Dollar)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "PEC", "Primary Energy Consumption (EJ)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "PEP", "Primary Energy Production (EJ)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "SEP", "Secondary Energy Production (EJ)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "ETRADE", "Net Export of Energy (EJ)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "ELEC", "Electricity Generation by Technology (EJ)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "ElecFuel", "Fuel Consumption for Electricity Generation (EJ)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "NEP", "Non-Energy Output (1990 Million Dollar)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "DEM", "Demographics (1000 Persons)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "CAP", "Total Capital Stock and Carbon Permit Revenue (1990 Million Dollar?)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "PRICE", "Prices Market (1990 Dollar)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "EINV", "Energy Investments Annual (1990 Million Dollar)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "NEINV", "Non-Energy Investments Annual (1990 Million Dollar)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "PASSTRAN", "Passenger Transport Vehicle Output (Million Passenger-Miles)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "PASSTRANFC", "Passenger Transport Fuel Consumption by Fuel (EJ/year)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "PASSTRANFCM", "Passenger Transport Fuel Consumption by Mode (EJ/year)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "PASSTRANFCT", "Passenger Transport Fuel Consumption by Vehicle Technology (EJ/year)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "PASSTRANMPG", "Passenger Transport Vehicle Fuel Economy (MPG)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "PASSTRANCOST", "Passenger Transport Vehicle Service Cost ($/pass-mile)", modeltime ) );
 }
 
 //! Default destructor destroys sector, demsector, Resource, and population objects.
@@ -141,10 +106,6 @@ void RegionCGE::clear(){
 
     for ( FactorSupplyIterator facIter = factorSupply.begin(); facIter != factorSupply.end(); ++facIter ) {
         delete *facIter;
-    }
-    // delete memory for SGM gen output tables
-    for( vector<SGMGenTable*>::iterator iter = mOutputContainers.begin(); iter != mOutputContainers.end(); ++iter ){
-        delete *iter;
     }
 
     for( vector<NationalAccount*>::iterator iter = mNationalAccounts.begin(); iter != mNationalAccounts.end(); ++iter ) {
@@ -436,10 +397,5 @@ void RegionCGE::accept( IVisitor* aVisitor, const int aPeriod ) const {
 
 //! update regional output tables for reporting
 void RegionCGE::updateAllOutputContainers( const int period ) { 
-    // update all tables for reporting
-    // load values into all tables
-    for ( unsigned int i = 0; i < mOutputContainers.size(); i++ ) { 
-        accept( mOutputContainers[ i ], period );
-    }
 }
 

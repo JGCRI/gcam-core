@@ -66,7 +66,6 @@ class IExpectedProfitRateCalculator;
 */
 class Consumer : public BaseTechnology
 {
-    friend class SGMGenTable;
 public:
     Consumer();
     virtual Consumer* clone() const = 0;

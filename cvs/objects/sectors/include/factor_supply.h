@@ -68,7 +68,6 @@ class Tabs;
 
 class FactorSupply: public IVisitable
 {
-    friend class SGMGenTable;
     friend class XMLDBOutputter;
 public:
     FactorSupply();
