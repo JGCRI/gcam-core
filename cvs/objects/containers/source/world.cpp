@@ -195,6 +195,12 @@ void World::completeInit() {
     ILogger &mainlog = ILogger::getLogger("main_log");
     totalgraphtimer.print(mainlog, "Total of all graph analysis setup:  ");
 #endif
+    
+    // At this point we can assume all model components have been initialized and will
+    // no longer require the global technology database to get parameters from so we are
+    // free to delete it
+    delete mGlobalTechDB;
+    mGlobalTechDB = 0;
 }
 
 //! Write out XML for debugging purposes.
@@ -861,6 +867,12 @@ void World::csvSGMGenFile( ostream& aFile ) const {
  * \return A reference to the global technologies database.
  */
 const GlobalTechnologyDatabase* World::getGlobalTechnologyDatabase() const {
+    if( !mGlobalTechDB ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::SEVERE );
+        mainLog << "Attempting to retrieve " << mGlobalTechDB->getXMLNameStatic() << " after completeInit()." << endl;
+        abort();
+    }
     return mGlobalTechDB;
 }
 

@@ -157,9 +157,6 @@ void BuildingNodeInput::completeInit( const string& aRegionName, const string& a
         marketplace->getDependencyFinder()->addDependency( aTechName, aRegionName, trialMarketName, aRegionName );
     }
 
-    // necessary to store trial internal gains in toInputXML
-    mRegionName = aRegionName;
-
     // create the function by getting it from the function manager
     if( !mFunctionType.empty() ) {
         mFunction = FunctionManager::getFunction( mFunctionType );
@@ -349,11 +346,12 @@ Value BuildingNodeInput::getFloorToSurfaceRatio( const int aPeriod ) const {
 
 /*!
  * \brief Get the total internal gains for this type of building.
+ * \param aRegionName The name of the containing region.
  * \param aPeriod Model period.
  * \return Internal gains in the given period.
  */
-double BuildingNodeInput::getInternalGains( const int aPeriod ) const {
-    return SectorUtils::getTrialSupply( mRegionName, mInternalGainsMarketname, aPeriod );
+double BuildingNodeInput::getInternalGains( const string& aRegionName, const int aPeriod ) const {
+    return SectorUtils::getTrialSupply( aRegionName, mInternalGainsMarketname, aPeriod );
 }
 
 /*!
