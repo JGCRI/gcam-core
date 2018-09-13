@@ -162,8 +162,6 @@ protected:
     std::vector<IActivity*> mGlobalOrdering;
 
     void clear();
-
-    void csvGlobalDataFile() const;
 };
 
 #endif // _WORLD_H_

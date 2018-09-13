@@ -671,28 +671,6 @@ void World::runClimateModel( int aPeriod ) {
     }
 }
 
-//! write global results to file
-void World::csvGlobalDataFile() const {
-    const int maxper = scenario->getModeltime()->getmaxper();
-    vector<double> temp(maxper);
-    // function protocol
-    void fileoutput3(string var1name,string var2name,string var3name,
-        string var4name,string var5name,string uname,vector<double> dout);
-
-    // write total emissions for World
-    for ( int m = 0; m < maxper; m++ ){
-        // Sum emissions by period.
-        for( CRegionIterator iter = mRegions.begin(); iter != mRegions.end(); ++iter ) {
-            // This interface needs to be fixed.
-            temp[ m ] += ( *iter )->getSummary( m ).get_emissmap_second( "CO2" );
-        }
-    }
-    fileoutput3( "global"," "," "," ","CO2 emiss","MTC",temp);
-
-    // Write out concentrations.
-    mClimateModel->printFileOutput();
-}
-
 /*! \brief Test to see if calibration worked for all regions
 *
 * Compares the sum of calibrated + fixed values to output of each sector.
