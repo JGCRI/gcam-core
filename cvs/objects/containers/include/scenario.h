@@ -164,7 +164,6 @@ protected:
 
     bool calculatePeriod( const int aPeriod,
         std::ostream& aXMLDebugFile,
-        std::ostream& aSGMDebugFile,
         Tabs* aTabs,
         const bool aPrintDebugging );
 
@@ -177,7 +176,6 @@ protected:
     void logRunEnding() const;
 
     void writeDebuggingFiles( std::ostream& aXMLDebugFile,
-        std::ostream& aSGMDebugFile,
         Tabs* aTabs,
         const int aPeriod ) const;
 

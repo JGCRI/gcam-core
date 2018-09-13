@@ -309,7 +309,7 @@ bool Scenario::run( const int aSinglePeriod,
     // time steps and operate model.
     if( aSinglePeriod == RUN_ALL_PERIODS ){
         for( int per = 0; per < mModeltime->getmaxper(); per++ ){
-            success &= calculatePeriod( per, *XMLDebugFile, *SGMDebugFile, &tabs, aPrintDebugging );
+            success &= calculatePeriod( per, *XMLDebugFile, &tabs, aPrintDebugging );
         }
     }
     // Check if the single period is invalid.
@@ -323,7 +323,7 @@ bool Scenario::run( const int aSinglePeriod,
         // Run all periods up to the single period which are invalid.
         for( int per = 0; per < aSinglePeriod; per++ ){
             if( !mIsValidPeriod[ per ] ){
-                success &= calculatePeriod( per, *XMLDebugFile, *SGMDebugFile, &tabs, aPrintDebugging );
+                success &= calculatePeriod( per, *XMLDebugFile, &tabs, aPrintDebugging );
             }
         }
         
@@ -334,7 +334,7 @@ bool Scenario::run( const int aSinglePeriod,
 
         // Now run the requested period. Results past this period will no longer
         // be valid. Do not attempt to use them!
-        success &= calculatePeriod( aSinglePeriod, *XMLDebugFile, *SGMDebugFile, &tabs, aPrintDebugging );
+        success &= calculatePeriod( aSinglePeriod, *XMLDebugFile, &tabs, aPrintDebugging );
     }
     
     // Print any unsolved periods.
@@ -376,14 +376,12 @@ bool Scenario::run( const int aSinglePeriod,
 /*! \brief Calculate a single period.
 * \param aPeriod Period to calculate.
 * \param aXMLDebugFile XML debugging file.
-* \param aSGMDebugFile SGM debugging file.
 * \param aTabs Tabs formatting object.
 * \param aPrintDebugging Whether to print debugging information.
 * \return Whether the period was calculated successfully.
 */
 bool Scenario::calculatePeriod( const int aPeriod,
                                 ostream& aXMLDebugFile,
-                                ostream& aSGMDebugFile,
                                 Tabs* aTabs,
                                 bool aPrintDebugging )
 {
@@ -511,7 +509,7 @@ bool Scenario::calculatePeriod( const int aPeriod,
     
     // Write out the results for debugging.
     if( aPrintDebugging ){
-        writeDebuggingFiles( aXMLDebugFile, aSGMDebugFile, aTabs, aPeriod );
+        writeDebuggingFiles( aXMLDebugFile, aTabs, aPeriod );
     }
 
     return success;
@@ -559,12 +557,10 @@ void Scenario::logRunEnding() const {
 
 /*! \brief Write to the debugging files for a given period.
 * \param aXMLDebugFile XML debugging file.
-* \param aSGMDebugFile SGM debugging file.
 * \param aTabs Tabs formatting object.
 * \param aPeriod Model period.
 */
 void Scenario::writeDebuggingFiles( ostream& aXMLDebugFile,
-                                    ostream& aSGMDebugFile,
                                     Tabs* aTabs,
                                     const int aPeriod ) const
 {
