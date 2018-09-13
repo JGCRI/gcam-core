@@ -96,7 +96,6 @@ class Subsector: public INamed,
                  private boost::noncopyable
 {
     friend class SocialAccountingMatrix;
-    friend class DemandComponentsTable;
     friend class SectorReport;
     friend class XMLDBOutputter;
     // needs to be friend so that it can set the doCalibration flag

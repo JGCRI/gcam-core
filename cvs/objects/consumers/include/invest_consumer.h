@@ -65,7 +65,6 @@ class IVisitor;
 class InvestConsumer : public Consumer
 {
     friend class SocialAccountingMatrix;
-    friend class DemandComponentsTable;
     friend class SectorReport;
     friend class XMLDBOutputter;
     friend class CalcCapitalGoodPriceVisitor;

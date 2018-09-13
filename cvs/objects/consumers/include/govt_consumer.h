@@ -66,7 +66,6 @@ class MoreSectorInfo;
 class GovtConsumer : public Consumer
 {
     friend class SocialAccountingMatrix;
-    friend class DemandComponentsTable;
     friend class SectorReport;
     friend class GovtResults;
     friend class XMLDBOutputter;

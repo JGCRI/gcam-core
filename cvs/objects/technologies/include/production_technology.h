@@ -103,7 +103,6 @@ class IShutdownDecider;
 class ProductionTechnology : public BaseTechnology
 {
     friend class SocialAccountingMatrix;
-    friend class DemandComponentsTable;
     friend class SectorReport;
     friend class SectorResults;
     friend class GovtResults;

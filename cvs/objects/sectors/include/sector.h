@@ -98,7 +98,6 @@ class Sector: public IVisitable,
 {
     // TODO: Remove the need for these.
     friend class SocialAccountingMatrix;
-    friend class DemandComponentsTable;
     friend class SectorReport;
     friend class XMLDBOutputter;
     friend class CalibrateShareWeightVisitor;
