@@ -68,7 +68,6 @@ class Tabs;
 class IInfo;
 class Demographic;
 class NationalAccount;
-class SocialAccountingMatrix;
 class ILandAllocator;
 class AGHG;
 class IDiscreteChoice;
@@ -96,7 +95,6 @@ class Sector: public IVisitable,
               private boost::noncopyable
 {
     // TODO: Remove the need for these.
-    friend class SocialAccountingMatrix;
     friend class XMLDBOutputter;
     friend class CalibrateShareWeightVisitor;
 protected:

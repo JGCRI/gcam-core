@@ -92,8 +92,6 @@ class Consumer;
 
 class RegionMiniCAM: public Region
 {
-    friend class InputOutputTable;
-    friend class SocialAccountingMatrix;
     friend class XMLDBOutputter;
 public:
     RegionMiniCAM();

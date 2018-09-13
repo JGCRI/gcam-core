@@ -67,7 +67,6 @@ class IVisitor;
  */
 class TradeConsumer : public Consumer
 {
-    friend class SocialAccountingMatrix;
     friend class XMLDBOutputter;
 public:
     TradeConsumer();

@@ -62,9 +62,7 @@
 #include "consumers/include/calc_capital_good_price_visitor.h"
 #include "containers/include/iinfo.h"
 // classes for reporting
-#include "reporting/include/social_accounting_matrix.h"
 #include "util/base/include/ivisitor.h"
-#include "reporting/include/input_output_table.h"
 
 using namespace std;
 using namespace xercesc;

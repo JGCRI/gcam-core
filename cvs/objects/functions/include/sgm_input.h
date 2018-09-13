@@ -106,7 +106,6 @@ class CachedMarket;
  */
 class SGMInput: public INestedInput
 {
-    friend class SocialAccountingMatrix;
     friend class XMLDBOutputter;
 public:
     SGMInput();

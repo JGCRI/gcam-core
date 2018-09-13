@@ -94,7 +94,6 @@ class Subsector: public INamed,
                  public IInvestable,
                  private boost::noncopyable
 {
-    friend class SocialAccountingMatrix;
     friend class XMLDBOutputter;
     // needs to be friend so that it can set the doCalibration flag
     friend class InvestableCounterVisitor;

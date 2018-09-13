@@ -102,11 +102,9 @@ class IShutdownDecider;
  */
 class ProductionTechnology : public BaseTechnology
 {
-    friend class SocialAccountingMatrix;
     friend class XMLDBOutputter;
     // either these are friends or move isAvailable and isRetired to public
     friend class EnergyBalanceTable;
-    friend class InputOutputTable;
 public:
     ProductionTechnology();
     ProductionTechnology* clone() const;
