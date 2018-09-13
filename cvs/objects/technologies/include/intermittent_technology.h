@@ -171,9 +171,6 @@ protected:
         //todo dynamically calculate average grid capacity factor
         DEFINE_VARIABLE( SIMPLE, "average-grid-capacity-factor", mAveGridCapacityFactor, Value ),
 
-        //! Trial market price updated with solution price.
-        DEFINE_VARIABLE( SIMPLE, "trial-market-price", mTrialMarketPrice, Value ),
-
         //! State value necessary to track tech output ration
         DEFINE_VARIABLE( SIMPLE | STATE, "tech-output-ratio", mIntermitOutTechRatio, Value )
     )

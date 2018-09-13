@@ -122,7 +122,7 @@ public:
 
 	Value getFloorToSurfaceRatio( const int aPeriod ) const;
 
-	double getInternalGains( const int aPeriod ) const;
+    double getInternalGains( const std::string& aRegionName, const int aPeriod ) const;
 
 	SatiationDemandFunction* getSatiationDemandFunction() const;
 
@@ -416,10 +416,6 @@ protected:
 
     //! Cache the vector of children as IInput* which is needed for the mFunction
     std::vector<IInput*> mChildInputsCache;
-                          
-    //! Stored region name only necessary because there is no
-    //! post calc to store the trial internal gains supply
-    std::string mRegionName;
                        
     typedef std::vector<INestedInput*>::iterator NestedInputIterator;
     typedef std::vector<INestedInput*>::const_iterator CNestedInputIterator;
