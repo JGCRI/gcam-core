@@ -78,7 +78,6 @@ public:
     static const std::string& getXMLNameStatic();
     void setupCalibrationMarkets( const std::string& regionName, const std::vector<double> aCalibrationGDPs  );
     void writeBackCalibratedValues( const std::string& regionName, const int period );
-    void csvOutputFile( const std::string& regionName ) const;
     void adjustGDP( const int period, const double priceratio );
     double getApproxGDPperCap( const int period ) const;
     double getApproxScaledGDPperCap( const int period ) const;

@@ -142,10 +142,6 @@ const string& PopulationMiniCAM::getXMLNameStatic() {
     return XML_NAME;
 }
 
-void PopulationMiniCAM::csvSGMOutputFile( ostream& aFile, const int period ) const {
-    Population::csvSGMOutputFile( aFile, period );
-}
-
 /*! \brief Update a visitor with information about a MiniCAM population.
 * \param aVisitor Visitor to update.
 * \param aPeriod Period for which to update.

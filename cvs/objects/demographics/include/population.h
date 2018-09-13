@@ -84,7 +84,6 @@ public:
     virtual const std::vector<double> getSurvMalePop() const = 0; // TEMP
     virtual const std::vector<double> getSurvFemalePop() const = 0; // TEMP
     virtual void initCalc() = 0;
-    virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const = 0;
 
     double getTotal() const;
     int getYear() const;

@@ -96,7 +96,6 @@ public:
         const MoreSectorInfo* moreSectorInfo, const std::string& aRegionName, 
         const std::string& aSectorName, const bool aIsNewVintageMode, const int aPeriod );
     
-    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     static const std::string& getXMLNameStatic();
 protected:

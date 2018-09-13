@@ -287,7 +287,6 @@ bool Scenario::run( const int aSinglePeriod,
     
     // Open the debugging files.
     AutoOutputFile XMLDebugFile( "xmlDebugFileName", "debug.xml", aPrintDebugging );
-    AutoOutputFile SGMDebugFile( "ObjectSGMFileName", "ObjectSGMout.csv", aPrintDebugging );
     Tabs tabs;
     if( aPrintDebugging ) {
         // Write opening tags for debug XML
@@ -571,7 +570,6 @@ void Scenario::writeDebuggingFiles( ostream& aXMLDebugFile,
 {
     mModeltime->toDebugXML( aPeriod, aXMLDebugFile, aTabs );
     mWorld->toDebugXML( aPeriod, aXMLDebugFile, aTabs );
-    csvSGMOutputFile( aSGMDebugFile, aPeriod );
 }
 
 /*! \brief Update a visitor for the Scenario.
@@ -724,12 +722,6 @@ bool Scenario::solve( const int period ){
 //! Output Scenario members to a CSV file.
 // I don't really like this function being hard-coded to an output file, but its very hard-coded.
 void Scenario::writeOutputFiles() const {
-    // main output file for sgm, general results.
-    {
-        AutoOutputFile sgmGenFile( "ObjectSGMGenFileName", "ObjectSGMGen.csv" );
-        // SGM csv general output, writes for all periods.
-        csvSGMGenFile( *sgmGenFile );
-    }
     
     // Print out dependency graphs.
     const Configuration* conf = Configuration::getInstance();
@@ -742,56 +734,6 @@ void Scenario::writeOutputFiles() const {
             printLandAllocatorGraph( period, printValues );
         }
     }
-
-    // Open the output file.
-    // note that we can not use an AutoOutputFile here since the ofstream is a hardcoded
-    // global variable
-    if( conf->shouldWriteFile( "outFileName" ) ) {
-        string outFileName = conf->getFile( "outFileName", "outfile.csv" );
-        if( conf->shouldAppendScnToFile( "outFileName" ) ) {
-            outFileName = util::appendScenarioToFileName( outFileName );
-        }
-        outFile.open( outFileName.c_str(), ios::out );
-        util::checkIsOpen( outFile, outFileName ); 
-
-        // Write results to the output file.
-        // Minicam style output.
-        outFile << "Region,Sector,Subsector,Technology,Variable,Units,";
-
-        for ( int t = 0; t < mModeltime->getmaxper(); t++ ) {
-            outFile << mModeltime->getper_to_yr( t ) <<",";
-        }
-        outFile << "Date,Notes" << endl;
-
-        // Write global market info to file
-        mMarketplace->csvOutputFile( "global" );
-
-        // Write world and regional info
-        mWorld->csvOutputFile();
-    }
-}
-
-/*! \brief Write SGM results to csv text file.
-* \param aSGMDebugFile SGM debugging file.
-* \param aPeriod Model period for which to print debugging information.
-*/
-void Scenario::csvSGMOutputFile( ostream& aSGMDebugFile, const int aPeriod ) const {
-    aSGMDebugFile <<  "**********************" << endl;
-    aSGMDebugFile <<  "RESULTS FOR PERIOD:  " << aPeriod << endl;
-    aSGMDebugFile <<  "**********************" << endl << endl;
-    mMarketplace->csvSGMOutputFile( aSGMDebugFile, aPeriod );
-    mWorld->csvSGMOutputFile( aSGMDebugFile, aPeriod );
-}
-
-/*! \brief Write SGM general results for all periods to csv text file.
-*/
-void Scenario::csvSGMGenFile( ostream& aFile ) const {
-    // Write out the file header.
-    aFile << "SGM General Output " << endl;
-    aFile << "Date & Time: ";
-    util::printTime( gGlobalTime, aFile );
-    aFile << endl;
-    mWorld->csvSGMGenFile( aFile );
 }
 
 /*!

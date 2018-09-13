@@ -304,44 +304,6 @@ const vector<double> Demographic::getTotalPopVec() const {
     return newTotalVector;
 }
 
-//! outputing population info to file
-void Demographic::csvOutputFile( const string& regionName ) const {
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxPeriod = modeltime->getmaxper();
-    vector<double> temp( maxPeriod );
-
-    // function protocol
-    void fileoutput3( string var1name,string var2name,string var3name,
-        string var4name,string var5name,string uname,vector<double> dout);
-
-    // write population to temporary array since not all will be sent to output
-    for ( int i = 0; i < maxPeriod; i++ ){
-        int index = convertPeriodToPopulationIndex( i );
-        // Check for invalid indices.
-        if( index != -1 ){
-            temp[i] = population[ index ]->getTotal();
-        }
-    }
-
-    // function arguments are variable name, double array, db name, table name
-    // the function writes all years
-    fileoutput3( regionName," "," "," ","population","1000s",temp);
-}
-
-void Demographic::csvSGMOutputFile( ostream& aFile, const int period ) const {
-    aFile << "Demographic Data for Labor Force and Government Transfers" << endl << endl;
-    aFile << getTotal( period ) << ',' << "Total Population" << endl;
-    aFile << getWorkingAgePopulationMales( period ) << ',' << "Working Age Pop. Male" << endl;
-    aFile << getWorkingAgePopulationFemales( period ) << ',' << "Working Age Pop. Females" << endl;
-    aFile << endl;
-
-    int index = convertPeriodToPopulationIndex( period );
-    // Check for invalid indices.
-    if( index != -1 ){
-        population[ index ]->csvSGMOutputFile( aFile, period );
-    }
-}
-
 // for reporting
 void Demographic::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->startVisitDemographic( this, aPeriod );

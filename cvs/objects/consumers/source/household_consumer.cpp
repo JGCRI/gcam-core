@@ -909,43 +909,6 @@ const string HouseholdConsumer::getPriceIndexMarketName() const {
     return PRICE_INDEX_NAME;
 }
 
-/*! \brief For outputing SGM data to a flat csv File
- *
- * \author Pralit Patel
- * \param period The period which we are outputing for
- */
-void HouseholdConsumer::csvSGMOutputFile( ostream& aFile, const int period ) const {
-    if ( year == scenario->getModeltime()->getper_to_yr( period ) ) {
-        aFile << "***** Household Sector Results *****" << endl << endl;
-
-        aFile << "Land Demand" << ',' << landDemand << endl;
-        aFile << "Labor Demand" << ',' << laborDemand << endl;
-        aFile << "Household Land Demand" << ',' << householdLandDemand << endl;
-        aFile << "Household Labor Demand" << ',' << householdLaborDemand << endl;
-
-        aFile << "Persons Per Household" << ',' << personsPerHousehold << endl;
-        aFile << "Number Of Households" << ',' << numberOfHouseholds << endl;
-        aFile << "Total Land Area" << ',' << totalLandArea << endl;
-
-        aFile << "Land Supply" << ',' << landSupply << endl;
-        aFile << "Unskilled Labor Supply: Male" << ',' << laborSupplyMaleUnSkLab << endl;
-        aFile << "Unskilled Labor Supply: Female" << ',' << laborSupplyFemaleUnSkLab << endl;
-        aFile << "Skilled Labor Supply: Male" << ',' << laborSupplyMaleSkLab << endl;
-        aFile << "Skilled Labor Supply: Female" << ',' << laborSupplyFemaleSkLab << endl;
-        aFile << "Labor Supply: Total" << ',' << getLaborSupply() << endl;
-
-        aFile << "Working Age Pop: Male" << ',' << workingAgePopMale << endl;
-        aFile << "Working Age Pop: Female" << ',' << workingAgePopFemale << endl;
-        aFile << "Working Age Pop: Total" << ',' << workingAgePopMale + workingAgePopFemale << endl;
-        expenditures[ period ].csvSGMOutputFile( aFile, period );
-
-        aFile << endl;
-
-        aFile << "HouseholdConsumer Expenditure" << endl << endl;
-        BaseTechnology::csvSGMOutputFile( aFile, period );
-    }
-}
-
 void HouseholdConsumer::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->startVisitHouseholdConsumer( this, aPeriod );
     Consumer::accept( aVisitor, aPeriod );

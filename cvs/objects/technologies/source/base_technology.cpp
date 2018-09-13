@@ -412,14 +412,6 @@ void BaseTechnology::updateMarketplace( const string& sectorName, const string& 
     mLeafInputs.clear();
 }
 
-void BaseTechnology::csvSGMOutputFile( ostream& aFile, const int period ) const {
-    aFile <<  "Commodity" << ',' << "Consumption" << ',' << "Price Paid" << endl;
-    for( CInputIterator curr = mLeafInputs.begin(); curr != mLeafInputs.end(); ++curr ) {
-        (*curr)->csvSGMOutputFile( aFile, period );
-    }
-    aFile << "Total Consumption" << ',' << mOutputs[ 0 ]->getCurrencyOutput( period ) << endl << endl;
-}
-
 void BaseTechnology::accept( IVisitor* aVisitor, const int aPeriod ) const
 {
     aVisitor->startVisitBaseTechnology( this, aPeriod );

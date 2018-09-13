@@ -438,21 +438,6 @@ const string& GovtConsumer::getXMLNameStatic() {
     return XML_NAME;
 }
 
-//! SGM version of outputing data to a csv file
-void GovtConsumer::csvSGMOutputFile( ostream& aFile, const int period ) const {
-    if ( year == scenario->getModeltime()->getper_to_yr( period ) ) {
-        aFile << "***** Government Sector Results *****" << endl << endl;
-        aFile << "Tax Accounts" << endl;
-        aFile << "Proportional Tax" << ',' << mTaxProportional << endl;
-        aFile << "Additive Tax" << ',' << mTaxAdditive << endl;
-        aFile << "Corporate Income Tax" << ',' << mTaxCorporate << endl;
-        aFile << "Indirect Business Tax" << ',' << mTaxIBT << endl;
-        expenditures[ period ].csvSGMOutputFile( aFile, period );
-        aFile << endl;
-        BaseTechnology::csvSGMOutputFile( aFile, period );
-    }
-}
-
 void GovtConsumer::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->startVisitGovtConsumer( this, aPeriod );
     Consumer::accept( aVisitor, aPeriod );

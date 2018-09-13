@@ -95,7 +95,6 @@ public:
     
     virtual void postCalc( const int aPeriod );
 
-    virtual void csvOutputFile() const {};
     virtual void initializeAgMarketPrices( const std::vector<double>& pricesIn ) {};
     virtual void updateSummary( const std::list<std::string>& aPrimaryFuelList, const int period ) {};
     virtual const Summary& getSummary( const int period ) const { static const Summary nullSummary; return nullSummary; };
@@ -108,10 +107,7 @@ public:
     virtual void updateAllOutputContainers( const int period ) = 0;
     virtual void updateMarketplace( const int period ) {};
 
-    virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const {};
-
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
-    virtual void csvSGMGenFile( std::ostream& aFile ) const {};
 protected:
     
     DEFINE_DATA(

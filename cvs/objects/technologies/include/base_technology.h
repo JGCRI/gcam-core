@@ -219,7 +219,6 @@ public:
                                          const int aPeriod ) = 0;
     virtual void updateMarketplace( const std::string& sectorName, const std::string& regionName,
                                     const int period ) = 0;
-    virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const = 0;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const = 0;
 
     const std::string getIdentifier() const;

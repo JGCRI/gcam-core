@@ -172,7 +172,6 @@ public:
                                  const double aNewInvestment, const int aPeriod );
     void updateMarketplace( const std::string& sectorName, const std::string& regionName, 
         const int period );
-    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     void accept( IVisitor* aVisitor, const int aPeriod ) const;
     void setTypeHelper( TechnologyType* aTechType );
     void postCalc( const std::string& aRegionName, const std::string& aSectorName, const int aPeriod );

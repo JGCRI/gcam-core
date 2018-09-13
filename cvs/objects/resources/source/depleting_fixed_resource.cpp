@@ -253,20 +253,6 @@ double DepletingFixedResource::getPrice( const int aPeriod ) const {
     return mInitialPrice;
 }
 
-void DepletingFixedResource::csvOutputFile( const string& aRegionName )
-{
-    // function protocol
-    void fileoutput3( string var1name,string var2name,string var3name,
-        string var4name,string var5name,string uname,vector<double> dout);
-
-    const int maxper = scenario->getModeltime()->getmaxper();
-    vector<double> temp( maxper );
-    for( int i = 0; i < maxper; ++i ){
-        temp[ i ] = getAnnualProd( aRegionName, i );
-    }
-    fileoutput3( aRegionName , mName," "," ","production", mOutputUnit, temp );
-}
-
 /*
 * \brief Create the resource market.
 * \details The resource creates a single solved market for the

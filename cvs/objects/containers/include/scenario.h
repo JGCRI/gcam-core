@@ -170,9 +170,7 @@ protected:
 
     void printGraphs( const int aPeriod ) const;
     void printLandAllocatorGraph( const int aPeriod, const bool aPrintValues ) const;
-    void csvSGMGenFile( std::ostream& aFile ) const;
-    void csvSGMOutputFile( std::ostream& aSGMDebugFile, const int aPeriod ) const;
-
+ 
     void logRunBeginning() const;
     void logPeriodBeginning( const int aPeriod ) const;
     void logPeriodEnding( const int aPeriod ) const;

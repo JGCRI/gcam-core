@@ -197,9 +197,6 @@ public:
 
     void emission( const int period );
     
-    virtual void csvOutputFile( const GDP* aGDP,
-                                const IndirectEmissionsCalculator* aIndirectEmissCalc ) const;
-
     std::map<std::string, double> getfuelcons( const int period ) const;
     double getConsByFuel( const int period, const std::string& key) const;
     std::map<std::string, double> getemission( const int period ) const;
@@ -210,7 +207,6 @@ public:
     void updateMarketplace( const int period );
     virtual void postCalc( const int aPeriod );
 
-    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 private:
     void clear();

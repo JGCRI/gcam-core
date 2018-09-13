@@ -184,17 +184,6 @@ void PopulationSGMFixed::calcPop(){
     mTotalPop = totMalePop + totFemalePop;  
 }
 
-void PopulationSGMFixed::csvSGMOutputFile( ostream& aFile, const int period ) const {
-     aFile << "Population Data by Age Cohort Total" << endl << endl;
-     aFile << "Males- " << mYear << endl;
-     for( CAgeCohortIterator it = ageCohort.begin(); it != ageCohort.end(); it++ ) {
-         aFile << ( *it )->getAgeGroup() << ',' << ( *it )->getMalePop() << endl;
-     }
-     aFile << endl << "Females- " << mYear << endl;
-     for( CAgeCohortIterator it = ageCohort.begin(); it != ageCohort.end(); it++ ) {
-         aFile << ( *it )->getAgeGroup() << ',' << ( *it )->getFemalePop() << endl;
-     }
-}
 
 /*! \brief Update a visitor with information about a SGM fixed cohort population.
 * \param aVisitor Visitor to update.

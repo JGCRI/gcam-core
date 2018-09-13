@@ -214,9 +214,6 @@ public:
 
     virtual double getTotalCalOutputs( const int period ) const;
 
-    void csvOutputFile( const GDP* aGDP,
-                        const IndirectEmissionsCalculator* aIndirectEmissCalc ) const; 
-
     void emission( const int period );
 
     double getInput( const int period ) const;
@@ -261,7 +258,6 @@ public:
     
     void updateMarketplace( const int period );
     void postCalc( const int aPeriod );
-    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     double getFixedInvestment( const int aPeriod ) const;
     bool hasCalibrationMarket() const;

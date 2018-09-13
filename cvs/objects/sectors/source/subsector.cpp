@@ -890,87 +890,6 @@ double Subsector::getShareWeight( const int period ) const {
     return mShareWeights[ period ];
 }
 
-//! write Subsector output to database
-// TODO: Fix up this output to handle multiple vintages correctly.
-void Subsector::csvOutputFile( const GDP* aGDP, 
-                               const IndirectEmissionsCalculator* aIndirectEmissCalc ) const {
-
-    // function protocol
-    void fileoutput3( string var1name,string var2name,string var3name,
-        string var4name,string var5name,string uname,vector<double> dout);
-    
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-    const string& outputUnit = mSubsectorInfo->getString( "output-unit", true );
-    const string& priceUnit = mSubsectorInfo->getString( "price-unit", true );
-    vector<double> temp(maxper);
-    
-    // function arguments are variable name, double array, db name, table name
-    // the function writes all years
-    // total Subsector output
-    for( int per = 0; per < maxper; ++per ){
-        temp[ per ] = getOutput( per );
-    }
-    fileoutput3( mRegionName,mSectorName,mName," ","production",outputUnit,temp);
-    // Subsector price
-    for( int m = 0; m < maxper; m++ ){
-        temp[ m ] = getPrice( aGDP, m );
-    }
-    fileoutput3( mRegionName,mSectorName,mName," ","price",priceUnit,temp);
-
-    for ( int m= 0;m<maxper;m++){
-        temp[m] = summary[m].get_emissmap_second("CO2");
-    }
-    fileoutput3( mRegionName,mSectorName,mName," ","CO2 emiss","MTC",temp);
-
-    // do for all technologies in the Subsector
-    for( unsigned int i = 0; i < mTechContainers.size(); ++i ){
-        // sjs -- bad coding here, hard-wired period. But is difficult to do
-        // something different with current output structure. This is just for
-        // csv file. This should just use the emissions map.
-        vector<string> ghgNames;
-        ghgNames = mTechContainers[i]->getNewVintageTechnology( 2 )->getGHGNames();        
-        for ( unsigned int ghgN =0; ghgN < ghgNames.size(); ghgN++ ) {
-            if ( ghgNames[ ghgN ] != "CO2" ) {
-                for ( int m=0;m<maxper;m++) {
-                    temp[m] = mTechContainers[i]->getNewVintageTechnology( m )->getEmissionsByGas( ghgNames[ ghgN ], m );
-                }
-                fileoutput3( mRegionName,mSectorName,mName,mTechContainers[i]->getName(), ghgNames[ ghgN ] + " emiss","Tg",temp);
-            }
-        }
-
-        // output or demand for each technology
-        for ( int m= 0;m<maxper;m++) {
-            temp[m] = mTechContainers[i]->getNewVintageTechnology(m)->getOutput( m );
-        }
-        fileoutput3( mRegionName,mSectorName,mName,mTechContainers[i]->getName(),"production",outputUnit,temp);
-        // Technology share
-        if( mTechContainers.size() > 1 ) {
-            for ( int m=0;m<maxper;m++) {
-                double subsecOutput = getOutput( m );
-                if( subsecOutput > 0 ){
-                    temp[m] = mTechContainers[i]->getNewVintageTechnology(m)->getOutput( m ) / subsecOutput;
-                }
-                else {
-                    temp[ m ] = 0;
-                }
-            }
-            fileoutput3( mRegionName,mSectorName,mName,mTechContainers[i]->getName(),"tech share","%",temp);
-        }
-        // Technology cost
-        for ( int m=0;m<maxper;m++) {
-            temp[m] = mTechContainers[i]->getNewVintageTechnology(m)->getCost( m );
-        }
-        fileoutput3( mRegionName,mSectorName,mName,mTechContainers[i]->getName(),"price",priceUnit,temp);
-
-        // Technology CO2 emission
-        for ( int m=0;m<maxper;m++) {
-            temp[m] = mTechContainers[i]->getNewVintageTechnology(m)->getEmissionsByGas("CO2", m );
-        }
-        fileoutput3( mRegionName,mSectorName,mName,mTechContainers[i]->getName(),"CO2 emiss","MTC",temp);
-    }
-}
-
 //! calculate GHG emissions from annual production of each Technology
 void Subsector::emission( const int period ){
     /*! \pre period is less than max period. */
@@ -1229,19 +1148,6 @@ void Subsector::postCalc( const int aPeriod ){
     // Finalize all technologies in all periods.
     for( TechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
         (*techIter)->postCalc( mRegionName, aPeriod );
-    }
-}
-
-/*! \brief For outputing SGM data to a flat csv File
- * \author Pralit Patel
- * \param period The period which we are outputing for
- */
-void Subsector::csvSGMOutputFile( ostream& aFile, const int period ) const {
-    const Modeltime* modeltime = scenario->getModeltime();
-    for( unsigned int j = 0; j < baseTechs.size(); j++ ) {
-        if( baseTechs[ j ]->getYear() <= modeltime->getper_to_yr( period ) ){ 
-            baseTechs[ j ]->csvSGMOutputFile( aFile, period );
-        }
     }
 }
 

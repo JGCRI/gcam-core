@@ -302,28 +302,6 @@ double GDP::getLaborForce( const int per ) const {
     return laborForce[ per ];
 }
 
-//! Write GDP info to text file
-void GDP::csvOutputFile( const string& regionName ) const {
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxPeriod = modeltime->getmaxper();
-    vector<double> temp( maxPeriod );
-
-   // function protocol
-void fileoutput3( string var1name,string var2name,string var3name,
-        string var4name,string var5name,string uname,vector<double> dout);
-
-    // write gdp to temporary array since not all will be sent to output
-    for ( int i = 0; i < maxPeriod; i++ ) {
-        temp[ i ] = laborProdGrowthRate[ i ];
-    }
-    fileoutput3( regionName," "," "," ", "labor prod", "%/yr", temp );   
-
-    // write gdp and adjusted gdp for region
-    fileoutput3(regionName," "," "," ","GDP",mGDPUnit,gdpValueAdjusted);
-    fileoutput3(regionName," "," "," ","GDPperCap","thousand90US$",gdpPerCapitaAdjusted);
-    fileoutput3(regionName," "," "," ","PPPperCap","thousand90US$",gdpPerCapitaAdjustedPPP);
-}
-
 /*! Calculate initial regional gdps.
 *
 *  Routine calculates GDPs without current period energy adjustment.

@@ -166,7 +166,6 @@ public:
         const int period ) const;
 
     void init_to_last( const int period );
-    void csvOutputFile( std::string marketsToPrint = "" ) const; 
     int resetToPriceMarket( const int aMarketNumber );
     void setMarketToSolve( const std::string& goodName, const std::string& regionName,
         const int period );
@@ -182,8 +181,7 @@ public:
     std::auto_ptr<CachedMarket> locateMarket( const std::string& aGoodName, const std::string& aRegionName,
                                                const int aPeriod ) const;
 
-    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
-    void accept( IVisitor* aVisitor, const int aPeriod ) const;
+   void accept( IVisitor* aVisitor, const int aPeriod ) const;
 
     std::vector<Market*> getMarketsToSolve( const int period ) const;
     static const std::string& getXMLNameStatic();

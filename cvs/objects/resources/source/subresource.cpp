@@ -431,26 +431,6 @@ double SubResource::getAvailable(int per) const {
     return mAvailable[per];
 }
 
-//! write SubResource output to file
-void SubResource::csvOutputFile( const string &regname, const string& sname) {
-    const Modeltime* modeltime = scenario->getModeltime();
-    // function protocol
-    void fileoutput3( string var1name,string var2name,string var3name,
-        string var4name,string var5name,string uname,vector<double> dout);
-
-    const int maxper = modeltime->getmaxper();
-    const string outputUnit = mSubresourceInfo->getString( "output-unit", true );
-    vector<double> temp(maxper);
-
-    // function arguments are variable name, double array, db name, table name
-    // the function writes all years
-    // total subsector output
-    fileoutput3( regname,sname,mName," ","production",outputUnit,convertToVector(mAnnualProd));
-    fileoutput3( regname,sname,mName," ","resource",outputUnit,convertToVector(mAvailable));
-
-}
-
-
 // ************************************************************
 // Definitions for two of the derived classes below.
 // Since these are very small changes, keep in same file for simplicity

@@ -81,7 +81,6 @@ public:
     double getWorkingAgePopMale() const;
     double getWorkingAgePopFemale() const;
 
-    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
     

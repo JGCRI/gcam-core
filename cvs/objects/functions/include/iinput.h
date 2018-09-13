@@ -46,7 +46,6 @@
 
 #include <string>
 #include <xercesc/dom/DOMNode.hpp>
-#include <iosfwd> // remove when csv output is removed.
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/inamed.h"
@@ -442,14 +441,6 @@ public:
      */
     virtual double getTechChange( const int aPeriod ) const = 0;
 
-    /*! \brief Write out the SGM csv output file.
-    * \todo Remove this function.
-    * \param aFile Output file.
-    * \param aPeriod Model period.
-    */
-    virtual void csvSGMOutputFile( std::ostream& aFile,
-                                   const int aPeriod ) const = 0;
-    
     /*!
      * \brief Hook for an input to do interpolations to fill in any data that
      *        should be interpolated to a newly created input for the missing

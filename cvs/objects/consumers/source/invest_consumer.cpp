@@ -211,19 +211,6 @@ const string& InvestConsumer::getXMLNameStatic() {
     return XML_NAME;
 }
 
-//! SGM version of outputing data members to a csv file
-void InvestConsumer::csvSGMOutputFile( ostream& aFile, const int aPeriod ) const {
-	if ( year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
-		aFile << "***** Investment Sector Results *****" << endl << endl;
-        aFile << "Capital good price," << mCapitalGoodPrice << endl;
-		expenditures[ aPeriod ].csvSGMOutputFile( aFile, aPeriod );
-		aFile << endl;
-
-		aFile << "Investment Consumer Expenditure" << endl << endl;
-		BaseTechnology::csvSGMOutputFile( aFile, aPeriod );
-	}
-}
-
 void InvestConsumer::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->startVisitInvestConsumer( this, aPeriod );
     Consumer::accept( aVisitor, aPeriod );

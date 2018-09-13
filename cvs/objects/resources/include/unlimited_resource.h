@@ -107,8 +107,6 @@ public:
 
     virtual double getPrice( const int aPeriod ) const;
 
-    virtual void csvOutputFile( const std::string& aRegionName ); 
-
     virtual void accept( IVisitor* aVisitor,
                          const int aPeriod ) const;
 

@@ -227,20 +227,6 @@ double UnlimitedResource::getPrice( const int aPeriod ) const {
     return mFixedPrices[ aPeriod ];
 }
 
-void UnlimitedResource::csvOutputFile( const string& aRegionName )
-{
-    // function protocol
-    void fileoutput3( string var1name,string var2name,string var3name,
-        string var4name,string var5name,string uname,vector<double> dout);
-
-    const int maxper = scenario->getModeltime()->getmaxper();
-    vector<double> temp( maxper );
-    for( int i = 0; i < maxper; ++i ){
-        temp[ i ] = getAnnualProd( aRegionName, i );
-    }
-    fileoutput3( aRegionName , mName," "," ","production", mOutputUnit, temp );
-}
-
 /*
 * \brief Create the resource market.
 * \details The unlimited resource creates a single unsolved market for the

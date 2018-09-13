@@ -82,8 +82,6 @@ public:
     double getTotal( const int per ) const;
     const std::vector<double> getTotalPopVec() const;
 
-    void csvOutputFile( const std::string& regionName ) const; 
-    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     void accept( IVisitor* aVisitor, const int aPeriod ) const;
     
 protected:

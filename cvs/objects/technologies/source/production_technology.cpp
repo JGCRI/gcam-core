@@ -829,13 +829,6 @@ void ProductionTechnology::postCalc( const string& aRegionName, const string& aS
     mLeafInputs.clear();
 }
 
-void ProductionTechnology::csvSGMOutputFile( ostream& aFile, const int period ) const {
-    // print for all operating vintages
-    if( isAvailable( period ) && !isRetired( period ) ){
-        // BaseTechnology::csvSGMOutputFile( aFile, period );
-    }
-}
-
 void ProductionTechnology::accept( IVisitor* aVisitor, const int aPeriod ) const
 {
     aVisitor->startVisitProductionTechnology( this, aPeriod );

@@ -259,9 +259,6 @@ public:
                             Expenditure* aExpenditure,
                             const int aPeriod ) const { return 0; }
 
-    virtual void csvSGMOutputFile( std::ostream& aFile,
-        const int aPeriod ) const {}
-    
     virtual void copyParamsInto( ProductionInput& aInput,
         const int aPeriod ) const {}
 

@@ -406,54 +406,6 @@ void RegionCGE::updateMarketplace( const int period ) {
     }
 }
 
-/*!
- * \brief For outputing SGM data to a flat csv File, wouldn't need to do anything for miniCAM
- * \param aFile The file to write results to.
- * \param period 
- * \author Pralit Patel
- */
-void RegionCGE::csvSGMOutputFile( ostream& aFile, const int period ) const {
-    vector<IVisitor*> outputContainers; // vector of output containers
-
-    aFile << "Region:  " << mName << endl << endl;
-    mNationalAccounts[ period ]->csvSGMOutputFile( aFile, period );
-
-    for( vector<Sector*>::const_iterator currSec = mSupplySector.begin(); currSec != mSupplySector.end(); ++currSec ){
-        (*currSec)->csvSGMOutputFile( aFile, period );
-    }
-    for (unsigned int i = 0; i < finalDemandSector.size(); i++) {
-        finalDemandSector[i]->csvSGMOutputFile( aFile, period );
-    }
-    for (unsigned int i = 0; i < factorSupply.size(); i++) {
-        factorSupply[i]->csvSGMOutputFile( aFile, period );
-    }
-    mDemographic->csvSGMOutputFile( aFile, period );
-    aFile << endl;
-
-
-    // Add outputcontainers here.
-    outputContainers.push_back( new SocialAccountingMatrix( mName, aFile ) );
-    outputContainers.push_back( new DemandComponentsTable( aFile ) );
-    outputContainers.push_back( new SectorResults( mName, aFile ) );
-    outputContainers.push_back( new GovtResults( mName, aFile ) );
-    outputContainers.push_back( new InputOutputTable( mName, aFile ) );
-    
-    // load values into all tables
-    for (unsigned int i = 0; i < outputContainers.size(); i++) { 
-        accept( outputContainers[ i ], period );
-    }
-
-    // print out all tables
-    for( unsigned int i = 0; i < outputContainers.size(); i++) {
-        outputContainers[ i ]->finish();
-    }
-    
-    // clean up memory.
-    for( vector<IVisitor*>::iterator iter = outputContainers.begin(); iter != outputContainers.end(); ++iter ){
-        delete *iter;
-    }
-}
-
 void RegionCGE::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->startVisitRegionCGE( this, aPeriod );
     Region::accept( aVisitor, aPeriod );
@@ -491,14 +443,3 @@ void RegionCGE::updateAllOutputContainers( const int period ) {
     }
 }
 
-/*! \brief General SGM output is called at end of model run and includes all
-*          periods.
-* \param aFile Output file.
-*/
-void RegionCGE::csvSGMGenFile( ostream& aFile ) const {
-    // print out all tables
-    for( unsigned int i = 0; i < mOutputContainers.size(); i++) {
-        mOutputContainers[ i ]->setOutputFile( aFile );
-        mOutputContainers[ i ]->finish();
-    }
-}

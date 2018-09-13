@@ -655,19 +655,6 @@ bool SGMInput::isSecondaryEnergyGood( const string& aRegionName ) const
     return marketInfo && marketInfo->getBoolean( "IsSecondaryEnergyGood", false );
 }
 
-/*! \brief For outputing SGM data to a flat csv File
- * 
- * \author Pralit Patel
- * \param period The period which we are outputing for
- */
-void SGMInput::csvSGMOutputFile( ostream& aFile, const int period ) const {
-    aFile << mName << ',';
-    aFile.precision(0);
-    aFile << mPhysicalDemand[ period ] << ',';
-    aFile.precision(3);
-    aFile << mPricePaid[ period ] << endl;
-}
-
 void SGMInput::doInterpolations( const int aYear, const int aPerviousYear,
                                  const int aNextYear, const IInput* aPreviousInput,
                                  const IInput* aNextInput )

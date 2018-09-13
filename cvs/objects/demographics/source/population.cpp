@@ -143,12 +143,6 @@ void Population::toDebugXML( std::ostream& out, Tabs* tabs ) const {
     XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
-void Population::csvSGMOutputFile( ostream& aFile, const int period ) const {
-    aFile << "Population Data Total" << endl;
-    aFile << "Year" << ',' << "Total" << endl;
-    aFile << mYear << ',' << mTotalPop << endl << endl;
-}
-
 /*! \brief Update a Visitor with information about a Population.
 * \param aVisitor Visitor to update.
 * \param aPeriod Period for which to update.

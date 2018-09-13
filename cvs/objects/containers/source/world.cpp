@@ -671,18 +671,6 @@ void World::runClimateModel( int aPeriod ) {
     }
 }
 
-
-//! write results for all regions to file
-void World::csvOutputFile() const {
-
-    // Write global data
-    csvGlobalDataFile();
-    
-    for( CRegionIterator i = mRegions.begin(); i != mRegions.end(); i++ ){
-        ( *i )->csvOutputFile();
-    }
-}
-
 //! write global results to file
 void World::csvGlobalDataFile() const {
     const int maxper = scenario->getModeltime()->getmaxper();
@@ -841,18 +829,6 @@ void World::postCalc( const int aPeriod ){
     // Finalize sectors.
     for( RegionIterator region = mRegions.begin(); region != mRegions.end(); ++region ){
         (*region)->postCalc( aPeriod );
-    }
-}
-
-void World::csvSGMOutputFile( ostream& aFile, const int period ) const {
-    for( CRegionIterator rIter = mRegions.begin(); rIter != mRegions.end(); ++rIter ){
-        ( *rIter )->csvSGMOutputFile( aFile, period );
-    }
-}
-
-void World::csvSGMGenFile( ostream& aFile ) const {
-    for( CRegionIterator rIter = mRegions.begin(); rIter != mRegions.end(); ++rIter ){
-        ( *rIter )->csvSGMGenFile( aFile );
     }
 }
 

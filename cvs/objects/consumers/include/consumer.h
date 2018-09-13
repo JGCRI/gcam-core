@@ -95,7 +95,6 @@ public:
                                     const int aPeriod );
     virtual void postCalc( const std::string& aRegionName, const std::string& aSectorName, 
                            const int aPeriod );
-    virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const = 0;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     
     // Consumer should be contained directly in Subsector and then all these functions could be removed.

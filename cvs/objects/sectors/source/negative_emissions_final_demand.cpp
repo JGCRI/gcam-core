@@ -220,8 +220,3 @@ void NegativeEmissionsFinalDemand::accept( IVisitor* aVisitor,
     aVisitor->endVisitFinalDemand( this, aPeriod );
 }
 
-//! Write sector output to database.
-void NegativeEmissionsFinalDemand::csvOutputFile( const string& aRegionName ) const {
-}
-
-

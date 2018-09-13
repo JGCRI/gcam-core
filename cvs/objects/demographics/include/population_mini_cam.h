@@ -77,7 +77,6 @@ public:
     double getWorkingAgePopMale() const { return 0; } // minicam only has total
     double getWorkingAgePopFemale() const { return 0; } // minicam only has total
 
-    virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
     

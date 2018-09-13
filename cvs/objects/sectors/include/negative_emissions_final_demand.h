@@ -95,8 +95,6 @@ public:
     virtual double getWeightedEnergyPrice( const std::string& aRegionName,
                                            const int aPeriod ) const;
 
-    virtual void csvOutputFile( const std::string& aRegionName ) const;
-
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
     

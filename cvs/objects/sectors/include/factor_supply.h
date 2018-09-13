@@ -82,7 +82,6 @@ public:
 
     double getSupply( const std::string& aRegionName, const int period ) const;
     void calcPricePaid( const std::string& aRegionName, const int period );
-    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     void accept( IVisitor* aVisitor, const int aPeriod ) const;
 
 protected:

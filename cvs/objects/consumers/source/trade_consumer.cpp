@@ -170,18 +170,6 @@ const string& TradeConsumer::getXMLNameStatic() {
 	return XML_NAME;
 }
 
-//! SGM version of outputing data to a csv file
-void TradeConsumer::csvSGMOutputFile( ostream& aFile, const int aPeriod ) const {
-	if ( year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
-		aFile << "***** Trade Sector Results *****" << endl << endl;
-		expenditures[ aPeriod ].csvSGMOutputFile( aFile, aPeriod );
-		aFile << endl;
-
-		aFile << "Trade Consumer Expenditure" << endl << endl;
-		BaseTechnology::csvSGMOutputFile( aFile, aPeriod );
-	}
-}
-
 void TradeConsumer::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->startVisitTradeConsumer( this, aPeriod );
     Consumer::accept( aVisitor, aPeriod );

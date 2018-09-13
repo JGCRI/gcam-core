@@ -224,16 +224,6 @@ void FactorSupply::calcPricePaid( const string& aRegionName, const int period ) 
     FunctionUtils::setPricePaid( aRegionName, name, period, pricePaid );
 }
 
-/*! \brief For outputing SGM data to a flat csv File
- * 
- * \author Pralit Patel, Sonny Kim
- * \param period The period which we are outputing for
- */
-void FactorSupply::csvSGMOutputFile( ostream& aFile, const int period ) const {
-    // Write factor supply output
-    // aFile << "Factor Supply Results" << endl << endl;
-}
-
 void FactorSupply::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->startVisitFactorSupply( this, aPeriod );
     aVisitor->endVisitFactorSupply( this, aPeriod );

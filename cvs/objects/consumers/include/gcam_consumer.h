@@ -115,10 +115,6 @@ public:
     
     static const std::string& getXMLNameStatic();
     
-    // This should probably be removed or moved to a visitor
-    virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const {
-    }
-
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     
 protected:

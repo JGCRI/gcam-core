@@ -118,9 +118,7 @@ public:
     virtual void calc( const int period );
     virtual void updateMarketplace( const int period );
     virtual void updateAllOutputContainers( const int period );
-    virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
-    virtual void csvSGMGenFile( std::ostream& aFile ) const;
 
 protected:
 

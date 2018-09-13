@@ -409,19 +409,6 @@ void EnergyFinalDemand::acceptDerived( IVisitor* aVisitor,
     aVisitor->endVisitEnergyFinalDemand( this, aPeriod );
 }
 
-//! Write sector output to database.
-void EnergyFinalDemand::csvOutputFile( const string& aRegionName ) const {
-    // function protocol
-    void fileoutput3( string var1name,string var2name,string var3name,
-        string var4name,string var5name,string uname,vector<double> dout);
-    
-    // function arguments are variable name, double array, db name, table name
-    // the function writes all years
-    // total Sector output
-    fileoutput3( aRegionName, mName, " ", " ", "demand", "SerUnit",
-                 convertToVector( mServiceDemands ) );
-}
-
 EnergyFinalDemand::FinalEnergyConsumer::FinalEnergyConsumer( const string& aFinalDemandName ) {
     mTFEMarketName = SectorUtils::createTFEMarketName( aFinalDemandName );
 }

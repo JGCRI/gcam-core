@@ -143,12 +143,6 @@ public:
     virtual double getWeightedEnergyPrice( const std::string& aRegionName,
                                            const int aPeriod ) const = 0;
 
-    /*!
-     * \brief Write output to the CSV file.
-     * \param aRegionName Region name.
-     */
-    virtual void csvOutputFile( const std::string& aRegionName ) const = 0;
-
     // Documentation is inherited.
     virtual void accept( IVisitor* aVisitor,
                          const int aPeriod ) const = 0;

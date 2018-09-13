@@ -103,7 +103,6 @@ public:
     void setEmissions( int period );
     void runClimateModel();
     void runClimateModel( int period );
-    void csvOutputFile() const; 
     const std::map<std::string,int> getOutputRegionMap() const;
     bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const;
     void setTax( const GHGPolicy* aTax );
@@ -116,8 +115,6 @@ public:
     const GlobalTechnologyDatabase* getGlobalTechnologyDatabase() const;
 
 	void accept( IVisitor* aVisitor, const int aPeriod ) const;
-    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
-    void csvSGMGenFile( std::ostream& aFile ) const;
 
 #if GCAM_PARALLEL_ENABLED
   protected:

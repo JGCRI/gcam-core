@@ -478,24 +478,6 @@ double Resource::getPrice( const int aPeriod ) const {
     return mResourcePrice[ aPeriod ];
 }
 
-//! Write resource output to file.
-void Resource::csvOutputFile( const string& regname )
-{
-    // function protocol
-    void fileoutput3( string var1name,string var2name,string var3name,
-        string var4name,string var5name,string uname,vector<double> dout);
-
-    // function arguments are variable name, double array, db name, table name
-    // the function writes all years
-    // total sector output
-    fileoutput3( regname,mName," "," ","production",mOutputUnit,convertToVector(mAnnualProd));
-
-    // do for all subsectors in the sector
-    for (int i=0;i<mSubResource.size();i++) {
-        mSubResource[i]->csvOutputFile(regname ,mName);
-    }
-}
-
 /*! \brief Update an output container for a Resource.
 * \param aVisitor Output container to update.
 * \param aPeriod Period to update.

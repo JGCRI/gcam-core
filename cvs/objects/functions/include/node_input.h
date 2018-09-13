@@ -257,9 +257,6 @@ public:
                             Expenditure* aExpenditure,
                             const int aPeriod ) const { return 0; }
 
-    virtual void csvSGMOutputFile( std::ostream& aFile,
-        const int aPeriod ) const {}
-    
     virtual void doInterpolations( const int aYear, const int aPreviousYear,
                                    const int aNextYear, const IInput* aPreviousInput,
                                    const IInput* aNextInput ) {}

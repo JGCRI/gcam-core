@@ -98,8 +98,7 @@ public:
         const std::string& aSectorName, const bool aIsNewVintageMode, const int aPeriod );
 
     static const std::string& getXMLNameStatic();
-
-    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
+    
     void accept( IVisitor* aVisitor, const int aPeriod ) const;
     double getLaborSupply() const;
 protected:

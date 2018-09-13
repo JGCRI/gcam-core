@@ -535,38 +535,6 @@ void Sector::emission( const int period ) {
     }
 }
 
-//! Write Sector output to database.
-void Sector::csvOutputFile( const GDP* aGDP,
-                            const IndirectEmissionsCalculator* aIndirectEmissCalc ) const {
-    // function protocol
-    void fileoutput3( string var1name,string var2name,string var3name,
-        string var4name,string var5name,string uname,vector<double> dout);
-
-    // function arguments are variable name, double array, db name, table name
-    // the function writes all years
-    // total Sector output
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-    vector<double> temp(maxper);
-    // sector output or production
-    for( int per = 0; per < maxper; ++per ){
-        temp[ per ] = getOutput( per );
-    }
-    fileoutput3( mRegionName, mName, " ", " ", "production", mOutputUnit, temp );
-
-    // Sector price
-    for( int per = 0; per < maxper; ++per ){
-        temp[ per ] = getPrice( aGDP, per );
-    }
-    fileoutput3( mRegionName, mName, " ", " ", "price", mPriceUnit, temp);
-
-    // do for all subsectors in the Sector
-    for( unsigned int i = 0; i < mSubsectors.size(); ++i ){
-        // output or demand for each technology
-        mSubsectors[ i ]->csvOutputFile( aGDP, aIndirectEmissCalc );
-    }
-}
-
 /*! \brief Return fuel consumption map for this Sector
 *
 * \author Sonny Kim
@@ -658,23 +626,6 @@ void Sector::postCalc( const int aPeriod ){
     // Set member price vector to solved market prices
     if( aPeriod > 0 ){
         mPrice[ aPeriod ] = scenario->getMarketplace()->getPrice( mName, mRegionName, aPeriod, true );
-    }
-}
-
-/*! \brief For outputting SGM data to a flat csv File
-*
-* \author Pralit Patel
-* \param period The period which we are outputting for
-*/
-void Sector::csvSGMOutputFile( ostream& aFile, const int period ) const {
-
-    // when csvSGMOutputFile() is called, a new sector report is created, updated and printed
-    // this function writes a sector report for each sector
-    auto_ptr<IVisitor> sectorReport( new SectorReport( aFile ) );
-    accept( sectorReport.get(), period );
-    sectorReport->finish();
-    for( unsigned int i = 0; i < mSubsectors.size(); i++ ) {
-        mSubsectors[ i ]->csvSGMOutputFile( aFile, period );
     }
 }
 

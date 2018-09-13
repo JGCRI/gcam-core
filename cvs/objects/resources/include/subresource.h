@@ -91,7 +91,6 @@ public:
     virtual void annualsupply( int aPeriod, const GDP* aGdp, double aPrice, double aPrevPrice );
     double getAnnualProd( int aPeriod ) const;
     double getAvailable( int aPeriod ) const;
-    void csvOutputFile(const std::string &regname, const std::string& sname); 
     void updateAvailable( const int period );
     virtual double getVariance() const;
     virtual double getAverageCapacityFactor() const;

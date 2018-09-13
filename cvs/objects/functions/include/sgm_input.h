@@ -188,7 +188,6 @@ public:
                                    const int aNextYear, const IInput* aPreviousInput,
                                    const IInput* aNextInput );
 
-    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     virtual void accept( IVisitor* aVistior, const int aPeriod ) const = 0;
     virtual void copyParamsInto( ProductionInput& aInput, const int aPeriod ) const = 0;
     virtual void copyParamsInto( DemandInput& aInput, const int aPeriod ) const = 0;
