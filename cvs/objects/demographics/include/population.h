@@ -56,6 +56,7 @@
 #include "util/base/include/data_definition_util.h"
 
 class IVisitor;
+class Tabs;
 
 // Need to forward declare the subclasses as well.
 class PopulationMiniCAM;

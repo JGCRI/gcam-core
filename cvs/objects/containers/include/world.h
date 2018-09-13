@@ -64,6 +64,7 @@ class IClimateModel;
 class GHGPolicy;
 class GlobalTechnologyDatabase;
 class IActivity;
+class Tabs;
 
 #if GCAM_PARALLEL_ENABLED
 class GcamFlowGraph;

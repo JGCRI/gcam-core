@@ -136,7 +136,7 @@ void MergeRunner::printOutput( Timer& timer, const bool aCloseDB ) const {
     AutoOutputFile xmlOut( "xmlOutputFileName", "output.xml" );
 
     Tabs tabs;
-    mScenario->toInputXML( *xmlOut, &tabs );
+    //mScenario->toInputXML( *xmlOut, &tabs );
 }
 
 void MergeRunner::cleanup() {

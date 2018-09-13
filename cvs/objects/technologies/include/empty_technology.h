@@ -54,7 +54,7 @@ class IVisitor;
  *          the real technology should not exist.  This will allow all calculations
  *          to remain the same without checking for a missing technology.  Note that
  *          there is only a single instance of this class and thus it can not be
- *          parsed nor should it be written in toInputXML.
+ *          parsed.
  *
  * \author Pralit Patel
  */

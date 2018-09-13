@@ -502,7 +502,7 @@ void XMLDBOutputter::startVisitOutputMetaData( const OutputMetaData* aOutputMeta
 {
     // Don't write opening and closing tags directly because toDebugXML will do it.
     // Write the internal data. The input XML format will work.
-    aOutputMetaData->toDebugXML( mBuffer, mTabs.get() );
+    //aOutputMetaData->toDebugXML( mBuffer, mTabs.get() );
 }
 
 void XMLDBOutputter::endVisitOutputMetaData( const OutputMetaData* aOutputMetaData,

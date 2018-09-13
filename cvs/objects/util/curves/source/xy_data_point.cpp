@@ -114,6 +114,14 @@ void XYDataPoint::print( ostream& out ) const {
     out << x << "," << y << endl;
 }
 
+//! Print the data point to an XML stream.
+void XYDataPoint::outputAsXML( ostream& aOut, Tabs* aTabs ) const {
+    XMLWriteOpeningTag( DataPoint::getXMLNameStatic(), aOut, aTabs, "", 0, getXMLName() );
+    XMLWriteElement( x, "x", aOut, aTabs );
+    XMLWriteElement( y, "y", aOut, aTabs );
+    XMLWriteClosingTag( DataPoint::getXMLNameStatic(), aOut, aTabs );
+}
+
 //! Parse the XYDataPoint from an XML DOM tree.
 void XYDataPoint::XMLParse( const xercesc::DOMNode* node ) {
     

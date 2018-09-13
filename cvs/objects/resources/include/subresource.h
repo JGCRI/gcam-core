@@ -101,7 +101,6 @@ public:
 protected:
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node ) = 0;
-    virtual void toXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
 
     DEFINE_DATA(
         /* Declare all subclasses of SubResource to allow automatic traversal of the

@@ -65,7 +65,6 @@ InterpolationRule::InterpolationRule()
     mOverwritePolicy = ALWAYS;
     mWarnWhenOverwritting = false;
     mIsFixedFunction = false;
-    mUseLastModelYearConstant = false;
     mInterpolationFunction = 0;
 }
 
@@ -86,9 +85,7 @@ void InterpolationRule::copy( const InterpolationRule& aOther ) {
     mToValue = aOther.mToValue;
     mOverwritePolicy = aOther.mOverwritePolicy;
     mWarnWhenOverwritting = aOther.mWarnWhenOverwritting;
-    mApplyTo = aOther.mApplyTo;
     mIsFixedFunction = aOther.mIsFixedFunction;
-    mUseLastModelYearConstant = aOther.mUseLastModelYearConstant;
     
     delete mInterpolationFunction;
     mInterpolationFunction = aOther.mInterpolationFunction ? aOther.mInterpolationFunction->clone() : 0;
@@ -114,9 +111,6 @@ bool InterpolationRule::XMLParse( const DOMNode* aNode ) {
     // assume we were passed a valid node.
     assert( aNode );
 
-    // store what this rule applies to so that we can be round-trippable
-    mApplyTo = XMLHelper<string>::getAttr( aNode, "apply-to" );
-
     // get the year-range this rule is applicable from the attributes
     mFromYear = XMLHelper<int>::getAttr( aNode, "from-year" );
     mToYear = XMLHelper<int>::getAttr( aNode, "to-year" );
@@ -124,7 +118,6 @@ bool InterpolationRule::XMLParse( const DOMNode* aNode ) {
     // replace to year if it is equal to the last model year flag
     if( mToYear == getLastModelYearConstant() ) {
         mToYear = scenario->getModeltime()->getEndYear();
-        mUseLastModelYearConstant = true;
     }
 
     // get the children of the node.

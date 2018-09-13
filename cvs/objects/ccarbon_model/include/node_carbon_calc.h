@@ -52,6 +52,7 @@
 
 class ICarbonCalc;
 class LandUseHistory;
+class Tabs;
 
 /*!
  * \brief A carbon calculator which simply drive the carbon calculation from leaves

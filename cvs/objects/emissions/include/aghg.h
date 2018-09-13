@@ -53,6 +53,7 @@
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/inamed.h"
+#include "util/base/include/iparsable.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
@@ -84,7 +85,7 @@ class NonCO2Emissions;
  *          The last one of these read in determines the method used.
  * \author Sonny Kim, Marshall Wise, Steve Smith, Nick Fernandez, Jim Naslund
  */
-class AGHG: public INamed, public IVisitable, private boost::noncopyable
+class AGHG: public INamed, public IParsable, public IVisitable, private boost::noncopyable
 { 
     friend class XMLDBOutputter;
 
@@ -97,8 +98,8 @@ public:
     
     virtual void copyGHGParameters( const AGHG* aPrevGHG ) = 0;
 
-    // IRoundTrippable methods
-    void XMLParse( const xercesc::DOMNode* aNode );
+    // IParsable methods
+    virtual bool XMLParse( const xercesc::DOMNode* aNode );
 
     void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
 

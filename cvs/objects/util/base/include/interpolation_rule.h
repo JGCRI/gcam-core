@@ -76,8 +76,7 @@
  *          - Attributes:
  *              - \c apply-to InterpolationRule::mApplyTo
  *                      The XML name for which this rule applys to.  This is used
- *                      by the containing class and is only included here so
- *                      that this class can be IRoundTrippable.
+ *                      by the containing class only.
  *              - \c from-year InterpolationRule::mFromYear
  *                      The left end point for the range of years this rule applies.
  *              - \c to-year InterpolationRule::mToYear

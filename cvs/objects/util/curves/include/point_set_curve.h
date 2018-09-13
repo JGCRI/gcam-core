@@ -73,6 +73,7 @@ public:
     PointSetCurve* clone() const;
     static const std::string& getXMLNameStatic();
     const std::string& getXMLName() const;
+    virtual void outputAsXMLDerived( std::ostream& aOut, Tabs* aTabs ) const;
     bool XMLParseDerived( const xercesc::DOMNode* node );
     double getY( const double xValue ) const;
     double getX( const double yValue ) const;

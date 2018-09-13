@@ -296,7 +296,7 @@ void SimplePolicyTargetRunner::printOutput( Timer& timer, const bool aCloseDB ) 
     // automatically be closed.
     AutoOutputFile out( "sPolicyOutputFileName", "sPolicyFinalEmissionsCurve.xml" );
     Tabs tabs;
-    mInterpolatedCurve->toInputXMLDerived( *out, &tabs );
+    mInterpolatedCurve->outputAsXMLDerived( *out, &tabs );
 
     static const bool printDB = Configuration::getInstance()->shouldWriteFile( "dbFileName" );
     

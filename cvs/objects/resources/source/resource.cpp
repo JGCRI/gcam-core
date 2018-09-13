@@ -212,7 +212,7 @@ void Resource::toDebugXML( const int period, ostream& aOut, Tabs* aTabs ) const 
         for ( object_meta_info_vector_type::const_iterator metaInfoIterItem = mObjectMetaInfo.begin();
             metaInfoIterItem != mObjectMetaInfo.end(); 
             ++metaInfoIterItem ) {
-                metaInfoIterItem->toInputXML( aOut, aTabs );
+                metaInfoIterItem->toDebugXML( period, aOut, aTabs );
             }
     }
 

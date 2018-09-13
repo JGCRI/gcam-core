@@ -57,12 +57,10 @@
  *          of making adjustments to the local copy of the TechnologyContainer
  *          from the GlobalTechnologyDatabase.  The global technology will get
  *          copied during completeInit and adjustments will be made then by
- *          calling XMLParse on the copied container.  The global technology is
- *          not written back in toInputXML instead only the XML adjustments will
- *          be.  All other ITechnologyContainer calls are merely forwared to the
- *          local copy of the global technology.  The stub technology also allows
- *          interpolating a technology before making adjustments by setting the
- *          allow-interpolate attrubute to true.
+ *          calling XMLParse on the copied container.  All other ITechnologyContainer
+ *          calls are merely forwared to the local copy of the global technology.
+ *          The stub technology also allows  interpolating a technology before making
+ *          adjustments by setting the allow-interpolate attrubute to true.
  *
  *
  *          <b>XML specification for StubTechnologyContainer</b>

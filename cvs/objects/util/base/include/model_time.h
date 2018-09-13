@@ -48,6 +48,9 @@
 #include <vector>
 #include <map>
 #include "util/base/include/iparsable.h"
+
+class Tabs;
+
 /*! 
 * \ingroup Objects
 * \brief A class which defines the time information necessary for the model to run.

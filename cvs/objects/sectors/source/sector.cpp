@@ -236,7 +236,7 @@ void Sector::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
         for ( object_meta_info_vector_type::const_iterator metaInfoIterItem = mObjectMetaInfo.begin();
             metaInfoIterItem != mObjectMetaInfo.end(); 
             ++metaInfoIterItem ) {
-                metaInfoIterItem->toDebugXML( aOut, aTabs );
+                metaInfoIterItem->toDebugXML( aPeriod, aOut, aTabs );
             }
     }
 

@@ -54,6 +54,8 @@
 #include "demographics/include/population.h"
 #include "util/base/include/data_definition_util.h"
 
+class Tabs;
+
 /*! 
 * \ingroup Objects
 * \brief Demographics model that calculates population by gender and age cohort.

@@ -52,6 +52,7 @@
 #include "util/base/include/ivisitable.h"
 
 class MoreSectorInfo;
+class Tabs;
 
 /*! 
 * \ingroup Objects

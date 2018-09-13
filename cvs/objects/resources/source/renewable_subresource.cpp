@@ -95,13 +95,6 @@ bool SubRenewableResource::XMLDerivedClassParse( const string& nodeName, const D
     return didParse;
 }
 
-//! Write out to XML variables specific to this derived class
-void SubRenewableResource::toXMLforDerivedClass( ostream& out, Tabs* tabs ) const {
-    XMLWriteElementCheckDefault( mGdpSupplyElasticity, "gdpSupplyElast", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( mSubResourceVariance, "subResourceVariance", out, tabs, 0.0 );
-    XMLWriteVector( mMaxAnnualSubResource, "maxSubResource", out, tabs, scenario->getModeltime(), 0.0 );
-}
-
 //! Do any initializations needed for this resource
 /*! Renewable resources should have only grades with well defined cost curves. 
 \todo The extra elements in the vector should be removed. 

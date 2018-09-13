@@ -49,6 +49,8 @@
 #include <map>
 #include <xercesc/dom/DOMNode.hpp>
 
+class Tabs;
+
 /*! 
 * \ingroup Objects
 * \brief A container which contains additional information about an SGM sector.

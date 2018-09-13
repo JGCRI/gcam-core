@@ -152,7 +152,9 @@ bool TradeInput::XMLDerivedClassParse( const string& aNodeName, const DOMNode* a
 
 //! Output debug info to XML for derived class
 void TradeInput::toDebugXMLDerived( const int period, ostream& aOut, Tabs* aTabs ) const {
-    toInputXMLDerived( aOut, aTabs );
+    XMLWriteElement( mTradingPartner, "trade-partner", aOut, aTabs );
+    XMLWriteElement( mImportTaxRate, "import-tax-rate", aOut, aTabs );
+    XMLWriteElement( mExportTaxRate, "export-tax-rate", aOut, aTabs );
 }
 
 void TradeInput::completeInit( const std::string& aRegionName,

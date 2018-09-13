@@ -70,7 +70,6 @@ class Tabs;
  */
 class LandUseHistory : public IVisitable,
                        public IParsable,
-                       public IRoundTrippable,
                        private boost::noncopyable
 {
     friend class XMLDBOutputter;

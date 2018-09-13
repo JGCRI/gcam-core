@@ -341,11 +341,6 @@ void TotalPolicyCostCalculator::printOutput() const {
         mSingleScenario->getXMLDBOutputter()->appendData( xmlString, UPDATE_LOCATION );
     }
 
-    // Write to the database.
-    if( Configuration::getInstance()->shouldWriteFile( "dbFileName" ) ) {
-        writeToDB();
-    }
-
     // Write to CSV file
     writeToCSV();
 }
@@ -408,7 +403,7 @@ const string TotalPolicyCostCalculator::createXMLOutputString() const {
         const int year = modeltime->getper_to_yr( per );
         XMLWriteOpeningTag( "CostCurves", buffer, &tabs, "", year );
         for( CRegionCurvesIterator rIter = mPeriodCostCurves[ per ].begin(); rIter != mPeriodCostCurves[ per ].end(); rIter++ ){
-            rIter->second->toInputXML( buffer, &tabs );
+            rIter->second->outputAsXML( buffer, &tabs );
         }
         XMLWriteClosingTag( "CostCurves", buffer, &tabs );
     }
@@ -416,7 +411,7 @@ const string TotalPolicyCostCalculator::createXMLOutputString() const {
     
     XMLWriteOpeningTag( "RegionalCostCurvesByPeriod", buffer, &tabs );
     for( CRegionCurvesIterator rIter = mRegionalCostCurves.begin(); rIter != mRegionalCostCurves.end(); ++rIter ){
-        rIter->second->toInputXML( buffer, &tabs );
+        rIter->second->outputAsXML( buffer, &tabs );
     }
     XMLWriteClosingTag( "RegionalCostCurvesByPeriod", buffer, &tabs ); 
     

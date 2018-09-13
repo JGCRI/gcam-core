@@ -66,6 +66,7 @@ class PolicyPortfolioStandard;
 class Curve;
 class AResource;
 class IInfo;
+class Tabs;
 
 // Need to forward declare the subclasses as well.
 class RegionMiniCAM;

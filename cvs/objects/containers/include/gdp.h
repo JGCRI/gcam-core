@@ -52,6 +52,7 @@
 #include "util/base/include/data_definition_util.h"
 
 class Demographic;
+class Tabs;
 
 /*! 
 * \ingroup Objects

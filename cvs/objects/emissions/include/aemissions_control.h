@@ -48,6 +48,7 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <string>
 #include "util/base/include/inamed.h"
+#include "util/base/include/iparsable.h"
 #include "util/base/include/value.h"
 #include "util/base/include/data_definition_util.h"
 
@@ -55,6 +56,7 @@
 class GDP;
 class IInfo;
 class NonCO2Emissions;
+class Tabs;
 
 // Need to forward declare the subclasses as well.
 class GDPControl;
@@ -68,14 +70,14 @@ class ReadInControl;
  * \details The AEmissionsControl class describes a means of reducing emissions.
  * \author Kate Calvin
  */
-class AEmissionsControl: public INamed, public IRoundTrippable {
+class AEmissionsControl: public INamed, public IParsable {
 public:
     //! Virtual Destructor.
     virtual ~AEmissionsControl();
     //! Clone operator.
     virtual AEmissionsControl* clone() const = 0;
     
-    void XMLParse( const xercesc::DOMNode* aNode );
+    bool XMLParse( const xercesc::DOMNode* aNode );
     void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
     static const std::string& getXMLNameStatic();
     

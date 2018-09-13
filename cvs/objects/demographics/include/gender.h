@@ -50,6 +50,8 @@
 #include <string>
 #include "util/base/include/ivisitable.h"
 
+class Tabs;
+
 /*! 
 * \ingroup Objects
 * \brief The base class for Male and Female objects. Both have populations and survival rates.

@@ -138,7 +138,17 @@ void DepletingFixedResource::toDebugXML( const int aPeriod,
                                     Tabs* aTabs ) const
 {
     // this object does not currently maintain state for past periods
-    toInputXML( aOut, aTabs );
+    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
+    
+    // write the xml for the class members.
+    XMLWriteElement( mOutputUnit, "output-unit", aOut, aTabs );
+    XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
+    XMLWriteElement( mMarket, "market", aOut, aTabs );
+    XMLWriteElement( mFixedResource, "fixed-resource", aOut, aTabs );
+    XMLWriteElement( mDepletionRate, "depletion-rate", aOut, aTabs );
+    
+    // finished writing xml for the class members.
+    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
 void DepletingFixedResource::completeInit( const string& aRegionName,

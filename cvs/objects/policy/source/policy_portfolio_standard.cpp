@@ -307,10 +307,5 @@ void PolicyPortfolioStandard::initCalc( const string& aRegionName, const int aPe
  * \param aPeriod The current model period which just finished.
  */
 void PolicyPortfolioStandard::postCalc( const string& aRegionName, const int aPeriod ) {
-    // if we are solving for a price because we have a constraint then we should
-    // save the solved price so we can write it back out in toInputXML for restart
-    if( mConstraint[ aPeriod ].isInited() ) {
-        mFixedTax[ aPeriod ] = scenario->getMarketplace()->getPrice( mName, aRegionName, aPeriod );
-    }
 }
 

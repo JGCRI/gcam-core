@@ -276,9 +276,6 @@ void SubResource::toDebugXML( const int period, ostream& out, Tabs* tabs ) const
 
     // finished writing xml for the class members.
 
-    // write out anything specific to the derived classes
-    toXMLforDerivedClass( out, tabs );
-
     XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
