@@ -203,8 +203,6 @@ public:
 
     double getCost( const int aPeriod ) const;
 
-    const std::map<std::string,double> getEmissions( const std::string& aGoodName, const int aPeriod ) const;
-
     const std::string& getName() const;
 
     void setShareWeight( double shareWeightValue );
@@ -240,8 +238,6 @@ public:
     double getEnergyInput( const int aPeriod ) const;
 
     const std::vector<std::string> getGHGNames() const;
- 
-    double getEmissionsByGas( const std::string& aGasName, const int aPeriod ) const;
 
     double getFixedOutput( const std::string& aRegionName,
                            const std::string& aSectorName,
@@ -271,8 +267,6 @@ public:
     virtual bool isAvailable( const int aPeriod ) const;
     
     virtual bool isOperating( const int aPeriod ) const;
-
-    const std::map<std::string, double> getFuelMap( const int aPeriod ) const;
 
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     

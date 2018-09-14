@@ -58,7 +58,6 @@
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/configuration.h"
 #include "util/base/include/util.h"
-#include "util/base/include/summary.h"
 #include "util/curves/include/curve.h"
 #include "util/curves/include/point_set_curve.h"
 #include "util/curves/include/point_set.h"
@@ -373,14 +372,6 @@ void World::calc( const int aPeriod, GcamFlowGraph *aWorkGraph, const vector<IAc
 }
 #endif
 
-//! Update all summary information for reporting
-// Orginally in world.calc, removed to call only once after solved
-void World::updateSummary( const list<string> aPrimaryFuelList, const int period ) {
-    for( RegionIterator i = mRegions.begin(); i != mRegions.end(); i++ ){
-        ( *i )->updateSummary( aPrimaryFuelList, period );
-        ( *i )->updateAllOutputContainers( period );
-    }
-}
 
 /*! Calculates the global emissions.
  */

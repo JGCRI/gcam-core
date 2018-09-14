@@ -58,7 +58,6 @@
 #include "util/base/include/time_vector.h"
 #include "util/base/include/value.h"
 #include "util/base/include/data_definition_util.h"
-#include "util/base/include/summary.h"
 
 // Forward declarations
 class Subsector;
@@ -144,8 +143,6 @@ protected:
     //! Pointer to the sector's information store.
     std::auto_ptr<IInfo> mSectorInfo;
 
-    objects::PeriodVector<Summary> summary; //!< summary for reporting
-
     typedef ObjECTS::TObjectMetaInfo<> object_meta_info_type;
     typedef std::vector<object_meta_info_type> object_meta_info_vector_type;
     object_meta_info_vector_type mObjectMetaInfo; //!< Vector of object meta info to pass to mSectorInfo
@@ -188,14 +185,6 @@ public:
     virtual double getOutput( const int period ) const = 0;
 
     virtual void calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod ) = 0;
-
-    void emission( const int period );
-    
-    std::map<std::string, double> getfuelcons( const int period ) const;
-    double getConsByFuel( const int period, const std::string& key) const;
-    std::map<std::string, double> getemission( const int period ) const;
-    std::map<std::string, double> getemfuelmap( const int period ) const;
-    void updateSummary( const std::list<std::string>& aPrimaryFuelList, const int period );
 
     virtual void operate( NationalAccount& nationalAccount, const Demographic* aDemographic, const int period ) = 0;
     void updateMarketplace( const int period );

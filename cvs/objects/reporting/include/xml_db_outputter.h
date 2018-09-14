@@ -76,9 +76,6 @@ public:
     void startVisitScenario( const Scenario* aScenario, const int aPeriod );
     void endVisitScenario( const Scenario* aScenario, const int aPeriod );
 
-    void startVisitOutputMetaData( const OutputMetaData* aOutputMetaData, const int aPeriod );
-    void endVisitOutputMetaData( const OutputMetaData* aOutputMetaData, const int aPeriod );
-
     void startVisitWorld( const World* aWorld, const int aPeriod );
     void endVisitWorld( const World* aWorld, const int aPeriod );
 

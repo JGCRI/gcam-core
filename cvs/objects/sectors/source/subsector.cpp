@@ -58,7 +58,6 @@
 #include "util/base/include/model_time.h"
 #include "util/base/include/xml_helper.h"
 #include "marketplace/include/marketplace.h"
-#include "util/base/include/summary.h"
 #include "containers/include/gdp.h"
 #include "containers/include/info_factory.h"
 #include "containers/include/iinfo.h"
@@ -101,7 +100,6 @@ Subsector::Subsector( const string& aRegionName, const string& aSectorName ):
     // resize vectors.
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
-    summary.resize(maxper); // object containing summaries
     mInvestments.resize( maxper );
     mFixedInvestments.resize( maxper, -1 );
 }
@@ -306,8 +304,6 @@ void Subsector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( getCalibrationStatus( period ), "calibration-status", out, tabs );
 
     toDebugXMLDerived( period, out, tabs );
-    // Write out the summary object.
-    // summary[ period ].toDebugXML( period, out );
     // write out the Technology objects.
 
     for ( unsigned int j = 0; j < baseTechs.size(); j++ ) {
@@ -889,21 +885,6 @@ double Subsector::getShareWeight( const int period ) const {
     return mShareWeights[ period ];
 }
 
-//! calculate GHG emissions from annual production of each Technology
-void Subsector::emission( const int period ){
-    /*! \pre period is less than max period. */
-    assert( period < scenario->getModeltime()->getmaxper() );
-    summary[period].clearemiss(); // clear emissions map
-    summary[period].clearemfuelmap(); // clear emissions map
-    
-    for( CTechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
-        ITechnologyContainer::CTechRangeIterator endIter = (*techIter)->getVintageEnd( period );
-        for( ITechnologyContainer::CTechRangeIterator vintageIter = (*techIter)->getVintageBegin( period ); vintageIter != endIter; ++vintageIter ) {
-            summary[period].updateemiss( (*vintageIter).second->getEmissions( mSectorName, period ) );
-        }
-    }
-}
-
 /*! \brief returns Subsector output
 *
 * output summed every time to ensure consistency
@@ -989,59 +970,6 @@ double Subsector::distributeInvestment( const IDistributor* aDistributor,
     abort();
 
     return 0.0;
-}
-
-/*! \brief returns gets fuel consumption map for this subsector
-*
-* \author Sonny Kim, Josh Lurz
-* \param period Model period
-* \pre updateSummary
-* \return fuel consumption map
-*/
-map<string, double> Subsector::getfuelcons( const int period ) const {
-    /*! \pre period is less than max period. */
-    assert( period < scenario->getModeltime()->getmaxper() );
-    
-    return summary[period].getfuelcons();
-}
-
-/*! \brief returns GHG emissions map for this subsector
-*
-* \author Sonny Kim, Josh Lurz
-* \param period Model period
-* \return GHG emissions map
-*/
-map<string, double> Subsector::getemission( const int period ) const {
-    return summary[ period ].getemission();
-}
-
-/*! \brief returns map of GHG emissions by fuel for this subsector
-*
-* \author Sonny Kim, Josh Lurz
-* \param period Model period
-* \return map of GHG emissions by fuel
-*/
-map<string, double> Subsector::getemfuelmap( const int period ) const {
-    return summary[ period ].getemfuelmap();
-}
-
-/*! \brief update summaries for reporting
-*
-* \author Sonny Kim, Josh Lurz
-* \param aPrimaryFuelList List of primary fuels.
-* \param period Model period
-*/
-void Subsector::updateSummary( const list<string>& aPrimaryFuelList,
-                               const int period )
-{
-    // clears Subsector fuel consumption map
-    summary[period].clearfuelcons();
-    for( CTechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
-        ITechnologyContainer::CTechRangeIterator endIter = (*techIter)->getVintageEnd( period );
-        for( ITechnologyContainer::CTechRangeIterator vintageIter = (*techIter)->getVintageBegin( period ); vintageIter != endIter; ++vintageIter ) {
-            summary[period].updatefuelcons( aPrimaryFuelList, (*vintageIter).second->getFuelMap( period ) );
-        }
-    }
 }
 
 /*! \brief Return the  expected profit rate.

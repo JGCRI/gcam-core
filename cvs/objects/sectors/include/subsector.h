@@ -59,7 +59,6 @@
 #include "util/base/include/data_definition_util.h"
 
 // Forward declarations
-class Summary;
 class ITechnologyContainer;
 class GDP;
 class IInfo;
@@ -154,7 +153,6 @@ protected:
 
     std::vector<double> mInvestments; //!< Investment by period.
     std::vector<double> mFixedInvestments; //!< Input fixed subsector level investment by period.
-    std::vector<Summary> summary; //!< summary for reporting
     std::vector<BaseTechnology*> baseTechs; // for the time being
     std::map<std::string, TechnologyType*> mTechTypes; //!< Mapping from technology name to group of technology vintages.
 
@@ -225,12 +223,6 @@ public:
                                  const std::string& aSectorName,
                                  const double aNewInvestment,
                                  const int aPeriod );
-
-    std::map<std::string, double> getfuelcons( const int period ) const; 
-    std::map<std::string, double> getemission( const int period ) const;
-    std::map<std::string, double> getemfuelmap( const int period ) const; 
-
-    void updateSummary( const std::list<std::string>& aPrimaryFuelList, const int period );
     
     double getExpectedProfitRate( const NationalAccount& aNationalAccount,
                                   const std::string& aRegionName,

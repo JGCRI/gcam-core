@@ -53,7 +53,6 @@
 #include "containers/include/iinfo.h"
 #include "util/base/include/xml_helper.h"
 #include "marketplace/include/marketplace.h"
-#include "util/base/include/summary.h"
 #include "containers/include/gdp.h"
 #include "demographics/include/demographic.h"
 #include "technologies/include/itechnology_container.h"

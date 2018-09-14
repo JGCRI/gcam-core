@@ -59,7 +59,6 @@
 #include "emissions/include/aghg.h"
 #include "technologies/include/icapture_component.h"
 #include "util/base/include/model_time.h"
-#include "containers/include/output_meta_data.h"
 #include "marketplace/include/marketplace.h"
 #include "marketplace/include/market.h"
 #include "climate/include/iclimate_model.h"
@@ -494,20 +493,6 @@ void XMLDBOutputter::startVisitScenario( const Scenario* aScenario, const int aP
 void XMLDBOutputter::endVisitScenario( const Scenario* aScenario, const int aPeriod ){
     // Write the closing scenario tag.
     XMLWriteClosingTag( aScenario->getXMLNameStatic(), mBuffer, mTabs.get() );
-}
-
-void XMLDBOutputter::startVisitOutputMetaData( const OutputMetaData* aOutputMetaData,
-                                               const int aPeriod )
-{
-    // Don't write opening and closing tags directly because toDebugXML will do it.
-    // Write the internal data. The input XML format will work.
-    //aOutputMetaData->toDebugXML( mBuffer, mTabs.get() );
-}
-
-void XMLDBOutputter::endVisitOutputMetaData( const OutputMetaData* aOutputMetaData,
-                                            const int aPeriod )
-{
-    // Don't write opening and closing tags directly because toDebugXML will do it.
 }
 
 void XMLDBOutputter::startVisitWorld( const World* aWorld, const int aPeriod ){

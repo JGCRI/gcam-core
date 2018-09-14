@@ -64,7 +64,6 @@ class Sector;
 class SupplySector;
 class LandAllocator;
 class GHGPolicy;
-class Summary;
 class ILogger;
 class GDP;
 class Curve;
@@ -102,9 +101,6 @@ public:
     virtual void initCalc( const int period );
 
     virtual void postCalc( const int aPeriod );
-
-    virtual void updateSummary( const std::list<std::string>& aPrimaryFuelList, const int period );
-    virtual const Summary& getSummary( const int period ) const;
 
     virtual bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const;
     virtual void updateAllOutputContainers( const int period );
@@ -146,8 +142,6 @@ protected:
         //! Private discount rate used for land decisions in the region.
         DEFINE_VARIABLE( SIMPLE, "private-discount-rate-land", mPrivateDiscountRateLand, double )
     )
-    
-    std::vector<Summary> summary; //!< summary values and totals for reporting
 
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
@@ -160,8 +154,6 @@ protected:
     void adjustGDP( const int period );
 
     const std::vector<double> calcFutureGDP() const;
-    void calcEmissions( const int period );
-    void calcEmissFuel( const std::list<std::string>& aPrimaryFuelList, const int period );
 
     void setCO2CoefsIntoMarketplace( const int aPeriod );
 

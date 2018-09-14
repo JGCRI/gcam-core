@@ -44,7 +44,6 @@
 		CD488738122873C200F5A88A /* info_factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48846C122873C000F5A88A /* info_factory.cpp */; };
 		CD488739122873C200F5A88A /* mac_generator_scenario_runner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48846D122873C000F5A88A /* mac_generator_scenario_runner.cpp */; };
 		CD48873B122873C200F5A88A /* national_account.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48846F122873C000F5A88A /* national_account.cpp */; };
-		CD48873C122873C200F5A88A /* output_meta_data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488470122873C000F5A88A /* output_meta_data.cpp */; };
 		CD48873D122873C200F5A88A /* region.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488471122873C000F5A88A /* region.cpp */; };
 		CD48873E122873C200F5A88A /* region_cge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488472122873C000F5A88A /* region_cge.cpp */; };
 		CD48873F122873C200F5A88A /* region_minicam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488473122873C000F5A88A /* region_minicam.cpp */; };
@@ -253,7 +252,6 @@
 		CD48882B122873C200F5A88A /* linear_interpolation_function.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886F8122873C200F5A88A /* linear_interpolation_function.cpp */; };
 		CD48882C122873C200F5A88A /* model_time.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886F9122873C200F5A88A /* model_time.cpp */; };
 		CD48882D122873C200F5A88A /* s_curve_interpolation_function.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886FA122873C200F5A88A /* s_curve_interpolation_function.cpp */; };
-		CD48882E122873C200F5A88A /* summary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886FB122873C200F5A88A /* summary.cpp */; };
 		CD48882F122873C200F5A88A /* supply_demand_curve.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886FC122873C200F5A88A /* supply_demand_curve.cpp */; };
 		CD488830122873C200F5A88A /* timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886FD122873C200F5A88A /* timer.cpp */; };
 		CD488831122873C200F5A88A /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886FE122873C200F5A88A /* util.cpp */; };
@@ -440,7 +438,6 @@
 		CD488458122873C000F5A88A /* iscenario_runner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iscenario_runner.h; sourceTree = "<group>"; };
 		CD488459122873C000F5A88A /* mac_generator_scenario_runner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mac_generator_scenario_runner.h; sourceTree = "<group>"; };
 		CD48845B122873C000F5A88A /* national_account.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = national_account.h; sourceTree = "<group>"; };
-		CD48845C122873C000F5A88A /* output_meta_data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = output_meta_data.h; sourceTree = "<group>"; };
 		CD48845D122873C000F5A88A /* region.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = region.h; sourceTree = "<group>"; };
 		CD48845E122873C000F5A88A /* region_cge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = region_cge.h; sourceTree = "<group>"; };
 		CD48845F122873C000F5A88A /* region_minicam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = region_minicam.h; sourceTree = "<group>"; };
@@ -458,7 +455,6 @@
 		CD48846C122873C000F5A88A /* info_factory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = info_factory.cpp; sourceTree = "<group>"; };
 		CD48846D122873C000F5A88A /* mac_generator_scenario_runner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mac_generator_scenario_runner.cpp; sourceTree = "<group>"; };
 		CD48846F122873C000F5A88A /* national_account.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = national_account.cpp; sourceTree = "<group>"; };
-		CD488470122873C000F5A88A /* output_meta_data.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = output_meta_data.cpp; sourceTree = "<group>"; };
 		CD488471122873C000F5A88A /* region.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = region.cpp; sourceTree = "<group>"; };
 		CD488472122873C000F5A88A /* region_cge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = region_cge.cpp; sourceTree = "<group>"; };
 		CD488473122873C000F5A88A /* region_minicam.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = region_minicam.cpp; sourceTree = "<group>"; };
@@ -897,7 +893,6 @@
 		CD4886D8122873C200F5A88A /* interpolation_function_factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interpolation_function_factory.h; sourceTree = "<group>"; };
 		CD4886D9122873C200F5A88A /* interpolation_rule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interpolation_rule.h; sourceTree = "<group>"; };
 		CD4886DA122873C200F5A88A /* iparsable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iparsable.h; sourceTree = "<group>"; };
-		CD4886DB122873C200F5A88A /* iround_trippable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iround_trippable.h; sourceTree = "<group>"; };
 		CD4886DC122873C200F5A88A /* istandard_component.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = istandard_component.h; sourceTree = "<group>"; };
 		CD4886DD122873C200F5A88A /* ivisitable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ivisitable.h; sourceTree = "<group>"; };
 		CD4886DE122873C200F5A88A /* ivisitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ivisitor.h; sourceTree = "<group>"; };
@@ -906,7 +901,6 @@
 		CD4886E1122873C200F5A88A /* object_meta_info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = object_meta_info.h; sourceTree = "<group>"; };
 		CD4886E2122873C200F5A88A /* s_curve_interpolation_function.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = s_curve_interpolation_function.h; sourceTree = "<group>"; };
 		CD4886E3122873C200F5A88A /* string_hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = string_hash.h; sourceTree = "<group>"; };
-		CD4886E4122873C200F5A88A /* summary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = summary.h; sourceTree = "<group>"; };
 		CD4886E5122873C200F5A88A /* supply_demand_curve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = supply_demand_curve.h; sourceTree = "<group>"; };
 		CD4886E6122873C200F5A88A /* time_vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = time_vector.h; sourceTree = "<group>"; };
 		CD4886E7122873C200F5A88A /* timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = timer.h; sourceTree = "<group>"; };
@@ -928,7 +922,6 @@
 		CD4886F8122873C200F5A88A /* linear_interpolation_function.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = linear_interpolation_function.cpp; sourceTree = "<group>"; };
 		CD4886F9122873C200F5A88A /* model_time.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = model_time.cpp; sourceTree = "<group>"; };
 		CD4886FA122873C200F5A88A /* s_curve_interpolation_function.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = s_curve_interpolation_function.cpp; sourceTree = "<group>"; };
-		CD4886FB122873C200F5A88A /* summary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = summary.cpp; sourceTree = "<group>"; };
 		CD4886FC122873C200F5A88A /* supply_demand_curve.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = supply_demand_curve.cpp; sourceTree = "<group>"; };
 		CD4886FD122873C200F5A88A /* timer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = timer.cpp; sourceTree = "<group>"; };
 		CD4886FE122873C200F5A88A /* util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = util.cpp; sourceTree = "<group>"; };
@@ -1267,7 +1260,6 @@
 				CD488458122873C000F5A88A /* iscenario_runner.h */,
 				CD488459122873C000F5A88A /* mac_generator_scenario_runner.h */,
 				CD48845B122873C000F5A88A /* national_account.h */,
-				CD48845C122873C000F5A88A /* output_meta_data.h */,
 				CD48845D122873C000F5A88A /* region.h */,
 				CD48845E122873C000F5A88A /* region_cge.h */,
 				CD48845F122873C000F5A88A /* region_minicam.h */,
@@ -1299,7 +1291,6 @@
 				CD48846C122873C000F5A88A /* info_factory.cpp */,
 				CD48846D122873C000F5A88A /* mac_generator_scenario_runner.cpp */,
 				CD48846F122873C000F5A88A /* national_account.cpp */,
-				CD488470122873C000F5A88A /* output_meta_data.cpp */,
 				CD488471122873C000F5A88A /* region.cpp */,
 				CD488472122873C000F5A88A /* region_cge.cpp */,
 				CD488473122873C000F5A88A /* region_minicam.cpp */,
@@ -2258,7 +2249,6 @@
 				CD4886D8122873C200F5A88A /* interpolation_function_factory.h */,
 				CD4886D9122873C200F5A88A /* interpolation_rule.h */,
 				CD4886DA122873C200F5A88A /* iparsable.h */,
-				CD4886DB122873C200F5A88A /* iround_trippable.h */,
 				CD4886DC122873C200F5A88A /* istandard_component.h */,
 				CD4886DD122873C200F5A88A /* ivisitable.h */,
 				CD4886DE122873C200F5A88A /* ivisitor.h */,
@@ -2267,7 +2257,6 @@
 				CD4886E1122873C200F5A88A /* object_meta_info.h */,
 				CD4886E2122873C200F5A88A /* s_curve_interpolation_function.h */,
 				CD4886E3122873C200F5A88A /* string_hash.h */,
-				CD4886E4122873C200F5A88A /* summary.h */,
 				CD4886E5122873C200F5A88A /* supply_demand_curve.h */,
 				CD4886E6122873C200F5A88A /* time_vector.h */,
 				CD4886E7122873C200F5A88A /* timer.h */,
@@ -2299,7 +2288,6 @@
 				CD4886F8122873C200F5A88A /* linear_interpolation_function.cpp */,
 				CD4886F9122873C200F5A88A /* model_time.cpp */,
 				CD4886FA122873C200F5A88A /* s_curve_interpolation_function.cpp */,
-				CD4886FB122873C200F5A88A /* summary.cpp */,
 				CD4886FC122873C200F5A88A /* supply_demand_curve.cpp */,
 				CD4886FD122873C200F5A88A /* timer.cpp */,
 				CD4886FE122873C200F5A88A /* util.cpp */,
@@ -2523,7 +2511,6 @@
 				CD488738122873C200F5A88A /* info_factory.cpp in Sources */,
 				CD488739122873C200F5A88A /* mac_generator_scenario_runner.cpp in Sources */,
 				CD48873B122873C200F5A88A /* national_account.cpp in Sources */,
-				CD48873C122873C200F5A88A /* output_meta_data.cpp in Sources */,
 				CD48873D122873C200F5A88A /* region.cpp in Sources */,
 				CD48873E122873C200F5A88A /* region_cge.cpp in Sources */,
 				CD48873F122873C200F5A88A /* region_minicam.cpp in Sources */,
@@ -2743,7 +2730,6 @@
 				CD48882B122873C200F5A88A /* linear_interpolation_function.cpp in Sources */,
 				CD48882C122873C200F5A88A /* model_time.cpp in Sources */,
 				CD48882D122873C200F5A88A /* s_curve_interpolation_function.cpp in Sources */,
-				CD48882E122873C200F5A88A /* summary.cpp in Sources */,
 				CD48882F122873C200F5A88A /* supply_demand_curve.cpp in Sources */,
 				CD488830122873C200F5A88A /* timer.cpp in Sources */,
 				CD488831122873C200F5A88A /* util.cpp in Sources */,

@@ -60,7 +60,6 @@
 #include "util/base/include/timer.h"
 #include "reporting/include/graph_printer.h"
 #include "reporting/include/land_allocator_printer.h"
-#include "containers/include/output_meta_data.h"
 #include "solution/solvers/include/solver_factory.h"
 #include "solution/solvers/include/bisection_nr_solver.h"
 #include "solution/util/include/solution_info_param_parser.h" 
@@ -167,9 +166,6 @@ bool Scenario::XMLParse( const DOMNode* node ){
         }
         else if ( nodeName == World::getXMLNameStatic() ){
             parseSingleNode( curr, mWorld, new World );
-        }
-        else if( nodeName == OutputMetaData::getXMLNameStatic() ) {
-            parseSingleNode( curr, mOutputMetaData, new OutputMetaData );
         }
         else if( nodeName == SolutionInfoParamParser::getXMLNameStatic() ) {
             parseSingleNode( curr, mSolutionInfoParamParser, new SolutionInfoParamParser );
@@ -294,7 +290,6 @@ bool Scenario::run( const int aSinglePeriod,
         XMLDebugFile << "<" << getXMLNameStatic() << " name=\"" << mName << "\" date=\"" << dateString << "\">" << endl;
 
         tabs.increaseIndent();
-        XMLWriteElement( "Debugging output", "summary", *XMLDebugFile, &tabs );
     }
 
     Timer& fullScenarioTimer = TimerRegistry::getInstance().getTimer( TimerRegistry::FULLSCENARIO );
@@ -477,14 +472,7 @@ bool Scenario::calculatePeriod( const int aPeriod,
     mManageStateVars = 0;
 
     mWorld->postCalc( aPeriod );
-    
-    // Output metadata is not required to exist.
-    const list<string>& primaryFuelList = mOutputMetaData.get() ? 
-                                          mOutputMetaData->getPrimaryFuelList() 
-                                          : list<string>();
-
-    mWorld->updateSummary( primaryFuelList, aPeriod ); // call to update summaries for reporting
-    
+        
     // Mark that the period is now valid.
     mIsValidPeriod[ aPeriod ] = true;
 
@@ -574,10 +562,6 @@ void Scenario::writeDebuggingFiles( ostream& aXMLDebugFile,
 */
 void Scenario::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->startVisitScenario( this, aPeriod );
-    // Update the meta-data.
-    if( mOutputMetaData.get() ){
-        mOutputMetaData->accept( aVisitor, aPeriod );
-    }
     // Update the world.
     if( mWorld ){
         mWorld->accept( aVisitor, aPeriod );

@@ -82,7 +82,6 @@
 #include "emissions/include/luc_emissions_summer.h"
 #include "policy/include/policy_ghg.h"
 
-#include "util/base/include/summary.h"
 #include "util/base/include/ivisitor.h"
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/model_time.h"
@@ -118,15 +117,6 @@ extern Scenario* scenario;
 
 //! Default constructor
 RegionMiniCAM::RegionMiniCAM() {
-    /*! \pre The modeltime object must be read-in before the Region can be
-    *        parsed.
-    */
-    assert( scenario->getModeltime() );
-
-    // Resize all vectors to maximum period
-    const int maxper = scenario->getModeltime()->getmaxper();
-    summary.resize( maxper );
-
     mGDP = 0;
     mLandAllocator = 0;
 
@@ -570,87 +560,6 @@ void RegionMiniCAM::postCalc( const int aPeriod ) {
     if( mLandAllocator ) {
         mLandAllocator->postCalc( mName, aPeriod );
     }
-}
-
-//! Calculate regional emissions from resources.
-void RegionMiniCAM::calcEmissions( const int period ) {
-    summary[period].clearemiss(); // clear emissions map
-
-    // need to call emissions function but sum is not needed
-    for ( unsigned int i = 0; i < mSupplySector.size(); i++ ) {
-        mSupplySector[i]->emission(period);
-        summary[period].updateemiss(mSupplySector[i]->getemission(period));
-    }
-
-    // Determine land use change emissions and add to the summary.
-	if( period > 0 ) {
-		LUCEmissionsSummer co2LandUseSummer( "CO2NetLandUse" );
-
-
-		const int year = scenario->getModeltime()->getper_to_yr( period );
-		accept( &co2LandUseSummer, period );
-		map<string,double> agEmissions;
-		if ( co2LandUseSummer.areEmissionsSet( year ) ) {
-			agEmissions[ "CO2NetLandUse" ] = co2LandUseSummer.getEmissions( year );
-			summary[ period ].updateemiss( agEmissions );
-		}
-	}
-}
-
-/*! \brief Calculate regional emissions by fuel for reporting.
-* \warning This function assumes emission has already been called, as this
-*          function cannot clear the summary emissions.
-* \param The global list of primary fuels.
-* \param period The model period.
-*/
-void RegionMiniCAM::calcEmissFuel( const list<string>& aPrimaryFuelList, const int period )
-{
-    map<string, double> fuelemiss; // tempory emissions by fuel
-
-    for( list<string>::const_iterator fuelIter = aPrimaryFuelList.begin();
-        fuelIter != aPrimaryFuelList.end(); ++fuelIter )
-    {
-        fuelemiss[ *fuelIter ] = summary[period].get_pemap_second( *fuelIter )
-                                 * util::searchForValue( mPrimaryFuelCO2Coef, *fuelIter );
-    }
-
-    summary[period].updateemiss(fuelemiss); // add CO2 emissions by fuel
-}
-
-//! update regional summaries for reporting
-void RegionMiniCAM::updateSummary( const list<string>& aPrimaryFuelList, const int period ) {
-    calcEmissions( period );
-
-    summary[period].clearpeprod();
-    summary[period].clearfuelcons();
-    summary[period].clearemfuelmap();
-
-    for ( unsigned int i = 0; i < mResources.size(); i++ ) {
-        summary[period].initpeprod( aPrimaryFuelList, mResources[i]->getName(),
-            mResources[i]->getAnnualProd( mName, period) );
-    }
-
-    for ( unsigned int i = 0; i < mSupplySector.size(); i++ ) {
-        // call update for supply sector
-        mSupplySector[i]->updateSummary( aPrimaryFuelList, period );
-        // update regional fuel consumption (primary and secondary) for supply sector
-        summary[period].updatefuelcons( aPrimaryFuelList, mSupplySector[i]->getfuelcons(period));
-        summary[ period ].updateemfuelmap( mSupplySector[ i ]->getemfuelmap( period ) );
-    }
-    // update primary energy trade from consumption and production amounts
-    summary[period].updatepetrade();
-
-    calcEmissFuel( aPrimaryFuelList, period );
-}
-
-//! Return the summary object for the given period.
-/*! \todo This is a temporary fix to get the global CO2. This should be
-*         restructured.
-* \param period Model period to return the summary for.
-* \return The summary object.
-*/
-const Summary& RegionMiniCAM::getSummary( const int period ) const {
-    return summary[ period ];
 }
 
 //! update regional output tables for reporting

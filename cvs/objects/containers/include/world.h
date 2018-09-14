@@ -99,7 +99,6 @@ public:
 
     void calc( const int period );
     void calc( const int period, const std::vector<IActivity*>& aRegionsToCalc );
-    void updateSummary( const std::list<std::string> aPrimaryFuelList, const int period ); 
     void setEmissions( int period );
     void runClimateModel();
     void runClimateModel( int period );

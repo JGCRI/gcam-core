@@ -55,7 +55,6 @@
 #include "util/base/include/configuration.h"
 #include "containers/include/iinfo.h"
 #include "sectors/include/sector_utils.h"
-#include "util/base/include/summary.h"
 
 using namespace std;
 using namespace xercesc;

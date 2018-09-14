@@ -58,7 +58,6 @@
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/configuration.h"
-#include "util/base/include/summary.h"
 #include "containers/include/world.h"
 #include "util/base/include/util.h"
 #include "util/logger/include/ilogger.h"
@@ -240,9 +239,6 @@ void Sector::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     }
 
     toDebugXMLDerived (aPeriod, aOut, aTabs);
-
-    // Write out the summary
-    // summary[ aPeriod ].toDebugXML( aPeriod, aOut );
 
     // write out the subsector objects.
     for( CSubsectorIterator j = mSubsectors.begin(); j != mSubsectors.end(); j++ ){
@@ -513,90 +509,6 @@ double Sector::getCalOutput( const int period  ) const {
         totalCalOutput += mSubsectors[ i ]->getTotalCalOutputs( period );
     }
     return totalCalOutput;
-}
-
-/*! \brief Calculate GHG emissions for each Sector from subsectors.
-*
-* Calculates emissions for subsectors and technologies, then updates emissions maps for emissions by gas and emissions by fuel & gas.
-*
-* Note that at present (10/03), emissions only occur at technology level.
-*
-* \author Sonny Kim
-* \param period Model period
-*/
-void Sector::emission( const int period ) {
-    summary[ period ].clearemiss(); // clear emissions map
-    summary[ period ].clearemfuelmap(); // clear emissions fuel map
-    for( unsigned int i = 0; i < mSubsectors.size(); ++i ){
-        mSubsectors[ i ]->emission( period );
-        summary[ period ].updateemiss( mSubsectors[ i ]->getemission( period )); // by gas
-        summary[ period ].updateemfuelmap( mSubsectors[ i ]->getemfuelmap( period )); // by fuel and gas
-    }
-}
-
-/*! \brief Return fuel consumption map for this Sector
-*
-* \author Sonny Kim
-* \param period Model period
-* \todo Input change name of this and other methods here to proper capitilization
-* \return fuel consumption map
-*/
-map<string, double> Sector::getfuelcons( const int period ) const {
-    return summary[ period ].getfuelcons();
-}
-
-//!  Get the second fuel consumption map in summary object.
-/*! \brief Return fuel consumption for the specifed fuel
-*
-* \author Sonny Kim
-* \param period Model period
-* \param fuelName name of fuel
-* \return fuel consumption
-*/
-double Sector::getConsByFuel( const int period, const std::string& fuelName ) const {
-    return summary[ period ].get_fmap_second( fuelName );
-}
-
-/*! \brief Return the ghg emissions map for this Sector
-*
-* \author Sonny Kim
-* \param period Model period
-* \return GHG emissions map
-*/
-map<string, double> Sector::getemission( const int period ) const {
-    return summary[ period ].getemission();
-}
-
-/*! \brief Return ghg emissions map in summary object
-*
-* This map is used to calculate the emissions coefficient for this Sector (and fuel?) in region
-*
-* \author Sonny Kim
-* \param period Model period
-* \return GHG emissions map
-*/
-map<string, double> Sector::getemfuelmap( const int period ) const {
-    return summary[ period ].getemfuelmap();
-}
-
-/*! \brief update summaries for reporting
-*
-*  Updates summary information for the Sector and all subsectors.
-*
-* \author Sonny Kim
-* \param period Model period
-* \return GHG emissions map
-*/
-void Sector::updateSummary( const list<string>& aPrimaryFuelList, const int period ) {
-    // clears Sector fuel consumption map
-    summary[ period ].clearfuelcons();
-
-    for( unsigned int i = 0; i < mSubsectors.size(); ++i ){
-        // call update summary for subsector
-        mSubsectors[ i ]->updateSummary( aPrimaryFuelList, period );
-        // sum subsector fuel consumption for Sector fuel consumption
-        summary[ period ].updatefuelcons( aPrimaryFuelList, mSubsectors[ i ]->getfuelcons( period ));
-    }
 }
 
 /*! \brief Initialize the marketplaces in the base year to get initial demands from each technology in subsector

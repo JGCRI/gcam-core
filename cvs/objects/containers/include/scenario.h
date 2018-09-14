@@ -150,9 +150,6 @@ protected:
     //! we are using shared pointers since we are avoiding copying solvers when not
     //! necessary
     std::vector<boost::shared_ptr<Solver> > mSolvers;
-
-    //! A container of meta-data pertinent to outputting data.
-    std::auto_ptr<OutputMetaData> mOutputMetaData;
     
     //! Objects that may take model results and provide some sort of feedback as
     //! the scenario progresses through the model periods.

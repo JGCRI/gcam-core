@@ -123,9 +123,6 @@ public:
                                         const int aPeriod ) const;
     
     virtual bool hasCalibratedValue( const int aPeriod ) const;
-    
-    virtual const std::map<std::string,double> getEmissions( const std::string& aGoodName,
-                                                            const int aPeriod ) const;
        
     virtual const std::string& getName() const;
     
@@ -151,8 +148,6 @@ public:
     
     virtual const std::vector<std::string> getGHGNames() const;
     
-    virtual double getEmissionsByGas( const std::string& aGasName, const int aPeriod ) const;
-    
     virtual double getFixedOutput( const std::string& aRegionName,
                                   const std::string& aSectorName,
                                   const bool aHasRequiredInput,
@@ -169,8 +164,6 @@ public:
     
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     virtual void acceptDerived( IVisitor* aVisitor, const int aPeriod ) const;
-    
-    virtual const std::map<std::string, double> getFuelMap( const int aPeriod ) const;
     
     virtual bool isAvailable( const int aPeriod ) const;
     

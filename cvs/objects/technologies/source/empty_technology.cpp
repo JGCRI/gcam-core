@@ -132,14 +132,6 @@ void EmptyTechnology::production( const string& aRegionName,
 {
 }
 
-const map<string, double> EmptyTechnology::getEmissions( const string& aGoodName,
-                                                   const int aPeriod ) const
-{
-    const map<string, double> emissions;
-    
-    return emissions;
-}
-
 const string& EmptyTechnology::getName() const
 {
     const static string name = "empty";
@@ -252,19 +244,6 @@ void EmptyTechnology::copyGHGParameters( const AGHG* prevGHG ) {
 
 const AGHG* EmptyTechnology::getGHGPointer( const string& aGHGName ) const {
     return 0;
-}
-
-double EmptyTechnology::getEmissionsByGas( const string& aGasName,
-                                     const int aPeriod ) const
-{
-    return 0;
-}
-
-const map<string, double> EmptyTechnology::getFuelMap( const int aPeriod ) const
-{
-    const map<string, double> inputMap;
-
-    return inputMap;
 }
 
 bool EmptyTechnology::isAllCalibrated( const int aPeriod,

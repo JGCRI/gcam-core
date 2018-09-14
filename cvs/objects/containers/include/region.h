@@ -55,7 +55,6 @@
 
 #include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
-#include "util/base/include/summary.h"
 #include "util/base/include/data_definition_util.h"
 
 // Forward declarations.
@@ -94,10 +93,6 @@ public:
     virtual void initCalc( const int period );
     
     virtual void postCalc( const int aPeriod );
-
-    virtual void initializeAgMarketPrices( const std::vector<double>& pricesIn ) {};
-    virtual void updateSummary( const std::list<std::string>& aPrimaryFuelList, const int period ) {};
-    virtual const Summary& getSummary( const int period ) const { static const Summary nullSummary; return nullSummary; };
 
     void setTax( const GHGPolicy* aTax );
     const Curve* getEmissionsQuantityCurve( const std::string& ghgName ) const;
