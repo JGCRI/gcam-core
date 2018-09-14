@@ -449,16 +449,6 @@ module_gcam.usa_L273.en_ghg_emissions_USA <- function(command, ...) {
        select(names(L252.MAC_higwp)) ->
        L273.MAC_higwp_USA
 
-     # TODO Check for missing values, this check was in the old data system. But with
-     # the new data system inputs this check fails. It is unclear if this check is needed in
-     # the new data system or not.
-     # stopifnot(!any(is.na(L273.res_ghg_tech_coeff_USA)))
-     # stopifnot(!any(is.na(L273.en_ghg_tech_coeff_USA)))
-     # stopifnot(!any(is.na(L273.en_ghg_emissions_USA)))
-     # stopifnot(!any(is.na(L273.out_ghg_emissions_USA)))
-     # stopifnot(!any(is.na(L273.ResMAC_fos_USA)))
-     # stopifnot(!any(is.na(L273.MAC_higwp_USA)))
-
     # ===================================================
 
     # Produce outputs
