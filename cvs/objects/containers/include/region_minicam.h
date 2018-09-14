@@ -103,7 +103,6 @@ public:
     virtual void postCalc( const int aPeriod );
 
     virtual bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const;
-    virtual void updateAllOutputContainers( const int period );
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
     

@@ -99,7 +99,6 @@ public:
     const Curve* getEmissionsPriceCurve( const std::string& ghgName ) const;
 
     virtual bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const { return true; };
-    virtual void updateAllOutputContainers( const int period ) = 0;
     virtual void updateMarketplace( const int period ) {};
 
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;

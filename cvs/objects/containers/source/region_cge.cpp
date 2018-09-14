@@ -389,7 +389,3 @@ void RegionCGE::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->endVisitRegionCGE( this, aPeriod );
 }
 
-//! update regional output tables for reporting
-void RegionCGE::updateAllOutputContainers( const int period ) { 
-}
-

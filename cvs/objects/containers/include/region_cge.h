@@ -111,7 +111,6 @@ public:
     virtual void postCalc( const int aPeriod );
     virtual void calc( const int period );
     virtual void updateMarketplace( const int period );
-    virtual void updateAllOutputContainers( const int period );
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 
 protected:

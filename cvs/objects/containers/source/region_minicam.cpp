@@ -562,10 +562,6 @@ void RegionMiniCAM::postCalc( const int aPeriod ) {
     }
 }
 
-//! update regional output tables for reporting
-void RegionMiniCAM::updateAllOutputContainers( const int period ) {
-}
-
 /*! \brief Check whether the GDP object exists and report a warning if it does not.
 * \return Whether the GDP object exists.
 * \author Josh Lurz
