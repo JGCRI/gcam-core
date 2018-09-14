@@ -144,6 +144,8 @@ generate_level2_data_names <- function() {
   level2_data_names[["GlobalTechEff"]] <- c(level2_data_names[["GlobalTechYr"]], "minicam.energy.input", "efficiency")
   level2_data_names[["GlobalTechCost"]] <- c(level2_data_names[["GlobalTechYr"]], "minicam.non.energy.input", "input.cost")
   level2_data_names[["GlobalTechCapital"]] <- c(level2_data_names[["GlobalTechYr"]], "input.capital", "capital.overnight", "fixed.charge.rate")
+  level2_data_names[["GlobalTechCapitalOnly"]] <- c(level2_data_names[["GlobalTechYr"]], "input.capital", "capital.overnight")
+  level2_data_names[["GlobalTechFCROnly"]] <- c(level2_data_names[["GlobalTechYr"]], "input.capital", "fixed.charge.rate")
   level2_data_names[["GlobalTechOMfixed"]] <- c(level2_data_names[["GlobalTechYr"]], "input.OM.fixed", "OM.fixed")
   level2_data_names[["GlobalTechOMvar"]] <- c(level2_data_names[["GlobalTechYr"]], "input.OM.var", "OM.var")
   level2_data_names[["GlobalTechBackup"]] <- c(level2_data_names[["GlobalTechYr"]], "electric.sector.name", "trial.market.name", "backup.capital.cost",
@@ -163,6 +165,8 @@ generate_level2_data_names <- function() {
   level2_data_names[["GlobalIntTechEff"]] <- c("sector.name", "subsector.name", "intermittent.technology", "year", "minicam.energy.input", "efficiency", "type")
   level2_data_names[["GlobalIntTechCapFac"]] <- c("sector.name", "subsector.name", "intermittent.technology", "year", "capacity.factor")
   level2_data_names[["GlobalIntTechCapital"]] <- c("sector.name", "subsector.name", "intermittent.technology", "year", "input.capital", "capital.overnight", "fixed.charge.rate")
+  level2_data_names[["GlobalIntTechCapitalOnly"]] <- c("sector.name", "subsector.name", "intermittent.technology", "year", "input.capital", "capital.overnight")
+  level2_data_names[["GlobalIntTechFCROnly"]] <- c("sector.name", "subsector.name", "intermittent.technology", "year", "input.capital", "fixed.charge.rate")
   level2_data_names[["GlobalIntTechOMfixed"]] <- c("sector.name", "subsector.name", "intermittent.technology", "year", "input.OM.fixed", "OM.fixed")
   level2_data_names[["GlobalIntTechOMvar"]] <- c("sector.name", "subsector.name", "intermittent.technology", "year", "input.OM.var", "OM.var")
   level2_data_names[["GlobalIntTechLifetime"]] <- c("sector.name", "subsector.name", "intermittent.technology", "year", "lifetime")
@@ -182,6 +186,8 @@ generate_level2_data_names <- function() {
   level2_data_names[["PrimaryRenewKeywordInt"]] <- c(level2_data_names[["GlobalTechYr"]], "primary.renewable")
   level2_data_names[["GlobalTechCTaxInput"]] <- c(level2_data_names[["GlobalTechYr"]], "ctax.input", "fuel.name")
   level2_data_names[["DeleteGlobalTechInput"]] <- level2_data_names[["GlobalTechInput"]]
+  level2_data_names[["GlobalTechRegPriceAdj"]] <- level2_data_names[["GlobalTechCost"]]
+  level2_data_names[["GlobalIntTechRegPriceAdj"]] <- c("sector.name", "subsector.name", "intermittent.technology", "year", "minicam.non.energy.input", "input.cost")
 
   # Stub technologies
   level2_data_names[["StubTech"]] <- c("region", "supplysector", "subsector", "stub.technology")
