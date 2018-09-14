@@ -204,17 +204,13 @@ bool SingleScenarioRunner::runScenarios( const int aSinglePeriod,
     return success;
 }
 
-void SingleScenarioRunner::printOutput( Timer& aTimer, const bool aCloseDB ) const {
+void SingleScenarioRunner::printOutput( Timer& aTimer ) const {
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::NOTICE );
     mainLog << "Printing output" << endl;
 
     Timer &writeTimer = TimerRegistry::getInstance().getTimer(TimerRegistry::WRITE_DATA);
     writeTimer.start();
-    
-    if( aCloseDB ){
-        outFile.close();
-    }
 
     if( Configuration::getInstance()->shouldWriteFile( "xmldb-location" ) ) {
         mainLog.setLevel( ILogger::NOTICE );

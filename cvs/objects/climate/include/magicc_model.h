@@ -114,7 +114,6 @@ public:
 
     virtual int getCarbonModelStartYear() const;
 
-    virtual void printFileOutput() const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     
     static const std::string& getnetDefor80sName();

@@ -43,7 +43,6 @@
 		CD488737122873C200F5A88A /* info.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48846B122873C000F5A88A /* info.cpp */; };
 		CD488738122873C200F5A88A /* info_factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48846C122873C000F5A88A /* info_factory.cpp */; };
 		CD488739122873C200F5A88A /* mac_generator_scenario_runner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48846D122873C000F5A88A /* mac_generator_scenario_runner.cpp */; };
-		CD48873A122873C200F5A88A /* merge_runner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48846E122873C000F5A88A /* merge_runner.cpp */; };
 		CD48873B122873C200F5A88A /* national_account.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48846F122873C000F5A88A /* national_account.cpp */; };
 		CD48873C122873C200F5A88A /* output_meta_data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488470122873C000F5A88A /* output_meta_data.cpp */; };
 		CD48873D122873C200F5A88A /* region.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488471122873C000F5A88A /* region.cpp */; };
@@ -264,7 +263,6 @@
 		CD488835122873C200F5A88A /* point_set.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48870C122873C200F5A88A /* point_set.cpp */; };
 		CD488836122873C200F5A88A /* point_set_curve.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48870D122873C200F5A88A /* point_set_curve.cpp */; };
 		CD488837122873C200F5A88A /* xy_data_point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48870E122873C200F5A88A /* xy_data_point.cpp */; };
-		CD488838122873C200F5A88A /* output_helper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488711122873C200F5A88A /* output_helper.cpp */; };
 		CD488839122873C200F5A88A /* logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48871A122873C200F5A88A /* logger.cpp */; };
 		CD48883A122873C200F5A88A /* logger_factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48871B122873C200F5A88A /* logger_factory.cpp */; };
 		CD48883B122873C200F5A88A /* plain_text_logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48871C122873C200F5A88A /* plain_text_logger.cpp */; };
@@ -441,7 +439,6 @@
 		CD488457122873C000F5A88A /* info_factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = info_factory.h; sourceTree = "<group>"; };
 		CD488458122873C000F5A88A /* iscenario_runner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iscenario_runner.h; sourceTree = "<group>"; };
 		CD488459122873C000F5A88A /* mac_generator_scenario_runner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mac_generator_scenario_runner.h; sourceTree = "<group>"; };
-		CD48845A122873C000F5A88A /* merge_runner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = merge_runner.h; sourceTree = "<group>"; };
 		CD48845B122873C000F5A88A /* national_account.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = national_account.h; sourceTree = "<group>"; };
 		CD48845C122873C000F5A88A /* output_meta_data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = output_meta_data.h; sourceTree = "<group>"; };
 		CD48845D122873C000F5A88A /* region.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = region.h; sourceTree = "<group>"; };
@@ -460,7 +457,6 @@
 		CD48846B122873C000F5A88A /* info.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = info.cpp; sourceTree = "<group>"; };
 		CD48846C122873C000F5A88A /* info_factory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = info_factory.cpp; sourceTree = "<group>"; };
 		CD48846D122873C000F5A88A /* mac_generator_scenario_runner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mac_generator_scenario_runner.cpp; sourceTree = "<group>"; };
-		CD48846E122873C000F5A88A /* merge_runner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = merge_runner.cpp; sourceTree = "<group>"; };
 		CD48846F122873C000F5A88A /* national_account.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = national_account.cpp; sourceTree = "<group>"; };
 		CD488470122873C000F5A88A /* output_meta_data.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = output_meta_data.cpp; sourceTree = "<group>"; };
 		CD488471122873C000F5A88A /* region.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = region.cpp; sourceTree = "<group>"; };
@@ -949,7 +945,6 @@
 		CD48870C122873C200F5A88A /* point_set.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = point_set.cpp; sourceTree = "<group>"; };
 		CD48870D122873C200F5A88A /* point_set_curve.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = point_set_curve.cpp; sourceTree = "<group>"; };
 		CD48870E122873C200F5A88A /* xy_data_point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xy_data_point.cpp; sourceTree = "<group>"; };
-		CD488711122873C200F5A88A /* output_helper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = output_helper.cpp; sourceTree = "<group>"; };
 		CD488714122873C200F5A88A /* ilogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ilogger.h; sourceTree = "<group>"; };
 		CD488715122873C200F5A88A /* logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logger.h; sourceTree = "<group>"; };
 		CD488716122873C200F5A88A /* logger_factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logger_factory.h; sourceTree = "<group>"; };
@@ -1271,7 +1266,6 @@
 				CD488457122873C000F5A88A /* info_factory.h */,
 				CD488458122873C000F5A88A /* iscenario_runner.h */,
 				CD488459122873C000F5A88A /* mac_generator_scenario_runner.h */,
-				CD48845A122873C000F5A88A /* merge_runner.h */,
 				CD48845B122873C000F5A88A /* national_account.h */,
 				CD48845C122873C000F5A88A /* output_meta_data.h */,
 				CD48845D122873C000F5A88A /* region.h */,
@@ -1304,7 +1298,6 @@
 				CD48846B122873C000F5A88A /* info.cpp */,
 				CD48846C122873C000F5A88A /* info_factory.cpp */,
 				CD48846D122873C000F5A88A /* mac_generator_scenario_runner.cpp */,
-				CD48846E122873C000F5A88A /* merge_runner.cpp */,
 				CD48846F122873C000F5A88A /* national_account.cpp */,
 				CD488470122873C000F5A88A /* output_meta_data.cpp */,
 				CD488471122873C000F5A88A /* region.cpp */,
@@ -2225,7 +2218,6 @@
 			children = (
 				CD4886C9122873C200F5A88A /* base */,
 				CD4886FF122873C200F5A88A /* curves */,
-				CD48870F122873C200F5A88A /* database */,
 				CD488712122873C200F5A88A /* logger */,
 			);
 			path = util;
@@ -2349,22 +2341,6 @@
 				CD48870C122873C200F5A88A /* point_set.cpp */,
 				CD48870D122873C200F5A88A /* point_set_curve.cpp */,
 				CD48870E122873C200F5A88A /* xy_data_point.cpp */,
-			);
-			path = source;
-			sourceTree = "<group>";
-		};
-		CD48870F122873C200F5A88A /* database */ = {
-			isa = PBXGroup;
-			children = (
-				CD488710122873C200F5A88A /* source */,
-			);
-			path = database;
-			sourceTree = "<group>";
-		};
-		CD488710122873C200F5A88A /* source */ = {
-			isa = PBXGroup;
-			children = (
-				CD488711122873C200F5A88A /* output_helper.cpp */,
 			);
 			path = source;
 			sourceTree = "<group>";
@@ -2546,7 +2522,6 @@
 				CD488737122873C200F5A88A /* info.cpp in Sources */,
 				CD488738122873C200F5A88A /* info_factory.cpp in Sources */,
 				CD488739122873C200F5A88A /* mac_generator_scenario_runner.cpp in Sources */,
-				CD48873A122873C200F5A88A /* merge_runner.cpp in Sources */,
 				CD48873B122873C200F5A88A /* national_account.cpp in Sources */,
 				CD48873C122873C200F5A88A /* output_meta_data.cpp in Sources */,
 				CD48873D122873C200F5A88A /* region.cpp in Sources */,
@@ -2779,7 +2754,6 @@
 				CD488836122873C200F5A88A /* point_set_curve.cpp in Sources */,
 				CD488837122873C200F5A88A /* xy_data_point.cpp in Sources */,
 				CD8FDECC1C0647A20099C752 /* pass_through_technology.cpp in Sources */,
-				CD488838122873C200F5A88A /* output_helper.cpp in Sources */,
 				CD488839122873C200F5A88A /* logger.cpp in Sources */,
 				CD48883A122873C200F5A88A /* logger_factory.cpp in Sources */,
 				CD48883B122873C200F5A88A /* plain_text_logger.cpp in Sources */,

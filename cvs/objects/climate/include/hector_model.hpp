@@ -101,7 +101,6 @@ public:
     virtual double getTemperature( const int aYear ) const;
     virtual double getForcing( const std::string& aGasName, const int aYear ) const;
     virtual double getTotalForcing( const int aYear ) const;
-    virtual void printFileOutput() const {} // NOT IMPLEMENTED
     virtual double getNetTerrestrialUptake( const int aYear ) const;
     virtual double getNetOceanUptake( const int aYear ) const;
     virtual int getCarbonModelStartYear() const;
