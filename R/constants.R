@@ -644,6 +644,13 @@ gcamusa.STATE_UNLIMITED_RESOURCES <- c("global solar resource", "limestone")
 # The supplysector and subsector structure in these sectors are retained
 gcamusa.SECTOR_EN_NAMES <- "refining"
 
+# Define intermittent technologies
+gcamusa.INT_TECH_LIST <- c("CSP", "PV", "wind")
+
+# Define storage technologies
+gcamusa.STORAGE_TECH_LIST <- c("CSP_storage", "PV_storage", "wind_storage")
+
+
 # Degree day norms
 gcamusa.BASE_HDD_USA <- 4524 # https://www.eia.gov/totalenergy/data/annual/showtext.php?t=ptb0107
 gcamusa.BASE_CDD_USA <- 1215 # https://www.eia.gov/totalenergy/data/annual/showtext.php?t=ptb010
