@@ -46,12 +46,12 @@
  */
 #include <boost/core/noncopyable.hpp>
 
+#include "ccarbon_model/include/icarbon_calc.h"
 #include "util/base/include/iparsable.h"
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/default_visitor.h"
 #include "util/base/include/data_definition_util.h"
 
-class ICarbonCalc;
 class LandUseHistory;
 
 /*!
@@ -96,7 +96,9 @@ public:
     
     void completeInit();
     
-    void calc( const int aPeriod, const int aEndYear, const bool aStoreFullEmiss );
+    void initCalc( const int aPeriod );
+    
+    void calc( const int aPeriod, const int aEndYear, const ICarbonCalc::CarbonCalcMode aCalcMode );
     
 protected:
     

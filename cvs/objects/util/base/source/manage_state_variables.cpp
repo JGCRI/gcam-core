@@ -313,24 +313,6 @@ void ManageStateVariables::DoCollect::processData<objects::PeriodVector<Value> >
 }
 
 template<>
-void ManageStateVariables::DoCollect::processData<objects::PeriodVector<objects::YearVector<Value>*> >( objects::PeriodVector<objects::YearVector<Value>*>& aData ) {
-    // This is a special case to handle the stored LUC emissions in the simple carbon
-    // calculator.  It is a two dimensional array by model period and each year of LUC
-    // emissions but we only need to consider the LUC emissions in the current period
-    // and for years in the current time step (already converted the years ahead of
-    // time in the interest of speed to be from [mCCStartYear, mYearToCollect]).
-    // Also note that since 1975 has the historical emissions a NULL value is set
-    // for the year vector in period 0 so be sure to avoid crashing on that.
-    if( !mIgnoreCurrValue && mParentClass->mPeriodToCollect > 0 ) {
-        objects::YearVector<Value>& currEmiss = *aData[ mParentClass->mPeriodToCollect ];
-        for( int year = mParentClass->mCCStartYear; year <= mParentClass->mYearToCollect; ++year ) {
-            mParentClass->mStateValues.push_front( &currEmiss[ year ] );
-            ++mParentClass->mNumCollected;
-        }
-    }
-}
-
-template<>
 void ManageStateVariables::DoCollect::processData<objects::YearVector<Value> >( objects::YearVector<Value>& aData ) {
     // When a year vector is tagged we only need to worry about values in the current
     // timestep (already calculated the years ahead of time in the interest of speed
