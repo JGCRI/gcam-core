@@ -679,21 +679,18 @@ vector<Market*> Marketplace::getMarketsToSolve( const int period ) const {
 /*!
  * \brief Conditionally initializes the market prices to the market prices from
  *        the previous period.
- * \details Resuse parsed prices up to the configuration parameter restart-period
- *          which will allow users to resume the model at that period.  If the
- *          user did not intend on restarting the model we can resuse prices up to
- *          the final calibration year.  After which we attempt to use the trend
- *          in prices to forecast prices ( and demands ) to come up with a good
- *          guess that would be closer to the solution. This only occurs for periods
- *          greater than 0.
+ * \details Keep existing prices for the calibration years as some of those prices
+ *          are calibrated prices and should not be reset. After calibration we
+ *          attempt to use the trend in prices to forecast prices ( and demands )
+ *          to come up with a good guess that would be closer to the solution.
+ *          This only occurs for periods greater than 0.
  * \author Sonny Kim
  * \param period Period for which to initialize prices.
  */
 void Marketplace::init_to_last( const int period ) { 
-    // Get the last period to allow using parsed prices, the default is the
+    // Get the last period to allow using parsed prices, which is the
     // final calibration period.
-    const static int restartPeriod = Configuration::getInstance()->getInt(
-        "restart-period", scenario->getModeltime()->getFinalCalibrationPeriod() + 1, false );
+    const int finalCalPeriod = scenario->getModeltime()->getFinalCalibrationPeriod();
 
     if( period == 0 ) {
         for( unsigned i = 0; i < mMarkets.size(); ++i ) {
@@ -701,14 +698,14 @@ void Marketplace::init_to_last( const int period ) {
             mMarkets[ i ]->getMarket( period )->setForecastDemand( 1.0 );
         }
     }
-    else if ( period > 0 && period < restartPeriod ) {
+    else if ( period > 0 && period <= finalCalPeriod ) {
         for ( unsigned int i = 0; i < mMarkets.size(); i++ ) {
             double forecastedPrice = mMarkets[ i ]->forecastPrice( period );
             mMarkets[ i ]->getMarket( period )->set_price_to_last_if_default( forecastedPrice );
             mMarkets[ i ]->forecastDemand( period );
         }
     }
-    else if( period >= restartPeriod ){
+    else {
         for ( unsigned int i = 0; i < mMarkets.size(); i++ ) {
             double forecastedPrice = mMarkets[ i ]->forecastPrice( period );
             double lastPeriodPrice = mMarkets[ i ]->getMarket( period - 1 )->getPrice();
