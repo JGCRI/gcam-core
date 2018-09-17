@@ -334,6 +334,8 @@ GlobalTranTechSCurve, global-technology-database/+{sector-name}location-info, gl
 
 DeleteStubTech, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name;delete=1}stub-technology, scenario, scenario/world
 
+DeleteStubTechMinicamEnergyInput, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name;delete=1}minicam-energy-input, scenario, scenario/world
+
 StubTech, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, scenario, scenario/world
 
 StubTechShrwt, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+share-weight, scenario, scenario/world
@@ -351,6 +353,8 @@ StubTechCoef, world/+{name}region, region/+{name}supplysector, supplysector/+{na
 StubTechCoef_NM, world/+{name}region, region/+{name}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+coefficient, scenario, scenario/world
 
 StubTechEff, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+efficiency, minicam-energy-input/+market-name, scenario, scenario/world
+
+StubTechEffFlag, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+efficiency, minicam-energy-input/+market-name, minicam-energy-input/+flag, scenario, scenario/world
 
 StubTechCost, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}minicam-non-energy-input, minicam-non-energy-input/+input-cost, scenario, scenario/world
 

@@ -450,6 +450,7 @@ CONV_DAYS_YEAR <- 1 / 365.25
 
 # Energy
 CONV_MWH_GJ <- 3.6 # Megawatt hours to Gigajoules
+CONV_MWH_EJ <- 3.6e-9 # Megawatt hours to Exajoules
 CONV_GWH_EJ <- 3.6e-6
 CONV_TWH_EJ <- 3.6e-3
 CONV_KWH_GJ <- 3.6e-3
