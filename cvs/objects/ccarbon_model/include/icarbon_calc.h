@@ -88,16 +88,24 @@ public:
     
     /*!
      * \brief An enum containing the possible "modes" in which to calculate this
-     *        carbon calc.
+     *        carbon calc, i.e. calling ICarbonCalc::calc.
      * \details Given that these calculations can be relative expensive to calculate
      *          and results in one period directly affecting many future years we give
      *          the users the ability to call "calc" in the following modes:
      *
      *            - CarbonCalcMode::eStoreResults Save all results for reporting.
+     *              This mode is typically used in postCalc to ensure LUC emissions are
+     *              saved and available for calculating emissions in the next time periods,
+     *              feeding into the climate model, reporting, etc.
      *            - CarbonCalcMode::eReturnTotal Avoid saving any results and intead
-     *              simply return the total emissions.
+     *              simply return the total emissions.  This mode is typically used during
+     *              World.calc and allows us to do the minimum computations in case we are
+     *              intending to add them to a CO2 constraint policy for instance, which is
+     *              the only time the value would be required during World.calc.
      *            - CarbonCalcMode::eReverseCalc Run the calculation just to back
-     *              out the emissions, etc from the currently saved results.
+     *              out the emissions, etc from the currently saved results.  This is called
+     *              during initCalc which allows us to re-run any model period, such as during
+     *              target finder.
      */
     enum CarbonCalcMode {
         /*!
