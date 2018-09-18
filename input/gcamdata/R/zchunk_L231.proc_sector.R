@@ -93,7 +93,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
                                    base.service = 0.004,
                                    aeei = 0 # Autonomous Energy Efficiency Improvement
     ) %>%
-      repeat_add_columns(tibble(year = BASE_YEARS))
+      repeat_add_columns(tibble(year = MODEL_BASE_YEARS))
 
     # L231.Supplysector_ind: Supply sector information for urban & industrial processes sectors
     L231.Supplysector_urb_ind <- A31.sector %>%
@@ -142,7 +142,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
       select(supplysector, subsector, technology) %>%
       distinct %>%
       # Interpolate to all years
-      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, FUTURE_YEARS))) %>%
+      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, MODEL_FUTURE_YEARS))) %>%
       left_join(A31.globaltech_shrwt, by = c("supplysector", "subsector", "technology", "year")) %>%
       mutate(share.weight = approx_fun(year, value = share.weight, rule = 1)) %>%
       filter(year %in% MODEL_YEARS) %>%
@@ -153,7 +153,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
       select(-year, -efficiency) %>%
       distinct %>%
       # Interpolate to all years
-      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, FUTURE_YEARS))) %>%
+      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, MODEL_FUTURE_YEARS))) %>%
       left_join(A31.globaltech_eff, by = c("supplysector", "subsector", "technology", "year", "minicam.energy.input")) %>%
       mutate(efficiency = approx_fun(year, value = efficiency, rule = 1)) %>%
       filter(year %in% MODEL_YEARS) %>%
@@ -165,7 +165,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
       select(-year, -coefficient) %>%
       distinct %>%
       # Interpolate to all years
-      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, FUTURE_YEARS))) %>%
+      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, MODEL_FUTURE_YEARS))) %>%
       left_join(A31.globaltech_coef, by = c("supplysector", "subsector", "technology", "year", "minicam.energy.input")) %>%
       mutate(coefficient = approx_fun(year, value = coefficient, rule = 1)) %>%
       filter(year %in% MODEL_YEARS) %>%
@@ -177,7 +177,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
       select(-year, -input.cost) %>%
       distinct %>%
       # Interpolate to all years
-      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, FUTURE_YEARS))) %>%
+      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, MODEL_FUTURE_YEARS))) %>%
       left_join(A31.globaltech_cost, by = c("supplysector", "subsector", "technology", "year", "minicam.non.energy.input")) %>%
       mutate(input.cost = approx_fun(year, value = input.cost, rule = 1)) %>%
       filter(year %in% MODEL_YEARS) %>%
@@ -186,7 +186,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     # Calibration and region-specific data
     # L231.StubTechCalInput_calvalue: calibrated input of urban & industrial processes technologies
     L231.RegionalTechCalValue_urb_ind <- L231.GlobalTechCost_urb_ind %>%
-      filter(year %in% BASE_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       select(-minicam.non.energy.input, -input.cost) %>%
       # Assign values to all regions
       repeat_add_columns(tibble(region = A_regions$region)) %>%
@@ -225,7 +225,7 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     # First, interpolate A32.globaltech_eff efficiency values to all years
     Ind.globaltech_eff <- A32.globaltech_eff %>%
       select(-year, -value) %>%
-      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, FUTURE_YEARS))) %>%
+      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, MODEL_FUTURE_YEARS))) %>%
       left_join(A32.globaltech_eff, by = c("supplysector", "subsector", "technology", "minicam.energy.input",
                                            "secondary.output", "year")) %>%
       group_by(supplysector, subsector, technology, minicam.energy.input,

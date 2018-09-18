@@ -94,7 +94,7 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
              price.unit = "none",
              calPrice = -1,
              market = region,
-             logit.year.fillout = min(BASE_YEARS),
+             logit.year.fillout = min(MODEL_BASE_YEARS),
              logit.exponent = -3,
              # Not in old-data-system, using because of removal of get_logit_fn_tables
              logit.type = NA)
@@ -114,7 +114,7 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
              UnmanagedLandTechnology = AgSupplySubsector,
              itemName = paste(itemName, GLU, sep = "_")) %>%
       # Repeat for base years
-      repeat_add_columns(tibble(year = BASE_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_BASE_YEARS)) %>%
       select(region, AgSupplySector, AgSupplySubsector, UnmanagedLandTechnology, year, itemName)
 
     # Grassland emissions
@@ -189,7 +189,7 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
     # We do not actually care about the logit here but we need a value to avoid errors
     L212.AgSupplySubsector <- L212.ItemName %>%
       select(region, AgSupplySector, AgSupplySubsector) %>%
-      mutate(logit.year.fillout = min(BASE_YEARS),
+      mutate(logit.year.fillout = min(MODEL_BASE_YEARS),
              logit.exponent = -3,
              logit.type = NA)
 

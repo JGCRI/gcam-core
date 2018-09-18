@@ -150,6 +150,8 @@ public:
     virtual ICarbonCalc* getCarbonContentCalc() const;
         
 	virtual bool isUnmanagedLandLeaf( )  const;
+    
+    bool hasLandAllocationCalculated( const int aPeriod ) const;
 
 protected:
     

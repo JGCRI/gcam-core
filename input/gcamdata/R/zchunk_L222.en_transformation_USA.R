@@ -212,7 +212,7 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
     L222.Tech_USAen %>%
       filter(subsector %in% c("oil refining", "biomass liquids")) %>%
       mutate(apply.to = "share-weight",
-             from.year = max(BASE_YEARS),
+             from.year = max(MODEL_BASE_YEARS),
              to.year = max(MODEL_YEARS),
              interpolation.function = if_else(subsector == "biomass liquids", "s-curve", "fixed")) ->
       L222.TechInterp_USAen
@@ -222,12 +222,12 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
     # Default the base year shareweights to 0. This will be over-ridden in calibration
     # Default the future year shareweights to 1.
     L222.Tech_USAen %>%
-      repeat_add_columns(tibble(year = BASE_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_BASE_YEARS)) %>%
       mutate(share.weight = 0) ->
       tmp
 
     L222.Tech_USAen %>%
-      repeat_add_columns(tibble(year = FUTURE_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) %>%
       mutate(share.weight = 1) %>%
       bind_rows(tmp) ->
       L222.TechShrwt_USAen
@@ -247,7 +247,7 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
     # L222.Production_USArefining: calibrated refinery production in USA (consuming output of states)
     # Aggregated to the supplysector/subsector/technology level
       L122.out_EJ_state_refining_F %>%
-        filter(year %in% BASE_YEARS) %>%
+        filter(year %in% MODEL_BASE_YEARS) %>%
         rename(calOutputValue = value) %>%
         mutate(calOutputvalue = round(calOutputValue, gcamusa.DIGITS_CALOUTPUT),
                region = gcam.USA_REGION) %>%
@@ -291,8 +291,8 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
       # calibration year so we can get a base cost for the absolute cost logit.  Having a share weight of zero
       # at the subsector is sufficient then to ensure we get no production in the calibration years
       L222.GlobalTechShrwt_en_USA %>%
-        mutate(share.weight = if_else(technology == "coal to liquids" & year == max(BASE_YEARS), 1.0, share.weight)) %>%
-        mutate(share.weight = if_else(technology == "gas to liquids" & year == max(BASE_YEARS), 1.0, share.weight)) ->
+        mutate(share.weight = if_else(technology == "coal to liquids" & year == max(MODEL_BASE_YEARS), 1.0, share.weight)) %>%
+        mutate(share.weight = if_else(technology == "gas to liquids" & year == max(MODEL_BASE_YEARS), 1.0, share.weight)) ->
         L222.GlobalTechShrwt_en_USA
 
 
@@ -337,7 +337,7 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
       # Step 2, process L122.out_EJ_state_refining_F, joining the processed table of calibrated_techs from step 1,
       # to create L222.StubTechProd_refining_USA. Note the supplysector is the same as the subsector within the states.
       L122.out_EJ_state_refining_F %>%
-        filter(year %in% BASE_YEARS) %>%
+        filter(year %in% MODEL_BASE_YEARS) %>%
         rename(region = state,
                calOutputValue = value) %>%
         mutate(calOutputValue = round(calOutputValue, gcamusa.DIGITS_CALOUTPUT)) %>%

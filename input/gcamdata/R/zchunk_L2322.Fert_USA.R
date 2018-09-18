@@ -121,7 +121,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     # for the fill out year.
     L2322.SubsectorLogit_USAFert %>%
       select(region, supplysector, subsector) %>%
-      mutate(year.fillout = min(BASE_YEARS)) %>%
+      mutate(year.fillout = min(MODEL_BASE_YEARS)) %>%
       mutate(share.weight = 1) ->
       L2322.SubsectorShrwtFllt_USAFert
 
@@ -131,7 +131,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     L2322.SubsectorLogit_USAFert %>%
       select(region, supplysector, subsector) %>%
       mutate(apply.to = "share-weight") %>%
-      mutate(from.year = max(BASE_YEARS)) %>%
+      mutate(from.year = max(MODEL_BASE_YEARS)) %>%
       mutate(to.year = max(MODEL_YEARS)) %>%
       mutate(interpolation.function = "fixed") ->
       L2322.SubsectorInterp_USAFert
@@ -150,7 +150,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     # format digits, and add region and supplysector information to prepare
     # the data frame to add logit table information.
     L1322.out_Mt_state_Fert_Yh %>%
-      filter(year %in% BASE_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       mutate(calOutputValue = signif(value, aglu.DIGITS_LAND_USE)) %>%
       select(-value) %>%
       mutate(region = gcam.USA_REGION, supplysector = gcamusa.FERT_NAME) %>%
@@ -249,7 +249,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     # Start by formating the state fertilizer production by subsetting for model base years,
     # rounding to the appropriate digits, and adding region information.
     L1322.out_Mt_state_Fert_Yh %>%
-      filter(year %in% BASE_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       mutate(calOutputValue = signif(value, digits = gcamusa.DIGITS_CALOUTPUT)) %>%
       mutate(region = state) ->
       L2322.StubTechProd_Fert_USA
@@ -278,7 +278,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     # Start by subsetting the state fertilizer input-output coefficient data frame for model base years
     # and rounding the input-output coefficient value to the appropriate digits.
     L1322.IO_GJkg_state_Fert_F_Yh %>%
-      filter(year %in% BASE_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       mutate(coefficient = signif(value, aglu.DIGITS_LAND_USE)) %>%
       select(-value) %>%
       mutate(region = state) ->

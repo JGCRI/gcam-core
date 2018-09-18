@@ -275,6 +275,10 @@ void LandNode::initCalc( const string& aRegionName, const int aPeriod )
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
         mChildren[ i ]->initCalc( aRegionName, aPeriod );
     }
+    
+    if( mCarbonCalc ) {
+        mCarbonCalc->initCalc( aPeriod );
+    }
 }
 
 /*!
@@ -520,7 +524,7 @@ void LandNode::calcLUCEmissions( const string& aRegionName,
                                  const bool aStoreFullEmiss )
 {
     if( mCarbonCalc ) {
-        mCarbonCalc->calc( aPeriod, aEndYear, aStoreFullEmiss );
+        mCarbonCalc->calc( aPeriod, aEndYear, aStoreFullEmiss ? ICarbonCalc::eStoreResults : ICarbonCalc::eReturnTotal );
     }
     
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {

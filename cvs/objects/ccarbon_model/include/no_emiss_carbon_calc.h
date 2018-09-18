@@ -54,8 +54,8 @@
  *          set and be retrievable by the time calc would be called.
  * \sa NodeCarbonCalc
  */
-class NoEmissCarbonCalc : public LandCarbonDensities
-{
+class NoEmissCarbonCalc : public LandCarbonDensities {
+    friend class NodeCarbonCalc;
 public:
     NoEmissCarbonCalc();
     virtual ~NoEmissCarbonCalc();
@@ -64,15 +64,22 @@ public:
 
     virtual const std::string& getXMLName() const;
     
-    virtual double calc( const int aPeriod, const int aEndYear, const bool aStoreFullEmiss );
+    virtual double calc( const int aPeriod, const int aEndYear, const CarbonCalcMode aCalcMode );
     
     virtual void acceptDerived( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.
     DEFINE_DATA_WITH_PARENT(
-        LandCarbonDensities
+        LandCarbonDensities,
+        
+        //! Since NodeCarbonCalc would have already been called we need to be able
+        //! to save the total emissions from there in case calc was called in eReturnTotal
+        //! mode.
+        DEFINE_VARIABLE( SIMPLE | STATE, "stored-total-emissions", mStoredEmissions, Value )
     )
+    
+    bool shouldReverseCalc( const int aPeriod ) const;
 };
 
 #endif // _NO_EMISS_CARBON_CALC_H_
