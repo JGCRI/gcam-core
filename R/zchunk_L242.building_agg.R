@@ -227,8 +227,8 @@ module_energy_L242.building_agg <- function(command, ...) {
 
     # Global technology shareweight interpolation of building sector
     A42.globaltech_interp %>%
-      mutate(from.year = max(BASE_YEARS),
-             to.year = max(FUTURE_YEARS)) %>%
+      mutate(from.year = max(MODEL_BASE_YEARS),
+             to.year = max(MODEL_FUTURE_YEARS)) %>%
       rename(sector.name = supplysector, subsector.name = subsector) %>%
       select(LEVEL2_DATA_NAMES[["GlobalTechInterp"]]) -> # Drops to.value
       L242.GlobalTechInterp_bld # OUTPUT
@@ -273,7 +273,7 @@ module_energy_L242.building_agg <- function(command, ...) {
     # Calibrated input of building energy use technologies (including cogen)
     L142.in_EJ_R_bld_F_Yh %>%
       # Subset table for model base years
-      filter(year %in% BASE_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       # Match in supplysector, subsector, technology
       left_join_error_no_match(calibrated_techs_bld_agg, by = c("sector", "fuel")) %>%
@@ -302,7 +302,7 @@ module_energy_L242.building_agg <- function(command, ...) {
     FuelPrefElasticity <- c("region", "supplysector", "subsector", "year.fillout", "fuelprefElasticity")
 
     A42.fuelprefElasticity %>%
-      mutate(year.fillout = min(FUTURE_YEARS)) %>%
+      mutate(year.fillout = min(MODEL_FUTURE_YEARS)) %>%
       write_to_all_regions(FuelPrefElasticity,
                            GCAM_region_names = GCAM_region_names) %>%
       mutate(region_subsector = paste(region, subsector)) %>%
@@ -319,8 +319,8 @@ module_energy_L242.building_agg <- function(command, ...) {
     # Expand price elasticity of building final demand across all regions and future years.
     # Price elasticities are only applied to future periods. Application in base years will cause solution failure.
     A42.demand %>%
-      repeat_add_columns(tibble(FUTURE_YEARS)) %>%
-      rename(year = FUTURE_YEARS) %>%
+      repeat_add_columns(tibble(MODEL_FUTURE_YEARS)) %>%
+      rename(year = MODEL_FUTURE_YEARS) %>%
       write_to_all_regions(LEVEL2_DATA_NAMES[["PriceElasticity"]],
                            GCAM_region_names = GCAM_region_names) ->
       L242.PriceElasticity_bld # OUTPUT

@@ -87,7 +87,7 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
     L143.HDDCDD_scen_ctry_Y <- HDDCDD_data %>%
       # Drop file name
       select(-file) %>%
-      # Filter only useful years
+      # Filter only useful years. The method assumes that HDD/CDD is printed annually -> no interpolation performed
       filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%
       # Remove apostrophe in Cote d'Ivoire and add in country iso by country name
       mutate(country = if_else(country == "Cote d'Ivoire", "Cote dIvoire", country)) %>%

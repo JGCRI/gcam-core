@@ -136,7 +136,7 @@ module_emissions_L211.ag_nonco2 <- function(command, ...) {
              AgProductionTechnology = AgSupplySubsector,
              emiss.coef = round(emiss.coef, emissions.DIGITS_EMISSIONS)) %>%
       # Repeat for model base years
-      repeat_add_columns(tibble(year = BASE_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_BASE_YEARS)) %>%
       select(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology,
              year, Non.CO2, emiss.coef)
 

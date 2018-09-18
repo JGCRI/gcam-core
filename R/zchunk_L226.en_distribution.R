@@ -140,12 +140,12 @@ module_energy_L226.en_distribution <- function(command, ...) {
     # Generates L226.GlobalTechEff_en: Energy inputs and efficiencies of global technologies for energy distribution by interpolating values for all model years
     A26.globaltech_eff %>%
       gather_years(value_col = "efficiency") %>%
-      complete(nesting(supplysector, subsector, technology, minicam.energy.input), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
+      complete(nesting(supplysector, subsector, technology, minicam.energy.input), year = c(year, MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
       arrange(supplysector, year) %>%
       group_by(supplysector) %>%
       mutate(efficiency = approx_fun(as.numeric(year), efficiency)) %>%
       ungroup() %>%
-      filter(year %in% c(BASE_YEARS, FUTURE_YEARS)) %>%
+      filter(year %in% c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
       # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
       rename(sector.name = supplysector, subsector.name = subsector) %>%
       mutate(efficiency = round(efficiency, DIGITS_EFFICIENCY))->
@@ -154,12 +154,12 @@ module_energy_L226.en_distribution <- function(command, ...) {
     # Generates L226.GlobalTechCost_en by interpolating values of cost adders for final energy delivery for all model years
     A26.globaltech_cost %>%
       gather_years(value_col = "input.cost") %>%
-      complete(nesting(supplysector, subsector, technology, minicam.non.energy.input), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
+      complete(nesting(supplysector, subsector, technology, minicam.non.energy.input), year = c(year, MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
       arrange(supplysector, year) %>%
       group_by(supplysector) %>%
       mutate (input.cost = approx_fun(as.numeric(year), input.cost)) %>%
       ungroup() %>%
-      filter(year %in% c(BASE_YEARS, FUTURE_YEARS)) %>%
+      filter(year %in% c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
       # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
       rename(sector.name = supplysector, subsector.name = subsector) %>%
       mutate(input.cost = round(input.cost, DIGITS_COST)) ->
@@ -168,12 +168,12 @@ module_energy_L226.en_distribution <- function(command, ...) {
     # Generates L226.GlobalTechShrwt_en: Shareweights of global technologies for energy distribution by interpolating values for all model years
     A26.globaltech_shrwt %>%
       gather_years(value_col = "share.weight") %>%
-      complete(nesting(supplysector, subsector, technology), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
+      complete(nesting(supplysector, subsector, technology), year = c(year, MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
       arrange(supplysector, year) %>%
       group_by(supplysector) %>%
       mutate (share.weight = approx_fun(as.numeric(year), share.weight)) %>%
       ungroup() %>%
-      filter(year %in% c(BASE_YEARS, FUTURE_YEARS)) %>%
+      filter(year %in% c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
       # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
       rename(sector.name = supplysector, subsector.name = subsector) ->
       L226.GlobalTechShrwt_en
@@ -182,7 +182,7 @@ module_energy_L226.en_distribution <- function(command, ...) {
     # Electricity ownuse IO coefs - filter down to the base years and append region IDs
     L126.IO_R_elecownuse_F_Yh %>%
       ungroup() %>% # this data apparently came into this chunk grouped, which was preventing deletion of grouped columns
-      filter(year %in% c(BASE_YEARS)) %>%
+      filter(year %in% c(MODEL_BASE_YEARS)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join(calibrated_techs, by = c("sector", "fuel")) %>%
       select(-calibration, -secondary.output) ->
@@ -190,8 +190,8 @@ module_energy_L226.en_distribution <- function(command, ...) {
 
     # repeat final year's ownuse ratio into future years and append future years to base years (could perhaps be tied to industrial CHP...but also AUTOELEC)
     L226.IO_R_elecownuse_F_Yh %>%
-      filter(year == max(BASE_YEARS)) %>%
-      repeat_add_columns(tibble("year" = FUTURE_YEARS)) %>%
+      filter(year == max(MODEL_BASE_YEARS)) %>%
+      repeat_add_columns(tibble("year" = MODEL_FUTURE_YEARS)) %>%
       select(-year.x) %>%
       rename(year = year.y) %>%
       bind_rows(L226.IO_R_elecownuse_F_Yh) ->
@@ -206,13 +206,13 @@ module_energy_L226.en_distribution <- function(command, ...) {
 
     # Filter electricity transmission and distribution input-output ratio historical data down to base years (this works now but may need optional interpolation if the assumptions file changes not to include base model years)
     L126.IO_R_electd_F_Yh %>%
-      filter(year %in% BASE_YEARS) ->
+      filter(year %in% MODEL_BASE_YEARS) ->
       L226.IO_R_electd_F_Yh
 
     # Copy final base year value to future periods
     L226.IO_R_electd_F_Yh %>%
-      filter(year == max(BASE_YEARS)) %>%
-      repeat_add_columns(tibble("year" = FUTURE_YEARS)) %>%
+      filter(year == max(MODEL_BASE_YEARS)) %>%
+      repeat_add_columns(tibble("year" = MODEL_FUTURE_YEARS)) %>%
       select(-year.x) %>%
       rename(year = year.y) ->
       L226.IO_R_electd_F_Yfut
@@ -220,7 +220,7 @@ module_energy_L226.en_distribution <- function(command, ...) {
     # append assumed techchange value and calculate decrease in future energy use
     L226.IO_R_electd_F_Yfut %>%
       left_join(A_regions, by = "GCAM_region_ID") %>%
-      mutate(value = value * ((1 - elect_td_techchange) ^ (year - max(BASE_YEARS)))) %>%
+      mutate(value = value * ((1 - elect_td_techchange) ^ (year - max(MODEL_BASE_YEARS)))) %>%
       select(GCAM_region_ID, sector, fuel, value, year) %>%
       bind_rows(L226.IO_R_electd_F_Yh, .) ->
       L226.IO_R_electd_F_Y
@@ -243,12 +243,12 @@ module_energy_L226.en_distribution <- function(command, ...) {
 
     # Interpolate regional gas pipeline IO coefs to generate future year values, add region names, and calibrated tech information
     L126.IO_R_gaspipe_F_Yh %>%
-      complete(nesting(GCAM_region_ID, sector, fuel), year = c(year, BASE_YEARS)) %>%
+      complete(nesting(GCAM_region_ID, sector, fuel), year = c(year, MODEL_BASE_YEARS)) %>%
       arrange(GCAM_region_ID, sector, year) %>%
       group_by(GCAM_region_ID, sector) %>%
       mutate (value = approx_fun(as.numeric(year), value)) %>%
       ungroup() %>%
-      filter(year %in% BASE_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join(calibrated_techs, by = c("sector", "fuel")) %>%
       select(-calibration, -secondary.output, -GCAM_region_ID, -sector, -fuel) ->
@@ -256,8 +256,8 @@ module_energy_L226.en_distribution <- function(command, ...) {
 
     # Generate future year gas pipeline energy use ratios by holding final base year value constant
     L226.IO_R_gaspipe_F_Yh %>%
-      filter(year == max(BASE_YEARS)) %>%
-      repeat_add_columns(tibble("year" = FUTURE_YEARS)) %>%
+      filter(year == max(MODEL_BASE_YEARS)) %>%
+      repeat_add_columns(tibble("year" = MODEL_FUTURE_YEARS)) %>%
       select(-year.x) %>%
       rename(year = year.y) ->
       L226.IO_R_gaspipe_F_Yfut
