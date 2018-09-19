@@ -1,0 +1,9 @@
+# File: EIA_tech_mapping.csv,
+# Title: EIA to GCAM-USA Electricity Technology Mapping,
+# Units: NA,
+# Comments: A mapping of EIA electricity generation technologies (fuel) to GCAM-USA technologies,
+fuel,gcam_tech
+wind,wind
+utility-scale photovoltaic,PV
+utility-scale thermal,CSP
+small-scale solar photovoltaic,rooftop_pv

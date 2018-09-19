@@ -1,0 +1,630 @@
+# File: EIA_net_gen_renewables.csv,,,,,,,,,,,,,,,,,,,
+# Title: EIA Net Generation for All Sectors,,,,,,,,,,,,,,,,,,,
+# Units: thousand MWh,,,,,,,,,,,,,,,,,,,
+# Comments: Data downloaded Wed May 02 2018 11:40:07 GMT-0400 (Eastern Daylight Time),,,,,,,,,,,,,,,,,,,
+# Source: U.S. Energy Information Administration - Electricity Data Browser (https://www.eia.gov/electricity/data/browser/#/topic/0?agg=2,0,1&fuel=0082u&geo=00fvvvvvvvvvo&sec=g&freq=A&start=2001&end=2017&ctype=linechart&ltype=pin&rtype=s&maptype=0&rse=0&pin=),,,,,,,,,,,,,,,,,
+description,units,source.key,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017
+Net generation for all sectors,,,,,,,,,,,,,,,,,,,
+United States,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+New England,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Connecticut,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Connecticut : all fuels (utility-scale),,ELEC.GEN.ALL-CT-99.A,,,,,,,,,,,,,,,,,
+Connecticut : other renewables,,ELEC.GEN.AOR-CT-99.A,,,,,,,,,,,,,,,,,
+Connecticut : wind,thousand megawatthours,ELEC.GEN.WND-CT-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,13,NM
+Connecticut : all utility-scale solar,,ELEC.GEN.SUN-CT-99.A,,,,,,,,,,,,,,,,,
+Connecticut : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-CT-99.A,--,--,--,--,--,--,--,--,--,--,--,--,0,12,17,25,58
+Connecticut : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-CT-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Connecticut : all solar,,ELEC.GEN.TSN-CT-99.A,,,,,,,,,,,,,,,,,
+Connecticut : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-CT-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,126,199,320,405
+Connecticut : all utility-scale solar,,ELEC.GEN.SUN-CT-99.A,,,,,,,,,,,,,,,,,
+Connecticut : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-CT-99.A,--,--,--,--,--,--,--,--,--,--,--,--,0,12,17,25,58
+Connecticut : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-CT-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Maine,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Maine : all fuels (utility-scale),,ELEC.GEN.ALL-ME-99.A,,,,,,,,,,,,,,,,,
+Maine : other renewables,,ELEC.GEN.AOR-ME-99.A,,,,,,,,,,,,,,,,,
+Maine : wind,thousand megawatthours,ELEC.GEN.WND-ME-99.A,--,--,--,--,--,--,99,132,299,499,707,887,1048,1097,1296,1667,2222
+Maine : all utility-scale solar,,ELEC.GEN.SUN-ME-99.A,,,,,,,,,,,,,,,,,
+Maine : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-ME-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,10
+Maine : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-ME-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Maine : all solar,,ELEC.GEN.TSN-ME-99.A,,,,,,,,,,,,,,,,,
+Maine : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-ME-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,13,19,29,41
+Maine : all utility-scale solar,,ELEC.GEN.SUN-ME-99.A,,,,,,,,,,,,,,,,,
+Maine : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-ME-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,10
+Maine : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-ME-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Massachusetts,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Massachusetts : all fuels (utility-scale),,ELEC.GEN.ALL-MA-99.A,,,,,,,,,,,,,,,,,
+Massachusetts : other renewables,,ELEC.GEN.AOR-MA-99.A,,,,,,,,,,,,,,,,,
+Massachusetts : wind,thousand megawatthours,ELEC.GEN.WND-MA-99.A,--,0,--,--,--,--,--,4,6,22,61,90,205,225,215,216,221
+Massachusetts : all utility-scale solar,,ELEC.GEN.SUN-MA-99.A,,,,,,,,,,,,,,,,,
+Massachusetts : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-MA-99.A,--,--,--,--,--,--,--,0,0,1,5,30,105,305,451,609,1052
+Massachusetts : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-MA-99.A,--,--,--,--,--,--,--,--,--,--,--,--,2,2,--,--,--
+Massachusetts : all solar,,ELEC.GEN.TSN-MA-99.A,,,,,,,,,,,,,,,,,
+Massachusetts : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-MA-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,625,862,1254,1502
+Massachusetts : all utility-scale solar,,ELEC.GEN.SUN-MA-99.A,,,,,,,,,,,,,,,,,
+Massachusetts : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-MA-99.A,--,--,--,--,--,--,--,0,0,1,5,30,105,305,451,609,1052
+Massachusetts : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-MA-99.A,--,--,--,--,--,--,--,--,--,--,--,--,2,2,--,--,--
+New Hampshire,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+New Hampshire : all fuels (utility-scale),,ELEC.GEN.ALL-NH-99.A,,,,,,,,,,,,,,,,,
+New Hampshire : other renewables,,ELEC.GEN.AOR-NH-99.A,,,,,,,,,,,,,,,,,
+New Hampshire : wind,thousand megawatthours,ELEC.GEN.WND-NH-99.A,--,--,--,--,--,--,--,10,62,76,66,209,389,412,423,432,414
+New Hampshire : all utility-scale solar,,ELEC.GEN.SUN-NH-99.A,,,,,,,,,,,,,,,,,
+New Hampshire : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-NH-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+New Hampshire : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-NH-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+New Hampshire : all solar,,ELEC.GEN.TSN-NH-99.A,,,,,,,,,,,,,,,,,
+New Hampshire : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-NH-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,14,24,52,87
+New Hampshire : all utility-scale solar,,ELEC.GEN.SUN-NH-99.A,,,,,,,,,,,,,,,,,
+New Hampshire : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-NH-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+New Hampshire : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-NH-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Rhode Island,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Rhode Island : all fuels (utility-scale),,ELEC.GEN.ALL-RI-99.A,,,,,,,,,,,,,,,,,
+Rhode Island : other renewables,,ELEC.GEN.AOR-RI-99.A,,,,,,,,,,,,,,,,,
+Rhode Island : wind,thousand megawatthours,ELEC.GEN.WND-RI-99.A,--,--,--,--,--,--,--,--,--,3,3,1,3,10,10,27,153
+Rhode Island : all utility-scale solar,,ELEC.GEN.SUN-RI-99.A,,,,,,,,,,,,,,,,,
+Rhode Island : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-RI-99.A,--,--,--,--,--,--,--,--,--,--,--,--,2,10,14,15,20
+Rhode Island : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-RI-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Rhode Island : all solar,,ELEC.GEN.TSN-RI-99.A,,,,,,,,,,,,,,,,,
+Rhode Island : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-RI-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,11,13,30,55
+Rhode Island : all utility-scale solar,,ELEC.GEN.SUN-RI-99.A,,,,,,,,,,,,,,,,,
+Rhode Island : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-RI-99.A,--,--,--,--,--,--,--,--,--,--,--,--,2,10,14,15,20
+Rhode Island : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-RI-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Vermont,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Vermont : all fuels (utility-scale),,ELEC.GEN.ALL-VT-99.A,,,,,,,,,,,,,,,,,
+Vermont : other renewables,,ELEC.GEN.AOR-VT-99.A,,,,,,,,,,,,,,,,,
+Vermont : wind,thousand megawatthours,ELEC.GEN.WND-VT-99.A,12,10,11,11,11,11,11,10,12,14,33,107,236,311,325,291,279
+Vermont : all utility-scale solar,,ELEC.GEN.SUN-VT-99.A,,,,,,,,,,,,,,,,,
+Vermont : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-VT-99.A,--,--,--,--,--,--,--,--,--,--,2,5,17,24,48,59,129
+Vermont : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-VT-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Vermont : all solar,,ELEC.GEN.TSN-VT-99.A,,,,,,,,,,,,,,,,,
+Vermont : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-VT-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,33,54,76,110
+Vermont : all utility-scale solar,,ELEC.GEN.SUN-VT-99.A,,,,,,,,,,,,,,,,,
+Vermont : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-VT-99.A,--,--,--,--,--,--,--,--,--,--,2,5,17,24,48,59,129
+Vermont : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-VT-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Middle Atlantic,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+New Jersey,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+New Jersey : all fuels (utility-scale),,ELEC.GEN.ALL-NJ-99.A,,,,,,,,,,,,,,,,,
+New Jersey : other renewables,,ELEC.GEN.AOR-NJ-99.A,,,,,,,,,,,,,,,,,
+New Jersey : wind,thousand megawatthours,ELEC.GEN.WND-NJ-99.A,--,--,--,--,--,16,20,21,21,13,11,12,11,23,22,21,20
+New Jersey : all utility-scale solar,,ELEC.GEN.SUN-NJ-99.A,,,,,,,,,,,,,,,,,
+New Jersey : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-NJ-99.A,--,--,--,--,--,--,--,3,11,21,69,304,437,514,628,835,1170
+New Jersey : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-NJ-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+New Jersey : all solar,,ELEC.GEN.TSN-NJ-99.A,,,,,,,,,,,,,,,,,
+New Jersey : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-NJ-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,1373,1435,1385,1667
+New Jersey : all utility-scale solar,,ELEC.GEN.SUN-NJ-99.A,,,,,,,,,,,,,,,,,
+New Jersey : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-NJ-99.A,--,--,--,--,--,--,--,3,11,21,69,304,437,514,628,835,1170
+New Jersey : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-NJ-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+New York,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+New York : all fuels (utility-scale),,ELEC.GEN.ALL-NY-99.A,,,,,,,,,,,,,,,,,
+New York : other renewables,,ELEC.GEN.AOR-NY-99.A,,,,,,,,,,,,,,,,,
+New York : wind,thousand megawatthours,ELEC.GEN.WND-NY-99.A,21,82,41,116,103,655,833,1251,2266,2596,2828,2992,3539,3968,3977,3940,3944
+New York : all utility-scale solar,,ELEC.GEN.SUN-NY-99.A,,,,,,,,,,,,,,,,,
+New York : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-NY-99.A,--,--,--,--,--,--,--,--,--,--,6,53,67,71,101,140,214
+New York : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-NY-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+New York : all solar,,ELEC.GEN.TSN-NY-99.A,,,,,,,,,,,,,,,,,
+New York : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-NY-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,350,589,873,1180
+New York : all utility-scale solar,,ELEC.GEN.SUN-NY-99.A,,,,,,,,,,,,,,,,,
+New York : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-NY-99.A,--,--,--,--,--,--,--,--,--,--,6,53,67,71,101,140,214
+New York : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-NY-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Pennsylvania,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Pennsylvania : all fuels (utility-scale),,ELEC.GEN.ALL-PA-99.A,,,,,,,,,,,,,,,,,
+Pennsylvania : other renewables,,ELEC.GEN.AOR-PA-99.A,,,,,,,,,,,,,,,,,
+Pennsylvania : wind,thousand megawatthours,ELEC.GEN.WND-PA-99.A,11,58,112,306,284,361,470,729,1075,1854,1794,2129,3352,3565,3353,3476,3379
+Pennsylvania : all utility-scale solar,,ELEC.GEN.SUN-PA-99.A,,,,,,,,,,,,,,,,,
+Pennsylvania : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-PA-99.A,--,--,--,--,--,--,--,0,4,8,23,32,63,62,64,75,91
+Pennsylvania : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-PA-99.A,--,--,--,--,--,--,--,0,0,--,--,--,--,--,--,--,--
+Pennsylvania : all solar,,ELEC.GEN.TSN-PA-99.A,,,,,,,,,,,,,,,,,
+Pennsylvania : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-PA-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,252,261,287,362
+Pennsylvania : all utility-scale solar,,ELEC.GEN.SUN-PA-99.A,,,,,,,,,,,,,,,,,
+Pennsylvania : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-PA-99.A,--,--,--,--,--,--,--,0,4,8,23,32,63,62,64,75,91
+Pennsylvania : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-PA-99.A,--,--,--,--,--,--,--,0,0,--,--,--,--,--,--,--,--
+East North Central,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Illinois,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Illinois : all fuels (utility-scale),,ELEC.GEN.ALL-IL-99.A,,,,,,,,,,,,,,,,,
+Illinois : other renewables,,ELEC.GEN.AOR-IL-99.A,,,,,,,,,,,,,,,,,
+Illinois : wind,thousand megawatthours,ELEC.GEN.WND-IL-99.A,--,--,18,78,141,255,664,2337,2820,4454,6213,7727,9625,10083,10747,10663,11297
+Illinois : all utility-scale solar,,ELEC.GEN.SUN-IL-99.A,,,,,,,,,,,,,,,,,
+Illinois : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-IL-99.A,--,--,--,--,--,--,--,--,0,14,14,15,52,50,49,49,55
+Illinois : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-IL-99.A,--,--,--,--,--,--,--,--,--,--,--,16,--,--,--,--,--
+Illinois : all solar,,ELEC.GEN.TSN-IL-99.A,,,,,,,,,,,,,,,,,
+Illinois : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-IL-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,21,27,37,58
+Illinois : all utility-scale solar,,ELEC.GEN.SUN-IL-99.A,,,,,,,,,,,,,,,,,
+Illinois : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-IL-99.A,--,--,--,--,--,--,--,--,0,14,14,15,52,50,49,49,55
+Illinois : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-IL-99.A,--,--,--,--,--,--,--,--,--,--,--,16,--,--,--,--,--
+Indiana,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Indiana : all fuels (utility-scale),,ELEC.GEN.ALL-IN-99.A,,,,,,,,,,,,,,,,,
+Indiana : other renewables,,ELEC.GEN.AOR-IN-99.A,,,,,,,,,,,,,,,,,
+Indiana : wind,thousand megawatthours,ELEC.GEN.WND-IN-99.A,--,--,--,--,--,--,--,238,1403,2934,3285,3210,3481,3496,4515,4899,4742
+Indiana : all utility-scale solar,,ELEC.GEN.SUN-IN-99.A,,,,,,,,,,,,,,,,,
+Indiana : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-IN-99.A,--,--,--,--,--,--,--,--,--,--,--,NM,31,102,156,226,356
+Indiana : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-IN-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Indiana : all solar,,ELEC.GEN.TSN-IN-99.A,,,,,,,,,,,,,,,,,
+Indiana : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-IN-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,9,12,17,33
+Indiana : all utility-scale solar,,ELEC.GEN.SUN-IN-99.A,,,,,,,,,,,,,,,,,
+Indiana : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-IN-99.A,--,--,--,--,--,--,--,--,--,--,--,NM,31,102,156,226,356
+Indiana : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-IN-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Michigan,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Michigan : all fuels (utility-scale),,ELEC.GEN.ALL-MI-99.A,,,,,,,,,,,,,,,,,
+Michigan : other renewables,,ELEC.GEN.AOR-MI-99.A,,,,,,,,,,,,,,,,,
+Michigan : wind,thousand megawatthours,ELEC.GEN.WND-MI-99.A,0,0,3,2,2,2,3,141,300,360,456,1132,2800,3868,4797,4696,5072
+Michigan : all utility-scale solar,,ELEC.GEN.SUN-MI-99.A,,,,,,,,,,,,,,,,,
+Michigan : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-MI-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,1,9,81
+Michigan : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-MI-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Michigan : all solar,,ELEC.GEN.TSN-MI-99.A,,,,,,,,,,,,,,,,,
+Michigan : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-MI-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,35,38,55,84
+Michigan : all utility-scale solar,,ELEC.GEN.SUN-MI-99.A,,,,,,,,,,,,,,,,,
+Michigan : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-MI-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,1,9,81
+Michigan : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-MI-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Ohio,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Ohio : all fuels (utility-scale),,ELEC.GEN.ALL-OH-99.A,,,,,,,,,,,,,,,,,
+Ohio : other renewables,,ELEC.GEN.AOR-OH-99.A,,,,,,,,,,,,,,,,,
+Ohio : wind,thousand megawatthours,ELEC.GEN.WND-OH-99.A,--,--,--,--,13,14,15,15,14,13,198,985,1146,1153,1203,1245,1563
+Ohio : all utility-scale solar,,ELEC.GEN.SUN-OH-99.A,,,,,,,,,,,,,,,,,
+Ohio : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-OH-99.A,--,--,--,--,--,--,--,--,--,13,15,37,46,54,56,66,129
+Ohio : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-OH-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Ohio : all solar,,ELEC.GEN.TSN-OH-99.A,,,,,,,,,,,,,,,,,
+Ohio : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-OH-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,83,95,108,132
+Ohio : all utility-scale solar,,ELEC.GEN.SUN-OH-99.A,,,,,,,,,,,,,,,,,
+Ohio : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-OH-99.A,--,--,--,--,--,--,--,--,--,13,15,37,46,54,56,66,129
+Ohio : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-OH-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Wisconsin,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Wisconsin : all fuels (utility-scale),,ELEC.GEN.ALL-WI-99.A,,,,,,,,,,,,,,,,,
+Wisconsin : other renewables,,ELEC.GEN.AOR-WI-99.A,,,,,,,,,,,,,,,,,
+Wisconsin : wind,thousand megawatthours,ELEC.GEN.WND-WI-99.A,72,46,98,104,93,101,109,487,1052,1088,1188,1558,1558,1618,1589,1515,1529
+Wisconsin : all utility-scale solar,,ELEC.GEN.SUN-WI-99.A,,,,,,,,,,,,,,,,,
+Wisconsin : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-WI-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,1,1,3,32
+Wisconsin : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-WI-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Wisconsin : all solar,,ELEC.GEN.TSN-WI-99.A,,,,,,,,,,,,,,,,,
+Wisconsin : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-WI-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,23,27,35,55
+Wisconsin : all utility-scale solar,,ELEC.GEN.SUN-WI-99.A,,,,,,,,,,,,,,,,,
+Wisconsin : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-WI-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,1,1,3,32
+Wisconsin : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-WI-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+West North Central,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Iowa,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Iowa : all fuels (utility-scale),,ELEC.GEN.ALL-IA-99.A,,,,,,,,,,,,,,,,,
+Iowa : other renewables,,ELEC.GEN.AOR-IA-99.A,,,,,,,,,,,,,,,,,
+Iowa : wind,thousand megawatthours,ELEC.GEN.WND-IA-99.A,488,919,982,1050,1647,2318,2757,4084,7421,9170,10709,14032,15568,16307,17873,20072,20816
+Iowa : all utility-scale solar,,ELEC.GEN.SUN-IA-99.A,,,,,,,,,,,,,,,,,
+Iowa : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-IA-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,0,9
+Iowa : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-IA-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Iowa : all solar,,ELEC.GEN.TSN-IA-99.A,,,,,,,,,,,,,,,,,
+Iowa : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-IA-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,24,41,59,89
+Iowa : all utility-scale solar,,ELEC.GEN.SUN-IA-99.A,,,,,,,,,,,,,,,,,
+Iowa : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-IA-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,0,9
+Iowa : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-IA-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Kansas,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Kansas : all fuels (utility-scale),,ELEC.GEN.ALL-KS-99.A,,,,,,,,,,,,,,,,,
+Kansas : other renewables,,ELEC.GEN.AOR-KS-99.A,,,,,,,,,,,,,,,,,
+Kansas : wind,thousand megawatthours,ELEC.GEN.WND-KS-99.A,40,467,366,359,426,992,1153,1759,2863,3405,3720,5195,9433,10845,10999,14111,18501
+Kansas : all utility-scale solar,,ELEC.GEN.SUN-KS-99.A,,,,,,,,,,,,,,,,,
+Kansas : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-KS-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,2,2,4
+Kansas : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-KS-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Kansas : all solar,,ELEC.GEN.TSN-KS-99.A,,,,,,,,,,,,,,,,,
+Kansas : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-KS-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,3,5,8,17
+Kansas : all utility-scale solar,,ELEC.GEN.SUN-KS-99.A,,,,,,,,,,,,,,,,,
+Kansas : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-KS-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,2,2,4
+Kansas : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-KS-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Minnesota,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Minnesota : all fuels (utility-scale),,ELEC.GEN.ALL-MN-99.A,,,,,,,,,,,,,,,,,
+Minnesota : other renewables,,ELEC.GEN.AOR-MN-99.A,,,,,,,,,,,,,,,,,
+Minnesota : wind,thousand megawatthours,ELEC.GEN.WND-MN-99.A,897,906,978,812,1582,2055,2639,4355,5053,4792,6726,8176,8259,9691,9779,9933,10885
+Minnesota : all utility-scale solar,,ELEC.GEN.SUN-MN-99.A,,,,,,,,,,,,,,,,,
+Minnesota : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-MN-99.A,--,--,--,--,--,--,--,--,--,--,--,0,3,3,3,10,728
+Minnesota : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-MN-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Minnesota : all solar,,ELEC.GEN.TSN-MN-99.A,,,,,,,,,,,,,,,,,
+Minnesota : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-MN-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,19,26,37,57
+Minnesota : all utility-scale solar,,ELEC.GEN.SUN-MN-99.A,,,,,,,,,,,,,,,,,
+Minnesota : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-MN-99.A,--,--,--,--,--,--,--,--,--,--,--,0,3,3,3,10,728
+Minnesota : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-MN-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Missouri,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Missouri : all fuels (utility-scale),,ELEC.GEN.ALL-MO-99.A,,,,,,,,,,,,,,,,,
+Missouri : other renewables,,ELEC.GEN.AOR-MO-99.A,,,,,,,,,,,,,,,,,
+Missouri : wind,thousand megawatthours,ELEC.GEN.WND-MO-99.A,--,--,--,--,--,--,--,203,499,925,1178,1245,1167,1131,1033,1122,1949
+Missouri : all utility-scale solar,,ELEC.GEN.SUN-MO-99.A,,,,,,,,,,,,,,,,,
+Missouri : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-MO-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,9,17,33,59
+Missouri : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-MO-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Missouri : all solar,,ELEC.GEN.TSN-MO-99.A,,,,,,,,,,,,,,,,,
+Missouri : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-MO-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,113,145,167,204
+Missouri : all utility-scale solar,,ELEC.GEN.SUN-MO-99.A,,,,,,,,,,,,,,,,,
+Missouri : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-MO-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,9,17,33,59
+Missouri : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-MO-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Nebraska,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Nebraska : all fuels (utility-scale),,ELEC.GEN.ALL-NE-99.A,,,,,,,,,,,,,,,,,
+Nebraska : other renewables,,ELEC.GEN.AOR-NE-99.A,,,,,,,,,,,,,,,,,
+Nebraska : wind,thousand megawatthours,ELEC.GEN.WND-NE-99.A,3,8,38,38,97,261,217,214,383,422,1051,1284,1802,2737,3180,3798,5237
+Nebraska : all utility-scale solar,,ELEC.GEN.SUN-NE-99.A,,,,,,,,,,,,,,,,,
+Nebraska : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-NE-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,4,18
+Nebraska : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-NE-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Nebraska : all solar,,ELEC.GEN.TSN-NE-99.A,,,,,,,,,,,,,,,,,
+Nebraska : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-NE-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,1,1,3,5
+Nebraska : all utility-scale solar,,ELEC.GEN.SUN-NE-99.A,,,,,,,,,,,,,,,,,
+Nebraska : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-NE-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,4,18
+Nebraska : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-NE-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+North Dakota,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+North Dakota : all fuels (utility-scale),,ELEC.GEN.ALL-ND-99.A,,,,,,,,,,,,,,,,,
+North Dakota : other renewables,,ELEC.GEN.AOR-ND-99.A,,,,,,,,,,,,,,,,,
+North Dakota : wind,thousand megawatthours,ELEC.GEN.WND-ND-99.A,--,--,59,215,220,369,621,1693,2998,4096,5236,5275,5519,6202,6506,8172,10987
+North Dakota : all utility-scale solar,,ELEC.GEN.SUN-ND-99.A,,,,,,,,,,,,,,,,,
+North Dakota : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-ND-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+North Dakota : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-ND-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+North Dakota : all solar,,ELEC.GEN.TSN-ND-99.A,,,,,,,,,,,,,,,,,
+North Dakota : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-ND-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,0,0,0,0
+North Dakota : all utility-scale solar,,ELEC.GEN.SUN-ND-99.A,,,,,,,,,,,,,,,,,
+North Dakota : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-ND-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+North Dakota : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-ND-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+South Dakota,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+South Dakota : all fuels (utility-scale),,ELEC.GEN.ALL-SD-99.A,,,,,,,,,,,,,,,,,
+South Dakota : other renewables,,ELEC.GEN.AOR-SD-99.A,,,,,,,,,,,,,,,,,
+South Dakota : wind,thousand megawatthours,ELEC.GEN.WND-SD-99.A,1,6,44,158,158,149,150,145,421,1372,2668,2354,2688,2336,2498,3714,3154
+South Dakota : all utility-scale solar,,ELEC.GEN.SUN-SD-99.A,,,,,,,,,,,,,,,,,
+South Dakota : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-SD-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,0,NM
+South Dakota : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-SD-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+South Dakota : all solar,,ELEC.GEN.TSN-SD-99.A,,,,,,,,,,,,,,,,,
+South Dakota : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-SD-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,0,1,1,1
+South Dakota : all utility-scale solar,,ELEC.GEN.SUN-SD-99.A,,,,,,,,,,,,,,,,,
+South Dakota : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-SD-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,0,NM
+South Dakota : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-SD-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+South Atlantic,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Delaware,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Delaware : all fuels (utility-scale),,ELEC.GEN.ALL-DE-99.A,,,,,,,,,,,,,,,,,
+Delaware : other renewables,,ELEC.GEN.AOR-DE-99.A,,,,,,,,,,,,,,,,,
+Delaware : wind,thousand megawatthours,ELEC.GEN.WND-DE-99.A,--,--,--,--,--,--,--,--,--,3,5,4,4,5,5,5,5
+Delaware : all utility-scale solar,,ELEC.GEN.SUN-DE-99.A,,,,,,,,,,,,,,,,,
+Delaware : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-DE-99.A,--,--,--,--,--,--,--,--,--,--,8,23,45,50,49,51,59
+Delaware : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-DE-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Delaware : all solar,,ELEC.GEN.TSN-DE-99.A,,,,,,,,,,,,,,,,,
+Delaware : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-DE-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,71,79,67,93
+Delaware : all utility-scale solar,,ELEC.GEN.SUN-DE-99.A,,,,,,,,,,,,,,,,,
+Delaware : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-DE-99.A,--,--,--,--,--,--,--,--,--,--,8,23,45,50,49,51,59
+Delaware : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-DE-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+District Of Columbia,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+District Of Columbia : all fuels (utility-scale),,ELEC.GEN.ALL-DC-99.A,,,,,,,,,,,,,,,,,
+District Of Columbia : other renewables,,ELEC.GEN.AOR-DC-99.A,,,,,,,,,,,,,,,,,
+District Of Columbia : wind,thousand megawatthours,ELEC.GEN.WND-DC-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+District Of Columbia : all utility-scale solar,,ELEC.GEN.SUN-DC-99.A,,,,,,,,,,,,,,,,,
+District Of Columbia : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-DC-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+District Of Columbia : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-DC-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+District Of Columbia : all solar,,ELEC.GEN.TSN-DC-99.A,,,,,,,,,,,,,,,,,
+District Of Columbia : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-DC-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,31,32,32,52
+District Of Columbia : all utility-scale solar,,ELEC.GEN.SUN-DC-99.A,,,,,,,,,,,,,,,,,
+District Of Columbia : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-DC-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+District Of Columbia : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-DC-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Florida,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Florida : all fuels (utility-scale),,ELEC.GEN.ALL-FL-99.A,,,,,,,,,,,,,,,,,
+Florida : other renewables,,ELEC.GEN.AOR-FL-99.A,,,,,,,,,,,,,,,,,
+Florida : wind,thousand megawatthours,ELEC.GEN.WND-FL-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Florida : all utility-scale solar,,ELEC.GEN.SUN-FL-99.A,,,,,,,,,,,,,,,,,
+Florida : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-FL-99.A,--,--,--,--,--,--,--,--,9,80,97,105,108,117,118,149,849
+Florida : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-FL-99.A,--,--,--,--,--,--,--,--,--,--,29,88,102,124,106,75,22
+Florida : all solar,,ELEC.GEN.TSN-FL-99.A,,,,,,,,,,,,,,,,,
+Florida : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-FL-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,119,156,205,293
+Florida : all utility-scale solar,,ELEC.GEN.SUN-FL-99.A,,,,,,,,,,,,,,,,,
+Florida : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-FL-99.A,--,--,--,--,--,--,--,--,9,80,97,105,108,117,118,149,849
+Florida : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-FL-99.A,--,--,--,--,--,--,--,--,--,--,29,88,102,124,106,75,22
+Georgia,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Georgia : all fuels (utility-scale),,ELEC.GEN.ALL-GA-99.A,,,,,,,,,,,,,,,,,
+Georgia : other renewables,,ELEC.GEN.AOR-GA-99.A,,,,,,,,,,,,,,,,,
+Georgia : wind,thousand megawatthours,ELEC.GEN.WND-GA-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Georgia : all utility-scale solar,,ELEC.GEN.SUN-GA-99.A,,,,,,,,,,,,,,,,,
+Georgia : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-GA-99.A,--,--,--,--,--,--,--,--,--,--,--,3,14,119,129,881,2137
+Georgia : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-GA-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Georgia : all solar,,ELEC.GEN.TSN-GA-99.A,,,,,,,,,,,,,,,,,
+Georgia : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-GA-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,99,100,195,227
+Georgia : all utility-scale solar,,ELEC.GEN.SUN-GA-99.A,,,,,,,,,,,,,,,,,
+Georgia : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-GA-99.A,--,--,--,--,--,--,--,--,--,--,--,3,14,119,129,881,2137
+Georgia : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-GA-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Maryland,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Maryland : all fuels (utility-scale),,ELEC.GEN.ALL-MD-99.A,,,,,,,,,,,,,,,,,
+Maryland : other renewables,,ELEC.GEN.AOR-MD-99.A,,,,,,,,,,,,,,,,,
+Maryland : wind,thousand megawatthours,ELEC.GEN.WND-MD-99.A,--,--,--,--,--,--,--,--,--,1,271,322,322,324,435,527,511
+Maryland : all utility-scale solar,,ELEC.GEN.SUN-MD-99.A,,,,,,,,,,,,,,,,,
+Maryland : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-MD-99.A,--,--,--,--,--,--,--,--,--,0,3,22,63,98,119,209,329
+Maryland : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-MD-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Maryland : all solar,,ELEC.GEN.TSN-MD-99.A,,,,,,,,,,,,,,,,,
+Maryland : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-MD-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,253,339,519,737
+Maryland : all utility-scale solar,,ELEC.GEN.SUN-MD-99.A,,,,,,,,,,,,,,,,,
+Maryland : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-MD-99.A,--,--,--,--,--,--,--,--,--,0,3,22,63,98,119,209,329
+Maryland : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-MD-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+North Carolina,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+North Carolina : all fuels (utility-scale),,ELEC.GEN.ALL-NC-99.A,,,,,,,,,,,,,,,,,
+North Carolina : other renewables,,ELEC.GEN.AOR-NC-99.A,,,,,,,,,,,,,,,,,
+North Carolina : wind,thousand megawatthours,ELEC.GEN.WND-NC-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,6,471
+North Carolina : all utility-scale solar,,ELEC.GEN.SUN-NC-99.A,,,,,,,,,,,,,,,,,
+North Carolina : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-NC-99.A,--,--,--,--,--,--,--,2,5,11,17,139,345,729,1374,3421,5578
+North Carolina : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-NC-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+North Carolina : all solar,,ELEC.GEN.TSN-NC-99.A,,,,,,,,,,,,,,,,,
+North Carolina : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-NC-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,74,86,167,204
+North Carolina : all utility-scale solar,,ELEC.GEN.SUN-NC-99.A,,,,,,,,,,,,,,,,,
+North Carolina : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-NC-99.A,--,--,--,--,--,--,--,2,5,11,17,139,345,729,1374,3421,5578
+North Carolina : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-NC-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+South Carolina,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+South Carolina : all fuels (utility-scale),,ELEC.GEN.ALL-SC-99.A,,,,,,,,,,,,,,,,,
+South Carolina : other renewables,,ELEC.GEN.AOR-SC-99.A,,,,,,,,,,,,,,,,,
+South Carolina : wind,thousand megawatthours,ELEC.GEN.WND-SC-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+South Carolina : all utility-scale solar,,ELEC.GEN.SUN-SC-99.A,,,,,,,,,,,,,,,,,
+South Carolina : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-SC-99.A,--,--,--,--,--,--,--,--,--,--,--,--,0,5,4,5,106
+South Carolina : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-SC-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+South Carolina : all solar,,ELEC.GEN.TSN-SC-99.A,,,,,,,,,,,,,,,,,
+South Carolina : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-SC-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,4,7,36,139
+South Carolina : all utility-scale solar,,ELEC.GEN.SUN-SC-99.A,,,,,,,,,,,,,,,,,
+South Carolina : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-SC-99.A,--,--,--,--,--,--,--,--,--,--,--,--,0,5,4,5,106
+South Carolina : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-SC-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Virginia,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Virginia : all fuels (utility-scale),,ELEC.GEN.ALL-VA-99.A,,,,,,,,,,,,,,,,,
+Virginia : other renewables,,ELEC.GEN.AOR-VA-99.A,,,,,,,,,,,,,,,,,
+Virginia : wind,thousand megawatthours,ELEC.GEN.WND-VA-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Virginia : all utility-scale solar,,ELEC.GEN.SUN-VA-99.A,,,,,,,,,,,,,,,,,
+Virginia : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-VA-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,21,375
+Virginia : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-VA-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Virginia : all solar,,ELEC.GEN.TSN-VA-99.A,,,,,,,,,,,,,,,,,
+Virginia : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-VA-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,22,30,41,66
+Virginia : all utility-scale solar,,ELEC.GEN.SUN-VA-99.A,,,,,,,,,,,,,,,,,
+Virginia : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-VA-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,21,375
+Virginia : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-VA-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+West Virginia,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+West Virginia : all fuels (utility-scale),,ELEC.GEN.ALL-WV-99.A,,,,,,,,,,,,,,,,,
+West Virginia : other renewables,,ELEC.GEN.AOR-WV-99.A,,,,,,,,,,,,,,,,,
+West Virginia : wind,thousand megawatthours,ELEC.GEN.WND-WV-99.A,--,9,170,161,154,174,168,392,742,939,1103,1286,1387,1451,1376,1432,1607
+West Virginia : all utility-scale solar,,ELEC.GEN.SUN-WV-99.A,,,,,,,,,,,,,,,,,
+West Virginia : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-WV-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+West Virginia : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-WV-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+West Virginia : all solar,,ELEC.GEN.TSN-WV-99.A,,,,,,,,,,,,,,,,,
+West Virginia : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-WV-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,4,4,6,8
+West Virginia : all utility-scale solar,,ELEC.GEN.SUN-WV-99.A,,,,,,,,,,,,,,,,,
+West Virginia : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-WV-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+West Virginia : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-WV-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+East South Central,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Alabama,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Alabama : all fuels (utility-scale),,ELEC.GEN.ALL-AL-99.A,,,,,,,,,,,,,,,,,
+Alabama : other renewables,,ELEC.GEN.AOR-AL-99.A,,,,,,,,,,,,,,,,,
+Alabama : wind,thousand megawatthours,ELEC.GEN.WND-AL-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Alabama : all utility-scale solar,,ELEC.GEN.SUN-AL-99.A,,,,,,,,,,,,,,,,,
+Alabama : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-AL-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,31,203
+Alabama : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-AL-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Alabama : all solar,,ELEC.GEN.TSN-AL-99.A,,,,,,,,,,,,,,,,,
+Alabama : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-AL-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,3,3,8,8
+Alabama : all utility-scale solar,,ELEC.GEN.SUN-AL-99.A,,,,,,,,,,,,,,,,,
+Alabama : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-AL-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,31,203
+Alabama : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-AL-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Kentucky,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Kentucky : all fuels (utility-scale),,ELEC.GEN.ALL-KY-99.A,,,,,,,,,,,,,,,,,
+Kentucky : other renewables,,ELEC.GEN.AOR-KY-99.A,,,,,,,,,,,,,,,,,
+Kentucky : wind,thousand megawatthours,ELEC.GEN.WND-KY-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Kentucky : all utility-scale solar,,ELEC.GEN.SUN-KY-99.A,,,,,,,,,,,,,,,,,
+Kentucky : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-KY-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,12,20
+Kentucky : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-KY-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Kentucky : all solar,,ELEC.GEN.TSN-KY-99.A,,,,,,,,,,,,,,,,,
+Kentucky : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-KY-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,13,14,20,26
+Kentucky : all utility-scale solar,,ELEC.GEN.SUN-KY-99.A,,,,,,,,,,,,,,,,,
+Kentucky : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-KY-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,12,20
+Kentucky : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-KY-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Mississippi,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Mississippi : all fuels (utility-scale),,ELEC.GEN.ALL-MS-99.A,,,,,,,,,,,,,,,,,
+Mississippi : other renewables,,ELEC.GEN.AOR-MS-99.A,,,,,,,,,,,,,,,,,
+Mississippi : wind,thousand megawatthours,ELEC.GEN.WND-MS-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Mississippi : all utility-scale solar,,ELEC.GEN.SUN-MS-99.A,,,,,,,,,,,,,,,,,
+Mississippi : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-MS-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,0,88
+Mississippi : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-MS-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Mississippi : all solar,,ELEC.GEN.TSN-MS-99.A,,,,,,,,,,,,,,,,,
+Mississippi : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-MS-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,2,2,6,11
+Mississippi : all utility-scale solar,,ELEC.GEN.SUN-MS-99.A,,,,,,,,,,,,,,,,,
+Mississippi : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-MS-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,0,88
+Mississippi : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-MS-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Tennessee,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Tennessee : all fuels (utility-scale),,ELEC.GEN.ALL-TN-99.A,,,,,,,,,,,,,,,,,
+Tennessee : other renewables,,ELEC.GEN.AOR-TN-99.A,,,,,,,,,,,,,,,,,
+Tennessee : wind,thousand megawatthours,ELEC.GEN.WND-TN-99.A,--,4,4,4,3,55,50,50,52,41,53,47,47,51,46,38,30
+Tennessee : all utility-scale solar,,ELEC.GEN.SUN-TN-99.A,,,,,,,,,,,,,,,,,
+Tennessee : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-TN-99.A,--,--,--,--,--,--,--,--,--,--,--,12,20,27,76,79,150
+Tennessee : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-TN-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Tennessee : all solar,,ELEC.GEN.TSN-TN-99.A,,,,,,,,,,,,,,,,,
+Tennessee : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-TN-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,60,60,86,87
+Tennessee : all utility-scale solar,,ELEC.GEN.SUN-TN-99.A,,,,,,,,,,,,,,,,,
+Tennessee : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-TN-99.A,--,--,--,--,--,--,--,--,--,--,--,12,20,27,76,79,150
+Tennessee : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-TN-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+West South Central,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Arkansas,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Arkansas : all fuels (utility-scale),,ELEC.GEN.ALL-AR-99.A,,,,,,,,,,,,,,,,,
+Arkansas : other renewables,,ELEC.GEN.AOR-AR-99.A,,,,,,,,,,,,,,,,,
+Arkansas : wind,thousand megawatthours,ELEC.GEN.WND-AR-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Arkansas : all utility-scale solar,,ELEC.GEN.SUN-AR-99.A,,,,,,,,,,,,,,,,,
+Arkansas : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-AR-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,1,26,29
+Arkansas : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-AR-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Arkansas : all solar,,ELEC.GEN.TSN-AR-99.A,,,,,,,,,,,,,,,,,
+Arkansas : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-AR-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,5,5,7,11
+Arkansas : all utility-scale solar,,ELEC.GEN.SUN-AR-99.A,,,,,,,,,,,,,,,,,
+Arkansas : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-AR-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,1,26,29
+Arkansas : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-AR-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Louisiana,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Louisiana : all fuels (utility-scale),,ELEC.GEN.ALL-LA-99.A,,,,,,,,,,,,,,,,,
+Louisiana : other renewables,,ELEC.GEN.AOR-LA-99.A,,,,,,,,,,,,,,,,,
+Louisiana : wind,thousand megawatthours,ELEC.GEN.WND-LA-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Louisiana : all utility-scale solar,,ELEC.GEN.SUN-LA-99.A,,,,,,,,,,,,,,,,,
+Louisiana : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-LA-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Louisiana : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-LA-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Louisiana : all solar,,ELEC.GEN.TSN-LA-99.A,,,,,,,,,,,,,,,,,
+Louisiana : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-LA-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,104,153,191,208
+Louisiana : all utility-scale solar,,ELEC.GEN.SUN-LA-99.A,,,,,,,,,,,,,,,,,
+Louisiana : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-LA-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Louisiana : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-LA-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Oklahoma,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Oklahoma : all fuels (utility-scale),,ELEC.GEN.ALL-OK-99.A,,,,,,,,,,,,,,,,,
+Oklahoma : other renewables,,ELEC.GEN.AOR-OK-99.A,,,,,,,,,,,,,,,,,
+Oklahoma : wind,thousand megawatthours,ELEC.GEN.WND-OK-99.A,--,--,54,573,848,1712,1849,2358,2698,3808,5605,8158,11162,11937,14031,20069,24404
+Oklahoma : all utility-scale solar,,ELEC.GEN.SUN-OK-99.A,,,,,,,,,,,,,,,,,
+Oklahoma : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-OK-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,2,5,39
+Oklahoma : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-OK-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Oklahoma : all solar,,ELEC.GEN.TSN-OK-99.A,,,,,,,,,,,,,,,,,
+Oklahoma : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-OK-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,2,3,4,6
+Oklahoma : all utility-scale solar,,ELEC.GEN.SUN-OK-99.A,,,,,,,,,,,,,,,,,
+Oklahoma : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-OK-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,2,5,39
+Oklahoma : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-OK-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Texas,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Texas : all fuels (utility-scale),,ELEC.GEN.ALL-TX-99.A,,,,,,,,,,,,,,,,,
+Texas : other renewables,,ELEC.GEN.AOR-TX-99.A,,,,,,,,,,,,,,,,,
+Texas : wind,thousand megawatthours,ELEC.GEN.WND-TX-99.A,1188,2656,2570,3138,4237,6671,9006,16225,20026,26251,30548,32214,35874,40005,44833,57531,67092
+Texas : all utility-scale solar,,ELEC.GEN.SUN-TX-99.A,,,,,,,,,,,,,,,,,
+Texas : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-TX-99.A,--,--,--,--,--,--,--,--,--,8,29,115,163,282,401,731,2119
+Texas : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-TX-99.A,--,--,--,--,--,--,--,--,--,--,--,3,--,--,--,--,--
+Texas : all solar,,ELEC.GEN.TSN-TX-99.A,,,,,,,,,,,,,,,,,
+Texas : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-TX-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,164,223,391,695
+Texas : all utility-scale solar,,ELEC.GEN.SUN-TX-99.A,,,,,,,,,,,,,,,,,
+Texas : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-TX-99.A,--,--,--,--,--,--,--,--,--,8,29,115,163,282,401,731,2119
+Texas : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-TX-99.A,--,--,--,--,--,--,--,--,--,--,--,3,--,--,--,--,--
+Mountain,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Arizona,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Arizona : all fuels (utility-scale),,ELEC.GEN.ALL-AZ-99.A,,,,,,,,,,,,,,,,,
+Arizona : other renewables,,ELEC.GEN.AOR-AZ-99.A,,,,,,,,,,,,,,,,,
+Arizona : wind,thousand megawatthours,ELEC.GEN.WND-AZ-99.A,--,--,--,--,--,--,--,--,30,135,256,532,450,468,452,542,588
+Arizona : all utility-scale solar,,ELEC.GEN.SUN-AZ-99.A,,,,,,,,,,,,,,,,,
+Arizona : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-AZ-99.A,--,--,0,4,14,13,8,14,14,13,81,955,2022,2538,2738,3122,4013
+Arizona : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-AZ-99.A,--,--,--,--,--,0,1,1,1,3,2,0,89,604,719,644,724
+Arizona : all solar,,ELEC.GEN.TSN-AZ-99.A,,,,,,,,,,,,,,,,,
+Arizona : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-AZ-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,1101,1370,1603,1761
+Arizona : all utility-scale solar,,ELEC.GEN.SUN-AZ-99.A,,,,,,,,,,,,,,,,,
+Arizona : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-AZ-99.A,--,--,0,4,14,13,8,14,14,13,81,955,2022,2538,2738,3122,4013
+Arizona : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-AZ-99.A,--,--,--,--,--,0,1,1,1,3,2,0,89,604,719,644,724
+Colorado,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Colorado : all fuels (utility-scale),,ELEC.GEN.ALL-CO-99.A,,,,,,,,,,,,,,,,,
+Colorado : other renewables,,ELEC.GEN.AOR-CO-99.A,,,,,,,,,,,,,,,,,
+Colorado : wind,thousand megawatthours,ELEC.GEN.WND-CO-99.A,49,139,147,220,776,866,1292,3221,3164,3452,5200,5969,7204,7369,7475,9421,9567
+Colorado : all utility-scale solar,,ELEC.GEN.SUN-CO-99.A,,,,,,,,,,,,,,,,,
+Colorado : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-CO-99.A,--,--,--,--,--,--,2,18,26,42,105,165,248,253,251,538,935
+Colorado : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-CO-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Colorado : all solar,,ELEC.GEN.TSN-CO-99.A,,,,,,,,,,,,,,,,,
+Colorado : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-CO-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,353,391,461,528
+Colorado : all utility-scale solar,,ELEC.GEN.SUN-CO-99.A,,,,,,,,,,,,,,,,,
+Colorado : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-CO-99.A,--,--,--,--,--,--,2,18,26,42,105,165,248,253,251,538,935
+Colorado : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-CO-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Idaho,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Idaho : all fuels (utility-scale),,ELEC.GEN.ALL-ID-99.A,,,,,,,,,,,,,,,,,
+Idaho : other renewables,,ELEC.GEN.AOR-ID-99.A,,,,,,,,,,,,,,,,,
+Idaho : wind,thousand megawatthours,ELEC.GEN.WND-ID-99.A,--,--,--,--,--,170,172,207,313,441,1307,1891,2460,2806,2270,2578,2453
+Idaho : all utility-scale solar,,ELEC.GEN.SUN-ID-99.A,,,,,,,,,,,,,,,,,
+Idaho : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-ID-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,30,494
+Idaho : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-ID-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Idaho : all solar,,ELEC.GEN.TSN-ID-99.A,,,,,,,,,,,,,,,,,
+Idaho : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-ID-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,4,6,10,16
+Idaho : all utility-scale solar,,ELEC.GEN.SUN-ID-99.A,,,,,,,,,,,,,,,,,
+Idaho : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-ID-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,30,494
+Idaho : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-ID-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Montana,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Montana : all fuels (utility-scale),,ELEC.GEN.ALL-MT-99.A,,,,,,,,,,,,,,,,,
+Montana : other renewables,,ELEC.GEN.AOR-MT-99.A,,,,,,,,,,,,,,,,,
+Montana : wind,thousand megawatthours,ELEC.GEN.WND-MT-99.A,--,--,--,--,--,436,496,593,821,930,1265,1262,1755,1974,1965,2140,2150
+Montana : all utility-scale solar,,ELEC.GEN.SUN-MT-99.A,,,,,,,,,,,,,,,,,
+Montana : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-MT-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,21
+Montana : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-MT-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Montana : all solar,,ELEC.GEN.TSN-MT-99.A,,,,,,,,,,,,,,,,,
+Montana : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-MT-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,11,8,11,15
+Montana : all utility-scale solar,,ELEC.GEN.SUN-MT-99.A,,,,,,,,,,,,,,,,,
+Montana : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-MT-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,21
+Montana : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-MT-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Nevada,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Nevada : all fuels (utility-scale),,ELEC.GEN.ALL-NV-99.A,,,,,,,,,,,,,,,,,
+Nevada : other renewables,,ELEC.GEN.AOR-NV-99.A,,,,,,,,,,,,,,,,,
+Nevada : wind,thousand megawatthours,ELEC.GEN.WND-NV-99.A,--,--,--,--,--,--,--,--,--,--,--,129,251,300,310,344,361
+Nevada : all utility-scale solar,,ELEC.GEN.SUN-NV-99.A,,,,,,,,,,,,,,,,,
+Nevada : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-NV-99.A,--,--,--,--,--,--,3,33,54,84,163,344,633,897,1548,2880,3675
+Nevada : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-NV-99.A,--,--,--,--,--,--,41,123,121,133,128,129,113,116,109,244,160
+Nevada : all solar,,ELEC.GEN.TSN-NV-99.A,,,,,,,,,,,,,,,,,
+Nevada : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-NV-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,104,186,372,406
+Nevada : all utility-scale solar,,ELEC.GEN.SUN-NV-99.A,,,,,,,,,,,,,,,,,
+Nevada : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-NV-99.A,--,--,--,--,--,--,3,33,54,84,163,344,633,897,1548,2880,3675
+Nevada : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-NV-99.A,--,--,--,--,--,--,41,123,121,133,128,129,113,116,109,244,160
+New Mexico,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+New Mexico : all fuels (utility-scale),,ELEC.GEN.ALL-NM-99.A,,,,,,,,,,,,,,,,,
+New Mexico : other renewables,,ELEC.GEN.AOR-NM-99.A,,,,,,,,,,,,,,,,,
+New Mexico : wind,thousand megawatthours,ELEC.GEN.WND-NM-99.A,--,--,183,513,795,1255,1393,1643,1547,1832,2104,2226,2193,2275,2090,3605,4542
+New Mexico : all utility-scale solar,,ELEC.GEN.SUN-NM-99.A,,,,,,,,,,,,,,,,,
+New Mexico : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-NM-99.A,--,--,--,--,--,--,--,--,--,9,128,334,388,515,615,752,1110
+New Mexico : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-NM-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+New Mexico : all solar,,ELEC.GEN.TSN-NM-99.A,,,,,,,,,,,,,,,,,
+New Mexico : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-NM-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,120,142,157,203
+New Mexico : all utility-scale solar,,ELEC.GEN.SUN-NM-99.A,,,,,,,,,,,,,,,,,
+New Mexico : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-NM-99.A,--,--,--,--,--,--,--,--,--,9,128,334,388,515,615,752,1110
+New Mexico : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-NM-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Utah,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Utah : all fuels (utility-scale),,ELEC.GEN.ALL-UT-99.A,,,,,,,,,,,,,,,,,
+Utah : other renewables,,ELEC.GEN.AOR-UT-99.A,,,,,,,,,,,,,,,,,
+Utah : wind,thousand megawatthours,ELEC.GEN.WND-UT-99.A,--,--,--,--,--,--,--,24,160,448,573,704,540,660,626,822,935
+Utah : all utility-scale solar,,ELEC.GEN.SUN-UT-99.A,,,,,,,,,,,,,,,,,
+Utah : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-UT-99.A,--,--,--,--,--,--,--,--,--,--,--,2,2,2,32,1054,1974
+Utah : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-UT-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Utah : all solar,,ELEC.GEN.TSN-UT-99.A,,,,,,,,,,,,,,,,,
+Utah : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-UT-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,37,67,150,288
+Utah : all utility-scale solar,,ELEC.GEN.SUN-UT-99.A,,,,,,,,,,,,,,,,,
+Utah : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-UT-99.A,--,--,--,--,--,--,--,--,--,--,--,2,2,2,32,1054,1974
+Utah : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-UT-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Wyoming,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Wyoming : all fuels (utility-scale),,ELEC.GEN.ALL-WY-99.A,,,,,,,,,,,,,,,,,
+Wyoming : other renewables,,ELEC.GEN.AOR-WY-99.A,,,,,,,,,,,,,,,,,
+Wyoming : wind,thousand megawatthours,ELEC.GEN.WND-WY-99.A,365,447,366,617,717,759,755,963,2226,3247,4612,4369,4433,4406,3757,4389,4398
+Wyoming : all utility-scale solar,,ELEC.GEN.SUN-WY-99.A,,,,,,,,,,,,,,,,,
+Wyoming : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-WY-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Wyoming : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-WY-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Wyoming : all solar,,ELEC.GEN.TSN-WY-99.A,,,,,,,,,,,,,,,,,
+Wyoming : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-WY-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,2,3,3,5
+Wyoming : all utility-scale solar,,ELEC.GEN.SUN-WY-99.A,,,,,,,,,,,,,,,,,
+Wyoming : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-WY-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Wyoming : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-WY-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Pacific Contiguous,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+California,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+California : all fuels (utility-scale),,ELEC.GEN.ALL-CA-99.A,,,,,,,,,,,,,,,,,
+California : other renewables,,ELEC.GEN.AOR-CA-99.A,,,,,,,,,,,,,,,,,
+California : wind,thousand megawatthours,ELEC.GEN.WND-CA-99.A,3500,3803,3895,4306,4262,4883,5585,5385,5840,6079,7752,9754,12822,12992,12230,13509,13971
+California : all utility-scale solar,,ELEC.GEN.SUN-CA-99.A,,,,,,,,,,,,,,,,,
+California : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-CA-99.A,--,--,2,2,2,2,3,6,34,116,242,743,3205,8336,12522,16386,20736
+California : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-CA-99.A,--,--,532,569,535,493,554,665,613,654,647,640,609,1595,2293,2421,2364
+California : all solar,,ELEC.GEN.TSN-CA-99.A,,,,,,,,,,,,,,,,,
+California : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-CA-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,4674,6014,8230,10633
+California : all utility-scale solar,,ELEC.GEN.SUN-CA-99.A,,,,,,,,,,,,,,,,,
+California : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-CA-99.A,--,--,2,2,2,2,3,6,34,116,242,743,3205,8336,12522,16386,20736
+California : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-CA-99.A,--,--,532,569,535,493,554,665,613,654,647,640,609,1595,2293,2421,2364
+Oregon,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Oregon : all fuels (utility-scale),,ELEC.GEN.ALL-OR-99.A,,,,,,,,,,,,,,,,,
+Oregon : other renewables,,ELEC.GEN.AOR-OR-99.A,,,,,,,,,,,,,,,,,
+Oregon : wind,thousand megawatthours,ELEC.GEN.WND-OR-99.A,89,376,444,619,734,931,1247,2575,3470,3920,4775,6343,7456,7555,6632,7157,6506
+Oregon : all utility-scale solar,,ELEC.GEN.SUN-OR-99.A,,,,,,,,,,,,,,,,,
+Oregon : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-OR-99.A,--,--,--,--,--,--,--,--,--,--,0,6,20,24,24,41,241
+Oregon : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-OR-99.A,--,--,--,--,--,--,--,--,--,--,--,1,--,--,--,--,--
+Oregon : all solar,,ELEC.GEN.TSN-OR-99.A,,,,,,,,,,,,,,,,,
+Oregon : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-OR-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,80,92,151,179
+Oregon : all utility-scale solar,,ELEC.GEN.SUN-OR-99.A,,,,,,,,,,,,,,,,,
+Oregon : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-OR-99.A,--,--,--,--,--,--,--,--,--,--,0,6,20,24,24,41,241
+Oregon : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-OR-99.A,--,--,--,--,--,--,--,--,--,--,--,1,--,--,--,--,--
+Washington,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Washington : all fuels (utility-scale),,ELEC.GEN.ALL-WA-99.A,,,,,,,,,,,,,,,,,
+Washington : other renewables,,ELEC.GEN.AOR-WA-99.A,,,,,,,,,,,,,,,,,
+Washington : wind,thousand megawatthours,ELEC.GEN.WND-WA-99.A,--,417,604,737,498,1038,2438,3657,3572,4745,6262,6600,7004,7268,7075,8042,7481
+Washington : all utility-scale solar,,ELEC.GEN.SUN-WA-99.A,,,,,,,,,,,,,,,,,
+Washington : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-WA-99.A,--,--,--,--,--,--,--,0,0,0,1,1,1,1,1,1,0
+Washington : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-WA-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Washington : all solar,,ELEC.GEN.TSN-WA-99.A,,,,,,,,,,,,,,,,,
+Washington : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-WA-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,36,55,89,116
+Washington : all utility-scale solar,,ELEC.GEN.SUN-WA-99.A,,,,,,,,,,,,,,,,,
+Washington : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-WA-99.A,--,--,--,--,--,--,--,0,0,0,1,1,1,1,1,1,0
+Washington : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-WA-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Pacific Noncontiguous,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Alaska,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Alaska : all fuels (utility-scale),,ELEC.GEN.ALL-AK-99.A,,,,,,,,,,,,,,,,,
+Alaska : other renewables,,ELEC.GEN.AOR-AK-99.A,,,,,,,,,,,,,,,,,
+Alaska : wind,thousand megawatthours,ELEC.GEN.WND-AK-99.A,1,--,--,--,1,1,1,0,7,13,12,37,145,152,160,169,164
+Alaska : all utility-scale solar,,ELEC.GEN.SUN-AK-99.A,,,,,,,,,,,,,,,,,
+Alaska : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-AK-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Alaska : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-AK-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Alaska : all solar,,ELEC.GEN.TSN-AK-99.A,,,,,,,,,,,,,,,,,
+Alaska : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-AK-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,1,2
+Alaska : all utility-scale solar,,ELEC.GEN.SUN-AK-99.A,,,,,,,,,,,,,,,,,
+Alaska : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-AK-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Alaska : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-AK-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Hawaii,,ELEC.GEN..A,,,,,,,,,,,,,,,,,
+Hawaii : all fuels (utility-scale),,ELEC.GEN.ALL-HI-99.A,,,,,,,,,,,,,,,,,
+Hawaii : other renewables,,ELEC.GEN.AOR-HI-99.A,,,,,,,,,,,,,,,,,
+Hawaii : wind,thousand megawatthours,ELEC.GEN.WND-HI-99.A,2,2,2,7,7,80,238,240,251,261,341,378,503,579,613,639,643
+Hawaii : all utility-scale solar,,ELEC.GEN.SUN-HI-99.A,,,,,,,,,,,,,,,,,
+Hawaii : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-HI-99.A,--,--,--,--,--,--,--,0,1,2,4,5,19,39,54,89,194
+Hawaii : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-HI-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Hawaii : all solar,,ELEC.GEN.TSN-HI-99.A,,,,,,,,,,,,,,,,,
+Hawaii : small-scale solar photovoltaic,thousand megawatthours,ELEC.GEN.DPV-HI-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,551,632,760,971
+Hawaii : all utility-scale solar,,ELEC.GEN.SUN-HI-99.A,,,,,,,,,,,,,,,,,
+Hawaii : utility-scale photovoltaic,thousand megawatthours,ELEC.GEN.SPV-HI-99.A,--,--,--,--,--,--,--,0,1,2,4,5,19,39,54,89,194
+Hawaii : utility-scale thermal,thousand megawatthours,ELEC.GEN.STH-HI-99.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,-- 
