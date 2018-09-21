@@ -98,6 +98,8 @@ module_water_L101.water.supply.groundwater <- function(command, ...) {
 
     # Step 3: Prepare constrained groundwater
     gw_constrained %>%
+      mutate(scenario = scenario) %>%
+      # ^^ removes attributes from input
       filter(scenario == water.GROUNDWATER_SCENARIO) %>%
       select(-scenario) ->
       L101.groundwater_grades_constrained_bm3

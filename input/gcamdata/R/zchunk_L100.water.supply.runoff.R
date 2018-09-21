@@ -81,7 +81,7 @@ module_water_L100.water.supply.runoff <- function(command, ...) {
       L100.runoff_max_bm3
 
     L100.runoff_accessible %>%
-      add_title("XXXX") %>%
+      add_title("Proportion of runoff available for access by basin") %>%
       add_units("Unitless") %>%
       add_comments("XXXX") %>%
       add_legacy_name("L100.runoff_max_bm3") %>%
