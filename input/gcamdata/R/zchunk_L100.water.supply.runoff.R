@@ -23,6 +23,9 @@ module_water_L100.water.supply.runoff <- function(command, ...) {
              "L100.runoff_accessible"))
   } else if(command == driver.MAKE) {
 
+    year <- runoff <- name <- accessible_water <-
+      access_fraction <- basin_id <- runoff_max <- NULL
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
