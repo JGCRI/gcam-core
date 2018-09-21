@@ -542,6 +542,17 @@ water.GCAM_MFG_FUELS_EFW <- c( "electricity" )
 # manufacturing. Used to set a cap on derived manufacturing water withdrawals
 water.MAX_MFG_FRAC_OF_IND <- 0.85
 
+# Groundwater may be calibrated using either the "watergap" or "gleeson" historical groundwater depletion estimates.
+water.GROUNDWATER_CALIBRATION <- "watergap"  # "gleeson"
+water.GROUNDWATER_SCENARIO <- "25pct" # may be "05pct", "25pct", or "40pct" (i.e., 5, 25, 40 % of groundwater)
+
+# Groundwater depletable resource curve parameters (see Kim et al., 2016)
+water.GROUNDWATER_MAX_PRICE_INC <- 10000
+water.GROUNDWATER_UNIFORM_GRADES <- 10
+water.GROUNDWATER_BETA <- 1.0
+
+
+
 # Emissions constants ======================================================================
 
 # Time

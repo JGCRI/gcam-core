@@ -1,4 +1,4 @@
-# File: groundwater_uniform
+# File: groundwater_uniform.csv
 # Title: Parameters for uniform ground water resource supply curves
 # Source: Kim et al. 2016. Balancing global water availability and use at basin scale in an integrated assessment model. Climatic Change, 136(2), pp.217-231.
 # Comments: alpha parameter is 0.5, water depth at 50 percentile, water price from 14 region version mapped to 32 region version of GCAM
