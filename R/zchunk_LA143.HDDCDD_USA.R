@@ -314,8 +314,7 @@ module_gcam.usa_LA143.HDDCDD <- function(command, ...) {
       mutate(DD = value_sR9 / pop_SR9) %>%
       select(subregion9, variable, DD) %>%
       repeat_add_columns(tibble::tibble(year = AEO_DD_years)) %>%
-      # apparently you can't filter within left_join_error_no_match ???
-      left_join(AEO_2015_HDDCDD %>%
+      left_join_error_no_match(AEO_2015_HDDCDD %>%
                   gather_years("value_AEO") %>%
                   filter(year %in% AEO_DD_years,
                          subregion9 != "USA"),
@@ -328,7 +327,8 @@ module_gcam.usa_LA143.HDDCDD <- function(command, ...) {
     DD_His %>%
       select(-subregion13, -historical_value) %>%
       left_join_error_no_match(L143.DDmult_sR9_Y_AEO %>%
-                                 filter(year == max(HISTORICAL_YEARS)) %>%
+                                 filter(year == min(AEO_DD_years)) %>%
+                                 # filter(year == max(HISTORICAL_YEARS)) %>%
                                  distinct(subregion9, variable, value_AEO),
                                by = c("subregion9", "variable")) %>%
       mutate(value = value * value_AEO) -> L143.HDDCDD_AEO_hist_years
