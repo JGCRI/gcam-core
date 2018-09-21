@@ -42,7 +42,8 @@ Imports:
     tibble (>= 1.1),
     tidyr (>= 0.7.1),
     readr (>= 1.0.0),
-    data.table (>= 1.10.4)
+    data.table (>= 1.10.4),
+    purrr (>= 0.2.4)
 Suggests:
     igraph (>= 1.0.1),
     mockr (>= 0.1),
