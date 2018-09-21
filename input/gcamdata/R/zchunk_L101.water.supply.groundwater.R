@@ -136,7 +136,7 @@ module_water_L101.water.supply.groundwater <- function(command, ...) {
       add_comments("These curves are not based on estimates of actual groundwater volumes") %>%
       add_legacy_name("L101.groundwater_grades_uniform_bm3") %>%
       add_precursors("water/basin_ID",
-                     "groundwater_uniform") ->
+                     "water/groundwater_uniform") ->
       L101.groundwater_grades_uniform_bm3
 
     L101.groundwater_grades_constrained_bm3 %>%
@@ -145,7 +145,7 @@ module_water_L101.water.supply.groundwater <- function(command, ...) {
       add_comments("These curves are based on global estimates of groundwater volumes") %>%
       add_legacy_name("L101.groundwater_grades_constrained_bm3") %>%
       add_precursors("water/basin_ID",
-                     "gw_constrained") ->
+                     "water/groundwater_constrained") ->
       L101.groundwater_grades_constrained_bm3
 
     L101.groundwater_depletion_bm3 %>%
