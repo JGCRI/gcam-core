@@ -99,8 +99,8 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
     # Clean FAO production and harvested area tables
     L100.FAO_ag_HA_ha %>%
       select(-countries, -country.codes, -item.codes, -element, -element.codes) %>%                             # Remove unnecessary columns
-      mutate(iso = if_else(iso %in% c("srb", "mne"), "scg", iso)) %>%                                           # Re-map Serbia and Montenegro (separately) to the same country, for matching with Monfreda data
-      group_by(item, iso, year) %>%
+      mutate(iso = if_else(iso %in% c("srb", "mne"), "scg", iso)) %>%                                           # Re-map Serbia (srb) and Montenegro (mne) to the iso code for the single country (scg)
+      group_by(item, iso, year) %>%                                                                             # scg is the iso code in the Monfreda data because its base year is ~2000
       summarize(value = sum(value)) ->                                                                          # Aggregate by ISO, item, and region (some iso codes apply to multiple lines in data)
       FAO_ag_HA_ha
 
@@ -108,8 +108,8 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
       select(-countries, -country.codes, -item.codes, -element, -element.codes) %>%                             # Remove unnecessary columns
       mutate(value = if_else(iso == "usa" & item == "Alfalfa for forage and silage",
                              value / 4, value),                                                                 # Divide USA Alfalfa production by 4 "for consistency with USDA"
-             iso = if_else(iso %in% c("srb", "mne"), "scg", iso)) %>%                                           # Re-map Serbia and Montenegro (separately) to the same country, for matching with Monfreda data
-      group_by(item, iso, year) %>%
+             iso = if_else(iso %in% c("srb", "mne"), "scg", iso)) %>%                                           # Re-map Serbia (srb) and Montenegro (mne) to the iso code for the single country (scg)
+      group_by(item, iso, year) %>%                                                                             # scg is the iso code in the Monfreda data because its base year is ~2000
       summarize(value = sum(value)) ->                                                                          # Aggregate by ISO, item, and region (some iso codes apply to multiple lines in data)
       FAO_ag_Prod_t
 
@@ -125,8 +125,8 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
     # of each GCAM commodity in the Monfreda (pre-processed by LDS) data on harvested area and production
     # Note - using GCAM commodities rather than specific crops in this task. This avoids dropping data, particularly
     # for the grass fodder crops which are poorly matched with the FAO data.
-    LDS_ctry_crop_SHARES <-
-      left_join_error_no_match(L100.LDS_ag_HA_ha, L100.LDS_ag_prod_t,
+    L100.LDS_ag_HA_ha %>%
+      left_join_error_no_match(L100.LDS_ag_prod_t,
                                by = c("iso", "GLU", "GTAP_crop")) %>%                                           # Join the Monfreda/LDS datasets of production and harvested area
       rename(harvested.area = value.x,
              production = value.y) %>%
@@ -139,73 +139,83 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
       group_by(iso, GCAM_commodity) %>%
       mutate(HA_share_GLU = harvested.area / sum(harvested.area),                                               # Compute the shares of country/crop/GLU within country/crop
              prod_share_GLU = production / sum(production)) %>%
-      ungroup()
+      ungroup() ->
+      LDS_ctry_crop_SHARES
+      
 
     # Compute default basin-within-country shares to be used where FAOSTAT has data but LDS/Monfreda does not.
     # These shares are computed from the harvested area of all crops available in Monfreda.
     # Harvested area is used to avoid compositional bias from different crop types in different basins.
-    LDS_ctry_SHARES <- group_by(LDS_ctry_crop_SHARES, iso, GLU) %>%
+    LDS_ctry_crop_SHARES %>%
+      group_by(iso, GLU) %>%
       summarise(harvested.area = sum(harvested.area)) %>%
       ungroup() %>%
       group_by(iso) %>%
       mutate(default_share_GLU = harvested.area / sum(harvested.area)) %>%
       ungroup() %>%
-      select(iso, GLU, default_share_GLU)
+      select(iso, GLU, default_share_GLU) ->
+      LDS_ctry_SHARES
 
     # only take the columns required for later steps in the LDS_ctry_crop_SHARES data table
     LDS_ctry_crop_SHARES <- select(LDS_ctry_crop_SHARES, iso, GLU, GCAM_commodity, HA_share_GLU, prod_share_GLU)
 
     # FAO_PRODSTAT_DOWNSCALED: FAO Prodstat data aggregated by GCAM commodity and downscaled to GLU.
-    FAO_PRODSTAT_DOWNSCALED <- FAO_PRODSTAT_MERGED %>%
+     FAO_PRODSTAT_MERGED %>%
       left_join_error_no_match(distinct(select(FAO_ag_items_PRODSTAT, item, GCAM_commodity)), by = "item",      # distinct() to avoid duplicating data for items with multiple rows in FAO_ag_items_PRODSTAT
                                ignore_columns = "GCAM_commodity") %>%                                           # ignore GCAM_commodity column to avoid error in ljenm (this column has NA for FAO items not modeled in GCAM)
       filter(!is.na(GCAM_commodity)) %>%                                                                        # Remove commodities not included in GCAM
       group_by(iso, GCAM_commodity, year) %>%
       summarise(harvested.area = sum(harvested.area),
                 production = sum(production)) %>%
-      ungroup()
+      ungroup() ->
+      FAO_PRODSTAT_DOWNSCALED
 
     # First group: crops and countries in BOTH datasetes (LDS/Monfreda and FAOSTAT)
-    FAO_PRODSTAT_DOWNSCALED_matched <- right_join(FAO_PRODSTAT_DOWNSCALED, LDS_ctry_crop_SHARES,
-                                                  by = c("iso", "GCAM_commodity")) %>%                            # use right_join to exclude crops and countries not in the LDS data
-      drop_na() %>%                                                                                               # NAs are observations in LDS but not FAOSTAT. These are dropped.
-      mutate(harvested.area = harvested.area * HA_share_GLU,                                                      # multiply through by shares of GLU within country and crop
-             production = production * prod_share_GLU) %>%
-      select(-HA_share_GLU, -prod_share_GLU)
+     FAO_PRODSTAT_DOWNSCALED %>%
+       right_join(LDS_ctry_crop_SHARES, by = c("iso", "GCAM_commodity")) %>%                                      # use right_join to exclude crops and countries not in the LDS data
+       drop_na() %>%                                                                                               # NAs are observations in LDS but not FAOSTAT. These are dropped.
+       mutate(harvested.area = harvested.area * HA_share_GLU,                                                      # multiply through by shares of GLU within country and crop
+              production = production * prod_share_GLU) %>%
+       select(-HA_share_GLU, -prod_share_GLU) ->
+       FAO_PRODSTAT_DOWNSCALED_matched
 
      # Second group: country/crop observations missing in LDS/Monfreda where some crops for the country are available
-    FAO_PRODSTAT_DOWNSCALED_cropNA <- anti_join(FAO_PRODSTAT_DOWNSCALED, LDS_ctry_crop_SHARES,
-                                             by = c("iso", "GCAM_commodity")) %>%                                 # Filter the dataset to only observations where the country and crop couldn't be matched
-      full_join(LDS_ctry_SHARES, by = "iso") %>%
-      drop_na() %>%                                                                                               # Drop places where entire country is not available in LDS/Monfreda data
-      mutate(harvested.area = harvested.area * default_share_GLU,                                                      # multiply through by shares of GLU within country and crop
-             production = production * default_share_GLU) %>%
-      select(-default_share_GLU)
+     FAO_PRODSTAT_DOWNSCALED %>%
+       anti_join(LDS_ctry_crop_SHARES, by = c("iso", "GCAM_commodity")) %>%                                        # Filter the dataset to only observations where the country and crop couldn't be matched
+       full_join(LDS_ctry_SHARES, by = "iso") %>%
+       drop_na() %>%                                                                                               # Drop places where entire country is not available in LDS/Monfreda data
+       mutate(harvested.area = harvested.area * default_share_GLU,                                                 # multiply through by shares of GLU within country and crop
+              production = production * default_share_GLU) %>%
+       select(-default_share_GLU) ->
+       FAO_PRODSTAT_DOWNSCALED_cropNA
 
     # Third group: country/crop observations in countries excluded from Monfreda/LDS, but that have cropland in Hyde.
     # These use the Hyde data to downscale to basin. In this method, there is a fourth group that is dropped entirely:
     # countries with data in FAOSTAT, but excluded from Monfreda/LDS and that have no cropland in Hyde.
     # First, compute the cropland basin-within-country from the Hyde countries, for only the countries that are in FAOSTAT but not Monfreda/LDS
-    Hyde_cropland_share_basin <- filter(L100.Land_type_area_ha,
-                                        iso %in% FAO_PRODSTAT_DOWNSCALED$iso &                                   # countries in FAOSTAT
-                                          !iso %in% LDS_ctry_SHARES$iso) %>%                                     # but not in Monfreda/LDS
-      left_join_error_no_match(select(LDS_land_types, Category, LT_SAGE, LT_HYDE), by = c(land_code = "Category")) %>%
-      filter(LT_HYDE == "Cropland",
-             LT_SAGE != "Unknown",                                                                               # Do not assign crop production to lands that are "unknown" in SAGE as these have no land allocation in GCAM.
-             year == 2000) %>%
-      group_by(iso, GLU) %>%
-      summarise(value = sum(value)) %>%
-      ungroup() %>%
-      group_by(iso) %>%
-      mutate(default_share_GLU = value / sum(value)) %>%
-      ungroup() %>%
-      select(iso, GLU, default_share_GLU)
+     L100.Land_type_area_ha %>%
+       filter(iso %in% FAO_PRODSTAT_DOWNSCALED$iso &                                                              # countries in FAOSTAT
+                !iso %in% LDS_ctry_SHARES$iso) %>%                                                                # but not in Monfreda/LDS
+       left_join_error_no_match(select(LDS_land_types, Category, LT_SAGE, LT_HYDE), by = c(land_code = "Category")) %>%
+       filter(LT_HYDE == "Cropland",
+              LT_SAGE != "Unknown",                                                                               # Do not assign crop production to lands that are "unknown" in SAGE as these have no land allocation in GCAM.
+              year == 2000) %>%
+       group_by(iso, GLU) %>%
+       summarise(value = sum(value)) %>%
+       ungroup() %>%
+       group_by(iso) %>%
+       mutate(default_share_GLU = value / sum(value)) %>%
+       ungroup() %>%
+       select(iso, GLU, default_share_GLU) ->
+       Hyde_cropland_share_basin
 
-    FAO_PRODSTAT_DOWNSCALED_countryNA <- filter(FAO_PRODSTAT_DOWNSCALED, iso %in% Hyde_cropland_share_basin$iso) %>%      # Filter to the same set of countries as above (in FAOSTAT, not Monfreda/LDS, with cropland in Hyde)
-      full_join(Hyde_cropland_share_basin, by = "iso") %>%
-      mutate(harvested.area = harvested.area * default_share_GLU,                                                      # multiply through by shares of GLU within country and crop
-             production = production * default_share_GLU) %>%
-      select(-default_share_GLU)
+     FAO_PRODSTAT_DOWNSCALED %>%
+       filter(iso %in% Hyde_cropland_share_basin$iso) %>%                                                         # Filter to the same set of countries as above (in FAOSTAT, not Monfreda/LDS, with cropland in Hyde)
+       full_join(Hyde_cropland_share_basin, by = "iso") %>%
+       mutate(harvested.area = harvested.area * default_share_GLU,                                                # multiply through by shares of GLU within country and crop
+              production = production * default_share_GLU) %>%
+       select(-default_share_GLU) ->
+       FAO_PRODSTAT_DOWNSCALED_countryNA
 
     # FAO downscaled data: bind the three groups together
     FAO_PRODSTAT_DOWNSCALED <- bind_rows(FAO_PRODSTAT_DOWNSCALED_matched,
@@ -261,7 +271,7 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
       arrange(GLU) ->  # so we match old d.s. order
       L101.ag_Yield_kgm2_R_C_Y_GLU
 
-        # Produce outputs
+    # Produce outputs
     L101.ag_Food_Mt_R_C_Y %>%
       add_title("FAO food consumption by GCAM region, commodity, and year") %>%
       add_units("Mt/yr") %>%
@@ -286,9 +296,6 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
       add_precursors("L100.FAO_ag_Food_t", "aglu/FAO/FAO_ag_items_cal_SUA", "common/iso_GCAM_regID") ->
       L101.ag_kcalg_R_C_Y
 
-    # The next four datasets have rounding issues that we couldn't resolve:
-    # they kept failing the 'oldnew' test even though data confirmed to be
-    # the same (to reasonable precision). Use the less-strict sum test for these.
     L101.ag_HA_bm2_R_C_Y_GLU %>%
       add_title("Harvested area by GCAM region, commodity, year, and GLU") %>%
       add_units("billion km2") %>%
