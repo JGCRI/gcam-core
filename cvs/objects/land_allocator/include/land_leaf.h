@@ -180,12 +180,18 @@ protected:
         
         DEFINE_VARIABLE( ARRAY, "parsed-landAllocation", mReadinLandAllocation, objects::PeriodVector<Value> ),
                             
+        //! Name of land constraint policy
+        DEFINE_VARIABLE( SIMPLE, "land-constraint-policy", mLandConstraintPolicy, std::string ),
+                            
         //! State value necessary to use Marketplace::addToDemand for CO2 emissions
         DEFINE_VARIABLE( SIMPLE | STATE, "luc-state", mLastCalcCO2Value, Value )
     )
 
     double getCarbonSubsidy( const std::string& aRegionName,
                            const int aPeriod ) const;
+    
+    double getLandConstraintCost( const std::string& aRegionName,
+                            const int aPeriod ) const;
 
     virtual bool XMLDerivedClassParse( const std::string& aNodeName,
                                        const xercesc::DOMNode* aCurr );

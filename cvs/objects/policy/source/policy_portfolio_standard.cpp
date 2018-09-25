@@ -234,6 +234,7 @@ void PolicyPortfolioStandard::completeInit( const string& aRegionName ) {
     IInfo* marketInfo = marketplace->getMarketInfo( mName, aRegionName, 0, true );
     marketInfo->setString( "price-unit", mPriceUnits );
     marketInfo->setString( "output-unit", mOutputUnits );
+    marketInfo->setString( "policy-type", mPolicyType );
 
     // Put the taxes in the market as the market prices if it is a fixed tax policy.
     for( unsigned int i = 0; i < mFixedTax.size(); ++i ){

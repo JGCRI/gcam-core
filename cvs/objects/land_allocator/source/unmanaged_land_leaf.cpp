@@ -114,7 +114,8 @@ void UnmanagedLandLeaf::setUnmanagedLandProfitRate( const string& aRegionName,
         adjustedProfitRate = adjustedProfitRate - expansionCost;
     }
 
-    mProfitRate[ aPeriod ] = max( adjustedProfitRate + getCarbonSubsidy( aRegionName, aPeriod ), 0.0 );
+    mProfitRate[ aPeriod ] = max( adjustedProfitRate + getCarbonSubsidy( aRegionName, aPeriod )
+                                 + getLandConstraintCost( aRegionName, aPeriod ), 0.0 );
 }  
 
 
