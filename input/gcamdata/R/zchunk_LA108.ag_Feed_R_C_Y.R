@@ -22,7 +22,7 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "aglu/FAO/FAO_ag_items_cal_SUA",
              "L100.FAO_ag_Feed_t",
-             "L103.ag_Prod_Mt_R_C_Y",
+             "L101.ag_Prod_Mt_R_C_Y",
              "L107.an_Feed_Mt_R_C_Sys_Fd_Y"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L108.ag_Feed_Mt_R_C_Y",
@@ -40,7 +40,7 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     FAO_ag_items_cal_SUA <- get_data(all_data, "aglu/FAO/FAO_ag_items_cal_SUA")
     L100.FAO_ag_Feed_t <- get_data(all_data, "L100.FAO_ag_Feed_t")
-    L103.ag_Prod_Mt_R_C_Y <- get_data(all_data, "L103.ag_Prod_Mt_R_C_Y")
+    L101.ag_Prod_Mt_R_C_Y <- get_data(all_data, "L101.ag_Prod_Mt_R_C_Y")
     L107.an_Feed_Mt_R_C_Sys_Fd_Y <- get_data(all_data, "L107.an_Feed_Mt_R_C_Sys_Fd_Y")
 
     # Part 1: FEEDCROPS
@@ -86,7 +86,7 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
     # Part 2: Calculating FodderHerb and Residue balances by region and year
     # First, compute differences between FodderHerb production and FodderHerb_Residue demand.
     # This will be used to compute Residue supply, and to adjust OtherUses of FodderHerb_Residue.
-    L103.ag_Prod_Mt_R_C_Y %>%
+    L101.ag_Prod_Mt_R_C_Y %>%
       filter(GCAM_commodity == "FodderHerb") %>%                                                                  # Filter production data for "FodderHerb"
       rename(FodderHerb = value) %>%
       left_join(filter(an_Feed_Mt_R_C_Y,feed == "FodderHerb_Residue"), by = c("GCAM_region_ID", "year")) %>%       # Map in demands for FodderHerb_Residue
@@ -144,7 +144,7 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
     an_Feed_Mt_R_C_Y %>%
       filter(feed == "Pasture_FodderGrass") %>%                                                                 # Start with Pasture_FodderGrass demand
       rename(PastFodderGrass_Demand = value) %>%
-      left_join(filter(L103.ag_Prod_Mt_R_C_Y, GCAM_commodity == "FodderGrass"),
+      left_join(filter(L101.ag_Prod_Mt_R_C_Y, GCAM_commodity == "FodderGrass"),
                 by = c("GCAM_region_ID", "year")) %>%                                                          # Map in FodderGrass production
       mutate(value = PastFodderGrass_Demand - value, GCAM_commodity = "Pasture") %>%                            # Compute Pasture supply as difference
       select(-feed, -PastFodderGrass_Demand) ->
@@ -164,7 +164,7 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
 
     # Adjust FodderGrass feed to reflect the shift in production from feed to other uses (calculated above)
     # FodderGrass used as feed = FodderGrass production - other uses
-    L103.ag_Prod_Mt_R_C_Y %>%
+    L101.ag_Prod_Mt_R_C_Y %>%
       filter(GCAM_commodity == "FodderGrass") %>%                                                          # Start with production of FodderGrass
       rename(Production = value) %>%
       left_join(ag_OtherUses_Mt_R_FodderGrass_Y, by = c("GCAM_commodity", "GCAM_region_ID", "year")) %>%   # Map in other uses
@@ -190,7 +190,7 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
       ag_Feed_Mt_R_C_Y
 
     # Part 6: Compute net exports of FodderHerb
-    L103.ag_Prod_Mt_R_C_Y %>%
+    L101.ag_Prod_Mt_R_C_Y %>%
       filter(GCAM_commodity == "FodderHerb") %>%                                                          # Start with production of FodderHerb
       rename(Production = value) %>%
       left_join(ag_Feed_Mt_R_FodderHerb_Y, by = c("GCAM_commodity", "GCAM_region_ID", "year")) %>%        # Map in feed demand
@@ -214,7 +214,7 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
       add_comments("Note: excess FodderGrass and FodderHerb production are mapped to OtherUses") %>%
       add_legacy_name("L108.ag_Feed_Mt_R_C_Y") %>%
       add_precursors("common/iso_GCAM_regID", "aglu/FAO/FAO_ag_items_cal_SUA", "L100.FAO_ag_Feed_t",
-                     "L103.ag_Prod_Mt_R_C_Y", "L107.an_Feed_Mt_R_C_Sys_Fd_Y") ->
+                     "L101.ag_Prod_Mt_R_C_Y", "L107.an_Feed_Mt_R_C_Sys_Fd_Y") ->
       L108.ag_Feed_Mt_R_C_Y
 
     ag_NetExp_Mt_R_FodderHerb_Y %>%
