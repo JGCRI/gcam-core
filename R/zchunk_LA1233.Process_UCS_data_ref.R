@@ -265,21 +265,6 @@ module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
       mutate(`2010`=`2008`,`2100`=`2020`)->
       LA1233.CoolingSystemShares_RG3_ref
 
-    # Checks
-    # d<- LA1233.CoolingSystemShares_RG3_ref
-    # d%>%filter(State=="CA",fuel=="nuclear",`2100`!=0)
-    # d%>%filter(State=="CA",fuel=="gas",`2100`!=0)
-    # d%>%filter(State=="CA",fuel=="coal",`2100`!=0)
-    # d%>%filter(State=="CA",fuel=="biomass",`2100`!=0)
-    # d%>%filter(State=="CA",fuel=="refined liquids",`2100`!=0)
-    # d%>%filter(State=="CA",fuel=="geothermal",`2100`!=0);d%>%filter(fuel=="geothermal",`2100`!=0);
-    # d%>%filter(State=="CA",fuel=="solar CSP",`2100`!=0)
-    # d%>%filter(State=="CA",fuel=="solar PV",`2100`!=0)
-    # d%>%filter(State=="CA",fuel=="wind",`2100`!=0)
-    # d%>%filter(State=="CA",fuel=="hydro",`2100`!=0)
-    # d%>%filter(`2020`<1)
-
-
     # NOTES: Differences from original script data output
     # Note 1: All "no cooling" plant_types are now assinged "fresh" water_type. In old data wind
     # and rooftop_pv were assigned "none" water_type while hydro, PV, PV_storage were assigned "fresh".
