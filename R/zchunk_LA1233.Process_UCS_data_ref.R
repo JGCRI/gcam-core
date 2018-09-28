@@ -125,7 +125,11 @@ module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
     capacity_tech_state
 
    capacity_tech%>%as.data.frame%>%
-     mutate(x=x/inner_join((capacity_tech%>%dplyr::select(State,plant_type,Fuel)),capacity_tech_state)$x)%>%
+     mutate(x=x/inner_join((capacity_tech%>%
+                              ungroup()%>%
+                              dplyr::select(State,plant_type,Fuel)),
+                           capacity_tech_state,
+                           by=c("State","plant_type","Fuel"))$x,)%>%
      mutate(year=year_i)->
      capacity_tech_cooling
 
@@ -178,7 +182,11 @@ module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
       capacity_tech_future_US_Total
 
     capacity_tech_future_US%>%as.data.frame%>%
-      mutate(x=x/inner_join((capacity_tech_future_US%>%dplyr::select(Fuel)),capacity_tech_future_US_Total)$x)->
+      mutate(x=x/inner_join((capacity_tech_future_US%>%
+                               ungroup()%>%
+                               dplyr::select(Fuel)),
+                            capacity_tech_future_US_Total,
+                            by=c("Fuel"))$x)->
       cooling_share_future_US
 
     # Aggregate by State & Fuel
@@ -188,7 +196,10 @@ module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
       capacity_tech_future_state
 
     capacity_tech_future%>%as.data.frame%>%
-      mutate(x=x/inner_join((capacity_tech_future%>%dplyr::select(State,Fuel)),capacity_tech_future_state)$x)->
+      mutate(x=x/inner_join((capacity_tech_future%>%ungroup()%>%
+                               dplyr::select(State,Fuel,plant_type)),
+                            capacity_tech_future_state,
+                            by=c("State","Fuel","plant_type"))$x)->
       cooling_share_future_state
 
     # --------------------------------
@@ -265,6 +276,20 @@ module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
       mutate(`2010`=`2008`,`2100`=`2020`)->
       LA1233.CoolingSystemShares_RG3_ref
 
+    # Checks
+    # d<- LA1233.CoolingSystemShares_RG3_ref
+    # d%>%filter(State=="CA",fuel=="nuclear",`2100`!=0)
+    # d%>%filter(State=="CA",fuel=="gas",`2100`!=0)
+    # d%>%filter(State=="CA",fuel=="coal",`2100`!=0)
+    # d%>%filter(State=="CA",fuel=="biomass",`2100`!=0)
+    # d%>%filter(State=="CA",fuel=="refined liquids",`2100`!=0)
+    # d%>%filter(State=="CA",fuel=="geothermal",`2100`!=0);d%>%filter(fuel=="geothermal",`2100`!=0);
+    # d%>%filter(State=="CA",fuel=="solar CSP",`2100`!=0)
+    # d%>%filter(State=="CA",fuel=="solar PV",`2100`!=0)
+    # d%>%filter(State=="CA",fuel=="wind",`2100`!=0)
+    # d%>%filter(State=="CA",fuel=="hydro",`2100`!=0)
+    # d%>%filter(`2020`<0)
+
     # NOTES: Differences from original script data output
     # Note 1: All "no cooling" plant_types are now assinged "fresh" water_type. In old data wind
     # and rooftop_pv were assigned "none" water_type while hydro, PV, PV_storage were assigned "fresh".
@@ -287,7 +312,7 @@ module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
       add_precursors(
         #"L120.RsrcCurves_EJ_R_offshore_wind_USA",
                      "gcam-usa/UCS_Database",
-                     "gcam-usa/UCS_Database",
+                     "gcam-usa/states_subregions",
                      "gcam-usa/elec_tech_water_map"
                      ) ->
       LA1233.CoolingSystemShares_RG3_ref
