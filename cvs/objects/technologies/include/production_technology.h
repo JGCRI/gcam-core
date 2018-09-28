@@ -102,16 +102,9 @@ class IShutdownDecider;
  */
 class ProductionTechnology : public BaseTechnology
 {
-    friend class SocialAccountingMatrix;
-    friend class DemandComponentsTable;
-    friend class SectorReport;
-    friend class SGMGenTable;
-    friend class SectorResults;
-    friend class GovtResults;
     friend class XMLDBOutputter;
     // either these are friends or move isAvailable and isRetired to public
     friend class EnergyBalanceTable;
-    friend class InputOutputTable;
 public:
     ProductionTechnology();
     ProductionTechnology* clone() const;
@@ -172,7 +165,6 @@ public:
                                  const double aNewInvestment, const int aPeriod );
     void updateMarketplace( const std::string& sectorName, const std::string& regionName, 
         const int period );
-    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     void accept( IVisitor* aVisitor, const int aPeriod ) const;
     void setTypeHelper( TechnologyType* aTechType );
     void postCalc( const std::string& aRegionName, const std::string& aSectorName, const int aPeriod );
@@ -181,7 +173,6 @@ protected:
     virtual void calcEmissions( const std::string& aGoodName, const std::string& aRegionName, const int aPeriod );
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 private:
 

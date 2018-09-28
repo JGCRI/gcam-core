@@ -136,15 +136,6 @@ bool S_CurveShutdownDecider::XMLParse( const xercesc::DOMNode* node ){
     return true;
 }
 
-void S_CurveShutdownDecider::toInputXML( ostream& aOut,
-                                        Tabs* aTabs ) const
-{
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
-    XMLWriteElementCheckDefault( mSteepness, "steepness", aOut, aTabs, 0.0 );
-    XMLWriteElementCheckDefault( mHalfLife, "half-life", aOut, aTabs, 0.0 );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 void S_CurveShutdownDecider::toDebugXML( const int aPeriod,
                                         ostream& aOut,
                                         Tabs* aTabs ) const

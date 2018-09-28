@@ -206,18 +206,6 @@ bool NonCO2Emissions::XMLDerivedClassParse( const string& aNodeName, const DOMNo
     return true;
 }
 
-
-void NonCO2Emissions::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteElement( mEmissionsCoef, "emiss-coef", aOut, aTabs );
-    XMLWriteElementCheckDefault( mInputEmissions, "input-emissions", aOut, aTabs, Value() );
-    
-    XMLWriteElement( "", mEmissionsDriver->getXMLName(), aOut, aTabs );
-    
-    for ( CControlIterator controlIt = mEmissionsControls.begin(); controlIt != mEmissionsControls.end(); ++controlIt ) {
-        (*controlIt)->toInputXML( aOut, aTabs );
-    }
-}
-
 void NonCO2Emissions::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mEmissionsCoef, "emiss-coef", aOut, aTabs );
     XMLWriteElement( mInputEmissions, "input-emissions", aOut, aTabs );

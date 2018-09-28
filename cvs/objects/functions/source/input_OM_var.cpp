@@ -155,15 +155,6 @@ void InputOMVar::XMLParse( const xercesc::DOMNode* node ) {
     }
 }
 
-void InputOMVar::toInputXML( ostream& aOut,
-                                 Tabs* aTabs ) const
-{
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
-    XMLWriteElement( mOMVar, "OM-var", aOut, aTabs );
-    XMLWriteElementCheckDefault( mTechChange, "tech-change", aOut, aTabs, Value( 0 ) );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 void InputOMVar::toDebugXML( const int aPeriod,
                              ostream& aOut,
                              Tabs* aTabs ) const

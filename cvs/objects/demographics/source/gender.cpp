@@ -88,21 +88,6 @@ void Gender::XMLParse( const DOMNode* node ) {
     }
 }
 
-//! Output to XML data
-void Gender::toInputXML( ostream& out, Tabs* tabs ) const {
-    XMLWriteOpeningTag( getXMLNameStatic(), out, tabs, "", 0, getXMLName() );
-
-    XMLWriteElementCheckDefault( mPopulation, "population", out, tabs );
-    XMLWriteElementCheckDefault( mSurvivingPop, "survivingPop", out, tabs );
-    XMLWriteElementCheckDefault( mSurvivalRate, "survivalRate", out, tabs );
-
-    // write out variables for derived classes
-    toInputXMLDerived( out, tabs );
-
-    // finished writing xml for the class members.
-    XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
-}
-
 //! Output debug info to XML data
 void Gender::toDebugXML( ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag ( getXMLName(), out, tabs );

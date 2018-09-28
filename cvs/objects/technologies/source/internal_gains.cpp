@@ -137,15 +137,6 @@ bool InternalGains::XMLParse( const DOMNode* aNode )
     return true;
 }
 
-void InternalGains::toInputXML( ostream& aOut,
-                                Tabs* aTabs ) const
-{
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
-    XMLWriteElement( mOutputRatio, "output-ratio", aOut, aTabs );
-    XMLWriteElement( mTrialMarketName, "internal-gains-market-name", aOut, aTabs );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 void InternalGains::toDebugXML( const int aPeriod,
                                 ostream& aOut,
                                 Tabs* aTabs ) const

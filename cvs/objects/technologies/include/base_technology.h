@@ -56,7 +56,6 @@
 #include "technologies/include/expenditure.h"
 #include "investment/include/iinvestable.h"
 #include "util/base/include/inamed.h"
-#include "util/base/include/iround_trippable.h"
 #include "util/base/include/value.h"
 #include "containers/include/iinfo.h"
 #include "util/base/include/data_definition_util.h"
@@ -127,7 +126,7 @@ class GCAMConsumer;
  * \author Pralit Patel, Sonny Kim
  */
 
-class BaseTechnology: public INamed, public IInvestable, public IRoundTrippable, private boost::noncopyable
+class BaseTechnology: public INamed, public IInvestable, private boost::noncopyable
 {
     friend class XMLDBOutputter;
     friend class InvestableCounterVisitor;
@@ -160,7 +159,6 @@ public:
 
     void XMLParse( const xercesc::DOMNode* node );
 
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     
     virtual void completeInit( const std::string& aRegionName,
@@ -221,7 +219,6 @@ public:
                                          const int aPeriod ) = 0;
     virtual void updateMarketplace( const std::string& sectorName, const std::string& regionName,
                                     const int period ) = 0;
-    virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const = 0;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const = 0;
 
     const std::string getIdentifier() const;
@@ -242,7 +239,6 @@ protected:
 
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
     virtual const std::string& getXMLName() const = 0;
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const = 0;
     
     void copy( const BaseTechnology& baseTechIn );

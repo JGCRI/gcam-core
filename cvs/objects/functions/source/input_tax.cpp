@@ -172,16 +172,6 @@ void InputTax::XMLParse( const xercesc::DOMNode* node ) {
     }
 }
 
-void InputTax::toInputXML( ostream& aOut,
-                               Tabs* aTabs ) const
-{
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
-    if( !mKeywordMap.empty() ) {
-        XMLWriteElementWithAttributes( "", "keyword", aOut, aTabs, mKeywordMap );
-    }
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 void InputTax::toDebugXML( const int aPeriod,
                                ostream& aOut,
                                Tabs* aTabs ) const

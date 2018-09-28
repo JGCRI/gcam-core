@@ -94,13 +94,6 @@ void CalDataOutput::XMLParse( const DOMNode* aNode ){
 	}
 }
 
-//! write object to xml output stream
-void CalDataOutput::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
-    XMLWriteElement( mCalOutputValue, "calOutputValue", aOut, aTabs );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 //! Write object to debugging xml output stream.
 void CalDataOutput::toDebugXML( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );

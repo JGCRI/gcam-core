@@ -112,11 +112,6 @@ void NodeCarbonCalc::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs )
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-void NodeCarbonCalc::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 void NodeCarbonCalc::startVisitNoEmissCarbonCalc( const NoEmissCarbonCalc* aNoEmissCarbonCalc, const int aPeriod ) {
     mCarbonCalcs.push_back( const_cast<NoEmissCarbonCalc*>( aNoEmissCarbonCalc ) );
 }

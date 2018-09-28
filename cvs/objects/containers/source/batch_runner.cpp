@@ -178,7 +178,7 @@ bool BatchRunner::runScenarios( const int aSinglePeriod,
     return success;
 }
 
-void BatchRunner::printOutput( Timer& aTimer, const bool aCloseDB ) const {
+void BatchRunner::printOutput( Timer& aTimer ) const {
     // Print out any scenarios that did not solve.
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::NOTICE );

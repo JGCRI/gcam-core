@@ -109,15 +109,6 @@ bool SmoothRenewableSubresource::XMLDerivedClassParse( const std::string& nodeNa
     return didParse;
 }
 
-// SmoothRenewableSubresource::toXMLforDerivedClass
-void SmoothRenewableSubresource::toXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const{
-    SubRenewableResource::toXMLforDerivedClass( out, tabs );
-    
-    XMLWriteElementCheckDefault( mMidPrice, "mid-price", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( mCostCurve.getCurveExponent(), "curve-exponent", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( mPriceExponent, "price-exponent", out, tabs, 0.01 );    
-}
-
 // SmoothRenewableSubresource::completeInit
 void SmoothRenewableSubresource::completeInit( const IInfo* aSectorInfo )
 {

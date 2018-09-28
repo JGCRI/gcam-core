@@ -150,16 +150,6 @@ bool ExportSector::XMLDerivedClassParse( const string& aNodeName, const DOMNode*
 	return true;
 }
 
-/*! \brief Write out derived class specific class members as an input file.
-* \param aOut The output stream to which to write.
-* \param aTabs Object responsible for writing tabs.
-*/
-void ExportSector::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {  
-    // write out the market string.
-    XMLWriteElement( mMarketName, "market", aOut, aTabs );
-    XMLWriteVector( mFixedPrices, "sectorprice", aOut, aTabs, scenario->getModeltime(), 0.0 );
-}	
-
 /*! \brief Write out derived class specific class members for debugging.
 * \param aPeriod The period in which to write debugging information.
 * \param aOut The output stream to which to write.

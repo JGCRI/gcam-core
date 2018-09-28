@@ -12,7 +12,6 @@ OBJS       = atom.o \
              configuration.o \
              input_finder.o \
              model_time.o \
-             summary.o \
              supply_demand_curve.o \
              timer.o \
              calibrate_share_weight_visitor.o \

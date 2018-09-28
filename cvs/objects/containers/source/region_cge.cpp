@@ -62,14 +62,7 @@
 #include "consumers/include/calc_capital_good_price_visitor.h"
 #include "containers/include/iinfo.h"
 // classes for reporting
-#include "reporting/include/social_accounting_matrix.h"
 #include "util/base/include/ivisitor.h"
-#include "reporting/include/demand_components_table.h"
-#include "reporting/include/sector_report.h"
-#include "reporting/include/sgm_gen_table.h"
-#include "reporting/include/input_output_table.h"
-#include "reporting/include/sector_results.h"
-#include "reporting/include/govt_results.h"
 
 using namespace std;
 using namespace xercesc;
@@ -92,40 +85,6 @@ RegionCGE::RegionCGE() {
     // Resize all vectors to maximum period
     const int maxper = scenario->getModeltime()->getmaxper();
     mNationalAccounts.resize( maxper );
-
-    // create empty tables for reporting
-    createSGMGenTables();
-}
-
-//! Empty tables for reporting available for writing in each period
-void RegionCGE::createSGMGenTables() {
-    // output container for reporting
-    // create empty tables for SGM general output
-    const Modeltime* modeltime = scenario->getModeltime();
-    mOutputContainers.push_back( new SGMGenTable( "CO2", "CO2 Emissions Total (MTC)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "EmissBySource", "Emissions by Primary Fuel(MTC)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "CO2bySec", "CO2 Emissions by Sector (MTC)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "CO2byTech", "CO2 Emissions by Technology (MTC)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "GNPREAL", "GNP REAL (1990 Million Dollar)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "GNPNOM", "GNP NOMINAL (1990 Million Dollar)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "PEC", "Primary Energy Consumption (EJ)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "PEP", "Primary Energy Production (EJ)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "SEP", "Secondary Energy Production (EJ)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "ETRADE", "Net Export of Energy (EJ)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "ELEC", "Electricity Generation by Technology (EJ)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "ElecFuel", "Fuel Consumption for Electricity Generation (EJ)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "NEP", "Non-Energy Output (1990 Million Dollar)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "DEM", "Demographics (1000 Persons)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "CAP", "Total Capital Stock and Carbon Permit Revenue (1990 Million Dollar?)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "PRICE", "Prices Market (1990 Dollar)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "EINV", "Energy Investments Annual (1990 Million Dollar)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "NEINV", "Non-Energy Investments Annual (1990 Million Dollar)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "PASSTRAN", "Passenger Transport Vehicle Output (Million Passenger-Miles)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "PASSTRANFC", "Passenger Transport Fuel Consumption by Fuel (EJ/year)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "PASSTRANFCM", "Passenger Transport Fuel Consumption by Mode (EJ/year)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "PASSTRANFCT", "Passenger Transport Fuel Consumption by Vehicle Technology (EJ/year)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "PASSTRANMPG", "Passenger Transport Vehicle Fuel Economy (MPG)", modeltime ) );
-    mOutputContainers.push_back( new SGMGenTable( "PASSTRANCOST", "Passenger Transport Vehicle Service Cost ($/pass-mile)", modeltime ) );
 }
 
 //! Default destructor destroys sector, demsector, Resource, and population objects.
@@ -141,10 +100,6 @@ void RegionCGE::clear(){
 
     for ( FactorSupplyIterator facIter = factorSupply.begin(); facIter != factorSupply.end(); ++facIter ) {
         delete *facIter;
-    }
-    // delete memory for SGM gen output tables
-    for( vector<SGMGenTable*>::iterator iter = mOutputContainers.begin(); iter != mOutputContainers.end(); ++iter ){
-        delete *iter;
     }
 
     for( vector<NationalAccount*>::iterator iter = mNationalAccounts.begin(); iter != mNationalAccounts.end(); ++iter ) {
@@ -205,16 +160,6 @@ bool RegionCGE::XMLDerivedClassParse( const string& nodeName, const DOMNode* cur
         return false;
     }
     return true;
-}
-
-//! For derived classes to output XML data
-void RegionCGE::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-    for ( unsigned int i = 0; i < finalDemandSector.size(); i ++ ) {
-        finalDemandSector[i]->toInputXML( out, tabs );
-    }
-    for( unsigned int i = 0; i < factorSupply.size(); i++ ){
-        factorSupply[ i ]->toInputXML( out, tabs );
-    }
 }
 
 //! Output debug info for derived class
@@ -416,54 +361,6 @@ void RegionCGE::updateMarketplace( const int period ) {
     }
 }
 
-/*!
- * \brief For outputing SGM data to a flat csv File, wouldn't need to do anything for miniCAM
- * \param aFile The file to write results to.
- * \param period 
- * \author Pralit Patel
- */
-void RegionCGE::csvSGMOutputFile( ostream& aFile, const int period ) const {
-    vector<IVisitor*> outputContainers; // vector of output containers
-
-    aFile << "Region:  " << mName << endl << endl;
-    mNationalAccounts[ period ]->csvSGMOutputFile( aFile, period );
-
-    for( vector<Sector*>::const_iterator currSec = mSupplySector.begin(); currSec != mSupplySector.end(); ++currSec ){
-        (*currSec)->csvSGMOutputFile( aFile, period );
-    }
-    for (unsigned int i = 0; i < finalDemandSector.size(); i++) {
-        finalDemandSector[i]->csvSGMOutputFile( aFile, period );
-    }
-    for (unsigned int i = 0; i < factorSupply.size(); i++) {
-        factorSupply[i]->csvSGMOutputFile( aFile, period );
-    }
-    mDemographic->csvSGMOutputFile( aFile, period );
-    aFile << endl;
-
-
-    // Add outputcontainers here.
-    outputContainers.push_back( new SocialAccountingMatrix( mName, aFile ) );
-    outputContainers.push_back( new DemandComponentsTable( aFile ) );
-    outputContainers.push_back( new SectorResults( mName, aFile ) );
-    outputContainers.push_back( new GovtResults( mName, aFile ) );
-    outputContainers.push_back( new InputOutputTable( mName, aFile ) );
-    
-    // load values into all tables
-    for (unsigned int i = 0; i < outputContainers.size(); i++) { 
-        accept( outputContainers[ i ], period );
-    }
-
-    // print out all tables
-    for( unsigned int i = 0; i < outputContainers.size(); i++) {
-        outputContainers[ i ]->finish();
-    }
-    
-    // clean up memory.
-    for( vector<IVisitor*>::iterator iter = outputContainers.begin(); iter != outputContainers.end(); ++iter ){
-        delete *iter;
-    }
-}
-
 void RegionCGE::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->startVisitRegionCGE( this, aPeriod );
     Region::accept( aVisitor, aPeriod );
@@ -492,23 +389,3 @@ void RegionCGE::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->endVisitRegionCGE( this, aPeriod );
 }
 
-//! update regional output tables for reporting
-void RegionCGE::updateAllOutputContainers( const int period ) { 
-    // update all tables for reporting
-    // load values into all tables
-    for ( unsigned int i = 0; i < mOutputContainers.size(); i++ ) { 
-        accept( mOutputContainers[ i ], period );
-    }
-}
-
-/*! \brief General SGM output is called at end of model run and includes all
-*          periods.
-* \param aFile Output file.
-*/
-void RegionCGE::csvSGMGenFile( ostream& aFile ) const {
-    // print out all tables
-    for( unsigned int i = 0; i < mOutputContainers.size(); i++) {
-        mOutputContainers[ i ]->setOutputFile( aFile );
-        mOutputContainers[ i ]->finish();
-    }
-}

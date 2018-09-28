@@ -48,7 +48,6 @@
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/iparsable.h"
-#include "util/base/include/iround_trippable.h"
 #include "util/base/include/time_vector.h"
 #include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
@@ -75,8 +74,8 @@ class StubTechnologyContainer;
  *          
  * \author Pralit Patel
  */
-class ITechnologyContainer : public INamed, public IParsable, public IRoundTrippable,
-                             public IVisitable, private boost::noncopyable
+class ITechnologyContainer : public INamed, public IParsable, public IVisitable,
+                             private boost::noncopyable
 {
     friend class StubTechnologyContainer; // to be able to call clone()
 public:

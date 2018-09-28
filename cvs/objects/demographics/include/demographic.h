@@ -51,23 +51,23 @@
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/ivisitable.h"
-#include "util/base/include/iround_trippable.h"
 #include "demographics/include/population.h"
 #include "util/base/include/data_definition_util.h"
+
+class Tabs;
 
 /*! 
 * \ingroup Objects
 * \brief Demographics model that calculates population by gender and age cohort.
 */
 
-class Demographic: public IVisitable, public IRoundTrippable, private boost::noncopyable {
+class Demographic: public IVisitable, private boost::noncopyable {
     friend class XMLDBOutputter; // For getXMLName()
 public:
     Demographic();
     ~Demographic();
 
     void XMLParse( const xercesc::DOMNode* node );
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     void completeInit();
     void initCalc();
@@ -82,9 +82,6 @@ public:
     double getTotal( const int per ) const;
     const std::vector<double> getTotalPopVec() const;
 
-    void csvOutputFile( const std::string& regionName ) const; 
-    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
-    void dbOutput( const std::string& regionName ) const; 
     void accept( IVisitor* aVisitor, const int aPeriod ) const;
     
 protected:

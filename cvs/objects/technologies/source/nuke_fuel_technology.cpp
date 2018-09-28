@@ -174,24 +174,6 @@ bool NukeFuelTechnology::XMLDerivedClassParse( const string& nodeName, const DOM
         return false;
     }
     return true;
-}
-
-void NukeFuelTechnology::toInputXMLDerived( ostream& out, Tabs* tabs ) const {  
-    XMLWriteElementCheckDefault( fertileFuelName, "fertileFuelName", out, tabs, string( "none" ) );
-    XMLWriteElementCheckDefault( blanketFuelName, "blanketFuelName", out, tabs, string( "none" ) );
-    XMLWriteElementCheckDefault( burnup, "burnup", out, tabs, 50.0 );
-    XMLWriteElementCheckDefault( blanketFuelRatio, "blanketFuelRatio", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( conversionCost, "conversionCost", out, tabs, 5.0 );
-    XMLWriteElementCheckDefault( enrichmentProd, "enrichmentProd", out, tabs, 0.045 );
-    XMLWriteElementCheckDefault( enrichmentFeed, "enrichmentFeed", out, tabs, 0.0071 );
-    XMLWriteElementCheckDefault( enrichmentTail, "enrichmentTail", out, tabs, 0.003 );
-    XMLWriteElementCheckDefault( enrichmentCost, "enrichmentCost", out, tabs, 100.0 );
-    XMLWriteElementCheckDefault( fabricationCost, "fabricationCost", out, tabs, 200.0 );
-    XMLWriteElementCheckDefault( blanketFabCost, "blanketFabCost", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( interimStorageCost, "interimStorageCost", out, tabs, 200.0 );
-    XMLWriteElementCheckDefault( geologicWasteDisposalCost, "geologicWasteDisposalCost", out, tabs, 400.0 );
-    XMLWriteElementCheckDefault( reprocessingCost, "reprocessingCost", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( mConversionFactor, "fMultiplier", out, tabs, 1.0 );
 }	
 
 void NukeFuelTechnology::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const { 

@@ -92,7 +92,7 @@ public:
     double getNearestXAbove( const double x ) const;
     double getNearestYBelow( const double x ) const;
     double getNearestYAbove( const double x ) const;
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
+    void outputAsXML( std::ostream& aOut, Tabs* aTabs ) const;
     void XMLParse( const xercesc::DOMNode* node );
     void invertAxises();
 protected:

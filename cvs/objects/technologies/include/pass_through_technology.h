@@ -96,7 +96,6 @@ public:
 
 protected:
     virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aNode );
-    virtual void toInputXMLDerived( std::ostream& aOut, Tabs* aTabs ) const;
     virtual void toDebugXMLDerived( const int aPeriod, std::ostream& aout, Tabs* aTabs ) const;
 
     // Define data such that introspection utilities can process the data from this

@@ -82,7 +82,6 @@ public:
     const std::string& getName() const;
     void XMLParse( const xercesc::DOMNode* tempnode );
     virtual void completeInit( const IInfo* aResourceInfo );
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
     virtual void cumulsupply( double aPrice, int aPeriod );
@@ -92,8 +91,6 @@ public:
     virtual void annualsupply( int aPeriod, const GDP* aGdp, double aPrice, double aPrevPrice );
     double getAnnualProd( int aPeriod ) const;
     double getAvailable( int aPeriod ) const;
-    void dbOutput( const std::string& regname, const std::string& secname); 
-    void csvOutputFile(const std::string &regname, const std::string& sname); 
     void updateAvailable( const int period );
     virtual double getVariance() const;
     virtual double getAverageCapacityFactor() const;
@@ -103,7 +100,6 @@ public:
 protected:
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node ) = 0;
-    virtual void toXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
 
     DEFINE_DATA(
         /* Declare all subclasses of SubResource to allow automatic traversal of the

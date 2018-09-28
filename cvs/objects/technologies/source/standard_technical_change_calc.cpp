@@ -125,16 +125,6 @@ bool StandardTechnicalChangeCalc::XMLParse( const xercesc::DOMNode* node ){
     return true;
 }
 
-void StandardTechnicalChangeCalc::toInputXML( ostream& aOut,
-                                              Tabs* aTabs ) const
-{
-	XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
-	XMLWriteElementCheckDefault( mHicksNeutralTechChange, "hicks-neutral", aOut, aTabs, Value( 0 ) );
-    XMLWriteElementCheckDefault( mEnergyTechChange, "energy-only", aOut, aTabs, Value( 0 ) );
-    XMLWriteElementCheckDefault( mMaterialTechChange, "material-only", aOut, aTabs, Value( 0 ) );
-	XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 void StandardTechnicalChangeCalc::toDebugXML( const int aPeriod,
                                               ostream& aOut,
                                               Tabs* aTabs ) const

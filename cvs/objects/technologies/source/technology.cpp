@@ -478,66 +478,6 @@ void Technology::completeInit( const string& aRegionName,
     }
 }
 
-//! write object to xml output stream
-void Technology::toInputXML( ostream& out,
-                             Tabs* tabs ) const
-{
-    XMLWriteOpeningTag( getXMLVintageNameStatic(), out, tabs, "", mYear );
-
-    // write the xml for the class members.
-    if( mParsedShareWeight.isInited() ) {
-        XMLWriteElement( mParsedShareWeight, "share-weight", out, tabs );
-    }
-    int defualtLifetimeYears = calcDefaultLifetime();
-    XMLWriteElementCheckDefault( mLifetimeYears, "lifetime", out, tabs, defualtLifetimeYears );
-    XMLWriteElementCheckDefault( mFixedOutput, "fixedOutput", out, tabs, getFixedOutputDefault() );
-    XMLWriteElementCheckDefault( mPMultiplier, "pMultiplier", out, tabs, 1.0 );
-    XMLWriteElementCheckDefault( mCapacityFactor, "capacity-factor", out, tabs, 1.0 );
-    if( !mKeywordMap.empty() ) {
-        XMLWriteElementWithAttributes( "", "keyword", out, tabs, mKeywordMap );
-    }
-
-    if( mCalValue ) {
-        mCalValue->toInputXML( out, tabs );
-    }
-
-    if( mCaptureComponent ) {
-        mCaptureComponent->toInputXML( out, tabs );
-    }
-
-    if( mTechChangeCalc ) {
-        mTechChangeCalc->toInputXML( out, tabs );
-    }
-
-    for( vector<IShutdownDecider*>::const_iterator i = mShutdownDeciders.begin(); i != mShutdownDeciders.end(); ++i ) {
-        ( *i )->toInputXML( out, tabs );
-    }
-
-    for( COutputIterator iter = mOutputs.begin(); iter != mOutputs.end(); ++iter ) {
-        ( *iter )->toInputXML( out, tabs );
-    }
-    for( CGHGIterator iter = mGHG.begin(); iter != mGHG.end(); ++iter ) {
-        ( *iter )->toInputXML( out, tabs );
-    }
-    for( unsigned int i = 0; i < mInputs.size(); ++i ) {
-        mInputs[ i ]->toInputXML( out, tabs );
-    }
-
-    // finished writing xml for the class members.
-    toInputXMLDerived( out, tabs );
-    XMLWriteClosingTag( getXMLVintageNameStatic(), out, tabs );
-}
-
-void Technology::toInputXMLForRestart( ostream& out, Tabs* tabs ) const {
-    // make sure calibrated share weights get written out
-    const Modeltime* modeltime = scenario->getModeltime();
-    if( mYear <= modeltime->getper_to_yr( modeltime->getFinalCalibrationPeriod() ) ) {
-        XMLWriteOpeningTag( getXMLVintageNameStatic(), out, tabs, "", mYear );
-        XMLWriteElement( mShareWeight, "share-weight", out, tabs );
-        XMLWriteClosingTag( getXMLVintageNameStatic(), out, tabs );
-    }
-}
-
 //! write object to xml debugging output stream
 void Technology::toDebugXML( const int period,
                              ostream& out,
@@ -1033,40 +973,6 @@ void Technology::calcEmissionsAndOutputs( const string& aRegionName,
     }
 }
 
-//! calculate GHG emissions from Technology use
-/* \brief Get a map containing emissions by gas from the Technology.
-* \param aGoodName Name of the sector.
-* \param aPeriod Period for which to get emissions.
-* \return A map of gas name to emissions. There are more gas names than ghgs.
-*/
-const map<string, double> Technology::getEmissions( const string& aGoodName,
-                                                    const int aPeriod ) const
-{
-    map<string, double> emissions;
-    for( unsigned int i = 0; i < mGHG.size(); ++i ) {
-        // emissions by gas name only
-        emissions[ mGHG[ i ]->getName() ] = mGHG[ i ]->getEmission( aPeriod );
-        // emissions by gas and fuel names combined
-        // used to calculate emissions by fuel
-        for( unsigned int j = 0; j < mInputs.size(); ++j ) {
-            // Calculate the per fuel emissions. TODO: This is very difficult to
-            // do as different fuels may have different input coefficients and
-            // different emissions coefficients. emissions[mGHG[i]->getName() +
-            // mInputs[ j ]->getName() ] = mGHG[i]->getEmission( aPeriod );
-        }
-        // add sequestered amount to emissions map used to calculate emissions
-        // by fuel if there are sequestered emissions.
-        if( mCaptureComponent ) {
-            emissions[ mGHG[ i ]->getName() + "sequestGeologic" ] = mCaptureComponent->
-            getSequesteredAmount( mGHG[ i ]->getName(), true, aPeriod );
-            emissions[ mGHG[ i ]->getName() + "sequestNonEngy" ] = mCaptureComponent->
-            getSequesteredAmount( mGHG[ i ]->getName(), false, aPeriod );
-        }
-    }
-
-    return emissions;
-}
-
 /*! \brief Returns Technology name
 *
 * \author Sonny Kim
@@ -1536,33 +1442,6 @@ const AGHG* Technology::getGHGPointer( const string& aGHGName ) const {
         }
     }
     return 0;
-}
-
-//! return value for ghg
-double Technology::getEmissionsByGas( const string& aGasName,
-                                      const int aPeriod ) const
-{
-    for( unsigned int i = 0; i < mGHG.size(); ++i ) {
-        if( mGHG[ i ]->getName() == aGasName ) {
-            return mGHG[ i ]->getEmission( aPeriod );
-        }
-    }
-    return 0;
-}
-
-/*!
- * \brief Update the subsectors input fuel map with information from the technology.
- * \param aPeriod Model period.
- * \return Mapping of input name to fuel consumption.
- */
-const map<string, double> Technology::getFuelMap( const int aPeriod ) const
-{
-    // Loop over the inputs and record their fuel usage.
-    map<string, double> inputMap;
-    for( unsigned int i = 0; i < mInputs.size(); ++i ) {
-        inputMap[ mInputs[ i ]->getName() ] = mInputs[ i ]->getPhysicalDemand( aPeriod );
-    }
-    return inputMap;
 }
 
 /*! \brief Test to see if calibration worked for this Technology.

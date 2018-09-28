@@ -340,91 +340,6 @@ void TotalPolicyCostCalculator::printOutput() const {
     if( Configuration::getInstance()->shouldWriteFile( "xmldb-location" ) ) {
         mSingleScenario->getXMLDBOutputter()->appendData( xmlString, UPDATE_LOCATION );
     }
-
-    // Write to the database.
-    if( Configuration::getInstance()->shouldWriteFile( "dbFileName" ) ) {
-        writeToDB();
-    }
-
-    // Write to CSV file
-    writeToCSV();
-}
-
-/*! \brief Write total cost output to the csv file.
-*/
-void TotalPolicyCostCalculator::writeToCSV() const {
-    // function protocol
-    void fileoutput3(string var1name,string var2name,string var3name,
-        string var4name,string var5name,string uname,vector<double> dout);
-
-    const Modeltime* modeltime = mSingleScenario->getInternalScenario()->getModeltime();
-    const int maxPeriod = modeltime->getmaxper();
-    vector<double> tempOutVec( maxPeriod );
-    for( CRegionCurvesIterator rIter = mRegionalCostCurves.begin(); rIter != mRegionalCostCurves.end(); ++rIter ){
-        // Write out to the database.
-        for( int per = 0; per < maxPeriod; ++per ){
-            tempOutVec[ per ] = rIter->second->getY( modeltime->getper_to_yr( per ) );
-        }
-        fileoutput3(rIter->first,"PolicyCost","","PolicyCostUndisc","Period","(millions)90US$",tempOutVec);
-    }
-
-    // Write out undiscounted costs by region.
-    tempOutVec.clear();
-    tempOutVec.resize( maxPeriod );
-    // Note: Since the carbon tax is in 1990 dollars, the total costs are
-    // already in 1990 dollars.
-    for( CRegionalCostsIterator iter = mRegionalCosts.begin(); iter != mRegionalCosts.end(); iter++ ){
-        // regional total cost of policy
-        tempOutVec[maxPeriod-1] = iter->second;
-        fileoutput3(iter->first,"PolicyCost","","PolicyCostTotalUndisc","AllYears","(millions)90US$",tempOutVec);
-    }
-
-    // Write out discounted costs by region.
-    tempOutVec.clear();
-    tempOutVec.resize( maxPeriod );
-    for( CRegionalCostsIterator iter = mRegionalDiscountedCosts.begin(); iter != mRegionalDiscountedCosts.end(); iter++ ){
-        // regional total cost of policy
-        tempOutVec[maxPeriod-1] = iter->second;
-        fileoutput3(iter->first,"PolicyCost","","PolicyCostTotalDisc","AllYears","(millions)90US$",tempOutVec);
-    }
-}
-
-/*! \brief Write total cost output to the Access database.
-*/
-void TotalPolicyCostCalculator::writeToDB() const {
-    // Database function definition. 
-    void dboutput4(string var1name,string var2name,string var3name,string var4name,
-        string uname,vector<double> dout);
-
-    const Modeltime* modeltime = mSingleScenario->getInternalScenario()->getModeltime();
-    const int maxPeriod = modeltime->getmaxper();
-
-    vector<double> tempOutVec( maxPeriod );
-    for( CRegionCurvesIterator rIter = mRegionalCostCurves.begin(); rIter != mRegionalCostCurves.end(); ++rIter ){
-        // Write out to the database.
-        for( int per = 0; per < maxPeriod; ++per ){
-            tempOutVec[ per ] = rIter->second->getY( modeltime->getper_to_yr( per ) );
-        }
-        dboutput4(rIter->first,"General","PolicyCostUndisc","Period","(millions)90US$",tempOutVec);
-    }
-
-    // Write out undiscounted costs by region.
-    tempOutVec.clear();
-    tempOutVec.resize( maxPeriod );
-    for( CRegionalCostsIterator iter = mRegionalCosts.begin(); iter != mRegionalCosts.end(); iter++ ){
-        // regional total cost of policy
-        tempOutVec[maxPeriod-1] = iter->second;
-        dboutput4(iter->first,"General","PolicyCostTotalUndisc","AllYears","(millions)90US$",tempOutVec);
-    }
-
-    // Write out discounted costs by region.
-    tempOutVec.clear();
-    tempOutVec.resize( maxPeriod );
-    for( CRegionalCostsIterator iter = mRegionalDiscountedCosts.begin(); iter != mRegionalDiscountedCosts.end(); iter++ ){
-        // regional total cost of policy
-        tempOutVec[maxPeriod-1] = iter->second;
-        dboutput4(iter->first,"General","PolicyCostTotalDisc","AllYears","(millions)90US$",tempOutVec);
-    }
 }
 
 /*! Create a string containing the XML output.
@@ -446,7 +361,7 @@ const string TotalPolicyCostCalculator::createXMLOutputString() const {
         const int year = modeltime->getper_to_yr( per );
         XMLWriteOpeningTag( "CostCurves", buffer, &tabs, "", year );
         for( CRegionCurvesIterator rIter = mPeriodCostCurves[ per ].begin(); rIter != mPeriodCostCurves[ per ].end(); rIter++ ){
-            rIter->second->toInputXML( buffer, &tabs );
+            rIter->second->outputAsXML( buffer, &tabs );
         }
         XMLWriteClosingTag( "CostCurves", buffer, &tabs );
     }
@@ -454,7 +369,7 @@ const string TotalPolicyCostCalculator::createXMLOutputString() const {
     
     XMLWriteOpeningTag( "RegionalCostCurvesByPeriod", buffer, &tabs );
     for( CRegionCurvesIterator rIter = mRegionalCostCurves.begin(); rIter != mRegionalCostCurves.end(); ++rIter ){
-        rIter->second->toInputXML( buffer, &tabs );
+        rIter->second->outputAsXML( buffer, &tabs );
     }
     XMLWriteClosingTag( "RegionalCostCurvesByPeriod", buffer, &tabs ); 
     

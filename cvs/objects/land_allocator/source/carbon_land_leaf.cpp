@@ -43,7 +43,6 @@
 #include "land_allocator/include/land_use_history.h"
 #include "util/base/include/xml_helper.h"
 #include "ccarbon_model/include/land_carbon_densities.h"
-#include "util/base/include/summary.h"
 #include "util/base/include/ivisitor.h"
 #include "marketplace/include/marketplace.h"
 #include "containers/include/iinfo.h"
@@ -71,10 +70,6 @@ bool CarbonLandLeaf::XMLDerivedClassParse( const std::string& aNodeName,
                                               const xercesc::DOMNode* aCurr )
 {
     return true;
-}
-
-void CarbonLandLeaf::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-
 }
 
 const string& CarbonLandLeaf::getXMLName() const {

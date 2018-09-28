@@ -150,18 +150,6 @@ void HectorModel::XMLParse( const DOMNode* node ) {
     }
 }
 
-void HectorModel::toInputXML( ostream& out, Tabs* tabs) const {
-    XMLWriteOpeningTag( getXMLName(), out, tabs );
-    XMLWriteElementCheckDefault( mHectorEndYear, "hector-end-year", out, tabs,
-                                 def_end_year );
-    XMLWriteElementCheckDefault( mEmissionsSwitchYear, "emissions-switch-year",
-                                 out, tabs, def_switch_year );
-    XMLWriteElementCheckDefault( mHectorIniFile, "hector-ini-file", out, tabs,
-                                 string( def_ini_file ) );
-    XMLWriteElementCheckDefault( mCarbonModelStartYear, "carbon-model-start-year", out, tabs, 1975 );
-    XMLWriteClosingTag( getXMLName(), out, tabs );
-}
-
 void HectorModel::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag( getXMLName(), out, tabs );
     XMLWriteElement( mHectorEndYear, "hector-end-year", out, tabs );
@@ -819,66 +807,6 @@ double HectorModel::getNetOceanUptake(const int aYear ) const {
 
 int HectorModel::getCarbonModelStartYear() const {
     return mCarbonModelStartYear;
-}
-
-//! GCAM DB output for the Hector data
-void HectorModel::printDBOutput() const {
-    void dboutput4(string var1name,string var2name,string var3name,
-                   string var4name, string uname,vector<double> dout);
-
-    const Modeltime* modeltime = scenario->getModeltime();
-    // CO2 concentration
-    vector<double> data( modeltime->getmaxper() );
-    for( int period = 0; period < modeltime->getmaxper(); ++period ){
-        data[ period ] = getConcentration( "CO2", modeltime->getper_to_yr( period ) );
-    }
-    dboutput4( "global", "General", "Concentrations", "Period", "PPM", data );
- 
-    // CO2 emissions (ex. land use change)
-    const vector<double> &co2emiss = mEmissionsTable.find("CO2")->second;
-    for( int period = 0; period < modeltime->getmaxper(); ++period ){
-        data[ period ] =
-            co2emiss[yearlyDataIndex(modeltime->getper_to_yr(period))]; 
-    }
-    dboutput4( "global", "General", "CO2 Emissions", "Period", "TgC", data );
-
-    // Total Forcing
-    for( int period = 0; period < modeltime->getmaxper(); ++period ){
-        data[ period ] = getTotalForcing( modeltime->getper_to_yr( period ) );
-    }
-    dboutput4( "global", "General", "Forcing", "Period","W/m^2", data );
-
-    // CO2 forcing.
-    for( int period = 0; period < modeltime->getmaxper(); ++period ){
-        data[ period ] = getForcing( "CO2", modeltime->getper_to_yr( period ) );
-    }
-    dboutput4( "global", "General", "CO2-Forcing", "Period","W/m^2", data );
-
-    // Fill up a vector of Global Mean Temperature.
-    for( int period = 0; period < modeltime->getmaxper(); ++period ){
-        data[ period ] = getTemperature( modeltime->getper_to_yr( period ) );
-    }
-    dboutput4( "global", "General", "Temperature", "Period", "degC", data );
-
-    // Net Terrestrial Uptake.
-    for( int period = 0; period < modeltime->getmaxper(); ++period ){
-        data[ period ] = getNetTerrestrialUptake( modeltime->getper_to_yr( period ) );
-    }
-    dboutput4( "global", "General", "NetTerUptake", "Period", "GtC", data );
-
-    // Ocean Uptake.
-    for( int period = 0; period < modeltime->getmaxper(); ++period ){
-        data[ period ] = getNetOceanUptake( modeltime->getper_to_yr( period ) );
-    }
-    dboutput4( "global", "General", "OceanUptake", "Period", "GtC", data );
-
-    // Fill up a vector of Net Land-Use Emissions.
-    const vector<double> &lucemiss = mEmissionsTable.find("CO2NetLandUse")->second;
-    for( int period = 0; period < modeltime->getmaxper(); ++period ){
-        data[ period ] =
-            lucemiss[yearlyDataIndex(modeltime->getper_to_yr(period))];
-    }
-    dboutput4( "global", "General", "netLUEm", "Period", "GtC", data );
 }
 
 void HectorModel::accept( IVisitor* aVisitor, const int aPeriod ) const {

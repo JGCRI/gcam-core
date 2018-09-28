@@ -54,7 +54,7 @@ class IVisitor;
  *          the real technology should not exist.  This will allow all calculations
  *          to remain the same without checking for a missing technology.  Note that
  *          there is only a single instance of this class and thus it can not be
- *          parsed nor should it be written in toInputXML.
+ *          parsed.
  *
  * \author Pralit Patel
  */
@@ -74,9 +74,7 @@ public:
     virtual int getYear() const;
     
     virtual bool XMLParse( const xercesc::DOMNode* tempnode );
-    virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    virtual void toInputXMLForRestart( std::ostream& out, Tabs* tabs ) const;
     
     virtual const std::string& getXMLName() const;
     
@@ -125,9 +123,6 @@ public:
                                         const int aPeriod ) const;
     
     virtual bool hasCalibratedValue( const int aPeriod ) const;
-    
-    virtual const std::map<std::string,double> getEmissions( const std::string& aGoodName,
-                                                            const int aPeriod ) const;
        
     virtual const std::string& getName() const;
     
@@ -153,8 +148,6 @@ public:
     
     virtual const std::vector<std::string> getGHGNames() const;
     
-    virtual double getEmissionsByGas( const std::string& aGasName, const int aPeriod ) const;
-    
     virtual double getFixedOutput( const std::string& aRegionName,
                                   const std::string& aSectorName,
                                   const bool aHasRequiredInput,
@@ -171,8 +164,6 @@ public:
     
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     virtual void acceptDerived( IVisitor* aVisitor, const int aPeriod ) const;
-    
-    virtual const std::map<std::string, double> getFuelMap( const int aPeriod ) const;
     
     virtual bool isAvailable( const int aPeriod ) const;
     

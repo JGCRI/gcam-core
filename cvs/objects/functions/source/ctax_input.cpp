@@ -152,14 +152,6 @@ void CTaxInput::XMLParse( const xercesc::DOMNode* aNode ) {
     }
 }
 
-void CTaxInput::toInputXML( ostream& aOut,
-                               Tabs* aTabs ) const
-{
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
-    XMLWriteElement( mFuelName, "fuel-name", aOut, aTabs );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 void CTaxInput::toDebugXML( const int aPeriod,
                                ostream& aOut,
                                Tabs* aTabs ) const

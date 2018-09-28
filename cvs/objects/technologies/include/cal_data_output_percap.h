@@ -54,7 +54,6 @@ public:
     virtual CalDataOutputPercap* clone() const;
 
     virtual void XMLParse( const xercesc::DOMNode* aNode );
-    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
     virtual void toDebugXML( std::ostream& aOut, Tabs* aTabs ) const;
     static const std::string& getXMLNameStatic();
 

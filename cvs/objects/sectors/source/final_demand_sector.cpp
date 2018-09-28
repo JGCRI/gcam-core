@@ -72,13 +72,6 @@ bool FinalDemandSector::XMLDerivedClassParse( const string& nodeName, const xerc
     return false;
 }
 
-//! For derived classes to output XML data
-void FinalDemandSector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-    if( moreSectorInfo.get() ){
-        moreSectorInfo->toInputXML( out, tabs );
-    }
-}
-
 //! Output debug info for derived class
 void FinalDemandSector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
     if( moreSectorInfo.get() ){
