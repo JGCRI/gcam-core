@@ -74,9 +74,7 @@ namespace {
     const double TG_TO_PG = 1.0e-3; // 1 Pg = 1000 Tg
     const double TG_TO_GG = 1.0e3;  // Also, 1Tg = 1Mt
     const double GG_TO_TG = 1.0e-3;
-    const double N_TO_N2O = 44.0/28.0; // 44g N2O has 28 g of N
     const double S_TO_SO2 = 2.0;       // 2g SO2 has 1g of S
-    const double NOX_TO_N = 14.0/38.0; // TODO: get better factor here
 
     // default values
     const int def_end_year = 2300;
@@ -199,7 +197,7 @@ void HectorModel::completeInit( const string& aScenarioName ) {
         climatelog << "Setting up stub Hector core." << endl;
         // TODO: shouldn't have to fool with the hector logger here.
         if( !hector_log_is_init ) {
-            Hector::Logger::getGlobalLogger().open( "hector", true, true, Hector::Logger::WARNING ); 
+            Hector::Logger::getGlobalLogger().open( "hector", true, true, Hector::Logger::DEBUG ); 
           //the new release of the Hector Logger has an additional argument must add a second true otherwise this will throw and error
             hector_log_is_init = true; 
         }
@@ -315,13 +313,13 @@ void HectorModel::completeInit( const string& aScenarioName ) {
     mUnitConvFac["SO2tot"] = TG_TO_GG / S_TO_SO2; // GCAM in Tg-SO2; Hector in Tg-S
     mUnitConvFac["BC"]  = GG_TO_TG;            // GCAM produces BC/OC in Tg but converts
     mUnitConvFac["OC"]  = GG_TO_TG;            // to Gg for MAGICC. Hector wants Tg.
-    mUnitConvFac["NOx"] = NOX_TO_N;            // GCAM in TG-NOX; Hector in TG-N
-    mUnitConvFac["N2O"] = 1.0 / N_TO_N2O; // GCAM in Tg-N2O; Hector in Tg-N 
     // Already in correct units:
     // CO2 - produced in Mt C, but converted to Gt C before passing in,
     // CH4 - produced in Mt CH4, which is what Hector wants.
     // halocarbons - produced in Gg, which is what Hector wants.
     // CO and NMVOC - produced in Tg of the relevant gas
+    // NOx -- GCAM produces this in TgNOx, but it is converted to N by world::setEmissions
+    // N2O -- GCAM produces this in TgN2O, but it is converted to N by world::setEmissions
 
     // set units for gasses that are not in Gg.  These units are
     // defined in the Hector header files.
@@ -754,6 +752,7 @@ void HectorModel::storeRF(const int aYear, const bool aHadError ) {
     mGasRFTable["N2O"][i]      = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_RF_N2O );
     mGasRFTable["BC"][i]       = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_RF_BC );
     mGasRFTable["OC"][i]       = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_RF_OC );
+    mGasRFTable["SO2"][i]       = aHadError ? numeric_limits<double>::quiet_NaN() : mHcore->sendMessage( M_GETDATA, D_RF_SO2 );
 
 #if 0
     // Forcings that hector can provide, but which are not currently
@@ -764,10 +763,9 @@ void HectorModel::storeRF(const int aYear, const bool aHadError ) {
 
     // Water vapor
     mGasRFTable["H2O"][i]   = mHcore->sendMessage( M_GETDATA, D_RF_H2O );
-    // SO2: direct, indirect, and total
+    // SO2: direct and indirect
     mGasRFTable["SO2d"][i]   = mHcore->sendMessage( M_GETDATA, D_RF_SO2d );
     mGasRFTable["SO2i"][i]   = mHcore->sendMessage( M_GETDATA, D_RF_SO2i );
-    mGasRFTable["SO2"][i]   = mHcore->sendMessage( M_GETDATA, D_RF_SO2 );
     // Ozone
     mGasRFTable["O3"][i]    = mHcore->sendMessage( M_GETDATA, D_RF_O3 );
 
@@ -794,6 +792,7 @@ void HectorModel::setupRFTbl() {
     mGasRFTable["N2O"].resize( size );
     mGasRFTable["BC"].resize( size );
     mGasRFTable["OC"].resize( size );
+    mGasRFTable["SO2"].resize( size );
 }
 
 //! Store the global quantities retrieved from Hector, except total
