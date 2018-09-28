@@ -26,12 +26,10 @@ module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
     return(c("LA1233.CoolingSystemShares_RG3_ref"))
   } else if(command == driver.MAKE) {
 
-    # Silence package notes
-    year <- value <- GCAM_region_ID <- fuel <- sector <- electricity <-
-        outputs <- input <- outputs_new <- industry <- elec_ratio <-
-        outputs_ratio <- NULL           # silence package check.
-
     all_data <- list(...)[[1]]
+
+    # Silence package notes
+    plant_type <- water_type <- fuel <- technology <- State <- NEMS <- cooling_system <- NULL
 
 # ===================================================
 # Load required inputs
@@ -129,7 +127,7 @@ module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
                               ungroup()%>%
                               dplyr::select(State,plant_type,Fuel)),
                            capacity_tech_state,
-                           by=c("State","plant_type","Fuel"))$x,)%>%
+                           by=c("State","plant_type","Fuel"))$x)%>%
      mutate(year=year_i)->
      capacity_tech_cooling
 
