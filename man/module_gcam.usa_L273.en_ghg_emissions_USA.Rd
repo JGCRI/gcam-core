@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_L273.en_ghg_emissions_USA.R
 \name{module_gcam.usa_L273.en_ghg_emissions_USA}
 \alias{module_gcam.usa_L273.en_ghg_emissions_USA}
-\title{module_gcam.usa_L273.en_ghg_emissions_USA.R
+\title{module_gcam.usa_L273.en_ghg_emissions_USA
 KALYN}
 \usage{
 module_gcam.usa_L273.en_ghg_emissions_USA(command, ...)
@@ -20,12 +20,12 @@ and \code{L273.MAC_higwp_USA}. The corresponding file in the
 original data system was \code{L273.en_ghg_emissions_USA.R} (gcam-usa level2).
 }
 \description{
-module_gcam.usa_L273.en_ghg_emissions_USA.R
+module_gcam.usa_L273.en_ghg_emissions_USA
 KALYN
 }
 \details{
 KALYN
 }
 \author{
-KRD September 2018
+KRD September 2018; edited MTB September 2018
 }

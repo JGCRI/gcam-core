@@ -22,10 +22,12 @@ module_gcamusa_batch_regional_biomass_USA_xml <- function(command, ...) {
              "L2261.StubTechFractProd_bio_USA",
              "L2261.DepRsrc_DDGS_USA",
              "L2261.DepRsrcPrice_DDGS_USA",
+             "L2261.Tech_rbm_USA",
+             "L2261.TechShrwt_rbm_USA",
+             "L2261.TechCoef_rbm_USA",
              "L2261.Tech_dbm_USA",
              "L2261.TechShrwt_dbm_USA",
              "L2261.TechEff_dbm_USA",
-             "L2261.TechCoef_dbm_USA",
              "L2261.TechCost_dbm_USA",
              "L2261.CarbonCoef_bio_USA",
              "L2261.StubTechMarket_en_USA",
@@ -52,10 +54,12 @@ module_gcamusa_batch_regional_biomass_USA_xml <- function(command, ...) {
     L2261.StubTechFractProd_bio_USA <- get_data(all_data, "L2261.StubTechFractProd_bio_USA")
     L2261.DepRsrc_DDGS_USA <- get_data(all_data, "L2261.DepRsrc_DDGS_USA")
     L2261.DepRsrcPrice_DDGS_USA <- get_data(all_data, "L2261.DepRsrcPrice_DDGS_USA")
+    L2261.Tech_rbm_USA <- get_data(all_data, "L2261.Tech_rbm_USA")
+    L2261.TechShrwt_rbm_USA <- get_data(all_data, "L2261.TechShrwt_rbm_USA")
+    L2261.TechCoef_rbm_USA <- get_data(all_data, "L2261.TechCoef_rbm_USA")
     L2261.Tech_dbm_USA <- get_data(all_data, "L2261.Tech_dbm_USA")
     L2261.TechShrwt_dbm_USA <- get_data(all_data, "L2261.TechShrwt_dbm_USA")
     L2261.TechEff_dbm_USA <- get_data(all_data, "L2261.TechEff_dbm_USA")
-    L2261.TechCoef_dbm_USA <- get_data(all_data, "L2261.TechCoef_dbm_USA")
     L2261.TechCost_dbm_USA <- get_data(all_data, "L2261.TechCost_dbm_USA")
     L2261.CarbonCoef_bio_USA <- get_data(all_data, "L2261.CarbonCoef_bio_USA")
     L2261.StubTechMarket_en_USA <- get_data(all_data, "L2261.StubTechMarket_en_USA")
@@ -81,10 +85,12 @@ module_gcamusa_batch_regional_biomass_USA_xml <- function(command, ...) {
       add_xml_data(L2261.StubTechFractProd_bio_USA, "StubTechFractProd") %>%
       add_xml_data(L2261.DepRsrc_DDGS_USA, "DepRsrc") %>%
       add_xml_data(L2261.DepRsrcPrice_DDGS_USA, "DepRsrcPrice") %>%
+      add_xml_data(L2261.Tech_rbm_USA, "Tech") %>%
+      add_xml_data(L2261.TechShrwt_rbm_USA, "TechShrwt") %>%
+      add_xml_data(L2261.TechCoef_rbm_USA, "TechCoef") %>%
       add_xml_data(L2261.Tech_dbm_USA, "Tech") %>%
       add_xml_data(L2261.TechShrwt_dbm_USA, "TechShrwt") %>%
       add_xml_data(L2261.TechEff_dbm_USA, "TechEff") %>%
-      add_xml_data(L2261.TechCoef_dbm_USA, "TechCoef") %>%
       add_xml_data(L2261.TechCost_dbm_USA, "TechCost") %>%
       add_xml_data(L2261.CarbonCoef_bio_USA, "CarbonCoef") %>%
       add_xml_data(L2261.StubTechMarket_en_USA, "StubTechMarket") %>%
@@ -104,10 +110,12 @@ module_gcamusa_batch_regional_biomass_USA_xml <- function(command, ...) {
                      "L2261.StubTechFractProd_bio_USA",
                      "L2261.DepRsrc_DDGS_USA",
                      "L2261.DepRsrcPrice_DDGS_USA",
+                     "L2261.Tech_rbm_USA",
+                     "L2261.TechShrwt_rbm_USA",
+                     "L2261.TechCoef_rbm_USA",
                      "L2261.Tech_dbm_USA",
                      "L2261.TechShrwt_dbm_USA",
                      "L2261.TechEff_dbm_USA",
-                     "L2261.TechCoef_dbm_USA",
                      "L2261.TechCost_dbm_USA",
                      "L2261.CarbonCoef_bio_USA",
                      "L2261.StubTechMarket_en_USA",

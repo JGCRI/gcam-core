@@ -11,6 +11,8 @@
 module_gcam.usa_batch_coal_retire_USA_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L2240.coal_conv_pul_delete_USA",
+             "L2240.StubTechProd_elecS_coal_USA", 
+             "L2240.StubTechShrwt_elecS_coal_USA",
              "L2240.StubTechProd_elec_coalret_USA",
              "L2240.StubTechEff_elec_coalret_USA",
              "L2240.StubTechSCurve_elec_coalret_USA",
@@ -22,8 +24,8 @@ module_gcam.usa_batch_coal_retire_USA_xml <- function(command, ...) {
              "L2240.GlobalTechOMvar_elec_coalret_USA",
              "L2240.GlobalTechEff_elec_coalret_USA",
              "L2240.GlobalTechProfitShutdown_elec_coalret_USA",
-             "L2240.ghg_emissions_coalret_USA",
-             "L2240.StubTechShrwt_coal_retire_elec_USA"))
+             "L2240.ghg_emissions_coalret_USA"))
+             # "L2240.StubTechShrwt_coal_retire_elec_USA"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "coal_retire_USA.xml"))
   } else if(command == driver.MAKE) {
@@ -35,8 +37,9 @@ module_gcam.usa_batch_coal_retire_USA_xml <- function(command, ...) {
 
     # Load required inputs
     L2240.coal_conv_pul_delete_USA <- get_data(all_data, "L2240.coal_conv_pul_delete_USA")
-    L2240.StubTechProd_elec_coalret_USA <- get_data(all_data, "L2240.StubTechProd_elec_coalret_USA") %>%
-      rename(tech.share.weight = share.weight)
+    L2240.StubTechProd_elecS_coal_USA <- get_data(all_data, "L2240.StubTechProd_elecS_coal_USA")
+    L2240.StubTechShrwt_elecS_coal_USA  <- get_data(all_data, "L2240.StubTechShrwt_elecS_coal_USA")
+    L2240.StubTechProd_elec_coalret_USA <- get_data(all_data, "L2240.StubTechProd_elec_coalret_USA")
     L2240.StubTechEff_elec_coalret_USA <- get_data(all_data, "L2240.StubTechEff_elec_coalret_USA")
     L2240.StubTechSCurve_elec_coalret_USA <- get_data(all_data, "L2240.StubTechSCurve_elec_coalret_USA")
     L2240.StubTechMarket_elec_coalret_USA <- get_data(all_data, "L2240.StubTechMarket_elec_coalret_USA")
@@ -54,11 +57,13 @@ module_gcam.usa_batch_coal_retire_USA_xml <- function(command, ...) {
     L2240.GlobalTechProfitShutdown_elec_coalret_USA <- get_data(all_data, "L2240.GlobalTechProfitShutdown_elec_coalret_USA") %>%
       rename(sector.name = supplysector, subsector.name = subsector)
     L2240.ghg_emissions_coalret_USA <- get_data(all_data, "L2240.ghg_emissions_coalret_USA")
-    L2240.StubTechShrwt_coal_retire_elec_USA <- get_data(all_data, "L2240.StubTechShrwt_coal_retire_elec_USA")
+    # L2240.StubTechShrwt_coal_retire_elec_USA <- get_data(all_data, "L2240.StubTechShrwt_coal_retire_elec_USA")
 
     # Produce outputs
     create_xml("coal_retire_USA.xml") %>%
       add_xml_data(L2240.coal_conv_pul_delete_USA, "DeleteStubTech") %>%
+      add_xml_data(L2240.StubTechProd_elecS_coal_USA, "StubTechProd") %>%
+      add_xml_data(L2240.StubTechShrwt_elecS_coal_USA, "StubTechShrwt") %>%
       add_xml_data(L2240.StubTechProd_elec_coalret_USA, "StubTechProd") %>%
       add_xml_data(L2240.StubTechEff_elec_coalret_USA, "StubTechEff") %>%
       add_xml_data(L2240.StubTechSCurve_elec_coalret_USA, "StubTechSCurve") %>%
@@ -71,8 +76,10 @@ module_gcam.usa_batch_coal_retire_USA_xml <- function(command, ...) {
       add_xml_data(L2240.GlobalTechEff_elec_coalret_USA, "GlobalTechEff") %>%
       add_xml_data(L2240.GlobalTechProfitShutdown_elec_coalret_USA, "GlobalTechProfitShutdown") %>%
       add_xml_data(L2240.ghg_emissions_coalret_USA, "InputEmissions") %>%
-      add_xml_data(L2240.StubTechShrwt_coal_retire_elec_USA, "StubTechShrwt") %>%
+      # add_xml_data(L2240.StubTechShrwt_coal_retire_elec_USA, "StubTechShrwt") %>%
       add_precursors("L2240.coal_conv_pul_delete_USA",
+                     "L2240.StubTechProd_elecS_coal_USA",
+                     "L2240.StubTechShrwt_elecS_coal_USA",
                      "L2240.StubTechProd_elec_coalret_USA",
                      "L2240.StubTechEff_elec_coalret_USA",
                      "L2240.StubTechSCurve_elec_coalret_USA",
@@ -84,8 +91,8 @@ module_gcam.usa_batch_coal_retire_USA_xml <- function(command, ...) {
                      "L2240.GlobalTechOMvar_elec_coalret_USA",
                      "L2240.GlobalTechEff_elec_coalret_USA",
                      "L2240.GlobalTechProfitShutdown_elec_coalret_USA",
-                     "L2240.ghg_emissions_coalret_USA",
-                     "L2240.StubTechShrwt_coal_retire_elec_USA") ->
+                     "L2240.ghg_emissions_coalret_USA") ->
+                     # "L2240.StubTechShrwt_coal_retire_elec_USA") ->
       coal_retire_USA.xml
 
     return_data(coal_retire_USA.xml)

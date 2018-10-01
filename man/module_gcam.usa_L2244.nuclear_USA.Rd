@@ -28,5 +28,5 @@ It assumes that no new nuclear is deployed in any state through 2035, except in 
 subsector share-weight assumptions in this add-on.
 }
 \author{
-RC Sep 2018
+RC Sep 2018; edited MB Sep 2018
 }

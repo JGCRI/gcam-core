@@ -3,6 +3,10 @@
 # Units: unitless,,,,,,,
 # Comments: Subsector share-weights which need a to-value,,,,,,,
 region,supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
+USA,base load generation,coal,share-weight,2015,end-year,1,fixed
+USA,intermediate generation,coal,share-weight,2015,end-year,1,fixed
+USA,subpeak generation,coal,share-weight,2015,end-year,1,fixed
+USA,peak generation,coal,share-weight,2015,end-year,1,fixed
 USA,base load generation,gas,share-weight,2015,end-year,1,fixed
 USA,intermediate generation,gas,share-weight,2015,end-year,1,fixed
 USA,subpeak generation,gas,share-weight,2015,end-year,1,fixed

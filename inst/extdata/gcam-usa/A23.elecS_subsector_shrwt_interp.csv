@@ -3,10 +3,6 @@
 # Units: unitless,,,,,,
 # Comments: Subsector shareweights for subsectors that are fixed at calibration values,,,,,,
 region,supplysector,subsector,apply.to,from.year,to.year,interpolation.function
-USA,base load generation,coal,share-weight,final-calibration-year,end-year,fixed
-USA,intermediate generation,coal,share-weight,final-calibration-year,end-year,fixed
-USA,subpeak generation,coal,share-weight,final-calibration-year,end-year,fixed
-USA,peak generation,coal,share-weight,final-calibration-year,end-year,fixed
 USA,base load generation,refined liquids,share-weight,final-calibration-year,end-year,fixed
 USA,intermediate generation,refined liquids,share-weight,final-calibration-year,end-year,fixed
 USA,subpeak generation,refined liquids,share-weight,final-calibration-year,end-year,fixed

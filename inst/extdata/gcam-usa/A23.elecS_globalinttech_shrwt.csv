@@ -16,4 +16,3 @@ intermediate generation,solar,CSP_int,1,1,1,1,1
 subpeak generation,solar,CSP_subpeak,1,1,1,1,1
 peak generation,solar,CSP_peak,1,1,1,1,1
 elect_td_bld,rooftop_pv,rooftop_pv,1,1,1,1,1
-base load generation,wind,wind_base_offshore,0,0,0.05,1,1

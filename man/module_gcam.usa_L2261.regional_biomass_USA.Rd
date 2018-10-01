@@ -18,11 +18,12 @@ the generated outputs: \code{L2261.DeleteSupplysector_bio_USA}, \code{L2261.Supp
 \code{L2261.SubsectorShrwtFllt_bio_USA}, \code{L2261.SubsectorInterp_bio_USA}, \code{L2261.SubsectorLogit_bio_USA},
 \code{L2261.StubTech_bio_USA}, \code{L2261.StubTechMarket_bio_USA}, \code{L2261.StubTechShrwt_rbO_USA},
 \code{L2261.StubTechFractSecOut_bio_USA}, \code{L2261.StubTechFractProd_bio_USA}, \code{L2261.DepRsrc_DDGS_USA},
-\code{L2261.DepRsrcPrice_DDGS_USA}, \code{L2261.Tech_dbm_USA}, \code{L2261.TechShrwt_dbm_USA},
-\code{L2261.TechEff_dbm_USA}, \code{L2261.TechCoef_dbm_USA}, \code{L2261.TechCost_dbm_USA},
-\code{L2261.CarbonCoef_bio_USA}, \code{L2261.StubTechMarket_en_USA}, \code{L2261.StubTechMarket_elecS_USA},
-\code{L2261.StubTechMarket_ind_USA}, \code{L2261.StubTechMarket_cement_USA}, \code{L2261.StubTechMarket_bld_USA}.
-The corresponding file in the original data system was \code{L228.regional_biomass_USA.R} (gcam-usa level2).
+\code{L2261.DepRsrcPrice_DDGS_USA}, \code{L2261.Tech_rbm_USA}, \code{L2261.TechShrwt_rbm_USA}, 
+\code{L2261.TechCoef_rbm_USA}, \code{L2261.Tech_dbm_USA}, \code{L2261.TechShrwt_dbm_USA},
+\code{L2261.TechEff_dbm_USA}, \code{L2261.TechCost_dbm_USA}, \code{L2261.CarbonCoef_bio_USA}, 
+\code{L2261.StubTechMarket_en_USA}, \code{L2261.StubTechMarket_elecS_USA}, \code{L2261.StubTechMarket_ind_USA}, 
+\code{L2261.StubTechMarket_cement_USA}, \code{L2261.StubTechMarket_bld_USA}.
+The corresponding file in the original data system was \code{L2261.regional_biomass_USA.R} (gcam-usa level2).
 }
 \description{
 Create biomass supply sectors at the state level.
