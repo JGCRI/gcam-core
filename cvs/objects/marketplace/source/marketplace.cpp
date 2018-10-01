@@ -496,7 +496,7 @@ void Marketplace::setPrice( const string& goodName, const string& regionName, co
     if ( !util::isValidNumber( value ) ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
-        mainLog << "Error setting price in markeplace for: " << goodName << ", value: " << value << endl;
+        mainLog << "Error setting price in marketplace for: " << goodName << ", value: " << value << endl;
         return;
     }
 
@@ -533,7 +533,7 @@ void Marketplace::addToSupply( const string& goodName, const string& regionName,
     if ( !util::isValidNumber( value ) ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
-        mainLog << "Error adding to supply in markeplace for: " << goodName << ", region: " << regionName << ", value: " << value << endl;
+        mainLog << "Error adding to supply in marketplace for: " << goodName << ", region: " << regionName << ", value: " << value << endl;
         return;
     }
 
@@ -571,7 +571,7 @@ void Marketplace::addToDemand( const string& goodName, const string& regionName,
     if ( !util::isValidNumber( value ) ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
-        mainLog << "Error adding to demand in markeplace for: " << goodName << ", region: " << regionName << ", value: " << value << endl;
+        mainLog << "Error adding to demand in marketplace for: " << goodName << ", region: " << regionName << ", value: " << value << endl;
         return;
     }
 
