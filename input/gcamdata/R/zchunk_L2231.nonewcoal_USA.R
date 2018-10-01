@@ -6,7 +6,8 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L2231.StubTechShrwt_coal_USA}. The corresponding file in the
+#' the generated outputs: \code{L2231.StubTechShrwt_nonewcoal_USA}, \code{L2231.StubTechShrwt_coal_delay_USA}. 
+#' The corresponding file in the
 #' original data system was \code{L2231.nonewcoal_USA.R} (gcam-usa level2).
 #' @details This chunk sets zero share-weights of pulverized coal technologies, which assumes
 #' no new pulverized coal plants without CCS will be built in USA states.
@@ -22,7 +23,8 @@ module_gcam.usa_L2231.nonewcoal_USA <- function(command, ...) {
              "L222.StubTech_en",
              "L225.StubTech_h2"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L2231.StubTechShrwt_coal_USA"))
+    return(c("L2231.StubTechShrwt_nonewcoal_USA", 
+             "L2231.StubTechShrwt_coal_delay_USA"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -37,6 +39,8 @@ module_gcam.usa_L2231.nonewcoal_USA <- function(command, ...) {
     A23.elecS_tech_associations <- get_data(all_data, "gcam-usa/A23.elecS_tech_associations")
     A23.elecS_tech_availability <- get_data(all_data, "gcam-usa/A23.elecS_tech_availability")
 
+    # ===================================================
+    # Perform computations
 
     A23.elecS_tech_associations %>%
       anti_join(A23.elecS_tech_availability, by = c("Electric.sector.technology" = "stub.technology")) %>%
@@ -68,7 +72,16 @@ module_gcam.usa_L2231.nonewcoal_USA <- function(command, ...) {
 
     bind_rows(L2231.StubTechShrwt_elec_USA,
               L2231.StubTechShrwt_refining_USA,
-              L2231.StubTechShrwt_en_USA) %>%
+              L2231.StubTechShrwt_en_USA) -> L2231.StubTechShrwt_nonewcoal_USA
+    
+    L2231.StubTechShrwt_nonewcoal_USA %>%
+      filter(year <= gcamusa.FIRST_NEW_COAL_YEAR) -> 
+      L2231.StubTechShrwt_coal_delay_USA
+      
+    # ===================================================
+    # Produce outputs
+    
+    L2231.StubTechShrwt_nonewcoal_USA %>%
       add_title("Share-weights for pulverized coal stub technologies in USA states") %>%
       add_units("Unitless") %>%
       add_comments("Set zero share-weights for all coal pulverized stub technologies in all USA states and future years") %>%
@@ -78,9 +91,22 @@ module_gcam.usa_L2231.nonewcoal_USA <- function(command, ...) {
                      "L222.StubTechMarket_en_USA",
                      "L222.StubTech_en",
                      "L225.StubTech_h2") ->
-      L2231.StubTechShrwt_coal_USA
+      L2231.StubTechShrwt_nonewcoal_USA
+    
+    L2231.StubTechShrwt_coal_delay_USA %>%
+      add_title("Share-weights for pulverized coal stub technologies in USA states") %>%
+      add_units("Unitless") %>%
+      add_comments("Set zero share-weights for all coal pulverized stub technologies in all USA states for near-future") %>%
+      add_comments("New coal power deployment can begin in gcamusa.FIRST_NEW_COAL_YEAR (see constants.R; default is 2035) ") %>%
+      add_precursors("gcam-usa/A23.elecS_tech_associations",
+                     "gcam-usa/A23.elecS_tech_availability",
+                     "L222.StubTechMarket_en_USA",
+                     "L222.StubTech_en",
+                     "L225.StubTech_h2") ->
+      L2231.StubTechShrwt_coal_delay_USA
 
-    return_data(L2231.StubTechShrwt_coal_USA)
+    return_data(L2231.StubTechShrwt_nonewcoal_USA, 
+                L2231.StubTechShrwt_coal_delay_USA)
   } else {
     stop("Unknown command")
   }

@@ -100,13 +100,32 @@
 		<Value name = "elect_td_usa">../input/gcamdata/xml/electd_USA.xml</Value>
 		<Value name = "trn_usa">../input/gcamdata/xml/transportation_USA.xml</Value>
 		<Value name = "bld_usa">../input/gcamdata/xml/building_USA.xml</Value>
-		<Value name = "dd_usa">../input/gcamdata/xml/HDDCDD_A2_GFDL_USA.xml</Value>
+		<!--Value name = "dd_usa">../input/gcamdata/xml/HDDCDD_A2_GFDL_USA.xml</Value-->
+		<Value name = "dd_usa">../input/gcamdata/xml/HDDCDD_AEO_2015_USA.xml</Value>
 		<Value name = "ind_usa">../input/gcamdata/xml/industry_USA.xml</Value>
+		<Value name = "ind_usa">../input/gcamdata/xml/industry_vintage_USA.xml</Value>
 		<Value name = "cement_usa">../input/gcamdata/xml/cement_USA.xml</Value>
 		<Value name = "fert_usa">../input/gcamdata/xml/Fert_USA.xml</Value>
+
+		<Value name = "solar_usa">../input/gcamdata/xml/solar_reeds_USA.xml</Value>
+		<Value name = "wind_usa">../input/gcamdata/xml/wind_reeds_USA.xml</Value>
+		<Value name = "hydro_usa">../input/gcamdata/xml/elec_hydro_USA.xml</Value>
+		<Value name = "coal_delay_usa">../input/gcamdata/xml/coal_delay_USA.xml</Value>
+		<Value name = "coal_retire_usa">../input/gcamdata/xml/coal_retire_USA.xml</Value>
+		<Value name = "coal_vintage_usa">../input/gcamdata/xml/coal_vintage_USA.xml</Value>
+		<Value name = "elecS_costs">../input/gcamdata/xml/elecS_costs_USA.xml</Value>
+		<Value name = "ITC_usa">../input/gcamdata/xml/elecS_costs_USA_itc.xml</Value>
+		<Value name = "PTC_usa">../input/gcamdata/xml/elecS_costs_USA_ptc.xml</Value>
+
+		<Value name = "ghg_emiss_usa">../input/gcamdata/xml/ghg_emissions_USA.xml</Value>
+		<Value name = "elec_emiss_usa">../input/gcamdata/xml/elecS_ghg_emissions_USA.xml</Value>
+		<Value name = "transport_emiss_usa">../input/gcamdata/xml/transport_emissions_USA.xml</Value>
+		<Value name = "ind_proc_emiss_usa">../input/gcamdata/xml/industry_process_USA.xml</Value>
+
 		<Value name = "liq_lim_usa">../input/gcamdata/xml/liquids_limits_USA.xml</Value>
 		<Value name = "neg_emiss_usa">../input/gcamdata/xml/negative_emissions_budget_USA_gSSP2.xml</Value>
 		<Value name = "USA_regional_bio">../input/gcamdata/xml/regional_biomass_USA.xml</Value>
+
 	</ScenarioComponents>
 	<Strings>
 		<Value name="scenarioName">GCAM-USA_Ref</Value>

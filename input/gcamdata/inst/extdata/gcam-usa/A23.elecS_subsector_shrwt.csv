@@ -3,6 +3,14 @@
 # Units: unitless,,,,
 # Comments: Subsector shareweights at points of inflexion,,,,
 region,supplysector,subsector,year,share.weight
+USA,base load generation,coal,2015,1
+USA,intermediate generation,coal,2015,1
+USA,subpeak generation,coal,2015,1
+USA,peak generation,coal,2015,1
+USA,base load generation,coal,end-year,1
+USA,intermediate generation,coal,end-year,1
+USA,subpeak generation,coal,end-year,1
+USA,peak generation,coal,end-year,1
 USA,base load generation,gas,2015,1
 USA,intermediate generation,gas,2015,1
 USA,subpeak generation,gas,2015,1

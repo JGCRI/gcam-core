@@ -16,7 +16,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author RC Sep 2018
+#' @author RC Sep 2018; edited MB Sep 2018
 module_gcam.usa_L2244.nuclear_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/nuc_gen2",
@@ -119,11 +119,12 @@ module_gcam.usa_L2244.nuclear_USA <- function(command, ...) {
 
     A23.elecS_tech_associations %>%
       anti_join(A23.elecS_tech_availability, by = c("Electric.sector.technology" = "stub.technology")) %>%
-      select(Electric.sector, subsector, Electric.sector.technology) %>%
-      filter(grepl("Gen III", Electric.sector.technology)) ->
+      filter(subsector == "nuclear") %>%
+      select(Electric.sector, subsector, Electric.sector.technology) ->
       L2244.nuc_stubtech
 
     L2244.nuc_stubtech %>%
+      filter(!grepl("Gen III", Electric.sector.technology)) %>%
       repeat_add_columns(tibble(region = unique(L2244.nuc_gen2_gen$region))) %>%
       left_join_error_no_match(L2244.nuc_gen2_s_curve_parameters, by = "region") %>%
       left_join(L2244.nuc_gen2_lifetime, by ="region") %>%
@@ -136,6 +137,7 @@ module_gcam.usa_L2244.nuclear_USA <- function(command, ...) {
 
     # Prepare table to read in 0 shareweights for Gen III technologies in all states through 2030
     L2244.nuc_stubtech %>%
+      filter(grepl("Gen III", Electric.sector.technology)) %>%
       repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
       repeat_add_columns(tibble(year = FUTURE_YEARS)) %>%
       filter(year <= 2030) %>%

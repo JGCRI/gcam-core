@@ -14,11 +14,11 @@ module_gcam.usa_L2240.coal_slow_fast_retire_USA(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L2240.coal_conv_pul_delete_USA}, \code{L2240.StubTechProd_elec_coalret_USA}, \code{L2240.StubTechEff_elec_coalret_USA},
-\code{L2240.StubTechSCurve_elec_coalret_USA}, \code{L2240.StubTechMarket_elec_coalret_USA}, \code{L2240.GlobalTechShrwt_elec_coalret_USA},
-\code{L2240.GlobalTechCapFac_elec_coalret_USA}, \code{L2240.GlobalTechCapital_elec_coalret_USA}, \code{L2240.GlobalTechOMfixed_elec_coalret_USA},
-\code{L2240.GlobalTechOMvar_elec_coalret_USA}, \code{L2240.GlobalTechEff_elec_coalret_USA}, \code{L2240.GlobalTechProfitShutdown_elec_coalret_USA},
-\code{L2240.ghg_emissions_coalret_USA}, \code{L2240.StubTechShrwt_coal_retire_elec_USA}.
+the generated outputs: \code{L2240.coal_conv_pul_delete_USA}, \code{L2240.StubTechProd_elecS_coal_USA}, \code{L2240.StubTechShrwt_elecS_coal_USA},
+\code{L2240.StubTechProd_elec_coalret_USA}, \code{L2240.StubTechEff_elec_coalret_USA}, \code{L2240.StubTechSCurve_elec_coalret_USA}, 
+\code{L2240.StubTechMarket_elec_coalret_USA}, \code{L2240.GlobalTechShrwt_elec_coalret_USA}, \code{L2240.GlobalTechCapFac_elec_coalret_USA}, 
+\code{L2240.GlobalTechCapital_elec_coalret_USA}, \code{L2240.GlobalTechOMfixed_elec_coalret_USA}, \code{L2240.GlobalTechOMvar_elec_coalret_USA}, 
+\code{L2240.GlobalTechEff_elec_coalret_USA}, \code{L2240.GlobalTechProfitShutdown_elec_coalret_USA}, \code{L2240.ghg_emissions_coalret_USA}.
 The corresponding file in the original data system was \code{L2240.coal_slow_fast_retire_USA.R} (gcam-usa level2).
 }
 \description{

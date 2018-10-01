@@ -1,5 +1,5 @@
-#' module_gcam.usa_L273.en_ghg_emissions_USA.R
-#'KALYN
+#' module_gcam.usa_L273.en_ghg_emissions_USA
+#' KALYN
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -12,12 +12,11 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author KRD September 2018
+#' @author KRD September 2018; edited MTB September 2018
 
 module_gcam.usa_L273.en_ghg_emissions_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
-             FILE = "gcam-usa/A27.tech_associations",
              "L123.in_EJ_R_elec_F_Yh",
              "L123.out_EJ_state_ownuse_elec",
              "L1231.in_EJ_state_elec_F_tech",
@@ -30,9 +29,9 @@ module_gcam.usa_L273.en_ghg_emissions_USA <- function(command, ...) {
              "L252.ResMAC_fos",
              "L252.MAC_higwp",
              "L222.StubTech_en_USA",
-            "L223.StubTech_elec_USA",
+             "L223.StubTech_elec_USA",
              "L232.StubTechCalInput_indenergy_USA",
-             "L244.StubTechCalInput_bld",
+             "L244.StubTechCalInput_bld_gcamusa",
              "L244.GlobalTechEff_bld"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L273.en_ghg_tech_coeff_USA",
@@ -54,7 +53,6 @@ module_gcam.usa_L273.en_ghg_emissions_USA <- function(command, ...) {
 
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
-    A27.tech_associations <- get_data(all_data, "gcam-usa/A27.tech_associations")
     L123.in_EJ_R_elec_F_Yh <- get_data(all_data, "L123.in_EJ_R_elec_F_Yh")
     L123.out_EJ_state_ownuse_elec <- get_data(all_data, "L123.out_EJ_state_ownuse_elec")
     L1231.in_EJ_state_elec_F_tech <- get_data(all_data, "L1231.in_EJ_state_elec_F_tech")
@@ -69,7 +67,7 @@ module_gcam.usa_L273.en_ghg_emissions_USA <- function(command, ...) {
     L222.StubTech_en_USA <- get_data(all_data, "L222.StubTech_en_USA")
     L223.StubTech_elec_USA <- get_data(all_data, "L223.StubTech_elec_USA")
     L232.StubTechCalInput_indenergy_USA <- get_data(all_data, "L232.StubTechCalInput_indenergy_USA")
-    L244.StubTechCalInput_bld <- get_data(all_data, "L244.StubTechCalInput_bld")
+    L244.StubTechCalInput_bld_gcamusa <- get_data(all_data, "L244.StubTechCalInput_bld_gcamusa")
     L244.GlobalTechEff_bld <- get_data(all_data, "L244.GlobalTechEff_bld")
 
     # ===================================================
@@ -131,62 +129,9 @@ module_gcam.usa_L273.en_ghg_emissions_USA <- function(command, ...) {
        select("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "emiss.coeff") ->
        L273.elc_ghg_tech_coeff_USA
 
-     # Subset the technologies that compete in the coal-gas dispatcher, and assign their emissions
-     L273.elc_ghg_tech_coeff_USA %>%
-       filter(stub.technology %in% A27.tech_associations$elec_technology) %>%
-       select(-supplysector, -subsector) %>%
-       left_join_error_no_match(A27.tech_associations %>%
-                                  select("elec_technology", "supplysector", "subsector", "technology"),
-                                by = c("stub.technology" = "elec_technology")) %>%
-       select("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "emiss.coeff") ->
-       disp_ghg_tech_coeff_USA
-
-     # Up to now, we've just written the tech coefficients that were already present in the emissions data for
-     # the dispatcher. But since there is nothing written out for the final base year we will miss emissions in this
-     # year.So will have to use input emissions and fuel input on the USA level to come up with a technology coefficient
-     # for the dispatcher technologies, and write this out for the first year that the dispatcher becomes available.
-     L201.en_ghg_emissions_base_years <- max(L201.en_ghg_emissions$year[L201.en_ghg_emissions$year %in% BASE_YEARS])
-
-     L201.en_ghg_emissions %>%
-       filter(stub.technology %in% A27.tech_associations$elec_technology &
-                year == L201.en_ghg_emissions_base_years &
-                region == "USA") ->
-       L201.disp_ghg_emissions_USA
-
-     # Grab the relevant fuel inputs to electricity from the energy data
-     L123.in_EJ_R_elec_F_Yh %>%
-       filter(GCAM_region_ID == 1 & year %in% L201.disp_ghg_emissions_USA$year &
-                fuel %in% L201.disp_ghg_emissions_USA$subsector) ->
-       L123.in_EJ_USA_elec_F_Ydisp
-
-     # Compute technology coefficients, write them to states, use them in the year that the dispatcher is available
-     L201.disp_ghg_emissions_USA %>%
-       left_join_error_no_match(L123.in_EJ_USA_elec_F_Ydisp %>%
-                                  select(fuel, value), by = c("subsector" = "fuel")) %>%
-       mutate(emiss.coeff = input.emissions / value,
-              year = max(BASE_YEARS)) %>%
-       select(-supplysector, -subsector) %>%
-       left_join_error_no_match(A27.tech_associations %>%
-                                  select(supplysector, subsector, technology, elec_technology),
-                                by = c("stub.technology" = "elec_technology")) %>%
-       select(supplysector, subsector, stub.technology, year, Non.CO2, input.emissions, emiss.coeff) %>%
-       repeat_add_columns(tibble(region = states_subregions$state)) ->
-       add_disp_ghg_tech_coeff_USA
-
-     # Select relevant columns
-     add_disp_ghg_tech_coeff_USA %>%
-       select(names(disp_ghg_tech_coeff_USA)) ->
-       add_disp_ghg_tech_coeff_USA
-
-     # Bind the dispatcher technology coefficients into one table
-     L273.disp_ghg_tech_coeff_USA <- bind_rows(add_disp_ghg_tech_coeff_USA, disp_ghg_tech_coeff_USA)
-
-     # Bind the dispatcher rows to the electricity data frame
-     L273.elcdisp_ghg_tech_coeff_USA <- bind_rows(L273.elc_ghg_tech_coeff_USA,L273.disp_ghg_tech_coeff_USA)
-
      # Bind rows containing refining and electricity emission coefficients into one table, and organize
      L273.ref_ghg_tech_coeff_USA %>%
-       bind_rows(L273.elcdisp_ghg_tech_coeff_USA) %>%
+       bind_rows(L273.elc_ghg_tech_coeff_USA) %>%
        mutate(emiss.coeff = round(emiss.coeff, emissions.DIGITS_EMISSIONS)) %>%
        arrange(region, supplysector, subsector, stub.technology, year, Non.CO2) ->
        L273.en_ghg_tech_coeff_USA
@@ -262,7 +207,7 @@ module_gcam.usa_L273.en_ghg_emissions_USA <- function(command, ...) {
        en_ghg_emissions_state
 
      # Buildings: First subset the heating and cooling demands
-     L244.StubTechCalInput_bld %>%
+     L244.StubTechCalInput_bld_gcamusa %>%
        filter(year %in% en_ghg_emissions_USA$year & subsector %in% en_ghg_emissions_USA$subsector) %>%
        # Add a sector column to match with the emissions data
        mutate(sector = if_else(supplysector %in% c("comm heating", "comm cooling", "resid heating", "resid cooling"),
@@ -355,7 +300,7 @@ module_gcam.usa_L273.en_ghg_emissions_USA <- function(command, ...) {
        L273.out_ghg_emissions_elec_ownuse
 
      # To compute building service output, multiply the building energy use by efficiency
-     L244.StubTechCalInput_bld %>%
+     L244.StubTechCalInput_bld_gcamusa %>%
        # TODO We do not expect a 1:1 match so can use a different left join here, there might
        # an issue with this match, must use left_join_keep_first_only to preserve the match
        # in the old data system but it might need to be a left_join.
@@ -458,7 +403,6 @@ module_gcam.usa_L273.en_ghg_emissions_USA <- function(command, ...) {
       add_comments("Write the USA coefficients for every state, remove H2 production emissions and match the refining emission factors to the corresponding technologies in the states.") %>%
       add_legacy_name("L273.en_ghg_tech_coeff_USA") %>%
       add_precursors("gcam-usa/states_subregions",
-                     "gcam-usa/A27.tech_associations",
                      "L123.in_EJ_R_elec_F_Yh",
                      "L123.out_EJ_state_ownuse_elec",
                      "L1231.in_EJ_state_elec_F_tech",
@@ -473,7 +417,7 @@ module_gcam.usa_L273.en_ghg_emissions_USA <- function(command, ...) {
                      "L222.StubTech_en_USA",
                      "L223.StubTech_elec_USA",
                      "L232.StubTechCalInput_indenergy_USA",
-                     "L244.StubTechCalInput_bld",
+                     "L244.StubTechCalInput_bld_gcamusa",
                      "L244.GlobalTechEff_bld") ->
        L273.en_ghg_tech_coeff_USA
 
@@ -483,7 +427,6 @@ module_gcam.usa_L273.en_ghg_emissions_USA <- function(command, ...) {
        add_comments("Compute shares of national and sector total for each fuel input technology") %>%
        add_legacy_name("L273.en_ghg_emissions_USA") %>%
        add_precursors("gcam-usa/states_subregions",
-                      "gcam-usa/A27.tech_associations",
                       "L123.in_EJ_R_elec_F_Yh",
                       "L123.out_EJ_state_ownuse_elec",
                       "L1231.in_EJ_state_elec_F_tech",
@@ -498,7 +441,7 @@ module_gcam.usa_L273.en_ghg_emissions_USA <- function(command, ...) {
                       "L222.StubTech_en_USA",
                       "L223.StubTech_elec_USA",
                       "L232.StubTechCalInput_indenergy_USA",
-                      "L244.StubTechCalInput_bld",
+                      "L244.StubTechCalInput_bld_gcamusa",
                       "L244.GlobalTechEff_bld") ->
        L273.en_ghg_emissions_USA
 
@@ -508,7 +451,6 @@ module_gcam.usa_L273.en_ghg_emissions_USA <- function(command, ...) {
        add_comments("Use state energy data to determine each state's share of the national emissions.") %>%
        add_legacy_name("L273.out_ghg_emissions_USA") %>%
        add_precursors("gcam-usa/states_subregions",
-                      "gcam-usa/A27.tech_associations",
                       "L123.in_EJ_R_elec_F_Yh",
                       "L123.out_EJ_state_ownuse_elec",
                       "L1231.in_EJ_state_elec_F_tech",
@@ -523,7 +465,7 @@ module_gcam.usa_L273.en_ghg_emissions_USA <- function(command, ...) {
                       "L222.StubTech_en_USA",
                       "L223.StubTech_elec_USA",
                       "L232.StubTechCalInput_indenergy_USA",
-                      "L244.StubTechCalInput_bld",
+                      "L244.StubTechCalInput_bld_gcamusa",
                       "L244.GlobalTechEff_bld") ->
        L273.out_ghg_emissions_USA
 
@@ -533,7 +475,6 @@ module_gcam.usa_L273.en_ghg_emissions_USA <- function(command, ...) {
        add_comments("The MAC curves will be identical to those for the USA.") %>%
        add_legacy_name("L252.MAC_higwp") %>%
        add_precursors("gcam-usa/states_subregions",
-                      "gcam-usa/A27.tech_associations",
                       "L123.in_EJ_R_elec_F_Yh",
                       "L123.out_EJ_state_ownuse_elec",
                       "L1231.in_EJ_state_elec_F_tech",
@@ -548,7 +489,7 @@ module_gcam.usa_L273.en_ghg_emissions_USA <- function(command, ...) {
                       "L222.StubTech_en_USA",
                       "L223.StubTech_elec_USA",
                       "L232.StubTechCalInput_indenergy_USA",
-                      "L244.StubTechCalInput_bld",
+                      "L244.StubTechCalInput_bld_gcamusa",
                       "L244.GlobalTechEff_bld") ->
        L273.MAC_higwp_USA
 
