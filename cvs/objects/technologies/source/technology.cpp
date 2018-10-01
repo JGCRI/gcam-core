@@ -1188,7 +1188,7 @@ bool Technology::hasInput( const string& aInput ) const
 double Technology::getOutput( const int aPeriod ) const
 {
     // Primary output is at position zero.
-    return mOutputs[ 0 ]->getPhysicalOutput( aPeriod );
+    return isOperating( aPeriod ) ? mOutputs[ 0 ]->getPhysicalOutput( aPeriod ) : 0.0;
 }
 
 /*! \brief Return Technology input cost.
