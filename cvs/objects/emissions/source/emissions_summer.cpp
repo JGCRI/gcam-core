@@ -108,8 +108,8 @@ void GroupedEmissionsSummer::startVisitGHG( const AGHG* aGHG, const int aPeriod 
     if( it != mEmissionsSummers.end() ) {
         for( int period = 1; period < scenario->getModeltime()->getmaxper(); ++period ) {
             if( !mCurrTech || mCurrTech->isOperating(period) ) {
-            (*it).second->startVisitGHG( aGHG, period );
-        }
+                (*it).second->startVisitGHG( aGHG, period );
+            }
         }
     }
 }

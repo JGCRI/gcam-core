@@ -50,6 +50,7 @@
 #include "demographics/include/demographic.h"
 #include "sectors/include/sector_utils.h"
 #include "technologies/include/generic_output.h"
+#include "emissions/include/aghg.h"
 
 #include "util/base/include/initialize_tech_vector_helper.hpp"
 
@@ -145,6 +146,8 @@ void GCAMConsumer::completeInit( const string& aRegionName, const string& aSecto
     }
     mOutputs.clear();
     mOutputs.insert( mOutputs.begin(), new GenericOutput( "generic-output" ) );
+    // Basetechnology creates a CO2 object however they are not needed for GCAMConsumers
+    // and they may cause trouble with tech vector sizing therefore just delete it.
     for( unsigned int i = 0; i < mGhgs.size(); ++i ){
         delete mGhgs[ i ];
     }

@@ -588,23 +588,6 @@ void Technology::initCalc( const string& aRegionName,
     // decides to produce output.
     setProductionState( aPeriod );
     
-    // If technology is not operating the cost is NaN.  The value
-    // should never be used; therefore, if the NaNs escape into the
-    // rest of the code, you know instantly that you have a problem.
-    /*if( !mProductionState[ aPeriod ]->isOperating() )
-    {
-        mCosts[ aPeriod ] = numeric_limits<double>::signaling_NaN();
-    }*/
-    
-    mTechnologyInfo->setBoolean( "new-vintage-tech", mProductionState[ aPeriod ]->isNewInvestment() );
-    mTechnologyInfo->setBoolean( "is-tech-operating", mProductionState[ aPeriod ]->isOperating() );
-
-    if( mProductionState[ aPeriod ]->isOperating() ) {
-    for( unsigned int i = 0; i < mGHG.size(); i++ ) {
-        mGHG[ i ]->initCalc( aRegionName, mTechnologyInfo.get(), aPeriod );
-    }
-    }
-
     if( !aPrevPeriodInfo.mIsFirstTech && !aPrevPeriodInfo.mInputs ){
         // The first period technology, which is not necessarily in the base year should
         // not have any previous technology information so do not print the warning.
@@ -614,36 +597,40 @@ void Technology::initCalc( const string& aRegionName,
                     << " did not pass forward the required information." << endl;
         }
     }
-
+    
     // Only copy inputs forward in the starting year of the technology.
-    else if( !aPrevPeriodInfo.mIsFirstTech && mProductionState[ aPeriod ]->isOperating() &&
-             mProductionState[ aPeriod ]->isNewInvestment() ){
+    else if( !aPrevPeriodInfo.mIsFirstTech && mProductionState[ aPeriod ]->isNewInvestment() ){
         // Copy information from the previous inputs forward.
         FunctionUtils::copyInputParamsForward( *aPrevPeriodInfo.mInputs, mInputs, aPeriod );
     }
     
     // Setup the structure for copying forward with information about the technology in this period.
     aPrevPeriodInfo.mInputs = &mInputs;
+    
+    // Do not attempt to perform further initializations if this technology is not operating
+    if( !isOperating( aPeriod ) ) {
+        return;
+    }
+    
+    mTechnologyInfo->setBoolean( "new-vintage-tech", mProductionState[ aPeriod ]->isNewInvestment() );
+
+    for( unsigned int i = 0; i < mGHG.size(); i++ ) {
+        mGHG[ i ]->initCalc( aRegionName, mTechnologyInfo.get(), aPeriod );
+    }
 
     // Initialize the inputs.
-    if( mProductionState[ aPeriod ]->isOperating() ) {
     for( unsigned int i = 0; i < mInputs.size(); ++i ) {
         mInputs[ i ]->initCalc( aRegionName, aSectorName, mProductionState[ aPeriod ]->isNewInvestment(), false,
 			mTechnologyInfo.get(), aPeriod );
     }
-    }
 
-    if( mProductionState[ aPeriod ]->isOperating() ) {
     if( mCaptureComponent ) {
         mCaptureComponent->initCalc( aRegionName, aSectorName, "", aPeriod );
         mCaptureComponent->adjustInputs( aRegionName, mInputs, aPeriod );
     }
-    }
 
-    if( mProductionState[ aPeriod ]->isOperating() ) {
     for( unsigned int i = 0; i < mOutputs.size(); ++i ) {
         mOutputs[ i ]->initCalc( aRegionName, aSectorName, aPeriod );
-    }
     }
 
     // Determine cumulative technical change. Alpha zero defaults to 1.
@@ -702,8 +689,6 @@ void Technology::setProductionState( const int aPeriod ){
     
     double initialOutput = 0;
     const Modeltime* modeltime = scenario->getModeltime();
-    //int currYear = modeltime->getper_to_yr( aPeriod );
-    //initialOutput = currYear >= mYear && currYear < (mYear + mLifetimeYears) ? mOutputs[ 0 ]->getPhysicalOutput( modeltime->getyr_to_per( mYear ) ) : 0.0;
     initialOutput = mOutputs[ 0 ]->getPhysicalOutput( modeltime->getyr_to_per( mYear ) );
     
     mProductionState[ aPeriod ] =
@@ -1333,14 +1318,10 @@ void Technology::calcCost( const string& aRegionName,
                            const string& aSectorName,
                            const int aPeriod )
 {
-    // If technology is not operating the cost is NaN.  The value
-    // should never be used; therefore, if the NaNs escape into the
-    // rest of the code, you know instantly that you have a problem.
-    if( !mProductionState[ aPeriod ]->isOperating() )
-    {
-        //assert( !util::isValidNumber( mCosts[ aPeriod ] ) );
-    }
-    else {
+    // A Technology can only calculate costs if it is operating
+    // Note that attempted to retrieve a cost when the technology is not
+    // operating will cause an abort.
+    if( mProductionState[ aPeriod ]->isOperating() ) {
         // Note we now allow costs in any sector to be <= 0.  If,
         // however, you are using the relative cost logit, costs will be
         // clamped on the low end for market share purposes (not for

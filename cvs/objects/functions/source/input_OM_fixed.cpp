@@ -190,7 +190,6 @@ void InputOMFixed::completeInit( const string& aRegionName,
     // levelized OM_fixed cost.
     // These costs may be adjusted by the Technology, for instance for capture
     // penalties.
-    //mAdjustedCosts.assign( mAdjustedCosts.size(), mLevelizedOMFixedCost );
     fill( mAdjustedCosts.begin(), mAdjustedCosts.end(), mLevelizedOMFixedCost );
 }
 

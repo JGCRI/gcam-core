@@ -178,7 +178,6 @@ void InputOMVar::completeInit( const string& aRegionName,
     // levelized OM-var cost.
     // These costs may be adjusted by the Technology, for instance for capture
     // penalties.
-    //mAdjustedCosts.assign( mAdjustedCosts.size(), Value( calcOMVarCost() ) );
     fill( mAdjustedCosts.begin(), mAdjustedCosts.end(), Value( calcOMVarCost() ) );
 }
 

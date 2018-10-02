@@ -127,17 +127,6 @@ protected:
     void cumulsupply( double aPrice, int aPeriod );
     
     void initTechVintageVector();
-    struct InitTechVintageVectorHelper {
-        int mStartPeriod;
-        int mNumPeriodsActive;
-        InitTechVintageVectorHelper( const int aStartPeriod, const int aNumPeriodsActive ):
-        mStartPeriod( aStartPeriod ),
-        mNumPeriodsActive( aNumPeriodsActive )
-        { }
-        
-        template<typename T>
-        void processData( T& aData );
-    };
 private:
     static const std::string XML_NAME; //!< node name for toXML methods
 };

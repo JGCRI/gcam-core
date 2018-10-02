@@ -273,8 +273,6 @@ public:
     virtual void doInterpolations( const Technology* aPrevTech, const Technology* aNextTech );
     
     virtual void initTechVintageVector();
-    
-    virtual int getLifetimeYears() const { return mLifetimeYears; }
 protected:
     
     // Define data such that introspection utilities can process the data from this
