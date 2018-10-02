@@ -63,7 +63,7 @@ ReadInControl::ReadInControl():
 AEmissionsControl(),
 mTechBuildPeriod( scenario->getModeltime()->getFinalCalibrationPeriod() )
 {
-    TVHHelper<double>::setDefaultValue( 0, mFutureEmissionsFactors );
+    TechVectorParseHelper<double>::setDefaultValue( 0, mFutureEmissionsFactors );
 }
 
 //! Default destructor.

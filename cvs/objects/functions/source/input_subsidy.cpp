@@ -95,7 +95,7 @@ const string& InputSubsidy::getXMLReportingName() const{
 //! Constructor
 InputSubsidy::InputSubsidy()
 {
-    TVHHelper<Value>::setDefaultValue( Value( 1.0 ), mAdjustedCoefficients );
+    TechVectorParseHelper<Value>::setDefaultValue( Value( 1.0 ), mAdjustedCoefficients );
 }
 
 /*!

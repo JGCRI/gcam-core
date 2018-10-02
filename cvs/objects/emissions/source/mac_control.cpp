@@ -71,7 +71,7 @@ mCovertPriceValue( 1 ),
 mPriceMarketName( "CO2" ),
 mMacCurve( new PointSetCurve( new ExplicitPointSet() ) )
 {
-    TVHHelper<double>::setDefaultValue( 0, mTechChange );
+    TechVectorParseHelper<double>::setDefaultValue( 0, mTechChange );
 }
 
 //! Default destructor.

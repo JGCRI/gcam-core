@@ -402,18 +402,6 @@ protected:
 private:
     void init();
     void clear();
-    
-    struct InitTechVintageVectorHelper {
-        int mStartPeriod;
-        int mNumPeriodsActive;
-        InitTechVintageVectorHelper( const int aStartPeriod, const int aNumPeriodsActive ):
-        mStartPeriod( aStartPeriod ),
-        mNumPeriodsActive( aNumPeriodsActive )
-        { }
-        
-        template<typename T>
-        void processData( T& aData );
-    };
 };
 
 #endif // _TECHNOLOGY_H_

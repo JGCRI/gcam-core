@@ -205,7 +205,7 @@ private:
 };
 
 template<typename T>
-class TVHHelper {
+class TechVectorParseHelper {
 public:
     
     std::map<size_t, objects::PeriodVector<T> > mTempStore;
@@ -222,39 +222,34 @@ public:
     
     static void setDefaultValue( const T& aDefaultValue, objects::TechVintageVector<T>& aTechVector );
     
-    /*void XMLParse(objects::TechVintageVector<T>& aV, const int aPeriod, const T& aData) {
-        mTempStore[ reinterpret_cast<size_t>( aV.mData ) ][aPeriod ] = aData;
-    }
-     */
-    
     static void initializeVector( const unsigned int aStartPeriod, const unsigned int aSize, objects::TechVintageVector<T>& aV );
 };
 
 
-using TempStoreTypes = boost::mpl::vector<double, Value>;
-using TempStorePtrTypes = typename boost::mpl::transform<TempStoreTypes, boost::add_pointer<TVHHelper<boost::mpl::_> > >::type;
-using TempStoreMapType = typename boost::fusion::result_of::as_map<
+using TechVectorParseHelperTempStoreTypes = boost::mpl::vector<double, Value>;
+using TechVectorParseHelperTempStorePtrTypes = typename boost::mpl::transform<TechVectorParseHelperTempStoreTypes, boost::add_pointer<TechVectorParseHelper<boost::mpl::_> > >::type;
+using TechVectorParseHelperTempStoreMapType = typename boost::fusion::result_of::as_map<
     typename boost::fusion::result_of::as_vector<
         typename boost::mpl::transform_view<
             boost::mpl::zip_view<
-                boost::mpl::vector<TempStoreTypes, TempStorePtrTypes> >,
+                boost::mpl::vector<TechVectorParseHelperTempStoreTypes, TechVectorParseHelperTempStorePtrTypes> >,
                 boost::mpl::unpack_args<boost::fusion::pair<boost::mpl::_1, boost::mpl::_2> >
             >
         >::type
     >::type;
 
-extern TempStoreMapType sTVHelperMap;
+extern TechVectorParseHelperTempStoreMapType sTechVectorParseHelperMap;
 
 template<typename T>
-void TVHHelper<T>::setDefaultValue( const T& aDefaultValue, objects::TechVintageVector<T>& aTechVector ) {
-    objects::PeriodVector<T>& periodVector = boost::fusion::at_key<T>( sTVHelperMap )->getPeriodVector( aTechVector );
+void TechVectorParseHelper<T>::setDefaultValue( const T& aDefaultValue, objects::TechVintageVector<T>& aTechVector ) {
+    objects::PeriodVector<T>& periodVector = boost::fusion::at_key<T>( sTechVectorParseHelperMap )->getPeriodVector( aTechVector );
     std::fill( periodVector.begin(), periodVector.end(), aDefaultValue );
 }
 
 template<typename T>
-void TVHHelper<T>::initializeVector( const unsigned int aStartPeriod, const unsigned int aSize, objects::TechVintageVector<T>& aV ) {
+void TechVectorParseHelper<T>::initializeVector( const unsigned int aStartPeriod, const unsigned int aSize, objects::TechVintageVector<T>& aV ) {
     if( !aV.isInitialized() ) {
-        TVHHelper<T>* inst = boost::fusion::at_key<T>( sTVHelperMap );
+        TechVectorParseHelper<T>* inst = boost::fusion::at_key<T>( sTechVectorParseHelperMap );
         size_t tempDataKey = reinterpret_cast<size_t>( aV.mData );
         aV.mStartPeriod = aStartPeriod;
         aV.mSize = aSize;
@@ -262,21 +257,21 @@ void TVHHelper<T>::initializeVector( const unsigned int aStartPeriod, const unsi
         aV.mData = new T[ aSize ];
         
         if( inst ) {
-        auto tempData = inst->mTempStore.find( tempDataKey );
-        
-        if( tempData != inst->mTempStore.end() ) {
-            const objects::PeriodVector<T>& pv = (*tempData).second;
-            for(auto per = aStartPeriod; per < (aStartPeriod + aSize); ++per ) {
-                aV[ per ] = pv[ per ];
+            auto tempData = inst->mTempStore.find( tempDataKey );
+            
+            if( tempData != inst->mTempStore.end() ) {
+                const objects::PeriodVector<T>& pv = (*tempData).second;
+                for(auto per = aStartPeriod; per < (aStartPeriod + aSize); ++per ) {
+                    aV[ per ] = pv[ per ];
+                }
+            }
+            else {
+                std::fill( aV.begin(), aV.end(), T() );
             }
         }
         else {
             std::fill( aV.begin(), aV.end(), T() );
         }
-    }
-    else {
-        std::fill( aV.begin(), aV.end(), T() );
-    }
     }
 }
 
@@ -575,7 +570,7 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* aNode,
                                           objects::TechVintageVector<T>& aTechVector,
                                           const Modeltime* aModeltime )
 {
-    insertValueIntoVector( aNode, boost::fusion::at_key<T>( sTVHelperMap )->getPeriodVector( aTechVector ), aModeltime );
+    insertValueIntoVector( aNode, boost::fusion::at_key<T>( sTechVectorParseHelperMap )->getPeriodVector( aTechVector ), aModeltime );
 }
 
 /*!
@@ -1010,10 +1005,9 @@ void XMLHelper<T>::initParser() {
     *getErrorHandlerPointerInternal() = ( (xercesc::ErrorHandler*)new xercesc::HandlerBase() );
     (*getParserPointerInternal())->setErrorHandler( *getErrorHandlerPointerInternal() );
     
-    boost::fusion::for_each(sTVHelperMap, [] (auto& aPair) {
+    boost::fusion::for_each(sTechVectorParseHelperMap, [] (auto& aPair) {
         using TVHHelperType = typename boost::remove_pointer<decltype( aPair.second )>::type;
         aPair.second = new TVHHelperType();
-        std::cout << "Set second: " << aPair.second << std::endl;
     });
 }
 
@@ -1068,8 +1062,7 @@ void XMLHelper<T>::cleanupParser(){
     delete *getParserPointerInternal();
     xercesc::XMLPlatformUtils::Terminate();
     
-    boost::fusion::for_each(sTVHelperMap, [] (auto& aPair) {
-        std::cout << "Clean up: " << aPair.second << std::endl;
+    boost::fusion::for_each(sTechVectorParseHelperMap, [] (auto& aPair) {
         delete aPair.second;
         aPair.second = 0;
     });

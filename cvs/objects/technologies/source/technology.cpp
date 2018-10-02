@@ -90,8 +90,7 @@
 #include "functions/include/function_utils.h"
 #include "marketplace/include/marketplace.h"
 
-#include "util/base/include/gcam_fusion.hpp"
-#include "util/base/include/gcam_data_containers.h"
+#include "util/base/include/initialize_tech_vector_helper.hpp"
 
 using namespace std;
 using namespace xercesc;
@@ -111,8 +110,6 @@ typedef vector<IShutdownDecider*>::iterator ShutdownDeciderIterator;
 typedef vector<IShutdownDecider*>::const_iterator CShutdownDeciderIterator;
 
 typedef vector<IInput*>::const_iterator CInputIterator;
-
-TempStoreMapType sTVHelperMap(boost::fusion::make_pair<double>( static_cast<TVHHelper<double>*>( 0 ) ), boost::fusion::make_pair<Value>( static_cast<TVHHelper<Value>*>( 0 ) ) );
 
 /*! 
  * \brief Constructor.
@@ -213,7 +210,7 @@ void Technology::init()
     // year is known.
     mLifetimeYears = -1;
 
-    TVHHelper<Value>::setDefaultValue( Value( -1 ), mCosts );
+    TechVectorParseHelper<Value>::setDefaultValue( Value( -1 ), mCosts );
     mProductionState.assign( mProductionState.size(), 0 );
     mProductionFunction = 0;
     mPMultiplier = 1;
@@ -1800,30 +1797,6 @@ void Technology::initTechVintageVector() {
         }
     }
     
-    vector<FilterStep*> collectStateSteps( 2, 0 );
-    collectStateSteps[ 0 ] = new FilterStep( "" );
-    collectStateSteps[ 1 ] = new FilterStep( "", DataFlags::ARRAY );
-    InitTechVintageVectorHelper helper( startPer, numPeriodsActive );
-    GCAMFusion<InitTechVintageVectorHelper, false, false, true> findTechVec( helper, collectStateSteps );
-    findTechVec.startFilter( this );
-    
-    // clean up GCAMFusion related memory
-    for( auto filterStep : collectStateSteps ) {
-        delete filterStep;
-    }
-}
-
-template<typename T>
-void Technology::InitTechVintageVectorHelper::processData( T& aData ) {
-    // ignore
-}
-
-template<>
-void Technology::InitTechVintageVectorHelper::processData<objects::TechVintageVector<double> >( objects::TechVintageVector<double>& aData ) {
-    TVHHelper<double>::initializeVector( mStartPeriod, mNumPeriodsActive, aData );
-}
-
-template<>
-void Technology::InitTechVintageVectorHelper::processData<objects::TechVintageVector<Value> >( objects::TechVintageVector<Value>& aData ) {
-    TVHHelper<Value>::initializeVector( mStartPeriod, mNumPeriodsActive, aData );
+    InitializeTechVectorHelper helper( startPer, numPeriodsActive );
+    helper.initializeTechVintageVector( this );
 }

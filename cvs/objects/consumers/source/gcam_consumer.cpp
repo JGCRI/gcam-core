@@ -51,8 +51,7 @@
 #include "sectors/include/sector_utils.h"
 #include "technologies/include/generic_output.h"
 
-#include "util/base/include/gcam_fusion.hpp"
-#include "util/base/include/gcam_data_containers.h"
+#include "util/base/include/initialize_tech_vector_helper.hpp"
 
 using namespace std;
 using namespace xercesc;
@@ -223,31 +222,6 @@ void GCAMConsumer::accept( IVisitor* aVisitor, const int aPeriod ) const {
 
 void GCAMConsumer::initTechVintageVector() {
     const Modeltime* modeltime = scenario->getModeltime();
-    
-    vector<FilterStep*> collectStateSteps( 2, 0 );
-    collectStateSteps[ 0 ] = new FilterStep( "" );
-    collectStateSteps[ 1 ] = new FilterStep( "", DataFlags::ARRAY );
-    InitTechVintageVectorHelper helper( 0, modeltime->getmaxper() );
-    GCAMFusion<InitTechVintageVectorHelper, false, false, true> findTechVec( helper, collectStateSteps );
-    findTechVec.startFilter( this );
-    
-    // clean up GCAMFusion related memory
-    for( auto filterStep : collectStateSteps ) {
-        delete filterStep;
-    }
-}
-
-template<typename T>
-void GCAMConsumer::InitTechVintageVectorHelper::processData( T& aData ) {
-    // ignore
-}
-
-template<>
-void GCAMConsumer::InitTechVintageVectorHelper::processData<objects::TechVintageVector<double> >( objects::TechVintageVector<double>& aData ) {
-    TVHHelper<double>::initializeVector( mStartPeriod, mNumPeriodsActive, aData );
-}
-
-template<>
-void GCAMConsumer::InitTechVintageVectorHelper::processData<objects::TechVintageVector<Value> >( objects::TechVintageVector<Value>& aData ) {
-    TVHHelper<Value>::initializeVector( mStartPeriod, mNumPeriodsActive, aData );
+    objects::InitializeTechVectorHelper helper( 0, modeltime->getmaxper() );
+    helper.initializeTechVintageVector( this );
 }

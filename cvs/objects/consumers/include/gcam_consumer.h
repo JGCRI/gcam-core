@@ -145,17 +145,6 @@ protected:
     bool isCoefBased() const { return true; }
     
     void initTechVintageVector();
-    struct InitTechVintageVectorHelper {
-        int mStartPeriod;
-        int mNumPeriodsActive;
-        InitTechVintageVectorHelper( const int aStartPeriod, const int aNumPeriodsActive ):
-        mStartPeriod( aStartPeriod ),
-        mNumPeriodsActive( aNumPeriodsActive )
-        { }
-        
-        template<typename T>
-        void processData( T& aData );
-    };
 };
 
 #endif // _GCAM_CONSUMER_H_

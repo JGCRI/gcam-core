@@ -50,7 +50,7 @@
 extern Scenario* scenario;
 
 template<typename T>
-class TVHHelper;
+class TechVectorParseHelper;
 
 /*! 
 * \file time_vector.h  
@@ -587,8 +587,7 @@ namespace objects {
      */
     template<class T>
     class TechVintageVector {
-        //template<class U>
-        friend class TVHHelper<T>;
+        friend class TechVectorParseHelper<T>;
     public:
         
         /*!
