@@ -613,6 +613,7 @@ void Technology::initCalc( const string& aRegionName,
     }
     
     mTechnologyInfo->setBoolean( "new-vintage-tech", mProductionState[ aPeriod ]->isNewInvestment() );
+    mTechnologyInfo->setInteger( "initial-tech-period", scenario->getModeltime()->getyr_to_per( mYear ) );
 
     for( unsigned int i = 0; i < mGHG.size(); i++ ) {
         mGHG[ i ]->initCalc( aRegionName, mTechnologyInfo.get(), aPeriod );

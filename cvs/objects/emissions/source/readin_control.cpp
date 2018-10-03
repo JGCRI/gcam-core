@@ -61,9 +61,9 @@ extern Scenario* scenario;
 //! Default constructor.
 ReadInControl::ReadInControl():
 AEmissionsControl(),
+mFutureEmissionsFactors(new objects::PeriodVector<double>( 0 ) ),
 mTechBuildPeriod( scenario->getModeltime()->getFinalCalibrationPeriod() )
 {
-    TechVectorParseHelper<double>::setDefaultValue( 0, mFutureEmissionsFactors );
 }
 
 //! Default destructor.
@@ -94,7 +94,7 @@ ReadInControl& ReadInControl::operator=( const ReadInControl& aOther ){
 
 //! Copy helper function.
 void ReadInControl::copy( const ReadInControl& aOther ){
-    //mFutureEmissionsFactors = aOther.mFutureEmissionsFactors;
+    mFutureEmissionsFactors = aOther.mFutureEmissionsFactors;
 }
 
 /*!
@@ -116,7 +116,7 @@ const string& ReadInControl::getXMLNameStatic(){
 bool ReadInControl::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aCurrNode ){
     const Modeltime* modeltime = scenario->getModeltime();
     if ( aNodeName == "future-emiss-factor" ){
-        XMLHelper<double>::insertValueIntoVector( aCurrNode, mFutureEmissionsFactors, modeltime );
+        XMLHelper<double>::insertValueIntoVector( aCurrNode, *mFutureEmissionsFactors, modeltime );
     }
     else{
         return false;
@@ -127,7 +127,7 @@ bool ReadInControl::XMLDerivedClassParse( const string& aNodeName, const DOMNode
 
 void ReadInControl::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
-	//XMLWriteVector( mFutureEmissionsFactors, "future-emiss-factor", aOut, aTabs, modeltime, 0.0 );
+	XMLWriteVector( *mFutureEmissionsFactors, "future-emiss-factor", aOut, aTabs, modeltime, 0.0 );
 
 }
 
@@ -151,8 +151,8 @@ void ReadInControl::initCalc( const string& aRegionName,
 void ReadInControl::calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP ) {
     double reduction = 0.0;
     
-    if ( mFutureEmissionsFactors[ mTechBuildPeriod ] != 0.0 ) {
-        reduction = ( mFutureEmissionsFactors[ mTechBuildPeriod ] - mFutureEmissionsFactors[ aPeriod ] ) / mFutureEmissionsFactors[ mTechBuildPeriod ];
+    if ( (*mFutureEmissionsFactors)[ mTechBuildPeriod ] != 0.0 ) {
+        reduction = ( (*mFutureEmissionsFactors)[ mTechBuildPeriod ] - (*mFutureEmissionsFactors)[ aPeriod ] ) / (*mFutureEmissionsFactors)[ mTechBuildPeriod ];
     }
     
     setEmissionsReduction( reduction );
