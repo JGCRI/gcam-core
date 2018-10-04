@@ -582,8 +582,27 @@ namespace objects {
         }
     
     /*!
-     * \brief Base class of vectors indexed by year or period.
-     * \details Provides common code for year and period vectors.
+     * \brief Base class of vectors indexed by period that will automatically get resized
+     *        to only include enough space for however many years an encolsing technology
+     *        will operate.
+     * \details Since Technologies are two dimensional, a new vintage for every model period,
+     *          and each vintage may operate for many model periods depending on the tech
+     *          lifetime.  Thus some technology member varariables must be saved in a
+     *          vector of some sort, however if we size that vector for all model periods then
+     *          that will lead to a lot of wasted memory.  That is where the TechVintageVector
+     *          comes into play.  It should be used for any member variable vectors that are
+     *          contained in an object that is ultimately contained in a technology.
+     *
+     *          Note that since technology lifetimes may not be known these vectors when first
+     *          created will be left uninitialized.  All instances will get automatically sized
+     *          and initialized during completeInit.  If a user needs to store values prior to
+     *          completeInit they may use the TechVectorParseHelper helper class to do so and those
+     *          stored values will get automatically copied over once the TechVintageVector is
+     *          initialized.
+     * \warning Attempting to access data prior to initialization will lead to an abort().
+     * \sa TechVectorParseHelper for how to set default values, etc prior to completeInit.
+     * \sa InitializeTechVectorHelper to see how instances of TechVintageVector are found and
+     *     initialized.
      */
     template<class T>
     class TechVintageVector {
@@ -679,18 +698,24 @@ namespace objects {
         iterator last();
         typedef T value_type;
     protected:
-        //! Dynamic array containing the data.
+        //! After initialization the dynamic array containing the data.
+        //! Prior to initialization we use it as a unique ID of this object as a means
+        //! for TechVectorParseHelper to associated temporarily stored data back to this
+        //! instance for permanent storage.
+        //! Note we use just a single variable for these two purposes to keep the memory
+        //! footprint of this object as small as possible.
         T* mData;
         
-        //! Initial period
+        //! Initial period the tech is available.
         int mStartPeriod;
         
-        //! Size of the array.
+        //! Size of the array, enough space to accomodate the tech lifetime.
         unsigned int mSize;
         
-        //! Flag if proper dimensions have been set and memory allocated
-        //bool mIsInitialized;
-        
+        /*!
+         * \brief a Helper to check if this instance has been initialized (memory allocated).
+         * \return True if this instance has been initialized.
+         */
         bool isInitialized() const {
             return mStartPeriod >= 0;
         }
@@ -702,6 +727,11 @@ namespace objects {
         void clear();
     };
     
+    /*!
+     * \brief Default constructor, by necessarily left un-initialized as that will
+     *        happen automatically during completeInit when technology lifetimes
+     *        will be known.
+     */
     template<class T>
     TechVintageVector<T>::TechVintageVector():
     mStartPeriod( -1 )
@@ -712,7 +742,9 @@ namespace objects {
     }
     
     /*!
-     * \brief Constructor.
+     * \brief Constructor. Users should use this constructor *only* if they need
+     *        to override the start period and size that would have been calculated
+     *        automatically using the enclosing technology's parameters.
      * \param aSize Size of the TimeVectorBase. The size is immutable once
      *              constructed.
      * \param aDefaultValue Default for all values.
@@ -723,8 +755,7 @@ namespace objects {
                                              const T aDefaultValue ):
     mData( new T[ aSize ] ),
     mStartPeriod( aStartPeriod ),
-    mSize( aSize )/*,
-    mIsInitialized( true )*/
+    mSize( aSize )
     {
         // Initialize the data to the default value.
         std::uninitialized_fill( &mData[ 0 ], &mData[ 0 ] + mSize, aDefaultValue );
@@ -750,14 +781,17 @@ namespace objects {
     
     /*!
      * \brief Copy constructor.
+     * \details If this aOther has not been initialized the copy will get the same
+     *          unique ID reference as aOther thus once initialization does occur it
+     *          will get the same values as aOther.  If it has already been initialized
+     *          then it will just be a deep copy including the start period and size.
      * \param aOther TimeVectorBase to copy.
      */
     template<class T>
     TechVintageVector<T>::TechVintageVector( const TechVintageVector<T>& aOther ):
     mData( aOther.mData ),
     mStartPeriod( aOther.mStartPeriod ),
-    mSize( aOther.mSize )/*,
-    mIsInitialized( aOther.mIsInitialized )*/
+    mSize( aOther.mSize )
     {
         if( aOther.isInitialized() ) {
             mData = new T[ mSize ];
@@ -767,6 +801,10 @@ namespace objects {
     
     /*!
      * \brief Assignment operator.
+     * \details If this aOther has not been initialized the copy will get the same
+     *          unique ID reference as aOther thus once initialization does occur it
+     *          will get the same values as aOther.  If it has already been initialized
+     *          then it will just be a deep copy including the start period and size.
      * \param aOther TimeVectorBase to copy.
      * \return The newly constructed TimeVectorBase by reference(for chaining
      *         assignment).
@@ -792,9 +830,11 @@ namespace objects {
     
     /*!
      * \brief Equals operator.
-     * \param aOther TimeVectorBase to check for equivalence.
-     * \details TimeVectorBases are equivalent if they have the same size and
-     *          all elements at respective positions are equal.
+     * \param aOther TechVintageVector to check for equivalence.
+     * \details TechVintageVector are equivalent if:
+     *          - Unitialized then they share the same lookup ID.
+     *          - Initialized then they have the same start period, size, and
+     *            all elements at respective positions are equal.
      * \return Whether the two vectors are equal.
      */
     template<class T>
@@ -810,8 +850,7 @@ namespace objects {
     /*!
      * \brief Not-equals operator.
      * \param aOther TimeVectorBase to check for dis-equivalence.
-     * \details TimeVectorBases are not equivalent if they have the different
-     *          sizes or all elements at respective positions are not equal.
+     * \details Just the not of the equals operator.
      * \return Whether the two vectors are equal.
      */
     template<class T>
@@ -819,44 +858,70 @@ namespace objects {
         return !( *this == aOther );
     }
     
+    /*!
+     * \brief Array index operator, where the index is a model period.
+     * \details The vector is index by model period similar to PeriodVector however
+     *          only periods >= the start year and <= the last model period the
+     *          technology operators are valid.  Also using this operator prior to
+     *          initialization is invalid.
+     * \param aIndex The model period to retrieve the value for.
+     * \return The data stored in the vector at aIndex.
+     * \warning Array index out of bounds checks are only enabled in debug mode.
+     */
     template<class T>
     T& TechVintageVector<T>::operator[]( const unsigned int aIndex ) {
-        static T UNDEFINED(-1.2);
+#if(!NDEBUG)
         if( !isInitialized() ) {
             abort();
         }
         
         if( aIndex < mStartPeriod ) {
-            std::cout << "Access before: " << aIndex << " < " << mStartPeriod << std::endl;
-            return UNDEFINED;
+            std::cerr << "Access before: " << aIndex << " < " << mStartPeriod << std::endl;
+            abort();
         }
         else if( aIndex > (mStartPeriod + mSize) ) {
-            std::cout << "Access before: " << aIndex << " > " << mStartPeriod + mSize << std::endl;
-            return UNDEFINED;
+            std::cerr << "Access before: " << aIndex << " > " << mStartPeriod + mSize << std::endl;
+            abort();
         }
+#endif // !NDEBUG
         
         return mData[ aIndex - mStartPeriod ];
     }
     
+    /*!
+     * \brief Const array index operator, where the index is a model period.
+     * \details The vector is index by model period similar to PeriodVector however
+     *          only periods >= the start year and <= the last model period the
+     *          technology operators are valid.  Also using this operator prior to
+     *          initialization is invalid.
+     * \param aIndex The model period to retrieve the value for.
+     * \return The data stored in the vector at aIndex.
+     * \warning Array index out of bounds checks are only enabled in debug mode.
+     */
     template<class T>
     const T& TechVintageVector<T>::operator[]( const unsigned int aIndex ) const {
-        const static T UNDEFINED(-1.2);
+#if(!NDEBUG)
         if( !isInitialized() ) {
             abort();
         }
         
         if( aIndex < mStartPeriod ) {
-            std::cout << "Access before: " << aIndex << " < " << mStartPeriod << std::endl;
-            return UNDEFINED;
+            std::cerr << "Access before: " << aIndex << " < " << mStartPeriod << std::endl;
+            abort();
         }
         else if( aIndex > (mStartPeriod + mSize) ) {
-            std::cout << "Access before: " << aIndex << " > " << mStartPeriod + mSize << std::endl;
-            return UNDEFINED;
+            std::cerr << "Access before: " << aIndex << " > " << mStartPeriod + mSize << std::endl;
+            abort();
         }
+#endif // !NDEBUG
         
         return mData[ aIndex - mStartPeriod ];
     }
     
+    /*!
+     * \brief The the start period of this vector.
+     * \return The first model period for which data is stored.
+     */
     template<class T>
     unsigned int TechVintageVector<T>::getStartPeriod() const {
         return mStartPeriod;

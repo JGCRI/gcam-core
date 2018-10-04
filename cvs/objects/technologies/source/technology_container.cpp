@@ -399,6 +399,8 @@ void TechnologyContainer::initCalc( const string& aRegionName, const string& aSe
             mVintagesByPeriod[ aPeriod ]->copyGHGParameters(
                 mVintagesByPeriod[ aPeriod - 1 ]->getGHGPointer( ghgNames[j] ) );
         }
+        // We must call initializeTechVintageVector again since we may have just newly
+        // created some GHG objects which need to have their TechVintageVectors sized.
         mVintagesByPeriod[ aPeriod ]->initTechVintageVector();
     }
     

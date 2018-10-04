@@ -49,29 +49,66 @@
 #include "util/base/include/gcam_fusion.hpp"
 #include "util/base/include/gcam_data_containers.h"
 
+// We need some place to static initialize the TechVectorParseHelper temporary storage arrays
 TechVectorParseHelperTempStoreMapType sTechVectorParseHelperMap(boost::fusion::make_pair<double>( static_cast<TechVectorParseHelper<double>*>( 0 ) ),
                                                        boost::fusion::make_pair<Value>( static_cast<TechVectorParseHelper<Value>*>( 0 ) ) );
 
 namespace objects {
 
+/*!
+ * \brief Constructor which takes the first model period the technology is available and
+ *        the number of model period for which it will operate.
+ * \param aStartPeriod The first period the technology operates.
+ * \param aNumPeriodsActive The total number of model periods the technology operates.
+ */
 InitializeTechVectorHelper::InitializeTechVectorHelper( const int aStartPeriod, const int aNumPeriodsActive ):
 mStartPeriod( aStartPeriod ),
 mNumPeriodsActive( aNumPeriodsActive )
 {
 }
-    
+
+/*!
+ * \brief Starts the process of initializing any uninitialized TechVintageVectors found in
+ *        the given technology.
+ * \param aContainer The current technology vintage in which to search for vectors.
+ */
 void InitializeTechVectorHelper::initializeTechVintageVector( ITechnology* aContainer ) {
     initializeTechVintageVectorImpl( aContainer );
 }
 
+/*!
+ * \brief Starts the process of initializing any uninitialized TechVintageVectors found in
+ *        the given GCAMConsumer.
+ * \details We need have a method for GCAMConsumer even though it does not have vintaging
+ *          since it contains some objects such as IOutput that are typicaly found in
+ *          Technology.
+ * \param aContainer The current technology vintage in which to search for vectors.
+ */
 void InitializeTechVectorHelper::initializeTechVintageVector( GCAMConsumer* aContainer ) {
     initializeTechVintageVectorImpl( aContainer );
 }
 
+/*!
+ * \brief Starts the process of initializing any uninitialized TechVintageVectors found in
+ *        the given Resource.
+ * \details We need have a method for Resource even though it does not have vintaging
+ *          since it contains some objects such as IOutput that are typicaly found in
+ *          Technology.
+ * \param aContainer The current technology vintage in which to search for vectors.
+ */
 void InitializeTechVectorHelper::initializeTechVintageVector( Resource* aContainer ) {
     initializeTechVintageVectorImpl( aContainer );
 }
 
+/*!
+ * \brief The implementation for initializeTechVintageVector which is templated simply to reduce
+ *        code duplication from having the same code for each of the container type this class
+ *        supports.
+ * \details This method will use GCAMFusion to search for any Data with ARRAY flag contained anywhere
+ *          in the given container (i.e. could be several conainers down).  The GCAMFusion callback
+ *          processData will then handle any TechVintageVector by calling TechVectorParseHelper::initializeVector.
+ * \param aContainer The GCAM Data CONTAINER from which to start the GCAMFusion search.
+ */
 template<typename ContainerType>
 void InitializeTechVectorHelper::initializeTechVintageVectorImpl( ContainerType* aContainer ) {
     std::vector<FilterStep*> findArraySteps( 2, 0 );

@@ -57,7 +57,7 @@ namespace objects {
     * \details This helper does a deep search using GCAMFusion for any class member
     *          Data tagged with ARRAY and type objects::TechVintageVector then initialize it by:
     *          - Setting the start period and sizing the array appropriately for the lifetime.
-    *          - Copy in any parameters set as default values / XMLParse.
+    *          - Copy in any parameters set as default values / XMLParse via TechVectorParseHelper.
     * \author Pralit Patel
     */
     class InitializeTechVectorHelper {

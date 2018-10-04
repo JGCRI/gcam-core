@@ -204,14 +204,27 @@ private:
     static xercesc::XercesDOMParser* getParser();
 };
 
+/*!
+ * \brief A helper class that provides a means for temporary storage of data for vectors
+ *        of type TechVintageVector when users needs to set values in them prior to it
+ *        being initialized with the proper technology size.
+ * \details This class contains a temporary storage for TechVintageVector by mapping it's
+ *          unique ID to a PeriodVector in which data can be stored.  Note PeriodVectors are
+ *          only allocated on demand so as to keep memory usage down.
+ * \author Pralit Patel
+ */
 template<typename T>
 class TechVectorParseHelper {
 public:
-    
-    std::map<size_t, objects::PeriodVector<T> > mTempStore;
-    
-    objects::PeriodVector<T>& getPeriodVector( objects::TechVintageVector<T>& aV ) {
-        size_t tempDataKey = reinterpret_cast<size_t>( aV.mData );
+    /*!
+     * \brief Get the "temporary" storage PeriodVector associated with a given TechVintageVector.
+     * \details Note if no entry has been previously made for the given TechVintageVector then
+     *          a new PeriodVector will be allocated for it.
+     * \param aTecVector The TechVintageVector instance to find the temporary storage for.
+     * \return The associated temporary storage for aTecVector.
+     */
+    objects::PeriodVector<T>& getPeriodVector( objects::TechVintageVector<T>& aTecVector ) {
+        size_t tempDataKey = reinterpret_cast<size_t>( aTecVector.mData );
         auto iter = mTempStore.find( tempDataKey );
         if( iter == mTempStore.end() ) {
             iter = mTempStore.insert( std::make_pair( tempDataKey, objects::PeriodVector<T>() ) ).first;
@@ -223,11 +236,28 @@ public:
     static void setDefaultValue( const T& aDefaultValue, objects::TechVintageVector<T>& aTechVector );
     
     static void initializeVector( const unsigned int aStartPeriod, const unsigned int aSize, objects::TechVintageVector<T>& aV );
+    
+private:
+    //! The map from a TechVintageVector's ID to it's temporary storage.
+    std::map<size_t, objects::PeriodVector<T> > mTempStore;
 };
 
-
+/*!
+ * \brief A list of all of the data container types TechVectorParseHelper might contain
+ *        to minimize the number of maps we have to make.
+ */
 using TechVectorParseHelperTempStoreTypes = boost::mpl::vector<double, Value>;
+/*!
+ * \brief Create a list of all the type of TechVectorParseHelper we will create.
+ * \details We transform TechVectorParseHelperTempStoreTypes (i.e. double) to make it the
+ *          template argument to TechVectorParseHelper as a pointer (i.e. TechVectorParseHelper<double>*)
+ */
 using TechVectorParseHelperTempStorePtrTypes = typename boost::mpl::transform<TechVectorParseHelperTempStoreTypes, boost::add_pointer<TechVectorParseHelper<boost::mpl::_> > >::type;
+/*!
+ * \brief Generate the type for our boost::fusion::map from storage type (i.e. double) to an
+ *        pointer of TechVectorParseHelper of that type (i.e. TechVectorParseHelper<double>*)
+ *        resulting in fusion::map<double, TechVectorParseHelper<double>*>
+ */
 using TechVectorParseHelperTempStoreMapType = typename boost::fusion::result_of::as_map<
     typename boost::fusion::result_of::as_vector<
         typename boost::mpl::transform_view<
@@ -238,39 +268,74 @@ using TechVectorParseHelperTempStoreMapType = typename boost::fusion::result_of:
         >::type
     >::type;
 
+/*!
+ * \brief We make just one static instance of the TechVectorParseHelper temporary
+ *        storafge instances as we really do not want to make copies of all of these
+ *        arrays.
+ */
 extern TechVectorParseHelperTempStoreMapType sTechVectorParseHelperMap;
 
+/*!
+ * \brief A helper method for class that use aTechVector to cover the commmon case that
+ *        they want to initialize the vector with some default value.
+ * \param aDefaultValue The default value to set.
+ * \param aTechVector The TechVintageVector which when initialized should have this default
+ *                    value.
+ */
 template<typename T>
 void TechVectorParseHelper<T>::setDefaultValue( const T& aDefaultValue, objects::TechVintageVector<T>& aTechVector ) {
     objects::PeriodVector<T>& periodVector = boost::fusion::at_key<T>( sTechVectorParseHelperMap )->getPeriodVector( aTechVector );
     std::fill( periodVector.begin(), periodVector.end(), aDefaultValue );
 }
 
+/*!
+ * \brief Initialize the given TechVintageVector instance.
+ * \details Initialize the given aTechVec if not already initialized with the given start period
+ *          and size, then copy in any data that may have been set in temporary storage for the
+ *          given instance.  Note that the temporary storage does not get removed yet in case there
+ *          are other instances that are sharing that temporary storage.  Instead all temporary storage
+ *          will go away after completeInit.
+ * \param aStartPeriod The start period to initialize aTechVec.
+ * \param aSize The size to initialize aTechVec.
+ * \param aTechVec The instance of TechVintageVector to initialize.
+ */
 template<typename T>
-void TechVectorParseHelper<T>::initializeVector( const unsigned int aStartPeriod, const unsigned int aSize, objects::TechVintageVector<T>& aV ) {
-    if( !aV.isInitialized() ) {
+void TechVectorParseHelper<T>::initializeVector( const unsigned int aStartPeriod, const unsigned int aSize, objects::TechVintageVector<T>& aTechVec ) {
+    // Do not re-initialize an instance that has already been initialized.
+    if( !aTechVec.isInitialized() ) {
+        // Fill the the vector parameters and allocate it's memory.
+        aTechVec.mStartPeriod = aStartPeriod;
+        aTechVec.mSize = aSize;
+        aTechVec.mData = new T[ aSize ];
+        
+        // Attempt to copy in data from temporary storage
         TechVectorParseHelper<T>* inst = boost::fusion::at_key<T>( sTechVectorParseHelperMap );
-        size_t tempDataKey = reinterpret_cast<size_t>( aV.mData );
-        aV.mStartPeriod = aStartPeriod;
-        aV.mSize = aSize;
-        //aV.mIsInitialized = true;
-        aV.mData = new T[ aSize ];
+        size_t tempDataKey = reinterpret_cast<size_t>( aTechVec.mData );
         
         if( inst ) {
             auto tempData = inst->mTempStore.find( tempDataKey );
-            
             if( tempData != inst->mTempStore.end() ) {
+                // Aata was found in temporary storage for this instance so copy those values
+                // over (for valid model periods only).
                 const objects::PeriodVector<T>& pv = (*tempData).second;
                 for(auto per = aStartPeriod; per < (aStartPeriod + aSize); ++per ) {
-                    aV[ per ] = pv[ per ];
+                    aTechVec[ per ] = pv[ per ];
                 }
             }
             else {
-                std::fill( aV.begin(), aV.end(), T() );
+                // No temporary data so just fill it with default values.
+                std::fill( aTechVec.begin(), aTechVec.end(), T() );
             }
         }
         else {
-            std::fill( aV.begin(), aV.end(), T() );
+            // The temporary storage has already been deleted.  All TechVintageVector should have
+            // already been initialized by this point HOWEVER we do have some vectors in objects
+            // that get created during the model simulation, such as in AGHG.
+            // The temporary storage will not be available to them and if they attempted to store
+            // values in it they would have gotten an error at that point.
+            // So.. with all the being said if we get to this point we can assume there should
+            // be no temporary storage and can just fill in default values.
+            std::fill( aTechVec.begin(), aTechVec.end(), T() );
         }
     }
 }
@@ -565,12 +630,30 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* aNode,
    }
 }
 
+/*!
+ * \brief Function which takes a node and inserts its value into the correct
+ *        position in a TechVintageVector based on the year XML attribute. If the XML
+ *        attribute "fillout" is set the data will be copied to the end of the
+ *        vector.
+ * \details During XMLParse the TechVintageVector will not be initialized, therefore
+ *          this data will simply call insertValueIntoVector with the temporary
+ *          PeriodVector storage allocated for aTechVector instead.
+ * \warning Make sure the node passed as an argument has a year attribute.
+ * \param aNode A pointer to a node from which to extract the data.
+ * \param aPeriodVector A PeriodVector passed by reference in which to insert the
+ *                      value.
+ * \param aModeltime Modeltime object.
+ */
 template<class T>
 void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* aNode,
                                           objects::TechVintageVector<T>& aTechVector,
                                           const Modeltime* aModeltime )
 {
-    insertValueIntoVector( aNode, boost::fusion::at_key<T>( sTechVectorParseHelperMap )->getPeriodVector( aTechVector ), aModeltime );
+    // Forward the call after looking up the PeriodVector temporary storage for
+    // the given tech vintage vector.
+    insertValueIntoVector( aNode,
+      boost::fusion::at_key<T>( sTechVectorParseHelperMap )->getPeriodVector( aTechVector ),
+      aModeltime );
 }
 
 /*!
@@ -1005,9 +1088,13 @@ void XMLHelper<T>::initParser() {
     *getErrorHandlerPointerInternal() = ( (xercesc::ErrorHandler*)new xercesc::HandlerBase() );
     (*getParserPointerInternal())->setErrorHandler( *getErrorHandlerPointerInternal() );
     
+    // At this point we should ensure we have a place to store "temporary" data for
+    // TechVintageVectors.
+    // Note we will clean up this memory (and all of the temporary arrays that it contains
+    // when we close the XML parser).
     boost::fusion::for_each(sTechVectorParseHelperMap, [] (auto& aPair) {
-        using TVHHelperType = typename boost::remove_pointer<decltype( aPair.second )>::type;
-        aPair.second = new TVHHelperType();
+        using TVVHelperType = typename boost::remove_pointer<decltype( aPair.second )>::type;
+        aPair.second = new TVVHelperType();
     });
 }
 
@@ -1059,9 +1146,12 @@ xercesc::XercesDOMParser* XMLHelper<T>::getParser() {
 template<class T>
 void XMLHelper<T>::cleanupParser(){
     delete *getErrorHandlerPointerInternal();
+    *getErrorHandlerPointerInternal() = 0;
     delete *getParserPointerInternal();
+    *getParserPointerInternal() = 0;
     xercesc::XMLPlatformUtils::Terminate();
     
+    // Clear out all temporary stroage arrays for TechVintageVector.
     boost::fusion::for_each(sTechVectorParseHelperMap, [] (auto& aPair) {
         delete aPair.second;
         aPair.second = 0;
