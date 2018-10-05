@@ -244,6 +244,7 @@ module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
     # In this script have ensured that sum of cooling techs across seawater and freshwater do no exceed 1
 
     # CSP storage and regular after 2020 has recirculating assigned to 1.
+    # In original script all fresh water geothermal recirculating is assigned 1
     # In original script both dry-hybrid and recirculaitng were assigned 1 which didn't make sense.
 
 
@@ -264,6 +265,7 @@ module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
       mutate(recirculating=case_when(is.na(recirculating)~0,TRUE~recirculating),
              recirculating=case_when((sumy!=0 & sumy!=1 & `Reported Water Source (Type)`=="fresh")~recirculating+(1-sumy),
                                      (Fuel=="solar CSP" & `Reported Water Source (Type)`=="fresh")~recirculating+(1-sumy),
+                                     (Fuel=="geothermal" & `Reported Water Source (Type)`=="fresh")~recirculating+(1-sumy),
                                      TRUE~recirculating))%>%
       mutate(sumx=rowSums(select(.,`cooling pond`,`dry cooling`,dry_hybrid,none,`once through`,recirculating),na.rm=T))%>%
       dplyr::select(-sumx,-sumy)%>%
@@ -306,7 +308,7 @@ module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
       add_title("Historical and future power plant cooling technology shares by state") %>%
       add_units("ratio") %>%
       add_comments("Written by LA1233.Process_UCS_data_ref.R") %>%
-      add_legacy_name("LA1233.Process_UCS_data_ref") %>%
+      add_legacy_name("LA1233.CoolingSystemShares_RG3_ref") %>%
       add_precursors(
         #"L120.RsrcCurves_EJ_R_offshore_wind_USA",
                      "gcam-usa/UCS_Database",
