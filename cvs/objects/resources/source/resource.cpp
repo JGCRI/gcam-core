@@ -771,6 +771,12 @@ void RenewableResource::annualsupply( const string& aRegionName, int aPeriod, co
     }
 }
 
+/*!
+ * \brief Initialize any TechVintageVector in any object that may be contained
+ *        in this class.
+ * \details Resource does not have vintaging so the vectors will be sized for
+ *          the entire model time.
+ */
 void Resource::initTechVintageVector() {
     const Modeltime* modeltime = scenario->getModeltime();
     objects::InitializeTechVectorHelper helper( 0, modeltime->getmaxper() );

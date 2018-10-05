@@ -223,6 +223,12 @@ void GCAMConsumer::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->endVisitGCAMConsumer( this, aPeriod );
 }
 
+/*!
+ * \brief Initialize any TechVintageVector in any object that may be contained
+ *        in this class.
+ * \details GCAMConsumer does not have vintaging so the vectors will be sized for
+ *          the entire model time.
+ */
 void GCAMConsumer::initTechVintageVector() {
     const Modeltime* modeltime = scenario->getModeltime();
     objects::InitializeTechVectorHelper helper( 0, modeltime->getmaxper() );

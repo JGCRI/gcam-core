@@ -146,8 +146,6 @@ private:
     
     // typdef to help simplify code
     typedef std::vector<const xercesc::DOMNode*>::const_iterator CXMLIterator;
-    
-    static xercesc::DOMDocument* getDocumentToHoldNodes();
 };
 
 #endif // _STUB_TECHNOLOGY_CONTAINER_H_

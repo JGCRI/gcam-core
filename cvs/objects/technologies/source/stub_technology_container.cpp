@@ -41,7 +41,6 @@
 #include <string>
 #include <cassert>
 #include <xercesc/dom/DOMNodeList.hpp>
-#include <xercesc/dom/DOMImplementation.hpp>
 
 #include "technologies/include/stub_technology_container.h"
 #include "technologies/include/global_technology_database.h"
@@ -94,7 +93,7 @@ bool StubTechnologyContainer::XMLParse( const DOMNode* aNode ) {
     /*!
      * \warning This may shift some parsing errors to completeInit.
      */
-    mXMLAdjustments.push_back( getDocumentToHoldNodes()->importNode( aNode, true ) );
+    mXMLAdjustments.push_back( XMLHelper<void>::getDOMDocument()->importNode( aNode, true ) );
     
     return true;
 }
@@ -194,18 +193,6 @@ void StubTechnologyContainer::accept( IVisitor* aVisitor, const int aPeriod ) co
 
 void StubTechnologyContainer::interpolateAndParse( const DOMNode* aNode ) {
     // could make this work
-}
-
-/*!
- * \brief Get a document so that we can control our own memory to store DOMNodes.
- * \details We have the DOM implementation create a single temporary document to
- *          store our temporary XML.
- * \return A document that will not get deleted.
- */
-DOMDocument* StubTechnologyContainer::getDocumentToHoldNodes() {
-    static DOMDocument* doc = DOMImplementation::getImplementation()->createDocument();
-    
-    return doc;
 }
 
 void StubTechnologyContainer::doDataExpansion( ExpandDataVector<ParentClass::SubClassFamilyVector>& aVisitor ) {

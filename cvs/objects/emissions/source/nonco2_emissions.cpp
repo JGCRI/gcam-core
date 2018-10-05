@@ -425,7 +425,7 @@ double NonCO2Emissions::getAdjustedEmissCoef( const int aPeriod ) const
     /*!
      * \pre The adjusted emissions coefficient has been calculated for this period.
      */
-    assert( mAdjustedEmissCoef[ aPeriod ] != -1.0 );
+    assert( (*mAdjustedEmissCoef)[ aPeriod ] != -1.0 );
 
     return (*mAdjustedEmissCoef)[ aPeriod ];
 }

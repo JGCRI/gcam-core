@@ -1766,6 +1766,15 @@ int Technology::calcDefaultLifetime() const {
         : modeltime->gettimestep( modeltime->getmaxper() - 1 );
 }
 
+/*!
+ * \brief Initialize any TechVintageVector in any object that may be contained
+ *        in this class.
+ * \details We must convert this tech year to the corresponding model period to
+ *          calculate the start period to use.  We then need to figure out how
+ *          many model periods will elapse before we reach the lifetime end of
+ *          this technology.  With that we have enough information to initialize
+ *          the TechVintageVectors.
+ */
 void Technology::initTechVintageVector() {
     const Modeltime* modeltime = scenario->getModeltime();
     int numPeriodsActive = 0;

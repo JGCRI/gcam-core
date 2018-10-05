@@ -79,6 +79,7 @@
 #include <xercesc/dom/DOMException.hpp>
 #include <xercesc/dom/DOMNamedNodeMap.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
+#include <xercesc/dom/DOMImplementation.hpp>
 #include <xercesc/sax/HandlerBase.hpp>
 #include <xercesc/util/PlatformUtils.hpp>
 
@@ -197,9 +198,11 @@ public:
    static void printXMLTrace( const xercesc::DOMNode* aNode, std::ostream& aOut );
    static void serializeNode( const xercesc::DOMNode* aNode, std::ostream& aOut, Tabs* aTabs,
                               const bool aDeep );
+   static xercesc::DOMDocument* getDOMDocument();
 private:
     static xercesc::XercesDOMParser** getParserPointerInternal();
     static xercesc::ErrorHandler** getErrorHandlerPointerInternal();
+    static xercesc::DOMDocument** getDOMDocumentInternal();
     static void initParser();
     static xercesc::XercesDOMParser* getParser();
 };
@@ -1088,6 +1091,8 @@ void XMLHelper<T>::initParser() {
     *getErrorHandlerPointerInternal() = ( (xercesc::ErrorHandler*)new xercesc::HandlerBase() );
     (*getParserPointerInternal())->setErrorHandler( *getErrorHandlerPointerInternal() );
     
+    *getDOMDocumentInternal() = xercesc::DOMImplementation::getImplementation()->createDocument();
+    
     // At this point we should ensure we have a place to store "temporary" data for
     // TechVintageVectors.
     // Note we will clean up this memory (and all of the temporary arrays that it contains
@@ -1149,6 +1154,8 @@ void XMLHelper<T>::cleanupParser(){
     *getErrorHandlerPointerInternal() = 0;
     delete *getParserPointerInternal();
     *getParserPointerInternal() = 0;
+    delete *getDOMDocumentInternal();
+    *getDOMDocumentInternal() = 0;
     xercesc::XMLPlatformUtils::Terminate();
     
     // Clear out all temporary stroage arrays for TechVintageVector.
@@ -1579,6 +1586,24 @@ template<class T>
 xercesc::ErrorHandler** XMLHelper<T>::getErrorHandlerPointerInternal(){
     static xercesc::ErrorHandler* errorHandler;
     return &errorHandler;
+}
+
+template<class T>
+xercesc::DOMDocument** XMLHelper<T>::getDOMDocumentInternal(){
+    static xercesc::DOMDocument* tempStoreDoc;
+    return &tempStoreDoc;
+}
+
+/*!
+ * \brief Get a document that will live beyond parsing of just the current
+ *        XML being parsed.
+ * \details We have the DOM implementation create a single temporary document to
+ *          store our temporary XML so we can delay parsing it until after completeInit.
+ * \return A document that will not get deleted until after completeInit.
+ */
+template<class T>
+xercesc::DOMDocument* XMLHelper<T>::getDOMDocument(){
+    return *getDOMDocumentInternal();
 }
 
 
