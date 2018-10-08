@@ -10,7 +10,8 @@
 #' original data system was \code{batch_industry_vintage_USA.xml.R} (gcamusa XML).
 module_gcamusa_batch_industry_vintage_USA_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L2322.StubTechSCurve_industry_USA"))
+    return(c("L2322.StubTechSCurve_industry_USA",
+             "L2322.StubTechProfitShutdown_industry_USA"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "industry_vintage_USA.xml"))
   } else if(command == driver.MAKE) {
@@ -19,13 +20,16 @@ module_gcamusa_batch_industry_vintage_USA_xml <- function(command, ...) {
 
     # Load required inputs
     L2322.StubTechSCurve_industry_USA <- get_data(all_data, "L2322.StubTechSCurve_industry_USA")
+    L2322.StubTechProfitShutdown_industry_USA <- get_data(all_data, "L2322.StubTechProfitShutdown_industry_USA")
 
     # ===================================================
 
     # Produce outputs
     create_xml("industry_vintage_USA.xml") %>%
       add_xml_data(L2322.StubTechSCurve_industry_USA, "StubTechSCurve") %>%
-      add_precursors("L2322.StubTechSCurve_industry_USA") ->
+      add_xml_data(L2322.StubTechProfitShutdown_industry_USA, "StubTechProfitShutdown") %>%
+      add_precursors("L2322.StubTechSCurve_industry_USA",
+                     "L2322.StubTechProfitShutdown_industry_USA") ->
       industry_vintage_USA.xml
 
     return_data(industry_vintage_USA.xml)

@@ -14,15 +14,15 @@ module_gcam.usa_L2322.industry_vintage_USA(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L2322.StubTechSCurve_industry_USA}. The corresponding file in the
-original data system was \code{L2322.industry_vintage_USA.R} (gcam-usa level2).
+the generated outputs: \code{L2322.StubTechSCurve_industry_USA}, \code{L2322.StubTechProfitShutdown_industry_USA}.
+ The corresponding file in the original data system was \code{L2322.industry_vintage_USA.R} (gcam-usa level2).
 }
 \description{
-Selects the subsectors to be removed from the hydrogen sectors for GCAM USA
+Creates a vintage structure and retirement parameters for U.S. industrial energy use
 }
 \details{
-This chunk selects the subsectors to be removed from the hydrogen sectors in GCAM USA on the national level.
+This chunk creates a vintage structure and retirement parameters for U.S. industrial energy use.
 }
 \author{
-KD August 2018
+KD August 2018; edited MTB October 2018
 }
