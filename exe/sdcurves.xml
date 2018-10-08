@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+	<supply-demand-curve name="globalcrude oil">
+		<price>0.500</price>
+		<price>0.750</price>
+		<price>0.999</price>
+		<price>1.000</price>
+		<price>1.001</price>
+		<price>1.250</price>
+		<price>1.500</price>
+	</supply-demand-curve>
+	<supply-demand-curve name="globalnatural gas">
+		<price>0.500</price>
+		<price>0.750</price>
+		<price>0.999</price>
+		<price>1.000</price>
+		<price>1.001</price>
+		<price>1.250</price>
+		<price>1.500</price>
+	</supply-demand-curve>
+	<supply-demand-curve name="USAbiomass">
+		<price>0.500</price>
+		<price>0.750</price>
+		<price>0.999</price>
+		<price>1.000</price>
+		<price>1.001</price>
+		<price>1.250</price>
+		<price>1.500</price>
+	</supply-demand-curve>	
+</scenario>
