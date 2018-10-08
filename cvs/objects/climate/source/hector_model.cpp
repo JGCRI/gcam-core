@@ -669,7 +669,19 @@ double HectorModel::getForcing( const string& aGas, int aYear ) const {
     // If the gas is a halocarbon, grab the RF request string and send
     // it to the Hector core.
     if( ittseries != mHectorRFTseriesMsg.end() ) {
-        return mHcore->sendMessage( M_GETDATA, ittseries->second, aYear );
+        double haloForcing = -1.0;
+        // We might get an error trying to retrieve halocarbon RF if
+        // hector had crashed trying to run up the given year.
+        // In that case issue a warning and return an invalid result.
+        try {
+            haloForcing = mHcore->sendMessage( M_GETDATA, ittseries->second, aYear );
+        }
+        catch( const h_exception& e ) {
+            ILogger& climatelog = ILogger::getLogger( "climate-log" );
+            climatelog.setLevel (ILogger::WARNING );
+            climatelog << "Exception: " << e << endl;
+        }
+        return haloForcing;
     }
 
     // For other RF components, 
