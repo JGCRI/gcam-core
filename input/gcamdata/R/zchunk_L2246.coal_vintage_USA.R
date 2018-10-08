@@ -7,11 +7,12 @@
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L2246.StubTechProd_coal_vintage_USA}, \code{L2246.StubTechEff_coal_vintage_USA},
-#' \code{L2246.StubTechLifetime_coal_vintage_USA}, \code{L2246.StubTechProfitShutdown_coal_vintage_USA},
-#' \code{L2246.StubTechMarket_coal_vintage_USA}, \code{L2246.GlobalTechShrwt_coal_vintage_USA},
-#' \code{L2246.GlobalTechEff_coal_vintage_USA}, \code{L2246.GlobalTechCapFac_coal_vintage_USA},
-#' \code{L2246.GlobalTechCapital_coal_vintage_USA}, \code{L2246.GlobalTechOMfixed_coal_vintage_USA},
-#' \code{L2246.GlobalTechOMvar_coal_vintage_USA}, \code{L2246.ghg_emissions_coal_vintage_USA}.
+#' \code{L2246.StubTechLifetime_coal_vintage_USA}, \code{L2246.StubTechSCurve_coal_vintage_USA},
+#' \code{L2246.StubTechProfitShutdown_coal_vintage_USA}, \code{L2246.StubTechMarket_coal_vintage_USA},
+#' \code{L2246.GlobalTechShrwt_coal_vintage_USA}, \code{L2246.GlobalTechEff_coal_vintage_USA},
+#' \code{L2246.GlobalTechCapFac_coal_vintage_USA}, \code{L2246.GlobalTechCapital_coal_vintage_USA},
+#' \code{L2246.GlobalTechOMfixed_coal_vintage_USA}, \code{L2246.GlobalTechOMvar_coal_vintage_USA},
+#' \code{L2246.ghg_emissions_coal_vintage_USA}.
 #' The corresponding file in the original data system was \code{L2246.coal_vintage.R} (gcam-usa level2).
 #' @details This chunk creates input files to include detailed coal vintages. Calibrated outputs in 2010 are allocated based on
 #' generation share by vintage groups in 2015 using EIA unit-level data.
@@ -37,6 +38,7 @@ module_gcam.usa_L2246.coal_vintage_USA <- function(command, ...) {
     return(c("L2246.StubTechProd_coal_vintage_USA",
              "L2246.StubTechEff_coal_vintage_USA",
              "L2246.StubTechLifetime_coal_vintage_USA",
+             "L2246.StubTechSCurve_coal_vintage_USA",
              "L2246.StubTechProfitShutdown_coal_vintage_USA",
              "L2246.StubTechMarket_coal_vintage_USA",
              "L2246.GlobalTechShrwt_coal_vintage_USA",
@@ -180,14 +182,26 @@ module_gcam.usa_L2246.coal_vintage_USA <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["StubTechProd"]], stub.technology.new, lifetime, vintage.bin) ->
       L2246.StubTechProd_coal_vintage_USA_2010
 
-    # Create a table to read lifetimes for vintage bin techs by state
+    # Create a table to read lifetimes for vintage bin techs by state, for vintages with =< 20 year lifetime remaining
     L2246.StubTechProd_coal_vintage_USA_2010 %>%
       mutate(stub.technology = stub.technology.new) %>%
+      filter(lifetime <= 20) %>%
       select(LEVEL2_DATA_NAMES[["StubTechLifetime"]]) ->
       L2246.StubTechLifetime_coal_vintage_USA
 
+    # Create a table to read in S-curve parameters for vintage bin techs by state, for vintages with > 20 year lifetime remaining
+    L2246.StubTechProd_coal_vintage_USA_2010 %>%
+      mutate(stub.technology = stub.technology.new) %>%
+      filter(lifetime > 20) %>%
+      select(LEVEL2_DATA_NAMES[["StubTechLifetime"]]) %>%
+      mutate(steepness = 0.3,
+             half.life = round(lifetime * (gcamusa.AVG_COAL_PLANT_HALFLIFE / gcamusa.AVG_COAL_PLANT_LIFETIME), 0)) ->
+      L2246.StubTechSCurve_coal_vintage_USA
+
     # Read in profit shutdown decider for vintage technologies
-    L2246.StubTechLifetime_coal_vintage_USA %>%
+    L2246.StubTechProd_coal_vintage_USA_2010 %>%
+      mutate(stub.technology = stub.technology.new) %>%
+      select(LEVEL2_DATA_NAMES[["StubTechLifetime"]]) %>%
       mutate(median.shutdown.point = -0.1, profit.shutdown.steepness = 6) %>%
       select(LEVEL2_DATA_NAMES[["StubTechProfitShutdown"]]) ->
       L2246.StubTechProfitShutdown_coal_vintage_USA
@@ -363,10 +377,19 @@ module_gcam.usa_L2246.coal_vintage_USA <- function(command, ...) {
       add_title("Lifetime of slow_retire conventional coal electricity plants from 2010 by detailed vintage and state") %>%
       add_units("Years") %>%
       add_comments("Average lifetime for each vintage group is weighted by capacity, based on EIA unit-level 2015 data") %>%
+      add_comments("Only for vintage groups with 20 or fewer years of lifetime remaining") %>%
       add_legacy_name("L2246.StubTechLifetime_coal_vintage_USA") %>%
       same_precursors_as("L2246.StubTechProd_coal_vintage_USA") %>%
       add_precursors("gcam-usa/EIA_860_generators_retired_2016") ->
       L2246.StubTechLifetime_coal_vintage_USA
+
+    L2246.StubTechSCurve_coal_vintage_USA %>%
+      add_title("Lifetime and retirement parameters for slow_retire conventional coal electricity plants from 2010 by detailed vintage and state") %>%
+      add_units("Years") %>%
+      add_comments("Average lifetime for each vintage group is weighted by capacity, based on EIA unit-level 2015 data") %>%
+      add_comments("Only for vintage groups with greater than 20 years of lifetime remaining") %>%
+      same_precursors_as("L2246.StubTechLifetime_coal_vintage_USA") ->
+      L2246.StubTechSCurve_coal_vintage_USA
 
     L2246.StubTechProfitShutdown_coal_vintage_USA %>%
       add_title("Profit shutdown decider for slow_retire conventional coal electricity plants by detailed vintage and state") %>%
@@ -450,6 +473,7 @@ module_gcam.usa_L2246.coal_vintage_USA <- function(command, ...) {
     return_data(L2246.StubTechProd_coal_vintage_USA,
                 L2246.StubTechEff_coal_vintage_USA,
                 L2246.StubTechLifetime_coal_vintage_USA,
+                L2246.StubTechSCurve_coal_vintage_USA,
                 L2246.StubTechProfitShutdown_coal_vintage_USA,
                 L2246.StubTechMarket_coal_vintage_USA,
                 L2246.GlobalTechShrwt_coal_vintage_USA,

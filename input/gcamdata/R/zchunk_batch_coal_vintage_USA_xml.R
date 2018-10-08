@@ -13,6 +13,7 @@ module_gcam.usa_batch_coal_vintage_USA_xml <- function(command, ...) {
     return(c("L2246.StubTechProd_coal_vintage_USA",
              "L2246.StubTechEff_coal_vintage_USA",
              "L2246.StubTechLifetime_coal_vintage_USA",
+             "L2246.StubTechSCurve_coal_vintage_USA",
              "L2246.StubTechProfitShutdown_coal_vintage_USA",
              "L2246.StubTechMarket_coal_vintage_USA",
              "L2246.GlobalTechShrwt_coal_vintage_USA",
@@ -32,6 +33,7 @@ module_gcam.usa_batch_coal_vintage_USA_xml <- function(command, ...) {
     L2246.StubTechProd_coal_vintage_USA <- get_data(all_data, "L2246.StubTechProd_coal_vintage_USA")
     L2246.StubTechEff_coal_vintage_USA <- get_data(all_data, "L2246.StubTechEff_coal_vintage_USA")
     L2246.StubTechLifetime_coal_vintage_USA <- get_data(all_data, "L2246.StubTechLifetime_coal_vintage_USA")
+    L2246.StubTechSCurve_coal_vintage_USA <- get_data(all_data, "L2246.StubTechSCurve_coal_vintage_USA")
     L2246.StubTechProfitShutdown_coal_vintage_USA <- get_data(all_data, "L2246.StubTechProfitShutdown_coal_vintage_USA")
     L2246.StubTechMarket_coal_vintage_USA <- get_data(all_data, "L2246.StubTechMarket_coal_vintage_USA")
     L2246.GlobalTechShrwt_coal_vintage_USA <- get_data(all_data, "L2246.GlobalTechShrwt_coal_vintage_USA")
@@ -47,6 +49,7 @@ module_gcam.usa_batch_coal_vintage_USA_xml <- function(command, ...) {
       add_xml_data(L2246.StubTechProd_coal_vintage_USA, "StubTechProd") %>%
       add_xml_data(L2246.StubTechEff_coal_vintage_USA, "StubTechEff") %>%
       add_xml_data(L2246.StubTechLifetime_coal_vintage_USA, "StubTechLifetime") %>%
+      add_xml_data(L2246.StubTechSCurve_coal_vintage_USA, "StubTechSCurve") %>%
       add_xml_data(L2246.StubTechProfitShutdown_coal_vintage_USA, "StubTechProfitShutdown") %>%
       add_xml_data(L2246.StubTechMarket_coal_vintage_USA, "StubTechMarket") %>%
       add_xml_data(L2246.GlobalTechShrwt_coal_vintage_USA, "GlobalTechShrwt") %>%
@@ -59,6 +62,7 @@ module_gcam.usa_batch_coal_vintage_USA_xml <- function(command, ...) {
       add_precursors("L2246.StubTechProd_coal_vintage_USA",
                      "L2246.StubTechEff_coal_vintage_USA",
                      "L2246.StubTechLifetime_coal_vintage_USA",
+                     "L2246.StubTechSCurve_coal_vintage_USA",
                      "L2246.StubTechProfitShutdown_coal_vintage_USA",
                      "L2246.StubTechMarket_coal_vintage_USA",
                      "L2246.GlobalTechShrwt_coal_vintage_USA",

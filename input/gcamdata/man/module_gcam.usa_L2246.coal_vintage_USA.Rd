@@ -15,11 +15,12 @@ module_gcam.usa_L2246.coal_vintage_USA(command, ...)
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
 the generated outputs: \code{L2246.StubTechProd_coal_vintage_USA}, \code{L2246.StubTechEff_coal_vintage_USA},
-\code{L2246.StubTechLifetime_coal_vintage_USA}, \code{L2246.StubTechProfitShutdown_coal_vintage_USA},
-\code{L2246.StubTechMarket_coal_vintage_USA}, \code{L2246.GlobalTechShrwt_coal_vintage_USA},
-\code{L2246.GlobalTechEff_coal_vintage_USA}, \code{L2246.GlobalTechCapFac_coal_vintage_USA},
-\code{L2246.GlobalTechCapital_coal_vintage_USA}, \code{L2246.GlobalTechOMfixed_coal_vintage_USA},
-\code{L2246.GlobalTechOMvar_coal_vintage_USA}, \code{L2246.ghg_emissions_coal_vintage_USA}.
+\code{L2246.StubTechLifetime_coal_vintage_USA}, \code{L2246.StubTechSCurve_coal_vintage_USA},
+\code{L2246.StubTechProfitShutdown_coal_vintage_USA}, \code{L2246.StubTechMarket_coal_vintage_USA},
+\code{L2246.GlobalTechShrwt_coal_vintage_USA}, \code{L2246.GlobalTechEff_coal_vintage_USA},
+\code{L2246.GlobalTechCapFac_coal_vintage_USA}, \code{L2246.GlobalTechCapital_coal_vintage_USA},
+\code{L2246.GlobalTechOMfixed_coal_vintage_USA}, \code{L2246.GlobalTechOMvar_coal_vintage_USA},
+\code{L2246.ghg_emissions_coal_vintage_USA}.
 The corresponding file in the original data system was \code{L2246.coal_vintage.R} (gcam-usa level2).
 }
 \description{
