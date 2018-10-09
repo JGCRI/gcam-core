@@ -125,18 +125,6 @@ bool SupplyDemandCurveSaver::XMLParse( const DOMNode* aNode ) {
     return true;
 }
 
-void SupplyDemandCurveSaver::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    // XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
-
-    aOut << "<" << getXMLNameStatic() << " name=\"" << mName << "\">" << endl;
-
-    for ( int i = 0; i < mPrices.size(); i++ ) {
-          XMLWriteElement( mPrices[ i ], "price", aOut, aTabs );
-    }
-    
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 
 /*! \brief Find and print supply-demand curves for designated market.
 *

@@ -79,9 +79,6 @@ public:
     // IParsable methods
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
     
-    // IRoundTrippable methods
-    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
-    
     // IModelFeedbackCalc methods
     virtual void calcFeedbacksBeforePeriod( Scenario* aScenario,
                                             const IClimateModel* aClimateModel,
