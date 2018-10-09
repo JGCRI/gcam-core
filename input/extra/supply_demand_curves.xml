@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scenario>
-	<supply-demand-curve name="globalcrude oil">
+	<supply-demand-curve-saver name="globalcrude oil">
+        <is-price-relative>1</is-price-relative>
 		<price>0.500</price>
 		<price>0.750</price>
 		<price>0.999</price>
@@ -8,8 +9,9 @@
 		<price>1.001</price>
 		<price>1.250</price>
 		<price>1.500</price>
-	</supply-demand-curve>
-	<supply-demand-curve name="globalnatural gas">
+	</supply-demand-curve-saver>
+	<supply-demand-curve-saver name="globalnatural gas">
+        <is-price-relative>1</is-price-relative>
 		<price>0.500</price>
 		<price>0.750</price>
 		<price>0.999</price>
@@ -17,8 +19,9 @@
 		<price>1.001</price>
 		<price>1.250</price>
 		<price>1.500</price>
-	</supply-demand-curve>
-	<supply-demand-curve name="USAbiomass">
+	</supply-demand-curve-saver>
+	<supply-demand-curve-saver name="USAbiomass">
+        <is-price-relative>1</is-price-relative>
 		<price>0.500</price>
 		<price>0.750</price>
 		<price>0.999</price>
@@ -26,5 +29,5 @@
 		<price>1.001</price>
 		<price>1.250</price>
 		<price>1.500</price>
-	</supply-demand-curve>	
+	</supply-demand-curve-saver>	
 </scenario>

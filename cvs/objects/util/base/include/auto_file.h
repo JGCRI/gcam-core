@@ -93,9 +93,7 @@ public:
     /*! \brief Open an output file with the given name.
     * \details Opens an automatically closing output file with a given filename.
     * \param aFileName Name of the file to open.
-     * \param aOpenMode The file opening mode. Use std::ios_base::app to open in append mode.
-    * \todo This interface is dangerous because forgetting an argument calls a
-    *       different function.
+    * \param aOpenMode The file opening mode. Use std::ios_base::app to open in append mode.
     */
     explicit AutoOutputFile( const std::string& aFileName, std::ios_base::openmode aOpenMode = std::ios_base::out )
         :mShouldWrite( true )
