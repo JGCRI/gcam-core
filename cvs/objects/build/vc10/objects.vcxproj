@@ -740,6 +740,7 @@
     <ClCompile Include="..\..\util\base\source\linear_interpolation_function.cpp" />
     <ClCompile Include="..\..\util\base\source\manage_state_variables.cpp" />
     <ClCompile Include="..\..\util\base\source\model_time.cpp" />
+    <ClCompile Include="..\..\util\base\source\supply_demand_curve_saver.cpp" />
     <ClCompile Include="..\..\util\base\source\s_curve_interpolation_function.cpp" />
     <ClCompile Include="..\..\util\base\source\supply_demand_curve.cpp" />
     <ClCompile Include="..\..\util\base\source\timer.cpp" />
@@ -1099,6 +1100,7 @@
     <ClInclude Include="..\..\util\base\include\manage_state_variables.hpp" />
     <ClInclude Include="..\..\util\base\include\model_time.h" />
     <ClInclude Include="..\..\util\base\include\object_meta_info.h" />
+    <ClInclude Include="..\..\util\base\include\supply_demand_curve_saver.h" />
     <ClInclude Include="..\..\util\base\include\s_curve_interpolation_function.h" />
     <ClInclude Include="..\..\util\base\include\string_hash.h" />
     <ClInclude Include="..\..\util\base\include\supply_demand_curve.h" />
