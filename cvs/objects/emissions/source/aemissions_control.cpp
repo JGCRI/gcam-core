@@ -80,7 +80,7 @@ void AEmissionsControl::copy( const AEmissionsControl& aOther ){
 }
 
 //! \brief initialize emissions control object with xml data
-void AEmissionsControl::XMLParse(const DOMNode* aNode) {
+bool AEmissionsControl::XMLParse(const DOMNode* aNode) {
     /*! \pre Assume we are passed a valid node. */
     assert( aNode );
 
@@ -88,6 +88,8 @@ void AEmissionsControl::XMLParse(const DOMNode* aNode) {
 
     // Parse the name attribute.
     mName = XMLHelper<string>::getAttr( aNode, "name" );
+    
+    bool parsingSuccessful = true;
 
     for( unsigned int i = 0; i < nodeList->getLength(); ++i ) {
         DOMNode* curr = nodeList->item( i );
@@ -102,22 +104,13 @@ void AEmissionsControl::XMLParse(const DOMNode* aNode) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
             mainLog << "Unrecognized text string: " << nodeName << " found while parsing AEmissionsControl." << endl;
+            parsingSuccessful = false;
         }
     }
-}
-
-//! Writes datamembers to datastream in XML format.
-void AEmissionsControl::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-
-    XMLWriteOpeningTag( getXMLName(), aOut, aTabs, getName() );
     
-    // write xml for data members
-    toInputXMLDerived( aOut, aTabs );
-    // done writing xml for data members.
-
-    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
-
+    return parsingSuccessful;
 }
+
 //! Writes datamembers to debugging datastream in XML format.
 void AEmissionsControl::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
 

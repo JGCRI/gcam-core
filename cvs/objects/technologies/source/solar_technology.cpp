@@ -460,30 +460,6 @@ void SolarTechnology::toDebugXMLDerived(
    XMLWriteElement( getSolarPenetration( period ), "estimated-sector-penetration", out, tabs );
 }
 
-// SolarTechnology::toInputXMLDerived ****************************************
-
-// Documentation is inherited
-void SolarTechnology::toInputXMLDerived(
-   std::ostream& out,
-   Tabs*         tabs ) const
-{
-   parent::toInputXMLDerived( out,  tabs );
-   XMLWriteElementCheckDefault( mCapitalCost, "capital-cost", out, tabs, double( 3486 ) );
-   XMLWriteElementCheckDefault( mFCR, "fcr", out, tabs, double( 0.0856 ) );
-   XMLWriteElementCheckDefault( mGridConnectionCost, "grid-connection-cost", out, tabs, double( 1500 ) );
-   XMLWriteElementCheckDefault( mOM, "om", out, tabs, double( 47.87 ) );
-   XMLWriteElementCheckDefault( mSolarFieldFraction, "solar-field-fraction", out, tabs, double( 0.3 ) );
-   XMLWriteElementCheckDefault( mSolarFieldArea, "solar-field-area", out, tabs, double( 6.9 ) );
-   XMLWriteElementCheckDefault( mMaxLoss, "max-solar-loss", out, tabs, double( 0.55 ) );
-   XMLWriteElementCheckDefault( mEfficiencyLossExponent, "loss-exponent", out, tabs, double( 3.0 ) );
-   XMLWriteElementCheckDefault( mPlantAvailability, "plant-availability-fraction", out, tabs, double( 0.98 ) );
-   XMLWriteElementCheckDefault( mScheduledMaintenance, "plant-scheduled-maintenance-fraction", out, tabs, double( 0.15 ) );
-   XMLWriteElementCheckDefault( mRandomMaintenanceFraction, "random-maintence-fraction", out, tabs, double( 0.50 ) );
-   XMLWriteElement( mCSPEfficiency, "net-solar-conversion-efficiency", out, tabs );
-   XMLWriteElement( mMaxSectorLoadServed, "max-sector-load-served", out, tabs );
-   XMLWriteElementCheckDefault<std::string>( mTotalAnnualIrradianceKey, "irradiance-tagname", out, tabs, "total-annual-irradiance" ); 
-}
-
 // SolarTechnology::XMLDerivedClassParse *************************************
 
 // Documentation is inherited

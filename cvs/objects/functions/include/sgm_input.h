@@ -106,10 +106,6 @@ class CachedMarket;
  */
 class SGMInput: public INestedInput
 {
-    friend class SocialAccountingMatrix;
-    friend class DemandComponentsTable;
-    friend class SectorReport;
-    friend class SGMGenTable;
     friend class XMLDBOutputter;
 public:
     SGMInput();
@@ -137,7 +133,6 @@ public:
                            const IInfo* aTechInfo,
                            const int aPeriod );
 
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     const std::string& getName() const;
     virtual const std::string& getMarketName( const std::string& aRegionName ) const { return aRegionName; }
@@ -189,7 +184,6 @@ public:
                                    const int aNextYear, const IInput* aPreviousInput,
                                    const IInput* aNextInput );
 
-    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     virtual void accept( IVisitor* aVistior, const int aPeriod ) const = 0;
     virtual void copyParamsInto( ProductionInput& aInput, const int aPeriod ) const = 0;
     virtual void copyParamsInto( DemandInput& aInput, const int aPeriod ) const = 0;
@@ -296,7 +290,6 @@ protected:
 
     virtual const std::string& getXMLName() const = 0;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const = 0;
 
 private:

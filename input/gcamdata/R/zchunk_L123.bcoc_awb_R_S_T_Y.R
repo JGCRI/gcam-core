@@ -16,7 +16,7 @@
 module_emissions_L123.bcoc_awb_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
-             "L103.ag_Prod_Mt_R_C_Y_GLU",
+             "L101.ag_Prod_Mt_R_C_Y_GLU",
              "L121.AWBshare_R_C_Y_GLU",
              FILE = "emissions/RCP_BC_2000",
              FILE = "emissions/RCP_OC_2000"))
@@ -31,7 +31,7 @@ module_emissions_L123.bcoc_awb_R_S_T_Y <- function(command, ...) {
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    L103.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L103.ag_Prod_Mt_R_C_Y_GLU")
+    L101.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L101.ag_Prod_Mt_R_C_Y_GLU")
     L121.AWBshare_R_C_Y_GLU <- get_data(all_data, "L121.AWBshare_R_C_Y_GLU")
     RCP_BC_2000 <- get_data(all_data, "emissions/RCP_BC_2000")
     RCP_OC_2000 <- get_data(all_data, "emissions/RCP_OC_2000")
@@ -57,9 +57,9 @@ module_emissions_L123.bcoc_awb_R_S_T_Y <- function(command, ...) {
       BCOC_AWB_2000
 
     # Extract only 2000 data from ag production data
-    filter(L103.ag_Prod_Mt_R_C_Y_GLU, year == 2000) %>%
+    filter(L101.ag_Prod_Mt_R_C_Y_GLU, year == 2000) %>%
       select(-year)  ->
-      L103.ag_Prod_Mt_R_C_Y_GLU_2000
+      L101.ag_Prod_Mt_R_C_Y_GLU_2000
 
     # Allocate aggreate regional year 2000 AWB emissions into GCAM crop and GLU
     # This is done using shares from L121.AWBshare_R_C_Y_GLU, which is calculated in another chunk
@@ -72,7 +72,7 @@ module_emissions_L123.bcoc_awb_R_S_T_Y <- function(command, ...) {
       # by the share for each individual GCAM technology
       mutate(awb_emission = AWB_emiss_share * awb) %>%
       # Add production data
-      left_join_error_no_match(L103.ag_Prod_Mt_R_C_Y_GLU_2000, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
+      left_join_error_no_match(L101.ag_Prod_Mt_R_C_Y_GLU_2000, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
       # Calculate emission factor, which is
       mutate(emfact = awb_emission / value) %>%
       select(-awb_emission, -value, -AWB_emiss_share, -awb) %>%
@@ -89,7 +89,7 @@ module_emissions_L123.bcoc_awb_R_S_T_Y <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID",
                      "emissions/RCP_BC_2000",
                      "emissions/RCP_OC_2000",
-                     "L103.ag_Prod_Mt_R_C_Y_GLU",
+                     "L101.ag_Prod_Mt_R_C_Y_GLU",
                      "L121.AWBshare_R_C_Y_GLU") ->
       L123.bcoc_tgmt_R_awb_2000
 

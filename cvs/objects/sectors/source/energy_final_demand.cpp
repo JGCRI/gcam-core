@@ -148,34 +148,6 @@ bool EnergyFinalDemand::XMLParse( const DOMNode* aNode ) {
     return true;
 }
 
-void EnergyFinalDemand::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( getXMLName(), aOut, aTabs, mName );
-    const Modeltime* modeltime = scenario->getModeltime();
-   
-    // write the xml for the class members.
-    XMLWriteElementCheckDefault( mDemandFunction->isPerCapitaBased(),
-                                 "perCapitaBased", aOut,
-                                 aTabs, false );
-
-    if( mFinalEnergyConsumer.get() ){
-        mFinalEnergyConsumer->toInputXML( aOut, aTabs );
-    }
-    // Write base service only if it has a non-zero value.
-    for( unsigned int i = 0; i < mBaseService.size(); ++i ){
-        XMLWriteElementCheckDefault( mBaseService[ i ].get(), "base-service",
-                                     aOut, aTabs, 0.0,
-                                     modeltime->getper_to_yr( i ) );
-    }
-
-    // It is important that we do not check default here since this could cause
-    // unintended interpolation.
-    XMLWriteVector( mPriceElasticity, "price-elasticity", aOut, aTabs, modeltime );
-    XMLWriteVector( mIncomeElasticity, "income-elasticity", aOut, aTabs, modeltime );
-
-    toInputXMLDerived( aOut, aTabs );
-    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
-}   
-
 void EnergyFinalDemand::toDebugXML( const int aPeriod,
                                     ostream& aOut,
                                     Tabs* aTabs ) const
@@ -214,9 +186,6 @@ bool EnergyFinalDemand::XMLDerivedClassParse( const std::string& nodeName, const
         return false;
     }
     return true;
-}
-
-void EnergyFinalDemand::toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {
 }
 
 void EnergyFinalDemand::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {
@@ -440,52 +409,6 @@ void EnergyFinalDemand::acceptDerived( IVisitor* aVisitor,
     aVisitor->endVisitEnergyFinalDemand( this, aPeriod );
 }
 
-//! Write sector output to database.
-void EnergyFinalDemand::csvOutputFile( const string& aRegionName ) const {
-    // function protocol
-    void fileoutput3( string var1name,string var2name,string var3name,
-        string var4name,string var5name,string uname,vector<double> dout);
-    
-    // function arguments are variable name, double array, db name, table name
-    // the function writes all years
-    // total Sector output
-    fileoutput3( aRegionName, mName, " ", " ", "demand", "SerUnit",
-                 convertToVector( mServiceDemands ) );
-}
-
-//! Write MiniCAM style demand sector output to database.
-void EnergyFinalDemand::dbOutput( const string& aRegionName ) const {
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-    vector<double> temp(maxper);
-    
-    // function protocol
-    void dboutput4(string var1name,string var2name,string var3name,string var4name,
-        string uname,vector<double> dout);
-    
-    // total sector output
-    dboutput4( aRegionName,"End-Use Service","by Sector", mName, "Ser Unit",
-               convertToVector( mServiceDemands ) );
-    
-    temp.clear();
-    for( int i = 0; i < maxper; ++i ) {
-        temp.push_back( mPriceElasticity[ i ] );
-    }
-
-    // End-use service price elasticity
-    dboutput4( aRegionName,"End-Use Service","Elasticity", mName + "_price" ,
-               " ", temp );
-    
-    temp.clear();
-    for( int i = 0; i < maxper; ++i ) {
-        temp.push_back( mIncomeElasticity[ i ] );
-    }
-
-    // End-use service income elasticity
-    dboutput4( aRegionName,"End-Use Service","Elasticity", mName + "_income",
-               " ", temp );
-}
-
 EnergyFinalDemand::FinalEnergyConsumer::FinalEnergyConsumer( const string& aFinalDemandName ) {
     mTFEMarketName = SectorUtils::createTFEMarketName( aFinalDemandName );
 }
@@ -691,27 +614,6 @@ bool EnergyFinalDemand::FinalEnergyConsumer::XMLParse( const DOMNode* aNode ) {
         }
     }
     return true;
-}
-
-void EnergyFinalDemand::FinalEnergyConsumer::toInputXML( ostream& aOut,
-                                                         Tabs* aTabs ) const
-{
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
-    const Modeltime* modeltime = scenario->getModeltime();
-   
-    // TODO: Use XMLWriteVector here.
-    for( unsigned int i = 0; i < mAEEI.size(); ++i ){
-        XMLWriteElementCheckDefault<double>( mAEEI[ i ], "aeei", aOut, aTabs, 0.0,
-                                     modeltime->getper_to_yr( i ) );
-    }
-
-    /* Don't write this out until we have a way of deactivating this for policy runs.
-    for( unsigned int i = 0; i < mCalFinalEnergy.size(); i++ ){
-        XMLWriteElementCheckDefault( mCalFinalEnergy[ i ], "mCalFinalEnergy", out, tabs, -1.0, modeltime->getper_to_yr( i ) );
-    }
-    */
-
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
 void EnergyFinalDemand::FinalEnergyConsumer::toDebugXML( const int aPeriod,

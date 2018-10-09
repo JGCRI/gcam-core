@@ -100,12 +100,6 @@ bool UnmanagedLandTechnology::XMLDerivedClassParse( const string& nodeName, cons
 }
 
 //! write object to xml output stream
-void UnmanagedLandTechnology::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-    AgProductionTechnology::toInputXMLDerived( out, tabs);
-    XMLWriteElement( mLandItemName, "itemName", out, tabs );
-}
-
-//! write object to xml output stream
 void UnmanagedLandTechnology::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
     AgProductionTechnology::toDebugXMLDerived( period, out, tabs);
     XMLWriteElement( mLandItemName, "itemName", out, tabs );

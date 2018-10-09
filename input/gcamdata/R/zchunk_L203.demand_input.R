@@ -168,7 +168,7 @@ module_aglu_L203.demand_input <- function(command, ...) {
              tech.share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
       select(LEVEL2_DATA_NAMES[["StubTechProd"]]) %>%
       filter(!region %in% aglu.NO_AGLU_REGIONS) %>%           # Remove any regions for which agriculture and land use are not modeled
-      filter(year %in% BASE_YEARS) ->                         # ALSO SUBSET THE CALIBRATION TABLES TO ONLY THE MODEL BASE YEARS
+      filter(year %in% MODEL_BASE_YEARS) ->                         # ALSO SUBSET THE CALIBRATION TABLES TO ONLY THE MODEL BASE YEARS
       L203.StubTechProd_food
 
     # Build L203.StubTechProd_nonfood_crop and L203.StubTechProd_nonfood_meat: crop and meat nonfood demand by technology and region
@@ -192,7 +192,7 @@ module_aglu_L203.demand_input <- function(command, ...) {
              tech.share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
       select(LEVEL2_DATA_NAMES[["StubTechProd"]]) %>%
       filter(!region %in% aglu.NO_AGLU_REGIONS) %>%           # Remove any regions for which agriculture and land use are not modeled
-      filter(year %in% BASE_YEARS) ->                         # ALSO SUBSET THE CALIBRATION TABLES TO ONLY THE MODEL BASE YEARS
+      filter(year %in% MODEL_BASE_YEARS) ->                         # ALSO SUBSET THE CALIBRATION TABLES TO ONLY THE MODEL BASE YEARS
       L203.StubTechProd_nonfood
 
     # Build L203.StubTechFixOut_exp: animal exports for net exporting regions in all periods
@@ -205,7 +205,7 @@ module_aglu_L203.demand_input <- function(command, ...) {
       # For each region / commodity
       group_by(region, subsector) %>%
       # Hold the animal exports constant in the future, so set value for future years at the final base year value
-      mutate(fixedOutput = replace(fixedOutput, year > max(BASE_YEARS), fixedOutput[year == max(BASE_YEARS)]),
+      mutate(fixedOutput = replace(fixedOutput, year > max(MODEL_BASE_YEARS), fixedOutput[year == max(MODEL_BASE_YEARS)]),
              share.weight.year = year,
              # Subsector and technology shareweights (subsector requires the year as well)
              subs.share.weight = 0, tech.share.weight = 0) %>%
@@ -234,7 +234,7 @@ module_aglu_L203.demand_input <- function(command, ...) {
              tech.share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
       select(LEVEL2_DATA_NAMES[["StubTechProd"]]) %>%
       filter(!region %in% aglu.NO_AGLU_REGIONS) %>%           # Remove any regions for which agriculture and land use are not modeled
-      filter(year %in% BASE_YEARS) ->                         # ALSO SUBSET THE CALIBRATION TABLES TO ONLY THE MODEL BASE YEARS
+      filter(year %in% MODEL_BASE_YEARS) ->                         # ALSO SUBSET THE CALIBRATION TABLES TO ONLY THE MODEL BASE YEARS
       L203.StubTechProd_For
 
     # Build L203.StubCalorieContent_crop and L203.StubCalorieContent_meat:
@@ -254,7 +254,7 @@ module_aglu_L203.demand_input <- function(command, ...) {
       # For each region / commodity,
       group_by(region, subsector) %>%
       # Calorie content are held constant in the future, so set value for future years at the final base year value
-      mutate(efficiency = replace(efficiency, year > max(BASE_YEARS), efficiency[year == max(BASE_YEARS)])) %>%
+      mutate(efficiency = replace(efficiency, year > max(MODEL_BASE_YEARS), efficiency[year == max(MODEL_BASE_YEARS)])) %>%
       ungroup() %>%
       select(LEVEL2_DATA_NAMES[["StubTechCalorieContent"]]) %>%
       filter(!region %in% aglu.NO_AGLU_REGIONS) ->          # Remove any regions for which agriculture and land use are not modeled
@@ -270,7 +270,7 @@ module_aglu_L203.demand_input <- function(command, ...) {
     # Build L203.BaseService: base service of final demands
     Prod_colnames <- c("region", "supplysector", "year", "calOutputValue")
     L203.StubTechFixOut_exp %>%
-      filter(year %in% BASE_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       rename(calOutputValue = fixedOutput) %>%
       select(Prod_colnames) %>%
       # Combine all food and nonfood demand
@@ -281,7 +281,7 @@ module_aglu_L203.demand_input <- function(command, ...) {
       ungroup() %>%
       rename(energy.final.demand = supplysector, base.service = calOutputValue) %>%
       filter(!region %in% aglu.NO_AGLU_REGIONS) %>%           # Remove any regions for which agriculture and land use are not modeled
-      filter(year %in% BASE_YEARS) ->                         # ALSO SUBSET THE CALIBRATION TABLES TO ONLY THE MODEL BASE YEARS
+      filter(year %in% MODEL_BASE_YEARS) ->                         # ALSO SUBSET THE CALIBRATION TABLES TO ONLY THE MODEL BASE YEARS
       L203.BaseService
 
     # L203.IncomeElasticity: Income elasticities
@@ -357,7 +357,7 @@ module_aglu_L203.demand_input <- function(command, ...) {
       # NAs for Taiwan, replace with zero, but Taiwan is dropped later
       replace_na(list(income.elasticity = 0)) %>%
       # Step 6: Convert to appropriate formats
-      filter(year %in% FUTURE_YEARS) %>%
+      filter(year %in% MODEL_FUTURE_YEARS) %>%
       select(scenario, region, energy.final.demand, year, income.elasticity) %>%
       # Adjust income elasticity values between [0,1] for all the SSP scenarios
       mutate(income.elasticity = replace(income.elasticity, scenario != "core" & income.elasticity > 1, 1),
@@ -368,7 +368,7 @@ module_aglu_L203.demand_input <- function(command, ...) {
     # Build L203.PriceElasticity: Price elasticities
     L203.PriceElasticity <- write_to_all_regions(A_demand_supplysector, c(LEVEL2_DATA_NAMES[["EnergyFinalDemand"]], "price.elasticity"),
                                                  GCAM_region_names = GCAM_region_names) %>%
-      repeat_add_columns(tibble(year = FUTURE_YEARS)) %>% # Price elasticities are only read for future periods
+      repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) %>% # Price elasticities are only read for future periods
       # Set the USA meat food price elasticity to a region-specific value
       mutate(price.elasticity = replace(price.elasticity, region == "USA" & energy.final.demand == "FoodDemand_Meat", aglu.FOOD_MEAT_P_ELAS_USA)) %>%
       select(LEVEL2_DATA_NAMES[["PriceElasticity"]]) %>%
@@ -379,7 +379,7 @@ module_aglu_L203.demand_input <- function(command, ...) {
     # Build L203.FuelPrefElast_ssp1: Fuel preference elasticities for meat in SSP1
     names_FuelPrefElasticity <- c("region", "supplysector", "subsector", "year.fillout", "fuelprefElasticity")
     A_fuelprefElasticity_ssp1 %>%
-      mutate(year.fillout = min(BASE_YEARS)) %>%
+      mutate(year.fillout = min(MODEL_BASE_YEARS)) %>%
       write_to_all_regions(names_FuelPrefElasticity, GCAM_region_names = GCAM_region_names) %>%
       filter(!region %in% aglu.NO_AGLU_REGIONS) ->           # Remove any regions for which agriculture and land use are not modeled
       L203.FuelPrefElast_ssp1

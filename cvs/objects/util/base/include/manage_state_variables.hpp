@@ -45,6 +45,7 @@
 
 #include <cassert>
 #include <forward_list>
+#include <string>
 #include "util/base/include/definitions.h"
 
 class Value;
@@ -123,6 +124,12 @@ private:
     void collectState();
     
     void resetState();
+    
+    std::string getRestartFileName() const;
+    
+    void loadRestartFile();
+    
+    void saveRestartFile();
     
     /*!
      * \brief A helper struct to provide a call back to GCAMFusion as it searches

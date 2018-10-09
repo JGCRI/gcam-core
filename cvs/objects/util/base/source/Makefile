@@ -12,7 +12,6 @@ OBJS       = atom.o \
              configuration.o \
              input_finder.o \
              model_time.o \
-             summary.o \
              supply_demand_curve.o \
              supply_demand_curve_saver.o \
              timer.o \

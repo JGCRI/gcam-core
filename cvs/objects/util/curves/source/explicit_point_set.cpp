@@ -313,12 +313,12 @@ double ExplicitPointSet::getNearestYAbove( const double y ) const {
 }
 
 //! Print out the ExplicitPointSet to an XML file.
-void ExplicitPointSet::toInputXML( ostream& out, Tabs* tabs ) const {
-    XMLWriteOpeningTag( PointSet::getXMLNameStatic(), out, tabs, "", 0, getXMLName() );
+void ExplicitPointSet::outputAsXML( ostream& aOut, Tabs* aTabs ) const {
+    XMLWriteOpeningTag( PointSet::getXMLNameStatic(), aOut, aTabs, "", 0, getXMLName() );
     for( DataPointConstIterator point = points.begin(); point != points.end(); ++point ){
-        ( *point )->toInputXML( out, tabs );
+        ( *point )->outputAsXML( aOut, aTabs );
     }
-    XMLWriteClosingTag( PointSet::getXMLNameStatic(), out, tabs );
+    XMLWriteClosingTag( PointSet::getXMLNameStatic(), aOut, aTabs );
 }
 
 //! Parse an ExplicitPointSet from a DOM tree.

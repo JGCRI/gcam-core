@@ -78,7 +78,7 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
     # Get base GDP in start year
     L201.BaseGDP_Scen <- L102.gdp_mil90usd_Scen_R_Y %>%
       filter(scenario == socioeconomics.BASE_GDP_SCENARIO) %>% # use the standard scenario
-      filter(year == min(BASE_YEARS)) %>% # find the first year
+      filter(year == min(MODEL_BASE_YEARS)) %>% # find the first year
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       mutate(baseGDP = round(value, socioeconomics.GDP_DIGITS)) %>%
       select(region, baseGDP)
@@ -88,7 +88,7 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
     # Simply fill out default rate
     L201.LaborForceFillout <- GCAM_region_names %>%
       select(region) %>%
-      mutate(year.fillout = min(BASE_YEARS),
+      mutate(year.fillout = min(MODEL_BASE_YEARS),
              laborforce = socioeconomics.DEFAULT_LABORFORCE)
 
     # Labor productivity growth is calculated from the change in per-capita GDP ratio in each time period
@@ -99,7 +99,7 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
       mutate(timesteps = year - lag(year, n = 1L, order_by = c(GCAM_region_ID))) %>% # calculate time step
       mutate(lag_pcgdp = lag(value, n = 1L, order_by = c(GCAM_region_ID))) %>% # last period pcgdp
       mutate(ratio_pcgdp = value / lag_pcgdp) %>% # ratio of this year to last year
-      filter(year != min(BASE_YEARS)) %>% # drop first period with NA ratio
+      filter(year != min(MODEL_BASE_YEARS)) %>% # drop first period with NA ratio
       mutate(rate_pcgdp = round(ratio_pcgdp ^ (1 / timesteps) - 1, socioeconomics.LABOR_PRODUCTIVITY_DIGITS)) %>% # Annualize the ratios to return annual growth rates
       ungroup() %>%
       select(scenario, region, year, laborproductivity = rate_pcgdp)
@@ -174,7 +174,7 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
              ratio_pcgdp = value / lag(value)) %>%
       ungroup() %>%
       # drop first period with NA ratio
-      filter(year != min(BASE_YEARS)) %>%
+      filter(year != min(MODEL_BASE_YEARS)) %>%
       # Annualize the ratios to return annual growth rates
       mutate(rate_pcgdp = round(ratio_pcgdp ^ (1 / timesteps) - 1, socioeconomics.LABOR_PRODUCTIVITY_DIGITS)) %>%
       select(region, year, laborproductivity = rate_pcgdp)
@@ -208,7 +208,7 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
       add_title("GDP in base scenario and year") %>%
       add_units("Million 1990USD") %>%
       add_comments(paste("Base scenario is", socioeconomics.BASE_GDP_SCENARIO)) %>%
-      add_comments(paste("Base year is", min(BASE_YEARS))) %>%
+      add_comments(paste("Base year is", min(MODEL_BASE_YEARS))) %>%
       add_legacy_name("L201.BaseGDP_Scen") %>%
       add_precursors("common/GCAM_region_names",  "L102.gdp_mil90usd_Scen_R_Y") ->
       L201.BaseGDP_Scen

@@ -200,48 +200,6 @@ void Region::XMLParse( const DOMNode* node ){
     }
 }
 
-/*! 
-* \brief Write datamembers to datastream in XML format. Calls XMLWriteElement
-*        function from the XMLHelper class for the actual writing.
-* \param out Output file in XML format.
-* \param tabs Tabs object used to track the number of tabs to print.
-* \ref faqitem1 
-*/
-void Region::toInputXML( ostream& out, Tabs* tabs ) const {
-    XMLWriteOpeningTag ( getXMLName(), out, tabs, mName );
-
-    // write the xml for the class members.
-    // write out the single population object.
-    if( mDemographic ){
-        mDemographic->toInputXML( out, tabs);
-    }
-
-    // write out supply sector objects.
-    for( CSectorIterator j = mSupplySector.begin(); j != mSupplySector.end(); j++ ){
-        ( *j )->toInputXML( out, tabs );
-    }
-
-    // write out mGhgPolicies objects.
-    for( CGHGPolicyIterator l = mGhgPolicies.begin(); l != mGhgPolicies.end(); l++ ){
-        ( *l )->toInputXML( out, tabs );
-    }
-
-    // write out mPolicies objects.
-    for( CPolicyIterator l = mPolicies.begin(); l != mPolicies.end(); l++ ){
-        ( *l )->toInputXML( out, tabs );
-    }
-    
-    // write out the resources objects.
-    for( CResourceIterator i = mResources.begin(); i != mResources.end(); i++ ){
-        ( *i )->toInputXML( out, tabs );
-    }
-
-    toInputXMLDerived( out, tabs );
-
-    // finished writing xml for the class members.
-    XMLWriteClosingTag( getXMLName(), out, tabs );
-}
-
 /*! \brief Write datamembers to datastream in XML format for debugging purposes.  
 * Calls XMLWriteElement function from the XMLHelper class for the actual
 * writing. Calls debug functions in other contained objects. 

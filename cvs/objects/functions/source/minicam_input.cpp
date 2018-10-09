@@ -168,13 +168,6 @@ double MiniCAMInput::getPriceAdjustment() const {
     return 0;
 }
 
-void MiniCAMInput::csvSGMOutputFile( ostream& aFile,
-                                     const int period ) const
-{
-    // MiniCAM should not be outputting a CSV file.
-    assert( false );
-}
-
 void MiniCAMInput::doInterpolations( const int aYear, const int aPreviousYear,
                                      const int aNextYear, const IInput* aPreviousInput,
                                      const IInput* aNextInput )

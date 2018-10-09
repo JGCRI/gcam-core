@@ -83,13 +83,6 @@ const string& Efficiency::getName() const {
     return getXMLNameStatic();
 }
 
-void Efficiency::toInputXML( ostream& aOut,
-                             Tabs* aTabs ) const
-{
-    XMLWriteElement( mReadInEfficiency, getXMLNameStatic(),
-                     aOut, aTabs );
-}
-
 void Efficiency::toDebugXML( const int period,
                              ostream& aOut,
                              Tabs* aTabs ) const

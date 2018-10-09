@@ -96,14 +96,14 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
     # delete industry sectors in the USA region (energy-final-demands and supplysectors)
     L232.Supplysector_ind %>%
       mutate(region = region) %>% # strip attributes from object
-      filter(region == "USA") %>%
+      filter(region == gcam.USA_REGION) %>%
       select(LEVEL2_DATA_NAMES[["DeleteSupplysector"]]) ->
       L232.DeleteSupplysector_USAind  ## OUTPUT
 
     # deleting energy final demand sectors in the full USA region" )
     L232.PerCapitaBased_ind %>%
       mutate(region = region) %>% # strip attributes from object
-      filter(region == "USA") %>%
+      filter(region == gcam.USA_REGION) %>%
       select(LEVEL2_DATA_NAMES[["DeleteFinalDemand"]]) ->
       L232.DeleteFinalDemand_USAind  ## OUTPUT
 
@@ -118,7 +118,7 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
       # to check to see if the data frame needs to be processed, it's assumed that if the USA
       # is not found in the region column that regions have already been processed.
 
-      check_USA <- filter(data, region == "USA")
+      check_USA <- filter(data, region == gcam.USA_REGION)
 
       if(nrow(check_USA) == 0) {
 
@@ -132,7 +132,7 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
         # then expand the input data to all states.
 
         data %>%
-          filter(region == "USA") %>%
+          filter(region == gcam.USA_REGION) %>%
           write_to_all_states(names = names(data)) ->
           new_data
 
@@ -156,9 +156,9 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
     # get calibrated input of industrial energy use technologies, including cogen
     L132.in_EJ_state_indnochp_F %>%
       bind_rows(L132.in_EJ_state_indchp_F) %>%
-      complete(nesting(state, sector, fuel), year = c(year, BASE_YEARS)) %>%
+      complete(nesting(state, sector, fuel), year = c(year, MODEL_BASE_YEARS)) %>%
       group_by(state, sector, fuel) %>% mutate(value = approx_fun(year, value)) %>%
-      ungroup %>% filter(year %in% BASE_YEARS) %>%
+      ungroup %>% filter(year %in% MODEL_BASE_YEARS) %>%
       rename(region = state) %>%
       left_join_keep_first_only(calibrated_techs, by = c("sector", "fuel")) %>%
       rename(stub.technology = technology) ->
@@ -178,9 +178,9 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
 
     # get calibrated input of industrial feedstock technologies
     L132.in_EJ_state_indfeed_F %>%
-      complete(nesting(state, sector, fuel), year = c(year, BASE_YEARS)) %>%
+      complete(nesting(state, sector, fuel), year = c(year, MODEL_BASE_YEARS)) %>%
       group_by(state, sector, fuel) %>% mutate(value = approx_fun(year, value)) %>%
-      ungroup %>% filter(year %in% BASE_YEARS) %>%
+      ungroup %>% filter(year %in% MODEL_BASE_YEARS) %>%
       rename(region = state) %>%
       left_join_keep_first_only(calibrated_techs, by = c("sector", "fuel")) %>%
       select(-calibration, -secondary.output) %>%
@@ -201,10 +201,10 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
     # get industrial sector calibrated output
     A32.globaltech_eff %>%
       complete(nesting(supplysector, subsector, technology, minicam.energy.input, secondary.output),
-               year = c(year, BASE_YEARS)) %>%
+               year = c(year, MODEL_BASE_YEARS)) %>%
       group_by(supplysector, subsector, technology, minicam.energy.input, secondary.output) %>%
       mutate(value = approx_fun(year, value)) %>% ungroup %>%
-      filter(year %in% BASE_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       rename(efficiency = value) %>%
       mutate(efficiency = round(efficiency, energy.DIGITS_EFFICIENCY)) ->
       A32.globaltech_eff_interp
@@ -249,8 +249,8 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
     # ^^ covers only base years
 
     L232.StubTechCoef_industry_USA_base %>%
-      filter(year == max(BASE_YEARS)) %>% select(-year) %>%
-      repeat_add_columns(tibble(year = FUTURE_YEARS)) ->
+      filter(year == max(MODEL_BASE_YEARS)) %>% select(-year) %>%
+      repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) ->
       L232.StubTechCoef_industry_USA_fut
     # ^^ future years copied from final base year
     # note: this is not typical, but is suitable here as no energy:feedstock evolution in the industrial...
@@ -261,14 +261,14 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
       L232.StubTechCoef_industry_USA  ## OUTPUT
 
     # Get markets for fuels consumed by the state industrial sectors
-    L232.StubTech_ind %>% filter(region == "USA") %>% select(-region) %>%
+    L232.StubTech_ind %>% filter(region == gcam.USA_REGION) %>% select(-region) %>%
       write_to_all_states(names = c(names(L232.StubTech_ind), "region")) %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       left_join_keep_first_only(A32.globaltech_eff %>% select(supplysector, subsector, technology, minicam.energy.input),
                                 by = c("supplysector", "subsector", "stub.technology" = "technology")) %>%
       filter(is.na(minicam.energy.input) == FALSE) %>%
       # ^^ includes generic industrial technology that is not required here...
-      mutate(market.name = "USA") %>%
+      mutate(market.name = gcam.USA_REGION) %>%
       select(LEVEL2_DATA_NAMES[["StubTechMarket"]]) %>%
       left_join_error_no_match(states_subregions %>% select(state, grid_region), by = c("region" = "state")) %>%
       mutate(market.name = if_else(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS & gcamusa.USE_REGIONAL_FUEL_MARKETS == TRUE,
@@ -287,7 +287,7 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
       # ^^ filters for rows contained in L232.chp_techs
       mutate(secondary.output = "electricity") %>%
       select(LEVEL2_DATA_NAMES[["StubTechYr"]], "secondary.output", "market.name") %>%
-      mutate(market.name = "USA") %>%
+      mutate(market.name = gcam.USA_REGION) %>%
       # ^^ over-ride regional market names
       left_join_error_no_match(states_subregions %>% select(state, grid_region), by = c("region" = "state")) %>%
       mutate(x = gcamusa.USE_REGIONAL_ELEC_MARKETS,

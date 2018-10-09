@@ -96,16 +96,16 @@ Curve* Curve::getCurve( const string& type ) {
 }
 
 //! Print out the curve to an XML File
-void Curve::toInputXML( ostream& out, Tabs* tabs ) const {
-    XMLWriteOpeningTag( Curve::getXMLNameStatic(), out, tabs, name, 0, getXMLName() );
-    XMLWriteElementCheckDefault( title, "title", out, tabs );
-    XMLWriteElementCheckDefault( numericalLabel, "numericalLabel", out, tabs );
-    XMLWriteElementCheckDefault( xAxisLabel, "xAxisLabel", out, tabs );
-    XMLWriteElementCheckDefault( yAxisLabel, "yAxisLabel", out, tabs );
-    XMLWriteElementCheckDefault( xAxisUnits, "xAxisUnit", out, tabs );
-    XMLWriteElementCheckDefault( yAxisUnits, "yAxisUnit", out, tabs );
-    toInputXMLDerived( out, tabs );
-    XMLWriteClosingTag( Curve::getXMLNameStatic(), out, tabs );
+void Curve::outputAsXML( ostream& aOut, Tabs* aTabs ) const {
+    XMLWriteOpeningTag( Curve::getXMLNameStatic(), aOut, aTabs, name, 0, getXMLName() );
+    XMLWriteElementCheckDefault( title, "title", aOut, aTabs );
+    XMLWriteElementCheckDefault( numericalLabel, "numericalLabel", aOut, aTabs );
+    XMLWriteElementCheckDefault( xAxisLabel, "xAxisLabel", aOut, aTabs );
+    XMLWriteElementCheckDefault( yAxisLabel, "yAxisLabel", aOut, aTabs );
+    XMLWriteElementCheckDefault( xAxisUnits, "xAxisUnit", aOut, aTabs );
+    XMLWriteElementCheckDefault( yAxisUnits, "yAxisUnit", aOut, aTabs );
+    outputAsXMLDerived( aOut, aTabs );
+    XMLWriteClosingTag( Curve::getXMLNameStatic(), aOut, aTabs );
 }
 
 //! Parse a curve from a DOM tree.

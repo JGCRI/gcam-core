@@ -74,7 +74,6 @@ public:
     // TODO: Fix this class to inherit so that this documentation is inherited.
     virtual void XMLParse( const xercesc::DOMNode* aCurr ) = 0;
     virtual void toDebugXML( const int period, std::ostream& aOut, Tabs* aTabs ) const = 0;
-    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const = 0;
     
     /*!
      * \brief Calculate a scalar which will be used to grow investment from the

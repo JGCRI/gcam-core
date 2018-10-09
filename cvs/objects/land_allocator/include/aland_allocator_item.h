@@ -53,7 +53,6 @@
 #include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iparsable.h"
-#include "util/base/include/iround_trippable.h"
 #include "util/base/include/time_vector.h"
 #include "util/base/include/value.h"
 #include "util/base/include/data_definition_util.h"
@@ -115,7 +114,6 @@ class ALandAllocatorItem : public TreeItem<ALandAllocatorItem>,
                            public INamed,
                            public IVisitable,
                            public IParsable,
-                           public IRoundTrippable,
                            private boost::noncopyable
 {
     friend class XMLDBOutputter;
@@ -136,10 +134,6 @@ public:
     
     // IParsable
     virtual bool XMLParse( const xercesc::DOMNode* aNode ) = 0;
-    
-    // IRoundTrippable
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const = 0;
     
     // IVisitable
     virtual void accept( IVisitor* aVisitor,

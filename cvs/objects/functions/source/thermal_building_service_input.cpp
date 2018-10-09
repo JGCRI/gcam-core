@@ -144,26 +144,6 @@ void ThermalBuildingServiceInput::copy( const ThermalBuildingServiceInput& aInpu
     mDegreeDays = aInput.mDegreeDays;
 }
 
-//! Output to XML data
-void ThermalBuildingServiceInput::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    // write the beginning tag.
-    XMLWriteOpeningTag ( getXMLNameStatic(), aOut, aTabs, mName );
-    
-    const Modeltime* modeltime = scenario->getModeltime();
-    // only write base year values
-    for( int period = 0; period <= modeltime->getFinalCalibrationPeriod(); period++ ) {
-        const int year = modeltime->getper_to_yr( period );
-        XMLWriteElement( mServiceDemand[ period ], "base-service", aOut, aTabs, year );
-    }
-    
-    XMLWriteElement( mInternalGainsScalar, "internal-gains-scalar", aOut, aTabs );
-    XMLWriteVector( mDegreeDays, "degree-days", aOut, aTabs, scenario->getModeltime() );
-    mSatiationDemandFunction->toInputXML( aOut, aTabs );
-    
-    // write the closing tag.
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 //! Output debug info to XML
 void ThermalBuildingServiceInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     // write the beginning tag.

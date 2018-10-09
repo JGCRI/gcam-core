@@ -163,9 +163,7 @@ bool MACControl::XMLDerivedClassParse( const string& aNodeName, const DOMNode* a
     return true;
 }
 
-
-void MACControl::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
-    
+void MACControl::toDebugXMLDerived( const int period, ostream& aOut, Tabs* aTabs ) const {
     const vector<pair<double,double> > pairs = mMacCurve->getSortedPairs();
     typedef vector<pair<double, double> >::const_iterator PairIterator;
     map<string, double> attrs;
@@ -174,16 +172,12 @@ void MACControl::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
         XMLWriteElementWithAttributes( currPair->second, "mac-reduction", aOut, aTabs, attrs );
     }
     const Modeltime* modeltime = scenario->getModeltime();
-	XMLWriteVector( mTechChange, "tech-change", aOut, aTabs, modeltime, 0.0 );
-
+    XMLWriteVector( mTechChange, "tech-change", aOut, aTabs, modeltime, 0.0 );
+    
     XMLWriteElementCheckDefault( mZeroCostPhaseInTime, "zero-cost-phase-in-time", aOut, aTabs, 25 );
-    XMLWriteElementCheckDefault( mNoZeroCostReductions, "no-zero-cost-reductions", aOut, aTabs, false );    
+    XMLWriteElementCheckDefault( mNoZeroCostReductions, "no-zero-cost-reductions", aOut, aTabs, false );
     XMLWriteElementCheckDefault( mCovertPriceValue, "mac-price-conversion", aOut, aTabs, Value( 1.0 ) );
     XMLWriteElement( mPriceMarketName, "market-name", aOut, aTabs );
-}
-
-void MACControl::toDebugXMLDerived( const int period, ostream& aOut, Tabs* aTabs ) const {
-    toInputXMLDerived( aOut, aTabs );
     XMLWriteElement( mNoZeroCostReductions, "no-zero-cost-reductions", aOut, aTabs);
 	XMLWriteElement( mTechChange[ period ], "tech-change", aOut, aTabs );
 }

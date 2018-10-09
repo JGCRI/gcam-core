@@ -113,17 +113,6 @@ void LandAllocator::toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTa
     ALandAllocatorItem::toDebugXML( aPeriod, aOut, aTabs );  
 }
 
-void LandAllocator::toInputXML( std::ostream& aOut, Tabs* aTabs ) const {
-    // Call the node toInputXML
-    LandNode::toInputXML( aOut, aTabs );
-}
-
-void LandAllocator::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteVector( mLandAllocation, "landAllocation", aOut, aTabs, scenario->getModeltime() );
-    XMLWriteVector( mCarbonPriceIncreaseRate, "carbonPriceIncreaseRate", aOut, aTabs, scenario->getModeltime() );
-    XMLWriteElement( mSoilTimeScale, "soilTimeScale", aOut, aTabs );
-}
-
 void LandAllocator::initCalc( const string& aRegionName, const int aPeriod )
 {
     // In calibration periods, check land area and set calibration values

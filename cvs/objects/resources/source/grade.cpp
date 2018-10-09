@@ -109,15 +109,6 @@ void Grade::completeInit( const IInfo* aSubresourceInfo ) {
     mGradeInfo.reset( InfoFactory::constructInfo( aSubresourceInfo, mName ) ); 
 }
 
-
-//! Write data members to data stream in XML format for replicating input file.
-void Grade::toInputXML( ostream& out, Tabs* tabs ) const {
-    XMLWriteOpeningTag( getXMLName(), out, tabs, mName );
-    XMLWriteElementCheckDefault( mAvailable, "available", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( mExtractCost, "extractioncost", out, tabs, 0.0 );
-    XMLWriteClosingTag( getXMLName(), out, tabs );
-}
-
 //! Write data members to debugging data stream in XML format.
 void Grade::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     

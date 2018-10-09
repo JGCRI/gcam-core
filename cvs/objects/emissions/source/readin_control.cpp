@@ -125,12 +125,6 @@ bool ReadInControl::XMLDerivedClassParse( const string& aNodeName, const DOMNode
     return true;
 }
 
-void ReadInControl::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
-    const Modeltime* modeltime = scenario->getModeltime(); 
-	XMLWriteVector( mFutureEmissionsFactors, "future-emiss-factor", aOut, aTabs, modeltime, 0.0 );
-
-}
-
 void ReadInControl::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
 	XMLWriteVector( mFutureEmissionsFactors, "future-emiss-factor", aOut, aTabs, modeltime, 0.0 );

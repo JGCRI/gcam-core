@@ -20,15 +20,17 @@ FLAG_XML             <- "FLAG_XML"              # xml data
 
 # Time constants ======================================================================
 
-BASE_YEARS              <- c(1975, 1990, 2005, 2010)
-FUTURE_YEARS            <- seq(2015, 2100, 5)
-HISTORICAL_YEARS        <- 1971:2010
-MODEL_YEARS             <- c(BASE_YEARS, FUTURE_YEARS)
+HISTORICAL_YEARS        <- 1971:2010                            # historical years for data processing
+FUTURE_YEARS            <- 2011:2100                            # future years for data processing
+MODEL_BASE_YEARS        <- c(1975, 1990, 2005, 2010)            # calibrated periods in the model
+MODEL_FUTURE_YEARS      <- seq(2015, 2100, 5)                   # future (i.e., not calibrated) time periods in the model
+MODEL_YEARS             <- c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)
 
 
 # GCAM constants ======================================================================
 
 gcam.USA_CODE            <- 1
+gcam.USA_REGION          <- "USA"
 gcam.WESTERN_EUROPE_CODE <- 13
 gcam.LOGIT_TYPES         <- c("relative-cost-logit", "absolute-cost-logit")
 gcam.EQUIV_TABLE         <- "EQUIV_TABLE"
@@ -141,6 +143,7 @@ aglu.MODEL_COST_YEARS       <- 2008:2011
 aglu.MODEL_PRICE_YEARS      <- 2008:2011
 aglu.PREAGLU_YEARS          <- c(1700, 1750,1800, 1850, 1900, 1950)          # Cropland cover years prior to first aglu historical year to use in climate model component
 aglu.SPEC_AG_PROD_YEARS     <- seq(max(aglu.AGLU_HISTORICAL_YEARS), 2050, by = 5) # Specified ag productivity years, KD i think this might need a better comment
+aglu.SSP_DEMAND_YEARS       <- seq(2010, 2100, 5) # food demand in the SSPs is calculated at 5-yr intervals
 
 aglu.LAND_TOLERANCE    <- 0.005
 aglu.MIN_PROFIT_MARGIN <- 0.15  # Unitless and is used to ensure that Agricultural Costs (units 1975USD/kg) don't lead to profits below a minimum profit margin.
@@ -329,7 +332,7 @@ aglu.DIGITS_WATER_CONTENT <- 2
 # Time
 energy.CDIAC_CO2_HISTORICAL_YEARS <- HISTORICAL_YEARS[HISTORICAL_YEARS < 2010] # At present the CO2 emissions inventory from CDIAC stops at 2009
 energy.CLIMATE_NORMAL_YEARS       <- 1981:2000
-energy.SATIATION_YEAR             <- 2010
+energy.SATIATION_YEAR             <- max(MODEL_BASE_YEARS) # Needs to be the last model base year to avoid the risk of the model crashing
 energy.UCD_EN_YEAR                <- 2005        # UCD transporctation year to use to compute shares for allocation of energy to mode/technology/fuel within category/fuel
 energy.WIND.BASE.COST.YEAR        <- 2005        # Base cost year for wind, used in capacity factor calculations
 
@@ -353,6 +356,10 @@ energy.HEAT_PRICE <- 3.2
 energy.GAS_PRICE  <- 2
 
 energy.CO2.STORAGE.MARKET <- "carbon-storage"
+
+# the year for the ratio of industrial energy:feedstocks convergence in all regions
+# in the old data system this was intended to be 2150 but was actually 2100
+energy.INDCOEF_CONVERGENCE_YR <- 2100
 
 energy.CEMENT_CCS_COST_2000USDTCO2 <- 50 # Starting point of supply curve in Mahasenan et al 2003; come from ENERGY_ASSUMPTIONS/A_ccs_data.R
 energy.CO2_STORAGE_COST_1990_USDTC <- 42 # From GCAM 1.0 inputs; come from ENERGY_ASSUMPTIONS/A_ccs_data.R
@@ -534,22 +541,21 @@ water.MAX_MFG_FRAC_OF_IND <- 0.85
 # Time
 emissions.CTRL_BASE_YEAR          <- 1975                # Year to read in pollution controls
 emissions.DEFOREST_COEF_YEARS     <- c(2000, 2005)
-emissions.EDGAR_F_GASSES_YEARS    <- 1970:2000
 emissions.EDGAR_HISTORICAL        <- 1971:2008
 emissions.EDGAR_YEARS             <- 1971:2008
 emissions.EDGAR_YEARS_PLUS        <- 1970:2008
 emissions.EPA_HISTORICAL_YEARS    <- 1971:2002
 emissions.EPA_MACC_YEAR           <- 2030                # Must be either 2020 or 2030
-emissions.FINAL_EMISS_YEAR        <- min(max(BASE_YEARS), 2005)
+emissions.FINAL_EMISS_YEAR        <- min(max(MODEL_BASE_YEARS), 2005)
 emissions.GAINS_BASE_YEAR         <- 2005
 emissions.GAINS_YEARS             <- c(2010, 2020, 2030)
 emissions.GHG_CONTROL_READIN_YEAR <- 1975
-emissions.HFC_MODEL_BASE_YEARS    <- c(1975, 1990, 2005, 2010)
+emissions.HFC_MODEL_BASE_YEARS    <- MODEL_YEARS[ MODEL_YEARS <= 2010] # We don't want this to change in timeshift
 emissions.INVENTORY_MATCH_YEAR    <- 2009                # Select year from which to calculate fuel emissions coefficients (2009 is currently the most recent)
-emissions.MODEL_BASE_YEARS        <- BASE_YEARS[BASE_YEARS < 2008]
+emissions.MODEL_BASE_YEARS        <- MODEL_BASE_YEARS[MODEL_BASE_YEARS < 2008]
 emissions.NH3_EXTRA_YEARS         <- 1971:1989
 emissions.NH3_HISTORICAL_YEARS    <- 1990:2002
-emissions.SSP_FUTURE_YEARS        <- c(2010, FUTURE_YEARS)
+emissions.SSP_FUTURE_YEARS        <- MODEL_YEARS[MODEL_YEARS %in% 2010:2100]
 
 # Other emissions constants
 emissions.CONV_C_CO2    <- 44 / 12 # Convert Carbon to CO2
@@ -650,6 +656,6 @@ gcamusa.DIGITS_TRNUSA_DEFAULT     <- 1    # Reduce rounding in detailed USA tran
 # Time shift conditions ======================================================================
 # Uncomment these lines to run under 'timeshift' conditions
 # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
-# FUTURE_YEARS <- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)
-# BASE_YEARS <- c(1975, 1990, 2005)   # normally (1975, 1990, 2005, 2010)
-# MODEL_YEARS <- c(BASE_YEARS, FUTURE_YEARS)
+# MODEL_FUTURE_YEARS <- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)
+# MODEL_BASE_YEARS <- c(1975, 1990, 2005)   # normally (1975, 1990, 2005, 2010)
+# MODEL_YEARS <- c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)

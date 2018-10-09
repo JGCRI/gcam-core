@@ -71,7 +71,6 @@ class Intensity;
  */
 class ICoefficient : public INamed,
                      public ISimpleComponent,
-                     public IRoundTrippable,
                      private boost::noncopyable
 {
 public:

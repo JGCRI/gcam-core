@@ -188,7 +188,7 @@ module_energy_L221.en_supply <- function(command, ...) {
       select(supplysector, subsector, technology, minicam.energy.input) %>%
       distinct %>%
       # Interpolate to all years
-      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, FUTURE_YEARS))) %>%
+      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, MODEL_FUTURE_YEARS))) %>%
       left_join(A21.globaltech_coef, by = c("supplysector", "subsector", "technology", "minicam.energy.input", "year")) %>%
       group_by(supplysector, subsector, technology, minicam.energy.input) %>%
       mutate(coefficient = approx_fun(year, value = coef, rule = 1)) %>%
@@ -204,7 +204,7 @@ module_energy_L221.en_supply <- function(command, ...) {
       select(supplysector, subsector, technology, minicam.non.energy.input) %>%
       distinct %>%
       # Interpolate to all years
-      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, FUTURE_YEARS))) %>%
+      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, MODEL_FUTURE_YEARS))) %>%
       left_join(A21.globaltech_cost, by = c("supplysector", "subsector", "technology", "minicam.non.energy.input", "year")) %>%
       group_by(supplysector, subsector, technology, minicam.non.energy.input) %>%
       mutate(input.cost = approx_fun(year, value = input.cost, rule = 1)) %>%
@@ -220,7 +220,7 @@ module_energy_L221.en_supply <- function(command, ...) {
       select(supplysector, subsector, technology) %>%
       distinct %>%
       # Interpolate to all years
-      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, FUTURE_YEARS))) %>%
+      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, MODEL_FUTURE_YEARS))) %>%
       left_join(A21.globaltech_shrwt, by = c("supplysector", "subsector", "technology", "year")) %>%
       group_by(supplysector, subsector, technology) %>%
       mutate(share.weight = approx_fun(year, value = share.weight, rule = 1)) %>%
@@ -230,7 +230,7 @@ module_energy_L221.en_supply <- function(command, ...) {
 
     # Keywords of global technologies
     A21.globaltech_keyword %>%
-      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, FUTURE_YEARS))) %>%
+      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, MODEL_FUTURE_YEARS))) %>%
       select(sector.name = supplysector, subsector.name = subsector, technology, primary.consumption, year) %>%
       filter(year %in% MODEL_YEARS) -> L221.PrimaryConsKeyword_en
 
@@ -266,7 +266,7 @@ module_energy_L221.en_supply <- function(command, ...) {
       select(supplysector, subsector, technology, fractional.secondary.output, region, sector, GCAM_region_ID) %>%
       distinct %>%
       # Interpolate to all years
-      repeat_add_columns(tibble(year = c(FUTURE_YEARS))) %>%
+      repeat_add_columns(tibble(year = c(MODEL_FUTURE_YEARS))) %>%
       left_join(L221.globaltech_secout_R %>%
                   gather_years("value"),
                 by = c("supplysector", "subsector", "technology", "fractional.secondary.output", "region", "sector", "GCAM_region_ID", "year")) %>%
@@ -351,7 +351,7 @@ module_energy_L221.en_supply <- function(command, ...) {
     # Coefficients of traded technologies
     A21.tradedtech_coef %>%
       select(supplysector, subsector, technology, minicam.energy.input) %>%
-      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, FUTURE_YEARS))) %>%
+      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, MODEL_FUTURE_YEARS))) %>%
       left_join(A21.tradedtech_coef %>%
                   gather(year, value, -supplysector, -subsector, - technology, -minicam.energy.input) %>%
                   mutate(year = as.numeric(year)),
@@ -367,7 +367,7 @@ module_energy_L221.en_supply <- function(command, ...) {
     # Costs of traded technologies
     A21.tradedtech_cost %>%
       select(supplysector, subsector, technology, minicam.non.energy.input) %>%
-      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, FUTURE_YEARS))) %>%
+      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, MODEL_FUTURE_YEARS))) %>%
       left_join(A21.tradedtech_cost %>%
                   gather(year, value, -supplysector, -subsector, - technology, -minicam.non.energy.input) %>%
                   mutate(year = as.numeric(year)),
@@ -383,7 +383,7 @@ module_energy_L221.en_supply <- function(command, ...) {
     # Shareweights of traded technologies
     A21.tradedtech_shrwt %>%
       select(supplysector, subsector, technology, minicam.energy.input) %>%
-      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, FUTURE_YEARS))) %>%
+      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, MODEL_FUTURE_YEARS))) %>%
       left_join(A21.tradedtech_shrwt %>%
                   gather(year, value, -supplysector, -subsector, - technology, -minicam.energy.input) %>%
                   mutate(year = as.numeric(year)),
@@ -404,17 +404,17 @@ module_energy_L221.en_supply <- function(command, ...) {
       rename(stub.technology = technology) %>%
       write_to_all_regions(c(LEVEL2_DATA_NAMES[["StubTechCoef"]]),
                            GCAM_region_names = GCAM_region_names) %>%
-      mutate(market.name = "USA") -> L221.StubTechCoef_unoil
+      mutate(market.name = gcam.USA_REGION) -> L221.StubTechCoef_unoil
 
     L111.Prod_EJ_R_F_Yh %>%
-      filter(grepl("unconventional", fuel), year %in% MODEL_YEARS) %>%
+      filter(grepl("unconventional", fuel), year %in% MODEL_BASE_YEARS) %>%
       left_join_error_no_match(A_regions %>%
                   select(GCAM_region_ID, region), by = c("GCAM_region_ID")) %>%
       select(GCAM_region_ID, value, year, region) -> L221.Prod_EJ_R_unoil_Yh
 
     # Calibrated production of unconventional oil
     L221.TechCoef_en_Traded %>%
-      filter(supplysector == "traded unconventional oil" & year %in% HISTORICAL_YEARS) %>%
+      filter(supplysector == "traded unconventional oil" & year %in% MODEL_BASE_YEARS) %>%
       left_join(L221.Prod_EJ_R_unoil_Yh %>%
                   rename(market.name = region), by = c("market.name", "year")) %>%
       mutate(calOutputValue = round(value, energy.DIGITS_CALOUTPUT)) %>%
@@ -433,14 +433,13 @@ module_energy_L221.en_supply <- function(command, ...) {
     # Calibrated demand of unconventional oil
     L221.StubTech_en %>%
       filter(supplysector == "regional oil" & subsector == "unconventional oil") %>%
-      repeat_add_columns(tibble(year = HISTORICAL_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_BASE_YEARS)) %>%
       left_join(L121.in_EJ_R_TPES_unoil_Yh, by = c("region", "year")) %>%
       mutate(calOutputValue = round(value, energy.DIGITS_CALOUTPUT),
              calOutputValue = if_else(is.na(calOutputValue), 0, calOutputValue),
              year.share.weight = year,
              subsector.share.weight = if_else(calOutputValue > 0, 1, 0),
              share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
-      filter(year %in% MODEL_YEARS) %>%
       select(region, supplysector, subsector, stub.technology, year, calOutputValue, year.share.weight, subsector.share.weight, share.weight) -> L221.StubTechProd_oil_unoil
 
     # Crude oil demand
@@ -451,20 +450,19 @@ module_energy_L221.en_supply <- function(command, ...) {
     # Calibrated demand of crude oil
     L221.StubTech_en %>%
       filter(supplysector == "regional oil" & subsector == "crude oil") %>%
-      repeat_add_columns(tibble(year = HISTORICAL_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_BASE_YEARS)) %>%
       left_join(L121.in_EJ_R_TPES_crude_Yh, by = c("region", "year")) %>%
       mutate(calOutputValue = round(value, energy.DIGITS_CALOUTPUT),
              calOutputValue = if_else(is.na(calOutputValue), 0, calOutputValue),
              year.share.weight = year,
              subsector.share.weight = if_else(calOutputValue > 0, 1, 0),
              share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
-      filter(year %in% MODEL_YEARS) %>%
       select(region, supplysector, subsector, stub.technology, year, calOutputValue, year.share.weight, subsector.share.weight, share.weight) -> L221.StubTechProd_oil_crude
 
     # Region-specific technology shareweights for biomassOil passthrough sector
     A21.globaltech_shrwt %>%
       select(supplysector, subsector, technology) %>%
-      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, FUTURE_YEARS))) %>%
+      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, MODEL_FUTURE_YEARS))) %>%
       left_join(A21.globaltech_shrwt, by = c("supplysector", "subsector", "technology", "year")) %>%
       group_by(supplysector, subsector, technology) %>%
       mutate(share.weight = approx_fun(year, share.weight, rule = 2)) %>%

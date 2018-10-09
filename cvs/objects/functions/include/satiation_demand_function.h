@@ -50,7 +50,6 @@
 
 #include "util/base/include/value.h"
 #include "util/base/include/iparsable.h"
-#include "util/base/include/iround_trippable.h"
 #include "util/base/include/data_definition_util.h"
 
 /*!
@@ -99,7 +98,7 @@
  * \author Pralit Patel
  * \author Jiyong Eom
  */
-class SatiationDemandFunction : public INamed, public IParsable, public IRoundTrippable, private boost::noncopyable {
+class SatiationDemandFunction : public INamed, public IParsable, private boost::noncopyable {
 	friend class XMLDBOutputter;
 public:
     SatiationDemandFunction();
@@ -117,9 +116,6 @@ public:
     
     // IParsable methods
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
-    
-    // IRoundTrippable methods
-    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
 
 protected:
     

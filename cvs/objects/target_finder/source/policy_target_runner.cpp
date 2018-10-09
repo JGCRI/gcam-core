@@ -65,10 +65,6 @@
 using namespace std;
 using namespace xercesc;
 
-extern void closeDB();
-extern ofstream outFile;
-extern void createMCvarid();
-
 /*!
  * \brief Constructor.
  */
@@ -355,7 +351,7 @@ bool PolicyTargetRunner::runScenarios( const int aSinglePeriod,
               << success << "." << endl;
 
     // Print the output before the total cost calculator modifies the scenario.
-    mSingleScenario->printOutput( aTimer, false );
+    mSingleScenario->printOutput( aTimer );
 
     // Initialize the total policy cost calculator if the user requested that
     // total costs should be calculated.
@@ -746,18 +742,10 @@ bool PolicyTargetRunner::skipFuturePeriod( vector<double>& aTaxes,
     return success;
 }
 
-void PolicyTargetRunner::printOutput( Timer& aTimer, const bool aCloseDB ) const
+void PolicyTargetRunner::printOutput( Timer& aTimer ) const
 {
     if( mPolicyCostCalculator.get() ){
         mPolicyCostCalculator->printOutput();
-    }
-    
-    // Close the database.
-    static const bool printDB = Configuration::getInstance()->shouldWriteFile( "dbFileName" );
-    if( printDB && aCloseDB ){
-        createMCvarid();
-        closeDB();
-        outFile.close();
     }
 }
 

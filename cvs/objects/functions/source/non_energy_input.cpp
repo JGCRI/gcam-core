@@ -166,15 +166,6 @@ void NonEnergyInput::XMLParse( const xercesc::DOMNode* node ) {
     }
 }
 
-void NonEnergyInput::toInputXML( ostream& aOut,
-                                 Tabs* aTabs ) const
-{
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
-    XMLWriteElement( mCost, "input-cost", aOut, aTabs );
-    XMLWriteElementCheckDefault( mTechChange, "tech-change", aOut, aTabs, Value( 0 ) );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 void NonEnergyInput::toDebugXML( const int aPeriod,
                                  ostream& aOut,
                                  Tabs* aTabs ) const

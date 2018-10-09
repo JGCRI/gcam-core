@@ -99,6 +99,5 @@ protected:
 
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node );
-    virtual void toXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
 };
 #endif // _RENEWABLE_SUBRESOURCE_H_

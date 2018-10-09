@@ -46,16 +46,17 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
       L171.ag_irrHA_frac_R_C_GLU
 
     # Second, downscale total harvested cropland to irrigated and rainfed by GCAM region, commodity, year and GLU.
-    # Apply the base year share of irrigated vs. rainfed cropland to all historial periods (due to lack of data indicating otherwise).
+    # Apply the ~2000-era share of irrigated vs. rainfed cropland to all historial periods (due to lack of data indicating otherwise).
+    # Use left_join to allow missing values (for areas like islands excluded from MIRCA inventory) where production is assumed 100% rainfed
     IrrRfdCropland <-
       L122.LC_bm2_R_HarvCropLand_C_Yh_GLU %>%
-      left_join_error_no_match(L171.ag_irrHA_frac_R_C_GLU,
+      left_join(L171.ag_irrHA_frac_R_C_GLU,
                                by = c("GCAM_region_ID", "GCAM_commodity",
                                       "GLU")) %>%
-      mutate(irr.harvarea = value * irrHA_frac,
-             irr.harvarea = replace(irr.harvarea, is.na(irr.harvarea), 0.0), # if no data, assume irrigated is zero
-             rfd.harvarea = value * rfd_share,
-             rfd.harvarea = replace(rfd.harvarea, is.na(rfd.harvarea), value)) # if no data, assume all rainfed
+      mutate(irrHA_frac = if_else(is.na(irrHA_frac), 0, irrHA_frac),
+             rfd_share = if_else(is.na(rfd_share), 1, rfd_share),
+             irr.harvarea = value * irrHA_frac,
+             rfd.harvarea = value * rfd_share)
 
     ## Extend to cover all years 1700-2010.
     idvars <- c('GCAM_region_ID', 'GCAM_commodity', 'GLU', 'year')

@@ -97,13 +97,6 @@ bool DefaultTechnology::XMLDerivedClassParse( const string& nodeName, const DOMN
     return false;
 }
 
-void DefaultTechnology::toInputXMLDerived( ostream& aOut,
-                                           Tabs* aTabs ) const
-{
-    // Empty implementation as the base class will print all the variables
-    // in toInputXML.
-}
-
 void DefaultTechnology::toDebugXMLDerived( const int aPeriod,
                                            ostream& aOut,
                                            Tabs* aTabs ) const

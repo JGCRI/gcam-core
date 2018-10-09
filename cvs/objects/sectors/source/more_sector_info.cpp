@@ -118,19 +118,6 @@ void MoreSectorInfo::XMLParse( const DOMNode* node ) {
 	}
 }
 
-//! Output to XML data
-/*! \todo This may print several extra values. */
-void MoreSectorInfo::toInputXML( ostream& out, Tabs* tabs ) const {
-	// write the beginning tag.
-    XMLWriteOpeningTag ( getXMLName(), out, tabs );
-    
-    for( CInfoTypeIterator value = mSectorInfoMap.begin(); value != mSectorInfoMap.end(); ++value ){
-        XMLWriteElementCheckDefault( value->second, enumToXMLName( value->first ), out, tabs );
-    }
-	// write the closing tag.
-	XMLWriteClosingTag( getXMLName(), out, tabs );
-}
-
 //! Output debug info to XML data
 void MoreSectorInfo::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 	// write the beginning tag.

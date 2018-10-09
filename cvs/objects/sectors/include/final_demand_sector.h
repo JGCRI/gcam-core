@@ -77,8 +77,6 @@ public:
     virtual void completeInit( const IInfo* aRegionInfo,
                                ILandAllocator* aLandAllocator );
 
-    virtual void dbOutput( const GDP* aGDP,
-                           const IndirectEmissionsCalculator* aIndEmissCalc ) const {}
 protected:
     std::auto_ptr<MoreSectorInfo> moreSectorInfo; //! Additional sector information needed below sector
     
@@ -91,7 +89,6 @@ protected:
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
-	virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
 };
 
 #endif // _FINAL_DEMAND_SECTOR_H_

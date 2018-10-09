@@ -170,36 +170,6 @@ void PolicyPortfolioStandard::XMLParse( const DOMNode* node ){
 }
 
 //! Writes data members to data stream in XML format.
-void PolicyPortfolioStandard::toInputXML( ostream& out, Tabs* tabs ) const {
-
-    XMLWriteOpeningTag( getXMLName(), out, tabs, mName );
-    XMLWriteElement( mMarket, "market", out, tabs );
-    XMLWriteElement( mPolicyType, "policyType", out, tabs );
-    XMLWriteElement( mIsShareBased, "isShareBased", out, tabs );
-    
-    const Modeltime* modeltime = scenario->getModeltime();    
-    for( int per = 0; per < modeltime->getmaxper(); ++per ) {
-        int year = modeltime->getper_to_yr( per );
-        if( mFixedTax[ per ].isInited() ) {
-            XMLWriteElement( mFixedTax[ per ], "fixedTax", out, tabs, year );
-        }
-        if( mConstraint[ per ].isInited() ) {
-            XMLWriteElement( mConstraint[ per ], "constraint", out, tabs, year );
-        }
-        if( mShareOfSectorOutput[ per ].isInited() ) {
-            XMLWriteElement( mShareOfSectorOutput[ per ], "share-of-sector-output", out, tabs, year );
-        }
-    }
-    XMLWriteVector( mMinPrice, "min-price", out, tabs, modeltime, 0.0 );
-    XMLWriteVector( mMaxPrice, "max-price", out, tabs, modeltime, util::getLargeNumber() );
-    XMLWriteElement( mPriceUnits, "price-unit", out, tabs );
-    XMLWriteElement( mOutputUnits, "output-unit", out, tabs );
-
-    // finished writing xml for the class members.
-    XMLWriteClosingTag( getXMLName(), out, tabs );
-}
-
-//! Writes data members to data stream in XML format.
 void PolicyPortfolioStandard::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
     XMLWriteOpeningTag( getXMLName(), out, tabs, mName );
@@ -337,10 +307,5 @@ void PolicyPortfolioStandard::initCalc( const string& aRegionName, const int aPe
  * \param aPeriod The current model period which just finished.
  */
 void PolicyPortfolioStandard::postCalc( const string& aRegionName, const int aPeriod ) {
-    // if we are solving for a price because we have a constraint then we should
-    // save the solved price so we can write it back out in toInputXML for restart
-    if( mConstraint[ aPeriod ].isInited() ) {
-        mFixedTax[ aPeriod ] = scenario->getMarketplace()->getPrice( mName, aRegionName, aPeriod );
-    }
 }
 
