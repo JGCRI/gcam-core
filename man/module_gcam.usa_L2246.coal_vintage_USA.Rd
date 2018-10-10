@@ -19,8 +19,7 @@ the generated outputs: \code{L2246.StubTechProd_coal_vintage_USA}, \code{L2246.S
 \code{L2246.StubTechProfitShutdown_coal_vintage_USA}, \code{L2246.StubTechMarket_coal_vintage_USA},
 \code{L2246.GlobalTechShrwt_coal_vintage_USA}, \code{L2246.GlobalTechEff_coal_vintage_USA},
 \code{L2246.GlobalTechCapFac_coal_vintage_USA}, \code{L2246.GlobalTechCapital_coal_vintage_USA},
-\code{L2246.GlobalTechOMfixed_coal_vintage_USA}, \code{L2246.GlobalTechOMvar_coal_vintage_USA},
-\code{L2246.ghg_emissions_coal_vintage_USA}.
+\code{L2246.GlobalTechOMfixed_coal_vintage_USA}, \code{L2246.GlobalTechOMvar_coal_vintage_USA}.
 The corresponding file in the original data system was \code{L2246.coal_vintage.R} (gcam-usa level2).
 }
 \description{
