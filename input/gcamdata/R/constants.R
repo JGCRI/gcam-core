@@ -593,6 +593,7 @@ gcamusa.FUTURE_MODEL_YEARS <- seq(from = 2015, to = 2100, by = 5)
 # This is done to get a somewhat smooth behavior for coal retirements
 # Assume lifetime for units built after 1970
 gcamusa.AVG_COAL_PLANT_LIFETIME <- 70
+gcamusa.AVG_COAL_PLANT_HALFLIFE <- 60
 
 # Define vintage bins and categories
 gcamusa.COAL_VINTAGE_BREAKS <- c(0, seq(1950, 2015, 5))

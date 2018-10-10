@@ -22,9 +22,9 @@ module_gcam.usa_L2011.socioeconomics_update_USA <- function(command, ...) {
              FILE = "gcam-usa/Census_pop_10_15",
              FILE = "gcam-usa/BEA_GDP_87_96_97USD_state",
              FILE = "gcam-usa/BEA_GDP_97_16_09USD_state",
-             FILE = "gcam-usa/PRIMA_pop",
              FILE = "gcam-usa/AEO_2016_pop_regional",
              FILE = "gcam-usa/AEO_2016_GDP_regional",
+             FILE = "gcam-usa/NCAR_SSP2_pop_state",
              "L201.LaborProductivity_SSP2",
              "L201.Pop_GCAMUSA"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -39,7 +39,8 @@ module_gcam.usa_L2011.socioeconomics_update_USA <- function(command, ...) {
     # silence package checks
     year <- region <- state <- Area <- totalPop <- pop <- pop_ratio <- GDP <- baseGDP <- pcGDP <- pcGDPratio <-
       laborproductivity <- time <- lag_pop <- lag_GDP <- iso <- growth <- timestep <- state_name <- Fips <-
-      Year <- Quarter <- census_region <- lp2100 <- lp2040 <- NULL
+      Year <- Quarter <- census_region <- lp2100 <- lp2040 <- State <- State_FIPS <- SSP <- growth_rate_SSP2 <-
+      growth_rate_hist <- growth_rate <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -50,9 +51,9 @@ module_gcam.usa_L2011.socioeconomics_update_USA <- function(command, ...) {
     Census_pop_10_15 <- get_data(all_data, "gcam-usa/Census_pop_10_15")
     BEA_GDP_87_96_97USD_state <- get_data(all_data, "gcam-usa/BEA_GDP_87_96_97USD_state")
     BEA_GDP_97_16_09USD_state <- get_data(all_data, "gcam-usa/BEA_GDP_97_16_09USD_state")
-    PRIMA_pop <- get_data(all_data, "gcam-usa/PRIMA_pop")
     AEO_2016_pop_regional <- get_data(all_data, "gcam-usa/AEO_2016_pop_regional")
     AEO_2016_GDP_regional <- get_data(all_data, "gcam-usa/AEO_2016_GDP_regional")
+    NCAR_SSP2_pop_state <- get_data(all_data, "gcam-usa/NCAR_SSP2_pop_state")
     L201.LaborProductivity_SSP2 <- get_data(all_data, "L201.LaborProductivity_SSP2")
     L201.Pop_GCAMUSA <- get_data(all_data, "L201.Pop_GCAMUSA")
 
@@ -70,31 +71,76 @@ module_gcam.usa_L2011.socioeconomics_update_USA <- function(command, ...) {
                   filter(year != max(BASE_YEARS))) %>%
       mutate(totalPop = round(totalPop * CONV_ONES_THOUS, socioeconomics.POP_DIGITS)) -> L2011.Pop_USA
 
-    # L2011.Pop_updated_USA: Updated model year populations for GCAM USA from 2015 historical data and PRIMA pop
-    # Segment out 2015 population data
+    # L2011.Pop_updated_USA: Updated future year populations for GCAM USA based on
+    # 2015 historical data and NCAR downsalced SSP2 data
+    # Calculate historical (2010-2015) population growth rates by state
     L2011.Pop_USA %>%
       rename(region = state) %>%
-      filter(year == SE_HIST_YEAR) -> L2011.Pop_USA_2015
+      filter(year %in% MODEL_YEARS,
+             year <= SE_HIST_YEAR) %>%
+      complete(nesting(region), year = c(MODEL_YEARS)) %>%
+      mutate(growth_rate_hist = (totalPop / lag(totalPop)) ^ (1 / (year - lag(year))) - 1) %>%
+      filter(year >= SE_HIST_YEAR) -> L2011.Pop_future_temp
 
-    # Future population projection by state, applying PRIMA pop ratios from 2020-2100 to 2015 historical data
-    PRIMA_pop %>%
-      rename(state_name = state) %>%
-      left_join_error_no_match(states_subregions %>%
-                  select(state_name, region = state),
-                            by = c("state_name")) %>%
-      select(-state_name) %>%
-      gather_years("pop") %>%
-      filter(year %in% FUTURE_YEARS) %>%
+    # Calculate SSP2 state-level population growth rates
+    states_subregions %>%
+      select(region = state, state_name) %>%
+      left_join_error_no_match(NCAR_SSP2_pop_state %>%
+                  rename(state_name = State),
+                by = c("state_name")) %>%
+      select(-state_name, -State_FIPS, -SSP) %>%
+      gather_years("totalPop") %>%
+      mutate(totalPop = totalPop / 1000) %>%
       group_by(region) %>%
-      mutate(pop_ratio = pop / pop[year == SE_HIST_YEAR]) %>%
+      mutate(growth_rate_SSP2 = (totalPop / lag(totalPop)) ^ (1 / (year - lag(year))) - 1) %>%
+      complete(nesting(region), year = c(FUTURE_YEARS)) %>%
+      filter(year >= 2030) %>%
+      mutate(growth_rate_SSP2 = approx_fun(year, growth_rate_SSP2)) %>%
+      ungroup() -> L2011.Pop_GR_SSP2
+
+    # Interpolate between historical 2010-2015 growth rates to NCAR 2030 growth rates
+    L2011.Pop_future_temp %>%
+      # left_join_error_no_match thorws error because of NAs in new columns
+      # this is becuase some years are (intentionally) missing from RHS
+      # thus we use left_join instead
+      left_join(L2011.Pop_GR_SSP2 %>%
+                  select(-totalPop),
+                by = c("region", "year")) %>%
+      group_by(region) %>%
+      mutate(growth_rate = if_else(is.na(growth_rate_hist), growth_rate_SSP2, growth_rate_hist),
+             growth_rate = approx_fun(year, growth_rate)) %>%
       ungroup() %>%
-      select(region, year, pop_ratio) %>%
-      left_join_error_no_match(L2011.Pop_USA_2015 %>%
-                                 select(-year),
-                               by = "region") %>%
-      mutate(totalPop = round(totalPop * pop_ratio, socioeconomics.POP_DIGITS)) %>%
-      select(region, year, totalPop) %>%
-      arrange(region) -> L2011.Pop_updated_USA
+      select(-growth_rate_hist, -growth_rate_SSP2) -> L2011.Pop_GR
+
+    L2011.Pop_GR %>%
+      distinct(year) %>%
+      filter(year != min(year)) -> L2011.Pop_GR_years
+    pop_years <- unique(L2011.Pop_GR_years$year)
+
+    for (y in pop_years) {
+
+      # Calculate revised population
+      L2011.Pop_GR %>%
+        group_by(region) %>%
+        mutate(time = year - lag(year, n = 1L),
+               lag_pop = lag(totalPop, n = 1L)) %>%
+        ungroup() %>%
+        filter(year == y) %>%
+        mutate(totalPop = lag_pop * ((1 + growth_rate) ^ time)) -> L2011.Pop_GR_temp
+
+      # Add back into table
+      L2011.Pop_GR %>%
+        filter(year != y) %>%
+        bind_rows(L2011.Pop_GR_temp %>%
+                    select(-time, -lag_pop)) %>%
+        mutate(year = as.numeric(year)) %>%
+        arrange(region, year) -> L2011.Pop_GR
+
+    }
+
+    L2011.Pop_GR %>%
+      select(-growth_rate) %>%
+      mutate(totalPop = round(totalPop, socioeconomics.POP_DIGITS)) -> L2011.Pop_updated_USA
 
     # L2011.BaseGDP_USA: GCAM USA base GDP by state
     # NOTE: Bureau of Economic Analysis does not have state-level GDP data available for years prior to 1987.
@@ -330,12 +376,12 @@ module_gcam.usa_L2011.socioeconomics_update_USA <- function(command, ...) {
       add_title("Updated population by state") %>%
       add_units("thousand persons") %>%
       add_comments("2015 populations from U.S. Census Bureau") %>%
-      add_comments("Post-2015 populations based on PRIMA state-level population growth ratios") %>%
+      add_comments("Post-2015 populations based on NCAR SSP2 state-level population growth rates") %>%
       add_legacy_name("L2011.Pop_USA_updated") %>%
       add_precursors("gcam-usa/states_subregions",
                      "gcam-usa/Census_pop_hist",
                      "gcam-usa/Census_pop_10_15",
-                     "gcam-usa/PRIMA_pop") ->
+                     "gcam-usa/NCAR_SSP2_pop_state") ->
       L2011.Pop_updated_USA
 
     L2011.BaseGDP_updated_USA %>%
@@ -362,7 +408,7 @@ module_gcam.usa_L2011.socioeconomics_update_USA <- function(command, ...) {
                      "gcam-usa/Census_pop_10_15",
                      "gcam-usa/BEA_GDP_87_96_97USD_state",
                      "gcam-usa/BEA_GDP_97_16_09USD_state",
-                     "gcam-usa/PRIMA_pop",
+                     "gcam-usa/NCAR_SSP2_pop_state",
                      "gcam-usa/AEO_2016_pop_regional",
                      "gcam-usa/AEO_2016_GDP_regional",
                      "L201.LaborProductivity_SSP2",
@@ -375,10 +421,7 @@ module_gcam.usa_L2011.socioeconomics_update_USA <- function(command, ...) {
       add_comments("Updates USA region population to match the 50 state + DC total") %>%
       add_comments("2015 populations from U.S. Census Bureau") %>%
       add_legacy_name("L2011.Pop_updated_USA_national") %>%
-      add_precursors("gcam-usa/states_subregions",
-                     "gcam-usa/Census_pop_hist",
-                     "gcam-usa/Census_pop_10_15",
-                     "gcam-usa/PRIMA_pop") ->
+      same_precursors_as("L2011.Pop_updated_USA") ->
       L2011.Pop_national_updated_USA
 
     L2011.BaseGDP_national_updated_USA %>%
@@ -404,7 +447,7 @@ module_gcam.usa_L2011.socioeconomics_update_USA <- function(command, ...) {
                      "gcam-usa/Census_pop_10_15",
                      "gcam-usa/BEA_GDP_87_96_97USD_state",
                      "gcam-usa/BEA_GDP_97_16_09USD_state",
-                     "gcam-usa/PRIMA_pop",
+                     "gcam-usa/NCAR_SSP2_pop_state",
                      "gcam-usa/AEO_2016_pop_regional",
                      "gcam-usa/AEO_2016_GDP_regional",
                      "L201.LaborProductivity_SSP2",

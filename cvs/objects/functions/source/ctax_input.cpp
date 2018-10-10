@@ -108,7 +108,6 @@ CTaxInput::~CTaxInput() {
  */
 CTaxInput::CTaxInput( const CTaxInput& aOther ){
     mName = aOther.mName;
-    mFuelName = aOther.mFuelName;
     mCachedCCoef = aOther.mCachedCCoef;
 }
 
@@ -140,9 +139,10 @@ void CTaxInput::XMLParse( const xercesc::DOMNode* aNode ) {
 
         const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 
-        if( nodeName == "fuel-name" ){
-            mFuelName = XMLHelper<string>::getValue( curr );
-        }
+		if ( nodeName == "fuel-C-coef" ){
+			mCachedCCoef = XMLHelper<double>::getValue(curr);
+		}
+
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
@@ -156,7 +156,7 @@ void CTaxInput::toInputXML( ostream& aOut,
                                Tabs* aTabs ) const
 {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
-    XMLWriteElement( mFuelName, "fuel-name", aOut, aTabs );
+	XMLWriteElement(mCachedCCoef, "fuel-C-coef", aOut, aTabs);
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
@@ -165,7 +165,6 @@ void CTaxInput::toDebugXML( const int aPeriod,
                                Tabs* aTabs ) const
 {
     XMLWriteOpeningTag ( getXMLNameStatic(), aOut, aTabs, mName );
-    XMLWriteElement( mFuelName, "fuel-name", aOut, aTabs );
     XMLWriteElement( mCachedCCoef, "fuel-C-coef", aOut, aTabs );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
@@ -193,7 +192,6 @@ void CTaxInput::initCalc( const string& aRegionName,
 {
     // There must be a valid region name.
     assert( !aRegionName.empty() );
-    mCachedCCoef = FunctionUtils::getCO2Coef( aRegionName, mFuelName, aPeriod );
 }
 
 void CTaxInput::copyParam( const IInput* aInput,
