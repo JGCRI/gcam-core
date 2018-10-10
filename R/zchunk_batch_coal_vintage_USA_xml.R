@@ -13,6 +13,7 @@ module_gcam.usa_batch_coal_vintage_USA_xml <- function(command, ...) {
     return(c("L2246.StubTechProd_coal_vintage_USA",
              "L2246.StubTechEff_coal_vintage_USA",
              "L2246.StubTechLifetime_coal_vintage_USA",
+             "L2246.StubTechSCurve_coal_vintage_USA",
              "L2246.StubTechProfitShutdown_coal_vintage_USA",
              "L2246.StubTechMarket_coal_vintage_USA",
              "L2246.GlobalTechShrwt_coal_vintage_USA",
@@ -20,8 +21,7 @@ module_gcam.usa_batch_coal_vintage_USA_xml <- function(command, ...) {
              "L2246.GlobalTechCapFac_coal_vintage_USA",
              "L2246.GlobalTechCapital_coal_vintage_USA",
              "L2246.GlobalTechOMfixed_coal_vintage_USA",
-             "L2246.GlobalTechOMvar_coal_vintage_USA",
-             "L2246.ghg_emissions_coal_vintage_USA"))
+             "L2246.GlobalTechOMvar_coal_vintage_USA"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "coal_vintage_USA.xml"))
   } else if(command == driver.MAKE) {
@@ -32,6 +32,7 @@ module_gcam.usa_batch_coal_vintage_USA_xml <- function(command, ...) {
     L2246.StubTechProd_coal_vintage_USA <- get_data(all_data, "L2246.StubTechProd_coal_vintage_USA")
     L2246.StubTechEff_coal_vintage_USA <- get_data(all_data, "L2246.StubTechEff_coal_vintage_USA")
     L2246.StubTechLifetime_coal_vintage_USA <- get_data(all_data, "L2246.StubTechLifetime_coal_vintage_USA")
+    L2246.StubTechSCurve_coal_vintage_USA <- get_data(all_data, "L2246.StubTechSCurve_coal_vintage_USA")
     L2246.StubTechProfitShutdown_coal_vintage_USA <- get_data(all_data, "L2246.StubTechProfitShutdown_coal_vintage_USA")
     L2246.StubTechMarket_coal_vintage_USA <- get_data(all_data, "L2246.StubTechMarket_coal_vintage_USA")
     L2246.GlobalTechShrwt_coal_vintage_USA <- get_data(all_data, "L2246.GlobalTechShrwt_coal_vintage_USA")
@@ -40,13 +41,13 @@ module_gcam.usa_batch_coal_vintage_USA_xml <- function(command, ...) {
     L2246.GlobalTechCapital_coal_vintage_USA <- get_data(all_data, "L2246.GlobalTechCapital_coal_vintage_USA")
     L2246.GlobalTechOMfixed_coal_vintage_USA <- get_data(all_data, "L2246.GlobalTechOMfixed_coal_vintage_USA")
     L2246.GlobalTechOMvar_coal_vintage_USA <- get_data(all_data, "L2246.GlobalTechOMvar_coal_vintage_USA")
-    L2246.ghg_emissions_coal_vintage_USA <- get_data(all_data, "L2246.ghg_emissions_coal_vintage_USA")
 
     # Produce outputs
     create_xml("coal_vintage_USA.xml") %>%
       add_xml_data(L2246.StubTechProd_coal_vintage_USA, "StubTechProd") %>%
       add_xml_data(L2246.StubTechEff_coal_vintage_USA, "StubTechEff") %>%
       add_xml_data(L2246.StubTechLifetime_coal_vintage_USA, "StubTechLifetime") %>%
+      add_xml_data(L2246.StubTechSCurve_coal_vintage_USA, "StubTechSCurve") %>%
       add_xml_data(L2246.StubTechProfitShutdown_coal_vintage_USA, "StubTechProfitShutdown") %>%
       add_xml_data(L2246.StubTechMarket_coal_vintage_USA, "StubTechMarket") %>%
       add_xml_data(L2246.GlobalTechShrwt_coal_vintage_USA, "GlobalTechShrwt") %>%
@@ -55,10 +56,10 @@ module_gcam.usa_batch_coal_vintage_USA_xml <- function(command, ...) {
       add_xml_data(L2246.GlobalTechCapital_coal_vintage_USA, "GlobalTechCapital") %>%
       add_xml_data(L2246.GlobalTechOMfixed_coal_vintage_USA, "GlobalTechOMfixed") %>%
       add_xml_data(L2246.GlobalTechOMvar_coal_vintage_USA, "GlobalTechOMvar") %>%
-      add_xml_data(L2246.ghg_emissions_coal_vintage_USA, "InputEmissions") %>%
       add_precursors("L2246.StubTechProd_coal_vintage_USA",
                      "L2246.StubTechEff_coal_vintage_USA",
                      "L2246.StubTechLifetime_coal_vintage_USA",
+                     "L2246.StubTechSCurve_coal_vintage_USA",
                      "L2246.StubTechProfitShutdown_coal_vintage_USA",
                      "L2246.StubTechMarket_coal_vintage_USA",
                      "L2246.GlobalTechShrwt_coal_vintage_USA",
@@ -66,8 +67,7 @@ module_gcam.usa_batch_coal_vintage_USA_xml <- function(command, ...) {
                      "L2246.GlobalTechCapFac_coal_vintage_USA",
                      "L2246.GlobalTechCapital_coal_vintage_USA",
                      "L2246.GlobalTechOMfixed_coal_vintage_USA",
-                     "L2246.GlobalTechOMvar_coal_vintage_USA",
-                     "L2246.ghg_emissions_coal_vintage_USA") ->
+                     "L2246.GlobalTechOMvar_coal_vintage_USA") ->
       coal_vintage_USA.xml
 
     return_data(coal_vintage_USA.xml)
