@@ -127,7 +127,7 @@ module_gcam.usa_LA2233.electricity_water_USA <- function(command, ...) {
       group_by(state,fuel,plant_type,technology,water_sector,water_type,minicam.energy.input)%>%
       mutate(coefficient=approx_fun(year,x,rule=2))%>%
       ungroup()%>%
-      mutate(plant_type=NULL,x=NULL)%>%   # Remove Seawater as per old code
+      mutate(plant_type=NULL,x=NULL)%>%
       inner_join(unique( elec_tech_water_map[ c( "sector","fuel","technology", grep( 'Electric.', names( elec_tech_water_map ), value=T ) ) ] ),
            by=c("fuel","technology"))%>%
       rename(region = state) %>%
