@@ -62,7 +62,7 @@ extern Scenario* scenario;
 CachedMarket::CachedMarket( const string& aGoodName, const string& aRegionName, const int aPeriod,
                             Market* aLocatedMarket )
 :
-#if(!NDEBUG)
+#ifndef NDEBUG
 mGoodName( aGoodName ),
 mRegionName( aRegionName ),
 mPeriod( aPeriod ),

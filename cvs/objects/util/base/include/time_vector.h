@@ -870,10 +870,10 @@ namespace objects {
      */
     template<class T>
     T& TechVintageVector<T>::operator[]( const unsigned int aIndex ) {
-#if(!NDEBUG)
         if( !isInitialized() ) {
             abort();
         }
+#ifndef NDEBUG
         
         if( aIndex < mStartPeriod ) {
             std::cerr << "Access before: " << aIndex << " < " << mStartPeriod << std::endl;
@@ -900,10 +900,10 @@ namespace objects {
      */
     template<class T>
     const T& TechVintageVector<T>::operator[]( const unsigned int aIndex ) const {
-#if(!NDEBUG)
         if( !isInitialized() ) {
             abort();
         }
+#ifndef NDEBUG
         
         if( aIndex < mStartPeriod ) {
             std::cerr << "Access before: " << aIndex << " < " << mStartPeriod << std::endl;
@@ -995,18 +995,6 @@ namespace objects {
         // the zeroth position.
         return typename TechVintageVector<T>::iterator( mData + std::max( static_cast<int>( size() ) - 1, 0 ) );
     }
-}
-
-/*!
- * \brief Convert a PeriodVector into a std::vector.
- * \return Vector equivalent to the period vector.
- * \todo Remove this after the database code is removed.
- */
-template<class T>
-static std::vector<double> convertToVector( const objects::PeriodVector<T>& aTimeVector ) {
-    std::vector<double> convVector( aTimeVector.size() );
-    std::copy( aTimeVector.begin(), aTimeVector.end(), convVector.begin() );
-    return convVector;
 }
 
 #endif // _TIME_VECTOR_H_

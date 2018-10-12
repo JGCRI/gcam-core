@@ -196,6 +196,9 @@ void UnmanagedLandTechnology::completeInit( const string& aRegionName,
     
     // Create the generic output for this technology. Insert the generic
     // output at position 0, so it can be used for emissions calculation.
+    // Note we use a GenericOutput instead the typical PrimaryOutput becasuse
+    // we want to avoid adding any values to the marketplace and instead are
+    // only keeping track of the output for the sake of calculating Non-CO2s.
     mOutputs.push_back( new GenericOutput( aSectorName ) );
 
     Technology::completeInit( aRegionName, aSectorName, aSubsectorName, aSubsectorInfo,

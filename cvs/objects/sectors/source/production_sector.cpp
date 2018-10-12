@@ -71,7 +71,6 @@ extern Scenario* scenario;
 * \param aRegionName Name of the region containing this sector.
 */
 ProductionSector::ProductionSector ( const string& aRegionName ) : Sector ( aRegionName ) {
-    mFixedPrices.resize( scenario->getModeltime()->getmaxper() );
     mIsFixedPrice = false;
     mIsEnergyGood = false;
     mIsPrimaryEnergyGood = false;
@@ -125,7 +124,7 @@ bool ProductionSector::XMLDerivedClassParse( const string& nodeName, const DOMNo
         mIsSecondaryEnergyGood = XMLHelper<bool>::getValue( curr );
     }
     else if( nodeName == "sectorprice" ){
-        XMLHelper<double>::insertValueIntoVector( curr, mFixedPrices, scenario->getModeltime() );
+        XMLHelper<Value>::insertValueIntoVector( curr, mFixedPrices, scenario->getModeltime() );
     }
     else if( nodeName == MoreSectorInfo::getXMLNameStatic() ) {
         parseSingleNode( curr, moreSectorInfo, new MoreSectorInfo );

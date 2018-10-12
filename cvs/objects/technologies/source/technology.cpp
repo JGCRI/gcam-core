@@ -353,6 +353,11 @@ void Technology::completeInit( const string& aRegionName,
         mGHG.push_back( CO2Ghg );
     }
     
+    // WARNING: all objects that may indirectly create a TechVintageVector *must* be created
+    // before we call initTechVintageVector() so that we can ensure that their vectors get
+    // sized and initialized properly.
+    // We must take care of this early in completeInit in case any of those objects will
+    // need to acccess those TechVintageVector for any reason then they will be able to.
     initTechVintageVector();
     
     // Check if both the original MiniCAM non-energy-input and the new input-capital

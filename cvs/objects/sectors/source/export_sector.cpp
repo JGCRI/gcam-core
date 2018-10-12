@@ -142,7 +142,7 @@ bool ExportSector::XMLDerivedClassParse( const string& aNodeName, const DOMNode*
 		mMarketName = XMLHelper<string>::getValue( aCurr );
 	}
     else if( aNodeName == "sectorprice" ){
-        XMLHelper<double>::insertValueIntoVector( aCurr, mFixedPrices, scenario->getModeltime() );
+        XMLHelper<Value>::insertValueIntoVector( aCurr, mFixedPrices, scenario->getModeltime() );
     }
 	else {
 		return false;
@@ -189,6 +189,6 @@ void ExportSector::setMarket() {
         mFixedPrices[ 0 ] = mPrice[ 0 ];
 
 		// Initializes prices with any values that are read-in. 
-        marketplace->setPriceVector( mName, mRegionName, convertToVector( mFixedPrices ) );
+        marketplace->setPriceVector( mName, mRegionName, mFixedPrices );
     }
 }

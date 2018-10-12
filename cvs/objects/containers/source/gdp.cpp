@@ -244,7 +244,7 @@ void GDP::setupCalibrationMarkets( const string& regionName, const vector<double
         marketInfo->setString( "price-unit", "LaborProd" );
         marketInfo->setString( "output-unit", "LaborProd" );
 
-        vector<double> tempLFPs( modeltime->getmaxper() );
+        objects::PeriodVector<Value> tempLFPs;
         for( int i = 0; i < modeltime->getmaxper(); i++ ){
             tempLFPs[ i ] = pow( 1 + laborProdGrowthRate[ i ], modeltime->gettimestep( i ) );
         }

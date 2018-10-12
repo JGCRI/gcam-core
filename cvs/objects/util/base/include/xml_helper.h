@@ -220,13 +220,16 @@ template<typename T>
 class TechVectorParseHelper {
 public:
     /*!
-     * \brief Get the "temporary" storage PeriodVector associated with a given TechVintageVector.
+     * \brief Get the temporary storage PeriodVector associated with a given TechVintageVector.
      * \details Note if no entry has been previously made for the given TechVintageVector then
      *          a new PeriodVector will be allocated for it.
      * \param aTecVector The TechVintageVector instance to find the temporary storage for.
      * \return The associated temporary storage for aTecVector.
      */
     objects::PeriodVector<T>& getPeriodVector( objects::TechVintageVector<T>& aTecVector ) {
+        // Note that in order to save memory usage space in TechVintageVector we do not have
+        // an explicit ID member variable in aTecVector.  Instead it has been stashed in
+        // aTecVector.mData so we must reinterpret that as size_t which is the ID type.
         size_t tempDataKey = reinterpret_cast<size_t>( aTecVector.mData );
         auto iter = mTempStore.find( tempDataKey );
         if( iter == mTempStore.end() ) {
@@ -309,16 +312,18 @@ void TechVectorParseHelper<T>::initializeVector( const unsigned int aStartPeriod
         // Fill the the vector parameters and allocate it's memory.
         aTechVec.mStartPeriod = aStartPeriod;
         aTechVec.mSize = aSize;
+        // Note an unititialized TechVintageVector will not have allocated any
+        // memory for mData so we do not need to worry about freeing that here
         aTechVec.mData = new T[ aSize ];
         
         // Attempt to copy in data from temporary storage
-        TechVectorParseHelper<T>* inst = boost::fusion::at_key<T>( sTechVectorParseHelperMap );
+        TechVectorParseHelper<T>* currTVParseHelper = boost::fusion::at_key<T>( sTechVectorParseHelperMap );
         size_t tempDataKey = reinterpret_cast<size_t>( aTechVec.mData );
         
-        if( inst ) {
-            auto tempData = inst->mTempStore.find( tempDataKey );
-            if( tempData != inst->mTempStore.end() ) {
-                // Aata was found in temporary storage for this instance so copy those values
+        if( currTVParseHelper ) {
+            auto tempData = currTVParseHelper->mTempStore.find( tempDataKey );
+            if( tempData != currTVParseHelper->mTempStore.end() ) {
+                // Data was found in temporary storage for this instance so copy those values
                 // over (for valid model periods only).
                 const objects::PeriodVector<T>& pv = (*tempData).second;
                 for(auto per = aStartPeriod; per < (aStartPeriod + aSize); ++per ) {
@@ -1093,7 +1098,7 @@ void XMLHelper<T>::initParser() {
     
     *getDOMDocumentInternal() = xercesc::DOMImplementation::getImplementation()->createDocument();
     
-    // At this point we should ensure we have a place to store "temporary" data for
+    // At this point we should ensure we have a place to store temporary data for
     // TechVintageVectors.
     // Note we will clean up this memory (and all of the temporary arrays that it contains
     // when we close the XML parser).

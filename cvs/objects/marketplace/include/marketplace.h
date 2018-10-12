@@ -63,6 +63,10 @@ class IInfo;
 class CachedMarket;
 class MarketDependencyFinder;
 class Value;
+namespace objects {
+    template<typename T>
+    class PeriodVector;
+}
 
 /*! 
  * \ingroup Objects
@@ -153,7 +157,7 @@ public:
     void setPrice( const std::string& goodName, const std::string& regionName, const double value,
                    const int period, bool aMustExist = true );
     void setPriceVector( const std::string& goodName, const std::string& regionName,
-                         const std::vector<double>& prices );
+                         const objects::PeriodVector<Value>& prices );
     void addToSupply( const std::string& goodName, const std::string& regionName, const Value& value,
                       const int period, bool aMustExist = true );
     void addToDemand( const std::string& goodName, const std::string& regionName, const Value& value,

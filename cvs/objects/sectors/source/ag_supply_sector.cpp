@@ -188,7 +188,7 @@ void AgSupplySector::setMarket() {
         marketInfo->setString( "output-unit", mOutputUnit );
 
         // Set market prices to initial price vector
-        marketplace->setPriceVector( mName, mRegionName, convertToVector( mPrice ) );
+        marketplace->setPriceVector( mName, mRegionName, mPrice );
         // Reset base period price to mCalPrice
         marketplace->setPrice( mName, mRegionName, mCalPrice, 0, true );
 

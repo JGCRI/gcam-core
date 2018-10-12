@@ -361,7 +361,7 @@ void Resource::setMarket( const string& aRegionName ) {
         pMarketInfo->setString( "price-unit", mPriceUnit );
         pMarketInfo->setString( "output-unit", mOutputUnit );
 
-        pMarketplace->setPriceVector( mName, aRegionName, convertToVector( mResourcePrice ) );
+        pMarketplace->setPriceVector( mName, aRegionName, mResourcePrice );
         for( int period = 0; period < pModeltime->getmaxper(); ++period ){
         
             // TODO: Remove or improve this. Intermittent technologies need to know during initCalc 
