@@ -105,6 +105,10 @@ struct GetIndexAsYear {
         return scenario->getModeltime()->getper_to_yr( aIter - aArray.begin() );
     }
     template<typename T>
+    static int convertIterToYear( const objects::TechVintageVector<T>& aArray, const typename objects::TechVintageVector<T>::const_iterator& aIter ) {
+        return scenario->getModeltime()->getper_to_yr( aArray.getStartPeriod() + ( aIter - aArray.begin() ) );
+    }
+    template<typename T>
     static int convertIterToYear( const objects::YearVector<T>& aArray, const typename objects::TimeVectorBase<T>::const_iterator& aIter ) {
         return aArray.getStartYear() + ( aIter - aArray.begin() );
     }

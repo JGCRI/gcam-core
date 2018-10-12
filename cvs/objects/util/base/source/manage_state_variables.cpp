@@ -423,6 +423,18 @@ void ManageStateVariables::DoCollect::processData<objects::PeriodVector<Value> >
 }
 
 template<>
+void ManageStateVariables::DoCollect::processData<objects::TechVintageVector<Value> >( objects::TechVintageVector<Value>& aData ) {
+    // When an ARRAY of values are tagged only the Value in [ mPeriodToCollect] is
+    // considered active.
+    
+    // Note, mIgnoreCurrValue should take care of out of bounds here
+    if( !mIgnoreCurrValue ) {
+        mParentClass->mStateValues.push_front( &aData[ mParentClass->mPeriodToCollect ] );
+        ++mParentClass->mNumCollected;
+    }
+}
+
+template<>
 void ManageStateVariables::DoCollect::processData<objects::YearVector<Value> >( objects::YearVector<Value>& aData ) {
     // When a year vector is tagged we only need to worry about values in the current
     // timestep (already calculated the years ahead of time in the interest of speed
@@ -444,6 +456,7 @@ template<typename DataType>
 void ManageStateVariables::DoCollect::popFilterStep( const DataType& aData ) {
     // ignore most steps
 }
+
 
 template<>
 void ManageStateVariables::DoCollect::pushFilterStep<ITechnology*>( ITechnology* const& aData ) {

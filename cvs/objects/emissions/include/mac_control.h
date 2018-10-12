@@ -93,9 +93,6 @@ protected:
         //! Boolean indicating whether reductions should occur at a zero carbon price
         DEFINE_VARIABLE( SIMPLE, "no-zero-cost-reductions", mNoZeroCostReductions, bool ),
         
-        //! Technology change, % improvement rate per year
-        DEFINE_VARIABLE( ARRAY, "tech-change", mTechChange, objects::PeriodVector<double> ),
-        
         //! The underlying Curve (as read in)
         DEFINE_VARIABLE( CONTAINER, "mac-reduction", mMacCurve, PointSetCurve* ),
         
@@ -108,6 +105,12 @@ protected:
         //! Name of market who's price is used to look up the curve.
         DEFINE_VARIABLE( SIMPLE, "market-name", mPriceMarketName, std::string )
     )
+    
+    //! Technology change, % improvement rate per year
+    // Note ideally this would be included for GCAMFusion with the following definition however it is
+    // not currently able to handle smart pointers.
+    // DEFINE_VARIABLE( ARRAY, "tech-change", mTechChange, std::shared_ptr<objects::PeriodVector<double> > ),
+    std::shared_ptr<objects::PeriodVector<double> > mTechChange;
 
 private:
     void copy( const MACControl& other );

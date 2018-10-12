@@ -43,6 +43,7 @@
 #include <cassert>
 #include "emissions/include/emissions_summer.h"
 #include "emissions/include/aghg.h"
+#include "technologies/include/technology.h"
 
 using namespace std;
 
@@ -106,7 +107,19 @@ void GroupedEmissionsSummer::startVisitGHG( const AGHG* aGHG, const int aPeriod 
     CSummerIterator it = mEmissionsSummers.find( aGHG->getName() );
     if( it != mEmissionsSummers.end() ) {
         for( int period = 1; period < scenario->getModeltime()->getmaxper(); ++period ) {
-            (*it).second->startVisitGHG( aGHG, period );
+            if( !mCurrTech || mCurrTech->isOperating(period) ) {
+                (*it).second->startVisitGHG( aGHG, period );
+            }
         }
     }
+}
+
+void GroupedEmissionsSummer::startVisitTechnology( const Technology* aTech,
+                                  const int aPeriod )
+{
+    mCurrTech = aTech;
+}
+
+void GroupedEmissionsSummer::endVisitTechnology(const Technology* aTech, const int aPeriod ) {
+    mCurrTech = 0;
 }

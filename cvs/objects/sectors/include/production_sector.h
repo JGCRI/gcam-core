@@ -131,7 +131,7 @@ protected:
 private:
     //! Vector of read-in prices for the production sector which will be used as
     //! fixed prices if mIsFixedPrice is true.
-    std::vector<double> mFixedPrices;
+    objects::PeriodVector<Value> mFixedPrices;
 
     //! The market region into which the sector is exporting.
     std::string mMarketName;

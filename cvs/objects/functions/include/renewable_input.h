@@ -151,7 +151,7 @@ protected:
         MiniCAMInput,
 
         //! Physical Demand.
-        DEFINE_VARIABLE( ARRAY | STATE, "physical-demand", mPhysicalDemand, objects::PeriodVector<Value> )
+        DEFINE_VARIABLE( ARRAY | STATE, "physical-demand", mPhysicalDemand, objects::TechVintageVector<Value> )
     )
     
     void copy( const RenewableInput& aOther );

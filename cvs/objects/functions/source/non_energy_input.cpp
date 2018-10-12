@@ -187,7 +187,7 @@ void NonEnergyInput::completeInit( const string& aRegionName,
     // Initialize the adjusted costs in all periods to the base read-in costs.
     // These costs may be adjusted by the Technology, for instance for capture
     // penalties.
-    mAdjustedCosts.assign( mAdjustedCosts.size(), mCost );
+    fill( mAdjustedCosts.begin(), mAdjustedCosts.end(), mCost );
 }
 
 void NonEnergyInput::initCalc( const string& aRegionName,

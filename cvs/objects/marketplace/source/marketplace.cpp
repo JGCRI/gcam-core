@@ -56,6 +56,7 @@
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/configuration.h"
 #include "util/base/include/fltcmp.hpp"
+#include "util/base/include/time_vector.h"
 #include "util/logger/include/ilogger.h"
 #include "marketplace/include/market_locator.h"
 #include "util/base/include/ivisitor.h"
@@ -316,8 +317,7 @@ int Marketplace::resetToPriceMarket( const int aMarketNumber ) {
 /*! \brief Set the prices by period of a market from a vector.
 *
 * This function sets the price for each period of a market according to the corresponding value in 
-* the prices vector.  The function checks so that it will not fail if the prices vector is a 
-* different size than the markets vector. 
+* the prices vector.
 *
 * \author Josh Lurz
 * \param goodName The goodName of the market for which to set new prices.
@@ -325,7 +325,7 @@ int Marketplace::resetToPriceMarket( const int aMarketNumber ) {
 * \param prices A vector containing prices to set into the market. 
 */
 void Marketplace::setPriceVector( const string& goodName, const string& regionName,
-                                 const vector<double>& prices ){
+                                 const objects::PeriodVector<Value>& prices ){
     // determine what market the region and good are in.
     const int marketNumber = mMarketLocator->getMarketNumber( regionName, goodName );
     if( marketNumber == MarketLocator::MARKET_NOT_FOUND ){

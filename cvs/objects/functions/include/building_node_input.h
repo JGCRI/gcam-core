@@ -404,9 +404,6 @@ protected:
         //! temporary value used during demand calculations
         DEFINE_VARIABLE( SIMPLE, "subregional-income", mCurrentSubregionalIncome, Value ),
 
-        //! Stored trial internal gains trial supply for reporting
-        DEFINE_VARIABLE( ARRAY, "internal-gains-trial-supply", mInternalGainsTrialSupply, objects::PeriodVector<double> ),
-
         //! The sum product of energy service price necessary to drive demands.
         DEFINE_VARIABLE( ARRAY | STATE, "price", mPrice, objects::PeriodVector<Value> )
     )

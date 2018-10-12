@@ -2089,22 +2089,7 @@ void XMLDBOutputter::writeItemUsingYear( const string& aName,
  * \author Sonny Kim
  */
 bool XMLDBOutputter::isTechnologyOperating( const int aPeriod ){
-    bool isOperating = false;
-    // If operating and has output greater than zero.
-    if( mCurrentTechnology->mProductionState[ aPeriod ] && mCurrentTechnology->mProductionState[ aPeriod ]->isOperating() ){
-        //if( mCurrentTechnology->getOutput( aPeriod ) > 0 ){
-            isOperating = true;
-        //}
-    }
-    // If not operating but is fixed output.
-    else {
-        if( mCurrentTechnology->mFixedOutput != IProductionState::fixedOutputDefault() ){
-            if( mCurrentTechnology->getOutput( aPeriod ) > 0 ){
-                isOperating = true;
-            }
-        }
-    }
-    return isOperating;
+    return mCurrentTechnology->isOperating( aPeriod );
 }
 
 /**

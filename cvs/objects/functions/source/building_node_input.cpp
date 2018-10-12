@@ -65,8 +65,7 @@ using namespace xercesc;
 extern Scenario* scenario;
 
 //! Default Constructor
-BuildingNodeInput::BuildingNodeInput():
-mInternalGainsTrialSupply( 0.001 )
+BuildingNodeInput::BuildingNodeInput()
 {
     mSatiationDemandFunction = 0;
 }
@@ -124,9 +123,6 @@ void BuildingNodeInput::XMLParse( const xercesc::DOMNode* node ) {
         else if ( nodeName == "internal-gains-unit" ) {
             mInternalGainsUnit = XMLHelper<string>::getValue( curr );
         }
-        else if ( nodeName == "internal-gains-trial-supply" ) {
-            XMLHelper<double>::insertValueIntoVector( curr, mInternalGainsTrialSupply, scenario->getModeltime() );
-        }
         else if( nodeName == SatiationDemandFunction::getXMLNameStatic() ) {
             parseSingleNode( curr, mSatiationDemandFunction, new SatiationDemandFunction );
         }
@@ -150,8 +146,6 @@ void BuildingNodeInput::completeInit( const string& aRegionName, const string& a
         // set initial trial supplies from the parsed vector
         Marketplace* marketplace = scenario->getMarketplace();
         const string trialMarketName = SectorUtils::getTrialMarketName( mInternalGainsMarketname );
-        marketplace->setPriceVector( trialMarketName, aRegionName,
-            convertToVector( mInternalGainsTrialSupply ) );
         // Note tech name is the name of the consumer which in GCAM is called
         // directly and so should be the name used in dependency tracking.
         marketplace->getDependencyFinder()->addDependency( aTechName, aRegionName, trialMarketName, aRegionName );
@@ -263,7 +257,6 @@ void BuildingNodeInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTab
     XMLWriteElement( mPriceExponent[ aPeriod ], "price-exponent", aOut, aTabs );
     XMLWriteElement( mShellConductance[ aPeriod ], "shell-conductance", aOut, aTabs );
     XMLWriteElement( mFloorToSurfaceRatio[ aPeriod ], "floor-to-surface-ratio", aOut, aTabs );
-    XMLWriteElement( mInternalGainsTrialSupply[ aPeriod ], "internal-gains-trial-supply", aOut, aTabs );
     XMLWriteElement( mPrice[ aPeriod ], "price", aOut, aTabs );
 
     XMLWriteElement( mFunctionType, "prodDmdFnType", aOut, aTabs );
