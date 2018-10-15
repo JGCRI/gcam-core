@@ -278,6 +278,7 @@
 		CD8FDEC91C0647140099C752 /* pass_through_sector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD8FDEC81C0647140099C752 /* pass_through_sector.cpp */; };
 		CD8FDECC1C0647A20099C752 /* pass_through_technology.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD8FDECB1C0647A20099C752 /* pass_through_technology.cpp */; };
 		CD966E751D92F1CD00A93938 /* libhector-lib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD966E721D92F1BB00A93938 /* libhector-lib.a */; };
+		CDAACD88216C546D00D13FD6 /* supply_demand_curve_saver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDAACD87216C546D00D13FD6 /* supply_demand_curve_saver.cpp */; };
 		CDAF62F0130DAB6900D93AFB /* MAGICC_array.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDAF62EC130DAB6900D93AFB /* MAGICC_array.cpp */; };
 		CDAF62F1130DAB6900D93AFB /* MAGICC_IO_helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDAF62ED130DAB6900D93AFB /* MAGICC_IO_helpers.cpp */; };
 		CDAF62F2130DAB6900D93AFB /* ObjECTS_MAGICC_others.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDAF62EE130DAB6900D93AFB /* ObjECTS_MAGICC_others.cpp */; };
@@ -993,6 +994,8 @@
 		CD8FDECA1C0647640099C752 /* pass_through_technology.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pass_through_technology.h; sourceTree = "<group>"; };
 		CD8FDECB1C0647A20099C752 /* pass_through_technology.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pass_through_technology.cpp; sourceTree = "<group>"; };
 		CD966E671D92F1BB00A93938 /* hector.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = hector.xcodeproj; path = ../../climate/source/hector/project_files/Xcode/hector.xcodeproj; sourceTree = "<group>"; };
+		CDAACD84216C545F00D13FD6 /* supply_demand_curve_saver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = supply_demand_curve_saver.h; sourceTree = "<group>"; };
+		CDAACD87216C546D00D13FD6 /* supply_demand_curve_saver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = supply_demand_curve_saver.cpp; sourceTree = "<group>"; };
 		CDAF62EA130DAB6100D93AFB /* MAGICC_array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAGICC_array.h; sourceTree = "<group>"; };
 		CDAF62EB130DAB6100D93AFB /* ObjECTS_MAGICC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjECTS_MAGICC.h; sourceTree = "<group>"; };
 		CDAF62EC130DAB6900D93AFB /* MAGICC_array.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MAGICC_array.cpp; sourceTree = "<group>"; };
@@ -2229,6 +2232,7 @@
 		CD4886CA122873C200F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
+				CDAACD84216C545F00D13FD6 /* supply_demand_curve_saver.h */,
 				CD2420002162D2250071DB2B /* initialize_tech_vector_helper.hpp */,
 				0E3C49651EC4BBC6005EDC19 /* iyeared.h */,
 				0E3C49661EC4BBC6005EDC19 /* manage_state_variables.hpp */,
@@ -2278,6 +2282,7 @@
 		CD4886EE122873C200F5A88A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				CDAACD87216C546D00D13FD6 /* supply_demand_curve_saver.cpp */,
 				CD2420012162D2310071DB2B /* initialize_tech_vector_helper.cpp */,
 				0E3C49691EC4BBD8005EDC19 /* manage_state_variables.cpp */,
 				0E05C9001E435B3600C73D94 /* gcam_fusion.cpp */,
@@ -2538,6 +2543,7 @@
 				CD488754122873C200F5A88A /* co2_emissions.cpp in Sources */,
 				CD488755122873C200F5A88A /* emissions_driver_factory.cpp in Sources */,
 				CD488756122873C200F5A88A /* emissions_summer.cpp in Sources */,
+				CDAACD88216C546D00D13FD6 /* supply_demand_curve_saver.cpp in Sources */,
 				CD488758122873C200F5A88A /* ghg_factory.cpp in Sources */,
 				CD693FA01AEFE0CE00805384 /* relative_cost_logit.cpp in Sources */,
 				CD48875B122873C200F5A88A /* input_driver.cpp in Sources */,

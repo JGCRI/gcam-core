@@ -112,7 +112,7 @@ public:
     bool hasSingularUnsolved();
     void unsetBisectedFlag();
     void printUnsolved( std::ostream& out );
-    void findAndPrintSD( World* aWorld, Marketplace* aMarketplace, const int aPeriod, ILogger& aLogger );
+    void findAndPrintSD( World* aWorld, Marketplace* aMarketplace, const int aPeriod, std::ostream& aOut );
     void printMarketInfo( const std::string& comment, const double worldCalcCount, std::ostream& out ) const;
     void printDerivatives( std::ostream& aOut ) const;
 

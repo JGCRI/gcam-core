@@ -1058,6 +1058,9 @@
     <ClCompile Include="..\..\emissions\source\readin_control.cpp">
       <Filter>Source Files\emissions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\util\base\source\supply_demand_curve_saver.cpp">
+      <Filter>Source Files\util\base</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\util\base\source\initialize_tech_vector_helper.cpp">
       <Filter>Source Files\util\base</Filter>
     </ClCompile>
@@ -2178,6 +2181,9 @@
     </ClInclude>
     <ClInclude Include="..\..\emissions\include\readin_control.h">
       <Filter>Header Files\emissions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\util\base\include\supply_demand_curve_saver.h">
+      <Filter>Header Files\util\base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\util\base\include\initialize_tech_vector_helper.hpp">
       <Filter>Header Files\util\base</Filter>

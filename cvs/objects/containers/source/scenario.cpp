@@ -65,6 +65,7 @@
 #include "solution/util/include/solution_info_param_parser.h" 
 #include "containers/include/imodel_feedback_calc.h"
 #include "util/base/include/manage_state_variables.hpp"
+#include "util/base/include/supply_demand_curve_saver.h"
 
 #if GCAM_PARALLEL_ENABLED && PARALLEL_DEBUG
 #include <stdlib.h>
@@ -169,6 +170,9 @@ bool Scenario::XMLParse( const DOMNode* node ){
         }
         else if( nodeName == SolutionInfoParamParser::getXMLNameStatic() ) {
             parseSingleNode( curr, mSolutionInfoParamParser, new SolutionInfoParamParser );
+        }
+        else if ( nodeName == SupplyDemandCurveSaver::getXMLNameStatic()) {
+            parseContainerNode( curr, mModelFeedbacks, new SupplyDemandCurveSaver );
         }
         
         /*!
@@ -467,9 +471,6 @@ bool Scenario::calculatePeriod( const int aPeriod,
     
     
     bool success = solve( aPeriod ); // solution uses Bisect and NR routine to clear markets
-    
-    delete mManageStateVars;
-    mManageStateVars = 0;
 
     mWorld->postCalc( aPeriod );
         
@@ -500,6 +501,9 @@ bool Scenario::calculatePeriod( const int aPeriod,
         writeDebuggingFiles( aXMLDebugFile, aTabs, aPeriod );
     }
 
+    delete mManageStateVars;
+    mManageStateVars = 0;
+    
     return success;
 }
 
