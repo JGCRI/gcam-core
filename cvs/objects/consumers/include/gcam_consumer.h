@@ -143,6 +143,8 @@ protected:
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     // not sure what this is for
     bool isCoefBased() const { return true; }
+    
+    void initTechVintageVector();
 };
 
 #endif // _GCAM_CONSUMER_H_

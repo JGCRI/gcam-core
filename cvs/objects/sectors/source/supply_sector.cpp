@@ -163,7 +163,7 @@ void SupplySector::setMarket() {
     // cannot be members of multi-region markets.
     if( marketplace->createMarket( mRegionName, mRegionName, mName, IMarketType::NORMAL ) ) {
         // Initialize prices for markets
-        marketplace->setPriceVector( mName, mRegionName, convertToVector( mPrice ) );
+        marketplace->setPriceVector( mName, mRegionName, mPrice );
 
         // Set price and output units for period 0 market info
         IInfo* marketInfo = marketplace->getMarketInfo( mName, mRegionName, 0, true );

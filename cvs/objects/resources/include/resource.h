@@ -125,6 +125,8 @@ protected:
     void setMarket( const std::string& aRegionName );
     virtual void annualsupply( const std::string& aRegionName, int aPeriod, const GDP* aGdp, double aPrice, double aPrevPrice );
     void cumulsupply( double aPrice, int aPeriod );
+    
+    void initTechVintageVector();
 private:
     static const std::string XML_NAME; //!< node name for toXML methods
 };

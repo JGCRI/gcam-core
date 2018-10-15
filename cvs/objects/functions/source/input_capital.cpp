@@ -202,7 +202,7 @@ void InputCapital::completeInit( const string& aRegionName,
     // levelized capital cost.
     // These costs may be adjusted by the Technology, for instance for capture
     // penalties.
-    mAdjustedCosts.assign( mAdjustedCosts.size(), mLevelizedCapitalCost );
+    fill( mAdjustedCosts.begin(), mAdjustedCosts.end(), mLevelizedCapitalCost );
 }
 
 /** Calculate the levelizd capital cost.

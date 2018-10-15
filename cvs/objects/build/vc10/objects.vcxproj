@@ -734,6 +734,7 @@
     <ClCompile Include="..\..\util\base\source\configuration.cpp" />
     <ClCompile Include="..\..\util\base\source\fixed_interpolation_function.cpp" />
     <ClCompile Include="..\..\util\base\source\gcam_fusion.cpp" />
+    <ClCompile Include="..\..\util\base\source\initialize_tech_vector_helper.cpp" />
     <ClCompile Include="..\..\util\base\source\input_finder.cpp" />
     <ClCompile Include="..\..\util\base\source\interpolation_function_factory.cpp" />
     <ClCompile Include="..\..\util\base\source\interpolation_rule.cpp" />
@@ -1088,6 +1089,7 @@
     <ClInclude Include="..\..\util\base\include\hash_map.h" />
     <ClInclude Include="..\..\util\base\include\iinterpolation_function.h" />
     <ClInclude Include="..\..\util\base\include\inamed.h" />
+    <ClInclude Include="..\..\util\base\include\initialize_tech_vector_helper.hpp" />
     <ClInclude Include="..\..\util\base\include\input_finder.h" />
     <ClInclude Include="..\..\util\base\include\interpolation_function_factory.h" />
     <ClInclude Include="..\..\util\base\include\interpolation_rule.h" />

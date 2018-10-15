@@ -161,7 +161,7 @@ protected:
         IOutput,
 
         //! Physical output by period.
-        DEFINE_VARIABLE( ARRAY | STATE, "physical-output", mPhysicalOutputs, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE, "physical-output", mPhysicalOutputs, objects::TechVintageVector<Value> ),
 
         //! Name of the primary output. This is the same as the sector name.
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),

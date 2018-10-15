@@ -69,6 +69,8 @@
 #include "functions/include/iinput.h"
 #include "sectors/include/sector_utils.h"
 
+#include "util/base/include/initialize_tech_vector_helper.hpp"
+
 
 using namespace std;
 using namespace xercesc;
@@ -288,6 +290,8 @@ void Resource::completeInit( const string& aRegionName, const IInfo* aRegionInfo
     // Create a single primary output for the resource output.
     mOutputs.insert( mOutputs.begin(), new PrimaryOutput( mName ) );
     
+    initTechVintageVector();
+    
     for( unsigned int i = 0; i < mGHG.size(); i++ ) {
         mGHG[ i ]->completeInit( aRegionName, mName, mResourceInfo.get() );
     }
@@ -357,7 +361,7 @@ void Resource::setMarket( const string& aRegionName ) {
         pMarketInfo->setString( "price-unit", mPriceUnit );
         pMarketInfo->setString( "output-unit", mOutputUnit );
 
-        pMarketplace->setPriceVector( mName, aRegionName, convertToVector( mResourcePrice ) );
+        pMarketplace->setPriceVector( mName, aRegionName, mResourcePrice );
         for( int period = 0; period < pModeltime->getmaxper(); ++period ){
         
             // TODO: Remove or improve this. Intermittent technologies need to know during initCalc 
@@ -765,4 +769,16 @@ void RenewableResource::annualsupply( const string& aRegionName, int aPeriod, co
         // add capacity factor to marketinfo
         marketInfo->setDouble( "resourceCapacityFactor", mResourceCapacityFactor[ aPeriod ] );
     }
+}
+
+/*!
+ * \brief Initialize any TechVintageVector in any object that may be contained
+ *        in this class.
+ * \details Resource does not have vintaging so the vectors will be sized for
+ *          the entire model time.
+ */
+void Resource::initTechVintageVector() {
+    const Modeltime* modeltime = scenario->getModeltime();
+    objects::InitializeTechVectorHelper helper( 0, modeltime->getmaxper() );
+    helper.initializeTechVintageVector( this );
 }

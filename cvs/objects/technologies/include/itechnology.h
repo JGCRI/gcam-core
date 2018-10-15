@@ -212,6 +212,8 @@ public:
     virtual double calcFuelPrefElasticity( const int aPeriod ) const = 0;
     
     virtual void doInterpolations( const Technology* aPrevTech, const Technology* aNextTech ) = 0;
+    
+    virtual void initTechVintageVector() { }
 
     protected:
 

@@ -53,7 +53,8 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
              "L212.FORESTEmissionsFactors_BCOC_FF_prot",
              "L212.FORESTEmissionsFactors_BCOC_FF_noprot",
              "L212.FORESTEmissionsFactors_BCOC_D_prot",
-             "L212.FORESTEmissionsFactors_BCOC_D_noprot"))
+             "L212.FORESTEmissionsFactors_BCOC_D_noprot",
+             "L212.FORESTEmissionsFactors_future_prot"))
   } else if(command == driver.MAKE) {
 
     # Silencing package checks
@@ -227,6 +228,11 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
 
     L212.FORESTEmissionsFactors_BCOC_prot <- L212.FORESTEmissionsFactors_BCOC %>%
       mutate(UnmanagedLandTechnology = paste0("Protected", UnmanagedLandTechnology))
+
+    # Create future emissions factors for protected lands
+    L212.FORESTEmissionsFactors_future_prot <- L212.FORESTEmissionsFactors_future %>%
+      mutate(UnmanagedLandTechnology = paste0("Protected", UnmanagedLandTechnology))
+
     # ===================================================
     # Produce outputs
     L212.AgSupplySector %>%
@@ -326,6 +332,16 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
                      "L124.nonco2_tg_R_forest_Y_GLU", "water/basin_to_country_mapping",
                      "L124.deforest_coefs", "L125.deforest_coefs_bcoc") ->
       L212.FORESTEmissionsFactors_future
+
+    L212.FORESTEmissionsFactors_future_prot %>%
+      add_title("Future BC/OC Emissions Coefficients-Deforestation for Protected Lands") %>%
+      add_units("kg/m2/yr") %>%
+      add_comments("L212.default_coefs values added to first future year") %>%
+      add_legacy_name("L212.FORESTEmissionsFactors_future") %>%
+      add_precursors("common/GCAM_region_names", "emissions/A_regions",
+                     "L124.nonco2_tg_R_forest_Y_GLU", "water/basin_to_country_mapping",
+                     "L124.deforest_coefs", "L125.deforest_coefs_bcoc") ->
+      L212.FORESTEmissionsFactors_future_prot
 
     L212.ItemName_prot %>%
       add_title("Mapping File for Protected Unmanaged Land") %>%
@@ -457,7 +473,7 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
                 L212.FORESTEmissions_D_prot, L212.FORESTEmissions_D_noprot, L212.GRASSEmissionsFactors_BCOC_prot,
                 L212.GRASSEmissionsFactors_BCOC_noprot, L212.FORESTEmissionsFactors_BCOC_FF_prot,
                 L212.FORESTEmissionsFactors_BCOC_FF_noprot, L212.FORESTEmissionsFactors_BCOC_D_prot,
-                L212.FORESTEmissionsFactors_BCOC_D_noprot)
+                L212.FORESTEmissionsFactors_BCOC_D_noprot, L212.FORESTEmissionsFactors_future_prot)
   } else {
     stop("Unknown command")
   }

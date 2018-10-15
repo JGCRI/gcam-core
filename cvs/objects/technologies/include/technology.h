@@ -271,6 +271,8 @@ public:
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     
     virtual void doInterpolations( const Technology* aPrevTech, const Technology* aNextTech );
+    
+    virtual void initTechVintageVector();
 protected:
     
     // Define data such that introspection utilities can process the data from this
@@ -311,7 +313,7 @@ protected:
          * \note calcCost must be called in an iteration before this value is valid.
          * \sa Technology::calcCost
          */
-        DEFINE_VARIABLE( ARRAY | STATE, "cost", mCosts, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE, "cost", mCosts, objects::TechVintageVector<Value> ),
 
         //! A map of a keyword to its keyword group
         DEFINE_VARIABLE( SIMPLE, "keyword", mKeywordMap, std::map<std::string, std::string> ),
@@ -394,6 +396,7 @@ protected:
     virtual const IInfo* getTechInfo() const;
     int calcDefaultLifetime() const;
     void copy( const Technology& techIn );
+    
 private:
     void init();
     void clear();

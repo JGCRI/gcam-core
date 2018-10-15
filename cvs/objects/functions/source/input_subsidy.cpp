@@ -93,9 +93,9 @@ const string& InputSubsidy::getXMLReportingName() const{
 }
 
 //! Constructor
-InputSubsidy::InputSubsidy():
-mAdjustedCoefficients( Value( 1.0 ) )
+InputSubsidy::InputSubsidy()
 {
+    TechVectorParseHelper<Value>::setDefaultValue( Value( 1.0 ), mAdjustedCoefficients );
 }
 
 /*!

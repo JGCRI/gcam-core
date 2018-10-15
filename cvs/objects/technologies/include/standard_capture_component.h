@@ -161,7 +161,7 @@ protected:
         ICaptureComponent,
 
         //! Sequestered quantity by period.
-        DEFINE_VARIABLE( ARRAY | STATE, "sequestered-amount", mSequesteredAmount, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE, "sequestered-amount", mSequesteredAmount, objects::TechVintageVector<Value> ),
 
         //! Name of the storage market.
         DEFINE_VARIABLE( SIMPLE, "storage-market", mStorageMarket, std::string ),
