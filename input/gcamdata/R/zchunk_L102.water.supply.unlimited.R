@@ -44,7 +44,7 @@ module_water_L102.water.supply.unlimited <- function(command, ...) {
         water_type == "water consumption" ~ water.DEFAULT_UNLIMITED_WATER_PRICE,
         water_type == "water withdrawals" ~ water.DEFAULT_UNLIMITED_WITHD_WATER_PRICE
       )) ->
-      L102.unlimited_mapped_water_price_R_W_Y_75USDm3
+      L102.unlimited_mapped_water_price_B_W_Y_75USDm3
 
     # nonmapped water types
     expand.grid(GCAM_region_ID = GCAM_region_names[["GCAM_region_ID"]],
@@ -58,23 +58,23 @@ module_water_L102.water.supply.unlimited <- function(command, ...) {
 
     # Produce outputs
 
-    L102.unlimited_mapped_water_price_R_W_Y_75USDm3 %>%
+    L102.unlimited_mapped_water_price_B_W_Y_75USDm3 %>%
       add_title("Water price assumptions for mapped water types") %>%
       add_units("1975$/m3") %>%
       add_comments("Nominal default water prices") %>%
       add_legacy_name("L102.unlimited_mapped_water_price_R_W_Y_75USDm3") %>%
       add_precursors("water/basin_ID") ->
-      L102.unlimited_mapped_water_price_R_W_Y_75USDm3
+      L102.unlimited_mapped_water_price_B_W_Y_75USDm3
 
     L102.unlimited_nonmapped_water_price_R_W_Y_75USDm3 %>%
       add_title("Water price assumptions for nonmapped water types") %>%
       add_units("1975$/m3") %>%
       add_comments("Nominal default water prices") %>%
-      add_legacy_name("L102.unlimited_mapped_water_price_R_W_Y_75USDm3") %>%
+      add_legacy_name("L102.unlimited_nonmapped_water_price_R_W_Y_75USDm3") %>%
       add_precursors("common/GCAM_region_names") ->
       L102.unlimited_nonmapped_water_price_R_W_Y_75USDm3
 
-      return_data(L102.unlimited_mapped_water_price_R_W_Y_75USDm3,
+      return_data(L102.unlimited_mapped_water_price_B_W_Y_75USDm3,
                   L102.unlimited_nonmapped_water_price_R_W_Y_75USDm3)
 
 
