@@ -26,7 +26,8 @@ module_water_L232.water.demand.manufacturing <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    water_sector <- water_type <- region <- supplysector <- subsector <- technology <-
+    stub.technology <- subs.share.weight <- tech.share.weight <- share.weight.year <-
+      water_sector <- water_type <- region <- supplysector <- subsector <- technology <-
       year <- minicam.energy.input <- coefficient <- market.name <- calOutputValue <-
       water_km3 <- energy_EJ <- NULL  # silence package check notes
 
