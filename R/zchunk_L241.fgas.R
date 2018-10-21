@@ -85,7 +85,7 @@ module_emissions_L241.fgas <- function(command, ...) {
     # subsequent steps the USA emission factors will be used to estimate future
     # emission factors.
     L141.hfc_ef_cooling_2010 %>%
-      filter(region == "USA") %>%
+      filter(region == gcam.USA_REGION) %>%
       select(USA_factor = value, -region, year, Non.CO2, supplysector) ->
       L141.hfc_ef_cooling_2010_USA
 
