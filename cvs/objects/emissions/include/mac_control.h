@@ -81,7 +81,6 @@ protected:
     
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aCurrNode );
-    virtual void toInputXMLDerived( std::ostream& aOut, Tabs* aTabs ) const;
     virtual void toDebugXMLDerived( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
 
     virtual void calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP );
@@ -93,9 +92,6 @@ protected:
         
         //! Boolean indicating whether reductions should occur at a zero carbon price
         DEFINE_VARIABLE( SIMPLE, "no-zero-cost-reductions", mNoZeroCostReductions, bool ),
-        
-        //! Technology change, % improvement rate per year
-        DEFINE_VARIABLE( ARRAY, "tech-change", mTechChange, objects::PeriodVector<double> ),
         
         //! The underlying Curve (as read in)
         DEFINE_VARIABLE( CONTAINER, "mac-reduction", mMacCurve, PointSetCurve* ),
@@ -109,6 +105,12 @@ protected:
         //! Name of market who's price is used to look up the curve.
         DEFINE_VARIABLE( SIMPLE, "market-name", mPriceMarketName, std::string )
     )
+    
+    //! Technology change, % improvement rate per year
+    // Note ideally this would be included for GCAMFusion with the following definition however it is
+    // not currently able to handle smart pointers.
+    // DEFINE_VARIABLE( ARRAY, "tech-change", mTechChange, std::shared_ptr<objects::PeriodVector<double> > ),
+    std::shared_ptr<objects::PeriodVector<double> > mTechChange;
 
 private:
     void copy( const MACControl& other );

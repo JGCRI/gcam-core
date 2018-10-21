@@ -139,36 +139,6 @@ void GDP::XMLParse( const DOMNode* node ){
     }
 }
 
-//! Writes datamembers to datastream in XML format.
-void GDP::toInputXML( ostream& out, Tabs* tabs ) const {
-    XMLWriteOpeningTag( getXMLNameStatic(), out, tabs );
-
-    // GDP to PPP conversion factor. Why isn't constRatio just seperate?
-    map<string, double> attrs;
-    attrs[ "constRatio" ] = constRatio;
-    XMLWriteElementWithAttributes( PPPConversionFact, "PPPConvert", out, tabs, attrs );
-
-    // Write out base-year GDP
-    XMLWriteElement( baseGDP, "baseGDP", out, tabs);
-
-    // Write out gdp energy elasticity.
-    XMLWriteElementCheckDefault( mEnergyGDPElasticity, "e_GDP_elas", out, tabs, 0.0 );
-
-    // Write out gdp units.
-    XMLWriteElement( mGDPUnit, "GDP-unit", out, tabs );
-
-    const Modeltime* modeltime = scenario->getModeltime();
-    for( unsigned int iter = 0; iter < laborProdGrowthRate.size(); ++iter ){
-        XMLWriteElement( laborProdGrowthRate[ iter ], "laborproductivity", out, tabs, modeltime->getper_to_yr( iter ) );
-    }
-
-    for( unsigned int iter = 0; iter < laborForceParticipationPercent.size(); ++iter ){
-        XMLWriteElement( laborForceParticipationPercent[ iter ], "laborforce", out, tabs, modeltime->getper_to_yr( iter ) );
-    }
-
-    XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
-}
-
 //! Writes data members to debugging data stream in XML format.
 void GDP::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
@@ -274,7 +244,7 @@ void GDP::setupCalibrationMarkets( const string& regionName, const vector<double
         marketInfo->setString( "price-unit", "LaborProd" );
         marketInfo->setString( "output-unit", "LaborProd" );
 
-        vector<double> tempLFPs( modeltime->getmaxper() );
+        objects::PeriodVector<Value> tempLFPs;
         for( int i = 0; i < modeltime->getmaxper(); i++ ){
             tempLFPs[ i ] = pow( 1 + laborProdGrowthRate[ i ], modeltime->gettimestep( i ) );
         }
@@ -330,51 +300,6 @@ double GDP::getTotalLaborProductivity( const int period ) const {
 double GDP::getLaborForce( const int per ) const {
     assert( per >= 0 && per < scenario->getModeltime()->getmaxper() );
     return laborForce[ per ];
-}
-
-//! Write GDP info to text file
-void GDP::csvOutputFile( const string& regionName ) const {
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxPeriod = modeltime->getmaxper();
-    vector<double> temp( maxPeriod );
-
-   // function protocol
-void fileoutput3( string var1name,string var2name,string var3name,
-        string var4name,string var5name,string uname,vector<double> dout);
-
-    // write gdp to temporary array since not all will be sent to output
-    for ( int i = 0; i < maxPeriod; i++ ) {
-        temp[ i ] = laborProdGrowthRate[ i ];
-    }
-    fileoutput3( regionName," "," "," ", "labor prod", "%/yr", temp );   
-
-    // write gdp and adjusted gdp for region
-    fileoutput3(regionName," "," "," ","GDP",mGDPUnit,gdpValueAdjusted);
-    fileoutput3(regionName," "," "," ","GDPperCap","thousand90US$",gdpPerCapitaAdjusted);
-    fileoutput3(regionName," "," "," ","PPPperCap","thousand90US$",gdpPerCapitaAdjustedPPP);
-}
-
-//! MiniCAM output to file
-void GDP::dbOutput( const string& regionName ) const {
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxPeriod = modeltime->getmaxper();
-    vector<double> temp( maxPeriod );
-
-    // function protocol
-    void dboutput4(string var1name,string var2name,string var3name,string var4name,
-        string uname,vector<double> dout);
-
-    // labor productivity
-    for( int i = 0; i < maxPeriod; i++ ){
-        temp[ i ] = laborProdGrowthRate[ i ];
-    }
-    dboutput4( regionName, "General", "LaborProd", "GrowthRate", "perYr", temp );
-
-    // write gdp and adjusted gdp for region
-    dboutput4(regionName,"General","GDP90$","GDP(90mer)",mGDPUnit,gdpValueAdjusted);
-    dboutput4(regionName,"General","GDP90$","GDPApprox(90mer)",mGDPUnit,gdpValue);
-    dboutput4(regionName,"General","GDP","perCap","thousand90US$",gdpPerCapitaAdjusted);
-    dboutput4(regionName,"General","GDP90$","perCAP_PPP","thousand90US$",gdpPerCapitaAdjustedPPP);
 }
 
 /*! Calculate initial regional gdps.

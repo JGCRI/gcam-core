@@ -97,9 +97,6 @@ public:
 
     virtual bool isSameType( const std::string& aType ) const;
 
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const;
-
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
                              Tabs* aTabs ) const;
@@ -165,11 +162,11 @@ protected:
         MiniCAMInput,
         
         //! Physical Demand.
-        DEFINE_VARIABLE( ARRAY | STATE, "physical-demand", mPhysicalDemand, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE, "physical-demand", mPhysicalDemand, objects::TechVintageVector<Value> ),
         
         //! Current coefficient after adjustments have been made by the technology's
         //! capture component.
-        DEFINE_VARIABLE( ARRAY, "current-coef", mAdjustedCoefficients, objects::PeriodVector<Value> )
+        DEFINE_VARIABLE( ARRAY, "current-coef", mAdjustedCoefficients, objects::TechVintageVector<Value> )
     )
 
     //! Stash the current sector name for use in setPhysicalDemand

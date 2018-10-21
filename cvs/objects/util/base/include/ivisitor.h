@@ -75,7 +75,6 @@ class Expenditure;
 class AResource;
 class Scenario;
 class AGHG;
-class OutputMetaData;
 class Marketplace;
 class Market;
 class SubResource;
@@ -263,9 +262,6 @@ public:
 
     virtual void startVisitGHG( const AGHG* aGHG, const int aPeriod ) = 0;
     virtual void endVisitGHG( const AGHG* aGHG, const int aPeriod ) = 0;
-    
-    virtual void startVisitOutputMetaData( const OutputMetaData* aOutputMetaData, const int aPeriod ) = 0;
-    virtual void endVisitOutputMetaData( const OutputMetaData* aOutputMetaData, const int aPeriod ) = 0;
     
     virtual void startVisitMarketplace( const Marketplace* aMarketplace, const int aPeriod ) = 0;
     virtual void endVisitMarketplace( const Marketplace* aMarketplace, const int aPeriod ) = 0;

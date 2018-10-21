@@ -73,7 +73,6 @@ public:
 
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
-    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
 
     virtual const std::string& getXMLName() const;
 
@@ -100,14 +99,6 @@ protected:
     DEFINE_DATA_WITH_PARENT(
         ASimpleCarbonCalc,
                             
-        //! Actual above ground carbon content by year.  Note that these are for
-        //! GCAM model years only since historical years have a seperate value.
-        DEFINE_VARIABLE( ARRAY, "actual-above-ground-carbon-density", mAboveGroundCarbon, objects::YearVector<double> ),
-        
-        //! Actual below ground carbon content by year.  Note that these are for
-        //! GCAM model years only since historical years have a seperate value.
-        DEFINE_VARIABLE( ARRAY, "actual-below-ground-carbon-density", mBelowGroundCarbon, objects::YearVector<double> ),
-        
         //! Average above ground carbon content (read in).
         DEFINE_VARIABLE( SIMPLE, "above-ground-carbon-density", mAvgAboveGroundCarbon, double ),
         

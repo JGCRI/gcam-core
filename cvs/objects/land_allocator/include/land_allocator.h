@@ -83,9 +83,6 @@ public:
                              std::ostream& aOut,
                              Tabs* aTabs ) const;
     
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const;
-    
     virtual double getLandAllocation( const std::string& aProductName,
                                       const int aPeriod ) const;
 
@@ -137,9 +134,6 @@ protected:
 
     virtual bool XMLDerivedClassParse( const std::string& aNodeName,
                                        const xercesc::DOMNode* aCurr );
-
-    virtual void toInputXMLDerived( std::ostream& aOutput,
-                                    Tabs* aTabs ) const;
 
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.

@@ -75,7 +75,6 @@ public:
     ~Accelerator();
     void XMLParse( const xercesc::DOMNode* node ); 
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
     void completeInit( const std::string& aRegionName, const std::string& aSectorName );
     void initCalc( std::vector<IInvestable*>& aInvestables,

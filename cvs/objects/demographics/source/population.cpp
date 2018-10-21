@@ -128,21 +128,6 @@ void Population::XMLParse( const xercesc::DOMNode* node ){
     }
 }
 
-//! Write out data members to XML output stream.
-void Population::toInputXML( std::ostream& out, Tabs* tabs ) const {
-    XMLWriteOpeningTag ( getXMLName(), out, tabs , "", mYear);
-
-    XMLWriteElement( mPopulationUnit, "population-unit", out, tabs );
-    XMLWriteElementCheckDefault( mTotalPop, "totalPop", out, tabs );
-    XMLWriteElementCheckDefault( mWorkingAgeMin, "min-working-age", out, tabs, WORKING_AGE_MIN_DEFAULT );
-    XMLWriteElementCheckDefault( mWorkingAgeMax, "max-working-age", out, tabs, WORKING_AGE_MAX_DEFAULT );
-    // write out variables for derived classes
-    toInputXMLDerived( out, tabs );
-
-    // finished writing xml for the class members.
-    XMLWriteClosingTag( getXMLName(), out, tabs );
-}
-
 //! Write out XML for debugging purposes.
 void Population::toDebugXML( std::ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag ( getXMLName(), out, tabs , "", mYear);
@@ -156,12 +141,6 @@ void Population::toDebugXML( std::ostream& out, Tabs* tabs ) const {
 
     // finished writing xml for the class members.
     XMLWriteClosingTag( getXMLName(), out, tabs );
-}
-
-void Population::csvSGMOutputFile( ostream& aFile, const int period ) const {
-    aFile << "Population Data Total" << endl;
-    aFile << "Year" << ',' << "Total" << endl;
-    aFile << mYear << ',' << mTotalPop << endl << endl;
 }
 
 /*! \brief Update a Visitor with information about a Population.

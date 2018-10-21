@@ -69,6 +69,8 @@
 #include "functions/include/iinput.h"
 #include "sectors/include/sector_utils.h"
 
+#include "util/base/include/initialize_tech_vector_helper.hpp"
+
 
 using namespace std;
 using namespace xercesc;
@@ -197,40 +199,6 @@ void Resource::XMLParse( const DOMNode* node ){
     }
 }
 
-//! Write data members to data stream in XML format for replicating input file.
-void Resource::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( getXMLName(), aOut, aTabs, mName );
-
-    // write the xml for the class members.
-    XMLWriteElement( mOutputUnit, "output-unit", aOut, aTabs );
-    XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
-    XMLWriteElement( mMarket, "market", aOut, aTabs );
-    if( !mKeywordMap.empty() ) {
-        XMLWriteElementWithAttributes( "", "keyword", aOut, aTabs, mKeywordMap );
-    }
-
-    if ( mObjectMetaInfo.size() ) {
-        for ( object_meta_info_vector_type::const_iterator metaInfoIterItem = mObjectMetaInfo.begin();
-            metaInfoIterItem != mObjectMetaInfo.end(); 
-            ++metaInfoIterItem ) {
-                metaInfoIterItem->toInputXML( aOut, aTabs );
-            }
-    }
-
-    // write out resource prices for base period only
-    XMLWriteVector( mResourcePrice, "price", aOut, aTabs, scenario->getModeltime() );
-    // write out the subresource objects.
-    for( vector<SubResource*>::const_iterator i = mSubResource.begin(); i != mSubResource.end(); i++ ){
-        ( *i )->toInputXML( aOut, aTabs );
-    }
-    for( CGHGIterator iter = mGHG.begin(); iter != mGHG.end(); ++iter ) {
-        ( *iter )->toInputXML( aOut, aTabs );
-    }
-
-    // finished writing xml for the class members.
-    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
-}
-
 //! Write data members to data stream in XML format for debugging.
 void Resource::toDebugXML( const int period, ostream& aOut, Tabs* aTabs ) const {
 
@@ -246,7 +214,7 @@ void Resource::toDebugXML( const int period, ostream& aOut, Tabs* aTabs ) const 
         for ( object_meta_info_vector_type::const_iterator metaInfoIterItem = mObjectMetaInfo.begin();
             metaInfoIterItem != mObjectMetaInfo.end(); 
             ++metaInfoIterItem ) {
-                metaInfoIterItem->toInputXML( aOut, aTabs );
+                metaInfoIterItem->toDebugXML( period, aOut, aTabs );
             }
     }
 
@@ -322,6 +290,8 @@ void Resource::completeInit( const string& aRegionName, const IInfo* aRegionInfo
     // Create a single primary output for the resource output.
     mOutputs.insert( mOutputs.begin(), new PrimaryOutput( mName ) );
     
+    initTechVintageVector();
+    
     for( unsigned int i = 0; i < mGHG.size(); i++ ) {
         mGHG[ i ]->completeInit( aRegionName, mName, mResourceInfo.get() );
     }
@@ -391,7 +361,7 @@ void Resource::setMarket( const string& aRegionName ) {
         pMarketInfo->setString( "price-unit", mPriceUnit );
         pMarketInfo->setString( "output-unit", mOutputUnit );
 
-        pMarketplace->setPriceVector( mName, aRegionName, convertToVector( mResourcePrice ) );
+        pMarketplace->setPriceVector( mName, aRegionName, mResourcePrice );
         for( int period = 0; period < pModeltime->getmaxper(); ++period ){
         
             // TODO: Remove or improve this. Intermittent technologies need to know during initCalc 
@@ -510,75 +480,6 @@ double Resource::getAnnualProd( const string& aRegionName, const int aPeriod ) c
 //! Return price of resources.
 double Resource::getPrice( const int aPeriod ) const {
     return mResourcePrice[ aPeriod ];
-}
-
-//! Write resource output to file.
-void Resource::csvOutputFile( const string& regname )
-{
-    // function protocol
-    void fileoutput3( string var1name,string var2name,string var3name,
-        string var4name,string var5name,string uname,vector<double> dout);
-
-    // function arguments are variable name, double array, db name, table name
-    // the function writes all years
-    // total sector output
-    fileoutput3( regname,mName," "," ","production",mOutputUnit,convertToVector(mAnnualProd));
-
-    // do for all subsectors in the sector
-    for (int i=0;i<mSubResource.size();i++) {
-        mSubResource[i]->csvOutputFile(regname ,mName);
-    }
-}
-
-//! Write resource output to database.
-void Resource::dbOutput( const string& regname ) {
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-    vector<double> temp(maxper);
-    // function protocol
-    void dboutput4(string var1name,string var2name,string var3name,string var4name,
-        string uname,vector<double> dout);
-    // resource price
-    dboutput4(regname,"Price","by Sector",mName,mPriceUnit,convertToVector(mResourcePrice));
-    // do for all subsectors in the sector
-    temp.assign( temp.size(), 0.0 );
-    for (int m=0;m<maxper;m++) {
-        for (int i=0;i<mSubResource.size();i++) {
-            temp[m] += mSubResource[i]->getCumulProd(m);
-        }
-    }
-    dboutput4(regname,"Resource","CummProd "+mName,"zTotal",mOutputUnit,temp);
-
-    temp.assign( temp.size(), 0.0 );
-    for (int m=0;m<maxper;m++) {
-        for (int i=0;i<mSubResource.size();i++) {
-            temp[m] += mSubResource[i]->getAnnualProd(m);
-        }
-    }
-    dboutput4(regname,"Resource","annual-production", mName, mOutputUnit, temp);
-
-    temp.assign( temp.size(), 0.0 );
-    // do for all subsectors in the sector
-    for (int m=0;m<maxper;m++) {
-        for (int i=0;i<mSubResource.size();i++) {
-            temp[m] += mSubResource[i]->getAvailable(m);
-        }
-    }
-    dboutput4(regname,"Resource","Available "+mName,"zTotal",mOutputUnit,temp);
-    
-    for( unsigned int i = 0; i < mGHG.size(); ++i ) {
-        // no inputs and capture components
-        temp.assign( temp.size(), 0.0 );
-        for (int period = 0; period < maxper; ++period) {
-            temp[period] += mGHG[i]->getEmission( period );
-        }
-        dboutput4(regname,"Emissions","Rsc-"+mName,mGHG[i]->getName(),"Tg",temp);
-    }
-
-    // do for all subsectors in the sector
-    for (int i=0;i<mSubResource.size();i++) {
-        mSubResource[i]->dbOutput(regname,mName);
-    }
 }
 
 /*! \brief Update an output container for a Resource.
@@ -868,4 +769,16 @@ void RenewableResource::annualsupply( const string& aRegionName, int aPeriod, co
         // add capacity factor to marketinfo
         marketInfo->setDouble( "resourceCapacityFactor", mResourceCapacityFactor[ aPeriod ] );
     }
+}
+
+/*!
+ * \brief Initialize any TechVintageVector in any object that may be contained
+ *        in this class.
+ * \details Resource does not have vintaging so the vectors will be sized for
+ *          the entire model time.
+ */
+void Resource::initTechVintageVector() {
+    const Modeltime* modeltime = scenario->getModeltime();
+    objects::InitializeTechVectorHelper helper( 0, modeltime->getmaxper() );
+    helper.initializeTechVintageVector( this );
 }

@@ -105,12 +105,6 @@ bool DemandInput::XMLDerivedClassParse( const string& nodeName, const xercesc::D
     return true;
 }
 
-//! Output XML for derived class
-void DemandInput::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-    XMLWriteElement( mIncomeElasticity, "incomeElasticity", out, tabs );
-    XMLWriteElement( mPriceElasticity, "priceElasticity", out, tabs );
-}
-
 //! Output debug info to XML for derived class
 void DemandInput::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( mIncomeElasticity, "incomeElasticity", out, tabs );

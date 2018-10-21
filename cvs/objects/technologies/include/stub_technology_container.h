@@ -57,12 +57,10 @@
  *          of making adjustments to the local copy of the TechnologyContainer
  *          from the GlobalTechnologyDatabase.  The global technology will get
  *          copied during completeInit and adjustments will be made then by
- *          calling XMLParse on the copied container.  The global technology is
- *          not written back in toInputXML instead only the XML adjustments will
- *          be.  All other ITechnologyContainer calls are merely forwared to the
- *          local copy of the global technology.  The stub technology also allows
- *          interpolating a technology before making adjustments by setting the
- *          allow-interpolate attrubute to true.
+ *          calling XMLParse on the copied container.  All other ITechnologyContainer
+ *          calls are merely forwared to the local copy of the global technology.
+ *          The stub technology also allows  interpolating a technology before making
+ *          adjustments by setting the allow-interpolate attrubute to true.
  *
  *
  *          <b>XML specification for StubTechnologyContainer</b>
@@ -118,9 +116,6 @@ public:
     // IParsable methods
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
     
-    // IRoundTrippable methods
-    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
-    
     // IVisitable methods
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     
@@ -151,8 +146,6 @@ private:
     
     // typdef to help simplify code
     typedef std::vector<const xercesc::DOMNode*>::const_iterator CXMLIterator;
-    
-    static xercesc::DOMDocument* getDocumentToHoldNodes();
 };
 
 #endif // _STUB_TECHNOLOGY_CONTAINER_H_

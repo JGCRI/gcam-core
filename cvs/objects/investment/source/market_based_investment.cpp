@@ -140,18 +140,6 @@ void MarketBasedInvestor::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aT
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-/*! \brief Write the object to an XML output stream.
-* \param aOut The output stream to write to.
-* \param aTabs The object which tracks the number of tabs to write.
-*/
-void MarketBasedInvestor::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
-    XMLWriteVector( mFixedInvestments, "FixedInvestment", aOut, aTabs, scenario->getModeltime(), -1.0 );
-
-    XMLWriteElementCheckDefault( mInvestmentLogitExp, "InvestmentLogitExp", aOut, aTabs, 1.0 );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 /*! \brief Complete the initialization of the market based investor.
 * \details This function performs a series of tasks needed before it can be
 *          used. It stores the region and sector name, and then sets up the

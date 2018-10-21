@@ -46,13 +46,13 @@
  */
 #include <boost/core/noncopyable.hpp>
 
+#include "ccarbon_model/include/icarbon_calc.h"
 #include "util/base/include/iparsable.h"
-#include "util/base/include/iround_trippable.h"
 #include "util/base/include/default_visitor.h"
 #include "util/base/include/data_definition_util.h"
 
-class ICarbonCalc;
 class LandUseHistory;
+class Tabs;
 
 /*!
  * \brief A carbon calculator which simply drive the carbon calculation from leaves
@@ -74,7 +74,6 @@ class LandUseHistory;
  *          so that the carbon calculations are not incorrectly calculated twice.
  */
 class NodeCarbonCalc: public IParsable,
-                      public IRoundTrippable,
                       public DefaultVisitor,
                       private boost::noncopyable
 {
@@ -87,16 +86,17 @@ public:
     // IParsable methods
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
 
-    // IRoundTrippable methods
+    // IStandardComponent methods
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
-    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
 
     // DefaultVisitor methods
     virtual void startVisitNoEmissCarbonCalc( const NoEmissCarbonCalc* aNoEmissCarbonCalc, const int aPeriod );
     
     void completeInit();
     
-    void calc( const int aPeriod, const int aEndYear, const bool aStoreFullEmiss );
+    void initCalc( const int aPeriod );
+    
+    void calc( const int aPeriod, const int aEndYear, const ICarbonCalc::CarbonCalcMode aCalcMode );
     
 protected:
     

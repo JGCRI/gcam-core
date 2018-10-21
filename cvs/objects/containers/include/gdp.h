@@ -47,12 +47,12 @@
 #include <vector>
 #include <boost/core/noncopyable.hpp>
 
-#include "util/base/include/iround_trippable.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/value.h"
 #include "util/base/include/data_definition_util.h"
 
 class Demographic;
+class Tabs;
 
 /*! 
 * \ingroup Objects
@@ -66,21 +66,18 @@ class Demographic;
 * \author Josh Lurz, Sonny Kim, Steve Smith
 */
 
-class GDP: public IRoundTrippable, public IVisitable, private boost::noncopyable
+class GDP: public IVisitable, private boost::noncopyable
 {
     friend class XMLDBOutputter;
 public:
     GDP();
     void XMLParse( const xercesc::DOMNode* node );
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     void initData( const Demographic* regionalPop );
     void initialGDPcalc( const int period, const double population);
     static const std::string& getXMLNameStatic();
     void setupCalibrationMarkets( const std::string& regionName, const std::vector<double> aCalibrationGDPs  );
     void writeBackCalibratedValues( const std::string& regionName, const int period );
-    void csvOutputFile( const std::string& regionName ) const;
-    void dbOutput( const std::string& regionName ) const;
     void adjustGDP( const int period, const double priceratio );
     double getApproxGDPperCap( const int period ) const;
     double getApproxScaledGDPperCap( const int period ) const;

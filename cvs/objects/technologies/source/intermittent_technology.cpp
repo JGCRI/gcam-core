@@ -186,47 +186,16 @@ bool IntermittentTechnology::XMLDerivedClassParse( const string& aNodeName,
     else if( BackupCalculatorFactory::isOfType( aNodeName ) ){
         parseSingleNode( aCurr, mBackupCalculator, BackupCalculatorFactory::create( aNodeName ).release() );
     }
-    else if( aNodeName == "trial-market-price" ){
-        mTrialMarketPrice.set( XMLHelper<double>::getValue(aCurr) );
-    }
     else {
         return false;
     }
     return true;
 }
 
-void IntermittentTechnology::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteElement( mElectricSectorName, "electric-sector-name", aOut, aTabs);
-    XMLWriteElement( mElectricSectorMarket, "electric-sector-market", aOut, aTabs);
-    XMLWriteElementCheckDefault( mTrialMarketNameParsed, "trial-market-name", aOut, aTabs, string("") );
-    if( mBackupCapacityFactor.isInited() ){
-        XMLWriteElement( mBackupCapacityFactor.get(), "backup-capacity-factor", aOut, aTabs);
-    }
-    if( mBackupCapitalCost.isInited() ){
-        XMLWriteElement( mBackupCapitalCost.get(), "backup-capital-cost", aOut, aTabs);
-    }
-    if( mBackupCalculator ){
-        mBackupCalculator->toInputXML( aOut, aTabs );
-    }
-}   
-
-void IntermittentTechnology::toInputXMLForRestart( ostream& aOut, Tabs* aTabs ) const {
-    Technology::toInputXMLForRestart( aOut, aTabs );
-
-    XMLWriteOpeningTag( getXMLVintageNameStatic(), aOut, aTabs, "", mYear );
-    if( mTrialMarketPrice.isInited() ){
-        XMLWriteElementCheckDefault( mTrialMarketPrice.get(), "trial-market-price", aOut, aTabs, 0.001 );
-    }
-    XMLWriteClosingTag( getXMLVintageNameStatic(), aOut, aTabs );
-}
-
 void IntermittentTechnology::toDebugXMLDerived( const int period, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mElectricSectorName, "electric-sector-name", aOut, aTabs);
     XMLWriteElement( mElectricSectorMarket, "electric-sector-market", aOut, aTabs);
     XMLWriteElementCheckDefault( mTrialMarketNameParsed, "trial-market-name", aOut, aTabs, string("") );
-    if( mTrialMarketPrice.isInited() ){
-        XMLWriteElementCheckDefault( mTrialMarketPrice.get(), "trial-market-price", aOut, aTabs, 0.001 );
-    }
     if( mBackupCapacityFactor.isInited() ){
         XMLWriteElement( mBackupCapacityFactor.get(), "backup-capacity-factor", aOut, aTabs );
     }
@@ -319,15 +288,6 @@ void IntermittentTechnology::completeInit( const string& aRegionName,
                 << " in region " << aRegionName
                 << " did not read in a backup calculator. Backup costs will default to zero. " << endl;
     }
-    // Convert technology year to period
-    int period = scenario->getModeltime()->getyr_to_per( mYear );
-    // Initialize trial market price here instead of in initCalc to avoid
-    // price override.
-    if( mTrialMarketPrice.isInited() ){
-        scenario->getMarketplace()->setPrice( 
-            SectorUtils::getTrialMarketName(mTrialMarketName),
-            aRegionName, mTrialMarketPrice.get(), period, true );
-    }
     
     initializeInputLocations( aRegionName, aSectorName, 0 );
     MarketDependencyFinder* depFinder = scenario->getMarketplace()->getDependencyFinder();
@@ -360,16 +320,6 @@ void IntermittentTechnology::postCalc( const string& aRegionName,
 {
     // Use the base class postCalc.
     Technology::postCalc( aRegionName, aPeriod );
-    // Store trial market solution price 
-    if( mProductionState[ aPeriod ]->isNewInvestment() ) { // do only once
-        mTrialMarketPrice.set( scenario->getMarketplace()->getPrice(
-            SectorUtils::getTrialMarketName(mTrialMarketName),
-            aRegionName, aPeriod, true) );
-    }
-    // TODO: hack since interpolated intermittent technologies are written out
-    if( !mParsedShareWeight.isInited() ) {
-        mParsedShareWeight = mShareWeight;
-    }
 }
 
 /*! \brief Set intermittent technology outputs and inputs and shares for trial market.

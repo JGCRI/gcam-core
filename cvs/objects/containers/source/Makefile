@@ -13,9 +13,7 @@ OBJS       = batch_runner.o \
              info.o \
              info_factory.o \
              mac_generator_scenario_runner.o \
-             merge_runner.o \
              national_account.o \
-             output_meta_data.o \
              region.o \
              region_cge.o \
              region_minicam.o \

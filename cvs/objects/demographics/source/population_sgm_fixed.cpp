@@ -92,13 +92,6 @@ bool PopulationSGMFixed::XMLDerivedClassParse( const std::string& nodeName, cons
     return true;
 }
 
-//! Write out rest of data members to XML output stream.
-void PopulationSGMFixed::toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {
-    for( vector<AgeCohort *>::const_iterator i = ageCohort.begin(); i != ageCohort.end(); i++ ){
-        ( *i )->toInputXML( out, tabs );
-    }
-}
-
 //! Write out XML for debugging purposes.
 void PopulationSGMFixed::toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const {
     for( vector<AgeCohort *>::const_iterator i = ageCohort.begin(); i != ageCohort.end(); i++ ){
@@ -191,17 +184,6 @@ void PopulationSGMFixed::calcPop(){
     mTotalPop = totMalePop + totFemalePop;  
 }
 
-void PopulationSGMFixed::csvSGMOutputFile( ostream& aFile, const int period ) const {
-     aFile << "Population Data by Age Cohort Total" << endl << endl;
-     aFile << "Males- " << mYear << endl;
-     for( CAgeCohortIterator it = ageCohort.begin(); it != ageCohort.end(); it++ ) {
-         aFile << ( *it )->getAgeGroup() << ',' << ( *it )->getMalePop() << endl;
-     }
-     aFile << endl << "Females- " << mYear << endl;
-     for( CAgeCohortIterator it = ageCohort.begin(); it != ageCohort.end(); it++ ) {
-         aFile << ( *it )->getAgeGroup() << ',' << ( *it )->getFemalePop() << endl;
-     }
-}
 
 /*! \brief Update a visitor with information about a SGM fixed cohort population.
 * \param aVisitor Visitor to update.

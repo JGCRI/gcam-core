@@ -55,8 +55,6 @@
 #include "util/base/include/configuration.h"
 #include "containers/include/iinfo.h"
 #include "sectors/include/sector_utils.h"
-#include "reporting/include/indirect_emissions_calculator.h"
-#include "util/base/include/summary.h"
 
 using namespace std;
 using namespace xercesc;
@@ -117,28 +115,10 @@ bool SupplySector::XMLDerivedClassParse( const string& nodeName, const DOMNode* 
     return true;
 }
 
-/*! \brief XML output stream for derived classes
-*
-* Function writes output due to any variables specific to derived classes to XML.
-* This function is called by toInputXML in the base Sector class.
-*
-* \author Steve Smith, Josh Lurz, Sonny Kim
-* \param out reference to the output stream
-* \param tabs A tabs object responsible for printing the correct number of tabs. 
-*/
-void SupplySector::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {  
-
-    const Modeltime* modeltime = scenario->getModeltime();
-    for( int period = 0; period < modeltime->getmaxper(); ++period ) {
-        XMLWriteElementCheckDefault( mPriceTrialSupplyMarket[ period ], "price-trial-supply",
-                                     aOut, aTabs, 0.001, modeltime->getper_to_yr( period ) );
-    }
-}
-
 /*! \brief XML debugging output stream for derived classes
 *
 * Function writes output due to any variables specific to derived classes to XML.
-* This function is called by toInputXML in the base Sector class.
+* This function is called by toDebugXML in the base Sector class.
 *
 * \author Steve Smith, Josh Lurz, Sonny Kim
 * \param out reference to the output stream
@@ -183,7 +163,7 @@ void SupplySector::setMarket() {
     // cannot be members of multi-region markets.
     if( marketplace->createMarket( mRegionName, mRegionName, mName, IMarketType::NORMAL ) ) {
         // Initialize prices for markets
-        marketplace->setPriceVector( mName, mRegionName, convertToVector( mPrice ) );
+        marketplace->setPriceVector( mName, mRegionName, mPrice );
 
         // Set price and output units for period 0 market info
         IInfo* marketInfo = marketplace->getMarketInfo( mName, mRegionName, 0, true );
@@ -353,96 +333,3 @@ void SupplySector::postCalc( const int aPeriod ){
     }
 }
 
-//! Write MiniCAM style Sector output to database.
-void SupplySector::dbOutput( const GDP* aGDP,
-                             const IndirectEmissionsCalculator* aIndEmissCalc ) const
-{
-    const Modeltime* modeltime = scenario->getModeltime();
-    // function protocol
-    void dboutput4(string var1name,string var2name,string var3name,string var4name,
-        string uname,vector<double> dout);
-
-    // total Sector output
-    int maxper = modeltime->getmaxper();
-    vector<double> temp(maxper);
-    for( int per = 0; per < maxper; ++per ){
-        temp[ per ] = getOutput( per );
-    }
-    dboutput4( mRegionName,"Secondary Energy Prod","by Sector",mName,mOutputUnit, temp );
-    dboutput4( mRegionName,"Secondary Energy Prod",mName,"zTotal",mOutputUnit, temp );
-
-
-    string str; // temporary string
-
-    // Sector fuel consumption by fuel type
-    typedef map<string,double>:: const_iterator CI;
-    map<string,double> tfuelmap = summary[0].getfuelcons();
-    for (CI fmap=tfuelmap.begin(); fmap!=tfuelmap.end(); ++fmap) {
-        for (int m=0;m<maxper;m++) {
-            temp[m] = summary[m].get_fmap_second(fmap->first);
-        }
-        if( fmap->first == "" ){
-            dboutput4( mRegionName,"Fuel Consumption",mName, "No Fuelname", mInputUnit,temp);
-        }
-        else {
-            dboutput4( mRegionName,"Fuel Consumption",mName,fmap->first,mInputUnit,temp);
-        }
-    }
-
-    // Sector emissions for all greenhouse gases
-    map<string,double> temissmap = summary[0].getemission(); // get gases for per 0
-    for (CI gmap=temissmap.begin(); gmap!=temissmap.end(); ++gmap) {
-        for (int m=0;m<maxper;m++) {
-            temp[m] = summary[m].get_emissmap_second(gmap->first);
-        }
-        dboutput4(mRegionName,"Emissions","Sec-"+mName,gmap->first,"MTC",temp);
-    }
-    // CO2 emissions by Sector
-    for ( int m=0;m<maxper;m++) {
-        temp[m] = summary[m].get_emissmap_second("CO2");
-    }
-    dboutput4( mRegionName,"CO2 Emiss","by Sector",mName,"MTC",temp);
-    dboutput4( mRegionName,"CO2 Emiss",mName,"zTotal","MTC",temp);
-
-    // CO2 indirect emissions by Sector
-    for ( int m=0;m<maxper;m++) {
-        temp[m] = aIndEmissCalc->getIndirectEmissions( mName, m );
-    }
-    dboutput4( mRegionName,"CO2 Emiss(ind)",mName,"zTotal","MTC",temp);
-
-    // Sector price
-    for ( int m=0;m<maxper;m++) {
-        temp[m] = getPrice( aGDP, m );
-    }
-    dboutput4( mRegionName,"Price",mName,"zSectorAvg",mPriceUnit, temp );
-    // for electricity Sector only
-    if (mName == "electricity") {
-        for ( int m=0;m<maxper;m++) {
-            temp[m] = getPrice( aGDP, m ) * 2.212 * 0.36;
-        }
-        dboutput4( mRegionName,"Price","electricity C/kWh","zSectorAvg","90C/kWh",temp);
-    }
-
-    // Sector price
-    for ( int m = 0; m < maxper; m++ ) {
-        temp[m] = getPrice( aGDP, m );
-    }
-    dboutput4( mRegionName,"Price","by Sector",mName,mPriceUnit, temp );
-
-    // do for all sub sectors in the Sector
-    for( int m = 0; m < maxper; m++ ) {
-        temp[ m ] = getOutput( m );
-    }
-
-    for( unsigned int i = 0; i < mSubsectors.size(); ++i ){
-        // output or demand for each technology
-        mSubsectors[ i ]->MCoutputSupplySector( aGDP );
-        mSubsectors[ i ]->MCoutputAllSectors( aGDP, aIndEmissCalc, temp );
-    }
-
-    // do for all sub sectors in the Sector
-    for( unsigned int i = 0; i < mSubsectors.size(); ++i ){
-        // output or demand for each technology
-        mSubsectors[ i ]->csvOutputFile( aGDP, aIndEmissCalc );
-    }
-}

@@ -178,7 +178,7 @@ bool BatchRunner::runScenarios( const int aSinglePeriod,
     return success;
 }
 
-void BatchRunner::printOutput( Timer& aTimer, const bool aCloseDB ) const {
+void BatchRunner::printOutput( Timer& aTimer ) const {
     // Print out any scenarios that did not solve.
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::NOTICE );
@@ -251,6 +251,9 @@ bool BatchRunner::runSingleScenario( IScenarioRunner* aScenarioRunner,
         mainLog << "Scenario setup failed. Skipping run." << endl;
         return false;
     }
+    
+    // Cleanup parser and associated memory now to save space while the scenario is running.
+    XMLHelper<void>::cleanupParser();
 
     // Run the scenario.
     success = mInternalRunner->runScenarios( aSinglePeriod, false, aTimer );

@@ -179,20 +179,6 @@ void GHGPolicy::XMLParse( const DOMNode* node ){
 }
 
 //! Writes data members to data stream in XML format.
-void GHGPolicy::toInputXML( ostream& out, Tabs* tabs ) const {
-
-    XMLWriteOpeningTag( getXMLName(), out, tabs, mName );
-    XMLWriteElement( mMarket, "market", out, tabs );
-    
-    const Modeltime* modeltime = scenario->getModeltime();    
-    XMLWriteVector( mConstraint, "constraint", out, tabs, modeltime, -1.0 );
-    XMLWriteVector( mFixedTax, "fixedTax", out, tabs, modeltime, 0.0 );
-
-    // finished writing xml for the class members.
-    XMLWriteClosingTag( getXMLName(), out, tabs );
-}
-
-//! Writes data members to data stream in XML format.
 void GHGPolicy::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
     XMLWriteOpeningTag( getXMLName(), out, tabs, mName );

@@ -626,11 +626,11 @@ void SolutionInfoSet::printMarketInfo( const string& aLocation,
 * \param aPeriod Period for which to print supply-demand curves.
 * \param aLogger Logger stream to print the curves to.
 */
-void SolutionInfoSet::findAndPrintSD( World* aWorld, Marketplace* aMarketplace, const int aPeriod, ILogger& aLogger ) {
+void SolutionInfoSet::findAndPrintSD( World* aWorld, Marketplace* aMarketplace, const int aPeriod, ostream& aOut) {
     const Configuration* conf = Configuration::getInstance();
     const int numMarketsToFindSD = conf->getInt( "numMarketsToFindSD", 5 );
     const int numPointsForSD = conf->getInt( "numPointsForSD", 5 );
-    
+   
     // Sort the vector so the worst markets are first.
     sort( solvable.begin(), solvable.end(), SolutionInfo::GreaterRelativeED() );
 
@@ -642,7 +642,7 @@ void SolutionInfoSet::findAndPrintSD( World* aWorld, Marketplace* aMarketplace, 
         }
         SupplyDemandCurve sdCurve( i, solvable[ i ].getName() );
         sdCurve.calculatePoints( numPointsForSD, *this, aWorld, aMarketplace, aPeriod );
-        sdCurve.print( aLogger );
+        sdCurve.print( aOut );
     }
 }
 

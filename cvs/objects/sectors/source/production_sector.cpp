@@ -71,7 +71,6 @@ extern Scenario* scenario;
 * \param aRegionName Name of the region containing this sector.
 */
 ProductionSector::ProductionSector ( const string& aRegionName ) : Sector ( aRegionName ) {
-    mFixedPrices.resize( scenario->getModeltime()->getmaxper() );
     mIsFixedPrice = false;
     mIsEnergyGood = false;
     mIsPrimaryEnergyGood = false;
@@ -125,7 +124,7 @@ bool ProductionSector::XMLDerivedClassParse( const string& nodeName, const DOMNo
         mIsSecondaryEnergyGood = XMLHelper<bool>::getValue( curr );
     }
     else if( nodeName == "sectorprice" ){
-        XMLHelper<double>::insertValueIntoVector( curr, mFixedPrices, scenario->getModeltime() );
+        XMLHelper<Value>::insertValueIntoVector( curr, mFixedPrices, scenario->getModeltime() );
     }
     else if( nodeName == MoreSectorInfo::getXMLNameStatic() ) {
         parseSingleNode( curr, moreSectorInfo, new MoreSectorInfo );
@@ -134,27 +133,6 @@ bool ProductionSector::XMLDerivedClassParse( const string& nodeName, const DOMNo
         return false;
     }
     return true;
-}
-
-/* \brief Write out ProductionSector specific data to the input XML file.
-* \param out Stream into which to write.
-* \tabs Object responsible for tabs in the output.
-*/
-void ProductionSector::toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {
-    if( mInvestor.get() ){
-        mInvestor->toInputXML( out, tabs );
-    }
-    // write out the market string.
-    XMLWriteElement( mMarketName, "market-name", out, tabs );
-    XMLWriteElementCheckDefault( mIsFixedPrice, "FixedPricePath", out, tabs );
-    XMLWriteElementCheckDefault( mIsEnergyGood, "IsEnergyGood", out, tabs );
-    XMLWriteVector( mFixedPrices, "sectorprice", out, tabs, scenario->getModeltime(), 0.0 );
-    for( map<string, double>::const_iterator coef = ghgEmissCoefMap.begin(); coef != ghgEmissCoefMap.end(); ++coef ){
-        XMLWriteElement( coef->second, "ghgEmissCoef", out, tabs, 0, coef->first );
-    }
-    if( moreSectorInfo.get() ){
-        moreSectorInfo->toInputXML( out, tabs );
-    }
 }
 
 /* \brief Write out ProductionSector specific data to the debugging XML file.

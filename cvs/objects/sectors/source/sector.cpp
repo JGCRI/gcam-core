@@ -58,7 +58,6 @@
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/configuration.h"
-#include "util/base/include/summary.h"
 #include "containers/include/world.h"
 #include "util/base/include/util.h"
 #include "util/logger/include/ilogger.h"
@@ -66,7 +65,6 @@
 #include "util/logger/include/logger.h"
 #include "containers/include/iinfo.h"
 #include "util/base/include/ivisitor.h"
-#include "reporting/include/sector_report.h"
 #include "sectors/include/tran_subsector.h"
 #include "sectors/include/sector_utils.h"
 #include "functions/include/idiscrete_choice.hpp"
@@ -206,51 +204,6 @@ void Sector::XMLParse( const DOMNode* node ){
     }
 }
 
-/*! \brief Write object to xml output stream
-*
-* Method writes the contents of this object to the XML output stream.
-*
-* \author Josh Lurz
-* \param out reference to the output stream
-* \param tabs A tabs object responsible for printing the correct number of tabs.
-*/
-void Sector::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    const Modeltime* modeltime = scenario->getModeltime();
-
-    XMLWriteOpeningTag ( getXMLName(), aOut, aTabs, mName );
-
-    // write the xml for the class members.
-    XMLWriteElement( mOutputUnit, "output-unit", aOut, aTabs );
-    XMLWriteElement( mInputUnit, "input-unit", aOut, aTabs );
-    XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
-    mDiscreteChoiceModel->toInputXML( aOut, aTabs );
-    XMLWriteElementCheckDefault( mUseTrialMarkets, "use-trial-market", aOut, aTabs, false );
-    XMLWriteVector( mPrice, "price", aOut, aTabs, modeltime );
-
-    if( !mKeywordMap.empty() ) {
-        XMLWriteElementWithAttributes( "", "keyword", aOut, aTabs, mKeywordMap );
-    }
-
-    if ( mObjectMetaInfo.size() ) {
-        for ( object_meta_info_vector_type::const_iterator metaInfoIterItem = mObjectMetaInfo.begin();
-            metaInfoIterItem != mObjectMetaInfo.end(); 
-            ++metaInfoIterItem ) {
-                metaInfoIterItem->toInputXML( aOut, aTabs );
-            }
-    }
-
-    // write out variables for derived classes
-    toInputXMLDerived( aOut, aTabs );
-
-    // write out the subsector objects.
-    for( CSubsectorIterator k = mSubsectors.begin(); k != mSubsectors.end(); k++ ){
-        ( *k )->toInputXML( aOut, aTabs );
-    }
-
-    // finished writing xml for the class members.
-    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
-}
-
 /*! \brief Write information useful for debugging to XML output stream
 *
 * Function writes market and other useful info to XML. Useful for debugging.
@@ -281,14 +234,11 @@ void Sector::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
         for ( object_meta_info_vector_type::const_iterator metaInfoIterItem = mObjectMetaInfo.begin();
             metaInfoIterItem != mObjectMetaInfo.end(); 
             ++metaInfoIterItem ) {
-                metaInfoIterItem->toInputXML( aOut, aTabs );
+                metaInfoIterItem->toDebugXML( aPeriod, aOut, aTabs );
             }
     }
 
     toDebugXMLDerived (aPeriod, aOut, aTabs);
-
-    // Write out the summary
-    // summary[ aPeriod ].toDebugXML( aPeriod, aOut );
 
     // write out the subsector objects.
     for( CSubsectorIterator j = mSubsectors.begin(); j != mSubsectors.end(); j++ ){
@@ -561,122 +511,6 @@ double Sector::getCalOutput( const int period  ) const {
     return totalCalOutput;
 }
 
-/*! \brief Calculate GHG emissions for each Sector from subsectors.
-*
-* Calculates emissions for subsectors and technologies, then updates emissions maps for emissions by gas and emissions by fuel & gas.
-*
-* Note that at present (10/03), emissions only occur at technology level.
-*
-* \author Sonny Kim
-* \param period Model period
-*/
-void Sector::emission( const int period ) {
-    summary[ period ].clearemiss(); // clear emissions map
-    summary[ period ].clearemfuelmap(); // clear emissions fuel map
-    for( unsigned int i = 0; i < mSubsectors.size(); ++i ){
-        mSubsectors[ i ]->emission( period );
-        summary[ period ].updateemiss( mSubsectors[ i ]->getemission( period )); // by gas
-        summary[ period ].updateemfuelmap( mSubsectors[ i ]->getemfuelmap( period )); // by fuel and gas
-    }
-}
-
-//! Write Sector output to database.
-void Sector::csvOutputFile( const GDP* aGDP,
-                            const IndirectEmissionsCalculator* aIndirectEmissCalc ) const {
-    // function protocol
-    void fileoutput3( string var1name,string var2name,string var3name,
-        string var4name,string var5name,string uname,vector<double> dout);
-
-    // function arguments are variable name, double array, db name, table name
-    // the function writes all years
-    // total Sector output
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-    vector<double> temp(maxper);
-    // sector output or production
-    for( int per = 0; per < maxper; ++per ){
-        temp[ per ] = getOutput( per );
-    }
-    fileoutput3( mRegionName, mName, " ", " ", "production", mOutputUnit, temp );
-
-    // Sector price
-    for( int per = 0; per < maxper; ++per ){
-        temp[ per ] = getPrice( aGDP, per );
-    }
-    fileoutput3( mRegionName, mName, " ", " ", "price", mPriceUnit, temp);
-
-    // do for all subsectors in the Sector
-    for( unsigned int i = 0; i < mSubsectors.size(); ++i ){
-        // output or demand for each technology
-        mSubsectors[ i ]->csvOutputFile( aGDP, aIndirectEmissCalc );
-    }
-}
-
-/*! \brief Return fuel consumption map for this Sector
-*
-* \author Sonny Kim
-* \param period Model period
-* \todo Input change name of this and other methods here to proper capitilization
-* \return fuel consumption map
-*/
-map<string, double> Sector::getfuelcons( const int period ) const {
-    return summary[ period ].getfuelcons();
-}
-
-//!  Get the second fuel consumption map in summary object.
-/*! \brief Return fuel consumption for the specifed fuel
-*
-* \author Sonny Kim
-* \param period Model period
-* \param fuelName name of fuel
-* \return fuel consumption
-*/
-double Sector::getConsByFuel( const int period, const std::string& fuelName ) const {
-    return summary[ period ].get_fmap_second( fuelName );
-}
-
-/*! \brief Return the ghg emissions map for this Sector
-*
-* \author Sonny Kim
-* \param period Model period
-* \return GHG emissions map
-*/
-map<string, double> Sector::getemission( const int period ) const {
-    return summary[ period ].getemission();
-}
-
-/*! \brief Return ghg emissions map in summary object
-*
-* This map is used to calculate the emissions coefficient for this Sector (and fuel?) in region
-*
-* \author Sonny Kim
-* \param period Model period
-* \return GHG emissions map
-*/
-map<string, double> Sector::getemfuelmap( const int period ) const {
-    return summary[ period ].getemfuelmap();
-}
-
-/*! \brief update summaries for reporting
-*
-*  Updates summary information for the Sector and all subsectors.
-*
-* \author Sonny Kim
-* \param period Model period
-* \return GHG emissions map
-*/
-void Sector::updateSummary( const list<string>& aPrimaryFuelList, const int period ) {
-    // clears Sector fuel consumption map
-    summary[ period ].clearfuelcons();
-
-    for( unsigned int i = 0; i < mSubsectors.size(); ++i ){
-        // call update summary for subsector
-        mSubsectors[ i ]->updateSummary( aPrimaryFuelList, period );
-        // sum subsector fuel consumption for Sector fuel consumption
-        summary[ period ].updatefuelcons( aPrimaryFuelList, mSubsectors[ i ]->getfuelcons( period ));
-    }
-}
-
 /*! \brief Initialize the marketplaces in the base year to get initial demands from each technology in subsector
 *
 * \author Pralit Patel
@@ -703,23 +537,6 @@ void Sector::postCalc( const int aPeriod ){
     // Set member price vector to solved market prices
     if( aPeriod > 0 ){
         mPrice[ aPeriod ] = scenario->getMarketplace()->getPrice( mName, mRegionName, aPeriod, true );
-    }
-}
-
-/*! \brief For outputting SGM data to a flat csv File
-*
-* \author Pralit Patel
-* \param period The period which we are outputting for
-*/
-void Sector::csvSGMOutputFile( ostream& aFile, const int period ) const {
-
-    // when csvSGMOutputFile() is called, a new sector report is created, updated and printed
-    // this function writes a sector report for each sector
-    auto_ptr<IVisitor> sectorReport( new SectorReport( aFile ) );
-    accept( sectorReport.get(), period );
-    sectorReport->finish();
-    for( unsigned int i = 0; i < mSubsectors.size(); i++ ) {
-        mSubsectors[ i ]->csvSGMOutputFile( aFile, period );
     }
 }
 

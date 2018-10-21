@@ -114,11 +114,6 @@ protected :
    virtual const std::string& getXMLName() const;
 
    // Documentation is inherited.
-   virtual void toXMLforDerivedClass(
-      std::ostream& out,
-      Tabs*         tabs ) const;
-
-   // Documentation is inherited.
  	virtual bool XMLDerivedClassParse(
       const std::string&      nodeName,
       const xercesc::DOMNode* node );

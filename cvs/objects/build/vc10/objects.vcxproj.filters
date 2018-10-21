@@ -44,9 +44,6 @@
     <Filter Include="Source Files\util\logger">
       <UniqueIdentifier>{e7c9badc-94be-48ae-8ca9-672ff0d5a18a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\util\database">
-      <UniqueIdentifier>{d0aa57fa-5427-4ea9-be6d-edc56edda538}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\util\curves">
       <UniqueIdentifier>{7456f06c-269e-4ce0-9f31-7c3da9b9ba4e}</UniqueIdentifier>
     </Filter>
@@ -179,13 +176,7 @@
     <ClCompile Include="..\..\containers\source\mac_generator_scenario_runner.cpp">
       <Filter>Source Files\containers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\containers\source\merge_runner.cpp">
-      <Filter>Source Files\containers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\containers\source\national_account.cpp">
-      <Filter>Source Files\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\containers\source\output_meta_data.cpp">
       <Filter>Source Files\containers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\containers\source\region.cpp">
@@ -581,9 +572,6 @@
     <ClCompile Include="..\..\util\base\source\s_curve_interpolation_function.cpp">
       <Filter>Source Files\util\base</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\util\base\source\summary.cpp">
-      <Filter>Source Files\util\base</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\util\base\source\supply_demand_curve.cpp">
       <Filter>Source Files\util\base</Filter>
     </ClCompile>
@@ -604,9 +592,6 @@
     </ClCompile>
     <ClCompile Include="..\..\util\logger\source\xml_logger.cpp">
       <Filter>Source Files\util\logger</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\database\source\output_helper.cpp">
-      <Filter>Source Files\util\database</Filter>
     </ClCompile>
     <ClCompile Include="..\..\util\curves\source\curve.cpp">
       <Filter>Source Files\util\curves</Filter>
@@ -683,37 +668,13 @@
     <ClCompile Include="..\..\reporting\source\batch_csv_outputter.cpp">
       <Filter>Source Files\reporting</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\reporting\source\demand_components_table.cpp">
-      <Filter>Source Files\reporting</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\reporting\source\energy_balance_table.cpp">
-      <Filter>Source Files\reporting</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\reporting\source\govt_results.cpp">
       <Filter>Source Files\reporting</Filter>
     </ClCompile>
     <ClCompile Include="..\..\reporting\source\graph_printer.cpp">
       <Filter>Source Files\reporting</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\reporting\source\indirect_emissions_calculator.cpp">
-      <Filter>Source Files\reporting</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\reporting\source\input_output_table.cpp">
-      <Filter>Source Files\reporting</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\reporting\source\land_allocator_printer.cpp">
-      <Filter>Source Files\reporting</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\reporting\source\sector_report.cpp">
-      <Filter>Source Files\reporting</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\reporting\source\sector_results.cpp">
-      <Filter>Source Files\reporting</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\reporting\source\sgm_gen_table.cpp">
-      <Filter>Source Files\reporting</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\reporting\source\social_accounting_matrix.cpp">
       <Filter>Source Files\reporting</Filter>
     </ClCompile>
     <ClCompile Include="..\..\reporting\source\storage_table.cpp">
@@ -1097,6 +1058,12 @@
     <ClCompile Include="..\..\emissions\source\readin_control.cpp">
       <Filter>Source Files\emissions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\util\base\source\supply_demand_curve_saver.cpp">
+      <Filter>Source Files\util\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\util\base\source\initialize_tech_vector_helper.cpp">
+      <Filter>Source Files\util\base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\containers\include\batch_runner.h">
@@ -1126,13 +1093,7 @@
     <ClInclude Include="..\..\containers\include\mac_generator_scenario_runner.h">
       <Filter>Header Files\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\containers\include\merge_runner.h">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\containers\include\national_account.h">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\containers\include\output_meta_data.h">
       <Filter>Header Files\containers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\containers\include\region.h">
@@ -1591,9 +1552,6 @@
     <ClInclude Include="..\..\util\base\include\iparsable.h">
       <Filter>Header Files\util\base</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\util\base\include\iround_trippable.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\util\base\include\istandard_component.h">
       <Filter>Header Files\util\base</Filter>
     </ClInclude>
@@ -1616,9 +1574,6 @@
       <Filter>Header Files\util\base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\util\base\include\string_hash.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\summary.h">
       <Filter>Header Files\util\base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\util\base\include\supply_demand_curve.h">
@@ -1705,34 +1660,10 @@
     <ClInclude Include="..\..\reporting\include\batch_csv_outputter.h">
       <Filter>Header Files\reporting</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\reporting\include\demand_components_table.h">
-      <Filter>Header Files\reporting</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\reporting\include\energy_balance_table.h">
       <Filter>Header Files\reporting</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\reporting\include\govt_results.h">
-      <Filter>Header Files\reporting</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\reporting\include\graph_printer.h">
-      <Filter>Header Files\reporting</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\reporting\include\indirect_emissions_calculator.h">
-      <Filter>Header Files\reporting</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\reporting\include\input_output_table.h">
-      <Filter>Header Files\reporting</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\reporting\include\sector_report.h">
-      <Filter>Header Files\reporting</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\reporting\include\sector_results.h">
-      <Filter>Header Files\reporting</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\reporting\include\sgm_gen_table.h">
-      <Filter>Header Files\reporting</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\reporting\include\social_accounting_matrix.h">
       <Filter>Header Files\reporting</Filter>
     </ClInclude>
     <ClInclude Include="..\..\reporting\include\storage_table.h">
@@ -2250,6 +2181,12 @@
     </ClInclude>
     <ClInclude Include="..\..\emissions\include\readin_control.h">
       <Filter>Header Files\emissions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\util\base\include\supply_demand_curve_saver.h">
+      <Filter>Header Files\util\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\util\base\include\initialize_tech_vector_helper.hpp">
+      <Filter>Header Files\util\base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

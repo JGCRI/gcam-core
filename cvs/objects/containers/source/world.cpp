@@ -58,7 +58,6 @@
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/configuration.h"
 #include "util/base/include/util.h"
-#include "util/base/include/summary.h"
 #include "util/curves/include/curve.h"
 #include "util/curves/include/point_set_curve.h"
 #include "util/curves/include/point_set.h"
@@ -195,29 +194,12 @@ void World::completeInit() {
     ILogger &mainlog = ILogger::getLogger("main_log");
     totalgraphtimer.print(mainlog, "Total of all graph analysis setup:  ");
 #endif
-}
-
-//! Write out datamembers to XML output stream.
-void World::toInputXML( ostream& out, Tabs* tabs ) const {
-
-    XMLWriteOpeningTag ( getXMLNameStatic(), out, tabs );
-
-    mGlobalTechDB->toInputXML( out, tabs );
-	
-    // Climate model parameters
-    // note that due to a dependency in the carbon cycle model this
-    // must be written out before any of the carbon cycle historical
-    // year data is written which is contained in the regions
-    if ( mClimateModel ) {
-        mClimateModel->toInputXML( out, tabs );
-    }
-
-    for( CRegionIterator i = mRegions.begin(); i != mRegions.end(); i++ ){
-        ( *i )->toInputXML( out, tabs );
-    }
-
-    // finished writing xml for the class members.
-    XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
+    
+    // At this point we can assume all model components have been initialized and will
+    // no longer require the global technology database to get parameters from so we are
+    // free to delete it
+    delete mGlobalTechDB;
+    mGlobalTechDB = 0;
 }
 
 //! Write out XML for debugging purposes.
@@ -390,14 +372,6 @@ void World::calc( const int aPeriod, GcamFlowGraph *aWorkGraph, const vector<IAc
 }
 #endif
 
-//! Update all summary information for reporting
-// Orginally in world.calc, removed to call only once after solved
-void World::updateSummary( const list<string> aPrimaryFuelList, const int period ) {
-    for( RegionIterator i = mRegions.begin(); i != mRegions.end(); i++ ){
-        ( *i )->updateSummary( aPrimaryFuelList, period );
-        ( *i )->updateAllOutputContainers( period );
-    }
-}
 
 /*! Calculates the global emissions.
  */
@@ -694,51 +668,6 @@ void World::runClimateModel( int aPeriod ) {
     }
 }
 
-
-//! write results for all regions to file
-void World::csvOutputFile() const {
-
-    // Write global data
-    csvGlobalDataFile();
-    
-    for( CRegionIterator i = mRegions.begin(); i != mRegions.end(); i++ ){
-        ( *i )->csvOutputFile();
-    }
-}
-
-//! write global results to file
-void World::csvGlobalDataFile() const {
-    const int maxper = scenario->getModeltime()->getmaxper();
-    vector<double> temp(maxper);
-    // function protocol
-    void fileoutput3(string var1name,string var2name,string var3name,
-        string var4name,string var5name,string uname,vector<double> dout);
-
-    // write total emissions for World
-    for ( int m = 0; m < maxper; m++ ){
-        // Sum emissions by period.
-        for( CRegionIterator iter = mRegions.begin(); iter != mRegions.end(); ++iter ) {
-            // This interface needs to be fixed.
-            temp[ m ] += ( *iter )->getSummary( m ).get_emissmap_second( "CO2" );
-        }
-    }
-    fileoutput3( "global"," "," "," ","CO2 emiss","MTC",temp);
-
-    // Write out concentrations.
-    mClimateModel->printFileOutput();
-}
-
-//! MiniCAM style output to database
-void World::dbOutput( const list<string>& aPrimaryFuelList ) const {
-    // Write out concentrations
-    mClimateModel->printDBOutput();
-
-    // call regional output
-    for( CRegionIterator i = mRegions.begin(); i != mRegions.end(); i++ ){
-        ( *i )->dbOutput( aPrimaryFuelList );
-    }
-}
-
 /*! \brief Test to see if calibration worked for all regions
 *
 * Compares the sum of calibrated + fixed values to output of each sector.
@@ -878,23 +807,17 @@ void World::postCalc( const int aPeriod ){
     }
 }
 
-void World::csvSGMOutputFile( ostream& aFile, const int period ) const {
-    for( CRegionIterator rIter = mRegions.begin(); rIter != mRegions.end(); ++rIter ){
-        ( *rIter )->csvSGMOutputFile( aFile, period );
-    }
-}
-
-void World::csvSGMGenFile( ostream& aFile ) const {
-    for( CRegionIterator rIter = mRegions.begin(); rIter != mRegions.end(); ++rIter ){
-        ( *rIter )->csvSGMGenFile( aFile );
-    }
-}
-
 /*!
  * \brief Get the global technology database to look up global techs.
  * \return A reference to the global technologies database.
  */
 const GlobalTechnologyDatabase* World::getGlobalTechnologyDatabase() const {
+    if( !mGlobalTechDB ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::SEVERE );
+        mainLog << "Attempting to retrieve " << mGlobalTechDB->getXMLNameStatic() << " after completeInit()." << endl;
+        abort();
+    }
     return mGlobalTechDB;
 }
 

@@ -133,26 +133,22 @@ const string& DepletingFixedResource::getXMLName() const {
     return getXMLNameStatic();
 }
 
-void DepletingFixedResource::toInputXML( ostream& aOut, Tabs* aTabs ) const {
+void DepletingFixedResource::toDebugXML( const int aPeriod,
+                                    ostream& aOut,
+                                    Tabs* aTabs ) const
+{
+    // this object does not currently maintain state for past periods
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
-
+    
     // write the xml for the class members.
     XMLWriteElement( mOutputUnit, "output-unit", aOut, aTabs );
     XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
     XMLWriteElement( mMarket, "market", aOut, aTabs );
     XMLWriteElement( mFixedResource, "fixed-resource", aOut, aTabs );
     XMLWriteElement( mDepletionRate, "depletion-rate", aOut, aTabs );
-
+    
     // finished writing xml for the class members.
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
-void DepletingFixedResource::toDebugXML( const int aPeriod,
-                                    ostream& aOut,
-                                    Tabs* aTabs ) const
-{
-    // this object does not currently maintain state for past periods
-    toInputXML( aOut, aTabs );
 }
 
 void DepletingFixedResource::completeInit( const string& aRegionName,
@@ -255,35 +251,6 @@ double DepletingFixedResource::getAnnualProd( const string& aRegionName,
 //! Return price of resources.
 double DepletingFixedResource::getPrice( const int aPeriod ) const {
     return mInitialPrice;
-}
-
-void DepletingFixedResource::csvOutputFile( const string& aRegionName )
-{
-    // function protocol
-    void fileoutput3( string var1name,string var2name,string var3name,
-        string var4name,string var5name,string uname,vector<double> dout);
-
-    const int maxper = scenario->getModeltime()->getmaxper();
-    vector<double> temp( maxper );
-    for( int i = 0; i < maxper; ++i ){
-        temp[ i ] = getAnnualProd( aRegionName, i );
-    }
-    fileoutput3( aRegionName , mName," "," ","production", mOutputUnit, temp );
-}
-
-void DepletingFixedResource::dbOutput( const string& aRegionName ){
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-    vector<double> temp(maxper);
-    // function protocol
-    void dboutput4(string var1name,string var2name,string var3name,string var4name,
-        string uname,vector<double> dout);
-
-    // Subsectors do not exist for depleting fixed Resource.
-    for (int m=0;m<maxper;m++) {
-        temp[m] += getAnnualProd(aRegionName, m);
-    }
-    dboutput4( aRegionName, "Resource", "annual-production", mName, mOutputUnit, temp );
 }
 
 /*

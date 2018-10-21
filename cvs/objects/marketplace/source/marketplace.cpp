@@ -56,6 +56,7 @@
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/configuration.h"
 #include "util/base/include/fltcmp.hpp"
+#include "util/base/include/time_vector.h"
 #include "util/logger/include/ilogger.h"
 #include "marketplace/include/market_locator.h"
 #include "util/base/include/ivisitor.h"
@@ -316,8 +317,7 @@ int Marketplace::resetToPriceMarket( const int aMarketNumber ) {
 /*! \brief Set the prices by period of a market from a vector.
 *
 * This function sets the price for each period of a market according to the corresponding value in 
-* the prices vector.  The function checks so that it will not fail if the prices vector is a 
-* different size than the markets vector. 
+* the prices vector.
 *
 * \author Josh Lurz
 * \param goodName The goodName of the market for which to set new prices.
@@ -325,7 +325,7 @@ int Marketplace::resetToPriceMarket( const int aMarketNumber ) {
 * \param prices A vector containing prices to set into the market. 
 */
 void Marketplace::setPriceVector( const string& goodName, const string& regionName,
-                                 const vector<double>& prices ){
+                                 const objects::PeriodVector<Value>& prices ){
     // determine what market the region and good are in.
     const int marketNumber = mMarketLocator->getMarketNumber( regionName, goodName );
     if( marketNumber == MarketLocator::MARKET_NOT_FOUND ){
@@ -496,7 +496,7 @@ void Marketplace::setPrice( const string& goodName, const string& regionName, co
     if ( !util::isValidNumber( value ) ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
-        mainLog << "Error setting price in markeplace for: " << goodName << ", value: " << value << endl;
+        mainLog << "Error setting price in marketplace for: " << goodName << ", value: " << value << endl;
         return;
     }
 
@@ -533,7 +533,7 @@ void Marketplace::addToSupply( const string& goodName, const string& regionName,
     if ( !util::isValidNumber( value ) ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
-        mainLog << "Error adding to supply in markeplace for: " << goodName << ", region: " << regionName << ", value: " << value << endl;
+        mainLog << "Error adding to supply in marketplace for: " << goodName << ", region: " << regionName << ", value: " << value << endl;
         return;
     }
 
@@ -571,7 +571,7 @@ void Marketplace::addToDemand( const string& goodName, const string& regionName,
     if ( !util::isValidNumber( value ) ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
-        mainLog << "Error adding to demand in markeplace for: " << goodName << ", region: " << regionName << ", value: " << value << endl;
+        mainLog << "Error adding to demand in marketplace for: " << goodName << ", region: " << regionName << ", value: " << value << endl;
         return;
     }
 
@@ -679,21 +679,18 @@ vector<Market*> Marketplace::getMarketsToSolve( const int period ) const {
 /*!
  * \brief Conditionally initializes the market prices to the market prices from
  *        the previous period.
- * \details Resuse parsed prices up to the configuration parameter restart-period
- *          which will allow users to resume the model at that period.  If the
- *          user did not intend on restarting the model we can resuse prices up to
- *          the final calibration year.  After which we attempt to use the trend
- *          in prices to forecast prices ( and demands ) to come up with a good
- *          guess that would be closer to the solution. This only occurs for periods
- *          greater than 0.
+ * \details Keep existing prices for the calibration years as some of those prices
+ *          are calibrated prices and should not be reset. After calibration we
+ *          attempt to use the trend in prices to forecast prices ( and demands )
+ *          to come up with a good guess that would be closer to the solution.
+ *          This only occurs for periods greater than 0.
  * \author Sonny Kim
  * \param period Period for which to initialize prices.
  */
 void Marketplace::init_to_last( const int period ) { 
-    // Get the last period to allow using parsed prices, the default is the
+    // Get the last period to allow using parsed prices, which is the
     // final calibration period.
-    const static int restartPeriod = Configuration::getInstance()->getInt(
-        "restart-period", scenario->getModeltime()->getFinalCalibrationPeriod() + 1, false );
+    const int finalCalPeriod = scenario->getModeltime()->getFinalCalibrationPeriod();
 
     if( period == 0 ) {
         for( unsigned i = 0; i < mMarkets.size(); ++i ) {
@@ -701,14 +698,14 @@ void Marketplace::init_to_last( const int period ) {
             mMarkets[ i ]->getMarket( period )->setForecastDemand( 1.0 );
         }
     }
-    else if ( period > 0 && period < restartPeriod ) {
+    else if ( period > 0 && period <= finalCalPeriod ) {
         for ( unsigned int i = 0; i < mMarkets.size(); i++ ) {
             double forecastedPrice = mMarkets[ i ]->forecastPrice( period );
             mMarkets[ i ]->getMarket( period )->set_price_to_last_if_default( forecastedPrice );
             mMarkets[ i ]->forecastDemand( period );
         }
     }
-    else if( period >= restartPeriod ){
+    else {
         for ( unsigned int i = 0; i < mMarkets.size(); i++ ) {
             double forecastedPrice = mMarkets[ i ]->forecastPrice( period );
             double lastPeriodPrice = mMarkets[ i ]->getMarket( period - 1 )->getPrice();
@@ -864,110 +861,6 @@ auto_ptr<CachedMarket> Marketplace::locateMarket( const string& aGoodName, const
                                                             marketNumber != MarketLocator::MARKET_NOT_FOUND ?
                                                             mMarkets[ marketNumber ]->getMarket( aPeriod ) : 0 ) );
     return locatedMarket;
-}
-
-/*! \brief Write out the market information to the database.
-*
-* This function is used to perform a data writeout to the database.
-*
-* \note This will be replaced by toXMLOutput
-*/
-void Marketplace::dbOutput() const {
-
-    const Modeltime* modeltime = scenario->getModeltime();
-
-    void dboutput4(string var1name,string var2name,string var3name,string var4name,
-        string uname,vector<double> dout);
-
-    const int maxPeriod = modeltime->getmaxper();
-    vector<double> temp( maxPeriod );
-    int j;
-    // write market prices, supply and demand
-    for (int i=0;i< static_cast<int>( mMarkets.size() );i++) {
-        string tempRegName = mMarkets[i]->getRegionName();
-        string tempGoodName = mMarkets[i]->getGoodName();
-        const IInfo* marketInfo = mMarkets[i]->getMarket( 0 )->getMarketInfo();
- 
-        for (j=0;j<maxPeriod;j++) {
-            temp[j] = mMarkets[i]->getMarket( j )->getPrice();
-        }
-        dboutput4(mMarkets[i]->getRegionName(),"Market",mMarkets[i]->getGoodName(),"1_price",
-            marketInfo->getString( "price-unit", true ), temp);
-        for (j=0;j<maxPeriod;j++) {
-            temp[j] = mMarkets[i]->getMarket( j )->getRawSupply();
-        }
-        dboutput4(mMarkets[i]->getRegionName(),"Market",mMarkets[i]->getGoodName(),"2_supply",
-            marketInfo->getString( "output-unit", true ), temp);
-        for (j=0;j<maxPeriod;j++) {
-            temp[j] = mMarkets[i]->getMarket( j )->getRawDemand();
-        }
-        dboutput4(mMarkets[i]->getRegionName(),"Market",mMarkets[i]->getGoodName(),"3_demand",
-            marketInfo->getString( "output-unit", true ), temp);
-    }
-}
-
-/*! \brief Write out market information to a file.
-*
-* This function is used to perform a data writeout to a plain text file.
-*
-* \note This will be replaced by toXMLOutput
-*/
-void Marketplace::csvOutputFile( string marketsToPrint ) const {
-
-    const Modeltime* modeltime = scenario->getModeltime();
-
-    // function protocol
-    void fileoutput2(string var1name,string var2name,string var3name,
-        string var4name,string var5name,vector<double> dout,string uname);
-    void fileoutput3(string var1name,string var2name,string var3name,
-        string var4name,string var5name,string uname,vector<double> dout);
-
-    const int maxPeriod = modeltime->getmaxper();
-    vector<double> temp( maxPeriod );
-
-    // Function arguments are variable name, double array, db name, and
-    // table name.
-    // The function writes all years.
-
-    // write market prices and supply (or demand)
-    for ( unsigned int i = 0; i < mMarkets.size(); i++ ) {
-      if ( marketsToPrint == "" || mMarkets[i]->getRegionName() == marketsToPrint ) {
-        const IInfo* marketInfo = mMarkets[i]->getMarket( 0 )->getMarketInfo();
-        for ( int j = 0; j < maxPeriod; j++ ) {
-            temp[j] = mMarkets[i]->getMarket( j )->getPrice();
-        }
-        fileoutput3(mMarkets[i]->getRegionName(),"market",mMarkets[i]->getGoodName()," ","price",
-            marketInfo->getString( "price-unit", true ), temp);
-        for ( int j = 0; j < maxPeriod; j++ ) {
-            temp[j] = mMarkets[i]->getMarket( j )->getRawSupply();
-        }
-        fileoutput3(mMarkets[i]->getRegionName(),"market",mMarkets[i]->getGoodName()," ","supply",
-            marketInfo->getString( "output-unit", true ), temp);
-      }
-    }
-}
-
-/*! \brief For outputing SGM data to a flat csv File
- * 
- * \author Pralit Patel
- * \param period The period which we are outputing for
- */
-void Marketplace::csvSGMOutputFile( ostream& aFile, const int period ) const {
-    // come back to this
-    aFile << "Region" << ',' << "Good" << ',' << "Price" << ','<< "PriceReceived" << ',' << "ED" 
-        << ',' << "Demand" << ',' << "Supply" << endl;
-    // reset format to default
-    aFile.setf(ios_base::fixed, ios_base::floatfield);
-    for ( unsigned int i = 0; i < mMarkets.size(); i++ ) {
-        aFile << mMarkets[ i ]->getRegionName() << ','
-              << mMarkets[ i ]->getGoodName() << ','
-              << mMarkets[ i ]->getMarket( period )->getPrice() << ','
-              << mMarkets[ i ]->getMarket( period )->getMarketInfo()->getDouble( "priceReceived", false ) << ','
-              << mMarkets[ i ]->getMarket( period )->getDemand() - mMarkets[ i ]->getMarket( period )->getSupply()  << ','
-              << mMarkets[ i ]->getMarket( period )->getDemand() << ',' << mMarkets[ i ]->getMarket( period )->getSupply()
-              << endl;
-    }
-    aFile << endl;
 }
 
 /*! \brief Update an output container for the Marketplace.

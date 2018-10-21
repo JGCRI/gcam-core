@@ -75,7 +75,6 @@ public:
     virtual ~Resource();
     static const std::string& getXMLNameStatic();
     void XMLParse( const xercesc::DOMNode* node );
-    void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
     void toDebugXML( const int period, std::ostream& aOut, Tabs* aTabs ) const;
     const std::string& getName() const; 
     virtual void completeInit( const std::string& aRegionName, const IInfo* aRegionInfo );
@@ -86,8 +85,6 @@ public:
     void calcSupply( const std::string& aRegionName, const GDP* aGdp, const int aPeriod );
     virtual double getAnnualProd( const std::string& aRegionName, const int aPeriod ) const;
     virtual double getPrice( const int aPeriod ) const;
-    void dbOutput( const std::string& regname );
-    void csvOutputFile( const std::string& regname ); 
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
 
@@ -128,6 +125,8 @@ protected:
     void setMarket( const std::string& aRegionName );
     virtual void annualsupply( const std::string& aRegionName, int aPeriod, const GDP* aGdp, double aPrice, double aPrevPrice );
     void cumulsupply( double aPrice, int aPeriod );
+    
+    void initTechVintageVector();
 private:
     static const std::string XML_NAME; //!< node name for toXML methods
 };

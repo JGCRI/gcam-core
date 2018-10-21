@@ -39,11 +39,13 @@
  */
 
 #include <cstring>
+#include <fstream>
 
 #include "util/base/include/manage_state_variables.hpp"
 #include "util/base/include/value.h"
 #include "containers/include/scenario.h"
 #include "util/logger/include/ilogger.h"
+#include "util/base/include/configuration.h"
 #include "util/base/include/gcam_fusion.hpp"
 #include "util/base/include/gcam_data_containers.h"
 
@@ -206,6 +208,12 @@ void ManageStateVariables::collectState() {
         ++mNumCollected;
     }
     
+    // if configured, reset initial state data from a restart file
+    const int restartPeriod = Configuration::getInstance()->getInt( "restart-period", -1, false );
+    if(  restartPeriod != -1 && mPeriodToCollect < restartPeriod ) {
+        loadRestartFile();
+    }
+    
     // clean up GCAMFusion related memory
     for( auto filterStep : collectStateSteps ) {
         delete filterStep;
@@ -217,6 +225,10 @@ void ManageStateVariables::collectState() {
  *        we move on from this model period and release the state memory.
  */
 void ManageStateVariables::resetState() {
+    if( Configuration::getInstance()->shouldWriteFile( "restart", false, false ) ) {
+        saveRestartFile();
+    }
+    
 #if DEBUG_STATE
     unsigned int count = 0;
 #endif
@@ -271,6 +283,104 @@ void ManageStateVariables::setPartialDeriv( const bool aIsPartialDeriv ) {
 #endif
 }
 
+/*!
+ * \brief Generate the appropriate restart file name to use.
+ * \details This method will append the model period this instance was created
+ *          with to the base name as set in the Configuration.  It will also also
+ *          follow the <Files> convetion, specificially obey append-scenario-name, when
+ *          it generates the file name.
+ * \return The correct filename to use for restarts
+ */
+string ManageStateVariables::getRestartFileName() const {
+    Configuration* conf = Configuration::getInstance();
+    const string fileName = conf->getFile( "restart", "restart/restart" );
+    const string scnAppend = conf->shouldAppendScnToFile( "restart" ) ? "." + scenario->getName() : "";
+    const string period = util::toString( mPeriodToCollect );
+    return fileName + scnAppend + "." + period;
+}
+
+/*!
+ * \brief Load a restart file from disk directly into the "base" state.
+ * \warning Very little error checking is done to ensure the state read in was generated
+ *          from the exact same scenario.  All we can do in terms of error checking is
+ *          check that the size of the data coming in is exactly the same size as mNumCollected.
+ * \sa ManageStateVariables::getRestartFileName
+ * \sa ManageStateVariables::saveRestartFile
+ */
+void ManageStateVariables::loadRestartFile() {
+    // read from the appropriate file which is in binary format
+    const string restartFileName = getRestartFileName();
+    fstream restartFile( restartFileName.c_str(), ios_base::in | ios_base::binary );
+    
+    if( !restartFile.is_open() ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::SEVERE );
+        mainLog << "Could not open restart file: " << restartFileName << " for read." << endl;
+        abort();
+    }
+    
+    size_t numStatesInRestart;
+    restartFile.read( reinterpret_cast<char*>( &numStatesInRestart ), sizeof( size_t ) );
+    if( numStatesInRestart != mNumCollected ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::SEVERE );
+        mainLog << "Restart file: " << restartFileName << " differs in size, read: " << numStatesInRestart
+                << ", expected: " << mNumCollected << endl;
+        abort();
+    }
+    
+    // read the binary data directly into the "base" state
+    restartFile.read( reinterpret_cast<char*>( mStateData[0] ), sizeof( double ) * numStatesInRestart );
+    if( !restartFile ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::SEVERE );
+        mainLog << "Restart file: " << restartFileName << " has fewer states than expected, read: " << static_cast<size_t>( (restartFile.gcount() - sizeof(size_t)) / sizeof(double))
+                << ", expected: " << numStatesInRestart << endl;
+        abort();
+    }
+    if( restartFile.peek() != EOF ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::SEVERE );
+        mainLog << "Restart file: " << restartFileName << " has more states than expected: " << numStatesInRestart << endl;
+        abort();
+    }
+
+    restartFile.close();
+}
+
+/*!
+ * \brief Dump the contents of the "base" state array into a binary restart file.
+ * \details The first value written is mNumCollected (size written: size_t) to help with do some error checking
+ *          when we try to read it back in.  Then we just write the entire content of mStateData[0]
+ *          (size written: double * mNumCollected).
+ * \sa ManageStateVariables::getRestartFileName
+ */
+void ManageStateVariables::saveRestartFile() {
+    const string restartFileName = getRestartFileName();
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::DEBUG );
+    mainLog << "Writing restart file: " << restartFileName << "... ";
+    fstream restartFile( restartFileName.c_str(), ios_base::out | ios_base::trunc | ios_base::binary );
+    
+    if( !restartFile.is_open() ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::SEVERE );
+        mainLog << "Could not open restart file: " << restartFileName << " for write." << endl;
+        abort();
+    }
+    
+    // first write the total number of entries that should be expected to help with error
+    // checking on read in
+    restartFile.write( reinterpret_cast<char*>( &mNumCollected ), sizeof( size_t ) );
+    
+    // write the entire contents of the "base" state
+    restartFile.write( reinterpret_cast<char*>( mStateData[0] ), sizeof( double ) * mNumCollected );
+    
+    restartFile.close();
+    
+    mainLog << "Done." << endl;
+}
+
 #if DEBUG_STATE
 void Value::doStateCheck() const {
     const bool isPartialDeriv = scenario->getMarketplace()->mIsDerivativeCalc;
@@ -313,20 +423,14 @@ void ManageStateVariables::DoCollect::processData<objects::PeriodVector<Value> >
 }
 
 template<>
-void ManageStateVariables::DoCollect::processData<objects::PeriodVector<objects::YearVector<Value>*> >( objects::PeriodVector<objects::YearVector<Value>*>& aData ) {
-    // This is a special case to handle the stored LUC emissions in the simple carbon
-    // calculator.  It is a two dimensional array by model period and each year of LUC
-    // emissions but we only need to consider the LUC emissions in the current period
-    // and for years in the current time step (already converted the years ahead of
-    // time in the interest of speed to be from [mCCStartYear, mYearToCollect]).
-    // Also note that since 1975 has the historical emissions a NULL value is set
-    // for the year vector in period 0 so be sure to avoid crashing on that.
-    if( !mIgnoreCurrValue && mParentClass->mPeriodToCollect > 0 ) {
-        objects::YearVector<Value>& currEmiss = *aData[ mParentClass->mPeriodToCollect ];
-        for( int year = mParentClass->mCCStartYear; year <= mParentClass->mYearToCollect; ++year ) {
-            mParentClass->mStateValues.push_front( &currEmiss[ year ] );
-            ++mParentClass->mNumCollected;
-        }
+void ManageStateVariables::DoCollect::processData<objects::TechVintageVector<Value> >( objects::TechVintageVector<Value>& aData ) {
+    // When an ARRAY of values are tagged only the Value in [ mPeriodToCollect] is
+    // considered active.
+    
+    // Note, mIgnoreCurrValue should take care of out of bounds here
+    if( !mIgnoreCurrValue ) {
+        mParentClass->mStateValues.push_front( &aData[ mParentClass->mPeriodToCollect ] );
+        ++mParentClass->mNumCollected;
     }
 }
 
@@ -352,6 +456,7 @@ template<typename DataType>
 void ManageStateVariables::DoCollect::popFilterStep( const DataType& aData ) {
     // ignore most steps
 }
+
 
 template<>
 void ManageStateVariables::DoCollect::pushFilterStep<ITechnology*>( ITechnology* const& aData ) {

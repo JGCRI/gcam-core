@@ -182,6 +182,9 @@ int main( int argc, char *argv[] ) {
     if( !success ){
         return 1;
     }
+    
+    // Cleanup Xerces. This should be encapsulated with an initializer object to ensure against leakage.
+    XMLHelper<void>::cleanupParser();
 
     // Run the scenario and print debugging information as controlled by the following
     // configuration options with the defaults being to run all periods and print debug
@@ -195,8 +198,6 @@ int main( int argc, char *argv[] ) {
     mainLog.setLevel( ILogger::WARNING ); // Increase level so that user will know that model is done
     mainLog << "Model exiting successfully." << endl;
     runner->cleanup();
-    // Cleanup Xerces. This should be encapsulated with an initializer object to ensure against leakage.
-    XMLHelper<void>::cleanupParser();
     
     // Return exit code based on whether the model succeeded(Non-zero is failure by convention).
     return success ? 0 : 1; 

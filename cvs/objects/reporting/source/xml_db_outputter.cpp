@@ -59,7 +59,6 @@
 #include "emissions/include/aghg.h"
 #include "technologies/include/icapture_component.h"
 #include "util/base/include/model_time.h"
-#include "containers/include/output_meta_data.h"
 #include "marketplace/include/marketplace.h"
 #include "marketplace/include/market.h"
 #include "climate/include/iclimate_model.h"
@@ -97,7 +96,6 @@
 #include "containers/include/national_account.h"
 #include "sectors/include/more_sector_info.h"
 #include "util/base/include/util.h"
-#include "reporting/include/indirect_emissions_calculator.h"
 #include "technologies/include/default_technology.h"
 #include "technologies/include/iproduction_state.h"
 #include "util/base/include/auto_file.h"
@@ -497,20 +495,6 @@ void XMLDBOutputter::endVisitScenario( const Scenario* aScenario, const int aPer
     XMLWriteClosingTag( aScenario->getXMLNameStatic(), mBuffer, mTabs.get() );
 }
 
-void XMLDBOutputter::startVisitOutputMetaData( const OutputMetaData* aOutputMetaData,
-                                               const int aPeriod )
-{
-    // Don't write opening and closing tags directly because toInputXML will do it.
-    // Write the internal data. The input XML format will work.
-    aOutputMetaData->toInputXML( mBuffer, mTabs.get() );
-}
-
-void XMLDBOutputter::endVisitOutputMetaData( const OutputMetaData* aOutputMetaData,
-                                            const int aPeriod )
-{
-    // Don't write opening and closing tags directly because toInputXML will do it.
-}
-
 void XMLDBOutputter::startVisitWorld( const World* aWorld, const int aPeriod ){
     // Write the opening world tag.
     XMLWriteOpeningTag( aWorld->getXMLNameStatic(), mBuffer, mTabs.get() );
@@ -527,16 +511,6 @@ void XMLDBOutputter::startVisitRegion( const Region* aRegion,
     // Store the region name.
     assert( mCurrentRegion.empty() );
     mCurrentRegion = aRegion->getName();
-
-    // Calculate indirect emissions coefficients for all Technologies in a Region.
-    mIndirectEmissCalc.reset( new IndirectEmissionsCalculator );
-
-    // The XML db outputter is always called in all-period mode but the indirect
-    // emissions calculator only works in single period mode.
-    assert( aPeriod == -1 );
-    for( int m = 0; m < scenario->getModeltime()->getmaxper(); ++m ){
-        aRegion->accept( mIndirectEmissCalc.get(), m );
-    }
 }
 
 void XMLDBOutputter::endVisitRegion( const Region* aRegion,
@@ -2115,22 +2089,7 @@ void XMLDBOutputter::writeItemUsingYear( const string& aName,
  * \author Sonny Kim
  */
 bool XMLDBOutputter::isTechnologyOperating( const int aPeriod ){
-    bool isOperating = false;
-    // If operating and has output greater than zero.
-    if( mCurrentTechnology->mProductionState[ aPeriod ] && mCurrentTechnology->mProductionState[ aPeriod ]->isOperating() ){
-        //if( mCurrentTechnology->getOutput( aPeriod ) > 0 ){
-            isOperating = true;
-        //}
-    }
-    // If not operating but is fixed output.
-    else {
-        if( mCurrentTechnology->mFixedOutput != IProductionState::fixedOutputDefault() ){
-            if( mCurrentTechnology->getOutput( aPeriod ) > 0 ){
-                isOperating = true;
-            }
-        }
-    }
-    return isOperating;
+    return mCurrentTechnology->isOperating( aPeriod );
 }
 
 /**

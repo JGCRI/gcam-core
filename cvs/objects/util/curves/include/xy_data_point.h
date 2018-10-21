@@ -72,7 +72,7 @@ class XYDataPoint: public DataPoint {
         double getY() const;
         void setX( const double xValue );
         void setY( const double yValue );
-        void toInputXML( std::ostream& out, Tabs* tabs ) const;
+        virtual void outputAsXML( std::ostream& aOut, Tabs* aTabs ) const;
         void XMLParse( const xercesc::DOMNode* node );
         void invertAxises();
     protected:

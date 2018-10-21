@@ -80,7 +80,7 @@ void AGHG::copy( const AGHG& aOther ){
 }
 
 //! \brief initialize Ghg object with xml data
-void AGHG::XMLParse( const DOMNode* aNode ) {
+bool AGHG::XMLParse( const DOMNode* aNode ) {
     /*! \pre Assume we are passed a valid node. */
     assert( aNode );
 
@@ -88,6 +88,8 @@ void AGHG::XMLParse( const DOMNode* aNode ) {
 
     // Parse the name attribute.
     mName = XMLHelper<string>::getAttr( aNode, "name" );
+    
+    bool parsingSuccessful = true;
 
     for( unsigned int i = 0; i < nodeList->getLength(); ++i ) {
         DOMNode* curr = nodeList->item( i );
@@ -105,23 +107,11 @@ void AGHG::XMLParse( const DOMNode* aNode ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
             mainLog << "Unrecognized text string: " << nodeName << " found while parsing GHG." << endl;
+            parsingSuccessful = false;
         }
     }
-}
-
-//! Writes datamembers to datastream in XML format.
-void AGHG::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-
-    XMLWriteOpeningTag( getXMLName(), aOut, aTabs, getName() );
-
-    XMLWriteElementCheckDefault( mEmissionsUnit, "emissions-unit", aOut, aTabs, string() );
-
-    // write xml for data members
-    toInputXMLDerived( aOut, aTabs );
-    // done writing xml for data members.
-
-    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
-
+    
+    return parsingSuccessful;
 }
 
 //! Writes datamembers to debugging datastream in XML format.

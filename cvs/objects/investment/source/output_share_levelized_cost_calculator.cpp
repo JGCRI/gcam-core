@@ -67,15 +67,6 @@ const string& OutputShareLevelizedCostCalculator::getXMLNameStatic(){
     return XML_NAME;
 }
 
-/*! \brief Write the object to an XML output stream.
-* \param aOut The output stream to write to.
-* \param aTabs The object which tracks the number of tabs to write.
-*/
-void OutputShareLevelizedCostCalculator::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 /*! \brief Write the object to an XML output stream for debugging.
 * \param aPeriod Period to write debugging information for.
 * \param aOut The output stream to write to.

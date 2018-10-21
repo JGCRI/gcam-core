@@ -53,7 +53,6 @@
 #include "containers/include/iinfo.h"
 #include "util/base/include/xml_helper.h"
 #include "marketplace/include/marketplace.h"
-#include "util/base/include/summary.h"
 #include "containers/include/gdp.h"
 #include "demographics/include/demographic.h"
 #include "technologies/include/itechnology_container.h"
@@ -136,21 +135,6 @@ bool TranSubsector::XMLDerivedClassParse( const string& nodeName, const DOMNode*
         return false;
     }
     return true;
-}
-
-/*! \brief XML output stream for derived classes
-*
-* Function writes output due to any variables specific to derived classes to XML
-* \author Josh Lurz, Sonny Kim
-* \param out reference to the output stream
-* \param tabs A tabs object responsible for printing the correct number of tabs. 
-*/
-void TranSubsector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-    XMLWriteElementCheckDefault( mAddTimeValue, "addTimeValue", out, tabs, false );
-    const Modeltime* modeltime = scenario->getModeltime();
-    XMLWriteVector( mSpeed, "speed", out, tabs, modeltime, Value( 0.0 ) );
-    XMLWriteVector( mPopDenseElasticity, "popDenseElasticity", out, tabs, modeltime, 0.0 );
-    XMLWriteVector( mTimeValueMult, "time-value-multiplier", out, tabs, modeltime, Value( 1.0 ) );
 }
 
 /*! \brief XML output for debugging.
@@ -306,99 +290,6 @@ void TranSubsector::setOutput( const double aVariableSubsectorDemand,
                           aFixedOutputScaleFactor,
                           aGDP,
                           aPeriod );
-}
-
-/*! \brief Write supply sector MiniCAM style Subsector output to database.
-*
-* Writes outputs with titles and units appropriate to supply sectors.
-*
-* \author Sonny Kim
-*/
-void TranSubsector::MCoutputSupplySector( const GDP* aGDP ) const {
-    // function protocol
-    void dboutput4(string var1name,string var2name,string var3name,string var4name,
-        string uname,vector<double> dout);
-    
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-    const string& outputUnit = mSubsectorInfo->getString( "output-unit", true );
-    const string& priceUnit = mSubsectorInfo->getString( "price-unit", true );
-    vector<double> temp(maxper);
-    
-    // total Subsector output
-    for( int per = 0; per < maxper; ++per ){
-        temp[ per ] = getOutput( per );
-    }
-    dboutput4(mRegionName,"Secondary Energy Prod",mSectorName,mName,outputUnit,temp);
-    // Subsector price
-    for( int m = 0; m < maxper; m++ ){
-        temp[ m ] = getPrice( aGDP, m );
-    }
-    dboutput4(mRegionName,"Price",mSectorName,mName,priceUnit,temp);
-    
-    // do for all technologies in the Subsector
-    for( unsigned int i = 0; i < mTechContainers.size(); ++i ){
-
-        // secondary energy and price output by tech
-        // output or demand for each Technology
-        for ( int m=0;m<maxper;m++) {
-            temp[m] = mTechContainers[i]->getNewVintageTechnology(m)->getOutput( m );
-        }
-
-        dboutput4( mRegionName, "Secondary Energy Prod", mSectorName + "_tech-new-investment",
-            mTechContainers[i]->getName(), outputUnit, temp );
-		
-        // Output for all vintages.
-        for ( int m=0; m < maxper;m++) {
-            temp[ m ] = 0;
-            // Only sum output to the current period.
-            for( int j = 0; j <= m; ++j ){
-                temp[m] += mTechContainers[i]->getNewVintageTechnology(j)->getOutput( m );
-            }
-        }
-        dboutput4( mRegionName, "Secondary Energy Prod", mSectorName + "_tech-total", mTechContainers[i]->getName(), outputUnit, temp );
-        // Transportation technology cost already in 1990 $.
-        for ( int m=0;m<maxper;m++) {
-            temp[m] = mTechContainers[i]->getNewVintageTechnology(m)->getCost( m );
-        }
-        dboutput4( mRegionName, "Price", mSectorName + "_tech", mTechContainers[i]->getName(), priceUnit, temp );
-    }
-}
-
-/*! \brief Writes variables specific to transportation class to database.
-*
-* \author Sonny Kim, Steve Smith
-* \param aGDP The GDP info object.
-* \param aSectorOutput The vector of sector outputs.
-*/
-void TranSubsector::MCoutputAllSectors( const GDP* aGDP,
-                                        const IndirectEmissionsCalculator* aIndirectEmissionsCalc,
-                                        const vector<double> aSectorOutput ) const
-{
-    Subsector::MCoutputAllSectors( aGDP, aIndirectEmissionsCalc, aSectorOutput );
-
-    // function protocol
-    void dboutput4(string var1name,string var2name,string var3name,string var4name,
-        string uname,vector<double> dout);
-    const int maxPeriod = scenario->getModeltime()->getmaxper();
-    const string& priceUnit = mSubsectorInfo->getString( "price-unit", true );
-    vector<double> temp( maxPeriod );
-    // Subsector timeValue price
-    for( int per = 0; per < maxPeriod; ++per ){
-        temp [ per ] = getTimeValue( aGDP, per );
-    }
-    dboutput4( mRegionName, "General", "TimeValue", mSectorName + mName, priceUnit, temp );
-    // Subsector speed
-    dboutput4( mRegionName, "General", "Speed", mSectorName + mName, "Miles/hr", convertToVector( mSpeed ) );
-    // time in transit (hours/day/person)
-    for( int per = 0; per < maxPeriod; ++per ){
-        temp[ per ] = getTimeInTransit( per );
-    }
-    dboutput4( mRegionName, "End-Use Service", mSectorName+" TimeInTransit", mName, "hrs/day/per", temp);
-    // service per day per person (service/day/person)
-    for( int per = 0; per < maxPeriod; ++per ){
-        temp[ per ] = getServicePerCapita( per );
-    }
 }
 
 void TranSubsector::accept( IVisitor* aVisitor, const int period ) const {

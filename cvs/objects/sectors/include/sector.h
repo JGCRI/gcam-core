@@ -53,13 +53,11 @@
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/ivisitable.h"
-#include "util/base/include/iround_trippable.h"
 #include "util/base/include/inamed.h"
 #include "util/base/include/object_meta_info.h"
 #include "util/base/include/time_vector.h"
 #include "util/base/include/value.h"
 #include "util/base/include/data_definition_util.h"
-#include "util/base/include/summary.h"
 
 // Forward declarations
 class Subsector;
@@ -69,9 +67,7 @@ class Tabs;
 class IInfo;
 class Demographic;
 class NationalAccount;
-class SocialAccountingMatrix;
 class ILandAllocator;
-class IndirectEmissionsCalculator;
 class AGHG;
 class IDiscreteChoice;
 
@@ -94,15 +90,10 @@ class PassThroughSector;
 */
 
 class Sector: public IVisitable,
-              public IRoundTrippable,
               public INamed,
               private boost::noncopyable
 {
     // TODO: Remove the need for these.
-    friend class SocialAccountingMatrix;
-    friend class DemandComponentsTable;
-    friend class SectorReport;
-    friend class SGMGenTable;
     friend class XMLDBOutputter;
     friend class CalibrateShareWeightVisitor;
 protected:
@@ -152,13 +143,10 @@ protected:
     //! Pointer to the sector's information store.
     std::auto_ptr<IInfo> mSectorInfo;
 
-    objects::PeriodVector<Summary> summary; //!< summary for reporting
-
     typedef ObjECTS::TObjectMetaInfo<> object_meta_info_type;
     typedef std::vector<object_meta_info_type> object_meta_info_vector_type;
     object_meta_info_vector_type mObjectMetaInfo; //!< Vector of object meta info to pass to mSectorInfo
 
-    virtual void toInputXMLDerived( std::ostream& aOut, Tabs* aTabs ) const = 0;
     virtual void toDebugXMLDerived( const int period, std::ostream& aOut, Tabs* aTabs ) const = 0;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
     virtual const std::string& getXMLName() const = 0;
@@ -178,7 +166,6 @@ public:
     virtual const std::string& getName() const;
 
     virtual void XMLParse( const xercesc::DOMNode* node );
-    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
 
     virtual void completeInit( const IInfo* aRegionInfo,
@@ -199,25 +186,10 @@ public:
 
     virtual void calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod ) = 0;
 
-    void emission( const int period );
-    
-    virtual void csvOutputFile( const GDP* aGDP,
-                                const IndirectEmissionsCalculator* aIndirectEmissCalc ) const;
-
-    virtual void dbOutput( const GDP* aGDP,
-                           const IndirectEmissionsCalculator* aIndEmissCalc ) const = 0;
-
-    std::map<std::string, double> getfuelcons( const int period ) const;
-    double getConsByFuel( const int period, const std::string& key) const;
-    std::map<std::string, double> getemission( const int period ) const;
-    std::map<std::string, double> getemfuelmap( const int period ) const;
-    void updateSummary( const std::list<std::string>& aPrimaryFuelList, const int period );
-
     virtual void operate( NationalAccount& nationalAccount, const Demographic* aDemographic, const int period ) = 0;
     void updateMarketplace( const int period );
     virtual void postCalc( const int aPeriod );
 
-    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 private:
     void clear();

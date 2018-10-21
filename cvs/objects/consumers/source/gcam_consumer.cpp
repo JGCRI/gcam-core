@@ -50,6 +50,9 @@
 #include "demographics/include/demographic.h"
 #include "sectors/include/sector_utils.h"
 #include "technologies/include/generic_output.h"
+#include "emissions/include/aghg.h"
+
+#include "util/base/include/initialize_tech_vector_helper.hpp"
 
 using namespace std;
 using namespace xercesc;
@@ -125,11 +128,6 @@ bool GCAMConsumer::XMLDerivedClassParse( const string& aNodeName, const DOMNode*
     return true;
 }
 
-void GCAMConsumer::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteVector( mSubregionalIncomeShare, "subregional-income-share", aOut, aTabs, scenario->getModeltime() );
-    XMLWriteVector( mSubregionalPopulationShare, "subregional-population-share", aOut, aTabs, scenario->getModeltime() );
-}
-
 void GCAMConsumer::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mSubregionalPopulation[ aPeriod ], "subregional-population", aOut, aTabs );
     XMLWriteElement( mSubregionalIncome[ aPeriod ], "subregional-income", aOut, aTabs );
@@ -148,6 +146,13 @@ void GCAMConsumer::completeInit( const string& aRegionName, const string& aSecto
     }
     mOutputs.clear();
     mOutputs.insert( mOutputs.begin(), new GenericOutput( "generic-output" ) );
+    // Basetechnology creates a CO2 object however they are not needed for GCAMConsumers
+    // and they may cause trouble with tech vector sizing therefore just delete it.
+    for( unsigned int i = 0; i < mGhgs.size(); ++i ){
+        delete mGhgs[ i ];
+    }
+    mGhgs.clear();
+    initTechVintageVector();
 
     // Interpolate shares for missing periods.
     SectorUtils::fillMissingPeriodVectorInterpolated( mSubregionalPopulationShare );
@@ -216,4 +221,16 @@ void GCAMConsumer::accept( IVisitor* aVisitor, const int aPeriod ) const {
     BaseTechnology::accept( aVisitor, aPeriod );
 
     aVisitor->endVisitGCAMConsumer( this, aPeriod );
+}
+
+/*!
+ * \brief Initialize any TechVintageVector in any object that may be contained
+ *        in this class.
+ * \details GCAMConsumer does not have vintaging so the vectors will be sized for
+ *          the entire model time.
+ */
+void GCAMConsumer::initTechVintageVector() {
+    const Modeltime* modeltime = scenario->getModeltime();
+    objects::InitializeTechVectorHelper helper( 0, modeltime->getmaxper() );
+    helper.initializeTechVintageVector( this );
 }

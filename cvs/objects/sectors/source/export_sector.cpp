@@ -142,23 +142,13 @@ bool ExportSector::XMLDerivedClassParse( const string& aNodeName, const DOMNode*
 		mMarketName = XMLHelper<string>::getValue( aCurr );
 	}
     else if( aNodeName == "sectorprice" ){
-        XMLHelper<double>::insertValueIntoVector( aCurr, mFixedPrices, scenario->getModeltime() );
+        XMLHelper<Value>::insertValueIntoVector( aCurr, mFixedPrices, scenario->getModeltime() );
     }
 	else {
 		return false;
 	}
 	return true;
 }
-
-/*! \brief Write out derived class specific class members as an input file.
-* \param aOut The output stream to which to write.
-* \param aTabs Object responsible for writing tabs.
-*/
-void ExportSector::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {  
-    // write out the market string.
-    XMLWriteElement( mMarketName, "market", aOut, aTabs );
-    XMLWriteVector( mFixedPrices, "sectorprice", aOut, aTabs, scenario->getModeltime(), 0.0 );
-}	
 
 /*! \brief Write out derived class specific class members for debugging.
 * \param aPeriod The period in which to write debugging information.
@@ -199,6 +189,6 @@ void ExportSector::setMarket() {
         mFixedPrices[ 0 ] = mPrice[ 0 ];
 
 		// Initializes prices with any values that are read-in. 
-        marketplace->setPriceVector( mName, mRegionName, convertToVector( mFixedPrices ) );
+        marketplace->setPriceVector( mName, mRegionName, mFixedPrices );
     }
 }

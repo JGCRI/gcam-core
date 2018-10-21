@@ -54,7 +54,6 @@
 
 #include "containers/include/region.h"
 #include "util/base/include/ivisitable.h"
-#include "util/base/include/iround_trippable.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
 
@@ -65,7 +64,6 @@ class Sector;
 class SupplySector;
 class LandAllocator;
 class GHGPolicy;
-class Summary;
 class ILogger;
 class GDP;
 class Curve;
@@ -93,11 +91,6 @@ class Consumer;
 
 class RegionMiniCAM: public Region
 {
-    friend class InputOutputTable;
-    friend class SocialAccountingMatrix;
-    friend class DemandComponentsTable;
-    friend class SectorReport;
-    friend class SGMGenTable;
     friend class XMLDBOutputter;
 public:
     RegionMiniCAM();
@@ -109,13 +102,7 @@ public:
 
     virtual void postCalc( const int aPeriod );
 
-    virtual void csvOutputFile() const;
-    virtual void dbOutput( const std::list<std::string>& aPrimaryFuelList ) const;
-    virtual void updateSummary( const std::list<std::string>& aPrimaryFuelList, const int period );
-    virtual const Summary& getSummary( const int period ) const;
-
     virtual bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const;
-    virtual void updateAllOutputContainers( const int period );
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
     
@@ -154,11 +141,8 @@ protected:
         //! Private discount rate used for land decisions in the region.
         DEFINE_VARIABLE( SIMPLE, "private-discount-rate-land", mPrivateDiscountRateLand, double )
     )
-    
-    std::vector<Summary> summary; //!< summary values and totals for reporting
 
     virtual const std::string& getXMLName() const;
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 
@@ -169,8 +153,6 @@ protected:
     void adjustGDP( const int period );
 
     const std::vector<double> calcFutureGDP() const;
-    void calcEmissions( const int period );
-    void calcEmissFuel( const std::list<std::string>& aPrimaryFuelList, const int period );
 
     void setCO2CoefsIntoMarketplace( const int aPeriod );
 

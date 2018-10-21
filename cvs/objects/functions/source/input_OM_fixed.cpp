@@ -157,15 +157,6 @@ void InputOMFixed::XMLParse( const xercesc::DOMNode* node ) {
     }
 }
 
-void InputOMFixed::toInputXML( ostream& aOut,
-                               Tabs* aTabs ) const
-{
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
-    XMLWriteElement( mOMFixed, "OM-fixed", aOut, aTabs );
-    XMLWriteElementCheckDefault( mTechChange, "tech-change", aOut, aTabs, Value( 0 ) );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 void InputOMFixed::toDebugXML( const int aPeriod,
                                ostream& aOut,
                                Tabs* aTabs ) const
@@ -199,7 +190,7 @@ void InputOMFixed::completeInit( const string& aRegionName,
     // levelized OM_fixed cost.
     // These costs may be adjusted by the Technology, for instance for capture
     // penalties.
-    mAdjustedCosts.assign( mAdjustedCosts.size(), mLevelizedOMFixedCost );
+    fill( mAdjustedCosts.begin(), mAdjustedCosts.end(), mLevelizedOMFixedCost );
 }
 
 /** Calculate the levelizd fixed O&M cost.

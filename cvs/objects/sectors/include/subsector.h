@@ -54,13 +54,11 @@
 
 #include "investment/include/iinvestable.h"
 #include "util/base/include/inamed.h"
-#include "util/base/include/iround_trippable.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
 #include "util/base/include/data_definition_util.h"
 
 // Forward declarations
-class Summary;
 class ITechnologyContainer;
 class GDP;
 class IInfo;
@@ -74,7 +72,6 @@ class IDistributor;
 class Tabs;
 class ILandAllocator;
 class Demographics;
-class IndirectEmissionsCalculator;
 class InterpolationRule;
 class IDiscreteChoice;
 
@@ -94,13 +91,8 @@ class SubsectorAddTechCosts;
 
 class Subsector: public INamed,
                  public IInvestable,
-                 public IRoundTrippable,
                  private boost::noncopyable
 {
-    friend class SocialAccountingMatrix;
-    friend class DemandComponentsTable;
-    friend class SectorReport;
-    friend class SGMGenTable;
     friend class XMLDBOutputter;
     // needs to be friend so that it can set the doCalibration flag
     friend class InvestableCounterVisitor;
@@ -161,7 +153,6 @@ protected:
 
     std::vector<double> mInvestments; //!< Investment by period.
     std::vector<double> mFixedInvestments; //!< Input fixed subsector level investment by period.
-    std::vector<Summary> summary; //!< summary for reporting
     std::vector<BaseTechnology*> baseTechs; // for the time being
     std::map<std::string, TechnologyType*> mTechTypes; //!< Mapping from technology name to group of technology vintages.
 
@@ -174,7 +165,6 @@ protected:
 
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual const std::string& getXMLName() const;
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {};
     void parseBaseTechHelper( const xercesc::DOMNode* curr, BaseTechnology* aNewTech );
     
@@ -195,8 +185,6 @@ public:
                            const MoreSectorInfo* aMoreSectorInfo,
                            const int aPeriod );
 
-
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
     virtual double getPrice( const GDP* aGDP, const int aPeriod ) const;
@@ -219,13 +207,6 @@ public:
 
     virtual double getTotalCalOutputs( const int period ) const;
 
-    void csvOutputFile( const GDP* aGDP,
-                        const IndirectEmissionsCalculator* aIndirectEmissCalc ) const; 
-    virtual void MCoutputSupplySector( const GDP* aGDP ) const; 
-    virtual void MCoutputAllSectors( const GDP* aGDP, 
-                                     const IndirectEmissionsCalculator* aIndirectEmissCalc,
-                                     const std::vector<double> aSectorOutput ) const; 
-
     void emission( const int period );
 
     double getInput( const int period ) const;
@@ -242,12 +223,6 @@ public:
                                  const std::string& aSectorName,
                                  const double aNewInvestment,
                                  const int aPeriod );
-
-    std::map<std::string, double> getfuelcons( const int period ) const; 
-    std::map<std::string, double> getemission( const int period ) const;
-    std::map<std::string, double> getemfuelmap( const int period ) const; 
-
-    void updateSummary( const std::list<std::string>& aPrimaryFuelList, const int period );
     
     double getExpectedProfitRate( const NationalAccount& aNationalAccount,
                                   const std::string& aRegionName,
@@ -270,7 +245,6 @@ public:
     
     void updateMarketplace( const int period );
     void postCalc( const int aPeriod );
-    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     double getFixedInvestment( const int aPeriod ) const;
     bool hasCalibrationMarket() const;

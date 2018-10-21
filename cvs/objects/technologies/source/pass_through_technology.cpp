@@ -179,9 +179,6 @@ bool PassThroughTechnology::XMLDerivedClassParse( const string& aNodeName, const
     return false;
 }
 
-void PassThroughTechnology::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
-}
-
 //! write object to xml output stream
 void PassThroughTechnology::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mPassThroughSectorName, "pass-through-name", aOut, aTabs );

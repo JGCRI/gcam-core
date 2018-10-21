@@ -78,10 +78,7 @@ protected:
                              const int aPeriod ) const;
 
     virtual bool XMLDerivedClassParse( const std::string& aNodeName,
-                                       const xercesc::DOMNode* aCurr ); 
-    
-    virtual void toInputXMLDerived( std::ostream& aOut,
-                                    Tabs* aTabs ) const;
+                                       const xercesc::DOMNode* aCurr );
     
     virtual void toDebugXMLDerived( const int aPeriod,
                                     std::ostream& aOut,
@@ -95,7 +92,7 @@ protected:
         SupplySector,
     
         //! Vector of read-in fixed prices.
-        DEFINE_VARIABLE( ARRAY, "sectorprice", mFixedPrices, objects::PeriodVector<double> ),
+        DEFINE_VARIABLE( ARRAY, "sectorprice", mFixedPrices, objects::PeriodVector<Value> ),
 
         //! The market region into which the sector is exporting.
         DEFINE_VARIABLE( SIMPLE, "market", mMarketName, std::string )

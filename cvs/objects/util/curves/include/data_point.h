@@ -86,7 +86,7 @@ class DataPoint : private boost::noncopyable {
         virtual double getY() const = 0;
         virtual void setX( const double xValue ) = 0;
         virtual void setY( const double yValue ) = 0;
-        virtual void toInputXML( std::ostream& out, Tabs* tabs ) const = 0;
+        virtual void outputAsXML( std::ostream& aOut, Tabs* aTabs ) const = 0;
         virtual void XMLParse( const xercesc::DOMNode* node ) = 0;
         virtual void invertAxises() = 0;
         

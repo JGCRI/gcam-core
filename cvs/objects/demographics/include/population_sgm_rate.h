@@ -81,7 +81,6 @@ public:
     double getWorkingAgePopMale() const;
     double getWorkingAgePopFemale() const;
 
-    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
     
@@ -98,7 +97,6 @@ protected:
 
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string &nodeName, const xercesc::DOMNode* curr );
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const;
 private:
     void fillMalePop( const std::vector<double>& aMalePop );

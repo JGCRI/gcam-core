@@ -48,7 +48,6 @@
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/iparsable.h"
-#include "util/base/include/iround_trippable.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
 #include "util/base/include/iinterpolation_function.h"
@@ -77,8 +76,7 @@
  *          - Attributes:
  *              - \c apply-to InterpolationRule::mApplyTo
  *                      The XML name for which this rule applys to.  This is used
- *                      by the containing class and is only included here so
- *                      that this class can be IRoundTrippable.
+ *                      by the containing class only.
  *              - \c from-year InterpolationRule::mFromYear
  *                      The left end point for the range of years this rule applies.
  *              - \c to-year InterpolationRule::mToYear
@@ -116,7 +114,7 @@
  * \author Pralit Patel
  * \author Sonny Kim
  */
-class InterpolationRule : public IParsable, public IRoundTrippable, private boost::noncopyable {
+class InterpolationRule : public IParsable, private boost::noncopyable {
 public:
 
     /*!
@@ -148,9 +146,6 @@ public:
     // IParsable methods
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
 
-    // IRoundTrippable methods
-    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
-
 protected:
     
     DEFINE_DATA(
@@ -179,20 +174,12 @@ protected:
 
         //! A flag to indicate a warning should be produced when an
         //! existing value gets overwritten.
-        DEFINE_VARIABLE( SIMPLE, "overwrite-warn", mWarnWhenOverwritting, bool ),
-
-        //! The XML name for what this rule applies to.  Currently
-        //! this is only here for toInputXML.
-        DEFINE_VARIABLE( SIMPLE, "apply-to", mApplyTo, std::string )
+        DEFINE_VARIABLE( SIMPLE, "overwrite-warn", mWarnWhenOverwritting, bool )
     )
 
     //! Flag to check if the interpolation function is fixed in which
     //! case we enable the hack to set the value in the from-year as well
     bool mIsFixedFunction;
-    
-    //! Flag to keep track of if we should write the to-year attribute
-    //! as the getLastModelYearConstant() in toInputXML
-    bool mUseLastModelYearConstant;
     
     void copy( const InterpolationRule& aOther );
 

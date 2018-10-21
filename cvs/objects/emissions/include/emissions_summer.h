@@ -91,11 +91,18 @@ private:
  */
 class GroupedEmissionsSummer : public DefaultVisitor {
 public:
+    GroupedEmissionsSummer(): mCurrTech( 0 ) { }
     void addEmissionsSummer( EmissionsSummer* aEmissionsSummer );
     
     // DefaultVisitor methods
     virtual void startVisitGHG( const AGHG* aGHG,
                                 const int aPeriod );
+    
+    virtual void startVisitTechnology( const Technology* aTech,
+                                      const int aPeriod );
+    
+    virtual void endVisitTechnology( const Technology* aTech,
+                                    const int aPeriod );
     
     /*virtual void startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc,
                                        const int aPeriod );*/
@@ -106,6 +113,8 @@ private:
     std::map<std::string, EmissionsSummer*> mEmissionsSummers;
     
     typedef std::map<std::string, EmissionsSummer*>::const_iterator CSummerIterator;
+    
+    Technology const* mCurrTech;
 };
 
 #endif // _EMISSIONS_SUMMER_H_

@@ -130,9 +130,6 @@ public:
     // IParsable methods
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
     
-    // IRoundTrippable methods
-    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
-    
     // IVisitable methods
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     

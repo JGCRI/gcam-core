@@ -11,8 +11,7 @@ endif
 ifeq ($(strip $(CC)),)
 CC		= gcc
 endif
-CFLAGS		= -O2
-CXXOPTIM        = -O2
+CXXOPTIM        = -O2 -pthread
 CXXDEBUG        = -ggdb -DNDEBUG -DFUSION_MAX_VECTOR_SIZE=30
 CXXBASEOPTS     = $(CXXDEBUG)
 

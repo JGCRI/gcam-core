@@ -47,7 +47,6 @@
 #include <string>
 #include <xercesc/dom/DOMNode.hpp>
 #include "util/base/include/iparsable.h"
-#include "util/base/include/iround_trippable.h"
 
 class Tabs;
 
@@ -119,8 +118,7 @@ inline ISimpleComponent::~ISimpleComponent(){
  * \author Josh Lurz
  */
 class IParsedComponent: public ISimpleComponent,
-                        public IParsable,
-                        public IRoundTrippable 
+                        public IParsable
 { 
 public:
 	/*!

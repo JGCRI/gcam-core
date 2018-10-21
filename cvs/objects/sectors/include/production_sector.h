@@ -118,8 +118,6 @@ public:
     virtual void postCalc( const int aPeriod );
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 
-    virtual void dbOutput( const GDP* aGDP,
-                           const IndirectEmissionsCalculator* aIndEmissCalc ) const {}
 protected:
     std::map<std::string,double> ghgEmissCoefMap; //! Map of ghg name to emission coefficient
     void setMarket();
@@ -129,12 +127,11 @@ protected:
 
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 private:
     //! Vector of read-in prices for the production sector which will be used as
     //! fixed prices if mIsFixedPrice is true.
-    std::vector<double> mFixedPrices;
+    objects::PeriodVector<Value> mFixedPrices;
 
     //! The market region into which the sector is exporting.
     std::string mMarketName;

@@ -77,7 +77,6 @@ public:
     Grade();
     void XMLParse( const xercesc::DOMNode* tempnode );
     virtual void completeInit( const IInfo* aSubresourceInfo );
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
 

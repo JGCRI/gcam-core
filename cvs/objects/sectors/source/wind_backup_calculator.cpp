@@ -90,11 +90,6 @@ bool WindBackupCalculator::XMLParse( const xercesc::DOMNode* node ){
     return true;
 }
 
-void WindBackupCalculator::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 void WindBackupCalculator::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );

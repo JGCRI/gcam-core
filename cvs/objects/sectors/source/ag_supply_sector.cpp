@@ -92,20 +92,6 @@ bool AgSupplySector::XMLDerivedClassParse( const string& nodeName, const DOMNode
     return true;
 }
 
-/*! \brief XML output stream for derived classes
-*
-* Function writes output due to any variables specific to derived classes to XML
-*
-* \author Steve Smith, Josh Lurz
-* \param out reference to the output stream
-* \param tabs A tabs object responsible for printing the correct number of tabs. 
-*/
-void AgSupplySector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-    SupplySector::toInputXMLDerived( out, tabs );
-    XMLWriteElementCheckDefault( mCalPrice, "calPrice", out, tabs, -1.0 );
-    XMLWriteElementCheckDefault( mMarketName, "market", out, tabs, string( "" ) );
-}	
-
 void AgSupplySector::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {
     SupplySector::toDebugXMLDerived( period, out, tabs );
     XMLWriteElement( scenario->getMarketplace()->getPrice( mName, mRegionName, 1, true ), "calPrice", out, tabs );
@@ -202,7 +188,7 @@ void AgSupplySector::setMarket() {
         marketInfo->setString( "output-unit", mOutputUnit );
 
         // Set market prices to initial price vector
-        marketplace->setPriceVector( mName, mRegionName, convertToVector( mPrice ) );
+        marketplace->setPriceVector( mName, mRegionName, mPrice );
         // Reset base period price to mCalPrice
         marketplace->setPrice( mName, mRegionName, mCalPrice, 0, true );
 

@@ -41,7 +41,6 @@
 #include <string>
 #include <cassert>
 #include <xercesc/dom/DOMNodeList.hpp>
-#include <xercesc/dom/DOMImplementation.hpp>
 
 #include "technologies/include/stub_technology_container.h"
 #include "technologies/include/global_technology_database.h"
@@ -94,32 +93,9 @@ bool StubTechnologyContainer::XMLParse( const DOMNode* aNode ) {
     /*!
      * \warning This may shift some parsing errors to completeInit.
      */
-    mXMLAdjustments.push_back( getDocumentToHoldNodes()->importNode( aNode, true ) );
+    mXMLAdjustments.push_back( XMLHelper<void>::getDOMDocument()->importNode( aNode, true ) );
     
     return true;
-}
-
-void StubTechnologyContainer::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    
-    // The technology does not get written back out here, rather that will occur
-    // in the global technology.  The XML adjustments do need to get written back
-    // out however.
-    for( CXMLIterator xmlIter = mXMLAdjustments.begin(); xmlIter != mXMLAdjustments.end(); ++xmlIter ) {
-        XMLHelper<void>::serializeNode( *xmlIter, aOut, aTabs, true );
-    }
-
-    // We must write out any data needed for restart otherwise they will be lost.
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
-    const Modeltime* modeltime = scenario->getModeltime();
-    ITechnologyContainer::CTechRangeIterator it =
-        mTechnology->getVintageBegin( modeltime->getmaxper() - 1 );
-    ITechnologyContainer::CTechRangeIterator endIter =
-        mTechnology->getVintageEnd( 0 );
-
-    for( ; it != endIter; ++it ) {
-        (*it).second->toInputXMLForRestart( aOut, aTabs );
-    }
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
 void StubTechnologyContainer::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
@@ -162,6 +138,9 @@ void StubTechnologyContainer::completeInit( const string& aRegionName,
             interpolateThenParse.push_back( *xmlIter );
         }
     }
+    // now that the XML adjustments are parsed no need to keep them around any longer
+    // Note the XML adjustments's memory will be managed by their document.
+    mXMLAdjustments.clear();
     
     // Next interpolate and parse XML that was tagged to allow interpolation.
     for( CXMLIterator xmlIter = interpolateThenParse.begin(); xmlIter != interpolateThenParse.end(); ++xmlIter ) {
@@ -214,18 +193,6 @@ void StubTechnologyContainer::accept( IVisitor* aVisitor, const int aPeriod ) co
 
 void StubTechnologyContainer::interpolateAndParse( const DOMNode* aNode ) {
     // could make this work
-}
-
-/*!
- * \brief Get a document so that we can control our own memory to store DOMNodes.
- * \details We have the DOM implementation create a single temporary document to
- *          store our temporary XML.
- * \return A document that will not get deleted.
- */
-DOMDocument* StubTechnologyContainer::getDocumentToHoldNodes() {
-    static DOMDocument* doc = DOMImplementation::getImplementation()->createDocument();
-    
-    return doc;
 }
 
 void StubTechnologyContainer::doDataExpansion( ExpandDataVector<ParentClass::SubClassFamilyVector>& aVisitor ) {
