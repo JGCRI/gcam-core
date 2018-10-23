@@ -349,7 +349,7 @@ chunk_inputs <- function(chunks = find_chunks()$name) {
   assertthat::assert_that(is.character(chunks))
 
   # Get list of data required by each chunk
-  names <- character()
+  chunk_names <- character()
   inputs <- character()
   from_files <- logical()
   optionals <- logical()
@@ -366,13 +366,13 @@ chunk_inputs <- function(chunks = find_chunks()$name) {
       optional_file_inputs <- names(reqdata) == "OPTIONAL_FILE"
     }
     if(!is.null(reqdata)) {
-      names <- c(names, rep(ch, times = length(reqdata)))
+      chunk_names <- c(chunk_names, rep(ch, times = length(reqdata)))
       inputs <- c(inputs, as.vector(unlist(reqdata)))
       from_files <- c(from_files, file_inputs)
       optionals <- c(optionals, optional_file_inputs)
     }
   }
-  tibble(name = names, input = inputs, from_file = from_files, optional = optionals)
+  tibble(name = chunk_names, input = inputs, from_file = from_files, optional = optionals)
 }
 
 
@@ -399,7 +399,7 @@ inputs_of <- function(chunks) {
 chunk_outputs <- function(chunks = find_chunks()$name) {
   assertthat::assert_that(is.character(chunks))
 
-  names <- character()
+  chunk_names <- character()
   outputs <- character()
   to_xmls <- logical()
   for(ch in chunks) {
@@ -413,12 +413,12 @@ chunk_outputs <- function(chunks = find_chunks()$name) {
       fileoutputs <- names(reqdata) == "XML"
     }
     if(!is.null(reqdata)) {
-      names <- c(names, rep(ch, times = length(reqdata)))
+      chunk_names <- c(chunk_names, rep(ch, times = length(reqdata)))
       outputs <- c(outputs, as.vector(unlist(reqdata)))
       to_xmls <- c(to_xmls, fileoutputs)
     }
   }
-  tibble(name = names, output = outputs, to_xml = to_xmls)
+  tibble(name = chunk_names, output = outputs, to_xml = to_xmls)
 }
 
 #' outputs_of

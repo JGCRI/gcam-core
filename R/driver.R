@@ -231,7 +231,11 @@ driver <- function(all_data = empty_data(),
 
   # Initialize some stuff before we start to run the chunks
   if(!missing(stop_before) || !missing(stop_after)) {
-    run_chunks <- ifelse(missing(stop_before), stop_after, stop_before)
+    if(!missing(stop_after)) {
+      run_chunks <- stop_after
+    } else {
+      run_chunks <- stop_before
+    }
     # calc min list
     verts <- inner_join(bind_rows(chunkoutputs,
                                   tibble(name = unfound_inputs$input,
