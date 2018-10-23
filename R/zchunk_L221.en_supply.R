@@ -319,7 +319,7 @@ module_energy_L221.en_supply <- function(command, ...) {
       left_join(L221.ag_FeedPrice_R_Yf, by = "region") %>%
       mutate(P1 = round(feed_price, digits = energy.DIGITS_COST)) %>%
       gather(key = "variable", value = "price", P0, P1) %>%
-      mutate(fraction.produced = as.numeric( sub( "P", "", variable ) )) %>%
+      mutate(fraction.produced = as.numeric( sub("P", "", variable ) )) %>%
       select(-variable, -feed_price, -GCAM_region_ID) -> L221.StubTechFractProd_en
 
     # Final tables for feedcrop secondary output: the resource
@@ -488,7 +488,7 @@ module_energy_L221.en_supply <- function(command, ...) {
       filter(!is.na(share.weight)) -> L221.StubTechShrwt_bio
 
     # For regions with no agricultural and land use sector (Taiwan), need to remove the passthrough supplysectors for first-gen biofuels
-    ag_en <- c( "regional corn for ethanol", "regional sugar for ethanol", "regional biomassOil" )
+    ag_en <- c("regional corn for ethanol", "regional sugar for ethanol", "regional biomassOil")
     aglu.NO_AGLU_REGIONS
     L221.SubsectorLogit_en %>%
       filter(!(region %in% aglu.NO_AGLU_REGIONS & supplysector %in% ag_en)) -> L221.SubsectorLogit_en

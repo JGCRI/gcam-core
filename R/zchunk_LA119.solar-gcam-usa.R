@@ -36,22 +36,6 @@ module_gcam.usa_LA119.Solar <- function(command, ...) {
     # These scalers will then be used to create capacity factors by state.
     # The idea is to vary capacity factors for solar technologies by state depending on the varying solar irradiance by state.
 
-    if(OLD_DATA_SYSTEM_BEHAVIOR) {
-      # Old data used the read-in value for the average, while we actually want to calculate it
-      # The difference between read-in value and calculated are slightly different
-      NREL_us_re_capacity_factors %>%
-        gather(fuel, value, -State) %>%
-        filter(State != "Average") ->
-        NREL_us_re_capacity_factors_longform
-
-      NREL_us_re_capacity_factors %>%
-        gather(fuel, value, -State) %>%
-        filter(State == "Average") %>%
-        select(-State) ->
-        Capacityfactor_average
-
-    } else {
-
     # Converting NREL_us_re_capacity_factors to long-form and removing read-in value for the average
     NREL_us_re_capacity_factors %>%
       gather(fuel, value, -State) %>%
@@ -61,9 +45,8 @@ module_gcam.usa_LA119.Solar <- function(command, ...) {
     # Calculate average capacity factor by fuel (not including the 0 capacity factors)
     NREL_us_re_capacity_factors_longform %>%
       group_by(fuel) %>%
-      summarise_all(funs(mean(.[. != 0])), -State) -> # Average does not include 0 capacity factors
+      summarise_at(vars(value), funs(mean(.[. != 0]))) -> # Average does not include 0 capacity factors
       Capacityfactor_average
-    }
 
     # Creating scalers by state by dividing capacity factor by the average
     # Using state name abbreviations instead of full names

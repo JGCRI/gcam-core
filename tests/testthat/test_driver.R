@@ -270,12 +270,11 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
     com2 <- "c2"
     f1 <- FLAG_INPUT_DATA
     f2 <- FLAG_NO_TEST
-    f3 <- FLAG_LONG_YEAR_FORM
 
     tibble(a = 1) %>%
       add_title(title) %>% add_precursors(precs) %>% add_units(unts) %>%
       add_comments(com1) %>% add_comments(com2) %>%
-      add_flags(f1, f2, f3) -> x
+      add_flags(f1, f2) -> x
 
     tb <- tibbelize_outputs(add_data(list(output = x), empty_data()), chunkname)
 
@@ -284,6 +283,6 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
     expect_identical(tb$precursors, precs)
     expect_identical(tb$units, unts)
     expect_identical(tb$comments, paste(com1, com2, sep = data.SEPARATOR))
-    expect_identical(tb$flags, paste(f1, f2, f3, sep = data.SEPARATOR))
+    expect_identical(tb$flags, paste(f1, f2, sep = data.SEPARATOR))
   })
 }

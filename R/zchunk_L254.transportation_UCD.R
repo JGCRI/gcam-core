@@ -204,6 +204,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       A54.tranSubsector_shrwt %>%
         filter(!is.na(year)) %>%
         write_to_all_regions(LEVEL2_DATA_NAMES[["tranSubsectorShrwt"]], GCAM_region_names = GCAM_region_names) %>%
+        mutate(year = as.integer(year)) %>%
         # Subset only the combinations of region, supplysector, and tranSubsector that are available
         semi_join(r_ss_ts_all, by = c("region", "supplysector", "tranSubsector")) %>%
         select(LEVEL2_DATA_NAMES[["tranSubsectorShrwt"]]) ->
@@ -214,6 +215,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       A54.tranSubsector_shrwt %>%
         filter(!is.na(year.fillout)) %>%
         write_to_all_regions(LEVEL2_DATA_NAMES[["tranSubsectorShrwtFllt"]], GCAM_region_names = GCAM_region_names) %>%
+        mutate(year.fillout = as.integer(year.fillout)) %>%
         # Subset only the combinations of region, supplysector, and tranSubsector that are available
         semi_join(r_ss_ts_all, by = c("region", "supplysector", "tranSubsector")) %>%
         select(LEVEL2_DATA_NAMES[["tranSubsectorShrwtFllt"]]) ->
@@ -517,28 +519,6 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
              subs.share.weight, tech.share.weight) ->
       L254.StubTechCalInput_passthru # OUTPUT
 
-    # There are a few rows with significant differences due to compounded rounding issues
-    # Differences are very small, relatively, but in a few cases absolutely large
-    # Fake these data for now, to pass tests
-    if(OLD_DATA_SYSTEM_BEHAVIOR) {
-      x <- L254.StubTechCalInput_passthru$supplysector=="trn_freight" & L254.StubTechCalInput_passthru$tranSubsector=="road" &
-        L254.StubTechCalInput_passthru$stub.technology=="road" & L254.StubTechCalInput_passthru$minicam.energy.input=="trn_freight_road"
-
-      L254.StubTechCalInput_passthru[L254.StubTechCalInput_passthru$region=="India" & x & L254.StubTechCalInput_passthru$year==2010, "calibrated.value"] <- 508952.42 # versus 509091.85
-      L254.StubTechCalInput_passthru[L254.StubTechCalInput_passthru$region=="South America_Northern" & x & L254.StubTechCalInput_passthru$year==2005, "calibrated.value"] <- 139468.49 # versus 139389.28
-      L254.StubTechCalInput_passthru[L254.StubTechCalInput_passthru$region=="Southeast Asia" & x & L254.StubTechCalInput_passthru$year==2005, "calibrated.value"] <- 351902.90 # versus 351980.89
-      L254.StubTechCalInput_passthru[L254.StubTechCalInput_passthru$region=="South America_Northern" & x & L254.StubTechCalInput_passthru$year==1990, "calibrated.value"] <- 92511.04 # versus 92458.50
-      L254.StubTechCalInput_passthru[L254.StubTechCalInput_passthru$region=="South America_Northern" & x & L254.StubTechCalInput_passthru$year==2010, "calibrated.value"] <- 161701.65 # versus 161737.59
-      L254.StubTechCalInput_passthru[L254.StubTechCalInput_passthru$region=="South America_Northern" & x & L254.StubTechCalInput_passthru$year==1975, "calibrated.value"] <- 61571.84 # versus 61550.48
-      L254.StubTechCalInput_passthru[L254.StubTechCalInput_passthru$region=="Africa_Southern" & x & L254.StubTechCalInput_passthru$year==2010, "calibrated.value"] <- 49553.03 # versus 49566.81
-      L254.StubTechCalInput_passthru[L254.StubTechCalInput_passthru$region=="South Asia" & x & L254.StubTechCalInput_passthru$year==2010, "calibrated.value"] <- 40902.62 # versus 40913.99
-      L254.StubTechCalInput_passthru[L254.StubTechCalInput_passthru$region=="EU-15" & x & L254.StubTechCalInput_passthru$year==2005, "calibrated.value"] <- 1646400.03 # versus 1646399.91
-
-      x <- L254.StubTechCalInput_passthru$supplysector=="trn_freight" & L254.StubTechCalInput_passthru$tranSubsector=="road" &
-        L254.StubTechCalInput_passthru$stub.technology=="road" & L254.StubTechCalInput_passthru$minicam.energy.input=="trn_pass_road"
-      L254.StubTechCalInput_passthru[L254.StubTechCalInput_passthru$region=="Southeast Asia" & x & L254.StubTechCalInput_passthru$year==2010, "calibrated.value"] <- 4320044.08 # versus 4320044.95
-    }
-
     # PART F: NON-MOTORIZED TRANSPORTATION - SERVICE OUTPUT
     # L254.StubTechProd_nonmotor: service output of non-motorized transportation technologies
     # L154.out_mpkm_R_trn_nonmotor_Yh reports service output by GCAM region / non-motorized transport mode / year
@@ -586,46 +566,6 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       ungroup() ->
       L254.BaseService_trn # OUTPUT
 
-    # There are a few rows with significant differences due to compounded rounding issues
-    # Differences are very small, relatively, but in a few cases absolutely large
-    # Fake these data for now, to pass tests
-    if(OLD_DATA_SYSTEM_BEHAVIOR) {
-      L254.BaseService_trn[L254.BaseService_trn$region=="India" & L254.BaseService_trn$energy.final.demand=="trn_freight"
-                           & L254.BaseService_trn$year==2010, "base.service"] <- 1346404.82 # versus 1346544.25
-      L254.BaseService_trn[L254.BaseService_trn$region=="Southeast Asia" & L254.BaseService_trn$energy.final.demand=="trn_freight"
-                           & L254.BaseService_trn$year==2005, "base.service"] <- 604999.65 # versus 605077.65
-      L254.BaseService_trn[L254.BaseService_trn$region=="South America_Northern" & L254.BaseService_trn$energy.final.demand=="trn_freight"
-                           & L254.BaseService_trn$year==2010, "base.service"] <- 195104.86 # versus 195140.79
-      L254.BaseService_trn[L254.BaseService_trn$region=="Africa_Southern" & L254.BaseService_trn$energy.final.demand=="trn_freight"
-                           & L254.BaseService_trn$year==2010, "base.service"] <- 63848.04 # versus 63861.81
-      L254.BaseService_trn[L254.BaseService_trn$region=="South Asia" & L254.BaseService_trn$energy.final.demand=="trn_freight"
-                           & L254.BaseService_trn$year==2010, "base.service"] <- 94203.62 # versus 94214.99
-      L254.BaseService_trn[L254.BaseService_trn$region=="Southeast Asia" & L254.BaseService_trn$energy.final.demand=="trn_pass"
-                           & L254.BaseService_trn$year==2010, "base.service"] <- 4706935.52 # versus 4706936.39
-      L254.BaseService_trn[L254.BaseService_trn$region=="South America_Northern" & L254.BaseService_trn$energy.final.demand=="trn_freight"
-                           & L254.BaseService_trn$year==2005, "base.service"] <- 168353.69 # versus 168274.47
-      L254.BaseService_trn[L254.BaseService_trn$region=="South America_Northern" & L254.BaseService_trn$energy.final.demand=="trn_freight"
-                           & L254.BaseService_trn$year==1990, "base.service"] <- 113348.93 # versus 113296.39
-      L254.BaseService_trn[L254.BaseService_trn$region=="South America_Northern" & L254.BaseService_trn$energy.final.demand=="trn_freight"
-                           & L254.BaseService_trn$year==1975, "base.service"] <- 72117.49 # versus 72096.13
-      L254.BaseService_trn[L254.BaseService_trn$region=="EU-15" & L254.BaseService_trn$energy.final.demand=="trn_freight"
-                           & L254.BaseService_trn$year==2005, "base.service"] <- 2802971.21 # versus 2802971.09
-
-      L254.StubTranTechLoadFactor$loadFactor[L254.StubTranTechLoadFactor$region == "Southeast Asia" & L254.StubTranTechLoadFactor$supplysector == "trn_freight_road" &
-                                    L254.StubTranTechLoadFactor$tranSubsector == "Truck (0-6t)" & L254.StubTranTechLoadFactor$stub.technology  == "Liquids" &
-                                    L254.StubTranTechLoadFactor$year == 2025] <- 0.52 # versus 0.53
-      L254.StubTranTechLoadFactor$loadFactor[L254.StubTranTechLoadFactor$region == "Southeast Asia" & L254.StubTranTechLoadFactor$supplysector == "trn_freight_road" &
-                                               L254.StubTranTechLoadFactor$tranSubsector == "Truck (0-6t)" & L254.StubTranTechLoadFactor$stub.technology  == "NG" &
-                                               L254.StubTranTechLoadFactor$year == 2035] <- 0.52 # versus 0.53
-      L254.StubTranTechLoadFactor$loadFactor[L254.StubTranTechLoadFactor$region == "Southeast Asia" & L254.StubTranTechLoadFactor$supplysector == "trn_freight_road" &
-                                               L254.StubTranTechLoadFactor$tranSubsector == "Truck (0-6t)" & L254.StubTranTechLoadFactor$stub.technology  == "NG" &
-                                               L254.StubTranTechLoadFactor$year == 2060] <- 0.52 # versus 0.53
-      L254.StubTranTechLoadFactor$loadFactor[L254.StubTranTechLoadFactor$region == "Southeast Asia" & L254.StubTranTechLoadFactor$supplysector == "trn_freight_road" &
-                                               L254.StubTranTechLoadFactor$tranSubsector == "Truck (0-6t)" & L254.StubTranTechLoadFactor$stub.technology  == "NG" &
-                                               L254.StubTranTechLoadFactor$year == 2085] <- 0.52 # versus 0.53
-
-    }
-
     # ===================================================
 
     L254.Supplysector_trn %>%
@@ -655,27 +595,6 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
                      "energy/A54.tranSubsector_logit", "energy/A54.globaltech_nonmotor") ->
       L254.tranSubsectorLogit
 
-    if(OLD_DATA_SYSTEM_BEHAVIOR) {
-
-      # Old code applied the if function to the wrong data (L254.SubsectorShrwt_trn instead of L254.tranSubsectorShrwt)
-      if(exists("L254.SubsectorShrwt_trn")) {
-        L254.tranSubsectorShrwt %>%
-          add_title("Subsector shareweights of transportation sector") %>%
-          add_units("Unitless") %>%
-          add_comments("Subsector shareweights of transportation sector were written for all regions and subset for existing combinations of region, supplysector, and tranSubsector") %>%
-          add_comments("Only rows with an entry for year were selected") %>%
-          add_legacy_name("L254.tranSubsectorShrwt") %>%
-          add_precursors("common/GCAM_region_names", "energy/mappings/UCD_techs", "L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y",
-                         "energy/A54.tranSubsector_shrwt", "energy/A54.globaltech_nonmotor") ->
-          L254.tranSubsectorShrwt
-      } else {
-        missing_data() %>%
-          add_legacy_name("L254.tranSubsectorShrwt") ->
-          L254.tranSubsectorShrwt
-      }
-
-    } else {
-
       if(exists("L254.tranSubsectorShrwt")) {
         L254.tranSubsectorShrwt %>%
           add_title("Subsector shareweights of transportation sector") %>%
@@ -691,7 +610,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
           add_legacy_name("L254.tranSubsectorShrwt") ->
           L254.tranSubsectorShrwt
       }
-    }
+
 
     if(exists("L254.tranSubsectorShrwtFllt")) {
       L254.tranSubsectorShrwtFllt %>%

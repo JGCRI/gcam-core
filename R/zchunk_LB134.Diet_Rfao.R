@@ -267,15 +267,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
       # Cap future values, both maximum annual change (ratio)
       # and absolute value, based on values in A_FoodDemand_SSPs
 
-      # Note that the old code has a bug: in line 168 (old file) a loop starts without
-      # correctly resetting the `prev_i` variable; as a result, if the value in
-      # the final historical year is 0, incorrect values get written to all future
-      # years -- but only for meat. We replicate this faulty behavior below.
-      if(OLD_DATA_SYSTEM_BEHAVIOR) {
-        prev_yr <- max(FUTURE_YEARS)  # bug
-      } else {
-        prev_yr <- max(HISTORICAL_YEARS)
-      }
+      prev_yr <- max(HISTORICAL_YEARS)
       # Because of the dependencies involved, I couldn't figure out a way
       # not to use a loop here.  :(
       for(yr in sort(FUTURE_YEARS)) {

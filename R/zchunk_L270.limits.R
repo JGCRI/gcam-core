@@ -10,7 +10,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L270.CreditOutput}, \code{L270.CreditInput_elec}, \code{L270.CreditInput_feedstocks}, \code{L270.CreditMkt}, \code{L270.CTaxInput}, \code{L270.NegEmissFinalDemand}, \code{L270.NegEmissFinalDemand_SPA}, \code{L270.NegEmissBudgetMaxPrice}, \code{paste0( "L270.NegEmissBudget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), c("spa1", "spa23", "spa4", "spa5")) )}. The corresponding file in the
+#' the generated outputs: \code{L270.CreditOutput}, \code{L270.CreditInput_elec}, \code{L270.CreditInput_feedstocks}, \code{L270.CreditMkt}, \code{L270.CTaxInput}, \code{L270.NegEmissFinalDemand}, \code{L270.NegEmissFinalDemand_SPA}, \code{L270.NegEmissBudgetMaxPrice}, \code{paste0("L270.NegEmissBudget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), paste0("spa", 1:5))) )}. The corresponding file in the
 #' original data system was \code{L270.limits.R} (energy level2).
 #' @details Generate GCAM policy constraints which enforce limits to liquid feedstocks
 #' and the amount of subsidies given for net negative emissions.
@@ -38,7 +38,7 @@ module_energy_L270.limits <- function(command, ...) {
              # TODO: might just be easier to keep the scenarios in a single
              # table here and split when making XMLs but to match the old
              # data system we will split here
-             paste0( "L270.NegEmissBudget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), c("spa1", "spa23", "spa4", "spa5")) )))
+             paste0("L270.NegEmissBudget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), paste0("spa", 1:5)) )))
   } else if(command == driver.MAKE) {
 
     value <- subsector <- supplysector <- year <- GCAM_region_ID <- sector.name <-
@@ -147,21 +147,7 @@ module_energy_L270.limits <- function(command, ...) {
     # split out SSPs so that we can generate SPA policies
     # NOTE: SPA policies *must* be regional no matter the value of NEG_EMISS_MARKT_GLOBAL
     L270.NegEmissBudget %>%
-      filter(grepl('^SSP\\d', scenario)) ->
-      L270.NegEmissBudget_SPA
-    # While it is true SSP 2 and 3 share policy assumptions (SPA) they do not
-    # share GDPs.  The data contained in L270.NegEmissBudget is GDP * policy assumption
-    # thus we should in fact keep them seperate.  Further, we are currently not considering
-    # scenario specific policies although it may make sense to do so in the future to fit in
-    # with SSP story lines.
-    if(OLD_DATA_SYSTEM_BEHAVIOR) {
-      L270.NegEmissBudget_SPA %>%
-        # SSP 2 and 3 share SPA
-        filter(scenario != "SSP3") %>%
-        mutate(scenario = if_else(scenario == "SSP2", "SSP23", scenario)) ->
-        L270.NegEmissBudget_SPA
-    }
-    L270.NegEmissBudget_SPA %>%
+      filter(grepl('^SSP\\d', scenario)) %>%
       mutate(scenario = sub('SSP', 'spa', scenario)) ->
       L270.NegEmissBudget_SPA
 
@@ -265,7 +251,7 @@ module_energy_L270.limits <- function(command, ...) {
     # Put the SPA budgets in with the rest of the scenarios so that we can export them all in bulk
     L270.NegEmissBudget %<>% bind_rows(L270.NegEmissBudget_SPA)
     for(scen in unique(L270.NegEmissBudget$scenario)) {
-      curr_data_name <- paste0( "L270.NegEmissBudget_", scen)
+      curr_data_name <- paste0("L270.NegEmissBudget_", scen)
       L270.NegEmissBudget %>%
         filter(scenario == scen) %>%
         select(-scenario) %>%
@@ -282,7 +268,7 @@ module_energy_L270.limits <- function(command, ...) {
     # Call return_data but we need to jump through some hoops since we generated some of the
     # tibbles from the scenarios so we will generate the call to return_data
     ret_data %>%
-      paste(collapse=", ") %>%
+      paste(collapse = ", ") %>%
       paste0("return_data(", ., ")") %>%
       parse(text = .) %>%
       eval()

@@ -104,7 +104,7 @@ module_emissions_L152.MACC <- function(command, ...) {
     L152.MAC_pct_R_S_Proc_EPA <- L152.EPA_MACC_percent_MtCO2e %>%
       select(Sector, Process, EPA_region) %>%
       unique %>%
-      repeat_add_columns(tibble(cost_1990USD_tCe = emissions.MAC_TAXES)) %>%
+      repeat_add_columns(tibble(cost_1990USD_tCe = round(emissions.MAC_TAXES * emissions.CONV_C_CO2 * gdp_deflator(1990, base_year = 2010), 0))) %>%
       left_join_error_no_match(L152.EPA_MACC_percent_MtCO2e,
                                by = c("Sector", "Process", "EPA_region", "cost_1990USD_tCe")) %>%
       spread(cost_1990USD_tCe, reduction_pct)
