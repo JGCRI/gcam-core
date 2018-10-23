@@ -367,8 +367,7 @@ warn_data_injects <- function() {
   # Are any chunks are using temp-data-inject data that are also available to them through the data system?
   ci <- chunk_inputs(find_chunks(include_disabled = FALSE)$name)
   chunk_outputs(find_chunks(include_disabled = FALSE)$name) %>%
-    rename(upstream_chunk = name) %>%
-    mutate(output = output) ->
+    rename(upstream_chunk = name) ->
     co
 
   # Look for TEMP_DATA_INJECT pattern in the chunk input list
