@@ -349,27 +349,30 @@ chunk_inputs <- function(chunks = find_chunks()$name) {
   assertthat::assert_that(is.character(chunks))
 
   # Get list of data required by each chunk
-  chunkinputs <- list()
+  chunk_names <- character()
+  inputs <- character()
+  from_files <- logical()
+  optionals <- logical()
   for(ch in chunks) {
     cl <- call(ch, driver.DECLARE_INPUTS)
     reqdata <- eval(cl)
 
     # Chunks mark their file inputs specially, using vector names
     if(is.null(names(reqdata))) {
-      file_inputs <- FALSE
-      optional_file_inputs <- FALSE
+      file_inputs <- rep(FALSE, times = length(reqdata))
+      optional_file_inputs <- rep(FALSE, times = length(reqdata))
     } else {
       file_inputs <- names(reqdata) %in% c("FILE", "OPTIONAL_FILE")
       optional_file_inputs <- names(reqdata) == "OPTIONAL_FILE"
     }
     if(!is.null(reqdata)) {
-      chunkinputs[[ch]] <- tibble(name = ch,
-                                  input = reqdata,
-                                  from_file = file_inputs,
-                                  optional = optional_file_inputs)
+      chunk_names <- c(chunk_names, rep(ch, times = length(reqdata)))
+      inputs <- c(inputs, as.vector(unlist(reqdata)))
+      from_files <- c(from_files, file_inputs)
+      optionals <- c(optionals, optional_file_inputs)
     }
   }
-  dplyr::bind_rows(chunkinputs)
+  tibble(name = chunk_names, input = inputs, from_file = from_files, optional = optionals)
 }
 
 
@@ -396,22 +399,26 @@ inputs_of <- function(chunks) {
 chunk_outputs <- function(chunks = find_chunks()$name) {
   assertthat::assert_that(is.character(chunks))
 
-  chunkoutputs <- list()
+  chunk_names <- character()
+  outputs <- character()
+  to_xmls <- logical()
   for(ch in chunks) {
     cl <- call(ch, driver.DECLARE_OUTPUTS)
     reqdata <- eval(cl)
 
     # Chunks mark any XML file outputs using vector names
     if(is.null(names(reqdata))) {
-      fileoutputs <- FALSE
+      fileoutputs <- rep(FALSE, times = length(reqdata))
     } else {
       fileoutputs <- names(reqdata) == "XML"
     }
     if(!is.null(reqdata)) {
-      chunkoutputs[[ch]] <- tibble(name = ch, output = reqdata, to_xml = fileoutputs)
+      chunk_names <- c(chunk_names, rep(ch, times = length(reqdata)))
+      outputs <- c(outputs, as.vector(unlist(reqdata)))
+      to_xmls <- c(to_xmls, fileoutputs)
     }
   }
-  dplyr::bind_rows(chunkoutputs)
+  tibble(name = chunk_names, output = outputs, to_xml = to_xmls)
 }
 
 #' outputs_of

@@ -164,7 +164,7 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
       filter(supplysector == "gas processing") -> L1011.gasproc_coef
 
     L1011.en_bal_EJ_R_Si_Fi_Yh %>%
-      filter(sector == "in_gas processing" & fuel=="coal") %>%
+      filter(sector == "in_gas processing" & fuel == "coal") %>%
       mutate(sector.x = sub("in_", "", sector)) %>%
       left_join(L1011.gasproc_coef %>%
                   rename(sector.x = sector), by = c("sector.x", "fuel", "year")) %>%

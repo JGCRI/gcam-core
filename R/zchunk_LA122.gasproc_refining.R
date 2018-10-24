@@ -130,7 +130,7 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
     # Create L122.out_EJ_R_gtlctl_Yh from L1011.en_bal_EJ_R_Si_Fi_Yh for gas to liquids (gtl) and coal to liquids (ctl) sectors
     L1011.en_bal_EJ_R_Si_Fi_Yh %>%
       filter(sector == "out_gtl" | sector == "out_ctl") %>%
-      mutate(sector = if_else(sector=="out_gtl", "gtl", "ctl")) -> L122.out_EJ_R_gtlctl_Yh
+      mutate(sector = if_else(sector == "out_gtl", "gtl", "ctl")) -> L122.out_EJ_R_gtlctl_Yh
 
     # GTL and CTL inputs (L122.in_EJ_R_gtlctl_F_Yh): derived as output times exogenous input-output coefficients
     # Interpolate gas processing IO coefs to all historical years and match in the fuel name

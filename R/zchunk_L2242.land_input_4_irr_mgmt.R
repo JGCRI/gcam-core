@@ -118,7 +118,7 @@ module_aglu_L2242.land_input_4_irr_mgmt <- function(command, ...) {
       add_title("Ghost node share for bioenergy node in future years, the fourth land nest") %>%
       add_units("NA") %>%
       add_comments("Ghost share values are read in from an assumptions file") %>%
-      add_comments( "and then mapped to all bioenergy nodes for future years after the bio start year") %>%
+      add_comments("and then mapped to all bioenergy nodes for future years after the bio start year") %>%
       add_legacy_name("L2242.LN4_NodeGhostShare") %>%
       add_precursors("L2012.AgYield_bio_ref",
                      "aglu/A_bio_ghost_share",
