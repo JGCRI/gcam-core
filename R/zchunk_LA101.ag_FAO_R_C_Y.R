@@ -141,7 +141,7 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
              prod_share_GLU = production / sum(production)) %>%
       ungroup() ->
       LDS_ctry_crop_SHARES
-      
+
 
     # Compute default basin-within-country shares to be used where FAOSTAT has data but LDS/Monfreda does not.
     # These shares are computed from the harvested area of all crops available in Monfreda.
@@ -177,7 +177,7 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
        mutate(harvested.area = harvested.area * HA_share_GLU,                                                      # multiply through by shares of GLU within country and crop
               production = production * prod_share_GLU) %>%
        select(-HA_share_GLU, -prod_share_GLU) ->
-       FAO_PRODSTAT_DOWNSCALED_matched
+       FAO_PRODSTAT_DOWNSCALED_matches
 
      # Second group: country/crop observations missing in LDS/Monfreda where some crops for the country are available
      FAO_PRODSTAT_DOWNSCALED %>%
@@ -218,7 +218,7 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
        FAO_PRODSTAT_DOWNSCALED_countryNA
 
     # FAO downscaled data: bind the three groups together
-    FAO_PRODSTAT_DOWNSCALED <- bind_rows(FAO_PRODSTAT_DOWNSCALED_matched,
+    FAO_PRODSTAT_DOWNSCALED <- bind_rows(FAO_PRODSTAT_DOWNSCALED_matches,
                                          FAO_PRODSTAT_DOWNSCALED_cropNA,
                                          FAO_PRODSTAT_DOWNSCALED_countryNA)
 

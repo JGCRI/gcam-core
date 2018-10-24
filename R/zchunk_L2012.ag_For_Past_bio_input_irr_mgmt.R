@@ -448,7 +448,8 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       add_comments("Exclude forest and pasture") %>%
       add_legacy_name("L2012.AgHAtoCL_irr_mgmt") %>%
       same_precursors_as("L2012.AgProduction_ag_irr_mgmt") %>%
-      add_precursors("L122.ag_HA_to_CropLand_R_Y_GLU") ->
+      add_precursors("L122.ag_HA_to_CropLand_R_Y_GLU") %>%
+      add_flags(FLAG_PROTECT_FLOAT) ->
       L2012.AgHAtoCL_irr_mgmt
 
     L2012.AgYield_bio_ref %>%
