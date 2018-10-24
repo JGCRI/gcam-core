@@ -36,6 +36,9 @@ gcam.LOGIT_TYPES         <- c("relative-cost-logit", "absolute-cost-logit")
 gcam.EQUIV_TABLE         <- "EQUIV_TABLE"
 gcam.IND_ENERGY_USE      <- c("biomass", "coal", "gas", "refined liquids")  # GCAM industrial energy use fuels
 GCAM_REGION_ID      <- "GCAM_region_ID"
+# The default market price GCAM will use to start solving from if it has no other info
+# If users do not have an estimate for a starting price this is a safe one to set
+gcam.DEFAULT_PRICE <- 1.0
 
 
 # Driver constants ======================================================================

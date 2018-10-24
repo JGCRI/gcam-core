@@ -117,7 +117,7 @@ module_aglu_L202.an_input <- function(command, ...) {
     # L202.RenewRsrcPrice: resource prices
     L202.RenewRsrc %>%
       select(region, renewresource) %>%
-      mutate(year = min(MODEL_BASE_YEARS), price = 1) ->
+      mutate(year = min(MODEL_BASE_YEARS), price = gcam.DEFAULT_PRICE) ->
       L202.RenewRsrcPrice
 
     # L202.maxSubResource: maximum amount of resource production allowed in any period (72-97)

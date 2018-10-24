@@ -52,7 +52,7 @@ module_water_L232.water.demand.manufacturing <- function(command, ...) {
     # (base-service)
     L232.water_km3_R_ind_Yh <-
       filter(L132.water_km3_R_ind_Yh, year %in% MODEL_BASE_YEARS) %>%
-      left_join_error_no_match( GCAM_region_names, by = "GCAM_region_ID") %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(L232.StubTechProd_industry, by = c("region", "year")) %>%
       rename(energy_EJ = calOutputValue) %>%
       mutate(coefficient = round(water_km3 / energy_EJ, digits = energy.DIGITS_COEFFICIENT)) ->

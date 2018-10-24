@@ -402,7 +402,7 @@ module_energy_L232.industry <- function(command, ...) {
       group_by(region, supplysector, subsector, stub.technology, minicam.energy.input) %>%
       mutate(coefficient = round(approx_fun(year, coefficient), energy.DIGITS_COEFFICIENT)) %>%
       ungroup() %>%
-      filter(year %in% MODEL_YEARS) ->   #drop the terminal coef year if it's outside of the model years
+      filter(year %in% MODEL_YEARS) ->   # drop the terminal coef year if it's outside of the model years
       L232.StubTechCoef_industry
 
     # L232.FuelPrefElast_indenergy: fuel preference elasticities of industrial energy use

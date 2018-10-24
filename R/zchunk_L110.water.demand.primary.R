@@ -62,7 +62,7 @@ module_water_L110.water.demand.primary <- function(command, ...) {
     MiddleEastRegion <- GCAM_region_names$region[GCAM_region_names$GCAM_region_ID == MiddleEastRegID]
     GCAM_region_names %>%
       mutate(rsrc_region = if_else(region == MiddleEastRegion, "Middle East", "USA")) %>%
-      left_join(resource_water_share, by = c(rsrc_region = "region_GCAM3")) %>%
+      left_join_error_no_match(resource_water_share, by = c(rsrc_region = "region_GCAM3")) %>%
       select(-rsrc_region, -region) -> L110.resource_water_share
     names(L110.resource_water_share) <- c("GCAM_region_ID", "sal", "fresh", "cons_fr", "cons_tot")
 
