@@ -106,7 +106,9 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
         # Calculate the FAO_LDS scaler value = FAO/LDS
         mutate(scaler = FAO / LDS) %>%
         # join back in the GTAP crop, which will be used for the remainder of the processing
-        left_join(FAO_ag_items_PRODSTAT[c("item", "GTAP_crop")], by = "item") %>%
+        # Because the FAO item "Grasses nes for forage;Sil" is assigned to two GTAP crops ("GrsNESFrgSlg" and "MxGrss_Lgm"),
+        # the "item" column will get longer. This is OK.
+        left_join(FAO_ag_items_PRODSTAT[c("item", "GTAP_crop")], by = "item", ignore_columns = "item") %>%
         select(iso, GTAP_crop, scaler) ->
         # store in an FAO_LDS table:
         L141.FAO_LDS

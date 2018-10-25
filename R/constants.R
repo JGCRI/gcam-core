@@ -542,7 +542,7 @@ gcamusa.STATES <- c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", 
 gcamusa.DEFAULT_COEFFICIENT <- 1
 gcamusa.DEFAULT_LOGIT_TYPE  <- NA  # default logit type
 gcamusa.DEFAULT_LOGITEXP    <- -3
-gcamusa.DEFAULT_MARKET      <- "USA"
+gcamusa.DEFAULT_MARKET      <- gcam.USA_REGION
 gcamusa.DEFAULT_SHAREWEIGHT <- 1
 
 # Logit exponent regulating competition between different grid regions in USA electricity market
