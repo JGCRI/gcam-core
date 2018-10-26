@@ -30,7 +30,9 @@ module_gcam.usa_LB1233.Elec_water_Update <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    state <- fuel <- plant_type <- technology <- water_withdrawals <- subsector <- water_consumption<- NULL
+    state <- fuel <- plant_type <- technology <- water_withdrawals <- subsector <-
+      water_consumption <- ':=' <- year <- x <- water_type <- State <- NEMS <-
+      cooling_system <- withdraw <- cons <- consSum <- withdrawSum <- NULL
 
     # ===================================================
     # Load required inputs

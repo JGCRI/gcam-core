@@ -30,8 +30,11 @@ module_gcam.usa_LA2233.electricity_water_USA <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    region<- supplysector <- subsector <-  technology <- year <-
-    minicam.energy.input<- coefficient<- market.name   <- NULL
+    region<- supplysector <- subsector <-  technology <- year <- minicam.energy.input <-
+      coefficient<- market.name <- Electric.sector <- Electric.sector.intermittent.technology <-
+      intermittent.technology <- subsector_1 <- sector <- fuel <- Electric.sector.technology <-
+      water_sector <- water_type <- state <- state_name <- ':=' <- x <- plant_type <- NULL
+
     # ===================================================
     # 1. Read files
 

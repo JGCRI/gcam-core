@@ -293,6 +293,18 @@ module_gcam.usa_L2011.socioeconomics_update_USA <- function(command, ...) {
       mutate(laborproductivity = round(laborproductivity, socioeconomics.LABOR_PRODUCTIVITY_DIGITS)) %>%
       filter(year != BASE_YEARS[1]) -> L2011.LaborProductivity_updated_USA
 
+    # Smoothen near-term changes in labor productivity growth rate
+    # Interpolate between historical (2010-2015 growth) rates to AEO 2030 growth rates
+
+    L2011.LaborProductivity_updated_USA %>%
+      filter(year <= 2015 | year >= 2030) %>%
+      complete(nesting(region), year = c(MODEL_YEARS)) %>%
+      filter(year != min(MODEL_YEARS)) %>%
+      group_by(region) %>%
+      mutate(laborproductivity = approx_fun(year, laborproductivity),
+             laborproductivity = round(laborproductivity, socioeconomics.LABOR_PRODUCTIVITY_DIGITS)) %>%
+      ungroup() -> L2011.LaborProductivity_updated_USA
+
 
     # Add USA-region udpates
     # Updated USA-region population

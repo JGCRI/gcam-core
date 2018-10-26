@@ -29,7 +29,11 @@ module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Silence package notes
-    plant_type <- water_type <- fuel <- technology <- State <- NEMS <- cooling_system <- NULL
+    plant_type <- water_type <- fuel <- technology <- State <- NEMS <- cooling_system <-
+      Fuel <- 'Reported Water Source (Type)' <- 'Generation Technology' <- 'Cooling Technology' <-
+      state <- 'First Year of Operation' <- 'Nameplate Capacity (MW)' <- x <- y <- z <- year <-
+      . <- 'cooling pond' <- 'dry cooling' <- dry_hybrid <- none <- 'once through' <- recirculating <-
+      sumy <- sumx <- NULL
 
 # ===================================================
 # Load required inputs
