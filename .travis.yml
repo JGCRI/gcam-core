@@ -8,10 +8,6 @@ cache: packages
 env:
   - GCAMDATA_USE_JAVA=TRUE
 
-r_github_packages:
-  - jimhester/covr@adffd69
-  - jgcri/gcamdata.compdata@HEAD
-
 script:
   - R CMD build .
   - travis_wait 30 R CMD check *.tar.gz
