@@ -9,7 +9,6 @@ env:
   - GCAMDATA_USE_JAVA=TRUE
 
 r_github_packages:
-  - jimhester/covr@adffd69
   - jgcri/gcamdata.compdata@HEAD
 
 script:

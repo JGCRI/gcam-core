@@ -47,6 +47,7 @@ Suggests:
     igraph (>= 1.0.1),
     mockr (>= 0.1),
     testthat (>= 1.0.2),
+    covr (>= 3.2.1),
     R.utils (>= 2.6.0),
     gcamdata.compdata
 Remotes: github::JGCRI/gcamdata.compdata
