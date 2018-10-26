@@ -272,7 +272,7 @@ module_gcam.usa_L2261.regional_biomass_USA <- function(command, ...) {
     # Carbon coefficients for state-level biomass sectors
     L202.CarbonCoef %>%
       filter(region == "USA",
-             PrimaryFuelCO2Coef.name %in% c(L2261.USA_biomass_sectors, "biomass")) %>%
+             PrimaryFuelCO2Coef.name %in% c(L2261.USA_biomass_sectors)) %>%
       select(-region) %>%
       repeat_add_columns(tibble::tibble(region = gcamusa.STATES)) %>%
       select(region, PrimaryFuelCO2Coef.name, PrimaryFuelCO2Coef) -> L2261.CarbonCoef_bio_USA
