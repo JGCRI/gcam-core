@@ -70,6 +70,7 @@
 // Could hide with a factory method.
 #include "climate/include/magicc_model.h"
 #include "climate/include/hector_model.hpp"
+#include "climate/include/no_climate_model.h"
 #include "emissions/include/emissions_summer.h"
 #include "emissions/include/luc_emissions_summer.h"
 #include "technologies/include/global_technology_database.h"
@@ -142,6 +143,9 @@ void World::XMLParse( const DOMNode* node ){
 		// Read in parameters for climate model
         else if( nodeName == MagiccModel::getXMLNameStatic() ){
             parseSingleNode( curr, mClimateModel, new MagiccModel() );
+        }
+        else if( nodeName == NoClimateModel::getXMLNameStatic() ){
+            parseSingleNode( curr, mClimateModel, new NoClimateModel() );
         }
 #if USE_HECTOR
         else if( nodeName == HectorModel::getXMLNameStatic() ) {
