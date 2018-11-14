@@ -17,7 +17,7 @@
 		<Value write-output="0" append-scenario-name="0" name="landAllocatorGraphName">LandAllocatorGraph.dot</Value>
 	</Files>
 	<ScenarioComponents>
-        <Value name = "climate">../input/gcamdata/xml/hector.xml</Value>
+        <Value name = "climate">../input/gcamdata/xml/no_climate_model.xml</Value>
 		<Value name = "interest_rate">../input/gcamdata/xml/interest_rate.xml</Value>
 		<Value name = "socioeconomics">../input/gcamdata/xml/socioeconomics_gSSP2.xml</Value>
 

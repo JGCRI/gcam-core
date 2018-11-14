@@ -536,6 +536,7 @@
     <ClCompile Include="..\..\climate\source\hector_model.cpp" />
     <ClCompile Include="..\..\climate\source\MAGICC_array.cpp" />
     <ClCompile Include="..\..\climate\source\MAGICC_IO_helpers.cpp" />
+    <ClCompile Include="..\..\climate\source\no_climate_model.cpp" />
     <ClCompile Include="..\..\climate\source\ObjECTS_MAGICC.cpp" />
     <ClCompile Include="..\..\climate\source\ObjECTS_MAGICC_others.cpp" />
     <ClCompile Include="..\..\consumers\source\gcam_consumer.cpp" />
@@ -840,6 +841,7 @@
     <ClInclude Include="..\..\ccarbon_model\include\no_emiss_carbon_calc.h" />
     <ClInclude Include="..\..\climate\include\hector_model.hpp" />
     <ClInclude Include="..\..\climate\include\MAGICC_array.h" />
+    <ClInclude Include="..\..\climate\include\no_climate_model.h" />
     <ClInclude Include="..\..\climate\include\ObjECTS_MAGICC.h" />
     <ClInclude Include="..\..\consumers\include\gcam_consumer.h" />
     <ClInclude Include="..\..\containers\include\batch_runner.h" />
