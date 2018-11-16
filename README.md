@@ -5,7 +5,7 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1249932.svg)](https://doi.org/10.5281/zenodo.1249932)
 
 # gcamdata
-The increasing data requirements of complex models demand robust, reproducible, and transparent systems to track and prepare models’ inputs. The _gcamdata__ R package processes raw inputs to produce the hundreds of XML files needed by the [GCAM integrated human-earth systems model](https://github.com/JGCRI/gcam-core). 
+The increasing data requirements of complex models demand robust, reproducible, and transparent systems to track and prepare models’ inputs. The _gcamdata__ R package processes raw inputs to produce the hundreds of XML files needed by the [GCAM integrated human-earth systems model](https://www.geosci-model-dev-discuss.net/gmd-2018-214/).
 
 Instructions for installing and running the data system can be found [in the wiki](https://github.com/JGCRI/gcamdata/wiki/Getting-Started).
 
