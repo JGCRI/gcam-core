@@ -7,8 +7,8 @@
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L103.water_mapping_R_GLU_B_W_Ws_share},
-#' \code{L103.water_mapping_R_B_W_Ws_share}. The corresponding file in the
-#' original data system was \code{L102.water.supply.unlimited.R} (water level1).
+#' \code{L103.water_mapping_R_B_W_Ws_share}. There was no corresponding file in the
+#' original data system.
 #' @details  Water demands to by region / sector to basin.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
@@ -20,7 +20,7 @@ module_water_L103.water.basin_mapping <- function(command, ...) {
              FILE = "water/nonirrigation_consumption",
              FILE = "water/nonirrigation_withdrawal",
              FILE = "common/iso_GCAM_regID",
-             FILE = "water/__TEMP_L125.LC_bm2_R_GLU")) ## NEEDS TO BE SET TO UPSTREAM FILE
+             "L125.LC_bm2_R_GLU"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L103.water_mapping_R_GLU_B_W_Ws_share",
              "L103.water_mapping_R_B_W_Ws_share"))
@@ -30,14 +30,12 @@ module_water_L103.water.basin_mapping <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    # load temp input (will be a file)
-    L125.LC_bm2_R_GLU <- get_data(all_data, "water/__TEMP_L125.LC_bm2_R_GLU")
-
     # Load required inputs
     basin_ids <- get_data(all_data, "water/basin_ID")
     nonirr_cons <- get_data(all_data, "water/nonirrigation_consumption")
     nonirr_wthd <- get_data(all_data, "water/nonirrigation_withdrawal")
     iso_GCAM_mapping <- get_data(all_data, "common/iso_GCAM_regID")
+    L125.LC_bm2_R_GLU <- get_data(all_data, "L125.LC_bm2_R_GLU")
 
     # expand all GLUs for each water type
     expand.grid(GLU = basin_ids$basin_id,
@@ -88,7 +86,7 @@ module_water_L103.water.basin_mapping <- function(command, ...) {
       add_comments("") %>%
       add_legacy_name("L103.water_mapping_R_GLU_B_W_Ws_share") %>%
       add_precursors("water/basin_ID",
-                     "water/__TEMP_L125.LC_bm2_R_GLU") ->
+                     "L125.LC_bm2_R_GLU") ->
       L103.water_mapping_R_GLU_B_W_Ws_share
 
 

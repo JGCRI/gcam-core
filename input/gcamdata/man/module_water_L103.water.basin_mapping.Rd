@@ -15,8 +15,8 @@ module_water_L103.water.basin_mapping(command, ...)
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
 the generated outputs: \code{L103.water_mapping_R_GLU_B_W_Ws_share},
-\code{L103.water_mapping_R_B_W_Ws_share}. The corresponding file in the
-original data system was \code{L102.water.supply.unlimited.R} (water level1).
+\code{L103.water_mapping_R_B_W_Ws_share}. There was no corresponding file in the
+original data system.
 }
 \description{
 Calculate percentage shares to map water demands by region / sector to basin.
