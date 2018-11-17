@@ -65,7 +65,7 @@ module_water_L101.water.supply.groundwater <- function(command, ...) {
         seq(log(x$base.prc),
             log(x$base.prc * water.GROUNDWATER_MAX_PRICE_INC),
             length.out = water.GROUNDWATER_UNIFORM_GRADES) %>%
-          exp() %>%
+          exp(.) %>%
           tibble(price = ., basin.id = x$basin.id) %>%
           left_join(x, by = "basin.id")
       }) %>% bind_rows() ->
