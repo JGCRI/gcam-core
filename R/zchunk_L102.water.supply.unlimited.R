@@ -59,6 +59,7 @@ module_water_L102.water.supply.unlimited <- function(command, ...) {
     # Produce outputs
 
     L102.unlimited_mapped_water_price_B_W_Y_75USDm3 %>%
+      mutate(water_type = as.character(water_type)) %>%
       add_title("Water price assumptions for mapped water types") %>%
       add_units("1975$/m3") %>%
       add_comments("Nominal default water prices") %>%
@@ -67,6 +68,7 @@ module_water_L102.water.supply.unlimited <- function(command, ...) {
       L102.unlimited_mapped_water_price_B_W_Y_75USDm3
 
     L102.unlimited_nonmapped_water_price_R_W_Y_75USDm3 %>%
+      mutate(water_type = as.character(water_type)) %>%
       add_title("Water price assumptions for nonmapped water types") %>%
       add_units("1975$/m3") %>%
       add_comments("Nominal default water prices") %>%
