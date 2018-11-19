@@ -158,18 +158,18 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       # NOTE: This also removes the rooftop PV subsector of the USA elect_td_bld sector
       L223.SubsectorLogit_elec %>%
         select(LEVEL2_DATA_NAMES[["Subsector"]]) %>%
-        filter(region == "USA") ->
+        filter(region == gcam.USA_REGION) ->
         L223.DeleteSubsector_USAelec
 
       # L223.Supplysector_USAelec: supplysector for electricity sector in the USA region,
       # including logit exponent between grid regions
       # All of the supplysector information is the same as before, except the logit exponent
-      tibble(region = "USA",
+      tibble(region = gcam.USA_REGION,
              supplysector = elec_gen_names,
              output.unit = "EJ",
              input.unit = "EJ",
              price.unit = "1975$/GJ",
-             logit.year.fillout = min(BASE_YEARS),
+             logit.year.fillout = min(MODEL_BASE_YEARS),
              logit.exponent = gcamusa.GRID_REGION_LOGIT,
              logit.type = gcamusa.GRID_REGION_LOGIT_TYPE) %>%
         select(LEVEL2_DATA_NAMES[["Supplysector"]]) ->
@@ -177,10 +177,10 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
 
       # L223.SubsectorShrwtFllt_USAelec: subsector (grid region) share-weights in USA electricity
       # No need to read in subsector logit exponents, which are applied to the technology competition
-      tibble(region = "USA",
+      tibble(region = gcam.USA_REGION,
              supplysector = elec_gen_names,
              subsector = paste(grid_regions, elec_gen_names, sep = " "),
-             year.fillout = min(BASE_YEARS),
+             year.fillout = min(MODEL_BASE_YEARS),
              share.weight = 1) ->
         L223.SubsectorShrwtFllt_USAelec
 
@@ -188,7 +188,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       L223.SubsectorShrwtFllt_USAelec %>%
         select(LEVEL2_DATA_NAMES[["Subsector"]]) %>%
         mutate(apply.to = "share-weight",
-               from.year = max(BASE_YEARS),
+               from.year = max(MODEL_BASE_YEARS),
                to.year = max(MODEL_YEARS),
                interpolation.function = "fixed") ->
         L223.SubsectorInterp_USAelec
@@ -197,7 +197,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       # NOTE: There is only one tech per subsector, so the logit choice does not matter
       L223.SubsectorShrwtFllt_USAelec %>%
         select(LEVEL2_DATA_NAMES[["Subsector"]]) %>%
-        mutate(logit.year.fillout = min(BASE_YEARS),
+        mutate(logit.year.fillout = min(MODEL_BASE_YEARS),
                logit.exponent = gcamusa.GRID_REGION_LOGIT,
                logit.type = gcamusa.GRID_REGION_LOGIT_TYPE) %>%
         select(LEVEL2_DATA_NAMES[["SubsectorLogit"]]) ->
@@ -221,7 +221,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
 
       # L223.Production_USAelec: calibrated electricity production in USA (consuming output of grid subregions)
       L1232.out_EJ_sR_elec %>%
-        filter(year %in% BASE_YEARS) %>%
+        filter(year %in% MODEL_BASE_YEARS) %>%
         mutate(calOutputValue = round(value, digits = energy.DIGITS_CALOUTPUT)) %>%
         left_join_error_no_match(unique(select(calibrated_techs, sector, supplysector)), by = "sector") %>%
         mutate(subsector = paste(grid_region, supplysector, sep = " ")) ->
@@ -229,7 +229,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
 
       L223.TechCoef_USAelec %>%
         select(LEVEL2_DATA_NAMES[["TechYr"]]) %>%
-        filter(year %in% BASE_YEARS) %>%
+        filter(year %in% MODEL_BASE_YEARS) %>%
         left_join_error_no_match(L223.out_EJ_sR_elec, by = c("supplysector", "subsector", "year")) %>%
         mutate(share.weight.year = year,
                tech.share.weight = if_else(calOutputValue == 0, 0, 1)) %>%
@@ -250,7 +250,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
            output.unit = "EJ",
            input.unit = "EJ",
            price.unit = "1975$/GJ",
-           logit.year.fillout = min(BASE_YEARS),
+           logit.year.fillout = min(MODEL_BASE_YEARS),
            logit.exponent = gcamusa.GRID_REGION_LOGIT,
            logit.type = gcamusa.GRID_REGION_LOGIT_TYPE) %>%
       select(c(LEVEL2_DATA_NAMES[["Supplysector"]], LOGIT_TYPE_COLNAME)) ->
@@ -261,7 +261,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       select(region = grid_region, state) %>%
       mutate(supplysector = elec_gen_names,
              subsector = paste(state, supplysector, sep = " "),
-             year.fillout = min(BASE_YEARS),
+             year.fillout = min(MODEL_BASE_YEARS),
              share.weight = 1) %>%
       select(-state) %>%
       arrange(region) ->
@@ -271,7 +271,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
     L223.SubsectorShrwtFllt_elec_FERC %>%
       select(LEVEL2_DATA_NAMES[["Subsector"]]) %>%
       mutate(apply.to = "share-weight",
-             from.year = max(BASE_YEARS),
+             from.year = max(MODEL_BASE_YEARS),
              to.year = max(MODEL_YEARS),
              interpolation.function = "fixed") ->
       L223.SubsectorInterp_elec_FERC
@@ -280,7 +280,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
     # NOTE: There is only one tech per subsector, so the logit choice does not matter
     L223.SubsectorShrwtFllt_elec_FERC %>%
       select(LEVEL2_DATA_NAMES[["Subsector"]]) %>%
-      mutate(logit.year.fillout = min(BASE_YEARS),
+      mutate(logit.year.fillout = min(MODEL_BASE_YEARS),
              logit.exponent = gcamusa.GRID_REGION_LOGIT,
              logit.type = gcamusa.GRID_REGION_LOGIT_TYPE) %>%
       select(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], LOGIT_TYPE_COLNAME)) ->
@@ -322,7 +322,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
 
     # L223.Production_elec_FERC: calibrated electricity production in grid region (consuming output of grid subregions)
     L1231.out_EJ_state_elec_F_tech %>%
-      filter(year %in% BASE_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       mutate(calOutputValue = round(value, digits = energy.DIGITS_CALOUTPUT)) %>%
       left_join_error_no_match(unique(select(calibrated_techs, sector, supplysector)), by = "sector") %>%
       mutate(subsector = paste(state, supplysector, sep = " ")) %>%
@@ -334,7 +334,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
 
     L223.TechCoef_elec_FERC %>%
       select(LEVEL2_DATA_NAMES[["TechYr"]]) %>%
-      filter(year %in% BASE_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       left_join_error_no_match(L223.out_EJ_state_elec, by = c("supplysector", "subsector", "year")) %>%
       mutate(share.weight.year = year,
              # tech.share.weights are set at technology level
@@ -364,7 +364,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
 
     # L223.LaborForceFillout_FERC: labor force in the grid regions
     tibble(region = grid_regions,
-           year.fillout = min(BASE_YEARS),
+           year.fillout = min(MODEL_BASE_YEARS),
            laborforce = socioeconomics.DEFAULT_LABORFORCE) ->
       L223.LaborForceFillout_FERC
 
@@ -377,7 +377,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
         minicam.energy.input <- NULL  # silence package check notes
 
       data_new <- data %>%
-        filter(region == "USA") %>%
+        filter(region == gcam.USA_REGION) %>%
         write_to_all_states(names(data))
 
       if("subsector" %in% names(data_new)) {
@@ -442,7 +442,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
     # Stub technology information for state electricity generation
     # calibration
     L1231.in_EJ_state_elec_F_tech %>%
-      filter(year %in% BASE_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       mutate(calibrated.value = round(value, digits = energy.DIGITS_CALOUTPUT),
              region = state) %>%
       left_join_error_no_match(select(calibrated_techs, -minicam.energy.input, -secondary.output),
@@ -486,7 +486,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
     L223.StubTechFixOut_elec_USA %>%
       filter(grepl("hydro", stub.technology), year == max(HISTORICAL_YEARS)) %>%
       select(-year) %>%
-      repeat_add_columns(tibble(year = FUTURE_YEARS)) ->
+      repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) ->
       L223.StubTechFixOut_hydro_USA
 
     # L223.StubTechProd_elec_USA: calibrated output of electricity generation technologies
@@ -506,7 +506,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
                                 by = c("supplysector", "subsector", "stub.technology" = "technology")) %>%
       # Remove NA rows for hydro
       na.omit %>%
-      mutate(market.name = "USA",
+      mutate(market.name = gcam.USA_REGION,
              market.name = replace(market.name,
                                    minicam.energy.input %in% c(gcamusa.STATE_RENEWABLE_RESOURCES, gcamusa.STATE_UNLIMITED_RESOURCES),
                                    region[minicam.energy.input %in% c(gcamusa.STATE_RENEWABLE_RESOURCES, gcamusa.STATE_UNLIMITED_RESOURCES)])) %>%
@@ -526,7 +526,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
     L223.GlobalIntTechBackup_elec %>%
       mutate(supplysector = sector.name, subsector = subsector.name) %>%
       write_to_all_states(names = c(names(.), 'region')) %>%
-      mutate(market.name = "USA", stub.technology = technology) %>%
+      mutate(market.name = gcam.USA_REGION, stub.technology = technology) %>%
       select(LEVEL2_DATA_NAMES[["StubTechMarket"]]) ->
       L223.StubTechMarket_backup_USA
 
@@ -535,7 +535,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
     if(!gcamusa.USE_REGIONAL_ELEC_MARKETS) {
       L223.StubTechMarket_backup_USA %>%
         select(LEVEL2_DATA_NAMES[["StubTechYr"]]) %>%
-        mutate(electric.sector.market = "USA") ->
+        mutate(electric.sector.market = gcam.USA_REGION) ->
         L223.StubTechElecMarket_backup_USA
     }
 
@@ -547,7 +547,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
       L223.CapacityFactor_wind_state
 
     L223.StubTechCapFactor_elec %>%
-      filter(region == "USA") %>%
+      filter(region == gcam.USA_REGION) %>%
       semi_join(L223.CapacityFactor_wind_state, by = c("supplysector", "subsector")) %>%
       select(-region, -capacity.factor) %>%
       write_to_all_states(names = c(names(.), "region")) %>%
@@ -566,7 +566,7 @@ module_gcam.usa_L223.electricity_USA <- function(command, ...) {
 
     # Just use the subsector for matching - technologies include storage technologies as well
     L223.StubTechCapFactor_elec %>%
-      filter(region == "USA") %>%
+      filter(region == gcam.USA_REGION) %>%
       semi_join(L223.CapFacScaler_solar_state, by = c("supplysector", "subsector")) %>%
       select(-region) %>%
       write_to_all_states(., c(names(.), "region")) %>%

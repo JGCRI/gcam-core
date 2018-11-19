@@ -95,7 +95,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
     # and processes for use in USA electricity T&D
     global_energy_to_USA_electd <- function(data) {
       data %>%
-        filter(region == "USA",
+        filter(region == gcam.USA_REGION,
                supplysector %in% gcamusa.ELECT_TD_SECTORS) %>%
         write_to_all_states(names(data))
     } # end global_energy_to_USA_electd
@@ -126,14 +126,14 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
       filter(supplysector %in% gcamusa.REGIONAL_FUEL_MARKETS) %>%
       bind_rows(A21.tmp) %>%
       repeat_add_columns(tibble(region = unique(states_subregions$grid_region))) %>%
-      mutate(logit.year.fillout = min(BASE_YEARS)) ->
+      mutate(logit.year.fillout = min(MODEL_BASE_YEARS)) ->
       L226.Supplysector_en_USA
 
 
     # L226.SubsectorShrwtFllt_en_USA: subsector shareweights of energy handling and delivery
     L226.Supplysector_en_USA %>%
       mutate(subsector = supplysector,
-             year.fillout = min(BASE_YEARS),
+             year.fillout = min(MODEL_BASE_YEARS),
              share.weight = gcamusa.DEFAULT_SHAREWEIGHT) %>%
       select(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]]) ->
       L226.SubsectorShrwtFllt_en_USA
@@ -143,7 +143,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
     # NOTE: There is only one tech per subsector so the logit choice does not matter
     L226.SubsectorShrwtFllt_en_USA %>%
       select(LEVEL2_DATA_NAMES[["Subsector"]]) %>%
-      mutate(logit.year.fillout = min(BASE_YEARS),
+      mutate(logit.year.fillout = min(MODEL_BASE_YEARS),
              logit.exponent = gcamusa.DEFAULT_LOGITEXP,
              logit.type = NA) %>%
       select(LEVEL2_DATA_NAMES[["SubsectorLogit"]], LOGIT_TYPE_COLNAME) ->
@@ -238,7 +238,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
 
     # L226.Ccoef: carbon coef for cost adder sectors
     L202.CarbonCoef %>%
-      filter(region == "USA") %>%
+      filter(region == gcam.USA_REGION) %>%
       select(-region) ->
       L226.Ccoef.usa
 
@@ -254,7 +254,7 @@ module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {
 
     # L226.DeleteSupplysector_USAelec: Removing the electricity T&D sectors of the USA region
     # This should probably be converted to an assumption and read in at some point.
-    L226.DeleteSupplysector_USAelec <- tibble(region = "USA", supplysector = gcamusa.ELECT_TD_SECTORS)
+    L226.DeleteSupplysector_USAelec <- tibble(region = gcam.USA_REGION, supplysector = gcamusa.ELECT_TD_SECTORS)
 
 
     # Replacing for loop starting on line 152 in old DS.

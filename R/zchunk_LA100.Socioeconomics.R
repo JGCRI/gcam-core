@@ -119,12 +119,11 @@ module_gcam.usa_LA100.Socioeconomics <- function(command, ...) {
       gather_years(value_col = "population") %>%
       mutate(population = as.numeric(population)) %>%
       # interpolate any missing data from end of history into future
-      filter(year %in% c(max(HISTORICAL_YEARS), FUTURE_YEARS)) %>%
+      complete(nesting(state), year = c(socioeconomics.FINAL_HIST_YEAR, FUTURE_YEARS)) %>%
       group_by(state) %>%
       mutate(population = approx_fun(year, population)) %>%
       arrange(state, year) %>%
       # compute ratios (change from end of history)
-      group_by(state) %>%
       mutate(pop_ratio = population / first(population)) %>%
       arrange(state, year) %>%
       rename(state_name = state) %>%

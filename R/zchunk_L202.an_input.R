@@ -97,7 +97,7 @@ module_aglu_L202.an_input <- function(command, ...) {
     get_join_filter <- function(x) {   #
       get_data(all_data, x) %>%
         left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-        filter(year %in% BASE_YEARS)
+        filter(year %in% MODEL_BASE_YEARS)
     }
 
     L202.an_Prod_Mt_R_C_Sys_Fd_Y.mlt <- get_join_filter("L107.an_Prod_Mt_R_C_Sys_Fd_Y")
@@ -117,7 +117,7 @@ module_aglu_L202.an_input <- function(command, ...) {
     # L202.RenewRsrcPrice: resource prices
     L202.RenewRsrc %>%
       select(region, renewresource) %>%
-      mutate(year = min(BASE_YEARS), price = 1) ->
+      mutate(year = min(MODEL_BASE_YEARS), price = 1) ->
       L202.RenewRsrcPrice
 
     # L202.maxSubResource: maximum amount of resource production allowed in any period (72-97)
@@ -141,7 +141,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       ungroup %>%
       mutate(sub.renewable.resource = GCAM_commodity,
              maxSubResource = round(maxSubResource, aglu.DIGITS_CALOUTPUT),
-             year.fillout = min(BASE_YEARS)) %>%
+             year.fillout = min(MODEL_BASE_YEARS)) %>%
       left_join_keep_first_only(select(A_agRsrcCurves, sub.renewable.resource, renewresource), by = "sub.renewable.resource") %>%
       select(LEVEL2_DATA_NAMES[["maxSubResource"]]) ->
       L202.maxSubResource
@@ -160,7 +160,7 @@ module_aglu_L202.an_input <- function(command, ...) {
     A_agUnlimitedRsrcCurves %>%
       gather_years(value_col = "price") %>%
       select(unlimited.resource, year, price) %>%
-      filter(year %in% BASE_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       write_to_all_regions(LEVEL2_DATA_NAMES[["UnlimitRsrcPrice"]], GCAM_region_names) ->
       L202.UnlimitedRenewRsrcPrice
 
@@ -208,7 +208,7 @@ module_aglu_L202.an_input <- function(command, ...) {
     A_an_input_technology %>%
       write_to_all_regions(LEVEL2_DATA_NAMES[["Tech"]], GCAM_region_names) %>%
       mutate(stub.technology = technology) %>%
-      repeat_add_columns(tibble(year = BASE_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_BASE_YEARS)) %>%
       # not every region/technology/year has a match, so need to use left_join
       left_join(L202.ag_Feed_Mt_R_C_Y.mlt, by = c("region", "technology" = "GCAM_commodity", "year")) %>%
       mutate(calOutputValue = round(value, aglu.DIGITS_CALOUTPUT)) %>%
@@ -248,7 +248,7 @@ module_aglu_L202.an_input <- function(command, ...) {
     A_an_technology %>%
       write_to_all_regions(LEVEL2_DATA_NAMES[["Tech"]], GCAM_region_names) %>%
       rename(stub.technology = technology) %>%
-      repeat_add_columns(tibble(year = BASE_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_BASE_YEARS)) %>%
       left_join_error_no_match(L202.an_Prod_Mt_R_C_Sys_Fd_Y.mlt,
                                by = c("region", "supplysector" = "GCAM_commodity",
                                       "subsector" = "system", "stub.technology" = "feed",
@@ -281,7 +281,7 @@ module_aglu_L202.an_input <- function(command, ...) {
     A_an_technology %>%
       write_to_all_regions(c(LEVEL2_DATA_NAMES[["Tech"]], "minicam.energy.input", "market.name"), GCAM_region_names) %>%
       rename(stub.technology = technology) %>%
-      repeat_add_columns(tibble(year = c(BASE_YEARS, FUTURE_YEARS))) %>%
+      repeat_add_columns(tibble(year = c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS))) %>%
       # not everything has a match so need to use left_join
       left_join(L202.an_FeedIO_R_C_Sys_Fd_Y.mlt,
                 by = c("region", "supplysector" = "GCAM_commodity",
@@ -307,7 +307,7 @@ module_aglu_L202.an_input <- function(command, ...) {
     # First, calculate the weighted average price across the different feed types (supplysectors)
     Index_region <- GCAM_region_names$region[1]
     L202.StubTechProd_in %>%
-      filter(region == Index_region, year == max(BASE_YEARS)) %>%
+      filter(region == Index_region, year == max(MODEL_BASE_YEARS)) %>%
       select(region, supplysector, subsector, stub.technology, calOutputValue) ->
       L202.ag_Feed_P_share_R_C
 
@@ -343,7 +343,7 @@ module_aglu_L202.an_input <- function(command, ...) {
 
     # Calculate the total cost of all inputs, for each animal commodity, first matching in the feed quantity and the price
     L202.an_Prod_Mt_R_C_Sys_Fd_Y.mlt %>%
-      filter(year == max(BASE_YEARS), region == Index_region) %>%
+      filter(year == max(MODEL_BASE_YEARS), region == Index_region) %>%
       left_join_error_no_match(select(L202.an_Feed_Mt_R_C_Sys_Fd_Y.mlt, GCAM_region_ID, GCAM_commodity, system, feed, year, Feed_Mt = value),
                                by = c("GCAM_region_ID", "GCAM_commodity", "system", "feed", "year")) %>%
       left_join_error_no_match(L202.ag_FeedCost_USDkg_R_F, by = c("region", "feed" = "supplysector")) %>%
@@ -360,7 +360,7 @@ module_aglu_L202.an_input <- function(command, ...) {
 
     # L202.GlobalTechCost_an: costs of animal production technologies (263-270)
     A_an_technology %>%
-      repeat_add_columns(tibble(year = c(BASE_YEARS, FUTURE_YEARS))) %>%
+      repeat_add_columns(tibble(year = c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS))) %>%
       mutate(sector.name = supplysector, subsector.name = subsector) %>%
       mutate(minicam.non.energy.input = "non-energy") %>%
       left_join_error_no_match(select(L202.an_FeedCost_R_C, GCAM_commodity, nonFeedCost), by = c("supplysector" = "GCAM_commodity")) %>%
@@ -373,7 +373,7 @@ module_aglu_L202.an_input <- function(command, ...) {
                                   subsector.name = "Imports",
                                   technology = "Imports",
                                   renewable.input = "renewable",
-                                  year = c(BASE_YEARS, FUTURE_YEARS))) %>%
+                                  year = c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS))) %>%
       write_to_all_regions(LEVEL2_DATA_NAMES[["GlobalRenewTech"]], GCAM_region_names) ->
       L202.GlobalRenewTech_imp_an
 
@@ -383,7 +383,7 @@ module_aglu_L202.an_input <- function(command, ...) {
            stub.technology = "Imports") %>%
       # write to all regions before repeating by years so that future year values will copy correctly
       write_to_all_regions(LEVEL2_DATA_NAMES[["StubTech"]], GCAM_region_names) %>%
-      repeat_add_columns(tibble(year = c(BASE_YEARS, FUTURE_YEARS))) %>%
+      repeat_add_columns(tibble(year = c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS))) %>%
       # not every region and supplysector is present in L202.an_ALL_Mt_R_C_Y so use left_join
       left_join(select(L202.an_ALL_Mt_R_C_Y, region, GCAM_commodity, year, NetExp_Mt),
                 by = c("region", "supplysector" = "GCAM_commodity", "year")) %>%
@@ -400,7 +400,7 @@ module_aglu_L202.an_input <- function(command, ...) {
     # instances by reading in time- and region-specific income elasticities that return the correct values for each
     # historical year after the final calibration year. This is not done, and is not recommended, as any regions that switch
     # between imports and exports will have elasiticies of +/- Inf; the historical data cannot be represented.
-    final_an_exp_year <- max(BASE_YEARS)
+    final_an_exp_year <- max(MODEL_BASE_YEARS)
     final_an_exp_year_data <- filter(L202.StubTechFixOut_imp_an, year == final_an_exp_year) %>% select(-year, -share.weight.year)
     L202.StubTechFixOut_imp_an %>%
       filter(year > final_an_exp_year) %>%

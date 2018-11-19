@@ -21,11 +21,14 @@ generate_level2_data_names <- function() {
 
   # Modeltime
   level2_data_names[["ModelTime"]] <- c("start.year.timestep", "start.year", "final.calibration.year", "end.year")
-  level2_data_names[["ModelTimeInterYears"]] <- c("inter.year.timestep", "inter.year")
+  level2_data_names[["ModelTimeInterYears"]] <- c("inter.year.timestep", "inter.year", "dummy.tag")
 
   # Climate
   level2_data_names[["MAGICC"]] <- c("last.historical.year", "bc.unit.forcing", "default.emiss.file", "carbon.model.start.year")
   level2_data_names[["hector"]] <- c("hector.end.year", "emissions.switch.year", "hector.ini.file", "carbon.model.start.year")
+  level2_data_names[["NoClimateModel"]] <- c("carbon.model.start.year")
+  level2_data_names[["DeleteMAGICC"]] <- c("delete")
+  level2_data_names[["DeleteHector"]] <- c("delete")
 
   # Socioeconomics
   level2_data_names[["Pop"]] <- c("region", "year", "totalPop")

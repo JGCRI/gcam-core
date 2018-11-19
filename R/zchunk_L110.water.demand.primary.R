@@ -18,6 +18,7 @@
 module_water_L110.water.demand.primary <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
+             FILE = "common/iso_GCAM_regID",
              FILE = "water/A227.resource_water_coef_mapping",
              FILE = "water/resource_water_data",
              FILE = "water/resource_water_share"))
@@ -32,6 +33,7 @@ module_water_L110.water.demand.primary <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
+    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A227.resource_water_coef_mapping <- get_data(all_data, "water/A227.resource_water_coef_mapping")
     resource_water_data <- get_data(all_data, "water/resource_water_data")
@@ -55,19 +57,14 @@ module_water_L110.water.demand.primary <- function(command, ...) {
 
     # Get water consumption and withdrawal ratios 32 GCAM regions...
     # ... all regions other than Middle East set to US values
+    # Set the middle east region to the one containing Saudi Arabia
+    MiddleEastRegID <- iso_GCAM_regID$GCAM_region_ID[iso_GCAM_regID$iso == "sau"]
+    MiddleEastRegion <- GCAM_region_names$region[GCAM_region_names$GCAM_region_ID == MiddleEastRegID]
     GCAM_region_names %>%
-      mutate(region_GCAM3 = region) %>%
-      left_join(resource_water_share, "region_GCAM3") %>%
-      select(-region_GCAM3, -region) -> L110.resource_water_share
+      mutate(rsrc_region = if_else(region == MiddleEastRegion, "Middle East", "USA")) %>%
+      left_join(resource_water_share, by = c(rsrc_region = "region_GCAM3")) %>%
+      select(-rsrc_region, -region) -> L110.resource_water_share
     names(L110.resource_water_share) <- c("GCAM_region_ID", "sal", "fresh", "cons_fr", "cons_tot")
-    L110.resource_water_share$sal[is.na(L110.resource_water_share$sal)] <-
-      filter(L110.resource_water_share, GCAM_region_ID == gcam.USA_CODE)$sal
-    L110.resource_water_share$fresh[is.na(L110.resource_water_share$fresh)] <-
-      filter(L110.resource_water_share, GCAM_region_ID == gcam.USA_CODE)$fresh
-    L110.resource_water_share$cons_fr[is.na(L110.resource_water_share$cons_fr)] <-
-      filter(L110.resource_water_share, GCAM_region_ID == gcam.USA_CODE)$cons_fr
-    L110.resource_water_share$cons_tot[is.na(L110.resource_water_share$cons_tot)] <-
-      filter(L110.resource_water_share, GCAM_region_ID == gcam.USA_CODE)$cons_tot
 
     # Bring consumption ratios and water usage coefficents into single table
     L110.resource_water_share %>%
@@ -95,6 +92,7 @@ module_water_L110.water.demand.primary <- function(command, ...) {
       add_comments("Primary energy water use coefficients calculated using US data for fractions of saline and freshwater share") %>%
       add_legacy_name("L110.water_demand_primary_R_S_W_m3_GJ") %>%
       add_precursors("common/GCAM_region_names",
+                     "common/iso_GCAM_regID",
                      "water/A227.resource_water_coef_mapping",
                      "water/resource_water_data",
                      "water/resource_water_share") ->
