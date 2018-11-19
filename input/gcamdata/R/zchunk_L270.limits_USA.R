@@ -58,7 +58,7 @@ module_gcam.usa_L270.limits_USA <- function(command, ...) {
     # Data Processing
 
     L270.CreditMkt %>%
-      filter(region == "USA") %>%
+      filter(region == gcam.USA_REGION) %>%
       write_to_all_states(names(L270.CreditMkt)) ->
       L270.CreditMkt_USA
 
@@ -144,7 +144,7 @@ module_gcam.usa_L270.limits_USA <- function(command, ...) {
     for(i in seq_along(negative_emiss_input_names)) {
       curr_data <- get_data(all_data, negative_emiss_input_names[i])
       curr_data %>%
-        filter(region == "USA") %>%
+        filter(region == gcam.USA_REGION) %>%
         write_to_all_states(names(curr_data)) %>%
         add_title(paste0("The negative emissions budget in scenario ", negative_emiss_input_names[i])) %>%
         add_units("mil 1990$") %>%

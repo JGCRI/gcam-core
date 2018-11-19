@@ -53,7 +53,8 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
              "L212.FORESTEmissionsFactors_BCOC_FF_prot",
              "L212.FORESTEmissionsFactors_BCOC_FF_noprot",
              "L212.FORESTEmissionsFactors_BCOC_D_prot",
-             "L212.FORESTEmissionsFactors_BCOC_D_noprot"))
+             "L212.FORESTEmissionsFactors_BCOC_D_noprot",
+             "L212.FORESTEmissionsFactors_future_prot"))
   } else if(command == driver.MAKE) {
 
     # Silencing package checks
@@ -94,7 +95,7 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
              price.unit = "none",
              calPrice = -1,
              market = region,
-             logit.year.fillout = min(BASE_YEARS),
+             logit.year.fillout = min(MODEL_BASE_YEARS),
              logit.exponent = -3,
              # Not in old-data-system, using because of removal of get_logit_fn_tables
              logit.type = NA)
@@ -114,7 +115,7 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
              UnmanagedLandTechnology = AgSupplySubsector,
              itemName = paste(itemName, GLU, sep = "_")) %>%
       # Repeat for base years
-      repeat_add_columns(tibble(year = BASE_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_BASE_YEARS)) %>%
       select(region, AgSupplySector, AgSupplySubsector, UnmanagedLandTechnology, year, itemName)
 
     # Grassland emissions
@@ -189,7 +190,7 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
     # We do not actually care about the logit here but we need a value to avoid errors
     L212.AgSupplySubsector <- L212.ItemName %>%
       select(region, AgSupplySector, AgSupplySubsector) %>%
-      mutate(logit.year.fillout = min(BASE_YEARS),
+      mutate(logit.year.fillout = min(MODEL_BASE_YEARS),
              logit.exponent = -3,
              logit.type = NA)
 
@@ -227,6 +228,11 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
 
     L212.FORESTEmissionsFactors_BCOC_prot <- L212.FORESTEmissionsFactors_BCOC %>%
       mutate(UnmanagedLandTechnology = paste0("Protected", UnmanagedLandTechnology))
+
+    # Create future emissions factors for protected lands
+    L212.FORESTEmissionsFactors_future_prot <- L212.FORESTEmissionsFactors_future %>%
+      mutate(UnmanagedLandTechnology = paste0("Protected", UnmanagedLandTechnology))
+
     # ===================================================
     # Produce outputs
     L212.AgSupplySector %>%
@@ -326,6 +332,16 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
                      "L124.nonco2_tg_R_forest_Y_GLU", "water/basin_to_country_mapping",
                      "L124.deforest_coefs", "L125.deforest_coefs_bcoc") ->
       L212.FORESTEmissionsFactors_future
+
+    L212.FORESTEmissionsFactors_future_prot %>%
+      add_title("Future BC/OC Emissions Coefficients-Deforestation for Protected Lands") %>%
+      add_units("kg/m2/yr") %>%
+      add_comments("L212.default_coefs values added to first future year") %>%
+      add_legacy_name("L212.FORESTEmissionsFactors_future") %>%
+      add_precursors("common/GCAM_region_names", "emissions/A_regions",
+                     "L124.nonco2_tg_R_forest_Y_GLU", "water/basin_to_country_mapping",
+                     "L124.deforest_coefs", "L125.deforest_coefs_bcoc") ->
+      L212.FORESTEmissionsFactors_future_prot
 
     L212.ItemName_prot %>%
       add_title("Mapping File for Protected Unmanaged Land") %>%
@@ -457,7 +473,7 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
                 L212.FORESTEmissions_D_prot, L212.FORESTEmissions_D_noprot, L212.GRASSEmissionsFactors_BCOC_prot,
                 L212.GRASSEmissionsFactors_BCOC_noprot, L212.FORESTEmissionsFactors_BCOC_FF_prot,
                 L212.FORESTEmissionsFactors_BCOC_FF_noprot, L212.FORESTEmissionsFactors_BCOC_D_prot,
-                L212.FORESTEmissionsFactors_BCOC_D_noprot)
+                L212.FORESTEmissionsFactors_BCOC_D_noprot, L212.FORESTEmissionsFactors_future_prot)
   } else {
     stop("Unknown command")
   }

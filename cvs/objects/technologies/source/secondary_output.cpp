@@ -158,16 +158,6 @@ bool SecondaryOutput::XMLParse( const DOMNode* aNode )
     return true;
 }
 
-void SecondaryOutput::toInputXML( ostream& aOut,
-                                  Tabs* aTabs ) const
-{
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
-    XMLWriteElement( mOutputRatio, "output-ratio", aOut, aTabs );
-    XMLWriteElementCheckDefault( mPriceMult, "pMultiplier", aOut, aTabs, 1.0 );
-    XMLWriteElementCheckDefault( mMarketName, "market-name", aOut, aTabs, string() );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 void SecondaryOutput::toDebugXML( const int aPeriod,
                                   ostream& aOut,
                                   Tabs* aTabs ) const

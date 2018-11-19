@@ -139,35 +139,6 @@ bool Modeltime::XMLParse( const DOMNode* aNode ) {
     return true;
 }
 
-//! Write data members to datastream in XML format.
-void Modeltime::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
-
-    // note that all redundant inter-year will not be written back out even if they were read in
-    map<string, int> attrs;
-    for( int period = 0; period < mMaxPeriod; ++period ) {
-        // skip writting out unnecessary inter-year elements
-        if( period != 0 && period < mMaxPeriod - 1 && mPeriodToTimeStep[ period + 1 ] == mPeriodToTimeStep[ period ] ) {
-            continue;
-        }
-        attrs[ "time-step" ] = period != mMaxPeriod - 1 ? mPeriodToTimeStep[ period + 1 ] : 0;
-        if( period == 0 ) {
-            XMLWriteElementWithAttributes( mStartYear, "start-year", aOut, aTabs, attrs );
-        }
-        else if( period == mMaxPeriod - 1 ) {
-            XMLWriteElement( mEndYear, "end-year", aOut, aTabs );
-        }
-        else {
-            XMLWriteElementWithAttributes( mPeriodToYear[ period ], "inter-year", aOut, aTabs, attrs );
-        }
-    }
-    
-    XMLWriteElement( mFinalCalibrationYear, "final-calibration-year", aOut, aTabs );
-    
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 //! Write out object to output stream for debugging.
 void Modeltime::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     

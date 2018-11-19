@@ -65,7 +65,7 @@ extern Scenario* scenario;
 MACControl::MACControl():
 AEmissionsControl(),
 mNoZeroCostReductions( false ),
-mTechChange( 0.0 ),
+mTechChange( new objects::PeriodVector<double>( 0.0 ) ),
 mZeroCostPhaseInTime( 25 ),
 mCovertPriceValue( 1 ),
 mPriceMarketName( "CO2" ),
@@ -146,7 +146,7 @@ bool MACControl::XMLDerivedClassParse( const string& aNodeName, const DOMNode* a
         mNoZeroCostReductions = true;
     }
     else if ( aNodeName == "tech-change" ){
-        XMLHelper<double>::insertValueIntoVector( aCurrNode, mTechChange, modeltime );
+        XMLHelper<double>::insertValueIntoVector( aCurrNode, *mTechChange, modeltime );
     }
     else if ( aNodeName == "zero-cost-phase-in-time" ){
         mZeroCostPhaseInTime = XMLHelper<int>::getValue( aCurrNode );
@@ -163,9 +163,7 @@ bool MACControl::XMLDerivedClassParse( const string& aNodeName, const DOMNode* a
     return true;
 }
 
-
-void MACControl::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
-    
+void MACControl::toDebugXMLDerived( const int period, ostream& aOut, Tabs* aTabs ) const {
     const vector<pair<double,double> > pairs = mMacCurve->getSortedPairs();
     typedef vector<pair<double, double> >::const_iterator PairIterator;
     map<string, double> attrs;
@@ -174,18 +172,14 @@ void MACControl::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
         XMLWriteElementWithAttributes( currPair->second, "mac-reduction", aOut, aTabs, attrs );
     }
     const Modeltime* modeltime = scenario->getModeltime();
-	XMLWriteVector( mTechChange, "tech-change", aOut, aTabs, modeltime, 0.0 );
+	XMLWriteVector( *mTechChange, "tech-change", aOut, aTabs, modeltime, 0.0 );
 
     XMLWriteElementCheckDefault( mZeroCostPhaseInTime, "zero-cost-phase-in-time", aOut, aTabs, 25 );
-    XMLWriteElementCheckDefault( mNoZeroCostReductions, "no-zero-cost-reductions", aOut, aTabs, false );    
+    XMLWriteElementCheckDefault( mNoZeroCostReductions, "no-zero-cost-reductions", aOut, aTabs, false );
     XMLWriteElementCheckDefault( mCovertPriceValue, "mac-price-conversion", aOut, aTabs, Value( 1.0 ) );
     XMLWriteElement( mPriceMarketName, "market-name", aOut, aTabs );
-}
-
-void MACControl::toDebugXMLDerived( const int period, ostream& aOut, Tabs* aTabs ) const {
-    toInputXMLDerived( aOut, aTabs );
     XMLWriteElement( mNoZeroCostReductions, "no-zero-cost-reductions", aOut, aTabs);
-	XMLWriteElement( mTechChange[ period ], "tech-change", aOut, aTabs );
+	XMLWriteElement( (*mTechChange)[ period ], "tech-change", aOut, aTabs );
 }
 
 void MACControl::completeInit( const string& aRegionName, const string& aSectorName,
@@ -307,7 +301,7 @@ double MACControl::adjustForTechChange( const int aPeriod, double reduction ) {
     int timestep = scenario->getModeltime()->gettimestep( 0 );
     for ( int i=0; i <= aPeriod; i++ ) {
         timestep = scenario->getModeltime()->gettimestep( i );
-        techChange *= pow( 1 + mTechChange[ i ], timestep );
+        techChange *= pow( 1 + (*mTechChange)[ i ], timestep );
     }
     reduction *= techChange;
     

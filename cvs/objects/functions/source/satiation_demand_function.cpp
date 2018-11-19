@@ -122,20 +122,6 @@ bool SatiationDemandFunction::XMLParse( const DOMNode* aNode ) {
     return true;
 }
 
-void SatiationDemandFunction::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
-
-    if( mParsedSatiationLevel.isInited() ) {
-        XMLWriteElement( mParsedSatiationLevel, "satiation-level", aOut, aTabs );
-    }
-    if( mBaseYearSatiationMultiplier.isInited() ) {
-        XMLWriteElement( mBaseYearSatiationMultiplier, "satiation-base-year-increase", aOut, aTabs );
-    }
-    XMLWriteElementCheckDefault( mParsedSatiationAdder, "satiation-adder", aOut, aTabs, Value( 0.0 ) );
-    
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 /*!
  * \brief Evaluate the satiation function at the given driver level.
  * \param aDemandDriver The value at which to calculate the function.

@@ -129,25 +129,6 @@ const string& UnlimitedResource::getXMLName() const {
     return getXMLNameStatic();
 }
 
-void UnlimitedResource::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
-
-    // write the xml for the class members.
-    XMLWriteElement( mOutputUnit, "output-unit", aOut, aTabs );
-    XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
-    XMLWriteElement( mMarket, "market", aOut, aTabs );
-    
-    const Value VALUE_DEFAULT;
-    XMLWriteElementCheckDefault( mVariance, "variance", aOut,
-                                 aTabs, VALUE_DEFAULT );
-    
-    const Modeltime* modeltime = scenario->getModeltime();
-    XMLWriteVector( mFixedPrices, "price", aOut, aTabs, modeltime, VALUE_DEFAULT );
-
-    // finished writing xml for the class members.
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 void UnlimitedResource::toDebugXML( const int aPeriod,
                                     ostream& aOut,
                                     Tabs* aTabs ) const
@@ -244,35 +225,6 @@ double UnlimitedResource::getAnnualProd( const string& aRegionName,
 //! Return price of resources.
 double UnlimitedResource::getPrice( const int aPeriod ) const {
     return mFixedPrices[ aPeriod ];
-}
-
-void UnlimitedResource::csvOutputFile( const string& aRegionName )
-{
-    // function protocol
-    void fileoutput3( string var1name,string var2name,string var3name,
-        string var4name,string var5name,string uname,vector<double> dout);
-
-    const int maxper = scenario->getModeltime()->getmaxper();
-    vector<double> temp( maxper );
-    for( int i = 0; i < maxper; ++i ){
-        temp[ i ] = getAnnualProd( aRegionName, i );
-    }
-    fileoutput3( aRegionName , mName," "," ","production", mOutputUnit, temp );
-}
-
-void UnlimitedResource::dbOutput( const string& aRegionName ){
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-    vector<double> temp(maxper);
-    // function protocol
-    void dboutput4(string var1name,string var2name,string var3name,string var4name,
-        string uname,vector<double> dout);
-
-    // Subsectors do not exist for Unlimited Resource.
-    for (int m=0;m<maxper;m++) {
-        temp[m] += getAnnualProd(aRegionName, m);
-    }
-    dboutput4( aRegionName, "Resource", "annual-production", mName, mOutputUnit, temp );
 }
 
 /*

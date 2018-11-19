@@ -210,10 +210,10 @@ void LandLeaf::completeInit( const string& aRegionName,
     // Note: zero land allocation is allowed
     const Modeltime* modeltime = scenario->getModeltime();
     for( int period = 0; period < modeltime->getmaxper(); period++ ) {
-        if( mLandAllocation[ period ] < 0 ) {
+        if( mReadinLandAllocation[ period ] < 0 ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Negative land allocation of " << mLandAllocation[ period ] 
+            mainLog << "Negative land allocation of " << mReadinLandAllocation[ period ] 
                     << " read in for leaf " << getName() << " in " 
                     << aRegionName << "." << endl;
             abort();
@@ -281,37 +281,6 @@ void LandLeaf::initLandUseHistory( const string& aRegionName )
         abort();
     }
     mCarbonContentCalc->setLandUseObjects( mLandUseHistory, this );
-}
-
-void LandLeaf::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag ( getXMLName(), aOut, aTabs, mName );
-    const Modeltime* modeltime = scenario->getModeltime();
-    for( int period = 0; period < modeltime->getmaxper(); ++period ) {
-        if( mReadinLandAllocation[ period ].isInited() ) {
-            const int year = modeltime->getper_to_yr( period );
-            XMLWriteElement( mReadinLandAllocation[ period ], "landAllocation", aOut, aTabs, year );
-        }
-    }
-    for( int period = 0; period < modeltime->getmaxper(); ++period ) {
-        if( mGhostUnormalizedShare[ period ].isInited() ) {
-            const int year = modeltime->getper_to_yr( period );
-            XMLWriteElement( mGhostUnormalizedShare[ period ], "ghost-unnormalized-share", aOut, aTabs, year );
-        }
-    }
-    XMLWriteElementCheckDefault( mIsGhostShareRelativeToDominantCrop, "is-ghost-share-relative", aOut, aTabs, false );
-    XMLWriteElement( mMinAboveGroundCDensity, "minAboveGroundCDensity", aOut, aTabs );
-    XMLWriteElement( mMinBelowGroundCDensity, "minBelowGroundCDensity", aOut, aTabs );
-    XMLWriteElementCheckDefault( mLandExpansionCostName, "landConstraintCurve", aOut, aTabs, string() );
-    
-
-    if( mLandUseHistory ){
-        mLandUseHistory->toInputXML( aOut, aTabs );
-    }
-
-    mCarbonContentCalc->toInputXML( aOut, aTabs );
-
-    // finished writing xml for the class members.
-    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
 }
 
 void LandLeaf::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
@@ -518,7 +487,7 @@ void LandLeaf::calcLUCEmissions( const string& aRegionName,
                                  const bool aStoreFullEmiss )
 {
     // Calculate the amount of emissions attributed to land use change in the current period
-    mLastCalcCO2Value = mCarbonContentCalc->calc( aPeriod, aEndYear, aStoreFullEmiss );
+    mLastCalcCO2Value = mCarbonContentCalc->calc( aPeriod, aEndYear, aStoreFullEmiss ? ICarbonCalc::eStoreResults : ICarbonCalc::eReturnTotal );
 
     // Add emissions to the carbon market.
     if ( !aStoreFullEmiss ) {
@@ -539,6 +508,16 @@ double LandLeaf::getLandAllocation( const string& aProductName,
     assert( aProductName == mName || aProductName == "" ); // Residue output object calls this without product information
 
     return mLandAllocation[ aPeriod ];
+}
+
+/*!
+ * \brief Has the land allocation ever been calculated for this leaf.
+ * \param aPeriod Model period to check.
+ * \return True if the land allocation has been calculated at *any* point
+ *         for the given model period.
+ */
+bool LandLeaf::hasLandAllocationCalculated( const int aPeriod ) const {
+    return mLandAllocation[ aPeriod ].isInited();
 }
 
 /*!

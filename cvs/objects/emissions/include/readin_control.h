@@ -44,6 +44,8 @@
  * \author Kate Calvin
  */
 
+#include <memory>
+
 #include "emissions/include/aemissions_control.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
@@ -79,7 +81,6 @@ protected:
     
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aCurrNode );
-    virtual void toInputXMLDerived( std::ostream& aOut, Tabs* aTabs ) const;
     virtual void toDebugXMLDerived( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
 
     virtual void calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP );
@@ -88,13 +89,16 @@ protected:
     // subclass together with the data members of the parent classes.
     DEFINE_DATA_WITH_PARENT(
         AEmissionsControl,
-
-        //! Future emissions factors -- this vector sets future emissions factors for vintaged technologies
-        DEFINE_VARIABLE( ARRAY, "future-emiss-factor", mFutureEmissionsFactors, objects::PeriodVector<double> ),
         
         //! Technology build period -- this is the period that the vintage was constructed
         DEFINE_VARIABLE( SIMPLE, "tech-build-period", mTechBuildPeriod, int )
     )
+    
+    //! Future emissions factors -- this vector sets future emissions factors for vintaged technologies
+    // Note ideally this would be included for GCAMFusion with the following definition however it is
+    // not currently able to handle smart pointers.
+    // DEFINE_VARIABLE( ARRAY, "future-emiss-factor", mFutureEmissionsFactors, std::shared_ptr<objects::PeriodVector<double> > ),
+    std::shared_ptr<objects::PeriodVector<double> > mFutureEmissionsFactors;
 
     void copy( const ReadInControl& aOther );
 };

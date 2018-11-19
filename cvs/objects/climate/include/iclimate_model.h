@@ -50,7 +50,6 @@
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/ivisitable.h"
-#include "util/base/include/iround_trippable.h"
 #include "util/base/include/iparsable.h"
 #include "util/base/include/data_definition_util.h"
 
@@ -60,6 +59,7 @@ class IVisitor;
 // Need to forward declare the subclasses as well.
 class MagiccModel;
 class HectorModel;
+class NoClimateModel;
 
 /*! 
 * \ingroup Objects
@@ -73,7 +73,7 @@ class HectorModel;
 * \author Josh Lurz
 */
 
-class IClimateModel: public IVisitable, public IRoundTrippable, private boost::noncopyable {
+class IClimateModel: public IVisitable, private boost::noncopyable {
 public:
 	//! Constructor.
     inline IClimateModel();
@@ -237,15 +237,6 @@ public:
     */
     virtual double getTotalForcing( const int aYear ) const = 0;
 
-	/*! \brief Print the output of the climate model to a file.
-	* \details Writes a subset of the output of the model to a file. The path to
-    *          the file is currently hard-coded due to limitations in the output
-    *          routines. This file is the same as all other CSV output is
-    *          written to.
-	* \pre The model must be run before output can be written.
-    */
-    virtual void printFileOutput() const = 0;
-
     /*! \brief Returns the net terrestrial uptake in a given period from the climate model.
     * \details Queries the climate model for the net terrestrial uptake for a given period
     *          and returns the value. If the climate model is unavailable the
@@ -274,12 +265,6 @@ public:
      */
     virtual int getCarbonModelStartYear() const = 0;
 
-	/*! \brief Print the output of the climate model to a database
-	* \details Writes a subset of the output of the model to a database.
-	* \pre The model must be run before output can be written.
-    */
-    virtual void printDBOutput() const = 0;
-
     /*! \brief Update a visitor with information from the climate model.
     * \param aVisitor Vistor to update.
     * \param aPeriod Period for which to perform the update, -1 means all
@@ -296,11 +281,11 @@ protected:
      */
 #if USE_HECTOR
     DEFINE_DATA(
-        DEFINE_SUBCLASS_FAMILY( IClimateModel, MagiccModel, HectorModel )
+        DEFINE_SUBCLASS_FAMILY( IClimateModel, MagiccModel, HectorModel, NoClimateModel )
     )
 #else
     DEFINE_DATA(
-        DEFINE_SUBCLASS_FAMILY(IClimateModel, MagiccModel)
+        DEFINE_SUBCLASS_FAMILY(IClimateModel, MagiccModel, NoClimateModel )
     )
 #endif // USE_HECTOR
 };

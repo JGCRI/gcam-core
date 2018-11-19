@@ -46,7 +46,6 @@
 #include "util/base/include/configuration.h"
 
 // Add new types here.
-#include "containers/include/merge_runner.h"
 #include "containers/include/single_scenario_runner.h"
 #include "containers/include/batch_runner.h"
 #include "containers/include/mac_generator_scenario_runner.h"
@@ -63,8 +62,7 @@ using namespace std;
  */
 bool ScenarioRunnerFactory::isOfType( const string& aType ) {
     // Search the list of known types.
-    return ( ( aType == MergeRunner::getXMLNameStatic() )
-        || ( aType == SingleScenarioRunner::getXMLNameStatic() )
+    return ( ( aType == SingleScenarioRunner::getXMLNameStatic() )
         || ( aType == MACGeneratorScenarioRunner::getXMLNameStatic() )
         || ( aType == BatchRunner::getXMLNameStatic() )
         || ( aType == PolicyTargetRunner::getXMLNameStatic() )
@@ -79,9 +77,6 @@ bool ScenarioRunnerFactory::isOfType( const string& aType ) {
  */
 auto_ptr<IScenarioRunner> ScenarioRunnerFactory::create( const string& aType ) {
     // Search the list of known types.
-    if( aType == MergeRunner::getXMLNameStatic() ) {
-        return auto_ptr<IScenarioRunner>( new MergeRunner );
-    }
     if( aType == SingleScenarioRunner::getXMLNameStatic() ){
         return auto_ptr<IScenarioRunner>( new SingleScenarioRunner );
     }
@@ -144,11 +139,6 @@ auto_ptr<IScenarioRunner> ScenarioRunnerFactory::createDefault( const list<strin
         && !isExcluded( aExcludedTypes, SimplePolicyTargetRunner::getXMLNameStatic() ) )
     {
         defaultRunner.reset( new SimplePolicyTargetRunner );
-    }
-    else if( conf->getBool( "mergeFilesOnly", false, false )
-        && !isExcluded( aExcludedTypes, MergeRunner::getXMLNameStatic() ) )
-    {
-        defaultRunner.reset( new MergeRunner );
     }
     else if( conf->getBool( "createCostCurve", false, false )
         && !isExcluded( aExcludedTypes, MACGeneratorScenarioRunner::getXMLNameStatic() ) )

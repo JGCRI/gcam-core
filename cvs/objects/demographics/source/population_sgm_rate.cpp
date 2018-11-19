@@ -135,13 +135,6 @@ double PopulationSGMRate::getWorkingAgePopFemale() const { // ages 15-65
     return workAgePop;
 }
 
-//! Write out rest of data members to XML output stream.
-void PopulationSGMRate::toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {
-    for( CAgeCohortIterator i = ageCohort.begin(); i != ageCohort.end(); ++i ){
-        ( *i )->toInputXML( out, tabs );
-    }
-}
-
 //! Write out XML for debugging purposes.
 void PopulationSGMRate::toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const {
     for( CAgeCohortIterator i = ageCohort.begin(); i != ageCohort.end(); ++i ){
@@ -263,18 +256,6 @@ void PopulationSGMRate::calcPop(){
         totFemalePop += (*cohort)->getFemalePop();
     }    
     mTotalPop = totMalePop + totFemalePop;  
-}
-
-void PopulationSGMRate::csvSGMOutputFile( ostream& aFile, const int period ) const {
-     aFile << "Population Data by Age Cohort Total" << endl << endl;
-     aFile << "Males- " << mYear << endl;
-     for( CAgeCohortIterator it = ageCohort.begin(); it != ageCohort.end(); it++ ) {
-         aFile << ( *it )->getAgeGroup() << ',' << ( *it )->getMalePop() << endl;
-     }
-     aFile << endl << "Females- " << mYear << endl;
-     for( CAgeCohortIterator it = ageCohort.begin(); it != ageCohort.end(); it++ ) {
-         aFile << ( *it )->getAgeGroup() << ',' << ( *it )->getFemalePop() << endl;
-     }
 }
 
 /*! \brief Update a visitor with information about a SGM rate based cohort

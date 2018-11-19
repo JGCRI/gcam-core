@@ -120,7 +120,7 @@ public:
                                const bool aPrintDebugging,
                                Timer& aTimer );
 
-    virtual void printOutput( Timer& aTimer, const bool aCloseDB ) const;
+    virtual void printOutput( Timer& aTimer ) const;
 
     virtual void cleanup();
 

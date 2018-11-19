@@ -53,7 +53,6 @@
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/ivisitable.h"
-#include "util/base/include/iround_trippable.h"
 #include "util/base/include/data_definition_util.h"
 
 // Forward declarations
@@ -65,6 +64,7 @@ class IClimateModel;
 class GHGPolicy;
 class GlobalTechnologyDatabase;
 class IActivity;
+class Tabs;
 
 #if GCAM_PARALLEL_ENABLED
 class GcamFlowGraph;
@@ -84,14 +84,13 @@ class GcamFlowGraph;
 * \author Sonny Kim
 */
 
-class World: public IVisitable, public IRoundTrippable, private boost::noncopyable
+class World: public IVisitable, private boost::noncopyable
 {
 public:
     World();
     ~World();
     void XMLParse( const xercesc::DOMNode* node );
     void completeInit();
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
 	static const std::string& getXMLNameStatic();
     const std::string& getName() const;
@@ -100,12 +99,9 @@ public:
 
     void calc( const int period );
     void calc( const int period, const std::vector<IActivity*>& aRegionsToCalc );
-    void updateSummary( const std::list<std::string> aPrimaryFuelList, const int period ); 
     void setEmissions( int period );
     void runClimateModel();
     void runClimateModel( int period );
-    void csvOutputFile() const; 
-    void dbOutput( const std::list<std::string>& aPrimaryFuelList ) const; 
     const std::map<std::string,int> getOutputRegionMap() const;
     bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const;
     void setTax( const GHGPolicy* aTax );
@@ -118,8 +114,6 @@ public:
     const GlobalTechnologyDatabase* getGlobalTechnologyDatabase() const;
 
 	void accept( IVisitor* aVisitor, const int aPeriod ) const;
-    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
-    void csvSGMGenFile( std::ostream& aFile ) const;
 
 #if GCAM_PARALLEL_ENABLED
   protected:
@@ -167,8 +161,6 @@ protected:
     std::vector<IActivity*> mGlobalOrdering;
 
     void clear();
-
-    void csvGlobalDataFile() const;
 };
 
 #endif // _WORLD_H_

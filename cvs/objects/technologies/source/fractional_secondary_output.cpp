@@ -171,22 +171,6 @@ bool FractionalSecondaryOutput::XMLParse( const DOMNode* aNode )
     return true;
 }
 
-void FractionalSecondaryOutput::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
-    XMLWriteElement( mOutputRatio, "output-ratio", aOut, aTabs );
-    
-    const vector<pair<double,double> > pairs = mCostCurve->getSortedPairs();
-    typedef vector<pair<double, double> >::const_iterator PairIterator;
-    map<string, double> attrs;
-    for( PairIterator currPair = pairs.begin(); currPair != pairs.end(); ++currPair ) {
-        attrs[ "price" ] = currPair->first;
-        XMLWriteElementWithAttributes( currPair->second, "fraction-produced", aOut, aTabs, attrs );
-    }
-    
-    XMLWriteElementCheckDefault( mMarketName, "market-name", aOut, aTabs, string() );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 void FractionalSecondaryOutput::toDebugXML( const int aPeriod,
                                             ostream& aOut,
                                             Tabs* aTabs ) const

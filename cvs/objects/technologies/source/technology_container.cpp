@@ -286,36 +286,6 @@ bool TechnologyContainer::XMLParse( const DOMNode* aNode ) {
     return parsingSuccessful;
 }
 
-void TechnologyContainer::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    if( mVintages.empty() ) {
-        return;
-    }
-
-    // Note that we are assuming that the tech type is the same for all vintages.
-    const string techType = ( *mVintages.begin() ).second->getXMLName();
-    XMLWriteOpeningTag( techType, aOut, aTabs, mName );
-    
-    XMLWriteElementCheckDefault( mInitialAvailableYear, "initial-available-year", aOut, aTabs, -1 );
-    XMLWriteElementCheckDefault( mFinalAvailableYear, "final-available-year", aOut, aTabs, -1 );
-    
-    for( CInterpRuleIterator ruleIt = mShareWeightInterpRules.begin(); ruleIt != mShareWeightInterpRules.end(); ++ruleIt ) {
-        ( *ruleIt )->toInputXML( aOut, aTabs );
-    }
-    
-    for( CVintageIterator vintageIt = mVintages.begin(); vintageIt != mVintages.end(); ++vintageIt ) {
-        // only write technologies that were not interpolated in toInputXML
-        if( find( mInterpolatedTechYears.begin(), mInterpolatedTechYears.end(), ( *vintageIt ).first )
-            == mInterpolatedTechYears.end() )
-        {
-            ( *vintageIt ).second->toInputXML( aOut, aTabs );
-        }
-        // always write data that is required for restart
-        ( *vintageIt ).second->toInputXMLForRestart( aOut, aTabs );
-    }
-    
-    XMLWriteClosingTag( techType, aOut, aTabs );
-}
-
 void TechnologyContainer::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     for( CVintageIterator vintageIt = mVintages.begin(); vintageIt != mVintages.end(); ++vintageIt ) {
         ( *vintageIt ).second->toDebugXML( aPeriod, aOut, aTabs );
@@ -395,10 +365,9 @@ void TechnologyContainer::completeInit( const string& aRegionName,
                 abort();
             }
             
-            // We can interpolate a technology to fill this year.  Note that this
-            // interpolated technology will not be written out in toInputXML
+            // We can interpolate a technology to fill this year.
             CVintageIterator tempPrevTech, prevTech;
-            tempPrevTech = prevTech = mVintages./*find*/lower_bound( 
+            tempPrevTech = prevTech = mVintages.lower_bound( 
                                       modeltime->getper_to_yr( period - 1 ) );
             // Use temporary iterator to get next tech to avoid changing prev tech.
             CVintageIterator nextTech = ++tempPrevTech;
@@ -430,6 +399,9 @@ void TechnologyContainer::initCalc( const string& aRegionName, const string& aSe
             mVintagesByPeriod[ aPeriod ]->copyGHGParameters(
                 mVintagesByPeriod[ aPeriod - 1 ]->getGHGPointer( ghgNames[j] ) );
         }
+        // We must call initializeTechVintageVector again since we may have just newly
+        // created some GHG objects which need to have their TechVintageVectors sized.
+        mVintagesByPeriod[ aPeriod ]->initTechVintageVector();
     }
     
     // Initialize the previous period info as having no input set and

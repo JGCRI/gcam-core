@@ -101,7 +101,6 @@ public:
     void addToType( const ExpenditureType aType, const double aValue );
     double getValue( const ExpenditureType aType ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     const std::string& enumToName( const ExpenditureType aType ) const;
     const std::string& enumToXMLName( const ExpenditureType aType ) const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;

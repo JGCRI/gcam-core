@@ -139,16 +139,6 @@ bool CapacityLimitBackupCalculator::XMLParse( const xercesc::DOMNode* node ){
 }
 
 // Documentation is inherited.
-void CapacityLimitBackupCalculator::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
-    XMLWriteElementCheckDefault( mCapacityLimit, "capacity-limit", aOut, aTabs, 1.0 );
-    XMLWriteElementCheckDefault( mFmax, "fmax", aOut, aTabs, 1.0 );
-    XMLWriteElementCheckDefault( mC, "c", aOut, aTabs, 5.0 );
-    XMLWriteElementCheckDefault( mTau, "tau", aOut, aTabs, 0.1 );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
-// Documentation is inherited.
 void CapacityLimitBackupCalculator::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
     XMLWriteElement( mCapacityLimit, "capacity-limit", aOut, aTabs );

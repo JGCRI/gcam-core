@@ -65,8 +65,7 @@ using namespace xercesc;
 extern Scenario* scenario;
 
 //! Default Constructor
-BuildingNodeInput::BuildingNodeInput():
-mInternalGainsTrialSupply( 0.001 )
+BuildingNodeInput::BuildingNodeInput()
 {
     mSatiationDemandFunction = 0;
 }
@@ -124,9 +123,6 @@ void BuildingNodeInput::XMLParse( const xercesc::DOMNode* node ) {
         else if ( nodeName == "internal-gains-unit" ) {
             mInternalGainsUnit = XMLHelper<string>::getValue( curr );
         }
-        else if ( nodeName == "internal-gains-trial-supply" ) {
-            XMLHelper<double>::insertValueIntoVector( curr, mInternalGainsTrialSupply, scenario->getModeltime() );
-        }
         else if( nodeName == SatiationDemandFunction::getXMLNameStatic() ) {
             parseSingleNode( curr, mSatiationDemandFunction, new SatiationDemandFunction );
         }
@@ -150,15 +146,10 @@ void BuildingNodeInput::completeInit( const string& aRegionName, const string& a
         // set initial trial supplies from the parsed vector
         Marketplace* marketplace = scenario->getMarketplace();
         const string trialMarketName = SectorUtils::getTrialMarketName( mInternalGainsMarketname );
-        marketplace->setPriceVector( trialMarketName, aRegionName,
-            convertToVector( mInternalGainsTrialSupply ) );
         // Note tech name is the name of the consumer which in GCAM is called
         // directly and so should be the name used in dependency tracking.
         marketplace->getDependencyFinder()->addDependency( aTechName, aRegionName, trialMarketName, aRegionName );
     }
-
-    // necessary to store trial internal gains in toInputXML
-    mRegionName = aRegionName;
 
     // create the function by getting it from the function manager
     if( !mFunctionType.empty() ) {
@@ -257,43 +248,6 @@ bool BuildingNodeInput::hasTypeFlag( const int aTypeFlag ) const {
     return false;
 }
 
-//! Output to XML data
-void BuildingNodeInput::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    // write the beginning tag.
-    XMLWriteOpeningTag ( getXMLReportingName(), aOut, aTabs, mName );
-    
-    const Modeltime* modeltime = scenario->getModeltime();
-    // only write base year values
-    for( int period = 0; period <= modeltime->getFinalCalibrationPeriod(); period++ ) {
-        const int year = modeltime->getper_to_yr( period );
-        XMLWriteElement( mBuildingSize[ period ], "base-building-size", aOut, aTabs, year );
-    }
-    XMLWriteVector( mPriceExponent, "price-exponent", aOut, aTabs, modeltime );
-    XMLWriteVector( mShellConductance, "shell-conductance", aOut, aTabs, modeltime );
-    XMLWriteVector( mFloorToSurfaceRatio, "floor-to-surface-ratio", aOut, aTabs, modeltime );
-    XMLWriteElement( mInternalGainsMarketname, "internal-gains-market-name", aOut, aTabs );
-    XMLWriteElement( mInternalGainsUnit, "internal-gains-unit", aOut, aTabs );
-    mSatiationDemandFunction->toInputXML( aOut, aTabs );
-
-    /*!
-     * \todo there is no postCalc so we can not store the internal gains trial supply there and
-     *       so we must do it here.
-     */
-    for( int period = 0; period < modeltime->getmaxper(); ++period ) {
-        const int year = modeltime->getper_to_yr( period );
-        XMLWriteElement( SectorUtils::getTrialSupply( mRegionName, mInternalGainsMarketname, period ),
-            "internal-gains-trial-supply", aOut, aTabs, year );
-    }
-
-    XMLWriteElement( mFunctionType, "prodDmdFnType", aOut, aTabs );
-    for( CNestedInputIterator it = mNestedInputs.begin(); it != mNestedInputs.end(); ++it ) {
-        (*it)->toInputXML( aOut, aTabs );
-    }
-
-    // write the closing tag.
-    XMLWriteClosingTag( getXMLReportingName(), aOut, aTabs );
-}
-
 //! Output debug info to XML
 void BuildingNodeInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     // write the beginning tag.
@@ -303,7 +257,6 @@ void BuildingNodeInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTab
     XMLWriteElement( mPriceExponent[ aPeriod ], "price-exponent", aOut, aTabs );
     XMLWriteElement( mShellConductance[ aPeriod ], "shell-conductance", aOut, aTabs );
     XMLWriteElement( mFloorToSurfaceRatio[ aPeriod ], "floor-to-surface-ratio", aOut, aTabs );
-    XMLWriteElement( mInternalGainsTrialSupply[ aPeriod ], "internal-gains-trial-supply", aOut, aTabs );
     XMLWriteElement( mPrice[ aPeriod ], "price", aOut, aTabs );
 
     XMLWriteElement( mFunctionType, "prodDmdFnType", aOut, aTabs );
@@ -386,11 +339,12 @@ Value BuildingNodeInput::getFloorToSurfaceRatio( const int aPeriod ) const {
 
 /*!
  * \brief Get the total internal gains for this type of building.
+ * \param aRegionName The name of the containing region.
  * \param aPeriod Model period.
  * \return Internal gains in the given period.
  */
-double BuildingNodeInput::getInternalGains( const int aPeriod ) const {
-    return SectorUtils::getTrialSupply( mRegionName, mInternalGainsMarketname, aPeriod );
+double BuildingNodeInput::getInternalGains( const string& aRegionName, const int aPeriod ) const {
+    return SectorUtils::getTrialSupply( aRegionName, mInternalGainsMarketname, aPeriod );
 }
 
 /*!

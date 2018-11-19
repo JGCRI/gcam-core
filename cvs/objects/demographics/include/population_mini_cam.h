@@ -77,7 +77,6 @@ public:
     double getWorkingAgePopMale() const { return 0; } // minicam only has total
     double getWorkingAgePopFemale() const { return 0; } // minicam only has total
 
-    virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
     
@@ -92,7 +91,6 @@ protected:
     
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const;
 private:
     static const std::string XML_NAME; //!< node name for toXML methods

@@ -54,9 +54,7 @@ extern Scenario* scenario;
 /*! \brief Constructor.
 * \author James Blackwood
 */
-LandCarbonDensities::LandCarbonDensities():
-mAboveGroundCarbon( scenario->getModeltime()->getStartYear(), CarbonModelUtils::getEndYear(), 0.0 ),
-mBelowGroundCarbon( scenario->getModeltime()->getStartYear(), CarbonModelUtils::getEndYear(), 0.0 )
+LandCarbonDensities::LandCarbonDensities()
 {
     mAvgAboveGroundCarbon = 0.0;
     mAvgBelowGroundCarbon = 0.0;
@@ -122,14 +120,6 @@ void LandCarbonDensities::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aT
     XMLWriteClosingTag( getXMLName(), aOut, aTabs );
 }
 
-void LandCarbonDensities::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( getXMLName(), aOut, aTabs );
-    XMLWriteElement( mAvgAboveGroundCarbon, "above-ground-carbon-density", aOut, aTabs, 0.0 );
-    XMLWriteElement( mAvgBelowGroundCarbon, "below-ground-carbon-density", aOut, aTabs, 0.0 );
-    XMLWriteElement( mMatureAge, "mature-age", aOut, aTabs );
-    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
-}
-
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
 *
 * This public function accesses the private constant string, XML_NAME.
@@ -153,11 +143,6 @@ const string& LandCarbonDensities::getXMLName() const {
 * \author Kate Calvin
 */
 void LandCarbonDensities::completeInit( const double aPrivateDiscountRateLand  ) {
-    for ( int i = scenario->getModeltime()->getStartYear(); i <= CarbonModelUtils::getEndYear(); ++i ){
-        mAboveGroundCarbon[ i ] = mAvgAboveGroundCarbon;
-        mBelowGroundCarbon[ i ] = mAvgBelowGroundCarbon;
-    }
-    
     // force the sigmoid to get precalculated.
     setMatureAge( mMatureAge );
     
@@ -167,13 +152,13 @@ void LandCarbonDensities::completeInit( const double aPrivateDiscountRateLand  )
 void LandCarbonDensities::setActualAboveGroundCarbonDensity( const double aAboveGroundCarbonDensity,
                                                      const int aYear )
 {
-    mAboveGroundCarbon[ aYear ] = aAboveGroundCarbonDensity;
+    mAvgAboveGroundCarbon = aAboveGroundCarbonDensity;
 }
 
 void LandCarbonDensities::setActualBelowGroundCarbonDensity( const double aBelowGroundCarbonDensity,
                                                      const int aYear )
 {
-    mBelowGroundCarbon[ aYear ] = aBelowGroundCarbonDensity;
+    mAvgBelowGroundCarbon = aBelowGroundCarbonDensity;
 }
 
 void LandCarbonDensities::setMatureAge( const int aMatureAge )    
@@ -184,23 +169,32 @@ void LandCarbonDensities::setMatureAge( const int aMatureAge )
     // Precompute the sigmoid curve differnce to avoid doing it during calc.
     // Note this is only necessary when the mature age is greater than 1.
     if( mMatureAge > 1 ) {
-        precalc_sigmoid_diff.resize( CarbonModelUtils::getEndYear() - CarbonModelUtils::getStartYear() + 1 );
-        double prevSigmoid = pow( 1 - exp( ( -3.0 * 0 ) / mMatureAge ), 2.0 );
-        for ( int i = CarbonModelUtils::getStartYear(); i <= CarbonModelUtils::getEndYear(); ++i ){
-            const int offestYear = i - CarbonModelUtils::getStartYear();
-            double currSigmoid = pow( 1 - exp( ( -3.0 * ( offestYear + 1 ) ) / mMatureAge ), 2.0 );
-            precalc_sigmoid_diff[ offestYear ] = currSigmoid - prevSigmoid;
-            prevSigmoid = currSigmoid;
-        }
+        precalc_sigmoid_diff = precalc_sigmoid_type( mMatureAge );
+    }
+}
+
+/*!
+ * \brief The boost fly weight will only actually construct one helper for each unique
+ *        mature age.  Any other time will just get the shared instance.
+ */
+ASimpleCarbonCalc::precalc_sigmoid_helper::precalc_sigmoid_helper( const int aMatureAge ):
+mData( CarbonModelUtils::getEndYear() - CarbonModelUtils::getStartYear() + 1 )
+{
+    double prevSigmoid = pow( 1 - exp( ( -3.0 * 0 ) / aMatureAge ), 2.0 );
+    for ( int i = CarbonModelUtils::getStartYear(); i <= CarbonModelUtils::getEndYear(); ++i ){
+        const int offestYear = i - CarbonModelUtils::getStartYear();
+        double currSigmoid = pow( 1 - exp( ( -3.0 * ( offestYear + 1 ) ) / aMatureAge ), 2.0 );
+        mData[ offestYear ] = currSigmoid - prevSigmoid;
+        prevSigmoid = currSigmoid;
     }
 }
 
 double LandCarbonDensities::getActualAboveGroundCarbonDensity( const int aYear ) const {
-    return mAboveGroundCarbon[ aYear ];
+    return mAvgAboveGroundCarbon;
 }
 
 double LandCarbonDensities::getActualBelowGroundCarbonDensity( const int aYear ) const {
-    return mBelowGroundCarbon[ aYear ];
+    return mAvgBelowGroundCarbon;
 }
 
 int LandCarbonDensities::getMatureAge( ) const {

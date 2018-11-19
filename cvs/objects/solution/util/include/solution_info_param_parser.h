@@ -127,7 +127,6 @@ class Marketplace;
  *                  The newton raphson delta price to set into a solution info.
  *
  * \author Pralit Patel
- * \todo Do we want to write this back out in toInputXML?
  */
 class SolutionInfoParamParser : public IParsable, private boost::noncopyable {
 public:

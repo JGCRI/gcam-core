@@ -90,6 +90,8 @@
 #include "functions/include/function_utils.h"
 #include "marketplace/include/marketplace.h"
 
+#include "util/base/include/initialize_tech_vector_helper.hpp"
+
 using namespace std;
 using namespace xercesc;
 using namespace objects;
@@ -208,7 +210,7 @@ void Technology::init()
     // year is known.
     mLifetimeYears = -1;
 
-    mCosts.assign( mCosts.size(), Value( -1.0 ) );
+    TechVectorParseHelper<Value>::setDefaultValue( Value( -1 ), mCosts );
     mProductionState.assign( mProductionState.size(), 0 );
     mProductionFunction = 0;
     mPMultiplier = 1;
@@ -335,6 +337,29 @@ void Technology::completeInit( const string& aRegionName,
         mLifetimeYears = calcDefaultLifetime();
     }
     
+    // Create the primary output for this technology. All technologies will have
+    // a primary output. Always insert the primary output at position 0.
+    mOutputs.insert( mOutputs.begin(), new PrimaryOutput( aSectorName ) );
+    
+    // Accidentally missing CO2 is very easy to do, and would cause big
+    // problems. Add it automatically if it does not exist. Warn the user so
+    // they remember to add it.
+    const string CO2 = "CO2";
+    if( util::searchForValue( mGHG, CO2 ) == mGHG.end() ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::DEBUG );
+        mainLog << "Adding CO2 to Technology " << mName << " in region " << aRegionName << " in sector " << aSectorName << "." << endl;
+        AGHG* CO2Ghg = new CO2Emissions;
+        mGHG.push_back( CO2Ghg );
+    }
+    
+    // WARNING: all objects that may indirectly create a TechVintageVector *must* be created
+    // before we call initTechVintageVector() so that we can ensure that their vectors get
+    // sized and initialized properly.
+    // We must take care of this early in completeInit in case any of those objects will
+    // need to acccess those TechVintageVector for any reason then they will be able to.
+    initTechVintageVector();
+    
     // Check if both the original MiniCAM non-energy-input and the new input-capital
     // are in the vector.  If so, eliminate the non-energy-input and use input-capital 
     // only so that non-energy costs are not double accounted.
@@ -388,10 +413,6 @@ void Technology::completeInit( const string& aRegionName,
         << "  region: " << aRegionName << "  sector: " << aSectorName << "  technology: " << mName << endl;
     }
 
-    // Create the primary output for this technology. All technologies will have
-    // a primary output. Always insert the primary output at position 0.
-    mOutputs.insert( mOutputs.begin(), new PrimaryOutput( aSectorName ) );
-
     // Check for attempts to calibrate fixed output.
     if( mFixedOutput != getFixedOutputDefault() && mCalValue ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -431,18 +452,6 @@ void Technology::completeInit( const string& aRegionName,
         mShareWeight = mParsedShareWeight = 0;
     }
 
-    // Accidentally missing CO2 is very easy to do, and would cause big
-    // problems. Add it automatically if it does not exist. Warn the user so
-    // they remember to add it.
-    const string CO2 = "CO2";
-    if( util::searchForValue( mGHG, CO2 ) == mGHG.end() ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::DEBUG );
-        mainLog << "Adding CO2 to Technology " << mName << " in region " << aRegionName << " in sector " << aSectorName << "." << endl;
-        AGHG* CO2Ghg = new CO2Emissions;
-        mGHG.push_back( CO2Ghg );
-    }
-
     // Initialize the capture component.
     if( mCaptureComponent ) {
         mCaptureComponent->completeInit( aRegionName, aSectorName );
@@ -475,66 +484,6 @@ void Technology::completeInit( const string& aRegionName,
             calLog << "Technology " << getName() << " year " << mYear << "has both calibrated inputs and outputs.";
             calLog << "Note that we are assuming the coefficient is consistent and the calibrated output takes precedence.";
         }
-    }
-}
-
-//! write object to xml output stream
-void Technology::toInputXML( ostream& out,
-                             Tabs* tabs ) const
-{
-    XMLWriteOpeningTag( getXMLVintageNameStatic(), out, tabs, "", mYear );
-
-    // write the xml for the class members.
-    if( mParsedShareWeight.isInited() ) {
-        XMLWriteElement( mParsedShareWeight, "share-weight", out, tabs );
-    }
-    int defualtLifetimeYears = calcDefaultLifetime();
-    XMLWriteElementCheckDefault( mLifetimeYears, "lifetime", out, tabs, defualtLifetimeYears );
-    XMLWriteElementCheckDefault( mFixedOutput, "fixedOutput", out, tabs, getFixedOutputDefault() );
-    XMLWriteElementCheckDefault( mPMultiplier, "pMultiplier", out, tabs, 1.0 );
-    XMLWriteElementCheckDefault( mCapacityFactor, "capacity-factor", out, tabs, 1.0 );
-    if( !mKeywordMap.empty() ) {
-        XMLWriteElementWithAttributes( "", "keyword", out, tabs, mKeywordMap );
-    }
-
-    if( mCalValue ) {
-        mCalValue->toInputXML( out, tabs );
-    }
-
-    if( mCaptureComponent ) {
-        mCaptureComponent->toInputXML( out, tabs );
-    }
-
-    if( mTechChangeCalc ) {
-        mTechChangeCalc->toInputXML( out, tabs );
-    }
-
-    for( vector<IShutdownDecider*>::const_iterator i = mShutdownDeciders.begin(); i != mShutdownDeciders.end(); ++i ) {
-        ( *i )->toInputXML( out, tabs );
-    }
-
-    for( COutputIterator iter = mOutputs.begin(); iter != mOutputs.end(); ++iter ) {
-        ( *iter )->toInputXML( out, tabs );
-    }
-    for( CGHGIterator iter = mGHG.begin(); iter != mGHG.end(); ++iter ) {
-        ( *iter )->toInputXML( out, tabs );
-    }
-    for( unsigned int i = 0; i < mInputs.size(); ++i ) {
-        mInputs[ i ]->toInputXML( out, tabs );
-    }
-
-    // finished writing xml for the class members.
-    toInputXMLDerived( out, tabs );
-    XMLWriteClosingTag( getXMLVintageNameStatic(), out, tabs );
-}
-
-void Technology::toInputXMLForRestart( ostream& out, Tabs* tabs ) const {
-    // make sure calibrated share weights get written out
-    const Modeltime* modeltime = scenario->getModeltime();
-    if( mYear <= modeltime->getper_to_yr( modeltime->getFinalCalibrationPeriod() ) ) {
-        XMLWriteOpeningTag( getXMLVintageNameStatic(), out, tabs, "", mYear );
-        XMLWriteElement( mShareWeight, "share-weight", out, tabs );
-        XMLWriteClosingTag( getXMLVintageNameStatic(), out, tabs );
     }
 }
 
@@ -644,21 +593,6 @@ void Technology::initCalc( const string& aRegionName,
     // decides to produce output.
     setProductionState( aPeriod );
     
-    // If technology is not operating the cost is NaN.  The value
-    // should never be used; therefore, if the NaNs escape into the
-    // rest of the code, you know instantly that you have a problem.
-    if( !mProductionState[ aPeriod ]->isOperating() )
-    {
-        mCosts[ aPeriod ] = numeric_limits<double>::signaling_NaN();
-    }
-    
-    mTechnologyInfo->setBoolean( "new-vintage-tech", mProductionState[ aPeriod ]->isNewInvestment() );
-    mTechnologyInfo->setBoolean( "is-tech-operating", mProductionState[ aPeriod ]->isOperating() );
-
-    for( unsigned int i = 0; i < mGHG.size(); i++ ) {
-        mGHG[ i ]->initCalc( aRegionName, mTechnologyInfo.get(), aPeriod );
-    }
-
     if( !aPrevPeriodInfo.mIsFirstTech && !aPrevPeriodInfo.mInputs ){
         // The first period technology, which is not necessarily in the base year should
         // not have any previous technology information so do not print the warning.
@@ -668,16 +602,27 @@ void Technology::initCalc( const string& aRegionName,
                     << " did not pass forward the required information." << endl;
         }
     }
-
+    
     // Only copy inputs forward in the starting year of the technology.
-    else if( !aPrevPeriodInfo.mIsFirstTech && mProductionState[ aPeriod ]->isOperating() &&
-             mProductionState[ aPeriod ]->isNewInvestment() ){
+    else if( !aPrevPeriodInfo.mIsFirstTech && mProductionState[ aPeriod ]->isNewInvestment() ){
         // Copy information from the previous inputs forward.
         FunctionUtils::copyInputParamsForward( *aPrevPeriodInfo.mInputs, mInputs, aPeriod );
     }
     
     // Setup the structure for copying forward with information about the technology in this period.
     aPrevPeriodInfo.mInputs = &mInputs;
+    
+    // Do not attempt to perform further initializations if this technology is not operating
+    if( !isOperating( aPeriod ) ) {
+        return;
+    }
+    
+    mTechnologyInfo->setBoolean( "new-vintage-tech", mProductionState[ aPeriod ]->isNewInvestment() );
+    mTechnologyInfo->setInteger( "initial-tech-period", scenario->getModeltime()->getyr_to_per( mYear ) );
+
+    for( unsigned int i = 0; i < mGHG.size(); i++ ) {
+        mGHG[ i ]->initCalc( aRegionName, mTechnologyInfo.get(), aPeriod );
+    }
 
     // Initialize the inputs.
     for( unsigned int i = 0; i < mInputs.size(); ++i ) {
@@ -1033,40 +978,6 @@ void Technology::calcEmissionsAndOutputs( const string& aRegionName,
     }
 }
 
-//! calculate GHG emissions from Technology use
-/* \brief Get a map containing emissions by gas from the Technology.
-* \param aGoodName Name of the sector.
-* \param aPeriod Period for which to get emissions.
-* \return A map of gas name to emissions. There are more gas names than ghgs.
-*/
-const map<string, double> Technology::getEmissions( const string& aGoodName,
-                                                    const int aPeriod ) const
-{
-    map<string, double> emissions;
-    for( unsigned int i = 0; i < mGHG.size(); ++i ) {
-        // emissions by gas name only
-        emissions[ mGHG[ i ]->getName() ] = mGHG[ i ]->getEmission( aPeriod );
-        // emissions by gas and fuel names combined
-        // used to calculate emissions by fuel
-        for( unsigned int j = 0; j < mInputs.size(); ++j ) {
-            // Calculate the per fuel emissions. TODO: This is very difficult to
-            // do as different fuels may have different input coefficients and
-            // different emissions coefficients. emissions[mGHG[i]->getName() +
-            // mInputs[ j ]->getName() ] = mGHG[i]->getEmission( aPeriod );
-        }
-        // add sequestered amount to emissions map used to calculate emissions
-        // by fuel if there are sequestered emissions.
-        if( mCaptureComponent ) {
-            emissions[ mGHG[ i ]->getName() + "sequestGeologic" ] = mCaptureComponent->
-            getSequesteredAmount( mGHG[ i ]->getName(), true, aPeriod );
-            emissions[ mGHG[ i ]->getName() + "sequestNonEngy" ] = mCaptureComponent->
-            getSequesteredAmount( mGHG[ i ]->getName(), false, aPeriod );
-        }
-    }
-
-    return emissions;
-}
-
 /*! \brief Returns Technology name
 *
 * \author Sonny Kim
@@ -1265,7 +1176,7 @@ bool Technology::hasInput( const string& aInput ) const
 double Technology::getOutput( const int aPeriod ) const
 {
     // Primary output is at position zero.
-    return mOutputs[ 0 ]->getPhysicalOutput( aPeriod );
+    return isOperating( aPeriod ) ? mOutputs[ 0 ]->getPhysicalOutput( aPeriod ) : 0.0;
 }
 
 /*! \brief Return Technology input cost.
@@ -1413,14 +1324,10 @@ void Technology::calcCost( const string& aRegionName,
                            const string& aSectorName,
                            const int aPeriod )
 {
-    // If technology is not operating the cost is NaN.  The value
-    // should never be used; therefore, if the NaNs escape into the
-    // rest of the code, you know instantly that you have a problem.
-    if( !mProductionState[ aPeriod ]->isOperating() )
-    {
-        assert( !util::isValidNumber( mCosts[ aPeriod ] ) );
-    }
-    else {
+    // A Technology can only calculate costs if it is operating
+    // Note that attempted to retrieve a cost when the technology is not
+    // operating will cause an abort.
+    if( mProductionState[ aPeriod ]->isOperating() ) {
         // Note we now allow costs in any sector to be <= 0.  If,
         // however, you are using the relative cost logit, costs will be
         // clamped on the low end for market share purposes (not for
@@ -1536,33 +1443,6 @@ const AGHG* Technology::getGHGPointer( const string& aGHGName ) const {
         }
     }
     return 0;
-}
-
-//! return value for ghg
-double Technology::getEmissionsByGas( const string& aGasName,
-                                      const int aPeriod ) const
-{
-    for( unsigned int i = 0; i < mGHG.size(); ++i ) {
-        if( mGHG[ i ]->getName() == aGasName ) {
-            return mGHG[ i ]->getEmission( aPeriod );
-        }
-    }
-    return 0;
-}
-
-/*!
- * \brief Update the subsectors input fuel map with information from the technology.
- * \param aPeriod Model period.
- * \return Mapping of input name to fuel consumption.
- */
-const map<string, double> Technology::getFuelMap( const int aPeriod ) const
-{
-    // Loop over the inputs and record their fuel usage.
-    map<string, double> inputMap;
-    for( unsigned int i = 0; i < mInputs.size(); ++i ) {
-        inputMap[ mInputs[ i ]->getName() ] = mInputs[ i ]->getPhysicalDemand( aPeriod );
-    }
-    return inputMap;
 }
 
 /*! \brief Test to see if calibration worked for this Technology.
@@ -1889,4 +1769,30 @@ int Technology::calcDefaultLifetime() const {
     return nextTechPeriod < modeltime->getmaxper()
         ? modeltime->getper_to_yr( nextTechPeriod ) - mYear
         : modeltime->gettimestep( modeltime->getmaxper() - 1 );
+}
+
+/*!
+ * \brief Initialize any TechVintageVector in any object that may be contained
+ *        in this class.
+ * \details We must convert this tech year to the corresponding model period to
+ *          calculate the start period to use.  We then need to figure out how
+ *          many model periods will elapse before we reach the lifetime end of
+ *          this technology.  With that we have enough information to initialize
+ *          the TechVintageVectors.
+ */
+void Technology::initTechVintageVector() {
+    const Modeltime* modeltime = scenario->getModeltime();
+    int numPeriodsActive = 0;
+    int startPer = modeltime->getyr_to_per( getYear() );
+    int currPer = startPer;
+    for( int year = getYear(); currPer < modeltime->getmaxper() && year < (getYear() + mLifetimeYears ); ) {
+        ++numPeriodsActive;
+        ++currPer;
+        if( currPer < modeltime->getmaxper() ) {
+            year = modeltime->getper_to_yr( currPer );
+        }
+    }
+    
+    InitializeTechVectorHelper helper( startPer, numPeriodsActive );
+    helper.initializeTechVintageVector( this );
 }

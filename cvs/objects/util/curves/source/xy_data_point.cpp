@@ -115,11 +115,11 @@ void XYDataPoint::print( ostream& out ) const {
 }
 
 //! Print the data point to an XML stream.
-void XYDataPoint::toInputXML( ostream& out, Tabs* tabs ) const {
-    XMLWriteOpeningTag( DataPoint::getXMLNameStatic(), out, tabs, "", 0, getXMLName() );
-    XMLWriteElement( x, "x", out, tabs );
-    XMLWriteElement( y, "y", out, tabs );
-    XMLWriteClosingTag( DataPoint::getXMLNameStatic(), out, tabs );
+void XYDataPoint::outputAsXML( ostream& aOut, Tabs* aTabs ) const {
+    XMLWriteOpeningTag( DataPoint::getXMLNameStatic(), aOut, aTabs, "", 0, getXMLName() );
+    XMLWriteElement( x, "x", aOut, aTabs );
+    XMLWriteElement( y, "y", aOut, aTabs );
+    XMLWriteClosingTag( DataPoint::getXMLNameStatic(), aOut, aTabs );
 }
 
 //! Parse the XYDataPoint from an XML DOM tree.

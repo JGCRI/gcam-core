@@ -166,44 +166,6 @@ bool LandNode::XMLDerivedClassParse( const std::string& aNodeName,
     return false;
 }
 
-void LandNode::toInputXML( ostream& out, Tabs* tabs ) const {
-    XMLWriteOpeningTag ( getXMLName(), out, tabs, mName );
-
-    const Modeltime* modeltime = scenario->getModeltime();
-    for( int period = 0; period < modeltime->getmaxper(); ++period ) {
-        if( mGhostUnormalizedShare[ period ].isInited() ) {
-            const int year = modeltime->getper_to_yr( period );
-            XMLWriteElement( mGhostUnormalizedShare[ period ], "ghost-unnormalized-share", out, tabs, year );
-        }
-    }
-    XMLWriteElementCheckDefault( mIsGhostShareRelativeToDominantCrop, "is-ghost-share-relative", out, tabs, false );
-    XMLWriteElement( mUnManagedLandValue, "unManagedLandValue", out, tabs );  
-
-    if( mLandUseHistory ){
-        mLandUseHistory->toInputXML( out, tabs );
-    }
-    
-    if( mCarbonCalc ) {
-        mCarbonCalc->toInputXML( out, tabs );
-    }
-
-    if( mChoiceFn ) {
-        mChoiceFn->toInputXML( out, tabs );
-    }
-    
-    // write out for mChildren
-    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        mChildren[i]->toInputXML( out, tabs );
-    }
-
-    toInputXMLDerived( out, tabs );
-    XMLWriteClosingTag( getXMLName(), out, tabs );
-}
-
-void LandNode::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
-    // Allow derived classes to override.
-}
-
 void LandNode::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {
     XMLWriteElement( mUnManagedLandValue, "unManagedLandValue", out, tabs );
 
@@ -274,6 +236,10 @@ void LandNode::initCalc( const string& aRegionName, const int aPeriod )
     // Call initCalc on any children
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
         mChildren[ i ]->initCalc( aRegionName, aPeriod );
+    }
+    
+    if( mCarbonCalc ) {
+        mCarbonCalc->initCalc( aPeriod );
     }
 }
 
@@ -520,7 +486,7 @@ void LandNode::calcLUCEmissions( const string& aRegionName,
                                  const bool aStoreFullEmiss )
 {
     if( mCarbonCalc ) {
-        mCarbonCalc->calc( aPeriod, aEndYear, aStoreFullEmiss );
+        mCarbonCalc->calc( aPeriod, aEndYear, aStoreFullEmiss ? ICarbonCalc::eStoreResults : ICarbonCalc::eReturnTotal );
     }
     
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {

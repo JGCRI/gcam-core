@@ -70,7 +70,7 @@ module_aglu_L242.ssp34_pasture <- function(command, ...) {
 
     # Model base period land cover, unmanaged land in the second nest
     L242.LC_bm2_R_Unmgd2_Yh_GLU.mlt %>%
-      filter(year %in% BASE_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       select(region, LandAllocatorRoot, LandNode1, LandNode2, UnmanagedLandLeaf, year, allocation) ->
       L242.LN2_UnmgdAllocation_ALL
 
@@ -92,7 +92,7 @@ module_aglu_L242.ssp34_pasture <- function(command, ...) {
 
     # Model base period land cover, managed land in the second nest
     L242.LC_bm2_R_Mgd2_Yh_GLU.mlt %>%
-      filter(year %in% BASE_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       select(region, LandAllocatorRoot, LandNode1, LandNode2, LandLeaf, year, allocation) ->
       L242.LN2_MgdAllocation_ALL
 

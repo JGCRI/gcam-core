@@ -48,7 +48,8 @@
 #include <vector>
 #include <map>
 #include <xercesc/dom/DOMNode.hpp>
-#include "util/base/include/iround_trippable.h"
+
+class Tabs;
 
 /*! 
 * \ingroup Objects
@@ -57,7 +58,7 @@
 * \author Sonny Kim
 */
 
-class MoreSectorInfo: public IRoundTrippable
+class MoreSectorInfo
 {
 public:
     enum MoreSectorInfoType {
@@ -79,7 +80,6 @@ public:
 	MoreSectorInfo();
     virtual ~MoreSectorInfo();
 	void XMLParse( const xercesc::DOMNode* node );
-	void toInputXML( std::ostream& out, Tabs* tabs ) const;
 	void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
 	static const std::string& getXMLNameStatic();
 	void reset();

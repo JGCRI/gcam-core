@@ -145,7 +145,7 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
              scenario, year, emfact, region_grouping)
 
     # Create list of countries with strong regulation based on elec_coal SO2 emissions factor
-    coal_so2 <- tibble(GCAM_region_ID = seq(1, 32)) %>%
+    coal_so2 <- tibble(GCAM_region_ID = A_regions$GCAM_region_ID) %>%
       left_join(
         emfact_scaled %>%
           filter(year == emissions.GAINS_YEARS[length(emissions.GAINS_YEARS)],

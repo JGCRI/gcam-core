@@ -122,7 +122,7 @@ public:
 
 	Value getFloorToSurfaceRatio( const int aPeriod ) const;
 
-	double getInternalGains( const int aPeriod ) const;
+    double getInternalGains( const std::string& aRegionName, const int aPeriod ) const;
 
 	SatiationDemandFunction* getSatiationDemandFunction() const;
 
@@ -191,9 +191,6 @@ public:
     virtual const std::string& getXMLReportingName() const;
 
     virtual void XMLParse( const xercesc::DOMNode* aNode );
-    
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const;
     
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
@@ -316,10 +313,7 @@ public:
                             NationalAccount* aNationalAccount,
                             Expenditure* aExpenditure,
                             const int aPeriod ) const { return 0; }
-
-    virtual void csvSGMOutputFile( std::ostream& aFile,
-        const int aPeriod ) const {}
-    
+   
     virtual void copyParamsInto( ProductionInput& aInput,
         const int aPeriod ) const {}
 
@@ -410,9 +404,6 @@ protected:
         //! temporary value used during demand calculations
         DEFINE_VARIABLE( SIMPLE, "subregional-income", mCurrentSubregionalIncome, Value ),
 
-        //! Stored trial internal gains trial supply for reporting
-        DEFINE_VARIABLE( ARRAY, "internal-gains-trial-supply", mInternalGainsTrialSupply, objects::PeriodVector<double> ),
-
         //! The sum product of energy service price necessary to drive demands.
         DEFINE_VARIABLE( ARRAY | STATE, "price", mPrice, objects::PeriodVector<Value> )
     )
@@ -422,10 +413,6 @@ protected:
 
     //! Cache the vector of children as IInput* which is needed for the mFunction
     std::vector<IInput*> mChildInputsCache;
-                          
-    //! Stored region name only necessary because there is no
-    //! post calc to store the trial internal gains supply
-    std::string mRegionName;
                        
     typedef std::vector<INestedInput*>::iterator NestedInputIterator;
     typedef std::vector<INestedInput*>::const_iterator CNestedInputIterator;

@@ -60,12 +60,12 @@
 #include "util/base/include/timer.h"
 #include "reporting/include/graph_printer.h"
 #include "reporting/include/land_allocator_printer.h"
-#include "containers/include/output_meta_data.h"
 #include "solution/solvers/include/solver_factory.h"
 #include "solution/solvers/include/bisection_nr_solver.h"
 #include "solution/util/include/solution_info_param_parser.h" 
 #include "containers/include/imodel_feedback_calc.h"
 #include "util/base/include/manage_state_variables.hpp"
+#include "util/base/include/supply_demand_curve_saver.h"
 
 #if GCAM_PARALLEL_ENABLED && PARALLEL_DEBUG
 #include <stdlib.h>
@@ -168,11 +168,11 @@ bool Scenario::XMLParse( const DOMNode* node ){
         else if ( nodeName == World::getXMLNameStatic() ){
             parseSingleNode( curr, mWorld, new World );
         }
-        else if( nodeName == OutputMetaData::getXMLNameStatic() ) {
-            parseSingleNode( curr, mOutputMetaData, new OutputMetaData );
-        }
         else if( nodeName == SolutionInfoParamParser::getXMLNameStatic() ) {
             parseSingleNode( curr, mSolutionInfoParamParser, new SolutionInfoParamParser );
+        }
+        else if ( nodeName == SupplyDemandCurveSaver::getXMLNameStatic()) {
+            parseContainerNode( curr, mModelFeedbacks, new SupplyDemandCurveSaver );
         }
         
         /*!
@@ -265,29 +265,6 @@ void Scenario::completeInit() {
     mIsValidPeriod.resize( mModeltime->getmaxper(), false );
 }
 
-//! Write object to xml output stream.
-void Scenario::toInputXML( ostream& out, Tabs* tabs ) const {
-    out.precision( 10 );
-    // write heading for XML input file
-    out << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" << endl;
-
-    out << "<" << getXMLNameStatic() << " name=\"" << mName << "\" date=\""
-        << util::XMLCreateDate( gGlobalTime ) << "\">" << endl;
-    
-    tabs->increaseIndent();
-
-    // write the xml for the class members.
-    mModeltime->toInputXML( out, tabs );
-    if( mOutputMetaData.get() ){
-        mOutputMetaData->toInputXML( out, tabs );
-    }
-
-    mWorld->toInputXML( out, tabs );
-    // finished writing xml for the class members.
-
-    XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
-}
-
 //! Return scenario name.
 const string& Scenario::getName() const {
     return mName;
@@ -310,7 +287,6 @@ bool Scenario::run( const int aSinglePeriod,
     
     // Open the debugging files.
     AutoOutputFile XMLDebugFile( "xmlDebugFileName", "debug.xml", aPrintDebugging );
-    AutoOutputFile SGMDebugFile( "ObjectSGMFileName", "ObjectSGMout.csv", aPrintDebugging );
     Tabs tabs;
     if( aPrintDebugging ) {
         // Write opening tags for debug XML
@@ -318,7 +294,6 @@ bool Scenario::run( const int aSinglePeriod,
         XMLDebugFile << "<" << getXMLNameStatic() << " name=\"" << mName << "\" date=\"" << dateString << "\">" << endl;
 
         tabs.increaseIndent();
-        XMLWriteElement( "Debugging output", "summary", *XMLDebugFile, &tabs );
     }
 
     Timer& fullScenarioTimer = TimerRegistry::getInstance().getTimer( TimerRegistry::FULLSCENARIO );
@@ -333,7 +308,7 @@ bool Scenario::run( const int aSinglePeriod,
     // time steps and operate model.
     if( aSinglePeriod == RUN_ALL_PERIODS ){
         for( int per = 0; per < mModeltime->getmaxper(); per++ ){
-            success &= calculatePeriod( per, *XMLDebugFile, *SGMDebugFile, &tabs, aPrintDebugging );
+            success &= calculatePeriod( per, *XMLDebugFile, &tabs, aPrintDebugging );
         }
     }
     // Check if the single period is invalid.
@@ -347,7 +322,7 @@ bool Scenario::run( const int aSinglePeriod,
         // Run all periods up to the single period which are invalid.
         for( int per = 0; per < aSinglePeriod; per++ ){
             if( !mIsValidPeriod[ per ] ){
-                success &= calculatePeriod( per, *XMLDebugFile, *SGMDebugFile, &tabs, aPrintDebugging );
+                success &= calculatePeriod( per, *XMLDebugFile, &tabs, aPrintDebugging );
             }
         }
         
@@ -358,7 +333,7 @@ bool Scenario::run( const int aSinglePeriod,
 
         // Now run the requested period. Results past this period will no longer
         // be valid. Do not attempt to use them!
-        success &= calculatePeriod( aSinglePeriod, *XMLDebugFile, *SGMDebugFile, &tabs, aPrintDebugging );
+        success &= calculatePeriod( aSinglePeriod, *XMLDebugFile, &tabs, aPrintDebugging );
     }
     
     // Print any unsolved periods.
@@ -400,14 +375,12 @@ bool Scenario::run( const int aSinglePeriod,
 /*! \brief Calculate a single period.
 * \param aPeriod Period to calculate.
 * \param aXMLDebugFile XML debugging file.
-* \param aSGMDebugFile SGM debugging file.
 * \param aTabs Tabs formatting object.
 * \param aPrintDebugging Whether to print debugging information.
 * \return Whether the period was calculated successfully.
 */
 bool Scenario::calculatePeriod( const int aPeriod,
                                 ostream& aXMLDebugFile,
-                                ostream& aSGMDebugFile,
                                 Tabs* aTabs,
                                 bool aPrintDebugging )
 {
@@ -434,10 +407,10 @@ bool Scenario::calculatePeriod( const int aPeriod,
     delete mManageStateVars;
     mManageStateVars = new ManageStateVariables( aPeriod );
     
-    // SGM Period 0 needs to clear out the supplies and demands put in by initCalc.
-    if( aPeriod == 0 ){
-        mMarketplace->nullSuppliesAndDemands( aPeriod );
-    }
+    // Be sure to clear out any supplies and demands in the marketplace before making our
+    // initial call to world.calc.  There may already be values in there if for instance
+    // they got set from a restart file.
+    mMarketplace->nullSuppliesAndDemands( aPeriod );
 
 #if GCAM_PARALLEL_ENABLED && PARALLEL_DEBUG
     mWorld->calc( aPeriod );       // get rid of transient bad data
@@ -498,19 +471,9 @@ bool Scenario::calculatePeriod( const int aPeriod,
     
     
     bool success = solve( aPeriod ); // solution uses Bisect and NR routine to clear markets
-    
-    delete mManageStateVars;
-    mManageStateVars = 0;
 
     mWorld->postCalc( aPeriod );
-    
-    // Output metadata is not required to exist.
-    const list<string>& primaryFuelList = mOutputMetaData.get() ? 
-                                          mOutputMetaData->getPrimaryFuelList() 
-                                          : list<string>();
-
-    mWorld->updateSummary( primaryFuelList, aPeriod ); // call to update summaries for reporting
-    
+        
     // Mark that the period is now valid.
     mIsValidPeriod[ aPeriod ] = true;
 
@@ -535,9 +498,12 @@ bool Scenario::calculatePeriod( const int aPeriod,
     
     // Write out the results for debugging.
     if( aPrintDebugging ){
-        writeDebuggingFiles( aXMLDebugFile, aSGMDebugFile, aTabs, aPeriod );
+        writeDebuggingFiles( aXMLDebugFile, aTabs, aPeriod );
     }
 
+    delete mManageStateVars;
+    mManageStateVars = 0;
+    
     return success;
 }
 
@@ -583,18 +549,15 @@ void Scenario::logRunEnding() const {
 
 /*! \brief Write to the debugging files for a given period.
 * \param aXMLDebugFile XML debugging file.
-* \param aSGMDebugFile SGM debugging file.
 * \param aTabs Tabs formatting object.
 * \param aPeriod Model period.
 */
 void Scenario::writeDebuggingFiles( ostream& aXMLDebugFile,
-                                    ostream& aSGMDebugFile,
                                     Tabs* aTabs,
                                     const int aPeriod ) const
 {
     mModeltime->toDebugXML( aPeriod, aXMLDebugFile, aTabs );
     mWorld->toDebugXML( aPeriod, aXMLDebugFile, aTabs );
-    csvSGMOutputFile( aSGMDebugFile, aPeriod );
 }
 
 /*! \brief Update a visitor for the Scenario.
@@ -603,10 +566,6 @@ void Scenario::writeDebuggingFiles( ostream& aXMLDebugFile,
 */
 void Scenario::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->startVisitScenario( this, aPeriod );
-    // Update the meta-data.
-    if( mOutputMetaData.get() ){
-        mOutputMetaData->accept( aVisitor, aPeriod );
-    }
     // Update the world.
     if( mWorld ){
         mWorld->accept( aVisitor, aPeriod );
@@ -747,12 +706,6 @@ bool Scenario::solve( const int period ){
 //! Output Scenario members to a CSV file.
 // I don't really like this function being hard-coded to an output file, but its very hard-coded.
 void Scenario::writeOutputFiles() const {
-    // main output file for sgm, general results.
-    {
-        AutoOutputFile sgmGenFile( "ObjectSGMGenFileName", "ObjectSGMGen.csv" );
-        // SGM csv general output, writes for all periods.
-        csvSGMGenFile( *sgmGenFile );
-    }
     
     // Print out dependency graphs.
     const Configuration* conf = Configuration::getInstance();
@@ -765,66 +718,6 @@ void Scenario::writeOutputFiles() const {
             printLandAllocatorGraph( period, printValues );
         }
     }
-
-    // Open the output file.
-    // note that we can not use an AutoOutputFile here since the ofstream is a hardcoded
-    // global variable
-    if( conf->shouldWriteFile( "outFileName" ) ) {
-        string outFileName = conf->getFile( "outFileName", "outfile.csv" );
-        if( conf->shouldAppendScnToFile( "outFileName" ) ) {
-            outFileName = util::appendScenarioToFileName( outFileName );
-        }
-        outFile.open( outFileName.c_str(), ios::out );
-        util::checkIsOpen( outFile, outFileName ); 
-
-        // Write results to the output file.
-        // Minicam style output.
-        outFile << "Region,Sector,Subsector,Technology,Variable,Units,";
-
-        for ( int t = 0; t < mModeltime->getmaxper(); t++ ) {
-            outFile << mModeltime->getper_to_yr( t ) <<",";
-        }
-        outFile << "Date,Notes" << endl;
-
-        // Write global market info to file
-        mMarketplace->csvOutputFile( "global" );
-
-        // Write world and regional info
-        mWorld->csvOutputFile();
-    }
-}
-
-//! Output Scenario members to the database.
-void Scenario::dbOutput() const {
-    // Output metadata is not required to exist.
-    const list<string>& primaryFuelList = mOutputMetaData.get() ? 
-                                          mOutputMetaData->getPrimaryFuelList() 
-                                          : list<string>();
-    mWorld->dbOutput( primaryFuelList );
-    mMarketplace->dbOutput();
-}
-
-/*! \brief Write SGM results to csv text file.
-* \param aSGMDebugFile SGM debugging file.
-* \param aPeriod Model period for which to print debugging information.
-*/
-void Scenario::csvSGMOutputFile( ostream& aSGMDebugFile, const int aPeriod ) const {
-    aSGMDebugFile <<  "**********************" << endl;
-    aSGMDebugFile <<  "RESULTS FOR PERIOD:  " << aPeriod << endl;
-    aSGMDebugFile <<  "**********************" << endl << endl;
-    mMarketplace->csvSGMOutputFile( aSGMDebugFile, aPeriod );
-    mWorld->csvSGMOutputFile( aSGMDebugFile, aPeriod );
-}
-
-/*! \brief Write SGM general results for all periods to csv text file.
-*/
-void Scenario::csvSGMGenFile( ostream& aFile ) const {
-    // Write out the file header.
-    aFile << "SGM General Output " << endl;
-    aFile << "Date & Time: ";
-    util::printTime( gGlobalTime, aFile );
-    aFile << endl;
-    mWorld->csvSGMGenFile( aFile );
 }
 
 /*!

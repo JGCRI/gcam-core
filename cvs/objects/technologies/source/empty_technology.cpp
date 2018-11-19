@@ -84,13 +84,6 @@ void EmptyTechnology::completeInit( const string& aRegionName,
 {
 }
 
-void EmptyTechnology::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    assert( false );
-}
-
-void EmptyTechnology::toInputXMLForRestart( ostream& aOut, Tabs* aTabs ) const {
-}
-
 void EmptyTechnology::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
 }
 
@@ -137,14 +130,6 @@ void EmptyTechnology::production( const string& aRegionName,
                             const GDP* aGDP,
                             const int aPeriod )
 {
-}
-
-const map<string, double> EmptyTechnology::getEmissions( const string& aGoodName,
-                                                   const int aPeriod ) const
-{
-    const map<string, double> emissions;
-    
-    return emissions;
 }
 
 const string& EmptyTechnology::getName() const
@@ -259,19 +244,6 @@ void EmptyTechnology::copyGHGParameters( const AGHG* prevGHG ) {
 
 const AGHG* EmptyTechnology::getGHGPointer( const string& aGHGName ) const {
     return 0;
-}
-
-double EmptyTechnology::getEmissionsByGas( const string& aGasName,
-                                     const int aPeriod ) const
-{
-    return 0;
-}
-
-const map<string, double> EmptyTechnology::getFuelMap( const int aPeriod ) const
-{
-    const map<string, double> inputMap;
-
-    return inputMap;
 }
 
 bool EmptyTechnology::isAllCalibrated( const int aPeriod,

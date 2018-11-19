@@ -214,36 +214,6 @@ void EnergyInput::XMLParse( const xercesc::DOMNode* node ) {
     }
 }
 
-void EnergyInput::toInputXML( ostream& aOut,
-                               Tabs* aTabs ) const
-{
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
-    // Write out the coefficient if there is one.
-    if( mCoefficient ){
-        mCoefficient->toInputXML( aOut, aTabs );
-    }
-    if( hasTypeFlag(IInput::RESOURCE) ) {
-        XMLWriteElement( getFlagName(IInput::RESOURCE), "flag", aOut, aTabs );
-    }
-    else if( hasTypeFlag(IInput::BACKUP_ENERGY) ) {
-        XMLWriteElement( getFlagName(IInput::BACKUP_ENERGY), "flag", aOut, aTabs );
-    }
-    XMLWriteElementCheckDefault( mIncomeElasticity, "income-elasticity", aOut,
-                                 aTabs, Value( 0 ) );
-    XMLWriteElementCheckDefault( mCalibrationInput, "calibrated-value", aOut,
-                                 aTabs, Value( 0 ) );
-    XMLWriteElementCheckDefault( mTechChange, "tech-change", aOut,
-                                 aTabs, Value( 0 ) );
-    XMLWriteElementCheckDefault( mPriceUnitConversionFactor, "price-unit-conversion", aOut,
-                                 aTabs, Value( 1 ) );
-    XMLWriteElement( mMarketName, "market-name", aOut, aTabs );
-    if( !mKeywordMap.empty() ) {
-        XMLWriteElementWithAttributes( "", "keyword", aOut, aTabs, mKeywordMap );
-    }
-
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 void EnergyInput::toDebugXML( const int aPeriod,
                                ostream& aOut,
                                Tabs* aTabs ) const
@@ -298,8 +268,7 @@ void EnergyInput::completeInit( const string& aRegionName,
     // TODO: This needs a default here.
 
     // Set the coeffients to the read-in value.
-    mAdjustedCoefficients.assign( mAdjustedCoefficients.size(),
-                                  currCoef );
+    fill( mAdjustedCoefficients.begin(), mAdjustedCoefficients.end(), currCoef );
     initializeTypeFlags();
 }
 

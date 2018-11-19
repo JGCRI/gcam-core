@@ -228,24 +228,6 @@ void BaseTechnology::XMLParse( const DOMNode* node ) {
     }
 }
 
-//! Output to XML data
-void BaseTechnology::toInputXML( ostream& out, Tabs* tabs ) const {
-
-    // write the beginning tag.
-    XMLWriteOpeningTag ( getXMLName(), out, tabs, name, year, "");
-
-    XMLWriteElement( mShareWeight, "share-weight", out, tabs );
-    mNestedInputRoot->toInputXML( out, tabs );
-    
-    for( CGHGIterator ghg = mGhgs.begin(); ghg != mGhgs.end(); ++ghg ){
-        (*ghg)->toInputXML( out, tabs );
-    }
-    toInputXMLDerived( out, tabs );
-
-    // write the closing tag.
-    XMLWriteClosingTag( getXMLName(), out, tabs );
-}
-
 //! Output debug info to XML data
 void BaseTechnology::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     // write the beginning tag.
@@ -428,14 +410,6 @@ void BaseTechnology::updateMarketplace( const string& sectorName, const string& 
     }
     //marketplace->addToSupply( sectorName, regionName, totalDemand, period );
     mLeafInputs.clear();
-}
-
-void BaseTechnology::csvSGMOutputFile( ostream& aFile, const int period ) const {
-    aFile <<  "Commodity" << ',' << "Consumption" << ',' << "Price Paid" << endl;
-    for( CInputIterator curr = mLeafInputs.begin(); curr != mLeafInputs.end(); ++curr ) {
-        (*curr)->csvSGMOutputFile( aFile, period );
-    }
-    aFile << "Total Consumption" << ',' << mOutputs[ 0 ]->getCurrencyOutput( period ) << endl << endl;
 }
 
 void BaseTechnology::accept( IVisitor* aVisitor, const int aPeriod ) const

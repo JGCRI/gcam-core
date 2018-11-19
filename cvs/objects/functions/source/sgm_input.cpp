@@ -248,22 +248,6 @@ bool SGMInput::isSameType( const string& aType ) const {
     return aType == getXMLName();
 }
 
-//! Output to XML data
-void SGMInput::toInputXML( ostream& out, Tabs* tabs ) const {
-    // write the beginning tag.
-    XMLWriteOpeningTag ( getXMLName(), out, tabs, mName );
-
-    XMLWriteElement( mCoefficient[ 0 ], "coefficient", out, tabs );
-    XMLWriteElement( mPhysicalDemand[ 0 ], "demandCurrency", out, tabs );
-    XMLWriteElement( mPriceAdjustFactor, "priceAdjustFactor", out, tabs );
-    XMLWriteElement( mSalesTaxRate, "sales-tax-rate", out, tabs );
-
-    toInputXMLDerived( out, tabs );
-
-    // write the closing tag.
-    XMLWriteClosingTag( getXMLName(), out, tabs );
-}
-
 //! Output debug info to XML
 void SGMInput::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     // write the beginning tag.
@@ -669,19 +653,6 @@ bool SGMInput::isSecondaryEnergyGood( const string& aRegionName ) const
     const IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( mName, aRegionName,
                                                                          0, false );
     return marketInfo && marketInfo->getBoolean( "IsSecondaryEnergyGood", false );
-}
-
-/*! \brief For outputing SGM data to a flat csv File
- * 
- * \author Pralit Patel
- * \param period The period which we are outputing for
- */
-void SGMInput::csvSGMOutputFile( ostream& aFile, const int period ) const {
-    aFile << mName << ',';
-    aFile.precision(0);
-    aFile << mPhysicalDemand[ period ] << ',';
-    aFile.precision(3);
-    aFile << mPricePaid[ period ] << endl;
 }
 
 void SGMInput::doInterpolations( const int aYear, const int aPerviousYear,

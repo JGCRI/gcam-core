@@ -133,14 +133,6 @@ bool CSPBackupCalculator::XMLParse( const xercesc::DOMNode* node ){
 }
 
 // Documentation is inherited.
-void CSPBackupCalculator::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
-    XMLWriteElement( mMaxBackupFraction, "max-backup-fraction", aOut, aTabs );
-    XMLWriteElementCheckDefault( mBackupExponent, "backup-exponent", aOut, aTabs, 4.0 );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
-// Documentation is inherited.
 void CSPBackupCalculator::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
     XMLWriteElement( mMaxBackupFraction, "max-backup-fraction", aOut, aTabs );

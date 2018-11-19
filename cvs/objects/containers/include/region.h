@@ -55,8 +55,6 @@
 
 #include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
-#include "util/base/include/iround_trippable.h"
-#include "util/base/include/summary.h"
 #include "util/base/include/data_definition_util.h"
 
 // Forward declarations.
@@ -67,6 +65,7 @@ class PolicyPortfolioStandard;
 class Curve;
 class AResource;
 class IInfo;
+class Tabs;
 
 // Need to forward declare the subclasses as well.
 class RegionMiniCAM;
@@ -79,14 +78,13 @@ class RegionCGE;
 * \author Sonny Kim
 */
 
-class Region: public INamed, public IVisitable, public IRoundTrippable, protected boost::noncopyable
+class Region: public INamed, public IVisitable, protected boost::noncopyable
 {
     friend class XMLDBOutputter;
 public:
     Region();
     virtual ~Region();
     void XMLParse( const xercesc::DOMNode* node );
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
     virtual void completeInit();
@@ -96,24 +94,14 @@ public:
     
     virtual void postCalc( const int aPeriod );
 
-    virtual void csvOutputFile() const {};
-    virtual void dbOutput( const std::list<std::string>& aPrimaryFuelList ) const {};
-    virtual void initializeAgMarketPrices( const std::vector<double>& pricesIn ) {};
-    virtual void updateSummary( const std::list<std::string>& aPrimaryFuelList, const int period ) {};
-    virtual const Summary& getSummary( const int period ) const { static const Summary nullSummary; return nullSummary; };
-
     void setTax( const GHGPolicy* aTax );
     const Curve* getEmissionsQuantityCurve( const std::string& ghgName ) const;
     const Curve* getEmissionsPriceCurve( const std::string& ghgName ) const;
 
     virtual bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const { return true; };
-    virtual void updateAllOutputContainers( const int period ) = 0;
     virtual void updateMarketplace( const int period ) {};
 
-    virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const {};
-
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
-    virtual void csvSGMGenFile( std::ostream& aFile ) const {};
 protected:
     
     DEFINE_DATA(
@@ -145,7 +133,6 @@ protected:
     )
 
     virtual const std::string& getXMLName() const = 0;
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const = 0;
 private:

@@ -112,16 +112,6 @@ void InvestmentGrowthCalculator::toDebugXML( const int aPeriod, ostream& aOut, T
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-//! Write out input XML information.
-void InvestmentGrowthCalculator::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
-    XMLWriteElementCheckDefault( mAggregateInvestmentFraction, "AggregateInvestmentFraction", aOut, aTabs );
-    XMLWriteElementCheckDefault( mInvestmentAcceleratorScalar, "InvestmentAcceleratorScalar", aOut, aTabs );
-    XMLWriteElementCheckDefault( mEconomicGrowthExp, "EconomicGrowthExp", aOut, aTabs, 1.0 );
-    XMLWriteElementCheckDefault( mMarginalValueDollar, "MarginalValueDollar", aOut, aTabs, 1.0 );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 /*! \brief Calculate an overall scalar used to grow investment from the previous
 *          aPeriod.
 * \details Calculates a scalar to grow investment which is based on several

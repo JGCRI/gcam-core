@@ -213,11 +213,6 @@ protected :
       Tabs*         tabs ) const;
 
    // Documentation is inherited
-   virtual void toInputXMLDerived(
-      std::ostream& out,
-      Tabs*         tabs ) const;
-
-   // Documentation is inherited
    virtual bool XMLDerivedClassParse(
       const std::string&      nodeName,
       const xercesc::DOMNode* curr );

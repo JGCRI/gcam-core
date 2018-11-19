@@ -91,9 +91,6 @@ public:
 
     virtual void XMLParse( const xercesc::DOMNode* aNode );
 
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const;
-
     virtual void toDebugXML( const int period,
                              std::ostream &out,
                              Tabs* tabs ) const;
@@ -117,10 +114,6 @@ public:
                                   const int aPeriod ) const;
 
     virtual double getPrice( const int aPeriod ) const;
-    
-    virtual void dbOutput( const std::string& aRegionName );
-
-    virtual void csvOutputFile( const std::string& aRegionName ); 
 
     virtual void accept( IVisitor* aVisitor,
                          const int aPeriod ) const;

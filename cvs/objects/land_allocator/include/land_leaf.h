@@ -138,9 +138,6 @@ public:
 
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
 
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const;
-
     virtual void accept( IVisitor* aVisitor,
                          const int aPeriod ) const;
 
@@ -150,6 +147,8 @@ public:
     virtual ICarbonCalc* getCarbonContentCalc() const;
         
 	virtual bool isUnmanagedLandLeaf( )  const;
+    
+    bool hasLandAllocationCalculated( const int aPeriod ) const;
 
 protected:
     

@@ -93,7 +93,6 @@ public:
     virtual void XMLParse( const xercesc::DOMNode* node ) = 0; 
     virtual void toDebugXML( const int period, std::ostream& out,
                              Tabs* tabs ) const = 0;
-    virtual void toInputXML( std::ostream& out, Tabs* tabs ) const = 0;
     
     /*!
      * \brief Calculate a total investment level for the sector and distribute

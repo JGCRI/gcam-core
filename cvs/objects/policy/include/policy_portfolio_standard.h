@@ -50,7 +50,6 @@
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/inamed.h"
-#include "util/base/include/iround_trippable.h"
 #include "util/base/include/time_vector.h"
 #include "util/base/include/data_definition_util.h"
 
@@ -59,7 +58,7 @@
 * \brief Class which defines a portfolio standard policy. 
 * \author Sonny Kim
 */
-class PolicyPortfolioStandard: public INamed, public IRoundTrippable, private boost::noncopyable {
+class PolicyPortfolioStandard: public INamed, private boost::noncopyable {
 public:
     PolicyPortfolioStandard();
 
@@ -67,7 +66,6 @@ public:
     const std::string& getXMLName() const;
     static const std::string& getXMLNameStatic();
     void XMLParse( const xercesc::DOMNode* node );
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     void completeInit( const std::string& aRegionName );
     void initCalc( const std::string& aRegionName, const int aPeriod );

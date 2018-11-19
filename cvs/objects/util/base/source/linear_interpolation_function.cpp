@@ -106,10 +106,6 @@ bool LinearInterpolationFunction::XMLParse( const DOMNode* aNode ) {
     return true;
 }
 
-void LinearInterpolationFunction::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteElement("", IInterpolationFunction::getXMLNameStatic(), aOut, aTabs, 0, getXMLAttrNameStatic() );
-}
-
 double LinearInterpolationFunction::interpolate( const DataPoint* aLeftPoint, const DataPoint* aRightPoint,
                                                  const double aXValue ) const
 {

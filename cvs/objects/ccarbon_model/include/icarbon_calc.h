@@ -49,7 +49,6 @@
 
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iparsable.h"
-#include "util/base/include/iround_trippable.h"
 #include "ccarbon_model/include/carbon_model_utils.h"
 #include "util/base/include/data_definition_util.h"
 
@@ -80,11 +79,56 @@ class NoEmissCarbonCalc;
  *          by the land leaf.
  */
 class ICarbonCalc: public IVisitable,
-                   public IRoundTrippable,
                    public IParsable ,
                    private boost::noncopyable
 {
 public:
+    
+    /*!
+     * \brief An enum containing the possible "modes" in which to calculate this
+     *        carbon calc, i.e. calling ICarbonCalc::calc.
+     * \details Given that these calculations can be relative expensive to calculate
+     *          and results in one period directly affecting many future years we give
+     *          the users the ability to call "calc" in the following modes:
+     *
+     *            - CarbonCalcMode::eStoreResults Save all results for reporting.
+     *              This mode is typically used in postCalc to ensure LUC emissions are
+     *              saved and available for calculating emissions in the next time periods,
+     *              feeding into the climate model, reporting, etc.
+     *            - CarbonCalcMode::eReturnTotal Avoid saving any results and intead
+     *              simply return the total emissions.  This mode is typically used during
+     *              World.calc and allows us to do the minimum computations in case we are
+     *              intending to add them to a CO2 constraint policy for instance, which is
+     *              the only time the value would be required during World.calc.
+     *            - CarbonCalcMode::eReverseCalc Run the calculation just to back
+     *              out the emissions, etc from the currently saved results.  This is called
+     *              during initCalc which allows us to re-run any model period, such as during
+     *              target finder.
+     */
+    enum CarbonCalcMode {
+        /*!
+         * \brief Run the calculation and save all results.
+         */
+        eStoreResults,
+        
+        /*!
+         * \brief Run the calculation but do not store any results.
+         * \details Flag used as an optimization to avoid storing the
+         *          full LUC emissins during World.calc and instead only
+         *          return the total emissions in the given year.
+         */
+        eReturnTotal,
+        
+        /*!
+         * \brief Run the calculation with the intent of backing out all the
+         *        emissions, etc for the given year from all of the future saved
+         *        results.
+         * \details Such a mode is required to properly calculate emissions if we
+         *          need to re-run some model period, such as for target finder.
+         */
+        eReverseCalc
+    };
+    
     //! Constructor
     inline ICarbonCalc();
 
@@ -96,9 +140,6 @@ public:
 
     // Documentation is inherited.
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const = 0;
-    
-    // Documentation is inherited.
-    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const = 0;
 
     //! Get element name used for XML parsing.
     virtual const std::string& getXMLName() const = 0;
@@ -133,11 +174,11 @@ public:
      *          calculated to the given end year.
      * \param aPeriod The current model period that is being calculated.
      * \param aEndYear The year to calculate future emissions to.
-     * \param aStoreFullEmiss Flag used as an optimization to avoid storing the
-     *                        full LUC emissins during World.calc.
+     * \param aCalcMode The "mode" in which to run the calculation.
      * \return The total LUC emissions in aEndYear.
+     * \sa CarbonCalcMode
      */
-    virtual double calc( const int aPeriod, const int aEndYear, const bool aStoreFullEmiss ) = 0;
+    virtual double calc( const int aPeriod, const int aEndYear, const CarbonCalcMode aCalcMode ) = 0;
 
     /*!
      * \brief Get the net land use change emissions for a given year.

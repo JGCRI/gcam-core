@@ -71,14 +71,6 @@ bool Female::XMLDerivedClassParse( const string &nodeName, const DOMNode* curr )
     return true;
 }
 
-//! For derived classes to output XML data
-void Female::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-    XMLWriteElementCheckDefault( mFertilityRate, "fertilityRate", out, tabs );
-    XMLWriteElementCheckDefault( mMaleBirthFrac, "maleBirthFrac", out, tabs );
-    XMLWriteElementCheckDefault( mFemaleBirth, "femaleBirth", out, tabs );
-    XMLWriteElementCheckDefault( mMaleBirth, "maleBirth", out, tabs );
-}
-
 //! Output debug info for derived class
 void Female::toDebugXMLDerived( ostream& out, Tabs* tabs ) const {
     XMLWriteElement( mFertilityRate, "fertilityRate", out, tabs );

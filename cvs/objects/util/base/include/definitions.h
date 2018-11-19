@@ -56,15 +56,6 @@
 
 // Configuration constants.
 
-#define __ACCESS_DB_OVERRIDE__ 0
-
-//! A flag which turns on or off compilation of database code. Database
-// cannot be compiled on VC8.
-#if( defined(_MSC_VER) && _MSC_VER < 1400 && !__ACCESS_DB_OVERRIDE__)
-#define __HAVE_DB__ 1
-#else
-#define __HAVE_DB__ 0
-#endif
 
 //! A flag which turns on or off the compilation of the XML database code.
 #ifndef __HAVE_JAVA__

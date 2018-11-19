@@ -48,20 +48,20 @@
 
 #include <xercesc/dom/DOMNode.hpp>
 #include <string>
-#include "util/base/include/iround_trippable.h"
 #include "util/base/include/ivisitable.h"
+
+class Tabs;
 
 /*! 
 * \ingroup Objects
 * \brief The base class for Male and Female objects. Both have populations and survival rates.
 */
 
-class Gender: public IRoundTrippable, IVisitable {
+class Gender: public IVisitable {
     friend class XMLDBOutputter; // For getXMLName()
 public:
 	Gender();
 	void XMLParse( const xercesc::DOMNode* node );
-	void toInputXML( std::ostream& out, Tabs* tabs ) const;
 	void toDebugXML( std::ostream& out, Tabs* tabs ) const;
 	static const std::string& getXMLNameStatic();
 	double calcSurvivingPop();
@@ -70,7 +70,6 @@ public:
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const = 0;
 protected:
     virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
     virtual const std::string& getXMLName() const = 0;
     static const std::string XML_NAME; //!< node name for toXML methods

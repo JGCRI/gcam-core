@@ -50,9 +50,9 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <memory>
 #include "util/base/include/ivisitable.h"
-#include "util/base/include/iround_trippable.h"
 
 class MoreSectorInfo;
+class Tabs;
 
 /*! 
 * \ingroup Objects
@@ -66,15 +66,13 @@ class MoreSectorInfo;
 * \author Pralit Patel, Sonny Kim
 */
 
-class FactorSupply: public IVisitable, public IRoundTrippable
+class FactorSupply: public IVisitable
 {
-    friend class SGMGenTable;
     friend class XMLDBOutputter;
 public:
     FactorSupply();
     const std::string& getName() const;
     bool XMLParse( const xercesc::DOMNode* node );
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
 
     static const std::string& getXMLNameStatic();
@@ -83,7 +81,6 @@ public:
 
     double getSupply( const std::string& aRegionName, const int period ) const;
     void calcPricePaid( const std::string& aRegionName, const int period );
-    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     void accept( IVisitor* aVisitor, const int aPeriod ) const;
 
 protected:
