@@ -236,10 +236,9 @@ void LandLeaf::completeInit( const string& aRegionName,
     
     // Add dependency for to expansion constraint policy if it is being used.
     if( mLandConstraintPolicy != "" ) {
-        cout << "Add dependency for " << mLandConstraintPolicy << " in leaf " << getName() << endl;
-        scenario->getMarketplace()->getDependencyFinder()->addDependency( mLandConstraintPolicy,
+        scenario->getMarketplace()->getDependencyFinder()->addDependency( "land-allocator",
                                                                          aRegionName,
-                                                                         "land-allocator",
+                                                                         mLandConstraintPolicy,
                                                                          aRegionName );
     }
 }
