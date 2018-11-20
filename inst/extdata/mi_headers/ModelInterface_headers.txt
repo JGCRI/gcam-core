@@ -81,6 +81,8 @@ maxSubResource, world/+{name}region, region/+{name}renewresource, renewresource/
 
 GrdRenewRsrcMax, world/+{name}region, region/+{name}renewresource, renewresource/+{name}sub-renewable-resource, sub-renewable-resource/+{year;fillout=1}maxSubResource, sub-renewable-resource/+maxSubResource, scenario, scenario/world
 
+GrdRenewRsrcMaxNoFO, world/+{name}region, region/+{name}renewresource, renewresource/+{name}sub-renewable-resource, sub-renewable-resource/+{year}maxSubResource, sub-renewable-resource/+maxSubResource, scenario, scenario/world
+
 DepRsrcCurves, world/+{name}region, region/+{name}depresource, depresource/+{name}subresource, subresource/+{name}grade, grade/+available, grade/+extractioncost, scenario, scenario/world
 
 RenewRsrcCurves, world/+{name}region, region/+{name}renewresource, renewresource/+{name}sub-renewable-resource, sub-renewable-resource/+{name}grade, grade/+available, grade/+extractioncost, scenario, scenario/world
@@ -193,6 +195,8 @@ TechCoef, world/+{name}region, region/+{name}supplysector, supplysector/+{name}s
 TechEff, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}technology, technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+efficiency, minicam-energy-input/+market-name, scenario, scenario/world, period/{name=CO2}CO2
 
 TechCost, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}technology, technology/+{year}period, period/+{name}minicam-non-energy-input, minicam-non-energy-input/+input-cost, scenario, scenario/world, period/{name=CO2}CO2
+
+TechPmult, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}technology, technology/+{year}period, period/+pMultiplier, scenario, scenario/world
 
 TechCapital, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}technology, technology/+{year}period, period/+{name}input-capital, input-capital/+capital-overnight, input-capital/+fixed-charge-rate, input-capital/+capacity-factor, scenario, scenario/world, period/{name=CO2}CO2
 
