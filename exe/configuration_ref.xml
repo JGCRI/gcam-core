@@ -65,6 +65,9 @@
 		<Value name = "nonco2_aglu_prot">../input/gcamdata/xml/all_protected_unmgd_emissions.xml</Value>
 		
 		<Value name = "unlim_supply_water">../input/gcamdata/xml/unlimited_water_supply.xml</Value>
+		<Value name = "water_supply">../input/gcamdata/xml/water_supply_uncalibrated.xml</Value>
+		<!-- optional add on file for constrained groundwater with calibrated runoff... -->
+		<!--Value name = "water_supply">../input/gcamdata/xml/water_supply_constrained.xml</Value-->
 		<Value name = "water_mapping">../input/gcamdata/xml/water_mapping.xml</Value>
 		<Value name = "ag_water">../input/gcamdata/xml/ag_water_input_IRR_MGMT.xml</Value>
 		<Value name = "elec_water_coef">../input/gcamdata/xml/electricity_water_coefs.xml</Value>
