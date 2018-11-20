@@ -66,7 +66,8 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
 
     tibble(group.name = "Resources", tag1 = "resource",
            tag2 = "depresource", tag3 = "renewresource",
-           tag4 = "unlimited.resource") ->
+           tag4 = "unlimited.resource") %>%
+      select(LEVEL2_DATA_NAMES[["EQUIV_TABLE"]]) ->
       L201.NodeEquiv
 
     # create full set of region/basin combinations
@@ -83,7 +84,7 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
     L201.region_basin %>%
       arrange(region) %>%
       mutate(unlimited.resource = paste0("-", water_type)) %>%
-      select(region, unlimited.resource) ->
+      select(LEVEL2_DATA_NAMES[["DeleteUnlimitRsrc"]]) ->
       L201.DeleteUnlimitRsrc
 
     # create resource markets for water withdrawals
@@ -93,7 +94,7 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
              output.unit = water.WATER_UNITS_QUANTITY,
              price.unit = water.WATER_UNITS_PRICE) %>%
       rename(market = basin_id) %>%
-      select(region, resource, output.unit, price.unit, market) ->
+      select(LEVEL2_DATA_NAMES[["Rsrc"]]) ->
       L201.Rsrc
 
     # get first basins only for each region
@@ -109,8 +110,8 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
              year = MODEL_YEARS[1],
              price = water.DEFAULT_BASEYEAR_WATER_PRICE
              ) %>%
-      select(region, renewresource, year, price) %>%
-      arrange(region, renewresource) ->
+      arrange(region, renewresource) %>%
+      select(LEVEL2_DATA_NAMES[["RenewRsrcPrice"]]) ->
       L201.RsrcPrice
 
     # Read in annual water runoff supply
@@ -120,9 +121,12 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
              sub.renewable.resource = "runoff") %>%
       rename(year.fillout = year,
              maxSubResource = runoff_max) %>%
-      select(region, renewresource, sub.renewable.resource, year.fillout, maxSubResource) %>%
-      arrange(region, renewresource, year.fillout) ->
+      arrange(region, renewresource, year.fillout) %>%
+      select(LEVEL2_DATA_NAMES[["GrdRenewRsrcMaxNoFO"]]) ->
       L201.GrdRenewRsrcMax_runoff
+
+
+
 
     # ==========================================================#
     # CREATE INPUTS FOR THE UNCALIBRATED WATER SUPPLY XML
@@ -159,7 +163,7 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
       arrange(region, depresource, price) %>%
       rename(extractioncost = price,
              available = avail) %>%
-      select(one_of(LEVEL2_DATA_NAMES$DepRsrcCurves)) ->
+      select(LEVEL2_DATA_NAMES[["DepRsrcCurves"]]) ->
       L201.DepRsrcCurves_ground_uniform
 
 
@@ -293,7 +297,7 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
                subresource = "groundwater",
                available = round(available, 5),
                extractioncost = round(extractioncost, 5)) %>%
-        select(one_of(LEVEL2_DATA_NAMES$DepRsrcCurves)) %>%
+        select(LEVEL2_DATA_NAMES[["DepRsrcCurves"]]) %>%
         arrange(region, depresource, extractioncost) ->
         L201.DepRsrcCurves_ground
 
