@@ -1,0 +1,8 @@
+# File: A10.ResReserveTechLifetime.csv
+# Title: Resource well / mine lifetime over which the reserve will be produced / depleted
+# Units: Years
+depresource,reserve.subresource,resource.reserve.technology,lifetime
+coal,coal,coal,45
+crude oil,crude oil,crude oil,60
+natural gas,natural gas,natural gas,45
+unconventional oil,unconventional oil,unconventional oil,45
