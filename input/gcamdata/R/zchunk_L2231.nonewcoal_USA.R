@@ -6,7 +6,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L2231.StubTechShrwt_nonewcoal_USA}, \code{L2231.StubTechShrwt_coal_delay_USA}. 
+#' the generated outputs: \code{L2231.StubTechShrwt_nonewcoal_USA}, \code{L2231.StubTechShrwt_coal_delay_USA}.
 #' The corresponding file in the
 #' original data system was \code{L2231.nonewcoal_USA.R} (gcam-usa level2).
 #' @details This chunk sets zero share-weights of pulverized coal technologies, which assumes
@@ -23,7 +23,7 @@ module_gcam.usa_L2231.nonewcoal_USA <- function(command, ...) {
              "L222.StubTech_en",
              "L225.StubTech_h2"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L2231.StubTechShrwt_nonewcoal_USA", 
+    return(c("L2231.StubTechShrwt_nonewcoal_USA",
              "L2231.StubTechShrwt_coal_delay_USA"))
   } else if(command == driver.MAKE) {
 
@@ -50,22 +50,22 @@ module_gcam.usa_L2231.nonewcoal_USA <- function(command, ...) {
       filter(subsector == "coal", !grepl("CCS", stub.technology)) %>%
       bind_rows(c(supplysector = "industrial energy use", subsector = "coal", stub.technology = "coal cogen")) %>%
       repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
-      repeat_add_columns(tibble(year = FUTURE_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) %>%
       mutate(share.weight = 0) %>%
       select(LEVEL2_DATA_NAMES[["StubTechYr"]], share.weight) ->
       L2231.StubTechShrwt_elec_USA
 
     L222.StubTechMarket_en_USA %>%
-      filter(year %in% FUTURE_YEARS, subsector == "coal to liquids", !grepl("CCS",stub.technology)) %>%
+      filter(year %in% MODEL_FUTURE_YEARS, subsector == "coal to liquids", !grepl("CCS",stub.technology)) %>%
       distinct(region, supplysector, subsector, stub.technology, year) %>%
       mutate(share.weight = 0) ->
       L2231.StubTechShrwt_refining_USA
 
     L222.StubTech_en %>%
-      filter(region == "USA", subsector == "coal gasification", !grepl("CCS",stub.technology)) %>%
+      filter(region == gcam.USA_REGION, subsector == "coal gasification", !grepl("CCS",stub.technology)) %>%
       bind_rows(L225.StubTech_h2 %>%
-                  filter(region == "USA", subsector == "coal", !grepl("CCS",stub.technology))) %>%
-      repeat_add_columns(tibble(year = FUTURE_YEARS)) %>%
+                  filter(region == gcam.USA_REGION, subsector == "coal", !grepl("CCS",stub.technology))) %>%
+      repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) %>%
       mutate(share.weight = 0) %>%
       select(LEVEL2_DATA_NAMES[["StubTechYr"]], share.weight) ->
       L2231.StubTechShrwt_en_USA
@@ -73,14 +73,14 @@ module_gcam.usa_L2231.nonewcoal_USA <- function(command, ...) {
     bind_rows(L2231.StubTechShrwt_elec_USA,
               L2231.StubTechShrwt_refining_USA,
               L2231.StubTechShrwt_en_USA) -> L2231.StubTechShrwt_nonewcoal_USA
-    
+
     L2231.StubTechShrwt_nonewcoal_USA %>%
-      filter(year <= gcamusa.FIRST_NEW_COAL_YEAR) -> 
+      filter(year <= gcamusa.FIRST_NEW_COAL_YEAR) ->
       L2231.StubTechShrwt_coal_delay_USA
-      
+
     # ===================================================
     # Produce outputs
-    
+
     L2231.StubTechShrwt_nonewcoal_USA %>%
       add_title("Share-weights for pulverized coal stub technologies in USA states") %>%
       add_units("Unitless") %>%
@@ -92,7 +92,7 @@ module_gcam.usa_L2231.nonewcoal_USA <- function(command, ...) {
                      "L222.StubTech_en",
                      "L225.StubTech_h2") ->
       L2231.StubTechShrwt_nonewcoal_USA
-    
+
     L2231.StubTechShrwt_coal_delay_USA %>%
       add_title("Share-weights for pulverized coal stub technologies in USA states") %>%
       add_units("Unitless") %>%
@@ -105,7 +105,7 @@ module_gcam.usa_L2231.nonewcoal_USA <- function(command, ...) {
                      "L225.StubTech_h2") ->
       L2231.StubTechShrwt_coal_delay_USA
 
-    return_data(L2231.StubTechShrwt_nonewcoal_USA, 
+    return_data(L2231.StubTechShrwt_nonewcoal_USA,
                 L2231.StubTechShrwt_coal_delay_USA)
   } else {
     stop("Unknown command")

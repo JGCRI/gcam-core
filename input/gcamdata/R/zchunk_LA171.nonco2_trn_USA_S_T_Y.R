@@ -191,7 +191,7 @@ module_gcam.usa_LA171.nonco2_trn_USA_S_T_Y.R <- function(command, ...) {
 
     # Clean up and subset base year vintages
     MARKAL_LDV_EFs_gpm.long %>%
-      filter(year %in% BASE_YEARS & Vintage <= year) %>%
+      filter(year %in% MODEL_BASE_YEARS & Vintage <= year) %>%
       filter(!(Vintage == 1990 & year ==2010)) %>%
       ### MISSING VALUES: emission factors pollutants with no data for ELC vehicles, and 2010 EFs for 1990 vintages
       na.omit ->
@@ -302,7 +302,7 @@ module_gcam.usa_LA171.nonco2_trn_USA_S_T_Y.R <- function(command, ...) {
 
     # Clean up and subset base year vintages
     MARKAL_HDV_EFs_gpm.long %>%
-      filter(year %in% BASE_YEARS & Vintage <= year) %>%
+      filter(year %in% MODEL_BASE_YEARS & Vintage <= year) %>%
       filter(!(year == 2010 & Vintage == 1990)) %>%
       na.omit ->
       MARKAL_HDV_EFs_gpm_Yb

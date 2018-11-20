@@ -580,7 +580,7 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
     # L244.Floorspace_AEO_2015_USA: Extend the base year floorspace through 2040 for AEO 2015 harmonization
     # NOTE: This is a hack and only works when the final calibration year is 2010
     L100.Pop_thous_state %>%
-      filter(year %in% c(max(BASE_YEARS), FUTURE_YEARS)) %>%
+      filter(year %in% c(max(MODEL_BASE_YEARS), MODEL_FUTURE_YEARS)) %>%
       group_by(year) %>%
       mutate(pop_year = sum(value)) %>%
       ungroup() %>%
@@ -600,12 +600,12 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
       mutate(flsp_growth = growth * pop_share,
              gcam.consumer = if_else(Sector == "Residential", "resid", "comm")) %>%
       left_join_error_no_match(L244.Floorspace_gcamusa %>%
-                                 filter(year == max(BASE_YEARS)) %>%
+                                 filter(year == max(MODEL_BASE_YEARS)) %>%
                                  select(-year) %>%
                                  distinct(),
                                by = c("region", "gcam.consumer")) %>%
       mutate(base.building.size = round(base.building.size + flsp_growth, digits = energy.DIGITS_FLOORSPACE)) %>%
-      filter(year %in% FUTURE_YEARS) %>%
+      filter(year %in% MODEL_FUTURE_YEARS) %>%
       select(LEVEL2_DATA_NAMES$Floorspace) -> L244.Floorspace_AEO_2015_future_USA
 
     L244.Floorspace_gcamusa %>%

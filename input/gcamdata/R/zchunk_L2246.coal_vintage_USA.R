@@ -167,12 +167,12 @@ module_gcam.usa_L2246.coal_vintage_USA <- function(command, ...) {
     L2246.coal_vintage_gen_2015 %>%
       rename(region = State) %>%
       left_join(L2240.StubTechProd_elec_coalret_USA %>%
-                  filter(subsector == "coal", year == max(BASE_YEARS), grepl("slow_retire", stub.technology)), by = "region") %>%
+                  filter(subsector == "coal", year == max(MODEL_BASE_YEARS), grepl("slow_retire", stub.technology)), by = "region") %>%
       filter(!is.na(calOutputValue), calOutputValue != 0) %>%
       mutate(calOutputValue = calOutputValue * share.vintage) %>%
       # Create new technologies. Naming the variable as stub.technology.new so that we can use stub.technology as reference later
       mutate(stub.technology.new = paste(stub.technology, vintage.bin, sep = " ")) %>%
-      mutate(year = max(BASE_YEARS), share.weight.year = max(BASE_YEARS),
+      mutate(year = max(MODEL_BASE_YEARS), share.weight.year = max(MODEL_BASE_YEARS),
              subs.share.weight = 1, tech.share.weight = 1) %>%
       # Select variables. For now, include lifetime and vintage.bin as well. We'll remove it later
       select(LEVEL2_DATA_NAMES[["StubTechProd"]], stub.technology.new, lifetime, vintage.bin) ->
@@ -207,7 +207,7 @@ module_gcam.usa_L2246.coal_vintage_USA <- function(command, ...) {
     # efficiency of a generator and its vintage.
     L2246.StubTechProd_coal_vintage_USA_2010 %>%
       select(LEVEL2_DATA_NAMES[["StubTechYr"]], stub.technology.new) %>%
-      complete(nesting(region, supplysector, subsector, stub.technology, stub.technology.new), year = BASE_YEARS) %>%
+      complete(nesting(region, supplysector, subsector, stub.technology, stub.technology.new), year = MODEL_BASE_YEARS) %>%
       left_join_error_no_match(L2240.StubTechEff_elec_coalret_USA,
                                by = c("region", "supplysector", "subsector", "stub.technology", "year")) %>%
       mutate(stub.technology = stub.technology.new) %>%
@@ -216,9 +216,9 @@ module_gcam.usa_L2246.coal_vintage_USA <- function(command, ...) {
 
     # Read in energy inputs for future periods
     L2246.StubTechEff_coal_vintage_USA %>%
-      filter(year == max(BASE_YEARS)) %>%
+      filter(year == max(MODEL_BASE_YEARS)) %>%
       select(-efficiency, -year) %>%
-      repeat_add_columns(tibble(year = FUTURE_YEARS)) ->
+      repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) ->
       L2246.StubTechMarket_coal_vintage_USA
 
 
@@ -284,7 +284,7 @@ module_gcam.usa_L2246.coal_vintage_USA <- function(command, ...) {
     L2246.StubTechProd_coal_vintage_USA_2010 %>%
       mutate(stub.technology = stub.technology.new) %>%
       select(LEVEL2_DATA_NAMES[["StubTechProd"]]) %>%
-      complete(nesting(region, supplysector, subsector, stub.technology), year = BASE_YEARS) %>%
+      complete(nesting(region, supplysector, subsector, stub.technology), year = MODEL_BASE_YEARS) %>%
       mutate(share.weight.year = year) %>%
       # Read in zero caloutputvalue for other base years
       replace_na(list(calOutputValue = 0, subs.share.weight = 1, tech.share.weight = 0)) ->
@@ -292,7 +292,7 @@ module_gcam.usa_L2246.coal_vintage_USA <- function(command, ...) {
 
     # Read in zero calOutputValue for 2010 for existing coal conv pul technology
     L2240.StubTechProd_elec_coalret_USA %>%
-                  filter(subsector == "coal", year == max(BASE_YEARS), calOutputValue != 0,
+                  filter(subsector == "coal", year == max(MODEL_BASE_YEARS), calOutputValue != 0,
                          grepl("slow_retire", stub.technology), region %in% unique(L2246.coal_vintage_gen_2015$State)) %>%
                   mutate(calOutputValue = 0, tech.share.weight = 0) %>%
       select(LEVEL2_DATA_NAMES[["StubTechProd"]]) %>%

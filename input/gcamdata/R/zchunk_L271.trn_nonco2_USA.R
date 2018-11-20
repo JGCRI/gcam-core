@@ -59,7 +59,7 @@ module_gcam.usa_L271.trn_nonco2_USA <- function(command, ...) {
       filter(supplysector == "trn_pass_road_LDV_4W") %>%
       left_join_error_no_match(MARKAL_UCD_class, by = c("tranSubsector" = "UCD_class")) %>%
       left_join_error_no_match(MARKAL_UCD_LDV_fuel, by = c("stub.technology" = "UCD_LDV_fuel" )) %>%
-      repeat_add_columns(tibble(year = c(2005, 2010, FUTURE_YEARS))) ->
+      repeat_add_columns(tibble(year = c(2005, 2010,MODEL_FUTURE_YEARS))) ->
       L254.StubTranTech_USA_LDV
 
 
@@ -74,7 +74,7 @@ module_gcam.usa_L271.trn_nonco2_USA <- function(command, ...) {
     L171.nonco2_tgej_state_LDV_S_F_Y %>%
       filter(year == 2050) %>%
       select(-year) %>%
-      repeat_add_columns(tibble(year = FUTURE_YEARS[FUTURE_YEARS > 2050])) %>%
+      repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS[MODEL_FUTURE_YEARS > 2050])) %>%
       bind_rows(L171.nonco2_tgej_state_LDV_S_F_Y) ->
       L171.nonco2_tgej_state_LDV_S_F_Y
 
@@ -99,7 +99,7 @@ module_gcam.usa_L271.trn_nonco2_USA <- function(command, ...) {
       filter(supplysector %in% c("trn_pass_road","trn_freight_road")) %>%
       left_join_error_no_match(MARKAL_UCD_class, by = c("tranSubsector" = "UCD_class")) %>%
       left_join_error_no_match(MARKAL_UCD_HDV_fuel, by = c("stub.technology" = "UCD_HDV_fuel")) %>%
-      repeat_add_columns(tibble(year = c(2005, 2010, FUTURE_YEARS))) ->
+      repeat_add_columns(tibble(year = c(2005, 2010,MODEL_FUTURE_YEARS))) ->
       L254.StubTranTech_USA_HDV
 
     # Subset relevant classes and fuels from emission factor table
@@ -113,7 +113,7 @@ module_gcam.usa_L271.trn_nonco2_USA <- function(command, ...) {
     L171.nonco2_tgej_state_HDV_S_F_Y %>%
       filter(year == 2050) %>%
       select(-year) %>%
-      repeat_add_columns(tibble(year = FUTURE_YEARS[FUTURE_YEARS > 2050])) %>%
+      repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS[MODEL_FUTURE_YEARS > 2050])) %>%
       bind_rows(L171.nonco2_tgej_state_HDV_S_F_Y) ->
       L171.nonco2_tgej_state_HDV_S_F_Y
 

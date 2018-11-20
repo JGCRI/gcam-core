@@ -609,8 +609,6 @@ gcamusa.COAL_VINTAGE_LABELS <- c("before 1950", "1951-1955", "1956-1960", "1961-
 gcamusa.FIRST_NEW_COAL_YEAR <- 2035
 
 # GCAM-USA states
-gcam.USA_REGION <- "USA"
-
 gcamusa.STATES <- c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA",
                     "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR",
                     "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY")

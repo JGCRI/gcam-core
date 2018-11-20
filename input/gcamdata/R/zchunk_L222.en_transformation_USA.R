@@ -234,7 +234,7 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
       mutate(share.weight = if_else(grepl("coal", subsector), coal_fract, share.weight)) %>%
       mutate(share.weight = if_else(grepl("gas", subsector), gas_fract, share.weight)) %>%
       #Default the base year shareweights to 0. This will be over-ridden in calibration
-      mutate(share.weight = if_else(year %in% BASE_YEARS, 0, round(share.weight, 3))) %>%
+      mutate(share.weight = if_else(year %in% MODEL_BASE_YEARS, 0, round(share.weight, 3))) %>%
       select(region, supplysector, subsector, technology, year, share.weight) -> L222.TechShrwt_USAen
 
 

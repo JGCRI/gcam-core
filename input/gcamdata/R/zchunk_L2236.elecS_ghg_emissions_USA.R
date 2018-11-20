@@ -64,7 +64,7 @@ module_gcam.usa_L2236.elecS_ghg_emissions_USA <- function(command, ...) {
       A23.elecS_tech_associations
 
     L241.nonco2_tech_coeff %>%
-      filter(region == "USA", supplysector == "electricity", Non.CO2 %in% c("N2O","CH4") ) %>%
+      filter(region == gcam.USA_REGION, supplysector == "electricity", Non.CO2 %in% c("N2O","CH4") ) %>%
       left_join(A23.elecS_tech_associations %>%
                   select(-subsector),
                 by = c("supplysector", "subsector" =  "subsector_1", "stub.technology" =  "technology")) %>%
@@ -81,7 +81,7 @@ module_gcam.usa_L2236.elecS_ghg_emissions_USA <- function(command, ...) {
     # L236.en_ghg_emissions_USA: Calibrated input emissions of N2O and CH4 by U.S. state
     # Filter the emissions data for USA & electricity sector
     L201.en_ghg_emissions %>%
-      filter(region == "USA" & grepl("electricity", supplysector)) %>%
+      filter(region == gcam.USA_REGION & grepl("electricity", supplysector)) %>%
       spread(Non.CO2, input.emissions) ->
       L2236.elec_ghg_emissions_USA
 

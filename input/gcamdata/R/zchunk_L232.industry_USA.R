@@ -321,7 +321,7 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
     A32.tech_eff_USA %>%
       gather_years("efficiency") %>%
       complete(nesting(region, supplysector, subsector, technology, minicam.energy.input, secondary.output),
-               year = c(FUTURE_YEARS)) %>%
+               year = c(MODEL_FUTURE_YEARS)) %>%
       arrange(region, supplysector, subsector, technology, year) %>%
       group_by(region, supplysector, subsector, technology, minicam.energy.input, secondary.output) %>%
       mutate(efficiency = approx_fun(year, efficiency),

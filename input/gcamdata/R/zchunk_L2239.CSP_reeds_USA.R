@@ -95,19 +95,19 @@ module_gcam.usa_L2239.CSP_reeds_USA <- function(command, ...) {
 
     L2247.GlobalIntTechCapitalOnly_elecS_USA %>%
       filter(intermittent.technology == "CSP_peak",
-             year == max(BASE_YEARS)) %>%
+             year == max(MODEL_BASE_YEARS)) %>%
       select(capital.overnight) -> L2239.CSP_capital
     L2239.CSP_capital <- as.numeric(L2239.CSP_capital)
 
     L223.GlobalIntTechCapital_elec %>%
       filter(intermittent.technology == "CSP",
-             year == max(BASE_YEARS)) %>%
+             year == max(MODEL_BASE_YEARS)) %>%
       select(fixed.charge.rate) -> L2239.fcr
     L2239.fcr <- as.numeric(L2239.fcr)
 
     L223.GlobalIntTechOMfixed_elec %>%
       filter(intermittent.technology == "CSP",
-             year == max(BASE_YEARS)) %>%
+             year == max(MODEL_BASE_YEARS)) %>%
       select(OM.fixed) -> L2239.CSP_OMfixed
     L2239.CSP_OMfixed <- as.numeric(L2239.CSP_OMfixed)
 
@@ -173,7 +173,7 @@ module_gcam.usa_L2239.CSP_reeds_USA <- function(command, ...) {
              tech.change = round(abs(1 - (tech.change.5yr)^(1/5)), 5)) %>%
       select(year, tech.change) %>%
       filter(!is.na(tech.change)) %>%
-      filter(year > max(BASE_YEARS)) -> L2239.CSP_curve_tech_change
+      filter(year > max(MODEL_BASE_YEARS)) -> L2239.CSP_curve_tech_change
 
     # Grid connection costs are read in as fixed non-energy cost adders (in $/GJ) that vary by state.
     # Our starting data comprises of grid connection costs in $/MW by ReEDS region and CSP class.
