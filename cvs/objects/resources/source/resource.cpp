@@ -59,6 +59,7 @@
 #include "marketplace/include/imarket_type.h"
 #include "resources/include/renewable_subresource.h"
 #include "resources/include/smooth_renewable_subresource.h"
+#include "resources/include/reserve_subresource.h"
 #include "util/base/include/ivisitor.h"
 #include "containers/include/info_factory.h"
 #include "containers/include/iinfo.h"
@@ -188,6 +189,9 @@ void Resource::XMLParse( const DOMNode* node ){
         else if( nodeName == SubRenewableResource::getXMLNameStatic() ) {
             parseContainerNode( curr, mSubResource, new SubRenewableResource() );
         }
+        else if( nodeName == ReserveSubResource::getXMLNameStatic() ) {
+            parseContainerNode( curr, mSubResource, new ReserveSubResource() );
+        }
         else if( XMLDerivedClassParse( nodeName, curr ) ){
             // no-op
         }
@@ -281,7 +285,7 @@ void Resource::completeInit( const string& aRegionName, const IInfo* aRegionInfo
     }
 
     for( vector<SubResource*>::iterator subResIter = mSubResource.begin(); subResIter != mSubResource.end(); subResIter++ ) {
-        ( *subResIter )->completeInit( mResourceInfo.get() );
+        ( *subResIter )->completeInit( aRegionName, mName, mResourceInfo.get() );
     }
 
     // Set markets for this sector
@@ -307,7 +311,7 @@ void Resource::completeInit( const string& aRegionName, const IInfo* aRegionInfo
 void Resource::initCalc( const string& aRegionName, const int aPeriod ) {
     // call subResource initializations
     for ( unsigned int i = 0; i < mSubResource.size(); i++ ){
-        mSubResource[i]->initCalc( aRegionName, mName, aPeriod );
+        mSubResource[i]->initCalc( aRegionName, mName, mResourceInfo.get(), aPeriod );
     }
 
     // The GHG objects will need to check the following flags to properly
@@ -465,7 +469,7 @@ void Resource::annualsupply( const string& aRegionName, int aPeriod, const GDP* 
 
     // sum annual production of each subsector
     for ( i = 0; i < mSubResource.size(); i++) {
-        mSubResource[i]->annualsupply( aPeriod, aGdp, aPrice, aPrevPrice );
+        mSubResource[i]->annualsupply( aRegionName, mName, aPeriod, aGdp, aPrice, aPrevPrice );
         mAnnualProd[ aPeriod ] += Value( mSubResource[i]->getAnnualProd( aPeriod ) );
         mAvailable[ aPeriod ] += Value( mSubResource[i]->getAvailable( aPeriod ) );
     }
@@ -736,7 +740,7 @@ void RenewableResource::annualsupply( const string& aRegionName, int aPeriod, co
     
     // sum annual production of each subsector
     for (int i=0;i<mSubResource.size();i++) {
-        mSubResource[i]->annualsupply( aPeriod, aGdp, aPrice, aPrevPrice );
+        mSubResource[i]->annualsupply( aRegionName, mName, aPeriod, aGdp, aPrice, aPrevPrice );
         mAnnualProd[ aPeriod ] += Value( mSubResource[i]->getAnnualProd( aPeriod ) );
         double adjustedSubResourceProd = max( mSubResource[i]->getAnnualProd( aPeriod ), MIN_RESOURCE_PROD );
         adjustedProduction += adjustedSubResourceProd;

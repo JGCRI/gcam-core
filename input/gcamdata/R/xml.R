@@ -343,5 +343,8 @@ XML_NODE_EQUIV <- list(
   "discrete-choice" = c("dummy-logit-tag", "relative-cost-logit",
                         "absolute-cost-logit"),
   "LandLeaf" = c("LandLeaf", "UnmanagedLandLeaf"),
-  "carbon-calc" = c("land-carbon-densities", "no-emiss-carbon-calc")
+  "carbon-calc" = c("land-carbon-densities", "no-emiss-carbon-calc"),
+  "resource" = c("resource", "depresource", "renewresource", "unlimited-resource"),
+  "subresource" = c("subresource", "sub-renewable-resource", "smooth-renewable-subresource",
+                    "reserve-subresource")
 )

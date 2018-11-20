@@ -76,8 +76,12 @@ void CalibrateResourceVisitor::endVisitResource( const AResource* aResource,
     mCurrentResourceName.clear();
 }
 
+#include "resources/include/reserve_subresource.h"
 
 void CalibrateResourceVisitor::startVisitSubResource( const SubResource* aSubResource, const int aPeriod ) {
+    if(aSubResource->getXMLName() == ReserveSubResource::getXMLNameStatic() ) {
+        return;
+    }
     // If calibration is active and a calibrated production quantity was read in, 
     // then we need to calculate the price adder needed to produce that quantity
     if( aSubResource->mCalProduction[ aPeriod ] != -1.0 && aPeriod > 0 ){

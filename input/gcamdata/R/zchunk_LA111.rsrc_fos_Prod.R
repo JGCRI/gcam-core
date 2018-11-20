@@ -24,10 +24,12 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
              FILE = "energy/IEA_product_rsrc",
              FILE = "energy/rsrc_unconv_oil_prod_bbld",
              FILE = "energy/A11.fos_curves",
+             FILE = "energy/A10.ResReserveTechLifetime",
              "L100.IEA_en_bal_ctry_hist",
              "L1011.en_bal_EJ_R_Si_Fi_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L111.Prod_EJ_R_F_Yh",
+             "L111.Reserve_EJ_R_F_Yh",
              "L111.RsrcCurves_EJ_R_Ffos"))
   } else if(command == driver.MAKE) {
 
@@ -42,6 +44,7 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
     IEA_product_rsrc <- get_data(all_data, "energy/IEA_product_rsrc")
     rsrc_unconv_oil_prod_bbld <- get_data(all_data, "energy/rsrc_unconv_oil_prod_bbld")
     A11.fos_curves <- get_data(all_data, "energy/A11.fos_curves")
+    A10.ResReserveTechLifetime <- get_data(all_data, "energy/A10.ResReserveTechLifetime")
     L100.IEA_en_bal_ctry_hist <- get_data(all_data, "L100.IEA_en_bal_ctry_hist")
     L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
 
@@ -203,6 +206,56 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
 
       # Produce outputs
 
+    # TODO: probably not right if the lifetime is shorter than the historical period
+    # L111.Prod_EJ_R_F_Yh %>%
+    #   left_join_error_no_match(A11.fos_reserve_lifetime) %>%
+    #   group_by(GCAM_region_ID, sector, fuel) %>%
+    #   mutate(value = pmax(value - lag(value, default = 0), 0) * lifetime) %>%
+    #   ungroup() %>%
+    #   select(-lifetime) ->
+    #   L111.Reserve_EJ_R_F_Yh
+    L111.Prod_EJ_R_F_Yh %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
+      left_join_error_no_match(select(A10.ResReserveTechLifetime, depresource, lifetime),
+                               by=c("fuel" = "depresource")) %>%
+      group_by(GCAM_region_ID, sector, fuel) %>%
+      mutate(value = pmax(value - lag(value, default = 0), 0) * lifetime) %>%
+      ungroup() %>%
+      select(-lifetime) ->
+      L111.Reserve_EJ_R_F_Yh
+
+    L111.Reserve_EJ_R_F_Yh %>%
+      group_by(GCAM_region_ID, fuel) %>%
+      summarize(value = sum(value)) %>%
+      ungroup() ->
+      ReserveTotal_EJ_R_F
+    L111.RsrcCurves_EJ_R_Ffos %>%
+      group_by(GCAM_region_ID, resource) %>%
+      summarize(available = sum(available)) %>%
+      ungroup() %>%
+      left_join_error_no_match(ReserveTotal_EJ_R_F, ., by=c("GCAM_region_ID", "fuel" = "resource")) %>%
+      filter(value > available) %>%
+      mutate(available = value - available) %>%
+      select(-value) %>%
+      rename(resource = fuel) %>%
+      left_join_error_no_match(L111.RsrcCurves_EJ_R_Ffos %>%
+                                 group_by(GCAM_region_ID, resource) %>%
+                                 filter(extractioncost == max(extractioncost)) %>%
+                                 ungroup() %>%
+                                 select(-available),
+                               by = c("GCAM_region_ID", "resource")) ->
+      RsrcCurve_ReserveMismatch
+    RsrcCurve_ReserveMismatch %>%
+      bind_rows(RsrcCurve_ReserveMismatch %>%
+                  mutate(grade = "extended for reserve") %>%
+                  # Note the factor here does not matter because this region + resource will completely
+                  # deplete in the historical period and none will be available during model operation
+                  # anyways.
+                  mutate(extractioncost = extractioncost * 1.1) %>%
+                  mutate(available = 0)) %>%
+      bind_rows(L111.RsrcCurves_EJ_R_Ffos, .) ->
+      L111.RsrcCurves_EJ_R_Ffos
+
       L111.RsrcCurves_EJ_R_Ffos %>%
         add_title("Fossil resource supply curves", overwrite = TRUE) %>%
         add_units("available: EJ; extractioncost: 1975$/GJ") %>%
@@ -214,11 +267,31 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
                        "energy/IEA_product_rsrc", "L100.IEA_en_bal_ctry_hist") ->
         L111.RsrcCurves_EJ_R_Ffos
 
-      # At this point output should be identical to the prebuilt version
-      verify_identical_prebuilt(L111.RsrcCurves_EJ_R_Ffos)
-    }
+    L111.Reserve_EJ_R_F_Yh %>%
+      add_title("Historical fossil energy resource reserves") %>%
+      add_units("EJ") %>%
+      add_comments("For now we are using a simplistic approach to back calculate reserves") %>%
+      add_comments("from historical production.  We do this since reserves data sets exist") %>%
+      add_comments("they are unreliable as countries are allowed to report them as they choose") %>%
+      add_comments("leading to unrealistic reserve values that do not match well with production") %>%
+      same_precursors_as(L111.Prod_EJ_R_F_Yh) %>%
+      add_precursors("energy/A10.ResReserveTechLifetime") ->
+      L111.Reserve_EJ_R_F_Yh
 
-    return_data(L111.Prod_EJ_R_F_Yh, L111.RsrcCurves_EJ_R_Ffos)
+    L111.RsrcCurves_EJ_R_Ffos %>%
+      add_title("Fossil resource supply curves", overwrite = TRUE) %>%
+      add_units("available: EJ; extractioncost: 1975$/GJ") %>%
+      add_comments("Downscale GCAM3.0 supply curves to the country level (on the basis of resource") %>%
+      add_comments("production) and aggregate by the new GCAM regions.") %>%
+      add_comments("Use crude oil production shares as a proxy for unconventional oil resources.") %>%
+      add_legacy_name("L111.RsrcCurves_EJ_R_Ffos") %>%
+      add_precursors("common/iso_GCAM_regID", "energy/A11.fos_curves",
+                     "energy/IEA_product_rsrc", "L100.IEA_en_bal_ctry_hist",
+                     "L1011.en_bal_EJ_R_Si_Fi_Yh",
+                     "energy/prebuilt_data/L111.RsrcCurves_EJ_R_Ffos") ->
+      L111.RsrcCurves_EJ_R_Ffos
+
+    return_data(L111.Prod_EJ_R_F_Yh, L111.Reserve_EJ_R_F_Yh, L111.RsrcCurves_EJ_R_Ffos)
   } else {
     stop("Unknown command")
   }

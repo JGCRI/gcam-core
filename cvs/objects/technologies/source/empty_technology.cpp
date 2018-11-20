@@ -264,6 +264,10 @@ int EmptyTechnology::getYear() const {
     return 0;
 }
 
+int EmptyTechnology::getLifetimeYears() const {
+    return 0;
+}
+
 void EmptyTechnology::doInterpolations( const Technology* aPrevTech,
                                         const Technology* aNextTech )
 {

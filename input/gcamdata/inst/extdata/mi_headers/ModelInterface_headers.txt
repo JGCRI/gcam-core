@@ -110,6 +110,16 @@ DeleteUnlimitRsrc, world/+{name}region, region/+{name; delete=1}unlimited-resour
 
 DepRsrcEnvironCost, world/+{name}region, region/+{name}depresource, depresource/+{name}subresource, subresource/+{year;fillout=1}environCost, subresource/+environCost, scenario, scenario/world
 
+DepReserveCalReserve, world/+{name}region, region/+{name}depresource, depresource/+{name}reserve-subresource, reserve-subresource/+{year}cal-reserve, reserve-subresource/+cal-reserve, scenario, scenario/world
+
+ResReserveTechShrwt, world/+{name}region, region/+{name}depresource, depresource/+{name}reserve-subresource, reserve-subresource/+{name}resource-reserve-technology, resource-reserve-technology/+{year}period, period/+share-weight, scenario, scenario/world
+
+ResReserveTechCost, world/+{name}region, region/+{name}depresource, depresource/+{name}reserve-subresource, reserve-subresource/+{name}resource-reserve-technology, resource-reserve-technology/+{year}period, period/+{name}minicam-non-energy-input, minicam-non-energy-input/+input-cost, scenario, scenario/world, period/{name=CO2}CO2
+
+ResReserveTechLifetime, world/+{name}region, region/+{name}depresource, depresource/+{name}reserve-subresource, reserve-subresource/+{name}resource-reserve-technology, resource-reserve-technology/+{year}period, period/+lifetime, scenario, scenario/world
+
+ResReserveTechProfitShutdown, world/+{name}region, region/+{name}depresource, depresource/+{name}reserve-subresource, reserve-subresource/+{name}resource-reserve-technology, resource-reserve-technology/+{year}period, profit-shutdown-decider/+median-shutdown-point, profit-shutdown-decider/+steepness, scenario, scenario/world, world/global-technology-database, period/{name=profit}profit-shutdown-decider
+
 #####, SUPPLYSECTOR
 DeleteSupplysector, world/+{name}region, region/+{name; delete=1}supplysector, scenario, scenario/world
 

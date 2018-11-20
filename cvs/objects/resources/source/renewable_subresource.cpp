@@ -99,9 +99,10 @@ bool SubRenewableResource::XMLDerivedClassParse( const string& nodeName, const D
 /*! Renewable resources should have only grades with well defined cost curves. 
 \todo The extra elements in the vector should be removed. 
 Also remove any grades with zero available by resetting the parameter nograde. */
-void SubRenewableResource::completeInit( const IInfo* aSectorInfo ) {   
+void SubRenewableResource::completeInit( const std::string& aRegionName, const std::string& aResourceName,
+                                         const IInfo* aSectorInfo ) {
 
-    SubResource::completeInit( aSectorInfo );
+    SubResource::completeInit( aRegionName, aResourceName, aSectorInfo );
     
     double lastAvailable = 0;
     
@@ -146,7 +147,8 @@ void SubRenewableResource::cumulsupply( double aPrice, int aPeriod ) {
 * Note that the cost curve needs to be in the form of price, and cumulative fraction available.
 * Calls calcVariance() method
 */
-void SubRenewableResource::annualsupply( int aPeriod, const GDP* aGdp, double aPrice, double aPrevPrice  ) {
+void SubRenewableResource::annualsupply( const std::string& aRegionName, const std::string& aResourceName,
+                                         int aPeriod, const GDP* aGdp, double aPrice, double aPrevPrice  ) {
 
     double fractionAvailable = -1;
     const double effectivePrice = aPrice + mPriceAdder[ aPeriod ];

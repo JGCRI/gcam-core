@@ -1,5 +1,5 @@
-#ifndef _RENEWABLE_SUBRESOURCE_H_
-#define _RENEWABLE_SUBRESOURCE_H_
+#ifndef _RESERVE_SUBRESOURCE_H_
+#define _RESERVE_SUBRESOURCE_H_
 #if defined(_MSC_VER)
 #pragma once
 #endif
@@ -39,67 +39,63 @@
 
 
 /*! 
-* \file renewable_subresource.h
+* \file reserve_subresource.h
 * \ingroup Objects
-* \brief The SubRenewableResource class header file.
+* \brief The ReserveSubResource class header file.
 * \author Sonny Kim
 */
+#include <memory>
 #include <xercesc/dom/DOMNode.hpp>
-#include "resources/include/subresource.h"
+#include <boost/core/noncopyable.hpp>
 
-// Forward declarations.
-class Grade;
-class SubResource;
-class Tabs;
-class IInfo;
+#include "resources/include/subresource.h"
+#include "util/base/include/value.h"
+#include "util/base/include/time_vector.h"
+
+class ITechnologyContainer;
 
 /*! 
 * \ingroup Objects
-* \brief A class which defines a SubRenewableResource object, which is a container for multiple grade objects.
-* \author Steve Smith
-* \date $ Date $
-* \version $ Revision $
+* \brief ReserveSubResource is a class that contains grades.
+* \author Pralit Patel
 */
-class SubRenewableResource: public SubResource {
-    friend class CalibrateResourceVisitor;
+
+class ReserveSubResource: public SubResource
+{
 public:
-    SubRenewableResource();
-    virtual ~SubRenewableResource();
-    //! Return the XML tag name
-    static const std::string& getXMLNameStatic( void );
+    ReserveSubResource();
+    virtual ~ReserveSubResource();
     virtual void completeInit( const std::string& aRegionName, const std::string& aResourceName,
-                               const IInfo* aSectorInfo );
+                               const IInfo* aResourceInfo );
+    //void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
+    static const std::string& getXMLNameStatic();
     virtual void cumulsupply( double aPrice, int aPeriod );
+    virtual void initCalc( const std::string& aRegionName, const std::string& aResourceName,
+                           const IInfo* aResourceInfo, const int aPeriod );
+    virtual void postCalc( const std::string& aRegionName, const std::string& aResourceName, const int aPeriod );
     virtual void annualsupply( const std::string& aRegionName, const std::string& aResourceName,
                                int aPeriod, const GDP* aGdp, double aPrice, double aPrevPrice );
-    virtual double getVariance() const;
-    virtual double getMaxAnnualSubResource( const int aPeriod ) const;
+    double getAnnualProd( int aPeriod ) const;
+    double getAvailable( int aPeriod ) const;
+    void updateAvailable( const int period );
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     virtual double getLowestPrice( const int aPeriod ) const;
-    
+    virtual double getHighestPrice( const int aPeriod ) const;
 protected:
-    
-    // Define data such that introspection utilities can process the data from this
-    // subclass together with the data members of the parent classes.
-    DEFINE_DATA_WITH_PARENT(
-        SubResource,
-
-        //! The maximum achievable resource production at a price of infinity.
-        //! This value may change by model period and is the max prior to any GDP
-        //! based supply expansion.
-        DEFINE_VARIABLE( ARRAY, "maxSubResource", mMaxAnnualSubResource, objects::PeriodVector<double> ),
-
-        //! elasticity on GDP growth that controls expansion of the max subresource.
-        DEFINE_VARIABLE( SIMPLE, "gdpSupplyElast", mGdpSupplyElasticity, double ),
-
-        //! subresource variance now read in rather than computed
-        DEFINE_VARIABLE( SIMPLE, "subResourceVariance", mSubResourceVariance, double ),
-
-        //! read in average capacity factor for each subresource
-        DEFINE_VARIABLE( SIMPLE, "subResourceCapacityFactor", mSubResourceCapacityFactor, double )
-    )
-
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node );
+    
+    void calCumulsupply( double aPrice, int aPeriod );
+
+    DEFINE_DATA_WITH_PARENT(
+        SubResource,
+                         
+        DEFINE_VARIABLE( ARRAY, "cal-reserve", mCalReserve, objects::PeriodVector<Value> ),
+                            
+        //! amount of ReserveSubResource for each grade
+        DEFINE_VARIABLE( CONTAINER, "technology", mTechnology, ITechnologyContainer* )
+    )
 };
-#endif // _RENEWABLE_SUBRESOURCE_H_
+
+
+#endif // _RESERVE_SUBRESOURCE_H_

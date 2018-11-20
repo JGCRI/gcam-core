@@ -110,9 +110,10 @@ bool SmoothRenewableSubresource::XMLDerivedClassParse( const std::string& nodeNa
 }
 
 // SmoothRenewableSubresource::completeInit
-void SmoothRenewableSubresource::completeInit( const IInfo* aSectorInfo )
+void SmoothRenewableSubresource::completeInit( const std::string& aRegionName, const std::string& aResourceName,
+                                               const IInfo* aSectorInfo )
 {
-   SubRenewableResource::completeInit( aSectorInfo );
+   SubRenewableResource::completeInit( aRegionName, aResourceName, aSectorInfo );
 
    if ( !( mCostCurve.getMidprice() > 0 && mCostCurve.getCurveExponent() > 0 ) )
    // Invalid input parameter
@@ -133,9 +134,9 @@ void SmoothRenewableSubresource::completeInit( const IInfo* aSectorInfo )
 * \param aPeriod Model aPeriod
 */
 void SmoothRenewableSubresource::initCalc(const std::string& aRegionName, const std::string& aResourceName, 
-                                          const int aPeriod)
+                                          const IInfo* aSectorInfo, const int aPeriod)
 {
-    SubResource::initCalc( aRegionName, aResourceName, aPeriod);
+    SubResource::initCalc( aRegionName, aResourceName, aSectorInfo, aPeriod);
 
     // Reset the mid price to account for technical change
     // The mid price is the price at which 50% of potential supply is utilized
@@ -154,7 +155,8 @@ void SmoothRenewableSubresource::initCalc(const std::string& aRegionName, const 
 }
 
 // SmoothRenewableSubresource::annualsupply
-void SmoothRenewableSubresource::annualsupply( int aPeriod, const GDP* aGDP, double aPrice, double aPrevPrice )
+void SmoothRenewableSubresource::annualsupply( const std::string& aRegionName, const std::string& aResourceName,
+                                               int aPeriod, const GDP* aGDP, double aPrice, double aPrevPrice )
 {
     // Compute the fraction of the total possible supply that is
     // available at a given price

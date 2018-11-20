@@ -138,7 +138,8 @@ void SubResource::XMLParse( const DOMNode* node ){
 * \author Josh Lurz, Sonny Kim
 * \warning markets are not necessarily set when completeInit is called
 */
-void SubResource::completeInit( const IInfo* aResourceInfo ) {
+void SubResource::completeInit( const std::string& aRegionName, const std::string& aResourceName,
+                                const IInfo* aResourceInfo ) {
     mSubresourceInfo.reset( InfoFactory::constructInfo( aResourceInfo, mName ) ); 
     // update the available resource for period 0
     // this function must be called after all the grades have been parsed and nograde set
@@ -193,7 +194,7 @@ void SubResource::completeInit( const IInfo* aResourceInfo ) {
 * \param aPeriod Model aPeriod
 */
 void SubResource::initCalc( const string& aRegionName, const string& aResourceName,
-                           const int aPeriod )
+                            const IInfo* aResourceInfo, const int aPeriod )
 {
     // call grade initializations
     for (unsigned int i = 0; i < mGrade.size(); i++) {
@@ -382,7 +383,8 @@ void SubResource::updateAvailable( const int aPeriod ){
 //! calculate annual supply
 /*! Takes into account short-term capacity limits.
 Note that cumulsupply() must be called before calling this function. */
-void SubResource::annualsupply( int aPeriod, const GDP* aGdp, double aPrice, double aPrev_price ) {
+void SubResource::annualsupply( const std::string& aRegionName, const std::string& aResourceName,
+                                int aPeriod, const GDP* aGdp, double aPrice, double aPrev_price ) {
     const Modeltime* modeltime = scenario->getModeltime();
     // For period 0 use initial annual supply. Cumulative production is 0 for period 0
     if ( aPeriod >= 1) {

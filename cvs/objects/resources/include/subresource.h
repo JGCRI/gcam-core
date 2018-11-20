@@ -64,6 +64,7 @@ class Tabs;
 // Need to forward declare the subclasses as well.
 class SubRenewableResource;
 class SmoothRenewableSubresource;
+class ReserveSubResource;
 
 /*! 
 * \ingroup Objects
@@ -81,14 +82,17 @@ public:
     virtual ~SubResource();
     const std::string& getName() const;
     void XMLParse( const xercesc::DOMNode* tempnode );
-    virtual void completeInit( const IInfo* aResourceInfo );
+    virtual void completeInit( const std::string& aRegionName, const std::string& aResourceName,
+                               const IInfo* aResourceInfo );
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
     virtual void cumulsupply( double aPrice, int aPeriod );
-    virtual void initCalc( const std::string& aRegionName, const std::string& aResourceName, const int aPeriod );
+    virtual void initCalc( const std::string& aRegionName, const std::string& aResourceName,
+                           const IInfo* aResourceInfo, const int aPeriod );
     virtual void postCalc( const std::string& aRegionName, const std::string& aResourceName, const int aPeriod );
     virtual double getCumulProd( const int aPeriod ) const;
-    virtual void annualsupply( int aPeriod, const GDP* aGdp, double aPrice, double aPrevPrice );
+    virtual void annualsupply( const std::string& aRegionName, const std::string& aResourceName,
+                               int aPeriod, const GDP* aGdp, double aPrice, double aPrevPrice );
     double getAnnualProd( int aPeriod ) const;
     double getAvailable( int aPeriod ) const;
     void updateAvailable( const int period );
@@ -105,7 +109,8 @@ protected:
         /* Declare all subclasses of SubResource to allow automatic traversal of the
          * hierarchy under introspection.
          */
-        DEFINE_SUBCLASS_FAMILY( SubResource, SubRenewableResource, SmoothRenewableSubresource ),
+        DEFINE_SUBCLASS_FAMILY( SubResource, SubRenewableResource, SmoothRenewableSubresource,
+                                ReserveSubResource ),
         
         //! SubResource name.
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
