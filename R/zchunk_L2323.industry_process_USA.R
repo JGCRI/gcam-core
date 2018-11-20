@@ -39,7 +39,7 @@ module_gcam.usa_L2323.industry_process_USA <- function(command, ...) {
       left_join(A32.process_eff_USA %>%
                   select(-region),
                 by = c("supplysector", "subsector", "stub.technology" = "technology", "year")) %>%
-      mutate(market.name = "USA") -> L2323.StubTechCoef_indproc_USA
+      mutate(market.name = gcamusa.DEFAULT_MARKET) -> L2323.StubTechCoef_indproc_USA
 
     # ===================================================
     # Produce outputs

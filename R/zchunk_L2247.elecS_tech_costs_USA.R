@@ -85,10 +85,10 @@ module_gcam.usa_L2247.elecS_tech_costs_USA <- function(command, ...) {
 
     # Copy the 2015 data to all base years and convert to right units
     A23.elec_overnight_costs_USA %>%
-      complete(nesting(GCAM.technology), year = c(BASE_YEARS, unique(A23.elec_overnight_costs_USA$year))) %>%
+      complete(nesting(GCAM.technology), year = c(MODEL_BASE_YEARS, unique(A23.elec_overnight_costs_USA$year))) %>%
       group_by(GCAM.technology) %>%
       # Use the 2015 value for all base years
-      mutate(overnight.cost = replace(overnight.cost, year %in% BASE_YEARS, overnight.cost[year == 2015]),
+      mutate(overnight.cost = replace(overnight.cost, year %in% MODEL_BASE_YEARS, overnight.cost[year == 2015]),
              # Convert to 1975USD
              overnight.cost = overnight.cost * gdp_deflator(1975, base_year = 2013)) %>%
       filter(!is.na(overnight.cost)) ->
@@ -207,7 +207,7 @@ module_gcam.usa_L2247.elecS_tech_costs_USA <- function(command, ...) {
     L2247.elec_overnight_costs_adv_USA %>%
       filter(GCAM.technology %in% gcamusa.INT_TECH_LIST) %>%
       group_by(GCAM.technology) %>%
-      mutate(adv.ratio = overnight.cost / overnight.cost[year == min(FUTURE_YEARS)]) %>%
+      mutate(adv.ratio = overnight.cost / overnight.cost[year == min(MODEL_FUTURE_YEARS)]) %>%
       ungroup %>%
       mutate(GCAM.technology = paste0(GCAM.technology, "_storage")) ->
       L2247.elec_overnight_costs_adv_storage_USA

@@ -129,7 +129,7 @@ module_gcam.usa_L2244.nuclear_USA <- function(command, ...) {
       left_join_error_no_match(L2244.nuc_gen2_s_curve_parameters, by = "region") %>%
       left_join(L2244.nuc_gen2_lifetime, by ="region") %>%
       filter(!is.na(lifetime)) %>%
-      mutate(year = max(BASE_YEARS)) %>%
+      mutate(year = max(MODEL_BASE_YEARS)) %>%
       rename(supplysector = Electric.sector, stub.technology = Electric.sector.technology) %>%
       select(LEVEL2_DATA_NAMES[["StubTechSCurve"]]) ->
       L2244.StubTechSCurve_nuc_gen2_USA
@@ -139,7 +139,7 @@ module_gcam.usa_L2244.nuclear_USA <- function(command, ...) {
     L2244.nuc_stubtech %>%
       filter(grepl("Gen III", Electric.sector.technology)) %>%
       repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
-      repeat_add_columns(tibble(year = FUTURE_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) %>%
       filter(year <= 2030) %>%
       mutate(share.weight = 0,
              # Adjust Gen III shareweight for GA which which has a plant under construction that's

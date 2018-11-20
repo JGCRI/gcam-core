@@ -221,7 +221,7 @@ module_gcam.usa_LB1235.elec_load_segments_USA <- function(command, ...) {
       summarise_at("generation", sum) %>%
       ungroup() %>%
       mutate(year = as.integer(year)) %>%
-      filter(year %in% BASE_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       # intended to duplicate rows; left_join_error_no_match throws an error
       left_join(elecS_fuel_fraction, by = c("fuel", "year")) %>%
       filter(!is.na(fraction)) %>%

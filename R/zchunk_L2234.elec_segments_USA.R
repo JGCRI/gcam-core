@@ -316,7 +316,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
     # Shareweights
     A23.elecS_globaltech_shrwt %>%
       gather_years("share.weight") %>%
-      complete(nesting(supplysector, subsector, technology), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
+      complete(nesting(supplysector, subsector, technology), year = c(year, MODEL_BASE_YEARS,MODEL_FUTURE_YEARS)) %>%
       arrange(supplysector, subsector, technology, year) %>%
       group_by(supplysector, subsector, technology) %>%
       mutate(share.weight = approx_fun(year, share.weight)) %>%
@@ -329,7 +329,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
 
     A23.elecS_globalinttech_shrwt %>%
       gather_years("share.weight") %>%
-      complete(nesting(supplysector, subsector, technology), year = c(year, BASE_YEARS, FUTURE_YEARS)) %>%
+      complete(nesting(supplysector, subsector, technology), year = c(year, MODEL_BASE_YEARS,MODEL_FUTURE_YEARS)) %>%
       arrange(supplysector, subsector, technology, year) %>%
       group_by(supplysector, subsector, technology) %>%
       mutate(share.weight = approx_fun(year, share.weight)) %>%
@@ -542,7 +542,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       bind_rows(A23.elecS_tech_associations) -> L2234.StubTechProd_elecS_USA_temp
 
     L2234.StubTechProd_elecS_USA_temp %>%
-      repeat_add_columns(tibble::tibble(year = BASE_YEARS)) %>%
+      repeat_add_columns(tibble::tibble(year = MODEL_BASE_YEARS)) %>%
       write_to_all_states(c("region","Electric.sector", "supplysector", "subsector",
                             "Electric.sector.technology", "technology","year")) -> L2234.StubTechProd_elecS_USA_temp
 
@@ -620,7 +620,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
     # near top of script) or (2) zeroing out their shareweights in future model periods.
 
     L2234.StubTechProd_elecS_USA %>%
-      filter(year == max(BASE_YEARS)) -> L2234.StubTechProd_elecS_USA_final_cal_year
+      filter(year == max(MODEL_BASE_YEARS)) -> L2234.StubTechProd_elecS_USA_final_cal_year
 
     L2234.SubsectorShrwt_elecS_USA %>%
       mutate(stub.technology = if_else(supplysector == "base load generation", "nuc_base_Gen II",
@@ -697,7 +697,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
     # Fixed Output for hydro in future years.
     # We apply the same fule fractions in future years as in the final calibration year
     L2234.fuelfractions_segment_USA %>%
-      filter(year == max(BASE_YEARS),
+      filter(year == max(MODEL_BASE_YEARS),
              subsector == "hydro") -> L2234.fuelfractions_segment_USA_hydro_final_calibration_year
 
     L223.StubTechFixOut_hydro_USA %>%
@@ -716,7 +716,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
     # Efficiencies for biomass, coal, oil, and gas technologies in calibration years
     L2234.StubTechMarket_elecS_USA %>%
       filter(subsector %in% c("coal", "gas", "refined liquids", "biomass"),
-             year %in% BASE_YEARS) %>%
+             year %in% MODEL_BASE_YEARS) %>%
       left_join_error_no_match(A23.elecS_tech_associations,
                            by = c("supplysector" = "Electric.sector", "subsector",
                                   "stub.technology" = "Electric.sector.technology")) %>%
@@ -738,7 +738,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
     # (in L223.StubTechEff_elec_USA) are based on the actual historical efficiency in the L123.eff_R_elec_F_Yh.csv file.
     L123.eff_R_elec_F_Yh %>%
       gather_years("eff_actual") %>%
-      filter(GCAM_region_ID == 1, year %in% BASE_YEARS) -> L2234.fuel_eff_actual
+      filter(GCAM_region_ID == gcam.USA_CODE, year %in% MODEL_BASE_YEARS) -> L2234.fuel_eff_actual
 
     L2234.StubTechEff_elecS_USA %>%
       group_by (region, supplysector, subsector, year) %>%
@@ -912,7 +912,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       mutate(subsector = paste(region,supplysector, sep = " ")) %>%
       select(grid_region, supplysector, subsector) %>%
       rename(region = grid_region) %>%
-      mutate(logit.year.fillout = min(BASE_YEARS)) %>%
+      mutate(logit.year.fillout = min(MODEL_BASE_YEARS)) %>%
       mutate(logit.exponent = -6) %>%
       mutate(logit.type = "relative-cost-logit") -> L2234.SubsectorLogit_elecS_grid
 
@@ -925,14 +925,14 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
     # Shareweights for subsectors in grid regions
     L2234.SubsectorLogit_elecS_grid %>%
       select(region, supplysector, subsector) %>%
-      mutate(year.fillout = min(FUTURE_YEARS)) %>%
+      mutate(year.fillout = min(MODEL_FUTURE_YEARS)) %>%
       mutate(share.weight = 1) -> L2234.SubsectorShrwtFllt_elecS_grid
 
     L2234.SubsectorLogit_elecS_grid %>%
       select(region, supplysector, subsector) %>%
       mutate(apply.to = "share-weight") %>%
-      mutate(from.year = max(BASE_YEARS)) %>%
-      mutate(to.year = max(FUTURE_YEARS)) %>%
+      mutate(from.year = max(MODEL_BASE_YEARS)) %>%
+      mutate(to.year = max(MODEL_FUTURE_YEARS)) %>%
       mutate(interpolation.function = "fixed" ) -> L2234.SubsectorShrwtInterp_elecS_grid
 
     # Shareweights for technologies in grid region sectors. This is a new table that needs to created.

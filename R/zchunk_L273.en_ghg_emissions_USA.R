@@ -77,7 +77,7 @@ module_gcam.usa_L273.en_ghg_emissions_USA <- function(command, ...) {
     # L273.res_ghg_tech_coeff_USA: GHG emissions for energy resources in all U.S. states
     # For resources all that needs to be done is to write the USA coefficients for every state
     L201.ghg_res %>%
-      filter(region == "USA") %>%
+      filter(region == gcam.USA_REGION) %>%
       select(-region) %>%
       repeat_add_columns(tibble("region" = states_subregions$state)) %>%
       select(region, depresource, Non.CO2, emiss.coef) ->
@@ -89,7 +89,7 @@ module_gcam.usa_L273.en_ghg_emissions_USA <- function(command, ...) {
     ## Remove H2 production emissions for now because energy is not available on state level
     # Refining first:
      L241.nonco2_tech_coeff %>%
-       filter(region == "USA" & Non.CO2 %in% c("N2O","CH4") & supplysector == "refining") ->
+       filter(region == gcam.USA_REGION & Non.CO2 %in% c("N2O","CH4") & supplysector == "refining") ->
        L241.ref_ghg_tech_coeff_USA
 
      # Match the refining emission factors to the corresponding technologies in the states. Matching on subsector
@@ -107,7 +107,7 @@ module_gcam.usa_L273.en_ghg_emissions_USA <- function(command, ...) {
 
      # Write electricity emission coefficients to states for technologies shared by GCAMUSA and emissions data
      L241.nonco2_tech_coeff %>%
-       filter(region == "USA" & Non.CO2 %in% c("N2O","CH4") & supplysector == "electricity") ->
+       filter(region == gcam.USA_REGION & Non.CO2 %in% c("N2O","CH4") & supplysector == "electricity") ->
        L241.elc_ghg_tech_coeff_USA
 
      L223.StubTech_elec_USA %>%
@@ -140,7 +140,7 @@ module_gcam.usa_L273.en_ghg_emissions_USA <- function(command, ...) {
      # L273.en_ghg_emissions_USA: Calibrated input emissions of N2O and CH4 by U.S. state
      # Filter the emissions data into USA, and transportation is calibrated elsewhere
      L201.en_ghg_emissions %>%
-       filter(region == "USA" & !grepl("trn",supplysector)) %>%
+       filter(region == gcam.USA_REGION & !grepl("trn",supplysector)) %>%
        spread(Non.CO2, input.emissions) %>%
        ###NOTE: emissions from coal use in commercial buildings "other" category does not have an equivalent representation
        #in the fifty state data. For now move these emissions over to comm heating
@@ -254,7 +254,7 @@ module_gcam.usa_L273.en_ghg_emissions_USA <- function(command, ...) {
      ###the energy data is available at the state level and will be used to share out the emissions
      L241.hfc_all %>%
        bind_rows(L241.pfc_all) %>%
-       filter(region == "USA") ->
+       filter(region == gcam.USA_REGION) ->
        L241.hfc_pfc_USA
 
      # Emissions from electricity own use
@@ -356,7 +356,7 @@ module_gcam.usa_L273.en_ghg_emissions_USA <- function(command, ...) {
      # L273.ResMAC_fos_USA: fossil resource MAC curves for all U.S. states
      # The MAC curves will be identical to those for the USA
      L252.ResMAC_fos %>%
-       filter(region == "USA") %>%
+       filter(region == gcam.USA_REGION) %>%
        select(depresource, Non.CO2, mac.control, tax, mac.reduction, market.name) %>%
        repeat_add_columns(tibble("region" = states_subregions$state)) %>%
        select(region, depresource, Non.CO2, mac.control, tax, mac.reduction) ->
@@ -364,7 +364,7 @@ module_gcam.usa_L273.en_ghg_emissions_USA <- function(command, ...) {
 
      # L273.MAC_higwp_USA: abatement from HFCs and PFCs in all U.S. states
      # The MAC curves will be identical to those for the USA.
-     L252.MAC_higwp_USA <- filter(L252.MAC_higwp, region == "USA")
+     L252.MAC_higwp_USA <- filter(L252.MAC_higwp, region == gcam.USA_REGION)
 
      # For building cooling, have to add more specific technologies on the state level. This means that both
      # of the building cooling techs in GCAM-USA will have identical MAC curves

@@ -45,15 +45,15 @@ module_gcam.usa_L2242.elec_hydro_USA <- function(command, ...) {
     # Isolate 2010 hydro fixedOutput
     L2234.StubTechFixOut_elecS_USA %>%
       filter(subsector == "hydro",
-             year == max(BASE_YEARS)) %>%
+             year == max(MODEL_BASE_YEARS)) %>%
       filter(fixedOutput != 0) -> L2242.hydro_2010_fixedOutput
 
     # Filter EIA data to get annual hydro net generation for 2010, 2015
     # Compute ratio of 2015 EIA to 2010 EIA
     EIA_elec_gen_hydro %>%
-      filter(year %in% c(max(BASE_YEARS), min(FUTURE_YEARS))) %>%
+      filter(year %in% c(max(MODEL_BASE_YEARS), min(MODEL_FUTURE_YEARS))) %>%
       group_by(state) %>%
-      mutate(EIA_ratio =  EIA[year == min(FUTURE_YEARS)] /EIA[year == max(BASE_YEARS)] ) %>%
+      mutate(EIA_ratio =  EIA[year == min(MODEL_FUTURE_YEARS)] /EIA[year == max(MODEL_BASE_YEARS)] ) %>%
       distinct(state, EIA_ratio) %>%
       ungroup() -> L2242.hydro_EIA_ratio
 
@@ -69,14 +69,14 @@ module_gcam.usa_L2242.elec_hydro_USA <- function(command, ...) {
     L2242.hydro_2010_fixedOutput %>%
       left_join_error_no_match(L2242.hydro_EIA_ratio, by = c("region" = "state")) %>%
       mutate(fixedOutput_2015 = fixedOutput * EIA_ratio,
-             year = min(FUTURE_YEARS),
+             year = min(MODEL_FUTURE_YEARS),
              share.weight.year = year,
              fixedOutput = fixedOutput_2015) %>%
       select(-EIA_ratio, -fixedOutput_2015) -> L2242.hydro_fixedOutput_2015
 
     # Compute ratio of AEO-2018 hydro generation relative to EIA 2015 at the national level
     EIA_elec_gen_hydro %>%
-      filter(year == min(FUTURE_YEARS)) %>%
+      filter(year == min(MODEL_FUTURE_YEARS)) %>%
       group_by(year) %>%
       summarise(hydro_EIA_US_2015 = sum(EIA) * CONV_MWH_EJ) %>%
       ungroup() -> L2242.hydro_EIA_US_2015
@@ -86,7 +86,7 @@ module_gcam.usa_L2242.elec_hydro_USA <- function(command, ...) {
     # The same ratio is assumed for all states
     AEO_2018_elec_gen_hydro %>%
       mutate(AEO_2015_ratio = (AEO * CONV_TWH_EJ) / L2242.hydro_EIA_US_2015) %>%
-      filter(year %in% FUTURE_YEARS) %>%
+      filter(year %in%MODEL_FUTURE_YEARS) %>%
       select(year, AEO_2015_ratio) %>%
       repeat_add_columns(tibble::tibble(region = gcamusa.STATES)) %>%
       # filtering out states with no hydro generation
@@ -104,7 +104,7 @@ module_gcam.usa_L2242.elec_hydro_USA <- function(command, ...) {
 
     # Copy 2050 values for the remaining years
     L2242.StubTechFixOut_hydro_USA_2050 %>%
-      complete(year = FUTURE_YEARS, nesting(region, supplysector, subsector, stub.technology,
+      complete(year = MODEL_FUTURE_YEARS, nesting(region, supplysector, subsector, stub.technology,
                                             subs.share.weight, tech.share.weight)) %>%
       group_by(region, supplysector, subsector, stub.technology) %>%
       mutate(fixedOutput = replace(fixedOutput, year > 2050, fixedOutput[year == 2050])) %>%

@@ -138,7 +138,7 @@ module_gcam.usa_LA2233.electricity_water_USA <- function(command, ...) {
       rename(supplysector = Electric.sector) %>%
       dplyr::select(-technology) %>%
       rename(technology = Electric.sector.technology) %>%
-      mutate(market.name = "USA")%>%
+      mutate(market.name = gcamusa.DEFAULT_MARKET)%>%
       dplyr::select(region,supplysector,subsector,technology,year,minicam.energy.input,coefficient,market.name)%>%
       anti_join(geo_states_noresource,by=c("region","subsector"))->   # Removing states which do not have geothermal technologies
       L2233.StubTech_WaterCoef_ref

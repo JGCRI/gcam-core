@@ -60,8 +60,8 @@ module_gcam.usa_LB1237.elec_load_segments_solver_2005_USA <- function(command, .
     # Data Processing
 
     #Initialize Variables
-    script_year = BASE_YEARS[3]
-    next_year = BASE_YEARS[4]
+    script_year = MODEL_BASE_YEARS[3]
+    next_year = MODEL_BASE_YEARS[4]
     L1237.grid_elec_supply <- L1236.grid_elec_supply_USA
     L1237.elecS_demand_fraction <- L1235.elecS_demand_fraction_USA
     L1237.elecS_horizontal_vertical <- L1235.elecS_horizontal_vertical_USA
@@ -89,7 +89,7 @@ module_gcam.usa_LB1237.elec_load_segments_solver_2005_USA <- function(command, .
       group_by(grid_region, sector, year, fuel) %>%
       summarise_at("generation", sum) %>%
       ungroup() %>%
-      filter(year %in% BASE_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       rename(tot_generation = generation) -> L1237.out_EJ_grid_elec_F
 
     L1237.segment_list <- unique(elecS_horizontal_to_vertical_map$horizontal_segment)

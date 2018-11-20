@@ -378,7 +378,7 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
     # because it's all going to be scaled later anyway. These unscaled values are only used to compute
     # percentage-wise by fuels to specific services.
     EIA_AEO_Tab5 %>%
-      filter(year == max(BASE_YEARS),
+      filter(year == max(MODEL_BASE_YEARS),
              variable != "Floorspace") %>%
       select(EIA_fuel = fuel,
              EIA_service = service,
@@ -391,7 +391,7 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
       ungroup() -> L144.EIA_QER_target
 
     L144.in_EJ_state_comm_F_U_Y_unscaled %>%
-      filter(year == max(BASE_YEARS)) %>%
+      filter(year == max(MODEL_BASE_YEARS)) %>%
       group_by(fuel, service) %>%
       summarise(initial = sum(value)) %>%
       ungroup() %>%
@@ -406,7 +406,7 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
       left_join_error_no_match(L144.scaler_USA_comm_F_U_2010 %>%
                                  select(fuel, service, scaler),
                                by = c("fuel", "service")) %>%
-      mutate(value = if_else(year == max(BASE_YEARS), value * scaler, value)) %>%
+      mutate(value = if_else(year == max(MODEL_BASE_YEARS), value * scaler, value)) %>%
       select(-scaler) -> L144.in_EJ_state_comm_F_U_Y_unscaled
 
 

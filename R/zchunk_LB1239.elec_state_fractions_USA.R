@@ -43,7 +43,7 @@ module_gcam.usa_LB1239.elec_state_fractions_USA <- function(command, ...) {
 
     #Initialize state electricity table
     L123.out_EJ_state_elec_F %>%
-      filter(year %in% BASE_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       mutate(fuel = sub("solar CSP", "solar", fuel)) %>%
       mutate(fuel = sub("solar PV", "solar", fuel)) %>%
       group_by(state, sector, fuel, year) %>%

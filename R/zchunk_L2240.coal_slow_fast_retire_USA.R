@@ -99,7 +99,7 @@ module_gcam.usa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
 
     # Prepare a table for stub technologies with all stats and base years
     A23.elec_tech_associations_coal_retire %>%
-      repeat_add_columns(tibble(year = BASE_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_BASE_YEARS)) %>%
       repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
       rename(supplysector = Electric.sector, stub.technology = Electric.sector.technology) ->
       L2240.elec_USA_coalret_base
@@ -207,7 +207,7 @@ module_gcam.usa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
     # Profit Shutdown decider
     # L2240.GlobalTechProfitShutdown_elec_coalret: Profit shut-down decider for historic U.S. conventional coal electricity plants by load segment
     L2240.elec_USA_coalret %>%
-      filter(year >= max(BASE_YEARS)) %>%
+      filter(year >= max(MODEL_BASE_YEARS)) %>%
       left_join_error_no_match(L2234.GlobalTechProfitShutdown_elecS_USA,
                                by = c("supplysector", "subsector",  "tech" = "technology", "year")) %>%
       select(supplysector, subsector, technology, year, median.shutdown.point, profit.shutdown.steepness) ->
@@ -218,7 +218,7 @@ module_gcam.usa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
     #   select(supplysector = Electric.sector, subsector, stub.technology = Electric.sector.technology) %>%
     #   filter(grepl("generation", supplysector)) %>%
     #   repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
-    #   repeat_add_columns(tibble(year = FUTURE_YEARS)) %>%
+    #   repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) %>%
     #   mutate(share.weight = 0) %>%
     #   select(LEVEL2_DATA_NAMES[["StubTechYr"]], share.weight) ->
     #   L2240.StubTechShrwt_coal_retire_elec_USA

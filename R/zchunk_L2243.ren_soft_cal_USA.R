@@ -68,7 +68,7 @@ module_gcam.usa_L2243.ren_soft_cal_USA <- function(command, ...) {
                 by = c("state_name")) %>%
       select(-state_name)%>%
       left_join_error_no_match(EIA_tech_mapping, by = "fuel") %>%
-      filter(year == min(FUTURE_YEARS)) %>%
+      filter(year == min(MODEL_FUTURE_YEARS)) %>%
       mutate(value = value * CONV_GWH_EJ) %>%
       select(state, stub.technology = gcam_tech, year, gen2015 = value, -units) -> L2243.ren_gen_2015
 
@@ -77,7 +77,7 @@ module_gcam.usa_L2243.ren_soft_cal_USA <- function(command, ...) {
     # as fixed output for "_2015" technologies in corresponding subsectors.
     # We'll keep the fixed outputs constant over time.
     L223.StubTechProd_elec_USA %>%
-      filter(year == max(BASE_YEARS),
+      filter(year == max(MODEL_BASE_YEARS),
              stub.technology %in% unique(L2243.ren_gen_2015$stub.technology)) %>%
       select(region, stub.technology, gen2010 = calOutputValue) %>%
       # need a right join here because LHS does not have rooftop_pv but RHS does
@@ -89,9 +89,9 @@ module_gcam.usa_L2243.ren_soft_cal_USA <- function(command, ...) {
       mutate(fixedOutput = if_else(fixedOutput < 0, 0, fixedOutput)) %>%
       left_join_error_no_match(A23.elec_tech_ren_soft_cal, by = c("stub.technology" = "technology")) %>%
       select(region, supplysector, subsector, stub.technology = new.technology, fixedOutput) %>%
-      repeat_add_columns(tibble::tibble(year = FUTURE_YEARS)) %>%
+      repeat_add_columns(tibble::tibble(year = MODEL_FUTURE_YEARS)) %>%
       # NOTE:  read in share-weight year as 1975 to avoid over-writing subsector shareweights that are read in for the electricity sector
-      mutate(share.weight.year = min(BASE_YEARS),
+      mutate(share.weight.year = min(MODEL_BASE_YEARS),
              subs.share.weight = 0,
              tech.share.weight = 0) %>%
       select(LEVEL2_DATA_NAMES$StubTechFixOut) %>%
