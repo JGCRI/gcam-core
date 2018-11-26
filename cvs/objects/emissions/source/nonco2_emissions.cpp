@@ -251,13 +251,6 @@ void NonCO2Emissions::initCalc( const string& aRegionName, const IInfo* aTechInf
     // the initial vintage year of the technology.
     mShouldCalibrateEmissCoef = mInputEmissions.isInited() && aTechInfo->getBoolean( "new-vintage-tech", true );
     
-    // Set the current adjusted coef in the shared vector only if the current adjusted coef
-    // was calculated for a new vintage tech.
-    // TODO: this might be better suited to be done in a postCalc if it existed.
-    if( (aPeriod - 1) == aTechInfo->getInteger( "initial-tech-period", false ) ) {
-        (*mAdjustedEmissCoef)[ aPeriod - 1 ] = mCurrAdjustedEmissCoef;
-    }
-    
     for ( CControlIterator controlIt = mEmissionsControls.begin(); controlIt != mEmissionsControls.end(); ++controlIt ) {
         (*controlIt)->initCalc( aRegionName, aTechInfo, this, aPeriod );
     }
@@ -384,9 +377,11 @@ void NonCO2Emissions::calcEmission( const string& aRegionName,
     mEmissions[ aPeriod ] = totalEmissions;
     
     // Stash actual emissions coefficient including impact of any controls. Needed by control
-    // objects that apply reductions relative to this emission coefficient value
-    mCurrAdjustedEmissCoef = emissDriver > 0 ? totalEmissions / emissDriver : 0;
-    
+    // objects that apply reductions relative to the actual emission coefficient
+	// This is only needed for past periods - so this would ideally be done in a postCalc() object if that existed
+	mCurrAdjustedEmissCoef = emissDriver > 0 ? totalEmissions / emissDriver : 0;
+    (*mAdjustedEmissCoef)[ aPeriod ] = mCurrAdjustedEmissCoef;    
+
     addEmissionsToMarket( aRegionName, aPeriod );
 }
 
