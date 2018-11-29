@@ -28,7 +28,7 @@ module_water_batch_water_supply_constrained_xml <- function(command, ...) {
     # ===================================================
 
     # Produce outputs
-    create_xml("water_supply_uncalibrated.xml") %>%
+    create_xml("water_supply_constrained.xml") %>%
       add_xml_data(L201.RenewRsrcCurves_calib, "RenewRsrcCurves") %>%
       add_xml_data(L201.GrdRenewRsrcMax_runoff, "GrdRenewRsrcMaxNoFO") %>%
       add_xml_data(L201.DepRsrcCurves_ground, "DepRsrcCurves") %>%
