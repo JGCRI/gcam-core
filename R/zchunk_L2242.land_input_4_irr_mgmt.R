@@ -75,15 +75,15 @@ module_aglu_L2242.land_input_4_irr_mgmt <- function(command, ...) {
     # Specify ghost node share for bioenergy node in future years (starting with first bio year).
     L2012.AgYield_bio_ref %>%
       distinct(region, AgSupplySubsector) %>%
-      mutate(GCAM_commodity = if_else(grepl("^biomass_grass", AgSupplySubsector), "biomass_grass", "biomass_tree")) %>%
-      mutate(GLU_name = if_else(grepl("^biomass_grass", AgSupplySubsector), gsub("biomass_grass_", "", AgSupplySubsector),
+      mutate(GCAM_commodity = if_else(grepl("^biomass_grass", AgSupplySubsector), "biomass_grass", "biomass_tree"),
+             GLU_name = if_else(grepl("^biomass_grass", AgSupplySubsector), gsub("biomass_grass_", "", AgSupplySubsector),
                                                                             gsub("biomass_tree_", "", AgSupplySubsector))) %>%
       left_join_error_no_match(A_LT_Mapping, by = "GCAM_commodity") %>%
-      mutate(LandAllocatorRoot = "root") %>%
-      mutate(LandNode1 = paste(LandNode1, GLU_name, sep = "_")) %>%
-      mutate(LandNode2 = paste(LandNode2, GLU_name, sep = "_")) %>%
-      mutate(LandNode3 = paste(LandNode3, GLU_name, sep = "_")) %>%
-      mutate(LandNode4 = paste(LandLeaf, GLU_name, sep = "_")) %>%
+      mutate(LandAllocatorRoot = "root",
+             LandNode1 = paste(LandNode1, GLU_name, sep = "_"),
+             LandNode2 = paste(LandNode2, GLU_name, sep = "_"),
+             LandNode3 = paste(LandNode3, GLU_name, sep = "_"),
+             LandNode4 = paste(LandLeaf, GLU_name, sep = "_")) %>%
       repeat_add_columns(tibble::tibble(year = FUTURE_YEARS)) %>%
       filter(year >= aglu.BIO_START_YEAR) %>%
       left_join(A_bio_ghost_share, by = "year") %>%

@@ -126,8 +126,8 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
     # Replace the data in the IEA energy balances table
     L101.en_bal_EJ_R_Si_Fi_Yh_full %>%
       left_join(L1011.in_EJ_R_intlship_Yh %>%
-                  mutate(sector = "in_trn_international ship") %>%
-                  mutate(fuel = "refined liquids"),
+                  mutate(sector = "in_trn_international ship",
+                         fuel = "refined liquids"),
                 by = c("sector", "fuel", "year", "GCAM_region_ID")) %>%
       mutate(value.x = if_else(is.na(value.y), value.x, value.y)) %>%
       select(GCAM_region_ID, sector, fuel, year, value = value.x) -> L1011.en_bal_EJ_R_Si_Fi_Yh
@@ -171,13 +171,13 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
       mutate(value = value.x / value.y) %>%
       select(GCAM_region_ID, sector, fuel, year, value) %>%
       # Changing the fuel to gas, sector to TPES so we can easily join it with gas in the next step
-      mutate(fuel = "gas") %>%
-      mutate(sector = "TPES") -> L1011.out_EJ_R_gasproc_coal_Yh
+      mutate(fuel = "gas",
+             sector = "TPES") -> L1011.out_EJ_R_gasproc_coal_Yh
 
     # Subtract gasified coal from natural gas TPES
     L1011.en_bal_EJ_R_Si_Fi_Yh %>%
       left_join(L1011.out_EJ_R_gasproc_coal_Yh, by = c("GCAM_region_ID", "sector", "fuel", "year"))%>%
-      mutate(value.x = if_else(is.na(value.y), value.x, value.x-value.y)) %>%
+      mutate(value.x = if_else(is.na(value.y), value.x, value.x - value.y)) %>%
       rename(value = value.x) %>%
       select(GCAM_region_ID, sector, fuel, year, value)-> L1011.en_bal_EJ_R_Si_Fi_Yh
 

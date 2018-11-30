@@ -146,8 +146,8 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
       # Assume missing values mean 100% forest fires since these are easier to model in GCAM
       replace_na(list(PctForestFire = 1)) %>%
       replace_na(list(PctDeforest = 0)) %>%
-      mutate(ForestFire = value * PctForestFire) %>%                                                   # Compute forest fire emissions
-      mutate(Deforest = value * PctDeforest) %>%                                                       # Compute deforestation emissions
+      mutate(ForestFire = value * PctForestFire,
+             Deforest = value * PctDeforest) %>%                                                       # Compute deforestation emissions
       ungroup() %>%
       select(-value, -PctForestFire, -PctDeforest) %>%
       gather(technology, value, -GCAM_region_ID, -GLU, -Land_Type, -Non.CO2, -year) ->
@@ -161,8 +161,8 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
       filter(year %in% emissions.DEFOREST_COEF_YEARS) %>%                                             # Get years that we'll use for deforestation calculation (as of 5/14/17 this was 2000 & 2005)
       mutate(year = if_else(year == min(emissions.DEFOREST_COEF_YEARS), "year1", "year2")) %>%        # Rename years so we can use them as column headings (this also makes this robust to changes in years later)
       spread(year, value) %>%                                                                         # Spread so years are separate columns
-      mutate(driver = (year1 - year2) / (emissions.DEFOREST_COEF_YEARS[2] - emissions.DEFOREST_COEF_YEARS[1])) %>%    # Compute average annual deforestation rates (change in forest area / number of years)
-      mutate(driver = if_else(driver < 0, 0, driver)) %>%                                             # Deforestation emissions only happen if forest area decreases
+      mutate(driver = (year1 - year2) / (emissions.DEFOREST_COEF_YEARS[2] - emissions.DEFOREST_COEF_YEARS[1]),    # Compute average annual deforestation rates (change in forest area / number of years)
+             driver = if_else(driver < 0, 0, driver)) %>%                                             # Deforestation emissions only happen if forest area decreases
       repeat_add_columns(gas_list) %>%                                                                # Add in rows for all required emissions
       left_join(filter(L124.nonco2_tg_R_forest_Y_GLU,                                                 # Map in EDGAR deforestation emissions for the final deforestation year (as of 5/14/17 this was 2005)
                        year == emissions.DEFOREST_COEF_YEARS[2],

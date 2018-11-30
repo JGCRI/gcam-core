@@ -86,8 +86,8 @@ module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {
     L125.GFED_ALL <- bind_rows(
       left_join_error_no_match(L125.GFED_ForestFire_BC, L125.GFED_Deforest_BC, by = c("GCAM_region_ID", "Non.CO2")),
       left_join_error_no_match(L125.GFED_ForestFire_OC, L125.GFED_Deforest_OC, by = c("GCAM_region_ID", "Non.CO2"))) %>%
-      mutate(PctForestFire = ForestFire / (ForestFire + Deforest)) %>% # calculate % forest first of total emissions
-      mutate(PctForestFire = replace(PctForestFire, is.na(PctForestFire),1)) %>%
+      mutate(PctForestFire = ForestFire / (ForestFire + Deforest), # calculate % forest first of total emissions
+             PctForestFire = replace(PctForestFire, is.na(PctForestFire), 1)) %>%
       # There are regions where GFED data is zero for both forest fires and deforestation, leading to NAs
       # Assume those missing values are places with 100% forest fires since these are easier to model in GCAM
       arrange(GCAM_region_ID, Non.CO2, ForestFire, Deforest, PctForestFire)
@@ -165,8 +165,8 @@ module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {
       select(GCAM_region_ID, Land_Type, Non.CO2, ForestFire, Deforest) %>%
       gather(technology, em_factor, -GCAM_region_ID, -Land_Type, -Non.CO2) %>%
       replace_na(em_factor = 0) %>% # replace nas, nans, and infinite values with zero
-      mutate(em_factor = replace(em_factor, is.infinite(em_factor), 0)) %>%
-      mutate(em_factor = replace(em_factor, is.nan(em_factor), 0)) %>%
+      mutate(em_factor = replace(em_factor, is.infinite(em_factor), 0),
+             em_factor = replace(em_factor, is.nan(em_factor), 0)) %>%
       arrange(Non.CO2, Land_Type, GCAM_region_ID) %>%
       ungroup()
 

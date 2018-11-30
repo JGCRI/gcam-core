@@ -75,16 +75,16 @@ module_water_L110.water.demand.primary <- function(command, ...) {
 
     # Calculate water withdrawal, seawater, and consumption, then bind to single tibble
     L110.water_ratios_coef %>%
-      mutate(water_type = "water withdrawals") %>%
-      mutate(coefficient_WC = fresh * water.coefficient.m3.per.TJ * 1e-3) %>%
-      mutate(coefficient = coefficient_WC / cons_fr) %>%
+      mutate(water_type = "water withdrawals",
+             coefficient_WC = fresh * water.coefficient.m3.per.TJ * 1e-3,
+             coefficient = coefficient_WC / cons_fr) %>%
       select(-coefficient_WC) -> L110.water_withdrawals
     L110.water_ratios_coef %>%
-      mutate(water_type = "seawater") %>%
-      mutate(coefficient = sal * water.coefficient.m3.per.TJ * 1e-3) -> L110.seawater
+      mutate(water_type = "seawater",
+             coefficient = sal * water.coefficient.m3.per.TJ * 1e-3) -> L110.seawater
     L110.water_ratios_coef %>%
-      mutate(water_type = "water consumption") %>%
-      mutate(coefficient = fresh * water.coefficient.m3.per.TJ * 1e-3) %>%
+      mutate(water_type = "water consumption",
+             coefficient = fresh * water.coefficient.m3.per.TJ * 1e-3) %>%
       bind_rows(L110.water_withdrawals, L110.seawater) %>%
       select(GCAM_region_ID, supplysector, water_type, coefficient) ->
       L110.water_demand_primary

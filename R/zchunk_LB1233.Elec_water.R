@@ -115,7 +115,8 @@ module_gcam.usa_LB1233.Elec_water <- function(command, ...) {
                                by = c("sector", "fuel", "technology", "cooling_system", "water_type")) %>%
       # ^^ brings in national average data
       group_by(state, sector, fuel, technology) %>%
-      mutate(sum_share_tech = sum(share)) %>% ungroup %>%
+      mutate(sum_share_tech = sum(share)) %>%
+      ungroup %>%
       mutate(share = if_else(sum_share_tech == 0, share_nat, share)) %>%
       select(-share_nat, -sum_share_tech) %>%
       # multiply through by historical output
@@ -136,7 +137,8 @@ module_gcam.usa_LB1233.Elec_water <- function(command, ...) {
                                by = c("sector", "fuel", "technology", "cooling_system", "water_type")) %>%
       # ^^ brings in national average data
       group_by(grid_region, sector, fuel, technology) %>%
-      mutate(sum_share_tech = sum(share)) %>% ungroup %>%
+      mutate(sum_share_tech = sum(share)) %>%
+      ungroup %>%
       mutate(share = if_else(sum_share_tech == 0, share_nat, share)) %>%
       select(-share_nat, -sum_share_tech, -out_MWh) ->
       L1233.share_sR_elec_F_tech_cool

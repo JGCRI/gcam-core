@@ -72,8 +72,8 @@ module_water_L245.water.demand.municipal <- function(command, ...) {
       L245.SubsectorLogit  # Subsector logit detail
 
     L245.assumptions_all %>%
-      mutate(year.fillout = MODEL_YEARS[1]) %>%
-      mutate(share.weight = 1) %>%
+      mutate(year.fillout = MODEL_YEARS[1],
+             share.weight = 1) %>%
       # ^^ share weights are 1 due to no competition
       select(LEVEL2_DATA_NAMES$SubsectorShrwtFllt) ->
       L245.SubsectorShrwtFllt  # Subsector shareweights
@@ -105,9 +105,9 @@ module_water_L245.water.demand.municipal <- function(command, ...) {
       repeat_add_columns(tibble(water_type = c("water consumption", "water withdrawals"))) %>%
       # ^^ withdrawal coefficient is 1; consumption coefficient is fraction of withdrawal
       mutate(coefficient = if_else(water_type == "water withdrawals", 1,
-                                   round(efficiency, water.DIGITS_MUNI_WATER))) %>%
-      mutate(water_sector = "Municipal") %>%
-      mutate(minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector)) %>%
+                                   round(efficiency, water.DIGITS_MUNI_WATER)),
+             water_sector = "Municipal",
+             minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector)) %>%
       select(LEVEL2_DATA_NAMES$TechCoef) ->
       L245.TechCoef  # municipal water technology withdrawals and consumption efficiencies
 

@@ -85,8 +85,8 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
     # Note that "traded biomass" only goes in the BIOMASS.TRADE.REGION
     A_bio_supplysector %>%
       repeat_add_columns(tibble(region = GCAM_region_names$region)) %>%
-      mutate(region = if_else(traded == 1, BIOMASS.TRADE.REGION, region)) %>%
-      mutate(logit.year.fillout = min(MODEL_YEARS)) %>%
+      mutate(region = if_else(traded == 1, BIOMASS.TRADE.REGION, region),
+             logit.year.fillout = min(MODEL_YEARS)) %>%
       select(-traded) ->
       L243.Supplysector_Bio
 
@@ -105,8 +105,8 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       repeat_add_columns(tibble(subsector.name = c(DOMESTIC.BIOMASS.NAME, INTERNATIONAL.BIOMASS.NAME))) %>%
       mutate(technology = subsector.name) %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
-      mutate(minicam.energy.input = if_else(subsector.name == DOMESTIC.BIOMASS.NAME, BIOMASS.NAME, TRADED.BIOMASS.NAME)) %>%
-      mutate(coefficient = 1) ->
+      mutate(minicam.energy.input = if_else(subsector.name == DOMESTIC.BIOMASS.NAME, BIOMASS.NAME, TRADED.BIOMASS.NAME),
+             coefficient = 1) ->
       L243.GlobalTechCoef_TotBio
 
     # Add share-weights to the global technologies
@@ -159,9 +159,9 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
     # Note that "traded biomass" only goes in the BIOMASS.TRADE.REGION, but the subsector name includes the original region name
     A_bio_subsector_logit %>%
       repeat_add_columns(tibble(region = GCAM_region_names$region)) %>%
-      mutate(subsector = if_else(traded == 1, paste(region, subsector), subsector)) %>%
-      mutate(region = if_else(traded == 1, BIOMASS.TRADE.REGION, region)) %>%
-      mutate(logit.year.fillout = min(MODEL_YEARS)) %>%
+      mutate(subsector = if_else(traded == 1, paste(region, subsector), subsector),
+             region = if_else(traded == 1, BIOMASS.TRADE.REGION, region),
+             logit.year.fillout = min(MODEL_YEARS)) %>%
       select(-traded) ->
       L243.SubsectorLogit_Bio
 

@@ -58,9 +58,9 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
       cols <- c("COUNTRY", "FLOW", "PRODUCT", hy)
       bind_rows(en_OECD[cols], en_nonOECD[cols]) %>%
         # rename fuels with inconsistent naming between the two databases
-        mutate(PRODUCT = replace(PRODUCT, PRODUCT == "Natural Gas", "Natural gas")) %>%
-        mutate(PRODUCT = replace(PRODUCT, PRODUCT == "Other Kerosene", "Other kerosene")) %>%
-        mutate(PRODUCT = replace(PRODUCT, PRODUCT == "Total", "Total of all energy sources")) ->
+        mutate(PRODUCT = replace(PRODUCT, PRODUCT == "Natural Gas", "Natural gas"),
+               PRODUCT = replace(PRODUCT, PRODUCT == "Other Kerosene", "Other kerosene"),
+               PRODUCT = replace(PRODUCT, PRODUCT == "Total", "Total of all energy sources")) ->
         L100.IEAfull
 
       # UP FRONT ADJUSTMENTS (UFA) original lines 42-67

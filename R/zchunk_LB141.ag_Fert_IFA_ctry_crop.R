@@ -213,8 +213,8 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
         left_join_error_no_match(select(L141.HA_ha_Rifa_Cifa, IFA_region, IFA_commodity, IFA_N_tha_default),
                                  by = c("IFA_region", "IFA_commodity")) %>%
         # calculate bottom up fertilizer demand = harvested area * consumption rate, using defaults where missing
-        mutate(IFA_N_Mt_unscaled = HA_ha * IFA2002_N_tha * CONV_T_MT) %>%
-        mutate(IFA_N_Mt_unscaled = replace(IFA_N_Mt_unscaled,
+        mutate(IFA_N_Mt_unscaled = HA_ha * IFA2002_N_tha * CONV_T_MT,
+               IFA_N_Mt_unscaled = replace(IFA_N_Mt_unscaled,
                                            is.na(IFA_N_Mt_unscaled),
                                            (HA_ha * IFA_N_tha_default)[is.na(IFA_N_Mt_unscaled)] * CONV_T_MT)) ->
         # store in table of ctry-crop level bottom up estimates of N consumption

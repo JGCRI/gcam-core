@@ -30,9 +30,9 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     iso <- item <- year <- value <- GCAM_commodity <- GCAM_region_ID <- feed <-
-        Feedfrac <- FodderHerb <- FodderHerb_Residue <- residual <-
-            total_residual <- share <- Residue <- PastFodderGrass_Demand <-
-                Production <- Feed <- OtherUses <- NULL # silence package check.
+      Feedfrac <- FodderHerb <- FodderHerb_Residue <- residual <-
+      total_residual <- share <- Residue <- PastFodderGrass_Demand <-
+      Production <- Feed <- OtherUses <- NULL # silence package check.
 
     all_data <- list(...)[[1]]
 
@@ -108,8 +108,8 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
       group_by(year) %>%
       mutate(share = residual / sum(residual)) %>%                                                             # Compute share of residual in each region
       left_join(ag_Residual_Mt_glbl_FodderHerbResidue_Y, by = "year") %>%                                       # Map in global total residual
-      mutate(total_residual = if_else(total_residual < 0, 0, total_residual)) %>%                               # Set all negative residuals to zero
-      mutate(value = share * total_residual, GCAM_commodity = "FodderHerb") %>%                                 # Compute regional residual, set commodity name to FodderHerb
+      mutate(total_residual = if_else(total_residual < 0, 0, total_residual),                               # Set all negative residuals to zero
+             value = share * total_residual, GCAM_commodity = "FodderHerb") %>%                                 # Compute regional residual, set commodity name to FodderHerb
       select(-residual, -share, -total_residual) ->
       ag_OtherUses_Mt_R_FodderHerb_Y
 
@@ -121,9 +121,9 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
       group_by(year) %>%
       mutate(share = residual / sum(residual)) %>%                                                              # Compute share of residual in each region
       left_join(ag_Residual_Mt_glbl_FodderHerbResidue_Y, by = "year") %>%                                       # Map in global total residual
-      mutate(total_residual = if_else(total_residual > 0, 0, total_residual)) %>%                               # Set all positive residuals to zero
-      mutate(total_residual = total_residual * -1) %>%
-      mutate(value = share * total_residual, GCAM_commodity = "Residue") %>%                                    # Compute regional residual, set commodity name to Residue
+      mutate(total_residual = if_else(total_residual > 0, 0, total_residual),                              # Set all positive residuals to zero
+             total_residual = -total_residual,
+             value = share * total_residual, GCAM_commodity = "Residue") %>%                                    # Compute regional residual, set commodity name to Residue
       select(-residual, -share, -total_residual) ->
       ag_Feed_Mt_R_Residue_Y
 
@@ -132,8 +132,8 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
     ag_Feed_Mt_R_Residue_Y %>%
       rename(Residue = value) %>%                                                                               # Start with newly calculated Residue supply
       left_join(filter(an_Feed_Mt_R_C_Y, feed == "FodderHerb_Residue"), by = c("GCAM_region_ID", "year")) %>%     # Map in FodderHerb_Residue demand
-      mutate(FodderHerb_Residue = value) %>%
-      mutate(value = FodderHerb_Residue - Residue, GCAM_commodity = "FodderHerb") %>%                           # Compute FodderHerb = FodderHerb_Residue - Residue
+      mutate(FodderHerb_Residue = value,
+             value = FodderHerb_Residue - Residue, GCAM_commodity = "FodderHerb") %>%                           # Compute FodderHerb = FodderHerb_Residue - Residue
       select(-feed, -Residue, -FodderHerb_Residue) ->
       ag_Feed_Mt_R_FodderHerb_Y
 
@@ -153,8 +153,9 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
     # If pasture demands are negative, this means FodderGrass production exceeds Pasture_FodderGrass demands
     # When this occurs, set pasture to zero and treat this quantity of foddergrass demand as an other use
     ag_Feed_Mt_R_Past_Y %>%
-      mutate(value = value * -1, GCAM_commodity = "FodderGrass") %>%                                            # Compute other uses of FodderGrass as excess supply
-      mutate(value = if_else(value < 0, 0, value)) ->                                                           # Zero out all other entries
+      mutate(value = -value,
+             GCAM_commodity = "FodderGrass",                                            # Compute other uses of FodderGrass as excess supply
+             value = if_else(value < 0, 0, value)) ->                                                           # Zero out all other entries
       ag_OtherUses_Mt_R_FodderGrass_Y
 
     # Now, adjust the pasture feeds to remove these other uses.
