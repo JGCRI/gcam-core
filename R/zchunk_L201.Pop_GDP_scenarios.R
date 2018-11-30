@@ -77,8 +77,8 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
     # L201.BaseGDP_Scen: Base GDP for all scenarios
     # Get base GDP in start year
     L201.BaseGDP_Scen <- L102.gdp_mil90usd_Scen_R_Y %>%
-      filter(scenario == socioeconomics.BASE_GDP_SCENARIO,  # use the standard scenario
-             year == min(BASE_YEARS)) %>% # find the first year
+      filter(scenario == socioeconomics.BASE_GDP_SCENARIO) %>%   # use the standard scenario
+      filter(year == min(BASE_YEARS)) %>% # find the first year
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       mutate(baseGDP = round(value, socioeconomics.GDP_DIGITS)) %>%
       select(region, baseGDP)

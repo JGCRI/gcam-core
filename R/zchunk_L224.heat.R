@@ -185,8 +185,8 @@ module_energy_L224.heat <- function(command, ...) {
                   select(sector, fuel, supplysector, subsector, technology, minicam.energy.input) %>%
                   distinct, by = c("sector", "fuel")) %>%
       rename(stub.technology = technology) %>%
-      filter(year %in% MODEL_YEARS,
-             region %in% heat_region$region) %>%
+      filter(year %in% MODEL_YEARS) %>%
+      filter(region %in% heat_region$region) %>%
       select(LEVEL2_DATA_NAMES[["StubTechYr"]], "minicam.energy.input", "value") %>%
       mutate(calibrated.value = round(value, energy.DIGITS_CALOUTPUT),
              year.share.weight = year,
@@ -227,9 +227,9 @@ module_energy_L224.heat <- function(command, ...) {
       filter(year %in% MODEL_YEARS) %>%
       rename(efficiency = value) %>%
       left_join(GCAM_region_names, by = "GCAM_region_ID") %>%
-      filter(region %in% heat_region$region,
-             fuel == "gas",
-             efficiency < energy.DEFAULT_ELECTRIC_EFFICIENCY) %>%
+      filter(region %in% heat_region$region) %>%
+      filter(fuel == "gas") %>%
+      filter(efficiency < energy.DEFAULT_ELECTRIC_EFFICIENCY) %>%
       mutate(cost_modifier = energy.GAS_PRICE * (1 / energy.DEFAULT_ELECTRIC_EFFICIENCY - 1 / efficiency)) -> L224.eff_cost_adj_Rh_elec_gas_sc_Y
 
     # Modify the costs

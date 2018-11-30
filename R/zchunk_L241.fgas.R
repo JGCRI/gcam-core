@@ -142,7 +142,8 @@ module_emissions_L241.fgas <- function(command, ...) {
       filter(!supplysector %in% c("resid cooling", "comm cooling")) %>%
       # EF is 1000 x emissions for non-cooling sectors
       mutate(value = value * 1000) %>%
-      filter(year == max(emissions.HFC_MODEL_BASE_YEARS), value > 0) %>%
+      filter(year == max(emissions.HFC_MODEL_BASE_YEARS)) %>%
+      filter(value > 0) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
       L241.hfc_ef_2010
 

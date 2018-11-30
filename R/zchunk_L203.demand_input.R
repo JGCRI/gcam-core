@@ -280,8 +280,8 @@ module_aglu_L203.demand_input <- function(command, ...) {
       summarise(calOutputValue = sum(calOutputValue)) %>%
       ungroup() %>%
       rename(energy.final.demand = supplysector, base.service = calOutputValue) %>%
-      filter(!region %in% aglu.NO_AGLU_REGIONS,           # Remove any regions for which agriculture and land use are not modeled
-             year %in% BASE_YEARS) ->                         # ALSO SUBSET THE CALIBRATION TABLES TO ONLY THE MODEL BASE YEARS
+      filter(!region %in% aglu.NO_AGLU_REGIONS) %>%            # Remove any regions for which agriculture and land use are not modeled
+      filter(year %in% BASE_YEARS) ->                         # ALSO SUBSET THE CALIBRATION TABLES TO ONLY THE MODEL BASE YEARS
       L203.BaseService
 
     # L203.IncomeElasticity: Income elasticities

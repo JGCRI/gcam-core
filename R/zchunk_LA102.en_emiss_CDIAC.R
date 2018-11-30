@@ -70,7 +70,8 @@ module_energy_LA102.en_emiss_CDIAC <- function(command, ...) {
     # Calculate the TPES by fuel, deducting non-energy use of fuels that does not result in CO2 emissions
 
     L1011.en_bal_EJ_R_Si_Fi_Yh %>%
-      filter(sector == "in_industry_feedstocks", fuel %in% L102.CO2_Mt_R_F_Yh$fuel) %>%
+      filter(sector == "in_industry_feedstocks") %>%
+      filter(fuel %in% L102.CO2_Mt_R_F_Yh$fuel) %>%
       left_join_error_no_match(A32.nonenergy_Cseq, by = c("fuel" = "subsector")) %>%
       mutate(val_non_energy = value * remove.fraction) %>%
       select(GCAM_region_ID, fuel, year, val_non_energy) ->

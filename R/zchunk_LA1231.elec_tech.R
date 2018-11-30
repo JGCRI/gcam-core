@@ -54,7 +54,8 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
     # Obtain unique gas technologies to avoid hard coding technologies later in the code
     # NOTE: It is assumed that there are 2 gas technologies only. If new gas technologies are added in the future, then this chunk has to be updated.
     calibrated_techs %>%
-      filter(subsector == "gas", supplysector == "electricity") %>%
+      filter(subsector == "gas") %>%
+      filter(supplysector == "electricity") %>%
       distinct(technology) -> energy.GAS_TECH_CONST
 
     # GAS_TECH1: gas steam/CT

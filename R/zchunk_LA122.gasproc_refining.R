@@ -141,7 +141,7 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
       rename(valueInput = value) %>%
       left_join(L122.gtlctl_coef, by = c("sector", "fuel", "year")) %>%
       mutate(value = valueInput * value) %>%
-      select(-valueInput, GCAM_region_ID, sector, fuel, year, value) -> L122.in_EJ_R_gtlctl_F_Yh
+      select(GCAM_region_ID, sector, fuel, year, value) -> L122.in_EJ_R_gtlctl_F_Yh
 
     # CRUDE OIL REFINING
     # Copied from original text:
@@ -156,13 +156,15 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
     # Create en_bal_TPES_OIL, en_bal_oil, ctl_OIL, and gtlctl_oil to adjust the outputs of CTL and GTL given the same fuel names of the oil refining outputs (as mentioned in the note above)
     # Get output for refined liquids for oil refining (TPES) sector
     L1011.en_bal_EJ_R_Si_Fi_Yh %>%
-      filter(sector == "TPES", fuel == "refined liquids") %>%
+      filter(sector == "TPES") %>%
+      filter(fuel == "refined liquids") %>%
       select(GCAM_region_ID,sector, year, value_en_bal_TPES = value) %>%
       mutate(sector = "oil refining") -> en_bal_TPES_OIL
 
     # Output for refined liquids for net_oil refining sector
     L1011.en_bal_EJ_R_Si_Fi_Yh %>%
-      filter(sector == "net_oil refining", fuel == "refined liquids") %>%
+      filter(sector == "net_oil refining") %>%
+      filter(fuel == "refined liquids") %>%
       select(GCAM_region_ID, sector, year, value_en_bal_net_oil = value) %>%
       mutate(sector = "oil refining") %>%
       left_join_error_no_match(en_bal_TPES_OIL, by = c("GCAM_region_ID", "sector", "year")) %>%
@@ -194,18 +196,19 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
 
     # Oil refining: input of oil is equal to TPES, and input of other fuels is from net refinery energy use
     L1011.en_bal_EJ_R_Si_Fi_Yh %>%
-      filter(sector == "net_oil refining", fuel == "refined liquids") %>%
+      filter(sector == "net_oil refining") %>%
+      filter(fuel == "refined liquids") %>%
       left_join_error_no_match(select(filter(L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "TPES", fuel == "refined liquids"), -sector), by = c("GCAM_region_ID", "fuel", "year")) %>%
       select(-value.x) %>%
       rename(value = value.y) %>%
-      bind_rows(filter(L1011.en_bal_EJ_R_Si_Fi_Yh,sector == "net_oil refining", fuel!= "refined liquids")) %>%
+      bind_rows(filter(L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "net_oil refining", fuel!= "refined liquids")) %>%
       mutate(sector = "oil refining",
              fuel = if_else(fuel == "refined liquids", "oil", fuel)) -> L122.in_EJ_R_oilrefining_F_Yh
 
     # Calculate region- and fuel-specific coefficients of crude oil refining
     L122.in_EJ_R_oilrefining_F_Yh %>%
       left_join(select(L122.out_EJ_R_oilrefining_Yh, -fuel), by = c("GCAM_region_ID", "sector", "year")) %>%
-      mutate(value = value.x/value.y) %>%
+      mutate(value = value.x / value.y) %>%
       select(-value.x, -value.y) -> L122.IO_R_oilrefining_F_Yh
 
     # Combine all calibrated refinery input and output tables
