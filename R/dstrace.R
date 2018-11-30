@@ -110,6 +110,8 @@ dstrace <- function(object_name, direction = "upstream", graph = FALSE,
 dstrace_chunks <- function(chunk_names, gcam_data_map, prev_trace_list = c()) {
   trace_list = prev_trace_list
 
+  name.x <- name.y <- NULL  # silence package check note
+
   for(chunk_name in chunk_names) {
     if(!(chunk_name %in% trace_list)) {
       trace_list <- c(trace_list, chunk_name)
