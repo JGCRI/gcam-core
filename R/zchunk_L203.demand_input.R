@@ -310,14 +310,17 @@ module_aglu_L203.demand_input <- function(command, ...) {
       L203.pcFoodRatio_R_Yh
 
     # Step 2: Calculate future changes (ratios) in caloric demands by region and demand type
+    L134.pcFood_kcald_R_Dmnd_Y_ssp1$scenario <- "SSP1"
+    L134.pcFood_kcald_R_Dmnd_Y_ssp2$scenario <- "SSP2"
+    L134.pcFood_kcald_R_Dmnd_Y_ssp3$scenario <- "SSP3"
+    L134.pcFood_kcald_R_Dmnd_Y_ssp4$scenario <- "SSP4"
+    L134.pcFood_kcald_R_Dmnd_Y_ssp5$scenario <- "SSP5"
     L134.pcFood_kcald_R_Dmnd_Y %>%
       # Combine per capita food caloric demand of core and all SSP scenarios
       mutate(scenario = "core") %>%
-      bind_rows(mutate(L134.pcFood_kcald_R_Dmnd_Y_ssp1, scenario = "SSP1"),
-                mutate(L134.pcFood_kcald_R_Dmnd_Y_ssp2, scenario = "SSP2"),
-                mutate(L134.pcFood_kcald_R_Dmnd_Y_ssp3, scenario = "SSP3"),
-                mutate(L134.pcFood_kcald_R_Dmnd_Y_ssp4, scenario = "SSP4"),
-                mutate(L134.pcFood_kcald_R_Dmnd_Y_ssp5, scenario = "SSP5")) %>%
+      bind_rows(L134.pcFood_kcald_R_Dmnd_Y_ssp1, L134.pcFood_kcald_R_Dmnd_Y_ssp2,
+                L134.pcFood_kcald_R_Dmnd_Y_ssp3, L134.pcFood_kcald_R_Dmnd_Y_ssp4,
+                L134.pcFood_kcald_R_Dmnd_Y_ssp5) %>%
       filter(year %in% aglu_demand_futureyears) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       # Create category crop vs. meat

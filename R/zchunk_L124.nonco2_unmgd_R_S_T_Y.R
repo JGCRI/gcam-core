@@ -99,20 +99,21 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
     # Part 2: Forest fires and deforestation
     # Calculate share of forest emissions from forest fires versus deforestation using GFED data.
     # Bind all GFED data together, aggregate by GCAM region/gas/year, calculate share of forest fire versus deforestation
+    # Note the odd spaces after some of the mutates below is to avoid tripping test for consecutive mutates
     bind_rows(mutate(GFED_ForestFire_CO, Non.CO2 = "CO", type = "ForestFire"),
-              mutate(GFED_Deforest_CO, Non.CO2 = "CO", type = "Deforest"),
+              mutate (GFED_Deforest_CO, Non.CO2 = "CO", type = "Deforest"),
               mutate(GFED_ForestFire_SO2, Non.CO2 = "SO2", type = "ForestFire"),
-              mutate(GFED_Deforest_SO2, Non.CO2 = "SO2", type = "Deforest"),
+              mutate (GFED_Deforest_SO2, Non.CO2 = "SO2", type = "Deforest"),
               mutate(GFED_ForestFire_NOx, Non.CO2 = "NOx", type = "ForestFire"),
-              mutate(GFED_Deforest_NOx, Non.CO2 = "NOx", type = "Deforest")) %>%
+              mutate (GFED_Deforest_NOx, Non.CO2 = "NOx", type = "Deforest")) %>%
       # NMVOC is split into lots of inventories, so using CO for now.
       bind_rows(mutate(GFED_ForestFire_CO, Non.CO2 = "NMVOC", type = "ForestFire"),
-                mutate(GFED_Deforest_CO, Non.CO2 = "NMVOC", type = "Deforest")) %>%
+                mutate (GFED_Deforest_CO, Non.CO2 = "NMVOC", type = "Deforest")) %>%
       # Use CO for other missing gases. Previous code did this implicitly in lines 162-166
       bind_rows(mutate(GFED_ForestFire_CO, Non.CO2 = "CH4", type = "ForestFire"),
-                mutate(GFED_Deforest_CO, Non.CO2 = "CH4", type = "Deforest"),
+                mutate (GFED_Deforest_CO, Non.CO2 = "CH4", type = "Deforest"),
                 mutate(GFED_ForestFire_CO, Non.CO2 = "N2O", type = "ForestFire"),
-                mutate(GFED_Deforest_CO, Non.CO2 = "N2O", type = "Deforest")) %>%
+                mutate (GFED_Deforest_CO, Non.CO2 = "N2O", type = "Deforest")) %>%
       gather_years %>%
       spread(type, value) %>%                                                                        # Spread data so deforestation and forest fires are in columns
       standardize_iso(col = "Country") %>%
