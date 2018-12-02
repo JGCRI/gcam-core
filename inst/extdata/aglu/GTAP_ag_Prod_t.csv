@@ -1,8 +1,8 @@
-# File: GTAP_ag_Prod_t.csv,,,,,,,,,,,,,,,,,,,
-# Author: Page Kyle,,,,,,,,,,,,,,,,,,,
-# Description: GTAP v2.1 Production by country / crop / and AEZ,,,,,,,,,,,,,,,,,,,
-# Original source: aglu-data/RawData/GTAP/SAGE_DATA.xls [SGPD],,,,,,,,,,,,,,,,,,,
-# ----------,,,,,,,,,,,,,,,,,,,
+# File: GTAP_ag_Prod_t.csv
+# Author: Page Kyle
+# Description: GTAP v2.1 Production by country / crop / and AEZ
+# Original source: aglu-data/RawData/GTAP/SAGE_DATA.xls [SGPD]
+# ----------
 ctry,GTAP_crop,AEZ01,AEZ02,AEZ03,AEZ04,AEZ05,AEZ06,AEZ07,AEZ08,AEZ09,AEZ10,AEZ11,AEZ12,AEZ13,AEZ14,AEZ15,AEZ16,AEZ17,AEZ18
 abw,Barley,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 abw,Buckwheat,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0

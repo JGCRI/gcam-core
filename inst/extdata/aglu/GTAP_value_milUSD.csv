@@ -1,8 +1,8 @@
-# File: GTAP_ag_HA_ha.csv,,,,,,,,,,,,,,,,,,,
-# Author: Page Kyle,,,,,,,,,,,,,,,,,,,
-# Description: GTAP v2.1 Land value by country / use / and AEZ,,,,,,,,,,,,,,,,,,,
-# Original source: aglu-data/RawData/GTAP/GTPLU18V60_AGMP_DEC06.XLS [VFMA],,,,,,,,,,,,,,,,,,,
-# ----------,,,,,,,,,,,,,,,,,,,
+# File: GTAP_ag_HA_ha.csv
+# Author: Page Kyle
+# Description: GTAP v2.1 Land value by country / use / and AEZ
+# Original source: aglu-data/RawData/GTAP/GTPLU18V60_AGMP_DEC06.XLS [VFMA]
+# ----------
 ctry87,GTAP_use,AEZ01,AEZ02,AEZ03,AEZ04,AEZ05,AEZ06,AEZ07,AEZ08,AEZ09,AEZ10,AEZ11,AEZ12,AEZ13,AEZ14,AEZ15,AEZ16,AEZ17,AEZ18
 alb,c_b,0,0,0,0,0,0,0,0,0.169841066,0.112948686,0,0,0,0,0,0,0,0
 alb,ctl,0,0,0,0,0,0,0,0,1.776853681,3.482889414,3.684029341,0,0,0,0,0,0,0
