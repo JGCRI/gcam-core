@@ -71,6 +71,7 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
       L201.NodeEquiv
 
     # create full set of region/basin combinations
+    # Use left join to ensure only those basins contained in GCAM regions are included
     bind_rows(water_mapping_R_GLU_B_W_Ws_share %>%
                 rename(basin_id = GLU),
               water_mapping_R_B_W_Ws_share) %>%
