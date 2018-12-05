@@ -1,8 +1,8 @@
-# File: nonirrigation_consumption.csv
-# Title: Nonirrigation consumption by country
-# Description: 2005 water demands by iso country from gridded data downscaled from the 14 region GCAM water demands.  This should be revised with new gridded data from the 32 region GCAM water demands.
-# Units: km^3/yr
-# Source: See description.
+# File: nonirrigation_consumption.csv,,,,,,,,,,,,,,
+# Title: Nonirrigation consumption by country,,,,,,,,,,,,,,
+# Description: 2005 water demands by iso country from gridded data downscaled from the 14 region GCAM water demands.  This should be revised with new gridded data from the 32 region GCAM water demands.,,,,,,,,,,,,,,
+# Units: km^3/yr,,,,,,,,,,,,,,
+# Source: See description.,,,,,,,,,,,,,,
 FID_,FIPS_CNTRY,ISO_3DIGIT,ISO_NUM,LONG_NAME,ISOSHRTNAM,GCAM_14_re,GCAM_30_re,GCAM_ID_1,Basin_na_1,Municipal,Electricity,Livestock,Manufacturing,Mining
 0,FK,FLK,238,Falkland Islands (Islas Malvinas),Falkland Islands (Malvinas),10,13,215,South_Argentina_South_Atlantic_Coast,0,0,0,0,0
 1,FG,GUF,254,Department of Guiana,French Guiana,10,25,156,Orinoco,0,0,0,0,0
@@ -94,7 +94,7 @@ FID_,FIPS_CNTRY,ISO_3DIGIT,ISO_NUM,LONG_NAME,ISOSHRTNAM,GCAM_14_re,GCAM_30_re,GC
 87,CA,CAN,124,Canada,Canada,2,8,227,Great_Lakes_Basin,0.668488,3.03058,0.039764,0.321158,0.139115
 88,CA,CAN,124,Canada,Canada,2,8,229,Pacific_Northwest_Basin,0.019802,0.088571,0.000887,0.009817,0.004061
 89,CA,CAN,124,Canada,Canada,2,8,232,New_England_Basin,0.013514,0.063668,0.000745,0.006338,0.002987
-90,GT,GTM,320,Republic of Guatemala,Guatemala,10,9,111,Yucat?n_Peninsula,0.05449,0.105458,0.007023,0.015981,0.009072
+90,GT,GTM,320,Republic of Guatemala,Guatemala,10,9,111,Yucatan_Peninsula,0.05449,0.105458,0.007023,0.015981,0.009072
 91,GT,GTM,320,Republic of Guatemala,Guatemala,10,9,133,Grijalva_Usumacinta,0.049481,0.095765,0.003201,0.014513,0.008239
 92,GT,GTM,320,Republic of Guatemala,Guatemala,10,9,135,Southern_Central_America,0.04942,0.095647,0.011152,0.014495,0.008228
 93,HQ, ,581,Howland Island,United States Minor Outlying Islands,11,1,176,Wake_Marshall_Islands,0,0,0,0,0
@@ -103,7 +103,7 @@ FID_,FIPS_CNTRY,ISO_3DIGIT,ISO_NUM,LONG_NAME,ISOSHRTNAM,GCAM_14_re,GCAM_30_re,GC
 96,MX,MEX,484,United Mexican States,Mexico,10,20,91,Baja_California,0.028862,0.052005,0.002135,0.007861,0.004476
 97,MX,MEX,484,United Mexican States,Mexico,10,20,96,Mexico_Northwest_Coast,0.133351,0.258091,0.037035,0.039109,0.022201
 98,MX,MEX,484,United Mexican States,Mexico,10,20,105,North_Gulf,0.087089,0.122896,0.019713,0.023421,0.010573
-99,MX,MEX,484,United Mexican States,Mexico,10,20,111,Yucat?n_Peninsula,0.055512,0.107435,0.009937,0.016281,0.009242
+99,MX,MEX,484,United Mexican States,Mexico,10,20,111,Yucatan_Peninsula,0.055512,0.107435,0.009937,0.016281,0.009242
 100,MX,MEX,484,United Mexican States,Mexico,10,20,114,Mexico_Interior,0.093178,0.18034,0.028354,0.027329,0.015514
 101,MX,MEX,484,United Mexican States,Mexico,10,20,115,Pacific_Central_Coast,0.029782,0.057641,0.022928,0.008735,0.004958
 102,MX,MEX,484,United Mexican States,Mexico,10,20,130,Papaloapan,0.039674,0.07679,0.017946,0.011637,0.006607
@@ -134,7 +134,7 @@ FID_,FIPS_CNTRY,ISO_3DIGIT,ISO_NUM,LONG_NAME,ISOSHRTNAM,GCAM_14_re,GCAM_30_re,GC
 127,NT,ANT,530,Netherlands Antilles,Netherlands Antilles,10,9,143,Caribbean_Coast,0,0,0,0,0
 128,BF,BHS,44,Commonwealth of The Bahamas,Bahamas,10,9,101,Caribbean,0,0,0.000006,0,0
 129,TK,TCA,796,Turks and Caicos Islands,Turks and Caicos Islands,10,13,101,Caribbean,0,0,0,0,0
-130,BH,BLZ,84,Belize,Belize,10,9,111,Yucat?n_Peninsula,0.001749,0.003384,0.00034,0.000513,0.000292
+130,BH,BLZ,84,Belize,Belize,10,9,111,Yucatan_Peninsula,0.001749,0.003384,0.00034,0.000513,0.000292
 131,BH,BLZ,84,Belize,Belize,10,9,133,Grijalva_Usumacinta,0,0,0,0,0
 132,CJ,CYM,136,Cayman Islands,Cayman Islands,10,9,101,Caribbean,0,0,0,0,0
 133,CO,COL,170,Republic of Colombia,Colombia,10,32,143,Caribbean_Coast,0.066397,0.128509,0.047464,0.019473,0.011056
@@ -144,7 +144,7 @@ FID_,FIPS_CNTRY,ISO_3DIGIT,ISO_NUM,LONG_NAME,ISOSHRTNAM,GCAM_14_re,GCAM_30_re,GC
 137,CS,CRI,188,Republic of Costa Rica,Costa Rica,10,9,135,Southern_Central_America,0.039433,0.076323,0.007282,0.011566,0.006564
 138,CU,CUB,192,Republic of Cuba,Cuba,10,9,101,Caribbean,0.100621,0.194745,0.030833,0.029516,0.016753
 139,ES,SLV,222,Republic of El Salvador,El Salvador,10,9,135,Southern_Central_America,0.035558,0.06882,0.008779,0.010429,0.00592
-140,HO,HND,340,Republic of Honduras,Honduras,10,9,111,Yucat?n_Peninsula,0.006071,0.01175,0.001941,0.001781,0.001011
+140,HO,HND,340,Republic of Honduras,Honduras,10,9,111,Yucatan_Peninsula,0.006071,0.01175,0.001941,0.001781,0.001011
 141,HO,HND,340,Republic of Honduras,Honduras,10,9,135,Southern_Central_America,0.085053,0.164609,0.024054,0.024948,0.014162
 142,NU,NIC,558,Republic of Nicaragua,Nicaragua,10,9,135,Southern_Central_America,0.054966,0.106384,0.020286,0.016121,0.00915
 143,PM,PAN,591,Republic of Panama,Panama,10,9,135,Southern_Central_America,0.033695,0.065216,0.01091,0.009884,0.00561
@@ -341,7 +341,7 @@ FID_,FIPS_CNTRY,ISO_3DIGIT,ISO_NUM,LONG_NAME,ISOSHRTNAM,GCAM_14_re,GCAM_30_re,GC
 334,IT,ITA,380,Italian Republic,Italy,3,13,57,Po,0.314953,0.551972,0.035953,0.153178,0.021386
 335,IT,ITA,380,Italian Republic,Italy,3,13,59,Italy_West_Coast,0.120123,0.210522,0.006902,0.058424,0.008157
 336,IT,ITA,380,Italian Republic,Italy,3,13,61,France_South_Coast,0,0,0,0,0
-337,IT,ITA,380,Italian Republic,Italy,3,13,62,Rh(ne,0,0,0,0,0
+337,IT,ITA,380,Italian Republic,Italy,3,13,62,Rhone,0,0,0,0,0
 338,IT,ITA,380,Italian Republic,Italy,3,13,63,Mediterranean_Sea_Islands,0.116349,0.203904,0.004896,0.056584,0.007899
 339,IT,ITA,380,Italian Republic,Italy,3,13,69,Tiber,0.071146,0.124685,0.00368,0.034601,0.004831
 340,MK,MKD,807,The Former Yugoslav Republic of Macedoni,"Macedonia, The Former Yugoslav Republic of",12,15,54,Danube,0,0,0,0,0
@@ -418,7 +418,7 @@ FID_,FIPS_CNTRY,ISO_3DIGIT,ISO_NUM,LONG_NAME,ISOSHRTNAM,GCAM_14_re,GCAM_30_re,GC
 411,FR,FRA,250,French Republic,France,3,13,57,Po,0.002189,0.003837,0.000309,0.001065,0.000149
 412,FR,FRA,250,French Republic,France,3,13,60,Spain_Portugal_Atlantic_Coast,0,0,0,0,0
 413,FR,FRA,250,French Republic,France,3,13,61,France_South_Coast,0.092282,0.161732,0.007028,0.04488,0.006266
-414,FR,FRA,250,French Republic,France,3,13,62,Rh(ne,0.122617,0.214895,0.020971,0.059638,0.008328
+414,FR,FRA,250,French Republic,France,3,13,62,Rhone,0.122617,0.214895,0.020971,0.059638,0.008328
 415,FR,FRA,250,French Republic,France,3,13,63,Mediterranean_Sea_Islands,0.01208,0.021171,0.001135,0.005875,0.00082
 416,FR,FRA,250,French Republic,France,3,13,64,Gironde,0.065784,0.115287,0.02724,0.031992,0.004468
 417,FR,FRA,250,French Republic,France,3,13,67,Spain_South_and_East_Coast,0,0,0,0,0
@@ -434,7 +434,7 @@ FID_,FIPS_CNTRY,ISO_3DIGIT,ISO_NUM,LONG_NAME,ISOSHRTNAM,GCAM_14_re,GCAM_30_re,GC
 427,SZ,CHE,756,Swiss Confederation,Switzerland,3,16,32,Rhine,0.089815,0.157406,0.013616,0.043682,0.0061
 428,SZ,CHE,756,Swiss Confederation,Switzerland,3,16,54,Danube,0.002381,0.004173,0.000232,0.001158,0.000162
 429,SZ,CHE,756,Swiss Confederation,Switzerland,3,16,57,Po,0.006324,0.011082,0.00055,0.003075,0.000429
-430,SZ,CHE,756,Swiss Confederation,Switzerland,3,16,62,Rh(ne,0.019157,0.033574,0.00181,0.009317,0.001301
+430,SZ,CHE,756,Swiss Confederation,Switzerland,3,16,62,Rhone,0.019157,0.033574,0.00181,0.009317,0.001301
 431,US,USA,840,United States of America,United States,1,1,7,Pacific_and_Arctic_Coast,0.169769,0.168794,0.001461,0.049283,0.010543
 432,US,USA,840,United States of America,United States,1,1,23,Saskatchewan_Nelson,0.018443,0.105849,0.010059,0.003097,0.006657
 433,US,USA,840,United States of America,United States,1,1,27,Fraser,0.000295,0.010179,0.000731,0.000101,0.00064
@@ -647,7 +647,7 @@ FID_,FIPS_CNTRY,ISO_3DIGIT,ISO_NUM,LONG_NAME,ISOSHRTNAM,GCAM_14_re,GCAM_30_re,GC
 640,RM,MHL,584,Republic of the Marshall Islands,Marshall Islands,11,29,150,Kiribati_Nauru,0,0,0,0,0
 641,FM,FSM,583,Federated States of Micronesia,"Micronesia, Federated States of",11,29,150,Micronesia,0,0,0,0,0
 642,CQ,MNP,580,Commonwealth of the Northern Mariana Isl,Northern Mariana Islands,11,29,121,North_Marina_Islands_and_Guam,0,0,0,0,0
-643,WQ, ,581,Wake Island,Inited States Minor Outlying Islands,0,1,150,Kiribati_Nauru,0,0,0,0,0
+643,WQ, ,581,Wake Island,United States Minor Outlying Islands,0,1,150,Kiribati_Nauru,0,0,0,0,0
 644,BC,BWA,72,Republic of Botswana,Botswana,9,4,188,Zambezi,0.00004,0.000031,0.000575,0.000012,0.00001
 645,BC,BWA,72,Republic of Botswana,Botswana,9,4,194,Orange,0.001188,0.000913,0.002114,0.000361,0.000308
 646,BC,BWA,72,Republic of Botswana,Botswana,9,4,197,Africa_South_Interior,0.002684,0.002057,0.008095,0.000813,0.000691
