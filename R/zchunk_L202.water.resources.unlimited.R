@@ -45,12 +45,13 @@ module_water_L202.water.resources.unlimited <- function(command, ...) {
     L103.water_mapping_R_B_W_Ws_share <- get_data(all_data, "L103.water_mapping_R_B_W_Ws_share")
 
     # Create a list of region + basin that actually exist with names
+    # Use left join to ensure only those basins contained in GCAM regions are included
     bind_rows(L103.water_mapping_R_GLU_B_W_Ws_share %>% rename(basin_id = GLU),
               L103.water_mapping_R_B_W_Ws_share) %>%
       select(-share, -water_sector) %>%
       unique() %>%
-      right_join(GCAM_region_names, by = "GCAM_region_ID") %>%
-      right_join(basin_ID, by = "basin_id") ->
+      left_join(GCAM_region_names, by = "GCAM_region_ID") %>%
+      left_join(basin_ID, by = "basin_id") ->
       L202.region_basin
 
     # Create unlimied research markets for mapped water types
