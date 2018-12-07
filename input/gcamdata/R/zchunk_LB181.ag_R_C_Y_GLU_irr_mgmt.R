@@ -88,6 +88,8 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
       rename(yield = value) %>%
       left_join_error_no_match(L181.LC_bm2_R_C_Yh_GLU_irr_level,
                                by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "Irr_Rfd", "year", "level")) %>%
+      # apply land area rounding (and cutoff) for production consistency
+      mutate(value = round(value, digits = aglu.DIGITS_LAND_USE)) %>%
       mutate(value = yield * value) %>%
       select(-yield) ->
       L181.ag_Prod_Mt_R_C_Y_GLU_irr_level

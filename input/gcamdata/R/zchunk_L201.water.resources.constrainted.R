@@ -82,16 +82,18 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
       L201.region_basin
 
     # create the delete for the unlimited resource markets for withdrawals
+    # using underscore as delimiter to paste water type
     L201.region_basin %>%
       arrange(region) %>%
-      mutate(unlimited.resource = paste0("-", water_type)) %>%
+      mutate(unlimited.resource = paste0("_", water_type)) %>%
       select(LEVEL2_DATA_NAMES[["DeleteUnlimitRsrc"]]) ->
       L201.DeleteUnlimitRsrc
 
     # create resource markets for water withdrawals
+    # using underscore as delimiter to paste water type
     L201.region_basin %>%
       arrange(region) %>%
-      mutate(resource = paste0("-", water_type),
+      mutate(resource = paste0("_", water_type),
              output.unit = water.WATER_UNITS_QUANTITY,
              price.unit = water.WATER_UNITS_PRICE) %>%
       rename(market = basin_id) %>%
@@ -107,7 +109,7 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
 
     # read in base year price
     L201.region_basin.first_only %>%
-      mutate(renewresource = paste(basin_name, water_type, sep = "-"),
+      mutate(renewresource = paste(basin_name, water_type, sep = "_"),
              year = MODEL_YEARS[1],
              price = water.DEFAULT_BASEYEAR_WATER_PRICE
              ) %>%
@@ -116,9 +118,10 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
       L201.RsrcPrice
 
     # Read in annual water runoff supply
+    # using underscore as delimiter to paste water type
     L201.region_basin.first_only %>% as_tibble() %>%
       left_join(L100.runoff_max_bm3, by = "basin_id") %>%
-      mutate(renewresource = paste0(basin_name, "-", water_type),
+      mutate(renewresource = paste0(basin_name, "_", water_type),
              sub.renewable.resource = "runoff") %>%
       rename(year.fillout = year,
              maxSubResource = runoff_max) %>%
@@ -138,7 +141,7 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
 
     access_fraction_uncalibrated %>%
       mutate(grade = "grade2",
-             renewresource = paste0(basin_name, "-", water_type),
+             renewresource = paste0(basin_name, "_", water_type),
              sub.renewable.resource = "runoff") %>%
       rename(available = access_fraction) %>%
       complete(grade = c("grade1", "grade2", "grade3"),
@@ -159,7 +162,7 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
     # depleteable ground water supply curve for uniform resources
     L201.region_basin.first_only %>%
       left_join(L201.DepRsrcCurves_ground_uniform_bm3, by = c("basin_id" = "basin.id")) %>%
-      mutate(depresource = paste(basin_name, water_type, sep = "-"),
+      mutate(depresource = paste(basin_name, water_type, sep = "_"),
              subresource = "groundwater") %>%
       arrange(region, depresource, price) %>%
       rename(extractioncost = price,
@@ -209,7 +212,7 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
     # Step 3
     L201.region_basin.first_only %>%
       left_join(aw, by= "basin_id") %>%
-      mutate(renewresource = paste0(basin_name, "-", water_type)) %>%
+      mutate(renewresource = paste0(basin_name, "_", water_type)) %>%
       select(renewresource, accessible) %>%
       right_join(L201.RenewRsrcCurves_uncalibrated, by = "renewresource") %>%
       mutate(available = case_when(
@@ -294,7 +297,7 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
           filter(is.na(grade) == F)
       ) %>%
         rename(extractioncost = price) %>%
-        mutate(depresource = paste0(basin_name, "-", water_type),
+        mutate(depresource = paste0(basin_name, "_", water_type),
                subresource = "groundwater",
                available = round(available, 5),
                extractioncost = round(extractioncost, 5)) %>%
@@ -401,7 +404,6 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
                   L201.DepRsrcCurves_ground_uniform,
                   L201.RenewRsrcCurves_calib,
                   L201.DepRsrcCurves_ground)
-
 
   } else {
     stop("Unknown command")

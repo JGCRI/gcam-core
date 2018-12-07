@@ -56,7 +56,7 @@ module_water_L202.water.resources.unlimited <- function(command, ...) {
 
     # Create unlimied research markets for mapped water types
     L202.region_basin %>%
-      mutate(unlimited.resource = paste(basin_name, water_type, sep = "-"),
+      mutate(unlimited.resource = paste(basin_name, water_type, sep = "_"),
              output.unit = water.WATER_UNITS_QUANTITY,
              price.unit = water.WATER_UNITS_PRICE,
              capacity.factor = 1) %>%
@@ -86,7 +86,7 @@ module_water_L202.water.resources.unlimited <- function(command, ...) {
       filter(GCAM_region_ID == min(GCAM_region_ID)) %>% ungroup() %>%
       left_join(L102.unlimited_mapped_water_price_B_W_Y_75USDm3,
                 by = c("basin_id", "water_type")) %>%
-      mutate(unlimited.resource = paste(basin_name, water_type, sep = "-")) %>%
+      mutate(unlimited.resource = paste(basin_name, water_type, sep = "_")) %>%
       select(one_of(LEVEL2_DATA_NAMES$UnlimitRsrcPrice)) ->
       L202.UnlimitRsrcPrice_mapped
 
