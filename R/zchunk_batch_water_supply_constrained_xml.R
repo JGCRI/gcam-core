@@ -10,7 +10,11 @@
 #' original data system was \code{batch_water_supply_x.xml} (water XML).
 module_water_batch_water_supply_constrained_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L201.RenewRsrcCurves_calib",
+    return(c("L201.NodeEquiv",
+             "L201.DeleteUnlimitRsrc",
+             "L201.Rsrc",
+             "L201.RsrcPrice",
+             "L201.RenewRsrcCurves_calib",
              "L201.GrdRenewRsrcMax_runoff",
              "L201.DepRsrcCurves_ground"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -20,6 +24,10 @@ module_water_batch_water_supply_constrained_xml <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
+    L201.NodeEquiv <- get_data(all_data, "L201.NodeEquiv")
+    L201.DeleteUnlimitRsrc <- get_data(all_data, "L201.DeleteUnlimitRsrc")
+    L201.Rsrc <- get_data(all_data, "L201.Rsrc")
+    L201.RsrcPrice <- get_data(all_data, "L201.RsrcPrice")
     L201.RenewRsrcCurves_calib <- get_data(all_data, "L201.RenewRsrcCurves_calib")
     L201.GrdRenewRsrcMax_runoff <- get_data(all_data, "L201.GrdRenewRsrcMax_runoff")
     L201.DepRsrcCurves_ground <- get_data(all_data, "L201.DepRsrcCurves_ground")
@@ -29,10 +37,18 @@ module_water_batch_water_supply_constrained_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("water_supply_constrained.xml") %>%
-      add_xml_data(L201.RenewRsrcCurves_calib, "RenewRsrcCurves") %>%
-      add_xml_data(L201.GrdRenewRsrcMax_runoff, "GrdRenewRsrcMaxNoFO") %>%
-      add_xml_data(L201.DepRsrcCurves_ground, "DepRsrcCurves") %>%
-      add_precursors("L201.RenewRsrcCurves_calib",
+      add_xml_data(L201.NodeEquiv, "EQUIV_TABLE") %>%
+      add_xml_data(L201.DeleteUnlimitRsrc, "DeleteUnlimitRsrc") %>%
+      add_xml_data(L201.Rsrc, "Rsrc") %>%
+      add_xml_data(L201.RsrcPrice, "RsrcPrice") %>%
+      add_xml_data(L201.RenewRsrcCurves_calib, "RenewRsrcCurvesWater") %>%
+      add_xml_data(L201.GrdRenewRsrcMax_runoff, "GrdRenewRsrcMaxNoFOWater") %>%
+      add_xml_data(L201.DepRsrcCurves_ground, "DepRsrcCurvesWater") %>%
+      add_precursors("L201.NodeEquiv",
+                     "L201.DeleteUnlimitRsrc",
+                     "L201.Rsrc",
+                     "L201.RsrcPrice",
+                     "L201.RenewRsrcCurves_calib",
                      "L201.GrdRenewRsrcMax_runoff",
                      "L201.DepRsrcCurves_ground") ->
       water_supply_constrained.xml

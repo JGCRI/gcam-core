@@ -40,10 +40,10 @@ module_water_batch_water_supply_uncalibrated_xml <- function(command, ...) {
       add_xml_data(L201.NodeEquiv, "EQUIV_TABLE") %>%
       add_xml_data(L201.DeleteUnlimitRsrc, "DeleteUnlimitRsrc") %>%
       add_xml_data(L201.Rsrc, "Rsrc") %>%
-      add_xml_data(L201.RsrcPrice, "RenewRsrcPrice") %>%
-      add_xml_data(L201.RenewRsrcCurves_uncalibrated, "RenewRsrcCurves") %>%
-      add_xml_data(L201.GrdRenewRsrcMax_runoff, "GrdRenewRsrcMaxNoFO") %>%
-      add_xml_data(L201.DepRsrcCurves_ground_uniform, "DepRsrcCurves") %>%
+      add_xml_data(L201.RsrcPrice, "RsrcPrice") %>%
+      add_xml_data(L201.RenewRsrcCurves_uncalibrated, "RenewRsrcCurvesWater") %>%
+      add_xml_data(L201.GrdRenewRsrcMax_runoff, "GrdRenewRsrcMaxNoFOWater") %>%
+      add_xml_data(L201.DepRsrcCurves_ground_uniform, "DepRsrcCurvesWater") %>%
       add_precursors("L201.NodeEquiv",
                      "L201.DeleteUnlimitRsrc",
                      "L201.Rsrc",

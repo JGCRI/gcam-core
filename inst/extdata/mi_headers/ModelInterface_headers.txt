@@ -61,13 +61,19 @@ UnlimitRsrc, world/+{name}region, region/+{name}unlimited-resource, unlimited-re
 
 RenewRsrcMkt, world/+{name}region, region/+{name}renewresource, renewresource/+market, scenario, scenario/world
 
+RsrcPrice, world/+{name}region, region/+{name}resource, resource/+{year}price, resource/+price, scenario, scenario/world
+
 DepRsrcPrice, world/+{name}region, region/+{name}depresource, depresource/+{year}price, depresource/+price, scenario, scenario/world
 
 RenewRsrcPrice, world/+{name}region, region/+{name}renewresource, renewresource/+{year}price, renewresource/+price, scenario, scenario/world
 
 UnlimitRsrcPrice, world/+{name}region, region/+{name}unlimited-resource, unlimited-resource/+{year}price, unlimited-resource/+price, scenario, scenario/world
 
+SubRsrc, world/+{name}region, region/+{name}resource, resource/+{name}subresource, scenario, scenario/world
+
 SubDepRsrc, world/+{name}region, region/+{name}depresource, depresource/+{name}subresource, scenario, scenario/world
+
+SubRenewRsrcWater, world/+{name}region, region/+{name}resource, resource/+{name}sub-renewable-resource, scenario, scenario/world
 
 SubRenewRsrc, world/+{name}region, region/+{name}renewresource, renewresource/+{name}sub-renewable-resource, scenario, scenario/world
 
@@ -79,17 +85,27 @@ RenewRsrcCalProd, world/+{name}region, region/+{name}renewresource, renewresourc
 
 maxSubResource, world/+{name}region, region/+{name}renewresource, renewresource/+{name}sub-renewable-resource, sub-renewable-resource/+{year;fillout=1}maxSubResource, sub-renewable-resource/+maxSubResource, scenario, scenario/world
 
+GrdRenewRsrcMaxWater, world/+{name}region, region/+{name}resource, resource/+{name}sub-renewable-resource, sub-renewable-resource/+{year;fillout=1}maxSubResource, sub-renewable-resource/+maxSubResource, scenario, scenario/world
+
 GrdRenewRsrcMax, world/+{name}region, region/+{name}renewresource, renewresource/+{name}sub-renewable-resource, sub-renewable-resource/+{year;fillout=1}maxSubResource, sub-renewable-resource/+maxSubResource, scenario, scenario/world
+
+GrdRenewRsrcMaxNoFOWater, world/+{name}region, region/+{name}resource, resource/+{name}sub-renewable-resource, sub-renewable-resource/+{year}maxSubResource, sub-renewable-resource/+maxSubResource, scenario, scenario/world
 
 GrdRenewRsrcMaxNoFO, world/+{name}region, region/+{name}renewresource, renewresource/+{name}sub-renewable-resource, sub-renewable-resource/+{year}maxSubResource, sub-renewable-resource/+maxSubResource, scenario, scenario/world
 
+DepRsrcCurvesWater, world/+{name}region, region/+{name}resource, resource/+{name}subresource, subresource/+{name}grade, grade/+available, grade/+extractioncost, scenario, scenario/world
+
 DepRsrcCurves, world/+{name}region, region/+{name}depresource, depresource/+{name}subresource, subresource/+{name}grade, grade/+available, grade/+extractioncost, scenario, scenario/world
+
+RenewRsrcCurvesWater, world/+{name}region, region/+{name}resource, resource/+{name}sub-renewable-resource, sub-renewable-resource/+{name}grade, grade/+available, grade/+extractioncost, scenario, scenario/world
 
 RenewRsrcCurves, world/+{name}region, region/+{name}renewresource, renewresource/+{name}sub-renewable-resource, sub-renewable-resource/+{name}grade, grade/+available, grade/+extractioncost, scenario, scenario/world
 
 SmthRenewRsrcCurves, world/+{name}region, region/+{name}renewresource, renewresource/+{name}smooth-renewable-subresource, smooth-renewable-subresource/+{year;fillout=1}maxSubResource, smooth-renewable-subresource/+maxSubResource, smooth-renewable-subresource/+mid-price, smooth-renewable-subresource/+curve-exponent, scenario, scenario/world
 
 SmthRenewRsrcCurvesGdpElast, world/+{name}region, region/+{name}renewresource, renewresource/+{name}smooth-renewable-subresource, smooth-renewable-subresource/+{year;fillout=1}maxSubResource, smooth-renewable-subresource/+maxSubResource, smooth-renewable-subresource/+mid-price, smooth-renewable-subresource/+curve-exponent, smooth-renewable-subresource/+gdpSupplyElast, scenario, scenario/world
+
+GrdRenewRsrcCurvesWater, world/+{name}region, region/+{name}resource, resource/+{name}sub-renewable-resource, sub-renewable-resource/+{name}grade, grade/+available, grade/+extractioncost, scenario, scenario/world
 
 GrdRenewRsrcCurves, world/+{name}region, region/+{name}renewresource, renewresource/+{name}sub-renewable-resource, sub-renewable-resource/+{name}grade, grade/+available, grade/+extractioncost, scenario, scenario/world
 

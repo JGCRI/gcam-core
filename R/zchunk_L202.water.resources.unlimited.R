@@ -18,7 +18,9 @@
 module_water_L202.water.resources.unlimited <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
+             FILE = "common/iso_GCAM_regID",
              FILE = "water/basin_ID",
+             FILE = "water/basin_to_country_mapping",
              "L102.unlimited_mapped_water_price_B_W_Y_75USDm3",
              "L102.unlimited_nonmapped_water_price_R_W_Y_75USDm3",
              "L103.water_mapping_R_GLU_B_W_Ws_share",
@@ -38,20 +40,39 @@ module_water_L202.water.resources.unlimited <- function(command, ...) {
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
+    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     basin_ID <- get_data(all_data, "water/basin_ID")
+    basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
     L102.unlimited_mapped_water_price_B_W_Y_75USDm3 <- get_data(all_data, "L102.unlimited_mapped_water_price_B_W_Y_75USDm3")
     L102.unlimited_nonmapped_water_price_R_W_Y_75USDm3 <- get_data(all_data, "L102.unlimited_nonmapped_water_price_R_W_Y_75USDm3")
     L103.water_mapping_R_GLU_B_W_Ws_share <- get_data(all_data, "L103.water_mapping_R_GLU_B_W_Ws_share")
     L103.water_mapping_R_B_W_Ws_share <- get_data(all_data, "L103.water_mapping_R_B_W_Ws_share")
 
+
+    # assign GCAM region name to each basin
+    # basins with overlapping GCAM regions assign to region with largest basin area
+    basin_to_country_mapping %>%
+      rename(iso = ISO) %>%
+      mutate(iso = tolower(iso)) %>%
+      left_join(iso_GCAM_regID, by = "iso") %>%
+      # basins without gcam region mapping excluded (right join)
+      # Antarctica not assigned
+      right_join(GCAM_region_names, by = "GCAM_region_ID") %>%
+      rename(basin_id = GCAM_basin_ID,
+             basin_name = Basin_name) %>%
+      select(GCAM_region_ID, region, basin_id) %>%
+      arrange(region) ->
+      RegionBasinHome
+
     # Create a list of region + basin that actually exist with names
     # Use left join to ensure only those basins contained in GCAM regions are included
     bind_rows(L103.water_mapping_R_GLU_B_W_Ws_share %>% rename(basin_id = GLU),
               L103.water_mapping_R_B_W_Ws_share) %>%
-      select(-share, -water_sector) %>%
+      select(basin_id, water_type) %>%
       unique() %>%
-      left_join(GCAM_region_names, by = "GCAM_region_ID") %>%
-      left_join(basin_ID, by = "basin_id") ->
+      left_join(basin_ID, by = "basin_id") %>%
+      left_join(RegionBasinHome, by = "basin_id") %>%
+      arrange(region, basin_name, water_type) ->
       L202.region_basin
 
     # Create unlimied research markets for mapped water types
@@ -61,9 +82,19 @@ module_water_L202.water.resources.unlimited <- function(command, ...) {
              price.unit = water.WATER_UNITS_PRICE,
              capacity.factor = 1) %>%
       ## ^^ capacity factor is not used for water resources
-      rename(market = basin_name) %>%
+      mutate(market = region) %>%
       select(one_of(LEVEL2_DATA_NAMES[["UnlimitRsrc"]])) ->
       L202.UnlimitRsrc_mapped
+
+    # Read in fixed prices for mapped water types
+    # Left join ensures only those basins in use get prices
+    L202.region_basin %>%
+      left_join(L102.unlimited_mapped_water_price_B_W_Y_75USDm3,
+                by = c("basin_id", "water_type")) %>%
+      mutate(unlimited.resource = paste(basin_name, water_type, sep = "_")) %>%
+      arrange(region, unlimited.resource) %>%
+      select(one_of(LEVEL2_DATA_NAMES$UnlimitRsrcPrice)) ->
+      L202.UnlimitRsrcPrice_mapped
 
     # Create unlimited resource markets for non-mapped water types
     L102.unlimited_nonmapped_water_price_R_W_Y_75USDm3 %>%
@@ -79,16 +110,6 @@ module_water_L202.water.resources.unlimited <- function(command, ...) {
                !(unlimited.resource %in% water.AG_ONLY_WATER_TYPES)) ->
     # ^^ remove water goods that are used only by ag technologies, in regions with no aglu module
     L202.UnlimitRsrc_nonmapped
-
-    # Read in fixed prices for mapped water types
-    L202.region_basin %>%
-      group_by(basin_name) %>%
-      filter(GCAM_region_ID == min(GCAM_region_ID)) %>% ungroup() %>%
-      left_join(L102.unlimited_mapped_water_price_B_W_Y_75USDm3,
-                by = c("basin_id", "water_type")) %>%
-      mutate(unlimited.resource = paste(basin_name, water_type, sep = "_")) %>%
-      select(one_of(LEVEL2_DATA_NAMES$UnlimitRsrcPrice)) ->
-      L202.UnlimitRsrcPrice_mapped
 
     # Read in fixed prices for non-mapped water types
     L102.unlimited_nonmapped_water_price_R_W_Y_75USDm3 %>%
@@ -110,9 +131,11 @@ module_water_L202.water.resources.unlimited <- function(command, ...) {
       add_comments("The removed record is biophysical water consumption for Taiwan") %>%
       add_legacy_name("L202.UnlimitRsrc") %>%
       add_precursors("common/GCAM_region_names",
+                     "common/iso_GCAM_regID",
                      "L103.water_mapping_R_GLU_B_W_Ws_share",
+                     "water/basin_to_country_mapping",
                      "water/basin_ID") ->
-      L202.UnlimitRsrc_mapped
+  L202.UnlimitRsrc_mapped
 
     L202.UnlimitRsrcPrice_mapped %>%
       add_title("Price for unlimited water resources (mapped)") %>%
@@ -120,7 +143,9 @@ module_water_L202.water.resources.unlimited <- function(command, ...) {
       add_comments("The removed record is biophysical water consumption for Taiwan") %>%
       add_legacy_name("L202.UnlimitRsrcPrice") %>%
       add_precursors("common/GCAM_region_names",
+                     "common/iso_GCAM_regID",
                      "L102.unlimited_mapped_water_price_B_W_Y_75USDm3",
+                     "water/basin_to_country_mapping",
                      "water/basin_ID") ->
       L202.UnlimitRsrcPrice_mapped
 
