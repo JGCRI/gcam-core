@@ -96,5 +96,9 @@ double MarginalProfitCalculator::calcShortTermMarginalProfit( const string& aReg
 
     double marginalProfit = ( marginalRevenue - variableCosts ) / 
 		                    ( fabs(variableCosts) + util::getVerySmallNumber() );
-    return marginalProfit;
+    // Note that when the marginalRevenue is negative we may still be able to
+    // get a marginalProfit less than -1.  Because the profit shutdown decider
+    // is intended to work on values from [-1, inf) we must ensure we never pass
+    // it a value less the -1 (i.e. costs are double the revenue).
+    return std::max( marginalProfit, -1.0 );
 }
