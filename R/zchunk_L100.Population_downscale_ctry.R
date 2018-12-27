@@ -174,8 +174,8 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
       mutate(pop = as.numeric(pop)) %>%  # Clean year variable
       complete(nesting(scenario, iso), year = c(socioeconomics.FINAL_HIST_YEAR, FUTURE_YEARS)) %>%
       group_by(scenario, iso) %>%
-      mutate(pop = approx_fun(year, pop)) %>%
-      mutate(ratio_iso_ssp = pop / pop[year == socioeconomics.FINAL_HIST_YEAR]) %>%  # Calculate population ratios to final historical year (2010), no units
+      mutate(pop = approx_fun(year, pop),
+             ratio_iso_ssp = pop / pop[year == socioeconomics.FINAL_HIST_YEAR]) %>%  # Calculate population ratios to final historical year (2010), no units
       select(-pop) %>%
       # Third, project country population values using SSP ratios and final historical year populations.
       # Not all countries in the UN data are in SSP data. Create complete tibble with all UN countries & SSP years.
