@@ -1,8 +1,8 @@
-# File: GTAP_ag_HA_ha.csv,,,,,,,,,,,,,,,,,,,
-# Author: Page Kyle,,,,,,,,,,,,,,,,,,,
-# Description: GTAP v2.1 Harvested area by country /  crop / and AEZ,,,,,,,,,,,,,,,,,,,
-# Original source: aglu-data/RawData/GTAP/SAGE_DATA.xls [SGHA],,,,,,,,,,,,,,,,,,,
-# ----------,,,,,,,,,,,,,,,,,,,
+# File: GTAP_ag_HA_ha.csv
+# Author: Page Kyle
+# Description: GTAP v2.1 Harvested area by country /  crop / and AEZ
+# Original source: aglu-data/RawData/GTAP/SAGE_DATA.xls [SGHA
+# ----------
 ctry,GTAP_crop,AEZ01,AEZ02,AEZ03,AEZ04,AEZ05,AEZ06,AEZ07,AEZ08,AEZ09,AEZ10,AEZ11,AEZ12,AEZ13,AEZ14,AEZ15,AEZ16,AEZ17,AEZ18
 abw,Barley,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 abw,Buckwheat,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
