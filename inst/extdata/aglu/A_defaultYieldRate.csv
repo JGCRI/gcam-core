@@ -3,6 +3,8 @@
 # Unit: NA
 # Description: Conservative yield change rates assumptions for crops if FAO estimates are not available for ceratin region-crop and beyond 2050
 # Source: GCAM team assumptions
+# Column types: ciinnnnnnnnnnnnn 
+# ----------
 GCAM_commodity,2005,2010,2020,2035,2050,2065,2080,2095,2110,2125,2140,2155,2170,2185,2200
 Corn,0,0,0.0025,0.0025,0.0025,0.0025,0.002,0.0015,0.001,0.001,0.001,0.001,0.001,0.001,0.001
 FiberCrop,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
