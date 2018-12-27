@@ -3,6 +3,8 @@
 # Units: varied (see below)
 # Description: maxSubResource (EJ/yr): maximum amount of MSW production in the base year mid-price (1975$/GJ): price at which half of the maxSubResource is produced curve-exponent (unitless): shape parameter of S-surve supply function; gdpSupplyElast (unitless): maxSubResource elasticity of GDP
 # Reference: Luckow, P., M.A. Wise, J.J. Dooley, and S.H. Kim. 2010. Large-scale utilization of biomass energy and carbon dioxide capture and storage in the transport and electricity sectors under stringent CO2 concentration limit scenarios. International Journal for Greenhouse Gas Control 4, 865-877. doi:10.1016/j.ijggc.2010.06.002
+# Column types: cccnnin 
+# ----------
 region_GCAM3,resource,subresource,maxSubResource,mid-price,curve-exponent,gdpSupplyElast
 Africa,biomass,generic waste biomass,0.12288,0.9,15,0.588
 Australia_NZ,biomass,generic waste biomass,0.0248025,0.9,15,0.588

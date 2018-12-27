@@ -1,6 +1,8 @@
 # File: A31.globaltech_cost.csv
 # Title: Industry processing default costs
 # Units: Unknown
+# Column types: ccccii 
+# ----------
 supplysector,subsector,technology,minicam.non.energy.input,1971,2100
 urban processes,landfills,landfills,non-energy,0,0
 urban processes,wastewater treatment,wastewater treatment,non-energy,0,0

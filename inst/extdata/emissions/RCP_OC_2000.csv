@@ -3,6 +3,8 @@
 # Units: ktC
 # Source: Unknown processing, evidently from gridded data.
 # Lamarque, et al. (2010) Historical (1850-2000) gridded anthropogenic and biomass burning emissions of reactive gases and aerosols: methodology and application Atmospheric Chemistry and Physics 10 pp. 7017–7039. doi:10.5194/acp-10-7017-2010
+# Column types: ccinnnnnninn 
+# ----------
 Country,iso,agr,awb,dom,ene,ind,lcf,sav,slv,tra,wst
 Russia,rus,0,32814558.33,477662258.4,24343271.16,22667410.93,2580831574,337315945.9,0,31356894.22,2271687.039
 Canada,can,0,7939181.809,18738275.32,6930713.294,13232972.8,553170851.5,56573059.99,0,14091726.13,452218.5055

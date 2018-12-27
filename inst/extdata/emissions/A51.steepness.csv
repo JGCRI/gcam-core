@@ -2,6 +2,8 @@
 # Title: Steepness of emissions reduction by supply sector, subsector, technology, and gas
 # Units: Percentage
 # Source: Internal
+# Column types: cccnnnnnn 
+# ----------
 supplysector,subsector,stub.technology,SO2,NOx,CO,BC,OC,NMVOC
 cement,cement,cement,,,,,,
 district heat,biomass,biomass,,,,,,

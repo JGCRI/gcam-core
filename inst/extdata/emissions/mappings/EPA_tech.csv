@@ -2,6 +2,8 @@
 # Title: xxx
 # Units: NA
 # Source: NA
+# Column types: ccc 
+# ----------
 EPA_Category,sector,fuel
 TOTAL ALL SOURCES,,
 FUEL COMBUSTION TOTAL (Tier 0 - 01),,

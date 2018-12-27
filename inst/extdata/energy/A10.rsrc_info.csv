@@ -2,6 +2,8 @@
 # Title: Information about resources in each region
 # Units: 1975$/kg for uranium and limestone;  1975$/GJ for everything else
 # Source: Prices from GCAM 3.1 model input. 2010 estimated
+# Column types: cccccnnnnn 
+# ----------
 resource,resource_type,market,output-unit,price-unit,1971,1975,1990,2005,2010
 coal,depresource,global,EJ,1975$/GJ,0.4,0.4,0.435,0.438,0.5
 crude oil,depresource,global,EJ,1975$/GJ,1.84,1.84,1.37,1.639,3.278

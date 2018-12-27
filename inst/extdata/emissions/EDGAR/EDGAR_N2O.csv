@@ -4,6 +4,8 @@
 # Comments: Date calculated December 15 2011 3:12 pm years 1970 to 2008
 # Dataset v4.2_EM_N2O_final_emitting_111111(edgar)
 # Source:  European Commission Joint Research Centre (JRC)/PBL Netherlands Environmental Assessment Agency. Emission Database for Global Atmospheric Research (EDGAR) release version 4.2. http://edgar.jrc.ec.europe.eu 2010
+# Column types: ccccccnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn 
+# ----------
 IPCC-Annex,World Region,ISO_A3,Name,IPCC,IPCC_description,1970,1971,1972,1973,1974,1975,1976,1977,1978,1979,1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008
 Annex_I,Canada,CAN,Canada,1A1a,Public electricity and heat production,5.49E-01,6.09E-01,5.89E-01,5.79E-01,5.86E-01,6.06E-01,6.86E-01,7.89E-01,8.05E-01,8.64E-01,9.79E-01,1.05E+00,1.17E+00,1.22E+00,1.34E+00,1.26E+00,1.16E+00,1.18E+00,1.42E+00,1.50E+00,1.39E+00,1.43E+00,1.51E+00,1.81E+00,1.90E+00,1.93E+00,1.97E+00,2.14E+00,2.32E+00,2.36E+00,2.55E+00,2.54E+00,2.50E+00,2.49E+00,2.32E+00,2.37E+00,2.27E+00,2.53E+00,2.18E+00
 Annex_I,Canada,CAN,Canada,1A1bc,Other Energy Industries,9.60E-02,9.95E-02,1.02E-01,1.11E-01,1.07E-01,1.06E-01,1.02E-01,1.06E-01,1.11E-01,1.04E-01,1.00E-01,9.21E-02,8.79E-02,8.07E-02,8.31E-02,8.31E-02,9.57E-02,9.56E-02,1.14E-01,1.12E-01,1.22E-01,1.23E-01,1.25E-01,1.29E-01,1.28E-01,1.39E-01,1.49E-01,1.57E-01,1.54E-01,1.61E-01,1.66E-01,1.77E-01,1.87E-01,1.88E-01,1.89E-01,1.75E-01,1.67E-01,1.74E-01,1.68E-01

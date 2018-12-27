@@ -2,6 +2,8 @@
 # Title: GCAM 3.0 fossil resource supply curves
 # Units: available: EJ; extractioncost: 1975$/GJ
 # Source: MiniCAM inputs, derived from analysis of Rogner 1997, https://doi.org/10.1146/annurev.energy.22.1.217
+# Column types: ccccnn 
+# ----------
 region_GCAM3,resource,subresource,grade,available,extractioncost
 Africa,coal,coal,grade 1,56,0.34
 Africa,coal,coal,grade 2,1059,0.37

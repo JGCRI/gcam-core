@@ -1,6 +1,8 @@
 # File: EDGAR_nation.csv
 # Title: Mapping file from iso to EDGAR iso codes
 # Units: NA
+# Column types: cc 
+# ----------
 iso,ISO_A3
 afg,AFG
 alb,ALB
