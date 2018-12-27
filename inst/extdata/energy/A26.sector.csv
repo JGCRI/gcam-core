@@ -3,6 +3,8 @@
 # Units: NA
 # Description: Characteristics of supply sectors for final energy delivery and reliability, setting the Units for price and inputs as well as the logit exponent.
 # Source: NA
+# Column types: ccccic 
+# ----------
 supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.type
 backup_electricity,EJ,EJ,1975$/GJ,-3,
 csp_backup,EJ,EJ,1975$/GJ,-3,
