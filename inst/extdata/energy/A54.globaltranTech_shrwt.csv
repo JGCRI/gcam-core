@@ -1,6 +1,8 @@
 # File: A54.globaltranTech_shrwt.csv
 # Title: Transportation technology default shareweights
 # Units: Unitless
+# Column types: ccciiiiii 
+# ----------
 supplysector,tranSubsector,tranTechnology,1971,2010,2015,2020,2050,2100
 trn_aviation_intl,International Aviation,Liquids,1,1,1,1,1,1
 trn_freight,Domestic Ship,Liquids,1,1,1,1,1,1

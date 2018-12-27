@@ -1,6 +1,8 @@
 # File: A54.globaltranTech_interp.csv
 # Title: Transportation technology default shareweights. Not including single-technology subsectors
 # Units: NA
+# Column types: ccccccc 
+# ----------
 supplysector,tranSubsector,tranTechnology,apply.to,from.year,to.year,interpolation.function
 trn_freight,Freight Rail,Adv-Electric,share-weight,final-calibration-year,end-year,fixed
 trn_freight,Freight Rail,Adv-Liquid,share-weight,final-calibration-year,end-year,fixed

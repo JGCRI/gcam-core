@@ -1,6 +1,8 @@
 # File: A322.subsector_logit.csv
 # Title: Fertilizer default technology logit exponents
 # Units: Unitless
+# Column types: ccic 
+# ----------
 supplysector,subsector,logit.exponent,logit.type
 N fertilizer,coal,-12,
 N fertilizer,gas,-12,

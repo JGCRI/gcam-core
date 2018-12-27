@@ -1,6 +1,8 @@
 # File: A54.tranSubsector_logit.csv
 # Title: Transportation default subsector logit exponents
 # Units: Unitless
+# Column types: ccicc 
+# ----------
 supplysector,tranSubsector,logit.exponent,logit.factor,logit.type
 trn_aviation_intl,International Aviation,-6,,absolute-cost-logit
 trn_freight,Domestic Ship,-6,,absolute-cost-logit
