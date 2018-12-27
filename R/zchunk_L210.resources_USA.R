@@ -101,7 +101,7 @@ module_gcam.usa_L210.resources_USA <- function(command, ...) {
     # NOTE: keeping limestone resources separate, written out to XML batch file for cement
     # L210.DeleteRenewRsrc_USArsrc: remove selected renewable resources from the USA region
     L210.DeleteRenewRsrc_USArsrc <- L210.RenewRsrc %>%
-      filter(region == "USA",
+      filter(region == gcam.USA_REGION,
              renewresource %in% gcamusa.STATE_RENEWABLE_RESOURCES) %>%
       select(region, renewresource) %>%
     # filtering and selecting was not removing attributes from L210.RenewRsrc, so we add this meaningless mutate
@@ -109,7 +109,7 @@ module_gcam.usa_L210.resources_USA <- function(command, ...) {
 
     # L210.DeleteUnlimitRsrc_USArsrc: remove selected renewable resources from the USA region
     L210.DeleteUnlimitRsrc_USArsrc <- L210.UnlimitRsrc %>%
-      filter(region == "USA",
+      filter(region == gcam.USA_REGION,
              unlimited.resource %in% gcamusa.STATE_UNLIMITED_RESOURCES) %>%
       select(region, unlimited.resource) %>%
       # filtering and selecting was not removing attributes from L210.UnlimitRsrc, so we add this meaningless mutate
@@ -124,7 +124,7 @@ module_gcam.usa_L210.resources_USA <- function(command, ...) {
 
     # L210.RenewRsrc_USA: renewable resource info in the states
     L210.RenewRsrc_USA <- L210.RenewRsrc %>%
-      filter(region == "USA",
+      filter(region == gcam.USA_REGION,
              renewresource %in% gcamusa.STATE_RENEWABLE_RESOURCES) %>%
       write_to_all_states(LEVEL2_DATA_NAMES[["RenewRsrc"]]) %>%
       # Remove geothermal from states that don't have it
@@ -133,7 +133,7 @@ module_gcam.usa_L210.resources_USA <- function(command, ...) {
 
     # L210.UnlimitRsrc_USA: unlimited resource info in the states
     L210.UnlimitRsrc_USA <- L210.UnlimitRsrc %>%
-      filter(region == "USA",
+      filter(region == gcam.USA_REGION,
              unlimited.resource %in% gcamusa.STATE_UNLIMITED_RESOURCES) %>%
       write_to_all_states(LEVEL2_DATA_NAMES[["UnlimitRsrc"]])
 
@@ -146,7 +146,7 @@ module_gcam.usa_L210.resources_USA <- function(command, ...) {
 
     # L210.UnlimitRsrcPrice_USA: unlimited resource prices in the states
     L210.UnlimitRsrcPrice_USA <- L210.UnlimitRsrcPrice %>%
-      filter(region == "USA",
+      filter(region == gcam.USA_REGION,
              unlimited.resource %in% gcamusa.STATE_UNLIMITED_RESOURCES) %>%
       write_to_all_states(LEVEL2_DATA_NAMES[["UnlimitRsrcPrice"]])
 
@@ -159,7 +159,7 @@ module_gcam.usa_L210.resources_USA <- function(command, ...) {
 
     # L210.SmthRenewRsrcTechChange_USA: smooth renewable resource tech change
     L210.SmthRenewRsrcTechChange_USA <- L210.SmthRenewRsrcTechChange %>%
-      filter(region == "USA",
+      filter(region == gcam.USA_REGION,
              renewresource %in% gcamusa.STATE_RENEWABLE_RESOURCES) %>%
       write_to_all_states(LEVEL2_DATA_NAMES[["SmthRenewRsrcTechChange"]]) %>%
       # If geothermal is included in this table, remove states that don't exist
@@ -167,7 +167,7 @@ module_gcam.usa_L210.resources_USA <- function(command, ...) {
 
     # L210.SmthRenewRsrcCurves_wind_USA: wind resource curves in the states
     L210.SmthRenewRsrcCurves_wind_USA <- L210.SmthRenewRsrcCurves_wind %>%
-      filter(region == "USA") %>%
+      filter(region == gcam.USA_REGION) %>%
       repeat_add_columns(tibble(state = gcamusa.STATES)) %>%
       # Add in new maxSubResource, mid.price, and curve.exponent from us_state_wind
       left_join_error_no_match(us_state_wind, by = c("state" = "region")) %>%
@@ -178,7 +178,7 @@ module_gcam.usa_L210.resources_USA <- function(command, ...) {
 
     # L210.GrdRenewRsrcCurves_geo_USA: geothermal resource curves in the states
     L210.GrdRenewRsrcCurves_geo_USA <- L210.GrdRenewRsrcCurves_geo %>%
-      filter(region == "USA") %>%
+      filter(region == gcam.USA_REGION) %>%
       mutate(change_cost = extractioncost - lag(extractioncost))
 
     # Calculate the cost increment between grades 1 and 2
@@ -213,13 +213,13 @@ module_gcam.usa_L210.resources_USA <- function(command, ...) {
     # Maximum resources: currently assuming this is just set to 1, and the resource info is stored in the grades
     # L210.GrdRenewRsrcMax_geo_USA: max sub resource for geothermal (placeholder)
     L210.GrdRenewRsrcMax_geo_USA <- L210.GrdRenewRsrcMax_geo %>%
-      filter(region == "USA") %>%
+      filter(region == gcam.USA_REGION) %>%
       select(-region) %>%
       repeat_add_columns(tibble(region = geo_states))
 
     # L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA: rooftop PV resource curves in the states
     L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA <- L210.SmthRenewRsrcCurvesGdpElast_roofPV %>%
-      filter(region == "USA") %>%
+      filter(region == gcam.USA_REGION) %>%
       select(-region, -maxSubResource, -mid.price, -curve.exponent) %>%
       write_to_all_states(names = c(names(.), "region")) %>%
       left_join_error_no_match(L115.rsrc_state_rooftopPV, by = c("region" = "state")) %>%

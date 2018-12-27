@@ -17,7 +17,7 @@ module_emissions_L121.nonco2_awb_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "emissions/EDGAR/EDGAR_sector",
-             "L103.ag_Prod_Mt_R_C_Y_GLU",
+             "L101.ag_Prod_Mt_R_C_Y_GLU",
              "L111.ag_resbio_R_C",
              FILE = "emissions/EDGAR/EDGAR_SO2",
              FILE = "emissions/EDGAR/EDGAR_CO",
@@ -42,7 +42,7 @@ module_emissions_L121.nonco2_awb_R_S_T_Y <- function(command, ...) {
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     EDGAR_sector <- get_data(all_data, "emissions/EDGAR/EDGAR_sector")
-    L103.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L103.ag_Prod_Mt_R_C_Y_GLU")
+    L101.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L101.ag_Prod_Mt_R_C_Y_GLU")
     L111.ag_resbio_R_C <- get_data(all_data, "L111.ag_resbio_R_C")
     EDGAR_SO2 <- get_data(all_data, "emissions/EDGAR/EDGAR_SO2")
     EDGAR_CO <- get_data(all_data, "emissions/EDGAR/EDGAR_CO")
@@ -58,7 +58,7 @@ module_emissions_L121.nonco2_awb_R_S_T_Y <- function(command, ...) {
     # estimated from production, harvest index, and water content
 
     # Match weighted average residue biomass parameters with crop prodcution.
-    L103.ag_Prod_Mt_R_C_Y_GLU %>%
+    L101.ag_Prod_Mt_R_C_Y_GLU %>%
       left_join(L111.ag_resbio_R_C, by = c("GCAM_region_ID", "GCAM_commodity")) %>%
       select(-c(ErosCtrl_tHa, ResEnergy_GJt, Root_Shoot)) ->
       L121.ag_ExcessDryBiomass_Mt_R_C_Y_GLU
@@ -167,7 +167,7 @@ module_emissions_L121.nonco2_awb_R_S_T_Y <- function(command, ...) {
                      "emissions/EDGAR/EDGAR_sector", "emissions/EDGAR/EDGAR_SO2", "emissions/EDGAR/EDGAR_CO",
                      "emissions/EDGAR/EDGAR_NOx", "emissions/EDGAR/EDGAR_NMVOC", "emissions/EDGAR/EDGAR_CH4",
                      "emissions/EDGAR/EDGAR_N2O", "emissions/EDGAR/EDGAR_NH3",
-                     "L103.ag_Prod_Mt_R_C_Y_GLU", "L111.ag_resbio_R_C") ->
+                     "L101.ag_Prod_Mt_R_C_Y_GLU", "L111.ag_resbio_R_C") ->
       L121.AWBshare_R_C_Y_GLU
 
     L121.nonco2_tg_R_awb_C_Y_GLU %>%
@@ -180,7 +180,7 @@ module_emissions_L121.nonco2_awb_R_S_T_Y <- function(command, ...) {
                      "emissions/EDGAR/EDGAR_sector", "emissions/EDGAR/EDGAR_SO2", "emissions/EDGAR/EDGAR_CO",
                      "emissions/EDGAR/EDGAR_NOx", "emissions/EDGAR/EDGAR_NMVOC", "emissions/EDGAR/EDGAR_CH4",
                      "emissions/EDGAR/EDGAR_N2O", "emissions/EDGAR/EDGAR_NH3",
-                     "L103.ag_Prod_Mt_R_C_Y_GLU", "L111.ag_resbio_R_C") ->
+                     "L101.ag_Prod_Mt_R_C_Y_GLU", "L111.ag_resbio_R_C") ->
       L121.nonco2_tg_R_awb_C_Y_GLU
 
     return_data(L121.AWBshare_R_C_Y_GLU, L121.nonco2_tg_R_awb_C_Y_GLU)

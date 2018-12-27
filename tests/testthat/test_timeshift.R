@@ -21,15 +21,14 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
 
     UNDER_TIMESHIFT <<- TRUE
 
-    # Move the historical/future division back by five years
-    hyr <- HISTORICAL_YEARS
-    HISTORICAL_YEARS <<- 1971:2005       # normally 1971:2010
-    fyr <- FUTURE_YEARS
-    FUTURE_YEARS <<- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)
-    byr <- BASE_YEARS
-    BASE_YEARS <<- c(1975, 1990, 2005)   # normally (1975, 1990, 2005, 2010)
+    # Re-set the model base years to 1975, 1990. Run 2005 and 2010 as future years
+    # Note that this does not affect the HISTORICAL_YEARS or FUTURE_YEARS for data processing
+    byr <- MODEL_BASE_YEARS
+    MODEL_BASE_YEARS <<- c(1975, 1990)   # normally (1975, 1990, 2005, 2010)
+    fyr <- MODEL_FUTURE_YEARS
+    MODEL_FUTURE_YEARS <<- c(2005, 2010, seq(2015, 2100, 5))   # normally (1975, 1990, 2005, 2010)
     myr <- MODEL_YEARS
-    MODEL_YEARS <<- c(BASE_YEARS, FUTURE_YEARS)
+    MODEL_YEARS <<- c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)
 
     with_mock(
       run_chunk = function(chunk, all_data) {
@@ -47,9 +46,8 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
 
     # Reset to what it was before
     UNDER_TIMESHIFT <<- FALSE
-    HISTORICAL_YEARS <<- hyr
-    FUTURE_YEARS <<- fyr
-    BASE_YEARS <<- byr
+    MODEL_BASE_YEARS <<- byr
+    MODEL_FUTURE_YEARS <<- fyr
     MODEL_YEARS <<- myr
   })
 
