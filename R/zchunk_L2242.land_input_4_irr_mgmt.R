@@ -56,7 +56,7 @@ module_aglu_L2242.land_input_4_irr_mgmt <- function(command, ...) {
              AgSupplySubsector = sub("biomass_tree", "biomasstree", AgSupplySubsector),
              AgSupplySubsector = sub("biomass_grass", "biomassgrass", AgSupplySubsector)) %>%
       separate(AgSupplySubsector, c("LandNode4", "GLU_name")) %>%
-      mutate(logit.year.fillout = min(BASE_YEARS),
+      mutate(logit.year.fillout = min(MODEL_BASE_YEARS),
              # Modify land node variable to match in logit exponent values
              LandNode4 = sub("RootTuber", "Root_Tuber", LandNode4),
              LandNode4 = sub("biomasstree", "biomass_tree", LandNode4),
@@ -84,7 +84,7 @@ module_aglu_L2242.land_input_4_irr_mgmt <- function(command, ...) {
       mutate(LandNode2 = paste(LandNode2, GLU_name, sep = "_")) %>%
       mutate(LandNode3 = paste(LandNode3, GLU_name, sep = "_")) %>%
       mutate(LandNode4 = paste(LandLeaf, GLU_name, sep = "_")) %>%
-      repeat_add_columns(tibble::tibble(year = FUTURE_YEARS)) %>%
+      repeat_add_columns(tibble::tibble(year = MODEL_FUTURE_YEARS)) %>%
       filter(year >= aglu.BIO_START_YEAR) %>%
       left_join(A_bio_ghost_share, by = "year") %>%
       mutate(ghost.unnormalized.share = approx_fun(year, ghost.share)) %>%

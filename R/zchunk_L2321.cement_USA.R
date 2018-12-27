@@ -101,7 +101,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
     #
     # Create a table that will be used remove the cement supply sector input table.
     L2321.Supplysector_cement %>%
-      filter(region == "USA") %>%
+      filter(region == gcam.USA_REGION) %>%
       select(region, supplysector) %>%
       # Mutate to remove attributes.
       mutate(region = region) ->
@@ -110,7 +110,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
     # Create the table that will be used to remove the cement sector information from the
     # energy.final.demand input table.
     L2321.PerCapitaBased_cement %>%
-      filter(region == "USA") %>%
+      filter(region == gcam.USA_REGION) %>%
       select(region, energy.final.demand) %>%
       # Mutate to remove attributes.
       mutate(region = region) ->
@@ -128,7 +128,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
       # to check to see if the data frame needs to be processed, it's assumed that if the USA
       # is not found in the region column that regions have already been processed.
 
-      check_df <- filter(data, region == "USA")
+      check_df <- filter(data, region == gcam.USA_REGION)
 
       if(nrow(check_df) == 0) {
 
@@ -142,7 +142,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
         # then expand the input data to all cement producing states.
 
         data %>%
-          filter(region == "USA") %>%
+          filter(region == gcam.USA_REGION) %>%
           write_to_all_states(names = names(data)) %>%
           filter(region %in% cement_states[["state"]]) ->
           new_data
@@ -172,7 +172,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
     # Start by sub setting the cement production by state / historical year
     # for model base years and rounding to the appropriate number of digits.
     L1321.out_Mt_state_cement_Yh %>%
-      filter(year %in% BASE_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       mutate(calOutputValue = signif(value, energy.DIGITS_CALOUTPUT),
              region = state ) ->
       L2321.StubTechProd_cement_USA
@@ -231,7 +231,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
     # Then linearly interpolate the default coefficients for future years. In the next step these
     # values will be added to the state input-output coefficients data frame.
     A321.globaltech_coef_long %>%
-      complete(nesting(supplysector, subsector, minicam.energy.input, technology), year = c(year, FUTURE_YEARS)) %>%
+      complete(nesting(supplysector, subsector, minicam.energy.input, technology), year = c(year, MODEL_FUTURE_YEARS)) %>%
       arrange(supplysector, subsector, minicam.energy.input, technology, year) %>%
       group_by(supplysector, subsector, minicam.energy.input, technology) %>%
       mutate(value = approx_fun(year, value), value = signif(value, energy.DIGITS_COEFFICIENT)) %>%
@@ -241,15 +241,15 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
     # Subset the global technology coefficients and format the data frame to join with the
     # state input-output coefficients.
     L2321.globaltech_coef %>%
-      filter(year %in% FUTURE_YEARS) %>%
+      filter(year %in% MODEL_FUTURE_YEARS) %>%
       spread(year, value) ->
-      L2321.globaltech_coef_future_years
+      L2321.globaltech_coef_yfut
 
     # Combine the future global technology coefficients with the state energy input-output
     # coefficients by supplysector / subsector / technology / minicam.energy.input combinations.
     L2321.IO_GJkg_state_cement_F_Yh %>%
       spread(year, value) %>%
-      left_join_error_no_match(L2321.globaltech_coef_future_years,
+      left_join_error_no_match(L2321.globaltech_coef_yfut,
                                by = c("supplysector", "subsector", "technology", "minicam.energy.input")) ->
       IO_and_globaltech
 
@@ -290,7 +290,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
     # comes from the USA level.
     L2321.StubTechCoef_cement_USA %>%
       mutate(market.name = region,
-             market.name = if_else(grepl("elec", minicam.energy.input), "USA", market.name)) ->
+             market.name = if_else(grepl("elec", minicam.energy.input), gcam.USA_REGION, market.name)) ->
       L2321.StubTechCoef_cement_USA
 
     if(gcamusa.USE_REGIONAL_FUEL_MARKETS) {
@@ -318,7 +318,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
     # Start by subsetting the energy inputs to cement production by state for model base years,
     # rounding to the correct xml digit and adding a region column.
     L1321.in_EJ_state_cement_F_Y %>%
-      filter(year %in% BASE_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       mutate(calibrated.value = signif(value, gcamusa.DIGITS_CALOUTPUT), region = state) %>%
       select(-value)  ->
       L2321.StubTechCalInput_cement_heat_USA
@@ -373,7 +373,7 @@ module_gcam.usa_L2321.cement_USA <- function(command, ...) {
 
     # Assume the fuels are from the USA markets unless using regional fuel markets.
     L2321.StubTechMarket_cement_USA %>%
-      mutate(market.name = "USA") %>%
+      mutate(market.name = gcam.USA_REGION) %>%
       select(region, supplysector, subsector, stub.technology, year, minicam.energy.input, market.name) ->
       L2321.StubTechMarket_cement_USA
 

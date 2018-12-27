@@ -26,7 +26,7 @@ trn_pass_road_LDV_4W,Mini Car,0.82,1.066,0,0.82,0,,-0.2
 trn_pass_road_LDV_4W,Multipurpose Vehicle,0.82,1.066,0,0.82,0,,0.2
 trn_pass_road_LDV_4W,Subcompact Car,0.82,1.066,0,0.82,0,,-0.1
 trn_pass_road_LDV_4W,Van,0.82,1.066,0,0.82,0,,0
-# Pass-through tranSubsectors,,,,,,,,
+# Pass-through tranSubsectors
 trn_pass,road,,,,1,0,,0
 trn_pass_road,LDV,,,,1,0,,0
 trn_pass_road,bus,0.77,1.066,0.128,0.808,0,,0
