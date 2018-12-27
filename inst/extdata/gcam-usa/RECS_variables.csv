@@ -1,6 +1,8 @@
 # File: RECS_variables.csv
 # Title: Residential Energy Consumption Survey Variables
 # Units: NA
+# Column types: ccc 
+# ----------
 variable,fuel,service
 BTUELSPH,electricity,resid heating
 BTUELCOL,electricity,resid cooling

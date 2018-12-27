@@ -3,6 +3,8 @@
 # Units: NA
 # Hydro potential was determined using various proxies
 # In most cases, a growth potential for each country was calculated,                    multiplied by its share in the region, and added to the base-year ouput
+# Column types: iccin 
+# ----------
 GCAM_region_ID,sector,fuel,year,value
 1,electricity generation,hydro,2010,0.9441575999999999
 1,electricity generation,hydro,2015,0.9541089935999999

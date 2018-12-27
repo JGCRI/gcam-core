@@ -1,6 +1,8 @@
 # File: EIA_SEDS_sectors.csv
 # Title: Convert EIA_sector code to GCAM_sector name
 # Units: NA
+# Column types: ccc 
+# ----------
 EIA_sector,GCAM_sector,description
 AC,trn_all,transportation sector consumption
 AP,,transportation sector per capita consumption

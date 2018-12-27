@@ -3,6 +3,8 @@
 # Source:  http://www.nrel.gov/gis/docs/us_re_technical_potential.xlsx
 # Units: In column names
 # Report Table Number-->,Table 2, Table 3, Table 4, Table 5, Table 6, Table 7, Table 8, Table 9, Table 10, Table 11
+# Column types: ciiiiiiiiiiiiiiiiiiiiiiiiiiiiii 
+# ----------
 State,Urban_Utility_scale_PV_GWh,Urban_Utility_scale_PV_GW,Urban_Utility_scale_PV_km2,Rural_Utility_scale_PV_GWh,Rural_Utility_scale_PV_GW,Rural_Utility_scale_PV_km2,Rooftop_PV_GWh,Rooftop_PV_GW,CSP_GWh,CSP_GW,CSP_km2,Onshore_Wind_GWh,Onshore_Wind_GW,Onshore_Wind_km2,Offshore_Wind_GWh,Offshore_Wind_GW,Offshore_Wind_km2,Biopower_Solid_GWh,Biopower_Solid_GW,Biopower_Solid_BDT,Biopower_Gaseous_GWh,Biopower_Gaseous_GW,Biopower_Gaseous_Tonnes_CH4,Geothermal_Hydrothermal_GWh,Geothermal_Hydrothermal_GW,EGS_Geothermal_GWh,EGS_Geothermal_GW,Hydropower_GWh,Hydropower_GW,Hydropower_Count_of_Sites
 Alabama,35851,20,426,3706839,2115,44058,15476,13,0,0,0,283,0,24,0,0,0,11193,1,10175869,1533,0,326187,0,0,535490,68,4103,1,2435
 Alaska,166,0,2,8282976,9005,187608,NA,1,0,0,0,1373433,493,98669,NA,NA,NA,513,0,466797,62,0,13157,15437,2,NA,NA,23676,5,3053

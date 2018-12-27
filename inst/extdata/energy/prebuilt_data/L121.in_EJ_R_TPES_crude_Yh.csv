@@ -3,6 +3,8 @@
 # Units: EJ
 # Unconventional oil subtracted from total primary energy supply of liquids
 # to determine crude oil supply
+# Column types: iccin 
+# ----------
 GCAM_region_ID,sector,fuel,year,value
 1,TPES,crude oil,1971,31.008799640000003
 1,TPES,crude oil,1972,33.304025300000006

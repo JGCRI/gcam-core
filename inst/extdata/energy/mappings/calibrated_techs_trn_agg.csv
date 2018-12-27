@@ -3,6 +3,8 @@
 # Units: NA,
 # Description: mapping between sector / fuel to supplysector/subsector/technology in aggregate transportation and UCD_category,
 # Source: Mishra et al. 2013,
+# Column types: cccccccc 
+# ----------
 sector,fuel,supplysector,subsector,technology,minicam.energy.input,calibration,UCD_category
 trn_domestic air,refined liquids,transportation,refined liquids,refined liquids,refined liquids enduse,input,trn_air
 trn_domestic ship,coal,transportation,coal,coal,delivered coal,input,trn_domestic ship

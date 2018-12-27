@@ -2,6 +2,8 @@
 # Title: Pre-built L101.in_EJ_ctry_bld_Fi_Yh.csv
 # Units: NA
 # Consumption of energy by the building sector by fuel and historical year. Aggregates by fuel and country
+# Column types: cccin 
+# ----------
 iso,sector,fuel,year,value
 abw,in_bld_comm,biomass,1971,1.790838492284019e-5
 abw,in_bld_comm,coal,1971,2.1678571222385492e-5

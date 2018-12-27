@@ -2,6 +2,8 @@
 # Title: Pre-built L101.in_EJ_ctry_trn_Fi_Yh.csv
 # Units: NA
 # Consumption of energy by the transport sector by fuel and historical year. Aggregates by fuel and country
+# Column types: cccin 
+# ----------
 iso,sector,fuel,year,value
 abw,in_trn_domestic air,refined liquids,1971,0
 abw,in_trn_domestic ship,refined liquids,1971,0

@@ -1,6 +1,8 @@
 # File: A44.bld_shell_conductance.csv
 # Title: Assumed USA shell efficiency trajectories
 # Units: Unitless
+# Column types: cnnnnnnnnnnn 
+# ----------
 gcam.consumer,1971,1975,1990,2005,2020,2035,2050,2065,2080,2095,2100
 resid,0.234,0.234,0.234,0.219,0.202,0.184,0.17,0.16,0.151,0.144,0.144
 comm,0.234,0.234,0.234,0.219,0.201,0.183,0.17,0.164,0.158,0.152,0.152

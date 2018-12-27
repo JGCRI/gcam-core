@@ -4,6 +4,8 @@
 # Downscale GCAM3.0 supply curves to the country level (on the basis of resource
 # production) and aggregate by the new GCAM regions.
 # Use crude oil production shares as a proxy for unconventional oil resources.
+# Column types: icccnn 
+# ----------
 GCAM_region_ID,resource,subresource,grade,available,extractioncost
 1,coal,coal,grade 1,284,0.34
 1,coal,coal,grade 2,6851,0.37

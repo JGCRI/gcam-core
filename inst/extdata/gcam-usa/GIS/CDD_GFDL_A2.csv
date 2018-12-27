@@ -3,6 +3,8 @@
 # Units: Fahrenheit Degree Days
 # Description: Cooling Degree Days by state
 # Reference: See inst/extdata/gcam-usa/GIS/README
+# Column types: cnnnnnnnnn 
+# ----------
 state,1975,1990,2005,2020,2035,2050,2065,2080,2095
 AK,36.378777,16.195,137,86,152,106,182,169,354
 AL,1908.2771,2160.163818,2576.52,2585.52,2755.08,3074.76,3374.64,3895.92,4459.68

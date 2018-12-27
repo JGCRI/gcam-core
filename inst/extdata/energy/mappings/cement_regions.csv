@@ -2,6 +2,8 @@
 # Title: Region Mappings for Cement Databases
 # Units: N/A
 # Description: Mapping between iso codes and regions in various cement databases
+# Column types: cccc 
+# ----------
 iso,Worrell_region,IEA_fuelshare_region,IEA_intensity_region
 abw,Rest-of-Latin-America,Latin America,Average
 afg,Rest-of-other-Asia,Southeast Asia,Average

@@ -2,6 +2,8 @@
 # Title: Pre-built L121.in_EJ_R_TPES_unoil_Yh.csv
 # Units: EJ
 # Unconventional oil production shared out to GCAM regions
+# Column types: icinc 
+# ----------
 GCAM_region_ID,fuel,year,value,sector
 1,unconventional oil,1971,0,TPES
 1,unconventional oil,1972,0,TPES
