@@ -35,8 +35,14 @@ load_csv_files <- function(filenames, optionals, quiet = FALSE, ...) {
       if(!quiet) message("Note: optional input ", f, "not found")
       next
     }
-    suppressMessages(readr::read_csv(fqfn, comment = COMMENT_CHAR, ...)) %>%
-      parse_csv_header(fqfn) %>%
+
+    # Read the file header and extract the column type info from it
+    assert_that(file.exists(fqfn))
+    header <- readLines(fqfn, n = 20)  # only first 20 lines
+    col_types <- extract_header_info(header, label = "Columns:", fqfn, required = TRUE)
+
+    readr::read_csv(fqfn, comment = COMMENT_CHAR, col_types = col_types, ...) %>%
+      parse_csv_header(fqfn, header) %>%
       add_comments(paste("Read from", gsub("^.*extdata", "extdata", fqfn))) %>%
       add_flags(FLAG_INPUT_DATA) ->
       filedata[[f]]
@@ -123,36 +129,27 @@ extract_header_info <- function(header_lines, label, filename, required = FALSE,
 #'
 #' @param obj The object to attach attributes to
 #' @param filename Fully-qualified filename
-#' @param n Number of lines to read from the beginning of the file
+#' @param header A vector of strings comprising the file header
 #' @param enforce_requirements Enforce mandatory fields?
 #' @details Headers are given at the top of files and consist of labels ("Title:", "Units:", etc)
 #' prefixed by comment characters (#). The parser looks for these, and calls \code{\link{add_title}} and
 #' similar functions to return an empty data frame with appropriate attribute set.
 #' @return An empty \code{\link{tibble}} with appropriate attributes filled in.
 #' @export
-parse_csv_header <- function(obj, filename, n = 20, enforce_requirements = TRUE) {
+parse_csv_header <- function(obj, filename, header, enforce_requirements = TRUE) {
   assert_that(tibble::is_tibble(obj))
   assert_that(is.character(filename))
-  assert_that(is.numeric(n))
+  assert_that(is.character(header))
   assert_that(is.logical(enforce_requirements))
-  assert_that(file.exists(filename))
-
-  # TEMPORARY: don't enforce metadata, for test, for data injection (from old d.s.)
-  if(isTRUE(grepl(TEMP_DATA_INJECT, filename, fixed = TRUE))) {
-    enforce_requirements <- FALSE
-    obj <- add_flags(obj, FLAG_NO_TEST)
-  }
-
-  x <- readLines(filename, n = n)
 
   # Excel tries to be 'helpful' and, when working with CSV files, quotes lines with
   # commas in them...which you CAN'T SEE when re-opening in Excel. Trap this problem.
-  if(any(grepl(paste0('^"', COMMENT_CHAR), x))) {
+  if(any(grepl(paste0('^"', COMMENT_CHAR), header))) {
     stop('A quoted comment (# prefixed by a double quote, probably due to Excel) detected in ', basename(filename))
   }
 
   # The 'File:' field has to match the actual filename
-  filecheck <- extract_header_info(x, "File:", filename, required = enforce_requirements)
+  filecheck <- extract_header_info(header, "File:", filename, required = enforce_requirements)
   # Remove trailing commas - stupid Excel
   filecheck <- gsub(",*$", "", filecheck)
   if(enforce_requirements & !identical(filecheck, basename(filename))) {
@@ -160,10 +157,10 @@ parse_csv_header <- function(obj, filename, n = 20, enforce_requirements = TRUE)
   }
 
   obj %>%
-    add_title(extract_header_info(x, "Title:", filename, required = enforce_requirements)) %>%
-    add_units(extract_header_info(x, "Units?:", filename, required = enforce_requirements)) %>%
-    add_comments(extract_header_info(x, "(Comments|Description):", filename, multiline = TRUE)) %>%
-    add_reference(extract_header_info(x, "(References?|Sources?):", filename, multiline = TRUE))
+    add_title(extract_header_info(header, "Title:", filename, required = enforce_requirements)) %>%
+    add_units(extract_header_info(header, "Units?:", filename, required = enforce_requirements)) %>%
+    add_comments(extract_header_info(header, "(Comments|Description):", filename, multiline = TRUE)) %>%
+    add_reference(extract_header_info(header, "(References?|Sources?):", filename, multiline = TRUE))
 }
 
 
