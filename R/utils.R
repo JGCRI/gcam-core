@@ -39,7 +39,7 @@ load_csv_files <- function(filenames, optionals, quiet = FALSE, ...) {
     # Read the file header and extract the column type info from it
     assert_that(file.exists(fqfn))
     header <- readLines(fqfn, n = 20)  # only first 20 lines
-    col_types <- extract_header_info(header, label = "Columns:", fqfn, required = TRUE)
+    col_types <- extract_header_info(header, label = "Column types:", fqfn, required = TRUE)
 
     readr::read_csv(fqfn, comment = COMMENT_CHAR, col_types = col_types, ...) %>%
       parse_csv_header(fqfn, header) %>%
