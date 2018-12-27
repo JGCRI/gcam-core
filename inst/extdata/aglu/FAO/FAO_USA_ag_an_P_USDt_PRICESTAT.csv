@@ -2,6 +2,8 @@
 # Title: FAO USA crop and animal producer prices
 # Units: Nominal USD/tonne
 # Source: http://www.fao.org/faostat/en/#data/PP ; downloaded Jan 2017
+# Column types: icicicnnnnnnnnnnnnnnnnnnnnnnnnn 
+# ----------
 country.codes,countries,item.codes,item,element.codes,element,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015
 101,Indonesia,249,Coconuts,5532,Producer Price (USD/tonne),81.5,102.8,93.3,97.3,142.5,143.7,112,69.8,82.7,54.9,65.1,53.9,63.2,54.2,106.4,125.2,130.2,166.3,154.1,179.6,,,,,
 101,Indonesia,254,Oil palm fruit,5532,Producer Price (USD/tonne),58.5,84,,,,,,,,,,,,64.1,58.6,75.7,91.9,103,103.2,150.6,137.7,133.2,122.9,123.4,101.3
