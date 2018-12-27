@@ -19,7 +19,7 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "emissions/EDGAR/EDGAR_sector",
-             "L103.ag_Prod_Mt_R_C_Y_GLU",
+             "L101.ag_Prod_Mt_R_C_Y_GLU",
              "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",
              "L142.ag_Fert_IO_R_C_Y_GLU",
              FILE = "emissions/EDGAR/EDGAR_CH4",
@@ -42,7 +42,7 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     EDGAR_sector <- get_data(all_data, "emissions/EDGAR/EDGAR_sector")
-    L103.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L103.ag_Prod_Mt_R_C_Y_GLU")
+    L101.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L101.ag_Prod_Mt_R_C_Y_GLU")
     L122.LC_bm2_R_HarvCropLand_C_Yh_GLU <- get_data(all_data, "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU")
     L142.ag_Fert_IO_R_C_Y_GLU <- get_data(all_data, "L142.ag_Fert_IO_R_C_Y_GLU")
     EDGAR_CH4 <- get_data(all_data, "emissions/EDGAR/EDGAR_CH4") %>%
@@ -71,7 +71,7 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
       mutate(crop_area_share = value / crop_area_total)
 
     # Production shares (region/GLU/crop within region/crop)
-    L122.ProdGLUshare_R_C_Y_GLU <- L103.ag_Prod_Mt_R_C_Y_GLU %>%
+    L122.ProdGLUshare_R_C_Y_GLU <- L101.ag_Prod_Mt_R_C_Y_GLU %>%
       filter(year %in% HISTORICAL_YEARS) %>%
       group_by(GCAM_region_ID, GCAM_commodity, year) %>%
       # Production by crop, region, and year
@@ -112,7 +112,7 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
       filter(sector == "rice")
 
     # Compute share of rice production by GLU in each region / year
-    L122.ag_Prod_Mt_R_rice_Y_GLU <- L103.ag_Prod_Mt_R_C_Y_GLU %>%
+    L122.ag_Prod_Mt_R_rice_Y_GLU <- L101.ag_Prod_Mt_R_C_Y_GLU %>%
       filter(GCAM_commodity == "Rice", year %in% emissions.EDGAR_YEARS) %>%
       group_by(GCAM_region_ID, GCAM_commodity, year) %>%
       # Total production by region, commodity, and year for calculating share
@@ -144,7 +144,7 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
       filter(sector == "fertilizer")
 
     # Compute fertilizer by crop
-    L122.fert_Mt_R_C_Y_GLU <- L103.ag_Prod_Mt_R_C_Y_GLU %>%
+    L122.fert_Mt_R_C_Y_GLU <- L101.ag_Prod_Mt_R_C_Y_GLU %>%
       filter(year %in% emissions.EDGAR_YEARS) %>%
       rename(ag_production = value) %>%
       left_join_error_no_match(L142.ag_Fert_IO_R_C_Y_GLU %>%
@@ -177,7 +177,7 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
       add_units("unitless share") %>%
       add_comments("Multiply region/crop area shares by region/crop/GLU production shares") %>%
       add_legacy_name("L122.EmissShare_R_C_Y_GLU") %>%
-      add_precursors("L103.ag_Prod_Mt_R_C_Y_GLU", "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU") ->
+      add_precursors("L101.ag_Prod_Mt_R_C_Y_GLU", "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU") ->
       L122.EmissShare_R_C_Y_GLU
 
     L122.ghg_tg_R_agr_C_Y_GLU %>%
@@ -186,7 +186,7 @@ module_emissions_L122.ghg_agr_R_S_T_Y <- function(command, ...) {
       add_comments("EDGAR emissions shared out by crop production") %>%
       add_legacy_name("L122.ghg_tg_R_agr_C_Y_GLU") %>%
       add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_sector",
-                     "L103.ag_Prod_Mt_R_C_Y_GLU", "L142.ag_Fert_IO_R_C_Y_GLU",
+                     "L101.ag_Prod_Mt_R_C_Y_GLU", "L142.ag_Fert_IO_R_C_Y_GLU",
                      "emissions/EDGAR/EDGAR_CH4", "emissions/EDGAR/EDGAR_N2O", "emissions/EDGAR/EDGAR_NH3", "emissions/EDGAR/EDGAR_NOx") ->
       L122.ghg_tg_R_agr_C_Y_GLU
 

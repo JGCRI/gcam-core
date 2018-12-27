@@ -80,14 +80,14 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     # subsector logit exponents of fertilizer sector for the fuel subsectors to be removed in
     # GCAM-USA.
     L2322.SubsectorLogit_Fert %>%
-      filter(region == "USA", supplysector == gcamusa.FERT_NAME, subsector != "Imports") %>%
+      filter(region == gcam.USA_REGION, supplysector == gcamusa.FERT_NAME, subsector != "Imports") %>%
       mutate(region = region) %>%
       select(region, supplysector, subsector) ->
       L2322.DeleteSubsector_USAFert
 
     # Subset the supply sector keywords for fertilizer sector in the USA region.
     L2322.FinalEnergyKeyword_Fert %>%
-      filter(region == "USA") %>%
+      filter(region == gcam.USA_REGION) %>%
       mutate(final.energy = "none") ->
       L2322.FinalEnergyKeyword_USAFert
 
@@ -103,7 +103,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     # Select the supply sector information for fertilizer sector within the US and expand to all of the
     # sates that are fertilizer producers, then create subsector from state and fertilizer name.
     L2322.Supplysector_Fert %>%
-      filter(region == "USA", supplysector == gcamusa.FERT_NAME) %>%
+      filter(region == gcam.USA_REGION, supplysector == gcamusa.FERT_NAME) %>%
       select(region, supplysector) %>%
       repeat_add_columns(Fert_states) %>%
       mutate(subsector = paste(state, gcamusa.FERT_NAME)) ->
@@ -121,7 +121,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     # for the fill out year.
     L2322.SubsectorLogit_USAFert %>%
       select(region, supplysector, subsector) %>%
-      mutate(year.fillout = min(BASE_YEARS)) %>%
+      mutate(year.fillout = min(MODEL_BASE_YEARS)) %>%
       mutate(share.weight = 1) ->
       L2322.SubsectorShrwtFllt_USAFert
 
@@ -131,7 +131,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     L2322.SubsectorLogit_USAFert %>%
       select(region, supplysector, subsector) %>%
       mutate(apply.to = "share-weight") %>%
-      mutate(from.year = max(BASE_YEARS)) %>%
+      mutate(from.year = max(MODEL_BASE_YEARS)) %>%
       mutate(to.year = max(MODEL_YEARS)) %>%
       mutate(interpolation.function = "fixed") ->
       L2322.SubsectorInterp_USAFert
@@ -150,10 +150,10 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     # format digits, and add region and supplysector information to prepare
     # the data frame to add logit table information.
     L1322.out_Mt_state_Fert_Yh %>%
-      filter(year %in% BASE_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       mutate(calOutputValue = signif(value, aglu.DIGITS_LAND_USE)) %>%
       select(-value) %>%
-      mutate(region = "USA", supplysector = gcamusa.FERT_NAME) %>%
+      mutate(region = gcam.USA_REGION, supplysector = gcamusa.FERT_NAME) %>%
       unite(subsector, state, supplysector, sep = " ", remove = FALSE) ->
       L2322.Production_USAFert
 
@@ -195,7 +195,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
       # If the subsetted data frame does not contain any fertilizer supplysector information
       # for the USA region then it is assumed that the data frame has already been
       # processed, and the input data frame is returned as is.
-      check_df <- dplyr::filter(data, region == "USA" & supplysector == gcamusa.FERT_NAME)
+      check_df <- dplyr::filter(data, region == gcam.USA_REGION & supplysector == gcamusa.FERT_NAME)
 
       if(nrow(check_df) == 0) {
         # This does not change the entries of the data frame but will strip the attributes
@@ -214,7 +214,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
         # input data frame columns to all USA states and then subset by the
         # fertilizer producing states.
         data %>%
-          filter(region == "USA", supplysector == gcamusa.FERT_NAME) %>%
+          filter(region == gcam.USA_REGION, supplysector == gcamusa.FERT_NAME) %>%
           write_to_all_states(names = df_names) %>%
           filter(region %in% Fert_states[["state"]]) ->
           new_df
@@ -249,7 +249,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     # Start by formating the state fertilizer production by subsetting for model base years,
     # rounding to the appropriate digits, and adding region information.
     L1322.out_Mt_state_Fert_Yh %>%
-      filter(year %in% BASE_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       mutate(calOutputValue = signif(value, digits = gcamusa.DIGITS_CALOUTPUT)) %>%
       mutate(region = state) ->
       L2322.StubTechProd_Fert_USA
@@ -278,7 +278,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     # Start by subsetting the state fertilizer input-output coefficient data frame for model base years
     # and rounding the input-output coefficient value to the appropriate digits.
     L1322.IO_GJkg_state_Fert_F_Yh %>%
-      filter(year %in% BASE_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       mutate(coefficient = signif(value, aglu.DIGITS_LAND_USE)) %>%
       select(-value) %>%
       mutate(region = state) ->
@@ -295,7 +295,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     # Next add stub.technology and market.name columns and select the columns to include in the final
     # output.
     L2322.StubTechCoef_Fert_USA %>%
-      mutate(stub.technology = technology, market.name = "USA") %>%
+      mutate(stub.technology = technology, market.name = gcam.USA_REGION) %>%
       select(region, supplysector, subsector, stub.technology,
              year, minicam.energy.input, coefficient, market.name) ->
       L2322.StubTechCoef_Fert_USA
@@ -333,7 +333,7 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
       left_join_error_no_match(A322.globaltech_coef %>%
                                  select(supplysector, subsector, technology, minicam.energy.input),
                                by = c("supplysector", "subsector", c("stub.technology" = "technology"))) %>%
-      mutate(market.name = "USA") ->
+      mutate(market.name = gcam.USA_REGION) ->
       L2322.StubTechMarket_Fert_USA
 
 

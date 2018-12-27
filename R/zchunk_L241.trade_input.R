@@ -120,7 +120,7 @@ module_aglu_L241.trade_input <- function(command, ...) {
 
     # Output coefficient for RES ag_trade of food crops (incl secondary products) (85-90)
     L2012.AgProduction_ag_irr_mgmt %>%
-      filter(year == max(BASE_YEARS)) %>%
+      filter(year == max(MODEL_BASE_YEARS)) %>%
       select(-year) %>%
       repeat_add_columns(tibble(year = aglu_demand_futureyears)) %>%
       mutate(res.secondary.output = "ag_trade",

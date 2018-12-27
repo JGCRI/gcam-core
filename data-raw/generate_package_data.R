@@ -21,7 +21,7 @@ generate_level2_data_names <- function() {
 
   # Modeltime
   level2_data_names[["ModelTime"]] <- c("start.year.timestep", "start.year", "final.calibration.year", "end.year")
-  level2_data_names[["ModelTimeInterYears"]] <- c("inter.year.timestep", "inter.year")
+  level2_data_names[["ModelTimeInterYears"]] <- c("inter.year.timestep", "inter.year", "dummy.tag")
 
   # Climate
   level2_data_names[["MAGICC"]] <- c("last.historical.year", "bc.unit.forcing", "default.emiss.file", "carbon.model.start.year")
