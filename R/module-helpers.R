@@ -185,12 +185,12 @@ set_traded_names <- function(data, GCAM_region_names, apply_selected_only = TRUE
 set_years <- function(data) {
   assert_that(is_tibble(data))
   if(nrow(data)) {
-    data[data == "start-year"] <- min(BASE_YEARS)
-    data[data == "final-calibration-year"] <- max(BASE_YEARS)
+    data[data == "start-year"] <- min(MODEL_BASE_YEARS)
+    data[data == "final-calibration-year"] <- max(MODEL_BASE_YEARS)
     data[data == "final-historical-year"] <- max(HISTORICAL_YEARS)
-    data[data == "initial-future-year"] <- min(FUTURE_YEARS)
+    data[data == "initial-future-year"] <- min(MODEL_FUTURE_YEARS)
     data[data == "initial-nonhistorical-year"] <- min(MODEL_YEARS[MODEL_YEARS > max(HISTORICAL_YEARS)])
-    data[data == "end-year"] <- max(FUTURE_YEARS)
+    data[data == "end-year"] <- max(MODEL_FUTURE_YEARS)
   }
   data
 }
@@ -363,7 +363,7 @@ add_carbon_info <- function( data, carbon_info_table, matchvars = c("region", "G
     mutate(hist.veg.carbon.density = round(hist.veg.carbon.density, aglu.DIGITS_C_DENSITY),
            hist.soil.carbon.density = round(hist.soil.carbon.density, aglu.DIGITS_C_DENSITY),
            mature.age = round(mature.age, aglu.DIGITS_MATUREAGE),
-           mature.age.year.fillout = min(BASE_YEARS),
+           mature.age.year.fillout = min(MODEL_BASE_YEARS),
            veg.carbon.density = hist.veg.carbon.density,
            soil.carbon.density = hist.soil.carbon.density,
            min.veg.carbon.density = aglu.MIN_VEG_CARBON_DENSITY,

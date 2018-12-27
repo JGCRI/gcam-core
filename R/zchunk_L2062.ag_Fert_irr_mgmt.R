@@ -47,7 +47,7 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
 
     # Process Fertilizer Coefficients: Copy coefficients to all four technologies (irr/rfd + hi/lo)
     L142.ag_Fert_IO_R_C_Y_GLU %>%
-      filter(year %in% BASE_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(basin_to_country_mapping[ c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) %>%
 
@@ -69,9 +69,9 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
     # Copy 2010 coefficients to all future years, bind with historic coefficients, then remove zeroes
     # Note: this assumes constant fertilizer coefficients in the future
     L2062.AgCoef_Fert_ag_irr_mgmt %>%
-      filter(year == max(BASE_YEARS)) %>%
+      filter(year == max(MODEL_BASE_YEARS)) %>%
       select(-year) %>%
-      repeat_add_columns(tibble::tibble(year = FUTURE_YEARS)) %>%
+      repeat_add_columns(tibble::tibble(year = MODEL_FUTURE_YEARS)) %>%
       bind_rows(L2062.AgCoef_Fert_ag_irr_mgmt) %>%
       filter(coefficient > 0) ->
       L2062.AgCoef_Fert_ag_irr_mgmt

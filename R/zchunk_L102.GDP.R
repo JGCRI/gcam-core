@@ -183,7 +183,13 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
       # just SSP1, SSP2, etc.
       group_by(scenario, GCAM_region_ID, year) %>%
       summarise(gdp = sum(gdp)) %>%
-      select(scenario, GCAM_region_ID, year, gdp)
+      select(scenario, GCAM_region_ID, year, gdp) %>%
+      ungroup() %>%
+      # The steps below write out the data to all future years, starting from the final socio historical year
+      complete(nesting(scenario, GCAM_region_ID), year = c(socioeconomics.FINAL_HIST_YEAR, FUTURE_YEARS)) %>%
+      group_by(scenario, GCAM_region_ID) %>%
+      mutate(gdp = approx_fun(year, gdp)) %>%
+      ungroup()
     ## Units are billions of 2005$
 
 
@@ -311,8 +317,12 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
       filter(scenario == socioeconomics.BASE_POP_SCEN) %>%
       gather_years %>%
       mutate(value = as.numeric(value)) %>%
-      filter(year %in% FUTURE_YEARS) %>%
-      select(iso, year, value)
+      select(iso, year, value) %>%
+      complete(nesting(iso), year = c(socioeconomics.FINAL_HIST_YEAR, FUTURE_YEARS)) %>%
+      group_by(iso) %>%
+      mutate(value = approx_fun(year, value)) %>%
+      ungroup() %>%
+      filter(year %in% FUTURE_YEARS)
 
     # Historical GDP
     gdp_mil90usd_ctry_Yh <- L100.gdp_mil90usd_ctry_Yh %>%
@@ -462,7 +472,8 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID",
                      "socioeconomics/SSP_database_v9",
                      "L100.gdp_mil90usd_ctry_Yh",
-                     "socioeconomics/GCAM3_GDP") ->
+                     "socioeconomics/GCAM3_GDP") %>%
+      add_flags(FLAG_PROTECT_FLOAT) ->
       L102.gdp_mil90usd_GCAM3_ctry_Y
 
     pcgdp_thous90USD_GCAM3_R_Y %>%
@@ -486,7 +497,8 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
                      "socioeconomics/SSP_database_v9",
                      "L100.gdp_mil90usd_ctry_Yh",
                      "socioeconomics/GCAM3_GDP",
-                     "L101.Pop_thous_GCAM3_ctry_Y") ->
+                     "L101.Pop_thous_GCAM3_ctry_Y") %>%
+      add_flags(FLAG_PROTECT_FLOAT) ->
       L102.pcgdp_thous90USD_GCAM3_ctry_Y
 
     return_data(L102.gdp_mil90usd_Scen_R_Y, L102.pcgdp_thous90USD_Scen_R_Y, L102.PPP_MER_R, L102.gdp_mil90usd_GCAM3_R_Y, L102.gdp_mil90usd_GCAM3_ctry_Y, L102.pcgdp_thous90USD_GCAM3_R_Y, L102.pcgdp_thous90USD_GCAM3_ctry_Y)

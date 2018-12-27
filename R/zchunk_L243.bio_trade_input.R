@@ -68,7 +68,7 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
     NEW.REGIONAL.BIOMASS.NAME <- "total biomass"
     TRADED.BIOMASS.NAME <- "traded biomass"
     BIOMASS.NAME <- "biomass"
-    BIOMASS.TRADE.REGION <- "USA"
+    BIOMASS.TRADE.REGION <- gcam.USA_REGION
     DOMESTIC.BIOMASS.NAME <- "domestic biomass"
     INTERNATIONAL.BIOMASS.NAME <- "imported biomass"
 

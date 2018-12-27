@@ -134,14 +134,14 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
     # L254.DeleteSupplysector_USAtrn: Delete transportation supplysectors of the USA region
     L254.Supplysector_trn %>%
       mutate(region = region) %>% # strip off attributes like title, etc.
-      filter(region == "USA") %>%
+      filter(region == gcam.USA_REGION) %>%
       select(region, supplysector) ->
       L254.DeleteSupplysector_USAtrn
 
     # L254.DeleteFinalDemand_USAtrn: Delete energy final demand sectors of the USA region
     L254.PerCapitaBased_trn %>%
       mutate(region = region) %>% # strip off attributes like title, etc.
-      filter(region == "USA") %>%
+      filter(region == gcam.USA_REGION) %>%
       select(LEVEL2_DATA_NAMES[["EnergyFinalDemand"]]) ->
       L254.DeleteFinalDemand_USAtrn
 
@@ -153,7 +153,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
         minicam.energy.input <- NULL  # silence package check notes
 
       data_new <- data %>%
-        filter(region == "USA") %>%
+        filter(region == gcam.USA_REGION) %>%
         write_to_all_states(names = c(names(data), "region"))
 
       # Re-set markets from USA to regional markets, if called for in the GCAM-USA assumptions for selected fuels
@@ -202,7 +202,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
     # Calibration
     # L254.StubTranTechCalInput_USA: calibrated energy consumption by all technologies
     L154.in_EJ_state_trn_m_sz_tech_F %>%
-      filter(year %in% BASE_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       mutate(calibrated.value = round(value, digits = energy.DIGITS_CALOUTPUT),
              region = state) %>%
       left_join_error_no_match(select(UCD_techs, UCD_sector, mode, size.class, UCD_technology, UCD_fuel,
@@ -214,7 +214,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
     # NOTE: NEED TO WRITE THIS OUT FOR ALL TECHNOLOGIES, NOT JUST THOSE THAT EXIST IN SOME BASE YEARS.
     # Model may make up calibration values otherwise.
     L254.StubTranTechCoef_USA %>%
-      filter(year %in% BASE_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       select_if(names(L254.StubTranTechCoef_USA) %in% LEVEL2_DATA_NAMES[["StubTranTechCalInput"]]) %>%
       left_join(L254.StubTranTechCalInput_USA,
                 by = c("region", "supplysector", "tranSubsector", "stub.technology", "year", "minicam.energy.input")) %>%
@@ -231,7 +231,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
     # Non-motorized technologies
     # L254.StubTranTechProd_nonmotor_USA: service output of non-motorized transportation technologies
     L154.out_mpkm_state_trn_nonmotor_Yh %>%
-      filter(year %in% BASE_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       mutate(calOutputValue = round(value, digits = energy.DIGITS_MPKM),
              region = state, tranSubsector = mode) %>%
       left_join_error_no_match(A54.globaltech_nonmotor, by = "tranSubsector") %>%
@@ -276,7 +276,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
 
     # Write all possible pass-through technologies to all regions
     A54.globaltech_passthru %>%
-      repeat_add_columns(tibble(year = BASE_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_BASE_YEARS)) %>%
       write_to_all_states(names = c(names(.), "region")) %>%
       select(region, supplysector, tranSubsector, stub.technology = technology, year, minicam.energy.input) %>%
       # Subset only the passthrough technologies that are applicable in each region

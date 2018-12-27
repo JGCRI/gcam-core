@@ -92,7 +92,7 @@ module_energy_L270.limits <- function(command, ...) {
            policy.portfolio.standard = "oil-credits",
            market = "global",
            policyType = "RES") %>%
-      repeat_add_columns(tibble(year = FUTURE_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) %>%
       mutate(constraint = 1,
              price.unit = "1975$/GJ",
              output.unit = "EJ") ->

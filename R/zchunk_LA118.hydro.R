@@ -130,7 +130,7 @@ module_energy_LA118.hydro <- function(command, ...) {
         filter(year != 2020) -> # Dropping 2020, as described above
         L118.out_EJ_RG3_elec_hydro_Y_with_values
 
-      # Create a table from 2010 to 2100 in 5-year intervals and interpolate for the missing values
+      # Create a table from 2010 to 2100 in all "FUTURE_YEARS" and interpolate for the missing values
       L118.out_EJ_RG3_elec_hydro_fby %>%
         select(region_GCAM3) %>%
         repeat_add_columns(tibble::tibble(year = c(max(HISTORICAL_YEARS), FUTURE_YEARS))) %>% # Years include historical max and future

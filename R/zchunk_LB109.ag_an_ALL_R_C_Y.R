@@ -17,7 +17,7 @@
 module_aglu_LB109.ag_an_ALL_R_C_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L101.ag_Food_Mt_R_C_Y",
-              "L103.ag_Prod_Mt_R_C_Y",
+              "L101.ag_Prod_Mt_R_C_Y",
               "L105.an_Food_Mt_R_C_Y",
               "L105.an_Prod_Mt_R_C_Y",
               "L106.ag_NetExp_Mt_R_C_Y",
@@ -40,7 +40,7 @@ module_aglu_LB109.ag_an_ALL_R_C_Y <- function(command, ...) {
 
     # Load required inputs
     L101.ag_Food_Mt_R_C_Y <- get_data(all_data, "L101.ag_Food_Mt_R_C_Y")
-    L103.ag_Prod_Mt_R_C_Y <- get_data(all_data, "L103.ag_Prod_Mt_R_C_Y")
+    L101.ag_Prod_Mt_R_C_Y <- get_data(all_data, "L101.ag_Prod_Mt_R_C_Y")
     L105.an_Food_Mt_R_C_Y <- get_data(all_data, "L105.an_Food_Mt_R_C_Y")
     L105.an_Prod_Mt_R_C_Y <- get_data(all_data, "L105.an_Prod_Mt_R_C_Y")
     L106.ag_NetExp_Mt_R_C_Y <- get_data(all_data, "L106.ag_NetExp_Mt_R_C_Y")
@@ -53,7 +53,7 @@ module_aglu_LB109.ag_an_ALL_R_C_Y <- function(command, ...) {
     # List of all flows for primary agricultural good balances
     ag_Flow_cols <- c("Prod_Mt", "NetExp_Mt", "Supply_Mt", "Food_Mt", "Feed_Mt", "Biofuels_Mt", "OtherUses_Mt")
     # List of commodities in production table
-    L103.ag_Prod_Mt_R_C_Y %>%
+    L101.ag_Prod_Mt_R_C_Y %>%
       pull(GCAM_commodity) %>%
       unique() -> Primary_commodities
     # List of any commodities (e.g. pasture, residue, scavenging) in feed but not in production table
@@ -67,7 +67,7 @@ module_aglu_LB109.ag_an_ALL_R_C_Y <- function(command, ...) {
       bind_rows(L108.ag_NetExp_Mt_R_FodderHerb_Y) %>%
       # Name the flows in each table, and combine all tables
       mutate(flow = "NetExp_Mt") %>%
-      bind_rows(mutate(L103.ag_Prod_Mt_R_C_Y, flow = "Prod_Mt")) %>%
+      bind_rows(mutate(L101.ag_Prod_Mt_R_C_Y, flow = "Prod_Mt")) %>%
       bind_rows(mutate(L101.ag_Food_Mt_R_C_Y, flow = "Food_Mt")) %>%
       bind_rows(mutate(L108.ag_Feed_Mt_R_C_Y, flow = "Feed_Mt")) %>%
       bind_rows(mutate(L122.in_Mt_R_C_Yh, flow = "Biofuels_Mt")) %>%
@@ -200,7 +200,7 @@ module_aglu_LB109.ag_an_ALL_R_C_Y <- function(command, ...) {
       add_comments("Adjusts global and regional net exports to remove net negative other uses") %>%
       add_legacy_name("L109.ag_ALL_Mt_R_C_Y") %>%
       add_precursors("L101.ag_Food_Mt_R_C_Y",
-                     "L103.ag_Prod_Mt_R_C_Y",
+                     "L101.ag_Prod_Mt_R_C_Y",
                      "L106.ag_NetExp_Mt_R_C_Y",
                      "L108.ag_Feed_Mt_R_C_Y",
                      "L108.ag_NetExp_Mt_R_FodderHerb_Y",

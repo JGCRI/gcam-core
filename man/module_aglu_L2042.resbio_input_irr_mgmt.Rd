@@ -26,16 +26,16 @@ curves for Mill, Forest, and Agriculture.
 For Forest Residue Biomass, each GCAM region-commodity-GLU combination in L123.For_Prod_bm3_R_Y_GLU is converted to a
 region-supplySector-supplySubsector-ProductionTech combination, and externally set parameters are added to form the table of Forest
 residue biomass parameters for each region and year. For each region-supplySector-supplySubsector-ProductionTech combination in
-this table, base supply curves are read in from A_resbio_curves and then, in specified calibration years BASE_YEARS, replaced by
+this table, base supply curves are read in from A_resbio_curves and then, in specified calibration years MODEL_BASE_YEARS, replaced by
 fractions in  A_bio_frac_prod_R to form the table of Forest resbio supply curves for each region and year.
 
 For Mill Residue Biomass, sector, subsector, and technology combinations for NonFoodDeman_Forest are pulled from A_demand_technology,
 and externally set parameters are added to form the table of global Mill residue biomass parameters in each year. Sector, subsector,
 and technology combinations from this table are repeated for each GCAM region and year, base supply curves are read in from
-A_resbio_curves and then, in specified calibration years BASE_YEARS, replaced by fractions in  A_bio_frac_prod_R to form the table of
+A_resbio_curves and then, in specified calibration years MODEL_BASE_YEARS, replaced by fractions in  A_bio_frac_prod_R to form the table of
 Mill resbio supply curves for each region and year.
 
-For Agriculture Residue Biomass, each GCAM region-commodity-GLU combination in L103.ag_Prod_Mt_R_C_Y_GLU is converted to a
+For Agriculture Residue Biomass, each GCAM region-commodity-GLU combination in L101.ag_Prod_Mt_R_C_Y_GLU is converted to a
 region-supplySector-supplySubsector-ProductionTech combination, and parameters from L111.ag_resbio_R_C are joined and rounded
 for each region-supplySector. These parameters are then repeated for model years, irrigation types, and management technology levels.
 Finally, for each region-supplySector-supplySubsector-ProductionTech-irrigation-tech combination in this table, base

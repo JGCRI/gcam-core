@@ -5,7 +5,7 @@
 
 ModelTime, modeltime/+{time-step}start-year, modeltime/+start-year, modeltime/+final-calibration-year, modeltime/+end-year, scenario, scenario/modeltime
 
-ModelTimeInterYears, modeltime/+{time-step}inter-year, modeltime/+inter-year, scenario, scenario/modeltime
+ModelTimeInterYears, modeltime/+{time-step}inter-year, modeltime/+inter-year, modeltime/+{dummy-tag}inter-year, scenario, scenario/modeltime
 
 MAGICC, MagiccModel/+last-historical-year, MagiccModel/+bc-unit-forcing, MagiccModel/+ghgInputFileName, MagiccModel/+carbon-model-start-year, scenario, scenario/world, world/MagiccModel
 

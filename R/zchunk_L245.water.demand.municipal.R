@@ -124,23 +124,23 @@ module_water_L245.water.demand.municipal <- function(command, ...) {
     L245.assumptions_all %>%
       left_join(L145.municipal_water_R_W_Yh_km3, by = "GCAM_region_ID") %>%
       # ^^ non-restrictive join used to allow expansion across multiple years
-      filter(year %in% BASE_YEARS) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       rename(base.service = withdrawals) %>%
       select(LEVEL2_DATA_NAMES$BaseService) ->
       L245.BaseService  # municipal water withdrawals for base years
 
     L245.assumptions_all %>%
-      repeat_add_columns(tibble(year = FUTURE_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) %>%
       select(LEVEL2_DATA_NAMES$IncomeElasticity) ->
       L245.IncomeElasticity  # income elasticity projections
 
     L245.assumptions_all %>%
-      repeat_add_columns(tibble(year = FUTURE_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) %>%
       select(LEVEL2_DATA_NAMES$PriceElasticity) ->
       L245.PriceElasticity  # price elasticity projections
 
     L245.assumptions_all %>%
-      repeat_add_columns(tibble(year = FUTURE_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) %>%
       select(LEVEL2_DATA_NAMES$aeei) ->
       L245.aeei  # demand efficiency projections
 
