@@ -127,7 +127,8 @@ module_energy_L232.industry <- function(command, ...) {
       L232.IncomeElasticity_ind_gssp3 <- L232.IncomeElasticity_ind_gssp4 <-
       L232.IncomeElasticity_ind_gssp5 <- L232.IncomeElasticity_ind_ssp1 <-
       L232.IncomeElasticity_ind_ssp2 <- L232.IncomeElasticity_ind_ssp3 <-
-      L232.IncomeElasticity_ind_ssp4 <- L232.IncomeElasticity_ind_ssp5 <- NULL
+      L232.IncomeElasticity_ind_ssp4 <- L232.IncomeElasticity_ind_ssp5 <-
+      market.name <- stub.technology <- NULL
 
     # ===================================================
     # 1. Perform computations
@@ -303,8 +304,8 @@ module_energy_L232.industry <- function(command, ...) {
     L232.in_EJ_R_indenergy_F_Yh %>%
       left_join_error_no_match(distinct(select(A32.globaltech_eff, subsector, technology, minicam.energy.input)),
                                by = c("subsector", "stub.technology" = "technology")) %>%
-      mutate(calibrated.value = round(value, energy.DIGITS_CALOUTPUT)) %>%
-      mutate(share.weight.year = year) %>%
+      mutate(calibrated.value = round(value, energy.DIGITS_CALOUTPUT),
+             share.weight.year = year) %>%
       rename(calOutputValue = calibrated.value) %>%  # temporary column name change to accommodate function set_subsector_shrwt
       set_subsector_shrwt %>%
       rename(calibrated.value = calOutputValue) %>% # temporary column name change to accommodate function set_subsector_shrwt
@@ -378,8 +379,8 @@ module_energy_L232.industry <- function(command, ...) {
       rename(minicam.energy.input = supplysector) %>%
       mutate(supplysector = L232.industry_names[["supplysector"]],
              subsector = L232.industry_names[["subsector"]],
-             stub.technology = L232.industry_names[["technology"]]) %>%
-      mutate(market.name = region) %>%
+             stub.technology = L232.industry_names[["technology"]],
+             market.name = region) %>%
       select(LEVEL2_DATA_NAMES[["StubTechCoef"]]) ->
       L232.StubTechCoef_industry_base # intermediate tibble?
 
@@ -480,8 +481,8 @@ module_energy_L232.industry <- function(command, ...) {
       filter(year %in% c(max(MODEL_BASE_YEARS), MODEL_FUTURE_YEARS)) %>%
       # Per-capita GDP ratios, which are used in the equation for demand growth
       group_by(GCAM_region_ID, scenario) %>%
-      mutate(temp_lag = lag(value, 1)) %>%
-      mutate(value = value / temp_lag) %>%
+      mutate(temp_lag = lag(value, 1),
+             value = value / temp_lag) %>%
       ungroup %>%
       select(-temp_lag) %>%
       filter(year %in% MODEL_FUTURE_YEARS) ->
@@ -511,9 +512,9 @@ module_energy_L232.industry <- function(command, ...) {
         mutate(parameter = approx(x = A32.inc_elas_output[["pc.output_GJ"]],
                                   y = A32.inc_elas_output[["inc_elas"]],
                                   xout = value.x,
-                                  rule = 2)[['y']]) %>%
-        mutate(value = value.x * value.y ^ parameter) %>%
-        mutate(year = elast_years[i]) %>%
+                                  rule = 2)[['y']],
+               value = value.x * value.y ^ parameter,
+               year = elast_years[i]) %>%
         select(GCAM_region_ID, scenario, region, year, value) %>%
         bind_rows(L232.Output_ind) ->
         L232.Output_ind

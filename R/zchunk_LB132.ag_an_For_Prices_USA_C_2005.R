@@ -186,8 +186,8 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
       gather_years %>%
       filter(year %in% aglu.MODEL_PRICE_YEARS) %>%
       # Modify element names to one word so that they can be used as column names when spreading element and doing calculations
-      mutate(element = if_else(element == "Export Quantity (m3)", "Exp_m3", "ExpV_USD")) %>%
-      mutate(GCAM_commodity = "Forest") %>%
+      mutate(element = if_else(element == "Export Quantity (m3)", "Exp_m3", "ExpV_USD"),
+             GCAM_commodity = "Forest") %>%
       spread(element, value) %>%
       # Calculate forest price as export value (in thous USD) divided by export quantity
       mutate(Price_USDm3 = ExpV_USD * 1000 / Exp_m3) %>%

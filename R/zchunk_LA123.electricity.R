@@ -88,9 +88,9 @@ module_energy_LA123.electricity <- function(command, ...) {
     # Taking care of NA, 0, and INF values generatted in previous step (efficiency calculations) and updating
     # the efficiency output L123.eff_R_elec_F_Yh
     L123.eff_R_elec_F_Yh %>%
-      mutate(value = if_else(!is.na(value), value, energy.DEFAULT_ELECTRIC_EFFICIENCY)) %>%
-      mutate(value = if_else(value == 0, energy.DEFAULT_ELECTRIC_EFFICIENCY, value)) %>%
-      mutate(value = if_else(is.infinite(value), energy.DEFAULT_ELECTRIC_EFFICIENCY, value)) ->
+      mutate(value = if_else(!is.na(value), value, energy.DEFAULT_ELECTRIC_EFFICIENCY),
+             value = if_else(value == 0, energy.DEFAULT_ELECTRIC_EFFICIENCY, value),
+             value = if_else(is.infinite(value), energy.DEFAULT_ELECTRIC_EFFICIENCY, value)) ->
       L123.eff_R_elec_F_Yh
 
     # Tibble (Output_efficiency_based) created to adjust electricity outputs (L123.out_EJ_R_elec_F_Yh)
@@ -124,8 +124,8 @@ module_energy_LA123.electricity <- function(command, ...) {
       left_join(enduse_fuel_aggregation_industry, by = "fuel") %>%
       mutate(fuel = industry) %>%
       select(-industry) %>%
-      mutate(fuel = replace(fuel, fuel == "heat", NA)) %>%
-      mutate(fuel = replace(fuel, fuel == "electricity", NA)) %>%
+      mutate(fuel = replace(fuel, fuel == "heat", NA),
+             fuel = replace(fuel, fuel == "electricity", NA)) %>%
       group_by(GCAM_region_ID, sector, fuel, year) %>%
       summarise_all(funs(sum)) %>%
       ungroup() %>%

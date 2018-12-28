@@ -14,8 +14,8 @@ graph_chunks <- function(module_filter = NULL,
                          include_disabled = FALSE,
                          quiet = TRUE) {
 
-  output <- to_xml <- module <- name.y <- name <- disabled <- input <- num <-
-    NULL                              # silence notes on package check.
+  palette <- output <- to_xml <- module <- name.y <- name <- disabled <-
+    input <- num <- NULL   # silence notes on package check.
 
   assert_that(is.null(module_filter) | is.character(module_filter))
   assert_that(is.logical(plot_gcam))

@@ -237,6 +237,7 @@ driver <- function(all_data = empty_data(),
       run_chunks <- stop_before
     }
     # calc min list
+    name.x <- name.y <- NULL  # silence package check note
     verts <- inner_join(bind_rows(chunkoutputs,
                                   tibble(name = unfound_inputs$input,
                                          output = unfound_inputs$input,

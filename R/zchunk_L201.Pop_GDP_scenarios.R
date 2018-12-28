@@ -77,7 +77,7 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
     # L201.BaseGDP_Scen: Base GDP for all scenarios
     # Get base GDP in start year
     L201.BaseGDP_Scen <- L102.gdp_mil90usd_Scen_R_Y %>%
-      filter(scenario == socioeconomics.BASE_GDP_SCENARIO) %>% # use the standard scenario
+      filter(scenario == socioeconomics.BASE_GDP_SCENARIO) %>%   # use the standard scenario
       filter(year == min(MODEL_BASE_YEARS)) %>% # find the first year
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       mutate(baseGDP = round(value, socioeconomics.GDP_DIGITS)) %>%
@@ -96,9 +96,9 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       filter(year %in% MODEL_YEARS) %>%
       group_by(scenario, GCAM_region_ID) %>%
-      mutate(timesteps = year - lag(year, n = 1L, order_by = c(GCAM_region_ID))) %>% # calculate time step
-      mutate(lag_pcgdp = lag(value, n = 1L, order_by = c(GCAM_region_ID))) %>% # last period pcgdp
-      mutate(ratio_pcgdp = value / lag_pcgdp) %>% # ratio of this year to last year
+      mutate(timesteps = year - lag(year, n = 1L, order_by = c(GCAM_region_ID)),# calculate time step
+             lag_pcgdp = lag(value, n = 1L, order_by = c(GCAM_region_ID)), # last period pcgdp
+             ratio_pcgdp = value / lag_pcgdp) %>% # ratio of this year to last year
       filter(year != min(MODEL_BASE_YEARS)) %>% # drop first period with NA ratio
       mutate(rate_pcgdp = round(ratio_pcgdp ^ (1 / timesteps) - 1, socioeconomics.LABOR_PRODUCTIVITY_DIGITS)) %>% # Annualize the ratios to return annual growth rates
       ungroup() %>%
@@ -110,8 +110,8 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
 
     L201.PPPConvert <- L102.PPP_MER_R %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      mutate(constRatio = constantPPPratio) %>%
-      mutate(PPPConvert = round(PPP_MER, socioeconomics.LABOR_PRODUCTIVITY_DIGITS)) %>%
+      mutate(constRatio = constantPPPratio,
+             PPPConvert = round(PPP_MER, socioeconomics.LABOR_PRODUCTIVITY_DIGITS)) %>%
       select(region, constRatio, PPPConvert)
 
     # Split by scenario and remove scenario column from each tibble

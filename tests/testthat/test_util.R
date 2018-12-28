@@ -15,6 +15,9 @@ test_that("screening for use of forbidden functions works", {
     # including match
     y <- ifelse(x < 0,0, x)
     z <- ifelse(x > 10, 10, x)
+    d %>%
+      mutate(x = 1) %>%
+      mutate(y = 2)
     dd <- melt(d)
     df <- cast(dd)
     dfm <- merge(d, dd)
@@ -25,7 +28,8 @@ test_that("screening for use of forbidden functions works", {
 
   expect_equal(screen_forbidden(testgood), character())
   tb <- screen_forbidden(testbad)
-  expect_equal(tb[,1], c("(?<!error_no_)match(?!es)", "ifelse", "ifelse", "melt", "cast", "rbind",
+  expect_equal(tb[,1], c("consecutive mutate calls", "(?<!error_no_)match(?!es)",
+                         "ifelse", "ifelse", "melt", "cast", "rbind",
                          "cbind", "merge"))
 })
 

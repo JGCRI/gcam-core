@@ -39,8 +39,8 @@
 #' @return Time series with the past and future joined as described in details.
 join.gdp.ts <- function(past, future, grouping) {
 
-    year <- gdp <- base.gdp <- gdp.ratio <- . <- scenario <-
-        NULL                            # silence notes on package check.
+  year <- gdp <- base.gdp <- gdp.ratio <- . <- scenario <-
+    NULL                            # silence notes on package check.
 
   if(! 'scenario' %in% names(future)) {
     ## This saves us having to make a bunch of exceptions below when we
@@ -131,8 +131,8 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     iso <- GCAM_region_ID <- value <- year <- gdp <- MODEL <- VARIABLE <-
-        UNIT <- SCENARIO <- scenario <- gdp.rate <- gdp.ratio <- population <-
-        pcgdp <- MER <- PPP <- region_GCAM3 <- agg_val <- share <-
+      UNIT <- SCENARIO <- scenario <- gdp.rate <- gdp.ratio <- population <-
+      pcgdp <- MER <- PPP <- region_GCAM3 <- agg_val <- share <-
       GCAM3_value <- base <- ratio <- value.x <- value.y <- NULL     # silence package check.
 
     all_data <- list(...)[[1]]
@@ -203,8 +203,8 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
       change_iso_code('rou', 'rom') %>%
       gather(year, gdp.rate, -iso) %>%
       full_join(gdp_mil90usd_ctry %>% select(iso) %>% unique, by = 'iso') %>%
-      mutate(gdp.rate = if_else(gdp.rate == 'n/a', '0', gdp.rate)) %>% # Treat string 'n/a' as missing.
-      mutate(year = as.integer(year),
+      mutate(gdp.rate = if_else(gdp.rate == 'n/a', '0', gdp.rate), # Treat string 'n/a' as missing.
+             year = as.integer(year),
              gdp.rate = as.numeric(gdp.rate)) %>%
       replace_na(list(year = 2010)) %>% # have to do this for `complete` to work as expected.
       complete(iso, year) %>%

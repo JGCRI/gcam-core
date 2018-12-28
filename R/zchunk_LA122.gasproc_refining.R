@@ -141,7 +141,6 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
       rename(valueInput = value) %>%
       left_join(L122.gtlctl_coef, by = c("sector", "fuel", "year")) %>%
       mutate(value = valueInput * value) %>%
-      select(-valueInput) %>%
       select(GCAM_region_ID, sector, fuel, year, value) -> L122.in_EJ_R_gtlctl_F_Yh
 
     # CRUDE OIL REFINING
@@ -202,14 +201,14 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
       left_join_error_no_match(select(filter(L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "TPES", fuel == "refined liquids"), -sector), by = c("GCAM_region_ID", "fuel", "year")) %>%
       select(-value.x) %>%
       rename(value = value.y) %>%
-      bind_rows(filter(L1011.en_bal_EJ_R_Si_Fi_Yh,sector == "net_oil refining", fuel!= "refined liquids")) %>%
-      mutate(sector = "oil refining") %>%
-      mutate(fuel = if_else(fuel == "refined liquids", "oil", fuel)) -> L122.in_EJ_R_oilrefining_F_Yh
+      bind_rows(filter(L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "net_oil refining", fuel!= "refined liquids")) %>%
+      mutate(sector = "oil refining",
+             fuel = if_else(fuel == "refined liquids", "oil", fuel)) -> L122.in_EJ_R_oilrefining_F_Yh
 
     # Calculate region- and fuel-specific coefficients of crude oil refining
     L122.in_EJ_R_oilrefining_F_Yh %>%
       left_join(select(L122.out_EJ_R_oilrefining_Yh, -fuel), by = c("GCAM_region_ID", "sector", "year")) %>%
-      mutate(value = value.x/value.y) %>%
+      mutate(value = value.x / value.y) %>%
       select(-value.x, -value.y) -> L122.IO_R_oilrefining_F_Yh
 
     # Combine all calibrated refinery input and output tables

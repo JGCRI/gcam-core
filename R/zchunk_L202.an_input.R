@@ -361,8 +361,8 @@ module_aglu_L202.an_input <- function(command, ...) {
     # L202.GlobalTechCost_an: costs of animal production technologies (263-270)
     A_an_technology %>%
       repeat_add_columns(tibble(year = c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS))) %>%
-      mutate(sector.name = supplysector, subsector.name = subsector) %>%
-      mutate(minicam.non.energy.input = "non-energy") %>%
+      mutate(sector.name = supplysector, subsector.name = subsector,
+             minicam.non.energy.input = "non-energy") %>%
       left_join_error_no_match(select(L202.an_FeedCost_R_C, GCAM_commodity, nonFeedCost), by = c("supplysector" = "GCAM_commodity")) %>%
       mutate(input.cost = round(nonFeedCost, aglu.DIGITS_CALPRICE)) %>%
       select(LEVEL2_DATA_NAMES[["GlobalTechCost"]]) ->
@@ -387,8 +387,8 @@ module_aglu_L202.an_input <- function(command, ...) {
       # not every region and supplysector is present in L202.an_ALL_Mt_R_C_Y so use left_join
       left_join(select(L202.an_ALL_Mt_R_C_Y, region, GCAM_commodity, year, NetExp_Mt),
                 by = c("region", "supplysector" = "GCAM_commodity", "year")) %>%
-      mutate(fixedOutput = pmax(0, round(-1 * NetExp_Mt, aglu.DIGITS_CALOUTPUT))) %>%
-      mutate(share.weight.year = year, subs.share.weight = 0, tech.share.weight = 0) %>%
+      mutate(fixedOutput = pmax(0, round(-1 * NetExp_Mt, aglu.DIGITS_CALOUTPUT)),
+             share.weight.year = year, subs.share.weight = 0, tech.share.weight = 0) %>%
       select(LEVEL2_DATA_NAMES[["StubTechFixOut"]]) ->
       L202.StubTechFixOut_imp_an
 
