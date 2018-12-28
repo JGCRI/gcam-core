@@ -7,7 +7,7 @@
 #' @export
 chunk_readylist <- function() {
   disabled <- output <- name <- available <- from_file <- module <- chunk <-
-      filename <- . <- NULL             # silence notes in package check
+    filename <- . <- NULL             # silence notes in package check
   chunklist <- find_chunks(include_disabled = TRUE)
   ci <- chunk_inputs(chunklist$name)
   co <- chunk_outputs(chunklist$name)
@@ -180,3 +180,26 @@ admin.LINEDATA <- structure(list(
   .Names = c("filename", "lines"),
   row.names = c(NA, -198L), class = c("tbl_df", "tbl", "data.frame"))
 
+
+#' find_multiple_mutates
+#'
+#' @param path Path to look in
+#' @return Nothing.
+#' @details Internal/admin function to find files with sequential 'mutate' calls,
+#' because mutate(x) %>% mutate(y) incurs a BIG performance penalty versus
+#' mutate(x, y) so we try to not have the former case.
+#' @note This will find some false positives (right now in zchunk_L124.nonco2_unmgd_R_S_T_Y.R
+#' and zchunk_L203.demand_input.R) as well as false negatives (e.g. mutates separated by comments)
+#' @author BBL November 2018
+find_multiple_mutates <- function(path = "R/") {
+  filelist <- list.files(path = path, pattern = "*.R", full.names = TRUE)
+
+  for(f in filelist) {
+    txt <- readLines(f)
+    mutates <- grepl("^\\s*mutate\\s*\\(", txt)
+    twos <- mutates[-length(mutates)] & mutates[-1]
+    if(any(twos)) {
+      cat(f, which(twos), "\n")
+    }
+  }
+}

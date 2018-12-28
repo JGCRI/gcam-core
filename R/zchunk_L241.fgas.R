@@ -159,10 +159,10 @@ module_emissions_L241.fgas <- function(command, ...) {
       select(-Emissions, -GDP) %>%
       spread(Year, EF) %>%
       select(Species, Scenario, `2010`, `2020`, `2030`) %>%
-      mutate(Species = gsub("-", "", Species )) %>%
-      mutate(Ratio_2020 = `2020` / `2010`) %>%
-      mutate(Ratio_2030 =  `2030` / `2010`) %>%
-      mutate(Species = gsub("-", "", Species))->
+      mutate(Species = gsub("-", "", Species ),
+             Ratio_2020 = `2020` / `2010`,
+             Ratio_2030 =  `2030` / `2010`,
+             Species = gsub("-", "", Species))->
       L241.FUT_EF_Ratio
 
     # Use the future emission factor ratios to update/scale the non-cooling
@@ -170,8 +170,8 @@ module_emissions_L241.fgas <- function(command, ...) {
     L241.hfc_ef_2010 %>%
       # Since Guus Velders data set contains information on extra gases we can use left_join here because we expect there to be NAs that will latter be removed.
       left_join(L241.FUT_EF_Ratio, by = c("Non.CO2" = "Species")) %>%
-      mutate(`2020` = value * Ratio_2020) %>%
-      mutate(`2030` = value * Ratio_2030) %>%
+      mutate(`2020` = value * Ratio_2020,
+             `2030` = value * Ratio_2030) %>%
       select(-Ratio_2020, -Ratio_2030, -Scenario) %>%
       na.omit() ->
       L241.hfc_ef_2010_update
@@ -187,7 +187,8 @@ module_emissions_L241.fgas <- function(command, ...) {
     # factor data frames together.
     L241.hfc_ef_2010_update_all %>%
       bind_rows(L241.hfc_cool_ef_update_filtered) %>%
-      mutate(emiss.coeff = round(value, emissions.DIGITS_EMISSIONS), year = as.numeric(year)) %>%
+      mutate(emiss.coeff = round(value, emissions.DIGITS_EMISSIONS),
+             year = as.numeric(year)) %>%
       select(region, supplysector, subsector, stub.technology, year, Non.CO2, emiss.coeff) ->
       L241.hfc_future
 

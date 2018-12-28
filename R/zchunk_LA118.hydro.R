@@ -69,8 +69,8 @@ module_energy_LA118.hydro <- function(command, ...) {
       # First, for countries reporting in MW, convert to GWh (most countries have potentials as GWh but some are in MW)
       Hydropower_potential %>%
         mutate_if(is.integer, as.numeric) %>% # Convert columns that are getting read in as integers to numbers
-        mutate(Technical_GWh = replace(Technical_GWh, is.na(Technical_GWh), (Technical_MW * CONV_YEAR_HOURS * CONV_MIL_BIL * Hydro_capfac)[is.na(Technical_GWh)])) %>%
-        mutate(Economic_GWh = replace(Economic_GWh, is.na(Economic_GWh), (Economic_MW * CONV_YEAR_HOURS * CONV_MIL_BIL * Hydro_capfac)[is.na(Economic_GWh)])) ->
+        mutate(Technical_GWh = replace(Technical_GWh, is.na(Technical_GWh), (Technical_MW * CONV_YEAR_HOURS * CONV_MIL_BIL * Hydro_capfac)[is.na(Technical_GWh)]),
+               Economic_GWh = replace(Economic_GWh, is.na(Economic_GWh), (Economic_MW * CONV_YEAR_HOURS * CONV_MIL_BIL * Hydro_capfac)[is.na(Economic_GWh)])) ->
         Hydropower_potential
 
       # Among countries with both technical and economic potential reported, calculate an average translation from one to the other
@@ -108,8 +108,8 @@ module_energy_LA118.hydro <- function(command, ...) {
       # Calculate the future growth potential in each country as the economic potential minus the present-day generation
       Hydropower_potential %>%
         left_join(L118.out_EJ_ctry_elec_hydro_fby, by = "iso") %>%
-        mutate(Growth_potential_EJ = Economic_EJ - value_base) %>%
-        mutate(Growth_potential_EJ = if_else(is.na(Growth_potential_EJ) | Growth_potential_EJ < 0, 0, Growth_potential_EJ)) %>%
+        mutate(Growth_potential_EJ = Economic_EJ - value_base,
+               Growth_potential_EJ = if_else(is.na(Growth_potential_EJ) | Growth_potential_EJ < 0, 0, Growth_potential_EJ)) %>%
         select(-region_GCAM3, -Economic_EJ, -value_base) %>%
         # Some countries (e.g., Bostwana) have NAs for RG3 names. This step is updating them (except Kosovo).
         left_join(select(iso_GCAM_regID, -country_name, -GCAM_region_ID), by = "iso") ->

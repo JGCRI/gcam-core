@@ -461,7 +461,15 @@ screen_forbidden <- function(fn) {
   code <- gsub("#.*$", "", code)      # remove comments
   code <- gsub('"[^"]*"', "", code)   # remove double quoted material
   code <- gsub("'[^']*'", "", code)   # remove single quoted material
+
+  # Special multiline case: consecutive mutate calls
   rslt <- character()
+  mutates <- grep("^\\s*mutate\\(", code)
+  diff1s <- base::diff(mutates) == 1
+  if(any(diff1s)) {
+    rslt <- cbind("consecutive mutate calls", code[mutates[which(diff1s)]])
+  }
+
   for(f in unique(forbidden)) {
     bad <- grep(f, code, perl = TRUE)
     if(length(bad) > 0) {

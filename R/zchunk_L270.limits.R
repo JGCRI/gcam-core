@@ -61,8 +61,8 @@ module_energy_L270.limits <- function(command, ...) {
            subsector.name = "oil refining",
            technology = "oil refining") %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
-      mutate(res.secondary.output = "oil-credits") %>%
-      mutate(output.ratio = 1.0) ->
+      mutate(res.secondary.output = "oil-credits",
+             output.ratio = 1.0) ->
       L270.CreditOutput
 
     # L270.CreditInput_elec: minicam-energy-input of oil credits for electricity techs
@@ -70,9 +70,9 @@ module_energy_L270.limits <- function(command, ...) {
       fill_exp_decay_extrapolate(MODEL_YEARS) %>%
       mutate(value = round(value, energy.DIGITS_EFFICIENCY)) %>%
       filter(subsector == "refined liquids") %>%
-      mutate(minicam.energy.input = "oil-credits") %>%
-      # note we are converting the efficiency to a coefficient here
-      mutate(coefficient = energy.OILFRACT_ELEC / value) %>%
+      mutate(minicam.energy.input = "oil-credits",
+             # note we are converting the efficiency to a coefficient here
+             coefficient = energy.OILFRACT_ELEC / value) %>%
       select(-value) %>%
       rename(sector.name = supplysector,
              subsector.name = subsector) ->
@@ -83,8 +83,8 @@ module_energy_L270.limits <- function(command, ...) {
            subsector.name = "refined liquids",
            technology = "refined liquids") %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
-      mutate(minicam.energy.input = "oil-credits") %>%
-      mutate(coefficient = energy.OILFRACT_FEEDSTOCKS) ->
+      mutate(minicam.energy.input = "oil-credits",
+             coefficient = energy.OILFRACT_FEEDSTOCKS) ->
       L270.CreditInput_feedstocks
 
     # L270.CreditMkt: Market for oil credits
@@ -112,8 +112,8 @@ module_energy_L270.limits <- function(command, ...) {
     # L270.CTaxInput: Create ctax-input for all biomass
     L221.GlobalTechCoef_en %>%
       filter(grepl("(biomass|ethanol)", sector.name)) %>%
-      mutate(ctax.input = energy.NEG_EMISS_POLICY_NAME) %>%
-      mutate(fuel.name = sector.name) ->
+      mutate(ctax.input = energy.NEG_EMISS_POLICY_NAME,
+             fuel.name = sector.name) ->
       L270.CTaxInput
     L270.CTaxInput <- L270.CTaxInput[, c(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "ctax.input", "fuel.name")]
 
@@ -126,13 +126,13 @@ module_energy_L270.limits <- function(command, ...) {
     # L270.NegEmissBudget: Create the budget for paying for net negative emissions
     GDP_scenario %>%
       # no dollar year or unit conversions since emissions already match
-      mutate(constraint = value * energy.NEG_EMISS_GDP_BUDGET_PCT) %>%
+      mutate(constraint = value * energy.NEG_EMISS_GDP_BUDGET_PCT,
+             policy.portfolio.standard = energy.NEG_EMISS_POLICY_NAME,
+             policyType = "tax",
+             market = region,
+             price.unit = "%",
+             output.unit = "mil 1990$") %>%
       select(-value) %>%
-      mutate(policy.portfolio.standard = energy.NEG_EMISS_POLICY_NAME) %>%
-      mutate(policyType = "tax") %>%
-      mutate(market = region) %>%
-      mutate(price.unit = "%") %>%
-      mutate(output.unit = "mil 1990$") %>%
       # constrain in only years which could include a carbon price
       filter(year >= 2020) ->
       L270.NegEmissBudget

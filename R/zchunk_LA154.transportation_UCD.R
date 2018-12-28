@@ -286,10 +286,10 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
 
     # Calculate the weighted volumes. No need to convert units because these will be aggregated and divided by weights
     ALL_region_var <- ALL_ctry_var %>%
-      mutate(Tvkm = weight_EJ / intensity) %>%
-      mutate(Tpkm = Tvkm * `load factor`) %>%
-      mutate(Tusd = Tvkm * `non-fuel costs`) %>%
-      mutate(Thr = Tvkm / speed.x) %>%
+      mutate(Tvkm = weight_EJ / intensity,
+             Tpkm = Tvkm * `load factor`,
+             Tusd = Tvkm * `non-fuel costs`,
+             Thr = Tvkm / speed.x) %>%
       group_by(UCD_technology,UCD_fuel, UCD_sector, mode, size.class.x, year, GCAM_region_ID) %>%
       summarise(weight_EJ = sum(weight_EJ), Tvkm = sum(Tvkm), Tpkm = sum(Tpkm),Tusd = sum(Tusd), Thr = sum(Thr)) %>%
       ungroup()
