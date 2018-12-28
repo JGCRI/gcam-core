@@ -181,13 +181,16 @@ admin.LINEDATA <- structure(list(
   row.names = c(NA, -198L), class = c("tbl_df", "tbl", "data.frame"))
 
 
-
-# internal/admin function to find files with sequential 'mutate' calls
-# mutate(x) %>% mutate(y) incurs a BIG performance penalty versus mutate(x, y)
-# so we try to not have the former case
-# Note this will find some false positives (right now in zchunk_L124.nonco2_unmgd_R_S_T_Y.R
-# and zchunk_L203.demand_input.R) as well as false negatives (e.g. mutates separated by comments)
-# BBL November 2018
+#' find_multiple_mutates
+#'
+#' @param path Path to look in
+#' @return Nothing.
+#' @details Internal/admin function to find files with sequential 'mutate' calls,
+#' because mutate(x) %>% mutate(y) incurs a BIG performance penalty versus
+#' mutate(x, y) so we try to not have the former case.
+#' @note This will find some false positives (right now in zchunk_L124.nonco2_unmgd_R_S_T_Y.R
+#' and zchunk_L203.demand_input.R) as well as false negatives (e.g. mutates separated by comments)
+#' @author BBL November 2018
 find_multiple_mutates <- function(path = "R/") {
   filelist <- list.files(path = path, pattern = "*.R", full.names = TRUE)
 
