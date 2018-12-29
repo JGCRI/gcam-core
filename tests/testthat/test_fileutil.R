@@ -50,14 +50,14 @@ test_that("loads test file", {
 })
 
 test_that("save_chunkdata saves", {
-  df <- tibble(x = 1:3)
+  df <- tibble(x = 1L:3L)
   all_data <- add_data(return_data(df), empty_data())
   td <- tempdir()
   save_chunkdata(all_data, outputs_dir = td)
 
   out <- file.path(td, "df.csv")
   expect_true(file.exists(out))
-  df2 <- readr::read_csv(out)
+  df2 <- readr::read_csv(out, col_types = "i")  # stupid readr
   expect_equal(df, df2)
 
   # Handles missing_data in data list
