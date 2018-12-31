@@ -13,7 +13,7 @@
 #' \code{L210.GrdRenewRsrcCurves_tradbio}, \code{L210.GrdRenewRsrcMax_tradbio}, \code{L210.DepRsrcTechChange_SSP1}, \code{L210.DepRsrcEnvironCost_SSP1},
 #' \code{L210.DepRsrcTechChange_SSP2}, \code{L210.DepRsrcEnvironCost_SSP2}, \code{L210.DepRsrcTechChange_SSP3}, \code{L210.DepRsrcEnvironCost_SSP3},
 #' \code{L210.DepRsrcTechChange_SSP4}, \code{L210.DepRsrcEnvironCost_SSP4}, \code{L210.DepRsrcTechChange_SSP5}, \code{L210.DepRsrcEnvironCost_SSP5},
-#' \code{L210.ResReserveTechLifetime}, \code{L210.ResReserveTechProfitShutdown}, \code{L210.ResReserveTechCost}, \code{L210.ResReserveTechShrwt}.
+#' \code{L210.ResReserveTechLifetime}, \code{L210.ResReserveTechProfitShutdown}, \code{L210.ResReserveTechCost}, \code{L210.ResTechShrwt}.
 #' The corresponding file in the original data system was \code{L210.resources.R} (energy level2).
 #' @details Resource market information, prices, TechChange parameters, supply curves, and environmental costs.
 #' @importFrom assertthat assert_that
@@ -78,7 +78,7 @@ module_energy_L210.resources <- function(command, ...) {
              "L210.ResReserveTechLifetime",
              "L210.ResReserveTechProfitShutdown",
              "L210.ResReserveTechCost",
-             "L210.ResReserveTechShrwt"))
+             "L210.ResTechShrwt"))
   } else if(command == driver.MAKE) {
 
     # Silence package checks
@@ -411,10 +411,25 @@ module_energy_L210.resources <- function(command, ...) {
       select(!!!LEVEL2_DATA_NAMES[["ResReserveTechCost"]]) ->
       L210.ResReserveTechCost
 
-    L210.ResReserveTechLifetime %>%
-      mutate(share.weight = 1.0) %>%
-      select(!!!LEVEL2_DATA_NAMES[["ResReserveTechShrwt"]]) ->
-      L210.ResReserveTechShrwt
+    A10.subrsrc_info %>%
+      repeat_add_columns(GCAM_region_names) %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      mutate(technology = subresource,
+             share.weight = 1.0) %>%
+      select(!!!LEVEL2_DATA_NAMES[["ResTechShrwt"]]) ->
+      L210.ResTechShrwt
+
+    # We need to remove regions + subresoures which should not exist
+    L210.ResTechShrwt %>%
+      semi_join(L210.GrdRenewRsrcMax_tradbio,
+                by = c("region", "resource" = "renewresource", "subresource" = "sub.renewable.resource")) %>%
+      bind_rows(filter(L210.ResTechShrwt, resource != "traditional biomass"), .) ->
+      L210.ResTechShrwt
+    L210.ResTechShrwt %>%
+      semi_join(L210.DepRsrcCurves_U,
+                by = c("region", "resource" = "depresource", "subresource")) %>%
+      bind_rows(filter(L210.ResTechShrwt, resource != "uranium"), .) ->
+      L210.ResTechShrwt
 
     # ===================================================
 
@@ -610,12 +625,13 @@ module_energy_L210.resources <- function(command, ...) {
       same_precursors_as(L210.ResReserveTechLifetime) ->
       L210.ResReserveTechCost
 
-    L210.ResReserveTechShrwt %>%
-      add_title("Share weights for RR technologies") %>%
+    L210.ResTechShrwt %>%
+      add_title("Share weights for technologies in resources") %>%
       add_units("NA") %>%
-      add_comments("Share weights won't matter for resource technologies as there.") %>%
-      same_precursors_as(L210.ResReserveTechLifetime) ->
-      L210.ResReserveTechShrwt
+      add_comments("Share weights won't matter for resource technologies as there") %>%
+      add_comments("is no competetion between technologies.") %>%
+      add_precursors("common/GCAM_region_names", "energy/A10.subrsrc_info") ->
+      L210.ResTechShrwt
 
     return_data(L210.DepRsrc, L210.RenewRsrc, L210.UnlimitRsrc, L210.DepRsrcPrice, L210.RenewRsrcPrice, L210.UnlimitRsrcPrice, L210.DepRsrcTechChange,
                 L210.SmthRenewRsrcTechChange, L210.DepRsrcCalProd, L210.DepReserveCalReserve, L210.DepRsrcCurves_fos, L210.DepRsrcCurves_U, L210.SmthRenewRsrcCurves_MSW,
@@ -623,7 +639,7 @@ module_energy_L210.resources <- function(command, ...) {
                 L210.GrdRenewRsrcCurves_EGS, L210.GrdRenewRsrcMax_EGS, L210.GrdRenewRsrcCurves_tradbio, L210.GrdRenewRsrcMax_tradbio, L210.DepRsrcTechChange_SSP1,
                 L210.DepRsrcEnvironCost_SSP1, L210.DepRsrcTechChange_SSP2, L210.DepRsrcEnvironCost_SSP2, L210.DepRsrcTechChange_SSP3, L210.DepRsrcEnvironCost_SSP3,
                 L210.DepRsrcTechChange_SSP4, L210.DepRsrcEnvironCost_SSP4, L210.DepRsrcTechChange_SSP5, L210.DepRsrcEnvironCost_SSP5,
-                L210.ResReserveTechLifetime, L210.ResReserveTechProfitShutdown, L210.ResReserveTechCost, L210.ResReserveTechShrwt)
+                L210.ResReserveTechLifetime, L210.ResReserveTechProfitShutdown, L210.ResReserveTechCost, L210.ResTechShrwt)
   } else {
     stop("Unknown command")
   }

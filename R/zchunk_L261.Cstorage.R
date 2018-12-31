@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L261.DepRsrc}, \code{L261.UnlimitRsrc}, \code{L261.DepRsrcCurves_C}, \code{L261.SectorLogitTables[[ curr_table ]]$data}, \code{L261.Supplysector_C}, \code{L261.SubsectorLogitTables[[ curr_table ]]$data}, \code{L261.SubsectorLogit_C}, \code{L261.SubsectorShrwtFllt_C}, \code{L261.StubTech_C}, \code{L261.GlobalTechCoef_C}, \code{L261.GlobalTechCost_C}, \code{L261.GlobalTechShrwt_C}, \code{L261.GlobalTechCost_C_High}, \code{L261.GlobalTechShrwt_C_nooffshore}, \code{L261.DepRsrcCurves_C_high}, \code{L261.DepRsrcCurves_C_low}, \code{L261.DepRsrcCurves_C_lowest}. The corresponding file in the
 #' original data system was \code{L261.Cstorage.R} (energy level2).
-#' @details The following fifteen tables pertaining to carbon storage properties are generated:
+#' @details The following tables pertaining to carbon storage properties are generated:
 #' \itemize{
 #'  \item{Carbon storage information}
 #'  \item{Unlimited carbon storage information}
@@ -45,6 +45,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
     return(c("L261.DepRsrc",
              "L261.UnlimitRsrc",
              "L261.DepRsrcCurves_C",
+             "L261.ResTechShrwt_C",
              "L261.Supplysector_C",
              "L261.SubsectorLogit_C",
              "L261.SubsectorShrwtFllt_C",
@@ -122,6 +123,16 @@ module_energy_L261.Cstorage <- function(command, ...) {
       mutate(available = round(available, DIGITS_COST)) %>%
       select(region, depresource = resource, subresource, grade, available, extractioncost) ->
       L261.DepRsrcCurves_C # This is a final output table.
+
+    L261.DepRsrcCurves_C %>%
+      select(region, resource = depresource, subresource) %>%
+      distinct() %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      mutate(technology = subresource,
+             share.weight = 1.0) %>%
+      select(!!!LEVEL2_DATA_NAMES[["ResTechShrwt"]]) ->
+      L261.ResTechShrwt_C
+
 
     # Calculate three different supply curves of carbon storage resources: high, low, and lowest.
     # Multiply the extraction cost by its respective multiplier below.
@@ -266,6 +277,13 @@ module_energy_L261.Cstorage <- function(command, ...) {
       add_precursors("common/GCAM_region_names", "L161.RsrcCurves_MtC_R") ->
       L261.DepRsrcCurves_C
 
+    L261.ResTechShrwt_C %>%
+      add_title("Technology share-weights for the carbon storage resource") %>%
+      add_units("NA") %>%
+      add_comments("Mostly just to provide a shell of a technology for the resource to use") %>%
+      same_precursors_as(L261.DepRsrcCurves_C) ->
+      L261.ResTechShrwt_C
+
     L261.DepRsrcCurves_C_high %>%
       add_title("High supply curve of onshore carbon storage resources") %>%
       add_units("Available in MtCO2, Extraction Cost in 1990$/tCO2") %>%
@@ -363,7 +381,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
       L261.GlobalTechShrwt_C_nooffshore
 
 
-    return_data(L261.DepRsrc, L261.UnlimitRsrc, L261.DepRsrcCurves_C, L261.Supplysector_C, L261.SubsectorLogit_C, L261.SubsectorShrwtFllt_C, L261.StubTech_C, L261.GlobalTechCoef_C, L261.GlobalTechCost_C, L261.GlobalTechShrwt_C, L261.GlobalTechCost_C_High, L261.GlobalTechShrwt_C_nooffshore, L261.DepRsrcCurves_C_high, L261.DepRsrcCurves_C_low, L261.DepRsrcCurves_C_lowest)
+    return_data(L261.DepRsrc, L261.UnlimitRsrc, L261.DepRsrcCurves_C, L261.ResTechShrwt_C, L261.Supplysector_C, L261.SubsectorLogit_C, L261.SubsectorShrwtFllt_C, L261.StubTech_C, L261.GlobalTechCoef_C, L261.GlobalTechCost_C, L261.GlobalTechShrwt_C, L261.GlobalTechCost_C_High, L261.GlobalTechShrwt_C_nooffshore, L261.DepRsrcCurves_C_high, L261.DepRsrcCurves_C_low, L261.DepRsrcCurves_C_lowest)
   } else {
     stop("Unknown command")
   }
