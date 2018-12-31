@@ -40,21 +40,13 @@
 
 #include "util/base/include/definitions.h"
 #include "technologies/include/resource_reserve_technology.h"
-#include "emissions/include/aghg.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/xml_helper.h"
-#include "marketplace/include/marketplace.h"
-#include "containers/include/iinfo.h"
-#include "technologies/include/ical_data.h"
 #include "technologies/include/iproduction_state.h"
 #include "technologies/include/production_state_factory.h"
 #include "technologies/include/marginal_profit_calculator.h"
 #include "technologies/include/ioutput.h"
-#include "technologies/include/generic_output.h"
 #include "util/base/include/ivisitor.h"
-//#include "containers/include/market_dependency_finder.h"
-//#include "sectors/include/sector_utils.h"
-#include "technologies/include/ishutdown_decider.h"
 #include "util/base/include/initialize_tech_vector_helper.hpp"
 
 using namespace std;
@@ -70,9 +62,10 @@ const int ADDITIONAL_PRODUCTION_LIFETIME = 20;
 * \param aYear Technology year.
 */
 ResourceReserveTechnology::ResourceReserveTechnology(const string& aName, const int aYear) :
-Technology(aName, aYear)
+Technology(aName, aYear),
+mTotalReserve( 0.0 ),
+mInvestmentCost( 0.0 )
 {
-    mTotalReserve = 0.0;
 }
 
 /*!
@@ -104,14 +97,10 @@ bool ResourceReserveTechnology::XMLDerivedClassParse(const string& aNodeName, co
 //! write object to xml output stream
 void ResourceReserveTechnology::toDebugXMLDerived(const int aPeriod, ostream& aOut, Tabs* aTabs) const {
 	XMLWriteElement(mTotalReserve, "total-resource-reserve", aOut, aTabs);
+    XMLWriteElement(mInvestmentCost, "investment-cost", aOut, aTabs);
 	XMLWriteElement(mCumulProd[ aPeriod ], "cumulative-production", aOut, aTabs);
 	XMLWriteElement(mProductionPhaseScaler, "production-phase-scaler", aOut, aTabs);
     XMLWriteElement(mMarginalRevenue, "marginal-revenue", aOut, aTabs);
-    /*double shutdown = 1.0;
-    for( auto sd : mShutdownDeciders ) {
-        shutdown *= sd->calcShutdownCoef(0, (mMarginalRevenue - mInputs[0]->getPrice("USA", aPeriod))/mInputs[0]->getPrice("USA", aPeriod), "USA", "alternative crude oil", mYear, aPeriod);
-    }
-    XMLWriteElement(shutdown, "profit-shutdown", aOut, aTabs);*/
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -158,14 +147,6 @@ void ResourceReserveTechnology::completeInit(const std::string& aRegionName,
 	//       the call to Technology::completeInit() must come afterwards
 	Technology::completeInit(aRegionName, aSectorName, aSubsectorName, aSubsectorInfo,
 		aLandAllocator);
-    
-    // replace the primary output with a generic output (does not add supply to market)
-    //delete mOutputs[ 0 ];
-    //mOutputs[ 0 ] = new GenericOutput( aSectorName );
-    for( auto ghg : mGHG ) {
-        delete ghg;
-    }
-    mGHG.clear();
 }
 
 void ResourceReserveTechnology::initCalc(const string& aRegionName,
@@ -178,24 +159,11 @@ void ResourceReserveTechnology::initCalc(const string& aRegionName,
 	Technology::initCalc(aRegionName, aSectorName, aSubsectorInfo,
 		aDemographics, aPrevPeriodInfo, aPeriod);
     
-    // we have to re-do setProductionState because it will override input coefficients but
-    // EnegyInput::initCalc resets it back again, so we call re-do setProductionState to
-    // reset it yet again.
-    setProductionState( aPeriod );
-    
     if( !isOperating( aPeriod ) ) {
         return;
     }
 
-    if( aPeriod > 0 && isOperating( aPeriod -1 ) ) {
-        
-        for( auto currInput : mInputs ) {
-            if( currInput->isSameType( "minicam-non-energy-input" ) ) {
-                currInput->setPrice( aRegionName, currInput->getPrice( aRegionName, aPeriod -1 ), aPeriod );
-            }
-        }
-    }
-    else {
+    if( aPeriod == 0 || !isOperating( aPeriod - 1 ) ) {
         mCumulProd[ aPeriod ] = 0.0;
     }
 }
@@ -265,13 +233,6 @@ void ResourceReserveTechnology::setProductionState( const int aPeriod ) {
     else {
         mProductionPhaseScaler = 1.0;
     }
-    
-    /*for( auto currInput : mInputs ) {
-        if( currInput->getName() == "CO2_For_EOR" ) {
-            currInput->setCoefficient( eorCoef, aPeriod );
-        }
-    }*/
-
 
     double initialOutput = annualAvgProd * mProductionPhaseScaler;
     
@@ -284,7 +245,6 @@ double ResourceReserveTechnology::getMarginalRevenue( const string& aRegionName,
                                       const string& aSectorName,
                                       const int aPeriod ) const
 {
-    //return scenario->getMarketplace()->getPrice( aSectorName, aRegionName, aPeriod ) + mInputs[0]->getPrice( aRegionName, aPeriod );
     return mMarginalRevenue;
 }
 
@@ -296,13 +256,9 @@ double ResourceReserveTechnology::getFixedOutput( const string& aRegionName,
                                   const int aPeriod ) const
 {
     if( mProductionState[ aPeriod ]->isNewInvestment() ) {
-        for( auto currInput : mInputs ) {
-            if( currInput->isSameType( "minicam-non-energy-input" ) ) {
-                currInput->setPrice( aRegionName, aMarginalRevenue, aPeriod );
-            }
-        }
+        const_cast<ResourceReserveTechnology*>(this)->mInvestmentCost = aMarginalRevenue;
     }
-    mMarginalRevenue = aMarginalRevenue + mInputs[0]->getPrice( aRegionName, aPeriod );
+    mMarginalRevenue = aMarginalRevenue + mInvestmentCost;
     
     // Construct a marginal profit calculator. This allows the calculation of
     // marginal profits to be lazy.
@@ -330,17 +286,10 @@ double ResourceReserveTechnology::getEnergyCost( const string& aRegionName,
 {
     // Calculates the energy cost by first calculating the total cost including
     // all inputs and then removing the non-energy costs.
-    double cost = getTotalInputCost( aRegionName, aSectorName, aPeriod );
+    double cost = getTotalInputCost( aRegionName, aSectorName, aPeriod ) +
+        mInvestmentCost;
 
     return cost;
-}
-
-double ResourceReserveTechnology::getCalibrationOutput( const bool aHasRequiredInput,
-                                                 const string& aRequiredInput,
-                                                 const int aPeriod ) const
-{
-    double techCalOutput = Technology::getCalibrationOutput( aHasRequiredInput, aRequiredInput, aPeriod );
-    return techCalOutput ;//== -1 ? techCalOutput : techCalOutput / mResourceReserveFactor;
 }
 
 void ResourceReserveTechnology::doInterpolations(const Technology* aPrevTech, const Technology* aNextTech) {
@@ -382,10 +331,6 @@ void ResourceReserveTechnology::postCalc( const string& aRegionName, const int a
         double periodCumulProd = prevProd * timeStep + 0.5 * ( currProd - prevProd) * timeStep;
         mCumulProd[ aPeriod ] = aPeriod > 0 ? mCumulProd[ aPeriod - 1 ] + periodCumulProd : 0.0;
     }
-    
-    /*if( aRegionName == "USA" && mYear == 1975 && aPeriod <= 4 ) {
-        mCumulProd[ aPeriod ] -= aPeriod == 4 ? 30 : 100.0;
-    }*/
 }
 
 void ResourceReserveTechnology::acceptDerived( IVisitor* aVisitor, const int aPeriod ) const {

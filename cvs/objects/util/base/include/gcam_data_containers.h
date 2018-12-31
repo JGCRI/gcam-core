@@ -123,7 +123,6 @@
 #include "resources/include/accumulated_grade.h"
 #include "resources/include/accumulated_post_grade.h"
 #include "resources/include/aresource.h"
-#include "resources/include/depleting_fixed_resource.h"
 #include "resources/include/grade.h"
 #include "resources/include/renewable_subresource.h"
 #include "resources/include/resource.h"

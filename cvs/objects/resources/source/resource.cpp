@@ -63,22 +63,13 @@
 #include "util/base/include/ivisitor.h"
 #include "containers/include/info_factory.h"
 #include "containers/include/iinfo.h"
-#include "emissions/include/ghg_factory.h"
-#include "emissions/include/co2_emissions.h"
-#include "technologies/include/ioutput.h"
-#include "technologies/include/primary_output.h"
-#include "functions/include/iinput.h"
 #include "sectors/include/sector_utils.h"
-
-#include "util/base/include/initialize_tech_vector_helper.hpp"
 
 
 using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
-
-typedef vector<AGHG*>::const_iterator CGHGIterator;
 
 //! Default constructor.
 Resource::Resource():
@@ -93,12 +84,6 @@ mCumulProd( Value( 0.0 ) )
 //! Destructor.
 Resource::~Resource() {
     for ( vector<SubResource*>::iterator iter = mSubResource.begin(); iter != mSubResource.end(); iter++ ) {
-        delete *iter;
-    }
-    for( CGHGIterator iter = mGHG.begin(); iter != mGHG.end(); ++iter ) {
-        delete *iter;
-    }
-    for( vector<IOutput*>::const_iterator iter = mOutputs.begin(); iter != mOutputs.end(); ++iter ) {
         delete *iter;
     }
 }
@@ -130,20 +115,20 @@ const std::string& Resource::getXMLNameStatic() {
 }
 
 //! Set data members from XML input.
-void Resource::XMLParse( const DOMNode* node ){
+void Resource::XMLParse( const DOMNode* aNode ){
     const Modeltime* modeltime = scenario->getModeltime();
     string nodeName;
     DOMNodeList* nodeList = 0;
     DOMNode* curr = 0;
 
     // make sure we were passed a valid node.
-    assert( node );
+    assert( aNode );
 
     // get the name attribute.
-    mName = XMLHelper<string>::getAttr( node, "name" );
+    mName = XMLHelper<string>::getAttr( aNode, "name" );
 
     // get all child nodes.
-    nodeList = node->getChildNodes();
+    nodeList = aNode->getChildNodes();
 
     // loop through the child nodes.
     for( int i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ){
@@ -180,14 +165,14 @@ void Resource::XMLParse( const DOMNode* node ){
                 mObjectMetaInfo.push_back( metaInfo );
             }
         }
-        else if( GHGFactory::isGHGNode( nodeName ) ) {
-            parseContainerNode( curr, mGHG, GHGFactory::create( nodeName ).release() );
-        }
-        else if( nodeName == SubDepletableResource::getXMLNameStatic() ){
-            parseContainerNode( curr, mSubResource, new SubDepletableResource() );
+        else if( nodeName == SubResource::getXMLNameStatic() ){
+            parseContainerNode( curr, mSubResource, new SubResource() );
         }
         else if( nodeName == SubRenewableResource::getXMLNameStatic() ) {
             parseContainerNode( curr, mSubResource, new SubRenewableResource() );
+        }
+        else if( nodeName == SmoothRenewableSubresource::getXMLNameStatic() ) {
+            parseContainerNode( curr, mSubResource, new SmoothRenewableSubresource() );
         }
         else if( nodeName == ReserveSubResource::getXMLNameStatic() ) {
             parseContainerNode( curr, mSubResource, new ReserveSubResource() );
@@ -238,10 +223,6 @@ void Resource::toDebugXML( const int period, ostream& aOut, Tabs* aTabs ) const 
     for( vector<SubResource*>::const_iterator i = mSubResource.begin(); i != mSubResource.end(); i++ ){
         ( *i )->toDebugXML( period, aOut, aTabs );
     }
-    // Write out ghg object, vector is of number of gases
-    for( CGHGIterator i = mGHG.begin(); i != mGHG.end(); i++ ) {
-        ( *i )->toDebugXML( period, aOut, aTabs );
-    }
 
     // finished writing xml for the class members.
     XMLWriteClosingTag( getXMLName(), aOut, aTabs );
@@ -290,15 +271,6 @@ void Resource::completeInit( const string& aRegionName, const IInfo* aRegionInfo
 
     // Set markets for this sector
     setMarket( aRegionName );
-
-    // Create a single primary output for the resource output.
-    mOutputs.insert( mOutputs.begin(), new PrimaryOutput( mName ) );
-    
-    initTechVintageVector();
-    
-    for( unsigned int i = 0; i < mGHG.size(); i++ ) {
-        mGHG[ i ]->completeInit( aRegionName, mName, mResourceInfo.get() );
-    }
 }
 
 /*! \brief Perform any initializations needed for each period.
@@ -314,17 +286,6 @@ void Resource::initCalc( const string& aRegionName, const int aPeriod ) {
         mSubResource[i]->initCalc( aRegionName, mName, mResourceInfo.get(), aPeriod );
     }
 
-    // The GHG objects will need to check the following flags to properly
-    // initialize and do error checking.
-    mResourceInfo->setBoolean( "new-vintage-tech", true );
-    mResourceInfo->setBoolean( "is-tech-operating", true );
-    for( unsigned int i = 0; i < mGHG.size(); i++ ) {
-        mGHG[ i ]->initCalc( aRegionName, mResourceInfo.get(), aPeriod );
-    }
-    
-    for( unsigned int i = 0; i < mOutputs.size(); i++ ) {
-        mOutputs[ i ]->initCalc( aRegionName, mName, aPeriod );
-    }
     // setup supply curve boundaries here.
     double minprice = util::getLargeNumber();
     double maxprice = -util::getLargeNumber();
@@ -407,44 +368,12 @@ void Resource::calcSupply( const string& aRegionName, const GDP* aGDP, const int
     Marketplace* marketplace = scenario->getMarketplace();
 
     double price = marketplace->getPrice( mName, aRegionName, aPeriod );
-    double lastPeriodPrice;
-
-    if ( aPeriod == 0 ) {
-        lastPeriodPrice = price;
-    }
-    else {
-        lastPeriodPrice = marketplace->getPrice( mName, aRegionName, aPeriod - 1 );
-    }
-
-    // Create a dummy input vector for use in GHG calls
-    // The mOutputs vector does not contain a valid value at this point, however it is
-    // not used in the getGHGValue call.
-    vector<IInput*> inputs; // empty vector
-    
-    
-    double totalGHGCost = 0;
-    // totalGHGCost and carbontax must be in same unit as fuel price
-    for( unsigned int i = 0; i < mGHG.size(); i++ ) {
-        totalGHGCost += mGHG[ i ]->getGHGValue( aRegionName, inputs, mOutputs, 0 , aPeriod );
-    }
-    
-    // Subtract ghg cost from price paid for resource
-    price -= totalGHGCost;
     
     // calculate annual supply
-    annualsupply( aRegionName, aPeriod, aGDP, price, lastPeriodPrice ); 
-
-    // There is only one primary output at the first position.
-    // Setting market supply of resource occurs in setPhysicalOutput().
-    mOutputs[0]->setPhysicalOutput( aPeriod > 0 ? mAnnualProd[ aPeriod ] : 0.0, aRegionName, 0, aPeriod );
-
-    for( unsigned int i = 0; i < mGHG.size(); ++i ) {
-        // no inputs or capture components
-        mGHG[i]->calcEmission( aRegionName, inputs, mOutputs, aGDP, 0, aPeriod );
-    }
+    annualsupply( aRegionName, aPeriod, aGDP, price );
 }
 
-void Resource::cumulsupply( double aPrice, int aPeriod )
+void Resource::cumulsupply( const string& aRegionName, double aPrice, int aPeriod )
 {   
     int i = 0;
     mCumulProd[ aPeriod ] = 0.0;
@@ -452,24 +381,24 @@ void Resource::cumulsupply( double aPrice, int aPeriod )
     mResourcePrice[ aPeriod ] = aPrice;
     // sum cumulative production of each subsector
     for ( i = 0; i < mSubResource.size(); i++ ) {
-        mSubResource[ i ]->cumulsupply( aPrice, aPeriod );
+        mSubResource[ i ]->cumulsupply( aRegionName, mName, aPrice, aPeriod );
         mCumulProd[ aPeriod ] += Value( mSubResource[ i ]->getCumulProd( aPeriod ) );
     }
 }
 
 //! Calculate annual production
-void Resource::annualsupply( const string& aRegionName, int aPeriod, const GDP* aGdp, double aPrice, double aPrevPrice )
+void Resource::annualsupply( const string& aRegionName, int aPeriod, const GDP* aGdp, double aPrice )
 {   
     int i = 0;
     mAnnualProd[ aPeriod ] = 0.0;
     mAvailable[ aPeriod ] = 0.0;
 
     // calculate cumulative production
-    cumulsupply( aPrice, aPeriod );
+    cumulsupply( aRegionName, aPrice, aPeriod );
 
     // sum annual production of each subsector
     for ( i = 0; i < mSubResource.size(); i++) {
-        mSubResource[i]->annualsupply( aRegionName, mName, aPeriod, aGdp, aPrice, aPrevPrice );
+        mSubResource[i]->annualsupply( aRegionName, mName, aPeriod, aGdp, aPrice );
         mAnnualProd[ aPeriod ] += Value( mSubResource[i]->getAnnualProd( aPeriod ) );
         mAvailable[ aPeriod ] += Value( mSubResource[i]->getAvailable( aPeriod ) );
     }
@@ -498,10 +427,6 @@ void Resource::accept( IVisitor* aVisitor, const int aPeriod ) const {
         mSubResource[ i ]->accept( aVisitor, aPeriod );
     }
 
-    for( unsigned int i = 0; i < mGHG.size(); ++i ) {
-        mGHG[ i ]->accept( aVisitor, aPeriod );
-    }
-
     aVisitor->endVisitResource( this, aPeriod );
 }
 
@@ -510,103 +435,6 @@ void Resource::accept( IVisitor* aVisitor, const int aPeriod ) const {
 // Since these are very small changes, keep in same file for simplicity
 // ************************************************************
 
-// *******************************************************************
-// DepletableResource Class
-// *******************************************************************
-/*! \brief Get the XML node name for output to XML.
-*
-* This public function accesses the private constant string, XML_NAME.
-* This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overridden by derived class pointers.
-* \author Josh Lurz, James Blackwood
-* \return The constant XML_NAME.
-*/
-const std::string& DepletableResource::getXMLName() const {
-    return getXMLNameStatic();
-}
-
-/*! \brief Get the XML node name in static form for comparison when parsing XML.
-*
-* This public function accesses the private constant string, XML_NAME.
-* This way the tag is always consistent for both read-in and output and can be easily changed.
-* The "==" operator that is used when parsing, required this second function to return static.
-* \note A function cannot be static and virtual.
-* \author Josh Lurz, James Blackwood
-* \return The constant XML_NAME as a static.
-*/
-const std::string& DepletableResource::getXMLNameStatic() {
-    static const string XML_NAME = "depresource";
-    return XML_NAME;
-}
-
-//! 
-/*! In this case, this read-in just substantiates the appropriate type of subResource */
-/*! \brief Performs XML read-in that is specific to this derived class
-*
-*  this case, this read-in just instantiates the appropriate type of subResource
-*
-* \author Steve Smith
-* \param aNodeName Name of the current node.
-* \param aNode Pointer to the current node in the XML input tree
-* \return Whether an element was parsed.
-* \todo In the input file, *SubResources should be read in as such, not silently converted here.
-*/
-bool DepletableResource::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aNode ) {
-    // TODO: Fix this.
-    if( aNodeName == SubResource::getXMLNameStatic() || aNodeName == SubDepletableResource::getXMLNameStatic() ){
-        parseContainerNode( aNode, mSubResource, new SubDepletableResource() );
-        return true;
-    }
-    return false;
-}
-
-// *******************************************************************
-// FixedResource Class
-// *******************************************************************
-/*! \brief Get the XML node name for output to XML.
-*
-* This public function accesses the private constant string, XML_NAME.
-* This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overridden by derived class pointers.
-* \author Josh Lurz, James Blackwood
-* \return The constant XML_NAME.
-*/
-const std::string& FixedResource::getXMLName() const {
-    return getXMLNameStatic();
-}
-
-/*! \brief Get the XML node name in static form for comparison when parsing XML.
-*
-* This public function accesses the private constant string, XML_NAME.
-* This way the tag is always consistent for both read-in and output and can be easily changed.
-* The "==" operator that is used when parsing, required this second function to return static.
-* \note A function cannot be static and virtual.
-* \author Josh Lurz, James Blackwood
-* \return The constant XML_NAME as a static.
-*/
-const std::string& FixedResource::getXMLNameStatic() {
-    static const string XML_NAME = "fixedresource";
-    return XML_NAME;
-}
-
-//! 
-/*! In this case, this read-in just substantiates the appropriate type of subResource */
-/*! \brief Performs XML read-in that is specific to this derived class
-*
-*  this case, this read-in just instantiates the appropriate type of subResource
-*
-* \author Steve Smith
-* \param node pointer to the current node in the XML input tree
-* \param nodeName name of the current node 
-* \return Whether an element was parsed.
-*/
-bool FixedResource::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aNode ) {
-    if( aNodeName == SubResource::getXMLNameStatic() || aNodeName == SubFixedResource::getXMLNameStatic() ){
-        parseContainerNode( aNode, mSubResource, new SubFixedResource() );
-        return true;
-    }
-    return false;
-}
 // *******************************************************************
 // RenewableResource Class
 // *******************************************************************
@@ -650,21 +478,12 @@ const std::string& RenewableResource::getXMLNameStatic() {
 *  this case, this read-in just instantiates the appropriate type of subResource
 *
 * \author Steve Smith
-* \param node pointer to the current node in the XML input tree
-* \param nodeName name of the current node 
+* \param aNodeName name of the current node
+* \param aNode pointer to the current node in the XML input tree
 * \return Whether an element was parsed.
 */
-bool RenewableResource::XMLDerivedClassParse( const string& nodeName, const DOMNode* node )
+bool RenewableResource::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aNode )
 {
-    if( nodeName == SubResource::getXMLNameStatic() ||
-        nodeName == SubRenewableResource::getXMLNameStatic() ) {
-            parseContainerNode( node, mSubResource, new SubRenewableResource() );
-            return true;
-        }
-    else if ( nodeName == SmoothRenewableSubresource::getXMLNameStatic() ) {
-        parseContainerNode( node, mSubResource, new SmoothRenewableSubresource() );
-        return true;
-    }
     return false;
 }
 
@@ -721,11 +540,11 @@ void RenewableResource::completeInit( const string& aRegionName, const IInfo* aR
 *
 * \author Steve Smith.  Mod for intermittent by Marshall Wise
 */
-void RenewableResource::annualsupply( const string& aRegionName, int aPeriod, const GDP* aGdp, double aPrice, double aPrevPrice )
+void RenewableResource::annualsupply( const string& aRegionName, int aPeriod, const GDP* aGdp, double aPrice )
 {
 
     // calculate cumulative production
-    cumulsupply( aPrice, aPeriod );
+    cumulsupply( aRegionName, aPrice, aPeriod );
 
     // clear out sums for this iteration
     mAnnualProd[ aPeriod ]=0.0;
@@ -740,7 +559,7 @@ void RenewableResource::annualsupply( const string& aRegionName, int aPeriod, co
     
     // sum annual production of each subsector
     for (int i=0;i<mSubResource.size();i++) {
-        mSubResource[i]->annualsupply( aRegionName, mName, aPeriod, aGdp, aPrice, aPrevPrice );
+        mSubResource[i]->annualsupply( aRegionName, mName, aPeriod, aGdp, aPrice );
         mAnnualProd[ aPeriod ] += Value( mSubResource[i]->getAnnualProd( aPeriod ) );
         double adjustedSubResourceProd = max( mSubResource[i]->getAnnualProd( aPeriod ), MIN_RESOURCE_PROD );
         adjustedProduction += adjustedSubResourceProd;
@@ -773,16 +592,4 @@ void RenewableResource::annualsupply( const string& aRegionName, int aPeriod, co
         // add capacity factor to marketinfo
         marketInfo->setDouble( "resourceCapacityFactor", mResourceCapacityFactor[ aPeriod ] );
     }
-}
-
-/*!
- * \brief Initialize any TechVintageVector in any object that may be contained
- *        in this class.
- * \details Resource does not have vintaging so the vectors will be sized for
- *          the entire model time.
- */
-void Resource::initTechVintageVector() {
-    const Modeltime* modeltime = scenario->getModeltime();
-    objects::InitializeTechVectorHelper helper( 0, modeltime->getmaxper() );
-    helper.initializeTechVintageVector( this );
 }

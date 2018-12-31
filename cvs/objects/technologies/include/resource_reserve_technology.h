@@ -89,10 +89,6 @@ public:
                           const double aMarginalRevenue,
                           const int aPeriod ) const;
     
-    virtual double getCalibrationOutput( const bool aHasRequiredInput,
-                                         const std::string& aRequiredInput,
-                                         const int aPeriod ) const;
-    
     virtual double getMarginalRevenue( const std::string& aRegionName,
                                       const std::string& aSectorName,
                                       const int aPeriod ) const;
@@ -122,7 +118,9 @@ protected:
         /*DEFINE_VARIABLE( SIMPLE, "eor-coef", mEORCoef, Value ),*/
                             
         // TODO: could make this a new vintage production state
-        DEFINE_VARIABLE( SIMPLE, "production-phase-scaler", mProductionPhaseScaler, Value )
+        DEFINE_VARIABLE( SIMPLE, "production-phase-scaler", mProductionPhaseScaler, Value ),
+        
+        DEFINE_VARIABLE( SIMPLE | STATE, "investment-cost", mInvestmentCost, Value )
     )
 
 	virtual void toDebugXMLDerived(const int period, std::ostream& out, Tabs* tabs) const;

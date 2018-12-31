@@ -78,6 +78,7 @@ class AGHG;
 class Marketplace;
 class Market;
 class SubResource;
+class ReserveSubResource;
 class SubRenewableResource;
 class Grade;
 class Population;
@@ -175,6 +176,9 @@ public:
     
     virtual void startVisitSubResource( const SubResource* aSubResource, const int aPeriod ) = 0;
     virtual void endVisitSubResource( const SubResource* aSubResource, const int aPeriod ) = 0;
+    
+    virtual void startVisitReserveSubResource( const ReserveSubResource* aSubResource, const int aPeriod ) = 0;
+    virtual void endVisitReserveSubResource( const ReserveSubResource* aSubResource, const int aPeriod ) = 0;
 
     virtual void startVisitSubRenewableResource( const SubRenewableResource* aSubResource, const int aPeriod ) = 0;
     virtual void endVisitSubRenewableResource( const SubRenewableResource* aSubResource, const int aPeriod ) = 0;

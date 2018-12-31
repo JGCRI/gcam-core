@@ -56,9 +56,8 @@
 //#include "containers/include/iinfo.h"
 #include "util/base/include/ivisitor.h"
 //#include "sectors/include/sector_utils.h"
-#include "technologies/include/itechnology_container.h"
-#include "technologies/include/technology_container.h"
 #include "technologies/include/resource_reserve_technology.h"
+#include "technologies/include/technology_container.h"
 
 using namespace std;
 using namespace xercesc;
@@ -66,14 +65,12 @@ using namespace xercesc;
 extern Scenario* scenario;
 
 //! Default constructor.
-ReserveSubResource::ReserveSubResource():
-mTechnology( 0 )
+ReserveSubResource::ReserveSubResource()
 {
 }
 
 //! Destructor.
 ReserveSubResource::~ReserveSubResource() {
-    delete mTechnology;
 }
 
 
@@ -88,12 +85,6 @@ void ReserveSubResource::completeInit( const std::string& aRegionName, const std
                                        const IInfo* aResourceInfo )
 {
     SubResource::completeInit( aRegionName, aResourceName, aResourceInfo );
-
-    if( !mTechnology ) {
-        abort();
-    } else {
-        mTechnology->completeInit( aRegionName, aResourceName, mName, aResourceInfo, 0 );
-    }
 }
 
 /*! \brief Perform any initializations needed for each period.
@@ -108,8 +99,6 @@ void ReserveSubResource::initCalc( const string& aRegionName, const string& aRes
                                    const IInfo* aResourceInfo, const int aPeriod )
 {
     SubResource::initCalc( aRegionName, aResourceName, aResourceInfo, aPeriod );
-
-    mTechnology->initCalc( aRegionName, aResourceName, aResourceInfo, 0, aPeriod );
 }
 
 /*! \brief Perform any initializations needed after each period.
@@ -121,18 +110,16 @@ void ReserveSubResource::initCalc( const string& aRegionName, const string& aRes
 * \param aResourceName Resource name.
 * \param period Model aPeriod
 */
-#include "util/base/include/auto_file.h"
+//#include "util/base/include/auto_file.h"
 void ReserveSubResource::postCalc( const string& aRegionName, const string& aResourceName, const int aPeriod ) {
     SubResource::postCalc( aRegionName, aResourceName, aPeriod );
     
-    mTechnology->postCalc( aRegionName, aPeriod );
-    
-    if( aRegionName == "European Free Trade Association" && mName == "crude oil") {
+    /*if( aRegionName == "European Free Trade Association" && mName == "crude oil") {
     AutoOutputFile temp("temp_debug_"+util::toString(aPeriod)+".txt");
     Tabs tabs;
     SubResource::toDebugXML( aPeriod, *temp, &tabs);
     mTechnology->toDebugXML( aPeriod, *temp, &tabs);
-    }
+    }*/
 }
 
 bool ReserveSubResource::XMLDerivedClassParse( const string& nodeName, const DOMNode* node ) {
@@ -173,15 +160,21 @@ const std::string& ReserveSubResource::getXMLNameStatic() {
     return XML_NAME;
 }
 
-void ReserveSubResource::cumulsupply( double aPrice, int aPeriod ) {
+void ReserveSubResource::cumulsupply( const string& aRegionName, const string& aResourceName,
+                                      double aPrice, int aPeriod ) {
     // TODO: not ovverride this method?
-    if( mCalReserve[ aPeriod ].isInited() ) {
+    /*if( mCalReserve[ aPeriod ].isInited() ) {
         calCumulsupply( aPrice, aPeriod );
     }
     else if( aPeriod == 0 ) {
         mCumulProd[ aPeriod ] = 0;
         return;
-    }
+    }*/
+    SubResource::cumulsupply( aRegionName, aResourceName, aPrice, aPeriod );
+    /*if( aRegionName == "USA" ) {
+        cout << "prod: " << aResourceName << " = " << mCumulProd[ aPeriod ] << endl;
+    }*/
+    /*
 
     double prevCumul = aPeriod > 0 ? mCumulProd[ aPeriod - 1 ] : 0.0;
     mEffectivePrice[ aPeriod ] = aPrice + mPriceAdder[ aPeriod ];
@@ -224,65 +217,8 @@ void ReserveSubResource::cumulsupply( double aPrice, int aPeriod ) {
         }
     }
     
-    /*if( mCalReserve[ aPeriod ].isInited() ) {
-        mCumulProd[ aPeriod ] = prevCumul + mCalReserve[ aPeriod ];
-    }
-    else {*/
-        mCumulProd[ aPeriod ] = std::max( mCumulProd[ aPeriod ].get(), prevCumul );
-    //}
-}
-
-void ReserveSubResource::calCumulsupply( double aPrice, int aPeriod ) {
-    double prevCumul = aPeriod > 0 ? mCumulProd[ aPeriod - 1 ] : 0.0;
-    
-    // First, calculate the cumulative production.  This is equal to
-    // cumulative production in the previous period plus the calibrated
-    // production times the timestep.  Note: this assumes constant production
-    // in all years with in a timestep. This is necessary to prevent erratic
-    // production in the future.
-    
-    double tempCumulProd = prevCumul + mCalReserve[ aPeriod ];
-    
-    // Next, determine which grade of resource is produced to get to the
-    // cumulative production needed.
-    double temp_cumulative = 0.0;
-    int gr_ind = 0;
-    double gr_avail = 0.0;
-    while ( temp_cumulative < tempCumulProd && gr_ind < mGrade.size() ) {
-        gr_avail = mGrade[ gr_ind ]->getAvail();
-        temp_cumulative += gr_avail;
-        gr_ind++;
-    }
-    
-    // not enough in supply curve to meet calibration
-    if( gr_ind == mGrade.size() ) {
-        mPriceAdder[ aPeriod ] = mGrade[ gr_ind - 1 ]->getCost( aPeriod ); // TODO?
-        return;
-    }
-    
-    // Then, calculate the fraction of the next grade that will be produced
-    double fractGrade = 0.0;
-    if ( gr_avail > 0.0 ) {
-        fractGrade = ( tempCumulProd - ( temp_cumulative - gr_avail ) )
-        / gr_avail;
-    }
-    
-    // Next, calculate the effective price.  This is the price needed
-    // to produce the calibrated production quantity in this period.
-    // mEffectivePrice = cost of the next highest grade -
-    // ( 1 - fractGrade )*( cost of higher grade - cost of lower grade )
-    double low_cost = 0.0;
-    if ( gr_ind > 0 ) {
-        low_cost = mGrade[ gr_ind - 1 ]->getCost( aPeriod );
-    }
-    double tempEffectivePrice = mGrade[ gr_ind ]->getCost( aPeriod ) -
-        ( 1 - fractGrade ) * ( mGrade[ gr_ind ]->getCost( aPeriod ) - low_cost );
-    
-    double mktPrice = aPrice;
-    
-    // Finally, calculate the price adder. This is the difference between the
-    // effective price and the global price
-    mPriceAdder[ aPeriod ] = tempEffectivePrice - mktPrice;
+    mCumulProd[ aPeriod ] = std::max( mCumulProd[ aPeriod ].get(), prevCumul );
+    */
 }
 
 /*
@@ -310,7 +246,7 @@ void ReserveSubResource::updateAvailable( const int aPeriod ){
 /*! Takes into account short-term capacity limits.
 Note that cumulsupply() must be called before calling this function. */
 void ReserveSubResource::annualsupply( const string& aRegionName, const string& aResourceName,
-                                       int aPeriod, const GDP* aGdp, double aPrice, double aPrev_price )
+                                       int aPeriod, const GDP* aGdp, double aPrice )
 {
     double prevCumul = aPeriod > 0 ? mCumulProd[ aPeriod - 1] : 0.0;
     double newReserves = mCumulProd[ aPeriod ] - prevCumul;
@@ -320,8 +256,9 @@ void ReserveSubResource::annualsupply( const string& aRegionName, const string& 
     // even when not calibrating
     double fixedScaleFactor = 1.0;
     double fixedOutput = 0;
+    double nonTechInvestmentCost = mEffectivePrice[ aPeriod ] - mTechnology->getNewVintageTechnology( aPeriod )->getCost( aPeriod );
     for( auto techIter = mTechnology->getVintageBegin( aPeriod ); techIter != mTechnology->getVintageEnd( aPeriod ); ++techIter ) {
-        fixedOutput += (*techIter).second->getFixedOutput( aRegionName, aResourceName, false, "", mEffectivePrice[ aPeriod ], aPeriod );
+        fixedOutput += (*techIter).second->getFixedOutput( aRegionName, aResourceName, false, "", nonTechInvestmentCost, aPeriod );
     }
     if( mCalProduction[ aPeriod ] != -1 ) {
         fixedScaleFactor = mCalProduction[ aPeriod ] == 0.0 ? 0.0 : mCalProduction[ aPeriod ] / ( fixedOutput + /* TOOD: move into tech? */ mCalReserve[ aPeriod ] / static_cast<double>( mTechnology->getNewVintageTechnology( aPeriod )->getLifetimeYears() ) );
@@ -351,7 +288,7 @@ double ReserveSubResource::getAnnualProd( int aPeriod ) const {
 * \param aPeriod Period to update.
 */
 void ReserveSubResource::accept( IVisitor* aVisitor, const int aPeriod ) const {
-    aVisitor->startVisitSubResource( this, aPeriod );
+    aVisitor->startVisitReserveSubResource( this, aPeriod );
 
     // Update the output container for the subresources.
     for( unsigned int i = 0; i < mGrade.size(); ++i ){
@@ -360,7 +297,7 @@ void ReserveSubResource::accept( IVisitor* aVisitor, const int aPeriod ) const {
     
     mTechnology->accept( aVisitor, aPeriod );
     
-    aVisitor->endVisitSubResource( this, aPeriod );
+    aVisitor->endVisitReserveSubResource( this, aPeriod );
 }
 
 //! return available resource for period

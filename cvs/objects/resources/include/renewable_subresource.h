@@ -69,9 +69,10 @@ public:
     static const std::string& getXMLNameStatic( void );
     virtual void completeInit( const std::string& aRegionName, const std::string& aResourceName,
                                const IInfo* aSectorInfo );
-    virtual void cumulsupply( double aPrice, int aPeriod );
+    virtual void cumulsupply( const std::string& aRegionName, const std::string& aResourceName,
+                              double aPrice, int aPeriod );
     virtual void annualsupply( const std::string& aRegionName, const std::string& aResourceName,
-                               int aPeriod, const GDP* aGdp, double aPrice, double aPrevPrice );
+                               int aPeriod, const GDP* aGdp, double aPrice );
     virtual double getVariance() const;
     virtual double getMaxAnnualSubResource( const int aPeriod ) const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;

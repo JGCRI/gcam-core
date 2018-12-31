@@ -64,6 +64,7 @@
 #include "climate/include/iclimate_model.h"
 #include "climate/include/magicc_model.h"
 #include "resources/include/subresource.h"
+#include "resources/include/reserve_subresource.h"
 #include "resources/include/renewable_subresource.h"
 #include "resources/include/smooth_renewable_subresource.h"
 #include "resources/include/grade.h"
@@ -573,10 +574,6 @@ void XMLDBOutputter::startVisitResource( const AResource* aResource,
             aResource->getAnnualProd( mCurrentRegion, per ), per );
     }
 
-    // Ghgs are expecting to use the buffer stack to write results into
-    // so create one for them to write into.
-    mBufferStack.push( new stringstream );
-
     // We want to write the keywords last due to limitations in
     // XPath we could be searching for them using following-sibling
     if( !aResource->mKeywordMap.empty() ) {
@@ -587,18 +584,6 @@ void XMLDBOutputter::startVisitResource( const AResource* aResource,
 void XMLDBOutputter::endVisitResource( const AResource* aResource,
                                        const int aPeriod )
 {
-    // Write the ghgs which put their output into the buffer stack.  We
-    // are not too concerned with writing empty tags at the resource
-    // level so we are not doing the full parent child buffers as in
-    // technology.
-    ostream* childBuffer = popBufferStack();
-    if( childBuffer->rdbuf()->in_avail() ) {
-        mBuffer << childBuffer->rdbuf();
-    }
-    delete childBuffer;
-    // the buffer stack should be empty by now
-    assert( mBufferStack.empty() );
-
     // Write the closing resource tag.
     XMLWriteClosingTag( aResource->getXMLName(), mBuffer, mTabs.get() );
     // Clear the current resource.
@@ -626,6 +611,16 @@ void XMLDBOutputter::endVisitSubResource( const SubResource* aSubResource,
 {
     // Write the closing subresource tag.
     XMLWriteClosingTag( aSubResource->getXMLName(), mBuffer, mTabs.get() );
+}
+
+void XMLDBOutputter::startVisitReserveSubResource( const ReserveSubResource* aSubResource, const int aPeriod )
+{
+    startVisitSubResource( aSubResource, aPeriod );
+}
+
+void XMLDBOutputter::endVisitReserveSubResource( const ReserveSubResource* aSubResource, const int aPeriod )
+{
+    endVisitSubResource( aSubResource, aPeriod );
 }
 
 void XMLDBOutputter::startVisitSubRenewableResource( const SubRenewableResource* aSubResource,

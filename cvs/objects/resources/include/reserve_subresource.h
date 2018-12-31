@@ -52,8 +52,6 @@
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
 
-class ITechnologyContainer;
-
 /*! 
 * \ingroup Objects
 * \brief ReserveSubResource is a class that contains grades.
@@ -62,6 +60,7 @@ class ITechnologyContainer;
 
 class ReserveSubResource: public SubResource
 {
+    friend class CalibrateResourceVisitor;
 public:
     ReserveSubResource();
     virtual ~ReserveSubResource();
@@ -69,12 +68,13 @@ public:
                                const IInfo* aResourceInfo );
     //void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
-    virtual void cumulsupply( double aPrice, int aPeriod );
+    virtual void cumulsupply( const std::string& aRegionName, const std::string& aResourceName,
+                              double aPrice, int aPeriod );
     virtual void initCalc( const std::string& aRegionName, const std::string& aResourceName,
                            const IInfo* aResourceInfo, const int aPeriod );
     virtual void postCalc( const std::string& aRegionName, const std::string& aResourceName, const int aPeriod );
     virtual void annualsupply( const std::string& aRegionName, const std::string& aResourceName,
-                               int aPeriod, const GDP* aGdp, double aPrice, double aPrevPrice );
+                               int aPeriod, const GDP* aGdp, double aPrice );
     double getAnnualProd( int aPeriod ) const;
     double getAvailable( int aPeriod ) const;
     void updateAvailable( const int period );
@@ -84,16 +84,11 @@ public:
 protected:
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node );
-    
-    void calCumulsupply( double aPrice, int aPeriod );
 
     DEFINE_DATA_WITH_PARENT(
         SubResource,
                          
-        DEFINE_VARIABLE( ARRAY, "cal-reserve", mCalReserve, objects::PeriodVector<Value> ),
-                            
-        //! amount of ReserveSubResource for each grade
-        DEFINE_VARIABLE( CONTAINER, "technology", mTechnology, ITechnologyContainer* )
+        DEFINE_VARIABLE( ARRAY, "cal-reserve", mCalReserve, objects::PeriodVector<Value> )
     )
 };
 

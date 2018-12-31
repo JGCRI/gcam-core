@@ -52,6 +52,8 @@
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 #include "util/base/include/ivisitor.h"
+#include "technologies/include/itechnology_container.h"
+#include "technologies/include/itechnology.h"
 #include <cassert>
 #include <cmath>
 
@@ -156,23 +158,26 @@ void SmoothRenewableSubresource::initCalc(const std::string& aRegionName, const 
 
 // SmoothRenewableSubresource::annualsupply
 void SmoothRenewableSubresource::annualsupply( const std::string& aRegionName, const std::string& aResourceName,
-                                               int aPeriod, const GDP* aGDP, double aPrice, double aPrevPrice )
+                                               int aPeriod, const GDP* aGDP, double aPrice )
 {
+    ITechnology* currTech = mTechnology->getNewVintageTechnology( aPeriod );
+    currTech->calcCost( aRegionName, aResourceName, aPeriod );
+    const double effectivePrice = aPrice + mPriceAdder[ aPeriod ] - currTech->getCost( aPeriod );
     // Compute the fraction of the total possible supply that is
     // available at a given price
-    double fractionAvailable = mCostCurve( aPrice );
+    double fractionAvailable = mCostCurve( effectivePrice );
     
     // Make supply increase continuously with price to improve convergence.
     // Default mPriceExponent value is very small so as not to significantly change resource base
     // The factor of 5 below is arbitary, but was chosen so as to not change results signifiantly.
     // The equation below changes max resource value (using default  mPriceExponent) by 1% at 2 * mid-price.
-    if( aPrice > 0 ) {
-        fractionAvailable *= std::pow( ( 1 + ( aPrice / ( 5.0 * mCostCurve.getMidprice() ) ) ), mPriceExponent );
+    if( effectivePrice > 0 ) {
+        fractionAvailable *= std::pow( ( 1 + ( effectivePrice / ( 5.0 * mCostCurve.getMidprice() ) ) ), mPriceExponent );
     }
     else {
-        // if aPrice <0, avoid NaN by using the first two terms in the
+        // if effectivePrice <0, avoid NaN by using the first two terms in the
         // series expansion of the above.
-        fractionAvailable *= 1.0 + mPriceExponent * aPrice / ( 5.0 * mCostCurve.getMidprice() );
+        fractionAvailable *= 1.0 + mPriceExponent * effectivePrice / ( 5.0 * mCostCurve.getMidprice() );
         // If the result is negative, clamp it to zero.
         if( fractionAvailable < 0.0 ) {
             fractionAvailable = 0.0;
@@ -185,6 +190,8 @@ void SmoothRenewableSubresource::annualsupply( const std::string& aRegionName, c
     
     // now convert to absolute value of production
     mAnnualProd[ aPeriod ] = fractionAvailable * mMaxAnnualSubResource[aPeriod] * gpdSupplyExpansion;
+    
+    currTech->production( aRegionName, aResourceName, mAnnualProd[ aPeriod ], 1.0, aGDP, aPeriod );
     
     // This subresource does not utilize a cumualtive supply curve.
     // Calculate cumulative production from annunal production values.
@@ -229,11 +236,11 @@ double SmoothRenewableSubresource::getHighestPrice( const int aPeriod ) const{
  * \param aVisitor Output container to update.
  * \param aPeriod Period to update.
  */
-void SmoothRenewableSubresource::accept( IVisitor* aVisitor, const int aPeriod ) const {
+/*void SmoothRenewableSubresource::accept( IVisitor* aVisitor, const int aPeriod ) const {
     // call the parent class methods since same outputs
     aVisitor->startVisitSubRenewableResource( this, aPeriod );
     aVisitor->endVisitSubRenewableResource( this, aPeriod );
-}
+}*/
 
 // end of smooth_renewable_subresource.cpp 
 
