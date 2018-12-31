@@ -135,7 +135,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["PassThroughTech"]] <- c(level2_data_names[["Subsector"]], "pass.through.technology")
   level2_data_names[["CalorieContent"]] <- c(level2_data_names[["TechYr"]], "minicam.energy.input", "efficiency")
   level2_data_names[["DeleteInput"]] <- c("region", "supplysector", "subsector", "technology", "year", "minicam.energy.input")
-  level2_data_names[["ResReserveTechShrwt"]] <- c("region", "depresource", "reserve.subresource", "resource.reserve.technology", "year", "share.weight")
+  level2_data_names[["ResTechShrwt"]] <- c("region", "resource", "subresource", "technology", "year", "share.weight")
   level2_data_names[["ResReserveTechCost"]] <- c("region", "depresource", "reserve.subresource", "resource.reserve.technology", "year", "minicam.non.energy.input", "input.cost")
   level2_data_names[["ResReserveTechLifetime"]] <- c("region", "depresource", "reserve.subresource", "resource.reserve.technology", "year", "lifetime")
   level2_data_names[["ResReserveTechProfitShutdown"]] <- c("region", "depresource", "reserve.subresource", "resource.reserve.technology", "year", "median.shutdown.point", "profit.shutdown.steepness")
@@ -368,10 +368,10 @@ generate_level2_data_names <- function() {
   level2_data_names[["LN1_Delete"]] <- c("region", "LandAllocatorRoot", "LandNode1")
 
   # NonCO2
-  level2_data_names[["ResEmissCoef"]] <- c("region", "depresource", "Non.CO2", "emiss.coef")
-  level2_data_names[["GDPCtrlMaxRes"]] <- c("region", "depresource", "Non.CO2", "ctrl.name", "max.reduction")
-  level2_data_names[["GDPCtrlSteepRes"]] <- c("region", "depresource", "Non.CO2", "ctrl.name", "steepness")
-  level2_data_names[["ResMAC"]] <- c("region", "depresource", "Non.CO2", "mac.control", "tax", "mac.reduction", "market.name")
+  level2_data_names[["ResEmissCoef"]] <- c("region", "depresource", "subresource", "technology", "year", "Non.CO2", "emiss.coef")
+  level2_data_names[["GDPCtrlMaxRes"]] <- c("region", "depresource", "subresource", "technology", "year", "Non.CO2", "ctrl.name", "max.reduction")
+  level2_data_names[["GDPCtrlSteepRes"]] <- c("region", "depresource", "subresource", "technology", "year", "Non.CO2", "ctrl.name", "steepness")
+  level2_data_names[["ResMAC"]] <- c("region", "depresource", "subresource", "technology", "year", "Non.CO2", "mac.control", "tax", "mac.reduction", "market.name")
   level2_data_names[["StubTechNonCO2"]] <- c(level2_data_names[["StubTechYr"]], "Non.CO2")
   level2_data_names[["StubTechEmissUnits"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "emissions.unit")
   level2_data_names[["InputEmissCoeff"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "emiss.coef")

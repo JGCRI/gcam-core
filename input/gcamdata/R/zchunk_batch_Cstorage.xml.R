@@ -13,6 +13,7 @@ module_energy_batch_Cstorage.xml <- function(command, ...) {
     return(c("L261.DepRsrc",
               "L261.UnlimitRsrc",
               "L261.DepRsrcCurves_C",
+              "L261.ResTechShrwt_C",
               "L261.Supplysector_C",
               "L261.SubsectorLogit_C",
               "L261.SubsectorShrwtFllt_C",
@@ -30,6 +31,7 @@ module_energy_batch_Cstorage.xml <- function(command, ...) {
     L261.DepRsrc <- get_data(all_data, "L261.DepRsrc")
     L261.UnlimitRsrc <- get_data(all_data, "L261.UnlimitRsrc")
     L261.DepRsrcCurves_C <- get_data(all_data, "L261.DepRsrcCurves_C")
+    L261.ResTechShrwt_C <- get_data(all_data, "L261.ResTechShrwt_C")
     L261.Supplysector_C <- get_data(all_data, "L261.Supplysector_C")
     L261.SubsectorLogit_C <- get_data(all_data, "L261.SubsectorLogit_C")
     L261.SubsectorShrwtFllt_C <- get_data(all_data, "L261.SubsectorShrwtFllt_C")
@@ -45,6 +47,7 @@ module_energy_batch_Cstorage.xml <- function(command, ...) {
       add_xml_data(L261.DepRsrc, "DepRsrc") %>%
       add_xml_data(L261.UnlimitRsrc, "UnlimitRsrc") %>%
       add_xml_data(L261.DepRsrcCurves_C, "DepRsrcCurves") %>%
+      add_xml_data(L261.ResTechShrwt_C, "ResTechShrwt") %>%
       add_logit_tables_xml(L261.Supplysector_C, "Supplysector") %>%
       add_logit_tables_xml(L261.SubsectorLogit_C, "SubsectorLogit") %>%
       add_xml_data(L261.SubsectorShrwtFllt_C, "SubsectorShrwtFllt") %>%
@@ -52,7 +55,7 @@ module_energy_batch_Cstorage.xml <- function(command, ...) {
       add_xml_data(L261.GlobalTechCoef_C, "GlobalTechCoef") %>%
       add_xml_data(L261.GlobalTechCost_C, "GlobalTechCost") %>%
       add_xml_data(L261.GlobalTechShrwt_C, "GlobalTechShrwt") %>%
-      add_precursors("L261.DepRsrc", "L261.UnlimitRsrc", "L261.DepRsrcCurves_C", "L261.Supplysector_C", "L261.SubsectorLogit_C", "L261.SubsectorShrwtFllt_C", "L261.StubTech_C", "L261.GlobalTechCoef_C", "L261.GlobalTechCost_C", "L261.GlobalTechShrwt_C") ->
+      add_precursors("L261.DepRsrc", "L261.UnlimitRsrc", "L261.DepRsrcCurves_C", "L261.ResTechShrwt_C", "L261.Supplysector_C", "L261.SubsectorLogit_C", "L261.SubsectorShrwtFllt_C", "L261.StubTech_C", "L261.GlobalTechCoef_C", "L261.GlobalTechCost_C", "L261.GlobalTechShrwt_C") ->
       Cstorage.xml
 
     return_data(Cstorage.xml)
