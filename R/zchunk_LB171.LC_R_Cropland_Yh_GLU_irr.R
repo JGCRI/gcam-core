@@ -96,8 +96,7 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
       add_comments("The share of irrigated cropland in the base year is applied to all historical periods.") %>%
       add_legacy_name("L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU") %>%
       add_precursors("L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",
-                     "L161.ag_irrHA_frac_R_C_GLU") %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+                     "L161.ag_irrHA_frac_R_C_GLU") ->
       L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU
 
     select(IrrRfdCropland, GCAM_region_ID, GCAM_commodity, GLU, year,
@@ -108,8 +107,7 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
       add_comments("The share of rainfed cropland in the base year is applied to all historical periods.") %>%
       add_legacy_name("L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU") %>%
       add_precursors("L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",
-                     "L161.ag_irrHA_frac_R_C_GLU") %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+                     "L161.ag_irrHA_frac_R_C_GLU") ->
       L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU
 
     select(ecyield.both, GCAM_region_ID, GCAM_commodity, GLU, year, value =

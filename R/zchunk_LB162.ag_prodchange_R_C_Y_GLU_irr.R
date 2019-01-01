@@ -412,8 +412,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
                      "L151.ag_irrHA_ha_ctry_crop",
                      "L151.ag_rfdHA_ha_ctry_crop",
                      "L161.ag_irrProd_Mt_R_C_Y_GLU",
-                     "L161.ag_rfdProd_Mt_R_C_Y_GLU") %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+                     "L161.ag_rfdProd_Mt_R_C_Y_GLU") ->
       L162.ag_YieldRate_R_C_Y_GLU_irr
 
     L162.bio_YieldRate_R_Y_GLU_irr %>%

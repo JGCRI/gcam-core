@@ -574,8 +574,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
                      "L100.FAO_CL_kha",
                      "L100.FAO_harv_CL_kha",
                      "L101.ag_HA_bm2_R_C_Y_GLU",
-                     "L120.LC_bm2_R_LT_Yh_GLU") %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+                     "L120.LC_bm2_R_LT_Yh_GLU") ->
       L122.LC_bm2_R_ExtraCropLand_Yh_GLU
 
     L122.LC_bm2_R_HarvCropLand_C_Yh_GLU %>%
@@ -590,8 +589,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
                      "L100.FAO_CL_kha",
                      "L100.FAO_harv_CL_kha",
                      "L101.ag_HA_bm2_R_C_Y_GLU",
-                     "L120.LC_bm2_R_LT_Yh_GLU") %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+                     "L120.LC_bm2_R_LT_Yh_GLU") ->
       L122.LC_bm2_R_HarvCropLand_C_Yh_GLU
 
     L122.LC_bm2_R_HarvCropLand_Yh_GLU %>%

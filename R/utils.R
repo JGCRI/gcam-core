@@ -264,10 +264,6 @@ save_chunkdata <- function(chunkdata, write_inputs = FALSE, create_dirs = FALSE,
         cat(paste(COMMENT_CHAR, paste(flags, collapse = " ")), file = fqfn, sep = "\n")
       }
 
-      if(FLAG_PROTECT_FLOAT %in% flags) {
-        cd <- protect_float(cd)
-      }
-
       if(!is.null(cmnts)) {
         cat(paste(COMMENT_CHAR, cmnts), file = fqfn, sep = "\n", append = TRUE)
       }
