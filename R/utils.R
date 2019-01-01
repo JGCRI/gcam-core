@@ -274,39 +274,6 @@ save_chunkdata <- function(chunkdata, write_inputs = FALSE, create_dirs = FALSE,
 }
 
 
-#' Protect floating point values in a data frame.
-#'
-#' All of the currently extant functions for writing tables render floating
-#' point values using C's %g format.  This format is badly broken, in that a
-#' value like 2.0 will be output as "2".  This can cause problems when the table
-#' is read in at some later time, as "2" looks like an integer.  This function
-#' converts all floating point columns in a data frame to character strings that
-#' are properly formatted as floating point literals.  Using
-#' \code{\link[readr]{write_csv}} on a data frame protected in this way will
-#' produce the expected output.
-#'
-#' @note The output produced this way will probably be a lot larger than one
-#' produced by the default behavior, so this function should be used only where
-#' the default behavior is causing problems.
-#' @note Because the numeric columns are converted to characters, a data
-#' frame converted in this way is no longer useful for computation.
-#'
-#' @param df Data frame to have floats protected.
-#' @return Data frame with floating point columns converted to character.
-protect_float <- function(df) {
-  floatcols <- names(df)[sapply(df, function(col) {is.numeric(col) &&
-      !is.integer(col)})]
-  for(col in floatcols) {
-    ## Write entries with very large or very small values in scientific
-    ## notation.  Other values will be in decimal notation.
-
-    df[[col]] <- if_else(abs(df[[col]]) < 1e-4 | abs(df[[col]]) > 1e6,
-                         sprintf("%.10e", df[[col]]),
-                         sprintf("%.10f", df[[col]]))
-  }
-  df
-}
-
 #' find_chunks
 #'
 #' Get a list of chunks in this package.
