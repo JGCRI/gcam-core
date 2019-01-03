@@ -114,6 +114,18 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
       bind_rows(select(L111.Prod_EJ_ctry_unconvOil_Yh, GCAM_region_ID, sector, fuel, year, value)) ->
       L111.Prod_EJ_R_F_Yh
 
+    # Produce outputs
+    L111.Prod_EJ_R_F_Yh %>%
+      add_title("Historical fossil energy production") %>%
+      add_units("EJ") %>%
+      add_comments("Determine regional shares of production for each primary fuel, ") %>%
+      add_comments("interpolate unconventional oil production to all historical years, ") %>%
+      add_comments("deduct unconventional oil from total oil and include it in calibrated production table.") %>%
+      add_legacy_name("L111.Prod_EJ_R_F_Yh") %>%
+      add_precursors("common/iso_GCAM_regID", "L1011.en_bal_EJ_R_Si_Fi_Yh",
+                     "energy/rsrc_unconv_oil_prod_bbld") ->
+      L111.Prod_EJ_R_F_Yh
+
     # ------- FOSSIL RESOURCE SUPPLY CURVES
 
     # Using supply curves from GCAM 3.0 (same as MiniCAM) (83-93)
@@ -189,18 +201,7 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
 
       # Fossil resource historical prices are currently assumed. No level1 processing is needed.
 
-
       # Produce outputs
-      L111.Prod_EJ_R_F_Yh %>%
-        add_title("Historical fossil energy production") %>%
-        add_units("EJ") %>%
-        add_comments("Determine regional shares of production for each primary fuel, ") %>%
-        add_comments("interpolate unconventional oil production to all historical years, ") %>%
-        add_comments("deduct unconventional oil from total oil and include it in calibrated production table.") %>%
-        add_legacy_name("L111.Prod_EJ_R_F_Yh") %>%
-        add_precursors("common/iso_GCAM_regID", "L1011.en_bal_EJ_R_Si_Fi_Yh",
-                       "energy/rsrc_unconv_oil_prod_bbld") ->
-        L111.Prod_EJ_R_F_Yh
 
       L111.RsrcCurves_EJ_R_Ffos %>%
         add_title("Fossil resource supply curves", overwrite = TRUE) %>%
