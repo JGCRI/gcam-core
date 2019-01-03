@@ -15,6 +15,9 @@ The header as a character vector.
 \description{
 Read a file line-by-line to find how far its header extends, and return it.
 }
+\note{
+Headers are defined as consecutive lines beginning with "#" at the top of a file.
+}
 \author{
 Alexey Shikomanov
 }

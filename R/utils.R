@@ -7,20 +7,22 @@
 #'
 #' @param fqfn Fully qualified filename, character
 #' @return The header as a character vector.
+#' @note Headers are defined as consecutive lines beginning with "#" at the top of a file.
 #' @author Alexey Shikomanov
 find_header <- function(fqfn) {
   con <- file(fqfn, "r")
+  on.exit(close(con))
+
   is_comment <- TRUE
   header <- character()
 
-  while (is_comment) {
+  while(is_comment) {
     line <- readLines(con, n = 1)
     is_comment <- grepl("^#", line)
     if (is_comment) {
       header <- c(header, line)
     }
   }
-  close(con)
   header
 }
 
