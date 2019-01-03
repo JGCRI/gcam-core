@@ -4,10 +4,12 @@
 \alias{prebuilt_data}
 \title{prebuilt_data}
 \usage{
-prebuilt_data(object_name)
+prebuilt_data(object_name, pb = PREBUILT_DATA)
 }
 \arguments{
 \item{object_name}{The name of the desired object, character}
+
+\item{pb}{\code{PREBUILT_DATA} object; overridden only for testing}
 }
 \value{
 The data object (a tibble).

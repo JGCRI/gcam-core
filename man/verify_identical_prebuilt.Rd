@@ -4,17 +4,19 @@
 \alias{verify_identical_prebuilt}
 \title{verify_identical_prebuilt}
 \usage{
-verify_identical_prebuilt(...)
+verify_identical_prebuilt(..., pb = PREBUILT_DATA)
 }
 \arguments{
 \item{...}{The objects}
+
+\item{pb}{\code{PREBUILT_DATA} object; overridden only for testing}
 }
 \value{
-None.
+A logical indicating whether a mismatch occurred.
 }
 \description{
 Check whether objects are identical to their prebuilt versions.
 }
 \note{
-Called for its side effects: a warning is issued for each non-identical object.
+Called primarily for its side effects: a warning is issued for each non-identical object.
 }

@@ -306,10 +306,11 @@ is_data_list <- function(data_list) {
 #' Extract a prebuilt data object from the PREBUILT_DATA store.
 #'
 #' @param object_name The name of the desired object, character
+#' @param pb \code{PREBUILT_DATA} object; overridden only for testing
 #' @return The data object (a tibble).
-prebuilt_data <- function(object_name) {
-  if(object_name %in% names(PREBUILT_DATA)) {
-    PREBUILT_DATA[[object_name]] %>%
+prebuilt_data <- function(object_name, pb = PREBUILT_DATA) {
+  if(object_name %in% names(pb)) {
+    pb[[object_name]] %>%
       add_comments("** PRE-BUILT; RAW IEA DATA NOT AVAILABLE **")
   } else {
     NULL
@@ -322,14 +323,15 @@ prebuilt_data <- function(object_name) {
 #' Check whether objects are identical to their prebuilt versions.
 #'
 #' @param ... The objects
-#' @note Called for its side effects: a warning is issued for each non-identical object.
-#' @return None.
-verify_identical_prebuilt <- function(...) {
+#' @param pb \code{PREBUILT_DATA} object; overridden only for testing
+#' @note Called primarily for its side effects: a warning is issued for each non-identical object.
+#' @return A logical indicating whether a mismatch occurred.
+verify_identical_prebuilt <- function(..., pb = PREBUILT_DATA) {
   dots <- list(...)
   names(dots) <- as.list(substitute(list(...)))[-1L]
   mismatch <- FALSE
   for(i in seq_along(dots)) {
-    if(!isTRUE(all.equal(dots[[i]], PREBUILT_DATA[[names(dots)[i]]]))) {
+    if(!isTRUE(all.equal(dots[[i]], pb[[names(dots)[i]]]))) {
       warning(names(dots)[i], " is not the same as its prebuilt version")
       mismatch <- TRUE
     }
@@ -337,4 +339,5 @@ verify_identical_prebuilt <- function(...) {
   if(mismatch) {
     warning("Re-run generate_package_data.R to rebuild package data")
   }
+  invisible(mismatch)
 }
