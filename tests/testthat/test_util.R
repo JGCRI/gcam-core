@@ -28,7 +28,7 @@ test_that("screening for use of forbidden functions works", {
 
   expect_equal(screen_forbidden(testgood), character())
   tb <- screen_forbidden(testbad)
-  expect_equal(tb[,1], c("consecutive mutate calls", "(?<!error_no_)match(?!es)",
+  expect_equivalent(tb[,1], c("consecutive mutate calls", "(?<!error_no_)match(?!es)",
                          "ifelse", "ifelse", "melt", "cast", "rbind",
                          "cbind", "merge"))
 })

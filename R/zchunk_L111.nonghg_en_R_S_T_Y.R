@@ -109,11 +109,15 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
 
     # Compute EDGAR emissions by region and sector
     # Add gas names and combine all data together
-    L111.EDGAR <- bind_rows(EDGAR_SO2 %>% mutate(Non.CO2 = "SO2"),
-                            EDGAR_CO %>% mutate(Non.CO2 = "CO"),
-                            EDGAR_NOx %>% mutate(Non.CO2 = "NOx"),
-                            EDGAR_NH3 %>% mutate(Non.CO2 = "NH3"),
-                            EDGAR_NMVOC %>% mutate(Non.CO2 = "NMVOC") %>% select(-`2009`, -`2010`)) %>%
+
+    # Need to avoid triggering a (false positive) consecutive-mutate error
+    e_SO2 <- EDGAR_SO2 %>% mutate(Non.CO2 = "SO2")
+    e_CO <- EDGAR_CO %>% mutate(Non.CO2 = "CO")
+    e_NOx <- EDGAR_NOx %>% mutate(Non.CO2 = "NOx")
+    e_NH3 <- EDGAR_NH3 %>% mutate(Non.CO2 = "NH3")
+    e_NMVOC <- EDGAR_NMVOC %>% mutate(Non.CO2 = "NMVOC") %>% select(-`2009`, -`2010`)
+
+    L111.EDGAR <- bind_rows(e_SO2, e_CO, e_NOx, e_NH3, e_NMVOC) %>%
       # Match in EDGAR sectors, use left_join because there are NAs in the data
       left_join(EDGAR_sector %>% select(IPCC, EDGAR_agg_sector = agg_sector) %>% unique, by = "IPCC") %>%
       # Match in EDGAR countries, use left_join because there are NAs in the data

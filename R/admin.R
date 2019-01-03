@@ -271,7 +271,7 @@ add_column_types_header_line <- function() {
       }
 
       # Read the data and infer column classes
-      dat <- read.csv(f, comment.char = "#", stringsAsFactors = F)
+      dat <- utils::read.csv(f, comment.char = "#", stringsAsFactors = F)
       coltypes_list <- lapply(dat, class)
 
       allNAs <- unlist(lapply(dat, function(x) all(is.na(x))))

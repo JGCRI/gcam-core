@@ -431,7 +431,7 @@ outputs_of <- function(chunks) {
 #' code chunks.  This function tests a function for calls to forbidden functions
 #' and flags the offending lines.
 #'
-#' @param fn The function to be tested.  This is the actual function object, not
+#' @param fn The function to be tested. This is the actual function object, not
 #' the name of the function.
 #' @return Nx2 Character matrix of flagged lines and the test that tripped them
 #' (empty vector, if none)
@@ -449,6 +449,13 @@ screen_forbidden <- function(fn) {
   code <- gsub('"[^"]*"', "", code)   # remove double quoted material
   code <- gsub("'[^']*'", "", code)   # remove single quoted material
 
+  # For some reason the R package check process seems to concatenate certain lines;
+  # in particular a mutate() followed by a replace_na() ends up on a single line, which
+  # can cause false positives below if it's then followed by another mutate(). This
+  # does not occur during 'normal' testthat testing.
+  # Anyway, ensure all %>% operations are on separate lines
+  code <- unlist(sapply(code, strsplit, split = "%>%", fixed = TRUE))
+
   # Special multiline case: consecutive mutate calls
   rslt <- character()
   mutates <- grep("^\\s*mutate\\(", code)
@@ -457,6 +464,7 @@ screen_forbidden <- function(fn) {
     rslt <- cbind("consecutive mutate calls", code[mutates[which(diff1s)]])
   }
 
+  # General screen-forbidden search, single lines only
   for(f in unique(forbidden)) {
     bad <- grep(f, code, perl = TRUE)
     if(length(bad) > 0) {
