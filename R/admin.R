@@ -253,8 +253,7 @@ add_column_types_header_line <- function() {
 
   for(f in files) {
     cat(f, "...")
-    header <- readLines(f, n = 20)
-    header <- header[grepl("^#", header)]
+    header <- find_header(f)
     original_header_length <- length(header)
 
     # Remove any previous Column types entry

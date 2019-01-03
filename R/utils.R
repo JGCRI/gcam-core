@@ -1,8 +1,33 @@
 # utils.R
 
+
+#' find_header
+#'
+#' Read a file line-by-line to find how far its header extends, and return it.
+#'
+#' @param fqfn Fully qualified filename, character
+#' @return The header as a character vector.
+#' @author Alexey Shikomanov
+find_header <- function(fqfn) {
+  con <- file(fqfn, "r")
+  is_comment <- TRUE
+  header <- character()
+
+  while (is_comment) {
+    line <- readLines(con, n = 1)
+    is_comment <- grepl("^#", line)
+    if (is_comment) {
+      header <- c(header, line)
+    }
+  }
+  close(con)
+  header
+}
+
 #' load_csv_files
 #'
 #' Load one or more internal, i.e. included with the package, csv (or csv.gz) data files.
+#'
 #' @param filenames Character vector of filenames to load
 #' @param optionals Logical vector, specifying whether corresponding file is optional
 #' @param quiet Logical - suppress messages?
@@ -38,7 +63,7 @@ load_csv_files <- function(filenames, optionals, quiet = FALSE, ...) {
 
     # Read the file header and extract the column type info from it
     assert_that(file.exists(fqfn))
-    header <- readLines(fqfn, n = 20)  # only first 20 lines
+    header <- find_header(fqfn)
     col_types <- extract_header_info(header, label = "Column types:", fqfn, required = TRUE)
 
     readr::read_csv(fqfn, comment = COMMENT_CHAR, col_types = col_types, ...) %>%
