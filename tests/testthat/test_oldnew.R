@@ -55,7 +55,6 @@ test_that("matches old data system output", {
   } else {
     # load the comparison data which is coming from the gcamdata.compdata package
     # the format is a list[[data name ]] = data tibble
-    COMPDATA <- NULL # silence package check note
     data(COMPDATA)
 
     # For each file in OUTPUTS_DIR, look for corresponding file in our
