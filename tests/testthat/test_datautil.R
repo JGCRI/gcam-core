@@ -77,8 +77,7 @@ test_that("prebuilt_data works", {
 })
 
 test_that("verify_identical_prebuilt works", {
-  test <- 1
-  PREBUILT_DATA[["test"]] <- test
-  expect_silent(verify_identical_prebuilt(test))
+  L101.en_bal_EJ_R_Si_Fi_Yh_full <- PREBUILT_DATA[["L101.en_bal_EJ_R_Si_Fi_Yh_full"]]
+  expect_silent(verify_identical_prebuilt(L101.en_bal_EJ_R_Si_Fi_Yh_full))
   expect_warning(verify_identical_prebuilt(zzz = 1))
 })

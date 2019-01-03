@@ -308,8 +308,12 @@ is_data_list <- function(data_list) {
 #' @param object_name The name of the desired object, character
 #' @return The data object (a tibble).
 prebuilt_data <- function(object_name) {
-  PREBUILT_DATA[[object_name]] %>%
-    add_comments("** PRE-BUILT; RAW IEA DATA NOT AVAILABLE **")
+  if(object_name %in% names(PREBUILT_DATA)) {
+    PREBUILT_DATA[[object_name]] %>%
+      add_comments("** PRE-BUILT; RAW IEA DATA NOT AVAILABLE **")
+  } else {
+    NULL
+  }
 }
 
 
