@@ -69,3 +69,16 @@ test_that("same_attributes_as works", {
   expect_identical(get_comments(x), get_comments(y))
   expect_identical(get_precursors(x), get_precursors(y))
 })
+
+test_that("prebuilt_data works", {
+  expect_null(prebuilt_data("not_prebuild_data"))
+  expect_equivalent(prebuilt_data(names(PREBUILT_DATA)[1]),
+                    PREBUILT_DATA[[1]])
+})
+
+test_that("verify_identical_prebuilt works", {
+  test <- 1
+  PREBUILT_DATA[["test"]] <- test
+  expect_silent(verify_identical_prebuilt(test))
+  expect_warning(verify_identical_prebuilt(zzz = 1))
+})

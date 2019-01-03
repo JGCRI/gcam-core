@@ -236,7 +236,7 @@ return_data <- function(...) {
     # check for them
     if(is_tibble(dots[[dname]])) {
       assert_that(is.null(groups(dots[[dname]])), msg =
-        paste0(dname, " is being returned grouped. This is not allowed; please ungroup()"))
+                    paste0(dname, " is being returned grouped. This is not allowed; please ungroup()"))
     }
   })
   dots
@@ -263,7 +263,7 @@ add_data <- function(data_list, all_data) {
   assert_that(is_data_list(all_data))
 
   for(d in names(data_list)) {
-      all_data[[d]] <- data_list[[d]]
+    all_data[[d]] <- data_list[[d]]
   }
   all_data
 }
@@ -298,4 +298,39 @@ remove_data <- function(data_list, all_data) {
 #' @details Currently a data_list is just a list.
 is_data_list <- function(data_list) {
   is.list(data_list)
+}
+
+
+#' prebuilt_data
+#'
+#' Extract a prebuilt data object from the PREBUILT_DATA store.
+#'
+#' @param object_name The name of the desired object, character
+#' @return The data object (a tibble).
+prebuilt_data <- function(object_name) {
+  PREBUILT_DATA[[object_name]] %>%
+    add_comments("** PRE-BUILT; RAW IEA DATA NOT AVAILABLE **")
+}
+
+
+#' verify_identical_prebuilt
+#'
+#' Check whether objects are identical to their prebuilt versions.
+#'
+#' @param ... The objects
+#' @note Called for its side effects: a warning is issued for each non-identical object.
+#' @return None.
+verify_identical_prebuilt <- function(...) {
+  dots <- list(...)
+  names(dots) <- as.list(substitute(list(...)))[-1L]
+  mismatch <- FALSE
+  for(i in seq_along(dots)) {
+    if(!isTRUE(all.equal(dots[[i]], PREBUILT_DATA[[names(dots)[i]]]))) {
+      warning(names(dots)[i], " is not the same as its prebuilt version")
+      mismatch <- TRUE
+    }
+  }
+  if(mismatch) {
+    warning("Re-run generate_package_data.R to rebuild package data")
+  }
 }
