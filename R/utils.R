@@ -454,7 +454,7 @@ screen_forbidden <- function(fn) {
   # can cause false positives below if it's then followed by another mutate(). This
   # does not occur during 'normal' testthat testing.
   # Anyway, ensure all %>% operations are on separate lines
-  code <- unlist(sapply(code, strsplit, split = "%>%", fixed = TRUE))
+  code <- unlist(vapply(code, strsplit, split = "%>%", fixed = TRUE, FUN.VALUE = list(1)))
 
   # Special multiline case: consecutive mutate calls
   rslt <- character()
