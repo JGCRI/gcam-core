@@ -4,7 +4,10 @@
 \alias{add_column_types_header_line}
 \title{add_column_types_header_line}
 \usage{
-add_column_types_header_line()
+add_column_types_header_line(overwrite = FALSE)
+}
+\arguments{
+\item{overwrite}{Overwrite any previous column type lines? Logical}
 }
 \value{
 Nothing.

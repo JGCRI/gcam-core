@@ -244,8 +244,9 @@ normalize_files <- function(root = system.file("extdata", package = "gcamdata"))
 #'
 #' One-off function to insert a `Column types` header line into input files.
 #'
+#' @param overwrite Overwrite any previous column type lines? Logical
 #' @return Nothing.
-add_column_types_header_line <- function() {
+add_column_types_header_line <- function(overwrite = FALSE) {
 
   files <- list.files(path = "inst/extdata/", pattern = "csv$", full.names = TRUE, recursive = TRUE)
 
@@ -257,9 +258,11 @@ add_column_types_header_line <- function() {
     original_header_length <- length(header)
 
     # Remove any previous Column types entry
-    column_rows <- grepl("^# Column types", header)
-    if(length(column_rows)) {
-      header <- header[!column_rows]
+    if(overwrite) {
+      column_rows <- grepl("^# Column types", header)
+      if(length(column_rows)) {
+        header <- header[!column_rows]
+      }
     }
 
     # A few files are custom and don't have headers; skip
@@ -296,5 +299,4 @@ add_column_types_header_line <- function() {
       next
     }
   }
-
 }
