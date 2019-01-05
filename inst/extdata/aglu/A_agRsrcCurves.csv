@@ -2,6 +2,7 @@
 # Title: Sets the characteristics and supply curves of the non-modeled inputs to animal production
 # Units: Various
 # Source: NA
+# Column types: cccnn 
 # ----------
 renewresource,sub.renewable.resource,grade,available,extractioncost
 Residue,Residue,grade 1,0,0.001

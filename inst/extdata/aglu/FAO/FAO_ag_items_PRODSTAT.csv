@@ -3,6 +3,8 @@
 # Unit: Unitless
 # Description: Maps FAO PRODSTAT crops to GCAM commodities and crop names in all other databases
 # Sources: FAO and other databases
+# Column types: ccccicccccccccccci 
+# ----------
 item,GTAP_crop,GCAM_commodity,CROSIT_crop,CROSIT_cropID,IFA2002_crop,IFA_commodity,MIRCA_crop_name,MIRCA_crop,MIRCA_Crop24and26,MH_crop,MH2011_crop,MH2014_proxy,GTAP_use,LPJmL_crop,GEPIC_crop,Pegasus_crop,C3avg_include
 Agave Fibres Nes,AgaveFibrNES,FiberCrop,,,,Other,Others (annual),Crop26,AgaveFibresNes,,,,pfb,,,,0
 Alfalfa for forage and silage,Alff4FrgSlg,FodderHerb,,,Alfalfa,Other,Fodder crops,Crop25,,,Peas,"Peas, green",ocr,C3avg,C3avg,C3avg,0

@@ -165,9 +165,9 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
       summarise_at(vars(avg), mean, na.rm = TRUE) %>%
       rename(FodderHerb = avg) %>%
       # Note: Setting FodderGrass price as a ratio to FodderHerb
-      mutate(FodderGrass = FodderHerb * aglu.PRICERATIO_GRASS_ALFALFA) %>%
-      # NOTE: Setting Pasture price equal to FodderGrass price
-      mutate(Pasture = FodderGrass) %>%
+      mutate(FodderGrass = FodderHerb * aglu.PRICERATIO_GRASS_ALFALFA,
+             # NOTE: Setting Pasture price equal to FodderGrass price
+             Pasture = FodderGrass) %>%
       gather(GCAM_commodity, Price_USDt) %>%
       # Combine crop commodities to get all primary agricultural commodities in a single tibble
       bind_rows(Price_ag) %>%

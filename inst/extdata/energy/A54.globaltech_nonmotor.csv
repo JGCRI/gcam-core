@@ -1,6 +1,8 @@
 # File: A54.globaltech_nonmotor.csv
 # Title: Table includes all parameters related to walking and cycling in each region
 # Units: Speed in km/hr; Share weight is unitless
+# Column types: ccncci 
+# ----------
 supplysector,tranSubsector,speed,technology,renewable.input,share.weight
 trn_pass,Walk,4.8,Walk,renewable,1
 trn_pass,Cycle,15,Cycle,renewable,1

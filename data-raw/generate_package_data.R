@@ -418,6 +418,34 @@ LEVEL2_DATA_NAMES <- generate_level2_data_names()
 #' @author BBL
 GCAM_DATA_MAP <- driver(return_data_map_only = TRUE)
 
+#' PREBUILT_DATA
+#'
+#' A list of prebuilt data objects. These are used when the proprietary IEA
+#' energy data files are not available, and thus
+#' \code{\link{module_energy_LA100.IEA_downscale_ctry}} is not able to run.
+#' Its immediate downstream dependencies (currently, four chunks) then use the
+#' prebuilt versions of their outputs stored in this object.
+#' @author BBL
+PREBUILT_DATA <- driver(write_outputs = FALSE,
+                        write_xml = FALSE,
+                        return_data_names = c(
+                          # outputs of module_energy_LA101.en_bal_IEA
+                          "L101.en_bal_EJ_R_Si_Fi_Yh_full",
+                          "L101.en_bal_EJ_ctry_Si_Fi_Yh_full",
+                          "L101.in_EJ_ctry_trn_Fi_Yh",
+                          "L101.in_EJ_ctry_bld_Fi_Yh",
+
+                          # output of module_energy_LA111.rsrc_fos_Prod
+                          "L111.RsrcCurves_EJ_R_Ffos",
+
+                          # output of module_energy_LA118.hydro
+                          "L118.out_EJ_R_elec_hydro_Yfut",
+
+                          # outputs of module_energy_LA121.oil
+                          "L121.in_EJ_R_unoil_F_Yh",
+                          "L121.in_EJ_R_TPES_crude_Yh",
+                          "L121.in_EJ_R_TPES_unoil_Yh"
+                        ))
 
 # Save these objects for use as internal package data
-devtools::use_data(GCAM_DATA_MAP, LEVEL2_DATA_NAMES, overwrite = TRUE, internal = TRUE)
+devtools::use_data(GCAM_DATA_MAP, LEVEL2_DATA_NAMES, PREBUILT_DATA, overwrite = TRUE, internal = TRUE)

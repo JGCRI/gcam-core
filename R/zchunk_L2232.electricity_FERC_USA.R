@@ -428,8 +428,7 @@ module_gcam.usa_L2232.electricity_FERC_USA <- function(command, ...) {
                      "L123.out_EJ_state_ownuse_elec",
                      "L126.in_EJ_state_td_elec",
                      "L132.out_EJ_state_indchp_F",
-                     "L1232.out_EJ_sR_elec") %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+                     "L1232.out_EJ_sR_elec") ->
       L2232.Production_exports_USAelec
 
     L2232.Supplysector_elec_FERC %>%
@@ -514,8 +513,7 @@ module_gcam.usa_L2232.electricity_FERC_USA <- function(command, ...) {
       add_comments("Consumption equals to the sum of input to the elect_td sectors") %>%
       add_legacy_name("L2232.Production_imports_FERC") %>%
       same_precursors_as("L2232.TechCoef_elec_FERC") %>%
-      same_precursors_as("L2232.Production_exports_USAelec") %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+      same_precursors_as("L2232.Production_exports_USAelec") ->
       L2232.Production_imports_FERC
 
     L2232.Production_elec_gen_FERC %>%
@@ -530,8 +528,7 @@ module_gcam.usa_L2232.electricity_FERC_USA <- function(command, ...) {
       add_comments("Net own use is calculated as total generation minus net outputs") %>%
       add_legacy_name("L2232.Production_elec_gen_FERC") %>%
       same_precursors_as("L2232.TechCoef_elec_FERC") %>%
-      same_precursors_as("L2232.Production_exports_USAelec") %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+      same_precursors_as("L2232.Production_exports_USAelec") ->
       L2232.Production_elec_gen_FERC
 
     L2232.StubTechElecMarket_backup_USA %>%

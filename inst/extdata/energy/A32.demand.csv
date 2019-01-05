@@ -1,5 +1,7 @@
 # File: A32.demand.csv
 # Title: Industry demand perCapitaBased and price elasticity
 # Units: Unitless
+# Column types: cii 
+# ----------
 energy.final.demand,perCapitaBased,price.elasticity
 industry,1,-1

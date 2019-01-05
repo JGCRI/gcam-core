@@ -1,6 +1,8 @@
 # File: A54.tranSubsector_shrwt.csv
 # Title: Transportation default subsector shareweights
 # Units: Unitless
+# Column types: ccccn 
+# ----------
 supplysector,tranSubsector,year.fillout,year,share.weight
 trn_aviation_intl,International Aviation,start-year,,1
 trn_freight,Domestic Ship,start-year,,1

@@ -1,6 +1,8 @@
 # File: A321.globaltech_cost.csv
 # Title: Cement default costs (note: CCS cost not included here; calculated in data processing)
 # Units: 1975$/kg for supplysector cement; 1975$/GJ for supplysector process heat cement
+# Column types: ccccnn 
+# ----------
 supplysector,subsector,technology,minicam.non.energy.input,1971,2100
 cement,cement,cement,non-energy,0.005,0.005
 cement,cement,cement CCS,non-energy,0.005,0.005

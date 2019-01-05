@@ -1,15 +1,16 @@
 #' module_energy_LA1011.en_bal_adj
 #'
-#' Adjustments to the IEA energy balance for shipping fuel consumption, Russia, and natural gas total primary energy supply (TPES; i.e., consumption).
+#' Adjustments to the IEA energy balance for shipping fuel consumption, Russia, and natural
+#' gas total primary energy supply (TPES; i.e., consumption).
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L1011.en_bal_EJ_R_Si_Fi_Yh}, \code{L1011.in_EJ_ctry_intlship_TOT_Yh}. The corresponding file in the
-#' original data system was \code{LA1011.en_bal_adj.R} (energy level1).
-#' @details This chunk replaces IEA international shipping fuel consumption estimates with EIA estimates, remaps USSR data to Russia,
-#' and removes coal-to-gas from natural gas TPES
+#' the generated outputs: \code{L1011.en_bal_EJ_R_Si_Fi_Yh}, \code{L1011.in_EJ_ctry_intlship_TOT_Yh}. The
+#' corresponding file in the original data system was \code{LA1011.en_bal_adj.R} (energy level1).
+#' @details This chunk replaces IEA international shipping fuel consumption estimates with EIA estimates,
+#' remaps USSR data to Russia, and removes coal-to-gas from natural gas TPES.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -28,7 +29,7 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
              "L1011.in_EJ_ctry_intlship_TOT_Yh"))
   } else if(command == driver.MAKE) {
 
-    # silence package check
+    # Silence package check
     technology <- minicam.energy.input <- sector <-
       fuel <- supplysector <- subsector <- GCAM_region_ID <- iso <- value.x <-
       year <- value <- Country <- value_TOT <- value_diff <- value_RFO <- value.y <- NULL
@@ -54,8 +55,8 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
     # ===================================================
 
     # MODIFICATIONS TO IEA ENERGY BALANCES
-    # Replacing IEA estimates of international shipping fuel consumption with EIA estimates (former is known
-    # by emissions modeling community as being too low)
+    # Replacing IEA estimates of international shipping fuel consumption with EIA estimates
+    # (former is known by emissions modeling community as being too low)
     # First, convert available data to EJ per year of total refined liquid products
     EIA_RFO_intlship_kbbld %>%
       filter(year %in% HISTORICAL_YEARS) %>%
@@ -87,8 +88,9 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
       select(Country, year, value) -> L1011.in_EJ_ctry_intlship_TOT_Yh
 
     # Several countries blink in and out of the time series.
-    # After 2005, Russia's shipping energy use drops off (mostly from RFO); holding constant at 2005 value
-    # because we know this is not acurate, and Russia is a large percent of global shipping fuel
+    # After 2005, Russia's shipping energy use drops off (mostly from RFO);
+    # holding constant at 2005 value because we know this is not acurate, and
+    # Russia is a large percent of global shipping fuel
     L1011.in_EJ_ctry_intlship_TOT_Yh %>%
       replace_na(list(value=0)) -> L1011.in_EJ_ctry_intlship_TOT_Yh
 
@@ -146,9 +148,12 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
       rename(value = value.x) %>%
       select(GCAM_region_ID, sector, fuel, year, value) -> L1011.en_bal_EJ_R_Si_Fi_Yh
 
-    # This is complicated. Because the output of "gas works gas" that is produced from coal is not distinguished from that produced by other fuels,
-    # the process is modeled based on the fuel inputs, and the output fuel is assigned the same name as natural gas. As a result the estimates of
-    # TPES at this point for natural gas include both natural gas and gasified coal. This subtraction generally follows the method used in code file L122.
+    # This is complicated. Because the output of "gas works gas" that is produced from coal is not
+    # distinguished from that produced by other fuels, the process is modeled based on the fuel
+    # inputs, and the output fuel is assigned the same name as natural gas. As a result the estimates
+    # of TPES at this point for natural gas include both natural gas and gasified coal. This
+    # subtraction generally follows the method used in code file L122.
+
     # Heat production from district heat sector
     A22.globaltech_coef %>%
       gather_years %>%
@@ -179,11 +184,13 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
       left_join(L1011.out_EJ_R_gasproc_coal_Yh, by = c("GCAM_region_ID", "sector", "fuel", "year"))%>%
       mutate(value.x = if_else(is.na(value.y), value.x, value.x - value.y)) %>%
       rename(value = value.x) %>%
-      select(GCAM_region_ID, sector, fuel, year, value)-> L1011.en_bal_EJ_R_Si_Fi_Yh
+      select(GCAM_region_ID, sector, fuel, year, value) -> L1011.en_bal_EJ_R_Si_Fi_Yh
 
-    # This is also complicated. In regions with very low natural gas use and high coal-to-gas with very high input-output coefs on coal-to-gas production
-    # (South Africa), dividing the coal input by the IO coef may cause gas production in excess of the demands in the region.
-    # If this is the case, need to return to original energy balance data and reduce the coal input to gas works (can re-allocate to another sector if desired)
+    # This is also complicated. In regions with very low natural gas use and high coal-to-gas with very
+    # high input-output coefs on coal-to-gas production (South Africa), dividing the coal input by the
+    # IO coef may cause gas production in excess of the demands in the region. If this is the case,
+    # need to return to original energy balance data and reduce the coal input to gas works (can
+    # re-allocate to another sector if desired)
 
     if(nrow(filter(L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "TPES", fuel == "gas", value < 0)) > 0) {
       stop("Exogenous IO coef on coal input to gas works caused an increase in natural gas beyond the regional TPES of gas")

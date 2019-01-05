@@ -5,6 +5,7 @@
 # Description: Initialization of harvested area (ha) by country/GLU/crop
 # Original source: many, including HYDE and SAGE
 # Source: https://github.com/JGCRI/moirai
+# Column types: cici 
 # ----------
 ctry_iso,glu_code,SAGE_crop,value
 afg,52,Barley,22868

@@ -3,6 +3,8 @@
 # Units: Coefficient = liter of service water per animal per day (litre/day)
 # Comments: NA
 #Source: Mekonnen and Hoekstra 2010. The Green, Blue and Grey Water Footprint of Farm Animals and Animal Products. Vol 2: Appendiecs. Table Appendix IV. Drinking and service water footprint per animal (litre/day). Sum of Drinking and Service Weighted average of Grazing, Mixed and Industrial.,
+# Column types: cn 
+# ----------
 Animal,Coefficient
 Beef cattle,34.1
 Dairy cattle,64

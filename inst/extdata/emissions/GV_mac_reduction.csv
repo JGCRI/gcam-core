@@ -2,6 +2,8 @@
 # Title: Mapping for tax and mac reduction for Guus Velders data
 # Units: 1990 USD
 # Source: Unknown
+# Column types: ii 
+# ----------
 tax,GV_year
 0,0
 10,2020

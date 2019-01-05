@@ -448,7 +448,6 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       add_comments("Exclude forest and pasture") %>%
       add_legacy_name("L2012.AgHAtoCL_irr_mgmt") %>%
       same_precursors_as("L2012.AgProduction_ag_irr_mgmt") %>%
-      add_flags(FLAG_PROTECT_FLOAT) %>%
       add_precursors("L122.ag_HA_to_CropLand_R_Y_GLU") ->
       L2012.AgHAtoCL_irr_mgmt
 
@@ -467,8 +466,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
                      "L113.ag_bioYield_GJm2_R_GLU",
                      "L163.ag_irrBioYield_GJm2_R_GLU",
                      "L163.ag_rfdBioYield_GJm2_R_GLU",
-                     "L181.YieldMult_R_bio_GLU_irr") %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+                     "L181.YieldMult_R_bio_GLU_irr") ->
       L2012.AgYield_bio_ref
 
     L201.AgYield_bio_grass %>%
@@ -478,8 +476,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       add_legacy_name("L201.AgYield_bio_grass") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
-                     "L113.ag_bioYield_GJm2_R_GLU") %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+                     "L113.ag_bioYield_GJm2_R_GLU") ->
       L201.AgYield_bio_grass
 
     L201.AgYield_bio_tree %>%
@@ -489,8 +486,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       add_comments("If data is missing for a region/basin, use the minimum yield") %>%
       add_legacy_name("L201.AgYield_bio_tree") %>%
       same_precursors_as("L201.AgYield_bio_grass") %>%
-      same_precursors_as("L2012.AgSupplySubsector") %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+      same_precursors_as("L2012.AgSupplySubsector") ->
       L201.AgYield_bio_tree
 
     return_data(L2012.AgSupplySector, L2012.AgSupplySubsector, L2012.AgProduction_ag_irr_mgmt, L2012.AgProduction_For, L2012.AgProduction_Past, L2012.AgHAtoCL_irr_mgmt, L2012.AgYield_bio_ref, L201.AgYield_bio_grass, L201.AgYield_bio_tree)

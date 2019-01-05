@@ -3,6 +3,8 @@
 # Units: tonnes
 # Source: 2007 IPCC AR4 p212 
 # Description: The global warming potential of Fgases over a 100-year time horizon
+# Column types: cci 
+# ----------
 Gas,HFC_PFC,GWP
 C2F6,PFC,12200
 CF4,PFC,7390

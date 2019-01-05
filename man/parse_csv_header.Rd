@@ -4,14 +4,14 @@
 \alias{parse_csv_header}
 \title{parse_csv_header}
 \usage{
-parse_csv_header(obj, filename, n = 20, enforce_requirements = TRUE)
+parse_csv_header(obj, filename, header, enforce_requirements = TRUE)
 }
 \arguments{
 \item{obj}{The object to attach attributes to}
 
 \item{filename}{Fully-qualified filename}
 
-\item{n}{Number of lines to read from the beginning of the file}
+\item{header}{A vector of strings comprising the file header}
 
 \item{enforce_requirements}{Enforce mandatory fields?}
 }

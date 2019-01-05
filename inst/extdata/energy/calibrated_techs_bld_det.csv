@@ -1,6 +1,8 @@
 # File: calibrated_techs_bld_det.csv
 # Title: Mapping between intermediate sectors and fuels to the techs in buildings
 # Units: NA
+# Column types: cccccccccc 
+# ----------
 sector,fuel,service,supplysector,subsector,technology,minicam.energy.input,gcam.consumer,nodeInput,building.node.input
 bld_resid,biomass,resid heating,resid heating,biomass,biomass,delivered biomass,resid,resid,resid_building
 bld_resid,coal,resid heating,resid heating,coal,coal,delivered coal,resid,resid,resid_building

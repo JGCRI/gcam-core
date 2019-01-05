@@ -1,6 +1,7 @@
 # File: Various_VegC_tCha_LTsage_AEZ.csv
 # Description: Assumed vegetationcarbon content by land use type and AEZ (MgC.ha)
 # Original source: listed in table
+# Column types: ciiiiniiiiiniiiiinic 
 # ----------
 LT_SAGE,AEZ01,AEZ02,AEZ03,AEZ04,AEZ05,AEZ06,AEZ07,AEZ08,AEZ09,AEZ10,AEZ11,AEZ12,AEZ13,AEZ14,AEZ15,AEZ16,AEZ17,AEZ18,Source
 Tropical Evergreen Forest/Woodland,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,200,"Houghton 1999, tropical equatorial forest"

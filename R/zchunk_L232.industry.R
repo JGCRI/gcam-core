@@ -414,7 +414,7 @@ module_energy_L232.industry <- function(command, ...) {
       right_join(L232.indenergy_fuel_shares, by = c("region", "GCAM_region_ID", "supplysector", "year")) %>%
       rename(total = value.x,
              value = value.y) %>%
-      mutate(share = value/total) %>%
+      mutate(share = value / total) %>%
       filter(year == max(MODEL_BASE_YEARS)) %>%
       mutate(fuelprefElasticity = 0) ->
       L232.indenergy_fuel_shares

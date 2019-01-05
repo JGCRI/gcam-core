@@ -1,6 +1,8 @@
 # File: A42.globaltech_eff.csv
 # Title: Aggregate building default efficiencies
 # Units: Unitless
+# Column types: ccccnnnnnnnnn 
+# ----------
 supplysector,subsector,technology,minicam.energy.input,1971,2005,2020,2035,2050,2065,2080,2095,2100
 building,biomass,biomass,delivered biomass,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3
 building,coal,coal,delivered coal,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3

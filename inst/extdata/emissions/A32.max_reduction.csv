@@ -2,6 +2,8 @@
 # Title: Maximum emissions reduction for energy technologies in all regions,
 # Units: Percent reduction from base-year emissions coefficient,
 # Source: Internal GCAM assumptions; sulfur reductions based on Smith et al. 2005. Climatic Change
+# Column types: ccciiiiii 
+# ----------
 supplysector,subsector,stub.technology,SO2,NOx,CO,BC,OC,NMVOC
 urban processes,landfills,landfills,50,80,80,30,30,60
 urban processes,wastewater treatment,wastewater treatment,,,,,,

@@ -1,6 +1,8 @@
 # File: IEA_sector_fuel_modifications.csv
 # Title: Mapping sectors and fuels
 # Units: n/a
+# Column types: ccccn 
+# ----------
 sector_initial,fuel_initial,sector,fuel,conversion
 in_electricity generation,electricity,,,
 in_electricity generation,heat,,,

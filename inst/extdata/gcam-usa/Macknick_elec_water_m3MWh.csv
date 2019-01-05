@@ -2,6 +2,8 @@
 # Title: Water withdrawals and consumption for electricity generation
 # Units: m^3/MWh
 # Source: Macknick et al. (2011) A review of operational water consumption and withdrawal factors for electricity generating technologies; IEA Greenhouse Gas R&D Programme
+# Column types: cccccnn 
+# ----------
 sector,fuel,technology,cooling_system,water_type,water_withdrawals,water_consumption
 electricity generation,biomass,biomass (conv),dry cooling,fresh,0,0
 electricity generation,biomass,biomass (conv),once through,fresh,152.36,1.14

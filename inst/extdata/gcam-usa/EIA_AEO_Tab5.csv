@@ -2,6 +2,8 @@
 # Title: Floorspace and building energy consumption
 # Units: In file
 # Source: Table 5 of the Annual Energy Outlook from 1999-2010 base years (2002-2013 editions)
+# Column types: ccccnnnnnnnnnnnn 
+# ----------
 variable,unit,fuel,service,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010
 Floorspace,Billion square feet,,,63.06753159,68.5,70.22344208,70.91719818,73.67056274,72.98784637,73.76942444,75.77220154,77.3,78.788895,80.253853,81.146553
 Energy Consumption,Quadrillion Btu,Purchased Electricity,Space Heating,0.140798271,0.15,0.144274965,0.142934889,0.152178451,0.166785926,0.142490223,0.158369228,0.167233,0.179185,0.181085,0.177032

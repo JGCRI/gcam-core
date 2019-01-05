@@ -2,6 +2,8 @@
 # Title: Primary energy transformation technology capture fractions
 # Units: fractions
 # Description: Fraction of CO2 captured by transformation technologies
+# Column types: cccnn 
+# ----------
 supplysector,subsector,technology,1971,2100
 refining,coal to liquids,coal to liquids CCS level 1,0.818,0.818
 refining,coal to liquids,coal to liquids CCS level 2,0.9,0.9

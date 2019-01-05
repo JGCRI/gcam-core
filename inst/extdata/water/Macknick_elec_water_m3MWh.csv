@@ -3,6 +3,8 @@
 # Units: m^3/MWh
 # Source: original GCAM water-electricity workbooks. Many values from Macknick et al and IEAGHG
 # Comment: March 2015 update: dry cooling coefs set to 10% of recirculating instead of 0
+# Column types: cccccnn 
+# ----------
 sector,fuel,technology,cooling_system,water_type,water_withdrawals,water_consumption
 electricity generation,biomass,biomass (conv),cooling pond,fresh,3.32,2.09
 electricity generation,biomass,biomass (conv),dry cooling,fresh,0.332,0.209

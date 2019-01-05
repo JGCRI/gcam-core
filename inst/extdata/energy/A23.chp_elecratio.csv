@@ -2,6 +2,8 @@
 # Title: Assumed CHP electricity output per unit fuel input
 # Units: Unitless (EJ/EJ)
 # Source: None (GCAM assumptions)
+# Column types: cn 
+# ----------
 fuel,elec_ratio
 biomass,0.2
 coal,0.25

@@ -3,6 +3,8 @@
 # Units: NA
 # Description: form of interpolation function to calculate shareweights for future years for final energy delivery subsectors
 # Source: NA
+# Column types: ccccccc 
+# ----------
 supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
 delivered biomass,delivered biomass,share-weight,final-calibration-year,end-year,,linear
 delivered coal,delivered coal,share-weight,final-calibration-year,end-year,,linear
