@@ -110,6 +110,10 @@ test_that("matches old data system output", {
         expect_equivalent(round_df(olddata), round_df(newdata), info = paste(basename(newf), "doesn't match"))
       }
     }
+    # Explicitly clean up COMPDATA as it uses a lot of memory and gets loaded into the
+    # Global environment
+    rm(COMPDATA, envir = .GlobalEnv)
+    gc()
   }
 })
 
