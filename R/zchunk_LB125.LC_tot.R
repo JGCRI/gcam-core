@@ -138,8 +138,7 @@ module_aglu_LB125.LC_tot <- function(command, ...) {
       add_units("billion square meters (bm2)") %>%
       add_comments("Aggregated Land area by GCAM region x GLU") %>%
       add_legacy_name("L125.LC_bm2_R_GLU") %>%
-      same_precursors_as(L125.LC_bm2_R) %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+      same_precursors_as(L125.LC_bm2_R) ->
       L125.LC_bm2_R_GLU
 
     L125.LC_bm2_R_LT_Yh_GLU %>%
@@ -147,8 +146,7 @@ module_aglu_LB125.LC_tot <- function(command, ...) {
       add_units("billion square meters (bm2)") %>%
       add_comments("Data was read in from multiple data sources for each land cover type") %>%
       add_legacy_name("L125.LC_bm2_R_LT_Yh_GLU") %>%
-      same_precursors_as(L125.LC_bm2_R) %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+      same_precursors_as(L125.LC_bm2_R) ->
       L125.LC_bm2_R_LT_Yh_GLU
 
     return_data(L125.LC_bm2_R, L125.LC_bm2_R_GLU, L125.LC_bm2_R_LT_Yh_GLU)

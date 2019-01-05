@@ -87,8 +87,7 @@ module_gcam.usa_LA101.EIA_SEDS <- function(command, ...) {
       add_comments("GCAM sector and fuel names were added, NAs for years 1971-1979 were replaced with most recent year's data available") %>%
       add_legacy_name("L101.EIA_use_all_Bbtu") %>%
       add_precursors("gcam-usa/EIA_use_all_Bbtu", "gcam-usa/EIA_SEDS_fuels",
-                     "gcam-usa/EIA_SEDS_sectors") %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+                     "gcam-usa/EIA_SEDS_sectors") ->
       L101.EIA_use_all_Bbtu
 
     L101.inEIA_EJ_state_S_F %>%

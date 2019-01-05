@@ -4,6 +4,8 @@
 # Comments: maximum lifetime of cohort. If no retirement function is used; the entire cohort is retired in this number of years.
 # half.life: number of years at which 50% of the cohort is retired; using the s-curve-shutdown-decider retirement function.
 # steepness: shape parameter used by the s-curve-shutdown-decider retirement function.
+# Column types: cccciin 
+# ----------
 supplysector,tranSubsector,tranTechnology,year,lifetime,half.life,steepness
 trn_freight_road,Truck,Liquids,final-calibration-year,40,25,0.124
 trn_freight_road,Truck,NG,final-calibration-year,40,25,0.124

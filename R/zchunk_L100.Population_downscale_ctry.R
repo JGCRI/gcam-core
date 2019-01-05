@@ -207,8 +207,7 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
       add_units("thousand") %>%
       add_comments("Future population calculated as final historical year (2010) population times ratio of SSP future years to SSP 2010") %>%
       add_legacy_name("L100.Pop_thous_SSP_ctry_Yfut") %>%
-      add_precursors("socioeconomics/socioeconomics_ctry", "socioeconomics/SSP_database_v9", "socioeconomics/UN_popTot") %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+      add_precursors("socioeconomics/socioeconomics_ctry", "socioeconomics/SSP_database_v9", "socioeconomics/UN_popTot") ->
       L100.Pop_thous_SSP_ctry_Yfut
 
     return_data(L100.Pop_thous_ctry_Yh, L100.Pop_thous_SSP_ctry_Yfut)

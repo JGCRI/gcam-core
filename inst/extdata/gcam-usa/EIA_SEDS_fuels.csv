@@ -1,6 +1,8 @@
 # File: EIA_SEDS_fuels.csv
 # Title: Convert EIA_fuel code to GCAM_fuel name
 # Units: NA
+# Column types: ccc 
+# ----------
 EIA_fuel,GCAM_fuel,description
 AB,refined liquids,aviation gasoline blending components
 AR,refined liquids (const feed),asphalt and road oil

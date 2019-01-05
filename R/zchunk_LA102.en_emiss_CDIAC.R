@@ -136,8 +136,7 @@ module_energy_LA102.en_emiss_CDIAC <- function(command, ...) {
       add_units("MtC") %>%
       add_comments("Aggregated from CDIAC country emissions database") %>%
       add_legacy_name("L102.CO2_Mt_R_F_Yh") %>%
-      add_precursors("L100.CDIAC_CO2_ctry_hist", "common/iso_GCAM_regID", "emissions/mappings/CDIAC_fuel") %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+      add_precursors("L100.CDIAC_CO2_ctry_hist", "common/iso_GCAM_regID", "emissions/mappings/CDIAC_fuel") ->
       L102.CO2_Mt_R_F_Yh
 
     L102.Ccoef_kgCGJ_R_F_Yh %>%

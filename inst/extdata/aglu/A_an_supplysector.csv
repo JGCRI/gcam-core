@@ -2,6 +2,7 @@
 # Title: Supplysectors of animal production
 # Units: Various
 # Source: NA
+# Column types: ccccic 
 # ----------
 supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.type
 Beef,Mt,Mt,1975$/kg,-3,

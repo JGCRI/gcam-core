@@ -1,6 +1,8 @@
 # File: A44.fuelprefElasticity.csv
 # Title: Fuel preference elasticities for building energy use
 # Units: Unitless
+# Column types: ccn 
+# ----------
 supplysector,subsector,fuelprefElasticity
 resid heating,biomass,-1
 resid heating,coal,-0.7

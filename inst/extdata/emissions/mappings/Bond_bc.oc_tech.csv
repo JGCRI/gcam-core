@@ -2,6 +2,8 @@
 # Title: Mapping between Bond etal BC OC emissions data technology/fuel combinations to GCAM sectors and technology/fuel categories
 # Units: None
 # Source: NA
+# Column types: ccc 
+# ----------
 BCOC.Technology,sector,technology
 Elec_Coal,electricity generation,coal (conv pul)
 Elec_Gas,electricity generation,gas (steam/CT)

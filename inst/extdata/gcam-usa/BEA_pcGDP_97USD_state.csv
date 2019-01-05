@@ -2,6 +2,8 @@
 # Title: GDP by State and Industry, NAICS, Per Capita Real GDP
 # Units: Chained 1997 US Dollars per capita
 # Source: Bureau of Economic Analysis, Per Capita Real GDP, SIC (1963-1997), All Areas, All Years. URL: http://www.bea.gov/iTable/iTableHtml.cfm?reqid=70&step=10&isuri=1&7003=1000&7035=-1&7004=sic&7022=10&7005=1&7023=7&7006=xx&7036=-1&7001=11000&7002=1&7090=70&7007=-1&7093=levels
+# Column types: iccccccccccccccccccccccccciiiiiiiiiii 
+# ----------
 Fips,Area,1963,1964,1965,1966,1967,1968,1969,1970,1971,1972,1973,1974,1975,1976,1977,1978,1979,1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997
 1000,Alabama,,,,,,,,,,,,,,,,,,,,,,,,,19590,20505,20447,20683,21008,21621,21633,22253,22813,23407,23994
 2000,Alaska,,,,,,,,,,,,,,,,,,,,,,,,,54747,51373,52974,52002,45285,44418,43454,43407,45678,44812,44996

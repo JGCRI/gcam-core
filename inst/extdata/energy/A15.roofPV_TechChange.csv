@@ -1,5 +1,7 @@
 # File: A15.roofPV_TechChange.csv
 # Title: GCAM 3.0 rooftop PV techChange
 # Units: Unitless
+# Column types: ccnnnnnn 
+# ----------
 resource,subresource,2010,2025,2040,2055,2070,2085
 distributed_solar,distributed_solar,0.0308,0.0234,0.0183,0.0149,0.0056,0.004

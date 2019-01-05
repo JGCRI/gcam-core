@@ -1,6 +1,8 @@
 # File: EDGAR_sector.csv
 # Title: Mapping file from IPCC to agg sector
 # Units: NA
+# Column types: ccc 
+# ----------
 IPCC,IPCC_description,agg_sector
 1A1a,Public electricity and heat production,elec_heat
 1A1bc,Other Energy Industries,industry_energy

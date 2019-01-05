@@ -1,6 +1,8 @@
 # File: A44.demand_satiation_mult.csv
 # Title: Assumed increase in demand of services in USA
 # Units: Increase in demand per unit floorspace
+# Column types: cn 
+# ----------
 supplysector,multiplier
 resid heating,1.1
 resid cooling,1.1

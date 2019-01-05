@@ -1,6 +1,8 @@
 # File: A44.globaltech_cost.csv
 # Title: Building technology costs
 # Units: 1975$/GJ
+# Column types: cccnnnnnnnnnn 
+# ----------
 supplysector,subsector,technology,1971,1990,2005,2020,2035,2050,2065,2080,2095,2100
 resid heating,biomass,wood furnace,1.355,1.355,1.355,1.335,1.315,1.295,1.276,1.257,1.238,1.238
 resid heating,coal,coal furnace,1.355,1.355,1.355,1.335,1.315,1.295,1.276,1.257,1.238,1.238

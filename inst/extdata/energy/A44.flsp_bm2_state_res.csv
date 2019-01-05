@@ -2,6 +2,8 @@
 # Title: Residential floorspace by state
 # Units: Billion m2
 # Source: Written by LA144.Residential.R from an earlier version of GCAM-USA
+# Column types: ccnnnnnnnn 
+# ----------
 state,GCAM_sector,X1975,X1980,X1985,X1990,X1995,X2000,X2005,X2008
 AK,resid,0.016511463,0.017638695,0.023373133,0.025056271,0.031061588,0.028666902,0.033803802,0.034744822
 AL,resid,0.187704553,0.198678299,0.202690502,0.239626661,0.238851907,0.277766912,0.254976858,0.262405328

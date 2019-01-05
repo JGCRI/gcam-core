@@ -1,6 +1,8 @@
 # File: A31.globaltech_eff.csv
 # Title: Industrial Processing Technology Efficiencies
 # Units: Unknown
+# Column types: cccciiiiiiiii 
+# ----------
 supplysector,subsector,technology,minicam.energy.input,1971,2005,2020,2035,2050,2065,2080,2095,2100
 urban processes,landfills,landfills,misc emissions sources,1,1,1,1,1,1,1,1,1
 urban processes,wastewater treatment,wastewater treatment,misc emissions sources,1,1,1,1,1,1,1,1,1

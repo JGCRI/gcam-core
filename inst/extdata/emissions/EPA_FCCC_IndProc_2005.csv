@@ -2,6 +2,8 @@
 # Title: Sectoral Report for total industrial energy emissions
 # Units: Gg
 # Source: GCAM3
+# Column types: ccnnnnnnnnnn 
+# ----------
 EPA_Source_Category_Raw,Source_Category,CO2,CH4,N2O,HFCs,PFCs,SF6,NOx,CO,NMVOC,SO2
 Total Industrial Processes,,146825.25,97.32,69.91,140066.16,6107.35,0.7,534.77,1771.71,1817.65,773.85
 A.  Mineral Products,A.  Mineral Products,71195.18,,,,,,,,,

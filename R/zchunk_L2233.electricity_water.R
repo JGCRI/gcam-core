@@ -588,7 +588,8 @@ module_water_L2233.electricity_water <- function(command, ...) {
                                       -from.supplysector, -from.subsector, -from.technology, -minicam.energy.input),
                                by = c("sector", "fuel", "technology", "cooling_system", "water_type", "plant_type")) %>%
       rename(supplysector = to.supplysector, subsector = to.subsector, stub.technology = to.technology) %>%
-      mutate(share.weight.year = year) %>% mutate(calOutputValue = round(calOutputValue, 7)) ->
+      mutate(share.weight.year = year,
+             calOutputValue = round(calOutputValue, 7)) ->
       L2233.out_EJ_R_elec_F_tech_Yh_cool
 
     L2233.out_EJ_R_elec_F_tech_Yh_cool %>%

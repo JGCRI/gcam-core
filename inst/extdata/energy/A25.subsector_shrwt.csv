@@ -1,6 +1,8 @@
 # File: A25.subsector_shrwt.csv
 # Title: Hydrogen subsector shareweights
 # Units: Unitless
+# Column types: cccci 
+# ----------
 supplysector,subsector,year.fillout,year,share.weight
 H2 central production,coal,start-year,,0
 H2 central production,gas,start-year,,0

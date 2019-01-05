@@ -18,7 +18,6 @@ module_energy_LA118.hydro <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "energy/Hydropower_potential",
-             FILE = "energy/prebuilt_data/L118.out_EJ_R_elec_hydro_Yfut",
              "L100.IEA_en_bal_ctry_hist",
              FILE = "energy/A18.hydro_output"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -37,9 +36,7 @@ module_energy_LA118.hydro <- function(command, ...) {
     # without the proprietary IEA data files). If this is the case, we substitute a
     # pre-built output dataset and exit.
     if(is.null(L100.IEA_en_bal_ctry_hist)) {
-      get_data(all_data, "energy/prebuilt_data/L118.out_EJ_R_elec_hydro_Yfut") %>%
-        add_comments("** PRE-BUILT; RAW IEA DATA NOT AVAILABLE **") ->
-        L118.out_EJ_R_elec_hydro_Yfut
+      L118.out_EJ_R_elec_hydro_Yfut <- prebuilt_data("L118.out_EJ_R_elec_hydro_Yfut")
     } else {
       L100.IEA_en_bal_ctry_hist %>%
         gather_years ->
@@ -216,20 +213,22 @@ module_energy_LA118.hydro <- function(command, ...) {
         select(GCAM_region_ID, sector, fuel, year, value) %>%
         add_title("L118.out_EJ_R_elec_hydro_Yfut") ->
         L118.out_EJ_R_elec_hydro_Yfut
-    }
 
-    # ===================================================
+      # ===================================================
 
-    L118.out_EJ_R_elec_hydro_Yfut %>%
-      add_units("EJ") %>%
-      add_comments("Hydro potential was determined using various proxies") %>%
-      add_comments("In most cases, a growth potential for each country was calculated,
+      L118.out_EJ_R_elec_hydro_Yfut %>%
+        add_units("EJ") %>%
+        add_comments("Hydro potential was determined using various proxies") %>%
+        add_comments("In most cases, a growth potential for each country was calculated,
                    multiplied by its share in the region, and added to the base-year ouput") %>%
-      add_legacy_name("L118.out_EJ_R_elec_hydro_Yfut") %>%
-      add_precursors("common/iso_GCAM_regID", "energy/Hydropower_potential",
-                     "L100.IEA_en_bal_ctry_hist", "energy/A18.hydro_output",
-                     "energy/prebuilt_data/L118.out_EJ_R_elec_hydro_Yfut") ->
-      L118.out_EJ_R_elec_hydro_Yfut
+        add_legacy_name("L118.out_EJ_R_elec_hydro_Yfut") %>%
+        add_precursors("common/iso_GCAM_regID", "energy/Hydropower_potential",
+                       "L100.IEA_en_bal_ctry_hist", "energy/A18.hydro_output") ->
+        L118.out_EJ_R_elec_hydro_Yfut
+
+      # At this point output should be identical to the prebuilt version
+      verify_identical_prebuilt(L118.out_EJ_R_elec_hydro_Yfut)
+    }
 
     return_data(L118.out_EJ_R_elec_hydro_Yfut)
   } else {

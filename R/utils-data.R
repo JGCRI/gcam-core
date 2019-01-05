@@ -236,7 +236,7 @@ return_data <- function(...) {
     # check for them
     if(is_tibble(dots[[dname]])) {
       assert_that(is.null(groups(dots[[dname]])), msg =
-        paste0(dname, " is being returned grouped. This is not allowed; please ungroup()"))
+                    paste0(dname, " is being returned grouped. This is not allowed; please ungroup()"))
     }
   })
   dots
@@ -263,7 +263,7 @@ add_data <- function(data_list, all_data) {
   assert_that(is_data_list(all_data))
 
   for(d in names(data_list)) {
-      all_data[[d]] <- data_list[[d]]
+    all_data[[d]] <- data_list[[d]]
   }
   all_data
 }
@@ -298,4 +298,46 @@ remove_data <- function(data_list, all_data) {
 #' @details Currently a data_list is just a list.
 is_data_list <- function(data_list) {
   is.list(data_list)
+}
+
+
+#' prebuilt_data
+#'
+#' Extract a prebuilt data object from the PREBUILT_DATA store.
+#'
+#' @param object_name The name of the desired object, character
+#' @param pb \code{PREBUILT_DATA} object; overridden only for testing
+#' @return The data object (a tibble).
+prebuilt_data <- function(object_name, pb = PREBUILT_DATA) {
+  if(object_name %in% names(pb)) {
+    pb[[object_name]] %>%
+      add_comments("** PRE-BUILT; RAW IEA DATA NOT AVAILABLE **")
+  } else {
+    NULL
+  }
+}
+
+
+#' verify_identical_prebuilt
+#'
+#' Check whether objects are identical to their prebuilt versions.
+#'
+#' @param ... The objects
+#' @param pb \code{PREBUILT_DATA} object; overridden only for testing
+#' @note Called primarily for its side effects: a warning is issued for each non-identical object.
+#' @return A logical indicating whether a mismatch occurred.
+verify_identical_prebuilt <- function(..., pb = PREBUILT_DATA) {
+  dots <- list(...)
+  names(dots) <- as.list(substitute(list(...)))[-1L]
+  mismatch <- FALSE
+  for(i in seq_along(dots)) {
+    if(!isTRUE(all.equal(dots[[i]], pb[[names(dots)[i]]]))) {
+      warning(names(dots)[i], " is not the same as its prebuilt version")
+      mismatch <- TRUE
+    }
+  }
+  if(mismatch) {
+    warning("Re-run generate_package_data.R to rebuild package data")
+  }
+  invisible(mismatch)
 }

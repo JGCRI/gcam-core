@@ -3,6 +3,8 @@
 # Units: NA,
 # Description: Mapping between iso codes and country names in GIS data,
 # Reference: Unknown,
+# Column types: cc 
+# ----------
 country,iso
 Russia,rus
 Canada,can

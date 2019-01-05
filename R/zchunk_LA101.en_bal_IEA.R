@@ -22,10 +22,6 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
              FILE = "energy/IEA_product_fuel",
              FILE = "energy/IEA_sector_fuel_modifications",
              FILE = "energy/enduse_fuel_aggregation",
-             FILE = "energy/prebuilt_data/L101.en_bal_EJ_R_Si_Fi_Yh_full",
-             FILE = "energy/prebuilt_data/L101.en_bal_EJ_ctry_Si_Fi_Yh_full",
-             FILE = "energy/prebuilt_data/L101.in_EJ_ctry_trn_Fi_Yh",
-             FILE = "energy/prebuilt_data/L101.in_EJ_ctry_bld_Fi_Yh",
              "L100.IEA_en_bal_ctry_hist"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L101.en_bal_EJ_R_Si_Fi_Yh_full",
@@ -54,20 +50,10 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
     # pre-built output datasets and exit.
     if(is.null(L100.IEA_en_bal_ctry_hist)) {
       # Proprietary IEA energy data are not available, so used saved outputs
-      warning_comment <- "** PRE-BUILT; RAW IEA DATA NOT AVAILABLE **"
-      get_data(all_data, "energy/prebuilt_data/L101.en_bal_EJ_R_Si_Fi_Yh_full") %>%
-        add_comments(warning_comment) ->
-        L101.en_bal_EJ_R_Si_Fi_Yh_full
-      get_data(all_data, "energy/prebuilt_data/L101.en_bal_EJ_ctry_Si_Fi_Yh_full") %>%
-        add_comments(warning_comment) ->
-        L101.en_bal_EJ_ctry_Si_Fi_Yh_full
-      get_data(all_data, "energy/prebuilt_data/L101.in_EJ_ctry_trn_Fi_Yh") %>%
-        add_comments(warning_comment) ->
-        L101.in_EJ_ctry_trn_Fi_Yh
-      get_data(all_data, "energy/prebuilt_data/L101.in_EJ_ctry_bld_Fi_Yh") %>%
-        add_comments(warning_comment) ->
-        L101.in_EJ_ctry_bld_Fi_Yh
-
+      L101.en_bal_EJ_R_Si_Fi_Yh_full <- prebuilt_data("L101.en_bal_EJ_R_Si_Fi_Yh_full")
+      L101.en_bal_EJ_ctry_Si_Fi_Yh_full <- prebuilt_data("L101.en_bal_EJ_ctry_Si_Fi_Yh_full")
+      L101.in_EJ_ctry_trn_Fi_Yh <- prebuilt_data("L101.in_EJ_ctry_trn_Fi_Yh")
+      L101.in_EJ_ctry_bld_Fi_Yh <- prebuilt_data("L101.in_EJ_ctry_bld_Fi_Yh")
     } else {
 
       # Add IEA data to main tibble (lines 35-46 in original file)
@@ -235,7 +221,6 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
         bind_rows(L101.in_EJ_ctry_TPES_Fi_Yh) %>%
         add_title("Energy balances by country / GCAM region / intermediate sector / intermediate fuel / historical year") ->
         L101.en_bal_EJ_ctry_Si_Fi_Yh_full
-    }
 
     ###############################################################################################################
     L101.en_bal_EJ_R_Si_Fi_Yh_full %>%
@@ -244,33 +229,36 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
       add_legacy_name("L101.en_bal_EJ_R_Si_Fi_Yh_full") %>%
       add_precursors("common/iso_GCAM_regID", "energy/A_regions", "energy/IEA_flow_sector", "energy/IEA_product_fuel",
                      "energy/IEA_sector_fuel_modifications", "energy/enduse_fuel_aggregation",
-                     "L100.IEA_en_bal_ctry_hist",
-                     "energy/prebuilt_data/L101.en_bal_EJ_R_Si_Fi_Yh_full") ->
+                     "L100.IEA_en_bal_ctry_hist") ->
       L101.en_bal_EJ_R_Si_Fi_Yh_full
 
     L101.en_bal_EJ_ctry_Si_Fi_Yh_full %>%
       add_units("EJ") %>%
       add_comments("For country-level comparisons, keep the iso and aggregate all sectors and fuels. It also includes TPES by country") %>%
       add_legacy_name("L101.en_bal_EJ_ctry_Si_Fi_Yh_full") %>%
-      same_precursors_as(L101.en_bal_EJ_R_Si_Fi_Yh_full) %>%
-      add_precursors("energy/prebuilt_data/L101.en_bal_EJ_ctry_Si_Fi_Yh_full") ->
+      same_precursors_as(L101.en_bal_EJ_R_Si_Fi_Yh_full) ->
       L101.en_bal_EJ_ctry_Si_Fi_Yh_full
 
     L101.in_EJ_ctry_trn_Fi_Yh %>%
       add_units("EJ") %>%
       add_comments("Consumption of energy by the transport sector by fuel and historical year. Aggregated by fuel and country") %>%
       add_legacy_name("L101.in_EJ_ctry_trn_Fi_Yh") %>%
-      same_precursors_as(L101.en_bal_EJ_R_Si_Fi_Yh_full) %>%
-      add_precursors("energy/prebuilt_data/L101.in_EJ_ctry_trn_Fi_Yh") ->
+      same_precursors_as(L101.en_bal_EJ_R_Si_Fi_Yh_full) ->
       L101.in_EJ_ctry_trn_Fi_Yh
 
     L101.in_EJ_ctry_bld_Fi_Yh %>%
       add_units("EJ") %>%
       add_comments("Consumption of energy by the building sector by fuel and historical year. Aggregated by fuel and country") %>%
       add_legacy_name("L101.in_EJ_ctry_bld_Fi_Yh") %>%
-      same_precursors_as(L101.en_bal_EJ_R_Si_Fi_Yh_full) %>%
-      add_precursors("energy/prebuilt_data/L101.in_EJ_ctry_bld_Fi_Yh") ->
+      same_precursors_as(L101.en_bal_EJ_R_Si_Fi_Yh_full) ->
       L101.in_EJ_ctry_bld_Fi_Yh
+
+    # At this point outputs should be identical to the prebuilt versions
+    verify_identical_prebuilt(L101.en_bal_EJ_R_Si_Fi_Yh_full,
+                              L101.en_bal_EJ_ctry_Si_Fi_Yh_full,
+                              L101.in_EJ_ctry_trn_Fi_Yh,
+                              L101.in_EJ_ctry_bld_Fi_Yh)
+    }
 
     return_data(L101.en_bal_EJ_R_Si_Fi_Yh_full, L101.en_bal_EJ_ctry_Si_Fi_Yh_full,
                 L101.in_EJ_ctry_trn_Fi_Yh, L101.in_EJ_ctry_bld_Fi_Yh)

@@ -4,6 +4,8 @@
 # Comments: Date calculated December 15 2011 3:12 pm 
 # Years: years 1970 to 2008
 # Source:  European Commission Joint Research Centre (JRC)/PBL Netherlands Environmental Assessment Agency. Emission Database for Global Atmospheric Research (EDGAR) release version 4.2.
+# Column types: ccccccnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn 
+# ----------
 IPCC_Annex,World_Region,ISO_A3,Name,IPCC,IPCC_description,1970,1971,1972,1973,1974,1975,1976,1977,1978,1979,1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008
 Annex_I,Canada,CAN,Canada,2C,Production of metals,1.12E-01,1.16E-01,1.05E-01,1.08E-01,1.17E-01,1.04E-01,7.55E-02,1.16E-01,1.26E-01,1.04E-01,1.22E-01,1.27E-01,1.20E-01,1.18E-01,1.27E-01,1.24E-01,1.23E-01,1.30E-01,1.30E-01,1.31E-01,1.17E-01,1.24E-01,1.15E-01,1.26E-01,1.15E-01,1.06E-01,1.06E-01,9.87E-02,9.48E-02,8.99E-02,8.30E-02,7.44E-02,7.16E-02,7.31E-02,6.85E-02,6.98E-02,7.65E-02,8.06E-02,8.50E-02
 Annex_I,Canada,CAN,Canada,2F1,Refrigeration and Air Conditioning,,,,,,,,,,,,,,,,,,,,,,,,,,6.52E-07,9.24E-06,2.86E-05,5.67E-05,5.75E-05,5.90E-05,6.30E-05,6.64E-05,6.91E-05,7.14E-05,7.34E-05,7.70E-05,7.99E-05,8.27E-05

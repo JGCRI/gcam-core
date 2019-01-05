@@ -13,7 +13,6 @@ LOGIT_TYPE_COLNAME        <- "logit.type"        # will be removed by test code 
 FLAG_INPUT_DATA      <- "FLAG_INPUT_DATA"       # input data, don't output
 FLAG_NO_OUTPUT       <- "FLAG_NO_OUTPUT"        # don't output
 FLAG_NO_TEST         <- "FLAG_NO_TEST"          # don't test
-FLAG_PROTECT_FLOAT   <- "FLAG_PROTECT_FLOAT"    # protect float columns from readr bug
 FLAG_SUM_TEST        <- "FLAG_SUM_TEST"         # use less-restrictive sum test
 FLAG_XML             <- "FLAG_XML"              # xml data
 

@@ -2,6 +2,8 @@
 # Title: Commercial Buildings Energy Consumption Survey 1999
 # Units: see source for details
 # Source: https://www.eia.gov/consumption/commercial/data/1999/
+# Column types: iiiiiin 
+# ----------
 PUBID7   ,REGION7  ,CENDIV7  ,SQFT7    ,YRCONC7  ,PBA7     ,ADJWT7   
 1,4,9,225000,6,8,88.72
 2,2,3,425000,7,7,14.49

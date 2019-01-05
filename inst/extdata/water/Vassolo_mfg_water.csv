@@ -4,6 +4,8 @@
 # Comments: Based on bottom-up study of total withdrawal. Does not separate Self or Public supplied or Fresh or Saline.
 # Based on Table 3 of source document: "Summary of Industrial Water Use for Each Continent for 1995."
 # Source: Vassolo and Doll, 2005. Global-scale gridded estimates of thermoelectric power and manufacturing water use. Water Resources Research.
+# Column types: cii 
+# ----------
 continent,withdrawals,consumption
 North America,42526,5741
 South America and Caribbean,21394,2888
