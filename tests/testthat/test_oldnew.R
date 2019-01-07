@@ -52,7 +52,16 @@ test_that("matches old data system output", {
                        "GCAM_DATA_MAP precursors doesn't match. Rerun generate_package_data to update.")
   }
 
-  if(!require("gcamdata.compdata", quietly = TRUE)) {
+  # Get a list of files in OUTPUTS_DIR for which we will make OLD/NEW comparisons
+  new_files <- list.files(outputs_dir, full.names = TRUE)
+
+  if(length(new_files) == 0) {
+    # There was no "NEW" outputs in the OUTPUTS_DIR to make comparisons
+    # so we will skip this test
+    skip("no output data found for comparison")
+  } else if(!require("gcamdata.compdata", quietly = TRUE)) {
+    # We couldn't get the "OLD" outputs from the gcamdata.compdata repo
+    # so we will skip this test
     skip("gcamdata.compdata package not available")
   } else {
     # load the comparison data which is coming from the gcamdata.compdata package
